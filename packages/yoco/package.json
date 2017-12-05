@@ -1,0 +1,23 @@
+{
+  "name": "@3yourmind/yoco",
+  "version": "0.0.1-beta",
+  "description": "A icon font library which ready to use and already in 3YOURMIND",
+  "main": "dist/yoco-icon.css",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3YOURMIND/yoco.git"
+  },
+  "keywords": [
+    "icon",
+    "font"
+  ],
+  "author": "Junyu Pu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/3YOURMIND/yoco/issues"
+  },
+  "homepage": "https://github.com/3YOURMIND/yoco#readme"
+}
