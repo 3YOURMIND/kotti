@@ -21,7 +21,7 @@ var iconStrings = [
   'cloud_download',
   'cloud_upload',
   'cloud',
-  'commment',
+  'comment',
   'copy',
   'dashboard',
   'dimension',
