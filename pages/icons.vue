@@ -20,8 +20,6 @@
 import YocoPreview from '~/components/YocoPreview.vue'
 import YocoLiga from '~/assets/json/yocoString.json'
 
-require('@3yourmind/yoco/docs/dist/yoco-icon.css')
-
 export default {
   name: 'icons',
   components: {
