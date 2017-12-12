@@ -18,10 +18,12 @@ export default {
 
 <style>
 .container {
+  max-width: 68rem;
   padding: 1rem;
+  float: left;
   box-sizing: border-box;
-  padding-left: 11rem;
-  width: 100%;
+  padding-left: 14rem;
+  width: 98%;
 }
 @media (max-width: 840px) {
   .sidebar {

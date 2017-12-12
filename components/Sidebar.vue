@@ -26,7 +26,7 @@
 .sidebar {
   background: #f8f8f8;
   height: 100vh;
-  width: 10rem;
+  width: 12rem;
   padding: 1.2rem;
   float: left;
   position: fixed;
