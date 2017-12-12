@@ -1,17 +1,35 @@
 <template>
-   <div class="icon-container">
-      <div>
-          <i class="yoco" ref="liga">{{icon}}</i>
-      </div>
-      <div class="icon-liga">{{icon}}</div>
+  <div class="icon-container" @click="copyLiga(icon)">
+    <div>
+      <i class="yoco" ref="liga">{{icon}}</i>
     </div>
+    <div class="icon-liga">{{icon}}</div>
+    <div class="success-message" v-if="copySuccess">Copied icon "{{icon}}"</div>
+  </div>
 </template>
+
 
 <script>
 export default {
   name: 'yoco-preview',
   props: {
-    icon: String
+    icon: String,
+    copySuccess: false
+  },
+  methods: {
+    copyLiga (string) {
+      let vm = this
+      let codeString = `<i class="yoco">${string}</i>`
+      this.$copyText(codeString).then(function (e) {
+        console.log('success')
+        vm.copySuccess = true
+        setTimeout(() => {
+          vm.copySuccess = false
+        }, 2000)
+      }, function (e) {
+        alert('failed')
+      })
+    }
   }
 }
 </script>
@@ -35,5 +53,14 @@ export default {
 }
 .icon-container .yoco {
   font-size: 32px!important;
+}
+.success-message {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  color: #fff;
+  border-radius: .1rem;
+  padding: .8rem 1.2rem;
+  background: #64AD13;
 }
 </style>

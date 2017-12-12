@@ -6,7 +6,11 @@
       <p>Youi uses designed icons -- <a href="https://3yourmind.github.io/yoco">Yoco</a></p>
     </div>
     <div class="columns">
-      <yoco-preview class="column col-2 col-md-6" :icon="liga" v-for="liga in iconLigas" :key="liga"/>
+      <yoco-preview class="column col-2 col-md-6"
+      :icon="liga"
+      v-for="liga in iconLigas"
+      @click="copyLiga(liga)"
+      :key="liga"/>
     </div>
     <h2>Design</h2>
   </div>
@@ -25,7 +29,8 @@ export default {
   },
   data () {
     return {
-      iconLigas: YocoLiga.data
+      iconLigas: YocoLiga.data,
+      copySuccess: false
     }
   }
 }
