@@ -14,7 +14,7 @@
       </div>
       
       <div class="column col-6 col-md-12">
-        <lightbox imgUrl="/layout/layout_overview.png"/>
+        <lightbox :imgUrl="imgOverview" />
       </div>
     </div>
     <h3>Navbar</h3>
@@ -77,7 +77,7 @@
       </ol>
       </div>
       <div class="column col-6">
-       <lightbox imgUrl="/layout/layout_padding.png"/>
+       <lightbox :imgUrl="imgPadding"/>
       </div>
     </div>
     <h3>Element Heights</h3>
@@ -89,11 +89,19 @@
 </template>
 <script>
 import Lightbox from '~/components/Lightbox.vue'
+import imgOverview from '~/assets/img/layout_overview.png'
+import imgPadding from '~/assets/img/layout_metric.png'
 
 export default {
   name: 'layout',
   components: {
     Lightbox
+  },
+  data () {
+    return {
+      imgOverview,
+      imgPadding
+    }
   }
 }
 </script>

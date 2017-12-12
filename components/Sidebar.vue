@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <div class="logo-nav">
-      <nuxt-link to="/"><img src="~/static/logo-nav.svg"></nuxt-link>
+      <nuxt-link to="/"><img src="~/assets/img/logo-nav.svg"></nuxt-link>
     </div>
     <ul>
       <li><nuxt-link to="/color">Color</nuxt-link></li>

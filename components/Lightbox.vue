@@ -23,7 +23,8 @@ export default {
     }
   },
   props: {
-    imgUrl: String
+    imgUrl: String,
+    imgUrl2x: String
   }
 }
 </script>
