@@ -13,6 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@3yourmind/yoco": "^0.0.1-beta.2",
     "highlight.js": "^9.12.0",
     "nuxt": "^1.0.0-rc11",
     "spectre.css": "^0.5.0",
