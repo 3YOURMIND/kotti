@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ColorPalette from '~/components/color/ColorPalette.vue'
+import ColorPalette from '~/components/ColorPalette.vue'
 
 export default {
   components: {

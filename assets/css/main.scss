@@ -35,3 +35,13 @@ h3 {
   color: #555;
   padding: .8rem 0 .2rem 0;
 }
+
+.success-message {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  color: #fff;
+  border-radius: .1rem;
+  padding: .8rem 1.2rem;
+  background: #64AD13;
+}

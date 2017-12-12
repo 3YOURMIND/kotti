@@ -54,13 +54,4 @@ export default {
 .icon-container .yoco {
   font-size: 32px!important;
 }
-.success-message {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  color: #fff;
-  border-radius: .1rem;
-  padding: .8rem 1.2rem;
-  background: #64AD13;
-}
 </style>

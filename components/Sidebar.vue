@@ -16,11 +16,11 @@
 
 <style lang="scss" scoped>
 .logo-nav {
-  margin: 1.2rem 0 2rem 0; 
+  margin: 2.4rem; 
   text-align: left;
-  height: 1rem;
+  height: 2rem;
   img {
-    height: 1rem;
+    height: 1.2rem;
   }
 }
 .sidebar {

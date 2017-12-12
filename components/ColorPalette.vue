@@ -1,13 +1,15 @@
 <template>
   <div class="color-palette">
     <div class="color-palette__title" v-text="colorName"/>
-    <div class="color-palette__block"
+    <div class="color-palette__block c-hand"
       v-for="color in colors"
+      @click="copyColor(color.code)"
       :style="{background: color.code}"
       :key="color.name">
-      <div class="color-palette__name" v-text="color.name"/>
+      <div class="color-palette__name" v-text="color.name" />
       <div class="color-palette__code" v-text="color.code"/>
     </div>
+     <div class="success-message" v-if="copySuccess">Copy Successed</div>
   </div>
 </template>
 
@@ -16,7 +18,23 @@ export default {
   name: 'color-palette',
   props: {
     colorName: String,
-    colors: Array
+    colors: Array,
+    copySuccess: false
+  },
+  methods: {
+    copyColor (string) {
+      let vm = this
+      let codeString = `${string}`
+      this.$copyText(codeString).then(function (e) {
+        console.log('success')
+        vm.copySuccess = true
+        setTimeout(() => {
+          vm.copySuccess = false
+        }, 2000)
+      }, function (e) {
+        alert('failed')
+      })
+    }
   }
 }
 </script>
