@@ -1,15 +1,39 @@
 <template>
   <div class="color">
     <h1>Colors</h1>
-    <p>We using </p>
-    <h2>Color Palettes</h2>
+    <h2>Primay Color</h2>
+    <div><p>Youi uses <code>Pirmary Blue</code> as main design color which also match to 3YOURMIND brand color. 
+    We don't against different color in one page, but should be limited to 10%.</p></div>
+    <h2>Color Palettes and Usage </h2>
+    <h3>Color name convention</h3>
+    <div>
+      <p>The colors in same palettes has same hue but diffrent saturation and lightness. Color start with primary color, 
+        then fills in the spectrum to create a complete and usable palette. Each color name as 
+        <code>ColorName-number</code>. <code>ColorName</code> represents the hue, and <code>number</code> represents the lightness.
+        Smaller number means lighter, and greater number means darker. 
+      </p>
+    </div>
+    <h3>
+      Color Palettes
+      <span class="tooltip float-right c-hand" data-tooltip="Click color to copy">
+      <i class="yoco">circle_question</i>
+    </span></h3>
     <div class="columns">
-      <color-palette class="column col-md-12 col-4" colorName="Primary Blue" :colors="primaryColor"/>
+      <color-palette class="column col-md-12 col-4" colorName="Pirmary Blue" :colors="primaryColor"/>
       <color-palette class="column col-md-12 col-4" colorName="Green" :colors="greenColor"/>
       <color-palette class="column col-md-12 col-4" colorName="Dark Grey" :colors="darkGrey"/>
       <color-palette class="column col-md-12 col-4" colorName="Light Grey" :colors="lightGrey"/>
       <color-palette class="column col-md-12 col-4" colorName="Red" :colors="redColor"/>
     </div>
+    <h3>Usage</h3>
+    <ul>
+      <li><b>Primay-500:</b> it's used as primary button color, section-header, icon buttons.</li>
+      <li><b>Green-500:</b> it represent success message.</li>
+      <li><b>Red-500:</b> it uses as danger message.</li>
+      <li><b>Darkgrey-500:</b> it uses as default text color.</li>
+      <li><b>Lightgrey-500:</b> it uses as addtional / supplementary text color.</li>
+    </ul>
+    
   </div>
 </template>
 

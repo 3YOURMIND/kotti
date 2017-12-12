@@ -1,22 +1,27 @@
 <template>
   <div>
     <sidebar class="sidebar"/>
+    <mobile-nav class="mobile-menu" />
     <nuxt class="container"/>
   </div>
 </template>
 
 <script>
 import Sidebar from '~/components/Sidebar.vue'
+import MobileNav from '~/components/MobileNav.vue'
 
 export default {
   components: {
-    Sidebar
+    Sidebar, MobileNav
   }
 }
 </script>
 
 
 <style>
+.mobile-menu {
+  display: none;
+}
 .container {
   max-width: 68rem;
   padding: 1rem;
@@ -30,7 +35,11 @@ export default {
     display: none;
   }
   .container {
+    margin-top: 4rem;
     padding-left: 1rem;
+  }
+  .mobile-menu {
+    display: block;
   }
 }
 </style>
