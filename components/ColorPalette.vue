@@ -4,9 +4,9 @@
     <div class="color-palette__block c-hand"
       v-for="color in colors"
       @click="copyColor(color.code)"
-      :style="{background: color.code}"
+      :style="{background: color.code, color: textColor(color.name)}"
       :key="color.name">
-      <div class="color-palette__name" v-text="color.name" />
+      <div class="color-palette__name" v-text="color.name"/>
       <div class="color-palette__code" v-text="color.code"/>
     </div>
      <div class="success-message" v-if="copySuccess">Copy Successed</div>
@@ -34,6 +34,11 @@ export default {
       }, function (e) {
         alert('failed')
       })
+    },
+    textColor (colorName) {
+      if (colorName === 'LightGrey-300' || colorName === 'LightGrey-400') {
+        return '#3d3d3d'
+      }
     }
   }
 }
