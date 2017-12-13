@@ -9,7 +9,7 @@
     </div>
     <div class="mobile-menu-expand" v-if="isOpen">
       <ul @click="isOpen=false">
-        <li><nuxt-link to="/color">Color</nuxt-link></li>
+        <li><nuxt-link to="/color">Colors</nuxt-link></li>
         <li><nuxt-link to="/layout">Layout</nuxt-link></li>
         <li><nuxt-link to="/typography">Typography</nuxt-link></li>
         <li><nuxt-link to="/table">Table</nuxt-link></li>
@@ -37,12 +37,12 @@ export default {
   width: 100%;
   top: 0;
   background: #fff;
-  box-shadow: 0 0 1px #ddd;
+  box-shadow: 0 0 1px #8f8f8f;
   position: fixed;
   img {
     height: 1.4rem;
   }
-  z-index: 5;
+  z-index: 999;
 }
 .mobile-menu-button {
   width: auto;
@@ -57,14 +57,16 @@ export default {
   i {
     line-height: 2.4rem;
   }
-  z-index: 5;
+  z-index: 999;
 }
 .mobile-menu-expand {
   position: fixed;
   margin-top: 3rem;
+  font-size: 1.2em;
   width: 100%;
-  box-shadow: 0 0 5px #ddd;
+  box-shadow: 0 0 5px #8f8f8f;
   background: #fff;
+  z-index: 998;
 }
 ul {
   margin: 0;

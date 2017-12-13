@@ -36,37 +36,21 @@
       <li><b>Lightgrey:</b> neutral color.</li>
     </ul>
     <h3>State</h3>
-    <table class="table table-striped table-hover">
-      <tr>
-      <th>Class</th>
-      <th>Default</th>
-      <th>Hover</th>
-      <th>Disable / Hint</th>
-      </tr>
-      <tr>
-        <td>Link</td>
-        <td>Primary-500</td>
-        <td>Primary-600</td>
-        <td>Primary-500 with 20% opacity</td>
-      </tr>
-    </table>
-    <table class="table">
-            <tr>
-      <th>Class</th>
-      <th>Default</th>
-      <th>Success</th>
-      <th>Fail / Alert</th>
-      </tr>
-          <tr>
-        <td>Hint Text</td>
-        <td>LightGrey-500</td>
-        <td>Green-600</td>
-        <td>Red-500</td>
-      </tr>
-    </table>
+    <div class="state-link">
+      <a>Default: This is an example link <code>Primary-500</code></a>
+      <a class="hover">Hover: This is an example link <code>Primary-600</code></a>
+      <a class="disabled">Disabled: This is an disabled link <code>Primary-500, opacity: .46</code></a>
+    </div>
+    <h3>Status</h3>
+    <div class="state-hint">
+      <input/>
+      <div style="color: #64AD13">Success</div>
+      <div style="color: #8A8A8A">Default</div>
+      <div style="color: #D91919">Fail</div>
+    </div>
     <h3>Dark text on light background</h3>
     <div class="columns">
-    <div class="column col-6">
+    <div class="column col-6 col-md-12">
       Depends on text meaning and hierarchy, there are three different type:
       <ul>
         <li><b>Default text</b> should be <code>Darkgrey-500</code></li>
@@ -75,7 +59,7 @@
         <li><b>Disabled / hint text</b> should be <code>Darkgrey-300</code>.</li>
       </ul>
     </div>
-    <div class="column col-6">
+    <div class="column col-6 col-md-12">
       <div class="text-color light">
       <div style="color:#3D3D3D">Default text - Darkgrey-500</div>
       <div style="color:#575757">Seconday text - Darkgrey-400</div>
@@ -101,19 +85,47 @@
       </div>
     </div>
     </div>
+    <h3>Light text on color background</h3>
+    <div class="columns">
+    <div class="column col-6 col-md-12">Same as dark text, there are three different type:
+    <ul>
+      <li><b>Default text</b> should be <code>Lightgrey-300</code></li>
+      <li><b>Secondary text, which is lower in the visual hierarchy,</b> 
+      uses <code>Lightgrey-400</code>.</li>
+      <li><b>Disabled / hint text</b> should be <code>Lightgrey-500</code>.</li>
+    </ul>
+    </div>
+    <div class="column col-6 col-md-12">
+      <div class="text-color color">
+      <div style="color:#FFFFFF">Default text - Whith Opacity 100%</div>
+      <div style="color:#FFFFFF; opacity: .68">Seconday text - Whith Opacity 68%</div>
+      <div style="color:#FFFFFF; opacity: .46">Disabled / hint text - Whith Opacity 46%</div>
+      </div>
+    </div>
+    </div>
     <h3>Icons and other elements</h3>
-    <div>
-      <p>Default icon color on light background is <code>DarkGrey-500</code>,
-      and on dark background should be white <code>LightGrey-300</code>.
-    </p> </div>
-    <div class="example1">
-      <i class="yoco">announce</i> This is icon on light background.
+    <div class="columns">
+    <div class="column col-6 col-md-12">
+      <p>Depends on the meaning and visual hierarchy, icon should match the following rules: </p>
+      <ul>
+      <li>If icon is <b>supplementary</b> to default text, 
+        the icon color should be <code>Darkgrey-300</code>. (First example)
+      </li>
+      <li>If icon has color background, both icon and text color is <code>LightGrey-300</code> (Second example)</li> 
+      <li>If text has color or status, mathc to its text. (Thrid example)</li>
+      </ul>
     </div>
-    <div class="example2">
-      <i class="yoco">announce</i> This is icon on dark background.
+    <div class="column col-6 col-md-12">
+      <div class="icon-color light">
+        <i class="yoco" style="color:#8A8A8A">file</i> file_name.pdf
+      </div>
+      <div class="icon-color color">
+        <i class="yoco">announce</i> Announce new icons.
+      </div>
+      <div class="icon-color dark">
+        <i class="yoco">print</i> Print invoice.
+      </div>
     </div>
-    <div class="example3">
-      <i class="yoco">announce</i> This is icon with action.
     </div>
     
   </div>
@@ -159,9 +171,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.state-link {
+  line-height: 2rem;
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  padding: .8rem;
+  background: #f8f8f8;
+  a {
+    color: #2C66C4;
+    display: block;
+  }
+  .hover {
+    color: #2659AB;
+  }
+  .disabled {
+    opacity: .46;
+  }
+}
+.state-hint {
+  padding: .8rem;
+  background: #f8f8f8;
+  font-size: 0.875em;
+  text-transform: uppercase;
+}
 .text-color{
   &.light {
     background: #f8f8f8;
+  }
+  &.color {
+    background: #2C66C4;
   }
   &.dark {
     background: #3d3d3d;
@@ -169,19 +208,19 @@ export default {
   padding: .8rem;
   line-height: 2rem;
 }
-.example1{
-  background: #f8f8f8;
-  color: #3d3d3d;
+.icon-color {
   padding: .8rem;
-}
-.example2{
-  background: #2C66C4;
-  color: #f8f8f8;
-  padding: .8rem;
-}
-.example3{
-  background: #f8f8f8;
-  color: #2C66C4;
-  padding: .8rem;
+  &.light {
+    background: #f8f8f8;
+    color: #3d3d3d;
+  }
+  &.color {
+    background: #2C66C4;
+    color: #f8f8f8;
+  }
+  &.dark {
+    background: #ffffff;
+    color: #2C66C4;
+  }
 }
 </style>
