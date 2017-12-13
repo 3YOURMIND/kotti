@@ -5,7 +5,7 @@
     <div><p>Youi uses <code>Pirmary Blue</code> as main design color which also match to 3YOURMIND brand color. 
     We don't strongly against multiple colors used in one page, but should be limited to less than 20%.</p></div>
     <h2>Color Palettes</h2>
-    <h3>Color name convention</h3>
+    <h3>Name convention</h3>
     <div>
       <p>The colors in same palettes has same hue but diffrent saturation and lightness. Color start with primary color, 
         then fills in the spectrum to create a complete and usable palette. Each color name as 

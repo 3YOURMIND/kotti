@@ -70,10 +70,9 @@
       <div class="column col-6">
       <p>Following 3 types of margin or padding metric are suggested:</p>
       <ol>
-        <li><b>Border Padding:</b> tha gap between window boader and components, the width is <code>32px</code>. Indicate as 1.</li>
-        <li><b>Block Margin:</b> tha gap between two elements in same component, but it's not <b>related</b> or <b>need visual separtion</b>,
-         the width is <code>24px</code>. Indicate as 2.</li>
-        <li><b>Element Margin:</b> the gap between two elements in same component, and it's related. Indicate as 3.</li>
+        <li><b>Border Margin:</b> tha gap between element and window, the width is <code>24px</code>.</li>
+        <li><b>Block Margin:</b> tha gap between two elements, the width is <code>24px</code>.</li>
+        <li><b>Element Padding:</b> the padding of elements.</li>
       </ol>
       </div>
       <div class="column col-6">

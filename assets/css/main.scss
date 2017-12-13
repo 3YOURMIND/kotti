@@ -9,7 +9,8 @@ html {
   box-sizing: border-box;
 }
 body {
-  font-size: 16px;
+  font-size: 14px;
+  color: #3d3d3d;
 }
 
 *, *:before, *:after {
@@ -46,4 +47,8 @@ h3 {
   border-radius: .1rem;
   padding: .8rem 1.2rem;
   background: #64AD13;
+}
+.example-wrapper {
+  padding: .8rem;
+  background: #f8f8f8;
 }
