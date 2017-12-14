@@ -24,7 +24,7 @@ export default {
   display: none;
 }
 .container {
-  max-width: 68rem;
+  max-width: 56rem;
   padding: 1rem;
   float: left;
   box-sizing: border-box;
