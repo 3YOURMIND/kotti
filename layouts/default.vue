@@ -32,11 +32,10 @@ export default {
   height: 100%;
   position: fixed;
   z-index: -1;
-  overflow: scroll;
+  overflow-y: auto;
   float: left;
   box-sizing: border-box;
   padding-left: 14.2rem;
-  width: 98%;
   background: #ffffff;
   box-shadow: 1px 0 2px #dbdbdb;
 }

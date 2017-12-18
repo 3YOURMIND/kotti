@@ -19,7 +19,7 @@ export default {
 
 <style lang="scss" scoped>
 .logo-nav {
-  margin: 1.2rem 0; 
+  margin: 1.2rem 0;
   text-align: left;
   height: 2.4rem;
 }
@@ -28,9 +28,9 @@ export default {
   height: 100vh;
   width: 12rem;
   padding: 1.2rem;
-  overflow-y: scroll;
+  overflow-y: auto;
   float: left;
-  color:#F8F8F8; 
+  color:#F8F8F8;
   position: fixed;
 }
 </style>
