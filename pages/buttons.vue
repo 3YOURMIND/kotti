@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>Form Element</h1>
-    <h2>Button</h2>
+    <h1>Button</h1>
     <div class="example-wrapper white columns">
       <div class="column col-3">
         <button class="yoda-btn primary c-hand">Primary</button>

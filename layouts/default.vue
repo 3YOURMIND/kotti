@@ -2,7 +2,9 @@
   <div>
     <sidebar class="sidebar" />
     <mobile-nav class="mobile-menu" />
-    <nuxt class="container" />
+    <div class="container">
+      <nuxt class="content" />
+    </div>
   </div>
 </template>
 
@@ -25,7 +27,7 @@ export default {
   display: none;
 }
 .container {
-  max-width: 54rem;
+  /* max-width: 54rem; */
   padding: 2.2rem;
   height: 100%;
   position: fixed;
@@ -38,13 +40,21 @@ export default {
   background: #ffffff;
   box-shadow: 1px 0 2px #dbdbdb;
 }
+.content {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 38rem;
+}
 @media (max-width: 840px) {
   .sidebar {
     display: none;
   }
   .container {
-    margin: 4rem 1%;
+    position: relative;
+    margin: 2.8rem 0;
     padding: 1rem;
+    width: 100%;
+    box-shadow: 0;
   }
   .mobile-menu {
     display: block;

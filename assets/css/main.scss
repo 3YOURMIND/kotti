@@ -20,24 +20,27 @@ body {
 }
 
 h1 {
-  font-size: 2em;
-  color: #2c66c4;
-  line-height: 2em;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #3d3d3d;
+  padding: .4rem 0;
+  line-height: 2.4rem;
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 1.2rem;
   color: #3d3d3d;
-  padding: .8rem 0 .4rem 0;
+  line-height: 1.6rem;
+  padding: .4rem 0;
 }
 
 h3 {
-  font-size: 1.1em;
-  line-height: 1.6em;
+  font-size: .8rem;
+  line-height: 1.2em;
   font-weight: bold;
-  color: #555;
-  margin-top: .8rem;
-  padding: .8rem 0 .2rem 0;
+  color: #2C66C4;
+  margin-top: 1.2rem;
+  padding: .4rem 0;
 }
 
 img {

@@ -1,5 +1,4 @@
 <template>
-  <section class="container">
     <div>
       <h1 class="title">Kotti Design System</h1>
       <h2 class="subtitle">Kotti Design Principles</h2>
@@ -10,7 +9,6 @@
       <div><p>The design need to response and help user finish their task in a timely matter.</p></div>
       <h3>Iconic</h3>
     </div>
-  </section>
 </template>
 
 <script>

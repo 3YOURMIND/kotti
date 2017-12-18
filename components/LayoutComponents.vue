@@ -1,20 +1,14 @@
 <template>
   <div>
     <h2>Components</h2>
-    <div class="columns">
-      <div class="column col-6 col-md-12">
-        <p>Our layout has 3 main components:
-          <b>Navbar</b>,
-          <b>Actionbar</b>, and
-          <b>Workspace</b>. The
-          <b>Actionbar</b> can be omited if necessary. However,
-          <b>Navbar</b> and
-          <b>Workspace</b> are required for every page.</p>
-      </div>
-      <div class="column col-6 col-md-12">
-        <lightbox :imgUrl="imgOverview" />
-      </div>
-    </div>
+    <p>Our layout has 3 main components:
+      <b>Navbar</b>,
+      <b>Actionbar</b>, and
+      <b>Workspace</b>. The
+      <b>Actionbar</b> can be omited if necessary. However,
+      <b>Navbar</b> and
+      <b>Workspace</b> are required for every page.</p>
+    <img src="~/assets/img/layout_overview.png" />
     <h3>Navbar</h3>
     <div>
       <p>The Navbar is the top-level navgation for user. The width is fixed:
@@ -46,6 +40,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import Lightbox from '~/components/Lightbox.vue'

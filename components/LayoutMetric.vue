@@ -66,8 +66,7 @@
       </tr>
     </table>
     <h3>Padding and Margin</h3>
-    <div class="columns">
-      <div class="column col-6">
+
         <p>Following 3 types of margin or padding metric are suggested:</p>
         <ol>
           <li>
@@ -79,11 +78,7 @@
           <li>
             <b>Element Padding:</b> the padding of elements.</li>
         </ol>
-      </div>
-      <div class="column col-6">
-        <lightbox :imgUrl="imgPadding" />
-      </div>
-    </div>
+    <img src="~/assets/img/layout_metric.png">
     <h3>Element Heights</h3>
     <div>
       <p>Most of the elements in Youi has fixed height, which is

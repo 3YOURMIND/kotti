@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mobile-logo">
-      <img src="~/assets/img/logo-nav.svg">
+      <img src="~/assets/img/nav_logo.svg">
     </div>
     <div class="mobile-menu-button c-hand" @click="isOpen=!isOpen">
       Menu <i class="yoco" v-if="isOpen">chevron_up</i>
@@ -32,22 +32,25 @@ export default {
 
 <style lang="scss" scoped>
 .mobile-logo {
-  padding: 1rem;
-  height: 3.2rem;
-  width: 100%;
+  padding: .8rem;
+  height: 2.8rem;
+  text-align: left;
   top: 0;
-  background: #fff;
+  width: 100%;
+  background: #2659AB;
   box-shadow: 0 0 1px #8f8f8f;
   position: fixed;
   img {
-    height: 1.4rem;
+    float: left;
+    width: 8rem;
+    margin-left: -2rem; 
   }
   z-index: 999;
 }
 .mobile-menu-button {
   width: auto;
   padding: 0 .8rem;
-  height: 2.4rem;
+  height: 2rem;
   background: #f8f8f8;
   border-radius: .1rem;
   position: fixed;
@@ -55,13 +58,13 @@ export default {
   right: .4rem;
   text-align: center;
   i {
-    line-height: 2.4rem;
+    line-height: 2rem;
   }
   z-index: 999;
 }
 .mobile-menu-expand {
   position: fixed;
-  margin-top: 3rem;
+  margin-top: 2.8rem;
   font-size: 1.2em;
   width: 100%;
   box-shadow: 0 0 5px #8f8f8f;
