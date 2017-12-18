@@ -2,9 +2,12 @@
   <div>
     <h2>Components</h2>
     <p>Our layout has 3 main components:
-      <b>Navbar</b>,
-      <b>Actionbar</b>, and
-      <b>Workspace</b>. The
+      <ol>
+        <li>Navbar</li>
+        <li>Actionbar</li>
+        <li>Workspace</li>
+      </ol>
+      <p>The
       <b>Actionbar</b> can be omited if necessary. However,
       <b>Navbar</b> and
       <b>Workspace</b> are required for every page.</p>

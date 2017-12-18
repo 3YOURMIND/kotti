@@ -86,20 +86,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import imgPadding from '~/assets/img/layout_metric.png'
-import Lightbox from '~/components/Lightbox.vue'
-
-export default {
-  name: 'layout-metric',
-  components: {
-    Lightbox
-  },
-  data () {
-    return {
-      imgPadding
-    }
-  }
-}
-</script>

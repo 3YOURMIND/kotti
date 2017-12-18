@@ -43,7 +43,7 @@ export default {
 .content {
   margin: 0 auto;
   width: 100%;
-  max-width: 38rem;
+  max-width: 40rem;
 }
 @media (max-width: 840px) {
   .sidebar {

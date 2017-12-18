@@ -7,25 +7,24 @@
       Menu <i class="yoco" v-if="isOpen">chevron_up</i>
       <i class="yoco" v-else>chevron_down</i>
     </div>
-    <div class="mobile-menu-expand" v-if="isOpen">
-      <ul @click="isOpen=false">
-        <li><nuxt-link to="/color">Colors</nuxt-link></li>
-        <li><nuxt-link to="/layout">Layout</nuxt-link></li>
-        <li><nuxt-link to="/typography">Typography</nuxt-link></li>
-        <li><nuxt-link to="/table">Table</nuxt-link></li>
-        <li><nuxt-link to="/Icons">Icons</nuxt-link></li>
-        <li><nuxt-link to="/form">Form</nuxt-link></li>
-      </ul>
+    <div class="mobile-menu-expand-wrapper" v-if="isOpen" @click="isOpen=false">
+    <div class="mobile-menu-expand" v-if="isOpen" @click="isOpen=false">
+      <menu-list/>
+    </div>
     </div>
   </div>
 </template>
 <script>
+import MenuList from '~/components/Menu.vue'
 export default {
   name: 'mobiel-menu',
   data () {
     return {
       isOpen: false
     }
+  },
+  components: {
+    MenuList
   }
 }
 </script>
@@ -38,7 +37,7 @@ export default {
   top: 0;
   width: 100%;
   background: #2659AB;
-  box-shadow: 0 0 1px #8f8f8f;
+  box-shadow: 0 0 1px rgba(0, 0, 0, .8);
   position: fixed;
   img {
     float: left;
@@ -62,23 +61,23 @@ export default {
   }
   z-index: 999;
 }
+.mobile-menu-expand-wrapper {
+  background: rgba(0, 0, 0, .8);
+  width: 100%;
+  height: 100%;
+  z-index: 993;
+  position: fixed;
+}
 .mobile-menu-expand {
   position: fixed;
-  margin-top: 2.8rem;
+  margin-top: 2.7rem;
+  overflow-y: scroll;
+  height: 90vh;
   font-size: 1.2em;
   width: 100%;
-  box-shadow: 0 0 5px #8f8f8f;
-  background: #fff;
-  z-index: 998;
-}
-ul {
-  margin: 0;
   padding: 1.2rem;
-}
-li {
-  text-align: center;
-  padding: .8em 0;
-  list-style: none;
+  background: #2659AB;
+  z-index: 998;
 }
 
 
