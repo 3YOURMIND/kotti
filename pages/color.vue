@@ -42,11 +42,19 @@
       <a class="disabled">Disabled: This is an disabled link <code>Primary-500, opacity: .46</code></a>
     </div>
     <h3>Status</h3>
-    <div class="state-hint">
-      <input/>
-      <div style="color: #64AD13">Success</div>
-      <div style="color: #8A8A8A">Default</div>
-      <div style="color: #D91919">Fail</div>
+    <div class="columns">
+      <div class="column col-4 state-hint">
+        <input/>
+        <span style="color: #64AD13">Success</span>
+      </div>
+       <div class="column col-4 state-hint">
+        <input/>
+        <span style="color: #8A8A8A">Default</span>
+      </div>
+       <div class="column col-4 state-hint">
+        <input/>
+        <span style="color: #D91919">Fail</span>
+      </div>
     </div>
     <h3>Dark text on light background</h3>
     <div class="columns">
@@ -194,6 +202,14 @@ export default {
   background: #f8f8f8;
   font-size: 0.875em;
   text-transform: uppercase;
+  input {
+    width: 100%;
+  }
+  span {
+    display: block;
+    padding: .2rem 0;
+    font-weight: 600;
+  }
 }
 .text-color{
   &.light {

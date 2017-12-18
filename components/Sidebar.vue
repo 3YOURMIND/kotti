@@ -1,52 +1,67 @@
 <template>
   <div class="sidebar">
     <div class="logo-nav">
-      <nuxt-link to="/"><img src="~/assets/img/logo-nav.svg"></nuxt-link>
+      <nuxt-link to="/"><img src="~/assets/img/nav_logo.svg"></nuxt-link>
     </div>
+    <div class="subline">Foundation</div>
     <ul>
-      <li><nuxt-link to="/color">Color</nuxt-link></li>
       <li><nuxt-link to="/layout">Layout</nuxt-link></li>
+      <li><nuxt-link to="/color">Color</nuxt-link></li>
       <li><nuxt-link to="/typography">Typography</nuxt-link></li>
+      <li><nuxt-link to="/icons">Icons</nuxt-link></li>
+      <li>Writing Style</li>
+
+    </ul>
+    <div class="subline">Components</div>
+    <ul>
+      <li>Banners</li>
       <li><nuxt-link to="/table">Table</nuxt-link></li>
-      <li><nuxt-link to="/Icons">Icons</nuxt-link></li>
-      <li><nuxt-link to="/form">Form</nuxt-link></li>
+      <li><nuxt-link to="/form">Button</nuxt-link></li>
+      <li>Notification</li>
+      <li>Clips</li>
+      <li>Toogles</li>
+      <li>Text field</li>
+      <li>Workflow</li>
+      <li>Overlay</li>
     </ul>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .logo-nav {
-  margin: 2.4rem; 
+  margin: 1.2rem 0; 
   text-align: left;
-  height: 2rem;
-  img {
-    height: 1.2rem;
-  }
+  height: 4rem;
 }
 .sidebar {
-  background: #f8f8f8;
+  background: #2659AB;
   height: 100vh;
   width: 12rem;
   padding: 1.2rem;
   float: left;
+  color:#F8F8F8; 
   position: fixed;
   ul {
-    line-height: 2rem;
+    line-height: 1.4rem;
     width: 100%;
     margin: 0;
     padding-left: 1.2rem;
   }
   li {
-    font-size: 0.875em;
     list-style: none;
   }
-    a {
+  a {
     font-weight: bold;
-    text-transform: uppercase;
-    color: #575757;
+    color: #F8F8F8;
   }
   a:active {
-    color: #575757;
+    color: #F8F8F8;
+  }
+  .subline {
+    font-size: 0.875em;
+    color: #DBDBDB;
+    margin: 1.2rem 0 .8rem 0;
+    text-transform: uppercase;
   }
 }
 

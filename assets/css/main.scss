@@ -11,6 +11,7 @@ html {
 body {
   font-size: 14px;
   color: #3d3d3d;
+  background: #f8f8f8;
 }
 
 *, *:before, *:after {
@@ -39,6 +40,9 @@ h3 {
   padding: .8rem 0 .2rem 0;
 }
 
+img {
+  width: 100%;
+}
 .success-message {
   position: fixed;
   bottom: 1rem;
@@ -51,6 +55,9 @@ h3 {
 .example-wrapper {
   padding: .8rem;
   background: #f8f8f8;
+  img {
+    width: 100%;
+  }
   &.white {
     background: #fff;
     border: 1px solid #8a8a8a;

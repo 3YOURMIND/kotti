@@ -1,7 +1,12 @@
 <template>
   <div>
     <h1>Icons</h1>
-    <h2>Yoco</h2>
+    <icon-font />
+    <h2>Preview
+      <span class="tooltip c-hand" data-tooltip="Click icon to copy">
+      <i class="yoco">circle_question</i>
+      </span>
+    </h2>
     <div>
       <p>Youi uses designed icons -- <a href="https://3yourmind.github.io/yoco">Yoco</a></p>
     </div>
@@ -12,18 +17,18 @@
       @click="copyLiga(liga)"
       :key="liga"/>
     </div>
-    <h2>Design</h2>
   </div>
 </template>
 
 <script>
+import IconFont from '~/components/IconFont.vue'
 import YocoPreview from '~/components/YocoPreview.vue'
 import YocoLiga from '~/assets/json/yocoString.json'
 
 export default {
   name: 'icons',
   components: {
-    YocoPreview
+    YocoPreview, IconFont
   },
   data () {
     return {
