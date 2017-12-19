@@ -46,6 +46,9 @@ h3 {
 img {
   width: 100%;
 }
+img.white {
+  border-left: 1px solid #dbdbdb;
+}
 .success-message {
   position: fixed;
   bottom: 1rem;

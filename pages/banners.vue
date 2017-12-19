@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Banner</h1>
+    <h1>Banners</h1>
     <h2 id="usage">Usage</h2>
 
     <p>Banners can be used as an alert at the top of the screen to display critical message or expandable information. It should
@@ -18,7 +18,7 @@
       <li>
         <strong>Action:</strong> A text call to action button to resovle this issue.</li>
     </ol>
-    <h2>Types</h2>
+    <h2>Banner Types</h2>
 
     <h3 id="messagebanner">Message Banner</h3>
 
