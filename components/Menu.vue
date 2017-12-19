@@ -27,13 +27,17 @@
         <nuxt-link to="/buttons">Buttons</nuxt-link>
       </li>
       <li>
+        <nuxt-link to="/drawer">Drawer</nuxt-link>
+      </li>
+      <!-- <li>Labels</li> -->
+      <li>
         <nuxt-link to="/inputs">Inputs</nuxt-link>
       </li>
       <li>
-        <nuxt-link to="/notifications">Notifications</nuxt-link>
+        <nuxt-link to="/tables">Tables</nuxt-link>
       </li>
       <li>
-        <nuxt-link to="/tables">Tables</nuxt-link>
+        <nuxt-link to="/toaster">Toaster</nuxt-link>
       </li>
       <!-- <li>Toogles</li>
       <li>Workflow</li>
@@ -41,7 +45,9 @@
     </ul>
     <div class="subline">Resource</div>
     <ul>
-      <li>Sketch Kit</li>
+      <li>
+         <nuxt-link to="/designkit">Design Kit</nuxt-link>
+      </li>
     </ul>
   </div>
 </template>
@@ -53,11 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .sidemenu {
-
   ul {
-
     width: 100%;
     margin: 0;
   }
@@ -65,19 +68,18 @@ export default {
     margin: 0;
     line-height: 1.4rem;
     list-style: none;
-  
-  a {
-    text-decoration: none;
-    padding: .4rem .8rem;
-    display: block;
-    color: #F8F8F8;
-  }
-  .nuxt-link-exact-active {
-    padding: .4rem .8rem;
-    display: block;
-    font-weight: 600;
-    background: rgba(0, 0, 0, .2);
-  }
+    a {
+      text-decoration: none;
+      padding: .2rem .8rem;
+      display: block;
+      color: #F8F8F8;
+    }
+    .nuxt-link-exact-active {
+      padding: .2rem .8rem;
+      display: block;
+      font-weight: 600;
+      background: rgba(0, 0, 0, .2);
+    }
   }
   .subline {
     font-size: 0.875em;
@@ -87,4 +89,5 @@ export default {
     text-transform: uppercase;
   }
 }
+
 </style>
