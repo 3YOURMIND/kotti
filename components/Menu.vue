@@ -33,7 +33,7 @@
         <nuxt-link to="/notifications">Notifications</nuxt-link>
       </li>
       <li>
-        <nuxt-link to="/table">Tables</nuxt-link>
+        <nuxt-link to="/tables">Tables</nuxt-link>
       </li>
       <!-- <li>Toogles</li>
       <li>Workflow</li>
