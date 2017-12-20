@@ -36,6 +36,7 @@ export default {
   float: left;
   box-sizing: border-box;
   padding-left: 14.2rem;
+  width: 98%;
   background: #ffffff;
   box-shadow: 1px 0 2px #dbdbdb;
 }

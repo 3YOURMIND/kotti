@@ -8,8 +8,7 @@
     <p>&quot;Yes/No&quot; buttons are not self-explained, user need to read the context to understand the action. Using &quot;Cancel/Replace&quot;
       buttons let user response quickly without thinking.</p>
     <h2 id="types">Types</h2>
-    <div class="columns">
-      <div class="column col-6 col-md-12">
+   <img src="~/assets/img/button_types.png" />
         <ol>
           <li>
             <strong>Primary button:</strong>Using primary to lead main call to action, such as change the status of an order, submit
@@ -30,11 +29,8 @@
               button to destructive action such as &quot;Cancel&quot;.
             </li>
         </ol>
-      </div>
-      <div class="column col-6 col-md-12">
-        <img class="white" src="~/assets/img/button_types.png" />
-      </div>
-    </div>
+
+        
     <h2 id="variations">Variations</h2>
     <div class="columns">
       <div class="column col-6 col-md-12">
