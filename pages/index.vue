@@ -1,7 +1,7 @@
 <template>
     <div>
       <h1 class="title">Kotti Design System</h1>
-      <h2 class="subtitle">Kotti Design Principles</h2>
+      <h2 class="subtitle">Design Principles</h2>
       <h3>Keen</h3>
       <h3>Observalbe</h3>
       <h3>Trasparent</h3>
