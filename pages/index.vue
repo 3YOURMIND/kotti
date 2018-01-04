@@ -5,9 +5,10 @@
     <h2 id="toc_0">Overview</h2>
 
     <p>Design system helps to unified our design language and provides the document for further product design decision. Kotti
-      design system has two main parts: foundation and components. Foundation defines the layout, color, icons, typography
-      and writing style. The foundation is higher lever and works as guide lines for the whole system. It also creates the
-      styles and characteristics different from other design system. Components are more concrete elements. They are pre-defined
+      design system has two main parts: foundation and components. </p>
+    <p>The foundation is higher lever and works as guide lines for the whole system, which defines the layout, color, icons, typography
+      and writing style. It also creates the styles and characteristics different from other design system.</p>
+    <p>Components are more concrete elements. They are pre-defined
       and cannot be changed in most case. These components include: banners, buttons, drawer , etc.</p>
 
     <h2 id="toc_1">Design Principles</h2>
