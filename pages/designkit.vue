@@ -1,6 +1,6 @@
 <template>
   <div>
     <h1>Design Kit</h1>
-    <p>Comming soon.</p>
+    <p>Coming soon.</p>
   </div>
 </template>
