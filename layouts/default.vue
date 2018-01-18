@@ -27,10 +27,9 @@ export default {
   display: none;
 }
 .container {
-  /* max-width: 54rem; */
   padding: 2.2rem;
   height: 100%;
-  position: fixed;
+  min-height: 100%;
   z-index: -1;
   overflow-y: auto;
   float: left;
