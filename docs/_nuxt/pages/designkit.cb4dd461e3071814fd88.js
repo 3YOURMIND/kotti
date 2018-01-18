@@ -1,2 +1,0 @@
-webpackJsonp([13],{UbwO:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r=t("opEk"),l=t("K60R"),s=l(null,r.a,!1,null,null,null);n.default=s.exports},opEk:function(e,n,t){"use strict";var r=function(){var e=this,n=e.$createElement;e._self._c;return e._m(0)},l=[function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",[t("h1",[e._v("Design Kit")]),t("p",[e._v("Coming soon.")])])}],s={render:r,staticRenderFns:l};n.a=s}});
-//# sourceMappingURL=designkit.cb4dd461e3071814fd88.js.map

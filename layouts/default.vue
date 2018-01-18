@@ -29,7 +29,7 @@ export default {
 .container {
   padding: 2.2rem;
   height: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   z-index: -1;
   overflow-y: auto;
   float: left;
