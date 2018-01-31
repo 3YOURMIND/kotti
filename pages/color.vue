@@ -2,7 +2,7 @@
   <div class="color">
     <h1>Colors</h1>
     <h2>Primay Color</h2>
-    <div><p>Youi uses <code>Pirmary Blue</code> as main design color which also match to 3YOURMIND brand color. 
+    <div><p>Kotti uses <code>Pirmary Blue</code> as main design color which also match to 3YOURMIND brand color. 
     We don't strongly against multiple colors used in one page, but should be limited to less than 20%.</p></div>
     <h2>Color Palettes</h2>
     <h3>Name convention</h3>
