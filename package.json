@@ -1,9 +1,10 @@
 {
   "name": "youui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Yoda UI library documents",
   "author": "Junyu Pu",
   "private": true,
+  "license" : "SEE LICENSE IN LICENSE",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",

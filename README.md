@@ -12,7 +12,7 @@ Design system for new version of 3YOURMIND product.
 
 **Intuitive:** The design should be intuitive and easy to understand, and decrease the learning curve.
 
-[Read the document online on kotti.now.sh](https://kotti.now.sh)
+[Read the document online on Github Pages](https://3yourmind.github.io/kotti/)
 
 ## Build Setup
 
@@ -27,9 +27,14 @@ $ npm run dev
 $ npm run build
 $ npm start
 
-# generate static project
-$ npm run generate
+```
 
+## Deploy to Github pages
+
+``` bash
 # generate github pages
 $ npm run gh-pages
+
+# copy all the file from dist and push to gh-pages branch
+$ npm run deploy
 ```
