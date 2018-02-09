@@ -1,15 +1,19 @@
 <template>
   <div class="color-palette">
-    <div class="color-palette__title" v-text="colorName"/>
-    <div class="color-palette__block c-hand"
+    <div class="color-palette__title" v-text="colorName" />
+    <div
       v-for="color in colors"
-      @click="copyColor(color.code)"
+      :key="color.name"
+      class="color-palette__block c-hand"
       :style="{background: color.code, color: textColor(color.name)}"
-      :key="color.name">
-      <div class="color-palette__name" v-text="color.name"/>
-      <div class="color-palette__code" v-text="color.code"/>
+      @click="copyColor(color.code)"
+    >
+      <div class="color-palette__name" v-text="color.name" />
+      <div class="color-palette__code" v-text="color.code" />
     </div>
-     <div class="success-message" v-if="copySuccess">Copy Successed</div>
+    <div v-if="copySuccess" class="success-message">
+      Copy successful
+    </div>
   </div>
 </template>
 
@@ -25,15 +29,17 @@ export default {
     copyColor (string) {
       let vm = this
       let codeString = `${string}`
-      this.$copyText(codeString).then(function (e) {
-        console.log('success')
-        vm.copySuccess = true
-        setTimeout(() => {
-          vm.copySuccess = false
-        }, 2000)
-      }, function (e) {
-        alert('failed')
-      })
+      this.$copyText(codeString).then(
+        function (e) {
+          vm.copySuccess = true
+          setTimeout(() => {
+            vm.copySuccess = false
+          }, 2000)
+        },
+        function () {
+          alert('failed')
+        }
+      )
     },
     textColor (colorName) {
       if (colorName === 'LightGrey-300' || colorName === 'LightGrey-400') {
@@ -43,7 +49,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .color-palette {
@@ -58,16 +63,15 @@ export default {
   box-sizing: border-box;
   height: 2.4rem;
   font-size: 0.875em;
-  padding: 0 .8rem;
+  padding: 0 0.8rem;
   color: #fff;
-  margin: .1rem 0;
+  margin: 0.1rem 0;
   display: block;
   &:hover {
     .color-palette__code {
       display: inline;
     }
   }
-
 }
 .color-palette__name {
   line-height: 2.4rem;
