@@ -23,3 +23,8 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'Toaster'
+}
+</script>

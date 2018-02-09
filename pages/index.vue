@@ -46,6 +46,7 @@
 import Sidebar from '~/components/Sidebar.vue'
 
 export default {
+  name: 'Index',
   components: {
     Sidebar
   }

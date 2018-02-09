@@ -52,3 +52,9 @@
     </ol><img src="~/assets/img/layout_metric.png">
   </div>
 </template>
+
+<script>
+export default {
+  name: 'LayoutMetric'
+}
+</script>

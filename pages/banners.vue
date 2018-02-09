@@ -26,3 +26,9 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'Banners'
+}
+</script>
+

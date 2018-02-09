@@ -92,11 +92,18 @@
 </div>
 </template>
 
+<script>
+export default {
+  name: 'ColorUsage'
+}
+</script>
+
+
 <style lang="scss" scoped>
 .example-wrapper {
   padding: 2rem 0;
   background: #f8f8f8;
-  margin-bottom: 1rem; 
+  margin-bottom: 1rem;
 }
 .example-content {
   width: 90%;

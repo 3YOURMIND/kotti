@@ -14,10 +14,11 @@
     </div>
   </div>
 </template>
+
 <script>
 import MenuList from '~/components/Menu.vue'
 export default {
-  name: 'mobiel-menu',
+  name: 'MobileNav',
   data () {
     return {
       isOpen: false
@@ -42,7 +43,7 @@ export default {
   img {
     float: left;
     width: 8rem;
-    margin-left: -2rem; 
+    margin-left: -2rem;
   }
   z-index: 999;
 }

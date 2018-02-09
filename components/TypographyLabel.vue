@@ -89,3 +89,9 @@
 </table>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'TypographyLabel'
+}
+</script>

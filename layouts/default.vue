@@ -8,19 +8,18 @@
   </div>
 </template>
 
-
 <script>
 import Sidebar from '~/components/Sidebar.vue'
 import MobileNav from '~/components/MobileNav.vue'
 require('@3yourmind/yoco/docs/dist/yoco-icon.css')
 
 export default {
+  name: 'DefaultLayout',
   components: {
     Sidebar, MobileNav
   }
 }
 </script>
-
 
 <style>
 .mobile-menu {

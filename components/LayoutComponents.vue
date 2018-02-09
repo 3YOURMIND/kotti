@@ -24,3 +24,9 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'LayoutComponents'
+}
+</script>

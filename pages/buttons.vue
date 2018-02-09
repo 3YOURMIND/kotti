@@ -30,7 +30,7 @@
             </li>
         </ol>
 
-        
+
     <h2 id="variations">Variations</h2>
     <div class="columns">
       <div class="column col-6 col-md-12">
@@ -54,7 +54,11 @@
   </div>
 </template>
 
-
+<script>
+export default {
+  name: 'Buttons'
+}
+</script>
 
 
 <style lang="scss" scoped>

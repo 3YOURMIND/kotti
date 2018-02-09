@@ -8,10 +8,9 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  name: 'yoco-preview',
+  name: 'YocoPreview',
   props: {
     icon: String,
     copySuccess: false

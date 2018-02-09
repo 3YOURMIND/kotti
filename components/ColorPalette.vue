@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'color-palette',
+  name: 'ColorPalette',
   props: {
     colorName: String,
     colors: Array,

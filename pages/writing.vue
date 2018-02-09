@@ -12,3 +12,8 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'Writing'
+}
+</script>

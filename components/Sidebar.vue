@@ -6,11 +6,12 @@
     <menu-list class="sidemenu"/>
   </div>
 </template>
+
 <script>
 import MenuList from '~/components/Menu.vue'
 
 export default {
-  name: 'sidebar',
+  name: 'Sidebar',
   components: {
     MenuList
   }

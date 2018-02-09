@@ -2,15 +2,15 @@
   <div class="color">
     <h1>Colors</h1>
     <h2>Primay Color</h2>
-    <div><p>Kotti uses <code>Pirmary Blue</code> as main design color which also match to 3YOURMIND brand color. 
+    <div><p>Kotti uses <code>Pirmary Blue</code> as main design color which also match to 3YOURMIND brand color.
     We don't strongly against multiple colors used in one page, but should be limited to less than 20%.</p></div>
     <h2>Color Palettes</h2>
     <h3>Name convention</h3>
     <div>
-      <p>The colors in same palettes has same hue but diffrent saturation and lightness. Color start with primary color, 
-        then fills in the spectrum to create a complete and usable palette. Each color name as 
+      <p>The colors in same palettes has same hue but diffrent saturation and lightness. Color start with primary color,
+        then fills in the spectrum to create a complete and usable palette. Each color name as
         <code>ColorName-number</code>. <code>ColorName</code> represents the hue, and <code>number</code> represents the lightness.
-        Smaller number means lighter, and greater number means darker. 
+        Smaller number means lighter, and greater number means darker.
       </p>
     </div>
     <h3>
@@ -38,6 +38,7 @@ import ColorUsage from '~/components/ColorUsage.vue'
 import ColorPalette from '~/components/ColorPalette.vue'
 
 export default {
+  name: 'Color',
   components: {
     ColorPalette, ColorUsage
   },

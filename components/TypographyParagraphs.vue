@@ -38,3 +38,9 @@
   </table>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'TypographyParagraphs'
+}
+</script>

@@ -26,7 +26,7 @@ import YocoPreview from '~/components/YocoPreview.vue'
 import YocoLiga from '~/assets/json/yocoString.json'
 
 export default {
-  name: 'icons',
+  name: 'Icons',
   components: {
     YocoPreview, IconFont
   },
