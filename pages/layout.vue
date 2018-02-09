@@ -11,7 +11,7 @@ import LayoutComponents from '~/components/LayoutComponents.vue'
 import LayoutMetric from '~/components/LayoutMetric.vue'
 
 export default {
-  name: 'layout',
+  name: 'Layout',
   components: {
     LayoutComponents, LayoutMetric
   }
