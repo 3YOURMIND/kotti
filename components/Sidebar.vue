@@ -1,9 +1,14 @@
 <template>
   <div class="sidebar">
     <div class="logo-nav">
-      <nuxt-link to="/"><img src="~/assets/img/nav_logo.svg"></nuxt-link>
+      <nuxt-link to="/">
+        <img
+          src="~/assets/img/nav_logo.svg"
+          alt="vector graphic as logo for the navigation bar"
+        />
+      </nuxt-link>
     </div>
-    <menu-list class="sidemenu"/>
+    <MenuList class="sidemenu" />
   </div>
 </template>
 
@@ -24,14 +29,15 @@ export default {
   text-align: left;
   height: 2.4rem;
 }
+
 .sidebar {
-  background: #2659AB;
+  background: #2659ab;
   height: 100vh;
   width: 12rem;
   padding: 1.2rem;
   overflow-y: auto;
   float: left;
-  color:#F8F8F8;
+  color: #f8f8f8;
   position: fixed;
 }
 </style>
