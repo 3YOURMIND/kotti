@@ -1,44 +1,58 @@
 <template>
   <div>
     <div class="mobile-logo">
-      <img src="~/assets/img/nav_logo.svg">
+      <img src="~/assets/img/nav_logo.svg" alt="mobile navigation bar icon" />
     </div>
-    <div class="mobile-menu-button c-hand" @click="isOpen=!isOpen">
-      Menu <i class="yoco" v-if="isOpen">chevron_up</i>
-      <i class="yoco" v-else>chevron_down</i>
+    <div class="mobile-menu-button c-hand" @click="toggleMenu">
+      <span>Menu </span>
+      <i v-if="isOpen" class="yoco">
+        chevron_up
+      </i>
+      <i v-else class="yoco">
+        chevron_down
+      </i>
     </div>
-    <div class="mobile-menu-expand-wrapper" v-if="isOpen" @click="isOpen=false">
-    <div class="mobile-menu-expand" v-if="isOpen" @click="isOpen=false">
-      <menu-list/>
-    </div>
+    <div v-if="isOpen" class="mobile-menu-expand-wrapper" @click="closeMenu">
+      <div class="mobile-menu-expand" @click="closeMenu">
+        <MenuList />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import MenuList from '~/components/Menu.vue'
+
 export default {
   name: 'MobileNav',
+  components: {
+    MenuList
+  },
   data () {
     return {
       isOpen: false
     }
   },
-  components: {
-    MenuList
+  methods: {
+    closeMenu () {
+      this.isOpen = false
+    },
+    toggleMenu () {
+      this.isOpen = !this.isOpen
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .mobile-logo {
-  padding: .8rem;
+  padding: 0.8rem;
   height: 2.8rem;
   text-align: left;
   top: 0;
   width: 100%;
-  background: #2659AB;
-  box-shadow: 0 0 1px rgba(0, 0, 0, .8);
+  background: #2659ab;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
   position: fixed;
   img {
     float: left;
@@ -47,28 +61,31 @@ export default {
   }
   z-index: 999;
 }
+
 .mobile-menu-button {
   width: auto;
-  padding: 0 .8rem;
+  padding: 0 0.8rem;
   height: 2rem;
   background: #f8f8f8;
-  border-radius: .1rem;
+  border-radius: 0.1rem;
   position: fixed;
-  top: .4rem;
-  right: .4rem;
+  top: 0.4rem;
+  right: 0.4rem;
   text-align: center;
   i {
     line-height: 2rem;
   }
   z-index: 999;
 }
+
 .mobile-menu-expand-wrapper {
-  background: rgba(0, 0, 0, .8);
+  background: rgba(0, 0, 0, 0.8);
   width: 100%;
   height: 100%;
   z-index: 993;
   position: fixed;
 }
+
 .mobile-menu-expand {
   position: fixed;
   margin-top: 2.7rem;
@@ -77,9 +94,7 @@ export default {
   font-size: 1.2em;
   width: 100%;
   padding: 1.2rem;
-  background: #2659AB;
+  background: #2659ab;
   z-index: 998;
 }
-
-
 </style>
