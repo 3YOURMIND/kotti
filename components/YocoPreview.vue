@@ -1,10 +1,14 @@
 <template>
   <div class="icon-container" @click="copyLiga(icon)">
     <div>
-      <i class="yoco" ref="liga">{{icon}}</i>
+      <i class="yoco" ref="liga" v-text="icon" />
     </div>
-    <div class="icon-liga">{{icon}}</div>
-    <div class="success-message" v-if="copySuccess">Copied icon "{{icon}}"</div>
+    <div class="icon-liga" v-text="icon" />
+    <div
+      v-if="copySuccess"
+      class="success-message"
+      v-text="copyIconSuccessMessage"
+    />
   </div>
 </template>
 
@@ -15,12 +19,16 @@ export default {
     icon: String,
     copySuccess: false
   },
+  computed: {
+    copyIconSuccessMessage () {
+      return `Copied icon "${this.icon}"`
+    }
+  },
   methods: {
     copyLiga (string) {
       let vm = this
       let codeString = `<i class="yoco">${string}</i>`
       this.$copyText(codeString).then(function (e) {
-        console.log('success')
         vm.copySuccess = true
         setTimeout(() => {
           vm.copySuccess = false
