@@ -1,28 +1,38 @@
 <template>
   <div>
     <h1>Banners</h1>
-    <p>Banners can be used as an alert at the top of the screen to display critical message or expandable information. It should
-      not include a dismiss icon, and should only disappear once the problem is resolved.</p>
+    <p>
+      Banners can be used as an alert at the top of the screen to display
+      critical message or expandable information. It should not include a
+      dismiss icon, and should only disappear once the problem is resolved.
+    </p>
     <h2 id="structure">Structure</h2>
-    <img src="~/assets/img/banner_alert.png">
+    <img src="~/assets/img/banner_alert.png" alt="banner alert" />
     <ol>
       <li>
-        <strong>Glyph icon:</strong> Indicate which type of this banner.</li>
-      <li>
-        <strong>Message:</strong> Give a short description of this issue or summary of important message.
+        <strong>Glyph icon:</strong> Indicate which type of this banner.
       </li>
       <li>
-        <strong>Action:</strong> A text call to action button to resovle this issue.
+        <strong>Message:</strong> Give a short description of this issue or
+        summary of important message.
+      </li>
+      <li>
+        <strong>Action:</strong> A text call to action button to resovle this
+        issue.
       </li>
     </ol>
     <h2>Banner Types</h2>
     <h3 id="messagebanner">Message Banner</h3>
-    <p>Only use this type of banner when this issue will cause significate error.</p>
-    <h3 id="expandbanner">Expand Banner</h3>
-    <p>It show the most import message inside the banner but hide other information. Use it when you want to create a clearly
-      none interrupt interface.
+    <p>
+      Only use this type of banner when this issue will cause significate error.
     </p>
-    <img src="~/assets/img/banner_expand.png">
+    <h3 id="expandbanner">Expand Banner</h3>
+    <p>
+      It show the most import message inside the banner but hide other
+      information. Use it when you want to create a clearly none interrupt
+      interface.
+    </p>
+    <img src="~/assets/img/banner_expand.png" alt="expanded banner" />
   </div>
 </template>
 
@@ -32,3 +42,5 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+</style>
