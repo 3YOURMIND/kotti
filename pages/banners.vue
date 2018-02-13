@@ -6,7 +6,7 @@
       critical message or expandable information. It should not include a
       dismiss icon, and should only disappear once the problem is resolved.
     </p>
-    <h2 id="structure">Structure</h2>
+    <h2>Structure</h2>
     <img src="~/assets/img/banner_alert.png" alt="banner alert" />
     <ol>
       <li>
@@ -22,11 +22,11 @@
       </li>
     </ol>
     <h2>Banner Types</h2>
-    <h3 id="messagebanner">Message Banner</h3>
+    <h3>Message Banner</h3>
     <p>
       Only use this type of banner when this issue will cause significate error.
     </p>
-    <h3 id="expandbanner">Expand Banner</h3>
+    <h3>Expand Banner</h3>
     <p>
       It show the most import message inside the banner but hide other
       information. Use it when you want to create a clearly none interrupt
