@@ -1,11 +1,11 @@
 <template>
   <div class="color">
     <h1>Colors</h1>
-    <h2>Primay Color</h2>
+    <h2>Primary Color</h2>
     <div><p>Kotti uses <code>Primary Blue</code> as the main design color which also match the 3YOURMIND brand color.
-    We don't strongly recommend against using multiple colors used in one page, but they  should be limited to less than 20%.</p></div>
+    We don't recommend against using multiple colors in one page, but they should be limited to less than 20%.</p></div>
     <h2>Color Palettes</h2>
-    <h3>Name convention</h3>
+    <h3>Naming convention</h3>
     <div>
       <p>The colors in each palette have the same hue but diffrent saturation and lightness. Palettes start with a primary color,
         then continue in the spectrum to create a complete and usable set of colors. An example color name is

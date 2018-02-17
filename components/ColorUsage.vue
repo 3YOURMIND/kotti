@@ -55,7 +55,7 @@
           Default text <code>LightGrey-300</code>
         </div>
         <div style="color:#DBDBDB">
-          Seconday text <code>Lightgrey-400</code>
+          Secondary text <code>Lightgrey-400</code>
         </div>
         <div style="color:#A8A8A8">
           Disabled / hint text <code>Lightgrey-500</code>
