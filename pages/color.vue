@@ -2,15 +2,15 @@
   <div class="color">
     <h1>Colors</h1>
     <h2>Primay Color</h2>
-    <div><p>Kotti uses <code>Pirmary Blue</code> as main design color which also match to 3YOURMIND brand color.
-    We don't strongly against multiple colors used in one page, but should be limited to less than 20%.</p></div>
+    <div><p>Kotti uses <code>Primary Blue</code> as the main design color which also match the 3YOURMIND brand color.
+    We don't strongly recommend against using multiple colors used in one page, but they  should be limited to less than 20%.</p></div>
     <h2>Color Palettes</h2>
     <h3>Name convention</h3>
     <div>
-      <p>The colors in same palettes has same hue but diffrent saturation and lightness. Color start with primary color,
-        then fills in the spectrum to create a complete and usable palette. Each color name as
+      <p>The colors in each palette have the same hue but diffrent saturation and lightness. Palettes start with a primary color,
+        then continue in the spectrum to create a complete and usable set of colors. An example color name is
         <code>ColorName-number</code>. <code>ColorName</code> represents the hue, and <code>number</code> represents the lightness.
-        Smaller number means lighter, and greater number means darker.
+        A smaller number means lighter, and a greater number means darker.
       </p>
     </div>
     <h3>
@@ -19,7 +19,7 @@
       <i class="yoco">circle_question</i>
     </span></h3>
     <div class="columns">
-      <color-palette class="column col-md-12 col-4" colorName="Pirmary Blue" :colors="primaryColor"/>
+      <color-palette class="column col-md-12 col-4" colorName="Prirmary Blue" :colors="primaryColor"/>
       <color-palette class="column col-md-12 col-4" colorName="Green" :colors="greenColor"/>
       <color-palette class="column col-md-12 col-4" colorName="Red" :colors="redColor"/>
       <color-palette class="column col-md-12 col-4" colorName="Purple" :colors="purpleColor"/>
@@ -45,10 +45,10 @@ export default {
   data () {
     return {
       primaryColor: [
-        {name: 'Primay-300', code: '#AFC5E8'},
-        {name: 'Primay-400', code: '#3173DE'},
-        {name: 'Primay-500', code: '#2C66C4'},
-        {name: 'Primay-600', code: '#2659AB'}
+        {name: 'Primary-300', code: '#AFC5E8'},
+        {name: 'Primary-400', code: '#3173DE'},
+        {name: 'Primary-500', code: '#2C66C4'},
+        {name: 'Primary-600', code: '#2659AB'}
       ],
       greenColor: [
         {name: 'Green-300', code: '#C4E0A5'},

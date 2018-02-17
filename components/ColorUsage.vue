@@ -4,16 +4,16 @@
     <h3>Meaning</h3>
     <ul>
       <li>
-        <b>Primay Blue:</b> primay color, brand color, deliver brand value.
+        <b>Primary Blue:</b> A primary color/brand color, which delivers brand value.
       </li>
       <li>
-        <b>Green:</b> success and process, postivie feedback.
+        <b>Green:</b> Success or progress, which gives positive feedback.
       </li>
       <li>
-        <b>Red:</b> need attention, danger.
+        <b>Red:</b> signals attention or danger.
       </li>
       <li>
-        <b>Darkgrey:</b> neutral color
+        <b>Darkgrey:</b> neutral color.
       </li>
       <li>
         <b>Lightgrey:</b> neutral color.
@@ -26,7 +26,7 @@
           Default text <code>Darkgrey-500</code>
         </div>
         <div style="color:#575757">
-          Seconday text <code>Darkgrey-400</code>
+          Secondary text <code>Darkgrey-400</code>
         </div>
         <div style="color:#8A8A8A">
           Disabled / hint text <code>Darkgrey-300</code>
@@ -38,7 +38,7 @@
     </p>
     <ul>
       <li>
-        <b>Default text</b> should be <code>Darkgrey-500</code>
+        <b>Default text</b> should be <code>Darkgrey-500</code>.
       </li>
       <li>
         <b>Secondary text, which is lower in the visual hierarchy,</b> uses
@@ -65,7 +65,7 @@
     <p>Similar to light text, there are three different types:</p>
     <ul>
       <li>
-        <b>Default text</b> should be <code>Lightgrey-300</code>
+        <b>Default text</b> should be <code>Lightgrey-300</code>.
       </li>
       <li>
         <b>Secondary text</b> uses <code>Lightgrey-400</code>.
@@ -81,7 +81,7 @@
           Default text <code>White, Opacity: 100%</code>
         </div>
         <div style="color:#FFFFFF; opacity: .68">
-          Seconday text <code>White, Opacity: 68%</code>
+          Secondary text <code>White, Opacity: 68%</code>
         </div>
         <div style="color:#FFFFFF; opacity: .46">
           Disabled / hint text <code>White, Opacity: 46%</code>
@@ -91,7 +91,7 @@
     <p>Same as light text, there are three different types:</p>
     <ul>
       <li>
-        <b>Default text</b> should be <code>white color with opacity 100%</code>
+        <b>Default text</b> should be <code>white color with opacity 100%</code>.
       </li>
       <li>
         <b>Secondary text</b> uses <code>white color with opacity 68%</code>.

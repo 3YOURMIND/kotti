@@ -1,44 +1,44 @@
 <template>
   <div>
     <h1 id="buttons">Buttons</h1>
-    <p>Use buttons to lead a call to action or guide user to next steps.</p>
+    <p>Use buttons to lead a call to action or guide a user to their next steps.</p>
     <h2 id="labels">Labels</h2>
     <p>
       The label text explains the purpose of the button, which should be
-      clearly, self-explained and short.
+      clear, self-explanatory and short.
     </p>
     <img src="~/assets/img/button_label.png" />
     <p>
-      &quot;Yes/No&quot; buttons are not self-explained, user need to read the
+      &quot;Yes/No&quot; buttons are not self-explanatory, the user needs to read the
       context to understand the action. Using &quot;Cancel/Replace&quot; buttons
-      let user response quickly without thinking.
+      let the user respond quickly without thinking.
     </p>
     <h2 id="types">Types</h2>
     <img src="~/assets/img/button_types.png" />
     <ol>
       <li>
-        <strong>Primary button:</strong>Using primary to lead main call to
-        action, such as change the status of an order, submit a form. We suggest
-        only use one primary button on each page (not include the primary button
-        on different layer). If there is another strong action needs, compare
-        the priority and choose the most priority one.
+        <strong>Primary button:</strong>Use the primary button to lead a main call to
+        action, such as changing the status of an order, or submitting a form. We suggest
+        only using one primary button on each page (not including the primary button
+        on a different layer). If there is another strong action needed, compare
+        their priority and choose the most important one.
       </li>
       <li>
-        <strong>Secondary button:</strong> Using secondary button only when
+        <strong>Secondary button:</strong> Use a secondary button only when
         there is a main call to action in the page.
       </li>
       <li>
-        <strong>Danger button:</strong> Danger button should be used only when
-        an action cause not re-doable status. For example, cancel an order or
-        delete a material. Same to primary button, it should also limited to
+        <strong>Danger button:</strong> The danger button should be used only for
+        actions which can't be undone. For example, canceling an order or
+        deleting a material. Like the primary button, it should also limited to
         once per page.
       </li>
       <li>
-        <strong>Default button:</strong> This button can be used in most case.
+        <strong>Default button:</strong> This button can be used in most cases.
       </li>
       <li>
-        <strong>Text button:</strong> Text button can be used for sub-menu, page
-        navigation. It also can pair with primary button to destructive action
+        <strong>Text button:</strong> A text button can be used for sub-menus and page
+        navigation. It also can pair with a primary button for destructive actions
         such as &quot;Cancel&quot;.
       </li>
     </ol>
@@ -48,16 +48,16 @@
       <div class="column col-6 col-md-12">
         <ol>
           <li>
-            <strong>Label only:</strong> Used in most case.
+            <strong>Label only:</strong> Used in most cases.
           </li>
           <li>
-            <strong>Icon and label:</strong> Use when need draw more attention
-            from users.
+            <strong>Icon and label:</strong> Use when you need to catch the user's
+            attention.
           </li>
           <li>
-            <strong>Icon only:</strong> Use when limited space such as page
-            needs to fit in mobile device, and single icon is enough to convey
-            the meaning.
+            <strong>Icon only:</strong> Use when you have limited space, such as
+            when the page needs to fit on a mobile device, and a single icon is
+            enough to convey the meaning.
           </li>
         </ol>
       </div>

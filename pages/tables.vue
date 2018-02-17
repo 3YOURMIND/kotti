@@ -5,21 +5,21 @@
     <img src="~/assets/img/tables_overview.png" />
     <ol>
       <li>
-        <strong>Table Heading:</strong> The table heading uses the same style as
-        <code>label text</code>. The label of heading should be expressive the content of each column.</li>
+        <strong>Table Heading:</strong> The table heading uses the same style as the
+        <code>label text</code>. The heading should express the content of each column.</li>
       <li>
         <strong>Table row:</strong> The row content uses
         <code>default text</code> style.</li>
       <li>
-        <strong>Table Hover Action Button:</strong> Some of the table row can have further action when its hovered.</li>
+        <strong>Table Hover Action Button:</strong> The table rows can imply further functionality when they are hovered over.</li>
     </ol>
     <h2 id="width">Width</h2>
-    <p>In most case the width of the table its parent&#39;s width.</p>
+    <p>In most cases the table is the same width as its parent.</p>
     <h2 id="content-alignment">Content alignment</h2>
     <p>Content should be left aligned except some common alignment style, such as price, currency. </p>
     <h2 id="responsive">Responsive</h2>
-    <p>When display space is limited, some columns should be hide depends on the importance of the content. </p>
-    <p>When content should not be hide, using horizontal scroll is better alternative.</p>
+    <p>When display space is limited, some columns should be hidden depending on the importance of the content. </p>
+    <p>When content should not be hidden, using horizontal scrolling is a better alternative.</p>
 
   </div>
 </template>
