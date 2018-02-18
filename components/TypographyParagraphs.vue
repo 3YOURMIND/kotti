@@ -29,7 +29,7 @@
         <td>
           <dl>
             <dt>2. Pargraph Margin</dt>
-            <dd>Maring bettween two paragraphs</dd>
+            <dd>Margin between two paragraphs</dd>
           </dl>
         </td>
         <td>--</td>

@@ -3,8 +3,8 @@
     <h2>Metric</h2>
     <div>
       <p>
-        Our metric based on <code>4px</code> and we call it is one unit. The
-        unit can be used as variable in
+        Our metric is based on <code>4px</code>; we call this one unit. The
+        unit can be used as a variable in
         <code>SCSS</code>. Table below shows the unit to pixel mapping.
       </p>
     </div>
@@ -45,11 +45,11 @@
     <p>Following 3 types of margin or padding metric are suggested:</p>
     <ol>
       <li>
-        <b>Border Margin:</b> tha gap between element and window, the width is
+        <b>Border Margin:</b> the gap between element and window, the width is
         <code>24px</code>.
       </li>
       <li>
-        <b>Block Margin:</b> tha gap between two elements, the width is
+        <b>Block Margin:</b> the gap between two elements, the width is
         <code>24px</code>.
       </li>
       <li>

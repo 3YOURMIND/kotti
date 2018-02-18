@@ -30,7 +30,7 @@
         <td>
           <dl>
             <dt>2. Default Text</dt>
-            <dd>Text style in most case.</dd>
+            <dd>Text style for most cases.</dd>
           </dl>
         </td>
         <td>
@@ -47,7 +47,7 @@
         <td>
           <dl>
             <dt>3. Key Text</dt>
-            <dd>Convey information which is rather important to users.</dd>
+            <dd>Conveys information which is important for users.</dd>
           </dl>
         </td>
         <td>
@@ -65,7 +65,7 @@
         <td>
           <dl>
             <dt>4. Addition information</dt>
-            <dd>Besides default text, add visual hierarchy.</dd>
+            <dd>Besides default text, adds visual hierarchy.</dd>
           </dl>
         </td>
         <td>

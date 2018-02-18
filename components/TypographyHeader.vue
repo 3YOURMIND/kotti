@@ -12,7 +12,7 @@
         <td>
           <dl>
             <dt>1. H1 Page header</dt>
-            <dd>Without actionbar, page header can be used in workspace.</dd>
+            <dd>Without actionbar, the page header can be used in the workspace.</dd>
           </dl>
         </td>
         <td>
@@ -31,7 +31,7 @@
         <td>
           <dl>
             <dt>2. H2 Subpage Header</dt>
-            <dd>Used for second lever header, main title in action bar.</dd>
+            <dd>Used for second level header, or main title in action bar.</dd>
           </dl>
         </td>
         <td>
@@ -51,7 +51,7 @@
           <dl>
             <dt>3. H3 Section header</dt>
             <dd>
-              Used for divider of each section, can add text button for actions.
+              Used to divide each section, can be used as a text button for actions.
             </dd>
           </dl>
         </td>
