@@ -1,0 +1,42 @@
+.yoda-nav {
+  .router-link-active li {
+    border-radius: .1rem;
+    font-weight: 600;
+    background: rgba(0, 0, 0, .2);
+  }
+}
+.yoda-nav-back {
+  line-height: 1.6rem;
+  font-size: 1em;
+  font-weight: 600;
+  margin-left: -.8rem;
+  margin-top: 0;
+  margin-bottom: .8rem;
+  color: $primary-500;
+}
+
+.yoda-sub-nav {
+  ul {
+    margin: 0;
+    position: relative;
+  }
+  li {
+    font-size: 0.94em;
+    list-style: none;
+    padding: $unit-2 0;
+  }
+  .router-link-active li {
+    font-weight: 600;
+  }
+  i {
+    color: $primary-500;
+    float: right;
+  }
+}
+.yoda-sub-nav li {
+  color: $darkgrey-500;
+}
+
+.yoda-sub-nav a {
+  text-decoration: none;
+}

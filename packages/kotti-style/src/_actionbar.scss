@@ -1,0 +1,23 @@
+
+.actionbar {
+  flex: 0 0 $actionbar-width;
+  width: $actionbar-width;
+  padding: $unit-6;
+  background: #FCFCFC;
+  height: 100vh;
+  // z-index: 2;
+  border-right: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.actionbar .bottom {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: $unit-6;
+}
+.actionbar-push {
+  margin-left: $navbar-width;
+}

@@ -1,0 +1,12 @@
+.#{$namespace}-navbar {
+	flex: 0 0 $navbar-width;
+  align-items: center;
+  width: $navbar-width;
+  padding: $unit-6;
+  background-color: $primary-600;
+	color: $lightgrey-300;
+	position: relative;
+	display: block;
+	overflow-y: auto;
+	height: 100vh;
+}

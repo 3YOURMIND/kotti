@@ -1,0 +1,120 @@
+// Color
+$primary-300: #AFC5E8;
+$primary-500: #2c66c4;
+$primary-400: #3173DE;
+$primary-600: #2659AB;
+$primary-700: darken($primary-500, 20);
+
+$darkgrey-300: #8A8A8A;
+$darkgrey-400: #575757;
+$darkgrey-500: #3d3d3d;
+$darkgrey-600: #242424;
+
+$lightgrey-300: #F8F8F8;
+$lightgrey-500: #8f8f8f;
+$lightgrey-400: #DBDBDB;
+$lightgrey-600: #5C5C5C;
+
+$green-300: #C4E0A5;
+$green-400: #71C716;
+$green-500: #64AD13;
+$green-600: #549410;
+
+$red-300: #F0A8A8;
+$red-400: #F21D1D;
+$red-500: #D91919;
+$red-600: #BF1717;
+
+$purple-300: #B995CA;
+$purple-400: #932DC2;
+$purple-500: #6C218F;
+$purple-600: #591B75;
+
+$warning-500: #ff7800;
+
+$body-font-color: $darkgrey-500;
+$body-bg: $lightgrey-300;
+
+$link-color: $primary-500;
+$link-color-dark: $primary-600;
+$border-color: $lightgrey-300;
+
+// Fonts
+// Credit: https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
+
+$base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
+$body-font-family: $base-font-family;
+$mono-font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace !default;
+$fallback-font-family: "Helvetica Neue", sans-serif !default;
+$cjk-zh-font-family: $base-font-family, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", $fallback-font-family !default;
+$cjk-jp-font-family: $base-font-family, "Hiragino Sans", "Hiragino Kaku Gothic Pro", "Yu Gothic", YuGothic, Meiryo, $fallback-font-family !default;
+$cjk-ko-font-family: $base-font-family, "Malgun Gothic", $fallback-font-family !default;
+$body-font-family: $base-font-family, $fallback-font-family !default;
+
+// Unit sizes
+$unit-o: .05rem !default;
+$unit-h: .1rem !default;
+$unit-1: .2rem !default;
+$unit-2: .4rem !default;
+$unit-3: .6rem !default;
+$unit-4: .8rem !default;
+$unit-5: 1rem !default;
+$unit-6: 1.2rem !default;
+$unit-7: 1.4rem !default;
+$unit-8: 1.6rem !default;
+$unit-9: 1.8rem !default;
+$unit-10: 2rem !default;
+$unit-12: 2.4rem !default;
+$unit-16: 3.2rem !default;
+
+// Font sizes
+$html-font-size: 20px !default;
+$html-line-height: 1.5 !default;
+$font-size: .7rem !default;
+$font-size-sm: .6rem !default;
+$font-size-lg: .8rem !default;
+$line-height: 1rem !default;
+
+// Sizes
+$layout-spacing: $unit-2 !default;
+$layout-spacing-sm: $unit-1 !default;
+$layout-spacing-lg: $unit-4 !default;
+$border-radius: $unit-h !default;
+$border-width: $unit-o !default;
+$border-width-lg: $unit-h !default;
+$control-size: $unit-9 !default;
+$control-size-sm: $unit-7 !default;
+$control-size-lg: $unit-10 !default;
+$control-padding-x: $unit-2 !default;
+$control-padding-x-sm: $unit-2 * .75 !default;
+$control-padding-x-lg: $unit-2 * 1.5 !default;
+$control-padding-y: ($control-size - $line-height) / 2 - $border-width !default;
+$control-padding-y-sm: ($control-size-sm - $line-height) / 2 - $border-width !default;
+$control-padding-y-lg: ($control-size-lg - $line-height) / 2 - $border-width !default;
+$control-icon-size: .8rem !default;
+
+$control-width-xs: 180px !default;
+$control-width-sm: 320px !default;
+$control-width-md: 640px !default;
+$control-width-lg: 960px !default;
+$control-width-xl: 1280px !default;
+
+$navbar-width: 12rem;
+$actionbar-width: 16rem;
+
+// Responsive breakpoints
+$size-xs: 480px !default;
+$size-sm: 600px !default;
+$size-md: 840px !default;
+$size-lg: 960px !default;
+$size-xl: 1280px !default;
+$size-2x: 1440px !default;
+
+$responsive-breakpoint: $size-xs !default;
+
+// Z-index
+$zindex-0: 1 !default;
+$zindex-1: 100 !default;
+$zindex-2: 200 !default;
+$zindex-3: 300 !default;
+$zindex-4: 400 !default;

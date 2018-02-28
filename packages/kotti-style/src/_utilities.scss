@@ -1,0 +1,46 @@
+// Width utilities
+
+$line-height: 24px;
+
+.w-100 {
+  width: 100%!important;
+}
+.columns-vertical {
+  .column{
+    padding: 0 $unit-1;
+    box-sizing: border-box;
+  }
+}
+.clickable:hover {
+  cursor: pointer;
+}
+
+.element-margin {
+  margin-top: $unit-4;
+}
+.block-margin {
+  margin-top: $unit-6;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  .show-all {
+    overflow: auto;
+  }
+}
+
+.email-preview {
+  background: #fcfcfc;
+  padding: 0 $unit-4;
+  border: 1px solid #DBDBDB;
+  border-radius: .1rem;
+  margin-bottom: $unit-4;
+  p {
+    line-height: 1.2em;
+  }
+  h2 {
+    margin: $unit-4 0;
+  }
+}

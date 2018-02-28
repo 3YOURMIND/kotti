@@ -1,0 +1,188 @@
+/* @OVERRIDE Default Form Styles */
+.form-group {
+  margin-bottom: $unit-2;
+}
+
+
+.form-checkbox-input {
+  padding-left: $unit-6;
+  width: 100%;
+  display: block;
+  margin-top: $unit-1;
+  box-sizing: border-box;
+  input {
+    width: 100%;
+  }
+}
+
+.form-checkbox {
+  font-size: 0.875em;
+  input:checked + .form-icon {
+    background: $primary-500;
+  }
+}
+
+.form-select:not([multiple]) {
+  height: $unit-8;
+  font-size: 1em;
+}
+
+.form-group.yoda-search {
+  position: relative;
+  input {
+    padding: 0 $unit-8;
+  }
+  label {
+    position: absolute;
+    top: .3em;
+    left: .4em;
+    z-index: 2;
+  }
+}
+
+.form-group.yoda-filter {
+  font-size: 0.875em;
+  position: relative;
+  label {
+    position: absolute;
+    top: .3em;
+    left: .4em;
+  }
+  select {
+    padding: 0 2rem;
+  }
+}
+
+.form-switch.right {
+  display: block;
+  font-size: 0.875em;
+  padding: .1rem 0;
+  input:checked + .form-icon {
+    background: $primary-500;
+    border-color: $primary-500;
+  }
+  .form-icon {
+    right:0!important;
+    left: inherit;
+  }
+}
+
+.form-input {
+  font-size: 0.875em;
+  width: 100%;
+  height: $unit-8;
+  border-radius: .1rem;
+  padding: 0 $unit-2;
+  position: relative;
+}
+
+.form-label {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  color: $lightgrey-500;
+  width: 100%;
+  display: block;
+  padding: 0;
+  line-height: $unit-6;
+  font-weight: 600;
+  i {
+    font-size: $unit-4;
+    line-height: $unit-4;
+  }
+  &.tooltip::after {
+    text-transform: initial;
+    width: inherit;
+    font-size: inherit;
+    line-height: 1.2em;
+    white-space: normal;
+  }
+}
+
+.form-group {
+  textarea {
+    padding: $unit-2!important;
+    box-sizing: border-box;
+  }
+}
+
+.input-group .input-group-addon {
+  line-height: 1.5rem;
+  padding: 0 .375rem;
+  font-size: 0.875em;
+  color: $darkgrey-400;
+}
+
+.yoda-select {
+  * {
+    border-radius: .1rem;
+  }
+  .multiselect__select {
+    height: $unit-8;
+    width: 2em;
+    // padding: .5em;
+  }
+  .multiselect__tags {
+    min-height: 1.5rem;
+    border-color: #c4c9d3;
+    padding: 0 $unit-8 0 $unit-2;
+    span {
+      background: $primary-500;
+      margin: $unit-1 $unit-1 $unit-o 0;
+    }
+  }
+  .multiselect__tag-icon {
+    &::after {color: #ffffff;}
+    &:hover {
+      background: darken($primary-500 , 10%)
+    }
+  }
+  .multiselect__input, .multiselect__single {
+    padding: 0;
+    font-size: 1em;
+    margin: 0;
+    line-height: 1.5rem;
+    color: #50596c;
+  }
+  .multiselect__option {
+    font-size: 0.95em;
+    white-space: space;
+  }
+  .multiselect__option--highlight {
+    background: $primary-500;
+  }
+  .multiselect__option--highlight:after {
+    background: transparent;
+  }
+  .multiselect__content-wrapper {
+    border-color: #c4c9d3;
+  }
+  .multiselect--disabled{
+    background: transparent;
+    .multiselect__select, .multiselect__option--disabled {
+      background: transparent;
+    }
+  }
+}
+
+
+.el-input__inner {
+  border-radius: .1rem;
+  height: $unit-8;
+  border: 1px solid #c4c9d3;
+  &:focus {
+    border-color: $primary-500;
+  }
+}
+
+.el-date-table td.current:not(.disabled), .el-date-table td.end-date, .el-date-table td.start-date {
+  background: $primary-500!important;
+}
+.el-date-table td.today {
+  color: $primary-500;
+  &.start-date, &.end-date {
+    color: #ffffff;
+  }
+}
+.el-input__icon {
+  color: $primary-500;
+}

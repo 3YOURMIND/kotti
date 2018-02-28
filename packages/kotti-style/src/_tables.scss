@@ -1,0 +1,83 @@
+table {
+  table-layout: auto;
+  border-collapse: collapse;
+  margin: 1em 0;
+  width: 100%;
+  position: relative;
+  hyphens: auto;
+  th {
+    border-bottom: $border-width solid $border-color;
+    padding: $unit-3 $unit-2;
+    color: $lightgrey-500;
+    border-bottom: 1px solid #DBDBDB;
+    line-height: 1em;
+    text-align: inherit;
+    font-size: $font-size-sm;
+    padding: $unit-2 $unit-1;
+    text-transform: uppercase;
+    &:first-child {
+      padding-left: $unit-6;
+    }
+  }
+  tr: {
+    margin: 0;
+  }
+  tr:hover {
+    .yoda-table-actions {
+      display: block;
+      background: #fff;
+    }
+    td {
+      background: #F8F8F8;
+    }
+  }
+  td {
+    line-height: 2em;
+    padding: .5em;
+    border-bottom: 1px solid #DBDBDB;
+    &:first-child {
+      padding-left: $unit-6;
+    }
+  }
+
+  .yoco {
+    font-size: .9rem;
+    color: $darkgrey-400;
+    margin: 0 .2rem;
+    &.disabled {
+      color: $lightgrey-500;
+    }
+  }
+
+  &.yoda-no-header {
+    margin-top: -.5em;
+  }
+
+  .yoda-table-actions {
+    display: none;
+    font-size: 1em;
+    padding: .25em;
+    border-radius: .1rem;
+    z-index: 2;
+    line-height: 1em;
+    width: auto;
+    position: absolute;
+    border:0;
+    margin-top: .5em;
+    right: 1em;
+    float: right;
+    box-shadow: 0 0 1px #999;
+    .yoco {
+      margin: 0 $unit-1;
+      color: $lightgrey-500;
+    }
+    .yoco:hover {
+      cursor: pointer;
+      color: $darkgrey-500;
+    }
+  }
+  .columns {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,16 @@
+.work-space-push {
+  margin-left: $actionbar-width;
+}
+.workspace {
+  flex: 1 1 auto;
+  background: #ffffff;
+  margin-right: $unit-6; 
+  padding: $unit-6;
+  overflow-y: auto;
+  height: 100vh;
+  box-shadow: 1px 0 2px #ddd;
+  @media (max-width: $size-md) {
+    margin-right: 0;
+  }
+}
+
