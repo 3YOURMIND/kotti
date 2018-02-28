@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <sidebar class="sidebar" />
+  <div class="wrapper">
+    <sidebar class="kt-navbar" />
     <mobile-nav class="mobile-menu" />
-    <div class="container">
+    <div class="workspace">
       <nuxt class="content" />
     </div>
   </div>
@@ -12,6 +12,7 @@
 import Sidebar from '~/components/Sidebar.vue'
 import MobileNav from '~/components/MobileNav.vue'
 require('@3yourmind/yoco/docs/dist/yoco-icon.css')
+require('../packages/kotti-style/lib/index.css')
 
 export default {
   name: 'DefaultLayout',
@@ -25,7 +26,7 @@ export default {
 .mobile-menu {
   display: none;
 }
-.container {
+.condtainer {
   padding: 2.2rem;
   height: 100%;
   min-height: 100vh;

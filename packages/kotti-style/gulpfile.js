@@ -1,11 +1,11 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var cleancss = require('gulp-clean-css');
-var csscomb = require('gulp-csscomb');
-var rename = require('gulp-rename');
-var autoprefixer = require('gulp-autoprefixer');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const cleancss = require('gulp-clean-css');
+const csscomb = require('gulp-csscomb');
+const rename = require('gulp-rename');
+const autoprefixer = require('gulp-autoprefixer');
 
-var paths = {
+const paths = {
   source: './src/*.scss',
 };
 

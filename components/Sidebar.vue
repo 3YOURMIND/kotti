@@ -30,14 +30,14 @@ export default {
   height: 2.4rem;
 }
 
-.sidebar {
-  background: #2659ab;
-  height: 100vh;
-  width: 12rem;
-  padding: 1.2rem;
-  overflow-y: auto;
-  float: left;
-  color: #f8f8f8;
-  position: fixed;
-}
+// .sidebar {
+//   background: #2659ab;
+//   height: 100vh;
+//   width: 12rem;
+//   padding: 1.2rem;
+//   overflow-y: auto;
+//   float: left;
+//   color: #f8f8f8;
+//   position: fixed;
+// }
 </style>

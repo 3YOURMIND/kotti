@@ -10,13 +10,15 @@ button {
   color: $primary-600;
   background: $lightgrey-300;
   line-height: 2em;
-  font-size: 0.875em;
+  font-weight: 600;
   &.tooltip::after {
-    font-size: 0.875em;
+    font-size: $font-size-sm;
     text-transform: none;
   }
-  .yoco {
+  i {
     font-size: 1rem;
+    font-size: $font-size-sm;
+    margin-right: .4rem;
   }
   &:hover {
     cursor: pointer;
@@ -26,7 +28,7 @@ button {
 
 button.primary {
   background: $primary-500;
-  color: #FFF;
+  color: #ffffff;
   &:hover {
     background: darken($primary-500, 10);
   }
@@ -41,7 +43,6 @@ button.secondary {
     color: $primary-600;
     border: 1px solid $primary-600;
     background: rgba(44, 102, 196, .1);
-
   }
 }
 

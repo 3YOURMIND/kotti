@@ -47,6 +47,23 @@
 <li>Prefix for currency</li>
 <li>User only needs to input the number</li>
 </ol>
+<div class="form-group">
+  <label class="form-label" for="input-example-1">Name</label>
+  <div class="input-group">
+    <span class="input-group-addon">Name</span>
+    <input type="text" class="form-input" placeholder="...">
+  </div>
+</div>
+<div class="form-group has-icon-left">
+  <label class="form-label" for="input-example-1">Name</label>
+  <input class="form-input form-input--invalid" type="text" id="input-example-1" placeholder="Name">
+  <i class="form-icon yoco">heart</i>
+</div>
+<div class="form-group has-icon-right">
+  <label class="form-label" for="input-example-1">Name</label>
+  <input class="form-input form-input--disabled" type="text" disabled placeholder="Name">
+  <i class="form-icon form-icon--error yoco">circle_cross</i>
+</div>
 </div>
 </template>
 

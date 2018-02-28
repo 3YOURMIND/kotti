@@ -42,7 +42,14 @@
         such as &quot;Cancel&quot;.
       </li>
     </ol>
-
+    <div class="columns">
+      <button class="column col-3 primary">Primary</button>
+      <button class="column col-3 secondary">Primary</button>
+      <button class="column col-3">Default</button>
+      <button class="column col-3 danger">Default</button>
+      <button class="column col-3 text">text button</button>
+      <button class="column col-3 primary"><i class="yoco">edit</i>text button</button>
+    </div>
     <h2 id="variations">Variations</h2>
     <div class="columns">
       <div class="column col-6 col-md-12">

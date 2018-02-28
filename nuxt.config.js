@@ -27,7 +27,7 @@ module.exports = {
   */
   css: [
     // Load a node module directly (here it's a SASS file)
-    'spectre.css',
+    // 'spectre.css',
     // CSS file in the project
     // '@/assets/css/main.css',
     // SCSS file in the project
