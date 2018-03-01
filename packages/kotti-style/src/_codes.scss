@@ -1,0 +1,33 @@
+// Codes
+@mixin code-base() {
+  border-radius: $border-radius;
+  background: $lightgrey-300;
+  line-height: 1.5;
+}
+
+pre {
+  @include code-base();
+  color: inherit;
+  display: block;
+  overflow-x: auto;
+  padding: 1rem;
+  width: 100%;
+}
+code {
+  @include code-base();
+  &::before {
+    color: $lightgrey-300;
+    content: attr(data-lang);
+    font-size: $font-size-sm;
+    position: absolute;
+    right: $layout-spacing;
+    top: $unit-h;
+  }
+  background: $lightgrey-300;
+  border-radius: $border-radius;
+  color: $body-font-color;
+  position: relative;
+  padding: $unit-h;
+  font-size: 85%;
+
+}

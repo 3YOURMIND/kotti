@@ -26,12 +26,9 @@ module.exports = {
   ** Customize the progress bar color
   */
   css: [
-    // Load a node module directly (here it's a SASS file)
-    // 'spectre.css',
-    // CSS file in the project
-    // '@/assets/css/main.css',
-    // SCSS file in the project
-    '@/assets/css/main.scss'
+    '../packages/kotti-style/lib/index.css',
+    '@/assets/css/main.scss',
+    '@3yourmind/yoco/docs/dist/yoco-icon.css',
   ],
   modules: [
     '@nuxtjs/markdownit'

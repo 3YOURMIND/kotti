@@ -11,8 +11,6 @@
 <script>
 import Sidebar from '~/components/Sidebar.vue'
 import MobileNav from '~/components/MobileNav.vue'
-require('@3yourmind/yoco/docs/dist/yoco-icon.css')
-require('../packages/kotti-style/lib/index.css')
 
 export default {
   name: 'DefaultLayout',

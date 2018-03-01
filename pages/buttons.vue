@@ -9,9 +9,9 @@
 
   ![Button labels](~/assets/img/button_label.png)
 
-      `Yes/No` buttons are not self-explanatory, the user needs to read the
-      context to understand the action. Using `Cancel/Replace` buttons
-      let the user respond quickly without thinking.
+  `Yes/No` buttons are not self-explanatory, the user needs to read the
+  context to understand the action. Using `Cancel/Replace` buttons
+  let the user respond quickly without thinking.
 
   ## Types
 
