@@ -33,6 +33,9 @@ module.exports = {
     // SCSS file in the project
     '@/assets/css/main.scss'
   ],
+  modules: [
+    '@nuxtjs/markdownit'
+  ],
   plugins: [
     { src: '~plugins/vue-highlightjs.js', ssr: false },
     { src: '~plugins/vue-clipboard.js', ssr: false }
