@@ -15,11 +15,6 @@ button {
     font-size: $font-size-sm;
     text-transform: none;
   }
-  i {
-    font-size: 1rem;
-    font-size: $font-size-sm;
-    margin-right: .4rem;
-  }
   &:hover {
     cursor: pointer;
     background: rgba(44, 102, 196, .1);
@@ -62,6 +57,18 @@ button.danger {
   &:hover {
     color: #ffffff;
     background: $red-500;
+  }
+}
+
+button.icon {
+  i {
+    font-size: 1rem;
+  }
+}
+button.icon-text {
+  i {
+    font-size: 1rem;
+    margin-right: .4rem;
   }
 }
 

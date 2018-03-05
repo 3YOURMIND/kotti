@@ -47,9 +47,16 @@
       />
       <ColorPalette
         class="column col-md-12 col-4"
+        colorName="Red"
+        :colors="orangeColor"
+      />
+      <ColorPalette
+        class="column col-md-12 col-4"
         colorName="Purple"
         :colors="purpleColor"
       />
+    </div>
+    <div class="columns">
       <ColorPalette
         class="column col-md-12 col-4"
         colorName="Dark Grey"
@@ -94,6 +101,12 @@ export default {
         {name: 'Red-400', code: '#F21D1D'},
         {name: 'Red-500', code: '#D91919'},
         {name: 'Red-600', code: '#BF1717'}
+      ],
+      orangeColor: [
+        {name: 'Orange-300', code: '#FFAE66'},
+        {name: 'Orange-400', code: '#FF9333'},
+        {name: 'Orange-500', code: '#FF7800'},
+        {name: 'Orange-600', code: '#D37D30'}
       ],
       purpleColor: [
         {name: 'Purple-300', code: '#B995CA'},

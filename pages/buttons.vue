@@ -17,38 +17,84 @@
 
   ![Button types](~/assets/img/button_types.png)
 
-  1. **Primary button:** Use the primary button to lead a main call to
+  ### Primary button
+  
+  Use the primary button to lead a main call to
   action, such as changing the status of an order, or submitting a form. We suggest
   only using one primary button on each page (not including the primary button
   on a different layer). If there is another strong action needed, compare
   their priority and choose the most important one.
-  1. **Secondary button:** Use a secondary button only when
-  there is a main call to action in the page.
-  1. **Danger button:** The danger button should be used only for
-  actions which can't be undone. For example, canceling an order or
-  deleting a material. Like the primary button, it should also limited to
-  once per page.
-  1. **Default button:** This button can be used in most cases.
-  1. **Text button:** A text button can be used for sub-menus and page
-  navigation. It also can pair with a primary button for destructive actions
-  such as `Cancel`.
- 
+  
+  <button class="primary">Primary Action</button>
+  
   ```html
-  <div class="columns">
-    <button class="column col-3 primary">Primary</button>
-    <button class="column col-3 secondary">Primary</button>
-    <button class="column col-3">Default</button>
-    <button class="column col-3 danger">Default</button>
-    <button class="column col-3 text">text button</button>
-    <button class="column col-3 primary"><i class="yoco">edit</i>text button</button>
-  </div>
+  <button class="primary">Primary Action</button>
+  ```
+
+  ### Secondary butto 
+  
+  Use a secondary button only when there is a main call to action in the page.
+
+    <button class="secondary">Secondary Button</button>
+  
+  ```html
+  <button class="secondary">Secondary Button</button>
+  ```
+
+  ### Danger button
+  
+  
+  The danger button should be used only for actions which can't be undone. 
+  For example, canceling an order or deleting a material. Like the primary button, it should also limited to once per page.
+
+  <button class="danger">Danger Action</button>
+
+    
+  ```html
+  <button class="danger">Secondary Button</button>
+  ```
+
+
+  ### Default button
+  
+  This button can be used in most cases.
+
+  <button>Default Button</button>
+
+  ```html
+  <button>Default Button</button>
+  ```
+
+
+  ### Text button
+  
+  A text button can be used for sub-menus and page navigation. It also can pair with a primary button for destructive actions such as `Cancel`.
+ 
+  <button class="text">Cancel</button>
+
+  ```html
+  <button class="text">Cancel</button>
   ```
   ## Variations
   ![Button variations](~/assets/img/button_variations.png)
 
-  1. **Label only:** Used in most cases.
-  1. **Icon and label:** Use when you need to catch the user's attention.
-  1. **Icon only:** Use when you have limited space, such as when the page needs to fit on a mobile device, and a single icon is enough to convey the meaning.
+  **Label only:** Used in most cases.
+  
+  **Icon and label:** Use when you need to catch the user's attention.
+
+  <button class="primary icon-text"><i class="yoco">edit</i>text button</button>
+
+  ```html
+  <button class="primary icon-text"><i class="yoco">edit</i>text button</button>
+  ```
+
+  **Icon only:** Use when you have limited space, such as when the page needs to fit on a mobile device, and a single icon is enough to convey the meaning.
+
+  <button class="primary icon"><i class="yoco">edit</i></button>
+
+  ```html
+  <button class="primary icon"><i class="yoco">edit</i></button>
+  ```
 
 </template>
 

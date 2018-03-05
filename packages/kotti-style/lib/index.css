@@ -929,11 +929,6 @@ button.tooltip::after
     font-size: .6rem; text-transform: none;
 }
 
-button i
-{
-    font-size: 1rem;    font-size: .6rem; margin-right: .4rem;
-}
-
 button:hover
 {
     cursor: pointer; background: rgba(44, 102, 196, .1);
@@ -978,6 +973,16 @@ button.danger
 button.danger:hover
 {
     color: #fff; background: #d91919;
+}
+
+button.icon i
+{
+    font-size: 1rem;
+}
+
+button.icon-text i
+{
+    font-size: 1rem; margin-right: .4rem;
 }
 
 button.disabled
