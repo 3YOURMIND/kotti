@@ -1,0 +1,79 @@
+body {
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #555;
+  background: #f9f9f9;
+  max-width: 800px;
+  padding: 0 16px;
+}
+h1 {
+  font-size: 3em;
+  text-decoration: underline;
+  font-weight: bold;
+}
+.icon-container {
+  float: left;
+  text-align: center;
+  width: 20%;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #efefef;
+}
+.icon-container:hover {
+  background: #fff;
+  cursor: pointer;
+  box-shadow: border-box;
+  box-shadow: 0 2px 2px #ddd;
+}
+.icon-liga {
+  font-size: 0.875em;
+  line-height: 2em;
+}
+.icon-container .yoco {
+  font-size: 32px!important;
+}
+.message {
+  position: fixed;
+  display: inline-block;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 4px 0;
+  box-sizing: border-box;
+  text-align: center;
+  z-index: 2px;
+  background: #568b15;
+  color: #fff;
+  opacity: 1;
+}
+
+.toggle {
+  display: block;
+  border: 0;
+  margin-bottom: 1em;
+  box-sizing: border-box;
+  padding: .5em 0;
+  font-size: 1.2em;
+}
+.toggle:hover {
+  cursor: pointer;
+}
+code {
+  font-family: 'Ubuntu Mono', monospace;
+  line-height: 2em;
+  background: #fff;
+  padding: 4px 16px;
+  display: block;
+  border: 1px solid #ddd;
+  margin: .5em 0;
+}
+code comment {
+  color: #999;
+}
+
+@media (max-width: 480px) {
+  .icon-container {
+    width: 33.3333%;
+  }
+}
