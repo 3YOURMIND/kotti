@@ -1,44 +1,33 @@
-<template>
-  <div>
-    <h2>Paragraphs</h2>
-    <img src="~/assets/img/typography_paragraph.png" />
-    <table class="table table-striped table-hover">
-      <tr>
-        <th class="col-6"> </th>
-        <th class="col-3">Basic Properties</th>
-        <th class="col-3">UI Properties</th>
-      </tr>
-      <tr>
-        <td>
-          <dl>
-            <dt>1. Paragraph Text</dt>
-            <dd>Used for long form text.</dd>
-          </dl>
-        </td>
-        <td>
-          <dd>font-size: 14px</dd>
-          <dd>
-            color: <code>darkgrey-500</code>
-          </dd>
-        </td>
-        <td>
-          <dd>line-height: 21</dd>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <dl>
-            <dt>2. Pargraph Margin</dt>
-            <dd>Margin between two paragraphs</dd>
-          </dl>
-        </td>
-        <td>--</td>
-        <td>
-          <dd>margin-bottom: 16px</dd>
-        </td>
-      </tr>
-    </table>
-  </div>
+<template lang="md">
+
+## Paragraphs
+
+![Paragraph Example](~/assets/img/typography_paragraph.png)
+
+|Element|Basic Properties|UI Properties|
+|----|----|----|
+|**Paragraph Text**<br/>Used for long form text.|font-size: `14px`;<br/>color: `$darkgrey-300`;|line-height: `21px`; |
+|**Pargraph Margin**<br/>Margin between two paragraphs|--|margin-bottom: `16px`;|
+
+<div class="element-example">
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean massa nibh, fermentum et facilisis sit amet, ullamcorper lobortis metus. 
+    Maecenas finibus ante orci, quis efficitur orci sagittis eget. Nulla ut felis cursus, mollis eros nec, ultricies sem. 
+    Donec tellus ligula, faucibus sed facilisis sit amet, luctus finibus nisi. Nulla condimentum urna in laoreet fermentum. 
+    Donec leo mi, consectetur a sem id, fringilla fringilla ex. Mauris augue magna, pharetra eu dapibus a, finibus id purus. 
+    In hac habitasse platea dictumst. 
+  </p>
+  <p>
+    Maecenas molestie hendrerit lectus, quis pellentesque dolor tempus sit amet. Etiam sagittis consectetur bibendum. 
+    Vestibulum sed consectetur nisi, ut vulputate est. Donec et ultricies nisl, ac accumsan arcu.
+  </p>
+</div>
+
+```html
+<p>Lorem ipsum dolor sit amet, ....</p>
+<p>Maecenas molestie hendrerit lectus, ....</p>
+```
+
 </template>
 
 <script>

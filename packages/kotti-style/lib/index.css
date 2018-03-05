@@ -1011,7 +1011,7 @@ h3,
 h4,
 h5,
 h6
-{font-weight: 600; line-height: 1.5; margin-top: 0; margin-bottom: .5em; 
+{font-weight: 600; line-height: 1.5; margin-top: .5em; 
 
     color: inherit;
 }
@@ -1028,8 +1028,9 @@ h6
 
 h1,
 .h1
-{
-    font-size: 2rem;
+{font-size: 2rem; 
+
+    margin-top: 0;
 }
 
 h2,
@@ -1041,7 +1042,21 @@ h2,
 h3,
 .h3
 {
-    font-size: .8rem; color: #2c66c4;
+    font-size: .8rem; padding-bottom: .4rem; color: #2c66c4; border-bottom: 1px solid #dbdbdb;
+}
+
+h3 span,
+.h3 span
+{font-weight: 500; 
+
+    float: right;
+}
+
+h3 span:hover,
+.h3 span:hover
+{font-weight: 600; 
+
+    cursor: pointer; color: #2659ab;
 }
 
 h4,
@@ -1064,7 +1079,7 @@ h6,
 
 p
 {
-    margin: 0 0 1rem;
+    margin: 0 0 .8rem;
 }
 
 abbr[title]
@@ -1121,6 +1136,43 @@ dl dt
 dl dd
 {
     margin: .4rem 0 .8rem 0;
+}
+
+.label-value
+{
+    line-height: 1.5; position: relative; color: #3d3d3d;
+}
+
+.label-value label
+{
+    font-size: .6rem; font-weight: 600; text-transform: uppercase; color: #8a8a8a;
+}
+
+.label-value .default
+{
+    font-size: .7rem;
+}
+
+.label-value .key
+{
+    font-size: 1.2rem; font-weight: 600;
+}
+
+.label-value .addition
+{
+    font-size: .8rem; font-weight: 600;
+}
+
+.label-value .action
+{position: absolute; top: 50%; right: .2rem; margin-top: -.5rem; 
+
+    color: #2c66c4;
+}
+
+.label-value .action:hover
+{cursor: pointer; 
+
+    color: #2659ab;
 }
 
 table

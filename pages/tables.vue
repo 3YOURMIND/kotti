@@ -1,5 +1,5 @@
 <template lang="md">
-## Tables
+# Tables
 
 ## Elements
 ![Table Elements](~/assets/img/tables_overview.png)

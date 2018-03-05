@@ -12,8 +12,7 @@ h6 {
   color: inherit;
   font-weight: 600;
   line-height: 1.5;
-  margin-bottom: 0.5em;
-  margin-top: 0;
+  margin-top: 0.5em;
 }
 .h1,
 .h2,
@@ -25,6 +24,7 @@ h6 {
 }
 h1,
 .h1 {
+  margin-top: 0;
   font-size: 2rem;
 }
 h2,
@@ -35,6 +35,17 @@ h3,
 .h3 {
   font-size: .8rem;
   color: $primary-500;
+  padding-bottom: $unit-2;
+  border-bottom: 1px solid $lightgrey-400;
+  span {
+    float: right;
+    font-weight: 500;
+    &:hover {
+      cursor: pointer;
+      font-weight: 600;
+      color: $primary-600;
+    }
+  }
 }
 h4,
 .h4 {
@@ -51,7 +62,7 @@ h6,
 
 // Paragraphs
 p {
-  margin: 0 0 $line-height;
+  margin: 0 0 .8rem;
 }
 
 // Semantic text elements
@@ -99,5 +110,39 @@ dl {
   }
   dd {
     margin: $unit-2 0 $unit-4 0;
+  }
+}
+
+.label-value {
+  line-height: 1.5;
+  color: $darkgrey-500;
+  position: relative;
+  label {
+    font-size: .6rem;
+    font-weight: 600;
+    color: $darkgrey-300;
+    text-transform: uppercase;
+  }
+  .default {
+    font-size: $font-size;
+  }
+  .key {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .addition {
+    font-size: .8rem;
+    font-weight: 600;
+  }
+  .action {
+    color: $primary-500;
+    position: absolute;
+    right: .2rem;
+    top: 50%;
+    margin-top: -.5rem;
+    &:hover {
+      color: $primary-600;
+      cursor: pointer;
+    }
   }
 }
