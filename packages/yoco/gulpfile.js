@@ -33,4 +33,21 @@ gulp.task('build', function() {
   .pipe(gulp.dest('./dist/fonts'));
 });
 
+gulp.task('gh-pages', function(){
+  gulp.src(paths.source)
+  .pipe(sass({outputStyle: 'compact', precision: 10})
+    .on('error', sass.logError)
+  )
+  .pipe(autoprefixer())
+  .pipe(csscomb())
+  .pipe(gulp.dest('./docs/dist'))
+  .pipe(cleancss())
+  .pipe(rename({
+    suffix: '.min'
+  }))
+  .pipe(gulp.dest('./docs/dist'));
+  gulp.src(paths.font)
+  .pipe(gulp.dest('./docs/dist/fonts'));
+})
+
 gulp.task('default', ['build']);

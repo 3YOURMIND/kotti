@@ -58,7 +58,8 @@
           "name": "material",
           "prevSize": 32,
           "code": 59653,
-          "tempChar": ""
+          "tempChar": "",
+          "ligatures": "material"
         },
         {
           "order": 141,
