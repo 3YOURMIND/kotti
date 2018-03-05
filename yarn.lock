@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@3yourmind/yoco@^0.0.1-beta.2":
-  version "0.0.1-beta.2"
-  resolved "https://registry.yarnpkg.com/@3yourmind/yoco/-/yoco-0.0.1-beta.2.tgz#4f96aa3e7f12b5e71e1b6f3710cbd3afb73c354b"
+"@3yourmind/yoco@^0.0.1-beta.3":
+  version "0.0.1-beta.3"
+  resolved "https://registry.yarnpkg.com/@3yourmind/yoco/-/yoco-0.0.1-beta.3.tgz#47d6a5ceca514fdd2d3784174e1cd5c64686480e"
 
 "@nuxtjs/markdownit-loader@^1.1.1":
   version "1.1.1"

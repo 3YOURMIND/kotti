@@ -21,26 +21,23 @@
 }
 
 .skeleton {
-  &--circle {
+  &.circle {
     @include skeleton-style(1000px, 1000px);
     padding-top: 100%;
     border-radius: 100%;
   }
-  &--square {
+  &.square {
     @include skeleton-style(1000px, 1000px);
     padding-top: 100%;
   }
-  &--rectangle {
+  &.rectangle {
     @include skeleton-style(1800px, 1200px);
     height: .4rem;
-    &__2x {
+    &.md {
       height: .8rem;
     }
-    &__3x {
+    &.lg {
       height: 1.2rem;
-    }
-    &__half {
-      width: 50%;
     }
   }
 }
@@ -76,7 +73,7 @@
     width: $unit-4;
     z-index: $zindex-0;
   }
-  &--inline {
+  &.inline {
     display: inline-block;
     margin: 0 $unit-2;
     &::after {
@@ -87,13 +84,13 @@
       position: relative;
     }
   }
-  &--white {
+  &.white {
     &::after {
       border-left-color: #ffffff;
       border-bottom-color: #ffffff;
     }
   }
-  &.loading-lg {
+  &.lg {
     min-height: $unit-10;
     &::after {
       height: $unit-8;

@@ -28,7 +28,7 @@ module.exports = {
   css: [
     '../packages/kotti-style/lib/index.css',
     '@/assets/css/main.scss',
-    '@3yourmind/yoco/docs/dist/yoco-icon.css',
+    '@3yourmind/yoco',
   ],
   modules: [
     '@nuxtjs/markdownit'

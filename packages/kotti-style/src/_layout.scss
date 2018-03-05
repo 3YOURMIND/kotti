@@ -1,5 +1,5 @@
 // Layout
-.wrapper {
+.d-flex {
   display: flex;
   flex-flow: nowrap;
   flex-direction: row;
@@ -12,7 +12,7 @@
   padding-left: $layout-spacing;
   padding-right: $layout-spacing;
   width: 100%;
-  // @extend .clearfix;
+  @include clearfix;
 
   $grid-spacing: ($layout-spacing / ($layout-spacing * 0 + 1)) * $html-font-size;
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="d-flex">
     <sidebar class="kt-navbar" />
     <mobile-nav class="mobile-menu" />
     <div class="workspace">

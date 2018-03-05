@@ -32,7 +32,12 @@ their presence.
 
 ## Update Logs
 
-* 2018-01-04: First document published
+* **2018-03-05**
+  * Updated `colors`;
+  * Added implmentation examples for `typography`, `buttons`, `inputs` and `tables`;
+  * Using `kotti-style` packages;
+  * Add new component `loadings`.
+* **2018-01-04** First document published
 
 </template>
 

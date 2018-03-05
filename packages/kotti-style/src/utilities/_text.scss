@@ -1,0 +1,10 @@
+// Text Utilities
+
+.text-truncate, .truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  .show-all {
+    overflow: auto;
+  }
+}

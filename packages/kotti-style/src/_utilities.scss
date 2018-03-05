@@ -1,18 +1,12 @@
-// Width utilities
+// Sizing
+@import "utilities/sizing";
+@import "utilities/cursors";
 
-$line-height: 24px;
-
-.w-100 {
-  width: 100%!important;
-}
 .columns-vertical {
   .column{
     padding: 0 $unit-1;
     box-sizing: border-box;
   }
-}
-.clickable:hover {
-  cursor: pointer;
 }
 
 .element-margin {
@@ -22,14 +16,7 @@ $line-height: 24px;
   margin-top: $unit-6;
 }
 
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  .show-all {
-    overflow: auto;
-  }
-}
+
 
 .email-preview {
   background: #fcfcfc;
@@ -43,8 +30,4 @@ $line-height: 24px;
   h2 {
     margin: $unit-4 0;
   }
-}
-
-.c-hand:hover {
-  cursor: pointer;
 }
