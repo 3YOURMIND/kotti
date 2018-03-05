@@ -66,8 +66,6 @@
     </div>
   ```
 
-
-
   ## Prefix Inputs
 
   When an value needs a fixed prefix or suffix, in order to make sure user doesn't put it in input field, 

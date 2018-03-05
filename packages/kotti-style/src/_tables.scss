@@ -23,7 +23,7 @@ table {
     margin: 0;
   }
   tr:hover {
-    .yoda-table-actions {
+    .table-actions {
       display: block;
       background: #fff;
     }
@@ -40,7 +40,7 @@ table {
     }
   }
 
-  .yoco {
+  i {
     font-size: .9rem;
     color: $darkgrey-400;
     margin: 0 .2rem;
@@ -49,11 +49,11 @@ table {
     }
   }
 
-  &.yoda-no-header {
+  &.no-header {
     margin-top: -.5em;
   }
 
-  .yoda-table-actions {
+  .table-actions {
     display: none;
     font-size: 1em;
     padding: .25em;
@@ -67,11 +67,11 @@ table {
     right: 1em;
     float: right;
     box-shadow: 0 0 1px #999;
-    .yoco {
+    i {
       margin: 0 $unit-1;
       color: $lightgrey-500;
     }
-    .yoco:hover {
+    i:hover {
       cursor: pointer;
       color: $darkgrey-500;
     }

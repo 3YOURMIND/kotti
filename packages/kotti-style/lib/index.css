@@ -1139,7 +1139,7 @@ table th:first-child
     padding-left: 1.2rem;
 }
 
-table tr:hover .yoda-table-actions
+table tr:hover .table-actions
 {
     display: block; background: #fff;
 }
@@ -1159,33 +1159,33 @@ table td:first-child
     padding-left: 1.2rem;
 }
 
-table .yoco
+table i
 {
     font-size: .9rem; margin: 0 .2rem; color: #575757;
 }
 
-table .yoco.disabled
+table i.disabled
 {
     color: #8f8f8f;
 }
 
-table.yoda-no-header
+table.no-header
 {
     margin-top: -.5em;
 }
 
-table .yoda-table-actions
+table .table-actions
 {font-size: 1em; line-height: 1em; position: absolute; z-index: 2; right: 1em; 
 
     display: none; float: right; width: auto; margin-top: .5em; padding: .25em; border: 0; border-radius: .1rem; box-shadow: 0 0 1px #999;
 }
 
-table .yoda-table-actions .yoco
+table .table-actions i
 {
     margin: 0 .2rem; color: #8f8f8f;
 }
 
-table .yoda-table-actions .yoco:hover
+table .table-actions i:hover
 {
     cursor: pointer; color: #3d3d3d;
 }
