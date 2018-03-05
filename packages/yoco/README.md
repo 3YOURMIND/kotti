@@ -25,7 +25,7 @@ Download latest version from Github and unzip in your project.
 
 **With module bundler**
 ```bash
-@import "../node_modules/@3yourmind/yoco/docs/dist/yoco-icon.css";
+@import "@3yourmind/yoco";
 ```
 **With HTML**
 ```html
@@ -35,5 +35,5 @@ Download latest version from Github and unzip in your project.
 
 ## Using yoco icons
 
-Please using [yoco docs](https://3yourmind.github.io/yoco)
+Please using [yoco docs](https://3yourmind.github.io/kotti/icons/)
 
