@@ -10,6 +10,7 @@ $ npm install @3yourmind/yoco
 ```
 
 **Using yarn**
+
 ```
 $ yarn add @3yourmind/yoco
 ```
@@ -18,7 +19,7 @@ $ yarn add @3yourmind/yoco
 
 Download latest version from Github and unzip in your project.
 
-* [Download v0.0.1-beta](https://github.com/3YOURMIND/yoco/releases/tag/v0.0.1-beta)
+* [Download v0.0.1-beta.2](https://github.com/3YOURMIND/yoco/releases/tag/v0.0.1-beta.2)
 
 ## Add yoco.css to your project
 

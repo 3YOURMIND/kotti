@@ -19,5 +19,13 @@
   "bugs": {
     "url": "https://github.com/3YOURMIND/yoco/issues"
   },
-  "homepage": "https://3yourmind.github.io/yoco"
+  "homepage": "https://3yourmind.github.io/yoco",
+  "devDependencies": {
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-csscomb": "^3.0.8",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "latest"
+  }
 }
