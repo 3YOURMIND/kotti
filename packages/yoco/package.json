@@ -1,6 +1,6 @@
 {
   "name": "@3yourmind/yoco",
-  "version": "0.0.1-beta.3",
+  "version": "0.0.2-beta.1",
   "description": "A icon font library which ready to use and already in 3YOURMIND",
   "main": "dist/yoco-icon.min.css",
   "scripts": {
