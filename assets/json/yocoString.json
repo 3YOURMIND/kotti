@@ -1,5 +1,12 @@
 {
   "data": [
+    "structure",
+    "sidebar",
+    "markup",
+    "version",
+    "arrow_line",
+    "material",
+    "logout",
     "announce",
     "3dbox",
     "attachment",
