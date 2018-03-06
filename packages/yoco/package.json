@@ -27,5 +27,8 @@
     "gulp-csscomb": "^3.0.8",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "latest"
+  },
+  "dependencies": {
+    "push-dir": "^0.4.1"
   }
 }

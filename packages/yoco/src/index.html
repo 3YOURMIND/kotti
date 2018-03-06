@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Yoco Icons</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./yoco-icon.css">
+        <script src="https://unpkg.com/vue"></script>
+        <style>
+            body {
+                margin: 0 auto;
+                font-family: sans-serif;
+                font-size: 16px;
+                color: #555;
+                background: #f8f8f8;
+                max-width: 60rem;
+                padding: 0 16px;
+            }
+
+            h1 {
+                font-size: 2em;
+                font-weight: bold;
+            }
+
+            .icon-container {
+                float: left;
+                text-align: center;
+                width: 20%;
+                padding: 24px;
+                box-sizing: border-box;
+                background: #efefef;
+            }
+
+            .icon-container:hover {
+                background: #fff;
+                cursor: pointer;
+                box-shadow: border-box;
+                box-shadow: 0 2px 2px #ddd;
+            }
+
+            .icon-liga {
+                font-size: 0.875em;
+                line-height: 2em;
+            }
+
+            .icon-container .yoco {
+                font-size: 32px !important;
+            }
+
+            .icon-baseline {
+                text-align: center;
+                padding: 2rem;
+                background: #fff;
+                font-size: 2em;
+            }
+
+            .icon-baseline i {
+                font-size: 1.6em;
+            }
+
+            @media (max-width: 480px) {
+                .icon-container {
+                    width: 33.3333%;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <h1>Yoco Icon Preview</h1>
+            <div class="icon-baseline">
+                <i class="yoco">{{previewIcon}}</i> {{previewIcon}}
+            </div>
+            <div class="icon-container" v-for="icon in iconString"  @click="previewIcon = icon">
+                <div>
+                    <i class="yoco" ref="liga">{{icon}}</i>
+                </div>
+                <div class="icon-liga">{{icon}}</div>
+            </div>
+        </div>
+    </body>
+    <script>
+        var iconStrings = [
+            'sidebar',
+            'structure',
+            'markup',
+            'version',
+            'material',
+            'logout',
+            'arrow_line',
+            'announce',
+            '3dbox',
+            'attachment',
+            'bell',
+            'calendar',
+            'card',
+            'charts',
+            'chevron_down',
+            'chevron_left',
+            'chevron_right',
+            'chevron_up',
+            'circle_attention',
+            'circle_check',
+            'circle_cross',
+            'circle_i',
+            'circle_load',
+            'circle_question',
+            'clock',
+            'close',
+            'cloud_download',
+            'cloud_upload',
+            'cloud',
+            'comment',
+            'copy',
+            'dashboard',
+            'dimension',
+            'dots_vertical',
+            'dots',
+            'download',
+            'upload',
+            'edit',
+            'exit_fullscreen',
+            'eye',
+            'file',
+            'filter',
+            'folder',
+            'fullscreen',
+            'global',
+            'heart',
+            'invoice',
+            'layer',
+            'list',
+            'minus',
+            'not_allow',
+            'permission',
+            'picture',
+            'plus',
+            'print',
+            'save',
+            'scale',
+            'search',
+            'setting',
+            'share',
+            'shop',
+            'start',
+            'support',
+            'tag',
+            'tech',
+            'trash',
+            'triangle_down',
+            'triangle_up',
+            'triangle_right',
+            'triangle_left',
+            'user',
+            'usergroup',
+            'view',
+            'zip'
+        ]
+
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                iconString: iconStrings,
+                previewIcon: 'cloud'
+            }
+        })
+    </script>
+
+</html>

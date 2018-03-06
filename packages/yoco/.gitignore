@@ -5,3 +5,4 @@ node_modules/
 !.gitattributes
 !.hound.yml
 !.scss-lint.yml
+yarn-error.log

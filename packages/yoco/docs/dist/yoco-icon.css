@@ -1,9 +1,0 @@
-@font-face
-{
-    font-family: 'yoco'; font-weight: normal; font-style: normal; src: url('fonts/yoco.eot'); src: url('fonts/yoco.eot#iefix') format('embedded-opentype'), url('fonts/yoco.ttf') format('truetype'), url('fonts/yoco.woff') format('woff'), url('fonts/yoco.svg#yoco') format('svg');
-}
-
-i.yoco
-{
-    /* use !important to prevent issues with browser extensions that change fonts */ font-family: 'yoco' !important; font-size: 24px; /* Enable Ligatures ================ */ font-weight: normal; font-style: normal; font-variant: normal; line-height: 1; letter-spacing: 0; text-transform: none; speak: none; -webkit-font-feature-settings: 'liga';     -ms-font-feature-settings: 'liga' 1;         font-feature-settings: 'liga'; -webkit-font-variant-ligatures: discretionary-ligatures;         font-variant-ligatures: discretionary-ligatures; /* Better Font Rendering =========== */ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-}
