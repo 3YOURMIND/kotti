@@ -36,6 +36,9 @@
         <nuxt-link to="/loadings">Loadings</nuxt-link>
       </li>
       <li>
+        <nuxt-link to="/popovers">Popovers</nuxt-link>
+      </li>
+      <li>
         <nuxt-link to="/tables">Tables</nuxt-link>
       </li>
       <li>
