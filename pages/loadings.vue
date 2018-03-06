@@ -10,60 +10,45 @@
 
   1. **Circle:** Cicular shape which width and height are equal to parents' width, class name `circle`;
   2. **Square:** Width and height are equal to parents' width, class name `square`;
-  3. **Rectangle:** Width equals to parents, height can be midium `md` or large `lg`.
+  3. **Rectangle:** Width equals to parents, height can be medium `md` or large `lg`.
 
   <div class="element-example">
     <div class="columns">
-      <div class="column col-1">
+      <div class="column col-2">
         <div class="skeleton circle" />
       </div>
-      <div class="column col-5">
-        <div class="skeleton rectangle md"/>
-        <div class="skeleton rectangle md"/>
-        <div class="skeleton rectangle md w-50"/>
+      <div class="column col-2">
+        <div class="skeleton square" />
+      </div>
+       <div class="column col-8">
+        <div class="skeleton rectangle md" />
+        <div class="skeleton rectangle md" />
+        <div class="skeleton rectangle md" />
+        <div class="skeleton rectangle md" />
+        <div class="skeleton rectangle md" />
       </div>
     </div>
   </div>
 
   ```html
-  <div class="columns">
-    <div class="column col-1">
-      <div class="skeleton circle" />
-    </div>
-    <div class="column col-5">
-      <div class="skeleton rectangle md"/>
-      <div class="skeleton rectangle md"/>
-      <div class="skeleton rectangle md w-50"/>
-    </div>
-  </div>
+  <div class="skeleton circle" />
+  <div class="skeleton square"/>
+  <div class="skeleton rectangle"/>
   ```
+  Rectangle skeleton with different height. 
 
   <div class="element-example">
-    <div class="columns">
-    <div class="column col-1">
-      <div class="skeleton square" />
-    </div>
-    <div class="column col-6">
-      <div class="skeleton rectangle"/>
-      <div class="skeleton rectangle md"/>
-      <div class="skeleton rectangle lg w-50"/>
-    </div>
-    </div>
+    <div class="skeleton rectangle"/>
+    <div class="skeleton rectangle md"/>
+    <div class="skeleton rectangle md"/>
+    <div class="skeleton rectangle lg"/>
   </div>
 
   ```html
-   <div class="element-example">
-    <div class="columns">
-    <div class="column col-1">
-      <div class="skeleton--square" />
-    </div>
-    <div class="column col-6">
-      <div class="skeleton rectangle"/>
-      <div class="skeleton rectangle md"/>
-      <div class="skeleton rectangle lg w-50"/>
-    </div>
-    </div>
-  </div>
+  <div class="skeleton rectangle"/>
+  <div class="skeleton rectangle md"/>
+  <div class="skeleton rectangle md"/>
+  <div class="skeleton rectangle lg"/>
   ```
 
   ## Spin Loading

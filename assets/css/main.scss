@@ -11,7 +11,21 @@
 
 .element-example {
   background: #f8f8f8;
-  padding: 1.2rem;
+  padding: 2rem 1.2rem;
   display: block;
   margin: 1rem 0;
+  position: relative;
+  &::before {
+    content: "Example";
+    display: block;
+    background: #555;
+    position: absolute;
+    color: #fff;
+    font-size: .875em;
+    padding: .2rem .4rem;
+    right: 0;
+    z-index: 99;
+    opacity: .46;
+    top: 0;
+  }
 }

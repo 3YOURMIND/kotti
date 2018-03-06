@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <sidebar class="kt-navbar" />
+    <sidebar class="navbar" />
     <mobile-nav class="mobile-menu" />
     <div class="workspace">
       <nuxt class="content" />

@@ -1,9 +1,9 @@
 {
   "name": "@3yourmind/kotti-style",
-  "version": "0.0.1",
+  "version": "0.0.1.alpha-1",
   "description": "Kotti Style",
-  "main": "lib/index.css",
-  "style": "lib/index.css",
+  "main": "lib/index.min.css",
+  "style": "lib/index.min.css",
   "files": [
     "lib",
     "src"
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ElementUI/theme-chalk.git"
+    "url": "git+https://github.com/3YOURMIND/kotti"
   },
   "keywords": [
     "element",
@@ -22,7 +22,7 @@
   "author": "jp@3yourmind.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://3yourmind.github.io/kotti/"
+    "url": "https://github.com/3YOURMIND/kotti/issues"
   },
   "homepage": "https://3yourmind.github.io/kotti/",
   "devDependencies": {
