@@ -1,0 +1,47 @@
+// Form misc: icon position
+
+.has-icon-left, .has-icon-right {
+  position: relative;
+  .form-icon {
+    color: $lightgrey-500;
+    font-size: 1rem;
+    position: absolute;
+    &--success {
+      color: $green-500;
+    }
+    &--error {
+      color: $red-500;
+    }
+  }
+}
+.has-icon-left {
+  .form-input {
+    padding-left: 1.6rem;
+  }
+  .form-icon {
+    top: .3rem;
+    left: .4rem;
+  }
+}
+
+.has-icon-right {
+  .form-input {
+    padding-right: 1.6rem;
+  }
+  .form-icon {
+    top: .3rem;
+    right: .4rem;
+  }
+}
+
+// Form misc: state 
+
+.is-error {
+  border: 1px solid $red-500;
+}
+.is-warning {
+  border: 1px solid $orange-500;
+}
+.disabled {
+  background: $lightgrey-300;
+}

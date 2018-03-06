@@ -1,0 +1,23 @@
+// Form element: label
+
+.form-label {
+  font-size: $font-size-sm;
+  text-transform: uppercase;
+  color: $lightgrey-500;
+  width: 100%;
+  display: block;
+  padding: 0;
+  line-height: $unit-6;
+  font-weight: 600;
+  i {
+    font-size: $unit-4;
+    line-height: $unit-4;
+  }
+  &.tooltip::after {
+    text-transform: initial;
+    width: inherit;
+    font-size: inherit;
+    line-height: 1.2em;
+    white-space: normal;
+  }
+}

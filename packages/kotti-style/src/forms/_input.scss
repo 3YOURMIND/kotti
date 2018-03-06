@@ -1,0 +1,78 @@
+// Form element: Input
+
+.form-input {
+  width: 100%;
+  height: $control-size;
+  line-height: $line-height;
+  border: 1px solid $lightgrey-400;
+  border-radius: .1rem;
+  padding: 0 $unit-2;
+  position: relative;
+  &:focus {
+    // @include control-shadow();
+    border-color: $primary-500;
+  }
+}
+
+
+// Form element: Input groups
+.input-group {
+  display: flex;
+
+  .input-group-addon {
+    background: $lightgrey-300;
+    border: $border-width solid #dbdbdb;
+    border-radius: $border-radius;
+    line-height: 1.5rem;
+    padding: 0 $control-padding-x;
+    white-space: nowrap;
+    &.addon-sm {
+      font-size: $font-size-sm;
+      padding: $control-padding-y-sm $control-padding-x-sm;
+    }
+
+    &.addon-lg {
+      font-size: $font-size-lg;
+      padding: $control-padding-y-lg $control-padding-x-lg;
+    }
+  }
+
+  .form-input,
+  .form-select {
+    flex: 1 1 auto;
+  }
+
+  .input-group-btn {
+    z-index: $zindex-0;
+  }
+
+  .form-input,
+  .form-select,
+  .input-group-addon,
+  .input-group-btn {
+    &:first-child:not(:last-child) {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+      margin-left: -$border-width;
+    }
+    &:last-child:not(:first-child) {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      margin-left: -$border-width;
+    }
+    &:focus {
+      z-index: $zindex-0 + 1;
+    }
+  }
+
+  .form-select {
+    width: auto;
+  }
+
+  &.input-inline {
+    display: inline-flex;
+  }
+}

@@ -1,0 +1,166 @@
+// Form element: Checkbox and Radio
+.form-checkbox,
+.form-radio,
+.form-switch {
+  display: inline-block;
+  line-height: $line-height;
+  margin: ($control-size - $control-size-sm) / 2 0;
+  min-height: 1.2rem;
+  padding: (($control-size-sm - $line-height) / 2) $control-padding-x (($control-size-sm - $line-height) / 2) ($control-icon-size + $control-padding-x);
+  position: relative;
+
+  input {
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    &:focus + .form-icon {
+      // @include control-shadow();
+      border-color: $primary-500;
+    }
+    &:checked + .form-icon {
+      background: $primary-500;
+      border-color: $primary-500;
+    }
+  }
+
+  .form-icon {
+    // @include control-transition();
+    border: $border-width solid $lightgrey-400;
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+  }
+
+  // Input checkbox, radio and switch sizes
+  &.input-sm {
+    font-size: $font-size-sm;
+    margin: 0;
+  }
+
+  &.input-lg {
+    font-size: $font-size-lg;
+    margin: ($control-size-lg - $control-size-sm) / 2 0;
+  }
+}
+
+.form-checkbox,
+.form-radio {
+  .form-icon {
+    background: $lightgrey-300;
+    height: $control-icon-size;
+    left: 0;
+    top: ($control-size-sm - $control-icon-size) / 2;
+    width: $control-icon-size;
+  }
+
+  input {
+    &:active + .form-icon {
+      background: $darkgrey-400;
+    }
+  }
+}
+.form-checkbox {
+  .form-icon {
+    border-radius: $border-radius;
+  }
+
+  input {
+    &:checked + .form-icon {
+      &::before {
+        background-clip: padding-box;
+        border: $border-width-lg solid #fff;
+        border-left-width: 0;
+        border-top-width: 0;
+        content: "";
+        height: 10px;
+        left: 50%;
+        margin-left: -3px;
+        margin-top: -6px;
+        position: absolute;
+        top: 50%;
+        transform: rotate(45deg);
+        width: 6px;
+      }
+    }
+    &:indeterminate + .form-icon {
+      background: $primary-500;
+      border-color: $primary-500;
+      &::before {
+        background: $lightgrey-400;
+        content: "";
+        height: 2px;
+        left: 50%;
+        margin-left: -5px;
+        margin-top: -1px;
+        position: absolute;
+        top: 50%;
+        width: 10px;
+      }
+    }
+  }
+}
+.form-radio {
+  .form-icon {
+    border-radius: 50%;
+  }
+
+  input {
+    &:checked + .form-icon {
+      &::before {
+        background: #fff;
+        border-radius: 50%;
+        content: "";
+        height: 4px;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 4px;
+      }
+    }
+  }
+}
+
+// Form element: Switch
+
+.form-switch {
+  padding-left: ($unit-8 + $control-padding-x);
+
+  .form-icon {
+    background: $lightgrey-400;
+    background-clip: padding-box;
+    border-radius: $unit-2 + $border-width;
+    height: $unit-4 + $border-width * 2;
+    left: 0;
+    top: ($control-size-sm - $unit-4) / 2 - $border-width;
+    width: $unit-8;
+    &::before {
+      // @include control-transition();
+      background: #fff;
+      border-radius: 50%;
+      content: "";
+      display: block;
+      height: $unit-4;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: $unit-4;
+    }
+  }
+
+  input {
+    &:checked + .form-icon {
+      &::before {
+        left: 14px;
+      }
+    }
+    &:active + .form-icon {
+      &::before {
+        background: #fff;
+      }
+    }
+  }
+}
