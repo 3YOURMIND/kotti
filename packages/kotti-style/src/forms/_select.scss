@@ -25,7 +25,7 @@
     padding-right: $control-icon-size + $control-padding-x;
   }
   &:focus {
-    // @include control-shadow();
+    @include control-shadow();
     border-color: $primary-500;
   }
   &::-ms-expand {

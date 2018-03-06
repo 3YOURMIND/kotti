@@ -1482,8 +1482,8 @@ textarea
 }
 
 .form-select:focus
-{
-    border-color: #2c66c4;
+{border-color: #2c66c4; 
+    box-shadow: 0 0 0 .1rem rgba(44, 102, 196, .2);
 }
 
 .form-select::-ms-expand
@@ -1504,12 +1504,12 @@ textarea
 .form-input
 {line-height: 1rem; position: relative; 
 
-    width: 100%; height: 1.6rem; padding: 0 .4rem; border: 1px solid #dbdbdb; border-radius: .1rem;
+    width: 100%; height: 1.6rem; padding: 0 .4rem; border: 1px solid #dbdbdb; border-radius: .1rem; outline: none;
 }
 
 .form-input:focus
-{
-    border-color: #2c66c4;
+{border-color: #2c66c4; 
+    box-shadow: 0 0 0 .1rem rgba(44, 102, 196, .2);
 }
 
 .input-group
@@ -1719,19 +1719,8 @@ textarea
     color: #8f8f8f;
 }
 
-.has-icon-left .form-icon--success,
-.has-icon-right .form-icon--success
-{
-    color: #64ad13;
-}
-
-.has-icon-left .form-icon--error,
-.has-icon-right .form-icon--error
-{
-    color: #d91919;
-}
-
-.has-icon-left .form-input
+.has-icon-left .form-input,
+.has-icon-left .form-select
 {
     padding-left: 1.6rem;
 }
@@ -1741,7 +1730,8 @@ textarea
     top: .3rem; left: .4rem;
 }
 
-.has-icon-right .form-input
+.has-icon-right .form-input,
+.has-icon-right .form-select
 {
     padding-right: 1.6rem;
 }
@@ -1751,19 +1741,187 @@ textarea
     top: .3rem; right: .4rem;
 }
 
-.is-error
+.is-success .form-input,
+.is-success .form-select
+{
+    border: 1px solid #64ad13;
+}
+
+.is-success .form-input:focus,
+.is-success .form-select:focus
+{
+    box-shadow: 0 0 0 .1rem rgba(100, 173, 19, .2);
+}
+
+.is-success .form-icon
+{
+    color: #64ad13;
+}
+
+.is-success .form-radio input:checked + .form-icon,
+.is-success .form-checkbox input:checked + .form-icon,
+.is-success .form-switch input:checked + .form-icon
+{
+    border-color: #64ad13; background: #64ad13;
+}
+
+.is-error .form-input,
+.is-error .form-select
 {
     border: 1px solid #d91919;
 }
 
-.is-warning
+.is-error .form-input:focus,
+.is-error .form-select:focus
+{
+    box-shadow: 0 0 0 .1rem rgba(217, 25, 25, .2);
+}
+
+.is-error .form-icon
+{
+    color: #d91919;
+}
+
+.is-error .form-radio input:checked + .form-icon,
+.is-error .form-checkbox input:checked + .form-icon,
+.is-error .form-switch input:checked + .form-icon
+{
+    border-color: #d91919; background: #d91919;
+}
+
+.is-warning .form-input,
+.is-warning .form-select
 {
     border: 1px solid #ff7800;
 }
 
-.disabled
+.is-warning .form-input:focus,
+.is-warning .form-select:focus
 {
-    background: #f8f8f8;
+    box-shadow: 0 0 0 .1rem rgba(255, 120, 0, .2);
+}
+
+.is-warning .form-icon
+{
+    color: #ff7800;
+}
+
+.is-warning .form-radio input:checked + .form-icon,
+.is-warning .form-checkbox input:checked + .form-icon,
+.is-warning .form-switch input:checked + .form-icon
+{
+    border-color: #ff7800; background: #ff7800;
+}
+
+.form-input:disabled,
+.form-input.disabled,
+.form-select:disabled,
+.form-select.disabled,
+.form-checkbox:disabled,
+.form-checkbox.disabled,
+.form-switch:disabled,
+.form-switch.disabled,
+.form-radio:disabled,
+.form-radio.disabled
+{cursor: not-allowed; 
+
+    opacity: .46; background: #f8f8f8;
+}
+
+.form-input:disabled .form-input,
+.form-input:disabled .form-select,
+.form-input.disabled .form-input,
+.form-input.disabled .form-select,
+.form-select:disabled .form-input,
+.form-select:disabled .form-select,
+.form-select.disabled .form-input,
+.form-select.disabled .form-select,
+.form-checkbox:disabled .form-input,
+.form-checkbox:disabled .form-select,
+.form-checkbox.disabled .form-input,
+.form-checkbox.disabled .form-select,
+.form-switch:disabled .form-input,
+.form-switch:disabled .form-select,
+.form-switch.disabled .form-input,
+.form-switch.disabled .form-select,
+.form-radio:disabled .form-input,
+.form-radio:disabled .form-select,
+.form-radio.disabled .form-input,
+.form-radio.disabled .form-select
+{
+    border: 1px solid #dbdbdb;
+}
+
+.form-input:disabled .form-input:focus,
+.form-input:disabled .form-select:focus,
+.form-input.disabled .form-input:focus,
+.form-input.disabled .form-select:focus,
+.form-select:disabled .form-input:focus,
+.form-select:disabled .form-select:focus,
+.form-select.disabled .form-input:focus,
+.form-select.disabled .form-select:focus,
+.form-checkbox:disabled .form-input:focus,
+.form-checkbox:disabled .form-select:focus,
+.form-checkbox.disabled .form-input:focus,
+.form-checkbox.disabled .form-select:focus,
+.form-switch:disabled .form-input:focus,
+.form-switch:disabled .form-select:focus,
+.form-switch.disabled .form-input:focus,
+.form-switch.disabled .form-select:focus,
+.form-radio:disabled .form-input:focus,
+.form-radio:disabled .form-select:focus,
+.form-radio.disabled .form-input:focus,
+.form-radio.disabled .form-select:focus
+{
+    box-shadow: 0 0 0 .1rem rgba(219, 219, 219, .2);
+}
+
+.form-input:disabled .form-icon,
+.form-input.disabled .form-icon,
+.form-select:disabled .form-icon,
+.form-select.disabled .form-icon,
+.form-checkbox:disabled .form-icon,
+.form-checkbox.disabled .form-icon,
+.form-switch:disabled .form-icon,
+.form-switch.disabled .form-icon,
+.form-radio:disabled .form-icon,
+.form-radio.disabled .form-icon
+{
+    color: #dbdbdb;
+}
+
+.form-input:disabled .form-radio input:checked + .form-icon,
+.form-input:disabled .form-checkbox input:checked + .form-icon,
+.form-input:disabled .form-switch input:checked + .form-icon,
+.form-input.disabled .form-radio input:checked + .form-icon,
+.form-input.disabled .form-checkbox input:checked + .form-icon,
+.form-input.disabled .form-switch input:checked + .form-icon,
+.form-select:disabled .form-radio input:checked + .form-icon,
+.form-select:disabled .form-checkbox input:checked + .form-icon,
+.form-select:disabled .form-switch input:checked + .form-icon,
+.form-select.disabled .form-radio input:checked + .form-icon,
+.form-select.disabled .form-checkbox input:checked + .form-icon,
+.form-select.disabled .form-switch input:checked + .form-icon,
+.form-checkbox:disabled .form-radio input:checked + .form-icon,
+.form-checkbox:disabled .form-checkbox input:checked + .form-icon,
+.form-checkbox:disabled .form-switch input:checked + .form-icon,
+.form-checkbox.disabled .form-radio input:checked + .form-icon,
+.form-checkbox.disabled .form-checkbox input:checked + .form-icon,
+.form-checkbox.disabled .form-switch input:checked + .form-icon,
+.form-switch:disabled .form-radio input:checked + .form-icon,
+.form-switch:disabled .form-checkbox input:checked + .form-icon,
+.form-switch:disabled .form-switch input:checked + .form-icon,
+.form-switch.disabled .form-radio input:checked + .form-icon,
+.form-switch.disabled .form-checkbox input:checked + .form-icon,
+.form-switch.disabled .form-switch input:checked + .form-icon,
+.form-radio:disabled .form-radio input:checked + .form-icon,
+.form-radio:disabled .form-checkbox input:checked + .form-icon,
+.form-radio:disabled .form-switch input:checked + .form-icon,
+.form-radio.disabled .form-radio input:checked + .form-icon,
+.form-radio.disabled .form-checkbox input:checked + .form-icon,
+.form-radio.disabled .form-switch input:checked + .form-icon
+{
+    border-color: #dbdbdb; background: #dbdbdb;
 }
 
 pre

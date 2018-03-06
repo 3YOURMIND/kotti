@@ -8,8 +8,9 @@
   border-radius: .1rem;
   padding: 0 $unit-2;
   position: relative;
+  outline: none;
   &:focus {
-    // @include control-shadow();
+    @include control-shadow();
     border-color: $primary-500;
   }
 }

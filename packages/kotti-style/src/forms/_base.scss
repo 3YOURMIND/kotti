@@ -1,4 +1,8 @@
 // Forms
+@mixin control-shadow($color: $primary-500) {
+  box-shadow: 0 0 0 .1rem rgba($color, .2);
+}
+
 fieldset {
   margin-bottom: $layout-spacing-lg;
 }
@@ -8,6 +12,7 @@ legend {
   font-weight: 500;
   margin-bottom: $layout-spacing-lg;
 }
+
 
 .form-group {
   &:not(:last-child) {

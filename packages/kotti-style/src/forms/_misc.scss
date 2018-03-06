@@ -6,16 +6,10 @@
     color: $lightgrey-500;
     font-size: 1rem;
     position: absolute;
-    &--success {
-      color: $green-500;
-    }
-    &--error {
-      color: $red-500;
-    }
   }
 }
 .has-icon-left {
-  .form-input {
+  .form-input, .form-select {
     padding-left: 1.6rem;
   }
   .form-icon {
@@ -25,7 +19,7 @@
 }
 
 .has-icon-right {
-  .form-input {
+  .form-input, .form-select {
     padding-right: 1.6rem;
   }
   .form-icon {
@@ -34,14 +28,50 @@
   }
 }
 
-// Form misc: state 
 
+@mixin form-state ($color) {
+  .form-input, .form-select {
+    &:focus {
+      @include control-shadow($color);
+    }
+    border: 1px solid $color;
+  }
+  .form-icon {
+    color: $color;
+  }
+  .form-radio,
+  .form-checkbox,
+  .form-switch  {
+    input {
+      &:checked + .form-icon {
+        border-color: $color;
+        background: $color;
+      }
+    }
+  }
+} 
+// Form misc: state 
+.is-success {
+  @include form-state($green-500)
+}
 .is-error {
-  border: 1px solid $red-500;
+  @include form-state($red-500)
 }
 .is-warning {
-  border: 1px solid $orange-500;
+  @include form-state($orange-500)
 }
-.disabled {
-  background: $lightgrey-300;
+
+
+.form-input,
+.form-select,
+.form-checkbox,
+.form-switch, 
+.form-radio {
+  &:disabled,
+  &.disabled {
+    @include form-state($lightgrey-400);
+    opacity: .46;
+    background: $lightgrey-300;
+    cursor: not-allowed;
+  }
 }

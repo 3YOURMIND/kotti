@@ -30,7 +30,7 @@
         <nuxt-link to="/drawer">Drawer</nuxt-link>
       </li>
       <li>
-        <nuxt-link to="/inputs">Inputs</nuxt-link>
+        <nuxt-link to="/forms">Forms</nuxt-link>
       </li>
       <li>
         <nuxt-link to="/loadings">Loadings</nuxt-link>
