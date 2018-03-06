@@ -1772,9 +1772,9 @@
         "minorVersion": 2
       },
       "metrics": {
-        "emSize": 512,
-        "baseline": 12,
-        "whitespace": 50
+        "emSize": 1024,
+        "baseline": 24,
+        "whitespace": 24
       },
       "embed": false,
       "showSelector": true,

@@ -19,7 +19,7 @@ $ yarn add @3yourmind/yoco
 
 Download latest version from Github and unzip in your project.
 
-* [Download v0.0.1-beta.2](https://github.com/3YOURMIND/yoco/releases/tag/v0.0.1-beta.2)
+* [Download v0.0.2-beta.4](https://github.com/3YOURMIND/yoco/releases/tag/v0.0.2-beta.4)
 
 ## Add yoco.css to your project
 
@@ -35,5 +35,40 @@ Download latest version from Github and unzip in your project.
 
 ## Using yoco icons
 
-Please using [yoco docs](https://3yourmind.github.io/kotti/icons/)
+Yoco use ligatures feature, which allows rendering of an icon glyph simply by using its textual name.
+
+```html
+<!-- cloud is icon's textual name -->
+<i class="yoco">cloud</i>
+```
+
+[Icon Preview](https://3yourmind.github.io/yoco/)
+
+[Yoco Icon tools](https://3yourmind.github.io/kotti/icons/)
+
+## Generate font file
+
+We use [icomoon](https://icomoon.io/app/) to generate font files. You can import `icomoon/yoco-icon.json` on icomoon website to generate new fonts. We apply follwing font metrics.
+
+|Type|Metrics|
+|----|----|
+|Square Height|1024|
+|Baseline Height|24|
+|Whitespace Width|24|
+
+## Build
+
+Gulp will copy fonts to `dist/fonts` folder and minify css files then copy to `dist` directory.  
+
+```bash
+yarn gulp build
+```
+## Publish to gh-pages
+
+```bash
+yarn gh-pages
+```
+
+
+
 
