@@ -7,7 +7,7 @@ const autoprefixer = require('gulp-autoprefixer');
 
 
 var paths = {
-  source: './src/*.scss',
+  source: './src/*.css',
   font: './src/fonts/*'
 };
 
