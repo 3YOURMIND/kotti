@@ -29,6 +29,9 @@
 .mb-16 {
   margin-bottom: $layout-spacing-lg;
 }
+.mb-0 {
+  margin-bottom: 0 !important;
+}
 
 .float-left {
   float: left;
