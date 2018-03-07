@@ -6,7 +6,15 @@
   background-color: $primary-600;
 	color: $lightgrey-300;
 	position: relative;
-	display: block;
+	display: flex;
+	flex-direction: column;
 	overflow-y: auto;
 	height: 100vh;
+	.navbar-body {
+		width: 100%;
+		flex: 1 1 100%;
+	}
+	.navbar-footer {
+		flex: 0 0 auto;
+	}
 }

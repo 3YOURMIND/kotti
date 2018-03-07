@@ -13,7 +13,7 @@
   padding-left: $layout-spacing;
   padding-right: $layout-spacing;
   width: 100%;
-  @include clearfix;
+  @include clearfix();
 
   $grid-spacing: ($layout-spacing / ($layout-spacing * 0 + 1)) * $html-font-size;
 
@@ -71,8 +71,7 @@
 .column {
   flex: 1;
   max-width: 100%;
-  padding-left: $layout-spacing;
-  padding-right: $layout-spacing;
+  padding: $layout-spacing;
 
   &.col-12,
   &.col-11,

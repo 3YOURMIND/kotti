@@ -8,13 +8,12 @@
   border-right: 1px solid #ddd;
   box-sizing: border-box;
   position: relative;
-}
-
-.actionbar .bottom {
-  box-sizing: border-box;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: $unit-6;
+  display: flex;
+  flex-direction: column;
+  .actionbar-body {
+    flex: 1 1 100%;
+  }
+  .actionbar-footer {
+    flex: 1 1 auto;
+  }
 }

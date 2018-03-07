@@ -1,7 +1,7 @@
 .workspace {
   flex: 1 1 100%;
   background: #ffffff;
-  margin-right: $unit-6; 
+  margin-right: $unit-6;
   padding: $unit-6;
   overflow-y: auto;
   max-height: 100vh;
@@ -12,3 +12,8 @@
   }
 }
 
+.workspace {
+  h3:not(:first-of-type)  {
+    margin-top: $unit-8;
+  }
+}

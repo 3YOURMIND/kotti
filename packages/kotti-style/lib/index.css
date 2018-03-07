@@ -584,7 +584,7 @@ img
 }
 
 .column
-{max-width: 100%; padding-right: .4rem; padding-left: .4rem; 
+{max-width: 100%; padding: .4rem; 
 
     flex: 1;
 }
@@ -1067,21 +1067,35 @@ img
 }
 
 .navbar
-{position: relative; display: block; overflow-y: auto; width: 12rem; height: 100vh; padding: 1.2rem; color: #f8f8f8; background-color: #2659ab; 
+{position: relative; display: flex; overflow-y: auto; flex-direction: column; width: 12rem; height: 100vh; padding: 1.2rem; color: #f8f8f8; background-color: #2659ab; 
 
     flex: 0 0 12rem; align-items: center;
 }
 
+.navbar .navbar-body
+{
+    width: 100%; flex: 1 1 100%;
+}
+
+.navbar .navbar-footer
+{
+    flex: 0 0 auto;
+}
+
 .actionbar
-{position: relative; box-sizing: border-box; width: 16rem; height: 100vh; padding: 1.2rem; border-right: 1px solid #ddd; background: #fcfcfc; 
+{position: relative; display: flex; flex-direction: column; box-sizing: border-box; width: 16rem; height: 100vh; padding: 1.2rem; border-right: 1px solid #ddd; background: #fcfcfc; 
 
     flex: 0 0 16rem;
 }
 
-.actionbar .bottom
-{position: absolute; bottom: 0; left: 0; 
+.actionbar .actionbar-body
+{
+    flex: 1 1 100%;
+}
 
-    box-sizing: border-box; width: 100%; padding: 1.2rem;
+.actionbar .actionbar-footer
+{
+    flex: 1 1 auto;
 }
 
 .workspace
@@ -1096,6 +1110,11 @@ img
     {
         margin-right: 0;
     }
+}
+
+.workspace h3:not(:first-of-type)
+{
+    margin-top: 1.6rem;
 }
 
 button
@@ -1186,7 +1205,7 @@ button.loading::after
 
 .banner
 {
-    display: flex; flex-direction: column; margin: .8rem 0; padding: .8rem .8rem; border: 1px solid #2c66c4; border-radius: .1rem; background: #fff;
+    display: flex; flex-direction: column; padding: .4rem .8rem; border: 1px solid #2c66c4; border-radius: .1rem; background: #fff;
 }
 
 .banner.banner-grey
@@ -1317,13 +1336,18 @@ textarea
     box-shadow: 0 0 0 .1rem rgba(44, 102, 196, .2);
 }
 
+textarea.form-input
+{
+    height: auto;
+}
+
 .input-group
 {
     display: flex;
 }
 
 .input-group .input-group-addon
-{line-height: 1.5rem; padding: 0 .4rem; white-space: nowrap; border: .05rem solid #dbdbdb; border-radius: .1rem; 
+{font-size: .6rem; line-height: 1.5rem; padding: 0 .4rem; white-space: nowrap; border: .05rem solid #dbdbdb; border-radius: .1rem; 
     background: #f8f8f8;
 }
 
@@ -1824,19 +1848,19 @@ code::before
 }
 
 .skeleton.circle
-{line-height: 1px; display: block; box-sizing: border-box; width: 100%; margin: .2rem 0; padding-top: 100%; 
+{line-height: 1px; display: block; box-sizing: border-box; width: 100%; margin: .4rem 0; padding-top: 100%; 
 
     -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; border-radius: 100%; background: #f6f7f8; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1000px 1000px;
 }
 
 .skeleton.square
-{line-height: 1px; display: block; box-sizing: border-box; width: 100%; margin: .2rem 0; padding-top: 100%; 
+{line-height: 1px; display: block; box-sizing: border-box; width: 100%; margin: .4rem 0; padding-top: 100%; 
 
     -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; background: #f6f7f8; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1000px 1000px;
 }
 
 .skeleton.rectangle
-{line-height: 1px; display: block; box-sizing: border-box; width: 100%; height: .4rem; margin: .2rem 0; 
+{line-height: 1px; display: block; box-sizing: border-box; width: 100%; height: .4rem; margin: .4rem 0; 
 
     -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; background: #f6f7f8; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1800px 1200px;
 }
@@ -2033,7 +2057,7 @@ h3,
 h4,
 h5,
 h6
-{font-weight: 600; line-height: 1.5; margin-top: .5em; margin-bottom: .5em; 
+{font-weight: 600; line-height: 1.5; margin-top: 0; margin-bottom: .5em; 
 
     color: inherit;
 }
@@ -2050,9 +2074,8 @@ h6
 
 h1,
 .h1
-{font-size: 1.6rem; 
-
-    margin-top: 0;
+{
+    font-size: 1.6rem;
 }
 
 h2,
@@ -2064,7 +2087,7 @@ h2,
 h3,
 .h3
 {
-    font-size: .8rem; padding-bottom: .4rem; color: #2c66c4; border-bottom: 1px solid #dbdbdb;
+    font-size: .8rem; margin-bottom: 0; padding-bottom: .4rem; color: #2c66c4; border-bottom: 1px solid #dbdbdb;
 }
 
 h3 span,
@@ -2235,7 +2258,7 @@ table td:first-child
 
 table i
 {
-    font-size: .9rem; margin: 0 .2rem; color: #575757;
+    font-size: 1rem !important; margin: 0 .2rem; color: #8a8a8a;
 }
 
 table i.disabled

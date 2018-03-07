@@ -12,7 +12,7 @@ h6 {
   color: inherit;
   font-weight: 600;
   line-height: 1.5;
-  margin-top: 0.5em;
+  margin-top: 0;
   margin-bottom: 0.5em;
 }
 .h1,
@@ -25,7 +25,6 @@ h6 {
 }
 h1,
 .h1 {
-  margin-top: 0;
   font-size: 1.6rem;
 }
 h2,
@@ -38,6 +37,7 @@ h3,
   color: $primary-500;
   padding-bottom: $unit-2;
   border-bottom: 1px solid $lightgrey-400;
+  margin-bottom: 0; 
   span {
     float: right;
     font-weight: 500;

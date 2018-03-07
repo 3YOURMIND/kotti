@@ -1,10 +1,9 @@
 .banner {
   display: flex;
-  margin: $unit-4 0;
   border-radius: .1rem;
   background: #fff;
   border: 1px solid $primary-500;
-  padding: $unit-4 $unit-4;
+  padding: $unit-2 $unit-4;
   flex-direction: column;
   &.banner-grey {
     border: 0;

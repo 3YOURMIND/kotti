@@ -41,8 +41,8 @@ table {
   }
 
   i {
-    font-size: .9rem;
-    color: $darkgrey-400;
+    font-size: 1rem !important;
+    color: $darkgrey-300;
     margin: 0 .2rem;
     &.disabled {
       color: $lightgrey-500;
