@@ -1,10 +1,11 @@
 .workspace {
-  flex: 1 1 auto;
+  flex: 1 1 100%;
   background: #ffffff;
   margin-right: $unit-6; 
   padding: $unit-6;
   overflow-y: auto;
   max-height: 100vh;
+  min-width: 40em;
   box-shadow: 1px 0 2px #ddd;
   @media (max-width: $size-md) {
     margin-right: 0;

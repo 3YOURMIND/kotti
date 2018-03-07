@@ -472,9 +472,14 @@ img
     margin-bottom: .8rem;
 }
 
-.columns-vertical .column
-{box-sizing: border-box; 
-    padding: 0 .2rem;
+.float-left
+{
+    float: left;
+}
+
+.float-right
+{
+    float: right;
 }
 
 .element-margin
@@ -485,6 +490,11 @@ img
 .block-margin
 {
     margin-top: 1.2rem;
+}
+
+.columns-vertical .column
+{box-sizing: border-box; 
+    padding: 0 .2rem;
 }
 
 .email-preview
@@ -505,7 +515,7 @@ img
 .d-flex
 {position: relative; 
 
-    display: flex; flex-direction: row; height: 100%; flex-flow: nowrap;
+    display: flex; flex-direction: row; width: 100%; height: 100%; flex-flow: nowrap;
 }
 
 .container
@@ -1063,7 +1073,7 @@ img
 }
 
 .actionbar
-{box-sizing: border-box; width: 16rem; height: 100vh; padding: 1.2rem; border-right: 1px solid #ddd; background: #fcfcfc; 
+{position: relative; box-sizing: border-box; width: 16rem; height: 100vh; padding: 1.2rem; border-right: 1px solid #ddd; background: #fcfcfc; 
 
     flex: 0 0 16rem;
 }
@@ -1075,9 +1085,9 @@ img
 }
 
 .workspace
-{overflow-y: auto; max-height: 100vh; margin-right: 1.2rem; padding: 1.2rem; background: #fff; box-shadow: 1px 0 2px #ddd; 
+{overflow-y: auto; min-width: 40em; max-height: 100vh; margin-right: 1.2rem; padding: 1.2rem; background: #fff; box-shadow: 1px 0 2px #ddd; 
 
-    flex: 1 1 auto;
+    flex: 1 1 100%;
 }
 
 @media (max-width: 840px)
@@ -1172,6 +1182,48 @@ button.bottom
 button.loading::after
 {
     border-bottom-color: white; border-left-color: white;
+}
+
+.banner
+{
+    display: flex; flex-direction: column; margin: .8rem 0; padding: .8rem .8rem; border: 1px solid #2c66c4; border-radius: .1rem; background: #fff;
+}
+
+.banner.banner-grey
+{
+    border: 0; background: #f8f8f8;
+}
+
+.banner .collapse
+{
+    display: flex; flex-direction: row; width: 100%;
+}
+
+.banner .glyph
+{line-height: 1; width: 1.6rem; 
+
+    text-align: center; flex: 0 0 auto; align-self: center;
+}
+
+.banner .glyph img
+{
+    width: 100%; height: 100%;
+}
+
+.banner .message
+{font-weight: 600; padding: 0 .8rem; color: #575757; 
+
+    flex: 1 1 100%; align-self: center;
+}
+
+.banner .action
+{
+    flex: 0 0 auto; align-self: center;
+}
+
+.banner .expand
+{
+    margin-top: .8rem;
 }
 
 fieldset
@@ -1916,7 +1968,7 @@ code::before
 
 .popover .card
 {border: 0; 
-    box-shadow: 0 0 2px #8a8a8a;
+    box-shadow: 0 0 1px #dbdbdb;
 }
 
 .tooltip
@@ -1998,7 +2050,7 @@ h6
 
 h1,
 .h1
-{font-size: 2rem; 
+{font-size: 1.6rem; 
 
     margin-top: 0;
 }
@@ -2110,7 +2162,7 @@ dl dd
 
 .label-value
 {
-    line-height: 1.5; position: relative; color: #3d3d3d;
+    line-height: 1.5; position: relative; margin-bottom: .8rem; color: #3d3d3d;
 }
 
 .label-value label

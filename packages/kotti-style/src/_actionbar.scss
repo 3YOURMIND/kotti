@@ -5,9 +5,9 @@
   padding: $unit-6;
   background: #FCFCFC;
   height: 100vh;
-  // z-index: 2;
   border-right: 1px solid #ddd;
   box-sizing: border-box;
+  position: relative;
 }
 
 .actionbar .bottom {

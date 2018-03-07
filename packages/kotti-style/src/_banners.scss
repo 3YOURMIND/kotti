@@ -1,0 +1,43 @@
+.banner {
+  display: flex;
+  margin: $unit-4 0;
+  border-radius: .1rem;
+  background: #fff;
+  border: 1px solid $primary-500;
+  padding: $unit-4 $unit-4;
+  flex-direction: column;
+  &.banner-grey {
+    border: 0;
+    background: $lightgrey-300;
+  }
+  .collapse {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .glyph {
+    text-align: center;
+    flex: 0 0 auto;
+    line-height: 1;
+    width: 1.6rem;
+    align-self: center;
+    img {
+      width: 100%;
+      height: 100%;;
+    }
+  }
+  .message {
+    flex: 1 1 100%;
+    font-weight: 600;
+    color: $darkgrey-400;
+    padding: 0 $unit-4;
+    align-self: center;
+  }
+  .action {
+    flex: 0 0 auto;
+    align-self: center;
+  }
+  .expand {
+    margin-top: $unit-4;
+  }
+}

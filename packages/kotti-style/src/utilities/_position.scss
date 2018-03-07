@@ -29,3 +29,17 @@
 .mb-16 {
   margin-bottom: $layout-spacing-lg;
 }
+
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+
+.element-margin {
+  margin-top: $unit-4;
+}
+.block-margin {
+  margin-top: $unit-6;
+}
