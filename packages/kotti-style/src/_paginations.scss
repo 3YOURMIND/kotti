@@ -1,0 +1,24 @@
+.pagination {
+  margin: 0;
+  list-style: none;
+  .disabled {
+    cursor: not-allowed;
+    .page-button {
+      opacity: .46;
+    }
+  }
+  .page-button {
+    background: $lightgrey-300;
+    display: inline-block;
+    padding: $unit-1;
+    &:hover {
+      background: $lightgrey-400;
+    }
+  }
+  .page-item {
+    display: inline-block;
+    text-align: center;
+    padding: $unit-2;
+    line-height: 24px;
+  }
+}

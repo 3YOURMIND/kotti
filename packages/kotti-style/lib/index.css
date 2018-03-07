@@ -2291,3 +2291,35 @@ table .columns
 {
     margin-right: 0; margin-left: 0;
 }
+
+.pagination
+{
+    margin: 0; list-style: none;
+}
+
+.pagination .disabled
+{
+    cursor: not-allowed;
+}
+
+.pagination .disabled .page-button
+{
+    opacity: .46;
+}
+
+.pagination .page-button
+{display: inline-block; padding: .2rem; 
+
+    background: #f8f8f8;
+}
+
+.pagination .page-button:hover
+{
+    background: #dbdbdb;
+}
+
+.pagination .page-item
+{line-height: 24px; 
+
+    display: inline-block; padding: .4rem; text-align: center;
+}
