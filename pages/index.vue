@@ -32,12 +32,21 @@ their presence.
 
 ## Update Logs
 
-* **2018-03-05**
+  
+`Version 0.0.1-beta.3`
+
+  * Updated `layout`
+  * Add new component `modal`
+  * Fix issue [#11](https://github.com/3YOURMIND/kotti/issues/11)
+  * Fix issue [#9](https://github.com/3YOURMIND/kotti/issues/9)
+  * Fix issue [#8](https://github.com/3YOURMIND/kotti/issues/8)
+
+`Version 0.0.1-beta.2`
+
   * Updated `colors`;
   * Added implmentation examples for `typography`, `buttons`, `inputs` and `tables`;
   * Using `kotti-style` packages;
   * Add new component `loadings`.
-* **2018-01-04** First document published
 
 </template>
 
