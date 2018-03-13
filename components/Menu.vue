@@ -33,7 +33,7 @@
         <nuxt-link to="/forms">Forms</nuxt-link>
       </li>
       <li>
-        <nuxt-link to="/Modal">Modal</nuxt-link>
+        <nuxt-link to="/modal">Modal</nuxt-link>
       </li>
       <li>
         <nuxt-link to="/loadings">Loadings</nuxt-link>
