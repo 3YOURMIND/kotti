@@ -1,7 +1,7 @@
 <template>
   <div class="sidemenu">
-    <div class="subline">Foundation</div>
-    <ul>
+    <div class="subline" @click="showFoundation=!showFoundation">Foundation</div>
+    <ul v-if="showFoundation">
       <li>
         <nuxt-link to="/layout">Layout</nuxt-link>
       </li>
@@ -18,8 +18,8 @@
         <nuxt-link to="/writing">Writing Style</nuxt-link>
       </li>
     </ul>
-    <div class="subline">Components</div>
-    <ul>
+    <div class="subline" @click="showComponents=!showComponents">Components</div>
+    <ul v-if="showComponents">
       <li>
         <nuxt-link to="/banners">Banners</nuxt-link>
       </li>
@@ -31,6 +31,9 @@
       </li>
       <li>
         <nuxt-link to="/forms">Forms</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/Modal">Modal</nuxt-link>
       </li>
       <li>
         <nuxt-link to="/loadings">Loadings</nuxt-link>
@@ -45,8 +48,8 @@
         <nuxt-link to="/toaster">Toaster</nuxt-link>
       </li>
     </ul>
-    <div class="subline">Resource</div>
-    <ul>
+    <div class="subline" @click="showResource=!showResource">Resource</div>
+    <ul v-if="showResource">
       <li>
         <nuxt-link to="/designkit">Design Kit</nuxt-link>
       </li>
@@ -56,7 +59,14 @@
 
 <script>
 export default {
-  name: 'Menu'
+  name: 'Menu',
+  data () {
+    return {
+      showFoundation: true,
+      showComponents: false,
+      showResource: false
+    }
+  }
 }
 </script>
 
@@ -70,8 +80,8 @@ export default {
   li {
     margin: 0;
     line-height: 1.4rem;
+    font-size: 1.05em;
     list-style: none;
-
     a {
       text-decoration: none;
       padding: 0.2rem 0.8rem;
@@ -88,11 +98,15 @@ export default {
   }
 
   .subline {
-    font-size: 0.875em;
+    font-size: 1em;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.64);
     margin: 1.2rem 0 0.8rem 0;
     text-transform: uppercase;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+    }
   }
 }
 </style>

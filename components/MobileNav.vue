@@ -12,8 +12,8 @@
         chevron_down
       </i>
     </div>
-    <div v-if="isOpen" class="mobile-menu-expand-wrapper" @click="closeMenu">
-      <div class="mobile-menu-expand" @click="closeMenu">
+    <div v-if="isOpen" class="mobile-menu-expand-wrapper" >
+      <div class="mobile-menu-expand" >
         <MenuList />
       </div>
     </div>
@@ -31,6 +31,11 @@ export default {
   data () {
     return {
       isOpen: false
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.isOpen = false
     }
   },
   methods: {

@@ -133,6 +133,12 @@
     <label class="form-label">Name</label>
     <input class="form-input" type="text" placeholder="Search 3D Project">
   </div>
+
+  <div class="form-group">
+    <label class="form-label">Email</label>
+    <input class="form-input" type="email" placeholder="Non email text will be invalid" value="Change to email address">
+  </div>
+
   <div class="form-group is-success">
     <label class="form-label">Select options</label>
     <select class="form-select">

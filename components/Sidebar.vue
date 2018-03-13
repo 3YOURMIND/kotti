@@ -1,14 +1,23 @@
 <template>
   <div class="sidebar">
-    <div class="logo-nav">
-      <nuxt-link to="/">
-        <img
-          src="~/assets/img/nav_logo.svg"
-          alt="vector graphic as logo for the navigation bar"
-        />
-      </nuxt-link>
+    <div class="navbar-wrapper">
+      <div class="navbar-header">
+        <div class="logo-nav mt-16">
+          <nuxt-link to="/">
+            <img
+              src="~/assets/img/nav_logo.svg"
+              alt="vector graphic as logo for the navigation bar"
+            />
+          </nuxt-link>
+        </div>
     </div>
-    <MenuList class="sidemenu" />
+    <div class="navbar-body">
+      <MenuList class="sidemenu" />
+    </div>
+    <div class="navbar-footer">
+      version 0.0.1-beta.3
+    </div>
+    </div>
   </div>
 </template>
 
@@ -24,20 +33,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logo-nav {
-  margin: 1.2rem 0;
-  text-align: left;
-  height: 2.4rem;
+.navbar-footer {
+  color: rgba(255, 255, 255, .46);
+  text-align: center;
 }
 
-// .sidebar {
-//   background: #2659ab;
-//   height: 100vh;
-//   width: 12rem;
-//   padding: 1.2rem;
-//   overflow-y: auto;
-//   float: left;
-//   color: #f8f8f8;
-//   position: fixed;
-// }
 </style>

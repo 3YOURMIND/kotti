@@ -121,10 +121,10 @@ export default {
         {name: 'Darkgrey-600', code: '#242424'}
       ],
       lightGrey: [
-        {name: 'LightGrey-300', code: '#F8F8F8'},
-        {name: 'LightGrey-400', code: '#DBDBDB'},
-        {name: 'LightGrey-500', code: '#A8A8A8'},
-        {name: 'LightGrey-600', code: '#5C5C5C'}
+        {name: 'Lightgrey-300', code: '#F8F8F8'},
+        {name: 'Lightgrey-400', code: '#DBDBDB'},
+        {name: 'Lightgrey-500', code: '#A8A8A8'},
+        {name: 'Lightgrey-600', code: '#5C5C5C'}
       ]
     }
   }

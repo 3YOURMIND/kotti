@@ -26,19 +26,24 @@
   their priority and choose the most important one.
   
   <button class="primary">Primary Action</button>
+  <button class="primary ml-16" disabled>Primary Action Disabled</button>
   
   ```html
   <button class="primary">Primary Action</button>
+  <button class="primary disabled">Primary Action</button>
+  <!-- <button class="primary" disabled>Primary Action</button> -->
   ```
 
   ### Secondary butto 
   
   Use a secondary button only when there is a main call to action in the page.
 
-    <button class="secondary">Secondary Button</button>
+  <button class="secondary">Secondary Button</button>
+  <button class="secondary ml-16" disabled>Secondary Button</button>
   
   ```html
   <button class="secondary">Secondary Button</button>
+  <button class="secondary" disabled>Secondary Button</button>
   ```
 
   ### Danger button
@@ -48,10 +53,11 @@
   For example, canceling an order or deleting a material. Like the primary button, it should also limited to once per page.
 
   <button class="danger">Danger Action</button>
-
+  <button class="danger ml-16" disabled>Danger Action</button>
     
   ```html
-  <button class="danger">Secondary Button</button>
+  <button class="danger">Danger Button</button>
+  <button class="danger" disabled>Danger Action</button>
   ```
 
 
@@ -60,9 +66,11 @@
   This button can be used in most cases.
 
   <button>Default Button</button>
+  <button class="ml-16" disabled>Default Button</button>
 
   ```html
   <button>Default Button</button>
+  <button disabled>Default Button</button>
   ```
 
 
@@ -71,9 +79,11 @@
   A text button can be used for sub-menus and page navigation. It also can pair with a primary button for destructive actions such as `Cancel`.
  
   <button class="text">Cancel</button>
+  <button class="text ml-16" disabled>Cancel</button>
 
   ```html
   <button class="text">Cancel</button>
+  <button class="text" disabled>Cancel</button>
   ```
   ## Variations
   ![Button variations](~/assets/img/button_variations.png)

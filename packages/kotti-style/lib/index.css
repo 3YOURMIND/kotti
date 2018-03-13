@@ -520,7 +520,7 @@ img
 .d-flex
 {position: relative; 
 
-    display: flex; flex-direction: row; width: 100%; height: 100%; flex-flow: nowrap;
+    display: flex; flex-direction: row; width: 100%; flex-flow: nowrap;
 }
 
 .container
@@ -1072,29 +1072,51 @@ img
 }
 
 .navbar
-{position: relative; display: flex; overflow-y: auto; flex-direction: column; width: 12rem; height: 100vh; padding: 1.2rem; color: #f8f8f8; background-color: #2659ab; 
+{top: 0; bottom: 0; left: 0; width: 12rem; min-height: 100vh; background-color: #2659ab; 
 
-    flex: 0 0 12rem; align-items: center;
+    flex: 0 0 12rem;
 }
 
-.navbar .navbar-body
+.navbar-wrapper
+{position: fixed; display: flex; flex-direction: column; width: 12rem; height: 100%; 
+    padding: 1.2rem; flex-wrap: nowrap;
+}
+
+.navbar-header
 {
-    width: 100%; flex: 1 1 100%;
+    flex: 0 0 auto;
 }
 
-.navbar .navbar-footer
+.navbar-body
+{overflow-y: auto; 
+
+    flex: 1 1 100%;
+}
+
+.navbar-footer
 {
     flex: 0 0 auto;
 }
 
 .actionbar
-{position: relative; display: flex; flex-direction: column; box-sizing: border-box; width: 16rem; height: 100vh; padding: 1.2rem; border-right: 1px solid #ddd; background: #fcfcfc; 
+{position: relative; display: flex; flex-direction: column; box-sizing: border-box; width: 16rem; min-height: 100vh; border-right: 1px solid #ddd; background: #fcfcfc; 
 
     flex: 0 0 16rem;
 }
 
-.actionbar .actionbar-body
+.actionbar .actionbar-wrapper
 {
+    position: fixed; display: flex; flex-direction: column; width: 16rem; height: 100%; padding: 1.2rem;
+}
+
+.actionbar .actionbar-header
+{
+    flex: 0 0 auto;
+}
+
+.actionbar .actionbar-body
+{overflow-y: auto; 
+
     flex: 1 1 100%;
 }
 
@@ -1104,7 +1126,7 @@ img
 }
 
 .workspace
-{overflow-y: auto; min-width: 40em; max-height: 100vh; margin-right: 1.2rem; padding: 1.2rem; background: #fff; box-shadow: 1px 0 2px #ddd; 
+{position: relative; display: block; min-width: 40em; min-height: 100%; margin-right: 1.2rem; padding: 1.2rem; background: #fff; box-shadow: 1px 0 2px #ddd; 
 
     flex: 1 1 100%;
 }
@@ -1134,7 +1156,7 @@ button.tooltip::after
 
 button:hover
 {
-    cursor: pointer; background: rgba(44, 102, 196, .1);
+    cursor: pointer; background: #afc5e8;
 }
 
 button.primary
@@ -1144,7 +1166,7 @@ button.primary
 
 button.primary:hover
 {
-    background: #23509a;
+    background: #2659ab;
 }
 
 button.secondary
@@ -1154,7 +1176,7 @@ button.secondary
 
 button.secondary:hover
 {
-    color: #2659ab; border: 1px solid #2659ab; background: rgba(44, 102, 196, .1);
+    color: #2659ab; border: 1px solid #2659ab; background: #afc5e8;
 }
 
 button.text
@@ -1188,14 +1210,11 @@ button.icon-text i
     font-size: 1rem; margin-right: .4rem;
 }
 
-button.disabled
-{
-    opacity: .46;
-}
+button.disabled,
+button:disabled
+{pointer-events: none; 
 
-button.disabled:hover
-{
-    cursor: default;
+    opacity: .46;
 }
 
 button.bottom
@@ -1341,9 +1360,14 @@ textarea
     box-shadow: 0 0 0 .1rem rgba(44, 102, 196, .2);
 }
 
+.form-input:invalid
+{
+    border: 1px solid #d91919;
+}
+
 textarea.form-input
 {
-    height: auto;
+    height: auto; padding: .4rem;
 }
 
 .input-group
@@ -1996,8 +2020,8 @@ code::before
 }
 
 .popover .card
-{border: 0; 
-    box-shadow: 0 0 1px #dbdbdb;
+{z-index: 400; border: 0; 
+    box-shadow: 0 0 2px rgba(0, 0, 0, .46);
 }
 
 .tooltip
@@ -2190,7 +2214,7 @@ dl dd
 
 .label-value
 {
-    line-height: 1.5; position: relative; margin-bottom: .8rem; color: #3d3d3d;
+    line-height: 1.5; position: relative; color: #3d3d3d;
 }
 
 .label-value label
@@ -2327,4 +2351,112 @@ table .columns
 {line-height: 24px; 
 
     display: inline-block; padding: .4rem; text-align: center;
+}
+
+.modal-mask
+{
+    position: fixed; z-index: 99; top: 0; left: 0; display: flex; width: 100%; height: 100%; transition: opacity .3s ease; background-color: rgba(0, 0, 0, .46);
+}
+
+.modal-container
+{width: 90%; max-width: 48em; margin: 0 auto; padding: 1.2rem; transition: all .3s ease; border-radius: .1rem; background-color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, .33); 
+
+    align-self: center;
+}
+
+.modal-header,
+.modal-body
+{
+    margin-bottom: .8rem;
+}
+
+.modal-footer
+{
+    float: right;
+}
+
+.modal-enter
+{
+    opacity: 0;
+}
+
+.modal-leave-active
+{
+    opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container
+{
+    -webkit-transform: scale(1.1);            transform: scale(1.1);
+}
+
+.drawer-mask
+{
+    position: fixed; z-index: 999; top: 0; left: 0; display: flex; width: 100%; height: 100%; transition: opacity .5s ease; background-color: rgba(0, 0, 0, .5);
+}
+
+.drawer-handle
+{line-height: 1.5rem; position: absolute; top: 50%; left: .2rem; 
+
+    display: block; width: 1.5rem; height: 1.5rem; margin-top: -.725rem; color: #8f8f8f;
+}
+
+.drawer-handle:hover
+{
+    cursor: pointer; color: #2c66c4;
+}
+
+.drawer-container
+{position: absolute; top: 0; right: 0; display: flex; overflow-y: auto; flex-direction: column; 
+
+    width: 18.8rem; height: 100%; padding: 1.2rem; padding-left: 1.6rem; transition: all .3s ease; background-color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+}
+
+.drawer-container.drawer-expand
+{
+    width: 50%;
+}
+
+.drawer-container.drawer-wide
+{
+    width: 26.8rem;
+}
+
+.drawer-container.drawer-wide.drawer-expand
+{
+    width: 75%;
+}
+
+.drawer-header
+{
+    flex: 0 0 auto;
+}
+
+.drawer-body
+{overflow-y: auto; 
+
+    margin-bottom: .8rem; flex: 1 1 auto;
+}
+
+.drawer-footer
+{width: 100%; 
+
+    align-self: flex-end; flex: 0 0 auto;
+}
+
+.drawer-enter
+{
+    transition: opacity .5s; opacity: 0;
+}
+
+.drawer-leave-active
+{
+    opacity: 0;
+}
+
+.drawer-enter .drawer-container,
+.drawer-leave-active .drawer-container
+{
+    -webkit-transform: translate(20em, 0);            transform: translate(20em, 0);
 }

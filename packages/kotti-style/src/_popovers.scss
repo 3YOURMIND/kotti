@@ -63,7 +63,8 @@
   }
 
   .card {
-    box-shadow: 0 0 1px $lightgrey-400;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .46);
     border: 0;
+    z-index: $zindex-4;
   }
 }

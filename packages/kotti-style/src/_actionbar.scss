@@ -2,16 +2,28 @@
 .actionbar {
   flex: 0 0 $actionbar-width;
   width: $actionbar-width;
-  padding: $unit-6;
+
   background: #FCFCFC;
-  height: 100vh;
+  min-height: 100vh;
   border-right: 1px solid #ddd;
   box-sizing: border-box;
   position: relative;
   display: flex;
   flex-direction: column;
+  .actionbar-wrapper {
+    position: fixed;
+    padding: $unit-6;
+    width: $actionbar-width;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .actionbar-header {
+    flex: 0 0 auto;
+  }
   .actionbar-body {
     flex: 1 1 100%;
+    overflow-y: auto;
   }
   .actionbar-footer {
     flex: 1 1 auto;

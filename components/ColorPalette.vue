@@ -42,7 +42,7 @@ export default {
       )
     },
     textColor (colorName) {
-      if (colorName === 'LightGrey-300' || colorName === 'LightGrey-400') {
+      if (colorName === 'Lightgrey-300' || colorName === 'Lightgrey-400') {
         return '#3d3d3d'
       }
     }

@@ -1,5 +1,4 @@
 // Yoda Button Styles
-
 button {
   border-radius: .1rem;
   border: 0;
@@ -17,7 +16,7 @@ button {
   }
   &:hover {
     cursor: pointer;
-    background: rgba(44, 102, 196, .1);
+    background: $primary-300;
   }
 }
 
@@ -25,7 +24,7 @@ button.primary {
   background: $primary-500;
   color: #ffffff;
   &:hover {
-    background: darken($primary-500, 10);
+    background: $primary-600;
   }
 }
 
@@ -37,7 +36,7 @@ button.secondary {
   &:hover {
     color: $primary-600;
     border: 1px solid $primary-600;
-    background: rgba(44, 102, 196, .1);
+    background: $primary-300;
   }
 }
 
@@ -72,11 +71,9 @@ button.icon-text {
   }
 }
 
-button.disabled {
+button.disabled, button:disabled {
   opacity: .46;
-  &:hover {
-    cursor: default;
-  }
+  pointer-events:none;
 }
 
 button.bottom {

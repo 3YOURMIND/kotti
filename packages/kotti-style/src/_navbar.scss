@@ -1,20 +1,28 @@
 .navbar {
 	flex: 0 0 $navbar-width;
-  align-items: center;
   width: $navbar-width;
-  padding: $unit-6;
   background-color: $primary-600;
-	color: $lightgrey-300;
-	position: relative;
+	bottom: 0;
+	left: 0;
+	top: 0;
+	min-height: 100vh;
+}
+.navbar-wrapper {
+	padding: $unit-6;
+	position: fixed;
+	width: $navbar-width;
 	display: flex;
+	height: 100%;
+	flex-wrap: nowrap;
 	flex-direction: column;
+}
+.navbar-header {
+	flex: 0 0 auto;
+}
+.navbar-body {
+	flex: 1 1 100%;
 	overflow-y: auto;
-	height: 100vh;
-	.navbar-body {
-		width: 100%;
-		flex: 1 1 100%;
-	}
-	.navbar-footer {
-		flex: 0 0 auto;
-	}
+}
+.navbar-footer {
+	flex: 0 0 auto;
 }

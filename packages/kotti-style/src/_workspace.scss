@@ -3,9 +3,12 @@
   background: #ffffff;
   margin-right: $unit-6;
   padding: $unit-6;
-  overflow-y: auto;
-  max-height: 100vh;
+  // overflow-y: auto;
+  // max-height: 100vh;
+  position: relative;
   min-width: 40em;
+  min-height: 100%;
+  display: block;
   box-shadow: 1px 0 2px #ddd;
   @media (max-width: $size-md) {
     margin-right: 0;

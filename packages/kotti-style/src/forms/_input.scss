@@ -13,10 +13,14 @@
     @include control-shadow();
     border-color: $primary-500;
   }
+  &:invalid {
+    border: 1px solid $red-500;
+  }
 }
 
 textarea.form-input {
   height: auto;
+  padding: $unit-2;
 }
 
 // Form element: Input groups

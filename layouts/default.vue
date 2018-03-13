@@ -46,12 +46,10 @@ export default {
   .sidebar {
     display: none;
   }
-  .container {
-    position: relative;
-    margin: 2.8rem 0;
-    padding: 1rem;
-    width: 100%;
-    box-shadow: 0;
+  .workspace {
+    min-width: 100%;
+    margin-top: 3rem;
+    margin-right: 0;
   }
   .mobile-menu {
     display: block;
