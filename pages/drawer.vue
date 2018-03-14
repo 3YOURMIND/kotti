@@ -32,7 +32,7 @@ It is best to place secondary functionality or information in the drawer, and on
     <div class="drawer-footer">
       <button class="w-100" @click="showDrawer=false">Close</button>
     </div>
-    <div class="drawer-handle" @click="expandWindow">
+    <div class="drawer-handle" @click="expand = !expand">
       <i class="yoco" v-if="expand">chevron_right</i>
       <i class="yoco" v-else>chevron_left</i>
     </div>
@@ -54,8 +54,8 @@ It is best to place secondary functionality or information in the drawer, and on
     <div class="drawer-footer">
       <button class="w-100" @click="showWideDrawer=false">Close</button>
     </div>
-    <div class="drawer-handle" @click="expandWindow">
-      <i class="yoco" v-if="expand">chevron_right</i>
+    <div class="drawer-handle" @click="wideExpand = !wideExpand">
+      <i class="yoco" v-if="wideExpand">chevron_right</i>
       <i class="yoco" v-else>chevron_left</i>
     </div>
   </div>
@@ -103,12 +103,6 @@ export default {
       wideExpand: false,
       showDrawer: false,
       showWideDrawer: false
-    }
-  },
-  methods: {
-    expandWindow () {
-      this.expand = !this.expand
-      this.wideExpand = !this.wideExpand
     }
   }
 }

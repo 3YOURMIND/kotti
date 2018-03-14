@@ -8,11 +8,11 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, .46);
-  display: flex;
   transition: opacity .3s ease;
 }
 
 .modal-container {
+  display: flex;
   align-self: center;
   max-width: 48em;
   width: 90%;
