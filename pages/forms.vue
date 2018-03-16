@@ -75,11 +75,25 @@
     </label>
   </div>
 
+  <div class="form-group">
+    <label class="form-switch form-switch-right w-100">
+      <input type="checkbox">
+      <i class="form-icon"></i> Switch is on the right side
+    </label>
+  </div>
+
   ```html
   <div class="form-group">
     <label class="form-switch">
       <input type="checkbox">
       <i class="form-icon"></i> Send me emails with news and tips
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label class="form-switch form-switch-right w-100">
+      <input type="checkbox">
+      <i class="form-icon"></i> Switch is on the right side
     </label>
   </div>
   ```

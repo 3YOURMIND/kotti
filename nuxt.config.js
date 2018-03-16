@@ -16,7 +16,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '{{ description }}' }
+      { hid: 'description', name: 'description', content: 'Kotti helps to unify our design language and provides the documentation for further product design decisions. The Kotti design system has two main parts: foundation and components.' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -26,7 +26,7 @@ module.exports = {
   ** Customize the progress bar color
   */
   css: [
-    '../packages/kotti-style/lib/index.css',
+    '../packages/kotti-style/lib/index.min.css',
     '@/assets/css/main.scss',
     '@3yourmind/yoco',
   ],
