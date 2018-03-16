@@ -47,8 +47,13 @@
       />
       <ColorPalette
         class="column col-md-12 col-4"
-        colorName="Red"
+        colorName="Orange"
         :colors="orangeColor"
+      />
+       <ColorPalette
+        class="column col-md-12 col-4"
+        colorName="Yellow"
+        :colors="yellowColor"
       />
       <ColorPalette
         class="column col-md-12 col-4"
@@ -66,6 +71,11 @@
         class="column col-md-12 col-4"
         colorName="Light Grey"
         :colors="lightGrey"
+      />
+      <ColorPalette
+        class="column col-md-12 col-4"
+        colorName="Neutrals"
+        :colors="neutrals"
       />
     </div>
     <ColorUsage />
@@ -125,6 +135,16 @@ export default {
         {name: 'Lightgrey-400', code: '#DBDBDB'},
         {name: 'Lightgrey-500', code: '#A8A8A8'},
         {name: 'Lightgrey-600', code: '#5C5C5C'}
+      ],
+      neutrals: [
+        {name: 'White-000', code: '#FFFFFF'},
+        {name: 'Black-000', code: '#000000'}
+      ],
+      yellowColor: [
+        {name: 'Yellow-300', code: '#FFF9C0'},
+        {name: 'Yellow-400', code: '#FFF490'},
+        {name: 'Yellow-500', code: '#FFE60D'},
+        {name: 'Yellow-600', code: '#DFC903'}
       ]
     }
   }

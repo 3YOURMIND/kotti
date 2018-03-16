@@ -12,7 +12,14 @@
         <h2>This is the header</h2>
       </div>
       <div class="modal-body">
-          default body
+          <p>default body</p>
+          <p>default body</p>
+          <p>default body</p>
+          <p>default body</p>
+          <p>default body</p>
+          <p>default body</p>
+          <p>default body</p>
+          <p>default body</p>
       </div>
       <div class="modal-footer">
         <button class="text" @click="showModal=false">Close</button>
