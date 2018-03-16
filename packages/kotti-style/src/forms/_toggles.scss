@@ -125,7 +125,6 @@
 }
 
 // Form element: Switch
-
 .form-switch {
   padding-left: ($unit-8 + $control-padding-x);
 
@@ -162,5 +161,13 @@
         background: #fff;
       }
     }
+  }
+}
+.form-switch.form-switch-right {
+  padding-left: 0;
+  padding-right: ($unit-8 + $control-padding-x);
+  .form-icon {
+    right: 0;
+    left: auto;
   }
 }

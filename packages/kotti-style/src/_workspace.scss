@@ -3,8 +3,7 @@
   background: #ffffff;
   margin-right: $unit-6;
   padding: $unit-6;
-  // overflow-y: auto;
-  // max-height: 100vh;
+  z-index: $zindex-0;
   position: relative;
   min-width: 40em;
   min-height: 100%;

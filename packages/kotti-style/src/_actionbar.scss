@@ -2,7 +2,7 @@
 .actionbar {
   flex: 0 0 $actionbar-width;
   width: $actionbar-width;
-
+  z-index: $zindex-1;
   background: #FCFCFC;
   min-height: 100vh;
   border-right: 1px solid #ddd;
