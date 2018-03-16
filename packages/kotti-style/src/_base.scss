@@ -31,9 +31,13 @@ a {
   &:active,
   &.active {
     color: $link-color-dark;
-    text-decoration: underline;
+    text-decoration: none;
+  }
+  i {
+    font-size: 1.5em!important;
   }
 }
+
 
 img {
   width: 100%;

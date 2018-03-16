@@ -27,3 +27,44 @@
 .navbar-footer {
 	flex: 0 0 auto;
 }
+
+.navbar-logo {
+  margin: 1.2rem auto;
+  width: 8rem;
+  img {
+    width: 100%;
+  }
+}
+
+.navbar-menu {
+  text-align: left;
+  box-sizing: border-box;
+  font-size: .8rem;
+  ul {
+    width: 100%;
+    margin: 0;
+  }
+  li {
+    color: #fff;
+    font-size: 1em;
+    margin: .8rem 0;
+    padding: .4rem .8rem;
+    list-style: none;
+    i {
+      margin-right: 1em;
+    }
+    &:hover {
+      border-radius: .1rem;
+      background: rgba(0, 0, 0, .2);
+      cursor: pointer;
+    }
+  }
+  a {
+    text-decoration: none;
+	}
+	.router-link-active li{
+		border-radius: .1rem;
+		font-weight: 600;
+		background: rgba(0, 0, 0, .2);
+	}
+}

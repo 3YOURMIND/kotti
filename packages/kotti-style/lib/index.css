@@ -75,14 +75,7 @@ address
 b,
 strong
 {
-    font-weight: inherit;
-}
-
-/** Add the correct font weight in Chrome, Edge, and Safari. */
-b,
-strong
-{
-    font-weight: bolder;
+    font-weight: inherit;    font-weight: bolder;
 }
 
 /** 1. Correct the inheritance and scaling of font size in all browsers. 2. Correct the odd `em` font sizing in all browsers. */
@@ -318,9 +311,14 @@ a:focus,
 a:hover,
 a:active,
 a.active
-{text-decoration: underline; 
+{text-decoration: none; 
 
     color: #2659ab;
+}
+
+a i
+{
+    font-size: 1.5em !important;
 }
 
 img
@@ -567,27 +565,6 @@ img
     display: none !important;
 }
 
-.columns
-{
-    display: flex; margin-right: -.4rem; margin-left: -.4rem; flex-wrap: wrap;
-}
-
-.columns.col-gapless
-{margin-right: 0; 
-    margin-left: 0;
-}
-
-.columns.col-gapless > .column
-{padding-right: 0; 
-    padding-left: 0;
-}
-
-.columns.col-oneline
-{overflow-x: auto; 
-
-    flex-wrap: nowrap;
-}
-
 .column
 {max-width: 100%; padding: .4rem; 
 
@@ -689,6 +666,27 @@ img
 .col-mr-auto
 {
     margin-right: auto;
+}
+
+.columns
+{
+    display: flex; margin-right: -.4rem; margin-left: -.4rem; flex-wrap: wrap;
+}
+
+.columns.col-gapless
+{margin-right: 0; 
+    margin-left: 0;
+}
+
+.columns.col-gapless > .column
+{padding-right: 0; 
+    padding-left: 0;
+}
+
+.columns.col-oneline
+{overflow-x: auto; 
+
+    flex-wrap: nowrap;
 }
 
 @media (max-width: 1280px)
@@ -1098,8 +1096,57 @@ img
     flex: 0 0 auto;
 }
 
+.navbar-logo
+{width: 8rem; 
+    margin: 1.2rem auto;
+}
+
+.navbar-logo img
+{
+    width: 100%;
+}
+
+.navbar-menu
+{font-size: .8rem; box-sizing: border-box; 
+
+    text-align: left;
+}
+
+.navbar-menu ul
+{
+    width: 100%; margin: 0;
+}
+
+.navbar-menu li
+{font-size: 1em; margin: .8rem 0; padding: .4rem .8rem; list-style: none; 
+
+    color: #fff;
+}
+
+.navbar-menu li i
+{
+    margin-right: 1em;
+}
+
+.navbar-menu li:hover
+{cursor: pointer; 
+
+    border-radius: .1rem; background: rgba(0, 0, 0, .2);
+}
+
+.navbar-menu a
+{
+    text-decoration: none;
+}
+
+.navbar-menu .router-link-active li
+{font-weight: 600; 
+
+    border-radius: .1rem; background: rgba(0, 0, 0, .2);
+}
+
 .actionbar
-{position: relative; z-index: 100; display: flex; flex-direction: column; box-sizing: border-box; width: 16rem; min-height: 100vh; border-right: 1px solid #ddd; background: #fcfcfc; 
+{position: relative; display: flex; flex-direction: column; box-sizing: border-box; width: 16rem; min-height: 100vh; border-right: 1px solid #ddd; background: #fcfcfc; 
 
     flex: 0 0 16rem;
 }
@@ -1125,10 +1172,56 @@ img
     flex: 1 1 auto;
 }
 
+.actionbar-back
+{font-size: .7rem; font-weight: 600; 
+    line-height: 1.2rem; margin-top: 0; margin-bottom: .8rem; margin-left: -.8rem; color: #2c66c4;
+}
+
+.actionbar-menu ul
+{position: relative; 
+
+    margin: 0;
+}
+
+.actionbar-menu li
+{
+    font-size: .7rem; padding: .4rem 0; list-style: none; color: #3d3d3d;
+}
+
+.actionbar-menu a
+{
+    text-decoration: none;
+}
+
+.actionbar-menu i
+{
+    color: #8f8f8f;
+}
+
+.actionbar-menu.has-icon-right i
+{
+    float: right;
+}
+
+.actionbar-menu .router-link-active li
+{
+    font-weight: 600; color: #2c66c4;
+}
+
+.actionbar-menu .router-link-active i
+{
+    color: #2c66c4;
+}
+
 .workspace
-{position: relative; z-index: 1; display: block; min-width: 40em; min-height: 100%; margin-right: 1.2rem; padding: 1.2rem; background: #fff; box-shadow: 1px 0 2px #ddd; 
+{position: relative; z-index: inherit; display: block; min-width: 40em; min-height: 100%; margin-right: 1.2rem; padding: 1.2rem; background: #fff; box-shadow: 1px 0 2px #ddd; 
 
     flex: 1 1 100%;
+}
+
+.workspace h3:not(:first-of-type)
+{
+    margin-top: 1.6rem;
 }
 
 @media (max-width: 840px)
@@ -1137,11 +1230,6 @@ img
     {
         margin-right: 0;
     }
-}
-
-.workspace h3:not(:first-of-type)
-{
-    margin-top: 1.6rem;
 }
 
 button
@@ -1809,22 +1897,8 @@ code::before
 }
 
 .card
-{display: flex; flex-direction: column; border: .05rem solid #f8f8f8; border-radius: .1rem; 
+{display: flex; flex-direction: column; border: .05rem solid #dbdbdb; border-radius: .1rem; 
     background: #fff;
-}
-
-.card .card-header,
-.card .card-body,
-.card .card-footer
-{
-    padding: .8rem; padding-bottom: 0;
-}
-
-.card .card-header:last-child,
-.card .card-body:last-child,
-.card .card-footer:last-child
-{
-    padding-bottom: .8rem;
 }
 
 .card .card-header h1,
@@ -1840,6 +1914,20 @@ code::before
 .card .card-footer
 {
     text-align: right;
+}
+
+.card .card-header,
+.card .card-body,
+.card .card-footer
+{
+    padding: .8rem; padding-bottom: 0;
+}
+
+.card .card-header:last-child,
+.card .card-body:last-child,
+.card .card-footer:last-child
+{
+    padding-bottom: .8rem;
 }
 
 .card .card-image
@@ -1889,19 +1977,19 @@ code::before
 .skeleton.circle
 {line-height: 1px; display: block; box-sizing: border-box; width: 100%; margin: .4rem 0; padding-top: 100%; 
 
-    -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; border-radius: 100%; background: #f6f7f8; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1000px 1000px;
+    -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; border-radius: 100%; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1000px 1000px;
 }
 
 .skeleton.square
 {line-height: 1px; display: block; box-sizing: border-box; width: 100%; margin: .4rem 0; padding-top: 100%; 
 
-    -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; background: #f6f7f8; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1000px 1000px;
+    -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1000px 1000px;
 }
 
 .skeleton.rectangle
 {line-height: 1px; display: block; box-sizing: border-box; width: 100%; height: .4rem; margin: .4rem 0; 
 
-    -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; background: #f6f7f8; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1800px 1200px;
+    -webkit-animation: 2s ease-out infinite 'skeleton-loading';            animation: 2s ease-out infinite 'skeleton-loading'; border-radius: 2px; background: linear-gradient(to left, #f8f8f8 0%, #dbdbdb 50%, #f8f8f8 100%); background-size: 1800px 1200px;
 }
 
 .skeleton.rectangle.md
@@ -2192,26 +2280,6 @@ ol li
     margin-top: .4rem;
 }
 
-ul
-{
-    list-style: disc inside;
-}
-
-ul ul
-{
-    list-style-type: circle;
-}
-
-ol
-{
-    list-style: decimal inside;
-}
-
-ol ol
-{
-    list-style-type: lower-alpha;
-}
-
 dl dt
 {
     font-weight: bold;
@@ -2266,23 +2334,13 @@ table
 }
 
 table th
-{font-size: .6rem; line-height: 1em; padding: .6rem .4rem; padding: .4rem .2rem; text-align: inherit; text-transform: uppercase; color: #8f8f8f; 
-    border-bottom: .05rem solid #f8f8f8;    border-bottom: 1px solid #dbdbdb;
+{font-size: .6rem; line-height: 1em; padding: .4rem .2rem; text-align: inherit; text-transform: uppercase; color: #8f8f8f; 
+    border-bottom: .05rem solid #dbdbdb;
 }
 
 table th:first-child
 {
     padding-left: 1.2rem;
-}
-
-table tr:hover .table-actions
-{
-    display: block; background: #fff;
-}
-
-table tr:hover td
-{
-    background: #f8f8f8;
 }
 
 table td
@@ -2295,6 +2353,11 @@ table td:first-child
     padding-left: 1.2rem;
 }
 
+table.no-header
+{
+    margin-top: -.5em;
+}
+
 table i
 {
     font-size: 1rem !important; margin: 0 .2rem; color: #8a8a8a;
@@ -2303,11 +2366,6 @@ table i
 table i.disabled
 {
     color: #8f8f8f;
-}
-
-table.no-header
-{
-    margin-top: -.5em;
 }
 
 table .table-actions
@@ -2326,6 +2384,16 @@ table .table-actions i:hover
     cursor: pointer; color: #3d3d3d;
 }
 
+table tr:hover .table-actions
+{
+    display: block; background: #fff;
+}
+
+table tr:hover td
+{
+    background: #f8f8f8;
+}
+
 table .columns
 {
     margin-right: 0; margin-left: 0;
@@ -2334,16 +2402,6 @@ table .columns
 .pagination
 {
     margin: 0; list-style: none;
-}
-
-.pagination .disabled
-{
-    cursor: not-allowed;
-}
-
-.pagination .disabled .page-button
-{
-    opacity: .46;
 }
 
 .pagination .page-button
@@ -2363,14 +2421,35 @@ table .columns
     display: inline-block; padding: .4rem; text-align: center;
 }
 
+.pagination .disabled
+{
+    cursor: not-allowed;
+}
+
+.pagination .disabled .page-button
+{
+    opacity: .46;
+}
+
 .modal-mask
 {
-    position: fixed; z-index: 99; top: 0; left: 0; width: 100%; height: 100%; transition: opacity .3s ease; background-color: rgba(0, 0, 0, .46);
+    position: fixed; z-index: 400; top: 0; left: 0; display: flex; width: 100%; height: 100%; transition: opacity .3s ease; background-color: rgba(0, 0, 0, .46);
 }
 
 .modal-container
+{display: flex; flex-direction: column; width: 90%; max-width: 48em; max-height: 90%; margin: 0 auto; padding: 1.2rem; transition: all .3s ease; border-radius: .1rem; background-color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, .33); 
+
+    align-self: center;
+}
+
+.modal-header
 {
-    display: flex; width: 90%; max-width: 48em; margin: 0 auto; padding: 1.2rem; transition: all .3s ease; border-radius: .1rem; background-color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, .33); align-self: center;
+    flex: 0 0 auto;
+}
+
+.modal-body
+{
+    overflow: auto; flex: 1 1 auto;
 }
 
 .modal-header,
@@ -2381,7 +2460,7 @@ table .columns
 
 .modal-footer
 {
-    float: right;
+    text-align: right; flex: 0 0 auto;
 }
 
 .modal-enter
@@ -2402,7 +2481,7 @@ table .columns
 
 .drawer-mask
 {
-    position: fixed; z-index: 999; top: 0; left: 0; display: flex; width: 100%; height: 100%; transition: opacity .5s ease; background-color: rgba(0, 0, 0, .5);
+    position: fixed; z-index: 400; top: 0; left: 0; display: flex; width: 100%; height: 100%; transition: opacity .5s ease; background-color: rgba(0, 0, 0, .5);
 }
 
 .drawer-handle
