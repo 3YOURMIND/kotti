@@ -1,31 +1,34 @@
 .navbar {
-	flex: 0 0 $navbar-width;
-  width: $navbar-width;
+  flex: 0 0 $navbar-width;
   background-color: $primary-600;
-	bottom: 0;
-	left: 0;
-	top: 0;
-	z-index: $zindex-1;
-	min-height: 100vh;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  z-index: $zindex-1;
+  min-height: 100vh;
 }
+
 .navbar-wrapper {
-	padding: $unit-6;
-	position: fixed;
-	width: $navbar-width;
-	display: flex;
-	height: 100%;
-	flex-wrap: nowrap;
-	flex-direction: column;
+  padding: $unit-6;
+  position: fixed;
+  width: $navbar-width;
+  display: flex;
+  height: 100%;
+  flex-wrap: nowrap;
+  flex-direction: column;
 }
+
 .navbar-header {
-	flex: 0 0 auto;
+  flex: 0 0 auto;
 }
+
 .navbar-body {
-	flex: 1 1 100%;
-	overflow-y: auto;
+  flex: 1 1 100%;
+  overflow-y: auto;
 }
+
 .navbar-footer {
-	flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .navbar-logo {
@@ -61,10 +64,10 @@
   }
   a {
     text-decoration: none;
-	}
-	.router-link-active li{
-		border-radius: .1rem;
-		font-weight: 600;
-		background: rgba(0, 0, 0, .2);
-	}
+  }
+  .router-link-active li {
+    border-radius: .1rem;
+    font-weight: 600;
+    background: rgba(0, 0, 0, .2);
+  }
 }
