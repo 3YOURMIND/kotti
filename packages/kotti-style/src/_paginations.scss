@@ -1,12 +1,6 @@
 .pagination {
   margin: 0;
   list-style: none;
-  .disabled {
-    cursor: not-allowed;
-    .page-button {
-      opacity: .46;
-    }
-  }
   .page-button {
     background: $lightgrey-300;
     display: inline-block;
@@ -20,5 +14,11 @@
     text-align: center;
     padding: $unit-2;
     line-height: 24px;
+  }
+  .disabled {
+    cursor: not-allowed;
+    .page-button {
+      opacity: .46;
+    }
   }
 }

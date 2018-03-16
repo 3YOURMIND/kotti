@@ -1,7 +1,5 @@
 // Typography
-
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
-
 // Headings
 h1,
 h2,
@@ -15,6 +13,7 @@ h6 {
   margin-top: 0;
   margin-bottom: 0.5em;
 }
+
 .h1,
 .h2,
 .h3,
@@ -23,21 +22,24 @@ h6 {
 .h6 {
   font-weight: 500;
 }
+
 h1,
 .h1 {
   font-size: 1.6rem;
 }
+
 h2,
 .h2 {
   font-size: 1.2rem;
 }
+
 h3,
 .h3 {
   font-size: .8rem;
   color: $primary-500;
   padding-bottom: $unit-2;
   border-bottom: 1px solid $lightgrey-400;
-  margin-bottom: 0; 
+  margin-bottom: 0;
   span {
     float: right;
     font-weight: 500;
@@ -48,14 +50,17 @@ h3,
     }
   }
 }
+
 h4,
 .h4 {
   font-size: 1.2rem;
 }
+
 h5,
 .h5 {
   font-size: 1rem;
 }
+
 h6,
 .h6 {
   font-size: 0.8rem;
@@ -78,30 +83,12 @@ ul,
 ol {
   margin: $unit-4 0 $unit-4 $unit-4;
   padding: 0;
-
   ul,
   ol {
     margin: $unit-4 0 $unit-4 $unit-4;
   }
-
   li {
     margin-top: $unit-2;
-  }
-}
-
-ul {
-  list-style: disc inside;
-
-  ul {
-    list-style-type: circle;
-  }
-}
-
-ol {
-  list-style: decimal inside;
-
-  ol {
-    list-style-type: lower-alpha;
   }
 }
 

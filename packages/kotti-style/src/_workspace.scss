@@ -9,13 +9,10 @@
   min-height: 100%;
   display: block;
   box-shadow: 1px 0 2px #ddd;
-  @media (max-width: $size-md) {
-    margin-right: 0;
-  }
-}
-
-.workspace {
   h3:not(:first-of-type)  {
     margin-top: $unit-8;
+  }
+  @media (max-width: $size-md) {
+    margin-right: 0;
   }
 }

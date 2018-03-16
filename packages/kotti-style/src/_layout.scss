@@ -47,26 +47,6 @@
 }
 
 // Responsive grid system
-.columns {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: -$layout-spacing;
-  margin-right: -$layout-spacing;
-
-  &.col-gapless {
-    margin-left: 0;
-    margin-right: 0;
-
-    & > .column {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  &.col-oneline {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
-}
 .column {
   flex: 1;
   max-width: 100%;
@@ -138,6 +118,28 @@
 .col-mr-auto {
   margin-right: auto;
 }
+
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -$layout-spacing;
+  margin-right: -$layout-spacing;
+
+  &.col-gapless {
+    margin-left: 0;
+    margin-right: 0;
+
+    & > .column {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  &.col-oneline {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}
+
 @media (max-width: $size-xl) {
   .col-xl-12,
   .col-xl-11,

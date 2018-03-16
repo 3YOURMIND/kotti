@@ -7,9 +7,7 @@ table {
   hyphens: auto;
   th {
     border-bottom: $border-width solid $border-color;
-    padding: $unit-3 $unit-2;
     color: $lightgrey-500;
-    border-bottom: 1px solid #DBDBDB;
     line-height: 1em;
     text-align: inherit;
     font-size: $font-size-sm;
@@ -22,15 +20,6 @@ table {
   tr: {
     margin: 0;
   }
-  tr:hover {
-    .table-actions {
-      display: block;
-      background: #fff;
-    }
-    td {
-      background: #F8F8F8;
-    }
-  }
   td {
     line-height: 2em;
     padding: .5em;
@@ -40,6 +29,9 @@ table {
     }
   }
 
+  &.no-header {
+    margin-top: -.5em;
+  }
   i {
     font-size: 1rem !important;
     color: $darkgrey-300;
@@ -47,10 +39,6 @@ table {
     &.disabled {
       color: $lightgrey-500;
     }
-  }
-
-  &.no-header {
-    margin-top: -.5em;
   }
 
   .table-actions {
@@ -76,6 +64,16 @@ table {
       color: $darkgrey-500;
     }
   }
+  tr:hover {
+    .table-actions {
+      display: block;
+      background: #fff;
+    }
+    td {
+      background: #F8F8F8;
+    }
+  }
+
   .columns {
     margin-right: 0;
     margin-left: 0;
