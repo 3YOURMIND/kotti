@@ -51,6 +51,7 @@
     <div class="subline" @click="showResource=!showResource">Resource</div>
     <ul v-if="showResource">
       <li>
+        <nuxt-link to="/kotti-style">Kotti Style</nuxt-link>
         <nuxt-link to="/designkit">Design Kit</nuxt-link>
       </li>
     </ul>

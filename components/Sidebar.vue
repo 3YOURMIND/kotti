@@ -15,7 +15,9 @@
       <MenuList class="sidemenu" />
     </div>
     <div class="navbar-footer">
-      version 0.0.1-beta.3
+      <a href="https://github.com/3YOURMIND/kotti">
+      <button class="primary">Github</button>
+      </a>
     </div>
     </div>
   </div>

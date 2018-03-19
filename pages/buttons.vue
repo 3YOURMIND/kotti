@@ -1,5 +1,5 @@
 <template lang="md">
-   # Buttons
+  # Buttons
   
   Use buttons to lead a call to action or guide a user to their next steps.</p>
   
