@@ -5,7 +5,7 @@
 Using popovers to provide extra information or operations. Comparing to `tooltip`, `popovers` can carry more information.
 
 <div class="element-example">
-  <div class="popover popover-left mr-8">
+  <div class="popover popover-left mr-8px">
     <button class="secondary">Popover left</button>
     <div class="popover-container">
       <div class="card">
@@ -22,7 +22,7 @@ Using popovers to provide extra information or operations. Comparing to `tooltip
       </div>
     </div>
   </div>
-  <div class="popover popover-bottom mr-8">
+  <div class="popover popover-bottom mr-8px">
     <button class="secondary">Popover bottom</button>
     <div class="popover-container">
       <div class="card">
@@ -39,7 +39,7 @@ Using popovers to provide extra information or operations. Comparing to `tooltip
       </div>
     </div>
   </div>
-  <div class="popover popover-up mr-8">
+  <div class="popover popover-up mr-8px">
     <button class="secondary">Popover up</button>
     <div class="popover-container">
       <div class="card">
@@ -56,7 +56,7 @@ Using popovers to provide extra information or operations. Comparing to `tooltip
       </div>
     </div>
   </div>
-  <div class="popover popover-right mr-8">
+  <div class="popover popover-right mr-8px">
     <button class="secondary">Popover right</button>
     <div class="popover-container">
       <div class="card">

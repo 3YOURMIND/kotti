@@ -8,3 +8,17 @@
     overflow: auto;
   }
 }
+
+$text-colors: (
+  text-primary: $primary-500,
+  text-grey: $lightgrey-500,
+  text-success: $green-500,
+  text-error: $red-500,
+  text-warning: $orange-500
+);
+
+@each $element, $color in $text-colors {
+  .#{$element} {
+    color: $color;
+  }
+}

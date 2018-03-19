@@ -15,7 +15,7 @@ It is best to place secondary functionality or information in the drawer, and on
 * **Background:** The background should be black `#000000` with 46% opacity.
 
 <div class="element-example">
-  <button class="primary mr-16"@click="showDrawer=true">Show Default Size Drawer</button>
+  <button class="primary mr-16px"@click="showDrawer=true">Show Default Size Drawer</button>
   <button class="primary"  @click="showWideDrawer=true">Show Wide Size Drawer</button>
 </div>
 <transition name="drawer" mode="out-in">

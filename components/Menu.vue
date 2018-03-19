@@ -47,6 +47,9 @@
       <li>
         <nuxt-link to="/toaster">Toaster</nuxt-link>
       </li>
+       <li>
+        <nuxt-link to="/utilities">Utilities</nuxt-link>
+      </li>
     </ul>
     <div class="subline" @click="showResource=!showResource">Resource</div>
     <ul v-if="showResource">

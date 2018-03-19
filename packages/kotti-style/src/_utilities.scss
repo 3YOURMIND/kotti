@@ -1,26 +1,6 @@
-// Sizing
+// Utilities
 @import "utilities/sizing";
 @import "utilities/cursors";
 @import "utilities/text";
 @import "utilities/position";
-
-.columns-vertical {
-  .column{
-    padding: 0 $unit-1;
-    box-sizing: border-box;
-  }
-}
-
-.email-preview {
-  background: #fcfcfc;
-  padding: 0 $unit-4;
-  border: 1px solid #DBDBDB;
-  border-radius: .1rem;
-  margin-bottom: $unit-4;
-  p {
-    line-height: 1.2em;
-  }
-  h2 {
-    margin: $unit-4 0;
-  }
-}
+@import "utilities/display";

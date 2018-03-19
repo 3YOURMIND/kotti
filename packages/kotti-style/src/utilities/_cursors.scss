@@ -1,24 +1,19 @@
 // Cursors
-.c-hand, .clickable {
-  cursor: pointer;
-}
 
-.c-move {
-  cursor: move;
-}
+$cursors: (
+  c-hand: pointer,
+  clickable: pointer,
+  c-move: move,
+  movable: move,
+  c-zoom-in: zoom-in,
+  c-zoom-out: zoom-out,
+  c-not-allowed: not-allowed,
+  c-auto: auto
+);
 
-.c-zoom-in {
-  cursor: zoom-in;
-}
 
-.c-zoom-out {
-  cursor: zoom-out;
-}
-
-.c-not-allowed {
-  cursor: not-allowed;
-}
-
-.c-auto {
-  cursor: auto;
+@each $element, $cursor in $cursors {
+  .#{$element} {
+    cursor: $cursor;
+  }
 }
