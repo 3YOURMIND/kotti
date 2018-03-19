@@ -1,6 +1,6 @@
 {
   "name": "@3yourmind/kotti-style",
-  "version": "0.0.1-beta.8",
+  "version": "0.0.1-beta.9",
   "description": "Kotti Style",
   "main": "lib/index.min.css",
   "style": "lib/index.min.css",
@@ -35,6 +35,5 @@
     "stylelint": "^9.1.3",
     "stylelint-config-recommended-scss": "^3.1.0",
     "stylelint-scss": "^2.5.0"
-  },
-  "dependencies": {}
+  }
 }
