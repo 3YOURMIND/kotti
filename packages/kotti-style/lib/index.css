@@ -1499,7 +1499,7 @@ img
 }
 
 .navbar
-{z-index: 100; top: 0; bottom: 0; left: 0; min-height: 100vh; background-color: #2659ab; 
+{position: relative; z-index: 100; top: 0; bottom: 0; left: 0; min-height: 100vh; background-color: #2659ab; 
 
     flex: 0 0 12rem;
 }
