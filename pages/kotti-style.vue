@@ -27,6 +27,17 @@ npm install -D @3yourmind/kotti-style
 ```
 
 ## Update Logs
+`Version 0.0.2`
+  
+  * Update grid system with more options
+
+`Version 0.0.1`
+
+  * Stable release
+
+`Version 0.0.1-beta.9`
+
+  * Fix issue [#13](https://github.com/3YOURMIND/kotti/issues/13)
   
 `Version 0.0.1-beta.8`
 
