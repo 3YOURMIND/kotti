@@ -1,6 +1,6 @@
 {
   "name": "@3yourmind/kotti-style",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Kotti Style",
   "main": "lib/index.min.css",
   "style": "lib/index.min.css",
