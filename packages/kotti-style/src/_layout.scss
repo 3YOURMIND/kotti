@@ -127,9 +127,27 @@
       padding-right: 0;
     }
   }
+  &.col-gutter-sm {
+    margin-left: -$layout-spacing/2;
+    margin-right: -$layout-spacing/2;
+    & > .column {
+      padding-left: $layout-spacing/2;
+      padding-right: $layout-spacing/2;
+    }
+  }
   &.col-oneline {
     flex-wrap: nowrap;
     overflow-x: auto;
+  }
+  &.row-gapless .column {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  &.row-gutter-sm {
+    & > .column {
+    padding-top: $layout-spacing/2;
+    padding-bottom: $layout-spacing/2;
+    }
   }
 }
 

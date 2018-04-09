@@ -50,16 +50,19 @@
 
 <layout-metric />
 
+<layout-grid />
+
 </template>
 
 <script>
 import LayoutComponents from '~/components/LayoutComponents.vue'
 import LayoutMetric from '~/components/LayoutMetric.vue'
+import LayoutGrid from '~/components/LayoutGrid.vue'
 
 export default {
   name: 'Layout',
   components: {
-    LayoutComponents, LayoutMetric
+    LayoutComponents, LayoutMetric, LayoutGrid
   }
 }
 </script>

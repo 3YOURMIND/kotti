@@ -1112,10 +1112,30 @@ img
     padding-left: 0;
 }
 
+.columns.col-gutter-sm
+{margin-right: -.2rem; 
+    margin-left: -.2rem;
+}
+
+.columns.col-gutter-sm > .column
+{padding-right: .2rem; 
+    padding-left: .2rem;
+}
+
 .columns.col-oneline
 {overflow-x: auto; 
 
     flex-wrap: nowrap;
+}
+
+.columns.row-gapless .column
+{
+    padding-top: 0; padding-bottom: 0;
+}
+
+.columns.row-gutter-sm > .column
+{
+    padding-top: .2rem; padding-bottom: .2rem;
 }
 
 @media (max-width: 1280px)
@@ -2813,12 +2833,12 @@ table .table-actions i:hover
     cursor: pointer; color: #3d3d3d;
 }
 
-table tr:hover .table-actions
+table > tr:hover > .table-actions
 {
     display: block; background: #fff;
 }
 
-table tr:hover td
+table > tr:hover > td
 {
     background: #f8f8f8;
 }

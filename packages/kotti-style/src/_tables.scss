@@ -64,12 +64,12 @@ table {
       color: $darkgrey-500;
     }
   }
-  tr:hover {
-    .table-actions {
+  > tr:hover {
+    > .table-actions {
       display: block;
       background: #fff;
     }
-    td {
+    > td {
       background: #F8F8F8;
     }
   }
