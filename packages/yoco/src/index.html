@@ -58,7 +58,20 @@
             .icon-baseline i {
                 font-size: 1.6em;
             }
-
+            .input-wrapper {
+                background: #f8f8f8;
+                padding: 1rem;
+                box-sizing: border-box;
+                box-shadow: 0 0 20px #ddd;
+            }
+            input {
+                box-sizing: border-box;
+                width: 100%;
+                height: 40px;
+                line-height: 2em;
+                padding: .8rem;
+                font-size: 16px;
+            }
             @media (max-width: 480px) {
                 .icon-container {
                     width: 33.3333%;
@@ -70,10 +83,13 @@
     <body>
         <div id="app">
             <h1>Yoco Icon Preview</h1>
+            <div class="input-wrapper">
+                <input v-model="serachString" placeholder="Search icon">
+            </div>
             <div class="icon-baseline">
                 <i class="yoco">{{previewIcon}}</i> {{previewIcon}}
             </div>
-            <div class="icon-container" v-for="icon in iconString"  @click="previewIcon = icon">
+            <div class="icon-container" v-for="icon in displayString"  @click="previewIcon = icon">
                 <div>
                     <i class="yoco" ref="liga">{{icon}}</i>
                 </div>
@@ -82,7 +98,7 @@
         </div>
     </body>
     <script>
-        var iconStrings = [
+        const iconStrings = [
             'sidebar',
             'structure',
             'markup',
@@ -159,12 +175,28 @@
             'zip'
         ]
 
-
         var app = new Vue({
             el: '#app',
             data: {
                 iconString: iconStrings,
-                previewIcon: 'cloud'
+                previewIcon: 'cloud',
+                serachString: ''
+            },
+            computed: {
+                displayString() {
+                    if (this.serachString) {
+                        return this.searchResults
+                    }
+                    return this.iconString
+                },
+                searchResults() {
+                    let results = iconStrings.filter( result => result.includes(this.serachString))
+                    if (results.length === 1) {
+                        this.previewIcon = results[0];
+                    }
+                    return results;
+                }
+
             }
         })
     </script>
