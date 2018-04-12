@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/vue'
 import { action } from '@storybook/addon-actions'
 import { withKnobs, text, number, boolean, array, select, color, date, button } from '@storybook/addon-knobs/vue'
 
-import KtAvatar from './components/Avatar.vue'
+import KtAvatar from '../packages/kotti-avatar/'
 
 const storiesOfAvatar = storiesOf('Avatar', module)
   .addDecorator(withKnobs)

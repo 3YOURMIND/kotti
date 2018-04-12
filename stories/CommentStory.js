@@ -1,28 +1,39 @@
-import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import { withKnobs, text, number, boolean, array, select, color, date, button } from '@storybook/addon-knobs/vue'
+import { storiesOf } from '@storybook/vue';
+import { action } from '@storybook/addon-actions';
+import {
+  withKnobs,
+  text,
+  number,
+  boolean,
+  array,
+  select,
+  color,
+  date,
+  button
+} from '@storybook/addon-knobs/vue';
 
-import KtComment from './components/Comment.vue'
-import KtCommentReply from './components/CommentReply.vue'
-import KtCommentInput from './components/CommentInput.vue'
+import KtComment from '../packages/kotti-comment';
 
 storiesOf('Comment', module)
-  .addDecorator(withKnobs)
-  .add('Default', () => {
-    const name = text('Name', 'John Doe')
-    const message = text('Message', 'Text message')
+  .add('Default', () => ({
+  components: { KtComment },
+  template: `<KtComment :name="comment.name" :message="comment.message" :replies="replies"/>`,
+  data() {
     return {
-      components: { KtComment, KtCommentInput },
-      template: `<div><KtComment name="${name}" message="${message}"/><KtCommentInput/></div>`
-    }
-  })
-  .add('Commet with reply', () => {
-    const name = text('Name', 'John Doe')
-    const message = text('Message', 'Text message')
-    const replyName = text('Reply Name', 'Bunny Five\'o')
-    const replyMessage = text('Reply Message', 'Text message')
-    return {
-      components: { KtComment, KtCommentReply, KtCommentInput },
-      template: `<KtComment name="${name}" message="${message}"><KtCommentReply name="${replyName}" message="${replyMessage}"/></KtComment>`
-    }
-  })
+      comment: {
+        name: 'Margaret Atwood',
+        message: 'Marine Le Pen, a Fierce Campaigner, Heads to Finale in French Election'
+      },
+      replies: [
+        {
+          name: 'Benni',
+          message: 'Join Bright Side Now!'
+        },
+        {
+          name: 'Cooky',
+          message: 'RE: Your trip to Montreal'
+        }
+      ]
+    };
+  }
+}));

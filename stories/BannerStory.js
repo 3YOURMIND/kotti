@@ -1,19 +1,29 @@
-import { storiesOf } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import { withKnobs, text, number, boolean, array, select, color, date, button } from '@storybook/addon-knobs/vue'
+import { storiesOf } from '@storybook/vue';
+import { action } from '@storybook/addon-actions';
+import {
+  withKnobs,
+  text,
+  number,
+  boolean,
+  array,
+  select,
+  color,
+  date,
+  button
+} from '@storybook/addon-knobs/vue';
 
-import KtBanner from './components/Banner.vue'
+import KtBanner from '../packages/kotti-banner';
 
 storiesOf('Banner', module)
   .addDecorator(withKnobs)
   .add('Collapsed', () => {
-    const message = text('Banner Message', 'Text message')
-    const greyBanner = boolean('GreyBanner', false)
+    const message = text('Banner Message', 'Text message');
+    const greyBanner = boolean('GreyBanner', false);
     return {
       components: { KtBanner },
       methods: {
         customAction() {
-          action('action-click')(`hmmm, I'm clicked.. you can do more actions`)
+          action('action-click')(`hmmm, I'm clicked.. you can do more actions`);
         }
       },
       template: `<KtBanner message="${message}" :isGrey="${greyBanner}">
@@ -22,18 +32,19 @@ storiesOf('Banner', module)
       </div>
       <div slot="glyph"><i class="yoco">cloud</i></div>
       </KtBanner>`
-    }
+    };
   })
   .add('Expandable', () => {
-    const message = text('Banner Message', 'Text message')
-    const actionText = text('Action Text', 'View')
-    const actionTextSwitch = text('Action Text Swtich', 'Clow')
-    const expandable = boolean('expandable', true)
+    const message = text('Banner Message', 'Text message');
+    const actionText = text('Action Text', 'View');
+    const actionTextSwitch = text('Action Text Swtich', 'Clow');
+    const expandable = boolean('expandable', true);
     return {
       components: { KtBanner },
-      template: `<KtBanner message="${message}" :expandable="${expandable}" :isGrey="true" actionText="${actionText}"  actionTextSwitch="${actionTextSwitch}">
+      template: `<KtBanner message="${message}" :expandable="${expandable}"
+      :isGrey="true" actionText="${actionText}"  actionTextSwitch="${actionTextSwitch}">
       <div slot="glyph"><i class="yoco">cloud</i></div>
       <div slot="expand"><h1>New message</h1></div>
       </KtBanner>`
-    }
-  })
+    };
+  });

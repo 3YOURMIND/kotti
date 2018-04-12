@@ -1,0 +1,22 @@
+{
+  "name": "@3yourmind/kotti-button",
+  "version": "0.0.1",
+  "config": {
+    "access": "public"
+  },
+  "description": "Avatar group",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "author": "Junyu P.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3YOURMIND/kotti"
+  },
+  "keywords": [
+    "avatar",
+    "kotti",
+    "ui"
+  ]
+}

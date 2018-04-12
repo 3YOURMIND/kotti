@@ -23,7 +23,9 @@
           </div>
         </div>
       </div>
-      <slot></slot>
+      <div v-for="reply in replies" :key="reply.name">
+        <KtCommentReply :name="reply.name" :message="reply.message" />
+      </div>
     </div>
   </kt-comment>
 </template>
@@ -38,6 +40,7 @@ export default {
     name: '',
     time: '',
     message: '',
+    replies: Array,
   },
   components : {
     KtCommentReply
