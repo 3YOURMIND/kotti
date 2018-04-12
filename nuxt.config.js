@@ -1,59 +1,60 @@
-const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
-  router: {
-    base: '/kotti/'
-  }
-} : {}
+const routerBase =
+	process.env.DEPLOY_ENV === 'GH_PAGES'
+		? {
+				router: {
+					base: '/kotti/'
+				}
+		  }
+		: {};
 
-// const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'docs' : 'dist' 
+// const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'docs' : 'dist'
 
 module.exports = {
-  srcDir: 'www/',
-  ...routerBase,
-  /*
+	srcDir: 'www/',
+	...routerBase,
+	/*
   ** Headers of the page
   */
-  head: {
-    title: 'Kotti Design System',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Kotti helps to unify our design language and provides the documentation for further product design decisions. The Kotti design system has two main parts: foundation and components.' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
-  },
-  /*
+	head: {
+		title: 'Kotti Design System',
+		meta: [
+			{ charset: 'utf-8' },
+			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+			{
+				hid: 'description',
+				name: 'description',
+				content:
+          `Kotti helps to unify our design language and provides the documentation for further product
+          design decisions. The Kotti design system has two main parts: foundation and components.`
+			}
+		],
+		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+	},
+	/*
   ** Customize the progress bar color
   */
-  css: [
-    '../packages/kotti-style/lib/index.min.css',
-    '@/assets/css/main.scss',
-    '@3yourmind/yoco',
-  ],
-  modules: [
-    '@nuxtjs/markdownit'
-  ],
-  loading: { color: '#2C64CC' },
-  /*
+	css: ['../packages/kotti-style/lib/index.min.css', '@/assets/css/main.scss', '@3yourmind/yoco'],
+	modules: ['@nuxtjs/markdownit'],
+	loading: { color: '#2C64CC' },
+	/*
   ** Build configuration
   */
-  generate: {
-    dir: 'dist'
-  },
-  build: {
-    /*
+	generate: {
+		dir: 'dist'
+	},
+	build: {
+		/*
     ** Run ESLint on save
     */
-    extend (config, ctx) {
-      if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
-    }
-  }
-}
+		extend(config, ctx) {
+			if (ctx.isDev && ctx.isClient) {
+				config.module.rules.push({
+					enforce: 'pre',
+					test: /\.(js|vue)$/,
+					// loader: 'eslint-loader',
+					exclude: /(node_modules)/
+				});
+			}
+		}
+	}
+};

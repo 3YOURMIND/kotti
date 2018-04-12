@@ -116,10 +116,15 @@ interface.
 </template>
 
 <script>
+import KtBanner from '../../packages/kotti-banner'
 export default {
-  name: 'Banners'
+  name: 'Banners',
+  components: {
+    KtBanner
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+
 </style>

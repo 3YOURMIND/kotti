@@ -13,7 +13,8 @@
     "doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
     "doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "storybook:build": "build-storybook -c .storybook -o dist"
+    "storybook:build": "build-storybook -c .storybook -o dist/storybook",
+    "deploy": "nuxt generate && build-storybook -c .storybook -o dist/storybook"
   },
   "dependencies": {
     "@3yourmind/kotti-style": "^0.0.2",
