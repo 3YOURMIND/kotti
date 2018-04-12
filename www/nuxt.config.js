@@ -33,10 +33,6 @@ module.exports = {
   modules: [
     '@nuxtjs/markdownit'
   ],
-  plugins: [
-    { src: '~plugins/vue-highlightjs.js', ssr: false },
-    { src: '~plugins/vue-clipboard.js', ssr: false }
-  ],
   loading: { color: '#2C64CC' },
   /*
   ** Build configuration
