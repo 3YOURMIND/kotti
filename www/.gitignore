@@ -11,6 +11,4 @@ yarn-error.log
 # Nuxt generate
 dist
 
-.vscode
-
 
