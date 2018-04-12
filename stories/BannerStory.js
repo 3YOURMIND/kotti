@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/vue'
 import { action } from '@storybook/addon-actions'
 import { withKnobs, text, number, boolean, array, select, color, date, button } from '@storybook/addon-knobs/vue'
 
-import KtBanner from '../components/Banner.vue'
+import KtBanner from './components/Banner.vue'
 
 storiesOf('Banner', module)
   .addDecorator(withKnobs)

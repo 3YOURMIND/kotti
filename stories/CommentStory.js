@@ -2,9 +2,9 @@ import { storiesOf } from '@storybook/vue'
 import { action } from '@storybook/addon-actions'
 import { withKnobs, text, number, boolean, array, select, color, date, button } from '@storybook/addon-knobs/vue'
 
-import KtComment from '../components/Comment.vue'
-import KtCommentReply from '../components/CommentReply.vue'
-import KtCommentInput from '../components/CommentInput.vue'
+import KtComment from './components/Comment.vue'
+import KtCommentReply from './components/CommentReply.vue'
+import KtCommentInput from './components/CommentInput.vue'
 
 storiesOf('Comment', module)
   .addDecorator(withKnobs)

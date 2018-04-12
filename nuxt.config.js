@@ -7,6 +7,7 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
 // const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'docs' : 'dist' 
 
 module.exports = {
+  srcDir: 'www/',
   ...routerBase,
   /*
   ** Headers of the page

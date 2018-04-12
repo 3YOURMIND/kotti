@@ -1,14 +1,15 @@
 import { configure } from '@storybook/vue';
+import Vue from 'vue';
 
-import '@3yourmind/kotti-style'
+import '../packages/kotti-style'
 import '@3yourmind/yoco'
-import '../storybook/src/assets/style.css'
+import '../assets/storybook-style.css'
 
 function loadStories() {
-  require('../storybook/src/stories/CommentStory.js')
-  require('../storybook/src/stories/BannerStory.js')
-  require('../storybook/src/stories/AvatarStory.js')
-  require('../storybook/src/stories/ButtonStory.js')
+  require('../stories/CommentStory.js')
+  require('../stories/BannerStory.js')
+  require('../stories/ButtonStory.js')
+  require('../stories/AvatarStory.js')
 }
 
 configure(loadStories, module)
