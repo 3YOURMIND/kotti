@@ -34,28 +34,26 @@
   <!-- <button class="primary" disabled>Primary Action</button> -->
   ```
 
-  ### Secondary butto 
+  ### Secondary Button 
   
   Use a secondary button only when there is a main call to action in the page.
 
-  <button class="secondary">Secondary Button</button>
-  <button class="secondary ml-16px" disabled>Secondary Button</button>
+  <KtButton type="secondary">Secondary Action</KtButton>
   
   ```html
-  <button class="secondary">Secondary Button</button>
+  <KtButton type="secondary">Secondary Action</KtButton>
   <button class="secondary" disabled>Secondary Button</button>
   ```
 
-  ### Danger button
-  
+  ### Danger Button
   
   The danger button should be used only for actions which can't be undone. 
   For example, canceling an order or deleting a material. Like the primary button, it should also limited to once per page.
 
-  <button class="danger">Danger Action</button>
-  <button class="danger ml-16px" disabled>Danger Action</button>
+  <KtButton type="danger">Danger Action</KtButton>
     
   ```html
+  <KtButton type="danger">Danger Action</KtButton>
   <button class="danger">Danger Button</button>
   <button class="danger" disabled>Danger Action</button>
   ```
@@ -105,12 +103,32 @@
   ```html
   <button class="primary icon"><i class="yoco">edit</i></button>
   ```
+  <div v-html="buttonUsage" />
+
+  <ShowCase :source="buttonData">
+  </ShowCase>
 
 </template>
 
 <script>
+import ButtonUsage from '../../packages/kotti-button/README.md'
+import KtButton from '../../packages/kotti-button'
+
 export default {
-  name: 'Buttons'
+  name: 'Buttons',
+  components: {
+    KtButton
+  },
+  data() {
+    return {
+      buttonData: `<KtButton type="danger">Danger Action</KtButton>`
+    }
+  },
+  computed: {
+    buttonUsage() {
+      return ButtonUsage
+    }
+  }
 }
 </script>
 

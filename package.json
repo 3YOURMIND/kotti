@@ -31,6 +31,7 @@
   ],
   "devDependencies": {
     "@nuxtjs/markdownit": "^1.2.0",
+    "@nuxtjs/markdownit-loader": "^1.1.1",
     "@storybook/addon-actions": "^3.4.1",
     "@storybook/addon-knobs": "^3.4.1",
     "@storybook/addon-links": "^3.4.1",
@@ -53,13 +54,16 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "file-loader": "^1.1.4",
+    "markdown-it-anchor": "^4.0.0",
+    "markdown-it-container": "^2.0.0",
     "node-sass": "^4.8.3",
     "push-dir": "^0.4.1",
     "sass-loader": "^6.0.7",
     "vue-loader": "^13.0.5",
-    "webpack": "^4.5.0",
+    "vue-markdown-loader": "^2.4.1",
     "vue-server-renderer": "^2.5.13",
     "vue-template-compiler": "^2.5.13 ",
+    "webpack": "^4.5.0",
     "webpack-dev-server": "^2.9.1"
   }
 }

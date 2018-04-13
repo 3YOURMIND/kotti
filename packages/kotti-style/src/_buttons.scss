@@ -60,14 +60,15 @@ button.danger {
 }
 
 button.icon {
+  padding: 0 .4rem;
   i {
     font-size: 1rem;
   }
 }
-button.icon-text {
+button.icon-only {
   i {
     font-size: 1rem;
-    margin-right: .4rem;
+    margin-right: .2rem;
   }
 }
 
@@ -79,9 +80,4 @@ button.disabled, button:disabled {
 button.bottom {
   min-width: 10rem;
   margin-top: $unit-8;
-}
-
-button.loading::after {
-  border-bottom-color: rgb(255, 255, 255);
-  border-left-color: rgb(255, 255, 255);
 }
