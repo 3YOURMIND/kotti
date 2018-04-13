@@ -14,7 +14,7 @@
     "doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook:build": "build-storybook -c .storybook -o dist/storybook",
-    "deploy": "nuxt generate && build-storybook -c .storybook -o dist/storybook",
+    "deploy": "node -v && nuxt generate && build-storybook -c .storybook -o dist/storybook",
     "deploy:cleanbuild": "rm -r dist && nuxt generate && build-storybook -c .storybook -o dist/storybook"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "vue": "^2.5.9",
     "vue-clipboard2": "^0.0.8"
   },
+  "engines" : { "node" : "9.11.1" },
   "browserslist": [
     "> 1%",
     "last 2 versions",
