@@ -24,7 +24,6 @@
     "vue": "^2.5.9",
     "vue-clipboard2": "^0.0.8"
   },
-  "engines" : { "node" : "9.11.1" },
   "browserslist": [
     "> 1%",
     "last 2 versions",
