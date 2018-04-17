@@ -1,5 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: 'Roboto';
+  font-size: 15px;
+}
+h3 ~ p {
+  margin-top: 1em;
+}
+h3 ~ table {
+  margin-top: 0;
 }
 .success-message {
   position: fixed;
@@ -29,5 +37,9 @@ body {
     z-index: 99;
     opacity: .46;
     top: 0;
+  }
+  &.white {
+    background: #fff;
+    border: 1px solid #dbdbdb;
   }
 }

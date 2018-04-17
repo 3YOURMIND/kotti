@@ -1,7 +1,7 @@
 <template>
-  <button :class="[type, objecClass]">
+  <button :class="[type, objectClass]">
     <i :class="loadingClass" v-if="loading"/>
-    <i class="yoco" v-text="icon"></i>
+    <i class="yoco" v-text="icon" v-else></i>
     <span><slot></slot></span>
   </button>
 </template>
@@ -21,7 +21,7 @@ export default {
         white: this.type === 'primary',
       };
     },
-    objecClass() {
+    objectClass() {
       return {
         icon: this.icon,
         'icon-only': this.icon && this.$slots.default,

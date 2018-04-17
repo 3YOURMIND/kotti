@@ -1,0 +1,75 @@
+.avatar {
+
+	background: #fff;
+	width: 2.4rem;
+	height: 2.4rem;
+	display: inline-flex;
+	position: relative;
+	border-radius: 100%;
+	padding: 0.1rem;
+	img {
+		object-fit: cover;
+		border-radius: 100%;
+  }
+  &:hover {
+    cursor: pointer;
+    background: $primary-400;
+  }
+}
+
+.avatar-group {
+	display: flex;
+  flex-direction: row;
+  align-items: center;
+  .avatar {
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        z-index: #{10 - $i};
+      }
+    }
+  }
+  &.stack {
+    .avatar:not(:first-of-type) {
+      margin-left: -0.4rem;
+    }
+  }
+  .avatar.avatar-number {
+    margin-left: .2rem;
+    align-items: center;
+    background: $lightgrey-400;
+    span {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+.avatar--sm {
+	width: 1.6rem;
+	height: 1.6rem;
+}
+
+.avatar--selected {
+	background: #2c64cc;
+}
+
+.avatar-fallback {
+	.head {
+		top: 0.5rem;
+		left: 0.9rem;
+		width: 0.6rem;
+		height: 0.6rem;
+		position: absolute;
+		background: #fff;
+		border-radius: 100%;
+	}
+	.body {
+		top: 1.3rem;
+		left: 0.6rem;
+		position: absolute;
+		width: 1.2rem;
+		height: 0.6rem;
+		background: #fff;
+		border-radius: 50% 50% 0 0;
+	}
+}
