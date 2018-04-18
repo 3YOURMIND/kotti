@@ -23,9 +23,37 @@ Only use this type of banner when this issue will cause a significant error.
 <KtBanner message="You material is not avaialbe to users" icon="announce" actionText="Publish" />
 </div>
 
+<ShowCase>
+
+<div slot="vue">
+
 ```html
 <KtBanner message="You material is not avaialbe to users" icon="announce" actionText="Publish" />
 ```
+
+</div>
+
+<div slot="style">
+
+```html
+<div class="banner">
+  <div class="collapse">
+    <div class="glyph">
+      <i class="yoco">announce</i>
+    </div>
+    <div class="message">
+      You material is not avaialbe to users
+    </div>
+    <div class="action">
+      <button class="text">Publish</button>
+    </div>
+  </div>
+</div>
+```
+
+</div>
+
+</ShowCase>
 
 ### Expand Banner
 
@@ -123,13 +151,14 @@ If you don't specify the icon text, you need add `glyph` slot.
 </template>
 
 <script>
-import KtBanner from '../../packages/kotti-banner'
+import KtBanner from '../../packages/kotti-banner';
+import ShowCase from '../components/ShowCase';
 export default {
   name: 'Banners',
   components: {
-    KtBanner
-  }
-}
+    KtBanner, ShowCase
+  },
+};
 </script>
 
 
