@@ -1,10 +1,9 @@
 {
   "name": "@3yourmind/kotti",
   "description": "Kotti Vue Component UI",
-  "version": "1.0.0",
-  "author": "Junyu Pu",
+  "version": "0.0.1",
+  "author": "3YOURMIND GmbH",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "doc": "nuxt",
     "doc:build": "nuxt build",
