@@ -14,34 +14,34 @@
 
 <script>
 export default {
-  name: 'Kt-Avatar',
-  props: {
-    name: '',
-    src: '',
-    selected: false,
-    small: false,
-    showTooltip: false,
-  },
-  computed: {
-    styleObject() {
-      return {
-        avatar: true,
-        'avatar--selected': this.selected,
-        'avatar--sm': this.small,
-        'tooltip tooltip-bottom': this.showTooltip,
-      };
-    },
-  },
-  methods: {
-    imgFallBack(imgSrc) {
-      if (imgSrc !== '' || imgSrc) {
-        return true;
-      }
-      return false;
-    },
-    handleClick(evt) {
-      this.$emit('click', evt);
-    },
-  },
+	name: 'Kt-Avatar',
+	props: {
+		name: '',
+		src: '',
+		selected: false,
+		small: false,
+		showTooltip: false,
+	},
+	computed: {
+		styleObject() {
+			return {
+				avatar: true,
+				'avatar--selected': this.selected,
+				'avatar--sm': this.small,
+				'tooltip tooltip-bottom': this.showTooltip,
+			};
+		},
+	},
+	methods: {
+		imgFallBack(imgSrc) {
+			if (imgSrc !== '' || imgSrc) {
+				return true;
+			}
+			return false;
+		},
+		handleClick(evt) {
+			this.$emit('click', evt);
+		},
+	},
 };
 </script>

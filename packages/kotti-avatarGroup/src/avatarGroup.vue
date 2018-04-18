@@ -21,30 +21,30 @@
 import KtAvatar from '../../kotti-avatar';
 
 export default {
-  name: 'KtAvatarGroup',
-  props: {
-    items: Array,
-    showItems: {
-      type: Number,
-      default: 2,
-    },
-    isStack: false,
-    showTooltip: false,
-  },
-  components: {
-    KtAvatar,
-  },
-  computed: {
-    styleObject() {
-      return {
-        'avatar-group': true,
-        'stack': this.isStack,
-      }
-    },
-    avatarNumber() {
-      let number = this.items.length - this.showItems;
-      return number;
-    },
-  },
+	name: 'KtAvatarGroup',
+	props: {
+		items: Array,
+		showItems: {
+			type: Number,
+			default: 2,
+		},
+		isStack: false,
+		showTooltip: false,
+	},
+	components: {
+		KtAvatar,
+	},
+	computed: {
+		styleObject() {
+			return {
+				'avatar-group': true,
+				stack: this.isStack,
+			};
+		},
+		avatarNumber() {
+			let number = this.items.length - this.showItems;
+			return number;
+		},
+	},
 };
 </script>

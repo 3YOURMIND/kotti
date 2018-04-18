@@ -1,39 +1,33 @@
 {
-  "name": "@3yourmind/kotti-style",
-  "version": "0.0.2",
-  "description": "Kotti Style",
-  "main": "lib/index.min.css",
-  "style": "lib/index.min.css",
-  "files": [
-    "lib",
-    "src"
-  ],
-  "scripts": {
-    "build": "gulp build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/3YOURMIND/kotti"
-  },
-  "keywords": [
-    "element",
-    "theme"
-  ],
-  "author": "jp@3yourmind.com",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/3YOURMIND/kotti/issues"
-  },
-  "homepage": "https://3yourmind.github.io/kotti/",
-  "devDependencies": {
-    "gulp": "latest",
-    "gulp-autoprefixer": "latest",
-    "gulp-clean-css": "^3.7.0",
-    "gulp-csscomb": "^3.0.8",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "latest",
-    "stylelint": "^9.1.3",
-    "stylelint-config-recommended-scss": "^3.1.0",
-    "stylelint-scss": "^2.5.0"
-  }
+	"name": "@3yourmind/kotti-style",
+	"version": "0.0.2",
+	"description": "Kotti Style",
+	"main": "lib/index.min.css",
+	"style": "lib/index.min.css",
+	"files": ["lib", "src"],
+	"scripts": {
+		"build": "gulp build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti"
+	},
+	"keywords": ["element", "theme"],
+	"author": "jp@3yourmind.com",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"homepage": "https://3yourmind.github.io/kotti/",
+	"devDependencies": {
+		"gulp": "latest",
+		"gulp-autoprefixer": "latest",
+		"gulp-clean-css": "^3.7.0",
+		"gulp-csscomb": "^3.0.8",
+		"gulp-rename": "^1.2.2",
+		"gulp-sass": "latest",
+		"stylelint": "^9.1.3",
+		"stylelint-config-recommended-scss": "^3.1.0",
+		"stylelint-scss": "^2.5.0"
+	}
 }

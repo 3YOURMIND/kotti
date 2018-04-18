@@ -1,18 +1,14 @@
 {
-  "name": "@3yourmind/avatar",
-  "version": "0.0.1",
-  "description": "Avatar component which can showcase avatars",
-  "main": "index.js",
-  "dependencies": {},
-  "author": "3YOURMIND GmbH",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/3YOURMIND/kotti"
-  },
-  "keywords": [
-    "avatar",
-    "kotti",
-    "ui"
-  ]
+	"name": "@3yourmind/avatar",
+	"version": "0.0.1",
+	"description": "Avatar component which can showcase avatars",
+	"main": "index.js",
+	"dependencies": {},
+	"author": "3YOURMIND GmbH",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/3YOURMIND/kotti"
+	},
+	"keywords": ["avatar", "kotti", "ui"]
 }

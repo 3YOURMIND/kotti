@@ -16,7 +16,6 @@ $ npm install @3yourmind/kotti-style --save
 $ yarn add @3yourmind/kotti-style
 ```
 
-
 ## Compiling CSS
 
 Kotti-style uses Gulp for compiling CSS. First you need to install dependences.
@@ -31,5 +30,5 @@ The compiled CSS file located in `/lib` directory.
 ## Import Kotti Style
 
 ```scss
-@import "@3yourmind/kotti-style/lib/index.min.css";
+@import '@3yourmind/kotti-style/lib/index.min.css';
 ```

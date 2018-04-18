@@ -8,26 +8,25 @@
 
 <script>
 export default {
-  name: 'KtButton',
-  props: {
-    type: '',
-    icon: '',
-    loading: Boolean,
-  },
-  computed: {
-    loadingClass() {
-      return {
-        'inline loading': true,
-        white: this.type === 'primary',
-      };
-    },
-    objectClass() {
-      return {
-        icon: this.icon,
-        'icon-only': this.icon && this.$slots.default,
-      };
-    },
-  },
+	name: 'KtButton',
+	props: {
+		type: '',
+		icon: '',
+		loading: Boolean,
+	},
+	computed: {
+		loadingClass() {
+			return {
+				'inline loading': true,
+				white: this.type === 'primary',
+			};
+		},
+		objectClass() {
+			return {
+				icon: this.icon,
+				'icon-only': this.icon && this.$slots.default,
+			};
+		},
+	},
 };
 </script>
-

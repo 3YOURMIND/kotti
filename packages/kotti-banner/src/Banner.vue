@@ -28,50 +28,50 @@
 
 <script>
 export default {
-  name: 'Kt-Banner',
-  data() {
-    return {
-      isExpand: false,
-    };
-  },
-  props: {
-    isGrey: {
-      type: Boolean,
-      default: false
-    },
-    message: String,
-    icon: {
-      type: String,
-      default: 'announce'
-    },
-    actionText: {
-      type: String,
-      default: ''
-    },
-    switchText: {
-      type: String,
-      default: 'View',
-    },
-    switchCloseText: {
-      type: String,
-      default: 'Close',
-    },
-  },
-  computed: {
-    bannerClass() {
-      return {
-        banner: true,
-        'banner-grey': this.isGrey,
-      };
-    },
-    expandable() {
-      return this.$slots.expand
-    },
-  },
-  methods: {
-    handleClick(evt) {
-      this.$emit('click', evt);
-    },
-  },
+	name: 'Kt-Banner',
+	data() {
+		return {
+			isExpand: false,
+		};
+	},
+	props: {
+		isGrey: {
+			type: Boolean,
+			default: false,
+		},
+		message: String,
+		icon: {
+			type: String,
+			default: 'announce',
+		},
+		actionText: {
+			type: String,
+			default: '',
+		},
+		switchText: {
+			type: String,
+			default: 'View',
+		},
+		switchCloseText: {
+			type: String,
+			default: 'Close',
+		},
+	},
+	computed: {
+		bannerClass() {
+			return {
+				banner: true,
+				'banner-grey': this.isGrey,
+			};
+		},
+		expandable() {
+			return this.$slots.expand;
+		},
+	},
+	methods: {
+		handleClick(evt) {
+			this.$emit('click', evt);
+		},
+	},
 };
 </script>
