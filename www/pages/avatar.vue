@@ -6,50 +6,99 @@ Avatar is a round object to help identify the user information.
 ## Item
 
 <div class="element-example">
-<KtAvatar
-  name="Johny O'Five"
-  src="https://picsum.photos/200"
-  showTooltip="true"
-/>
-<KtAvatar
-  name="Justin O\'Five'"
-  src="https://picsum.photos/200"
-  selected="true"
-/>
-<KtAvatar
-  name="Justin O\'Five'"
-  src="https://picsum.photos/200"
-  small="true"
-/>
+	<KtAvatar
+		:name="'Justin O\'Five'"
+		:src="'https://picsum.photos/200'"
+		:showTooltip="true"
+	/>
+	<KtAvatar
+		:name="'Justin O\'Five'"
+		:src="'https://picsum.photos/200'"
+		:selected="true"
+	/>
+	<KtAvatar
+		:name="'Justin O\'Five'"
+		:src="'https://picsum.photos/200'"
+		:small="true"
+	/>
 </div>
 
-```html
-<KtAvatar name="Johny O'Five" src="https://picsum.photos/200" showTooltip="true"/>
-<KtAvatar name="Johny O'Five" src="https://picsum.photos/100" selected="true"/>
-<KtAvatar name="Johny O'Five'" src="https://picsum.photos/120" small="true"/>
+```vue
+<KtAvatar
+	:name="'Justin O\'Five'"
+	:src="'https://picsum.photos/200'"
+	:showTooltip="true"
+/>
+<KtAvatar
+	:name="'Justin O\'Five'"
+	:src="'https://picsum.photos/100'"
+	:selected="true"
+/>
+<KtAvatar
+	:name="'Justin O\'Five'"
+	:src="'https://picsum.photos/120'"
+	:small="true"
+/>
 ```
-
-
 
 ## Grouped
 
+This example is based on `avatarData`. The example of the avatar data is shown here:
+
+```javascript
+const avatarData = [
+	{
+		name: 'Justin',
+		src: 'https://picsum.photos/100'
+	},
+	{
+		name: 'Beoncye',
+		src: 'https://picsum.photos/200'
+	},
+	{
+		name: 'Simens',
+		src: 'https://picsum.photos/120'
+	}
+];
+```
+
 <div class="element-example">
-<KtAvatarGroup :items="avatarData"/>
-<KtAvatarGroup :items="avatarData" isStack="true"/>
+	<KtAvatarGroup
+		:items="avatarData"
+	/>
+	<KtAvatarGroup
+		:items="avatarData"
+		:isStack="true"
+	/>
 </div>
 
 ```html
-<KtAvatarGroup :items="avatarData"/>
-<KtAvatarGroup :items="avatarData" isStack="true"/>
- ```
+<KtAvatarGroup
+	:items="avatarData"
+/>
+<KtAvatarGroup
+	:items="avatarData"
+	:isStack="true"
+/>
+```
 
 <div class="element-example">
-  <KtAvatarGroup :items="avatarData" :showItems="4" isStack="true" showTooltip="true"/>
+  <KtAvatarGroup
+		:items="avatarData"
+		:showItems="4"
+		:isStack="true"
+		:showTooltip="true"
+	/>
 </div>
 
 ```html
- <KtAvatarGroup :items="avatarData" :showItems="4" isStack="true" showTooltip="true"/>
- ```
+<KtAvatarGroup
+	:items="avatarData"
+	:showItems="4"
+	:isStack="true"
+	:showTooltip="true"
+/>
+```
 
 ## Usage
 
@@ -75,29 +124,32 @@ Avatar is a round object to help identify the user information.
 </template>
 
 <script>
-import KtAvatar from '../../packages/kotti-avatar'
-import KtAvatarGroup from '../../packages/kotti-avatarGroup'
+import KtAvatar from '../../packages/kotti-avatar';
+import KtAvatarGroup from '../../packages/kotti-avatarGroup';
 
 export default {
-  name: 'Avatar',
-  components: {
-    KtAvatar, KtAvatarGroup
-  },
-  data() {
-    return {
-      avatarData: [{
-        name: 'Justin',
-        src: 'https://picsum.photos/100'
-      },
-      {
-        name: 'Beoncye',
-        src: 'https://picsum.photos/200'
-      },
-      {
-        name: 'Simens',
-        src: 'https://picsum.photos/120'
-      }]
-    }
-  }
-}
+	name: 'Avatar',
+	components: {
+		KtAvatar,
+		KtAvatarGroup,
+	},
+	data() {
+		return {
+			avatarData: [
+				{
+					name: 'Justin',
+					src: 'https://picsum.photos/100',
+				},
+				{
+					name: 'Beoncye',
+					src: 'https://picsum.photos/200',
+				},
+				{
+					name: 'Simens',
+					src: 'https://picsum.photos/120',
+				},
+			],
+		};
+	},
+};
 </script>
