@@ -1,15 +1,11 @@
 {
-  "name": "@3yourmind/kotti-button",
+  "name": "@3yourmind/avatar",
   "version": "0.0.1",
-  "config": {
-    "access": "public"
-  },
-  "description": "Avatar group",
+  "description": "Avatar component which can showcase avatars",
   "main": "index.js",
-  "dependencies": {
-  },
-  "author": "Junyu P.",
-  "license": "Apache-2.0",
+  "dependencies": {},
+  "author": "3YOURMIND GmbH",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/3YOURMIND/kotti"

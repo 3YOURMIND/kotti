@@ -1,9 +1,11 @@
 <template>
-	<div :class="styleObject" :data-tooltip="name"
-  @click="handleClick"
+	<div
+		:class="styleObject"
+		:data-tooltip="name"
+  	@click="handleClick"
   >
-		<img :src="src" v-if="imgFallBack(src)" />
-		<div class="avatar-fallback" v-else>
+		<img v-if="imgFallBack(src)" :src="src" />
+		<div v-else class="avatar-fallback">
 			<div class="head" />
 			<div class="body" />
 		</div>
