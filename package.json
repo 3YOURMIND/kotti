@@ -20,7 +20,7 @@
 		"precommit": "lint-staged"
 	},
 	"lint-staged": {
-		"*.{js,json,css,md,vue}": ["prettier --write", "git add"]
+		"*.{js,json,css,scss,md,vue}": ["prettier --write", "git add"]
 	},
 	"dependencies": {
 		"@3yourmind/kotti-style": "^0.0.2",
