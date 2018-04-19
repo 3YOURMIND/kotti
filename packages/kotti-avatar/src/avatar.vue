@@ -1,14 +1,13 @@
 <template>
 	<div
-		:class="styleObject"
+		:class="avatarClasses"
 		:data-tooltip="name"
-  	@click="handleClick"
+  	@click="onAvatarContainerClick"
   >
-		<div v-if="this.src !='' && avatarFallback">
-			<img :src="src" @error="imgFallBack()"/>
+		<div v-if="avatarAvailable">
+			<img :src="src" @error="imgFallBack()" />
 		</div>
-		<div v-else
-			:class="['avatar-fallback', {'avatar-fallback--small': small}]">
+		<div v-else :class="avatarFallbackClasses">
 			<div class="avatar-fallback__head" />
 			<div class="avatar-fallback__body" />
 		</div>
@@ -19,14 +18,26 @@
 export default {
 	name: 'Kt-Avatar',
 	props: {
-		name: '',
+		name: {
+			type: String,
+			default: '',
+		},
 		src: {
 			type: String,
 			default: '',
 		},
-		selected: false,
-		small: false,
-		showTooltip: false,
+		selected: {
+			type: Boolean,
+			default: false,
+		},
+		small: {
+			type: Boolean,
+			default: false,
+		},
+		showTooltip: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -34,7 +45,10 @@ export default {
 		};
 	},
 	computed: {
-		styleObject() {
+		avatarAvailable() {
+			return this.src !== '' && this.avatarFallback;
+		},
+		avatarClasses() {
 			return {
 				avatar: true,
 				'avatar--selected': this.selected,
@@ -42,13 +56,19 @@ export default {
 				'tooltip tooltip-bottom': this.showTooltip,
 			};
 		},
+		avatarFallbackClasses() {
+			return {
+				'avatar-fallback': true,
+				'avatar-fallback--small': this.small,
+			};
+		},
 	},
 	methods: {
 		imgFallBack() {
 			this.avatarFallback = false;
 		},
-		handleClick(evt) {
-			this.$emit('click', evt);
+		onAvatarContainerClick($event) {
+			this.$emit('click', $event);
 		},
 	},
 };
