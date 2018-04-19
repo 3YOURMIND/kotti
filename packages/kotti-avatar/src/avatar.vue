@@ -4,7 +4,7 @@
 		:data-tooltip="name"
   	@click="onAvatarContainerClick"
   >
-		<div v-if="this.src !='' && avatarFallback">
+		<div v-if="avatarAvailable">
 			<img :src="src" @error="imgFallBack()" />
 		</div>
 		<div
@@ -36,6 +36,9 @@ export default {
 		};
 	},
 	computed: {
+		avatarAvailable() {
+			return this.src !== '' && this.avatarFallback;
+		},
 		avatarClasses() {
 			return {
 				avatar: true,
