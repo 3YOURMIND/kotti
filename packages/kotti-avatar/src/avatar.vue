@@ -2,7 +2,7 @@
 	<div
 		:class="avatarClass"
 		:data-tooltip="name"
-  	@click="handleClick"
+  	@click="onAvatarContainerClick"
   >
 		<div v-if="this.src !='' && avatarFallback">
 			<img :src="src" @error="imgFallBack()"/>
@@ -47,8 +47,8 @@ export default {
 		imgFallBack() {
 			this.avatarFallback = false;
 		},
-		handleClick(evt) {
-			this.$emit('click', evt);
+		onAvatarContainerClick($event) {
+			this.$emit('click', $event);
 		},
 	},
 };
