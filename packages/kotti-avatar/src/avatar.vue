@@ -1,6 +1,6 @@
 <template>
 	<div
-		:class="avatarClass"
+		:class="avatarClasses"
 		:data-tooltip="name"
   	@click="onAvatarContainerClick"
   >
@@ -9,7 +9,7 @@
 		</div>
 		<div
 			v-else
-			:class="['avatar-fallback', {'avatar-fallback--small': small}]"
+			:class="avatarFallbackClasses"
 		>
 			<div class="avatar-fallback__head" />
 			<div class="avatar-fallback__body" />
@@ -36,12 +36,18 @@ export default {
 		};
 	},
 	computed: {
-		avatarClass() {
+		avatarClasses() {
 			return {
 				avatar: true,
 				'avatar--selected': this.selected,
 				'avatar--sm': this.small,
 				'tooltip tooltip-bottom': this.showTooltip,
+			};
+		},
+		avatarFallbackClasses() {
+			return {
+				'avatar-fallback': true,
+				'avatar-fallback--small': this.small,
 			};
 		},
 	},
