@@ -133,4 +133,11 @@ dl {
       cursor: pointer;
     }
   }
+  .editable {
+    padding: .2rem 0;
+    &:hover {
+      cursor: pointer;
+      background: $lightgrey-300;
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <template>
-  <button :class="[type, objectClass]">
+  <button :class="[type, objectClass]" @click="handleClick">
     <i :class="loadingClass" v-if="loading"/>
     <i class="yoco" v-text="icon" v-else></i>
     <span><slot></slot></span>
@@ -28,5 +28,10 @@ export default {
 			};
 		},
 	},
+	methods: {
+		handleClick(evt){
+			this.$emit('click', evt);
+		}
+	}
 };
 </script>

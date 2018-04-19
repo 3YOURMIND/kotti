@@ -2776,6 +2776,16 @@ dl dd
     color: #2659ab;
 }
 
+.label-value .editable
+{
+    padding: .2rem 0;
+}
+
+.label-value .editable:hover
+{
+    cursor: pointer; background: #f8f8f8;
+}
+
 table
 {position: relative; width: 100%; margin: 1em 0; 
 
