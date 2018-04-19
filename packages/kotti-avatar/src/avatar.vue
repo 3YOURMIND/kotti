@@ -5,10 +5,12 @@
   	@click="onAvatarContainerClick"
   >
 		<div v-if="this.src !='' && avatarFallback">
-			<img :src="src" @error="imgFallBack()"/>
+			<img :src="src" @error="imgFallBack()" />
 		</div>
-		<div v-else
-			:class="['avatar-fallback', {'avatar-fallback--small': small}]">
+		<div
+			v-else
+			:class="['avatar-fallback', {'avatar-fallback--small': small}]"
+		>
 			<div class="avatar-fallback__head" />
 			<div class="avatar-fallback__body" />
 		</div>
