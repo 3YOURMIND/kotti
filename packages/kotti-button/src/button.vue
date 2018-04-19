@@ -24,7 +24,7 @@ export default {
 		objectClass() {
 			return {
 				icon: this.icon,
-				'icon-only': this.icon && this.$slots.default,
+				'icon-only': this.icon && !this.$slots.default,
 			};
 		},
 	},
