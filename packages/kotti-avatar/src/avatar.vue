@@ -1,6 +1,6 @@
 <template>
 	<div
-		:class="styleObject"
+		:class="avatarClass"
 		:data-tooltip="name"
   	@click="handleClick"
   >
@@ -34,7 +34,7 @@ export default {
 		};
 	},
 	computed: {
-		styleObject() {
+		avatarClass() {
 			return {
 				avatar: true,
 				'avatar--selected': this.selected,
