@@ -1,5 +1,5 @@
 <template lang="md">
-# Avatar
+# Avatars
 
 Avatar is a round object to help identify the user information.
 
@@ -7,43 +7,58 @@ Avatar is a round object to help identify the user information.
 
 <div class="element-example">
 	<KtAvatar
-		:name="'Justin O\'Five'"
-		:src="'https://picsum.photos/200'"
+		name="Jony O'Five"
+		src="https://picsum.photos/200"
 		:showTooltip="true"
+		class="mr-16px"
 	/>
 	<KtAvatar
-		:name="'Justin O\'Five'"
-		:src="'https://picsum.photos/200'"
+		name="Jony O'Five"
 		:selected="true"
+		class="mr-16px"
 	/>
 	<KtAvatar
-		:name="'Justin O\'Five'"
-		:src="'https://picsum.photos/200'"
+		name="Jony O'Five"
 		:small="true"
+		class="mr-16px"
 	/>
 </div>
 
-```vue
-<KtAvatar
-	:name="'Justin O\'Five'"
-	:src="'https://picsum.photos/200'"
-	:showTooltip="true"
-/>
-<KtAvatar
-	:name="'Justin O\'Five'"
-	:src="'https://picsum.photos/100'"
-	:selected="true"
-/>
-<KtAvatar
-	:name="'Justin O\'Five'"
-	:src="'https://picsum.photos/120'"
-	:small="true"
-/>
+Avatar has `name` and image `src`. If no image is given, 
+or image error occurs avatar will fallback to default.
+
+Set `small` to `true` for smaller avatar.
+
+```html
+	<KtAvatar
+		name="Jony O'Five"
+		src="https://picsum.photos/200"
+		:showTooltip="true"
+	/>
+	<KtAvatar
+		name="Jony O'Five"
+		src="https://picsum.photos/200"
+		:selected="true"
+	/>
+	<KtAvatar
+		name="Jony O'Five"
+		src="https://picsum.photos/200"
+		:small="true"
+	/>
 ```
 
 ## Grouped
 
-This example is based on `avatarData`. The example of the avatar data is shown here:
+<div class="element-example">
+  <KtAvatarGroup
+		:items="avatarData"
+		:showItems="4"
+		:showTooltip="true"
+	/>
+</div>
+
+Avatars can be grouped to avatar groups. Using `items` props to pass the `avatarData`.
+The example of the avatar data is shown here, which has same properities as avatar item:
 
 ```javascript
 const avatarData = [
@@ -61,41 +76,27 @@ const avatarData = [
 	}
 ];
 ```
-
-<div class="element-example">
-	<KtAvatarGroup
-		:items="avatarData"
-	/>
-	<KtAvatarGroup
-		:items="avatarData"
-		:isStack="true"
-	/>
-</div>
-
-```html
-<KtAvatarGroup
-	:items="avatarData"
-/>
-<KtAvatarGroup
-	:items="avatarData"
-	:isStack="true"
-/>
-```
-
 <div class="element-example">
   <KtAvatarGroup
 		:items="avatarData"
 		:showItems="4"
 		:isStack="true"
-		:showTooltip="true"
+	/>
+	<KtAvatarGroup
+		:items="avatarData"
+		:showItems="2"
+		:isStack="true"
 	/>
 </div>
+
+Avatar group can be stacked by setting `isStack` to `true`. 
+You can control how many avatar items you need to show when `showItems` are setted.
 
 ```html
 <KtAvatarGroup
 	:items="avatarData"
-	:showItems="4"
 	:isStack="true"
+	:showItems="4"
 	:showTooltip="true"
 />
 ```
@@ -143,6 +144,14 @@ export default {
 				{
 					name: 'Beoncye',
 					src: 'https://picsum.photos/200',
+				},
+				{
+					name: 'Simens',
+					src: 'https://picsum.photos/120',
+				},
+				{
+					name: 'Simens',
+					src: 'https://picsum.photos/120',
 				},
 				{
 					name: 'Simens',

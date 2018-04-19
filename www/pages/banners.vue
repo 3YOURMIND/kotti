@@ -102,7 +102,7 @@ You can use `banner-grey` to change the banner's background color,
 this style is useful when you want add contrast to the page.
 
 <div class="element-example white">
-<KtBanner message="You material is not avaialbe to users" icon="announce" actionText="Publish" isGrey="true"/>
+<KtBanner message="You material is not avaialbe to users" icon="announce" actionText="Publish" :isGrey="true"/>
 </div>
 
 ```html
@@ -110,7 +110,7 @@ this style is useful when you want add contrast to the page.
   message="You material is not avaialbe to users"
   icon="announce"
   actionText="Publish"
-  isGrey="true"/>
+  :isGrey="true"/>
 ```
 
 ### Glyph

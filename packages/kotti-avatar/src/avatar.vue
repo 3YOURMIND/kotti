@@ -4,10 +4,13 @@
 		:data-tooltip="name"
   	@click="handleClick"
   >
-		<img v-if="imgFallBack(src)" :src="src" />
-		<div v-else class="avatar-fallback">
-			<div class="head" />
-			<div class="body" />
+		<div v-if="this.src !='' && avatarFallback">
+			<img :src="src" @error="imgFallBack()"/>
+		</div>
+		<div v-else
+			:class="['avatar-fallback', {'avatar-fallback--small': small}]">
+			<div class="avatar-fallback__head" />
+			<div class="avatar-fallback__body" />
 		</div>
 	</div>
 </template>
@@ -17,10 +20,18 @@ export default {
 	name: 'Kt-Avatar',
 	props: {
 		name: '',
-		src: '',
+		src: {
+			type: String,
+			default: '',
+		},
 		selected: false,
 		small: false,
 		showTooltip: false,
+	},
+	data() {
+		return {
+			avatarFallback: true,
+		};
 	},
 	computed: {
 		styleObject() {
@@ -33,11 +44,8 @@ export default {
 		},
 	},
 	methods: {
-		imgFallBack(imgSrc) {
-			if (imgSrc !== '' || imgSrc) {
-				return true;
-			}
-			return false;
+		imgFallBack() {
+			this.avatarFallback = false;
 		},
 		handleClick(evt) {
 			this.$emit('click', evt);

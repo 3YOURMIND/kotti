@@ -1,19 +1,18 @@
 .avatar {
-
-	background: #fff;
+	background: $lightgrey-400;
 	width: 2.4rem;
 	height: 2.4rem;
 	display: inline-flex;
 	position: relative;
 	border-radius: 100%;
-	padding: 0.1rem;
+	border: .1rem solid #fff;
 	img {
 		object-fit: cover;
 		border-radius: 100%;
   }
   &:hover {
     cursor: pointer;
-    background: $primary-400;
+    border: .1rem solid $primary-400;
   }
 }
 
@@ -26,11 +25,12 @@
       &:nth-child(#{$i}) {
         z-index: #{10 - $i};
       }
-    }
+		}
+		margin-right: .2rem;
   }
   &.stack {
     .avatar:not(:first-of-type) {
-      margin-left: -0.4rem;
+      margin-left: -0.8rem;
     }
   }
   .avatar.avatar-number {
@@ -52,24 +52,38 @@
 .avatar--selected {
 	background: #2c64cc;
 }
-
 .avatar-fallback {
-	.head {
+	.avatar-fallback__head {
 		top: 0.5rem;
-		left: 0.9rem;
+		left: 0.8rem;
 		width: 0.6rem;
 		height: 0.6rem;
 		position: absolute;
 		background: #fff;
 		border-radius: 100%;
 	}
-	.body {
+	.avatar-fallback__body {
 		top: 1.3rem;
-		left: 0.6rem;
-		position: absolute;
+		left: 0.5rem;
 		width: 1.2rem;
-		height: 0.6rem;
+		height: 0.4rem;
+		position: absolute;
 		background: #fff;
 		border-radius: 50% 50% 0 0;
+	}
+}
+
+.avatar-fallback--small {
+	.avatar-fallback__head {
+		top: 0.3rem;
+		left: 0.5rem;
+		width: 0.4rem;
+		height: 0.4rem;
+	}
+	.avatar-fallback__body {
+		top: 0.8rem;
+		left: 0.3rem;
+		width: 0.8rem;
+		height: 0.3rem;
 	}
 }

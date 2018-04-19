@@ -21,6 +21,9 @@
     <div class="subline" @click="showComponents=!showComponents">Components</div>
     <ul v-if="showComponents">
       <li>
+        <nuxt-link to="/avatars">Avatars</nuxt-link>
+      </li>
+      <li>
         <nuxt-link to="/banners">Banners</nuxt-link>
       </li>
       <li>
