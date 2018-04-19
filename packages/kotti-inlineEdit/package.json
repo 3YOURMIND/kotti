@@ -1,7 +1,7 @@
 {
-	"name": "@3yourmind/button",
+	"name": "@3yourmind/inline-edit",
 	"version": "0.0.1",
-	"description": "Button which is a simple base button component",
+	"description": "A component which is a label but also an input at the same time.",
 	"main": "index.js",
 	"dependencies": {},
 	"author": "3YOURMIND GmbH",
@@ -13,8 +13,8 @@
 	"bugs": {
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
-	"homepage": "https://3yourmind.github.io/kotti/buttons",
-	"keywords": ["button", "kotti", "ui", "vue", "component"],
+	"homepage": "https://3yourmind.github.io/kotti/inline-edit",
+	"keywords": ["inline edit", "kotti", "ui", "vue", "component"],
 	"contributors": [
 		{
 			"name": "Kevin Peters",
