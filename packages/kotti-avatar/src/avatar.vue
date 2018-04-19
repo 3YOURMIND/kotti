@@ -7,10 +7,7 @@
 		<div v-if="avatarAvailable">
 			<img :src="src" @error="imgFallBack()" />
 		</div>
-		<div
-			v-else
-			:class="avatarFallbackClasses"
-		>
+		<div v-else :class="avatarFallbackClasses">
 			<div class="avatar-fallback__head" />
 			<div class="avatar-fallback__body" />
 		</div>
