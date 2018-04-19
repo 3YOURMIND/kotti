@@ -21,14 +21,26 @@
 export default {
 	name: 'Kt-Avatar',
 	props: {
-		name: '',
+		name: {
+			type: String,
+			default: '',
+		},
 		src: {
 			type: String,
 			default: '',
 		},
-		selected: false,
-		small: false,
-		showTooltip: false,
+		selected: {
+			type: Boolean,
+			default: false,
+		},
+		small: {
+			type: Boolean,
+			default: false,
+		},
+		showTooltip: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
