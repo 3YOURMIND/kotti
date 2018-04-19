@@ -1737,19 +1737,19 @@ button.danger:hover
     color: #fff; background: #d91919;
 }
 
-button.icon
+button.icon i
+{
+    font-size: 1rem; margin-right: .2rem;
+}
+
+button.icon-only
 {
     padding: 0 .4rem;
 }
 
-button.icon i
-{
-    font-size: 1rem;
-}
-
 button.icon-only i
 {
-    font-size: 1rem; margin-right: .2rem;
+    margin-right: 0;
 }
 
 button.disabled,
@@ -1762,6 +1762,21 @@ button:disabled
 button.bottom
 {
     min-width: 10rem; margin-top: 1.6rem;
+}
+
+.button-group button
+{
+    border-radius: 0;
+}
+
+.button-group button:first-of-type
+{
+    border-radius: .1rem 0 0 .1rem;
+}
+
+.button-group button:last-of-type
+{
+    border-radius: 0 .1rem .1rem 0;
 }
 
 .banner
@@ -2778,7 +2793,7 @@ dl dd
 
 .label-value .editable
 {
-    padding: .2rem 0;
+    padding: .1rem 0;
 }
 
 .label-value .editable:hover

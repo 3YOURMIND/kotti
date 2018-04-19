@@ -3,7 +3,7 @@
 		<label class="form-label" v-text="label"/>
 		<div class="default editable"
 			v-if="!editMode"
-			@click="editMode=true" v-text="message"/>
+			@click="editMode=true" v-text="currentValue"/>
 		<div v-else>
 			<input type="text" 
 			class="form-input"
@@ -90,9 +90,12 @@ export default {
 .inline-edit {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 
 .edit-button {
-	float: right;
+	position: absolute;
+	bottom: -32px;
+	right: 0;
 }
 </style>
