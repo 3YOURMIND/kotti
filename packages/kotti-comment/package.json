@@ -1,7 +1,7 @@
 {
-	"name": "@3yourmind/button",
+	"name": "@3yourmind/comment",
 	"version": "0.0.1",
-	"description": "Button which is a simple base button component",
+	"description": "Comment component which is used throughout different components to show comments for different use cases.",
 	"main": "index.js",
 	"dependencies": {},
 	"author": "3YOURMIND GmbH",
@@ -13,8 +13,8 @@
 	"bugs": {
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
-	"homepage": "https://3yourmind.github.io/kotti/buttons",
-	"keywords": ["button", "kotti", "ui", "vue", "component"],
+	"homepage": "https://3yourmind.github.io/kotti/comments",
+	"keywords": ["comments", "kotti", "ui", "vue", "component"],
 	"contributors": [
 		{
 			"name": "Kevin Peters",

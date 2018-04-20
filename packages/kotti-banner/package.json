@@ -1,7 +1,8 @@
 {
-	"name": "@3yourmind/button",
+	"name": "@3yourmind/banner",
 	"version": "0.0.1",
-	"description": "Button which is a simple base button component",
+	"description":
+		"Banner which is shown as kind of notification",
 	"main": "index.js",
 	"dependencies": {},
 	"author": "3YOURMIND GmbH",
@@ -13,8 +14,8 @@
 	"bugs": {
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
-	"homepage": "https://3yourmind.github.io/kotti/buttons",
-	"keywords": ["button", "kotti", "ui", "vue", "component"],
+	"homepage": "https://3yourmind.github.io/kotti/banners",
+	"keywords": ["banner", "kotti", "ui", "vue", "component"],
 	"contributors": [
 		{
 			"name": "Kevin Peters",
