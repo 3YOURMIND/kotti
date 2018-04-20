@@ -36,6 +36,12 @@
         <nuxt-link to="/forms">Forms</nuxt-link>
       </li>
       <li>
+        <nuxt-link to="/inputs">Inputs</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/inline-edit">Inline Edit</nuxt-link>
+      </li>
+      <li>
         <nuxt-link to="/modal">Modal</nuxt-link>
       </li>
       <li>

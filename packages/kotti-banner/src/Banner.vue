@@ -42,7 +42,7 @@ export default {
 		message: String,
 		icon: {
 			type: String,
-			default: 'announce',
+			default: '',
 		},
 		actionText: {
 			type: String,
