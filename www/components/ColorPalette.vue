@@ -11,9 +11,11 @@
       <div class="color-palette__name" v-text="color.name" />
       <div class="color-palette__code" v-text="color.code" />
     </div>
+    <transition name="slide-fade">
     <div v-if="copySuccess" class="success-message">
       Copy successful
     </div>
+    </transition>
   </div>
 </template>
 
@@ -23,7 +25,11 @@ export default {
   props: {
     colorName: String,
     colors: Array,
-    copySuccess: false
+  },
+  data() {
+    return {
+      copySuccess: false
+    }
   },
   methods: {
     copyColor (string) {
@@ -34,7 +40,7 @@ export default {
           vm.copySuccess = true
           setTimeout(() => {
             vm.copySuccess = false
-          }, 2000)
+          }, 1000)
         },
         function () {
           alert('failed')
@@ -89,5 +95,17 @@ export default {
   width: 50%;
   float: right;
   display: none;
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(100px);
+  opacity: 0;
 }
 </style>

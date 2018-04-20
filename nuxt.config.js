@@ -36,6 +36,7 @@ module.exports = {
 	css: ['../packages/kotti-style/lib/index.min.css', '@/assets/css/main.scss', '@3yourmind/yoco'],
 	modules: ['@nuxtjs/markdownit'],
 	loading: { color: '#2C64CC' },
+	plugins: ['~/plugins/vue-clipboard2'],
 	/*
   ** Build configuration
   */
