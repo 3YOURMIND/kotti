@@ -100,7 +100,7 @@
 <script>
 import ButtonUsage from '../../packages/kotti-button/README.md'
 import KtButton from '../../packages/kotti-button'
-import KtButtonGroup from '../../packages/kotti-buttonGroup'
+import KtButtonGroup from '../../packages/kotti-button-group'
 import ShowCase from '../components/ShowCase'
 
 export default {

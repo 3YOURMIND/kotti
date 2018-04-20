@@ -126,7 +126,7 @@ You can control how many avatar items you need to show when `showItems` are sett
 
 <script>
 import KtAvatar from '../../packages/kotti-avatar';
-import KtAvatarGroup from '../../packages/kotti-avatarGroup';
+import KtAvatarGroup from '../../packages/kotti-avatar-group';
 
 export default {
 	name: 'Avatar',
