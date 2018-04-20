@@ -7,7 +7,7 @@
   flex-direction: column;
   &.banner-grey {
     border: 0;
-    background: $lightgrey-300;
+    background: $lightgray-300;
   }
   .collapse {
     display: flex;
@@ -28,7 +28,7 @@
   .message {
     flex: 1 1 100%;
     font-weight: 600;
-    color: $darkgrey-400;
+    color: $darkgray-400;
     padding: 0 $unit-4;
     align-self: center;
   }

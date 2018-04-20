@@ -38,7 +38,7 @@ h3,
   font-size: .8rem;
   color: $primary-500;
   padding-bottom: $unit-2;
-  border-bottom: 1px solid $lightgrey-400;
+  border-bottom: 1px solid $lightgray-400;
   margin-bottom: 0;
   span {
     float: right;
@@ -103,12 +103,12 @@ dl {
 
 .label-value {
   line-height: 1.5;
-  color: $darkgrey-500;
+  color: $darkgray-500;
   position: relative;
   label {
     font-size: .6rem;
     font-weight: 600;
-    color: $darkgrey-300;
+    color: $darkgray-300;
     text-transform: uppercase;
   }
   .default {
@@ -137,7 +137,7 @@ dl {
     padding: .1rem 0;
     &:hover {
       cursor: pointer;
-      background: $lightgrey-300;
+      background: $lightgray-300;
     }
   }
 }

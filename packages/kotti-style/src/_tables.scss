@@ -7,7 +7,7 @@ table {
   hyphens: auto;
   th {
     border-bottom: $border-width solid $border-color;
-    color: $lightgrey-500;
+    color: $lightgray-500;
     line-height: 1em;
     text-align: inherit;
     font-size: $font-size-sm;
@@ -34,10 +34,10 @@ table {
   }
   i {
     font-size: 1rem !important;
-    color: $darkgrey-300;
+    color: $darkgray-300;
     margin: 0 .2rem;
     &.disabled {
-      color: $lightgrey-500;
+      color: $lightgray-500;
     }
   }
 
@@ -57,11 +57,11 @@ table {
     box-shadow: 0 0 1px #999;
     i {
       margin: 0 $unit-1;
-      color: $lightgrey-500;
+      color: $lightgray-500;
     }
     i:hover {
       cursor: pointer;
-      color: $darkgrey-500;
+      color: $darkgray-500;
     }
   }
   > tr:hover {

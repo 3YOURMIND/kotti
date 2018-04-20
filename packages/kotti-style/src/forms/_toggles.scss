@@ -28,7 +28,7 @@
 
   .form-icon {
     // @include control-transition();
-    border: $border-width solid $lightgrey-400;
+    border: $border-width solid $lightgray-400;
     cursor: pointer;
     display: inline-block;
     position: absolute;
@@ -49,7 +49,7 @@
 .form-checkbox,
 .form-radio {
   .form-icon {
-    background: $lightgrey-300;
+    background: $lightgray-300;
     height: $control-icon-size;
     left: 0;
     top: ($control-size-sm - $control-icon-size) / 2;
@@ -58,7 +58,7 @@
 
   input {
     &:active + .form-icon {
-      background: $darkgrey-400;
+      background: $darkgray-400;
     }
   }
 }
@@ -89,7 +89,7 @@
       background: $primary-500;
       border-color: $primary-500;
       &::before {
-        background: $lightgrey-400;
+        background: $lightgray-400;
         content: "";
         height: 2px;
         left: 50%;
@@ -129,7 +129,7 @@
   padding-left: ($unit-8 + $control-padding-x);
 
   .form-icon {
-    background: $lightgrey-400;
+    background: $lightgray-400;
     background-clip: padding-box;
     border-radius: $unit-2 + $border-width;
     height: $unit-4 + $border-width * 2;

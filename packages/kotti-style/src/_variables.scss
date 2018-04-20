@@ -5,15 +5,15 @@ $primary-400: #3173DE;
 $primary-600: #2659AB;
 $primary-700: darken($primary-500, 20);
 
-$darkgrey-300: #8A8A8A;
-$darkgrey-400: #575757;
-$darkgrey-500: #3d3d3d;
-$darkgrey-600: #242424;
+$darkgray-300: #8A8A8A;
+$darkgray-400: #575757;
+$darkgray-500: #3d3d3d;
+$darkgray-600: #242424;
 
-$lightgrey-300: #F8F8F8;
-$lightgrey-500: #8f8f8f;
-$lightgrey-400: #DBDBDB;
-$lightgrey-600: #5C5C5C;
+$lightgray-300: #F8F8F8;
+$lightgray-500: #8f8f8f;
+$lightgray-400: #DBDBDB;
+$lightgray-600: #5C5C5C;
 
 $green-300: #C4E0A5;
 $green-400: #71C716;
@@ -37,12 +37,12 @@ $purple-600: #591B75;
 
 $warning-500: #ff7800;
 
-$body-font-color: $darkgrey-500;
-$body-bg: $lightgrey-300;
+$body-font-color: $darkgray-500;
+$body-bg: $lightgray-300;
 
 $link-color: $primary-500;
 $link-color-dark: $primary-600;
-$border-color: $lightgrey-400;
+$border-color: $lightgray-400;
 $code-color: $primary-600;
 
 // Fonts
