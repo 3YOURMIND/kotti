@@ -1,20 +1,19 @@
 <template>
-<div :class="styleObject">
-  <KtAvatar
-    v-for="(item , index) in items"
-    :key="index"
-    :name="item.name"
-    :src="item.src"
-    :selected="item.selected"
-    :small="item.small"
-    :showTooltip="showTooltip"
-    v-if="index < showItems"
-  />
-  <div class="avatar avatar-number"
-   v-if="avatarNumber>0">
-    <span v-text="`+${avatarNumber}`"/>
-  </div>
-</div>
+	<div :class="avatarGroupClasses">
+		<KtAvatar
+			v-if="index < showItems"
+			v-for="(item , index) in items"
+			:key="index"
+			:name="item.name"
+			:src="item.src"
+			:selected="item.selected"
+			:small="item.small"
+			:showTooltip="showTooltip"
+		/>
+		<div v-if="avatarRemainders > 0" class="avatar avatar-number">
+			<span v-text="`+${avatarRemainders}`" />
+		</div>
+	</div>
 </template>
 
 <script>
@@ -22,28 +21,33 @@ import KtAvatar from '../../kotti-avatar';
 
 export default {
 	name: 'KtAvatarGroup',
+	components: {
+		KtAvatar,
+	},
 	props: {
 		items: Array,
 		showItems: {
 			type: Number,
 			default: 2,
 		},
-		isStack: false,
-		showTooltip: false,
-	},
-	components: {
-		KtAvatar,
+		isStack: {
+			type: Boolean,
+			default: false,
+		},
+		showTooltip: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	computed: {
-		styleObject() {
+		avatarGroupClasses() {
 			return {
 				'avatar-group': true,
 				stack: this.isStack,
 			};
 		},
-		avatarNumber() {
-			let number = this.items.length - this.showItems;
-			return number;
+		avatarRemainders() {
+			return this.items.length - this.showItems;
 		},
 	},
 };
