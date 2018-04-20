@@ -1,29 +1,29 @@
 <template>
-  <div :class="bannerClass">
-  <div class="collapse">
-    <div class="glyph">
-      <span v-if="icon">
-      <i class="yoco" v-text="icon"/>
-      </span>
-      <span v-else>
-      <slot name="glyph" >
-        <i class="yoco">announce</i>
-      </slot>
-      </span>
-    </div>
-    <div class="message" v-text="message" />
-    <div class="action" v-if="!expandable" @click="handleClick">
-      <button class="text" v-text="actionText"/>
-    </div>
-    <div class="action" v-else @click="isExpand=!isExpand">
-        <button class="text" v-text="switchText" v-if="!isExpand" />
-        <button class="text" v-text="switchCloseText" v-else/>
-    </div>
-  </div>
-  <div class="expand" v-if="isExpand">
-    <slot name="expand"></slot>
-  </div>
-</div>
+	<div :class="bannerClass">
+		<div class="collapse">
+			<div class="glyph">
+				<span v-if="icon">
+					<i class="yoco" v-text="icon" />
+				</span>
+				<span v-else>
+					<slot name="glyph">
+						<i class="yoco">announce</i>
+					</slot>
+				</span>
+			</div>
+			<div class="message" v-text="message" />
+			<div class="action" v-if="!expandable" @click="handleClick">
+				<button class="text" v-text="actionText" />
+			</div>
+			<div class="action" v-else @click="isExpand=!isExpand">
+				<button class="text" v-text="switchText" v-if="!isExpand" />
+				<button class="text" v-text="switchCloseText" v-else />
+			</div>
+		</div>
+		<div class="expand" v-if="isExpand">
+			<slot name="expand" />
+		</div>
+	</div>
 </template>
 
 <script>
