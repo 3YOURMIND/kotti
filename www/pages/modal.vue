@@ -53,6 +53,14 @@ When `closeOutside` set to `false`, it prevents close the modal from outside.
 |size|size of the modal window|`string`|`sm`,`md`,`lg`,`xl`|`md`|
 |closeOutside|allow user close modal from outside|`boolean`|-|`true`|
 
+### Slots
+
+| Slot Name | Description             |
+| --------- | ----------------------- |
+| modal-header| header section of modal|
+| modal-body | body section of modal| 
+| modal-footer | footer section of modal| 
+
 </template>
 
 

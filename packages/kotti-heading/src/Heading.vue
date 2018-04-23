@@ -20,7 +20,7 @@
 
 <script>
 export default {
-	name: 'KtModal',
+	name: 'KtHeading',
 	props: {
 		text: {
 			type: String,
@@ -46,11 +46,10 @@ export default {
 			type: String,
 			default: 'Close',
 		},
-	},
-	data() {
-		return {
-			toggleStatus: false,
-		};
+		toggleStatus: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	computed: {
 		toggleTextRep() {
@@ -62,7 +61,9 @@ export default {
 			if (this.type === 'action') {
 				this.$emit('click', evt);
 			}
-			this.toggleStatus = !this.toggleStatus;
+			if (this.type === 'toggle') {
+				this.$emit('toggle', evt);
+			}
 		},
 	},
 };

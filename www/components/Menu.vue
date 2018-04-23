@@ -30,7 +30,10 @@
         <nuxt-link to="/buttons">Buttons</nuxt-link>
       </li>
       <li>
-        <nuxt-link to="/drawer">Drawer</nuxt-link>
+        <nuxt-link to="/drawer">Drawers</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/headings">Headings</nuxt-link>
       </li>
       <li>
         <nuxt-link to="/forms">Forms</nuxt-link>
@@ -72,54 +75,54 @@
 
 <script>
 export default {
-  name: 'Menu',
-  data () {
-    return {
-      showFoundation: true,
-      showComponents: false,
-      showResource: false
-    }
-  }
-}
+	name: 'Menu',
+	data() {
+		return {
+			showFoundation: true,
+			showComponents: false,
+			showResource: false,
+		};
+	},
+};
 </script>
 
 <style lang="scss" scoped>
 .sidemenu {
-  ul {
-    width: 100%;
-    margin: 0;
-  }
+	ul {
+		width: 100%;
+		margin: 0;
+	}
 
-  li {
-    margin: 0;
-    line-height: 1.4rem;
-    font-size: 1.05em;
-    list-style: none;
-    a {
-      text-decoration: none;
-      padding: 0.2rem 0.8rem;
-      display: block;
-      color: #f8f8f8;
-    }
+	li {
+		margin: 0;
+		line-height: 1.4rem;
+		font-size: 1.05em;
+		list-style: none;
+		a {
+			text-decoration: none;
+			padding: 0.2rem 0.8rem;
+			display: block;
+			color: #f8f8f8;
+		}
 
-    .nuxt-link-exact-active {
-      padding: 0.2rem 0.8rem;
-      display: block;
-      font-weight: 600;
-      background: rgba(0, 0, 0, 0.2);
-    }
-  }
+		.nuxt-link-exact-active {
+			padding: 0.2rem 0.8rem;
+			display: block;
+			font-weight: 600;
+			background: rgba(0, 0, 0, 0.2);
+		}
+	}
 
-  .subline {
-    font-size: 1em;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.64);
-    margin: 1.2rem 0 0.8rem 0;
-    text-transform: uppercase;
-    &:hover {
-      cursor: pointer;
-      color: #fff;
-    }
-  }
+	.subline {
+		font-size: 1em;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.64);
+		margin: 1.2rem 0 0.8rem 0;
+		text-transform: uppercase;
+		&:hover {
+			cursor: pointer;
+			color: #fff;
+		}
+	}
 }
 </style>
