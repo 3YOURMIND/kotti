@@ -2810,7 +2810,6 @@ h2,
 h3,
 .h3 {
 	font-size: 0.8rem;
-	margin-bottom: 0;
 	padding-bottom: 0.4rem;
 	color: #2c66c4;
 	border-bottom: 1px solid #dbdbdb;
@@ -2829,6 +2828,11 @@ h3 span:hover,
 
 	cursor: pointer;
 	color: #2659ab;
+}
+
+h3 i.yoco,
+.h3 i.yoco {
+	font-size: 1rem;
 }
 
 h4,

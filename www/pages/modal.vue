@@ -27,6 +27,9 @@ Modal has 4 different size: `sm`, `md`, `lg`, and `xl`. The default modal size i
 
 ```html
 <KtModal v-if="showModal" @close="showModal=false" size="sm"/>
+<KtModal v-if="showModal" @close="showModal=false" size="md"/>
+<KtModal v-if="showModal" @close="showModal=false" size="lg"/>
+<KtModal v-if="showModal" @close="showModal=false" size="xl"/>
 ```
 
 ## Close from outside
@@ -40,6 +43,15 @@ When `closeOutside` set to `false`, it prevents close the modal from outside.
 ```html
 <KtModal v-if="showModal" @close="showModal=false" size="sm" :closeOutside="false"/>
 ```
+
+## Usage
+
+### Attributes
+
+|Attribute|Description|Type|Accepted Values|Default|
+|----|----|----|----|----|
+|size|size of the modal window|`string`|`sm`,`md`,`lg`,`xl`|`md`|
+|closeOutside|allow user close modal from outside|`boolean`|-|`true`|
 
 </template>
 
