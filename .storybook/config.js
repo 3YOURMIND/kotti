@@ -10,6 +10,7 @@ function loadStories() {
 	require('../stories/ButtonStory.js');
 	require('../stories/AvatarStory.js');
 	require('../stories/NavbarStory.js');
+	require('../stories/DrawerStory.js');
 }
 
 configure(loadStories, module);

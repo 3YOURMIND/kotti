@@ -3430,6 +3430,38 @@ table .columns {
 	transform: translate(20em, 0);
 }
 
+@media (max-width: 600px) {
+	.drawer-container,
+	.drawer-container.drawer-wide {
+		top: auto;
+		bottom: 0;
+
+		width: 100%;
+		height: 80%;
+		padding: 0.8rem;
+		padding-top: 1.6rem;
+	}
+	.drawer-container.drawer-expand,
+	.drawer-container.drawer-wide.drawer-expand {
+		width: 100%;
+		height: 100%;
+	}
+	.drawer-handle {
+		top: 0;
+		left: 50%;
+		margin-top: 0.2rem;
+		margin-left: -0.75rem;
+
+		-webkit-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+	.drawer-enter .drawer-container,
+	.drawer-leave-active .drawer-container {
+		-webkit-transform: translate(0, 20rem);
+		transform: translate(0, 20rem);
+	}
+}
+
 .avatar {
 	position: relative;
 	display: -webkit-inline-box;
