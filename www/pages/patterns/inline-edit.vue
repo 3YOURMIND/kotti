@@ -48,18 +48,18 @@
 
 
 <script>
-import KtInlineEdit from '../../packages/kotti-inlineEdit';
+import KtInlineEdit from '../../../packages/kotti-inlineEdit';
 
 export default {
 	name: 'KtInlineEditDoc',
 	components: {
 		KtInlineEdit,
-  },
-  data() {
-    return {
-      value1: 'Random Picture'
-    }
-  },
+	},
+	data() {
+		return {
+			value1: 'Random Picture',
+		};
+	},
 	methods: {
 		showAlert(msg) {
 			alert(msg);

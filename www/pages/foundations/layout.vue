@@ -55,41 +55,44 @@
 </template>
 
 <script>
-import LayoutComponents from '~/components/LayoutComponents.vue'
-import LayoutMetric from '~/components/LayoutMetric.vue'
-import LayoutGrid from '~/components/LayoutGrid.vue'
+import LayoutComponents from '~/components/LayoutComponents.vue';
+import LayoutMetric from '~/components/LayoutMetric.vue';
+import LayoutGrid from '~/components/LayoutGrid.vue';
 
 export default {
-  name: 'Layout',
-  components: {
-    LayoutComponents, LayoutMetric, LayoutGrid
-  }
-}
+	name: 'Layout',
+	components: {
+		LayoutComponents,
+		LayoutMetric,
+		LayoutGrid,
+	},
+};
 </script>
 
 <style lang="scss">
 .layout-example {
-  height: 20rem;
-  overflow: scroll;
-  overflow-x: auto;
-  overflow-y: auto;
-  color: #333;
-  .navbar {
-    color: #fff;
-  }
-  .navbar, .actionbar, .navbar-wrapper, .actionbar-wrapper{
-    height: 400px;
-    min-height: 0;
-    position: relative;
-  }
-  @media (max-width: 840px) {
-      .workspace {
-        min-width: 40rem;
-        margin-top: 0rem;
-        margin-right: 1rem;
-      }
-  }
-
+	height: 20rem;
+	overflow: scroll;
+	overflow-x: auto;
+	overflow-y: auto;
+	color: #333;
+	.navbar {
+		color: #fff;
+	}
+	.navbar,
+	.actionbar,
+	.navbar-wrapper,
+	.actionbar-wrapper {
+		height: 400px;
+		min-height: 0;
+		position: relative;
+	}
+	@media (max-width: 840px) {
+		.workspace {
+			min-width: 40rem;
+			margin-top: 0rem;
+			margin-right: 1rem;
+		}
+	}
 }
 </style>
-

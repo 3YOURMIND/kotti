@@ -25,6 +25,6 @@
 
 <script>
 export default {
-  name: 'Toaster'
-}
+	name: 'Toaster',
+};
 </script>

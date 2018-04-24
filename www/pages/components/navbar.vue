@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import KtNavbar from '../../packages/kotti-navbar';
+import KtNavbar from '../../../packages/kotti-navbar';
 
 export default {
 	name: 'KtNavbarDoc',

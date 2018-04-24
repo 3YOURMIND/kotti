@@ -126,21 +126,21 @@
 </template>
 
 <script>
-import KtInput from '../../packages/kotti-input'
+import KtInput from '../../../packages/kotti-input';
 
 export default {
-  name: 'KtInputDoc',
-  components: {
-    KtInput,
-  },
-  data() {
-    return {
-      v1: 'Jony One O',
-      v2: '',
-      v3: 'Jony Three O',
-      v4: 4,
-      v5: 'email@example.com'
-    }
-  }
-}
+	name: 'KtInputDoc',
+	components: {
+		KtInput,
+	},
+	data() {
+		return {
+			v1: 'Jony One O',
+			v2: '',
+			v3: 'Jony Three O',
+			v4: 4,
+			v5: 'email@example.com',
+		};
+	},
+};
 </script>

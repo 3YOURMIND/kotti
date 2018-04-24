@@ -23,20 +23,21 @@ Youi uses designed icons -- [Yoco](https://www.github.com/3yourmind/yoco)
 </template>
 
 <script>
-import IconFont from '~/components/IconFont.vue'
-import YocoPreview from '~/components/YocoPreview.vue'
-import YocoLiga from '~/assets/json/yocoString.json'
+import IconFont from '~/components/IconFont.vue';
+import YocoPreview from '~/components/YocoPreview.vue';
+import YocoLiga from '~/assets/json/yocoString.json';
 
 export default {
-  name: 'Icons',
-  components: {
-    YocoPreview, IconFont
-  },
-  data () {
-    return {
-      iconLigas: YocoLiga.data,
-      copySuccess: false
-    }
-  }
-}
+	name: 'Icons',
+	components: {
+		YocoPreview,
+		IconFont,
+	},
+	data() {
+		return {
+			iconLigas: YocoLiga.data,
+			copySuccess: false,
+		};
+	},
+};
 </script>

@@ -34,21 +34,23 @@ their presence.
 </template>
 
 
-<script>
-import Sidebar from '~/components/Sidebar.vue'
+// <script>
+// import Sidebar from '~/components/Actionbar.vue'
 
-export default {
-  name: 'Index',
-  components: {
-    Sidebar
-  }
-}
+// export default {
+//   name: 'Index',
+//   components: {
+//     Sidebar
+//   }
+// }
+//
 </script>
 
-<style scoped lang="scss">
-.container {
-  min-height: 100vh;
-  display: flex;
-}
+// <style scoped lang="scss">
+// .container {
+//   min-height: 100vh;
+//   display: flex;
+// }
 
+//
 </style>

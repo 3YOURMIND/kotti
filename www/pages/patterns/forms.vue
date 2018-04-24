@@ -278,6 +278,6 @@
 
 <script>
 export default {
-  name: 'Inputs'
-}
+	name: 'Inputs',
+};
 </script>

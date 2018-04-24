@@ -102,6 +102,6 @@ You can use `card` component in `popover-container`. There are also 4 different 
 
 <script>
 export default {
-  name: 'Popovers'
-}
+	name: 'Popovers',
+};
 </script>

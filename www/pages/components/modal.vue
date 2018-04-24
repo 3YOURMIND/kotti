@@ -65,7 +65,7 @@ When `closeOutside` set to `false`, it prevents close the modal from outside.
 
 
 <script>
-import KtModal from '../../packages/kotti-modal';
+import KtModal from '../../../packages/kotti-modal';
 
 export default {
 	name: 'Modal',

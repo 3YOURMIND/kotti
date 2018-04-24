@@ -111,7 +111,6 @@
 
 <script>
 export default {
-  name: 'Loadings'
-}
+	name: 'Loadings',
+};
 </script>
-

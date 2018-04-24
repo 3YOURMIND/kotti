@@ -8,7 +8,7 @@
 
 
 <script>
-import KtSelect from '../../packages/kotti-single-select';
+import KtSelect from '../../../packages/kotti-single-select';
 
 export default {
 	name: 'KtSelectDoc',

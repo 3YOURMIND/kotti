@@ -87,7 +87,7 @@ You can change the `toggleStatus` dynamically by binding value to it.
 
 
 <script>
-import KtHeading from '../../packages/kotti-heading';
+import KtHeading from '../../../packages/kotti-heading';
 
 export default {
 	name: 'KtHeadingDoc',

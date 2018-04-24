@@ -98,20 +98,22 @@
 </template>
 
 <script>
-import ButtonUsage from '../../packages/kotti-button/README.md'
-import KtButton from '../../packages/kotti-button'
-import KtButtonGroup from '../../packages/kotti-button-group'
-import ShowCase from '../components/ShowCase'
+import ButtonUsage from '../../../packages/kotti-button/README.md';
+import KtButton from '../../../packages/kotti-button';
+import KtButtonGroup from '../../../packages/kotti-button-group';
+import ShowCase from '../../components/ShowCase';
 
 export default {
-  name: 'Buttons',
-  components: {
-    KtButton, ShowCase, KtButtonGroup
-  },
-  computed: {
-    buttonUsage() {
-      return ButtonUsage
-    }
-  }
-}
+	name: 'Buttons',
+	components: {
+		KtButton,
+		ShowCase,
+		KtButtonGroup,
+	},
+	computed: {
+		buttonUsage() {
+			return ButtonUsage;
+		},
+	},
+};
 </script>

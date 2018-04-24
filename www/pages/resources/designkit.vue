@@ -25,6 +25,6 @@
 
 <script>
 export default {
-  name: 'DesignKit'
-}
+	name: 'DesignKit',
+};
 </script>

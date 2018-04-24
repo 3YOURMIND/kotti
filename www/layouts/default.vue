@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex">
-    <sidebar class="navbar"/>
-    <mobile-nav class="mobile-menu" />
+  <div class="d-flex responsive">
+    <Navbar @switch="switchSection"/>
+    <KtActionbar :currentSection="currentSection"/>
     <div class="workspace">
       <nuxt class="content" />
     </div>
@@ -9,50 +9,41 @@
 </template>
 
 <script>
-import Sidebar from '~/components/Sidebar.vue'
-import MobileNav from '~/components/MobileNav.vue'
+import KtActionbar from '~/components/Actionbar.vue';
+import MobileNav from '~/components/MobileNav.vue';
+import Navbar from '~/components/Navbar.vue';
 
 export default {
-  name: 'DefaultLayout',
-  components: {
-    Sidebar, MobileNav
-  }
-}
+	name: 'DefaultLayout',
+	components: {
+		KtActionbar,
+		MobileNav,
+		Navbar,
+	},
+	data() {
+		return {
+			currentSection: 'Foundations',
+		};
+	},
+	methods: {
+		switchSection(value) {
+			this.currentSection = value;
+		},
+	},
+};
 </script>
 
 <style>
-.mobile-menu {
-  display: none;
-}
-.condtainer {
-  padding: 2.2rem;
-  height: 100%;
-  min-height: 100vh;
-  z-index: -1;
-  overflow-y: auto;
-  float: left;
-  box-sizing: border-box;
-  padding-left: 14.2rem;
-  width: 98%;
-  background: #ffffff;
-  box-shadow: 1px 0 2px #dbdbdb;
-}
 .content {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 40rem;
+	margin: 0 auto;
+	width: 100%;
+	max-width: 40rem;
 }
 @media (max-width: 840px) {
-  .sidebar {
-    display: none;
-  }
-  .workspace {
-    min-width: 100%;
-    margin-top: 3rem;
-    margin-right: 0;
-  }
-  .mobile-menu {
-    display: block;
-  }
+	.workspace {
+		min-width: 100%;
+		margin-top: 3rem;
+		margin-right: 0;
+	}
 }
 </style>

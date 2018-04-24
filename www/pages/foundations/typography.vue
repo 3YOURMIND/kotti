@@ -14,16 +14,16 @@
 </template>
 
 <script>
-import TypographyHeader from '~/components/TypographyHeader.vue'
-import TypographyLabel from '~/components/TypographyLabel.vue'
-import TypographyParagraphs from '~/components/TypographyParagraphs.vue'
+import TypographyHeader from '~/components/TypographyHeader.vue';
+import TypographyLabel from '~/components/TypographyLabel.vue';
+import TypographyParagraphs from '~/components/TypographyParagraphs.vue';
 
 export default {
-  name: 'Typography',
-  components: {
-    TypographyHeader,
-    TypographyLabel,
-    TypographyParagraphs
-  }
-}
+	name: 'Typography',
+	components: {
+		TypographyHeader,
+		TypographyLabel,
+		TypographyParagraphs,
+	},
+};
 </script>

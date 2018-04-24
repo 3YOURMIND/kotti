@@ -66,6 +66,6 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 <script>
 export default {
-  name: 'Tables'
-}
+	name: 'Tables',
+};
 </script>

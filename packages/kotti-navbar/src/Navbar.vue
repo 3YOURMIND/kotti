@@ -12,12 +12,13 @@
 			</div>
 			<div class="navbar-body">
 				<div :class="objectClass('navbar-menu')">
-					<ul>
+					<ul v-if="menu.length">
 						<li v-for="item in menu" :key="item.to">
 							<i class="yoco" v-text="item.icon" />
 							<span v-if="!narrow" v-text="item.label" />
 						</li>
 					</ul>
+					<slot name="navbar-menu" />
 				</div>
 			</div>
 			<div :class="objectClass('navbar-footer')">
@@ -25,11 +26,12 @@
 			</div>
 			<div class="navbar-dropdown" v-if="mobileMenuToggle">
 				<div class="navbar-menu">
-					<ul>
+					<ul v-if="menu.length">
 						<li v-for="item in menu" :key="item.to">
 							<i class="yoco" v-text="item.icon" /> {{item.label}}
 						</li>
 					</ul>
+					<slot name="navbar-menu" />
 				</div>
 			</div>
 		</div>
