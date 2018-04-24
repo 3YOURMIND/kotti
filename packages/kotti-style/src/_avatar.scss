@@ -5,43 +5,43 @@
 	display: inline-flex;
 	position: relative;
 	border-radius: 100%;
-	border: .1rem solid #fff;
+	border: 0.1rem solid #fff;
 	img {
 		object-fit: cover;
 		border-radius: 100%;
-  }
-  &:hover {
-    cursor: pointer;
-    border: .1rem solid $primary-400;
-  }
+	}
+	&:hover {
+		cursor: pointer;
+		border: 0.1rem solid $primary-600;
+	}
 }
 
 .avatar-group {
 	display: flex;
-  flex-direction: row;
-  align-items: center;
-  .avatar {
-    @for $i from 1 through 10 {
-      &:nth-child(#{$i}) {
-        z-index: #{10 - $i};
-      }
+	flex-direction: row;
+	align-items: center;
+	.avatar {
+		@for $i from 1 through 10 {
+			&:nth-child(#{$i}) {
+				z-index: #{10 - $i};
+			}
 		}
-		margin-right: .2rem;
-  }
-  &.stack {
-    .avatar:not(:first-of-type) {
-      margin-left: -0.8rem;
-    }
-  }
-  .avatar.avatar-number {
-    margin-left: .2rem;
-    align-items: center;
-    background: $lightgray-400;
-    span {
-      width: 100%;
-      text-align: center;
-    }
-  }
+		margin-right: 0.2rem;
+	}
+	&.stack {
+		.avatar:not(:first-of-type) {
+			margin-left: -0.8rem;
+		}
+	}
+	.avatar.avatar-number {
+		margin-left: 0.2rem;
+		align-items: center;
+		background: $lightgray-400;
+		span {
+			width: 100%;
+			text-align: center;
+		}
+	}
 }
 
 .avatar--sm {

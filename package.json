@@ -38,6 +38,7 @@
 		"@storybook/addon-links": "^3.4.1",
 		"@storybook/addon-notes": "^3.4.1",
 		"@storybook/addon-storysource": "^3.4.1",
+		"@storybook/addon-viewport": "^3.4.2",
 		"@storybook/vue": "^3.4.1",
 		"babel-core": "^6.26.0",
 		"babel-eslint": "^7.2.3",
