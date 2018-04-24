@@ -134,7 +134,16 @@ $narrow-navbar-width: 3.2rem;
 	.navbar {
 		height: 2.4rem;
 		min-height: auto;
+		z-index: $zindex-4;
 		flex: 0 0 $mobile-navbar-height;
+	}
+	.navbar-wrapper {
+		width: 100%;
+		padding: 0;
+		position: relative;
+		flex-direction: row;
+		flex: 0 0 $mobile-navbar-height;
+		height: $mobile-navbar-height;
 	}
 	.navbar-header {
 		width: 100%;
@@ -155,13 +164,7 @@ $narrow-navbar-width: 3.2rem;
 	.navbar-dropdown {
 		display: block;
 	}
-	.navbar-wrapper {
-		width: 100%;
-		padding: 0;
-		flex-direction: row;
-		flex: 0 0 $mobile-navbar-height;
-		height: $mobile-navbar-height;
-	}
+
 	.navbar--narrow {
 		.navbar-wrapper {
 			padding: 0;

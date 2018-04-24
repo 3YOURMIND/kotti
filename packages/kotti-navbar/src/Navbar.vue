@@ -12,7 +12,7 @@
 			</div>
 			<div class="navbar-body">
 				<div :class="objectClass('navbar-menu')">
-					<ul v-if="menu.length">
+					<ul v-if="menu">
 						<li v-for="item in menu" :key="item.to">
 							<i class="yoco" v-text="item.icon" />
 							<span v-if="!narrow" v-text="item.label" />
@@ -24,9 +24,9 @@
 			<div :class="objectClass('navbar-footer')">
 				<slot name="navbar-footer" />
 			</div>
-			<div class="navbar-dropdown" v-if="mobileMenuToggle">
+			<div class="navbar-dropdown" v-if="mobileMenuToggle" @click="mobileMenuToggle=false">
 				<div class="navbar-menu">
-					<ul v-if="menu.length">
+					<ul v-if="menu">
 						<li v-for="item in menu" :key="item.to">
 							<i class="yoco" v-text="item.icon" /> {{item.label}}
 						</li>
@@ -47,10 +47,7 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		menu: {
-			type: Array,
-			default: [],
-		},
+		menu: Array,
 	},
 	data() {
 		return {

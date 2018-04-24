@@ -86,9 +86,9 @@
 
 <style scoped>
 .element-example span {
-  margin-right: 8px;
-  background: #fff;
-  padding: 8px;
-  line-height: 48px;
+	margin-right: 8px;
+	background: #fff;
+	padding: 8px;
+	line-height: 48px;
 }
 </style>
