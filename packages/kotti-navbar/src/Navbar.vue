@@ -18,7 +18,7 @@
 							<span v-if="!narrow" v-text="item.label" />
 						</li>
 					</ul>
-					<slot name="navbar-menu" />
+					<slot name="navbar-menu" v-else/>
 				</div>
 			</div>
 			<div :class="objectClass('navbar-footer')">
@@ -31,7 +31,7 @@
 							<i class="yoco" v-text="item.icon" /> {{item.label}}
 						</li>
 					</ul>
-					<slot name="navbar-menu" />
+					<slot name="navbar-menu" v-else/>
 				</div>
 			</div>
 		</div>

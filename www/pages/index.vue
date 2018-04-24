@@ -34,23 +34,16 @@ their presence.
 </template>
 
 
-// <script>
-// import Sidebar from '~/components/Actionbar.vue'
-
-// export default {
-//   name: 'Index',
-//   components: {
-//     Sidebar
-//   }
-// }
-//
+<script>
+export default {
+	layout: 'frontpage',
+	name: 'Index',
+};
 </script>
 
-// <style scoped lang="scss">
-// .container {
-//   min-height: 100vh;
-//   display: flex;
-// }
 
-//
+<style lang="scss" scoped>
+.content {
+	padding-top: 4rem;
+}
 </style>

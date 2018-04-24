@@ -66,7 +66,7 @@ export default {
 		},
 		activeLinkClass(val) {
 			let parentPath = val.toLowerCase();
-			let routePath = this.$route.name;
+			let routePath = this.$route.name ? this.$route.name : '';
 			return {
 				active: routePath.includes(parentPath),
 			};
