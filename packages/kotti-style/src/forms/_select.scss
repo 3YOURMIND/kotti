@@ -1,47 +1,82 @@
 // Form select elements
 .form-select {
-  appearance: none;
-  border: $border-width solid $lightgray-400;
-  border-radius: $border-radius;
-  color: inherit;
-  font-size: $font-size;
-  height: $control-size;
-  line-height: $line-height;
-  outline: none;
-  padding: $control-padding-y $control-padding-x;
-  vertical-align: middle;
-  width: 100%;
+	appearance: none;
+	border: $border-width solid $lightgray-400;
+	border-radius: $border-radius;
+	color: inherit;
+	font-size: $font-size;
+	height: $control-size;
+	line-height: $line-height;
+	outline: none;
+	padding: $control-padding-y $control-padding-x;
+	vertical-align: middle;
+	width: 100%;
 
-  &[size],
-  &[multiple] {
-    height: auto;
-    
-    option {
-      padding: $unit-h $unit-1;
-    }
-  }
-  &:not([multiple]):not([size]) {
-    background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right .35rem center/.4rem .5rem;
-    padding-right: $control-icon-size + $control-padding-x;
-  }
-  &:focus {
-    @include control-shadow();
-    border-color: $primary-500;
-  }
-  &::-ms-expand {
-    display: none;
-  }
+	&[size],
+	&[multiple] {
+		height: auto;
 
-  // Select sizes
-  &.select-sm {
-    font-size: $font-size-sm;
-    height: $control-size-sm;
-    padding: $control-padding-y-sm ($control-icon-size + $control-padding-x-sm) $control-padding-y-sm $control-padding-x-sm;
-  }
+		option {
+			padding: $unit-h $unit-1;
+		}
+	}
+	&:not([multiple]):not([size]) {
+		background: #fff
+			url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E")
+			no-repeat right 0.35rem center/.4rem 0.5rem;
+		padding-right: $control-icon-size + $control-padding-x;
+	}
+	&:focus {
+		@include control-shadow();
+		border-color: $primary-500;
+	}
+	&::-ms-expand {
+		display: none;
+	}
 
-  &.select-lg {
-    font-size: $font-size-lg;
-    height: $control-size-lg;
-    padding: $control-padding-y-lg ($control-icon-size + $control-padding-x-lg) $control-padding-y-lg $control-padding-x-lg;
-  }
+	// Select sizes
+	&.select-sm {
+		font-size: $font-size-sm;
+		height: $control-size-sm;
+		padding: $control-padding-y-sm ($control-icon-size + $control-padding-x-sm)
+			$control-padding-y-sm $control-padding-x-sm;
+	}
+
+	&.select-lg {
+		font-size: $font-size-lg;
+		height: $control-size-lg;
+		padding: $control-padding-y-lg ($control-icon-size + $control-padding-x-lg)
+			$control-padding-y-lg $control-padding-x-lg;
+	}
+}
+
+.form-options {
+	position: absolute;
+	top: 2rem;
+	width: 100%;
+	background: #fff;
+	box-shadow: 0 0 1px #dbdbdb, 0 2px 5px rgba(0, 0, 0, 0.26);
+	border-radius: 0.1rem;
+	padding: 0.4rem 0;
+	ul {
+		margin: 0;
+	}
+	li {
+		margin: 0;
+		line-height: 1.2rem;
+		padding: 0.2rem 0.4rem;
+		list-style: none;
+		&.form-options--empty {
+			text-align: center;
+			color: #a8a8a8;
+			&:hover {
+				cursor: default;
+				background: transparent;
+			}
+		}
+	}
+	li:hover {
+		cursor: pointer;
+		background: #f8f8f8;
+	}
 }

@@ -33,15 +33,6 @@ their presence.
 
 </template>
 
-
-<script>
-export default {
-	layout: 'frontpage',
-	name: 'Index',
-};
-</script>
-
-
 <style lang="scss" scoped>
 .content {
 	padding-top: 4rem;

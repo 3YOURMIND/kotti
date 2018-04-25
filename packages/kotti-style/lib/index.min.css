@@ -1658,6 +1658,37 @@ textarea {
 	height: 2rem;
 	padding: 0.45rem 1.4rem 0.45rem 0.6rem;
 }
+.form-options {
+	position: absolute;
+	top: 2rem;
+	width: 100%;
+	padding: 0.4rem 0;
+	border-radius: 0.1rem;
+	background: #fff;
+	-webkit-box-shadow: 0 0 1px #dbdbdb, 0 2px 5px rgba(0, 0, 0, 0.26);
+	box-shadow: 0 0 1px #dbdbdb, 0 2px 5px rgba(0, 0, 0, 0.26);
+}
+.form-options ul {
+	margin: 0;
+}
+.form-options li {
+	line-height: 1.2rem;
+	margin: 0;
+	padding: 0.2rem 0.4rem;
+	list-style: none;
+}
+.form-options li.form-options--empty {
+	text-align: center;
+	color: #a8a8a8;
+}
+.form-options li.form-options--empty:hover {
+	cursor: default;
+	background: 0 0;
+}
+.form-options li:hover {
+	cursor: pointer;
+	background: #f8f8f8;
+}
 .form-input {
 	line-height: 1rem;
 	position: relative;

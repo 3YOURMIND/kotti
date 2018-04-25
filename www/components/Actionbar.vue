@@ -2,7 +2,7 @@
 	<div class="actionbar">
 		<div class="actionbar-wrapper">
 			<div class="actionbar-header">
-				<h1 v-text="currentSection" />
+				<h1 v-text="currentSection"/>
 			</div>
 			<div class="actionbar-body">
 				<div class="actionbar-menu has-icon-right">
@@ -39,13 +39,18 @@ import Submenu from '../assets/json/submenu';
 
 export default {
 	name: 'Actionbar',
-	props: {
-		currentSection: String,
-	},
 	data() {
 		return {
 			submenu: Submenu,
 		};
+	},
+	computed: {
+		currentSection() {
+			let pathName = this.$route.name.split('-')[0];
+
+			let sectionName = pathName.slice(0, 1).toUpperCase() + pathName.slice(1);
+			return sectionName;
+		},
 	},
 };
 </script>

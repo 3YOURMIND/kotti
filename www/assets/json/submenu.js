@@ -69,6 +69,10 @@ const submenu = [
 				to: 'toaster',
 			},
 			{
+				label: 'Selects',
+				to: 'selects',
+			},
+			{
 				label: 'Utilities',
 				to: 'utilities',
 			},

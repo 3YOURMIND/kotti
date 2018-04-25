@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex responsive">
-    <Navbar @switch="switchSection"/>
-    <Actionbar :currentSection="currentSection"/>
+    <Navbar/>
+    <Actionbar v-if="showActionbar"/>
     <div class="workspace">
       <nuxt class="content" />
     </div>
@@ -18,14 +18,9 @@ export default {
 		Actionbar,
 		Navbar,
 	},
-	data() {
-		return {
-			currentSection: 'Foundations',
-		};
-	},
-	methods: {
-		switchSection(value) {
-			this.currentSection = value;
+	computed: {
+		showActionbar() {
+			return this.$route.name === 'index' ? false : true;
 		},
 	},
 };

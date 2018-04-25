@@ -1,4 +1,7 @@
 <template lang=md>
+
+  # Inline Edit
+  
   <div class="element-example white">
     <KtInlineEdit 
     label="Picture Title"

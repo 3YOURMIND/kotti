@@ -2,7 +2,7 @@
 	<KtNavbar :src="logoSrc">
 		<ul slot="navbar-menu">
 			<nuxt-link :to="item.to" v-for="item in globalMenu" :key="item.icon" :class="activeLinkClass(item.label)">
-				<li @click="switchSubMenu(item.label)" >
+				<li>
 				<i class="yoco" v-text="item.icon" />
 				<span v-text="item.label" />
 				</li>
@@ -61,9 +61,6 @@ export default {
 		};
 	},
 	methods: {
-		switchSubMenu(val) {
-			this.$emit('switch', val);
-		},
 		activeLinkClass(val) {
 			let parentPath = val.toLowerCase();
 			let routePath = this.$route.name ? this.$route.name : '';
