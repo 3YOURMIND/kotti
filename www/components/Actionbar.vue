@@ -46,8 +46,7 @@ export default {
 	},
 	computed: {
 		currentSection() {
-			let pathName = this.$route.name.split('-')[0];
-
+			let pathName = this.$route.name ? this.$route.name.split('-')[0] : '';
 			let sectionName = pathName.slice(0, 1).toUpperCase() + pathName.slice(1);
 			return sectionName;
 		},

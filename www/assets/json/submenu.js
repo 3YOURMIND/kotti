@@ -8,6 +8,10 @@ const submenu = [
 				to: 'layout',
 			},
 			{
+				label: 'Grid',
+				to: 'grids',
+			},
+			{
 				label: 'Color',
 				to: 'color',
 			},
