@@ -123,14 +123,10 @@ $narrow-navbar-width: 3.2rem;
 @media (max-width: $size-lg) {
 }
 
-@media (max-width: $size-md) {
-}
+// @media (max-width: $size-md) {
+// }
 
-@media (max-width: $size-sm) {
-	.responsive {
-		display: flex;
-		flex-direction: column;
-	}
+@media (max-width: $size-md) {
 	.navbar {
 		height: 2.4rem;
 		min-height: auto;
@@ -178,15 +174,5 @@ $narrow-navbar-width: 3.2rem;
 		flex: 0 0 2.4rem;
 		justify-content: center;
 		align-items: center;
-	}
-}
-
-@media (max-width: $size-xs) {
-	.responsive {
-		display: flex;
-		flex-direction: column;
-	}
-	.navbar {
-		// display: none;
 	}
 }

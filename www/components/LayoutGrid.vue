@@ -1,5 +1,7 @@
 <template lang="md">
-
+```html
+deprecate 
+```
 ## Grid System
 
 Kotti using grid system inherit 
@@ -95,7 +97,7 @@ can change the `gutter` between two columns to 8px, `row-gutter-sm` changes the 
 
 <style lang="scss" scoped>
 .content {
-  color: #fff;
-  background: #3173DE;
+	color: #fff;
+	background: #3173de;
 }
 </style>

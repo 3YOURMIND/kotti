@@ -2,97 +2,45 @@
 
 # Layout
 
-<layout-components/>
+## Layout Components
 
-<div class="element-example">
-  <div class="d-flex layout-example">
-    <div class="navbar">
-      <div class="navbar-wrapper">
-        <div class="navbar-header">Nav Header</div>
-        <div class="navbar-body">Nav Body</div>
-        <div class="navbar-footer">Nav footer</div>
-      </div>
-    </div>
-    <div class="actionbar">
-      <div class="actionbar-wrapper">
-      <div class="actionbar-header">Actionbar Header</div>
-        <div class="actionbar-body">Actionbar Body</div>
-        <div class="actionbar-footer">Actionbar footer</div>
-        </div>
-    </div>
-    <div class="workspace">
-      Workspace
-    </div>
-  </div>
-</div>
+![layout overiew](~/assets/img/layout_overview.png)
 
-```html
-<div class="d-flex layout-example">
-  <div class="navbar">
-    <div class="navbar-wrapper">
-      <div class="navbar-header">Nav Header</div>
-      <div class="navbar-body">Nav Body</div>
-      <div class="navbar-footer">Nav footer</div>
-    </div>
-  </div>
-  <div class="actionbar">
-    <div class="actionbar-wrapper">
-    <div class="actionbar-header">Actionbar Header</div>
-      <div class="actionbar-body">Actionbar Body</div>
-      <div class="actionbar-footer">Actionbar footer</div>
-      </div>
-  </div>
-  <div class="workspace">
-    Workspace
-  </div>
-</div>
-```
+### [Navbar](/components/navbar)
+
+The Navbar is the top-level navigation for the user. The width is fixed: `280px` or `14rem`. The background is `Primary-600 (#2659AB)`.
+
+### [Actionbar](#)
+
+The actionbar is always located between the Navbar and Workspace, which can be omitted if necessary. 
+
+The actionbar is considered to be an attachment to the Workspace.
+It represents addtional and important information for the Workspace.
+The width of Actionbar is also fixed: `320px` or `16rem`. The background color is `#F8F8F8`.
+
+The elements suggested on the Actionbar are: <b>primary action button</b>,
+Secondary action buttton, information which doesn't require complex interaction,
+and `sub-menu` for the Workspace.
+
+### [Workspace](#)
+
+The workspace is designed as a space for related tasks, most interactions
+should be inside this area. The width of the Workspace is responsive: `100%` of the screen width with margin `24px` to the right. 
+The background is `#FFFFFF`, with dropshadow: `1px 0 1px #DBDBDB`;
+
 
 <layout-metric />
 
-<layout-grid />
 
 </template>
 
 <script>
-import LayoutComponents from '~/components/LayoutComponents.vue';
 import LayoutMetric from '~/components/LayoutMetric.vue';
-import LayoutGrid from '~/components/LayoutGrid.vue';
 
 export default {
 	name: 'Layout',
 	components: {
-		LayoutComponents,
 		LayoutMetric,
-		LayoutGrid,
 	},
 };
 </script>
-
-<style lang="scss">
-.layout-example {
-	height: 20rem;
-	overflow: scroll;
-	overflow-x: auto;
-	overflow-y: auto;
-	color: #333;
-	.navbar {
-		color: #fff;
-	}
-	.navbar,
-	.actionbar,
-	.navbar-wrapper,
-	.actionbar-wrapper {
-		height: 400px;
-		min-height: 0;
-		position: relative;
-	}
-	@media (max-width: 840px) {
-		.workspace {
-			min-width: 40rem;
-			margin-top: 0rem;
-			margin-right: 1rem;
-		}
-	}
-}
-</style>

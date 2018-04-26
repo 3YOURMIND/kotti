@@ -857,6 +857,18 @@ img {
 	-ms-flex-direction: column;
 }
 
+@media (max-width: 840px) {
+	.responsive {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		flex-direction: column;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-ms-flex-direction: column;
+	}
+}
+
 .container {
 	width: 100%;
 	margin-right: auto;
@@ -1524,16 +1536,7 @@ img {
 	background: rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 600px) {
-	.responsive {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-		flex-direction: column;
-		-webkit-box-orient: vertical;
-		-webkit-box-direction: normal;
-		-ms-flex-direction: column;
-	}
+@media (max-width: 840px) {
 	.navbar {
 		z-index: 400;
 
@@ -1608,18 +1611,6 @@ img {
 		-webkit-box-align: center;
 		-ms-flex-align: center;
 		align-items: center;
-	}
-}
-
-@media (max-width: 480px) {
-	.responsive {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-		flex-direction: column;
-		-webkit-box-orient: vertical;
-		-webkit-box-direction: normal;
-		-ms-flex-direction: column;
 	}
 }
 
@@ -1722,7 +1713,7 @@ img {
 	color: #2c66c4;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 840px) {
 	.actionbar {
 		z-index: 100;
 
@@ -1744,9 +1735,10 @@ img {
 .workspace {
 	position: relative;
 	z-index: inherit;
-	display: block;
-	min-width: 40em;
-	min-height: 100%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	min-height: 100vh;
 	margin-right: 1.2rem;
 	padding: 1.2rem;
 	background: #fff;
@@ -1762,8 +1754,16 @@ img {
 	margin-top: 1.6rem;
 }
 
+@media (max-width: 960px) {
+	.workspace {
+		width: 100%;
+		margin-right: 0;
+	}
+}
+
 @media (max-width: 840px) {
 	.workspace {
+		width: 100%;
 		margin-right: 0;
 	}
 }
