@@ -19,7 +19,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"homepage": "https://3yourmind.github.io/kotti/",
-	"devDependencies": {
+	"dependencies": {
 		"gulp": "latest",
 		"gulp-autoprefixer": "latest",
 		"gulp-clean-css": "^3.7.0",
