@@ -8,7 +8,10 @@ export default {
 			type: String,
 			default: 'div',
 		},
-		gutter: Number,
+		gutter: {
+			type: Number,
+			default: 16,
+		},
 		type: String,
 		justify: {
 			type: String,
@@ -28,11 +31,6 @@ export default {
 			if (this.gutter) {
 				ret.marginLeft = `-${this.gutter / 2}px`;
 				ret.marginRight = ret.marginLeft;
-			}
-
-			if (this.gap) {
-				ret.marginTop = `-${this.gap / 2}px`;
-				ret.marginBottom = ret.marginBottom;
 			}
 
 			return ret;
