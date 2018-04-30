@@ -5,13 +5,14 @@
 	"author": "3YOURMIND GmbH",
 	"license": "MIT",
 	"scripts": {
-		"doc": "nuxt",
+		"doc": "nuxt -c build/nuxt.config.js",
 		"doc:build": "nuxt build",
 		"doc:start": "nuxt start",
 		"doc:generate": "nuxt generate",
 		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
 		"doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
 		"storybook": "start-storybook -p 9001 -c .storybook",
+		"build:component": "node build/component",
 		"storybook:build": "build-storybook -c .storybook -o dist/storybook",
 		"deploy":
 			"node -v && nuxt generate && build-storybook -c .storybook -o dist/storybook",
@@ -29,6 +30,7 @@
 		"vue-clipboard2": "^0.0.8"
 	},
 	"devDependencies": {
+		"webpack-merge": "^4.1.2",
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@storybook/addon-actions": "^3.4.1",

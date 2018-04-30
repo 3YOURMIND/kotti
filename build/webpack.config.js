@@ -1,6 +1,6 @@
 var path = require('path');
 module.exports = {
-  entry: './src/app.js',
+	entry: './src/app.js',
 	module: {
 		rules: [
 			{

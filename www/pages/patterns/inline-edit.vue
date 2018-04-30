@@ -51,7 +51,7 @@
 
 
 <script>
-import KtInlineEdit from '../../../packages/kotti-inlineEdit';
+import KtInlineEdit from '../../../packages/kotti-inline-edit';
 
 export default {
 	name: 'KtInlineEditDoc',

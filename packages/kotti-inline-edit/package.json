@@ -1,7 +1,8 @@
 {
 	"name": "@3yourmind/inline-edit",
 	"version": "0.0.1",
-	"description": "A component which is a label but also an input at the same time.",
+	"description":
+		"A component which is a label but also an input at the same time.",
 	"main": "index.js",
 	"dependencies": {},
 	"author": "3YOURMIND GmbH",
