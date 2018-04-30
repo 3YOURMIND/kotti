@@ -81,6 +81,10 @@ const submenu = [
 				to: 'selects',
 			},
 			{
+				label: 'Switchs',
+				to: 'switchs',
+			},
+			{
 				label: 'Utilities',
 				to: 'utilities',
 			},
