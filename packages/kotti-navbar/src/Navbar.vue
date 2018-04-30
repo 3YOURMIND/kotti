@@ -3,7 +3,7 @@
 		<div :class="objectClass('navbar-wrapper')">
 			<div :class="['navbar-toggle', {'navbar-toggle--active':mobileMenuToggle}]"
 			  @click="mobileMenuToggle = !mobileMenuToggle">
-				<i class="yoco">dots_vertical</i>
+				<i class="yoco">burger</i>
 			</div>
 			<div class="navbar-header">
 				<div class="navbar-logo">
