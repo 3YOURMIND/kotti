@@ -1,42 +1,29 @@
-require('shelljs/global');
-var path = require('path');
-
-const ora = require('ora');
+const base = require('./webpack.config.js');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.config.js');
+const path = require('path');
 
-const spinner = ora('building components for production...');
+const version = process.env.VERSION || require('../package.json').version;
 
-spinner.start();
-baseWebpackConfig.entry = {};
-
-const buildsConfig = {
-	dev: {
-		filename: 'kotti.js',
-		library: 'kotti',
-		libraryTarget: 'umd',
-		env: 'developement',
+const builds = {
+	development: {
+		config: {
+			output: {
+				filename: 'kotti-ui.js',
+				libraryTarget: 'umd',
+			},
+		},
 	},
-	prod: {
-		filename: 'kotti.min.js',
-		library: 'kotti',
-		libraryTarget: 'umd',
+	production: {
+		mode: 'production',
+		config: {
+			output: {
+				filename: 'kotti-ui.min.js',
+				libraryTarget: 'umd',
+				path: path.resolve(__dirname, '../lib/'),
+			},
+		},
 		env: 'production',
-	},
-};
-
-function getConfig(options) {
-	const config = merge(baseWebpackConfig, {
-		entry: {
-			main: './src/index.js',
-		},
-		output: {
-			filename: options.filename,
-			library: options.library,
-			libraryTarget: options.libraryTarget,
-			path: path.resolve(__dirname, '../lib/'),
-		},
 		externals: {
 			vue: {
 				root: 'Vue',
@@ -45,30 +32,39 @@ function getConfig(options) {
 				amd: 'vue',
 			},
 		},
-		plugins: [
-			new webpack.LoaderOptionsPlugin({
-				minimize: true,
-				progress: true,
-				hide_modules: true,
-			}),
-		],
-	});
+		optimization: {
+			minimize: true,
+		},
+	},
+};
 
+function genConfig(opts) {
+	const config = merge({}, base, opts.config);
+
+	config.plugins = config.plugins.concat([
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify(opts.env || 'development'),
+		}),
+	]);
+
+	if (opts.env) {
+		config.plugins = config.plugins.concat([
+			new webpack.BannerPlugin({
+				banner: `/*!
+* Kotti-UI v${version}
+* Released under the MIT License.
+*/     `,
+				raw: true,
+				entryOnly: true,
+			}),
+			new webpack.optimize.ModuleConcatenationPlugin(),
+		]);
+	}
 	return config;
 }
 
-Object.keys(buildsConfig).map(conf =>
-	webpack(getConfig(buildsConfig[conf]), (err, stats) => {
-		spinner.stop();
-		if (err) throw err;
-		process.stdout.write(
-			`${stats.toString({
-				color: true,
-				modules: false,
-				children: false,
-				chunks: false,
-				chunkModules: false,
-			})}\n`
-		);
-	})
-);
+if (process.env.TARGET) {
+	module.exports = genConfig(builds[process.env.TARGET]);
+} else {
+	module.exports = Object.keys(builds).map(name => genConfig(builds[name]));
+}

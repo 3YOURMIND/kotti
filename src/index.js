@@ -12,6 +12,7 @@ import KtInput from '../packages/kotti-input';
 import KtModal from '../packages/kotti-modal';
 import KtNavbar from '../packages/kotti-navbar';
 import KtRadio from '../packages/kotti-radio';
+import KtRow from '../packages/kotti-row';
 import ktRadioGroup from '../packages/kotti-radio-group';
 import KtSingleSelect from '../packages/kotti-single-select';
 
@@ -31,6 +32,7 @@ const components = [
 	KtNavbar,
 	KtRadio,
 	ktRadioGroup,
+	KtRow,
 	KtSingleSelect,
 ];
 
@@ -44,23 +46,4 @@ if (typeof window !== 'undefined' && window.Vue) {
 	install(window.Vue);
 }
 
-module.exports = {
-	KtAvatar,
-	KtAvatarGroup,
-	KtBanner,
-	KtButton,
-	KtButtonGroup,
-	KtCol,
-	KtComment,
-	KtDrawer,
-	KtHeading,
-	KtInlineEdit,
-	KtInput,
-	KtModal,
-	KtNavbar,
-	KtRadio,
-	ktRadioGroup,
-	KtSingleSelect,
-};
-
-module.exports.default = module.exports;
+export default Object.assign({}, components, { install });

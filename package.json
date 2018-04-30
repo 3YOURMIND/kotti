@@ -12,7 +12,8 @@
 		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
 		"doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
 		"storybook": "start-storybook -p 9001 -c .storybook",
-		"build:component": "node build/component",
+		"build:component":
+			"NODE_ENV=production webpack --config build/component.js --progress",
 		"storybook:build": "build-storybook -c .storybook -o dist/storybook",
 		"deploy":
 			"node -v && nuxt generate && build-storybook -c .storybook -o dist/storybook",
@@ -30,7 +31,6 @@
 		"vue-clipboard2": "^0.0.8"
 	},
 	"devDependencies": {
-		"webpack-merge": "^4.1.2",
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@storybook/addon-actions": "^3.4.1",
@@ -84,7 +84,9 @@
 		"vue-server-renderer": "^2.5.13",
 		"vue-template-compiler": "^2.5.13 ",
 		"webpack": "^4.5.0",
-		"webpack-dev-server": "^2.9.1"
+		"webpack-cli": "^2.1.2",
+		"webpack-dev-server": "^2.9.1",
+		"webpack-merge": "^4.1.2"
 	},
 	"bolt": {
 		"workspaces": ["packages/*"]
