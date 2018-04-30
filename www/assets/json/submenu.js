@@ -41,6 +41,10 @@ const submenu = [
 				to: 'banners',
 			},
 			{
+				label: 'Buttons',
+				to: 'buttons',
+			},
+			{
 				label: 'Drawers',
 				to: 'drawer',
 			},
@@ -53,16 +57,18 @@ const submenu = [
 				to: 'inputs',
 			},
 			{
+				label: 'Loadings',
+				to: 'loadings',
+				isCSS: true,
+			},
+			{
 				label: 'Modal',
 				to: 'modal',
 			},
 			{
-				label: 'Loadings',
-				to: 'loadings',
-			},
-			{
 				label: 'Popovers',
 				to: 'popovers',
+				isCSS: true,
 			},
 			{
 				label: 'Radios',
@@ -71,6 +77,7 @@ const submenu = [
 			{
 				label: 'Tables',
 				to: 'tables',
+				isCSS: true,
 			},
 			{
 				label: 'Toaster',
@@ -87,6 +94,7 @@ const submenu = [
 			{
 				label: 'Utilities',
 				to: 'utilities',
+				isCSS: true,
 			},
 		],
 	},

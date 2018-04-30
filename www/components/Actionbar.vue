@@ -12,6 +12,7 @@
 						  :key="child.to">
 							<li>
 								<span v-text="child.label" />
+								<span v-if="child.isCSS" class="indicator-only-css">CSS</span>
 								<i class="yoco">chevron_right</i>
 							</li>
 						</nuxt-link>
@@ -30,6 +31,15 @@
 	i {
 		color: #2c66c4;
 	}
+}
+.indicator-only-css {
+	font-size: 0.6em;
+	background: #64ad13;
+	color: #fff;
+	line-height: 1em;
+	padding: 0.1rem 0.2rem;
+	margin-left: 0.2rem;
+	border-radius: 0.2rem;
 }
 </style>
 

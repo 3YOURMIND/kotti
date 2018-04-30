@@ -22,7 +22,7 @@ export default {
 	computed: {
 		switchClass() {
 			return {
-				'form-switch w-100': true,
+				'form-switch': true,
 				'form-switch-right': this.right,
 			};
 		},

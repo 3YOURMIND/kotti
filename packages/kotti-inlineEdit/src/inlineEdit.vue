@@ -12,16 +12,17 @@
 			@change="handleChange"
 			:value="currentValue"
 			>
-			<div class="edit-button">
+			<KtButtonGroup class="edit-button">
 				<KtButton icon="close" @click="handleDismiss" />
-				<KtButton icon="edit" @click="handleConfirm" />
-			</div>
+				<KtButton icon="check" @click="handleConfirm" />
+			</KtButtonGroup>
 		</div>
 	</div>
 </template>
 
 <script>
 import KtButton from '../../kotti-button';
+import KtButtonGroup from '../../kotti-button-group';
 
 export default {
 	name: 'Kt-InlineEdit',
@@ -38,6 +39,7 @@ export default {
 	},
 	components: {
 		KtButton,
+		KtButtonGroup,
 	},
 	data() {
 		return {
