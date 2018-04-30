@@ -65,6 +65,10 @@ const submenu = [
 				to: 'popovers',
 			},
 			{
+				label: 'Radios',
+				to: 'radios',
+			},
+			{
 				label: 'Tables',
 				to: 'tables',
 			},
