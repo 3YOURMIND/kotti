@@ -1,9 +1,10 @@
 require('shelljs/global');
+var path = require('path');
 
 const ora = require('ora');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const baseWebpackConfig = require('../webpack.config.js');
+const baseWebpackConfig = require('./webpack.config.js');
 
 const spinner = ora('building components for production...');
 
@@ -34,6 +35,7 @@ function getConfig(options) {
 			filename: options.filename,
 			library: options.library,
 			libraryTarget: options.libraryTarget,
+			path: path.resolve(__dirname, '../lib/'),
 		},
 		externals: {
 			vue: {

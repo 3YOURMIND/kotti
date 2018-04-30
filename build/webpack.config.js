@@ -1,6 +1,8 @@
 var path = require('path');
+const { VueLoaderPlugin } = require('vue-loader');
+
 module.exports = {
-	entry: './src/app.js',
+	entry: './src/index.js',
 	module: {
 		rules: [
 			{
@@ -34,6 +36,7 @@ module.exports = {
 			},
 		],
 	},
+	plugins: [new VueLoaderPlugin()],
 	resolve: {
 		alias: {
 			vue$: 'vue/dist/vue.esm.js',
