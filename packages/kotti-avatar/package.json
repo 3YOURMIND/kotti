@@ -1,24 +1,24 @@
 {
-	"name": "@3yourmind/kotti-avatar",
-	"version": "0.0.1",
-	"description": "Avatar component which can showcase user profile pictures",
-	"main": "index.js",
+	"author": "3YOURMIND GmbH",
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"contributors": [{
+			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
+			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
+			"url": "https://ostoc.github.io/"
+		}
+	],
 	"dependencies": {
 		"rollup": "^0.58.2",
 		"rollup-plugin-vue": "^3.0.0"
 	},
-	"author": "3YOURMIND GmbH",
-	"license": "MIT",
-	"scripts": {
-		"build": "rollup -c rollup.config.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/3YOURMIND/kotti"
-	},
-	"bugs": {
-		"url": "https://github.com/3YOURMIND/kotti/issues"
-	},
+	"description": "Avatar component which can showcase user profile pictures",
 	"homepage": "https://3yourmind.github.io/kotti/avatars",
 	"keywords": [
 		"avatar",
@@ -27,16 +27,15 @@
 		"vue",
 		"component"
 	],
-	"contributors": [
-		{
-			"name": "Kevin Peters",
-			"email": "kevinigeligeligel@gmail.com",
-			"url": "https://www.kevinpeters.net/"
-		},
-		{
-			"name": "Junyu Pu",
-			"email": "pujunyu@gmail.com",
-			"url": "https://ostoc.github.io/"
-		}
-	]
+	"license": "MIT",
+	"main": "index.js",
+	"name": "@3yourmind/kotti-avatar",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/3YOURMIND/kotti"
+	},
+	"scripts": {
+		"build": "rollup -c rollup.config.js"
+	},
+	"version": "0.0.1"
 }
