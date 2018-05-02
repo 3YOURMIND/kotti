@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import KtAvatar from '../../kotti-avatar/src/avatar.vue';
+import KtAvatar from '@3yourmind/kotti-avatar';
 
 export default {
 	name: 'KtAvatarGroup',
