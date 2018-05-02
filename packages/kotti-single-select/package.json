@@ -1,5 +1,5 @@
 {
-	"name": "@3yourmind/single-select",
+	"name": "@3yourmind/kotti-single-select",
 	"version": "0.0.1",
 	"description": "single-select",
 	"main": "index.js",

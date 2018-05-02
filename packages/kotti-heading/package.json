@@ -1,7 +1,7 @@
 {
-	"name": "@3yourmind/drawer",
+	"name": "@3yourmind/kotti-heading",
 	"version": "0.0.1",
-	"description": "drawer",
+	"description": "heading",
 	"main": "index.js",
 	"dependencies": {},
 	"author": "3YOURMIND GmbH",

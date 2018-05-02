@@ -1,5 +1,5 @@
 {
-	"name": "@3yourmind/avatar",
+	"name": "@3yourmind/kotti-avatar",
 	"version": "0.0.1",
 	"description": "Avatar component which can showcase user profile pictures",
 	"main": "index.js",

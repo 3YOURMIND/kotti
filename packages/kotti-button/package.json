@@ -1,5 +1,5 @@
 {
-	"name": "@3yourmind/button",
+	"name": "@3yourmind/kotti-button",
 	"version": "0.0.1",
 	"description": "Button which is a simple base button component",
 	"main": "index.js",

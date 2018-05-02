@@ -1,5 +1,5 @@
 {
-	"name": "@3yourmind/col",
+	"name": "@3yourmind/kotti-col",
 	"version": "0.0.1",
 	"description": "Column components",
 	"main": "index.js",

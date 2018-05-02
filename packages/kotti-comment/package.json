@@ -1,5 +1,5 @@
 {
-	"name": "@3yourmind/comment",
+	"name": "@3yourmind/kotti-comment",
 	"version": "0.0.1",
 	"description": "Comment component which is used throughout different components to show comments for different use cases.",
 	"main": "index.js",

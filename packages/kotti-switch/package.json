@@ -1,5 +1,5 @@
 {
-	"name": "@3yourmind/switch",
+	"name": "@3yourmind/kotti-switch",
 	"version": "0.0.1",
 	"description":
 		"A component which is a label but also an input at the same time.",
