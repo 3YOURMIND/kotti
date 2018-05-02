@@ -12,21 +12,22 @@
 		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
 		"doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
 		"storybook": "start-storybook -p 9001 -c .storybook",
-		"build:component":
-			"NODE_ENV=production webpack --config build/component.js --progress",
+		"build:component": "NODE_ENV=production webpack --config build/component.js --progress",
 		"storybook:build": "build-storybook -c .storybook -o dist/storybook",
-		"deploy":
-			"node -v && nuxt generate && build-storybook -c .storybook -o dist/storybook",
-		"deploy:cleanbuild":
-			"rm -r dist && nuxt generate && build-storybook -c .storybook -o dist/storybook",
+		"deploy": "node -v && nuxt generate && build-storybook -c .storybook -o dist/storybook",
+		"deploy:cleanbuild": "rm -r dist && nuxt generate && build-storybook -c .storybook -o dist/storybook",
 		"precommit": "lint-staged"
 	},
 	"lint-staged": {
-		"*.{js,json,css,scss,md,vue}": ["prettier --write", "git add"]
+		"*.{js,json,css,scss,md,vue}": [
+			"prettier --write",
+			"git add"
+		]
 	},
 	"dependencies": {
 		"@3yourmind/yoco": "^0.0.3",
 		"nuxt": "^1.3.0",
+		"rollup": "^0.58.2",
 		"vue": "^2.5.9",
 		"vue-clipboard2": "^0.0.8"
 	},
@@ -89,6 +90,8 @@
 		"webpack-merge": "^4.1.2"
 	},
 	"bolt": {
-		"workspaces": ["packages/*"]
+		"workspaces": [
+			"packages/*"
+		]
 	}
 }
