@@ -73,3 +73,8 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+@import '../kotti-style/src/_variables';
+@import '../kotti-style/src/_avatar';
+</style>

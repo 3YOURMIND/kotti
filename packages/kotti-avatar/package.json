@@ -3,9 +3,15 @@
 	"version": "0.0.1",
 	"description": "Avatar component which can showcase user profile pictures",
 	"main": "index.js",
-	"dependencies": {},
+	"dependencies": {
+		"rollup": "^0.58.2",
+		"rollup-plugin-vue": "^3.0.0"
+	},
 	"author": "3YOURMIND GmbH",
 	"license": "MIT",
+	"scripts": {
+		"build": "rollup -c rollup.config.js"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/3YOURMIND/kotti"
@@ -14,7 +20,13 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"homepage": "https://3yourmind.github.io/kotti/avatars",
-	"keywords": ["avatar", "kotti", "ui", "vue", "component"],
+	"keywords": [
+		"avatar",
+		"kotti",
+		"ui",
+		"vue",
+		"component"
+	],
 	"contributors": [
 		{
 			"name": "Kevin Peters",
