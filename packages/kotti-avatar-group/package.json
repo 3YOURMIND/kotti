@@ -1,31 +1,42 @@
 {
-	"name": "@3yourmind/kotti-avatar-group",
-	"version": "0.0.1",
-	"description":
-		"Avatar group component which shows grouped user profile pictures",
-	"main": "index.js",
-	"dependencies": {},
 	"author": "3YOURMIND GmbH",
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"contributors": [
+		{
+			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
+			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
+			"url": "https://ostoc.github.io/"
+		}
+	],
+	"dependencies": {
+		"rollup": "^0.58.2",
+		"rollup-plugin-vue": "^3.0.0"
+	},
+	"description": "Avatar group component which shows grouped user profile pictures",
+	"homepage": "https://3yourmind.github.io/kotti/avatars",
+	"keywords": [
+		"avatar group",
+		"kotti",
+		"ui",
+		"vue",
+		"component"
+	],
 	"license": "MIT",
+	"main": "index.js",
+	"name": "@3yourmind/kotti-avatar-group",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/3YOURMIND/kotti"
 	},
-	"bugs": {
-		"url": "https://github.com/3YOURMIND/kotti/issues"
-	},
-	"homepage": "https://3yourmind.github.io/kotti/avatars",
-	"keywords": ["avatar group", "kotti", "ui", "vue", "component"],
-	"contributors": [
-		{
-			"name": "Kevin Peters",
-			"email": "kevinigeligeligel@gmail.com",
-			"url": "https://www.kevinpeters.net/"
-		},
-		{
-			"name": "Junyu Pu",
-			"email": "pujunyu@gmail.com",
-			"url": "https://ostoc.github.io/"
-		}
-	]
+	"version": "0.0.1",
+	"scripts": {
+		"build": "rollup -c ./rollup.config.js"
+	}
 }
