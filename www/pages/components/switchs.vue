@@ -7,7 +7,7 @@
   <div v-if="checkbox1"><h2>Hello World</h2></div>
 </div>
 
-```html 
+```html
 <KtSwitch v-model="checkbox1"activeMessage="Show Message" inactiveMessage="Close" />
 ```
 
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import KtSwitch from '../../../packages/kotti-swtich';
+import KtSwitch from '../../../packages/kotti-switch';
 
 export default {
 	name: 'KtSwitchDoc',

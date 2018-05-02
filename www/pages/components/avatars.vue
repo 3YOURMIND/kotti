@@ -24,7 +24,7 @@ Avatar is a round object to help identify the user information.
 	/>
 </div>
 
-Avatar has `name` and image `src`. If no image is given, 
+Avatar has `name` and image `src`. If no image is given,
 or image error occurs avatar will fallback to default.
 
 Set `small` to `true` for smaller avatar.
@@ -89,7 +89,7 @@ const avatarData = [
 	/>
 </div>
 
-Avatar group can be stacked by setting `isStack` to `true`. 
+Avatar group can be stacked by setting `isStack` to `true`.
 You can control how many avatar items you need to show when `showItems` are setted.
 
 ```html
@@ -125,8 +125,8 @@ You can control how many avatar items you need to show when `showItems` are sett
 </template>
 
 <script>
-import KtAvatar from '../../../packages/kotti-avatar';
-import KtAvatarGroup from '../../../packages/kotti-avatar-group';
+import KtAvatar from '../../../packages/kotti-avatar/dist/kotti-avatar.esm';
+import KtAvatarGroup from '../../../packages/kotti-avatar-group/dist/kotti-avatar-group.esm';
 
 export default {
 	name: 'Avatar',
