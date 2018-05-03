@@ -5,6 +5,7 @@
 	"author": "3YOURMIND GmbH",
 	"license": "MIT",
 	"scripts": {
+		"packages:build": "bolt ws run build",
 		"doc": "nuxt -c build/nuxt.config.js",
 		"doc:build": "nuxt build",
 		"doc:start": "nuxt start",
