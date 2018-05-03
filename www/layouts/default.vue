@@ -9,6 +9,9 @@
 </template>
 
 <script>
+import '../../packages/kotti-avatar/dist/kotti-avatar.css';
+import '../../packages/kotti-avatar-group/dist/kotti-avatar-group.css';
+
 import Actionbar from '~/components/Actionbar.vue';
 import Navbar from '~/components/Navbar.vue';
 
