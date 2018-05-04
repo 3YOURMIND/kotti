@@ -62,27 +62,43 @@ When display space is limited, some columns should be hidden depending on the im
 
 When content should not be hidden, using horizontal scrolling is a better alternative.
 <div>
-<KtTable :data="tableData" :columns="tableColumns" selectable  v-model="select">
-  <button>Hello</button>
-</KtTable>
-{{select}}
+<KtTable :tableData="tableData" :columns="tableColumns" actions selectable v-model="select">
+<div slot-scope="rowsProps" slot="actions">
+<i class="yoco" @click="showAlert(rowsProps.row.name, 'edited')">edit</i>
+<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i>
 </div>
+</KtTable>
+Selected value: {{select}}
+
+<KtTable :tableData="tableData" :columns="tableColumns" expand>
+<div slot-scope="expandProps" slot="expand">
+	<KtBanner :message="expandProps.row.name" icon="user" :isGrey="true"/>
+	<KtBanner :message="expandProps.row.address" icon="global" :isGrey="true"/>
+</div>
+</KtTable>
+</div>
+
 
 </template>
 
 <script>
-import KtTable from '../../../packages/kotti-table-column/table.vue';
-import KtTableColumn from '../../../packages/kotti-table-column/table-column.vue';
+import KtTable from '../../../packages/kotti-table/table.vue';
+import KtBanner from '../../../packages/kotti-banner';
 
 export default {
 	name: 'Tables',
 	components: {
-		KtTableColumn,
 		KtTable,
+		KtBanner,
+	},
+	methods: {
+		showAlert(val, model) {
+			alert(`${val} is ${model}!`);
+		},
 	},
 	data() {
 		return {
-			select: [],
+			select: [0, 1],
 			tableColumns: [
 				{
 					label: 'Name',

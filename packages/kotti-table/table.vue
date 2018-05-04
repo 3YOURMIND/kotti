@@ -1,7 +1,9 @@
 <template>
-  <table>
+<div class="x-scroll">
+  <table >
     <thead>
       <tr>
+				<th v-if="expand"/>
         <th v-if="selectable"><div class="form-group">
           <label class="form-checkbox">
             <input type="checkbox" v-model="selectedAll">
@@ -9,12 +11,18 @@
           </label>
         </div></th>
         <th v-for="column in columns" :key="column.key" v-text="column.label"/>
-        <th v-if="expand"/>
+        
       </tr>
     </thead>
-    <tbody>
+    <tbody v-if="tableData">
+			
       <tr v-for="(row, index) in tableBodyData" :key="row.index" :class="trClass(index)">
-        <td v-if="!row.expand">
+				<td v-if="expand && !row.expand" class="c-hand" @click="toggleExpandRow(index)">
+          <i class="yoco" v-if="expandRowIndex - 1 === index">chevron_down</i>
+          <i class="yoco" v-else>chevron_right</i>
+        </td>
+        
+        <td v-if="!row.expand && selectable">
           <div class="form-group">
           <label class="form-checkbox">
             <input type="checkbox" :value="index" v-model="selectedRow">
@@ -28,28 +36,28 @@
         v-text="value"
         v-if="!row.expand" 
         />
-        <td v-if="expand" class="c-hand" @click="toggleExpandRow(index)">
-          <i class="yoco" v-if="expandRowIndex - 1 === index">chevron_down</i>
-          <i class="yoco" v-else>chevron_right</i>
+				<td :colspan="colSpanNumber" v-if="row.expand && expandRowIndex === index" >
+          <slot name="expand" :row="row" />
+				</td>
+        
+        <td class="table-actions" v-if="!row.expand && actions" >
+          <slot name="actions" :row="row" />
         </td>
-        <td :colspan="colSpanNumber" v-if="row.expand && expandRowIndex === index" ><slot>hello</slot></td>
-        <td class="table-actions" v-if="!row.expand && actions">
-          <i class="yoco">edit</i>
-          <i class="yoco">trash</i>
-        </td>
-
-
       </tr>
     </tbody>
+		<tbody v-else>
+			<td class="empty" :colspan="colSpanNumber">No Table Data</td>
+		</tbody>
   </table>
+  </div>
 </template>
 
 <script>
 export default {
 	name: 'Kt-Table',
 	props: {
-		data: {},
-		columns: '',
+		tableData: Array,
+		columns: Array,
 		expand: Boolean,
 		actions: Boolean,
 		selectable: Boolean,
@@ -62,19 +70,26 @@ export default {
 			selectedAll: false,
 		};
 	},
+	mounted() {
+		this.selectedRow = this.value;
+	},
 	computed: {
 		tableBodyData() {
 			let _data = [];
-			this.data.forEach(item => {
+			this.tableData.forEach(item => {
 				let newItem = {};
 				this.columns.forEach(column => {
 					newItem[column.key] = item[column.key];
 				});
 				_data.push(newItem);
 				if (this.expand) {
-					let expandableRow = {};
-					expandableRow.expand = true;
-					_data.push(expandableRow);
+					let newItemExpand = Object.assign(
+						{
+							expand: true,
+						},
+						newItem
+					);
+					_data.push(newItemExpand);
 				}
 			});
 			return _data;
@@ -92,6 +107,7 @@ export default {
 	},
 	watch: {
 		selectedRow(val) {
+			if (!this.selectable) return;
 			let _tableLength = this.expand
 				? this.tableBodyData.length / 2
 				: this.tableBodyData.length;
@@ -103,6 +119,7 @@ export default {
 			this.handleSelected(val);
 		},
 		selectedAll(oldVal, newVal) {
+			if (!this.selectable) return;
 			let _tableLength = this.expand
 				? this.tableBodyData.length / 2
 				: this.tableBodyData.length;
@@ -128,13 +145,10 @@ export default {
 	},
 	methods: {
 		trClass(index) {
+			if (!this.selectable) return;
 			if (this.selectedRow.includes(index)) {
 				return ['selected'];
 			}
-		},
-		handleClick(index) {
-			this.selectRows(index);
-			this.toggleExpandRow(index);
 		},
 		handleSelected() {
 			let _selected = this.selectedRow;
@@ -144,6 +158,7 @@ export default {
 			this.$emit('input', _selected);
 		},
 		selectRows(index) {
+			if (!this.selectable) return;
 			let _selectedRow = this.selectedRow;
 			if (_selectedRow.includes(index)) {
 				_selectedRow = _selectedRow.filter(row => row != index);
@@ -169,12 +184,13 @@ export default {
 
 
 <style lang="scss">
-tr:hover {
-	.table-actions {
-		display: block;
-	}
-}
 .selected {
 	background: #f8f8f8;
+}
+.x-scroll {
+	width: 100%;
+	display: block;
+	overflow-x: auto;
+	white-space: nowrap;
 }
 </style>
