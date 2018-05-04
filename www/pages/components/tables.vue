@@ -61,11 +61,65 @@ Content should be left aligned except some common alignment style, such as price
 When display space is limited, some columns should be hidden depending on the importance of the content.
 
 When content should not be hidden, using horizontal scrolling is a better alternative.
+<div>
+<KtTable :data="tableData" :columns="tableColumns" selectable  v-model="select">
+  <button>Hello</button>
+</KtTable>
+{{select}}
+</div>
 
 </template>
 
 <script>
+import KtTable from '../../../packages/kotti-table-column/table.vue';
+import KtTableColumn from '../../../packages/kotti-table-column/table-column.vue';
+
 export default {
 	name: 'Tables',
+	components: {
+		KtTableColumn,
+		KtTable,
+	},
+	data() {
+		return {
+			select: [],
+			tableColumns: [
+				{
+					label: 'Name',
+					key: 'name',
+				},
+				{
+					label: 'Date',
+					key: 'date',
+				},
+				{
+					label: 'Address',
+					key: 'address',
+				},
+			],
+			tableData: [
+				{
+					date: '2016-05-03',
+					name: 'Tom',
+					address: 'No. 119, Grove St, Los Angeles',
+				},
+				{
+					date: '2016-05-02',
+					name: 'Jackson',
+					address: 'No. 89, Grove St, Los Angeles',
+				},
+				{
+					date: '2016-05-04',
+					name: 'Fen',
+					address: 'No. 182, Grove St, Los Angeles',
+				},
+				{
+					date: '2016-05-01',
+					name: 'Fexiang',
+					address: 'No. 189, Grove St, Los Angeles',
+				},
+			],
+		};
+	},
 };
 </script>
