@@ -1,25 +1,27 @@
 <template>
-<div class="x-scroll">
-  <table >
+<div :class="{'x-scroll' : xScroll}">
+  <table>
     <thead>
       <tr>
-				<th v-if="expand"/>
-        <th v-if="selectable"><div class="form-group">
+				<th v-if="expand" style="width:48px"/>
+        <th v-if="selectable" style="width:48px">
+					<div class="form-group">
           <label class="form-checkbox">
             <input type="checkbox" v-model="selectedAll">
             <i class="form-icon"></i>
           </label>
         </div></th>
-        <th v-for="column in columns" :key="column.key" v-text="column.label"/>
-        
+        <th v-for="(column, index) in columns" :key="column.key" v-text="column.label" :style="columnStyle(column.width, index)"/>
+				<th v-if="actions" style="width:0"/>
       </tr>
     </thead>
     <tbody v-if="tableData">
-			
       <tr v-for="(row, index) in tableBodyData" :key="row.index" :class="trClass(index)">
 				<td v-if="expand && !row.expand" class="c-hand" @click="toggleExpandRow(index)">
-          <i class="yoco" v-if="expandRowIndex - 1 === index">chevron_down</i>
-          <i class="yoco" v-else>chevron_right</i>
+					<div class="toggle">
+          	<i class="yoco" v-if="expandRowIndex - 1 === index">chevron_down</i>
+          	<i class="yoco" v-else>chevron_right</i>
+					</div>
         </td>
         
         <td v-if="!row.expand && selectable">
@@ -40,8 +42,10 @@
           <slot name="expand" :row="row" />
 				</td>
         
-        <td class="table-actions" v-if="!row.expand && actions" >
-          <slot name="actions" :row="row" />
+        <td  v-if="!row.expand && actions" >
+					<div class="table-actions">
+          <slot name="actions"  :row="row" />
+					</div>
         </td>
       </tr>
     </tbody>
@@ -62,6 +66,7 @@ export default {
 		actions: Boolean,
 		selectable: Boolean,
 		value: Array,
+		xScroll: Boolean,
 	},
 	data() {
 		return {
@@ -144,6 +149,12 @@ export default {
 		},
 	},
 	methods: {
+		columnStyle(width, index) {
+			let _width = width || 0;
+			return {
+				width: _width ? `${_width}%` : 'auto',
+			};
+		},
 		trClass(index) {
 			if (!this.selectable) return;
 			if (this.selectedRow.includes(index)) {
@@ -181,16 +192,9 @@ export default {
 };
 </script>
 
-
-
-<style lang="scss">
-.selected {
-	background: #f8f8f8;
-}
-.x-scroll {
-	width: 100%;
-	display: block;
-	overflow-x: auto;
-	white-space: nowrap;
+<style lang="scss" scoped>
+.toggle {
+	display: inline-block;
+	width: 32px;
 }
 </style>

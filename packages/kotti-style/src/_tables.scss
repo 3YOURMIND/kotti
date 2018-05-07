@@ -14,10 +14,12 @@ table {
 		padding: $unit-2 $unit-1;
 		text-transform: uppercase;
 	}
-	tr: {
+	tr {
+		position: relative;
 		margin: 0;
 	}
 	td {
+		position: relative;
 		line-height: 1.2rem;
 		padding: $unit-2 $unit-1;
 		border-bottom: 1px solid #dbdbdb;
@@ -45,7 +47,8 @@ table {
 		width: auto;
 		position: absolute;
 		border: 0;
-		margin-top: 0.4rem;
+		top: 50%;
+		margin-top: -0.8rem;
 		right: 0.8rem;
 		float: right;
 		box-shadow: 0 0 1px #999;
@@ -65,16 +68,29 @@ table {
 			background: #ffffff;
 		}
 	}
+	tr.selected {
+		background: #f8f8f8;
+	}
 	td.empty {
 		text-align: center;
 		color: $lightgray-500;
 	}
 	.form-group {
-		line-height: 1;
+		width: 32px;
+		line-height: 0;
+		.form-icon {
+			top: 0.2rem;
+		}
 	}
 	.form-checkbox {
 		margin: 0;
 		line-height: 1.2rem;
 		padding: 0 0.4rem;
 	}
+}
+.x-scroll {
+	width: 100%;
+	display: block;
+	overflow-x: auto;
+	white-space: nowrap;
 }

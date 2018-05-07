@@ -70,7 +70,7 @@ When content should not be hidden, using horizontal scrolling is a better altern
 </KtTable>
 Selected value: {{select}}
 
-<KtTable :tableData="tableData" :columns="tableColumns" expand>
+<KtTable :tableData="tableData" :columns="tableColumns" expand xScroll>
 <div slot-scope="expandProps" slot="expand">
 	<KtBanner :message="expandProps.row.name" icon="user" :isGrey="true"/>
 	<KtBanner :message="expandProps.row.address" icon="global" :isGrey="true"/>
@@ -103,14 +103,17 @@ export default {
 				{
 					label: 'Name',
 					key: 'name',
+					// width: 10,
 				},
 				{
 					label: 'Date',
 					key: 'date',
+					// width: 30,
 				},
 				{
 					label: 'Address',
 					key: 'address',
+					width: 60,
 				},
 			],
 			tableData: [
