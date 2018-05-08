@@ -21,14 +21,15 @@ gulp.task('build', function() {
 		)
 		.pipe(autoprefixer())
 		.pipe(csscomb())
-		.pipe(gulp.dest('./lib'))
+		.pipe(gulp.dest('./dist'))
 		.pipe(cleancss())
 		.pipe(
 			rename({
 				suffix: '.min',
 			})
 		)
-		.pipe(gulp.dest('./lib'));
+		.pipe(gulp.dest('./dist'))
+		.pipe(gulp.dest('../../src/dist'));
 });
 
 gulp.task('default', ['build']);

@@ -25,7 +25,7 @@ import KtButton from '../../kotti-button';
 import KtButtonGroup from '../../kotti-button-group';
 
 export default {
-	name: 'Kt-InlineEdit',
+	name: 'KtInlineEdit',
 	props: {
 		value: [String, Number],
 		label: {

@@ -241,7 +241,7 @@ data() {
 </template>
 
 <script>
-import KtTable from '../../../packages/kotti-table/table.vue';
+import KtTable from '../../../packages/kotti-table';
 import KtBanner from '../../../packages/kotti-banner';
 import ShowCase from '../../components/ShowCase';
 

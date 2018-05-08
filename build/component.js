@@ -6,7 +6,9 @@ const path = require('path');
 const version = process.env.VERSION || require('../package.json').version;
 
 const builds = {
+	mode: 'development',
 	development: {
+		mode: 'development',
 		config: {
 			output: {
 				filename: 'kotti-ui.js',
@@ -20,7 +22,7 @@ const builds = {
 			output: {
 				filename: 'kotti-ui.min.js',
 				libraryTarget: 'umd',
-				path: path.resolve(__dirname, '../lib/'),
+				path: path.resolve(__dirname, '../src/dist/'),
 			},
 		},
 		env: 'production',

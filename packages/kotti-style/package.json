@@ -1,9 +1,10 @@
 {
 	"name": "@3yourmind/kotti-style",
 	"version": "0.0.2",
-	"description": "Kotti style repository which includes all styles of the kotti component library.",
-	"main": "lib/index.min.css",
-	"style": "lib/index.min.css",
+	"description":
+		"Kotti style repository which includes all styles of the kotti component library.",
+	"main": "./dist/index.min.css",
+	"style": "./dist/index.min.css",
 	"files": ["lib", "src"],
 	"scripts": {
 		"build": "gulp build"

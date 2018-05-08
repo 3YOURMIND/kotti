@@ -35,7 +35,7 @@
 import KtCommentReply from './CommentReply.vue';
 
 export default {
-	name: 'Kotti-Comment',
+	name: 'KtComment',
 	props: {
 		name: '',
 		time: '',

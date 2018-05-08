@@ -28,7 +28,7 @@
 
 <script>
 export default {
-	name: 'Kt-Banner',
+	name: 'KtBanner',
 	data() {
 		return {
 			isExpand: false,

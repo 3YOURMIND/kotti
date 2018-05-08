@@ -25,7 +25,7 @@
 
 <script>
 export default {
-	name: 'Comment-Reply',
+	name: 'KtCommentReply',
 	props: {
 		name: String,
 		message: String,

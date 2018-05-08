@@ -13,17 +13,18 @@
 		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
 		"doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
 		"storybook": "start-storybook -p 9001 -c .storybook",
-		"build:component": "NODE_ENV=production webpack --config build/component.js --progress",
+		"build:ui":
+			"rm src/dist/* && NODE_ENV=production webpack --config build/component.js --progress",
+		"build:style": "cd packages/kotti-style && yarn gulp build",
 		"storybook:build": "build-storybook -c .storybook -o dist/storybook",
-		"deploy": "node -v && nuxt generate && build-storybook -c .storybook -o dist/storybook",
-		"deploy:cleanbuild": "rm -r dist && nuxt generate && build-storybook -c .storybook -o dist/storybook",
+		"deploy":
+			"node -v && nuxt generate && build-storybook -c .storybook -o dist/storybook",
+		"deploy:cleanbuild":
+			"rm -r dist && nuxt generate && build-storybook -c .storybook -o dist/storybook",
 		"precommit": "lint-staged"
 	},
 	"lint-staged": {
-		"*.{js,json,css,scss,md,vue}": [
-			"prettier --write",
-			"git add"
-		]
+		"*.{js,json,css,scss,md,vue}": ["prettier --write", "git add"]
 	},
 	"dependencies": {
 		"@3yourmind/yoco": "^0.0.3",
@@ -93,8 +94,6 @@
 		"webpack-merge": "^4.1.2"
 	},
 	"bolt": {
-		"workspaces": [
-			"packages/*"
-		]
+		"workspaces": ["packages/*"]
 	}
 }

@@ -5,7 +5,7 @@
   	@click="onAvatarContainerClick"
   >
 		<div v-if="avatarAvailable">
-			<img :src="src" @error="imgFallBack()" />
+			<img class="avata-img" :src="src" @error="imgFallBack()" />
 		</div>
 		<div v-else :class="avatarFallbackClasses">
 			<div class="avatar-fallback__head" />
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-	name: 'Kt-Avatar',
+	name: 'KtAvatar',
 	props: {
 		name: {
 			type: String,

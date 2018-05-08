@@ -33,7 +33,7 @@ module.exports = {
   ** Customize the progress bar color
   */
 	css: [
-		'../packages/kotti-style/lib/index.min.css',
+		'../packages/kotti-style/dist/index.min.css',
 		'@/assets/css/main.scss',
 		'@3yourmind/yoco',
 	],

@@ -6,16 +6,17 @@
 	position: relative;
 	border-radius: 100%;
 	border: 0.1rem solid #fff;
-	img {
-		object-fit: cover;
-		border-radius: 100%;
-	}
+
 	&:hover {
 		cursor: pointer;
 		border: 0.1rem solid $primary-600;
 	}
 }
-
+.avatar-img {
+	object-fit: cover;
+	border-radius: 100%;
+	width: 100%;
+}
 .avatar-group {
 	display: flex;
 	flex-direction: row;

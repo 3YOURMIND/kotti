@@ -29,7 +29,7 @@
 	"homepage": "https://3yourmind.github.io/kotti/avatars",
 	"keywords": ["avatar group", "kotti", "ui", "vue", "component"],
 	"license": "MIT",
-	"main": "dist/vue-yodify.cjs.js",
+	"main": "index.js",
 	"module": "dist/kotti-avatar.esm.js",
 	"name": "@3yourmind/kotti-avatar-group",
 	"repository": {

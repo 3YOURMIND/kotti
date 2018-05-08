@@ -32,7 +32,7 @@
 
 <script>
 export default {
-	name: 'Kt-CommentInput',
+	name: 'KtCommentInput',
 	data() {
 		return {
 			textFocused: false,

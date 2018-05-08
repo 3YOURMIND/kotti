@@ -62,7 +62,7 @@
 
 <script>
 export default {
-	name: 'Kt-Table',
+	name: 'KtTable',
 	props: {
 		tableData: Array,
 		columns: Array,
@@ -137,6 +137,7 @@ export default {
 				this.selectedRow = [];
 			}
 			if (!newVal) {
+				if (!this.selectedRow) return;
 				if (this.selectedRow.length !== _tableLength) {
 					let _selectedRow = [];
 

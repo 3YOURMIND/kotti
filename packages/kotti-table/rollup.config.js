@@ -2,7 +2,7 @@
 import vue from 'rollup-plugin-vue';
 
 export default {
-	input: 'table.vue',
+	input: 'src/Table.vue',
 	output: [
 		{
 			file: 'dist/kotti-table.cjs.js',
