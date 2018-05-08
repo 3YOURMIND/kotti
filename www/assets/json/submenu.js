@@ -105,6 +105,10 @@ const submenu = [
 				to: 'forms',
 			},
 			{
+				label: 'Comments',
+				to: 'comments',
+			},
+			{
 				label: 'Inline Edit',
 				to: 'inline-edit',
 			},
