@@ -9,8 +9,8 @@
 		"doc": "nuxt -c build/nuxt.config.js",
 		"doc:build": "nuxt build",
 		"doc:start": "nuxt start",
-		"doc:generate": "nuxt generate",
-		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
+		"doc:generate": "nuxt generate -c build/nuxt.config.js",
+		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate -c build/nuxt.config.js",
 		"doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
 		"storybook": "start-storybook -p 9001 -c .storybook",
 		"build:ui":

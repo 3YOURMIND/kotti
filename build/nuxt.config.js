@@ -7,7 +7,7 @@ const routerBase =
 		  }
 		: {};
 
-// const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'docs' : 'dist'
+const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'gh-pages' : 'dist';
 
 module.exports = {
 	srcDir: './www/',
@@ -44,7 +44,7 @@ module.exports = {
   ** Build configuration
   */
 	generate: {
-		dir: 'dist',
+		dir: outputDir,
 	},
 	build: {
 		/*
