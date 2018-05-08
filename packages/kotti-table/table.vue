@@ -3,7 +3,7 @@
   <table>
     <thead>
       <tr>
-				<th v-if="expand" style="width:48px"/>
+				<th v-if="expandable" style="width:48px"/>
         <th v-if="selectable" style="width:48px">
 					<div class="form-group">
           <label class="form-checkbox">
@@ -11,13 +11,15 @@
             <i class="form-icon"></i>
           </label>
         </div></th>
-        <th v-for="(column, index) in columns" :key="column.key" v-text="column.label" :style="columnStyle(column.width, index)"/>
+        <th v-for="column in columns" :key="column.key" v-text="column.label" 
+				:class="columnClass(column.responsive)"
+				:style="columnStyle(column.width, column.align)"/>
 				<th v-if="actions" style="width:0"/>
       </tr>
     </thead>
     <tbody v-if="tableData">
       <tr v-for="(row, index) in tableBodyData" :key="row.index" :class="trClass(index)">
-				<td v-if="expand && !row.expand" class="c-hand" @click="toggleExpandRow(index)">
+				<td v-if="expandable && !row.expand" class="c-hand" @click="toggleExpandRow(index)">
 					<div class="toggle">
           	<i class="yoco" v-if="expandRowIndex - 1 === index">chevron_down</i>
           	<i class="yoco" v-else>chevron_right</i>
@@ -33,9 +35,11 @@
         </div>
         </td>
         <td 
-        v-for="value in row"
+        v-for="(value, key) in row"
         :key="value.index"
         v-text="value"
+				:class="tdColumnClass(key)"
+				:style="tdColumnStyle(key)"
         v-if="!row.expand" 
         />
 				<td :colspan="colSpanNumber" v-if="row.expand && expandRowIndex === index" >
@@ -62,11 +66,12 @@ export default {
 	props: {
 		tableData: Array,
 		columns: Array,
-		expand: Boolean,
+		expandable: Boolean,
 		actions: Boolean,
 		selectable: Boolean,
 		value: Array,
 		xScroll: Boolean,
+		responsive: String,
 	},
 	data() {
 		return {
@@ -76,7 +81,7 @@ export default {
 		};
 	},
 	mounted() {
-		this.selectedRow = this.value;
+		this.selectedRow = this.value || [];
 	},
 	computed: {
 		tableBodyData() {
@@ -87,7 +92,7 @@ export default {
 					newItem[column.key] = item[column.key];
 				});
 				_data.push(newItem);
-				if (this.expand) {
+				if (this.expandable) {
 					let newItemExpand = Object.assign(
 						{
 							expand: true,
@@ -101,7 +106,7 @@ export default {
 		},
 		colSpanNumber() {
 			let _span = this.columns.length;
-			if (this.expand) {
+			if (this.expandable) {
 				_span = _span + 1;
 			}
 			if (this.selectable) {
@@ -113,7 +118,7 @@ export default {
 	watch: {
 		selectedRow(val) {
 			if (!this.selectable) return;
-			let _tableLength = this.expand
+			let _tableLength = this.expandable
 				? this.tableBodyData.length / 2
 				: this.tableBodyData.length;
 			if (val.length === _tableLength) {
@@ -125,7 +130,7 @@ export default {
 		},
 		selectedAll(oldVal, newVal) {
 			if (!this.selectable) return;
-			let _tableLength = this.expand
+			let _tableLength = this.expandable
 				? this.tableBodyData.length / 2
 				: this.tableBodyData.length;
 			if (!oldVal && newVal && this.selectedRow.length === _tableLength) {
@@ -136,7 +141,7 @@ export default {
 					let _selectedRow = [];
 
 					for (let i = 0; i < _tableLength; i++) {
-						if (this.expand) {
+						if (this.expandable) {
 							_selectedRow.push(i * 2);
 						} else {
 							_selectedRow.push(i);
@@ -149,11 +154,21 @@ export default {
 		},
 	},
 	methods: {
-		columnStyle(width, index) {
+		columnStyle(width, align) {
 			let _width = width || 0;
-			return {
-				width: _width ? `${_width}%` : 'auto',
-			};
+			let _algin = align || 'left';
+			return [{ width: _width ? `${_width}%` : 'auto' }, { textAlign: _algin }];
+		},
+		tdColumnStyle(key) {
+			let column = this.columns.find(column => column.key === key);
+			return { textAlign: column.align };
+		},
+		tdColumnClass(key) {
+			let column = this.columns.find(column => column.key === key);
+			return [column.responsive];
+		},
+		columnClass(responsive) {
+			return [responsive];
 		},
 		trClass(index) {
 			if (!this.selectable) return;
@@ -163,7 +178,7 @@ export default {
 		},
 		handleSelected() {
 			let _selected = this.selectedRow;
-			if (this.expand) {
+			if (this.expandable) {
 				_selected = _selected.map(index => index / 2);
 			}
 			this.$emit('input', _selected);
