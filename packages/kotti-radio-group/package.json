@@ -1,0 +1,31 @@
+{
+	"name": "@3yourmind/kotti-radio-group",
+	"version": "0.0.1",
+	"description":
+		"A component which is a label but also an input at the same time.",
+	"main": "index.js",
+	"dependencies": {},
+	"author": "3YOURMIND GmbH",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/3YOURMIND/kotti"
+	},
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"homepage": "https://3yourmind.github.io/kotti/inline-edit",
+	"keywords": ["inline edit", "kotti", "ui", "vue", "component"],
+	"contributors": [
+		{
+			"name": "Kevin Peters",
+			"email": "kevinigeligeligel@gmail.com",
+			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"name": "Junyu Pu",
+			"email": "pujunyu@gmail.com",
+			"url": "https://ostoc.github.io/"
+		}
+	]
+}

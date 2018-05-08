@@ -1,69 +1,83 @@
 // Action bar eletment
 .actionbar {
-  flex: 0 0 $actionbar-width;
-  width: $actionbar-width;
-  background: #fcfcfc;
-  min-height: 100vh;
-  border-right: 1px solid #ddd;
-  box-sizing: border-box;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  .actionbar-wrapper {
-    position: fixed;
-    padding: $unit-6;
-    width: $actionbar-width;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .actionbar-header {
-    flex: 0 0 auto;
-  }
-  .actionbar-body {
-    flex: 1 1 100%;
-    overflow-y: auto;
-  }
-  .actionbar-footer {
-    flex: 1 1 auto;
-  }
+	flex: 0 0 $actionbar-width;
+	width: $actionbar-width;
+	background: #fcfcfc;
+	min-height: 100vh;
+	border-right: 1px solid #ddd;
+	box-sizing: border-box;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	.actionbar-wrapper {
+		position: fixed;
+		padding: $unit-6;
+		width: $actionbar-width;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+	.actionbar-header {
+		flex: 0 0 auto;
+	}
+	.actionbar-body {
+		flex: 1 1 100%;
+		overflow-y: auto;
+	}
+	.actionbar-footer {
+		flex: 1 1 auto;
+	}
 }
 
 .actionbar-back {
-  line-height: 1.2rem;
-  font-size: .7rem;
-  font-weight: 600;
-  margin-left: -.8rem;
-  margin-top: 0;
-  margin-bottom: .8rem;
-  color: $primary-500;
+	line-height: 1.2rem;
+	font-size: 0.7rem;
+	font-weight: 600;
+	margin-left: -0.8rem;
+	margin-top: 0;
+	margin-bottom: 0.8rem;
+	color: $primary-500;
 }
 
 .actionbar-menu {
-  ul {
-    margin: 0;
-    position: relative;
-  }
-  li {
-    font-size: 0.7rem;
-    list-style: none;
-    padding: $unit-2 0;
-    color: $darkgrey-500;
-  }
-  a {
-    text-decoration: none;
-  }
-  i {
-    color: $lightgrey-500;
-  }
-  &.has-icon-right i {
-    float: right;
-  }
-  .router-link-active li {
-    font-weight: 600;
-    color: $primary-500;
-  }
-  .router-link-active i {
-    color: $primary-500;
-  }
+	ul {
+		margin: 0;
+		position: relative;
+	}
+	li {
+		font-size: 0.7rem;
+		list-style: none;
+		padding: $unit-2 0;
+		color: $darkgray-500;
+	}
+	a {
+		text-decoration: none;
+	}
+	i {
+		color: $lightgray-500;
+	}
+	&.has-icon-right i {
+		float: right;
+	}
+	.router-link-active li {
+		font-weight: 600;
+		color: $primary-500;
+	}
+	.router-link-active i {
+		color: $primary-500;
+	}
+}
+@media (max-width: $size-md) {
+	.actionbar {
+		width: 100%;
+		min-height: auto;
+		border-right: 0;
+		border-bottom: 1px solid #ddd;
+		flex: 1 1 auto;
+		z-index: $zindex-1;
+		.actionbar-wrapper {
+			width: 100%;
+			position: relative;
+		}
+	}
 }

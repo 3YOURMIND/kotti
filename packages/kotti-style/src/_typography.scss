@@ -1,5 +1,5 @@
 // Typography
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 // Headings
 h1,
 h2,
@@ -7,11 +7,11 @@ h3,
 h4,
 h5,
 h6 {
-  color: inherit;
-  font-weight: 600;
-  line-height: 1.5;
-  margin-top: 0;
-  margin-bottom: 0.5em;
+	color: inherit;
+	font-weight: 600;
+	line-height: 1.5;
+	margin-top: 0;
+	margin-bottom: 0.5em;
 }
 
 .h1,
@@ -20,117 +20,126 @@ h6 {
 .h4,
 .h5,
 .h6 {
-  font-weight: 500;
+	font-weight: 500;
 }
 
 h1,
 .h1 {
-  font-size: 1.6rem;
+	font-size: 1.6rem;
 }
 
 h2,
 .h2 {
-  font-size: 1.2rem;
+	font-size: 1.2rem;
 }
 
 h3,
 .h3 {
-  font-size: .8rem;
-  color: $primary-500;
-  padding-bottom: $unit-2;
-  border-bottom: 1px solid $lightgrey-400;
-  margin-bottom: 0;
-  span {
-    float: right;
-    font-weight: 500;
-    &:hover {
-      cursor: pointer;
-      font-weight: 600;
-      color: $primary-600;
-    }
-  }
+	font-size: 0.8rem;
+	color: $primary-500;
+	padding-bottom: $unit-2;
+	border-bottom: 1px solid $lightgray-400;
+	span {
+		float: right;
+		font-weight: 500;
+		&:hover {
+			cursor: pointer;
+			font-weight: 600;
+			color: $primary-600;
+		}
+	}
+	i.yoco {
+		font-size: 1rem;
+	}
 }
 
 h4,
 .h4 {
-  font-size: 1.2rem;
+	font-size: 1.2rem;
 }
 
 h5,
 .h5 {
-  font-size: 1rem;
+	font-size: 1rem;
 }
 
 h6,
 .h6 {
-  font-size: 0.8rem;
+	font-size: 0.8rem;
 }
 
 // Paragraphs
 p {
-  margin: 0 0 .8rem;
+	margin: 0 0 0.8rem;
 }
 
 // Semantic text elements
 abbr[title] {
-  border-bottom: $border-width dotted;
-  cursor: help;
-  text-decoration: none;
+	border-bottom: $border-width dotted;
+	cursor: help;
+	text-decoration: none;
 }
 
 // Lists
 ul,
 ol {
-  margin: $unit-4 0 $unit-4 $unit-4;
-  padding: 0;
-  ul,
-  ol {
-    margin: $unit-4 0 $unit-4 $unit-4;
-  }
-  li {
-    margin-top: $unit-2;
-  }
+	margin: $unit-4 0 $unit-4 $unit-4;
+	padding: 0;
+	ul,
+	ol {
+		margin: $unit-4 0 $unit-4 $unit-4;
+	}
+	li {
+		margin-top: $unit-2;
+	}
 }
 
 dl {
-  dt {
-    font-weight: bold;
-  }
-  dd {
-    margin: $unit-2 0 $unit-4 0;
-  }
+	dt {
+		font-weight: bold;
+	}
+	dd {
+		margin: $unit-2 0 $unit-4 0;
+	}
 }
 
 .label-value {
-  line-height: 1.5;
-  color: $darkgrey-500;
-  position: relative;
-  label {
-    font-size: .6rem;
-    font-weight: 600;
-    color: $darkgrey-300;
-    text-transform: uppercase;
-  }
-  .default {
-    font-size: $font-size;
-  }
-  .key {
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-  .addition {
-    font-size: .8rem;
-    font-weight: 600;
-  }
-  .action {
-    color: $primary-500;
-    position: absolute;
-    right: .2rem;
-    top: 50%;
-    margin-top: -.5rem;
-    &:hover {
-      color: $primary-600;
-      cursor: pointer;
-    }
-  }
+	line-height: 1.5;
+	color: $darkgray-500;
+	position: relative;
+	label {
+		font-size: 0.6rem;
+		font-weight: 600;
+		color: $darkgray-300;
+		text-transform: uppercase;
+	}
+	.default {
+		font-size: $font-size;
+	}
+	.key {
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+	.addition {
+		font-size: 0.8rem;
+		font-weight: 600;
+	}
+	.action {
+		color: $primary-500;
+		position: absolute;
+		right: 0.2rem;
+		top: 50%;
+		margin-top: -0.5rem;
+		&:hover {
+			color: $primary-600;
+			cursor: pointer;
+		}
+	}
+	.editable {
+		padding: 0.1rem 0;
+		&:hover {
+			cursor: pointer;
+			background: $lightgray-300;
+		}
+	}
 }

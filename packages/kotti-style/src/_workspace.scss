@@ -1,18 +1,26 @@
 .workspace {
-  flex: 1 1 100%;
-  background: #ffffff;
-  margin-right: $unit-6;
-  padding: $unit-6;
-  z-index: inherit;
-  position: relative;
-  min-width: 40em;
-  min-height: 100%;
-  display: block;
-  box-shadow: 1px 0 2px #ddd;
-  h3:not(:first-of-type)  {
-    margin-top: $unit-8;
-  }
-  @media (max-width: $size-md) {
-    margin-right: 0;
-  }
+	flex: 1 1 100%;
+	background: #ffffff;
+	margin-right: $unit-6;
+	padding: $unit-6;
+	z-index: inherit;
+	position: relative;
+	min-height: 100vh;
+	display: flex;
+	box-shadow: 1px 0 2px #ddd;
+	h3:not(:first-of-type) {
+		margin-top: $unit-8;
+	}
+}
+@media (max-width: $size-lg) {
+	.workspace {
+		margin-right: 0;
+		width: 100%;
+	}
+}
+@media (max-width: $size-md) {
+	.workspace {
+		margin-right: 0;
+		width: 100%;
+	}
 }

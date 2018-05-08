@@ -4,7 +4,7 @@
   width: 100%;
   height: $control-size;
   line-height: $line-height;
-  border: 1px solid $lightgrey-400;
+  border: 1px solid $lightgray-400;
   border-radius: .1rem;
   padding: 0 $unit-2;
   position: relative;
@@ -28,7 +28,7 @@ textarea.form-input {
   display: flex;
 
   .input-group-addon {
-    background: $lightgrey-300;
+    background: $lightgray-300;
     border: $border-width solid #dbdbdb;
     border-radius: $border-radius;
     line-height: 1.5rem;

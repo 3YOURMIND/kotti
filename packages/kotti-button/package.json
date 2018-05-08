@@ -1,22 +1,30 @@
 {
-  "name": "@3yourmind/kotti-button",
-  "version": "34.1.3",
-  "config": {
-    "access": "public"
-  },
-  "description": "Fabric emoji React components",
-  "main": "index.js",
-  "dependencies": {
-  },
-  "author": "Junyu P.",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/3YOURMIND/kotti"
-  },
-  "keywords": [
-    "button",
-    "kotti",
-    "ui"
-  ]
+	"name": "@3yourmind/kotti-button",
+	"version": "0.0.1",
+	"description": "Button which is a simple base button component",
+	"main": "index.js",
+	"dependencies": {},
+	"author": "3YOURMIND GmbH",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/3YOURMIND/kotti"
+	},
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"homepage": "https://3yourmind.github.io/kotti/buttons",
+	"keywords": ["button", "kotti", "ui", "vue", "component"],
+	"contributors": [
+		{
+			"name": "Kevin Peters",
+			"email": "kevinigeligeligel@gmail.com",
+			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"name": "Junyu Pu",
+			"email": "pujunyu@gmail.com",
+			"url": "https://ostoc.github.io/"
+		}
+	]
 }

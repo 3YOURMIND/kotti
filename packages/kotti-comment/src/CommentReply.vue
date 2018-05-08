@@ -25,57 +25,57 @@
 
 <script>
 export default {
-  name: 'Comment-Reply',
-  props: {
-    name: String,
-    message: String,
-  }
-}
+	name: 'KtCommentReply',
+	props: {
+		name: String,
+		message: String,
+	},
+};
 </script>
 
 
 <style lang="scss" scoped>
 .comment-reply {
-  display: flex;
-  flex-flow: row;
-  padding: .4rem 0;
-  .avatar {
-    width: 1.6rem;
-    height: 1.6rem;
-    flex: 0 0 1.6rem;
-    border-radius: 100%;
-    background: #ddd;
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 100%;
-    }
-  }
-  .wrapper {
-    width: 100%;
-    margin-left: .4rem;
-    display: flex;
-    flex-direction: column;
-  }
-  .info {
-    width: 100%;
-    display: flex;
-    font-size: .65rem;
-    line-height: .8rem;
-    flex-direction: row;
-  }
-  .name {
-    flex: 1 1;
-    font-weight: 600;
-  }
-  .time {
-    flex: 1 1;
-    color: #a8a8a8;
-    text-align: right;
-  }
-  .text {
-    font-size: .7rem;
-    line-height: 1.1rem;
-  }
+	display: flex;
+	flex-flow: row;
+	padding: 0.4rem 0;
+	.avatar {
+		width: 1.6rem;
+		height: 1.6rem;
+		flex: 0 0 1.6rem;
+		border-radius: 100%;
+		background: #ddd;
+		img {
+			width: 100%;
+			height: 100%;
+			border-radius: 100%;
+		}
+	}
+	.wrapper {
+		width: 100%;
+		margin-left: 0.4rem;
+		display: flex;
+		flex-direction: column;
+	}
+	.info {
+		width: 100%;
+		display: flex;
+		font-size: 0.65rem;
+		line-height: 0.8rem;
+		flex-direction: row;
+	}
+	.name {
+		flex: 1 1;
+		font-weight: 600;
+	}
+	.time {
+		flex: 1 1;
+		color: #a8a8a8;
+		text-align: right;
+	}
+	.text {
+		font-size: 0.7rem;
+		line-height: 1.1rem;
+	}
 }
 </style>

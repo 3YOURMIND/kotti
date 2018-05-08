@@ -33,22 +33,8 @@ their presence.
 
 </template>
 
-
-<script>
-import Sidebar from '~/components/Sidebar.vue'
-
-export default {
-  name: 'Index',
-  components: {
-    Sidebar
-  }
+<style lang="scss" scoped>
+.content {
+	padding-top: 4rem;
 }
-</script>
-
-<style scoped lang="scss">
-.container {
-  min-height: 100vh;
-  display: flex;
-}
-
 </style>

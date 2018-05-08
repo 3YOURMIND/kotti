@@ -1,4 +1,3 @@
-// Yoda Button Styles
 button {
   border-radius: .1rem;
   border: 0;
@@ -7,7 +6,7 @@ button {
   text-transform: uppercase;
   padding: 0 1em;
   color: $primary-600;
-  background: $lightgrey-300;
+  background: $lightgray-300;
   line-height: 2em;
   font-weight: 600;
   &.tooltip::after {
@@ -60,15 +59,15 @@ button.danger {
 }
 
 button.icon {
-  padding: 0 .4rem;
-  i {
-    font-size: 1rem;
-  }
-}
-button.icon-only {
   i {
     font-size: 1rem;
     margin-right: .2rem;
+  }
+}
+button.icon-only {
+  padding: 0 .4rem;
+  i {
+    margin-right: 0;
   }
 }
 
@@ -80,4 +79,16 @@ button.disabled, button:disabled {
 button.bottom {
   min-width: 10rem;
   margin-top: $unit-8;
+}
+
+.button-group {
+  button {
+    border-radius: 0; 
+  }
+  button:first-of-type {
+    border-radius: .1rem 0 0 .1rem;
+  }
+  button:last-of-type {
+    border-radius: 0 .1rem .1rem 0;
+  }
 }

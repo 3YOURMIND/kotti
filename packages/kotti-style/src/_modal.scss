@@ -1,57 +1,70 @@
 // Modal Window with Vue Transation
 
 .modal-mask {
-  position: fixed;
-  z-index: $zindex-4;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .46);
-  transition: opacity .3s ease;
-  display: flex;
+	position: fixed;
+	z-index: $zindex-4;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.46);
+	transition: opacity 0.3s ease;
+	display: flex;
 }
 
 .modal-container {
-  align-self: center;
-  max-width: 48em;
-  width: 90%;
-  max-height: 90%;
-  margin: 0px auto;
-  padding: $unit-6;
-  background-color: #fff;
-  border-radius: .1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
-  display: flex;
-  flex-direction: column; 
+	align-self: center;
+	width: 90%;
+	max-height: 90%;
+	margin: 0px auto;
+	padding: $unit-6;
+	background-color: #fff;
+	border-radius: 0.1rem;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+	transition: all 0.3s ease;
+	display: flex;
+	flex-direction: column;
+}
+
+.modal-sm {
+	max-width: 24rem;
+}
+.modal-md {
+	max-width: 36rem;
+}
+.modal-lg {
+	max-width: 48rem;
+}
+.modal-xl {
+	max-width: 64rem;
 }
 
 .modal-header {
-  flex: 0 0 auto;
+	flex: 0 0 auto;
 }
 .modal-body {
-  overflow: auto;
-  flex: 1 1 auto;
+	overflow: auto;
+	flex: 1 1 auto;
 }
-.modal-header, .modal-body {
-  margin-bottom: .8rem;
+.modal-header,
+.modal-body {
+	margin-bottom: 0.8rem;
 }
 .modal-footer {
-  text-align: right;
-  flex: 0 0 auto;
+	text-align: right;
+	flex: 0 0 auto;
 }
 
 .modal-enter {
-  opacity: 0;
+	opacity: 0;
 }
 
 .modal-leave-active {
-  opacity: 0;
+	opacity: 0;
 }
 
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
 }

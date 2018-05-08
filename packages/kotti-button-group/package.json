@@ -1,0 +1,14 @@
+{
+	"name": "@3yourmind/kotti-button-group",
+	"version": "0.0.1",
+	"description": "...",
+	"main": "index.js",
+	"dependencies": {},
+	"author": "Junyu P.",
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/3YOURMIND/kotti"
+	},
+	"keywords": ["button", "kotti", "ui"]
+}

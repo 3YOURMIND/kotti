@@ -1,8 +1,18 @@
-# .prettierrc
-printWidth: 100
-parser: flow
-semi: true
-tabWidth: 2
-singleQuote: true
-spaceBeforeFunctionParen: true
-trailingComma: 'es5'
+{
+	"useTabs": true,
+	"tabWidth": 2,
+	"semi": true,
+	"singleQuote": true,
+	"trailingComma": "es5",
+	"proseWrap": "always",
+	"overrides": [
+    {
+      "files": ".prettierrc",
+      "options": { "parser": "json" }
+    },
+    {
+      "files": "*.md",
+      "options": { "parser": "markdown" }
+    }
+  ]
+}

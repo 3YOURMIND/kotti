@@ -6,7 +6,7 @@
 
 |Element|Basic Properties|UI Properties|
 |----|----|----|
-|**Paragraph Text**<br/>Used for long form text.|font-size: `14px`;<br/>color: `$darkgrey-300`;|line-height: `21px`; |
+|**Paragraph Text**<br/>Used for long form text.|font-size: `14px`;<br/>color: `$darkgray-300`;|line-height: `21px`; |
 |**Pargraph Margin**<br/>Margin between two paragraphs|--|margin-bottom: `16px`;|
 
 <div class="element-example">

@@ -1,80 +1,107 @@
 // Drawer with Vue Transition
 
 .drawer-mask {
-  position: fixed;
-  z-index: $zindex-4;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .5);
-  display: flex;
-  transition: opacity .5s ease;
+	position: fixed;
+	z-index: $zindex-4;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	transition: opacity 0.5s ease;
 }
 .drawer-handle {
-  display: block;
-  width: 1.5rem;
-  height: 1.5rem;
-  position: absolute;
-  line-height: 1.5rem;
-  top: 50%;
-  left: $unit-1;
-  color: $lightgrey-500;
-  margin-top: -.725rem;
-  &:hover {
-    cursor: pointer;
-    color: $primary-500;
-  }
+	display: block;
+	width: 1.5rem;
+	height: 1.5rem;
+	position: absolute;
+	line-height: 1.5rem;
+	top: 50%;
+	left: $unit-1;
+	color: $lightgray-500;
+	margin-top: -0.725rem;
+	&:hover {
+		cursor: pointer;
+		color: $primary-500;
+	}
 }
 
 .drawer-container {
-  width: 18.8rem;
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  padding: $unit-6;
-  padding-left: $unit-8;
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  transition: all .3s ease;
-  &.drawer-expand {
-    width: 50%;
-  }
+	width: 18.8rem;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	padding: $unit-6;
+	padding-left: $unit-8;
+	background-color: #fff;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	transition: all 0.3s ease;
+	&.drawer-expand {
+		width: 50%;
+	}
 }
 .drawer-container.drawer-wide {
-  width: 26.8rem;
-  &.drawer-expand {
-    width: 75%;
-  }
+	width: 26.8rem;
+	&.drawer-expand {
+		width: 75%;
+	}
 }
 .drawer-header {
-  flex: 0 0 auto;
+	flex: 0 0 auto;
 }
-.drawer-body{
-  margin-bottom: .8rem;
-  flex: 1 1 auto;
-  overflow-y: auto;
+.drawer-body {
+	margin-bottom: 0.8rem;
+	flex: 1 1 auto;
+	overflow-y: auto;
 }
 .drawer-footer {
-  align-self: flex-end;
-  width: 100%;
-  flex: 0 0 auto;
+	align-self: flex-end;
+	width: 100%;
+	flex: 0 0 auto;
 }
 
 .drawer-enter {
-  transition: opacity .5s;
-  opacity: 0;
+	transition: opacity 0.5s;
+	opacity: 0;
 }
 
 .drawer-leave-active {
-  opacity: 0;
+	opacity: 0;
 }
 
 .drawer-enter .drawer-container,
 .drawer-leave-active .drawer-container {
-  transform: translate(20em, 0);
+	transform: translate(20em, 0);
+}
+
+@media (max-width: $size-sm) {
+	.drawer-container,
+	.drawer-container.drawer-wide {
+		width: 100%;
+		height: 80%;
+		bottom: 0;
+		padding: $unit-4;
+		padding-top: $unit-8;
+		top: auto;
+		&.drawer-expand {
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.drawer-handle {
+		transform: rotate(90deg);
+		top: 0;
+		left: 50%;
+		margin-top: 0.2rem;
+		margin-left: -0.75rem;
+	}
+	.drawer-enter .drawer-container,
+	.drawer-leave-active .drawer-container {
+		transform: translate(0, 20rem);
+	}
 }

@@ -1,0 +1,90 @@
+.avatar {
+	background: $lightgray-400;
+	width: 2.4rem;
+	height: 2.4rem;
+	display: inline-flex;
+	position: relative;
+	border-radius: 100%;
+	border: 0.1rem solid #fff;
+
+	&:hover {
+		cursor: pointer;
+		border: 0.1rem solid $primary-600;
+	}
+}
+.avatar-img {
+	object-fit: cover;
+	border-radius: 100%;
+	width: 100%;
+}
+.avatar-group {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	.avatar {
+		@for $i from 1 through 10 {
+			&:nth-child(#{$i}) {
+				z-index: #{10 - $i};
+			}
+		}
+		margin-right: 0.2rem;
+	}
+	&.stack {
+		.avatar:not(:first-of-type) {
+			margin-left: -0.8rem;
+		}
+	}
+	.avatar.avatar-number {
+		margin-left: 0.2rem;
+		align-items: center;
+		background: $lightgray-400;
+		span {
+			width: 100%;
+			text-align: center;
+		}
+	}
+}
+
+.avatar--sm {
+	width: 1.6rem;
+	height: 1.6rem;
+}
+
+.avatar--selected {
+	background: #2c64cc;
+}
+.avatar-fallback {
+	.avatar-fallback__head {
+		top: 0.5rem;
+		left: 0.8rem;
+		width: 0.6rem;
+		height: 0.6rem;
+		position: absolute;
+		background: #fff;
+		border-radius: 100%;
+	}
+	.avatar-fallback__body {
+		top: 1.3rem;
+		left: 0.5rem;
+		width: 1.2rem;
+		height: 0.4rem;
+		position: absolute;
+		background: #fff;
+		border-radius: 50% 50% 0 0;
+	}
+}
+
+.avatar-fallback--small {
+	.avatar-fallback__head {
+		top: 0.3rem;
+		left: 0.5rem;
+		width: 0.4rem;
+		height: 0.4rem;
+	}
+	.avatar-fallback__body {
+		top: 0.8rem;
+		left: 0.3rem;
+		width: 0.8rem;
+		height: 0.3rem;
+	}
+}
