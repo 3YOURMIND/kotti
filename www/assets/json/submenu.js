@@ -77,7 +77,6 @@ const submenu = [
 			{
 				label: 'Tables',
 				to: 'tables',
-				isCSS: true,
 			},
 			{
 				label: 'Toaster',
