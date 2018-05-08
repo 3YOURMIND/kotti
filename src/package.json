@@ -1,8 +1,9 @@
 {
 	"name": "@3yourmind/kotti-ui",
-	"version": "0.0.1-beta.4",
+	"version": "0.0.1-beta.6",
 	"description": "Core UI Component",
-	"main": "index.js",
+	"main": "/dist/kotti-ui.min.js",
+	"style": "/dist/index.min.css",
 	"dependencies": {},
 	"author": "3YOURMIND GmbH",
 	"license": "MIT",

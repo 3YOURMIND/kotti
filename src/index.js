@@ -15,6 +15,7 @@ import KtRadio from '../packages/kotti-radio';
 import KtRow from '../packages/kotti-row';
 import ktRadioGroup from '../packages/kotti-radio-group';
 import KtSingleSelect from '../packages/kotti-single-select';
+import KtTable from '../packages/kotti-table';
 
 const components = [
 	KtAvatar,
@@ -34,6 +35,7 @@ const components = [
 	ktRadioGroup,
 	KtRow,
 	KtSingleSelect,
+	KtTable,
 ];
 
 const install = function(Vue, opts = {}) {
