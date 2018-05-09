@@ -9,3 +9,6 @@ export default {
 	name: 'KtButtonGroup',
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
