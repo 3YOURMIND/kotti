@@ -3,14 +3,16 @@
 		<label class="form-label" v-text="label" />
 		<div :class="inputGroupClass">
 			<span class="input-group-addon" v-text="addonText" />
-			<input class="form-input"
+			<input
+				class="form-input"
 				v-bind="$attrs"
 				:type="type"
+				:placeholder="placeholder"
+				:value="currentValue"
 				@input="handleInput"
 				@change="handleChange"
-				:placeholder="placeholder"
-				:value="currentValue" />
-			<i class="form-icon yoco" v-text="icon"/>
+			/>
+			<i class="form-icon yoco" v-text="icon" />
 		</div>
 	</div>
 </template>
@@ -20,7 +22,7 @@ export default {
 	name: 'KtInput',
 	data() {
 		return {
-			currentValue: this.value === undefined ? '' : this.value,
+			currentValue: this.value || '',
 		};
 	},
 	watch: {
@@ -87,3 +89,6 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
