@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import KtButton from '../../kotti-button';
-import KtButtonGroup from '../../kotti-button-group';
+import KtButton from '@3yourmind/kotti-button';
+import KtButtonGroup from '@3yourmind/kotti-button-group';
 
 export default {
 	name: 'KtInlineEdit',
