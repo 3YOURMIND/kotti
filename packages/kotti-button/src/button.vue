@@ -1,23 +1,38 @@
 <template>
-  <button :class="[type, objectClass]" @click="handleClick">
-    <i :class="loadingClass" v-if="loading"/>
-    <i class="yoco" v-text="icon" v-else></i>
-    <span><slot></slot></span>
-  </button>
+	<button :class="mainClasses" @click="handleClick">
+		<i v-if="loading" :class="loadingClass" />
+		<i v-else class="yoco" v-text="icon" />
+		<span>
+			<slot />
+		</span>
+	</button>
 </template>
 
 <script>
 export default {
 	name: 'KtButton',
 	props: {
-		type: '',
-		icon: '',
-		loading: Boolean,
+		type: {
+			type: String,
+			default: '',
+		},
+		icon: {
+			type: String,
+			default: '',
+		},
+		loading: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	computed: {
+		mainClasses() {
+			return [this.type, this.objectClass];
+		},
 		loadingClass() {
 			return {
-				'inline loading': true,
+				inline: true,
+				loading: true,
 				white: this.type === 'primary',
 			};
 		},
@@ -29,9 +44,9 @@ export default {
 		},
 	},
 	methods: {
-		handleClick(evt){
+		handleClick(evt) {
 			this.$emit('click', evt);
-		}
-	}
+		},
+	},
 };
 </script>
