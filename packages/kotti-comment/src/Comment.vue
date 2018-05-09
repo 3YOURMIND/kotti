@@ -1,33 +1,36 @@
 <template>
-  <kt-comment class="comment">
-    <div class="comment__avatar">
-      <img src="https://picsum.photos/200/200">
-    </div>
-    <div class="comment__wrapper">
-      <div class="comment__info">
-        <div class="info__name" v-text="name" />
-        <div class="info__time">2018-04-02 14:30</div>
-      </div>
-      <div class="comment__text" v-text="message">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis pulvinar est, sed tempus risus.
-      </div>
-      <div class="comment__action">
-        <div class="action__reply">
-          <i class="yoco">comment</i> Reply
-        </div>
-        <div class="action__more">
-          <i class="yoco">dots</i>
-          <div class="comment__options">
-            <a>Edit</a>
-            <a>Delete</a>
-          </div>
-        </div>
-      </div>
-      <div v-for="reply in replies" :key="reply.name">
-        <KtCommentReply :name="reply.name" :message="reply.message" />
-      </div>
-    </div>
-  </kt-comment>
+	<div class="comment">
+		<div class="comment__avatar">
+			<img src="https://picsum.photos/200/200">
+		</div>
+		<div class="comment__wrapper">
+			<div class="comment__info">
+				<div class="info__name" v-text="authorName" />
+				<div class="info__time">2018-04-02 14:30</div>
+			</div>
+			<div class="comment__text" v-text="message">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis pulvinar est, sed tempus risus.
+			</div>
+			<div class="comment__action">
+				<div class="action__reply">
+					<i class="yoco">comment</i> Reply
+				</div>
+				<div class="action__more">
+					<i class="yoco">dots</i>
+					<div class="comment__options">
+						<a>Edit</a>
+						<a>Delete</a>
+					</div>
+				</div>
+			</div>
+			<KtCommentReply
+				v-for="reply in replies"
+				:key="reply.name"
+				:name="reply.name"
+				:message="reply.message"
+			/>
+		</div>
+	</div>
 </template>
 
 
@@ -37,13 +40,19 @@ import KtCommentReply from './CommentReply.vue';
 export default {
 	name: 'KtComment',
 	props: {
-		name: '',
-		time: '',
-		message: '',
+		authorName: {
+			type: String,
+			default: '',
+		},
+		time: {
+			type: String,
+			default: '',
+		},
+		message: {
+			type: String,
+			default: '',
+		},
 		replies: Array,
-	},
-	components: {
-		KtCommentReply,
 	},
 	computed: {
 		styleObject() {

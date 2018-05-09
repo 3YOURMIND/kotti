@@ -1,5 +1,5 @@
 <template>
-  <kt-comment-reply class="comment-reply">
+  <div class="comment-reply">
     <div class="avatar">
       <img src="https://picsum.photos/200/200">
     </div>
@@ -20,7 +20,7 @@
         </div>
       </div> -->
     </div>
-  </kt-comment-reply>
+  </div>
 </template>
 
 <script>
