@@ -1,4 +1,3 @@
-// rollup.config.js
 import vue from 'rollup-plugin-vue';
 
 const inputPath = 'src/Banner.vue';
