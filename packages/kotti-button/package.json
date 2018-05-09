@@ -1,40 +1,42 @@
 {
-	"name": "@3yourmind/kotti-button",
-	"version": "0.0.1",
-	"description": "Button which is a simple base button component",
-	"main": "index.js",
 	"author": {
 		"email": "info@3yourmind.com",
 		"name": "3YOURMIND GmbH",
 		"url": "https://www.3yourmind.com/"
 	},
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"contributors": [
+		{
+			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
+			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
+			"url": "https://ostoc.github.io/"
+		}
+	],
+	"dependencies": {
+		"rollup": "^0.58.2",
+		"rollup-plugin-vue": "^3.0.0"
+	},
+	"description": "Button which is a simple base button component",
+	"homepage": "https://3yourmind.github.io/kotti/components/buttons",
+	"keywords": ["button", "kotti", "ui", "vue", "component"],
 	"license": "MIT",
+	"main": "dist/kotti-button.cjs.js",
+	"module": "dist/kotti-button.esm.js",
+	"name": "@3yourmind/kotti-button",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/3YOURMIND/kotti"
 	},
-	"bugs": {
-		"url": "https://github.com/3YOURMIND/kotti/issues"
-	},
-	"homepage": "https://3yourmind.github.io/kotti/buttons",
-	"keywords": ["button", "kotti", "ui", "vue", "component"],
-	"contributors": [
-		{
-			"name": "Kevin Peters",
-			"email": "kevinigeligeligel@gmail.com",
-			"url": "https://www.kevinpeters.net/"
-		},
-		{
-			"name": "Junyu Pu",
-			"email": "pujunyu@gmail.com",
-			"url": "https://ostoc.github.io/"
-		}
-	],
 	"scripts": {
 		"build": "rollup -c rollup.config.js"
 	},
-	"dependencies": {
-		"rollup": "^0.58.2",
-		"rollup-plugin-vue": "^3.0.0"
-	}
+	"sideEffects": false,
+	"version": "0.0.1"
 }

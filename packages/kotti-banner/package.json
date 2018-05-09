@@ -24,11 +24,12 @@
 		"rollup-plugin-vue": "^3.0.0"
 	},
 	"description": "Banner which is shown as kind of notification",
-	"homepage": "https://3yourmind.github.io/kotti/banners",
+	"files": ["dist"],
+	"homepage": "https://3yourmind.github.io/kotti/components/banners",
 	"keywords": ["banner", "kotti", "ui", "vue", "component"],
 	"license": "MIT",
-	"main": "index.js",
-	"module": "dist/kotti-avatar.esm.js",
+	"main": "dist/kotti-banner.cjs.js",
+	"module": "dist/kotti-banner.esm.js",
 	"name": "@3yourmind/kotti-banner",
 	"repository": {
 		"type": "git",
