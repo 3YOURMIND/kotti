@@ -1,22 +1,25 @@
 <template>
-<div class="h3-heading">
-	<h3>
-		<label v-text="text" />
-		<span v-if="type==='action'" @click="handleClick">
-			<i class="yoco" v-text="icon" /> {{actionText}}
-		</span>
-		<span v-if="type==='toggle'" @click="handleClick">
-			<i class="yoco" v-if="!toggleStatus">plus</i>
-			<i class="yoco" v-else>minus</i>
-			{{toggleTextRep}}
-		</span>
-	</h3>
-	<div v-if="toggleStatus && type==='toggle'">
-		<slot />
+	<div class="h3-heading">
+		<h3>
+			<label v-text="text" />
+			<span v-if="type==='action'" @click="handleClick">
+				<i class="yoco" v-text="icon" /> {{ actionText }}
+			</span>
+			<span v-if="type==='toggle'" @click="handleClick">
+				<i v-if="!toggleStatus" class="yoco">
+					plus
+				</i>
+				<i v-else class="yoco">
+					minus
+				</i>
+				{{ toggleTextRep }}
+			</span>
+		</h3>
+		<div v-if="toggleStatus && type === 'toggle'">
+			<slot />
+		</div>
 	</div>
-</div>
 </template>
-
 
 <script>
 export default {
@@ -68,3 +71,6 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
