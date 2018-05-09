@@ -11,7 +11,7 @@
             <i class="form-icon"></i>
           </label>
         </div></th>
-        <th v-for="column in columns" :key="column.key" v-text="column.label" 
+        <th v-for="column in columns" :key="column.key" v-text="column.label"
 				:class="columnClass(column.responsive)"
 				:style="columnStyle(column.width, column.align)"/>
 				<th v-if="actions" style="width:0"/>
@@ -25,7 +25,7 @@
           	<i class="yoco" v-else>chevron_right</i>
 					</div>
         </td>
-        
+
         <td v-if="!row.expand && selectable">
           <div class="form-group">
           <label class="form-checkbox">
@@ -34,18 +34,18 @@
           </label>
         </div>
         </td>
-        <td 
+        <td
         v-for="(value, key) in row"
         :key="value.index"
         v-text="value"
 				:class="tdColumnClass(key)"
 				:style="tdColumnStyle(key)"
-        v-if="!row.expand" 
+        v-if="!row.expand"
         />
 				<td :colspan="colSpanNumber" v-if="row.expand && expandRowIndex === index" >
           <slot name="expand" :row="row" />
 				</td>
-        
+
         <td  v-if="!row.expand && actions" >
 					<div class="table-actions">
           <slot name="actions"  :row="row" />
@@ -105,6 +105,9 @@ export default {
 			return _data;
 		},
 		colSpanNumber() {
+			if (!this.columns) {
+				return 0;
+			}
 			let _span = this.columns.length;
 			if (this.expandable) {
 				_span = _span + 1;
