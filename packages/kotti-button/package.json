@@ -3,8 +3,11 @@
 	"version": "0.0.1",
 	"description": "Button which is a simple base button component",
 	"main": "index.js",
-	"dependencies": {},
-	"author": "3YOURMIND GmbH",
+	"author": {
+		"email": "info@3yourmind.com",
+		"name": "3YOURMIND GmbH",
+		"url": "https://www.3yourmind.com/"
+	},
 	"license": "MIT",
 	"repository": {
 		"type": "git",
@@ -26,5 +29,12 @@
 			"email": "pujunyu@gmail.com",
 			"url": "https://ostoc.github.io/"
 		}
-	]
+	],
+	"scripts": {
+		"build": "rollup -c rollup.config.js"
+	},
+	"dependencies": {
+		"rollup": "^0.58.2",
+		"rollup-plugin-vue": "^3.0.0"
+	}
 }
