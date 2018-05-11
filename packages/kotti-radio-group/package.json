@@ -1,31 +1,43 @@
 {
-	"name": "@3yourmind/kotti-radio-group",
-	"version": "0.0.1",
-	"description":
-		"A component which is a label but also an input at the same time.",
-	"main": "index.js",
-	"dependencies": {},
-	"author": "3YOURMIND GmbH",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/3YOURMIND/kotti"
+	"author": {
+		"email": "info@3yourmind.com",
+		"name": "3YOURMIND GmbH",
+		"url": "https://www.3yourmind.com/"
 	},
 	"bugs": {
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
-	"homepage": "https://3yourmind.github.io/kotti/inline-edit",
-	"keywords": ["inline edit", "kotti", "ui", "vue", "component"],
 	"contributors": [
 		{
-			"name": "Kevin Peters",
 			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
 			"url": "https://www.kevinpeters.net/"
 		},
 		{
-			"name": "Junyu Pu",
 			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
 			"url": "https://ostoc.github.io/"
 		}
-	]
+	],
+	"dependencies": {
+		"rollup": "^0.58.2",
+		"rollup-plugin-vue": "^3.0.0"
+	},
+	"description": "Radio group component of kotti ui",
+	"files": ["dist"],
+	"homepage": "https://3yourmind.github.io/kotti/components/radios",
+	"keywords": ["radio", "group", "kotti", "ui", "vue", "component"],
+	"license": "MIT",
+	"main": "dist/kotti-radio-group.cjs.js",
+	"module": "dist/kotti-radio-group.esm.js",
+	"name": "@3yourmind/kotti-radio-group",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/3YOURMIND/kotti"
+	},
+	"scripts": {
+		"build": "rollup -c rollup.config.js"
+	},
+	"sideEffects": false,
+	"version": "0.0.1"
 }
