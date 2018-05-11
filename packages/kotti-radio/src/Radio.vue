@@ -1,16 +1,18 @@
 <template>
-    <label class="form-radio">
-    <input type="radio"
-    :name="name"
-    :value="label"
-    v-model="model"
-    @change="handleInput">
-    <i class="form-icon"></i>
-    <span>
-       <slot></slot>
-       <template v-if="!$slots.default">{{label}}</template>
-    </span>
-    </label>
+	<label class="form-radio">
+		<input
+			type="radio"
+			:name="name"
+			:value="label"
+			v-model="model"
+			@change="handleInput"
+		/>
+		<i class="form-icon" />
+		<span>
+			<slot />
+			<template v-if="!$slots.default">{{ label }}</template>
+		</span>
+	</label>
 </template>
 
 <script>
@@ -39,3 +41,6 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
