@@ -3,16 +3,28 @@
 		<div class="form-group">
 			<label class="form-label" v-text="label" />
 			<div class="has-icon-right">
-				<input class="form-input" v-model="selectedLabel" type="text"
-				  :placeholder="placeholder" :readonly="!filterable" @input="handleQueryChange"
-				  @focus="handleInputFocus" @keydown.esc.stop.prevent="visible = false">
+				<input
+					class="form-input"
+					v-model="selectedLabel"
+					type="text"
+					:placeholder="placeholder"
+					:readonly="!filterable"
+					@input="handleQueryChange"
+					@focus="handleInputFocus"
+					@keydown.esc.stop.prevent="visible = false"
+				/>
 				<i class="yoco form-icon" v-text="indicatorRep" />
-				<div class="form-options" v-if="visible">
+				<div v-if="visible" class="form-options">
 					<ul>
-						<li v-for="(option, index) in optionsRep" :key="index" @click="handleOptionClick(option)"
-						  v-text="option.label">
+						<li
+							v-for="(option, index) in optionsRep"
+							:key="index"
+							@click="handleOptionClick(option)"
+							v-text="option.label"
+						/>
+						<li class="form-options--empty" v-if="!optionsRep.length">
+							No result found
 						</li>
-						<li class="form-options--empty" v-if="!optionsRep.length">No result found</li>
 					</ul>
 				</div>
 			</div>
@@ -20,12 +32,9 @@
 	</div>
 </template>
 
-
-
-
 <script>
 import ClickOutside from './clickoutside';
-import KtInput from '../../kotti-input';
+import KtInput from '@3yourmind/kotti-input';
 
 export default {
 	name: 'KtSelect',
@@ -115,3 +124,6 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
