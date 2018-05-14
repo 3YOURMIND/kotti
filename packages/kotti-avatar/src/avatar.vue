@@ -38,6 +38,7 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		hoverable: Boolean,
 	},
 	data() {
 		return {
@@ -53,6 +54,7 @@ export default {
 				avatar: true,
 				'avatar--selected': this.selected,
 				'avatar--sm': this.small,
+				'avatar--hover': this.hoverable,
 				'tooltip tooltip-bottom': this.showTooltip,
 			};
 		},

@@ -9,6 +9,7 @@
   v-for="comment in comments"
   :key="comment.uuid"
   :uuid="comment.uuid"
+	:time="comment.time"
   :name="comment.name"
   :message="comment.message" :src="comment.src"
   :replies="comment.replies"/>
@@ -38,16 +39,20 @@ export default {
 					message:
 						'Marine Le Pen, a Fierce Campaigner, Heads to Finale in French Election',
 					src: 'https://picsum.photos/200',
+					time: '2018-03-20',
 					replies: [
 						{
 							uuid: '45051148-52c0-11e8-9c2d-fa7ae01bbebc',
 							name: 'Benni',
-							message: 'Join Bright Side Now!',
+							time: '2018-03-20',
+							message:
+								'Join Bright Side Now! Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
 							src: 'https://picsum.photos/100',
 						},
 						{
 							uuid: '4bf75e84-52c0-11e8-9c2d-fa7ae01bbebc',
 							name: 'Cooky',
+							time: '2018-03-20',
 							message: 'RE: Your trip to Montreal',
 							src: 'https://picsum.photos/120',
 						},
@@ -56,18 +61,21 @@ export default {
 				{
 					uuid: 'f682fa1a-52c1-11e8-9c2d-fa7ae01bbebc',
 					name: 'Anny Hetwood',
+					time: '2018-03-20',
 					message: 'Marine Le Pen Finale in French Election',
 					src: 'https://picsum.photos/100',
 					replies: [
 						{
 							uuid: 'f9e6e2d4-52c1-11e8-9c2d-fa7ae01bbebe',
 							name: 'Benni',
+							time: '2018-03-20',
 							message: 'Join Bright!',
 							src: 'https://picsum.photos/100',
 						},
 						{
 							uuid: '005e57aa-52c2-11e8-9c2d-fa7ae01bbebc',
 							name: 'Cooky',
+							time: '2018-03-20',
 							message: 'Your trip to Montreal is cool',
 							src: 'https://picsum.photos/120',
 						},
@@ -86,7 +94,6 @@ export default {
 	},
 	methods: {
 		handleCurrentUuid(value) {
-			console.log(value);
 			this.currentUuid = value;
 		},
 		handleReplyCloseClicked() {

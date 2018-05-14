@@ -9,9 +9,7 @@
         </div>
       </div>
 				<div class="comment-input__reply">
-					<div class="comment-input__avatar">
-						<img src="https://picsum.photos/200/200">
-					</div>
+					<KtAvatar class="comment-input__avatar" :src="src"/>
 					<div class="comment-input__input">
 						<textarea 
 						@focus="textFocused=true" 
@@ -22,7 +20,8 @@
 						</textarea>
 					</div>
 					<div class="comment-input__button">
-						<button class="text">post</button>
+						<button class="text"
+						@click="handlePostClick">post</button>
 					</div>
 					</div>
     </div>
@@ -30,10 +29,15 @@
 </template>
 
 <script>
+import KtAvatar from '../../kotti-avatar';
 export default {
 	name: 'KtCommentInput',
+	components: {
+		KtAvatar,
+	},
 	props: {
 		replyName: String,
+		src: String,
 	},
 	data() {
 		return {
@@ -48,6 +52,9 @@ export default {
 		},
 		handleReplyClose() {
 			this.$emit('replyCloseClicked');
+		},
+		handlePostClick() {
+			this.$emit('postClicked');
 		},
 	},
 };
