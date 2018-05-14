@@ -1,12 +1,12 @@
 <template>
-  <div class="form-group">
-  <label :class="switchClass">
-    <input type="checkbox" :checked="checkboxValue" @change="handleChange">
-    <i class="form-icon"></i>
-    <slot></slot>
-    <span v-text="switchMessage" v-if="!$slots.default"/>
-  </label>
-</div>
+	<div class="form-group">
+		<label :class="switchClass">
+			<input type="checkbox" :checked="checkboxValue" @change="handleChange" />
+			<i class="form-icon" />
+			<span v-if="!$slots.default" v-text="switchMessage" />
+			<slot />
+		</label>
+	</div>
 </template>
 
 <script>
@@ -14,10 +14,22 @@ export default {
 	name: 'KtRadioGroup',
 	props: {
 		label: [String, Number],
-		right: Boolean,
-		value: Boolean,
-		activeMessage: '',
-		inactiveMessage: '',
+		right: {
+			type: Boolean,
+			default: false,
+		},
+		value: {
+			type: Boolean,
+			default: false,
+		},
+		activeMessage: {
+			type: String,
+			default: '',
+		},
+		inactiveMessage: {
+			type: String,
+			default: '',
+		},
 	},
 	computed: {
 		switchClass() {
@@ -35,9 +47,11 @@ export default {
 	},
 	methods: {
 		handleChange(event) {
-			let val = event.target.checked;
-			this.$emit('input', val);
+			this.$emit('input', event.target.checked);
 		},
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

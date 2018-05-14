@@ -7,7 +7,6 @@ function validate(binding) {
 		);
 		return false;
 	}
-
 	return true;
 }
 
@@ -26,7 +25,6 @@ function isPopup(popupItem, elements) {
 			return false;
 		}
 	}
-
 	return false;
 }
 
@@ -36,8 +34,7 @@ function isServer(vNode) {
 		vNode.componentInstance.$isServer
 	);
 }
-
-exports = module.exports = {
+export default {
 	bind: function(el, binding, vNode) {
 		if (!validate(binding)) return;
 

@@ -1,47 +1,45 @@
-// rollup.config.js
 import vue from 'rollup-plugin-vue';
+
+const inputPath = 'src/avatar-group.vue';
+const filePrefix = 'kotti-avatar-group';
+const camelCasesPrefix = 'KottiAvatarGroup';
+const globals = {
+	KtAvatar: '@3yourmind/kotti-avatar',
+};
 
 export default {
 	external: ['@3yourmind/kotti-avatar'],
 	input: 'src/avatar-group.vue',
 	output: [
 		{
-			file: 'dist/kotti-avatar-group.cjs.js',
+			file: `dist/${filePrefix}.cjs.js`,
 			format: 'cjs',
-			globals: {
-				KtAvatar: '@3yourmind/kotti-avatar',
-			},
+			globals,
 			sourcemap: true,
 		},
 		{
-			file: 'dist/kotti-avatar-group.umd.js',
+			file: `dist/${filePrefix}.umd.js`,
 			format: 'umd',
-			globals: {
-				KtAvatar: '@3yourmind/kotti-avatar',
-			},
-			name: 'KottiAvatarGroup',
+			globals,
+			name: camelCasesPrefix,
 			sourcemap: true,
 		},
 		{
-			file: 'dist/kotti-avatar-group.amd.js',
+			file: `dist/${filePrefix}.amd.js`,
 			format: 'amd',
-			globals: {
-				KtAvatar: '@3yourmind/kotti-avatar',
-			},
+			globals,
 			sourcemap: true,
 		},
 		{
-			file: 'dist/kotti-avatar-group.esm.js',
+			file: `dist/${filePrefix}.esm.js`,
 			format: 'es',
-			globals: {
-				KtAvatar: '@3yourmind/kotti-avatar',
-			},
+			globals,
 			sourcemap: true,
 		},
 	],
 	plugins: [
 		vue({
-			css: 'dist/kotti-avatar-group.css',
+			css: `dist/${filePrefix}.css`,
 		}),
 	],
 };

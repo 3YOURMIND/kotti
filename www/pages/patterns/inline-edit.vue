@@ -1,9 +1,9 @@
 <template lang=md>
 
   # Inline Edit
-  
+
   <div class="element-example white">
-    <KtInlineEdit 
+    <KtInlineEdit
     label="Picture Title"
     placeholder="this holder"
     v-model="value1"
@@ -14,7 +14,7 @@
   </div>
 
   ```html
-  <KtInlineEdit 
+  <KtInlineEdit
     label="Picture Title"
     placeholder="this holder"
     v-model="value1"
@@ -22,7 +22,7 @@
     @dismiss="showAlert('Dismissed Function')"
     class="mb-16px"/>
   <img src="https://picsum.photos/800/200">
-  ```  
+  ```
 
   ## Usage
 
@@ -51,7 +51,9 @@
 
 
 <script>
-import KtInlineEdit from '../../../packages/kotti-inline-edit';
+import KtButton from '../../../packages/kotti-button/dist/kotti-button.esm';
+import KtButtonGroup from '../../../packages/kotti-button-group/dist/kotti-button-group.esm';
+import KtInlineEdit from '../../../packages/kotti-inline-edit/dist/kotti-inline-edit.esm';
 
 export default {
 	name: 'KtInlineEditDoc',

@@ -1,63 +1,85 @@
 <template>
-<div :class="{'x-scroll' : xScroll}">
-  <table>
-    <thead>
-      <tr>
-				<th v-if="expandable" style="width:48px"/>
-        <th v-if="selectable" style="width:48px">
-					<div class="form-group">
-          <label class="form-checkbox">
-            <input type="checkbox" v-model="selectedAll">
-            <i class="form-icon"></i>
-          </label>
-        </div></th>
-        <th v-for="column in columns" :key="column.key" v-text="column.label" 
-				:class="columnClass(column.responsive)"
-				:style="columnStyle(column.width, column.align)"/>
-				<th v-if="actions" style="width:0"/>
-      </tr>
-    </thead>
-    <tbody v-if="tableData">
-      <tr v-for="(row, index) in tableBodyData" :key="row.index" :class="trClass(index)">
-				<td v-if="expandable && !row.expand" class="c-hand" @click="toggleExpandRow(index)">
-					<div class="toggle">
-          	<i class="yoco" v-if="expandRowIndex - 1 === index">chevron_down</i>
-          	<i class="yoco" v-else>chevron_right</i>
-					</div>
-        </td>
-        
-        <td v-if="!row.expand && selectable">
-          <div class="form-group">
-          <label class="form-checkbox">
-            <input type="checkbox" :value="index" v-model="selectedRow">
-            <i class="form-icon"></i>
-          </label>
-        </div>
-        </td>
-        <td 
-        v-for="(value, key) in row"
-        :key="value.index"
-        v-text="value"
-				:class="tdColumnClass(key)"
-				:style="tdColumnStyle(key)"
-        v-if="!row.expand" 
-        />
-				<td :colspan="colSpanNumber" v-if="row.expand && expandRowIndex === index" >
-          <slot name="expand" :row="row" />
+	<div :class="{'x-scroll' : xScroll}">
+		<table>
+			<thead>
+				<tr>
+					<th v-if="expandable" style="width:48px" />
+					<th v-if="selectable" style="width:48px">
+						<div class="form-group">
+							<label class="form-checkbox">
+								<input type="checkbox" v-model="selectedAll" />
+								<i class="form-icon" />
+							</label>
+						</div>
+					</th>
+					<th
+						v-for="column in columns"
+						:key="column.key"
+						:class="columnClass(column.responsive)"
+						:style="columnStyle(column.width, column.align)"
+						v-text="column.label"
+					/>
+					<th v-if="actions" style="width:0" />
+				</tr>
+			</thead>
+			<tbody v-if="tableData">
+				<tr
+					v-for="(row, index) in tableBodyData"
+					:key="row.index"
+					:class="trClass(index)"
+				>
+					<td
+						v-if="expandable && !row.expand"
+						class="c-hand"
+						@click="toggleExpandRow(index)"
+					>
+						<div class="toggle">
+							<i class="yoco" v-if="expandRowIndex - 1 === index">
+								chevron_down
+							</i>
+							<i class="yoco" v-else>
+								chevron_right
+							</i>
+						</div>
+					</td>
+
+					<td v-if="!row.expand && selectable">
+						<div class="form-group">
+							<label class="form-checkbox">
+								<input type="checkbox" :value="index" v-model="selectedRow" />
+								<i class="form-icon" />
+							</label>
+						</div>
+					</td>
+					<td
+						v-if="!row.expand"
+						v-for="(value, key) in row"
+						:key="value.index"
+						v-text="value"
+						:class="tdColumnClass(key)"
+						:style="tdColumnStyle(key)"
+					/>
+					<td
+						v-if="row.expand && expandRowIndex === index"
+						:colspan="colSpanNumber"
+					>
+						<slot name="expand" :row="row" />
+					</td>
+
+					<td v-if="!row.expand && actions">
+						<div class="table-actions">
+							<slot name="actions" :row="row" />
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			<tbody v-else>
+				<td class="empty" :colspan="colSpanNumber">
+					No Table Data
 				</td>
-        
-        <td  v-if="!row.expand && actions" >
-					<div class="table-actions">
-          <slot name="actions"  :row="row" />
-					</div>
-        </td>
-      </tr>
-    </tbody>
-		<tbody v-else>
-			<td class="empty" :colspan="colSpanNumber">No Table Data</td>
-		</tbody>
-  </table>
-  </div>
+			</tbody>
+		</table>
+	</div>
 </template>
 
 <script>
@@ -105,6 +127,9 @@ export default {
 			return _data;
 		},
 		colSpanNumber() {
+			if (!this.columns) {
+				return 0;
+			}
 			let _span = this.columns.length;
 			if (this.expandable) {
 				_span = _span + 1;

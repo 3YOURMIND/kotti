@@ -1,8 +1,8 @@
 import vue from 'rollup-plugin-vue';
 
-const inputPath = 'src/Banner.vue';
-const filePrefix = 'kotti-banner';
-const camelCasesPrefix = 'KottiBanner';
+const inputPath = 'src/Navbar.vue';
+const filePrefix = 'kotti-navbar';
+const camelCasesPrefix = 'KottiNavbar';
 
 export default {
 	input: inputPath,

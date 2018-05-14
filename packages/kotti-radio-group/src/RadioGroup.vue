@@ -1,8 +1,8 @@
 <template>
-  <div class="form-group">
-  <label class="form-label" v-text="label"/>
-  <slot></slot>
-  </div>
+	<div class="form-group">
+		<label class="form-label" v-text="label" />
+		<slot />
+	</div>
 </template>
 
 <script>
@@ -13,3 +13,6 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

@@ -1,30 +1,43 @@
 {
-	"name": "@3yourmind/kotti-drawer",
-	"version": "0.0.1",
-	"description": "drawer",
-	"main": "index.js",
-	"dependencies": {},
-	"author": "3YOURMIND GmbH",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/3YOURMIND/kotti"
+	"author": {
+		"email": "info@3yourmind.com",
+		"name": "3YOURMIND GmbH",
+		"url": "https://www.3yourmind.com/"
 	},
 	"bugs": {
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
-	"homepage": "https://3yourmind.github.io/kotti/comments",
-	"keywords": ["drawer", "kotti", "ui", "vue", "component"],
 	"contributors": [
 		{
-			"name": "Kevin Peters",
 			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
 			"url": "https://www.kevinpeters.net/"
 		},
 		{
-			"name": "Junyu Pu",
 			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
 			"url": "https://ostoc.github.io/"
 		}
-	]
+	],
+	"dependencies": {
+		"rollup": "^0.58.2",
+		"rollup-plugin-vue": "^3.0.0"
+	},
+	"description": "Drawer component which can showcase user profile pictures",
+	"files": ["dist"],
+	"homepage": "https://3yourmind.github.io/kotti/components/drawer",
+	"keywords": ["drawer", "kotti", "ui", "vue", "component"],
+	"license": "MIT",
+	"main": "dist/kotti-drawer.cjs.js",
+	"module": "dist/kotti-drawer.esm.js",
+	"name": "@3yourmind/kotti-drawer",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/3YOURMIND/kotti"
+	},
+	"scripts": {
+		"build": "rollup -c rollup.config.js"
+	},
+	"sideEffects": false,
+	"version": "0.0.1"
 }

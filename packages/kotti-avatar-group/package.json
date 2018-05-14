@@ -26,11 +26,12 @@
 	},
 	"description":
 		"Avatar group component which shows grouped user profile pictures",
-	"homepage": "https://3yourmind.github.io/kotti/avatars",
+	"files": ["dist"],
+	"homepage": "https://3yourmind.github.io/kotti/components/avatars",
 	"keywords": ["avatar group", "kotti", "ui", "vue", "component"],
 	"license": "MIT",
-	"main": "index.js",
-	"module": "dist/kotti-avatar.esm.js",
+	"main": "dist/kotti-avatar-group.cjs.js",
+	"module": "dist/kotti-avatar-group.esm.js",
 	"name": "@3yourmind/kotti-avatar-group",
 	"repository": {
 		"type": "git",

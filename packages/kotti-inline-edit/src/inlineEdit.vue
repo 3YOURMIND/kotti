@@ -1,17 +1,21 @@
 <template>
 	<div :class="objectClass">
-		<label class="form-label" v-text="label"/>
-		<div class="default editable"
+		<label class="form-label" v-text="label" />
+		<div
 			v-if="!editMode"
-			@click="editMode=true" v-text="currentValue"/>
+			class="default editable"
+			@click="editMode=true"
+			v-text="currentValue"
+		/>
 		<div v-else>
-			<input type="text" 
-			class="form-input"
-			v-bind="$attrs"
-			@input="handleInput"
-			@change="handleChange"
-			:value="currentValue"
-			>
+			<input
+				type="text"
+				class="form-input"
+				v-bind="$attrs"
+				@input="handleInput"
+				@change="handleChange"
+				:value="currentValue"
+			/>
 			<KtButtonGroup class="edit-button">
 				<KtButton icon="close" @click="handleDismiss" />
 				<KtButton icon="check" @click="handleConfirm" />
@@ -21,11 +25,15 @@
 </template>
 
 <script>
-import KtButton from '../../kotti-button';
-import KtButtonGroup from '../../kotti-button-group';
+import KtButton from '@3yourmind/kotti-button';
+import KtButtonGroup from '@3yourmind/kotti-button-group';
 
 export default {
 	name: 'KtInlineEdit',
+	components: {
+		KtButton,
+		KtButtonGroup,
+	},
 	props: {
 		value: [String, Number],
 		label: {
@@ -37,27 +45,25 @@ export default {
 			default: '',
 		},
 	},
-	components: {
-		KtButton,
-		KtButtonGroup,
-	},
 	data() {
 		return {
 			editMode: false,
-			currentValue: this.value === undefined ? '' : this.value,
-			preValue: this.value === undefined ? '' : this.value,
+			currentValue: this.value || '',
+			preValue: this.value || '',
 		};
+	},
+	computed: {
+		objectClass() {
+			return {
+				'inline-edit': true,
+				'form-group': this.editMode,
+				'label-value': !this.editMode,
+			};
+		},
 	},
 	watch: {
 		value(val, oldValue) {
 			this.setCurrentValue(val);
-		},
-	},
-	computed: {
-		objectClass() {
-			let editModeClass = this.editMode ? 'form-group' : 'label-value';
-
-			return ['inline-edit', editModeClass];
 		},
 	},
 	methods: {

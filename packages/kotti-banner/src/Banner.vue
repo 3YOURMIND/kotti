@@ -29,11 +29,6 @@
 <script>
 export default {
 	name: 'KtBanner',
-	data() {
-		return {
-			isExpand: false,
-		};
-	},
 	props: {
 		isGrey: {
 			type: Boolean,
@@ -56,6 +51,11 @@ export default {
 			type: String,
 			default: 'Close',
 		},
+	},
+	data() {
+		return {
+			isExpand: false,
+		};
 	},
 	computed: {
 		bannerClass() {

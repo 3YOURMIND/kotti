@@ -1,13 +1,15 @@
 <template>
 	<nav :class="objectClass('navbar')">
 		<div :class="objectClass('navbar-wrapper')">
-			<div :class="['navbar-toggle', {'navbar-toggle--active':mobileMenuToggle}]"
-			  @click="mobileMenuToggle = !mobileMenuToggle">
+			<div
+				:class="['navbar-toggle', {'navbar-toggle--active':mobileMenuToggle}]"
+			  @click="mobileMenuToggle = !mobileMenuToggle"
+			>
 				<i class="yoco">burger</i>
 			</div>
 			<div class="navbar-header">
 				<div class="navbar-logo">
-					<img :src="src">
+					<img :src="src" />
 				</div>
 			</div>
 			<div class="navbar-body">
@@ -18,7 +20,7 @@
 							<span v-if="!narrow" v-text="item.label" />
 						</li>
 					</ul>
-					<slot name="navbar-menu" v-else/>
+					<slot v-else name="navbar-menu" />
 				</div>
 			</div>
 			<div :class="objectClass('navbar-footer')">
@@ -31,7 +33,7 @@
 							<i class="yoco" v-text="item.icon" /> {{item.label}}
 						</li>
 					</ul>
-					<slot name="navbar-menu" v-else/>
+					<slot v-else name="navbar-menu" />
 				</div>
 			</div>
 		</div>
@@ -56,9 +58,12 @@ export default {
 	},
 	methods: {
 		objectClass(className) {
-			let isNarrowClass = this.narrow ? `${className}--narrow` : '';
+			const isNarrowClass = this.narrow ? `${className}--narrow` : '';
 			return [className, isNarrowClass];
 		},
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

@@ -1,8 +1,8 @@
 import vue from 'rollup-plugin-vue';
 
-const inputPath = 'src/Banner.vue';
-const filePrefix = 'kotti-banner';
-const camelCasesPrefix = 'KottiBanner';
+const inputPath = 'src/RadioGroup.vue';
+const filePrefix = 'kotti-radio-group';
+const camelCasesPrefix = 'KottiRadioGroup';
 
 export default {
 	input: inputPath,

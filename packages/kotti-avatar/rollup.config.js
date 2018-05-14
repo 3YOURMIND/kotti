@@ -1,34 +1,37 @@
-// rollup.config.js
 import vue from 'rollup-plugin-vue';
 
+const inputPath = 'src/avatar.vue';
+const filePrefix = 'kotti-avatar';
+const camelCasesPrefix = 'KottiAvatar';
+
 export default {
-	input: 'src/avatar.vue',
+	input: inputPath,
 	output: [
 		{
-			file: 'dist/kotti-avatar.cjs.js',
+			file: `dist/${filePrefix}.cjs.js`,
 			format: 'cjs',
 			sourcemap: true,
 		},
 		{
-			name: 'KottiAvatar',
-			file: 'dist/kotti-avatar.umd.js',
+			name: camelCasesPrefix,
+			file: `dist/${filePrefix}.umd.js`,
 			format: 'umd',
 			sourcemap: true,
 		},
 		{
-			file: 'dist/kotti-avatar.amd.js',
+			file: `dist/${filePrefix}.amd.js`,
 			format: 'amd',
 			sourcemap: true,
 		},
 		{
-			file: 'dist/kotti-avatar.esm.js',
+			file: `dist/${filePrefix}.esm.js`,
 			format: 'es',
 			sourcemap: true,
 		},
 	],
 	plugins: [
 		vue({
-			css: 'dist/kotti-avatar.css',
+			css: `dist/${filePrefix}.css`,
 		}),
 	],
 };

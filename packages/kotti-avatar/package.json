@@ -25,10 +25,10 @@
 	},
 	"description": "Avatar component which can showcase user profile pictures",
 	"files": ["dist"],
-	"homepage": "https://3yourmind.github.io/kotti/avatars",
+	"homepage": "https://3yourmind.github.io/kotti/components/avatars",
 	"keywords": ["avatar", "kotti", "ui", "vue", "component"],
 	"license": "MIT",
-	"main": "index.js",
+	"main": "dist/kotti-avatar.cjs.js",
 	"module": "dist/kotti-avatar.esm.js",
 	"name": "@3yourmind/kotti-avatar",
 	"repository": {

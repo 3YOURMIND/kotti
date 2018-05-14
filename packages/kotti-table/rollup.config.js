@@ -1,34 +1,37 @@
-// rollup.config.js
 import vue from 'rollup-plugin-vue';
 
+const inputPath = 'src/Table.vue';
+const filePrefix = 'kotti-table';
+const camelCasesPrefix = 'KottiTable';
+
 export default {
-	input: 'src/Table.vue',
+	input: inputPath,
 	output: [
 		{
-			file: 'dist/kotti-table.cjs.js',
+			file: `dist/${filePrefix}.cjs.js`,
 			format: 'cjs',
 			sourcemap: true,
 		},
 		{
-			name: 'KottiTable',
-			file: 'dist/kotti-table.umd.js',
+			name: camelCasesPrefix,
+			file: `dist/${filePrefix}.umd.js`,
 			format: 'umd',
 			sourcemap: true,
 		},
 		{
-			file: 'dist/kotti-table.amd.js',
+			file: `dist/${filePrefix}.amd.js`,
 			format: 'amd',
 			sourcemap: true,
 		},
 		{
-			file: 'dist/kotti-table.esm.js',
+			file: `dist/${filePrefix}.esm.js`,
 			format: 'es',
 			sourcemap: true,
 		},
 	],
 	plugins: [
 		vue({
-			css: 'dist/kotti-table.css',
+			css: `dist/${filePrefix}.css`,
 		}),
 	],
 };

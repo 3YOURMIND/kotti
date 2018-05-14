@@ -1,19 +1,19 @@
 <template>
-<transition name="modal" mode="out-in">
-	<div class="modal-mask" @click.self="closeModal">
-		<div :class="modalClass"> 
-			<div class="modal-header">
-				<slot name="modal-header"/>
-			</div>
-			<div class="modal-body">
-				<slot name="modal-body"/>
-			</div>
-			<div class="modal-footer">
-				<slot name="modal-footer"/>
+	<transition name="modal" mode="out-in">
+		<div class="modal-mask" @click.self="closeModal">
+			<div :class="modalClass">
+				<div class="modal-header">
+					<slot name="modal-header" />
+				</div>
+				<div class="modal-body">
+					<slot name="modal-body" />
+				</div>
+				<div class="modal-footer">
+					<slot name="modal-footer" />
+				</div>
 			</div>
 		</div>
-	</div>
-</transition>
+	</transition>
 </template>
 
 <script>
@@ -44,3 +44,6 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

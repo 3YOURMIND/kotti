@@ -1,8 +1,6 @@
-import vue from 'rollup-plugin-vue';
-
-const inputPath = 'src/Banner.vue';
-const filePrefix = 'kotti-banner';
-const camelCasesPrefix = 'KottiBanner';
+const inputPath = 'src/Row.js';
+const filePrefix = 'kotti-row';
+const camelCasesPrefix = 'KottiRow';
 
 export default {
 	input: inputPath,
@@ -28,10 +26,5 @@ export default {
 			format: 'es',
 			sourcemap: true,
 		},
-	],
-	plugins: [
-		vue({
-			css: `dist/${filePrefix}.css`,
-		}),
 	],
 };
