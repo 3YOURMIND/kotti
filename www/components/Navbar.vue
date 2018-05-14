@@ -50,7 +50,7 @@ export default {
 				{
 					icon: 'support',
 					label: 'Patterns',
-					to: '/patterns/inline-edit',
+					to: '/patterns/forms',
 				},
 				{
 					icon: 'download',
