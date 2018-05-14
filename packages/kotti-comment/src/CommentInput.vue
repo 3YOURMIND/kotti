@@ -1,38 +1,44 @@
 <template>
-  <kt-comment-input class="comment-input">
+  <div class="comment-input">
     <div class="comment-input__wrapper" 
       :class="{'comment-input__wrapper--focus' : textFocused}">
-
-      <div class="comment-input__quote">
-        <div class="comment-quote__name">Reply to someone</div>
-        <div class="comment-quote__close">
+      <div class="comment-input__quote" v-if="replyName">
+        <div class="comment-quote__name">Reply to {{replyName}}</div>
+        <div class="comment-quote__close c-hand" @click="handleReplyClose">
           <i class="yoco">close</i>
         </div>
       </div>
-            <div class="comment-input__reply">
-              <div class="comment-input__avatar">
-                <img src="https://picsum.photos/200/200">
-              </div>
-              <div class="comment-input__input">
-                <textarea 
-                @focus="textFocused=true" 
-                @blur="textFocused=false"
-                @input="updateHeight"
-                ref="textarea"
-                >
-                </textarea>
-              </div>
-              <div class="comment-input__button">
-                <button class="text">post</button>
-              </div>
-              </div>
+				<div class="comment-input__reply">
+					<KtAvatar class="comment-input__avatar" :src="src"/>
+					<div class="comment-input__input">
+						<textarea 
+						@focus="textFocused=true" 
+						@blur="textFocused=false"
+						@input="updateHeight"
+						ref="textarea"
+						>
+						</textarea>
+					</div>
+					<div class="comment-input__button">
+						<button class="text"
+						@click="handlePostClick">post</button>
+					</div>
+					</div>
     </div>
-  </kt-comment-input>
+  </div>
 </template>
 
 <script>
+import KtAvatar from '../../kotti-avatar';
 export default {
 	name: 'KtCommentInput',
+	components: {
+		KtAvatar,
+	},
+	props: {
+		replyName: String,
+		src: String,
+	},
 	data() {
 		return {
 			textFocused: false,
@@ -44,74 +50,12 @@ export default {
 			var height = this.$refs.textarea.scrollHeight;
 			this.$refs.textarea.style.height = `${height}px`;
 		},
+		handleReplyClose() {
+			this.$emit('replyCloseClicked');
+		},
+		handlePostClick() {
+			this.$emit('postClicked');
+		},
 	},
 };
 </script>
-
-
-<style lang="scss" scoped>
-.comment-input {
-	display: flex;
-	flex-direction: row;
-	box-sizing: border-box;
-	bottom: 0;
-	background: #f8f8f8;
-}
-.comment-input__wrapper {
-	display: flex;
-	width: 100%;
-	flex-direction: column;
-	margin: 0.8rem;
-	border: 1px solid #dbdbdb;
-	background: #fff;
-	border-radius: 0.1rem;
-	&--focus {
-		border: 1px solid #bbb;
-	}
-}
-.comment-input__reply {
-	display: flex;
-	width: 100%;
-	padding: 0.4rem;
-	align-items: center;
-}
-.comment-input__quote {
-	background: #f8f8f8;
-	color: #a8a8a8;
-	width: 100%;
-	padding: 0.4rem;
-	display: flex;
-}
-.comment-quote__name {
-	flex: 1 1;
-}
-.comment-input__avatar {
-	width: 2rem;
-	height: 2rem;
-	border-radius: 100%;
-	flex: 0 0 2rem;
-	img {
-		border-radius: 100%;
-		height: 100%;
-		width: 100%;
-	}
-}
-.comment-input__input {
-	flex: 1 1;
-	textarea {
-		resize: none;
-		width: 100%;
-		padding: 0.4rem 0.8rem;
-		border: 0;
-		line-height: 1rem;
-		height: 1.6rem;
-		&:focus {
-			outline: none;
-		}
-	}
-}
-.comment-input__button {
-	flex: 0 0;
-	line-height: 2rem;
-}
-</style>

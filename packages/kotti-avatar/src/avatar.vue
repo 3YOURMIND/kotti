@@ -38,6 +38,7 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		hoverable: Boolean,
 	},
 	data() {
 		return {
@@ -53,6 +54,7 @@ export default {
 				avatar: true,
 				'avatar--selected': this.selected,
 				'avatar--sm': this.small,
+				'avatar--hover': this.hoverable,
 				'tooltip tooltip-bottom': this.showTooltip,
 			};
 		},
@@ -73,8 +75,3 @@ export default {
 	},
 };
 </script>
-
-<style lang="scss" scoped>
-@import '../kotti-style/src/_variables.scss';
-@import '../kotti-style/src/_avatar.scss';
-</style>

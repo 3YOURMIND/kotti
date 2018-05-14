@@ -6,6 +6,7 @@
 			:key="index"
 			:name="item.name"
 			:src="item.src"
+			:hoverable="hoverable"
 			:selected="item.selected"
 			:small="item.small"
 			:showTooltip="showTooltip"
@@ -38,6 +39,7 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		hoverable: Boolean,
 	},
 	computed: {
 		avatarGroupClasses() {

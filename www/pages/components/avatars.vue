@@ -8,12 +8,14 @@ Avatar is a round object to help identify the user information.
 <div class="element-example">
 	<KtAvatar
 		name="Jony O'Five"
+		hoverable
 		src="https://picsum.photos/200"
 		:showTooltip="true"
 		class="mr-16px"
 	/>
 	<KtAvatar
 		name="Jony O'Five"
+		hoverable
 		:selected="true"
 		class="mr-16px"
 	/>
@@ -32,6 +34,7 @@ Set `small` to `true` for smaller avatar.
 ```html
 	<KtAvatar
 		name="Jony O'Five"
+		hoverable
 		src="https://picsum.photos/200"
 		:showTooltip="true"
 	/>
@@ -54,6 +57,7 @@ Set `small` to `true` for smaller avatar.
 		:items="avatarData"
 		:showItems="4"
 		:showTooltip="true"
+		hoverable
 	/>
 </div>
 
@@ -80,6 +84,7 @@ const avatarData = [
   <KtAvatarGroup
 		:items="avatarData"
 		:showItems="4"
+		hoverable
 		:isStack="true"
 	/>
 	<KtAvatarGroup
@@ -111,6 +116,7 @@ You can control how many avatar items you need to show when `showItems` are sett
 |src|avatar image src|`string`|-|-|
 |selected|avatar selecte status|`boolean`|-|`false`|
 |small|set avatar to small size|`boolean`|-|`false`|
+|hoverable|add hover effects to avatar|`boolean`|-|`false`|
 |showTooltip|show avatar name in tooltip|`boolean`|-|`false`|
 
 ### Avatar Group Attributes
@@ -125,8 +131,8 @@ You can control how many avatar items you need to show when `showItems` are sett
 </template>
 
 <script>
-import KtAvatar from '../../../packages/kotti-avatar';
-import KtAvatarGroup from '../../../packages/kotti-avatar-group';
+import KtAvatar from '../../../packages/kotti-avatar/src/avatar.vue';
+import KtAvatarGroup from '../../../packages/kotti-avatar-group/src/avatar-group.vue';
 
 export default {
 	name: 'Avatar',

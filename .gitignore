@@ -17,3 +17,5 @@ gh-pages
 
 packages/kotti-style/lib/index.css
 packages/kotti-style/lib/index.min.css
+
+.DS_Store
