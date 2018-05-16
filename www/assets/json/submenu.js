@@ -45,10 +45,6 @@ const submenu = [
 				to: 'buttons',
 			},
 			{
-				label: 'Comments',
-				to: 'comments',
-			},
-			{
 				label: 'Drawers',
 				to: 'drawer',
 			},

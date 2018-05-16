@@ -1,5 +1,6 @@
 <template>
 	<div class="form-group">
+		<label class="form-label" v-text="label" />
 		<label :class="switchClass">
 			<input type="checkbox" :checked="checkboxValue" @change="handleChange" />
 			<i class="form-icon" />
