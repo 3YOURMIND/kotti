@@ -6,18 +6,13 @@
 	"license": "MIT",
 	"scripts": {
 		"doc": "nuxt -c build/nuxt.config.js",
-		"doc:build": "nuxt build",
-		"doc:start": "nuxt start",
 		"doc:generate": "nuxt generate -c build/nuxt.config.js",
 		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate -c build/nuxt.config.js",
 		"doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
-		"build:ui":
+		"build:kotti":
 			"rm src/dist/* && NODE_ENV=production webpack --config build/component.js --progress",
-		"build:style": "cd packages/kotti-style && yarn gulp build",
-		"deploy":
-			"node -v && nuxt generate && build-storybook -c .storybook -o dist/storybook",
-		"deploy:cleanbuild":
-			"rm -r dist && nuxt generate && build-storybook -c .storybook -o dist/storybook",
+		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
+		"watch:style": "yarn gulp watch --gulpfile ./build/gulpstyle.js",
 		"precommit": "lint-staged"
 	},
 	"lint-staged": {

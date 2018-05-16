@@ -6,11 +6,11 @@ const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 
 const paths = {
-	source: './src/*.scss',
+	source: '../packages/kotti-style/src/*.scss',
 };
 
 gulp.task('watch', function() {
-	gulp.watch('./**/*.scss', ['build']);
+	gulp.watch('../packages/kotti-style/src/**/*.scss', ['build']);
 });
 
 gulp.task('build', function() {
@@ -21,14 +21,13 @@ gulp.task('build', function() {
 		)
 		.pipe(autoprefixer())
 		.pipe(csscomb())
-		.pipe(gulp.dest('./dist'))
 		.pipe(cleancss())
 		.pipe(
 			rename({
 				suffix: '.min',
 			})
 		)
-		.pipe(gulp.dest('./dist'));
+		.pipe(gulp.dest('../packages/kotti-style/dist'));
 });
 
 gulp.task('default', ['build']);

@@ -36,7 +36,7 @@ Kotti Design System includes:
 ## Folder Structure
 
 ```bash
-.kotti
+kotti
 |-- www // nuxt.js managed design guideline & usage documentation
      |-- packages.json
      |-- nuxt.js
@@ -48,8 +48,6 @@ Kotti Design System includes:
           |-- package.json
           |-- index.js
           |-- README.md
-          |-- USAGE.md // usage example doc can be auto generated
-|-- storybook // storybook playground for UI components
 package.json
 README.md
 ```
@@ -57,12 +55,11 @@ README.md
 ## Build Setup
 
 ```bash
-$ yarn global add bolt
-$ bolt install
-$ yarn run packages:build
-$ yarn run doc
+# build pacakges
+$ yarn run build:kotti
 
 # serve with hot reload at localhost:3000
+$ yarn run build:style
 $ yarn run doc
 
 # build for production and launch server

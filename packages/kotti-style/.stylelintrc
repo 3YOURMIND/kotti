@@ -1,7 +1,0 @@
-{
-  "extends": "stylelint-config-recommended-scss",
-  "rules": {
-    "block-no-empty": null,
-    "unit-whitelist": ["em", "rem", "s", "vh", "%", "px", "deg", "ms"]
-  }
-}

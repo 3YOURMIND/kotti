@@ -20,12 +20,16 @@ $ yarn add @3yourmind/kotti-style
 
 Kotti-style uses Gulp for compiling CSS. First you need to install dependences.
 
+```
+$ yarn install
+```
+
 All available Gulp tasks:
 
 * `yarn gulp build` - compile Sass to CSS and minify files (default)
 * `yarn gulp watch` - watch file changes and re-compile CSS files
 
-The compiled CSS file located in `/lib` directory.
+The compiled CSS file located in `/dist` directory.
 
 ## Import Kotti Style
 
