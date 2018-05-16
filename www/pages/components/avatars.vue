@@ -131,8 +131,8 @@ You can control how many avatar items you need to show when `showItems` are sett
 </template>
 
 <script>
-import KtAvatar from '../../../packages/kotti-avatar/src/avatar.vue';
-import KtAvatarGroup from '../../../packages/kotti-avatar-group/src/avatar-group.vue';
+import KtAvatar from '../../../packages/kotti-avatar/';
+import KtAvatarGroup from '../../../packages/kotti-avatar-group/';
 
 export default {
 	name: 'Avatar',

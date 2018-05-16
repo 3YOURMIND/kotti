@@ -1,4 +1,4 @@
-import KtAvatarGroup from './src/avatar-group';
+import KtAvatarGroup from './src/AvatarGroup';
 
 KtAvatarGroup.install = function(Vue) {
 	Vue.component(KtAvatarGroup.name, KtAvatarGroup);

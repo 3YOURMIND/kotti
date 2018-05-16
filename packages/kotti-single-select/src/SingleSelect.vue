@@ -35,7 +35,7 @@
 
 <script>
 import ClickOutside from './clickoutside';
-import KtInput from '@3yourmind/kotti-input';
+import KtInput from '../../kotti-input';
 
 export default {
 	name: 'KtSelect',

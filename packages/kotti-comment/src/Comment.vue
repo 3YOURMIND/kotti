@@ -50,7 +50,7 @@
 import KtAvatar from '../../kotti-avatar';
 import KtCommentReply from './CommentReply.vue';
 import KtButton from '../../kotti-button';
-import KtButtonGroup from '../../kotti-button-group/src/button-group.vue';
+import KtButtonGroup from '../../kotti-button-group/';
 
 export default {
 	name: 'KtComment',

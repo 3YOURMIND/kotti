@@ -1,4 +1,4 @@
-import KtButtonGroup from './src/button-group';
+import KtButtonGroup from './src/ButtonGroup';
 
 KtButtonGroup.install = function(Vue) {
 	Vue.component(KtButtonGroup.name, KtButtonGroup);

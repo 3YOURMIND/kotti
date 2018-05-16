@@ -51,9 +51,9 @@
 
 
 <script>
-import KtButton from '../../../packages/kotti-button/dist/kotti-button.esm';
-import KtButtonGroup from '../../../packages/kotti-button-group/dist/kotti-button-group.esm';
-import KtInlineEdit from '../../../packages/kotti-inline-edit/dist/kotti-inline-edit.esm';
+import KtButton from '../../../packages/kotti-button/';
+import KtButtonGroup from '../../../packages/kotti-button-group/';
+import KtInlineEdit from '../../../packages/kotti-inline-edit/';
 
 export default {
 	name: 'KtInlineEditDoc',
