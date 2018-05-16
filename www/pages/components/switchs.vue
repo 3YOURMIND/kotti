@@ -26,7 +26,7 @@ Default slot is for customize template.
 	<h2>Hello World</h2>
 </div>
 ```
-## Switch Indication Message
+## Indicate Message
 
 <div class="element-example">
   <KtSwitch v-model="checkbox2"

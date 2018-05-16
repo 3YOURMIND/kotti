@@ -58,6 +58,7 @@
 	box-shadow: 0 0 1px #dbdbdb, 0 2px 5px rgba(0, 0, 0, 0.26);
 	border-radius: 0.1rem;
 	padding: 0.4rem 0;
+	z-index: $zindex-4;
 	ul {
 		margin: 0;
 	}
@@ -66,9 +67,15 @@
 		line-height: 1.2rem;
 		padding: 0.2rem 0.4rem;
 		list-style: none;
-		&.form-options--empty {
+		&.form-option--disabled {
+			color: $lightgray-500;
+			&:hover {
+				cursor: not-allowed;
+			}
+		}
+		&.form-option--empty {
 			text-align: center;
-			color: #a8a8a8;
+			color: $lightgray-500;
 			&:hover {
 				cursor: default;
 				background: transparent;

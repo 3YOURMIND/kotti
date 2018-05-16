@@ -19,10 +19,11 @@
 						<li
 							v-for="(option, index) in optionsRep"
 							:key="index"
+							:class="optionClass(option)"
 							@click="handleOptionClick(option)"
 							v-text="option.label"
 						/>
-						<li class="form-options--empty" v-if="!optionsRep.length">
+						<li class="form-option--empty" v-if="!optionsRep.length">
 							No result found
 						</li>
 					</ul>
@@ -42,14 +43,12 @@ export default {
 		KtInput,
 	},
 	props: {
-		label: {
-			type: String,
-			default: '',
-		},
+		label: String,
 		filterable: Boolean,
 		placeholder: String,
 		value: [String, Number],
 		options: Array,
+		allowEmpty: Boolean,
 	},
 	data() {
 		return {
@@ -82,21 +81,44 @@ export default {
 		},
 	},
 	methods: {
+		optionClass(option) {
+			let _disableClass = false;
+			if (option.value === null && this.allowEmpty) {
+				_disableClass = false;
+			}
+			if (option.value === null && !this.allowEmpty) {
+				_disableClass = true;
+			}
+			if (option.disabled) {
+				_disableClass = true;
+			}
+			return {
+				'form-option--disabled': _disableClass,
+			};
+		},
 		handleOptionClick(option) {
-			this.selectedLabel = option.label;
-			this.setValue(this.selectedLabel);
-			this.visible = false;
+			if (option.value === null && !this.allowEmpty) {
+				return;
+			}
+			if (!option.disabled) {
+				this.selectedLabel = option.label;
+				this.setValue(this.selectedLabel);
+				this.visible = false;
+			}
+			return;
 		},
 		handleQueryChange(evt) {
 			this.queryString = evt.target.value.toLowerCase();
 			this.queryString;
 			let results = [];
 			this.options.filter(item => {
-				if (
-					item.label.toLowerCase().includes(this.queryString) ||
-					item.value.toLowerCase().includes(this.queryString)
-				) {
-					results.push(item);
+				if (item.value !== null) {
+					if (
+						item.label.toLowerCase().includes(this.queryString) ||
+						item.value.toLowerCase().includes(this.queryString)
+					) {
+						results.push(item);
+					}
 				}
 			});
 			this.filterResults = results;
@@ -108,7 +130,7 @@ export default {
 			this.visible = true;
 		},
 		handleClickOutside() {
-			if (this.selectedLabel) {
+			if (this.selectedLabel || this.allowEmpty) {
 				this.visible = false;
 			}
 		},
@@ -124,6 +146,3 @@ export default {
 	},
 };
 </script>
-
-<style lang="scss" scoped>
-</style>
