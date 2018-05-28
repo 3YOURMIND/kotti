@@ -1,6 +1,6 @@
-# yoco
+# Yoco Icon
 
-Customised icons for Yoda.
+In house designed icons for [kotti design system](https://3yourmind.github.io/kotti/).
 
 ## Get yoco
 
@@ -15,13 +15,7 @@ $ npm install @3yourmind/yoco
 $ yarn add @3yourmind/yoco
 ```
 
-**Using Github**
-
-Download latest version from Github and unzip in your project.
-
-* [Download v0.0.2-beta.4](https://github.com/3YOURMIND/yoco/releases/tag/v0.0.2-beta.4)
-
-## Add yoco.css to your project
+## Add Yoco Icon to your project
 
 **With module bundler**
 ```bash
@@ -44,7 +38,7 @@ Yoco use ligatures feature, which allows rendering of an icon glyph simply by us
 
 [Icon Preview](https://3yourmind.github.io/yoco/)
 
-[Yoco Icon tools](https://3yourmind.github.io/kotti/icons/)
+[Yoco Icon tools](https://3yourmind.github.io/kotti/foundations/icons)
 
 ## Generate font file
 
