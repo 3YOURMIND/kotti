@@ -3,6 +3,9 @@
   "version": "0.0.3",
   "description": "A icon font library which ready to use and already in 3YOURMIND",
   "main": "dist/yoco-icon.min.css",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "gulp build",
     "gh-pages": "push-dir --dir=src --branch=gh-pages"
