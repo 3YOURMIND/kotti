@@ -1,11 +1,11 @@
 {
 	"name": "@3yourmind/kotti-style",
-	"version": "0.0.2",
+	"version": "0.0.3-beta.2",
 	"description":
 		"Kotti style repository which includes all styles of the kotti component library.",
 	"main": "./dist/index.min.css",
 	"style": "./dist/index.min.css",
-	"files": ["lib", "src"],
+	"files": ["dist", "src"],
 	"scripts": {
 		"build": "gulp build"
 	},
@@ -20,7 +20,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"homepage": "https://3yourmind.github.io/kotti/",
-	"dependencies": {
+	"devDependencies": {
 		"gulp": "latest",
 		"gulp-autoprefixer": "latest",
 		"gulp-clean-css": "^3.7.0",
