@@ -1,10 +1,5 @@
 node_modules/
-.*
-!.csscomb.json
-!.gitignore
-!.gitattributes
-!.hound.yml
-!.scss-lint.yml
 yarn-error.log
 .DS_Store
 dist/
+gh-pages/
