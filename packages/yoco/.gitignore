@@ -6,3 +6,5 @@ node_modules/
 !.hound.yml
 !.scss-lint.yml
 yarn-error.log
+.DS_Store
+dist/
