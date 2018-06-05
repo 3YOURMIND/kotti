@@ -95,10 +95,13 @@
         position: relative;
         text-align: center;
         transition: ease-in .22s width;
+        border-radius: 4px;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.1);
       }
 
       .input-wrapper:focus-within {
         width: 65%;
+        box-shadow: 0 0 0 1px rgba(44, 100, 204, 1), 0 4px 16px rgba(0, 0, 0, 0.1);
         transition: ease-out .22s width;
       }
 
@@ -131,16 +134,14 @@
         width: 100%;
         height: 56px;
         line-height: 2em;
-        border-radius: 4px;
+        border-radius: .4rem;
         border: 0;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.1);
         padding: .8rem 40px;
         font-size: 16px;
       }
 
       input:focus {
         outline: none;
-        box-shadow: 0 0 0 1px rgba(44, 100, 204, 1), 0 4px 16px rgba(0, 0, 0, 0.1);
 
       }
 
@@ -296,7 +297,7 @@
           return this.iconString;
         },
         searchResults() {
-          let results = iconStrings.filter(result => result.includes(this.serachString))
+          let results = iconStrings.filter(result => result.includes(this.serachString.toLowerCase()))
           if (results.length === 1) {
             this.previewIcon = results[0];
           }
