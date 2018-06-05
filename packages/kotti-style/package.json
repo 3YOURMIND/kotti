@@ -1,6 +1,6 @@
 {
 	"name": "@3yourmind/kotti-style",
-	"version": "0.0.3-beta.2",
+	"version": "0.0.3-beta.3",
 	"description":
 		"Kotti style repository which includes all styles of the kotti component library.",
 	"main": "./dist/index.min.css",

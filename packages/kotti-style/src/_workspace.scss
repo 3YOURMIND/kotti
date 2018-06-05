@@ -7,6 +7,7 @@
 	position: relative;
 	min-height: 100vh;
 	display: flex;
+	flex-direction: column;
 	box-shadow: 1px 0 2px #ddd;
 	h3:not(:first-of-type) {
 		margin-top: $unit-8;
