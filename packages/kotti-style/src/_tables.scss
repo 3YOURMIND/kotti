@@ -5,6 +5,7 @@ table {
 	width: 100%;
 	position: relative;
 	hyphens: auto;
+
 	th {
 		border-bottom: $border-width solid $border-color;
 		color: $lightgray-500;
@@ -14,10 +15,12 @@ table {
 		padding: $unit-2 $unit-1;
 		text-transform: uppercase;
 	}
+
 	tr {
 		position: relative;
 		margin: 0;
 	}
+
 	td {
 		position: relative;
 		line-height: 1.2rem;
@@ -25,9 +28,6 @@ table {
 		border-bottom: 1px solid #dbdbdb;
 	}
 
-	&.no-header {
-		margin-top: -0.5em;
-	}
 	i {
 		font-size: 1rem !important;
 		color: $darkgray-300;
@@ -52,42 +52,53 @@ table {
 		right: 0.8rem;
 		float: right;
 		box-shadow: 0 0 1px #999;
+
 		i {
 			margin: 0 $unit-1;
 			color: $lightgray-500;
 		}
+
 		i:hover {
 			cursor: pointer;
 			color: $darkgray-500;
 		}
 	}
-	tr:hover {
-		.table-actions {
-			display: inline-flex;
-			justify-content: center;
-			background: #ffffff;
-		}
+
+	tr:hover .table-actions {
+		display: inline-flex;
+		justify-content: center;
+		background: #ffffff;
 	}
+
 	tr.selected {
 		background: #f8f8f8;
 	}
+
 	td.empty {
 		text-align: center;
 		color: $lightgray-500;
 	}
+
 	.form-group {
 		width: 32px;
 		line-height: 0;
+
 		.form-icon {
 			top: 0.2rem;
 		}
 	}
+
 	.form-checkbox {
 		margin: 0;
 		line-height: 1.2rem;
 		padding: 0 0.4rem;
 	}
+
+	&.no-header {
+		margin-top: -0.5em;
+	}
 }
+
 .x-scroll {
 	width: 100%;
 	height: 100%;

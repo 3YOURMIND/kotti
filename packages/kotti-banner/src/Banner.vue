@@ -55,26 +55,23 @@ export default {
 	data() {
 		return {
 			isExpand: false,
-		};
+		}
 	},
 	computed: {
 		bannerClass() {
 			return {
 				banner: true,
 				'banner-grey': this.isGrey,
-			};
+			}
 		},
 		expandable() {
-			return this.$slots.expand;
+			return this.$slots.expand
 		},
 	},
 	methods: {
 		handleClick(evt) {
-			this.$emit('click', evt);
+			this.$emit('click', evt)
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss">
-</style>

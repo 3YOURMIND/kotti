@@ -1,16 +1,16 @@
 <template>
-  <div class="d-flex responsive">
-    <Navbar/>
-    <Actionbar v-if="showActionbar"/>
-    <div class="workspace">
-      <nuxt class="content" />
-    </div>
-  </div>
+	<div class="d-flex responsive">
+		<Navbar/>
+		<Actionbar v-if="showActionbar"/>
+		<div class="workspace">
+			<nuxt class="content" />
+		</div>
+	</div>
 </template>
 
 <script>
-import Actionbar from '~/components/Actionbar.vue';
-import Navbar from '~/components/Navbar.vue';
+import Actionbar from '~/components/Actionbar.vue'
+import Navbar from '~/components/Navbar.vue'
 
 export default {
 	name: 'DefaultLayout',
@@ -20,10 +20,10 @@ export default {
 	},
 	computed: {
 		showActionbar() {
-			return this.$route.name === 'index' ? false : true;
+			return this.$route.name !== 'index'
 		},
 	},
-};
+}
 </script>
 
 <style>

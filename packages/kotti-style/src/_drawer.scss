@@ -11,6 +11,7 @@
 	display: flex;
 	transition: opacity 0.5s ease;
 }
+
 .drawer-handle {
 	display: block;
 	width: 1.5rem;
@@ -21,6 +22,7 @@
 	left: $unit-1;
 	color: $lightgray-500;
 	margin-top: -0.725rem;
+
 	&:hover {
 		cursor: pointer;
 		color: $primary-500;
@@ -41,25 +43,31 @@
 	flex-direction: column;
 	overflow-y: auto;
 	transition: all 0.3s ease;
+
 	&.drawer-expand {
 		width: 50%;
 	}
 }
+
 .drawer-container.drawer-wide {
 	width: 26.8rem;
+
 	&.drawer-expand {
 		width: 75%;
 	}
 }
+
 .drawer-header {
 	flex: 0 0 auto;
 }
+
 .drawer-body {
 	margin: 0 -0.8rem 0.8rem -0.8rem;
 	padding: 0 0.8rem;
 	flex: 1 1 auto;
 	overflow-y: auto;
 }
+
 .drawer-footer {
 	align-self: flex-end;
 	width: 100%;
@@ -89,11 +97,13 @@
 		padding: $unit-4;
 		padding-top: $unit-8;
 		top: auto;
+
 		&.drawer-expand {
 			width: 100%;
 			height: 100%;
 		}
 	}
+
 	.drawer-handle {
 		transform: rotate(90deg);
 		top: 0;
@@ -101,6 +111,7 @@
 		margin-top: 0.2rem;
 		margin-left: -0.75rem;
 	}
+
 	.drawer-enter .drawer-container,
 	.drawer-leave-active .drawer-container {
 		transform: translate(0, 20rem);

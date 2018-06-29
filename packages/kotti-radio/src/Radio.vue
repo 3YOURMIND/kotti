@@ -1,16 +1,16 @@
 <template>
 	<label class="form-radio">
 		<input
-			type="radio"
 			:name="name"
 			:value="label"
-			v-model="model"
 			@change="handleInput"
+			type="radio"
+			v-model="model"
 		/>
 		<i class="form-icon" />
 		<span>
-			<slot />
-			<template v-if="!$slots.default">{{ label }}</template>
+			<slot/>
+			<template v-if="!$slots.default" v-text="label"></template>
 		</span>
 	</label>
 </template>
@@ -19,28 +19,24 @@
 export default {
 	name: 'KtRadio',
 	props: {
+		label: [String, Number, Boolean],
 		name: [String, Number],
 		value: [String, Number, Boolean],
-		label: [String, Number, Boolean],
 	},
 	computed: {
 		model: {
 			get() {
-				return this.value;
+				return this.value
 			},
 			set(val) {
-				return;
+				return
 			},
 		},
 	},
 	methods: {
 		handleInput(event) {
-			let val = event.target.value;
-			this.$emit('input', val);
+			this.$emit('input', event.target.value)
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

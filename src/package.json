@@ -1,31 +1,37 @@
 {
-	"name": "@3yourmind/kotti-ui",
-	"version": "0.0.1-beta.6",
-	"description": "Core UI Component",
-	"main": "/dist/kotti-ui.min.js",
-	"style": "/dist/index.min.css",
-	"dependencies": {},
 	"author": "3YOURMIND GmbH",
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"contributors": [
+		{
+			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
+			"url": "https://ostoc.github.io/"
+		},
+		{
+			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
+			"url": "https://www.kevinpeters.net/"
+		}
+	],
+	"dependencies": {},
+	"description": "Core UI Component",
+	"homepage": "https://3yourmind.github.io/kotti/inline-edit",
+	"keywords": [
+		"inline edit",
+		"kotti",
+		"ui",
+		"vue",
+		"component"
+	],
 	"license": "MIT",
+	"main": "/dist/kotti-ui.min.js",
+	"name": "@3yourmind/kotti-ui",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/3YOURMIND/kotti"
 	},
-	"bugs": {
-		"url": "https://github.com/3YOURMIND/kotti/issues"
-	},
-	"homepage": "https://3yourmind.github.io/kotti/inline-edit",
-	"keywords": ["inline edit", "kotti", "ui", "vue", "component"],
-	"contributors": [
-		{
-			"name": "Junyu Pu",
-			"email": "pujunyu@gmail.com",
-			"url": "https://ostoc.github.io/"
-		},
-		{
-			"name": "Kevin Peters",
-			"email": "kevinigeligeligel@gmail.com",
-			"url": "https://www.kevinpeters.net/"
-		}
-	]
+	"style": "/dist/index.min.css",
+	"version": "0.0.1-beta.6"
 }

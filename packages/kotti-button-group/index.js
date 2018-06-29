@@ -1,7 +1,7 @@
-import KtButtonGroup from './src/ButtonGroup';
+import KtButtonGroup from './src/ButtonGroup'
 
 KtButtonGroup.install = function(Vue) {
-	Vue.component(KtButtonGroup.name, KtButtonGroup);
-};
+	Vue.component(KtButtonGroup.name, KtButtonGroup)
+}
 
-export default KtButtonGroup;
+export default KtButtonGroup

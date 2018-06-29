@@ -39,15 +39,18 @@ h3,
 	color: $primary-500;
 	padding-bottom: $unit-2;
 	border-bottom: 1px solid $lightgray-400;
+
 	span {
 		float: right;
 		font-weight: 500;
+
 		&:hover {
 			cursor: pointer;
 			font-weight: 600;
 			color: $primary-600;
 		}
 	}
+
 	i.yoco {
 		font-size: 1rem;
 	}
@@ -89,6 +92,7 @@ ol {
 	ol {
 		margin: $unit-4 0 $unit-4 $unit-4;
 	}
+
 	li {
 		margin-top: $unit-2;
 	}
@@ -98,6 +102,7 @@ dl {
 	dt {
 		font-weight: bold;
 	}
+
 	dd {
 		margin: $unit-2 0 $unit-4 0;
 	}
@@ -107,36 +112,44 @@ dl {
 	line-height: 1.5;
 	color: $darkgray-500;
 	position: relative;
+
 	label {
 		font-size: 0.6rem;
 		font-weight: 600;
 		color: $darkgray-300;
 		text-transform: uppercase;
 	}
+
 	.default {
 		font-size: $font-size;
 	}
+
 	.key {
 		font-size: 1.2rem;
 		font-weight: 600;
 	}
+
 	.addition {
 		font-size: 0.8rem;
 		font-weight: 600;
 	}
+
 	.action {
 		color: $primary-500;
 		position: absolute;
 		right: 0.2rem;
 		top: 50%;
 		margin-top: -0.5rem;
+
 		&:hover {
 			color: $primary-600;
 			cursor: pointer;
 		}
 	}
+
 	.editable {
 		padding: 0.1rem 0;
+
 		&:hover {
 			cursor: pointer;
 			background: $lightgray-300;

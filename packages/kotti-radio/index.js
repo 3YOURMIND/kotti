@@ -1,7 +1,7 @@
-import KtRadio from './src/Radio';
+import KtRadio from './src/Radio'
 
 KtRadio.install = function(Vue) {
-	Vue.component(KtRadio.name, KtRadio);
-};
+	Vue.component(KtRadio.name, KtRadio)
+}
 
-export default KtRadio;
+export default KtRadio

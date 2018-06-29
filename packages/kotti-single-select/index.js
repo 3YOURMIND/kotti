@@ -1,7 +1,7 @@
-import KtSingleSelect from './src/SingleSelect';
+import KtSingleSelect from './src/SingleSelect'
 
 KtSingleSelect.install = function(Vue) {
-	Vue.component(KtSingleSelect.name, KtSingleSelect);
-};
+	Vue.component(KtSingleSelect.name, KtSingleSelect)
+}
 
-export default KtSingleSelect;
+export default KtSingleSelect

@@ -10,10 +10,12 @@
 	position: relative;
 	outline: none;
 	-webkit-appearance: none;
+
 	&:focus {
 		@include control-shadow();
 		border-color: $primary-500;
 	}
+
 	&:invalid {
 		border: 1px solid $red-500;
 	}
@@ -36,6 +38,7 @@ textarea.form-input {
 		font-size: $font-size-sm;
 		padding: 0 $control-padding-x;
 		white-space: nowrap;
+
 		&.addon-sm {
 			font-size: $font-size-sm;
 			padding: $control-padding-y-sm $control-padding-x-sm;
@@ -65,15 +68,18 @@ textarea.form-input {
 			border-bottom-right-radius: 0;
 			border-top-right-radius: 0;
 		}
+
 		&:not(:first-child):not(:last-child) {
 			border-radius: 0;
 			margin-left: -$border-width;
 		}
+
 		&:last-child:not(:first-child) {
 			border-bottom-left-radius: 0;
 			border-top-left-radius: 0;
 			margin-left: -$border-width;
 		}
+
 		&:focus {
 			z-index: $zindex-0 + 1;
 		}

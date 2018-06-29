@@ -10,7 +10,7 @@ Avatar is a round object to help identify the user information.
 		name="Jony O'Five"
 		hoverable
 		src="https://picsum.photos/200"
-		:showTooltip="true"
+		showTooltip
 		class="mr-16px"
 	/>
 	<KtAvatar
@@ -21,42 +21,42 @@ Avatar is a round object to help identify the user information.
 	/>
 	<KtAvatar
 		name="Jony O'Five"
-		:small="true"
+		small
 		class="mr-16px"
 	/>
 </div>
 
 Avatar has `name` and image `src`. If no image is given,
-or image error occurs avatar will fallback to default.
+or image error occurs avatar will use a placeholder avatar.
 
-Set `small` to `true` for smaller avatar.
+Set `small` to make the avatar smaller.
 
 ```html
-	<KtAvatar
-		name="Jony O'Five"
-		hoverable
-		src="https://picsum.photos/200"
-		:showTooltip="true"
-	/>
-	<KtAvatar
-		name="Jony O'Five"
-		src="https://picsum.photos/200"
-		:selected="true"
-	/>
-	<KtAvatar
-		name="Jony O'Five"
-		src="https://picsum.photos/200"
-		:small="true"
-	/>
+<KtAvatar
+	name="Jony O'Five"
+	hoverable
+	src="https://picsum.photos/200"
+	showTooltip
+/>
+<KtAvatar
+	name="Jony O'Five"
+	src="https://picsum.photos/200"
+	selected
+/>
+<KtAvatar
+	name="Jony O'Five"
+	small
+	src="https://picsum.photos/200"
+/>
 ```
 
 ## Grouped
 
 <div class="element-example">
-  <KtAvatarGroup
+	<KtAvatarGroup
 		:items="avatarData"
 		:showItems="4"
-		:showTooltip="true"
+		showTooltip
 		hoverable
 	/>
 </div>
@@ -64,7 +64,7 @@ Set `small` to `true` for smaller avatar.
 Avatars can be grouped to avatar groups. Using `items` props to pass the `avatarData`.
 The example of the avatar data is shown here, which has same properities as avatar item:
 
-```javascript
+```js
 const avatarData = [
 	{
 		name: 'Justin',
@@ -81,28 +81,28 @@ const avatarData = [
 ];
 ```
 <div class="element-example">
-  <KtAvatarGroup
+	<KtAvatarGroup
 		:items="avatarData"
 		:showItems="4"
 		hoverable
-		:isStack="true"
+		isStack
 	/>
 	<KtAvatarGroup
 		:items="avatarData"
 		:showItems="2"
-		:isStack="true"
+		isStack
 	/>
 </div>
 
-Avatar group can be stacked by setting `isStack` to `true`.
-You can control how many avatar items you need to show when `showItems` are setted.
+Avatar group can be stacked by setting `isStack`.
+You can control how many avatar items are displayed with `showItems`.
 
 ```html
 <KtAvatarGroup
 	:items="avatarData"
-	:isStack="true"
+	isStack
 	:showItems="4"
-	:showTooltip="true"
+	showTooltip
 />
 ```
 
@@ -110,29 +110,28 @@ You can control how many avatar items you need to show when `showItems` are sett
 
 ### Avatar Attributes
 
-|Attribute|Description|Type|Accepted values|Default|
-|---|---|---|---|---|---|
-|name|avatar name|`string`|-|-|
-|src|avatar image src|`string`|-|-|
-|selected|avatar selecte status|`boolean`|-|`false`|
-|small|set avatar to small size|`boolean`|-|`false`|
-|hoverable|add hover effects to avatar|`boolean`|-|`false`|
-|showTooltip|show avatar name in tooltip|`boolean`|-|`false`|
+| Attribute     | Description                 | Type      | Accepted values | Default |
+|:--------------|:----------------------------|:----------|:----------------|:--------|
+| `hoverable`   | add hover effects to avatar | `Boolean` | —               | `false` |
+| `name`        | avatar name                 | `String`  | —               | —       |
+| `selected`    | avatar selecte status       | `Boolean` | —               | `false` |
+| `showTooltip` | show avatar name in tooltip | `Boolean` | —               | `false` |
+| `small`       | set avatar to small size    | `Boolean` | —               | `false` |
+| `src`         | avatar image                | `String`  | —               | —       |
 
 ### Avatar Group Attributes
 
-|Attribute|Description|Type|Accepted values|Default|
-|---|---|---|---|---|---|
-|items|avatar data array, each item has avatar attribute|`array`|-|-|
-|showItems|number of items to show|`number`|-|`2`|
-|isStack|stack avatars|`boolean`|-|`false`|
-|showTooltip|show avatar name in tooltip|`boolean`|-|`false`|
-
+| Attribute     | Description                                       | Type      | Accepted values | Default |
+|:--------------|:--------------------------------------------------|:----------|:----------------|:--------|
+| `isStack`     | stack avatars                                     | `Boolean` | —               | `false` |
+| `items`       | avatar data array, each item has avatar attribute | `Array`   | —               | —       |
+| `showItems`   | number of items to show                           | `Number`  | —               | `2`     |
+| `showTooltip` | show avatar name in tooltip                       | `Boolean` | —               | `false` |
 </template>
 
 <script>
-import KtAvatar from '../../../packages/kotti-avatar/';
-import KtAvatarGroup from '../../../packages/kotti-avatar-group/';
+import KtAvatar from '../../../packages/kotti-avatar'
+import KtAvatarGroup from '../../../packages/kotti-avatar-group'
 
 export default {
 	name: 'Avatar',
@@ -143,28 +142,13 @@ export default {
 	data() {
 		return {
 			avatarData: [
-				{
-					name: 'Justin',
-					src: 'https://picsum.photos/100',
-				},
-				{
-					name: 'Beoncye',
-					src: 'https://picsum.photos/200',
-				},
-				{
-					name: 'Simens',
-					src: 'https://picsum.photos/120',
-				},
-				{
-					name: 'Simens',
-					src: 'https://picsum.photos/120',
-				},
-				{
-					name: 'Simens',
-					src: 'https://picsum.photos/120',
-				},
+				{ name: 'Beoncye', src: 'https://picsum.photos/200' },
+				{ name: 'Justin', src: 'https://picsum.photos/100' },
+				{ name: 'Simens', src: 'https://picsum.photos/120' },
+				{ name: 'Simens', src: 'https://picsum.photos/120' },
+				{ name: 'Simens', src: 'https://picsum.photos/120' },
 			],
-		};
+		}
 	},
-};
+}
 </script>

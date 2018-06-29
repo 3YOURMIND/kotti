@@ -1,49 +1,32 @@
 <template lang="md">
-
 # Kotti-Style CSS Library
 
-Based on Kotti Design System, we created `Kotti-Style` CSS library which is customized and favored 
-CSS framework forked from [Spectre.css](https://picturepan2.github.io/spectre/index.html).
-
+The `kotti-style` CSS library, based on the Kotti Design System, is a highly customized
+fork of [Spectre.css](https://picturepan2.github.io/spectre/index.html).
 
 ## Installation
 
-**Intall from yarn**
+**yarn**: `yarn add @3yourmind/kotti-style`
 
-```sh
-yarn add @3yourmind/kotti-style
-```
+**npm**: `npm install @3yourmind/kotti-style`
 
-**Intall from npm**
-
-```sh
-npm install -D @3yourmind/kotti-style
-```
-
-**Import Kotti-Style in your project**
+## Import
 
 ```scss
-@import "@3yourmind/kotti-style
+@import "@3yourmind/kotti-style";
 ```
 
-## Update Logs
-  
-`Version 0.0.1-beta.8`
+## Changelog
 
-  * Updated `layout`
-  * Add new component `modal`
-  * Fix issue [#11](https://github.com/3YOURMIND/kotti/issues/11)
-  * Fix issue [#9](https://github.com/3YOURMIND/kotti/issues/9)
-  * Fix issue [#8](https://github.com/3YOURMIND/kotti/issues/8)
-
-`Version 0.0.1-beta.2`
-
-  * Updated `colors`;
-  * Added implmentation examples for `typography`, `buttons`, `inputs` and `tables`;
-  * Using `kotti-style` packages;
-  * Add new component `loadings`.
-
-
-
-  
+* `0.0.1-beta.8`
+	* Updated `layout`
+	* Added `modal` component
+	* Fixed issue [#8](https://github.com/3YOURMIND/kotti/issues/8)
+	* Fixed issue [#9](https://github.com/3YOURMIND/kotti/issues/9)
+	* Fixed issue [#11](https://github.com/3YOURMIND/kotti/issues/11)
+* `0.0.1-beta.2`
+	* Updated `colors`
+	* Added implmentation examples for `buttons`, `inputs`, `tables`, and `typography`
+	* Using `kotti-style` packages
+	* Added `loadings component`
 </template>

@@ -1,7 +1,7 @@
-import KtRadioGroup from './src/RadioGroup';
+import KtRadioGroup from './src/RadioGroup'
 
 KtRadioGroup.install = function(Vue) {
-	Vue.component(KtRadioGroup.name, KtRadioGroup);
-};
+	Vue.component(KtRadioGroup.name, KtRadioGroup)
+}
 
-export default KtRadioGroup;
+export default KtRadioGroup

@@ -29,12 +29,15 @@
 .modal-sm {
 	max-width: 24rem;
 }
+
 .modal-md {
 	max-width: 36rem;
 }
+
 .modal-lg {
 	max-width: 48rem;
 }
+
 .modal-xl {
 	max-width: 64rem;
 }
@@ -42,14 +45,17 @@
 .modal-header {
 	flex: 0 0 auto;
 }
+
 .modal-body {
 	overflow: auto;
 	flex: 1 1 auto;
 }
+
 .modal-header,
 .modal-body {
 	margin-bottom: 0.8rem;
 }
+
 .modal-footer {
 	text-align: right;
 	flex: 0 0 auto;

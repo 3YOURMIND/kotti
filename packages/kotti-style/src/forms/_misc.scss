@@ -1,77 +1,83 @@
 // Form misc: icon position
 
-.has-icon-left, .has-icon-right {
-  position: relative;
-  .form-icon {
-    color: $lightgray-500;
-    font-size: 1rem;
-    position: absolute;
-  }
+.has-icon-left,
+.has-icon-right {
+	position: relative;
+
+	.form-icon {
+		color: $lightgray-500;
+		font-size: 1rem;
+		position: absolute;
+	}
 }
+
 .has-icon-left {
-  .form-input, .form-select {
-    padding-left: 1.6rem;
-  }
-  .form-icon {
-    top: .3rem;
-    left: .4rem;
-  }
+	.form-input,
+	.form-select {
+		padding-left: 1.6rem;
+	}
+
+	.form-icon {
+		top: 0.3rem;
+		left: 0.4rem;
+	}
 }
 
 .has-icon-right {
-  .form-input, .form-select {
-    padding-right: 1.6rem;
-  }
-  .form-icon {
-    top: .3rem;
-    right: .4rem;
-  }
+	.form-input,
+	.form-select {
+		padding-right: 1.6rem;
+	}
+
+	.form-icon {
+		top: 0.3rem;
+		right: 0.4rem;
+	}
 }
 
+@mixin form-state($color) {
+	.form-input,
+	.form-select {
+		&:focus {
+			@include control-shadow($color);
+		}
+		border: 1px solid $color;
+	}
 
-@mixin form-state ($color) {
-  .form-input, .form-select {
-    &:focus {
-      @include control-shadow($color);
-    }
-    border: 1px solid $color;
-  }
-  .form-icon {
-    color: $color;
-  }
-  .form-radio,
-  .form-checkbox,
-  .form-switch  {
-    input {
-      &:checked + .form-icon {
-        border-color: $color;
-        background: $color;
-      }
-    }
-  }
-} 
-// Form misc: state 
+	.form-icon {
+		color: $color;
+	}
+
+	.form-radio,
+	.form-checkbox,
+	.form-switch {
+		input:checked + .form-icon {
+			border-color: $color;
+			background: $color;
+		}
+	}
+}
+// Form misc: state
 .is-success {
-  @include form-state($green-500)
+	@include form-state($green-500);
 }
 .is-error {
-  @include form-state($red-500)
+	@include form-state($red-500);
 }
 .is-warning {
-  @include form-state($orange-500)
+	@include form-state($orange-500);
 }
-
 
 .form-input,
 .form-select,
 .form-checkbox,
-.form-switch, 
+.form-switch,
 .form-radio {
-  &:disabled,
-  &.disabled {
-    @include form-state($lightgray-400);
-    opacity: .46;
-    background: $lightgray-300;
-    cursor: not-allowed;
-  }
+	&:disabled,
+	&.disabled {
+		@include form-state($lightgray-400);
+		opacity: 0.46;
+		background: $lightgray-300;
+		cursor: not-allowed;
+	}
 }

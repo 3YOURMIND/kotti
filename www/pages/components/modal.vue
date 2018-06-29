@@ -1,71 +1,75 @@
 <template lang="md">
 
-# Modal 
+# Modal
 
 ## Size
 
 <div class="element-example">
-  <button @click="showModal=true, modalSize='sm', closeOutside=true">small modal</button>
-  <button @click="showModal=true, modalSize='md', closeOutside=true">default modal</button>
-  <button @click="showModal=true, modalSize='lg', closeOutside=true">large modal</button>
-  <button @click="showModal=true, modalSize='xl', closeOutside=true">x-large modal</button>
-  <KtModal v-if="showModal" @close="showModal=false" :size="modalSize" :closeOutside="closeOutside">
-  <div slot="modal-header">
-    <h2>This the modal title</h2>
-  </div>
-  <div slot="modal-body">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <p>Nunc a sollicitudin libero, consectetur interdum ligula.</p>
-  </div>
-  <div slot="modal-footer">
-    <button @click="showModal=false">Close</button>
-  </div>
-  </KtModal>
+	<button @click="showModal=true, modalSize='sm', closeOutside=true">small modal</button>
+	<button @click="showModal=true, modalSize='md', closeOutside=true">default modal</button>
+	<button @click="showModal=true, modalSize='lg', closeOutside=true">large modal</button>
+	<button @click="showModal=true, modalSize='xl', closeOutside=true">x-large modal</button>
+	<KtModal v-if="showModal" @close="showModal = false" :size="modalSize" :closeOutside="closeOutside">
+	<div slot="modal-header">
+		<h2>This the modal title</h2>
+	</div>
+	<div slot="modal-body">
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		<p>Nunc a sollicitudin libero, consectetur interdum ligula.</p>
+	</div>
+	<div slot="modal-footer">
+		<button @click="showModal = false">Close</button>
+	</div>
+	</KtModal>
 </div>
 
 Modal has 4 different size: `sm`, `md`, `lg`, and `xl`. The default modal size is medium `md`.
 
 ```html
-<KtModal v-if="showModal" @close="showModal=false" size="sm"/>
-<KtModal v-if="showModal" @close="showModal=false" size="md"/>
-<KtModal v-if="showModal" @close="showModal=false" size="lg"/>
-<KtModal v-if="showModal" @close="showModal=false" size="xl"/>
+<KtModal v-if="showModal" @close="showModal = false" size="sm"/>
+<KtModal v-if="showModal" @close="showModal = false" size="md"/>
+<KtModal v-if="showModal" @close="showModal = false" size="lg"/>
+<KtModal v-if="showModal" @close="showModal = false" size="xl"/>
 ```
 
 ## Close from outside
 
 <div class="element-example">
-  <button @click="showModal=true, modalSize='sm', closeOutside=false">disable colse from outside modal</button>
+	<button @click="showModal = true, modalSize = 'sm', closeOutside = false">disable close from outside of modal</button>
 </div>
 
-When `closeOutside` set to `false`, it prevents close the modal from outside.
+When `closeOutside` set to `false`, it disables closing the modal from the outside.
 
 ```html
-<KtModal v-if="showModal" @close="showModal=false" size="sm" :closeOutside="false"/>
+<KtModal
+	v-if="showModal"
+	:closeOutside="false"
+	size="sm"
+	@close="showModal = false"
+/>
 ```
 
 ## Usage
 
 ### Attributes
 
-|Attribute|Description|Type|Accepted Values|Default|
-|----|----|----|----|----|
-|size|size of the modal window|`string`|`sm`,`md`,`lg`,`xl`|`md`|
-|closeOutside|allow user close modal from outside|`boolean`|-|`true`|
+| Attribute      | Description                         | Type      | Accepted Values     | Default |
+|:---------------|:------------------------------------|:----------|:--------------------|:--------|
+| `closeOutside` | allow user close modal from outside | `Boolean` | —                   | `true`  |
+| `size`         | size of the modal window            | `String`  | `sm`,`md`,`lg`,`xl` | `"md"`  |
 
 ### Slots
 
-| Slot Name | Description             |
-| --------- | ----------------------- |
-| modal-header| header section of modal|
-| modal-body | body section of modal| 
-| modal-footer | footer section of modal| 
-
+| Slot Name      | Description             |
+|:---------------|:------------------------|
+| `modal-header` | header section of modal |
+| `modal-body`   | body section of modal   |
+| `modal-footer` | footer section of modal |
 </template>
 
 
 <script>
-import KtModal from '../../../packages/kotti-modal';
+import KtModal from '../../../packages/kotti-modal'
 
 export default {
 	name: 'Modal',
@@ -74,10 +78,10 @@ export default {
 	},
 	data() {
 		return {
-			showModal: false,
-			modalSize: 'md',
 			closeOutside: true,
-		};
+			modalSize: 'md',
+			showModal: false,
+		}
 	},
-};
+}
 </script>

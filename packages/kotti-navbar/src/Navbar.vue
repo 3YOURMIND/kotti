@@ -3,14 +3,16 @@
 		<div :class="objectClass('navbar-wrapper')">
 			<div
 				:class="['navbar-toggle', {'navbar-toggle--active':mobileMenuToggle}]"
-			  @click="mobileMenuToggle = !mobileMenuToggle"
+				@click="mobileMenuToggle = !mobileMenuToggle"
 			>
 				<i class="yoco">burger</i>
 			</div>
 			<div class="navbar-header">
-				<div class="navbar-logo">
-					<img :src="src" />
-				</div>
+				<slot name="navbar-header">
+					<div class="navbar-logo">
+						<img :src="src" />
+					</div>
+				</slot>
 			</div>
 			<div class="navbar-body">
 				<div :class="objectClass('navbar-menu')">
@@ -44,26 +46,20 @@
 export default {
 	name: 'KtNavbar',
 	props: {
-		src: String,
-		narrow: {
-			type: Boolean,
-			default: false,
-		},
 		menu: Array,
+		narrow: { type: Boolean, default: false },
+		src: String,
 	},
 	data() {
 		return {
 			mobileMenuToggle: false,
-		};
+		}
 	},
 	methods: {
 		objectClass(className) {
-			const isNarrowClass = this.narrow ? `${className}--narrow` : '';
-			return [className, isNarrowClass];
+			const isNarrowClass = this.narrow ? `${className}--narrow` : ''
+			return [className, isNarrowClass]
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

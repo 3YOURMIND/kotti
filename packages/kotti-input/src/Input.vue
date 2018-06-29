@@ -4,13 +4,13 @@
 		<div :class="inputGroupClass">
 			<span class="input-group-addon" v-text="addonText" />
 			<input
-				class="form-input"
 				v-bind="$attrs"
-				:type="type"
 				:placeholder="placeholder"
+				:type="type"
 				:value="currentValue"
-				@input="handleInput"
 				@change="handleChange"
+				@input="handleInput"
+				class="form-input"
 			/>
 			<i class="form-icon yoco" v-text="icon" />
 		</div>
@@ -23,72 +23,48 @@ export default {
 	data() {
 		return {
 			currentValue: this.value || '',
-		};
+		}
 	},
 	watch: {
 		value(val, oldValue) {
-			this.setCurrentValue(val);
+			this.setCurrentValue(val)
 		},
 	},
 	props: {
+		addonText: { type: String, default: '' },
+		icon: { type: String, default: '' },
+		iconPosition: { type: String, default: 'left' },
 		label: String,
-		value: [String, Number],
-		addonText: {
-			type: String,
-			default: '',
-		},
-		icon: {
-			type: String,
-			default: '',
-		},
-		type: {
-			type: String,
-			default: 'text',
-		},
-		validate: {
-			type: String,
-			default: '',
-		},
 		placeholder: String,
-		iconPosition: {
-			type: String,
-			default: 'left',
-		},
+		type: { type: String, default: 'text' },
+		validate: { type: String, default: '' },
+		value: [String, Number],
 	},
 	computed: {
 		inputGroupClass() {
-			let iconClass;
-			if (this.icon != '') {
-				iconClass = `has-icon-${this.iconPosition}`;
+			return {
+				'input-group': Boolean(this.addonText),
+				[`has-icon-${this.iconPosition}`]: Boolean(this.icon),
 			}
-			return [
-				iconClass,
-				{
-					'input-group': this.addonText != '',
-				},
-			];
 		},
 		formClass() {
-			let validateClass = `is-${this.validate}`;
-			return ['form-group', validateClass];
+			const validateClass = `is-${this.validate}`
+			return ['form-group', validateClass]
 		},
 	},
 	methods: {
 		setCurrentValue(value) {
-			if (value === this.currentValue) return;
-			this.currentValue = value;
+			if (value === this.currentValue) return
+			this.currentValue = value
 		},
 		handleInput(event) {
-			const value = event.target.value;
-			this.$emit('input', value);
-			this.setCurrentValue(value);
+			const value = event.target.value
+			this.$emit('input', value)
+			this.setCurrentValue(value)
 		},
 		handleChange(event) {
-			this.$emit('change', event.target.value);
+			this.$emit('change', event.target.value)
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

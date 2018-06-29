@@ -37,22 +37,19 @@ export default {
 			return {
 				'form-switch': true,
 				'form-switch-right': this.right,
-			};
+			}
 		},
 		checkboxValue() {
-			return this.value;
+			return this.value
 		},
 		switchMessage() {
-			return this.checkboxValue ? this.inactiveMessage : this.activeMessage;
+			return this.checkboxValue ? this.inactiveMessage : this.activeMessage
 		},
 	},
 	methods: {
 		handleChange(event) {
-			this.$emit('input', event.target.checked);
+			this.$emit('input', event.target.checked)
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

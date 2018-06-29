@@ -1,22 +1,9 @@
 {
-	"name": "@3yourmind/kotti",
-	"description": "Kotti Vue Component UI",
-	"version": "0.0.1",
 	"author": "3YOURMIND GmbH",
-	"license": "MIT",
-	"scripts": {
-		"doc": "nuxt -c build/nuxt.config.js",
-		"doc:generate": "nuxt generate -c build/nuxt.config.js",
-		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate -c build/nuxt.config.js",
-		"doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
-		"build:kotti":
-			"rm src/dist/* && NODE_ENV=production webpack --config build/component.js --progress",
-		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
-		"watch:style": "yarn gulp watch --gulpfile ./build/gulpstyle.js",
-		"precommit": "lint-staged"
-	},
-	"lint-staged": {
-		"*.{js,json,css,scss,md,vue}": ["prettier --write", "git add"]
+	"bolt": {
+		"workspaces": [
+			"packages/*"
+		]
 	},
 	"dependencies": {
 		"@3yourmind/yoco": "^0.0.3",
@@ -24,9 +11,11 @@
 		"vue": "^2.5.9",
 		"vue-clipboard2": "^0.0.8"
 	},
+	"description": "Kotti Vue Component UI",
 	"devDependencies": {
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
+		"@vue/eslint-config-prettier": "^3.0.0-rc.3",
 		"autoprefixer": "^8.3.0",
 		"babel-core": "^6.26.0",
 		"babel-eslint": "^7.2.3",
@@ -45,6 +34,7 @@
 		"eslint-plugin-node": "^5.2.1",
 		"eslint-plugin-promise": "^3.6.0",
 		"eslint-plugin-standard": "^3.0.1",
+		"eslint-plugin-vue": "^4.5.0",
 		"file-loader": "^1.1.4",
 		"gulp": "latest",
 		"gulp-autoprefixer": "latest",
@@ -60,6 +50,7 @@
 		"postcss-cssnext": "^3.1.0",
 		"postcss-import": "^11.1.0",
 		"postcss-loader": "^2.1.4",
+		"prettier": "^1.13.7",
 		"push-dir": "^0.4.1",
 		"sass-loader": "^7.0.1",
 		"stylelint": "^9.1.3",
@@ -74,5 +65,56 @@
 		"webpack-cli": "^2.1.2",
 		"webpack-dev-server": "^2.9.1",
 		"webpack-merge": "^4.1.2"
-	}
+	},
+	"eslintConfig": {
+		"extends": [
+			"plugin:vue/essential",
+			"@vue/prettier"
+		],
+		"root": true,
+		"rules": {
+			"no-debugger": 0
+		}
+	},
+	"license": "MIT",
+	"lint-staged": {
+		"*.{js,json,css,scss,md,vue}": [
+			"prettier --write",
+			"git add"
+		]
+	},
+	"name": "@3yourmind/kotti",
+	"prettier": {
+		"overrides": [
+			{
+				"files": ".prettierrc",
+				"options": {
+					"parser": "json"
+				}
+			},
+			{
+				"files": "*.md",
+				"options": {
+					"parser": "markdown"
+				}
+			}
+		],
+		"proseWrap": "always",
+		"semi": false,
+		"singleQuote": true,
+		"tabWidth": 2,
+		"trailingComma": "es5",
+		"useTabs": true
+	},
+	"scripts": {
+		"build:kotti": "rm -f src/dist/* && NODE_ENV=production webpack --config build/component.js --progress",
+		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
+		"doc": "nuxt -c build/nuxt.config.js",
+		"doc:deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
+		"doc:generate": "nuxt generate -c build/nuxt.config.js",
+		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate -c build/nuxt.config.js",
+		"precommit": "lint-staged",
+		"watch:style": "yarn gulp watch --gulpfile ./build/gulpstyle.js"
+	},
+	"version": "0.0.1"
 }

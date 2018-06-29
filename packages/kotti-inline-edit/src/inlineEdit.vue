@@ -3,18 +3,18 @@
 		<label class="form-label" v-text="label" />
 		<div
 			v-if="!editMode"
-			class="default editable"
-			@click="editMode=true"
 			v-text="currentValue"
+			@click="editMode=true"
+			class="default editable"
 		/>
 		<div v-else>
 			<input
-				type="text"
-				class="form-input"
 				v-bind="$attrs"
-				@input="handleInput"
-				@change="handleChange"
 				:value="currentValue"
+				@change="handleChange"
+				@input="handleInput"
+				class="form-input"
+				type="text"
 			/>
 			<KtButtonGroup class="edit-button">
 				<KtButton icon="close" @click="handleDismiss" />
@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import KtButton from '../../kotti-button';
-import KtButtonGroup from '../../kotti-button-group';
+import KtButton from '../../kotti-button'
+import KtButtonGroup from '../../kotti-button-group'
 
 export default {
 	name: 'KtInlineEdit',
@@ -50,7 +50,7 @@ export default {
 			editMode: false,
 			currentValue: this.value || '',
 			preValue: this.value || '',
-		};
+		}
 	},
 	computed: {
 		objectClass() {
@@ -58,40 +58,40 @@ export default {
 				'inline-edit': true,
 				'form-group': this.editMode,
 				'label-value': !this.editMode,
-			};
+			}
 		},
 	},
 	watch: {
 		value(val, oldValue) {
-			this.setCurrentValue(val);
+			this.setCurrentValue(val)
 		},
 	},
 	methods: {
 		handleConfirm(event) {
-			this.editMode = false;
-			this.preValue = this.currentValue;
-			this.$emit('confirm', event);
+			this.editMode = false
+			this.preValue = this.currentValue
+			this.$emit('confirm', event)
 		},
 		handleDismiss(event) {
-			this.editMode = false;
-			this.setCurrentValue(this.preValue);
-			this.$emit('input', this.preValue);
-			this.$emit('dismiss', event);
+			this.editMode = false
+			this.setCurrentValue(this.preValue)
+			this.$emit('input', this.preValue)
+			this.$emit('dismiss', event)
 		},
 		setCurrentValue(value) {
-			if (value === this.currentValue) return;
-			this.currentValue = value;
+			if (value === this.currentValue) return
+			this.currentValue = value
 		},
 		handleInput(event) {
-			const value = event.target.value;
-			this.$emit('input', value);
-			this.setCurrentValue(value);
+			const value = event.target.value
+			this.$emit('input', value)
+			this.setCurrentValue(value)
 		},
 		handleChange(event) {
-			this.$emit('change', event.target.value);
+			this.$emit('change', event.target.value)
 		},
 	},
-};
+}
 </script>
 
 <style lang="scss" scoped>

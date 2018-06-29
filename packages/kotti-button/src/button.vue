@@ -27,29 +27,26 @@ export default {
 	},
 	computed: {
 		mainClasses() {
-			return [this.type, this.objectClass];
+			return [this.type, this.objectClass]
 		},
 		loadingClass() {
 			return {
 				inline: true,
 				loading: true,
 				white: this.type === 'primary',
-			};
+			}
 		},
 		objectClass() {
 			return {
 				icon: this.icon,
 				'icon-only': this.icon && !this.$slots.default,
-			};
+			}
 		},
 	},
 	methods: {
 		handleClick(evt) {
-			this.$emit('click', evt);
+			this.$emit('click', evt)
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

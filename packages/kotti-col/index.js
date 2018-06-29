@@ -1,7 +1,7 @@
-import KtCol from './src/Col';
+import KtCol from './src/Col'
 
 KtCol.install = function(Vue) {
-	Vue.component(KtCol.name, KtCol);
-};
+	Vue.component(KtCol.name, KtCol)
+}
 
-export default KtCol;
+export default KtCol

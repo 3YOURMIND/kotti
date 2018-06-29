@@ -1,7 +1,7 @@
-import KtButton from './src/button';
+import KtButton from './src/button'
 
 KtButton.install = function(Vue) {
-	Vue.component(KtButton.name, KtButton);
-};
+	Vue.component(KtButton.name, KtButton)
+}
 
-export default KtButton;
+export default KtButton

@@ -1,39 +1,39 @@
 // Color
-$primary-300: #AFC5E8;
+$primary-300: #afc5e8;
 $primary-500: #2c66c4;
-$primary-400: #3173DE;
-$primary-600: #2659AB;
+$primary-400: #3173de;
+$primary-600: #2659ab;
 $primary-700: darken($primary-500, 20);
 
-$darkgray-300: #8A8A8A;
+$darkgray-300: #8a8a8a;
 $darkgray-400: #575757;
 $darkgray-500: #3d3d3d;
 $darkgray-600: #242424;
 
-$lightgray-300: #F8F8F8;
+$lightgray-300: #f8f8f8;
 $lightgray-500: #8f8f8f;
-$lightgray-400: #DBDBDB;
-$lightgray-600: #5C5C5C;
+$lightgray-400: #dbdbdb;
+$lightgray-600: #5c5c5c;
 
-$green-300: #C4E0A5;
-$green-400: #71C716;
-$green-500: #64AD13;
+$green-300: #c4e0a5;
+$green-400: #71c716;
+$green-500: #64ad13;
 $green-600: #549410;
 
-$orange-300: #FFAE66;
-$orange-400: #FF9333;
-$orange-500: #FF7800;
-$orange-600: #D37D30;
+$orange-300: #ffae66;
+$orange-400: #ff9333;
+$orange-500: #ff7800;
+$orange-600: #d37d30;
 
-$red-300: #F0A8A8;
-$red-400: #F21D1D;
-$red-500: #D91919;
-$red-600: #BF1717;
+$red-300: #f0a8a8;
+$red-400: #f21d1d;
+$red-500: #d91919;
+$red-600: #bf1717;
 
-$purple-300: #B995CA;
-$purple-400: #932DC2;
-$purple-500: #6C218F;
-$purple-600: #591B75;
+$purple-300: #b995ca;
+$purple-400: #932dc2;
+$purple-500: #6c218f;
+$purple-600: #591b75;
 
 $warning-500: #ff7800;
 
@@ -48,22 +48,23 @@ $code-color: $primary-600;
 // Fonts
 // Credit: https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
 
-$base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
+$base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto !default;
 $body-font-family: $base-font-family;
-$mono-font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace !default;
-$fallback-font-family: "Helvetica Neue", sans-serif !default;
-$cjk-zh-font-family: $base-font-family, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", $fallback-font-family !default;
-$cjk-jp-font-family: $base-font-family, "Hiragino Sans", "Hiragino Kaku Gothic Pro", "Yu Gothic", YuGothic, Meiryo, $fallback-font-family !default;
-$cjk-ko-font-family: $base-font-family, "Malgun Gothic", $fallback-font-family !default;
+$mono-font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Courier, monospace !default;
+$fallback-font-family: 'Helvetica Neue', sans-serif !default;
+$cjk-zh-font-family: $base-font-family, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', $fallback-font-family !default;
+$cjk-jp-font-family: $base-font-family, 'Hiragino Sans', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', YuGothic, Meiryo,
+	$fallback-font-family !default;
+$cjk-ko-font-family: $base-font-family, 'Malgun Gothic', $fallback-font-family !default;
 $body-font-family: $base-font-family, $fallback-font-family !default;
 
 // Unit sizes
-$unit-o: .05rem !default;
-$unit-h: .1rem !default;
-$unit-1: .2rem !default;
-$unit-2: .4rem !default;
-$unit-3: .6rem !default;
-$unit-4: .8rem !default;
+$unit-o: 0.05rem !default;
+$unit-h: 0.1rem !default;
+$unit-1: 0.2rem !default;
+$unit-2: 0.4rem !default;
+$unit-3: 0.6rem !default;
+$unit-4: 0.8rem !default;
 $unit-5: 1rem !default;
 $unit-6: 1.2rem !default;
 $unit-7: 1.4rem !default;
@@ -76,9 +77,9 @@ $unit-16: 3.2rem !default;
 // Font sizes
 $html-font-size: 20px !default;
 $html-line-height: 1.5 !default;
-$font-size: .7rem !default;
-$font-size-sm: .6rem !default;
-$font-size-lg: .8rem !default;
+$font-size: 0.7rem !default;
+$font-size-sm: 0.6rem !default;
+$font-size-lg: 0.8rem !default;
 $line-height: 1rem !default;
 
 // Sizes
@@ -92,12 +93,12 @@ $control-size: $unit-8 !default;
 $control-size-sm: $unit-7 !default;
 $control-size-lg: $unit-10 !default;
 $control-padding-x: $unit-2 !default;
-$control-padding-x-sm: $unit-2 * .75 !default;
+$control-padding-x-sm: $unit-2 * 0.75 !default;
 $control-padding-x-lg: $unit-2 * 1.5 !default;
 $control-padding-y: ($control-size - $line-height) / 2 - $border-width !default;
 $control-padding-y-sm: ($control-size-sm - $line-height) / 2 - $border-width !default;
 $control-padding-y-lg: ($control-size-lg - $line-height) / 2 - $border-width !default;
-$control-icon-size: .8rem !default;
+$control-icon-size: 0.8rem !default;
 
 $control-width-xs: 180px !default;
 $control-width-sm: 320px !default;

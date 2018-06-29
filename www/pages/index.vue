@@ -4,13 +4,13 @@
 
 ## Overview
 
-This design system helps to unify our design language and provides the documentation for further product design decisions. 
+This design system helps to unify our design language and provides the documentation for further product design decisions.
 The Kotti design system has two main parts: foundation and components.
 
-The foundation is higher level and works as a guideline for the whole system, which defines the layout, color, icons, typography and writing style. 
+The foundation is higher level and works as a guideline for the whole system, which defines the layout, color, icons, typography and writing style.
 It also creates styles and characteristics which are different from other design systems.
 
-Components are more concrete elements. They are pre-defined and cannot be changed in most cases. 
+Components are more concrete elements. They are pre-defined and cannot be changed in most cases.
 These components include banners, buttons, drawers and more.
 
 ## Design Principles
@@ -23,14 +23,12 @@ on the design principles we use.
 **Okay:** It's okay to not follow the foundation, but there should be a strong reason. It's okay to break
 the design principles but only when it's the only way to solve the requirement.
 
-**Transparent:** By making design cues easy to perceive and detect, the user can process information smoothly without being aware of 
+**Transparent:** By making design cues easy to perceive and detect, the user can process information smoothly without being aware of
 their presence.
 
 **Timely:** The design needs to respond quickly and help the user finish their task in a timely matter.
 
 **Intuitive:** The design should be intuitive and easy to understand, and decrease the learning curve.
-
-
 </template>
 
 <style lang="scss" scoped>

@@ -9,10 +9,12 @@ button {
 	background: $lightgray-300;
 	line-height: 2em;
 	font-weight: 600;
+
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
 	}
+
 	&:hover {
 		cursor: pointer;
 		background: $primary-300;
@@ -22,6 +24,7 @@ button {
 button.primary {
 	background: $primary-500;
 	color: #ffffff;
+
 	&:hover {
 		background: $primary-600;
 	}
@@ -32,6 +35,7 @@ button.secondary {
 	background: #fff;
 	color: $primary-500;
 	font-weight: 600;
+
 	&:hover {
 		color: $primary-600;
 		border: 1px solid $primary-600;
@@ -43,6 +47,7 @@ button.text {
 	color: $primary-500;
 	font-weight: 600;
 	background: transparent;
+
 	&:hover {
 		background: darken(#fff, 10);
 	}
@@ -52,20 +57,21 @@ button.danger {
 	background: #f8f8f8;
 	color: $red-500;
 	font-weight: 600;
+
 	&:hover {
 		color: #ffffff;
 		background: $red-500;
 	}
 }
 
-button.icon {
-	i {
-		font-size: 1rem;
-		margin-right: 0.2rem;
-	}
+button.icon i {
+	font-size: 1rem;
+	margin-right: 0.2rem;
 }
+
 button.icon-only {
 	padding: 0 0.4rem;
+
 	i {
 		margin-right: 0;
 	}
@@ -86,12 +92,15 @@ button.bottom {
 	button {
 		border-radius: 0;
 	}
+
 	button:first-of-type {
 		border-radius: 0.1rem 0 0 0.1rem;
 	}
+
 	button:last-of-type {
 		border-radius: 0 0.1rem 0.1rem 0;
 	}
+
 	&--shadow {
 		box-shadow: 0 1px 2px rgba($color: #000000, $alpha: 0.24);
 	}

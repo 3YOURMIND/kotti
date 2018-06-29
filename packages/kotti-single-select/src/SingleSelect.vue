@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import ClickOutside from './clickoutside';
-import KtInput from '../../kotti-input';
+import ClickOutside from './clickoutside'
+import KtInput from '../../kotti-input'
 
 export default {
 	name: 'KtSelect',
@@ -43,106 +43,106 @@ export default {
 		KtInput,
 	},
 	props: {
-		label: String,
+		allowEmpty: Boolean,
 		filterable: Boolean,
+		label: String,
+		options: Array,
 		placeholder: String,
 		value: [String, Number],
-		options: Array,
-		allowEmpty: Boolean,
 	},
 	data() {
 		return {
 			currentValue: [String, Number],
-			visible: false,
-			selectedLabel: '',
 			filterResults: [],
 			queryString: '',
-		};
+			selectedLabel: '',
+			visible: false,
+		}
 	},
 	directives: {
 		ClickOutside,
 	},
 	mounted() {
 		if (this.value) {
-			this.labelVaule(this.value);
+			this.labelVaule(this.value)
 		}
 	},
 	computed: {
 		indicatorRep() {
-			return this.visible ? 'chevron_up' : 'chevron_down';
+			return this.visible ? 'chevron_up' : 'chevron_down'
 		},
 		optionsRep() {
 			if (!this.filterable) {
-				return this.options;
+				return this.options
 			}
 			if (this.filterable) {
-				return this.filterResults;
+				return this.filterResults
 			}
 		},
 	},
 	methods: {
 		optionClass(option) {
-			let _disableClass = false;
+			let _disableClass = false
 			if (option.value === null && this.allowEmpty) {
-				_disableClass = false;
+				_disableClass = false
 			}
 			if (option.value === null && !this.allowEmpty) {
-				_disableClass = true;
+				_disableClass = true
 			}
 			if (option.disabled) {
-				_disableClass = true;
+				_disableClass = true
 			}
 			return {
 				'form-option--disabled': _disableClass,
-			};
+			}
 		},
 		handleOptionClick(option) {
 			if (option.value === null && !this.allowEmpty) {
-				return;
+				return
 			}
 			if (!option.disabled) {
-				this.selectedLabel = option.label;
-				this.setValue(this.selectedLabel);
-				this.visible = false;
+				this.selectedLabel = option.label
+				this.setValue(this.selectedLabel)
+				this.visible = false
 			}
-			return;
+			return
 		},
 		handleQueryChange(evt) {
-			this.queryString = evt.target.value.toLowerCase();
-			this.queryString;
-			let results = [];
+			this.queryString = evt.target.value.toLowerCase()
+			this.queryString
+			let results = []
 			this.options.filter(item => {
 				if (item.value !== null) {
 					if (
 						item.label.toLowerCase().includes(this.queryString) ||
 						item.value.toLowerCase().includes(this.queryString)
 					) {
-						results.push(item);
+						results.push(item)
 					}
 				}
-			});
-			this.filterResults = results;
+			})
+			this.filterResults = results
 		},
 		handleInputFocus() {
 			if (!this.queryString) {
-				this.filterResults = this.options;
+				this.filterResults = this.options
 			}
-			this.visible = true;
+			this.visible = true
 		},
 		handleClickOutside() {
 			if (this.selectedLabel || this.allowEmpty) {
-				this.visible = false;
+				this.visible = false
 			}
 		},
 		setValue(label) {
-			let selectedItem = this.options.find(option => option.label === label);
-			this.currentValue = selectedItem.value;
-			this.$emit('input', this.currentValue);
+			let selectedItem = this.options.find(option => option.label === label)
+			this.currentValue = selectedItem.value
+			this.$emit('input', this.currentValue)
 		},
 		labelVaule(val) {
-			let selectedItem = this.options.find(option => option.value === val);
-			this.selectedLabel = selectedItem.label;
+			let selectedItem = this.options.find(option => option.value === val)
+			this.selectedLabel = selectedItem.label
 		},
 	},
-};
+}
 </script>

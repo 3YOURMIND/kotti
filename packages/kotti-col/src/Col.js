@@ -22,53 +22,44 @@ export default {
 
 	computed: {
 		space() {
-			let parent = this.$parent;
+			let parent = this.$parent
 			while (parent && parent.$options.componentName !== 'KtRow') {
-				parent = parent.$parent;
+				parent = parent.$parent
 			}
 			return {
 				gutter: parent ? parent.gutter : 0,
 				gap: parent ? parent.gap : 0,
-			};
+			}
 		},
 	},
 	render(h) {
-		let classList = [];
-		let style = {};
+		let classList = []
+		let style = {}
 
 		if (this.space.gutter) {
-			style.paddingLeft = this.space.gutter / 2 + 'px';
-			style.paddingRight = style.paddingLeft;
+			style.paddingLeft = this.space.gutter / 2 + 'px'
+			style.paddingRight = style.paddingLeft
 		}
 		if (this.space.gap) {
-			style.paddingTop = this.space.gap / 2 + 'px';
-			style.paddingBottom = style.paddingTop;
+			style.paddingTop = this.space.gap / 2 + 'px'
+			style.paddingBottom = style.paddingTop
 		}
 
-		['span', 'offset', 'pull', 'push'].forEach(prop => {
+		;['span', 'offset', 'pull', 'push'].forEach(prop => {
 			if (this[prop] || this[prop] === 0) {
-				classList.push(
-					prop !== 'span'
-						? `kt-col-${prop}-${this[prop]}`
-						: `kt-col-${this[prop]}`
-				);
+				classList.push(prop !== 'span' ? `kt-col-${prop}-${this[prop]}` : `kt-col-${this[prop]}`)
 			}
-		});
-
-		['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
+		})
+		;['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
 			if (typeof this[size] === 'number') {
-				classList.push(`kt-col-${size}-${this[size]}`);
+				classList.push(`kt-col-${size}-${this[size]}`)
 			} else if (typeof this[size] === 'object') {
-				let props = this[size];
+				let props = this[size]
 				Object.keys(props).forEach(prop => {
-					classList.push(
-						prop !== 'span'
-							? `kt-col-${size}-${prop}-${props[prop]}`
-							: `kt-col-${size}-${props[prop]}`
-					);
-				});
+					classList.push(prop !== 'span' ? `kt-col-${size}-${prop}-${props[prop]}` : `kt-col-${size}-${props[prop]}`)
+				})
 			}
-		});
+		})
 
 		return h(
 			this.tag,
@@ -77,6 +68,6 @@ export default {
 				style,
 			},
 			this.$slots.default
-		);
+		)
 	},
-};
+}

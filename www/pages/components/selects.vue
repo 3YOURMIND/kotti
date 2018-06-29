@@ -36,24 +36,26 @@
 </div>
 
 ```js
-words: [
-	{
-		label: '西瓜',
-		value: 'Watermelon',
-	},
-	{
-		label: '香蕉',
-		value: 'Bananna',
-	},
-	{
-		label: '鳄梨',
-		value: 'Avacados',
-	},
-	{
-		label: '苹果',
-		value: 'Apple',
-	},
-],
+{
+	words: [
+		{
+			label: '西瓜',
+			value: 'Watermelon',
+		},
+		{
+			label: '香蕉',
+			value: 'Bananna',
+		},
+		{
+			label: '鳄梨',
+			value: 'Avacados',
+		},
+		{
+			label: '苹果',
+			value: 'Apple',
+		},
+	],
+}
 ```
 
 
@@ -62,7 +64,7 @@ words: [
 
 
 <script>
-import KtSelect from '../../../packages/kotti-single-select';
+import KtSelect from '../../../packages/kotti-single-select'
 
 export default {
 	name: 'KtSelectDoc',
@@ -97,7 +99,7 @@ export default {
 					value: 'Apple',
 				},
 			],
-		};
+		}
 	},
-};
+}
 </script>

@@ -1,24 +1,26 @@
 <template>
-  <tr>
-    <td>{{ unit }} Unit</td>
-    <td>{{ pixel }}px</td>
-    <td>
-      <code>$unit-{{ unit }}</code>
-    </td>
-    <td>
-      <code>{{ rem }}rem</code>
-    </td>
-  </tr>
+	<tr>
+		<td>{{ unit }} Unit</td>
+		<td>
+			<code>{{ pixel }}px</code>
+		</td>
+		<td>
+			<code>$unit-{{ unit }}</code>
+		</td>
+		<td>
+			<code>{{ rem }}rem</code>
+		</td>
+	</tr>
 </template>
 
 <script>
 export default {
-  name: 'LayoutMetricTableRow',
-  props: {
-    unit: Number,
-    pixel: Number,
-    rem: Number
-  }
+	name: 'LayoutMetricTableRow',
+	props: {
+		unit: Number,
+		pixel: Number,
+		rem: Number,
+	},
 }
 </script>
 
