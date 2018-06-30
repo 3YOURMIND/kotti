@@ -1,25 +1,21 @@
 {
-	"name": "@3yourmind/kotti-style",
-	"version": "0.0.3-beta.4",
-	"description":
-		"Kotti style repository which includes all styles of the kotti component library.",
-	"main": "./dist/index.min.css",
-	"style": "./dist/index.min.css",
-	"files": ["dist", "src"],
-	"scripts": {
-		"build": "gulp build"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/3YOURMIND/kotti"
-	},
-	"keywords": ["element", "theme"],
 	"author": "3YOURMIND GmbH",
-	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
-	"homepage": "https://3yourmind.github.io/kotti/",
+	"contributors": [
+		{
+			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
+			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
+			"url": "https://ostoc.github.io/"
+		}
+	],
+	"description": "Kotti style repository which includes all styles of the kotti component library.",
 	"devDependencies": {
 		"gulp": "latest",
 		"gulp-autoprefixer": "latest",
@@ -31,16 +27,41 @@
 		"stylelint-config-recommended-scss": "^3.1.0",
 		"stylelint-scss": "^2.5.0"
 	},
-	"contributors": [
-		{
-			"name": "Kevin Peters",
-			"email": "kevinigeligeligel@gmail.com",
-			"url": "https://www.kevinpeters.net/"
-		},
-		{
-			"name": "Junyu Pu",
-			"email": "pujunyu@gmail.com",
-			"url": "https://ostoc.github.io/"
+	"files": [
+		"dist",
+		"src"
+	],
+	"homepage": "https://3yourmind.github.io/kotti/",
+	"keywords": [
+		"element",
+		"theme"
+	],
+	"license": "MIT",
+	"main": "./dist/index.min.css",
+	"name": "@3yourmind/kotti-style",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/3YOURMIND/kotti"
+	},
+	"scripts": {
+		"build": "gulp build"
+	},
+	"style": "./dist/index.min.css",
+	"stylelint": {
+		"extends": "stylelint-config-recommended-scss",
+		"rules": {
+			"block-no-empty": null,
+			"unit-whitelist": [
+				"em",
+				"rem",
+				"s",
+				"vh",
+				"%",
+				"px",
+				"deg",
+				"ms"
+			]
 		}
-	]
+	},
+	"version": "0.0.3-beta.4"
 }

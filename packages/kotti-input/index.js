@@ -1,7 +1,7 @@
-import KtInput from './src/Input';
+import KtInput from './src/Input'
 
 KtInput.install = function(Vue) {
-	Vue.component(KtInput.name, KtInput);
-};
+	Vue.component(KtInput.name, KtInput)
+}
 
-export default KtInput;
+export default KtInput

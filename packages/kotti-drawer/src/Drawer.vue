@@ -40,7 +40,7 @@ export default {
 	data() {
 		return {
 			isExpanded: false,
-		};
+		}
 	},
 	computed: {
 		drawerClass() {
@@ -48,21 +48,18 @@ export default {
 				'drawer-container': true,
 				'drawer-expand': this.isExpanded,
 				'drawer-wide': this.wide,
-			};
+			}
 		},
 	},
 	methods: {
 		onDrawerHandleClick() {
-			this.isExpanded = !this.isExpanded;
+			this.isExpanded = !this.isExpanded
 		},
 		onOutsideDrawerClick() {
 			if (this.closeOutside) {
-				this.$emit('close');
+				this.$emit('close')
 			}
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss">
-</style>

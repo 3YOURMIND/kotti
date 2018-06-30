@@ -1,24 +1,25 @@
 // Text Utilities
 
-.text-truncate, .truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  .show-all {
-    overflow: auto;
-  }
+.text-truncate,
+.truncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	.show-all {
+		overflow: auto;
+	}
 }
 
 $text-colors: (
-  text-primary: $primary-500,
-  text-grey: $lightgray-500,
-  text-success: $green-500,
-  text-error: $red-500,
-  text-warning: $orange-500
+	text-primary: $primary-500,
+	text-grey: $lightgray-500,
+	text-success: $green-500,
+	text-error: $red-500,
+	text-warning: $orange-500,
 );
 
 @each $element, $color in $text-colors {
-  .#{$element} {
-    color: $color;
-  }
+	.#{$element} {
+		color: $color;
+	}
 }

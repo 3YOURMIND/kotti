@@ -1,101 +1,112 @@
 @keyframes skeleton-loading {
-  0% {
-    background-position: -50rem 0
-  }
-  100% {
-    background-position: 50rem 0
-  }
+	0% {
+		background-position: -50rem 0;
+	}
+
+	100% {
+		background-position: 50rem 0;
+	}
 }
 
 @mixin skeleton-style($bg-x, $bg-y) {
-  animation: 2s ease-out infinite 'skeleton-loading';
-  display: block;
-  width: 100%;
-  line-height: 1px;
-  margin: .4rem 0;
-  box-sizing: border-box;
-  border-radius: 2px; 
-  background: linear-gradient(to left, $lightgray-300 0%, $lightgray-400 50%, $lightgray-300 100%);
-  background-size: $bg-x $bg-y;
+	animation: 2s ease-out infinite 'skeleton-loading';
+	display: block;
+	width: 100%;
+	line-height: 1px;
+	margin: 0.4rem 0;
+	box-sizing: border-box;
+	border-radius: 2px;
+	background: linear-gradient(to left, $lightgray-300 0%, $lightgray-400 50%, $lightgray-300 100%);
+	background-size: $bg-x $bg-y;
 }
 
 .skeleton {
-  &.circle {
-    @include skeleton-style(1000px, 1000px);
-    padding-top: 100%;
-    border-radius: 100%;
-  }
-  &.square {
-    @include skeleton-style(1000px, 1000px);
-    padding-top: 100%;
-  }
-  &.rectangle {
-    @include skeleton-style(1800px, 1200px);
-    height: .4rem;
-    &.md {
-      height: .8rem;
-    }
-    &.lg {
-      height: 1.2rem;
-    }
-  }
+	&.circle {
+		@include skeleton-style(1000px, 1000px);
+		padding-top: 100%;
+		border-radius: 100%;
+	}
+
+	&.square {
+		@include skeleton-style(1000px, 1000px);
+		padding-top: 100%;
+	}
+
+	&.rectangle {
+		@include skeleton-style(1800px, 1200px);
+		height: 0.4rem;
+
+		&.md {
+			height: 0.8rem;
+		}
+
+		&.lg {
+			height: 1.2rem;
+		}
+	}
 }
 
 @keyframes loading {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 .loading {
-  color: transparent !important;
-  min-height: $unit-4;
-  pointer-events: none;
-  position: relative;
-  &::after {
-    animation: loading 500ms infinite linear;
-    border: $border-width-lg solid $primary-500;
-    border-radius: 50%;
-    border-right-color: transparent;
-    border-top-color: transparent;
-    content: "";
-    display: block;
-    height: $unit-4;
-    left: 50%;
-    margin-left: -$unit-2;
-    margin-top: -$unit-2;
-    position: absolute;
-    top: 50%;
-    width: $unit-4;
-    z-index: $zindex-0;
-  }
-  &.inline {
-    display: inline-block;
-    margin: 0 $unit-2;
-    &::after {
-      margin: 0;
-      left: 0;
-      top: 2px;
-      display: inline-block;
-      position: relative;
-    }
-  }
-  &.white {
-    &::after {
-      border-left-color: #ffffff;
-      border-bottom-color: #ffffff;
-    }
-  }
-  &.lg {
-    min-height: $unit-10;
-    &::after {
-      height: $unit-8;
-      margin-left: -$unit-4;
-      margin-top: -$unit-4;
-      width: $unit-8;
-    }
-  }
+	color: transparent !important;
+	min-height: $unit-4;
+	pointer-events: none;
+	position: relative;
+
+	&::after {
+		animation: loading 500ms infinite linear;
+		border: $border-width-lg solid $primary-500;
+		border-radius: 50%;
+		border-right-color: transparent;
+		border-top-color: transparent;
+		content: '';
+		display: block;
+		height: $unit-4;
+		left: 50%;
+		margin-left: -$unit-2;
+		margin-top: -$unit-2;
+		position: absolute;
+		top: 50%;
+		width: $unit-4;
+		z-index: $zindex-0;
+	}
+
+	&.inline {
+		display: inline-block;
+		margin: 0 $unit-2;
+		&::after {
+			margin: 0;
+			left: 0;
+			top: 2px;
+			display: inline-block;
+			position: relative;
+		}
+	}
+
+	&.white {
+		&::after {
+			border-left-color: #ffffff;
+			border-bottom-color: #ffffff;
+		}
+	}
+
+	&.lg {
+		min-height: $unit-10;
+
+		&::after {
+			height: $unit-8;
+			margin-left: -$unit-4;
+			margin-top: -$unit-4;
+			width: $unit-8;
+		}
+	}
 }

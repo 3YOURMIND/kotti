@@ -11,8 +11,5 @@ export default {
 	props: {
 		label: [String, Number],
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

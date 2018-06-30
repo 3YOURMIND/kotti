@@ -31,19 +31,13 @@ export default {
 	},
 	computed: {
 		modalClass() {
-			let modalSizeClass = `modal-${this.size}`;
-			return ['modal-container', modalSizeClass];
+			return ['modal-container', `modal-${this.size}`]
 		},
 	},
 	methods: {
 		closeModal() {
-			if (this.closeOutside) {
-				this.$emit('close');
-			}
+			if (this.closeOutside) this.$emit('close')
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

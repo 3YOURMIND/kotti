@@ -12,7 +12,7 @@ The Navbar is the top-level navigation for the user. The width is fixed: `280px`
 
 ### [Actionbar](#)
 
-The actionbar is always located between the Navbar and Workspace, which can be omitted if necessary. 
+The actionbar is always located between the Navbar and Workspace, which can be omitted if necessary.
 
 The actionbar is considered to be an attachment to the Workspace.
 It represents addtional and important information for the Workspace.
@@ -25,22 +25,19 @@ and `sub-menu` for the Workspace.
 ### [Workspace](#)
 
 The workspace is designed as a space for related tasks, most interactions
-should be inside this area. The width of the Workspace is responsive: `100%` of the screen width with margin `24px` to the right. 
+should be inside this area. The width of the Workspace is responsive: `100%` of the screen width with margin `24px` to the right.
 The background is `#FFFFFF`, with dropshadow: `1px 0 1px #DBDBDB`;
 
-
 <layout-metric />
-
-
 </template>
 
 <script>
-import LayoutMetric from '~/components/LayoutMetric.vue';
+import LayoutMetric from '~/components/LayoutMetric.vue'
 
 export default {
 	name: 'Layout',
 	components: {
 		LayoutMetric,
 	},
-};
+}
 </script>

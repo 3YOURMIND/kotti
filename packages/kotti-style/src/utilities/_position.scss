@@ -1,45 +1,49 @@
 .float-left {
-  float: left;
+	float: left;
 }
 .float-right {
-  float: right;
+	float: right;
 }
 
-$margins:(
-  0: 0,
-  1: $unit-1,
-  2: $unit-2,
-  3: $unit-3,
-  4: $unit-4,
-  5: $unit-5,
-  6: $unit-6,
-  '8px': $unit-2,
-  '16px': $unit-4,
-  element: $unit-4,
-  block: $unit-6
+$margins: (
+	0: 0,
+	1: $unit-1,
+	2: $unit-2,
+	3: $unit-3,
+	4: $unit-4,
+	5: $unit-5,
+	6: $unit-6,
+	'8px': $unit-2,
+	'16px': $unit-4,
+	element: $unit-4,
+	block: $unit-6,
 );
 
 @each $prop, $abbrev in (margin-top: mt, margin-bottom: mb, margin-right: mr, margin-left: ml) {
-  @each $size, $length in $margins {
-    .#{$abbrev}-#{$size} { #{$prop}: $length; }
-  }
+	@each $size, $length in $margins {
+		.#{$abbrev}-#{$size} {
+			#{$prop}: $length;
+		}
+	}
 }
 
-$paddings:(
-  0: 0,
-  1: $unit-1,
-  2: $unit-2,
-  3: $unit-3,
-  4: $unit-4,
-  5: $unit-5,
-  6: $unit-6,
-  '8px': $unit-2,
-  '16px': $unit-4,
-  element: $unit-4
+$paddings: (
+	0: 0,
+	1: $unit-1,
+	2: $unit-2,
+	3: $unit-3,
+	4: $unit-4,
+	5: $unit-5,
+	6: $unit-6,
+	'8px': $unit-2,
+	'16px': $unit-4,
+	element: $unit-4,
 );
 
 @each $prop, $abbrev in (padding-top: pt, padding-bottom: pb, padding-right: pr, padding-left: pl) {
-  @each $size, $length in $margins {
-    .#{$abbrev}-#{$size} { #{$prop}: $length; }
-  }
+	@each $size, $length in $margins {
+		.#{$abbrev}-#{$size} {
+			#{$prop}: $length;
+		}
+	}
 }

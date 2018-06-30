@@ -25,6 +25,7 @@ a {
 	color: $link-color;
 	outline: none;
 	text-decoration: none;
+
 	&:focus,
 	&:hover,
 	&:active,
@@ -32,6 +33,7 @@ a {
 		color: $link-color-dark;
 		text-decoration: none;
 	}
+
 	i {
 		font-size: 1.5em !important;
 	}

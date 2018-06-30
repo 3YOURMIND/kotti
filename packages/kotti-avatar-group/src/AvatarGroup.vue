@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import KtAvatar from '../../kotti-avatar';
+import KtAvatar from '../../kotti-avatar'
 
 export default {
 	name: 'KtAvatarGroup',
@@ -46,14 +46,11 @@ export default {
 			return {
 				'avatar-group': true,
 				stack: this.isStack,
-			};
+			}
 		},
 		avatarRemainders() {
-			return this.items.length - this.showItems;
+			return this.items.length - this.showItems
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

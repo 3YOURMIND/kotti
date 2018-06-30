@@ -27,42 +27,44 @@ In order to user table, you need give `tableData` and `columns` data to `KtTable
 ```
 
 ```js
-tableColumns: [
-	{
-		label: 'Name',
-		key: 'name',
-	},
-	{
-		label: 'Date',
-		key: 'date',
-	},
-	{
-		label: 'Address',
-		key: 'address',
-	},
-],
-tableData: [
-	{
-		date: '2016-05-03',
-		name: 'Tom',
-		address: 'No. 119, Grove St, Los Angeles',
-	},
-	{
-		date: '2016-05-02',
-		name: 'Jackson',
-		address: 'No. 89, Grove St, Los Angeles',
-	},
-	{
-		date: '2016-05-04',
-		name: 'Fen',
-		address: 'No. 182, Grove St, Los Angeles',
-	},
-	{
-		date: '2016-05-01',
-		name: 'Fexiang',
-		address: 'No. 189, Grove St, Los Angeles',
-	},
-],
+{
+	tableColumns: [
+		{
+			label: 'Name',
+			key: 'name',
+		},
+		{
+			label: 'Date',
+			key: 'date',
+		},
+		{
+			label: 'Address',
+			key: 'address',
+		},
+	],
+	tableData: [
+		{
+			date: '2016-05-03',
+			name: 'Tom',
+			address: 'No. 119, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-02',
+			name: 'Jackson',
+			address: 'No. 89, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-04',
+			name: 'Fen',
+			address: 'No. 182, Grove St, Los Angeles',
+		},
+		{
+			date: '2016-05-01',
+			name: 'Fexiang',
+			address: 'No. 189, Grove St, Los Angeles',
+		},
+	],
+}
 ```
 
 </div>
@@ -127,13 +129,13 @@ Content should be left aligned except some common alignment style, such as price
 
 <KtTable :tableData="tableData" :columns="tableColumnsAlign" />
 
-`align` in `columns` decide the alignment of each column. 
+`align` in `columns` decide the alignment of each column.
 
 ## Responsive
 
 When display space is limited, some columns should be hidden depending on the importance of the content.
 
-`responsive` in `columns` has five break point to hide the column. 
+`responsive` in `columns` has five break point to hide the column.
 
 <KtTable :tableData="tableData" :columns="tableColumns" />
 
@@ -171,12 +173,12 @@ data() {
 
 `actions` adds hover actions to the table. Using `actions` slot to define the action template.
 
-`slot-scope` can be used to pass the properties of each row. 
+`slot-scope` can be used to pass the properties of each row.
 
 <KtTable :tableData="tableData" :columns="tableColumns" actions>
 	<div slot-scope="rowsProps" slot="actions">
 	<i class="yoco" @click="showAlert(rowsProps.row.name, 'edited')">edit</i>
-	<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i> 
+	<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i>
 	</div>
 </KtTable>
 
@@ -184,15 +186,14 @@ data() {
 <KtTable :tableData="tableData" :columns="tableColumns" actions>
 	<div slot-scope="rowsProps" slot="actions">
 	<i class="yoco" @click="showAlert(rowsProps.row.name, 'edited')">edit</i>
-	<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i> 
+	<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i>
 	</div>
 </KtTable>
 ```
-
 
 ## Expandable
 
-`expandable` enable expandability of the row, you can create template in `expand` slot. Same as `actions`, `slot-scope` can be used to pass the properties of each row. 
+`expandable` enable expandability of the row, you can create template in `expand` slot. Same as `actions`, `slot-scope` can be used to pass the properties of each row.
 
 <KtTable :tableData="tableData" :columns="tableColumns" expandable xScroll>
 <div slot-scope="expandProps" slot="expand">
@@ -209,52 +210,48 @@ data() {
 </div>
 </KtTable>
 ```
-
-
 
 ## Usage
 
 ### Attributes
 
-| Attribute | Description | Type | Accepted values | Default |
-| ---- | ---- | ---- | ---- | ---- |
-| tableData | table row data | `Array` | - | - |
-| columns | table column information | `Arrary` | - | - |
-| columns.label | table column header | `String` | - | - |
-| columns.key | used to match the value in `tableData` | `String` | - | - |
-| columns.width | width percentage | `Number` | - | `null` |
-| columns.align | alignment of column | `String` | `center`, `left`, `right` | `left` |
-| columns.responsive | control responsive display | `String` | - | - |
-| xScroll | allow scroll table horizontal | `Boolean` | - | `false` |
-| selectable | enable select option of table | `Boolean` | - | `false` |
-| expandable | allow row expanding | `Boolean` | - | `false` |
-| actions | add hover actions to the table | `Boolean` | - | `false` |
+| Attribute            | Description                            | Type      | Accepted values           | Default |
+|:---------------------|:---------------------------------------|:----------|:--------------------------|:--------|
+| `tableData`          | table row data                         | `Array`   | —                         | —       |
+| `columns`            | table column information               | `Array`  | —                         | —       |
+| `columns.label`      | table column header                    | `String`  | —                         | —       |
+| `columns.key`        | used to match the value in `tableData` | `String`  | —                         | —       |
+| `columns.width`      | width percentage                       | `Number`  | —                         | `null`  |
+| `columns.align`      | alignment of column                    | `String`  | `center`, `left`, `right` | `left`  |
+| `columns.responsive` | control responsive display             | `String`  | —                         | —       |
+| `xScroll`            | allow scroll table horizontal          | `Boolean` | —                         | `false` |
+| `selectable`         | enable select option of table          | `Boolean` | —                         | `false` |
+| `expandable`         | allow row expanding                    | `Boolean` | —                         | `false` |
+| `actions`            | add hover actions to the table         | `Boolean` | —                         | `false` |
 
 ### Slots
 
-| Slot Name | Description |
-| --------- | ----------- |
-| expand | expand section of each row |
-| actions | action section of each row |
-
-
+| Slot Name | Description                |
+|:----------|:---------------------------|
+| `expand`  | expand section of each row |
+| `actions` | action section of each row |
 </template>
 
 <script>
-import KtTable from '../../../packages/kotti-table';
-import KtBanner from '../../../packages/kotti-banner';
-import ShowCase from '../../components/ShowCase';
+import KtBanner from '../../../packages/kotti-banner'
+import KtTable from '../../../packages/kotti-table'
+import ShowCase from '../../components/ShowCase'
 
 export default {
 	name: 'Tables',
 	components: {
-		KtTable,
 		KtBanner,
+		KtTable,
 		ShowCase,
 	},
 	methods: {
 		showAlert(val, model) {
-			alert(`${val} is ${model}!`);
+			alert(`${val} is ${model}!`)
 		},
 	},
 	data() {
@@ -336,7 +333,7 @@ export default {
 					address: 'No. 89, Grove St, Los Angeles',
 				},
 			],
-		};
+		}
 	},
-};
+}
 </script>

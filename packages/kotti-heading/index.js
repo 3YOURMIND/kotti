@@ -1,7 +1,7 @@
-import KtHeading from './src/Heading';
+import KtHeading from './src/Heading'
 
 KtHeading.install = function(Vue) {
-	Vue.component(KtHeading.name, KtHeading);
-};
+	Vue.component(KtHeading.name, KtHeading)
+}
 
-export default KtHeading;
+export default KtHeading

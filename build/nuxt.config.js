@@ -5,9 +5,9 @@ const routerBase =
 					base: '/kotti/',
 				},
 		  }
-		: {};
+		: {}
 
-const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'gh-pages' : 'dist';
+const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'gh-pages' : 'dist'
 
 module.exports = {
 	srcDir: './www/',
@@ -24,7 +24,7 @@ module.exports = {
 				hid: 'description',
 				name: 'description',
 				content: `Kotti helps to unify our design language and provides the documentation for further product
-          design decisions. The Kotti design system has two main parts: foundation and components.`,
+design decisions. The Kotti design system has two main parts: foundation and components.`,
 			},
 		],
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -32,11 +32,7 @@ module.exports = {
 	/*
   ** Customize the progress bar color
   */
-	css: [
-		'../packages/kotti-style/dist/index.min.css',
-		'@/assets/css/main.scss',
-		'@3yourmind/yoco',
-	],
+	css: ['../packages/kotti-style/dist/index.min.css', '@/assets/css/main.scss', '@3yourmind/yoco'],
 	modules: ['@nuxtjs/markdownit'],
 	loading: { color: '#2C64CC' },
 	plugins: ['~/plugins/vue-clipboard2'],
@@ -57,8 +53,8 @@ module.exports = {
 					test: /\.(js|vue)$/,
 					// loader: 'eslint-loader',
 					exclude: /(node_modules)/,
-				});
+				})
 			}
 		},
 	},
-};
+}

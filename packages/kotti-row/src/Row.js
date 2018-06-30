@@ -26,14 +26,14 @@ export default {
 
 	computed: {
 		style() {
-			const ret = {};
+			const result = {}
 
 			if (this.gutter) {
-				ret.marginLeft = `-${this.gutter / 2}px`;
-				ret.marginRight = ret.marginLeft;
+				result.marginLeft = `-${this.gutter / 2}px`
+				result.marginRight = result.marginLeft
 			}
 
-			return ret;
+			return result
 		},
 	},
 
@@ -49,6 +49,6 @@ export default {
 				style: this.style,
 			},
 			this.$slots.default
-		);
+		)
 	},
-};
+}

@@ -1,9 +1,9 @@
-const base = require('./webpack.config.js');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const path = require('path');
+const base = require('./webpack.config.js')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const path = require('path')
 
-const version = process.env.VERSION || require('../package.json').version;
+const version = process.env.VERSION || require('../package.json').version
 
 const builds = {
 	mode: 'development',
@@ -38,16 +38,16 @@ const builds = {
 			minimize: true,
 		},
 	},
-};
+}
 
 function genConfig(opts) {
-	const config = merge({}, base, opts.config);
+	const config = merge({}, base, opts.config)
 
 	config.plugins = config.plugins.concat([
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify(opts.env || 'development'),
 		}),
-	]);
+	])
 
 	if (opts.env) {
 		config.plugins = config.plugins.concat([
@@ -60,13 +60,13 @@ function genConfig(opts) {
 				entryOnly: true,
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
-		]);
+		])
 	}
-	return config;
+	return config
 }
 
 if (process.env.TARGET) {
-	module.exports = genConfig(builds[process.env.TARGET]);
+	module.exports = genConfig(builds[process.env.TARGET])
 } else {
-	module.exports = Object.keys(builds).map(name => genConfig(builds[name]));
+	module.exports = Object.keys(builds).map(name => genConfig(builds[name]))
 }

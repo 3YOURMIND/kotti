@@ -1,33 +1,33 @@
 .d-flex {
-  display: flex;
-  flex-flow: nowrap;
-  flex-direction: row;
-  width: 100%;
-  position: relative; 
+	display: flex;
+	flex-flow: nowrap;
+	flex-direction: row;
+	width: 100%;
+	position: relative;
 }
 
 .d-block {
-  display: block;
+	display: block;
 }
 
 .d-inline {
-  display: inline;
+	display: inline;
 }
 
 .d-inline-block {
-  display: inline-block;
+	display: inline-block;
 }
 
 .d-none {
-  display: none;
+	display: none;
 }
 
 .d-flex-row {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .d-flex-column {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }

@@ -17,27 +17,27 @@ It is best to place secondary functionality or information in the drawer, and on
 ## Size
 
 <div class="element-example">
-  <button class="primary mr-16px" @click="showDrawer=true" >Show Default Size Drawer</button>
-  <button class="primary"  @click="showWideDrawer=true">Show Wide Size Drawer</button>
-  <KtDrawer v-if="showDrawer" @close="showDrawer=false" :closeOutside="false">
-    <div slot="drawer-header">
-      <h2>Default Size Drawer</h2>
-    </div>
-    <div slot="drawer-body">
-      <p>Close from outside disabled</p>
-    </div>
-    <div slot="drawer-footer">
-      <button @click="showDrawer=false" class="w-100">Close Drawer</button>
-    </div>
-  </KtDrawer>
-  <KtDrawer v-if="showWideDrawer" :wide="true" @close="showWideDrawer=false">
-    <div slot="drawer-header">
-      <h2>Wide Size Drawer</h2>
-    </div>
-    <div slot="drawer-body">
-      <p>Close from outside allowed</p>
-    </div>
-  </KtDrawer>
+	<button class="primary mr-16px" @click="showDrawer=true" >Show Default Size Drawer</button>
+	<button class="primary" @click="showWideDrawer=true">Show Wide Size Drawer</button>
+	<KtDrawer v-if="showDrawer" @close="showDrawer=false" :closeOutside="false">
+		<div slot="drawer-header">
+			<h2>Default Size Drawer</h2>
+		</div>
+		<div slot="drawer-body">
+			<p>Close from outside disabled</p>
+		</div>
+		<div slot="drawer-footer">
+			<button @click="showDrawer=false" class="w-100">Close Drawer</button>
+		</div>
+	</KtDrawer>
+	<KtDrawer v-if="showWideDrawer" :wide="true" @close="showWideDrawer=false">
+		<div slot="drawer-header">
+			<h2>Wide Size Drawer</h2>
+		</div>
+		<div slot="drawer-body">
+			<p>Close from outside allowed</p>
+		</div>
+	</KtDrawer>
 </div>
 
 There are two size of drawer: `default` and `wide`. Drawer will be half fo the window width when `wide` set to `true`.
@@ -53,23 +53,23 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 
 ```html
 <KtDrawer v-if="showDrawer" @close="showDrawer=false" :closeOutside="false">
-  <div slot="drawer-header">
-    <h2>Default Size Drawer</h2>
-  </div>
-  <div slot="drawer-body">
-    <p>Close from outside disabled</p>
-  </div>
-  <div slot="drawer-footer">
-    <button @click="showDrawer=false" class="w-100">Close Drawer</button>
-  </div>
+	<div slot="drawer-header">
+		<h2>Default Size Drawer</h2>
+	</div>
+	<div slot="drawer-body">
+		<p>Close from outside disabled</p>
+	</div>
+	<div slot="drawer-footer">
+		<button @click="showDrawer=false" class="w-100">Close Drawer</button>
+	</div>
 </KtDrawer>
 <KtDrawer v-if="showWideDrawer" :wide="true" @close="showWideDrawer=false">
-  <div slot="drawer-header">
-    <h2>Wide Size Drawer</h2>
-  </div>
-  <div slot="drawer-body">
-    <p>Close from outside allowed</p>
-  </div>
+	<div slot="drawer-header">
+		<h2>Wide Size Drawer</h2>
+	</div>
+	<div slot="drawer-body">
+		<p>Close from outside allowed</p>
+	</div>
 </KtDrawer>
 ```
 
@@ -79,29 +79,29 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 
 ```html
 <div class="drawer-mask">
-  <div class="drawer-container">
-    <div class="drawer-header">
-      <h2>default header</h2>
-    </div>
-    <div class="drawer-body">
-        default body
-    </div>
-    <div class="drawer-footer">
-      <button class="w-100">Close</button>
-    </div>
-    <div class="drawer-handle">
-      <i class="yoco" v-if="expand">chevron_right</i>
-      <i class="yoco" v-else>chevron_left</i>
-    </div>
-  </div>
+	<div class="drawer-container">
+		<div class="drawer-header">
+			<h2>default header</h2>
+		</div>
+		<div class="drawer-body">
+				default body
+		</div>
+		<div class="drawer-footer">
+			<button class="w-100">Close</button>
+		</div>
+		<div class="drawer-handle">
+			<i class="yoco" v-if="expand">chevron_right</i>
+			<i class="yoco" v-else>chevron_left</i>
+		</div>
+	</div>
 </div>
 
 <div class="drawer-mask">
-  <div class="drawer-container drawer-wide">
-    <div class="drawer-header"></div>
-    <div class="drawer-body"></div>
-    ...
-  </div>
+	<div class="drawer-container drawer-wide">
+		<div class="drawer-header"></div>
+		<div class="drawer-body"></div>
+		...
+	</div>
 </div>
 ```
 </div>
@@ -112,25 +112,23 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 
 ### Attributes
 
-| Attribute | Description             | Type      | Accepted values                  | Default |
-| --------- | ----------------------- | --------- | -------------------------------- | ------- |
-| wide      | wide drawer          | `boolean`  | - | `false  `    |
-| closeOutside | closed drawer when click outside of drawer            | `boolean`  | -            | `true`     |
-
+| Attribute      | Description                                | Type      | Accepted values | Default |
+|:---------------|:-------------------------------------------|:----------|:----------------|:--------|
+| `closeOutside` | closed drawer when click outside of drawer | `Boolean` | —               | `true`  |
+| `wide`         | wide drawer                                | `Boolean` | —               | `false	` |
 
 ### Slots
 
-| Slot Name | Description             |
-| --------- | ----------------------- |
-| drawer-header| header section of drawer          |
-| drawer-body | body section of drawer       | 
-| drawer-footer | footer section of dreawer          | 
-
+| Slot Name       | Description     |
+|:----------------|:----------------|
+| `drawer-header` | header section  |
+| `drawer-body`   | body section    |
+| `drawer-footer` | footer section  |
 </template>
 
 <script>
-import KtDrawer from '../../../packages/kotti-drawer';
-import ShowCase from '../../components/ShowCase';
+import KtDrawer from '../../../packages/kotti-drawer'
+import ShowCase from '../../components/ShowCase'
 
 export default {
 	name: 'Drawer',
@@ -142,7 +140,7 @@ export default {
 		return {
 			showDrawer: false,
 			showWideDrawer: false,
-		};
+		}
 	},
-};
+}
 </script>

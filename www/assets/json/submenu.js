@@ -1,7 +1,6 @@
 // Todo: auto generate submenu from './pages/' dir
 const submenu = [
 	{
-		parent: 'foundations',
 		child: [
 			{
 				label: 'Layout',
@@ -28,9 +27,9 @@ const submenu = [
 				to: 'writing',
 			},
 		],
+		parent: 'foundations',
 	},
 	{
-		parent: 'components',
 		child: [
 			{
 				label: 'Avatars',
@@ -57,18 +56,18 @@ const submenu = [
 				to: 'inputs',
 			},
 			{
+				isCSS: true,
 				label: 'Loadings',
 				to: 'loadings',
-				isCSS: true,
 			},
 			{
 				label: 'Modal',
 				to: 'modal',
 			},
 			{
+				isCSS: true,
 				label: 'Popovers',
 				to: 'popovers',
-				isCSS: true,
 			},
 			{
 				label: 'Radios',
@@ -87,18 +86,18 @@ const submenu = [
 				to: 'selects',
 			},
 			{
-				label: 'Switchs',
-				to: 'switchs',
+				label: 'Switches',
+				to: 'switches',
 			},
 			{
+				isCSS: true,
 				label: 'Utilities',
 				to: 'utilities',
-				isCSS: true,
 			},
 		],
+		parent: 'components',
 	},
 	{
-		parent: 'patterns',
 		child: [
 			{
 				label: 'Forms',
@@ -113,9 +112,9 @@ const submenu = [
 				to: 'inline-edit',
 			},
 		],
+		parent: 'patterns',
 	},
 	{
-		parent: 'resources',
 		child: [
 			{
 				label: 'Kotti Style',
@@ -126,7 +125,8 @@ const submenu = [
 				to: 'designkit',
 			},
 		],
+		parent: 'resources',
 	},
-];
+]
 
-export default submenu;
+export default submenu

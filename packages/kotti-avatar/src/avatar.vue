@@ -2,8 +2,8 @@
 	<div
 		:class="avatarClasses"
 		:data-tooltip="name"
-  	@click="onAvatarContainerClick"
-  >
+		@click="onAvatarContainerClick"
+	>
 		<div v-if="avatarAvailable">
 			<img class="avatar-img" :src="src" @error="imgFallBack()" />
 		</div>
@@ -43,11 +43,11 @@ export default {
 	data() {
 		return {
 			avatarFallback: true,
-		};
+		}
 	},
 	computed: {
 		avatarAvailable() {
-			return this.src !== '' && this.avatarFallback;
+			return this.src !== '' && this.avatarFallback
 		},
 		avatarClasses() {
 			return {
@@ -56,22 +56,22 @@ export default {
 				'avatar--sm': this.small,
 				'avatar--hover': this.hoverable,
 				'tooltip tooltip-bottom': this.showTooltip,
-			};
+			}
 		},
 		avatarFallbackClasses() {
 			return {
 				'avatar-fallback': true,
 				'avatar-fallback--small': this.small,
-			};
+			}
 		},
 	},
 	methods: {
 		imgFallBack() {
-			this.avatarFallback = false;
+			this.avatarFallback = false
 		},
 		onAvatarContainerClick($event) {
-			this.$emit('click', $event);
+			this.$emit('click', $event)
 		},
 	},
-};
+}
 </script>

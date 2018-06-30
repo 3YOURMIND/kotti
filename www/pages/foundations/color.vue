@@ -1,90 +1,90 @@
 <template>
-  <div class="color">
-    <h1>Colors</h1>
-    <h2>Primary Color</h2>
-    <div>
-      <p>
-        Kotti uses <code>Primary Blue</code> as the main design color which also
-        match the 3YOURMIND brand color. We don't recommend against using
-        multiple colors in one page, but they should be limited to less than
-        20%.
-      </p>
-    </div>
-    <h2>Color Palettes</h2>
-    <h3>Naming convention</h3>
-    <div>
-      <p>
-        The colors in each palette have the same hue but diffrent saturation and
-        lightness. Palettes start with a primary color, then continue in the
-        spectrum to create a complete and usable set of colors. An example color
-        name is
-        <code>ColorName-number</code>. <code>ColorName</code> represents the
-        hue, and <code>number</code> represents the lightness. A smaller number
-        means lighter, and a greater number means darker.
-      </p>
-    </div>
-    <h3>
-      Palettes
-      <span class="tooltip c-hand" data-tooltip="Click color to copy">
-        <i class="yoco">circle_question</i>
-      </span>
-    </h3>
-    <div class="columns">
-      <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Prirmary Blue"
-        :colors="primaryColor"
-      />
-      <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Green"
-        :colors="greenColor"
-      />
-      <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Red"
-        :colors="redColor"
-      />
-      <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Orange"
-        :colors="orangeColor"
-      />
-       <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Yellow"
-        :colors="yellowColor"
-      />
-      <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Purple"
-        :colors="purpleColor"
-      />
-    </div>
-    <div class="columns">
-      <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Dark Grey"
-        :colors="darkGrey"
-      />
-      <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Light Grey"
-        :colors="lightGrey"
-      />
-      <ColorPalette
-        class="column col-md-12 col-4"
-        colorName="Neutrals"
-        :colors="neutrals"
-      />
-    </div>
-    <ColorUsage />
-  </div>
+	<div class="color">
+		<h1>Colors</h1>
+		<h2>Primary Color</h2>
+		<div>
+			<p>
+				Kotti uses <code>Primary Blue</code> as the main design color which also
+				match the 3YOURMIND brand color. We don't recommend against using
+				multiple colors in one page, but they should be limited to less than
+				20%.
+			</p>
+		</div>
+		<h2>Color Palettes</h2>
+		<h3>Naming convention</h3>
+		<div>
+			<p>
+				The colors in each palette have the same hue but diffrent saturation and
+				lightness. Palettes start with a primary color, then continue in the
+				spectrum to create a complete and usable set of colors. An example color
+				name is
+				<code>ColorName-number</code>. <code>ColorName</code> represents the
+				hue, and <code>number</code> represents the lightness. A smaller number
+				means lighter, and a greater number means darker.
+			</p>
+		</div>
+		<h3>
+			Palettes
+			<span class="tooltip c-hand" data-tooltip="Click color to copy">
+				<i class="yoco">circle_question</i>
+			</span>
+		</h3>
+		<div class="columns">
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Prirmary Blue"
+				:colors="primaryColor"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Green"
+				:colors="greenColor"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Red"
+				:colors="redColor"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Orange"
+				:colors="orangeColor"
+			/>
+			 <ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Yellow"
+				:colors="yellowColor"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Purple"
+				:colors="purpleColor"
+			/>
+		</div>
+		<div class="columns">
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Dark Grey"
+				:colors="darkGrey"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Light Grey"
+				:colors="lightGrey"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Neutrals"
+				:colors="neutrals"
+			/>
+		</div>
+		<ColorUsage />
+	</div>
 </template>
 
 <script>
-import ColorUsage from '~/components/ColorUsage.vue';
-import ColorPalette from '~/components/ColorPalette.vue';
+import ColorUsage from '~/components/ColorUsage.vue'
+import ColorPalette from '~/components/ColorPalette.vue'
 
 export default {
 	name: 'Color',
@@ -136,17 +136,14 @@ export default {
 				{ name: 'Lightgrey-500', code: '#A8A8A8' },
 				{ name: 'Lightgrey-600', code: '#5C5C5C' },
 			],
-			neutrals: [
-				{ name: 'White-000', code: '#FFFFFF' },
-				{ name: 'Black-000', code: '#000000' },
-			],
+			neutrals: [{ name: 'White-000', code: '#FFFFFF' }, { name: 'Black-000', code: '#000000' }],
 			yellowColor: [
 				{ name: 'Yellow-300', code: '#FFF9C0' },
 				{ name: 'Yellow-400', code: '#FFF490' },
 				{ name: 'Yellow-500', code: '#FFE60D' },
 				{ name: 'Yellow-600', code: '#DFC903' },
 			],
-		};
+		}
 	},
-};
+}
 </script>

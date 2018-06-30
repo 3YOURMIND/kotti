@@ -1,24 +1,29 @@
 .pagination {
-  margin: 0;
-  list-style: none;
-  .page-button {
-    background: $lightgray-300;
-    display: inline-block;
-    padding: $unit-1;
-    &:hover {
-      background: $lightgray-400;
-    }
-  }
-  .page-item {
-    display: inline-block;
-    text-align: center;
-    padding: $unit-2;
-    line-height: 24px;
-  }
-  .disabled {
-    cursor: not-allowed;
-    .page-button {
-      opacity: .46;
-    }
-  }
+	margin: 0;
+	list-style: none;
+
+	.page-button {
+		background: $lightgray-300;
+		display: inline-block;
+		padding: $unit-1;
+
+		&:hover {
+			background: $lightgray-400;
+		}
+	}
+
+	.page-item {
+		display: inline-block;
+		text-align: center;
+		padding: $unit-2;
+		line-height: 24px;
+	}
+
+	.disabled {
+		cursor: not-allowed;
+
+		.page-button {
+			opacity: 0.46;
+		}
+	}
 }

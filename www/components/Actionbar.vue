@@ -8,8 +8,11 @@
 				<div class="actionbar-menu has-icon-right">
 					<ul v-for="item in submenu" :key="item.id"
 							v-if="item.parent === currentSection.toLowerCase()">
-						<nuxt-link v-for="child in item.child" :to="`/${item.parent}/${child.to}`"
-						  :key="child.to">
+						<nuxt-link
+							v-for="child in item.child"
+							:to="`/${item.parent}/${child.to}`"
+							:key="child.to"
+						>
 							<li>
 								<span v-text="child.label" />
 								<span v-if="child.isCSS" class="indicator-only-css">CSS</span>
@@ -28,10 +31,12 @@
 .nuxt-link-exact-active li {
 	font-weight: 600;
 	color: #2c66c4;
+
 	i {
 		color: #2c66c4;
 	}
 }
+
 .indicator-only-css {
 	font-size: 0.6em;
 	background: #64ad13;
@@ -45,21 +50,21 @@
 
 
 <script>
-import Submenu from '../assets/json/submenu';
+import Submenu from '../assets/json/submenu'
 
 export default {
 	name: 'Actionbar',
 	data() {
 		return {
 			submenu: Submenu,
-		};
+		}
 	},
 	computed: {
 		currentSection() {
-			let pathName = this.$route.name ? this.$route.name.split('-')[0] : '';
-			let sectionName = pathName.slice(0, 1).toUpperCase() + pathName.slice(1);
-			return sectionName;
+			const pathName = this.$route.name ? this.$route.name.split('-')[0] : ''
+			const sectionName = pathName.slice(0, 1).toUpperCase() + pathName.slice(1)
+			return sectionName
 		},
 	},
-};
+}
 </script>

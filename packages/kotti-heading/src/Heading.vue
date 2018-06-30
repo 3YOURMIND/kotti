@@ -25,52 +25,28 @@
 export default {
 	name: 'KtHeading',
 	props: {
-		text: {
-			type: String,
-			default: 'H3 Heading',
-		},
-		type: {
-			type: String,
-			default: 'default',
-		},
-		actionText: {
-			type: String,
-			default: '',
-		},
-		icon: {
-			type: String,
-			default: '',
-		},
-		toggleText: {
-			type: String,
-			default: 'View',
-		},
-		toggleCloseText: {
-			type: String,
-			default: 'Close',
-		},
-		toggleStatus: {
-			type: Boolean,
-			default: false,
-		},
+		actionText: { type: String, default: '' },
+		icon: { type: String, default: '' },
+		text: { type: String, default: 'H3 Heading' },
+		toggleCloseText: { type: String, default: 'Close' },
+		toggleStatus: { type: Boolean, default: false },
+		toggleText: { type: String, default: 'View' },
+		type: { type: String, default: 'default' },
 	},
 	computed: {
 		toggleTextRep() {
-			return this.toggleStatus ? this.toggleCloseText : this.toggleText;
+			return this.toggleStatus ? this.toggleCloseText : this.toggleText
 		},
 	},
 	methods: {
-		handleClick(evt) {
+		handleClick(event) {
 			if (this.type === 'action') {
-				this.$emit('click', evt);
+				this.$emit('click', event)
 			}
 			if (this.type === 'toggle') {
-				this.$emit('toggle', evt);
+				this.$emit('toggle', event)
 			}
 		},
 	},
-};
+}
 </script>
-
-<style lang="scss" scoped>
-</style>

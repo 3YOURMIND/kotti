@@ -49,19 +49,24 @@
 	clear: both;
 	display: flex;
 	flex-wrap: wrap;
+
 	&::before,
 	&::after {
 		clear: both;
 	}
+
 	&--justify-center {
 		justify-content: center;
 	}
+
 	&--justify-end {
 		justify-content: flex-end;
 	}
+
 	&--align-center {
 		align-items: center;
 	}
+
 	&--align-bottom {
 		align-items: baseline;
 	}

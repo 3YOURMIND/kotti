@@ -1,7 +1,7 @@
-import KtTable from './src/Table';
+import KtTable from './src/Table'
 
 KtTable.install = function(Vue) {
-	Vue.component(KtTable.name, KtTable);
-};
+	Vue.component(KtTable.name, KtTable)
+}
 
-export default KtTable;
+export default KtTable

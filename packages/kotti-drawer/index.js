@@ -1,7 +1,7 @@
-import KtDrawer from './src/Drawer';
+import KtDrawer from './src/Drawer'
 
 KtDrawer.install = function(Vue) {
-	Vue.component(KtDrawer.name, KtDrawer);
-};
+	Vue.component(KtDrawer.name, KtDrawer)
+}
 
-export default KtDrawer;
+export default KtDrawer

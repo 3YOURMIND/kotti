@@ -9,6 +9,7 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
+
 	.actionbar-wrapper {
 		position: fixed;
 		padding: $unit-6;
@@ -17,13 +18,16 @@
 		display: flex;
 		flex-direction: column;
 	}
+
 	.actionbar-header {
 		flex: 0 0 auto;
 	}
+
 	.actionbar-body {
 		flex: 1 1 100%;
 		overflow-y: auto;
 	}
+
 	.actionbar-footer {
 		flex: 1 1 auto;
 		padding-top: 1.2rem;
@@ -45,27 +49,35 @@
 		margin: 0;
 		position: relative;
 	}
+
 	li {
 		font-size: 0.7rem;
 		list-style: none;
 		padding: $unit-2 0;
 		color: $darkgray-500;
 	}
+
 	a {
 		text-decoration: none;
 	}
+
 	i {
 		color: $lightgray-500;
 	}
+
 	&.has-icon-right i {
 		float: right;
 	}
-	.router-link-active li {
-		font-weight: 600;
-		color: $primary-500;
-	}
-	.router-link-active i {
-		color: $primary-500;
+
+	.router-link-active {
+		li {
+			font-weight: 600;
+			color: $primary-500;
+		}
+
+		i {
+			color: $primary-500;
+		}
 	}
 }
 @media (max-width: $size-md) {
@@ -76,6 +88,7 @@
 		border-bottom: 1px solid #ddd;
 		flex: 1 1 auto;
 		z-index: $zindex-1;
+
 		.actionbar-wrapper {
 			width: 100%;
 			position: relative;

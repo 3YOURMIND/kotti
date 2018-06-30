@@ -1,7 +1,7 @@
 <template>
-  <div :class="objectClass">
-  	<slot></slot>
-  </div>
+	<div :class="objectClass">
+		<slot/>
+	</div>
 </template>
 
 <script>
@@ -15,8 +15,8 @@ export default {
 			return {
 				'button-group': true,
 				'button-group--shadow': this.shadow,
-			};
+			}
 		},
 	},
-};
+}
 </script>

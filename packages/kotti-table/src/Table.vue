@@ -86,151 +86,147 @@
 export default {
 	name: 'KtTable',
 	props: {
-		tableData: Array,
+		actions: Boolean,
 		columns: Array,
 		expandable: Boolean,
-		actions: Boolean,
+		responsive: String,
 		selectable: Boolean,
+		tableData: Array,
 		value: Array,
 		xScroll: Boolean,
-		responsive: String,
 	},
 	data() {
 		return {
-			selectedRow: [],
 			expandRowIndex: Number,
 			selectedAll: false,
-		};
+			selectedRow: [],
+		}
 	},
 	mounted() {
-		this.selectedRow = this.value || [];
+		this.selectedRow = this.value || []
 	},
 	computed: {
 		tableBodyData() {
-			let _data = [];
+			let _data = []
 			this.tableData.forEach(item => {
-				let newItem = {};
+				let newItem = {}
 				this.columns.forEach(column => {
-					newItem[column.key] = item[column.key];
-				});
-				_data.push(newItem);
+					newItem[column.key] = item[column.key]
+				})
+				_data.push(newItem)
 				if (this.expandable) {
 					let newItemExpand = Object.assign(
 						{
 							expand: true,
 						},
 						newItem
-					);
-					_data.push(newItemExpand);
+					)
+					_data.push(newItemExpand)
 				}
-			});
-			return _data;
+			})
+			return _data
 		},
 		colSpanNumber() {
 			if (!this.columns) {
-				return 0;
+				return 0
 			}
-			let _span = this.columns.length;
+			let _span = this.columns.length
 			if (this.expandable) {
-				_span = _span + 1;
+				_span = _span + 1
 			}
 			if (this.selectable) {
-				_span = _span + 1;
+				_span = _span + 1
 			}
-			return _span;
+			return _span
 		},
 	},
 	watch: {
 		selectedRow(val) {
-			if (!this.selectable) return;
-			let _tableLength = this.expandable
-				? this.tableBodyData.length / 2
-				: this.tableBodyData.length;
+			if (!this.selectable) return
+			let _tableLength = this.expandable ? this.tableBodyData.length / 2 : this.tableBodyData.length
 			if (val.length === _tableLength) {
-				this.selectedAll = true;
+				this.selectedAll = true
 			} else {
-				this.selectedAll = false;
+				this.selectedAll = false
 			}
-			this.handleSelected(val);
+			this.handleSelected(val)
 		},
 		selectedAll(oldVal, newVal) {
-			if (!this.selectable) return;
-			let _tableLength = this.expandable
-				? this.tableBodyData.length / 2
-				: this.tableBodyData.length;
+			if (!this.selectable) return
+			let _tableLength = this.expandable ? this.tableBodyData.length / 2 : this.tableBodyData.length
 			if (!oldVal && newVal && this.selectedRow.length === _tableLength) {
-				this.selectedRow = [];
+				this.selectedRow = []
 			}
 			if (!newVal) {
-				if (!this.selectedRow) return;
+				if (!this.selectedRow) return
 				if (this.selectedRow.length !== _tableLength) {
-					let _selectedRow = [];
+					let _selectedRow = []
 
 					for (let i = 0; i < _tableLength; i++) {
 						if (this.expandable) {
-							_selectedRow.push(i * 2);
+							_selectedRow.push(i * 2)
 						} else {
-							_selectedRow.push(i);
+							_selectedRow.push(i)
 						}
 					}
-					this.selectedRow = _selectedRow;
+					this.selectedRow = _selectedRow
 				}
-				return;
+				return
 			}
 		},
 	},
 	methods: {
 		columnStyle(width, align) {
-			let _width = width || 0;
-			let _algin = align || 'left';
-			return [{ width: _width ? `${_width}%` : 'auto' }, { textAlign: _algin }];
+			let _width = width || 0
+			let _algin = align || 'left'
+			return [{ width: _width ? `${_width}%` : 'auto' }, { textAlign: _algin }]
 		},
 		tdColumnStyle(key) {
-			let column = this.columns.find(column => column.key === key);
-			return { textAlign: column.align };
+			let column = this.columns.find(column => column.key === key)
+			return { textAlign: column.align }
 		},
 		tdColumnClass(key) {
-			let column = this.columns.find(column => column.key === key);
-			return [column.responsive];
+			let column = this.columns.find(column => column.key === key)
+			return [column.responsive]
 		},
 		columnClass(responsive) {
-			return [responsive];
+			return [responsive]
 		},
 		trClass(index) {
-			if (!this.selectable) return;
+			if (!this.selectable) return
 			if (this.selectedRow.includes(index)) {
-				return ['selected'];
+				return ['selected']
 			}
 		},
 		handleSelected() {
-			let _selected = this.selectedRow;
+			let _selected = this.selectedRow
 			if (this.expandable) {
-				_selected = _selected.map(index => index / 2);
+				_selected = _selected.map(index => index / 2)
 			}
-			this.$emit('input', _selected);
+			this.$emit('input', _selected)
 		},
 		selectRows(index) {
-			if (!this.selectable) return;
-			let _selectedRow = this.selectedRow;
+			if (!this.selectable) return
+			let _selectedRow = this.selectedRow
 			if (_selectedRow.includes(index)) {
-				_selectedRow = _selectedRow.filter(row => row != index);
+				_selectedRow = _selectedRow.filter(row => row != index)
 			} else {
-				_selectedRow.push(index);
+				_selectedRow.push(index)
 			}
-			this.selectedRow = _selectedRow;
+			this.selectedRow = _selectedRow
 		},
 		toggleExpandRow(index) {
 			if (index === this.expandRowIndex) {
-				return;
+				return
 			}
 			if (this.expandRowIndex === index + 1) {
-				this.expandRowIndex = null;
+				this.expandRowIndex = null
 			} else {
-				this.expandRowIndex = index + 1;
+				this.expandRowIndex = index + 1
 			}
 		},
 	},
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
-import KtModal from './src/Modal';
+import KtModal from './src/Modal'
 
 KtModal.install = function(Vue) {
-	Vue.component(KtModal.name, KtModal);
-};
+	Vue.component(KtModal.name, KtModal)
+}
 
-export default KtModal;
+export default KtModal

@@ -4,16 +4,19 @@
 	padding: 0.4rem 0;
 	border-bottom: 1px solid #dbdbdb;
 }
+
 .comment__avatar {
 	height: 2.4rem;
 	flex: 0 0 2.4rem;
 }
+
 .comment__wrapper {
 	margin-left: 0.4rem;
 	flex: 1 1 auto;
 	display: flex;
 	flex-direction: column;
 }
+
 .comment__info {
 	width: 100%;
 	display: flex;
@@ -21,19 +24,23 @@
 	line-height: 1.2rem;
 	flex-direction: row;
 }
+
 .info__name {
 	flex: 1 1;
 	font-weight: 600;
 }
+
 .info__time {
 	flex: 1 1;
 	color: $lightgray-500;
 	text-align: right;
 }
+
 .comment__message {
 	font-size: 0.75rem;
 	line-height: 1.2rem;
 }
+
 .comment__action,
 .comment-reply__action {
 	display: flex;
@@ -102,17 +109,20 @@
 	flex-flow: row;
 	padding: 0.4rem 0;
 }
+
 .comment-reply__avatar {
 	width: 1.6rem;
 	height: 1.6rem;
 	flex: 0 0 1.6rem;
 }
+
 .comment-reply__wrapper {
 	width: 100%;
 	margin-left: 0.4rem;
 	display: flex;
 	flex-direction: column;
 }
+
 .comment-reply__info {
 	width: 100%;
 	display: flex;
@@ -121,25 +131,30 @@
 	margin-bottom: 0.2rem;
 	flex-direction: row;
 }
+
 .comment-reply__name {
 	flex: 1 1;
 	font-weight: 600;
 }
+
 .comment-reply__time {
 	flex: 1 1 auto;
 	color: $lightgray-500;
 	text-align: right;
 }
+
 .comment-reply__body {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
+
 .comment-reply__message {
 	width: 100%;
 	font-size: 0.7rem;
 	line-height: 1.2rem;
 }
+
 .comment-reply__action {
 	align-items: center;
 	align-self: center;
@@ -152,6 +167,7 @@
 	bottom: 0;
 	background: #f8f8f8;
 }
+
 .comment-input__wrapper {
 	display: flex;
 	width: 100%;
@@ -164,12 +180,14 @@
 		border: 1px solid #bbb;
 	}
 }
+
 .comment-input__reply {
 	display: flex;
 	width: 100%;
 	padding: 0.4rem;
 	align-items: center;
 }
+
 .comment-input__quote {
 	background: #f8f8f8;
 	color: #a8a8a8;
@@ -177,22 +195,27 @@
 	padding: 0.4rem;
 	display: flex;
 }
+
 .comment-quote__name {
 	flex: 1 1;
 }
+
 .comment-input__avatar {
 	width: 2.4rem;
 	height: 2.4rem;
 	border-radius: 100%;
 	flex: 0 0 2.4rem;
+
 	img {
 		border-radius: 100%;
 		height: 100%;
 		width: 100%;
 	}
 }
+
 .comment-input__input {
 	flex: 1 1;
+
 	textarea {
 		resize: none;
 		width: 100%;
@@ -200,11 +223,13 @@
 		border: 0;
 		line-height: 1rem;
 		height: 1.6rem;
+
 		&:focus {
 			outline: none;
 		}
 	}
 }
+
 .comment-input__button {
 	flex: 0 0;
 	line-height: 2rem;

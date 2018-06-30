@@ -1,32 +1,36 @@
 // Codes
 @mixin code-base() {
-  border-radius: $border-radius;
-  background: $lightgray-300;
-  line-height: 1.5;
+	border-radius: $border-radius;
+	background: $lightgray-300;
+	line-height: 1.5;
 }
 
 pre {
-  @include code-base();
-  color: inherit;
-  display: block;
-  overflow-x: auto;
-  padding: 1rem;
-  width: 100%;
+	@include code-base();
+
+	color: inherit;
+	display: block;
+	overflow-x: auto;
+	padding: 1rem;
+	width: 100%;
 }
+
 code {
-  @include code-base();
-  &::before {
-    color: $lightgray-300;
-    content: attr(data-lang);
-    font-size: $font-size-sm;
-    position: absolute;
-    right: $layout-spacing;
-    top: $unit-h;
-  }
-  background: $lightgray-300;
-  border-radius: $border-radius;
-  color: $body-font-color;
-  position: relative;
-  padding: $unit-h;
-  font-size: 85%;
+	@include code-base();
+
+	background: $lightgray-300;
+	border-radius: $border-radius;
+	color: $body-font-color;
+	position: relative;
+	padding: $unit-h;
+	font-size: 85%;
+
+	&::before {
+		color: $lightgray-300;
+		content: attr(data-lang);
+		font-size: $font-size-sm;
+		position: absolute;
+		right: $layout-spacing;
+		top: $unit-h;
+	}
 }

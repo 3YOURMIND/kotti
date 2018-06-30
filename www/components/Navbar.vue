@@ -1,16 +1,21 @@
 <template>
 	<KtNavbar :src="logoSrc">
+		<div slot="navbar-header" class="navbar-logo">
+			<nuxt-link to="/">
+				<img :src="logoSrc" />
+			</nuxt-link>
+		</div>
 		<ul slot="navbar-menu">
 			<nuxt-link :to="item.to" v-for="item in globalMenu" :key="item.icon" :class="activeLinkClass(item.label)">
 				<li>
-				<i class="yoco" v-text="item.icon" />
-				<span v-text="item.label" />
+					<i class="yoco" v-text="item.icon" />
+					<span v-text="item.label" />
 				</li>
 			</nuxt-link>
 		</ul>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti">
-				<button class="primary w-100">Github</button>
+				<button class="primary w-100">GitHub</button>
 			</a>
 		</div>
 	</KtNavbar>
@@ -26,8 +31,9 @@
 
 
 <script>
-import LogoSvg from '~/assets/img/nav_logo.svg';
-import KtNavbar from '../../packages/kotti-navbar';
+import KtNavbar from '../../packages/kotti-navbar'
+import LogoSvg from '~/assets/img/nav_logo.svg'
+
 export default {
 	name: 'KtNavbarComponent',
 	components: {
@@ -58,16 +64,16 @@ export default {
 					to: '/resources/kotti-style',
 				},
 			],
-		};
+		}
 	},
 	methods: {
 		activeLinkClass(val) {
-			let parentPath = val.toLowerCase();
-			let routePath = this.$route.name ? this.$route.name : '';
+			const parentPath = val.toLowerCase()
+			const routePath = this.$route.name || ''
 			return {
 				active: routePath.includes(parentPath),
-			};
+			}
 		},
 	},
-};
+}
 </script>
