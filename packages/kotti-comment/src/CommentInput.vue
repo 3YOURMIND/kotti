@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import KtAvatar from '@3yourmind/kotti-avatar'
+import KtAvatar from '../../kotti-avatar'
 
 export default {
 	name: 'KtCommentInput',

@@ -36,9 +36,9 @@
 </template>
 
 <script>
-import KtAvatar from '@3yourmind/kotti-avatar'
-import KtButton from '@3yourmind/kotti-button'
-import KtButtonGroup from '@3yourmind/kotti-button-group'
+import KtAvatar from '../../kotti-avatar'
+import KtButton from '../../kotti-button'
+import KtButtonGroup from '../../kotti-button-group'
 
 export default {
 	name: 'KtCommentReply',
