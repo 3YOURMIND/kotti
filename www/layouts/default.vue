@@ -33,6 +33,6 @@ export default {
 	max-width: 40rem;
 }
 .content img {
-	width: 100%;
+	max-width: 100%;
 }
 </style>
