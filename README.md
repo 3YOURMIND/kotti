@@ -21,7 +21,7 @@ presence.
 Kotti Design System includes:
 
 | Item                     | Meaning                                                                               | Purpose                                                                         |
-|:-------------------------|:--------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------|
+| :----------------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------ |
 | Design Guideline         | a suggestion documentation for non-developer to read and understand the design system | Give UX/UI designer a single source of truth and make sure design is consistent |
 | Styles `kotti-style`     | a css framework which implement the design guideline                                  | Help developer to write customize component easier                              |
 | UI Components `kotti-ui` | modular and functional components based on design guideline                           | replace the shared components in our project                                    |
@@ -68,6 +68,8 @@ yarn doc:gh-pages
 
 ## Use Kotti-Style
 
+[![npm version](https://badge.fury.io/js/%403yourmind%2Fkotti-style.svg)](https://www.npmjs.com/package/@3yourmind/kotti-style)
+
 ### Install Kotti-Style
 
 ```bash
@@ -75,13 +77,15 @@ yarn doc:gh-pages
 yarn add @3yourmind/kotti-style
 ```
 
-### Import Kotti-Style
+### Use Kotti-Style
 
 ```scss
 @import '@3yourmind/kotti-style';
 ```
 
 ## Use Kotti-UI
+
+[![npm version](https://badge.fury.io/js/%403yourmind%2Fkotti-ui.svg)](https://www.npmjs.com/package/@3yourmind/kotti-ui)
 
 ### Install Kotti-UI
 

@@ -32,6 +32,9 @@
 		"type": "git",
 		"url": "https://github.com/3YOURMIND/kotti"
 	},
-	"style": "/dist/index.min.css",
+	"files": [
+		"dist",
+		"../packages"
+	],
 	"version": "0.0.1-beta.6"
 }
