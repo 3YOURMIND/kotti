@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@3yourmind/yoco@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@3yourmind/yoco/-/yoco-0.0.3.tgz#ef2f55c862c95bf488d3fbe6138f06ef6dccfb28"
+"@3yourmind/yoco@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@3yourmind/yoco/-/yoco-0.0.4.tgz#b35578c506a7a6857a1745fc8e3c3609251833ef"
 
 "@babel/code-frame@7.0.0-beta.46", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.46"

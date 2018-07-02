@@ -12,6 +12,8 @@
 
 Kotti uses custom icons — [Yoco](https://www.github.com/3yourmind/yoco)
 
+![npm-version](https://badge.fury.io/js/%403yourmind%2Fyoco.svg)
+
 <div class="columns">
 	<yoco-preview
 		:icon="liga"
@@ -43,3 +45,10 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss" scoped>
+img[alt='npm-version'] {
+	width: 120px;
+	display: block;
+}
+</style>
