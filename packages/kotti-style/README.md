@@ -1,6 +1,8 @@
 # Kotti Style
 
-The library for kotti style CSS
+The CSS library for Kotti Style 💅
+
+![npm version](https://badge.fury.io/js/%403yourmind%2Fkotti-style.svg)
 
 ## Getting started
 
@@ -34,5 +36,5 @@ The compiled CSS file located in `/dist` directory.
 ## Import Kotti Style
 
 ```scss
-@import '@3yourmind/kotti-style/lib/index.min.css';
+@import '@3yourmind/kotti-style';
 ```

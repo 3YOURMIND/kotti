@@ -18,8 +18,21 @@ $text-colors: (
 	text-warning: $orange-500,
 );
 
+$text-aligns: (
+	text-right: right,
+	text-left: left,
+	text-center: center,
+	text-justify: justify,
+);
+
 @each $element, $color in $text-colors {
 	.#{$element} {
 		color: $color;
+	}
+}
+
+@each $element, $align in $text-aligns {
+	.#{$element} {
+		text-align: $align;
 	}
 }
