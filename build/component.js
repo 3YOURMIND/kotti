@@ -6,18 +6,7 @@ const path = require('path')
 const version = process.env.VERSION || require('../package.json').version
 
 const builds = {
-	mode: 'development',
-	development: {
-		mode: 'development',
-		config: {
-			output: {
-				filename: 'kotti-ui.js',
-				libraryTarget: 'umd',
-			},
-		},
-	},
 	production: {
-		mode: 'production',
 		config: {
 			output: {
 				filename: 'kotti-ui.min.js',
@@ -65,8 +54,4 @@ function genConfig(opts) {
 	return config
 }
 
-if (process.env.TARGET) {
-	module.exports = genConfig(builds[process.env.TARGET])
-} else {
-	module.exports = Object.keys(builds).map(name => genConfig(builds[name]))
-}
+module.exports = genConfig(builds['production'])
