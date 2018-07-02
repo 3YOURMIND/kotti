@@ -128,6 +128,26 @@
 	<KtInput label="Warning Input" :placeholder="v5" validate="warning" />
 	```
 
+	## Compact
+
+	In order to save vertical space on the page when many inputs need, and icon only input can not deliver clear information,
+	you can choose compact input style.
+
+	<div class="element-example">
+		<KtInput label="Full Name" isCompact/>
+		<KtInput label="Address" isCompact/>
+		<KtInput label="Company" isCompact/>
+	</div>
+
+	Using `isCompact` to enable compact style.
+
+	```html
+	<KtInput label="Full Name" compact/>
+	<KtInput label="Address" compact/>
+	<KtInput label="Company" compact/>
+	```
+
+
 </template>
 
 <script>

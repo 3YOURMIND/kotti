@@ -21,6 +21,12 @@
 	}
 }
 
+.form-input--compact {
+	height: $control-size-lg;
+	line-height: 0.8rem;
+	padding-top: 0.6rem;
+}
+
 textarea.form-input {
 	height: auto;
 	padding: $unit-2;
@@ -91,5 +97,46 @@ textarea.form-input {
 
 	&.input-inline {
 		display: inline-flex;
+	}
+}
+
+// Compact Input with label
+
+@mixin checkout_address-input-overlay {
+	position: absolute;
+	pointer-events: none;
+	height: 100%;
+	width: 100%;
+	font-size: $font-size;
+	line-height: $unit-10;
+	box-sizing: border-box;
+	color: $lightgray-500;
+	transition: all 0.1s ease-out;
+}
+
+.checkout_address-input-overlay {
+	@include checkout_address-input-overlay();
+	padding: 0 $unit-2;
+	font-size: $font-size;
+}
+
+.checkout_address-input-overlay--focused {
+	@include checkout_address-input-overlay();
+	padding: 0 0 0 $unit-2;
+	line-height: $unit-4;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+}
+
+.checkout__address-input {
+	position: absolute;
+	bottom: 0;
+	border: 0;
+	outline: 0;
+	margin: 0;
+	background: transparent;
+	::placeholder {
+		color: $lightgray-500;
 	}
 }

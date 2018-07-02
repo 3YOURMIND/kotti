@@ -1,6 +1,6 @@
 <template>
 	<div :class="formClass">
-		<label class="form-label" v-text="label" />
+		<label :class="formLabelClass" v-text="label" />
 		<div :class="inputGroupClass">
 			<span class="input-group-addon" v-text="addonText" />
 			<input
@@ -10,7 +10,9 @@
 				:value="currentValue"
 				@change="handleChange"
 				@input="handleInput"
-				class="form-input"
+				@blur="handleBlur"
+				@focus="handleFocus"
+				:class="formInputClass"
 			/>
 			<i class="form-icon yoco" v-text="icon" />
 		</div>
@@ -23,6 +25,7 @@ export default {
 	data() {
 		return {
 			currentValue: this.value || '',
+			isFocused: false,
 		}
 	},
 	watch: {
@@ -39,12 +42,26 @@ export default {
 		type: { type: String, default: 'text' },
 		validate: { type: String, default: '' },
 		value: [String, Number],
+		isCompact: Boolean,
 	},
 	computed: {
 		inputGroupClass() {
 			return {
 				'input-group': Boolean(this.addonText),
 				[`has-icon-${this.iconPosition}`]: Boolean(this.icon),
+			}
+		},
+		formInputClass() {
+			return {
+				'form-input': true,
+				'form-input--compact': this.isCompact,
+			}
+		},
+		formLabelClass() {
+			return {
+				'form-label': true,
+				'form-label--compact': this.isCompact,
+				'form-label--compact--focus': this.isCompact && (this.isFocused || this.currentValue),
 			}
 		},
 		formClass() {
@@ -61,6 +78,12 @@ export default {
 			const value = event.target.value
 			this.$emit('input', value)
 			this.setCurrentValue(value)
+		},
+		handleFocus() {
+			this.isFocused = true
+		},
+		handleBlur() {
+			this.isFocused = false
 		},
 		handleChange(event) {
 			this.$emit('change', event.target.value)

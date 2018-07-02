@@ -23,3 +23,22 @@
 		white-space: normal;
 	}
 }
+
+.form-label--compact {
+	position: absolute;
+	top: 0;
+	line-height: $control-size-lg;
+	font-size: 0.75rem;
+	font-weight: 500;
+	left: $unit-2;
+	z-index: 1;
+	text-transform: none;
+	pointer-events: none;
+	transition: all 0.1s ease-in;
+	&--focus {
+		line-height: $control-size-lg / 2;
+		text-transform: uppercase;
+		font-size: 0.5rem;
+		transition: all 0.1s ease-out;
+	}
+}

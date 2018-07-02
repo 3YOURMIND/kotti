@@ -12,13 +12,12 @@ legend {
 	font-weight: 500;
 	margin-bottom: $layout-spacing-lg;
 }
-
-.form-group :not(:last-child) {
-	margin-bottom: $layout-spacing;
+.form-group {
+	position: relative;
+	&:not(:last-child) {
+		margin-bottom: $layout-spacing;
+	}
 }
-
-// Text area
-
 .form-textarea,
 textarea {
 	padding: $unit-2;
