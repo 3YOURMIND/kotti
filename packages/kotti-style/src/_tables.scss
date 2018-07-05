@@ -19,6 +19,21 @@ table {
 	tr {
 		position: relative;
 		margin: 0;
+
+		&:hover .table-actions {
+			display: inline-flex;
+			justify-content: center;
+			background: #ffffff;
+		}
+
+		&.selected,
+		&:focus {
+			background: $lightgray-300;
+		}
+
+		&:focus {
+			outline: none;
+		}
 	}
 
 	td {
@@ -26,12 +41,18 @@ table {
 		line-height: 1.2rem;
 		padding: $unit-2 $unit-1;
 		border-bottom: 1px solid #dbdbdb;
+
+		&.empty {
+			text-align: center;
+			color: $lightgray-500;
+		}
 	}
 
 	i {
 		font-size: 1rem !important;
 		color: $darkgray-300;
 		margin: 0 0.2rem;
+
 		&.disabled {
 			color: $lightgray-500;
 		}
@@ -56,27 +77,12 @@ table {
 		i {
 			margin: 0 $unit-1;
 			color: $lightgray-500;
+
+			&:hover {
+				cursor: pointer;
+				color: $darkgray-500;
+			}
 		}
-
-		i:hover {
-			cursor: pointer;
-			color: $darkgray-500;
-		}
-	}
-
-	tr:hover .table-actions {
-		display: inline-flex;
-		justify-content: center;
-		background: #ffffff;
-	}
-
-	tr.selected {
-		background: #f8f8f8;
-	}
-
-	td.empty {
-		text-align: center;
-		color: $lightgray-500;
 	}
 
 	.form-group {
