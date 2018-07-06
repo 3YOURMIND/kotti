@@ -2,67 +2,43 @@
 # Tables
 
 ## Elements
+
 ![Table Elements](~/assets/img/tables_overview.png)
 
-1. **Table Heading:** The table heading uses the same style as the `label text`. The heading should express the content of each column.
-2. **Table row:** The row content uses `default text` style.
-3. **Table Hover Action Button:** The table rows can imply further functionality when they are hovered over.
+1. **Table Heading**: The table heading uses the same style as the `label text`. The heading should express the content of each column.
+2. **Table Row**: The row content uses `default text` style.
+3. **Table Hover Action Button**: The table rows can imply further functionality when they are hovered over.
 
 ## Basic
 
-In order to user table, you need give `tableData` and `columns` data to `KtTable` component.
+In order to use the table, you need give `rows` and `columns` data to `KtTable` component.
 
-<KtTable :tableData="tableData" :columns="tableColumns1" />
+<KtTable :rows="rows" :columns="columnsResponsive" />
 
-`columns` define the column of the table, `label` is the header text of table, `key` will be used to find the value from `tableData`.
+`columns` define the column of the table, `label` is the header text of table, `key` will be used to find the value from `rows`.
 
-`tableData` is the data of each row.
+`rows` is an `Array` of `Object`s that represent a `row`.
 
 <ShowCase>
 
 <div slot="vue">
 
 ```html
-<KtTable :tableData="tableData" :columns="tableColumns" />
+<KtTable :rows="rows" :columns="columns" />
 ```
 
 ```js
 {
-	tableColumns: [
-		{
-			label: 'Name',
-			key: 'name',
-		},
-		{
-			label: 'Date',
-			key: 'date',
-		},
-		{
-			label: 'Address',
-			key: 'address',
-		},
+	columns: [
+		{ label: 'Name',    key: 'name' },
+		{ label: 'Date',    key: 'date' },
+		{ label: 'Address', key: 'address' },
 	],
-	tableData: [
-		{
-			date: '2016-05-03',
-			name: 'Tom',
-			address: 'No. 119, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-02',
-			name: 'Jackson',
-			address: 'No. 89, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-04',
-			name: 'Fen',
-			address: 'No. 182, Grove St, Los Angeles',
-		},
-		{
-			date: '2016-05-01',
-			name: 'Fexiang',
-			address: 'No. 189, Grove St, Los Angeles',
-		},
+	rows: [
+		{ date: '2016-05-03', name: 'Tom',     address: 'No. 119, Grove St, Los Angeles' },
+		{ date: '2016-05-02', name: 'Jackson', address: 'No. 89, Grove St, Los Angeles' },
+		{ date: '2016-05-04', name: 'Fen',     address: 'No. 182, Grove St, Los Angeles' },
+		{ date: '2016-05-01', name: 'Fexiang', address: 'No. 189, Grove St, Los Angeles' },
 	],
 }
 ```
@@ -74,9 +50,9 @@ In order to user table, you need give `tableData` and `columns` data to `KtTable
 ```html
 <table>
 	<thead>
-		<th>NAME</th>
+		<th>Name</th>
 		<th>Date</th>
-		<th>ADDRESS</th>
+		<th>Address</th>
 	</thead>
 	<tbody>
 		<tr>
@@ -101,70 +77,62 @@ In order to user table, you need give `tableData` and `columns` data to `KtTable
 
 In most cases the table is the same width as its parent. You can also specify the column width in `columns`.
 
-<KtTable :tableData="tableData" :columns="tableColumnsWidth" />
+<KtTable :rows="rows" :columns="columnsWidth" />
 
 ```js
-tableColumns: [
-	{
-		label: 'Name',
-		key: 'name',
-		width: 30
-	},
-	{
-		label: 'Date',
-		key: 'date',
-		width: 20
-	},
-	{
-		label: 'Address',
-		key: 'address',
-		width: 50
-	},
-],
+{
+	columns: [
+		{ key: 'name',    label: 'Name',    width: '30%' },
+		{ key: 'date',    label: 'Date',    width: '20%' },
+		{ key: 'address', label: 'Address', width: '50%' },
+	],
+}
 ```
 
 ## Content alignment
 
 Content should be left aligned except some common alignment style, such as price, currency.
 
-<KtTable :tableData="tableData" :columns="tableColumnsAlign" />
+<KtTable :rows="rows" :columns="columnsAlign" />
 
-`align` in `columns` decide the alignment of each column.
+`align` in `columns` decides the alignment of each column’s text.
 
 ## Responsive
 
-When display space is limited, some columns should be hidden depending on the importance of the content.
+When display space is limited, some less-important columns should be hidden.
 
-`responsive` in `columns` has five break point to hide the column.
+`responsive` in `columns` has five breakpoints to make this easy to do.
 
-<KtTable :tableData="tableData" :columns="tableColumns" />
+<KtTable :rows="rows" :columns="columnsResponsive" />
 
 When content should not be hidden, using horizontal scrolling is a better alternative.
-`xScroll` will enable x-scrolling for the table.
+`isScrollable` will enable horizontal scrolling for the table.
 
-<KtTable :tableData="tableData" :columns="tableColumns1" xScroll/>
+<KtTable :rows="rows" :columns="columnsDefault" isScrollable />
 
 ```html
-<KtTable :tableData="tableData" :columns="tableColumns1" xScroll/>
+<KtTable :rows="rows" :columns="columnsDefault" isScrollable />
 ```
 
 ## Selectable
 
-`selectable` enables mutilple select option of the table. You can bind an `Arrary` model to `KtTable`, and control the select data.
+`isSelectable` enables mutilple select option of the table. You can bind an `Array` model to `KtTable` and control the selected data.
 
 <div>
-	<KtTable :tableData="tableData" :columns="tableColumns" selectable v-model="select" />
-	Selected value: {{select}}
+	<KtTable :rows="rows" :columns="columnsResponsive" isSelectable v-model="select" />
+	Selected value: {{ select }}
 </div>
 
 ```html
-<KtTable :tableData="tableData" :columns="tableColumns" selectable v-model="select" />
+<KtTable :rows="rows" :columns="columns" isSelectable v-model="select" />
 ```
 
 ```js
-data() {
-	return {
-		select: [0, 1]
+{
+	data() {
+		return {
+			select: [0, 1]
+		}
 	}
 }
 ```
@@ -175,39 +143,39 @@ data() {
 
 `slot-scope` can be used to pass the properties of each row.
 
-<KtTable :tableData="tableData" :columns="tableColumns" actions>
-	<div slot-scope="rowsProps" slot="actions">
-	<i class="yoco" @click="showAlert(rowsProps.row.name, 'edited')">edit</i>
-	<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i>
+<KtTable :rows="rows" :columns="columnsResponsive" hasActions>
+	<div slot-scope="row" slot="actions">
+		<i class="yoco" @click="showAlert(row.data.name, 'edited')">edit</i>
+		<i class="yoco" @click="showAlert(row.data.name, 'deleted')">trash</i>
 	</div>
 </KtTable>
 
 ```html
-<KtTable :tableData="tableData" :columns="tableColumns" actions>
-	<div slot-scope="rowsProps" slot="actions">
-	<i class="yoco" @click="showAlert(rowsProps.row.name, 'edited')">edit</i>
-	<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i>
+<KtTable :rows="rows" :columns="columns" hasActions>
+	<div slot-scope="row" slot="actions">
+		<i class="yoco" @click="showAlert(row.data.name, 'edited')">edit</i>
+		<i class="yoco" @click="showAlert(row.data.name, 'deleted')">trash</i>
 	</div>
 </KtTable>
 ```
 
 ## Expandable
 
-`expandable` enable expandability of the row, you can create template in `expand` slot. Same as `actions`, `slot-scope` can be used to pass the properties of each row.
+`isExpandable` enables expandability of the row, you can create template in `expand` slot. Same as `actions`, `slot-scope` can be used to pass the properties of each row.
 
-<KtTable :tableData="tableData" :columns="tableColumns" expandable xScroll>
-<div slot-scope="expandProps" slot="expand">
-	<KtBanner :message="expandProps.row.name" icon="user" :isGrey="true"/>
-	<KtBanner :message="expandProps.row.address" icon="global" :isGrey="true"/>
-</div>
+<KtTable :rows="rows" :columns="columnsResponsive" isExpandable isScrollable>
+	<div slot-scope="row" slot="expand">
+		<KtBanner :message="row.data.name" icon="user" :isGrey="true"/>
+		<KtBanner :message="row.data.address" icon="global" :isGrey="true"/>
+	</div>
 </KtTable>
 
 ```html
-<KtTable :tableData="tableData" :columns="tableColumns" expandable xScroll>
-<div slot-scope="expandProps" slot="expand">
-	<KtBanner :message="expandProps.row.name" icon="user" :isGrey="true"/>
-	<KtBanner :message="expandProps.row.address" icon="global" :isGrey="true"/>
-</div>
+<KtTable :rows="rows" :columns="columns" isExpandable isScrollable>
+	<div slot-scope="row" slot="expand">
+		<KtBanner :message="row.data.name" icon="user" :isGrey="true"/>
+		<KtBanner :message="row.data.address" icon="global" :isGrey="true"/>
+	</div>
 </KtTable>
 ```
 
@@ -215,26 +183,38 @@ data() {
 
 ### Attributes
 
-| Attribute            | Description                            | Type      | Accepted values           | Default |
-|:---------------------|:---------------------------------------|:----------|:--------------------------|:--------|
-| `tableData`          | table row data                         | `Array`   | —                         | —       |
-| `columns`            | table column information               | `Array`  | —                         | —       |
-| `columns.label`      | table column header                    | `String`  | —                         | —       |
-| `columns.key`        | used to match the value in `tableData` | `String`  | —                         | —       |
-| `columns.width`      | width percentage                       | `Number`  | —                         | `null`  |
-| `columns.align`      | alignment of column                    | `String`  | `center`, `left`, `right` | `left`  |
-| `columns.responsive` | control responsive display             | `String`  | —                         | —       |
-| `xScroll`            | allow scroll table horizontal          | `Boolean` | —                         | `false` |
-| `selectable`         | enable select option of table          | `Boolean` | —                         | `false` |
-| `expandable`         | allow row expanding                    | `Boolean` | —                         | `false` |
-| `actions`            | add hover actions to the table         | `Boolean` | —                         | `false` |
+| Attribute            | Description                                 | Type                        | Accepted values                 | Default |
+|:---------------------|:--------------------------------------------|:----------------------------|:--------------------------------|:--------|
+| `columns.align`      | alignment of column text                    | `String`                    | `"center"`, `"left"`, `"right"` | `left`  |
+| `columns.key`        | used to match the value in `rows`           | `String`                    | —                               | —       |
+| `columns.label`      | table column header                         | `String`                    | —                               | —       |
+| `columns.responsive` | control responsive display                  | `String`                    | —                               | —       |
+| `columns.width`      | width                                       | `String`                    | `10%`, `100px`                  | `auto`  |
+| `columns`            | table column information                    | `Array`                     | —                               | —       |
+| `emptyText`          | text to show when table is empty            | `String`                    | —                               | —       |
+| `hasActions`         | add hover actions to the table              | `Boolean`                   | —                               | `false` |
+| `isExpandable`       | allow row expanding                         | `Boolean`                   | —                               | `false` |
+| `isInteractive`      | allow clicking/keyboard focusing table rows | `Boolean`                   | —                               | `false` |
+| `isScrollable`       | allow horizontal table scrolling            | `Boolean`                   | —                               | `false` |
+| `isSelectable`       | enable select option of table               | `Boolean`                   | —                               | `false` |
+| `rows`               | table row data                              | `Array`                     | —                               | —       |
+| `tdClasses`          | classes to apply to all `<td>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
+| `thClasses`          | classes to apply to all `<th>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
+| `trClasses`          | classes to apply to all `<tr>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
+| `value`              | —                                           | `Array`                     | —                               | —       |
+
+### Events
+
+| Event Name     | Arguments       | Description                                                         |
+|:---------------|:----------------|:--------------------------------------------------------------------|
+| `@activateRow` | `(data, index)` | Row was clicked or activated via keyboard. Requires `isInteractive` |
 
 ### Slots
 
 | Slot Name | Description                |
 |:----------|:---------------------------|
-| `expand`  | expand section of each row |
 | `actions` | action section of each row |
+| `expand`  | expand section of each row |
 </template>
 
 <script>
@@ -250,87 +230,43 @@ export default {
 		ShowCase,
 	},
 	methods: {
-		showAlert(val, model) {
-			alert(`${val} is ${model}!`)
+		showAlert(value, model) {
+			alert(`${value} is ${model}!`)
 		},
 	},
 	data() {
 		return {
 			select: [0, 1],
-			tableColumns1: [
-				{
-					label: 'Name',
-					key: 'name',
-				},
-				{
-					label: 'Date',
-					key: 'date',
-				},
-				{
-					label: 'Address',
-					key: 'address',
-				},
+			columnsDefault: [
+				{ key: 'name', label: 'Name' },
+				{ key: 'date', label: 'Date' },
+				{ key: 'address', label: 'Address' },
 			],
-			tableColumnsWidth: [
-				{
-					label: 'Name',
-					key: 'name',
-					width: 10,
-				},
-				{
-					label: 'Date',
-					key: 'date',
-					width: 40,
-				},
-				{
-					label: 'Address',
-					key: 'address',
-					width: 50,
-				},
+			columnsAlign: [
+				{ key: 'name', label: 'Name', align: 'left' },
+				{ key: 'date', label: 'Date', align: 'center' },
+				{ key: 'address', label: 'Address', align: 'right' },
 			],
-			tableColumnsAlign: [
-				{
-					label: 'Name',
-					key: 'name',
-					align: 'left',
-				},
-				{
-					label: 'Date',
-					key: 'date',
-					align: 'center',
-				},
-				{
-					label: 'Address',
-					key: 'address',
-					align: 'right',
-				},
+			columnsResponsive: [
+				{ key: 'name', label: 'Name', responsive: 'hide-sm' },
+				{ key: 'date', label: 'Date', responsive: 'hide-md' },
+				{ key: 'address', label: 'Address' },
 			],
-			tableColumns: [
-				{
-					label: 'Name',
-					key: 'name',
-					responsive: 'hide-sm',
-				},
-				{
-					label: 'Date',
-					key: 'date',
-					responsive: 'hide-md',
-				},
-				{
-					label: 'Address',
-					key: 'address',
-				},
+			columnsWidth: [
+				{ key: 'name', label: 'Name', width: '30%' },
+				{ key: 'date', label: 'Date', width: '20%' },
+				{ key: 'address', label: 'Address', width: '50%' },
 			],
-			tableData: [
+			rows: [
 				{
+					address: 'No. 119, Grove St, Los Angeles',
 					date: '2016-05-03',
 					name: 'Tom',
-					address: 'No. 119, Grove St, Los Angeles',
 				},
 				{
+					address: 'No. 89, Grove St, Los Angeles',
 					date: '2016-05-02',
 					name: 'Jackson',
-					address: 'No. 89, Grove St, Los Angeles',
 				},
 			],
 		}

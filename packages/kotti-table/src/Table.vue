@@ -1,13 +1,17 @@
 <template>
-	<div :class="{'x-scroll' : xScroll}">
+	<div :class="{ 'x-scroll': isScrollable }">
 		<table>
 			<thead>
 				<tr>
-					<th v-if="expandable" style="width:48px" />
-					<th v-if="selectable" style="width:48px">
+					<th v-if="isExpandable" class="th-expandable" />
+					<th v-if="isSelectable" class="th-selectable">
 						<div class="form-group">
 							<label class="form-checkbox">
-								<input type="checkbox" v-model="selectedAll" />
+								<input
+									type="checkbox"
+									:checked="allSelected"
+									@input.prevent.stop="toggleSelectAll"
+								/>
 								<i class="form-icon" />
 							</label>
 						</div>
@@ -15,214 +19,143 @@
 					<th
 						v-for="column in columns"
 						:key="column.key"
-						:class="columnClass(column.responsive)"
-						:style="columnStyle(column.width, column.align)"
+						:class="getThClasses(column)"
+						:style="getThStyle(column)"
 						v-text="column.label"
 					/>
-					<th v-if="actions" style="width:0" />
+					<th v-if="hasActions" class="th-actions" />
 				</tr>
 			</thead>
-			<tbody v-if="tableData">
-				<tr
-					v-for="(row, index) in tableBodyData"
-					:key="row.index"
-					:class="trClass(index)"
-				>
-					<td
-						v-if="expandable && !row.expand"
-						class="c-hand"
-						@click="toggleExpandRow(index)"
-					>
-						<div class="toggle">
-							<i class="yoco" v-if="expandRowIndex - 1 === index">
-								chevron_down
-							</i>
-							<i class="yoco" v-else>
-								chevron_right
-							</i>
-						</div>
-					</td>
-
-					<td v-if="!row.expand && selectable">
-						<div class="form-group">
-							<label class="form-checkbox">
-								<input type="checkbox" :value="index" v-model="selectedRow" />
-								<i class="form-icon" />
-							</label>
-						</div>
-					</td>
-					<td
-						v-if="!row.expand"
-						v-for="(value, key) in row"
-						:key="value.index"
-						v-text="value"
-						:class="tdColumnClass(key)"
-						:style="tdColumnStyle(key)"
-					/>
-					<td
-						v-if="row.expand && expandRowIndex === index"
-						:colspan="colSpanNumber"
-					>
-						<slot name="expand" :row="row" />
-					</td>
-
-					<td v-if="!row.expand && actions">
-						<div class="table-actions">
-							<slot name="actions" :row="row" />
-						</div>
-					</td>
-				</tr>
+			<tbody v-if="isEmpty">
+				<td
+					class="empty"
+					:colspan="colSpan"
+					v-text="emptyText"
+				/>
 			</tbody>
 			<tbody v-else>
-				<td class="empty" :colspan="colSpanNumber">
-					No Table Data
-				</td>
+				<KtTableRow
+					v-for="(virtualRow, key) in virtualRows"
+					:key="key"
+					:colSpan="colSpan"
+					:columns="columns"
+					:data="rows[virtualRow.index]"
+					:isExpanded="expandedRow === virtualRow.index"
+					:isSelected="isSelected(virtualRow.index)"
+					:virtualRow="virtualRow"
+					v-bind="settings"
+					@activateRow="onActivateRow(virtualRow.index)"
+					@toggleExpand="toggleExpand(virtualRow.index)"
+					@toggleSelect="toggleSelect(virtualRow.index)"
+				>
+					<div slot="actions" slot-scope="row">
+						<slot name="actions" v-bind="row"/>
+					</div>
+					<div slot="expand" slot-scope="row">
+						<slot name="expand" v-bind="row"/>
+					</div>
+				</KtTableRow>
 			</tbody>
 		</table>
 	</div>
 </template>
 
 <script>
+import KtTableRow from './TableRow.vue'
+
 export default {
 	name: 'KtTable',
+	components: { KtTableRow },
 	props: {
-		actions: Boolean,
-		columns: Array,
-		expandable: Boolean,
-		responsive: String,
-		selectable: Boolean,
-		tableData: Array,
-		value: Array,
-		xScroll: Boolean,
+		columns: { required: true, type: Array },
+		emptyText: { default: 'No Data', type: String },
+		hasActions: { default: false, type: Boolean },
+		isExpandable: { default: false, type: Boolean },
+		isInteractive: { default: false, type: Boolean },
+		isScrollable: { default: false, type: Boolean },
+		isSelectable: { default: false, type: Boolean },
+		rows: { required: true, type: Array },
+		tdClasses: { default: () => [], types: [Array, String, Object] },
+		thClasses: { default: () => [], types: [Array, String, Object] },
+		trClasses: { default: () => [], types: [Array, String, Object] },
+		value: { default: () => [], type: Array }, // v-model value
 	},
 	data() {
-		return {
-			expandRowIndex: Number,
-			selectedAll: false,
-			selectedRow: [],
-		}
-	},
-	mounted() {
-		this.selectedRow = this.value || []
+		return { expandedRow: null }
 	},
 	computed: {
-		tableBodyData() {
-			let _data = []
-			this.tableData.forEach(item => {
-				let newItem = {}
-				this.columns.forEach(column => {
-					newItem[column.key] = item[column.key]
-				})
-				_data.push(newItem)
-				if (this.expandable) {
-					let newItemExpand = Object.assign(
-						{
-							expand: true,
-						},
-						newItem
-					)
-					_data.push(newItemExpand)
-				}
-			})
-			return _data
+		allSelected() {
+			return this.value.length === this.rows.length
 		},
-		colSpanNumber() {
-			if (!this.columns) {
-				return 0
-			}
-			let _span = this.columns.length
-			if (this.expandable) {
-				_span = _span + 1
-			}
-			if (this.selectable) {
-				_span = _span + 1
-			}
-			return _span
-		},
-	},
-	watch: {
-		selectedRow(val) {
-			if (!this.selectable) return
-			let _tableLength = this.expandable ? this.tableBodyData.length / 2 : this.tableBodyData.length
-			if (val.length === _tableLength) {
-				this.selectedAll = true
-			} else {
-				this.selectedAll = false
-			}
-			this.handleSelected(val)
-		},
-		selectedAll(oldVal, newVal) {
-			if (!this.selectable) return
-			let _tableLength = this.expandable ? this.tableBodyData.length / 2 : this.tableBodyData.length
-			if (!oldVal && newVal && this.selectedRow.length === _tableLength) {
-				this.selectedRow = []
-			}
-			if (!newVal) {
-				if (!this.selectedRow) return
-				if (this.selectedRow.length !== _tableLength) {
-					let _selectedRow = []
+		colSpan() {
+			if (!this.columns) return 0
 
-					for (let i = 0; i < _tableLength; i++) {
-						if (this.expandable) {
-							_selectedRow.push(i * 2)
-						} else {
-							_selectedRow.push(i)
-						}
-					}
-					this.selectedRow = _selectedRow
-				}
-				return
+			let colSpan = this.columns.length
+
+			if (this.isExpandable) colSpan++
+			if (this.isSelectable) colSpan++
+
+			return colSpan
+		},
+		isEmpty() {
+			return this.rows.length === 0
+		},
+		settings() {
+			return [
+				'hasActions',
+				'isExpandable',
+				'isInteractive',
+				'isSelectable',
+				'tdClasses',
+				'trClasses',
+			].reduce((result, key) => ({ ...result, [key]: this[key] }), {})
+		},
+		/**
+		 * @description Generates table rows, expanders, etc.
+		 * @returns {Array} rows to display
+		 */
+		virtualRows() {
+			const rows = []
+
+			for (let index = 0; index < this.rows.length; index++) {
+				rows.push({ index, isExpander: false })
+				if (this.isExpandable) rows.push({ index, isExpander: true })
 			}
+
+			return rows
 		},
 	},
 	methods: {
-		columnStyle(width, align) {
-			let _width = width || 0
-			let _algin = align || 'left'
-			return [{ width: _width ? `${_width}%` : 'auto' }, { textAlign: _algin }]
+		isSelected(index) {
+			return this.value.includes(index)
 		},
-		tdColumnStyle(key) {
-			let column = this.columns.find(column => column.key === key)
-			return { textAlign: column.align }
+		toggleExpand(index) {
+			this.expandedRow = this.expandedRow === index ? null : index
 		},
-		tdColumnClass(key) {
-			let column = this.columns.find(column => column.key === key)
-			return [column.responsive]
+		toggleSelect(index) {
+			this.$emit(
+				'input',
+				this.isSelected(index)
+					? this.value.filter(row => row !== index)
+					: this.value.concat(index).sort(),
+			)
 		},
-		columnClass(responsive) {
-			return [responsive]
+		toggleSelectAll() {
+			this.$emit(
+				'input',
+				this.allSelected ? [] : this.rows.map((_, index) => index),
+			)
 		},
-		trClass(index) {
-			if (!this.selectable) return
-			if (this.selectedRow.includes(index)) {
-				return ['selected']
-			}
+		onActivateRow(index) {
+			this.$emit('activateRow', index, this.rows[index])
 		},
-		handleSelected() {
-			let _selected = this.selectedRow
-			if (this.expandable) {
-				_selected = _selected.map(index => index / 2)
-			}
-			this.$emit('input', _selected)
+		getThClasses(column) {
+			return [this.thClasses, column.thClasses]
 		},
-		selectRows(index) {
-			if (!this.selectable) return
-			let _selectedRow = this.selectedRow
-			if (_selectedRow.includes(index)) {
-				_selectedRow = _selectedRow.filter(row => row != index)
-			} else {
-				_selectedRow.push(index)
-			}
-			this.selectedRow = _selectedRow
-		},
-		toggleExpandRow(index) {
-			if (index === this.expandRowIndex) {
-				return
-			}
-			if (this.expandRowIndex === index + 1) {
-				this.expandRowIndex = null
-			} else {
-				this.expandRowIndex = index + 1
+		getThStyle(column) {
+			return {
+				textAlign: column.align || 'left',
+				width: column.width || 'auto',
 			}
 		},
 	},
@@ -232,6 +165,18 @@ export default {
 <style lang="scss" scoped>
 .toggle {
 	display: inline-block;
+	width: 32px;
+}
+
+.th-actions {
+	width: 0;
+}
+
+.th-expandable,
+.th-selectable,
+.td-selectable {
+	text-align: left;
+	user-select: none;
 	width: 32px;
 }
 </style>
