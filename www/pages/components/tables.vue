@@ -95,7 +95,7 @@ Content should be left aligned except some common alignment style, such as price
 
 <KtTable :rows="rows" :columns="columnsAlign" />
 
-`textAlign` in `columns` decides the alignment of each column’s text.
+`align` in `columns` decides the alignment of each column’s text.
 
 ## Responsive
 
@@ -116,7 +116,7 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 ## Selectable
 
-`isSelectable` enables mutilple select option of the table. You can bind an `Arrary` model to `KtTable`, and control the select data.
+`isSelectable` enables mutilple select option of the table. You can bind an `Array` model to `KtTable` and control the selected data.
 
 <div>
 	<KtTable :rows="rows" :columns="columnsResponsive" isSelectable v-model="select" />
@@ -144,17 +144,17 @@ When content should not be hidden, using horizontal scrolling is a better altern
 `slot-scope` can be used to pass the properties of each row.
 
 <KtTable :rows="rows" :columns="columnsResponsive" hasActions>
-	<div slot-scope="rowsProps" slot="actions">
-		<i class="yoco" @click="showAlert(rowsProps.row.name, 'edited')">edit</i>
-		<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i>
+	<div slot-scope="row" slot="actions">
+		<i class="yoco" @click="showAlert(row.data.name, 'edited')">edit</i>
+		<i class="yoco" @click="showAlert(row.data.name, 'deleted')">trash</i>
 	</div>
 </KtTable>
 
 ```html
 <KtTable :rows="rows" :columns="columns" hasActions>
-	<div slot-scope="rowsProps" slot="actions">
-		<i class="yoco" @click="showAlert(rowsProps.row.name, 'edited')">edit</i>
-		<i class="yoco" @click="showAlert(rowsProps.row.name, 'deleted')">trash</i>
+	<div slot-scope="row" slot="actions">
+		<i class="yoco" @click="showAlert(row.data.name, 'edited')">edit</i>
+		<i class="yoco" @click="showAlert(row.data.name, 'deleted')">trash</i>
 	</div>
 </KtTable>
 ```
@@ -164,17 +164,17 @@ When content should not be hidden, using horizontal scrolling is a better altern
 `isExpandable` enables expandability of the row, you can create template in `expand` slot. Same as `actions`, `slot-scope` can be used to pass the properties of each row.
 
 <KtTable :rows="rows" :columns="columnsResponsive" isExpandable isScrollable>
-	<div slot-scope="expandProps" slot="expand">
-		<KtBanner :message="expandProps.row.name" icon="user" :isGrey="true"/>
-		<KtBanner :message="expandProps.row.address" icon="global" :isGrey="true"/>
+	<div slot-scope="row" slot="expand">
+		<KtBanner :message="row.data.name" icon="user" :isGrey="true"/>
+		<KtBanner :message="row.data.address" icon="global" :isGrey="true"/>
 	</div>
 </KtTable>
 
 ```html
 <KtTable :rows="rows" :columns="columns" isExpandable isScrollable>
-	<div slot-scope="expandProps" slot="expand">
-		<KtBanner :message="expandProps.row.name" icon="user" :isGrey="true"/>
-		<KtBanner :message="expandProps.row.address" icon="global" :isGrey="true"/>
+	<div slot-scope="row" slot="expand">
+		<KtBanner :message="row.data.name" icon="user" :isGrey="true"/>
+		<KtBanner :message="row.data.address" icon="global" :isGrey="true"/>
 	</div>
 </KtTable>
 ```
@@ -185,10 +185,10 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 | Attribute            | Description                             | Type                        | Accepted values                 | Default |
 |:---------------------|:----------------------------------------|:----------------------------|:--------------------------------|:--------|
+| `columns.align`      | alignment of column text                | `String`                    | `"center"`, `"left"`, `"right"` | `left`  |
 | `columns.key`        | used to match the value in `rows`       | `String`                    | —                               | —       |
 | `columns.label`      | table column header                     | `String`                    | —                               | —       |
 | `columns.responsive` | control responsive display              | `String`                    | —                               | —       |
-| `columns.textAlign`  | alignment of column text                | `String`                    | `"center"`, `"left"`, `"right"` | `left`  |
 | `columns.width`      | width                                   | `String`                    | `10%`, `100px`                  | `auto`  |
 | `columns`            | table column information                | `Array`                     | —                               | —       |
 | `emptyText`          | text to show when table is empty        | `String`                    | —                               | —       |
@@ -202,6 +202,12 @@ When content should not be hidden, using horizontal scrolling is a better altern
 | `thClasses`          | classes to apply to all `<th>` elements | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
 | `trClasses`          | classes to apply to all `<tr>` elements | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
 | `value`              | —                                       | `Array`                     | —                               | —       |
+
+### Events
+
+| Event Name  | Arguments       | Description                             |
+|:------------|:----------------|:----------------------------------------|
+| `@clickRow` | `(data, index)` | Row was clicked. Requires `isClickable` |
 
 ### Slots
 
@@ -237,9 +243,9 @@ export default {
 				{ key: 'address', label: 'Address' },
 			],
 			columnsAlign: [
-				{ key: 'name', label: 'Name', textAlign: 'left' },
-				{ key: 'date', label: 'Date', textAlign: 'center' },
-				{ key: 'address', label: 'Address', textAlign: 'right' },
+				{ key: 'name', label: 'Name', align: 'left' },
+				{ key: 'date', label: 'Date', align: 'center' },
+				{ key: 'address', label: 'Address', align: 'right' },
 			],
 			columnsResponsive: [
 				{ key: 'name', label: 'Name', responsive: 'hide-sm' },
@@ -247,13 +253,21 @@ export default {
 				{ key: 'address', label: 'Address' },
 			],
 			columnsWidth: [
-				{ key: 'name', label: 'Name', width: 10 },
-				{ key: 'date', label: 'Date', width: 40 },
-				{ key: 'address', label: 'Address', width: 50 },
+				{ key: 'name', label: 'Name', width: '30%' },
+				{ key: 'date', label: 'Date', width: '20%' },
+				{ key: 'address', label: 'Address', width: '50%' },
 			],
 			rows: [
-				{ address: 'No. 119, Grove St, Los Angeles', date: '2016-05-03', name: 'Tom' },
-				{ address: 'No. 89, Grove St, Los Angeles', date: '2016-05-02', name: 'Jackson' },
+				{
+					address: 'No. 119, Grove St, Los Angeles',
+					date: '2016-05-03',
+					name: 'Tom',
+				},
+				{
+					address: 'No. 89, Grove St, Los Angeles',
+					date: '2016-05-02',
+					name: 'Jackson',
+				},
 			],
 		}
 	},
