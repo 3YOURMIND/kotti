@@ -1,12 +1,21 @@
 <template>
 	<tr
+		v-if="virtualRow.isExpander"
+		v-show="isExpanded"
+	>
+		<td :colspan="colSpan">
+			<slot name="expand" :data="data" />
+		</td>
+	</tr>
+	<tr
+		v-else
 		:class="_trClasses"
-		:role="isClickable ? 'button': false"
-		:tabindex="isClickable ? 0 : false"
-		@click="$emit('click')"
+		:role="isInteractive ? 'button': false"
+		:tabindex="isInteractive ? 0 : false"
+		@click="$emit('activateRow')"
 	>
 		<td
-			v-if="showExpandToggle"
+			v-if="isExpandable"
 			class="c-hand"
 			@click.stop="$emit('toggleExpand')"
 		>
@@ -15,7 +24,7 @@
 			</div>
 		</td>
 		<td
-			v-if="showSelectToggle"
+			v-if="isSelectable"
 			class="td-selectable"
 			@click.stop
 		>
@@ -31,17 +40,13 @@
 			</div>
 		</td>
 		<td
-			v-if="showData"
 			v-for="column in columns"
 			:key="column.key"
 			:class="getTdClasses(column)"
 			:style="getTdStyles(column)"
 			v-text="data[column.key]"
 		/>
-		<td v-if="showExpandSlot" :colspan="colSpan" >
-			<slot name="expand" :data="data" />
-		</td>
-		<td v-if="showActionsSlot">
+		<td v-if="hasActions">
 			<div class="table-actions">
 				<slot name="actions" :data="data" />
 			</div>
@@ -57,9 +62,9 @@ export default {
 		columns: { required: true, type: Array },
 		data: { required: true, type: Object },
 		hasActions: { required: true, type: Boolean },
-		isClickable: { required: true, type: Boolean },
 		isExpandable: { required: true, type: Boolean },
 		isExpanded: { required: true, type: Boolean },
+		isInteractive: { required: true, type: Boolean },
 		isSelectable: { required: true, type: Boolean },
 		isSelected: { required: true, type: Boolean },
 		trClasses: { default: [], type: [Object, Array, String] },
@@ -69,25 +74,10 @@ export default {
 		expandToggleIcon() {
 			return this.isExpanded ? 'chevron_down' : 'chevron_right'
 		},
-		showActionsSlot() {
-			return !this.virtualRow.isExpander && this.hasActions
-		},
-		showData() {
-			return !this.virtualRow.isExpander
-		},
-		showExpandSlot() {
-			return this.virtualRow.isExpander && this.isExpanded
-		},
-		showExpandToggle() {
-			return !this.virtualRow.isExpander && this.isExpandable
-		},
-		showSelectToggle() {
-			return !this.virtualRow.isExpander && this.isSelectable
-		},
 		_trClasses() {
 			const classes = []
 
-			if (this.isClickable) classes.push('clickable')
+			if (this.isInteractive) classes.push('clickable')
 			if (this.isSelected) classes.push('selected')
 			if (this.trClasses) classes.push(this.trClasses)
 

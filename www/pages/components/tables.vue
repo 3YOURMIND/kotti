@@ -183,31 +183,31 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 ### Attributes
 
-| Attribute            | Description                             | Type                        | Accepted values                 | Default |
-|:---------------------|:----------------------------------------|:----------------------------|:--------------------------------|:--------|
-| `columns.align`      | alignment of column text                | `String`                    | `"center"`, `"left"`, `"right"` | `left`  |
-| `columns.key`        | used to match the value in `rows`       | `String`                    | —                               | —       |
-| `columns.label`      | table column header                     | `String`                    | —                               | —       |
-| `columns.responsive` | control responsive display              | `String`                    | —                               | —       |
-| `columns.width`      | width                                   | `String`                    | `10%`, `100px`                  | `auto`  |
-| `columns`            | table column information                | `Array`                     | —                               | —       |
-| `emptyText`          | text to show when table is empty        | `String`                    | —                               | —       |
-| `hasActions`         | add hover actions to the table          | `Boolean`                   | —                               | `false` |
-| `isClickable`        | allow clicking table rows               | `Boolean`                   | —                               | `false` |
-| `isExpandable`       | allow row expanding                     | `Boolean`                   | —                               | `false` |
-| `isScrollable`       | allow horizontal table scrolling        | `Boolean`                   | —                               | `false` |
-| `isSelectable`       | enable select option of table           | `Boolean`                   | —                               | `false` |
-| `rows`               | table row data                          | `Array`                     | —                               | —       |
-| `tdClasses`          | classes to apply to all `<td>` elements | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `thClasses`          | classes to apply to all `<th>` elements | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `trClasses`          | classes to apply to all `<tr>` elements | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `value`              | —                                       | `Array`                     | —                               | —       |
+| Attribute            | Description                                 | Type                        | Accepted values                 | Default |
+|:---------------------|:--------------------------------------------|:----------------------------|:--------------------------------|:--------|
+| `columns.align`      | alignment of column text                    | `String`                    | `"center"`, `"left"`, `"right"` | `left`  |
+| `columns.key`        | used to match the value in `rows`           | `String`                    | —                               | —       |
+| `columns.label`      | table column header                         | `String`                    | —                               | —       |
+| `columns.responsive` | control responsive display                  | `String`                    | —                               | —       |
+| `columns.width`      | width                                       | `String`                    | `10%`, `100px`                  | `auto`  |
+| `columns`            | table column information                    | `Array`                     | —                               | —       |
+| `emptyText`          | text to show when table is empty            | `String`                    | —                               | —       |
+| `hasActions`         | add hover actions to the table              | `Boolean`                   | —                               | `false` |
+| `isExpandable`       | allow row expanding                         | `Boolean`                   | —                               | `false` |
+| `isInteractive`      | allow clicking/keyboard focusing table rows | `Boolean`                   | —                               | `false` |
+| `isScrollable`       | allow horizontal table scrolling            | `Boolean`                   | —                               | `false` |
+| `isSelectable`       | enable select option of table               | `Boolean`                   | —                               | `false` |
+| `rows`               | table row data                              | `Array`                     | —                               | —       |
+| `tdClasses`          | classes to apply to all `<td>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
+| `thClasses`          | classes to apply to all `<th>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
+| `trClasses`          | classes to apply to all `<tr>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
+| `value`              | —                                           | `Array`                     | —                               | —       |
 
 ### Events
 
-| Event Name  | Arguments       | Description                             |
-|:------------|:----------------|:----------------------------------------|
-| `@clickRow` | `(data, index)` | Row was clicked. Requires `isClickable` |
+| Event Name     | Arguments       | Description                                                         |
+|:---------------|:----------------|:--------------------------------------------------------------------|
+| `@activateRow` | `(data, index)` | Row was clicked or activated via keyboard. Requires `isInteractive` |
 
 ### Slots
 

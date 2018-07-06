@@ -44,7 +44,7 @@
 					:isSelected="isSelected(virtualRow.index)"
 					:virtualRow="virtualRow"
 					v-bind="settings"
-					@clickRow="onClickRow(virtualRow.index)"
+					@activateRow="onActivateRow(virtualRow.index)"
 					@toggleExpand="toggleExpand(virtualRow.index)"
 					@toggleSelect="toggleSelect(virtualRow.index)"
 				>
@@ -70,8 +70,8 @@ export default {
 		columns: { required: true, type: Array },
 		emptyText: { default: 'No Data', type: String },
 		hasActions: { default: false, type: Boolean },
-		isClickable: { default: false, type: Boolean },
 		isExpandable: { default: false, type: Boolean },
+		isInteractive: { default: false, type: Boolean },
 		isScrollable: { default: false, type: Boolean },
 		isSelectable: { default: false, type: Boolean },
 		rows: { required: true, type: Array },
@@ -103,8 +103,8 @@ export default {
 		settings() {
 			return [
 				'hasActions',
-				'isClickable',
 				'isExpandable',
+				'isInteractive',
 				'isSelectable',
 				'tdClasses',
 				'trClasses',
@@ -146,8 +146,8 @@ export default {
 				this.allSelected ? [] : this.rows.map((_, index) => index),
 			)
 		},
-		onClickRow(index) {
-			this.$emit('clickRow', index, this.rows[index])
+		onActivateRow(index) {
+			this.$emit('activateRow', index, this.rows[index])
 		},
 		getThClasses(column) {
 			return [this.thClasses, column.thClasses]
