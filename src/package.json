@@ -17,13 +17,17 @@
 	],
 	"dependencies": {},
 	"description": "Core UI Component",
+	"files": [
+		"dist",
+		"../packages"
+	],
 	"homepage": "https://3yourmind.github.io/kotti/inline-edit",
 	"keywords": [
+		"component",
 		"inline edit",
 		"kotti",
 		"ui",
-		"vue",
-		"component"
+		"vue"
 	],
 	"license": "MIT",
 	"main": "/dist/kotti-ui.min.js",
@@ -32,9 +36,5 @@
 		"type": "git",
 		"url": "https://github.com/3YOURMIND/kotti"
 	},
-	"files": [
-		"dist",
-		"../packages"
-	],
 	"version": "0.0.1-beta.6"
 }

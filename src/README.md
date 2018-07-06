@@ -1,12 +1,11 @@
 # Kotti-UI
 
-[![npm version](https://badge.fury.io/js/%403yourmind%2Fkotti-ui.svg)](https://www.npmjs.com/package/@3yourmind/kotti-ui)
+[![npm version][npm-version-badge]][npm-package]
 
 ## Install Kotti-UI
 
 ```bash
-# add kotti-ui package to your project
-yarn add @3yourmind/kotti-ui
+yarn add @3yourmind/kotti-ui @3yourmind/kotti-style
 ```
 
 ## Import Kotti-UI
@@ -16,12 +15,16 @@ yarn add @3yourmind/kotti-ui
 ```js
 // in main.js
 import Vue from 'vue'
-import KottiUI from 'kotti-ui'
+import KottiUI from '@3yourmind/kotti-ui'
 import '@3yourmind/kotti-style'
 
 Vue.use(KottiUI)
 ```
 
-## Document
+## Documentation
 
-You can find Kotti-UI document on https://3yourmind.github.io/kotti/
+You can [find the documentation here][documentation].
+
+[documentation]: https://3yourmind.github.io/kotti/
+[npm-package]: https://www.npmjs.com/package/@3yourmind/kotti-ui
+[npm-version-badge]: https://badge.fury.io/js/%403yourmind%2Fkotti-ui.svg

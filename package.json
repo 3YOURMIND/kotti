@@ -85,25 +85,11 @@
 	},
 	"name": "@3yourmind/kotti",
 	"prettier": {
-		"overrides": [
-			{
-				"files": ".prettierrc",
-				"options": {
-					"parser": "json"
-				}
-			},
-			{
-				"files": "*.md",
-				"options": {
-					"parser": "markdown"
-				}
-			}
-		],
 		"proseWrap": "always",
 		"semi": false,
 		"singleQuote": true,
 		"tabWidth": 2,
-		"trailingComma": "es5",
+		"trailingComma": "all",
 		"useTabs": true
 	},
 	"scripts": {
