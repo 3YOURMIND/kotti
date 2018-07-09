@@ -38,7 +38,7 @@ const components = [
 	ktRadioGroup,
 ]
 
-const install = function(Vue, opts = {}) {
+const install = function(Vue = {}) {
 	components.map(component => {
 		Vue.component(component.name, component)
 	})

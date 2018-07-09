@@ -18,8 +18,7 @@
 	"dependencies": {},
 	"description": "Core UI Component",
 	"files": [
-		"dist",
-		"../packages"
+		"dist"
 	],
 	"homepage": "https://3yourmind.github.io/kotti/inline-edit",
 	"keywords": [
@@ -36,5 +35,5 @@
 		"type": "git",
 		"url": "https://github.com/3YOURMIND/kotti"
 	},
-	"version": "0.0.1-beta.6"
+	"version": "0.0.1-beta.7"
 }

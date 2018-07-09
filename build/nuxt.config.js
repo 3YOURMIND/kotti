@@ -1,3 +1,6 @@
+/*eslint no-undef: "error"*/
+/*eslint-env node*/
+
 const routerBase =
 	process.env.DEPLOY_ENV === 'GH_PAGES'
 		? {
@@ -43,7 +46,11 @@ design decisions. The Kotti design system has two main parts: foundation and com
 	/*
 	 ** Customize the progress bar color
 	 */
-	css: ['../packages/kotti-style/dist/index.min.css', '@/assets/css/main.scss', '@3yourmind/yoco'],
+	css: [
+		'../packages/kotti-style/dist/index.min.css',
+		'@/assets/css/main.scss',
+		'@3yourmind/yoco',
+	],
 	modules: ['@nuxtjs/markdownit'],
 	loading: {
 		color: '#2C64CC',
@@ -56,9 +63,6 @@ design decisions. The Kotti design system has two main parts: foundation and com
 		dir: outputDir,
 	},
 	build: {
-		/*
-		 ** Run ESLint on save
-		 */
 		extend(config, ctx) {
 			if (ctx.isDev && ctx.isClient) {
 				config.module.rules.push({

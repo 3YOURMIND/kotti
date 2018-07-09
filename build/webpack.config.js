@@ -1,3 +1,6 @@
+/*eslint no-undef: "error"*/
+/*eslint-env node*/
+
 var path = require('path')
 const webpack = require('webpack')
 module.exports = {
