@@ -1,3 +1,6 @@
+/*eslint no-undef: "error"*/
+/*eslint-env node*/
+
 const base = require('./webpack.config.js')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
