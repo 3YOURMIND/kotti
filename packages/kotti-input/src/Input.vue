@@ -16,6 +16,9 @@
 			/>
 			<i class="form-icon yoco" v-text="icon" />
 		</div>
+		<div class="form-validation-text" v-if="validateText">
+			<span v-text="validateText" />
+		</div>
 	</div>
 </template>
 
@@ -41,6 +44,7 @@ export default {
 		placeholder: String,
 		type: { type: String, default: 'text' },
 		validate: { type: String, default: '' },
+		validateText: { type: String, default: '' },
 		value: [String, Number],
 		isCompact: Boolean,
 	},
@@ -61,11 +65,12 @@ export default {
 			return {
 				'form-label': true,
 				'form-label--compact': this.isCompact,
-				'form-label--compact--focus': this.isCompact && (this.isFocused || this.currentValue),
+				'form-label--compact--focus':
+					this.isCompact && (this.isFocused || this.currentValue),
 			}
 		},
 		formClass() {
-			const validateClass = `is-${this.validate}`
+			const validateClass = this.validate ? `is-${this.validate}` : ''
 			return ['form-group', validateClass]
 		},
 	},

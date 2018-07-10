@@ -3,7 +3,6 @@ button {
 	border: 0;
 	height: $unit-8;
 	outline: none;
-	text-transform: uppercase;
 	padding: 0 1em;
 	color: $primary-600;
 	background: $lightgray-300;
@@ -26,7 +25,7 @@ button.primary {
 	color: #ffffff;
 
 	&:hover {
-		background: $primary-600;
+		background: $primary-400;
 	}
 }
 
@@ -37,9 +36,9 @@ button.secondary {
 	font-weight: 600;
 
 	&:hover {
-		color: $primary-600;
+		color: $primary-400;
 		border: 1px solid $primary-600;
-		background: $primary-300;
+		background: $lightgray-300;
 	}
 }
 
@@ -49,7 +48,7 @@ button.text {
 	background: transparent;
 
 	&:hover {
-		background: darken(#fff, 10);
+		background: $lightgray-300;
 	}
 }
 
@@ -60,7 +59,7 @@ button.danger {
 
 	&:hover {
 		color: #ffffff;
-		background: $red-500;
+		background: $red-400;
 	}
 }
 

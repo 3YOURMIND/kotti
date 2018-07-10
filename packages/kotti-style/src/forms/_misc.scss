@@ -47,7 +47,11 @@
 	.form-icon {
 		color: $color;
 	}
-
+	.form-validation-text {
+		font-size: $font-size-sm;
+		color: $color;
+		padding: 0.2rem;
+	}
 	.form-radio,
 	.form-checkbox,
 	.form-switch {

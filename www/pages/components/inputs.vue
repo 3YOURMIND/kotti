@@ -107,16 +107,19 @@
 			label="Success Input"
 			:placeholder="v5"
 			validate="success"
+			validateText="Your user name is availabe"
 		/>
 		<KtInput
 			label="Error Input"
 			:placeholder="v5"
 			validate="error"
+			validateText="Your input is invalid"
 		/>
 		<KtInput
 			label="Warning Input"
 			:placeholder="v5"
 			validate="warning"
+			validateText="Your input is wrong"
 		/>
 	</div>
 
@@ -125,7 +128,7 @@
 	```html
 	<KtInput label="Success Input" :placeholder="v5" validate="success" />
 	<KtInput label="Error Input" :placeholder="v5" validate="error" />
-	<KtInput label="Warning Input" :placeholder="v5" validate="warning" />
+	<KtInput label="Warning Input" :placeholder="v5" validate="warning" validateText="Your input is wrong"/>
 	```
 
 	## Compact
@@ -142,9 +145,9 @@
 	Using `isCompact` to enable compact style.
 
 	```html
-	<KtInput label="Full Name" compact/>
-	<KtInput label="Address" compact/>
-	<KtInput label="Company" compact/>
+	<KtInput label="Full Name" isCompact/>
+	<KtInput label="Address" isCompact/>
+	<KtInput label="Company" isCompact/>
 	```
 
 
