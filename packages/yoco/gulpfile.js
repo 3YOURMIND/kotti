@@ -11,12 +11,7 @@ var paths = {
   font: './src/fonts/*'
 };
 
-gulp.task('watch', function() {
-  gulp.watch('./**/*.css', ['build']);
-  // gulp.watch('./**/*.scss', ['docs']);
-});
-
-gulp.task('build', function() {
+gulp.task('default', function(done) {
   gulp.src(paths.source)
     .pipe(sass({outputStyle: 'compact', precision: 10})
       .on('error', sass.logError)
@@ -31,6 +26,7 @@ gulp.task('build', function() {
     .pipe(gulp.dest('./dist'));
   gulp.src(paths.font)
   .pipe(gulp.dest('./dist/fonts'));
+  done();
 });
 
-gulp.task('default', ['build']);
+gulp.task('default');

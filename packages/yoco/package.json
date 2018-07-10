@@ -1,13 +1,13 @@
 {
   "name": "@3yourmind/yoco",
-  "version": "0.0.5",
+  "version": "0.0.5-hotfix.1",
   "description": "A icon font library which ready to use and already in 3YOURMIND",
   "main": "dist/yoco-icon.min.css",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "gulp build",
+    "build": "gulp",
     "gh-pages": "push-dir --dir=src --branch=gh-pages"
   },
   "repository": {
@@ -25,7 +25,7 @@
   },
   "homepage": "https://3yourmind.github.io/yoco",
   "devDependencies": {
-    "gulp": "latest",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "latest",
     "gulp-clean-css": "^3.7.0",
     "gulp-csscomb": "^3.0.8",
