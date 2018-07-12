@@ -7,7 +7,7 @@ const submenu = [
 				to: 'layout',
 			},
 			{
-				label: 'Grid',
+				label: 'Grids',
 				to: 'grids',
 			},
 			{
@@ -42,6 +42,10 @@ const submenu = [
 			{
 				label: 'Buttons',
 				to: 'buttons',
+			},
+			{
+				label: 'Cards',
+				to: 'cards',
 			},
 			{
 				label: 'Drawers',

@@ -1,23 +1,147 @@
 <template lang="md">
-
 # Cards
 
-<div class="card">
-	<div class="card-image">
-		<img src="img/osx-el-capitan.jpg" class="img-responsive">
-	</div>
-	<div class="card-header">
-		<div class="card-title h5">Microsoft</div>
-		<div class="card-subtitle text-gray">Software and hardware</div>
-	</div>
-	<div class="card-body">
-		Empower every person and every organization on the planet to achieve more.
-	</div>
-	<div class="card-footer">
-		<button class="btn btn-primary">Do</button>
-	</div>
+## Structure
+
+<div class="element-example">
+	<KtCard>
+		<div slot="card-header" >
+			<h2>Lorem Ipsum</h2>
+			<b>consectetur adipiscing elit</b>
+		</div>
+		<div slot="card-body" >
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Phasellus consequat nisl at nisl condimentum vehicula.
+			</p>
+		</div>
+		<div slot="card-footer">
+			<button>Button</button>
+		</div>
+	</KtCard>
 </div>
 
-hl
+The Card component has slots for the `card-header`, `card-body`, and `card-footer`:
+
+```html
+<KtCard>
+	<div slot="card-header" >
+		<h2>Lorem Ipsum</h2>
+		<b>consectetur adipiscing elit</b>
+	</div>
+	<div slot="card-body" >
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+			Phasellus consequat nisl at nisl condimentum vehicula.
+		</p>
+	</div>
+	<div slot="card-footer">
+		This is the end
+	</div>
+</KtCard>
+```
+
+## Images and Position
+
+<div class="element-example">
+	<KtRow :gap="16">
+		<KtCol :span="8">
+			<KtCard imgUrl="https://picsum.photos/900/300">
+				<div slot="card-header" >
+					<h2>Lorem Ipsum</h2>
+				</div>
+				<div slot="card-body" >
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						Phasellus consequat nisl at nisl condimentum vehicula.
+					</p>
+				</div>
+			</KtCard>
+		</KtCol>
+		<KtCol :span="8">
+			<KtCard imgUrl="https://picsum.photos/900/300" imgPosition="middle">
+				<div slot="card-header" >
+					<h2>Lorem Ipsum</h2>
+				</div>
+				<div slot="card-body" >
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						Phasellus consequat nisl at nisl condimentum vehicula.
+					</p>
+				</div>
+				<div slot="card-footer">
+					This is the end
+				</div>
+			</KtCard>
+		</KtCol>
+		<KtCol :span="8">
+			<KtCard imgUrl="https://picsum.photos/900/300" imgPosition="bottom">
+				<div slot="card-header" >
+					<h2>Lorem Ipsum</h2>
+				</div>
+				<div slot="card-body" >
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						Phasellus consequat nisl at nisl condimentum vehicula.
+					</p>
+				</div>
+				<div slot="card-footer">
+					This is the end
+				</div>
+			</KtCard>
+		</KtCol>
+	</KtRow>
+</div>
+
+The `imgUrl` property defines the image’s `url`.
+
+`imgPosition` sets the image position. Valid values are `top`, `middle` and `bottom`.
+
+```html
+<KtCard imgUrl="https://picsum.photos/900/300" imgPosition="middle">
+	<div slot="card-header" >
+		<h2>Lorem Ipsum</h2>
+	</div>
+	<div slot="card-body" >
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+			Phasellus consequat nisl at nisl condimentum vehicula.
+		</p>
+	</div>
+	<div slot="card-footer">
+		This is the end
+	</div>
+</KtCard>
+```
+
+## Usage
+
+### Attributes
+
+| Attribute     | Description                  | Type     | Accepted Values                 | Default |
+|:--------------|:-----------------------------|:---------|:--------------------------------|:--------|
+| `imgPosition` | postion of image in the card | `String` | `"top"`, `"middle"`, `"bottom"` | `top`   |
+| `imgUrl`      | url of image                 | `String` | —                               | —       |
+
+### Slots
+
+| Slot Name     | Description    |
+|:--------------|:---------------|
+| `card-header` | header section |
+| `card-body`   | body section   |
+| `card-footer` | footer section |
 
 </template>
+
+<script>
+import KtCard from '../../../packages/kotti-card'
+import KtCol from '../../../packages/kotti-col'
+import KtRow from '../../../packages/kotti-row'
+
+export default {
+	name: 'Cards',
+	components: {
+		KtCard,
+		KtCol,
+		KtRow,
+	},
+}
+</script>
