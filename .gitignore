@@ -1,18 +1,2 @@
-# dependencies
-node_modules
-
-# logs
-npm-debug.log
-yarn-error.log
-
-# Nuxt build
-.nuxt
-
-# Nuxt generate
 dist
-
-.vscode
-
 gh-pages
-
-.DS_Store
