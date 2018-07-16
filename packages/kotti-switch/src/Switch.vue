@@ -12,7 +12,7 @@
 
 <script>
 export default {
-	name: 'KtRadioGroup',
+	name: 'KtSwitch',
 	props: {
 		label: [String, Number],
 		right: {
