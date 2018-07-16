@@ -1,14 +1,28 @@
-<template>
-	<div>
-		<h1>Typography</h1>
-		<h2>Typeface</h2>
-		<p>Kotti uses Open Sans as default font for all text, and includes two font-weight: Regular and Bold.
-		You can download fonts at <a href="https://fonts.google.com/specimen/Open+Sans">https://fonts.google.com/specimen/Open+Sans</a></p>
+<template lang="md">
+# Typography
 
-		<typography-header />
-		<typography-label />
-		<typography-paragraphs />
-	</div>
+## Typeface
+
+Kotti uses Open Sans as default font for all text, and includes two font-weight: Regular and Bold.
+You can download fonts at <a href="https://fonts.google.com/specimen/Open+Sans">https://fonts.google.com/specimen/Open+Sans</a>
+
+<typography-header />
+
+<typography-label />
+
+<typography-paragraphs />
+
+## Formatting
+
+
+|Style|Notes|
+|----|---|
+|*Italics text*|Using `<em>`|
+|**This is bold text**|Using `<strong>`|
+|<ol><li>This is an ordered list;</li><li>Second item of ordered list;</li><li>Thrid item of ordered list.</li></ol>|`<li>` element has margin `8px` with default `line-height`|
+|<ul><li>This is an unordered list;</li><li>Second item of unordered list;</li><li>Thrid item of unordered list.</li></ul>|same as ordered list|
+
+
 </template>
 
 <script>
