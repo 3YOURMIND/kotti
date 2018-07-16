@@ -48,12 +48,16 @@ $code-color: $primary-600;
 // Fonts
 // Credit: https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
 
-$base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto !default;
+$base-font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI',
+	Roboto !default;
 $body-font-family: $base-font-family;
-$mono-font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Courier, monospace !default;
+$mono-font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Courier,
+	monospace !default;
 $fallback-font-family: 'Helvetica Neue', sans-serif !default;
-$cjk-zh-font-family: $base-font-family, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', $fallback-font-family !default;
-$cjk-jp-font-family: $base-font-family, 'Hiragino Sans', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', YuGothic, Meiryo,
+$cjk-zh-font-family: $base-font-family, 'PingFang SC', 'Hiragino Sans GB',
+	'Microsoft YaHei', $fallback-font-family !default;
+$cjk-jp-font-family: $base-font-family, 'Hiragino Sans',
+	'Hiragino Kaku Gothic Pro', 'Yu Gothic', YuGothic, Meiryo,
 	$fallback-font-family !default;
 $cjk-ko-font-family: $base-font-family, 'Malgun Gothic', $fallback-font-family !default;
 $body-font-family: $base-font-family, $fallback-font-family !default;
