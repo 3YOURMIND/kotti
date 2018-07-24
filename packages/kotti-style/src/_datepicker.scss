@@ -1,0 +1,103 @@
+.kt-datepicker {
+	width: 15.6rem;
+	background: #fff;
+	padding: 0.8rem;
+	box-shadow: 0 0 1px #dbdbdb, 0 0.1rem 5px rgba(0, 0, 0, 0.26);
+	box-sizing: border-box;
+	border-radius: 0.1rem;
+}
+.kt-datepicker-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	&__month {
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+	&__year {
+		color: $darkgray-300;
+	}
+	&__control i {
+		color: $darkgray-300;
+		user-select: none;
+		&:hover {
+			color: $darkgray-500;
+			cursor: pointer;
+		}
+	}
+}
+.kt-datepicker-calendar {
+	&__week {
+		font-weight: 600;
+		color: $darkgray-300;
+		width: 100%;
+		line-height: 1.6rem;
+		margin: 0.2rem;
+		font-size: 0.6rem;
+		text-align: center;
+		span {
+			width: 2rem;
+			display: inline-block;
+		}
+	}
+	&__day {
+		width: 100%;
+	}
+	&__day-cell {
+		display: inline-block;
+		width: 2rem;
+		height: 2rem;
+		padding: 0.2rem;
+		text-align: center;
+		user-select: none;
+		&:hover {
+			cursor: pointer;
+		}
+		span {
+			line-height: 1.6rem;
+			width: 1.6rem;
+			border-radius: 100%;
+			display: inline-block;
+			&:hover {
+				color: #fff;
+				background: $primary-300;
+			}
+		}
+	}
+	&__day--blank {
+		opacity: 0;
+		&:hover {
+			cursor: default;
+		}
+	}
+	&__day--highlighted span {
+		box-shadow: inset 0 0 0 0.1rem $primary-500;
+		background: $primary-400;
+		border-radius: 100%;
+		color: #fff;
+	}
+	&__day--today span {
+		box-shadow: inset 0 0 0 0.1rem $primary-500;
+		border-radius: 100%;
+	}
+	&__day--start,
+	&__day--end {
+		color: #fff;
+		background: $primary-300;
+		border-radius: 100% 0 0 100%;
+		span {
+			box-shadow: inset 0 0 0 0.1rem $primary-500;
+			background: $primary-400;
+			border-radius: 100%;
+		}
+	}
+	&__day--end {
+		border-radius: 0 100% 100% 0;
+	}
+	&__day--between {
+		color: #fff;
+		margin: 0;
+		background: $primary-300;
+	}
+}
