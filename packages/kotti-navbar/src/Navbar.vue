@@ -17,10 +17,10 @@
 			<div class="navbar-body">
 				<div :class="objectClass('navbar-menu')">
 					<ul v-if="menu">
-						<li v-for="item in menu" :key="item.to">
+						<router-link :exact="item.exact" tag="li" v-for="item in menu" :key="item.index" :to="item.to">
 							<i class="yoco" v-text="item.icon" />
 							<span v-if="!narrow" v-text="item.label" />
-						</li>
+						</router-link>
 					</ul>
 					<slot v-else name="navbar-menu" />
 				</div>

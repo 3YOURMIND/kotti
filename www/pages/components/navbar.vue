@@ -4,7 +4,7 @@
 
 <div class="element-example">
 	<div class="d-flex">
-		<KtNavbar/>
+		<KtNavbar src="https://picsum.photos/200/60"/>
 	</div>
 </div>
 
