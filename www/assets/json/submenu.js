@@ -104,16 +104,24 @@ const submenu = [
 	{
 		child: [
 			{
-				label: 'Forms',
-				to: 'forms',
-			},
-			{
 				label: 'Comments',
 				to: 'comments',
 			},
 			{
+				label: 'Forms',
+				to: 'forms',
+			},
+			{
+				label: 'Navbar',
+				to: 'navbar',
+			},
+			{
 				label: 'Inline Edit',
 				to: 'inline-edit',
+			},
+			{
+				label: 'User Menu',
+				to: 'user-menu',
 			},
 		],
 		parent: 'patterns',

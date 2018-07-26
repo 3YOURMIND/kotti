@@ -5,7 +5,7 @@
 		</div>
 		<div :class="userInfoClass" @click="isMenuShow=!isMenuShow">
 			<div class="user-info-avatar">
-				<KtAvatar small :src="usesAvatarSrc"/>
+				<KtAvatar small :src="userAvatarSrc"/>
 			</div>
 			<div class="user-info-text" v-if="!isNarrow || isMenuShow">
 				<div class="user-info-text__name" v-text="userName" />
@@ -27,7 +27,7 @@ import { mixin as clickaway } from '../../mixin/vue-clickaway'
 export default {
 	name: 'KtUserMenu',
 	props: {
-		usesAvatarSrc: { type: String, default: '' },
+		userAvatarSrc: { type: String, default: '' },
 		userName: { type: String, default: '--/--' },
 		userStatus: { type: String, default: '--/--' },
 	},

@@ -20,8 +20,8 @@
 
 <script>
 import Actionbar from '~/components/Actionbar.vue'
-import KtNavbar from '../../packages/kotti-navbar'
-import KtUserMenu from '../../packages/kotti-user-menu'
+import KtNavbar from '../../../packages/kotti-navbar'
+import KtUserMenu from '../../../packages/kotti-user-menu'
 
 export default {
 	layout: 'fullpage',

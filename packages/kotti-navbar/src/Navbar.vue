@@ -20,7 +20,7 @@
 							<span v-text="item.label" v-if="!isNarrowNavBar"/>
 						</router-link>
 					</ul>
-					<slot name="navbar-menu" />
+					<slot name="navbar-body" />
 				</div>
 			</div>
 			<div :class="objectClass('navbar-footer')">
