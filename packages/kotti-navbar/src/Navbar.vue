@@ -1,11 +1,8 @@
 <template>
 	<nav :class="objectClass('navbar')">
 		<div :class="objectClass('navbar-wrapper')">
-			<div
-				:class="['navbar-toggle', {'navbar-toggle--active':mobileMenuToggle}]"
-				@click="mobileMenuToggle = !mobileMenuToggle"
-			>
-				<i class="yoco">burger</i>
+			<div :class="navbarToggleClass" @click="toggleMobieMenu">
+				<i class="yoco" v-text="'burger'"/>
 			</div>
 			<div class="navbar-header">
 				<slot name="navbar-header">
@@ -14,28 +11,30 @@
 					</div>
 				</slot>
 			</div>
+			<div class="navbar-narrow-toggle" @click="toggleNarrowBar"/>
 			<div class="navbar-body">
 				<div :class="objectClass('navbar-menu')">
-					<ul v-if="menu">
+					<ul>
 						<router-link :exact="item.exact" tag="li" v-for="item in menu" :key="item.index" :to="item.to">
 							<i class="yoco" v-text="item.icon" />
-							<span v-if="!narrow" v-text="item.label" />
+							<span v-text="item.label" v-if="!isNarrowNavBar"/>
 						</router-link>
 					</ul>
-					<slot v-else name="navbar-menu" />
+					<slot name="navbar-menu" />
 				</div>
 			</div>
 			<div :class="objectClass('navbar-footer')">
 				<slot name="navbar-footer" />
 			</div>
-			<div class="navbar-dropdown" v-if="mobileMenuToggle" @click="mobileMenuToggle=false">
+			<div class="navbar-dropdown" v-if="mobileMenuToggle" v-on-clickaway="clickawayMobileMenu" >
 				<div class="navbar-menu">
-					<ul v-if="menu">
-						<li v-for="item in menu" :key="item.to">
-							<i class="yoco" v-text="item.icon" /> {{item.label}}
-						</li>
+					<ul>
+						<router-link :exact="item.exact" tag="li" v-for="item in menu" :key="item.index" :to="item.to">
+							<i class="yoco" v-text="item.icon" />
+							<span v-text="item.label" />
+						</router-link>
 					</ul>
-					<slot v-else name="navbar-menu" />
+					<slot name="navbar-menu" />
 				</div>
 			</div>
 		</div>
@@ -43,22 +42,60 @@
 </template>
 
 <script>
+import { mixin as clickaway } from '../../mixin/vue-clickaway'
+
 export default {
 	name: 'KtNavbar',
+	mixins: [clickaway],
 	props: {
 		menu: Array,
-		narrow: { type: Boolean, default: false },
+		isNarrow: { type: Boolean, default: false },
 		src: String,
 	},
 	data() {
 		return {
 			mobileMenuToggle: false,
+			isNarrowNavBarToggle: null,
 		}
+	},
+	created() {
+		this.$parent.$on('clickawayKtNavbarMobileMenu', this.clickawayMobileMenu)
+	},
+	mounted() {
+		this.isNarrowNavBarToggle = this.isNarrow
+		this.navbarNarrowBarEvent(this.isNarrowNavBarToggle)
+	},
+	computed: {
+		isNarrowNavBar() {
+			if (this.isNarrowNavBarToggle === null) {
+				return this.isNarrow
+			}
+			return this.isNarrowNavBarToggle
+		},
+		navbarToggleClass() {
+			return [
+				'navbar-toggle',
+				{ 'navbar-toggle--active': this.mobileMenuToggle },
+			]
+		},
 	},
 	methods: {
 		objectClass(className) {
-			const isNarrowClass = this.narrow ? `${className}--narrow` : ''
+			const isNarrowClass = this.isNarrowNavBar ? `${className}--narrow` : ''
 			return [className, isNarrowClass]
+		},
+		clickawayMobileMenu() {
+			this.mobileMenuToggle = false
+		},
+		toggleMobieMenu() {
+			this.mobileMenuToggle = !this.mobileMenuToggle
+		},
+		toggleNarrowBar() {
+			this.isNarrowNavBarToggle = !this.isNarrowNavBarToggle
+			this.navbarNarrowBarEvent(this.isNarrowNavBarToggle)
+		},
+		navbarNarrowBarEvent(value) {
+			this.$emit('toggleKtNavbarNarrowEvent', value)
 		},
 	},
 }

@@ -1,18 +1,10 @@
 <template>
-	<KtNavbar :src="logoSrc">
+	<KtNavbar :src="logoSrc" :menu="globalMenu">
 		<div slot="navbar-header" class="navbar-logo">
 			<nuxt-link to="/">
 				<img :src="logoSrc" />
 			</nuxt-link>
 		</div>
-		<ul slot="navbar-menu">
-			<nuxt-link :to="item.to" v-for="item in globalMenu" :key="item.icon" :class="activeLinkClass(item.label)">
-				<li>
-					<i class="yoco" v-text="item.icon" />
-					<span v-text="item.label" />
-				</li>
-			</nuxt-link>
-		</ul>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti">
 				<button class="primary w-100">GitHub</button>
@@ -21,8 +13,8 @@
 	</KtNavbar>
 </template>
 
-<style lang="scss" scoped>
-.active li {
+<style lang="scss">
+li.nuxt-link-active {
 	border-radius: 0.1rem;
 	font-weight: 600;
 	background: rgba(0, 0, 0, 0.2);

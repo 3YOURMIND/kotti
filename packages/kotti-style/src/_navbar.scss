@@ -72,7 +72,7 @@ $narrow-navbar-width: 3.2rem;
 
 .navbar-logo {
 	margin: 1.2rem auto;
-
+	align-items: center;
 	img {
 		width: 100%;
 	}
@@ -134,12 +134,33 @@ $narrow-navbar-width: 3.2rem;
 	}
 }
 
-// @media (max-width: $size-lg) {
-// }
-
-// @media (max-width: $size-md) {
-// }
-
+.navbar-narrow-toggle {
+	width: 1.2rem;
+	height: 100vh;
+	background: transparent;
+	display: block;
+	position: absolute;
+	right: -1.2rem;
+	top: 0;
+	&:hover {
+		border-left: 0.2rem solid $primary-300;
+		cursor: pointer;
+		&::after {
+			content: '';
+			width: 0.2rem;
+			height: 1.6rem;
+			display: block;
+			position: relative;
+			top: 50%;
+			left: 0.2rem;
+			border-radius: 0.2rem;
+			background: $primary-300;
+		}
+	}
+	@media (max-width: $size-md) {
+		display: none;
+	}
+}
 @media (max-width: $size-md) {
 	.navbar {
 		height: 2.4rem;
