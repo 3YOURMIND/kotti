@@ -5,7 +5,7 @@
 		@click="onAvatarContainerClick"
 	>
 		<div v-if="avatarAvailable">
-			<img class="avatar-img" :src="src" @error="imgFallBack()" />
+			<img class="avatar-img" :src="src" @error="imgFallBack" />
 		</div>
 		<div v-else :class="avatarFallbackClasses">
 			<div class="avatar-fallback__head" />
@@ -20,11 +20,11 @@ export default {
 	props: {
 		name: {
 			type: String,
-			default: '',
+			default: null,
 		},
 		src: {
 			type: String,
-			default: '',
+			default: null,
 		},
 		selected: {
 			type: Boolean,
@@ -47,7 +47,7 @@ export default {
 	},
 	computed: {
 		avatarAvailable() {
-			return this.src !== '' && this.avatarFallback
+			return this.src && this.avatarFallback
 		},
 		avatarClasses() {
 			return {

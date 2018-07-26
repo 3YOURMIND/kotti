@@ -6,7 +6,7 @@
 
 ```html
 <div class="d-flex responsive">
-	<KtNavbar src="https://picsum.photos/200/60" :menu="menuData"/>
+	<KtNavbar theme="themeData" :menu="menuData"/>
 	<Actionbar />
 	<div class="workspace">
 		Workspace Content
@@ -14,43 +14,39 @@
 </div>
 ```
 
-```json
-menuData: [{
-		to: 'navbar-example/',
-		label: 'Navbar',
-		icon: 'dashboard',
-	},
-	{
-		to: 'components/navbar',
-		label: 'Component',
-		icon: 'layer',
-	},
-	{
-		to: 'components/navbar',
-		label: 'Calendar',
-		icon: 'calendar',
-	}]
+```js
+{
+	menuData: [
+		{ to: 'navbar-example/',   label: 'Navbar',    icon: 'dashboard' },
+		{ to: 'components/navbar', label: 'Component', icon: 'layer' },
+		{ to: 'components/navbar', label: 'Calendar',  icon: 'calendar' }
+	],
+	themeData: {
+		logoUrl: https://picsum.photos/200/60
+	}
+}
 ```
 
 ## Usage
 
 ### Attribuites
 
-| Attribute    | Description                             | Type             | Accepted values | Default |
-|:-------------|:----------------------------------------|:-----------------|:----------------|:--------|
-| `src`        | logo image src                          | `String`         | —               | —       |
-| `isNarrow`   | define navbar is narrow                 | `Bolean`         | —               | `false` |
-| `menu`       | menu of the navbar|`Arrary`             | -                | -               |         |
-| `menu.lable` | menu lable text|`String`                | -                | -               |         |
-| `menu.icon`  | menu icon|`String`                      | String from yoco | -               |         |
-| `menu.to`    | router link to|`String`                 | -                | -               |         |
-| `menu.exact` | enable router link exact match|`Bolean` | -|`false`        |                 |         |
+| Attribute       | Description                    | Type      | Accepted values  | Default |
+|:----------------|:-------------------------------|:----------|:-----------------|:--------|
+| `isNarrow`      | define navbar is narrow        | `Boolean` | —                | `false` |
+| `menu`          | menu of the navbar             | `Arrary`  | —                | —       |
+| `menu.exact`    | enable router link exact match | `Bolean`  | `false`          | —       |
+| `menu.icon`     | menu icon                      | `String`  | String from yoco | —       |
+| `menu.lable`    | menu lable text                | `String`  | —                | —       |
+| `menu.to`       | router link to                 | `String`  | —                | —       |
+| `theme`         | kotti theme                    | `Object`  | —                | `{}`    |
+| `theme.logoUrl` | navbar logo url                | `String`  | `''`             | `null`  |
 
 ### Events
 
-| Event Name                   | Type    | Payload  | Description                 |
-|:-----------------------------|:--------|:---------|:----------------------------|
-| `@toggleKtNavbarNarrowEvent` | `$emit` | `Bolean` | toggle the navbar to narrow |
+| Event Name                   | Type    | Payload   | Description                 |
+|:-----------------------------|:--------|:----------|:----------------------------|
+| `@toggleKtNavbarNarrowEvent` | `$emit` | `Boolean` | toggle the navbar to narrow |
 
 ### Slots
 

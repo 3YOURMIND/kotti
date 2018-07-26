@@ -1,8 +1,8 @@
 <template>
-	<KtNavbar :src="logoSrc" :menu="globalMenu">
+	<KtNavbar :theme="theme" :menu="globalMenu">
 		<div slot="navbar-header" class="navbar-logo">
 			<nuxt-link to="/">
-				<img :src="logoSrc" />
+				<img :src="theme.logoUrl" />
 			</nuxt-link>
 		</div>
 		<div slot="navbar-footer">
@@ -33,7 +33,9 @@ export default {
 	},
 	data() {
 		return {
-			logoSrc: LogoSvg,
+			theme: {
+				logoUrl: LogoSvg,
+			},
 			globalMenu: [
 				{
 					icon: 'layer',
@@ -57,15 +59,6 @@ export default {
 				},
 			],
 		}
-	},
-	methods: {
-		activeLinkClass(val) {
-			const parentPath = val.toLowerCase()
-			const routePath = this.$route.name || ''
-			return {
-				active: routePath.includes(parentPath),
-			}
-		},
 	},
 }
 </script>

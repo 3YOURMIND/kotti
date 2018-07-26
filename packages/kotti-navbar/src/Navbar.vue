@@ -7,7 +7,7 @@
 			<div class="navbar-header">
 				<slot name="navbar-header">
 					<div class="navbar-logo">
-						<img :src="src" />
+						<img :src="theme.logoUrl" />
 					</div>
 				</slot>
 			</div>
@@ -48,22 +48,23 @@ export default {
 	name: 'KtNavbar',
 	mixins: [clickaway],
 	props: {
-		menu: Array,
 		isNarrow: { type: Boolean, default: false },
-		src: String,
+		menu: { type: Array, required: true },
+		theme: {
+			type: Object,
+			default: () => {
+				logoUrl: null
+			},
+		},
 	},
-	data() {
+	data(props) {
 		return {
+			isNarrowNavBarToggle: props.isNarrow,
 			mobileMenuToggle: false,
-			isNarrowNavBarToggle: null,
 		}
 	},
 	created() {
 		this.$parent.$on('clickawayKtNavbarMobileMenu', this.clickawayMobileMenu)
-	},
-	mounted() {
-		this.isNarrowNavBarToggle = this.isNarrow
-		this.navbarNarrowBarEvent(this.isNarrowNavBarToggle)
 	},
 	computed: {
 		isNarrowNavBar() {
@@ -73,16 +74,18 @@ export default {
 			return this.isNarrowNavBarToggle
 		},
 		navbarToggleClass() {
-			return [
-				'navbar-toggle',
-				{ 'navbar-toggle--active': this.mobileMenuToggle },
-			]
+			return {
+				'navbar-toggle': true,
+				'navbar-toggle--active': this.mobileMenuToggle,
+			}
 		},
 	},
 	methods: {
 		objectClass(className) {
-			const isNarrowClass = this.isNarrowNavBar ? `${className}--narrow` : ''
-			return [className, isNarrowClass]
+			return {
+				[className]: true,
+				[`${className}--narrow`]: this.isNarrowNavBar,
+			}
 		},
 		clickawayMobileMenu() {
 			this.mobileMenuToggle = false
@@ -92,10 +95,15 @@ export default {
 		},
 		toggleNarrowBar() {
 			this.isNarrowNavBarToggle = !this.isNarrowNavBarToggle
-			this.navbarNarrowBarEvent(this.isNarrowNavBarToggle)
 		},
-		navbarNarrowBarEvent(value) {
-			this.$emit('toggleKtNavbarNarrowEvent', value)
+		navbarNarrowBarEvent() {
+			this.$emit('toggleKtNavbarNarrowEvent', this.isNarrowNavBarToggle)
+		},
+	},
+	watch: {
+		isNarrowNavBar: {
+			immediate: true,
+			handler: 'navbarNarrowBarEvent',
 		},
 	},
 }

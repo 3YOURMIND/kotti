@@ -7,7 +7,7 @@
 </a>
 
 ```html
-<KtUserMenu userName="Jony'O Five" userStatus="Invisiable">
+<KtUserMenu userName="Jony'O Five" userStatus="Invisible">
 	<div slot="user-menu-items">
 		<div class="user-menu__item">Settings</div>
 		<div class="user-menu__item">User Profile</div>
@@ -18,11 +18,11 @@
 
 ## Usage
 
-| Attribute       | Description                  | Type     | Accepted values | Default |
-|:----------------|:-----------------------------|:---------|:----------------|:--------|
-| `userAvatarSrc` | user avatar image src        | `String` | --              | --      |
-| `userName`      | user name text               | `String` | --              | --      |
-| `userStatus`    | status of user menu|`String` | --       | --              |         |
+| Attribute       | Description           | Type     | Accepted values | Default          |
+|:----------------|:----------------------|:---------|:----------------|:-----------------|
+| `userAvatarSrc` | user avatar image src | `String` | —               | —                |
+| `userName`      | user name text        | `String` | —               | —                |
+| `userStatus`    | status of user menu   | `String` | —               | —                |
 
 ### Slots
 
