@@ -15,9 +15,16 @@
 			<div class="navbar-body">
 				<div :class="objectClass('navbar-menu')">
 					<ul>
-						<router-link :exact="item.exact" tag="li" v-for="item in menu" :key="item.index" :to="item.to">
-							<i class="yoco" v-text="item.icon" />
-							<span v-text="item.label" v-if="!isNarrowNavBar"/>
+						<router-link
+							v-for="item in menu"
+							:exact="item.exact"
+							:key="item.index"
+							:to="item.to"
+						>
+							<li>
+								<i class="yoco" v-text="item.icon" />
+								<span v-if="!isNarrowNavBar" v-text="item.label"/>
+							</li>
 						</router-link>
 					</ul>
 					<slot name="navbar-body" />
