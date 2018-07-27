@@ -10,6 +10,7 @@ import KtInlineEdit from '../packages/kotti-inline-edit'
 import KtInput from '../packages/kotti-input'
 import KtModal from '../packages/kotti-modal'
 import KtNavbar from '../packages/kotti-navbar'
+import KtUserMenu from '../packages/kotti-user-menu'
 import KtRadio from '../packages/kotti-radio'
 import KtRow from '../packages/kotti-row'
 import KtSingleSelect from '../packages/kotti-single-select'
@@ -35,6 +36,7 @@ const components = [
 	KtSingleSelect,
 	KtSwitch,
 	KtTable,
+	KtUserMenu,
 	ktRadioGroup,
 ]
 
