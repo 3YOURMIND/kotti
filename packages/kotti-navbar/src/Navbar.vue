@@ -1,13 +1,14 @@
 <template>
 	<nav :class="objectClass('navbar')">
 		<div :class="objectClass('navbar-wrapper')">
-			<div :class="navbarToggleClass" @click="toggleMobieMenu">
+			<div :class="navbarToggleClass" @click="toggleMobileMenu">
 				<i class="yoco" v-text="'burger'"/>
 			</div>
 			<div class="navbar-header">
 				<slot name="navbar-header">
-					<div class="navbar-logo">
-						<img :src="theme.logoUrl" />
+					<div :class="objectClass('navbar-logo')">
+						<img :src="logoUrl" class="navbar-logo-img"/>
+						<img :src="theme.logo.wide" class="navbar-logo-img--mobile"/>
 					</div>
 				</slot>
 			</div>
@@ -59,9 +60,12 @@ export default {
 		menu: { type: Array, required: true },
 		theme: {
 			type: Object,
-			default: () => {
-				logoUrl: null
-			},
+			default: () => ({
+				logo: {
+					wide: null,
+					narrow: null,
+				},
+			}),
 		},
 	},
 	data(props) {
@@ -86,6 +90,11 @@ export default {
 				'navbar-toggle--active': this.mobileMenuToggle,
 			}
 		},
+		logoUrl() {
+			return this.isNarrowNavBar && this.theme.logo.narrow
+				? this.theme.logo.narrow
+				: this.theme.logo.wide
+		},
 	},
 	methods: {
 		objectClass(className) {
@@ -97,7 +106,7 @@ export default {
 		clickawayMobileMenu() {
 			this.mobileMenuToggle = false
 		},
-		toggleMobieMenu() {
+		toggleMobileMenu() {
 			this.mobileMenuToggle = !this.mobileMenuToggle
 		},
 		toggleNarrowBar() {

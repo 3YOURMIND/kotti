@@ -2,6 +2,21 @@
 	<div class="user-menus" v-on-clickaway = "clickawayMenu">
 		<div class="user-menu" v-if="isMenuShow" @click="clickawayMenu">
 			<slot name="user-menu-items"></slot>
+			<div class="user-menu-items">
+				<div v-for="(item, index) in userMenuItems" :key="index">
+					<div v-if="item.sectionTitle"
+						class="user-menu__section"
+						v-text="item.sectionTitle"
+					/>
+					<a class="user-menu__item"
+						v-for="(link, index) in item.links"
+						:key="index"
+						:href="link.link"
+						@click="handleLinkClicked(link)"
+						v-text="link.title"
+					/>
+				</div>
+			</div>
 		</div>
 		<div :class="userInfoClass" @click="isMenuShow=!isMenuShow">
 			<div class="user-info-avatar">
@@ -16,7 +31,6 @@
 				<i class="yoco" v-else>chevron_up</i>
 			</div>
 		</div>
-
 	</div>
 </template>
 
@@ -30,6 +44,7 @@ export default {
 		userAvatar: { type: String, default: null },
 		userName: { type: String, required: true },
 		userStatus: { type: String, required: true },
+		userMenuItems: { type: Object, required: true },
 	},
 	components: {
 		KtAvatar,
@@ -56,6 +71,9 @@ export default {
 		},
 		clickawayMenu() {
 			this.isMenuShow = false
+		},
+		handleLinkClicked(item) {
+			this.$emit('userMenuLinkClicked', item)
 		},
 	},
 	created() {

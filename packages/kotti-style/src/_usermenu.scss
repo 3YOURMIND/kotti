@@ -50,7 +50,7 @@
 .user-menu {
 	flex: none;
 	position: absolute;
-	background: darken(#2659ab, 24);
+	background: darken(#2659ab, 20);
 	width: 11.2rem;
 	box-sizing: border-box;
 	bottom: 0.4rem;
@@ -60,12 +60,23 @@
 	padding: 0.8rem;
 	padding-bottom: 3.2rem;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+	&__section {
+		padding: 0.2rem 0.4rem;
+		font-size: 0.5rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		opacity: 0.46;
+	}
 	&__item {
-		margin: 0.2rem 0;
-		padding: 0.4rem;
+		margin: 0.1rem 0;
+		padding: 0.2rem 0.4rem;
 		line-height: 1.2rem;
+		font-size: 0.68rem;
 		border-radius: 0.2rem;
+		color: inherit;
+		display: block;
 		&:hover {
+			color: inherit;
 			cursor: pointer;
 			background: rgba(255, 255, 255, 0.14);
 		}

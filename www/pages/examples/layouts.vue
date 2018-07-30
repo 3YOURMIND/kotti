@@ -2,13 +2,10 @@
 	<div class="d-flex responsive">
 		<KtNavbar :menu="menuData" :theme="themeData">
 			<div slot="navbar-footer">
-				<KtUserMenu userName="Jony'O Five" userStatus="Invisible">
-					<div slot="user-menu-items">
-						<div class="user-menu__item">Settings</div>
-						<div class="user-menu__item">User Profile</div>
-						<div class="user-menu__item">Logout</div>
-					</div>
-				</KtUserMenu>
+				<KtUserMenu
+					userName="Jony'O Five"
+					userStatus="Invisible"
+					:userMenuItems="userMenuData" />
 			</div>
 		</KtNavbar>
 		<Actionbar />
@@ -34,7 +31,7 @@ export default {
 		return {
 			menuData: [
 				{
-					to: 'navbar-example/',
+					to: '#',
 					label: 'Navbar',
 					icon: 'dashboard',
 				},
@@ -49,8 +46,59 @@ export default {
 					icon: 'calendar',
 				},
 			],
+			userMenuData: [
+				{
+					sectionTitle: 'Switch To',
+					links: [
+						{
+							link: '#',
+							title: 'User Panel',
+						},
+						{
+							link: '#',
+							title: 'Service Panel',
+						},
+						{
+							link: '#',
+							title: 'Org Panel',
+						},
+					],
+				},
+				{
+					sectionTitle: 'Recent Service',
+					links: [
+						{
+							link: '#',
+							title: '2YOURMIND Service',
+						},
+						{
+							link: '#',
+							title: '3YOURMIND Service',
+						},
+						{
+							link: '#',
+							title: 'View More',
+						},
+					],
+				},
+				{
+					links: [
+						{
+							link: '#',
+							title: 'Settings',
+						},
+						{
+							link: '#',
+							title: 'Logout',
+						},
+					],
+				},
+			],
 			themeData: {
-				logoUrl: 'https://picsum.photos/200/60',
+				logo: {
+					wide: 'https://picsum.photos/200/60',
+					narrow: 'https://picsum.photos/60/60',
+				},
 			},
 		}
 	},
