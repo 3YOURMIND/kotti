@@ -74,7 +74,7 @@ $narrow-navbar-width: 3.2rem;
 	margin: 1.2rem auto;
 	align-items: center;
 	img {
-		width: 100%;
+		width: 10rem;
 	}
 }
 
@@ -188,9 +188,13 @@ $narrow-navbar-width: 3.2rem;
 	.navbar-logo {
 		margin: 0;
 		height: 2rem;
-		width: 100%;
 		display: flex;
+		flex: 1;
 		justify-content: center;
+		img {
+			width: auto;
+			max-height: 100%;
+		}
 	}
 
 	.navbar-body {
