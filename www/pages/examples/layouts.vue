@@ -84,7 +84,7 @@ export default {
 				{
 					links: [
 						{
-							link: '#',
+							link: 'https://google.com',
 							title: 'Settings',
 						},
 						{

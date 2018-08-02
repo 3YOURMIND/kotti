@@ -33,6 +33,11 @@ export default {
 	},
 	data() {
 		return {
+			theme: {
+				logo: {
+					wide: LogoSvg,
+				},
+			},
 			globalMenu: [
 				{ icon: 'layer', label: 'Foundations', to: '/foundations/layout' },
 				{ icon: 'dashboard', label: 'Components', to: '/components/avatars' },
