@@ -2,7 +2,7 @@
 	<KtNavbar :theme="theme" :menu="globalMenu">
 		<div slot="navbar-header" class="navbar-logo">
 			<nuxt-link to="/">
-				<img :src="theme.logoUrl" />
+				<img :src="theme.logo.wide" />
 			</nuxt-link>
 		</div>
 		<div slot="navbar-footer">
@@ -15,9 +15,9 @@
 
 <style lang="scss">
 li.nuxt-link-active {
+	background: rgba(0, 0, 0, 0.2);
 	border-radius: 0.1rem;
 	font-weight: 600;
-	background: rgba(0, 0, 0, 0.2);
 }
 </style>
 
@@ -33,31 +33,13 @@ export default {
 	},
 	data() {
 		return {
-			theme: {
-				logoUrl: LogoSvg,
-			},
 			globalMenu: [
-				{
-					icon: 'layer',
-					label: 'Foundations',
-					to: '/foundations/layout',
-				},
-				{
-					icon: 'dashboard',
-					label: 'Components',
-					to: '/components/avatars',
-				},
-				{
-					icon: 'support',
-					label: 'Patterns',
-					to: '/patterns/forms',
-				},
-				{
-					icon: 'download',
-					label: 'Resources',
-					to: '/resources/kotti-style',
-				},
+				{ icon: 'layer', label: 'Foundations', to: '/foundations/layout' },
+				{ icon: 'dashboard', label: 'Components', to: '/components/avatars' },
+				{ icon: 'support', label: 'Patterns', to: '/patterns/forms' },
+				{ icon: 'download', label: 'Resources', to: '/resources/kotti-style' },
 			],
+			theme: { logo: { wide: LogoSvg } },
 		}
 	},
 }
