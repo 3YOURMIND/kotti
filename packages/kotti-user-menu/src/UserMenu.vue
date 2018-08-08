@@ -3,14 +3,14 @@
 		<div class="user-menu" v-if="isMenuShow" @click="clickawayMenu">
 			<slot name="user-menu-items"/>
 			<div class="user-menu-items">
-				<div v-for="(item, index) in userMenuItems" :key="index">
+				<div v-for="(section, index) in sections" :key="index">
 					<div
-						v-if="item.sectionTitle"
+						v-if="section.title"
 						class="user-menu__section"
-						v-text="item.sectionTitle"
+						v-text="section.title"
 					/>
 					<a
-						v-for="(link, index) in item.links"
+						v-for="(link, index) in section.links"
 						:href="link.link"
 						:key="index"
 						@click="handleLinkClicked(link)"
@@ -44,9 +44,19 @@ export default {
 	name: 'KtUserMenu',
 	props: {
 		userAvatar: { type: String, default: null },
+		sections: {
+			type: Array,
+			required: true,
+			validator: sections => {
+				for (const section of sections)
+					if (!Array.isArray(section.links) || !section.links.length)
+						return false
+
+				return true
+			},
+		},
 		userName: { type: String, required: true },
 		userStatus: { type: String, required: true },
-		userMenuItems: { type: Object, required: true },
 	},
 	components: {
 		KtAvatar,

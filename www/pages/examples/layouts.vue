@@ -5,7 +5,7 @@
 				<KtUserMenu
 					userName="Jony'O Five"
 					userStatus="Invisible"
-					:userMenuItems="userMenuData" />
+					:sections="userMenuData" />
 			</div>
 		</KtNavbar>
 		<Actionbar />
@@ -48,7 +48,7 @@ export default {
 			],
 			userMenuData: [
 				{
-					sectionTitle: 'Switch To',
+					title: 'Switch To',
 					links: [
 						{
 							link: '#',
@@ -65,7 +65,7 @@ export default {
 					],
 				},
 				{
-					sectionTitle: 'Recent Service',
+					title: 'Recent Service',
 					links: [
 						{
 							link: '#',
