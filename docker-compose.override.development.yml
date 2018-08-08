@@ -12,4 +12,4 @@ services:
       - './kotti/www/:/usr/share/app/www/:ro'
   mono-proxy:
     volumes:
-      - './kotti/Caddyfile:/etc/configs/custom/kotti.conf'
+      - './kotti/Caddyfile:/etc/configs/kotti.conf'
