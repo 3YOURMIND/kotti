@@ -1,18 +1,20 @@
 <template>
 	<div class="user-menus" v-on-clickaway = "clickawayMenu">
 		<div class="user-menu" v-if="isMenuShow" @click="clickawayMenu">
-			<slot name="user-menu-items"></slot>
+			<slot name="user-menu-items"/>
 			<div class="user-menu-items">
 				<div v-for="(item, index) in userMenuItems" :key="index">
-					<div v-if="item.sectionTitle"
+					<div
+						v-if="item.sectionTitle"
 						class="user-menu__section"
 						v-text="item.sectionTitle"
 					/>
-					<a class="user-menu__item"
+					<a
 						v-for="(link, index) in item.links"
-						:key="index"
 						:href="link.link"
+						:key="index"
 						@click="handleLinkClicked(link)"
+						class="user-menu__item"
 						v-text="link.title"
 					/>
 				</div>
@@ -66,14 +68,14 @@ export default {
 		},
 	},
 	methods: {
-		setNarrowValue(value) {
-			this.isNarrow = value
-		},
 		clickawayMenu() {
 			this.isMenuShow = false
 		},
 		handleLinkClicked(item) {
 			this.$emit('userMenuLinkClicked', item)
+		},
+		setNarrowValue(value) {
+			this.isNarrow = value
 		},
 	},
 	created() {
