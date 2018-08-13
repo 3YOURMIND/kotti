@@ -1,5 +1,21 @@
 <template>
-	<div class="kt-datepicker">
+<div class="kt-dateinput">
+	<div class="form-group">
+		<label class="form-label" v-text="'label'" />
+		<div class="has-icon-left">
+			<input
+				v-bind="$attrs"
+				@focus="handleFocus"
+				class="form-input"
+				:value="selectedDate"
+			/>
+			<i class="form-icon yoco" v-text="'calendar'" />
+		</div>
+		<div class="form-validation-text" v-if="'validateText'">
+			<span v-text="'validateText'" />
+		</div>
+	</div>
+	<div class="kt-datepicker" v-if="showDatePicker">
 		<div class="kt-datepicker-header">
 			<div class="kt-datepicker-header__date">
 				<div class="kt-datepicker-header__month" v-text="monthRep" />
@@ -18,12 +34,15 @@
 				<div class="kt-datepicker-calendar__day-cell kt-datepicker-calendar__day--blank" v-for="d in daysOfBlank" :key="d.id">
 					<span>{{d}}</span>
 				</div>
-				<div class="kt-datepicker-calendar__day-cell" v-for="d in dateOfMonth" :key="d.id" :class="dateStyle(d)">
-					<span>{{d}}</span>
+				<div class="kt-datepicker-calendar__day-cell"
+					v-for="d in dateOfMonth" :key="d.id" :class="dateStyle(d)"
+					@click="handleDateSelected(d)">
+					<span  v-text="d"/>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </template>
 
 <script>
@@ -33,23 +52,12 @@ export default {
 	name: 'KtDatePicker',
 	data() {
 		return {
-			daysOfWeekString: ['星期日', '月耀日', '화요일', 'Wed', 'Th', 'F', 'Sat'],
-			monthsString: [
-				'一月',
-				'January',
-				'Feb',
-				'April',
-				'May',
-				'六月',
-				'July',
-				'August',
-				'September',
-				'October',
-				'Nov.',
-				'December',
-			],
+			daysOfWeekString: dateUtils.weekString,
+			monthsString: dateUtils.monthsString,
 			mondayFirst: true,
 			pageDate: new Date(),
+			showDatePicker: false,
+			selectedDate: null,
 		}
 	},
 	computed: {
@@ -103,23 +111,40 @@ export default {
 		monthDecrease() {
 			this.changeMonth(-1)
 		},
+		handleFocus() {
+			this.showDatePicker = true
+		},
+		handleBlur() {
+			this.showDatePicker = false
+		},
+		handleDateSelected(d) {
+			let date = this.pageDate
+			date.setDate(d)
+			this.selectedDate = new Date(date)
+			this.showDatePicker = false
+		},
 		dateStyle(d) {
-			if (d === 1) {
-				return 'kt-datepicker-calendar__day--start'
-			}
-			if (d === 4) {
-				return 'kt-datepicker-calendar__day--end'
-			}
-			if (d < 5 && d > 1) {
-				return 'kt-datepicker-calendar__day--between'
-			}
-			if (d === 10) {
-				return 'kt-datepicker-calendar__day--highlighted'
-			}
-			if (d === 22) {
+			const todayDate = new Date().getDate()
+			const currentMonth = new Date().getMonth()
+			const selectedDay = this.selectedDate ? this.selectedDate.getDate() : null
+			if (d === todayDate && this.pageDate.getMonth() === currentMonth) {
 				return 'kt-datepicker-calendar__day--today'
+			}
+			if (d === selectedDay) {
+				return 'kt-datepicker-calendar__day--highlighted'
 			}
 		},
 	},
 }
 </script>
+
+
+<style scoped>
+.kt-dateinput {
+	position: relative;
+}
+.kt-datepicker {
+	position: absolute;
+	top: 3.2rem;
+}
+</style>
