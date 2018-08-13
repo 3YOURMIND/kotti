@@ -121,30 +121,29 @@ export default {
 			let date = this.pageDate
 			date.setDate(d)
 			this.selectedDate = new Date(date)
+			this.$emit('KtDateSelected', this.selectedDate)
 			this.showDatePicker = false
 		},
 		dateStyle(d) {
 			const todayDate = new Date().getDate()
 			const currentMonth = new Date().getMonth()
 			const selectedDay = this.selectedDate ? this.selectedDate.getDate() : null
-			if (d === todayDate && this.pageDate.getMonth() === currentMonth) {
+			const selectedMonth = this.selectedDate
+				? this.selectedDate.getMonth()
+				: null
+			if (d === todayDate && currentMonth === this.pageDate.getMonth()) {
 				return 'kt-datepicker-calendar__day--today'
 			}
-			if (d === selectedDay) {
+			if (d === selectedDay && selectedMonth === this.pageDate.getMonth()) {
 				return 'kt-datepicker-calendar__day--highlighted'
 			}
 		},
 	},
 }
 </script>
-
-
-<style scoped>
-.kt-dateinput {
-	position: relative;
-}
+<style lang="scss" scoped>
 .kt-datepicker {
 	position: absolute;
-	top: 3.2rem;
+	top: 5.2rem;
 }
 </style>

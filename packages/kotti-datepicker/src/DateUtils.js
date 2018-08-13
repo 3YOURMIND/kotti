@@ -10,20 +10,20 @@ const util = {
 		return 31
 	},
 	monthsString: [
-		'一月',
 		'January',
-		'Feb',
+		'February',
+		'March',
 		'April',
 		'May',
-		'六月',
+		'June',
 		'July',
 		'August',
 		'September',
 		'October',
-		'Nov.',
+		'November',
 		'December',
 	],
-	weekString: ['星期日', '月耀日', '화요일', 'Wed', 'Th', 'F', 'Sat'],
+	weekString: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 }
 export default {
 	...util,
