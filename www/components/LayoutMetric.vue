@@ -9,37 +9,39 @@
 			</p>
 		</div>
 		<table class="table table-striped table-hover">
-			<tr>
-				<th>Unit</th>
-				<th>Pixel</th>
-				<th>SCSS Variable</th>
-				<th>in REM</th>
-			</tr>
-			<LayoutMetricTableRow
-				:unit="1"
-				:pixel="4"
-				:rem="0.2"
-			/>
-			<LayoutMetricTableRow
-				:unit="2"
-				:pixel="8"
-				:rem="0.4"
-			/>
-			<LayoutMetricTableRow
-				:unit="4"
-				:pixel="16"
-				:rem="0.8"
-			/>
-			<LayoutMetricTableRow
-				:unit="6"
-				:pixel="24"
-				:rem="1.2"
-			/>
-			<LayoutMetricTableRow
-				:unit="8"
-				:pixel="32"
-				:rem="1.6"
-			/>
+			<tbody>
+				<tr>
+					<th>Unit</th>
+					<th>Pixel</th>
+					<th>SCSS Variable</th>
+					<th>in REM</th>
+				</tr>
+				<LayoutMetricTableRow
+					:unit="1"
+					:pixel="4"
+					:rem="0.2"
+				/>
+				<LayoutMetricTableRow
+					:unit="2"
+					:pixel="8"
+					:rem="0.4"
+				/>
+				<LayoutMetricTableRow
+					:unit="4"
+					:pixel="16"
+					:rem="0.8"
+				/>
+				<LayoutMetricTableRow
+					:unit="6"
+					:pixel="24"
+					:rem="1.2"
+				/>
+				<LayoutMetricTableRow
+					:unit="8"
+					:pixel="32"
+					:rem="1.6"
+				/>
+			</tbody>
 		</table>
 		<h3>Padding and Margin</h3>
 		<p>Following 3 types of margin or padding metric are suggested:</p>

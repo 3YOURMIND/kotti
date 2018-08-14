@@ -40,6 +40,13 @@
 import KtAvatar from '../../kotti-avatar'
 import { mixin as clickaway } from '../../mixin/vue-clickaway'
 
+const linkIsValid = link => Boolean(link.title)
+
+const sectionIsValid = section =>
+	Array.isArray(section.links) &&
+	Boolean(section.links.length) &&
+	section.links.every(linkIsValid)
+
 export default {
 	name: 'KtUserMenu',
 	props: {
@@ -47,13 +54,7 @@ export default {
 		sections: {
 			type: Array,
 			required: true,
-			validator: sections => {
-				for (const section of sections)
-					if (!Array.isArray(section.links) || !section.links.length)
-						return false
-
-				return true
-			},
+			validator: sections => sections.every(sectionIsValid),
 		},
 		userName: { type: String, required: true },
 		userStatus: { type: String, required: true },
