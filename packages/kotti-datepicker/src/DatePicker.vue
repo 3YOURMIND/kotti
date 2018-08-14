@@ -1,29 +1,13 @@
 <template>
-<div class="kt-dateinput">
-	<div class="form-group">
-		<label class="form-label" v-text="'label'" />
-		<div class="has-icon-left">
-			<input
-				v-bind="$attrs"
-				@focus="handleFocus"
-				class="form-input"
-				:value="selectedDate"
-			/>
-			<i class="form-icon yoco" v-text="'calendar'" />
-		</div>
-		<div class="form-validation-text" v-if="'validateText'">
-			<span v-text="'validateText'" />
-		</div>
-	</div>
-	<div class="kt-datepicker" v-if="showDatePicker">
+	<div class="kt-datepicker">
 		<div class="kt-datepicker-header">
 			<div class="kt-datepicker-header__date">
 				<div class="kt-datepicker-header__month" v-text="monthRep" />
 				<div class="kt-datepicker-header__year" v-text="yearRep" />
 			</div>
 			<div class="kt-datepicker-header__control">
-				<i class="yoco" @click="monthDecrease">chevron_left</i>
-				<i class="yoco" @click="monthIncrease">chevron_right</i>
+				<i class="yoco" @click="changeMonth(-1)">chevron_left</i>
+				<i class="yoco" @click="changeMonth(+1)">chevron_right</i>
 			</div>
 		</div>
 		<div class="kt-datepicker-calendar">
@@ -42,7 +26,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <script>
@@ -50,15 +33,22 @@ import dateUtils from './DateUtils.js'
 
 export default {
 	name: 'KtDatePicker',
+	props: {
+		selectedDate: { type: Date, default: null },
+		mondayFirst: { type: Boolean, default: false },
+	},
 	data() {
 		return {
 			daysOfWeekString: dateUtils.weekString,
 			monthsString: dateUtils.monthsString,
-			mondayFirst: true,
 			pageDate: new Date(),
-			showDatePicker: false,
-			selectedDate: null,
 		}
+	},
+	watch: {
+		selectedDate: {
+			immediate: true,
+			handler: 'setPageDate',
+		},
 	},
 	computed: {
 		monthRep() {
@@ -99,29 +89,20 @@ export default {
 		},
 	},
 	methods: {
+		setPageDate() {
+			let d = this.selectedDate
+			this.pageDate = d ? new Date(d) : new Date()
+		},
 		changeMonth(incrementBy) {
 			let d = this.pageDate
 			let m = d.getUTCMonth() + incrementBy
 			d = d.setUTCMonth(m)
 			this.pageDate = new Date(d)
 		},
-		monthIncrease() {
-			this.changeMonth(+1)
-		},
-		monthDecrease() {
-			this.changeMonth(-1)
-		},
-		handleFocus() {
-			this.showDatePicker = true
-		},
-		handleBlur() {
-			this.showDatePicker = false
-		},
 		handleDateSelected(d) {
 			let date = this.pageDate
 			date.setDate(d)
-			this.selectedDate = new Date(date)
-			this.$emit('KtDateSelected', this.selectedDate)
+			this.$emit('KtDateSelected', date)
 			this.showDatePicker = false
 		},
 		dateStyle(d) {
@@ -131,19 +112,15 @@ export default {
 			const selectedMonth = this.selectedDate
 				? this.selectedDate.getMonth()
 				: null
+			let styleObject = []
 			if (d === todayDate && currentMonth === this.pageDate.getMonth()) {
-				return 'kt-datepicker-calendar__day--today'
+				styleObject.push('kt-datepicker-calendar__day--today')
 			}
 			if (d === selectedDay && selectedMonth === this.pageDate.getMonth()) {
-				return 'kt-datepicker-calendar__day--highlighted'
+				styleObject.push('kt-datepicker-calendar__day--highlighted')
 			}
+			return styleObject
 		},
 	},
 }
 </script>
-<style lang="scss" scoped>
-.kt-datepicker {
-	position: absolute;
-	top: 5.2rem;
-}
-</style>

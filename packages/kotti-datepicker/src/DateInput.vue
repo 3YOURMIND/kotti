@@ -7,15 +7,19 @@
 					v-bind="$attrs"
 					@focus.prevent="handleFocus"
 					class="form-input"
-					v-model="formatedDate"
+					:value="formatedDate"
 				/>
 				<i class="form-icon yoco" v-text="'calendar'" />
 			</div>
 		</div>
-		<div v-if="showDatePicker"  >
-			<KtDatePicker @KtDateSelected="setDate" />
+		<div v-if="showDatePicker">
+			<KtDatePicker
+				@KtDateSelected="setDate"
+				:selectedDate="currentDate"
+				:mondayFirst="mondayFirst"
+			/>
 		</div>
-		</div>
+	</div>
 </template>
 
 <script>
@@ -24,9 +28,9 @@ import { mixin as clickaway } from '../../mixin/vue-clickaway'
 export default {
 	name: 'KtDateInput',
 	mixins: [clickaway],
-	// props: {
-	// 	formatedDate: String
-	// },
+	props: {
+		mondayFirst: Boolean,
+	},
 	components: {
 		KtDatePicker,
 	},
@@ -53,13 +57,8 @@ export default {
 		setDate(value) {
 			this.currentDate = value
 			this.showDatePicker = false
+			this.$emit('input', value)
 		},
 	},
 }
 </script>
-
-<style scoped>
-.kt-dateinput {
-	position: relative;
-}
-</style>

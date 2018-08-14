@@ -3,7 +3,8 @@
 # Date Picker
 
 <div class="element-example">
-	<KtDatePicker/>
+	<KtDatePicker v-model="date1" placeholder="Choose a date" mondayFirst/>
+	{{date1}}
 </div>
 
 </template>
@@ -14,6 +15,11 @@ export default {
 	name: 'DatePicker',
 	components: {
 		KtDatePicker,
+	},
+	data() {
+		return {
+			date1: null,
+		}
 	},
 }
 </script>
