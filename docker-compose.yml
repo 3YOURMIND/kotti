@@ -3,5 +3,4 @@ services:
   kotti:
     build:
       context: kotti
-    container_name: kotti
     restart: unless-stopped

@@ -3,6 +3,7 @@ services:
   kotti:
     build:
       target: development
+    container_name: kotti
     depends_on:
       - mono-proxy
     tty: true
