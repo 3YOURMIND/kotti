@@ -2,7 +2,7 @@ http://kotti.3yd {
 	log stdout
 
 	proxy / http://kotti {
-		header_upstream Host 'localhost'
+		transparent
 		websocket
 	}
 }

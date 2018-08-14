@@ -1,5 +1,10 @@
 {
 	"author": "3YOURMIND GmbH",
+	"babel": {
+		"plugins": [
+			"transform-object-rest-spread"
+		]
+	},
 	"bolt": {
 		"workspaces": [
 			"packages/*"
