@@ -9,7 +9,8 @@
 	box-sizing: border-box;
 	border-radius: 0.1rem;
 	position: absolute;
-	top: 5.2rem;
+	top: 3.2rem;
+	z-index: $zindex-4;
 }
 .kt-datepicker-header {
 	display: flex;

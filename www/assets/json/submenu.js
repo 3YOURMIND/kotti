@@ -48,6 +48,10 @@ const submenu = [
 				to: 'cards',
 			},
 			{
+				label: 'DatePicker',
+				to: 'datepicker',
+			},
+			{
 				label: 'Drawers',
 				to: 'drawer',
 			},

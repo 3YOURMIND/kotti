@@ -1,7 +1,7 @@
 <template>
 	<div v-on-clickaway="handleBlur">
 		<div class="form-group">
-			<label class="form-label" v-text="'label'" />
+			<label class="form-label" v-text="label" />
 			<div class="has-icon-left">
 				<input
 					v-bind="$attrs"
@@ -11,13 +11,13 @@
 				/>
 				<i class="form-icon yoco" v-text="'calendar'" />
 			</div>
-		</div>
-		<div v-if="showDatePicker">
-			<KtDatePicker
-				@KtDateSelected="setDate"
-				:selectedDate="currentDate"
-				:mondayFirst="mondayFirst"
-			/>
+			<div v-if="showDatePicker">
+				<KtDatePicker
+					@KtDateSelected="setDate"
+					:selectedDate="currentDate"
+					:mondayFirst="mondayFirst"
+				/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -29,7 +29,8 @@ export default {
 	name: 'KtDateInput',
 	mixins: [clickaway],
 	props: {
-		mondayFirst: Boolean,
+		label: { type: String, default: null },
+		mondayFirst: { type: Boolean, default: false },
 	},
 	components: {
 		KtDatePicker,
