@@ -4,35 +4,34 @@
 
 <div class="element-example">
 	<KtDatePicker
-		v-model="date1"
-		placeholder="Choose a date"
-		mondayFirst
+		v-model="date"
 		label="Delivery Date"
+		mondayFirst
+		placeholder="Choose a date"
 	/>
-	{{date1}}
+	{{ date }}
 </div>
 
 ```html
 <KtDatePicker
-	v-model="date1"
-	placeholder="Choose a date"
-	mondayFirst
+	v-model="date"
 	label="Delivery Date"
+	mondayFirst
+	placeholder="Choose a date"
 />
+
+{{ date }}
 ```
 
 ## Usage
 
 ### Attributes
 
-| Attribute     | Description                        | Type      | Accepted values | Default |
-|:--------------|:-----------------------------------|:----------|:----------------|:--------|
-| `label`       | label input field                  | `String`  | --              | --      |
-| `placeholder` | placeholder text                   | `String`  | --              | --      |
-| `mondayFirst` | set Moday as first day of the week | `Boolean` | —               | `false` |
-
-
-
+| Attribute     | Description                         | Type      | Accepted values | Default |
+|:--------------|:------------------------------------|:----------|:----------------|:--------|
+| `label`       | label input field                   | `String`  | —               | —       |
+| `mondayFirst` | set Monday as first day of the week | `Boolean` | —               | `false` |
+| `placeholder` | placeholder text                    | `String`  | —               | —       |
 </template>
 
 <script>
@@ -44,7 +43,7 @@ export default {
 	},
 	data() {
 		return {
-			date1: null,
+			date: null,
 		}
 	},
 }

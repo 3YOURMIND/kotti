@@ -13,9 +13,16 @@
 			"email": "kevinigeligeligel@gmail.com",
 			"name": "Kevin Peters",
 			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"email": "fw@3yourmind.com",
+			"name": "Florian Wendelborn",
+			"url": "https://hello.dodekeract.com/npm/@3yourmind/kotti-ui"
 		}
 	],
-	"dependencies": {},
+	"dependencies": {
+		"dayjs": "^1.7.5"
+	},
 	"description": "Core UI Component",
 	"files": [
 		"dist"

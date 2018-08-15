@@ -1,7 +1,10 @@
 <template>
 	<div v-on-clickaway="handleBlur">
 		<div class="form-group">
-			<label class="form-label" v-text="label" />
+			<label
+				class="form-label"
+				v-text="label"
+			/>
 			<div class="has-icon-left">
 				<input
 					v-bind="$attrs"
@@ -9,13 +12,16 @@
 					class="form-input"
 					:value="formatedDate"
 				/>
-				<i class="form-icon yoco" v-text="'calendar'" />
+				<i
+					class="form-icon yoco"
+					v-text="'calendar'"
+				/>
 			</div>
 			<div v-if="showDatePicker">
 				<KtDatePicker
-					@KtDateSelected="setDate"
-					:selectedDate="currentDate"
 					:mondayFirst="mondayFirst"
+					:selectedDate="currentDate"
+					@KtDateSelected="setDate"
 				/>
 			</div>
 		</div>
@@ -23,8 +29,11 @@
 </template>
 
 <script>
-import KtDatePicker from './DatePicker'
 import { mixin as clickaway } from '../../mixin/vue-clickaway'
+
+// components
+import KtDatePicker from './DatePicker'
+
 export default {
 	name: 'KtDateInput',
 	mixins: [clickaway],
@@ -37,15 +46,15 @@ export default {
 	},
 	data() {
 		return {
-			showDatePicker: false,
 			currentDate: null,
+			showDatePicker: false,
 		}
 	},
 	computed: {
 		formatedDate() {
-			if (this.currentDate) {
-				return this.currentDate.toLocaleDateString()
-			}
+			if (this.currentDate) return this.currentDate.toLocaleDateString()
+
+			return null
 		},
 	},
 	methods: {

@@ -2,26 +2,34 @@
 	<div class="kt-datepicker">
 		<div class="kt-datepicker-header">
 			<div class="kt-datepicker-header__date">
-				<div class="kt-datepicker-header__month" v-text="monthRep" />
-				<div class="kt-datepicker-header__year" v-text="yearRep" />
+				<div class="kt-datepicker-header__month" v-text="monthText" />
+				<div class="kt-datepicker-header__year" v-text="yearText" />
 			</div>
 			<div class="kt-datepicker-header__control">
-				<i class="yoco" @click="changeMonth(-1)">chevron_left</i>
-				<i class="yoco" @click="changeMonth(+1)">chevron_right</i>
+				<i class="yoco" @click="monthPrevious" v-text="'chevron_left'"/>
+				<i class="yoco" @click="monthNext" v-text="'chevron_right'"/>
 			</div>
 		</div>
 		<div class="kt-datepicker-calendar">
 			<div class="kt-datepicker-calendar__week">
-				<span v-for="d in daysOfWeek" :key="d">{{d}}</span>
+				<span v-for="day in daysOfWeek" :key="day" v-text="day"/>
 			</div>
 			<div class="kt-datepicker-calendar__day">
-				<div class="kt-datepicker-calendar__day-cell kt-datepicker-calendar__day--blank" v-for="d in daysOfBlank" :key="d.id">
-					<span>{{d}}</span>
+				<div
+					v-for="(day, index) in daysOfBlank"
+					:key="`blank${index}`"
+					class="kt-datepicker-calendar__day-cell kt-datepicker-calendar__day--blank"
+				>
+					<span v-text="day"/>
 				</div>
-				<div class="kt-datepicker-calendar__day-cell"
-					v-for="d in dateOfMonth" :key="d.id" :class="dateStyle(d)"
-					@click="handleDateSelected(d)">
-					<span  v-text="d"/>
+
+				<div
+					v-for="(day, index) in daysRange"
+					:key="`day${index}`"
+					:class="dayStyle(day)"
+					@click="selectDay(day)"
+				>
+					<span  v-text="day"/>
 				</div>
 			</div>
 		</div>
@@ -29,97 +37,101 @@
 </template>
 
 <script>
-import dateUtils from './DateUtils.js'
+import dayjs from 'dayjs'
+
+const range = (start, end) => {
+	const result = []
+	for (let i = start; i <= end; i++) result.push(i)
+	return result
+}
 
 export default {
 	name: 'KtDatePicker',
 	props: {
-		selectedDate: { type: Date, default: null },
+		daysTranslations: {
+			type: Array,
+			default: () =>
+				range(0, 6).map(day =>
+					dayjs()
+						.set('day', day)
+						.format('ddd'),
+				),
+		},
 		mondayFirst: { type: Boolean, default: false },
+		monthsTranslations: {
+			type: Array,
+			default: () =>
+				range(0, 11).map(month =>
+					dayjs()
+						.set('month', month)
+						.format('MMMM'),
+				),
+		},
+		selectedDate: { type: Date, default: null },
 	},
 	data() {
-		return {
-			daysOfWeekString: dateUtils.weekString,
-			monthsString: dateUtils.monthsString,
-			pageDate: new Date(),
-		}
+		return { date: null }
+	},
+	computed: {
+		selected() {
+			return dayjs(this.selectedDate).startOf('date')
+		},
+		monthText() {
+			return this.monthsTranslations[this.date.month()]
+		},
+		yearText() {
+			return this.date.year()
+		},
+		daysRange() {
+			return range(1, this.date.daysInMonth())
+		},
+		daysOfWeek() {
+			const [sun, mon, tue, wed, thu, fri, sat] = this.daysTranslations
+
+			return this.mondayFirst
+				? [mon, tue, wed, thu, fri, sat, sun]
+				: [sun, mon, tue, wed, thu, fri, sat]
+		},
+		daysOfBlank() {
+			const day = this.date.day()
+			// use +6 instead of -1 because negative numbers will yield
+			// negative results when using the division rest operator (%)
+			return (this.mondayFirst ? day + 6 : day) % 7
+		},
 	},
 	watch: {
 		selectedDate: {
 			immediate: true,
-			handler: 'setPageDate',
-		},
-	},
-	computed: {
-		monthRep() {
-			const d = this.pageDate
-			return this.monthsString[d.getUTCMonth()]
-		},
-		yearRep() {
-			const d = this.pageDate
-			return d.getUTCFullYear()
-		},
-		daysOfWeek() {
-			if (this.mondayFirst) {
-				let tempDays = this.daysOfWeekString.slice()
-				tempDays.push(tempDays.shift())
-				return tempDays
-			}
-			return this.daysOfWeekString
-		},
-		daysOfBlank() {
-			let d = this.pageDate
-			let dObject = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1))
-			if (this.mondayFirst) {
-				return dObject.getDay() > 0 ? dObject.getDay() - 1 : 6
-			}
-			return dObject.getDay()
-		},
-		dateOfMonth() {
-			const d = this.pageDate
-			let _dateArrary = []
-			for (
-				let i = 1;
-				i < dateUtils.daysInMonth(d.getUTCFullYear(), d.getUTCMonth()) + 1;
-				i++
-			) {
-				_dateArrary.push(i)
-			}
-			return _dateArrary
+			handler: 'onSelectedDateChange',
 		},
 	},
 	methods: {
-		setPageDate() {
-			let d = this.selectedDate
-			this.pageDate = d ? new Date(d) : new Date()
+		monthPrevious() {
+			this.date = this.date.subtract(1, 'month')
 		},
-		changeMonth(incrementBy) {
-			let d = this.pageDate
-			let m = d.getUTCMonth() + incrementBy
-			d = d.setUTCMonth(m)
-			this.pageDate = new Date(d)
+		monthNext() {
+			this.date = this.date.add(1, 'month')
 		},
-		handleDateSelected(d) {
-			let date = this.pageDate
-			date.setDate(d)
-			this.$emit('KtDateSelected', date)
-			this.showDatePicker = false
+		selectDay(day) {
+			this.date = this.date.set('date', day)
+			this.$emit('KtDateSelected', this.date.toDate())
 		},
-		dateStyle(d) {
-			const todayDate = new Date().getDate()
-			const currentMonth = new Date().getMonth()
-			const selectedDay = this.selectedDate ? this.selectedDate.getDate() : null
-			const selectedMonth = this.selectedDate
-				? this.selectedDate.getMonth()
-				: null
-			let styleObject = []
-			if (d === todayDate && currentMonth === this.pageDate.getMonth()) {
-				styleObject.push('kt-datepicker-calendar__day--today')
-			}
-			if (d === selectedDay && selectedMonth === this.pageDate.getMonth()) {
-				styleObject.push('kt-datepicker-calendar__day--highlighted')
-			}
-			return styleObject
+		dayStyle(dayOfMonth) {
+			const date = this.date.set('date', dayOfMonth)
+			const today = dayjs().startOf('date')
+
+			const isToday = date.isSame(today)
+			const isSelected = date.isSame(this.selected)
+
+			const styles = ['kt-datepicker-calendar__day-cell']
+
+			if (isToday) styles.push('kt-datepicker-calendar__day--today')
+			if (isSelected) styles.push('kt-datepicker-calendar__day--highlighted')
+
+			return styles
+		},
+		onSelectedDateChange(selectedDate) {
+			this.date = dayjs(selectedDate || undefined).startOf('month')
 		},
 	},
 }
