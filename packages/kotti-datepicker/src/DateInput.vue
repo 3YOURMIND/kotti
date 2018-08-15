@@ -21,6 +21,8 @@
 				<KtDatePicker
 					:mondayFirst="mondayFirst"
 					:selectedDate="currentDate"
+					:daysTranslations="daysTranslations"
+					:monthsTranslations="monthsTranslations"
 					@KtDateSelected="setDate"
 				/>
 			</div>
@@ -40,6 +42,8 @@ export default {
 	props: {
 		label: { type: String, default: null },
 		mondayFirst: { type: Boolean, default: false },
+		daysTranslations: { type: Array },
+		monthsTranslations: { type: Array },
 	},
 	components: {
 		KtDatePicker,
