@@ -10,7 +10,7 @@
 					v-bind="$attrs"
 					@focus.prevent="handleFocus"
 					class="form-input"
-					:value="formatedDate"
+					:value="formattedDate"
 				/>
 				<i
 					class="form-icon yoco"
@@ -55,7 +55,7 @@ export default {
 		}
 	},
 	computed: {
-		formatedDate() {
+		formattedDate() {
 			if (this.currentDate) return this.currentDate.toLocaleDateString()
 
 			return null
