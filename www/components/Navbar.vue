@@ -1,10 +1,5 @@
 <template>
 	<KtNavbar :theme="theme" :menu="globalMenu">
-		<div slot="navbar-header" class="navbar-logo">
-			<nuxt-link to="/">
-				<img :src="theme.logo.wide" />
-			</nuxt-link>
-		</div>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti">
 				<button class="primary w-100">GitHub</button>
