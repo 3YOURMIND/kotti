@@ -5,6 +5,7 @@ import KtButton from '../packages/kotti-button'
 import KtButtonGroup from '../packages/kotti-button-group'
 import KtCol from '../packages/kotti-col'
 import KtDrawer from '../packages/kotti-drawer'
+import KtDatePicker from '../packages/kotti-datepicker'
 import KtHeading from '../packages/kotti-heading'
 import KtInlineEdit from '../packages/kotti-inline-edit'
 import KtInput from '../packages/kotti-input'
@@ -26,6 +27,7 @@ const components = [
 	KtButtonGroup,
 	KtCol,
 	KtDrawer,
+	KtDatePicker,
 	KtHeading,
 	KtInlineEdit,
 	KtInput,
