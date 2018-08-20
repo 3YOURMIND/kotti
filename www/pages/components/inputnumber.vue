@@ -7,8 +7,7 @@ Input Number is an input field which only supports the `Number` type.
 
 <div class="element-example white">
 	<KtInputNumber v-model="number1" />
-
-	Value: {{number1}}
+	<pre v-text="`value: ${number1}`"/>
 </div>
 
 Bind a variable to `v-model` in `<KtInputNumber>`.

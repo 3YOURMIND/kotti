@@ -33,9 +33,9 @@ export default {
 		showMaxNumber: { type: Boolean, default: false },
 		fullWidth: { type: Boolean, default: false },
 	},
-	data() {
+	data(props) {
 		return {
-			currentValue: this.value || 0,
+			currentValue: props.value || 0,
 		}
 	},
 	watch: {
@@ -48,11 +48,14 @@ export default {
 			return {
 				'kt-input-number form-group': true,
 				'form-group--100': this.fullWidth,
-				'form-group--error':
-					(this.currentValue > this.max && this.max) ||
-					(this.currentValue < this.min && this.min) ||
-					this.currentValue === '',
+				'form-group--error': this.formError,
 			}
+		},
+		formError() {
+			if (this.currentValue > this.max && this.max !== null) return true
+			if (this.currentValue < this.min && this.min !== null) return true
+			if (this.currentValue === '') return true
+			return false
 		},
 		inputStyle() {
 			return {
