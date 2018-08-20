@@ -20,7 +20,8 @@ export default {
 	},
 	computed: {
 		showActionbar() {
-			return this.$route.name !== 'index'
+			const exclusivePage = ['index', 'changelog']
+			return !exclusivePage.includes(this.$route.name)
 		},
 	},
 }

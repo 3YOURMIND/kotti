@@ -133,6 +133,10 @@ const submenu = [
 	{
 		child: [
 			{
+				label: 'Kotti UI',
+				to: 'kotti-ui',
+			},
+			{
 				label: 'Kotti Style',
 				to: 'kotti-style',
 			},

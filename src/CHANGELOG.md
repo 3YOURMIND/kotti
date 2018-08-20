@@ -1,38 +1,38 @@
-# Change Log
+## Change Log
 
-## [Unreleased]
+### [Unreleased]
 
-### Added
+#### Added
 
 - This CHANGELOG file
 - Stepper styled InputNumber
 - Single Date Picker
 
-## [0.0.3] - 2018.07.30
+### [0.0.3] - 2018.07.30
 
-### Added
+#### Added
 
 - UserMenu supported
 - Add NavBar component
 
-### Changed
+#### Changed
 
 - NavBar style support narrow logo
 - Narrow bar toggle style changed
 
-## [0.0.2] - 2018.07.26
+### [0.0.2] - 2018.07.26
 
-### Fixed
+#### Fixed
 
 - A better support for avatar
 
-### Changed
+#### Changed
 
 - Switch to semantic version for production use
 
-## [0.0.1-beta.10] - 2018.07.26
+### [0.0.1-beta.10] - 2018.07.26
 
-### Changed
+#### Changed
 
 - Out of beta
 

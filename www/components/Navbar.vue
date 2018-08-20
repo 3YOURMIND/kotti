@@ -1,14 +1,19 @@
 <template>
 	<KtNavbar :theme="theme" :menu="globalMenu">
 		<div slot="navbar-footer">
-			<a href="https://github.com/3YOURMIND/kotti">
-				<button class="primary w-100">GitHub</button>
+			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
+				<img src="~/assets/img/icon_github.svg" width="24" height="24"/>
 			</a>
 		</div>
 	</KtNavbar>
 </template>
 
 <style lang="scss">
+.github-link {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+}
 li.nuxt-link-active {
 	background: rgba(0, 0, 0, 0.2);
 	border-radius: 0.1rem;
