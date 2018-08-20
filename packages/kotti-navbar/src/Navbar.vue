@@ -68,9 +68,9 @@ export default {
 			}),
 		},
 	},
-	data(props) {
+	data() {
 		return {
-			isNarrowNavBarToggle: props.isNarrow,
+			isNarrowNavBarToggle: this.isNarrow,
 			mobileMenuToggle: false,
 		}
 	},

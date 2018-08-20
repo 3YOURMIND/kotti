@@ -33,9 +33,9 @@ export default {
 		showMaxNumber: { type: Boolean, default: false },
 		fullWidth: { type: Boolean, default: false },
 	},
-	data(props) {
+	data() {
 		return {
-			currentValue: props.value || 0,
+			currentValue: this.value || 0,
 		}
 	},
 	watch: {
