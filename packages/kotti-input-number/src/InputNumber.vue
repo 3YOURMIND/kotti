@@ -4,17 +4,17 @@
 			<i class="yoco">minus</i>
 		</div>
 		<input
-			class="kt-input-number__input"
+			:class="inputStyle"
 			type="number"
+			:disabled="disabled"
 			:step="step"
-			v-model="currentValue"
+			:value="currentValue"
 			:max="max"
 			:min="min"
 			ref="inputNumber"
 			@input="handleInput"
-			@change="setValue"
 		/>
-		<div class="kt-input-number__max" v-text="max"/>
+		<div v-if="max && showMaxNumber" class="kt-input-number__max" v-text="max"/>
 		<div :class="increaseButtonStyle" @click="increaseNumber">
 			<i class="yoco">plus</i>
 		</div>
@@ -27,105 +27,75 @@ export default {
 	props: {
 		max: { type: Number, default: null },
 		min: { type: Number, default: null },
+		value: { type: Number, default: null },
 		step: { type: Number, default: 1 },
+		disabled: { type: Boolean, default: false },
+		showMaxNumber: { type: Boolean, default: false },
+		fullWidth: { type: Boolean, default: false },
 	},
 	data() {
 		return {
-			currentValue: 0,
+			currentValue: this.value || 0,
 		}
+	},
+	watch: {
+		value(val, oldValue) {
+			this.setCurrentValue(val)
+		},
 	},
 	computed: {
 		formGroupStyle() {
 			return {
-				'form-group': true,
+				'kt-input-number form-group': true,
+				'form-group--100': this.fullWidth,
 				'form-group--error':
-					this.currentValue > this.max ||
-					this.currentValue < this.min ||
+					(this.currentValue > this.max && this.max) ||
+					(this.currentValue < this.min && this.min) ||
 					this.currentValue === '',
+			}
+		},
+		inputStyle() {
+			return {
+				'kt-input-number__input': true,
+				'kt-input-number__input--100': this.fullWidth,
+				'kt-input-number__input--disabled': this.disabled,
+				'kt-input-number__input--max': this.showMaxNumber,
 			}
 		},
 		increaseButtonStyle() {
 			return {
 				'kt-input-number__button': true,
-				'kt-input-number__button--disabled': this.currentValue === this.max,
+				'kt-input-number__button--disabled':
+					this.currentValue == this.max || this.disabled,
 			}
 		},
 		decreaseButtonStyle() {
 			return {
 				'kt-input-number__button': true,
-				'kt-input-number__button--disabled': this.currentValue === this.min,
+				'kt-input-number__button--disabled':
+					this.currentValue == this.min || this.disabled,
 			}
 		},
 	},
 	methods: {
+		setCurrentValue(value) {
+			if (value === this.currentValue) return
+			this.currentValue = value
+		},
 		increaseNumber() {
+			if (this.disabled) return
 			this.$refs.inputNumber.stepUp(1)
-			this.setValue()
+			this.handleInput()
 		},
 		decreaseNumber() {
+			if (this.disabled) return
 			this.$refs.inputNumber.stepDown(1)
-			this.setValue()
+			this.handleInput()
 		},
-		setValue() {
+		handleInput() {
+			this.currentValue = this.$refs.inputNumber.value
 			this.$emit('input', this.$refs.inputNumber.value)
 		},
 	},
 }
 </script>
-
-
-<style lang="scss" scoped>
-.kt-input-number__input {
-	width: auto;
-	border: 0;
-	width: 50%;
-	text-align: right;
-	color: #3d3d3d;
-	padding-right: 0.1rem;
-	&:focus {
-		box-shadow: 0;
-		outline: 0;
-	}
-	&::-webkit-outer-spin-button,
-	&::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-}
-.form-group {
-	display: flex;
-	width: auto;
-	border-radius: 0.1rem;
-	border: 1px solid #dbdbdb;
-	&--error {
-		border-color: #3d3d3d;
-	}
-}
-.kt-input-number__max {
-	line-height: 1.6rem;
-	width: 50%;
-	&::before {
-		content: '/';
-		padding-right: 0.2rem;
-	}
-}
-.kt-input-number__button {
-	border-radius: 0.1rem;
-	flex: 0 0 1.6rem;
-	width: 1.6rem;
-	height: 1.6rem;
-	text-align: center;
-	line-height: 1.6rem;
-	background: #f8f8f8;
-	user-select: none;
-	&:hover {
-		cursor: pointer;
-	}
-	&--disabled {
-		color: #fff;
-	}
-	&--disabled:hover {
-		cursor: default;
-	}
-}
-</style>

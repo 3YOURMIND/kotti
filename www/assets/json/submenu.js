@@ -64,6 +64,10 @@ const submenu = [
 				to: 'inputs',
 			},
 			{
+				label: 'Input Number',
+				to: 'inputnumber',
+			},
+			{
 				isCSS: true,
 				label: 'Loadings',
 				to: 'loadings',
