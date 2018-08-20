@@ -1,7 +1,7 @@
 <template lang="md">
 # Input Number
 
-Input Number is a input field only supports number type.
+Input Number is an input field which only supports the `Number` type.
 
 ## Basic Usage
 
@@ -11,7 +11,7 @@ Input Number is a input field only supports number type.
 	Value: {{number1}}
 </div>
 
-Bind a vairable to `v-model` in `<KtInputNumber>`.
+Bind a variable to `v-model` in `<KtInputNumber>`.
 
 ```html
 <KtInputNumber v-model="number1" />
@@ -30,7 +30,7 @@ Bind a vairable to `v-model` in `<KtInputNumber>`.
 
 You can use the `min` and `max` attributes to specify a minimum and maximum value.
 
-`step` value is specifying the step amount which is `1` by default.
+The `step` value specifies the step amount, which is `1` by default.
 
 ```html
 <KtInputNumber v-model="number2" :max="12" :min="0" :step="0.2" />
@@ -42,7 +42,7 @@ You can use the `min` and `max` attributes to specify a minimum and maximum valu
 	<KtInputNumber v-model="number3" disabled />
 </div>
 
-When `disabled` attribute is `true`, user cannot change the value.
+When the `disabled` attribute is `true`, the user cannot change the value.
 
 ```html
 <KtInputNumber v-model="number3" disabled />
@@ -56,7 +56,7 @@ When `disabled` attribute is `true`, user cannot change the value.
 	<KtInputNumber v-model="number4" showMaxNumber :max="12" />
 </div>
 
-When `max` attribute has value, and `showMaxNumber` is `true`, the max number shows beside the value.
+When `max` attribute has a value, and `showMaxNumber` is `true`, the max number shows beside the value.
 
 ```html
 <KtInputNumber v-model="number4" showMaxNumber :max="12" />
@@ -70,7 +70,7 @@ When `max` attribute has value, and `showMaxNumber` is `true`, the max number sh
 	<KtInputNumber v-model="number4" fullWidth :max="12" />
 </div>
 
-You can specify the width of input, all using `fullWidth` to set the width of input to 100%.
+You can use `fullWidth` to set the width of input to 100%.
 
 ```html
 <KtInputNumber v-model="number4" :max="12" />
