@@ -96,8 +96,8 @@ export default {
 			this.handleInput()
 		},
 		handleInput() {
-			this.currentValue = this.$refs.inputNumber.value
-			this.$emit('input', this.$refs.inputNumber.value)
+			this.currentValue = parseFloat(this.$refs.inputNumber.value)
+			this.$emit('input', this.currentValue)
 		},
 	},
 }
