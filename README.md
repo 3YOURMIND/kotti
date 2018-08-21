@@ -4,15 +4,18 @@ Design system for new version of 3YOURMIND product.
 
 **Keen:** The design should encourage users to engage with the product.
 
-**Okay:** It’s okay not to follow the foundation if there's good reason. It’s okay to break the design principles when
-it’s the only way to solve the requirement.
+**Okay:** It’s okay not to follow the foundation if there's good reason. It’s
+okay to break the design principles when it’s the only way to solve the
+requirement.
 
-**Transparent:** Making the design easy to perceive or detect, user can process smoothly without being aware of its
-presence.
+**Transparent:** Making the design easy to perceive or detect, user can process
+smoothly without being aware of its presence.
 
-**Timely:** The design need to response and help user finish their task in a timely matter.
+**Timely:** The design need to response and help user finish their task in a
+timely matter.
 
-**Intuitive:** The design should be intuitive and easy to understand, and decrease the learning curve.
+**Intuitive:** The design should be intuitive and easy to understand, and
+decrease the learning curve.
 
 [Read the document online on Github Pages](https://3yourmind.github.io/kotti/)
 
@@ -20,50 +23,59 @@ presence.
 
 Kotti Design System includes:
 
-| Item                     | Meaning                                                                               | Purpose                                                                         |
-| :----------------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------ |
-| Design Guideline         | a suggestion documentation for non-developer to read and understand the design system | Give UX/UI designer a single source of truth and make sure design is consistent |
-| Styles `kotti-style`     | a css framework which implement the design guideline                                  | Help developer to write customize component easier                              |
-| UI Components `kotti-ui` | modular and functional components based on design guideline                           | replace the shared components in our project                                    |
-| Usage Documents          | example based documentation                                                           | helps developer to use the component                                            |
-| Storybook                | UI development env                                                                    | easier UI develop                                                               |
-| Test                     | UI Test                                                                               | —                                                                               |
+| Item                | Meaning                                                                      | Purpose                                                                         |
+| :------------------ | :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
+| Design Guideline    | A suggestion documentation for non-developer to understand the design system | Give UX/UI designer a single source of truth and make sure design is consistent |
+| Kotti-Styles        | A css framework which implement the design guideline                         | Help developer to write customize component easier                              |
+| Kotti-UI Components | Modular and functional components based on design guideline                  | Replace the shared components in our project                                    |
+| Usage Documents     | Example based documentation                                                  | Help developer to use the component                                             |
+| Test                | UI Test                                                                      | —                                                                               |
 
 ## Folder Structure
 
 ```text
 kotti
 ├─ www // nuxt.js managed design guideline & usage documentation
-│  ├─ packages.json
-│  └─ nuxt.js
+│  ├─ assets
+|  ├─ pages
 ├─ packages
 │  ├─ kotti-style // scss file documentation
 │  ├─ kotti-icons // icon fonts
 │  └─ kotti-button
 │     ├─ src
-│     ├─ package.json
 │     ├─ index.js
-│     └─ README.md
-│        └─ USAGE.md // usage example doc can be auto generated
 ├─ package.json
+├─ CHANGELOG.md
 └─ README.md
 ```
 
-## Build Setup
+## Build
 
 ```bash
-# build packages
+# install dependencies
+yarn install
+
+# build kott-ui
 yarn run build:kotti
 
-# serve with hot reload at localhost:3000
+# build kotti-style
 yarn run build:style
-yarn run doc
 
-# build for production and launch server
-yarn doc:generate
+# generate kotti-docs to /docs
+yarn run build:docs
 
-# generate github pages
-yarn doc:gh-pages
+# generate kotti-docs for github pages to /gh-pages
+yarn run build:gh-pages
+```
+
+## Develop
+
+```bash
+# install dependencies
+yarn install
+
+# serve with hot reload at localhost:3000
+yarn dev:docs
 ```
 
 ## Use Kotti-Style
@@ -94,7 +106,7 @@ yarn add @3yourmind/kotti-style
 yarn add @3yourmind/kotti-ui
 ```
 
-### Import Kotti-UI
+### Use Kotti-UI
 
 **Fully Import**
 
@@ -102,7 +114,9 @@ yarn add @3yourmind/kotti-ui
 // in main.js
 import Vue from 'vue'
 import KottiUI from 'kotti-ui'
-import '@3yourmind/kotti-style'
+
+// from v.0.0.4 kotti-ui includes kotti-style
+import '@3yourmind/kotti-ui/kotti-style/dist/index.min.css'
 
 Vue.use(KottiUI)
 ```

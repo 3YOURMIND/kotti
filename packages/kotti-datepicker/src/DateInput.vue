@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mixin as clickaway } from '../../mixin/vue-clickaway'
+import { mixin as clickaway } from '../../../src/mixin/vue-clickaway'
 
 // components
 import KtDatePicker from './DatePicker'

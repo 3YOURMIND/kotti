@@ -38,7 +38,7 @@
 
 <script>
 import KtAvatar from '../../kotti-avatar'
-import { mixin as clickaway } from '../../mixin/vue-clickaway'
+import { mixin as clickaway } from '../../../src/mixin/vue-clickaway'
 
 const linkIsValid = link => Boolean(link.title)
 

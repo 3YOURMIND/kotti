@@ -14,7 +14,7 @@ const builds = {
 			output: {
 				filename: 'kotti-ui.min.js',
 				libraryTarget: 'umd',
-				path: path.resolve(__dirname, '../src/dist/'),
+				path: path.resolve(__dirname, '../dist/'),
 			},
 		},
 		env: 'production',

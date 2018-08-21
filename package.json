@@ -5,20 +5,37 @@
 			"transform-object-rest-spread"
 		]
 	},
-	"bolt": {
-		"workspaces": [
-			"packages/*"
-		]
-	},
+	"contributors": [
+		{
+			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
+			"url": "https://ostoc.github.io/"
+		},
+		{
+			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
+			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"email": "fw@3yourmind.com",
+			"name": "Florian Wendelborn",
+			"url": "https://hello.dodekeract.com/npm/@3yourmind/kotti-ui"
+		},
+		{
+			"email": "jo@3yourmind.com",
+			"name": "James O'Shea",
+			"url": "https://github.com/jamesoshea"
+		}
+	],
 	"dependencies": {
 		"@3yourmind/yoco": "^0.0.6",
-		"dayjs": "^1.7.5",
-		"nuxt": "^1.4.2",
-		"vue": "^2.5.17",
-		"vue-clipboard2": "^0.2.1"
+		"dayjs": "^1.7.5"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
+		"nuxt": "^1.4.2",
+		"vue": "^2.5.17",
+		"vue-clipboard2": "^0.2.1",
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@vue/eslint-config-prettier": "^3.0.0",
@@ -29,7 +46,6 @@
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-stage-3": "^6.24.1",
-		"bolt": "^0.20.7",
 		"cross-env": "^5.2.0",
 		"css-loader": "^0.28.7",
 		"cssnano": "^3.10.0",
@@ -58,7 +74,6 @@
 		"postcss-import": "^11.1.0",
 		"postcss-loader": "^2.1.4",
 		"prettier": "^1.14.2",
-		"push-dir": "^0.4.1",
 		"sass-loader": "^7.1.0",
 		"stylelint": "^9.4.0",
 		"stylelint-config-recommended-scss": "^3.1.0",
@@ -69,9 +84,7 @@
 		"vue-server-renderer": "^2.5.17",
 		"vue-template-compiler": "^2.5.17",
 		"webpack": "^4.16.5",
-		"webpack-cli": "^2.1.2",
-		"webpack-dev-server": "^2.9.1",
-		"webpack-merge": "^4.1.4"
+		"webpack-dev-server": "^2.9.1"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -90,7 +103,12 @@
 			"git add"
 		]
 	},
-	"name": "@3yourmind/kotti",
+	"files": [
+		"dist",
+		"packages"
+	],
+	"name": "@3yourmind/kotti-ui",
+	"main": "/dist/kotti-ui.min.js",
 	"prettier": {
 		"proseWrap": "always",
 		"semi": false,
@@ -100,14 +118,13 @@
 		"useTabs": true
 	},
 	"scripts": {
-		"build:kotti": "rm -f src/dist/* && NODE_ENV=production webpack --config build/component.js --progress",
-		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
-		"doc": "nuxt -c build/nuxt.config.js",
-		"doc:deploy": "push-dir --dir=gh-pages --branch=gh-pages --cleanup",
-		"doc:generate": "nuxt generate -c build/nuxt.config.js",
-		"doc:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate -c build/nuxt.config.js",
 		"precommit": "lint-staged",
-		"watch:style": "yarn gulp watch --gulpfile ./build/gulpstyle.js"
+		"build:kotti": "NODE_ENV=production webpack --config build/component.js --progress",
+		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
+		"build:doc": "nuxt generate -c build/nuxt.config.js",
+		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate -c build/nuxt.config.js",
+		"dev:docs": "nuxt -c build/nuxt.config.js"
 	},
-	"version": "0.0.1"
+	"style": "/dist/kotti-style/index.min.css",
+	"version": "0.0.4"
 }

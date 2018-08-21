@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { mixin as clickaway } from '../../mixin/vue-clickaway'
+import { mixin as clickaway } from '../../../src/mixin/vue-clickaway'
 
 export default {
 	name: 'KtNavbar',

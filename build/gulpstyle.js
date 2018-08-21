@@ -34,6 +34,7 @@ gulp.task('build', function() {
 			}),
 		)
 		.pipe(gulp.dest('../packages/kotti-style/dist'))
+		.pipe(gulp.dest('../dist/kotti-style'))
 })
 
 gulp.task('default', ['build'])

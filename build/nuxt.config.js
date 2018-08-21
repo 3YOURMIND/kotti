@@ -10,7 +10,7 @@ const routerBase =
 		  }
 		: {}
 
-const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'gh-pages' : 'dist'
+const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'gh-pages' : 'docs'
 
 module.exports = {
 	srcDir: './www/',
@@ -47,7 +47,7 @@ design decisions. The Kotti design system has two main parts: foundation and com
 	 ** Customize the progress bar color
 	 */
 	css: [
-		'../packages/kotti-style/dist/index.min.css',
+		'../packages/kotti-style/src/index.scss',
 		'@/assets/css/main.scss',
 		'@3yourmind/yoco',
 	],
