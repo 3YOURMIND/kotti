@@ -1,5 +1,5 @@
 <template>
-	<KtNavbar :theme="theme" :menu="globalMenu">
+	<KtNavbar :theme="theme" :menu="globalMenu" :isNarrow="isNarrow">
 		<div slot="navbar-header">
 			<div class="navbar-logo">
 			<nuxt-link to="/">
@@ -38,6 +38,9 @@ export default {
 	name: 'KtNavbarComponent',
 	components: {
 		KtNavbar,
+	},
+	props: {
+		isNarrow: { type: Boolean, default: false },
 	},
 	data() {
 		return {

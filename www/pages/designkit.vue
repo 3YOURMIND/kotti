@@ -24,5 +24,6 @@
 <script>
 export default {
 	name: 'DesignKit',
+	layout: 'fullpage',
 }
 </script>

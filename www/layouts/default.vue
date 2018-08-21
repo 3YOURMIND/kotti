@@ -1,6 +1,6 @@
 <template>
 	<div class="d-flex responsive">
-		<Navbar/>
+		<Navbar isNarrow/>
 		<Actionbar v-if="showActionbar"/>
 		<div class="workspace">
 			<nuxt class="content" />

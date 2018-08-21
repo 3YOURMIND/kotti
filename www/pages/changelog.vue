@@ -7,6 +7,7 @@ import KottiUIChangeLog from '../../CHANGELOG.md'
 
 export default {
 	name: 'ChangeLogPage',
+	layout: 'fullpage',
 	computed: {
 		KottiUIChangeLogRepsent() {
 			return KottiUIChangeLog
