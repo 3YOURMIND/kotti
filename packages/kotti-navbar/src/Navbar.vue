@@ -6,10 +6,12 @@
 			</div>
 			<div class="navbar-header">
 				<slot name="navbar-header">
-					<div :class="objectClass('navbar-logo')">
-						<img :src="logoUrl" class="navbar-logo-img"/>
-						<img :src="theme.logo.wide" class="navbar-logo-img--mobile"/>
-					</div>
+					<router-link :to="theme.logo.to">
+						<div :class="objectClass('navbar-logo')">
+							<img :src="logoUrl" class="navbar-logo-img"/>
+							<img :src="theme.logo.wide" class="navbar-logo-img--mobile"/>
+						</div>
+					</router-link>
 				</slot>
 			</div>
 			<div class="navbar-narrow-toggle" @click="toggleNarrowBar"/>

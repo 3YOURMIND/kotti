@@ -5,6 +5,7 @@
 - Added: this CHANGELOG file
 - Added: Stepper styled InputNumber
 - Added: Single Date Picker
+- Added: link supported in NavBar logo
 - Changed: inclued `kotti-style` in npm packages
 
 ## [0.0.3] - 2018.07.30

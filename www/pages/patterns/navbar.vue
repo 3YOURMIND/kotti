@@ -31,16 +31,18 @@
 
 ### Attribuites
 
-| Attribute       | Description                    | Type      | Accepted values  | Default |
-|:----------------|:-------------------------------|:----------|:-----------------|:--------|
-| `isNarrow`      | define navbar is narrow        | `Boolean` | —                | `false` |
-| `menu`          | menu of the navbar             | `Arrary`  | —                | —       |
-| `menu.exact`    | enable router link exact match | `Bolean`  | `false`          | —       |
-| `menu.icon`     | menu icon                      | `String`  | String from yoco | —       |
-| `menu.lable`    | menu lable text                | `String`  | —                | —       |
-| `menu.to`       | router link to                 | `String`  | —                | —       |
-| `theme`         | kotti theme                    | `Object`  | —                | `{}`    |
-| `theme.logoUrl` | navbar logo url                | `String`  | `''`             | `null`  |
+| Attribute           | Description                               | Type      | Accepted values  | Default |
+|:--------------------|:------------------------------------------|:----------|:-----------------|:--------|
+| `isNarrow`          | define navbar is narrow                   | `Boolean` | —                | `false` |
+| `menu`              | menu of the navbar                        | `Arrary`  | —                | —       |
+| `menu.exact`        | enable router link exact match            | `Bolean`  | `false`          | —       |
+| `menu.icon`         | menu icon                                 | `String`  | String from yoco | —       |
+| `menu.lable`        | menu lable text                           | `String`  | —                | —       |
+| `menu.to`           | router link to                            | `String`  | —                | —       |
+| `theme`             | kotti theme                               | `Object`  | —                | `{}`    |
+| `theme.logo.wide`   | navbar wide logo url                      | `String`  | `''`             | `null`  |
+| `theme.logo.narrow` | navbar logo url when the NavBar is narrow | `String`  | `''`             | `null`  |
+| `theme.logo.to`     | navbar logo link url                      | `String`  | `''`             | `null`  |
 
 ### Events
 

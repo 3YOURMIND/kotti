@@ -1,13 +1,5 @@
 <template>
 	<KtNavbar :theme="theme" :menu="globalMenu" :isNarrow="isNarrow">
-		<div slot="navbar-header">
-			<div class="navbar-logo">
-			<nuxt-link to="/">
-				<img :src="theme.logo.wide" class="navbar-logo-img">
-				<img :src="theme.logo.wide" class="navbar-logo-img--mobile">
-			</nuxt-link>
-			</div>
-		</div>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
 				<img src="~/assets/img/icon_github.svg" width="24" height="24"/>
@@ -33,6 +25,7 @@ li.nuxt-link-active {
 <script>
 import KtNavbar from '../../packages/kotti-navbar'
 import LogoSvg from '~/assets/img/nav_logo.svg'
+import LogoIconSvg from '~/assets/img/nav_icon.svg'
 
 export default {
 	name: 'KtNavbarComponent',
@@ -44,11 +37,6 @@ export default {
 	},
 	data() {
 		return {
-			theme: {
-				logo: {
-					wide: LogoSvg,
-				},
-			},
 			globalMenu: [
 				{ icon: 'layer', label: 'Foundations', to: '/foundations/layout' },
 				{ icon: 'dashboard', label: 'Components', to: '/components/avatars' },
@@ -56,7 +44,7 @@ export default {
 				{ icon: 'version', label: 'Changelog', to: '/changelog' },
 				{ icon: 'markup', label: 'Design Kit', to: '/designkit' },
 			],
-			theme: { logo: { wide: LogoSvg } },
+			theme: { logo: { wide: LogoSvg, narrow: LogoIconSvg, to: '/' } },
 		}
 	},
 }
