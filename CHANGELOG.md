@@ -1,40 +1,27 @@
-## Change Log
+# Change Log
 
-### [Unreleased]
+## [Unreleased]
 
-#### Added
+- Added: this CHANGELOG file
+- Added: Stepper styled InputNumber
+- Added: Single Date Picker
+- Changed: inclued `kotti-style` in npm packages
 
-- This CHANGELOG file
-- Stepper styled InputNumber
-- Single Date Picker
+## [0.0.3] - 2018.07.30
 
-### [0.0.3] - 2018.07.30
+- Added: UserMenu supported
+- Adedd: NavBar component
+- Changed: NavBar style support narrow logo
+- Changed: narrow bar toggle style changed
 
-#### Added
+## [0.0.2] - 2018.07.26
 
-- UserMenu supported
-- Add NavBar component
+- Fixed: better support for avatar
+- Changed: switch to semantic version for production use
 
-#### Changed
+## [0.0.1-beta.10] - 2018.07.26
 
-- NavBar style support narrow logo
-- Narrow bar toggle style changed
-
-### [0.0.2] - 2018.07.26
-
-#### Fixed
-
-- A better support for avatar
-
-#### Changed
-
-- Switch to semantic version for production use
-
-### [0.0.1-beta.10] - 2018.07.26
-
-#### Changed
-
-- Out of beta
+- Changed: out of beta
 
 [0.0.3]: https://unpkg.com/@3yourmind/kotti-ui@0.0.3
 [0.0.2]: https://unpkg.com/@3yourmind/kotti-ui@0.0.2

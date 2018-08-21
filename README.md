@@ -1,6 +1,21 @@
 # Kotti Design System
 
-Design system for new version of 3YOURMIND product.
+## Overview
+
+This design system helps to unify our design language and provides the
+documentation for further product design decisions. The Kotti design system has
+two main parts: foundation and components.
+
+The foundation is higher level and works as a guideline for the whole system,
+which defines the layout, color, icons, typography and writing style. It also
+creates styles and characteristics which are different from other design
+systems.
+
+Components are more concrete elements. They are pre-defined and cannot be
+changed in most cases. These components include banners, buttons, drawers and
+more.
+
+## Design Principles
 
 **Keen:** The design should encourage users to engage with the product.
 
@@ -17,7 +32,7 @@ timely matter.
 **Intuitive:** The design should be intuitive and easy to understand, and
 decrease the learning curve.
 
-[Read the document online on Github Pages](https://3yourmind.github.io/kotti/)
+[Read the document online](https://3yourmind.github.io/kotti/)
 
 ## Project Scope
 

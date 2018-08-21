@@ -20,7 +20,7 @@ export default {
 	},
 	computed: {
 		showActionbar() {
-			const exclusivePage = ['index', 'changelog']
+			const exclusivePage = ['index', 'changelog', 'designkit']
 			return !exclusivePage.includes(this.$route.name)
 		},
 	},

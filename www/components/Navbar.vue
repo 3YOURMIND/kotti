@@ -1,5 +1,13 @@
 <template>
 	<KtNavbar :theme="theme" :menu="globalMenu">
+		<div slot="navbar-header">
+			<div class="navbar-logo">
+			<a href="/">
+				<img :src="theme.logo.wide" class="navbar-logo-img">
+				<img :src="theme.logo.wide" class="navbar-logo-img--mobile">
+			</a>
+			</div>
+		</div>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
 				<img src="~/assets/img/icon_github.svg" width="24" height="24"/>
@@ -42,7 +50,8 @@ export default {
 				{ icon: 'layer', label: 'Foundations', to: '/foundations/layout' },
 				{ icon: 'dashboard', label: 'Components', to: '/components/avatars' },
 				{ icon: 'support', label: 'Patterns', to: '/patterns/forms' },
-				{ icon: 'download', label: 'Resources', to: '/resources/kotti-style' },
+				{ icon: 'version', label: 'Changelog', to: '/changelog' },
+				{ icon: 'markup', label: 'Design Kit', to: '/designkit' },
 			],
 			theme: { logo: { wide: LogoSvg } },
 		}

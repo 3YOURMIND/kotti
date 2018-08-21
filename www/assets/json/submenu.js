@@ -134,23 +134,6 @@ const submenu = [
 		],
 		parent: 'patterns',
 	},
-	{
-		child: [
-			{
-				label: 'Kotti UI',
-				to: 'kotti-ui',
-			},
-			{
-				label: 'Kotti Style',
-				to: 'kotti-style',
-			},
-			{
-				label: 'Design Kit',
-				to: 'designkit',
-			},
-		],
-		parent: 'resources',
-	},
 ]
 
 export default submenu
