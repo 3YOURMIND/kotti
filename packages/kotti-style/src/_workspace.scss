@@ -9,8 +9,6 @@
 	display: flex;
 	flex-direction: column;
 	box-shadow: 1px 0 2px #ddd;
-	overflow-x: auto;
-
 	h3:not(:first-of-type) {
 		margin-top: $unit-8;
 	}

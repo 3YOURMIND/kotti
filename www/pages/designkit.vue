@@ -3,9 +3,13 @@
 
 	## Sketch Library
 
-	![Design Kit](~/assets/img/design_kit_sketch.png)
+	<div class="download-area">
+		<img src="~/assets/img/design_kit_sketch.png" width="100%">
+		<a href="https://www.dropbox.com/sh/bvylt9gmufechnt/AAAKkdpjsyBSB779v1ST4KZxa?dl=0" target="about_blank">
+			<button class="primary">Download Kotti Design Kit</button>
+		</a>
+	</div>
 
-	You can import Kotti Sketch Design library to your [Sketch Library](https://www.sketchapp.com/docs/libraries/).
 
 	In order to organize the library easier and robust, we separate the Sketch Libary to different files:
 
@@ -18,7 +22,8 @@
 	* **Kotti Layout**: Navbar, actionbar and workspace
 	* **Kotti Text**: Typography and text styles
 
-	You can download Kotti Libary [here](https://www.dropbox.com/sh/bvylt9gmufechnt/AAAKkdpjsyBSB779v1ST4KZxa?dl=0)
+	<i class="yoco">circle_question</i> You can import Kotti Sketch Design library to your [Sketch Library](https://www.sketchapp.com/docs/libraries/).
+
 </template>
 
 <script>
@@ -27,3 +32,12 @@ export default {
 	layout: 'fullpage',
 }
 </script>
+
+<style lang="scss" scoped>
+.download-area {
+	text-align: center;
+	background: #f8f8f8;
+	padding-bottom: 2.4rem;
+	margin: 0.8rem 0;
+}
+</style>

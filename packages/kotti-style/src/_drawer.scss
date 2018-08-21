@@ -1,4 +1,6 @@
 // Drawer with Vue Transition
+$default-drawer-width: 18.8rem;
+$wide-drawer-width: 26.8rem;
 
 .drawer-mask {
 	position: fixed;
@@ -30,7 +32,7 @@
 }
 
 .drawer-container {
-	width: 18.8rem;
+	width: $default-drawer-width;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -50,7 +52,7 @@
 }
 
 .drawer-container.drawer-wide {
-	width: 26.8rem;
+	width: $wide-drawer-width;
 
 	&.drawer-expand {
 		width: 75%;

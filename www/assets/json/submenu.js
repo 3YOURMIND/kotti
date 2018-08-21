@@ -64,7 +64,7 @@ const submenu = [
 				to: 'inputs',
 			},
 			{
-				label: 'Input Number',
+				label: 'InputNumber',
 				to: 'inputnumber',
 			},
 			{

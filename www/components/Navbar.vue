@@ -40,7 +40,7 @@ export default {
 			globalMenu: [
 				{ icon: 'layer', label: 'Foundations', to: '/foundations/layout' },
 				{ icon: 'dashboard', label: 'Components', to: '/components/avatars' },
-				{ icon: 'support', label: 'Patterns', to: '/patterns/forms' },
+				{ icon: 'sidebar', label: 'Patterns', to: '/patterns/forms' },
 				{ icon: 'version', label: 'Changelog', to: '/changelog' },
 				{ icon: 'markup', label: 'Design Kit', to: '/designkit' },
 			],

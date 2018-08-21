@@ -3,16 +3,16 @@
 		<h3>
 			<label v-text="text" />
 			<span v-if="type==='action'" @click="handleClick">
-				<i class="yoco" v-text="icon" /> {{ actionText }}
+				{{ actionText }} <i class="yoco" v-text="icon" />
 			</span>
 			<span v-if="type==='toggle'" @click="handleClick">
+				{{ toggleTextRep }}
 				<i v-if="!toggleStatus" class="yoco">
 					plus
 				</i>
 				<i v-else class="yoco">
 					minus
 				</i>
-				{{ toggleTextRep }}
 			</span>
 		</h3>
 		<div v-if="toggleStatus && type === 'toggle'">

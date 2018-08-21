@@ -30,7 +30,7 @@ It is best to place secondary functionality or information in the drawer, and on
 			<button @click="showDrawer=false" class="w-100">Close Drawer</button>
 		</div>
 	</KtDrawer>
-	<KtDrawer v-if="showWideDrawer" :wide="true" @close="showWideDrawer=false">
+	<KtDrawer v-if="showWideDrawer" wide @close="showWideDrawer=false">
 		<div slot="drawer-header">
 			<h2>Wide Size Drawer</h2>
 		</div>

@@ -34,7 +34,7 @@ export default {
 		},
 		wide: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 	},
 	data() {
