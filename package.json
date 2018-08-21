@@ -123,7 +123,8 @@
 		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
 		"build:doc": "nuxt generate -c build/nuxt.config.js",
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate -c build/nuxt.config.js",
-		"dev:docs": "nuxt -c build/nuxt.config.js"
+		"dev:docs": "nuxt -c build/nuxt.config.js",
+		"deploy:docs": ". github-deploy.sh"
 	},
 	"style": "/dist/kotti-style/index.min.css",
 	"version": "0.0.4"

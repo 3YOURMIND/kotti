@@ -2,10 +2,10 @@
 	<KtNavbar :theme="theme" :menu="globalMenu">
 		<div slot="navbar-header">
 			<div class="navbar-logo">
-			<a href="/">
+			<nuxt-link to="/">
 				<img :src="theme.logo.wide" class="navbar-logo-img">
 				<img :src="theme.logo.wide" class="navbar-logo-img--mobile">
-			</a>
+			</nuxt-link>
 			</div>
 		</div>
 		<div slot="navbar-footer">
