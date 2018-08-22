@@ -42,13 +42,13 @@
 | `theme`             | kotti theme                               | `Object`  | —                | `{}`    |
 | `theme.logo.wide`   | navbar wide logo url                      | `String`  | `''`             | `null`  |
 | `theme.logo.narrow` | navbar logo url when the NavBar is narrow | `String`  | `''`             | `null`  |
-| `theme.logo.to`     | navbar logo link url                      | `String`  | `''`             | `null`  |
 
 ### Events
 
 | Event Name                   | Type    | Payload   | Description                 |
 |:-----------------------------|:--------|:----------|:----------------------------|
 | `@toggleKtNavbarNarrowEvent` | `$emit` | `Boolean` | toggle the navbar to narrow |
+| `@clickLogo`                 | `$emit` | `Boolean` | navbar logo was clicked     |
 
 ### Slots
 

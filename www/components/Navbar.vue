@@ -1,5 +1,5 @@
 <template>
-	<KtNavbar :theme="theme" :menu="globalMenu" :isNarrow="isNarrow">
+	<KtNavbar @clickLogo="$router.push('/')" :theme="theme" :menu="globalMenu" :isNarrow="isNarrow">
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
 				<img src="~/assets/img/icon_github.svg" width="24" height="24"/>
@@ -44,7 +44,7 @@ export default {
 				{ icon: 'version', label: 'Changelog', to: '/changelog' },
 				{ icon: 'markup', label: 'Design Kit', to: '/designkit' },
 			],
-			theme: { logo: { wide: LogoSvg, narrow: LogoIconSvg, to: '/' } },
+			theme: { logo: { wide: LogoSvg, narrow: LogoIconSvg } },
 		}
 	},
 }

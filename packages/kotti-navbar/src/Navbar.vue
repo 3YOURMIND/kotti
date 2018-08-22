@@ -6,12 +6,12 @@
 			</div>
 			<div class="navbar-header">
 				<slot name="navbar-header">
-					<router-link :to="theme.logo.to">
+					<a @click="$emit('clickLogo')">
 						<div :class="objectClass('navbar-logo')">
 							<img :src="logoUrl" class="navbar-logo-img"/>
 							<img :src="theme.logo.wide" class="navbar-logo-img--mobile"/>
 						</div>
-					</router-link>
+					</a>
 				</slot>
 			</div>
 			<div class="navbar-narrow-toggle" @click="toggleNarrowBar"/>
