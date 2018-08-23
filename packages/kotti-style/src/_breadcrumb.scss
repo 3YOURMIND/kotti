@@ -1,0 +1,21 @@
+.breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+}
+.breadcrumb li {
+	line-height: 1.2rem;
+	display: inline-block;
+}
+.breadcrumb__text-separator {
+	padding: 0 0.4rem;
+}
+.breadcrumb__text {
+	color: $darkgray-300;
+	&--completed {
+		font-weight: 600;
+		color: $darkgray-500;
+	}
+	&--completed:hover {
+		cursor: pointer;
+	}
+}
