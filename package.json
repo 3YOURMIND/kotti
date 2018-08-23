@@ -120,7 +120,7 @@
 	"scripts": {
 		"precommit": "lint-staged",
 		"prepublishOnly": "yarn build:style && yarn build:kotti",
-		"postpublish": "git tag kotti-$(node -p \"require('./package.json').version\") && git push --tags",
+		"postpublish": "git tag versions/kotti/$(node -p \"require('./package.json').version\") && git push --tags",
 		"build:kotti": "NODE_ENV=production webpack --config build/component.js --progress",
 		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
 		"build:doc": "nuxt generate -c build/nuxt.config.js",
