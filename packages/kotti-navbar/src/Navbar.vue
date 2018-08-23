@@ -117,7 +117,10 @@ export default {
 			this.$emit('toggleKtNavbarNarrowEvent', this.isNarrowNavBarToggle)
 		},
 		handleMenuClick(to) {
-			if (!to || !this.$router) return
+			if (!to || !this.$router)
+				return console.warn(
+					'KtNavbar: “this.$router” not available but “to” was passed.',
+				)
 			this.$router.push(to)
 		},
 	},
