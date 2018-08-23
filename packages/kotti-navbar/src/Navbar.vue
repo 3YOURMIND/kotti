@@ -18,17 +18,13 @@
 			<div class="navbar-body">
 				<div :class="objectClass('navbar-menu')">
 					<ul>
-						<router-link
-							v-for="item in menu"
+							<li v-for="item in menu"
 							:exact="item.exact"
 							:key="item.index"
-							:to="item.to"
-						>
-							<li>
+							@click="handleMenuClick(item.to)">
 								<i class="yoco" v-text="item.icon" />
 								<span v-if="!isNarrowNavBar" v-text="item.label"/>
 							</li>
-						</router-link>
 					</ul>
 					<slot name="navbar-body" />
 				</div>
@@ -39,10 +35,13 @@
 			<div class="navbar-dropdown" v-if="mobileMenuToggle" v-on-clickaway="clickawayMobileMenu" >
 				<div class="navbar-menu">
 					<ul>
-						<router-link :exact="item.exact" tag="li" v-for="item in menu" :key="item.index" :to="item.to">
+						<li :exact="item.exact"
+							v-for="item in menu"
+							:key="item.index"
+							@click="handleMenuClick(item.to)">
 							<i class="yoco" v-text="item.icon" />
 							<span v-text="item.label" />
-						</router-link>
+						</li>
 					</ul>
 					<slot name="navbar-menu" />
 				</div>
@@ -116,6 +115,10 @@ export default {
 		},
 		navbarNarrowBarEvent() {
 			this.$emit('toggleKtNavbarNarrowEvent', this.isNarrowNavBarToggle)
+		},
+		handleMenuClick(to) {
+			if (!to || !this.$router) return
+			this.$router.push(to)
 		},
 	},
 	watch: {

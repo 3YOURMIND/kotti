@@ -21,7 +21,7 @@ import KtNavbar from '../../../packages/kotti-navbar'
 import KtUserMenu from '../../../packages/kotti-user-menu'
 
 export default {
-	layout: 'fullpage',
+	layout: 'example',
 	components: {
 		KtNavbar,
 		KtUserMenu,
