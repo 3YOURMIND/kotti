@@ -165,16 +165,16 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 <KtTable :rows="rows" :columns="columnsResponsive" isExpandable isScrollable>
 	<div slot-scope="row" slot="expand">
-		<KtBanner :message="row.data.name" icon="user" :isGrey="true"/>
-		<KtBanner :message="row.data.address" icon="global" :isGrey="true"/>
+		<KtBanner :message="row.data.name" icon="user" isGrey/>
+		<KtBanner :message="row.data.address" icon="global" isGrey/>
 	</div>
 </KtTable>
 
 ```html
 <KtTable :rows="rows" :columns="columns" isExpandable isScrollable>
 	<div slot-scope="row" slot="expand">
-		<KtBanner :message="row.data.name" icon="user" :isGrey="true"/>
-		<KtBanner :message="row.data.address" icon="global" :isGrey="true"/>
+		<KtBanner :message="row.data.name" icon="user" isGrey/>
+		<KtBanner :message="row.data.address" icon="global" isGrey/>
 	</div>
 </KtTable>
 ```

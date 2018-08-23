@@ -106,7 +106,7 @@ this style is useful when you want add contrast to the page.
 		message="You material is not available to users"
 		icon="announce"
 		actionText="Publish"
-		:isGrey="true"
+		isGrey
 	/>
 </div>
 
@@ -115,7 +115,7 @@ this style is useful when you want add contrast to the page.
 	message="You material is not available to users"
 	icon="announce"
 	actionText="Publish"
-	:isGrey="true"
+	isGrey
 />
 ```
 
