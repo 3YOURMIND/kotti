@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.5 - 2018.08.23
+
+- Typing specific numbers into InputNumber does not work correctly [KT-5]
+- Logo link in NavBar breaks [KT-12]
+- Merge Breadcrumb from B3 to Kotti [KT-11]
+
 ## 0.0.4 - 2018.08.21
 
 - Added: this CHANGELOG file
