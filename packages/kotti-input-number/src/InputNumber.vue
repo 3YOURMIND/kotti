@@ -12,7 +12,7 @@
 			:max="max"
 			:min="min"
 			ref="inputNumber"
-			@input="handleInput"
+			@change="handleInput"
 		/>
 		<div v-if="max && showMaxNumber" class="kt-input-number__max" v-text="max"/>
 		<div :class="increaseButtonStyle" @click="increaseNumber">
@@ -54,7 +54,7 @@ export default {
 		formError() {
 			if (this.currentValue > this.max && this.max !== null) return true
 			if (this.currentValue < this.min && this.min !== null) return true
-			if (this.currentValue === '') return true
+			if (this.currentValue === '' || isNaN(this.currentValue)) return true
 			return false
 		},
 		inputStyle() {
