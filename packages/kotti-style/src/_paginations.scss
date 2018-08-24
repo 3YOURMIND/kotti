@@ -1,22 +1,32 @@
 .pagination {
 	margin: 0;
 	list-style: none;
-
+	user-select: none;
 	.page-button {
 		background: $lightgray-300;
 		display: inline-block;
 		padding: $unit-1;
-
+		border-radius: 0.1rem;
 		&:hover {
 			background: $lightgray-400;
+			cursor: pointer;
 		}
 	}
-
+	.fraction {
+		display: inline-block;
+		letter-spacing: 0.4rem;
+	}
 	.page-item {
 		display: inline-block;
 		text-align: center;
 		padding: $unit-2;
 		line-height: 24px;
+		&--active {
+			color: $primary-500;
+		}
+		&:hover {
+			cursor: pointer;
+		}
 	}
 
 	.disabled {
