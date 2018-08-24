@@ -77,6 +77,10 @@ const submenu = [
 				to: 'modal',
 			},
 			{
+				label: 'Paginations',
+				to: 'paginations',
+			},
+			{
 				isCSS: true,
 				label: 'Popovers',
 				to: 'popovers',
