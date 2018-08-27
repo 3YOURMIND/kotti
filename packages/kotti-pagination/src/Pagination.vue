@@ -11,7 +11,7 @@
 				:key="index"
 				:class="paginatorClasses(page, 'page-item--active')"
 				v-text="page"
-				@click="handleClick(page)"
+				@click="setCurrentPage(page)"
 			/>
 			<li :class="paginatorClasses(maximumPage, 'disabled')" @click="nextPage">
 				<i class="yoco page-button">chevron_right</i>
@@ -51,20 +51,20 @@ export default {
 				[className]: this.currentPage === page,
 			}
 		},
-		handleClick(page) {
+		setCurrentPage(page) {
 			if (page === this.currentPage) return
 			this.currentPage = page
-			this.eventEmittor('currentPageChange')
+			this.eventEmitter('currentPageChange')
 		},
 		nextPage() {
 			if (this.currentPage === this.maximumPage) return
 			this.currentPage += 1
-			this.eventEmittor('nextPageClicked')
+			this.eventEmitter('nextPageClicked')
 		},
 		previousPage() {
 			if (this.currentPage === 1) return
 			this.currentPage -= 1
-			this.eventEmittor('previousPageClicked')
+			this.eventEmitter('previousPageClicked')
 		},
 		eventEmitter(eventName) {
 			this.$emit(eventName, this.currentPage)

@@ -1,5 +1,5 @@
 <template lang="md">
-# Pagination
+# Paginations
 
 ## Basic Usage
 
