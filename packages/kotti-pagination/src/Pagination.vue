@@ -4,14 +4,14 @@
 			<li :class="paginatorClasses(1, 'disabled')" @click="previousPage">
 				<i class="yoco page-button">chevron_left</i>
 			</li>
-			<li v-text="fractionRep" class="fraction" v-if="fractionStyle"/>
+			<li v-if="fractionStyle" class="fraction" v-text="fractionRep" />
 			<li
 				v-else
 				v-for="(page,index) in totalPages"
 				:key="index"
 				:class="paginatorClasses(page, 'page-item--active')"
 				v-text="page"
-				@click="handelClick(page)"
+				@click="handleClick(page)"
 			/>
 			<li :class="paginatorClasses(maximumPage, 'disabled')" @click="nextPage">
 				<i class="yoco page-button">chevron_right</i>
@@ -51,7 +51,7 @@ export default {
 				[className]: this.currentPage === page,
 			}
 		},
-		handelClick(page) {
+		handleClick(page) {
 			if (page === this.currentPage) return
 			this.currentPage = page
 			this.eventEmittor('currentPageChange')
@@ -66,7 +66,7 @@ export default {
 			this.currentPage -= 1
 			this.eventEmittor('previousPageClicked')
 		},
-		eventEmittor(eventName) {
+		eventEmitter(eventName) {
 			this.$emit(eventName, this.currentPage)
 		},
 	},
