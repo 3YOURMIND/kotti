@@ -41,15 +41,15 @@
 	&.select-sm {
 		font-size: $font-size-sm;
 		height: $control-size-sm;
-		padding: $control-padding-y-sm ($control-icon-size + $control-padding-x-sm) $control-padding-y-sm
-			$control-padding-x-sm;
+		padding: $control-padding-y-sm ($control-icon-size + $control-padding-x-sm)
+			$control-padding-y-sm $control-padding-x-sm;
 	}
 
 	&.select-lg {
 		font-size: $font-size-lg;
 		height: $control-size-lg;
-		padding: $control-padding-y-lg ($control-icon-size + $control-padding-x-lg) $control-padding-y-lg
-			$control-padding-x-lg;
+		padding: $control-padding-y-lg ($control-icon-size + $control-padding-x-lg)
+			$control-padding-y-lg $control-padding-x-lg;
 	}
 }
 
@@ -62,6 +62,9 @@
 	border-radius: 0.1rem;
 	padding: 0.4rem 0;
 	z-index: $zindex-4;
+	max-height: 20rem;
+	overflow: hidden;
+	overflow-y: auto;
 
 	ul {
 		margin: 0;
@@ -81,7 +84,8 @@
 			}
 		}
 
-		&.form-option--empty {
+		&.form-option--empty,
+		&.form-option--loading {
 			text-align: center;
 			color: $lightgray-500;
 

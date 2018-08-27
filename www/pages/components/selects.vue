@@ -35,6 +35,9 @@
 	<h5 v-text="`English: ${value3}`" class="mt-16px"/>
 </div>
 
+
+
+
 ```js
 {
 	words: [
@@ -58,7 +61,18 @@
 }
 ```
 
+## Async Search
 
+<div class="element-example">
+	<KtSelect label="Words"
+		placeholder="Select Word"
+		v-model="value4"
+		allowEmpty
+		:isLoading="loadingOnRequest"
+		:asyncMethod="asyncFind"
+		:options="countryOptions"/>
+	<h5 v-text="`Navive Name: ${value4}`" class="mt-16px"/>
+</div>
 
 </template>
 
@@ -76,6 +90,7 @@ export default {
 			value1: '',
 			value2: 'Avacados',
 			value3: 'Avacados',
+			value4: '',
 			words: [
 				{
 					label: 'Empty',
@@ -99,7 +114,24 @@ export default {
 					value: 'Apple',
 				},
 			],
+			loadingOnRequest: false,
+			countryOptions: [],
 		}
+	},
+	methods: {
+		async asyncFind(query) {
+			const BASE_URL = `https://restcountries.eu/rest/v2`
+			const queryURL = !query ? `${BASE_URL}/all` : `${BASE_URL}/name/${query}`
+			this.loadingOnRequest = true
+			await this.$axios.$get(queryURL).then(response => {
+				let coutriesOptions = response.map(country => ({
+					label: country.name,
+					value: country.nativeName,
+				}))
+				this.loadingOnRequest = false
+				this.countryOptions = coutriesOptions
+			})
+		},
 	},
 }
 </script>

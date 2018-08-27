@@ -29,13 +29,11 @@
 	],
 	"dependencies": {
 		"@3yourmind/yoco": "^0.0.6",
+		"@nuxtjs/axios": "^5.3.1",
 		"dayjs": "^1.7.5"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
-		"nuxt": "^1.4.2",
-		"vue": "^2.5.17",
-		"vue-clipboard2": "^0.2.1",
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@vue/eslint-config-prettier": "^3.0.0",
@@ -70,6 +68,7 @@
 		"markdown-it-anchor": "^4.0.0",
 		"markdown-it-container": "^2.0.0",
 		"node-sass": "^4.9.3",
+		"nuxt": "^1.4.2",
 		"postcss-cssnext": "^3.1.0",
 		"postcss-import": "^11.1.0",
 		"postcss-loader": "^2.1.4",
@@ -79,6 +78,8 @@
 		"stylelint-config-recommended-scss": "^3.1.0",
 		"stylelint-scss": "^2.5.0",
 		"sugarss": "^1.0.1",
+		"vue": "^2.5.17",
+		"vue-clipboard2": "^0.2.1",
 		"vue-loader": "^14.2.2",
 		"vue-markdown-loader": "^2.4.1",
 		"vue-server-renderer": "^2.5.17",

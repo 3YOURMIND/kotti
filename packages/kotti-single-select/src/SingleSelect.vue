@@ -16,14 +16,19 @@
 				<i class="yoco form-icon" v-text="indicatorRep" />
 				<div v-if="visible" class="form-options">
 					<ul>
+						<li v-if="isLoading" class="form-option--loading">Loading</li>
 						<li
+							v-else
 							v-for="(option, index) in optionsRep"
 							:key="index"
 							:class="optionClass(option)"
 							@click="handleOptionClick(option)"
 							v-text="option.label"
 						/>
-						<li class="form-option--empty" v-if="!optionsRep.length">
+						<li
+							v-if="!optionsRep.length && !isLoading"
+							class="form-option--empty"
+							>
 							No result found
 						</li>
 					</ul>
@@ -43,12 +48,15 @@ export default {
 		KtInput,
 	},
 	props: {
-		allowEmpty: Boolean,
-		filterable: Boolean,
-		label: String,
-		options: Array,
-		placeholder: String,
+		allowEmpty: { type: Boolean, default: false },
+		filterable: { type: Boolean, default: false },
+		label: { type: String, default: null },
+		options: { type: Array, default: [] },
+		placeholder: { type: String, default: null },
 		value: [String, Number],
+		isAsync: { type: Boolean, default: false },
+		asyncMethod: { type: Function, default: null },
+		isLoading: { type: Boolean, default: false },
 	},
 	data() {
 		return {
@@ -72,12 +80,7 @@ export default {
 			return this.visible ? 'chevron_up' : 'chevron_down'
 		},
 		optionsRep() {
-			if (!this.filterable) {
-				return this.options
-			}
-			if (this.filterable) {
-				return this.filterResults
-			}
+			return this.filterable ? this.filterResults : this.options
 		},
 	},
 	methods: {
@@ -111,6 +114,9 @@ export default {
 			this.queryString = evt.target.value.toLowerCase()
 			this.queryString
 			let results = []
+			if (typeof this.asyncMethod === 'function') {
+				this.asyncMethod(this.queryString)
+			}
 			this.options.filter(item => {
 				if (item.value !== null) {
 					if (
@@ -127,6 +133,10 @@ export default {
 			if (!this.queryString) {
 				this.filterResults = this.options
 			}
+			if (!this.queryString && typeof this.asyncMethod === 'function') {
+				this.filterResults = this.options
+				this.asyncMethod()
+			}
 			this.visible = true
 		},
 		handleClickOutside() {
@@ -140,6 +150,7 @@ export default {
 			this.$emit('input', this.currentValue)
 		},
 		labelVaule(val) {
+			if (!this.options) return
 			let selectedItem = this.options.find(option => option.value === val)
 			this.selectedLabel = selectedItem.label
 		},
