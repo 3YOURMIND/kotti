@@ -1,10 +1,15 @@
 # Change Log
 
+## 0.0.6 - 2018.08.28
+
+- Added: Pagination component [KT-10]
+- Fixed: Support IE 11 [KT-18]
+
 ## 0.0.5 - 2018.08.23
 
-- Typing specific numbers into InputNumber does not work correctly [KT-5]
-- Logo link in NavBar breaks [KT-12]
-- Merge Breadcrumb from B3 to Kotti [KT-11]
+- Fixed: Typing specific numbers into InputNumber does not work correctly [KT-5]
+- Fixed: Logo link in NavBar breaks [KT-12]
+- Added: Merge Breadcrumb from B3 to Kotti [KT-11]
 
 ## 0.0.4 - 2018.08.21
 
