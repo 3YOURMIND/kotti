@@ -1,18 +1,19 @@
 <template>
 	<div :class="formClass">
-		<label :class="formLabelClass" v-text="label" />
+		<label :class="formLabelClass" v-text="_label" />
 		<div :class="inputGroupClass">
 			<span class="input-group-addon" v-text="addonText" />
 			<input
 				v-bind="$attrs"
+				:class="formInputClass"
 				:placeholder="placeholder"
+				:required="required"
 				:type="type"
 				:value="currentValue"
-				@change="handleChange"
-				@input="handleInput"
 				@blur="handleBlur"
+				@change="handleChange"
 				@focus="handleFocus"
-				:class="formInputClass"
+				@input="handleInput"
 			/>
 			<i class="form-icon yoco" v-text="icon" />
 		</div>
@@ -40,15 +41,20 @@ export default {
 		addonText: { type: String, default: '' },
 		icon: { type: String, default: '' },
 		iconPosition: { type: String, default: 'left' },
+		isCompact: Boolean,
 		label: String,
 		placeholder: String,
+		required: { default: false, type: Boolean },
 		type: { type: String, default: 'text' },
 		validate: { type: String, default: '' },
 		validateText: { type: String, default: '' },
 		value: [String, Number],
-		isCompact: Boolean,
 	},
 	computed: {
+		_label() {
+			if (this.required) return `${this.label} *`
+			return this.label
+		},
 		inputGroupClass() {
 			return {
 				'input-group': Boolean(this.addonText),

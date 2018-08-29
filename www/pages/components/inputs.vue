@@ -131,6 +131,22 @@
 	<KtInput label="Warning Input" :placeholder="v5" validate="warning" validateText="Your input is wrong"/>
 	```
 
+	## Required
+
+	<div class="element-example">
+		<KtInput
+			:placeholder="v5"
+			label="Required Input"
+			required
+		/>
+	</div>
+
+	`required` marks a field as non-optional. Browsers will also refuse sending the form until the field is filled.
+
+	```html
+	<KtInput placeholder="email@example.com" label="Required Input" required/>
+	```
+
 	## Compact
 
 	In order to save vertical space on the page when many inputs need, and icon only input can not deliver clear information,
