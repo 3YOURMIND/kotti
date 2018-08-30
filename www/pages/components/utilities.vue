@@ -1,6 +1,57 @@
 <template lang="md">
 	# Utilities
 
+	## Text
+
+	Text utility helps text format text.
+
+	<div class="element-example white">
+		<h4>Text Color</h4>
+		<div class="text-primary">Text Primary</div>
+		<div class="text-grey ">Text Grey</div>
+		<div class="text-success">Text Succes</div>
+		<div class="text-error">Text Error</div>
+		<div class="text-warning">Text Warning</div>
+	</div>
+
+	```html
+	<div class="text-primary">Text Primary</div>
+	<div class="text-grey ">Text Grey</div>
+	<div class="text-success">Text Succes</div>
+	<div class="text-error">Text Error</div>
+	<div class="text-warning">Text Warning</div>
+	```
+
+	<div class="element-example">
+		<h4>Text Truncate</h4>
+		<div class="text-truncate" style="width: 100px">Text Truncate - Long text string</div>
+	</div>
+
+	```html
+	<div class="text-truncate" style="width: 100px">Text Truncate - Long text string</div>
+	```
+
+	<div class="element-example white">
+		<h4>Text Alignment</h4>
+		<div class="text-left">Text Left</div>
+		<div class="text-center">Text Center</div>
+		<div class="text-right">Text Warning</div>
+		<div class="text-justify">
+			Text Justify
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam finibus eu lacus id volutpat.
+			Nam finibus eu lacus id volutpat.
+			Aenean eu viverra sem. In dapibus molestie nibh in aliquam.
+		</div>
+	</div>
+
+	```html
+	<div class="text-left">Text Left</div>
+	<div class="text-center">Text Center</div>
+	<div class="text-right">Text Warning</div>
+	<div class="text-justify">Text Justify ...</div>
+	```
+
+
 	## Cursors
 
 	Cursors utility specifies which mouse cursor to display when the mouse pointer is over an element.
