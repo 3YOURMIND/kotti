@@ -1,6 +1,6 @@
 <template>
 	<div :class="formClass">
-		<label :class="formLabelClass" v-text="_label" />
+		<label :class="formLabelClass" v-text="labelRep" />
 		<div :class="inputGroupClass">
 			<span class="input-group-addon" v-text="addonText" />
 			<input
@@ -51,7 +51,7 @@ export default {
 		value: [String, Number],
 	},
 	computed: {
-		_label() {
+		labelRep() {
 			if (this.required) return `${this.label} *`
 			return this.label
 		},
