@@ -2,13 +2,13 @@
 	<transition name="modal" mode="out-in">
 		<div class="modal-mask" @click.self="closeModal">
 			<div :class="modalClass">
-				<div class="modal-header">
+				<div v-if="hasHeader" class="modal-header">
 					<slot name="modal-header" />
 				</div>
-				<div class="modal-body">
+				<div v-if="hasBody" class="modal-body">
 					<slot name="modal-body" />
 				</div>
-				<div class="modal-footer">
+				<div v-if="hasFooter" class="modal-footer">
 					<slot name="modal-footer" />
 				</div>
 			</div>
@@ -30,6 +30,15 @@ export default {
 		},
 	},
 	computed: {
+		hasBody() {
+			return Boolean(this.$slots['modal-body'])
+		},
+		hasFooter() {
+			return Boolean(this.$slots['modal-footer'])
+		},
+		hasHeader() {
+			return Boolean(this.$slots['modal-header'])
+		},
 		modalClass() {
 			return ['modal-container', `modal-${this.size}`]
 		},
