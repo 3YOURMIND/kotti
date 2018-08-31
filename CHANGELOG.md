@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.0.7 - 2018.08.31
+
+- Fixed: Remove KtModal empty slots space [KT-20]
+- Added: Include text css utilities in documents [KT-14]
+- Added: Required Indicator for KtInput [KT-19]
+
 ## 0.0.6 - 2018.08.28
 
 - Added: Pagination component [KT-10]
