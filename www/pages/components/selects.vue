@@ -71,7 +71,7 @@
 		:isLoading="loadingOnRequest"
 		:asyncMethod="asyncFind"
 		:options="countryOptions"/>
-	<h5 v-text="`Navive Name: ${value4}`" class="mt-16px"/>
+	<h5 v-text="`Native Name: ${value4}`" class="mt-16px"/>
 </div>
 
 </template>
