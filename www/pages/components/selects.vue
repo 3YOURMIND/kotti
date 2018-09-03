@@ -36,8 +36,6 @@
 </div>
 
 
-
-
 ```js
 {
 	words: [
@@ -64,15 +62,48 @@
 ## Async Search
 
 <div class="element-example">
-	<KtSelect label="Words"
-		placeholder="Select Word"
+	<KtSelect label="Country"
+		placeholder="Select Country"
 		v-model="value4"
 		allowEmpty
+		filterable
+		isAsync
 		:isLoading="loadingOnRequest"
-		:asyncMethod="asyncFind"
+		@asyncMethod="asyncFind"
 		:options="countryOptions"/>
 	<h5 v-text="`Native Name: ${value4}`" class="mt-16px"/>
 </div>
+
+
+```html
+<KtSelect label="Country"
+	placeholder="Select Country"
+	v-model="value4"
+	allowEmpty
+	filterable
+	:isLoading="loadingOnRequest"
+	@asyncMethod="asyncFind"
+	:options="countryOptions"/>
+<h5 v-text="`Native Name: ${value4}`" class="mt-16px"/>
+```
+
+```js
+async asyncFind(query) {
+	const BASE_URL = `https://restcountries.eu/rest/v2`
+	const queryURL = !query ? `${BASE_URL}/all` : `${BASE_URL}/name/${query}`
+	this.loadingOnRequest = true
+	await this.$axios.$get(queryURL).then(response => {
+		let coutriesOptions = response.map(country => ({
+			label: country.name,
+			value: country.nativeName,
+		}))
+		this.loadingOnRequest = false
+		this.countryOptions = coutriesOptions
+	}).catch(()=>{
+		this.loadingOnRequest = false
+	})
+},
+```
 
 </template>
 
@@ -123,14 +154,19 @@ export default {
 			const BASE_URL = `https://restcountries.eu/rest/v2`
 			const queryURL = !query ? `${BASE_URL}/all` : `${BASE_URL}/name/${query}`
 			this.loadingOnRequest = true
-			await this.$axios.$get(queryURL).then(response => {
-				let coutriesOptions = response.map(country => ({
-					label: country.name,
-					value: country.nativeName,
-				}))
-				this.loadingOnRequest = false
-				this.countryOptions = coutriesOptions
-			})
+			await this.$axios
+				.$get(queryURL)
+				.then(response => {
+					let coutriesOptions = response.map(country => ({
+						label: country.name,
+						value: country.nativeName,
+					}))
+					this.loadingOnRequest = false
+					this.countryOptions = coutriesOptions
+				})
+				.catch(() => {
+					this.loadingOnRequest = false
+				})
 		},
 	},
 }
