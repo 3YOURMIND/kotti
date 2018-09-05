@@ -16,4 +16,4 @@ services:
       - './kotti/README.md:/usr/share/app/README.md:ro'
   mono-proxy:
     volumes:
-      - './kotti/Caddyfile:/etc/configs/kotti.conf'
+      - './kotti/Caddyfile:/domains/kotti.conf'

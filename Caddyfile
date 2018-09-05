@@ -1,4 +1,6 @@
-http://kotti.3yd {
+{$MONO_SCHEME}://kotti.3ydev.com {
+	import /etc/snippets/tls
+
 	log stdout
 
 	proxy / http://kotti {
