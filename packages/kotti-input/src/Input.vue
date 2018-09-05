@@ -15,7 +15,21 @@
 				@focus="handleFocus"
 				@input="handleInput"
 			/>
-			<i class="form-icon yoco" v-text="icon" />
+			<i
+				:class="iconClass"
+				v-text="icon"
+				ref="inputIcon"
+				@mouseover="showDialog=true"
+				@mouseleave="showDialog=false"
+			/>
+			<div
+				v-show="showDialog && hasDialog"
+				:class="dialogClass"
+			>
+				<slot name="dialog">
+					{{dialog}}
+				</slot>
+			</div>
 		</div>
 		<div class="form-validation-text" v-if="validateText">
 			<span v-text="validateText" />
@@ -30,6 +44,7 @@ export default {
 		return {
 			currentValue: this.value || '',
 			isFocused: false,
+			showDialog: false,
 		}
 	},
 	watch: {
@@ -49,6 +64,7 @@ export default {
 		validate: { type: String, default: '' },
 		validateText: { type: String, default: '' },
 		value: [String, Number],
+		dialog: { type: String, default: null },
 	},
 	computed: {
 		labelRep() {
@@ -59,6 +75,12 @@ export default {
 			return {
 				'input-group': Boolean(this.addonText),
 				[`has-icon-${this.iconPosition}`]: Boolean(this.icon),
+			}
+		},
+		iconClass() {
+			return {
+				'form-icon yoco': true,
+				'c-hand': this.hasDialog,
 			}
 		},
 		formInputClass() {
@@ -78,6 +100,16 @@ export default {
 		formClass() {
 			const validateClass = this.validate ? `is-${this.validate}` : ''
 			return ['form-group', validateClass]
+		},
+		dialogClass() {
+			const dialogPosition = `dialog--${this.iconPosition}`
+			return ['dialog', dialogPosition]
+		},
+		hasDialog() {
+			if (this.dialog || this.$slots.dialog) {
+				return true
+			}
+			return false
 		},
 	},
 	methods: {

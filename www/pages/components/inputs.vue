@@ -22,24 +22,71 @@
 	## Icon
 	<div class="element-example">
 		<KtInput
-			v-model="v2"
-			placeholder="Serach your name"
-			iconPosition="right"
-			icon="search"
-		/>
-		<KtInput
 			v-model="v3"
 			placeholder="Add your name"
 			icon="user"
 		/>
+		<KtInput
+			v-model="v3"
+			iconPosition="right"
+			placeholder="Add your name"
+			icon="user"
+		/>
+
 	</div>
 
 	`icon` accepts any `String` from yoco, the default location of icon is `left`,
 	to change the location, set `iconPosition="right"`
 
 	```html
-	<KtInput v-model="v2" placeholder="Serach your name" iconPosition="right" icon="search"/>
 	<KtInput v-model="v3" placeholder="Add your name" icon="user"/>
+	<KtInput v-model="v2" placeholder="Serach your name" iconPosition="right" icon="search"/>
+	```
+
+	## Icon Dialog
+
+	<div class="element-example">
+		<KtInput
+			v-model="v3"
+			placeholder="Serach your name"
+			icon="circle_question"
+			iconPosition="right"
+			dialog="Available"
+			/>
+		<KtInput
+			v-model="v3"
+			placeholder="Serach your name"
+			icon="check"
+			iconPosition="right"
+			>
+			<div slot="dialog">
+				<h4>Availabe</h4>
+				<span>This user name is availabe</span>
+			</div>
+		</KtInput>
+	</div>
+
+	If you want show addition information of the input field, `dialog` accepts `String` text or `dialog` slot for HTML template.
+
+	```html
+	<KtInput
+			v-model="v3"
+			placeholder="Serach your name"
+			icon="circle_question"
+			iconPosition="right"
+			dialog="Available"
+			/>
+	<KtInput
+		v-model="v3"
+		placeholder="Serach your name"
+		icon="check"
+		iconPosition="right"
+		>
+		<div slot="dialog">
+			<h4>Availabe</h4>
+			<span>This user name is availabe</span>
+		</div>
+	</KtInput>
 	```
 
 	## Addon Text
@@ -184,6 +231,12 @@ export default {
 			v3: 'Jony Three O',
 			v4: 4,
 			v5: 'email@example.com',
+			dialog: {
+				enabled: true,
+				message: 'Help Message',
+				position: 'right',
+				html: '',
+			},
 		}
 	},
 }

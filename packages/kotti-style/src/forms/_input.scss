@@ -22,6 +22,24 @@
 	}
 }
 
+.dialog {
+	position: absolute;
+	padding: 0.4rem 0.8rem;
+	max-width: 20rem;
+	border-radius: 2px;
+	box-shadow: 0 0 0.2rem rgba($color: #000000, $alpha: 0.26);
+	background: #fff;
+	z-index: $zindex-4;
+	font-size: 0.85em;
+	margin-top: 0.2rem;
+	&--right {
+		right: 0;
+	}
+	&--left {
+		left: 0;
+	}
+}
+
 .form-input--compact {
 	height: $control-size-lg;
 	line-height: 0.8rem;
