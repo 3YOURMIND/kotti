@@ -1,5 +1,9 @@
 <template>
-	<KtNavbar @clickLogo="$router.push('/')" :theme="theme" :menu="globalMenu" :isNarrow="isNarrow">
+	<KtNavbar
+		@clickLogo="$router.push('/')"
+		:theme="theme"
+		:menu="globalMenu"
+		:isNarrow="isNarrow">
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
 				<img src="~/assets/img/icon_github.svg" width="24" height="24"/>
@@ -38,11 +42,31 @@ export default {
 	data() {
 		return {
 			globalMenu: [
-				{ icon: 'layer', label: 'Foundations', to: '/foundations/layout' },
-				{ icon: 'dashboard', label: 'Components', to: '/components/avatars' },
-				{ icon: 'sidebar', label: 'Patterns', to: '/patterns/forms' },
-				{ icon: 'version', label: 'Changelog', to: '/changelog' },
-				{ icon: 'markup', label: 'Design Kit', to: '/designkit' },
+				{
+					icon: 'layer',
+					label: 'Foundations',
+					to: '/foundations/layout',
+				},
+				{
+					icon: 'dashboard',
+					label: 'Components',
+					to: '/components/avatars',
+				},
+				{
+					icon: 'sidebar',
+					label: 'Patterns',
+					to: '/patterns/forms',
+				},
+				{
+					icon: 'version',
+					label: 'Changelog',
+					to: '/changelog',
+				},
+				{
+					icon: 'markup',
+					label: 'Design Kit',
+					to: '/designkit',
+				},
 			],
 			theme: { logo: { wide: LogoSvg, narrow: LogoIconSvg } },
 		}

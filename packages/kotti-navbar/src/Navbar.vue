@@ -6,27 +6,28 @@
 			</div>
 			<div class="navbar-header">
 				<slot name="navbar-header">
-					<a @click="$emit('clickLogo')">
-						<div :class="objectClass('navbar-logo')">
+						<div :class="objectClass('navbar-logo')" @click="$emit('clickLogo')">
 							<img :src="logoUrl" class="navbar-logo-img"/>
 							<img :src="theme.logo.wide" class="navbar-logo-img--mobile"/>
 						</div>
-					</a>
 				</slot>
 			</div>
 			<div class="navbar-narrow-toggle" @click="toggleNarrowBar"/>
 			<div class="navbar-body">
 				<div :class="objectClass('navbar-menu')">
-					<ul>
-							<li v-for="item in menu"
-							:exact="item.exact"
-							:key="item.index"
-							@click="handleMenuClick(item.to)">
-								<i class="yoco" v-text="item.icon" />
-								<span v-if="!isNarrowNavBar" v-text="item.label"/>
-							</li>
-					</ul>
-					<slot name="navbar-body" />
+					<slot name="navbar-body">
+						<ul>
+								<router-link
+									v-for="item in menu"
+									:exact="item.exact"
+									:key="item.index"
+									:to="item.to"
+									tag="li">
+									<i class="yoco" v-text="item.icon" />
+									<span v-if="!isNarrowNavBar" v-text="item.label"/>
+								</router-link>
+						</ul>
+					</slot>
 				</div>
 			</div>
 			<div :class="objectClass('navbar-footer')">
@@ -35,13 +36,15 @@
 			<div class="navbar-dropdown" v-if="mobileMenuToggle" v-on-clickaway="clickawayMobileMenu" >
 				<div class="navbar-menu">
 					<ul>
-						<li :exact="item.exact"
+						<router-link
 							v-for="item in menu"
+							:exact="item.exact"
 							:key="item.index"
-							@click="handleMenuClick(item.to)">
+							:to="item.to"
+							tag="li">
 							<i class="yoco" v-text="item.icon" />
-							<span v-text="item.label" />
-						</li>
+							<span v-if="!isNarrowNavBar" v-text="item.label"/>
+						</router-link>
 					</ul>
 					<slot name="navbar-menu" />
 				</div>
@@ -56,6 +59,7 @@ import { mixin as clickaway } from '../../../src/mixin/vue-clickaway'
 export default {
 	name: 'KtNavbar',
 	mixins: [clickaway],
+	activeClassName: { type: String, default: null },
 	props: {
 		isNarrow: { type: Boolean, default: false },
 		menu: { type: Array, required: true },
@@ -115,13 +119,6 @@ export default {
 		},
 		navbarNarrowBarEvent() {
 			this.$emit('toggleKtNavbarNarrowEvent', this.isNarrowNavBarToggle)
-		},
-		handleMenuClick(to) {
-			if (!to || !this.$router)
-				return console.warn(
-					'KtNavbar: “this.$router” not available but “to” was passed.',
-				)
-			this.$router.push(to)
 		},
 	},
 	watch: {

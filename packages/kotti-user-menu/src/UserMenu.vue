@@ -56,7 +56,7 @@ export default {
 			required: true,
 			validator: sections => sections.every(sectionIsValid),
 		},
-		userName: { type: String, required: true },
+		userName: { types: [String, null], required: true },
 		userStatus: { type: String, required: true },
 	},
 	components: {

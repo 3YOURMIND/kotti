@@ -67,8 +67,12 @@ $narrow-navbar-width: 3.2rem;
 .navbar-logo {
 	margin: 1.2rem auto;
 	align-items: center;
+	&:hover {
+		cursor: pointer;
+	}
 	.navbar-logo-img {
 		width: 100%;
+		padding: 0.4rem;
 		&--mobile {
 			display: none;
 		}
