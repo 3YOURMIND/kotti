@@ -8,12 +8,12 @@ services:
       - mono-proxy
     tty: true
     volumes:
-      - './kotti/build/:/usr/share/app/build/:ro'
-      - './kotti/src/:/usr/share/app/src/:ro'
-      - './kotti/packages/:/usr/share/app/packages/'
-      - './kotti/www/:/usr/share/app/www/:ro'
-      - './kotti/CHANGELOG.md:/usr/share/app/CHANGELOG.md:ro'
-      - './kotti/README.md:/usr/share/app/README.md:ro'
+      - './kotti/build/:/app/kotti/build/:ro'
+      - './kotti/src/:/app/kotti/src/:ro'
+      - './kotti/packages/:/app/kotti/packages/'
+      - './kotti/www/:/app/kotti/www/:ro'
+      - './kotti/CHANGELOG.md:/app/kotti/CHANGELOG.md:ro'
+      - './kotti/README.md:/app/kotti/README.md:ro'
   mono-proxy:
     volumes:
       - './kotti/Caddyfile:/domains/kotti.conf'

@@ -2,5 +2,6 @@ version: '3.5'
 services:
   kotti:
     build:
-      context: kotti
+      context: .
+      dockerfile: kotti/Dockerfile
     restart: unless-stopped

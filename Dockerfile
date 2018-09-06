@@ -3,9 +3,9 @@ FROM node:8-alpine as development
 ENV LISTEN_HOST 0.0.0.0
 ENV LISTEN_PORT 80
 
-WORKDIR /usr/share/app
-COPY package.json .
-COPY yarn.lock .
+WORKDIR /app/kotti/
+COPY kotti/package.json .
+COPY kotti/yarn.lock .
 RUN yarn install
 
 CMD "$(npm bin)/nuxt" \
@@ -16,16 +16,16 @@ CMD "$(npm bin)/nuxt" \
 ################################################################################
 
 FROM development as build
-COPY build build
-COPY packages packages
-COPY CHANGELOG.md CHANGELOG.md
-COPY README.md README.md
-COPY src src
-COPY www www
+COPY kotti/build build
+COPY kotti/packages packages
+COPY kotti/CHANGELOG.md CHANGELOG.md
+COPY kotti/README.md README.md
+COPY kotti/src src
+COPY kotti/www www
 RUN "$(npm bin)/nuxt" generate -c build/nuxt.config.js
 
 ################################################################################
 
 FROM nginx:alpine as production
 RUN rm -rf /usr/share/nginx/html/
-COPY --from=build /usr/share/app/docs/ /usr/share/nginx/html/
+COPY --from=build /app/kotti/docs/ /usr/share/nginx/html/
