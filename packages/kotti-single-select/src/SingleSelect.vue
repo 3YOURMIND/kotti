@@ -1,22 +1,26 @@
 <template>
-	<div class="selects" v-on-clickaway="handleClickOutside" >
+	<div class="selects">
 		<div class="form-group">
 			<label class="form-label" v-text="label" />
-			<div class="has-icon-right">
+			<div class="has-icon-right" v-on-clickaway="handleClickOutside">
 				<input
 					class="form-input"
 					v-model="selectedLabel"
 					type="text"
 					:placeholder="placeholder"
 					:readonly="!filterable"
-					@input="handleQueryChange"
+					@input="setQueryString($event.target.value)"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
 				/>
 				<i class="yoco form-icon" v-text="indicatorRep" />
 				<div v-if="visible" class="form-options">
 					<ul>
-						<li v-if="isLoading" class="form-option--loading">Loading</li>
+						<li
+							v-if="isLoading"
+							class="form-option--loading"
+							v-text="loadingText"
+						/>
 						<li
 							v-else
 							v-for="(option, index) in optionsRep"
@@ -28,9 +32,8 @@
 						<li
 							v-if="!optionsRep.length && !isLoading"
 							class="form-option--empty"
-							>
-							No result found
-						</li>
+							v-text="noResultsFoundText"
+						/>
 					</ul>
 				</div>
 			</div>
@@ -47,25 +50,29 @@ export default {
 	props: {
 		allowEmpty: { type: Boolean, default: false },
 		filterable: { type: Boolean, default: false },
+		isAsync: { type: Boolean, default: false },
+		isLoading: { type: Boolean, default: false },
 		label: { type: String, default: null },
+		loadingText: { type: String, default: 'Loading' },
+		noResultsFoundText: { type: String, default: 'No Results Found' },
 		options: { type: Array, default: [] },
 		placeholder: { type: String, default: null },
 		value: [String, Number],
-		isAsync: { type: Boolean, default: false },
-		isLoading: { type: Boolean, default: false },
 	},
 	data() {
 		return {
-			currentValue: [String, Number],
-			filterResults: [],
 			queryString: '',
 			selectedLabel: '',
 			visible: false,
 		}
 	},
 	mounted() {
-		if (this.value) {
-			this.initialSelect(this.value)
+		if (this.value && this.options) {
+			const selectedItem = this.options.find(
+				option => option.value === this.value,
+			)
+			this.selectedLabel = selectedItem.label
+			this.setQueryString(selectedItem.label)
 		}
 	},
 	computed: {
@@ -75,84 +82,60 @@ export default {
 		optionsRep() {
 			return this.filterable ? this.filterResults : this.options
 		},
-	},
-	watch: {
-		options(value) {
-			this.filterResults = value
+		filterResults() {
+			if (this.queryString === null) return this.options
+
+			const query = this.queryString.toLowerCase()
+			return this.options.filter(({ label, value }) => {
+				if (value === null) return false
+
+				return (
+					label.toLowerCase().includes(query) ||
+					value.toLowerCase().includes(query)
+				)
+			})
 		},
 	},
 	methods: {
+		isOptionAllowed({ disabled, value }) {
+			if (disabled) return false
+			if (!this.allowEmpty && value === null) return false
+			return true
+		},
 		optionClass(option) {
-			let _disableClass = false
-			if (option.value === null && this.allowEmpty) {
-				_disableClass = false
-			}
-			if (option.value === null && !this.allowEmpty) {
-				_disableClass = true
-			}
-			if (option.disabled) {
-				_disableClass = true
-			}
-			return {
-				'form-option--disabled': _disableClass,
-			}
+			if (!this.isOptionAllowed(option)) return 'form-option--disabled'
 		},
 		handleOptionClick(option) {
-			if (option.value === null && !this.allowEmpty) {
-				return
-			}
-			if (!option.disabled) {
-				this.selectedLabel = option.label
-				this.setValue(this.selectedLabel)
-				this.visible = false
-			}
-			return
+			if (!this.isOptionAllowed(option)) return
+
+			this.selectedLabel = option.label
+
+			const selectedItem = this.options.find(
+				({ label }) => label === this.selectedLabel,
+			)
+			this.$emit('input', selectedItem.value)
+			this.queryString = this.selectedLabel
+			this.visible = false
 		},
-		handleQueryChange(evt) {
+		setQueryString(value) {
 			if (!this.filterable) return
-			this.queryString = evt.target.value.toLowerCase()
-			if (this.isAsync) {
-				this.$emit('asyncMethod', this.queryString)
-			}
-			this.handleQuery(this.queryString)
+			this.queryString = value
+			this.triggerAsync()
 		},
-		handleQuery(query) {
-			let results = []
-			this.options.filter(item => {
-				if (item.value !== null) {
-					if (
-						item.label.toLowerCase().includes(query) ||
-						item.value.toLowerCase().includes(query)
-					) {
-						results.push(item)
-					}
-				}
-			})
-			this.filterResults = results
+		triggerAsync() {
+			if (!this.isAsync) return
+
+			return this.$emit(
+				'asyncMethod',
+				this.queryString === null ? null : this.queryString.toLowerCase(),
+			)
 		},
 		handleInputFocus() {
-			if (!this.queryString && this.isAsync) {
-				this.$emit('asyncMethod', null)
-			}
-
 			this.visible = true
+			this.triggerAsync()
 		},
 		handleClickOutside() {
-			if (this.selectedLabel || this.allowEmpty) {
-				this.visible = false
-			}
-		},
-		setValue(label) {
-			let selectedItem = this.options.find(option => option.label === label)
-			this.currentValue = selectedItem.value
-			this.$emit('input', this.currentValue)
-		},
-		initialSelect(value) {
-			if (!this.options) return
-			let selectedItem = this.options.find(option => option.value === value)
-			this.queryString = selectedItem.label
-			this.selectedLabel = selectedItem.label
-			this.handleQuery(this.queryString)
+			if (this.allowEmpty || this.selectedLabel) this.visible = false
 		},
 	},
 }
