@@ -1,19 +1,14 @@
 <template>
 	<label class="form-radio">
 		<input
-			:name="name"
+			v-model="model"
+			:name="radioName"
 			:value="value"
-			:id="value"
-			v-model="parentValue"
 			type="radio"
 		/>
 		<i class="form-icon" />
-		<span :for="value">
-			<slot/>
-			<template>
-				<span v-if="!$slots.default" v-text="label"  />
-			</template>
-		</span>
+		<slot v-if="$slots.default"/>
+		<span v-else v-text="label"/>
 	</label>
 </template>
 
@@ -21,28 +16,27 @@
 export default {
 	name: 'KtRadio',
 	props: {
-		label: [String, Number, Boolean],
-		name: [String, Number],
-		value: [String, Number],
+		label: { types: [String, Number, Boolean] },
+		name: { types: [String, Number] },
+		value: { types: [String, Number] },
 	},
 	computed: {
-		parentValue: {
+		model: {
 			get() {
-				return this._radioGroup.value || ''
+				if (this.isInGroup) return this.$parent.value
+				return this.value
 			},
 			set(value) {
-				if (this._radioGroup) {
-					this._radioGroup.$emit('input', value)
-				}
+				if (this.isInGroup) this.$parent.$emit('input', value)
 				this.$emit('input', value)
 			},
 		},
 		radioName() {
-			return this._radioGroup.name || this.name
+			if (this.isInGroup) return this.$parent.name
+			return this.name
 		},
-		_radioGroup() {
-			let parent = this.$parent
-			return parent.$options.name === 'KtRadioGroup' ? parent : false
+		isInGroup() {
+			return this.$parent.$options.name === 'KtRadioGroup'
 		},
 	},
 }

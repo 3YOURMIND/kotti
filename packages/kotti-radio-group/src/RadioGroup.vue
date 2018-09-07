@@ -10,21 +10,21 @@
 export default {
 	name: 'KtRadioGroup',
 	props: {
-		value: {
-			type: [String, Number],
-			default: null,
-		},
 		label: {
-			type: [String, Number],
 			default: null,
-		},
-		name: {
-			type: [String, Number],
-			required: true,
+			types: [String, Number, null],
 		},
 		listStyle: {
-			type: Boolean,
 			default: false,
+			type: Boolean,
+		},
+		name: {
+			required: true,
+			types: [String, Number],
+		},
+		value: {
+			default: null,
+			types: [String, Number, null],
 		},
 	},
 	computed: {
@@ -39,9 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-group--list-options {
-	.form-radio {
-		display: block;
-	}
+.form-group--list-options .form-radio {
+	display: block;
 }
 </style>

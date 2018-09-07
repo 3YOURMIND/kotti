@@ -20,7 +20,7 @@ You can customize radio button template inside `KtRadio` component, or just give
 
 ```html
 <KtRadioGroup label="Good Time" name="group1" v-model="radio1">
-	<KtRadio value="morning" label="Good Morning"></KtRadio>
+	<KtRadio value="morning" label="Good Morning"/>
 	<KtRadio value="night">
 		Good Night <a href="https://en.wikipedia.org/wiki/Good_Night">Link</a>
 	</KtRadio>
@@ -89,16 +89,16 @@ export default {
 			title: 'Test',
 			options: [
 				{
-					value: 'option1',
 					label: 'Good Day',
+					value: 'option1',
 				},
 				{
-					value: 'option2',
 					label: 'Good Night',
+					value: 'option2',
 				},
 				{
-					value: 'option3',
 					label: 'Good Morning',
+					value: 'option3',
 				},
 			],
 		}
