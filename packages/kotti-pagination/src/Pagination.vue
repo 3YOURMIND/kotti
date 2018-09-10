@@ -22,6 +22,7 @@
 
 <script>
 export default {
+	name: 'KtPagination',
 	props: {
 		page: { type: Number, default: 1 },
 		total: { type: Number, required: true },
