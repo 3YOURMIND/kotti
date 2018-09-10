@@ -1,9 +1,10 @@
 <template>
 	<KtNavbar
-		@clickLogo="$router.push('/')"
-		:theme="theme"
+		:isNarrow="isNarrow"
 		:menu="globalMenu"
-		:isNarrow="isNarrow">
+		:theme="theme"
+		@clickLogo="$router.push('/')"
+	>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
 				<img src="~/assets/img/icon_github.svg" width="24" height="24"/>
