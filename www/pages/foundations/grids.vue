@@ -166,7 +166,7 @@
 	</KtRow>
 	```
 
-	## Resposive
+	## Responsive
 
 	There are five media query breakpoints: `xs: 480px`, `sm: 600px`, `md: 840px` , `lg: 960px` and `xl: 1280px`.
 	Breakpoint attribute accept `Number` as `span`.
