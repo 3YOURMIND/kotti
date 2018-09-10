@@ -1,17 +1,19 @@
 <template>
 	<transition name="modal" mode="out-in">
 		<div class="modal-mask" @click.self="closeModal">
-			<div :class="modalClass">
-				<div v-if="hasHeader" class="modal-header">
-					<slot name="modal-header" />
+			<slot name="modal-container">
+				<div :class="modalClass">
+					<div v-if="hasHeader" class="modal-header">
+						<slot name="modal-header" />
+					</div>
+					<div v-if="hasBody" class="modal-body">
+						<slot name="modal-body" />
+					</div>
+					<div v-if="hasFooter" class="modal-footer">
+						<slot name="modal-footer" />
+					</div>
 				</div>
-				<div v-if="hasBody" class="modal-body">
-					<slot name="modal-body" />
-				</div>
-				<div v-if="hasFooter" class="modal-footer">
-					<slot name="modal-footer" />
-				</div>
-			</div>
+			</slot>
 		</div>
 	</transition>
 </template>
