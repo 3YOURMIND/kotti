@@ -35,9 +35,9 @@ export default {
 		KtButtonGroup,
 	},
 	props: {
-		value: [String, Number],
-		invalidMessage: { type: String, default: 'Click to edit' },
-		label: { type: String, default: null },
+		invalidMessage: { default: 'Click to edit', type: String },
+		label: { default: null, types: [String, null] },
+		value: { types: [String, Number] },
 	},
 	data() {
 		return {
@@ -65,8 +65,8 @@ export default {
 		},
 	},
 	watch: {
-		value(val, oldValue) {
-			this.setCurrentValue(val)
+		value: {
+			handler: 'setCurrentValue',
 		},
 	},
 	methods: {

@@ -4,14 +4,15 @@
 ## Basic
 <div class="element-example white">
 	<KtInlineEdit
-	label="Picture Title"
-	placeholder="Give a title"
-	invalidMessage="Click to change the title"
-	v-model="value1"
-	@confirm="showAlert('Confirmed Function')"
-	@dismiss="showAlert('Dismissed Function')"
-	class="mb-16px"/>
-	<img src="https://picsum.photos/800/200">
+		label="Picture Title"
+		placeholder="Give a title"
+		invalidMessage="Click to change the title"
+		v-model="value1"
+		@confirm="showAlert('Confirmed Function')"
+		@dismiss="showAlert('Dismissed Function')"
+		class="mb-16px"
+	/>
+	<img src="https://picsum.photos/800/200"/>
 </div>
 
 ```html
@@ -22,19 +23,20 @@
 	v-model="value1"
 	@confirm="showAlert('Confirmed Function')"
 	@dismiss="showAlert('Dismissed Function')"
-	class="mb-16px"/>
-<img src="https://picsum.photos/800/200">
+	class="mb-16px"
+/>
+<img src="https://picsum.photos/800/200"/>
 ```
 
 ## Usage
 
 ### Attribuites
 
-| Attribute | Description                      | Type      | Accepted values | Default |
-|:----------|:---------------------------------|:----------|:----------------|:--------|
-| `label`   | label text                       | `String`  | —               | —       |
-| `value`   | value of message and input value | `v-model` | —               | —       |
-|`invalidMessage`| message
+| Attribute        | Description                      | Type      | Accepted values | Default           |
+|:-----------------|:---------------------------------|:----------|:----------------|:------------------|
+| `invalidMessage` | message                          | `String`  | —               | `"Click to edit"` |
+| `label`          | label text                       | `String`  | —               | —                 |
+| `value`          | value of message and input value | `v-model` | —               | —                 |
 
 ### Input Events
 
@@ -51,8 +53,6 @@
 </template>
 
 <script>
-import KtButton from '../../../packages/kotti-button'
-import KtButtonGroup from '../../../packages/kotti-button-group'
 import KtInlineEdit from '../../../packages/kotti-inline-edit'
 
 export default {
@@ -67,7 +67,7 @@ export default {
 	},
 	methods: {
 		showAlert(msg) {
-			alert(msg)
+			window.alert(msg)
 		},
 	},
 }
