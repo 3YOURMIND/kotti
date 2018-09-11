@@ -1,5 +1,16 @@
 # Change Log
 
+## 0.0.8 - 2018.09.11
+
+- Fixed: Navbar no longer highlights selected tabs [KT-15]
+- Fixed: KtSelect When Label is Clicked, the Dropdown doesn’t close [KT-27]
+- Fixed: KtRadio Only Works With Default Slot [KT-28]
+- Fixed: Yoco Start should be Star [KT-30]
+- Fixed: KtInlineEdit z-index and invalid message [KT-33]
+- Added: Support Asynchronous Options in Select [KT-7]
+- Added: KtInput Description Support [KT-22]
+- Added: Popover component [KT-35]
+
 ## 0.0.7 - 2018.08.31
 
 - Fixed: Remove KtModal empty slots space [KT-20]
