@@ -2,72 +2,83 @@
 
 # Popovers
 
-Using popovers to provide extra information or operations. Comparing to `tooltip`, `popovers` can carry more information.
+Use popovers to provide extra information or actions. Compared to `tooltip`, `popovers` can carry more information.
 
 <div class="element-example">
+<KtPopover position="left" class="mr-4">
+	<KtButton type="secondary" slot="toggle">
+		Popover Left
+	</KtButton>
+	<KtCard slot="content">
+		<div slot="card-header" >
+			<h2>Lorem Ipsum</h2>
+		</div>
+		<div slot="card-body" >
+			This is the hover popover
+		</div>
+	</KtCard>
+</KtPopover>
+
+<KtPopover position="top" class="mr-4">
+	<KtButton type="secondary" slot="toggle">
+		Popover Top
+	</KtButton>
+	<KtCard slot="content">
+		<div slot="card-header" >
+			<h2>Lorem Ipsum</h2>
+		</div>
+		<div slot="card-body" >
+			This is the hover popover
+		</div>
+	</KtCard>
+</KtPopover>
+
+<KtPopover position="bottom" class="mr-4">
+	<KtButton type="secondary" slot="toggle">
+		Popover Bottom
+	</KtButton>
+	<KtCard slot="content">
+		<div slot="card-header">
+			<h2>Lorem Ipsum</h2>
+		</div>
+		<div slot="card-body">
+			This is the hover popover
+		</div>
+	</KtCard>
+</KtPopover>
+
 <KtPopover position="right">
-	<button class="secondary" slot="toggle">Popover Right</button>
+	<KtButton type="secondary" slot="toggle">
+		Popover Bottom
+	</KtButton>
 	<KtCard slot="content">
-		<div slot="card-header" >
+		<div slot="card-header">
 			<h2>Lorem Ipsum</h2>
 		</div>
-		<div slot="card-body" >
-			This is the hover popover
-		</div>
-	</KtCard>
-</KtPopover>
-
-<KtPopover position="left" class="ml-4">
-	<button class="secondary" slot="toggle">Popover Left</button>
-	<KtCard slot="content">
-		<div slot="card-header" >
-			<h2>Lorem Ipsum</h2>
-		</div>
-		<div slot="card-body" >
-			This is the hover popover
-		</div>
-	</KtCard>
-</KtPopover>
-
-<KtPopover position="up" class="ml-4">
-	<button class="secondary" slot="toggle">Popover Up</button>
-	<KtCard slot="content">
-		<div slot="card-header" >
-			<h2>Lorem Ipsum</h2>
-		</div>
-		<div slot="card-body" >
-			This is the hover popover
-		</div>
-	</KtCard>
-</KtPopover>
-<KtPopover position="bottom" class="ml-4">
-	<button class="secondary" slot="toggle">Popover Bottom</button>
-	<KtCard slot="content">
-		<div slot="card-header" >
-			<h2>Lorem Ipsum</h2>
-		</div>
-		<div slot="card-body" >
+		<div slot="card-body">
 			This is the hover popover
 		</div>
 	</KtCard>
 </KtPopover>
 </div>
 
-There are also 4 different positions for popovers. `right`, `left`, `up` and `bottom`.
+There are also 4 different positions for popovers. `right`, `left`, `top`, and `bottom`.
 
-`toggle` slot is the element to trigger the popover.
+The `toggle` slot is the element to trigger the popover.
 
-A [card component](./cards) is inside `content` slot usually.
+A [card component](./cards) is usually used inside the `content` slot.
 
 
 ```html
 <KtPopover position="right">
-	<button class="secondary" slot="toggle">Popover Bottom</button>
+	<KtButton type="secondary" slot="toggle">
+		Popover Bottom
+	</KtButton>
 	<KtCard slot="content">
 		<div slot="card-header" >
 			<h2>Lorem Ipsum</h2>
 		</div>
-		<div slot="card-body" >
+		<div slot="card-body">
 			This is the hover popover
 		</div>
 	</KtCard>
@@ -89,19 +100,21 @@ A [card component](./cards) is inside `content` slot usually.
 | `toggle`  | toggle element of the content |
 | `content` | content section               |
 
-
 </template>
 
 
 <script>
-import KtPopover from '../../../packages/kotti-popover'
+import KtButton from '../../../packages/kotti-button'
 import KtCard from '../../../packages/kotti-card'
+import KtPopover from '../../../packages/kotti-popover'
 import ShowCase from '../../components/ShowCase'
+
 export default {
 	name: 'PopoversDoc',
 	components: {
-		KtPopover,
+		KtButton,
 		KtCard,
+		KtPopover,
 		ShowCase,
 	},
 }

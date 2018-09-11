@@ -1,9 +1,9 @@
 <template>
 	<transition name="popover">
 		<div :class="`popover popover-${position}`">
-			<slot name="toggle" />
+			<slot name="toggle"/>
 			<div class="popover-container">
-				<slot name="content"></slot>
+				<slot name="content"/>
 			</div>
 		</div>
 	</transition>

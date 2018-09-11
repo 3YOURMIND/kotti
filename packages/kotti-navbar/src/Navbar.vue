@@ -18,11 +18,12 @@
 					<slot name="navbar-body">
 						<ul>
 							<router-link
-								v-for="item in menu"
+								v-for="(item, index) in menu"
 								:exact="item.exact"
-								:key="item.index"
+								:key="index"
 								:to="item.to"
-								tag="li">
+								tag="li"
+							>
 								<i class="yoco" v-text="item.icon" />
 								<span v-if="!isNarrowNavBar" v-text="item.label"/>
 							</router-link>
