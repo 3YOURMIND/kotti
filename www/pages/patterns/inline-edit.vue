@@ -1,10 +1,12 @@
 <template lang="md">
 # Inline Edit
 
+## Basic
 <div class="element-example white">
 	<KtInlineEdit
 	label="Picture Title"
-	placeholder="this holder"
+	placeholder="Give a title"
+	invalidMessage="Click to change the title"
 	v-model="value1"
 	@confirm="showAlert('Confirmed Function')"
 	@dismiss="showAlert('Dismissed Function')"
@@ -16,6 +18,7 @@
 <KtInlineEdit
 	label="Picture Title"
 	placeholder="this holder"
+	invalidMessage="Click to change the title"
 	v-model="value1"
 	@confirm="showAlert('Confirmed Function')"
 	@dismiss="showAlert('Dismissed Function')"
@@ -31,6 +34,7 @@
 |:----------|:---------------------------------|:----------|:----------------|:--------|
 | `label`   | label text                       | `String`  | —               | —       |
 | `value`   | value of message and input value | `v-model` | —               | —       |
+|`invalidMessage`| message
 
 ### Input Events
 
@@ -58,7 +62,7 @@ export default {
 	},
 	data() {
 		return {
-			value1: 'Random Picture',
+			value1: '',
 		}
 	},
 	methods: {

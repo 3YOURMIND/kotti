@@ -40,6 +40,18 @@
 	}
 }
 
+.inline-edit {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	&__edit-buttons {
+		position: absolute;
+		z-index: $zindex-4;
+		bottom: -32px;
+		right: 0;
+	}
+}
+
 .form-input--compact {
 	height: $control-size-lg;
 	line-height: 0.8rem;

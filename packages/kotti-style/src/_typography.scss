@@ -147,7 +147,9 @@ dl {
 
 	.editable {
 		padding: 0.1rem 0;
-
+		&--empty {
+			font-style: italic;
+		}
 		&:hover {
 			cursor: pointer;
 			background: $lightgray-300;

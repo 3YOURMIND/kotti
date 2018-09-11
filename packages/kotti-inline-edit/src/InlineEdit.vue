@@ -3,9 +3,9 @@
 		<label class="form-label" v-text="label" />
 		<div
 			v-if="!editMode"
-			v-text="currentValue"
+			v-text="representValue"
 			@click="editMode=true"
-			class="default editable"
+			:class="representTextClass"
 		/>
 		<div v-else>
 			<input
@@ -16,7 +16,7 @@
 				class="form-input"
 				type="text"
 			/>
-			<KtButtonGroup class="edit-button">
+			<KtButtonGroup shadow class="inline-edit__edit-buttons">
 				<KtButton icon="close" @click="handleDismiss" />
 				<KtButton icon="check" @click="handleConfirm" />
 			</KtButtonGroup>
@@ -36,14 +36,8 @@ export default {
 	},
 	props: {
 		value: [String, Number],
-		label: {
-			type: String,
-			default: '',
-		},
-		message: {
-			type: String,
-			default: '',
-		},
+		invalidMessage: { type: String, default: 'Click to edit' },
+		label: { type: String, default: null },
 	},
 	data() {
 		return {
@@ -58,6 +52,15 @@ export default {
 				'inline-edit': true,
 				'form-group': this.editMode,
 				'label-value': !this.editMode,
+			}
+		},
+		representValue() {
+			return this.currentValue ? this.currentValue : this.invalidMessage
+		},
+		representTextClass() {
+			return {
+				'default editable': true,
+				'editable--empty': !this.currentValue,
 			}
 		},
 	},
@@ -93,17 +96,3 @@ export default {
 	},
 }
 </script>
-
-<style lang="scss" scoped>
-.inline-edit {
-	display: flex;
-	flex-direction: column;
-	position: relative;
-}
-
-.edit-button {
-	position: absolute;
-	bottom: -32px;
-	right: 0;
-}
-</style>
