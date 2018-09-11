@@ -131,7 +131,7 @@ import KtDrawer from '../../../packages/kotti-drawer'
 import ShowCase from '../../components/ShowCase'
 
 export default {
-	name: 'Drawer',
+	name: 'DrawerDocs',
 	components: {
 		KtDrawer,
 		ShowCase,

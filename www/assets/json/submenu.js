@@ -81,7 +81,6 @@ const submenu = [
 				to: 'paginations',
 			},
 			{
-				isCSS: true,
 				label: 'Popovers',
 				to: 'popovers',
 			},
