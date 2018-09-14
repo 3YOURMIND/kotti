@@ -1,36 +1,50 @@
 <template>
-	<KtContainer hasActionBar>
-		<KtNavbar slot="navbar" :menu="menuData" :theme="themeData">
-			<div slot="navbar-footer">
-				<KtUserMenu
-					userName="Jony'O Five"
-					userStatus="Invisible"
-					:sections="userMenuData" />
-			</div>
-		</KtNavbar>
-		<KtActionbar slot="actionbar" />
-		<div slot="workspace">
-			Hello
+	<div class="d-flex responsive">
+		<slot name="navbar">
+			<KtNavbar :menu="menuData" :theme="themeData">
+				<div slot="navbar-footer">
+					<KtUserMenu
+						userName="Jony'O Five"
+						userStatus="Invisible"
+						:sections="userMenuData" />
+				</div>
+			</KtNavbar>
+		</slot>
+		<slot name="actionbar" v-if="hasActionbar">
+			<KtActionBar/>
+		</slot>
+
+		<div class="workspace">
+			<slot name="workspace">
+			</slot>
 		</div>
-	</KtContainer>
+	</div>
 </template>
 
 <script>
-import KtActionbar from '../../../packages/kotti-actionbar'
-import KtContainer from '../../../packages/kotti-container'
 import KtNavbar from '../../../packages/kotti-navbar'
+import KtActionBar from '../../../packages/kotti-actionbar'
 import KtUserMenu from '../../../packages/kotti-user-menu'
 
 export default {
-	layout: 'empty',
+	name: 'KtContainer',
+	layout: 'container',
 	components: {
 		KtNavbar,
-		KtActionbar,
-		KtContainer,
 		KtUserMenu,
+		KtActionBar,
+	},
+	computed: {
+		containerClass() {
+			return {
+				'kt-container': true,
+				'kt-container--actionbar': this.hasActionbar,
+			}
+		},
 	},
 	data() {
 		return {
+			hasActionbar: true,
 			menuData: [
 				{
 					to: '#',
@@ -83,18 +97,6 @@ export default {
 						},
 					],
 				},
-				{
-					links: [
-						{
-							link: 'https://google.com',
-							title: 'Settings',
-						},
-						{
-							link: '#',
-							title: 'Logout',
-						},
-					],
-				},
 			],
 			themeData: {
 				logo: {
@@ -106,3 +108,27 @@ export default {
 	},
 }
 </script>
+
+
+<style lang="scss" scoped>
+.kt-container {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 100vh;
+	&--actionbar {
+		grid-template-columns: auto 16rem 1fr;
+	}
+}
+.workspace__content {
+	display: block;
+	background: #ddd;
+	height: 800px;
+	overflow: auto;
+}
+@media (max-width: 480px) {
+	.kt-container {
+		display: flex;
+		flex-direction: column;
+	}
+}
+</style>
