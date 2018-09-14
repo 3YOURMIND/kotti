@@ -1,12 +1,10 @@
 <template>
-	<div class="d-flex responsive">
-		<slot name="navbar" />
-		<acionbar class="actionbar" v-if="hasActionBar">
-			<slot name="actionbar"/>
-		</acionbar>
-		<workspace class="workspace">
+	<div class="kt-container">
+		<slot name="navbar"/>
+		<slot name="actionbar" v-if="hasActionBar"/>
+		<div class="workspace">
 			<slot name="workspace" />
-		</workspace>
+		</div>
 	</div>
 </template>
 

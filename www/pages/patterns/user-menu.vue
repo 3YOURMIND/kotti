@@ -2,9 +2,9 @@
 
 # User Menu
 
-<a href="/examples/layouts">
-	<button class="primary">Check The Example</button>
-</a>
+<nuxt-link to="/examples/layouts">
+	<button class="primary">Show Layout Example</button>
+</nuxt-link>
 
 ```html
 <KtUserMenu userName="Jony'O Five" userStatus="Invisible">

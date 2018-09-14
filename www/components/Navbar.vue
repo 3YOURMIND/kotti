@@ -13,7 +13,7 @@
 	</KtNavbar>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .github-link {
 	display: inline-block;
 	width: 100%;
@@ -56,7 +56,7 @@ export default {
 				{
 					icon: 'sidebar',
 					label: 'Patterns',
-					to: '/patterns/forms',
+					to: '/patterns/comments',
 				},
 				{
 					icon: 'version',

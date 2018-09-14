@@ -16,6 +16,7 @@
 		width: $actionbar-width;
 		height: 100%;
 		display: flex;
+		overflow-y: auto;
 		flex-direction: column;
 	}
 
@@ -25,7 +26,6 @@
 
 	.actionbar-body {
 		flex: 1 1 100%;
-		overflow-y: auto;
 	}
 
 	.actionbar-footer {
@@ -43,6 +43,54 @@
 	margin-bottom: 0.8rem;
 	color: $primary-500;
 }
+.actionbar-nav {
+	margin: 0 -$unit-2;
+}
+.actionbar-nav__item {
+	font-size: 0.75rem;
+	list-style: none;
+	padding: $unit-2;
+	margin: $unit-2 0;
+	border-radius: 0.2rem;
+	color: $darkgray-500;
+	&:hover {
+		background: $lightgray-400;
+		cursor: pointer;
+	}
+	&__icon {
+		padding-right: 0.4rem;
+		color: $darkgray-500;
+
+		&--right {
+			padding-right: 0;
+			padding-left: 0.4rem;
+			float: right;
+		}
+	}
+
+	&__label {
+		color: $darkgray-500;
+	}
+
+	&--active {
+		.actionbar-nav__item__icon {
+			color: $primary-500;
+		}
+		.actionbar-nav__item__label {
+			font-weight: 600;
+			color: $primary-500;
+		}
+	}
+	&--disabled {
+		&:hover {
+			cursor: not-allowed;
+		}
+		.actionbar-nav__item__label,
+		.actionbar-nav__item__icon {
+			color: $lightgray-500;
+		}
+	}
+}
 
 .actionbar-menu {
 	ul {
@@ -51,7 +99,7 @@
 	}
 
 	li {
-		font-size: 0.7rem;
+		font-size: 0.75rem;
 		list-style: none;
 		padding: $unit-2 0;
 		color: $darkgray-500;
@@ -80,6 +128,7 @@
 		}
 	}
 }
+
 @media (max-width: $size-md) {
 	.actionbar {
 		width: 100%;

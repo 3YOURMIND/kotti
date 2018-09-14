@@ -1,14 +1,15 @@
 <template>
-	<div class="d-flex responsive">
-		<Navbar/>
-		<Actionbar v-if="showActionbar"/>
-		<div class="workspace">
+	<KtContainer :hasActionBar="showActionbar">
+		<Navbar slot="navbar"/>
+		<Actionbar slot="actionbar" />
+		<div slot="workspace">
 			<nuxt class="content" />
 		</div>
-	</div>
+	</KtContainer>
 </template>
 
 <script>
+import KtContainer from '../../packages/kotti-container'
 import Actionbar from '~/components/Actionbar.vue'
 import Navbar from '~/components/Navbar.vue'
 
@@ -17,6 +18,7 @@ export default {
 	components: {
 		Actionbar,
 		Navbar,
+		KtContainer,
 	},
 	computed: {
 		showActionbar() {

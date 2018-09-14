@@ -8,9 +8,14 @@
 					:sections="userMenuData" />
 			</div>
 		</KtNavbar>
-		<KtActionbar slot="actionbar" />
+		<KtActionbar
+			slot="actionbar"
+			headerTitle="KtContainer Example"
+			:menuStyle="menuStyle"
+			:menu="menu"
+		/>
 		<div slot="workspace">
-			Hello
+			KtContainer Conetent
 		</div>
 	</KtContainer>
 </template>
@@ -38,13 +43,8 @@ export default {
 					icon: 'dashboard',
 				},
 				{
-					to: 'components/navbar',
-					label: 'Component',
-					icon: 'layer',
-				},
-				{
-					to: 'components/navbar',
-					label: 'Calendar',
+					to: '#',
+					label: 'ActionBar',
 					icon: 'calendar',
 				},
 			],
@@ -60,10 +60,6 @@ export default {
 							link: '#',
 							title: 'Service Panel',
 						},
-						{
-							link: '#',
-							title: 'Org Panel',
-						},
 					],
 				},
 				{
@@ -76,10 +72,6 @@ export default {
 						{
 							link: '#',
 							title: '3YOURMIND Service',
-						},
-						{
-							link: '#',
-							title: 'View More',
 						},
 					],
 				},
@@ -102,6 +94,31 @@ export default {
 					narrow: 'https://picsum.photos/60/60',
 				},
 			},
+			menuStyle: {
+				defaultItemInMobile: 5,
+				iconPosition: 'left',
+			},
+			menu: [
+				{
+					label: 'First Link',
+					to: '/examples/layouts',
+					icon: 'user',
+					active: false,
+					disabled: false,
+				},
+				{
+					label: 'Second Link',
+					to: 'https://google.com',
+					icon: 'basket',
+					active: true,
+				},
+				{
+					label: 'Thrid Link',
+					to: '/',
+					icon: 'bell',
+					disabled: true,
+				},
+			],
 		}
 	},
 }

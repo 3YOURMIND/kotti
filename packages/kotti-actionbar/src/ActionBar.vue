@@ -1,14 +1,14 @@
 <template>
-	<actionbar class="actionbar">
+	<div class="actionbar">
 		<div class="actionbar-wrapper">
 			<div class="actionbar-header">
 				<slot name="actionbar-header">
-					<h1>Header</h1>
+					<h1 v-text="headerTitle"/>
 				</slot>
 			</div>
 			<div class="actionbar-body">
 				<slot name="actionbar-body">
-					<p>Body</p>
+					<KtActionBarMenu :menu="menu" :menuStyle="menuStyle" v-if="menu"/>
 				</slot>
 			</div>
 			<div class="actionbar-footer">
@@ -17,10 +17,22 @@
 				</slot>
 			</div>
 		</div>
-	</actionbar>
+	</div>
 </template>
 <script>
+import KtActionBarMenu from './ActionBarMenu'
 export default {
 	name: 'KtActionBar',
+	props: {
+		headerTitle: {
+			type: String,
+			default: 'Actionbar Header',
+		},
+		menu: [],
+		menuStyle: {},
+	},
+	components: {
+		KtActionBarMenu,
+	},
 }
 </script>

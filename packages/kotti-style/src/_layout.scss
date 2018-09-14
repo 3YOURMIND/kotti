@@ -1,13 +1,19 @@
 // Layout
-
-@media (max-width: $size-md) {
-	.responsive {
+.kt-container {
+	display: flex;
+	@media (max-width: $size-md) {
 		display: flex;
 		flex-direction: column;
 	}
 }
 
 // deprecate
+@media (max-width: $size-md) {
+	.responsive {
+		display: flex;
+		flex-direction: column;
+	}
+}
 .container {
 	margin-left: auto;
 	margin-right: auto;

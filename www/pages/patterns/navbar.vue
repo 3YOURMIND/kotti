@@ -1,8 +1,8 @@
 <template lang="md">
 # NavBar
-<a href="/examples/layouts">
-	<button class="primary">Check The Example</button>
-</a>
+<nuxt-link to="/examples/layouts">
+	<button class="primary">Show Layout Example</button>
+</nuxt-link>
 
 ```html
 <div class="d-flex responsive">

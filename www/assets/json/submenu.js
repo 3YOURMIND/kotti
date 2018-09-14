@@ -115,15 +115,20 @@ const submenu = [
 	{
 		child: [
 			{
+				label: 'ActionBar',
+				to: 'actionbar',
+			},
+			{
 				label: 'Comments',
 				to: 'comments',
 			},
 			{
-				label: 'Forms',
-				to: 'forms',
+				label: 'Container',
+				to: 'container',
 			},
+
 			{
-				label: 'Navbar',
+				label: 'NavBar',
 				to: 'navbar',
 			},
 			{
