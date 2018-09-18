@@ -8,7 +8,11 @@
 			</div>
 			<div class="actionbar-body">
 				<slot name="actionbar-body">
-					<KtActionBarMenu :menu="menu" :menuStyle="menuStyle" v-if="menu"/>
+					<KtActionBarMenu
+						v-if="menu"
+						:menu="menu"
+						:menuStyle="menuStyle"
+					/>
 				</slot>
 			</div>
 			<div class="actionbar-footer">
@@ -21,18 +25,16 @@
 </template>
 <script>
 import KtActionBarMenu from './ActionBarMenu'
+
 export default {
 	name: 'KtActionBar',
-	props: {
-		headerTitle: {
-			type: String,
-			default: 'Actionbar Header',
-		},
-		menu: [],
-		menuStyle: {},
-	},
 	components: {
 		KtActionBarMenu,
+	},
+	props: {
+		headerTitle: { default: 'Actionbar Header', type: String },
+		menu: { default: () => [], type: Array },
+		menuStyle: { default: () => ({}), type: Object },
 	},
 }
 </script>

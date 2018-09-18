@@ -7,7 +7,7 @@
 </nuxt-link>
 
 ```html
-<KtContainer hasActionBar>
+<KtContainer>
 	<KtNavbar slot="navbar" :menu="menuData" :theme="themeData"/>
 	<KtActionbar slot="actionbar" headerTitle="KtContainer Example"/>
 	<div slot="workspace">
@@ -16,14 +16,7 @@
 </KtContainer>
 ```
 
-
 ## Usage
-
-### Attribuites
-
-| Attribute      | Description            | Type      | Accepted values | Default |
-|:---------------|:-----------------------|:----------|:----------------|:--------|
-| `hasActionBar` | show or hide actionbar | `Boolean` | —               | `false` |
 
 ### Slots
 
@@ -32,5 +25,4 @@
 | `navbar`    | navbar section    |
 | `actionbar` | actionbar section |
 | `workspace` | workspace section |
-
 </template>

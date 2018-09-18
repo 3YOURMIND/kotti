@@ -11,8 +11,10 @@
 <script>
 export default {
 	name: 'KtContainer',
-	props: {
-		hasActionBar: { type: Boolean, default: false },
+	computed: {
+		hasActionBar() {
+			return Boolean(this.$slots.actionbar)
+		},
 	},
 }
 </script>
