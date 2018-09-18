@@ -35,7 +35,7 @@ menu: [
 		active: true,
 	},
 	{
-		label: 'Thrid Link',
+		label: 'Third Link',
 		to: '/',
 		icon: 'bell',
 		disabled: true,

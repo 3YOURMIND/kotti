@@ -11,7 +11,7 @@
 	<KtNavbar slot="navbar" :menu="menuData" :theme="themeData"/>
 	<KtActionbar slot="actionbar" headerTitle="KtContainer Example"/>
 	<div slot="workspace">
-		KtContainer Conetent
+		KtContainer Content
 	</div>
 </KtContainer>
 ```

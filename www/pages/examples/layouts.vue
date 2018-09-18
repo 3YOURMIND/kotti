@@ -15,7 +15,7 @@
 			:menu="menu"
 		/>
 		<div slot="workspace">
-			KtContainer Conetent
+			KtContainer Content
 		</div>
 	</KtContainer>
 </template>
@@ -113,7 +113,7 @@ export default {
 					active: true,
 				},
 				{
-					label: 'Thrid Link',
+					label: 'Third Link',
 					to: '/',
 					icon: 'bell',
 					disabled: true,
