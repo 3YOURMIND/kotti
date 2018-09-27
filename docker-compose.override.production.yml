@@ -5,6 +5,3 @@ services:
       target: production
     depends_on:
       - mono-proxy
-  mono-proxy:
-    volumes:
-      - './kotti/Caddyfile:/domains/kotti.conf'

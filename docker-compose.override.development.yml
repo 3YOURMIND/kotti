@@ -14,6 +14,3 @@ services:
       - './kotti/www/:/app/kotti/www/:ro'
       - './kotti/CHANGELOG.md:/app/kotti/CHANGELOG.md:ro'
       - './kotti/README.md:/app/kotti/README.md:ro'
-  mono-proxy:
-    volumes:
-      - './kotti/Caddyfile:/domains/kotti.conf'
