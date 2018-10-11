@@ -57,7 +57,7 @@ export default {
 		noResultsFoundText: { type: String, default: 'No Results Found' },
 		options: { type: Array, default: [] },
 		placeholder: { type: String, default: null },
-		value: [String, Number],
+		value: { default: null },
 	},
 	data() {
 		return {
@@ -67,13 +67,14 @@ export default {
 		}
 	},
 	mounted() {
-		if (this.value && this.options) {
-			const selectedItem = this.options.find(
-				option => option.value === this.value,
-			)
-			this.selectedLabel = selectedItem.label
-			this.setQueryString(selectedItem.label)
+		if (this.value === null || this.options.length === 0) {
+			return
 		}
+		const selectedItem = this.options.find(
+			option => option.value === this.value,
+		)
+		this.selectedLabel = selectedItem.label
+		this.setQueryString(selectedItem.label)
 	},
 	computed: {
 		indicatorRep() {

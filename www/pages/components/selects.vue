@@ -45,11 +45,11 @@
 		},
 		{
 			label: '香蕉',
-			value: 'Bananna',
+			value: 'Banana',
 		},
 		{
 			label: '鳄梨',
-			value: 'Avacados',
+			value: 'Avocados',
 		},
 		{
 			label: '苹果',
@@ -118,10 +118,10 @@ export default {
 	},
 	data() {
 		return {
-			value1: '',
-			value2: 'Avacados',
-			value3: 'Avacados',
-			value4: '',
+			value1: null,
+			value2: 'Avocados',
+			value3: 'Avocados',
+			value4: null,
 			words: [
 				{
 					label: 'Empty',
@@ -133,12 +133,12 @@ export default {
 				},
 				{
 					label: '香蕉',
-					value: 'Bananna',
+					value: 'Banana',
 					disabled: true,
 				},
 				{
 					label: '鳄梨',
-					value: 'Avacados',
+					value: 'Avocados',
 				},
 				{
 					label: '苹果',
