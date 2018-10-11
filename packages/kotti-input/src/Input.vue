@@ -9,6 +9,7 @@
 				:placeholder="placeholder"
 				:required="required"
 				:type="type"
+				:step="inputStep"
 				:value="currentValue"
 				@blur="handleBlur"
 				@change="handleChange"
@@ -60,6 +61,7 @@ export default {
 		label: String,
 		placeholder: String,
 		required: { default: false, type: Boolean },
+		step: { type: String, default: '1' },
 		type: { type: String, default: 'text' },
 		validate: { type: String, default: '' },
 		validateText: { type: String, default: '' },
@@ -82,6 +84,9 @@ export default {
 				'form-icon yoco': true,
 				'c-hand': this.hasDialog,
 			}
+		},
+		inputStep() {
+			return this.type === 'number' ? this.step : null
 		},
 		formInputClass() {
 			return {
