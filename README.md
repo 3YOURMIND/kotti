@@ -131,7 +131,7 @@ import Vue from 'vue'
 import KottiUI from 'kotti-ui'
 
 // from v.0.0.4 kotti-ui includes kotti-style
-import '@3yourmind/kotti-ui/kotti-style/dist/index.min.css'
+import '@3yourmind/kotti-ui/dist/kotti-style/index.min.css'
 
 Vue.use(KottiUI)
 ```
