@@ -125,6 +125,7 @@
 	</div>
 
 	For input field it accept types `Number`, `text` and `email`.
+	Using `step` to define the precision.
 	If you want to use `checkbox`, `radio` type, using `KtCheckbox` and `KtRadio`.
 
 	```html
