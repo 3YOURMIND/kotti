@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.0.10 - 2018.10.15
+
+- Fixed: Support step for KtInput [KT-40]
+
+## 0.0.9 - 2018.09.18
+
+- Added: Components for ActionBar, ActionBarMenu [KT-25]
+
 ## 0.0.8 - 2018.09.11
 
 - Fixed: Navbar no longer highlights selected tabs [KT-15]
