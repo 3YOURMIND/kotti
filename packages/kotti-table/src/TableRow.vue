@@ -67,7 +67,7 @@ export default {
 		isInteractive: { required: true, type: Boolean },
 		isSelectable: { required: true, type: Boolean },
 		isSelected: { required: true, type: Boolean },
-		trClasses: { default: [], type: [Object, Array, String] },
+		trClasses: { default: [], types: [Object, Array, String] },
 		virtualRow: { require: true, type: Object },
 	},
 	computed: {
