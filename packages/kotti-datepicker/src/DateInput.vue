@@ -40,6 +40,7 @@ export default {
 	name: 'KtDateInput',
 	mixins: [clickaway],
 	props: {
+		initialValue: { types: [Date, Number, String] },
 		label: { type: String, default: null },
 		mondayFirst: { type: Boolean, default: false },
 		daysTranslations: { type: Array },
@@ -57,8 +58,14 @@ export default {
 	computed: {
 		formattedDate() {
 			if (this.currentDate) return this.currentDate.toLocaleDateString()
-
 			return null
+		},
+	},
+	watch: {
+		initialValue: {
+			handler(value) {
+				this.currentDate = value ? new Date(value) : null
+			},
 		},
 	},
 	methods: {

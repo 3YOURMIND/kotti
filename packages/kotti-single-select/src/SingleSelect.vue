@@ -66,16 +66,6 @@ export default {
 			visible: false,
 		}
 	},
-	mounted() {
-		if (this.value === null || this.options.length === 0) {
-			return
-		}
-		const selectedItem = this.options.find(
-			option => option.value === this.value,
-		)
-		this.selectedLabel = selectedItem.label
-		this.setQueryString(selectedItem.label)
-	},
 	computed: {
 		indicatorRep() {
 			return this.visible ? 'chevron_up' : 'chevron_down'
@@ -95,6 +85,18 @@ export default {
 					value.toLowerCase().includes(query)
 				)
 			})
+		},
+	},
+	watch: {
+		value: {
+			handler(value) {
+				if (value === null || this.options.length === 0) {
+					return
+				}
+				const selectedItem = this.options.find(option => option.value === value)
+				this.selectedLabel = selectedItem.label
+				this.setQueryString(selectedItem.label)
+			},
 		},
 	},
 	methods: {
