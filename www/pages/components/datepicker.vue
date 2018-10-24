@@ -22,9 +22,31 @@
 ```
 
 <div class="element-example">
-	<h2>With Translation</h2>
+	<h2>With Initial Value</h2>
 	<KtDatePicker
 		v-model="date2"
+		label="Delivery Date"
+		mondayFirst
+		placeholder="Choose a date"
+		:initialValue="new Date()"
+	/>
+	{{ date }}
+</div>
+
+```html
+<KtDatePicker
+		v-model="date2"
+		label="Delivery Date"
+		mondayFirst
+		placeholder="Choose a date"
+		:initialValue="new Date()"
+/>
+```
+
+<div class="element-example">
+	<h2>With Translation</h2>
+	<KtDatePicker
+		v-model="date3"
 		label="配送日期"
 		:monthsTranslations="monthCN"
 		:daysTranslations="dayCN"
@@ -35,7 +57,7 @@
 
 ```html
 <KtDatePicker
-	v-model="date2"
+	v-model="date3"
 	label="配送日期"
 	:monthsTranslations="monthCN"
 	:daysTranslations="dayCN"
@@ -68,6 +90,7 @@ export default {
 		return {
 			date: null,
 			date2: null,
+			date3: null,
 			monthCN: [
 				'一月',
 				'二月',

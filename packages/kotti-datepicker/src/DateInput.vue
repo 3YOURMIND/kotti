@@ -66,6 +66,7 @@ export default {
 			handler(value) {
 				this.currentDate = value ? new Date(value) : null
 			},
+			immediate: true,
 		},
 	},
 	methods: {
