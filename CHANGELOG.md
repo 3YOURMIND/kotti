@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.11 - 2018.10.25
+
+- Fixed: handling of initial values in KtSelect and KtDatepicker [KT-44]
+
 ## 0.0.10 - 2018.10.15
 
 - Fixed: Support step for KtInput [KT-40]
