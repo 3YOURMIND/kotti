@@ -60,6 +60,10 @@ const submenu = [
 				to: 'headings',
 			},
 			{
+				label: 'Horizontal Lines',
+				to: 'lines',
+			},
+			{
 				label: 'Inputs',
 				to: 'inputs',
 			},
