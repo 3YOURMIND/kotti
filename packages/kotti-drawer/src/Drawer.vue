@@ -1,7 +1,7 @@
 <template>
 	<transition name="drawer" mode="out-in">
 		<div class="drawer-mask" @click.self="onOutsideDrawerClick">
-			<div :class="drawerClass">
+			<div :class="drawerClass" :style="drawerWidth">
 				<div class="drawer-header">
 					<slot name="drawer-header" />
 				</div>
@@ -36,6 +36,14 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		defaultWidth: {
+			type: String,
+			default: null,
+		},
+		expandWidth: {
+			type: String,
+			default: null,
+		},
 	},
 	data() {
 		return {
@@ -49,6 +57,14 @@ export default {
 				'drawer-expand': this.isExpanded,
 				'drawer-wide': this.wide,
 			}
+		},
+		drawerWidth() {
+			if (this.defaultWidht && this.expandWidth) {
+				return {
+					width: this.isExpanded ? this.expandWidth : this.defaultWidht,
+				}
+			}
+			return {}
 		},
 	},
 	methods: {
