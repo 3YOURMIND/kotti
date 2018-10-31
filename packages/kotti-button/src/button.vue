@@ -24,10 +24,14 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		size: {
+			type: String,
+			default: null,
+		},
 	},
 	computed: {
 		mainClasses() {
-			return [this.type, this.objectClass]
+			return [this.sizeClass, this.type, this.objectClass]
 		},
 		loadingClass() {
 			return {
@@ -35,6 +39,10 @@ export default {
 				loading: true,
 				white: this.type === 'primary',
 			}
+		},
+		sizeClass() {
+			if (this.size === 'small') return 'sm'
+			if (this.size === 'large') return 'lg'
 		},
 		objectClass() {
 			return {

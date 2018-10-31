@@ -48,8 +48,6 @@
 
 	A text button can be used for sub-menus and page navigation. It also can pair with a primary button for destructive actions such as `Cancel`.
 
-
-
 	## Icon
 
 	<div class="element-example">
@@ -91,6 +89,20 @@
 		<KtButton type="primary" icon="edit">Edit</KtButton>
 		<KtButton type="secondary" icon="trash">Delete</KtButton>
 	</KtButtonGroup>
+	```
+	## Size
+
+	<div class="element-example">
+		<KtButton type="primary" size="small" icon="edit" class="mr-16px">Small</KtButton>
+		<KtButton loading class="mr-16px">Default</KtButton>
+		<KtButton size="large" icon="edit">Large</KtButton>
+	</div>
+
+	`KtButton` has 3 size: `small`, `default` and `large`.
+
+	```html
+	<KtButton type="primary" size="small" icon="edit">Small</KtButton>
+	<KtButton size="large" icon="edit">Large</KtButton>
 	```
 
 	<div v-html="buttonUsage" />

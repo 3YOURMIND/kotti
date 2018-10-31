@@ -1,14 +1,19 @@
+$default-button-height: 32px;
+$large-button-height: 40px;
+$small-button-height: 24px;
+
 button {
 	border-radius: 0.1rem;
 	border: 0;
-	height: $unit-8;
+	height: $default-button-height;
 	outline: none;
 	padding: 0 1em;
 	color: $primary-600;
 	background: $lightgray-300;
-	line-height: 2em;
+	display: inline-flex;
+	align-items: center;
 	font-weight: 600;
-
+	border: 1px solid $lightgray-400;
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
@@ -20,9 +25,18 @@ button {
 	}
 }
 
+button.sm {
+	height: $small-button-height;
+}
+
+button.lg {
+	height: $large-button-height;
+}
+
 button.primary {
 	background: $primary-500;
 	color: #ffffff;
+	border: 1px solid $primary-600;
 
 	&:hover {
 		background: $primary-400;
@@ -37,7 +51,7 @@ button.secondary {
 
 	&:hover {
 		color: $primary-400;
-		border: 1px solid $primary-600;
+		border: 1px solid $primary-400;
 		background: $lightgray-300;
 	}
 }
@@ -46,7 +60,7 @@ button.text {
 	color: $primary-500;
 	font-weight: 600;
 	background: transparent;
-
+	border-color: transparent;
 	&:hover {
 		background: $lightgray-300;
 	}
@@ -69,8 +83,7 @@ button.icon i {
 }
 
 button.icon-only {
-	padding: 0 0.4rem;
-
+	padding: 0 0.3rem;
 	i {
 		margin-right: 0;
 	}
