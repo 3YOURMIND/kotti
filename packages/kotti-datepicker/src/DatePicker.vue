@@ -63,6 +63,7 @@ export default {
 			default: () =>
 				range(0, 11).map(month =>
 					dayjs()
+						.set('date', 1)
 						.set('month', month)
 						.format('MMMM'),
 				),
