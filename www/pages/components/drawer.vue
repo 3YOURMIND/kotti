@@ -131,17 +131,17 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 | Attribute      | Description                                | Type      | Accepted values | Default |
 |:---------------|:-------------------------------------------|:----------|:----------------|:--------|
 | `closeOutside` | closed drawer when click outside of drawer | `Boolean` | —               | `true`  |
-| `wide`         | wide drawer                                | `Boolean` | —               | `false	` |
-| `defaultWidth` | width when drawer is closed                | `String`  | CSS width       | -       |
-| `expandWidth`  | width when drawer is expand                | `String`  | CSS width       | -       |
+| `defaultWidth` | width when drawer is closed                | `String`  | CSS width       | —       |
+| `expandWidth`  | width when drawer is expanded              | `String`  | CSS width       | —       |
+| `wide`         | wide drawer                                | `Boolean` | —               | `false` |
 
 ### Slots
 
-| Slot Name       | Description     |
-|:----------------|:----------------|
-| `drawer-header` | header section  |
-| `drawer-body`   | body section    |
-| `drawer-footer` | footer section  |
+| Slot Name       | Description    |
+|:----------------|:---------------|
+| `drawer-header` | header section |
+| `drawer-body`   | body section   |
+| `drawer-footer` | footer section |
 </template>
 
 <script>
@@ -156,9 +156,9 @@ export default {
 	},
 	data() {
 		return {
+			customizeWidthDrawer: false,
 			showDrawer: false,
 			showWideDrawer: false,
-			customizeWidthDrawer: false,
 		}
 	},
 }
