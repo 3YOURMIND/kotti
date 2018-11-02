@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.0.12 - 2018.11.02
+
+- Added: Horizontal Row [KT-16]
+- Added: Support Wider in KtDrawer [KT-41]
+- Fixed: Remove duplicated December in KtDatepicker [KT-47]
+- Fixed: KtSingleSelect doesn't response [KT-50]
+
 ## 0.0.11 - 2018.10.25
 
 - Fixed: handling of initial values in KtSelect and KtDatepicker [KT-44]
