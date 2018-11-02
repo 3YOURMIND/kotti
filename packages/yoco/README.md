@@ -5,6 +5,7 @@ In house designed icons for [kotti design system](https://3yourmind.github.io/ko
 ## Get yoco
 
 **Using npm**
+
 ```bash
 $ npm install @3yourmind/yoco
 ```
@@ -18,10 +19,13 @@ $ yarn add @3yourmind/yoco
 ## Add Yoco Icon to your project
 
 **With module bundler**
+
 ```bash
 @import "@3yourmind/yoco";
 ```
+
 **With HTML**
+
 ```html
 <!-- Add yoco.css to your project -->
 <link rel="stylesheet" href="./path/to/yoco-icon.css">
@@ -44,25 +48,22 @@ Yoco use ligatures feature, which allows rendering of an icon glyph simply by us
 
 We use [icomoon](https://icomoon.io/app/) to generate font files. You can import `icomoon/yoco-icon.json` on icomoon website to generate new fonts. We apply follwing font metrics.
 
-|Type|Metrics|
-|----|----|
-|Square Height|1024|
-|Baseline Height|24|
-|Whitespace Width|24|
+| Type             | Metrics |
+| ---------------- | ------- |
+| Square Height    | 1024    |
+| Baseline Height  | 24      |
+| Whitespace Width | 24      |
 
 ## Build
 
-Gulp will copy fonts to `dist/fonts` folder and minify css files then copy to `dist` directory.  
+Gulp will copy fonts to `dist/fonts` folder and minify css files then copy to `dist` directory.
 
 ```bash
 yarn gulp build
 ```
+
 ## Publish to gh-pages
 
 ```bash
 yarn gh-pages
 ```
-
-
-
-
