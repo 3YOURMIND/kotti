@@ -59,11 +59,11 @@ export default {
 			}
 		},
 		drawerWidth() {
-			if (this.defaultWidht && this.expandWidth) {
+			if (this.defaultWidth && this.expandWidth)
 				return {
-					width: this.isExpanded ? this.expandWidth : this.defaultWidht,
+					width: this.isExpanded ? this.expandWidth : this.defaultWidth,
 				}
-			}
+
 			return {}
 		},
 	},
