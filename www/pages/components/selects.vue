@@ -21,7 +21,9 @@
 		allowEmpty
 		:options="words"/>
 	<h5 v-text="`English: ${value2}`" class="mt-16px"/>
+	<button @click="value2=null">Reset</button>
 </div>
+
 
 ## Filterable
 

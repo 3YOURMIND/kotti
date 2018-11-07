@@ -91,6 +91,10 @@ export default {
 		value: {
 			immediate: true,
 			handler(value) {
+				if (value === null && this.allowEmpty) {
+					this.selectedLabel = ''
+					return
+				}
 				if (value === null || this.options.length === 0) {
 					return
 				}
