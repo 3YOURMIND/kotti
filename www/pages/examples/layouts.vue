@@ -1,11 +1,12 @@
 <template>
-	<KtContainer hasActionBar>
+	<KtContainer>
 		<KtNavbar slot="navbar" :menu="menuData" :theme="themeData">
 			<div slot="navbar-footer">
 				<KtUserMenu
 					userName="Jony'O Five"
 					userStatus="Invisible"
-					:sections="userMenuData" />
+					:sections="userMenuData"
+				/>
 			</div>
 		</KtNavbar>
 		<KtActionbar
@@ -14,9 +15,7 @@
 			:menuStyle="menuStyle"
 			:menu="menu"
 		/>
-		<div slot="workspace">
-			KtContainer Content
-		</div>
+		<div slot="workspace">KtContainer Content</div>
 	</KtContainer>
 </template>
 
