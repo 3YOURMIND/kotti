@@ -3,17 +3,20 @@ $large-button-height: 40px;
 $small-button-height: 24px;
 
 button {
-	border-radius: 0.1rem;
-	border: 0;
-	height: $default-button-height;
-	outline: none;
-	padding: 0 1em;
-	color: $primary-600;
-	background: $lightgray-300;
 	display: inline-flex;
 	align-items: center;
+
+	height: $default-button-height;
+	padding: 0 1em;
+
+	background: $lightgray-300;
+	color: $primary-600;
 	font-weight: 600;
+	outline: none;
+
 	border: 1px solid $lightgray-400;
+	border-radius: 0.1rem;
+
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
