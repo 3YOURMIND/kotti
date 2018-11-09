@@ -1,10 +1,7 @@
 <template>
 	<button :class="mainClasses" @click="handleClick">
 		<i v-if="loading" :class="loadingClass" />
-		<i v-else class="yoco" v-text="icon" />
-		<span>
-			<slot />
-		</span>
+		<i v-else class="yoco" v-text="icon" /> <span> <slot /> </span>
 	</button>
 </template>
 
@@ -31,7 +28,10 @@ export default {
 	},
 	computed: {
 		mainClasses() {
-			return [this.sizeClass, this.type, this.objectClass]
+			const classes = [this.type, this.objectClass]
+			if (this.size === 'small') classes.push('sm')
+			if (this.size === 'large') classes.push('lg')
+			return classes
 		},
 		loadingClass() {
 			return {
@@ -39,10 +39,6 @@ export default {
 				loading: true,
 				white: this.type === 'primary',
 			}
-		},
-		sizeClass() {
-			if (this.size === 'small') return 'sm'
-			if (this.size === 'large') return 'lg'
 		},
 		objectClass() {
 			return {
