@@ -7,7 +7,7 @@
 	>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
-				<img src="~/assets/img/icon_github.svg" width="24" height="24"/>
+				<img src="~/assets/img/icon_github.svg" width="24" height="24" />
 			</a>
 		</div>
 	</KtNavbar>
@@ -26,7 +26,6 @@ li.nuxt-link-active {
 }
 </style>
 
-
 <script>
 import KtNavbar from '../../packages/kotti-navbar'
 import LogoSvg from '~/assets/img/nav_logo.svg'
@@ -44,32 +43,55 @@ export default {
 		return {
 			globalMenu: [
 				{
-					icon: 'layer',
-					label: 'Foundations',
-					to: '/foundations/layout',
+					links: [
+						{
+							icon: 'layer',
+							title: 'Foundations',
+							link: '/foundations/layout',
+						},
+					],
 				},
 				{
-					icon: 'dashboard',
-					label: 'Components',
-					to: '/components/avatars',
+					links: [
+						{
+							icon: 'dashboard',
+							title: 'Components',
+							link: '/components/avatars',
+						},
+					],
 				},
 				{
-					icon: 'sidebar',
-					label: 'Patterns',
-					to: '/patterns/comments',
+					links: [
+						{ icon: 'sidebar', title: 'Patterns', link: '/patterns/comments' },
+					],
 				},
 				{
-					icon: 'version',
-					label: 'Changelog',
-					to: '/changelog',
+					links: [
+						{
+							icon: 'version',
+							title: 'Changelog',
+							link: '/changelog',
+						},
+					],
 				},
 				{
-					icon: 'markup',
-					label: 'Design Kit',
-					to: '/designkit',
+					links: [
+						{
+							icon: 'markup',
+							title: 'Design Kit',
+							link: '/designkit',
+						},
+					],
 				},
 			],
-			theme: { logo: { wide: LogoSvg, narrow: LogoIconSvg } },
+			theme: {
+				color: {
+					backgroundColor: '#122C56',
+					borderColor: 'rgba(#555, 24)',
+					textColor: 'rgba(255,255,255,.54)',
+				},
+				logo: { wide: LogoSvg, narrow: LogoIconSvg },
+			},
 		}
 	},
 }

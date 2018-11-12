@@ -48,7 +48,7 @@ $narrow-navbar-width: 3.2rem;
 
 .navbar-header {
 	flex: 1 1 auto;
-	padding: 1.2rem;
+	padding: 0.8rem 1.2rem;
 	border-bottom: 1px solid rgba(#fff, 0.26);
 	&--narrow {
 		padding: 1.2rem 0;
@@ -116,7 +116,7 @@ $narrow-navbar-width: 3.2rem;
 	padding: 0.8rem 1.2rem;
 	margin-bottom: 0.4rem;
 	span {
-		margin-left: 0.4rem;
+		margin-left: 0.8rem;
 	}
 	&--narrow {
 		justify-content: center;
@@ -145,7 +145,7 @@ $narrow-navbar-width: 3.2rem;
 .navbar-menu {
 	text-align: left;
 	box-sizing: border-box;
-	padding: 0 1.2rem;
+	padding: 0.4rem 1.2rem;
 	color: #fff;
 	&--narrow {
 		padding: 0.4rem 0;
@@ -167,7 +167,7 @@ $narrow-navbar-width: 3.2rem;
 		padding: 0.6rem 0;
 	}
 	&__item span {
-		margin-left: 0.4rem;
+		margin-left: 0.8rem;
 	}
 	.yoco {
 		font-size: 1rem;

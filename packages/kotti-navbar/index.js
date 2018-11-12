@@ -1,4 +1,4 @@
-import KtNavbar from './src/Navbar'
+import KtNavbar from './src/KtNavbar'
 
 KtNavbar.install = function(Vue) {
 	Vue.component(KtNavbar.name, KtNavbar)

@@ -33,6 +33,7 @@
 				/>
 			</div>
 			<kt-navbar-notification
+				v-if="showNotification"
 				:isNarrow="isNarrowNavBar"
 				:number="10"
 				:textColor="themeColor.textColor"
@@ -83,6 +84,7 @@ export default {
 	props: {
 		isNarrow: { type: Boolean, default: false },
 		menu: { type: Array, required: true },
+		showNotification: { type: Boolean, default: false },
 		theme: {
 			type: Object,
 			default: () => ({

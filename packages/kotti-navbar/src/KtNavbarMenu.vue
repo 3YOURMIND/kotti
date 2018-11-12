@@ -10,9 +10,8 @@
 			<router-link
 				v-for="(link, index) in item.links"
 				:key="index"
-				class=""
-				:style="{ color: textColor }"
 				:to="link.link"
+				:style="{ color: textColor }"
 			>
 				<div class="navbar-menu__item">
 					<i class="yoco" v-text="link.icon" />
