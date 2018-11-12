@@ -1,55 +1,66 @@
 <template>
-	<nav :class="objectClass('navbar')">
-		<div :class="objectClass('navbar-wrapper')">
-			<div :class="navbarToggleClass" @click="toggleMobileMenu">
-				<i class="yoco" v-text="'burger'"/>
+	<nav
+		:class="objectClass('navbar')"
+		:style="{
+			background: themeColor.backgroundColor,
+			'border-color': themeColor.borderColor,
+		}"
+	>
+		<div
+			:class="objectClass('navbar-wrapper')"
+			:style="{ 'border-color': themeColor.borderColor }"
+		>
+			<div
+				class="navbar-toggle"
+				:style="navbarActiveToggleStyle"
+				@click="toggleMobileMenu"
+			>
+				<i
+					class="yoco"
+					v-text="'burger'"
+					:style="{ color: themeColor.textColor }"
+				/>
 			</div>
-			<div class="navbar-header">
-				<slot name="navbar-header">
-					<div :class="objectClass('navbar-logo')" @click="$emit('clickLogo')">
-						<img :src="logoUrl" class="navbar-logo-img"/>
-						<img :src="theme.logo.wide" class="navbar-logo-img--mobile"/>
-					</div>
-				</slot>
+			<div
+				:class="objectClass('navbar-header')"
+				:style="{ 'border-color': themeColor.borderColor }"
+			>
+				<kt-navbar-logo
+					:logoUrl="logoUrl"
+					:isNarrow="isNarrowNavBar"
+					:textColor="themeColor.textColor"
+					@toggleNarrowBar="toggleNarrowBar"
+				/>
 			</div>
-			<div class="navbar-narrow-toggle" @click="toggleNarrowBar"/>
-			<div class="navbar-body">
-				<div :class="objectClass('navbar-menu')">
-					<slot name="navbar-body">
-						<ul>
-							<router-link
-								v-for="(item, index) in menu"
-								:exact="item.exact"
-								:key="index"
-								:to="item.to"
-								tag="li"
-							>
-								<i class="yoco" v-text="item.icon" />
-								<span v-if="!isNarrowNavBar" v-text="item.label"/>
-							</router-link>
-						</ul>
-					</slot>
-				</div>
+			<kt-navbar-notification
+				:isNarrow="isNarrowNavBar"
+				:number="10"
+				:textColor="themeColor.textColor"
+				:borderColor="themeColor.borderColor"
+			/>
+			<div :class="objectClass('navbar-body')">
+				<kt-navbar-menu
+					:menu="menu"
+					:textColor="themeColor.textColor"
+					:isNarrow="isNarrowNavBar"
+				/>
 			</div>
-			<div :class="objectClass('navbar-footer')">
+			<div
+				:class="objectClass('navbar-footer')"
+				:style="{ 'border-color': themeColor.borderColor }"
+			>
 				<slot name="navbar-footer" />
 			</div>
-			<div class="navbar-dropdown" v-if="mobileMenuToggle" v-on-clickaway="clickawayMobileMenu" >
-				<div class="navbar-menu">
-					<slot name="navbar-menu">
-						<ul>
-							<router-link
-								v-for="item in menu"
-								:exact="item.exact"
-								:key="item.index"
-								:to="item.to"
-								tag="li">
-								<i class="yoco" v-text="item.icon" />
-								<span v-if="!isNarrowNavBar" v-text="item.label"/>
-							</router-link>
-						</ul>
-					</slot>
-				</div>
+			<div
+				class="navbar-dropdown"
+				v-if="mobileMenuToggle"
+				:style="{ background: themeColor.backgroundColor }"
+			>
+				<kt-navbar-menu
+					:menu="menu"
+					:textColor="themeColor.textColor"
+					v-on-clickaway="clickawayMobileMenu"
+				/>
 			</div>
 		</div>
 	</nav>
@@ -57,17 +68,28 @@
 
 <script>
 import { mixin as clickaway } from '../../../src/mixin/vue-clickaway'
+import KtNavbarLogo from './KtNavbarLogo'
+import KtNavbarMenu from './KtNavbarMenu'
+import KtNavbarNotification from './KtNavbarNotification'
 
 export default {
 	name: 'KtNavbar',
 	mixins: [clickaway],
-	activeClassName: { type: String, default: null },
+	components: {
+		KtNavbarLogo,
+		KtNavbarMenu,
+		KtNavbarNotification,
+	},
 	props: {
 		isNarrow: { type: Boolean, default: false },
 		menu: { type: Array, required: true },
 		theme: {
 			type: Object,
 			default: () => ({
+				color: {
+					backgroundColor: null,
+					textColor: null,
+				},
 				logo: {
 					wide: null,
 					narrow: null,
@@ -79,6 +101,11 @@ export default {
 		return {
 			isNarrowNavBarToggle: this.isNarrow,
 			mobileMenuToggle: false,
+			defaultThemeColor: {
+				backgroundColor: '#122C56',
+				textColor: 'rgba(255,255,255, 0.84)',
+				borderColor: '#rgba(255,255,255, 0.14)',
+			},
 		}
 	},
 	created() {
@@ -91,16 +118,20 @@ export default {
 			}
 			return this.isNarrowNavBarToggle
 		},
-		navbarToggleClass() {
+		navbarActiveToggleStyle() {
 			return {
-				'navbar-toggle': true,
-				'navbar-toggle--active': this.mobileMenuToggle,
+				'background-color': this.mobileMenuToggle
+					? this.themeColor.borderColor
+					: '',
 			}
 		},
 		logoUrl() {
 			return this.isNarrowNavBar && this.theme.logo.narrow
 				? this.theme.logo.narrow
 				: this.theme.logo.wide
+		},
+		themeColor() {
+			return this.theme.color ? this.theme.color : this.defaultThemeColor
 		},
 	},
 	methods: {

@@ -7,12 +7,12 @@
 	padding: 0.4rem;
 	line-height: 1;
 	&--narrow {
-		position: absolute;
-		bottom: 0.8rem;
-		left: 0.8rem;
 		width: 2.4rem;
 	}
 	&--narrow-wide {
+		bottom: 0.8rem;
+		left: 0.8rem;
+		position: absolute;
 		width: 11.2rem;
 	}
 	&:hover {

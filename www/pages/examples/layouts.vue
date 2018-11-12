@@ -1,8 +1,10 @@
 <template>
 	<KtContainer>
-		<KtNavbar slot="navbar" :menu="menuData" :theme="themeData">
+		<KtNavbar slot="navbar" :menu="menuBarData" :theme="themeData">
 			<div slot="navbar-footer">
 				<KtUserMenu
+					textColor="#000"
+					backgroundColor="#FFF"
 					userName="Jony'O Five"
 					userStatus="Invisible"
 					:sections="userMenuData"
@@ -47,6 +49,47 @@ export default {
 					icon: 'calendar',
 				},
 			],
+			menuBarData: [
+				{
+					links: [
+						{
+							link: '#',
+							title: 'Dashboard',
+							icon: 'dashboard',
+						},
+					],
+				},
+				{
+					title: 'Order Management',
+					links: [
+						{
+							link: '#',
+							title: 'Orders',
+							icon: 'invoice',
+						},
+						{
+							link: '#',
+							title: 'Quotes',
+							icon: 'request',
+						},
+					],
+				},
+				{
+					title: 'Agile MES',
+					links: [
+						{
+							link: '#',
+							title: 'Parts',
+							icon: '3dbox',
+						},
+						{
+							link: '#',
+							title: 'Schedule',
+							icon: 'calendar',
+						},
+					],
+				},
+			],
 			userMenuData: [
 				{
 					title: 'Switch To',
@@ -88,6 +131,11 @@ export default {
 				},
 			],
 			themeData: {
+				color: {
+					backgroundColor: '#fff',
+					textColor: 'rgba(0,0,0,0.69)',
+					borderColor: '#dbdbdb',
+				},
 				logo: {
 					wide: 'https://picsum.photos/200/60',
 					narrow: 'https://picsum.photos/60/60',
