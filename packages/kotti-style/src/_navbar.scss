@@ -212,9 +212,6 @@ $narrow-navbar-width: 3.2rem;
 	}
 	.navbar-notification {
 		display: none;
-		.yoco {
-			font-size: 1rem;
-		}
 		&--mobile {
 			border: 0;
 			margin: 0.6rem 0;
@@ -224,6 +221,9 @@ $narrow-navbar-width: 3.2rem;
 			background: rgba(#fff, 0.26);
 			border-radius: 1.2rem;
 			display: block;
+			.yoco {
+				font-size: 1rem;
+			}
 		}
 	}
 	.navbar-body {

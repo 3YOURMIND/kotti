@@ -1,6 +1,11 @@
 <template>
 	<KtContainer>
-		<KtNavbar slot="navbar" :menu="menuBarData" :theme="themeData">
+		<KtNavbar
+			slot="navbar"
+			:menu="navbarMenu"
+			:theme="themeData"
+			:notification="navbarNotification"
+		>
 			<div slot="navbar-footer">
 				<KtUserMenu
 					textColor="#000"
@@ -15,7 +20,7 @@
 			slot="actionbar"
 			headerTitle="KtContainer Example"
 			:menuStyle="menuStyle"
-			:menu="menu"
+			:menu="actionbarMenu"
 		/>
 		<div slot="workspace">KtContainer Content</div>
 	</KtContainer>
@@ -37,19 +42,7 @@ export default {
 	},
 	data() {
 		return {
-			menuData: [
-				{
-					to: '#',
-					label: 'Navbar',
-					icon: 'dashboard',
-				},
-				{
-					to: '#',
-					label: 'ActionBar',
-					icon: 'calendar',
-				},
-			],
-			menuBarData: [
+			navbarMenu: [
 				{
 					links: [
 						{
@@ -95,6 +88,10 @@ export default {
 					],
 				},
 			],
+			navbarNotification: {
+				showNotification: true,
+				number: 1,
+			},
 			userMenuData: [
 				{
 					title: 'Switch To',
@@ -138,9 +135,9 @@ export default {
 			themeData: {
 				color: {
 					backgroundColor: '#fff',
-					textColor: 'rgba(0,0,0,0.69)',
+					textColor: 'rgba(0,0,0,0.58)',
 					borderColor: '#dbdbdb',
-					activeColor: 'rgba(0,0,0,1)',
+					activeColor: '#2c64cc',
 				},
 				logo: {
 					wide: 'https://picsum.photos/200/60',
@@ -151,7 +148,7 @@ export default {
 				defaultItemInMobile: 5,
 				iconPosition: 'left',
 			},
-			menu: [
+			actionbarMenu: [
 				{
 					label: 'First Link',
 					to: '/examples/layouts',
