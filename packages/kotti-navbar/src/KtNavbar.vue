@@ -43,6 +43,7 @@
 				<kt-navbar-menu
 					:menu="menu"
 					:textColor="themeColor.textColor"
+					:activeColor="themeColor.activeColor"
 					:isNarrow="isNarrowNavBar"
 				/>
 			</div>
@@ -60,6 +61,7 @@
 				<kt-navbar-menu
 					:menu="menu"
 					:textColor="themeColor.textColor"
+					:activeColor="themeColor.activeColor"
 					v-on-clickaway="clickawayMobileMenu"
 				/>
 			</div>

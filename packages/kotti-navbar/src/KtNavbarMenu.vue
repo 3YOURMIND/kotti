@@ -7,17 +7,17 @@
 				:style="{ color: textColor }"
 				class="navbar-menu__section"
 			/>
-			<router-link
+			<a
 				v-for="(link, index) in item.links"
 				:key="index"
-				:to="link.link"
-				:style="{ color: textColor }"
+				:href="link.link"
+				:style="{ color: link.isActive ? activeColor : textColor }"
 			>
-				<div class="navbar-menu__item">
+				<div :class="{ active: link.isActive, 'navbar-menu__item': true }">
 					<i class="yoco" v-text="link.icon" />
 					<span v-if="!isNarrow" v-text="link.title" />
 				</div>
-			</router-link>
+			</a>
 		</div>
 	</div>
 </template>
@@ -28,7 +28,8 @@ export default {
 	props: {
 		mobileMenuToggle: { type: Boolean, default: false },
 		menu: { type: Array, default: null },
-		textColor: { type: String, default: '#fff' },
+		textColor: { type: String, default: 'rgba(255,255,255, 0.8)' },
+		activeColor: { type: String, default: 'rgba(255,255,255, 1)' },
 		isNarrow: { type: Boolean, default: false },
 	},
 	computed: {
