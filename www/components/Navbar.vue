@@ -1,8 +1,9 @@
 <template>
 	<KtNavbar
 		:isNarrow="isNarrow"
-		:menu="globalMenu"
+		:menu="dynamicMenu"
 		:theme="theme"
+		:notification="{ showNotification: false }"
 		@clickLogo="$router.push('/')"
 	>
 		<div slot="navbar-footer">
@@ -78,7 +79,7 @@ export default {
 					links: [
 						{
 							icon: 'markup',
-							title: 'Design Kit',
+							title: 'DesignKit',
 							link: '/designkit',
 						},
 					],
@@ -89,10 +90,28 @@ export default {
 					backgroundColor: '#122C56',
 					borderColor: 'rgba(#555, 24)',
 					textColor: 'rgba(255,255,255,.54)',
+					activeColor: 'rgba(255,255,255, 1)',
 				},
 				logo: { wide: LogoSvg, narrow: LogoIconSvg },
 			},
 		}
+	},
+	computed: {
+		dynamicMenu() {
+			let menu = this.globalMenu
+			let currentPage = this.$route.name.split('-')
+			menu.map(item => {
+				item.links.map(link => {
+					if (currentPage[0] === link.title.toLowerCase()) {
+						link.isActive = true
+						return
+					}
+					link.isActive = false
+				})
+				return item
+			})
+			return menu
+		},
 	},
 }
 </script>
