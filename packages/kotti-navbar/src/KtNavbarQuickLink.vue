@@ -8,7 +8,13 @@
 			:style="{ color: themeColor.textColor }"
 			v-text="title"
 		/>
-		<a v-for="(item, index) in links" :key="index" :href="item.link">
+		<a
+			v-for="(item, index) in links"
+			:key="index"
+			:href="item.link"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
 			<div
 				class="kt-navbar__quick-link__links"
 				:style="{ color: themeColor.textColor }"

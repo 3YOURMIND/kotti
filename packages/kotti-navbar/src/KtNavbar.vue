@@ -31,16 +31,16 @@
 				/>
 			</div>
 			<kt-navbar-notification
-				v-if="notification.showNotification"
+				v-if="notification"
 				:isNarrow="isNarrowNavBar"
-				:number="notification.number"
+				:count="notification.count"
 				:title="notification.title"
 				:link="notification.link"
 			/>
 			<div :class="objectClass('navbar-body')">
-				<kt-navbar-menu :menu="menu" :isNarrow="isNarrowNavBar" />
+				<kt-navbar-menu :sections="sections" :isNarrow="isNarrowNavBar" />
 				<kt-navbar-quick-link
-					v-show="quickLinks.showQuickLink"
+					v-if="quickLinks"
 					:title="quickLinks.title"
 					:links="quickLinks.links"
 				/>
@@ -56,7 +56,10 @@
 				v-if="mobileMenuToggle"
 				:style="{ background: themeColor.backgroundColor }"
 			>
-				<kt-navbar-menu :menu="menu" v-on-clickaway="clickawayMobileMenu" />
+				<kt-navbar-menu
+					:sections="sections"
+					v-on-clickaway="clickawayMobileMenu"
+				/>
 			</div>
 		</div>
 	</nav>
@@ -80,23 +83,14 @@ export default {
 	},
 	props: {
 		isNarrow: { type: Boolean, default: false },
-		menu: { type: Array, required: true },
+		sections: { type: Array, required: true },
 		notification: {
 			type: Object,
-			default: () => ({
-				showNotification: true,
-				title: 'Notification',
-				link: null,
-				number: 0,
-			}),
+			default: null,
 		},
 		quickLinks: {
 			type: Object,
-			default: () => ({
-				showQuickLink: false,
-				title: 'Quick Links',
-				links: [],
-			}),
+			default: null,
 		},
 	},
 	inject: {

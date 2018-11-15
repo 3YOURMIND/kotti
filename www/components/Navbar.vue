@@ -43,7 +43,6 @@ export default {
 	data() {
 		return {
 			quickLinksData: {
-				showQuickLink: true,
 				links: [
 					{
 						title: 'Create New Issue',

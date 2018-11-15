@@ -2,13 +2,12 @@
 	<KtContainer>
 		<KtNavbar
 			slot="navbar"
-			:menu="navbarMenu"
+			:sections="navbarMenu"
 			:notification="navbarNotification"
+			:quickLinks="quickLinksData"
 		>
 			<div slot="navbar-footer">
 				<KtUserMenu
-					textColor="#000"
-					backgroundColor="#FFF"
 					userName="Jony'O Five"
 					userStatus="Invisible"
 					:sections="userMenuData"
@@ -52,6 +51,15 @@ export default {
 	},
 	data() {
 		return {
+			quickLinksData: {
+				links: [
+					{
+						title: 'Create New Issue',
+						link:
+							'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
+					},
+				],
+			},
 			navbarMenu: [
 				{
 					links: [
@@ -99,8 +107,7 @@ export default {
 				},
 			],
 			navbarNotification: {
-				showNotification: true,
-				number: 1,
+				count: 1,
 				title: 'Message',
 				link: '#',
 			},
@@ -144,11 +151,6 @@ export default {
 					],
 				},
 			],
-
-			menuStyle: {
-				defaultItemInMobile: 5,
-				iconPosition: 'left',
-			},
 			actionbarMenu: [
 				{
 					label: 'First Link',

@@ -9,7 +9,7 @@
 		>
 			<div>
 				<i
-					v-if="!number || !isNarrow"
+					v-if="!count || !isNarrow"
 					class="navbar-notification__icon yoco"
 					v-text="'bell'"
 				/>
@@ -20,13 +20,13 @@
 				/>
 			</div>
 			<div
-				v-show="number"
+				v-show="count"
 				class="navbar-notification__number"
 				:style="{
 					color: themeColor.textColor,
 					background: themeColor.borderColor,
 				}"
-				v-text="number"
+				v-text="count"
 			/>
 		</div>
 		<div
@@ -36,7 +36,7 @@
 				background: themeColor.borderColor,
 			}"
 		>
-			<i class="yoco" v-if="!number">bell</i> <span v-else v-text="number" />
+			<i class="yoco" v-if="!count">bell</i> <span v-else v-text="count" />
 		</div>
 	</a>
 </template>
@@ -46,7 +46,7 @@ export default {
 	name: 'KtNavbarNotification',
 	props: {
 		isNarrow: { type: Boolean, default: false },
-		number: { type: Number, default: 0 },
+		count: { type: Number, default: 0 },
 		title: { type: String, default: 'Notificatoin' },
 		link: { type: String, default: null },
 	},

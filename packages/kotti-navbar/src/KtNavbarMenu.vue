@@ -1,6 +1,6 @@
 <template>
 	<div :class="objectClass">
-		<div v-for="(item, index) in menu" :key="index">
+		<div v-for="(item, index) in sections" :key="index">
 			<div
 				v-if="item.title"
 				v-text="isNarrow ? '' : item.title"
@@ -29,7 +29,7 @@ export default {
 	name: 'KtNavbarMenu',
 	props: {
 		mobileMenuToggle: { type: Boolean, default: false },
-		menu: { type: Array, default: null },
+		sections: { type: Array, default: null },
 		isNarrow: { type: Boolean, default: false },
 	},
 	inject: {
