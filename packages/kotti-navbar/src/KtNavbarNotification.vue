@@ -52,7 +52,7 @@ export default {
 	},
 	inject: {
 		themeColor: {
-			from: 'theme',
+			from: 'KtNavbarTheme',
 			default: () => {
 				return {
 					textColor: '#fff',

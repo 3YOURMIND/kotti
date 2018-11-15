@@ -82,7 +82,7 @@ export default {
 	mixins: [clickaway],
 	inject: {
 		themeColor: {
-			from: 'theme',
+			from: 'KtNavbarTheme',
 			default: () => {
 				return {
 					textColor: '#fff',

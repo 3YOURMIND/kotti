@@ -84,7 +84,7 @@ export default {
 	},
 	inject: {
 		themeColor: {
-			from: 'theme',
+			from: 'KtNavbarTheme',
 			default: () => {
 				return {
 					backgroundColor: '#122C56',

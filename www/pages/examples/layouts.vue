@@ -41,7 +41,7 @@ export default {
 	},
 	provide() {
 		return {
-			theme: {
+			KtNavbarTheme: {
 				backgroundColor: '#fff',
 				textColor: 'rgba(0,0,0,0.58)',
 				borderColor: '#dbdbdb',

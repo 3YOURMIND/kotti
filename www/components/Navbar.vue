@@ -2,7 +2,6 @@
 	<KtNavbar
 		:isNarrow="isNarrow"
 		:menu="dynamicMenu"
-		:theme="theme"
 		:notification="{ showNotification: false }"
 		@clickLogo="$router.push('/')"
 	>
@@ -89,7 +88,7 @@ export default {
 	},
 	provide() {
 		return {
-			theme: {
+			KtNavbarTheme: {
 				backgroundColor: '#122C56',
 				borderColor: 'rgba(#555, 24)',
 				textColor: 'rgba(255,255,255,.54)',

@@ -34,7 +34,7 @@ export default {
 	},
 	inject: {
 		themeColor: {
-			from: 'theme',
+			from: 'KtNavbarTheme',
 			default: () => {
 				return {
 					textColor: 'rgba(255,255,255, 0.8)',
