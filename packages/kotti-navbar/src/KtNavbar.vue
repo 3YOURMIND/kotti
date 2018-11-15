@@ -34,6 +34,8 @@
 				v-if="notification.showNotification"
 				:isNarrow="isNarrowNavBar"
 				:number="notification.number"
+				:title="notification.title"
+				:link="notification.link"
 			/>
 			<div :class="objectClass('navbar-body')">
 				<kt-navbar-menu :menu="menu" :isNarrow="isNarrowNavBar" />

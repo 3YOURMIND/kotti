@@ -101,6 +101,8 @@ export default {
 			navbarNotification: {
 				showNotification: true,
 				number: 1,
+				title: 'Message',
+				link: '#',
 			},
 			userMenuData: [
 				{

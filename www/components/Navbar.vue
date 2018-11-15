@@ -100,7 +100,7 @@ export default {
 	computed: {
 		dynamicMenu() {
 			let menu = this.globalMenu
-			let currentPage = this.$route.name.split('-')
+			let currentPage = this.$route.name ? this.$route.name.split('-') : ''
 			menu.map(item => {
 				item.links.map(link => {
 					if (currentPage[0] === link.title.toLowerCase()) {
