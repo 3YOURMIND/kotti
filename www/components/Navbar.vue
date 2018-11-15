@@ -3,6 +3,7 @@
 		:isNarrow="isNarrow"
 		:menu="dynamicMenu"
 		:notification="{ showNotification: false }"
+		:quickLinks="quickLinksData"
 		@clickLogo="$router.push('/')"
 	>
 		<div slot="navbar-footer">
@@ -41,6 +42,16 @@ export default {
 	},
 	data() {
 		return {
+			quickLinksData: {
+				showQuickLink: true,
+				links: [
+					{
+						title: 'Create New Issue',
+						link:
+							'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
+					},
+				],
+			},
 			globalMenu: [
 				{
 					links: [
@@ -90,7 +101,7 @@ export default {
 		return {
 			KtNavbarTheme: {
 				backgroundColor: '#122C56',
-				borderColor: 'rgba(#555, 24)',
+				borderColor: 'rgba(255,255,255,.24)',
 				textColor: 'rgba(255,255,255,.54)',
 				activeColor: 'rgba(255,255,255, 1)',
 				logoUrl: LogoSvg,

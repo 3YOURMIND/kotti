@@ -39,6 +39,11 @@
 			/>
 			<div :class="objectClass('navbar-body')">
 				<kt-navbar-menu :menu="menu" :isNarrow="isNarrowNavBar" />
+				<kt-navbar-quick-link
+					v-show="quickLinks.showQuickLink"
+					:title="quickLinks.title"
+					:links="quickLinks.links"
+				/>
 			</div>
 			<div
 				:class="objectClass('navbar-footer')"
@@ -62,6 +67,7 @@ import { mixin as clickaway } from '../../../src/mixin/vue-clickaway'
 import KtNavbarLogo from './KtNavbarLogo'
 import KtNavbarMenu from './KtNavbarMenu'
 import KtNavbarNotification from './KtNavbarNotification'
+import KtNavbarQuickLink from './KtNavbarQuickLink'
 
 export default {
 	name: 'KtNavbar',
@@ -70,6 +76,7 @@ export default {
 		KtNavbarLogo,
 		KtNavbarMenu,
 		KtNavbarNotification,
+		KtNavbarQuickLink,
 	},
 	props: {
 		isNarrow: { type: Boolean, default: false },
@@ -81,6 +88,14 @@ export default {
 				title: 'Notification',
 				link: null,
 				number: 0,
+			}),
+		},
+		quickLinks: {
+			type: Object,
+			default: () => ({
+				showQuickLink: false,
+				title: 'Quick Links',
+				links: [],
 			}),
 		},
 	},
