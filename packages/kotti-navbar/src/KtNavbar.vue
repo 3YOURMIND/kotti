@@ -26,9 +26,7 @@
 				:style="{ 'border-color': themeColor.borderColor }"
 			>
 				<kt-navbar-logo
-					:logoUrl="logoUrl"
 					:isNarrow="isNarrowNavBar"
-					:textColor="themeColor.textColor"
 					@toggleNarrowBar="toggleNarrowBar"
 				/>
 			</div>
@@ -36,16 +34,9 @@
 				v-if="notification.showNotification"
 				:isNarrow="isNarrowNavBar"
 				:number="notification.number"
-				:textColor="themeColor.textColor"
-				:borderColor="themeColor.borderColor"
 			/>
 			<div :class="objectClass('navbar-body')">
-				<kt-navbar-menu
-					:menu="menu"
-					:textColor="themeColor.textColor"
-					:activeColor="themeColor.activeColor"
-					:isNarrow="isNarrowNavBar"
-				/>
+				<kt-navbar-menu :menu="menu" :isNarrow="isNarrowNavBar" />
 			</div>
 			<div
 				:class="objectClass('navbar-footer')"
@@ -58,12 +49,7 @@
 				v-if="mobileMenuToggle"
 				:style="{ background: themeColor.backgroundColor }"
 			>
-				<kt-navbar-menu
-					:menu="menu"
-					:textColor="themeColor.textColor"
-					:activeColor="themeColor.activeColor"
-					v-on-clickaway="clickawayMobileMenu"
-				/>
+				<kt-navbar-menu :menu="menu" v-on-clickaway="clickawayMobileMenu" />
 			</div>
 		</div>
 	</nav>
@@ -95,30 +81,25 @@ export default {
 				number: 0,
 			}),
 		},
-		theme: {
-			type: Object,
-			default: () => ({
-				color: {
-					backgroundColor: null,
-					textColor: null,
-				},
-				logo: {
-					wide: null,
-					narrow: null,
-				},
-			}),
+	},
+	inject: {
+		themeColor: {
+			from: 'theme',
+			default: () => {
+				return {
+					backgroundColor: '#122C56',
+					textColor: 'rgba(255,255,255, 0.8)',
+					activeColor: 'rgba(255,255,255, 1)',
+					borderColor: '#rgba(255,255,255, 0.14)',
+					logoUrl: null,
+				}
+			},
 		},
 	},
 	data() {
 		return {
 			isNarrowNavBarToggle: this.isNarrow,
 			mobileMenuToggle: false,
-			defaultThemeColor: {
-				backgroundColor: '#122C56',
-				textColor: 'rgba(255,255,255, 0.8)',
-				activeColor: 'rgba(255,255,255, 1)',
-				borderColor: '#rgba(255,255,255, 0.14)',
-			},
 		}
 	},
 	created() {
@@ -139,12 +120,7 @@ export default {
 			}
 		},
 		logoUrl() {
-			return this.isNarrowNavBar && this.theme.logo.narrow
-				? this.theme.logo.narrow
-				: this.theme.logo.wide
-		},
-		themeColor() {
-			return this.theme.color ? this.theme.color : this.defaultThemeColor
+			return this.themeColor
 		},
 	},
 	methods: {

@@ -3,7 +3,6 @@
 		<KtNavbar
 			slot="navbar"
 			:menu="navbarMenu"
-			:theme="themeData"
 			:notification="navbarNotification"
 		>
 			<div slot="navbar-footer">
@@ -39,6 +38,17 @@ export default {
 		KtActionbar,
 		KtContainer,
 		KtUserMenu,
+	},
+	provide() {
+		return {
+			theme: {
+				backgroundColor: '#fff',
+				textColor: 'rgba(0,0,0,0.58)',
+				borderColor: '#dbdbdb',
+				activeColor: '#2c64cc',
+				logoUrl: 'https://picsum.photos/200/80',
+			},
+		}
 	},
 	data() {
 		return {
@@ -132,18 +142,7 @@ export default {
 					],
 				},
 			],
-			themeData: {
-				color: {
-					backgroundColor: '#fff',
-					textColor: 'rgba(0,0,0,0.58)',
-					borderColor: '#dbdbdb',
-					activeColor: '#2c64cc',
-				},
-				logo: {
-					wide: 'https://picsum.photos/200/60',
-					narrow: 'https://picsum.photos/60/60',
-				},
-			},
+
 			menuStyle: {
 				defaultItemInMobile: 5,
 				iconPosition: 'left',

@@ -85,14 +85,16 @@ export default {
 					],
 				},
 			],
+		}
+	},
+	provide() {
+		return {
 			theme: {
-				color: {
-					backgroundColor: '#122C56',
-					borderColor: 'rgba(#555, 24)',
-					textColor: 'rgba(255,255,255,.54)',
-					activeColor: 'rgba(255,255,255, 1)',
-				},
-				logo: { wide: LogoSvg, narrow: LogoIconSvg },
+				backgroundColor: '#122C56',
+				borderColor: 'rgba(#555, 24)',
+				textColor: 'rgba(255,255,255,.54)',
+				activeColor: 'rgba(255,255,255, 1)',
+				logoUrl: LogoSvg,
 			},
 		}
 	},

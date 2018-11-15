@@ -1,7 +1,7 @@
 <template>
-	<div :style="{ color: textColor }">
+	<div :style="{ color: themeColor.textColor }">
 		<div :class="objectClass">
-			<img :src="logoUrl" v-if="!isNarrow" />
+			<img :src="themeColor.logoUrl" v-if="!isNarrow" />
 			<i
 				v-if="!isNarrow"
 				class="yoco"
@@ -15,7 +15,7 @@
 				@click="handleToggleNarroClicked"
 			/>
 		</div>
-		<div class="navbar-logo--mobile"><img :src="logoUrl" /></div>
+		<div class="navbar-logo--mobile"><img :src="themeColor.logoUrl" /></div>
 	</div>
 </template>
 
@@ -23,13 +23,22 @@
 export default {
 	name: 'KtNavbarLogo',
 	props: {
-		textColor: { type: String, default: null },
 		isNarrow: { type: Boolean, default: false },
-		logoUrl: { type: String, default: null },
 	},
 	methods: {
 		handleToggleNarroClicked() {
 			this.$emit('toggleNarrowBar')
+		},
+	},
+	inject: {
+		themeColor: {
+			from: 'theme',
+			default: () => {
+				return {
+					textColor: '#fff',
+					logoUrl: null,
+				}
+			},
 		},
 	},
 	computed: {

@@ -2,7 +2,10 @@
 	<a :href="link">
 		<div
 			:class="objectClass"
-			:style="{ color: textColor, 'border-color': borderColor }"
+			:style="{
+				color: themeColor.textColor,
+				'border-color': themeColor.borderColor,
+			}"
 		>
 			<div>
 				<i
@@ -19,13 +22,19 @@
 			<div
 				v-show="number"
 				class="navbar-notification__number"
-				:style="{ color: textColor, background: borderColor }"
+				:style="{
+					color: themeColor.textColor,
+					background: themeColor.borderColor,
+				}"
 				v-text="number"
 			/>
 		</div>
 		<div
 			class="navbar-notification--mobile"
-			:style="{ color: textColor, background: borderColor }"
+			:style="{
+				color: themeColor.textColor,
+				background: themeColor.borderColor,
+			}"
 		>
 			<i class="yoco" v-if="!number">bell</i> <span v-else v-text="number" />
 		</div>
@@ -37,11 +46,20 @@ export default {
 	name: 'KtNavbarNotification',
 	props: {
 		isNarrow: { type: Boolean, default: false },
-		textColor: { type: String, default: '#fff' },
-		borderColor: { type: String, default: '#dbdbdb' },
 		number: { type: Number, default: 0 },
 		title: { type: String, default: 'Notificatoin' },
 		link: { type: String, default: null },
+	},
+	inject: {
+		themeColor: {
+			from: 'theme',
+			default: () => {
+				return {
+					textColor: '#fff',
+					borderColor: '#dbdbdb',
+				}
+			},
+		},
 	},
 	computed: {
 		objectClass() {

@@ -4,7 +4,7 @@
 			class="user-menu"
 			v-if="isMenuShow"
 			@click="clickawayMenu"
-			:style="{ background: backgroundColor }"
+			:style="{ background: themeColor.backgroundColor }"
 		>
 			<slot name="user-menu-items" />
 			<div class="user-menu-items">
@@ -13,7 +13,7 @@
 						v-if="section.title"
 						class="user-menu__section"
 						v-text="section.title"
-						:style="{ color: textColor }"
+						:style="{ color: themeColor.textColor }"
 					/>
 					<a
 						v-for="(link, index) in section.links"
@@ -22,7 +22,7 @@
 						@click="handleLinkClicked(link)"
 						class="user-menu__item"
 						v-text="link.title"
-						:style="{ color: textColor }"
+						:style="{ color: themeColor.textColor }"
 					/>
 				</div>
 			</div>
@@ -33,18 +33,18 @@
 				<div
 					class="user-info-text__name"
 					v-text="userName"
-					:style="{ color: textColor }"
+					:style="{ color: themeColor.textColor }"
 				/>
 				<div
 					class="user-info-text__status"
 					v-text="userStatus"
-					:style="{ color: textColor }"
+					:style="{ color: themeColor.textColor }"
 				/>
 			</div>
 			<div
 				class="user-info-toggle"
 				v-if="!isNarrow || isMenuShow"
-				:style="{ color: textColor }"
+				:style="{ color: themeColor.textColor }"
 			>
 				<i class="yoco" v-if="isMenuShow">chevron_down</i>
 				<i class="yoco" v-else>chevron_up</i>
@@ -75,13 +75,22 @@ export default {
 		},
 		userName: { types: [String, null], required: true },
 		userStatus: { type: String, required: true },
-		textColor: { type: String, default: '#FFF' },
-		backgroundColor: { type: String, default: '#122C56' },
 	},
 	components: {
 		KtAvatar,
 	},
 	mixins: [clickaway],
+	inject: {
+		themeColor: {
+			from: 'theme',
+			default: () => {
+				return {
+					textColor: '#fff',
+					background: '#122C56',
+				}
+			},
+		},
+	},
 	data() {
 		return {
 			isMenuShow: false,
