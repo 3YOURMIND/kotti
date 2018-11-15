@@ -28,7 +28,6 @@
 export default {
 	name: 'KtNavbarMenu',
 	props: {
-		mobileMenuToggle: { type: Boolean, default: false },
 		sections: { type: Array, default: null },
 		isNarrow: { type: Boolean, default: false },
 	},
@@ -37,8 +36,8 @@ export default {
 			from: 'KtNavbarTheme',
 			default: () => {
 				return {
-					textColor: 'rgba(255,255,255, 0.8)',
-					activeColor: 'rgba(255,255,255, 1)',
+					activeColor: 'rgba(255, 255, 255, 1)',
+					textColor: 'rgba(255, 255, 255, 0.8)',
 				}
 			},
 		},

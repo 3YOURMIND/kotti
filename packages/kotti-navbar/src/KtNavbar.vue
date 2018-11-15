@@ -41,6 +41,7 @@
 				<kt-navbar-menu :sections="sections" :isNarrow="isNarrowNavBar" />
 				<kt-navbar-quick-link
 					v-if="quickLinks"
+					:isNarrow="isNarrowNavBar"
 					:title="quickLinks.title"
 					:links="quickLinks.links"
 				/>
@@ -58,6 +59,12 @@
 			>
 				<kt-navbar-menu
 					:sections="sections"
+					v-on-clickaway="clickawayMobileMenu"
+				/>
+				<kt-navbar-quick-link
+					v-if="quickLinks"
+					:title="quickLinks.title"
+					:links="quickLinks.links"
 					v-on-clickaway="clickawayMobileMenu"
 				/>
 			</div>
@@ -84,27 +91,19 @@ export default {
 	props: {
 		isNarrow: { type: Boolean, default: false },
 		sections: { type: Array, required: true },
-		notification: {
-			type: Object,
-			default: null,
-		},
-		quickLinks: {
-			type: Object,
-			default: null,
-		},
+		notification: { type: Object, default: null },
+		quickLinks: { type: Object, default: null },
 	},
 	inject: {
 		themeColor: {
 			from: 'KtNavbarTheme',
-			default: () => {
-				return {
-					backgroundColor: '#122C56',
-					textColor: 'rgba(255,255,255, 0.8)',
-					activeColor: 'rgba(255,255,255, 1)',
-					borderColor: '#rgba(255,255,255, 0.14)',
-					logoUrl: null,
-				}
-			},
+			default: () => ({
+				backgroundColor: '#122C56',
+				textColor: 'rgba(255,255,255, 0.8)',
+				activeColor: 'rgba(255,255,255, 1)',
+				borderColor: '#rgba(255,255,255, 0.14)',
+				logoUrl: null,
+			}),
 		},
 	},
 	data() {
@@ -113,15 +112,11 @@ export default {
 			mobileMenuToggle: false,
 		}
 	},
-	created() {
-		this.$parent.$on('clickawayKtNavbarMobileMenu', this.clickawayMobileMenu)
-	},
 	computed: {
 		isNarrowNavBar() {
-			if (this.isNarrowNavBarToggle === null) {
-				return this.isNarrow
-			}
-			return this.isNarrowNavBarToggle
+			return this.isNarrowNavBarToggle === null
+				? this.isNarrow
+				: this.isNarrowNavBarToggle
 		},
 		navbarActiveToggleStyle() {
 			return {
@@ -129,9 +124,6 @@ export default {
 					? this.themeColor.borderColor
 					: '',
 			}
-		},
-		logoUrl() {
-			return this.themeColor
 		},
 	},
 	methods: {
@@ -159,6 +151,9 @@ export default {
 			immediate: true,
 			handler: 'navbarNarrowBarEvent',
 		},
+	},
+	created() {
+		this.$parent.$on('clickawayKtNavbarMobileMenu', this.clickawayMobileMenu)
 	},
 }
 </script>

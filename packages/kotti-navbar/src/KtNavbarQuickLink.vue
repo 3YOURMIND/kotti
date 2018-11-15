@@ -1,9 +1,13 @@
 <template>
 	<div
-		class="kt-navbar__quick-link"
+		:class="[
+			'kt-navbar__quick-link',
+			{ 'kt-navbar__quick-link--narrow': isNarrow },
+		]"
 		:style="{ 'border-color': themeColor.borderColor }"
 	>
 		<div
+			v-if="!isNarrow"
 			class="kt-navbar__quick-link__title"
 			:style="{ color: themeColor.textColor }"
 			v-text="title"
@@ -16,10 +20,14 @@
 			rel="noopener noreferrer"
 		>
 			<div
-				class="kt-navbar__quick-link__links"
+				:class="[
+					'kt-navbar__quick-link__links',
+					{ 'kt-navbar__quick-link__links--narrow': isNarrow },
+				]"
 				:style="{ color: themeColor.textColor }"
 			>
-				<span v-text="item.title" /> <i>Icon</i>
+				<span v-text="item.title" v-if="!isNarrow" />
+				<i class="todo-yoco">link</i>
 			</div>
 		</a>
 	</div>
@@ -31,6 +39,7 @@ export default {
 	props: {
 		title: { type: String, default: 'Quick Links' },
 		links: { type: Array, default: [] },
+		isNarrow: { type: Boolean, default: null },
 	},
 	inject: {
 		themeColor: {
@@ -40,10 +49,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .kt-navbar__quick-link {
 	border-top: 1px solid #fff;
 	padding: 0.8rem 1.2rem;
+	&--narrow {
+		text-align: center;
+		padding: 0.8rem 0;
+	}
 }
 .kt-navbar__quick-link__title {
 	font-size: 0.6rem;
@@ -56,5 +69,8 @@ export default {
 	font-size: 0.75rem;
 	padding: 0.3rem 0;
 	justify-content: space-between;
+	&--narrow {
+		display: block;
+	}
 }
 </style>

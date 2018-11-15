@@ -45,18 +45,18 @@
 export default {
 	name: 'KtNavbarNotification',
 	props: {
-		isNarrow: { type: Boolean, default: false },
 		count: { type: Number, default: 0 },
-		title: { type: String, default: 'Notificatoin' },
+		isNarrow: { type: Boolean, default: false },
 		link: { type: String, default: null },
+		title: { type: String, default: 'Notification' },
 	},
 	inject: {
 		themeColor: {
 			from: 'KtNavbarTheme',
 			default: () => {
 				return {
-					textColor: '#fff',
 					borderColor: '#dbdbdb',
+					textColor: '#fff',
 				}
 			},
 		},

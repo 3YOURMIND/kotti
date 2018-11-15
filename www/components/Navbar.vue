@@ -1,8 +1,7 @@
 <template>
 	<KtNavbar
 		:isNarrow="isNarrow"
-		:menu="dynamicMenu"
-		:notification="{ showNotification: false }"
+		:sections="dynamicMenu"
 		:quickLinks="quickLinksData"
 		@clickLogo="$router.push('/')"
 	>
@@ -109,19 +108,15 @@ export default {
 	},
 	computed: {
 		dynamicMenu() {
-			let menu = this.globalMenu
-			let currentPage = this.$route.name ? this.$route.name.split('-') : ''
-			menu.map(item => {
-				item.links.map(link => {
-					if (currentPage[0] === link.title.toLowerCase()) {
-						link.isActive = true
-						return
-					}
-					link.isActive = false
-				})
-				return item
-			})
-			return menu
+			const menu = this.globalMenu
+			const currentPage = this.$route.name ? this.$route.name.split('-') : ''
+			return menu.map(menuItem => ({
+				...menuItem,
+				links: menuItem.links.map(link => ({
+					...link,
+					isActive: currentPage[0] === link.title.toLowerCase(),
+				})),
+			}))
 		},
 	},
 }

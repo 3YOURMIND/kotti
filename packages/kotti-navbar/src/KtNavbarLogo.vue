@@ -6,13 +6,13 @@
 				v-if="!isNarrow"
 				class="yoco"
 				v-text="'triangle_left'"
-				@click="handleToggleNarroClicked"
+				@click="handleToggleNarrowClicked"
 			/>
 			<i
 				v-if="isNarrow"
 				class="yoco"
 				v-text="'burger'"
-				@click="handleToggleNarroClicked"
+				@click="handleToggleNarrowClicked"
 			/>
 		</div>
 		<div class="navbar-logo--mobile"><img :src="themeColor.logoUrl" /></div>
@@ -26,7 +26,7 @@ export default {
 		isNarrow: { type: Boolean, default: false },
 	},
 	methods: {
-		handleToggleNarroClicked() {
+		handleToggleNarrowClicked() {
 			this.$emit('toggleNarrowBar')
 		},
 	},
