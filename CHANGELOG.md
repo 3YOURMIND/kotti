@@ -1,7 +1,17 @@
 # Change Log
 
+## 0.0.13 - 2018.11.20
+
+- Fixed: Cannot click icon in KtSelect [KT-57]
+- Fixed: Duplicated slot name in KtActionBar [KT-54]
+- Fixed: Cannot Rest KtSelect to Null [KT-52]
+- Fixed: KtButton new styles break the text-align [KT-56]
+- Added: New KtNavBar styles [KT-48]
+- Added: Update KtUserMenu to new style [KT-49]
+
 ## 0.0.12 - 2018.11.02
 
+- Added: New KtButton style with 3 sizes [KT-45]
 - Added: Horizontal Row [KT-16]
 - Added: Support Wider in KtDrawer [KT-41]
 - Fixed: Remove duplicated December in KtDatepicker [KT-47]
