@@ -5,6 +5,7 @@ $small-button-height: 24px;
 button {
 	display: inline-flex;
 	align-items: center;
+	justify-content: center;
 
 	height: $default-button-height;
 	padding: 0 1em;
