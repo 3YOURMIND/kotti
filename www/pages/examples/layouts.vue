@@ -20,7 +20,9 @@
 			:menuStyle="menuStyle"
 			:menu="actionbarMenu"
 		/>
-		<div slot="workspace">KtContainer Content</div>
+		<div slot="workspace">KtContainer Content
+			<button @click="isDarkThemeEnabled=!isDarkThemeEnabled">Toggle darkTheme</button>
+		</div>
 	</KtContainer>
 </template>
 
@@ -39,18 +41,38 @@ export default {
 		KtUserMenu,
 	},
 	provide() {
-		return {
-			KtNavbarTheme: {
-				backgroundColor: '#fff',
-				textColor: 'rgba(0,0,0,0.58)',
-				borderColor: '#dbdbdb',
-				activeColor: '#2c64cc',
-				logoUrl: 'https://picsum.photos/200/80',
-			},
-		}
+		return { KtNavbarTheme: this.defaultTheme }
+	},
+	watch: {
+		isDarkThemeEnabled(value) {
+			const theme = value ? this.darkTheme : this.lightTheme
+			Object.entries(theme).forEach(([key, value]) => {
+				this.$set(this.defaultTheme, key, value)
+			})
+		},
 	},
 	data() {
 		return {
+			isDarkThemeEnabled: false,
+			defaultTheme: {
+				backgroundColor: '#122C56',
+				borderColor: 'rgba(255,255,255,.24)',
+				textColor: 'rgba(255,255,255,.54)',
+				activeColor: 'rgba(255,255,255, 1)',
+				logoUrl: 'https://source.unsplash.com/random/200x60',
+			},
+			darkTheme: {
+				backgroundColor: '#122C56',
+				borderColor: 'rgba(255,255,255,.24)',
+				textColor: 'rgba(255,255,255,.54)',
+				activeColor: 'rgba(255,255,255, 1)',
+			},
+			lightTheme: {
+				backgroundColor: '#fff',
+				borderColor: 'rgba(0,0,0,.24)',
+				textColor: 'rgba(0,0,0,.54)',
+				activeColor: 'rgba(0,0,0, 1)',
+			},
 			quickLinksData: {
 				links: [
 					{
