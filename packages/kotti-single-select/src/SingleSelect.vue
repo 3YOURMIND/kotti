@@ -13,7 +13,11 @@
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
 				/>
-				<i class="yoco form-icon" v-text="indicatorRep" />
+				<i
+					class="yoco form-icon"
+					v-text="indicatorRep"
+					style="pointer-events: none;"
+				/>
 				<div v-if="visible" class="form-options">
 					<ul>
 						<li
