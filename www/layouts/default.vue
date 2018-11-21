@@ -1,10 +1,8 @@
 <template>
 	<KtContainer :hasActionBar="showActionbar">
-		<Navbar slot="navbar"/>
+		<Navbar slot="navbar" />
 		<Actionbar slot="actionbar" />
-		<div slot="workspace">
-			<nuxt class="content" />
-		</div>
+		<div slot="workspace"><nuxt class="content" /></div>
 	</KtContainer>
 </template>
 
@@ -20,6 +18,15 @@ export default {
 		Navbar,
 		KtContainer,
 	},
+	// provide() {
+	// 	return {
+	// 		KtTheme: {
+	// 			brandColor: '#3d3d3d',
+	// 			dangerColor: 'red',
+	// 			brandColorDark: '#222',
+	// 		},
+	// 	}
+	// },
 	computed: {
 		showActionbar() {
 			const exclusivePage = ['index', 'changelog', 'designkit']

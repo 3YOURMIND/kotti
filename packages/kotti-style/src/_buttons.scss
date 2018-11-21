@@ -24,8 +24,8 @@ button {
 	}
 
 	&:hover {
+		color: $primary-600;
 		cursor: pointer;
-		background: $primary-300;
 	}
 }
 
