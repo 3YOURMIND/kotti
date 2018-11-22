@@ -41,6 +41,21 @@
 <script>
 export default {
 	name: 'KtInput',
+	props: {
+		addonText: { default: '', type: String },
+		dialog: { default: null, type: String },
+		icon: { default: '', type: String },
+		iconPosition: { default: 'left', type: String },
+		isCompact: { default: false, type: Boolean },
+		label: String,
+		placeholder: String,
+		required: { default: false, type: Boolean },
+		step: { default: '1', type: String },
+		type: { default: 'text', type: String },
+		validate: { default: '', type: String },
+		validateText: { default: '', type: String },
+		value: [String, Number],
+	},
 	data() {
 		return {
 			currentValue: this.value || '',
@@ -48,36 +63,31 @@ export default {
 			showDialog: false,
 		}
 	},
-	watch: {
-		value(val, oldValue) {
-			this.setCurrentValue(val)
-		},
-	},
-	props: {
-		addonText: { type: String, default: '' },
-		icon: { type: String, default: '' },
-		iconPosition: { type: String, default: 'left' },
-		isCompact: Boolean,
-		label: String,
-		placeholder: String,
-		required: { default: false, type: Boolean },
-		step: { type: String, default: '1' },
-		type: { type: String, default: 'text' },
-		validate: { type: String, default: '' },
-		validateText: { type: String, default: '' },
-		value: [String, Number],
-		dialog: { type: String, default: null },
-	},
 	computed: {
-		labelRep() {
-			if (this.required) return `${this.label} *`
-			return this.label
+		dialogClass() {
+			const dialogPosition = `dialog--${this.iconPosition}`
+			return ['dialog', dialogPosition]
 		},
-		inputGroupClass() {
+		formClass() {
+			const validateClass = this.validate ? `is-${this.validate}` : ''
+			return ['form-group', validateClass]
+		},
+		formInputClass() {
 			return {
-				'input-group': Boolean(this.addonText),
-				[`has-icon-${this.iconPosition}`]: Boolean(this.icon),
+				'form-input': true,
+				'form-input--compact': this.shouldBeCompact,
 			}
+		},
+		formLabelClass() {
+			return {
+				'form-label': true,
+				'form-label--compact': this.shouldBeCompact,
+				'form-label--compact--focus':
+					this.shouldBeCompact && (this.isFocused || this.currentValue),
+			}
+		},
+		hasDialog() {
+			return this.dialog || this.$slots.dialog
 		},
 		iconClass() {
 			return {
@@ -85,56 +95,44 @@ export default {
 				'c-hand': this.hasDialog,
 			}
 		},
+		inputGroupClass() {
+			return {
+				'input-group': Boolean(this.addonText),
+				[`has-icon-${this.iconPosition}`]: Boolean(this.icon),
+			}
+		},
 		inputStep() {
 			return this.type === 'number' ? this.step : null
 		},
-		formInputClass() {
-			return {
-				'form-input': true,
-				'form-input--compact': this.isCompact,
-			}
+		labelRep() {
+			if (this.required) return `${this.label} *`
+			return this.label
 		},
-		formLabelClass() {
-			return {
-				'form-label': true,
-				'form-label--compact': this.isCompact,
-				'form-label--compact--focus':
-					this.isCompact && (this.isFocused || this.currentValue),
-			}
-		},
-		formClass() {
-			const validateClass = this.validate ? `is-${this.validate}` : ''
-			return ['form-group', validateClass]
-		},
-		dialogClass() {
-			const dialogPosition = `dialog--${this.iconPosition}`
-			return ['dialog', dialogPosition]
-		},
-		hasDialog() {
-			if (this.dialog || this.$slots.dialog) {
-				return true
-			}
-			return false
+		shouldBeCompact() {
+			return this.isCompact && !this.addonText
 		},
 	},
+	watch: {
+		value: 'setCurrentValue',
+	},
 	methods: {
-		setCurrentValue(value) {
-			if (value === this.currentValue) return
-			this.currentValue = value
-		},
-		handleInput(event) {
-			const value = event.target.value
-			this.$emit('input', value)
-			this.setCurrentValue(value)
-		},
-		handleFocus() {
-			this.isFocused = true
-		},
 		handleBlur() {
 			this.isFocused = false
 		},
 		handleChange(event) {
 			this.$emit('change', event.target.value)
+		},
+		handleFocus() {
+			this.isFocused = true
+		},
+		handleInput(event) {
+			const { value } = event.target
+			this.$emit('input', value)
+			this.setCurrentValue(value)
+		},
+		setCurrentValue(value) {
+			if (value === this.currentValue) return
+			this.currentValue = value
 		},
 	},
 }
