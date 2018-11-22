@@ -148,8 +148,8 @@
 	<KtInput label="Disabled Input" :placeholder="v5" disabled />
 	```
 
-
 	## Validate
+
 	<div class="element-example">
 		<KtInput
 			label="Success Input"
@@ -199,6 +199,8 @@
 
 	In order to save vertical space on the page when many inputs need, and icon only input can not deliver clear information,
 	you can choose compact input style.
+
+	Note that **`isCompact` is incompatible with `addonText`**, and won’t be applied if both are passed.
 
 	<div class="element-example">
 		<KtInput label="Full Name" isCompact/>
