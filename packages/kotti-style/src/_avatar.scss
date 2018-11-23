@@ -25,11 +25,6 @@
 	align-items: center;
 
 	.avatar {
-		@for $i from 1 through 10 {
-			&:nth-child(#{$i}) {
-				z-index: #{10 - $i};
-			}
-		}
 		margin-right: 0.2rem;
 	}
 

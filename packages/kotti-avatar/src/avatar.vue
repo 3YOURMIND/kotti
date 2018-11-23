@@ -3,6 +3,7 @@
 		:class="avatarClasses"
 		:data-tooltip="name"
 		@click="onAvatarContainerClick"
+		:style="{ 'z-index': zIndex }"
 	>
 		<div v-if="avatarAvailable">
 			<img class="avatar-img" :src="src" @error="imgFallBack" />
@@ -39,6 +40,10 @@ export default {
 			default: false,
 		},
 		hoverable: Boolean,
+		zIndex: {
+			type: String || Number,
+			default: 'auto',
+		},
 	},
 	data() {
 		return {

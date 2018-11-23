@@ -2,13 +2,14 @@
 	<div :class="avatarGroupClasses">
 		<KtAvatar
 			v-if="index < showItems"
-			v-for="(item , index) in items"
+			v-for="(item, index) in items"
 			:key="index"
 			:name="item.name"
 			:src="item.src"
 			:hoverable="hoverable"
 			:selected="item.selected"
 			:small="item.small"
+			:zIndex="showItems - index"
 			:showTooltip="showTooltip"
 		/>
 		<div v-if="avatarRemainders > 0" class="avatar avatar-number">
