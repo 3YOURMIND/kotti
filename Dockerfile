@@ -1,4 +1,4 @@
-FROM node:8-alpine as development
+FROM node:8-alpine AS development
 
 ENV LISTEN_HOST 0.0.0.0
 ENV LISTEN_PORT 80
@@ -15,7 +15,7 @@ CMD "$(npm bin)/nuxt" \
 
 ################################################################################
 
-FROM development as build
+FROM development AS build
 COPY kotti/build build
 COPY kotti/packages packages
 COPY kotti/CHANGELOG.md CHANGELOG.md
@@ -26,6 +26,11 @@ RUN "$(npm bin)/nuxt" generate -c build/nuxt.config.js
 
 ################################################################################
 
-FROM nginx:alpine as production
+FROM scratch AS static
+COPY --from=build /app/kotti/docs/ /
+
+################################################################################
+
+FROM nginx:alpine AS production
 RUN rm -rf /usr/share/nginx/html/
-COPY --from=build /app/kotti/docs/ /usr/share/nginx/html/
+COPY --from=static / /usr/share/nginx/html/
