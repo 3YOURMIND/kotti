@@ -16,7 +16,12 @@
 	margin: 0.4rem 0;
 	box-sizing: border-box;
 	border-radius: 2px;
-	background: linear-gradient(to left, $lightgray-300 0%, $lightgray-400 50%, $lightgray-300 100%);
+	background: linear-gradient(
+		to left,
+		$lightgray-300 0%,
+		$lightgray-400 50%,
+		$lightgray-300 100%
+	);
 	background-size: $bg-x $bg-y;
 }
 
@@ -55,7 +60,18 @@
 		transform: rotate(360deg);
 	}
 }
-
+.kt-circle-loading {
+	display: inline-block;
+	height: $unit-4;
+	width: $unit-4;
+	margin-right: 0.2rem;
+	pointer-events: none;
+	animation: loading 500ms infinite linear;
+	border-radius: 50%;
+	border: $border-width-lg solid $primary-500;
+	border-right-color: transparent;
+	border-top-color: transparent;
+}
 .loading {
 	color: transparent !important;
 	min-height: $unit-4;
