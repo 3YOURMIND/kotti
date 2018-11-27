@@ -41,8 +41,8 @@ export default {
 		},
 		hoverable: Boolean,
 		zIndex: {
-			type: String || Number,
-			default: 'auto',
+			type: [String, Number],
+			default: 'inherit',
 		},
 	},
 	data() {

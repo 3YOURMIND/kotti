@@ -85,11 +85,13 @@ const avatarData = [
 		:items="avatarData"
 		:showItems="4"
 		hoverable
+		showTooltip
 		isStack
 	/>
 	<KtAvatarGroup
 		:items="avatarData"
 		:showItems="2"
+		showTooltip
 		isStack
 	/>
 </div>
