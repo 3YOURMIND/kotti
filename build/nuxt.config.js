@@ -1,33 +1,13 @@
-/*eslint no-undef: "error"*/
-/*eslint-env node*/
-
-const routerBase =
-	process.env.DEPLOY_ENV === 'GH_PAGES'
-		? {
-				router: {
-					base: '/kotti/',
-				},
-		  }
-		: {}
-
-const outputDir = process.env.DEPLOY_ENV === 'GH_PAGES' ? 'gh-pages' : 'docs'
-
-module.exports = {
+const config = {
 	srcDir: './www/',
-	...routerBase,
 	/*
 	 ** Headers of the page
 	 */
 	head: {
 		title: 'Kotti Design System',
 		meta: [
-			{
-				charset: 'utf-8',
-			},
-			{
-				name: 'viewport',
-				content: 'width=device-width, initial-scale=1',
-			},
+			{ charset: 'utf-8' },
+			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
 			{
 				hid: 'description',
 				name: 'description',
@@ -35,13 +15,7 @@ module.exports = {
 design decisions. The Kotti design system has two main parts: foundation and components.`,
 			},
 		],
-		link: [
-			{
-				rel: 'icon',
-				type: 'image/x-icon',
-				href: '/favicon.ico',
-			},
-		],
+		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
 		script: [
 			{
 				src: `https://jira.3yourmind.com/s/a4b15870ba2faaa8526e29ec1fc54fc2-T/-s8v1l3/79002/b10b26119affed4ed7a2e8f9c8556e37/
@@ -66,9 +40,6 @@ design decisions. The Kotti design system has two main parts: foundation and com
 	/*
 	 ** Build configuration
 	 */
-	generate: {
-		dir: outputDir,
-	},
 	build: {
 		extend(config, ctx) {
 			if (ctx.isDev && ctx.isClient) {
@@ -82,3 +53,14 @@ design decisions. The Kotti design system has two main parts: foundation and com
 		},
 	},
 }
+
+if (process.env.DEPLOY_ENV === 'GH_PAGES') {
+	config.generate = {
+		dir: 'gh-pages',
+	}
+	config.router = {
+		base: '/kotti/',
+	}
+}
+
+module.exports = config

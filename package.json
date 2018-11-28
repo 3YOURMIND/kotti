@@ -1,10 +1,5 @@
 {
 	"author": "3YOURMIND GmbH",
-	"babel": {
-		"plugins": [
-			"transform-object-rest-spread"
-		]
-	},
 	"contributors": [
 		{
 			"email": "pujunyu@gmail.com",
@@ -34,63 +29,36 @@
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
-		"@nuxtjs/axios": "^5.3.1",
+		"@babel/core": "^7.1.6",
+		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+		"@babel/plugin-transform-runtime": "^7.1.0",
+		"@nuxtjs/axios": "^5.3.6",
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
-		"@vue/eslint-config-prettier": "^3.0.0",
-		"autoprefixer": "^8.3.0",
-		"babel-core": "^6.26.0",
-		"babel-eslint": "^7.2.3",
-		"babel-loader": "^7.1.5",
-		"babel-plugin-transform-object-rest-spread": "^6.26.0",
-		"babel-preset-env": "^1.7.0",
-		"babel-preset-stage-3": "^6.24.1",
+		"@vue/cli-plugin-babel": "^3.1.1",
+		"@vue/cli-plugin-typescript": "^3.1.1",
+		"@vue/cli-plugin-unit-jest": "^3.1.1",
+		"@vue/cli-service": "^3.1.1",
+		"@vue/eslint-config-prettier": "^4.0.1",
 		"cross-env": "^5.2.0",
-		"css-loader": "^0.28.7",
-		"cssnano": "^3.10.0",
-		"eslint": "^5.3.0",
+		"eslint": "^5.9.0",
 		"eslint-config-prettier": "^3.3.0",
-		"eslint-config-standard": "^11.0.0",
 		"eslint-loader": "^2.1.0",
-		"eslint-plugin-html": "^4.0.5",
-		"eslint-plugin-import": "^2.14.0",
-		"eslint-plugin-node": "^7.0.1",
-		"eslint-plugin-prettier": "^3.0.0",
-		"eslint-plugin-promise": "^3.8.0",
-		"eslint-plugin-standard": "^3.0.1",
 		"eslint-plugin-vue": "^4.7.1",
-		"file-loader": "^1.1.4",
 		"gulp": "latest",
 		"gulp-autoprefixer": "^6.0.0",
-		"gulp-clean-css": "^3.10.0",
+		"gulp-clean-css": "^4.0.0",
 		"gulp-csscomb": "^3.0.8",
 		"gulp-rename": "^1.4.0",
 		"gulp-sass": "^4.0.2",
-		"husky": "^0.14.3",
-		"lint-staged": "^7.2.2",
-		"markdown-it-anchor": "^4.0.0",
-		"markdown-it-container": "^2.0.0",
-		"node-sass": "^4.9.3",
-		"nuxt": "^1.4.2",
-		"postcss-cssnext": "^3.1.0",
-		"postcss-import": "^11.1.0",
-		"postcss-loader": "^2.1.4",
+		"husky": "^1.2.0",
+		"lint-staged": "^8.1.0",
+		"node-sass": "^4.10.0",
+		"nuxt": "^2.3.4",
 		"prettier": "^1.15.2",
 		"sass-loader": "^7.1.0",
-		"stylelint": "^9.4.0",
-		"stylelint-config-recommended-scss": "^3.1.0",
-		"stylelint-scss": "^2.5.0",
-		"sugarss": "^1.0.1",
-		"vue": "^2.5.17",
-		"vue-clipboard2": "^0.2.1",
-		"vue-loader": "^14.2.2",
-		"vue-markdown-loader": "^2.4.1",
-		"vue-server-renderer": "^2.5.17",
-		"vue-template-compiler": "^2.5.17",
-		"webpack": "^4.16.5",
-		"webpack-command": "^0.4.1",
-		"webpack-dev-server": "^2.9.1",
-		"webpack-merge": "^4.1.4"
+		"typescript": "^3.0.0",
+		"vue-clipboard2": "^0.2.1"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -102,6 +70,10 @@
 			"no-debugger": 0
 		}
 	},
+	"files": [
+		"dist",
+		"packages"
+	],
 	"license": "MIT",
 	"lint-staged": {
 		"*.{js,json,css,scss,md,vue}": [
@@ -109,12 +81,8 @@
 			"git add"
 		]
 	},
-	"files": [
-		"dist",
-		"packages"
-	],
+	"main": "/dist/kotti-ui.common.js",
 	"name": "@3yourmind/kotti-ui",
-	"main": "/dist/kotti-ui.min.js",
 	"prettier": {
 		"proseWrap": "always",
 		"semi": false,
@@ -124,15 +92,15 @@
 		"useTabs": true
 	},
 	"scripts": {
-		"precommit": "lint-staged",
-		"prepublishOnly": "yarn build:style && yarn build:kotti",
-		"postpublish": "git tag versions/kotti/$(node -p \"require('./package.json').version\") && git push --tags",
-		"build:kotti": "NODE_ENV=production webpack --config build/component.js --progress",
-		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
+		"build": "vue-cli-service build --target lib --name KottiUI src/index.js",
 		"build:doc": "nuxt generate -c build/nuxt.config.js",
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate -c build/nuxt.config.js",
+		"build:style": "yarn gulp build --gulpfile ./build/gulpstyle.js",
+		"deploy:docs": ". github-deploy.sh",
 		"dev:docs": "nuxt -c build/nuxt.config.js",
-		"deploy:docs": ". github-deploy.sh"
+		"postpublish": "git tag versions/kotti/$(node -p \"require('./package.json').version\") && git push --tags",
+		"precommit": "lint-staged",
+		"prepublishOnly": "yarn build:style && yarn build:kotti"
 	},
 	"style": "/dist/kotti-style/index.min.css",
 	"version": "0.0.14"
