@@ -3,7 +3,8 @@
 		:isNarrow="isNarrow"
 		:sections="dynamicMenu"
 		:quickLinks="quickLinksData"
-		@clickLogo="$router.push('/')"
+		@KtNavbarLogoClicked="$router.push('/')"
+		@KtNavbarLinkClicked="redirectRouter($event)"
 	>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
@@ -56,7 +57,7 @@ export default {
 						{
 							icon: 'layer',
 							title: 'Foundations',
-							link: '/foundations/layout',
+							path: '/foundations/layout',
 						},
 					],
 				},
@@ -65,35 +66,26 @@ export default {
 						{
 							icon: 'dashboard',
 							title: 'Components',
-							link: '/components/avatars',
+							path: '/components/avatars',
 						},
 					],
 				},
 				{
 					links: [
-						{ icon: 'sidebar', title: 'Patterns', link: '/patterns/comments' },
+						{ icon: 'sidebar', title: 'Patterns', path: '/patterns/actionbar' },
 					],
 				},
 				{
-					links: [
-						{
-							icon: 'version',
-							title: 'Changelog',
-							link: '/changelog',
-						},
-					],
+					links: [{ icon: 'version', title: 'Changelog', path: '/changelog' }],
 				},
-				{
-					links: [
-						{
-							icon: 'markup',
-							title: 'DesignKit',
-							link: '/designkit',
-						},
-					],
-				},
+				{ links: [{ icon: 'markup', title: 'DesignKit', path: '/designkit' }] },
 			],
 		}
+	},
+	methods: {
+		redirectRouter(link) {
+			this.$router.push(link.path)
+		},
 	},
 	provide() {
 		return {
@@ -103,6 +95,7 @@ export default {
 				textColor: 'rgba(255,255,255,.54)',
 				activeColor: 'rgba(255,255,255, 1)',
 				logoUrl: LogoSvg,
+				logoHeight: '40px',
 			},
 		}
 	},

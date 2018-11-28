@@ -11,17 +11,20 @@
 					userName="Jony'O Five"
 					userStatus="Invisible"
 					:sections="userMenuData"
+					@KtUserMenuLinkClicked="handleMenuClick($event)"
 				/>
 			</div>
 		</KtNavbar>
 		<KtActionbar
 			slot="actionbar"
 			headerTitle="KtContainer Example"
-			:menuStyle="menuStyle"
 			:menu="actionbarMenu"
 		/>
-		<div slot="workspace">KtContainer Content
-			<button @click="isDarkThemeEnabled=!isDarkThemeEnabled">Toggle darkTheme</button>
+		<div slot="workspace">
+			KtContainer Content
+			<button @click="isDarkThemeEnabled = !isDarkThemeEnabled">
+				Toggle darkTheme
+			</button>
 		</div>
 	</KtContainer>
 </template>
@@ -49,6 +52,11 @@ export default {
 			Object.entries(theme).forEach(([key, value]) => {
 				this.$set(this.defaultTheme, key, value)
 			})
+		},
+	},
+	methods: {
+		handleMenuClick(link) {
+			console.log(link.link)
 		},
 	},
 	data() {
