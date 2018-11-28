@@ -19,7 +19,7 @@
 						v-for="(link, index) in section.links"
 						:href="link.link"
 						:key="index"
-						@click="handleLinkClicked(link)"
+						@click="$emit('KtUserMenuLinkClicked', link)"
 						class="user-menu__item"
 						v-text="link.title"
 						:style="{ color: themeColor.textColor }"
@@ -109,9 +109,6 @@ export default {
 	methods: {
 		clickawayMenu() {
 			this.isMenuShow = false
-		},
-		handleLinkClicked(item) {
-			this.$emit('userMenuLinkClicked', item)
 		},
 		setNarrowValue(value) {
 			this.isNarrow = value
