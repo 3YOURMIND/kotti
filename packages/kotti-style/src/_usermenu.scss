@@ -59,7 +59,8 @@
 	border-radius: 0.2rem;
 	padding: 0.8rem;
 	padding-bottom: 3.2rem;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+	border: 1px solid rgba($color: #ffffff, $alpha: 0.1);
+	box-shadow: 0 0.2rem 1rem 0.2rem rgba(0, 0, 0, 0.24);
 	&__section {
 		padding: 0.2rem 0.4rem;
 		font-size: 0.5rem;
