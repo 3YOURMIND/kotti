@@ -1,7 +1,11 @@
 <template>
 	<div :style="{ color: themeColor.textColor }">
 		<div :class="objectClass">
-			<img :src="themeColor.logoUrl" v-if="!isNarrow" />
+			<img
+				:src="themeColor.logoUrl"
+				v-if="!isNarrow"
+				:height="themeColor.logoHeight"
+			/>
 			<i
 				v-if="!isNarrow"
 				class="yoco"
@@ -36,6 +40,7 @@ export default {
 			default: () => {
 				return {
 					textColor: '#fff',
+					logoHeight: '24px',
 					logoUrl: null,
 				}
 			},
