@@ -22,7 +22,7 @@ import KtSwitch from './kotti-switch'
 import KtTable from './kotti-table'
 import KtUserMenu from './kotti-user-menu'
 import KtRadioGroup from './kotti-radio-group'
-import './kotti-style/src/index.scss'
+import './kotti-style/index.scss'
 
 const components = [
 	KtAvatar,

@@ -28,7 +28,7 @@ design decisions. The Kotti design system has two main parts: foundation and com
 	 ** Customize the progress bar color
 	 */
 	css: [
-		'../packages/kotti-style/src/index.scss',
+		'../packages/kotti-style/index.scss',
 		'@/assets/css/main.scss',
 		'@3yourmind/yoco',
 	],

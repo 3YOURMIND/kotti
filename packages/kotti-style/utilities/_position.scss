@@ -19,7 +19,10 @@ $margins: (
 	block: $unit-6,
 );
 
-@each $prop, $abbrev in (margin-top: mt, margin-bottom: mb, margin-right: mr, margin-left: ml) {
+@each $prop,
+	$abbrev
+		in (margin-top: mt, margin-bottom: mb, margin-right: mr, margin-left: ml)
+{
 	@each $size, $length in $margins {
 		.#{$abbrev}-#{$size} {
 			#{$prop}: $length;
@@ -40,7 +43,15 @@ $paddings: (
 	element: $unit-4,
 );
 
-@each $prop, $abbrev in (padding-top: pt, padding-bottom: pb, padding-right: pr, padding-left: pl) {
+@each $prop,
+	$abbrev
+		in (
+			padding-top: pt,
+			padding-bottom: pb,
+			padding-right: pr,
+			padding-left: pl
+		)
+{
 	@each $size, $length in $margins {
 		.#{$abbrev}-#{$size} {
 			#{$prop}: $length;

@@ -6,7 +6,8 @@
 	line-height: $line-height;
 	margin: ($control-size - $control-size-sm) / 2 0;
 	min-height: 1.2rem;
-	padding: (($control-size-sm - $line-height) / 2) $control-padding-x (($control-size-sm - $line-height) / 2)
+	padding: (($control-size-sm - $line-height) / 2) $control-padding-x
+		(($control-size-sm - $line-height) / 2)
 		($control-icon-size + $control-padding-x);
 	position: relative;
 
