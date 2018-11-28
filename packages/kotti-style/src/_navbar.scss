@@ -93,6 +93,7 @@ $narrow-navbar-width: 3.2rem;
 	}
 	img {
 		width: 9rem;
+		max-height: 2.4rem;
 		padding: 0.4rem 0;
 	}
 }
@@ -147,6 +148,9 @@ $narrow-navbar-width: 3.2rem;
 	box-sizing: border-box;
 	padding: 0.4rem 1.2rem;
 	color: #fff;
+	&:hover {
+		cursor: pointer;
+	}
 	&--narrow {
 		padding: 0.4rem 0;
 		margin: 0.8rem 0.2rem;

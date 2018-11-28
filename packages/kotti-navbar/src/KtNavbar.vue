@@ -24,6 +24,7 @@
 			<div
 				:class="objectClass('navbar-header')"
 				:style="{ 'border-color': themeColor.borderColor }"
+				@click="$emit('KtNavbarLogoClicked')"
 			>
 				<kt-navbar-logo
 					:isNarrow="isNarrowNavBar"
@@ -38,7 +39,11 @@
 				:link="notification.link"
 			/>
 			<div :class="objectClass('navbar-body')">
-				<kt-navbar-menu :sections="sections" :isNarrow="isNarrowNavBar" />
+				<kt-navbar-menu
+					:sections="sections"
+					:isNarrow="isNarrowNavBar"
+					@KtNavbarMenuLinkClicked="$emit('KtNavbarLinkClicked', $event)"
+				/>
 				<kt-navbar-quick-link
 					v-if="quickLinks"
 					:isNarrow="isNarrowNavBar"
@@ -59,6 +64,7 @@
 			>
 				<kt-navbar-menu
 					:sections="sections"
+					@KtNavbarMenuLinkClicked="$emit('KtNavbarLinkClicked', $event)"
 					v-on-clickaway="clickawayMobileMenu"
 				/>
 				<kt-navbar-quick-link
