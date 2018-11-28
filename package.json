@@ -1,5 +1,16 @@
 {
 	"author": "3YOURMIND GmbH",
+	"babel": {
+		"presets": [
+			"@vue/app"
+		]
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"ie 11",
+		"not ie <= 8"
+	],
 	"contributors": [
 		{
 			"email": "pujunyu@gmail.com",
@@ -29,28 +40,23 @@
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
-		"@babel/core": "^7.1.6",
-		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-		"@babel/plugin-transform-runtime": "^7.1.0",
 		"@nuxtjs/axios": "^5.3.6",
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@vue/cli-plugin-babel": "^3.1.1",
-		"@vue/cli-plugin-typescript": "^3.1.1",
-		"@vue/cli-plugin-unit-jest": "^3.1.1",
+		"@vue/cli-plugin-eslint": "^3.1.5",
+		"@vue/eslint-config-prettier": "^4.0.1",
 		"@vue/cli-service": "^3.1.1",
 		"cross-env": "^5.2.0",
-		"eslint": "^5.9.0",
-		"eslint-loader": "^2.1.0",
-		"eslint-plugin-vue": "^4.7.1",
 		"husky": "^1.2.0",
 		"lint-staged": "^8.1.0",
 		"node-sass": "^4.10.0",
 		"nuxt": "^2.3.4",
 		"prettier": "^1.15.2",
 		"sass-loader": "^7.1.0",
-		"typescript": "^3.0.0",
-		"vue-clipboard2": "^0.2.1"
+		"vue": "^2.5.17",
+		"vue-clipboard2": "^0.2.1",
+		"vue-template-compiler": "^2.5.17"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -73,7 +79,7 @@
 			"git add"
 		]
 	},
-	"main": "/dist/KottiUI.common.js",
+	"main": "dist/KottiUI.umd.js",
 	"name": "@3yourmind/kotti-ui",
 	"prettier": {
 		"proseWrap": "always",
@@ -84,14 +90,14 @@
 		"useTabs": true
 	},
 	"scripts": {
-		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
+		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"deploy:docs": ". github-deploy.sh",
 		"dev:docs": "nuxt",
 		"postpublish": "git tag versions/kotti/$(node -p \"require('./package.json').version\") && git push --tags",
 		"precommit": "lint-staged",
 		"prepublishOnly": "yarn run build:kotti"
 	},
-	"style": "/dist/kotti-style/index.min.css",
+	"style": "dist/KottiUI.css",
 	"version": "0.0.13"
 }
