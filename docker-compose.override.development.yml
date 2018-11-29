@@ -8,8 +8,9 @@ services:
       - mono-proxy
     tty: true
     volumes:
-      - './kotti/build/:/app/kotti/build/:ro'
-      - './kotti/packages/:/app/kotti/packages/'
-      - './kotti/www/:/app/kotti/www/:ro'
       - './kotti/CHANGELOG.md:/app/kotti/CHANGELOG.md:ro'
+      - './kotti/nuxt.config.js:/app/kotti/nuxt.config.js:ro'
+      - './kotti/packages/:/app/kotti/packages/:ro'
       - './kotti/README.md:/app/kotti/README.md:ro'
+      - './kotti/vue.config.js:/app/kotti/vue.config.js:ro'
+      - './kotti/www/:/app/kotti/www/:ro'

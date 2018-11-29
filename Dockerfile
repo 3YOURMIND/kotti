@@ -9,25 +9,24 @@ COPY kotti/yarn.lock .
 RUN yarn install
 
 CMD "$(npm bin)/nuxt" \
-		--hostname $LISTEN_HOST \
-		--port $LISTEN_PORT \
-		-c build/nuxt.config.js
+	--hostname $LISTEN_HOST \
+	--port $LISTEN_PORT
 
 ################################################################################
 
 FROM development AS build
-COPY kotti/build build
-COPY kotti/packages packages
 COPY kotti/CHANGELOG.md CHANGELOG.md
+COPY kotti/nuxt.config.js .
+COPY kotti/packages packages
 COPY kotti/README.md README.md
-COPY kotti/src src
+COPY kotti/vue.config.js .
 COPY kotti/www www
-RUN "$(npm bin)/nuxt" generate -c build/nuxt.config.js
+RUN "$(npm bin)/nuxt" generate
 
 ################################################################################
 
 FROM scratch AS static
-COPY --from=build /app/kotti/docs/ /
+COPY --from=build /app/kotti/dist/ /
 
 ################################################################################
 
