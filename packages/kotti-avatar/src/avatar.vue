@@ -19,31 +19,13 @@
 export default {
 	name: 'KtAvatar',
 	props: {
-		name: {
-			type: String,
-			default: null,
-		},
-		src: {
-			type: String,
-			default: null,
-		},
-		selected: {
-			type: Boolean,
-			default: false,
-		},
-		small: {
-			type: Boolean,
-			default: false,
-		},
-		showTooltip: {
-			type: Boolean,
-			default: false,
-		},
-		hoverable: Boolean,
-		zIndex: {
-			type: [String, Number],
-			default: 'inherit',
-		},
+		hoverable: { default: false, type: Boolean },
+		name: { default: null, type: String },
+		selected: { default: false, type: Boolean },
+		showTooltip: { default: false, type: Boolean },
+		small: { default: false, type: Boolean },
+		src: { default: null, type: String },
+		zIndex: { default: 'inherit', types: [String, Number] },
 	},
 	data() {
 		return {
