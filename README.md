@@ -73,12 +73,6 @@ yarn install
 # build kott-ui
 yarn run build:kotti
 
-# build kotti-style
-yarn run build:style
-
-# generate kotti-docs to /docs
-yarn run build:docs
-
 # generate kotti-docs for github pages to /gh-pages
 yarn run build:gh-pages
 ```
@@ -91,23 +85,6 @@ yarn install
 
 # serve with hot reload at localhost:3000
 yarn dev:docs
-```
-
-## Use Kotti-Style
-
-[![npm version](https://badge.fury.io/js/%403yourmind%2Fkotti-style.svg)](https://www.npmjs.com/package/@3yourmind/kotti-style)
-
-### Install Kotti-Style
-
-```bash
-# install kotti-style package to your project
-yarn add @3yourmind/kotti-style
-```
-
-### Use Kotti-Style
-
-```scss
-@import '@3yourmind/kotti-style';
 ```
 
 ## Use Kotti-UI
@@ -131,7 +108,7 @@ import Vue from 'vue'
 import KottiUI from 'kotti-ui'
 
 // from v.0.0.4 kotti-ui includes kotti-style
-import '@3yourmind/kotti-ui/dist/kotti-style/index.min.css'
+import '@3yourmind/kotti-ui/KottiUI.css'
 
 Vue.use(KottiUI)
 ```
