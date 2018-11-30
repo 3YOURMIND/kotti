@@ -20,7 +20,7 @@ COPY kotti/nuxt.config.js .
 COPY kotti/packages packages
 COPY kotti/README.md README.md
 COPY kotti/vue.config.js .
-COPY kotti/www www
+COPY kotti/docs docs
 RUN "$(npm bin)/nuxt" generate
 
 ################################################################################

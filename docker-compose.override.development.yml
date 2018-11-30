@@ -13,4 +13,4 @@ services:
       - './kotti/packages/:/app/kotti/packages/:ro'
       - './kotti/README.md:/app/kotti/README.md:ro'
       - './kotti/vue.config.js:/app/kotti/vue.config.js:ro'
-      - './kotti/www/:/app/kotti/www/:ro'
+      - './kotti/docs/:/app/kotti/docs/:ro'
