@@ -88,11 +88,17 @@ $narrow-navbar-width: 3.2rem;
 		display: none;
 	}
 	i {
+		padding: 0 0.8rem;
+		flex-basis: 2.4rem;
 		width: 1.2rem;
 		flex: 0 0;
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
+		}
 	}
 	img {
-		max-width: 9rem;
+		max-width: 8rem;
 		max-height: 4rem;
 		padding: 0;
 	}

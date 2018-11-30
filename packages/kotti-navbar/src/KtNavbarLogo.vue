@@ -6,18 +6,7 @@
 				v-if="!isNarrow"
 				:height="themeColor.logoHeight"
 			/>
-			<i
-				v-if="!isNarrow"
-				class="yoco"
-				v-text="'triangle_left'"
-				@click="handleToggleNarrowClicked"
-			/>
-			<i
-				v-if="isNarrow"
-				class="yoco"
-				v-text="'burger'"
-				@click="handleToggleNarrowClicked"
-			/>
+			<i class="yoco" v-text="iconText" @click="handleToggleNarrowClicked" />
 		</div>
 		<div class="navbar-logo--mobile"><img :src="themeColor.logoUrl" /></div>
 	</div>
@@ -39,14 +28,17 @@ export default {
 			from: 'KtNavbarTheme',
 			default: () => {
 				return {
-					textColor: '#fff',
-					logoHeight: '24px',
+					textColor: '#ffffff',
+					logoHeight: '1.2rem',
 					logoUrl: null,
 				}
 			},
 		},
 	},
 	computed: {
+		iconText() {
+			return this.isNarrow ? 'burger' : 'triangle_left'
+		},
 		objectClass() {
 			return {
 				'navbar-logo': true,
