@@ -135,5 +135,5 @@
 		"deploy:docs": ". github-deploy.sh"
 	},
 	"style": "/dist/kotti-style/index.min.css",
-	"version": "0.0.13"
+	"version": "0.0.14"
 }

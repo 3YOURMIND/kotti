@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.0.14 - 2018.11.30
+
+- Fixed: KtAvatarGroup change the z-index causes element overlapping [KT-55]
+- Added: Click event to KtNavbar [KT-58]
+- Added: Cutomizable themes to KtButtons [KT-59]
+- Added: More stronger shadows to the KtUserMenu [KT-60]
+
 ## 0.0.13 - 2018.11.20
 
 - Fixed: Cannot click icon in KtSelect [KT-57]
