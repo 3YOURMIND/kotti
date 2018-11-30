@@ -39,9 +39,8 @@ decrease the learning curve.
 Kotti Design System includes:
 
 | Item                | Meaning                                                                      | Purpose                                                                         |
-| :------------------ | :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
+|:--------------------|:-----------------------------------------------------------------------------|:--------------------------------------------------------------------------------|
 | Design Guideline    | A suggestion documentation for non-developer to understand the design system | Give UX/UI designer a single source of truth and make sure design is consistent |
-| Kotti-Styles        | A css framework which implement the design guideline                         | Help developer to write customize component easier                              |
 | Kotti-UI Components | Modular and functional components based on design guideline                  | Replace the shared components in our project                                    |
 | Usage Documents     | Example based documentation                                                  | Help developer to use the component                                             |
 | Test                | UI Test                                                                      | —                                                                               |
@@ -50,7 +49,7 @@ Kotti Design System includes:
 
 ```text
 kotti
-├─ www // nuxt.js managed design guideline & usage documentation
+├─ docs // nuxt.js managed design guideline & usage documentation
 │  ├─ assets
 |  ├─ pages
 ├─ packages
@@ -85,6 +84,9 @@ yarn install
 
 # serve with hot reload at localhost:3000
 yarn dev:docs
+
+# deploy documents on github
+yarn deploy:docs
 ```
 
 ## Use Kotti-UI
@@ -108,7 +110,7 @@ import Vue from 'vue'
 import KottiUI from 'kotti-ui'
 
 // from v.0.0.4 kotti-ui includes kotti-style
-import '@3yourmind/kotti-ui/KottiUI.css'
+import '@3yourmind/kotti-ui/dist/KottiUI.css'
 
 Vue.use(KottiUI)
 ```

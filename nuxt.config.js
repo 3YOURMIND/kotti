@@ -1,5 +1,5 @@
 const config = {
-	srcDir: './www/',
+	srcDir: './docs/',
 	/*
 	 ** Headers of the page
 	 */
