@@ -4,27 +4,18 @@
 		<h3>Meaning</h3>
 		<ul>
 			<li>
-				<b>Primary Blue:</b> A primary color/brand color, which delivers brand value.
+				<b>Primary Blue:</b> A primary color/brand color, which delivers brand
+				value.
 			</li>
-			<li>
-				<b>Green:</b> Success or progress, which gives positive feedback.
-			</li>
-			<li>
-				<b>Red:</b> signals attention or danger.
-			</li>
-			<li>
-				<b>Darkgrey:</b> neutral color.
-			</li>
-			<li>
-				<b>Lightgrey:</b> neutral color.
-			</li>
+			<li><b>Green:</b> Success or progress, which gives positive feedback.</li>
+			<li><b>Red:</b> signals attention or danger.</li>
+			<li><b>Darkgrey:</b> neutral color.</li>
+			<li><b>Lightgrey:</b> neutral color.</li>
 		</ul>
 		<h3>Dark text on light background</h3>
 		<div class="example-wrapper">
 			<div class="example-content light">
-				<div style="color:#3D3D3D">
-					Default text <code>Darkgrey-500</code>
-				</div>
+				<div style="color:#3D3D3D">Default text <code>Darkgrey-500</code></div>
 				<div style="color:#575757">
 					Secondary text <code>Darkgrey-400</code>
 				</div>
@@ -37,23 +28,17 @@
 			Depends on text meaning and hierarchy, there are three different types:
 		</p>
 		<ul>
-			<li>
-				<b>Default text</b> should be <code>Darkgrey-500</code>.
-			</li>
+			<li><b>Default text</b> should be <code>Darkgrey-500</code>.</li>
 			<li>
 				<b>Secondary text, which is lower in the visual hierarchy,</b> uses
 				<code>Darkgrey-400</code>.
 			</li>
-			<li>
-				<b>Disabled / hint text</b> should be <code>Darkgrey-300</code>.
-			</li>
+			<li><b>Disabled / hint text</b> should be <code>Darkgrey-300</code>.</li>
 		</ul>
 		<h3>Light text on dark background</h3>
 		<div class="example-wrapper">
 			<div class="example-content dark">
-				<div style="color:#F8F8F8">
-					Default text <code>LightGrey-300</code>
-				</div>
+				<div style="color:#F8F8F8">Default text <code>LightGrey-300</code></div>
 				<div style="color:#DBDBDB">
 					Secondary text <code>Lightgrey-400</code>
 				</div>
@@ -64,15 +49,9 @@
 		</div>
 		<p>Similar to light text, there are three different types:</p>
 		<ul>
-			<li>
-				<b>Default text</b> should be <code>Lightgrey-300</code>.
-			</li>
-			<li>
-				<b>Secondary text</b> uses <code>Lightgrey-400</code>.
-			</li>
-			<li>
-				<b>Disabled / hint text</b> should be <code>Lightgrey-500</code>.
-			</li>
+			<li><b>Default text</b> should be <code>Lightgrey-300</code>.</li>
+			<li><b>Secondary text</b> uses <code>Lightgrey-400</code>.</li>
+			<li><b>Disabled / hint text</b> should be <code>Lightgrey-500</code>.</li>
 		</ul>
 		<h3>Light text on color background</h3>
 		<div class="example-wrapper">
@@ -91,7 +70,8 @@
 		<p>Same as light text, there are three different types:</p>
 		<ul>
 			<li>
-				<b>Default text</b> should be <code>white color with opacity 100%</code>.
+				<b>Default text</b> should be
+				<code>white color with opacity 100%</code>.
 			</li>
 			<li>
 				<b>Secondary text</b> uses <code>white color with opacity 68%</code>.
@@ -109,12 +89,10 @@
 					<span> file_name.pdf</span>
 				</div>
 				<div style="color: #fff; background: #2C66C4">
-					<i class="yoco">announce</i>
-					<span> Announce new icons.</span>
+					<i class="yoco">announce</i> <span> Announce new icons.</span>
 				</div>
 				<div style="color: #2C66C4">
-					<i class="yoco">print</i>
-					<span> Print invoice.</span>
+					<i class="yoco">print</i> <span> Print invoice.</span>
 				</div>
 			</div>
 		</div>

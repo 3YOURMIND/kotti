@@ -1,13 +1,14 @@
 <template>
 	<div class="actionbar">
 		<div class="actionbar-wrapper">
-			<div class="actionbar-header">
-				<h1 v-text="currentSection"/>
-			</div>
+			<div class="actionbar-header"><h1 v-text="currentSection" /></div>
 			<div class="actionbar-body">
 				<div class="actionbar-menu has-icon-right">
-					<ul v-for="item in submenu" :key="item.id"
-							v-if="item.parent === currentSection.toLowerCase()">
+					<ul
+						v-for="item in submenu"
+						:key="item.id"
+						v-if="item.parent === currentSection.toLowerCase()"
+					>
 						<nuxt-link
 							v-for="child in item.child"
 							:to="`/${item.parent}/${child.to}`"
@@ -25,7 +26,6 @@
 		</div>
 	</div>
 </template>
-
 
 <style lang="scss" scoped>
 .nuxt-link-exact-active li {
@@ -47,7 +47,6 @@
 	border-radius: 0.2rem;
 }
 </style>
-
 
 <script>
 import Submenu from '../assets/json/submenu'

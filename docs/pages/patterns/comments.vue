@@ -1,4 +1,4 @@
-<template lang=md>
+<template lang="md">
 
 # Comments
 
@@ -41,7 +41,8 @@ export default {
 				{
 					uuid: '333afea0-52c0-11e8-9c2d-fa7ae01bbebc',
 					name: 'Margaret Atwood',
-					message: 'Marine Le Pen, a Fierce Campaigner, Heads to Finale in French Election',
+					message:
+						'Marine Le Pen, a Fierce Campaigner, Heads to Finale in French Election',
 					src: 'https://picsum.photos/200',
 					time: '2018-03-20',
 					replies: [
@@ -49,7 +50,8 @@ export default {
 							uuid: '45051148-52c0-11e8-9c2d-fa7ae01bbebc',
 							name: 'Benni',
 							time: '2018-03-20',
-							message: 'Join Bright Side Now! Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
+							message:
+								'Join Bright Side Now! Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
 							src: 'https://picsum.photos/100',
 						},
 						{
@@ -89,7 +91,9 @@ export default {
 	},
 	computed: {
 		replyName() {
-			const _comment = this.comments.find(comment => comment.uuid === this.currentUuid)
+			const _comment = this.comments.find(
+				comment => comment.uuid === this.currentUuid,
+			)
 			return _comment ? _comment.name : null
 		},
 	},

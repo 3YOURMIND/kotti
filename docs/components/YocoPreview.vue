@@ -1,8 +1,6 @@
 <template>
 	<div class="icon-container" @click="copyLiga(icon)">
-		<div>
-			<i class="yoco" ref="liga" v-text="icon" />
-		</div>
+		<div><i class="yoco" ref="liga" v-text="icon" /></div>
 		<div class="icon-liga" v-text="icon" />
 		<div
 			v-if="copySuccess"
@@ -36,7 +34,7 @@ export default {
 				},
 				() => {
 					alert('failed')
-				}
+				},
 			)
 		},
 	},

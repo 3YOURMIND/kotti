@@ -17,10 +17,9 @@
 				The colors in each palette have the same hue but diffrent saturation and
 				lightness. Palettes start with a primary color, then continue in the
 				spectrum to create a complete and usable set of colors. An example color
-				name is
-				<code>ColorName-number</code>. <code>ColorName</code> represents the
-				hue, and <code>number</code> represents the lightness. A smaller number
-				means lighter, and a greater number means darker.
+				name is <code>ColorName-number</code>. <code>ColorName</code> represents
+				the hue, and <code>number</code> represents the lightness. A smaller
+				number means lighter, and a greater number means darker.
 			</p>
 		</div>
 		<h3>
@@ -50,7 +49,7 @@
 				colorName="Orange"
 				:colors="orangeColor"
 			/>
-			 <ColorPalette
+			<ColorPalette
 				class="column col-md-12 col-4"
 				colorName="Yellow"
 				:colors="yellowColor"
@@ -136,7 +135,10 @@ export default {
 				{ name: 'Lightgrey-500', code: '#A8A8A8' },
 				{ name: 'Lightgrey-600', code: '#5C5C5C' },
 			],
-			neutrals: [{ name: 'White-000', code: '#FFFFFF' }, { name: 'Black-000', code: '#000000' }],
+			neutrals: [
+				{ name: 'White-000', code: '#FFFFFF' },
+				{ name: 'Black-000', code: '#000000' },
+			],
 			yellowColor: [
 				{ name: 'Yellow-300', code: '#FFF9C0' },
 				{ name: 'Yellow-400', code: '#FFF490' },

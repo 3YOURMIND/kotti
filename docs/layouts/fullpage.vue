@@ -1,9 +1,7 @@
 <template>
 	<div class="d-flex responsive">
-		<Navbar/>
-		<div class="workspace">
-			<nuxt class="content" />
-		</div>
+		<Navbar />
+		<div class="workspace"><nuxt class="content" /></div>
 	</div>
 </template>
 

@@ -39,7 +39,7 @@ decrease the learning curve.
 Kotti Design System includes:
 
 | Item                | Meaning                                                                      | Purpose                                                                         |
-|:--------------------|:-----------------------------------------------------------------------------|:--------------------------------------------------------------------------------|
+| :------------------ | :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
 | Design Guideline    | A suggestion documentation for non-developer to understand the design system | Give UX/UI designer a single source of truth and make sure design is consistent |
 | Kotti-UI Components | Modular and functional components based on design guideline                  | Replace the shared components in our project                                    |
 | Usage Documents     | Example based documentation                                                  | Help developer to use the component                                             |

@@ -4,7 +4,7 @@
 		<div
 			v-for="color in colors"
 			:key="color.name"
-			:style="{background: color.code, color: textColor(color.name)}"
+			:style="{ background: color.code, color: textColor(color.name) }"
 			@click="copyColor(color.code)"
 			class="color-palette__block c-hand"
 		>
@@ -12,9 +12,7 @@
 			<div class="color-palette__code" v-text="color.code" />
 		</div>
 		<transition name="slide-fade">
-			<div v-if="copySuccess" class="success-message">
-				Copy successful
-			</div>
+			<div v-if="copySuccess" class="success-message">Copy successful</div>
 		</transition>
 	</div>
 </template>
@@ -43,7 +41,7 @@ export default {
 				},
 				() => {
 					alert('failed')
-				}
+				},
 			)
 		},
 		textColor(colorName) {

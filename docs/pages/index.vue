@@ -1,5 +1,5 @@
 <template>
-	<div v-html="KottiReadMe"/>
+	<div v-html="KottiReadMe" />
 </template>
 
 <script>

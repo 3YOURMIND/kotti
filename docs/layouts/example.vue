@@ -1,7 +1,5 @@
 <template>
-	<div class="d-flex responsive">
-			<nuxt/>
-	</div>
+	<div class="d-flex responsive"><nuxt /></div>
 </template>
 <script>
 export default {

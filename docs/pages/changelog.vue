@@ -1,5 +1,5 @@
 <template>
-	<div v-html="KottiUIChangeLogRepsent"/>
+	<div v-html="KottiUIChangeLogRepsent" />
 </template>
 
 <script>
