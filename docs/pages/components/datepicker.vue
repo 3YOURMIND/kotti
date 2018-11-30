@@ -3,7 +3,7 @@
 # Date Picker
 
 <div class="element-example">
-	<KtDatePicker
+	<KtDateInput
 		v-model="date"
 		label="Delivery Date"
 		mondayFirst
@@ -13,7 +13,7 @@
 </div>
 
 ```html
-<KtDatePicker
+<KtDateInput
 	v-model="date"
 	label="Delivery Date"
 	mondayFirst
@@ -23,7 +23,7 @@
 
 <div class="element-example">
 	<h2>With Initial Value</h2>
-	<KtDatePicker
+	<KtDateInput
 		v-model="date2"
 		label="Delivery Date"
 		mondayFirst
@@ -34,7 +34,7 @@
 </div>
 
 ```html
-<KtDatePicker
+<KtDateInput
 		v-model="date2"
 		label="Delivery Date"
 		mondayFirst
@@ -45,7 +45,7 @@
 
 <div class="element-example">
 	<h2>With Translation</h2>
-	<KtDatePicker
+	<KtDateInput
 		v-model="date3"
 		label="配送日期"
 		:monthsTranslations="monthCN"
@@ -56,7 +56,7 @@
 </div>
 
 ```html
-<KtDatePicker
+<KtDateInput
 	v-model="date3"
 	label="配送日期"
 	:monthsTranslations="monthCN"
@@ -81,7 +81,7 @@
 
 <script>
 export default {
-	name: 'DatePicker',
+	name: 'DatePickerDoc',
 	data() {
 		return {
 			date: null,

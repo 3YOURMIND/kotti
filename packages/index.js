@@ -16,6 +16,7 @@ import KtInputNumber from './kotti-input-number'
 import KtModal from './kotti-modal'
 import KtNavbar from './kotti-navbar'
 import KtPopover from './kotti-popover'
+import KtPagenation from './kotti-pagination'
 import KtRadio from './kotti-radio'
 import KtRow from './kotti-row'
 import KtSingleSelect from './kotti-single-select'
@@ -44,6 +45,7 @@ const components = [
 	KtModal,
 	KtNavbar,
 	KtPopover,
+	KtPagenation,
 	KtRadio,
 	KtRow,
 	KtSingleSelect,

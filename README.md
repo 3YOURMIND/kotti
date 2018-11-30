@@ -54,13 +54,32 @@ kotti
 |  ├─ pages
 ├─ packages
 │  ├─ kotti-style // scss file documentation
-│  ├─ kotti-icons // icon fonts
 │  └─ kotti-button
 │     ├─ src
 │     ├─ index.js
 ├─ package.json
 ├─ CHANGELOG.md
 └─ README.md
+```
+
+## Install
+
+[![npm version](https://badge.fury.io/js/%403yourmind%2Fkotti-ui.svg)](https://www.npmjs.com/package/@3yourmind/kotti-ui)
+
+```bash
+# add kotti-ui package to your project
+yarn add @3yourmind/kotti-ui
+```
+
+```js
+// in main.js
+import Vue from 'vue'
+import KottiUI from 'kotti-ui'
+
+// from v.0.0.4 kotti-ui includes kotti-style
+import '@3yourmind/kotti-ui/dist/KottiUI.css'
+
+Vue.use(KottiUI)
 ```
 
 ## Build
@@ -87,30 +106,4 @@ yarn dev:docs
 
 # deploy documents on github
 yarn deploy:docs
-```
-
-## Use Kotti-UI
-
-[![npm version](https://badge.fury.io/js/%403yourmind%2Fkotti-ui.svg)](https://www.npmjs.com/package/@3yourmind/kotti-ui)
-
-### Install Kotti-UI
-
-```bash
-# add kotti-ui package to your project
-yarn add @3yourmind/kotti-ui
-```
-
-### Use Kotti-UI
-
-**Fully Import**
-
-```js
-// in main.js
-import Vue from 'vue'
-import KottiUI from 'kotti-ui'
-
-// from v.0.0.4 kotti-ui includes kotti-style
-import '@3yourmind/kotti-ui/dist/KottiUI.css'
-
-Vue.use(KottiUI)
 ```

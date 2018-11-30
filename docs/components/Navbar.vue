@@ -1,9 +1,8 @@
 <template>
 	<KtNavbar
 		:isNarrow="isNarrow"
-		:sections="dynamicMenu"
+		:sections="globalMenu"
 		:quickLinks="quickLinksData"
-		@logoClick="$router.push('/')"
 		@linkClick="redirectRouter($event)"
 	>
 		<div slot="navbar-footer">
@@ -49,42 +48,22 @@ export default {
 						link:
 							'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
 					},
+					{
+						title: 'Yoco Icon',
+						link: 'https://3yourmind.github.io/yoco',
+					},
 				],
 			},
-			globalMenu: [
-				{
-					links: [
-						{
-							icon: 'layer',
-							title: 'Foundations',
-							path: '/foundations/layout',
-						},
-					],
-				},
-				{
-					links: [
-						{
-							icon: 'dashboard',
-							title: 'Components',
-							path: '/components/avatars',
-						},
-					],
-				},
-				{
-					links: [
-						{ icon: 'sidebar', title: 'Patterns', path: '/patterns/actionbar' },
-					],
-				},
-				{
-					links: [{ icon: 'version', title: 'Changelog', path: '/changelog' }],
-				},
-				{ links: [{ icon: 'markup', title: 'DesignKit', path: '/designkit' }] },
-			],
 		}
 	},
 	methods: {
 		redirectRouter(link) {
 			this.$router.push(link.path)
+		},
+		isCurrentPage(path) {
+			return path === '/'
+				? this.$route.path === '/'
+				: this.$route.path.includes(path)
 		},
 	},
 	provide() {
@@ -100,16 +79,55 @@ export default {
 		}
 	},
 	computed: {
-		dynamicMenu() {
-			const menu = this.globalMenu
-			const currentPage = this.$route.name ? this.$route.name.split('-') : ''
-			return menu.map(menuItem => ({
-				...menuItem,
-				links: menuItem.links.map(link => ({
-					...link,
-					isActive: currentPage[0] === link.title.toLowerCase(),
-				})),
-			}))
+		globalMenu() {
+			return [
+				{
+					title: 'Guide',
+					links: [
+						{
+							icon: 'file',
+							title: 'Overview',
+							path: '/',
+							isActive: this.isCurrentPage('/'),
+						},
+						{
+							icon: 'version',
+							title: 'Changelog',
+							path: '/changelog',
+							isActive: this.isCurrentPage('/changelog'),
+						},
+					],
+				},
+				{
+					title: 'Usage',
+					links: [
+						{
+							icon: 'layer',
+							title: 'Foundations',
+							path: '/foundations/layout',
+							isActive: this.isCurrentPage('/foundations'),
+						},
+						{
+							icon: 'dashboard',
+							title: 'Components',
+							path: '/components/avatars',
+							isActive: this.isCurrentPage('/components'),
+						},
+						{
+							icon: 'sidebar',
+							title: 'Patterns',
+							path: '/patterns/actionbar',
+							isActive: this.isCurrentPage('/patterns'),
+						},
+						{
+							icon: 'markup',
+							title: 'DesignKit',
+							path: '/designkit',
+							isActive: this.isCurrentPage('/designkit'),
+						},
+					],
+				},
+			]
 		},
 	},
 }
