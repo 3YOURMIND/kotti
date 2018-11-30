@@ -3,8 +3,8 @@
 		:isNarrow="isNarrow"
 		:sections="dynamicMenu"
 		:quickLinks="quickLinksData"
-		@KtNavbarLogoClicked="$router.push('/')"
-		@KtNavbarLinkClicked="redirectRouter($event)"
+		@logoClick="$router.push('/')"
+		@linkClick="redirectRouter($event)"
 	>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">

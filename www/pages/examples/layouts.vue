@@ -11,7 +11,7 @@
 					userName="Jony'O Five"
 					userStatus="Invisible"
 					:sections="userMenuData"
-					@KtUserMenuLinkClicked="handleMenuClick($event)"
+					@click="handleMenuClick($event)"
 				/>
 			</div>
 		</KtNavbar>
@@ -56,7 +56,7 @@ export default {
 	},
 	methods: {
 		handleMenuClick(link) {
-			console.log(link.link)
+			alert('Link Clicked')
 		},
 	},
 	data() {

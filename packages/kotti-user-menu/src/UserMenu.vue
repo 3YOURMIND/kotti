@@ -19,7 +19,7 @@
 						v-for="(link, index) in section.links"
 						:href="link.link"
 						:key="index"
-						@click="$emit('KtUserMenuLinkClicked', link)"
+						@click="$emit('click', link)"
 						class="user-menu__item"
 						v-text="link.title"
 						:style="{ color: themeColor.textColor }"

@@ -14,7 +14,7 @@
 				:style="{
 					color: link.isActive ? themeColor.activeColor : themeColor.textColor,
 				}"
-				@click="$emit('KtNavbarMenuLinkClicked', link)"
+				@click="$emit('menuLinkClick', link)"
 			>
 				<div :class="{ active: link.isActive, 'navbar-menu__item': true }">
 					<i class="yoco" v-text="link.icon" />
@@ -49,11 +49,6 @@ export default {
 				'navbar-menu': true,
 				'navbar-menu--narrow': this.isNarrow,
 			}
-		},
-	},
-	methods: {
-		handleLinkClick(link) {
-			this.$emit('linkClick', link)
 		},
 	},
 }
