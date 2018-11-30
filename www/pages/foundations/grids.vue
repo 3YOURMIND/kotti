@@ -1,4 +1,4 @@
-<template lang=md>
+<template lang="md">
 	# Grid System
 
 	Kotti uses 24 columns `span` grid system. With `row` and `col` it can create dynamic layout.
@@ -194,16 +194,7 @@
 </template>
 
 <script>
-import KtRow from '../../../packages/kotti-row'
-import KtCol from '../../../packages/kotti-col'
-
-export default {
-	name: 'KtGridDoc',
-	components: {
-		KtRow,
-		KtCol,
-	},
-}
+export default { name: 'KtGridDoc' }
 </script>
 
 <style lang="scss">

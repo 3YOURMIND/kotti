@@ -132,16 +132,5 @@ The `imgUrl` property defines the image’s `url`.
 </template>
 
 <script>
-import KtCard from '../../../packages/kotti-card'
-import KtCol from '../../../packages/kotti-col'
-import KtRow from '../../../packages/kotti-row'
-
-export default {
-	name: 'Cards',
-	components: {
-		KtCard,
-		KtCol,
-		KtRow,
-	},
-}
+export default { name: 'CardsDocs' }
 </script>

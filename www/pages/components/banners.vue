@@ -161,13 +161,11 @@ If you don't specify the icon text, you need to use the `glyph` slot.
 </template>
 
 <script>
-import KtBanner from '../../../packages/kotti-banner'
 import ShowCase from '../../components/ShowCase'
 
 export default {
 	name: 'Banners',
 	components: {
-		KtBanner,
 		ShowCase,
 	},
 }

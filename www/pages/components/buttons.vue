@@ -1,7 +1,7 @@
 <template lang="md">
 	# Buttons
 
-	Use buttons to lead a call to action or guide a user to their next steps.</p>
+	Use buttons to lead a call to action or guide a user to their next steps.
 
 	## Labels
 
@@ -115,15 +115,11 @@
 
 <script>
 import ButtonUsage from '../../../packages/kotti-button/README.md'
-import KtButton from '../../../packages/kotti-button'
-import KtButtonGroup from '../../../packages/kotti-button-group'
 import ShowCase from '../../components/ShowCase'
 
 export default {
 	name: 'Buttons',
 	components: {
-		KtButton,
-		KtButtonGroup,
 		ShowCase,
 	},
 	computed: {

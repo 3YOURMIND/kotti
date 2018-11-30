@@ -132,15 +132,8 @@ You can control how many avatar items are displayed with `showItems`.
 </template>
 
 <script>
-import KtAvatar from '../../../packages/kotti-avatar'
-import KtAvatarGroup from '../../../packages/kotti-avatar-group'
-
 export default {
 	name: 'Avatar',
-	components: {
-		KtAvatar,
-		KtAvatarGroup,
-	},
 	data() {
 		return {
 			avatarData: [

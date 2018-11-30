@@ -145,15 +145,11 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 </template>
 
 <script>
-import KtDrawer from '../../../packages/kotti-drawer'
 import ShowCase from '../../components/ShowCase'
 
 export default {
 	name: 'DrawerDocs',
-	components: {
-		KtDrawer,
-		ShowCase,
-	},
+	components: { ShowCase },
 	data() {
 		return {
 			customizeWidthDrawer: false,

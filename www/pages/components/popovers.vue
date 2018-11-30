@@ -102,20 +102,11 @@ A [card component](./cards) is usually used inside the `content` slot.
 
 </template>
 
-
 <script>
-import KtButton from '../../../packages/kotti-button'
-import KtCard from '../../../packages/kotti-card'
-import KtPopover from '../../../packages/kotti-popover'
 import ShowCase from '../../components/ShowCase'
 
 export default {
 	name: 'PopoversDoc',
-	components: {
-		KtButton,
-		KtCard,
-		KtPopover,
-		ShowCase,
-	},
+	components: { ShowCase },
 }
 </script>

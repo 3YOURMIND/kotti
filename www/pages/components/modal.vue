@@ -67,15 +67,9 @@ When `closeOutside` set to `false`, it disables closing the modal from the outsi
 | `modal-footer` | footer section of modal |
 </template>
 
-
 <script>
-import KtModal from '../../../packages/kotti-modal'
-
 export default {
-	name: 'Modal',
-	components: {
-		KtModal,
-	},
+	name: 'KtModalDocs',
 	data() {
 		return {
 			closeOutside: true,

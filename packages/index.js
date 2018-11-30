@@ -1,4 +1,5 @@
 import KtAvatar from './kotti-avatar'
+import KtActionbar from './kotti-actionbar'
 import KtAvatarGroup from './kotti-avatar-group'
 import KtBanner from './kotti-banner'
 import KtBreadcrumb from './kotti-breadcrumb'
@@ -27,6 +28,7 @@ import './kotti-style/index.scss'
 const components = [
 	KtAvatar,
 	KtAvatarGroup,
+	KtActionbar,
 	KtBanner,
 	KtBreadcrumb,
 	KtButton,

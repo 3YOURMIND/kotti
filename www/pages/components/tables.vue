@@ -224,11 +224,7 @@ import ShowCase from '../../components/ShowCase'
 
 export default {
 	name: 'Tables',
-	components: {
-		KtBanner,
-		KtTable,
-		ShowCase,
-	},
+	components: { ShowCase },
 	methods: {
 		showAlert(value, model) {
 			alert(`${value} is ${model}!`)

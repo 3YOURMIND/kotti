@@ -53,13 +53,8 @@
 </template>
 
 <script>
-import KtInlineEdit from '../../../packages/kotti-inline-edit'
-
 export default {
 	name: 'KtInlineEditDoc',
-	components: {
-		KtInlineEdit,
-	},
 	data() {
 		return {
 			value1: '',

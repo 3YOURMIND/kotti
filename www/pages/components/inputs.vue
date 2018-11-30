@@ -220,13 +220,8 @@
 </template>
 
 <script>
-import KtInput from '../../../packages/kotti-input'
-
 export default {
 	name: 'KtInputDoc',
-	components: {
-		KtInput,
-	},
 	data() {
 		return {
 			v1: 'Jony One O',

@@ -79,15 +79,9 @@ You can use `fullWidth` to set the width of input to 100%.
 
 
 </template>
-
-
 <script>
-import KtInputNumber from '../../../packages/kotti-input-number'
 export default {
 	name: 'KtInputNumberDoc',
-	components: {
-		KtInputNumber,
-	},
 	data() {
 		return {
 			number1: 12,

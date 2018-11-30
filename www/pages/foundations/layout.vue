@@ -28,16 +28,30 @@ The workspace is designed as a space for related tasks, most interactions
 should be inside this area. The width of the Workspace is responsive: `100%` of the screen width with margin `24px` to the right.
 The background is `#FFFFFF`, with dropshadow: `1px 0 1px #DBDBDB`;
 
-<layout-metric />
+### Metric
+
+Our metric is based on `4px`; we call this one unit. The unit can be used as a variable in `SCSS`. Table below shows the unit to pixel mapping.
+
+|Unit|Pixel|Scss Variable|In Rem|
+|----|----|----|----|
+|1 unit|4px|$unit-1|0.2rem|
+|2 unit|8px|$unit-2|0.4rem|
+|4 unit|4px|$unit-4|0.8rem|
+|6 unit|4px|$unit-6|1.2rem|
+|8 unit|4px|$unit-8|1.6rem|
+
+### Padding and Margin
+
+Following 3 types of margin or padding metric are suggested:
+
+1.  **Border Margin:** the gap between element and window, the width is `24px`.
+2.  **Block Margin:** the gap between two elements, the width is `24px`.
+3.  **Element Padding:** the padding of elements.
+
+![Margin Padding](~/assets/img/layout_metric.png)
+
 </template>
 
 <script>
-import LayoutMetric from '~/components/LayoutMetric.vue'
-
-export default {
-	name: 'Layout',
-	components: {
-		LayoutMetric,
-	},
-}
+export default { name: 'LayoutDoc' }
 </script>

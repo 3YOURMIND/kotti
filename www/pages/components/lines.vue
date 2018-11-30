@@ -1,4 +1,4 @@
-<template lang=md>
+<template lang="md">
 
 	# Horizontal Lines
 
@@ -25,13 +25,5 @@
 </template>
 
 <script>
-import KtLine from '../../../packages/kotti-line'
-import KtButton from '../../../packages/kotti-button'
-export default {
-	name: 'LinePage',
-	components: {
-		KtLine,
-		KtButton,
-	},
-}
+export default { name: 'KtHorizontalLineDoc' }
 </script>

@@ -19,7 +19,7 @@
 import KtActionBarMenu from './ActionBarMenu'
 
 export default {
-	name: 'KtActionBar',
+	name: 'KtActionbar',
 	components: {
 		KtActionBarMenu,
 	},

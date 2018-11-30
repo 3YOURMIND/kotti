@@ -1,4 +1,4 @@
-<template lang=md>
+<template lang="md">
 
 # User Menu
 
@@ -33,12 +33,5 @@
 </template>
 
 <script>
-import KtNavbar from '../../../packages/kotti-navbar'
-
-export default {
-	name: 'KtNavbarDoc',
-	components: {
-		KtNavbar,
-	},
-}
+export default { name: 'KtNavbarDoc' }
 </script>

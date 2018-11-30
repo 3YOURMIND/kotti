@@ -30,18 +30,12 @@
 </template>
 
 <script>
-import KtActionbar from '../../../packages/kotti-actionbar'
 import KtContainer from '../../../packages/kotti-container'
-import KtNavbar from '../../../packages/kotti-navbar'
-import KtUserMenu from '../../../packages/kotti-user-menu'
 
 export default {
 	layout: 'empty',
 	components: {
-		KtNavbar,
-		KtActionbar,
 		KtContainer,
-		KtUserMenu,
 	},
 	provide() {
 		return { KtNavbarTheme: this.defaultTheme }

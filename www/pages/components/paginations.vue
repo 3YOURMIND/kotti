@@ -52,13 +52,6 @@
 
 </template>
 
-
 <script>
-import KtPagination from '../../../packages/kotti-pagination'
-export default {
-	name: 'KtPaginationDoc',
-	components: {
-		KtPagination,
-	},
-}
+export default { name: 'KtPaginationDocs' }
 </script>

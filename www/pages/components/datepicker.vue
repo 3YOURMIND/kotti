@@ -80,12 +80,8 @@
 </template>
 
 <script>
-import KtDatePicker from '../../../packages/kotti-datepicker'
 export default {
 	name: 'DatePicker',
-	components: {
-		KtDatePicker,
-	},
 	data() {
 		return {
 			date: null,

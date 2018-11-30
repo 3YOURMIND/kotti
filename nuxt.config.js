@@ -36,7 +36,7 @@ design decisions. The Kotti design system has two main parts: foundation and com
 	loading: {
 		color: '#2C64CC',
 	},
-	plugins: ['~/plugins/vue-clipboard2'],
+	plugins: ['~/plugins/vue-clipboard2', '~/plugins/kotti-ui'],
 	/*
 	 ** Build configuration
 	 */

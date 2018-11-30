@@ -103,7 +103,5 @@
 </template>
 
 <script>
-export default {
-	name: 'Loadings',
-}
+export default { name: 'KtLoadingDocs' }
 </script>

@@ -1,4 +1,4 @@
-<template lang=md>
+<template lang="md">
 
 # Select
 
@@ -109,15 +109,9 @@ async asyncFind(query) {
 
 </template>
 
-
 <script>
-import KtSelect from '../../../packages/kotti-single-select'
-
 export default {
 	name: 'KtSelectDoc',
-	components: {
-		KtSelect,
-	},
 	data() {
 		return {
 			value1: null,

@@ -135,6 +135,10 @@
 
 </template>
 
+<script>
+export default { name: 'KtUtilitiesDoc' }
+</script>
+
 <style scoped>
 .element-example span {
 	margin-right: 8px;

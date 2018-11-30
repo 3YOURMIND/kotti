@@ -1,4 +1,4 @@
-<template lang=md>
+<template lang="md">
 # Switch
 
 Using swtich to change the value between `true` or `false` quickly.
@@ -76,13 +76,8 @@ using `right` to change the position.
 </template>
 
 <script>
-import KtSwitch from '../../../packages/kotti-switch'
-
 export default {
 	name: 'KtSwitchDoc',
-	components: {
-		KtSwitch,
-	},
 	data() {
 		return {
 			checkbox1: false,

@@ -1,4 +1,4 @@
-<template lang=md>
+<template lang="md">
 
 # Radio
 
@@ -71,17 +71,9 @@ options: [{
 
 </template>
 
-
 <script>
-import KtRadio from '../../../packages/kotti-radio'
-import KtRadioGroup from '../../../packages/kotti-radio-group'
-
 export default {
 	name: 'KtRadioDoc',
-	components: {
-		KtRadio,
-		KtRadioGroup,
-	},
 	data() {
 		return {
 			radio1: 'morning',

@@ -1,4 +1,4 @@
-<template lang=md>
+<template lang="md">
 # Headings
 
 H3 heading supports customize actions, and also can work as section toggles.
@@ -90,13 +90,8 @@ You can change the `toggleStatus` dynamically by binding value to it.
 </template>
 
 <script>
-import KtHeading from '../../../packages/kotti-heading'
-
 export default {
-	name: 'KtHeadingDoc',
-	components: {
-		KtHeading,
-	},
+	name: 'KtHeadingDocs',
 	data() {
 		return {
 			toggle: false,

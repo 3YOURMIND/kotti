@@ -161,6 +161,7 @@ There are three types of validation: `is-error`, `is-success` and `is-warning`.
 		<option>Second options</option>
 	</select>
 </div>
+
 <div class="form-group is-warning">
 	<label class="form-label">Gender</label>
 	<label class="form-radio">
@@ -185,6 +186,7 @@ There are three types of validation: `is-error`, `is-success` and `is-warning`.
 	...
 </div>
 ```
+
 ## Form Icons
 
 You can add icon to `input` and `select` elements by adding `has-icon-left` or `has-icon-right`.
@@ -273,10 +275,9 @@ Add the `disabled` attribute to the element or `<fieldset>` for a disabled form 
 	</select>
 </div>
 ```
+
 </template>
 
 <script>
-export default {
-	name: 'Inputs',
-}
+export default { name: 'FormDoc' }
 </script>
