@@ -15,7 +15,7 @@
 				:style="{ opacity: text ? 1 : '0.24' }"
 				type="text"
 				v-text="replyButtonText"
-				@click="handlePostClick"
+				@click="handleSubmitClick"
 			/>
 		</div>
 	</div>
@@ -62,11 +62,8 @@ export default {
 			const height = this.$refs.textarea.scrollHeight
 			this.$refs.textarea.style.height = `${height}px`
 		},
-		handleReplyClose() {
-			this.$emit('replyCloseClicked')
-		},
-		handlePostClick() {
-			if (!this.text) {
+		handleSubmitClick() {
+			if (!this.text && this.text === '\n') {
 				return
 			}
 			let _payload = {
@@ -74,8 +71,11 @@ export default {
 				replyToId: this.replyToId,
 				parentId: this.parentId,
 			}
-			this.$emit('postClick', _payload)
+			this.$emit('submit', _payload)
+			// Reset all the state
 			_payload = {}
+			this.text = null
+			this.$refs.textarea.style.height = '1.2rem'
 		},
 		divClass(divName) {
 			return this.isInline ? `${divName} ${divName}--inline` : divName

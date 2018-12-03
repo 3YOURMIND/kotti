@@ -7,6 +7,8 @@ import KtButton from './kotti-button'
 import KtButtonGroup from './kotti-button-group'
 import KtCard from './kotti-card'
 import KtCol from './kotti-col'
+import KtComment from './kotti-comment'
+import KtCommentInput from './kotti-comment-input'
 import KtDatePicker from './kotti-datepicker'
 import KtDrawer from './kotti-drawer'
 import KtHeading from './kotti-heading'
@@ -36,6 +38,8 @@ const components = {
 	KtButtonGroup,
 	KtCard,
 	KtCol,
+	KtComment,
+	KtCommentInput,
 	KtDatePicker,
 	KtDrawer,
 	KtHeading,

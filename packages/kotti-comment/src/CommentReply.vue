@@ -10,9 +10,9 @@
 				<div
 					class="comment-reply__message"
 					v-if="!isInlineEdit"
-					@click="$emit('inlineReplyClick', name)"
+					@click="$emit('_inlineReplyClick', name)"
 				>
-					<span v-text="inlineMessage" /> <i class="yoco" v-text="'comment'" />
+					<span v-html="inlineMessage" /> <i class="yoco" v-text="'comment'" />
 				</div>
 				<div class="comment-inline-edit form-group" v-else>
 					<textarea
@@ -21,15 +21,15 @@
 						@change="handleInlineInput"
 					></textarea>
 					<KtButtonGroup class="comment-inline-edit-buttons" shadow>
-						<KtButton icon="close" @click="handleDismiss" />
+						<KtButton icon="close" @click="isInlineEdit = false" />
 						<KtButton icon="check" @click="handleConfirm" />
 					</KtButtonGroup>
 				</div>
 				<div class="comment-reply__action action__more" v-if="!isInlineEdit">
 					<i class="yoco">dots</i>
 					<div class="action__options">
-						<a @click="handleCommentReplyEditClicked"> <li>Edit</li> </a>
-						<a @click="handleCommentReplyDeleteClicked"> <li>Delete</li> </a>
+						<a @click="isInlineEdit = true"> <li>Edit</li> </a>
+						<a @click="$emit('_inlineDeleteClick', uuid)"> <li>Delete</li> </a>
 					</div>
 				</div>
 			</div>
@@ -71,9 +71,6 @@ export default {
 		handleInlineInput(evt) {
 			this.inlineMessageValue = evt.target.value
 		},
-		handleDismiss() {
-			this.isInlineEdit = false
-		},
 		handleConfirm() {
 			this.isInlineEdit = false
 			if (!this.inlineMessageValue) return
@@ -81,14 +78,7 @@ export default {
 				value: this.inlineMessageValue,
 				uuid: this.uuid,
 			}
-			this.$emit('commentReplyEditConfirmed', _payload)
-		},
-		handleCommentReplyEditClicked() {
-			this.isInlineEdit = true
-			this.$emit('commentReplyEditClicked', this.uuid)
-		},
-		handleCommentReplyDeleteClicked() {
-			this.$emit('commentReplyDeleteClicked', this.uuid)
+			this.$emit('_inlineEditSumbit', _payload)
 		},
 	},
 }

@@ -18,8 +18,8 @@
 					@change="handleInlineInput"
 				></textarea>
 				<KtButtonGroup class="comment-inline-edit-buttons" shadow>
-					<KtButton icon="close" @click="handleDismiss" />
-					<KtButton icon="check" @click="handleConfirm" />
+					<KtButton icon="close" @click="isInlineEdit = false" />
+					<KtButton icon="check" @click="handleEditConfirm" />
 				</KtButtonGroup>
 			</div>
 			<div class="comment__action">
@@ -29,8 +29,8 @@
 				<div class="action__more">
 					<i class="yoco">dots</i>
 					<div class="action__options">
-						<a @click="handleEditClicked"> <li>Edit</li> </a>
-						<a @click="handCommentDeleteClicked"> <li>Delete</li> </a>
+						<a @click="isInlineEdit = true"> <li>Edit</li> </a>
+						<a @click="$emit('delete', uuid)"> <li>Delete</li> </a>
 					</div>
 				</div>
 			</div>
@@ -41,7 +41,9 @@
 					:message="reply.message"
 					:time="reply.time"
 					:src="reply.src"
-					@inlineReplyClick="handleInlineReplyClick"
+					@_inlineReplyClick="handleInlineReplyClick"
+					@_inlineDeleteClick="$emit('replyDelete', $event)"
+					@_inlineEditSumbit="$emit('replyEdit', $event)"
 				/>
 			</div>
 			<KtCommentInput
@@ -49,7 +51,7 @@
 				v-if="showInlineReply"
 				:parentId="uuid"
 				:placeholder="replyToText"
-				@postClick="handleInlinePostClick($event)"
+				@submit="handleInlineSubmit($event)"
 			/>
 		</div>
 	</div>
@@ -106,27 +108,18 @@ export default {
 			this.showInlineReply = true
 			this.replyToText = `Reply to ${name}`
 		},
-		handleInlinePostClick(event) {
+		handleInlineSubmit(event) {
 			this.showInlineReply = false
-			this.$emit('inlinePostClick', event)
+			this.$emit('replySubmit', event)
 		},
-		handleDismiss() {
-			this.isInlineEdit = false
-		},
-		handleConfirm() {
+		handleEditConfirm() {
 			this.isInlineEdit = false
 			if (!this.inlineMessageValue) return
-
-			this.$emit('commentEditConfirmed', {
-				value: this.inlineMessageValue,
+			const _payload = {
 				uuid: this.uuid,
-			})
-		},
-		handleEditClicked() {
-			this.isInlineEdit = true
-		},
-		handCommentDeleteClicked() {
-			this.$emit('commentDeleteClicked', this.uuid)
+				value: this.inlineMessageValue,
+			}
+			this.$emit('edit', _payload)
 		},
 	},
 }

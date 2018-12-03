@@ -4,8 +4,6 @@
 
 <div>
 	<KtComment
-		@replyClicked="handleCurrentUuid(comment.uuid)"
-		@commentDeleteClicked="handleCommentDeleteClicked(comment.uuid)"
 		v-for="comment in comments"
 		:key="comment.uuid"
 		:uuid="comment.uuid"
@@ -13,26 +11,24 @@
 		:name="comment.name"
 		:message="comment.message" :src="comment.src"
 		:replies="comment.replies"
-		@inlinePostClick="handlePost($event)"
+		@delete="handleCommentDeleteClicked(comment.uuid)"
+		@edit="handleEditSumbit(payload)"
+		@replySubmit="handlePost($event)"
 	/>
-	<KtCommentInput class="mt-16px"
-	:replyName="replyName" @postClick="handlePost($event)"/>
+	<KtCommentInput
+		class="mt-16px"
+		placeholder="Add comment"
+		src='https://picsum.photos/120'
+		:replyName="replyName"
+		@submit="handlePost($event)"
+	/>
 </div>
 
 </template>
 
 <script>
-import KtComment from '../../../packages/kotti-comment/src/Comment.vue'
-import KtCommentInput from '../../../packages/kotti-comment/src/CommentInput.vue'
-import KtCommentReply from '../../../packages/kotti-comment/src/CommentReply.vue'
-
 export default {
 	name: 'KtCommentDoc',
-	components: {
-		KtComment,
-		KtCommentInput,
-		KtCommentReply,
-	},
 	data() {
 		return {
 			currentUuid: '',
@@ -64,31 +60,6 @@ export default {
 						},
 					],
 				},
-				{
-					uuid: 'f682fa1a-52c1-11e8-9c2d-fa7ae01bbebc',
-					name: 'Anny Hetwood',
-					time: '2018-03-20',
-					message: 'Marine Le Pen Finale in French Election',
-					src: 'https://picsum.photos/100',
-					replies: [
-						{
-							uuid: 'f9e6e2d4-52c1-11e8-9c2d-fa7ae01bbebe',
-							name: 'Benni',
-							userId: '12',
-							time: '2018-03-20',
-							message: 'Join Bright!',
-							src: 'https://picsum.photos/100',
-						},
-						{
-							uuid: '005e57aa-52c2-11e8-9c2d-fa7ae01bbebc',
-							name: 'Cooky',
-							userId: '89',
-							time: '2018-03-20',
-							message: 'Your trip to Montreal is cool',
-							src: 'https://picsum.photos/120',
-						},
-					],
-				},
 			],
 		}
 	},
@@ -104,17 +75,22 @@ export default {
 		handleCurrentUuid(value) {
 			this.currentUuid = value
 		},
+		handleEditSumbit(payload) {
+			console.log(payload)
+		},
 		handlePost(payload) {
 			const _message = {
 				uuid: Math.random().toString(),
 				name: 'Junyu',
 				message: payload.message,
+				src: 'https://picsum.photos/120',
 				time: new Date().toDateString(),
+				replies: [],
 			}
-			if (payload.parentId) {
-				let parentComment = this.comments.find(comment => {
-					return comment.uuid === payload.parentId
-				})
+			const parentComment = this.comments.find(comment => {
+				return comment.uuid === payload.parentId
+			})
+			if (parentComment) {
 				parentComment.replies.push(_message)
 				return
 			}
