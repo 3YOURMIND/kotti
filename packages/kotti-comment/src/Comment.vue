@@ -1,6 +1,6 @@
 <template>
 	<div class="comment">
-		<KtAvatar class="comment__avatar" :src="src"/>
+		<KtAvatar class="comment__avatar" :src="src" />
 		<div class="comment__wrapper">
 			<div class="comment__info">
 				<div class="info__name" v-text="name" />
@@ -12,7 +12,8 @@
 				v-text="inlineMessage"
 			/>
 			<div class="comment-inline-edit form-group" v-else>
-				<textarea class="comment-inline-edit-input form-input"
+				<textarea
+					class="comment-inline-edit-input form-input"
 					:value="inlineMessage"
 					@change="handleInlineInput"
 				></textarea>
@@ -22,18 +23,14 @@
 				</KtButtonGroup>
 			</div>
 			<div class="comment__action">
-				<div class="action__reply" @click="handleReplyClicked">
+				<div class="action__reply" @click="handleInlineReplyClick(name)">
 					<i class="yoco">comment</i> Reply
 				</div>
 				<div class="action__more">
 					<i class="yoco">dots</i>
 					<div class="action__options">
-						<a @click="handleEditClicked">
-							<li>Edit</li>
-						</a>
-						<a @click="handCommentDeleteClicked">
-							<li>Delete</li>
-						</a>
+						<a @click="handleEditClicked"> <li>Edit</li> </a>
+						<a @click="handCommentDeleteClicked"> <li>Delete</li> </a>
 					</div>
 				</div>
 			</div>
@@ -44,17 +41,26 @@
 					:message="reply.message"
 					:time="reply.time"
 					:src="reply.src"
+					@inlineReplyClick="handleInlineReplyClick"
 				/>
 			</div>
+			<KtCommentInput
+				isInline
+				v-if="showInlineReply"
+				:parentId="uuid"
+				:placeholder="replyToText"
+				@postClick="handleInlinePostClick($event)"
+			/>
 		</div>
 	</div>
 </template>
 
 <script>
 import KtAvatar from '../../kotti-avatar'
-import KtCommentReply from './CommentReply.vue'
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group/'
+import KtCommentReply from './CommentReply.vue'
+import KtCommentInput from './CommentInput.vue'
 
 export default {
 	name: 'KtComment',
@@ -71,9 +77,12 @@ export default {
 		KtButton,
 		KtButtonGroup,
 		KtCommentReply,
+		KtCommentInput,
 	},
 	data() {
 		return {
+			showInlineReply: false,
+			replyToText: null,
 			isInlineEdit: false,
 			inlineMessageValue: '',
 		}
@@ -93,6 +102,14 @@ export default {
 		handleInlineInput(event) {
 			this.inlineMessageValue = event.target.value
 		},
+		handleInlineReplyClick(name) {
+			this.showInlineReply = true
+			this.replyToText = `Reply to ${name}`
+		},
+		handleInlinePostClick(event) {
+			this.showInlineReply = false
+			this.$emit('inlinePostClick', event)
+		},
 		handleDismiss() {
 			this.isInlineEdit = false
 		},
@@ -107,9 +124,6 @@ export default {
 		},
 		handleEditClicked() {
 			this.isInlineEdit = true
-		},
-		handleReplyClicked() {
-			this.$emit('replyClicked', this.uuid)
 		},
 		handCommentDeleteClicked() {
 			this.$emit('commentDeleteClicked', this.uuid)

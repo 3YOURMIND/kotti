@@ -104,133 +104,109 @@
 	}
 }
 
+// Comment Reply => KtCommentReply
+
 .comment-reply {
 	display: flex;
 	flex-flow: row;
-	padding: 0.4rem 0;
-}
-
-.comment-reply__avatar {
-	width: 1.6rem;
-	height: 1.6rem;
-	flex: 0 0 1.6rem;
-}
-
-.comment-reply__wrapper {
-	width: 100%;
-	margin-left: 0.4rem;
-	display: flex;
-	flex-direction: column;
-}
-
-.comment-reply__info {
-	width: 100%;
-	display: flex;
-	font-size: 0.65rem;
-	line-height: 0.8rem;
-	margin-bottom: 0.2rem;
+	padding: 0.2rem 0;
 	flex-direction: row;
+	&__wrapper {
+		width: 100%;
+		margin-left: 0.4rem;
+		display: flex;
+		flex-direction: column;
+	}
+	&__avatar {
+		flex: 0 0 1.6rem;
+	}
+	&__info {
+		display: flex;
+		font-size: 0.7rem;
+		line-height: 0.7rem;
+		margin-bottom: 0.1rem;
+		flex-direction: row;
+	}
+	&__name {
+		flex: 1 1;
+		font-weight: 600;
+	}
+	&__time {
+		flex: 1 1 auto;
+		color: $lightgray-500;
+		text-align: right;
+	}
+	&__body {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	&__message {
+		width: 100%;
+		font-size: 0.65rem;
+		line-height: 1rem;
+		.yoco {
+			font-size: 0.8rem;
+			color: #a8a8a8;
+			display: none;
+		}
+		&:hover {
+			cursor: pointer;
+			.yoco {
+				color: $darkgray-400;
+				display: inline;
+			}
+		}
+	}
 }
 
-.comment-reply__name {
-	flex: 1 1;
-	font-weight: 600;
-}
+// .comment-reply__action {
+// 	align-items: center;
+// 	align-self: center;
+// }
 
-.comment-reply__time {
-	flex: 1 1 auto;
-	color: $lightgray-500;
-	text-align: right;
-}
-
-.comment-reply__body {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.comment-reply__message {
-	width: 100%;
-	font-size: 0.7rem;
-	line-height: 1.2rem;
-}
-
-.comment-reply__action {
-	align-items: center;
-	align-self: center;
-}
+// KtCommentInput
 
 .comment-input {
 	display: flex;
 	flex-direction: row;
 	box-sizing: border-box;
-	bottom: 0;
-	background: #f8f8f8;
-}
-
-.comment-input__wrapper {
-	display: flex;
-	width: 100%;
-	flex-direction: column;
-	margin: 0.8rem;
-	border: 1px solid #dbdbdb;
-	background: #fff;
-	border-radius: 0.1rem;
-	&--focus {
-		border: 1px solid #bbb;
+	&--inline {
+		margin: 0;
 	}
-}
-
-.comment-input__reply {
-	display: flex;
-	width: 100%;
-	padding: 0.4rem;
-	align-items: center;
-}
-
-.comment-input__quote {
-	background: #f8f8f8;
-	color: #a8a8a8;
-	width: 100%;
-	padding: 0.4rem;
-	display: flex;
-}
-
-.comment-quote__name {
-	flex: 1 1;
-}
-
-.comment-input__avatar {
-	width: 2.4rem;
-	height: 2.4rem;
-	border-radius: 100%;
-	flex: 0 0 2.4rem;
-
-	img {
-		border-radius: 100%;
-		height: 100%;
+	&__wrapper {
+		display: flex;
 		width: 100%;
+		flex-direction: row;
+		padding: 0.4rem;
+		align-items: center;
+		border: 1px solid #dbdbdb;
+		background: #fff;
+		border-radius: 0.1rem;
+		&--focus {
+			border: 1px solid #bbb;
+		}
+		&--inline {
+			padding: 0.2rem;
+		}
 	}
-}
-
-.comment-input__input {
-	flex: 1 1;
-
-	textarea {
+	&__avatar {
+		flex: 0 0 1.6rem;
+		align-self: flex-start;
+	}
+	&__textarea {
+		flex: 1 1;
 		resize: none;
 		width: 100%;
-		padding: 0.4rem 0.8rem;
+		height: 1.2rem;
 		border: 0;
-		line-height: 1rem;
-		height: 1.6rem;
-
+		padding: 0;
+		margin: 0 0.2rem;
 		&:focus {
 			outline: none;
 		}
 	}
-}
-
-.comment-input__button {
-	flex: 0 0;
-	line-height: 2rem;
+	&__button {
+		height: 1.6rem;
+	}
 }

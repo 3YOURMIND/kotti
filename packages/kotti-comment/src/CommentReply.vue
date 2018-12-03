@@ -1,13 +1,19 @@
 <template>
 	<div class="comment-reply">
-		<KtAvatar small :src="src" class="comment-reply__avatar"/>
+		<KtAvatar small :src="src" class="comment-reply__avatar" />
 		<div class="comment-reply__wrapper">
 			<div class="comment-reply__info">
 				<div class="comment-reply__name" v-text="name" />
 				<div class="comment-reply__time" v-text="time" />
 			</div>
 			<div class="comment-reply__body">
-				<div class="comment-reply__message" v-text="inlineMessage" v-if="!isInlineEdit" />
+				<div
+					class="comment-reply__message"
+					v-if="!isInlineEdit"
+					@click="$emit('inlineReplyClick', name)"
+				>
+					<span v-text="inlineMessage" /> <i class="yoco" v-text="'comment'" />
+				</div>
 				<div class="comment-inline-edit form-group" v-else>
 					<textarea
 						class="comment-inline-edit-input form-input"
@@ -22,12 +28,8 @@
 				<div class="comment-reply__action action__more" v-if="!isInlineEdit">
 					<i class="yoco">dots</i>
 					<div class="action__options">
-						<a @click="handleCommentReplyEditClicked">
-							<li>Edit</li>
-						</a>
-						<a @click="handleCommentReplyDeleteClicked">
-							<li>Delete</li>
-						</a>
+						<a @click="handleCommentReplyEditClicked"> <li>Edit</li> </a>
+						<a @click="handleCommentReplyDeleteClicked"> <li>Delete</li> </a>
 					</div>
 				</div>
 			</div>

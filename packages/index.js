@@ -26,7 +26,7 @@ import KtUserMenu from './kotti-user-menu'
 import KtRadioGroup from './kotti-radio-group'
 import './kotti-style/index.scss'
 
-const components = [
+const components = {
 	KtAvatar,
 	KtAvatarGroup,
 	KtActionbar,
@@ -53,16 +53,13 @@ const components = [
 	KtTable,
 	KtUserMenu,
 	KtRadioGroup,
-]
-
-const install = function(Vue = {}) {
-	components.map(component => {
-		Vue.component(component.name, component)
-	})
+}
+function install(Vue) {
+	for (const component of Object.values(components)) Vue.use(component)
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
 	install(window.Vue)
 }
 
-export default Object.assign({}, components, { install })
+export default { ...components, install }
