@@ -1,16 +1,16 @@
 <template>
 	<div class="comment-reply">
-		<KtAvatar small :src="src" class="comment-reply__avatar" />
+		<KtAvatar small :src="userAvatar" class="comment-reply__avatar" />
 		<div class="comment-reply__wrapper">
 			<div class="comment-reply__info">
-				<div class="comment-reply__name" v-text="name" />
-				<div class="comment-reply__time" v-text="time" />
+				<div class="comment-reply__name" v-text="userName" />
+				<div class="comment-reply__time" v-text="createdTime" />
 			</div>
 			<div class="comment-reply__body">
 				<div
 					class="comment-reply__message"
 					v-if="!isInlineEdit"
-					@click="$emit('_inlineReplyClick', name)"
+					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
 					<span v-html="inlineMessage" /> <i class="yoco" v-text="'comment'" />
 				</div>
@@ -29,7 +29,7 @@
 					<i class="yoco">dots</i>
 					<div class="action__options">
 						<a @click="isInlineEdit = true"> <li>Edit</li> </a>
-						<a @click="$emit('_inlineDeleteClick', uuid)"> <li>Delete</li> </a>
+						<a @click="$emit('_inlineDeleteClick', id)"> <li>Delete</li> </a>
 					</div>
 				</div>
 			</div>
@@ -50,11 +50,12 @@ export default {
 		KtButtonGroup,
 	},
 	props: {
+		createdTime: String,
+		id: Number,
 		message: String,
-		name: String,
-		src: String,
-		time: String,
-		uuid: String,
+		userAvatar: String,
+		userId: Number,
+		userName: String,
 	},
 	data() {
 		return {
@@ -68,15 +69,15 @@ export default {
 		},
 	},
 	methods: {
-		handleInlineInput(evt) {
-			this.inlineMessageValue = evt.target.value
+		handleInlineInput(event) {
+			this.inlineMessageValue = event.target.value
 		},
 		handleConfirm() {
 			this.isInlineEdit = false
 			if (!this.inlineMessageValue) return
 			let _payload = {
-				value: this.inlineMessageValue,
-				uuid: this.uuid,
+				message: this.inlineMessageValue,
+				id: this.id,
 			}
 			this.$emit('_inlineEditSumbit', _payload)
 		},

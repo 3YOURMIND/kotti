@@ -1,7 +1,12 @@
 <template>
 	<div :class="divClass('comment-input')">
 		<div :class="warpperClass">
-			<KtAvatar class="comment-input__avatar" small :src="src" />
+			<KtAvatar
+				class="comment-input__avatar"
+				small
+				:src="userAvatar"
+				v-if="!isInline"
+			/>
 			<textarea
 				class="comment-input__textarea"
 				@focus="textFocused = true"
@@ -32,11 +37,11 @@ export default {
 		KtButton,
 	},
 	props: {
-		replyName: String,
-		src: String,
-		parentId: { type: String, default: null },
-		placeholder: String,
 		isInline: { type: Boolean, default: false },
+		parentId: Number,
+		placeholder: String,
+		replyToUserId: Number,
+		userAvatar: String,
 	},
 	data() {
 		return {
@@ -68,7 +73,7 @@ export default {
 			}
 			let _payload = {
 				message: this.text,
-				replyToId: this.replyToId,
+				replyToUserId: this.replyToUserId,
 				parentId: this.parentId,
 			}
 			this.$emit('submit', _payload)

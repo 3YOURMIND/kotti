@@ -2,27 +2,86 @@
 
 # Comments
 
-<div>
+## Example
+
+<div class="element-example">
 	<KtComment
 		v-for="comment in comments"
-		:key="comment.uuid"
-		:uuid="comment.uuid"
-		:time="comment.time"
-		:name="comment.name"
-		:message="comment.message" :src="comment.src"
+		:key="comment.id"
+		:id="comment.id"
+		:createdTime="comment.createdTime"
+		:userName="comment.userName"
+		:userAvatar="comment.userAvatar"
+		:userId="comment.userId"
+		:message="comment.message"
 		:replies="comment.replies"
-		@delete="handleCommentDeleteClicked(comment.uuid)"
-		@edit="handleEditSumbit(payload)"
-		@replySubmit="handlePost($event)"
+		@delete="handelDelete($event)"
+		@edit="handleEdit($event)"
+		@submit="handlePost($event)"
 	/>
 	<KtCommentInput
 		class="mt-16px"
 		placeholder="Add comment"
-		src='https://picsum.photos/120'
-		:replyName="replyName"
+		userAvatar='https://picsum.photos/120'
 		@submit="handlePost($event)"
 	/>
 </div>
+
+## Usage
+
+### Comment Object
+
+```js
+{
+	id: 1, // Comment ID
+	userId: 12,
+	userName: 'Margaret Atwood',
+	message: 'Marine Le Pen, a Fierce Campaigner',
+	userAvatar: 'https://picsum.photos/200',
+	createdTime: '2018-12-04T09:57:20+00:00',
+	replies: [{
+		id: 2,
+		userId: 12,
+		userName: 'Margaret Atwood',
+		message: 'Marine Le Pen, a Fierce Campaigner',
+		userAvatar: 'https://picsum.photos/200',
+		createdTime: '2018-12-04T09:57:20+00:00',
+	}]
+}
+```
+
+### Payload Object
+
+```js
+// Submit Payload
+{
+	parentId: Number // If null => parent comment
+	replyToUserId: Number // Reserved variable for @ function
+	message: String
+}
+
+// Edit Payload
+{
+	id: Number
+	message: String
+}
+
+// Delete Payload
+{
+	id: Number
+	message: String
+	parentId: Number
+}
+
+```
+
+### Event
+
+| Event Name | Component        | Payload   | Description     |
+|------------|------------------|-----------|-----------------|
+| `@submit`  | `KtCommentInput` | See above | Add new comment |
+| `@delete`  | `KtComment`      | See above | Delete comment  |
+| `@edit`    | `KtComment`      | See above | Edit comment    |
 
 </template>
 
@@ -32,31 +91,37 @@ export default {
 	data() {
 		return {
 			currentUuid: '',
+			currentUser: {
+				userName: 'Junyu',
+				userId: 3,
+				userAvatar: 'https://picsum.photos/48',
+			},
 			comments: [
 				{
-					uuid: '333afea0-52c0-11e8-9c2d-fa7ae01bbebc',
-					name: 'Margaret Atwood',
+					id: 1,
+					userId: 12,
+					userName: 'Margaret Atwood',
 					message:
 						'Marine Le Pen, a Fierce Campaigner, Heads to Finale in French Election',
-					src: 'https://picsum.photos/200',
-					time: '2018-03-20',
+					userAvatar: 'https://picsum.photos/200',
+					createdTime: '2018-12-04T09:57:20+00:00',
 					replies: [
 						{
-							uuid: '45051148-52c0-11e8-9c2d-fa7ae01bbebc',
-							name: 'Benni',
-							userId: '12',
-							time: '2018-03-20',
+							id: 2,
+							userId: 13,
+							userName: 'Benni',
+							createdTime: '2018-03-20',
 							message:
 								'Join Bright Side Now! Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
-							src: 'https://picsum.photos/100',
+							userAvatar: 'https://picsum.photos/100',
 						},
 						{
-							uuid: '4bf75e84-52c0-11e8-9c2d-fa7ae01bbebc',
-							name: 'Cooky',
-							time: '2018-03-20',
-							userId: '1',
+							id: 3,
+							userId: 2,
+							userName: 'Cooky',
+							userAvatar: 'https://picsum.photos/120',
+							createdTime: '2018-03-20',
 							message: 'RE: Your trip to Montreal',
-							src: 'https://picsum.photos/120',
 						},
 					],
 				},
@@ -72,23 +137,19 @@ export default {
 		},
 	},
 	methods: {
-		handleCurrentUuid(value) {
-			this.currentUuid = value
-		},
-		handleEditSumbit(payload) {
+		handleEdit(payload) {
 			console.log(payload)
 		},
 		handlePost(payload) {
 			const _message = {
-				uuid: Math.random().toString(),
-				name: 'Junyu',
+				...this.currentUser,
+				id: Math.floor(Math.random() * 101),
 				message: payload.message,
-				src: 'https://picsum.photos/120',
-				time: new Date().toDateString(),
+				createdTime: new Date().toDateString(),
 				replies: [],
 			}
 			const parentComment = this.comments.find(comment => {
-				return comment.uuid === payload.parentId
+				return comment.id === payload.parentId
 			})
 			if (parentComment) {
 				parentComment.replies.push(_message)
@@ -96,8 +157,16 @@ export default {
 			}
 			this.comments.push(_message)
 		},
-		handleCommentDeleteClicked(uuid) {
-			this.comments = this.comments.filter(comment => comment.uuid !== uuid)
+		handelDelete(payload) {
+			if (payload.parentId) {
+				let parentComment = this.comments.find(
+					comment => comment.id === payload.parentId,
+				)
+				parentComment.replies = parentComment.replies.filter(
+					reply => reply.id !== payload.id,
+				)
+			}
+			this.comments = this.comments.filter(comment => comment.id !== payload.id)
 		},
 	},
 }

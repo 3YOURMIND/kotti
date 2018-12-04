@@ -1,10 +1,10 @@
 <template>
 	<div class="comment">
-		<KtAvatar class="comment__avatar" :src="src" />
+		<KtAvatar class="comment__avatar" :src="userAvatar" />
 		<div class="comment__wrapper">
 			<div class="comment__info">
-				<div class="info__name" v-text="name" />
-				<div class="info__time" v-text="time" />
+				<div class="info__name" v-text="userName" />
+				<div class="info__time" v-text="createdTime" />
 			</div>
 			<div
 				v-if="!isInlineEdit"
@@ -23,34 +23,40 @@
 				</KtButtonGroup>
 			</div>
 			<div class="comment__action">
-				<div class="action__reply" @click="handleInlineReplyClick(name)">
+				<div
+					class="action__reply"
+					@click="handleInlineReplyClick({ userName, userId })"
+				>
 					<i class="yoco">comment</i> Reply
 				</div>
 				<div class="action__more">
 					<i class="yoco">dots</i>
 					<div class="action__options">
 						<a @click="isInlineEdit = true"> <li>Edit</li> </a>
-						<a @click="$emit('delete', uuid)"> <li>Delete</li> </a>
+						<a @click="handleDelete(id)"> <li>Delete</li> </a>
 					</div>
 				</div>
 			</div>
-			<div v-for="reply in replies" :key="reply.uuid">
+			<div v-for="reply in replies" :key="reply.id">
 				<KtCommentReply
-					:uuid="reply.uuid"
-					:name="reply.name"
+					:id="reply.id"
+					:userName="reply.userName"
+					:userAvatar="reply.userAvatar"
+					:userId="reply.userId"
 					:message="reply.message"
-					:time="reply.time"
-					:src="reply.src"
+					:createdTime="reply.createdTime"
 					@_inlineReplyClick="handleInlineReplyClick"
-					@_inlineDeleteClick="$emit('replyDelete', $event)"
-					@_inlineEditSumbit="$emit('replyEdit', $event)"
+					@_inlineDeleteClick="handleDelete($event, 'INLINE')"
+					@_inlineEditSumbit="$emit('edit', $event)"
 				/>
 			</div>
 			<KtCommentInput
 				isInline
 				v-if="showInlineReply"
-				:parentId="uuid"
+				:parentId="id"
+				:replyToUserId="replyToUserId"
 				:placeholder="replyToText"
+				:userAvatar="userAvatar"
 				@submit="handleInlineSubmit($event)"
 			/>
 		</div>
@@ -67,12 +73,13 @@ import KtCommentInput from './CommentInput.vue'
 export default {
 	name: 'KtComment',
 	props: {
+		createdTime: String,
+		id: Number,
 		message: String,
-		name: String,
 		replies: Array,
-		src: String,
-		time: String,
-		uuid: String,
+		userAvatar: String,
+		userId: Number,
+		userName: String,
 	},
 	components: {
 		KtAvatar,
@@ -85,6 +92,7 @@ export default {
 		return {
 			showInlineReply: false,
 			replyToText: null,
+			replyToUserId: Number,
 			isInlineEdit: false,
 			inlineMessageValue: '',
 		}
@@ -104,20 +112,28 @@ export default {
 		handleInlineInput(event) {
 			this.inlineMessageValue = event.target.value
 		},
-		handleInlineReplyClick(name) {
+		handleInlineReplyClick(user) {
 			this.showInlineReply = true
-			this.replyToText = `Reply to ${name}`
+			this.replyToUserId = user.userId
+			this.replyToText = `Reply to ${user.userName}`
+		},
+		handleDelete(event, type) {
+			const _payload = {
+				id: event,
+				parentId: type ? this.id : null,
+			}
+			this.$emit('delete', _payload)
 		},
 		handleInlineSubmit(event) {
 			this.showInlineReply = false
-			this.$emit('replySubmit', event)
+			this.$emit('submit', event)
 		},
 		handleEditConfirm() {
 			this.isInlineEdit = false
 			if (!this.inlineMessageValue) return
 			const _payload = {
-				uuid: this.uuid,
-				value: this.inlineMessageValue,
+				id: this.id,
+				message: this.inlineMessageValue,
 			}
 			this.$emit('edit', _payload)
 		},

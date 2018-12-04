@@ -48,7 +48,8 @@
 	font-size: 0.7rem;
 	color: $lightgray-500;
 	font-weight: 600;
-	height: 1.2rem;
+	margin: 0.2rem 0;
+	line-height: 1.2rem;
 	justify-content: space-between;
 	.yoco {
 		font-size: 0.9rem;
@@ -83,24 +84,31 @@
 		list-style: none;
 	}
 	li:hover {
-		background: $lightgray-400;
+		background: $lightgray-300;
 	}
 }
 
 .action__reply {
 	flex: 0 0 auto;
+	padding: 0 0.2rem;
+	border-radius: 0.2rem;
 	&:hover {
 		cursor: pointer;
+		background: $lightgray-400;
 		color: $darkgray-400;
 	}
 }
 .action__more {
-	flex: 0 0 2.4rem;
+	flex: 0 0 2rem;
+	padding: 0 0.2rem;
+	border-radius: 0.2rem;
 	position: relative;
-	text-align: right;
+	text-align: center;
 	display: inline-block;
 	&:hover {
 		cursor: pointer;
+		color: $darkgray-400;
+		background: $lightgray-400;
 		color: $darkgray-400;
 		.action__options {
 			display: block;
