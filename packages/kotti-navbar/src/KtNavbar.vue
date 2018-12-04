@@ -28,6 +28,7 @@
 			>
 				<kt-navbar-logo
 					:isNarrow="isNarrowNavBar"
+					:labelText="labelText"
 					@toggleNarrowBar="toggleNarrowBar"
 				/>
 			</div>
@@ -99,6 +100,7 @@ export default {
 		sections: { type: Array, required: true },
 		notification: { type: Object, default: null },
 		quickLinks: { type: Object, default: null },
+		labelText: { type: String, default: '' },
 	},
 	inject: {
 		themeColor: {

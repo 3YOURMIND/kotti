@@ -3,9 +3,10 @@
 		<div :class="objectClass">
 			<img
 				:src="themeColor.logoUrl"
-				v-if="!isNarrow"
+				v-if="themeColor.logoUrl && !isNarrow"
 				:height="themeColor.logoHeight"
 			/>
+			<div v-if="!themeColor.logoUrl && !isNarrow">{{ labelText }}</div>
 			<i class="yoco" v-text="iconText" @click="handleToggleNarrowClicked" />
 		</div>
 		<div class="navbar-logo--mobile"><img :src="themeColor.logoUrl" /></div>
@@ -17,6 +18,7 @@ export default {
 	name: 'KtNavbarLogo',
 	props: {
 		isNarrow: { type: Boolean, default: false },
+		labelText: { type: String, default: '' },
 	},
 	methods: {
 		handleToggleNarrowClicked() {
