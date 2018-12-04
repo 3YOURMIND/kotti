@@ -95,21 +95,23 @@ myNotification: {
 
 ### Attribuites
 
-| Attribute    | Description                    | Type      | Accepted values  | Default |
-|:-------------|:-------------------------------|:----------|:-----------------|:--------|
-| `isNarrow`   | define navbar is narrow        | `Boolean` | —                | `false` |
-| `menu`       | menu of the navbar             | `Arrary`  | —                | —       |
-| `menu.exact` | enable router link exact match | `Bolean`  | `false`          | —       |
-| `menu.icon`  | menu icon                      | `String`  | String from yoco | —       |
-| `menu.lable` | menu lable text                | `String`  | —                | —       |
-| `menu.to`    | router link to                 | `String`  | —                | —       |
+| Attribute       | Description                            | Type      | Accepted values  | Default |
+|:----------------|:---------------------------------------|:----------|:-----------------|:--------|
+| `isNarrow`      | define navbar is narrow                | `Boolean` | -                | `false` |
+| `labelText`     | using text when logoUrl is not defined | `String`  | -                | -       |
+| `section`       | menu of the navbar                     | `Arrary`  | -                | -       |
+| `section.exact` | enable router link exact match         | `Bolean`  | `false`          | -       |
+| `section.icon`  | menu icon                              | `String`  | String from yoco | -       |
+| `section.lable` | menu lable text                        | `String`  | -                | -       |
+| `section.to`    | router link to                         | `String`  | -                | -       |
 
 ### Events
 
-| Event Name                   | Type    | Payload   | Description                 |
-|:-----------------------------|:--------|:----------|:----------------------------|
-| `@toggleKtNavbarNarrowEvent` | `$emit` | `Boolean` | toggle the navbar to narrow |
-| `@clickLogo`                 | `$emit` | `Boolean` | navbar logo was clicked     |
+| Event Name                   | Type    | Payload   | Description                  |
+|:-----------------------------|:--------|:----------|:-----------------------------|
+| `@toggleKtNavbarNarrowEvent` | `$emit` | `Boolean` | toggle the navbar to narrow  |
+| `@logoClick`                 | `$emit` | `$event`  | navbar logo was clicked      |
+| `@linkClick`                 | `$emit` | `$event`  | navbar menu link was clicked |
 
 ### Slots
 
