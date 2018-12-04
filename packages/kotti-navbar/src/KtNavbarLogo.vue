@@ -42,7 +42,7 @@ export default {
 	},
 	computed: {
 		iconText() {
-			return this.isNarrow ? 'burger' : 'triangle_left'
+			return this.isNarrow ? 'burger' : 'hide_menu'
 		},
 		objectClass() {
 			return {

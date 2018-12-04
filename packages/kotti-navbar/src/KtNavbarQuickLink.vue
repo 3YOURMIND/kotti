@@ -26,8 +26,7 @@
 				]"
 				:style="{ color: themeColor.textColor }"
 			>
-				<span v-text="item.title" v-if="!isNarrow" />
-				<i class="todo-yoco">link</i>
+				<span v-text="item.title" v-if="!isNarrow" /> <i class="yoco">link</i>
 			</div>
 		</a>
 	</div>
@@ -69,8 +68,12 @@ export default {
 	font-size: 0.75rem;
 	padding: 0.3rem 0;
 	justify-content: space-between;
+	align-items: center;
 	&--narrow {
 		display: block;
+	}
+	i {
+		font-size: 0.8rem;
 	}
 }
 </style>
