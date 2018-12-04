@@ -46,7 +46,6 @@ export default {
 	name: 'KtNavbarNotification',
 	props: {
 		count: { type: Number, default: 0 },
-		isNarrow: { type: Boolean, default: false },
 		link: { type: String, default: null },
 		title: { type: String, default: 'Notification' },
 	},
@@ -62,6 +61,9 @@ export default {
 		},
 	},
 	computed: {
+		isNarrow() {
+			return this.$KtNavbar.isNarrow
+		},
 		objectClass() {
 			return {
 				'navbar-notification': true,

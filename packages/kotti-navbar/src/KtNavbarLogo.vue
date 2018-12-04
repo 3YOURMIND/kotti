@@ -20,7 +20,6 @@
 export default {
 	name: 'KtNavbarLogo',
 	props: {
-		isNarrow: { type: Boolean, default: false },
 		labelText: { type: String, default: null },
 	},
 	methods: {
@@ -41,6 +40,9 @@ export default {
 		},
 	},
 	computed: {
+		isNarrow() {
+			return this.$KtNavbar.isNarrow
+		},
 		iconText() {
 			return this.isNarrow ? 'burger' : 'hide_menu'
 		},

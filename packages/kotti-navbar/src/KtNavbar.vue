@@ -26,11 +26,10 @@
 				:style="{ 'border-color': themeColor.borderColor }"
 				@click="$emit('logoClick')"
 			>
-				<kt-navbar-logo :isNarrow="isNarrowNavBar" :labelText="labelText" />
+				<kt-navbar-logo :labelText="labelText" />
 			</div>
 			<kt-navbar-notification
 				v-if="notification"
-				:isNarrow="isNarrowNavBar"
 				:count="notification.count"
 				:title="notification.title"
 				:link="notification.link"
@@ -38,12 +37,10 @@
 			<div :class="objectClass('navbar-body')">
 				<kt-navbar-menu
 					:sections="sections"
-					:isNarrow="isNarrowNavBar"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
 				<kt-navbar-quick-link
 					v-if="quickLinks"
-					:isNarrow="isNarrowNavBar"
 					:title="quickLinks.title"
 					:links="quickLinks.links"
 				/>
@@ -92,7 +89,6 @@ export default {
 		KtNavbarQuickLink,
 	},
 	props: {
-		isNarrow: { type: Boolean, default: false },
 		sections: { type: Array, required: true },
 		notification: { type: Object, default: null },
 		quickLinks: { type: Object, default: null },
@@ -116,9 +112,6 @@ export default {
 		}
 	},
 	computed: {
-		isNarrowNavBar() {
-			return this.$KtNavbar.isNarrow
-		},
 		navbarActiveToggleStyle() {
 			return {
 				'background-color': this.mobileMenuToggle
@@ -131,7 +124,7 @@ export default {
 		objectClass(className) {
 			return {
 				[className]: true,
-				[`${className}--narrow`]: this.isNarrowNavBar,
+				[`${className}--narrow`]: this.$KtNavbar.isNarrow,
 			}
 		},
 		clickawayMobileMenu() {

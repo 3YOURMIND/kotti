@@ -38,11 +38,15 @@ export default {
 	props: {
 		title: { type: String, default: 'Quick Links' },
 		links: { type: Array, default: [] },
-		isNarrow: { type: Boolean, default: null },
 	},
 	inject: {
 		themeColor: {
 			from: 'KtNavbarTheme',
+		},
+	},
+	computed: {
+		isNarrow() {
+			return this.$KtNavbar.isNarrow
 		},
 	},
 }

@@ -30,7 +30,6 @@ export default {
 	name: 'KtNavbarMenu',
 	props: {
 		sections: { type: Array, default: null },
-		isNarrow: { type: Boolean, default: false },
 	},
 	inject: {
 		themeColor: {
@@ -44,6 +43,9 @@ export default {
 		},
 	},
 	computed: {
+		isNarrow() {
+			return this.$KtNavbar.isNarrow
+		},
 		objectClass() {
 			return {
 				'navbar-menu': true,
