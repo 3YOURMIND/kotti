@@ -17,15 +17,38 @@
 		:replies="comment.replies"
 		@delete="handelDelete($event)"
 		@edit="handleEdit($event)"
-		@submit="handlePost($event)"
+		@submit="handleSubmit($event)"
 	/>
 	<KtCommentInput
 		class="mt-16px"
 		placeholder="Add comment"
 		userAvatar='https://picsum.photos/120'
-		@submit="handlePost($event)"
+		@submit="handleSubmit($event)"
 	/>
 </div>
+
+```html
+<KtComment
+	v-for="comment in comments"
+	:key="comment.id"
+	:id="comment.id"
+	:createdTime="comment.createdTime"
+	:userName="comment.userName"
+	:userAvatar="comment.userAvatar"
+	:userId="comment.userId"
+	:message="comment.message"
+	:replies="comment.replies"
+	@delete="handelDelete($event)"
+	@edit="handleEdit($event)"
+	@submit="handlePost($event)"
+/>
+<KtCommentInput
+	class="mt-16px"
+	placeholder="Add comment"
+	userAvatar='https://picsum.photos/120'
+	@submit="handlePost($event)"
+/>
+```
 
 ## Usage
 
@@ -140,7 +163,7 @@ export default {
 		handleEdit(payload) {
 			console.log(payload)
 		},
-		handlePost(payload) {
+		handleSubmit(payload) {
 			const _message = {
 				...this.currentUser,
 				id: Math.floor(Math.random() * 101),
