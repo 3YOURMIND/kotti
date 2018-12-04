@@ -1,11 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Yoco Icons</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./yoco-icon.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./yoco-icon.css" />
     <script src="https://unpkg.com/vue"></script>
     <style>
       body {
@@ -13,7 +12,8 @@
         font-family: sans-serif;
         font-size: 16px;
         color: #555;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
         max-width: 60rem;
         text-align: center;
         padding: 0 16px;
@@ -37,8 +37,9 @@
         font-weight: 300;
       }
 
-      a,a:visited {
-        color: #2C66C4;
+      a,
+      a:visited {
+        color: #2c66c4;
         text-decoration: none;
       }
       a:hover {
@@ -94,15 +95,16 @@
         width: 50%;
         position: relative;
         text-align: center;
-        transition: ease-in .22s width;
+        transition: ease-in 0.22s width;
         border-radius: 4px;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.1);
       }
 
       .input-wrapper:focus-within {
         width: 65%;
-        box-shadow: 0 0 0 1px rgba(44, 100, 204, 1), 0 4px 16px rgba(0, 0, 0, 0.1);
-        transition: ease-out .22s width;
+        box-shadow: 0 0 0 1px rgba(44, 100, 204, 1),
+          0 4px 16px rgba(0, 0, 0, 0.1);
+        transition: ease-out 0.22s width;
       }
 
       .input-wrapper span {
@@ -134,15 +136,14 @@
         width: 100%;
         height: 56px;
         line-height: 2em;
-        border-radius: .4rem;
+        border-radius: 0.4rem;
         border: 0;
-        padding: .8rem 40px;
+        padding: 0.8rem 40px;
         font-size: 16px;
       }
 
       input:focus {
         outline: none;
-
       }
 
       @media (max-width: 480px) {
@@ -160,24 +161,31 @@
   <body>
     <div id="app">
       <div class="header">
-        <h1 @click="feelLucky">yoco icon
-          <i class="yoco icon-preview">{{previewIcon}}</i>
+        <h1 @click="feelLucky">
+          yoco icon <i class="yoco icon-preview">{{ previewIcon }}</i>
         </h1>
-        <h2>In house designed icons for <a href="https://3yourmind.github.io/kotti/foundations/icons">kotti design system</a></h2>
+        <h2>
+          In house designed icons for
+          <a href="https://3yourmind.github.io/kotti/foundations/icons"
+            >kotti design system</a
+          >
+        </h2>
       </div>
       <div class="input-wrapper">
-        <span>
-          <i class="yoco">search</i>
-        </span>
-        <input v-model="serachString" placeholder="Search icon">
+        <span> <i class="yoco">search</i> </span>
+        <input v-model="serachString" placeholder="Search icon" />
         <button @click="serachString=''" v-if="serachString">
           <i class="yoco">close</i>
         </button>
       </div>
       <div class="icons">
-        <div class="icon-container" v-for="icon in displayString" @click="previewIcon=icon">
+        <div
+          class="icon-container"
+          v-for="icon in displayString"
+          @click="previewIcon=icon"
+        >
           <div class="icon">
-            <i class="yoco" ref="liga">{{icon}}</i>
+            <i class="yoco" ref="liga">{{ icon }}</i>
             <div class="icon-liga" v-text="icon"></div>
           </div>
         </div>
@@ -186,119 +194,127 @@
   </body>
   <script>
     const iconStrings = [
-			'request',
-			'idea',
-			'landline',
-			'mobile',
-			'address_book',
-      'qr_code',
-      'camera_switch',
-      'camera',
-      'cad',
-      'csv',
-      'json',
-      'thumb_down',
-      'thumb_up',
-      'shipping',
-      'basket',
-      'location',
-      'notes',
-      'burger',
-      'email',
-      'check',
-      'sidebar',
-      'structure',
-      'markup',
-      'version',
-      'material',
-      'logout',
-      'arrow_line',
-      'announce',
-      '3dbox',
-      'attachment',
-      'bell',
-      'calendar',
-      'card',
-      'charts',
-      'chevron_down',
-      'chevron_left',
-      'chevron_right',
-      'chevron_up',
-      'circle_attention',
-      'circle_check',
-      'circle_cross',
-      'circle_i',
-      'circle_load',
-      'circle_question',
-      'clock',
-      'close',
-      'cloud_download',
-      'cloud_upload',
-      'cloud',
-      'comment',
-      'copy',
-      'dashboard',
-      'dimension',
-      'dots_vertical',
-      'dots',
-      'download',
-      'upload',
-      'edit',
-      'exit_fullscreen',
-      'eye',
-      'file',
-      'filter',
-      'folder',
-      'fullscreen',
-      'global',
-      'heart',
-      'invoice',
-      'layer',
-      'list',
-      'minus',
-      'not_allow',
-      'permission',
-      'picture',
-      'plus',
-      'print',
-      'save',
-      'scale',
-      'search',
-      'setting',
-      'share',
-      'shop',
-      'star',
-      'support',
-      'tag',
-      'tech',
-      'trash',
-      'triangle_down',
-      'triangle_up',
-      'triangle_right',
-      'triangle_left',
-      'user',
-      'usergroup',
-      'view',
-      'zip'
-    ]
+      "link",
+      "kanban",
+      "flag",
+      "hide_menu",
+      "idea",
+      "request",
+      "idea",
+      "landline",
+      "mobile",
+      "address_book",
+      "qr_code",
+      "camera_switch",
+      "camera",
+      "cad",
+      "csv",
+      "json",
+      "thumb_down",
+      "thumb_up",
+      "shipping",
+      "basket",
+      "location",
+      "notes",
+      "burger",
+      "email",
+      "check",
+      "sidebar",
+      "structure",
+      "markup",
+      "version",
+      "material",
+      "logout",
+      "arrow_line",
+      "announce",
+      "3dbox",
+      "attachment",
+      "bell",
+      "calendar",
+      "card",
+      "charts",
+      "chevron_down",
+      "chevron_left",
+      "chevron_right",
+      "chevron_up",
+      "circle_attention",
+      "circle_check",
+      "circle_cross",
+      "circle_i",
+      "circle_load",
+      "circle_question",
+      "clock",
+      "close",
+      "cloud_download",
+      "cloud_upload",
+      "cloud",
+      "comment",
+      "copy",
+      "dashboard",
+      "dimension",
+      "dots_vertical",
+      "dots",
+      "download",
+      "upload",
+      "edit",
+      "exit_fullscreen",
+      "eye",
+      "file",
+      "filter",
+      "folder",
+      "fullscreen",
+      "global",
+      "heart",
+      "invoice",
+      "layer",
+      "list",
+      "minus",
+      "not_allow",
+      "permission",
+      "picture",
+      "plus",
+      "print",
+      "save",
+      "scale",
+      "search",
+      "setting",
+      "share",
+      "shop",
+      "star",
+      "support",
+      "tag",
+      "tech",
+      "trash",
+      "triangle_down",
+      "triangle_up",
+      "triangle_right",
+      "triangle_left",
+      "user",
+      "usergroup",
+      "view",
+      "zip"
+    ];
 
     var app = new Vue({
-      el: '#app',
+      el: "#app",
       data: {
         iconString: iconStrings,
-        previewIcon: '',
-        serachString: ''
+        previewIcon: "",
+        serachString: ""
       },
       mounted() {
-        let randomNumber = Math.floor(Math.random() * this.iconString.length) - 1;
+        let randomNumber =
+          Math.floor(Math.random() * this.iconString.length) - 1;
         this.previewIcon = this.iconString[randomNumber];
       },
       methods: {
         feelLucky() {
-          for (let i=0; i<10; i++) {
-            setTimeout(()=>{
-              this.previewIcon = this.iconString[Math.floor(Math.random() * this.iconString.length) - 1];
-            }, i * 100)
+          for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+              this.previewIcon = this.iconString[
+                Math.floor(Math.random() * this.iconString.length) - 1
+              ];
+            }, i * 100);
           }
         }
       },
@@ -310,15 +326,15 @@
           return this.iconString;
         },
         searchResults() {
-          let results = iconStrings.filter(result => result.includes(this.serachString.toLowerCase()))
+          let results = iconStrings.filter(result =>
+            result.includes(this.serachString.toLowerCase())
+          );
           if (results.length === 1) {
             this.previewIcon = results[0];
           }
           return results;
         }
-
       }
-    })
+    });
   </script>
-
 </html>
