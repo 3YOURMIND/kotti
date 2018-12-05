@@ -105,8 +105,13 @@ button.bottom {
 }
 
 .button-group {
+	/** Fix for inline element space
+	https://css-tricks.com/fighting-the-space-between-inline-block-elements/ **/
+	font-size: 0;
+
 	button {
 		border-radius: 0;
+		font-size: $font-size;
 	}
 
 	button:first-of-type {
