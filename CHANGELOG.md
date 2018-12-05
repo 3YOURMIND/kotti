@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.0.0 - 2018.12.05
+
+**Breaking Changes**
+
+**This release upgrades the vue/cli for nuxt and build process. The style entry
+point is also changed from last version. Please check README for installation
+guides.**
+
+- Fxied: Nuxt to use Kotti globally [KT-46]
+- Added: Merge vue-yodify into Kotti [KT-2]
+- Added: KtActionbar and KtPagination to the package [KT-61]
+- Changed: KtComments switch to inline reply [KT-62]
+- Added: When no logoUrl show text of the lable [KT-63]
+- Added: Label Props Supports in KtButton [KT-65]
+
 ## 0.0.14 - 2018.11.30
 
 - Fixed: KtAvatarGroup change the z-index causes element overlapping [KT-55]
