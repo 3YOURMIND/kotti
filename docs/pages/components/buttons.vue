@@ -16,11 +16,11 @@
 	## Types
 
 	<div class="element-example white">
-	<KtButton type="primary" class="mt-4 mr-4">Primary Button</KtButton>
-	<KtButton type="secondary" class="mt-4 mr-4">Secondary Button</KtButton>
-	<KtButton type="danger" class="mt-4 mr-4">Danger Button</KtButton>
-	<KtButton class="mt-4 mr-4">Default Button</KtButton>
-	<KtButton type="text" class="mt-4 mr-4">Text Button</KtButton>
+		<KtButton type="primary" class="mt-4 mr-4">Primary Button</KtButton>
+		<KtButton type="secondary" class="mt-4 mr-4">Secondary Button</KtButton>
+		<KtButton type="danger" class="mt-4 mr-4">Danger Button</KtButton>
+		<KtButton class="mt-4 mr-4">Default Button</KtButton>
+		<KtButton type="text" class="mt-4 mr-4">Text Button</KtButton>
 	</div>
 
 	**Primary button**
@@ -48,11 +48,24 @@
 
 	A text button can be used for sub-menus and page navigation. It also can pair with a primary button for destructive actions such as `Cancel`.
 
+	## Label
+
+	<div class="element-example">
+		<KtButton type="primary" icon="edit" label="Edit Button"/>
+	</div>
+
+	Instead of using the default slot, you can also provide text via the `label` property. Note that `v-text` and `v-t` will **not** be compatible with the `icon` property.
+
+	```html
+	<KtButton type="primary" icon="edit" label="Edit Button"/>
+	```
+
 	## Icon
 
 	<div class="element-example">
-	<KtButton type="primary" icon="edit" class="mr-16px">Edit button</KtButton>
-	<KtButton type="primary" icon="edit" />
+		<KtButton type="primary" class="mr-4">Edit button</KtButton>
+		<KtButton type="primary" icon="edit" label="Edit Button" class="mr-4" />
+		<KtButton type="primary" icon="edit"/>
 	</div>
 
 	* **Label only:** Used in most cases.
@@ -60,8 +73,9 @@
 	* **Icon only:** Use when you have limited space, such as when the page needs to fit on a mobile device, and a single icon is enough to convey the meaning.
 
 	```html
-	<KtButton type="primary" icon="edit">Edit button</KtButton>
-	<KtButton type="primary" icon="edit" />
+	<KtButton type="primary">Edit button</KtButton>
+	<KtButton type="primary" icon="edit" label="Edit Button" />
+	<KtButton type="primary" icon="edit"/>
 	```
 	## Loading
 
@@ -78,10 +92,10 @@
 	## Button Group
 
 	<div class="element-example white">
-	<KtButtonGroup>
-	<KtButton type="primary" icon="edit">Edit</KtButton>
-	<KtButton type="secondary" icon="trash">Delete</KtButton>
-	</KtButtonGroup>
+		<KtButtonGroup>
+			<KtButton type="primary" icon="edit">Edit</KtButton>
+			<KtButton type="secondary" icon="trash">Delete</KtButton>
+		</KtButtonGroup>
 	</div>
 
 	```html
@@ -105,6 +119,7 @@
 	<KtButton size="large" icon="edit">Large</KtButton>
 	```
 	## Themes
+
 	<div class="element-example">
 		<KtButton @click="isThemeChange = !isThemeChange">Change Theme</KtButton>
 	</div>

@@ -7,7 +7,8 @@
 		@mouseleave="isHover = false"
 	>
 		<i v-if="loading" class="kt-circle-loading" :style="loadingStyle" />
-		<i v-else class="yoco" v-text="icon" /> <span> <slot /> </span>
+		<i v-else-if="icon" class="yoco" v-text="icon" />
+		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />
 	</button>
 </template>
 
@@ -18,6 +19,7 @@ export default {
 	name: 'KtButton',
 	props: {
 		icon: { default: '', type: String },
+		label: { default: null, type: String },
 		loading: { default: false, type: Boolean },
 		size: { default: null, type: String },
 		type: { default: null, type: String },
@@ -36,17 +38,8 @@ export default {
 		}
 	},
 	computed: {
-		mainClasses() {
-			const classes = [this.type, this.objectClass]
-			if (this.size === 'small') classes.push('sm')
-			if (this.size === 'large') classes.push('lg')
-			return classes
-		},
-		objectClass() {
-			return {
-				icon: this.icon,
-				'icon-only': this.icon && !this.$slots.default,
-			}
+		hasSlot() {
+			return Boolean(this.$slots.default)
 		},
 		loadingStyle() {
 			const circleColor =
@@ -56,45 +49,53 @@ export default {
 				'border-bottom-color': circleColor,
 			}
 		},
+		mainClasses() {
+			const classes = [this.type, this.objectClass]
+			if (this.size === 'small') classes.push('sm')
+			if (this.size === 'large') classes.push('lg')
+			return classes
+		},
+		objectClass() {
+			return {
+				icon: this.icon,
+				'icon-only': this.icon && !this.$slots.default && !this.label,
+			}
+		},
 		themeColor() {
-			const style = {}
-
 			switch (this.type) {
 				case 'primary':
-					style['color'] = color(this.KtTheme.brandColor).isDark()
-						? '#ffffff'
-						: '#3d3d3d'
-					style['background-color'] = this.hoverColor(this.KtTheme.brandColor)
-					style['border-color'] = color(this.KtTheme.brandColor).darken(0.24)
-					break
+					return {
+						color: color(this.KtTheme.brandColor).isDark()
+							? '#ffffff'
+							: '#3d3d3d',
+						'background-color': this.hoverColor(this.KtTheme.brandColor),
+						'border-color': color(this.KtTheme.brandColor).darken(0.24),
+					}
 
 				case 'danger':
-					style['background-color'] = this.isHover
-						? this.KtTheme.dangerColor
-						: null
-					style['border-color'] = this.isHover ? this.KtTheme.dangerColor : null
-					style['color'] = this.isHover ? '#ffffff' : this.KtTheme.dangerColor
-					break
+					return {
+						color: this.isHover ? '#ffffff' : this.KtTheme.dangerColor,
+						'background-color': this.isHover ? this.KtTheme.dangerColor : null,
+						'border-color': this.isHover ? this.KtTheme.dangerColor : null,
+					}
 
 				case 'secondary':
-					style['border-color'] = this.hoverColor(this.KtTheme.brandColor)
-					style['color'] = this.hoverColor(this.KtTheme.brandColor)
-					break
+					return {
+						color: this.hoverColor(this.KtTheme.brandColor),
+						'border-color': this.hoverColor(this.KtTheme.brandColor),
+					}
 
 				case 'text':
-					style['color'] = this.hoverColor(this.KtTheme.brandColor)
-					break
+					return { color: this.hoverColor(this.KtTheme.brandColor) }
 
 				default:
-					style['color'] = this.hoverColor(this.KtTheme.brandColor)
+					return { color: this.hoverColor(this.KtTheme.brandColor) }
 			}
-
-			return style
 		},
 	},
 	methods: {
-		handleClick(evt) {
-			this.$emit('click', evt)
+		handleClick(event) {
+			this.$emit('click', event)
 		},
 		hoverColor(orginalColor) {
 			return this.isHover ? color(orginalColor).darken(0.24) : orginalColor
