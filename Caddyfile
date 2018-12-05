@@ -6,5 +6,6 @@
 	proxy / http://kotti {
 		transparent
 		websocket
+		header_upstream Host localhost
 	}
 }
