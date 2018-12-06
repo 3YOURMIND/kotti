@@ -51,7 +51,8 @@
 		width: 100%;
 	}
 	&__day-cell {
-		display: inline-block;
+		display: block;
+		float: left;
 		width: 2rem;
 		height: 2rem;
 		padding: 0.2rem;

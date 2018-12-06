@@ -6,13 +6,13 @@
 				<div class="kt-datepicker-header__year" v-text="yearText" />
 			</div>
 			<div class="kt-datepicker-header__control">
-				<i class="yoco" @click="monthPrevious" v-text="'chevron_left'"/>
-				<i class="yoco" @click="monthNext" v-text="'chevron_right'"/>
+				<i class="yoco" @click="monthPrevious" v-text="'chevron_left'" />
+				<i class="yoco" @click="monthNext" v-text="'chevron_right'" />
 			</div>
 		</div>
 		<div class="kt-datepicker-calendar">
 			<div class="kt-datepicker-calendar__week">
-				<span v-for="day in daysOfWeek" :key="day" v-text="day"/>
+				<span v-for="day in daysOfWeek" :key="day" v-text="day" />
 			</div>
 			<div class="kt-datepicker-calendar__day">
 				<div
@@ -20,7 +20,7 @@
 					:key="`blank${index}`"
 					class="kt-datepicker-calendar__day-cell kt-datepicker-calendar__day--blank"
 				>
-					<span v-text="day"/>
+					<span v-text="day" />
 				</div>
 
 				<div
@@ -29,7 +29,7 @@
 					:class="dayStyle(day)"
 					@click="selectDay(day)"
 				>
-					<span  v-text="day"/>
+					<span v-text="day" />
 				</div>
 			</div>
 		</div>
