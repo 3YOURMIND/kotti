@@ -105,6 +105,10 @@ const submenu = [
 				to: 'selects',
 			},
 			{
+				label: 'Steps',
+				to: 'steps',
+			},
+			{
 				label: 'Switches',
 				to: 'switches',
 			},

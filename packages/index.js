@@ -24,6 +24,8 @@ import KtRadio from './kotti-radio'
 import KtRow from './kotti-row'
 import KtSingleSelect from './kotti-single-select'
 import KtSwitch from './kotti-switch'
+import KtStep from './kotti-step'
+import KtSteps from './kotti-steps'
 import KtTable from './kotti-table'
 import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
@@ -58,6 +60,8 @@ const components = {
 	KtRow,
 	KtSingleSelect,
 	KtSwitch,
+	KtStep,
+	KtSteps,
 	KtTable,
 	KtToaster,
 	KtUserMenu,
