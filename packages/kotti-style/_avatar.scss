@@ -21,8 +21,9 @@
 
 .avatar-group {
 	display: flex;
-	flex-direction: row;
+	flex-direction: row-reverse;
 	align-items: center;
+	justify-content: flex-end;
 
 	.avatar {
 		margin-right: 0.2rem;
@@ -40,6 +41,10 @@
 			width: 100%;
 			text-align: center;
 		}
+	}
+
+	&.stack .avatar.avatar-number {
+		margin-left: -0.8rem;
 	}
 }
 

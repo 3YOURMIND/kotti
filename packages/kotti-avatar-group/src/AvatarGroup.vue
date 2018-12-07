@@ -1,20 +1,19 @@
 <template>
 	<div :class="avatarGroupClasses">
+		<div v-if="avatarRemainders > 0" class="avatar avatar-number">
+			<span v-text="`+${avatarRemainders}`" />
+		</div>
 		<KtAvatar
 			v-if="index < showItems"
-			v-for="(item, index) in items"
+			v-for="(item, index) in reversedItems"
 			:key="index"
 			:name="item.name"
 			:src="item.src"
 			:hoverable="hoverable"
 			:selected="item.selected"
 			:small="item.small"
-			:zIndex="showItems - index"
 			:showTooltip="showTooltip"
 		/>
-		<div v-if="avatarRemainders > 0" class="avatar avatar-number">
-			<span v-text="`+${avatarRemainders}`" />
-		</div>
 	</div>
 </template>
 
@@ -51,6 +50,9 @@ export default {
 		},
 		avatarRemainders() {
 			return this.items.length - this.showItems
+		},
+		reversedItems() {
+			return this.items.reverse()
 		},
 	},
 }

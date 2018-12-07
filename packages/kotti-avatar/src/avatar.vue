@@ -3,7 +3,6 @@
 		:class="avatarClasses"
 		:data-tooltip="name"
 		@click="onAvatarContainerClick"
-		:style="{ 'z-index': zIndex }"
 	>
 		<div v-if="avatarAvailable">
 			<img class="avatar-img" :src="src" @error="imgFallBack" />
@@ -25,7 +24,6 @@ export default {
 		showTooltip: { default: false, type: Boolean },
 		small: { default: false, type: Boolean },
 		src: { default: null, type: String },
-		zIndex: { default: 'inherit', types: [String, Number] },
 	},
 	data() {
 		return {
