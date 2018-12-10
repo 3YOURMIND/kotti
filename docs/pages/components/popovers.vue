@@ -4,74 +4,37 @@
 
 Use popovers to provide extra information or actions. Compared to `tooltip`, `popovers` can carry more information.
 
+## Placement
+
 <div class="element-example">
-<KtPopover position="left" class="mr-4">
-	<KtButton type="secondary" slot="toggle">
-		Popover Left
-	</KtButton>
-	<KtCard slot="content">
-		<div slot="card-header" >
-			<h2>Lorem Ipsum</h2>
-		</div>
-		<div slot="card-body" >
-			This is the hover popover
-		</div>
-	</KtCard>
+<KtPopover placement="top" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Top Popover"/>
+	<div slot="content">
+		<h2>Top Popover</h2>
+		<p>Top Popovers</p>
+	</div>
 </KtPopover>
-
-<KtPopover position="top" class="mr-4">
-	<KtButton type="secondary" slot="toggle">
-		Popover Top
-	</KtButton>
-	<KtCard slot="content">
-		<div slot="card-header" >
-			<h2>Lorem Ipsum</h2>
-		</div>
-		<div slot="card-body" >
-			This is the hover popover
-		</div>
-	</KtCard>
+<KtPopover placement="Bottom" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Bottom Popover"/>
+	<div slot="content">Heloo</div>
 </KtPopover>
-
-<KtPopover position="bottom" class="mr-4">
-	<KtButton type="secondary" slot="toggle">
-		Popover Bottom
-	</KtButton>
-	<KtCard slot="content">
-		<div slot="card-header">
-			<h2>Lorem Ipsum</h2>
-		</div>
-		<div slot="card-body">
-			This is the hover popover
-		</div>
-	</KtCard>
+<KtPopover placement="right" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Right Popover" />
+	<div slot="content">New Message</div>
 </KtPopover>
-
-<KtPopover position="right">
-	<KtButton type="secondary" slot="toggle">
-		Popover Bottom
-	</KtButton>
-	<KtCard slot="content">
-		<div slot="card-header">
-			<h2>Lorem Ipsum</h2>
-		</div>
-		<div slot="card-body">
-			This is the hover popover
-		</div>
-	</KtCard>
+<KtPopover placement="left" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Left Popover" />
+	<div slot="content">New Message</div>
 </KtPopover>
 </div>
 
-There are also 4 different positions for popovers. `right`, `left`, `top`, and `bottom`.
+There are 4 different positions for popovers. `right`, `left`, `top`, and `bottom`.
 
-The `toggle` slot is the element to trigger the popover.
-
-A [card component](./cards) is usually used inside the `content` slot.
-
+**Attention:** Popover will change the placement positions when parent has `overflow: scroll`.
 
 ```html
-<KtPopover position="right">
-	<KtButton type="secondary" slot="toggle">
+<KtPopover placement="right">
+	<KtButton type="secondary">
 		Popover Bottom
 	</KtButton>
 	<KtCard slot="content">
@@ -84,20 +47,40 @@ A [card component](./cards) is usually used inside the `content` slot.
 	</KtCard>
 </KtPopover>
 ```
+## Size
+
+Popover size can be `sm`, `md`, and `lg`.
+
+<div class="element-example">
+<KtPopover size="sm" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Small Popover" />
+	<div slot="content">Message</div>
+</KtPopover>
+<KtPopover size="md" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Medium Popover" />
+	<div slot="content">Message</div>
+</KtPopover>
+<KtPopover size="lg" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Large Popover" />
+	<div slot="content">Message</div>
+</KtPopover>
+</div>
+
 
 ## Usage
 
 ### Attributes
 
-| Attribute | Description                | Type     | Accepted Values                  | Default  |
-|:----------|:---------------------------|:---------|:---------------------------------|:---------|
-| `postion` | postion of popover content | `String` | `top`, `bottom`, `right`, `left` | `bottom` |
+| Attribute   | Description                | Type     | Accepted Values                  | Default  |
+|:------------|:---------------------------|:---------|:---------------------------------|:---------|
+| `placement` | postion of popover content | `String` | `top`, `bottom`, `right`, `left` | `bottom` |
+| `size`      | size of popover content    | `String` | `sm`, `md`, `lg`                 | `sm`     |
 
 ### Slots
 
 | Slot Name | Description                   |
 |:----------|:------------------------------|
-| `toggle`  | toggle element of the content |
+| `default` | toggle element of the content |
 | `content` | content section               |
 
 </template>

@@ -68,3 +68,38 @@
 		z-index: $zindex-4;
 	}
 }
+
+// poper.js css
+.kt-popper {
+	padding: 0.8rem;
+	background: #fff;
+	border-radius: $border-radius;
+	z-index: $zindex-4;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 1px 0.2rem 0.6rem rgba(0, 0, 0, 0.24);
+	&--sm {
+		width: 12rem;
+	}
+	&--md {
+		width: 16rem;
+	}
+	&--lg {
+		width: 20rem;
+	}
+
+	&[x-placement^='top'] {
+		margin-bottom: $unit-1;
+	}
+
+	&[x-placement^='bottom'] {
+		margin-top: $unit-1;
+	}
+
+	&[x-placement^='right'] {
+		margin-left: $unit-1;
+	}
+
+	&[x-placement^='left'] {
+		margin-right: $unit-1;
+	}
+}
