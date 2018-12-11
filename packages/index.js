@@ -12,6 +12,7 @@ import KtCommentInput from './kotti-comment-input'
 import KtDatePicker from './kotti-datepicker'
 import KtDrawer from './kotti-drawer'
 import KtHeading from './kotti-heading'
+import KtLine from './kotti-line'
 import KtInlineEdit from './kotti-inline-edit'
 import KtInput from './kotti-input'
 import KtInputNumber from './kotti-input-number'
@@ -44,6 +45,7 @@ const components = {
 	KtDatePicker,
 	KtDrawer,
 	KtHeading,
+	KtLine,
 	KtInlineEdit,
 	KtInput,
 	KtInputNumber,
