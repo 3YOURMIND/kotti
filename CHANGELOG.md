@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.0.1 - 2018.12.05
+
+- Added: New icons in yoco [KT-70]
+- Fixed: KtInput label overlaps placeholder when it is `isCompact` [KT-21]
+- Fixed: Added KtLine into package [KT-69]
+- Fixed: KtDatePicker layout problem caused by inline-block [KT-66]
+- Fixed: KtAvatar overlay when tooltip show [KT-67]
+
 ## 1.0.0 - 2018.12.05
 
 **Breaking Changes**
@@ -14,6 +22,9 @@ guides.**
 - Changed: KtComments switch to inline reply [KT-62]
 - Added: When no logoUrl show text of the lable [KT-63]
 - Added: Label Props Supports in KtButton [KT-65]
+
+<details>
+<summary><strong>Older Versions</strong></summary>
 
 ## 0.0.14 - 2018.11.30
 
@@ -104,3 +115,5 @@ guides.**
 ## 0.0.1-beta.10 - 2018.07.26
 
 - Changed: out of beta
+
+</details>

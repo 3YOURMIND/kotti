@@ -34,7 +34,7 @@
 		}
 	],
 	"dependencies": {
-		"@3yourmind/yoco": "^1.0.0",
+		"@3yourmind/yoco": "^1.1.0",
 		"color": "^3.1.0",
 		"dayjs": "^1.7.5",
 		"vue-clickaway": "^2.2.2"
@@ -100,5 +100,5 @@
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.0.0"
+	"version": "1.0.1"
 }
