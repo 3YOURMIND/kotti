@@ -49,21 +49,15 @@ Yoco use ligatures feature, which allows rendering of an icon glyph simply by us
 We use [icomoon](https://icomoon.io/app/) to generate font files. You can import `icomoon/yoco-icon.json` on icomoon website to generate new fonts. We apply follwing font metrics.
 
 | Type             | Metrics |
-| ---------------- | ------- |
+|------------------|---------|
 | Square Height    | 1024    |
 | Baseline Height  | 24      |
 | Whitespace Width | 24      |
 
 ## Build
 
-Gulp will copy fonts to `dist/fonts` folder and minify css files then copy to `dist` directory.
+Fonts, CSS and Svg files will be copied to `dist` folder
 
 ```bash
-yarn gulp build
-```
-
-## Publish to gh-pages
-
-```bash
-yarn gh-pages
+yarn run build
 ```

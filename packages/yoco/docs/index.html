@@ -9,15 +9,13 @@
     <style>
       body {
         margin: 0 auto;
-        font-family: sans-serif;
         font-size: 16px;
         color: #555;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         max-width: 60rem;
         text-align: center;
         padding: 0 16px;
-        font-weight: 300;
+        font-weight: 400;
       }
 
       h1 {
@@ -42,14 +40,16 @@
         color: #2c66c4;
         text-decoration: none;
       }
+
       a:hover {
         text-decoration: underline;
       }
+
       .header {
         margin: 2rem 0;
       }
 
-      i.icon-preview {
+      .yoco.icon-preview {
         font-size: 4rem;
       }
 
@@ -84,10 +84,11 @@
       .icon-liga {
         font-size: 0.875em;
         line-height: 2em;
+        opacity: 0.84;
       }
 
       .icon-container .yoco {
-        font-size: 32px !important;
+        font-size: 32px;
       }
 
       .input-wrapper {
@@ -150,6 +151,7 @@
         .icon-container {
           width: 50%;
         }
+
         .input-wrapper,
         .input-wrapper:focus-within {
           width: 100%;
@@ -170,6 +172,10 @@
             >kotti design system</a
           >
         </h2>
+        <p v-if="!previewIcon">
+          You got an empty icon,
+          <a href="https://github.com/3YOURMIND/yoco/issues/new">it's a bug</a>
+        </p>
       </div>
       <div class="input-wrapper">
         <span> <i class="yoco">search</i> </span>
@@ -193,127 +199,34 @@
     </div>
   </body>
   <script>
-    const iconStrings = [
-      "3dbox",
-      "address_book",
-      "announce",
-      "arrow_line",
-      "attachment",
-      "basket",
-      "bell",
-      "bookmark",
-      "burger",
-      "cad",
-      "calendar",
-      "camera_switch",
-      "camera",
-      "card",
-      "charts",
-      "check",
-      "chevron_down",
-      "chevron_left",
-      "chevron_right",
-      "chevron_up",
-      "circle_attention",
-      "circle_check",
-      "circle_cross",
-      "circle_i",
-      "circle_load",
-      "circle_question",
-      "clock",
-      "close",
-      "cloud_download",
-      "cloud_upload",
-      "cloud",
-      "column_fixleft",
-      "column_fixright",
-      "column_hide",
-      "comment",
-      "copy",
-      "csv",
-      "dashboard",
-      "dimension",
-      "doc",
-      "dots_vertical",
-      "dots",
-      "download",
-      "edit",
-      "email",
-      "exit_fullscreen",
-      "eye",
-      "file",
-      "filter",
-      "flag",
-      "folder",
-      "fullscreen",
-      "global",
-      "heart",
-      "hide_menu",
-      "idea",
-      "invoice",
-      "json",
-      "kanban",
-      "landline",
-      "layer",
-      "link",
-      "list",
-      "location",
-      "logout",
-      "markup",
-      "material",
-      "minus",
-      "mobile",
-      "not_allow",
-      "notes",
-      "pdf",
-      "permission",
-      "picture",
-      "plus",
-      "print",
-      "qr_code",
-      "request",
-      "save",
-      "scale",
-      "search",
-      "setting",
-      "share",
-      "shipping",
-      "shop",
-      "sidebar",
-      "sort_ascend",
-      "sort_descend",
-      "star",
-      "structure",
-      "support",
-      "tag",
-      "tech",
-      "thumb_down",
-      "thumb_up",
-      "trash",
-      "triangle_down",
-      "triangle_left",
-      "triangle_right",
-      "triangle_switch",
-      "triangle_up",
-      "upload",
-      "user",
-      "usergroup",
-      "version",
-      "view",
-      "zip"
-    ];
+    function loadJSON(callback) {
+      var xobj = new XMLHttpRequest();
+      xobj.overrideMimeType("application/json");
+      xobj.open("GET", "yoco-icon.json", true);
+      xobj.onreadystatechange = function() {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+          callback(xobj.responseText);
+        }
+      };
+      xobj.send(null);
+    }
+    loadJSON(function(response) {
+      const json = JSON.parse(response).iconSets[0].selection;
+      let iconMoonString = [];
+      json.map(function(item) {
+        iconMoonString.push(item.ligatures.split(",")[0]);
+      });
+      app.iconString = iconMoonString;
+    });
 
     var app = new Vue({
       el: "#app",
-      data: {
-        iconString: iconStrings,
-        previewIcon: "",
-        serachString: ""
-      },
-      mounted() {
-        let randomNumber =
-          Math.floor(Math.random() * this.iconString.length) - 1;
-        this.previewIcon = this.iconString[randomNumber];
+      data() {
+        return {
+          iconString: [],
+          previewIcon: "idea",
+          serachString: ""
+        };
       },
       methods: {
         feelLucky() {
@@ -334,7 +247,7 @@
           return this.iconString;
         },
         searchResults() {
-          let results = iconStrings.filter(result =>
+          let results = this.iconString.filter(result =>
             result.includes(this.serachString.toLowerCase())
           );
           if (results.length === 1) {
