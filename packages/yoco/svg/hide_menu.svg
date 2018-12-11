@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>hide_menu</title>
+    <desc>Created with Sketch.</desc>
+    <g id="hide_menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M9.5,6 L16.5,6 C16.7761424,6 17,6.22385763 17,6.5 L17,7.5 C17,7.77614237 16.7761424,8 16.5,8 L9.5,8 C9.22385763,8 9,7.77614237 9,7.5 L9,6.5 C9,6.22385763 9.22385763,6 9.5,6 Z M7,11 L16.5,11 C16.7761424,11 17,11.2238576 17,11.5 L17,12.5 C17,12.7761424 16.7761424,13 16.5,13 L7,13 L7,15.271682 L4,12 L7,9 L7,11 Z M9.5,16 L16.5,16 C16.7761424,16 17,16.2238576 17,16.5 L17,17.5 C17,17.7761424 16.7761424,18 16.5,18 L9.5,18 C9.22385763,18 9,17.7761424 9,17.5 L9,16.5 C9,16.2238576 9.22385763,16 9.5,16 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
+    </g>
+</svg>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>json</title>
+    <desc>Created with Sketch.</desc>
+    <g id="json" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M4,2 L16.9891968,2 L21,6.17947824 L21,20.5714286 C21,21.3604068 20.5522847,22 20,22 L4,22 C3.44771525,22 3,21.3604068 3,20.5714286 L3,3.42857143 C3,2.63959321 3.44771525,2 4,2 Z M4.99536133,4.00024414 L4.99536133,20.0291748 L19.0252887,20.0291748 L19.0252887,7.06243896 L16,7 L16.0358887,4.00024414 L4.99536133,4.00024414 Z M9,14 L9,12 L11,12 L11,13 L10,13 L10,14.5 L9.3797026,15 L10,15.5 L10,17 L11,17 L11,18 L9,18 L9,16 L8,15 L9,14 Z M15,14 L16,15 L15,16 L15,18 L13,18 L13,17 L14,17 L14,15.5 L14.6202974,15 L14,14.5 L14,13 L13,13 L13,12 L15,12 L15,14 Z" id="Combined-Shape" fill="#000000" fill-rule="nonzero"></path>
+    </g>
+</svg>
