@@ -56,6 +56,12 @@
 	height: $control-size-lg;
 	line-height: 0.8rem;
 	padding-top: 0.6rem;
+	&::placeholder {
+		color: transparent;
+	}
+	&--focus::placeholder {
+		color: $lightgray-500;
+	}
 }
 
 textarea.form-input {

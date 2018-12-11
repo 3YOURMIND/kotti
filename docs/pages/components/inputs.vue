@@ -203,7 +203,7 @@
 	Note that **`isCompact` is incompatible with `addonText`**, and won’t be applied if both are passed.
 
 	<div class="element-example">
-		<KtInput label="Full Name" isCompact/>
+		<KtInput label="Full Name" placeholder="Your first name and last name" isCompact/>
 		<KtInput label="Address" isCompact/>
 		<KtInput label="Company" isCompact/>
 	</div>
@@ -211,7 +211,7 @@
 	Using `isCompact` to enable compact style.
 
 	```html
-	<KtInput label="Full Name" isCompact/>
+	<KtInput label="Full Name" placeholder="Your first name and last name" isCompact/>
 	<KtInput label="Address" isCompact/>
 	<KtInput label="Company" isCompact/>
 	```

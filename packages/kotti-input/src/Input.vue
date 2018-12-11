@@ -20,16 +20,11 @@
 				:class="iconClass"
 				v-text="icon"
 				ref="inputIcon"
-				@mouseover="showDialog=true"
-				@mouseleave="showDialog=false"
+				@mouseover="showDialog = true"
+				@mouseleave="showDialog = false"
 			/>
-			<div
-				v-show="showDialog && hasDialog"
-				:class="dialogClass"
-			>
-				<slot name="dialog">
-					{{dialog}}
-				</slot>
+			<div v-show="showDialog && hasDialog" :class="dialogClass">
+				<slot name="dialog">{{ dialog }}</slot>
 			</div>
 		</div>
 		<div class="form-validation-text" v-if="validateText">
@@ -76,6 +71,7 @@ export default {
 			return {
 				'form-input': true,
 				'form-input--compact': this.shouldBeCompact,
+				'form-input--compact--focus': this.shouldBeCompact && this.isFocused,
 			}
 		},
 		formLabelClass() {

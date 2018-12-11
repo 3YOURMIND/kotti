@@ -8,7 +8,7 @@
 	display: block;
 	padding: 0;
 	line-height: $unit-6;
-	font-weight: 600;
+	font-weight: 700;
 
 	i {
 		font-size: $unit-4;
@@ -28,7 +28,7 @@
 	position: absolute;
 	top: 0;
 	line-height: $control-size-lg;
-	font-size: 0.75rem;
+	font-size: 0.7rem;
 	font-weight: 500;
 	left: $unit-2;
 	z-index: 1;
@@ -39,6 +39,7 @@
 		line-height: $control-size-lg / 2;
 		text-transform: uppercase;
 		font-size: 0.5rem;
-		transition: all 0.1s ease-out;
+		font-weight: 700;
+		transition: all 0.1s ease-in-out;
 	}
 }
