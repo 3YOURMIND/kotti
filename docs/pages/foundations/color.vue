@@ -63,13 +63,13 @@
 		<div class="columns">
 			<ColorPalette
 				class="column col-md-12 col-4"
-				colorName="Dark Grey"
-				:colors="darkGrey"
+				colorName="Dark Gray"
+				:colors="darkGray"
 			/>
 			<ColorPalette
 				class="column col-md-12 col-4"
-				colorName="Light Grey"
-				:colors="lightGrey"
+				colorName="Light Gray"
+				:colors="lightGray"
 			/>
 			<ColorPalette
 				class="column col-md-12 col-4"
@@ -123,17 +123,17 @@ export default {
 				{ name: 'Purple-500', code: '#6C218F' },
 				{ name: 'Purple-600', code: '#591B75' },
 			],
-			darkGrey: [
-				{ name: 'Darkgrey-300', code: '#8A8A8A' },
-				{ name: 'Darkgrey-400', code: '#575757' },
-				{ name: 'Darkgrey-500', code: '#3D3D3D' },
-				{ name: 'Darkgrey-600', code: '#242424' },
+			darkGray: [
+				{ name: 'Darkgray-300', code: '#8A8A8A' },
+				{ name: 'Darkgray-400', code: '#575757' },
+				{ name: 'Darkgray-500', code: '#3D3D3D' },
+				{ name: 'Darkgray-600', code: '#242424' },
 			],
-			lightGrey: [
-				{ name: 'Lightgrey-300', code: '#F8F8F8' },
-				{ name: 'Lightgrey-400', code: '#DBDBDB' },
-				{ name: 'Lightgrey-500', code: '#A8A8A8' },
-				{ name: 'Lightgrey-600', code: '#5C5C5C' },
+			lightGray: [
+				{ name: 'Lightgray-300', code: '#F8F8F8' },
+				{ name: 'Lightgray-400', code: '#DBDBDB' },
+				{ name: 'Lightgray-500', code: '#A8A8A8' },
+				{ name: 'Lightgray-600', code: '#5C5C5C' },
 			],
 			neutrals: [
 				{ name: 'White-000', code: '#FFFFFF' },
