@@ -2,10 +2,10 @@ version: '3.5'
 services:
   kotti:
     build:
+      context: .
+      dockerfile: kotti/Dockerfile
       target: development
     container_name: kotti
-    depends_on:
-      - mono-proxy
     tty: true
     volumes:
       - './kotti/CHANGELOG.md:/app/kotti/CHANGELOG.md:ro'

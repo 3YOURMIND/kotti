@@ -1,7 +1,6 @@
 version: '3.5'
 services:
   kotti:
-    build:
-      context: .
-      dockerfile: kotti/Dockerfile
+    depends_on:
+      - mono-proxy
     restart: unless-stopped
