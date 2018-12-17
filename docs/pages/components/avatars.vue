@@ -53,10 +53,11 @@ Set `small` to make the avatar smaller.
 ## Grouped
 
 <div class="element-example">
-	<KtAvatarGroup
+	<kt-avatar-group
 		:items="avatarData"
-		:showItems="4"
+		:showItems="3"
 		showTooltip
+		isStack
 		hoverable
 	/>
 </div>
@@ -80,30 +81,17 @@ const avatarData = [
 	}
 ];
 ```
-<div class="element-example">
-	<KtAvatarGroup
-		:items="avatarData"
-		:showItems="4"
-		hoverable
-		showTooltip
-		isStack
-	/>
-	<KtAvatarGroup
-		:items="avatarData"
-		:showItems="2"
-		showTooltip
-		isStack
-	/>
-</div>
+
 
 Avatar group can be stacked by setting `isStack`.
 You can control how many avatar items are displayed with `showItems`.
 
 ```html
-<KtAvatarGroup
+<kt-avatar-group
 	:items="avatarData"
+	:showItems="3"
+	hoverable
 	isStack
-	:showItems="4"
 	showTooltip
 />
 ```
@@ -139,9 +127,9 @@ export default {
 			avatarData: [
 				{ name: 'Beoncye', src: 'https://picsum.photos/200' },
 				{ name: 'Justin', src: 'https://picsum.photos/100' },
-				{ name: 'Simens', src: 'https://picsum.photos/120' },
-				{ name: 'Simens', src: 'https://picsum.photos/120' },
-				{ name: 'Simens', src: 'https://picsum.photos/120' },
+				{ name: 'Simens', src: 'https://picsum.photos/130' },
+				{ name: 'Simens', src: 'https://picsum.photos/140' },
+				{ name: 'Simens', src: 'https://picsum.photos/150' },
 			],
 		}
 	},
