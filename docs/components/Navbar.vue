@@ -4,6 +4,7 @@
 		:sections="globalMenu"
 		:quickLinks="quickLinksData"
 		@linkClick="redirectRouter($event)"
+		@logoClick="$router.push('/')"
 	>
 		<div slot="navbar-footer">
 			<a href="https://github.com/3YOURMIND/kotti" class="github-link">

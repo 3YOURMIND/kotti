@@ -1,13 +1,13 @@
 <template>
 	<div :style="{ color: themeColor.textColor }">
-		<div :class="objectClass">
+		<div :class="objectClass" @click="$emit('logoClick')">
 			<img
 				:src="themeColor.logoUrl"
 				v-if="themeColor.logoUrl && !isNarrow"
 				:height="themeColor.logoHeight"
 			/>
 			<div v-if="!themeColor.logoUrl && !isNarrow" v-text="labelText" />
-			<i class="yoco" v-text="iconText" @click="$KtNavbar.toggle()" />
+			<i class="yoco" v-text="iconText" @click.stop="$KtNavbar.toggle()" />
 		</div>
 		<div class="navbar-logo--mobile">
 			<div v-if="!themeColor.logoUrl" v-text="labelText" />

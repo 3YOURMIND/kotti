@@ -24,9 +24,8 @@
 			<div
 				:class="objectClass('navbar-header')"
 				:style="{ 'border-color': themeColor.borderColor }"
-				@click="$emit('logoClick')"
 			>
-				<kt-navbar-logo :labelText="labelText" />
+				<kt-navbar-logo :labelText="labelText" @logoClick="$emit('logoClick')" />
 			</div>
 			<kt-navbar-notification
 				v-if="notification"
