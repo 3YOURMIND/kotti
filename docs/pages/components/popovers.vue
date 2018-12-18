@@ -16,7 +16,7 @@ Use popovers to provide extra information or actions. Compared to `tooltip`, `po
 </KtPopover>
 <KtPopover placement="Bottom" class="mt-4 ml-4">
 	<KtButton type="secondary" label="Bottom Popover"/>
-	<div slot="content">Heloo</div>
+	<div slot="content">Hello</div>
 </KtPopover>
 <KtPopover placement="right" class="mt-4 ml-4">
 	<KtButton type="secondary" label="Right Popover" />
@@ -30,7 +30,7 @@ Use popovers to provide extra information or actions. Compared to `tooltip`, `po
 
 There are 4 different positions for popovers. `right`, `left`, `top`, and `bottom`.
 
-**Attention:** Popover will change the placement positions when parent has `overflow: scroll`.
+**Attention:** The popover may change its placement position when parent has `overflow: scroll`.
 
 ```html
 <KtPopover placement="right">
