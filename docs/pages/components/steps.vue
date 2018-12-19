@@ -11,12 +11,12 @@
 	<KtStep title="Error" status="error" :showLine="false" icon="cloud" description="Customized icons"/>
 </div>
 
-`KtStep` includes 4 status and can be controled via `status` props:
+`KtStep` includes 4 statuses that can be controlled via the `status` prop:
 
-1. Finished: The step is finished, also the default status.
-2. Process: The step is procssing.
-3. Wait: The step is waiting for last step to be finished.
-4. Error: The step is finished with error.
+1. Finished: The step is finished (default)
+2. Process: The step is procssing
+3. Wait: The step is waiting for last step to be finished
+4. Error: The step is finished with an error
 
 ```html
 <KtStep title="Process" description="Your items are Printing" status="process" />
@@ -41,14 +41,14 @@ Each `KtStep` has four elements:
 			<KtSteps :current="current" status="process">
 				<KtStep title="Pending" description="Your items have been ordered"/>
 				<KtStep title="Print" description="Your items are printing"/>
-				<KtStep title="Shppied" description="Your items has been shipped"/>
+				<KtStep title="Shipped" description="Your items have been shipped"/>
 			</KtSteps>
 		</KtCol>
 		<KtCol :span="12" :xs="24">
 			<KtSteps :current="current" status="process" showIcon>
 				<KtStep title="Pending" description="Your items have been ordered"/>
 				<KtStep title="Print" description="Your items are printing"/>
-				<KtStep title="Shppied" description="Your items has been shipped"/>
+				<KtStep title="Shipped" description="Your items have been shipped"/>
 			</KtSteps>
 		</KtCol>
 	</KtRow>
@@ -62,7 +62,7 @@ Each `KtStep` has four elements:
 <KtSteps :current="1" status="process">
 	<KtStep title="Pending" description="Your items have been ordered"/>
 	<KtStep title="Print" description="Your items are printing"/>
-	<KtStep title="Shppied" description="Your items has been shipped"/>
+	<KtStep title="Shipped" description="Your items has been shipped"/>
 </KtSteps>
 <!-- Show as icons -->
 <KtSteps :current="1" status="process" showIcon>
@@ -78,9 +78,9 @@ Each `KtStep` has four elements:
 
 | Attribute  | Description             | Type      | Accepted Values                           | Default   |
 |:-----------|:------------------------|:----------|:------------------------------------------|:----------|
+| `current`  | index of current step   | `Number`  | —                                         | `0`       |
+| `showIcon` | show indicator as icons | `Boolean` | —                                         | `false`   |
 | `status`   | status of the step      | `String`  | `process`, `finished`, `error` and `wait` | `process` |
-| `current`  | index of current step   | `Number`  |                                           | `0`       |
-| `showIcon` | show indicator as icons | `Boolean` | -                                         | `false`   |
 
 ### Step Attributes
 
@@ -93,11 +93,9 @@ Each `KtStep` has four elements:
 
 ### Theme
 
-| Attribute    | Description                            |
-|:-------------|:---------------------------------------|
-| `brandColor` | Change the color of indicator and line |
-
-
+| Attribute    | Description                             |
+|:-------------|:----------------------------------------|
+| `brandColor` | Changes the color of indicator and line |
 </template>
 
 <script>

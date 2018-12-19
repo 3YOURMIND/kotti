@@ -31,7 +31,12 @@ export default {
 		title: { type: String, default: 'Title' },
 		description: { type: String, default: null },
 		showLine: { type: Boolean, default: true },
-		status: { type: String, default: null },
+		status: {
+			default: null,
+			type: String,
+			validator: value =>
+				['error', 'finished', 'process', 'wait'].includes(value),
+		},
 		indexNumber: { type: Number, default: null },
 	},
 	inject: {
@@ -43,9 +48,9 @@ export default {
 	},
 	data() {
 		return {
-			isLastStep: false,
 			currentStatus: '',
 			index: null,
+			isLastStep: false,
 		}
 	},
 	created() {
@@ -59,9 +64,8 @@ export default {
 	},
 	computed: {
 		iconText() {
-			if (this.icon) {
-				return this.icon
-			}
+			if (this.icon) return this.icon
+
 			switch (this.currentStatus) {
 				case 'wait':
 				case 'process':
@@ -87,18 +91,17 @@ export default {
 		},
 		lineStyle() {
 			const lightBrandColor = color(this.KtTheme.brandColor).lighten(0.5)
-			if (this.currentStatus === 'finished' || this.currentStatus === null) {
+			if (this.currentStatus === 'finished' || this.currentStatus === null)
 				return {
 					background: this.KtTheme.brandColor,
 				}
-			}
-			if (this.currentStatus === 'process') {
+
+			if (this.currentStatus === 'process')
 				return {
 					background: `linear-gradient(${
 						this.KtTheme.brandColor
 					}, ${lightBrandColor},${this.KtTheme.brandColor})`,
 				}
-			}
 		},
 	},
 	methods: {
@@ -122,6 +125,7 @@ export default {
 	display: flex;
 	overflow: hidden;
 }
+
 .kt-steps-left {
 	position: relative;
 
@@ -135,25 +139,30 @@ export default {
 		width: 24px;
 		background: #2c64cc;
 		border-radius: 100%;
+
 		span,
 		i {
 			font-weight: bolder;
 			color: #ffffff;
 			font-size: 0.8rem;
 		}
+
 		&--outline {
 			height: 24px;
 			background: transparent;
 			border: 4px solid #ddd;
+
 			span,
 			i {
 				color: #ddd;
 			}
 		}
+
 		&--loading i {
 			animation: iconspin 1.5s ease-in-out infinite;
 		}
 	}
+
 	&__line {
 		z-index: 0;
 		position: absolute;
@@ -163,10 +172,12 @@ export default {
 		top: 0;
 		left: 10px;
 		background: #2c63cc;
+
 		&--outline {
 			top: 24px;
 			background: #ddd;
 		}
+
 		&--loading {
 			background: linear-gradient(#2c63cc, #9ab6ee, #2c63cc);
 			background-position: 4px 100%;
@@ -174,11 +185,13 @@ export default {
 		}
 	}
 }
+
 .kt-steps-right {
 	&__title {
 		font-weight: 600;
 		margin-left: 0.4rem;
 	}
+
 	&__description {
 		font-size: 0.9em;
 		margin-left: 0.4rem;
@@ -186,14 +199,17 @@ export default {
 		margin-bottom: 0.4rem;
 	}
 }
+
 @keyframes iconspin {
 	0% {
 		transform: rotate(0deg);
 	}
+
 	100% {
 		transform: rotate(360deg);
 	}
 }
+
 @keyframes lineloading {
 	0% {
 		background-position: 0 -50px;
