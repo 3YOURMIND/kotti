@@ -4,7 +4,7 @@
 			<span
 				:class="classSwitcher('kt-steps-left__line')"
 				:style="lineStyle"
-				v-if="showLine && !isLastStep"
+				v-if="!hideLine && !isLastStep"
 			/>
 			<div
 				:class="classSwitcher('kt-steps-left__indicator')"
@@ -30,7 +30,7 @@ export default {
 		icon: { type: String, default: null },
 		title: { type: String, default: 'Title' },
 		description: { type: String, default: null },
-		showLine: { type: Boolean, default: true },
+		hideLine: { type: Boolean, default: false },
 		status: {
 			default: null,
 			type: String,

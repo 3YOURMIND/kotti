@@ -8,7 +8,7 @@
 	<KtStep title="Finished" description="Your order has been accepted"/>
 	<KtStep title="Process" description="Your items are Printing" status="process"/>
 	<KtStep title="Wait" status="wait" :indexNumber="3" description="with index number"/>
-	<KtStep title="Error" status="error" :showLine="false" icon="cloud" description="Customized icons"/>
+	<KtStep title="Error" status="error" hideLine icon="cloud" description="Customized icons"/>
 </div>
 
 `KtStep` includes 4 statuses that can be controlled via the `status` prop:
@@ -26,8 +26,8 @@
 
 Each `KtStep` has four elements:
 
-1. Indicator: The icon on the left, you can change the icon via `icon` props.
-2. Line: The line under the icon, if the step is last in the group, you may want to use `showLine="false"` to disable the line.
+1. Indicator: The icon on the left, can be changed with the `icon` prop
+2. Line: The line under the icon, if the step is last in the group, you may want to use `hideLine` to disable the line
 3. Title: The bold text on the right side, given via `title` props.
 4. Description: The grey text under tilte, given via `description` props.
 
@@ -84,12 +84,13 @@ Each `KtStep` has four elements:
 
 ### Step Attributes
 
-| Attribute     | Description                  | Type     | Accepted Values                           | Default   |
-|:--------------|:-----------------------------|:---------|:------------------------------------------|:----------|
-| `icon`        | icon of the step             | `String` | yoco icon string                          | `check`   |
-| `title`       | title text of the step       | `String` |                                           | `null`    |
-| `description` | description text of the step | `String` |                                           | `null`    |
-| `status`      | status of the step           | `String` | `process`, `finished`, `error` and `wait` | `process` |
+| Attribute     | Description                      | Type      | Accepted Values                           | Default   |
+|:--------------|:---------------------------------|:----------|:------------------------------------------|:----------|
+| `description` | description text of the step     | `String`  | —                                         | `null`    |
+| `hideLine`    | should be used for the last step | `Boolean` | `true`, `false`                           | `false`   |
+| `icon`        | icon of the step                 | `String`  | yoco icon string                          | `check`   |
+| `status`      | status of the step               | `String`  | `process`, `finished`, `error` and `wait` | `process` |
+| `title`       | title text of the step           | `String`  | —                                         | `null`    |
 
 ### Theme
 
