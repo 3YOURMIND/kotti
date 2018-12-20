@@ -29,7 +29,7 @@
 				>
 					<i class="yoco">comment</i> Reply
 				</div>
-				<div class="action__more">
+				<div class="action__more" v-if="allowChange">
 					<i class="yoco">dots</i>
 					<div class="action__options">
 						<a @click="isInlineEdit = true"> <li>Edit</li> </a>
@@ -45,6 +45,7 @@
 					:userId="reply.userId"
 					:message="reply.message"
 					:createdTime="reply.createdTime"
+					:allowChange="reply.allowChange"
 					@_inlineReplyClick="handleInlineReplyClick"
 					@_inlineDeleteClick="handleDelete($event, 'INLINE')"
 					@_inlineEditSumbit="$emit('edit', $event)"
@@ -80,6 +81,7 @@ export default {
 		userAvatar: String,
 		userId: Number,
 		userName: String,
+		allowChange: Boolean,
 	},
 	components: {
 		KtAvatar,

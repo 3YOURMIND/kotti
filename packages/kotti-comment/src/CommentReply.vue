@@ -25,7 +25,10 @@
 						<KtButton icon="check" @click="handleConfirm" />
 					</KtButtonGroup>
 				</div>
-				<div class="comment-reply__action action__more" v-if="!isInlineEdit">
+				<div
+					class="comment-reply__action action__more"
+					v-if="!isInlineEdit & allowChange"
+				>
 					<i class="yoco">dots</i>
 					<div class="action__options">
 						<a @click="isInlineEdit = true"> <li>Edit</li> </a>
@@ -56,6 +59,7 @@ export default {
 		userAvatar: String,
 		userId: Number,
 		userName: String,
+		allowChange: Boolean,
 	},
 	data() {
 		return {

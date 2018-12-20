@@ -15,6 +15,7 @@
 		:userId="comment.userId"
 		:message="comment.message"
 		:replies="comment.replies"
+		:allowChange="comment.allowChange"
 		@delete="handelDelete($event)"
 		@edit="handleEdit($event)"
 		@submit="handleSubmit($event)"
@@ -38,6 +39,7 @@
 	:userId="comment.userId"
 	:message="comment.message"
 	:replies="comment.replies"
+	:allowChange="comment.allowChange"
 	@delete="handelDelete($event)"
 	@edit="handleEdit($event)"
 	@submit="handlePost($event)"
@@ -62,6 +64,7 @@
 	message: 'Marine Le Pen, a Fierce Campaigner',
 	userAvatar: 'https://picsum.photos/200',
 	createdTime: '2018-12-04T09:57:20+00:00',
+	allowChange: true,
 	replies: [{
 		id: 2,
 		userId: 12,
@@ -69,6 +72,7 @@
 		message: 'Marine Le Pen, a Fierce Campaigner',
 		userAvatar: 'https://picsum.photos/200',
 		createdTime: '2018-12-04T09:57:20+00:00',
+		allowChange: false
 	}]
 }
 ```
@@ -128,6 +132,7 @@ export default {
 						'Marine Le Pen, a Fierce Campaigner, Heads to Finale in French Election',
 					userAvatar: 'https://picsum.photos/200',
 					createdTime: '2018-12-04T09:57:20+00:00',
+					allowChange: true,
 					replies: [
 						{
 							id: 2,
@@ -137,6 +142,7 @@ export default {
 							message:
 								'Join Bright Side Now! Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
 							userAvatar: 'https://picsum.photos/100',
+							allowChange: false,
 						},
 						{
 							id: 3,
@@ -145,6 +151,7 @@ export default {
 							userAvatar: 'https://picsum.photos/120',
 							createdTime: '2018-03-20',
 							message: 'RE: Your trip to Montreal',
+							allowChange: true,
 						},
 					],
 				},
