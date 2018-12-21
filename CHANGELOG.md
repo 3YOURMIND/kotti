@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.1.0 - 2018.12.21
+
+Winter Solstice Update
+
+- Fixed: Prevent Narrow Button LogoClick [KT-73]
+- Added: Using Vue-Popper for popover/tooltip component [KT-1]
+- Added: KtSteps and KtStep componet [KT-68]
+- Added: allowChange props to KtComments [KT-74]
+
 ## 1.0.1 - 2018.12.05
 
 - Added: New icons in yoco [KT-70]
