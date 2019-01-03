@@ -7,7 +7,7 @@
 				:height="themeColor.logoHeight"
 			/>
 			<div v-if="!themeColor.logoUrl && !isNarrow" v-text="labelText" />
-			<i class="yoco" v-text="iconText" @click="handleToggleNarrowClicked" />
+			<i class="yoco" v-text="iconText" @click="$KtNavbar.toggle()" />
 		</div>
 		<div class="navbar-logo--mobile">
 			<div v-if="!themeColor.logoUrl" v-text="labelText" />

@@ -94,10 +94,12 @@ export default {
 	data() {
 		return {
 			isMenuShow: false,
-			isNarrow: false,
 		}
 	},
 	computed: {
+		isNarrow() {
+			return this.$KtNavbar.isNarrow
+		},
 		userInfoClass() {
 			return {
 				'user-info': true,
@@ -110,12 +112,6 @@ export default {
 		clickawayMenu() {
 			this.isMenuShow = false
 		},
-		setNarrowValue(value) {
-			this.isNarrow = value
-		},
-	},
-	created() {
-		this.$parent.$on('toggleKtNavbarNarrowEvent', this.setNarrowValue)
 	},
 }
 </script>

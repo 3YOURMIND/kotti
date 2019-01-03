@@ -26,11 +26,7 @@
 				:style="{ 'border-color': themeColor.borderColor }"
 				@click="$emit('logoClick')"
 			>
-				<kt-navbar-logo
-					:isNarrow="isNarrowNavBar"
-					:labelText="labelText"
-					@toggleNarrowBar="toggleNarrowBar"
-				/>
+				<kt-navbar-logo :isNarrow="isNarrowNavBar" :labelText="labelText" />
 			</div>
 			<kt-navbar-notification
 				v-if="notification"
@@ -116,15 +112,12 @@ export default {
 	},
 	data() {
 		return {
-			isNarrowNavBarToggle: this.isNarrow,
 			mobileMenuToggle: false,
 		}
 	},
 	computed: {
 		isNarrowNavBar() {
-			return this.isNarrowNavBarToggle === null
-				? this.isNarrow
-				: this.isNarrowNavBarToggle
+			return this.$KtNavbar.isNarrow
 		},
 		navbarActiveToggleStyle() {
 			return {
@@ -146,18 +139,6 @@ export default {
 		},
 		toggleMobileMenu() {
 			this.mobileMenuToggle = !this.mobileMenuToggle
-		},
-		toggleNarrowBar() {
-			this.isNarrowNavBarToggle = !this.isNarrowNavBarToggle
-		},
-		navbarNarrowBarEvent() {
-			this.$emit('toggleKtNavbarNarrowEvent', this.isNarrowNavBarToggle)
-		},
-	},
-	watch: {
-		isNarrowNavBar: {
-			immediate: true,
-			handler: 'navbarNarrowBarEvent',
 		},
 	},
 	created() {
