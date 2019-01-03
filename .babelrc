@@ -1,7 +1,7 @@
 {
 	"presets": [
 		[
-			"env",
+			"@babel/env",
 			{
 				"modules": false,
 				"targets": {
@@ -10,7 +10,10 @@
 			}
 		]
 	],
-	"plugins": ["transform-runtime", "transform-object-rest-spread"],
+	"plugins": [
+		"@babel/plugin-transform-runtime",
+		"@babel/plugin-proposal-object-rest-spread"
+	],
 	"env": {
 		"test": {
 			"presets": ["env", "stage-2"],
