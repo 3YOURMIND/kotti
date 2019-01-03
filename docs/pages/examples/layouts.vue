@@ -3,6 +3,7 @@
 		<KtNavbar
 			slot="navbar"
 			:sections="navbarMenu"
+			labelText="MultiText"
 			:notification="navbarNotification"
 			:quickLinks="quickLinksData"
 		>
@@ -61,7 +62,6 @@ export default {
 				borderColor: 'rgba(255,255,255,.24)',
 				textColor: 'rgba(255,255,255,.54)',
 				activeColor: 'rgba(255,255,255, 1)',
-				logoUrl: 'https://source.unsplash.com/random/200x60',
 			},
 			darkTheme: {
 				backgroundColor: '#122C56',
