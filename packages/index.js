@@ -7,8 +7,6 @@ import KtButton from './kotti-button'
 import KtButtonGroup from './kotti-button-group'
 import KtCard from './kotti-card'
 import KtCol from './kotti-col'
-import KtComment from './kotti-comment'
-import KtCommentInput from './kotti-comment-input'
 import KtDatePicker from './kotti-datepicker'
 import KtDrawer from './kotti-drawer'
 import KtHeading from './kotti-heading'
@@ -24,11 +22,12 @@ import KtRow from './kotti-row'
 import KtSingleSelect from './kotti-single-select'
 import KtSwitch from './kotti-switch'
 import KtTable from './kotti-table'
+import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
 import KtRadioGroup from './kotti-radio-group'
 import './kotti-style/index.scss'
 
-const components = {
+const components = [
 	KtAvatar,
 	KtAvatarGroup,
 	KtActionbar,
@@ -38,8 +37,6 @@ const components = {
 	KtButtonGroup,
 	KtCard,
 	KtCol,
-	KtComment,
-	KtCommentInput,
 	KtDatePicker,
 	KtDrawer,
 	KtHeading,
@@ -55,15 +52,31 @@ const components = {
 	KtSingleSelect,
 	KtSwitch,
 	KtTable,
+	KtToaster,
 	KtUserMenu,
 	KtRadioGroup,
-}
-function install(Vue) {
-	for (const component of Object.values(components)) Vue.use(component)
+]
+
+const install = function(Vue = {}) {
+	components.map(component => {
+		Vue.component(component.name, component)
+	})
+	Vue.prototype.$yodifyBuffer = []
+	Vue.prototype.$yodify = function({
+		duration = 3000,
+		text,
+		type = 'success',
+	}) {
+		const notification = { duration, text, type }
+
+		// buffer notifications if vue isn't ready
+		if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)
+		else this.$root.$emit('vue-yodify', notification)
+	}
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
 	install(window.Vue)
 }
 
-export default { ...components, install }
+export default Object.assign({}, components, { install })
