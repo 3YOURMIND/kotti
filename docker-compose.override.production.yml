@@ -1,7 +1,0 @@
-version: '3.5'
-services:
-  kotti:
-    build:
-      context: .
-      dockerfile: kotti/Dockerfile
-      target: production

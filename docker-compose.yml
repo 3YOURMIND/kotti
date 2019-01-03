@@ -1,6 +1,17 @@
 version: '3.5'
 services:
   kotti:
-    depends_on:
-      - mono-proxy
+    build:
+      context: .
+      target: development
+    ports:
+      - 8927:80
     restart: unless-stopped
+    tty: true
+    volumes:
+      - './CHANGELOG.md:/app/CHANGELOG.md:ro'
+      - './docs/:/app/docs/:ro'
+      - './nuxt.config.js:/app/nuxt.config.js:ro'
+      - './packages/:/app/packages/:ro'
+      - './README.md:/app/README.md:ro'
+      - './vue.config.js:/app/vue.config.js:ro'
