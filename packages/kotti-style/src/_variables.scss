@@ -49,7 +49,7 @@ $code-color: $primary-600;
 // Credit: https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
 
 $base-font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI',
-	Roboto !default;
+	Roboto, Freesans, sans-serif !default;
 $body-font-family: $base-font-family;
 $mono-font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Courier,
 	monospace !default;
