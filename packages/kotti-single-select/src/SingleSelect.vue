@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mixin as clickaway } from '../../../src/mixin/vue-clickaway'
+import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
 	name: 'KtSelect',

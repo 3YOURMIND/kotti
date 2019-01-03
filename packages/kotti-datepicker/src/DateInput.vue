@@ -1,10 +1,7 @@
 <template>
 	<div v-on-clickaway="handleBlur">
 		<div class="form-group">
-			<label
-				class="form-label"
-				v-text="label"
-			/>
+			<label class="form-label" v-text="label" />
 			<div class="has-icon-left">
 				<input
 					v-bind="$attrs"
@@ -12,10 +9,7 @@
 					class="form-input"
 					:value="formattedDate"
 				/>
-				<i
-					class="form-icon yoco"
-					v-text="'calendar'"
-				/>
+				<i class="form-icon yoco" v-text="'calendar'" />
 			</div>
 			<div v-if="showDatePicker">
 				<KtDatePicker
@@ -31,7 +25,7 @@
 </template>
 
 <script>
-import { mixin as clickaway } from '../../../src/mixin/vue-clickaway'
+import { mixin as clickaway } from 'vue-clickaway'
 
 // components
 import KtDatePicker from './DatePicker'
