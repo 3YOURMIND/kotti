@@ -1,182 +1,315 @@
 <template>
 	<div :class="{ 'x-scroll': isScrollable }">
-		<table>
-			<thead>
-				<tr>
-					<th v-if="isExpandable" class="th-expandable" />
-					<th v-if="isSelectable" class="th-selectable">
-						<div class="form-group">
-							<label class="form-checkbox">
-								<input
-									type="checkbox"
-									:checked="allSelected"
-									@input.prevent.stop="toggleSelectAll"
-								/>
-								<i class="form-icon" />
-							</label>
-						</div>
-					</th>
-					<th
-						v-for="column in columns"
-						:key="column.key"
-						:class="getThClasses(column)"
-						:style="getThStyle(column)"
-						v-text="column.label"
-					/>
-					<th v-if="hasActions" class="th-actions" />
-				</tr>
-			</thead>
-			<tbody v-if="isEmpty">
-				<td
-					class="empty"
-					:colspan="colSpan"
-					v-text="emptyText"
-				/>
-			</tbody>
-			<tbody v-else>
-				<KtTableRow
-					v-for="(virtualRow, key) in virtualRows"
-					:key="key"
-					:colSpan="colSpan"
-					:columns="columns"
-					:data="rows[virtualRow.index]"
-					:isExpanded="expandedRow === virtualRow.index"
-					:isSelected="isSelected(virtualRow.index)"
-					:virtualRow="virtualRow"
-					v-bind="settings"
-					@activateRow="onActivateRow(virtualRow.index)"
-					@toggleExpand="toggleExpand(virtualRow.index)"
-					@toggleSelect="toggleSelect(virtualRow.index)"
-				>
-					<div slot="actions" slot-scope="row">
-						<slot name="actions" v-bind="row"/>
-					</div>
-					<div slot="expand" slot-scope="row">
-						<slot name="expand" v-bind="row"/>
-					</div>
-				</KtTableRow>
-			</tbody>
+		<div class="hidden-columns">
+			<TableColumn
+				v-for="column in formatedColumns"
+				:key="column.prop"
+				v-bind="column"
+			/>
+			<slot></slot>
+		</div>
+		<table class="kt-table">
+			<TableHeader />
+			<TableBody />
 		</table>
 	</div>
 </template>
-
 <script>
-import KtTableRow from './TableRow.vue'
+import pick from 'lodash/pick'
+import TableStore from './logic/store'
+import TableLayout from './table-layout'
+import TableColumn from './TableColumn'
+import TableHeader from './TableHeader'
+import TableBody from './TableBody'
+import {
+	SORT_NONE,
+	KT_TABLE,
+	KT_STORE,
+	KT_LAYOUT,
+	KT_TABLE_STATE_PROVIDER,
+} from './constants'
+
+let tableIdSeed = 1
+
+export const INITIAL_TABLE_STORE_PROPS = [
+	'rowKey',
+	'sortMultiple',
+	'remoteSort',
+	'sortable',
+	'sortedColumns',
+	'hiddenColumns',
+	'filteredColumns',
+]
 
 export default {
+	components: { TableBody, TableHeader, TableColumn },
 	name: 'KtTable',
-	components: { KtTableRow },
 	props: {
-		columns: { required: true, type: Array },
+		rowKey: { type: String },
+		rows: { required: true, type: Array },
+		columns: { default: () => [], type: Array },
+		useColumnStateControl: { default: false, type: Boolean },
 		emptyText: { default: 'No Data', type: String },
-		hasActions: { default: false, type: Boolean },
-		isExpandable: { default: false, type: Boolean },
+
 		isInteractive: { default: false, type: Boolean },
 		isScrollable: { default: false, type: Boolean },
 		isSelectable: { default: false, type: Boolean },
-		rows: { required: true, type: Array },
+
+		sortable: { default: false, type: [Boolean, String] },
+		sortMultiple: { default: false, type: Boolean },
+		remoteSort: { default: false, type: Boolean },
+		useQuickSortControl: { default: false, type: Boolean },
+
+		sortedColumns: { type: [Array, undefined] },
+		filteredColumns: { type: [Array, undefined] },
+		hiddenColumns: { type: [Array, undefined] },
+
+		loading: Boolean,
+
 		tdClasses: { default: () => [], types: [Array, String, Object] },
 		thClasses: { default: () => [], types: [Array, String, Object] },
 		trClasses: { default: () => [], types: [Array, String, Object] },
-		value: { default: () => [], type: Array }, // v-model value
+		headerClass: { default: () => [], types: [Array, String, Object] },
+		height: String,
+		maxHeight: String,
+
+		renderExpand: Function,
+		renderActions: Function,
+		renderLoading: Function,
+		renderEmpty: Function,
+
+		expandMultiple: { default: false, type: Boolean },
+		selected: { default: () => [], type: Array },
+		// should be deprecated in favor of selections
+		value: { type: Array }, // v-model value
+	},
+	inject: {
+		[KT_TABLE_STATE_PROVIDER]: {
+			default: false,
+		},
+	},
+	beforeCreate() {
+		this.tableId = `kt-table_${tableIdSeed}`
+		tableIdSeed += 1
 	},
 	data() {
-		return { expandedRow: null }
+		let localStore
+		const initialState = pick(this, INITIAL_TABLE_STORE_PROPS)
+		if (this[KT_TABLE_STATE_PROVIDER]) {
+			localStore = this[KT_TABLE_STATE_PROVIDER].store
+			localStore.setTable(this)
+			localStore.setInitialState(initialState)
+		} else {
+			localStore = new TableStore(this, initialState)
+		}
+
+		const layout = new TableLayout(this)
+		return {
+			localStore,
+			layout,
+		}
 	},
 	computed: {
-		allSelected() {
-			return this.value.length === this.rows.length
+		store() {
+			return this[KT_TABLE_STATE_PROVIDER]
+				? this[KT_TABLE_STATE_PROVIDER].store
+				: this.localStore
+		},
+		formatedColumns() {
+			return this.columns.map(column => {
+				if (column.key) {
+					// eslint-disable-next-line
+					console.warn(
+						`column ${
+							column.prop
+						} table column property 'key' is deprecated using prop is sufficent to identify the column`,
+					)
+					return { ...column, prop: column.prop || column.key }
+				}
+				return column
+			})
 		},
 		colSpan() {
-			if (!this.columns) return 0
-
-			let colSpan = this.columns.length
+			let colSpan = this.store.state.columns.length
 
 			if (this.isExpandable) colSpan++
 			if (this.isSelectable) colSpan++
 
 			return colSpan
 		},
-		isEmpty() {
-			return this.rows.length === 0
+		isExpandable() {
+			return Boolean(this.$scopedSlots.expand || this.renderExpand)
 		},
-		settings() {
-			return [
-				'hasActions',
-				'isExpandable',
-				'isInteractive',
-				'isSelectable',
-				'tdClasses',
-				'trClasses',
-			].reduce((result, key) => ({ ...result, [key]: this[key] }), {})
+		hasActions() {
+			return Boolean(this.$scopedSlots.actions || this.renderActions)
 		},
-		/**
-		 * @description Generates table rows, expanders, etc.
-		 * @returns {Array} rows to display
-		 */
-		virtualRows() {
-			const rows = []
-
-			for (let index = 0; index < this.rows.length; index++) {
-				rows.push({ index, isExpander: false })
-				if (this.isExpandable) rows.push({ index, isExpander: true })
+		_renderExpand() {
+			return (h, rowData) => {
+				const table = this
+				if (table.renderExpand) {
+					return table.renderExpand(h, rowData)
+				} else {
+					return table.$scopedSlots.expand(rowData)
+				}
 			}
-
-			return rows
+		},
+		_renderActions() {
+			return (h, rowData) => {
+				const table = this
+				if (table.renderActions) {
+					return table.renderActions(h, rowData)
+				} else {
+					return table.$scopedSlots.actions(rowData)
+				}
+			}
+		},
+		_renderLoading() {
+			return h => {
+				const table = this
+				if (table.renderLoading) {
+					return table.renderLoading(h)
+				} else {
+					return table.$slots.loading || <div class="loading lg" />
+				}
+			}
+		},
+		_renderEmpty() {
+			return h => {
+				const table = this
+				if (table.renderEmpty) {
+					return table.renderEmpty(h)
+				} else {
+					return table.$slots.empty || this.emptyText || this.$t
+						? this.$t('table.emptyText')
+						: 'No Data'
+				}
+			}
+		},
+	},
+	watch: {
+		rows: {
+			immediate: true,
+			handler(value) {
+				this.localStore.commit('setRows', value)
+			},
+		},
+		selected: {
+			immediate: true,
+			handler(value, oldValue) {
+				if (value !== oldValue) {
+					this.localStore.commit('setSelected', value)
+				}
+			},
+		},
+		value: {
+			immediate: true,
+			handler(value, oldValue) {
+				if (value !== oldValue) {
+					console.warn(
+						'use of v-model in table is deprecated use selected prop instead',
+					)
+					this.localStore.commit('setSelectedIndexes', value)
+				}
+			},
+		},
+		sortedColumns: {
+			handler(value, oldValue) {
+				if (value && value !== oldValue) {
+					this.store.commit('setSortedColumns', value)
+				}
+			},
+		},
+		hiddenColumns: {
+			handler(value, oldValue) {
+				if (value && value !== oldValue) {
+					this.store.commit('setHiddenColumns', value)
+				}
+			},
+		},
+		filteredColumns: {
+			handler(value, oldValue) {
+				if (value && value !== oldValue) {
+					this.store.commit('setFilteredColumns', value)
+				}
+			},
 		},
 	},
 	methods: {
 		isSelected(index) {
-			return this.value.includes(index)
+			return this.store.isSelected(
+				this.store.get('getRowByVisibleIndex', index),
+			)
 		},
 		toggleExpand(index) {
-			this.expandedRow = this.expandedRow === index ? null : index
+			this.store.commit(
+				'expandRow',
+				this.store.get('getRowByVisibleIndex', index),
+			)
 		},
 		toggleSelect(index) {
-			this.$emit(
-				'input',
-				this.isSelected(index)
-					? this.value.filter(row => row !== index)
-					: this.value.concat(index).sort(),
+			this.store.commit(
+				'selectRow',
+				this.store.get('getRowByVisibleIndex', index),
 			)
 		},
 		toggleSelectAll() {
-			this.$emit(
-				'input',
-				this.allSelected ? [] : this.rows.map((_, index) => index),
-			)
+			this.store.commit('toggleAllSelection')
 		},
-		onActivateRow(index) {
-			this.$emit('activateRow', index, this.rows[index])
-		},
-		getThClasses(column) {
-			return [this.thClasses, column.thClasses]
-		},
-		getThStyle(column) {
-			return {
-				textAlign: column.align || 'left',
-				width: column.width || 'auto',
+	},
+	provide() {
+		return {
+			[KT_TABLE]: this,
+			[KT_STORE]: this.store,
+			[KT_LAYOUT]: this.layout,
+		}
+	},
+	mounted() {
+		this.sortedColumns &&
+			this.store.commit('setSortedColumns', this.sortedColumns)
+		this.filteredColumns &&
+			this.store.commit('setFilteredColumns', this.filteredColumns)
+		this.hiddenColumns &&
+			this.store.commit('setHiddenColumns', this.hiddenColumns)
+		this.$ready = true
+		this.store.commit('updateColumns')
+		this.$on('selectionChange', selection => {
+			if (this.value) {
+				this.$emit(
+					'input',
+					selection.map(row => this.store.get('getIndexByRow', row)),
+				)
 			}
-		},
+		})
+		const events = Object.keys(this.$listeners)
+		if (events.includes('input')) {
+			console.warn(
+				'use of v-model and @input in table is deprecated subscribe to @selectionChange, @selectAll events instead',
+			)
+		}
 	},
 }
 </script>
 
-<style lang="scss" scoped>
-.toggle {
-	display: inline-block;
-	width: 32px;
+<style lang="css" scoped>
+.kt-table >>> .kt-table__no-row {
+	color: #8f8f8f;
+	text-align: center;
 }
 
-.th-actions {
-	width: 0;
+.kt-table >>> .kt-table__loader {
+	text-align: center;
 }
 
-.th-expandable,
-.th-selectable,
-.td-selectable {
-	text-align: left;
-	user-select: none;
-	width: 32px;
+.kt-table >>> .loading {
+	margin: 1.6rem 0;
+	text-align: center;
+}
+
+.x-scroll {
+	height: auto;
+}
+
+.hidden-columns {
+	display: none;
 }
 </style>
