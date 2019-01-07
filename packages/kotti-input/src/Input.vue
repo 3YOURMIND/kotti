@@ -1,6 +1,6 @@
 <template>
 	<div :class="formClass">
-		<label :class="formLabelClass" v-text="labelRep" />
+		<label :class="formLabelClass" v-text="labelRep" :for="labelFor" />
 		<div :class="inputGroupClass">
 			<span class="input-group-addon" v-text="addonText" />
 			<input
@@ -49,6 +49,7 @@ export default {
 		type: { default: 'text', type: String },
 		validate: { default: '', type: String },
 		validateText: { default: '', type: String },
+		labelFor: { default: null },
 		value: [String, Number],
 	},
 	data() {

@@ -7,15 +7,18 @@
 		<KtInput
 			v-model="v1"
 			label="Name"
+			labelFor="Name"
 			placeholder="Add your name"
 		/>
 		<KtInput placeholder="Add your name"/>
 	</div>
 
 	`label` props accept `String` and show on the top of `input`.
+	
+	`labelFor` define the `for` attributes in `label`.
 
 	```html
-	<KtInput v-model="v1" label="Name" placeholder="Add your name"/>
+	<KtInput v-model="v1" label="Name" labelFor="Name" placeholder="Add your name"/>
 	<KtInput placeholder="Add your name"/>
 	```
 
