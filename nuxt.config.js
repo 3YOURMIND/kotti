@@ -16,13 +16,6 @@ design decisions. The Kotti design system has two main parts: foundation and com
 			},
 		],
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-		script: [
-			{
-				src: `https://jira.3yourmind.com/s/a4b15870ba2faaa8526e29ec1fc54fc2-T/-s8v1l3/79002/b10b26119affed4ed7a2e8f9c8556e37/
-			2.0.27/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/
-			com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-UK&collectorId=e069af0f`,
-			},
-		],
 	},
 	/*
 	 ** Customize the progress bar color
