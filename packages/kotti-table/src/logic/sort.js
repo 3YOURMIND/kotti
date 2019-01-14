@@ -1,8 +1,10 @@
 import pick from 'lodash/pick'
 import property from 'lodash/property'
 import { setColumnsArray, getColumnsArray } from './column'
-import { SORT_ASC, SORT_DSC, SORT_NONE } from '../constants'
+import { IS_ASC, IS_DSC, SORT_DSC, SORT_NONE } from '../constants'
 import { getColumn } from './column'
+
+const PUBLIC_SORT_PROPS = ['prop', 'sortBy', 'sortOrder']
 
 export const defaultState = {
 	sortMultiple: false,
@@ -38,19 +40,26 @@ export const mutations = {
 		const { state } = store
 		state.rows = sortData(state.filteredData || state._data || [], state)
 
+		const sortedColumns = state.sortedColumns.map(column => {
+			column = pick(column, PUBLIC_SORT_PROPS)
+			return {
+				...column,
+				sortBy: column.sortBy || column.prop,
+			}
+		})
+
 		if (!options || !options.silent) {
 			store.emit('sortChange', {
-				sortedColumns: state.sortedColumns,
+				sortedColumns,
 				column: options.column,
 				prop: options.column.prop,
-				sortBy: options.column.sortBy,
+				sortBy: options.column.sortBy || options.column.prop,
 				sortOrder: options.column.sortOrder,
 			})
 		}
 	},
 	setSortedColumns(store, columns = store.state.sortedColumns) {
-		const props = ['prop', 'sortOrder']
-		setColumnsArray(store.state, 'sortedColumns', props, columns)
+		setColumnsArray(store.state, 'sortedColumns', PUBLIC_SORT_PROPS, columns)
 		store.commit('updateColumns')
 	},
 }
@@ -69,11 +78,11 @@ export const getters = {
 	},
 	isSortedByAsc(state, column) {
 		column = getSortedColumn(state, column)
-		return column && column.sortOrder === SORT_ASC
+		return column && IS_ASC.test(String(column.sortOrder))
 	},
 	isSortedByDsc(state, column) {
 		column = getSortedColumn(state, column)
-		return column && column.sortOrder === SORT_DSC
+		return column && IS_DSC.test(String(column.sortOrder))
 	},
 	getSortedColumns(state) {
 		return getColumnsArray(state, 'sortedColumns')
