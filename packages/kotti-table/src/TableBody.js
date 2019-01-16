@@ -13,20 +13,21 @@ export default {
 		return (
 			<tbody>
 				{showEmptyText && <TableBodyEmptyRow />}
-				{rows.map((row, rowIndex) => [
-					<TableRow
-						key={getRowKey(row) || rowIndex}
-						row={row}
-						rowIndex={rowIndex}
-					/>,
-					isExpandable && (
-						<TableBodyExpandRow
-							key={`${getRowKey(row) || rowIndex}-expansion`}
+				{!loading &&
+					rows.map((row, rowIndex) => [
+						<TableRow
+							key={getRowKey(row) || rowIndex}
 							row={row}
 							rowIndex={rowIndex}
-						/>
-					),
-				])}
+						/>,
+						isExpandable && (
+							<TableBodyExpandRow
+								key={`${getRowKey(row) || rowIndex}-expansion`}
+								row={row}
+								rowIndex={rowIndex}
+							/>
+						),
+					])}
 				{loading && <TableBodyLoadingRow />}
 			</tbody>
 		)
