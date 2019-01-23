@@ -75,11 +75,11 @@ export default {
 	name: 'KtComment',
 	props: {
 		createdTime: String,
-		id: Number,
+		id: Number | String,
 		message: String,
 		replies: Array,
 		userAvatar: String,
-		userId: Number,
+		userId: Number | String,
 		userName: String,
 		allowChange: Boolean,
 	},
