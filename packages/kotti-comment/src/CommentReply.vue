@@ -54,10 +54,10 @@ export default {
 	},
 	props: {
 		createdTime: String,
-		id: Number,
+		id: Number | String,
 		message: String,
 		userAvatar: String,
-		userId: Number,
+		userId: Number | String,
 		userName: String,
 		allowChange: Boolean,
 	},
