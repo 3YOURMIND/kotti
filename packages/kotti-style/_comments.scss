@@ -39,6 +39,10 @@
 .comment__message {
 	font-size: 0.75rem;
 	line-height: 1.2rem;
+	word-break: break-word;
+}
+.comment-reply__message{
+	word-break: break-word;
 }
 
 .comment__action,
