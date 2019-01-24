@@ -154,6 +154,7 @@ th.sortable .kt-table__controls {
 	top: 0;
 	width: 0.6rem;
 	height: 100%;
+	hyphens: none;
 }
 
 th.sortable:hover .kt-table__controls,
