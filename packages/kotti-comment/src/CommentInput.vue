@@ -38,9 +38,9 @@ export default {
 	},
 	props: {
 		isInline: { type: Boolean, default: false },
-		parentId: Number,
+		parentId: Number | String,
 		placeholder: String,
-		replyToUserId: Number,
+		replyToUserId: Number | String,
 		userAvatar: String,
 	},
 	data() {
