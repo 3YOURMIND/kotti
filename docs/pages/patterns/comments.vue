@@ -129,7 +129,7 @@ export default {
 					userId: 12,
 					userName: 'Margaret Atwood',
 					message:
-						'Marine Le Pen, a Fierce Campaigner, Heads to Finale in French Election',
+						'Marine Le Pen, a Fierce Campaigner, </br> Heads to Finale in French Election',
 					userAvatar: 'https://picsum.photos/200',
 					createdTime: '2018-12-04T09:57:20+00:00',
 					allowChange: true,
@@ -140,7 +140,7 @@ export default {
 							userName: 'Benni',
 							createdTime: '2018-03-20',
 							message:
-								'Join Bright Side Now! Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
+								'Join Bright Side Now!</br>Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
 							userAvatar: 'https://picsum.photos/100',
 							allowChange: false,
 						},

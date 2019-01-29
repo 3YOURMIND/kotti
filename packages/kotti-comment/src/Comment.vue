@@ -9,7 +9,7 @@
 			<div
 				v-if="!isInlineEdit"
 				class="comment__message"
-				v-text="inlineMessage"
+				v-html="inlineMessage"
 			/>
 			<div class="comment-inline-edit form-group" v-else>
 				<textarea
