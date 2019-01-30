@@ -14,7 +14,7 @@
 				>
 					<span
 						v-html="
-							postEscapeParser(dangerDefaultParserOverride(inlineMessage))
+							postEscapeParser(dangerouslyOverrideParser(inlineMessage))
 						"
 					/>
 					<i class="yoco" v-text="'comment'" />
@@ -59,7 +59,7 @@ export default {
 		KtButtonGroup,
 	},
 	props: {
-		dangerDefaultParserOverride: { default: escape, type: Function },
+		dangerouslyOverrideParser: { default: escape, type: Function },
 		postEscapeParser: { default: _ => _, type: Function },
 		parser: { default: escape, type: Function },
 		createdTime: String,

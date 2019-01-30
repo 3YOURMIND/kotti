@@ -103,17 +103,17 @@
 
 KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop 
 
-> Remember to still escape tags to prevent XHR attacks,
+> Remember to **escape malicious tags** to prevent [Cross-site-scripting](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks,
 you can use KtComment's default parser function with KtComment.defaultParser
 
 ```js
 methods: {
-	dangerDefaultParserOverride: msg => escape(msg).replace(/\n/g, '<br>'),
+	dangerouslyOverrideParser: msg => escape(msg).replace(/\n/g, '<br>'),
 	// alternativly you could
-	dangerDefaultParserOverride: msg => escape(msg),
-	postEscapeParser: msg => msg.replace(/\n/g, '<br>'),
+	dangerouslyOverrideParser: msg => escape(msg),
+	postEscapeParser: msg => msg.replace(/\n/g, '<br/>'),
 	// or just
-	postEscapeParser: msg => msg.replace(/\n/g, '<br>'),
+	postEscapeParser: msg => msg.replace(/\n/g, '<br/>'),
 }
 ```
 
@@ -121,7 +121,7 @@ methods: {
 	<KtComment
 		v-for="comment in badComments"
 		:key="comment.id"
-	  :dangerDefaultParserOverride="dangerDefaultParserOverride"
+	:dangerouslyOverrideParser="dangerouslyOverrideParser"
 		:postEscapeParser="postEscapeParser"
 		:id="comment.id"
 		:createdTime="comment.createdTime"
@@ -222,7 +222,7 @@ export default {
 							userName: 'Benni',
 							createdTime: '2018-03-20',
 							message:
-								'Join Bright Side Now!</br>Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
+								'Join Bright Side Now!<br/>Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
 							userAvatar: 'https://picsum.photos/100',
 							allowChange: false,
 						},
@@ -249,7 +249,7 @@ export default {
 		},
 	},
 	methods: {
-		dangerDefaultParserOverride: msg => escape(msg),
+		dangerouslyOverrideParser: msg => escape(msg),
 		postEscapeParser: msg => msg.replace(/\n/g, '</br>'),
 		handleEdit(payload) {
 			console.log(payload)
