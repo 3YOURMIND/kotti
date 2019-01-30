@@ -13,9 +13,7 @@
 					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
 					<span
-						v-html="
-							postEscapeParser(dangerDefaultParserOverride(inlineMessage))
-						"
+						v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 					/>
 					<i class="yoco" v-text="'comment'" />
 				</div>
@@ -59,7 +57,7 @@ export default {
 		KtButtonGroup,
 	},
 	props: {
-		dangerDefaultParserOverride: { default: escape, type: Function },
+		dangerouslyOverrideParser: { default: escape, type: Function },
 		postEscapeParser: { default: _ => _, type: Function },
 		parser: { default: escape, type: Function },
 		createdTime: String,
