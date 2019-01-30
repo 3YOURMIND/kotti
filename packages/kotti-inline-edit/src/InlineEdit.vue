@@ -3,8 +3,8 @@
 		<label class="form-label" v-text="label" />
 		<div
 			v-if="!editMode"
-			v-text="representValue"
-			@click="editMode=true"
+			v-html="postEscapeParser(dangerouslyOverrideParser(representValue))"
+			@click="editMode = true"
 			:class="representTextClass"
 		/>
 		<div v-else>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import escape from 'lodash/escape'
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group'
 
@@ -35,6 +36,8 @@ export default {
 		KtButtonGroup,
 	},
 	props: {
+		dangerouslyOverrideParser: { default: escape, type: Function },
+		postEscapeParser: { default: _ => _, type: Function },
 		invalidMessage: { default: 'Click to edit', type: String },
 		label: { default: null, types: [String, null] },
 		value: { types: [String, Number] },
