@@ -12,7 +12,8 @@
 					v-if="!isInlineEdit"
 					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
-					<span v-html="inlineMessage" /> <i class="yoco" v-text="'comment'" />
+					<span v-html="parser(inlineMessage)" />
+					<i class="yoco" v-text="'comment'" />
 				</div>
 				<div class="comment-inline-edit form-group" v-else>
 					<textarea
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+import escape from 'lodash/escape'
 import KtAvatar from '../../kotti-avatar'
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group'
@@ -53,6 +55,7 @@ export default {
 		KtButtonGroup,
 	},
 	props: {
+		parser: { default: escape, type: Function },
 		createdTime: String,
 		id: Number | String,
 		message: String,

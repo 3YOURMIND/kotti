@@ -99,3 +99,38 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default { ...components, install }
+
+export {
+	KtActionbar,
+	KtAvatar,
+	KtAvatarGroup,
+	KtBanner,
+	KtBreadcrumb,
+	KtButton,
+	KtButtonGroup,
+	KtCard,
+	KtCol,
+	KtComment,
+	KtCommentInput,
+	KtDatePicker,
+	KtDrawer,
+	KtHeading,
+	KtLine,
+	KtInlineEdit,
+	KtInput,
+	KtInputNumber,
+	KtModal,
+	KtNavbar,
+	KtPagenation,
+	KtPopover,
+	KtRadio,
+	KtRadioGroup,
+	KtRow,
+	KtSingleSelect,
+	KtSwitch,
+	KtStep,
+	KtSteps,
+	KtTable,
+	KtToaster,
+	KtUserMenu,
+}
