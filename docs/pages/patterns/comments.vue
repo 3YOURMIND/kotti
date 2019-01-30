@@ -145,8 +145,6 @@ methods: {
 
 ### Props
 
-		allowChange: Boolean,
-
 | Attribute            | Description                                 | Type                        | Accepted values                 | Default |
 |:---------------------|:--------------------------------------------|:----------------------------|:--------------------------------|:--------|
 | `createdTime`  | The Time that appears in the comment | string | "20-12-2008" | - |
