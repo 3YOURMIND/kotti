@@ -9,7 +9,7 @@
 			<div
 				v-if="!isInlineEdit"
 				class="comment__message"
-				v-html="parser(inlineMessage)"
+				v-html="postEscapeParser(dangerDefaultParserOverride(inlineMessage))"
 			/>
 			<div class="comment-inline-edit form-group" v-else>
 				<textarea
@@ -46,7 +46,8 @@
 					:message="reply.message"
 					:createdTime="reply.createdTime"
 					:allowChange="reply.allowChange"
-					:parser="parser"
+					:dangerDefaultParserOverride="dangerDefaultParserOverride"
+					:postEscapeParser="postEscapeParser"
 					@_inlineReplyClick="handleInlineReplyClick"
 					@_inlineDeleteClick="handleDelete($event, 'INLINE')"
 					@_inlineEditSumbit="$emit('edit', $event)"
@@ -76,7 +77,8 @@ import KtCommentInput from './CommentInput.vue'
 export default {
 	name: 'KtComment',
 	props: {
-		parser: { default: escape, type: Function },
+		dangerDefaultParserOverride: { default: escape, type: Function },
+		postEscapeParser: { default: _ => _, type: Function },
 		createdTime: String,
 		id: Number,
 		message: String,

@@ -12,7 +12,11 @@
 					v-if="!isInlineEdit"
 					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
-					<span v-html="parser(inlineMessage)" />
+					<span
+						v-html="
+							postEscapeParser(dangerDefaultParserOverride(inlineMessage))
+						"
+					/>
 					<i class="yoco" v-text="'comment'" />
 				</div>
 				<div class="comment-inline-edit form-group" v-else>
@@ -55,6 +59,8 @@ export default {
 		KtButtonGroup,
 	},
 	props: {
+		dangerDefaultParserOverride: { default: escape, type: Function },
+		postEscapeParser: { default: _ => _, type: Function },
 		parser: { default: escape, type: Function },
 		createdTime: String,
 		id: Number,
