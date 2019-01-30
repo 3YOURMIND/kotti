@@ -9,7 +9,7 @@
 			<div
 				v-if="!isInlineEdit"
 				class="comment__message"
-				v-text="inlineMessage"
+				v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 			/>
 			<div class="comment-inline-edit form-group" v-else>
 				<textarea
@@ -46,6 +46,8 @@
 					:message="reply.message"
 					:createdTime="reply.createdTime"
 					:allowChange="reply.allowChange"
+					:dangerouslyOverrideParser="dangerouslyOverrideParser"
+					:postEscapeParser="postEscapeParser"
 					@_inlineReplyClick="handleInlineReplyClick"
 					@_inlineDeleteClick="handleDelete($event, 'INLINE')"
 					@_inlineEditSumbit="$emit('edit', $event)"
@@ -65,6 +67,7 @@
 </template>
 
 <script>
+import escape from 'lodash/escape'
 import KtAvatar from '../../kotti-avatar'
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group/'
@@ -74,6 +77,8 @@ import KtCommentInput from './CommentInput.vue'
 export default {
 	name: 'KtComment',
 	props: {
+		dangerouslyOverrideParser: { default: escape, type: Function },
+		postEscapeParser: { default: _ => _, type: Function },
 		createdTime: String,
 		id: Number | String,
 		message: String,
