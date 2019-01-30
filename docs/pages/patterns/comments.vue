@@ -107,14 +107,22 @@ KtComment will escape all tags by default but you can opt out and pass your own 
 you can use KtComment's default parser function with KtComment.defaultParser
 
 ```js
-function newLineParser (msg) { return escape(msg).replace(/\n/g, "<br>") }
+methods: {
+	dangerDefaultParserOverride: msg => escape(msg).replace(/\n/g, '<br>'),
+	// alternativly you could
+	dangerDefaultParserOverride: msg => escape(msg),
+	postEscapeParser: msg => msg.replace(/\n/g, '<br>'),
+	// or just
+	postEscapeParser: msg => msg.replace(/\n/g, '<br>'),
+}
 ```
 
 <div class="element-example">
 	<KtComment
 		v-for="comment in badComments"
 		:key="comment.id"
-	  :parser="parser"
+	  :dangerDefaultParserOverride="dangerDefaultParserOverride"
+		:postEscapeParser="postEscapeParser"
 		:id="comment.id"
 		:createdTime="comment.createdTime"
 		:userName="comment.userName"
@@ -148,7 +156,8 @@ function newLineParser (msg) { return escape(msg).replace(/\n/g, "<br>") }
 | `userId`  | id of user who made the comment to reply too | number, string | "2" | - |
 | `userName`  | name of user to display | string | "Jhone Doe" | - |
 | `message`  | the actual comment | string | "Hello" | - |
-| `parser`             | A function that processes the comment message before it is passed to the div that render it | (string) => string | Function | lodash escape function |
+| `dangerDefaultParserOverride`  | A function that processes and escapes the comment message before it is passed to the div that render it, as the name implies you're responsible for escaping if you use this | (string) => string | Function | lodash escape function |
+| `postEscapeParser`  | A function that processes the message after is has been escaped use this instead of `dangerDefaultParserOverride` | (string) => string | Function | (_) => _ |
 | `allowChange`  | wether this comment is editable | boolean | true,false | false |
 
 ### Event
@@ -242,7 +251,8 @@ export default {
 		},
 	},
 	methods: {
-		parser: msg => escape(msg).replace(/\n/g, '</br>'),
+		dangerDefaultParserOverride: msg => escape(msg),
+		postEscapeParser: msg => msg.replace(/\n/g, '</br>'),
 		handleEdit(payload) {
 			console.log(payload)
 		},
