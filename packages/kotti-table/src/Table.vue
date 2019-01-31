@@ -48,6 +48,7 @@ export default {
 		rowKey: { type: String },
 		rows: { required: true, type: Array },
 		columns: { default: () => [], type: Array },
+		useColumnDragToOrder: { default: false, type: Boolean },
 		useColumnStateControl: { default: false, type: Boolean },
 		emptyText: { default: 'No Data', type: String },
 

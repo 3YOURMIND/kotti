@@ -64,8 +64,9 @@ const TableColumn = {
 		default: updateColumnsfor('default'),
 	},
 	mounted() {
-		const columnIndex = [].indexOf.call(this[KT_TABLE].$children, this)
-		this[KT_STORE].commit('insertColumn', this.columnConfig, columnIndex)
+		this.columnConfig.index =
+			this.columnConfig.index || [].indexOf.call(this[KT_TABLE].$children, this)
+		this[KT_STORE].commit('insertColumn', this.columnConfig)
 	},
 	destroyed() {
 		if (!this.$parent) return
