@@ -26,6 +26,7 @@ export default {
 			handleExpand,
 			hasActions,
 			renderActions,
+			isDisabled,
 		} = this
 		return (
 			<tr
@@ -54,11 +55,15 @@ export default {
 						<div class="form-group">
 							<label class="form-checkbox">
 								<input
+									disabled={isDisabled}
 									type="checkbox"
 									checked={isSelected}
 									onChange={$event => handleSelect($event, row, rowIndex)}
 								/>
-								<i class="form-icon" />
+								<i
+									style={isDisabled ? { cursor: 'not-allowed' } : {}}
+									class="form-icon"
+								/>
 							</label>
 						</div>
 					</td>
@@ -87,8 +92,9 @@ export default {
 		_trClasses() {
 			const classes = []
 
-			if (this.isInteractive) classes.push('clickable')
+			if (this.isInteractive && !this.isDisabled) classes.push('clickable')
 			if (this.isSelected) classes.push('selected')
+			if (this.isDisabled) classes.push('disabled')
 			if (this[KT_TABLE].trClasses) classes.push(this[KT_TABLE].trClasses)
 
 			return classes
@@ -120,6 +126,12 @@ export default {
 		renderActions() {
 			return this[KT_TABLE]._renderActions
 		},
+		isDisabled() {
+			return this[KT_TABLE].disableRow({
+				row: this.row,
+				rowIndex: this.rowIndex,
+			})
+		},
 		isSelected() {
 			return this[KT_STORE].get('isSelected', this.row)
 		},
@@ -135,18 +147,18 @@ export default {
 		},
 		handleClick($event, row, index) {
 			this[KT_TABLE].$emit('rowClick', row, index)
-			if (this[KT_TABLE].isInteractive) {
+			if (this[KT_TABLE].isInteractive && !this.isDisabled) {
 				this[KT_TABLE].$emit('activateRow', row, index)
 			}
 		},
 		handleFocus($event, row, index) {
-			if (this[KT_TABLE].isInteractive) {
+			if (this[KT_TABLE].isInteractive && !this.isDisabled) {
 				this[KT_TABLE].$emit('activateRow', row, index)
 				this[KT_TABLE].$emit('rowFocus', row, index)
 			}
 		},
 		handleBlur($event, row, index) {
-			if (this[KT_TABLE].isInteractive) {
+			if (this[KT_TABLE].isInteractive && !this.isDisabled) {
 				this[KT_TABLE].$emit('rowBlur', row, index)
 			}
 		},

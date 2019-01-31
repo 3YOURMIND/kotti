@@ -78,6 +78,8 @@ export default {
 		renderLoading: Function,
 		renderEmpty: Function,
 
+		disableRow: { default: () => false, type: Function },
+
 		expandMultiple: { default: false, type: Boolean },
 		selected: { default: () => [], type: Array },
 		// should be deprecated in favor of selections
@@ -303,6 +305,11 @@ export default {
 .kt-table >>> .loading {
 	margin: 1.6rem 0;
 	text-align: center;
+}
+
+.kt-table >>> tr.disabled {
+	background-color: #f8f8f8;
+	cursor: not-allowed;
 }
 
 .x-scroll {
