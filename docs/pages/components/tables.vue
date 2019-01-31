@@ -200,6 +200,41 @@ It is also possible to control which rows are selected by passing the rows to `s
 }
 ```
 
+
+## Disable
+
+`disableRow` function can be passed to `KtTable` to reactivly diable rows,
+based on your view and specific row data
+
+<KtInput v-model='disableName' />
+<KtTable
+	:rows="rows"
+	:columns="columnsResponsive"
+	:disableRow="disableRow" />
+
+```html
+<KtInput v-model='disableName' />
+<KtTable
+	:rows="rows"
+	:columns="columnsResponsive"
+	:disableRow="disableRow" />
+```
+
+```js
+{
+	data() {
+		return {
+			disableName: 'F'
+		}
+	},
+	methods: {
+		disableRow({ row }) {
+			return this.disableName?row.name.includes(this.disableName):false
+		}
+	}
+}
+```
+
 ## Sorting
 
 To enable sorting you must enable a sorting ui flag `useQuickSortControl` as well as add `sortable` to any column definition.
@@ -532,6 +567,7 @@ slot-scope is not required for the `loading` and `empty` slots
 | `value`              | —                                           | `Array`                     | —                               | —       |
 | `maxHeight`          | —                                           | `String`                     | `10%`, `100px`                                  | —       |
 | `height`             | —                                           | `String`                     | `10%`, `100px`                                | —       |
+| `disableRow`         | disable some rows if the function is true   | `Function`                    | —                               | —       |
 | `renderEmpty`        | render function for empty text                                       | `Function`                     | —                               | —       |
 | `renderLoading`      | render function for when loading               | `Function`                     | —                               | —       |
 | `renderExpand`       | render function for expand                                           | `Function`                     | —                               | —       |
@@ -667,9 +703,11 @@ export default {
 					address: { number: 189, line: 'No. 189, Grove St, Los Angeles' },
 				},
 			],
+			disableName: 'F'
 		}
 	},
 	methods: {
+		disableRow({ row }) { return this.disableName?row.name.includes(this.disableName):false },
 		showAlert(value, model) {
 			alert(`${value} is ${model}!`)
 		},
