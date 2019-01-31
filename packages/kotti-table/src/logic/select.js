@@ -1,4 +1,5 @@
 import debounce from 'lodash/debounce'
+import { getEnabledRows } from './disable'
 
 export const defaultState = {
 	selection: [],
@@ -19,13 +20,15 @@ export const mutations = {
 	},
 	toggleAllSelection: debounce(store => {
 		const { state } = store
-		const { rows = [] } = state
-		if (rows.length === 0) return
+		// refresh disabled rows status in case of external influence
+		store.commit('updateDisabledRows')
+		const { rows = [], isAllRowsDisabled, enabledRows } = state
+		if (rows.length === 0 || isAllRowsDisabled) return
 
 		const oldSelection = state.selection
 		const shouldSelectAll = !(state.isAllSelected || oldSelection.length)
 
-		state.selection = shouldSelectAll ? [...rows] : []
+		state.selection = shouldSelectAll ? [...enabledRows] : []
 
 		const selection = [...state.selection]
 		state.isAllSelected = shouldSelectAll
@@ -58,7 +61,7 @@ export const getters = {
 			: row[state.rowKey]
 	},
 	isSelected(state, row) {
-		return (state.selection || []).indexOf(row) > -1
+		return state.selection.includes(row)
 	},
 }
 

@@ -27,6 +27,7 @@ import {
 	KT_STORE,
 	KT_LAYOUT,
 	KT_TABLE_STATE_PROVIDER,
+	DEFAULT_DISABLE_ROW,
 } from './constants'
 
 let tableIdSeed = 1
@@ -78,7 +79,7 @@ export default {
 		renderLoading: Function,
 		renderEmpty: Function,
 
-		disableRow: { default: () => false, type: Function },
+		disableRow: { default: DEFAULT_DISABLE_ROW, type: Function },
 
 		expandMultiple: { default: false, type: Boolean },
 		selected: { default: () => [], type: Array },
@@ -233,6 +234,11 @@ export default {
 				if (value && value !== oldValue) {
 					this.store.commit('setFilteredColumns', value)
 				}
+			},
+		},
+		disableRow: {
+			handler(value) {
+				this.store.commit('updateDisabledRows')
 			},
 		},
 	},

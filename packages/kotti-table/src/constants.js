@@ -10,6 +10,7 @@ export const KT_LAYOUT = 'KT_LAYOUT'
 export const KT_TABLE_STATE_PROVIDER = 'KT_TABLE_STATE_PROVIDER'
 export const COLUMN_TYPE = Symbol('kt-table-column')
 
+export const DEFAULT_DISABLE_ROW = () => false
 export const DEFAULT_RENDER_CELL = function DEFAULT_RENDER_CELL(
 	h,
 	{ row, rowIndex, column, columnIndex, value },

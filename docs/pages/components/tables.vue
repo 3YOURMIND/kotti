@@ -210,14 +210,18 @@ based on your view and specific row data
 <KtTable
 	:rows="rows"
 	:columns="columnsResponsive"
-	:disableRow="disableRow" />
+	:disableRow="disableRow"
+	isSelectable
+	/>
 
 ```html
 <KtInput v-model='disableName' />
 <KtTable
 	:rows="rows"
 	:columns="columnsResponsive"
-	:disableRow="disableRow" />
+	:disableRow="disableRow"
+	isSelectable
+	/>
 ```
 
 ```js
@@ -229,7 +233,8 @@ based on your view and specific row data
 	},
 	methods: {
 		disableRow({ row }) {
-			return this.disableName?row.name.includes(this.disableName):false
+			// when name empty will disable all 
+			return row.name.includes(this.disableName)
 		}
 	}
 }
@@ -707,7 +712,9 @@ export default {
 		}
 	},
 	methods: {
-		disableRow({ row }) { return this.disableName?row.name.includes(this.disableName):false },
+		disableRow({ row }) {
+			return row.name.includes(this.disableName)
+		},
 		showAlert(value, model) {
 			alert(`${value} is ${model}!`)
 		},

@@ -6,7 +6,10 @@
 				<div class="form-group">
 					<label class="form-checkbox">
 						<input type="checkbox" :checked="isAllSelected" />
-						<i class="form-icon"></i>
+						<i
+							:style="isAllRowsDisabled ? { cursor: 'not-allowed' } : {}"
+							class="form-icon"
+						></i>
 					</label>
 					<div
 						class="kt-table-checkbox-col__click-area"
@@ -58,6 +61,9 @@ export default {
 	name: 'KtTableHeader',
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 	computed: {
+		isAllRowsDisabled() {
+			return this[KT_STORE].state.isAllRowsDisabled
+		},
 		isAllSelected() {
 			return this[KT_STORE].state.isAllSelected
 		},
