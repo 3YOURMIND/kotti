@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.3.0 - 2019.02.01
+
+_Chinese New Year Update_
+
+- Fixed: icon type in `yoco` example
+- Fixed: table control misplaced in Firefox Dev Version
+- Added: support for disable function in `KtTable`
+- Added: change order of the column by drag & drop in `KtTable`
+
+# 1.2.2 - 2019.01.30
+
+- Fixed: potential security issue in KtComment when enabling HTML support
+
 ## 1.2.1 - 2019.01.24
 
 - Fixed: Add word-break to comment message and comment reply message
@@ -15,7 +28,7 @@
 
 ## 1.1.0 - 2018.12.21
 
-Winter Solstice Update
+_Winter Solstice Update_
 
 - Fixed: Prevent Narrow Button LogoClick
 - Added: Using Vue-Popper for popover/tooltip component- Added: KtSteps and
