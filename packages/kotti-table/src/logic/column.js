@@ -7,6 +7,7 @@ import { setHiddenColumn } from './hide'
 import { setFilterColumn } from './filter'
 
 export const defaultState = {
+	freshColumns: true,
 	_columns: [],
 	columns: [],
 }
@@ -14,6 +15,21 @@ export const defaultState = {
 export const mutations = {
 	insertColumn(store, column, index) {
 		setColumn(store.state, column, index)
+		store.commit('updateColumns')
+	},
+	swapColumns(store, fromColumn, toColumn) {
+		const { state } = store
+		const fromRealIndex = getColumnIndex(state, fromColumn)
+		const toRealIndex = getColumnIndex(state, toColumn)
+		state._columns[fromRealIndex] = toColumn
+		state._columns[toRealIndex] = fromColumn
+		store.emit(
+			'columnOrderChange',
+			state._columns.map((column, order) => {
+				column.order = order
+				return column
+			}),
+		)
 		store.commit('updateColumns')
 	},
 	removeColumn(store, column) {
@@ -24,15 +40,23 @@ export const mutations = {
 	updateColumns({ table, state }) {
 		if (table.$ready) {
 			const { _columns = [] } = state
-			state.columns = _columns.filter(negate(property('hidden')))
+			if (state.freshColumns) {
+				state._columns = resolveColumnsOrder(_columns)
+				state.freshColumns = false
+			}
+			state.columns = state._columns.filter(negate(property('hidden')))
 		}
 	},
 }
 
 export const getters = {}
 
+export function getColumnIndex(state, column) {
+	return state._columns.findIndex(({ prop }) => prop === column.prop)
+}
+
 export function getColumn(state, column) {
-	return state._columns.find(({ prop }) => prop === column.prop)
+	return getColumnIndex(state, column)
 }
 
 export function setColumn(state, column, index) {
@@ -43,18 +67,28 @@ export function setColumn(state, column, index) {
 		oldColumnIndex = _columns.findIndex(({ prop }) => prop === column.prop)
 	}
 
+	// resolve where to place the column
 	if (oldColumnIndex !== -1) {
+		// if colum prop exists merge
 		let oldColumn = _columns[oldColumnIndex]
-		column.index = oldColumnIndex
 		_columns.splice(column.index, 1, { ...oldColumn, ...column })
-	} else if (column.index !== undefined) {
-		_columns.splice(column.index, 0, column)
 	} else if (index !== undefined) {
+		// else place at this exact index
 		_columns.splice(index, 0, column)
+	} else if (column.order !== undefined) {
+		// else place at order location
+		if (_columns.length > column.order) {
+			_columns.splice(column.order, 0, column)
+		} else {
+			_columns[column.order] = column
+		}
+	} else if (column.index !== undefined) {
+		// else infered index from children position in dom or prop
+		_columns.splice(column.index, 0, column)
 	} else {
-		column.index = _columns.length
 		_columns.push(column)
 	}
+	delete column.index
 
 	if (column.sortOrder !== SORT_NONE) {
 		setSortedColumn(state, column)
@@ -78,4 +112,28 @@ export function setColumnsArray(state, prop, shapeKeys, columns) {
 
 export function getColumnsArray(state, prop) {
 	return [...state[prop]]
+}
+
+function resolveColumnsOrder(columns) {
+	return columns
+		.filter(Boolean) // clear possible blanks after order based column insert then order
+		.map((col, index) => {
+			return {
+				orderAdvantage: 'order' in col ? 1 : -1,
+				order: col.order || index,
+				index,
+				col,
+			}
+		})
+		.sort((a, b) =>
+			a.order < b.order
+				? -1
+				: a.order > b.order
+				? 1
+				: a.orderAdvantage + a.index - (b.orderAdvantage + b.index),
+		)
+		.map(({ col }, order) => {
+			col.order = order
+			return col
+		})
 }

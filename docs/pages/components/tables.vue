@@ -147,7 +147,7 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 ```html
 <KtTable :rows="rows" :columns="columnsDefault" isScrollable />
-``` 
+```
 
 ## Selectable
 
@@ -200,7 +200,6 @@ It is also possible to control which rows are selected by passing the rows to `s
 }
 ```
 
-
 ## Disable
 
 `disableRow` function can be passed to `KtTable` to reactivly diable rows,
@@ -233,11 +232,29 @@ based on your view and specific row data
 	},
 	methods: {
 		disableRow({ row }) {
-			// when name empty will disable all 
+			// when name empty will disable all
 			return row.name.includes(this.disableName)
 		}
 	}
 }
+```
+
+## Ordering Columns
+
+You can order Columns by dragging if you use the `useColumnDragToOrder` flag
+
+<KtTable :rows="rows" useColumnDragToOrder >
+	<KtTableColumn label="Name" prop="name" />
+	<KtTableColumn label="Date" prop="date"/>
+	<KtTableColumn label="Address" prop="address.line"/>
+</KtTable>
+
+```html
+<KtTable :rows="rows" useColumnDragToOrder >
+	<KtTableColumn label="Name" prop="name" />
+	<KtTableColumn label="Date" prop="date"/>
+	<KtTableColumn label="Address" prop="address.line"/>
+</KtTable>
 ```
 
 ## Sorting
@@ -353,7 +370,7 @@ You can then use the set sortedColumns prop on the KtTable to update the table u
 
 ## Expandable
 
-`expandMultiple` enables expandability of the row, you can create template in `expand` slot. 
+`expandMultiple` enables expandability of the row, you can create template in `expand` slot.
 
 Same as `actions`, `slot-scope` is required and is used to pass data to the expantion.
 
@@ -381,83 +398,83 @@ It is possible to customize parts of the table by passing your own render prop f
 `KtTableColumn` supports the `formatter`, `renderHeader`, and `renderCell` props
 
 <KtTable
-	:rows="rows" 
+	:rows="rows"
 	:renderExpand="renderExpand"
 	:renderActions="renderActions"
 	>
 	<KtTableColumn
-		label="Name" 
-		prop="name" 
+		label="Name"
+		prop="name"
 		:renderHeader="renderHeader"
 		:renderCell="renderCell"
 		/>
 	<KtTableColumn
-		label="Date" 
-		prop="date" 
+		label="Date"
+		prop="date"
 		:formatter="formatDate"
 		/>
 </KtTable>
 
 <KtTable
-	:rows="[]" 
+	:rows="[]"
 	:loading="true"
 	>
 	<KtTableColumn
-		label="Name" 
-		prop="name" 
+		label="Name"
+		prop="name"
 		/>
 	<KtTableColumn
-		label="Date" 
-		prop="date" 
+		label="Date"
+		prop="date"
 		/>
 </KtTable>
 
 <KtTable
-	:rows="[]" 
+	:rows="[]"
 	:renderLoading="renderLoading"
 	:loading="true"
 	>
 	<KtTableColumn
-		label="Name" 
-		prop="name" 
+		label="Name"
+		prop="name"
 		/>
 	<KtTableColumn
-		label="Date" 
-		prop="date" 
+		label="Date"
+		prop="date"
 		/>
 </KtTable>
 
 <KtTable
-	:rows="[]" 
+	:rows="[]"
 	:renderEmpty="renderEmpty"
 	>
 	<KtTableColumn
-		label="Name" 
-		prop="name" 
+		label="Name"
+		prop="name"
 		/>
 	<KtTableColumn
-		label="Date" 
-		prop="date" 
+		label="Date"
+		prop="date"
 		/>
 </KtTable>
 
 ```html
 <KtTable
-	:rows="rows" 
+	:rows="rows"
 	:renderEmpty="renderEmpty"
 	:renderLoading="renderLoading"
 	:renderExpand="renderExpand"
 	:renderActions="renderActions"
 	>
 	<KtTableColumn
-		label="Name" 
-		prop="name" 
+		label="Name"
+		prop="name"
 		:renderHeader="renderHeader"
 		:renderCell="renderCell"
 		/>
 	<KtTableColumn
-		label="Date" 
-		prop="date" 
+		label="Date"
+		prop="date"
 		:formatter="formatDate"
 		/>
 </KtTable>
@@ -520,8 +537,8 @@ slot-scope is not required for the `loading` and `empty` slots
 		Loading while the loading prop on KtTable is true
 	</div>
 	<KtTableColumn
-		label="Name" 
-		prop="name" 
+		label="Name"
+		prop="name"
 		>
 		<template slot="header" slot-scope="{ value, column, columnIndex }">
 			<div>
@@ -540,113 +557,115 @@ slot-scope is not required for the `loading` and `empty` slots
 		</template>
 	</KtTableColumn>
 </KtTable>
-``` 
+```
 
 ## Usage
 
 ### Attributes
 
-| Attribute            | Description                                 | Type                        | Accepted values                 | Default |
-|:---------------------|:--------------------------------------------|:----------------------------|:--------------------------------|:--------|
-| `rows` (required)    | table row data                              | `Array`                     | —                               | —       |
-| `rowKey`             | the row prop used for the rows key          | `String`                    | —                               | —       |
-| `columns`            | table column information                    | `Array`                     | —                               | —       |
-| `emptyText`          | text to show when table is empty            | `String`                    | —                               | —       |
-| `loading`            | trigger toable loading state                | `Boolean`                   | —                               | `false` |
-| `expandMultiple`     | allow for exapnding multople rows at once   | `Boolean`                   | —                               | `false` |
-| `isInteractive`      | allow clicking/keyboard focusing table rows | `Boolean`                   | —                               | `false` |
-| `isScrollable`       | allow horizontal table scrolling            | `Boolean`                   | —                               | `false` |
-| `isSelectable`       | enable select option of table               | `Boolean`                   | —                               | `false` |
-| `sortable`           | enable sorting for all columns              | `Boolean`, `String`         | "all"                           | `false` |
-| `sortMultiple`       | retain sort priority for across multiple columns | `Boolean`              | -                               | `false` |
-| `remoteSort`         | ui is enabled but table will not sort only publish sortChange event | `Boolean`  | -                        | `false` |
-| `useQuickSortControl`| enable toggle sort by column click ui        | `Boolean`                   | -                               | `false` |
-| `useColumnsStateControl`| still not available enable ui for managing columns state  | `Boolean`   | -                               | `false` |
-| `sortedColumns`      | prop for setting sorted columns  | `Array`   | [{ prop, sortOrder }]                               | `[]` |
-| `hiddenColumns`      | prop for setting hidden columns  | `Array`   | [{ prop, hidden }]                               | `[]` |
-| `filterdColumns`     | prop for setting filterd columns  | `Array`   | [{ prop, filter }]                               | `[]` |
-| `tdClasses`          | classes to apply to all `<td>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `thClass`            | classes to apply to all `<th>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `trClasses`          | classes to apply to all `<tr>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `selected`           | rows that are selected as returned by selectionChange event       | `Array`                     | —                               | —       |
-| `value`              | —                                           | `Array`                     | —                               | —       |
-| `maxHeight`          | —                                           | `String`                     | `10%`, `100px`                                  | —       |
-| `height`             | —                                           | `String`                     | `10%`, `100px`                                | —       |
-| `disableRow`         | disable some rows if the function is true   | `Function`                    | —                               | —       |
-| `renderEmpty`        | render function for empty text                                       | `Function`                     | —                               | —       |
-| `renderLoading`      | render function for when loading               | `Function`                     | —                               | —       |
-| `renderExpand`       | render function for expand                                           | `Function`                     | —                               | —       |
-| `renderActions`      | render function for row actions                                          | `Function`                     | —                               | —       |
-| `renderActions`      | render function for row actions                                          | `Function`                     | —                               | —       |
+| Attribute                | Description                                                         | Type                        | Accepted values       | Default |
+|:-------------------------|:--------------------------------------------------------------------|:----------------------------|:----------------------|:--------|
+| `rows` (required)        | table row data                                                      | `Array`                     | —                     | —       |
+| `rowKey`                 | the row prop used for the rows key                                  | `String`                    | —                     | —       |
+| `columns`                | table column information                                            | `Array`                     | —                     | —       |
+| `emptyText`              | text to show when table is empty                                    | `String`                    | —                     | —       |
+| `loading`                | trigger toable loading state                                        | `Boolean`                   | —                     | `false` |
+| `expandMultiple`         | allow for exapnding multople rows at once                           | `Boolean`                   | —                     | `false` |
+| `isInteractive`          | allow clicking/keyboard focusing table rows                         | `Boolean`                   | —                     | `false` |
+| `isScrollable`           | allow horizontal table scrolling                                    | `Boolean`                   | —                     | `false` |
+| `isSelectable`           | enable select option of table                                       | `Boolean`                   | —                     | `false` |
+| `sortable`               | enable sorting for all columns                                      | `Boolean`, `String`         | "all"                 | `false` |
+| `sortMultiple`           | retain sort priority for across multiple columns                    | `Boolean`                   | -                     | `false` |
+| `remoteSort`             | ui is enabled but table will not sort only publish sortChange event | `Boolean`                   | -                     | `false` |
+| `useColumnDragToOrder`   | enable dragging columns to sort their order                         | `Boolean`                   | -                     | `false` |
+| `useQuickSortControl`    | enable toggle sort by column click ui                               | `Boolean`                   | -                     | `false` |
+| `useColumnsStateControl` | still not available enable ui for managing columns state            | `Boolean`                   | -                     | `false` |
+| `sortedColumns`          | prop for setting sorted columns                                     | `Array`                     | [{ prop, sortOrder }] | `[]`    |
+| `hiddenColumns`          | prop for setting hidden columns                                     | `Array`                     | [{ prop, hidden }]    | `[]`    |
+| `filterdColumns`         | prop for setting filterd columns                                    | `Array`                     | [{ prop, filter }]    | `[]`    |
+| `tdClasses`              | classes to apply to all `<td>` elements                             | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
+| `thClass`                | classes to apply to all `<th>` elements                             | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
+| `trClasses`              | classes to apply to all `<tr>` elements                             | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
+| `selected`               | rows that are selected as returned by selectionChange event         | `Array`                     | —                     | —       |
+| `value`                  | —                                                                   | `Array`                     | —                     | —       |
+| `maxHeight`              | —                                                                   | `String`                    | `10%`, `100px`        | —       |
+| `height`                 | —                                                                   | `String`                    | `10%`, `100px`        | —       |
+| `disableRow`             | disable some rows if the function is true                           | `Function`                  | —                     | —       |
+| `renderEmpty`            | render function for empty text                                      | `Function`                  | —                     | —       |
+| `renderLoading`          | render function for when loading                                    | `Function`                  | —                     | —       |
+| `renderExpand`           | render function for expand                                          | `Function`                  | —                     | —       |
+| `renderActions`          | render function for row actions                                     | `Function`                  | —                     | —       |
+| `renderActions`          | render function for row actions                                     | `Function`                  | —                     | —       |
 
 ### Column Attributes
 
-| Attribute            | Description                                 | Type                        | Accepted values                 | Default |
-|:---------------------|:--------------------------------------------|:----------------------------|:--------------------------------|:--------|
-| `prop`  (required)   | used to match the value in `rows` can be a dot path       | `String` `String.String`         | —                               | —       |
-| `align`              | alignment of column text                    | `String`                    | `"center"`, `"left"`, `"right"` | `left`  |
-| `key`                | deprecated is transalted to prop instead         | `String`                    | —                               | —       |
-| `label`              | table column header value                        | `String`                    | —                               | —       |
-| `responsive`         | control responsive display  (this doesn't seem to work )                | `String`                    | —                               | —       |
-| `width`              | width                                       | `String`                    | `10%`, `100px`                  | `auto`  |
-| `maxWidth`           |  currently not used | String | `10%`, `100px`   | - |
-| `hidden`             | does not render this collumn if true  | Boolean |  false |
-| `sortable` | wether this column is sortable or not | [Boolean, undefined] | true, false, undefined | - |
-| `sortOrder` | the current sort order of the column | [Number, String] | "ascending", "descending", null | null |
-| `sortOrders` | order to toggle sort  | Array | - | ["ascending", "descending", null] |
-| `sortMethod` | custom sort method ignores sortBy  | Function | - | - |
-| `sortBy` | compare function to sort by | String, Function, Array | path string, function or array of previous | column.prop |
-| `disableRowClick` | stop row click from propagating when clicking on cell | Boolean | - | 
-| `default` | if cell value is undfined use default. Does not work if you used custom render  | Function, String | - | - |
-| `formatter` | formates value before passing it to cell  | Function | - | 
-| `renderHeader` | render function to custom render header cell  | Function | - | 
-| `renderCell` |  render function to custom render table cell | Function | - | 
-| `renderContext` | object you can use to pass extra data to all render functions  | Object | - | 
-| `order` | number to sort columns from left to right by | Number | - | 
-| `thClass`          | classes to this colum's header to `<td>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `tdClass`          | classes to this colum's to `<td>` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `headerCellClass`  | classes to this colum's to `.kt-table__header-cell` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
-| `cellClass`        | classes to this colum's to `.kt-table__cell` elements     | `Array`, `String`, `Object` | `"responsive"`                  | `[]`    |
+| Attribute          | Description                                                                    | Type                        | Accepted values                            | Default                           |
+|:-------------------|:-------------------------------------------------------------------------------|:----------------------------|:-------------------------------------------|:----------------------------------|
+| `prop`  (required) | used to match the value in `rows` can be a dot path                            | `String` `String.String`    | —                                          | —                                 |
+| `align`            | alignment of column text                                                       | `String`                    | `"center"`, `"left"`, `"right"`            | `left`                            |
+| `key`              | deprecated is transalted to prop instead                                       | `String`                    | —                                          | —                                 |
+| `label`            | table column header value                                                      | `String`                    | —                                          | —                                 |
+| `responsive`       | control responsive display  (this doesn't seem to work )                       | `String`                    | —                                          | —                                 |
+| `width`            | width                                                                          | `String`                    | `10%`, `100px`                             | `auto`                            |
+| `maxWidth`         | currently not used                                                             | String                      | `10%`, `100px`                             | -                                 |
+| `hidden`           | does not render this collumn if true                                           | Boolean                     | false                                      |                                   |
+| `sortable`         | wether this column is sortable or not                                          | [Boolean, undefined]        | true, false, undefined                     | -                                 |
+| `sortOrder`        | the current sort order of the column                                           | [Number, String]            | "ascending", "descending", null            | null                              |
+| `sortOrders`       | order to toggle sort                                                           | Array                       | -                                          | ["ascending", "descending", null] |
+| `sortMethod`       | custom sort method ignores sortBy                                              | Function                    | -                                          | -                                 |
+| `sortBy`           | compare function to sort by                                                    | String, Function, Array     | path string, function or array of previous | column.prop                       |
+| `disableRowClick`  | stop row click from propagating when clicking on cell                          | Boolean                     | -                                          |                                   |
+| `default`          | if cell value is undfined use default. Does not work if you used custom render | Function, String            | -                                          | -                                 |
+| `formatter`        | formates value before passing it to cell                                       | Function                    | -                                          |                                   |
+| `renderHeader`     | render function to custom render header cell                                   | Function                    | -                                          |                                   |
+| `renderCell`       | render function to custom render table cell                                    | Function                    | -                                          |                                   |
+| `renderContext`    | object you can use to pass extra data to all render functions                  | Object                      | -                                          |                                   |
+| `order`            | number to sort columns from left to right by                                   | Number                      | -                                          |                                   |
+| `thClass`          | classes to this colum's header to `<td>` elements                              | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `tdClass`          | classes to this colum's to `<td>` elements                                     | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `headerCellClass`  | classes to this colum's to `.kt-table__header-cell` elements                   | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `cellClass`        | classes to this colum's to `.kt-table__cell` elements                          | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
 
 ### Events
 
 #### Column
 
-| Event Name     | Arguments       | Description                                                         |
-|:---------------|:----------------|:--------------------------------------------------------------------|
-| `@activateRow` | `(row, index)` | Row was clicked or activated via keyboard. Requires `isInteractive` |
-| `@rowClick` | `(row, index)` | Row was clicked  |
-| `@rowFocus` | `(row, index)` | Row was in focus Requires `isInteractive` |
-| `@expandChange` | `(selection)` | Row was blured Requires `isInteractive` |
-| `@expand` | `(selection)` | Row was expanded |
-| `@selectionChange` | `(selection)` | selection changed |
-| `@selectAll` | `(selection)` | all selection checkbox was toggled |
-| `@select` | `(selection, row)` | a row was selected |
-| `@sortChange` | `({ sortedColumns, column, prop, sortOrder, sortBy})` | a column was sorted |
+| Event Name           | Arguments                                             | Description                                                         |
+|:---------------------|:------------------------------------------------------|:--------------------------------------------------------------------|
+| `@activateRow`       | `(row, index)`                                        | Row was clicked or activated via keyboard. Requires `isInteractive` |
+| `@rowClick`          | `(row, index)`                                        | Row was clicked                                                     |
+| `@rowFocus`          | `(row, index)`                                        | Row was in focus Requires `isInteractive`                           |
+| `@expandChange`      | `(selection)`                                         | Row was blured Requires `isInteractive`                             |
+| `@expand`            | `(selection)`                                         | Row was expanded                                                    |
+| `@selectionChange`   | `(selection)`                                         | selection changed                                                   |
+| `@selectAll`         | `(selection)`                                         | all selection checkbox was toggled                                  |
+| `@select`            | `(selection, row)`                                    | a row was selected                                                  |
+| `@sortChange`        | `({ sortedColumns, column, prop, sortOrder, sortBy})` | a column was sorted                                                 |
+| `@columnOrderChange` | `([colun])`                                           | array of columns with updated order                                 |
 
 #### Column
 
-| Event Name     | Arguments       | Description                                                         |
-|:---------------|:----------------|:--------------------------------------------------------------------|
+| Event Name   | Arguments                                         | Description        |
+|:-------------|:--------------------------------------------------|:-------------------|
 | `@cellClick` | `({ value, column, row, columnIndex, rowIndex })` | a cell was clicked |
 
 ### Slots
 
 #### Table
 
-| Slot Name | Description                |
-|:----------|:---------------------------|
-| `empty`   | what to render when no data|
+| Slot Name | Description                         |
+|:----------|:------------------------------------|
+| `empty`   | what to render when no data         |
 | `loading` | what to render when loading is true |
-| `actions` | action section of each row |
-| `expand`  | expand section of each row |
+| `actions` | action section of each row          |
+| `expand`  | expand section of each row          |
 
 #### Column
 
-| Slot Name | Description                |
-|:----------|:---------------------------|
-| `header` | render in table row |
-| `default`| render in table cell |
+| Slot Name | Description          |
+|:----------|:---------------------|
+| `header`  | render in table row  |
+| `default` | render in table cell |
 </template>
 
 <script>
