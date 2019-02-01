@@ -27,6 +27,7 @@ import {
 	KT_STORE,
 	KT_LAYOUT,
 	KT_TABLE_STATE_PROVIDER,
+	DEFAULT_DISABLE_ROW,
 } from './constants'
 
 let tableIdSeed = 1
@@ -78,6 +79,8 @@ export default {
 		renderActions: Function,
 		renderLoading: Function,
 		renderEmpty: Function,
+
+		disableRow: { default: DEFAULT_DISABLE_ROW, type: Function },
 
 		expandMultiple: { default: false, type: Boolean },
 		selected: { default: () => [], type: Array },
@@ -234,6 +237,11 @@ export default {
 				}
 			},
 		},
+		disableRow: {
+			handler(value) {
+				this.store.commit('updateDisabledRows')
+			},
+		},
 	},
 	methods: {
 		isSelected(index) {
@@ -304,6 +312,11 @@ export default {
 .kt-table >>> .loading {
 	margin: 1.6rem 0;
 	text-align: center;
+}
+
+.kt-table >>> tr.disabled {
+	background-color: #f8f8f8;
+	cursor: not-allowed;
 }
 
 .x-scroll {

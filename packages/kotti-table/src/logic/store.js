@@ -9,6 +9,7 @@ import * as hide from './hide'
 import * as select from './select'
 import * as sort from './sort'
 import * as filter from './filter'
+import * as disable from './disable'
 
 export default class TableStore {
 	constructor(table, initialState = {}) {
@@ -18,6 +19,7 @@ export default class TableStore {
 			...column.defaultState,
 			...rows.defaultState,
 			...expand.defaultState,
+			...disable.defaultState,
 			...select.defaultState,
 			...hide.defaultState,
 			...sort.defaultState,
@@ -29,6 +31,7 @@ export default class TableStore {
 			...column.mutations,
 			...rows.mutations,
 			...expand.mutations,
+			...disable.mutations,
 			...select.mutations,
 			...hide.mutations,
 			...sort.mutations,
@@ -39,6 +42,7 @@ export default class TableStore {
 			...column.getters,
 			...rows.getters,
 			...expand.getters,
+			...disable.getters,
 			...select.getters,
 			...hide.getters,
 			...sort.getters,

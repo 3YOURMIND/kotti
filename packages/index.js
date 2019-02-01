@@ -26,7 +26,11 @@ import KtSingleSelect from './kotti-single-select'
 import KtSwitch from './kotti-switch'
 import KtStep from './kotti-step'
 import KtSteps from './kotti-steps'
-import KtTable from './kotti-table'
+import KtTable, {
+	KtTableColumn,
+	KtTableProvider,
+	KtTableColumnsStateMixin,
+} from './kotti-table'
 import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
 import KtRadioGroup from './kotti-radio-group'
@@ -131,6 +135,9 @@ export {
 	KtStep,
 	KtSteps,
 	KtTable,
+	KtTableColumn,
+	KtTableProvider,
+	KtTableColumnsStateMixin,
 	KtToaster,
 	KtUserMenu,
 }

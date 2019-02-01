@@ -38,7 +38,7 @@ export const mutations = {
 
 	changeSortConditions(store, options) {
 		const { state } = store
-		state.rows = sortData(state.filteredData || state._data || [], state)
+		state.rows = sortData(state.filteredRows || state._rows || [], state)
 
 		const sortedColumns = state.sortedColumns.map(column => {
 			column = pick(column, PUBLIC_SORT_PROPS)
