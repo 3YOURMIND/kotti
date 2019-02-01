@@ -20,6 +20,12 @@
 				:class="getThClasses(column)"
 				:style="getThStyle(column)"
 				@click="handleThClick(column)"
+				:draggable="isDraggable"
+				@dragstart="dragStart($event, column)"
+				@dragenter="dragEnter($event, column)"
+				@dragend="dragEnd"
+				@drop="drop($event, column)"
+				@dragover.prevent
 			>
 				<div
 					:class="[
@@ -57,6 +63,12 @@ export default {
 	components: { TableHeaderCell },
 	name: 'KtTableHeader',
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
+	data() {
+		return {
+			draggingColumn: null,
+			columnDragOver: null,
+		}
+	},
 	computed: {
 		isAllSelected() {
 			return this[KT_STORE].state.isAllSelected
@@ -66,6 +78,12 @@ export default {
 		},
 		hasActions() {
 			return this[KT_TABLE].hasActions
+		},
+		isDraggable() {
+			return this[KT_TABLE].useColumnDragToOrder
+		},
+		isDraggingColumn() {
+			return Boolean(this.draggingColumn)
 		},
 		isExpandable() {
 			return this[KT_TABLE].isExpandable
@@ -92,7 +110,9 @@ export default {
 		getThClasses(column) {
 			return [
 				{
+					dragOver: this.isDraggedOver(column),
 					sortable: this.canSort(column),
+					dragging: this.isDraggable,
 					sorted: this.isSorted(column),
 					clickable: this.canSort(column),
 				},
@@ -121,6 +141,23 @@ export default {
 		isSortedByDsc(column) {
 			return this[KT_STORE].get('isSortedByDsc', column)
 		},
+		dragStart(event, column) {
+			this.draggingColumn = column
+		},
+		dragEnter(event, column) {
+			this.columnDragOver = column
+		},
+		dragEnd(event) {
+			this.columnDragOver = null
+		},
+		isDraggedOver(column) {
+			return column === this.columnDragOver && this.draggingColumn !== column
+		},
+		drop(event, column) {
+			this[KT_STORE].commit('swapColumns', this.draggingColumn, column)
+			this.draggingColumn = null
+			this.columnDragOver = null
+		},
 	},
 }
 </script>
@@ -141,10 +178,21 @@ export default {
 	left: 0;
 	cursor: pointer;
 }
-
+th {
+	border-width: 0;
+	border-left-color: $lightgray-300;
+	box-sizing: border-box;
+	transition: border 0.2s ease-in-out;
+}
+th.dragOver {
+	border-left: 0.3rem solid;
+}
 th.sortable {
 	position: relative;
 	padding-right: 1rem;
+}
+th.dragging {
+	cursor: move;
 }
 
 th.sortable .kt-table__controls {

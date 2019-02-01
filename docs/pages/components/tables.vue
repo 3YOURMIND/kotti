@@ -200,6 +200,24 @@ It is also possible to control which rows are selected by passing the rows to `s
 }
 ```
 
+## Ordering Columns
+
+You can order Columns by dragging if you use the `useColumnDragToOrder` flag
+
+<KtTable :rows="rows" useColumnDragToOrder >
+	<KtTableColumn label="Name" prop="name" />
+	<KtTableColumn label="Date" prop="date"/>
+	<KtTableColumn label="Address" prop="address.line"/>
+</KtTable>
+
+```html
+<KtTable :rows="rows" useColumnDragToOrder >
+	<KtTableColumn label="Name" prop="name" />
+	<KtTableColumn label="Date" prop="date"/>
+	<KtTableColumn label="Address" prop="address.line"/>
+</KtTable>
+```
+
 ## Sorting
 
 To enable sorting you must enable a sorting ui flag `useQuickSortControl` as well as add `sortable` to any column definition.
@@ -520,6 +538,7 @@ slot-scope is not required for the `loading` and `empty` slots
 | `sortable`           | enable sorting for all columns              | `Boolean`, `String`         | "all"                           | `false` |
 | `sortMultiple`       | retain sort priority for across multiple columns | `Boolean`              | -                               | `false` |
 | `remoteSort`         | ui is enabled but table will not sort only publish sortChange event | `Boolean`  | -                        | `false` |
+|`useColumnDragToOrder`| enable dragging columns to sort their order  | `Boolean`                   | -                               | `false` |
 | `useQuickSortControl`| enable toggle sort by column click ui        | `Boolean`                   | -                               | `false` |
 | `useColumnsStateControl`| still not available enable ui for managing columns state  | `Boolean`   | -                               | `false` |
 | `sortedColumns`      | prop for setting sorted columns  | `Array`   | [{ prop, sortOrder }]                               | `[]` |
@@ -582,6 +601,7 @@ slot-scope is not required for the `loading` and `empty` slots
 | `@selectAll` | `(selection)` | all selection checkbox was toggled |
 | `@select` | `(selection, row)` | a row was selected |
 | `@sortChange` | `({ sortedColumns, column, prop, sortOrder, sortBy})` | a column was sorted |
+| `@columnOrderChange` | `([colun])` | array of columns with updated order |
 
 #### Column
 
