@@ -3,14 +3,16 @@
 		<label class="form-label" v-text="label" />
 		<div
 			v-if="!editMode"
-			v-html="postEscapeParser(dangerouslyOverrideParser(representValue))"
+			v-html="postParser(dangerouslyOverrideParser(representValue))"
 			@click="editMode = true"
 			:class="representTextClass"
 		/>
 		<div v-else>
-			<input
+			<component
+				:is="inputComponent"
 				v-bind="$attrs"
 				:value="currentValue"
+				v-text="currentValue"
 				@change="handleChange"
 				@input="handleInput"
 				class="form-input"
@@ -23,11 +25,13 @@
 		</div>
 	</div>
 </template>
-
 <script>
 import escape from 'lodash/escape'
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group'
+
+const DEFAULT_POST_PARSER = _ => _
+const newLineParser = t => t.replace(/\n/gm, '<br/>')
 
 export default {
 	name: 'KtInlineEdit',
@@ -37,8 +41,9 @@ export default {
 	},
 	props: {
 		dangerouslyOverrideParser: { default: escape, type: Function },
-		postEscapeParser: { default: _ => _, type: Function },
+		postEscapeParser: { default: DEFAULT_POST_PARSER, type: Function },
 		invalidMessage: { default: 'Click to edit', type: String },
+		multiline: { deafult: false, type: Boolean },
 		label: { default: null, types: [String, null] },
 		value: { types: [String, Number] },
 	},
@@ -50,6 +55,14 @@ export default {
 		}
 	},
 	computed: {
+		inputComponent() {
+			return this.multiline ? 'textarea' : 'input'
+		},
+		postParser() {
+			return this.multiline && this.postEscapeParser === DEFAULT_POST_PARSER
+				? newLineParser
+				: this.postEscapeParser
+		},
 		objectClass() {
 			return {
 				'inline-edit': true,
