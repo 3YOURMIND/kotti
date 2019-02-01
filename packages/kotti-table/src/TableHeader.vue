@@ -112,6 +112,7 @@ export default {
 				{
 					dragOver: this.isDraggedOver(column),
 					sortable: this.canSort(column),
+					dragging: this.isDraggable,
 					sorted: this.isSorted(column),
 					clickable: this.canSort(column),
 				},
@@ -189,6 +190,9 @@ th.dragOver {
 th.sortable {
 	position: relative;
 	padding-right: 1rem;
+}
+th.dragging {
+	cursor: move;
 }
 
 th.sortable .kt-table__controls {
