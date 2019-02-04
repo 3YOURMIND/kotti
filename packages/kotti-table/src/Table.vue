@@ -316,6 +316,7 @@ export default {
 
 .kt-table >>> tr.disabled {
 	background-color: #f8f8f8;
+	opacity: 0.6;
 	cursor: not-allowed;
 }
 
