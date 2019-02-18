@@ -14,7 +14,7 @@ export default {
 	mixins: [clickaway],
 	props: {
 		placement: { type: String, default: 'bottom' },
-		size: { type: String, default: 'sm' },
+		size: { type: String, default: null },
 		content: { type: String, default: '' },
 	},
 	data() {
@@ -44,7 +44,7 @@ export default {
 	},
 	computed: {
 		popperClass() {
-			return `kt-popper kt-popper--${this.size}`
+			return this.size ? `kt-popper kt-popper--${this.size}` : `kt-popper`
 		},
 	},
 	methods: {
