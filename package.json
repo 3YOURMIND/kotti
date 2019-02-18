@@ -38,7 +38,7 @@
 		"color": "^3.1.0",
 		"dayjs": "^1.7.5",
 		"vue-clickaway": "^2.2.2",
-		"vue-popperjs": "^1.6.1"
+		"vue-popperjs": "^2.0.2"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
@@ -57,7 +57,7 @@
 		"prettier": "^1.15.2",
 		"sass-loader": "^7.1.0",
 		"vue": "^2.5.17",
-		"vue-clipboard2": "^0.2.1",
+		"vue-clipboard2": "^0.3.0",
 		"vue-template-compiler": "^2.5.17"
 	},
 	"eslintConfig": {
