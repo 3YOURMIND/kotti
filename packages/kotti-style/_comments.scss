@@ -81,7 +81,7 @@
 	z-index: $zindex-4;
 	line-height: 1.4rem;
 	border-radius: $border-radius;
-	box-shadow: 0 0 0.2rem $border-radius rgba(0, 0, 0, 0.24);
+	box-shadow: $box-shadow;
 	display: none;
 	li {
 		padding: 0.2rem 1rem;
