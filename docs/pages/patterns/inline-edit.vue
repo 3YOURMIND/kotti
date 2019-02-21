@@ -37,6 +37,7 @@
 | `invalidMessage` | message                          | `String`  | —               | `"Click to edit"` |
 | `label`          | label text                       | `String`  | —               | —                 |
 | `value`          | value of message and input value | `v-model` | —               | —                 |
+| `multiline`      | allow input enter multilines     | `Boolean` | —               | `false`           |
 
 ### Input Events
 
@@ -50,6 +51,7 @@
 |:-----------|:-------------------------------------|:-----------------|
 | `confirm`  | triggers when confirm button clicked | `(event: Event)` |
 | `dismiss`  | triggers when dismiss button clicked | `(event: Event)` |
+
 </template>
 
 <script>

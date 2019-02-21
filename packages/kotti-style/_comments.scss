@@ -41,7 +41,7 @@
 	line-height: 1.2rem;
 	word-break: break-word;
 }
-.comment-reply__message{
+.comment-reply__message {
 	word-break: break-word;
 }
 
@@ -80,8 +80,8 @@
 	background: #ffffff;
 	z-index: $zindex-4;
 	line-height: 1.4rem;
-	border-radius: 0.1rem;
-	box-shadow: 0 0 0.2rem 0.1rem rgba(0, 0, 0, 0.24);
+	border-radius: $border-radius;
+	box-shadow: $box-shadow;
 	display: none;
 	li {
 		padding: 0.2rem 1rem;
@@ -193,7 +193,7 @@
 		align-items: center;
 		border: 1px solid #dbdbdb;
 		background: #fff;
-		border-radius: 0.1rem;
+		border-radius: $border-radius;
 		&--focus {
 			border: 1px solid #bbb;
 		}

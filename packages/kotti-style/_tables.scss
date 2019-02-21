@@ -62,7 +62,7 @@ table {
 		display: none;
 		font-size: 0.8rem;
 		padding: 0.25rem;
-		border-radius: 0.1rem;
+		border-radius: $border-radius;
 		z-index: $zindex-4;
 		line-height: 0.8rem;
 		width: auto;

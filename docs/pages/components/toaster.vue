@@ -26,7 +26,7 @@ Since `Kotti-UI 1.0.0`, [vue-yodify](https://github.com/3YOURMIND/vue-yodify) is
 	<KtToaster/>
 	<KtButton
 		@click="$yodify({ text: 'Wow very looooooooooooong text, and it breaks the line!', type: 'success' })"
-		v-text="'Long Message'"
+		v-text="'Success Long Message'"
 	/>
 	<KtButton
 		@click="$yodify({ text: 'Error message', type: 'error' })"

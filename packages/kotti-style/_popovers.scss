@@ -74,9 +74,8 @@
 	padding: 0.8rem;
 	background: #fff;
 	border-radius: $border-radius;
+	box-shadow: $box-shadow;
 	z-index: $zindex-4;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	box-shadow: 1px 0.2rem 0.6rem rgba(0, 0, 0, 0.24);
 	width: auto;
 	&--sm {
 		width: 12rem;

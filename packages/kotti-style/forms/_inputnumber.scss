@@ -34,7 +34,7 @@
 		display: inline-flex;
 		width: auto;
 		max-width: 100%;
-		border-radius: 0.1rem;
+		border-radius: $border-radius;
 		border: 1px solid $lightgray-400;
 		&--100 {
 			width: 100%;
@@ -55,7 +55,7 @@
 }
 
 .kt-input-number__button {
-	border-radius: 0.1rem;
+	border-radius: $border-radius;
 	flex: 0 0 1.6rem;
 	width: 1.6rem;
 	height: 1.6rem;
@@ -65,11 +65,13 @@
 	user-select: none;
 	&:hover {
 		cursor: pointer;
+		background: $lightgray-400;
 	}
 	&--disabled {
 		color: $lightgray-400;
 	}
 	&--disabled:hover {
 		cursor: not-allowed;
+		background: $lightgray-300;
 	}
 }

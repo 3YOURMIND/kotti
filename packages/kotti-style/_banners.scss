@@ -1,8 +1,8 @@
 .banner {
 	display: flex;
-	border-radius: 0.1rem;
+	border-radius: $border-radius;
 	background: #fff;
-	border: 1px solid $primary-500;
+	border: 1px solid $lightgray-400;
 	padding: $unit-2 $unit-4;
 	flex-direction: column;
 

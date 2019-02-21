@@ -6,7 +6,7 @@
 			class="vue-yodify__notification"
 		>
 			<div :class="iconClass(notification.type)">
-				<i class="yoco" v-text="'bell'" />
+				<i class="yoco" v-text="iconText(notification.type)" />
 			</div>
 			<div class="vue-yodify__content" v-text="notification.text" />
 			<div
@@ -38,6 +38,11 @@ export default {
 		},
 		iconClass(notificationStatus) {
 			return `vue-yodify__icon vue-yodify__icon--${notificationStatus}`
+		},
+		iconText(type) {
+			if (type === 'error') return 'circle_cross'
+			if (type === 'warning') return 'circle_attention'
+			return 'circle_check'
 		},
 	},
 	created() {

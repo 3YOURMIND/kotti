@@ -129,3 +129,7 @@ $zindex-1: 100 !default;
 $zindex-2: 200 !default;
 $zindex-3: 300 !default;
 $zindex-4: 400 !default;
+
+// Shadow
+
+$box-shadow: 0 0 1px #dbdbdb, 0 0.1rem 5px rgba(0, 0, 0, 0.26);
