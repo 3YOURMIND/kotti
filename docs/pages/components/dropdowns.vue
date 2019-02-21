@@ -94,12 +94,26 @@ If you are using `KtDropdownMenu`, you can use `icon` props to define the icon i
 
 The `placement` prop accepts same values as `KtPopover`. We suggest using the default placement.
 
+## Usage
 
+### Attributes
+
+| Attribute              | Description               | Type     | Accepted values   | Default |
+|:-----------------------|:--------------------------|:---------|:------------------|:--------|
+| `KtDropdown.size`      | size of the dropdown      | `String` | Same as KtPopover | `auto`  |
+| `KtDropdown.placement` | placement of the dropdown | `String` | Same as KtPopover | `auto`  |
+| `KtDropdownMenu.icon`  | icon of the dropdown denu | `String` | Yoco icon text    | -       |
+
+### Slots
+
+| Slot Name         | Description           |
+|:------------------|:----------------------|
+| `KtDropdownMenus` | dropdown menu section |
 
 </template>
 
 <script>
 export default {
-	name: 'DropdownDocs',
+	name: 'KtDropdownsDocs',
 }
 </script>

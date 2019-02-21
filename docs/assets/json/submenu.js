@@ -60,6 +60,10 @@ const submenu = [
 				to: 'drawer',
 			},
 			{
+				label: 'Dropdowns',
+				to: 'dropdowns',
+			},
+			{
 				label: 'Headings',
 				to: 'headings',
 			},
