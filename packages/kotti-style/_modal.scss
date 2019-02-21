@@ -19,7 +19,7 @@
 	margin: 0px auto;
 	padding: $unit-6;
 	background-color: #fff;
-	border-radius: 0.1rem;
+	border-radius: $border-radius;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
 	transition: all 0.3s ease;
 	display: flex;

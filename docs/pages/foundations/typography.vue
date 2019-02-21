@@ -15,7 +15,7 @@ You can download fonts at <a href="https://fonts.google.com/specimen/Open+Sans">
 | **H1 Page header**<br/>Without actionbar, the page header can be used in the workspace. | font-size: `32px`;<br/>font-weight: `600`;<br/>color: `$darkgray-500`; | line-height: `48px`;                                                    |
 | **H2 Subpage Header**<br/>Used for second level header, or main title in action bar.    | font-size: `24px`;<br/>font-weight: `600`;<br/>color: `$darkgray-500`; | line-height: `32px`;<br/>margin-top: `16px`;                            |
 | **H3 Section Header**<br/>Used to divide each section.                                  | font-size: `16px`;<br/>font-weight: `600`;<br/>color: `$primary-500`;  | line-height: `24px`;<br/>margin-top: `16px`;<br/>padding-bottom: `8px`; |
-| **H3 Section Header with actions**<br/>Text button for actions.                         | —                                                                      |—                                                                       |
+| **H3 Section Header with actions**<br/>Text button for actions.                         | —                                                                      | —                                                                       |
 
 
 <div class="element-example">
@@ -25,6 +25,16 @@ You can download fonts at <a href="https://fonts.google.com/specimen/Open+Sans">
 <h3>H3 Section Header
 	<span>Actions<i class="yoco">plus</i></span>
 </h3>
+</div>
+
+
+<div class="mb-8px">
+<KtBanner
+	message="Using Header Component for H3"
+	icon="circle_attention"
+	actionText="View"
+	@click="$router.push('/components/headings')"
+/>
 </div>
 
 ```html
@@ -99,7 +109,7 @@ You can download fonts at <a href="https://fonts.google.com/specimen/Open+Sans">
 | Element                                               | Basic Properties                               | UI Properties          |
 |:------------------------------------------------------|:-----------------------------------------------|:-----------------------|
 | **Paragraph Text**<br/>Used for long form text.       | font-size: `14px`;<br/>color: `$darkgray-300`; | line-height: `21px`;   |
-| **Pargraph Margin**<br/>Margin between two paragraphs | —                                             | margin-bottom: `16px`; |
+| **Pargraph Margin**<br/>Margin between two paragraphs | —                                              | margin-bottom: `16px`; |
 
 <div class="element-example">
 	<p>

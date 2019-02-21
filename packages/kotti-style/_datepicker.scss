@@ -1,13 +1,14 @@
+$span-width: 1.6rem;
 .kt-dateinput {
 	position: relative;
 }
 .kt-datepicker {
-	width: 15.6rem;
+	width: $span-width * 8;
 	background: #fff;
-	padding: 0.8rem;
-	box-shadow: 0 0 1px #dbdbdb, 0 0.1rem 5px rgba(0, 0, 0, 0.26);
+	padding: $span-width/2;
+	box-shadow: $box-shadow;
 	box-sizing: border-box;
-	border-radius: 0.1rem;
+	border-radius: $border-radius;
 	position: absolute;
 	top: 3.2rem;
 	z-index: $zindex-4;
@@ -43,7 +44,7 @@
 		font-size: 0.6rem;
 		text-align: center;
 		span {
-			width: 2rem;
+			width: $span-width;
 			display: inline-block;
 		}
 	}
@@ -53,8 +54,8 @@
 	&__day-cell {
 		display: block;
 		float: left;
-		width: 2rem;
-		height: 2rem;
+		width: $span-width;
+		height: $span-width;
 		padding: 0.2rem;
 		text-align: center;
 		user-select: none;

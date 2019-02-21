@@ -76,7 +76,7 @@
 	border-radius: $border-radius;
 	z-index: $zindex-4;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-	box-shadow: 1px 0.2rem 0.6rem rgba(0, 0, 0, 0.24);
+	box-shadow: $box-shadow;
 	&--sm {
 		width: 12rem;
 	}

@@ -6,7 +6,7 @@
 		background: $lightgray-300;
 		display: inline-block;
 		padding: $unit-1;
-		border-radius: 0.1rem;
+		border-radius: $border-radius;
 		&:hover {
 			background: $lightgray-400;
 			cursor: pointer;
