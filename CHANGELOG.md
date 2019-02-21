@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.4.0 - 2019.02.21
+
+- Fixed: disabled row opacity to visually distinguish it
+- Fixed: fine and small style changes to match the new design kit
+- Fixed: `KtToaster` icons mapping
+- Fixed: `KtBreadcrumb` is not including correctly
+- Fixed: updated the example pictures
+- Added: support multiple line in KtInlineEdit
+- Added: support for dropdown
+- Added: support multiline flag for inlineEdit component
+
 ## 1.3.0 - 2019.02.01
 
 _Chinese New Year Update_
@@ -9,7 +20,7 @@ _Chinese New Year Update_
 - Added: support for disable function in `KtTable`
 - Added: change order of the column by drag & drop in `KtTable`
 
-# 1.2.2 - 2019.01.30
+## 1.2.2 - 2019.01.30
 
 - Fixed: potential security issue in KtComment when enabling HTML support
 
