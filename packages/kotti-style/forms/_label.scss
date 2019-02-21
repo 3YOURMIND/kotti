@@ -2,7 +2,6 @@
 
 .form-label {
 	font-size: $font-size-sm;
-	text-transform: uppercase;
 	color: $lightgray-500;
 	width: 100%;
 	display: block;
@@ -37,7 +36,6 @@
 	transition: all 0.1s ease-in;
 	&--focus {
 		line-height: $control-size-lg / 2;
-		text-transform: uppercase;
 		font-size: 0.5rem;
 		font-weight: 700;
 		transition: all 0.1s ease-in-out;

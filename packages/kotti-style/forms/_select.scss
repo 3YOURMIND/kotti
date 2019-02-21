@@ -58,8 +58,8 @@
 	top: 2rem;
 	width: 100%;
 	background: #fff;
-	box-shadow: 0 0 1px #dbdbdb, 0 2px 5px rgba(0, 0, 0, 0.26);
-	border-radius: 0.1rem;
+	box-shadow: $box-shadow;
+	border-radius: $border-radius;
 	padding: 0.4rem 0;
 	z-index: $zindex-4;
 	max-height: 20rem;
