@@ -1,14 +1,20 @@
 <template>
 	<div class="breadcrumb">
 		<ol>
-			<li v-for="(breadcrumb, index) in breadcrumbs" :key="index" :class="textClasses(breadcrumb)">
+			<li
+				v-for="(breadcrumb, index) in breadcrumbs"
+				:key="index"
+				:class="textClasses(breadcrumb)"
+			>
 				<span v-text="breadcrumb.title" @click="handleClick(breadcrumb)" />
 				<span v-if="showSeparator(index)">
-					<i v-if="separator.style === 'icon'"
+					<i
+						v-if="separator.style === 'icon'"
 						class="yoco"
 						v-text="separator.value"
 					/>
-					<span v-if="separator.style === 'text'"
+					<span
+						v-if="separator.style === 'text'"
 						class="breadcrumb__text-separator"
 						v-text="separator.value"
 					/>
@@ -20,7 +26,7 @@
 
 <script>
 export default {
-	name: 'BreadcrumbElement',
+	name: 'KtBreadcrumb',
 	props: {
 		breadcrumbs: { type: Array, required: true },
 		separator: {

@@ -44,6 +44,10 @@ const submenu = [
 				to: 'buttons',
 			},
 			{
+				label: 'Breadcrumbs',
+				to: 'breadcrumbs',
+			},
+			{
 				label: 'Cards',
 				to: 'cards',
 			},

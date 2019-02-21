@@ -58,12 +58,8 @@ textSeparator: {
 </template>
 
 <script>
-import KtBreadcrumb from '../../../packages/kotti-breadcrumb'
 export default {
 	name: 'KtBreadCrumbDoc',
-	components: {
-		KtBreadcrumb,
-	},
 	data() {
 		return {
 			textSeparator: {
