@@ -74,7 +74,7 @@ yarn add @3yourmind/kotti-ui
 ```js
 // in main.js
 import Vue from 'vue'
-import KottiUI from 'kotti-ui'
+import KottiUI from '@3yourmind/kotti-ui'
 
 // from v.0.0.4 kotti-ui includes kotti-style
 import '@3yourmind/kotti-ui/dist/KottiUI.css'
