@@ -25,7 +25,10 @@
 				:class="objectClass('navbar-header')"
 				:style="{ 'border-color': themeColor.borderColor }"
 			>
-				<kt-navbar-logo :labelText="labelText" @logoClick="$emit('logoClick')" />
+				<kt-navbar-logo
+					:labelText="labelText"
+					@logoClick="$emit('logoClick')"
+				/>
 			</div>
 			<kt-navbar-notification
 				v-if="notification"
@@ -73,6 +76,7 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
+import color from 'color'
 import KtNavbarLogo from './KtNavbarLogo'
 import KtNavbarMenu from './KtNavbarMenu'
 import KtNavbarNotification from './KtNavbarNotification'
@@ -94,15 +98,12 @@ export default {
 		labelText: { type: String, default: null },
 	},
 	inject: {
-		themeColor: {
-			from: 'KtNavbarTheme',
-			default: () => ({
-				backgroundColor: '#122C56',
-				textColor: 'rgba(255,255,255, 0.8)',
-				activeColor: 'rgba(255,255,255, 1)',
-				borderColor: '#rgba(255,255,255, 0.14)',
-				logoUrl: null,
-			}),
+		KtTheme: {
+			default: {
+				navbarBackgroundColor: '#122C56',
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarTextActiveColor: 'rgba(255,255,255, 1)',
+			},
 		},
 	},
 	data() {
@@ -116,6 +117,15 @@ export default {
 				'background-color': this.mobileMenuToggle
 					? this.themeColor.borderColor
 					: '',
+			}
+		},
+		themeColor() {
+			return {
+				backgroundColor: this.KtTheme.navbarBackgroundColor,
+				textColor: this.KtTheme.navbarTextColor,
+				borderColor: color(this.KtTheme.navbarBackgroundColor).isDark()
+					? 'rgba(255,255,255,0.24)'
+					: 'rgba(0,0,0,0.24)',
 			}
 		},
 	},

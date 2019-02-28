@@ -4,7 +4,7 @@
 			class="user-menu"
 			v-if="isMenuShow"
 			@click="clickawayMenu"
-			:style="{ background: themeColor.backgroundColor }"
+			:style="{ background: themeColor.textColor }"
 		>
 			<slot name="user-menu-items" />
 			<div class="user-menu-items">
@@ -81,13 +81,9 @@ export default {
 	},
 	mixins: [clickaway],
 	inject: {
-		themeColor: {
-			from: 'KtNavbarTheme',
-			default: () => {
-				return {
-					textColor: '#fff',
-					background: '#122C56',
-				}
+		KtTheme: {
+			default: {
+				navbarTextColor: 'rgba(255,255,255,.54)',
 			},
 		},
 	},
@@ -97,6 +93,11 @@ export default {
 		}
 	},
 	computed: {
+		themeColor() {
+			return {
+				textColor: this.KtTheme.navbarTextColor,
+			}
+		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
 		},

@@ -28,18 +28,22 @@ export default {
 		},
 	},
 	inject: {
-		themeColor: {
-			from: 'KtNavbarTheme',
-			default: () => {
-				return {
-					textColor: '#ffffff',
-					logoHeight: '1.2rem',
-					logoUrl: null,
-				}
+		KtTheme: {
+			default: {
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				logoUrl: null,
+				logoHeight: '40px',
 			},
 		},
 	},
 	computed: {
+		themeColor() {
+			return {
+				textColor: this.KtTheme.navbarTextColor,
+				logoHeight: this.KtTheme.logoHeight,
+				logoUrl: this.KtTheme.logoUrl,
+			}
+		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
 		},

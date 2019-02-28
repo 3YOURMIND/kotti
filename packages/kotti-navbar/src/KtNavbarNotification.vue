@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import color from 'color'
+
 export default {
 	name: 'KtNavbarNotification',
 	props: {
@@ -50,19 +52,24 @@ export default {
 		title: { type: String, default: 'Notification' },
 	},
 	inject: {
-		themeColor: {
-			from: 'KtNavbarTheme',
-			default: () => {
-				return {
-					borderColor: '#dbdbdb',
-					textColor: '#fff',
-				}
+		KtTheme: {
+			default: {
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarBackgroundColor: '#122C56',
 			},
 		},
 	},
 	computed: {
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
+		},
+		themeColor() {
+			return {
+				textColor: this.KtTheme.navbarTextColor,
+				borderColor: color(this.KtTheme.navbarBackgroundColor).isDark()
+					? 'rgba(255,255,255,0.24)'
+					: 'rgba(0,0,0,0.24)',
+			}
 		},
 		objectClass() {
 			return {

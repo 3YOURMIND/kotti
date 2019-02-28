@@ -69,11 +69,10 @@ export default {
 	},
 	provide() {
 		return {
-			KtNavbarTheme: {
-				backgroundColor: '#122C56',
-				borderColor: 'rgba(255,255,255,.24)',
-				textColor: 'rgba(255,255,255,.54)',
-				activeColor: 'rgba(255,255,255, 1)',
+			KtTheme: {
+				navbarBackgroundColor: '#122C56',
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarTextActiveColor: 'rgba(255,255,255, 1)',
 				logoUrl: LogoSvg,
 				logoHeight: '40px',
 			},

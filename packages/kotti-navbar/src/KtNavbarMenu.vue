@@ -32,17 +32,20 @@ export default {
 		sections: { type: Array, default: null },
 	},
 	inject: {
-		themeColor: {
-			from: 'KtNavbarTheme',
-			default: () => {
-				return {
-					activeColor: 'rgba(255, 255, 255, 1)',
-					textColor: 'rgba(255, 255, 255, 0.8)',
-				}
+		KtTheme: {
+			default: {
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarTextActiveColor: 'rgba(255,255,255,1)',
 			},
 		},
 	},
 	computed: {
+		themeColor() {
+			return {
+				activeColor: this.KtTheme.navbarTextActiveColor,
+				textColor: this.KtTheme.navbarTextColor,
+			}
+		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
 		},
