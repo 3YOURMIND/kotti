@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import color from 'color'
+
 export default {
 	name: 'KtNavbarQuickLink',
 	props: {
@@ -40,13 +42,24 @@ export default {
 		links: { type: Array, default: [] },
 	},
 	inject: {
-		themeColor: {
-			from: 'KtNavbarTheme',
+		KtTheme: {
+			default: {
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarBackgroundColor: '#122C56',
+			},
 		},
 	},
 	computed: {
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
+		},
+		themeColor() {
+			return {
+				borderColor: color(this.KtTheme.navbarBackgroundColor).isDark()
+					? 'rgba(255,255,255,0.24)'
+					: 'rgba(0,0,0,0.24)',
+				textColor: this.KtTheme.navbarTextColor,
+			}
 		},
 	},
 }

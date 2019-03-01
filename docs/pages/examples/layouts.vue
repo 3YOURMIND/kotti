@@ -39,7 +39,7 @@ export default {
 		KtContainer,
 	},
 	provide() {
-		return { KtNavbarTheme: this.defaultTheme }
+		return { KtTheme: this.defaultTheme }
 	},
 	watch: {
 		isDarkThemeEnabled(value) {
@@ -58,22 +58,19 @@ export default {
 		return {
 			isDarkThemeEnabled: false,
 			defaultTheme: {
-				backgroundColor: '#122C56',
-				borderColor: 'rgba(255,255,255,.24)',
-				textColor: 'rgba(255,255,255,.54)',
-				activeColor: 'rgba(255,255,255, 1)',
+				navbarBackgroundColor: '#122C56',
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarTextActiveColor: 'rgba(255,255,255, 1)',
 			},
 			darkTheme: {
-				backgroundColor: '#122C56',
-				borderColor: 'rgba(255,255,255,.24)',
-				textColor: 'rgba(255,255,255,.54)',
-				activeColor: 'rgba(255,255,255, 1)',
+				navbarBackgroundColor: '#122C56',
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarTextActiveColor: 'rgba(255,255,255, 1)',
 			},
 			lightTheme: {
-				backgroundColor: '#fff',
-				borderColor: 'rgba(0,0,0,.24)',
-				textColor: 'rgba(0,0,0,.54)',
-				activeColor: 'rgba(0,0,0, 1)',
+				navbarBackgroundColor: '#fff',
+				navbarTextColor: 'rgba(0,0,0,.54)',
+				navbarTextActiveColor: 'rgba(0,0,0, 1)',
 			},
 			quickLinksData: {
 				links: [
