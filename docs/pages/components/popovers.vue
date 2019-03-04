@@ -66,6 +66,34 @@ Popover size can be `sm`, `md`, and `lg`.
 </KtPopover>
 </div>
 
+## Scoped Slot
+
+Scoped slot allows your to get props or function provided by slot themselve.
+In KtPopover, `close` function is provided to allow user click a button from slot content and close the popover.
+
+<div class="element-example">
+	<KtPopover class="mt-4 ml-4">
+		<KtButton type="secondary" label="Close with Cancel Button" />
+		<template v-slot:content="slotProps">
+			<p>Save your message</p>
+			<KtButton type="text" @click="slotProps.close">Cancel</KtButton>
+			<KtButton type="primary">Save</KtButton>
+		</template>
+	</KtPopover>
+</div>
+
+
+```html
+<KtPopover>
+	<KtButton type="secondary" label="Close with Cancel Button" />
+	<template v-slot:content="slotProps">
+		<p>Save your message</p>
+		<KtButton type="text" @click="slotProps.close" label="Cancel"/>
+		<KtButton type="primary" label="Save"/>
+	</template>
+</KtPopover>
+```
+
 
 ## Usage
 
@@ -78,18 +106,16 @@ Popover size can be `sm`, `md`, and `lg`.
 
 ### Slots
 
-| Slot Name | Description                   |
-|:----------|:------------------------------|
-| `default` | toggle element of the content |
-| `content` | content section               |
+| Slot Name              | Description                   |
+|:-----------------------|:------------------------------|
+| `default`              | toggle element of the content |
+| `content`              | content section               |
+| `v-slot:content.close` | close popover                 |
 
 </template>
 
 <script>
-import ShowCase from '../../components/ShowCase'
-
 export default {
 	name: 'PopoversDoc',
-	components: { ShowCase },
 }
 </script>

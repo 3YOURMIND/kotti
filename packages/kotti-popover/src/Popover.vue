@@ -2,7 +2,7 @@
 	<div class="kt-popover" v-on-clickaway="handleClickaway">
 		<div ref="anchor" @click="handleClick"><slot>Anchor</slot></div>
 		<div :class="popperClass" v-if="showPopper" ref="content">
-			<slot name="content">{{ content }}</slot>
+			<slot name="content" :close="handleClickaway">{{ content }}</slot>
 		</div>
 	</div>
 </template>

@@ -36,29 +36,29 @@
 	"dependencies": {
 		"@3yourmind/yoco": "^1.1.0",
 		"color": "^3.1.0",
-		"dayjs": "^1.7.5",
+		"dayjs": "^1.8.8",
 		"vue-clickaway": "^2.2.2",
-		"vue-popperjs": "^2.0.2"
+		"vue-popperjs": "^2.0.3"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
-		"@nuxtjs/axios": "^5.3.6",
+		"@nuxtjs/axios": "^5.4.0",
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
-		"@vue/cli-plugin-babel": "^3.1.1",
-		"@vue/cli-plugin-eslint": "^3.1.5",
-		"@vue/cli-service": "^3.1.4",
+		"@vue/cli-plugin-babel": "^3.4.1",
+		"@vue/cli-plugin-eslint": "^3.4.1",
+		"@vue/cli-service": "^3.4.1",
 		"@vue/eslint-config-prettier": "^4.0.1",
 		"cross-env": "^5.2.0",
 		"husky": "^1.2.0",
-		"lint-staged": "^8.1.0",
+		"lint-staged": "^8.1.5",
 		"node-sass": "^4.10.0",
-		"nuxt": "^2.3.4",
+		"nuxt": "^2.4.5",
 		"prettier": "^1.15.2",
 		"sass-loader": "^7.1.0",
-		"vue": "^2.5.17",
+		"vue": "^2.6.8",
 		"vue-clipboard2": "^0.3.0",
-		"vue-template-compiler": "^2.5.17"
+		"vue-template-compiler": "^2.6.8"
 	},
 	"eslintConfig": {
 		"extends": [
