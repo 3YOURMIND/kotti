@@ -9,7 +9,7 @@ Avatar is a round object to help identify the user information.
 	<KtAvatar
 		name="Jony O'Five"
 		hoverable
-		src="https://picsum.photos/200"
+		src="https://picsum.photos/200/100"
 		showTooltip
 		class="mr-16px"
 	/>
@@ -35,7 +35,7 @@ Set `small` to make the avatar smaller.
 <KtAvatar
 	name="Jony O'Five"
 	hoverable
-	src="https://picsum.photos/200"
+	src="https://picsum.photos/200/100"
 	showTooltip
 />
 <KtAvatar
