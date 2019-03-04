@@ -46,8 +46,7 @@ export default {
 				links: [
 					{
 						title: 'Create New Issue',
-						link:
-							'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
+						link: 'https://github.com/3YOURMIND/kotti/issues/new/choose',
 					},
 					{
 						title: 'Yoco Icon',
