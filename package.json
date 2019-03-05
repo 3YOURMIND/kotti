@@ -58,6 +58,7 @@
 		"sass-loader": "^7.1.0",
 		"vue": "^2.6.8",
 		"vue-clipboard2": "^0.3.0",
+		"vue-loader": "^15.7.0",
 		"vue-template-compiler": "^2.6.8"
 	},
 	"eslintConfig": {
