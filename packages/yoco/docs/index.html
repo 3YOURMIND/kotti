@@ -49,6 +49,12 @@
         margin: 2rem 0;
       }
 
+      .divider {
+        font-size: 12px;
+        color: #8a8a8a;
+        font-weight: 700;
+      }
+
       .yoco.icon-preview {
         font-size: 4rem;
       }
@@ -184,10 +190,24 @@
           <i class="yoco">close</i>
         </button>
       </div>
+      <div class="divider">Solid</div>
       <div class="icons">
         <div
           class="icon-container"
-          v-for="icon in displayString"
+          v-for="icon in displayString(solidIconString)"
+          @click="previewIcon=icon"
+        >
+          <div class="icon">
+            <i class="yoco" ref="liga">{{ icon }}</i>
+            <div class="icon-liga" v-text="icon"></div>
+          </div>
+        </div>
+      </div>
+      <div class="divider">Line</div>
+      <div class="icons">
+        <div
+          class="icon-container"
+          v-for="icon in displayString(iconString)"
           @click="previewIcon=icon"
         >
           <div class="icon">
@@ -213,9 +233,16 @@
     loadJSON(function(response) {
       const json = JSON.parse(response).iconSets[0].selection;
       let iconMoonString = [];
-      json.map(function(item) {
-        iconMoonString.push(item.ligatures.split(",")[0]);
+      let solidIconMoonString = [];
+      json.forEach(function(item) {
+        const liga = item.ligatures.split(",")[0];
+        if (liga.includes("solid")) {
+          solidIconMoonString.push(liga);
+        } else {
+          iconMoonString.push(liga);
+        }
       });
+      app.solidIconString = solidIconMoonString;
       app.iconString = iconMoonString;
     });
 
@@ -224,6 +251,7 @@
       data() {
         return {
           iconString: [],
+          solidIconString: [],
           previewIcon: "idea",
           serachString: ""
         };
@@ -237,23 +265,21 @@
               ];
             }, i * 100);
           }
-        }
-      },
-      computed: {
-        displayString() {
-          if (this.serachString) {
-            return this.searchResults;
-          }
-          return this.iconString;
         },
-        searchResults() {
-          let results = this.iconString.filter(result =>
+        searchResults(strings) {
+          let results = strings.filter(result =>
             result.includes(this.serachString.toLowerCase())
           );
           if (results.length === 1) {
             this.previewIcon = results[0];
           }
           return results;
+        },
+        displayString(strings) {
+          if (this.serachString) {
+            return this.searchResults(strings);
+          }
+          return strings;
         }
       }
     });
