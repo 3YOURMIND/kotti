@@ -4,7 +4,7 @@
 			class="user-menu"
 			v-if="isMenuShow"
 			@click="clickawayMenu"
-			:style="{ background: themeColor.textColor }"
+			:style="{ background: themeColor.backgroundColor }"
 		>
 			<slot name="user-menu-items" />
 			<div class="user-menu-items">
@@ -84,6 +84,7 @@ export default {
 		KtTheme: {
 			default: {
 				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarBackgroundColor: '#122C56',
 			},
 		},
 	},
@@ -96,6 +97,7 @@ export default {
 		themeColor() {
 			return {
 				textColor: this.KtTheme.navbarTextColor,
+				backgroundColor: this.KtTheme.navbarBackgroundColor,
 			}
 		},
 		isNarrow() {
