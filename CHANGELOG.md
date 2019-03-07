@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.5.0 - 2019.02.21
+
+- Fixed: KtNavbarTheme to KtTheme #63
+- Fixed: Expose KtPopover close function #59
+- Fixed: Avatar component doesn't handle non square images #45
+
 ## 1.4.0 - 2019.02.21
 
 - Fixed: disabled row opacity to visually distinguish it
