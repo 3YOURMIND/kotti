@@ -28,6 +28,14 @@ For every icon, you need specify a `ligature¹`. You should not using `-` or `em
 
 Before you `download⁴` the font files, you need change the `verison number³` by opening the `preferences²`
 
+We apply follwing font metrics.
+
+| Type             | Metrics |
+|------------------|---------|
+| Square Height    | 1024    |
+| Baseline Height  | 24      |
+| Whitespace Width | 24      |
+
 ## Prepare for Build
 
 1. Replace all the files in `docs/fonts` with new download font files.
