@@ -2,6 +2,8 @@
 
 In house designed icons for [kotti design system](https://3yourmind.github.io/kotti/).
 
+[👓 Check the Icons](https://3yourmind.github.io/yoco/)
+
 ## Get yoco
 
 **Using npm**
@@ -40,24 +42,7 @@ Yoco use ligatures feature, which allows rendering of an icon glyph simply by us
 <i class="yoco">cloud</i>
 ```
 
-[Icon Preview](https://3yourmind.github.io/yoco/)
+## How to Build and Generate Yoco Font
 
-[Yoco Icon tools](https://3yourmind.github.io/kotti/foundations/icons)
+[More details are here](https://github.com/3YOURMIND/yoco/blob/master/docs/howto.md)
 
-## Generate font file
-
-We use [icomoon](https://icomoon.io/app/) to generate font files. You can import `icomoon/yoco-icon.json` on icomoon website to generate new fonts. We apply follwing font metrics.
-
-| Type             | Metrics |
-|------------------|---------|
-| Square Height    | 1024    |
-| Baseline Height  | 24      |
-| Whitespace Width | 24      |
-
-## Build
-
-Fonts, CSS and Svg files will be copied to `dist` folder
-
-```bash
-yarn run build
-```
