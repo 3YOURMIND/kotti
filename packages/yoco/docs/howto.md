@@ -1,4 +1,4 @@
-# Build and Publish Yoco Icon
+# How to Build and Publish Yoco Icon
 
 The Yoco Icon is using font ligatures which we havn't found a good solution for to generate icon font automatically, instead we using a third party service called [`icomoon`](https://icomoon.io/app) to build the font.
 
