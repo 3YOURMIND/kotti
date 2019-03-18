@@ -5,7 +5,7 @@
 
 	<div class="download-area">
 		<img src="~/assets/img/design_kit_sketch.png" width="100%">
-		<a href="https://www.dropbox.com/sh/bvylt9gmufechnt/AAAKkdpjsyBSB779v1ST4KZxa?dl=0" target="about_blank">
+		<a href="https://github.com/3YOURMIND/kotti/tree/master/docs/assets/sketch" target="about_blank">
 			<button class="primary">Download Kotti Design Kit</button>
 		</a>
 	</div>
