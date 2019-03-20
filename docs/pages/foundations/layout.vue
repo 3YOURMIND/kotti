@@ -50,6 +50,10 @@ Following 3 types of margin or padding metric are suggested:
 
 ![Margin Padding](~/assets/img/layout_metric.png)
 
+### Responsive Classes
+
+Kotti uses the same responsive classes as Spectre. You can [find them here](https://picturepan2.github.io/spectre/layout/responsive.html#responsive-visibility).
+
 </template>
 
 <script>
