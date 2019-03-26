@@ -5,7 +5,7 @@
 
 Kotti uses Open Sans as default font for all text.
 
-For macOS, we use Apple system font San Francisco, you can download from [https://developer.apple.com/fonts/"](Fonts - Apple Developer)
+For macOS, we use Apple system font San Francisco, you can download from [Fonts - Apple Developer](https://developer.apple.com/fonts/)
 
 ## Headers
 
