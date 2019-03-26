@@ -3,8 +3,9 @@
 
 ## Typeface
 
-Kotti uses Open Sans as default font for all text, and includes two font-weight: Regular and Bold.
-You can download fonts at <a href="https://fonts.google.com/specimen/Open+Sans">https://fonts.google.com/specimen/Open+Sans</a>
+Kotti uses Open Sans as default font for all text.
+
+For macOS, we use Apple system font San Francisco, you can download from [https://developer.apple.com/fonts/"](Fonts - Apple Developer)
 
 ## Headers
 
