@@ -83,8 +83,8 @@ function install(Vue) {
 			isNarrow: false,
 		},
 		methods: {
-			toggle(value) {
-				this.isNarrow = value ? value : !this.isNarrow
+			toggle(value = null) {
+				this.isNarrow = value === null ? !this.isNarrow : value
 			},
 		},
 	})
