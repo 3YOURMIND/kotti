@@ -1,9 +1,15 @@
 <template>
 	<label class="form-checkbox">
-		<input v-model="model" :name="name" :value="value" type="checkbox" />
+		<input
+			class="form-checkbox__input"
+			v-model="model"
+			:name="name"
+			type="checkbox"
+		/>
 		<i class="form-icon" />
-		<slot v-if="$slots.default" />
-		<span v-else v-text="label" />
+		<span class="form-checkbox__label">
+			<slot>{{ label }}</slot>
+		</span>
 	</label>
 </template>
 
@@ -13,12 +19,19 @@ export default {
 	props: {
 		label: { types: [String] },
 		name: { types: [String] },
-		value: { types: [Boolean], default: false },
+		value: { types: [Boolean] },
+		initialValue: { types: [Boolean] },
 	},
 	computed: {
 		model: {
 			get() {
-				return this.value
+				let value
+				if (typeof this.value == 'boolean') {
+					value = this.value
+				} else {
+					value = this.initialValue
+				}
+				return value
 			},
 			set(value) {
 				this.$emit('input', value)
