@@ -6,6 +6,7 @@ import KtBreadcrumb from './kotti-breadcrumb'
 import KtButton from './kotti-button'
 import KtButtonGroup from './kotti-button-group'
 import KtCard from './kotti-card'
+import KtCheckbox from './kotti-checkbox'
 import KtCol from './kotti-col'
 import KtComment from './kotti-comment'
 import KtCommentInput from './kotti-comment-input'
@@ -47,6 +48,7 @@ const components = {
 	KtButton,
 	KtButtonGroup,
 	KtCard,
+	KtCheckbox,
 	KtCol,
 	KtComment,
 	KtCommentInput,
