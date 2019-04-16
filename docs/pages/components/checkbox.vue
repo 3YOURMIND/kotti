@@ -1,16 +1,46 @@
 <template lang="md">
 
-# Radio
+# Checkbox
 
-## Basic
+## Basic usage
+
+The `KtCheckbox` component needs a `v-model` and a `label` props. An optional `name` can be used.
+
+```html
+<div class="element-example">
+	<KtCheckbox v-model="value1" label="Will you give everything up for kotti?" />
+</div>
+```
 
 <div class="element-example">
-	<KtCheckbox :value="true" label="Good Morning" />
-	<KtCheckbox :value="false">
-		Good Night <a href="https://en.wikipedia.org/wiki/Good_Night">Link</a>
-	</KtCheckbox>
-	<h4>Value: {{radio1}}</h4>
+	<KtCheckbox v-model="value1" label="Will you give everything up for kotti?" />
+	<h4>Value: {{value1}}</h4>
 </div>
+
+We can also specify the label as a default scope:
+
+```html
+<div class="element-example">
+	<KtCheckbox v-model="value2">
+		I agree to the <a href="http://google.com">Terms of usage</a>
+	</KtCheckbox>
+</div>
+```
+<div class="element-example">
+	<KtCheckbox v-model="value2">
+		I agree to the <a href="http://google.com">Terms of usage</a>
+	</KtCheckbox>
+		<h4>Value: {{value2}}</h4>
+</div>
+
+## Properties
+
+| Attribute            | Description                            | Type      | Accepted values | Default |
+|:---------------------|:---------------------------------------|:----------|:----------------|:--------|
+| `label`              | label input field                      | `String`  | —               | —       |
+| `name`               | name attribute for the field           | `String`  | —               | -       |
+| `value`              | initial value (handled by `v-model`)   | `Boolean` | —               | `false` |
+
 
 </template>
 
@@ -19,23 +49,8 @@ export default {
 	name: 'KtCheckboxDoc',
 	data() {
 		return {
-			radio1: 'morning',
-			radio2: 'option1',
-			title: 'Test',
-			options: [
-				{
-					label: 'Good Day',
-					value: 'option1',
-				},
-				{
-					label: 'Good Night',
-					value: 'option2',
-				},
-				{
-					label: 'Good Morning',
-					value: 'option3',
-				},
-			],
+			value1: true,
+			value2: false,
 		}
 	},
 }
