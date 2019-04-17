@@ -22,7 +22,7 @@ We can also specify the label as a default scope:
 ```html
 <div class="element-example">
 	<KtCheckbox v-model="value2">
-		I agree to the <a href="http://google.com">Terms of usage</a>
+		I agree to the <a href="https://3yourmind.com">Terms of usage</a>
 	</KtCheckbox>
 </div>
 ```
