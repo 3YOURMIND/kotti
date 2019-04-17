@@ -18,7 +18,7 @@ export default {
 	name: 'KtCheckbox',
 	props: {
 		label: { types: [String] },
-		name: { types: [String] },
+		name: { default: null, types: [String, null] },
 		value: { types: [Boolean] },
 		initialValue: { types: [Boolean] },
 	},
