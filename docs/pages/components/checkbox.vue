@@ -4,7 +4,7 @@
 
 ## Basic usage
 
-The `KtCheckbox` component needs a `v-model` and a `label` props. An optional `name` can be used.
+The `KtCheckbox` component requires the `v-model` and `label` properties. Other arguments (e.g. `name`) get directly passed to the `<input>` element.
 
 ```html
 <div class="element-example">
