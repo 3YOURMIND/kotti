@@ -26,7 +26,7 @@ export default {
 		model: {
 			get() {
 				let value
-				if (typeof this.value == 'boolean') {
+				if (typeof this.value === 'boolean') {
 					value = this.value
 				} else {
 					value = this.initialValue
