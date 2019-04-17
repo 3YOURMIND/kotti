@@ -33,22 +33,6 @@ We can also specify the label as a default scope:
 	<h4>Value: {{value2}}</h4>
 </div>
 
-### Provide an `initialValue`
-
-In certain cases we may wat to have a default value in case the one used by `v-model` is `undefined` (while it's retrieved for example).
-We can then define `initialValue` props:
-``` html
-<div class="element-example">
-	<KtCheckbox v-model="value3" :initialValue="true" label="Will you give everything up for kotti?" />
-	<h4>Value: {{value3}}</h4>
-</div>
-```
-<div class="element-example">
-	<KtCheckbox v-model="value3" :initialValue="true" label="Will you give everything up for kotti?" />
-	<h4>Value: {{value3}}</h4>
-</div>
-In the example above, `value3` is `undefined` and will default to `true`.
-
 ## Properties
 
 | Attribute            | Description                                   | Type      | Accepted values | Default |
@@ -56,11 +40,8 @@ In the example above, `value3` is `undefined` and will default to `true`.
 | `label`              | label input field                             | `String`  | —               | —       |
 | `name`               | name attribute for the field                  | `String`  | —               | —       |
 | `value`              | value                                         | `Boolean` | —               | —       |
-| `initialValue`       | initial value (in case `value` is not defined)| `Boolean` | —               | —       |
-
 
 </template>
-
 <script>
 export default {
 	name: 'KtCheckboxDoc',

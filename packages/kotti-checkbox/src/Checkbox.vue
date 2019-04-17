@@ -3,8 +3,8 @@
 		<input
 			class="form-checkbox__input"
 			v-model="model"
-			:name="name"
 			type="checkbox"
+			v-bind="$attrs"
 		/>
 		<i class="form-icon" />
 		<span class="form-checkbox__label">
@@ -12,26 +12,17 @@
 		</span>
 	</label>
 </template>
-
 <script>
 export default {
 	name: 'KtCheckbox',
 	props: {
 		label: { types: [String] },
-		name: { default: null, types: [String, null] },
 		value: { required: true, type: Boolean },
-		initialValue: { types: [Boolean] },
 	},
 	computed: {
 		model: {
 			get() {
-				let value
-				if (typeof this.value === 'boolean') {
-					value = this.value
-				} else {
-					value = this.initialValue
-				}
-				return value
+				return this.value
 			},
 			set(value) {
 				this.$emit('input', value)
