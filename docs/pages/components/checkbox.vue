@@ -35,7 +35,7 @@ We can also specify the label as a default scope:
 
 ### Provide an `initialValue`
 
-In certain cases we may wat to have a default value in case the oe used by `v-model` is `undefined` (while it's retrieved for example).
+In certain cases we may wat to have a default value in case the one used by `v-model` is `undefined` (while it's retrieved for example).
 We can then define `initialValue` props:
 ``` html
 <div class="element-example">
