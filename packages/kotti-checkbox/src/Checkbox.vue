@@ -19,7 +19,7 @@ export default {
 	props: {
 		label: { types: [String] },
 		name: { default: null, types: [String, null] },
-		value: { types: [Boolean] },
+		value: { required: true, type: Boolean },
 		initialValue: { types: [Boolean] },
 	},
 	computed: {
