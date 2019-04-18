@@ -35,11 +35,11 @@ We can also specify the label as a default scope:
 
 ## Properties
 
-| Attribute            | Description                                   | Type      | Accepted values | Default |
-|:---------------------|:----------------------------------------------|:----------|:----------------|:--------|
-| `label`              | label input field                             | `String`  | —               | —       |
-| `name`               | name attribute for the field                  | `String`  | —               | —       |
-| `value`              | value                                         | `Boolean` | —               | —       |
+| Attribute | Description                  | Type      | Accepted values | Default |
+|:----------|:-----------------------------|:----------|:----------------|:--------|
+| `label`   | label input field            | `String`  | —               | —       |
+| `name`    | name attribute for the field | `String`  | —               | —       |
+| `value`   | value                        | `Boolean` | —               | —       |
 
 </template>
 <script>
