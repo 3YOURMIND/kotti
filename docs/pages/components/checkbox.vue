@@ -49,7 +49,6 @@ export default {
 		return {
 			value1: true,
 			value2: false,
-			value3: undefined,
 		}
 	},
 }
