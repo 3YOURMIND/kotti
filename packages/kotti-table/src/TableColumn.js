@@ -25,6 +25,7 @@ const TableColumn = {
 		label: String,
 
 		tdClass: String,
+		thClass: String,
 		headerCellClass: String,
 		cellClass: String,
 
@@ -57,6 +58,7 @@ const TableColumn = {
 		label: updateColumnsfor('label'),
 		index: updateColumnsfor('index'),
 		tdClass: updateColumnsfor('tdClass'),
+		thClass: updateColumnsfor('thClass'),
 		headerCellClass: updateColumnsfor('headerCellClass'),
 		cellClass: updateColumnsfor('cellClass'),
 		prop: updateColumnsfor('prop'),

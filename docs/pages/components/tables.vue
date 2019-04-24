@@ -584,7 +584,7 @@ slot-scope is not required for the `loading` and `empty` slots
 | `hiddenColumns`          | prop for setting hidden columns                                     | `Array`                     | [{ prop, hidden }]    | `[]`    |
 | `filterdColumns`         | prop for setting filterd columns                                    | `Array`                     | [{ prop, filter }]    | `[]`    |
 | `tdClasses`              | classes to apply to all `<td>` elements                             | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
-| `thClass`                | classes to apply to all `<th>` elements                             | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
+| `thClasses`              | classes to apply to all `<th>` elements                             | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
 | `trClasses`              | classes to apply to all `<tr>` elements                             | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
 | `selected`               | rows that are selected as returned by selectionChange event         | `Array`                     | —                     | —       |
 | `value`                  | —                                                                   | `Array`                     | —                     | —       |
