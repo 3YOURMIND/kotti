@@ -8,7 +8,7 @@
 		/>
 		<i class="form-icon" />
 		<slot>
-			<span v-if="noLabel" class="form-checkbox__label" v-text="label" />
+			<span v-if="hasLabel" class="form-checkbox__label" v-text="label" />
 		</slot>
 	</label>
 </template>
@@ -20,8 +20,8 @@ export default {
 		value: { default: false, type: Boolean },
 	},
 	computed: {
-	        noLabel() {
-			return this.label===null || this.label === undefined
+	        hasLabel() {
+			return !(this.label===null || this.label === undefined)
 		},
 		model: {
 			get() {
