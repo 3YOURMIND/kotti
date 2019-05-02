@@ -5,6 +5,7 @@ import negate from 'lodash/negate'
 import * as column from './column'
 import * as rows from './row'
 import * as expand from './expand'
+import * as order from './order'
 import * as hide from './hide'
 import * as select from './select'
 import * as sort from './sort'
@@ -19,6 +20,7 @@ export default class TableStore {
 			...column.defaultState,
 			...rows.defaultState,
 			...expand.defaultState,
+			...order.defaultState,
 			...disable.defaultState,
 			...select.defaultState,
 			...hide.defaultState,
@@ -31,6 +33,7 @@ export default class TableStore {
 			...column.mutations,
 			...rows.mutations,
 			...expand.mutations,
+			...order.mutations,
 			...disable.mutations,
 			...select.mutations,
 			...hide.mutations,
@@ -42,6 +45,7 @@ export default class TableStore {
 			...column.getters,
 			...rows.getters,
 			...expand.getters,
+			...order.getters,
 			...disable.getters,
 			...select.getters,
 			...hide.getters,

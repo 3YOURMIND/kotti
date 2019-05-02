@@ -23,7 +23,9 @@ export default {
 			handleClick,
 			handleFocus,
 			handleBlur,
+			handleKey,
 			handleExpand,
+			handleActionsClick,
 			hasActions,
 			renderActions,
 			isDisabled,
@@ -31,11 +33,12 @@ export default {
 		return (
 			<tr
 				class={_trClasses}
-				role={isInteractive ? 'button' : false}
-				tabindex={isInteractive ? 0 : false}
+				role={isInteractive && !isDisabled ? 'button' : false}
+				tabindex={isInteractive && !isDisabled ? 0 : false}
 				onClick={$event => handleClick($event, row, rowIndex)}
 				onFocus={$event => handleFocus($event, row, rowIndex)}
 				onBlur={$event => handleBlur($event, row, rowIndex)}
+				onKeyup={$event => handleKey($event, row, rowIndex)}
 			>
 				{isExpandable && (
 					<td
@@ -78,7 +81,7 @@ export default {
 					/>
 				))}
 				{hasActions && (
-					<td>
+					<td onClick={handleActionsClick}>
 						<div class="table-actions">
 							{renderActions(h, { row, data: row, rowIndex })}
 						</div>
@@ -92,7 +95,8 @@ export default {
 		_trClasses() {
 			const classes = []
 
-			if (this.isInteractive && !this.isDisabled) classes.push('clickable')
+			if ((this.isInteractive || this.hasClickListener) && !this.isDisabled)
+				classes.push('clickable')
 			if (this.isSelected) classes.push('selected')
 			if (this.isDisabled) classes.push('disabled')
 			if (this[KT_TABLE].trClasses) classes.push(this[KT_TABLE].trClasses)
@@ -105,8 +109,14 @@ export default {
 		expandToggleIcon() {
 			return this.isExpanded ? 'chevron_down' : 'chevron_right'
 		},
+		hasClickListener() {
+			return Boolean(this[KT_TABLE].$listeners['rowClick'])
+		},
 		isInteractive() {
-			return this[KT_TABLE].isInteractive
+			return (
+				this[KT_TABLE].isInteractive ||
+				Boolean(this[KT_TABLE].$listeners['activateRow'])
+			)
 		},
 		isSelectable() {
 			return this[KT_TABLE].isSelectable
@@ -135,6 +145,9 @@ export default {
 		isSelected() {
 			return this[KT_STORE].get('isSelected', this.row)
 		},
+		isFocused() {
+			return this[KT_STORE].get('isFocusedRow', this.row)
+		},
 	},
 	methods: {
 		handleSelect($event, row) {
@@ -145,20 +158,39 @@ export default {
 			$event.stopPropagation()
 			this[KT_STORE].commit('expandRow', row)
 		},
+		handleActionsClick($event) {
+			$event.stopPropagation()
+		},
 		handleClick($event, row, index) {
 			this[KT_TABLE].$emit('rowClick', row, index)
-			if (this[KT_TABLE].isInteractive && !this.isDisabled) {
+			if (this.isInteractive && !this.isDisabled) {
 				this[KT_TABLE].$emit('activateRow', row, index)
 			}
 		},
 		handleFocus($event, row, index) {
-			if (this[KT_TABLE].isInteractive && !this.isDisabled) {
-				this[KT_TABLE].$emit('activateRow', row, index)
+			if (this.isInteractive && !this.isDisabled) {
+				this[KT_STORE].commit('focuseRow', row)
 				this[KT_TABLE].$emit('rowFocus', row, index)
 			}
 		},
+		handelActivation($event, row, index) {
+			if (this.isInteractive && !this.isDisabled && this.isFocused) {
+				this[KT_TABLE].$emit('activateRow', row, index)
+			}
+		},
+		handleKey($event, row, index) {
+			if (
+				$event.key === 'Enter' &&
+				this.isInteractive &&
+				!this.isDisabled &&
+				this.isFocused
+			) {
+				this[KT_TABLE].$emit('activateRow', row, index)
+			}
+		},
 		handleBlur($event, row, index) {
-			if (this[KT_TABLE].isInteractive && !this.isDisabled) {
+			if (this.isInteractive && !this.isDisabled) {
+				this[KT_STORE].commit('blurRow', row)
 				this[KT_TABLE].$emit('rowBlur', row, index)
 			}
 		},

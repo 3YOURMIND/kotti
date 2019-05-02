@@ -63,16 +63,21 @@ const TableColumn = {
 		cellClass: updateColumnsfor('cellClass'),
 		prop: updateColumnsfor('prop'),
 		hidden: updateColumnsfor('hidden'),
+		order: updateColumnsfor('order'),
 		default: updateColumnsfor('default'),
 	},
 	mounted() {
-		this.columnConfig.index =
-			this.columnConfig.index || [].indexOf.call(this[KT_TABLE].$children, this)
-		this[KT_STORE].commit('insertColumn', this.columnConfig)
+		const columnIndex = [].indexOf.call(this[KT_TABLE].$children, this)
+		this[KT_STORE].commit('insertColumn', {
+			column: this.columnConfig,
+			index: columnIndex,
+			fromTableColumn: true,
+		})
 	},
 	destroyed() {
 		if (!this.$parent) return
-		this[KT_STORE].commit('removeColumn', this.columnConfig)
+		this.columnConfig &&
+			this[KT_STORE].commit('removeColumn', this.columnConfig)
 	},
 }
 
@@ -105,6 +110,7 @@ function createColumn(column = {}) {
 
 	column.id = columnId
 	column.type = COLUMN_TYPE
+	column._deleted = false
 
 	let renderCell = column.renderCell
 	let renderHeader = column.renderHeader

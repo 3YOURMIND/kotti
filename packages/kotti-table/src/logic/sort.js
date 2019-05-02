@@ -1,10 +1,14 @@
 import pick from 'lodash/pick'
 import property from 'lodash/property'
 import { setColumnsArray, getColumnsArray } from './column'
-import { IS_ASC, IS_DSC, SORT_DSC, SORT_NONE } from '../constants'
+import {
+	IS_ASC,
+	IS_DSC,
+	SORT_DSC,
+	SORT_NONE,
+	PUBLIC_SORT_PROPS,
+} from '../constants'
 import { getColumn } from './column'
-
-const PUBLIC_SORT_PROPS = ['prop', 'sortBy', 'sortOrder']
 
 export const defaultState = {
 	sortMultiple: false,
@@ -38,17 +42,16 @@ export const mutations = {
 
 	changeSortConditions(store, options) {
 		const { state } = store
-		state.rows = sortData(state.filteredRows || state._rows || [], state)
-
-		const sortedColumns = state.sortedColumns.map(column => {
-			column = pick(column, PUBLIC_SORT_PROPS)
-			return {
-				...column,
-				sortBy: column.sortBy || column.prop,
-			}
-		})
+		state.rows = sortData(state.filteredData || state._data || [], state)
 
 		if (!options || !options.silent) {
+			const sortedColumns = state.sortedColumns.map(column => {
+				column = pick(column, PUBLIC_SORT_PROPS)
+				return {
+					...column,
+					sortBy: column.sortBy || column.prop,
+				}
+			})
 			store.emit('sortChange', {
 				sortedColumns,
 				column: options.column,
@@ -60,7 +63,7 @@ export const mutations = {
 	},
 	setSortedColumns(store, columns = store.state.sortedColumns) {
 		setColumnsArray(store.state, 'sortedColumns', PUBLIC_SORT_PROPS, columns)
-		store.commit('updateColumns')
+		store.commit('updateColumns', { emitChange: false })
 	},
 }
 

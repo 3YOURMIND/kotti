@@ -160,7 +160,7 @@ export default {
 			return column === this.columnDragOver && this.draggingColumn !== column
 		},
 		drop(event, column) {
-			this[KT_STORE].commit('swapColumns', this.draggingColumn, column)
+			this[KT_STORE].commit('orderBefore', this.draggingColumn, column)
 			this.draggingColumn = null
 			this.columnDragOver = null
 		},
@@ -184,6 +184,7 @@ export default {
 	left: 0;
 	cursor: pointer;
 }
+
 th {
 	border-width: 0;
 	border-left-color: $lightgray-300;
@@ -200,7 +201,6 @@ th.sortable {
 th.dragging {
 	cursor: move;
 }
-
 th.sortable .kt-table__controls {
 	display: none;
 	position: absolute;

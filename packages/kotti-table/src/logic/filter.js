@@ -7,7 +7,7 @@ export const defaultState = {
 export const mutations = {
 	setFilteredColumns(store, columns = store.state.filteredColumns) {
 		setColumnsArray(store.state, 'filteredColumns', ['prop', 'hidden'], columns)
-		store.commit('updateColumns')
+		store.commit('updateColumns', { emitChange: false })
 	},
 }
 
