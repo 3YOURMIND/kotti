@@ -52,6 +52,10 @@ const submenu = [
 				to: 'cards',
 			},
 			{
+				label: 'Checkboxes',
+				to: 'checkbox',
+			},
+			{
 				label: 'DatePicker',
 				to: 'datepicker',
 			},
