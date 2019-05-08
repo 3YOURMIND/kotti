@@ -578,7 +578,7 @@ slot-scope is not required for the `loading` and `empty` slots
 ### Provider/Consumer and Mixin
 
 Sometimes you may need to access the table's store and control it from outside,
-while `ref` may work if you're modifications are in the same component, you controling ui may be elsewhere
+while `ref` may work if your modifications are in the same component, your controlling ui may be elsewhere
 For that purpose we introduce `KtTableProvider` `KtTableConsumer` and optionally but discourged we expose `KtTableColumnsStateMixin`
 
 <KtTableProvider>
