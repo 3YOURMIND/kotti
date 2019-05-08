@@ -85,7 +85,7 @@ export function getColumn(state, column = {}) {
 export function setColumn(state, { column, index, deleted }) {
 	const { _columns = {} } = state
 
-	let oldColumn = _columns[column.prop]
+	const oldColumn = _columns[column.prop]
 	if (oldColumn) {
 		if (deleted) {
 			_columns[column.prop]._deleted = false
@@ -119,7 +119,7 @@ export function setColumnsArray(
 ) {
 	state[prop] = columns.map(column => {
 		column = pick(column, shapeKeys)
-		let oldColumn = getColumn(state, column) || {}
+		const oldColumn = getColumn(state, column) || {}
 		return mergeStrategy(oldColumn, column)
 	})
 }

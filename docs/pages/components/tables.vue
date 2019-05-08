@@ -579,7 +579,7 @@ slot-scope is not required for the `loading` and `empty` slots
 
 Sometimes you may need to access the table's store and control it from outside,
 while `ref` may work if your modifications are in the same component, your controlling ui may be elsewhere
-For that purpose we introduce `KtTableProvider` `KtTableConsumer` and optionally but discourged we expose `KtTableColumnsStateMixin`
+For that purpose we introduce `KtTableProvider` `KtTableConsumer`. There’s also the deprecated `KtTableColumnsStateMixin`.
 
 <KtTableProvider>
 	<div>
@@ -590,7 +590,7 @@ For that purpose we introduce `KtTableProvider` `KtTableConsumer` and optionally
 							v-for="column in columns"
 							:key="column.prop"
 							:label="column.label || column.prop"
-							:type="column.hidden?'text':'primary'"
+							:type="column.hidden ? 'text' : 'primary'"
 							@click="hideColumn(column, !column.hidden)"
 						/>
 				</KtButtonGroup>
@@ -612,7 +612,7 @@ For that purpose we introduce `KtTableProvider` `KtTableConsumer` and optionally
 							v-for="column in columns"
 							:key="column.prop"
 							:label="column.label || column.prop"
-							:type="column.hidden?'text':'primary'"
+							:type="column.hidden ? text' : 'primary'"
 							@click="hideColumn(column, !column.hidden)"
 						/>
 				</KtButtonGroup>

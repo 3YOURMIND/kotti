@@ -44,7 +44,7 @@ export const getters = {
 }
 
 export function resolveColumnsOrder({ _columns = {}, orderedColumns = [] }) {
-	for (let col of orderedColumns) {
+	for (const col of orderedColumns) {
 		_columns[col.prop] = col.order || _columns[col.prop]
 	}
 	return Object.values(_columns)
