@@ -6,12 +6,12 @@
 			<input
 				v-bind="$attrs"
 				:class="formInputClass"
+				:id="labelForAttr"
 				:placeholder="placeholder"
 				:required="required"
 				:type="type"
 				:step="inputStep"
 				:value="currentValue"
-				:id="labelForAttr"
 				@blur="handleBlur"
 				@change="handleChange"
 				@focus="handleFocus"
