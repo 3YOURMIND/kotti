@@ -752,11 +752,6 @@ Otherwise all tables under the same Provider will share the same store
 | :-------- | :---------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
 | `default` | provide a table's store and other methods | `{store,columns, hiddenColumns, sortedColumns, filteredColumns, hideColumn, showAllColumns, orderBeforeColumn,}` |
 
-### Store
-
-The table store is exposed through the KtTableConsumer for in ui update as well as the KtTableColumnStateMixin for in component access.
-A `commit` and `get` methods as well as a state property you can checkout the code for insight on available mutations you can carry out.
-
 </template>
 
 <script>
