@@ -162,20 +162,17 @@ export default {
 			$event.stopPropagation()
 		},
 		handleClick($event, row, index) {
-			this[KT_TABLE].$emit('rowClick', row, index)
-			if (this.isInteractive && !this.isDisabled) {
-				this[KT_TABLE].$emit('activateRow', row, index)
+			if (!this.isDisabled) {
+				this[KT_TABLE].$emit('rowClick', row, index)
+				if (this.isInteractive) {
+					this[KT_TABLE].$emit('activateRow', row, index)
+				}
 			}
 		},
 		handleFocus($event, row, index) {
 			if (this.isInteractive && !this.isDisabled) {
 				this[KT_STORE].commit('focuseRow', row)
 				this[KT_TABLE].$emit('rowFocus', row, index)
-			}
-		},
-		handelActivation($event, row, index) {
-			if (this.isInteractive && !this.isDisabled && this.isFocused) {
-				this[KT_TABLE].$emit('activateRow', row, index)
 			}
 		},
 		handleKey($event, row, index) {

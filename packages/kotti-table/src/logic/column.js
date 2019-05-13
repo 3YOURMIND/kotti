@@ -31,8 +31,8 @@ export const mutations = {
 	},
 	setColumns(store, columns = store.state._columnsArray) {
 		const { state } = store
-		for (let col of columns) {
-			col = pick(col, PUBLIC_COLUMN_PROPS)
+		const pickedColumns = columns.map(col => pick(col, PUBLIC_COLUMN_PROPS))
+		for (const col of pickedColumns) {
 			const column = getColumn(state, col)
 			if (column) {
 				Object.assign(column, col)

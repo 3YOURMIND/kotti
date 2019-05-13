@@ -239,6 +239,34 @@ based on your view and specific row data
 }
 ```
 
+## Row Interaction
+
+`KtTable` has a `@rowClick` event for when a user clicks but perfered event is `@activateRow`,
+which gets fired on row click as well as when the user hits the enter/return key while focused.
+
+You can tab and trigger row active by the hitting enter (not you can't select disabled rows)
+
+
+<KtInput v-model='disableName' />
+<KtTable
+	:rows="rows"
+	:columns="columnsResponsive"
+	:disableRow="disableRow"
+	isSelectable
+	@activateRow="showAlert"
+	/>
+
+```html
+<KtInput v-model='disableName' />
+<KtTable
+	:rows="rows"
+	:columns="columnsResponsive"
+	:disableRow="disableRow"
+	isSelectable
+	@activateRow="showAlert"
+	/>
+```
+
 ## Ordering Columns
 
 You can order Columns by dragging if you use the `useColumnDragToOrder` flag

@@ -49,7 +49,7 @@ export default {
 		id: { default: null, type: String },
 		rowKey: { type: String },
 		rows: { default: () => [], type: Array },
-		columns: { type: Array },
+		columns: { default: null, type: Array },
 		useColumnDragToOrder: { default: false, type: Boolean },
 		useColumnStateControl: { default: false, type: Boolean },
 		emptyText: { default: 'No Data', type: String },

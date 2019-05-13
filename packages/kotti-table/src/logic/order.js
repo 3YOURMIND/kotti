@@ -57,19 +57,21 @@ export function resolveColumnsOrder({ _columns = {}, orderedColumns = [] }) {
 			index: col.index || index,
 			col,
 		}))
-		.sort((a, b) =>
-			a.order < b.order
-				? -1
-				: a.order > b.order
-				? 1
-				: a.orderAdvantage + a.index - (b.orderAdvantage + b.index),
-		)
+		.sort(byOrder)
 		.map(({ col }, order) => {
 			// re-allign column index with new order
 			col.order = order
 			col.index = order
 			return col
 		})
+}
+
+function byOrder(a, b) {
+	return a.order < b.order
+		? -1
+		: a.order > b.order
+		? 1
+		: a.orderAdvantage + a.index - (b.orderAdvantage + b.index)
 }
 
 export function getOrderedColumns(state) {

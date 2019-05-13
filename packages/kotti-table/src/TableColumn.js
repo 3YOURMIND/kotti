@@ -72,10 +72,10 @@ const TableColumn = {
 		default: updateColumnsfor('default'),
 	},
 	mounted() {
-		const columnIndex = [].indexOf.call(this[KT_TABLE].$children, this)
+		const columnIndex = this[KT_TABLE].$children.indexOf(this)
 		this[KT_STORE].commit('insertColumn', {
 			column: this.columnConfig,
-			index: columnIndex,
+			...(columnIndex > 0 ? { index: columnIndex } : {}),
 			fromTableColumn: true,
 		})
 	},
@@ -115,6 +115,7 @@ function createColumn(column = {}) {
 
 	column.id = columnId
 	column.type = COLUMN_TYPE
+	// needed for maintaining column state across re-renders as column get removed and re-inserted
 	column._deleted = false
 
 	let renderCell = column.renderCell
