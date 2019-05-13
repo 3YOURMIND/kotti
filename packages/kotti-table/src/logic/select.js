@@ -61,7 +61,7 @@ export const getters = {
 			: row[state.rowKey]
 	},
 	isSelected(state, row) {
-		return state.selection.includes(row)
+		return (state.selection || []).indexOf(row) > -1
 	},
 }
 

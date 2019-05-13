@@ -23,14 +23,19 @@ export const TableColumnsStateMixin = {
 			},
 		},
 	},
+	data() {
+		return {
+			KtSelectedTableId: null,
+		}
+	},
 	computed: {
 		KtTableStore() {
 			return this[KT_TABLE]
 				? this[KT_STORE]
-				: this[KT_TABLE_STATE_PROVIDER].store
+				: this[KT_TABLE_STATE_PROVIDER].getStore(this.KtSelectedTableId)
 		},
 		KtTableColumns() {
-			return this.KtTableStore.state._columns
+			return this.KtTableStore.state._columnsArray
 		},
 		KtTableHiddenColumns() {
 			return this.KtTableStore.state.hiddenColumns
@@ -48,6 +53,9 @@ export const TableColumnsStateMixin = {
 		},
 		KtTableShowAllColumns() {
 			this.KtTableStore.commit('showAll')
+		},
+		KtTableOrderBeforeColumn(fromColumn, toColumn) {
+			this.KtTableStore.commit('orderBefore', fromColumn, toColumn)
 		},
 	},
 }

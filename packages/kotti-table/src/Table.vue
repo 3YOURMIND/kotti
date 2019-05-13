@@ -2,8 +2,8 @@
 	<div :class="{ 'x-scroll': isScrollable }">
 		<div class="hidden-columns">
 			<TableColumn
-				v-for="column in formatedColumns"
-				:key="column.prop"
+				v-for="(column, index) in formatedColumns"
+				:key="`${column.prop}_${index}`"
 				v-bind="column"
 			/>
 			<slot></slot>
@@ -46,9 +46,10 @@ export default {
 	components: { TableBody, TableHeader, TableColumn },
 	name: 'KtTable',
 	props: {
+		id: { default: null, type: String },
 		rowKey: { type: String },
-		rows: { required: true, type: Array },
-		columns: { default: () => [], type: Array },
+		rows: { default: () => [], type: Array },
+		columns: { default: null, type: Array },
 		useColumnDragToOrder: { default: false, type: Boolean },
 		useColumnStateControl: { default: false, type: Boolean },
 		emptyText: { default: 'No Data', type: String },
@@ -65,6 +66,7 @@ export default {
 		sortedColumns: { type: [Array, undefined] },
 		filteredColumns: { type: [Array, undefined] },
 		hiddenColumns: { type: [Array, undefined] },
+		orderedColumns: { type: [Array, undefined] },
 
 		loading: Boolean,
 
@@ -100,9 +102,16 @@ export default {
 		let localStore
 		const initialState = pick(this, INITIAL_TABLE_STORE_PROPS)
 		if (this[KT_TABLE_STATE_PROVIDER]) {
-			localStore = this[KT_TABLE_STATE_PROVIDER].store
-			localStore.setTable(this)
-			localStore.setInitialState(initialState)
+			if (this.id) {
+				localStore = new TableStore(this, initialState)
+				this[KT_TABLE_STATE_PROVIDER].addStore(this.id, localStore)
+				this[KT_TABLE_STATE_PROVIDER].selectedTableId(this.id)
+			} else {
+				localStore = this[KT_TABLE_STATE_PROVIDER].store
+				localStore.setTable(this)
+				localStore.setInitialState(initialState)
+			}
+			this[KT_TABLE_STATE_PROVIDER].addTable(this)
 		} else {
 			localStore = new TableStore(this, initialState)
 		}
@@ -120,18 +129,20 @@ export default {
 				: this.localStore
 		},
 		formatedColumns() {
-			return this.columns.map(column => {
-				if (column.key) {
-					// eslint-disable-next-line
-					console.warn(
-						`column ${
-							column.prop
-						} table column property 'key' is deprecated using prop is sufficent to identify the column`,
-					)
-					return { ...column, prop: column.prop || column.key }
-				}
-				return column
-			})
+			return this.columns
+				? this.columns.map(column => {
+						if (column.key) {
+							// eslint-disable-next-line
+							console.warn(
+								`column ${
+									column.prop
+								} table column property 'key' is deprecated using prop is sufficent to identify the column`,
+							)
+							return { ...column, prop: column.prop || column.key }
+						}
+						return column
+				  })
+				: []
 		},
 		colSpan() {
 			let colSpan = this.store.state.columns.length
@@ -148,8 +159,8 @@ export default {
 			return Boolean(this.$scopedSlots.actions || this.renderActions)
 		},
 		_renderExpand() {
+			const table = this
 			return (h, rowData) => {
-				const table = this
 				if (table.renderExpand) {
 					return table.renderExpand(h, rowData)
 				} else {
@@ -158,8 +169,8 @@ export default {
 			}
 		},
 		_renderActions() {
+			const table = this
 			return (h, rowData) => {
-				const table = this
 				if (table.renderActions) {
 					return table.renderActions(h, rowData)
 				} else {
@@ -168,8 +179,8 @@ export default {
 			}
 		},
 		_renderLoading() {
+			const table = this
 			return h => {
-				const table = this
 				if (table.renderLoading) {
 					return table.renderLoading(h)
 				} else {
@@ -178,8 +189,8 @@ export default {
 			}
 		},
 		_renderEmpty() {
+			const table = this
 			return h => {
-				const table = this
 				if (table.renderEmpty) {
 					return table.renderEmpty(h)
 				} else {
@@ -191,6 +202,9 @@ export default {
 		},
 	},
 	watch: {
+		id(newId, id) {
+			this[KT_TABLE_STATE_PROVIDER].updateStoreId(id, newId)
+		},
 		rows: {
 			immediate: true,
 			handler(value) {
@@ -242,6 +256,20 @@ export default {
 				this.store.commit('updateDisabledRows')
 			},
 		},
+		orderedColumns: {
+			handler(value, oldValue) {
+				if (value && value !== oldValue) {
+					this.store.commit('setOrderedColumns', value)
+				}
+			},
+		},
+		columns: {
+			handler(value, oldValue) {
+				if (value && value !== oldValue) {
+					this.store.commit('setColumns', value)
+				}
+			},
+		},
 	},
 	methods: {
 		isSelected(index) {
@@ -273,6 +301,9 @@ export default {
 		}
 	},
 	mounted() {
+		this.columns && this.store.commit('setColumns', this.columns)
+		this.orderedColumns &&
+			this.store.commit('setOrderedColumns', this.orderedColumns)
 		this.sortedColumns &&
 			this.store.commit('setSortedColumns', this.sortedColumns)
 		this.filteredColumns &&
@@ -280,7 +311,7 @@ export default {
 		this.hiddenColumns &&
 			this.store.commit('setHiddenColumns', this.hiddenColumns)
 		this.$ready = true
-		this.store.commit('updateColumns')
+		this.store.commit('updateColumns', { emitChange: false })
 		this.$on('selectionChange', selection => {
 			if (this.value) {
 				this.$emit(

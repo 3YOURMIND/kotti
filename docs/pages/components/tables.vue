@@ -202,7 +202,7 @@ It is also possible to control which rows are selected by passing the rows to `s
 
 ## Disable
 
-`disableRow` function can be passed to `KtTable` to reactivly diable rows,
+`disableRow` function can be passed to `KtTable` to reactivly disable rows,
 based on your view and specific row data
 
 <KtInput v-model='disableName' />
@@ -237,6 +237,34 @@ based on your view and specific row data
 		}
 	}
 }
+```
+
+## Row Interaction
+
+`KtTable` has a `@rowClick` event for when a user clicks but perfered event is `@activateRow`,
+which gets fired on row click as well as when the user hits the enter/return key while focused.
+
+You can tab and trigger row active by the hitting enter (not you can't select disabled rows)
+
+
+<KtInput v-model='disableName' />
+<KtTable
+	:rows="rows"
+	:columns="columnsResponsive"
+	:disableRow="disableRow"
+	isSelectable
+	@activateRow="showAlert"
+	/>
+
+```html
+<KtInput v-model='disableName' />
+<KtTable
+	:rows="rows"
+	:columns="columnsResponsive"
+	:disableRow="disableRow"
+	isSelectable
+	@activateRow="showAlert"
+	/>
 ```
 
 ## Ordering Columns
@@ -335,7 +363,7 @@ You can then listening to the `@sortChange` which returns
 
 ```
 {
-	sortedColumns, // an array of the sorted colums by priority if sortMultiple is galse then it will allways contain one element.
+	sortedColumns, // an array of the sorted colums by priority if sortMultiple is false then it will allways contain one element.
 	column, // the column that was just sorted
 	sortOrder, // the order the column is to be sorted to
 	prop, // the prop to be sorted on that column
@@ -345,6 +373,22 @@ You can then listening to the `@sortChange` which returns
 
 You can then use the set sortedColumns prop on the KtTable to update the table ui when your backend request is resolved.
 
+```html
+<KtTable :rows="rows" useQuickSortControl sortable="all" sortRemote @sortChange="sort">
+	<KtTableColumn label="Name" prop="name" /> // change the default the next sort order on click
+	<KtTableColumn label="Date" prop="date" sortBy="order_date" /> // use custom compare function
+	<KtTableColumn label="Address" prop="address.line" sortBy="address_line"/> // target different props on the row
+</KtTable>
+```
+```js
+{
+	methods: {
+		async sort({ sortBy, sortOrder }) {
+			this.rows = await api.get(url, { params: { [sortBy]: sortOrder } })
+		}
+	}
+}
+```
 
 ## Actions
 
@@ -352,7 +396,7 @@ You can then use the set sortedColumns prop on the KtTable to update the table u
 
 > You must use `slot-scope` prop for the `actions` slot for it to be detected.
 
-<KtTable :rows="rows" :columns="columnsResponsive" >
+<KtTable :rows="rows" :columns="columnsResponsive">
 	<template slot-scope="{ row }" slot="actions">
 		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
 		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
@@ -362,9 +406,9 @@ You can then use the set sortedColumns prop on the KtTable to update the table u
 ```html
 <KtTable :rows="rows" :columns="columns">
 	<template slot-scope="{ row }" slot="actions">
-		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
-		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
-	</template>
+	<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
+	<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
+</template>
 </KtTable>
 ```
 
@@ -376,17 +420,17 @@ Same as `actions`, `slot-scope` is required and is used to pass data to the expa
 
 <KtTable :rows="rows" :columns="columnsResponsive" isExpandable isScrollable>
 	<template slot-scope="{ row, rowIndex }" slot="expand">
-		<KtBanner :message="row.name" icon="user" isGrey/>
-		<KtBanner :message="row.address.line" icon="global" isGrey/>
-	</template>
+	<KtBanner :message="row.name" icon="user" isGrey />
+	<KtBanner :message="row.address.line" icon="global" isGrey />
+</template>
 </KtTable>
 
 ```html
 <KtTable :rows="rows" :columns="columns" isExpandable isScrollable>
 	<template slot-scope="{ row, rowIndex }" slot="expand">
-		<KtBanner :message="row.name" icon="user" isGrey/>
-		<KtBanner :message="row.address.line" icon="global" isGrey/>
-	</template>
+	<KtBanner :message="row.name" icon="user" isGrey />
+	<KtBanner :message="row.address.line" icon="global" isGrey />
+</template>
 </KtTable>
 ```
 
@@ -541,31 +585,87 @@ slot-scope is not required for the `loading` and `empty` slots
 		prop="name"
 		>
 		<template slot="header" slot-scope="{ value, column, columnIndex }">
-			<div>
-				{{value}}
-			</div>
-		</template>
+	<div>
+		{{ value }}
+	</div>
+</template>
 		<template slot-scope="{ value, row, rowIndex, column, columnIndex }">
-			<KtAvatar
-				name={value}
-				hoverable
-				src="https://picsum.photos/200"
-				showTooltip
-				small
-				class="mr-16px"
-			/>
-		</template>
+	<KtAvatar
+		:name="value"
+		hoverable
+		src="https://picsum.photos/200"
+		showTooltip
+		small
+		class="mr-16px"
+	/>
+</template>
 	</KtTableColumn>
 </KtTable>
 ```
+
+### Provider/Consumer and Mixin
+
+Sometimes you may need to access the table's store and control it from outside,
+while `ref` may work if your modifications are in the same component, your controlling ui may be elsewhere
+For that purpose we introduce `KtTableProvider` `KtTableConsumer`. There’s also the deprecated `KtTableColumnsStateMixin`.
+
+<KtTableProvider>
+	<div>
+		<KtTableConsumer #default="{ columns, hideColumn }">
+			<div class="parts-edit-columns-filter__container">
+				<KtButtonGroup>
+						<KtButton
+							v-for="column in columns"
+							:key="column.prop"
+							:label="column.label || column.prop"
+							:type="column.hidden ? 'text' : 'primary'"
+							@click="hideColumn(column, !column.hidden)"
+						/>
+				</KtButtonGroup>
+			</div>
+		</KtTableConsumer>
+	</div>
+	<div>
+		<KtTable :rows="rows" :columns="columnsDefault" />
+	</div>
+</KtTableProvider>
+
+```html
+<KtTableProvider>
+	<div>
+		<KtTableConsumer #default="{ columns, hideColumn }">
+			<div class="parts-edit-columns-filter__container">
+				<KtButtonGroup>
+						<KtButton
+							v-for="column in columns"
+							:key="column.prop"
+							:label="column.label || column.prop"
+							:type="column.hidden ? text' : 'primary'"
+							@click="hideColumn(column, !column.hidden)"
+						/>
+				</KtButtonGroup>
+			</div>
+		</KtTableConsumer>
+	</div>
+	<div>
+		<KtTable :rows="rows" :columns="columnsDefault" />
+	</div>
+</KtTableProvider>
+```
+
+`KtTableProvider` takes the same props as KtTable
+
+`KtTable` can have an optional `id` prop that will allow `KtTableConsumer` to select the same `id`.
+Otherwise all tables under the same Provider will share the same store
 
 ## Usage
 
 ### Attributes
 
-| Attribute                | Description                                                         | Type                        | Accepted values       | Default |
-|:-------------------------|:--------------------------------------------------------------------|:----------------------------|:----------------------|:--------|
+|        Attribute         |                             Description                             |            Type             |    Accepted values    | Default |
+| :----------------------- | :------------------------------------------------------------------ | :-------------------------- | :-------------------- | :------ |
 | `rows` (required)        | table row data                                                      | `Array`                     | —                     | —       |
+| `id`                     | for when using multiple provider                                    | `String`                    | —                     | null    |
 | `rowKey`                 | the row prop used for the rows key                                  | `String`                    | —                     | —       |
 | `columns`                | table column information                                            | `Array`                     | —                     | —       |
 | `emptyText`              | text to show when table is empty                                    | `String`                    | —                     | —       |
@@ -599,8 +699,8 @@ slot-scope is not required for the `loading` and `empty` slots
 
 ### Column Attributes
 
-| Attribute          | Description                                                                    | Type                        | Accepted values                            | Default                           |
-|:-------------------|:-------------------------------------------------------------------------------|:----------------------------|:-------------------------------------------|:----------------------------------|
+|     Attribute      |                                  Description                                   |            Type             |              Accepted values               |              Default              |
+| :----------------- | :----------------------------------------------------------------------------- | :-------------------------- | :----------------------------------------- | :-------------------------------- |
 | `prop`  (required) | used to match the value in `rows` can be a dot path                            | `String` `String.String`    | —                                          | —                                 |
 | `align`            | alignment of column text                                                       | `String`                    | `"center"`, `"left"`, `"right"`            | `left`                            |
 | `key`              | deprecated is transalted to prop instead                                       | `String`                    | —                                          | —                                 |
@@ -626,16 +726,23 @@ slot-scope is not required for the `loading` and `empty` slots
 | `headerCellClass`  | classes to this colum's to `.kt-table__header-cell` elements                   | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
 | `cellClass`        | classes to this colum's to `.kt-table__cell` elements                          | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
 
+
+#### TableConsumer Attributes
+
+| Attribute |           Description            |   Type   | Accepted values | Default |
+| :-------- | :------------------------------- | :------- | :-------------- | :------ |
+| `id`      | for when using multiple provider | `String` | —               | null    |
+
 ### Events
 
 #### Column
 
-| Event Name           | Arguments                                             | Description                                                         |
-|:---------------------|:------------------------------------------------------|:--------------------------------------------------------------------|
-| `@activateRow`       | `(row, index)`                                        | Row was clicked or activated via keyboard. Requires `isInteractive` |
+|      Event Name      |                       Arguments                       |                             Description                             |
+| :------------------- | :---------------------------------------------------- | :------------------------------------------------------------------ |
+| `@activateRow`       | `(row, index)`                                        | Row was clicked or activated via keyboard.                          |
 | `@rowClick`          | `(row, index)`                                        | Row was clicked                                                     |
-| `@rowFocus`          | `(row, index)`                                        | Row was in focus Requires `isInteractive`                           |
-| `@expandChange`      | `(selection)`                                         | Row was blured Requires `isInteractive`                             |
+| `@rowFocus`          | `(row, index)`                                        | Row was in focus Requires setting `isInteractive` or `@activateRow` |
+| `@expandChange`      | `(selection)`                                         | Row was blured Requires setting `isInteractive` or `@activateRow`   |
 | `@expand`            | `(selection)`                                         | Row was expanded                                                    |
 | `@selectionChange`   | `(selection)`                                         | selection changed                                                   |
 | `@selectAll`         | `(selection)`                                         | all selection checkbox was toggled                                  |
@@ -645,27 +752,34 @@ slot-scope is not required for the `loading` and `empty` slots
 
 #### Column
 
-| Event Name   | Arguments                                         | Description        |
-|:-------------|:--------------------------------------------------|:-------------------|
+|  Event Name  |                     Arguments                     |    Description     |
+| :----------- | :------------------------------------------------ | :----------------- |
 | `@cellClick` | `({ value, column, row, columnIndex, rowIndex })` | a cell was clicked |
 
 ### Slots
 
 #### Table
 
-| Slot Name | Description                         |
-|:----------|:------------------------------------|
-| `empty`   | what to render when no data         |
-| `loading` | what to render when loading is true |
-| `actions` | action section of each row          |
-| `expand`  | expand section of each row          |
+| Slot Name |             Description             |          Scope           |
+| :-------- | :---------------------------------- | :----------------------- |
+| `empty`   | what to render when no data         | --                       |
+| `loading` | what to render when loading is true | --                       |
+| `actions` | action section of each row          | `{value, row, rowIndex } |
+| `expand`  | expand section of each row          | `{value, row, rowIndex } |
 
 #### Column
 
-| Slot Name | Description          |
-|:----------|:---------------------|
-| `header`  | render in table row  |
-| `default` | render in table cell |
+| Slot Name |     Description      |                     Scope                     |
+| :-------- | :------------------- | :-------------------------------------------- |
+| `header`  | render in table row  | `{value, row, rowIndex }`                     |
+| `default` | render in table cell | `{value, row, rowIndex, column, columnIndex}` |
+
+#### TableConsumer
+
+| Slot Name |                Description                |                                                      Scope                                                       |
+| :-------- | :---------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
+| `default` | provide a table's store and other methods | `{store,columns, hiddenColumns, sortedColumns, filteredColumns, hideColumn, showAllColumns, orderBeforeColumn,}` |
+
 </template>
 
 <script>
@@ -700,11 +814,13 @@ export default {
 				{ prop: 'date', label: 'Date', width: '20%' },
 				{ prop: 'address.line', label: 'Address', width: '50%' },
 			],
-			rows2: [{
+			rows2: [
+				{
 					date: '2016-05-03',
 					name: 'Tom',
 					address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
-				},],
+				},
+			],
 			rows: [
 				{
 					date: '2016-05-03',
@@ -727,7 +843,7 @@ export default {
 					address: { number: 189, line: 'No. 189, Grove St, Los Angeles' },
 				},
 			],
-			disableName: 'F'
+			disableName: 'F',
 		}
 	},
 	methods: {
@@ -754,38 +870,34 @@ export default {
 			return <div>Loading while the loading prop on KtTable is true</div>
 		},
 		renderExpand(h, { row, rowIndex }) {
-			return (
-				[
-					<KtBanner message={'row.name'} icon="user" isGrey />,
-					<KtBanner message={'row.address.line'} icon="global" isGrey />
-				]
-			)
+			return [
+				<KtBanner message={'row.name'} icon="user" isGrey />,
+				<KtBanner message={'row.address.line'} icon="global" isGrey />,
+			]
 		},
 		renderActions(h, { row, rowIndex }) {
-			return (
-				[
-					<i class="yoco" onClick={() => this.showAlert(row.name, 'edited')}>
-						edit
-					</i>,
-					<i class="yoco" onClick={() => this.showAlert(row.name, 'deleted')}>
-						trash
-					</i>
-				]
-			)
+			return [
+				<i class="yoco" onClick={() => this.showAlert(row.name, 'edited')}>
+					edit
+				</i>,
+				<i class="yoco" onClick={() => this.showAlert(row.name, 'deleted')}>
+					trash
+				</i>,
+			]
 		},
 		renderHeader(h, { value, column, columnIndex }) {
 			return <div>{value}</div>
 		},
 		renderCell(h, { value, row, rowIndex, column, columnIndex }) {
 			return (
-					<KtAvatar
-						name={value}
-						hoverable
-						src="https://picsum.photos/200"
-						showTooltip
-						small
-						class="mr-16px"
-					/>
+				<KtAvatar
+					name={value}
+					hoverable
+					src="https://picsum.photos/200"
+					showTooltip
+					small
+					class="mr-16px"
+				/>
 			)
 		},
 	},

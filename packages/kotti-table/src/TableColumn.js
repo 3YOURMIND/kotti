@@ -63,16 +63,26 @@ const TableColumn = {
 		cellClass: updateColumnsfor('cellClass'),
 		prop: updateColumnsfor('prop'),
 		hidden: updateColumnsfor('hidden'),
+		sortable: updateColumnsfor('sortable'),
+		sortOrder: updateColumnsfor('sortOrder'),
+		order: updateColumnsfor('order'),
+		width: updateColumnsfor('width'),
+		maxWidth: updateColumnsfor('maxWidth'),
+		align: updateColumnsfor('align'),
 		default: updateColumnsfor('default'),
 	},
 	mounted() {
-		this.columnConfig.index =
-			this.columnConfig.index || [].indexOf.call(this[KT_TABLE].$children, this)
-		this[KT_STORE].commit('insertColumn', this.columnConfig)
+		const columnIndex = this[KT_TABLE].$children.indexOf(this)
+		this[KT_STORE].commit('insertColumn', {
+			column: this.columnConfig,
+			...(columnIndex > 0 ? { index: columnIndex } : {}),
+			fromTableColumn: true,
+		})
 	},
 	destroyed() {
 		if (!this.$parent) return
-		this[KT_STORE].commit('removeColumn', this.columnConfig)
+		this.columnConfig &&
+			this[KT_STORE].commit('removeColumn', this.columnConfig)
 	},
 }
 
@@ -105,6 +115,8 @@ function createColumn(column = {}) {
 
 	column.id = columnId
 	column.type = COLUMN_TYPE
+	// needed for maintaining column state across re-renders as column get removed and re-inserted
+	column._deleted = false
 
 	let renderCell = column.renderCell
 	let renderHeader = column.renderHeader

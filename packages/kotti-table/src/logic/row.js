@@ -2,23 +2,22 @@ import { sortData } from './sort'
 import { updateAllSelected, cleanSelection, clearSelection } from './select'
 
 export const defaultState = {
-	_rows: [],
-	filteredRows: null,
+	_data: [],
+	filteredData: null,
+	focusedRow: null,
 	rows: null,
 }
 
 export const mutations = {
-	setRows(store, rows) {
+	setRows(store, data) {
 		const { state } = store
-		const { _rows } = state
-		const dataInstanceChanged = _rows !== rows
+		const { _data } = state
+		const dataInstanceChanged = _data !== data
 		// eslint-disable-next-line no-underscore-dangle
-		state._rows = rows
+		state._data = data
 
-		state.filteredRows = rows
-		state.rows = sortData(state.filteredRows || [], state)
-
-		store.commit('updateDisabledRows')
+		state.filteredData = data
+		state.rows = sortData(data || [], state)
 
 		if (dataInstanceChanged) {
 			clearSelection(store)
@@ -27,6 +26,16 @@ export const mutations = {
 		}
 		updateAllSelected(state)
 	},
+	focuseRow({ state }, row) {
+		state.focusedRow = row
+	},
+	blurRow({ state }) {
+		state.focusedRow = null
+	},
 }
 
-export const getters = {}
+export const getters = {
+	isFocusedRow(state, row) {
+		return state.focusedRow === row
+	},
+}

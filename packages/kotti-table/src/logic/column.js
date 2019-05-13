@@ -1,94 +1,101 @@
-import property from 'lodash/property'
-import negate from 'lodash/negate'
+import Vue from 'vue'
 import pick from 'lodash/pick'
-import { SORT_NONE } from '../constants'
+import { SORT_NONE, PUBLIC_COLUMN_PROPS } from '../constants'
 import { setSortedColumn } from './sort'
-import { setHiddenColumn } from './hide'
+import { setHiddenColumn, getResolvedHiddenColumns } from './hide'
 import { setFilterColumn } from './filter'
+import { resolveColumnsOrder, getOrderedColumns } from './order'
 
 export const defaultState = {
-	freshColumns: true,
-	_columns: [],
+	_destroyedColumns: {},
+	refreshColumnArray: true,
+	_columns: {},
+	_columnsArray: [],
 	columns: [],
 }
 
 export const mutations = {
-	insertColumn(store, column, index) {
-		setColumn(store.state, column, index)
-		store.commit('updateColumns')
-	},
-	swapColumns(store, fromColumn, toColumn) {
-		const { state } = store
-		const fromRealIndex = getColumnIndex(state, fromColumn)
-		const toRealIndex = getColumnIndex(state, toColumn)
-		state._columns[fromRealIndex] = toColumn
-		state._columns[toRealIndex] = fromColumn
-		store.emit(
-			'columnOrderChange',
-			state._columns.map((column, order) => {
-				column.order = order
-				return column
-			}),
-		)
-		store.commit('updateColumns')
+	insertColumn(store, { column, index }) {
+		const deleted = store.state._destroyedColumns[column.prop]
+		setColumn(store.state, { column, index, deleted })
+		deleted && (store.state._destroyedColumns[column.prop] = 0)
+		store.commit('updateColumns', { emitChange: false })
 	},
 	removeColumn(store, column) {
-		const { _columns = [] } = store.state
-		_columns.splice(_columns.indexOf(column), 1)
-		store.commit('updateColumns')
+		column = getColumn(store.state, column)
+		if (column) {
+			column._deleted = true
+			store.state._destroyedColumns[column.prop] = 1
+			store.commit('updateColumns', { emitChange: false })
+		}
 	},
-	updateColumns({ table, state }) {
-		if (table.$ready) {
-			const { _columns = [] } = state
-			if (state.freshColumns) {
-				state._columns = resolveColumnsOrder(_columns)
-				state.freshColumns = false
+	setColumns(store, columns = store.state._columnsArray) {
+		const { state } = store
+		const pickedColumns = columns.map(col => pick(col, PUBLIC_COLUMN_PROPS))
+		for (const col of pickedColumns) {
+			const column = getColumn(state, col)
+			if (column) {
+				Object.assign(column, col)
 			}
-			state.columns = state._columns.filter(negate(property('hidden')))
+		}
+		store.commit('updateColumns', {
+			emitChange: false,
+			refreshColumnArray: true,
+		})
+	},
+	updateColumns(
+		store,
+		{
+			emitChange = true,
+			refreshColumnArray = store.state.refreshColumnArray,
+		} = {},
+	) {
+		const { table, state } = store
+		if (table.$ready) {
+			if (refreshColumnArray || didRestorDestroyedColumns(state)) {
+				state._columnsArray = resolveColumnsOrder(state)
+				state.orderedColumns = getOrderedColumns(state)
+				state._destroyedColumns = {}
+				state.refreshColumnArray = false
+			}
+			state.columns = getResolvedHiddenColumns(state._columnsArray)
+			emitChange && emitColumnsChange(store)
 		}
 	},
 }
 
-export const getters = {}
+export const getters = {
+	getColumns(state) {
+		return getColumnsArray(state, '_columns')
+	},
+}
+
+export function getColumnRealIndex(state, column) {
+	return state._columnsArray.findIndex(({ id }) => id == column.id)
+}
 
 export function getColumnIndex(state, column) {
-	return state._columns.findIndex(({ prop }) => prop === column.prop)
+	return getColumn(state, column).index
 }
 
-export function getColumn(state, column) {
-	return getColumnIndex(state, column)
+export function getColumn(state, column = {}) {
+	return state._columns[column.prop]
 }
 
-export function setColumn(state, column, index) {
-	const { _columns = [] } = state
-	let oldColumnIndex = -1
+export function setColumn(state, { column, index, deleted }) {
+	const { _columns = {} } = state
 
-	if (column.prop) {
-		oldColumnIndex = _columns.findIndex(({ prop }) => prop === column.prop)
-	}
-
-	// resolve where to place the column
-	if (oldColumnIndex !== -1) {
-		// if colum prop exists merge
-		let oldColumn = _columns[oldColumnIndex]
-		_columns.splice(column.index, 1, { ...oldColumn, ...column })
-	} else if (index !== undefined) {
-		// else place at this exact index
-		_columns.splice(index, 0, column)
-	} else if (column.order !== undefined) {
-		// else place at order location
-		if (_columns.length > column.order) {
-			_columns.splice(column.order, 0, column)
+	const oldColumn = _columns[column.prop]
+	if (oldColumn) {
+		if (deleted) {
+			_columns[column.prop]._deleted = false
 		} else {
-			_columns[column.order] = column
+			Vue.set(_columns, column.prop, { ...oldColumn, ...column })
 		}
-	} else if (column.index !== undefined) {
-		// else infered index from children position in dom or prop
-		_columns.splice(column.index, 0, column)
 	} else {
-		_columns.push(column)
+		column.index = index || Object.keys(_columns).length
+		Vue.set(_columns, column.prop, column)
 	}
-	delete column.index
 
 	if (column.sortOrder !== SORT_NONE) {
 		setSortedColumn(state, column)
@@ -99,14 +106,21 @@ export function setColumn(state, column, index) {
 	if (column.filter !== undefined) {
 		setFilterColumn(state, column)
 	}
+
 	return column
 }
 
-export function setColumnsArray(state, prop, shapeKeys, columns) {
+export function setColumnsArray(
+	state,
+	prop,
+	shapeKeys,
+	columns,
+	mergeStrategy = Object.assign,
+) {
 	state[prop] = columns.map(column => {
 		column = pick(column, shapeKeys)
-		let oldColumn = getColumn(state, column) || {}
-		return Object.assign(oldColumn, column)
+		const oldColumn = getColumn(state, column) || {}
+		return mergeStrategy(oldColumn, column)
 	})
 }
 
@@ -114,26 +128,21 @@ export function getColumnsArray(state, prop) {
 	return [...state[prop]]
 }
 
-function resolveColumnsOrder(columns) {
-	return columns
-		.filter(Boolean) // clear possible blanks after order based column insert then order
-		.map((col, index) => {
-			return {
-				orderAdvantage: 'order' in col ? 1 : -1,
-				order: col.order || index,
-				index,
-				col,
-			}
-		})
-		.sort((a, b) =>
-			a.order < b.order
-				? -1
-				: a.order > b.order
-				? 1
-				: a.orderAdvantage + a.index - (b.orderAdvantage + b.index),
+export function emitColumnsChange(store) {
+	store.table.$ready &&
+		store.emit(
+			'columnsChange',
+			store.state._columnsArray.map(col => pick(col, PUBLIC_COLUMN_PROPS)),
 		)
-		.map(({ col }, order) => {
-			col.order = order
-			return col
-		})
+}
+
+export function columnStatMatch(cols1, cols2, props = PUBLIC_COLUMN_PROPS) {
+	cols1 = cols1.map(col => pick(col, props))
+	cols2 = cols2.map(col => pick(col, props))
+	return JSON.stringify(cols1) === JSON.stringify(cols2)
+}
+
+function didRestorDestroyedColumns({ _destroyedColumns }) {
+	const columns = Object.values(_destroyedColumns)
+	return columns.length && columns.reduce((sum, n) => sum + n) === 0
 }

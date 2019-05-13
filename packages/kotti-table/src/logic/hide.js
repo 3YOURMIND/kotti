@@ -14,18 +14,19 @@ export const mutations = {
 		} else {
 			removeHiddenColumn(state, column)
 		}
-
 		store.commit('updateColumns')
+		store.emit('hiddenChange', state.hiddenColumns)
 	},
 	showAll(store) {
-		store.state.hiddenColumns.forEach(column => (column.hidden = false))
+		store.state._columnsArray.forEach(column => (column.hidden = false))
 		store.state.hiddenColumns = []
 
 		store.commit('updateColumns')
+		store.emit('hiddenChange', store.state.hiddenColumns)
 	},
 	setHiddenColumns(store, columns = store.state.hiddenColumns) {
 		setColumnsArray(store.state, 'hiddenColumns', ['prop', 'hidden'], columns)
-		store.commit('updateColumns')
+		store.commit('updateColumns', { emitChange: false })
 	},
 }
 
@@ -54,4 +55,8 @@ export function getHiddenColumn(state, column) {
 }
 export function getHiddenColumnIndex(state, column) {
 	return state.hiddenColumns.findIndex(({ prop }) => prop === column.prop)
+}
+
+export function getResolvedHiddenColumns(columns) {
+	return columns.filter(({ _deleted, hidden }) => !_deleted && !hidden)
 }
