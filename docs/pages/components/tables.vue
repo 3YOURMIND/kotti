@@ -378,9 +378,9 @@ You can then use the set sortedColumns prop on the KtTable to update the table u
 ```html
 <KtTable :rows="rows" :columns="columns">
 	<template slot-scope="{ row }" slot="actions">
-		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
-		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
-	</template>
+	<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
+	<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
+</template>
 </KtTable>
 ```
 
@@ -392,17 +392,17 @@ Same as `actions`, `slot-scope` is required and is used to pass data to the expa
 
 <KtTable :rows="rows" :columns="columnsResponsive" isExpandable isScrollable>
 	<template slot-scope="{ row, rowIndex }" slot="expand">
-		<KtBanner :message="row.name" icon="user" isGrey/>
-		<KtBanner :message="row.address.line" icon="global" isGrey/>
-	</template>
+	<KtBanner :message="row.name" icon="user" isGrey />
+	<KtBanner :message="row.address.line" icon="global" isGrey />
+</template>
 </KtTable>
 
 ```html
 <KtTable :rows="rows" :columns="columns" isExpandable isScrollable>
 	<template slot-scope="{ row, rowIndex }" slot="expand">
-		<KtBanner :message="row.name" icon="user" isGrey/>
-		<KtBanner :message="row.address.line" icon="global" isGrey/>
-	</template>
+	<KtBanner :message="row.name" icon="user" isGrey />
+	<KtBanner :message="row.address.line" icon="global" isGrey />
+</template>
 </KtTable>
 ```
 
@@ -557,20 +557,20 @@ slot-scope is not required for the `loading` and `empty` slots
 		prop="name"
 		>
 		<template slot="header" slot-scope="{ value, column, columnIndex }">
-			<div>
-				{{value}}
-			</div>
-		</template>
+	<div>
+		{{ value }}
+	</div>
+</template>
 		<template slot-scope="{ value, row, rowIndex, column, columnIndex }">
-			<KtAvatar
-				name={value}
-				hoverable
-				src="https://picsum.photos/200"
-				showTooltip
-				small
-				class="mr-16px"
-			/>
-		</template>
+	<KtAvatar
+		:name="value"
+		hoverable
+		src="https://picsum.photos/200"
+		showTooltip
+		small
+		class="mr-16px"
+	/>
+</template>
 	</KtTableColumn>
 </KtTable>
 ```
@@ -634,8 +634,8 @@ Otherwise all tables under the same Provider will share the same store
 
 ### Attributes
 
-| Attribute                | Description                                                         | Type                        | Accepted values       | Default |
-|:-------------------------|:--------------------------------------------------------------------|:----------------------------|:----------------------|:--------|
+|        Attribute         |                             Description                             |            Type             |    Accepted values    | Default |
+| :----------------------- | :------------------------------------------------------------------ | :-------------------------- | :-------------------- | :------ |
 | `rows` (required)        | table row data                                                      | `Array`                     | —                     | —       |
 | `id`                     | for when using multiple provider                                    | `String`                    | —                     | null    |
 | `rowKey`                 | the row prop used for the rows key                                  | `String`                    | —                     | —       |
@@ -671,8 +671,8 @@ Otherwise all tables under the same Provider will share the same store
 
 ### Column Attributes
 
-| Attribute          | Description                                                                    | Type                        | Accepted values                            | Default                           |
-|:-------------------|:-------------------------------------------------------------------------------|:----------------------------|:-------------------------------------------|:----------------------------------|
+|     Attribute      |                                  Description                                   |            Type             |              Accepted values               |              Default              |
+| :----------------- | :----------------------------------------------------------------------------- | :-------------------------- | :----------------------------------------- | :-------------------------------- |
 | `prop`  (required) | used to match the value in `rows` can be a dot path                            | `String` `String.String`    | —                                          | —                                 |
 | `align`            | alignment of column text                                                       | `String`                    | `"center"`, `"left"`, `"right"`            | `left`                            |
 | `key`              | deprecated is transalted to prop instead                                       | `String`                    | —                                          | —                                 |
@@ -701,16 +701,16 @@ Otherwise all tables under the same Provider will share the same store
 
 #### TableConsumer Attributes
 
-| Attribute                | Description                      | Type                        | Accepted values       | Default |
-|:-------------------------|:---------------------------------|:----------------------------|:----------------------|:--------|
-| `id`                     | for when using multiple provider | `String`                    | —                     | null    |
+| Attribute |           Description            |   Type   | Accepted values | Default |
+| :-------- | :------------------------------- | :------- | :-------------- | :------ |
+| `id`      | for when using multiple provider | `String` | —               | null    |
 
 ### Events
 
 #### Column
 
-| Event Name           | Arguments                                             | Description                                                         |
-|:---------------------|:------------------------------------------------------|:--------------------------------------------------------------------|
+|      Event Name      |                       Arguments                       |                             Description                             |
+| :------------------- | :---------------------------------------------------- | :------------------------------------------------------------------ |
 | `@activateRow`       | `(row, index)`                                        | Row was clicked or activated via keyboard.                          |
 | `@rowClick`          | `(row, index)`                                        | Row was clicked                                                     |
 | `@rowFocus`          | `(row, index)`                                        | Row was in focus Requires setting `isInteractive` or `@activateRow` |
@@ -724,33 +724,33 @@ Otherwise all tables under the same Provider will share the same store
 
 #### Column
 
-| Event Name   | Arguments                                         | Description        |
-|:-------------|:--------------------------------------------------|:-------------------|
+|  Event Name  |                     Arguments                     |    Description     |
+| :----------- | :------------------------------------------------ | :----------------- |
 | `@cellClick` | `({ value, column, row, columnIndex, rowIndex })` | a cell was clicked |
 
 ### Slots
 
 #### Table
 
-| Slot Name | Description                         | Scope                                         |
-|:----------|:------------------------------------|:----------------------------------------------|
-| `empty`   | what to render when no data         | --                                            |
-| `loading` | what to render when loading is true | --                                            |
-| `actions` | action section of each row          | `{value, row, rowIndex }                      |
-| `expand`  | expand section of each row          | `{value, row, rowIndex }                      |
+| Slot Name |             Description             |          Scope           |
+| :-------- | :---------------------------------- | :----------------------- |
+| `empty`   | what to render when no data         | --                       |
+| `loading` | what to render when loading is true | --                       |
+| `actions` | action section of each row          | `{value, row, rowIndex } |
+| `expand`  | expand section of each row          | `{value, row, rowIndex } |
 
 #### Column
 
-| Slot Name | Description          | Scope                                         |
-|:----------|:---------------------|:----------------------------------------------|
+| Slot Name |     Description      |                     Scope                     |
+| :-------- | :------------------- | :-------------------------------------------- |
 | `header`  | render in table row  | `{value, row, rowIndex }`                     |
 | `default` | render in table cell | `{value, row, rowIndex, column, columnIndex}` |
 
 #### TableConsumer
 
-| Slot Name | Description                               | Scope                                                                                                           |
-|:----------|:------------------------------------------|:----------------------------------------------------------------------------------------------------------------|
-| `default` | provide a table's store and other methods | `{store,columns, hiddenColumns, sortedColumns, filteredColumns, hideColumn, showAllColumns, orderBeforeColumn,}`|
+| Slot Name |                Description                |                                                      Scope                                                       |
+| :-------- | :---------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
+| `default` | provide a table's store and other methods | `{store,columns, hiddenColumns, sortedColumns, filteredColumns, hideColumn, showAllColumns, orderBeforeColumn,}` |
 
 ### Store
 
