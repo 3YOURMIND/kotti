@@ -45,18 +45,18 @@ export const getters = {
 
 export function resolveColumnsOrder({ _columns = {}, orderedColumns = [] }) {
 	for (const col of orderedColumns) {
-		_columns[col.prop] = col.order || _columns[col.prop]
+		if (_columns[col.prop]) {
+			_columns[col.prop].order = col.order
+		}
 	}
 	return Object.values(_columns)
 		.filter(({ _deleted }) => !_deleted)
-		.map((col, index) => {
-			return {
-				orderAdvantage: 'order' in col ? 1 : -1,
-				order: col.order || col.index,
-				index: col.index || index,
-				col,
-			}
-		})
+		.map((col, index) => ({
+			orderAdvantage: 'order' in col ? 1 : -1,
+			order: col.order || col.index,
+			index: col.index || index,
+			col,
+		}))
 		.sort((a, b) =>
 			a.order < b.order
 				? -1
@@ -65,6 +65,7 @@ export function resolveColumnsOrder({ _columns = {}, orderedColumns = [] }) {
 				: a.orderAdvantage + a.index - (b.orderAdvantage + b.index),
 		)
 		.map(({ col }, order) => {
+			// re-allign column index with new order
 			col.order = order
 			col.index = order
 			return col

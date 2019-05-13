@@ -63,7 +63,12 @@ const TableColumn = {
 		cellClass: updateColumnsfor('cellClass'),
 		prop: updateColumnsfor('prop'),
 		hidden: updateColumnsfor('hidden'),
+		sortable: updateColumnsfor('sortable'),
+		sortOrder: updateColumnsfor('sortOrder'),
 		order: updateColumnsfor('order'),
+		width: updateColumnsfor('width'),
+		maxWidth: updateColumnsfor('maxWidth'),
+		align: updateColumnsfor('align'),
 		default: updateColumnsfor('default'),
 	},
 	mounted() {

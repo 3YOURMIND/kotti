@@ -57,7 +57,8 @@ export default {
 			return {
 				...column.styles,
 				...(column.align ? { textAlign: column.align } : {}),
-				...(column.width ? { textAlign: column.width } : {}),
+				...(column.width ? { width: column.width } : {}),
+				...(column.maxWidth ? { maxWidth: column.maxWidth } : {}),
 			}
 		},
 	},
