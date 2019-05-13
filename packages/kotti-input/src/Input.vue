@@ -1,8 +1,8 @@
 <template>
 	<div :class="formClass">
-		<label :class="formLabelClass" v-text="labelRep" :for="labelFor" />
+		<label :class="formLabelClass" v-text="labelRep" :for="labelForAttr" />
 		<div :class="inputGroupClass">
-			<span class="input-group-addon" v-text="addonText" />
+			<label class="input-group-addon" v-text="addonText" :for="labelForAttr" />
 			<input
 				v-bind="$attrs"
 				:class="formInputClass"
@@ -11,6 +11,7 @@
 				:type="type"
 				:step="inputStep"
 				:value="currentValue"
+				:id="labelForAttr"
 				@blur="handleBlur"
 				@change="handleChange"
 				@focus="handleFocus"
@@ -100,6 +101,9 @@ export default {
 		},
 		inputStep() {
 			return this.type === 'number' ? this.step : null
+		},
+		labelForAttr() {
+			return this.labelFor ? this.labelFor : `field-${this._uid}`
 		},
 		labelRep() {
 			if (this.required) return `${this.label} *`
