@@ -1,17 +1,28 @@
 <template>
-	<div :style="{ color: themeColor.textColor }">
-		<div :class="objectClass" @click="$emit('logoClick')">
-			<img
-				:src="themeColor.logoUrl"
-				v-if="themeColor.logoUrl && !isNarrow"
-				:height="themeColor.logoHeight"
+	<div :style="{ color: themeColor.textColor, height: '100%' }">
+		<div v-if="isNarrow" :class="objectClass" @click="$emit('logoClick')">
+			<i class="yoco" v-text="iconText" @click.stop="$KtNavbar.toggle()" />
+		</div>
+		<div v-else :class="objectClass" @click="$emit('logoClick')">
+			<div
+				:style="
+					`background-image: url(${themeColor.logoUrl}); height: ${
+						themeColor.logoHeight
+					}`
+				"
+				v-if="themeColor.logoUrl"
+				class="navbar-logo--logo"
 			/>
-			<div v-if="!themeColor.logoUrl && !isNarrow" v-text="labelText" />
+			<div v-else v-text="labelText" />
 			<i class="yoco" v-text="iconText" @click.stop="$KtNavbar.toggle()" />
 		</div>
 		<div class="navbar-logo--mobile">
-			<div v-if="!themeColor.logoUrl" v-text="labelText" />
-			<img :src="themeColor.logoUrl" />
+			<div
+				:style="`background-image: url(${themeColor.logoUrl})`"
+				v-if="themeColor.logoUrl"
+				class="navbar-logo--logo"
+			/>
+			<div v-else v-text="labelText" />
 		</div>
 	</div>
 </template>
@@ -40,7 +51,7 @@ export default {
 		themeColor() {
 			return {
 				textColor: this.KtTheme.navbarTextColor,
-				logoHeight: this.KtTheme.logoHeight,
+				logoHeight: this.KtTheme.logoHeight || '40px',
 				logoUrl: this.KtTheme.logoUrl,
 			}
 		},
