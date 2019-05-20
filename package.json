@@ -31,14 +31,19 @@
 			"email": "jo@3yourmind.com",
 			"name": "James O'Shea",
 			"url": "https://github.com/jamesoshea"
+		},
+		{
+			"email": "tquinonero@gmail.com",
+			"name": "Tom Quinonero",
+			"url": "https://github.com/tomquinonero"
 		}
 	],
 	"dependencies": {
-		"@3yourmind/yoco": "^1.1.0",
-		"color": "^3.1.0",
-		"dayjs": "^1.8.8",
-		"vue-clickaway": "^2.2.2",
-		"vue-popperjs": "^2.0.3"
+		"@3yourmind/yoco": "~1.1.0",
+		"color": "~3.1.0",
+		"dayjs": "~1.8.8",
+		"vue-clickaway": "~2.2.2",
+		"vue-popperjs": "~2.0.3"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
