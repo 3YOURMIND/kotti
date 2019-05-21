@@ -97,10 +97,12 @@ $narrow-navbar-width: 3.2rem;
 		padding: 0;
 	}
 	i {
-		margin-left: 1.2rem;
 		opacity: 0.64;
 		&:hover {
 			opacity: 1;
+		}
+		&.expanded {
+			margin-left: 1.2rem;
 		}
 	}
 }

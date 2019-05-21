@@ -1,7 +1,11 @@
 <template>
 	<div :style="{ color: themeColor.textColor, height: '100%' }">
 		<div v-if="isNarrow" :class="objectClass" @click="$emit('logoClick')">
-			<i class="yoco" v-text="iconText" @click.stop="$KtNavbar.toggle()" />
+			<i
+				:class="iconClass"
+				v-text="iconText"
+				@click.stop="$KtNavbar.toggle()"
+			/>
 		</div>
 		<div v-else :class="objectClass" @click="$emit('logoClick')">
 			<div
@@ -14,7 +18,11 @@
 				class="navbar-logo--logo"
 			/>
 			<div v-else v-text="labelText" />
-			<i class="yoco" v-text="iconText" @click.stop="$KtNavbar.toggle()" />
+			<i
+				:class="iconClass"
+				v-text="iconText"
+				@click.stop="$KtNavbar.toggle()"
+			/>
 		</div>
 		<div class="navbar-logo--mobile">
 			<div
@@ -57,6 +65,9 @@ export default {
 		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
+		},
+		iconClass() {
+			return this.isNarrow ? 'yoco' : 'yoco expanded'
 		},
 		iconText() {
 			return this.isNarrow ? 'burger' : 'hide_menu'
