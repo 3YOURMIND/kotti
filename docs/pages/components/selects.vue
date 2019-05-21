@@ -12,6 +12,17 @@
 	<h5 v-text="`English: ${value1}`" class="mt-16px"/>
 </div>
 
+## Compact
+
+<div class="element-example">
+	<KtSelect label="Words"
+		is-compact
+		placeholder="Select Word"
+		v-model="value1"
+		:options="words"/>
+	<h5 v-text="`English: ${value1}`" class="mt-16px"/>
+</div>
+
 ## Allow Empty
 
 <div class="element-example">
