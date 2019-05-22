@@ -9,12 +9,8 @@
 		</div>
 		<div v-else :class="objectClass" @click="$emit('logoClick')">
 			<div
-				:style="
-					`background-image: url(${themeColor.logoUrl}); height: ${
-						themeColor.logoHeight
-					}`
-				"
 				v-if="themeColor.logoUrl"
+				:style="[backgroundStyle, heightStyle]"
 				class="navbar-logo--logo"
 			/>
 			<div v-else v-text="labelText" />
@@ -26,8 +22,8 @@
 		</div>
 		<div class="navbar-logo--mobile">
 			<div
-				:style="`background-image: url(${themeColor.logoUrl})`"
 				v-if="themeColor.logoUrl"
+				:style="backgroundStyle"
 				class="navbar-logo--logo"
 			/>
 			<div v-else v-text="labelText" />
@@ -56,15 +52,15 @@ export default {
 		},
 	},
 	computed: {
-		themeColor() {
+		backgroundStyle() {
 			return {
-				textColor: this.KtTheme.navbarTextColor,
-				logoHeight: this.KtTheme.logoHeight || '40px',
-				logoUrl: this.KtTheme.logoUrl,
+				'background-image': `url(${this.themeColor.logoUrl})`,
 			}
 		},
-		isNarrow() {
-			return this.$KtNavbar.isNarrow
+		heightStyle() {
+			return {
+				height: this.themeColor.logoHeight,
+			}
 		},
 		iconClass() {
 			return this.isNarrow ? 'yoco' : 'yoco expanded'
@@ -72,10 +68,20 @@ export default {
 		iconText() {
 			return this.isNarrow ? 'burger' : 'hide_menu'
 		},
+		isNarrow() {
+			return this.$KtNavbar.isNarrow
+		},
 		objectClass() {
 			return {
 				'navbar-logo': true,
 				'navbar-logo--narrow': this.isNarrow,
+			}
+		},
+		themeColor() {
+			return {
+				textColor: this.KtTheme.navbarTextColor,
+				logoHeight: this.KtTheme.logoHeight || '40px',
+				logoUrl: this.KtTheme.logoUrl,
 			}
 		},
 	},
