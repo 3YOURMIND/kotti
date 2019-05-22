@@ -1,8 +1,4 @@
 // Forms
-@mixin control-shadow($color: $primary-500) {
-	box-shadow: 0 0 0 0.1rem rgba($color, 0.2);
-}
-
 fieldset {
 	margin-bottom: $layout-spacing-lg;
 }

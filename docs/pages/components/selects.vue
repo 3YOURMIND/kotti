@@ -167,3 +167,8 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.element-example {
+	overflow: auto;
+}
+</style>
