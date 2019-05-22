@@ -79,32 +79,31 @@ $narrow-navbar-width: 3.2rem;
 .navbar-logo {
 	display: flex;
 	align-items: center;
-	padding: 0.8rem 0;
+	padding: 0.8rem 1.2rem;
 	justify-content: space-between;
+	&--logo {
+		background-repeat: no-repeat;
+		background-position: left;
+		background-size: contain;
+		flex: 1;
+	}
+	&--mobile {
+		display: none;
+		padding: 0.2rem;
+		height: 100%;
+	}
 	&--narrow {
 		display: block;
 		padding: 0;
 	}
-	&--mobile {
-		display: none;
-	}
 	i {
-		text-align: center;
-		display: block;
-		width: 3.2rem;
-		flex: 0 0 3.2rem;
 		opacity: 0.64;
 		&:hover {
 			opacity: 1;
 		}
-	}
-	div {
-		padding-left: 1.2rem;
-	}
-	img {
-		max-width: 8rem;
-		max-height: 4rem;
-		padding-left: 1.2rem;
+		&.expanded {
+			margin-left: 1.2rem;
+		}
 	}
 }
 
@@ -210,21 +209,15 @@ $narrow-navbar-width: 3.2rem;
 	}
 	.navbar-header {
 		width: 100%;
-		flex: 1 1 auto;
-		display: flex;
-		align-items: center;
-		align-content: center;
-		justify-content: center;
-		padding: 0;
+		padding: 0.2rem 0;
 	}
 	.navbar-logo {
 		display: none;
 		&--mobile {
 			display: flex;
-			padding: 0.2rem;
-			img {
-				max-height: 2rem;
-			}
+		}
+		&--logo {
+			background-position: center;
 		}
 	}
 	.navbar-notification {
