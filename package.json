@@ -45,6 +45,7 @@
 		"@nuxtjs/axios": "^5.4.0",
 		"@nuxtjs/markdownit": "^1.2.0",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
+		"@nuxtjs/style-resources": "^0.1.2",
 		"@vue/cli-plugin-babel": "^3.4.1",
 		"@vue/cli-plugin-eslint": "^3.4.1",
 		"@vue/cli-service": "^3.4.1",
