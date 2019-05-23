@@ -208,8 +208,10 @@ export default {
 }
 
 .form-options {
-	position: fixed;
-	margin-top: 2rem;
+	position: absolute;
+	top: 2rem;
+	left: 0;
+	right: 0;
 	background: #fff;
 	box-shadow: $box-shadow;
 	border-radius: $border-radius;
@@ -218,7 +220,6 @@ export default {
 	max-height: 20rem;
 	overflow: hidden;
 	overflow-y: auto;
-
 	ul {
 		margin: 0;
 	}
