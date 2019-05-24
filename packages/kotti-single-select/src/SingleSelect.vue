@@ -12,13 +12,19 @@
 					@input="setQueryString($event.target.value)"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
+					ref="input"
 				/>
 				<i
 					class="yoco form-icon"
 					v-text="indicatorRep"
 					style="pointer-events: none;"
 				/>
-				<div v-if="visible" class="form-options">
+				<div
+					v-show="visible"
+					:style="formOptionStyle"
+					ref="formOptions"
+					class="form-options"
+				>
 					<ul>
 						<li
 							v-if="isLoading"
@@ -68,7 +74,23 @@ export default {
 			queryString: '',
 			selectedLabel: '',
 			visible: false,
+			formOptions: null,
+			formOptionsContainer: null,
+			input: null,
+			formOptionStyle: '',
 		}
+	},
+	mounted() {
+		this.formOptions = this.$refs['formOptions']
+		this.input = this.$refs['input']
+		this.formOptionsContainer = document.querySelector('body')
+		this.formOptionsContainer.append(this.formOptions)
+		this.computeFormOptionsStyle()
+		window.addEventListener('resize', this.computeFormOptionsStyle)
+	},
+	beforeDestroy() {
+		this.formOptionsContainer.removeChild(this.formOptions)
+		window.removeEventListener('resize', this.computeFormOptionsStyle)
 	},
 	computed: {
 		indicatorRep() {
@@ -109,6 +131,17 @@ export default {
 		},
 	},
 	methods: {
+		computeFormOptionsStyle() {
+			let top =
+				this.input.getBoundingClientRect().top -
+				this.formOptionsContainer.getBoundingClientRect().top +
+				this.input.offsetHeight
+			let left =
+				this.input.getBoundingClientRect().left -
+				this.formOptionsContainer.getBoundingClientRect().left
+			let width = this.input.offsetWidth
+			this.formOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
+		},
 		isOptionAllowed({ disabled, value }) {
 			if (disabled) return false
 			if (!this.allowEmpty && value === null) return false
