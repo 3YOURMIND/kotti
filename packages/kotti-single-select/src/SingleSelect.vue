@@ -242,9 +242,7 @@ export default {
 
 .form-options {
 	position: absolute;
-	top: 2rem;
-	left: 0;
-	right: 0;
+	margin-top: $unit-1;
 	background: #fff;
 	box-shadow: $box-shadow;
 	border-radius: $border-radius;
