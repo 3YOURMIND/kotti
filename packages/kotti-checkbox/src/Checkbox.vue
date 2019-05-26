@@ -1,12 +1,12 @@
 <template>
-	<label :class="labelClass">
+	<label class="form-checkbox">
 		<input
 			class="form-checkbox__input"
 			v-model="model"
 			type="checkbox"
 			v-bind="$attrs"
 		/>
-		<i class="form-icon" :style="iconColor"/>
+		<i class="form-icon" :style="iconColor" />
 		<slot>
 			<span v-if="hasLabel" class="form-checkbox__label" v-text="label" />
 		</slot>
@@ -21,16 +21,13 @@ export default {
 		value: { default: false, type: Boolean },
 	},
 	computed: {
-	    hasLabel() {
-			return !(this.label===null || this.label === undefined)
-		},
-		labelClass() {
-			return color ? 'form-checkbox-color' : 'form-checkbox'
+		hasLabel() {
+			return !(this.label === null || this.label === undefined)
 		},
 		iconColor() {
 			return {
-				'background-color': color ? color : 'none',
-				'border-color': color ? color : 'none'
+				backgroundColor: this.color ? this.color : 'none',
+				borderColor: this.color ? this.color : 'none',
 			}
 		},
 		model: {
