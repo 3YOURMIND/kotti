@@ -4,7 +4,9 @@
 
 ## Basic usage
 
-The `KtCheckbox` component requires the `v-model` and `label` properties. Other arguments (e.g. `name`) get directly passed to the `<input>` element.
+The `KtCheckbox` component requires the `v-model` and `label` properties.
+The 'color' property is optional, if set it will pass the color code to the '<i>' element.
+Other arguments (e.g. `name`) get directly passed to the `<input>` element.
 
 ```html
 <div class="element-example">
@@ -33,13 +35,28 @@ We can also specify the label as a default scope:
 	<h4>Value: {{value2}}</h4>
 </div>
 
+With color:
+```html
+<div class="element-example">
+	<KtCheckbox v-model="value1" label="With color" color="#FFD600"/>
+</div>
+```
+
+<div class="element-example">
+	<KtCheckbox v-model="value1" label="With color" color="#FFD600"/>
+	<h4>Value: {{value1}}</h4>
+</div>
+
+
 ## Properties
 
 | Attribute | Description                  | Type      | Accepted values | Default |
 |:----------|:-----------------------------|:----------|:----------------|:--------|
 | `label`   | label input field            | `String`  | —               | —       |
 | `name`    | name attribute for the field | `String`  | —               | —       |
+| `color`   | color code                   | `String`  | rgb or hex      | —       |
 | `value`   | value                        | `Boolean` | —               | —       |
+
 
 </template>
 <script>
