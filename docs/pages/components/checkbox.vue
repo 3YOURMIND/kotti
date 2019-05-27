@@ -1,12 +1,11 @@
 <template lang="md">
-
 # Checkbox
 
 ## Basic usage
 
 The `KtCheckbox` component requires the `v-model` and `label` properties.
-The 'color' property is optional, if set it will pass the color code to the '<i>' element.
-Other arguments (e.g. `name`) get directly passed to the `<input>` element.
+The 'color' property is optional, if set it will pass the color code to the '<i/>' element.
+Other arguments (e.g. `name`) get directly passed to the `<input/>` element.
 
 ```html
 <div class="element-example">
@@ -21,13 +20,6 @@ Other arguments (e.g. `name`) get directly passed to the `<input>` element.
 
 We can also specify the label as a default scope:
 
-```html
-<div class="element-example">
-	<KtCheckbox v-model="value2">
-		I agree to the <a href="https://3yourmind.com">Terms of usage</a>
-	</KtCheckbox>
-</div>
-```
 <div class="element-example">
 	<KtCheckbox v-model="value2">
 		I agree to the <a href="https://3yourmind.com">Terms of usage</a>
@@ -35,16 +27,24 @@ We can also specify the label as a default scope:
 	<h4>Value: {{value2}}</h4>
 </div>
 
+```html
+<div class="element-example">
+	<KtCheckbox v-model="value2">
+		I agree to the <a href="https://3yourmind.com">Terms of usage</a>
+	</KtCheckbox>
+</div>
+```
+
 Example of using the required field:
 
 <div class="element-example">
-	<KtCheckbox v-model="value3" required label="i am required"/>
+	<KtCheckbox v-model="value3" required label="i am required" />
 	<h4>Value: {{value3}}</h4>
 </div>
 
 ```html
 <div class="element-example">
-	<KtCheckbox v-model="value3" required label="i am required"/>
+	<KtCheckbox v-model="value3" required label="i am required" />
 	<h4>Value: {{value3}}</h4>
 </div>
 ```
@@ -52,13 +52,13 @@ Example of using the required field:
 With color:
 
 <div class="element-example">
-	<KtCheckbox v-model="value1" label="With color" color="#FFD600"/>
+	<KtCheckbox v-model="value1" label="With color" color="#FFD600" />
 	<h4>Value: {{value1}}</h4>
 </div>
 
 ```html
 <div class="element-example">
-	<KtCheckbox v-model="value1" label="With color" color="#FFD600"/>
+	<KtCheckbox v-model="value1" label="With color" color="#FFD600" />
 </div>
 ```
 

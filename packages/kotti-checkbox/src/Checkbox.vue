@@ -7,7 +7,7 @@
 			v-bind="$attrs"
 			:required="required"
 		/>
-		<i class="form-icon" />
+		<i class="form-icon" :style="iconColor" />
 		<slot>
 			<span v-if="hasLabel" class="form-checkbox__label" v-text="labelRep" />
 		</slot>
@@ -17,6 +17,7 @@
 export default {
 	name: 'KtCheckbox',
 	props: {
+		color: { default: null, type: String },
 		label: { default: null, type: String },
 		required: { default: false, type: Boolean },
 		value: { default: false, type: Boolean },
@@ -27,6 +28,12 @@ export default {
 		},
 		labelRep() {
 			return this.required ? `${this.label} *` : this.label
+		},
+		iconColor() {
+			return {
+				backgroundColor: this.color ? this.color : 'none',
+				borderColor: this.color ? this.color : 'none',
+			}
 		},
 		model: {
 			get() {
