@@ -2,7 +2,11 @@
 	<div class="selects">
 		<div class="form-group">
 			<label class="form-label" v-text="label" />
-			<div class="has-icon-right" v-on-clickaway="handleClickOutside">
+			<div
+				class="has-icon-right"
+				:class="{ 'has-icon-left': icon }"
+				v-on-clickaway="handleClickOutside"
+			>
 				<input
 					class="form-input"
 					v-model="selectedLabel"
@@ -16,6 +20,12 @@
 				/>
 				<i
 					class="yoco form-icon"
+					v-text="icon"
+					v-if="icon"
+					style="pointer-events: none;"
+				/>
+				<i
+					class="yoco form-icon select-opening"
 					v-text="indicatorRep"
 					style="pointer-events: none;"
 				/>
@@ -60,6 +70,7 @@ export default {
 	props: {
 		allowEmpty: { type: Boolean, default: false },
 		filterable: { type: Boolean, default: false },
+		icon: { type: String, default: null },
 		isAsync: { type: Boolean, default: false },
 		isLoading: { type: Boolean, default: false },
 		label: { type: String, default: null },
@@ -239,7 +250,16 @@ export default {
 			$control-padding-y-lg $control-padding-x-lg;
 	}
 }
-
+.selects .form-group {
+	.form-icon {
+		right: auto;
+	}
+	.select-opening {
+		right: $unit-2;
+		left: auto;
+		cursor: pointer;
+	}
+}
 .form-options {
 	position: absolute;
 	margin-top: $unit-1;
