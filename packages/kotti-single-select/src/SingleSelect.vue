@@ -143,14 +143,14 @@ export default {
 	},
 	methods: {
 		computeFormOptionsStyle() {
-			let top =
+			const top =
 				this.input.getBoundingClientRect().top -
 				this.formOptionsContainer.getBoundingClientRect().top +
 				this.input.offsetHeight
-			let left =
+			const left =
 				this.input.getBoundingClientRect().left -
 				this.formOptionsContainer.getBoundingClientRect().left
-			let width = this.input.offsetWidth
+			const width = this.input.offsetWidth
 			this.formOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
 		},
 		isOptionAllowed({ disabled, value }) {
