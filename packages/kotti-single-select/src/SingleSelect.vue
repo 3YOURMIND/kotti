@@ -19,9 +19,9 @@
 					ref="input"
 				/>
 				<i
+					v-if="icon"
 					class="yoco form-icon"
 					v-text="icon"
-					v-if="icon"
 					style="pointer-events: none;"
 				/>
 				<i
@@ -68,27 +68,59 @@ export default {
 	name: 'KtSelect',
 	mixins: [clickaway],
 	props: {
-		allowEmpty: { type: Boolean, default: false },
-		filterable: { type: Boolean, default: false },
-		icon: { type: String, default: null },
-		isAsync: { type: Boolean, default: false },
-		isLoading: { type: Boolean, default: false },
-		label: { type: String, default: null },
-		loadingText: { type: String, default: 'Loading' },
-		noResultsFoundText: { type: String, default: 'No Results Found' },
-		options: { type: Array, default: [] },
-		placeholder: { type: String, default: null },
-		value: { default: null },
+		allowEmpty: {
+			default: false,
+			type: Boolean,
+		},
+		filterable: {
+			default: false,
+			type: Boolean,
+		},
+		icon: {
+			default: null,
+			type: String,
+		},
+		isAsync: {
+			default: false,
+			type: Boolean,
+		},
+		isLoading: {
+			default: false,
+			type: Boolean,
+		},
+		label: {
+			default: null,
+			type: String,
+		},
+		loadingText: {
+			default: 'Loading',
+			type: String,
+		},
+		noResultsFoundText: {
+			default: 'No Results Found',
+			type: String,
+		},
+		options: {
+			default: [],
+			type: Array,
+		},
+		placeholder: {
+			default: null,
+			type: String,
+		},
+		value: {
+			default: null,
+		},
 	},
 	data() {
 		return {
+			formOptions: null,
+			formOptionsContainer: null,
+			formOptionStyle: '',
+			input: null,
 			queryString: '',
 			selectedLabel: '',
 			visible: false,
-			formOptions: null,
-			formOptionsContainer: null,
-			input: null,
-			formOptionStyle: '',
 		}
 	},
 	mounted() {
