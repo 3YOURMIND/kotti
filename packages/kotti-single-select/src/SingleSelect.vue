@@ -98,10 +98,17 @@ export default {
 		this.formOptionsContainer.append(this.formOptions)
 		this.computeFormOptionsStyle()
 		window.addEventListener('resize', this.computeFormOptionsStyle)
+		this.observer = new MutationObserver(this.computeFormOptionsStyle)
+		this.observer.observe(this.formOptionsContainer, {
+			attributes: true,
+			childList: true,
+			subtree: true,
+		})
 	},
 	beforeDestroy() {
 		this.formOptionsContainer.removeChild(this.formOptions)
 		window.removeEventListener('resize', this.computeFormOptionsStyle)
+		this.observer.disconnect()
 	},
 	computed: {
 		indicatorRep() {
