@@ -25,7 +25,13 @@ design decisions. The Kotti design system has two main parts: foundation and com
 		'@/assets/css/main.scss',
 		'@3yourmind/yoco',
 	],
-	modules: ['@nuxtjs/markdownit', '@nuxtjs/axios'],
+	modules: ['@nuxtjs/markdownit', '@nuxtjs/axios', '@nuxtjs/style-resources'],
+	styleResources: {
+		scss: [
+			'./packages/kotti-style/_variables.scss',
+			'./packages/kotti-style/mixins/index.scss',
+		],
+	},
 	loading: {
 		color: '#2C64CC',
 	},

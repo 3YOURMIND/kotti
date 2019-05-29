@@ -2,7 +2,11 @@
 	<div class="selects">
 		<div class="form-group">
 			<label :class="formLabelClass" v-text="label" />
-			<div class="has-icon-right" v-on-clickaway="handleClickOutside">
+			<div
+				class="has-icon-right"
+				:class="{ 'has-icon-left': icon }"
+				v-on-clickaway="handleClickOutside"
+			>
 				<input
 					:class="formInputClass"
 					v-model="selectedLabel"
@@ -12,13 +16,25 @@
 					@input="setQueryString($event.target.value)"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
+					ref="input"
 				/>
 				<i
+					v-if="icon"
 					class="yoco form-icon"
+					v-text="icon"
+					style="pointer-events: none;"
+				/>
+				<i
+					class="yoco form-icon select-opening"
 					v-text="indicatorRep"
 					style="pointer-events: none;"
 				/>
-				<div v-if="visible" class="form-options">
+				<div
+					v-show="visible"
+					:style="formOptionStyle"
+					ref="formOptions"
+					class="form-options"
+				>
 					<ul>
 						<li
 							v-if="isLoading"
@@ -52,24 +68,83 @@ export default {
 	name: 'KtSelect',
 	mixins: [clickaway],
 	props: {
-		allowEmpty: { type: Boolean, default: false },
-		filterable: { type: Boolean, default: false },
-		isAsync: { type: Boolean, default: false },
-		isCompact: { default: false, type: Boolean },
-		isLoading: { type: Boolean, default: false },
-		label: { type: String, default: null },
-		loadingText: { type: String, default: 'Loading' },
-		noResultsFoundText: { type: String, default: 'No Results Found' },
-		options: { type: Array, default: [] },
-		placeholder: { type: String, default: null },
-		value: { default: null },
+		allowEmpty: {
+			default: false,
+			type: Boolean,
+		},
+		filterable: {
+			default: false,
+			type: Boolean,
+		},
+		icon: {
+			default: null,
+			type: String,
+		},
+		isAsync: {
+			default: false,
+			type: Boolean,
+		},
+		isCompact: {
+			default: false,
+			type: Boolean,
+		},
+		isLoading: {
+			default: false,
+			type: Boolean,
+		},
+		label: {
+			default: null,
+			type: String,
+		},
+		loadingText: {
+			default: 'Loading',
+			type: String,
+		},
+		noResultsFoundText: {
+			default: 'No Results Found',
+			type: String,
+		},
+		options: {
+			default: [],
+			type: Array,
+		},
+		placeholder: {
+			default: null,
+			type: String,
+		},
+		value: {
+			default: null,
+		},
 	},
 	data() {
 		return {
+			formOptions: null,
+			formOptionsContainer: null,
+			formOptionStyle: '',
+			input: null,
 			queryString: '',
 			selectedLabel: '',
 			visible: false,
 		}
+	},
+	mounted() {
+		this.formOptions = this.$refs['formOptions']
+		this.input = this.$refs['input']
+		this.formOptionsContainer = document.querySelector('body')
+		this.formOptionsContainer.append(this.formOptions)
+		this.computeFormOptionsStyle()
+		window.addEventListener('resize', this.computeFormOptionsStyle)
+		this.observer = new MutationObserver(this.computeFormOptionsStyle)
+		this.observer.observe(this.formOptionsContainer, {
+			attributes: true,
+			childList: true,
+			subtree: true,
+		})
+	},
+	beforeDestroy() {
+		this.formOptionsContainer.removeChild(this.formOptions)
+		window.removeEventListener('resize', this.computeFormOptionsStyle)
+		this.observer.disconnect()
 	},
 	computed: {
 		formInputClass() {
@@ -125,6 +200,17 @@ export default {
 		},
 	},
 	methods: {
+		computeFormOptionsStyle() {
+			const top =
+				this.input.getBoundingClientRect().top -
+				this.formOptionsContainer.getBoundingClientRect().top +
+				this.input.offsetHeight
+			const left =
+				this.input.getBoundingClientRect().left -
+				this.formOptionsContainer.getBoundingClientRect().left
+			const width = this.input.offsetWidth
+			this.formOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
+		},
 		isOptionAllowed({ disabled, value }) {
 			if (disabled) return false
 			if (!this.allowEmpty && value === null) return false
@@ -168,3 +254,114 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.form-select {
+	appearance: none;
+	border: $border-width solid $lightgray-400;
+	border-radius: $border-radius;
+	color: inherit;
+	font-size: $font-size;
+	height: $control-size;
+	line-height: $line-height;
+	outline: none;
+	padding: $control-padding-y $control-padding-x;
+	vertical-align: middle;
+	width: 100%;
+
+	&[size],
+	&[multiple] {
+		height: auto;
+
+		option {
+			padding: $unit-h $unit-1;
+		}
+	}
+
+	&:not([multiple]):not([size]) {
+		background: #fff
+			url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E")
+			no-repeat right 0.35rem center/.4rem 0.5rem;
+		padding-right: $control-icon-size + $control-padding-x;
+	}
+
+	&:focus {
+		@include control-shadow();
+		border-color: $primary-500;
+	}
+
+	&::-ms-expand {
+		display: none;
+	}
+
+	// Select sizes
+	&.select-sm {
+		font-size: $font-size-sm;
+		height: $control-size-sm;
+		padding: $control-padding-y-sm ($control-icon-size + $control-padding-x-sm)
+			$control-padding-y-sm $control-padding-x-sm;
+	}
+
+	&.select-lg {
+		font-size: $font-size-lg;
+		height: $control-size-lg;
+		padding: $control-padding-y-lg ($control-icon-size + $control-padding-x-lg)
+			$control-padding-y-lg $control-padding-x-lg;
+	}
+}
+.selects .form-group {
+	.form-icon {
+		right: auto;
+	}
+	.select-opening {
+		right: $unit-2;
+		left: auto;
+		cursor: pointer;
+	}
+}
+.form-options {
+	position: absolute;
+	margin-top: $unit-1;
+	background: #fff;
+	box-shadow: $box-shadow;
+	border-radius: $border-radius;
+	padding: 0.4rem 0;
+	z-index: $zindex-4;
+	max-height: 20rem;
+	overflow: hidden;
+	overflow-y: auto;
+	ul {
+		margin: 0;
+	}
+
+	li {
+		margin: 0;
+		line-height: 1.2rem;
+		padding: 0.2rem 0.4rem;
+		list-style: none;
+
+		&.form-option--disabled {
+			color: $lightgray-500;
+
+			&:hover {
+				cursor: not-allowed;
+			}
+		}
+
+		&.form-option--empty,
+		&.form-option--loading {
+			text-align: center;
+			color: $lightgray-500;
+
+			&:hover {
+				cursor: default;
+				background: transparent;
+			}
+		}
+	}
+
+	li:hover {
+		cursor: pointer;
+		background: #f8f8f8;
+	}
+}
+</style>

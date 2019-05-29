@@ -72,6 +72,19 @@
 }
 ```
 
+## Icon
+
+<div class="element-example">
+	<KtSelect label="Words"
+		placeholder="Select Word"
+		v-model="value3"
+		filterable
+		allowEmpty
+		icon="user"
+		:options="words"/>
+	<h5 v-text="`English: ${value3}`" class="mt-16px"/>
+</div>
+
 ## Async Search
 
 <div class="element-example">
@@ -178,3 +191,8 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.element-example {
+	overflow: auto;
+}
+</style>
