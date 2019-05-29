@@ -16,9 +16,9 @@
 
 <style lang="scss" scoped>
 .github-link {
-	display: inline-block;
+	display: flex;
+	justify-content: center;
 	width: 100%;
-	text-align: center;
 }
 li.nuxt-link-active {
 	background: rgba(0, 0, 0, 0.2);

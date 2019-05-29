@@ -1,14 +1,14 @@
 <template>
 	<div class="selects">
 		<div class="form-group">
-			<label class="form-label" v-text="label" />
+			<label :class="formLabelClass" v-text="label" />
 			<div
 				class="has-icon-right"
 				:class="{ 'has-icon-left': icon }"
 				v-on-clickaway="handleClickOutside"
 			>
 				<input
-					class="form-input"
+					:class="formInputClass"
 					v-model="selectedLabel"
 					type="text"
 					:placeholder="placeholder"
@@ -84,6 +84,10 @@ export default {
 			default: false,
 			type: Boolean,
 		},
+		isCompact: {
+			default: false,
+			type: Boolean,
+		},
 		isLoading: {
 			default: false,
 			type: Boolean,
@@ -143,6 +147,21 @@ export default {
 		this.observer.disconnect()
 	},
 	computed: {
+		formInputClass() {
+			return {
+				'form-input': true,
+				'form-input--compact': this.isCompact,
+				'form-input--compact--focus': this.isCompact && this.visible,
+			}
+		},
+		formLabelClass() {
+			return {
+				'form-label': true,
+				'form-label--compact': this.isCompact,
+				'form-label--compact--focus':
+					this.isCompact && (this.visible || this.selectedLabel),
+			}
+		},
 		indicatorRep() {
 			return this.visible ? 'chevron_up' : 'chevron_down'
 		},
