@@ -76,8 +76,13 @@ export default {
 				links: [
 					{
 						title: 'Create New Issue',
+						isExternal: true,
 						link:
 							'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
+					},
+					{
+						title: 'Internal link',
+						link: { name: 'components-dropdowns' },
 					},
 				],
 			},
@@ -162,6 +167,7 @@ export default {
 				{
 					links: [
 						{
+							isExternal: true,
 							link: 'https://google.com',
 							title: 'Settings',
 						},
@@ -182,6 +188,7 @@ export default {
 				},
 				{
 					label: 'Second Link',
+					isExternal: true,
 					to: 'https://google.com',
 					icon: 'basket',
 					active: true,

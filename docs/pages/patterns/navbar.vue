@@ -12,6 +12,9 @@
 3. **Quick Links:** Customizable quick links
 4. **Navbar Footer:** Customizable slots
 
+Anytime defining a link, we can use the same props as when using `to` props in `router-link`. 
+Please refer to the official documentation: <https://router.vuejs.org/api/#to>
+
 ## Components
 
 <nuxt-link to="/examples/layouts">
@@ -57,7 +60,7 @@ menuData: [
 				isActive: false,
 			},
 			{
-				link: '#',
+				link: {name: 'myRouteName'},
 				title: 'Quotes',
 				icon: 'request',
 				isActive: false,
@@ -74,6 +77,10 @@ quickLinksData: {
 	links: [{
 		title: 'Create New Issue',
 		link: 'https://github.com/3YOURMIND/kotti/issues/new',
+	},
+	{
+		title: 'Use router-link object',
+		link: {name: 'KtCheckboxDoc'},
 	}],
 },
 ```
@@ -136,9 +143,9 @@ You can get the value of narrow navbar via `$KtNavbar.isNarrow`
 |:---------------------|:---------------------------------------|:----------|:-----------------------|:--------|
 | `$KtNavbar.isNarrow` | define navbar is narrow                | `Boolean` | —                      | `false` |
 | `labelText`          | using text when logoUrl is not defined | `String`  | —                      | —       |
-| `notification`       | notification section of the navbar     | `Arrary`  | See above Notification | —       |
-| `quickLinks`         | quick link section of the navbar       | `Arrary`  | See above Quick Links  | —       |
-| `sections`           | menu section of the navbar             | `Arrary`  | See above Menu         | —       |
+| `notification`       | notification section of the navbar     | `Array`   | See above Notification | —       |
+| `quickLinks`         | quick link section of the navbar       | `Array`   | See above Quick Links  | —       |
+| `sections`           | menu section of the navbar             | `Array`   | See above Menu         | —       |
 
 ### Events
 
