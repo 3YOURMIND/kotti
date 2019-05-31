@@ -148,3 +148,13 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.navbar {
+	a,
+	a:hover,
+	a:focus,
+	a:visited {
+		color: inherit;
+	}
+}
+</style>

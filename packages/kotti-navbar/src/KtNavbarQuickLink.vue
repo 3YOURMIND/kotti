@@ -12,12 +12,13 @@
 			:style="{ color: themeColor.textColor }"
 			v-text="title"
 		/>
-		<a
+		<KtNavbarLink
 			v-for="(item, index) in links"
 			:key="index"
-			:href="item.link"
+			:link="item.link"
 			target="_blank"
 			rel="noopener noreferrer"
+			:isExternal="item.isExternal"
 		>
 			<div
 				:class="[
@@ -28,15 +29,17 @@
 			>
 				<span v-text="item.title" v-if="!isNarrow" /> <i class="yoco">link</i>
 			</div>
-		</a>
+		</KtNavbarLink>
 	</div>
 </template>
 
 <script>
 import color from 'color'
+import KtNavbarLink from './KtNavbarLink'
 
 export default {
 	name: 'KtNavbarQuickLink',
+	components: { KtNavbarLink },
 	props: {
 		title: { type: String, default: 'Quick Links' },
 		links: { type: Array, default: [] },
