@@ -12,6 +12,7 @@
 			v-else
 			@click="$emit('menuLinkClick', link)"
 			v-bind="$attrs"
+			active-class="is-active"
 			:to="link"
 		>
 			<slot />

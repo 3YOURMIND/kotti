@@ -129,6 +129,17 @@ export default {
 			}
 		},
 	},
+	mounted() {
+		let parent = document.querySelector('html')
+		parent.style.setProperty(
+			'--navbar-text-active-color',
+			this.KtTheme.navbarTextActiveColor,
+		)
+		parent.style.setProperty(
+			'--navbar-text-color',
+			this.KtTheme.navbarTextColor,
+		)
+	},
 	methods: {
 		objectClass(className) {
 			return {
@@ -155,6 +166,9 @@ export default {
 	a:focus,
 	a:visited {
 		color: inherit;
+	}
+	a.is-active {
+		color: var(--navbar-text-active-color);
 	}
 }
 </style>

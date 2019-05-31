@@ -60,11 +60,6 @@ export default {
 		redirectRouter(link) {
 			this.$router.push(link.path)
 		},
-		isCurrentPage(path) {
-			return path === '/'
-				? this.$route.path === '/'
-				: this.$route.path.includes(path)
-		},
 	},
 	provide() {
 		return {
@@ -87,13 +82,11 @@ export default {
 							icon: 'file',
 							title: 'Overview',
 							link: '/',
-							isActive: this.isCurrentPage('/'),
 						},
 						{
 							icon: 'version',
 							title: 'Changelog',
 							link: '/changelog',
-							isActive: this.isCurrentPage('/changelog'),
 						},
 					],
 				},
@@ -104,25 +97,21 @@ export default {
 							icon: 'layer',
 							title: 'Foundations',
 							link: '/foundations/layout',
-							isActive: this.isCurrentPage('/foundations'),
 						},
 						{
 							icon: 'dashboard',
 							title: 'Components',
 							link: '/components/avatars',
-							isActive: this.isCurrentPage('/components'),
 						},
 						{
 							icon: 'sidebar',
 							title: 'Patterns',
 							link: '/patterns/actionbar',
-							isActive: this.isCurrentPage('/patterns'),
 						},
 						{
 							icon: 'markup',
 							title: 'DesignKit',
 							link: '/designkit',
-							isActive: this.isCurrentPage('/designkit'),
 						},
 					],
 				},
