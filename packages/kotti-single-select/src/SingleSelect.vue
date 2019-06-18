@@ -244,7 +244,8 @@ export default {
 				this.queryString === null ? null : this.queryString.toLowerCase(),
 			)
 		},
-		handleInputFocus() {
+		handleInputFocus(event) {
+			this.$emit('focus', event)
 			this.visible = true
 			this.triggerAsync()
 		},
