@@ -12,6 +12,7 @@
 					v-model="selectedLabel"
 					type="text"
 					:placeholder="placeholder"
+					:autocomplete="this.$attrs.autocomplete"
 					:readonly="!filterable"
 					@input="setQueryString($event.target.value)"
 					@focus="handleInputFocus"
@@ -244,7 +245,8 @@ export default {
 				this.queryString === null ? null : this.queryString.toLowerCase(),
 			)
 		},
-		handleInputFocus() {
+		handleInputFocus(event) {
+			this.$emit('focus', event)
 			this.visible = true
 			this.triggerAsync()
 		},
