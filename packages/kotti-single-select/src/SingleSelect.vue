@@ -12,6 +12,7 @@
 					v-model="selectedLabel"
 					type="text"
 					:placeholder="placeholder"
+					:autocomplete="this.$attrs.autocomplete"
 					:readonly="!filterable"
 					@input="setQueryString($event.target.value)"
 					@focus="handleInputFocus"
