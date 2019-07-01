@@ -1,5 +1,5 @@
 <template>
-	<div class="inline-container">
+	<div class="inline-container" :style="containerStyle">
 		<li
 			v-if="showFirstPage"
 			v-text="humanReadablePageNumber(0)"
@@ -29,11 +29,18 @@
 </template>
 
 <script>
+const ADJACENT_MULTIPLIER = 20
+const BASE_NUMBER_WIDTH = 24.5
+const BASE_OFFSET = 3
+const MAX_NUMBER_OF_ELEMENTS = 5
+const PIXEL_MULTIPLIER = 2.8
+
 export default {
-	name: 'ContractedPaginator',
+	name: 'FlexiblePaginator',
 	props: {
 		adjacentAmount: { type: Number, required: true },
 		currentPage: { type: Number, required: true },
+		fixedWidth: { type: Boolean, required: true },
 		maximumPage: { type: Number, required: true },
 	},
 	methods: {
@@ -48,6 +55,18 @@ export default {
 		},
 	},
 	computed: {
+		pixelMargin() {
+			const digitWidth = this.maximumPage.toString().length - 1
+			const numberWidth = BASE_NUMBER_WIDTH + digitWidth * PIXEL_MULTIPLIER
+			const baseElementsWidth =
+				(2 * this.adjacentAmount + MAX_NUMBER_OF_ELEMENTS) * numberWidth
+			const adjacentPagesOffset = this.adjacentAmount * ADJACENT_MULTIPLIER
+			return baseElementsWidth + BASE_OFFSET * 2 + adjacentPagesOffset
+		},
+		containerStyle() {
+			if (this.fixedWidth) return 'width: ' + this.pixelMargin + 'px'
+			return ''
+		},
 		showFirstPage() {
 			return !this.neighborValues.includes(0)
 		},
@@ -81,6 +100,15 @@ export default {
 
 			const values = []
 			for (let i = min; i <= max; i++) values.push(i)
+
+			/**
+			 * Snippet to reduce width variations around edges
+			 */
+			if (this.currentPage >= this.maximumPage - this.adjacentAmount)
+				values.unshift(this.maximumPage - 2 * this.adjacentAmount - 1)
+			if (this.currentPage <= this.adjacentAmount)
+				values.push(2 * this.adjacentAmount + 1)
+
 			return values
 		},
 	},
@@ -89,6 +117,7 @@ export default {
 
 <style lang="scss" scoped>
 .inline-container {
+	justify-content: center;
 	display: inline-flex;
 }
 </style>

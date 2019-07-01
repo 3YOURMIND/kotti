@@ -17,23 +17,30 @@
 </template>
 
 <script>
-import ContractedPaginator from './components/ContractedPaginator.vue'
 import ExpandedPaginator from './components/ExpandedPaginator.vue'
+import FlexiblePaginator from './components/FlexiblePaginator.vue'
 import FractionatedPaginator from './components/FractionatedPaginator.vue'
 
 export default {
 	name: 'KtPagination',
 	components: {
-		ContractedPaginator,
 		ExpandedPaginator,
+		FlexiblePaginator,
 		FractionatedPaginator,
 	},
 	props: {
 		adjacentAmount: { type: Number, default: 1 },
-		paginationStyle: { type: String, default: 'expanded' },
+		fixedWidth: { type: Boolean, default: false },
 		page: { type: Number, default: 1 },
 		pageSize: { type: Number, default: 10 },
+		pagingStyle: { type: String, default: 'expand' },
 		total: { type: Number, required: true },
+
+		/**
+		 * @deprecated
+		 * Use :pagingStyle='fraction' instead
+		 */
+		fractionStyle: { type: Boolean, default: false },
 	},
 	data() {
 		return {
@@ -45,6 +52,7 @@ export default {
 			return {
 				adjacentAmount: this.adjacentAmount,
 				currentPage: this.currentPage,
+				fixedWidth: this.fixedWidth,
 				maximumPage: this.maximumPage,
 				pageSize: this.pageSize,
 				total: this.total,
@@ -52,17 +60,28 @@ export default {
 			}
 		},
 		component() {
-			switch (this.paginationStyle) {
-				case 'contracted':
-					return 'ContractedPaginator'
-				case 'expanded':
-					return 'ExpandedPaginator'
-				case 'fractionated':
+			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
+			if (!isFlexLogical || this.pageAmount < 2) return 'ExpandedPaginator'
+			if (this.fractionStyle) {
+				console.warn(
+					"WARNING : fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
+				)
+				return 'FractionatedPaginator'
+			}
+			switch (this.pagingStyle) {
+				case 'flex':
+					return 'FlexiblePaginator'
+				case 'fraction':
 					return 'FractionatedPaginator'
+				default:
+					return 'ExpandedPaginator'
 			}
 		},
 		maximumPage() {
 			return Math.ceil(this.total / this.pageSize) - 1
+		},
+		pageAmount() {
+			return Math.ceil(this.total / this.pageSize)
 		},
 	},
 	methods: {
