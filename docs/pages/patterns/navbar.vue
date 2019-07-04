@@ -21,7 +21,7 @@
 ```html
 <KtNavbar
 	:notification="notificationData"
-	:section="menuData"
+	:sections="menuData"
 	:quickLinks="quickLinksData"
 	@logoClick="redirect($event)"
 	@linkClick="redirect($event)"
