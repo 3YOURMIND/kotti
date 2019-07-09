@@ -49,7 +49,7 @@ There are 4 different positions for popovers. `right`, `left`, `top`, and `botto
 ```
 ## Size
 
-Popover size can be `sm`, `md`,`lg`, 'xl', 'xxl' and 'xxxl'.
+Popover size can be `sm`, `md`,`lg`, `xl`, `xxl` and `xxxl`.
 The small size equals to a width '12rem', then every larger size is
 an increment of '4rem'.
 
