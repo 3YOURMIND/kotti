@@ -49,7 +49,9 @@ There are 4 different positions for popovers. `right`, `left`, `top`, and `botto
 ```
 ## Size
 
-Popover size can be `sm`, `md`, and `lg`.
+Popover size can be `sm`, `md`,`lg`, `xl`, `xxl` and `xxxl`.
+The small size equals to a width '12rem', then every larger size is
+an increment of '4rem'.
 
 <div class="element-example">
 <KtPopover size="sm" class="mt-4 ml-4">
@@ -62,6 +64,18 @@ Popover size can be `sm`, `md`, and `lg`.
 </KtPopover>
 <KtPopover size="lg" class="mt-4 ml-4">
 	<KtButton type="secondary" label="Large Popover" />
+	<div slot="content">Message</div>
+</KtPopover>
+<KtPopover size="xl" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Extra Large Popover" />
+	<div slot="content">Message</div>
+</KtPopover>
+<KtPopover size="xxl" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Huge Popover" />
+	<div slot="content">Message</div>
+</KtPopover>
+<KtPopover size="xxxl" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Massive Popover" />
 	<div slot="content">Message</div>
 </KtPopover>
 </div>

@@ -86,6 +86,15 @@
 	&--lg {
 		width: 20rem;
 	}
+	&--xl {
+		width: 24rem;
+	}
+	&--xxl {
+		width: 28rem;
+	}
+	&--xxxl {
+		width: 32rem;
+	}
 
 	&[x-placement^='top'] {
 		margin-bottom: $unit-1;

@@ -36,6 +36,11 @@
 			"email": "tquinonero@gmail.com",
 			"name": "Tom Quinonero",
 			"url": "https://github.com/tomquinonero"
+		},
+		{
+			"email": "melvinvangent@gmail.com",
+			"name": "Melvin van Gent",
+			"url": "https://github.com/mvangent"
 		}
 	],
 	"dependencies": {
@@ -107,5 +112,5 @@
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.7.1"
+	"version": "1.7.2"
 }
