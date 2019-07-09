@@ -67,15 +67,15 @@ an increment of '4rem'.
 	<div slot="content">Message</div>
 </KtPopover>
 <KtPopover size="xl" class="mt-4 ml-4">
-	<KtButton type="secondary" label="Large Popover" />
+	<KtButton type="secondary" label="Extra Large Popover" />
 	<div slot="content">Message</div>
 </KtPopover>
 <KtPopover size="xxl" class="mt-4 ml-4">
-	<KtButton type="secondary" label="Large Popover" />
+	<KtButton type="secondary" label="Huge Popover" />
 	<div slot="content">Message</div>
 </KtPopover>
 <KtPopover size="xxxl" class="mt-4 ml-4">
-	<KtButton type="secondary" label="Large Popover" />
+	<KtButton type="secondary" label="Massive Popover" />
 	<div slot="content">Message</div>
 </KtPopover>
 </div>
