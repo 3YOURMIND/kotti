@@ -36,6 +36,11 @@
 			"email": "tquinonero@gmail.com",
 			"name": "Tom Quinonero",
 			"url": "https://github.com/tomquinonero"
+		},
+		{
+			"email": "melvinvangent@gmail.com",
+			"name": "Melvin van Gent",
+			"url": "https://github.com/mvangent"
 		}
 	],
 	"dependencies": {
