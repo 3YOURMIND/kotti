@@ -112,5 +112,5 @@
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.7.2"
+	"version": "1.7.4"
 }
