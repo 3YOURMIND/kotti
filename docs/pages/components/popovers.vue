@@ -108,6 +108,44 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 </KtPopover>
 ```
 
+## Nested Dropdowns
+
+Because both Popover and Dropdown components make use of Popper.js and vue/clickaway, a Dropdown in a Popover can be tricky.
+With no check in the Popover handleClickAway, a Popover would close on an input event of the Dropdown.
+This has been resolved in the Popover by checking whether the clicked outside element contains the Popover.
+Dropdown lists are added to the body of the DOM, thus if a value is selected, the list element won't contain the
+Popover, and the Popover handleClickaway with escape with an early return.
+
+<div class="element-example">
+	<KtPopover placement="top" class="mt-4 ml-4">
+		<KtButton type="secondary" label="Test Popover with Dropdown"/>
+		<div slot="content">
+			<h2>I, the Popover, will stay open after a value from the Dropdown has been selected...</h2>
+			<h3>...and only close when a click outside of the Popover occurs</h3>
+			<KtSelect
+					:allowEmpty='false'
+					placeholder="Test with dropdown"
+					:options="[{label: 'Click me', value: 'test_click'}]"
+					filterable
+				/>
+		</div>
+	</KtPopover>
+</div>
+
+```html
+<KtPopover placement="top" class="mt-4 ml-4">
+	<KtButton type="secondary" label="Top Popover"/>
+	<div slot="content">
+		<KtSelect
+				:allowEmpty='false'
+				placeholder="Test with dropdown"
+				:options="[{label: 'Click me', value: 'test_click'}]"
+				filterable
+			/>
+	</div>
+</KtPopover>
+```
+
 
 ## Usage
 
