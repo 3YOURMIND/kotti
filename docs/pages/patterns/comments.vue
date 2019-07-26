@@ -99,9 +99,9 @@
 
 ```
 
-## Parsing HTML 
+## Parsing HTML
 
-KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop 
+KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop
 
 > Remember to **escape malicious tags** to prevent [Cross-site-scripting](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks,
 you can use KtComment's default parser function with KtComment.defaultParser
@@ -185,8 +185,7 @@ export default {
 					id: 1,
 					userId: 12,
 					userName: 'Margaret Atwood',
-					message: `Marine Le Pen, a Fierce Campaigner, 
-					Heads to Finale in French Election <iframe style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; height: 100vh; width: 100vw;" src="https://projects.dodekeract.com/particles/"></iframe>`,
+					message: `We miss you, David`,
 					userAvatar: 'https://picsum.photos/200',
 					createdTime: '2018-12-04T09:57:20+00:00',
 					allowChange: true,
@@ -211,7 +210,7 @@ export default {
 					id: 1,
 					userId: 12,
 					userName: 'Margaret Atwood',
-					message: `Marine Le Pen, a Fierce Campaigner, Heads to Finale in French Election`,
+					message: `We miss you, David`,
 					userAvatar: 'https://picsum.photos/200',
 					createdTime: '2018-12-04T09:57:20+00:00',
 					allowChange: true,

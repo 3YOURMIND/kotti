@@ -13,20 +13,17 @@
 					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
 					<span
-						v-html="
-							postEscapeParser(dangerouslyOverrideParser(inlineMessage))
-						"
+						v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 					/>
 					<i class="yoco" v-text="'comment'" />
 				</div>
 				<div class="comment-inline-edit form-group" v-else>
 					<textarea
 						class="comment-inline-edit-input form-input"
-						:value="inlineMessage"
-						@change="handleInlineInput"
+						v-model="inlineMessageValue"
 					></textarea>
 					<KtButtonGroup class="comment-inline-edit-buttons" shadow>
-						<KtButton icon="close" @click="isInlineEdit = false" />
+						<KtButton icon="close" @click="cancelInlineEdit" />
 						<KtButton icon="check" @click="handleConfirm" />
 					</KtButtonGroup>
 				</div>
@@ -36,7 +33,7 @@
 				>
 					<i class="yoco">dots</i>
 					<div class="action__options">
-						<a @click="isInlineEdit = true"> <li>Edit</li> </a>
+						<a @click="startInlineEdit"> <li>Edit</li> </a>
 						<a @click="$emit('_inlineDeleteClick', id)"> <li>Delete</li> </a>
 					</div>
 				</div>
@@ -78,10 +75,18 @@ export default {
 	},
 	computed: {
 		inlineMessage() {
-			return this.inlineMessageValue ? this.inlineMessageValue : this.message
+			return this.inlineMessageValue || this.message
 		},
 	},
 	methods: {
+		cancelInlineEdit() {
+			this.inlineMessageValue = ''
+			this.isInlineEdit = false
+		},
+		startInlineEdit() {
+			this.inlineMessageValue = this.inlineMessage
+			this.isInlineEdit = true
+		},
 		handleInlineInput(event) {
 			this.inlineMessageValue = event.target.value
 		},
