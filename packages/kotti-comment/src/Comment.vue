@@ -14,11 +14,10 @@
 			<div class="comment-inline-edit form-group" v-else>
 				<textarea
 					class="comment-inline-edit-input form-input"
-					:value="inlineMessage"
-					@change="handleInlineInput"
+					v-model="inlineMessageValue"
 				></textarea>
 				<KtButtonGroup class="comment-inline-edit-buttons" shadow>
-					<KtButton icon="close" @click="isInlineEdit = false" />
+					<KtButton icon="close" @click="cancelInlineEdit" />
 					<KtButton icon="check" @click="handleEditConfirm" />
 				</KtButtonGroup>
 			</div>
@@ -32,7 +31,7 @@
 				<div class="action__more" v-if="allowChange">
 					<i class="yoco">dots</i>
 					<div class="action__options">
-						<a @click="isInlineEdit = true"> <li>Edit</li> </a>
+						<a @click="startInlineEdit"> <li>Edit</li> </a>
 						<a @click="handleDelete(id)"> <li>Delete</li> </a>
 					</div>
 				</div>
@@ -116,8 +115,13 @@ export default {
 		},
 	},
 	methods: {
-		handleInlineInput(event) {
-			this.inlineMessageValue = event.target.value
+		cancelInlineEdit() {
+			this.inlineMessageValue = ''
+			this.isInlineEdit = false
+		},
+		startInlineEdit() {
+			this.inlineMessageValue = this.inlineMessage
+			this.isInlineEdit = true
 		},
 		handleInlineReplyClick(user) {
 			this.showInlineReply = true
