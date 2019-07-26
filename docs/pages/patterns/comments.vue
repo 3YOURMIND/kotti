@@ -99,9 +99,9 @@
 
 ```
 
-## Parsing HTML 
+## Parsing HTML
 
-KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop 
+KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop
 
 > Remember to **escape malicious tags** to prevent [Cross-site-scripting](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks,
 you can use KtComment's default parser function with KtComment.defaultParser
@@ -185,7 +185,7 @@ export default {
 					id: 1,
 					userId: 12,
 					userName: 'Margaret Atwood',
-					message: `Radric is out, now free Charles`,
+					message: `We miss you, David`,
 					userAvatar: 'https://picsum.photos/200',
 					createdTime: '2018-12-04T09:57:20+00:00',
 					allowChange: true,
@@ -210,7 +210,7 @@ export default {
 					id: 1,
 					userId: 12,
 					userName: 'Margaret Atwood',
-					message: `Radric is out, now free Charles`,
+					message: `We miss you, David`,
 					userAvatar: 'https://picsum.photos/200',
 					createdTime: '2018-12-04T09:57:20+00:00',
 					allowChange: true,
