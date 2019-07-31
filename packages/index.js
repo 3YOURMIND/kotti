@@ -13,6 +13,7 @@ import KtCommentInput from './kotti-comment-input'
 import KtDatePicker from './kotti-datepicker'
 import KtDrawer from './kotti-drawer'
 import KtDropdown from './kotti-dropdown'
+import KtDropdownButton from './kotti-dropdown-button'
 import KtDropdownMenu from './kotti-dropdown-menu'
 import KtHeading from './kotti-heading'
 import KtLine from './kotti-line'
@@ -55,6 +56,7 @@ const components = {
 	KtDatePicker,
 	KtDrawer,
 	KtDropdown,
+	KtDropdownButton,
 	KtDropdownMenu,
 	KtHeading,
 	KtLine,

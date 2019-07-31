@@ -31,6 +31,16 @@ In `KtDropdownMenus` slot, you can write your own stylied element. However, we s
 </KtDropdown>
 ```
 
+## Dropdown button 
+
+<div class="element-example">
+	<KtDropdownButton size="sm" type="primary" v-t="'Dropdown button'" >
+		<div slot="KtDropdownMenus">
+			<KtDropdownMenu>Request item</KtDropdownMenu>
+			<KtDropdownMenu>Download Item</KtDropdownMenu>
+		</div>
+	</KtDropdownButton>
+</div>
 
 ## Icons and Size
 
