@@ -8,9 +8,9 @@
 				<KtButton
 					class="kt-dropdown-button__icon"
 					v-bind="$attrs"
-					icon="chevron_down"
+					:icon="dropdownIcon"
 				>
-					<i class="yoco" v-text="chevron_down" />
+					<i class="yoco" v-text="dropdownIcon" />
 				</KtButton>
 			</KtButtonGroup>
 			<div slot="content">
@@ -27,6 +27,10 @@ import KtPopover from '../kotti-popover'
 export default {
 	name: 'KtDropdownButton',
 	props: {
+		dropdownIcon: {
+			type: String,
+			default: 'chevron_up',
+		},
 		placement: {
 			type: String,
 			default: 'top-end',
@@ -49,6 +53,18 @@ export default {
 		display: flex;
 		position: relative;
 		margin-right: 32px;
+	}
+	.kt-popper {
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: $unit-1;
+		padding-bottom: $unit-1;
+	}
+	.kt-dropdown-menu {
+		margin-left: 0;
+		margin-right: 0;
+		padding-left: $unit-3;
+		padding-right: $unit-3;
 	}
 }
 .kt-dropdown-button__button {
