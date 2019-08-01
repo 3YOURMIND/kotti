@@ -29,11 +29,11 @@ export default {
 	props: {
 		dropdownIcon: {
 			type: String,
-			default: 'chevron_up',
+			default: 'chevron_down',
 		},
 		placement: {
 			type: String,
-			default: 'top-end',
+			default: 'bottom-end',
 		},
 		size: {
 			type: String,
