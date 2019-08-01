@@ -48,6 +48,17 @@ You can also use any attribute you would pass to `KtPopover` or `KtButton`. They
 	</KtDropdownButton>
 </div>
 
+``` html
+<div class="element-example">
+	<KtDropdownButton size="sm" type="primary" v-t="'Dropdown button'" >
+		<div slot="KtDropdownMenus">
+			<KtDropdownMenu>Request item</KtDropdownMenu>
+			<KtDropdownMenu>Download Item</KtDropdownMenu>
+		</div>
+	</KtDropdownButton>
+</div>
+```
+
 ## Icons and Size
 
 <div class="element-example">
