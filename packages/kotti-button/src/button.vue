@@ -1,15 +1,17 @@
 <template>
-	<button
+	<component
+		:is="element"
 		:class="mainClasses"
 		:style="themeColor"
 		@click="handleClick"
 		@mouseover="isHover = true"
 		@mouseleave="isHover = false"
+		role="button"
 	>
 		<i v-if="loading" class="kt-circle-loading" :style="loadingStyle" />
 		<i v-else-if="icon" class="yoco" v-text="icon" />
 		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />
-	</button>
+	</component>
 </template>
 
 <script>
@@ -19,6 +21,7 @@ export default {
 	name: 'KtButton',
 	props: {
 		icon: { default: '', type: String },
+		element: { type: String, default: 'button' },
 		label: { default: null, type: String },
 		loading: { default: false, type: Boolean },
 		size: { default: null, type: String },
@@ -113,6 +116,7 @@ $small-button-height: 24px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
 
 	height: $default-button-height;
 	padding: 0 1em;
@@ -121,10 +125,10 @@ $small-button-height: 24px;
 	color: $primary-600;
 	font-weight: 600;
 	outline: none;
+	user-select: none;
 
 	border: 1px solid $lightgray-400;
 	border-radius: $border-radius;
-
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
