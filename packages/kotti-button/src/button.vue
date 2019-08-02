@@ -53,6 +53,7 @@ export default {
 			const classes = [this.type, this.objectClass]
 			if (this.size === 'small') classes.push('sm')
 			if (this.size === 'large') classes.push('lg')
+			classes.push('kt-btn')
 			return classes
 		},
 		objectClass() {
@@ -108,7 +109,7 @@ $default-button-height: 32px;
 $large-button-height: 40px;
 $small-button-height: 24px;
 
-button {
+.kt-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -135,15 +136,15 @@ button {
 	}
 }
 
-button.sm {
+.kt-btn.sm {
 	height: $small-button-height;
 }
 
-button.lg {
+.kt-btn.lg {
 	height: $large-button-height;
 }
 
-button.primary {
+.kt-btn.primary {
 	background: $primary-500;
 	color: #ffffff;
 	border: 1px solid $primary-600;
@@ -153,7 +154,7 @@ button.primary {
 	}
 }
 
-button.secondary {
+.kt-btn.secondary {
 	border: 1px solid $primary-500;
 	background: #fff;
 	color: $primary-500;
@@ -166,7 +167,7 @@ button.secondary {
 	}
 }
 
-button.text {
+.kt-btn.text {
 	color: $primary-500;
 	font-weight: 600;
 	background: transparent;
@@ -176,7 +177,7 @@ button.text {
 	}
 }
 
-button.danger {
+.kt-btn.danger {
 	background: #f8f8f8;
 	color: $red-500;
 	font-weight: 600;
@@ -187,49 +188,26 @@ button.danger {
 	}
 }
 
-button.icon i {
+.kt-btn.icon i {
 	font-size: 1rem;
 	margin-right: 0.2rem;
 }
 
-button.icon-only {
+.kt-btn.icon-only {
 	padding: 0 0.3rem;
 	i {
 		margin-right: 0;
 	}
 }
 
-button.disabled,
-button:disabled {
+.kt-btn.disabled,
+.kt-btn:disabled {
 	opacity: 0.46;
 	pointer-events: none;
 }
 
-button.bottom {
+.kt-btn.bottom {
 	min-width: 10rem;
 	margin-top: $unit-8;
-}
-
-.button-group {
-	/** Fix for inline element space
-	https://css-tricks.com/fighting-the-space-between-inline-block-elements/ **/
-	font-size: 0;
-
-	button {
-		border-radius: 0;
-		font-size: $font-size;
-	}
-
-	button:first-of-type {
-		border-radius: $border-radius 0 0 $border-radius;
-	}
-
-	button:last-of-type {
-		border-radius: 0 $border-radius $border-radius 0;
-	}
-
-	&--shadow {
-		box-shadow: 0 1px 2px rgba($color: #000000, $alpha: 0.24);
-	}
 }
 </style>
