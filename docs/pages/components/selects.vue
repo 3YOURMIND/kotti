@@ -37,10 +37,25 @@
 
 ## Disable
 
+```js
+
 <div class="element-example">
 	<KtSelect label="Words"
 		placeholder="Select Word"
-		disabled="true"
+		disabled
+		v-model="value2"
+		allowEmpty
+		:options="words"/>
+	<h5 v-text="`English: ${value2}`" class="mt-16px"/>
+	<button @click="value2=null">Reset</button>
+</div>
+
+```
+
+<div class="element-example">
+	<KtSelect label="Words"
+		placeholder="Select Word"
+		disabled
 		v-model="value2"
 		allowEmpty
 		:options="words"/>
