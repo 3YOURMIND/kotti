@@ -10,6 +10,7 @@
 				<input
 					:class="formInputClass"
 					v-model="selectedLabel"
+					:disabled="disabled"
 					type="text"
 					:placeholder="placeholder"
 					:autocomplete="this.$attrs.autocomplete"
@@ -70,6 +71,10 @@ export default {
 	mixins: [clickaway],
 	props: {
 		allowEmpty: {
+			default: false,
+			type: Boolean,
+		},
+		disabled: {
 			default: false,
 			type: Boolean,
 		},
