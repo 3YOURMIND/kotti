@@ -53,10 +53,9 @@ export default {
 			}
 		},
 		mainClasses() {
-			const classes = [this.type, this.objectClass]
+			const classes = ['kt-btn', this.type, this.objectClass]
 			if (this.size === 'small') classes.push('sm')
 			if (this.size === 'large') classes.push('lg')
-			classes.push('kt-btn')
 			return classes
 		},
 		objectClass() {
