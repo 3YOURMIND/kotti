@@ -20,16 +20,22 @@ links: [
 		title: 'Kotti',
 		to: '/',
 		isCompleted: true,
+		params: {urlParam: value}
+		query: {queryParam: value}
 	},
 	{
 		title: 'Components',
 		to: '/components',
 		isCompleted: true,
+		params: {urlParam: value}
+		query: {queryParam: value}
 	},
 	{
 		title: 'Breadcrumbs',
 		to: '/components/breadcrumbs',
 		isCompleted: false,
+		params: {urlParam: value}
+		query: {queryParam: value}
 	},
 ]
 ```
