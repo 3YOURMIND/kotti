@@ -10,13 +10,13 @@
 				<span v-if="showSeparator(index)">
 					<i
 						v-if="separator.style === 'icon'"
-						class="yoco"
 						v-text="separator.value"
+						class="yoco"
 					/>
 					<span
 						v-if="separator.style === 'text'"
-						class="breadcrumb__text-separator"
 						v-text="separator.value"
+						class="breadcrumb__text-separator"
 					/>
 				</span>
 			</li>
@@ -30,6 +30,7 @@ export default {
 	props: {
 		breadcrumbs: { type: Array, required: true },
 		separator: {
+			type: Object,
 			default() {
 				return {
 					style: 'icon',
@@ -44,13 +45,16 @@ export default {
 		},
 		textClasses(item) {
 			return {
-				breadcrumb__text: true,
+				'breadcrumb__text': true,
 				'breadcrumb__text--completed': item.isCompleted,
 			}
 		},
 		handleClick(item) {
 			if (!item.isCompleted || !item.to || !this.$router) return
-			this.$router.push(item.to)
+			const { params, query, to } = item
+			if (params) to.params = params
+			if (query) to.query = query
+			this.$router.push(to)
 		},
 	},
 }
