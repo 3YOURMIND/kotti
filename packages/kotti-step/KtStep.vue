@@ -2,16 +2,16 @@
 	<div class="kt-step">
 		<div class="kt-steps-left">
 			<span
+				v-if="!hideLine && !isLastStep"
 				:class="classSwitcher('kt-steps-left__line')"
 				:style="lineStyle"
-				v-if="!hideLine && !isLastStep"
 			/>
 			<div
 				:class="classSwitcher('kt-steps-left__indicator')"
 				:style="indicatorStyle"
 			>
 				<span v-text="index" />
-				<i class="yoco" v-if="!index" v-text="iconText" />
+				<i v-if="!index" class="yoco" v-text="iconText" />
 			</div>
 		</div>
 		<div class="kt-steps-right">
@@ -53,15 +53,6 @@ export default {
 			isLastStep: false,
 		}
 	},
-	created() {
-		this.currentStatus = this.status
-		this.index = this.indexNumber
-	},
-	watch: {
-		status(val) {
-			this.currentStatus = val
-		},
-	},
 	computed: {
 		iconText() {
 			if (this.icon) return this.icon
@@ -98,11 +89,19 @@ export default {
 
 			if (this.currentStatus === 'process')
 				return {
-					background: `linear-gradient(${
-						this.KtTheme.brandColor
-					}, ${lightBrandColor},${this.KtTheme.brandColor})`,
+					background: `linear-gradient(${this.KtTheme.brandColor}, ${lightBrandColor},${this.KtTheme.brandColor})`,
 				}
+			return undefined
 		},
+	},
+	watch: {
+		status(val) {
+			this.currentStatus = val
+		},
+	},
+	created() {
+		this.currentStatus = this.status
+		this.index = this.indexNumber
 	},
 	methods: {
 		classSwitcher(baseClass) {
@@ -110,6 +109,8 @@ export default {
 				case 'process':
 					return `${baseClass} ${baseClass}--loading`
 				case 'error':
+					// is this correct?
+					return undefined
 				case 'wait':
 					return `${baseClass} ${baseClass}--outline`
 				default:

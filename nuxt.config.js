@@ -40,6 +40,13 @@ design decisions. The Kotti design system has two main parts: foundation and com
 	 ** Build configuration
 	 */
 	build: {
+		postcss: {
+			// Add plugin names as key and arguments as value
+			// Install them before as dependencies with npm or yarn
+			plugins: {
+				'postcss-flexbugs-fixes': {},
+			},
+		},
 		extend(config, ctx) {
 			if (ctx.isDev && ctx.isClient) {
 				config.module.rules.push({

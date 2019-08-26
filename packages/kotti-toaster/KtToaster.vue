@@ -27,6 +27,16 @@ export default {
 	data() {
 		return { queue: [] }
 	},
+	created() {
+		let notification
+		while ((notification = this.$yodifyBuffer.pop()))
+			this.addNotification(notification)
+
+		this.$root.$on('vue-yodify', this.addNotification)
+	},
+	beforeDestroy() {
+		this.$root.$off('vue-yodify', this.addNotification)
+	},
 	methods: {
 		addNotification({ id = generateId(), text, type, duration = 3000 }) {
 			this.queue.push({ id, text, type })
@@ -44,16 +54,6 @@ export default {
 			if (type === 'warning') return 'circle_attention'
 			return 'circle_check'
 		},
-	},
-	created() {
-		let notification
-		while ((notification = this.$yodifyBuffer.pop()))
-			this.addNotification(notification)
-
-		this.$root.$on('vue-yodify', this.addNotification)
-	},
-	beforeDestroy() {
-		this.$root.$off('vue-yodify', this.addNotification)
 	},
 }
 </script>

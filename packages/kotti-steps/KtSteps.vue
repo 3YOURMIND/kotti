@@ -10,6 +10,14 @@ export default {
 		status: { type: String, default: 'process' },
 		showIcon: { type: Boolean, default: false },
 	},
+	watch: {
+		current() {
+			this.updateChildProps()
+		},
+		status() {
+			this.updateCurrentStatus()
+		},
+	},
 	mounted() {
 		this.updateChildLine()
 		this.updateChildProps(true)
@@ -43,14 +51,6 @@ export default {
 				return
 			}
 			this.$children[this.current].currentStatus = this.status
-		},
-	},
-	watch: {
-		current() {
-			this.updateChildProps()
-		},
-		status() {
-			this.updateCurrentStatus()
 		},
 	},
 }

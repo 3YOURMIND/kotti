@@ -1,5 +1,5 @@
-import KtComment from './src/Comment'
 import escape from 'lodash/escape'
+import KtComment from './src/Comment'
 
 export const defaultParser = message => escape(message)
 
