@@ -1,21 +1,30 @@
 <template>
 	<div :class="formGroupStyle">
-		<div :class="decreaseButtonStyle" @click="decreaseNumber">
+		<div
+			:class="decreaseButtonStyle"
+			@click="setCurrentValue(currentValue + 1)"
+		>
 			<i class="yoco">minus</i>
 		</div>
 		<input
+			ref="inputNumber"
 			:class="inputStyle"
 			type="number"
 			:disabled="disabled"
-			:step="step"
 			:value="currentValue"
 			:max="max"
 			:min="min"
-			ref="inputNumber"
-			@change="handleInput"
+			@input="setCurrentValue($event.target.value)"
 		/>
-		<div v-if="max && showMaxNumber" class="kt-input-number__max" v-text="max"/>
-		<div :class="increaseButtonStyle" @click="increaseNumber">
+		<div
+			v-if="max && showMaxNumber"
+			class="kt-input-number__max"
+			v-text="max"
+		/>
+		<div
+			:class="increaseButtonStyle"
+			@click="setCurrentValue(currentValue + 1)"
+		>
 			<i class="yoco">plus</i>
 		</div>
 	</div>
@@ -37,11 +46,6 @@ export default {
 		return {
 			currentValue: this.value || 0,
 		}
-	},
-	watch: {
-		value(val, oldValue) {
-			this.setCurrentValue(val)
-		},
 	},
 	computed: {
 		formGroupStyle() {
@@ -80,23 +84,16 @@ export default {
 			}
 		},
 	},
+	watch: {
+		value(val) {
+			this.currentValue = parseFloat(val)
+		},
+	},
 	methods: {
+		/* Do not use input.stepUp - this method does not work in internet explorer and is not transpiled by Babel  */
 		setCurrentValue(value) {
 			if (value === this.currentValue) return
-			this.currentValue = value
-		},
-		increaseNumber() {
-			if (this.disabled) return
-			this.$refs.inputNumber.stepUp(1)
-			this.handleInput()
-		},
-		decreaseNumber() {
-			if (this.disabled) return
-			this.$refs.inputNumber.stepDown(1)
-			this.handleInput()
-		},
-		handleInput() {
-			this.currentValue = parseFloat(this.$refs.inputNumber.value)
+			this.currentValue = typeof value === Number ? value : parseFloat(value)
 			this.$emit('input', this.currentValue)
 		},
 	},
