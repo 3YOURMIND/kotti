@@ -2,7 +2,7 @@
 	<div :class="formGroupStyle">
 		<div
 			:class="decreaseButtonStyle"
-			@click="setCurrentValue(currentValue + 1)"
+			@click="setCurrentValue(currentValue - step)"
 		>
 			<i class="yoco">minus</i>
 		</div>
