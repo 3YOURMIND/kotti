@@ -23,7 +23,7 @@
 		/>
 		<div
 			:class="increaseButtonStyle"
-			@click="setCurrentValue(currentValue + 1)"
+			@click="setCurrentValue(currentValue + step)"
 		>
 			<i class="yoco">plus</i>
 		</div>
