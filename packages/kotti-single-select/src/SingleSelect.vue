@@ -2,22 +2,19 @@
 	<div class="selects">
 		<div class="form-group">
 			<label :class="formLabelClass" v-text="label" />
-			<div
-				class="has-icon-right"
-				:class="{ 'has-icon-left': icon }"
-				v-on-clickaway="handleClickOutside"
-			>
+			<div class="has-icon-right" :class="{ 'has-icon-left': icon }">
 				<input
 					:class="formInputClass"
 					v-model="selectedLabel"
 					:disabled="disabled"
 					type="text"
 					:placeholder="placeholder"
-					:autocomplete="this.$attrs.autocomplete"
 					:readonly="!filterable"
 					@input="setQueryString($event.target.value)"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
+					@click.stop="show"
+					v-bind="$attrs"
 					ref="input"
 				/>
 				<i
@@ -31,33 +28,36 @@
 					v-text="indicatorRep"
 					style="pointer-events: none;"
 				/>
-				<div
-					v-show="visible"
-					:style="formOptionStyle"
-					ref="formOptions"
-					class="form-options"
-				>
-					<ul>
-						<li
-							v-if="isLoading"
-							class="form-option--loading"
-							v-text="loadingText"
-						/>
-						<li
-							v-else
-							v-for="(option, index) in optionsRep"
-							:key="index"
-							:class="optionClass(option)"
-							@click="handleOptionClick(option)"
-							v-text="option.label"
-						/>
-						<li
-							v-if="!optionsRep.length && !isLoading"
-							class="form-option--empty"
-							v-text="noResultsFoundText"
-						/>
-					</ul>
-				</div>
+				<Portal>
+					<template v-if="visible">
+						<div
+							:style="selectorOptionStyle"
+							class="form-options"
+							v-on-clickaway="handleClickOutside"
+						>
+							<ul>
+								<li
+									v-if="isLoading"
+									class="form-option--loading"
+									v-text="loadingText"
+								/>
+								<li
+									v-else
+									v-for="(option, index) in optionsRep"
+									:key="index"
+									:class="optionClass(option)"
+									@click="handleOptionClick(option)"
+									v-text="option.label"
+								/>
+								<li
+									v-if="!optionsRep.length && !isLoading"
+									class="form-option--empty"
+									v-text="noResultsFoundText"
+								/>
+							</ul>
+						</div>
+					</template>
+				</Portal>
 			</div>
 		</div>
 	</div>
@@ -65,10 +65,14 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
+import { Portal } from '../../util/portal'
+import { isBrowser } from '../../util'
 
 export default {
 	name: 'KtSelect',
 	mixins: [clickaway],
+	components: { Portal },
+	inheritAttrs: false,
 	props: {
 		allowEmpty: {
 			default: false,
@@ -124,33 +128,18 @@ export default {
 	},
 	data() {
 		return {
-			formOptions: null,
-			formOptionsContainer: null,
-			formOptionStyle: '',
-			input: null,
+			selectorOptionStyle: '',
 			queryString: '',
 			selectedLabel: '',
 			visible: false,
 		}
 	},
 	mounted() {
-		this.formOptions = this.$refs['formOptions']
-		this.input = this.$refs['input']
-		this.formOptionsContainer = document.querySelector('body')
-		this.formOptionsContainer.append(this.formOptions)
-		this.computeFormOptionsStyle()
-		window.addEventListener('resize', this.computeFormOptionsStyle)
-		this.observer = new MutationObserver(this.computeFormOptionsStyle)
-		this.observer.observe(this.formOptionsContainer, {
-			attributes: true,
-			childList: true,
-			subtree: true,
-		})
+		this.computeSelectorOptionsStyle()
+		window.addEventListener('resize', this.computeSelectorOptionsStyle)
 	},
 	beforeDestroy() {
-		this.formOptionsContainer.removeChild(this.formOptions)
-		window.removeEventListener('resize', this.computeFormOptionsStyle)
-		this.observer.disconnect()
+		window.removeEventListener('resize', this.computeSelectorOptionsStyle)
 	},
 	computed: {
 		formInputClass() {
@@ -206,16 +195,18 @@ export default {
 		},
 	},
 	methods: {
-		computeFormOptionsStyle() {
-			const top =
-				this.input.getBoundingClientRect().top -
-				this.formOptionsContainer.getBoundingClientRect().top +
-				this.input.offsetHeight
-			const left =
-				this.input.getBoundingClientRect().left -
-				this.formOptionsContainer.getBoundingClientRect().left
-			const width = this.input.offsetWidth
-			this.formOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
+		computeSelectorOptionsStyle() {
+			if (isBrowser) {
+				const top =
+					this.$refs.input.getBoundingClientRect().top -
+					window.document.body.getBoundingClientRect().top +
+					this.$refs.input.offsetHeight
+				const left =
+					this.$refs.input.getBoundingClientRect().left -
+					window.document.body.getBoundingClientRect().left
+				const width = this.$refs.input.offsetWidth
+				this.selectorOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
+			}
 		},
 		isOptionAllowed({ disabled, value }) {
 			if (disabled) return false
@@ -252,11 +243,18 @@ export default {
 		},
 		handleInputFocus(event) {
 			this.$emit('focus', event)
-			this.visible = true
-			this.triggerAsync()
+			this.show()
+		},
+		show() {
+			if (!this.visible) {
+				this.visible = true
+				this.triggerAsync()
+			}
 		},
 		handleClickOutside() {
-			if (this.allowEmpty || this.selectedLabel) this.visible = false
+			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
+				this.visible = false
+			}
 		},
 	},
 }

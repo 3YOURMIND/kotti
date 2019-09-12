@@ -51,11 +51,11 @@ export default {
 		validate: { default: '', type: String },
 		validateText: { default: '', type: String },
 		labelFor: { default: null },
-		value: [String, Number],
+		value: { default: null, type: [String, Number, null] },
 	},
 	data() {
 		return {
-			currentValue: this.value || '',
+			currentValue: this.value === null ? '' : this.value,
 			isFocused: false,
 			showDialog: false,
 		}
@@ -133,7 +133,7 @@ export default {
 		},
 		setCurrentValue(value) {
 			if (value === this.currentValue) return
-			this.currentValue = value
+			this.currentValue = value === null ? '' : value
 		},
 	},
 }
