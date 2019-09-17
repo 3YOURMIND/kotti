@@ -2,12 +2,12 @@
 	<div class="selects">
 		<div class="form-group">
 			<label :class="formLabelClass" v-text="label" />
-			<div class="has-icon-right" :class="{ 'has-icon-left': icon }">
+			<div :class="{ 'has-icon-left': icon }" class="has-icon-right">
 				<input
+					ref="input"
 					:class="formInputClass"
 					v-model="selectedLabel"
 					:disabled="disabled"
-					type="text"
 					:placeholder="placeholder"
 					:readonly="!filterable"
 					@input="setQueryString($event.target.value)"
@@ -15,44 +15,44 @@
 					@keydown.esc.stop.prevent="visible = false"
 					@click.stop="show"
 					v-bind="$attrs"
-					ref="input"
+					type="text"
 				/>
 				<i
 					v-if="icon"
-					class="yoco form-icon"
 					v-text="icon"
+					class="yoco form-icon"
 					style="pointer-events: none;"
 				/>
 				<i
-					class="yoco form-icon select-opening"
 					v-text="indicatorRep"
+					class="yoco form-icon select-opening"
 					style="pointer-events: none;"
 				/>
 				<Portal>
 					<template v-if="visible">
 						<div
 							:style="selectorOptionStyle"
-							class="form-options"
 							v-on-clickaway="handleClickOutside"
+							class="kt-select-options"
 						>
 							<ul>
 								<li
 									v-if="isLoading"
-									class="form-option--loading"
 									v-text="loadingText"
+									class="kt-select-option kt-select-option--loading"
 								/>
 								<li
 									v-else
 									v-for="(option, index) in optionsRep"
 									:key="index"
-									:class="optionClass(option)"
+									:class="['kt-select-option', optionClass(option)]"
 									@click="handleOptionClick(option)"
 									v-text="option.label"
 								/>
 								<li
 									v-if="!optionsRep.length && !isLoading"
-									class="form-option--empty"
 									v-text="noResultsFoundText"
+									class="kt-select-option kt-select-option--empty"
 								/>
 							</ul>
 						</div>
@@ -70,8 +70,8 @@ import { isBrowser } from '../../util'
 
 export default {
 	name: 'KtSelect',
-	mixins: [clickaway],
 	components: { Portal },
+	mixins: [clickaway],
 	inheritAttrs: false,
 	props: {
 		allowEmpty: {
@@ -115,7 +115,7 @@ export default {
 			type: String,
 		},
 		options: {
-			default: [],
+			default: () => [],
 			type: Array,
 		},
 		placeholder: {
@@ -124,6 +124,7 @@ export default {
 		},
 		value: {
 			default: null,
+			type: [String, Number, Boolean, Object, null],
 		},
 	},
 	data() {
@@ -133,13 +134,6 @@ export default {
 			selectedLabel: '',
 			visible: false,
 		}
-	},
-	mounted() {
-		this.computeSelectorOptionsStyle()
-		window.addEventListener('resize', this.computeSelectorOptionsStyle)
-	},
-	beforeDestroy() {
-		window.removeEventListener('resize', this.computeSelectorOptionsStyle)
 	},
 	computed: {
 		formInputClass() {
@@ -194,6 +188,13 @@ export default {
 			},
 		},
 	},
+	mounted() {
+		this.computeSelectorOptionsStyle()
+		window.addEventListener('resize', this.computeSelectorOptionsStyle)
+	},
+	beforeDestroy() {
+		window.removeEventListener('resize', this.computeSelectorOptionsStyle)
+	},
 	methods: {
 		computeSelectorOptionsStyle() {
 			if (isBrowser) {
@@ -214,7 +215,7 @@ export default {
 			return true
 		},
 		optionClass(option) {
-			if (!this.isOptionAllowed(option)) return 'form-option--disabled'
+			if (!this.isOptionAllowed(option)) return 'kt-select-option--disabled'
 		},
 		handleOptionClick(option) {
 			if (!this.isOptionAllowed(option)) return
@@ -247,6 +248,7 @@ export default {
 		},
 		show() {
 			if (!this.visible) {
+				this.computeSelectorOptionsStyle()
 				this.visible = true
 				this.triggerAsync()
 			}
@@ -323,7 +325,7 @@ export default {
 		cursor: pointer;
 	}
 }
-.form-options {
+.kt-select-options {
 	position: absolute;
 	margin-top: $unit-1;
 	background: #fff;
@@ -338,13 +340,13 @@ export default {
 		margin: 0;
 	}
 
-	li {
+	.kt-select-option {
 		margin: 0;
 		line-height: 1.2rem;
 		padding: 0.2rem 0.4rem;
 		list-style: none;
 
-		&.form-option--disabled {
+		&.kt-select-option--disabled {
 			color: $lightgray-500;
 
 			&:hover {
@@ -352,8 +354,8 @@ export default {
 			}
 		}
 
-		&.form-option--empty,
-		&.form-option--loading {
+		&.kt-select-option--empty,
+		&.kt-select-option--loading {
 			text-align: center;
 			color: $lightgray-500;
 
@@ -364,7 +366,7 @@ export default {
 		}
 	}
 
-	li:hover {
+	.kt-select-option:hover {
 		cursor: pointer;
 		background: #f8f8f8;
 	}
