@@ -107,9 +107,9 @@ export default {
 }
 </script>
 <style lang="scss">
-$default-button-height: 32px;
-$large-button-height: 40px;
-$small-button-height: 24px;
+$default-button-height: $unit-8;
+$large-button-height: $unit-9;
+$small-button-height: $unit-6;
 
 .kt-btn {
 	display: inline-flex;
