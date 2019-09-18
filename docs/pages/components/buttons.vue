@@ -118,6 +118,22 @@
 	<KtButton type="primary" size="small" icon="edit">Small</KtButton>
 	<KtButton size="large" icon="edit">Large</KtButton>
 	```
+
+	## Using another html element
+	
+	Ktbutton uses `button` element, but we can override this using the `element` prop.
+	Here's a `KtButton` using a div:
+
+	<div class="element-example white">
+		<KtButton type="primary" element="div">Primary Button</KtButton>
+	</div>
+
+	``` html
+	<KtButton type="primary" element="div">Primary Button</KtButton>
+	```
+
+	This can be useful 
+
 	## Themes
 
 	<div class="element-example">
