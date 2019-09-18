@@ -1,6 +1,6 @@
 <template>
 	<div :class="objectClass">
-		<slot/>
+		<slot />
 	</div>
 </template>
 
@@ -20,3 +20,27 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.button-group {
+	/** Fix for inline element space
+	https://css-tricks.com/fighting-the-space-between-inline-block-elements/ **/
+	font-size: 0;
+
+	.kt-button {
+		border-radius: 0;
+		font-size: $font-size;
+	}
+
+	.kt-button:first-of-type {
+		border-radius: $border-radius 0 0 $border-radius;
+	}
+
+	.kt-button:last-of-type {
+		border-radius: 0 $border-radius $border-radius 0;
+	}
+
+	&--shadow {
+		box-shadow: 0 1px 2px rgba($color: #000000, $alpha: 0.24);
+	}
+}
+</style>

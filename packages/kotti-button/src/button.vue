@@ -1,15 +1,17 @@
 <template>
-	<button
+	<component
+		:is="element"
 		:class="mainClasses"
 		:style="themeColor"
 		@click="handleClick"
 		@mouseover="isHover = true"
 		@mouseleave="isHover = false"
+		role="button"
 	>
 		<i v-if="loading" class="kt-circle-loading" :style="loadingStyle" />
 		<i v-else-if="icon" class="yoco" v-text="icon" />
 		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />
-	</button>
+	</component>
 </template>
 
 <script>
@@ -19,6 +21,7 @@ export default {
 	name: 'KtButton',
 	props: {
 		icon: { default: '', type: String },
+		element: { type: String, default: 'button' },
 		label: { default: null, type: String },
 		loading: { default: false, type: Boolean },
 		size: { default: null, type: String },
@@ -50,7 +53,7 @@ export default {
 			}
 		},
 		mainClasses() {
-			const classes = [this.type, this.objectClass]
+			const classes = ['kt-button', this.type, this.objectClass]
 			if (this.size === 'small') classes.push('sm')
 			if (this.size === 'large') classes.push('lg')
 			return classes
@@ -103,3 +106,111 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+$default-button-height: $unit-8;
+$large-button-height: $unit-9;
+$small-button-height: $unit-6;
+
+.kt-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+	height: $default-button-height;
+	padding: 0 1em;
+
+	background: $lightgray-300;
+	color: $primary-600;
+	font-weight: 600;
+	outline: none;
+	user-select: none;
+
+	border: 1px solid $lightgray-400;
+	border-radius: $border-radius;
+	&.tooltip::after {
+		font-size: $font-size-sm;
+		text-transform: none;
+	}
+
+	&:hover {
+		color: $primary-600;
+		cursor: pointer;
+	}
+}
+
+.kt-button.sm {
+	height: $small-button-height;
+}
+
+.kt-button.lg {
+	height: $large-button-height;
+}
+
+.kt-button.primary {
+	background: $primary-500;
+	color: #ffffff;
+	border: 1px solid $primary-600;
+
+	&:hover {
+		background: $primary-400;
+	}
+}
+
+.kt-button.secondary {
+	border: 1px solid $primary-500;
+	background: #fff;
+	color: $primary-500;
+	font-weight: 600;
+
+	&:hover {
+		color: $primary-400;
+		border: 1px solid $primary-400;
+		background: $lightgray-300;
+	}
+}
+
+.kt-button.text {
+	color: $primary-500;
+	font-weight: 600;
+	background: transparent;
+	border-color: transparent;
+	&:hover {
+		background: $lightgray-300;
+	}
+}
+
+.kt-button.danger {
+	background: #f8f8f8;
+	color: $red-500;
+	font-weight: 600;
+
+	&:hover {
+		color: #ffffff;
+		background: $red-400;
+	}
+}
+
+.kt-button.icon i {
+	font-size: 1rem;
+	margin-right: 0.2rem;
+}
+
+.kt-button.icon-only {
+	padding: 0 0.3rem;
+	i {
+		margin-right: 0;
+	}
+}
+
+.kt-button.disabled,
+.kt-button:disabled {
+	opacity: 0.46;
+	pointer-events: none;
+}
+
+.kt-button.bottom {
+	min-width: 10rem;
+	margin-top: $unit-8;
+}
+</style>
