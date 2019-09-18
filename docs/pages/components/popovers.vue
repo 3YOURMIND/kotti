@@ -3,6 +3,7 @@
 # Popovers
 
 Use popovers to provide extra information or actions. Compared to `tooltip`, `popovers` can carry more information.
+It uses popper.js library.
 
 ## Placement
 
@@ -22,13 +23,18 @@ Use popovers to provide extra information or actions. Compared to `tooltip`, `po
 	<KtButton type="secondary" label="Right Popover" />
 	<div slot="content">New Message</div>
 </KtPopover>
-<KtPopover placement="left" class="mt-4 ml-4">
-	<KtButton type="secondary" label="Left Popover" />
-	<div slot="content">New Message</div>
+<KtPopover placement="top-start" class="mt-4 ml-4">
+	<KtButton type="secondary">
+		Popover Top Start
+	</KtButton>
+	<div slot="content">
+		This is the hover popover
+	</div>
 </KtPopover>
 </div>
 
 There are 4 different positions for popovers. `right`, `left`, `top`, and `bottom`.
+You can append `-start` and `-end` to the placement as well.
 
 **Attention:** The popover may change its placement position when parent has `overflow: scroll`.
 
