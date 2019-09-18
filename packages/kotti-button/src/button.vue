@@ -53,7 +53,7 @@ export default {
 			}
 		},
 		mainClasses() {
-			const classes = ['kt-btn', this.type, this.objectClass]
+			const classes = ['kt-button', this.type, this.objectClass]
 			if (this.size === 'small') classes.push('sm')
 			if (this.size === 'large') classes.push('lg')
 			return classes
@@ -111,7 +111,7 @@ $default-button-height: $unit-8;
 $large-button-height: $unit-9;
 $small-button-height: $unit-6;
 
-.kt-btn {
+.kt-button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -139,15 +139,15 @@ $small-button-height: $unit-6;
 	}
 }
 
-.kt-btn.sm {
+.kt-button.sm {
 	height: $small-button-height;
 }
 
-.kt-btn.lg {
+.kt-button.lg {
 	height: $large-button-height;
 }
 
-.kt-btn.primary {
+.kt-button.primary {
 	background: $primary-500;
 	color: #ffffff;
 	border: 1px solid $primary-600;
@@ -157,7 +157,7 @@ $small-button-height: $unit-6;
 	}
 }
 
-.kt-btn.secondary {
+.kt-button.secondary {
 	border: 1px solid $primary-500;
 	background: #fff;
 	color: $primary-500;
@@ -170,7 +170,7 @@ $small-button-height: $unit-6;
 	}
 }
 
-.kt-btn.text {
+.kt-button.text {
 	color: $primary-500;
 	font-weight: 600;
 	background: transparent;
@@ -180,7 +180,7 @@ $small-button-height: $unit-6;
 	}
 }
 
-.kt-btn.danger {
+.kt-button.danger {
 	background: #f8f8f8;
 	color: $red-500;
 	font-weight: 600;
@@ -191,25 +191,25 @@ $small-button-height: $unit-6;
 	}
 }
 
-.kt-btn.icon i {
+.kt-button.icon i {
 	font-size: 1rem;
 	margin-right: 0.2rem;
 }
 
-.kt-btn.icon-only {
+.kt-button.icon-only {
 	padding: 0 0.3rem;
 	i {
 		margin-right: 0;
 	}
 }
 
-.kt-btn.disabled,
-.kt-btn:disabled {
+.kt-button.disabled,
+.kt-button:disabled {
 	opacity: 0.46;
 	pointer-events: none;
 }
 
-.kt-btn.bottom {
+.kt-button.bottom {
 	min-width: 10rem;
 	margin-top: $unit-8;
 }

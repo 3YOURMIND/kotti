@@ -26,16 +26,16 @@ export default {
 	https://css-tricks.com/fighting-the-space-between-inline-block-elements/ **/
 	font-size: 0;
 
-	.kt-btn {
+	.kt-button {
 		border-radius: 0;
 		font-size: $font-size;
 	}
 
-	.kt-btn:first-of-type {
+	.kt-button:first-of-type {
 		border-radius: $border-radius 0 0 $border-radius;
 	}
 
-	.kt-btn:last-of-type {
+	.kt-button:last-of-type {
 		border-radius: 0 $border-radius $border-radius 0;
 	}
 
