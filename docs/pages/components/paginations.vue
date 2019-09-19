@@ -4,43 +4,86 @@
 ## Basic Usage
 
 <div class="element-example white">
-	<KtPagination :total="100" :pageSize="25"/>
+	<KtPagination :total="50" :pageSize="10"/>
 </div>
 
 ```html
-<KtPagination :total="100" :pageSize="25"/>
+<KtPagination :total="50" :pageSize="10"/>
 ```
 
 ## Default Page
 
 <div class="element-example white">
-	<KtPagination :total="100" :pageSize="25" :page="2" />
+	<KtPagination :total="50" :pageSize="10" :page="3" />
 </div>
 
 ```html
-<KtPagination :total="100" :pageSize="25" :page="2" />
+<KtPagination :total="50" :pageSize="10" :page="3" />
 ```
 
-## Fraction Style
+## Styles
+
+#### Expanded
 
 <div class="element-example white">
-	<KtPagination :total="100" :pageSize="25" fractionStyle/>
+	<KtPagination pagingStyle="expand" :total="50" :pageSize="10"/>
 </div>
 
 ```html
-<KtPagination :total="100" :pageSize="25" fractionStyle/>
+	<KtPagination pagingStyle="expand" :total="50" :pageSize="10"/>
+```
+
+#### Fraction
+
+<div class="element-example white">
+	<KtPagination pagingStyle="fraction" :total="50" :pageSize="10"/>
+</div>
+
+```html
+	<KtPagination pagingStyle="fraction" :total="50" :pageSize="10"/>
+```
+
+#### Flexible
+
+<div class="element-example white">
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10"/>
+</div>
+
+```html
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10"/>
+```
+
+#### Extra Options
+<div class="element-example white">
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10" :page="25" :adjacentAmount="1"/>
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10" :page="25" :adjacentAmount="2"/>
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10" :page="25" :adjacentAmount="3"/>
+	<br/>
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10"/>
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10" fixedWidth/>
+</div>
+
+```html
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10" :page="25" :adjacentAmount="1"/>
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10" :page="25" :adjacentAmount="2"/>
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10" :page="25" :adjacentAmount="3"/>
+
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10"/>
+	<KtPagination pagingStyle="flex" :total="500" :pageSize="10" fixedWidth/>
 ```
 
 ## Usage
 
 ### Props
 
-| Attribute       | Description               | Type      | Accepted Values | Default    |
-|:----------------|:--------------------------|:----------|:----------------|:-----------|
-| `total`         | total amount of items     | `Number`  | --              | `Required` |
-| `pageSize`      | amount of items each page | `Number`  | --              | `10`       |
-| `page`          | the default page to show  | `Number`  | --              | --         |
-| `fractionStyle` | fraction style pagination | `Boolean` | --              | `false`    |
+| Attribute         | Description                                  | Type      | Accepted Values              | Default    |
+|:------------------|:---------------------------------------------|:----------|:-----------------------------|:-----------|
+| `adjacentAmount`  | number of pairs of adjacent pages to display | `Number`  | --                           | `1`        |
+| `fixedWidth`      | set width based on max number of elements    | `Boolean` | `True`, `False`              | `False`    |
+| `page`            | the default page to show                     | `Number`  | --                           | --         |
+| `pageSize`        | amount of items each page                    | `Number`  | --                           | `10`       |
+| `pagingStyle`     | style of the pagination                      | `String`  | `expand`, `flex`, `fraction` | `expand`   |
+| `total`           | total amount of items                        | `Number`  | --                           | `Required` |
 
 ### Events
 
