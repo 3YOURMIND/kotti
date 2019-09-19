@@ -12,7 +12,7 @@
 
 <script>
 export default {
-	name: 'ExpandedPaginator',
+	name: 'KtPaginationExpanded',
 	props: {
 		currentPage: { type: Number, required: true },
 		pageSize: { type: Number, required: true },

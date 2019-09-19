@@ -17,16 +17,16 @@
 </template>
 
 <script>
-import ExpandedPaginator from './components/ExpandedPaginator.vue'
-import FlexiblePaginator from './components/FlexiblePaginator.vue'
-import FractionatedPaginator from './components/FractionatedPaginator.vue'
+import KtPaginationExpanded from './components/KtPaginationExpanded.vue'
+import KtPaginationFlexible from './components/KtPaginationFlexible.vue'
+import KtPaginationFractionated from './components/KtPaginationFractionated.vue'
 
 export default {
 	name: 'KtPagination',
 	components: {
-		ExpandedPaginator,
-		FlexiblePaginator,
-		FractionatedPaginator,
+		KtPaginationExpanded,
+		KtPaginationFlexible,
+		KtPaginationFractionated,
 	},
 	props: {
 		adjacentAmount: { type: Number, default: 1 },
@@ -61,20 +61,20 @@ export default {
 		},
 		component() {
 			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
-			if (!isFlexLogical || this.pageAmount < 2) return 'ExpandedPaginator'
+			if (!isFlexLogical || this.pageAmount < 2) return 'KtPaginationExpanded'
 			if (this.fractionStyle) {
 				console.warn(
-					"WARNING : fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
+					"<KtPagination> : fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
 				)
-				return 'FractionatedPaginator'
+				return 'KtPaginationFractionated'
 			}
 			switch (this.pagingStyle) {
 				case 'flex':
-					return 'FlexiblePaginator'
+					return 'KtPaginationFlexible'
 				case 'fraction':
-					return 'FractionatedPaginator'
+					return 'KtPaginationFractionated'
 				default:
-					return 'ExpandedPaginator'
+					return 'KtPaginationExpanded'
 			}
 		},
 		maximumPage() {

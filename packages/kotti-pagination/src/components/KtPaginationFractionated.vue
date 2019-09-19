@@ -4,7 +4,7 @@
 
 <script>
 export default {
-	name: 'FractionatedPaginator',
+	name: 'KtPaginationFractionated',
 	props: {
 		currentPage: { type: Number, required: true },
 		maximumPage: { type: Number, required: true },

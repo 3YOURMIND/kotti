@@ -36,7 +36,7 @@ const MAX_NUMBER_OF_ELEMENTS = 5
 const PIXEL_MULTIPLIER = 2.8
 
 export default {
-	name: 'FlexiblePaginator',
+	name: 'KtPaginationFlexible',
 	props: {
 		adjacentAmount: { type: Number, required: true },
 		currentPage: { type: Number, required: true },
@@ -64,8 +64,7 @@ export default {
 			return baseElementsWidth + BASE_OFFSET * 2 + adjacentPagesOffset
 		},
 		containerStyle() {
-			if (this.fixedWidth) return 'width: ' + this.pixelMargin + 'px'
-			return ''
+			return this.fixedWidth ? { width: `${this.pixelMargin}px` } : {}
 		},
 		showFirstPage() {
 			return !this.neighborValues.includes(0)
