@@ -15,4 +15,7 @@ $cursors: (
 	.#{$element} {
 		cursor: $cursor;
 	}
+	.#{$element}-important {
+		cursor: $cursor !important;
+	}
 }

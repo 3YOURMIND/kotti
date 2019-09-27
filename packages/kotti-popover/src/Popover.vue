@@ -51,16 +51,7 @@ export default {
 		handleClick() {
 			this.showPopper = !this.showPopper
 		},
-		handleClickaway(e) {
-			/**
-			 * Early return, if anchor is not descending from the clicked element.
-			 * This can occur if a popover contains a dropdown. This dropdown
-			 * also makes use of Popper.js with vue/clickaway. Since Popper adds the
-			 * dropdown list to the body of the dom, this check is
-			 * warranted. Otherwise the closing of the Popover is triggerd by
-			 * the select input event.
-			 * */
-			if (!e.target.contains(this.$refs.anchor)) return
+		handleClickaway() {
 			this.showPopper = false
 		},
 		initPopper() {
