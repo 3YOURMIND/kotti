@@ -80,7 +80,14 @@ export default {
 			return this[KT_STORE].state.isAllSelected
 		},
 		tableColumns() {
-			return this[KT_STORE].state.columns
+			return this[KT_STORE].state.columns.map(column => ({
+				...column,
+				renderHeader: column.renderHeader
+					? column.renderHeader
+					: function DEFAULT_RENDER_HEADER(h, { column }) {
+							return [column.label === undefined ? column.prop : column.label]
+					  },
+			}))
 		},
 		hasActions() {
 			return this[KT_TABLE].hasActions

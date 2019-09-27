@@ -17,25 +17,40 @@ export const defaultState = {
 export const mutations = {
 	insertColumn(store, { column, index }) {
 		const deleted = store.state._destroyedColumns[column.prop]
-		setColumn(store.state, { column, index, deleted })
+		setColumn(store.state, {
+			column,
+			index,
+			deleted,
+		})
 		deleted && (store.state._destroyedColumns[column.prop] = 0)
-		store.commit('updateColumns', { emitChange: false })
+		store.commit('updateColumns', {
+			emitChange: false,
+		})
 	},
 	removeColumn(store, column) {
 		column = getColumn(store.state, column)
 		if (column) {
 			column._deleted = true
 			store.state._destroyedColumns[column.prop] = 1
-			store.commit('updateColumns', { emitChange: false })
+			store.commit('updateColumns', {
+				emitChange: false,
+			})
 		}
 	},
 	setColumns(store, columns = store.state._columnsArray) {
 		const { state } = store
 		const pickedColumns = columns.map(col => pick(col, PUBLIC_COLUMN_PROPS))
-		for (const col of pickedColumns) {
+		for (let i = 0; i < pickedColumns.length; i++) {
+			const col = pickedColumns[i]
 			const column = getColumn(state, col)
-			if (column) {
+
+			if (column && state._columns.length > 0) {
 				Object.assign(column, col)
+			} else {
+				setColumn(state, {
+					column: col,
+					index: i,
+				})
 			}
 		}
 		store.commit('updateColumns', {
@@ -90,7 +105,11 @@ export function setColumn(state, { column, index, deleted }) {
 		if (deleted) {
 			_columns[column.prop]._deleted = false
 		} else {
-			Vue.set(_columns, column.prop, { ...oldColumn, ...column })
+			Vue.set(_columns, column.prop, {
+				...oldColumn,
+				...column,
+				_deleted: false,
+			})
 		}
 	} else {
 		column.index = index || Object.keys(_columns).length
