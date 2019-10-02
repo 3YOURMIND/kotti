@@ -39,6 +39,10 @@ export default {
 		icon: {
 			type: String,
 		},
+		isClosed: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -48,6 +52,7 @@ export default {
 		}
 	},
 	mounted() {
+		this.isOpen = !this.isClosed
 		// This is the best solution right now
 		// It will handle the case when the content change
 		// eslint-disable-next-line no-magic-numbers
