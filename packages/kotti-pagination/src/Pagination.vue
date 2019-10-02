@@ -1,17 +1,13 @@
 <template>
 	<div>
 		<ul class="pagination">
-			<li :class="paginatorClasses(1, 'disabled')" @click="previousPage">
+			<li :class="paginatorClasses(0, 'disabled')" @click="previousPage">
 				<i class="yoco page-button">chevron_left</i>
 			</li>
-			<li v-if="fractionStyle" class="fraction" v-text="fractionRep" />
-			<li
-				v-else
-				v-for="(page,index) in totalPages"
-				:key="index"
-				:class="paginatorClasses(page, 'page-item--active')"
-				v-text="page"
-				@click="setCurrentPage(page)"
+			<component
+				:is="component"
+				v-bind="bound"
+				@setPage="setCurrentPage($event)"
 			/>
 			<li :class="paginatorClasses(maximumPage, 'disabled')" @click="nextPage">
 				<i class="yoco page-button">chevron_right</i>
@@ -21,28 +17,71 @@
 </template>
 
 <script>
+import KtPaginationExpanded from './components/KtPaginationExpanded.vue'
+import KtPaginationFlexible from './components/KtPaginationFlexible.vue'
+import KtPaginationFractionated from './components/KtPaginationFractionated.vue'
+
 export default {
 	name: 'KtPagination',
+	components: {
+		KtPaginationExpanded,
+		KtPaginationFlexible,
+		KtPaginationFractionated,
+	},
 	props: {
+		adjacentAmount: { type: Number, default: 1 },
+		fixedWidth: { type: Boolean, default: false },
 		page: { type: Number, default: 1 },
-		total: { type: Number, required: true },
 		pageSize: { type: Number, default: 10 },
+		pagingStyle: { type: String, default: 'expand' },
+		total: { type: Number, required: true },
+
+		/**
+		 * @deprecated
+		 * Use :pagingStyle='fraction' instead
+		 */
 		fractionStyle: { type: Boolean, default: false },
 	},
 	data() {
 		return {
-			currentPage: this.page,
+			currentPage: this.page - 1,
 		}
 	},
 	computed: {
+		bound() {
+			return {
+				adjacentAmount: this.adjacentAmount,
+				currentPage: this.currentPage,
+				fixedWidth: this.fixedWidth,
+				maximumPage: this.maximumPage,
+				pageSize: this.pageSize,
+				total: this.total,
+				totalPages: this.totalPages,
+			}
+		},
+		component() {
+			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
+			if (!isFlexLogical || this.pageAmount < 2) return 'KtPaginationExpanded'
+			if (this.fractionStyle) {
+				console.warn(
+					"<KtPagination> : fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
+				)
+				return 'KtPaginationFractionated'
+			}
+			switch (this.pagingStyle) {
+				case 'flex':
+					return 'KtPaginationFlexible'
+				case 'fraction':
+					return 'KtPaginationFractionated'
+				default:
+					return 'KtPaginationExpanded'
+			}
+		},
 		maximumPage() {
+			return Math.ceil(this.total / this.pageSize) - 1
+		},
+		pageAmount() {
 			return Math.ceil(this.total / this.pageSize)
-		},
-		totalPages() {
-			return [...Array(this.maximumPage).keys()].map(e => e + 1)
-		},
-		fractionRep() {
-			return `${this.currentPage}/${this.maximumPage}`
 		},
 	},
 	methods: {
@@ -63,12 +102,12 @@ export default {
 			this.eventEmitter('nextPageClicked')
 		},
 		previousPage() {
-			if (this.currentPage === 1) return
+			if (this.currentPage === 0) return
 			this.currentPage -= 1
 			this.eventEmitter('previousPageClicked')
 		},
 		eventEmitter(eventName) {
-			this.$emit(eventName, this.currentPage)
+			this.$emit(eventName, this.currentPage + 1)
 		},
 	},
 }
