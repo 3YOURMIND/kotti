@@ -1,17 +1,13 @@
 <template>
-	<div class="closable-block">
-		<div class="closable-block__header">
-			<div class="closable-block__title">
+	<div class="accordion">
+		<div class="accordion__header">
+			<div class="accordion__title">
 				<slot name="title">
-					<i
-						v-if="icon"
-						v-text="icon"
-						class="yoco closable-block__title__icon"
-					/>
-					<div class="closable-block__title__text">{{ title }}</div>
+					<i v-if="icon" v-text="icon" class="yoco accordion__title__icon" />
+					<div class="accordion__title__text">{{ title }}</div>
 				</slot>
 			</div>
-			<div @click="toggle" class="closable-block__toggle">
+			<div @click="toggle" class="accordion__toggle">
 				<i v-text="isOpen ? 'minus' : 'plus'" class="yoco" />
 			</div>
 		</div>
@@ -19,7 +15,7 @@
 			:style="`--height: ${contentHeight}px`"
 			:class="isOpen ? 'is-open' : 'is-close'"
 			@click="setHeight"
-			class="closable-block__content"
+			class="accordion__content"
 		>
 			<div ref="contentInner" class="inner">
 				<slot />
@@ -30,7 +26,7 @@
 
 <script>
 export default {
-	name: 'KtClosableBlock',
+	name: 'KtAccordion',
 	props: {
 		title: {
 			type: String,
@@ -74,27 +70,27 @@ export default {
 }
 </script>
 <style lang="scss">
-.closable-block {
+.accordion {
 	margin-bottom: $unit-4;
 	border-bottom: none;
 	border-radius: 2px;
 }
 
-.closable-block__header {
+.accordion__header {
 	display: flex;
 	justify-content: space-between;
 	padding: $unit-2 $unit-8;
 	border: 1px solid $lightgray-400;
 }
 
-.closable-block__title {
+.accordion__title {
 	flex-grow: 1;
 	align-self: center;
 	font-size: 16px;
 	font-weight: 600;
 }
 
-.closable-block__content {
+.accordion__content {
 	overflow: hidden;
 	border: 1px solid $lightgray-400;
 	border-top: none;
@@ -110,18 +106,18 @@ export default {
 	}
 }
 
-.closable-block__title__icon,
-.closable-block__title__text {
+.accordion__title__icon,
+.accordion__title__text {
 	display: inline-block;
 }
 
-.closable-block__title__icon {
+.accordion__title__icon {
 	margin-right: $unit-4;
 	font-size: 26px !important;
 	color: $primary-500;
 }
 
-.closable-block__toggle {
+.accordion__toggle {
 	align-self: center;
 	margin-left: $unit-4;
 	color: $primary-500;

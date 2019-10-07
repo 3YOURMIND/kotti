@@ -7,7 +7,7 @@ import KtButton from './kotti-button'
 import KtButtonGroup from './kotti-button-group'
 import KtCard from './kotti-card'
 import KtCheckbox from './kotti-checkbox'
-import KtClosableBlock from './kotti-closable-block'
+import KtAccordion from './kotti-accordion'
 import KtCol from './kotti-col'
 import KtComment from './kotti-comment'
 import KtCommentInput from './kotti-comment-input'
@@ -50,7 +50,7 @@ const components = {
 	KtButtonGroup,
 	KtCard,
 	KtCheckbox,
-	KtClosableBlock,
+	KtAccordion,
 	KtCol,
 	KtComment,
 	KtCommentInput,

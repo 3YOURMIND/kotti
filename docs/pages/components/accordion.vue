@@ -1,46 +1,46 @@
 <template lang="md">
 
-# Closable block
+# Accordion
 
-A closable block for hiding content on click. 
+An accordion for hiding content on click. 
 It is animated but the animation doesn't work with IE11.
 
 ``` html
-<KtClosableBlock title="Closable block">
+<KtAccordion title="Accordion">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
-</KtClosableBlock>
+</KtAccordion>
 ```
 
-<KtClosableBlock title="Closable block">
+<KtAccordion title="Accordion">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
-</KtClosableBlock>
+</KtAccordion>
 
 ## Using icons
 
 We can use `yoco` icons as well:
 
 ``` html
-<KtClosableBlock icon="edit" title="Closable block mit icon">
+<KtAccordion icon="edit" title="Accordion mit icon">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
-</KtClosableBlock>
+</KtAccordion>
 ```
 
-<KtClosableBlock icon="edit" title="Closable block mit icon">
+<KtAccordion icon="edit" title="Accordion mit icon">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
-</KtClosableBlock>
+</KtAccordion>
 
 ## Closed by default 
 
 
 ``` html
-<KtClosableBlock :isClosed="true" title="Openable block :)">
+<KtAccordion :isClosed="true" title="Openable block :)">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
-</KtClosableBlock>
+</KtAccordion>
 ```
 
-<KtClosableBlock :isClosed="true" title="Openable block :)">
+<KtAccordion :isClosed="true" title="Openable block :)">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
-</KtClosableBlock>
+</KtAccordion>
 
 ## Properties
 
@@ -53,6 +53,6 @@ We can use `yoco` icons as well:
 </template>
 <script>
 export default {
-	name: 'KtClosableBlockDocs',
+	name: 'KtAccordionDocs',
 }
 </script>
