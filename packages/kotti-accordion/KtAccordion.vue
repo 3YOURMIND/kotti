@@ -51,8 +51,8 @@ export default {
 		this.isOpen = !this.isClosed
 		// This is the best solution right now
 		// It will handle the case when the content change
-		// eslint-disable-next-line no-magic-numbers
-		this.interval = setInterval(this.setHeight, 500)
+		const reloadingTime = 500
+		this.interval = setInterval(this.setHeight, reloadingTime)
 	},
 	beforeDestroy() {
 		clearInterval(this.interval)
