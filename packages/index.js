@@ -127,6 +127,7 @@ export {
 	KtDatePicker,
 	KtDrawer,
 	KtDropdown,
+	KtDropdownButton,
 	KtDropdownMenu,
 	KtHeading,
 	KtLine,
