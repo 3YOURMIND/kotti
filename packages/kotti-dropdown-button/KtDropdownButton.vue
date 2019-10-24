@@ -2,10 +2,15 @@
 	<div class="kt-dropdown-button">
 		<KtPopover v-bind="$attrs" :placement="placement">
 			<KtButtonGroup>
-				<KtButton class="kt-dropdown-button__button" v-bind="$attrs">
+				<KtButton
+					:disabled="disabled"
+					class="kt-dropdown-button__button"
+					v-bind="$attrs"
+				>
 					<slot>Dropdown Text</slot>
 				</KtButton>
 				<KtButton
+					:disabled="disabled"
 					class="kt-dropdown-button__icon"
 					v-bind="$attrs"
 					:icon="dropdownIcon"
@@ -13,7 +18,7 @@
 					<i class="yoco" v-text="dropdownIcon" />
 				</KtButton>
 			</KtButtonGroup>
-			<div slot="content">
+			<div v-if="!disabled" slot="content">
 				<slot name="KtDropdownMenus">Dropdown Menu</slot>
 			</div>
 		</KtPopover>
@@ -38,6 +43,10 @@ export default {
 		size: {
 			type: String,
 			default: null,
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	components: {
@@ -75,7 +84,6 @@ export default {
 	z-index: 1;
 }
 .kt-dropdown-button__icon {
-	border-left: 0 !important;
 	padding: 0 $unit-2;
 	position: absolute;
 	left: 0;
