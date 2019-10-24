@@ -16,6 +16,7 @@ export default {
 		placement: { type: String, default: 'bottom' },
 		size: { type: String, default: null },
 		content: { type: String, default: '' },
+		disabled: { type: Boolean, default: false },
 	},
 	data() {
 		return {
@@ -49,6 +50,7 @@ export default {
 	},
 	methods: {
 		handleClick() {
+			if (this.disabled) return null
 			this.showPopper = !this.showPopper
 		},
 		handleClickaway() {
