@@ -49,6 +49,8 @@ export default {
 </script>
 <style lang="scss">
 .kt-dropdown-button {
+	display: inline-block;
+	margin: 0 $unit-1;
 	.button-group {
 		display: flex;
 		position: relative;
