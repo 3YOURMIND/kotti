@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-dropdown-button">
-		<KtPopover v-bind="$attrs" :placement="placement">
+		<KtPopover :size="size" v-bind="$attrs" :placement="placement">
 			<KtButtonGroup>
 				<KtButton
 					:disabled="disabled"
