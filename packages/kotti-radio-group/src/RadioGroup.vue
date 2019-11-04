@@ -1,9 +1,8 @@
 <template>
-<div :class="formRadioStyle">
-	<label class="form-label" v-text="label" />
-	<slot />
-</div>
-
+	<div :class="formRadioStyle">
+		<label class="form-label" v-text="labelRep" />
+		<slot />
+	</div>
 </template>
 
 <script>
@@ -26,20 +25,48 @@ export default {
 			default: null,
 			types: [String, Number, null],
 		},
+		required: {
+			default: false,
+			type: Boolean,
+		},
 	},
 	computed: {
 		formRadioStyle() {
 			return {
 				'form-group': true,
 				'form-group--list-options': this.listStyle,
+				'form-group--invalid': this.invalidInput,
 			}
+		},
+		hasLabel() {
+			return !(this.label === null || this.label === undefined)
+		},
+		labelRep() {
+			if (!this.hasLabel) return
+			return this.required ? `${this.label} *` : this.label
+		},
+		invalidInput() {
+			return this.required && (this.value === null || this.value === '')
 		},
 	},
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import '../../kotti-style/_variables.scss';
+@import '../../kotti-style/mixins/index.scss';
+
 .form-group--list-options .form-radio {
 	display: block;
+}
+.form-group--invalid {
+	.form-radio {
+		.form-icon {
+			border: 1px solid $red-500;
+			&:focus {
+				@include control-shadow($red-500);
+			}
+		}
+	}
 }
 </style>
