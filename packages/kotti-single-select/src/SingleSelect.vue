@@ -267,7 +267,7 @@ export default {
 			}
 		},
 		handleClickOutside() {
-			if (this.visible) {
+			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
 				this.visible = false
 			}
 		},
