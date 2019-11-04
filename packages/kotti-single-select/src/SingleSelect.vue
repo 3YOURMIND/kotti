@@ -1,7 +1,7 @@
 <template>
 	<div class="selects">
 		<div class="form-group">
-			<label :class="formLabelClass" v-text="label" />
+			<label :class="formLabelClass" v-text="labelRep" />
 			<div :class="{ 'has-icon-left': icon }" class="has-icon-right">
 				<input
 					ref="input"
@@ -11,6 +11,7 @@
 					:placeholder="placeholder"
 					:readonly="!filterable"
 					@input="setQueryString($event.target.value)"
+					:required="required"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
 					@click.stop="show"
@@ -126,6 +127,10 @@ export default {
 			default: null,
 			type: [String, Number, Boolean, Object, null],
 		},
+		required: {
+			default: false,
+			type: Boolean,
+		},
 	},
 	data() {
 		return {
@@ -141,7 +146,11 @@ export default {
 				'form-input': true,
 				'form-input--compact': this.isCompact,
 				'form-input--compact--focus': this.isCompact && this.visible,
+				'form-input--invalid': this.required && !this.selectedLabel,
 			}
+		},
+		invalidInput() {
+			return this.required && !this.selectedLabel
 		},
 		formLabelClass() {
 			return {
@@ -169,6 +178,9 @@ export default {
 					value.toLowerCase().includes(query)
 				)
 			})
+		},
+		labelRep() {
+			return this.required ? `${this.label} *` : this.label
 		},
 	},
 	watch: {
@@ -226,7 +238,8 @@ export default {
 				({ label }) => label === this.selectedLabel,
 			)
 			this.$emit('input', selectedItem.value)
-			this.queryString = this.selectedLabel
+			// this.queryString = this.selectedLabel
+			this.setQueryString(this.selectedLabel)
 			this.visible = false
 		},
 		setQueryString(value) {
@@ -254,14 +267,17 @@ export default {
 			}
 		},
 		handleClickOutside() {
-			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
+			if (this.visible) {
 				this.visible = false
 			}
 		},
 	},
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+@import '../../kotti-style/_variables.scss';
+@import '../../kotti-style/mixins/index.scss';
+
 .form-select {
 	appearance: none;
 	border: $border-width solid $lightgray-400;
