@@ -1,6 +1,6 @@
 <template>
 	<div :class="formRadioStyle">
-		<label class="form-label" v-text="labelRep" />
+		<label v-if="hasLabel" class="form-label" v-text="labelRep" />
 		<slot />
 	</div>
 </template>
@@ -39,10 +39,9 @@ export default {
 			}
 		},
 		hasLabel() {
-			return !(this.label === null || this.label === undefined)
+			return this.label && this.label.length
 		},
 		labelRep() {
-			if (!this.hasLabel) return
 			return this.required ? `${this.label} *` : this.label
 		},
 		invalidInput() {

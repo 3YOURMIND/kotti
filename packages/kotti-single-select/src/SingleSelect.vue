@@ -1,7 +1,7 @@
 <template>
 	<div class="selects">
 		<div class="form-group">
-			<label :class="formLabelClass" v-text="labelRep" />
+			<label v-if="hasLabel" :class="formLabelClass" v-text="labelRep" />
 			<div :class="{ 'has-icon-left': icon }" class="has-icon-right">
 				<input
 					ref="input"
@@ -178,6 +178,9 @@ export default {
 					value.toLowerCase().includes(query)
 				)
 			})
+		},
+		hasLabel() {
+			return this.label && this.label.length
 		},
 		labelRep() {
 			return this.required ? `${this.label} *` : this.label

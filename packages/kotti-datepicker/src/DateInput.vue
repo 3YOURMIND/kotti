@@ -1,7 +1,7 @@
 <template>
 	<div v-on-clickaway="handleBlur">
 		<div class="form-group">
-			<label class="form-label" v-text="labelRep" />
+			<label v-if="hasLabel" class="form-label" v-text="labelRep" />
 			<div class="has-icon-left">
 				<input
 					v-bind="$attrs"
@@ -57,10 +57,9 @@ export default {
 			return null
 		},
 		hasLabel() {
-			return !(this.label === null || this.label === undefined)
+			return this.label && this.label.length
 		},
 		labelRep() {
-			if (!this.hasLabel) return
 			return `${this.label}${this.required ? ' *' : ''}`
 		},
 	},

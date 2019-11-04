@@ -23,10 +23,9 @@ export default {
 	},
 	computed: {
 		hasLabel() {
-			return !(this.label === null || this.label === undefined)
+			return this.label && this.label.length
 		},
 		labelRep() {
-			if (!this.hasLabel) return
 			return this.required ? `${this.label} *` : this.label
 		},
 		model: {
