@@ -5,10 +5,11 @@
 			v-model="model"
 			type="checkbox"
 			v-bind="$attrs"
+			:required="required"
 		/>
 		<i class="form-icon" />
 		<slot>
-			<span v-if="hasLabel" class="form-checkbox__label" v-text="label" />
+			<span v-if="hasLabel" class="form-checkbox__label" v-text="labelRep" />
 		</slot>
 	</label>
 </template>
@@ -17,11 +18,15 @@ export default {
 	name: 'KtCheckbox',
 	props: {
 		label: { default: null, type: String },
+		required: { default: false, type: Boolean },
 		value: { default: false, type: Boolean },
 	},
 	computed: {
-	        hasLabel() {
-			return !(this.label===null || this.label === undefined)
+		hasLabel() {
+			return this.label && this.label.length
+		},
+		labelRep() {
+			return this.required ? `${this.label} *` : this.label
 		},
 		model: {
 			get() {

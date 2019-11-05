@@ -33,14 +33,22 @@ We can also specify the label as a default scope:
 	<h4>Value: {{value2}}</h4>
 </div>
 
+Example of using the required field:
+
+<div class="element-example">
+	<KtCheckbox v-model="value3" required label="i am required"/>
+	<h4>Value: {{value3}}</h4>
+</div>
+
+
 ## Properties
 
 | Attribute | Description                  | Type      | Accepted values | Default |
 |:----------|:-----------------------------|:----------|:----------------|:--------|
 | `label`   | label input field            | `String`  | —               | —       |
 | `name`    | name attribute for the field | `String`  | —               | —       |
-| `value`   | value                        | `Boolean` | —               | —       |
-
+| `value`   | value                        | `Boolean` | [true, false]   | false   |
+| `required`| required                     | `Boolean` | [true, false]   | false   |
 </template>
 <script>
 export default {
@@ -49,6 +57,7 @@ export default {
 		return {
 			value1: true,
 			value2: false,
+			value3: undefined,
 		}
 	},
 }

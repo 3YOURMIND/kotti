@@ -17,8 +17,15 @@
 		border-color: $primary-500;
 	}
 
-	&:invalid {
+	&:invalid,
+	&.form-input--invalid {
 		border: 1px solid $red-500;
+		&:focus {
+			@include control-shadow($red-500);
+		}
+		~ .form-icon {
+			color: $red-500;
+		}
 	}
 }
 

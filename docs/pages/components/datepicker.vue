@@ -65,6 +65,26 @@
 />
 ```
 
+<div class="element-example">
+	<h2>With Required Flag</h2>
+	<KtDateInput
+		v-model="date4"
+		label="Delivery Date"
+		required
+		placeholder="Choose a date"
+	/>
+	{{ date4 }}
+</div>
+
+```html
+<KtDateInput
+	v-model="date4"
+	label="Delivery Date"
+	required
+	placeholder="Choose a date"
+/>
+```
+
 ## Usage
 
 ### Attributes
@@ -74,9 +94,9 @@
 | `label`              | label input field                      | `String`  | —               | —       |
 | `mondayFirst`        | set Monday as first day of the week    | `Boolean` | —               | `false` |
 | `placeholder`        | placeholder text                       | `String`  | —               | —       |
-| `monthsTranslations` | translation strings for months|`Array` | -         | -               |         |
-| `daysTranslations`   | translation strings for days|`Array`   | -         | -               |         |
-
+| `monthsTranslations` | translation strings for months|`Array` | —         | —               |         |
+| `daysTranslations`   | translation strings for days|`Array`   | —         | —               |         |
+| `required`           | sets it as a requiredf field           | `Boolean` | [true, false]   | `false` |
 </template>
 
 <script>
@@ -87,6 +107,7 @@ export default {
 			date: null,
 			date2: null,
 			date3: null,
+			date4: null,
 			monthCN: [
 				'一月',
 				'二月',
