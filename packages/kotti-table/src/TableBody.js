@@ -19,6 +19,7 @@ export default {
 							key={getRowKey(row) || rowIndex}
 							row={row}
 							rowIndex={rowIndex}
+							data-test={`table-row-${row.number}`}
 						/>,
 						isExpandable && (
 							<TableBodyExpandRow
