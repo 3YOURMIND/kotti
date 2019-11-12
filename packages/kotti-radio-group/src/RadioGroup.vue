@@ -1,6 +1,12 @@
 <template>
 	<div :class="formRadioStyle">
 		<label v-if="hasLabel" class="form-label" v-text="labelRep" />
+		<input
+			:required="required"
+			:value="invalidInput ? '' : 'notempty'"
+			type="text"
+			class="radio-input--hidden"
+		/>
 		<slot />
 	</div>
 </template>
@@ -35,17 +41,16 @@ export default {
 			return {
 				'form-group': true,
 				'form-group--list-options': this.listStyle,
-				'form-group--invalid': this.invalidInput,
 			}
 		},
 		hasLabel() {
-			return this.label && this.label.length
+			return this.label && this.label.length > 0
 		},
 		labelRep() {
 			return this.required ? `${this.label} *` : this.label
 		},
 		invalidInput() {
-			return this.required && (this.value === null || this.value === '')
+			return this.value === null || this.value === undefined
 		},
 	},
 }
@@ -58,8 +63,9 @@ export default {
 .form-group--list-options .form-radio {
 	display: block;
 }
-.form-group--invalid {
-	.form-radio {
+.radio-input--hidden {
+	display: none;
+	&:invalid ~ .form-radio {
 		.form-icon {
 			border: 1px solid $red-500;
 			&:focus {
