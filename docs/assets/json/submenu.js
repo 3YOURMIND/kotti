@@ -15,6 +15,10 @@ const submenu = [
 				to: 'color',
 			},
 			{
+				label: 'New Colors',
+				to: 'new-colors',
+			},
+			{
 				label: 'Icons',
 				to: 'icons',
 			},
