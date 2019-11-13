@@ -113,7 +113,7 @@ export default {
 
 .accordion__title__icon {
 	margin-right: $unit-4;
-	font-size: 26px !important;
+	font-size: 22px !important;
 	color: $primary-500;
 }
 
