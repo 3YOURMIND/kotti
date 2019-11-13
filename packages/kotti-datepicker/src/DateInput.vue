@@ -1,13 +1,14 @@
 <template>
 	<div v-on-clickaway="handleBlur">
 		<div class="form-group">
-			<label class="form-label" v-text="label" />
+			<label v-if="hasLabel" class="form-label" v-text="labelRep" />
 			<div class="has-icon-left">
 				<input
 					v-bind="$attrs"
 					@focus.prevent="handleFocus"
 					class="form-input"
 					:value="formattedDate"
+					:required="required"
 				/>
 				<i class="form-icon yoco" v-text="'calendar'" />
 			</div>
@@ -39,6 +40,7 @@ export default {
 		mondayFirst: { type: Boolean, default: false },
 		daysTranslations: { type: Array },
 		monthsTranslations: { type: Array },
+		required: { type: Boolean, default: false },
 	},
 	components: {
 		KtDatePicker,
@@ -53,6 +55,12 @@ export default {
 		formattedDate() {
 			if (this.currentDate) return this.currentDate.toLocaleDateString()
 			return null
+		},
+		hasLabel() {
+			return this.label && this.label.length
+		},
+		labelRep() {
+			return `${this.label}${this.required ? ' *' : ''}`
 		},
 	},
 	watch: {

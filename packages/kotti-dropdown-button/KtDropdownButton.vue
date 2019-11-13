@@ -62,6 +62,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../kotti-style/_variables.scss';
+
 .kt-dropdown-button {
 	display: inline-block;
 	margin: 0 $unit-1;

@@ -28,6 +28,9 @@
 			background: $primary-500;
 			border-color: $primary-500;
 		}
+		&:invalid + .form-icon {
+			border: 1px solid $red-500;
+		}
 	}
 
 	.form-icon {
