@@ -29,6 +29,20 @@ We can use `yoco` icons as well:
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
 </KtAccordion>
 
+## Fully clickable 
+
+We might want to use the whole header as a toggling zone:
+
+``` html
+<KtAccordion :isFullyClickable="true" icon="edit" title="Accordion mit icon">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
+</KtAccordion>
+```
+
+<KtAccordion :isFullyClickable="true" icon="edit" title="Accordion mit icon">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
+</KtAccordion>
+
 ## Closed by default 
 
 
@@ -44,11 +58,12 @@ We can use `yoco` icons as well:
 
 ## Properties
 
-| Attribute | Description                     | Type      | Accepted values | Default |
-|:----------|:--------------------------------|:----------|:----------------|:--------|
-| `title`   | Title of the block              | `String`  | —               | —       |
-| `icon`    | A yoco icon name                | `String`  | —               | —       |
-| `isClosed`| Is the block closed by default? | `Boolean` | —               | —       |
+| Attribute           | Description                     | Type      | Accepted values | Default |
+|:--------------------|:--------------------------------|:----------|:----------------|:--------|
+| `title`             | Title of the block              | `String`  | —               | —       |
+| `icon`              | A yoco icon name                | `String`  | —               | —       |
+| `isClosed`          | Is the block closed by default? | `Boolean` | —               | `false` |
+| `isFullyClickable`  | Is the whole header clickable?  | `Boolean` | —               | `false` |
 
 </template>
 <script>

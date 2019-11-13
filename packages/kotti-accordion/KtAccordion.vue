@@ -1,6 +1,10 @@
 <template>
 	<div class="accordion">
-		<div class="accordion__header">
+		<div
+			@click="headerToggle"
+			class="accordion__header"
+			:class="{ 'accordion__header--clickable': isFullyClickable }"
+		>
 			<div class="accordion__title">
 				<slot name="title">
 					<i v-if="icon" v-text="icon" class="yoco accordion__title__icon" />
@@ -39,6 +43,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		isFullyClickable: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -62,6 +70,9 @@ export default {
 			const height = this.$refs.contentInner.clientHeight
 			this.contentHeight = height
 		},
+		headerToggle() {
+			if (this.isFullyClickable) this.toggle()
+		},
 		toggle() {
 			this.setHeight()
 			this.isOpen = !this.isOpen
@@ -81,6 +92,9 @@ export default {
 	justify-content: space-between;
 	padding: $unit-2 $unit-8;
 	border: 1px solid $lightgray-400;
+}
+.accordion__header--clickable {
+	cursor: pointer;
 }
 
 .accordion__title {
