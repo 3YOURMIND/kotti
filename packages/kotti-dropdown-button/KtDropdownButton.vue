@@ -89,16 +89,18 @@ export default {
 	pointer-events: none;
 	position: relative;
 	z-index: 1;
+	&:disabled {
+		// background: transparent !important;
+	}
 }
 .kt-dropdown-button__icon {
 	padding: 0 $unit-2;
 	position: absolute;
-	left: 0;
-	padding-left: 100%;
+	left: -1px;
+	margin-left: 100%;
 	border-radius: 0.2em !important;
 	.yoco {
-		margin: 0;
-		margin-left: $unit-1;
+		margin: 0 !important;
 	}
 	span .yoco {
 		display: none;
