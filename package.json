@@ -47,6 +47,7 @@
 		"@3yourmind/yoco": "~1.1.0",
 		"color": "~3.1.0",
 		"dayjs": "~1.8.8",
+		"ie11-custom-properties": "^2.2.0",
 		"vue-clickaway": "^2.2.2",
 		"vue-popperjs": "^2.0.3"
 	},
