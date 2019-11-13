@@ -17,8 +17,7 @@
 		border-color: $primary-500;
 	}
 
-	&:invalid,
-	&.form-input--invalid {
+	&:invalid {
 		border: 1px solid $red-500;
 		&:focus {
 			@include control-shadow($red-500);

@@ -85,6 +85,10 @@
 			value: 'Watermelon',
 		},
 		{
+			label: '西蕉',
+			value: 'Waternana',
+		},
+		{
 			label: '香蕉',
 			value: 'Banana',
 		},
@@ -203,6 +207,10 @@ export default {
 				{
 					label: '西瓜',
 					value: 'Watermelon',
+				},
+				{
+					label: '西蕉',
+					value: 'Waternana',
 				},
 				{
 					label: '香蕉',
