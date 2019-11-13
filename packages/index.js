@@ -1,5 +1,6 @@
-import KtAvatar from './kotti-avatar'
+import KtAccordion from './kotti-accordion'
 import KtActionbar from './kotti-actionbar'
+import KtAvatar from './kotti-avatar'
 import KtAvatarGroup from './kotti-avatar-group'
 import KtBanner from './kotti-banner'
 import KtBreadcrumb from './kotti-breadcrumb'
@@ -7,7 +8,6 @@ import KtButton from './kotti-button'
 import KtButtonGroup from './kotti-button-group'
 import KtCard from './kotti-card'
 import KtCheckbox from './kotti-checkbox'
-import KtAccordion from './kotti-accordion'
 import KtCol from './kotti-col'
 import KtComment from './kotti-comment'
 import KtCommentInput from './kotti-comment-input'
@@ -41,6 +41,7 @@ import KtRadioGroup from './kotti-radio-group'
 import './kotti-style/index.scss'
 
 const components = {
+	KtAccordion,
 	KtActionbar,
 	KtAvatar,
 	KtAvatarGroup,
@@ -50,7 +51,6 @@ const components = {
 	KtButtonGroup,
 	KtCard,
 	KtCheckbox,
-	KtAccordion,
 	KtCol,
 	KtComment,
 	KtCommentInput,
@@ -113,6 +113,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 export default { ...components, install }
 
 export {
+	KtAccordion,
 	KtActionbar,
 	KtAvatar,
 	KtAvatarGroup,
