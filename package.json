@@ -106,11 +106,11 @@
 	"scripts": {
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
 		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
-		"deploy:docs": ". github-deploy.sh",
+		"deploy:docs": "./github-deploy.sh",
 		"dev:docs": "nuxt",
 		"precommit": "lint-staged",
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.7.9"
+	"version": "1.7.13"
 }

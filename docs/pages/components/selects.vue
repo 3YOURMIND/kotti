@@ -113,6 +113,29 @@
 	<h5 v-text="`English: ${value3}`" class="mt-16px"/>
 </div>
 
+## Required 
+
+<div class="element-example">
+	<KtSelect label="Words"
+		placeholder="Select Word"
+		v-model="value5"
+		required
+		icon="user"
+		:options="words"/>
+	<h5 v-text="`English: ${value5}`" class="mt-16px"/>
+</div>
+
+if you allowEmpty, you can't make the field required. allowEmpty will make field valid in that case
+
+```html
+	<KtSelect label="Words"
+		placeholder="Select Word"
+		v-model="value5"
+		required
+		icon="user"
+		:options="words"/>
+```
+
 ## Async Search
 
 <div class="element-example">
@@ -168,14 +191,15 @@ export default {
 	data() {
 		return {
 			value1: null,
-			value2: 'Avocados',
+			value2: null,
 			value3: 'Avocados',
 			value4: null,
+			value5: null,
 			words: [
-				{
-					label: 'Empty',
-					value: null,
-				},
+				// {
+				// 	label: 'Empty',
+				// 	value: null,
+				// },
 				{
 					label: '西瓜',
 					value: 'Watermelon',
