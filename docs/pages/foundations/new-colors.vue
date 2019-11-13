@@ -39,17 +39,22 @@ This list is automatically generated so you can consider it a source of truth.
   <KtTableColumn label="Description" prop="description"/>
 </KtTable>
 
+{{colorObjectTokens}}
+
 <div>
 </div>
 
 </template>
 <script>
 import { baseColors, tokens } from '../../../packages/kotti-colors/colors'
+import { colorObjectTokens } from '../../../packages/kotti-colors/index'
+
 export default {
 	name: 'NewColors',
 	data() {
 		return {
 			tokens,
+			colorObjectTokens,
 			columns: [
 				{ label: 'Name', prop: 'name' },
 				{ label: 'Description', prop: 'description' },

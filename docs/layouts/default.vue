@@ -1,5 +1,5 @@
 <template>
-	<KtContainer :hasActionBar="showActionbar">
+	<KtContainer :style="style" :hasActionBar="showActionbar">
 		<Navbar slot="navbar" />
 		<Actionbar slot="actionbar" />
 		<div slot="workspace"><nuxt class="content" /></div>
@@ -10,6 +10,7 @@
 import KtContainer from '../../packages/kotti-container'
 import Actionbar from '~/components/Actionbar.vue'
 import Navbar from '~/components/Navbar.vue'
+import { customPropertiesTokens } from '../../packages/kotti-colors/index'
 
 export default {
 	name: 'DefaultLayout',
@@ -28,6 +29,9 @@ export default {
 	// 	}
 	// },
 	computed: {
+		style() {
+			return customPropertiesTokens
+		},
 		showActionbar() {
 			const exclusivePage = ['index', 'changelog', 'designkit']
 			return !exclusivePage.includes(this.$route.name)

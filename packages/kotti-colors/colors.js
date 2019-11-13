@@ -107,12 +107,12 @@ export const tokens = [
 	{
 		name: 'danger',
 		description: 'Danger button background',
-		reference: 'red',
+		reference: 'red-50',
 	},
 	{
 		name: 'hover-danger',
 		description: 'Danger hover',
-		reference: 'darker red',
+		reference: 'red-70',
 	},
 	{
 		name: 'link-01',
@@ -142,26 +142,21 @@ export const tokens = [
 	{
 		name: 'support-error',
 		description: 'Error',
-		reference: 'red',
+		reference: 'red-50',
 	},
 	{
 		name: 'support-warning',
 		description: 'Warning',
-		reference: 'organge',
+		reference: 'orange-50',
 	},
 	{
 		name: 'support-success',
 		description: 'Success',
-		reference: 'Green',
+		reference: 'green-50',
 	},
 	{
 		name: 'support-info',
 		description: 'Information',
-		reference: 'Light blue',
-	},
-	{
-		name: '',
-		description: '',
-		reference: '',
+		reference: 'primary-50',
 	},
 ]
