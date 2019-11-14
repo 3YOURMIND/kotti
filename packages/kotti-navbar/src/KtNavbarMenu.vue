@@ -18,7 +18,11 @@
 			>
 				<div :class="{ active: link.isActive, 'navbar-menu__item': true }">
 					<i class="yoco" v-text="link.icon" />
-					<span v-if="!isNarrow" v-text="link.title" />
+					<span
+						v-if="!isNarrow"
+						v-text="link.title"
+						:data-test="`navbar-section-item-${link.title.toLowerCase()}`"
+					/>
 				</div>
 			</a>
 		</div>
