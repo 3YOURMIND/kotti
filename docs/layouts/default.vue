@@ -10,7 +10,7 @@
 import KtContainer from '../../packages/kotti-container'
 import Actionbar from '~/components/Actionbar.vue'
 import Navbar from '~/components/Navbar.vue'
-import { customPropertiesTokens } from '../../packages/kotti-colors/index'
+import { customProperties } from '../../packages/kotti-colors/index'
 
 export default {
 	name: 'DefaultLayout',
@@ -30,7 +30,7 @@ export default {
 	// },
 	computed: {
 		style() {
-			return customPropertiesTokens
+			return customProperties
 		},
 		showActionbar() {
 			const exclusivePage = ['index', 'changelog', 'designkit']

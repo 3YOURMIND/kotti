@@ -16,3 +16,9 @@ export const tokenColorsFactory = {
 	array: tokens,
 	string: arrayToCustomProperties(tokens),
 }
+
+export const customProperties = `
+${baseColorsFactory.string}
+
+
+${tokenColorsFactory.string}`
