@@ -32,29 +32,42 @@ We encourage you to replace usage of kotti colors with kotti color tokens.
 ## List of tokens
 This list is automatically generated so you can consider it a source of truth.
 
-<KtTable :rows="tokens">
+<KtTable :rows="tokenColorsFactory.array">
   <KtTableColumn label="Name" :renderCell="renderColorVar" prop="name"/>
   <KtTableColumn label="Refers to" :renderCell="renderColorVar" prop="reference"/>
   <KtTableColumn label="Color" prop="" :renderCell="renderColor"/>
   <KtTableColumn label="Description" prop="description"/>
 </KtTable>
 
-{{colorObjectTokens}}
+## CSS custom properties generated
 
+Again, these are automatically generated so it can be considered source of truth.
+
+<pre>
+/* Base colors */
+
+{{baseColorsFactory.string}}
+
+/* Token colors */
+
+{{tokenColorsFactory.string}}
+</pre>
 <div>
 </div>
 
 </template>
 <script>
-import { baseColors, tokens } from '../../../packages/kotti-colors/colors'
-import { colorObjectTokens } from '../../../packages/kotti-colors/index'
+import {
+	baseColorsFactory,
+	tokenColorsFactory,
+} from '../../../packages/kotti-colors/index'
 
 export default {
 	name: 'NewColors',
 	data() {
 		return {
-			tokens,
-			colorObjectTokens,
+			baseColorsFactory,
+			tokenColorsFactory,
 			columns: [
 				{ label: 'Name', prop: 'name' },
 				{ label: 'Description', prop: 'description' },
@@ -65,7 +78,7 @@ export default {
 	},
 	methods: {
 		renderColor(h, { value, row, rowIndex, column, columnIndex }) {
-			const color = baseColors[row.reference]
+			const color = baseColorsFactory.object[row.reference]
 			if (!color) return 'No color'
 			return (
 				<div class="color-box" style={`--localColor: ${color};`}>
