@@ -59,6 +59,7 @@ Again, these are automatically generated so it can be considered source of truth
 <script>
 import {
 	baseColorsFactory,
+	figma,
 	tokenColorsFactory,
 } from '../../../packages/kotti-colors/index'
 
@@ -67,6 +68,7 @@ export default {
 	data() {
 		return {
 			baseColorsFactory,
+			figma,
 			tokenColorsFactory,
 			columns: [
 				{ label: 'Name', prop: 'name' },
