@@ -113,6 +113,7 @@ $default-button-height: $unit-8;
 $large-button-height: $unit-9;
 $small-button-height: $unit-6;
 
+// Base style
 .kt-button {
 	display: inline-flex;
 	align-items: center;
@@ -122,31 +123,32 @@ $small-button-height: $unit-6;
 	height: $default-button-height;
 	padding: 0 1em;
 
-	background: $lightgray-300;
-	color: $primary-600;
 	font-weight: 600;
 	outline: none;
 	user-select: none;
-
-	border: 1px solid $lightgray-400;
 	border-radius: $border-radius;
+	cursor: pointer;
+
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
 	}
-
-	&:hover {
-		color: $primary-600;
-		cursor: pointer;
-	}
 }
 
+// Size modifiers
 .kt-button.sm {
 	height: $small-button-height;
 }
 
 .kt-button.lg {
 	height: $large-button-height;
+}
+
+// Color modifier
+.kt-button {
+	background: $lightgray-300;
+	color: $primary-600;
+	border: 1px solid $lightgray-400;
 }
 
 .kt-button.primary {
@@ -193,6 +195,7 @@ $small-button-height: $unit-6;
 	}
 }
 
+// With icon
 .kt-button.icon i {
 	font-size: 1rem;
 	margin-right: 0.2rem;
@@ -205,6 +208,7 @@ $small-button-height: $unit-6;
 	}
 }
 
+// Disabled button
 .kt-button.disabled,
 .kt-button:disabled {
 	opacity: 0.46;
