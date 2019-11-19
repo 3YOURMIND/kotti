@@ -80,13 +80,17 @@
 	## Loading
 
 	<div class="element-example">
-		<KtButton type="primary" loading icon="edit">Loading button</KtButton>
-		<KtButton type="secondary" class="ml-16px" loading icon="edit">Loading</KtButton>
+		<KtButton loading class="mr-16px">Loading button</KtButton>
+		<KtButton type="primary" class="mr-16px" loading>Loading button</KtButton>
+		<KtButton type="secondary" class="mr-16px" loading>Loading</KtButton>
+		<KtButton type="danger" class="mr-16px" loading>Loading</KtButton>
 	</div>
 
 	```html
-	<KtButton type="primary" loading icon="edit">Loading button</KtButton>
-	<KtButton type="primary" class="ml-16px" loading icon="edit"/>
+	<KtButton loading>Loading button</KtButton>
+	<KtButton type="primary" loading>Loading button</KtButton>
+	<KtButton type="secondary" loading/>
+	<KtButton type="danger" loading/>
 	```
 
 	## Button Group
