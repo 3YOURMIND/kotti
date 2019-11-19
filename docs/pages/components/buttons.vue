@@ -136,14 +136,6 @@
 	<KtButton type="primary" element="div">Primary Button</KtButton>
 	```
 
-	This can be useful 
-
-	## Themes
-
-	<div class="element-example">
-		<KtButton @click="isThemeChange = !isThemeChange">Change Theme</KtButton>
-	</div>
-
 	<div v-html="buttonUsage" />
 
 </template>
@@ -160,34 +152,6 @@ export default {
 	computed: {
 		buttonUsage() {
 			return ButtonUsage
-		},
-	},
-	provide() {
-		return { KtTheme: this.themeProvider }
-	},
-	data() {
-		return {
-			isThemeChange: true,
-			themeProvider: {
-				brandColor: '#2c66c4',
-				dangerColor: '#d91919',
-			},
-			customizedTheme: {
-				brandColor: '#000',
-				dangerColor: '#f85a40',
-			},
-			defaultTheme: {
-				brandColor: '#2c66c4',
-				dangerColor: '#d91919',
-			},
-		}
-	},
-	watch: {
-		isThemeChange(value) {
-			const theme = value ? this.customizedTheme : this.defaultTheme
-			Object.entries(theme).forEach(([key, value]) => {
-				this.$set(this.themeProvider, key, value)
-			})
 		},
 	},
 }
