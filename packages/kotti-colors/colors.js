@@ -1,3 +1,8 @@
+// Base colors are not meant to change
+// They CAN but should not be used directly
+// Instead, we are using tokens that are role based colors
+// The tokens are defined with these base colors
+
 export const baseColors = {
 	white: '#FFFFFF',
 	black: '#000000',
@@ -42,6 +47,8 @@ export const baseColors = {
 	'orange-60': '#FF7800',
 	'orange-70': '#BA6820',
 }
+
+// Tokens are calling base colors
 
 export const tokens = [
 	{
@@ -91,13 +98,18 @@ export const tokens = [
 	},
 	{
 		name: 'interactive-01-hover',
-		description: 'Hiver for Interactive-01',
+		description: 'Hover for Interactive-01',
 		reference: 'primary-70',
 	},
 	{
 		name: 'interactive-02',
 		description: 'Secondary interactive color\nSecondary button',
 		reference: 'gray-10',
+	},
+	{
+		name: 'interactive-02-hover',
+		description: 'Hover for Interactive-02',
+		reference: 'primary-10',
 	},
 	{
 		name: 'interactive-03',
