@@ -4,6 +4,7 @@ import {
 	arrayToCustomProperties,
 	arrayToObject,
 } from './utilities'
+import Color from 'color'
 
 export const baseColorsFactory = {
 	object: baseColors,
@@ -29,15 +30,51 @@ export const factoryToFigmaImportable = (
 ) => {
 	const output = []
 	tokenColorsFactory.array.forEach(token => {
-		const name = token.name.split('-').join(' ')
+		const name = token.name.split('--').join('')
+		const referencedColor = token.reference
+			? baseColorsFactory.object[token.reference]
+			: token.value
+		const color = Color(referencedColor)
+			.rgb()
+			.object()
+		const description = token.description
+			? `${token.description}. 
+Original color: '${token.reference}'`
+			: ''
 		output.push({
 			name,
-			description: token.description,
-			color: baseColorsFactory.object[token.reference],
+			description,
+			color,
 		})
 	})
 	return output
 }
+
+// tokens.forEach(token => {
+// 	// edit the style if already existing
+// 	const existingStyles = figma.getLocalPaintStyles()
+// 	let existing = existingStyles.find(style => style.name === token.name)
+// 	let figmaStyle
+// 	if (existing) {
+// 		figmaStyle = existing
+// 	}else{
+// 		figmaStyle = figma.createPaintStyle()
+// 	}
+
+// 	figmaStyle.name = token.name
+// 	figmaStyle.description = token.description
+
+// 	figmaStyle.paints = [
+// 		{
+// 			type: 'SOLID',
+// 			color: {
+// 				r: token.color.r / 255,
+// 				g: token.color.g / 255,
+// 				b: token.color.b / 255,
+// 			},
+// 		},
+// 	]
+// })
 
 export const figma = factoryToFigmaImportable(
 	tokenColorsFactory,
