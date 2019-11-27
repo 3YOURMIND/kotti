@@ -27,10 +27,14 @@ ${tokenColorsFactory.string}`
 export const factoryToFigmaImportable = (
 	tokenColorsFactory,
 	baseColorsFactory,
+	splitDashIntoGroups = false,
 ) => {
 	const output = []
 	tokenColorsFactory.array.forEach(token => {
-		const name = token.name.split('--').join('')
+		let name = token.name.split('--').join('')
+		if (splitDashIntoGroups) {
+			name = name.split('-').join(' / ')
+		}
 		const referencedColor = token.reference
 			? baseColorsFactory.object[token.reference]
 			: token.value

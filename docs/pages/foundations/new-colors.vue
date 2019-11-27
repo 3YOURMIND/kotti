@@ -65,11 +65,11 @@ and patterns) on a project.
 **It should not be used in a production file, it is just for cleaning up tests, 
 if you use it on the library file, you will break every team projects!**
 
-``` js 
+<pre class="long">
 // remove all style from pages
-const existingStyles = figma.getLocalPaintStyles()
+existingStyles = figma.getLocalPaintStyles()
 existingStyles.forEach(style=> style.remove())
-```
+</pre>
 
 ### Color list 
 
@@ -105,7 +105,7 @@ tokens = {{tokenImportableList}}
 {{figmaImportScript}}
 </pre>
 
-### Base colors and tokens
+#### Base colors and tokens
 <pre class="long">
 tokens = {{[...baseImportableList,...tokenImportableList]}}
 
@@ -154,10 +154,18 @@ export default {
 	},
 	computed: {
 		tokenImportableList() {
-			return factoryToFigmaImportable(tokenColorsFactory, baseColorsFactory)
+			return factoryToFigmaImportable(
+				tokenColorsFactory,
+				baseColorsFactory,
+				true,
+			)
 		},
 		baseImportableList() {
-			return factoryToFigmaImportable(baseColorsFactory, baseColorsFactory)
+			return factoryToFigmaImportable(
+				baseColorsFactory,
+				baseColorsFactory,
+				true,
+			)
 		},
 	},
 }
@@ -175,5 +183,6 @@ export default {
 pre.long {
 	max-height: 500px;
 	overflow-y: auto;
+	user-select: all;
 }
 </style>
