@@ -31,10 +31,7 @@ Again, these are automatically generated so it can be considered source of truth
 
 </template>
 <script>
-import {
-	baseColorsFactory,
-	tokenColorsFactory,
-} from '../../../packages/kotti-colors/index'
+import { baseColorsFactory, tokenColorsFactory } from '../../../tokens'
 
 export default {
 	name: 'NewColors',

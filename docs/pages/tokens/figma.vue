@@ -73,8 +73,8 @@ import {
 	figma,
 	tokenColorsFactory,
 	factoryToFigmaImportable,
-} from '../../../packages/kotti-colors/index'
-import figmaImportScript from '../../../packages/kotti-colors/figma-import-script'
+} from '../../../tokens'
+import figmaImportScript from '../../../tokens/figma-import-script'
 
 export default {
 	name: 'NewColors',
