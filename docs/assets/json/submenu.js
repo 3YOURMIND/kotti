@@ -11,10 +11,6 @@ const submenu = [
 				to: 'grids',
 			},
 			{
-				label: 'Color',
-				to: 'color',
-			},
-			{
 				label: 'Icons',
 				to: 'icons',
 			},
