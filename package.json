@@ -62,6 +62,7 @@
 		"@vue/cli-service": "^3.4.1",
 		"@vue/eslint-config-prettier": "^4.0.1",
 		"cross-env": "^5.2.0",
+		"esm": "^3.2.25",
 		"husky": "^1.2.0",
 		"lint-staged": "^8.1.5",
 		"node-sass": "^4.10.0",
@@ -106,12 +107,14 @@
 	},
 	"scripts": {
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
-		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
+		"build:kotti": "yarn tokens; vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"deploy:docs": "./github-deploy.sh",
-		"dev:docs": "nuxt",
+		"dev:docs": "yarn tokens; nuxt",
 		"precommit": "lint-staged",
-		"prepublishOnly": "yarn run build:kotti"
+		"prepublishOnly": "yarn run build:kotti",
+		"tokens": "node -r esm tokens/generate.js"
 	},
 	"style": "dist/KottiUI.css",
+	"type": "module",
 	"version": "1.7.13"
 }

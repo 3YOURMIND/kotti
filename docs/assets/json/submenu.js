@@ -15,10 +15,6 @@ const submenu = [
 				to: 'color',
 			},
 			{
-				label: 'New Colors',
-				to: 'new-colors',
-			},
-			{
 				label: 'Icons',
 				to: 'icons',
 			},
@@ -32,6 +28,23 @@ const submenu = [
 			},
 		],
 		parent: 'foundations',
+	},
+	{
+		child: [
+			{
+				label: 'Introduction to tokens',
+				to: 'introduction',
+			},
+			{
+				label: 'Colors',
+				to: 'colors',
+			},
+			{
+				label: 'Figma',
+				to: 'figma',
+			},
+		],
+		parent: 'tokens',
 	},
 	{
 		child: [

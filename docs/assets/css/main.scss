@@ -12,6 +12,12 @@ h3 ~ table {
 	margin-top: 0;
 }
 
+pre.long {
+	max-height: 500px;
+	overflow-y: auto;
+	user-select: all;
+}
+
 .success-message {
 	position: fixed;
 	bottom: 1rem;

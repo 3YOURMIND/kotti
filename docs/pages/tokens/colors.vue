@@ -1,29 +1,5 @@
 <template lang="md">
-  # New Colors
-
-  Our new color system is better, bigger and uses CSS custom properties!
-  We are using the `ie11-custom-properties` package for IE11 support.
-
-  ## CSS Custom properties
-
-  CSS custom properties are just native CSS variables. Without any preprocesssing ! 
-  Also mean they work in cascade! All of that is great!
-
-``` css
-  /* set a css custom property */
-  --text-01: #000;
-  --background-01: #f5f5f5; 
-
-  /* read a property */
-  color: var(--text-01)
-  background-color: var(--background-01)
-```
-
-## The token principle
-Using color names like `gray-10` make sense, but we think that color name should be semantic as well!
-So we are abstracting the color by usage. It help really make sense for changing colors as well.
-
-When using kotti color, you should use token colors and not base color directly!
+# Color Tokens
 
 ## Migration
 Old scss variables will still be available but we will drop support in the next major release. <br>
@@ -43,7 +19,7 @@ This list is automatically generated so you can consider it a source of truth.
 
 Again, these are automatically generated so it can be considered source of truth.
 
-<pre>
+<pre class="long">
 /* Base colors */
 
 {{baseColorsFactory.string}}
@@ -52,23 +28,16 @@ Again, these are automatically generated so it can be considered source of truth
 
 {{tokenColorsFactory.string}}
 </pre>
-<div>
-</div>
 
 </template>
 <script>
-import {
-	baseColorsFactory,
-	figma,
-	tokenColorsFactory,
-} from '../../../packages/kotti-colors/index'
+import { baseColorsFactory, tokenColorsFactory } from '../../../tokens'
 
 export default {
 	name: 'NewColors',
 	data() {
 		return {
 			baseColorsFactory,
-			figma,
 			tokenColorsFactory,
 			columns: [
 				{ label: 'Name', prop: 'name' },

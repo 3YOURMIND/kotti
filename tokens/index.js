@@ -4,6 +4,7 @@ import {
 	arrayToCustomProperties,
 	arrayToObject,
 } from './utilities'
+import Color from 'color'
 
 export const baseColorsFactory = {
 	object: baseColors,
@@ -26,14 +27,28 @@ ${tokenColorsFactory.string}`
 export const factoryToFigmaImportable = (
 	tokenColorsFactory,
 	baseColorsFactory,
+	splitDashIntoGroups = false,
 ) => {
 	const output = []
 	tokenColorsFactory.array.forEach(token => {
-		const name = token.name.split('-').join(' ')
+		let name = token.name.split('--').join('')
+		if (splitDashIntoGroups) {
+			name = name.split('-').join(' / ')
+		}
+		const referencedColor = token.reference
+			? baseColorsFactory.object[token.reference]
+			: token.value
+		const color = Color(referencedColor)
+			.rgb()
+			.object()
+		const description = token.description
+			? `${token.description}. 
+Original color: '${token.reference}'`
+			: ''
 		output.push({
 			name,
-			description: token.description,
-			color: baseColorsFactory.object[token.reference],
+			description,
+			color,
 		})
 	})
 	return output

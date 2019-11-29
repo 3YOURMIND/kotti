@@ -4,11 +4,7 @@
 			<div class="actionbar-header"><h1 v-text="currentSection" /></div>
 			<div class="actionbar-body">
 				<div class="actionbar-menu has-icon-right">
-					<ul
-						v-for="item in submenu"
-						:key="item.id"
-						v-if="item.parent === currentSection.toLowerCase()"
-					>
+					<ul v-for="item in filteredSubmenus" :key="item.id">
 						<nuxt-link
 							v-for="child in item.child"
 							:to="`/${item.parent}/${child.to}`"
@@ -63,6 +59,11 @@ export default {
 			const pathName = this.$route.name ? this.$route.name.split('-')[0] : ''
 			const sectionName = pathName.slice(0, 1).toUpperCase() + pathName.slice(1)
 			return sectionName
+		},
+		filteredSubmenus() {
+			return Submenu.filter(
+				menu => menu.parent.toLowerCase() === this.currentSection.toLowerCase(),
+			)
 		},
 	},
 }
