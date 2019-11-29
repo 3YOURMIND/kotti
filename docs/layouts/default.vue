@@ -30,7 +30,7 @@ export default {
 	// },
 	computed: {
 		style() {
-			return customProperties
+			return ''
 		},
 		showActionbar() {
 			const exclusivePage = ['index', 'changelog', 'designkit']
