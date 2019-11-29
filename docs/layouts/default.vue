@@ -10,6 +10,7 @@
 import KtContainer from '../../packages/kotti-container'
 import Actionbar from '~/components/Actionbar.vue'
 import Navbar from '~/components/Navbar.vue'
+import 'ie11-custom-properties'
 
 export default {
 	name: 'DefaultLayout',
