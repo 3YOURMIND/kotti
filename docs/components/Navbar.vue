@@ -109,7 +109,7 @@ export default {
 						{
 							icon: 'json',
 							title: 'Tokens',
-							path: '/tokens/index',
+							path: '/tokens/introduction',
 							isActive: this.isCurrentPage('/tokens'),
 						},
 						{

@@ -1,40 +1,18 @@
 <template lang="md">
-# Color Tokens
+  
+# Figma
 
-## Migration
-Old scss variables will still be available but we will drop support in the next major release. <br>
-We encourage you to replace usage of kotti colors with kotti color tokens.
+We are using figma for proptotyping and managing our components.
+Our goal is to keep everything updated between the code and the figma files. 
 
-## List of tokens
-This list is automatically generated so you can consider it a source of truth.
-
-<KtTable :rows="tokenColorsFactory.array">
-  <KtTableColumn label="Name" :renderCell="renderColorVar" prop="name"/>
-  <KtTableColumn label="Refers to" :renderCell="renderColorVar" prop="reference"/>
-  <KtTableColumn label="Color" prop="" :renderCell="renderColor"/>
-  <KtTableColumn label="Description" prop="description"/>
-</KtTable>
-
-## CSS custom properties generated
-
-Again, these are automatically generated so it can be considered source of truth.
-
-<pre class="long">
-/* Base colors */
-
-{{baseColorsFactory.string}}
-
-/* Token colors */
-
-{{tokenColorsFactory.string}}
-</pre>
+We wrote few scriptsthat uses the figma API to avoid us any manual work.
 
 ## Import into figma
 Figma let you use the `figma` object in the console, so we can easily interact with 
 the API without even having to create or publish plugins. We'll use that feature to 
 easily import the colors into figma as styles.
 
-### Clean up old color
+### Clean up old color styles
 This snippet will help you delete every color style (paint style, also include gradients 
 and patterns) on a project. 
 
@@ -49,7 +27,7 @@ existingStyles.forEach(style=> style.remove())
 
 ### Color list 
 
-This is useful if you use the color importer figma plugin.
+This is useful if you use the color importer figma plugin (TBA).
 
 #### Base colors 
 <pre class="long">
@@ -106,27 +84,7 @@ export default {
 			figma,
 			tokenColorsFactory,
 			figmaImportScript,
-			columns: [
-				{ label: 'Name', prop: 'name' },
-				{ label: 'Description', prop: 'description' },
-				{ label: 'Refers to', prop: 'reference' },
-				{ label: '', prop: 'reference' },
-			],
 		}
-	},
-	methods: {
-		renderColor(h, { value, row, rowIndex, column, columnIndex }) {
-			const color = baseColorsFactory.object[row.reference]
-			if (!color) return 'No color'
-			return (
-				<div class="color-box" style={`--localColor: ${color};`}>
-					&nbsp;
-				</div>
-			)
-		},
-		renderColorVar(h, { value, row, rowIndex, column, columnIndex }) {
-			return <code>--{value}</code>
-		},
 	},
 	computed: {
 		tokenImportableList() {
@@ -146,14 +104,3 @@ export default {
 	},
 }
 </script>
-<style>
-.color-box {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	box-shadow: 2px 2px 5px #ccc;
-	border: 4px solid #fff;
-	background: var(--localColor);
-	margin: 8px;
-}
-</style>
