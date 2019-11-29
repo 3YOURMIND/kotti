@@ -1,5 +1,6 @@
-import KtAvatar from './kotti-avatar'
+import KtAccordion from './kotti-accordion'
 import KtActionbar from './kotti-actionbar'
+import KtAvatar from './kotti-avatar'
 import KtAvatarGroup from './kotti-avatar-group'
 import KtBanner from './kotti-banner'
 import KtBreadcrumb from './kotti-breadcrumb'
@@ -41,6 +42,7 @@ import KtRadioGroup from './kotti-radio-group'
 import './kotti-style/index.scss'
 
 const components = {
+	KtAccordion,
 	KtActionbar,
 	KtAvatar,
 	KtAvatarGroup,
@@ -113,6 +115,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 export default { ...components, install }
 
 export {
+	KtAccordion,
 	KtActionbar,
 	KtAvatar,
 	KtAvatarGroup,
