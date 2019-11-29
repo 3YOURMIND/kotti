@@ -5,7 +5,7 @@
 We are using figma for proptotyping and managing our components.
 Our goal is to keep everything updated between the code and the figma files. 
 
-We wrote few scriptsthat uses the figma API to avoid us any manual work.
+We wrote few scripts that uses the figma API to avoid us any manual work.
 
 ## Import into figma
 Figma let you use the `figma` object in the console, so we can easily interact with 
