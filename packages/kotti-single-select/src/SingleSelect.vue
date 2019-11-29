@@ -9,8 +9,7 @@
 					v-model="selectedLabel"
 					:disabled="disabled"
 					:placeholder="placeholder"
-					:readonly="!filterable"
-					@input="setQueryString($event.target.value)"
+					@input="handleInputChange($event.target.value)"
 					:required="required"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
@@ -146,7 +145,6 @@ export default {
 				'form-input': true,
 				'form-input--compact': this.isCompact,
 				'form-input--compact--focus': this.isCompact && this.visible,
-				'form-input--invalid': this.required && !this.selectedLabel,
 			}
 		},
 		invalidInput() {
@@ -171,12 +169,11 @@ export default {
 
 			const query = this.queryString.toLowerCase()
 			return this.options.filter(({ label, value }) => {
-				if (value === null) return false
-
-				return (
-					label.toLowerCase().includes(query) ||
-					value.toLowerCase().includes(query)
-				)
+				return label !== null
+					? label.toLowerCase().includes(query)
+					: value !== null
+					? value.toLowerCase().includes(query)
+					: false
 			})
 		},
 		hasLabel() {
@@ -199,7 +196,6 @@ export default {
 				}
 				const selectedItem = this.options.find(option => option.value === value)
 				this.selectedLabel = selectedItem.label
-				this.setQueryString(selectedItem.label)
 			},
 		},
 	},
@@ -236,14 +232,20 @@ export default {
 			if (!this.isOptionAllowed(option)) return
 
 			this.selectedLabel = option.label
-
-			const selectedItem = this.options.find(
-				({ label }) => label === this.selectedLabel,
-			)
+			// const selectedItem = this.options.find(
+			// 	({ label }) => label === this.selectedLabel,
+			// )
+			const selectedItem = option //a scenario where this is not the same as above?
 			this.$emit('input', selectedItem.value)
-			// this.queryString = this.selectedLabel
-			this.setQueryString(this.selectedLabel)
+			this.setQueryString('')
 			this.visible = false
+		},
+		handleInputChange(value) {
+			if (!this.filterable) {
+				this.selectedLabel = ''
+				return
+			}
+			this.setQueryString(value)
 		},
 		setQueryString(value) {
 			if (!this.filterable) return

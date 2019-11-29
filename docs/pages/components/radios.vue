@@ -99,7 +99,7 @@ export default {
 		return {
 			radio1: 'morning',
 			radio2: 'option1',
-			radio3: '',
+			radio3: null,
 			title: 'Test',
 			options: [
 				{

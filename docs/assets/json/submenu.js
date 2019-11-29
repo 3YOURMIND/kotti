@@ -49,6 +49,10 @@ const submenu = [
 	{
 		child: [
 			{
+				label: 'Accordion',
+				to: 'accordion',
+			},
+			{
 				label: 'Avatars',
 				to: 'avatars',
 			},
