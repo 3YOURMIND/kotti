@@ -107,9 +107,9 @@
 	},
 	"scripts": {
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
-		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
+		"build:kotti": "yarn tokens; vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"deploy:docs": "./github-deploy.sh",
-		"dev:docs": "nuxt",
+		"dev:docs": "yarn tokens; nuxt",
 		"precommit": "lint-staged",
 		"prepublishOnly": "yarn run build:kotti",
 		"tokens": "node -r esm tokens/generate.js"

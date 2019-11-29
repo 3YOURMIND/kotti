@@ -51,7 +51,7 @@ export const tokens = [
 	},
 	{
 		name: 'ui-01',
-		description: 'Secondary page background',
+		description: 'Secondary page background 2',
 		reference: 'gray-10',
 	},
 	{
