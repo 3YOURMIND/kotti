@@ -19,19 +19,7 @@ export default {
 		Navbar,
 		KtContainer,
 	},
-	// provide() {
-	// 	return {
-	// 		KtTheme: {
-	// 			brandColor: '#3d3d3d',
-	// 			dangerColor: 'red',
-	// 			brandColorDark: '#222',
-	// 		},
-	// 	}
-	// },
 	computed: {
-		style() {
-			return ''
-		},
 		showActionbar() {
 			const exclusivePage = ['index', 'changelog', 'designkit']
 			return !exclusivePage.includes(this.$route.name)
