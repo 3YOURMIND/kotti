@@ -1,5 +1,5 @@
 <template>
-	<KtContainer :style="style" :hasActionBar="showActionbar">
+	<KtContainer :hasActionBar="showActionbar">
 		<Navbar slot="navbar" />
 		<Actionbar slot="actionbar" />
 		<div slot="workspace"><nuxt class="content" /></div>
@@ -29,9 +29,6 @@ export default {
 	// 	}
 	// },
 	computed: {
-		style() {
-			return ''
-		},
 		showActionbar() {
 			const exclusivePage = ['index', 'changelog', 'designkit']
 			return !exclusivePage.includes(this.$route.name)
