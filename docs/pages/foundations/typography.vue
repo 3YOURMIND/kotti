@@ -3,9 +3,10 @@
 
 ## Typeface
 
-Kotti uses Open Sans as default font for all text.
-
-For macOS, we use Apple system font San Francisco, you can download from [Fonts - Apple Developer](https://developer.apple.com/fonts/)
+Kotti uses Roboto as default font for all text.
+You are responsible for loading it into your app. For this documentation we use the
+google font version online, but you might want to load it locally if your app doesn't
+have access to the network.
 
 ## Headers
 
@@ -143,5 +144,7 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 </template>
 
 <script>
-export default { name: 'Typography' }
+export default {
+	name: 'Typography',
+}
 </script>

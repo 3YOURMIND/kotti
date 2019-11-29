@@ -48,8 +48,7 @@ $code-color: $primary-600;
 // Fonts
 // Credit: https://css-tricks.com/snippets/css/system-font-stack/
 
-$base-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-	Helvetica, Arial, sans-serif !default;
+$base-font-family: Roboto, sans-serif !default;
 $body-font-family: $base-font-family;
 $mono-font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Courier,
 	monospace !default;

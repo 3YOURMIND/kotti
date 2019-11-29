@@ -14,7 +14,13 @@ const config = {
 				content: `Kotti helps to unify our design language and provides the documentation for further product design decisions. The Kotti design system has two main parts: foundation and components.`,
 			},
 		],
-		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+		link: [
+			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+			{
+				href: 'https://fonts.googleapis.com/css?family=Roboto&display=swap',
+				rel: 'stylesheet',
+			},
+		],
 	},
 	/*
 	 ** Customize the progress bar color
