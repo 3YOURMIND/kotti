@@ -99,7 +99,7 @@ export default {
 	},
 }
 </script>
-<style>
+<style lang="scss">
 .kt-input-number__input {
 	width: auto;
 	border: 0;
@@ -107,6 +107,7 @@ export default {
 	max-width: 100%;
 	color: $darkgray-500;
 	padding-right: 0.1rem;
+	-moz-appearance: textfield;
 	&--100 {
 		width: 100%;
 	}
