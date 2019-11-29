@@ -107,6 +107,12 @@ export default {
 							isActive: this.isCurrentPage('/foundations'),
 						},
 						{
+							icon: 'json',
+							title: 'Tokens',
+							path: '/tokens/index',
+							isActive: this.isCurrentPage('/tokens'),
+						},
+						{
 							icon: 'dashboard',
 							title: 'Components',
 							path: '/components/avatars',
