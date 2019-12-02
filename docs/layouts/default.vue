@@ -19,6 +19,9 @@ export default {
 		Navbar,
 		KtContainer,
 	},
+	mounted() {
+		cssVars()
+	},
 	computed: {
 		showActionbar() {
 			const exclusivePage = ['index', 'changelog', 'designkit']
