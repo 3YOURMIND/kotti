@@ -5528,11 +5528,6 @@ icss-utils@^4.1.0:
   dependencies:
     postcss "^7.0.14"
 
-ie11-custom-properties@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/ie11-custom-properties/-/ie11-custom-properties-2.2.0.tgz#e3202eae12f0020648ea78924bfe69336c7ea0e0"
-  integrity sha512-Hn5O7kIuppiHUhLVsBZIHnCSYaLqwfCBgy1Kp5Cwjo7aYTCs3jkyKTjTL0FVtJptB0t03BOYGGNRR8VDBOpknw==
-
 ieee754@^1.1.4:
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"

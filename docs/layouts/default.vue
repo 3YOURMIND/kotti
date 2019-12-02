@@ -20,7 +20,9 @@ export default {
 		KtContainer,
 	},
 	mounted() {
-		cssVars({ watch: true, shadowDOM: true, onlyLegacy: false })
+		// loading IE11 polyfill
+		const isIE = !!window.MSInputMethodContext && !!document.documentMode
+		if (isIE) cssVars({ watch: true, shadowDOM: true, onlyLegacy: false })
 	},
 	computed: {
 		showActionbar() {
