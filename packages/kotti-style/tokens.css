@@ -4,7 +4,7 @@
 // Run `yarn tokens` to egenrate again
 */
 
-body {
+:root {
 	--white: #ffffff;
 	--black: #000000;
 	--gray-10: #f8f8f8;
@@ -59,6 +59,7 @@ body {
 	--interactive-01: var(--primary-60);
 	--interactive-01-hover: var(--primary-70);
 	--interactive-02: var(--gray-10);
+	--interactive-02-hover: var(--primary-10);
 	--interactive-03: var(--primary-50);
 	--danger: var(--red-50);
 	--hover-danger: var(--red-70);

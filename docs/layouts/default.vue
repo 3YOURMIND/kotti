@@ -20,7 +20,7 @@ export default {
 		KtContainer,
 	},
 	mounted() {
-		cssVars({ watch: true })
+		cssVars({ watch: true, shadowDOM: true, onlyLegacy: false })
 	},
 	computed: {
 		showActionbar() {

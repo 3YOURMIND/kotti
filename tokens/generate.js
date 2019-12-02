@@ -10,7 +10,7 @@ let output = `
 // Run \`yarn tokens\` to egenrate again
 */
 
-body{
+:root{
 ${arrayToCustomProperties(objectToArray(baseColors), 'color')}
 ${arrayToCustomProperties(tokens)}
 }`
