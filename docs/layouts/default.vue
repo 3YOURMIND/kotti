@@ -10,6 +10,7 @@
 import KtContainer from '../../packages/kotti-container'
 import Actionbar from '~/components/Actionbar.vue'
 import Navbar from '~/components/Navbar.vue'
+import cssVars from 'css-vars-ponyfill'
 
 export default {
 	name: 'DefaultLayout',
