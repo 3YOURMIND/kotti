@@ -1,21 +1,25 @@
 <template>
 	<a :href="link">
-		<div class="navbar-notification">
+		<div class="kt-navbar-notification">
 			<div>
 				<i
 					v-if="!count || !isNarrow"
-					class="navbar-notification__icon yoco"
+					class="kt-navbar-notification__icon yoco"
 					v-text="'bell'"
 				/>
 				<span
 					v-show="!isNarrow"
-					class="navbar-notification__label"
+					class="kt-navbar-notification__label"
 					v-text="title"
 				/>
 			</div>
-			<div v-show="count" class="navbar-notification__number" v-text="count" />
+			<div
+				v-show="count"
+				class="kt-navbar-notification__number"
+				v-text="count"
+			/>
 		</div>
-		<div class="navbar-notification--mobile">
+		<div class="kt-navbar-notification--mobile">
 			<i class="yoco" v-if="!count">bell</i> <span v-else v-text="count" />
 		</div>
 	</a>
@@ -46,3 +50,41 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.kt-navbar-notification {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 1px solid rgba(#fff, 0.26);
+	font-size: 0.75rem;
+	line-height: 1.2rem;
+	padding: 0.8rem 1.2rem;
+	margin-bottom: 0.4rem;
+	span {
+		margin-left: 0.8rem;
+	}
+	&--narrow {
+		justify-content: center;
+		padding: 0.8rem 0;
+	}
+	.yoco {
+		font-size: 1rem;
+	}
+	&__number {
+		border-radius: 0.6rem;
+		width: 1.2rem;
+		height: 1.2rem;
+		line-height: 1.2rem;
+		font-size: 0.6rem;
+		text-align: center;
+		background: rgba(#fff, 0.26);
+		&--narrow {
+			right: 0.4rem;
+			position: absolute;
+		}
+	}
+	&--mobile {
+		display: none;
+	}
+}
+</style>

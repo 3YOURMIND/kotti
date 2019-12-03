@@ -1,6 +1,6 @@
 <template>
-	<div class="kt-navbar__quick-link">
-		<div v-if="!isNarrow" class="kt-navbar__quick-link__title" v-text="title" />
+	<div class="kt-navbar-quick-link">
+		<div v-if="!isNarrow" class="kt-navbar-quick-link__title" v-text="title" />
 		<a
 			v-for="(item, index) in links"
 			:key="index"
@@ -8,7 +8,7 @@
 			target="_blank"
 			rel="noopener noreferrer"
 		>
-			<div class="kt-navbar__quick-link__links">
+			<div class="kt-navbar-quick-link__links">
 				<span v-text="item.title" v-if="!isNarrow" /> <i class="yoco">link</i>
 			</div>
 		</a>
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.kt-navbar__quick-link {
+.kt-navbar-quick-link {
 	border-top: 1px solid #fff;
 	padding: 0.8rem 1.2rem;
 	&--narrow {
@@ -41,13 +41,13 @@ export default {
 		padding: 0.8rem 0;
 	}
 }
-.kt-navbar__quick-link__title {
+.kt-navbar-quick-link__title {
 	font-size: 0.6rem;
 	font-weight: 700;
 	opacity: 0.64;
 	text-transform: uppercase;
 }
-.kt-navbar__quick-link__links {
+.kt-navbar-quick-link__links {
 	display: flex;
 	font-size: 0.75rem;
 	padding: 0.3rem 0;
