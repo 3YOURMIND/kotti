@@ -6,6 +6,7 @@
 			labelText="MultiText"
 			:notification="navbarNotification"
 			:quickLinks="quickLinksData"
+			logoUrl="placehold.it/160x50"
 		>
 			<div slot="navbar-footer">
 				<KtUserMenu
@@ -21,57 +22,31 @@
 			headerTitle="KtContainer Example"
 			:menu="actionbarMenu"
 		/>
-		<div slot="workspace">
-			KtContainer Content
-			<button @click="isDarkThemeEnabled = !isDarkThemeEnabled">
-				Toggle darkTheme
-			</button>
-		</div>
+		<div slot="workspace"></div>
 	</KtContainer>
 </template>
 
 <script>
 import KtContainer from '../../../packages/kotti-container'
+import cssVars from 'css-vars-ponyfill'
 
 export default {
 	layout: 'empty',
 	components: {
 		KtContainer,
 	},
-	provide() {
-		return { KtTheme: this.defaultTheme }
-	},
-	watch: {
-		isDarkThemeEnabled(value) {
-			const theme = value ? this.darkTheme : this.lightTheme
-			Object.entries(theme).forEach(([key, value]) => {
-				this.$set(this.defaultTheme, key, value)
-			})
-		},
-	},
 	methods: {
 		handleMenuClick(link) {
 			alert('Link Clicked')
 		},
 	},
+	mounted() {
+		// loading IE11 polyfill
+		const isIE = !!window.MSInputMethodContext && !!document.documentMode
+		if (isIE) cssVars({ watch: true, shadowDOM: true, onlyLegacy: false })
+	},
 	data() {
 		return {
-			isDarkThemeEnabled: false,
-			defaultTheme: {
-				navbarBackgroundColor: '#122C56',
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255, 1)',
-			},
-			darkTheme: {
-				navbarBackgroundColor: '#122C56',
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255, 1)',
-			},
-			lightTheme: {
-				navbarBackgroundColor: '#fff',
-				navbarTextColor: 'rgba(0,0,0,.54)',
-				navbarTextActiveColor: 'rgba(0,0,0, 1)',
-			},
 			quickLinksData: {
 				links: [
 					{

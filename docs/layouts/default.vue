@@ -10,7 +10,6 @@
 import KtContainer from '../../packages/kotti-container'
 import Actionbar from '~/components/Actionbar.vue'
 import Navbar from '~/components/Navbar.vue'
-import cssVars from 'css-vars-ponyfill'
 
 export default {
 	name: 'DefaultLayout',
@@ -18,11 +17,6 @@ export default {
 		Actionbar,
 		Navbar,
 		KtContainer,
-	},
-	mounted() {
-		// loading IE11 polyfill
-		const isIE = !!window.MSInputMethodContext && !!document.documentMode
-		if (isIE) cssVars({ watch: true, shadowDOM: true, onlyLegacy: false })
 	},
 	computed: {
 		showActionbar() {
