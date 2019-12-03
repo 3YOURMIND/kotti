@@ -55,17 +55,13 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border-bottom: 1px solid;
+	border-bottom: 1px solid var(--navbar-border);
 	font-size: 0.75rem;
 	line-height: 1.2rem;
-	padding: 0.8rem 1.2rem;
+	padding: 0.8rem 1rem;
 	margin-bottom: 0.4rem;
 	span {
 		margin-left: 0.8rem;
-	}
-	&--narrow {
-		justify-content: center;
-		padding: 0.8rem 0;
 	}
 	.yoco {
 		font-size: 1rem;
@@ -78,10 +74,6 @@ export default {
 		font-size: 0.6rem;
 		text-align: center;
 		background: rgba(#fff, 0.26);
-		&--narrow {
-			right: 0.4rem;
-			position: absolute;
-		}
 	}
 	&--mobile {
 		display: none;

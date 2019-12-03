@@ -33,12 +33,8 @@ export default {
 
 <style lang="scss" scoped>
 .kt-navbar-quick-links {
-	border-top: 1px solid #fff;
-	padding: 0.8rem 1.2rem;
-	&--narrow {
-		text-align: center;
-		padding: 0.8rem 0;
-	}
+	border-top: 1px solid var(--navbar-border);
+	padding: 0.8rem 1rem;
 }
 .kt-navbar-quick-links__title {
 	font-size: 0.6rem;
@@ -52,10 +48,6 @@ export default {
 	padding: 0.3rem 0;
 	justify-content: space-between;
 	align-items: center;
-	color: inherit;
-	&--narrow {
-		display: block;
-	}
 	i {
 		font-size: 0.8rem;
 	}

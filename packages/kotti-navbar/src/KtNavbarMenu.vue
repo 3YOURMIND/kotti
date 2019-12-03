@@ -42,15 +42,7 @@ export default {
 .kt-navbar-menu {
 	text-align: left;
 	box-sizing: border-box;
-	padding: 0.4rem 1.2rem;
-	&:hover {
-		cursor: pointer;
-	}
-	&--narrow {
-		padding: 0.4rem 0;
-		margin: 0.8rem 0.2rem;
-		text-align: center;
-	}
+	padding: 0.4rem 1rem;
 	&__section {
 		display: block;
 		text-transform: uppercase;
@@ -65,15 +57,19 @@ export default {
 		font-size: 0.75rem;
 		padding: 0.6rem 0;
 		color: inherit;
+		&:hover {
+			cursor: pointer;
+			color: var(--navbar-color-active);
+		}
+		&.active {
+			color: var(--navbar-color-active);
+		}
 	}
 	&__item span {
 		margin-left: 0.8rem;
 	}
 	.yoco {
 		font-size: 1rem;
-	}
-	.active {
-		font-weight: 700;
 	}
 }
 </style>

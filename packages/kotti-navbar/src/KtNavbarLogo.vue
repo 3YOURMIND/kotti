@@ -8,7 +8,7 @@
 			/>
 		</div>
 		<div v-else class="kt-navbar-logo" @click="$emit('logoClick')">
-			<div class="navbar-logo--logo">
+			<div class="kt-navbar-logo__logo">
 				<slot />
 			</div>
 			<i
@@ -17,8 +17,8 @@
 				@click.stop="$KtNavbar.toggle()"
 			/>
 		</div>
-		<div class="navbar-logo--mobile">
-			<div class="navbar-logo--logo">
+		<div class="kt-navbar-logo--mobile">
+			<div class="kt-navbar-logo__logo">
 				<slot />
 			</div>
 		</div>
@@ -53,9 +53,9 @@ export default {
 .kt-navbar-logo {
 	display: flex;
 	align-items: center;
-	padding: 0.8rem 1.2rem;
+	padding: 0.8rem 1rem;
 	justify-content: space-between;
-	&--logo {
+	&__logo {
 		background-repeat: no-repeat;
 		background-position: left;
 		background-size: contain;
@@ -65,10 +65,6 @@ export default {
 		display: none;
 		padding: 0.2rem;
 		height: 100%;
-	}
-	&--narrow {
-		display: block;
-		padding: 0;
 	}
 	i {
 		opacity: 0.64;
