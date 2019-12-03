@@ -49,6 +49,7 @@
 	--orange-70: #ba6820;
 
 	--ui-background: var(--white);
+	--ui-navbar-background: var(--primary-90);
 	--ui-01: var(--gray-10);
 	--ui-02: var(--gray-20);
 	--ui-03: var(--gray-50);

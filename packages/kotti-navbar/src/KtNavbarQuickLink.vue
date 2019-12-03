@@ -39,7 +39,6 @@ export default {
 .kt-navbar-quick-links__title {
 	font-size: 0.6rem;
 	font-weight: 700;
-	opacity: 0.64;
 	text-transform: uppercase;
 }
 .kt-navbar-quick-links__link {
@@ -48,6 +47,10 @@ export default {
 	padding: 0.3rem 0;
 	justify-content: space-between;
 	align-items: center;
+	color: var(--navbar-color-light);
+	&:hover {
+		color: var(--navbar-color);
+	}
 	i {
 		font-size: 0.8rem;
 	}

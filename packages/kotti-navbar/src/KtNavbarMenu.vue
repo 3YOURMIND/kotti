@@ -46,9 +46,9 @@ export default {
 	&__section {
 		display: block;
 		text-transform: uppercase;
-		font-size: 0.75em;
+		font-size: 0.85em;
 		font-weight: 700;
-		opacity: 0.64;
+		color: var(--navbar-color-light);
 		padding: 0.2rem 0;
 		margin-top: 0.4rem;
 	}

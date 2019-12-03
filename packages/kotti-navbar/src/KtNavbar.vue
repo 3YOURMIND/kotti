@@ -102,8 +102,9 @@ $narrow-navbar-width: 3.4rem;
 
 :root {
 	--navbar-background: var(--primary-90);
-	--navbar-border: var(--primary-50);
+	--navbar-border: var(--primary-80);
 	--navbar-color: var(--primary-20);
+	--navbar-color-light: var(--primary-30);
 	--navbar-color-active: var(--white);
 }
 
