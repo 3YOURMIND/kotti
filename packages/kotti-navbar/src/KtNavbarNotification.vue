@@ -55,7 +55,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border-bottom: 1px solid rgba(#fff, 0.26);
+	border-bottom: 1px solid;
 	font-size: 0.75rem;
 	line-height: 1.2rem;
 	padding: 0.8rem 1.2rem;

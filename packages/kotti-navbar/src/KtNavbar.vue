@@ -72,16 +72,6 @@ export default {
 		labelText: { type: String, default: null },
 		logoUrl: { type: String },
 	},
-	// inject: {
-	// 	KtTheme: {
-	// 		default: {
-	// 			navbarBackgroundColor: '#122C56',
-	// 			navbarTextColor: 'rgba(255,255,255,.54)',
-	// 			navbarTextActiveColor: 'rgba(255,255,255, 1)',
-	// 		},
-	// 	},
-	// },
-	inject: ['KtTheme'],
 	data() {
 		return {
 			mobileMenuToggle: false,
@@ -112,7 +102,8 @@ $narrow-navbar-width: 3.2rem;
 
 .kt-navbar {
 	flex: 0 0 $navbar-width;
-	background-color: $primary-600;
+	background-color: var(--ui-navbar-background);
+	color: var(--text-04);
 	border-right: 1px solid #000;
 	bottom: 0;
 	left: 0;
@@ -149,16 +140,14 @@ $narrow-navbar-width: 3.2rem;
 	width: 2.4rem;
 	&:hover {
 		cursor: pointer;
-		background: rgba(0, 0, 0, 0.24);
 	}
 	&--active {
-		background: $primary-700;
 	}
 }
 
 .kt-navbar__header {
 	flex: 1 1 auto;
-	border-bottom: 1px solid rgba(#fff, 0.26);
+	border-bottom: 1px solid;
 	&--narrow {
 		padding: 1rem 0;
 		text-align: center;
@@ -179,7 +168,7 @@ $narrow-navbar-width: 3.2rem;
 .kt-navbar__footer {
 	flex: 0 0 auto;
 	padding: 0.8rem;
-	border-top: 1px solid rgba(#fff, 0.26);
+	border-top: 1px solid;
 	&--narrow {
 		display: flex;
 		justify-content: center;
@@ -241,7 +230,6 @@ $narrow-navbar-width: 3.2rem;
 			height: 1.2rem;
 			width: 1.2rem;
 			text-align: center;
-			background: rgba(#fff, 0.26);
 			border-radius: 1.2rem;
 			display: block;
 			.yoco {

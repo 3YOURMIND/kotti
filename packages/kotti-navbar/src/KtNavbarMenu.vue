@@ -7,19 +7,19 @@
 				class="kt-navbar-menu__section"
 			/>
 			<a
+				:class="{ active: link.isActive }"
+				class="kt-navbar-menu__item"
 				v-for="(link, index) in item.links"
 				:key="index"
 				:href="link.link ? link.link : null"
 				@click="$emit('menuLinkClick', link)"
 			>
-				<div class="kt-navbar-menu__item" :class="{ active: link.isActive }">
-					<i class="yoco" v-text="link.icon" />
-					<span
-						v-if="!isNarrow"
-						v-text="link.title"
-						:data-test="`kt-navbar-section-item-${link.title.toLowerCase()}`"
-					/>
-				</div>
+				<i class="yoco" v-text="link.icon" />
+				<span
+					v-if="!isNarrow"
+					v-text="link.title"
+					:data-test="`kt-navbar-section-item-${link.title.toLowerCase()}`"
+				/>
 			</a>
 		</div>
 	</div>
@@ -43,7 +43,6 @@ export default {
 	text-align: left;
 	box-sizing: border-box;
 	padding: 0.4rem 1.2rem;
-	color: #fff;
 	&:hover {
 		cursor: pointer;
 	}
@@ -65,6 +64,7 @@ export default {
 		display: block;
 		font-size: 0.75rem;
 		padding: 0.6rem 0;
+		color: inherit;
 	}
 	&__item span {
 		margin-left: 0.8rem;
