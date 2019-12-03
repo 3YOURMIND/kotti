@@ -1,12 +1,6 @@
 <template>
 	<a :href="link">
-		<div
-			:class="objectClass"
-			:style="{
-				color: themeColor.textColor,
-				'border-color': themeColor.borderColor,
-			}"
-		>
+		<div class="navbar-notification">
 			<div>
 				<i
 					v-if="!count || !isNarrow"
@@ -19,23 +13,9 @@
 					v-text="title"
 				/>
 			</div>
-			<div
-				v-show="count"
-				class="navbar-notification__number"
-				:style="{
-					color: themeColor.textColor,
-					background: themeColor.borderColor,
-				}"
-				v-text="count"
-			/>
+			<div v-show="count" class="navbar-notification__number" v-text="count" />
 		</div>
-		<div
-			class="navbar-notification--mobile"
-			:style="{
-				color: themeColor.textColor,
-				background: themeColor.borderColor,
-			}"
-		>
+		<div class="navbar-notification--mobile">
 			<i class="yoco" v-if="!count">bell</i> <span v-else v-text="count" />
 		</div>
 	</a>
@@ -62,20 +42,6 @@ export default {
 	computed: {
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
-		},
-		themeColor() {
-			return {
-				textColor: this.KtTheme.navbarTextColor,
-				borderColor: color(this.KtTheme.navbarBackgroundColor).isDark()
-					? 'rgba(255,255,255,0.24)'
-					: 'rgba(0,0,0,0.24)',
-			}
-		},
-		objectClass() {
-			return {
-				'navbar-notification': true,
-				'navbar-notification--narrow': this.isNarrow,
-			}
 		},
 	},
 }

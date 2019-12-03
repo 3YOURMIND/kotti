@@ -1,10 +1,10 @@
 <template>
-	<nav :class="objectClass('navbar')">
-		<div :class="objectClass('navbar-wrapper')">
-			<div class="navbar-toggle" @click="toggleMobileMenu">
+	<nav class="kt-navbar">
+		<div class="kt-navbar-wrapper">
+			<div class="kt-navbar-toggle" @click="toggleMobileMenu">
 				<i class="yoco" v-text="'burger'" />
 			</div>
-			<div :class="objectClass('navbar-header')">
+			<div class="kt-navbar__header">
 				<KtNavbarLogo :labelText="labelText" @logoClick="$emit('logoClick')">
 					<slot name="navbar-logo">
 						<img :src="logoUrl" alt="logo" />
@@ -17,7 +17,7 @@
 				:title="notification.title"
 				:link="notification.link"
 			/>
-			<div :class="objectClass('navbar-body')">
+			<div class="kt-navbar__body">
 				<kt-navbar-menu
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
@@ -28,10 +28,10 @@
 					:links="quickLinks.links"
 				/>
 			</div>
-			<div :class="objectClass('navbar-footer')">
+			<div class="kt-navbar__footer">
 				<slot name="navbar-footer" />
 			</div>
-			<div class="navbar-dropdown" v-if="mobileMenuToggle">
+			<div class="kt-navbar__dropdown" v-if="mobileMenuToggle">
 				<kt-navbar-menu
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
@@ -106,3 +106,4 @@ export default {
 	},
 }
 </script>
+<style lang="scss"></style>

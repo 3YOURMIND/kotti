@@ -12,7 +12,7 @@
 				:href="link.link ? link.link : null"
 				@click="$emit('menuLinkClick', link)"
 			>
-				<div :class="{ active: link.isActive, 'navbar-menu__item': true }">
+				<div class="navbar-menu__item" :class="{ active: link.isActive }">
 					<i class="yoco" v-text="link.icon" />
 					<span
 						v-if="!isNarrow"
@@ -34,12 +34,6 @@ export default {
 	computed: {
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
-		},
-		objectClass() {
-			return {
-				'navbar-menu': true,
-				'navbar-menu--narrow': this.isNarrow,
-			}
 		},
 	},
 }

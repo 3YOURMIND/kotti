@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<div v-if="isNarrow" :class="objectClass" @click="$emit('logoClick')">
+		<div v-if="isNarrow" class="kt-navbar__logo" @click="$emit('logoClick')">
 			<i
 				:class="iconClass"
 				v-text="iconText"
 				@click.stop="$KtNavbar.toggle()"
 			/>
 		</div>
-		<div v-else :class="objectClass" @click="$emit('logoClick')">
+		<div v-else class="kt-navbar__logo" @click="$emit('logoClick')">
 			<div class="navbar-logo--logo">
 				<slot />
 			</div>
@@ -45,12 +45,6 @@ export default {
 		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
-		},
-		objectClass() {
-			return {
-				'navbar-logo': true,
-				'navbar-logo--narrow': this.isNarrow,
-			}
 		},
 	},
 }
