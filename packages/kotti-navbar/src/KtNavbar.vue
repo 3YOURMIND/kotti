@@ -1,34 +1,15 @@
 <template>
-	<nav
-		:class="objectClass('navbar')"
-		:style="{
-			background: themeColor.backgroundColor,
-			'border-color': themeColor.borderColor,
-		}"
-	>
-		<div
-			:class="objectClass('navbar-wrapper')"
-			:style="{ 'border-color': themeColor.borderColor }"
-		>
-			<div
-				class="navbar-toggle"
-				:style="navbarActiveToggleStyle"
-				@click="toggleMobileMenu"
-			>
-				<i
-					class="yoco"
-					v-text="'burger'"
-					:style="{ color: themeColor.textColor }"
-				/>
+	<nav :class="objectClass('navbar')">
+		<div :class="objectClass('navbar-wrapper')">
+			<div class="navbar-toggle" @click="toggleMobileMenu">
+				<i class="yoco" v-text="'burger'" />
 			</div>
-			<div
-				:class="objectClass('navbar-header')"
-				:style="{ 'border-color': themeColor.borderColor }"
-			>
-				<kt-navbar-logo
-					:labelText="labelText"
-					@logoClick="$emit('logoClick')"
-				/>
+			<div :class="objectClass('navbar-header')">
+				<KtNavbarLogo :labelText="labelText" @logoClick="$emit('logoClick')">
+					<slot name="navbar-logo">
+						<img :src="logoUrl" alt="logo" />
+					</slot>
+				</KtNavbarLogo>
 			</div>
 			<kt-navbar-notification
 				v-if="notification"
@@ -47,17 +28,10 @@
 					:links="quickLinks.links"
 				/>
 			</div>
-			<div
-				:class="objectClass('navbar-footer')"
-				:style="{ 'border-color': themeColor.borderColor }"
-			>
+			<div :class="objectClass('navbar-footer')">
 				<slot name="navbar-footer" />
 			</div>
-			<div
-				class="navbar-dropdown"
-				v-if="mobileMenuToggle"
-				:style="{ background: themeColor.backgroundColor }"
-			>
+			<div class="navbar-dropdown" v-if="mobileMenuToggle">
 				<kt-navbar-menu
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
@@ -96,38 +70,22 @@ export default {
 		notification: { type: Object, default: null },
 		quickLinks: { type: Object, default: null },
 		labelText: { type: String, default: null },
+		logoUrl: { type: String },
 	},
-	inject: {
-		KtTheme: {
-			default: {
-				navbarBackgroundColor: '#122C56',
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255, 1)',
-			},
-		},
-	},
+	// inject: {
+	// 	KtTheme: {
+	// 		default: {
+	// 			navbarBackgroundColor: '#122C56',
+	// 			navbarTextColor: 'rgba(255,255,255,.54)',
+	// 			navbarTextActiveColor: 'rgba(255,255,255, 1)',
+	// 		},
+	// 	},
+	// },
+	inject: ['KtTheme'],
 	data() {
 		return {
 			mobileMenuToggle: false,
 		}
-	},
-	computed: {
-		navbarActiveToggleStyle() {
-			return {
-				'background-color': this.mobileMenuToggle
-					? this.themeColor.borderColor
-					: '',
-			}
-		},
-		themeColor() {
-			return {
-				backgroundColor: this.KtTheme.navbarBackgroundColor,
-				textColor: this.KtTheme.navbarTextColor,
-				borderColor: color(this.KtTheme.navbarBackgroundColor).isDark()
-					? 'rgba(255,255,255,0.24)'
-					: 'rgba(0,0,0,0.24)',
-			}
-		},
 	},
 	methods: {
 		objectClass(className) {

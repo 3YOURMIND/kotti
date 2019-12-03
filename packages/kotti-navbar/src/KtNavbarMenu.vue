@@ -4,16 +4,12 @@
 			<div
 				v-if="item.title"
 				v-text="isNarrow ? '' : item.title"
-				:style="{ color: themeColor.textColor }"
 				class="navbar-menu__section"
 			/>
 			<a
 				v-for="(link, index) in item.links"
 				:key="index"
 				:href="link.link ? link.link : null"
-				:style="{
-					color: link.isActive ? themeColor.activeColor : themeColor.textColor,
-				}"
 				@click="$emit('menuLinkClick', link)"
 			>
 				<div :class="{ active: link.isActive, 'navbar-menu__item': true }">
@@ -35,21 +31,7 @@ export default {
 	props: {
 		sections: { type: Array, default: null },
 	},
-	inject: {
-		KtTheme: {
-			default: {
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255,1)',
-			},
-		},
-	},
 	computed: {
-		themeColor() {
-			return {
-				activeColor: this.KtTheme.navbarTextActiveColor,
-				textColor: this.KtTheme.navbarTextColor,
-			}
-		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
 		},
