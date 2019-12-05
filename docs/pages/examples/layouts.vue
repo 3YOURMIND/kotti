@@ -42,8 +42,15 @@ export default {
 	},
 	mounted() {
 		// loading IE11 polyfill
-		const isIE = !!window.MSInputMethodContext && !!document.documentMode
-		if (isIE) cssVars({ watch: true, shadowDOM: true, onlyLegacy: true })
+		console.log('lol')
+		const isIE =
+			(!!window.MSInputMethodContext && !!document.documentMode) || true
+		console.log(isIE)
+		if (isIE) {
+			let oo = cssVars({ watch: true, shadowDOM: true, onlyLegacy: true })
+			console.log('IE 11')
+			console.log(oo)
+		}
 	},
 	data() {
 		return {
