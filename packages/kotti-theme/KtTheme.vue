@@ -1,15 +1,28 @@
+<template> </template>
 <script>
 export default {
 	name: 'KtTheme',
 	props: {
-		overwrites: {
-			type: Array,
-			default: [],
+		customProperties: {
+			type: Object,
+			default: {},
 		},
 	},
+	data() {
+		return {
+			root: null,
+		}
+	},
+	mounted() {
+		this.root = document.querySelector(':root')
+	},
 	watch: {
-		overwrites() {
-			console.log(this.overwrites)
+		customProperties() {
+			console.log(this.root)
+			Object.keys(this.customProperties).forEach(key => {
+				let formattedKey = '--' + key.split('--').join('')
+				this.root.style.setProperty(formattedKey, this.customProperties[key])
+			})
 		},
 	},
 }

@@ -2,7 +2,9 @@
 	<KtContainer :hasActionBar="showActionbar">
 		<Navbar slot="navbar" />
 		<Actionbar slot="actionbar" />
-		<div slot="workspace"><nuxt class="content" /></div>
+		<div slot="workspace">
+			<nuxt class="content" />
+		</div>
 	</KtContainer>
 </template>
 
