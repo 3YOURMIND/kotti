@@ -39,6 +39,10 @@ const submenu = [
 				label: 'Figma',
 				to: 'figma',
 			},
+			{
+				label: 'Theming',
+				to: 'theming',
+			},
 		],
 		parent: 'tokens',
 	},
