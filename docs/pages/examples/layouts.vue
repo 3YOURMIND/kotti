@@ -44,6 +44,9 @@ export default {
 		// loading IE11 polyfill
 		const isIE = !!window.MSInputMethodContext && !!document.documentMode
 		if (isIE) cssVars({ watch: true, shadowDOM: true, onlyLegacy: false })
+		if (isIE) {
+			console.log('IE!')
+		}
 	},
 	data() {
 		return {

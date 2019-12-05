@@ -110,7 +110,7 @@ $narrow-navbar-width: 3.4rem;
 
 .kt-navbar {
 	flex: 0 0 $navbar-width;
-	background-color: var(--navbar-background);
+	background: var(--navbar-background);
 	color: var(--navbar-color);
 	border-right: 1px solid var(--navbar-border);
 	bottom: 0;
