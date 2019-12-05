@@ -39,6 +39,9 @@ design decisions. The Kotti design system has two main parts: foundation and com
 	/*
 	 ** Build configuration
 	 */
+	extractCSS: {
+		allChunks: true,
+	},
 	build: {
 		extend(config, ctx) {
 			if (ctx.isDev && ctx.isClient) {
