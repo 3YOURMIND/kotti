@@ -28,7 +28,6 @@
 
 <script>
 import KtContainer from '../../../packages/kotti-container'
-import cssVars from 'css-vars-ponyfill'
 
 export default {
 	layout: 'empty',
@@ -39,18 +38,6 @@ export default {
 		handleMenuClick(link) {
 			alert('Link Clicked')
 		},
-	},
-	mounted() {
-		// loading IE11 polyfill
-		console.log('lol')
-		const isIE =
-			(!!window.MSInputMethodContext && !!document.documentMode) || true
-		console.log(isIE)
-		if (isIE) {
-			let oo = cssVars({ watch: true, shadowDOM: true, onlyLegacy: true })
-			console.log('IE 11')
-			console.log(oo)
-		}
 	},
 	data() {
 		return {

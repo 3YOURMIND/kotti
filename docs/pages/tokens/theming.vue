@@ -47,10 +47,10 @@ export default {
 			navbarBackground: null,
 			navbarColor: null,
 			navbarLightColor: null,
-			navbarBorder: null,
+			navbarBorder: 'blue',
 			navbarColorActive: null,
 			colors: [
-				{ label: 'Default', value: null },
+				{ label: 'Default', value: 'null' },
 				{ label: 'Blue', value: 'blue' },
 				{ label: 'Red', value: 'red' },
 				{ label: 'Green', value: 'green' },
