@@ -15,7 +15,7 @@ export const baseColors = {
 	'gray-70': '#525252',
 	'gray-80': '#393939',
 	'gray-90': '#262626',
-	'gray-100': '#3D3D3D',
+	'gray-100': '#141414',
 	'primary-10': '#EAF0FA',
 	'primary-20': '#C1D7FB',
 	'primary-30': '#AFC5E8',
@@ -42,7 +42,7 @@ export const baseColors = {
 	'yellow-50': '#FFF490',
 	'yellow-60': '#FFE60D',
 	'yellow-70': '#DFC903',
-	'orange-20': '#FFAE66',
+	'orange-20': '#FAB980',
 	'orange-50': '#FF9333',
 	'orange-60': '#FF7800',
 	'orange-70': '#BA6820',
@@ -74,7 +74,7 @@ export const tokens = [
 	{
 		name: 'text-01',
 		description: 'Primary text\nHeaders',
-		reference: 'gray-100',
+		reference: 'gray-80',
 	},
 	{
 		name: 'text-02',
