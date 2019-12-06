@@ -4,7 +4,7 @@
 You can apply your own theme to the kotti design system.
 Since we are defining design tokens with CSS custom properties, you can override any of them easily, on the fly.
 
-> We are defining every custom props on `:root` because only root variables are supported by  [css-vars-ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill)>, the ponyfill we are using. 
+> We are defining every custom props on `:root` because only root variables are supported by  [css-vars-ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill), the ponyfill we are using. 
 > If you don't care about IE11 support, you can overwrite custom props on any element.
 
 ## Method 1: CSS file
@@ -47,15 +47,16 @@ export default {
 			navbarBackground: null,
 			navbarColor: null,
 			navbarLightColor: null,
-			navbarBorder: 'blue',
+			navbarBorder: null,
 			navbarColorActive: null,
 			colors: [
-				{ label: 'Default', value: 'null' },
-				{ label: 'Blue', value: 'blue' },
-				{ label: 'Red', value: 'red' },
-				{ label: 'Green', value: 'green' },
+				{ label: 'Default', value: null },
+				{ label: 'Blue', value: '#001f3f' },
+				{ label: 'Red', value: '#FF4136' },
+				{ label: 'Green', value: '#2ECC40' },
+				{ label: 'Teal', value: '#39CCCC' },
 				{ label: 'White', value: 'white' },
-				{ label: 'Black', value: 'black' },
+				{ label: 'Black', value: '#111111' },
 			],
 		}
 	},
