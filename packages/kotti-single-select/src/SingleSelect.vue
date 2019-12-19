@@ -122,13 +122,13 @@ export default {
 			default: null,
 			type: String,
 		},
-		value: {
-			default: null,
-			type: [String, Number, Boolean, Object, null],
-		},
 		required: {
 			default: false,
 			type: Boolean,
+		},
+		value: {
+			default: null,
+			type: [String, Number, Boolean, Object, null],
 		},
 	},
 	data() {
@@ -147,8 +147,17 @@ export default {
 				'form-input--compact--focus': this.isCompact && this.visible,
 			}
 		},
-		invalidInput() {
-			return this.required && !this.selectedLabel
+		filterResults() {
+			if (this.queryString === null) return this.options
+
+			const query = this.queryString.toLowerCase()
+			return this.options.filter(({ label, value }) =>
+				label !== null
+					? label.toLowerCase().includes(query)
+					: value !== null
+					? value.toLowerCase().includes(query)
+					: false,
+			)
 		},
 		formLabelClass() {
 			return {
@@ -158,29 +167,20 @@ export default {
 					this.isCompact && (this.visible || this.selectedLabel),
 			}
 		},
-		indicatorRep() {
-			return this.visible ? 'chevron_up' : 'chevron_down'
-		},
-		optionsRep() {
-			return this.filterable ? this.filterResults : this.options
-		},
-		filterResults() {
-			if (this.queryString === null) return this.options
-
-			const query = this.queryString.toLowerCase()
-			return this.options.filter(({ label, value }) => {
-				return label !== null
-					? label.toLowerCase().includes(query)
-					: value !== null
-					? value.toLowerCase().includes(query)
-					: false
-			})
-		},
 		hasLabel() {
 			return this.label && this.label.length
 		},
+		indicatorRep() {
+			return this.visible ? 'chevron_up' : 'chevron_down'
+		},
+		invalidInput() {
+			return this.required && !this.selectedLabel
+		},
 		labelRep() {
 			return this.required ? `${this.label} *` : this.label
+		},
+		optionsRep() {
+			return this.filterable ? this.filterResults : this.options
 		},
 	},
 	watch: {
@@ -220,13 +220,21 @@ export default {
 				this.selectorOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
 			}
 		},
-		isOptionAllowed({ disabled, value }) {
-			if (disabled) return false
-			if (!this.allowEmpty && value === null) return false
-			return true
+		handleClickOutside() {
+			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
+				this.visible = false
+			}
 		},
-		optionClass(option) {
-			if (!this.isOptionAllowed(option)) return 'kt-select-option--disabled'
+		handleInputChange(value) {
+			if (!this.filterable) {
+				this.selectedLabel = ''
+				return
+			}
+			this.setQueryString(value)
+		},
+		handleInputFocus(event) {
+			this.$emit('focus', event)
+			this.show()
 		},
 		handleOptionClick(option) {
 			if (!this.isOptionAllowed(option)) return
@@ -240,17 +248,25 @@ export default {
 			this.setQueryString('')
 			this.visible = false
 		},
-		handleInputChange(value) {
-			if (!this.filterable) {
-				this.selectedLabel = ''
-				return
-			}
-			this.setQueryString(value)
+		isOptionAllowed({ disabled, value }) {
+			if (disabled) return false
+			if (!this.allowEmpty && value === null) return false
+			return true
+		},
+		optionClass(option) {
+			if (!this.isOptionAllowed(option)) return 'kt-select-option--disabled'
 		},
 		setQueryString(value) {
 			if (!this.filterable) return
 			this.queryString = value
 			this.triggerAsync()
+		},
+		show() {
+			if (!this.visible) {
+				this.computeSelectorOptionsStyle()
+				this.visible = true
+				this.triggerAsync()
+			}
 		},
 		triggerAsync() {
 			if (!this.isAsync) return
@@ -260,25 +276,10 @@ export default {
 				this.queryString === null ? null : this.queryString.toLowerCase(),
 			)
 		},
-		handleInputFocus(event) {
-			this.$emit('focus', event)
-			this.show()
-		},
-		show() {
-			if (!this.visible) {
-				this.computeSelectorOptionsStyle()
-				this.visible = true
-				this.triggerAsync()
-			}
-		},
-		handleClickOutside() {
-			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
-				this.visible = false
-			}
-		},
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
 @import '../../kotti-style/mixins/index.scss';
@@ -336,6 +337,7 @@ export default {
 			$control-padding-y-lg $control-padding-x-lg;
 	}
 }
+
 .selects .form-group {
 	.form-icon {
 		right: auto;
@@ -346,6 +348,7 @@ export default {
 		cursor: pointer;
 	}
 }
+
 .kt-select-options {
 	position: absolute;
 	margin-top: $unit-1;
