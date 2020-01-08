@@ -23,6 +23,7 @@
 						class="user-menu__item"
 						v-text="link.title"
 						:style="{ color: themeColor.textColor }"
+						:data-test="`up-navbar__footer__item__${link.title.toLowerCase()}`"
 					/>
 				</div>
 			</div>

@@ -21,7 +21,7 @@
 					<span
 						v-if="!isNarrow"
 						v-text="link.title"
-						:data-test="`navbar-section-item-${link.title.toLowerCase()}`"
+						:data-test="`up__navbar-menu-item-${link.title.toLowerCase()}`"
 					/>
 				</div>
 			</a>
