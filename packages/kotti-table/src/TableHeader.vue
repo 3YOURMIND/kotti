@@ -63,8 +63,8 @@ import TableHeaderCell from './TableHeaderCell'
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
 
 export default {
-	components: { TableHeaderCell },
 	name: 'KtTableHeader',
+	components: { TableHeaderCell },
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 	data() {
 		return {

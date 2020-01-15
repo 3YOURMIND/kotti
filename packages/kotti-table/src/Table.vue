@@ -3,6 +3,7 @@
 		<div class="hidden-columns">
 			<TableColumn
 				v-for="(column, index) in formatedColumns"
+				isPropDefined
 				:key="`${column.prop}_${index}`"
 				v-bind="column"
 			/>
@@ -22,7 +23,6 @@ import TableColumn from './TableColumn'
 import TableHeader from './TableHeader'
 import TableBody from './TableBody'
 import {
-	SORT_NONE,
 	KT_TABLE,
 	KT_STORE,
 	KT_LAYOUT,
@@ -43,8 +43,8 @@ export const INITIAL_TABLE_STORE_PROPS = [
 ]
 
 export default {
-	components: { TableBody, TableHeader, TableColumn },
 	name: 'KtTable',
+	components: { TableBody, TableHeader, TableColumn },
 	props: {
 		id: { default: null, type: String },
 		rowKey: { type: String },
@@ -70,10 +70,10 @@ export default {
 
 		loading: Boolean,
 
-		tdClasses: { default: () => [], types: [Array, String, Object] },
-		thClasses: { default: () => [], types: [Array, String, Object] },
-		trClasses: { default: () => [], types: [Array, String, Object] },
-		headerClass: { default: () => [], types: [Array, String, Object] },
+		tdClasses: { default: () => [], type: [Array, String, Object] },
+		thClasses: { default: () => [], type: [Array, String, Object] },
+		trClasses: { default: () => [], type: [Array, String, Object] },
+		headerClass: { default: () => [], type: [Array, String, Object] },
 		height: String,
 		maxHeight: String,
 
@@ -93,10 +93,6 @@ export default {
 		[KT_TABLE_STATE_PROVIDER]: {
 			default: false,
 		},
-	},
-	beforeCreate() {
-		this.tableId = `kt-table_${tableIdSeed}`
-		tableIdSeed += 1
 	},
 	data() {
 		let localStore
@@ -134,9 +130,7 @@ export default {
 						if (column.key) {
 							// eslint-disable-next-line
 							console.warn(
-								`column ${
-									column.prop
-								} table column property 'key' is deprecated using prop is sufficent to identify the column`,
+								`column ${column.prop} table column property 'key' is deprecated using prop is sufficient to identify the column`,
 							)
 							return { ...column, prop: column.prop || column.key }
 						}
@@ -271,6 +265,37 @@ export default {
 			},
 		},
 	},
+	beforeCreate() {
+		this.tableId = `kt-table_${tableIdSeed}`
+		tableIdSeed += 1
+	},
+	mounted() {
+		this.columns && this.store.commit('setColumns', this.columns)
+		this.orderedColumns &&
+			this.store.commit('setOrderedColumns', this.orderedColumns)
+		this.sortedColumns &&
+			this.store.commit('setSortedColumns', this.sortedColumns)
+		this.filteredColumns &&
+			this.store.commit('setFilteredColumns', this.filteredColumns)
+		this.hiddenColumns &&
+			this.store.commit('setHiddenColumns', this.hiddenColumns)
+		this.$ready = true
+		this.store.commit('updateColumns', { emitChange: false })
+		this.$on('selectionChange', selection => {
+			if (this.value) {
+				this.$emit(
+					'input',
+					selection.map(row => this.store.get('getIndexByRow', row)),
+				)
+			}
+		})
+		const events = Object.keys(this.$listeners)
+		if (events.includes('input')) {
+			console.warn(
+				'use of v-model and @input in table is deprecated subscribe to @selectionChange, @selectAll events instead',
+			)
+		}
+	},
 	methods: {
 		isSelected(index) {
 			return this.store.isSelected(
@@ -298,33 +323,6 @@ export default {
 			[KT_TABLE]: this,
 			[KT_STORE]: this.store,
 			[KT_LAYOUT]: this.layout,
-		}
-	},
-	mounted() {
-		this.columns && this.store.commit('setColumns', this.columns)
-		this.orderedColumns &&
-			this.store.commit('setOrderedColumns', this.orderedColumns)
-		this.sortedColumns &&
-			this.store.commit('setSortedColumns', this.sortedColumns)
-		this.filteredColumns &&
-			this.store.commit('setFilteredColumns', this.filteredColumns)
-		this.hiddenColumns &&
-			this.store.commit('setHiddenColumns', this.hiddenColumns)
-		this.$ready = true
-		this.store.commit('updateColumns', { emitChange: false })
-		this.$on('selectionChange', selection => {
-			if (this.value) {
-				this.$emit(
-					'input',
-					selection.map(row => this.store.get('getIndexByRow', row)),
-				)
-			}
-		})
-		const events = Object.keys(this.$listeners)
-		if (events.includes('input')) {
-			console.warn(
-				'use of v-model and @input in table is deprecated subscribe to @selectionChange, @selectAll events instead',
-			)
 		}
 	},
 }
