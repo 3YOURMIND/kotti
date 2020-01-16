@@ -13,9 +13,9 @@
 			</div>
 			<div class="message" v-text="message" />
 			<div class="action" v-if="!expandable" @click="handleClick">
-				<button class="text" v-text="actionText" />
+				<button class="text" v-if="actionText.length" v-text="actionText" />
 			</div>
-			<div class="action" v-else @click="isExpand=!isExpand">
+			<div class="action" v-else @click="isExpand = !isExpand">
 				<button class="text" v-text="switchText" v-if="!isExpand" />
 				<button class="text" v-text="switchCloseText" v-else />
 			</div>
@@ -65,7 +65,7 @@ export default {
 			}
 		},
 		expandable() {
-			return this.$slots.expand
+			return !!this.$slots.expand
 		},
 	},
 	methods: {
