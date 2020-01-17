@@ -65,7 +65,7 @@ export default {
 			}
 		},
 		expandable() {
-			return !!this.$slots.expand
+			return Boolean(this.$slots.expand)
 		},
 	},
 	methods: {
