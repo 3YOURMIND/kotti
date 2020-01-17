@@ -411,21 +411,24 @@ You can then use the set sortedColumns prop on the KtTable to update the table u
 `actions` adds hover actions to the table. Using `actions` slot to define the action template.
 
 > You must use `slot-scope` prop for the `actions` slot for it to be detected.
+> Update: shorthand for v-slot is used now, instead.
 
 <KtTable :rows="rows" :columns="columnsResponsive">
-	<template slot-scope="{ row }" slot="actions">
+	<template #actions="{ row }">
 		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
 		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
 	</template>
 </KtTable>
 
-```html
-<KtTable :rows="rows">
-	<template slot-scope="{ row }" slot="actions">
-		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
-		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
-	</template>
-</KtTable>
+```vue
+<template>
+	<KtTable :rows="rows" :columns="columnsResponsive">
+		<template #actions="{ row }">
+			<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
+			<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
+		</template>
+	</KtTable>
+</template>
 ```
 
 ## Expandable
@@ -650,7 +653,7 @@ For that purpose we introduce `KtTableProvider` `KtTableConsumer`. There’s als
 							v-for="column in columns"
 							:key="column.prop"
 							:label="column.label || column.prop"
-							:type="column.hidden ? text' : 'primary'"
+							:type="column.hidden ? 'text' : 'primary'"
 							@click="hideColumn(column, !column.hidden)"
 						/>
 				</KtButtonGroup>
