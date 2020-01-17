@@ -1,14 +1,9 @@
 <template>
 	<label class="form-radio">
-		<input
-			v-model="model"
-			:name="radioName"
-			:value="value"
-			type="radio"
-		/>
+		<input v-model="model" :name="radioName" :value="value" type="radio" />
 		<i class="form-icon" />
-		<slot v-if="$slots.default"/>
-		<span v-else v-text="label"/>
+		<slot v-if="$slots.default" />
+		<span v-else v-text="label" />
 	</label>
 </template>
 
@@ -16,9 +11,9 @@
 export default {
 	name: 'KtRadio',
 	props: {
-		label: { types: [String, Number, Boolean] },
-		name: { types: [String, Number] },
-		value: { types: [String, Number] },
+		label: { type: [String, Number, Boolean] },
+		name: { type: [String, Number] },
+		value: { type: [String, Number] },
 	},
 	computed: {
 		model: {

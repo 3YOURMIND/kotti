@@ -70,10 +70,10 @@ export default {
 
 		loading: Boolean,
 
-		tdClasses: { default: () => [], types: [Array, String, Object] },
-		thClasses: { default: () => [], types: [Array, String, Object] },
-		trClasses: { default: () => [], types: [Array, String, Object] },
-		headerClass: { default: () => [], types: [Array, String, Object] },
+		tdClasses: { default: () => [], type: [Array, String, Object] },
+		thClasses: { default: () => [], type: [Array, String, Object] },
+		trClasses: { default: () => [], type: [Array, String, Object] },
+		headerClass: { default: () => [], type: [Array, String, Object] },
 		height: String,
 		maxHeight: String,
 
@@ -134,9 +134,7 @@ export default {
 						if (column.key) {
 							// eslint-disable-next-line
 							console.warn(
-								`column ${
-									column.prop
-								} table column property 'key' is deprecated using prop is sufficent to identify the column`,
+								`column ${column.prop} table column property 'key' is deprecated using prop is sufficent to identify the column`,
 							)
 							return { ...column, prop: column.prop || column.key }
 						}
