@@ -1,7 +1,8 @@
 <template>
 	<div class="code-switch">
 		<div class="switcher" v-text="currentCode" @click="showCode = !showCode" />
-		<slot name="vue" v-if="showCode" /> <slot name="style" v-else />
+		<slot name="vue" v-if="showCode" />
+		<slot name="style" v-else />
 	</div>
 </template>
 

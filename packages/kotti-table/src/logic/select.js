@@ -1,5 +1,4 @@
 import debounce from 'lodash/debounce'
-import { getEnabledRows } from './disable'
 
 export const defaultState = {
 	selection: [],
@@ -39,6 +38,7 @@ export const mutations = {
 	setSelectedIndexes(store, indexes) {
 		store.commit(
 			'setSelected',
+			// eslint-disable-next-line prettier/prettier
 			indexes.map(index => store.get('getRowByVisibleIndex', index)),
 		)
 	},
@@ -61,14 +61,22 @@ export const getters = {
 			: row[state.rowKey]
 	},
 	isSelected(state, row) {
-		return (state.selection || []).indexOf(row) > -1
+		return (
+			(state.selection.map(e => JSON.stringify(e)) || []).indexOf(
+				JSON.stringify(row),
+			) > -1
+		)
 	},
 }
 
 export function toggleRowSelection(state, row, selected) {
 	let changed = false
 	const selection = state.selection
-	const index = selection.indexOf(row)
+	//indexOf uses strict comparison and selection is an array of Objects
+	const index = selection
+		.map(e => JSON.stringify(e))
+		.indexOf(JSON.stringify(row))
+	// const index = selection.indexOf(row)
 	if (typeof selected === 'undefined') {
 		if (index === -1) {
 			selection.push(row)
@@ -99,7 +107,9 @@ export function getSelectCheckForState(state) {
 	if (selectedMap) {
 		return row => Boolean(selectedMap[getRowIdentity(row, rowKey)])
 	}
-	return row => selection.indexOf(row) !== -1
+	return row =>
+		selection.map(e => JSON.stringify(e)).indexOf(JSON.stringify(row)) !== -1
+	// return row => selection.indexOf(row) !== -1
 }
 
 export function getKeysMap(list, key) {
@@ -138,11 +148,19 @@ export function cleanSelection(store) {
 			}
 		})
 	} else {
-		deleted = selection.filter(item => rows.indexOf(item) === -1)
+		deleted = selection.filter(
+			item =>
+				rows.map(r => JSON.stringify(r)).indexOf(JSON.stringify(item)) === -1,
+		)
 	}
 
 	deleted.forEach(deletedItem => {
-		selection.splice(selection.indexOf(deletedItem), 1)
+		selection.splice(
+			selection
+				.map(e => JSON.stringify(e))
+				.indexOf(JSON.stringify(deletedItem)),
+			1,
+		)
 	})
 
 	if (deleted.length) {
