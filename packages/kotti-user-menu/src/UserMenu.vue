@@ -73,7 +73,7 @@ export default {
 			required: true,
 			validator: sections => sections.every(sectionIsValid),
 		},
-		userName: { types: [String, null], required: true },
+		userName: { type: String, default: null },
 		userStatus: { type: String, required: true },
 	},
 	components: {

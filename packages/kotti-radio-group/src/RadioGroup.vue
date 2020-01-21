@@ -17,7 +17,7 @@ export default {
 	props: {
 		label: {
 			default: null,
-			types: [String, Number, null],
+			type: [String, Number],
 		},
 		listStyle: {
 			default: false,
@@ -25,11 +25,11 @@ export default {
 		},
 		name: {
 			required: true,
-			types: [String, Number],
+			type: [String, Number],
 		},
 		value: {
 			default: null,
-			types: [String, Number, null],
+			type: [String, Number],
 		},
 		required: {
 			default: false,

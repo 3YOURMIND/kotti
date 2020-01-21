@@ -44,8 +44,8 @@ export default {
 		postEscapeParser: { default: DEFAULT_POST_PARSER, type: Function },
 		invalidMessage: { default: 'Click to edit', type: String },
 		multiline: { deafult: false, type: Boolean },
-		label: { default: null, types: [String, null] },
-		value: { types: [String, Number] },
+		label: { default: null, type: String },
+		value: { type: [String, Number] },
 	},
 	data() {
 		return {

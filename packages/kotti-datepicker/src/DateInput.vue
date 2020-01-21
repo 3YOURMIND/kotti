@@ -35,7 +35,7 @@ export default {
 	name: 'KtDateInput',
 	mixins: [clickaway],
 	props: {
-		initialValue: { types: [Date, Number, String] },
+		initialValue: { type: [Date, Number, String] },
 		label: { type: String, default: null },
 		mondayFirst: { type: Boolean, default: false },
 		daysTranslations: { type: Array },

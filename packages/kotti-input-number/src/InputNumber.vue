@@ -99,3 +99,85 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
+.kt-input-number__input {
+	width: auto;
+	border: 0;
+	text-align: center;
+	max-width: 100%;
+	color: $darkgray-500;
+	padding-right: 0.1rem;
+	-moz-appearance: textfield;
+	&--100 {
+		width: 100%;
+	}
+	&--max {
+		width: 50%;
+		text-align: right;
+	}
+	&--disabled {
+		background: $lightgray-300;
+		&:hover {
+			cursor: not-allowed;
+		}
+	}
+	&:focus {
+		box-shadow: 0;
+		outline: 0;
+	}
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+}
+
+.kt-input-number {
+	&.form-group {
+		display: inline-flex;
+		width: auto;
+		max-width: 100%;
+		border-radius: $border-radius;
+		border: 1px solid $lightgray-400;
+		&--100 {
+			width: 100%;
+		}
+		&--error {
+			border-color: $red-500;
+		}
+	}
+}
+
+.kt-input-number__max {
+	line-height: 1.6rem;
+	width: 50%;
+	&::before {
+		content: '/';
+		padding-right: 0.2rem;
+	}
+}
+
+.kt-input-number__button {
+	border-radius: $border-radius;
+	flex: 0 0 1.6rem;
+	width: 1.6rem;
+	height: 1.6rem;
+	text-align: center;
+	line-height: 1.6rem;
+	background: $lightgray-300;
+	user-select: none;
+	&:hover {
+		cursor: pointer;
+		background: $lightgray-400;
+	}
+	&--disabled {
+		color: $lightgray-400;
+	}
+	&--disabled:hover {
+		cursor: not-allowed;
+		background: $lightgray-300;
+	}
+}
+</style>
