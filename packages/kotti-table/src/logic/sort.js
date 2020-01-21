@@ -1,6 +1,6 @@
 import pick from 'lodash/pick'
 import property from 'lodash/property'
-import { setColumnsArray, getColumnsArray } from './column'
+import { setColumnsArray, getColumnsArray, getColumn } from './column'
 import {
 	IS_ASC,
 	IS_DSC,
@@ -8,7 +8,6 @@ import {
 	SORT_NONE,
 	PUBLIC_SORT_PROPS,
 } from '../constants'
-import { getColumn } from './column'
 
 export const defaultState = {
 	sortMultiple: false,

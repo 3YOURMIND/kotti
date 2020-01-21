@@ -272,16 +272,32 @@ You can tab and trigger row active by the hitting enter (not you can't select di
 You can order Columns by dragging if you use the `useColumnDragToOrder` flag
 
 <KtTable :rows="rows" useColumnDragToOrder >
-	<KtTableColumn label="Name" prop="name" />
-	<KtTableColumn label="Date" prop="date"/>
-	<KtTableColumn label="Address" prop="address.line"/>
+	<KtTableColumn
+		label="Avatar"
+		prop="name"
+		:renderCell="renderCell"
+	/>
+	<KtTableColumn
+		label="Date"
+		prop="date"
+		:formatter="formatDate"
+	/>
+	<KtTableColumn label="Address" prop="address.line" />
 </KtTable>
 
 ```html
 <KtTable :rows="rows" useColumnDragToOrder >
-	<KtTableColumn label="Name" prop="name" />
-	<KtTableColumn label="Date" prop="date"/>
-	<KtTableColumn label="Address" prop="address.line"/>
+	<KtTableColumn
+		label="Avatar"
+		prop="name"
+		:renderCell="renderCell"
+	/>
+	<KtTableColumn
+		label="Date"
+		prop="date"
+		:formatter="formatDate"
+	/>
+	<KtTableColumn label="Address" prop="address.line" />
 </KtTable>
 ```
 
@@ -395,42 +411,45 @@ You can then use the set sortedColumns prop on the KtTable to update the table u
 `actions` adds hover actions to the table. Using `actions` slot to define the action template.
 
 > You must use `slot-scope` prop for the `actions` slot for it to be detected.
+> Update: shorthand for v-slot is used now, instead.
 
 <KtTable :rows="rows" :columns="columnsResponsive">
-	<template slot-scope="{ row }" slot="actions">
+	<template #actions="{ row }">
 		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
 		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
 	</template>
 </KtTable>
 
-```html
-<KtTable :rows="rows" :columns="columns">
-	<template slot-scope="{ row }" slot="actions">
-	<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
-	<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
+```vue
+<template>
+	<KtTable :rows="rows" :columns="columnsResponsive">
+		<template #actions="{ row }">
+			<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
+			<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
+		</template>
+	</KtTable>
 </template>
-</KtTable>
 ```
 
 ## Expandable
 
 `expandMultiple` enables expandability of the row, you can create template in `expand` slot.
 
-Same as `actions`, `slot-scope` is required and is used to pass data to the expantion.
+Same as `actions`, `slot-scope` is required and is used to pass data to the expansion.
 
 <KtTable :rows="rows" :columns="columnsResponsive" isExpandable isScrollable>
-	<template slot-scope="{ row, rowIndex }" slot="expand">
-	<KtBanner :message="row.name" icon="user" isGrey />
-	<KtBanner :message="row.address.line" icon="global" isGrey />
-</template>
+		<div slot="expand" slot-scope="{ row, rowIndex}">
+			<KtBanner :message="row.name" icon="user" isGrey />
+			<KtBanner :message="row.address.line" icon="global" isGrey />
+		</div>
 </KtTable>
 
 ```html
-<KtTable :rows="rows" :columns="columns" isExpandable isScrollable>
-	<template slot-scope="{ row, rowIndex }" slot="expand">
-	<KtBanner :message="row.name" icon="user" isGrey />
-	<KtBanner :message="row.address.line" icon="global" isGrey />
-</template>
+<KtTable :rows="rows" :columns="columnsResponsive" isExpandable isScrollable>
+		<div slot="expand" slot-scope="{ row, rowIndex}">
+			<KtBanner :message="row.name" icon="user" isGrey />
+			<KtBanner :message="row.address.line" icon="global" isGrey />
+		</div>
 </KtTable>
 ```
 
@@ -445,18 +464,18 @@ It is possible to customize parts of the table by passing your own render prop f
 	:rows="rows"
 	:renderExpand="renderExpand"
 	:renderActions="renderActions"
-	>
+>
 	<KtTableColumn
 		label="Name"
 		prop="name"
 		:renderHeader="renderHeader"
 		:renderCell="renderCell"
-		/>
+	/>
 	<KtTableColumn
 		label="Date"
 		prop="date"
 		:formatter="formatDate"
-		/>
+	/>
 </KtTable>
 
 <KtTable
@@ -466,11 +485,11 @@ It is possible to customize parts of the table by passing your own render prop f
 	<KtTableColumn
 		label="Name"
 		prop="name"
-		/>
+	/>
 	<KtTableColumn
 		label="Date"
 		prop="date"
-		/>
+	/>
 </KtTable>
 
 <KtTable
@@ -583,22 +602,16 @@ slot-scope is not required for the `loading` and `empty` slots
 	<KtTableColumn
 		label="Name"
 		prop="name"
-		>
-		<template slot="header" slot-scope="{ value, column, columnIndex }">
-	<div>
-		{{ value }}
-	</div>
-</template>
-		<template slot-scope="{ value, row, rowIndex, column, columnIndex }">
-	<KtAvatar
-		:name="value"
-		hoverable
-		src="https://picsum.photos/200"
-		showTooltip
-		small
-		class="mr-16px"
-	/>
-</template>
+		slot-scope="{ value }"
+	>
+		<KtAvatar
+			:name="value"
+			hoverable
+			src="https://picsum.photos/200"
+			showTooltip
+			small
+			class="mr-16px"
+		/>
 	</KtTableColumn>
 </KtTable>
 ```
@@ -640,7 +653,7 @@ For that purpose we introduce `KtTableProvider` `KtTableConsumer`. There’s als
 							v-for="column in columns"
 							:key="column.prop"
 							:label="column.label || column.prop"
-							:type="column.hidden ? text' : 'primary'"
+							:type="column.hidden ? 'text' : 'primary'"
 							@click="hideColumn(column, !column.hidden)"
 						/>
 				</KtButtonGroup>

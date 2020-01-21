@@ -47,6 +47,7 @@ const TableColumn = {
 		renderHeader: Function,
 		renderCell: Function,
 		renderContext: Object,
+		isPropDefined: { default: false, type: Boolean },
 	},
 	beforeCreate() {
 		this.columnConfig = {}
@@ -75,7 +76,7 @@ const TableColumn = {
 		const columnIndex = this[KT_TABLE].$children.indexOf(this)
 		this[KT_STORE].commit('insertColumn', {
 			column: this.columnConfig,
-			...(columnIndex > 0 ? { index: columnIndex } : {}),
+			...(columnIndex >= 0 ? { index: columnIndex } : {}),
 			fromTableColumn: true,
 		})
 	},
