@@ -35,6 +35,7 @@ let tableIdSeed = 1
 export const INITIAL_TABLE_STORE_PROPS = [
 	'rowKey',
 	'sortMultiple',
+	'expandMultiple',
 	'remoteSort',
 	'sortable',
 	'sortedColumns',
