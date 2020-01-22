@@ -14,14 +14,19 @@ export const mutations = {
 
 export const getters = {
 	isExpanded(state, row) {
-		return state.expanded.includes(row)
+		return state.expanded
+			.map(e => JSON.stringify(e))
+			.includes(JSON.stringify(row))
 	},
 }
 
 function toggleRowExpansion(state, row) {
 	const expanded = state.expanded
-	const index = expanded.indexOf(row)
-	const shouldExpand = index === -1
+	debugger
+	const index = expanded
+		.map(e => JSON.stringify(e))
+		.indexOf(JSON.stringify(row))
+	const shouldExpand = index === -1 //if the row is not already included in state.expanded
 	if (state.expandMultiple) {
 		if (shouldExpand) {
 			expanded.push(row)
@@ -29,11 +34,7 @@ function toggleRowExpansion(state, row) {
 			expanded.splice(index, 1)
 		}
 	} else {
-		if (shouldExpand) {
-			state.expanded = [row]
-		} else {
-			state.expanded = []
-		}
+		state.expanded = shouldExpand ? [row] : []
 	}
 	return shouldExpand
 }
