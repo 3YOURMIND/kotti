@@ -1,4 +1,5 @@
 import debounce from 'lodash/debounce'
+import deepEql from 'deep-eql'
 
 export const defaultState = {
 	selection: [],
@@ -61,22 +62,14 @@ export const getters = {
 			: row[state.rowKey]
 	},
 	isSelected(state, row) {
-		return (
-			(state.selection.map(e => JSON.stringify(e)) || []).indexOf(
-				JSON.stringify(row),
-			) > -1
-		)
+		return state.selection.some(e => deepEql(e, row))
 	},
 }
 
 export function toggleRowSelection(state, row, selected) {
 	let changed = false
 	const selection = state.selection
-	//indexOf uses strict comparison and selection is an array of Objects
-	const index = selection
-		.map(e => JSON.stringify(e))
-		.indexOf(JSON.stringify(row))
-	// const index = selection.indexOf(row)
+	const index = selection.findIndex(e => deepEql(e, row))
 	if (typeof selected === 'undefined') {
 		if (index === -1) {
 			selection.push(row)
@@ -107,9 +100,8 @@ export function getSelectCheckForState(state) {
 	if (selectedMap) {
 		return row => Boolean(selectedMap[getRowIdentity(row, rowKey)])
 	}
-	return row =>
-		selection.map(e => JSON.stringify(e)).indexOf(JSON.stringify(row)) !== -1
-	// return row => selection.indexOf(row) !== -1
+	return row => selection.some(e => deepEql(e, row))
+	// return row => selection.indexOf(row) > -1
 }
 
 export function getKeysMap(list, key) {
@@ -135,36 +127,19 @@ export function updateAllSelected(state) {
 }
 
 export function cleanSelection(store) {
-	const { rowKey } = store
-	const { selection = [], rows } = store.state
-	let deleted
+	const { rowKey, state } = store
+	const initialSelectionLength = state.selection.length
 	if (rowKey) {
-		deleted = []
-		const selectedMap = getKeysMap(selection, rowKey)
-		const dataMap = getKeysMap(rows, rowKey)
-		Object.keys(selectedMap).forEach(key => {
-			if (!dataMap[key]) {
-				deleted.push(selectedMap[key])
-			}
-		})
+		const rowsSet = new Set(state.rows.map(r => r[rowKey]))
+		state.selection = state.selection.filter(s => rowsSet.has(s[rowKey]))
 	} else {
-		deleted = selection.filter(
-			item =>
-				rows.map(r => JSON.stringify(r)).indexOf(JSON.stringify(item)) === -1,
+		state.selection = state.selection.filter(s =>
+			state.rows.some(r => deepEql(r, s)),
 		)
 	}
 
-	deleted.forEach(deletedItem => {
-		selection.splice(
-			selection
-				.map(e => JSON.stringify(e))
-				.indexOf(JSON.stringify(deletedItem)),
-			1,
-		)
-	})
-
-	if (deleted.length) {
-		store.emit('selectionChange', [...selection])
+	if (initialSelectionLength !== state.selection.length) {
+		store.emit('selectionChange', [...state.selection])
 	}
 }
 
