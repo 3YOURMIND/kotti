@@ -125,7 +125,7 @@ In most cases the table is the same width as its parent. You can also specify th
 }
 ```
 
-## Content alignment
+## Align (Content)
 
 Alignment would default to be `left`. It can be customized for common cases that require it, such as price, and currency.
 `align` in `columns` decides the alignment of each column’s text.
@@ -190,7 +190,6 @@ When content should not be hidden, using horizontal scrolling is a better altern
 {
 	data() {
 		return {
-			...objectFromBefore, // rows, and columns
 			select: [0,1]
 		}
 	}
@@ -235,7 +234,7 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 <div>
 	<KtTable :rows="rows" :columns="columnsDefault" isSelectable @selectionChange="selectedRows = $event" />
-	<pre>Selected value: {{ JSON.stringify(selectedRows, undefined, 2) }}</pre>
+	<pre>selectedRows: {{ JSON.stringify(selectedRows, undefined, 2) }}</pre>
 </div>
 
 ```html
@@ -507,51 +506,402 @@ To sort remotly:
 `actions` adds _hover_ actions to the table. You use the `slot="actions"` to define the actions template.
 > You must use `slot-scope` prop for the `actions` slot for it to be detected.
 
-<KtTable :rows="rows" :columns="columnsDefault">
-	<template slot="actions" slot-scope="{ row }">
-		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
-		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
-	</template>
-</KtTable>
-
+<ShowCase vueSlotLabel="Actions Table" styleSlotLabel="html">
+<div slot="vue">
+	<KtTable :rows="rows" :columns="columnsDefault" isSelectable>
+		<template slot="actions" slot-scope="{ row, rowIndex }">
+			<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
+			<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
+		</template>
+	</KtTable>
+</div>
+<div slot="style">
 
 ```html
 <KtTable :rows="rows" :columns="columns">
-	<template slot="actions" slot-scope="{ row }">
-		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
-		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
-	</template>
+		<template slot="actions" slot-scope="{ row }">
+	<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
+	<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
+</template>
 </KtTable>
 ```
 
+</div>
+</ShowCase>
+
+_Update_: Preferably, since the above syntax is now deprecated, use [v-slot](https://vuejs.org/v2/guide/components-slots.html) 
+
+<ShowCase vueSlotLabel="v-slot syntax" styleSlotLabel="shorthand">
+<div slot="vue">
+
 ```html
 <KtTable :rows="rows" :columns="columns">
-	<template v-slot:actions="{ row }">
+<template v-slot:actions="{ row }">
 	<!-- as before  -->
-	</template>
+</template>
 </KtTable>
 ```
+
+</div>
+<div slot="style">
 
 ```html
 <KtTable :rows="rows" :columns="columns">
-	<template #actions="{ row }">
+<template #actions="{ row }">
 	<!-- as before  -->
-	</template>
+</template>
 </KtTable>
 ```
 
+</div>
+</ShowCase>
+
+## Expandable
+
+`isExpandable` enables expandability of the row**s**, defined on `<KtTable/>`. You use the `slot="expand"` to define the template that shows on expansion.
+
+<ShowCase vueSlotLabel="Expandable Table" styleSlotLabel="html">
+<div slot="vue">
+<KtTable :rows="rows" :columns="columnsDefault" isExpandable>
+<template #expand="{ row, rowIndex }">
+	<KtBanner :message="row.name" icon="user" isGrey />
+	<KtBanner :message="row.address.line" icon="global" isGrey />
+</template>
+</KtTable>
+</div>
+
+
+<div slot="style">
+
+```html
+<KtTable :rows="rows" :columns="columns" isExpandable>
+<template #expand="{ row, rowIndex }">
+	<KtBanner :message="row.name" icon="user" isGrey />
+	<KtBanner :message="row.address.line" icon="global" isGrey />
+</template>
+</KtTable>
+```
+
+</div>
+</ShowCase>
+
+The default behavior only allows you to expand one row at a time; expanding one row would trigger any currently-unexpanded rows to shrink back.
+
+If you want to allow for the expansion of multiple rows at a time, set the `expandMultiple` flag on `<KtTable />`, as well.
+
+<ShowCase vueSlotLabel="Expandable Table" styleSlotLabel="html">
+<div slot="vue">
+<KtTable :rows="rows" :columns="columnsDefault" isExpandable expandMultiple>
+<template #expand="{ row, rowIndex }">
+	<KtBanner :message="row.name" icon="user" isGrey />
+	<KtBanner :message="row.address.line" icon="global" isGrey />
+</template>
+</KtTable>
+</div>
+<div slot="style">
+
+```html
+<KtTable :rows="rows" :columns="columns" isExpandable expandMultiple>
+
+<template #expand="{ row, rowIndex }">
+	<KtBanner :message="row.name" icon="user" isGrey />
+	<KtBanner :message="row.address.line" icon="global" isGrey />
+</template>
+
+</KtTable>
+```
+
+</div>
+</ShowCase>
+
+## Custom Render
+
+It is possible to customize parts (columns) of the table by passing your own render-prop functions instead of using slots.
+
+`<KtTable />` supports the following render props:  
+* `renderEmpty` &rarr; to define a custom rendered component when the table is empty, i.e., `:rows=[]`. `slot='empty'` can be used instead.
+* `renderLoading` &rarr; for when the `rows` are still loading (e.g., backend-api call has not resolved yet). `slot='loading'` can be used to render a template, instead.
+> Note there is a `loading` Boolean flag, and when set to true, will render whatever is passed to `renderLoading` inside the table body. 
+> if no `renderLoading` function is passed, it defaults to a buffer, still. 
+* `renderExpand` &rarr; alternative to the `expand` slot.
+* `renderActions` &rarr; alternative to the `actions` slot.
+
+
+`<KtTableColumn />` supports the following render props: 
+* `formatter` &rarr; which applies formatting to the cell (somewhat similar to what you would consider as a `computed`)
+* `renderHeader` &rarr; custom render fn, to render a custom element in the header of the column. Instead you can use, slot='header'
+* `renderCell` &rarr; custom render fn, to render a custom element in the cells of the column. Instead use a default slot. 
+
+<ShowCase vueSlotLabel="Custom Render Table" styleSlotLabel="html">
+<div slot="vue" >
+	<KtTable
+		:rows="rows"
+		:renderExpand="renderExpand"
+		:renderActions="renderActions"
+	>
+		<KtTableColumn
+			label="Name"
+			prop="name"
+			:renderHeader="renderHeader"
+			:renderCell="renderCell"
+		/>
+		<KtTableColumn
+			label="Date"
+			prop="date"
+			:formatter="formatDate"
+		/>
+	</KtTable>
+</div>
+
+<div slot="style">
+
+```html
+<KtTable
+	:rows="rows"
+	:renderExpand="renderExpand"
+	:renderActions="renderActions"
+>
+	<KtTableColumn
+		label="Name"
+		prop="name"
+		:renderHeader="renderHeader"
+		:renderCell="renderCell"
+	/>
+	<KtTableColumn
+		label="Date"
+		prop="date"
+		:formatter="formatDate"
+	/>
+</KtTable>
+```
+
+</div>
+</ShowCase>
+
+
+```js
+{
+	methods: {
+		formatDate(value, row, column, columnIndex, rowIndex) {
+			return new Date(value).toUTCString()
+		},
+		renderExpand(h, { row }) {
+			return (
+				<div>
+					<KtBanner message={row.name} icon="user" isGrey />
+					<KtBanner message={row.address.line} icon="global" isGrey />
+				</div>
+			)
+		}
+		renderActions(h, { row }) {
+			return (
+				<div>
+					<i class="yoco" onClick={() => this.showAlert(row.name, 'edited')}> edit</i>
+					<i class="yoco" onClick={() => this.showAlert(row.name, 'deleted')}>trash</i>
+				</div>
+			)
+		},
+		renderHeader(h, { value, column, columnIndex }) {
+			return <div>{value}</div>
+		},
+		renderCell(h, { value, row, rowIndex, column, columnIndex }) {
+			return (
+				<KtAvatar
+					name={value}
+					hoverable
+					src="https://picsum.photos/200"
+					showTooltip
+					small
+					class="mr-16px"
+				/>
+			)
+		},
+	}
+}
+```
+
+<ShowCase vueSlotLabel="Custom Loading" styleSlotLabel="html">
+<div slot="vue">
+	<KtTable
+		:rows="rows"
+		:renderLoading="renderLoading"
+		:loading="true"
+		>
+		<KtTableColumn
+			label="Name"
+			prop="name"
+		/>
+		<KtTableColumn
+			label="Date"
+			prop="date"
+		/>
+	</KtTable>
+</div>
+
+<div slot="style">
+	
+```html
+<KtTable
+	:rows="rows"
+	:renderLoading="renderLoading"
+	:loading="true"
+>
+	<KtTableColumn
+		label="Name"
+		prop="name"
+	/>
+	<KtTableColumn
+		label="Date"
+		prop="date"
+	/>
+</KtTable>
+```
+
+</div>
+</ShowCase>
+
+<ShowCase vueSlotLabel="Empty Table" styleSlotLabel="html">
+<div slot="vue">
+<KtTable
+	:rows="[]"
+	:renderEmpty="renderEmpty"
+>
+	<KtTableColumn
+		label="Name"
+		prop="name"
+	/>
+	<KtTableColumn
+		label="Date"
+		prop="date"
+	/>
+</KtTable>
+</div>
+
+<div slot="style">
+
+```html
+<KtTable
+	:rows="[]"
+	:renderEmpty="renderEmpty"
+>
+	<KtTableColumn
+		label="Name"
+		prop="name"
+	/>
+	<KtTableColumn
+		label="Date"
+		prop="date"
+	/>
+</KtTable>
+```
+</div>
+</ShowCase>
+
+
+
+```js
+renderLoading() {
+	return <div>Loading while the loading prop on KtTable is true</div>
+},
+renderEmpty() {
+	return <div>Hello</div>
+},
+```
+
+You can also use slots instead of render props. [`slot="loading"`, `slot="empty"`, `slot="header"`].
+
+```html
+<KtTable :rows="rows">
+	<div slot="empty">
+		No data to see
+	</div>
+	<div slot="loading">
+		Loading while the loading prop on KtTable is true
+	</div>
+<KtTableColumn
+		label="Name"
+		prop="name"
+>
+<template #header="{ value }">
+	<div>{{ value }}</div>
+</template>
+<!-- if you use old slot syntax, you need to define slot name for a default slot (this replaces renderCell) -->
+<template #default="{value, row, rowIndex, column, columnIndex}">
+	<KtAvatar
+		:name="value"
+		hoverable
+		src="https://picsum.photos/200"
+		showTooltip
+		small
+		class="mr-16px"
+	/>
+</template>
+</KtTableColumn>
+</KtTable>
+```
+
+### Provider/Consumer and Mixin
+
+Sometimes you may need to access the table's store and control it from outside.
+While `ref` may work if your modifications are in the _same_ component, your controller component may be elsewhere.
+
+For that purpose, we introduce `KtTableProvider`/`KtTableConsumer`. The provider exposes the `store`, from which you can access many props from the store. 
+It also directly exposes `columns`, `filteredColumns`, `sortedColumns`, `hiddenColumns`, for faster accesss, and methods: `hideColumn`, `showAllColumns`, `orderBeforeColumn`.
+
+_Notes_:
+* hideColumn(column, toggleTo) &rarr; takes the column to be hidden and the _negation_ of its _current_ `hidden` prop (i.e. If it's already hidden, toggle will be set hidden to `false` and vice-versa)
+* showAllColumns() &rarr; takes no arguments and sets `hidden` prop to false on all columns
+* orderBeforeColumn(fromIndex, to Index) &rarr; used when `useColumnDragToOrder` flag is true. Takes the column index we're dragging from, and the index of the column before the one we're dragging to.
+
+> There’s also the _deprecated_ `KtTableColumnsStateMixin`.
+
+<KtTableProvider>
+	<div>
+		<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
+			<div class="parts-edit-columns-filter__container">
+				<KtButtonGroup>
+						<KtButton
+							v-for="column in columns"
+							:key="column.prop"
+							:label="`${column.hidden? 'Show ':'Hide '} ${column.label || column.prop}`"
+							:type="column.hidden ? 'text' : 'primary'"
+							@click="hideColumn(column, !column.hidden)"
+						/>
+				</KtButtonGroup>
+				<KtButton :type="columns.filter(c => c.hidden).length > 0? 'primary':'text'" label="Show All Columns" @click="showAllColumns"/>
+			</div>
+		</KtTableConsumer>
+		<KtTableConsumer #default="{ columns, orderBeforeColumn }">
+			<div>
+				<KtInput label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
+				<KtInput label="Drag To: " type="number" min="0" :max="columns.length -2" v-model="toIndex" />
+				<KtButton label="Reorder Columns" @click="orderBeforeColumn(fromIndex, toIndex)" />
+			</div>
+		</KtTableConsumer>
+	</div>
+	<div>
+		<KtTable :rows="rows" :columns="columnsResponsive" useColumnDragToOrder/>
+	</div>
+</KtTableProvider>
+
+
+`<KtTableProvider />` takes the same props as `<KtTable/>`.
+
+`<KtTable />` can have an optional `id` prop that will allow the corresponding `<KtTableConsumer />` to select the same `id`.
+Otherwise, all tables **under** the same provider will share the same store.
+
+<hr />
 
 </template>
 
 <script>
 import KtBanner from '../../../packages/kotti-banner'
 import KtAvatar from '../../../packages/kotti-avatar'
-// import KtTable from '../../../packages/kotti-table'
 import ShowCase from '../../components/ShowCase'
 
 export default {
 	name: 'Tables',
-	components: { ShowCase },
+	components: { KtBanner, ShowCase },
 	data() {
 		return {
 			select: [0, 1],
@@ -612,6 +962,8 @@ export default {
 				},
 			],
 			disableName: 'F',
+			fromIndex: 0,
+			toIndex: 0,
 		}
 	},
 	methods: {
@@ -621,8 +973,8 @@ export default {
 		showAlertOnClickOrEnter(row, rowIndex) {
 			alert(`${JSON.stringify(row)} is at index: ${rowIndex}!`)
 		},
-		showAlert(value, model) {
-			alert(`${value} is ${model}!`)
+		showAlert(model, value) {
+			alert(`${model} is ${value}!`)
 		},
 		sortDate(a, b) {
 			return new Date(a) - new Date(b)
@@ -641,20 +993,27 @@ export default {
 			return <div>Loading while the loading prop on KtTable is true</div>
 		},
 		renderExpand(h, { row }) {
-			return [
-				<KtBanner message={'row.name'} icon="user" isGrey />,
-				<KtBanner message={'row.address.line'} icon="global" isGrey />,
-			]
+			return (
+				<div>
+					<KtBanner message={row.name} icon="user" isGrey />
+					<KtBanner message={row.address.line} icon="global" isGrey />
+				</div>
+			)
 		},
 		renderActions(h, { row }) {
-			return [
-				<i class="yoco" onClick={() => this.showAlert(row.name, 'edited')}>
-					edit
-				</i>,
-				<i class="yoco" onClick={() => this.showAlert(row.name, 'deleted')}>
-					trash
-				</i>,
-			]
+			return (
+				<div>
+					<i class="yoco" onClick={() => this.showAlert(row.name, 'edited')}>
+						edit
+					</i>
+					<i class="yoco" onClick={() => this.showAlert(row.name, 'deleted')}>
+						trash
+					</i>
+				</div>
+			)
+		},
+		showAlterCallBack(name, text) {
+			return () => this.showAlert(name, text)
 		},
 		renderHeader(h, { value }) {
 			return <div>{value}</div>
@@ -670,6 +1029,9 @@ export default {
 					class="mr-16px"
 				/>
 			)
+		},
+		orderBeforeColumn() {
+			console.log('hi')
 		},
 	},
 }

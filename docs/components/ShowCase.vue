@@ -14,9 +14,15 @@ export default {
 			showCode: true,
 		}
 	},
+	props: {
+		vueSlotLabel: String,
+		styleSlotLabel: String,
+	},
 	computed: {
 		currentCode() {
-			return this.showCode ? 'Kotti-UI' : 'Kotti-Style'
+			return this.showCode
+				? this.vueSlotLabel || 'Kotti-UI'
+				: this.styleSlotLabel || 'Kotti-Style'
 		},
 	},
 }
