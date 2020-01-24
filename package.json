@@ -68,7 +68,7 @@
 		"lint-staged": "^8.1.5",
 		"node-sass": "^4.10.0",
 		"nuxt": "^2.4.5",
-		"prettier": "^1.15.2",
+		"prettier": "^1.19.1",
 		"sass-loader": "^7.1.0",
 		"vue": "^2.6.8",
 		"vue-clipboard2": "^0.3.0",
