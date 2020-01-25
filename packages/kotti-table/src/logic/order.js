@@ -13,7 +13,7 @@ export const defaultState = {
 export const mutations = {
 	orderBefore(store, fromColumn, toColumn) {
 		const { state } = store
-
+		debugger
 		const fromIndex = getColumnIndex(state, fromColumn)
 		state._columnsArray.splice(fromIndex, 1)
 

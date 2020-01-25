@@ -679,7 +679,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 </ShowCase>
 
 
-```js
+```jsx
 {
 	methods: {
 		formatDate(value, row, column, columnIndex, rowIndex) {
@@ -694,10 +694,13 @@ It is possible to customize parts (columns) of the table by passing your own ren
 			)
 		}
 		renderActions(h, { row }) {
+			const onEditClick = () => this.showAlert(row.name, 'edited')
+			const onDeleteClick = () => this.showAlert(row.name, 'deleted')
+			
 			return (
 				<div>
-					<i class="yoco" onClick={() => this.showAlert(row.name, 'edited')}> edit</i>
-					<i class="yoco" onClick={() => this.showAlert(row.name, 'deleted')}>trash</i>
+					<i class="yoco" onClick={onEditedClick}>edit</i>
+					<i class="yoco" onClick={onDeleteClick}>trash</i>
 				</div>
 			)
 		},
@@ -825,7 +828,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <template #header="{ value }">
 	<div>{{ value }}</div>
 </template>
-<!-- if you use old slot syntax, you need to define slot name for a default slot (this replaces renderCell) -->
+<!-- if you use old slot syntax, you don't need to define slot name for a default slot (this replaces renderCell) -->
 <template #default="{value, row, rowIndex, column, columnIndex}">
 	<KtAvatar
 		:name="value"
@@ -848,13 +851,52 @@ While `ref` may work if your modifications are in the _same_ component, your con
 For that purpose, we introduce `KtTableProvider`/`KtTableConsumer`. The provider exposes the `store`, from which you can access many props from the store. 
 It also directly exposes `columns`, `filteredColumns`, `sortedColumns`, `hiddenColumns`, for faster accesss, and methods: `hideColumn`, `showAllColumns`, `orderBeforeColumn`.
 
+`<KtTableProvider />` takes the same props as `<KtTable/>`.
+
+`<KtTable />` can have an optional `id` prop that will allow the corresponding `<KtTableConsumer />` to select the same `id`.
+Otherwise, all tables **under** the same provider will share the same store.
+
 _Notes_:
-* hideColumn(column, toggleTo) &rarr; takes the column to be hidden and the _negation_ of its _current_ `hidden` prop (i.e. If it's already hidden, toggle will be set hidden to `false` and vice-versa)
-* showAllColumns() &rarr; takes no arguments and sets `hidden` prop to false on all columns
-* orderBeforeColumn(fromIndex, to Index) &rarr; used when `useColumnDragToOrder` flag is true. Takes the column index we're dragging from, and the index of the column before the one we're dragging to.
+* `hideColumn(column, toggleTo)` &rarr; takes the column to be hidden and the _negation_ of its _current_ `hidden` prop (i.e. If it's already hidden, toggle will be set hidden to `false` and vice-versa)
+* `showAllColumns()` &rarr; takes no arguments and sets `hidden` prop to false on all columns
+* `orderBeforeColumn(fromIndex, to Index)` &rarr; used when `useColumnDragToOrder` flag is true. Takes the column index we're dragging from, and the index of the column before the one we're dragging to.
 
 > There’s also the _deprecated_ `KtTableColumnsStateMixin`.
 
+<ShowCase vueSlotLabel="Consumer/Provider Table" styleSlotLabel="html">
+<div slot="vue">
+	<KtTableProvider>
+		<div>
+			<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
+				<div class="parts-edit-columns-filter__container">
+					<KtButtonGroup style="margin-top: 20px;">
+							<KtButton
+								v-for="column in columns"
+								:key="column.prop"
+								:label="`${column.hidden? 'Show ':'Hide '} ${column.label || column.prop}`"
+								:type="column.hidden ? 'text' : 'primary'"
+								@click="hideColumn(column, !column.hidden)"
+							/>
+					</KtButtonGroup>
+					<KtButton :disabled="columns.filter(c=> c.hidden).length === 0" type="primary" label="Show All Columns" @click="showAllColumns"/>
+				</div>
+			</KtTableConsumer>
+			<KtTableConsumer #default="{ columns, orderBeforeColumn }">
+				<div>
+					<KtInput label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
+					<KtInput label="(+-)Steps: " type="number" :min="fromIndex===0?0:-fromIndex" :max="(columns.length -2 - fromIndex)" v-model="dragSteps" />
+					<KtButton type="primary" label="Reorder Columns" :disabled="parseInt(dragSteps,10)===0" @click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )" />
+				</div>
+			</KtTableConsumer>
+		</div>
+		<div>
+			<KtTable :rows="rows" :columns="columnsResponsive" useColumnDragToOrder/>
+		</div>
+	</KtTableProvider>
+</div>
+<div slot="style">
+
+```html
 <KtTableProvider>
 	<div>
 		<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
@@ -868,14 +910,14 @@ _Notes_:
 							@click="hideColumn(column, !column.hidden)"
 						/>
 				</KtButtonGroup>
-				<KtButton :type="columns.filter(c => c.hidden).length > 0? 'primary':'text'" label="Show All Columns" @click="showAllColumns"/>
+				<KtButton :disabled="columns.filter(c=> c.hidden).length === 0" type="primary" label="Show All Columns" @click="showAllColumns"/>
 			</div>
 		</KtTableConsumer>
 		<KtTableConsumer #default="{ columns, orderBeforeColumn }">
 			<div>
 				<KtInput label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
-				<KtInput label="Drag To: " type="number" min="0" :max="columns.length -2" v-model="toIndex" />
-				<KtButton label="Reorder Columns" @click="orderBeforeColumn(fromIndex, toIndex)" />
+				<KtInput label="(+-)Steps: " type="number" :min="fromIndex===0?0:-fromIndex" :max="(columns.length -2 - fromIndex)" v-model="dragSteps" />
+				<KtButton type="primary" label="Reorder Columns" :disabled="parseInt(dragSteps,10)===0" @click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )" />
 			</div>
 		</KtTableConsumer>
 	</div>
@@ -883,14 +925,158 @@ _Notes_:
 		<KtTable :rows="rows" :columns="columnsResponsive" useColumnDragToOrder/>
 	</div>
 </KtTableProvider>
+```
 
+</div>
+</ShowCase>
 
-`<KtTableProvider />` takes the same props as `<KtTable/>`.
+```js
+{
+	data(){
+		return 	{
+			fromIndex: 0,
+			dragSteps: 0
+		}
+	},
+	computed: {
+		toIndex() {
+			const parsedFrom = parseInt(this.fromIndex, 10)
+			const parsedSteps = parseInt(this.dragSteps, 10)
 
-`<KtTable />` can have an optional `id` prop that will allow the corresponding `<KtTableConsumer />` to select the same `id`.
-Otherwise, all tables **under** the same provider will share the same store.
+			return parsedFrom + parsedSteps + (parsedSteps > 0 ? 1 : 0)
+		},
+	},
+}
+```
+
+_Note:_
+The above code for `orderBeforeColumn` function, is meant to map the UI drag/drop behavior, exactly. Currently, you can only drag a column to any position, except to the last column (i.e. if you want to move a column to the end of the table, you have to drag it to before-the-last column, then drag the last column one step to the left to achieve this.). Currently, the implementation for the dragging behavior is done in such a way, but the feature may be added in the future.
 
 <hr />
+
+## Usage
+
+### Attributes of `<KtTable />`
+
+|        Attribute         |                             Description                             |            Type             |    Accepted values    | Default |
+| :----------------------- | :------------------------------------------------------------------ | :-------------------------- | :-------------------- | :------ |
+| `rows` (required)        | table row data                                                      | `Array`                     | —                     | —       |
+| `id`                     | for when using nested providers                                     | `String`                    | —                     | null    |
+| `rowKey`                 | the row prop used for the rows key                                  | `String`                    | —                     | —       |
+| `columns`                | table column information                                            | `Array`                     | —                     | —       |
+| `emptyText`              | text to show when table is empty                                    | `String`                    | —                     | —       |
+| `loading`                | flag to toggle loading state.                                       | `Boolean`                   | —                     | `false` |
+| `expandMultiple`         | allow for expanding multiple rows at once                           | `Boolean`                   | —                     | `false` |
+| `isInteractive`          | allow clicking/keyboard focusing table rows                         | `Boolean`                   | —                     | `false` |
+| `isScrollable`           | allow horizontal table scrolling                                    | `Boolean`                   | —                     | `false` |
+| `isSelectable`           | enable `select` option of table                                     | `Boolean`                   | —                     | `false` |
+| `sortable`               | enable sorting for all columns                                      | `Boolean`, `String`         | "all"                 | `false` |
+| `sortMultiple`           | retain sort priority across multiple columns                        | `Boolean`                   | -                     | `false` |
+| `remoteSort`             | UI is enabled but table will not sort; but only publish @sortChange | `Boolean`                   | -                     | `false` |
+| `useColumnDragToOrder`   | enable dragging columns to change their order                       | `Boolean`                   | -                     | `false` |
+| `useQuickSortControl`    | enable toggle sort by column click UI (arrow keys)                  | `Boolean`                   | -                     | `false` |
+| `useColumnsStateControl` | still not available. Enable UI for managing columns state           | `Boolean`                   | -                     | `false` |
+| `sortedColumns`          | prop for changing sorted columns                                    | `Array`                     | [{ prop, sortOrder }] | `[]`    |
+| `hiddenColumns`          | prop for changing hidden columns                                    | `Array`                     | [{ prop, hidden }]    | `[]`    |
+| `filterdColumns`         | prop for changing filterd columns                                   | `Array`                     | [{ prop, filter }]    | `[]`    |
+| `tdClasses`              | classes to apply to all `<td />` elements                           | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
+| `thClasses`              | classes to apply to all `<th />` elements                           | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
+| `trClasses`              | classes to apply to all `<tr />` elements                           | `Array`, `String`, `Object` | `"responsive"`        | `[]`    |
+| `selected`               | prop for rows that are selected, as returned by @selectionChange    | `Array`                     | —                     | —       |
+| `value`                  | deprecated; used when v-model was used instead of `selected`        | `Array`                     | —                     | —       |
+| `maxHeight`              | —                                                                   | `String`                    | `10%`, `100px`        | —       |
+| `height`                 | —                                                                   | `String`                    | `10%`, `100px`        | —       |
+| `disableRow`             | disable some rows if the function is true                           | `Function`                  | —                     | —       |
+| `renderEmpty`            | render prop for `emptyText` prop, when rows are empty               | `Function`                  | —                     | —       |
+| `renderLoading`          | render prop for `loading`                                           | `Function`                  | —                     | —       |
+| `renderExpand`           | render prop for `expand`                                            | `Function`                  | —                     | —       |
+| `renderActions`          | render prop for row `actions`                                       | `Function`                  | —                     | —       |
+
+### `<KtTableColumn/>` Attributes
+
+|     Attribute      |                                  Description                                   |            Type             |              Accepted values               |              Default              |
+| :----------------- | :----------------------------------------------------------------------------- | :-------------------------- | :----------------------------------------- | :-------------------------------- |
+| `prop`  (required) | used to match the value in `rows` can be a dot path                            | `String` `String.String`    | —                                          | —                                 |
+| `align`            | alignment of column text                                                       | `String`                    | `"center"`, `"left"`, `"right"`            | `left`                            |
+| `key`              | deprecated. Is transalted to `prop`, instead                                   | `String`                    | —                                          | —                                 |
+| `label`            | table column header value                                                      | `String`                    | —                                          | —                                 |
+| `responsive`       | control responsive display  (this doesn't seem to work )                       | `String`                    | —                                          | —                                 |
+| `width`            | width of the column within table. When using %, must add up to `100%`          | `String`                    | `10%`, `100px`                             | `auto`                            |
+| `maxWidth`         | currently not used                                                             | String                      | `10%`, `100px`                             | -                                 |
+| `hidden`           | does not render this collumn if true                                           | Boolean                     | false                                      |                                   |
+| `sortable`         | whether this column is sortable or not                                         | [Boolean, undefined]        | true, false, undefined                     | -                                 |
+| `sortOrder`        | the current sort order of the column                                           | [Number, String]            | "ascending", "descending", null            | null                              |
+| `sortOrders`       | order to toggle sort                                                           | Array                       | -                                          | ["ascending", "descending", null] |
+| `sortMethod`       | custom sort method ignores sortBy                                              | Function                    | -                                          | -                                 |
+| `sortBy`           | compare function to sort by                                                    | String, Function, Array     | path string, function or array of previous | column.prop                       |
+| `disableRowClick`  | stop row click from bubbling up when clicking on cell                          | Boolean                     | -                                          |                                   |
+| `default`          | if cell value is undefined, use default. Does not work if you use custom render| Function, String            | -                                          | -                                 |
+| `formatter`        | formats value before passing it to cell                                        | Function                    | -                                          |                                   |
+| `renderHeader`     | render function to custom render header cell                                   | Function                    | -                                          |                                   |
+| `renderCell`       | render function to custom render table cell                                    | Function                    | -                                          |                                   |
+| `renderContext`    | object you can use to pass extra data to all render functions                  | Object                      | -                                          |                                   |
+| `order`            | number to sort columns from left to right by                                   | Number                      | -                                          |                                   |
+| `thClass`          | classes to this column's header to `<td />` elements                           | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `tdClass`          | classes to this column's to `<td />` elements                                  | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `headerCellClass`  | classes to this column's to `.kt-table__header-cell` elements                  | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `cellClass`        | classes to this column's to `.kt-table__cell` elements                         | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+
+
+#### `<TableConsumer/>` Attributes
+
+| Attribute |           Description            |   Type   | Accepted values | Default |
+| :-------- | :------------------------------- | :------- | :-------------- | :------ |
+| `id`      | for when using nested providers  | `String` | —               | null    |
+
+
+### Events
+
+#### `<KtTableColumn/>`
+
+|      Event Name      |                       Arguments                       |                             Description                             |
+| :------------------- | :---------------------------------------------------- | :------------------------------------------------------------------ |
+| `@activateRow`       | `(row, index)`                                        | Row was clicked or activated via keyboard.                          |
+| `@rowClick`          | `(row, index)`                                        | Row was clicked                                                     |
+| `@rowFocus`          | `(row, index)`                                        | Row was in focus Requires setting `isInteractive` or `@activateRow` |
+| `@expandChange`      | `(selection)`                                         | Row was blured Requires setting `isInteractive` or `@activateRow`   |
+| `@expand`            | `(selection)`                                         | Row was expanded                                                    |
+| `@selectionChange`   | `(selection)`                                         | selection changed                                                   |
+| `@selectAll`         | `(selection)`                                         | all selection checkbox was toggled                                  |
+| `@select`            | `(selection, row)`                                    | a row was selected                                                  |
+| `@sortChange`        | `({ sortedColumns, column, prop, sortOrder, sortBy})` | a column was sorted                                                 |
+| `@columnOrderChange` | `([column])`                                          | array of columns with updated order                                 |
+
+#### Cell
+
+|  Event Name  |                     Arguments                     |    Description     |
+| :----------- | :------------------------------------------------ | :----------------- |
+| `@cellClick` | `({ value, column, row, columnIndex, rowIndex })` | a cell was clicked | 
+> It triggers @rowClick, unless bubbling up is disabled
+
+
+### Slots
+
+#### `<KtTable/>`
+
+| Slot Name |             Description             |          Scope           |
+| :-------- | :---------------------------------- | :----------------------- |
+| `empty`   | what to render when no data         | --                       |
+| `loading` | what to render when loading is true | --                       |
+| `actions` | action section of each row          | `{value, row, rowIndex } |
+| `expand`  | expand section of each row          | `{value, row, rowIndex } |
+
+#### `<KtTableColumn />`
+
+| Slot Name |     Description      |                     Scope                     |
+| :-------- | :------------------- | :-------------------------------------------- |
+| `header`  | render in table row  | `{value, row, rowIndex }`                     |
+| `default` | render in table cell | `{value, row, rowIndex, column, columnIndex}` |
+
+#### `<TableConsumer/>`
+
+| Slot Name |                Description                |                                                      Scope                                                       |
+| :-------- | :---------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
+| `default` | provide a table's store and other methods | `{store, columns, hiddenColumns, sortedColumns, filteredColumns, hideColumn, showAllColumns, orderBeforeColumn}` |
 
 </template>
 
@@ -898,6 +1084,7 @@ Otherwise, all tables **under** the same provider will share the same store.
 import KtBanner from '../../../packages/kotti-banner'
 import KtAvatar from '../../../packages/kotti-avatar'
 import ShowCase from '../../components/ShowCase'
+import deepEql from 'deep-eql'
 
 export default {
 	name: 'Tables',
@@ -963,8 +1150,16 @@ export default {
 			],
 			disableName: 'F',
 			fromIndex: 0,
-			toIndex: 0,
+			dragSteps: 0,
 		}
+	},
+	computed: {
+		toIndex() {
+			const parsedFrom = parseInt(this.fromIndex, 10)
+			const parsedSteps = parseInt(this.dragSteps, 10)
+
+			return parsedFrom + parsedSteps + (parsedSteps > 0 ? 1 : 0)
+		},
 	},
 	methods: {
 		disableRow({ row }) {
