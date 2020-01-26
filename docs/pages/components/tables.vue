@@ -505,21 +505,22 @@ To sort remotly:
 
 `actions` adds _hover_ actions to the table. You use the `slot="actions"` to define the actions template.
 > You must use `slot-scope` prop for the `actions` slot for it to be detected.
+> Update: shorthand for v-slot is used now, instead.
 
 <ShowCase vueSlotLabel="Actions Table" styleSlotLabel="html">
 <div slot="vue">
-	<KtTable :rows="rows" :columns="columnsDefault" isSelectable>
-		<template slot="actions" slot-scope="{ row, rowIndex }">
-			<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
-			<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
-		</template>
-	</KtTable>
+<KtTable :rows="rows" :columns="columnsDefault">
+	<template slot="actions" slot-scope="{ row, rowIndex }">
+		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
+		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
+	</template>
+</KtTable>
 </div>
 <div slot="style">
 
-```html
+```vue
 <KtTable :rows="rows" :columns="columns">
-		<template slot="actions" slot-scope="{ row }">
+<template slot="actions" slot-scope="{ row }">
 	<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
 	<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
 </template>
@@ -585,7 +586,7 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 </div>
 </ShowCase>
 
-The default behavior only allows you to expand one row at a time; expanding one row would trigger any currently-unexpanded rows to shrink back.
+The default behavior only allows you to expand one row at a time; expanding one row would trigger any currently-expanded rows to shrink back.
 
 If you want to allow for the expansion of multiple rows at a time, set the `expandMultiple` flag on `<KtTable />`, as well.
 
@@ -600,14 +601,12 @@ If you want to allow for the expansion of multiple rows at a time, set the `expa
 </div>
 <div slot="style">
 
-```html
+```vue
 <KtTable :rows="rows" :columns="columns" isExpandable expandMultiple>
-
 <template #expand="{ row, rowIndex }">
 	<KtBanner :message="row.name" icon="user" isGrey />
 	<KtBanner :message="row.address.line" icon="global" isGrey />
 </template>
-
 </KtTable>
 ```
 
@@ -813,7 +812,7 @@ renderEmpty() {
 
 You can also use slots instead of render props. [`slot="loading"`, `slot="empty"`, `slot="header"`].
 
-```html
+```vue
 <KtTable :rows="rows">
 	<div slot="empty">
 		No data to see
@@ -828,7 +827,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <template #header="{ value }">
 	<div>{{ value }}</div>
 </template>
-<!-- if you use old slot syntax, you don't need to define slot name for a default slot (this replaces renderCell) -->
+<!-- if you use deprecated slot syntax, you don't need to define slot name for a default slot (this replaces renderCell) -->
 <template #default="{value, row, rowIndex, column, columnIndex}">
 	<KtAvatar
 		:name="value"
@@ -865,34 +864,34 @@ _Notes_:
 
 <ShowCase vueSlotLabel="Consumer/Provider Table" styleSlotLabel="html">
 <div slot="vue">
-	<KtTableProvider>
-		<div>
-			<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
-				<div class="parts-edit-columns-filter__container">
-					<KtButtonGroup style="margin-top: 20px;">
-							<KtButton
-								v-for="column in columns"
-								:key="column.prop"
-								:label="`${column.hidden? 'Show ':'Hide '} ${column.label || column.prop}`"
-								:type="column.hidden ? 'text' : 'primary'"
-								@click="hideColumn(column, !column.hidden)"
-							/>
-					</KtButtonGroup>
-					<KtButton :disabled="columns.filter(c=> c.hidden).length === 0" type="primary" label="Show All Columns" @click="showAllColumns"/>
-				</div>
-			</KtTableConsumer>
-			<KtTableConsumer #default="{ columns, orderBeforeColumn }">
-				<div>
-					<KtInput label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
-					<KtInput label="(+-)Steps: " type="number" :min="fromIndex===0?0:-fromIndex" :max="(columns.length -2 - fromIndex)" v-model="dragSteps" />
-					<KtButton type="primary" label="Reorder Columns" :disabled="parseInt(dragSteps,10)===0" @click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )" />
-				</div>
-			</KtTableConsumer>
-		</div>
-		<div>
-			<KtTable :rows="rows" :columns="columnsResponsive" useColumnDragToOrder/>
-		</div>
-	</KtTableProvider>
+<KtTableProvider>
+	<div>
+		<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
+			<div class="parts-edit-columns-filter__container">
+				<KtButtonGroup style="margin-top: 20px;">
+						<KtButton
+							v-for="column in columns"
+							:key="column.prop"
+							:label="`${column.hidden? 'Show ':'Hide '} ${column.label || column.prop}`"
+							:type="column.hidden ? 'text' : 'primary'"
+							@click="hideColumn(column, !column.hidden)"
+						/>
+				</KtButtonGroup>
+				<KtButton :disabled="columns.filter(c=> c.hidden).length === 0" type="primary" label="Show All Columns" @click="showAllColumns"/>
+			</div>
+		</KtTableConsumer>
+		<KtTableConsumer #default="{ columns, orderBeforeColumn }">
+			<div>
+				<KtInput label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
+				<KtInput label="(+-)Steps: " type="number" :min="fromIndex===0?0:-fromIndex" :max="(columns.length -2 - fromIndex)" v-model="dragSteps" />
+				<KtButton type="primary" label="Reorder Columns" :disabled="parseInt(dragSteps,10)===0" @click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )" />
+			</div>
+		</KtTableConsumer>
+	</div>
+	<div>
+		<KtTable :rows="rows" :columns="columnsResponsive" useColumnDragToOrder/>
+	</div>
+</KtTableProvider>
 </div>
 <div slot="style">
 
@@ -956,7 +955,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 ## Usage
 
-### Attributes of `<KtTable />`
+### Table Attributes
 
 |        Attribute         |                             Description                             |            Type             |    Accepted values    | Default |
 | :----------------------- | :------------------------------------------------------------------ | :-------------------------- | :-------------------- | :------ |
@@ -992,7 +991,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 | `renderExpand`           | render prop for `expand`                                            | `Function`                  | —                     | —       |
 | `renderActions`          | render prop for row `actions`                                       | `Function`                  | —                     | —       |
 
-### `<KtTableColumn/>` Attributes
+### Column Attributes
 
 |     Attribute      |                                  Description                                   |            Type             |              Accepted values               |              Default              |
 | :----------------- | :----------------------------------------------------------------------------- | :-------------------------- | :----------------------------------------- | :-------------------------------- |
@@ -1022,7 +1021,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 | `cellClass`        | classes to this column's to `.kt-table__cell` elements                         | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
 
 
-#### `<TableConsumer/>` Attributes
+#### Consumer Attributes
 
 | Attribute |           Description            |   Type   | Accepted values | Default |
 | :-------- | :------------------------------- | :------- | :-------------- | :------ |
@@ -1031,7 +1030,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 ### Events
 
-#### `<KtTableColumn/>`
+#### Column Events
 
 |      Event Name      |                       Arguments                       |                             Description                             |
 | :------------------- | :---------------------------------------------------- | :------------------------------------------------------------------ |
@@ -1046,17 +1045,17 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 | `@sortChange`        | `({ sortedColumns, column, prop, sortOrder, sortBy})` | a column was sorted                                                 |
 | `@columnOrderChange` | `([column])`                                          | array of columns with updated order                                 |
 
-#### Cell
+#### Cell Events
 
 |  Event Name  |                     Arguments                     |    Description     |
 | :----------- | :------------------------------------------------ | :----------------- |
 | `@cellClick` | `({ value, column, row, columnIndex, rowIndex })` | a cell was clicked | 
-> It triggers @rowClick, unless bubbling up is disabled
+> It triggers @rowClick, unless bubbling up is disabled by setting `disableRowClick` to true
 
 
 ### Slots
 
-#### `<KtTable/>`
+#### Table Slots
 
 | Slot Name |             Description             |          Scope           |
 | :-------- | :---------------------------------- | :----------------------- |
@@ -1065,14 +1064,14 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 | `actions` | action section of each row          | `{value, row, rowIndex } |
 | `expand`  | expand section of each row          | `{value, row, rowIndex } |
 
-#### `<KtTableColumn />`
+#### Column Slots
 
 | Slot Name |     Description      |                     Scope                     |
 | :-------- | :------------------- | :-------------------------------------------- |
 | `header`  | render in table row  | `{value, row, rowIndex }`                     |
 | `default` | render in table cell | `{value, row, rowIndex, column, columnIndex}` |
 
-#### `<TableConsumer/>`
+#### Consumer Slots
 
 | Slot Name |                Description                |                                                      Scope                                                       |
 | :-------- | :---------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |

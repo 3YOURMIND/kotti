@@ -84,30 +84,40 @@ export function getColumn(state, column = {}) {
 
 export function setColumn(state, { column, index, deleted }) {
 	const { _columns = {} } = state
-
-	const oldColumn = _columns[column.prop]
+	let newColumn = column
+	const oldColumn = _columns[newColumn.prop]
 	if (oldColumn) {
 		if (deleted) {
-			_columns[column.prop]._deleted = false
+			_columns[newColumn.prop]._deleted = false
 		} else {
-			Vue.set(_columns, column.prop, { ...oldColumn, ...column })
+			const isNewColumnPropDefined = newColumn.isPropDefined
+			const isOldColumnSlotDefined = oldColumn.isPropDefined === false
+			if (isNewColumnPropDefined && isOldColumnSlotDefined) {
+				newColumn = pick(newColumn, PUBLIC_COLUMN_PROPS)
+			}
+
+			const filteredColumn = Object.fromEntries(
+				Object.entries(newColumn).filter(kv => kv[1] !== undefined),
+			)
+			newColumn = { ...oldColumn, ...filteredColumn }
+			Vue.set(_columns, newColumn.prop, newColumn)
 		}
 	} else {
-		column.index = index || Object.keys(_columns).length
-		Vue.set(_columns, column.prop, column)
+		newColumn.index = index || Object.keys(_columns).length
+		Vue.set(_columns, newColumn.prop, newColumn)
 	}
 
-	if (column.sortOrder !== SORT_NONE) {
-		setSortedColumn(state, column)
+	if (newColumn.sortOrder !== SORT_NONE) {
+		setSortedColumn(state, newColumn)
 	}
-	if (column.hidden !== undefined) {
-		setHiddenColumn(state, column)
+	if (newColumn.hidden !== undefined) {
+		setHiddenColumn(state, newColumn)
 	}
-	if (column.filter !== undefined) {
-		setFilterColumn(state, column)
+	if (newColumn.filter !== undefined) {
+		setFilterColumn(state, newColumn)
 	}
 
-	return column
+	return newColumn
 }
 
 export function setColumnsArray(
