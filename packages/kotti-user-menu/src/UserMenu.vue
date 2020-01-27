@@ -23,13 +23,20 @@
 						class="user-menu__item"
 						v-text="link.title"
 						:style="{ color: themeColor.textColor }"
-						:data-test="`up-navbar__footer__item__${link.title.toLowerCase()}`"
+						:data-test="
+							`navbar:footer:element:${link.title
+								.toLowerCase()
+								.split(' ')
+								.join('-')}`
+						"
 					/>
 				</div>
 			</div>
 		</div>
 		<div :class="userInfoClass" @click="isMenuShow = !isMenuShow">
-			<div class="user-info-avatar"><KtAvatar small :src="userAvatar" /></div>
+			<div class="user-info-avatar">
+				<KtAvatar small :src="userAvatar" />
+			</div>
 			<div class="user-info-text" v-if="!isNarrow || isMenuShow">
 				<div
 					class="user-info-text__name"
