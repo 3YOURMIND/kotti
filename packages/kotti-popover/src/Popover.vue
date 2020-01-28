@@ -50,7 +50,7 @@ export default {
 	},
 	methods: {
 		handleClick() {
-			if (this.disabled) return null
+			if (this.disabled) return
 			this.showPopper = !this.showPopper
 		},
 		handleClickaway() {
