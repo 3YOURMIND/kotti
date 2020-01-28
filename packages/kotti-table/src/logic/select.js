@@ -26,7 +26,8 @@ export const mutations = {
 		if (rows.length === 0 || isAllRowsDisabled) return
 
 		const oldSelection = state.selection
-		const shouldSelectAll = !(state.isAllSelected || oldSelection.length)
+		const shouldSelectAll = !state.isAllSelected //more intuitive
+		// const shouldSelectAll = !(state.isAllSelected || oldSelection.length)
 
 		state.selection = shouldSelectAll ? [...enabledRows] : []
 
@@ -36,6 +37,7 @@ export const mutations = {
 		store.emit('selectionChange', selection)
 		store.emit('selectAll', selection)
 	}),
+
 	setSelectedIndexes(store, indexes) {
 		store.commit(
 			'setSelected',
@@ -43,6 +45,7 @@ export const mutations = {
 			indexes.map(index => store.get('getRowByVisibleIndex', index)),
 		)
 	},
+
 	setSelected({ state }, selection) {
 		state.selection = selection
 		updateAllSelected(state)
@@ -89,21 +92,6 @@ export function toggleRowSelection(state, row, selected) {
 	return changed
 }
 
-export function getSelectCheckForState(state) {
-	const { selection, rowKey } = state
-
-	let selectedMap
-	if (rowKey) {
-		selectedMap = getKeysMap(state.selection, rowKey)
-	}
-
-	if (selectedMap) {
-		return row => Boolean(selectedMap[getRowIdentity(row, rowKey)])
-	}
-	return row => selection.some(e => deepEql(e, row))
-	// return row => selection.indexOf(row) > -1
-}
-
 export function getKeysMap(list, key) {
 	const map = {}
 	for (const item of list) map[item[key]] = item
@@ -120,8 +108,6 @@ export function updateAllSelected(state) {
 		state.isAllSelected = false
 		return
 	}
-
-	// const isSelected = getSelectCheckForState(state)
 
 	state.isAllSelected = selection.length === rows.length
 }
