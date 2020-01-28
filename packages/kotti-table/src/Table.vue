@@ -189,9 +189,12 @@ export default {
 				if (table.renderEmpty) {
 					return table.renderEmpty(h)
 				} else {
-					return table.$slots.empty || this.emptyText || this.$t
-						? this.$t('table.emptyText')
-						: 'No Data'
+					return (
+						table.$slots.empty ||
+						table.emptyText ||
+						(this.$t && this.$t('table.emptyText')) ||
+						'No Data'
+					)
 				}
 			}
 		},

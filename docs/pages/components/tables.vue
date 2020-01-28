@@ -196,12 +196,12 @@ When content should not be hidden, using horizontal scrolling is a better altern
 }
 ```
 
-*Update:* The use of v-model is deprecated. Instead, bind the Array of selected to the `selected` property
+*Update:* The use of v-model is deprecated. Instead, bind the Array of selected to the `selected` property, and subscribe to @selectionChange, which returns the currently selected rows whenever they change
 > Note the difference between the Array model passed to the v-model and that passed to the selected property. 
 > The former is an `Array` of selected indices, and the latter is an `Array` of _row_ `Object`s
 
 <div>
-	<KtTable :rows="rows" :columns="columnsDefault" isSelectable :selected="selected" />
+	<KtTable :rows="rows" :columns="columnsDefault" isSelectable :selected="selected" @selectionChange="selected = $event" />
 	<pre>Selected Rows: {{JSON.stringify(selected,undefined, 2)}} </pre>
 </div>
 
@@ -209,7 +209,7 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 ```html
 <div>
-	<KtTable :rows="rows" :columns="columns" isSelectable :selected="selected" />
+	<KtTable :rows="rows" :columns="columns" isSelectable :selected="selected" @selectionChange="((selection) => selected = selection)"/>
 	<pre>Selected Rows: {{JSON.stringify(selected,undefined, 2)}} </pre>
 </div>
 ```
@@ -225,32 +225,6 @@ When content should not be hidden, using horizontal scrolling is a better altern
 					address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
 				}
 			],
-		}
-	}
-}
-```
-
-> While you can bind the selections with v-model, it is advised instead to listen to the `@selectionChange` event which publishes the current selected rows whenever they change
-
-<div>
-	<KtTable :rows="rows" :columns="columnsDefault" isSelectable @selectionChange="selectedRows = $event" />
-	<pre>selectedRows: {{ JSON.stringify(selectedRows, undefined, 2) }}</pre>
-</div>
-
-```html
-<KtTable :rows="rows" :columns="columns" isSelectable @selectionChange="selectRows" />
-```
-
-```js
-{
-	data() {
-		return {
-			selectedRows: []
-		}
-	}
-	methods: {
-		selectRows(selectedRows) {
-			this.selectedRows = selectedRows
 		}
 	}
 }
@@ -636,6 +610,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 	<KtTable
 		:rows="rows"
 		:renderExpand="renderExpand"
+		expandMultiple
 		:renderActions="renderActions"
 	>
 		<KtTableColumn
@@ -658,6 +633,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 <KtTable
 	:rows="rows"
 	:renderExpand="renderExpand"
+	expandMultiple
 	:renderActions="renderActions"
 >
 	<KtTableColumn
@@ -691,14 +667,17 @@ It is possible to customize parts (columns) of the table by passing your own ren
 					<KtBanner message={row.address.line} icon="global" isGrey />
 				</div>
 			)
-		}
+		},
+		showAlert(model, value) {
+			alert(`${model} is ${value}!`)
+		},
 		renderActions(h, { row }) {
 			const onEditClick = () => this.showAlert(row.name, 'edited')
 			const onDeleteClick = () => this.showAlert(row.name, 'deleted')
 			
 			return (
 				<div>
-					<i class="yoco" onClick={onEditedClick}>edit</i>
+					<i class="yoco" onClick={onEditClick}>edit</i>
 					<i class="yoco" onClick={onDeleteClick}>trash</i>
 				</div>
 			)
@@ -796,10 +775,9 @@ It is possible to customize parts (columns) of the table by passing your own ren
 	/>
 </KtTable>
 ```
+
 </div>
 </ShowCase>
-
-
 
 ```js
 renderLoading() {
@@ -810,22 +788,86 @@ renderEmpty() {
 },
 ```
 
-You can also use slots instead of render props. [`slot="loading"`, `slot="empty"`, `slot="header"`].
+You can also use slots instead of render props. [`slot="loading"`, `slot="empty"`, `slot="header"`, `slot="default"`].
 
-```vue
-<KtTable :rows="rows">
-	<div slot="empty">
-		No data to see
-	</div>
+<ShowCase vueSlotLabel="Loading Slot" styleSlotLabel="html">
+<div slot="vue">
+<KtTable :rows="rows" :columns="columnsDefault" :loading="true">
 	<div slot="loading">
 		Loading while the loading prop on KtTable is true
 	</div>
+</KtTable>	
+</div>
+
+<div slot="style">
+
+```html
+<KtTable :rows="rows" :columns="columnsDefault" :loading="true">
+	<div slot="loading">
+		Loading while the loading prop on KtTable is true
+	</div>
+</KtTable>
+```
+
+</div>
+</ShowCase>
+
+<ShowCase vueSlotLabel="Empty Slot" styleSlotLabel="html">
+<div slot="vue">
+<KtTable :rows="emptyRows" :columns="columnsDefault">
+	<div slot="empty">
+		Hello, Empty World!
+	</div>
+</KtTable>
+</div>
+
+<div slot="style">
+
+```html
+<KtTable :rows="emptyRows" :columns="columns">
+	<div slot="empty">
+		Hello, Empty World!
+	</div>
+</KtTable>
+```
+
+</div>
+</ShowCase>
+
+<ShowCase vueSlotLabel="header/default slots" styleSlotLabel="html">
+<div slot="vue">
+<KtTable :rows="rows">
 <KtTableColumn
-		label="Name"
-		prop="name"
+	label="Name"
+	prop="name"
 >
-<template #header="{ value }">
-	<div>{{ value }}</div>
+<template #header="{ value, columnIndex }">
+	<div v-text="columnIndex + '::' + value" />
+</template>
+<template #default="{value, row, rowIndex, column, columnIndex}">
+	<KtAvatar
+		:name="value"
+		hoverable
+		src="https://picsum.photos/200"
+		showTooltip
+		small
+		class="mr-16px"
+	/>
+</template>
+</KtTableColumn>
+</KtTable>
+
+</div>
+<div slot="style">
+
+```html
+<KtTable :rows="rows">
+<KtTableColumn
+	label="Name"
+	prop="name"
+>
+<template #header="{ value, columnIndex }">
+	<div v-text="columnIndex + '::' + value" />
 </template>
 <!-- if you use deprecated slot syntax, you don't need to define slot name for a default slot (this replaces renderCell) -->
 <template #default="{value, row, rowIndex, column, columnIndex}">
@@ -841,6 +883,9 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 </KtTableColumn>
 </KtTable>
 ```
+
+</div>
+</ShowCase>
 
 ### Provider/Consumer and Mixin
 
@@ -1125,6 +1170,7 @@ export default {
 					address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
 				},
 			],
+			emptyRows: [],
 			rows: [
 				{
 					date: '2016-05-03',
@@ -1223,9 +1269,6 @@ export default {
 					class="mr-16px"
 				/>
 			)
-		},
-		orderBeforeColumn() {
-			console.log('hi')
 		},
 	},
 }
