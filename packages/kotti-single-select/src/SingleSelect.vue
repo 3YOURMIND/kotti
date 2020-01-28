@@ -152,11 +152,7 @@ export default {
 
 			const query = this.queryString.toLowerCase()
 			return this.options.filter(({ label, value }) =>
-				label !== null
-					? label.toLowerCase().includes(query)
-					: value !== null
-					? value.toLowerCase().includes(query)
-					: false,
+				label !== null ? label.toLowerCase().includes(query) : false,
 			)
 		},
 		formLabelClass() {
