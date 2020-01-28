@@ -196,7 +196,7 @@ When content should not be hidden, using horizontal scrolling is a better altern
 }
 ```
 
-*Update:* The use of v-model is deprecated. Instead, bind the Array of selected to the `selected` property, and subscribe to @selectionChange, which returns the currently selected rows whenever they change
+*Update:* The use of v-model is deprecated. Instead, bind the Array of selected to the `selected` property, and subscribe to `@selectionChange`, which returns the currently selected rows whenever they change
 > Note the difference between the Array model passed to the v-model and that passed to the selected property. 
 > The former is an `Array` of selected indices, and the latter is an `Array` of _row_ `Object`s
 
