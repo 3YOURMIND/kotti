@@ -47,6 +47,9 @@
 		"@3yourmind/yoco": "~1.1.0",
 		"color": "~3.1.0",
 		"dayjs": "~1.8.8",
+		"deep-eql": "^4.0.0",
+		"eslint": "^6.8.0",
+		"eslint-plugin-prettier": "^3.1.2",
 		"vue-clickaway": "^2.2.2",
 		"vue-popperjs": "^2.0.3"
 	},
@@ -59,13 +62,13 @@
 		"@vue/cli-plugin-babel": "^3.4.1",
 		"@vue/cli-plugin-eslint": "^3.4.1",
 		"@vue/cli-service": "^3.4.1",
-		"@vue/eslint-config-prettier": "^4.0.1",
+		"@vue/eslint-config-prettier": "^6.0.0",
 		"cross-env": "^5.2.0",
 		"husky": "^1.2.0",
 		"lint-staged": "^8.1.5",
 		"node-sass": "^4.10.0",
 		"nuxt": "^2.4.5",
-		"prettier": "^1.15.2",
+		"prettier": "^1.19.1",
 		"sass-loader": "^7.1.0",
 		"vue": "^2.6.8",
 		"vue-clipboard2": "^0.3.0",
@@ -75,7 +78,7 @@
 	"eslintConfig": {
 		"extends": [
 			"plugin:vue/essential",
-			"@vue/prettier"
+			"@vue/prettier/recommended"
 		],
 		"root": true,
 		"rules": {

@@ -146,12 +146,6 @@ export function emitColumnsChange(store) {
 		)
 }
 
-export function columnStatMatch(cols1, cols2, props = PUBLIC_COLUMN_PROPS) {
-	cols1 = cols1.map(col => pick(col, props))
-	cols2 = cols2.map(col => pick(col, props))
-	return JSON.stringify(cols1) === JSON.stringify(cols2)
-}
-
 function didRestorDestroyedColumns({ _destroyedColumns }) {
 	const columns = Object.values(_destroyedColumns)
 	return columns.length && columns.reduce((sum, n) => sum + n) === 0
