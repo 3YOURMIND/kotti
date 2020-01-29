@@ -61,7 +61,7 @@ export default {
 									disabled={isDisabled}
 									type="checkbox"
 									checked={isSelected}
-									onChange={$event => handleSelect($event, row, rowIndex)}
+									onChange={$event => handleSelect($event, row)}
 								/>
 								<i
 									style={isDisabled ? { cursor: 'not-allowed' } : {}}

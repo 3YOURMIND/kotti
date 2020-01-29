@@ -224,7 +224,7 @@ export default {
 					console.warn(
 						'use of v-model in table is deprecated use selected prop instead',
 					)
-					this.localStore.commit('setSelectedIndexes', value)
+					this.localStore.commit('setSelectedIndices', value)
 				}
 			},
 		},
@@ -305,21 +305,6 @@ export default {
 			return this.store.isSelected(
 				this.store.get('getRowByVisibleIndex', index),
 			)
-		},
-		toggleExpand(index) {
-			this.store.commit(
-				'expandRow',
-				this.store.get('getRowByVisibleIndex', index),
-			)
-		},
-		toggleSelect(index) {
-			this.store.commit(
-				'selectRow',
-				this.store.get('getRowByVisibleIndex', index),
-			)
-		},
-		toggleSelectAll() {
-			this.store.commit('toggleAllSelection')
 		},
 	},
 	provide() {
