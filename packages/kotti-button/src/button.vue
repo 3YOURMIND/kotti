@@ -4,8 +4,8 @@
 		:class="mainClasses"
 		:style="themeColor"
 		@click="handleClick"
-		@mouseover="isHover = true"
-		@mouseleave="isHover = false"
+		@mouseover="handleMouseover"
+		@mouseleave="handleMouseleave"
 		role="button"
 	>
 		<i v-if="loading" class="kt-circle-loading" :style="loadingStyle" />
@@ -99,6 +99,14 @@ export default {
 	methods: {
 		handleClick(event) {
 			this.$emit('click', event)
+		},
+		handleMouseover(event) {
+			this.isHover = true
+			this.$emit('mouseover', event)
+		},
+		handleMouseleave(event) {
+			this.isHover = false
+			this.$emit('mouseleave', event)
 		},
 		hoverColor(orginalColor) {
 			return this.isHover ? color(orginalColor).darken(0.24) : orginalColor
