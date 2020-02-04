@@ -306,6 +306,21 @@ export default {
 				this.store.get('getRowByVisibleIndex', index),
 			)
 		},
+		toggleExpand(index) {
+			this.store.commit(
+				'expandRow',
+				this.store.get('getRowByVisibleIndex', index),
+			)
+		},
+		toggleSelect(index) {
+			this.store.commit(
+				'selectRow',
+				this.store.get('getRowByVisibleIndex', index),
+			)
+		},
+		toggleSelectAll() {
+			this.store.commit('toggleAllSelection')
+		},
 	},
 	provide() {
 		return {
