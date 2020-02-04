@@ -50,6 +50,7 @@
 		"deep-eql": "^4.0.0",
 		"eslint": "^6.8.0",
 		"eslint-plugin-prettier": "^3.1.2",
+		"eslint-plugin-vue": "^6.1.2",
 		"vue-clickaway": "^2.2.2",
 		"vue-popperjs": "^2.0.3"
 	},
