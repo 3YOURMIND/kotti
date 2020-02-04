@@ -20,6 +20,16 @@ export default {
 		placement: { type: String, default: 'bottom' },
 		size: { type: String, default: null },
 		content: { type: String, default: '' },
+		forceShowPopover: {
+			type: Boolean,
+			required: false,
+			default: null,
+		},
+	},
+	mounted() {
+		if (this.forceShowPopover !== null) {
+			this.showPopper = this.forceShowPopover
+		}
 	},
 	data() {
 		return {
@@ -40,6 +50,11 @@ export default {
 				this.$nextTick(() => {
 					this.initPopper()
 				})
+			}
+		},
+		forceShowPopover(val, oldVal) {
+			if (val !== oldval && val !== null) {
+				this.showPopper = val
 			}
 		},
 	},
