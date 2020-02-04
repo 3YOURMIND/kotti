@@ -20,15 +20,15 @@ export default {
 		placement: { type: String, default: 'bottom' },
 		size: { type: String, default: null },
 		content: { type: String, default: '' },
-		showPopperProp: {
+		forceShowPopover: {
 			type: Boolean,
 			required: false,
 			default: null,
 		},
 	},
 	mounted() {
-		if (this.showPopperProp !== null) {
-			this.showPopper = this.showPopperProp
+		if (this.forceShowPopover !== null) {
+			this.showPopper = this.forceShowPopover
 		}
 	},
 	data() {
@@ -52,7 +52,7 @@ export default {
 				})
 			}
 		},
-		showPopperProp(val, oldVal) {
+		forceShowPopover(val, oldVal) {
 			if (val !== oldval && val !== null) {
 				this.showPopper = val
 			}
