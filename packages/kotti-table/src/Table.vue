@@ -224,7 +224,7 @@ export default {
 					console.warn(
 						'use of v-model in table is deprecated use selected prop instead',
 					)
-					this.localStore.commit('setSelectedIndexes', value)
+					this.localStore.commit('setSelectedIndices', value)
 				}
 			},
 		},
