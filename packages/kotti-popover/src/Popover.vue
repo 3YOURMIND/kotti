@@ -27,7 +27,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.forceShowPopover !== null) {
+		if (!this.forceShowPopoverIsNull) {
 			this.showPopper = this.forceShowPopover
 		}
 	},
@@ -38,22 +38,24 @@ export default {
 		}
 	},
 	ready() {
-		this.$nextTick(() => {
-			if (this.showPopper) {
-				this.initPopper()
-			}
-		})
+		if (this.forceShowPopoverIsNull) {
+			this.$nextTick(() => {
+				if (this.showPopper) {
+					this.initPopper()
+				}
+			})
+		}
 	},
 	watch: {
-		showPopper(val, oldVal) {
+		showPopper() {
 			if (!!this.showPopper) {
 				this.$nextTick(() => {
 					this.initPopper()
 				})
 			}
 		},
-		forceShowPopover(val, oldVal) {
-			if (val !== oldval && val !== null) {
+		forceShowPopover(val) {
+			if (val !== null) {
 				this.showPopper = val
 			}
 		},
@@ -65,12 +67,17 @@ export default {
 		popperClass() {
 			return this.size ? `kt-popper kt-popper--${this.size}` : `kt-popper`
 		},
+		forceShowPopoverIsNull() {
+			return this.forceShowPopover === null
+		},
 	},
 	methods: {
 		handleClick() {
+			if (!this.forceShowPopoverIsNull) return
 			this.showPopper = !this.showPopper
 		},
 		handleClickaway() {
+			if (!this.forceShowPopoverIsNull) return
 			this.showPopper = false
 		},
 		initPopper() {
@@ -82,7 +89,7 @@ export default {
 			})
 		},
 		destroyPopper() {
-			if (this.popper) {
+			if (this.forceShowPopoverIsNull && this.popper) {
 				this.popper.destroy()
 				this.popper = null
 			}
