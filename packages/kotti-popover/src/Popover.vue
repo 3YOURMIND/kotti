@@ -25,9 +25,14 @@ export default {
 			required: false,
 			default: null,
 		},
+		forceDisable: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
 	},
 	mounted() {
-		if (this.forceShowPopover !== null) {
+		if (this.forceShowPopover !== null && !this.forceDisable) {
 			this.showPopper = this.forceShowPopover
 		}
 	},
@@ -38,22 +43,25 @@ export default {
 		}
 	},
 	ready() {
-		this.$nextTick(() => {
-			if (this.showPopper) {
-				this.initPopper()
-			}
-		})
+		if (!this.forceDisable) {
+			this.$nextTick(() => {
+				if (this.showPopper) {
+					this.initPopper()
+				}
+			})
+		}
 	},
 	watch: {
-		showPopper(val, oldVal) {
-			if (!!this.showPopper) {
+		showPopper() {
+			if (!this.forceDisable && !!this.showPopper) {
 				this.$nextTick(() => {
 					this.initPopper()
 				})
 			}
 		},
-		forceShowPopover(val, oldVal) {
-			if (val !== oldval && val !== null) {
+		forceShowPopover(val) {
+			console.log(val)
+			if (!this.forceDisable && val !== null) {
 				this.showPopper = val
 			}
 		},
@@ -68,21 +76,25 @@ export default {
 	},
 	methods: {
 		handleClick() {
-			this.showPopper = !this.showPopper
+			if (!this.forceDisable) {
+				this.showPopper = !this.showPopper
+			}
 		},
 		handleClickaway() {
-			this.showPopper = false
+			if (!this.forceDisable) this.showPopper = false
 		},
 		initPopper() {
-			this.popper = new Popper(this.$refs.anchor, this.$refs.content, {
-				placement: this.placement,
-				modifiers: {
-					flip: false,
-				},
-			})
+			if (!this.forceDisable) {
+				this.popper = new Popper(this.$refs.anchor, this.$refs.content, {
+					placement: this.placement,
+					modifiers: {
+						flip: false,
+					},
+				})
+			}
 		},
 		destroyPopper() {
-			if (this.popper) {
+			if (!this.forceDisable && this.popper) {
 				this.popper.destroy()
 				this.popper = null
 			}
