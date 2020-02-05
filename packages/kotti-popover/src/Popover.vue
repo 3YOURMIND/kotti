@@ -25,14 +25,9 @@ export default {
 			required: false,
 			default: null,
 		},
-		forceDisablePopoverOnClick: {
-			type: Boolean,
-			required: false,
-			default: false,
-		},
 	},
 	mounted() {
-		if (this.forceShowPopover !== null) {
+		if (!this.forceShowPopoverIsNull) {
 			this.showPopper = this.forceShowPopover
 		}
 	},
@@ -43,7 +38,7 @@ export default {
 		}
 	},
 	ready() {
-		if (!this.forceDisablePopoverOnClick) {
+		if (this.forceShowPopoverIsNull) {
 			this.$nextTick(() => {
 				if (this.showPopper) {
 					this.initPopper()
@@ -72,15 +67,18 @@ export default {
 		popperClass() {
 			return this.size ? `kt-popper kt-popper--${this.size}` : `kt-popper`
 		},
+		forceShowPopoverIsNull() {
+			return this.forceShowPopover === null
+		},
 	},
 	methods: {
 		handleClick() {
-			if (!this.forceDisablePopoverOnClick) {
+			if (this.forceShowPopoverIsNull) {
 				this.showPopper = !this.showPopper
 			}
 		},
 		handleClickaway() {
-			if (!this.forceDisablePopoverOnClick) this.showPopper = false
+			if (this.forceShowPopoverIsNull) this.showPopper = false
 		},
 		initPopper() {
 			this.popper = new Popper(this.$refs.anchor, this.$refs.content, {
@@ -91,7 +89,7 @@ export default {
 			})
 		},
 		destroyPopper() {
-			if (!this.forceDisablePopoverOnClick && this.popper) {
+			if (this.forceShowPopoverIsNull && this.popper) {
 				this.popper.destroy()
 				this.popper = null
 			}
