@@ -73,12 +73,12 @@ export default {
 	},
 	methods: {
 		handleClick() {
-			if (this.forceShowPopoverIsNull) {
-				this.showPopper = !this.showPopper
-			}
+			if (!this.forceShowPopoverIsNull) return
+			this.showPopper = !this.showPopper
 		},
 		handleClickaway() {
-			if (this.forceShowPopoverIsNull) this.showPopper = false
+			if (!this.forceShowPopoverIsNull) return
+			this.showPopper = false
 		},
 		initPopper() {
 			this.popper = new Popper(this.$refs.anchor, this.$refs.content, {
