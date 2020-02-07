@@ -1,13 +1,13 @@
+const { resolve } = require('path')
 module.exports = {
 	productionSourceMap: false,
-	css: {
-		loaderOptions: {
-			sass: {
-				data: `
-          @import "./packages/kotti-style/_variables.scss";
-          @import "./packages/kotti-style/mixins/index.scss";
-        `,
-			},
+	pluginOptions: {
+		'style-resources-loader': {
+			preProcessor: 'scss',
+			patterns: [
+				resolve(__dirname, './packages/kotti-style/_variables.scss'),
+				resolve(__dirname, './packages/kotti-style/mixins/index.scss'),
+			],
 		},
 	},
 }
