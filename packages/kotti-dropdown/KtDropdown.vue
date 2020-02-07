@@ -13,6 +13,9 @@
 import KtPopover from '../kotti-popover'
 export default {
 	name: 'KtDropdown',
+	components: {
+		KtPopover,
+	},
 	props: {
 		placement: {
 			type: String,
@@ -22,9 +25,6 @@ export default {
 			type: String,
 			default: null,
 		},
-	},
-	components: {
-		KtPopover,
 	},
 }
 </script>

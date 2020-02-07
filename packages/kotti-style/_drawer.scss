@@ -4,46 +4,46 @@ $wide-drawer-width: 26.8rem;
 
 .drawer-mask {
 	position: fixed;
-	z-index: $zindex-4;
 	top: 0;
 	left: 0;
+	z-index: $zindex-4;
+	display: flex;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
-	display: flex;
 	transition: opacity 0.5s ease;
 }
 
 .drawer-handle {
+	position: absolute;
+	top: 50%;
+	left: $unit-1;
 	display: block;
 	width: 1.5rem;
 	height: 1.5rem;
-	position: absolute;
-	line-height: 1.5rem;
-	top: 50%;
-	left: $unit-1;
-	color: $lightgray-500;
 	margin-top: -0.725rem;
+	line-height: 1.5rem;
+	color: $lightgray-500;
 
 	&:hover {
-		cursor: pointer;
 		color: $primary-500;
+		cursor: pointer;
 	}
 }
 
 .drawer-container {
-	width: $default-drawer-width;
 	position: absolute;
-	right: 0;
 	top: 0;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	width: $default-drawer-width;
 	height: 100%;
 	padding: $unit-6;
 	padding-left: $unit-8;
+	overflow-y: auto;
 	background-color: #fff;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-	display: flex;
-	flex-direction: column;
-	overflow-y: auto;
 	transition: all 0.3s ease;
 
 	&.drawer-expand {
@@ -64,21 +64,21 @@ $wide-drawer-width: 26.8rem;
 }
 
 .drawer-body {
-	margin: 0 -0.8rem 0.8rem -0.8rem;
-	padding: 0 0.8rem;
 	flex: 1 1 auto;
+	padding: 0 0.8rem;
+	margin: 0 -0.8rem 0.8rem -0.8rem;
 	overflow-y: auto;
 }
 
 .drawer-footer {
+	flex: 0 0 auto;
 	align-self: flex-end;
 	width: 100%;
-	flex: 0 0 auto;
 }
 
 .drawer-enter {
-	transition: opacity 0.5s;
 	opacity: 0;
+	transition: opacity 0.5s;
 }
 
 .drawer-leave-active {
@@ -93,12 +93,12 @@ $wide-drawer-width: 26.8rem;
 @media (max-width: $size-sm) {
 	.drawer-container,
 	.drawer-container.drawer-wide {
+		top: auto;
+		bottom: 0;
 		width: 100%;
 		height: 80%;
-		bottom: 0;
 		padding: $unit-4;
 		padding-top: $unit-8;
-		top: auto;
 
 		&.drawer-expand {
 			width: 100%;
@@ -107,11 +107,11 @@ $wide-drawer-width: 26.8rem;
 	}
 
 	.drawer-handle {
-		transform: rotate(90deg);
 		top: 0;
 		left: 50%;
 		margin-top: 0.2rem;
 		margin-left: -0.75rem;
+		transform: rotate(90deg);
 	}
 
 	.drawer-enter .drawer-container,

@@ -1,18 +1,18 @@
 // Popovers
 .popover {
-	display: inline-block;
 	position: relative;
+	display: inline-block;
 
 	.popover-container {
-		left: 50%;
-		opacity: 0;
-		padding: $layout-spacing;
 		position: absolute;
 		top: 0;
-		transform: translate(-50%, -50%) scale(0);
-		transition: transform 0.2s ease;
-		width: $control-width-sm;
+		left: 50%;
 		z-index: $zindex-3;
+		width: $control-width-sm;
+		padding: $layout-spacing;
+		opacity: 0;
+		transition: transform 0.2s ease;
+		transform: translate(-50%, -50%) scale(0);
 	}
 
 	*:focus + .popover-container,
@@ -25,8 +25,8 @@
 
 	&.popover-right {
 		.popover-container {
-			left: 100%;
 			top: 50%;
+			left: 100%;
 		}
 
 		:focus + .popover-container,
@@ -38,8 +38,8 @@
 
 	&.popover-bottom {
 		.popover-container {
-			left: 50%;
 			top: 100%;
+			left: 50%;
 		}
 
 		:focus + .popover-container,
@@ -51,8 +51,8 @@
 
 	&.popover-left {
 		.popover-container {
-			left: 0;
 			top: 50%;
+			left: 0;
 		}
 
 		:focus + .popover-container,
@@ -63,20 +63,20 @@
 	}
 
 	.card {
-		box-shadow: 0 0 2px rgba(0, 0, 0, 0.46);
-		border: 0;
 		z-index: $zindex-4;
+		border: 0;
+		box-shadow: 0 0 2px rgba(0, 0, 0, 0.46);
 	}
 }
 
 // poper.js css
 .kt-popper {
+	z-index: $zindex-4;
+	width: auto;
 	padding: 0.8rem;
 	background: #fff;
 	border-radius: $border-radius;
 	box-shadow: $box-shadow;
-	z-index: $zindex-4;
-	width: auto;
 	&--sm {
 		width: 12rem;
 	}

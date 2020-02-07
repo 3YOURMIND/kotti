@@ -1,15 +1,15 @@
 $mobile-navbar-height: 2.4rem;
 $narrow-navbar-width: 3.2rem;
 .navbar {
-	flex: 0 0 $navbar-width;
-	background-color: $primary-600;
-	border-right: 1px solid #000;
+	position: relative;
+	top: 0;
 	bottom: 0;
 	left: 0;
-	top: 0;
-	position: relative;
 	z-index: $zindex-1;
+	flex: 0 0 $navbar-width;
 	min-height: 100vh;
+	background-color: $primary-600;
+	border-right: 1px solid #000;
 	&--narrow {
 		flex: 0 0 $narrow-navbar-width;
 	}
@@ -17,11 +17,11 @@ $narrow-navbar-width: 3.2rem;
 
 .navbar-wrapper {
 	position: fixed;
-	width: $navbar-width;
 	display: flex;
-	height: 100%;
-	flex-wrap: nowrap;
 	flex-direction: column;
+	flex-wrap: nowrap;
+	width: $navbar-width;
+	height: 100%;
 	&--narrow {
 		flex: 0 0 $narrow-navbar-width;
 		width: $narrow-navbar-width;
@@ -29,14 +29,14 @@ $narrow-navbar-width: 3.2rem;
 }
 
 .navbar-toggle {
-	height: $mobile-navbar-height;
 	display: none;
-	color: #fff;
 	flex: 0 0 2.4rem;
-	justify-content: center;
-	text-align: center;
 	align-items: center;
+	justify-content: center;
 	width: 2.4rem;
+	height: $mobile-navbar-height;
+	color: #fff;
+	text-align: center;
 	&:hover {
 		cursor: pointer;
 		background: rgba(0, 0, 0, 0.24);
@@ -79,18 +79,18 @@ $narrow-navbar-width: 3.2rem;
 .navbar-logo {
 	display: flex;
 	align-items: center;
-	padding: 0.8rem 1.2rem;
 	justify-content: space-between;
+	padding: 0.8rem 1.2rem;
 	&--logo {
+		flex: 1;
 		background-repeat: no-repeat;
 		background-position: left;
 		background-size: contain;
-		flex: 1;
 	}
 	&--mobile {
 		display: none;
-		padding: 0.2rem;
 		height: 100%;
+		padding: 0.2rem;
 	}
 	&--narrow {
 		display: block;
@@ -110,9 +110,9 @@ $narrow-navbar-width: 3.2rem;
 .navbar-dropdown {
 	position: absolute;
 	top: $mobile-navbar-height;
-	padding: 0.8rem 0;
-	width: 100%;
 	display: none;
+	width: 100%;
+	padding: 0.8rem 0;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
 }
 
@@ -120,11 +120,11 @@ $narrow-navbar-width: 3.2rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border-bottom: 1px solid rgba(#fff, 0.26);
-	font-size: 0.75rem;
-	line-height: 1.2rem;
 	padding: 0.8rem 1.2rem;
 	margin-bottom: 0.4rem;
+	font-size: 0.75rem;
+	line-height: 1.2rem;
+	border-bottom: 1px solid rgba(#fff, 0.26);
 	span {
 		margin-left: 0.8rem;
 	}
@@ -136,16 +136,16 @@ $narrow-navbar-width: 3.2rem;
 		font-size: 1rem;
 	}
 	&__number {
-		border-radius: 0.6rem;
 		width: 1.2rem;
 		height: 1.2rem;
-		line-height: 1.2rem;
 		font-size: 0.6rem;
+		line-height: 1.2rem;
 		text-align: center;
 		background: rgba(#fff, 0.26);
+		border-radius: 0.6rem;
 		&--narrow {
-			right: 0.4rem;
 			position: absolute;
+			right: 0.4rem;
 		}
 	}
 	&--mobile {
@@ -153,10 +153,10 @@ $narrow-navbar-width: 3.2rem;
 	}
 }
 .navbar-menu {
-	text-align: left;
 	box-sizing: border-box;
 	padding: 0.4rem 1.2rem;
 	color: #fff;
+	text-align: left;
 	&:hover {
 		cursor: pointer;
 	}
@@ -167,17 +167,17 @@ $narrow-navbar-width: 3.2rem;
 	}
 	&__section {
 		display: block;
-		text-transform: uppercase;
-		font-size: 0.75em;
-		font-weight: 700;
-		opacity: 0.64;
 		padding: 0.2rem 0;
 		margin-top: 0.4rem;
+		font-size: 0.75em;
+		font-weight: 700;
+		text-transform: uppercase;
+		opacity: 0.64;
 	}
 	&__item {
 		display: block;
-		font-size: 0.75rem;
 		padding: 0.6rem 0;
+		font-size: 0.75rem;
 	}
 	&__item span {
 		margin-left: 0.8rem;
@@ -192,19 +192,19 @@ $narrow-navbar-width: 3.2rem;
 
 @media (max-width: $size-md) {
 	.navbar {
+		z-index: $zindex-4;
+		flex: 0 0 $mobile-navbar-height;
 		height: 2.4rem;
 		min-height: auto;
-		z-index: $zindex-4;
 		border: 0;
-		flex: 0 0 $mobile-navbar-height;
 	}
 	.navbar-wrapper {
-		width: 100%;
-		padding: 0;
 		position: relative;
-		flex-direction: row;
 		flex: 0 0 $mobile-navbar-height;
+		flex-direction: row;
+		width: 100%;
 		height: $mobile-navbar-height;
+		padding: 0;
 		border-bottom: 1px solid #ddd;
 	}
 	.navbar-header {
@@ -223,14 +223,14 @@ $narrow-navbar-width: 3.2rem;
 	.navbar-notification {
 		display: none;
 		&--mobile {
-			border: 0;
-			margin: 0.6rem 0;
-			height: 1.2rem;
+			display: block;
 			width: 1.2rem;
+			height: 1.2rem;
+			margin: 0.6rem 0;
 			text-align: center;
 			background: rgba(#fff, 0.26);
+			border: 0;
 			border-radius: 1.2rem;
-			display: block;
 			.yoco {
 				font-size: 1rem;
 			}
@@ -253,9 +253,9 @@ $narrow-navbar-width: 3.2rem;
 	}
 	.navbar-footer {
 		display: flex;
-		border: 0;
 		flex: 0 0 2.4rem;
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
+		border: 0;
 	}
 }

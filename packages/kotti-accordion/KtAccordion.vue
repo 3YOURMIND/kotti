@@ -1,25 +1,25 @@
 <template>
 	<div class="accordion">
 		<div
-			@click="headerToggle"
 			class="accordion__header"
 			:class="{ 'accordion__header--clickable': isFullyClickable }"
+			@click="headerToggle"
 		>
 			<div class="accordion__title">
 				<slot name="title">
-					<i v-if="icon" v-text="icon" class="yoco accordion__title__icon" />
+					<i v-if="icon" class="yoco accordion__title__icon" v-text="icon" />
 					<div class="accordion__title__text">{{ title }}</div>
 				</slot>
 			</div>
-			<div @click="toggle" class="accordion__toggle">
-				<i v-text="isOpen ? 'minus' : 'plus'" class="yoco" />
+			<div class="accordion__toggle" @click="toggle">
+				<i class="yoco" v-text="isOpen ? 'minus' : 'plus'" />
 			</div>
 		</div>
 		<div
 			:style="`--height: ${contentHeight}px`"
 			:class="isOpen ? 'is-open' : 'is-close'"
-			@click="setHeight"
 			class="accordion__content"
+			@click="setHeight"
 		>
 			<div ref="contentInner" class="inner">
 				<slot />
