@@ -110,13 +110,13 @@
 		}
 	},
 	"lint-staged": {
-		"*.md": [
+		"*.{json,md}": [
 			"prettier --write"
 		],
 		"*.{css,scss,vue}": [
 			"stylelint --fix"
 		],
-		"*.{js,vue,ts,json,tsx}": [
+		"*.{js,vue,ts,tsx}": [
 			"eslint --fix"
 		]
 	},
@@ -127,12 +127,11 @@
 		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"deploy:docs": "./github-deploy.sh",
 		"dev:docs": "nuxt",
-		"precommit": "lint-staged",
-		"prepublishOnly": "yarn run build:kotti",
 		"lint:script": "eslint --fix packages/**/*.{js,vue}",
 		"lint:style": "stylelint --fix packages/**/*.{css,scss,vue}",
 		"check:script": "eslint packages/**/*.{js,vue}",
-		"check:style": "stylelint packages/**/*.{css,scss,vue}"
+		"check:style": "stylelint packages/**/*.{css,scss,vue}",
+		"format:docs": "prettier --write docs/**/*.{md,js,vue}"
 	},
 	"style": "dist/KottiUI.css",
 	"version": "1.7.23"

@@ -1,4 +1,5 @@
 const { resolve } = require('path')
+
 module.exports = {
 	productionSourceMap: false,
 	pluginOptions: {

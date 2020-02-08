@@ -11,8 +11,7 @@ const config = {
 			{
 				hid: 'description',
 				name: 'description',
-				content: `Kotti helps to unify our design language and provides the documentation for further product
-design decisions. The Kotti design system has two main parts: foundation and components.`,
+				content: `Kotti helps to unify our design language and provides the documentation for further product design decisions. The Kotti design system has two main parts: foundation and components.`,
 			},
 		],
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -40,6 +39,20 @@ design decisions. The Kotti design system has two main parts: foundation and com
 	 ** Build configuration
 	 */
 	build: {
+		babel: {
+			presets({ isServer }) {
+				return [
+					[
+						require.resolve('@nuxt/babel-preset-app'),
+						// require.resolve('@nuxt/babel-preset-app-edge'), // For nuxt-edge users
+						{
+							buildTarget: isServer ? 'server' : 'client',
+							corejs: { version: 3 },
+						},
+					],
+				]
+			},
+		},
 		extend(config, ctx) {
 			if (ctx.isDev && ctx.isClient) {
 				config.module.rules.push({
