@@ -44,7 +44,7 @@ export default {
 		avatarGroupClasses() {
 			return {
 				'avatar-group': true,
-				stack: this.isStack,
+				'stack': this.isStack,
 			}
 		},
 		avatarRemainders() {

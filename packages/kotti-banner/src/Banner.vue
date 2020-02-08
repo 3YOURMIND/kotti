@@ -60,7 +60,7 @@ export default {
 	computed: {
 		bannerClass() {
 			return {
-				banner: true,
+				'banner': true,
 				'banner-grey': this.isGrey,
 			}
 		},

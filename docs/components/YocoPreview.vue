@@ -43,15 +43,15 @@ export default {
 
 <style lang="scss" scoped>
 .icon-container {
-	float: left;
-	text-align: center;
-	padding: 24px;
 	box-sizing: border-box;
+	float: left;
+	padding: 24px;
+	text-align: center;
 }
 
 .icon-container:hover {
-	background: #f8f8f8;
 	cursor: pointer;
+	background: #f8f8f8;
 	box-shadow: border-box;
 	box-shadow: 0 2px 2px #ddd;
 }

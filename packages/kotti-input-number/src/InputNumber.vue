@@ -104,11 +104,11 @@ export default {
 
 .kt-input-number__input {
 	width: auto;
-	border: 0;
-	text-align: center;
 	max-width: 100%;
-	color: $darkgray-500;
 	padding-right: 0.1rem;
+	color: $darkgray-500;
+	text-align: center;
+	border: 0;
 	-moz-appearance: textfield;
 	&--100 {
 		width: 100%;
@@ -124,13 +124,13 @@ export default {
 		}
 	}
 	&:focus {
-		box-shadow: 0;
 		outline: 0;
+		box-shadow: 0;
 	}
 	&::-webkit-outer-spin-button,
 	&::-webkit-inner-spin-button {
-		-webkit-appearance: none;
 		margin: 0;
+		-webkit-appearance: none;
 	}
 }
 
@@ -139,8 +139,8 @@ export default {
 		display: inline-flex;
 		width: auto;
 		max-width: 100%;
-		border-radius: $border-radius;
 		border: 1px solid $lightgray-400;
+		border-radius: $border-radius;
 		&--100 {
 			width: 100%;
 		}
@@ -151,23 +151,23 @@ export default {
 }
 
 .kt-input-number__max {
-	line-height: 1.6rem;
 	width: 50%;
+	line-height: 1.6rem;
 	&::before {
-		content: '/';
 		padding-right: 0.2rem;
+		content: '/';
 	}
 }
 
 .kt-input-number__button {
-	border-radius: $border-radius;
 	flex: 0 0 1.6rem;
 	width: 1.6rem;
 	height: 1.6rem;
-	text-align: center;
 	line-height: 1.6rem;
-	background: $lightgray-300;
+	text-align: center;
 	user-select: none;
+	background: $lightgray-300;
+	border-radius: $border-radius;
 	&:hover {
 		cursor: pointer;
 		background: $lightgray-400;

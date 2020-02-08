@@ -4,9 +4,9 @@ fieldset {
 }
 
 legend {
+	margin-bottom: $layout-spacing-lg;
 	font-size: $font-size-lg;
 	font-weight: 500;
-	margin-bottom: $layout-spacing-lg;
 }
 .form-group {
 	position: relative;
@@ -16,6 +16,6 @@ legend {
 }
 .form-textarea,
 textarea {
-	padding: $unit-2;
 	box-sizing: border-box;
+	padding: $unit-2;
 }

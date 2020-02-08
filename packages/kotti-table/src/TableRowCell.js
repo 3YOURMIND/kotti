@@ -26,7 +26,7 @@ export default {
 			<td
 				class={_tdClasses}
 				style={_tdStyles}
-				onClick={$event =>
+				onClick={($event) =>
 					cellClick($event, { value, column, row, columnIndex, rowIndex })
 				}
 			>

@@ -12,15 +12,15 @@ export default Vue.extend({
 			updatedNodes: vm.nodes,
 		}
 	},
+	destroyed: function destroyed() {
+		var el = this.$el
+		el.parentNode.removeChild(el)
+	},
 	render: function render(h) {
 		var nodes = this.updatedNodes && this.updatedNodes()
 		if (!nodes) return h()
 		return nodes.length < 2 && !nodes[0].text
 			? nodes
 			: h(this.tag || 'DIV', nodes)
-	},
-	destroyed: function destroyed() {
-		var el = this.$el
-		el.parentNode.removeChild(el)
 	},
 })

@@ -2,9 +2,9 @@
 
 .text-truncate,
 .truncate {
-	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 	.show-all {
 		overflow: auto;
 	}

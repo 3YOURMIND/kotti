@@ -2,7 +2,7 @@
 	<nav
 		:class="objectClass('navbar')"
 		:style="{
-			background: themeColor.backgroundColor,
+			'background': themeColor.backgroundColor,
 			'border-color': themeColor.borderColor,
 		}"
 	>

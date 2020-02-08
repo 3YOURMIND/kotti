@@ -48,7 +48,7 @@ export default {
 				],
 				style: this.style,
 			},
-			this.$slots.default
+			this.$slots.default,
 		)
 	},
 }

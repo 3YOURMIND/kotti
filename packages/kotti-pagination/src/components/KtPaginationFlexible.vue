@@ -116,7 +116,7 @@ export default {
 
 <style lang="scss" scoped>
 .inline-container {
-	justify-content: center;
 	display: inline-flex;
+	justify-content: center;
 }
 </style>

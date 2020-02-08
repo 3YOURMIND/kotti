@@ -127,7 +127,7 @@ export default {
 		},
 		formatedColumns() {
 			return this.columns
-				? this.columns.map(column => {
+				? this.columns.map((column) => {
 						if (column.key) {
 							// eslint-disable-next-line
 							console.warn(
@@ -175,7 +175,7 @@ export default {
 		},
 		_renderLoading() {
 			const table = this
-			return h => {
+			return (h) => {
 				if (table.renderLoading) {
 					return table.renderLoading(h)
 				} else {
@@ -185,7 +185,7 @@ export default {
 		},
 		_renderEmpty() {
 			const table = this
-			return h => {
+			return (h) => {
 				if (table.renderEmpty) {
 					return table.renderEmpty(h)
 				} else {
@@ -285,11 +285,11 @@ export default {
 			this.store.commit('setHiddenColumns', this.hiddenColumns)
 		this.$ready = true
 		this.store.commit('updateColumns', { emitChange: false })
-		this.$on('selectionChange', selection => {
+		this.$on('selectionChange', (selection) => {
 			if (this.value) {
 				this.$emit(
 					'input',
-					selection.map(row => this.store.get('getIndexByRow', row)),
+					selection.map((row) => this.store.get('getIndexByRow', row)),
 				)
 			}
 		})
@@ -348,9 +348,9 @@ export default {
 }
 
 .kt-table >>> tr.disabled {
+	cursor: not-allowed;
 	background-color: #f8f8f8;
 	opacity: 0.6;
-	cursor: not-allowed;
 }
 
 .x-scroll {

@@ -57,7 +57,7 @@ export default {
 	},
 	props: {
 		dangerouslyOverrideParser: { default: escape, type: Function },
-		postEscapeParser: { default: _ => _, type: Function },
+		postEscapeParser: { default: (_) => _, type: Function },
 		parser: { default: escape, type: Function },
 		createdTime: String,
 		id: Number | String,

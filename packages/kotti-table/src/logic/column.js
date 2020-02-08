@@ -31,7 +31,7 @@ export const mutations = {
 	},
 	setColumns(store, columns = store.state._columnsArray) {
 		const { state } = store
-		const pickedColumns = columns.map(col => pick(col, PUBLIC_COLUMN_PROPS))
+		const pickedColumns = columns.map((col) => pick(col, PUBLIC_COLUMN_PROPS))
 		for (const col of pickedColumns) {
 			const column = getColumn(state, col)
 			if (column) {
@@ -97,7 +97,7 @@ export function setColumn(state, { column, index, deleted }) {
 			}
 
 			const filteredColumn = Object.fromEntries(
-				Object.entries(newColumn).filter(kv => kv[1] !== undefined),
+				Object.entries(newColumn).filter((kv) => kv[1] !== undefined),
 			)
 			newColumn = { ...oldColumn, ...filteredColumn }
 			Vue.set(_columns, newColumn.prop, newColumn)
@@ -127,7 +127,7 @@ export function setColumnsArray(
 	columns,
 	mergeStrategy = Object.assign,
 ) {
-	state[prop] = columns.map(column => {
+	state[prop] = columns.map((column) => {
 		column = pick(column, shapeKeys)
 		const oldColumn = getColumn(state, column) || {}
 		return mergeStrategy(oldColumn, column)
@@ -142,7 +142,7 @@ export function emitColumnsChange(store) {
 	store.table.$ready &&
 		store.emit(
 			'columnsChange',
-			store.state._columnsArray.map(col => pick(col, PUBLIC_COLUMN_PROPS)),
+			store.state._columnsArray.map((col) => pick(col, PUBLIC_COLUMN_PROPS)),
 		)
 }
 

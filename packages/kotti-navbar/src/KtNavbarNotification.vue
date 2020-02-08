@@ -3,7 +3,7 @@
 		<div
 			:class="objectClass"
 			:style="{
-				color: themeColor.textColor,
+				'color': themeColor.textColor,
 				'border-color': themeColor.borderColor,
 			}"
 		>

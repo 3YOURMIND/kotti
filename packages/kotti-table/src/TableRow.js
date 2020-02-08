@@ -35,15 +35,15 @@ export default {
 				class={_trClasses}
 				role={isInteractive && !isDisabled ? 'button' : false}
 				tabindex={isInteractive && !isDisabled ? 0 : false}
-				onClick={$event => handleClick($event, row, rowIndex)}
-				onFocus={$event => handleFocus($event, row, rowIndex)}
-				onBlur={$event => handleBlur($event, row, rowIndex)}
-				onKeyup={$event => handleKey($event, row, rowIndex)}
+				onClick={($event) => handleClick($event, row, rowIndex)}
+				onFocus={($event) => handleFocus($event, row, rowIndex)}
+				onBlur={($event) => handleBlur($event, row, rowIndex)}
+				onKeyup={($event) => handleKey($event, row, rowIndex)}
 			>
 				{isExpandable && (
 					<td
 						class="c-hand"
-						onClick={$event => handleExpand($event, row, rowIndex)}
+						onClick={($event) => handleExpand($event, row, rowIndex)}
 					>
 						<div class="toggle">
 							<i class="yoco">{expandToggleIcon}</i>
@@ -53,7 +53,7 @@ export default {
 				{isSelectable && (
 					<td
 						class="td-selectable kt-table__checkbox-col"
-						onClick={$event => $event.stopPropagation()}
+						onClick={($event) => $event.stopPropagation()}
 					>
 						<div class="form-group">
 							<label class="form-checkbox">
@@ -61,7 +61,7 @@ export default {
 									disabled={isDisabled}
 									type="checkbox"
 									checked={isSelected}
-									onChange={$event => handleSelect($event, row)}
+									onChange={($event) => handleSelect($event, row)}
 								/>
 								<i
 									style={isDisabled ? { cursor: 'not-allowed' } : {}}

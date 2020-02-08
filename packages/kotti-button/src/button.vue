@@ -60,7 +60,7 @@ export default {
 		},
 		objectClass() {
 			return {
-				icon: this.icon,
+				'icon': this.icon,
 				'icon-only': this.icon && !this.$slots.default && !this.label,
 			}
 		},
@@ -68,7 +68,7 @@ export default {
 			switch (this.type) {
 				case 'primary':
 					return {
-						color: color(this.KtTheme.brandColor).isDark()
+						'color': color(this.KtTheme.brandColor).isDark()
 							? '#ffffff'
 							: '#3d3d3d',
 						'background-color': this.hoverColor(this.KtTheme.brandColor),
@@ -77,14 +77,14 @@ export default {
 
 				case 'danger':
 					return {
-						color: this.isHover ? '#ffffff' : this.KtTheme.dangerColor,
+						'color': this.isHover ? '#ffffff' : this.KtTheme.dangerColor,
 						'background-color': this.isHover ? this.KtTheme.dangerColor : null,
 						'border-color': this.isHover ? this.KtTheme.dangerColor : null,
 					}
 
 				case 'secondary':
 					return {
-						color: this.hoverColor(this.KtTheme.brandColor),
+						'color': this.hoverColor(this.KtTheme.brandColor),
 						'border-color': this.hoverColor(this.KtTheme.brandColor),
 					}
 
@@ -125,19 +125,19 @@ $small-button-height: $unit-6;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	text-align: center;
 
 	height: $default-button-height;
 	padding: 0 1em;
+	font-weight: 600;
+	color: $primary-600;
+	text-align: center;
+	user-select: none;
 
 	background: $lightgray-300;
-	color: $primary-600;
-	font-weight: 600;
-	outline: none;
-	user-select: none;
 
 	border: 1px solid $lightgray-400;
 	border-radius: $border-radius;
+	outline: none;
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
@@ -158,8 +158,8 @@ $small-button-height: $unit-6;
 }
 
 .kt-button.primary {
-	background: $primary-500;
 	color: #ffffff;
+	background: $primary-500;
 	border: 1px solid $primary-600;
 
 	&:hover {
@@ -168,21 +168,21 @@ $small-button-height: $unit-6;
 }
 
 .kt-button.secondary {
-	border: 1px solid $primary-500;
-	background: #fff;
-	color: $primary-500;
 	font-weight: 600;
+	color: $primary-500;
+	background: #fff;
+	border: 1px solid $primary-500;
 
 	&:hover {
 		color: $primary-400;
-		border: 1px solid $primary-400;
 		background: $lightgray-300;
+		border: 1px solid $primary-400;
 	}
 }
 
 .kt-button.text {
-	color: $primary-500;
 	font-weight: 600;
+	color: $primary-500;
 	background: transparent;
 	border-color: transparent;
 	&:hover {
@@ -191,9 +191,9 @@ $small-button-height: $unit-6;
 }
 
 .kt-button.danger {
-	background: #f8f8f8;
-	color: $red-500;
 	font-weight: 600;
+	color: $red-500;
+	background: #f8f8f8;
 
 	&:hover {
 		color: #ffffff;
@@ -202,8 +202,8 @@ $small-button-height: $unit-6;
 }
 
 .kt-button.icon i {
-	font-size: 1rem;
 	margin-right: 0.2rem;
+	font-size: 1rem;
 }
 
 .kt-button.icon-only {
@@ -215,8 +215,8 @@ $small-button-height: $unit-6;
 
 .kt-button.disabled,
 .kt-button:disabled {
-	opacity: 0.46;
 	pointer-events: none;
+	opacity: 0.46;
 }
 
 .kt-button.bottom {

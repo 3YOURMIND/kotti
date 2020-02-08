@@ -178,17 +178,17 @@ export default {
 }
 .kt-table-checkbox-col__click-area {
 	position: absolute;
-	width: 100%;
-	height: 100%;
 	top: 0;
 	left: 0;
+	width: 100%;
+	height: 100%;
 	cursor: pointer;
 }
 
 th {
+	box-sizing: border-box;
 	border-width: 0;
 	border-left-color: $lightgray-300;
-	box-sizing: border-box;
 	transition: border 0.2s ease-in-out;
 }
 th.dragOver {
@@ -202,10 +202,10 @@ th.dragging {
 	cursor: move;
 }
 th.sortable .kt-table__controls {
-	display: none;
 	position: absolute;
-	right: 0.1rem;
 	top: 0;
+	right: 0.1rem;
+	display: none;
 	width: 0.6rem;
 	height: 100%;
 	hyphens: none;
@@ -225,9 +225,9 @@ th.sorted .kt-table__quick-sort-control {
 	width: 0.5rem;
 }
 .kt-table__quick-sort-control .yoco {
-	color: $darkgray-300;
 	height: 0.5rem;
 	line-height: 0.5;
+	color: $darkgray-300;
 }
 .kt-table__quick-sort-control .yoco.active {
 	color: $primary-400;

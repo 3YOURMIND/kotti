@@ -1,7 +1,7 @@
 <template>
 	<div class="kt-container">
-		<slot name="navbar"/>
-		<slot name="actionbar" v-if="hasActionBar"/>
+		<slot name="navbar" />
+		<slot name="actionbar" v-if="hasActionBar" />
 		<div class="workspace">
 			<slot name="workspace" />
 		</div>

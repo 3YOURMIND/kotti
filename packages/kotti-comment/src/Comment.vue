@@ -77,7 +77,7 @@ export default {
 	name: 'KtComment',
 	props: {
 		dangerouslyOverrideParser: { default: escape, type: Function },
-		postEscapeParser: { default: _ => _, type: Function },
+		postEscapeParser: { default: (_) => _, type: Function },
 		createdTime: String,
 		id: Number | String,
 		message: String,
@@ -106,7 +106,7 @@ export default {
 	computed: {
 		styleObject() {
 			return {
-				avatar: true,
+				'avatar': true,
 				'avatar-selected': this.selected,
 			}
 		},

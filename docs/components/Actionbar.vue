@@ -38,12 +38,12 @@
 }
 
 .indicator-only-css {
-	font-size: 0.6em;
-	background: #64ad13;
-	color: #fff;
-	line-height: 1em;
 	padding: 0.1rem 0.2rem;
 	margin-left: 0.2rem;
+	font-size: 0.6em;
+	line-height: 1em;
+	color: #fff;
+	background: #64ad13;
 	border-radius: 0.2rem;
 }
 </style>

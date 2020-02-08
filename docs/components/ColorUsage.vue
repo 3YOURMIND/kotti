@@ -124,14 +124,14 @@ export default {
 <style lang="scss" scoped>
 .example-wrapper {
 	padding: 2rem 0;
-	background: #f8f8f8;
 	margin-bottom: 1rem;
+	background: #f8f8f8;
 }
 
 .example-content {
 	width: 90%;
-	padding: 0.8rem;
 	max-width: 480px;
+	padding: 0.8rem;
 	margin: 0 auto;
 
 	div {

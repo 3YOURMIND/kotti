@@ -65,9 +65,9 @@
 import KtAvatar from '../../kotti-avatar'
 import { mixin as clickaway } from 'vue-clickaway'
 
-const linkIsValid = link => Boolean(link.title)
+const linkIsValid = (link) => Boolean(link.title)
 
-const sectionIsValid = section =>
+const sectionIsValid = (section) =>
 	Array.isArray(section.links) &&
 	Boolean(section.links.length) &&
 	section.links.every(linkIsValid)
@@ -79,7 +79,7 @@ export default {
 		sections: {
 			type: Array,
 			required: true,
-			validator: sections => sections.every(sectionIsValid),
+			validator: (sections) => sections.every(sectionIsValid),
 		},
 		userName: { type: String, default: null },
 		userStatus: { type: String, required: true },

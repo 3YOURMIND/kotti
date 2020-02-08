@@ -128,11 +128,11 @@
 		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"deploy:docs": "./github-deploy.sh",
 		"dev:docs": "nuxt",
-		"lint:script": "eslint --fix packages/**/*.{js,vue}",
-		"lint:style": "stylelint --fix packages/**/*.{css,scss,vue}",
-		"check:script": "eslint packages/**/*.{js,vue}",
-		"check:style": "stylelint packages/**/*.{css,scss,vue}",
-		"format:docs": "prettier --write docs/**/*.{md,js,vue}"
+		"lint:script": "eslint --fix '**/*.{js,vue}'",
+		"lint:style": "stylelint --fix **/*.{css,scss,vue}",
+		"check:script": "eslint '**/*.{js,vue}'",
+		"check:style": "stylelint **/*.{css,scss,vue}",
+		"format:docs": "prettier --write **/*.md"
 	},
 	"style": "dist/KottiUI.css",
 	"version": "1.7.23"
