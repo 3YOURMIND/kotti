@@ -4,7 +4,7 @@
 @import 'mixins/index';
 
 // Reset and dependencies
-@import 'normalize';
+@import '~@csstools/normalize.css';
 @import 'base';
 
 // Utility classes

@@ -91,6 +91,7 @@ export default {
 				return {
 					background: `linear-gradient(${this.KtTheme.brandColor}, ${lightBrandColor},${this.KtTheme.brandColor})`,
 				}
+			return ''
 		},
 	},
 	watch: {

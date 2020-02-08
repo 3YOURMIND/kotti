@@ -59,6 +59,7 @@
 		"@babel/core": "^7.8.4",
 		"@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
 		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
+		"@csstools/normalize.css": "^10.1.0",
 		"@nuxtjs/axios": "^5.9.5",
 		"@nuxtjs/markdownit": "^1.2.7",
 		"@nuxtjs/markdownit-loader": "^1.1.1",

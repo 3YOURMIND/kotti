@@ -210,6 +210,7 @@ $narrow-navbar-width: 3.2rem;
 	.navbar-header {
 		width: 100%;
 		padding: 0.2rem 0;
+		border: 0;
 	}
 	.navbar-logo {
 		display: none;
@@ -247,9 +248,6 @@ $narrow-navbar-width: 3.2rem;
 	}
 	.navbar-toggle {
 		display: flex;
-	}
-	.navbar-header {
-		border: 0;
 	}
 	.navbar-footer {
 		display: flex;

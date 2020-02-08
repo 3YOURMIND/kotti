@@ -41,9 +41,6 @@
 	line-height: 1.2rem;
 	word-break: break-word;
 }
-.comment-reply__message {
-	word-break: break-word;
-}
 
 .comment__action,
 .comment-reply__action {
@@ -111,7 +108,6 @@
 	border-radius: 0.2rem;
 	&:hover {
 		color: $darkgray-400;
-		color: $darkgray-400;
 		cursor: pointer;
 		background: $lightgray-400;
 		.action__options {
@@ -125,7 +121,6 @@
 .comment-reply {
 	display: flex;
 	flex-direction: row;
-	flex-flow: row;
 	padding: 0.2rem 0;
 	&__wrapper {
 		display: flex;
@@ -161,6 +156,7 @@
 		width: 100%;
 		font-size: 0.65rem;
 		line-height: 1rem;
+		word-break: break-word;
 		.yoco {
 			display: none;
 			font-size: 0.8rem;
