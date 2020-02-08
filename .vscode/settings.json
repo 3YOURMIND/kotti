@@ -2,7 +2,7 @@
 	"editor.formatOnSave": false,
 	"eslint.alwaysShowStatus": true,
 	"eslint.options": {
-		"extensions": [".html", ".js", ".vue", ".jsx", ".ts", ".tsx"]
+		"extensions": [".js", ".vue", ".jsx", ".ts", ".tsx"]
 	},
 	"eslint.validate": [
 		"javascript",
@@ -15,15 +15,7 @@
 	"vetur.validation.template": true,
 	"vetur.validation.script": true,
 	"vetur.format.enable": false,
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"path-intellisense.mappings": {
-		"::shared": "${workspaceRoot}/src/shared",
-		"::up/*": "${workspaceRoot}/src/user-panel-frontend/src",
-		"::sp/*": "${workspaceRoot}/src/service-panel/src",
-		"::op/*": "${workspaceRoot}/src/organization-panel/src",
-		"::kotti/*": "${workspaceRoot}/node_modules/@3yourmind/kotti-ui"
-	},
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true
-	},
+	}
 }
