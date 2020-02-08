@@ -1,4 +1,4 @@
-FROM node:8-alpine AS development
+FROM node:10.16.0-alpine AS development
 
 ENV LISTEN_HOST 0.0.0.0
 ENV LISTEN_PORT 80
@@ -20,6 +20,7 @@ COPY nuxt.config.js .
 COPY packages packages
 COPY README.md README.md
 COPY vue.config.js .
+COPY postcss.config.js .
 COPY docs docs
 RUN "$(npm bin)/nuxt" generate
 
