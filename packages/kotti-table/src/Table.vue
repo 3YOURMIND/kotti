@@ -3,8 +3,8 @@
 		<div class="hidden-columns">
 			<TableColumn
 				v-for="(column, index) in formatedColumns"
-				isPropDefined
 				:key="`${column.prop}_${index}`"
+				isPropDefined
 				v-bind="column"
 			/>
 			<slot></slot>
@@ -221,6 +221,7 @@ export default {
 			immediate: true,
 			handler(value, oldValue) {
 				if (value !== oldValue) {
+					// eslint-disable-next-line no-console
 					console.warn(
 						'use of v-model in table is deprecated use selected prop instead',
 					)
@@ -250,7 +251,8 @@ export default {
 			},
 		},
 		disableRow: {
-			handler(value) {
+			handler() {
+				//FIXME: i remove the parameter here because it was unused - was this intentional? @carol
 				this.store.commit('updateDisabledRows')
 			},
 		},
@@ -295,6 +297,7 @@ export default {
 		})
 		const events = Object.keys(this.$listeners)
 		if (events.includes('input')) {
+			// eslint-disable-next-line no-console
 			console.warn(
 				'use of v-model and @input in table is deprecated subscribe to @selectionChange, @selectAll events instead',
 			)

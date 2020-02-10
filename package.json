@@ -124,9 +124,9 @@
 		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"deploy:docs": "./github-deploy.sh",
 		"dev:docs": "nuxt",
-		"lint:script": "eslint --fix --ignorePath .gitignore '**/*.{js,vue}'",
+		"lint:script": "eslint --fix --ignore-path .gitignore '**/*.{js,vue}'",
 		"lint:style": "stylelint --fix **/*.{css,scss,vue}",
-		"check:script": "eslint --ignorePath .gitignore '**/*.{js,vue}'",
+		"check:script": "eslint --ignore-path .gitignore '**/*.{js,vue}'",
 		"check:style": "stylelint **/*.{css,scss,vue}",
 		"format:docs": "prettier --write **/*.md"
 	},

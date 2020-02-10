@@ -1,12 +1,12 @@
 <template>
 	<div :class="formClass">
-		<label :class="formLabelClass" v-text="labelRep" :for="labelForAttr" />
+		<label :class="formLabelClass" :for="labelForAttr" v-text="labelRep" />
 		<div :class="inputGroupClass">
-			<label class="input-group-addon" v-text="addonText" :for="labelForAttr" />
+			<label class="input-group-addon" :for="labelForAttr" v-text="addonText" />
 			<input
+				:id="labelForAttr"
 				v-bind="$attrs"
 				:class="formInputClass"
-				:id="labelForAttr"
 				:placeholder="placeholder"
 				:required="required"
 				:type="type"
@@ -18,17 +18,17 @@
 				@input="handleInput"
 			/>
 			<i
-				:class="iconClass"
-				v-text="icon"
 				ref="inputIcon"
+				:class="iconClass"
 				@mouseover="showDialog = true"
 				@mouseleave="showDialog = false"
+				v-text="icon"
 			/>
 			<div v-show="showDialog && hasDialog" :class="dialogClass">
 				<slot name="dialog">{{ dialog }}</slot>
 			</div>
 		</div>
-		<div class="form-validation-text" v-if="validateText">
+		<div v-if="validateText" class="form-validation-text">
 			<span v-text="validateText" />
 		</div>
 	</div>

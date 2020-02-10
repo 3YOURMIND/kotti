@@ -1,6 +1,6 @@
 <template>
 	<div class="icon-container" @click="copyLiga(icon)">
-		<div><i class="yoco" ref="liga" v-text="icon" /></div>
+		<div><i ref="liga" class="yoco" v-text="icon" /></div>
 		<div class="icon-liga" v-text="icon" />
 		<div
 			v-if="copySuccess"
@@ -14,7 +14,10 @@
 export default {
 	name: 'YocoPreview',
 	props: {
-		copySuccess: false,
+		copySuccess: {
+			type: Boolean,
+			default: false,
+		},
 		icon: String,
 	},
 	computed: {
@@ -50,9 +53,9 @@ export default {
 }
 
 .icon-container:hover {
+	box-sizing: border-box;
 	cursor: pointer;
 	background: #f8f8f8;
-	box-shadow: border-box;
 	box-shadow: 0 2px 2px #ddd;
 }
 

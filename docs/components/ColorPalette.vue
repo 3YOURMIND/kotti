@@ -5,8 +5,8 @@
 			v-for="color in colors"
 			:key="color.name"
 			:style="{ background: color.code, color: textColor(color.name) }"
-			@click="copyColor(color.code)"
 			class="color-palette__block c-hand"
+			@click="copyColor(color.code)"
 		>
 			<div class="color-palette__name" v-text="color.name" />
 			<div class="color-palette__code" v-text="color.code" />

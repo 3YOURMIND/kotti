@@ -1,22 +1,22 @@
 <template>
 	<div class="code-switch">
-		<div class="switcher" v-text="currentCode" @click="showCode = !showCode" />
-		<slot name="vue" v-if="showCode" />
-		<slot name="style" v-else />
+		<div class="switcher" @click="showCode = !showCode" v-text="currentCode" />
+		<slot v-if="showCode" name="vue" />
+		<slot v-else name="style" />
 	</div>
 </template>
 
 <script>
 export default {
 	name: 'ShowCase',
+	props: {
+		vueSlotLabel: String,
+		styleSlotLabel: String,
+	},
 	data() {
 		return {
 			showCode: true,
 		}
-	},
-	props: {
-		vueSlotLabel: String,
-		styleSlotLabel: String,
 	},
 	computed: {
 		currentCode() {

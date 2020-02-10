@@ -15,8 +15,6 @@ module.exports = {
 	plugins: ['sonarjs'],
 	extends: [
 		'eslint:recommended',
-		'plugin:import/errors',
-		'plugin:import/warnings',
 		'plugin:vue/recommended',
 		'plugin:sonarjs/recommended',
 		'plugin:prettier/recommended',

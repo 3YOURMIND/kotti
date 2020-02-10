@@ -22,8 +22,8 @@
 				:key="column.prop"
 				:class="getThClasses(column)"
 				:style="getThStyle(column)"
-				@click="handleThClick(column)"
 				:draggable="isDraggable"
+				@click="handleThClick(column)"
 				@dragstart="dragStart($event, column)"
 				@dragenter="dragEnter($event, column)"
 				@dragend="dragEnd"
@@ -153,7 +153,7 @@ export default {
 		dragEnter(event, column) {
 			this.columnDragOver = column
 		},
-		dragEnd(event) {
+		dragEnd() {
 			this.columnDragOver = null
 		},
 		isDraggedOver(column) {

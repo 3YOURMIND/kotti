@@ -5,45 +5,45 @@
 			<div :class="{ 'has-icon-left': icon }" class="has-icon-right">
 				<input
 					ref="input"
-					:class="formInputClass"
 					v-model="selectedLabel"
+					:class="formInputClass"
 					:disabled="disabled"
 					:placeholder="placeholder"
-					@input="handleInputChange($event.target.value)"
 					:required="required"
+					v-bind="$attrs"
+					type="text"
+					@input="handleInputChange($event.target.value)"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
 					@click.stop="show"
-					v-bind="$attrs"
-					type="text"
 				/>
 				<i
 					v-if="icon"
-					v-text="icon"
 					class="yoco form-icon"
 					style="pointer-events: none;"
+					v-text="icon"
 				/>
 				<i
-					v-text="indicatorRep"
 					class="yoco form-icon select-opening"
 					style="pointer-events: none;"
+					v-text="indicatorRep"
 				/>
 				<Portal>
 					<template v-if="visible">
 						<div
-							:style="selectorOptionStyle"
 							v-on-clickaway="handleClickOutside"
+							:style="selectorOptionStyle"
 							class="kt-select-options"
 						>
 							<ul>
 								<li
 									v-if="isLoading"
-									v-text="loadingText"
 									class="kt-select-option kt-select-option--loading"
+									v-text="loadingText"
 								/>
 								<li
-									v-else
 									v-for="(option, index) in optionsRep"
+									v-else
 									:key="index"
 									:class="['kt-select-option', optionClass(option)]"
 									@click="handleOptionClick(option)"
@@ -51,8 +51,8 @@
 								/>
 								<li
 									v-if="!optionsRep.length && !isLoading"
-									v-text="noResultsFoundText"
 									class="kt-select-option kt-select-option--empty"
+									v-text="noResultsFoundText"
 								/>
 							</ul>
 						</div>
@@ -151,7 +151,7 @@ export default {
 			if (this.queryString === null) return this.options
 
 			const query = this.queryString.toLowerCase()
-			return this.options.filter(({ label, value }) =>
+			return this.options.filter(({ label }) =>
 				label !== null ? label.toLowerCase().includes(query) : false,
 			)
 		},

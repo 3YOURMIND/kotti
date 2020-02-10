@@ -1,10 +1,10 @@
 <template>
-	<div class="user-menus" v-on-clickaway="clickawayMenu">
+	<div v-on-clickaway="clickawayMenu" class="user-menus">
 		<div
-			class="user-menu"
 			v-if="isMenuShow"
-			@click="clickawayMenu"
+			class="user-menu"
 			:style="{ background: themeColor.backgroundColor }"
+			@click="clickawayMenu"
 		>
 			<slot name="user-menu-items" />
 			<div class="user-menu-items">
@@ -12,16 +12,14 @@
 					<div
 						v-if="section.title"
 						class="user-menu__section"
-						v-text="section.title"
 						:style="{ color: themeColor.textColor }"
+						v-text="section.title"
 					/>
 					<a
 						v-for="(link, index) in section.links"
-						:href="link.link"
 						:key="index"
-						@click="$emit('click', link)"
+						:href="link.link"
 						class="user-menu__item"
-						v-text="link.title"
 						:style="{ color: themeColor.textColor }"
 						:data-test="
 							`navbar:footer:element:${link.title
@@ -29,6 +27,8 @@
 								.split(' ')
 								.join('-')}`
 						"
+						@click="$emit('click', link)"
+						v-text="link.title"
 					/>
 				</div>
 			</div>
@@ -37,25 +37,25 @@
 			<div class="user-info-avatar">
 				<KtAvatar small :src="userAvatar" />
 			</div>
-			<div class="user-info-text" v-if="!isNarrow || isMenuShow">
+			<div v-if="!isNarrow || isMenuShow" class="user-info-text">
 				<div
 					class="user-info-text__name"
-					v-text="userName"
 					:style="{ color: themeColor.textColor }"
+					v-text="userName"
 				/>
 				<div
 					class="user-info-text__status"
-					v-text="userStatus"
 					:style="{ color: themeColor.textColor }"
+					v-text="userStatus"
 				/>
 			</div>
 			<div
-				class="user-info-toggle"
 				v-if="!isNarrow || isMenuShow"
+				class="user-info-toggle"
 				:style="{ color: themeColor.textColor }"
 			>
-				<i class="yoco" v-if="isMenuShow">chevron_down</i>
-				<i class="yoco" v-else>chevron_up</i>
+				<i v-if="isMenuShow" class="yoco">chevron_down</i>
+				<i v-else class="yoco">chevron_up</i>
 			</div>
 		</div>
 	</div>
@@ -74,6 +74,10 @@ const sectionIsValid = (section) =>
 
 export default {
 	name: 'KtUserMenu',
+	components: {
+		KtAvatar,
+	},
+	mixins: [clickaway],
 	props: {
 		userAvatar: { type: String, default: null },
 		sections: {
@@ -84,10 +88,6 @@ export default {
 		userName: { type: String, default: null },
 		userStatus: { type: String, required: true },
 	},
-	components: {
-		KtAvatar,
-	},
-	mixins: [clickaway],
 	inject: {
 		KtTheme: {
 			default: {

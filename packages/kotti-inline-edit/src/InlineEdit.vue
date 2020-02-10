@@ -3,20 +3,20 @@
 		<label class="form-label" v-text="label" />
 		<div
 			v-if="!editMode"
-			v-html="postParser(dangerouslyOverrideParser(representValue))"
-			@click="editMode = true"
 			:class="representTextClass"
+			@click="editMode = true"
+			v-html="postParser(dangerouslyOverrideParser(representValue))"
 		/>
 		<div v-else>
 			<component
 				:is="inputComponent"
 				v-bind="$attrs"
 				:value="currentValue"
-				v-text="currentValue"
-				@change="handleChange"
-				@input="handleInput"
 				class="form-input"
 				type="text"
+				@change="handleChange"
+				@input="handleInput"
+				v-text="currentValue"
 			/>
 			<KtButtonGroup shadow class="inline-edit__edit-buttons">
 				<KtButton icon="close" @click="handleDismiss" />

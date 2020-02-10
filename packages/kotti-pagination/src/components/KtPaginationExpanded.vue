@@ -4,8 +4,8 @@
 			v-for="(page, index) in totalPages"
 			:key="index"
 			:class="paginatorClasses(page, 'page-item--active')"
-			v-text="humanReadablePageNumber(page)"
 			@click="$emit('setPage', page)"
+			v-text="humanReadablePageNumber(page)"
 		/>
 	</div>
 </template>

@@ -1,21 +1,21 @@
 <template>
 	<div class="card">
-		<div class="card-image" v-if="displayImagePostion('top')">
+		<div v-if="displayImagePostion('top')" class="card-image">
 			<img :src="imgUrl" class="img-responsive" />
 		</div>
 		<div class="card-header">
 			<slot name="card-header" />
 		</div>
-		<div class="card-image" v-if="displayImagePostion('middle')">
+		<div v-if="displayImagePostion('middle')" class="card-image">
 			<img :src="imgUrl" class="img-responsive" />
 		</div>
 		<div class="card-body">
 			<slot name="card-body" />
 		</div>
-		<div class="card-footer" v-if="$slots['card-footer']">
+		<div v-if="$slots['card-footer']" class="card-footer">
 			<slot name="card-footer" />
 		</div>
-		<div class="card-image" v-if="displayImagePostion('bottom')">
+		<div v-if="displayImagePostion('bottom')" class="card-image">
 			<img :src="imgUrl" class="img-responsive" />
 		</div>
 	</div>

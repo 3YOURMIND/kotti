@@ -26,7 +26,7 @@
 				]"
 				:style="{ color: themeColor.textColor }"
 			>
-				<span v-text="item.title" v-if="!isNarrow" /> <i class="yoco">link</i>
+				<span v-if="!isNarrow" v-text="item.title" /> <i class="yoco">link</i>
 			</div>
 		</a>
 	</div>
@@ -39,7 +39,7 @@ export default {
 	name: 'KtNavbarQuickLink',
 	props: {
 		title: { type: String, default: 'Quick Links' },
-		links: { type: Array, default: [] },
+		links: { type: Array, default: () => [] },
 	},
 	inject: {
 		KtTheme: {

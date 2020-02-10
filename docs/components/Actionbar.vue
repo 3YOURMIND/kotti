@@ -4,23 +4,24 @@
 			<div class="actionbar-header"><h1 v-text="currentSection" /></div>
 			<div class="actionbar-body">
 				<div class="actionbar-menu has-icon-right">
-					<ul
-						v-for="item in submenu"
-						:key="item.id"
-						v-if="item.parent === currentSection.toLowerCase()"
-					>
-						<nuxt-link
-							v-for="child in item.child"
-							:to="`/${item.parent}/${child.to}`"
-							:key="child.to"
+					<template v-for="item in submenu">
+						<ul
+							v-if="item.parent === currentSection.toLowerCase()"
+							:key="item.id"
 						>
-							<li>
-								<span v-text="child.label" />
-								<span v-if="child.isCSS" class="indicator-only-css">CSS</span>
-								<i class="yoco">chevron_right</i>
-							</li>
-						</nuxt-link>
-					</ul>
+							<nuxt-link
+								v-for="child in item.child"
+								:key="child.to"
+								:to="`/${item.parent}/${child.to}`"
+							>
+								<li>
+									<span v-text="child.label" />
+									<span v-if="child.isCSS" class="indicator-only-css">CSS</span>
+									<i class="yoco">chevron_right</i>
+								</li>
+							</nuxt-link>
+						</ul>
+					</template>
 				</div>
 			</div>
 		</div>
@@ -61,8 +62,7 @@ export default {
 	computed: {
 		currentSection() {
 			const pathName = this.$route.name ? this.$route.name.split('-')[0] : ''
-			const sectionName = pathName.slice(0, 1).toUpperCase() + pathName.slice(1)
-			return sectionName
+			return pathName.slice(0, 1).toUpperCase() + pathName.slice(1)
 		},
 	},
 }

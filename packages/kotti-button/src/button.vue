@@ -3,10 +3,10 @@
 		:is="element"
 		:class="mainClasses"
 		:style="themeColor"
+		role="button"
 		@click="handleClick"
 		@mouseover="handleMouseover"
 		@mouseleave="handleMouseleave"
-		role="button"
 	>
 		<i v-if="loading" class="kt-circle-loading" :style="loadingStyle" />
 		<i v-else-if="icon" class="yoco" v-text="icon" />

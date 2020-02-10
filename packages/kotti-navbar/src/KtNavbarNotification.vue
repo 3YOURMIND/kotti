@@ -36,7 +36,7 @@
 				background: themeColor.borderColor,
 			}"
 		>
-			<i class="yoco" v-if="!count">bell</i> <span v-else v-text="count" />
+			<i v-if="!count" class="yoco">bell</i> <span v-else v-text="count" />
 		</div>
 	</a>
 </template>

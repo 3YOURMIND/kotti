@@ -2,9 +2,9 @@
 	<div class="actionbar-nav">
 		<router-link
 			v-for="(item, index) in menu"
+			:key="index"
 			tag="li"
 			:to="item.to"
-			:key="index"
 			:class="navItemClass(item)"
 		>
 			<i :class="navItemIconClass" v-text="item.icon" />
