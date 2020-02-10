@@ -68,7 +68,6 @@ export default {
 
 .vue-yodify__notification {
 	display: flex;
-	display: flex;
 	justify-content: space-between;
 	width: 448px;
 	margin: 1.2rem 0;

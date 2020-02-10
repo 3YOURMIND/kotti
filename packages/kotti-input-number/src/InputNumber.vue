@@ -125,7 +125,7 @@ export default {
 	}
 	&:focus {
 		outline: 0;
-		box-shadow: 0;
+		box-shadow: none;
 	}
 	&::-webkit-outer-spin-button,
 	&::-webkit-inner-spin-button {
