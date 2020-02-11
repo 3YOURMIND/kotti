@@ -1,5 +1,5 @@
 {
-	"editor.formatOnSave": false,
+	"editor.formatOnSave": true,
 	"eslint.alwaysShowStatus": true,
 	"eslint.options": {
 		"extensions": [".js", ".vue", ".jsx", ".ts", ".tsx"]
