@@ -128,7 +128,8 @@
 		"lint:style": "stylelint --fix **/*.{css,scss,vue}",
 		"check:script": "eslint --ignore-path .gitignore '**/*.{js,vue}'",
 		"check:style": "stylelint **/*.{css,scss,vue}",
-		"format:docs": "prettier --write **/*.md"
+		"format:docs": "prettier --write **/*.md",
+		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
 	"version": "1.8.0"
