@@ -16,7 +16,7 @@
 	--gray-70: #525252;
 	--gray-80: #393939;
 	--gray-90: #262626;
-	--gray-100: #3d3d3d;
+	--gray-100: #141414;
 	--primary-10: #eaf0fa;
 	--primary-20: #c1d7fb;
 	--primary-30: #afc5e8;
@@ -43,7 +43,7 @@
 	--yellow-50: #fff490;
 	--yellow-60: #ffe60d;
 	--yellow-70: #dfc903;
-	--orange-20: #ffae66;
+	--orange-20: #fab980;
 	--orange-50: #ff9333;
 	--orange-60: #ff7800;
 	--orange-70: #ba6820;
@@ -52,7 +52,7 @@
 	--ui-01: var(--gray-10);
 	--ui-02: var(--gray-20);
 	--ui-03: var(--gray-50);
-	--text-01: var(--gray-100);
+	--text-01: var(--gray-80);
 	--text-02: var(--gray-50);
 	--text-03: var(--gray-40);
 	--text-04: var(--white);
@@ -65,6 +65,9 @@
 	--hover-danger: var(--red-70);
 	--link-01: var(--primary-60);
 	--link-02: var(--gray-50);
+	--link-03: var(--primary-50);
+	--link-04: var(--primary-40);
+	--link-04: var(--primary-30);
 	--icon-01: var(--gray-100);
 	--icon-02: var(--gray-50);
 	--icon-03: var(--white);

@@ -137,6 +137,21 @@ export const tokens = [
 		reference: 'gray-50',
 	},
 	{
+		name: 'link-03',
+		description: 'Active link',
+		reference: 'primary-50',
+	},
+	{
+		name: 'link-04',
+		description: 'Dark background link',
+		reference: 'primary-40',
+	},
+	{
+		name: 'link-05',
+		description: 'Dark background active link',
+		reference: 'primary-30',
+	},
+	{
 		name: 'icon-01',
 		description: 'Primary icon',
 		reference: 'gray-100',
