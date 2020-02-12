@@ -92,7 +92,7 @@ export default {
 	},
 	watch: {
 		value(val) {
-			this.currentValue = parseFloat(val)
+			this.currentValue = this.handleInput(val)
 		},
 		currentValue(newVal) {
 			if (!this.formError) {
