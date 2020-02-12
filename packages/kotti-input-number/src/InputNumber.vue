@@ -1,19 +1,13 @@
 <template>
 	<div :class="formGroupStyle">
-		<div
-			:class="decreaseButtonStyle"
-			@click="setCurrentValue(currentValue - step)"
-		>
+		<div :class="decreaseButtonStyle" @click="decrementValue">
 			<i class="yoco">minus</i>
 		</div>
 		<input
 			ref="inputNumber"
 			:class="inputStyle"
-			type="number"
 			:disabled="disabled"
 			:value="currentValue"
-			:max="max"
-			:min="min"
 			@input="setCurrentValue($event.target.value)"
 		/>
 		<div
@@ -21,10 +15,7 @@
 			class="kt-input-number__max"
 			v-text="max"
 		/>
-		<div
-			:class="increaseButtonStyle"
-			@click="setCurrentValue(currentValue + step)"
-		>
+		<div :class="increaseButtonStyle" @click="incrementValue">
 			<i class="yoco">plus</i>
 		</div>
 	</div>
@@ -44,7 +35,9 @@ export default {
 	},
 	data() {
 		return {
-			currentValue: this.value || 0,
+			currentValue: null,
+			incrementDisabled: false,
+			decrementDisabled: false,
 		}
 	},
 	computed: {
@@ -56,9 +49,10 @@ export default {
 			}
 		},
 		formError() {
-			if (this.currentValue > this.max && this.max !== null) return true
-			if (this.currentValue < this.min && this.min !== null) return true
-			if (this.currentValue === '' || isNaN(this.currentValue)) return true
+			if (this.max !== null && this.currentValue > this.max) return true
+			if (this.min !== null && this.currentValue < this.min) return true
+			if (typeof this.currentValue === 'string' || isNaN(this.currentValue))
+				return true
 			return false
 		},
 		inputStyle() {
@@ -72,15 +66,13 @@ export default {
 		increaseButtonStyle() {
 			return {
 				'kt-input-number__button': true,
-				'kt-input-number__button--disabled':
-					this.currentValue == this.max || this.disabled,
+				'kt-input-number__button--disabled': this.incrementDisabled,
 			}
 		},
 		decreaseButtonStyle() {
 			return {
 				'kt-input-number__button': true,
-				'kt-input-number__button--disabled':
-					this.currentValue == this.min || this.disabled,
+				'kt-input-number__button--disabled': this.decrementDisabled,
 			}
 		},
 	},
@@ -88,19 +80,58 @@ export default {
 		value(val) {
 			this.currentValue = parseFloat(val)
 		},
+		currentValue(newVal) {
+			if (!this.formError) {
+				this.$emit('input', newVal)
+			}
+			if (typeof this.min === 'number') {
+				if (newVal - this.step < this.min) {
+					this.decrementDisabled = true
+				} else if (!this.disabled) {
+					this.decrementDisabled = false
+				}
+			}
+			if (typeof this.max === 'number') {
+				if (newVal + this.step > this.max) {
+					this.incrementDisabled = true
+				} else if (!this.disabled) {
+					this.incrementDisabled = false
+				}
+			}
+		},
+		disabled(newVal) {
+			if (newVal) {
+				this.incrementDisabled = newVal
+				this.decrementDisabled = newVal
+			}
+		},
+	},
+	created() {
+		this.currentValue = typeof this.value === 'number' ? this.value : 0
 	},
 	methods: {
+		incrementValue() {
+			if (this.incrementDisabled) return
+			this.currentValue += this.step
+		},
+		decrementValue() {
+			if (this.decrementDisabled) return
+			this.currentValue -= this.step
+		},
 		/* Do not use input.stepUp - this method does not work in internet explorer and is not transpiled by Babel  */
+
 		setCurrentValue(value) {
 			if (value === this.currentValue) return
-			this.currentValue = typeof value === Number ? value : parseFloat(value)
-			this.$emit('input', this.currentValue)
+			this.currentValue =
+				typeof value === 'number' && !Number.isNaN(value)
+					? value
+					: parseFloat(value)
 		},
 	},
 }
 </script>
 <style lang="scss">
-@import '../../kotti-style/_variables.scss';
+// @import '../../kotti-style/_variables.scss';
 
 .kt-input-number__input {
 	width: auto;
