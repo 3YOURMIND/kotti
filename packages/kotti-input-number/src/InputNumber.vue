@@ -1,17 +1,16 @@
 <template>
 	<div :class="formGroupStyle">
 		<div :class="decreaseButtonStyle" @click="decrementValue">
-			<i class="yoco">minus</i>
+			<i :class="yocoClassDecrement">minus</i>
 		</div>
 		<input
-			ref="inputNumber"
 			type="number"
 			:min="min"
 			:max="max"
 			:class="inputStyle"
 			:disabled="disabled"
 			:value="currentValue"
-			@input="setCurrentValue($event.target.value)"
+			@input="handleInput($event.target.value)"
 		/>
 		<div
 			v-if="max && showMaxNumber"
@@ -19,7 +18,7 @@
 			v-text="max"
 		/>
 		<div :class="increaseButtonStyle" @click="incrementValue">
-			<i class="yoco">plus</i>
+			<i :class="yocoClassIncrement">plus</i>
 		</div>
 	</div>
 </template>
@@ -54,7 +53,7 @@ export default {
 		formError() {
 			if (this.max !== null && this.currentValue > this.max) return true
 			if (this.min !== null && this.currentValue < this.min) return true
-			if (typeof this.currentValue === 'string' || isNaN(this.currentValue))
+			if (Number.isNaN(this.currentValue) || typeof this.currentValue !== 'number')
 				return true
 			return false
 		},
@@ -76,6 +75,18 @@ export default {
 			return {
 				'kt-input-number__button': true,
 				'kt-input-number__button--disabled': this.decrementDisabled,
+			}
+		},
+		yocoClassIncrement() {
+			return {
+				'yoco': true,
+				'yoco--disabled': this.incrementDisabled || this.disabled,
+			}
+		},
+		yocoClassDecrement() {
+			return {
+				'yoco': true,
+				'yoco--disabled': this.decrementDisabled || this.disabled,
 			}
 		},
 	},
@@ -102,15 +113,18 @@ export default {
 				}
 			}
 		},
-		disabled(newVal) {
+		disabled(newVal, oldVal) {
 			if (newVal) {
 				this.incrementDisabled = newVal
 				this.decrementDisabled = newVal
+			} else if (!newVal && oldVal) {
+				this.incrementDisabled = this.currentValue + this.step > this.max
+				this.decrementDisabled = this.currentValue - this.step < this.min
 			}
 		},
 	},
 	created() {
-		this.currentValue = typeof this.value === 'number' ? this.value : 0
+		this.currentValue = typeof this.value === 'number' && !Number.isNaN(this.value) ? this.value : 0
 	},
 	methods: {
 		incrementValue() {
@@ -123,7 +137,7 @@ export default {
 		},
 		/* Do not use input.stepUp - this method does not work in internet explorer and is not transpiled by Babel  */
 
-		setCurrentValue(value) {
+		handleInput(value) {
 			if (value === this.currentValue) return
 			this.currentValue =
 				typeof value === 'number' && !Number.isNaN(value)
@@ -133,9 +147,7 @@ export default {
 	},
 }
 </script>
-<style lang="scss">
-@import '../../kotti-style/_variables.scss';
-
+<style lang="scss" scoped>
 .kt-input-number__input {
 	width: auto;
 	border: 0;
@@ -152,7 +164,7 @@ export default {
 		text-align: right;
 	}
 	&--disabled {
-		background: $lightgray-300;
+		color: $lightgray-300;
 		&:hover {
 			cursor: not-allowed;
 		}
@@ -212,6 +224,9 @@ export default {
 	&--disabled:hover {
 		cursor: not-allowed;
 		background: $lightgray-300;
+	}
+	.yoco--disabled {
+		color: $lightgray-400;
 	}
 }
 </style>
