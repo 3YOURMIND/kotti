@@ -5,6 +5,9 @@
 		</div>
 		<input
 			ref="inputNumber"
+			type="number"
+			:min="min"
+			:max="max"
 			:class="inputStyle"
 			:disabled="disabled"
 			:value="currentValue"
