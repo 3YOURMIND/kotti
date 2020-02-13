@@ -53,7 +53,10 @@ export default {
 		formError() {
 			if (this.max !== null && this.currentValue > this.max) return true
 			if (this.min !== null && this.currentValue < this.min) return true
-			if (Number.isNaN(this.currentValue) || typeof this.currentValue !== 'number')
+			if (
+				Number.isNaN(this.currentValue) ||
+				typeof this.currentValue !== 'number'
+			)
 				return true
 			return false
 		},
@@ -124,7 +127,14 @@ export default {
 		},
 	},
 	created() {
-		this.currentValue = typeof this.value === 'number' && !Number.isNaN(this.value) ? this.value : 0
+		this.currentValue =
+			typeof this.value === 'number' && !Number.isNaN(this.value)
+				? this.value
+				: 0
+		if (this.disabled) {
+			this.incrementDisabled = true
+			this.decrementDisabled = true
+		}
 	},
 	methods: {
 		incrementValue() {
@@ -164,7 +174,6 @@ export default {
 		text-align: right;
 	}
 	&--disabled {
-		color: $lightgray-300;
 		&:hover {
 			cursor: not-allowed;
 		}
