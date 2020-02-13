@@ -114,7 +114,7 @@
 		"*.{css,scss,vue}": [
 			"stylelint --fix"
 		],
-		"*.{js,vue,ts,tsx}": [
+		"*.{js,jsx,vue,ts,tsx}": [
 			"eslint --fix"
 		]
 	},
