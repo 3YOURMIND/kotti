@@ -83,9 +83,6 @@ export default {
 		initPopper() {
 			this.popper = createPopper(this.$refs.anchor, this.$refs.content, {
 				placement: this.placement,
-				modifiers: {
-					flip: false,
-				},
 			})
 		},
 		destroyPopper() {
