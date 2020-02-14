@@ -2,6 +2,11 @@
 
 # Dropdowns
 
+<div class="danger-block">
+	This component is deprecated and will be removed in kotti 2.0.<br/>
+	Please use <a href="/components/popovers">KtPopover</a> instead.
+</div>
+
 ## Basic Usage
 
 <div class="element-example">

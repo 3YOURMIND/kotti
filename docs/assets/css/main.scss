@@ -49,6 +49,17 @@ h3 ~ table {
 	}
 }
 
+.danger-block {
+	padding: 1.2rem;
+	background: #f8f8f8;
+	color: $red-600;
+	margin-bottom: 0.6rem;
+	a {
+		color: inherit;
+		text-decoration: underline;
+	}
+}
+
 code {
 	background: #e6e6e6;
 	color: #091142;
