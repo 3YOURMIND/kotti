@@ -115,11 +115,11 @@ It replaces the old `KtDropdownMenu`.
 
 
 <div class="element-example">
-<KtPopover>
+<KtPopover placement="bottom-end">
 	<KtButton label="Popover with items" />
 	<div slot="content">
-		<KtPopoverItem icon="refresh" v-text="'Refresh'"/>
-		<KtPopoverItem icon="profile" v-text="'Profile'"/>
+		<KtPopoverItem icon="global">Refresh</KtPopoverItem>
+		<KtPopoverItem icon="shipping">Profile</KtPopoverItem>
 	</div>
 </KtPopover>
 </div>

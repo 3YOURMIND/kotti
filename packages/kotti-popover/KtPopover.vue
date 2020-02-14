@@ -127,6 +127,10 @@ export default {
 <style lang="scss" scoped>
 .kt-popover {
 	display: inline-block;
+	&-item {
+		margin: -$unit-1;
+		padding: $unit-4;
+	}
 }
 
 // poper.js css
