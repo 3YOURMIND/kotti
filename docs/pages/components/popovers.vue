@@ -108,6 +108,22 @@ an increment of '4rem'.
 </KtPopover>
 </div>
 
+## Items
+
+We also provide a nice way of displaying items inside popovers. 
+It replaces the old `KtDropdownMenu`.
+
+
+<div class="element-example">
+<KtPopover>
+	<KtButton label="Popover with items" />
+	<div slot="content">
+		<KtPopoverItem icon="refresh" v-text="'Refresh'"/>
+		<KtPopoverItem icon="profile" v-text="'Profile'"/>
+	</div>
+</KtPopover>
+</div>
+
 ## Scoped Slot
 
 Scoped slot allows your to get props or function provided by slot themselve.

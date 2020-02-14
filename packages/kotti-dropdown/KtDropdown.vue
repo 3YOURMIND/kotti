@@ -28,3 +28,10 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.kt-dropdown {
+	.kt-popper {
+		padding: $unit-2 $unit-1;
+	}
+}
+</style>

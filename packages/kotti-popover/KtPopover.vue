@@ -128,4 +128,32 @@ export default {
 .kt-popover {
 	display: inline-block;
 }
+
+// poper.js css
+.kt-popper {
+	padding: 0.8rem;
+	background: #fff;
+	border-radius: $border-radius;
+	box-shadow: $box-shadow;
+	z-index: $zindex-4;
+	width: auto;
+	&--sm {
+		width: 12rem;
+	}
+	&--md {
+		width: 16rem;
+	}
+	&--lg {
+		width: 20rem;
+	}
+	&--xl {
+		width: 24rem;
+	}
+	&--xxl {
+		width: 28rem;
+	}
+	&--xxxl {
+		width: 32rem;
+	}
+}
 </style>
