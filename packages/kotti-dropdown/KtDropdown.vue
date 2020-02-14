@@ -1,9 +1,10 @@
 <template>
 	<div class="kt-dropdown">
 		<KtPopover :placement="placement" :size="size">
-			<slot>Dropdown Text</slot>
+			<slot />
 			<div slot="content">
-				<slot name="KtDropdownMenus">Dropdown Menu</slot>
+				<slot name="KtDropdownMenus" />
+				<slot name="content" />
 			</div>
 		</KtPopover>
 	</div>
@@ -28,10 +29,3 @@ export default {
 	},
 }
 </script>
-<style lang="scss">
-.kt-dropdown {
-	.kt-popper {
-		padding: $unit-2 $unit-1;
-	}
-}
-</style>
