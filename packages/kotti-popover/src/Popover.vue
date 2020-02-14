@@ -4,14 +4,18 @@
 		:class="{ showPopper }"
 		v-on-clickaway="handleClickaway"
 	>
-		<div ref="anchor" @click="handleClick"><slot>Anchor</slot></div>
+		<div ref="anchor" @click="handleClick">
+			<slot>Anchor</slot>
+		</div>
 		<div :class="popperClass" v-if="showPopper" ref="content">
-			<slot name="content" :close="handleClickaway">{{ content }}</slot>
+			<slot name="content" :close="handleClickaway">
+				{{ content }}
+			</slot>
 		</div>
 	</div>
 </template>
 <script>
-import Popper from 'popper.js'
+import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
 export default {
 	name: 'KtPopover',
@@ -20,6 +24,7 @@ export default {
 		placement: { type: String, default: 'bottom' },
 		size: { type: String, default: null },
 		content: { type: String, default: '' },
+		options: { type: Object, default: () => {} },
 		forceShowPopover: {
 			type: Boolean,
 			required: false,
@@ -81,12 +86,33 @@ export default {
 			this.showPopper = false
 		},
 		initPopper() {
-			this.popper = new Popper(this.$refs.anchor, this.$refs.content, {
+			let propsOptions = {
 				placement: this.placement,
-				modifiers: {
-					flip: false,
-				},
-			})
+				modifiers: [
+					{
+						name: 'flip',
+						enabled: true,
+						options: {
+							padding: 8,
+						},
+					},
+					{
+						name: 'offset',
+						options: {
+							offset: [0, 8],
+						},
+					},
+					{
+						name: 'preventOverflow',
+						enabled: true,
+						options: {
+							padding: 8,
+						},
+					},
+				],
+			}
+			let options = { ...options, ...propsOptions }
+			this.popper = createPopper(this.$refs.anchor, this.$refs.content, options)
 		},
 		destroyPopper() {
 			if (this.forceShowPopoverIsNull && this.popper) {
