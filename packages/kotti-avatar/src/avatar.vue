@@ -36,7 +36,7 @@ export default {
 		},
 		avatarClasses() {
 			return {
-				'avatar': true,
+				avatar: true,
 				'avatar--selected': this.selected,
 				'avatar--sm': this.small,
 				'avatar--hover': this.hoverable,

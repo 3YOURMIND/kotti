@@ -16,8 +16,8 @@
 						v-text="section.title"
 					/>
 					<a
-						v-for="(link, index) in section.links"
-						:key="index"
+						v-for="(link, linkIndex) in section.links"
+						:key="linkIndex"
 						:href="link.link"
 						class="user-menu__item"
 						:style="{ color: themeColor.textColor }"

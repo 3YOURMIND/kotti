@@ -1,5 +1,5 @@
 module.exports = {
-	quoteProps: 'consistent',
+	quoteProps: 'as-needed',
 	useTabs: true,
 	singleQuote: true,
 	arrowParens: 'always',

@@ -44,7 +44,7 @@ export default {
 		},
 		textClasses(item) {
 			return {
-				'breadcrumb__text': true,
+				breadcrumb__text: true,
 				'breadcrumb__text--completed': item.isCompleted,
 			}
 		},

@@ -25,7 +25,10 @@ export default {
 		KtAvatar,
 	},
 	props: {
-		items: Array,
+		items: {
+			type: Array,
+			default: () => [],
+		},
 		showItems: {
 			type: Number,
 			default: 2,
@@ -44,14 +47,14 @@ export default {
 		avatarGroupClasses() {
 			return {
 				'avatar-group': true,
-				'stack': this.isStack,
+				stack: this.isStack,
 			}
 		},
 		avatarRemainders() {
 			return this.items.length - this.showItems
 		},
 		reversedItems() {
-			return this.items.reverse()
+			return [...this.items].reverse()
 		},
 		visibleItems() {
 			return this.reversedItems.filter((item, index) => index < this.showItems)

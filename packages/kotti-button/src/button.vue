@@ -60,7 +60,7 @@ export default {
 		},
 		objectClass() {
 			return {
-				'icon': this.icon,
+				icon: this.icon,
 				'icon-only': this.icon && !this.$slots.default && !this.label,
 			}
 		},
@@ -68,7 +68,7 @@ export default {
 			switch (this.type) {
 				case 'primary':
 					return {
-						'color': color(this.KtTheme.brandColor).isDark()
+						color: color(this.KtTheme.brandColor).isDark()
 							? '#ffffff'
 							: '#3d3d3d',
 						'background-color': this.hoverColor(this.KtTheme.brandColor),
@@ -77,14 +77,14 @@ export default {
 
 				case 'danger':
 					return {
-						'color': this.isHover ? '#ffffff' : this.KtTheme.dangerColor,
+						color: this.isHover ? '#ffffff' : this.KtTheme.dangerColor,
 						'background-color': this.isHover ? this.KtTheme.dangerColor : null,
 						'border-color': this.isHover ? this.KtTheme.dangerColor : null,
 					}
 
 				case 'secondary':
 					return {
-						'color': this.hoverColor(this.KtTheme.brandColor),
+						color: this.hoverColor(this.KtTheme.brandColor),
 						'border-color': this.hoverColor(this.KtTheme.brandColor),
 					}
 

@@ -106,7 +106,7 @@ export default {
 	computed: {
 		styleObject() {
 			return {
-				'avatar': true,
+				avatar: true,
 				'avatar-selected': this.selected,
 			}
 		},

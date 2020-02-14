@@ -16,7 +16,7 @@
 				}"
 				@click="$emit('menuLinkClick', link)"
 			>
-				<div :class="{ 'active': link.isActive, 'navbar-menu__item': true }">
+				<div :class="{ active: link.isActive, 'navbar-menu__item': true }">
 					<i class="yoco" v-text="link.icon" />
 					<span
 						v-if="!isNarrow"
