@@ -1,9 +1,10 @@
 <template>
 	<div class="kt-dropdown">
 		<KtPopover :placement="placement" :size="size">
-			<slot>Dropdown Text</slot>
+			<slot />
 			<div slot="content">
-				<slot name="KtDropdownMenus">Dropdown Menu</slot>
+				<slot name="KtDropdownMenus" />
+				<slot name="content" />
 			</div>
 		</KtPopover>
 	</div>

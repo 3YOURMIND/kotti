@@ -45,14 +45,14 @@
 	],
 	"dependencies": {
 		"@3yourmind/yoco": "~1.1.0",
+		"@popperjs/core": "^2.0.6",
 		"color": "~3.1.0",
 		"dayjs": "~1.8.8",
 		"deep-eql": "^4.0.0",
 		"eslint": "^6.8.0",
 		"eslint-plugin-prettier": "^3.1.2",
 		"eslint-plugin-vue": "^6.1.2",
-		"vue-clickaway": "^2.2.2",
-		"vue-popperjs": "^2.0.3"
+		"vue-clickaway": "^2.2.2"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {

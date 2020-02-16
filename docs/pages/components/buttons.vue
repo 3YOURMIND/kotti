@@ -104,6 +104,35 @@
 		<KtButton type="secondary" icon="trash">Delete</KtButton>
 	</KtButtonGroup>
 	```
+
+	## Dropdown button 
+
+	A dropdown button is a current pattern nowadays. 
+	It allows to have a subaction without changing page or opening a modal.
+
+	Note the `dropdownIcon` prop. It will default to `chevron_down`.
+	You can also use any attribute you would pass to `KtPopover` or `KtButton`. They will be passed.
+
+	<div class="element-example">
+		<KtDropdownButton size="sm" type="primary" v-t="'Dropdown button'" >
+			<div slot="content">
+				<KtPopoverItem>Request item</KtPopoverItem>
+				<KtPopoverItem>Download Item</KtPopoverItem>
+			</div>
+		</KtDropdownButton>
+	</div>
+
+	``` html
+	<div class="element-example">
+		<KtDropdownButton size="sm" type="primary" v-t="'Dropdown button'" >
+			<div slot="content">
+				<KtPopoverItem>Request item</KtPopoverItem>
+				<KtPopoverItem>Download Item</KtPopoverItem>
+			</div>
+		</KtDropdownButton>
+	</div>
+	```
+
 	## Size
 
 	<div class="element-example">
