@@ -14,7 +14,7 @@
 				</KtButton>
 			</KtButtonGroup>
 			<div slot="content">
-				<slot name="KtDropdownMenus">Dropdown Menu</slot>
+				<slot name="content">Dropdown Menu</slot>
 			</div>
 		</KtPopover>
 	</div>
@@ -60,15 +60,11 @@ export default {
 	}
 	.kt-popper {
 		padding-top: $unit-1;
+		padding-right: $unit-1;
 		padding-right: 0;
 		padding-bottom: $unit-1;
+		padding-left: $unit-1;
 		padding-left: 0;
-	}
-	.kt-dropdown-menu {
-		padding-right: $unit-3;
-		padding-left: $unit-3;
-		margin-right: 0;
-		margin-left: 0;
 	}
 }
 .kt-dropdown-button__button {

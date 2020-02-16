@@ -4,9 +4,13 @@
 		class="kt-popover"
 		:class="{ showPopper }"
 	>
-		<div ref="anchor" @click="handleClick"><slot>Anchor</slot></div>
+		<div ref="anchor" @click="handleClick">
+			<slot>Anchor</slot>
+		</div>
 		<div v-if="showPopper" ref="content" :class="popperClass">
-			<slot name="content" :close="handleClickaway">{{ content }}</slot>
+			<slot name="content" :close="handleClickaway">
+				{{ content }}
+			</slot>
 		</div>
 	</div>
 </template>
@@ -20,6 +24,7 @@ export default {
 		placement: { type: String, default: 'bottom' },
 		size: { type: String, default: null },
 		content: { type: String, default: '' },
+		options: { type: Object, default: () => {} },
 		forceShowPopover: {
 			type: Boolean,
 			required: false,
@@ -81,9 +86,33 @@ export default {
 			this.showPopper = false
 		},
 		initPopper() {
-			this.popper = createPopper(this.$refs.anchor, this.$refs.content, {
+			let propsOptions = {
 				placement: this.placement,
-			})
+				modifiers: [
+					{
+						name: 'flip',
+						enabled: true,
+						options: {
+							padding: 8,
+						},
+					},
+					{
+						name: 'offset',
+						options: {
+							offset: [0, 8],
+						},
+					},
+					{
+						name: 'preventOverflow',
+						enabled: true,
+						options: {
+							padding: 8,
+						},
+					},
+				],
+			}
+			let options = { ...options, ...propsOptions }
+			this.popper = createPopper(this.$refs.anchor, this.$refs.content, options)
 		},
 		destroyPopper() {
 			if (this.forceShowPopoverIsNull && this.popper) {
@@ -98,5 +127,37 @@ export default {
 <style lang="scss" scoped>
 .kt-popover {
 	display: inline-block;
+	&-item {
+		padding: $unit-4;
+		margin: -$unit-1;
+	}
+}
+
+// poper.js css
+.kt-popper {
+	z-index: $zindex-4;
+	width: auto;
+	padding: 0.8rem;
+	background: #fff;
+	border-radius: $border-radius;
+	box-shadow: $box-shadow;
+	&--sm {
+		width: 12rem;
+	}
+	&--md {
+		width: 16rem;
+	}
+	&--lg {
+		width: 20rem;
+	}
+	&--xl {
+		width: 24rem;
+	}
+	&--xxl {
+		width: 28rem;
+	}
+	&--xxxl {
+		width: 32rem;
+	}
 }
 </style>
