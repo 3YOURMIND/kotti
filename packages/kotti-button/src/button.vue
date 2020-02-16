@@ -115,8 +115,6 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '../../kotti-style/_variables.scss';
-
 $default-button-height: $unit-8;
 $large-button-height: $unit-9;
 $small-button-height: $unit-6;
