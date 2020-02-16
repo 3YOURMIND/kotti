@@ -5,45 +5,45 @@
 			<div :class="{ 'has-icon-left': icon }" class="has-icon-right">
 				<input
 					ref="input"
-					:class="formInputClass"
 					v-model="selectedLabel"
+					:class="formInputClass"
 					:disabled="disabled"
 					:placeholder="placeholder"
-					@input="handleInputChange($event.target.value)"
 					:required="required"
+					v-bind="$attrs"
+					type="text"
+					@input="handleInputChange($event.target.value)"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
 					@click.stop="show"
-					v-bind="$attrs"
-					type="text"
 				/>
 				<i
 					v-if="icon"
-					v-text="icon"
 					class="yoco form-icon"
 					style="pointer-events: none;"
+					v-text="icon"
 				/>
 				<i
-					v-text="indicatorRep"
 					class="yoco form-icon select-opening"
 					style="pointer-events: none;"
+					v-text="indicatorRep"
 				/>
 				<Portal>
 					<template v-if="visible">
 						<div
-							:style="selectorOptionStyle"
 							v-on-clickaway="handleClickOutside"
+							:style="selectorOptionStyle"
 							class="kt-select-options"
 						>
 							<ul>
 								<li
 									v-if="isLoading"
-									v-text="loadingText"
 									class="kt-select-option kt-select-option--loading"
+									v-text="loadingText"
 								/>
 								<li
-									v-else
 									v-for="(option, index) in optionsRep"
+									v-else
 									:key="index"
 									:class="['kt-select-option', optionClass(option)]"
 									@click="handleOptionClick(option)"
@@ -51,8 +51,8 @@
 								/>
 								<li
 									v-if="!optionsRep.length && !isLoading"
-									v-text="noResultsFoundText"
 									class="kt-select-option kt-select-option--empty"
+									v-text="noResultsFoundText"
 								/>
 							</ul>
 						</div>
@@ -151,7 +151,7 @@ export default {
 			if (this.queryString === null) return this.options
 
 			const query = this.queryString.toLowerCase()
-			return this.options.filter(({ label, value }) =>
+			return this.options.filter(({ label }) =>
 				label !== null ? label.toLowerCase().includes(query) : false,
 			)
 		},
@@ -190,7 +190,9 @@ export default {
 				if (value === null || this.options.length === 0) {
 					return
 				}
-				const selectedItem = this.options.find(option => option.value === value)
+				const selectedItem = this.options.find(
+					(option) => option.value === value,
+				)
 				this.selectedLabel = selectedItem.label
 			},
 		},
@@ -281,17 +283,17 @@ export default {
 @import '../../kotti-style/mixins/index.scss';
 
 .form-select {
-	appearance: none;
+	width: 100%;
+	height: $control-size;
+	padding: $control-padding-y $control-padding-x;
+	font-size: $font-size;
+	line-height: $line-height;
+	color: inherit;
+	vertical-align: middle;
 	border: $border-width solid $lightgray-400;
 	border-radius: $border-radius;
-	color: inherit;
-	font-size: $font-size;
-	height: $control-size;
-	line-height: $line-height;
 	outline: none;
-	padding: $control-padding-y $control-padding-x;
-	vertical-align: middle;
-	width: 100%;
+	appearance: none;
 
 	&[size],
 	&[multiple] {
@@ -303,10 +305,10 @@ export default {
 	}
 
 	&:not([multiple]):not([size]) {
+		padding-right: $control-icon-size + $control-padding-x;
 		background: #fff
 			url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E")
 			no-repeat right 0.35rem center/.4rem 0.5rem;
-		padding-right: $control-icon-size + $control-padding-x;
 	}
 
 	&:focus {
@@ -320,17 +322,17 @@ export default {
 
 	// Select sizes
 	&.select-sm {
-		font-size: $font-size-sm;
 		height: $control-size-sm;
 		padding: $control-padding-y-sm ($control-icon-size + $control-padding-x-sm)
 			$control-padding-y-sm $control-padding-x-sm;
+		font-size: $font-size-sm;
 	}
 
 	&.select-lg {
-		font-size: $font-size-lg;
 		height: $control-size-lg;
 		padding: $control-padding-y-lg ($control-icon-size + $control-padding-x-lg)
 			$control-padding-y-lg $control-padding-x-lg;
+		font-size: $font-size-lg;
 	}
 }
 
@@ -347,23 +349,23 @@ export default {
 
 .kt-select-options {
 	position: absolute;
-	margin-top: $unit-1;
-	background: #fff;
-	box-shadow: $box-shadow;
-	border-radius: $border-radius;
-	padding: 0.4rem 0;
 	z-index: $zindex-4;
 	max-height: 20rem;
+	padding: 0.4rem 0;
+	margin-top: $unit-1;
 	overflow: hidden;
 	overflow-y: auto;
+	background: #fff;
+	border-radius: $border-radius;
+	box-shadow: $box-shadow;
 	ul {
 		margin: 0;
 	}
 
 	.kt-select-option {
+		padding: 0.2rem 0.4rem;
 		margin: 0;
 		line-height: 1.2rem;
-		padding: 0.2rem 0.4rem;
 		list-style: none;
 
 		&.kt-select-option--disabled {
@@ -376,8 +378,8 @@ export default {
 
 		&.kt-select-option--empty,
 		&.kt-select-option--loading {
-			text-align: center;
 			color: $lightgray-500;
+			text-align: center;
 
 			&:hover {
 				cursor: default;

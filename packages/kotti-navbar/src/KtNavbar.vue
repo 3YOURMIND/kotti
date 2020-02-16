@@ -17,8 +17,8 @@
 			>
 				<i
 					class="yoco"
-					v-text="'burger'"
 					:style="{ color: themeColor.textColor }"
+					v-text="'burger'"
 				/>
 			</div>
 			<div
@@ -54,20 +54,20 @@
 				<slot name="navbar-footer" />
 			</div>
 			<div
-				class="navbar-dropdown"
 				v-if="mobileMenuToggle"
+				class="navbar-dropdown"
 				:style="{ background: themeColor.backgroundColor }"
 			>
 				<kt-navbar-menu
+					v-on-clickaway="clickawayMobileMenu"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
-					v-on-clickaway="clickawayMobileMenu"
 				/>
 				<kt-navbar-quick-link
 					v-if="quickLinks"
+					v-on-clickaway="clickawayMobileMenu"
 					:title="quickLinks.title"
 					:links="quickLinks.links"
-					v-on-clickaway="clickawayMobileMenu"
 				/>
 			</div>
 		</div>
@@ -84,13 +84,13 @@ import KtNavbarQuickLink from './KtNavbarQuickLink'
 
 export default {
 	name: 'KtNavbar',
-	mixins: [clickaway],
 	components: {
 		KtNavbarLogo,
 		KtNavbarMenu,
 		KtNavbarNotification,
 		KtNavbarQuickLink,
 	},
+	mixins: [clickaway],
 	props: {
 		sections: { type: Array, required: true },
 		notification: { type: Object, default: null },
@@ -129,6 +129,9 @@ export default {
 			}
 		},
 	},
+	created() {
+		this.$parent.$on('clickawayKtNavbarMobileMenu', this.clickawayMobileMenu)
+	},
 	methods: {
 		objectClass(className) {
 			return {
@@ -142,9 +145,6 @@ export default {
 		toggleMobileMenu() {
 			this.mobileMenuToggle = !this.mobileMenuToggle
 		},
-	},
-	created() {
-		this.$parent.$on('clickawayKtNavbarMobileMenu', this.clickawayMobileMenu)
 	},
 }
 </script>

@@ -38,9 +38,9 @@ export default {
 
 <style>
 .content {
-	margin: 0 auto;
 	width: 100%;
 	max-width: 40rem;
+	margin: 0 auto;
 }
 .content img {
 	max-width: 100%;

@@ -1,14 +1,14 @@
 .banner {
 	display: flex;
-	border-radius: $border-radius;
+	flex-direction: column;
+	padding: $unit-2 $unit-4;
 	background: #fff;
 	border: 1px solid $lightgray-400;
-	padding: $unit-2 $unit-4;
-	flex-direction: column;
+	border-radius: $border-radius;
 
 	&.banner-grey {
-		border: 0;
 		background: $lightgray-300;
+		border: 0;
 	}
 
 	.collapse {
@@ -18,11 +18,11 @@
 	}
 
 	.glyph {
-		text-align: center;
 		flex: 0 0 auto;
-		line-height: 1;
-		width: 1.6rem;
 		align-self: center;
+		width: 1.6rem;
+		line-height: 1;
+		text-align: center;
 
 		img {
 			width: 100%;
@@ -32,10 +32,10 @@
 
 	.message {
 		flex: 1 1 100%;
+		align-self: center;
+		padding: 0 $unit-4;
 		font-weight: 600;
 		color: $darkgray-400;
-		padding: 0 $unit-4;
-		align-self: center;
 	}
 
 	.action {

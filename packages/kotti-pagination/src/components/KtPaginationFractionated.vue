@@ -12,7 +12,7 @@ export default {
 	computed: {
 		fractionRep() {
 			return [this.currentPage, this.maximumPage]
-				.map(page => page + 1)
+				.map((page) => page + 1)
 				.join(' / ')
 		},
 	},

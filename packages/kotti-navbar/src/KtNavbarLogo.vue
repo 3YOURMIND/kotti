@@ -3,8 +3,8 @@
 		<div v-if="isNarrow" :class="objectClass" @click="$emit('logoClick')">
 			<i
 				:class="iconClass"
-				v-text="iconText"
 				@click.stop="$KtNavbar.toggle()"
+				v-text="iconText"
 			/>
 		</div>
 		<div v-else :class="objectClass" @click="$emit('logoClick')">
@@ -16,8 +16,8 @@
 			<div v-else v-text="labelText" />
 			<i
 				:class="iconClass"
-				v-text="iconText"
 				@click.stop="$KtNavbar.toggle()"
+				v-text="iconText"
 			/>
 		</div>
 		<div class="navbar-logo--mobile">
@@ -36,20 +36,6 @@ export default {
 	name: 'KtNavbarLogo',
 	props: {
 		labelText: { type: String, default: null },
-	},
-	methods: {
-		handleToggleNarrowClicked() {
-			this.$emit('toggleNarrowBar')
-		},
-	},
-	inject: {
-		KtTheme: {
-			default: {
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				logoUrl: null,
-				logoHeight: '40px',
-			},
-		},
 	},
 	computed: {
 		backgroundStyle() {
@@ -83,6 +69,20 @@ export default {
 				logoHeight: this.KtTheme.logoHeight || '40px',
 				logoUrl: this.KtTheme.logoUrl,
 			}
+		},
+	},
+	methods: {
+		handleToggleNarrowClicked() {
+			this.$emit('toggleNarrowBar')
+		},
+	},
+	inject: {
+		KtTheme: {
+			default: {
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				logoUrl: null,
+				logoHeight: '40px',
+			},
 		},
 	},
 }

@@ -1,8 +1,8 @@
 <template>
 	<div class="kt-line">
 		<div class="kt-line__left" />
-		<div class="kt-line__middle" v-text="text" v-if="text"/>
-		<div class="kt-line__right" v-if="text" />
+		<div v-if="text" class="kt-line__middle" v-text="text" />
+		<div v-if="text" class="kt-line__right" />
 	</div>
 </template>
 

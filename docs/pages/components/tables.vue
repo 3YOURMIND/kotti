@@ -1128,7 +1128,6 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 import KtBanner from '../../../packages/kotti-banner'
 import KtAvatar from '../../../packages/kotti-avatar'
 import ShowCase from '../../components/ShowCase'
-import deepEql from 'deep-eql'
 
 export default {
 	name: 'Tables',

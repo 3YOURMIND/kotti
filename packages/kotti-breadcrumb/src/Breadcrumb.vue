@@ -6,7 +6,7 @@
 				:key="index"
 				:class="textClasses(breadcrumb)"
 			>
-				<span v-text="breadcrumb.title" @click="handleClick(breadcrumb)" />
+				<span @click="handleClick(breadcrumb)" v-text="breadcrumb.title" />
 				<span v-if="showSeparator(index)">
 					<i
 						v-if="separator.style === 'icon'"

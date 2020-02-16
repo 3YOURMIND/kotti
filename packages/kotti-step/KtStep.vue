@@ -2,16 +2,16 @@
 	<div class="kt-step">
 		<div class="kt-steps-left">
 			<span
+				v-if="!hideLine && !isLastStep"
 				:class="classSwitcher('kt-steps-left__line')"
 				:style="lineStyle"
-				v-if="!hideLine && !isLastStep"
 			/>
 			<div
 				:class="classSwitcher('kt-steps-left__indicator')"
 				:style="indicatorStyle"
 			>
 				<span v-text="index" />
-				<i class="yoco" v-if="!index" v-text="iconText" />
+				<i v-if="!index" class="yoco" v-text="iconText" />
 			</div>
 		</div>
 		<div class="kt-steps-right">
@@ -34,7 +34,7 @@ export default {
 		status: {
 			default: null,
 			type: String,
-			validator: value =>
+			validator: (value) =>
 				['error', 'finished', 'process', 'wait'].includes(value),
 		},
 		indexNumber: { type: Number, default: null },
@@ -52,15 +52,6 @@ export default {
 			index: null,
 			isLastStep: false,
 		}
-	},
-	created() {
-		this.currentStatus = this.status
-		this.index = this.indexNumber
-	},
-	watch: {
-		status(val) {
-			this.currentStatus = val
-		},
 	},
 	computed: {
 		iconText() {
@@ -98,11 +89,19 @@ export default {
 
 			if (this.currentStatus === 'process')
 				return {
-					background: `linear-gradient(${
-						this.KtTheme.brandColor
-					}, ${lightBrandColor},${this.KtTheme.brandColor})`,
+					background: `linear-gradient(${this.KtTheme.brandColor}, ${lightBrandColor},${this.KtTheme.brandColor})`,
 				}
+			return ''
 		},
+	},
+	watch: {
+		status(val) {
+			this.currentStatus = val
+		},
+	},
+	created() {
+		this.currentStatus = this.status
+		this.index = this.indexNumber
 	},
 	methods: {
 		classSwitcher(baseClass) {
@@ -135,16 +134,16 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: 24px;
 		width: 24px;
+		height: 24px;
 		background: #2c64cc;
 		border-radius: 100%;
 
 		span,
 		i {
+			font-size: 0.8rem;
 			font-weight: bolder;
 			color: #ffffff;
-			font-size: 0.8rem;
 		}
 
 		&--outline {
@@ -164,13 +163,13 @@ export default {
 	}
 
 	&__line {
-		z-index: 0;
 		position: absolute;
+		top: 0;
+		left: 10px;
+		z-index: 0;
 		display: block;
 		width: 4px;
 		height: 100%;
-		top: 0;
-		left: 10px;
 		background: #2c63cc;
 
 		&--outline {
@@ -188,15 +187,15 @@ export default {
 
 .kt-steps-right {
 	&__title {
-		font-weight: 600;
 		margin-left: 0.4rem;
+		font-weight: 600;
 	}
 
 	&__description {
-		font-size: 0.9em;
-		margin-left: 0.4rem;
-		color: #8a8a8a;
 		margin-bottom: 0.4rem;
+		margin-left: 0.4rem;
+		font-size: 0.9em;
+		color: #8a8a8a;
 	}
 }
 

@@ -80,6 +80,7 @@ You can use `fullWidth` to set the width of input to 100%.
 
 </template>
 <script>
+/* eslint-disable prettier/prettier */
 export default {
 	name: 'KtInputNumberDoc',
 	data() {

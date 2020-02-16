@@ -2,25 +2,25 @@
 	<div :class="divClass('comment-input')">
 		<div :class="warpperClass">
 			<KtAvatar
+				v-if="!isInline"
 				class="comment-input__avatar"
 				small
 				:src="userAvatar"
-				v-if="!isInline"
 			/>
 			<textarea
+				ref="textarea"
+				v-model="text"
 				class="comment-input__textarea"
+				:placeholder="placeholder"
 				@focus="textFocused = true"
 				@blur="textFocused = false"
 				@input="updateHeight"
-				v-model="text"
-				:placeholder="placeholder"
-				ref="textarea"
 			></textarea>
 			<KtButton
 				:style="{ opacity: text ? 1 : '0.24' }"
 				type="text"
-				v-text="replyButtonText"
 				@click="handleSubmitClick"
+				v-text="replyButtonText"
 			/>
 		</div>
 	</div>
@@ -38,9 +38,9 @@ export default {
 	},
 	props: {
 		isInline: { type: Boolean, default: false },
-		parentId: Number | String,
+		parentId: [Number, String],
 		placeholder: String,
-		replyToUserId: Number | String,
+		replyToUserId: [Number, String],
 		userAvatar: String,
 	},
 	data() {

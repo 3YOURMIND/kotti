@@ -41,19 +41,6 @@ export default {
 	provide() {
 		return { KtTheme: this.defaultTheme }
 	},
-	watch: {
-		isDarkThemeEnabled(value) {
-			const theme = value ? this.darkTheme : this.lightTheme
-			Object.entries(theme).forEach(([key, value]) => {
-				this.$set(this.defaultTheme, key, value)
-			})
-		},
-	},
-	methods: {
-		handleMenuClick(link) {
-			alert('Link Clicked')
-		},
-	},
 	data() {
 		return {
 			isDarkThemeEnabled: false,
@@ -194,6 +181,19 @@ export default {
 				},
 			],
 		}
+	},
+	watch: {
+		isDarkThemeEnabled(value) {
+			const theme = value ? this.darkTheme : this.lightTheme
+			Object.entries(theme).forEach(([key, value]) => {
+				this.$set(this.defaultTheme, key, value)
+			})
+		},
+	},
+	methods: {
+		handleMenuClick() {
+			alert('Link Clicked')
+		},
 	},
 }
 </script>

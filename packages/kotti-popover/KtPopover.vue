@@ -1,13 +1,13 @@
 <template>
 	<div
+		v-on-clickaway="handleClickaway"
 		class="kt-popover"
 		:class="{ showPopper }"
-		v-on-clickaway="handleClickaway"
 	>
 		<div ref="anchor" @click="handleClick">
 			<slot>Anchor</slot>
 		</div>
-		<div :class="popperClass" v-if="showPopper" ref="content">
+		<div v-if="showPopper" ref="content" :class="popperClass">
 			<slot name="content" :close="handleClickaway">
 				{{ content }}
 			</slot>
@@ -31,29 +31,23 @@ export default {
 			default: null,
 		},
 	},
-	mounted() {
-		if (!this.forceShowPopoverIsNull) {
-			this.showPopper = this.forceShowPopover
-		}
-	},
 	data() {
 		return {
 			showPopper: false,
 			popper: null,
 		}
 	},
-	ready() {
-		if (this.forceShowPopoverIsNull) {
-			this.$nextTick(() => {
-				if (this.showPopper) {
-					this.initPopper()
-				}
-			})
-		}
+	computed: {
+		popperClass() {
+			return this.size ? `kt-popper kt-popper--${this.size}` : `kt-popper`
+		},
+		forceShowPopoverIsNull() {
+			return this.forceShowPopover === null
+		},
 	},
 	watch: {
 		showPopper() {
-			if (!!this.showPopper) {
+			if (this.showPopper) {
 				this.$nextTick(() => {
 					this.initPopper()
 				})
@@ -65,16 +59,22 @@ export default {
 			}
 		},
 	},
+	mounted() {
+		if (!this.forceShowPopoverIsNull) {
+			this.showPopper = this.forceShowPopover
+		}
+	},
+	ready() {
+		if (this.forceShowPopoverIsNull) {
+			this.$nextTick(() => {
+				if (this.showPopper) {
+					this.initPopper()
+				}
+			})
+		}
+	},
 	destroyed() {
 		this.destroyPopper()
-	},
-	computed: {
-		popperClass() {
-			return this.size ? `kt-popper kt-popper--${this.size}` : `kt-popper`
-		},
-		forceShowPopoverIsNull() {
-			return this.forceShowPopover === null
-		},
 	},
 	methods: {
 		handleClick() {
@@ -128,19 +128,19 @@ export default {
 .kt-popover {
 	display: inline-block;
 	&-item {
-		margin: -$unit-1;
 		padding: $unit-4;
+		margin: -$unit-1;
 	}
 }
 
 // poper.js css
 .kt-popper {
+	z-index: $zindex-4;
+	width: auto;
 	padding: 0.8rem;
 	background: #fff;
 	border-radius: $border-radius;
 	box-shadow: $box-shadow;
-	z-index: $zindex-4;
-	width: auto;
 	&--sm {
 		width: 12rem;
 	}

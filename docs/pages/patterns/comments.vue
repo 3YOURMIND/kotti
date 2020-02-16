@@ -242,14 +242,14 @@ export default {
 	computed: {
 		replyName() {
 			const _comment = this.comments.find(
-				comment => comment.uuid === this.currentUuid,
+				(comment) => comment.uuid === this.currentUuid,
 			)
 			return _comment ? _comment.name : null
 		},
 	},
 	methods: {
-		dangerouslyOverrideParser: msg => escape(msg),
-		postEscapeParser: msg => msg.replace(/\n/g, '</br>'),
+		dangerouslyOverrideParser: (msg) => escape(msg),
+		postEscapeParser: (msg) => msg.replace(/\n/g, '</br>'),
 		handleEdit(payload) {
 			console.log(payload)
 		},
@@ -261,7 +261,7 @@ export default {
 				createdTime: new Date().toDateString(),
 				replies: [],
 			}
-			const parentComment = this.comments.find(comment => {
+			const parentComment = this.comments.find((comment) => {
 				return comment.id === payload.parentId
 			})
 			if (parentComment) {
@@ -273,13 +273,15 @@ export default {
 		handelDelete(payload) {
 			if (payload.parentId) {
 				let parentComment = this.comments.find(
-					comment => comment.id === payload.parentId,
+					(comment) => comment.id === payload.parentId,
 				)
 				parentComment.replies = parentComment.replies.filter(
-					reply => reply.id !== payload.id,
+					(reply) => reply.id !== payload.id,
 				)
 			}
-			this.comments = this.comments.filter(comment => comment.id !== payload.id)
+			this.comments = this.comments.filter(
+				(comment) => comment.id !== payload.id,
+			)
 		},
 	},
 }

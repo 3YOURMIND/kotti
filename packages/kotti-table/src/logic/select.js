@@ -18,7 +18,7 @@ export const mutations = {
 		}
 		updateAllSelected(state)
 	},
-	toggleAllSelection: debounce(store => {
+	toggleAllSelection: debounce((store) => {
 		const { state } = store
 		// refresh disabled rows status in case of external influence
 		store.commit('updateDisabledRows')
@@ -41,7 +41,7 @@ export const mutations = {
 	setSelectedIndices(store, indices) {
 		store.commit(
 			'setSelected',
-			indices.map(index => store.get('getRowByVisibleIndex', index)),
+			indices.map((index) => store.get('getRowByVisibleIndex', index)),
 		)
 	},
 
@@ -56,7 +56,7 @@ export const getters = {
 		return state.rows[index]
 	},
 	getIndexByRow(state, row) {
-		return state.rows.findIndex(r => r === row)
+		return state.rows.findIndex((r) => r === row)
 	},
 	getRowKey(state, row) {
 		return typeof state.rowKey === 'function'
@@ -64,14 +64,14 @@ export const getters = {
 			: row[state.rowKey]
 	},
 	isSelected(state, row) {
-		return state.selection.some(e => deepEql(e, row))
+		return state.selection.some((e) => deepEql(e, row))
 	},
 }
 
 export function toggleRowSelection(state, row, selected) {
 	let changed = false
 	const selection = state.selection
-	const index = selection.findIndex(selectedRow => deepEql(selectedRow, row))
+	const index = selection.findIndex((selectedRow) => deepEql(selectedRow, row))
 	if (typeof selected === 'undefined') {
 		if (index === -1) {
 			selection.push(row)
@@ -115,11 +115,11 @@ export function cleanSelection(store) {
 	const { rowKey, state } = store
 	const initialSelectionLength = state.selection.length
 	if (rowKey) {
-		const rowsSet = new Set(state.rows.map(r => r[rowKey]))
-		state.selection = state.selection.filter(s => rowsSet.has(s[rowKey]))
+		const rowsSet = new Set(state.rows.map((r) => r[rowKey]))
+		state.selection = state.selection.filter((s) => rowsSet.has(s[rowKey]))
 	} else {
-		state.selection = state.selection.filter(s =>
-			state.rows.some(r => deepEql(r, s)),
+		state.selection = state.selection.filter((s) =>
+			state.rows.some((r) => deepEql(r, s)),
 		)
 	}
 

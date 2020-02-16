@@ -26,6 +26,11 @@ import KtPopover from '../kotti-popover'
 
 export default {
 	name: 'KtDropdownButton',
+	components: {
+		KtButton,
+		KtButtonGroup,
+		KtPopover,
+	},
 	props: {
 		dropdownIcon: {
 			type: String,
@@ -40,11 +45,6 @@ export default {
 			default: null,
 		},
 	},
-	components: {
-		KtButton,
-		KtButtonGroup,
-		KtPopover,
-	},
 }
 </script>
 <style lang="scss">
@@ -54,28 +54,30 @@ export default {
 	display: inline-block;
 	margin: 0 $unit-1;
 	.button-group {
-		display: flex;
 		position: relative;
+		display: flex;
 		margin-right: 32px;
 	}
 	.kt-popper {
-		padding-left: $unit-1;
-		padding-right: $unit-1;
 		padding-top: $unit-1;
+		padding-right: $unit-1;
+		padding-right: 0;
 		padding-bottom: $unit-1;
+		padding-left: $unit-1;
+		padding-left: 0;
 	}
 }
 .kt-dropdown-button__button {
-	pointer-events: none;
 	position: relative;
 	z-index: 1;
+	pointer-events: none;
 }
 .kt-dropdown-button__icon {
-	border-left: 0 !important;
-	padding: 0 $unit-2;
 	position: absolute;
 	left: 0;
+	padding: 0 $unit-2;
 	padding-left: 100%;
+	border-left: 0 !important;
 	border-radius: 0.2em !important;
 	.yoco {
 		margin: 0;

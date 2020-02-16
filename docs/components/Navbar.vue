@@ -21,16 +21,15 @@
 	width: 100%;
 }
 li.nuxt-link-active {
+	font-weight: 600;
 	background: rgba(0, 0, 0, 0.2);
 	border-radius: 0.1rem;
-	font-weight: 600;
 }
 </style>
 
 <script>
 import KtNavbar from '../../packages/kotti-navbar'
 import LogoSvg from '~/assets/img/nav_logo.svg'
-import LogoIconSvg from '~/assets/img/nav_icon.svg'
 
 export default {
 	name: 'KtNavbarComponent',
@@ -53,27 +52,6 @@ export default {
 						link: 'https://3yourmind.github.io/yoco',
 					},
 				],
-			},
-		}
-	},
-	methods: {
-		redirectRouter(link) {
-			this.$router.push(link.path)
-		},
-		isCurrentPage(path) {
-			return path === '/'
-				? this.$route.path === '/'
-				: this.$route.path.includes(path)
-		},
-	},
-	provide() {
-		return {
-			KtTheme: {
-				navbarBackgroundColor: '#122C56',
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255, 1)',
-				logoUrl: LogoSvg,
-				logoHeight: '40px',
 			},
 		}
 	},
@@ -128,6 +106,27 @@ export default {
 				},
 			]
 		},
+	},
+	methods: {
+		redirectRouter(link) {
+			this.$router.push(link.path)
+		},
+		isCurrentPage(path) {
+			return path === '/'
+				? this.$route.path === '/'
+				: this.$route.path.includes(path)
+		},
+	},
+	provide() {
+		return {
+			KtTheme: {
+				navbarBackgroundColor: '#122C56',
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				navbarTextActiveColor: 'rgba(255,255,255, 1)',
+				logoUrl: LogoSvg,
+				logoHeight: '40px',
+			},
+		}
 	},
 }
 </script>

@@ -1,12 +1,12 @@
 .workspace {
-	flex: 1 1 100%;
-	background: #ffffff;
-	padding: $unit-6;
-	z-index: inherit;
 	position: relative;
-	min-height: 100vh;
+	z-index: inherit;
 	display: flex;
+	flex: 1 1 100%;
 	flex-direction: column;
+	min-height: 100vh;
+	padding: $unit-6;
+	background: #ffffff;
 	box-shadow: 1px 0 2px #ddd;
 	h3:not(:first-of-type) {
 		margin-top: $unit-8;
@@ -15,14 +15,14 @@
 
 @media (max-width: $size-lg) {
 	.workspace {
-		margin-right: 0;
 		width: 100%;
+		margin-right: 0;
 	}
 }
 
 @media (max-width: $size-md) {
 	.workspace {
-		margin-right: 0;
 		width: 100%;
+		margin-right: 0;
 	}
 }

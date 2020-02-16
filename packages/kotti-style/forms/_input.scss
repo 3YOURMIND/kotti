@@ -1,14 +1,14 @@
 // Form element: Input
 
 .form-input {
+	position: relative;
 	width: 100%;
 	height: $control-size;
+	padding: 0 $unit-2;
 	line-height: $line-height;
+	color: $darkgray-500;
 	border: 1px solid $lightgray-400;
 	border-radius: $border-radius;
-	color: $darkgray-500;
-	padding: 0 $unit-2;
-	position: relative;
 	outline: none;
 	-webkit-appearance: none;
 
@@ -30,14 +30,14 @@
 
 .dialog {
 	position: absolute;
-	padding: 0.4rem 0.8rem;
+	z-index: $zindex-4;
 	max-width: 20rem;
+	padding: 0.4rem 0.8rem;
+	margin-top: 0.2rem;
+	font-size: 0.85em;
+	background: #fff;
 	border-radius: 2px;
 	box-shadow: 0 0 0.2rem rgba($color: #000000, $alpha: 0.26);
-	background: #fff;
-	z-index: $zindex-4;
-	font-size: 0.85em;
-	margin-top: 0.2rem;
 	&--right {
 		right: 0;
 	}
@@ -47,21 +47,21 @@
 }
 
 .inline-edit {
+	position: relative;
 	display: flex;
 	flex-direction: column;
-	position: relative;
 	&__edit-buttons {
 		position: absolute;
-		z-index: $zindex-4;
-		bottom: -32px;
 		right: 0;
+		bottom: -32px;
+		z-index: $zindex-4;
 	}
 }
 
 .form-input--compact {
 	height: $control-size-lg;
-	line-height: 0.8rem;
 	padding-top: 0.6rem;
+	line-height: 0.8rem;
 	&::placeholder {
 		color: transparent;
 	}
@@ -80,22 +80,22 @@ textarea.form-input {
 	display: flex;
 
 	.input-group-addon {
+		padding: 0 $control-padding-x;
+		font-size: $font-size-sm;
+		line-height: 1.5rem;
+		white-space: nowrap;
 		background: $lightgray-300;
 		border: $border-width solid #dbdbdb;
 		border-radius: $border-radius;
-		line-height: 1.5rem;
-		font-size: $font-size-sm;
-		padding: 0 $control-padding-x;
-		white-space: nowrap;
 
 		&.addon-sm {
-			font-size: $font-size-sm;
 			padding: $control-padding-y-sm $control-padding-x-sm;
+			font-size: $font-size-sm;
 		}
 
 		&.addon-lg {
-			font-size: $font-size-lg;
 			padding: $control-padding-y-lg $control-padding-x-lg;
+			font-size: $font-size-lg;
 		}
 	}
 
@@ -114,19 +114,19 @@ textarea.form-input {
 	.input-group-addon,
 	.input-group-btn {
 		&:first-child:not(:last-child) {
-			border-bottom-right-radius: 0;
 			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
 		}
 
 		&:not(:first-child):not(:last-child) {
-			border-radius: 0;
 			margin-left: -$border-width;
+			border-radius: 0;
 		}
 
 		&:last-child:not(:first-child) {
-			border-bottom-left-radius: 0;
-			border-top-left-radius: 0;
 			margin-left: -$border-width;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
 		}
 
 		&:focus {

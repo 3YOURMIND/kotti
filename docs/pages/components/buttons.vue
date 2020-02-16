@@ -182,14 +182,6 @@ export default {
 	components: {
 		ShowCase,
 	},
-	computed: {
-		buttonUsage() {
-			return ButtonUsage
-		},
-	},
-	provide() {
-		return { KtTheme: this.themeProvider }
-	},
 	data() {
 		return {
 			isThemeChange: true,
@@ -206,6 +198,14 @@ export default {
 				dangerColor: '#d91919',
 			},
 		}
+	},
+	computed: {
+		buttonUsage() {
+			return ButtonUsage
+		},
+	},
+	provide() {
+		return { KtTheme: this.themeProvider }
 	},
 	watch: {
 		isThemeChange(value) {

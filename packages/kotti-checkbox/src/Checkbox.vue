@@ -1,8 +1,8 @@
 <template>
 	<label class="form-checkbox">
 		<input
-			class="form-checkbox__input"
 			v-model="model"
+			class="form-checkbox__input"
 			type="checkbox"
 			v-bind="$attrs"
 			:required="required"

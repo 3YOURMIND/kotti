@@ -18,9 +18,9 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-	padding: 2rem 0;
-	margin: 0 auto;
 	width: 100%;
 	max-width: 40rem;
+	padding: 2rem 0;
+	margin: 0 auto;
 }
 </style>

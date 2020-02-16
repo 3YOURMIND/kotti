@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 img[alt='npm-version'] {
-	width: 120px;
 	display: block;
+	width: 120px;
 }
 </style>

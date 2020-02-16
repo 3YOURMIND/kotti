@@ -29,8 +29,8 @@ export default {
 	font-size: 0;
 
 	.kt-button {
-		border-radius: 0;
 		font-size: $font-size;
+		border-radius: 0;
 	}
 
 	.kt-button:first-of-type {

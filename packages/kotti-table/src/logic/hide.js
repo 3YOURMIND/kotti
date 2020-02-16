@@ -18,7 +18,7 @@ export const mutations = {
 		store.emit('hiddenChange', state.hiddenColumns)
 	},
 	showAll(store) {
-		store.state._columnsArray.forEach(column => (column.hidden = false))
+		store.state._columnsArray.forEach((column) => (column.hidden = false))
 		store.state.hiddenColumns = []
 
 		store.commit('updateColumns')

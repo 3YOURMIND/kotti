@@ -112,7 +112,7 @@ function createColumn(column = {}) {
 
 	column.sortOrder = column.sortOrder || SORT_NONE
 	column.sortOrders = column.sortOrders || [SORT_ASC, SORT_DSC, SORT_NONE]
-	column.formatter = column.formatter || (value => value)
+	column.formatter = column.formatter || ((value) => value)
 
 	column.id = columnId
 	column.type = COLUMN_TYPE

@@ -27,6 +27,16 @@ export default {
 	data() {
 		return { queue: [] }
 	},
+	created() {
+		let notification
+		while ((notification = this.$yodifyBuffer.pop()))
+			this.addNotification(notification)
+
+		this.$root.$on('vue-yodify', this.addNotification)
+	},
+	beforeDestroy() {
+		this.$root.$off('vue-yodify', this.addNotification)
+	},
 	methods: {
 		addNotification({ id = generateId(), text, type, duration = 3000 }) {
 			this.queue.push({ id, text, type })
@@ -45,45 +55,34 @@ export default {
 			return 'circle_check'
 		},
 	},
-	created() {
-		let notification
-		while ((notification = this.$yodifyBuffer.pop()))
-			this.addNotification(notification)
-
-		this.$root.$on('vue-yodify', this.addNotification)
-	},
-	beforeDestroy() {
-		this.$root.$off('vue-yodify', this.addNotification)
-	},
 }
 </script>
 
 <style lang="scss" scoped>
 .vue-yodify {
-	z-index: 9999;
 	position: fixed;
 	top: 0;
 	right: 0.8rem;
+	z-index: 9999;
 }
 
 .vue-yodify__notification {
-	background-color: white;
-	display: flex;
-	overflow: hidden;
-	margin: 1.2rem 0;
-	width: 448px;
-	border-radius: 0.2rem;
-	box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.24);
 	display: flex;
 	justify-content: space-between;
+	width: 448px;
+	margin: 1.2rem 0;
+	overflow: hidden;
+	background-color: white;
+	border-radius: 0.2rem;
+	box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.24);
 }
 
 .vue-yodify__icon,
 .vue-yodify__close {
 	display: flex;
+	flex: 0 0 2rem;
 	align-items: center;
 	justify-content: center;
-	flex: 0 0 2rem;
 	min-height: 2rem;
 }
 .vue-yodify__icon {
@@ -105,8 +104,8 @@ export default {
 	display: flex;
 	flex: 1;
 	align-items: center;
-	min-height: 1.2rem;
 	height: 100%;
+	min-height: 1.2rem;
 	padding: 0.4rem;
 }
 .vue-yodify__close {
@@ -123,8 +122,8 @@ export default {
 // reset some commonly overwritten styles
 .vue-yodify,
 .vue-yodify * {
-	line-height: initial;
 	box-sizing: initial;
+	line-height: initial;
 }
 
 // support for mobile device
@@ -134,8 +133,8 @@ export default {
 		margin: 2%;
 	}
 	.vue-yodify {
-		width: 100%;
 		right: 0;
+		width: 100%;
 	}
 }
 </style>

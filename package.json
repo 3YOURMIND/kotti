@@ -1,15 +1,8 @@
 {
 	"author": "3YOURMIND GmbH",
-	"babel": {
-		"presets": [
-			"@vue/app"
-		]
-	},
 	"browserslist": [
-		"> 1%",
-		"last 2 versions",
-		"ie 11",
-		"not ie <= 8"
+		"defaults",
+		"IE 11"
 	],
 	"contributors": [
 		{
@@ -41,80 +34,104 @@
 			"email": "melvinvangent@gmail.com",
 			"name": "Melvin van Gent",
 			"url": "https://github.com/mvangent"
+		},
+		{
+			"email": "nhirschfeld@gmail.com",
+			"name": "Na'aman Hirschfeld",
+			"url": "https://github.com/Goldziher"
 		}
 	],
 	"dependencies": {
-		"@3yourmind/yoco": "~1.1.0",
-		"@popperjs/core": "^2.0.6",
-		"color": "~3.1.0",
-		"dayjs": "~1.8.8",
+		"@3yourmind/yoco": "^1.3.1",
+		"@popperjs/core": "^2.0.5",
+		"color": "^3.1.2",
+		"dayjs": "^1.8.20",
 		"deep-eql": "^4.0.0",
-		"eslint": "^6.8.0",
-		"eslint-plugin-prettier": "^3.1.2",
-		"eslint-plugin-vue": "^6.1.2",
+		"normalize.css": "^8.0.1",
 		"vue-clickaway": "^2.2.2"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
-		"@nuxtjs/axios": "^5.4.0",
-		"@nuxtjs/markdownit": "^1.2.0",
+		"@babel/core": "^7.8.4",
+		"@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
+		"@babel/plugin-proposal-optional-chaining": "^7.8.3",
+		"@nuxtjs/axios": "^5.9.5",
+		"@nuxtjs/markdownit": "^1.2.7",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
-		"@nuxtjs/style-resources": "^0.1.2",
-		"@vue/cli-plugin-babel": "^3.4.1",
-		"@vue/cli-plugin-eslint": "^3.4.1",
-		"@vue/cli-service": "^3.4.1",
-		"@vue/eslint-config-prettier": "^6.0.0",
-		"cross-env": "^5.2.0",
-		"husky": "^1.2.0",
-		"lint-staged": "^8.1.5",
-		"node-sass": "^4.10.0",
-		"nuxt": "^2.4.5",
+		"@nuxtjs/style-resources": "^1.0.0",
+		"@vue/cli-plugin-babel": "^4.2.2",
+		"@vue/cli-service": "^4.2.2",
+		"babel-eslint": "^10.0.3",
+		"core-js": "^3.6.4",
+		"cross-env": "^7.0.0",
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.10.0",
+		"eslint-plugin-import": "^2.20.1",
+		"eslint-plugin-prettier": "^3.1.2",
+		"eslint-plugin-sonarjs": "^0.5.0",
+		"eslint-plugin-vue": "^6.1.2",
+		"husky": "^4.2.1",
+		"lint-staged": "^10.0.7",
+		"node-sass": "^4.13.1",
+		"nuxt": "^2.11.0",
+		"path": "^0.12.7",
+		"postcss-bem-linter": "^3.3.0",
+		"postcss-flexbugs-fixes": "^4.2.0",
+		"postcss-loader": "^3.0.0",
+		"postcss-normalize": "^8.0.1",
+		"postcss-preset-env": "^6.7.0",
 		"prettier": "^1.19.1",
-		"sass-loader": "^7.1.0",
-		"vue": "^2.6.8",
-		"vue-clipboard2": "^0.3.0",
-		"vue-loader": "^15.7.0",
-		"vue-template-compiler": "^2.6.8"
-	},
-	"eslintConfig": {
-		"extends": [
-			"plugin:vue/essential",
-			"@vue/prettier/recommended"
-		],
-		"root": true,
-		"rules": {
-			"no-debugger": 0
-		}
+		"sass-loader": "^8.0.2",
+		"style-resources-loader": "^1.3.3",
+		"stylelint": "^13.1.0",
+		"stylelint-config-prettier": "^8.0.1",
+		"stylelint-config-recess-order": "^2.0.3",
+		"stylelint-config-recommended-scss": "^4.2.0",
+		"stylelint-csstree-validator": "^1.8.0",
+		"stylelint-prettier": "^1.1.2",
+		"stylelint-scss": "^3.14.2",
+		"stylelint-selector-no-empty": "^1.0.7",
+		"vue": "^2.6.11",
+		"vue-clipboard2": "^0.3.1",
+		"vue-eslint-parser": "^7.0.0",
+		"vue-loader": "^15.8.3",
+		"vue-template-compiler": "^2.6.11"
 	},
 	"files": [
 		"dist",
 		"packages/kotti-style/_variables.scss"
 	],
 	"license": "MIT",
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
 	"lint-staged": {
-		"*.{js,json,css,scss,md,vue}": [
-			"prettier --write",
-			"git add"
+		"*.{json,md}": [
+			"prettier --write"
+		],
+		"*.{css,scss,vue}": [
+			"stylelint --fix"
+		],
+		"*.{js,jsx,vue,ts,tsx}": [
+			"eslint --fix"
 		]
 	},
 	"main": "dist/KottiUI.umd.js",
 	"name": "@3yourmind/kotti-ui",
-	"prettier": {
-		"proseWrap": "always",
-		"semi": false,
-		"singleQuote": true,
-		"tabWidth": 2,
-		"trailingComma": "all",
-		"useTabs": true
-	},
 	"scripts": {
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
 		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"deploy:docs": "./github-deploy.sh",
 		"dev:docs": "nuxt",
-		"precommit": "lint-staged",
+		"lint:script": "eslint --fix --ignore-path .gitignore '**/*.{js,vue}'",
+		"lint:style": "stylelint --fix **/*.{css,scss,vue}",
+		"check:script": "eslint --ignore-path .gitignore '**/*.{js,vue}'",
+		"check:style": "stylelint **/*.{css,scss,vue}",
+		"format:docs": "prettier --write **/*.md",
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.7.25"
+	"version": "1.8.0"
 }

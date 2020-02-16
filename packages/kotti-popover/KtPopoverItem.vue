@@ -19,18 +19,18 @@ export default {
 <style lang="scss">
 .kt-popover-item {
 	display: flex;
-	line-height: 20px;
 	padding: $unit-2;
 	margin: $unit-h;
+	line-height: 20px;
 	&:hover {
+		cursor: pointer;
 		background: $lightgray-300;
 		border-radius: $border-radius;
-		cursor: pointer;
 	}
 	.yoco {
 		align-self: center;
-		font-size: 20px;
 		padding-right: $unit-1;
+		font-size: 20px;
 	}
 }
 </style>

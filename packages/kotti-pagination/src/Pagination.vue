@@ -63,6 +63,7 @@ export default {
 			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
 			if (!isFlexLogical || this.pageAmount < 2) return 'KtPaginationExpanded'
 			if (this.fractionStyle) {
+				// eslint-disable-next-line no-console
 				console.warn(
 					"<KtPagination> : fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
 				)

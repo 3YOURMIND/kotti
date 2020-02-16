@@ -74,5 +74,5 @@ function byOrder(a, b) {
 }
 
 export function getOrderedColumns(state) {
-	state._columnsArray.map(col => pick(col, ['prop', 'order']))
+	return state._columnsArray.map((col) => pick(col, ['prop', 'order']))
 }

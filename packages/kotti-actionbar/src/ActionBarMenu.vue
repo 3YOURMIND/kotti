@@ -1,14 +1,14 @@
 <template>
 	<div class="actionbar-nav">
 		<router-link
-			v-for="(item,index) in menu"
+			v-for="(item, index) in menu"
+			:key="index"
 			tag="li"
 			:to="item.to"
-			:key="index"
 			:class="navItemClass(item)"
 		>
-			<i :class="navItemIconClass" v-text="item.icon"/>
-			<span class="actionbar-nav__item__label" v-text="item.label"/>
+			<i :class="navItemIconClass" v-text="item.icon" />
+			<span class="actionbar-nav__item__label" v-text="item.label" />
 		</router-link>
 	</div>
 </template>

@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 /**
  * @description generates a random id
  * @param {Number} ID_BITS id entropy in bits, defaults to 64 (4 words)

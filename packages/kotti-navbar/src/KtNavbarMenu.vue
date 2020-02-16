@@ -3,9 +3,9 @@
 		<div v-for="(item, index) in sections" :key="index">
 			<div
 				v-if="item.title"
-				v-text="isNarrow ? '' : item.title"
 				:style="{ color: themeColor.textColor }"
 				class="navbar-menu__section"
+				v-text="isNarrow ? '' : item.title"
 			/>
 			<a
 				v-for="(link, index) in item.links"
@@ -20,8 +20,8 @@
 					<i class="yoco" v-text="link.icon" />
 					<span
 						v-if="!isNarrow"
-						v-text="link.title"
 						:data-test="`navbar:menu:element:${link.title.toLowerCase()}`"
+						v-text="link.title"
 					/>
 				</div>
 			</a>

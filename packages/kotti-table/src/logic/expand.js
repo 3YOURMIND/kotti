@@ -16,13 +16,13 @@ export const mutations = {
 
 export const getters = {
 	isExpanded(state, row) {
-		return state.expanded.some(e => deepEql(e, row))
+		return state.expanded.some((e) => deepEql(e, row))
 	},
 }
 
 function toggleRowExpansion(state, row) {
 	const expanded = state.expanded
-	const index = expanded.findIndex(elem => deepEql(elem, row))
+	const index = expanded.findIndex((elem) => deepEql(elem, row))
 	const shouldExpand = index === -1 //if the row is not already included in state.expanded
 
 	if (state.expandMultiple) {
