@@ -77,6 +77,27 @@ In order to use the table, you need give `rows` and `columns` data to `KtTable` 
 
 </ShowCase>
 
+## Lot of columns 
+
+Some table with a lot of columns will need to handle that overflow.
+We have two way of making the columns fits: `isScrollable` props that will make the whole table 
+horizontally scrollable.
+
+The other method is using the `kt-table--auto-layout` class that will use auto layout and will
+break words inside every cell so it fits. 
+
+Usually, we recommend using `isScrollable` that looks better in most cases.
+
+<KtTable :rows="rows" :columns="columnsLong" isScrollable />
+<KtTable :rows="rows" :columns="columnsLong" class="kt-table--auto-layout"/>
+
+``` html 
+<!-- using isScollable prop -->
+<KtTable :rows="rows" :columns="columnsLong" isScrollable />
+<!-- using kt-table--auto-layout class -->
+<KtTable :rows="rows" :columns="columnsLong" class="kt-table--auto-layout"/>
+
+```
 
 ## Declarative form
 
@@ -1157,6 +1178,17 @@ export default {
 				{ prop: 'date', label: 'Date', responsive: 'hide-md' },
 				{ prop: 'address.line', label: 'Address' },
 			],
+			columnsLong: [
+				{ prop: 'name', label: 'Name' },
+				{ prop: 'date', label: 'Date' },
+				{ prop: 'address.line', label: 'Address' },
+				{ prop: 'address.number', label: 'Address' },
+				{ prop: 'createdAt', label: 'Created at' },
+				{ prop: 'updatedAt', label: 'Updated at' },
+				{ prop: 'contact', label: 'Contact' },
+				{ prop: 'complementary', label: 'Complementary' },
+				{ prop: 'complementary2', label: 'Complementary 2' },
+			],
 			columnsWidth: [
 				{ prop: 'name', label: 'Name', width: '30%' },
 				{ prop: 'date', label: 'Date', width: '20%' },
@@ -1175,21 +1207,45 @@ export default {
 					date: '2016-05-03',
 					name: 'Tom',
 					address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
+					status: 'Ordered',
+					createdAt: '10/20/2018',
+					updatedAt: '12/23/2019',
+					contact: 'John Smith',
+					complementary: 'Hire on 10/06/2017, contract signed on 12/06/2017',
+					complementary2: 'Hire on 10/06/2017, contract signed on 12/06/2017',
 				},
 				{
 					date: '2016-05-02',
 					name: 'Jackson',
 					address: { number: 89, line: 'No. 89, Grove St, Los Angeles' },
+					status: 'Ordered',
+					createdAt: '10/20/2018',
+					updatedAt: '12/23/2019',
+					contact: 'John Smith',
+					complementary: 'Hire on 10/06/2017, contract signed on 12/06/2017',
+					complementary2: 'Hire on 10/06/2017, contract signed on 12/06/2017',
 				},
 				{
 					date: '2016-05-04',
 					name: 'Fen',
 					address: { number: 182, line: 'No. 182, Grove St, Los Angeles' },
+					status: 'Ordered',
+					createdAt: '10/20/2018',
+					updatedAt: '12/23/2019',
+					contact: 'John Smith',
+					complementary: 'Hire on 10/06/2017, contract signed on 12/06/2017',
+					complementary2: 'Hire on 10/06/2017, contract signed on 12/06/2017',
 				},
 				{
 					date: '2016-05-01',
 					name: 'Fexiang',
 					address: { number: 189, line: 'No. 189, Grove St, Los Angeles' },
+					status: 'Ordered',
+					createdAt: '10/20/2018',
+					updatedAt: '12/23/2019',
+					contact: 'John Smith',
+					complementary: 'Hire on 10/06/2017, contract signed on 12/06/2017',
+					complementary2: 'Hire on 10/06/2017, contract signed on 12/06/2017',
 				},
 			],
 			disableName: 'F',

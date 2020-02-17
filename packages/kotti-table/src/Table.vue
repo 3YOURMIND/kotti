@@ -343,6 +343,12 @@ export default {
 	hyphens: auto;
 	table-layout: auto;
 	border-collapse: collapse;
+	&--auto-layout {
+		table-layout: auto;
+		.kt-table__cell {
+			word-break: break-all;
+		}
+	}
 
 	th {
 		padding: $unit-2 $unit-1;
