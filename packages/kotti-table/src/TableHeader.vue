@@ -168,6 +168,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '../../kotti-style/_variables.scss';
+
 .table-header-row {
 	background-color: $lightgray-300;
 }

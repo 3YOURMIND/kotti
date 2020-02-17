@@ -58,6 +58,7 @@ export default {
 
 <style lang="scss">
 @import '../../kotti-style/mixins/index.scss';
+@import '../../kotti-style/_variables.scss';
 .form-group--list-options .form-radio {
 	display: block;
 }

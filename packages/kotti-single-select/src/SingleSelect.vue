@@ -280,6 +280,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../kotti-style/mixins/index.scss';
+@import '../../kotti-style/_variables.scss';
 .form-select {
 	width: 100%;
 	height: $control-size;
