@@ -158,6 +158,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '../../kotti-style/_variables.scss';
 .kt-input-number__input {
 	width: auto;
 	max-width: 100%;

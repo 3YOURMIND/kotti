@@ -21,6 +21,7 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
 .button-group {
 	/** Fix for inline element space
 	https://css-tricks.com/fighting-the-space-between-inline-block-elements/ **/
