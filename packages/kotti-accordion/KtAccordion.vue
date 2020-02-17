@@ -81,7 +81,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '../../kotti-style/_variables.scss';
+@import '../kotti-style/_variables.scss';
 .accordion {
 	margin-bottom: $unit-4;
 	border-bottom: none;
