@@ -335,7 +335,123 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss">
+.kt-table {
+	position: relative;
+	width: 100%;
+	margin: 0.8rem 0;
+	hyphens: auto;
+	table-layout: auto;
+	border-collapse: collapse;
+
+	th {
+		padding: $unit-2 $unit-1;
+		font-size: $font-size-sm;
+		line-height: 1em;
+		color: $lightgray-500;
+		text-align: inherit;
+		text-transform: uppercase;
+		border-bottom: $border-width solid $border-color;
+	}
+
+	tr {
+		position: relative;
+		margin: 0;
+
+		&:hover .table-actions {
+			display: inline-flex;
+			justify-content: center;
+			background: #ffffff;
+		}
+
+		&.selected,
+		&:focus {
+			background: $lightgray-300;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	td {
+		position: relative;
+		padding: $unit-2 $unit-1;
+		line-height: 1.2rem;
+		border-bottom: 1px solid #dbdbdb;
+
+		&.empty {
+			color: $lightgray-500;
+			text-align: center;
+		}
+	}
+
+	i {
+		margin: 0 0.2rem;
+		font-size: 1rem !important;
+		color: $darkgray-300;
+
+		&.disabled {
+			color: $lightgray-500;
+		}
+	}
+
+	.table-actions {
+		position: absolute;
+		top: 50%;
+		right: 0.8rem;
+		z-index: $zindex-4;
+		display: none;
+		float: right;
+		width: auto;
+		padding: 0.25rem;
+		margin-top: -0.8rem;
+		font-size: 0.8rem;
+		line-height: 0.8rem;
+		border: 0;
+		border-radius: $border-radius;
+		box-shadow: 0 0 1px #999;
+
+		i {
+			margin: 0 $unit-1;
+			color: $lightgray-500;
+
+			&:hover {
+				color: $darkgray-500;
+				cursor: pointer;
+			}
+		}
+	}
+
+	.form-group {
+		width: 32px;
+		line-height: 0;
+
+		.form-icon {
+			top: 0.2rem;
+		}
+	}
+
+	.form-checkbox {
+		padding: 0 0.4rem;
+		margin: 0;
+		line-height: 1.2rem;
+	}
+
+	&.no-header {
+		margin-top: -0.5em;
+	}
+}
+
+.x-scroll {
+	display: block;
+	width: 100%;
+	height: 100%;
+	height: auto;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
 .kt-table >>> .kt-table__no-row {
 	color: #8f8f8f;
 	text-align: center;
@@ -354,10 +470,6 @@ export default {
 	cursor: not-allowed;
 	background-color: #f8f8f8;
 	opacity: 0.6;
-}
-
-.x-scroll {
-	height: auto;
 }
 
 .hidden-columns {
