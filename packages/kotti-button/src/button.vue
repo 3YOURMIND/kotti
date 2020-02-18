@@ -58,9 +58,11 @@ export default {
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
 
-$default-button-height: $unit-8;
-$large-button-height: $unit-9;
-$small-button-height: $unit-6;
+:root {
+	--default-button-height: var(--unit-8);
+	--large-button-height: var(--unit-9);
+	--small-button-height: var(--unit-6);
+}
 
 // Base style
 .kt-button {
@@ -69,8 +71,8 @@ $small-button-height: $unit-6;
 	justify-content: center;
 	text-align: center;
 
-	height: $default-button-height;
-	padding: 0 $unit-4;
+	height: var(--default-button-height);
+	padding: 0 var(--unit-4);
 
 	font-weight: 600;
 	user-select: none;
@@ -91,11 +93,11 @@ $small-button-height: $unit-6;
 
 // Size modifiers
 .kt-button.sm {
-	height: $small-button-height;
+	height: var(--small-button-height);
 }
 
 .kt-button.lg {
-	height: $large-button-height;
+	height: var(--large-button-height);
 }
 
 // Color modifier
@@ -182,6 +184,6 @@ $small-button-height: $unit-6;
 
 .kt-button.bottom {
 	min-width: 10rem;
-	margin-top: $unit-8;
+	margin-top: var(--unit-8);
 }
 </style>
