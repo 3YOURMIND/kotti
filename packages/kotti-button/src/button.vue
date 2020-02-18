@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import color from 'color'
-
 export default {
 	name: 'KtButton',
 	props: {
@@ -57,11 +55,13 @@ export default {
 </script>
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
-
 :root {
 	--default-button-height: var(--unit-8);
 	--large-button-height: var(--unit-9);
 	--small-button-height: var(--unit-6);
+	--button-main-color: var(--interactive-01);
+	--button-main-color-dark: var(--interactive-01-hover);
+	--button-main-color-light: var(--interactive-02-hover);
 }
 
 // Base style
@@ -103,24 +103,24 @@ export default {
 // Color modifier
 .kt-button {
 	background-color: var(--interactive-02);
-	color: var(--interactive-01-hover);
+	color: var(--button-main-color-dark);
 	border-color: var(--ui-02);
 	&:hover {
-		background-color: var(--interactive-02-hover);
-		border-color: var(--interactive-02-hover);
+		background-color: var(--button-main-color-light);
+		border-color: var(--button-main-color-light);
 	}
 	.kt-circle-loading {
-		border-left-color: var(--interactive-01-hover);
-		border-bottom-color: var(--interactive-01-hover);
+		border-left-color: var(--button-main-color-dark);
+		border-bottom-color: var(--button-main-color-dark);
 	}
 }
 
 .kt-button.primary {
-	background-color: var(--interactive-01);
+	background-color: var(--button-main-color);
 	color: var(--text-04);
-	border-color: var(--interactive-01-hover);
+	border-color: var(--button-main-color-dark);
 	&:hover {
-		background-color: var(--interactive-01-hover);
+		background-color: var(--button-main-color-dark);
 	}
 	.kt-circle-loading {
 		border-left-color: var(--text-04);
@@ -130,10 +130,10 @@ export default {
 
 .kt-button.secondary {
 	background-color: var(--interactive-02);
-	color: var(--interactive-01-hover);
-	border: 1px solid var(--interactive-01-hover);
+	color: var(--button-main-color-dark);
+	border: 1px solid var(--button-main-color-dark);
 	&:hover {
-		background-color: var(--interactive-02-hover);
+		background-color: var(--button-main-color-light);
 	}
 }
 
@@ -141,7 +141,7 @@ export default {
 	background: transparent;
 	border-color: transparent;
 	&:hover {
-		background-color: var(--interactive-02-hover);
+		background-color: var(--button-main-color-light);
 	}
 }
 
