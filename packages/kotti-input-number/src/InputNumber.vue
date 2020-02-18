@@ -7,6 +7,7 @@
 			type="number"
 			:min="min"
 			:max="max"
+			:step="step"
 			:class="inputStyle"
 			:disabled="disabled"
 			:value="currentValue"
@@ -54,6 +55,10 @@ export default {
 		fullWidth: {
 			type: Boolean,
 			default: false,
+		},
+		pattern: {
+			type: String,
+			required: false,
 		},
 	},
 	data() {
@@ -113,6 +118,9 @@ export default {
 				'yoco--disabled': this.incrementDisabled || this.disabled,
 			}
 		},
+		isFloat() {
+			return this.step % 1 !== 0
+		},
 		yocoClassDecrement() {
 			return {
 				yoco: true,
@@ -122,6 +130,10 @@ export default {
 	},
 	watch: {
 		currentValue(newVal) {
+			if (typeof newVal === 'number' && newVal % 1 !== 0) {
+				const fixedVal = newVal.toFixed(3)
+				this.currentValue = parseFloat(fixedVal)
+			}
 			if (!this.formError) {
 				this.$emit('input', newVal)
 			}
