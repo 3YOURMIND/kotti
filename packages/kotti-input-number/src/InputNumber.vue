@@ -27,17 +27,38 @@
 export default {
 	name: 'KtInputNumber',
 	props: {
-		max: { type: Number, default: null },
-		min: { type: Number, default: null },
-		value: { type: Number, default: null },
-		step: { type: Number, default: 1 },
-		disabled: { type: Boolean, default: false },
-		showMaxNumber: { type: Boolean, default: false },
-		fullWidth: { type: Boolean, default: false },
+		max: {
+			type: Number,
+			default: null,
+		},
+		min: {
+			type: Number,
+			default: null,
+		},
+		value: {
+			type: [Number, null],
+			default: 0,
+		},
+		step: {
+			type: Number,
+			default: 1,
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		showMaxNumber: {
+			type: Boolean,
+			default: false,
+		},
+		fullWidth: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
-			currentValue: null,
+			currentValue: this.value ?? 0,
 			incrementDisabled: false,
 			decrementDisabled: false,
 		}
@@ -51,13 +72,19 @@ export default {
 			}
 		},
 		formError() {
-			if (this.max !== null && this.currentValue > this.max) return true
-			if (this.min !== null && this.currentValue < this.min) return true
 			if (
 				Number.isNaN(this.currentValue) ||
 				typeof this.currentValue !== 'number'
-			)
+			) {
 				return true
+			}
+			if (typeof this.max === 'number' && this.currentValue > this.max) {
+				return true
+			}
+			if (typeof this.min === 'number' && this.currentValue < this.min) {
+				return true
+			}
+
 			return false
 		},
 		inputStyle() {
@@ -94,9 +121,6 @@ export default {
 		},
 	},
 	watch: {
-		value(val) {
-			this.currentValue = this.handleInput(val)
-		},
 		currentValue(newVal) {
 			if (!this.formError) {
 				this.$emit('input', newVal)
@@ -121,16 +145,16 @@ export default {
 				this.incrementDisabled = newVal
 				this.decrementDisabled = newVal
 			} else if (!newVal && oldVal) {
-				this.incrementDisabled = this.currentValue + this.step > this.max
-				this.decrementDisabled = this.currentValue - this.step < this.min
+				if (typeof this.min === 'number') {
+					this.decrementDisabled = this.currentValue - this.step < this.min
+				}
+				if (typeof this.max === 'number') {
+					this.incrementDisabled = this.currentValue + this.step > this.max
+				}
 			}
 		},
 	},
 	created() {
-		this.currentValue =
-			typeof this.value === 'number' && !Number.isNaN(this.value)
-				? this.value
-				: 0
 		if (this.disabled) {
 			this.incrementDisabled = true
 			this.decrementDisabled = true
@@ -152,7 +176,9 @@ export default {
 			this.currentValue =
 				typeof value === 'number' && !Number.isNaN(value)
 					? value
-					: parseFloat(value)
+					: !Number.isNaN(Number(value))
+					? Number(value)
+					: 0
 		},
 	},
 }
