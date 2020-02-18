@@ -82,7 +82,7 @@ export default {
 </script>
 <style lang="scss">
 .accordion {
-	margin-bottom: $unit-4;
+	margin-bottom: var(--unit-4);
 	border-bottom: none;
 	border-radius: 2px;
 }
@@ -90,8 +90,8 @@ export default {
 .accordion__header {
 	display: flex;
 	justify-content: space-between;
-	padding: $unit-2 $unit-8;
-	border: 1px solid $lightgray-400;
+	padding: var(--unit-2) var(--unit-8);
+	border: 1px solid var(--ui-02);
 }
 .accordion__header--clickable {
 	cursor: pointer;
@@ -106,11 +106,11 @@ export default {
 
 .accordion__content {
 	overflow: hidden;
-	border: 1px solid $lightgray-400;
+	border: 1px solid var(--ui-02);
 	border-top: none;
 	transition: height 200ms linear;
 	.inner {
-		padding: $unit-2 $unit-8;
+		padding: var(--unit-2) var(--unit-8);
 	}
 	&.is-open {
 		height: var(--height);
@@ -126,15 +126,15 @@ export default {
 }
 
 .accordion__title__icon {
-	margin-right: $unit-4;
+	margin-right: var(--unit-4);
 	font-size: 22px !important;
-	color: $primary-500;
+	color: var(--interactive-03);
 }
 
 .accordion__toggle {
 	align-self: center;
-	margin-left: $unit-4;
-	color: $primary-500;
+	margin-left: var(--unit-4);
+	color: var(--interactive-03);
 	cursor: pointer;
 	user-select: none;
 }
