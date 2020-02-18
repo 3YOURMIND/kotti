@@ -118,9 +118,6 @@ export default {
 				'yoco--disabled': this.incrementDisabled || this.disabled,
 			}
 		},
-		isFloat() {
-			return this.step % 1 !== 0
-		},
 		yocoClassDecrement() {
 			return {
 				yoco: true,
@@ -131,7 +128,8 @@ export default {
 	watch: {
 		currentValue(newVal) {
 			if (typeof newVal === 'number' && newVal % 1 !== 0) {
-				const fixedVal = newVal.toFixed(3)
+				const THREE_DECIMAL_PLACES = 3
+				const fixedVal = newVal.toFixed(THREE_DECIMAL_PLACES)
 				this.currentValue = parseFloat(fixedVal)
 			}
 			if (!this.formError) {
