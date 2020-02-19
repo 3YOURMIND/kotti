@@ -3,8 +3,8 @@
 		<div v-if="isNarrow" class="kt-navbar-logo" @click="$emit('logoClick')">
 			<i
 				:class="iconClass"
-				v-text="iconText"
 				@click.stop="$KtNavbar.toggle()"
+				v-text="iconText"
 			/>
 		</div>
 		<div v-else class="kt-navbar-logo" @click="$emit('logoClick')">
@@ -13,8 +13,8 @@
 			</div>
 			<i
 				:class="iconClass"
-				v-text="iconText"
 				@click.stop="$KtNavbar.toggle()"
+				v-text="iconText"
 			/>
 		</div>
 		<div class="kt-navbar-logo--mobile">
@@ -31,11 +31,6 @@ export default {
 	props: {
 		labelText: { type: String, default: null },
 	},
-	methods: {
-		handleToggleNarrowClicked() {
-			this.$emit('toggleNarrowBar')
-		},
-	},
 	computed: {
 		iconClass() {
 			return this.isNarrow ? 'yoco' : 'yoco expanded'
@@ -47,24 +42,38 @@ export default {
 			return this.$KtNavbar.isNarrow
 		},
 	},
+	methods: {
+		handleToggleNarrowClicked() {
+			this.$emit('toggleNarrowBar')
+		},
+	},
+	inject: {
+		KtTheme: {
+			default: {
+				navbarTextColor: 'rgba(255,255,255,.54)',
+				logoUrl: null,
+				logoHeight: '40px',
+			},
+		},
+	},
 }
 </script>
 <style lang="scss">
 .kt-navbar-logo {
 	display: flex;
 	align-items: center;
-	padding: 0.8rem 1rem;
 	justify-content: space-between;
+	padding: 0.8rem 1rem;
 	&__logo {
+		flex: 1;
 		background-repeat: no-repeat;
 		background-position: left;
 		background-size: contain;
-		flex: 1;
 	}
 	&--mobile {
 		display: none;
-		padding: 0.2rem;
 		height: 100%;
+		padding: 0.2rem;
 	}
 	i {
 		opacity: 0.64;

@@ -34,10 +34,8 @@ export default {
 	components: {
 		KtContainer,
 	},
-	methods: {
-		handleMenuClick(link) {
-			alert('Link Clicked')
-		},
+	provide() {
+		return { KtTheme: this.defaultTheme }
 	},
 	data() {
 		return {
@@ -163,6 +161,19 @@ export default {
 				},
 			],
 		}
+	},
+	watch: {
+		isDarkThemeEnabled(value) {
+			const theme = value ? this.darkTheme : this.lightTheme
+			Object.entries(theme).forEach(([key, value]) => {
+				this.$set(this.defaultTheme, key, value)
+			})
+		},
+	},
+	methods: {
+		handleMenuClick() {
+			alert('Link Clicked')
+		},
 	},
 }
 </script>

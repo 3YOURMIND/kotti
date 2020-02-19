@@ -9,13 +9,11 @@
 }
 
 @mixin skeleton-style($bg-x, $bg-y) {
-	animation: 2s ease-out infinite 'skeleton-loading';
+	box-sizing: border-box;
 	display: block;
 	width: 100%;
-	line-height: 1px;
 	margin: 0.4rem 0;
-	box-sizing: border-box;
-	border-radius: 2px;
+	line-height: 1px;
 	background: linear-gradient(
 		to left,
 		$lightgray-300 0%,
@@ -23,6 +21,8 @@
 		$lightgray-300 100%
 	);
 	background-size: $bg-x $bg-y;
+	border-radius: 2px;
+	animation: 2s ease-out infinite 'skeleton-loading';
 }
 
 .skeleton {
@@ -62,56 +62,56 @@
 }
 .kt-circle-loading {
 	display: inline-block;
-	height: $unit-4;
 	width: $unit-4;
+	height: $unit-4;
 	margin-right: 0.2rem;
 	pointer-events: none;
-	animation: loading 500ms infinite linear;
-	border-radius: 50%;
 	border: $border-width-lg solid $primary-500;
-	border-right-color: transparent;
 	border-top-color: transparent;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: loading 500ms infinite linear;
 }
 .loading {
-	color: transparent !important;
-	min-height: $unit-4;
-	pointer-events: none;
 	position: relative;
+	min-height: $unit-4;
+	color: transparent !important;
+	pointer-events: none;
 
 	&::after {
-		animation: loading 500ms infinite linear;
-		border: $border-width-lg solid $primary-500;
-		border-radius: 50%;
-		border-right-color: transparent;
-		border-top-color: transparent;
-		content: '';
-		display: block;
-		height: $unit-4;
-		left: 50%;
-		margin-left: -$unit-2;
-		margin-top: -$unit-2;
 		position: absolute;
 		top: 50%;
-		width: $unit-4;
+		left: 50%;
 		z-index: $zindex-0;
+		display: block;
+		width: $unit-4;
+		height: $unit-4;
+		margin-top: -$unit-2;
+		margin-left: -$unit-2;
+		content: '';
+		border: $border-width-lg solid $primary-500;
+		border-top-color: transparent;
+		border-right-color: transparent;
+		border-radius: 50%;
+		animation: loading 500ms infinite linear;
 	}
 
 	&.inline {
 		display: inline-block;
 		margin: 0 $unit-2;
 		&::after {
-			margin: 0;
-			left: 0;
-			top: 2px;
-			display: inline-block;
 			position: relative;
+			top: 2px;
+			left: 0;
+			display: inline-block;
+			margin: 0;
 		}
 	}
 
 	&.white {
 		&::after {
-			border-left-color: #ffffff;
 			border-bottom-color: #ffffff;
+			border-left-color: #ffffff;
 		}
 	}
 
@@ -119,10 +119,10 @@
 		min-height: $unit-10;
 
 		&::after {
-			height: $unit-8;
-			margin-left: -$unit-4;
-			margin-top: -$unit-4;
 			width: $unit-8;
+			height: $unit-8;
+			margin-top: -$unit-4;
+			margin-left: -$unit-4;
 		}
 	}
 }

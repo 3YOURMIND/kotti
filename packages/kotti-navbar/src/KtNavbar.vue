@@ -31,17 +31,16 @@
 			<div class="kt-navbar__footer">
 				<slot name="navbar-footer" />
 			</div>
-			<div class="kt-navbar__dropdown" v-if="mobileMenuToggle">
+			<div v-if="mobileMenuToggle" class="kt-navbar__dropdown">
 				<KtNavbarMenu
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
-					v-on-clickaway="clickawayMobileMenu"
 				/>
 				<kt-navbar-quick-link
 					v-if="quickLinks"
+					v-on-clickaway="clickawayMobileMenu"
 					:title="quickLinks.title"
 					:links="quickLinks.links"
-					v-on-clickaway="clickawayMobileMenu"
 				/>
 			</div>
 		</div>
@@ -50,7 +49,6 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
-import color from 'color'
 import KtNavbarLogo from './KtNavbarLogo'
 import KtNavbarMenu from './KtNavbarMenu'
 import KtNavbarNotification from './KtNavbarNotification'
@@ -58,13 +56,13 @@ import KtNavbarQuickLink from './KtNavbarQuickLink'
 
 export default {
 	name: 'KtNavbar',
-	mixins: [clickaway],
 	components: {
 		KtNavbarLogo,
 		KtNavbarMenu,
 		KtNavbarNotification,
 		KtNavbarQuickLink,
 	},
+	mixins: [clickaway],
 	props: {
 		sections: { type: Array, required: true },
 		notification: { type: Object, default: null },
@@ -91,9 +89,6 @@ export default {
 			this.mobileMenuToggle = !this.mobileMenuToggle
 		},
 	},
-	created() {
-		this.$parent.$on('clickawayKtNavbarMobileMenu', this.clickawayMobileMenu)
-	},
 }
 </script>
 <style lang="scss">
@@ -109,44 +104,44 @@ $narrow-navbar-width: 3.4rem;
 }
 
 .kt-navbar {
-	flex: 0 0 $navbar-width;
-	background: var(--navbar-background);
-	color: var(--navbar-color);
-	border-right: 1px solid var(--navbar-border);
+	position: relative;
+	top: 0;
 	bottom: 0;
 	left: 0;
-	top: 0;
-	position: relative;
 	z-index: $zindex-1;
-	min-height: 100vh;
+	flex: 0 0 $navbar-width;
 	width: $navbar-width;
+	min-height: 100vh;
+	color: var(--navbar-color);
+	background: var(--navbar-background);
+	border-right: 1px solid var(--navbar-border);
 }
 
 .kt-navbar-wrapper {
 	position: fixed;
 	display: flex;
-	height: 100%;
-	flex-wrap: nowrap;
 	flex-direction: column;
+	flex-wrap: nowrap;
 	width: $navbar-width;
+	height: 100%;
 }
 
 .kt-navbar-toggle {
-	height: $mobile-navbar-height;
 	display: none;
-	color: #fff;
 	flex: 0 0 2.4rem;
-	justify-content: center;
-	text-align: center;
 	align-items: center;
+	justify-content: center;
 	width: 2.4rem;
+	height: $mobile-navbar-height;
+	color: #fff;
+	text-align: center;
 	cursor: pointer;
 }
 
 .kt-navbar__header {
 	flex: 1 1 auto;
-	border-bottom: 1px solid var(--navbar-border);
 	cursor: pointer;
+	border-bottom: 1px solid var(--navbar-border);
 }
 
 .kt-navbar__body {
@@ -161,11 +156,11 @@ $narrow-navbar-width: 3.4rem;
 }
 
 .kt-navbar__dropdown {
-	background-color: var(--navbar-background);
 	position: absolute;
 	top: $mobile-navbar-height;
-	width: 100%;
 	display: none;
+	width: 100%;
+	background-color: var(--navbar-background);
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
 }
 
@@ -199,13 +194,13 @@ $narrow-navbar-width: 3.4rem;
 		justify-content: center;
 		padding: 0.8rem 0;
 		&__number {
-			right: 0.4rem;
 			position: absolute;
+			right: 0.4rem;
 		}
 	}
 	.kt-navbar-quick-links {
-		text-align: center;
 		padding: 0.8rem 0;
+		text-align: center;
 		&__link {
 			display: block;
 		}
@@ -215,20 +210,20 @@ $narrow-navbar-width: 3.4rem;
 // Mobile version
 @media (max-width: $size-md) {
 	.kt-navbar {
-		height: 2.4rem;
-		min-height: auto;
 		z-index: $zindex-4;
-		border: 0;
 		flex: 0 0 $mobile-navbar-height;
 		width: auto;
+		height: 2.4rem;
+		min-height: auto;
+		border: 0;
 	}
 	.kt-navbar-wrapper {
-		width: 100%;
-		padding: 0;
 		position: relative;
-		flex-direction: row;
 		flex: 0 0 $mobile-navbar-height;
+		flex-direction: row;
+		width: 100%;
 		height: $mobile-navbar-height;
+		padding: 0;
 		border-bottom: 1px solid var(--navbar-border);
 	}
 	.kt-navbar__header {
@@ -238,10 +233,10 @@ $narrow-navbar-width: 3.4rem;
 	}
 	.kt-navbar__footer {
 		display: flex;
-		border: 0;
 		flex: 0 0 2.4rem;
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
+		border: 0;
 	}
 	.kt-navbar-logo {
 		display: none;
@@ -255,13 +250,13 @@ $narrow-navbar-width: 3.4rem;
 	.kt-navbar-notification {
 		display: none;
 		&--mobile {
-			border: 0;
-			margin: 0.6rem 0;
-			height: 1.2rem;
-			width: 1.2rem;
-			text-align: center;
-			border-radius: 1.2rem;
 			display: block;
+			width: 1.2rem;
+			height: 1.2rem;
+			margin: 0.6rem 0;
+			text-align: center;
+			border: 0;
+			border-radius: 1.2rem;
 			.yoco {
 				font-size: 1rem;
 			}

@@ -13,19 +13,19 @@ html {
 }
 
 body {
-	background: $body-bg;
-	color: $body-font-color;
+	overflow-x: hidden;
 	font-family: $body-font-family;
 	font-size: $font-size;
-	overflow-x: hidden;
 	font-weight: 400;
+	color: $body-font-color;
+	background: $body-bg;
 	text-rendering: optimizeLegibility;
 }
 
 a {
 	color: $link-color;
-	outline: none;
 	text-decoration: none;
+	outline: none;
 
 	&:focus,
 	&:hover,

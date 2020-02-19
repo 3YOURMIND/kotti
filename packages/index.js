@@ -117,7 +117,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default { ...components, install }
-
 export {
 	KtAccordion,
 	KtActionbar,
@@ -128,6 +127,7 @@ export {
 	KtButton,
 	KtButtonGroup,
 	KtCard,
+	KtCheckbox,
 	KtCol,
 	KtComment,
 	KtCommentInput,
@@ -153,10 +153,10 @@ export {
 	KtStep,
 	KtSteps,
 	KtTable,
+	KtToaster,
+	KtUserMenu,
 	KtTableColumn,
 	KtTableProvider,
 	KtTableColumnsStateMixin,
 	KtTheme,
-	KtToaster,
-	KtUserMenu,
 }

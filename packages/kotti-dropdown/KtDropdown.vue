@@ -1,9 +1,10 @@
 <template>
 	<div class="kt-dropdown">
 		<KtPopover :placement="placement" :size="size">
-			<slot>Dropdown Text</slot>
+			<slot />
 			<div slot="content">
-				<slot name="KtDropdownMenus">Dropdown Menu</slot>
+				<slot name="KtDropdownMenus" />
+				<slot name="content" />
 			</div>
 		</KtPopover>
 	</div>
@@ -13,6 +14,9 @@
 import KtPopover from '../kotti-popover'
 export default {
 	name: 'KtDropdown',
+	components: {
+		KtPopover,
+	},
 	props: {
 		placement: {
 			type: String,
@@ -22,9 +26,6 @@ export default {
 			type: String,
 			default: null,
 		},
-	},
-	components: {
-		KtPopover,
 	},
 }
 </script>

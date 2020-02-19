@@ -237,8 +237,8 @@ export default {
 			this.loadingOnRequest = true
 			await this.$axios
 				.$get(queryURL)
-				.then(response => {
-					let coutriesOptions = response.map(country => ({
+				.then((response) => {
+					let coutriesOptions = response.map((country) => ({
 						label: country.name,
 						value: country.nativeName,
 					}))

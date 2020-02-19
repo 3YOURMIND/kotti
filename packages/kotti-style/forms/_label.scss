@@ -1,13 +1,13 @@
 // Form element: label
 
 .form-label {
-	font-size: $font-size-sm;
-	color: $lightgray-500;
-	width: 100%;
 	display: block;
+	width: 100%;
 	padding: 0;
-	line-height: $unit-6;
+	font-size: $font-size-sm;
 	font-weight: 700;
+	line-height: $unit-6;
+	color: $lightgray-500;
 
 	i {
 		font-size: $unit-4;
@@ -15,10 +15,10 @@
 	}
 
 	&.tooltip::after {
-		text-transform: initial;
 		width: inherit;
 		font-size: inherit;
 		line-height: 1.2em;
+		text-transform: initial;
 		white-space: normal;
 	}
 }
@@ -26,18 +26,18 @@
 .form-label--compact {
 	position: absolute;
 	top: 0;
-	line-height: $control-size-lg;
-	font-size: 0.7rem;
-	font-weight: 500;
 	left: $unit-2;
 	z-index: 1;
+	font-size: 0.7rem;
+	font-weight: 500;
+	line-height: $control-size-lg;
 	text-transform: none;
 	pointer-events: none;
 	transition: all 0.1s ease-in;
 	&--focus {
-		line-height: $control-size-lg / 2;
 		font-size: 0.5rem;
 		font-weight: 700;
+		line-height: $control-size-lg / 2;
 		transition: all 0.1s ease-in-out;
 	}
 }

@@ -5,11 +5,11 @@ h3,
 h4,
 h5,
 h6 {
-	color: inherit;
-	font-weight: 600;
-	line-height: 1.5;
 	margin-top: 0;
 	margin-bottom: 0.5em;
+	font-weight: 600;
+	line-height: 1.5;
+	color: inherit;
 }
 
 .h1,
@@ -33,8 +33,8 @@ h2,
 
 h3,
 .h3 {
-	font-size: 0.8rem;
 	padding-bottom: $unit-2;
+	font-size: 0.8rem;
 	border-bottom: 1px solid $lightgray-400;
 
 	span {
@@ -42,9 +42,9 @@ h3,
 		font-weight: 500;
 		color: $primary-500;
 		&:hover {
-			cursor: pointer;
 			font-weight: 700;
 			color: $primary-500;
+			cursor: pointer;
 		}
 	}
 
@@ -75,16 +75,16 @@ p {
 
 // Semantic text elements
 abbr[title] {
-	border-bottom: $border-width dotted;
-	cursor: help;
 	text-decoration: none;
+	cursor: help;
+	border-bottom: $border-width dotted;
 }
 
 // Lists
 ul,
 ol {
-	margin: $unit-4 0 $unit-4 $unit-4;
 	padding: 0;
+	margin: $unit-4 0 $unit-4 $unit-4;
 	ul,
 	ol {
 		margin: $unit-4 0 $unit-4 $unit-4;
@@ -106,9 +106,9 @@ dl {
 }
 
 .label-value {
+	position: relative;
 	line-height: 1.5;
 	color: $darkgray-500;
-	position: relative;
 
 	label {
 		font-size: 0.6rem;
@@ -131,11 +131,11 @@ dl {
 	}
 
 	.action {
-		color: $primary-500;
 		position: absolute;
-		right: 0.2rem;
 		top: 50%;
+		right: 0.2rem;
 		margin-top: -0.5rem;
+		color: $primary-500;
 
 		&:hover {
 			color: $primary-600;

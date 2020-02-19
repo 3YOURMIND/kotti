@@ -35,9 +35,9 @@ export default {
 
 <style lang="scss" scoped>
 .download-area {
-	text-align: center;
-	background: #f8f8f8;
 	padding-bottom: 2.4rem;
 	margin: 0.8rem 0;
+	text-align: center;
+	background: #f8f8f8;
 }
 </style>

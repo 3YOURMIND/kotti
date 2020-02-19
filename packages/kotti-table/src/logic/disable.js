@@ -8,20 +8,22 @@ export const defaultState = {
 export const mutations = {
 	updateDisabledRows({ state, table }) {
 		state.enabledRows = getEnabledRows(state.rows, table.disableRow)
-		state.isAllRowsDisabled = !Boolean(state.enabledRows.length)
+		state.isAllRowsDisabled = state.enabledRows.length === 0
 	},
 }
 
 export const getters = {
 	isAllRowsDisabled(state) {
-		return state.rows.length === getDisabledRows(rows, this.table.disableRow)
+		return (
+			state.rows.length === getDisabledRows(state.rows, this.table.disableRow)
+		)
 	},
 }
 
 export function getDisabledRows(rows, disableRow) {
-	return rows.filter((row, rowIndex) =>
-		disableRow ? disableRow({ row, rowIndex }) : false,
-	)
+	return rows.filter((row, rowIndex) => {
+		return disableRow ? disableRow({ row, rowIndex }) : false
+	})
 }
 
 export function getEnabledRows(rows, disableRow) {

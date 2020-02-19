@@ -22,8 +22,8 @@
 }
 
 .kt-col {
-	float: left;
 	box-sizing: border-box;
+	float: left;
 }
 
 @include col-width('');
@@ -46,9 +46,9 @@
 .kt-row {
 	position: relative;
 	box-sizing: border-box;
-	clear: both;
 	display: flex;
 	flex-wrap: wrap;
+	clear: both;
 
 	&::before,
 	&::after {

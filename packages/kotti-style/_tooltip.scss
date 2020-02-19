@@ -3,25 +3,25 @@
 	position: relative;
 
 	&::after {
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		z-index: $zindex-3;
+		display: block;
+		max-width: $control-width-sm;
+		padding: $unit-1 $unit-2;
+		overflow: hidden;
+		font-size: $font-size-sm;
+		color: $lightgray-300;
+		text-overflow: ellipsis;
+		white-space: pre;
+		pointer-events: none;
+		content: attr(data-tooltip);
 		background: rgba($darkgray-500, 0.9);
 		border-radius: $border-radius;
-		bottom: 100%;
-		color: $lightgray-300;
-		content: attr(data-tooltip);
-		display: block;
-		font-size: $font-size-sm;
-		left: 50%;
-		max-width: $control-width-sm;
 		opacity: 0;
-		overflow: hidden;
-		padding: $unit-1 $unit-2;
-		pointer-events: none;
-		position: absolute;
-		text-overflow: ellipsis;
-		transform: translate(-50%, $unit-2);
 		transition: all 0.2s ease;
-		white-space: pre;
-		z-index: $zindex-3;
+		transform: translate(-50%, $unit-2);
 	}
 
 	&:focus,
@@ -54,8 +54,8 @@
 
 	&.tooltip-bottom {
 		&::after {
-			bottom: auto;
 			top: 100%;
+			bottom: auto;
 			transform: translate(-50%, -$unit-2);
 		}
 
@@ -69,9 +69,9 @@
 
 	&.tooltip-left {
 		&::after {
+			right: 100%;
 			bottom: 50%;
 			left: auto;
-			right: 100%;
 			transform: translate($unit-2, 50%);
 		}
 

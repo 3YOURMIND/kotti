@@ -12,15 +12,15 @@
 				</span>
 			</div>
 			<div class="message" v-text="message" />
-			<div class="action" v-if="!expandable" @click="handleClick">
-				<button class="text" v-text="actionText" />
+			<div v-if="!expandable" class="action" @click="handleClick">
+				<button v-if="actionText.length" class="text" v-text="actionText" />
 			</div>
-			<div class="action" v-else @click="isExpand=!isExpand">
-				<button class="text" v-text="switchText" v-if="!isExpand" />
-				<button class="text" v-text="switchCloseText" v-else />
+			<div v-else class="action" @click="isExpand = !isExpand">
+				<button v-if="!isExpand" class="text" v-text="switchText" />
+				<button v-else class="text" v-text="switchCloseText" />
 			</div>
 		</div>
-		<div class="expand" v-if="isExpand">
+		<div v-if="isExpand" class="expand">
 			<slot name="expand" />
 		</div>
 	</div>
@@ -65,7 +65,7 @@ export default {
 			}
 		},
 		expandable() {
-			return this.$slots.expand
+			return Boolean(this.$slots.expand)
 		},
 	},
 	methods: {

@@ -21,27 +21,27 @@ export default {
 		Navbar,
 		KtContainer,
 	},
-	mounted() {
-		// loading IE11 polyfill
-		const isIE = !!window.MSInputMethodContext && !!document.documentMode
-		if (isIE) {
-			let oo = cssVars({ watch: true, shadowDOM: true, onlyLegacy: true })
-		}
-	},
 	computed: {
 		showActionbar() {
 			const exclusivePage = ['index', 'changelog', 'designkit']
 			return !exclusivePage.includes(this.$route.name)
 		},
 	},
+	mounted() {
+		// loading IE11 polyfill
+		const isIE = !!window.MSInputMethodContext && !!document.documentMode
+		if (isIE) {
+			cssVars({ watch: true, shadowDOM: true, onlyLegacy: true })
+		}
+	},
 }
 </script>
 
 <style>
 .content {
-	margin: 0 auto;
 	width: 100%;
 	max-width: 40rem;
+	margin: 0 auto;
 }
 .content img {
 	max-width: 100%;

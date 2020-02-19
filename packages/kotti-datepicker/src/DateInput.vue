@@ -5,10 +5,10 @@
 			<div class="has-icon-left">
 				<input
 					v-bind="$attrs"
-					@focus.prevent="handleFocus"
 					class="form-input"
 					:value="formattedDate"
 					:required="required"
+					@focus.prevent="handleFocus"
 				/>
 				<i class="form-icon yoco" v-text="'calendar'" />
 			</div>
@@ -33,17 +33,17 @@ import KtDatePicker from './DatePicker'
 
 export default {
 	name: 'KtDateInput',
+	components: {
+		KtDatePicker,
+	},
 	mixins: [clickaway],
 	props: {
-		initialValue: { types: [Date, Number, String] },
+		initialValue: { type: [Date, Number, String] },
 		label: { type: String, default: null },
 		mondayFirst: { type: Boolean, default: false },
 		daysTranslations: { type: Array },
 		monthsTranslations: { type: Array },
 		required: { type: Boolean, default: false },
-	},
-	components: {
-		KtDatePicker,
 	},
 	data() {
 		return {

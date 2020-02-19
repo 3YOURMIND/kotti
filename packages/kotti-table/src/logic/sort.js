@@ -1,6 +1,6 @@
 import pick from 'lodash/pick'
 import property from 'lodash/property'
-import { setColumnsArray, getColumnsArray } from './column'
+import { setColumnsArray, getColumnsArray, getColumn } from './column'
 import {
 	IS_ASC,
 	IS_DSC,
@@ -8,7 +8,6 @@ import {
 	SORT_NONE,
 	PUBLIC_SORT_PROPS,
 } from '../constants'
-import { getColumn } from './column'
 
 export const defaultState = {
 	sortMultiple: false,
@@ -45,7 +44,7 @@ export const mutations = {
 		state.rows = sortData(state.filteredData || state._data || [], state)
 
 		if (!options || !options.silent) {
-			const sortedColumns = state.sortedColumns.map(column => {
+			const sortedColumns = state.sortedColumns.map((column) => {
 				column = pick(column, PUBLIC_SORT_PROPS)
 				return {
 					...column,
@@ -106,7 +105,7 @@ export function setSortedColumn(state, column) {
 }
 
 export function setSortedColumns(state, columns) {
-	state.sortedColumns = columns.map(column => {
+	state.sortedColumns = columns.map((column) => {
 		column = pick(column, ['prop', 'sortOrder'])
 		const oldColumn = getColumn(state, column) || {}
 		return Object.assign(oldColumn, column)
@@ -135,7 +134,7 @@ export function sortData(data, state) {
 }
 
 export function orderBy(array, sortedColumns) {
-	const columns = sortedColumns.map(column => {
+	const columns = sortedColumns.map((column) => {
 		let { prop, sortOrder, sortMethod, sortBy = prop } = column
 		if (typeof sortOrder === 'string') {
 			sortOrder = sortOrder === SORT_DSC ? -1 : 1
@@ -159,7 +158,7 @@ export function orderBy(array, sortedColumns) {
 				0,
 			),
 		)
-		.map(item => item.value)
+		.map((item) => item.value)
 }
 
 function compare(order, a, b, { sortMethod, sortBy, sortOrder }) {

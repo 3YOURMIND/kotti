@@ -1,13 +1,17 @@
 <template>
 	<div class="kt-dropdown-menu">
-		<i v-show="icon" class="yoco" v-text="icon" />
-		<slot></slot>
+		<KtPopoverItem :icon="icon">
+			<slot />
+		</KtPopoverItem>
 	</div>
 </template>
 
 <script>
+import KtPopoverItem from '../kotti-popover/KtPopoverItem'
+
 export default {
 	name: 'KtDropdownMenu',
+	components: { KtPopoverItem },
 	props: {
 		icon: {
 			type: String,

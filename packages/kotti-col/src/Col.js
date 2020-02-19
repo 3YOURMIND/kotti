@@ -45,18 +45,26 @@ export default {
 			style.paddingBottom = style.paddingTop
 		}
 
-		;['span', 'offset', 'pull', 'push'].forEach(prop => {
+		;['span', 'offset', 'pull', 'push'].forEach((prop) => {
 			if (this[prop] || this[prop] === 0) {
-				classList.push(prop !== 'span' ? `kt-col-${prop}-${this[prop]}` : `kt-col-${this[prop]}`)
+				classList.push(
+					prop !== 'span'
+						? `kt-col-${prop}-${this[prop]}`
+						: `kt-col-${this[prop]}`,
+				)
 			}
 		})
-		;['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
+		;['xs', 'sm', 'md', 'lg', 'xl'].forEach((size) => {
 			if (typeof this[size] === 'number') {
 				classList.push(`kt-col-${size}-${this[size]}`)
 			} else if (typeof this[size] === 'object') {
 				let props = this[size]
-				Object.keys(props).forEach(prop => {
-					classList.push(prop !== 'span' ? `kt-col-${size}-${prop}-${props[prop]}` : `kt-col-${size}-${props[prop]}`)
+				Object.keys(props).forEach((prop) => {
+					classList.push(
+						prop !== 'span'
+							? `kt-col-${size}-${prop}-${props[prop]}`
+							: `kt-col-${size}-${props[prop]}`,
+					)
 				})
 			}
 		})
@@ -67,7 +75,7 @@ export default {
 				class: ['kt-col', classList],
 				style,
 			},
-			this.$slots.default
+			this.$slots.default,
 		)
 	},
 }

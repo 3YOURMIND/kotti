@@ -3,20 +3,20 @@
 		<label class="form-label" v-text="label" />
 		<div
 			v-if="!editMode"
-			v-html="postParser(dangerouslyOverrideParser(representValue))"
-			@click="editMode = true"
 			:class="representTextClass"
+			@click="editMode = true"
+			v-html="postParser(dangerouslyOverrideParser(representValue))"
 		/>
 		<div v-else>
 			<component
 				:is="inputComponent"
 				v-bind="$attrs"
 				:value="currentValue"
-				v-text="currentValue"
-				@change="handleChange"
-				@input="handleInput"
 				class="form-input"
 				type="text"
+				@change="handleChange"
+				@input="handleInput"
+				v-text="currentValue"
 			/>
 			<KtButtonGroup shadow class="inline-edit__edit-buttons">
 				<KtButton icon="close" @click="handleDismiss" />
@@ -30,8 +30,8 @@ import escape from 'lodash/escape'
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group'
 
-const DEFAULT_POST_PARSER = _ => _
-const newLineParser = t => t.replace(/\n/gm, '<br/>')
+const DEFAULT_POST_PARSER = (_) => _
+const newLineParser = (t) => t.replace(/\n/gm, '<br/>')
 
 export default {
 	name: 'KtInlineEdit',
@@ -44,8 +44,8 @@ export default {
 		postEscapeParser: { default: DEFAULT_POST_PARSER, type: Function },
 		invalidMessage: { default: 'Click to edit', type: String },
 		multiline: { deafult: false, type: Boolean },
-		label: { default: null, types: [String, null] },
-		value: { types: [String, Number] },
+		label: { default: null, type: String },
+		value: { type: [String, Number] },
 	},
 	data() {
 		return {

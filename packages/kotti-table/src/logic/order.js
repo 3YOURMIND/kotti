@@ -13,7 +13,7 @@ export const defaultState = {
 export const mutations = {
 	orderBefore(store, fromColumn, toColumn) {
 		const { state } = store
-
+		if (fromColumn.id === toColumn.id) return
 		const fromIndex = getColumnIndex(state, fromColumn)
 		state._columnsArray.splice(fromIndex, 1)
 
@@ -24,7 +24,6 @@ export const mutations = {
 			col.order = index
 			col.index = index
 		})
-
 		store.emit('orderChange', getOrderedColumns(state))
 		store.commit('updateColumns')
 	},
@@ -75,5 +74,5 @@ function byOrder(a, b) {
 }
 
 export function getOrderedColumns(state) {
-	state._columnsArray.map(col => pick(col, ['prop', 'order']))
+	return state._columnsArray.map((col) => pick(col, ['prop', 'order']))
 }

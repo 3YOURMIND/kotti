@@ -5,8 +5,8 @@
 			v-for="color in colors"
 			:key="color.name"
 			:style="{ background: color.code, color: textColor(color.name) }"
-			@click="copyColor(color.code)"
 			class="color-palette__block c-hand"
+			@click="copyColor(color.code)"
 		>
 			<div class="color-palette__name" v-text="color.name" />
 			<div class="color-palette__code" v-text="color.code" />
@@ -66,18 +66,18 @@ export default {
 
 .color-palette__title {
 	font-size: 1em;
-	color: #8f8f8f;
 	line-height: 1.55em;
+	color: #8f8f8f;
 }
 
 .color-palette__block {
 	box-sizing: border-box;
-	height: 2.4rem;
-	font-size: 0.875em;
-	padding: 0 0.8rem;
-	color: #fff;
-	margin: 0.1rem 0;
 	display: block;
+	height: 2.4rem;
+	padding: 0 0.8rem;
+	margin: 0.1rem 0;
+	font-size: 0.875em;
+	color: #fff;
 
 	&:hover .color-palette__code {
 		display: inline;
@@ -85,16 +85,16 @@ export default {
 }
 
 .color-palette__name {
-	line-height: 2.4rem;
 	float: left;
+	line-height: 2.4rem;
 }
 
 .color-palette__code {
-	text-align: right;
-	line-height: 2.4rem;
-	width: 50%;
-	float: right;
 	display: none;
+	float: right;
+	width: 50%;
+	line-height: 2.4rem;
+	text-align: right;
 }
 
 .slide-fade-enter-active {
@@ -107,7 +107,7 @@ export default {
 
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
-	transform: translateX(100px);
 	opacity: 0;
+	transform: translateX(100px);
 }
 </style>

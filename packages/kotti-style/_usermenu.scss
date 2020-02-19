@@ -1,24 +1,24 @@
 .user-info {
+	position: relative;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	position: relative;
-	margin: -0.4rem;
 	padding: 0.4rem;
+	margin: -0.4rem;
 	line-height: 1;
 	&--narrow {
 		width: 2.4rem;
 	}
 	&--narrow-wide {
+		position: absolute;
 		bottom: 0.8rem;
 		left: 0.8rem;
-		position: absolute;
 		width: 11.2rem;
 	}
 	&:hover {
-		border-radius: 0.2rem;
 		cursor: pointer;
-		background: rgba($color: #000000, $alpha: 0.24);
+		background: rgba(0, 0, 0, 0.24);
+		border-radius: 0.2rem;
 	}
 }
 .user-info-avatar {
@@ -27,39 +27,40 @@
 }
 .user-info-text {
 	z-index: 2;
-	color: #ffffff;
+	width: 100%;
 	margin-left: 0.4rem;
 	line-height: 0.8rem;
-	width: 100%;
+	color: #ffffff;
 	&__name {
-		font-weight: 600;
 		font-size: 0.7rem;
+		font-weight: 600;
 	}
 	&__status {
-		font-weight: 600;
 		font-size: 0.6rem;
+		font-weight: 600;
 		opacity: 0.65;
 	}
 }
 .user-info-toggle {
 	z-index: 2;
-	color: #ffffff;
 	flex-grow: 0;
 	align-self: center;
+	color: #ffffff;
 }
 .user-menu {
-	flex: none;
 	position: absolute;
-	background: darken(#2659ab, 20);
-	width: 11.2rem;
-	box-sizing: border-box;
 	bottom: 0.4rem;
 	left: 0.4rem;
-	color: #ffffff;
-	border-radius: 0.2rem;
+	box-sizing: border-box;
+	flex: none;
+	width: 11.2rem;
 	padding: 0.8rem;
 	padding-bottom: 3.2rem;
+	color: #ffffff;
+	/* stylelint-disable-next-line */
+	background: darken(#2659ab, 20);
 	border: 1px solid rgba($color: #ffffff, $alpha: 0.1);
+	border-radius: 0.2rem;
 	box-shadow: 0 0.2rem 1rem 0.2rem rgba(0, 0, 0, 0.24);
 	&__section {
 		padding: 0.2rem 0.4rem;
@@ -69,13 +70,13 @@
 		opacity: 0.46;
 	}
 	&__item {
-		margin: 0.1rem 0;
-		padding: 0.2rem 0.4rem;
-		line-height: 1.2rem;
-		font-size: 0.68rem;
-		border-radius: 0.2rem;
-		color: inherit;
 		display: block;
+		padding: 0.2rem 0.4rem;
+		margin: 0.1rem 0;
+		font-size: 0.68rem;
+		line-height: 1.2rem;
+		color: inherit;
+		border-radius: 0.2rem;
 		&:hover {
 			color: inherit;
 			cursor: pointer;
@@ -103,11 +104,11 @@
 		display: block;
 	}
 	.user-menu {
-		bottom: auto;
 		top: 2.4rem;
+		bottom: auto;
 		left: 0;
 		width: 100%;
-		border-radius: 0 0 0.2rem 0.2rem;
 		padding-bottom: 0.8rem;
+		border-radius: 0 0 0.2rem 0.2rem;
 	}
 }

@@ -1,0 +1,259 @@
+$mobile-navbar-height: 2.4rem;
+$narrow-navbar-width: 3.2rem;
+.navbar {
+	position: relative;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: $zindex-1;
+	flex: 0 0 $navbar-width;
+	min-height: 100vh;
+	background-color: $primary-600;
+	border-right: 1px solid #000;
+	&--narrow {
+		flex: 0 0 $narrow-navbar-width;
+	}
+}
+
+.navbar-wrapper {
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	width: $navbar-width;
+	height: 100%;
+	&--narrow {
+		flex: 0 0 $narrow-navbar-width;
+		width: $narrow-navbar-width;
+	}
+}
+
+.navbar-toggle {
+	display: none;
+	flex: 0 0 2.4rem;
+	align-items: center;
+	justify-content: center;
+	width: 2.4rem;
+	height: $mobile-navbar-height;
+	color: #fff;
+	text-align: center;
+	&:hover {
+		cursor: pointer;
+		background: rgba(0, 0, 0, 0.24);
+	}
+	&--active {
+		background: $primary-700;
+	}
+}
+
+.navbar-header {
+	flex: 1 1 auto;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+	&--narrow {
+		padding: 1rem 0;
+		text-align: center;
+	}
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.navbar-body {
+	flex: 1 1 100%;
+	overflow-y: auto;
+	&--narrow {
+		padding: 0;
+	}
+}
+
+.navbar-footer {
+	flex: 0 0 auto;
+	padding: 0.8rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.26);
+	&--narrow {
+		display: flex;
+		justify-content: center;
+	}
+}
+
+.navbar-logo {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.8rem 1.2rem;
+	&--logo {
+		flex: 1;
+		background-repeat: no-repeat;
+		background-position: left;
+		background-size: contain;
+	}
+	&--mobile {
+		display: none;
+		height: 100%;
+		padding: 0.2rem;
+	}
+	&--narrow {
+		display: block;
+		padding: 0;
+	}
+	i {
+		opacity: 0.64;
+		&:hover {
+			opacity: 1;
+		}
+		&.expanded {
+			margin-left: 1.2rem;
+		}
+	}
+}
+
+.navbar-dropdown {
+	position: absolute;
+	top: $mobile-navbar-height;
+	display: none;
+	width: 100%;
+	padding: 0.8rem 0;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+}
+
+.navbar-notification {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.8rem 1.2rem;
+	margin-bottom: 0.4rem;
+	font-size: 0.75rem;
+	line-height: 1.2rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+	span {
+		margin-left: 0.8rem;
+	}
+	&--narrow {
+		justify-content: center;
+		padding: 0.8rem 0;
+	}
+	.yoco {
+		font-size: 1rem;
+	}
+	&__number {
+		width: 1.2rem;
+		height: 1.2rem;
+		font-size: 0.6rem;
+		line-height: 1.2rem;
+		text-align: center;
+		background: rgba(255, 255, 255, 0.26);
+		border-radius: 0.6rem;
+		&--narrow {
+			position: absolute;
+			right: 0.4rem;
+		}
+	}
+	&--mobile {
+		display: none;
+	}
+}
+.navbar-menu {
+	box-sizing: border-box;
+	padding: 0.4rem 1.2rem;
+	color: #fff;
+	text-align: left;
+	&:hover {
+		cursor: pointer;
+	}
+	&--narrow {
+		padding: 0.4rem 0;
+		margin: 0.8rem 0.2rem;
+		text-align: center;
+	}
+	&__section {
+		display: block;
+		padding: 0.2rem 0;
+		margin-top: 0.4rem;
+		font-size: 0.75em;
+		font-weight: 700;
+		text-transform: uppercase;
+		opacity: 0.64;
+	}
+	&__item {
+		display: block;
+		padding: 0.6rem 0;
+		font-size: 0.75rem;
+	}
+	&__item span {
+		margin-left: 0.8rem;
+	}
+	.yoco {
+		font-size: 1rem;
+	}
+	.active {
+		font-weight: 700;
+	}
+}
+
+@media (max-width: $size-md) {
+	.navbar {
+		z-index: $zindex-4;
+		flex: 0 0 $mobile-navbar-height;
+		height: 2.4rem;
+		min-height: auto;
+		border: 0;
+	}
+	.navbar-wrapper {
+		position: relative;
+		flex: 0 0 $mobile-navbar-height;
+		flex-direction: row;
+		width: 100%;
+		height: $mobile-navbar-height;
+		padding: 0;
+		border-bottom: 1px solid #ddd;
+	}
+	.navbar-header {
+		width: 100%;
+		padding: 0.2rem 0;
+		border: 0;
+	}
+	.navbar-logo {
+		display: none;
+		&--mobile {
+			display: flex;
+		}
+		&--logo {
+			background-position: center;
+		}
+	}
+	.navbar-notification {
+		display: none;
+		&--mobile {
+			display: block;
+			width: 1.2rem;
+			height: 1.2rem;
+			margin: 0.6rem 0;
+			text-align: center;
+			background: rgba(255, 255, 255, 0.26);
+			border: 0;
+			border-radius: 1.2rem;
+			.yoco {
+				font-size: 1rem;
+			}
+		}
+	}
+	.navbar-body {
+		display: none;
+	}
+	.navbar-dropdown {
+		display: block;
+	}
+	.navbar--narrow .navbar-wrapper {
+		padding: 0;
+	}
+	.navbar-toggle {
+		display: flex;
+	}
+	.navbar-footer {
+		display: flex;
+		flex: 0 0 2.4rem;
+		align-items: center;
+		justify-content: center;
+		border: 0;
+	}
+}

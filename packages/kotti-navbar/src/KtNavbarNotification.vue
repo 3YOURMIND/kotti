@@ -20,14 +20,12 @@
 			/>
 		</div>
 		<div class="kt-navbar-notification--mobile">
-			<i class="yoco" v-if="!count">bell</i> <span v-else v-text="count" />
+			<i v-if="!count" class="yoco">bell</i> <span v-else v-text="count" />
 		</div>
 	</a>
 </template>
 
 <script>
-import color from 'color'
-
 export default {
 	name: 'KtNavbarNotification',
 	props: {
@@ -55,11 +53,11 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border-bottom: 1px solid var(--navbar-border);
-	font-size: 0.75rem;
-	line-height: 1.2rem;
 	padding: 0.8rem 1rem;
 	margin-bottom: 0.4rem;
+	font-size: 0.75rem;
+	line-height: 1.2rem;
+	border-bottom: 1px solid var(--navbar-border);
 	span {
 		margin-left: 0.8rem;
 	}
@@ -67,13 +65,13 @@ export default {
 		font-size: 1rem;
 	}
 	&__number {
-		border-radius: 0.6rem;
 		width: 1.2rem;
 		height: 1.2rem;
-		line-height: 1.2rem;
 		font-size: 0.6rem;
+		line-height: 1.2rem;
 		text-align: center;
-		background: rgba(#fff, 0.26);
+		background: rgba(255, 255, 255, 0.26);
+		border-radius: 0.6rem;
 	}
 	&--mobile {
 		display: none;

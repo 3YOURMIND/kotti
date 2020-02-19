@@ -32,13 +32,14 @@ timely matter.
 **Intuitive:** The design should be intuitive and easy to understand, and
 decrease the learning curve.
 
-
 ## Documentation
 
-### Stable Documentation 
+### Stable Documentation
+
 Build after every release → https://3yourmind.github.io/kotti/
 
 ### Nightly Documentation
+
 Auto build after PR merged to master → https://kotti.netlify.com/
 
 ## Project Scope

@@ -3,21 +3,21 @@ $span-width: 1.6rem;
 	position: relative;
 }
 .kt-datepicker {
-	width: $span-width * 8;
-	background: #fff;
-	padding: $span-width/2;
-	box-shadow: $box-shadow;
-	box-sizing: border-box;
-	border-radius: $border-radius;
 	position: absolute;
 	top: 3.2rem;
 	z-index: $zindex-4;
+	box-sizing: border-box;
+	width: $span-width * 8;
+	padding: $span-width/2;
+	background: #fff;
+	border-radius: $border-radius;
+	box-shadow: $box-shadow;
 }
 .kt-datepicker-header {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
 	&__month {
 		font-size: 1.2rem;
 		font-weight: 600;
@@ -36,16 +36,16 @@ $span-width: 1.6rem;
 }
 .kt-datepicker-calendar {
 	&__week {
-		font-weight: 600;
-		color: $darkgray-300;
 		width: 100%;
-		line-height: 1.6rem;
 		margin: 0.2rem;
 		font-size: 0.6rem;
+		font-weight: 600;
+		line-height: 1.6rem;
+		color: $darkgray-300;
 		text-align: center;
 		span {
-			width: $span-width;
 			display: inline-block;
+			width: $span-width;
 		}
 	}
 	&__day {
@@ -63,10 +63,10 @@ $span-width: 1.6rem;
 			cursor: pointer;
 		}
 		span {
-			line-height: 1.6rem;
-			width: 1.6rem;
-			border-radius: 100%;
 			display: inline-block;
+			width: 1.6rem;
+			line-height: 1.6rem;
+			border-radius: 100%;
 			&:hover {
 				color: #fff;
 				background: $primary-300;
@@ -80,15 +80,15 @@ $span-width: 1.6rem;
 		}
 	}
 	&__day--highlighted span {
-		box-shadow: inset 0 0 0 0.1rem $primary-500;
+		color: #fff;
 		background: $primary-400;
 		border-radius: 100%;
-		color: #fff;
+		box-shadow: inset 0 0 0 0.1rem $primary-500;
 	}
 
 	&__day--today {
-		color: $primary-500;
 		font-weight: 600;
+		color: $primary-500;
 	}
 	&__day--start,
 	&__day--end {
@@ -96,17 +96,17 @@ $span-width: 1.6rem;
 		background: $primary-300;
 		border-radius: 100% 0 0 100%;
 		span {
-			box-shadow: inset 0 0 0 0.1rem $primary-500;
 			background: $primary-400;
 			border-radius: 100%;
+			box-shadow: inset 0 0 0 0.1rem $primary-500;
 		}
 	}
 	&__day--end {
 		border-radius: 0 100% 100% 0;
 	}
 	&__day--between {
-		color: #fff;
 		margin: 0;
+		color: #fff;
 		background: $primary-300;
 	}
 }

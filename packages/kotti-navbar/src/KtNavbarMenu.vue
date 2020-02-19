@@ -3,22 +3,22 @@
 		<div v-for="(item, index) in sections" :key="index">
 			<div
 				v-if="item.title"
-				v-text="isNarrow ? '' : item.title"
 				class="kt-navbar-menu__section"
+				v-text="isNarrow ? '' : item.title"
 			/>
 			<a
+				v-for="(link, linkIndex) in item.links"
+				:key="linkIndex"
 				:class="{ active: link.isActive }"
 				class="kt-navbar-menu__item"
-				v-for="(link, index) in item.links"
-				:key="index"
 				:href="link.link ? link.link : null"
 				@click="$emit('menuLinkClick', link)"
 			>
 				<i class="yoco" v-text="link.icon" />
 				<span
 					v-if="!isNarrow"
-					v-text="link.title"
 					:data-test="`kt-navbar-section-item-${link.title.toLowerCase()}`"
+					v-text="link.title"
 				/>
 			</a>
 		</div>
@@ -40,26 +40,26 @@ export default {
 </script>
 <style lang="scss">
 .kt-navbar-menu {
-	text-align: left;
 	box-sizing: border-box;
 	padding: 0.4rem 1rem;
+	text-align: left;
 	&__section {
 		display: block;
-		text-transform: uppercase;
+		padding: 0.2rem 0;
+		margin-top: 0.4rem;
 		font-size: 0.85em;
 		font-weight: 700;
 		color: var(--navbar-color-light);
-		padding: 0.2rem 0;
-		margin-top: 0.4rem;
+		text-transform: uppercase;
 	}
 	&__item {
 		display: block;
-		font-size: 0.75rem;
 		padding: 0.6rem 0;
+		font-size: 0.75rem;
 		color: inherit;
 		&:hover {
-			cursor: pointer;
 			color: var(--navbar-color-active);
+			cursor: pointer;
 		}
 		&.active {
 			color: var(--navbar-color-active);

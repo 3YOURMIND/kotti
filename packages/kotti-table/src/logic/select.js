@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce'
-import { getEnabledRows } from './disable'
+import deepEql from 'deep-eql'
 
 export const defaultState = {
 	selection: [],
@@ -18,30 +18,33 @@ export const mutations = {
 		}
 		updateAllSelected(state)
 	},
-	toggleAllSelection: debounce(store => {
+	toggleAllSelection: debounce((store) => {
 		const { state } = store
 		// refresh disabled rows status in case of external influence
 		store.commit('updateDisabledRows')
 		const { rows = [], isAllRowsDisabled, enabledRows } = state
-		if (rows.length === 0 || isAllRowsDisabled) return
+		if (rows.length === 0 || isAllRowsDisabled) {
+			store.commit('setSelected', [])
+			return
+		}
 
-		const oldSelection = state.selection
-		const shouldSelectAll = !(state.isAllSelected || oldSelection.length)
+		// const shouldSelectAll = !(state.isAllSelected || oldSelection.length)
+		const shouldSelectAll = !state.isAllSelected //more intuitive
 
-		state.selection = shouldSelectAll ? [...enabledRows] : []
+		store.commit('setSelected', shouldSelectAll ? [...enabledRows] : [])
 
 		const selection = [...state.selection]
-		state.isAllSelected = shouldSelectAll
-
 		store.emit('selectionChange', selection)
 		store.emit('selectAll', selection)
 	}),
-	setSelectedIndexes(store, indexes) {
+
+	setSelectedIndices(store, indices) {
 		store.commit(
 			'setSelected',
-			indexes.map(index => store.get('getRowByVisibleIndex', index)),
+			indices.map((index) => store.get('getRowByVisibleIndex', index)),
 		)
 	},
+
 	setSelected({ state }, selection) {
 		state.selection = selection
 		updateAllSelected(state)
@@ -53,7 +56,7 @@ export const getters = {
 		return state.rows[index]
 	},
 	getIndexByRow(state, row) {
-		return state.rows.findIndex(r => r === row)
+		return state.rows.findIndex((r) => r === row)
 	},
 	getRowKey(state, row) {
 		return typeof state.rowKey === 'function'
@@ -61,14 +64,14 @@ export const getters = {
 			: row[state.rowKey]
 	},
 	isSelected(state, row) {
-		return (state.selection || []).indexOf(row) > -1
+		return state.selection.some((e) => deepEql(e, row))
 	},
 }
 
 export function toggleRowSelection(state, row, selected) {
 	let changed = false
 	const selection = state.selection
-	const index = selection.indexOf(row)
+	const index = selection.findIndex((selectedRow) => deepEql(selectedRow, row))
 	if (typeof selected === 'undefined') {
 		if (index === -1) {
 			selection.push(row)
@@ -88,20 +91,6 @@ export function toggleRowSelection(state, row, selected) {
 	return changed
 }
 
-export function getSelectCheckForState(state) {
-	const { selection, rowKey } = state
-
-	let selectedMap
-	if (rowKey) {
-		selectedMap = getKeysMap(state.selection, rowKey)
-	}
-
-	if (selectedMap) {
-		return row => Boolean(selectedMap[getRowIdentity(row, rowKey)])
-	}
-	return row => selection.indexOf(row) !== -1
-}
-
 export function getKeysMap(list, key) {
 	const map = {}
 	for (const item of list) map[item[key]] = item
@@ -114,50 +103,36 @@ export function getRowIdentity(item, key = 'id') {
 
 export function updateAllSelected(state) {
 	const { rows, selection } = state
-	if (!rows || rows.length === 0) {
+	if (!rows || rows.length === 0 || !selection || selection.length === 0) {
 		state.isAllSelected = false
 		return
 	}
-
-	// const isSelected = getSelectCheckForState(state)
 
 	state.isAllSelected = selection.length === rows.length
 }
 
 export function cleanSelection(store) {
-	const { rowKey } = store
-	const { selection = [], rows } = store.state
-	let deleted
+	const { rowKey, state } = store
+	const initialSelectionLength = state.selection.length
 	if (rowKey) {
-		deleted = []
-		const selectedMap = getKeysMap(selection, rowKey)
-		const dataMap = getKeysMap(rows, rowKey)
-		Object.keys(selectedMap).forEach(key => {
-			if (!dataMap[key]) {
-				deleted.push(selectedMap[key])
-			}
-		})
+		const rowsSet = new Set(state.rows.map((r) => r[rowKey]))
+		state.selection = state.selection.filter((s) => rowsSet.has(s[rowKey]))
 	} else {
-		deleted = selection.filter(item => rows.indexOf(item) === -1)
+		state.selection = state.selection.filter((s) =>
+			state.rows.some((r) => deepEql(r, s)),
+		)
 	}
 
-	deleted.forEach(deletedItem => {
-		selection.splice(selection.indexOf(deletedItem), 1)
-	})
-
-	if (deleted.length) {
-		store.emit('selectionChange', [...selection])
+	if (initialSelectionLength !== state.selection.length) {
+		store.emit('selectionChange', [...state.selection])
 	}
 }
 
 export function clearSelection(store) {
 	const state = store.state
 	state.isAllSelected = false
-	const oldSelection = state.selection
 	if (state.selection.length) {
 		state.selection = []
-	}
-	if (oldSelection.length > 0) {
-		store.emit('selectionChange', [...state.selection])
+		store.emit('selectionChange', [])
 	}
 }

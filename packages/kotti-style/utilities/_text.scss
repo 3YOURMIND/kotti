@@ -2,9 +2,9 @@
 
 .text-truncate,
 .truncate {
-	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 	.show-all {
 		overflow: auto;
 	}
@@ -25,6 +25,7 @@ $text-aligns: (
 	text-justify: justify,
 );
 
+/* stylelint-disable */
 @each $element, $color in $text-colors {
 	.#{$element} {
 		color: $color;
@@ -36,3 +37,4 @@ $text-aligns: (
 		text-align: $align;
 	}
 }
+/* stylelint-enable */

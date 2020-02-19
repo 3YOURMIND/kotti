@@ -5,45 +5,45 @@
 			<div :class="{ 'has-icon-left': icon }" class="has-icon-right">
 				<input
 					ref="input"
-					:class="formInputClass"
 					v-model="selectedLabel"
+					:class="formInputClass"
 					:disabled="disabled"
 					:placeholder="placeholder"
-					@input="handleInputChange($event.target.value)"
 					:required="required"
+					v-bind="$attrs"
+					type="text"
+					@input="handleInputChange($event.target.value)"
 					@focus="handleInputFocus"
 					@keydown.esc.stop.prevent="visible = false"
 					@click.stop="show"
-					v-bind="$attrs"
-					type="text"
 				/>
 				<i
 					v-if="icon"
-					v-text="icon"
 					class="yoco form-icon"
 					style="pointer-events: none;"
+					v-text="icon"
 				/>
 				<i
-					v-text="indicatorRep"
 					class="yoco form-icon select-opening"
 					style="pointer-events: none;"
+					v-text="indicatorRep"
 				/>
 				<Portal>
 					<template v-if="visible">
 						<div
-							:style="selectorOptionStyle"
 							v-on-clickaway="handleClickOutside"
+							:style="selectorOptionStyle"
 							class="kt-select-options"
 						>
 							<ul>
 								<li
 									v-if="isLoading"
-									v-text="loadingText"
 									class="kt-select-option kt-select-option--loading"
+									v-text="loadingText"
 								/>
 								<li
-									v-else
 									v-for="(option, index) in optionsRep"
+									v-else
 									:key="index"
 									:class="['kt-select-option', optionClass(option)]"
 									@click="handleOptionClick(option)"
@@ -51,8 +51,8 @@
 								/>
 								<li
 									v-if="!optionsRep.length && !isLoading"
-									v-text="noResultsFoundText"
 									class="kt-select-option kt-select-option--empty"
+									v-text="noResultsFoundText"
 								/>
 							</ul>
 						</div>
@@ -122,13 +122,13 @@ export default {
 			default: null,
 			type: String,
 		},
-		value: {
-			default: null,
-			type: [String, Number, Boolean, Object, null],
-		},
 		required: {
 			default: false,
 			type: Boolean,
+		},
+		value: {
+			default: null,
+			type: [String, Number, Boolean, Object, null],
 		},
 	},
 	data() {
@@ -147,8 +147,13 @@ export default {
 				'form-input--compact--focus': this.isCompact && this.visible,
 			}
 		},
-		invalidInput() {
-			return this.required && !this.selectedLabel
+		filterResults() {
+			if (this.queryString === null) return this.options
+
+			const query = this.queryString.toLowerCase()
+			return this.options.filter(({ label }) =>
+				label !== null ? label.toLowerCase().includes(query) : false,
+			)
 		},
 		formLabelClass() {
 			return {
@@ -158,29 +163,20 @@ export default {
 					this.isCompact && (this.visible || this.selectedLabel),
 			}
 		},
-		indicatorRep() {
-			return this.visible ? 'chevron_up' : 'chevron_down'
-		},
-		optionsRep() {
-			return this.filterable ? this.filterResults : this.options
-		},
-		filterResults() {
-			if (this.queryString === null) return this.options
-
-			const query = this.queryString.toLowerCase()
-			return this.options.filter(({ label, value }) => {
-				return label !== null
-					? label.toLowerCase().includes(query)
-					: value !== null
-					? value.toLowerCase().includes(query)
-					: false
-			})
-		},
 		hasLabel() {
 			return this.label && this.label.length
 		},
+		indicatorRep() {
+			return this.visible ? 'chevron_up' : 'chevron_down'
+		},
+		invalidInput() {
+			return this.required && !this.selectedLabel
+		},
 		labelRep() {
 			return this.required ? `${this.label} *` : this.label
+		},
+		optionsRep() {
+			return this.filterable ? this.filterResults : this.options
 		},
 	},
 	watch: {
@@ -194,7 +190,9 @@ export default {
 				if (value === null || this.options.length === 0) {
 					return
 				}
-				const selectedItem = this.options.find(option => option.value === value)
+				const selectedItem = this.options.find(
+					(option) => option.value === value,
+				)
 				this.selectedLabel = selectedItem.label
 			},
 		},
@@ -220,13 +218,21 @@ export default {
 				this.selectorOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
 			}
 		},
-		isOptionAllowed({ disabled, value }) {
-			if (disabled) return false
-			if (!this.allowEmpty && value === null) return false
-			return true
+		handleClickOutside() {
+			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
+				this.visible = false
+			}
 		},
-		optionClass(option) {
-			if (!this.isOptionAllowed(option)) return 'kt-select-option--disabled'
+		handleInputChange(value) {
+			if (!this.filterable) {
+				this.selectedLabel = ''
+				return
+			}
+			this.setQueryString(value)
+		},
+		handleInputFocus(event) {
+			this.$emit('focus', event)
+			this.show()
 		},
 		handleOptionClick(option) {
 			if (!this.isOptionAllowed(option)) return
@@ -240,17 +246,25 @@ export default {
 			this.setQueryString('')
 			this.visible = false
 		},
-		handleInputChange(value) {
-			if (!this.filterable) {
-				this.selectedLabel = ''
-				return
-			}
-			this.setQueryString(value)
+		isOptionAllowed({ disabled, value }) {
+			if (disabled) return false
+			if (!this.allowEmpty && value === null) return false
+			return true
+		},
+		optionClass(option) {
+			if (!this.isOptionAllowed(option)) return 'kt-select-option--disabled'
 		},
 		setQueryString(value) {
 			if (!this.filterable) return
 			this.queryString = value
 			this.triggerAsync()
+		},
+		show() {
+			if (!this.visible) {
+				this.computeSelectorOptionsStyle()
+				this.visible = true
+				this.triggerAsync()
+			}
 		},
 		triggerAsync() {
 			if (!this.isAsync) return
@@ -260,41 +274,25 @@ export default {
 				this.queryString === null ? null : this.queryString.toLowerCase(),
 			)
 		},
-		handleInputFocus(event) {
-			this.$emit('focus', event)
-			this.show()
-		},
-		show() {
-			if (!this.visible) {
-				this.computeSelectorOptionsStyle()
-				this.visible = true
-				this.triggerAsync()
-			}
-		},
-		handleClickOutside() {
-			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
-				this.visible = false
-			}
-		},
 	},
 }
 </script>
-<style lang="scss" scoped>
-@import '../../kotti-style/_variables.scss';
-@import '../../kotti-style/mixins/index.scss';
 
+<style lang="scss" scoped>
+@import '../../kotti-style/mixins/index.scss';
+@import '../../kotti-style/_variables.scss';
 .form-select {
-	appearance: none;
+	width: 100%;
+	height: $control-size;
+	padding: $control-padding-y $control-padding-x;
+	font-size: $font-size;
+	line-height: $line-height;
+	color: inherit;
+	vertical-align: middle;
 	border: $border-width solid $lightgray-400;
 	border-radius: $border-radius;
-	color: inherit;
-	font-size: $font-size;
-	height: $control-size;
-	line-height: $line-height;
 	outline: none;
-	padding: $control-padding-y $control-padding-x;
-	vertical-align: middle;
-	width: 100%;
+	appearance: none;
 
 	&[size],
 	&[multiple] {
@@ -306,10 +304,10 @@ export default {
 	}
 
 	&:not([multiple]):not([size]) {
+		padding-right: $control-icon-size + $control-padding-x;
 		background: #fff
 			url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E")
 			no-repeat right 0.35rem center/.4rem 0.5rem;
-		padding-right: $control-icon-size + $control-padding-x;
 	}
 
 	&:focus {
@@ -323,19 +321,20 @@ export default {
 
 	// Select sizes
 	&.select-sm {
-		font-size: $font-size-sm;
 		height: $control-size-sm;
 		padding: $control-padding-y-sm ($control-icon-size + $control-padding-x-sm)
 			$control-padding-y-sm $control-padding-x-sm;
+		font-size: $font-size-sm;
 	}
 
 	&.select-lg {
-		font-size: $font-size-lg;
 		height: $control-size-lg;
 		padding: $control-padding-y-lg ($control-icon-size + $control-padding-x-lg)
 			$control-padding-y-lg $control-padding-x-lg;
+		font-size: $font-size-lg;
 	}
 }
+
 .selects .form-group {
 	.form-icon {
 		right: auto;
@@ -346,25 +345,26 @@ export default {
 		cursor: pointer;
 	}
 }
+
 .kt-select-options {
 	position: absolute;
-	margin-top: $unit-1;
-	background: #fff;
-	box-shadow: $box-shadow;
-	border-radius: $border-radius;
-	padding: 0.4rem 0;
 	z-index: $zindex-4;
 	max-height: 20rem;
+	padding: 0.4rem 0;
+	margin-top: $unit-1;
 	overflow: hidden;
 	overflow-y: auto;
+	background: #fff;
+	border-radius: $border-radius;
+	box-shadow: $box-shadow;
 	ul {
 		margin: 0;
 	}
 
 	.kt-select-option {
+		padding: 0.2rem 0.4rem;
 		margin: 0;
 		line-height: 1.2rem;
-		padding: 0.2rem 0.4rem;
 		list-style: none;
 
 		&.kt-select-option--disabled {
@@ -377,8 +377,8 @@ export default {
 
 		&.kt-select-option--empty,
 		&.kt-select-option--loading {
-			text-align: center;
 			color: $lightgray-500;
+			text-align: center;
 
 			&:hover {
 				cursor: default;

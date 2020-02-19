@@ -5,9 +5,9 @@
 	position: relative;
 
 	.form-icon {
-		color: $lightgray-500;
-		font-size: 1rem;
 		position: absolute;
+		font-size: 1rem;
+		color: $lightgray-500;
 	}
 }
 
@@ -48,16 +48,16 @@
 		color: $color;
 	}
 	.form-validation-text {
+		padding: 0.2rem;
 		font-size: $font-size-sm;
 		color: $color;
-		padding: 0.2rem;
 	}
 	.form-radio,
 	.form-checkbox,
 	.form-switch {
 		input:checked + .form-icon {
-			border-color: $color;
 			background: $color;
+			border-color: $color;
 		}
 	}
 }
@@ -80,8 +80,8 @@
 	&:disabled,
 	&.disabled {
 		@include form-state($lightgray-400);
-		opacity: 0.46;
-		background: $lightgray-300;
 		cursor: not-allowed;
+		background: $lightgray-300;
+		opacity: 0.46;
 	}
 }

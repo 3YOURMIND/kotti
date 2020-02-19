@@ -21,14 +21,13 @@ export default Vue.extend({
 			default: 'DIV',
 		},
 	},
-	render: function render(h) {
-		if (this.disabled) {
-			var nodes = this.$scopedSlots && this.$scopedSlots.default()
-			if (!nodes) return h()
-			return nodes.length < 2 && !nodes[0].text ? nodes : h(this.tag, nodes)
-		}
-
-		return h()
+	watch: {
+		disabled: {
+			immediate: true,
+			handler: function handler(disabled) {
+				disabled ? this.unmount() : this.$nextTick(this.mount)
+			},
+		},
 	},
 	created: function created() {
 		if (!this.getTargetEl()) {
@@ -52,14 +51,6 @@ export default Vue.extend({
 	},
 	beforeDestroy: function beforeDestroy() {
 		this.unmount()
-	},
-	watch: {
-		disabled: {
-			immediate: true,
-			handler: function handler(disabled) {
-				disabled ? this.unmount() : this.$nextTick(this.mount)
-			},
-		},
 	},
 	methods: {
 		// This returns the element into which the content should be mounted.
@@ -100,6 +91,15 @@ export default Vue.extend({
 				delete this.container
 			}
 		},
+	},
+	render: function render(h) {
+		if (this.disabled) {
+			var nodes = this.$scopedSlots && this.$scopedSlots.default()
+			if (!nodes) return h()
+			return nodes.length < 2 && !nodes[0].text ? nodes : h(this.tag, nodes)
+		}
+
+		return h()
 	},
 })
 

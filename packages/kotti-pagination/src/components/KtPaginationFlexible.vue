@@ -2,28 +2,28 @@
 	<div class="inline-container" :style="containerStyle">
 		<li
 			v-if="showFirstPage"
-			v-text="humanReadablePageNumber(0)"
 			:class="paginatorClasses(0, 'page-item--active')"
 			@click="$emit('setPage', 0)"
+			v-text="humanReadablePageNumber(0)"
 		/>
-		<li v-if="showLeftDots" v-text="'...'" class="c-auto-important page-item" />
+		<li v-if="showLeftDots" class="c-auto-important page-item" v-text="'...'" />
 		<li
 			v-for="(page, index) in neighborValues"
 			:key="index"
 			:class="paginatorClasses(page, 'page-item--active')"
-			v-text="humanReadablePageNumber(page)"
 			@click="$emit('setPage', page)"
+			v-text="humanReadablePageNumber(page)"
 		/>
 		<li
 			v-if="showRightDots"
-			v-text="'...'"
 			class="c-auto-important page-item"
+			v-text="'...'"
 		/>
 		<li
 			v-if="showLastPage"
-			v-text="humanReadablePageNumber(maximumPage)"
 			:class="paginatorClasses(maximumPage, 'page-item--active')"
 			@click="$emit('setPage', maximumPage)"
+			v-text="humanReadablePageNumber(maximumPage)"
 		/>
 	</div>
 </template>
@@ -42,17 +42,6 @@ export default {
 		currentPage: { type: Number, required: true },
 		fixedWidth: { type: Boolean, required: true },
 		maximumPage: { type: Number, required: true },
-	},
-	methods: {
-		paginatorClasses(page, className) {
-			return {
-				'page-item': true,
-				[className]: this.currentPage === page,
-			}
-		},
-		humanReadablePageNumber(page) {
-			return page + 1
-		},
 	},
 	computed: {
 		pixelMargin() {
@@ -111,12 +100,23 @@ export default {
 			return values
 		},
 	},
+	methods: {
+		paginatorClasses(page, className) {
+			return {
+				'page-item': true,
+				[className]: this.currentPage === page,
+			}
+		},
+		humanReadablePageNumber(page) {
+			return page + 1
+		},
+	},
 }
 </script>
 
 <style lang="scss" scoped>
 .inline-container {
-	justify-content: center;
 	display: inline-flex;
+	justify-content: center;
 }
 </style>

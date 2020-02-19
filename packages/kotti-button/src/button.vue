@@ -2,10 +2,11 @@
 	<component
 		:is="element"
 		:class="mainClasses"
-		@click="handleClick"
-		@mouseover="isHover = true"
-		@mouseleave="isHover = false"
+		:style="themeColor"
 		role="button"
+		@click="handleClick"
+		@mouseover="handleMouseover"
+		@mouseleave="handleMouseleave"
 	>
 		<i v-if="loading" class="kt-circle-loading" />
 		<i v-else-if="icon" class="yoco" v-text="icon" />
@@ -69,16 +70,15 @@ export default {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	text-align: center;
 
 	height: var(--default-button-height);
 	padding: 0 var(--unit-4);
 
 	font-weight: 600;
-	user-select: none;
-	border-radius: $border-radius;
 	cursor: pointer;
+	user-select: none;
 	border: 1px solid transparent;
+	border-radius: $border-radius;
 	transition: 30ms opacity ease-in-out;
 
 	&:active {
@@ -101,36 +101,37 @@ export default {
 }
 
 // Color modifier
+/* stylelint-disable-next-line */
 .kt-button {
-	background-color: var(--interactive-02);
 	color: var(--button-main-color-dark);
+	background-color: var(--interactive-02);
 	border-color: var(--ui-02);
 	&:hover {
 		background-color: var(--button-main-color-light);
 		border-color: var(--button-main-color-light);
 	}
 	.kt-circle-loading {
-		border-left-color: var(--button-main-color-dark);
 		border-bottom-color: var(--button-main-color-dark);
+		border-left-color: var(--button-main-color-dark);
 	}
 }
 
 .kt-button.primary {
-	background-color: var(--button-main-color);
 	color: var(--text-04);
+	background-color: var(--button-main-color);
 	border-color: var(--button-main-color-dark);
 	&:hover {
 		background-color: var(--button-main-color-dark);
 	}
 	.kt-circle-loading {
-		border-left-color: var(--text-04);
 		border-bottom-color: var(--text-04);
+		border-left-color: var(--text-04);
 	}
 }
 
 .kt-button.secondary {
-	background-color: var(--interactive-02);
 	color: var(--button-main-color-dark);
+	background-color: var(--interactive-02);
 	border: 1px solid var(--button-main-color-dark);
 	&:hover {
 		background-color: var(--button-main-color-light);
@@ -148,24 +149,24 @@ export default {
 .kt-button.danger {
 	color: var(--danger);
 	.kt-circle-loading {
-		border-left-color: var(--danger);
 		border-bottom-color: var(--danger);
+		border-left-color: var(--danger);
 	}
 	&:hover {
 		color: var(--text-04);
 		background-color: var(--danger);
 		border-color: transparent;
 		.kt-circle-loading {
-			border-left-color: var(--text-04);
 			border-bottom-color: var(--text-04);
+			border-left-color: var(--text-04);
 		}
 	}
 }
 
 // With icon
 .kt-button.icon i {
-	font-size: 1rem;
 	margin-right: 0.2rem;
+	font-size: 1rem;
 }
 
 .kt-button.icon-only {
@@ -178,8 +179,8 @@ export default {
 // Disabled button
 .kt-button.disabled,
 .kt-button:disabled {
-	opacity: 0.46;
 	pointer-events: none;
+	opacity: 0.46;
 }
 
 .kt-button.bottom {

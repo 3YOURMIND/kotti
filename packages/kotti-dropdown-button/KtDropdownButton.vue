@@ -24,7 +24,7 @@
 				</KtButton>
 			</KtButtonGroup>
 			<div v-if="!disabled" slot="content">
-				<slot name="KtDropdownMenus">Dropdown Menu</slot>
+				<slot name="content">Dropdown Menu</slot>
 			</div>
 		</KtPopover>
 	</div>
@@ -36,6 +36,11 @@ import KtPopover from '../kotti-popover'
 
 export default {
 	name: 'KtDropdownButton',
+	components: {
+		KtButton,
+		KtButtonGroup,
+		KtPopover,
+	},
 	props: {
 		dropdownIcon: {
 			type: String,
@@ -54,50 +59,38 @@ export default {
 			default: false,
 		},
 	},
-	components: {
-		KtButton,
-		KtButtonGroup,
-		KtPopover,
-	},
 }
 </script>
 <style lang="scss">
 @import '../kotti-style/_variables.scss';
-
 .kt-dropdown-button {
 	display: inline-block;
 	margin: 0 $unit-1;
 	.button-group {
-		display: flex;
 		position: relative;
+		display: flex;
 		margin-right: 32px;
 	}
 	.kt-popper {
-		padding-left: 0;
-		padding-right: 0;
 		padding-top: $unit-1;
+		padding-right: $unit-1;
+		padding-right: 0;
 		padding-bottom: $unit-1;
-	}
-	.kt-dropdown-menu {
-		margin-left: 0;
-		margin-right: 0;
-		padding-left: $unit-3;
-		padding-right: $unit-3;
+		padding-left: $unit-1;
+		padding-left: 0;
 	}
 }
 .kt-dropdown-button__button {
-	pointer-events: none;
 	position: relative;
 	z-index: 1;
-	&:disabled {
-		// background: transparent !important;
-	}
 }
 .kt-dropdown-button__icon {
-	padding: 0 $unit-2;
 	position: absolute;
 	left: -1px;
+	padding: 0 $unit-2;
 	margin-left: 100%;
+	pointer-events: none;
+	border-left: 0 !important;
 	border-radius: 0.2em !important;
 	.yoco {
 		margin: 0 !important;

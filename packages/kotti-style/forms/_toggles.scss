@@ -2,22 +2,22 @@
 .form-checkbox,
 .form-radio,
 .form-switch {
+	position: relative;
 	display: inline-block;
-	line-height: $line-height;
-	margin: ($control-size - $control-size-sm) / 2 0;
 	min-height: 1.2rem;
 	padding: (($control-size-sm - $line-height) / 2) $control-padding-x
 		(($control-size-sm - $line-height) / 2)
 		($control-icon-size + $control-padding-x);
-	position: relative;
+	margin: ($control-size - $control-size-sm) / 2 0;
+	line-height: $line-height;
 
 	input {
-		clip: rect(0, 0, 0, 0);
+		position: absolute;
+		width: 1px;
 		height: 1px;
 		margin: -1px;
 		overflow: hidden;
-		position: absolute;
-		width: 1px;
+		clip: rect(0, 0, 0, 0);
 
 		&:focus + .form-icon {
 			// @include control-shadow();
@@ -34,33 +34,33 @@
 	}
 
 	.form-icon {
+		position: absolute;
+		display: inline-block;
+		cursor: pointer;
 		// @include control-transition();
 		border: $border-width solid $lightgray-400;
-		cursor: pointer;
-		display: inline-block;
-		position: absolute;
 	}
 
 	// Input checkbox, radio and switch sizes
 	&.input-sm {
-		font-size: $font-size-sm;
 		margin: 0;
+		font-size: $font-size-sm;
 	}
 
 	&.input-lg {
-		font-size: $font-size-lg;
 		margin: ($control-size-lg - $control-size-sm) / 2 0;
+		font-size: $font-size-lg;
 	}
 }
 
 .form-checkbox,
 .form-radio {
 	.form-icon {
-		background: $lightgray-300;
-		height: $control-icon-size;
-		left: 0;
 		top: ($control-size-sm - $control-icon-size) / 2;
+		left: 0;
 		width: $control-icon-size;
+		height: $control-icon-size;
+		background: $lightgray-300;
 	}
 
 	input {
@@ -77,19 +77,19 @@
 	input {
 		&:checked + .form-icon {
 			&::before {
-				background-clip: padding-box;
-				border: $border-width-lg solid #fff;
-				border-left-width: 0;
-				border-top-width: 0;
-				content: '';
-				height: 10px;
-				left: 50%;
-				margin-left: -3px;
-				margin-top: -6px;
 				position: absolute;
 				top: 50%;
-				transform: rotate(45deg);
+				left: 50%;
 				width: 6px;
+				height: 10px;
+				margin-top: -6px;
+				margin-left: -3px;
+				content: '';
+				background-clip: padding-box;
+				border: $border-width-lg solid #fff;
+				border-top-width: 0;
+				border-left-width: 0;
+				transform: rotate(45deg);
 			}
 		}
 
@@ -98,15 +98,15 @@
 			border-color: $primary-500;
 
 			&::before {
-				background: $lightgray-400;
-				content: '';
-				height: 2px;
-				left: 50%;
-				margin-left: -5px;
-				margin-top: -1px;
 				position: absolute;
 				top: 50%;
+				left: 50%;
 				width: 10px;
+				height: 2px;
+				margin-top: -1px;
+				margin-left: -5px;
+				content: '';
+				background: $lightgray-400;
 			}
 		}
 	}
@@ -120,15 +120,15 @@
 	input {
 		&:checked + .form-icon {
 			&::before {
-				background: #fff;
-				border-radius: 50%;
-				content: '';
-				height: 4px;
-				left: 50%;
 				position: absolute;
 				top: 50%;
-				transform: translate(-50%, -50%);
+				left: 50%;
 				width: 4px;
+				height: 4px;
+				content: '';
+				background: #fff;
+				border-radius: 50%;
+				transform: translate(-50%, -50%);
 			}
 		}
 	}
@@ -139,25 +139,25 @@
 	padding-left: ($unit-8 + $control-padding-x);
 
 	.form-icon {
+		top: ($control-size-sm - $unit-4) / 2 - $border-width;
+		left: 0;
+		width: $unit-8;
+		height: $unit-4 + $border-width * 2;
 		background: $lightgray-400;
 		background-clip: padding-box;
 		border-radius: $unit-2 + $border-width;
-		height: $unit-4 + $border-width * 2;
-		left: 0;
-		top: ($control-size-sm - $unit-4) / 2 - $border-width;
-		width: $unit-8;
 
 		&::before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: block;
+			width: $unit-4;
+			height: $unit-4;
+			content: '';
 			// @include control-transition();
 			background: #fff;
 			border-radius: 50%;
-			content: '';
-			display: block;
-			height: $unit-4;
-			left: 0;
-			position: absolute;
-			top: 0;
-			width: $unit-4;
 		}
 	}
 
@@ -176,8 +176,8 @@
 }
 
 .form-switch.form-switch-right {
-	padding-left: 0;
 	padding-right: ($unit-8 + $control-padding-x);
+	padding-left: 0;
 
 	.form-icon {
 		right: 0;

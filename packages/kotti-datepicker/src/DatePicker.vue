@@ -51,7 +51,7 @@ export default {
 		daysTranslations: {
 			type: Array,
 			default: () =>
-				range(0, 6).map(day =>
+				range(0, 6).map((day) =>
 					dayjs()
 						.set('day', day)
 						.format('ddd'),
@@ -61,7 +61,7 @@ export default {
 		monthsTranslations: {
 			type: Array,
 			default: () =>
-				range(0, 11).map(month =>
+				range(0, 11).map((month) =>
 					dayjs()
 						.set('date', 1)
 						.set('month', month)

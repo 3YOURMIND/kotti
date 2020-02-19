@@ -11,10 +11,10 @@
 				class="comment__message"
 				v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 			/>
-			<div class="comment-inline-edit form-group" v-else>
+			<div v-else class="comment-inline-edit form-group">
 				<textarea
-					class="comment-inline-edit-input form-input"
 					v-model="inlineMessageValue"
+					class="comment-inline-edit-input form-input"
 				></textarea>
 				<KtButtonGroup class="comment-inline-edit-buttons" shadow>
 					<KtButton icon="close" @click="cancelInlineEdit" />
@@ -28,7 +28,7 @@
 				>
 					<i class="yoco">comment</i> Reply
 				</div>
-				<div class="action__more" v-if="allowChange">
+				<div v-if="allowChange" class="action__more">
 					<i class="yoco">dots</i>
 					<div class="action__options">
 						<a @click="startInlineEdit"> <li>Edit</li> </a>
@@ -53,8 +53,8 @@
 				/>
 			</div>
 			<KtCommentInput
-				isInline
 				v-if="showInlineReply"
+				isInline
 				:parentId="id"
 				:replyToUserId="replyToUserId"
 				:placeholder="replyToText"
@@ -75,24 +75,24 @@ import KtCommentInput from './CommentInput.vue'
 
 export default {
 	name: 'KtComment',
-	props: {
-		dangerouslyOverrideParser: { default: escape, type: Function },
-		postEscapeParser: { default: _ => _, type: Function },
-		createdTime: String,
-		id: Number | String,
-		message: String,
-		replies: Array,
-		userAvatar: String,
-		userId: Number | String,
-		userName: String,
-		allowChange: Boolean,
-	},
 	components: {
 		KtAvatar,
 		KtButton,
 		KtButtonGroup,
 		KtCommentReply,
 		KtCommentInput,
+	},
+	props: {
+		dangerouslyOverrideParser: { default: escape, type: Function },
+		postEscapeParser: { default: (_) => _, type: Function },
+		createdTime: String,
+		id: [Number, String],
+		message: String,
+		replies: Array,
+		userAvatar: String,
+		userId: [Number, String],
+		userName: String,
+		allowChange: Boolean,
 	},
 	data() {
 		return {

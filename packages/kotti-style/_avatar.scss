@@ -1,11 +1,11 @@
 .avatar {
-	background: $lightgray-400;
+	position: relative;
+	display: inline-flex;
 	width: 2.4rem;
 	height: 2.4rem;
-	display: inline-flex;
-	position: relative;
-	border-radius: 100%;
+	background: $lightgray-400;
 	border: 0.1rem solid #fff;
+	border-radius: 100%;
 }
 
 .avatar--hover:hover {
@@ -14,17 +14,17 @@
 }
 
 .avatar-img {
-	object-fit: cover;
-	border-radius: 100%;
 	width: 100%;
 	height: 100%;
+	border-radius: 100%;
+	object-fit: cover;
 }
 
 .avatar-group {
 	display: flex;
 	flex-direction: row-reverse;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: center;
 
 	.avatar {
 		margin-right: 0.2rem;
@@ -35,8 +35,8 @@
 	}
 
 	.avatar.avatar-number {
-		margin-left: 0.2rem;
 		align-items: center;
+		margin-left: 0.2rem;
 		background: $lightgray-400;
 		span {
 			width: 100%;
@@ -59,21 +59,21 @@
 }
 .avatar-fallback {
 	.avatar-fallback__head {
+		position: absolute;
 		top: 0.5rem;
 		left: 0.8rem;
 		width: 0.6rem;
 		height: 0.6rem;
-		position: absolute;
 		background: #fff;
 		border-radius: 100%;
 	}
 
 	.avatar-fallback__body {
+		position: absolute;
 		top: 1.3rem;
 		left: 0.5rem;
 		width: 1.2rem;
 		height: 0.4rem;
-		position: absolute;
 		background: #fff;
 		border-radius: 50% 50% 0 0;
 	}

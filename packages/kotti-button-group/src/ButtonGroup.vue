@@ -22,15 +22,14 @@ export default {
 </script>
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
-
 .button-group {
 	/** Fix for inline element space
 	https://css-tricks.com/fighting-the-space-between-inline-block-elements/ **/
 	font-size: 0;
 
 	.kt-button {
-		border-radius: 0;
 		font-size: $font-size;
+		border-radius: 0;
 	}
 
 	.kt-button:first-of-type {

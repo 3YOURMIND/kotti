@@ -8,8 +8,8 @@
 			</div>
 			<div class="comment-reply__body">
 				<div
-					class="comment-reply__message"
 					v-if="!isInlineEdit"
+					class="comment-reply__message"
 					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
 					<span
@@ -17,10 +17,10 @@
 					/>
 					<i class="yoco" v-text="'comment'" />
 				</div>
-				<div class="comment-inline-edit form-group" v-else>
+				<div v-else class="comment-inline-edit form-group">
 					<textarea
-						class="comment-inline-edit-input form-input"
 						v-model="inlineMessageValue"
+						class="comment-inline-edit-input form-input"
 					></textarea>
 					<KtButtonGroup class="comment-inline-edit-buttons" shadow>
 						<KtButton icon="close" @click="cancelInlineEdit" />
@@ -28,8 +28,8 @@
 					</KtButtonGroup>
 				</div>
 				<div
-					class="comment-reply__action action__more"
 					v-if="!isInlineEdit & allowChange"
+					class="comment-reply__action action__more"
 				>
 					<i class="yoco">dots</i>
 					<div class="action__options">
@@ -57,13 +57,13 @@ export default {
 	},
 	props: {
 		dangerouslyOverrideParser: { default: escape, type: Function },
-		postEscapeParser: { default: _ => _, type: Function },
+		postEscapeParser: { default: (_) => _, type: Function },
 		parser: { default: escape, type: Function },
 		createdTime: String,
-		id: Number | String,
+		id: [Number, String],
 		message: String,
 		userAvatar: String,
-		userId: Number | String,
+		userId: [Number, String],
 		userName: String,
 		allowChange: Boolean,
 	},

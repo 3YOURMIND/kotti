@@ -40,17 +40,6 @@ export default {
 			},
 		}
 	},
-	methods: {
-		redirectRouter(link) {
-			this.$router.push(link.path)
-		},
-		isCurrentPage(path) {
-			return path === '/'
-				? this.$route.path === '/'
-				: this.$route.path.includes(path)
-		},
-	},
-
 	computed: {
 		globalMenu() {
 			return [
@@ -109,6 +98,16 @@ export default {
 			]
 		},
 	},
+	methods: {
+		redirectRouter(link) {
+			this.$router.push(link.path)
+		},
+		isCurrentPage(path) {
+			return path === '/'
+				? this.$route.path === '/'
+				: this.$route.path.includes(path)
+		},
+	},
 }
 </script>
 
@@ -119,8 +118,8 @@ export default {
 	width: 100%;
 }
 li.nuxt-link-active {
+	font-weight: 600;
 	background: rgba(0, 0, 0, 0.2);
 	border-radius: 0.1rem;
-	font-weight: 600;
 }
 </style>
