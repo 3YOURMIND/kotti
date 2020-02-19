@@ -72,6 +72,11 @@ export const tokens = [
 		reference: 'gray-50',
 	},
 	{
+		name: 'ui-04',
+		description: 'High contrast border',
+		reference: 'gray-60',
+	},
+	{
 		name: 'text-01',
 		description: 'Primary text\nHeaders',
 		reference: 'gray-80',
