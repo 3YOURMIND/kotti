@@ -46,6 +46,7 @@
 									v-else
 									:key="index"
 									:class="['kt-select-option', optionClass(option)]"
+									data-test="select"
 									@click="handleOptionClick(option)"
 									v-text="option.label"
 								/>
@@ -64,8 +65,8 @@
 </template>
 
 <script>
+import { Portal } from '@linusborg/vue-simple-portal'
 import { mixin as clickaway } from 'vue-clickaway'
-import { Portal } from '../../util/portal'
 import { isBrowser } from '../../util'
 
 export default {
@@ -122,13 +123,13 @@ export default {
 			default: null,
 			type: String,
 		},
-		required: {
-			default: false,
-			type: Boolean,
-		},
 		value: {
 			default: null,
 			type: [String, Number, Boolean, Object, null],
+		},
+		required: {
+			default: false,
+			type: Boolean,
 		},
 	},
 	data() {
@@ -137,6 +138,7 @@ export default {
 			queryString: '',
 			selectedLabel: '',
 			visible: false,
+			selectedLabelInternal: '',
 		}
 	},
 	computed: {
@@ -147,14 +149,6 @@ export default {
 				'form-input--compact--focus': this.isCompact && this.visible,
 			}
 		},
-		filterResults() {
-			if (this.queryString === null) return this.options
-
-			const query = this.queryString.toLowerCase()
-			return this.options.filter(({ label }) =>
-				label !== null ? label.toLowerCase().includes(query) : false,
-			)
-		},
 		formLabelClass() {
 			return {
 				'form-label': true,
@@ -163,20 +157,32 @@ export default {
 					this.isCompact && (this.visible || this.selectedLabel),
 			}
 		},
-		hasLabel() {
-			return this.label && this.label.length
-		},
 		indicatorRep() {
 			return this.visible ? 'chevron_up' : 'chevron_down'
 		},
-		invalidInput() {
-			return this.required && !this.selectedLabel
-		},
-		labelRep() {
-			return this.required ? `${this.label} *` : this.label
-		},
 		optionsRep() {
 			return this.filterable ? this.filterResults : this.options
+		},
+		filterResults() {
+			if (this.queryString === null) return this.options
+
+			const query = this.queryString.toLowerCase()
+			return this.options.filter(({ label }) =>
+				label !== null ? label.toLowerCase().includes(query) : false,
+			)
+		},
+		hasLabel() {
+			return this.label?.length
+		},
+		labelRep() {
+			const showRequired = this.required ? '*' : ''
+			return showRequired
+				? this.hasLabel
+					? `${this.label} ${showRequired}`
+					: showRequired
+				: this.hasLabel
+				? this.label
+				: ''
 		},
 	},
 	watch: {
@@ -196,6 +202,18 @@ export default {
 				this.selectedLabel = selectedItem.label
 			},
 		},
+		visible(newValue, oldValue) {
+			const isOpening = !oldValue && newValue
+			if (isOpening) {
+				this.selectedLabelInternal = this.selectedLabel
+				this.selectedLabel = ''
+			} else {
+				if (this.selectedLabel === '' && this.required) {
+					this.selectedLabel = this.selectedLabelInternal
+				}
+				this.selectedLabelInternal = ''
+			}
+		},
 	},
 	mounted() {
 		this.computeSelectorOptionsStyle()
@@ -207,44 +225,23 @@ export default {
 	methods: {
 		computeSelectorOptionsStyle() {
 			if (isBrowser) {
-				const top =
-					this.$refs.input.getBoundingClientRect().top -
-					window.document.body.getBoundingClientRect().top +
-					this.$refs.input.offsetHeight
+				const inputOffset = this.$refs.input.offsetHeight
+				const inputTop = this.$refs.input.getBoundingClientRect().top
+				const windowTop = window.document.body.getBoundingClientRect().top
+				const windowHeight = window.document.body.getBoundingClientRect().height
+				const top = inputTop - windowTop + inputOffset
+				const bottom = windowHeight - inputTop
+
 				const left =
 					this.$refs.input.getBoundingClientRect().left -
 					window.document.body.getBoundingClientRect().left
 				const width = this.$refs.input.offsetWidth
-				this.selectorOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
+				if (this.placement === 'bottom') {
+					this.selectorOptionStyle = `bottom: auto; top: ${top}px; left: ${left}px; width: ${width}px;`
+				} else {
+					this.selectorOptionStyle = `top: auto; bottom: ${bottom}px; left: ${left}px; width: ${width}px;`
+				}
 			}
-		},
-		handleClickOutside() {
-			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
-				this.visible = false
-			}
-		},
-		handleInputChange(value) {
-			if (!this.filterable) {
-				this.selectedLabel = ''
-				return
-			}
-			this.setQueryString(value)
-		},
-		handleInputFocus(event) {
-			this.$emit('focus', event)
-			this.show()
-		},
-		handleOptionClick(option) {
-			if (!this.isOptionAllowed(option)) return
-
-			this.selectedLabel = option.label
-			// const selectedItem = this.options.find(
-			// 	({ label }) => label === this.selectedLabel,
-			// )
-			const selectedItem = option //a scenario where this is not the same as above?
-			this.$emit('input', selectedItem.value)
-			this.setQueryString('')
-			this.visible = false
 		},
 		isOptionAllowed({ disabled, value }) {
 			if (disabled) return false
@@ -254,17 +251,26 @@ export default {
 		optionClass(option) {
 			if (!this.isOptionAllowed(option)) return 'kt-select-option--disabled'
 		},
+		handleOptionClick(option) {
+			if (!this.isOptionAllowed(option)) return
+
+			this.selectedLabel = option.label
+			const selectedItem = option
+			this.$emit('input', selectedItem.value)
+			this.setQueryString('')
+			this.visible = false
+		},
+		handleInputChange(value) {
+			if (!this.filterable) {
+				this.selectedLabel = ''
+				return
+			}
+			this.setQueryString(value)
+		},
 		setQueryString(value) {
 			if (!this.filterable) return
 			this.queryString = value
 			this.triggerAsync()
-		},
-		show() {
-			if (!this.visible) {
-				this.computeSelectorOptionsStyle()
-				this.visible = true
-				this.triggerAsync()
-			}
 		},
 		triggerAsync() {
 			if (!this.isAsync) return
@@ -274,14 +280,31 @@ export default {
 				this.queryString === null ? null : this.queryString.toLowerCase(),
 			)
 		},
+		handleInputFocus(event) {
+			this.$emit('focus', event)
+			this.show()
+		},
+		show() {
+			if (!this.visible) {
+				this.computeSelectorOptionsStyle()
+				this.visible = true
+				this.triggerAsync()
+			}
+		},
+		handleClickOutside() {
+			if (this.visible && (this.allowEmpty || this.selectedLabel)) {
+				this.visible = false
+			}
+		},
 	},
 }
 </script>
-
 <style lang="scss" scoped>
 @import '../../kotti-style/mixins/index.scss';
 @import '../../kotti-style/_variables.scss';
+
 .form-select {
+	appearance: none;
 	width: 100%;
 	height: $control-size;
 	padding: $control-padding-y $control-padding-x;
@@ -292,7 +315,6 @@ export default {
 	border: $border-width solid $lightgray-400;
 	border-radius: $border-radius;
 	outline: none;
-	appearance: none;
 
 	&[size],
 	&[multiple] {
@@ -334,7 +356,6 @@ export default {
 		font-size: $font-size-lg;
 	}
 }
-
 .selects .form-group {
 	.form-icon {
 		right: auto;
@@ -345,7 +366,6 @@ export default {
 		cursor: pointer;
 	}
 }
-
 .kt-select-options {
 	position: absolute;
 	z-index: $zindex-4;
