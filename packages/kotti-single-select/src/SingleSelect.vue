@@ -65,7 +65,7 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
-import { Portal } from '../../util/portal'
+import { Portal } from '@linusborg/vue-simple-portal'
 import { isBrowser } from '../../util'
 
 export default {
@@ -207,15 +207,22 @@ export default {
 	methods: {
 		computeSelectorOptionsStyle() {
 			if (isBrowser) {
-				const top =
-					this.$refs.input.getBoundingClientRect().top -
-					window.document.body.getBoundingClientRect().top +
-					this.$refs.input.offsetHeight
+				const inputOffset = this.$refs.input.offsetHeight
+				const inputTop = this.$refs.input.getBoundingClientRect().top
+				const windowTop = window.document.body.getBoundingClientRect().top
+				const windowHeight = window.document.body.getBoundingClientRect().height
+				const top = inputTop - windowTop + inputOffset
+				const bottom = windowHeight - inputTop
+
 				const left =
 					this.$refs.input.getBoundingClientRect().left -
 					window.document.body.getBoundingClientRect().left
 				const width = this.$refs.input.offsetWidth
-				this.selectorOptionStyle = `top: ${top}px; left: ${left}px; width: ${width}px;`
+				if (this.placement === 'bottom') {
+					this.selectorOptionStyle = `bottom: auto; top: ${top}px; left: ${left}px; width: ${width}px;`
+				} else {
+					this.selectorOptionStyle = `top: auto; bottom: ${bottom}px; left: ${left}px; width: ${width}px;`
+				}
 			}
 		},
 		handleClickOutside() {
