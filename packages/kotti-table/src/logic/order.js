@@ -27,7 +27,7 @@ export const mutations = {
 		store.emit('orderChange', getOrderedColumns(state))
 		store.commit('updateColumns')
 	},
-	setOrderedColumns(store, columns = store.state.orderedColumns) {
+	setOrderedColumns(store, columns) {
 		setColumnsArray(store.state, 'orderedColumns', ['prop', 'order'], columns)
 		store.commit('updateColumns', {
 			emitChange: false,
@@ -42,8 +42,8 @@ export const getters = {
 	},
 }
 
-export function resolveColumnsOrder({ _columns = {}, orderedColumns = [] }) {
-	for (const col of orderedColumns) {
+export function resolveColumnsOrder({ _columns = {}, _columnsArray = [] }) {
+	for (const col of _columnsArray) {
 		if (_columns[col.prop]) {
 			_columns[col.prop].order = col.order
 		}
