@@ -3,7 +3,7 @@ import pick from 'lodash/pick'
 import { SORT_NONE, PUBLIC_COLUMN_PROPS } from '../constants'
 import { setSortedColumn } from './sort'
 import { setHiddenColumn, getResolvedHiddenColumns } from './hide'
-import { setFilterColumn } from './filter'
+import { setFilteredColumn } from './filter'
 import { resolveColumnsOrder, getOrderedColumns } from './order'
 
 export const defaultState = {
@@ -110,11 +110,11 @@ export function setColumn(state, { column, index, deleted }) {
 	if (newColumn.sortOrder !== SORT_NONE) {
 		setSortedColumn(state, newColumn)
 	}
-	if (newColumn.hidden !== undefined) {
+	if (newColumn.hidden === true) {
 		setHiddenColumn(state, newColumn)
 	}
 	if (newColumn.filter !== undefined) {
-		setFilterColumn(state, newColumn)
+		setFilteredColumn(state, newColumn)
 	}
 
 	return newColumn
