@@ -126,49 +126,49 @@ export default {
 		},
 	},
 	watch: {
-		currentValue(newVal) {
-			if (typeof newVal === 'number' && newVal % 1 !== 0) {
-				const THREE_DECIMAL_PLACES = 3
-				const fixedVal = newVal.toFixed(THREE_DECIMAL_PLACES)
-				this.currentValue = parseFloat(fixedVal)
-			}
-			if (!this.formError) {
-				this.$emit('input', newVal)
-			}
-			if (typeof this.min === 'number') {
-				if (newVal - this.step < this.min) {
-					this.decrementDisabled = true
-				} else if (!this.disabled) {
-					this.decrementDisabled = false
+		currentValue: {
+			immediate: true,
+			handler(newVal) {
+				if (typeof newVal === 'number' && this.hasFractionalValue(newVal)) {
+					const THREE_DECIMAL_PLACES = 3
+					const fixedVal = newVal.toFixed(THREE_DECIMAL_PLACES)
+					this.currentValue = parseFloat(fixedVal)
 				}
-			}
-			if (typeof this.max === 'number') {
-				if (newVal + this.step > this.max) {
-					this.incrementDisabled = true
-				} else if (!this.disabled) {
-					this.incrementDisabled = false
+				if (!this.formError) {
+					this.$emit('input', newVal)
 				}
-			}
-		},
-		disabled(newVal, oldVal) {
-			if (newVal) {
-				this.incrementDisabled = newVal
-				this.decrementDisabled = newVal
-			} else if (!newVal && oldVal) {
 				if (typeof this.min === 'number') {
-					this.decrementDisabled = this.currentValue - this.step < this.min
+					if (newVal - this.step < this.min) {
+						this.decrementDisabled = true
+					} else if (!this.disabled) {
+						this.decrementDisabled = false
+					}
 				}
 				if (typeof this.max === 'number') {
-					this.incrementDisabled = this.currentValue + this.step > this.max
+					if (newVal + this.step > this.max) {
+						this.incrementDisabled = true
+					} else if (!this.disabled) {
+						this.incrementDisabled = false
+					}
 				}
-			}
+			},
 		},
-	},
-	created() {
-		if (this.disabled) {
-			this.incrementDisabled = true
-			this.decrementDisabled = true
-		}
+		disabled: {
+			immediate: true,
+			handler(newVal, oldVal) {
+				if (newVal) {
+					this.incrementDisabled = newVal
+					this.decrementDisabled = newVal
+				} else if (oldVal) {
+					if (typeof this.min === 'number') {
+						this.decrementDisabled = this.currentValue - this.step < this.min
+					}
+					if (typeof this.max === 'number') {
+						this.incrementDisabled = this.currentValue + this.step > this.max
+					}
+				}
+			},
+		},
 	},
 	methods: {
 		incrementValue() {
@@ -189,6 +189,10 @@ export default {
 					: !Number.isNaN(Number(value))
 					? Number(value)
 					: 0
+		},
+		hasFractionalValue(num) {
+			if (num % 1 !== 0) return true
+			return false
 		},
 	},
 }
