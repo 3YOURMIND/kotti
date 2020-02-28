@@ -171,33 +171,10 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 ## Selectable
 
-`isSelectable` enables mutilple-select option of the rows. You can bind an `Array` model to `KtTable` and control the selected data.
+`isSelectable` enables mutilple-select option of the rows. 
 
-<div>
-	<KtTable :rows="rows" :columns="columnsDefault" isSelectable v-model="select" />
-	<span>Selected value: {{ select }}</span>
-</div>
-
-
-```html
-<div>
-	<KtTable :rows="rows" :columns="columns" isSelectable v-model="select" />
-	<span>Selected value: {{ select }}</span>
-</div>
-```
-
-```js
-{
-	data() {
-		return {
-			select: [0,1]
-		}
-	}
-}
-```
-
-*Update:* The use of v-model is deprecated. Instead, bind the Array of selected to the `selected` property, and subscribe to `@selectionChange`, which returns the currently selected rows whenever they change
-> Note the difference between the Array model passed to the v-model and that passed to the selected property. 
+*Note:* The use of v-model is *REMOVED*. Instead, bind the Array of selected to the `selected` property, and subscribe to `@selectionChange`, which returns the currently selected rows whenever they change
+> Note the difference between the Array model passed to the v-model (now, removed) and that passed to the selected property. 
 > The former is an `Array` of selected indices, and the latter is an `Array` of _row_ `Object`s
 
 <div>
@@ -1088,7 +1065,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 | `@selectAll`         | `(selection)`                                         | all selection checkbox was toggled                                  |
 | `@select`            | `(selection, row)`                                    | a row was selected                                                  |
 | `@sortChange`        | `({ sortedColumns, column, prop, sortOrder, sortBy})` | a column was sorted                                                 |
-| `@columnOrderChange` | `([column])`                                          | array of columns with updated order                                 |
+| `@orderChange`       | `([column])`                                          | array of columns with updated order                                 |
 
 #### Cell Events
 
