@@ -77,18 +77,13 @@ export default {
 			}
 		},
 		formError() {
-			if (
-				Number.isNaN(this.currentValue) ||
-				typeof this.currentValue !== 'number'
-			) {
+			if (!this.isValidNumber(this.currentValue)) return true
+
+			if (typeof this.max === 'number' && this.currentValue > this.max)
 				return true
-			}
-			if (typeof this.max === 'number' && this.currentValue > this.max) {
+
+			if (typeof this.min === 'number' && this.currentValue < this.min)
 				return true
-			}
-			if (typeof this.min === 'number' && this.currentValue < this.min) {
-				return true
-			}
 
 			return false
 		},
@@ -128,7 +123,8 @@ export default {
 	watch: {
 		currentValue: {
 			immediate: true,
-			handler(newVal) {
+			handler(newVal, oldVal) {
+				if (newVal === oldVal) return
 				if (typeof newVal === 'number' && this.hasFractionalValue(newVal)) {
 					const THREE_DECIMAL_PLACES = 3
 					const fixedVal = newVal.toFixed(THREE_DECIMAL_PLACES)
@@ -136,6 +132,12 @@ export default {
 				}
 				if (!this.formError) {
 					this.$emit('input', newVal)
+				} else {
+					this.currentValue = this.isValidNumber(oldVal) ? oldVal : 0 //force to oldVal if user inputs wrong currentValue
+					//no need to run the below checks for newVal, since we will care about in the next call of this handler
+					//but checking them when the currentValue is faulty (check formError computation) will enable either
+					//increment or decrement until watcher is called again (glitch)
+					return
 				}
 				if (typeof this.min === 'number') {
 					if (newVal - this.step < this.min) {
@@ -183,16 +185,17 @@ export default {
 
 		handleInput(value) {
 			if (value === this.currentValue) return
-			this.currentValue =
-				typeof value === 'number' && !Number.isNaN(value)
-					? value
-					: !Number.isNaN(Number(value))
-					? Number(value)
-					: 0
+			this.currentValue = this.isValidNumber(value)
+				? value
+				: this.isValidNumber(Number(value))
+				? Number(value)
+				: 0
 		},
 		hasFractionalValue(num) {
-			if (num % 1 !== 0) return true
-			return false
+			return num % 1 !== 0 ? true : false
+		},
+		isValidNumber(num) {
+			return typeof num === 'number' && !Number.isNaN(num)
 		},
 	},
 }
