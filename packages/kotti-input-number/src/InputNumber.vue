@@ -122,7 +122,7 @@ export default {
 			return (
 				this.disabled ||
 				(this.isValidNumber(this.min) &&
-					this.currentValue - this.step <= this.min)
+					this.currentValue - this.step < this.min)
 			)
 		},
 		incrementDisabled() {
@@ -130,7 +130,7 @@ export default {
 			return (
 				this.disabled ||
 				(this.isValidNumber(this.max) &&
-					this.currentValue + this.step >= this.max)
+					this.currentValue + this.step > this.max)
 			)
 		},
 	},
