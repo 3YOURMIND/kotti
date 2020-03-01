@@ -90,13 +90,13 @@ export default {
 		yocoClassIncrement() {
 			return {
 				yoco: true,
-				'yoco--disabled': this.incrementDisabled || this.disabled,
+				'yoco--disabled': this.incrementDisabled,
 			}
 		},
 		yocoClassDecrement() {
 			return {
 				yoco: true,
-				'yoco--disabled': this.decrementDisabled || this.disabled,
+				'yoco--disabled': this.decrementDisabled,
 			}
 		},
 		decrementDisabled() {
