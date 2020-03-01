@@ -195,8 +195,6 @@ export default {
 }
 
 .kt-input-number {
-	box-sizing: unset;
-
 	display: flex;
 	align-items: center;
 	height: 1.6rem;
@@ -207,11 +205,13 @@ export default {
 		display: flex;
 		flex: 1;
 		align-items: center;
+		height: 100%;
 
 		input,
 		.kt-input-number__max {
 			flex: 1 1 100%;
 			min-width: 0px;
+			height: 100%;
 		}
 
 		.kt-input-number__max-separator {
