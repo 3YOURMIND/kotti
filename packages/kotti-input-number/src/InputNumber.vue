@@ -64,8 +64,6 @@ export default {
 	data() {
 		return {
 			currentValue: this.value ?? 0,
-			incrementDisabled: false,
-			decrementDisabled: false,
 		}
 	},
 	computed: {
@@ -79,10 +77,10 @@ export default {
 		formError() {
 			if (!this.isValidNumber(this.currentValue)) return true
 
-			if (typeof this.max === 'number' && this.currentValue > this.max)
+			if (this.isValidNumber(this.max) && this.currentValue > this.max)
 				return true
 
-			if (typeof this.min === 'number' && this.currentValue < this.min)
+			if (this.isValidNumber(this.min) && this.currentValue < this.min)
 				return true
 
 			return false
@@ -119,55 +117,43 @@ export default {
 				'yoco--disabled': this.decrementDisabled || this.disabled,
 			}
 		},
+		decrementDisabled() {
+			debugger
+			return (
+				this.disabled ||
+				(this.isValidNumber(this.min) &&
+					this.currentValue - this.step <= this.min)
+			)
+		},
+		incrementDisabled() {
+			debugger
+			return (
+				this.disabled ||
+				(this.isValidNumber(this.max) &&
+					this.currentValue + this.step >= this.max)
+			)
+		},
 	},
 	watch: {
 		currentValue: {
 			immediate: true,
 			handler(newVal, oldVal) {
+				debugger
 				if (newVal === oldVal) return
-				if (typeof newVal === 'number' && this.hasFractionalValue(newVal)) {
-					const THREE_DECIMAL_PLACES = 3
-					const fixedVal = newVal.toFixed(THREE_DECIMAL_PLACES)
-					this.currentValue = parseFloat(fixedVal)
+				if (this.isValidNumber(newVal)) {
+					let roundedVal = newVal
+					if (this.hasFractionalValue(newVal)) {
+						const THREE_DECIMAL_PLACES = 3
+						roundedVal = newVal.toFixed(THREE_DECIMAL_PLACES)
+					}
+					this.currentValue = parseFloat(roundedVal, 10)
 				}
 				if (!this.formError) {
-					this.$emit('input', newVal)
+					this.$emit('input', this.currentValue)
 				} else {
-					this.currentValue = this.isValidNumber(oldVal) ? oldVal : 0 //force to oldVal if user inputs wrong currentValue
-					//no need to run the below checks for newVal, since we will care about in the next call of this handler
-					//but checking them when the currentValue is faulty (check formError computation) will enable either
-					//increment or decrement until watcher is called again (glitch)
-					return
-				}
-				if (typeof this.min === 'number') {
-					if (newVal - this.step < this.min) {
-						this.decrementDisabled = true
-					} else if (!this.disabled) {
-						this.decrementDisabled = false
-					}
-				}
-				if (typeof this.max === 'number') {
-					if (newVal + this.step > this.max) {
-						this.incrementDisabled = true
-					} else if (!this.disabled) {
-						this.incrementDisabled = false
-					}
-				}
-			},
-		},
-		disabled: {
-			immediate: true,
-			handler(newVal, oldVal) {
-				if (newVal) {
-					this.incrementDisabled = newVal
-					this.decrementDisabled = newVal
-				} else if (oldVal) {
-					if (typeof this.min === 'number') {
-						this.decrementDisabled = this.currentValue - this.step < this.min
-					}
-					if (typeof this.max === 'number') {
-						this.incrementDisabled = this.currentValue + this.step > this.max
-					}
+					this.$emit('invalid', this.currentValue)
+					//force to oldVal if user inputs wrong currentValue
+					this.currentValue = this.isValidNumber(oldVal) ? oldVal : 0
 				}
 			},
 		},
@@ -181,18 +167,16 @@ export default {
 			if (this.decrementDisabled) return
 			this.currentValue -= this.step
 		},
-		/* Do not use input.stepUp - this method does not work in internet explorer and is not transpiled by Babel  */
-
 		handleInput(value) {
 			if (value === this.currentValue) return
 			this.currentValue = this.isValidNumber(value)
 				? value
-				: this.isValidNumber(Number(value))
-				? Number(value)
+				: this.isValidNumber(parseFloat(value, 10))
+				? parseFloat(value, 10)
 				: 0
 		},
 		hasFractionalValue(num) {
-			return num % 1 !== 0 ? true : false
+			return num % 1 !== 0
 		},
 		isValidNumber(num) {
 			return typeof num === 'number' && !Number.isNaN(num)
@@ -250,7 +234,6 @@ export default {
 }
 
 .kt-input-number__max {
-	width: 50%;
 	line-height: 1.6rem;
 	&::before {
 		padding-right: 0.2rem;
