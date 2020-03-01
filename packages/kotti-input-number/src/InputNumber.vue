@@ -3,21 +3,27 @@
 		<div :class="decreaseButtonStyle" @click="decrementValue">
 			<i :class="yocoClassDecrement">minus</i>
 		</div>
-		<input
-			type="number"
-			:min="min"
-			:max="max"
-			:step="step"
-			:class="inputStyle"
-			:disabled="disabled"
-			:value="currentValue"
-			@input="handleInput($event.target.value)"
-		/>
-		<div
-			v-if="max && showMaxNumber"
-			class="kt-input-number__max"
-			v-text="max"
-		/>
+		<div class="kt-input-number__middle" @click="$refs.input.focus()">
+			<input
+				ref="input"
+				type="number"
+				:min="min"
+				:max="max"
+				:step="step"
+				:class="inputStyle"
+				:disabled="disabled"
+				:value="currentValue"
+				@input="handleInput($event.target.value)"
+			/>
+			<div v-if="max && showMaxNumber" class="kt-input-number__max-separator">
+				/
+			</div>
+			<div
+				v-if="max && showMaxNumber"
+				class="kt-input-number__max"
+				v-text="max"
+			/>
+		</div>
 		<div :class="increaseButtonStyle" @click="incrementValue">
 			<i :class="yocoClassIncrement">plus</i>
 		</div>
@@ -28,38 +34,14 @@
 export default {
 	name: 'KtInputNumber',
 	props: {
-		max: {
-			type: Number,
-			default: null,
-		},
-		min: {
-			type: Number,
-			default: null,
-		},
-		value: {
-			type: [Number, null],
-			default: 0,
-		},
-		step: {
-			type: Number,
-			default: 1,
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		showMaxNumber: {
-			type: Boolean,
-			default: false,
-		},
-		fullWidth: {
-			type: Boolean,
-			default: false,
-		},
-		pattern: {
-			type: String,
-			required: false,
-		},
+		disabled: { default: false, type: Boolean },
+		fullWidth: { default: false, type: Boolean },
+		max: { default: null, type: Number },
+		min: { default: null, type: Number },
+		pattern: { required: false, type: String },
+		showMaxNumber: { type: Boolean, default: false },
+		step: { default: 1, type: Number },
+		value: { default: 0, type: [Number, null] },
 	},
 	data() {
 		return {
@@ -118,7 +100,6 @@ export default {
 			}
 		},
 		decrementDisabled() {
-			debugger
 			return (
 				this.disabled ||
 				(this.isValidNumber(this.min) &&
@@ -126,7 +107,6 @@ export default {
 			)
 		},
 		incrementDisabled() {
-			debugger
 			return (
 				this.disabled ||
 				(this.isValidNumber(this.max) &&
@@ -138,7 +118,6 @@ export default {
 		currentValue: {
 			immediate: true,
 			handler(newVal, oldVal) {
-				debugger
 				if (newVal === oldVal) return
 				if (this.isValidNumber(newVal)) {
 					let roundedVal = newVal
@@ -186,19 +165,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
+
 .kt-input-number__input {
-	width: auto;
-	max-width: 100%;
-	padding-right: 0.1rem;
 	color: $darkgray-500;
 	text-align: center;
 	border: 0;
 	-moz-appearance: textfield;
+
 	&--100 {
 		width: 100%;
 	}
 	&--max {
-		width: 50%;
 		text-align: right;
 	}
 	&--disabled {
@@ -218,12 +195,36 @@ export default {
 }
 
 .kt-input-number {
+	box-sizing: unset;
+
+	display: flex;
+	align-items: center;
+	height: 1.6rem;
+
+	overflow: hidden;
+
+	&__middle {
+		display: flex;
+		flex: 1;
+		align-items: center;
+
+		input,
+		.kt-input-number__max {
+			flex: 1 1 100%;
+			min-width: 0px;
+		}
+
+		.kt-input-number__max-separator {
+			flex: unset;
+			width: fit-content;
+		}
+	}
+
 	&.form-group {
 		display: inline-flex;
-		width: auto;
-		max-width: 100%;
 		border: 1px solid $lightgray-400;
 		border-radius: $border-radius;
+
 		&--100 {
 			width: 100%;
 		}
@@ -233,23 +234,17 @@ export default {
 	}
 }
 
-.kt-input-number__max {
-	line-height: 1.6rem;
-	&::before {
-		padding-right: 0.2rem;
-		content: '/';
-	}
-}
-
 .kt-input-number__button {
-	flex: 0 0 1.6rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
 	width: 1.6rem;
 	height: 1.6rem;
-	line-height: 1.6rem;
-	text-align: center;
+
 	user-select: none;
 	background: $lightgray-300;
-	border-radius: $border-radius;
+
 	&:hover {
 		cursor: pointer;
 		background: $lightgray-400;
