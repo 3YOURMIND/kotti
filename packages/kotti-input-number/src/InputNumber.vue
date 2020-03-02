@@ -27,12 +27,13 @@
 <script>
 const isInRange = ({ max, min, value }) =>
 	(max === null || value <= max) && (min === null || value >= min)
-const toNumber = (string) => (string === '' ? 0 : parseFloat(string))
+const toNumber = (string) =>
+	['', '-'].includes(string) ? 0 : parseFloat(string)
 
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().substring(1, 2)
 const VALID_REGEX = new RegExp(
-	`^(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
+	`^[+-]?(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
 )
 
 export default {
@@ -79,13 +80,21 @@ export default {
 		isDecrementDisabled() {
 			return (
 				this.disabled ||
-				(this.min !== null && this.currentValueNumber - this.step < this.min)
+				isInRange({
+					max: null,
+					min: this.min,
+					value: this.currentValueNumber - this.step < this.min,
+				})
 			)
 		},
 		isIncrementDisabled() {
 			return (
 				this.disabled ||
-				(this.max !== null && this.currentValueNumber + this.step > this.max)
+				isInRange({
+					max: this.max,
+					min: null,
+					value: this.currentValueNumber + this.step > this.max,
+				})
 			)
 		},
 		middleClasses() {
@@ -110,7 +119,8 @@ export default {
 	watch: {
 		value: {
 			handler(newValue) {
-				this.setValue(String(newValue))
+				const shouldUpdate = this.currentValueNumber !== toNumber(newValue)
+				if (shouldUpdate) this.setValue(String(newValue))
 			},
 			immediate: true,
 		},
@@ -132,6 +142,8 @@ export default {
 			if (isTypedNumberValid) this.setValue(value)
 			else this.hasFormError = true
 
+			// vue doesn't support controlled input fields without re-rendering
+			// therefore, in case nothing changed, we need to re-render here
 			this.$forceUpdate()
 		},
 		incrementValue() {
