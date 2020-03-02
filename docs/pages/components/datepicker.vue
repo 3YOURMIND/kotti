@@ -85,6 +85,24 @@
 />
 ```
 
+## Just the datepicker 
+
+<KtDatePicker
+	v-model="date5"
+	label="Delivery Date"
+	required
+	placeholder="Choose a date"
+/>
+{{date5}}
+```html
+<KtDatePicker
+	v-model="date4"
+	label="Delivery Date"
+	required
+	placeholder="Choose a date"
+/>
+```
+
 ## Usage
 
 ### Attributes
@@ -108,6 +126,7 @@ export default {
 			date2: null,
 			date3: null,
 			date4: null,
+			date5: null,
 			monthCN: [
 				'一月',
 				'二月',
