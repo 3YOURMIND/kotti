@@ -31,6 +31,7 @@
 				>
 					<span v-text="day" />
 				</div>
+				<div class="kt-datepicker-calendar__breaker" />
 			</div>
 		</div>
 	</div>
@@ -174,6 +175,9 @@ $span-width: 1.6rem;
 	}
 }
 .kt-datepicker-calendar {
+	&__breaker {
+		clear: both;
+	}
 	&__week {
 		width: 100%;
 		margin: 0.2rem;
@@ -189,7 +193,6 @@ $span-width: 1.6rem;
 	}
 	&__day {
 		width: 100%;
-		overflow: hidden;
 	}
 	&__day-cell {
 		display: block;
