@@ -1,30 +1,42 @@
 <template>
 	<div :class="formGroupStyle">
-		<div :class="decreaseButtonClasses" @click="decrementValue">
+		<div :class="decrementButtonClasses" @click="decrementValue">
 			<i :class="yocoClassDecrement">minus</i>
 		</div>
 		<div :class="middleClasses" @click="$refs.input.focus()">
 			<input
 				ref="input"
 				type="number"
-				:min="min"
-				:max="max"
-				:step="step"
 				:class="inputClasses"
 				:disabled="disabled"
+				:max="max"
+				:min="min"
+				:step="step"
 				:value="currentValue"
 				@input="handleInput($event.target.value)"
 			/>
 			<div v-if="showMaxNumber">/</div>
 			<div v-if="showMaxNumber" class="kt-input-number__max" v-text="max" />
 		</div>
-		<div :class="increaseButtonClasses" @click="incrementValue">
+		<div :class="incrementButtonClasses" @click="incrementValue">
 			<i :class="yocoClassIncrement">plus</i>
 		</div>
 	</div>
 </template>
 
 <script>
+const isFraction = (n) => n % 1 !== 0
+const isInvalidValue = ({ value, max, min }) => {
+	if (!isValidNumber(value)) return true
+
+	if (isValidNumber(max) && value > max) return true
+
+	if (isValidNumber(min) && value < min) return true
+
+	return false
+}
+const isValidNumber = (n) => typeof n === 'number' && !Number.isNaN(n)
+
 export default {
 	name: 'KtInputNumber',
 	props: {
@@ -37,25 +49,26 @@ export default {
 		value: { default: 0, type: [Number, null] },
 	},
 	data() {
-		return { currentValue: this.value }
+		return { currentValue: this.value, hasFormError: false }
 	},
 	computed: {
-		formGroupStyle() {
+		decrementButtonClasses() {
 			return {
-				'kt-input-number form-group': true,
-				'form-group--error': this.formError,
+				'kt-input-number__button': true,
+				'kt-input-number__button--disabled': this.isDecrementDisabled,
 			}
 		},
-		formError() {
-			if (!this.isValidNumber(this.currentValue)) return true
-
-			if (this.isValidNumber(this.max) && this.currentValue > this.max)
-				return true
-
-			if (this.isValidNumber(this.min) && this.currentValue < this.min)
-				return true
-
-			return false
+		formGroupStyle() {
+			return {
+				'form-group--error': this.hasFormError,
+				'kt-input-number form-group': true,
+			}
+		},
+		incrementButtonClasses() {
+			return {
+				'kt-input-number__button': true,
+				'kt-input-number__button--disabled': this.isIncrementDisabled,
+			}
 		},
 		inputClasses() {
 			return {
@@ -63,11 +76,17 @@ export default {
 				'kt-input-number__input--max': this.showMaxNumber,
 			}
 		},
-		increaseButtonClasses() {
-			return {
-				'kt-input-number__button': true,
-				'kt-input-number__button--disabled': this.incrementDisabled,
-			}
+		isDecrementDisabled() {
+			return (
+				this.disabled ||
+				(isValidNumber(this.min) && this.currentValue - this.step < this.min)
+			)
+		},
+		isIncrementDisabled() {
+			return (
+				this.disabled ||
+				(isValidNumber(this.max) && this.currentValue + this.step > this.max)
+			)
 		},
 		middleClasses() {
 			return {
@@ -75,86 +94,58 @@ export default {
 				'kt-input-number__middle--disabled': this.disabled,
 			}
 		},
-		decreaseButtonClasses() {
-			return {
-				'kt-input-number__button': true,
-				'kt-input-number__button--disabled': this.decrementDisabled,
-			}
-		},
 		yocoClassIncrement() {
 			return {
 				yoco: true,
-				'yoco--disabled': this.incrementDisabled,
+				'yoco--disabled': this.isIncrementDisabled,
 			}
 		},
 		yocoClassDecrement() {
 			return {
 				yoco: true,
-				'yoco--disabled': this.decrementDisabled,
+				'yoco--disabled': this.isDecrementDisabled,
 			}
-		},
-		decrementDisabled() {
-			return (
-				this.disabled ||
-				(this.isValidNumber(this.min) &&
-					this.currentValue - this.step < this.min)
-			)
-		},
-		incrementDisabled() {
-			return (
-				this.disabled ||
-				(this.isValidNumber(this.max) &&
-					this.currentValue + this.step > this.max)
-			)
 		},
 	},
 	watch: {
-		currentValue: {
-			immediate: true,
-			handler(newVal, oldVal) {
-				if (newVal === oldVal) return
-
-				if (this.isValidNumber(newVal)) {
-					const THREE_DECIMAL_PLACES = 3
-					const roundedVal = this.hasFractionalValue(newVal)
-						? newVal.toFixed(THREE_DECIMAL_PLACES)
-						: newVal
-
-					this.currentValue = parseFloat(roundedVal, 10)
-				}
-
-				if (!this.formError) {
-					this.$emit('input', this.currentValue)
-				} else {
-					this.$emit('invalid', this.currentValue)
-					//force to oldVal if user inputs wrong currentValue
-					this.currentValue = this.isValidNumber(oldVal) ? oldVal : 0
-				}
+		value: {
+			handler(newValue) {
+				this.setValue(newValue)
 			},
+			immediate: true,
 		},
 	},
 	methods: {
-		incrementValue() {
-			if (this.incrementDisabled) return
-			this.currentValue += this.step
-		},
 		decrementValue() {
-			if (this.decrementDisabled) return
-			this.currentValue -= this.step
+			if (this.isDecrementDisabled) return
+			this.setValue(this.currentValue - this.step)
 		},
 		handleInput(value) {
-			if (value === this.currentValue) return
-			this.currentValue = this.isValidNumber(value)
-				? value
-				: this.isValidNumber(parseFloat(value, 10))
-				? parseFloat(value, 10)
-				: 0
+			this.hasFormError = Number.isNaN(Number(value))
+			this.setValue(parseFloat(value))
+
+			if (value !== `${parseFloat(value)}.`) this.$forceUpdate()
 		},
-		hasFractionalValue(num) {
-			return num % 1 !== 0
+		incrementValue() {
+			if (this.isIncrementDisabled) return
+			this.setValue(this.currentValue + this.step)
 		},
-		isValidNumber(num) {
-			return typeof num === 'number' && !Number.isNaN(num)
+		setValue(newValue) {
+			if (newValue === this.currentValue) return
+
+			if (isInvalidValue({ min: this.min, max: this.max, value: newValue })) {
+				this.hasFormError = true
+				return this.$emit('invalid', newValue)
+			}
+
+			this.hasFormError = false
+
+			const THREE_DECIMAL_PLACES = 3
+			this.currentValue = isFraction(newValue)
+				? parseFloat(newValue.toFixed(THREE_DECIMAL_PLACES))
+				: newValue
+
+			this.$emit('input', this.currentValue)
 		},
 	},
 }
