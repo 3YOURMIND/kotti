@@ -1,16 +1,16 @@
 <template>
 	<div :class="formGroupStyle">
-		<div :class="decreaseButtonStyle" @click="decrementValue">
+		<div :class="decreaseButtonClasses" @click="decrementValue">
 			<i :class="yocoClassDecrement">minus</i>
 		</div>
-		<div class="kt-input-number__middle" @click="$refs.input.focus()">
+		<div :class="middleClasses" @click="$refs.input.focus()">
 			<input
 				ref="input"
 				type="number"
 				:min="min"
 				:max="max"
 				:step="step"
-				:class="inputStyle"
+				:class="inputClasses"
 				:disabled="disabled"
 				:value="currentValue"
 				@input="handleInput($event.target.value)"
@@ -18,7 +18,7 @@
 			<div v-if="showMaxNumber">/</div>
 			<div v-if="showMaxNumber" class="kt-input-number__max" v-text="max" />
 		</div>
-		<div :class="increaseButtonStyle" @click="incrementValue">
+		<div :class="increaseButtonClasses" @click="incrementValue">
 			<i :class="yocoClassIncrement">plus</i>
 		</div>
 	</div>
@@ -61,21 +61,26 @@ export default {
 
 			return false
 		},
-		inputStyle() {
+		inputClasses() {
 			return {
 				'kt-input-number__input': true,
 				'kt-input-number__input--100': this.fullWidth,
-				'kt-input-number__input--disabled': this.disabled,
 				'kt-input-number__input--max': this.showMaxNumber,
 			}
 		},
-		increaseButtonStyle() {
+		increaseButtonClasses() {
 			return {
 				'kt-input-number__button': true,
 				'kt-input-number__button--disabled': this.incrementDisabled,
 			}
 		},
-		decreaseButtonStyle() {
+		middleClasses() {
+			return {
+				'kt-input-number__middle': true,
+				'kt-input-number__middle--disabled': this.disabled,
+			}
+		},
+		decreaseButtonClasses() {
 			return {
 				'kt-input-number__button': true,
 				'kt-input-number__button--disabled': this.decrementDisabled,
@@ -166,16 +171,16 @@ export default {
 	border: 0;
 	-moz-appearance: textfield;
 
+	&:disabled {
+		color: unset;
+		background-color: unset;
+	}
+
 	&--100 {
 		width: 100%;
 	}
 	&--max {
 		text-align: right;
-	}
-	&--disabled {
-		&:hover {
-			cursor: not-allowed;
-		}
 	}
 	&:focus {
 		outline: 0;
@@ -200,6 +205,15 @@ export default {
 		flex: 1;
 		align-items: center;
 		height: 100%;
+
+		&--disabled {
+			color: $lightgray-400;
+			background-color: $lightgray-300;
+
+			&:hover {
+				cursor: not-allowed;
+			}
+		}
 
 		input,
 		.kt-input-number__max {
