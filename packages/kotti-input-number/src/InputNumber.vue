@@ -6,7 +6,7 @@
 		<div :class="middleClasses" @click="$refs.input.focus()">
 			<input
 				ref="input"
-				type="number"
+				type="text"
 				:class="inputClasses"
 				:disabled="disabled"
 				:max="max"
@@ -25,17 +25,15 @@
 </template>
 
 <script>
-const isFraction = (n) => n % 1 !== 0
-const isInvalidValue = ({ value, max, min }) => {
-	if (!isValidNumber(value)) return true
+const isInRange = ({ max, min, value }) =>
+	(max === null || value <= max) && (min === null || value >= min)
+const toNumber = (string) => (string === '' ? 0 : parseFloat(string))
 
-	if (isValidNumber(max) && value > max) return true
-
-	if (isValidNumber(min) && value < min) return true
-
-	return false
-}
-const isValidNumber = (n) => typeof n === 'number' && !Number.isNaN(n)
+const DECIMAL_PLACES = 3
+const DECIMAL_SEPARATOR = (1.1).toLocaleString().substring(1, 2)
+const VALID_REGEX = new RegExp(
+	`^(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
+)
 
 export default {
 	name: 'KtInputNumber',
@@ -43,15 +41,17 @@ export default {
 		disabled: { default: false, type: Boolean },
 		max: { default: null, type: Number },
 		min: { default: null, type: Number },
-		pattern: { required: false, type: String },
 		showMaxNumber: { type: Boolean, default: false },
 		step: { default: 1, type: Number },
 		value: { default: 0, type: [Number, null] },
 	},
 	data() {
-		return { currentValue: this.value, hasFormError: false }
+		return { currentValue: `${this.value}`, hasFormError: false }
 	},
 	computed: {
+		currentValueNumber() {
+			return toNumber(this.currentValue)
+		},
 		decrementButtonClasses() {
 			return {
 				'kt-input-number__button': true,
@@ -79,13 +79,13 @@ export default {
 		isDecrementDisabled() {
 			return (
 				this.disabled ||
-				(isValidNumber(this.min) && this.currentValue - this.step < this.min)
+				(this.min !== null && this.currentValueNumber - this.step < this.min)
 			)
 		},
 		isIncrementDisabled() {
 			return (
 				this.disabled ||
-				(isValidNumber(this.max) && this.currentValue + this.step > this.max)
+				(this.max !== null && this.currentValueNumber + this.step > this.max)
 			)
 		},
 		middleClasses() {
@@ -110,7 +110,7 @@ export default {
 	watch: {
 		value: {
 			handler(newValue) {
-				this.setValue(newValue)
+				this.setValue(String(newValue))
 			},
 			immediate: true,
 		},
@@ -118,34 +118,37 @@ export default {
 	methods: {
 		decrementValue() {
 			if (this.isDecrementDisabled) return
-			this.setValue(this.currentValue - this.step)
+			this.setValue(
+				(this.currentValueNumber - this.step).toFixed(DECIMAL_PLACES),
+			)
 		},
 		handleInput(value) {
-			this.hasFormError = Number.isNaN(Number(value))
-			this.setValue(parseFloat(value))
+			const { max, min } = this
 
-			if (value !== `${parseFloat(value)}.`) this.$forceUpdate()
+			const isTypedNumberValid =
+				VALID_REGEX.test(value) &&
+				isInRange({ max, min, value: toNumber(value) })
+
+			if (isTypedNumberValid) this.setValue(value)
+			else this.hasFormError = true
+
+			this.$forceUpdate()
 		},
 		incrementValue() {
 			if (this.isIncrementDisabled) return
-			this.setValue(this.currentValue + this.step)
+
+			this.setValue(
+				(this.currentValueNumber + this.step).toFixed(DECIMAL_PLACES),
+			)
 		},
 		setValue(newValue) {
-			if (newValue === this.currentValue) return
-
-			if (isInvalidValue({ min: this.min, max: this.max, value: newValue })) {
-				this.hasFormError = true
-				return this.$emit('invalid', newValue)
-			}
+			const oldNumber = this.currentValueNumber
 
 			this.hasFormError = false
+			this.currentValue = newValue
 
-			const THREE_DECIMAL_PLACES = 3
-			this.currentValue = isFraction(newValue)
-				? parseFloat(newValue.toFixed(THREE_DECIMAL_PLACES))
-				: newValue
-
-			this.$emit('input', this.currentValue)
+			if (oldNumber !== this.currentValueNumber)
+				this.$emit('input', this.currentValueNumber)
 		},
 	},
 }
