@@ -1,6 +1,6 @@
 <template>
 	<div v-on-clickaway="handleBlur">
-		<div class="form-group">
+		<div ref="input" class="form-group">
 			<label v-if="hasLabel" class="form-label" v-text="labelRep" />
 			<div class="has-icon-left">
 				<input
@@ -12,29 +12,37 @@
 				/>
 				<i class="form-icon yoco" v-text="'calendar'" />
 			</div>
-			<div v-if="showDatePicker">
-				<KtDatePicker
-					:mondayFirst="mondayFirst"
-					:value="currentDate"
-					:daysTranslations="daysTranslations"
-					:monthsTranslations="monthsTranslations"
-					@input="setDate"
-				/>
-			</div>
+			<Portal>
+				<div v-if="showDatePicker">
+					<KtDatePicker
+						:style="selectorOptionStyle"
+						:mondayFirst="mondayFirst"
+						:value="currentDate"
+						:daysTranslations="daysTranslations"
+						:monthsTranslations="monthsTranslations"
+						@input="setDate"
+					/>
+				</div>
+			</Portal>
 		</div>
 	</div>
 </template>
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
+import { isBrowser } from '../../util'
 
 // components
 import KtDatePicker from './DatePicker'
+import { Portal } from '../../util/portal'
+
+const POPPER_OFFSET = 4
 
 export default {
 	name: 'KtDateInput',
 	components: {
 		KtDatePicker,
+		Portal,
 	},
 	mixins: [clickaway],
 	props: {
@@ -49,6 +57,7 @@ export default {
 		return {
 			currentDate: null,
 			showDatePicker: false,
+			selectorOptionStyle: '',
 		}
 	},
 	computed: {
@@ -71,9 +80,17 @@ export default {
 			immediate: true,
 		},
 	},
+	mounted() {
+		this.computeSelectorOptionsStyle()
+		window.addEventListener('resize', this.computeSelectorOptionsStyle)
+	},
+	beforeDestroy() {
+		window.removeEventListener('resize', this.computeSelectorOptionsStyle)
+	},
 	methods: {
 		handleFocus() {
 			this.showDatePicker = true
+			this.computeSelectorOptionsStyle()
 		},
 		handleBlur() {
 			this.showDatePicker = false
@@ -82,6 +99,19 @@ export default {
 			this.currentDate = value
 			this.showDatePicker = false
 			this.$emit('input', value)
+		},
+		computeSelectorOptionsStyle() {
+			if (isBrowser) {
+				const top =
+					this.$refs.input.getBoundingClientRect().top -
+					window.document.body.getBoundingClientRect().top +
+					this.$refs.input.offsetHeight +
+					POPPER_OFFSET
+				const left =
+					this.$refs.input.getBoundingClientRect().left -
+					window.document.body.getBoundingClientRect().left
+				this.selectorOptionStyle = `position: absolute; top: ${top}px; left: ${left}px;`
+			}
 		},
 	},
 }
