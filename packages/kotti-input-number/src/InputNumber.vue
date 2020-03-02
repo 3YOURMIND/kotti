@@ -28,10 +28,11 @@
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().substring(1, 2)
 const STRINGS_THAT_ARE_TREATED_AS_ZERO = ['', '-']
+const LEADING_ZEROS_REGEX = /^0+([1-9])|^(0)/
+const TRAILING_ZEROES_REGEX = /\.0*$|(\.\d*[1-9])0+$/
 const VALID_REGEX = new RegExp(
 	`^[+-]?(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
 )
-const TRAILING_ZEROES_REGEX = /\.0*$|(\.\d*[1-9])0+$/
 
 const isInRange = ({ max, min, value }) =>
 	(max === null || value <= max) && (min === null || value >= min)
@@ -147,11 +148,16 @@ export default {
 		handleInput(value) {
 			const { max, min } = this
 
-			const isTypedNumberValid =
-				VALID_REGEX.test(value) &&
-				isInRange({ max, min, value: toNumber(value) })
+			const valueWithoutTrailingZeroes = value.replace(
+				LEADING_ZEROS_REGEX,
+				'$1$2',
+			)
 
-			if (isTypedNumberValid) this.setValue(value)
+			const isTypedNumberValid =
+				VALID_REGEX.test(valueWithoutTrailingZeroes) &&
+				isInRange({ max, min, value: toNumber(valueWithoutTrailingZeroes) })
+
+			if (isTypedNumberValid) this.setValue(valueWithoutTrailingZeroes)
 			else this.hasFormError = true
 
 			// vue doesn't support controlled input fields without re-rendering
