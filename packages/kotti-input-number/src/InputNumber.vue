@@ -113,14 +113,16 @@ export default {
 			immediate: true,
 			handler(newVal, oldVal) {
 				if (newVal === oldVal) return
+
 				if (this.isValidNumber(newVal)) {
-					let roundedVal = newVal
-					if (this.hasFractionalValue(newVal)) {
-						const THREE_DECIMAL_PLACES = 3
-						roundedVal = newVal.toFixed(THREE_DECIMAL_PLACES)
-					}
+					const THREE_DECIMAL_PLACES = 3
+					const roundedVal = this.hasFractionalValue(newVal)
+						? newVal.toFixed(THREE_DECIMAL_PLACES)
+						: newVal
+
 					this.currentValue = parseFloat(roundedVal, 10)
 				}
+
 				if (!this.formError) {
 					this.$emit('input', this.currentValue)
 				} else {
