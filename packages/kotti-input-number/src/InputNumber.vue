@@ -25,16 +25,27 @@
 </template>
 
 <script>
-const isInRange = ({ max, min, value }) =>
-	(max === null || value <= max) && (min === null || value >= min)
-const toNumber = (string) =>
-	['', '-'].includes(string) ? 0 : parseFloat(string)
-
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().substring(1, 2)
+const STRINGS_THAT_ARE_TREATED_AS_ZERO = ['', '-']
 const VALID_REGEX = new RegExp(
 	`^[+-]?(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
 )
+const TRAILING_ZEROES_REGEX = /\.0*$|(\.\d*[1-9])0+$/
+
+const isInRange = ({ max, min, value }) =>
+	(max === null || value <= max) && (min === null || value >= min)
+
+const toNumber = (string) =>
+	STRINGS_THAT_ARE_TREATED_AS_ZERO.includes(string)
+		? 0
+		: parseFloat(string.replace(DECIMAL_SEPARATOR, '.'))
+
+const toString = (number) =>
+	number
+		.toFixed(DECIMAL_PLACES)
+		.replace('.', DECIMAL_SEPARATOR)
+		.replace(TRAILING_ZEROES_REGEX, '$1')
 
 export default {
 	name: 'KtInputNumber',
@@ -42,12 +53,12 @@ export default {
 		disabled: { default: false, type: Boolean },
 		max: { default: null, type: Number },
 		min: { default: null, type: Number },
-		showMaxNumber: { type: Boolean, default: false },
+		showMaxNumber: { default: false, type: Boolean },
 		step: { default: 1, type: Number },
-		value: { default: 0, type: [Number, null] },
+		value: { default: 0, type: Number },
 	},
 	data() {
-		return { currentValue: `${this.value}`, hasFormError: false }
+		return { currentValue: toString(this.value), hasFormError: false }
 	},
 	computed: {
 		currentValueNumber() {
@@ -68,7 +79,7 @@ export default {
 		incrementButtonClasses() {
 			return {
 				'kt-input-number__button': true,
-				'kt-input-number__button--disabled': this.isIncrementDisabled,
+				'kt-input-number__button--disabled': !this.isIncrementEnabled,
 			}
 		},
 		inputClasses() {
@@ -77,23 +88,23 @@ export default {
 				'kt-input-number__input--max': this.showMaxNumber,
 			}
 		},
-		isDecrementDisabled() {
+		isDecrementEnabled() {
 			return (
-				this.disabled ||
+				!this.disabled &&
 				isInRange({
 					max: null,
 					min: this.min,
-					value: this.currentValueNumber - this.step < this.min,
+					value: this.currentValueNumber - this.step,
 				})
 			)
 		},
-		isIncrementDisabled() {
+		isIncrementEnabled() {
 			return (
-				this.disabled ||
+				!this.disabled &&
 				isInRange({
 					max: this.max,
 					min: null,
-					value: this.currentValueNumber + this.step > this.max,
+					value: this.currentValueNumber + this.step,
 				})
 			)
 		},
@@ -106,31 +117,32 @@ export default {
 		yocoClassIncrement() {
 			return {
 				yoco: true,
-				'yoco--disabled': this.isIncrementDisabled,
+				'yoco--disabled': !this.isIncrementEnabled,
 			}
 		},
 		yocoClassDecrement() {
 			return {
 				yoco: true,
-				'yoco--disabled': this.isDecrementDisabled,
+				'yoco--disabled': !this.isDecrementEnabled,
 			}
 		},
 	},
 	watch: {
 		value: {
 			handler(newValue) {
-				const shouldUpdate = this.currentValueNumber !== toNumber(newValue)
-				if (shouldUpdate) this.setValue(String(newValue))
+				const shouldUpdate =
+					this.currentValueNumber !== toNumber(String(newValue))
+
+				if (shouldUpdate) this.setValue(toString)
 			},
 			immediate: true,
 		},
 	},
 	methods: {
 		decrementValue() {
-			if (this.isDecrementDisabled) return
-			this.setValue(
-				(this.currentValueNumber - this.step).toFixed(DECIMAL_PLACES),
-			)
+			if (!this.isDecrementEnabled) return
+
+			this.setValue(toString(this.currentValueNumber - this.step))
 		},
 		handleInput(value) {
 			const { max, min } = this
@@ -147,11 +159,9 @@ export default {
 			this.$forceUpdate()
 		},
 		incrementValue() {
-			if (this.isIncrementDisabled) return
+			if (!this.isIncrementEnabled) return
 
-			this.setValue(
-				(this.currentValueNumber + this.step).toFixed(DECIMAL_PLACES),
-			)
+			this.setValue(toString(this.currentValueNumber + this.step))
 		},
 		setValue(newValue) {
 			const oldNumber = this.currentValueNumber
