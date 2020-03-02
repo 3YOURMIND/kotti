@@ -15,14 +15,8 @@
 				:value="currentValue"
 				@input="handleInput($event.target.value)"
 			/>
-			<div v-if="max && showMaxNumber" class="kt-input-number__max-separator">
-				/
-			</div>
-			<div
-				v-if="max && showMaxNumber"
-				class="kt-input-number__max"
-				v-text="max"
-			/>
+			<div v-if="showMaxNumber">/</div>
+			<div v-if="showMaxNumber" class="kt-input-number__max" v-text="max" />
 		</div>
 		<div :class="increaseButtonStyle" @click="incrementValue">
 			<i :class="yocoClassIncrement">plus</i>
@@ -214,16 +208,11 @@ export default {
 			align-items: center;
 			min-width: 0px;
 			height: 100%;
-		}
-
-		.kt-input-number__max-separator {
-			flex: unset;
-			width: fit-content;
+			padding: 0;
 		}
 	}
 
 	&.form-group {
-		display: inline-flex;
 		border: 1px solid $lightgray-400;
 		border-radius: $border-radius;
 
