@@ -209,7 +209,9 @@ export default {
 
 		input,
 		.kt-input-number__max {
+			display: flex;
 			flex: 1 1 100%;
+			align-items: center;
 			min-width: 0px;
 			height: 100%;
 		}
