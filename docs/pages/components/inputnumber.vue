@@ -60,22 +60,6 @@ When `max` attribute has a value, and `showMaxNumber` is `true`, the max number 
 ```html
 <KtInputNumber v-model="number4" showMaxNumber :min="0" :max="12" />
 ```
-
-
-### Full width
-
-<div class="element-example white">
-	<KtInputNumber v-model="number4" :min="0" :max="12" />
-	<KtInputNumber v-model="number4" fullWidth :min="0" :max="12" />
-</div>
-
-You can use `fullWidth` to set the width of input to 100%.
-
-```html
-<KtInputNumber v-model="number4" :min="0" :max="12" />
-<KtInputNumber v-model="number4" fullWidth :min="0" :max="12" />
-```
-
 </template>
 
 <script>

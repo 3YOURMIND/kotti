@@ -29,7 +29,6 @@ export default {
 	name: 'KtInputNumber',
 	props: {
 		disabled: { default: false, type: Boolean },
-		fullWidth: { default: false, type: Boolean },
 		max: { default: null, type: Number },
 		min: { default: null, type: Number },
 		pattern: { required: false, type: String },
@@ -38,15 +37,12 @@ export default {
 		value: { default: 0, type: [Number, null] },
 	},
 	data() {
-		return {
-			currentValue: this.value ?? 0,
-		}
+		return { currentValue: this.value }
 	},
 	computed: {
 		formGroupStyle() {
 			return {
 				'kt-input-number form-group': true,
-				'form-group--100': this.fullWidth,
 				'form-group--error': this.formError,
 			}
 		},
@@ -64,7 +60,6 @@ export default {
 		inputClasses() {
 			return {
 				'kt-input-number__input': true,
-				'kt-input-number__input--100': this.fullWidth,
 				'kt-input-number__input--max': this.showMaxNumber,
 			}
 		},
@@ -176,9 +171,6 @@ export default {
 		background-color: unset;
 	}
 
-	&--100 {
-		width: 100%;
-	}
 	&--max {
 		text-align: right;
 	}
@@ -230,9 +222,6 @@ export default {
 		border: 1px solid $lightgray-400;
 		border-radius: $border-radius;
 
-		&--100 {
-			width: 100%;
-		}
 		&--error {
 			border-color: $red-500;
 		}
