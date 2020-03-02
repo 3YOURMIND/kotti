@@ -15,10 +15,10 @@
 			<div v-if="showDatePicker">
 				<KtDatePicker
 					:mondayFirst="mondayFirst"
-					:selectedDate="currentDate"
+					:value="currentDate"
 					:daysTranslations="daysTranslations"
 					:monthsTranslations="monthsTranslations"
-					@KtDateSelected="setDate"
+					@input="setDate"
 				/>
 			</div>
 		</div>

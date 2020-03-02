@@ -68,14 +68,14 @@ export default {
 						.format('MMMM'),
 				),
 		},
-		selectedDate: { type: Date, default: null },
+		value: { type: Date, default: null },
 	},
 	data() {
 		return { date: null }
 	},
 	computed: {
 		selected() {
-			return dayjs(this.selectedDate).startOf('date')
+			return dayjs(this.value).startOf('date')
 		},
 		monthText() {
 			return this.monthsTranslations[this.date.month()]
@@ -101,9 +101,9 @@ export default {
 		},
 	},
 	watch: {
-		selectedDate: {
+		value: {
 			immediate: true,
-			handler: 'onSelectedDateChange',
+			handler: 'onvalueChange',
 		},
 	},
 	methods: {
@@ -116,6 +116,8 @@ export default {
 		selectDay(day) {
 			this.date = this.date.set('date', day)
 			this.$emit('KtDateSelected', this.date.toDate())
+			// better syntax
+			this.$emit('input', this.date.toDate())
 		},
 		dayStyle(dayOfMonth) {
 			const date = this.date.set('date', dayOfMonth)
@@ -131,8 +133,8 @@ export default {
 
 			return styles
 		},
-		onSelectedDateChange(selectedDate) {
-			this.date = dayjs(selectedDate || undefined).startOf('month')
+		onvalueChange(value) {
+			this.date = dayjs(value || undefined).startOf('month')
 		},
 	},
 }
@@ -143,9 +145,6 @@ $span-width: 1.6rem;
 	position: relative;
 }
 .kt-datepicker {
-	position: absolute;
-	top: 3.2rem;
-	z-index: $zindex-4;
 	box-sizing: border-box;
 	width: $span-width * 8;
 	padding: $span-width/2;
@@ -190,6 +189,7 @@ $span-width: 1.6rem;
 	}
 	&__day {
 		width: 100%;
+		overflow: hidden;
 	}
 	&__day-cell {
 		display: block;

@@ -89,9 +89,6 @@
 
 <KtDatePicker
 	v-model="date5"
-	label="Delivery Date"
-	required
-	placeholder="Choose a date"
 />
 {{date5}}
 ```html
