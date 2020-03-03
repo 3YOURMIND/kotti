@@ -130,11 +130,11 @@ export default {
 	},
 	watch: {
 		value: {
-			handler(newValue) {
-				const shouldUpdate =
-					this.currentValueNumber !== toNumber(String(newValue))
+			handler(newNumber) {
+				const newString = toString(newNumber)
+				const shouldUpdate = this.currentValueNumber !== toNumber(newString)
 
-				if (shouldUpdate) this.setValue(toString)
+				if (shouldUpdate) this.setValue(newString)
 			},
 			immediate: true,
 		},
@@ -212,8 +212,7 @@ export default {
 .kt-input-number {
 	display: flex;
 	align-items: center;
-
-	width: inherit;
+	width: 100%;
 	height: 1.6rem;
 
 	overflow: hidden;
