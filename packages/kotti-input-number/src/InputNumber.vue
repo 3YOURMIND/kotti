@@ -27,7 +27,7 @@
 <script>
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().replace(/\d/g, '')
-const STRINGS_THAT_ARE_TREATED_AS_ZERO = ['', '-']
+const STRINGS_THAT_ARE_TREATED_AS_ZERO = ['', '-', '+']
 const LEADING_ZEROES_REGEX = /^0+([1-9])|^(0)/
 const TRAILING_ZEROES_REGEX = /\.0*$|(\.\d*[1-9])0+$/
 const VALID_REGEX = new RegExp(
