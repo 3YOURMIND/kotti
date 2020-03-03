@@ -68,13 +68,13 @@ export default {
 		decrementButtonClasses() {
 			return {
 				'kt-input-number__button': true,
-				'kt-input-number__button--disabled': this.isDecrementDisabled,
+				'kt-input-number__button--disabled': !this.isDecrementEnabled,
 			}
 		},
 		formGroupStyle() {
 			return {
-				'form-group--error': this.hasFormError,
 				'kt-input-number form-group': true,
+				'form-group--error': this.hasFormError,
 			}
 		},
 		incrementButtonClasses() {
@@ -212,6 +212,8 @@ export default {
 .kt-input-number {
 	display: flex;
 	align-items: center;
+
+	width: inherit;
 	height: 1.6rem;
 
 	overflow: hidden;
@@ -241,7 +243,6 @@ export default {
 			padding: 0;
 		}
 	}
-
 	&.form-group {
 		border: 1px solid $lightgray-400;
 		border-radius: $border-radius;
