@@ -28,7 +28,7 @@
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().substring(1, 2)
 const STRINGS_THAT_ARE_TREATED_AS_ZERO = ['', '-']
-const LEADING_ZEROS_REGEX = /^0+([1-9])|^(0)/
+const LEADING_ZEROES_REGEX = /^0+([1-9])|^(0)/
 const TRAILING_ZEROES_REGEX = /\.0*$|(\.\d*[1-9])0+$/
 const VALID_REGEX = new RegExp(
 	`^[+-]?(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
@@ -149,7 +149,7 @@ export default {
 			const { max, min } = this
 
 			const valueWithoutLeadingZeroes = value.replace(
-				LEADING_ZEROS_REGEX,
+				LEADING_ZEROES_REGEX,
 				'$1$2',
 			)
 
