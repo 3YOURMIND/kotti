@@ -1,3 +1,5 @@
+const { resolve } = require('path')
+
 const config = {
 	srcDir: './docs/',
 	/*
@@ -51,6 +53,9 @@ const config = {
 					],
 				]
 			},
+		},
+		extend(config) {
+			config.resolve.alias['::p'] = resolve(__dirname, './packages/')
 		},
 	},
 }

@@ -8,6 +8,7 @@
 		@mouseover="handleMouseover"
 		@mouseleave="handleMouseleave"
 	>
+		123
 		<i v-if="loading" class="kt-circle-loading" :style="loadingStyle" />
 		<i v-else-if="icon" class="yoco" v-text="icon" />
 		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />

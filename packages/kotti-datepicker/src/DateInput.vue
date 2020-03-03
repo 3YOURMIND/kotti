@@ -33,7 +33,7 @@ import { mixin as clickaway } from 'vue-clickaway'
 import { isBrowser } from '../../util'
 
 // components
-import KtDatePicker from './DatePicker'
+import KtDatePicker from '::p/kotti-datepicker/src/DatePicker'
 import { Portal } from '../../util/portal'
 
 const POPPER_OFFSET = 4

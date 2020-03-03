@@ -11,4 +11,12 @@ module.exports = {
 			],
 		},
 	},
+	configureWebpack: {
+		resolve: {
+			alias: {
+				'::p': resolve(__dirname, './packages/'),
+				vue$: 'vue/dist/vue.esm.js',
+			},
+		},
+	},
 }
