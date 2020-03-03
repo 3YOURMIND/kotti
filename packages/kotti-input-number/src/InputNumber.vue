@@ -148,16 +148,16 @@ export default {
 		handleInput(value) {
 			const { max, min } = this
 
-			const valueWithoutTrailingZeroes = value.replace(
+			const valueWithoutLeadingZeroes = value.replace(
 				LEADING_ZEROS_REGEX,
 				'$1$2',
 			)
 
 			const isTypedNumberValid =
-				VALID_REGEX.test(valueWithoutTrailingZeroes) &&
-				isInRange({ max, min, value: toNumber(valueWithoutTrailingZeroes) })
+				VALID_REGEX.test(valueWithoutLeadingZeroes) &&
+				isInRange({ max, min, value: toNumber(valueWithoutLeadingZeroes) })
 
-			if (isTypedNumberValid) this.setValue(valueWithoutTrailingZeroes)
+			if (isTypedNumberValid) this.setValue(valueWithoutLeadingZeroes)
 			else this.hasFormError = true
 
 			// vue doesn't support controlled input fields without re-rendering
