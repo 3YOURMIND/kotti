@@ -184,38 +184,80 @@ export default {
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
 
-.kt-input-number__input {
-	color: $darkgray-500;
-	text-align: center;
-	border: 0;
-	-moz-appearance: textfield;
-
-	&:disabled {
-		color: unset;
-		background-color: unset;
-	}
-
-	&--max {
-		text-align: right;
-	}
-	&:focus {
-		outline: 0;
-		box-shadow: none;
-	}
-	&::-webkit-outer-spin-button,
-	&::-webkit-inner-spin-button {
-		margin: 0;
-		-webkit-appearance: none;
-	}
-}
+$size: 1.6rem;
 
 .kt-input-number {
 	display: flex;
 	align-items: center;
 	width: 100%;
-	height: 1.6rem;
+	height: $size;
 
 	overflow: hidden;
+
+	&.form-group {
+		border: 1px solid $lightgray-400;
+		border-radius: $border-radius;
+
+		&--error {
+			border-color: $red-500;
+		}
+	}
+
+	&__button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: $size;
+		height: $size;
+
+		cursor: pointer;
+		user-select: none;
+		background: $lightgray-300;
+
+		&:hover {
+			background: $lightgray-400;
+		}
+		&--disabled {
+			color: $lightgray-400;
+			cursor: not-allowed;
+
+			&:hover {
+				background: $lightgray-300;
+			}
+		}
+
+		.yoco--disabled {
+			color: $lightgray-400;
+		}
+	}
+
+	&__input {
+		color: $darkgray-500;
+		text-align: center;
+		border: 0;
+		-moz-appearance: textfield;
+
+		&:disabled {
+			color: unset;
+			background-color: unset;
+		}
+
+		&:focus {
+			outline: 0;
+			box-shadow: none;
+		}
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			margin: 0;
+			-webkit-appearance: none;
+		}
+
+		&--max {
+			text-align: right;
+		}
+	}
 
 	&__middle {
 		display: flex;
@@ -241,41 +283,6 @@ export default {
 			height: 100%;
 			padding: 0;
 		}
-	}
-	&.form-group {
-		border: 1px solid $lightgray-400;
-		border-radius: $border-radius;
-
-		&--error {
-			border-color: $red-500;
-		}
-	}
-}
-
-.kt-input-number__button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	width: 1.6rem;
-	height: 1.6rem;
-
-	user-select: none;
-	background: $lightgray-300;
-
-	&:hover {
-		cursor: pointer;
-		background: $lightgray-400;
-	}
-	&--disabled {
-		color: $lightgray-400;
-	}
-	&--disabled:hover {
-		cursor: not-allowed;
-		background: $lightgray-300;
-	}
-	.yoco--disabled {
-		color: $lightgray-400;
 	}
 }
 </style>
