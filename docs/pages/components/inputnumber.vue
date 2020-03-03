@@ -7,10 +7,10 @@ Input Number is an input field which only supports the `Number` type.
 
 <div class="element-example white">
 	<KtInputNumber v-model="number1" />
-	<pre v-text="`value: ${number1}`"/>
+	<pre v-text="`value: ${number1}`" />
 </div>
 
-Bind a variable to `v-model` in `<KtInputNumber>`.
+Bind a variable to `v-model` in `<KtInputNumber/>`.
 
 ```html
 <KtInputNumber v-model="number1" />
@@ -52,35 +52,17 @@ When the `disabled` attribute is `true`, the user cannot change the value.
 ### Show Max Number
 
 <div class="element-example white">
-	<KtInputNumber v-model="number4" showMaxNumber :max="12" />
+	<KtInputNumber v-model="number4" showMaxNumber :min="0" :max="12" />
 </div>
 
 When `max` attribute has a value, and `showMaxNumber` is `true`, the max number shows beside the value.
 
 ```html
-<KtInputNumber v-model="number4" showMaxNumber :max="12" />
+<KtInputNumber v-model="number4" showMaxNumber :min="0" :max="12" />
 ```
-
-
-### Full width
-
-<div class="element-example white">
-	<KtInputNumber v-model="number4" :max="12" />
-	<KtInputNumber v-model="number4" fullWidth :max="12" />
-</div>
-
-You can use `fullWidth` to set the width of input to 100%.
-
-```html
-<KtInputNumber v-model="number4" :max="12" />
-<KtInputNumber v-model="number4" fullWidth :max="12" />
-```
-
-
-
 </template>
+
 <script>
-/* eslint-disable prettier/prettier */
 export default {
 	name: 'KtInputNumberDoc',
 	data() {
