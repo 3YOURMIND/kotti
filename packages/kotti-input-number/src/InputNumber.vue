@@ -13,6 +13,7 @@
 				:min="min"
 				:step="step"
 				:value="currentValue"
+				@blur="handleBlur"
 				@input="handleInput($event.target.value)"
 			/>
 			<div v-if="showMaxNumber">/</div>
@@ -144,6 +145,9 @@ export default {
 			if (!this.isDecrementEnabled) return
 
 			this.setValue(toString(this.currentValueNumber - this.step))
+		},
+		handleBlur() {
+			this.setValue(toString(this.currentValueNumber))
 		},
 		handleInput(value) {
 			const { max, min } = this
