@@ -1,9 +1,10 @@
 <template>
-	<div v-on-clickaway="handleBlur">
+	<div>
 		<div ref="input" class="form-group">
 			<label v-if="hasLabel" class="form-label" v-text="labelRep" />
 			<div class="has-icon-left">
 				<input
+					ref="field"
 					v-bind="$attrs"
 					class="form-input"
 					:value="formattedDate"
@@ -13,7 +14,7 @@
 				<i class="form-icon yoco" v-text="'calendar'" />
 			</div>
 			<Portal>
-				<div v-if="showDatePicker">
+				<div v-if="showDatePicker" v-on-clickaway="handleBlur">
 					<KtDatePicker
 						:style="selectorOptionStyle"
 						:mondayFirst="mondayFirst"
@@ -92,7 +93,10 @@ export default {
 			this.showDatePicker = true
 			this.computeSelectorOptionsStyle()
 		},
-		handleBlur() {
+		handleBlur(event) {
+			if (event.target === this.$refs.field) {
+				return
+			}
 			this.showDatePicker = false
 		},
 		setDate(value) {
