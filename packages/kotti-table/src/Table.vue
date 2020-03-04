@@ -87,8 +87,6 @@ export default {
 
 		expandMultiple: { default: false, type: Boolean },
 		selected: { default: () => [], type: Array },
-		// should be deprecated in favor of selections
-		value: { type: Array }, // v-model value
 	},
 	inject: {
 		[KT_TABLE_STATE_PROVIDER]: {
@@ -217,19 +215,16 @@ export default {
 				}
 			},
 		},
-		value: {
+		columns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value !== oldValue) {
-					// eslint-disable-next-line no-console
-					console.warn(
-						'use of v-model in table is deprecated use selected prop instead',
-					)
-					this.localStore.commit('setSelectedIndices', value)
+				if (value && value !== oldValue) {
+					this.store.commit('setColumns', value)
 				}
 			},
 		},
 		sortedColumns: {
+			immediate: true,
 			handler(value, oldValue) {
 				if (value && value !== oldValue) {
 					this.store.commit('setSortedColumns', value)
@@ -237,6 +232,7 @@ export default {
 			},
 		},
 		hiddenColumns: {
+			immediate: true,
 			handler(value, oldValue) {
 				if (value && value !== oldValue) {
 					this.store.commit('setHiddenColumns', value)
@@ -244,30 +240,24 @@ export default {
 			},
 		},
 		filteredColumns: {
+			immediate: true,
 			handler(value, oldValue) {
 				if (value && value !== oldValue) {
 					this.store.commit('setFilteredColumns', value)
 				}
 			},
 		},
-		disableRow: {
-			handler() {
-				//FIXME: i remove the parameter here because it was unused - was this intentional? @carol
-				this.store.commit('updateDisabledRows')
-			},
-		},
 		orderedColumns: {
+			immediate: true,
 			handler(value, oldValue) {
 				if (value && value !== oldValue) {
 					this.store.commit('setOrderedColumns', value)
 				}
 			},
 		},
-		columns: {
-			handler(value, oldValue) {
-				if (value && value !== oldValue) {
-					this.store.commit('setColumns', value)
-				}
+		disableRow: {
+			handler() {
+				this.store.commit('updateDisabledRows')
 			},
 		},
 	},
@@ -276,15 +266,6 @@ export default {
 		tableIdSeed += 1
 	},
 	mounted() {
-		this.columns && this.store.commit('setColumns', this.columns)
-		this.orderedColumns &&
-			this.store.commit('setOrderedColumns', this.orderedColumns)
-		this.sortedColumns &&
-			this.store.commit('setSortedColumns', this.sortedColumns)
-		this.filteredColumns &&
-			this.store.commit('setFilteredColumns', this.filteredColumns)
-		this.hiddenColumns &&
-			this.store.commit('setHiddenColumns', this.hiddenColumns)
 		this.$ready = true
 		this.store.commit('updateColumns', { emitChange: false })
 		this.$on('selectionChange', (selection) => {
@@ -295,13 +276,6 @@ export default {
 				)
 			}
 		})
-		const events = Object.keys(this.$listeners)
-		if (events.includes('input')) {
-			// eslint-disable-next-line no-console
-			console.warn(
-				'use of v-model and @input in table is deprecated subscribe to @selectionChange, @selectAll events instead',
-			)
-		}
 	},
 	methods: {
 		isSelected(index) {

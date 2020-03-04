@@ -1,4 +1,4 @@
-import { setColumnsArray, getColumnsArray } from './column'
+import { setColumnsArray } from './column'
 
 export const defaultState = {
 	filteredColumns: [],
@@ -11,30 +11,17 @@ export const mutations = {
 	},
 }
 
-export const getters = {
-	getfilteredColumns(state) {
-		return getColumnsArray(state, 'filteredColumns')
-	},
-}
+export const getters = {}
 
-export function setFilterColumn(state, column) {
-	const columnIndex = getfilterdColumnIndex(state, column)
-	if (columnIndex > 0) {
+export function setFilteredColumn(state, column) {
+	const columnIndex = getFilteredColumnIndex(state, column)
+	if (columnIndex > -1) {
 		state.filteredColumns[columnIndex] = column
 	} else {
 		state.filteredColumns.push(column)
 	}
 }
 
-export function removefilterdColumn(state, column) {
-	const columnIndex = getfilterdColumnIndex(state, column)
-	if (columnIndex > 0) {
-		state.filteredColumns.splice(columnIndex, 1)
-	}
-}
-export function getfilterdColumn(state, column) {
-	return state.filteredColumns[getfilterdColumnIndex(state, column)]
-}
-export function getfilterdColumnIndex(state, column) {
+function getFilteredColumnIndex(state, column) {
 	return state.filteredColumns.findIndex(({ prop }) => prop === column.prop)
 }
