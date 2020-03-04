@@ -270,7 +270,7 @@ $size: 1.6rem;
 		height: 100%;
 
 		&--disabled {
-			color: $lightgray-400;
+			color: $lightgray-600;
 			background-color: $lightgray-300;
 
 			&:hover {
