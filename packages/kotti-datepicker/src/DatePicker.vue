@@ -141,8 +141,6 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '../../kotti-style/_variables.scss';
-
 $span-width: 1.6rem;
 .kt-dateinput {
 	position: relative;
