@@ -11,7 +11,7 @@ import KtCheckbox from './kotti-checkbox'
 import KtCol from './kotti-col'
 import KtComment from './kotti-comment'
 import KtCommentInput from './kotti-comment-input'
-import { KtDateInput, KtDatePicker } from './kotti-datepicker'
+import KtDatePicker from './kotti-datepicker'
 import KtDrawer from './kotti-drawer'
 import KtDropdown from './kotti-dropdown'
 import KtDropdownButton from './kotti-dropdown-button'
@@ -55,7 +55,6 @@ const components = {
 	KtCol,
 	KtComment,
 	KtCommentInput,
-	KtDateInput,
 	KtDatePicker,
 	KtDrawer,
 	KtDropdown,
@@ -128,7 +127,6 @@ export {
 	KtCol,
 	KtComment,
 	KtCommentInput,
-	KtDateInput,
 	KtDatePicker,
 	KtDrawer,
 	KtDropdown,
