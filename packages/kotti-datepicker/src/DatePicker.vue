@@ -31,7 +31,6 @@
 				>
 					<span v-text="day" />
 				</div>
-				<div class="kt-datepicker-calendar__breaker" />
 			</div>
 		</div>
 	</div>
@@ -69,14 +68,14 @@ export default {
 						.format('MMMM'),
 				),
 		},
-		value: { type: Date, default: null },
+		selectedDate: { type: Date, default: null },
 	},
 	data() {
 		return { date: null }
 	},
 	computed: {
 		selected() {
-			return dayjs(this.value).startOf('date')
+			return dayjs(this.selectedDate).startOf('date')
 		},
 		monthText() {
 			return this.monthsTranslations[this.date.month()]
@@ -102,9 +101,9 @@ export default {
 		},
 	},
 	watch: {
-		value: {
+		selectedDate: {
 			immediate: true,
-			handler: 'onvalueChange',
+			handler: 'onSelectedDateChange',
 		},
 	},
 	methods: {
@@ -117,8 +116,6 @@ export default {
 		selectDay(day) {
 			this.date = this.date.set('date', day)
 			this.$emit('KtDateSelected', this.date.toDate())
-			// better syntax
-			this.$emit('input', this.date.toDate())
 		},
 		dayStyle(dayOfMonth) {
 			const date = this.date.set('date', dayOfMonth)
@@ -134,123 +131,9 @@ export default {
 
 			return styles
 		},
-		onvalueChange(value) {
-			this.date = dayjs(value || undefined).startOf('month')
+		onSelectedDateChange(selectedDate) {
+			this.date = dayjs(selectedDate || undefined).startOf('month')
 		},
 	},
 }
 </script>
-<style lang="scss">
-$span-width: 1.6rem;
-.kt-dateinput {
-	position: relative;
-}
-.kt-datepicker {
-	box-sizing: border-box;
-	width: $span-width * 8;
-	padding: $span-width/2;
-	background: #fff;
-	border-radius: $border-radius;
-	box-shadow: $box-shadow;
-}
-.kt-datepicker-header {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	&__month {
-		font-size: 1.2rem;
-		font-weight: 600;
-	}
-	&__year {
-		color: $darkgray-300;
-	}
-	&__control i {
-		color: $darkgray-300;
-		user-select: none;
-		&:hover {
-			color: $darkgray-500;
-			cursor: pointer;
-		}
-	}
-}
-.kt-datepicker-calendar {
-	&__breaker {
-		clear: both;
-	}
-	&__week {
-		width: 100%;
-		margin: 0.2rem;
-		font-size: 0.6rem;
-		font-weight: 600;
-		line-height: 1.6rem;
-		color: $darkgray-300;
-		text-align: center;
-		span {
-			display: inline-block;
-			width: $span-width;
-		}
-	}
-	&__day {
-		width: 100%;
-	}
-	&__day-cell {
-		display: block;
-		float: left;
-		width: $span-width;
-		height: $span-width;
-		padding: 0.2rem;
-		text-align: center;
-		user-select: none;
-		&:hover {
-			cursor: pointer;
-		}
-		span {
-			display: inline-block;
-			width: 1.6rem;
-			line-height: 1.6rem;
-			border-radius: 100%;
-			&:hover {
-				color: #fff;
-				background: $primary-300;
-			}
-		}
-	}
-	&__day--blank {
-		opacity: 0;
-		&:hover {
-			cursor: default;
-		}
-	}
-	&__day--highlighted span {
-		color: #fff;
-		background: $primary-400;
-		border-radius: 100%;
-		box-shadow: inset 0 0 0 0.1rem $primary-500;
-	}
-
-	&__day--today {
-		font-weight: 600;
-		color: $primary-500;
-	}
-	&__day--start,
-	&__day--end {
-		color: #fff;
-		background: $primary-300;
-		border-radius: 100% 0 0 100%;
-		span {
-			background: $primary-400;
-			border-radius: 100%;
-			box-shadow: inset 0 0 0 0.1rem $primary-500;
-		}
-	}
-	&__day--end {
-		border-radius: 0 100% 100% 0;
-	}
-	&__day--between {
-		margin: 0;
-		color: #fff;
-		background: $primary-300;
-	}
-}
-</style>
