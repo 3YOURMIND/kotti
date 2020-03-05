@@ -60,6 +60,20 @@ When `max` attribute has a value, and `showMaxNumber` is `true`, the max number 
 ```html
 <KtInputNumber v-model="number4" showMaxNumber :min="0" :max="12" />
 ```
+
+### Null Value
+
+<div class="element-example white">
+	<KtInputNumber v-model="number5" :step="1" :min="0" :max="12" />
+</div>
+
+When `max` attribute has a value, and `showMaxNumber` is `true`, the max number shows beside the value.
+
+```html
+<KtInputNumber v-model="number5" :step="1" :min="0" :max="12" />
+```
+
+
 </template>
 
 <script>
@@ -71,6 +85,7 @@ export default {
 			number2: 0,
 			number3: 0,
 			number4: 0,
+			number5: null,
 		}
 	},
 }

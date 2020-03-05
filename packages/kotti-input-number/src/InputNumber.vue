@@ -28,7 +28,7 @@
 <script>
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().replace(/\d/g, '')
-const STRINGS_THAT_ARE_TREATED_AS_ZERO = ['', '-', '+']
+const STRINGS_THAT_ARE_TREATED_AS_NULL = ['', '-', '+']
 const LEADING_ZEROES_REGEX = /^0+(([1-9])|(0.?))/
 const TRAILING_ZEROES_REGEX = /\.0*$|(\.\d*[1-9])0+$/
 const VALID_REGEX = new RegExp(
@@ -39,15 +39,17 @@ const isInRange = ({ max, min, value }) =>
 	(max === null || value <= max) && (min === null || value >= min)
 
 const toNumber = (string) =>
-	STRINGS_THAT_ARE_TREATED_AS_ZERO.includes(string)
-		? 0
+	STRINGS_THAT_ARE_TREATED_AS_NULL.includes(string)
+		? null
 		: parseFloat(string.replace(DECIMAL_SEPARATOR, '.'))
 
 const toString = (number) =>
-	number
-		.toFixed(DECIMAL_PLACES)
-		.replace('.', DECIMAL_SEPARATOR)
-		.replace(TRAILING_ZEROES_REGEX, '$1')
+	number === null
+		? ''
+		: number
+				.toFixed(DECIMAL_PLACES)
+				.replace('.', DECIMAL_SEPARATOR)
+				.replace(TRAILING_ZEROES_REGEX, '$1')
 
 export default {
 	name: 'KtInputNumber',
@@ -57,7 +59,7 @@ export default {
 		min: { default: null, type: Number },
 		showMaxNumber: { default: false, type: Boolean },
 		step: { default: 1, type: Number },
-		value: { default: 0, type: Number },
+		value: { default: 0, type: [Number, null] },
 	},
 	data() {
 		return { currentValue: toString(this.value), hasFormError: false }
@@ -92,6 +94,7 @@ export default {
 		},
 		isDecrementEnabled() {
 			return (
+				this.currentValueNumber !== null &&
 				!this.disabled &&
 				isInRange({
 					max: null,
@@ -102,6 +105,7 @@ export default {
 		},
 		isIncrementEnabled() {
 			return (
+				this.currentValueNumber !== null &&
 				!this.disabled &&
 				isInRange({
 					max: this.max,
@@ -142,7 +146,7 @@ export default {
 	},
 	methods: {
 		decrementValue() {
-			if (!this.isDecrementEnabled) return
+			if (!this.isDecrementEnabled || this.currentValueNumber === null) return
 
 			this.setValue(toString(this.currentValueNumber - this.step))
 		},
@@ -159,7 +163,8 @@ export default {
 
 			const isTypedNumberValid =
 				VALID_REGEX.test(valueWithoutLeadingZeroes) &&
-				isInRange({ max, min, value: toNumber(valueWithoutLeadingZeroes) })
+				(STRINGS_THAT_ARE_TREATED_AS_NULL.includes(valueWithoutLeadingZeroes) ||
+					isInRange({ max, min, value: toNumber(valueWithoutLeadingZeroes) }))
 
 			if (isTypedNumberValid) this.setValue(valueWithoutLeadingZeroes)
 			else this.hasFormError = true
@@ -169,7 +174,7 @@ export default {
 			this.$forceUpdate()
 		},
 		incrementValue() {
-			if (!this.isIncrementEnabled) return
+			if (!this.isIncrementEnabled || this.currentValueNumber === null) return
 
 			this.setValue(toString(this.currentValueNumber + this.step))
 		},
