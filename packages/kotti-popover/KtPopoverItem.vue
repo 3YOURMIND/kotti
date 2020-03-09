@@ -1,5 +1,5 @@
 <template>
-	<div class="kt-popover-item">
+	<div class="kt-popover-item" v-bind="$attrs" v-on="$listeners">
 		<i v-show="icon" class="yoco" v-text="icon" />
 		<slot />
 	</div>
