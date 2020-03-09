@@ -63,6 +63,13 @@ When `max` attribute has a value, and `showMaxNumber` is `true`, the max number 
 
 ### Null Value
 
+if the bound value is `null` or if the user clears the input (making the internal value we track null), 
+both increment/decrement buttons will be enabled but clicking them will initialize the inputNumber to `0`. 
+
+Thus, note that if the bound value is `null` or the input is an empty string, the min/max range checks are disregarded 
+until the user inputs an actual value or tries to decrement/increment, 
+after which the component behaves as in the above examples.
+
 <div class="element-example white">
 	<KtInputNumber v-model="number5" :step="1" :min="0" :max="12" />
 </div>

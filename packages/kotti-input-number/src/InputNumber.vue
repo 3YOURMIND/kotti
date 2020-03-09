@@ -96,24 +96,24 @@ export default {
 		},
 		isDecrementEnabled() {
 			return (
-				this.currentValueNumber !== null &&
 				!this.disabled &&
-				isInRange({
-					max: null,
-					min: this.min,
-					value: this.currentValueNumber - this.step,
-				})
+				(this.currentValueNumber === null ||
+					isInRange({
+						max: null,
+						min: this.min,
+						value: this.currentValueNumber - this.step,
+					}))
 			)
 		},
 		isIncrementEnabled() {
 			return (
-				this.currentValueNumber !== null &&
 				!this.disabled &&
-				isInRange({
-					max: this.max,
-					min: null,
-					value: this.currentValueNumber + this.step,
-				})
+				(this.currentValueNumber === null ||
+					isInRange({
+						max: this.max,
+						min: null,
+						value: this.currentValueNumber + this.step,
+					}))
 			)
 		},
 		middleClasses() {
@@ -148,7 +148,8 @@ export default {
 	},
 	methods: {
 		decrementValue() {
-			if (!this.isDecrementEnabled || this.currentValueNumber === null) return
+			if (!this.isDecrementEnabled) return
+			if (this.currentValueNumber === null) return this.setValue('0')
 
 			this.setValue(toString(this.currentValueNumber - this.step))
 		},
@@ -176,7 +177,8 @@ export default {
 			this.$forceUpdate()
 		},
 		incrementValue() {
-			if (!this.isIncrementEnabled || this.currentValueNumber === null) return
+			if (!this.isIncrementEnabled) return
+			if (this.currentValueNumber === null) return this.setValue('0')
 
 			this.setValue(toString(this.currentValueNumber + this.step))
 		},
@@ -184,7 +186,7 @@ export default {
 			const oldNumber = this.currentValueNumber
 
 			this.hasFormError = false
-			this.currentValue = newValue
+			this.currentValue = newValue //immediately computed new currentValueNumber
 
 			if (oldNumber !== this.currentValueNumber)
 				this.$emit('input', this.currentValueNumber)
