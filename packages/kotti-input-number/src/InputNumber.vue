@@ -96,8 +96,8 @@ export default {
 		},
 		isDecrementEnabled() {
 			return (
-				this.currentValueNumber === null ||
-				(!this.disabled &&
+				!this.disabled &&
+				(this.currentValueNumber === null ||
 					isInRange({
 						max: null,
 						min: this.min,
@@ -107,8 +107,8 @@ export default {
 		},
 		isIncrementEnabled() {
 			return (
-				this.currentValueNumber === null ||
-				(!this.disabled &&
+				!this.disabled &&
+				(this.currentValueNumber === null ||
 					isInRange({
 						max: this.max,
 						min: null,
