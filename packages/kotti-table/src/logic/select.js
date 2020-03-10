@@ -28,8 +28,7 @@ export const mutations = {
 			return
 		}
 
-		// const shouldSelectAll = !(state.isAllSelected || oldSelection.length)
-		const shouldSelectAll = !state.isAllSelected //more intuitive
+		const shouldSelectAll = !state.isAllSelected
 
 		store.commit('setSelected', shouldSelectAll ? [...enabledRows] : [])
 
