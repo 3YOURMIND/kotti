@@ -192,12 +192,15 @@ export default {
 		},
 		setValue(newValue) {
 			const oldNumber = this.currentValueNumber
-
 			this.hasFormError = false
 			this.currentValue = newValue //immediately computed new currentValueNumber
 
-			if (oldNumber !== this.currentValueNumber)
+			if (
+				oldNumber !== this.currentValueNumber &&
+				this.currentValueNumber !== null
+			) {
 				this.$emit('input', this.currentValueNumber)
+			}
 		},
 	},
 }
