@@ -149,7 +149,11 @@ export default {
 	methods: {
 		decrementValue() {
 			if (!this.isDecrementEnabled) return
-			if (this.currentValueNumber === null) return this.setValue('0')
+			if (this.currentValueNumber === null) {
+				const defaultString = this.min === null ? '0' : this.min + ''
+				this.setValue(defaultString)
+				return
+			}
 
 			this.setValue(toString(this.currentValueNumber - this.step))
 		},
@@ -178,7 +182,11 @@ export default {
 		},
 		incrementValue() {
 			if (!this.isIncrementEnabled) return
-			if (this.currentValueNumber === null) return this.setValue('0')
+			if (this.currentValueNumber === null) {
+				const defaultString = this.min === null ? '0' : this.min + ''
+				this.setValue(defaultString)
+				return
+			}
 
 			this.setValue(toString(this.currentValueNumber + this.step))
 		},
