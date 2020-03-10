@@ -131,7 +131,7 @@
 		"format:docs": "prettier --write **/*.md",
 		"lint:script": "eslint --fix --ignore-path .gitignore '**/*.{js,vue}'",
 		"lint:style": "stylelint --fix **/*.{css,scss,vue}",
-		"postpublish": "git tag v$(node -p \"require('./package.json').version\") && git push origin v$(node -p \"require('./package.json').version\")",
+		"postpublish": "git tag -f v$(node -p \"require('./package.json').version\") && git push origin v$(node -p \"require('./package.json').version\")",
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
