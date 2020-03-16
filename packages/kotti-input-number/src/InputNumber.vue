@@ -42,6 +42,14 @@ const VALID_REGEX = new RegExp(
 	`^[+-]?(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
 )
 
+const isStepMultiple = ({ min, step, value }) => {
+	if (min === null) return true
+
+	const k = (value - min) / step
+	const epsilon = 10e-10
+	return Math.abs(k - Math.round(k)) < epsilon
+}
+
 const isInRange = ({ max, min, offset, value }) => {
 	if (value === null) return true
 
@@ -148,24 +156,20 @@ export default {
 			handler(newNumber, oldNumber) {
 				const newString = toString(newNumber)
 				const truncatedNumber = toNumber(newString)
+				const { min, max, step } = this
 
-				if (
-					!isInRange({
-						max: this.max,
-						min: this.min,
-						offset: 0,
-						value: truncatedNumber,
-					})
-				)
+				if (!isInRange({ max, min, offset: 0, value: truncatedNumber }))
 					throw new RangeError(
 						`KtInputNumber: encounted an out-of-range number "${newNumber}"`,
 					)
 
+				if (!isStepMultiple({ min, step, value: truncatedNumber }))
+					throw new Error(
+						`KtInputNumber: encounted a value "${newNumber}" that doesn't fit ((min + k * step): where k is an integer)`,
+					)
+
 				const shouldUpdate = oldNumber !== truncatedNumber
-				if (shouldUpdate) {
-					this.hasFormError = false
-					this.internalStringValue = newString
-				}
+				if (shouldUpdate) this.setInternalStringValue(newString)
 			},
 			immediate: true,
 		},
@@ -184,33 +188,35 @@ export default {
 			this.$emit('input', value)
 		},
 		handleBlur() {
-			this.internalStringValue = toString(this.value)
+			this.setInternalStringValue(toString(this.value))
 		},
 		handleInput(value) {
-			const { max, min } = this
+			const { max, min, step } = this
 
 			const valueWithoutLeadingZeroes = value.replace(
 				LEADING_ZEROES_REGEX,
 				'$1',
 			)
+			const nextNumber = toNumber(valueWithoutLeadingZeroes)
 
 			const isTypedNumberValid =
 				VALID_REGEX.test(valueWithoutLeadingZeroes) &&
-				(STRINGS_THAT_ARE_TREATED_AS_NULL.includes(valueWithoutLeadingZeroes) ||
-					isInRange({
-						max,
-						min,
-						offset: 0,
-						value: toNumber(valueWithoutLeadingZeroes),
-					}))
+				isStepMultiple({
+					min,
+					step,
+					value: nextNumber,
+				}) &&
+				isInRange({
+					max,
+					min,
+					offset: 0,
+					value: nextNumber,
+				})
 
 			if (isTypedNumberValid) {
-				const shouldEmit = toNumber(valueWithoutLeadingZeroes) !== this.value
-				if (shouldEmit) {
-					this.emitInput(toNumber(valueWithoutLeadingZeroes))
-				} else {
-					this.internalStringValue = valueWithoutLeadingZeroes
-				}
+				const shouldEmit = nextNumber !== this.value
+				if (shouldEmit) this.emitInput(nextNumber)
+				else this.setInternalStringValue(valueWithoutLeadingZeroes)
 			} else {
 				this.hasFormError = true
 				this.$emit('error', valueWithoutLeadingZeroes)
@@ -228,6 +234,10 @@ export default {
 			}
 
 			this.emitInput(this.value + this.step)
+		},
+		setInternalStringValue(value) {
+			this.hasFormError = false
+			this.internalStringValue = value
 		},
 	},
 }
