@@ -29,7 +29,11 @@
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().replace(/\d/g, '')
 const SIGN_STRINGS = ['-', '+']
-const STRINGS_THAT_ARE_TREATED_AS_NULL = [...SIGN_STRINGS, '']
+const STRINGS_THAT_ARE_TREATED_AS_NULL = [
+	...SIGN_STRINGS,
+	DECIMAL_SEPARATOR,
+	'',
+]
 const LEADING_ZEROES_REGEX = new RegExp(`^0+([1-9]|0\\${DECIMAL_SEPARATOR}?)`)
 const TRAILING_ZEROES_REGEX = new RegExp(
 	`\\${DECIMAL_SEPARATOR}0*$|(\\${DECIMAL_SEPARATOR}\\d*[1-9])0+$`,
@@ -38,9 +42,14 @@ const VALID_REGEX = new RegExp(
 	`^[+-]?(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
 )
 
-const isInRange = ({ max, min, value }) =>
-	value === null ||
-	((max === null || value <= max) && (min === null || value >= min))
+const isInRange = ({ max, min, offset, value }) => {
+	if (value === null) return true
+
+	const fitsMinimum = min === null || value + offset >= min
+	const fitsMaximum = max === null || value + offset <= max
+
+	return fitsMinimum && fitsMaximum
+}
 
 const toNumber = (string) =>
 	STRINGS_THAT_ARE_TREATED_AS_NULL.includes(string)
@@ -69,9 +78,6 @@ export default {
 		return { internalStringValue: '', hasFormError: false }
 	},
 	computed: {
-		currentValueNumber() {
-			return toNumber(this.internalStringValue)
-		},
 		decrementButtonClasses() {
 			return {
 				'kt-input-number__button': true,
@@ -99,23 +105,23 @@ export default {
 		isDecrementEnabled() {
 			return (
 				!this.disabled &&
-				(this.currentValueNumber === null ||
-					isInRange({
-						max: null,
-						min: this.min,
-						value: this.currentValueNumber - this.step,
-					}))
+				isInRange({
+					max: null,
+					min: this.min,
+					offset: -this.step,
+					value: this.value,
+				})
 			)
 		},
 		isIncrementEnabled() {
 			return (
 				!this.disabled &&
-				(this.currentValueNumber === null ||
-					isInRange({
-						max: this.max,
-						min: null,
-						value: this.currentValueNumber + this.step,
-					}))
+				isInRange({
+					max: this.max,
+					min: null,
+					offset: this.step,
+					value: this.value,
+				})
 			)
 		},
 		middleClasses() {
@@ -144,7 +150,12 @@ export default {
 				const truncatedNumber = toNumber(newString)
 
 				if (
-					!isInRange({ max: this.max, min: this.min, value: truncatedNumber })
+					!isInRange({
+						max: this.max,
+						min: this.min,
+						offset: 0,
+						value: truncatedNumber,
+					})
 				)
 					throw new RangeError(
 						`KtInputNumber: encounted an out-of-range number "${newNumber}"`,
@@ -162,12 +173,15 @@ export default {
 	methods: {
 		decrementValue() {
 			if (!this.isDecrementEnabled) return
-			if (this.currentValueNumber === null) {
+			if (this.value === null) {
 				const defaultNumber = this.min || 0
 				this.emitInput(defaultNumber)
 				return
 			}
-			this.emitInput(this.currentValueNumber - this.step)
+			this.emitInput(this.value - this.step)
+		},
+		emitInput(value) {
+			this.$emit('input', value)
 		},
 		handleBlur() {
 			this.internalStringValue = toString(this.value)
@@ -183,7 +197,12 @@ export default {
 			const isTypedNumberValid =
 				VALID_REGEX.test(valueWithoutLeadingZeroes) &&
 				(STRINGS_THAT_ARE_TREATED_AS_NULL.includes(valueWithoutLeadingZeroes) ||
-					isInRange({ max, min, value: toNumber(valueWithoutLeadingZeroes) }))
+					isInRange({
+						max,
+						min,
+						offset: 0,
+						value: toNumber(valueWithoutLeadingZeroes),
+					}))
 
 			if (isTypedNumberValid) {
 				const shouldEmit = toNumber(valueWithoutLeadingZeroes) !== this.value
@@ -202,16 +221,13 @@ export default {
 		},
 		incrementValue() {
 			if (!this.isIncrementEnabled) return
-			if (this.currentValueNumber === null) {
+			if (this.value === null) {
 				const defaultNumber = this.min || 0
 				this.emitInput(defaultNumber)
 				return
 			}
 
-			this.emitInput(this.currentValueNumber + this.step)
-		},
-		emitInput(value) {
-			this.$emit('input', value)
+			this.emitInput(this.value + this.step)
 		},
 	},
 }
