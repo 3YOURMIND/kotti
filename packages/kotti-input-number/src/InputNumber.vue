@@ -28,12 +28,7 @@
 <script>
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().replace(/\d/g, '')
-const SIGN_STRINGS = ['-', '+']
-const STRINGS_THAT_ARE_TREATED_AS_NULL = [
-	...SIGN_STRINGS,
-	DECIMAL_SEPARATOR,
-	'',
-]
+const STRINGS_THAT_ARE_TREATED_AS_NULL = [DECIMAL_SEPARATOR, '-', '+', '']
 const LEADING_ZEROES_REGEX = new RegExp(`^0+([1-9]|0\\${DECIMAL_SEPARATOR}?)`)
 const TRAILING_ZEROES_REGEX = new RegExp(
 	`\\${DECIMAL_SEPARATOR}0*$|(\\${DECIMAL_SEPARATOR}\\d*[1-9])0+$`,
