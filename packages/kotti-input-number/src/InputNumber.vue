@@ -12,7 +12,7 @@
 				:max="max"
 				:min="min"
 				:step="step"
-				:value="currentValue"
+				:value="internalStringValue"
 				@blur="handleBlur"
 				@input="handleInput($event.target.value)"
 			/>
@@ -28,7 +28,7 @@
 <script>
 const DECIMAL_PLACES = 3
 const DECIMAL_SEPARATOR = (1.1).toLocaleString().replace(/\d/g, '')
-const STRINGS_THAT_ARE_TREATED_AS_NULL = ['', '-', '+']
+const STRINGS_THAT_ARE_TREATED_AS_NULL = [DECIMAL_SEPARATOR, '-', '+', '']
 const LEADING_ZEROES_REGEX = new RegExp(`^0+([1-9]|0\\${DECIMAL_SEPARATOR}?)`)
 const TRAILING_ZEROES_REGEX = new RegExp(
 	`\\${DECIMAL_SEPARATOR}0*$|(\\${DECIMAL_SEPARATOR}\\d*[1-9])0+$`,
@@ -37,8 +37,22 @@ const VALID_REGEX = new RegExp(
 	`^[+-]?(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
 )
 
-const isInRange = ({ max, min, value }) =>
-	(max === null || value <= max) && (min === null || value >= min)
+const isStepMultiple = ({ min, step, value }) => {
+	if (min === null) return true
+
+	const k = (value - min) / step
+	const epsilon = 10e-10
+	return Math.abs(k - Math.round(k)) < epsilon
+}
+
+const isInRange = ({ max, min, offset, value }) => {
+	if (value === null) return true
+
+	const fitsMinimum = min === null || value + offset >= min
+	const fitsMaximum = max === null || value + offset <= max
+
+	return fitsMinimum && fitsMaximum
+}
 
 const toNumber = (string) =>
 	STRINGS_THAT_ARE_TREATED_AS_NULL.includes(string)
@@ -64,12 +78,9 @@ export default {
 		value: { default: 0, type: [Number, null] },
 	},
 	data() {
-		return { currentValue: toString(this.value), hasFormError: false }
+		return { internalStringValue: '', hasFormError: false }
 	},
 	computed: {
-		currentValueNumber() {
-			return toNumber(this.currentValue)
-		},
 		decrementButtonClasses() {
 			return {
 				'kt-input-number__button': true,
@@ -97,23 +108,23 @@ export default {
 		isDecrementEnabled() {
 			return (
 				!this.disabled &&
-				(this.currentValueNumber === null ||
-					isInRange({
-						max: null,
-						min: this.min,
-						value: this.currentValueNumber - this.step,
-					}))
+				isInRange({
+					max: null,
+					min: this.min,
+					offset: -this.step,
+					value: this.value,
+				})
 			)
 		},
 		isIncrementEnabled() {
 			return (
 				!this.disabled &&
-				(this.currentValueNumber === null ||
-					isInRange({
-						max: this.max,
-						min: null,
-						value: this.currentValueNumber + this.step,
-					}))
+				isInRange({
+					max: this.max,
+					min: null,
+					offset: this.step,
+					value: this.value,
+				})
 			)
 		},
 		middleClasses() {
@@ -137,11 +148,23 @@ export default {
 	},
 	watch: {
 		value: {
-			handler(newNumber) {
+			handler(newNumber, oldNumber) {
 				const newString = toString(newNumber)
-				const shouldUpdate = this.currentValueNumber !== toNumber(newString)
+				const truncatedNumber = toNumber(newString)
+				const { min, max, step } = this
 
-				if (shouldUpdate) this.setValue(newString)
+				if (!isInRange({ max, min, offset: 0, value: truncatedNumber }))
+					throw new RangeError(
+						`KtInputNumber: encounted an out-of-range number "${newNumber}"`,
+					)
+
+				if (!isStepMultiple({ min, step, value: truncatedNumber }))
+					throw new Error(
+						`KtInputNumber: encounted a value "${newNumber}" that doesn't fit ((min + k * step): where k is an integer)`,
+					)
+
+				const shouldUpdate = oldNumber !== truncatedNumber
+				if (shouldUpdate) this.setInternalStringValue(newString)
 			},
 			immediate: true,
 		},
@@ -149,58 +172,67 @@ export default {
 	methods: {
 		decrementValue() {
 			if (!this.isDecrementEnabled) return
-			if (this.currentValueNumber === null) {
-				const defaultString = this.min === null ? '0' : this.min + ''
-				this.setValue(defaultString)
+			if (this.value === null) {
+				const defaultNumber = this.min || 0
+				this.emitInput(defaultNumber)
 				return
 			}
-
-			this.setValue(toString(this.currentValueNumber - this.step))
+			this.emitInput(this.value - this.step)
+		},
+		emitInput(value) {
+			this.$emit('input', value)
 		},
 		handleBlur() {
-			this.setValue(toString(this.currentValueNumber))
+			this.setInternalStringValue(toString(this.value))
 		},
 		handleInput(value) {
-			const { max, min } = this
+			const { max, min, step } = this
 
 			const valueWithoutLeadingZeroes = value.replace(
 				LEADING_ZEROES_REGEX,
 				'$1',
 			)
+			const nextNumber = toNumber(valueWithoutLeadingZeroes)
 
 			const isTypedNumberValid =
 				VALID_REGEX.test(valueWithoutLeadingZeroes) &&
-				(STRINGS_THAT_ARE_TREATED_AS_NULL.includes(valueWithoutLeadingZeroes) ||
-					isInRange({ max, min, value: toNumber(valueWithoutLeadingZeroes) }))
+				isStepMultiple({
+					min,
+					step,
+					value: nextNumber,
+				}) &&
+				isInRange({
+					max,
+					min,
+					offset: 0,
+					value: nextNumber,
+				})
 
-			if (isTypedNumberValid) this.setValue(valueWithoutLeadingZeroes)
-			else this.hasFormError = true
-
+			if (isTypedNumberValid) {
+				const shouldEmit = nextNumber !== this.value
+				if (shouldEmit) this.emitInput(nextNumber)
+				else this.setInternalStringValue(valueWithoutLeadingZeroes)
+			} else {
+				this.hasFormError = true
+				this.$emit('error', valueWithoutLeadingZeroes)
+			}
 			// vue doesn't support controlled input fields without re-rendering
 			// therefore, in case nothing changed, we need to re-render here
 			this.$forceUpdate()
 		},
 		incrementValue() {
 			if (!this.isIncrementEnabled) return
-			if (this.currentValueNumber === null) {
-				const defaultString = this.min === null ? '0' : this.min + ''
-				this.setValue(defaultString)
+			if (this.value === null) {
+				const defaultNumber = this.min || 0
+				this.emitInput(defaultNumber)
 				return
 			}
 
-			this.setValue(toString(this.currentValueNumber + this.step))
+			this.emitInput(this.value + this.step)
 		},
-		setValue(newValue) {
-			const oldNumber = this.currentValueNumber
+		setInternalStringValue(value) {
 			this.hasFormError = false
-			this.currentValue = newValue //immediately computed new currentValueNumber
-
-			if (
-				oldNumber !== this.currentValueNumber &&
-				this.currentValueNumber !== null
-			) {
-				this.$emit('input', this.currentValueNumber)
-			}
+			this.internalStringValue = value
 		},
 	},
 }
