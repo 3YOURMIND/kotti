@@ -115,3 +115,21 @@ yarn dev:docs
 # deploy documents on github
 yarn deploy:docs
 ```
+
+## Publish
+
+```bash
+# you may need login to npm with your credentials if you have publishing rights
+npm login
+
+# update version according to one of the valid options
+ npm version {patch, minor, major}
+# OR change the version directly in package.json
+# then commit & push
+
+# finally, publish
+  npm publish
+
+# the postPublish hook will create and automatically push the new tag
+
+```
