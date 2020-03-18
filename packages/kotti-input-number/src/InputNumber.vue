@@ -38,8 +38,7 @@ const VALID_REGEX = new RegExp(
 )
 
 const isStepMultiple = ({ min, step, value }) => {
-	if (min === null) return true
-
+	if (min === null || value === null) return true
 	const k = (value - min) / step
 	const epsilon = 10e-10
 	return Math.abs(k - Math.round(k)) < epsilon
