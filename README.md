@@ -123,12 +123,12 @@ yarn deploy:docs
 npm login
 
 # update version according to one of the valid options
- npm version {patch, minor, major}
+npm version {patch, minor, major}
 # OR change the version directly in package.json
 # then commit & push
 
 # finally, publish
-  npm publish
+npm publish
 
 # the postPublish hook will create and automatically push the new tag
 
