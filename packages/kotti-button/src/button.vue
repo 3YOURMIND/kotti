@@ -4,6 +4,7 @@
 		:class="mainClasses"
 		:style="themeColor"
 		role="button"
+		v-bind="element === 'button' ? { type: 'button' } : {}"
 		@click="handleClick"
 		@mouseover="handleMouseover"
 		@mouseleave="handleMouseleave"
