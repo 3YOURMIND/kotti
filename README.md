@@ -1,4 +1,14 @@
-# Kotti Design System
+<h1 align="center">Kotti UI</h1>
+
+<p align="center">
+	<a href="https://github.com/3yourmind">@3YOURMIND</a>’s Vue.js UI Framework
+</p>
+
+<p align="center">
+	<a href="https://npmjs.com/package/@3yourmind/kotti-ui"><img src="https://img.shields.io/npm/dm/@3yourmind/kotti-ui.svg"/></a>
+	<a href="https://npmjs.com/package/@3yourmind/kotti-ui"><img src="https://david-dm.org/@3yourmind/kotti-ui.svg"/></a>
+	<a href="https://bundlephobia.com/result?p=@3yourmind/kotti-ui"><img src="https://img.shields.io/bundlephobia/minzip/@3yourmind/kotti-ui.svg"/></a>
+</p>
 
 ## Overview
 
