@@ -44,15 +44,14 @@ export function setHiddenColumn(state, column) {
 		state.hiddenColumns.push(column)
 	}
 }
-export function removeHiddenColumn(state, column) {
+
+function removeHiddenColumn(state, column) {
 	const columnIndex = getHiddenColumnIndex(state, column)
 	if (columnIndex > 0) {
 		state.hiddenColumns.splice(columnIndex, 1)
 	}
 }
-export function getHiddenColumn(state, column) {
-	return state.hiddenColumns[getHiddenColumnIndex(state, column)]
-}
+
 export function getHiddenColumnIndex(state, column) {
 	return state.hiddenColumns.findIndex(({ prop }) => prop === column.prop)
 }

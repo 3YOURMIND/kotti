@@ -1,278 +1,344 @@
 <template>
 	<div :class="formGroupStyle">
-		<div :class="decreaseButtonStyle" @click="decrementValue">
+		<div :class="decrementButtonClasses" @click="decrementValue">
 			<i :class="yocoClassDecrement">minus</i>
 		</div>
-		<input
-			type="number"
-			:min="min"
-			:max="max"
-			:step="step"
-			:class="inputStyle"
-			:disabled="disabled"
-			:value="currentValue"
-			@input="handleInput($event.target.value)"
-		/>
-		<div
-			v-if="max && showMaxNumber"
-			class="kt-input-number__max"
-			v-text="max"
-		/>
-		<div :class="increaseButtonStyle" @click="incrementValue">
+		<div :class="middleClasses" @click="$refs.input.focus()">
+			<input
+				ref="input"
+				type="text"
+				:class="inputClasses"
+				:disabled="disabled"
+				:max="max"
+				:min="min"
+				:step="step"
+				:value="internalStringValue"
+				@blur="handleBlur"
+				@input="handleInput($event.target.value)"
+			/>
+			<div v-if="showMaxNumber">/</div>
+			<div v-if="showMaxNumber" class="kt-input-number__max" v-text="max" />
+		</div>
+		<div :class="incrementButtonClasses" @click="incrementValue">
 			<i :class="yocoClassIncrement">plus</i>
 		</div>
 	</div>
 </template>
 
 <script>
+const DECIMAL_PLACES = 3
+const DECIMAL_SEPARATOR = (1.1).toLocaleString().replace(/\d/g, '')
+const STRINGS_THAT_ARE_TREATED_AS_NULL = [DECIMAL_SEPARATOR, '-', '+', '']
+const LEADING_ZEROES_REGEX = new RegExp(`^0+([1-9]|0\\${DECIMAL_SEPARATOR}?)`)
+const TRAILING_ZEROES_REGEX = new RegExp(
+	`\\${DECIMAL_SEPARATOR}0*$|(\\${DECIMAL_SEPARATOR}\\d*[1-9])0+$`,
+)
+const VALID_REGEX = new RegExp(
+	`^[+-]?(0?|([1-9]\\d*))?(\\${DECIMAL_SEPARATOR}[0-9]{0,${DECIMAL_PLACES}})?$`,
+)
+
+const isStepMultiple = ({ min, step, value }) => {
+	if (min === null) return true
+
+	const k = (value - min) / step
+	const epsilon = 10e-10
+	return Math.abs(k - Math.round(k)) < epsilon
+}
+
+const isInRange = ({ max, min, offset, value }) => {
+	if (value === null) return true
+
+	const fitsMinimum = min === null || value + offset >= min
+	const fitsMaximum = max === null || value + offset <= max
+
+	return fitsMinimum && fitsMaximum
+}
+
+const toNumber = (string) =>
+	STRINGS_THAT_ARE_TREATED_AS_NULL.includes(string)
+		? null
+		: parseFloat(string.replace(DECIMAL_SEPARATOR, '.'))
+
+const toString = (number) =>
+	number === null
+		? ''
+		: number
+				.toFixed(DECIMAL_PLACES)
+				.replace('.', DECIMAL_SEPARATOR)
+				.replace(TRAILING_ZEROES_REGEX, '$1')
+
 export default {
 	name: 'KtInputNumber',
 	props: {
-		max: {
-			type: Number,
-			default: null,
-		},
-		min: {
-			type: Number,
-			default: null,
-		},
-		value: {
-			type: [Number, null],
-			default: 0,
-		},
-		step: {
-			type: Number,
-			default: 1,
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		showMaxNumber: {
-			type: Boolean,
-			default: false,
-		},
-		fullWidth: {
-			type: Boolean,
-			default: false,
-		},
-		pattern: {
-			type: String,
-			required: false,
-		},
+		disabled: { default: false, type: Boolean },
+		max: { default: null, type: Number },
+		min: { default: null, type: Number },
+		showMaxNumber: { default: false, type: Boolean },
+		step: { default: 1, type: Number },
+		value: { default: 0, type: [Number, null] },
 	},
 	data() {
-		return {
-			currentValue: this.value ?? 0,
-			incrementDisabled: false,
-			decrementDisabled: false,
-		}
+		return { internalStringValue: '', hasFormError: false }
 	},
 	computed: {
+		decrementButtonClasses() {
+			return {
+				'kt-input-number__button': true,
+				'kt-input-number__button--disabled': !this.isDecrementEnabled,
+			}
+		},
 		formGroupStyle() {
 			return {
 				'kt-input-number form-group': true,
-				'form-group--100': this.fullWidth,
-				'form-group--error': this.formError,
+				'form-group--error': this.hasFormError,
 			}
 		},
-		formError() {
-			if (
-				Number.isNaN(this.currentValue) ||
-				typeof this.currentValue !== 'number'
-			) {
-				return true
+		incrementButtonClasses() {
+			return {
+				'kt-input-number__button': true,
+				'kt-input-number__button--disabled': !this.isIncrementEnabled,
 			}
-			if (typeof this.max === 'number' && this.currentValue > this.max) {
-				return true
-			}
-			if (typeof this.min === 'number' && this.currentValue < this.min) {
-				return true
-			}
-
-			return false
 		},
-		inputStyle() {
+		inputClasses() {
 			return {
 				'kt-input-number__input': true,
-				'kt-input-number__input--100': this.fullWidth,
-				'kt-input-number__input--disabled': this.disabled,
 				'kt-input-number__input--max': this.showMaxNumber,
 			}
 		},
-		increaseButtonStyle() {
-			return {
-				'kt-input-number__button': true,
-				'kt-input-number__button--disabled': this.incrementDisabled,
-			}
+		isDecrementEnabled() {
+			return (
+				!this.disabled &&
+				isInRange({
+					max: null,
+					min: this.min,
+					offset: -this.step,
+					value: this.value,
+				})
+			)
 		},
-		decreaseButtonStyle() {
+		isIncrementEnabled() {
+			return (
+				!this.disabled &&
+				isInRange({
+					max: this.max,
+					min: null,
+					offset: this.step,
+					value: this.value,
+				})
+			)
+		},
+		middleClasses() {
 			return {
-				'kt-input-number__button': true,
-				'kt-input-number__button--disabled': this.decrementDisabled,
+				'kt-input-number__middle': true,
+				'kt-input-number__middle--disabled': this.disabled,
 			}
 		},
 		yocoClassIncrement() {
 			return {
 				yoco: true,
-				'yoco--disabled': this.incrementDisabled || this.disabled,
+				'yoco--disabled': !this.isIncrementEnabled,
 			}
 		},
 		yocoClassDecrement() {
 			return {
 				yoco: true,
-				'yoco--disabled': this.decrementDisabled || this.disabled,
+				'yoco--disabled': !this.isDecrementEnabled,
 			}
 		},
 	},
 	watch: {
-		currentValue(newVal) {
-			if (typeof newVal === 'number' && newVal % 1 !== 0) {
-				const THREE_DECIMAL_PLACES = 3
-				const fixedVal = newVal.toFixed(THREE_DECIMAL_PLACES)
-				this.currentValue = parseFloat(fixedVal)
-			}
-			if (!this.formError) {
-				this.$emit('input', newVal)
-			}
-			if (typeof this.min === 'number') {
-				if (newVal - this.step < this.min) {
-					this.decrementDisabled = true
-				} else if (!this.disabled) {
-					this.decrementDisabled = false
-				}
-			}
-			if (typeof this.max === 'number') {
-				if (newVal + this.step > this.max) {
-					this.incrementDisabled = true
-				} else if (!this.disabled) {
-					this.incrementDisabled = false
-				}
-			}
+		value: {
+			handler(newNumber, oldNumber) {
+				const newString = toString(newNumber)
+				const truncatedNumber = toNumber(newString)
+				const { min, max, step } = this
+
+				if (!isInRange({ max, min, offset: 0, value: truncatedNumber }))
+					throw new RangeError(
+						`KtInputNumber: encounted an out-of-range number "${newNumber}"`,
+					)
+
+				if (!isStepMultiple({ min, step, value: truncatedNumber }))
+					throw new Error(
+						`KtInputNumber: encounted a value "${newNumber}" that doesn't fit ((min + k * step): where k is an integer)`,
+					)
+
+				const shouldUpdate = oldNumber !== truncatedNumber
+				if (shouldUpdate) this.setInternalStringValue(newString)
+			},
+			immediate: true,
 		},
-		disabled(newVal, oldVal) {
-			if (newVal) {
-				this.incrementDisabled = newVal
-				this.decrementDisabled = newVal
-			} else if (!newVal && oldVal) {
-				if (typeof this.min === 'number') {
-					this.decrementDisabled = this.currentValue - this.step < this.min
-				}
-				if (typeof this.max === 'number') {
-					this.incrementDisabled = this.currentValue + this.step > this.max
-				}
-			}
-		},
-	},
-	created() {
-		if (this.disabled) {
-			this.incrementDisabled = true
-			this.decrementDisabled = true
-		}
 	},
 	methods: {
-		incrementValue() {
-			if (this.incrementDisabled) return
-			this.currentValue += this.step
-		},
 		decrementValue() {
-			if (this.decrementDisabled) return
-			this.currentValue -= this.step
+			if (!this.isDecrementEnabled) return
+			if (this.value === null) {
+				const defaultNumber = this.min || 0
+				this.emitInput(defaultNumber)
+				return
+			}
+			this.emitInput(this.value - this.step)
 		},
-		/* Do not use input.stepUp - this method does not work in internet explorer and is not transpiled by Babel  */
-
+		emitInput(value) {
+			this.$emit('input', value)
+		},
+		handleBlur() {
+			this.setInternalStringValue(toString(this.value))
+		},
 		handleInput(value) {
-			if (value === this.currentValue) return
-			this.currentValue =
-				typeof value === 'number' && !Number.isNaN(value)
-					? value
-					: !Number.isNaN(Number(value))
-					? Number(value)
-					: 0
+			const { max, min, step } = this
+
+			const valueWithoutLeadingZeroes = value.replace(
+				LEADING_ZEROES_REGEX,
+				'$1',
+			)
+			const nextNumber = toNumber(valueWithoutLeadingZeroes)
+
+			const isTypedNumberValid =
+				VALID_REGEX.test(valueWithoutLeadingZeroes) &&
+				isStepMultiple({
+					min,
+					step,
+					value: nextNumber,
+				}) &&
+				isInRange({
+					max,
+					min,
+					offset: 0,
+					value: nextNumber,
+				})
+
+			if (isTypedNumberValid) {
+				const shouldEmit = nextNumber !== this.value
+				if (shouldEmit) this.emitInput(nextNumber)
+				else this.setInternalStringValue(valueWithoutLeadingZeroes)
+			} else {
+				this.hasFormError = true
+				this.$emit('error', valueWithoutLeadingZeroes)
+			}
+			// vue doesn't support controlled input fields without re-rendering
+			// therefore, in case nothing changed, we need to re-render here
+			this.$forceUpdate()
+		},
+		incrementValue() {
+			if (!this.isIncrementEnabled) return
+			if (this.value === null) {
+				const defaultNumber = this.min || 0
+				this.emitInput(defaultNumber)
+				return
+			}
+
+			this.emitInput(this.value + this.step)
+		},
+		setInternalStringValue(value) {
+			this.hasFormError = false
+			this.internalStringValue = value
 		},
 	},
 }
 </script>
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
-.kt-input-number__input {
-	width: auto;
-	max-width: 100%;
-	padding-right: 0.1rem;
-	color: $darkgray-500;
-	text-align: center;
-	border: 0;
-	-moz-appearance: textfield;
-	&--100 {
-		width: 100%;
-	}
-	&--max {
-		width: 50%;
-		text-align: right;
-	}
-	&--disabled {
-		&:hover {
-			cursor: not-allowed;
-		}
-	}
-	&:focus {
-		outline: 0;
-		box-shadow: none;
-	}
-	&::-webkit-outer-spin-button,
-	&::-webkit-inner-spin-button {
-		margin: 0;
-		-webkit-appearance: none;
-	}
-}
+
+$size: 1.6rem;
 
 .kt-input-number {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: $size;
+
+	overflow: hidden;
+
 	&.form-group {
-		display: inline-flex;
-		width: auto;
-		max-width: 100%;
 		border: 1px solid $lightgray-400;
 		border-radius: $border-radius;
-		&--100 {
-			width: 100%;
-		}
+
 		&--error {
 			border-color: $red-500;
 		}
 	}
-}
 
-.kt-input-number__max {
-	width: 50%;
-	line-height: 1.6rem;
-	&::before {
-		padding-right: 0.2rem;
-		content: '/';
-	}
-}
+	&__button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
-.kt-input-number__button {
-	flex: 0 0 1.6rem;
-	width: 1.6rem;
-	height: 1.6rem;
-	line-height: 1.6rem;
-	text-align: center;
-	user-select: none;
-	background: $lightgray-300;
-	border-radius: $border-radius;
-	&:hover {
+		width: $size;
+		height: $size;
+
 		cursor: pointer;
-		background: $lightgray-400;
-	}
-	&--disabled {
-		color: $lightgray-400;
-	}
-	&--disabled:hover {
-		cursor: not-allowed;
+		user-select: none;
 		background: $lightgray-300;
+
+		&:hover {
+			background: $lightgray-400;
+		}
+		&--disabled {
+			color: $lightgray-400;
+			cursor: not-allowed;
+
+			&:hover {
+				background: $lightgray-300;
+			}
+		}
+
+		.yoco--disabled {
+			color: $lightgray-400;
+		}
 	}
-	.yoco--disabled {
-		color: $lightgray-400;
+
+	&__input {
+		color: $darkgray-500;
+		text-align: center;
+		border: 0;
+		-moz-appearance: textfield;
+
+		&:disabled {
+			color: unset;
+			background-color: unset;
+		}
+
+		&:focus {
+			outline: 0;
+			box-shadow: none;
+		}
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			margin: 0;
+			-webkit-appearance: none;
+		}
+
+		&--max {
+			text-align: right;
+		}
+	}
+
+	&__middle {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		height: 100%;
+
+		&--disabled {
+			color: $lightgray-600;
+			background-color: $lightgray-300;
+
+			&:hover {
+				cursor: not-allowed;
+			}
+		}
+
+		input,
+		.kt-input-number__max {
+			display: flex;
+			flex: 1 1 100%;
+			align-items: center;
+			min-width: 0px;
+			height: 100%;
+			padding: 0;
+		}
 	}
 }
 </style>

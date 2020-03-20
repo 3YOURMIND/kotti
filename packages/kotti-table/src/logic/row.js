@@ -13,7 +13,6 @@ export const mutations = {
 		const { state } = store
 		const { _data } = state
 		const dataInstanceChanged = _data !== data
-		// eslint-disable-next-line no-underscore-dangle
 		state._data = data
 
 		state.filteredData = data

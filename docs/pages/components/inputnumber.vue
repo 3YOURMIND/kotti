@@ -7,10 +7,14 @@ Input Number is an input field which only supports the `Number` type.
 
 <div class="element-example white">
 	<KtInputNumber v-model="number1" />
-	<pre v-text="`value: ${number1}`"/>
+	<pre v-text="`value: ${number1}`" />
 </div>
 
+<<<<<<< HEAD
 Bind a variable to `v-model` in `KtInputNumber`.
+=======
+Bind a variable to `v-model` in `<KtInputNumber/>`.
+>>>>>>> origin/master
 
 ```html
 <KtInputNumber v-model="number1" />
@@ -52,32 +56,36 @@ When the `disabled` attribute is `true`, the user cannot change the value.
 ### Show Max Number
 
 <div class="element-example white">
-	<KtInputNumber v-model="number4" showMaxNumber :max="12" />
+	<KtInputNumber v-model="number4" showMaxNumber :min="0" :max="12" />
 </div>
 
 When `max` attribute has a value, and `showMaxNumber` is `true`, the max number shows beside the value.
 
 ```html
-<KtInputNumber v-model="number4" showMaxNumber :max="12" />
+<KtInputNumber v-model="number4" showMaxNumber :min="0" :max="12" />
 ```
 
+### Null Value
 
-### Full width
+if the bound value is `null` or if the user clears the input (making the internal value we track null), 
+both increment/decrement buttons will be enabled but clicking them will initialize the inputNumber to `0`. 
+
+Thus, note that if the bound value is `null` or the input is an empty string, the min/max range checks are disregarded 
+until the user inputs an actual value or tries to decrement/increment, 
+after which the component behaves as in the above examples.
 
 <div class="element-example white">
-	<KtInputNumber v-model="number4" :max="12" />
-	<KtInputNumber v-model="number4" fullWidth :max="12" />
+	<KtInputNumber v-model="number5" :step="1" :min="0" :max="12" />
 </div>
 
-You can use `fullWidth` to set the width of input to 100%.
+When `max` attribute has a value, and `showMaxNumber` is `true`, the max number shows beside the value.
 
 ```html
-<KtInputNumber v-model="number4" :max="12" />
-<KtInputNumber v-model="number4" fullWidth :max="12" />
+<KtInputNumber v-model="number5" :step="1" :min="0" :max="12" />
 ```
 </template>
+
 <script>
-/* eslint-disable prettier/prettier */
 export default {
 	name: 'KtInputNumberDoc',
 	data() {
@@ -86,6 +94,7 @@ export default {
 			number2: 0,
 			number3: 0,
 			number4: 0,
+			number5: null,
 		}
 	},
 }

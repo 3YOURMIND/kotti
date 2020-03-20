@@ -1,4 +1,4 @@
-FROM node:lts AS development
+FROM node:lts-alpine AS development
 
 ENV LISTEN_HOST 0.0.0.0
 ENV LISTEN_PORT 80

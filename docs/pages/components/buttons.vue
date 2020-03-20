@@ -109,9 +109,9 @@
 	</KtButtonGroup>
 	```
 
-	## Dropdown button 
+	## Dropdown button
 
-	A dropdown button is a current pattern nowadays. 
+	A dropdown button is a current pattern nowadays.
 	It allows to have a subaction without changing page or opening a modal.
 
 	Note the `dropdownIcon` prop. It will default to `chevron_down`.
@@ -153,7 +153,7 @@
 	```
 
 	## Using another html element
-	
+
 	Ktbutton uses `button` element, but we can override this using the `element` prop.
 	Here's a `KtButton` using a div:
 
