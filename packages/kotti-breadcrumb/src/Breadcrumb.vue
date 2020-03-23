@@ -57,6 +57,9 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+	--breadcrumb-color-active: var(--interactive-03);
+}
 .breadcrumb {
 	display: flex;
 	flex-wrap: wrap;
@@ -72,7 +75,7 @@ export default {
 	color: $darkgray-300;
 	&--completed {
 		font-weight: 600;
-		color: $primary-500;
+		color: var(--breadcrumb-color-active);
 	}
 	&--completed:hover {
 		cursor: pointer;
