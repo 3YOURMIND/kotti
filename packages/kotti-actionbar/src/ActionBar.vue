@@ -31,6 +31,9 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+	--action-bar-color-active: var(--interactive-03);
+}
 // Action bar eletment
 .actionbar {
 	position: relative;
@@ -74,7 +77,7 @@ export default {
 	font-size: 0.7rem;
 	font-weight: 600;
 	line-height: 1.2rem;
-	color: $primary-500;
+	color: var(--action-bar-color-active);
 }
 .actionbar-nav {
 	margin: 0 -$unit-2;
@@ -107,11 +110,11 @@ export default {
 
 	&--active {
 		.actionbar-nav__item__icon {
-			color: $primary-500;
+			color: var(--action-bar-color-active);
 		}
 		.actionbar-nav__item__label {
 			font-weight: 600;
-			color: $primary-500;
+			color: var(--action-bar-color-active);
 		}
 	}
 	&--disabled {
@@ -153,11 +156,11 @@ export default {
 	.router-link-active {
 		li {
 			font-weight: 600;
-			color: $primary-500;
+			color: var(--action-bar-color-active);
 		}
 
 		i {
-			color: $primary-500;
+			color: var(--action-bar-color-active);
 		}
 	}
 }
