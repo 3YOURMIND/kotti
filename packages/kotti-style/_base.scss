@@ -1,3 +1,8 @@
+:root {
+	--link-color: var(--link-01);
+	--link-color-active: var(--link-03);
+}
+
 // Base
 *,
 *::before,
@@ -23,7 +28,7 @@ body {
 }
 
 a {
-	color: $link-color;
+	color: var(--link-color);
 	text-decoration: none;
 	outline: none;
 
@@ -31,11 +36,7 @@ a {
 	&:hover,
 	&:active,
 	&.active {
-		color: $link-color-dark;
+		color: var(--link-color-active);
 		text-decoration: none;
 	}
-
-	// i {
-	// 	font-size: 1.5em !important;
-	// }
 }
