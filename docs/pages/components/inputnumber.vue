@@ -10,11 +10,7 @@ Input Number is an input field which only supports the `Number` type.
 	<pre v-text="`value: ${number1}`" />
 </div>
 
-<<<<<<< HEAD
 Bind a variable to `v-model` in `KtInputNumber`.
-=======
-Bind a variable to `v-model` in `<KtInputNumber/>`.
->>>>>>> origin/master
 
 ```html
 <KtInputNumber v-model="number1" />
