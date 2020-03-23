@@ -50,7 +50,7 @@ export default {
 		type: { default: 'text', type: String },
 		validate: { default: '', type: String },
 		validateText: { default: '', type: String },
-		labelFor: { default: null },
+		labelFor: { default: null, type: String },
 		value: { default: null, type: [String, Number, null] },
 	},
 	data() {
