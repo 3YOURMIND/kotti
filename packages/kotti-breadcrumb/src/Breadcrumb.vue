@@ -30,6 +30,7 @@ export default {
 	props: {
 		breadcrumbs: { type: Array, required: true },
 		separator: {
+			type: Object,
 			default() {
 				return {
 					style: 'icon',
