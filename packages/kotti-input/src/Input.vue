@@ -139,6 +139,9 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+	--form-input-border-focus: var(--interactive-03);
+}
 .form-input {
 	position: relative;
 	width: 100%;
@@ -153,7 +156,7 @@ export default {
 
 	&:focus {
 		@include control-shadow();
-		border-color: $primary-500;
+		border-color: var(--form-input-border-focus);
 	}
 
 	&:invalid {
