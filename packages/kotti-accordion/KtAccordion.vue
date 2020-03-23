@@ -81,6 +81,9 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+	--accordion-color: var(--interactive-03);
+}
 @import '../kotti-style/_variables.scss';
 .accordion {
 	margin-bottom: var(--unit-4);
@@ -129,13 +132,13 @@ export default {
 .accordion__title__icon {
 	margin-right: var(--unit-4);
 	font-size: 22px !important;
-	color: var(--interactive-03);
+	color: var(--accordion-color);
 }
 
 .accordion__toggle {
 	align-self: center;
 	margin-left: var(--unit-4);
-	color: var(--interactive-03);
+	color: var(--accordion-color);
 	cursor: pointer;
 	user-select: none;
 }
