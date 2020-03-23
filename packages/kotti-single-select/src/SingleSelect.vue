@@ -312,7 +312,7 @@ export default {
 
 	&:focus {
 		@include control-shadow();
-		border-color: $primary-500;
+		border-color: var(--form-input-border-focus);
 	}
 
 	&::-ms-expand {
