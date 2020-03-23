@@ -37,13 +37,21 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+	--radio-color: var(--interactive-01);
+}
 .form-radio {
 	.form-icon {
 		border-radius: 50%;
 	}
 
 	input {
+		&:focus + .form-icon {
+			border-color: var(--radio-color);
+		}
 		&:checked + .form-icon {
+			background-color: var(--radio-color);
+			border-color: var(--radio-color);
 			&::before {
 				position: absolute;
 				top: 50%;
