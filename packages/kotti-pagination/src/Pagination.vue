@@ -114,6 +114,9 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+	--pagination-color-active: var(--interactive-03);
+}
 .pagination {
 	margin: 0;
 	list-style: none;
@@ -137,7 +140,7 @@ export default {
 		line-height: 24px;
 		text-align: center;
 		&--active {
-			color: $primary-500;
+			color: var(--pagination-color-active);
 		}
 		&:hover {
 			cursor: pointer;
