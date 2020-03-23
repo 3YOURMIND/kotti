@@ -61,6 +61,9 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+	--avatar-color: var(--interactive-01);
+}
 .avatar {
 	position: relative;
 	display: inline-flex;
@@ -73,7 +76,7 @@ export default {
 
 .avatar--hover:hover {
 	cursor: pointer;
-	border: 0.1rem solid $primary-600;
+	border: 0.1rem solid var(--avatar-color);
 }
 
 .avatar-img {
