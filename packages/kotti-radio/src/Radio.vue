@@ -36,3 +36,26 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.form-radio {
+	.form-icon {
+		border-radius: 50%;
+	}
+
+	input {
+		&:checked + .form-icon {
+			&::before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 4px;
+				height: 4px;
+				content: '';
+				background: #fff;
+				border-radius: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+}
+</style>

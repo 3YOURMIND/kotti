@@ -39,3 +39,47 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.form-checkbox {
+	.form-icon {
+		border-radius: $border-radius;
+	}
+
+	input {
+		&:checked + .form-icon {
+			&::before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 6px;
+				height: 10px;
+				margin-top: -6px;
+				margin-left: -3px;
+				content: '';
+				background-clip: padding-box;
+				border: $border-width-lg solid #fff;
+				border-top-width: 0;
+				border-left-width: 0;
+				transform: rotate(45deg);
+			}
+		}
+
+		&:indeterminate + .form-icon {
+			background: $primary-500;
+			border-color: $primary-500;
+
+			&::before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 10px;
+				height: 2px;
+				margin-top: -1px;
+				margin-left: -5px;
+				content: '';
+				background: $lightgray-400;
+			}
+		}
+	}
+}
+</style>
