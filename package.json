@@ -135,14 +135,15 @@
 	"name": "@3yourmind/kotti-ui",
 	"scripts": {
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
-		"build:kotti": "vue-cli-service build --target lib --name KottiUI packages/index.js",
+		"build:kotti": "yarn tokens; vue-cli-service build --target lib --name KottiUI packages/index.js",
 		"check:script": "eslint --ignore-path .gitignore '**/*.{js,vue}'",
 		"check:style": "stylelint **/*.{css,scss,vue}",
 		"deploy:docs": "./github-deploy.sh",
-		"dev:docs": "nuxt",
+		"dev:docs": "yarn tokens; nuxt",
 		"format:docs": "prettier --write **/*.md",
 		"lint:script": "eslint --fix --ignore-path .gitignore '**/*.{js,vue}'",
 		"lint:style": "stylelint --fix **/*.{css,scss,vue}",
+		"tokens": "node -r esm tokens/generate.js",
 		"postpublish": "git tag -f v$(node -p \"require('./package.json').version\") && git push origin v$(node -p \"require('./package.json').version\")",
 		"prepublishOnly": "yarn run build:kotti"
 	},
