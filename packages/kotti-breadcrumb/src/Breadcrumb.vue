@@ -56,3 +56,26 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+}
+.breadcrumb li {
+	display: inline-block;
+	line-height: 1.2rem;
+}
+.breadcrumb__text-separator {
+	padding: 0 0.4rem;
+}
+.breadcrumb__text {
+	color: $darkgray-300;
+	&--completed {
+		font-weight: 600;
+		color: $primary-500;
+	}
+	&--completed:hover {
+		cursor: pointer;
+	}
+}
+</style>
