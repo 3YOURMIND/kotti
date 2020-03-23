@@ -98,7 +98,7 @@ export const tokens = [
 	},
 	{
 		name: 'interactive-01',
-		description: 'Primary interactive color\nPrimary buttons',
+		description: 'Primary interactive color\nPrimary buttons\nChecked color',
 		reference: 'primary-60',
 	},
 	{
