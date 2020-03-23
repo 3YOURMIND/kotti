@@ -138,3 +138,43 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.form-input {
+	position: relative;
+	width: 100%;
+	height: $control-size;
+	padding: 0 $unit-2;
+	line-height: $line-height;
+	color: $darkgray-500;
+	border: 1px solid $lightgray-400;
+	border-radius: $border-radius;
+	outline: none;
+	-webkit-appearance: none;
+
+	&:focus {
+		@include control-shadow();
+		border-color: $primary-500;
+	}
+
+	&:invalid {
+		border: 1px solid $red-500;
+		&:focus {
+			@include control-shadow($red-500);
+		}
+		~ .form-icon {
+			color: $red-500;
+		}
+	}
+	&--compact {
+		height: $control-size-lg;
+		padding-top: 0.6rem;
+		line-height: 0.8rem;
+		&::placeholder {
+			color: transparent;
+		}
+		&--focus::placeholder {
+			color: $lightgray-500;
+		}
+	}
+}
+</style>
