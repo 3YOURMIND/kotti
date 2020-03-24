@@ -79,14 +79,9 @@ In order to use the table, you need give `rows` and `columns` data to `KtTable` 
 
 ## Lot of columns 
 
-Some table with a lot of columns will need to handle that overflow.
-We have two way of making the columns fits: `isScrollable` props that will make the whole table 
-horizontally scrollable.
-
-The other method is using the `kt-table--auto-layout` class that will use auto layout and will
-break words inside every cell so it fits. 
-
-Usually, we recommend using `isScrollable` that looks better in most cases.
+Tables with lots of columns will need to handle that overflow. This can be accomplished by using the isScrollable prop in order to make the table scroll horizontally.
+Alternatively, you can use the kt-table--auto-layout class to automatically break words to make the content fit into the table.
+In most cases, isScrollable will yield better results.
 
 <KtTable :rows="rows" :columns="columnsLong" isScrollable />
 <KtTable :rows="rows" :columns="columnsLong" class="kt-table--auto-layout"/>
