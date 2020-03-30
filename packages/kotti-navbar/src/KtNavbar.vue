@@ -96,11 +96,11 @@ $mobile-navbar-height: 2.4rem;
 $narrow-navbar-width: 3.4rem;
 
 :root {
-	--navbar-background: var(--primary-90);
-	--navbar-border: var(--primary-80);
-	--navbar-color: var(--primary-20);
-	--navbar-color-light: var(--primary-30);
-	--navbar-color-active: var(--white);
+	--navbar-background: var(--primary-70);
+	--navbar-border: var(--primary-60);
+	--navbar-color: var(--primary-10);
+	--navbar-color-light: var(--primary-20);
+	--navbar-color-active: var(--primary-30);
 }
 
 .kt-navbar {
