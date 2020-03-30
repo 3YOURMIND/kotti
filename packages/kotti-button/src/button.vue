@@ -2,19 +2,15 @@
 	<component
 		:is="element"
 		:class="mainClasses"
-		:style="themeColor"
 		role="button"
 		v-bind="element === 'button' ? { type: 'button' } : {}"
 		@click="handleClick"
-		@mouseover="handleMouseover"
-		@mouseleave="handleMouseleave"
 	>
 		<i v-if="loading" class="kt-circle-loading" />
 		<i v-else-if="icon" class="yoco" v-text="icon" />
 		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />
 	</component>
 </template>
-
 <script>
 export default {
 	name: 'KtButton',
