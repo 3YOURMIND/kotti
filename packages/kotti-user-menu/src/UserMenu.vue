@@ -1,26 +1,23 @@
 <template>
 	<div v-on-clickaway="clickawayMenu" class="user-menus">
-		<div
-			v-if="isMenuShow"
-			class="user-menu"
-			:style="{ background: themeColor.backgroundColor }"
-			@click="clickawayMenu"
-		>
+		<div v-if="isMenuShow" class="user-menu" @click="clickawayMenu">
 			<slot name="user-menu-items" />
 			<div class="user-menu-items">
-				<div v-for="(section, index) in sections" :key="index">
+				<div
+					v-for="(section, index) in sections"
+					:key="index"
+					class="user-menu__section"
+				>
 					<div
 						v-if="section.title"
-						class="user-menu__section"
-						:style="{ color: themeColor.textColor }"
+						class="user-menu__section__title"
 						v-text="section.title"
 					/>
 					<a
 						v-for="(link, linkIndex) in section.links"
 						:key="linkIndex"
 						:href="link.link"
-						class="user-menu__item"
-						:style="{ color: themeColor.textColor }"
+						class="user-menu__section__item"
 						:data-test="
 							`navbar:footer:element:${link.title
 								.toLowerCase()
@@ -38,22 +35,10 @@
 				<KtAvatar small :src="userAvatar" />
 			</div>
 			<div v-if="!isNarrow || isMenuShow" class="user-info-text">
-				<div
-					class="user-info-text__name"
-					:style="{ color: themeColor.textColor }"
-					v-text="userName"
-				/>
-				<div
-					class="user-info-text__status"
-					:style="{ color: themeColor.textColor }"
-					v-text="userStatus"
-				/>
+				<div class="user-info-text__name" v-text="userName" />
+				<div class="user-info-text__status" v-text="userStatus" />
 			</div>
-			<div
-				v-if="!isNarrow || isMenuShow"
-				class="user-info-toggle"
-				:style="{ color: themeColor.textColor }"
-			>
+			<div v-if="!isNarrow || isMenuShow" class="user-info-toggle">
 				<i v-if="isMenuShow" class="yoco">chevron_down</i>
 				<i v-else class="yoco">chevron_up</i>
 			</div>
@@ -127,6 +112,13 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+	--user-menu-border: var(--primary-80);
+	--user-menu-background-active: var(--primary-80);
+	--user-menu-background: var(--primary-70);
+	--user-menu-color: var(--primary-10);
+}
+
 .user-info {
 	position: relative;
 	display: flex;
@@ -146,7 +138,7 @@ export default {
 	}
 	&:hover {
 		cursor: pointer;
-		background: rgba(0, 0, 0, 0.24);
+		background: var(--user-menu-background);
 		border-radius: 0.2rem;
 	}
 }
@@ -159,7 +151,7 @@ export default {
 	width: 100%;
 	margin-left: 0.4rem;
 	line-height: 0.8rem;
-	color: #ffffff;
+	color: var(--user-menu-color);
 	&__name {
 		font-size: 0.7rem;
 		font-weight: 600;
@@ -174,7 +166,7 @@ export default {
 	z-index: 2;
 	flex-grow: 0;
 	align-self: center;
-	color: #ffffff;
+	color: var(--user-menu-color);
 }
 .user-menu {
 	position: absolute;
@@ -184,32 +176,37 @@ export default {
 	flex: none;
 	width: 11.2rem;
 	padding: 0.8rem;
-	padding-bottom: 3.2rem;
-	color: #ffffff;
+	padding-bottom: 2.6rem;
+	color: var(--user-menu-color);
 	/* stylelint-disable-next-line */
-	background: darken(#2659ab, 20);
-	border: 1px solid rgba($color: #ffffff, $alpha: 0.1);
+	background: var(--user-menu-background);
+	// TODO: remove
+	border: none;
 	border-radius: 0.2rem;
-	box-shadow: 0 0.2rem 1rem 0.2rem rgba(0, 0, 0, 0.24);
+	// TODO: remove
+	box-shadow: none;
 	&__section {
-		padding: 0.2rem 0.4rem;
-		font-size: 0.5rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		opacity: 0.46;
-	}
-	&__item {
-		display: block;
-		padding: 0.2rem 0.4rem;
-		margin: 0.1rem 0;
-		font-size: 0.68rem;
-		line-height: 1.2rem;
-		color: inherit;
-		border-radius: 0.2rem;
-		&:hover {
+		margin-bottom: 0.4rem;
+		opacity: 1;
+		&__title {
+			padding: 0.2rem 0.4rem;
+			font-size: 0.5rem;
+			font-weight: 600;
+			text-transform: uppercase;
+		}
+		&__item {
+			display: block;
+			padding: 0.2rem 0.4rem;
+			margin: 0.1rem 0;
+			font-size: 0.68rem;
+			line-height: 1.2rem;
 			color: inherit;
-			cursor: pointer;
-			background: rgba(255, 255, 255, 0.14);
+			border-radius: 0.2rem;
+			&:hover {
+				color: inherit;
+				cursor: pointer;
+				background: var(--user-menu-background-active);
+			}
 		}
 	}
 }
