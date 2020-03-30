@@ -139,6 +139,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/mixins';
+
 :root {
 	--form-input-border-focus: var(--interactive-03);
 }
