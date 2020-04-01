@@ -1,5 +1,5 @@
 <template>
-	<nav class="kt-navbar" :class="{ 'kt-navbar--narrow': $KtNavbar.isNarrow }">
+	<nav class="kt-navbar" :class="classes">
 		<div class="kt-navbar-wrapper">
 			<div class="kt-navbar-toggle" @click="toggleMobileMenu">
 				<i class="yoco" v-text="'burger'" />
@@ -69,11 +69,24 @@ export default {
 		quickLinks: { type: Object, default: null },
 		labelText: { type: String, default: null },
 		logoUrl: { type: String },
+		theme: { type: String },
 	},
 	data() {
 		return {
 			mobileMenuToggle: false,
 		}
+	},
+	computed: {
+		classes() {
+			const classes = []
+			if (this.$KtNavbar.isNarrow) {
+				classes.push('kt-navbar--narrow')
+			}
+			if (this.theme) {
+				classes.push(`kt-navbar--theme-${this.theme}`)
+			}
+			return classes
+		},
 	},
 	methods: {
 		objectClass(className) {
@@ -100,7 +113,7 @@ $narrow-navbar-width: 3.4rem;
 	--navbar-border: var(--primary-60);
 	--navbar-color: var(--primary-10);
 	--navbar-color-light: var(--primary-20);
-	--navbar-color-active: var(--primary-30);
+	--navbar-color-active: var(--white);
 }
 
 .kt-navbar {
@@ -115,6 +128,18 @@ $narrow-navbar-width: 3.4rem;
 	color: var(--navbar-color);
 	background: var(--navbar-background);
 	border-right: 1px solid var(--navbar-border);
+	&--theme-reverse {
+		--navbar-background: var(--primary-10);
+		--navbar-border: var(--primary-20);
+		--navbar-color: var(--primary-80);
+		--navbar-color-light: var(--primary-60);
+		--navbar-color-active: var(--primary-100);
+
+		--user-menu-border: var(--primary-30);
+		--user-menu-background-active: var(--primary-100);
+		--user-menu-background: var(--primary-20);
+		--user-menu-color: var(--primary-80);
+	}
 }
 
 .kt-navbar-wrapper {
@@ -201,6 +226,7 @@ $narrow-navbar-width: 3.4rem;
 	.kt-navbar-quick-links {
 		padding: 0.8rem 0;
 		text-align: center;
+		background: var(--navbar-border);
 		&__link {
 			display: block;
 		}
