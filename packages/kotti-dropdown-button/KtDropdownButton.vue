@@ -81,6 +81,7 @@ export default {
 	.yoco {
 		margin: 0;
 		margin-left: $unit-1;
+		padding-left: $unit-2;
 	}
 	span .yoco {
 		display: none;
