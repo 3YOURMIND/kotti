@@ -38,7 +38,7 @@ export const getters = {
 
 export function setHiddenColumn(state, column) {
 	const columnIndex = getHiddenColumnIndex(state, column)
-	if (columnIndex > 0) {
+	if (columnIndex !== -1) {
 		state.hiddenColumns[columnIndex] = column
 	} else {
 		state.hiddenColumns.push(column)
@@ -47,7 +47,7 @@ export function setHiddenColumn(state, column) {
 
 function removeHiddenColumn(state, column) {
 	const columnIndex = getHiddenColumnIndex(state, column)
-	if (columnIndex > 0) {
+	if (columnIndex !== -1) {
 		state.hiddenColumns.splice(columnIndex, 1)
 	}
 }

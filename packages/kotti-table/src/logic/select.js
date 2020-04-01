@@ -82,7 +82,7 @@ export function toggleRowSelection(state, row, selected) {
 	} else if (selected && index === -1) {
 		selection.push(row)
 		changed = true
-	} else if (!selected && index > -1) {
+	} else if (!selected && index !== -1) {
 		selection.splice(index, 1)
 		changed = true
 	}

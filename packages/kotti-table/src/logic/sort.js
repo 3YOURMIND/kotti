@@ -96,7 +96,7 @@ export function setSortedColumn(state, column) {
 		state.sortedColumns = [column]
 	} else {
 		const columnIndex = getSortedColumnIndex(state, column)
-		if (columnIndex > 0) {
+		if (columnIndex !== -1) {
 			state.sortedColumns[columnIndex] = column
 		} else {
 			state.sortedColumns = [...state.sortedColumns, column]
