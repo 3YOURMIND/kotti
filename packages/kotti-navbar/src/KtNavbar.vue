@@ -136,7 +136,7 @@ $narrow-navbar-width: 3.4rem;
 		--navbar-color-active: var(--primary-100);
 
 		--user-menu-border: var(--primary-30);
-		--user-menu-background-active: var(--primary-100);
+		--user-menu-background-active: var(--primary-30);
 		--user-menu-background: var(--primary-20);
 		--user-menu-color: var(--primary-80);
 	}
