@@ -145,5 +145,5 @@
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.9.3"
+	"version": "1.9.4"
 }
