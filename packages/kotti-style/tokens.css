@@ -62,6 +62,7 @@
 	--interactive-02: var(--gray-10);
 	--interactive-02-hover: var(--primary-10);
 	--interactive-03: var(--primary-50);
+	--interactive-04: var(--primary-20);
 	--danger: var(--red-50);
 	--hover-danger: var(--red-70);
 	--link-01: var(--primary-60);

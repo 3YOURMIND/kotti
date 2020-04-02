@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 // Base colors are not meant to change
 // They CAN but should not be used directly
 // Instead, we are using tokens that are role based colors
@@ -120,6 +121,11 @@ export const tokens = [
 		name: 'interactive-03',
 		description: 'Selected elements\nActive elements\nAccent icons',
 		reference: 'primary-50',
+	},
+	{
+		name: 'interactive-04',
+		description: 'Selected elements light\n Alternative border',
+		reference: 'primary-20',
 	},
 	{
 		name: 'danger',

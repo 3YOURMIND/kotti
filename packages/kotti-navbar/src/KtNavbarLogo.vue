@@ -69,6 +69,10 @@ export default {
 		background-repeat: no-repeat;
 		background-position: left;
 		background-size: contain;
+		.image {
+			max-width: 100%;
+			height: auto;
+		}
 	}
 	&--mobile {
 		display: none;

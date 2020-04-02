@@ -7,7 +7,7 @@
 			<div class="kt-navbar__header">
 				<KtNavbarLogo :labelText="labelText" @logoClick="$emit('logoClick')">
 					<slot name="navbar-logo">
-						<img :src="logoUrl" alt="logo" />
+						<img class="image" :src="logoUrl" alt="logo" />
 					</slot>
 				</KtNavbarLogo>
 			</div>
