@@ -29,6 +29,7 @@ import {
 	KT_TABLE_STATE_PROVIDER,
 	DEFAULT_DISABLE_ROW,
 } from './constants'
+import deepEql from 'deep-eql'
 
 let tableIdSeed = 1
 
@@ -210,7 +211,7 @@ export default {
 		selected: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value !== oldValue) {
+				if (!deepEql(value, oldValue)) {
 					this.localStore.commit('setSelected', value)
 				}
 			},
@@ -218,7 +219,7 @@ export default {
 		columns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && value !== oldValue) {
+				if (value && !deepEql(value, oldValue)) {
 					this.store.commit('setColumns', value)
 				}
 			},
@@ -226,7 +227,7 @@ export default {
 		sortedColumns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && value !== oldValue) {
+				if (value && !deepEql(value, oldValue)) {
 					this.store.commit('setSortedColumns', value)
 				}
 			},
@@ -234,7 +235,7 @@ export default {
 		hiddenColumns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && value !== oldValue) {
+				if (value && !deepEql(value, oldValue)) {
 					this.store.commit('setHiddenColumns', value)
 				}
 			},
@@ -242,7 +243,7 @@ export default {
 		filteredColumns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && value !== oldValue) {
+				if (value && !deepEql(value, oldValue)) {
 					this.store.commit('setFilteredColumns', value)
 				}
 			},
@@ -250,7 +251,7 @@ export default {
 		orderedColumns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && value !== oldValue) {
+				if (value && !deepEql(value, oldValue)) {
 					this.store.commit('setOrderedColumns', value)
 				}
 			},
