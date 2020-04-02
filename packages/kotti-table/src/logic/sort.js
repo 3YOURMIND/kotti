@@ -45,9 +45,8 @@ export const mutations = {
 
 		if (!options || !options.silent) {
 			const sortedColumns = state.sortedColumns.map((column) => {
-				column = pick(column, PUBLIC_SORT_PROPS)
 				return {
-					...column,
+					...pick(column, PUBLIC_SORT_PROPS),
 					sortBy: column.sortBy || column.prop,
 				}
 			})
