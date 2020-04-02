@@ -33,20 +33,25 @@ const TableColumn = {
 		width: String,
 		maxWidth: String,
 
-		hidden: { type: Boolean, default: false },
+		hidden: { default: undefined, type: Boolean },
 
-		sortable: { type: [Boolean, String, undefined], default: undefined }, // wether this column is sortable, string means sortOrder is remote
-		sortOrder: { type: [Number, String], default: SORT_NONE }, // one of "ascending", "descending", undefined
+		// whether this column is sortable, string means sortOrder is remote
+		sortable: { default: undefined, type: [Boolean, String, undefined] },
+		sortOrder: { default: SORT_NONE, type: [Number, String] },
 		sortOrders: { type: Array, default: () => [SORT_ASC, SORT_DSC, SORT_NONE] },
 		sortMethod: Function,
-		sortBy: [String, Array], // if not defined uses column prop
+		sortBy: [String, Array],
 
-		disableRowClick: { type: Boolean, default: false },
+		disableRowClick: { default: undefined, type: [Boolean, undefined] },
 		default: [Function, String],
 		formatter: Function,
 		renderHeader: Function,
 		renderCell: Function,
 		renderContext: Object,
+
+		/**
+		 * @private
+		 */
 		isPropDefined: { default: false, type: Boolean },
 	},
 	beforeCreate() {
@@ -90,7 +95,7 @@ const TableColumn = {
 export default TableColumn
 
 function updateColumnsfor(prop) {
-	return function updateColulmnProp(newVal) {
+	return function updateColumnProp(newVal) {
 		if (this.columnConfig) {
 			this.columnConfig[prop] = newVal
 			this[KT_STORE].commit('updateColumns')
@@ -99,7 +104,6 @@ function updateColumnsfor(prop) {
 }
 
 function createColumn(column = {}) {
-	// eslint-disable-next-line no-underscore-dangle
 	const _self = column
 
 	let columnId = column.id
@@ -107,7 +111,6 @@ function createColumn(column = {}) {
 		columnId = `${_self[KT_TABLE].tableId}_column_${columnIdSeed}`
 		columnIdSeed++
 	}
-
 	column = pick(column, [...Object.keys(TableColumn.props), '$attrs'])
 
 	column.sortOrder = column.sortOrder || SORT_NONE
