@@ -77,6 +77,7 @@
 		"@vue/cli-plugin-babel": "^4.2.2",
 		"@vue/cli-plugin-typescript": "^4.2.3",
 		"@vue/cli-service": "^4.2.2",
+		"@vue/composition-api": "^0.5.0",
 		"babel-eslint": "^10.0.3",
 		"core-js": "^3.6.4",
 		"cross-env": "^7.0.0",

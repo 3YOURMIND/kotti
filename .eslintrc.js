@@ -37,7 +37,7 @@ module.exports = {
 	},
 	overrides: [
 		{
-			files: ['**/*.vue'],
+			files: ['**/*.vue', '**/*.js'],
 			rules: {
 				'@typescript-eslint/explicit-function-return-type': 'off',
 			},
