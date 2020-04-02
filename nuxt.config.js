@@ -53,6 +53,7 @@ const config = {
 			},
 		},
 	},
+	buildModules: ['@nuxt/typescript-build'],
 }
 
 if (process.env.DEPLOY_ENV === 'GH_PAGES') {
