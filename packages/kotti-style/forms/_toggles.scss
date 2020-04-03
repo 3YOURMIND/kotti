@@ -20,13 +20,12 @@
 		clip: rect(0, 0, 0, 0);
 
 		&:focus + .form-icon {
-			// @include control-shadow();
-			border-color: $primary-500;
+			border-color: var(--interactive-01);
 		}
 
 		&:checked + .form-icon {
-			background: $primary-500;
-			border-color: $primary-500;
+			background: var(--interactive-01);
+			border-color: var(--interactive-01);
 		}
 		&:invalid + .form-icon {
 			border: 1px solid $red-500;
@@ -37,8 +36,7 @@
 		position: absolute;
 		display: inline-block;
 		cursor: pointer;
-		// @include control-transition();
-		border: $border-width solid $lightgray-400;
+		border: $border-width solid var(--ui-02);
 	}
 
 	// Input checkbox, radio and switch sizes
@@ -60,63 +58,12 @@
 		left: 0;
 		width: $control-icon-size;
 		height: $control-icon-size;
-		background: $lightgray-300;
+		background: var(--icon-02);
 	}
 
 	input {
 		&:active + .form-icon {
-			background: $darkgray-400;
+			background: var(--ui-04);
 		}
-	}
-}
-
-// Form element: Switch
-.form-switch {
-	padding-left: ($unit-8 + $control-padding-x);
-
-	.form-icon {
-		top: ($control-size-sm - $unit-4) / 2 - $border-width;
-		left: 0;
-		width: $unit-8;
-		height: $unit-4 + $border-width * 2;
-		background: $lightgray-400;
-		background-clip: padding-box;
-		border-radius: $unit-2 + $border-width;
-
-		&::before {
-			position: absolute;
-			top: 0;
-			left: 0;
-			display: block;
-			width: $unit-4;
-			height: $unit-4;
-			content: '';
-			// @include control-transition();
-			background: #fff;
-			border-radius: 50%;
-		}
-	}
-
-	input {
-		&:checked + .form-icon {
-			&::before {
-				left: 14px;
-			}
-		}
-		&:active + .form-icon {
-			&::before {
-				background: #fff;
-			}
-		}
-	}
-}
-
-.form-switch.form-switch-right {
-	padding-right: ($unit-8 + $control-padding-x);
-	padding-left: 0;
-
-	.form-icon {
-		right: 0;
-		left: auto;
 	}
 }
