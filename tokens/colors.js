@@ -59,12 +59,12 @@ export const tokens = [
 	},
 	{
 		name: 'ui-01',
-		description: 'Secondary page background 2',
+		description: 'Secondary page\nBackground 2',
 		reference: 'gray-10',
 	},
 	{
 		name: 'ui-02',
-		description: 'Subtle border',
+		description: 'Subtle border\nBackground 3',
 		reference: 'gray-20',
 	},
 	{
