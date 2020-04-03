@@ -98,6 +98,11 @@ export const tokens = [
 		reference: 'white',
 	},
 	{
+		name: 'text-05',
+		description: 'Disabled text',
+		reference: 'gray-30',
+	},
+	{
 		name: 'interactive-01',
 		description: 'Primary interactive color\nPrimary buttons\nChecked color',
 		reference: 'primary-60',
