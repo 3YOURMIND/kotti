@@ -33,15 +33,16 @@ export default {
 <style lang="scss">
 :root {
 	--action-bar-color-active: var(--interactive-03);
+	--action-bar-width: 200px;
 }
 // Action bar eletment
 .actionbar {
 	position: relative;
 	box-sizing: border-box;
 	display: flex;
-	flex: 0 0 $actionbar-width;
+	flex: 0 0 var(--action-bar-width);
 	flex-direction: column;
-	width: $actionbar-width;
+	width: var(--action-bar-width);
 	min-height: 100vh;
 	background: #fcfcfc;
 	border-right: 1px solid #ddd;
@@ -50,7 +51,7 @@ export default {
 		position: fixed;
 		display: flex;
 		flex-direction: column;
-		width: $actionbar-width;
+		width: var(--action-bar-width);
 		height: 100%;
 		padding: $unit-6;
 		overflow-y: auto;
