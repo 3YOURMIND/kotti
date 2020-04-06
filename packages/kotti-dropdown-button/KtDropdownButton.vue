@@ -93,7 +93,9 @@ export default {
 	border-left: 0 !important;
 	border-radius: 0.2em !important;
 	.yoco {
+		padding-left: $unit-2;
 		margin: 0 !important;
+		margin-left: $unit-1;
 	}
 	span .yoco {
 		display: none;

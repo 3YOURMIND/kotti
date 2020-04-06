@@ -15,7 +15,7 @@ export const getters = {}
 
 export function setFilteredColumn(state, column) {
 	const columnIndex = getFilteredColumnIndex(state, column)
-	if (columnIndex > -1) {
+	if (columnIndex !== -1) {
 		state.filteredColumns[columnIndex] = column
 	} else {
 		state.filteredColumns.push(column)

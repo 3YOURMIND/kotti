@@ -819,7 +819,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 	prop="name"
 >
 <template #header="{ value, columnIndex }">
-	<div v-text="columnIndex + '::' + value" />
+	<div v-text="columnIndex + '::' + value" ></div>
 </template>
 <template #default="{value, row, rowIndex, column, columnIndex}">
 	<KtAvatar
@@ -844,7 +844,8 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 	prop="name"
 >
 <template #header="{ value, columnIndex }">
-	<div v-text="columnIndex + '::' + value" />
+	<div v-text="columnIndex + '::' + value" >
+	</div>
 </template>
 <!-- if you use deprecated slot syntax, you don't need to define slot name for a default slot (this replaces renderCell) -->
 <template #default="{value, row, rowIndex, column, columnIndex}">
@@ -911,7 +912,7 @@ _Notes_:
 		</KtTableConsumer>
 	</div>
 	<div>
-		<KtTable :rows="rows" :columns="columnsResponsive" useColumnDragToOrder/>
+		<KtTable :rows="rows" :columns="columnsHidden" useColumnDragToOrder/>
 	</div>
 </KtTableProvider>
 </div>
@@ -943,7 +944,7 @@ _Notes_:
 		</KtTableConsumer>
 	</div>
 	<div>
-		<KtTable :rows="rows" :columns="columnsResponsive" useColumnDragToOrder/>
+		<KtTable :rows="rows" :columns="columnsHidden" useColumnDragToOrder/>
 	</div>
 </KtTableProvider>
 ```
@@ -1131,6 +1132,11 @@ export default {
 			],
 			columnsResponsive: [
 				{ prop: 'name', label: 'Name', responsive: 'hide-sm' },
+				{ prop: 'date', label: 'Date', responsive: 'hide-md' },
+				{ prop: 'address.line', label: 'Address' },
+			],
+			columnsHidden: [
+				{ prop: 'name', label: 'Name', responsive: 'hide-sm', hidden: true },
 				{ prop: 'date', label: 'Date', responsive: 'hide-md' },
 				{ prop: 'address.line', label: 'Address' },
 			],

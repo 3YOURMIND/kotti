@@ -45,9 +45,8 @@ export const mutations = {
 
 		if (!options || !options.silent) {
 			const sortedColumns = state.sortedColumns.map((column) => {
-				column = pick(column, PUBLIC_SORT_PROPS)
 				return {
-					...column,
+					...pick(column, PUBLIC_SORT_PROPS),
 					sortBy: column.sortBy || column.prop,
 				}
 			})
@@ -96,7 +95,7 @@ export function setSortedColumn(state, column) {
 		state.sortedColumns = [column]
 	} else {
 		const columnIndex = getSortedColumnIndex(state, column)
-		if (columnIndex > 0) {
+		if (columnIndex !== -1) {
 			state.sortedColumns[columnIndex] = column
 		} else {
 			state.sortedColumns = [...state.sortedColumns, column]
