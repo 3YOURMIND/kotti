@@ -41,7 +41,7 @@
 			"url": "https://github.com/Goldziher"
 		},
 		{
-			"email": "amr.m.daz@gmail.com",
+			"email": "amr.m.draz@gmail.com",
 			"name": "Amr Draz",
 			"url": "https://github.com/amrdraz"
 		},
@@ -145,5 +145,5 @@
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.9.5"
+	"version": "1.9.6"
 }
