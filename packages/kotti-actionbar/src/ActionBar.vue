@@ -33,7 +33,7 @@ export default {
 <style lang="scss">
 :root {
 	--action-bar-color-active: var(--interactive-03);
-	--action-bar-width: 200px;
+	--action-bar-width: 16rem;
 }
 // Action bar eletment
 .actionbar {
