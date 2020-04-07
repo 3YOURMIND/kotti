@@ -279,7 +279,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-style/mixins/index.scss';
 @import '../../kotti-style/_variables.scss';
 .form-select {
 	width: 100%;
@@ -311,8 +310,8 @@ export default {
 	}
 
 	&:focus {
-		@include control-shadow();
-		border-color: var(--form-input-border-focus);
+		border-color: var(--form-input-focus);
+		box-shadow: 0 0 0 0.1rem rgba(var(--form-input-focus), 0.2);
 	}
 
 	&::-ms-expand {

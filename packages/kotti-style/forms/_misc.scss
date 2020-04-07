@@ -39,7 +39,7 @@
 	.form-input,
 	.form-select {
 		&:focus {
-			@include control-shadow($color);
+			box-shadow: 0 0 0 0.1rem rgba($color, 0.2);
 		}
 		border: 1px solid $color;
 	}

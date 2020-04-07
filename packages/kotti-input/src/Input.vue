@@ -142,7 +142,7 @@ export default {
 @import '../../kotti-style/mixins';
 
 :root {
-	--form-input-border-focus: var(--interactive-03);
+	--form-input-focus: var(--interactive-03);
 }
 .form-input {
 	position: relative;
@@ -157,14 +157,14 @@ export default {
 	-webkit-appearance: none;
 
 	&:focus {
-		@include control-shadow();
-		border-color: var(--form-input-border-focus);
+		border-color: var(--form-input-focus);
+		box-shadow: 0 0 0 0.1rem rgba(var(--form-input-focus), 0.2);
 	}
 
 	&:invalid {
 		border: 1px solid var(--support-error);
 		&:focus {
-			@include control-shadow($red-500);
+			box-shadow: 0 0 0 0.1rem rgba(var(--support-error), 0.2);
 		}
 		~ .form-icon {
 			color: var(--support-error);

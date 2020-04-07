@@ -57,7 +57,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../kotti-style/mixins/index.scss';
 @import '../../kotti-style/_variables.scss';
 .form-group--list-options .form-radio {
 	display: block;
@@ -68,7 +67,7 @@ export default {
 		.form-icon {
 			border: 1px solid var(--support-error);
 			&:focus {
-				@include control-shadow($red-500);
+				box-shadow: 0 0 0 0.1rem rgba(var(--support-error), 0.2);
 			}
 		}
 	}
