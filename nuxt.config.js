@@ -39,8 +39,8 @@ const config = {
 	 ** Build configuration
 	 */
 	build: {
-		extractCSS: {
-			allChunks: true,
+		optimization: {
+			splitChunks: true,
 		},
 		babel: {
 			presets({ isServer }) {
