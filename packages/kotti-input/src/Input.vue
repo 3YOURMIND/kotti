@@ -150,8 +150,8 @@ export default {
 	height: $control-size;
 	padding: 0 $unit-2;
 	line-height: $line-height;
-	color: $darkgray-500;
-	border: 1px solid $lightgray-400;
+	color: var(--text-01);
+	border: 1px solid var(--ui-02);
 	border-radius: $border-radius;
 	outline: none;
 	-webkit-appearance: none;
@@ -178,7 +178,7 @@ export default {
 			color: transparent;
 		}
 		&--focus::placeholder {
-			color: $lightgray-500;
+			color: var(--text-03);
 		}
 	}
 }
