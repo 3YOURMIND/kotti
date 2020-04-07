@@ -162,12 +162,12 @@ export default {
 	}
 
 	&:invalid {
-		border: 1px solid $red-500;
+		border: 1px solid var(--support-error);
 		&:focus {
 			@include control-shadow($red-500);
 		}
 		~ .form-icon {
-			color: $red-500;
+			color: var(--support-error);
 		}
 	}
 	&--compact {

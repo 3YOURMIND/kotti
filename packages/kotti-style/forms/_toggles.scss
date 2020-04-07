@@ -28,7 +28,7 @@
 			border-color: var(--interactive-01);
 		}
 		&:invalid + .form-icon {
-			border: 1px solid $red-500;
+			border: 1px solid var(--support-error);
 		}
 	}
 

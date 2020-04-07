@@ -61,8 +61,8 @@ pre.long {
 .danger-block {
 	padding: 1.2rem;
 	margin-bottom: 0.6rem;
-	color: $red-600;
-	background: #f8f8f8;
+	color: var(--support-error);
+	background: var(--ui-01);
 	a {
 		color: inherit;
 		text-decoration: underline;

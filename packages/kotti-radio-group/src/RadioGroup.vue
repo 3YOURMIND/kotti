@@ -66,7 +66,7 @@ export default {
 	display: none;
 	&:invalid ~ .form-radio {
 		.form-icon {
-			border: 1px solid $red-500;
+			border: 1px solid var(--support-error);
 			&:focus {
 				@include control-shadow($red-500);
 			}
