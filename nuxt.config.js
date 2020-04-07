@@ -41,7 +41,7 @@ const config = {
 	build: {
 		optimization: {
 			splitChunks: {
-				commons: true,
+				chunks: 'all',
 			},
 		},
 		babel: {
