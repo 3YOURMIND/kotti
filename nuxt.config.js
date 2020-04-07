@@ -40,7 +40,9 @@ const config = {
 	 */
 	build: {
 		optimization: {
-			splitChunks: true,
+			splitChunks: {
+				commons: true,
+			},
 		},
 		babel: {
 			presets({ isServer }) {
