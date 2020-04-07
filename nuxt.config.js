@@ -39,11 +39,6 @@ const config = {
 	 ** Build configuration
 	 */
 	build: {
-		optimization: {
-			splitChunks: {
-				chunks: 'all',
-			},
-		},
 		babel: {
 			presets({ isServer }) {
 				return [
