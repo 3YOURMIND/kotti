@@ -309,11 +309,6 @@ export default {
 			no-repeat right 0.35rem center/.4rem 0.5rem;
 	}
 
-	&:focus {
-		border-color: var(--form-input-focus);
-		box-shadow: 0 0 0 0.1rem rgba(var(--form-input-focus), 0.2);
-	}
-
 	&::-ms-expand {
 		display: none;
 	}
