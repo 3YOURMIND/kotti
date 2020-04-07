@@ -188,9 +188,19 @@ export const tokens = [
 		reference: 'red-50',
 	},
 	{
+		name: 'support-error-light',
+		description: 'Error light',
+		reference: 'red-20',
+	},
+	{
 		name: 'support-warning',
 		description: 'Warning',
 		reference: 'orange-50',
+	},
+	{
+		name: 'support-warning-light',
+		description: 'Warning light',
+		reference: 'orange-20',
 	},
 	{
 		name: 'support-success',
@@ -198,8 +208,18 @@ export const tokens = [
 		reference: 'green-50',
 	},
 	{
+		name: 'support-success-light',
+		description: 'Success light',
+		reference: 'green-20',
+	},
+	{
 		name: 'support-info',
 		description: 'Information',
 		reference: 'primary-50',
+	},
+	{
+		name: 'support-info-light',
+		description: 'Information light',
+		reference: 'primary-20',
 	},
 ]

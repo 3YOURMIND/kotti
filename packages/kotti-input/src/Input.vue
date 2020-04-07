@@ -139,8 +139,6 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '../../kotti-style/mixins';
-
 :root {
 	--form-input-focus: var(--interactive-03);
 }
@@ -156,20 +154,21 @@ export default {
 	outline: none;
 	-webkit-appearance: none;
 
-	&:focus {
-		border-color: var(--form-input-focus);
-		box-shadow: 0 0 0 0.1rem rgba(var(--form-input-focus), 0.2);
-	}
+	// &:focus {
+	// 	border-color: var(--form-input-focus);
+	// 	box-shadow: 0 0 0 0.1rem rgba(var(--form-input-focus), 0.2);
+	// }
 
-	&:invalid {
-		border: 1px solid var(--support-error);
-		&:focus {
-			box-shadow: 0 0 0 0.1rem rgba(var(--support-error), 0.2);
-		}
-		~ .form-icon {
-			color: var(--support-error);
-		}
-	}
+	// &:invalid {
+	// 	border: 1px solid var(--support-error);
+	// 	&:focus {
+	// 		box-shadow: 0 0 0 0.1rem rgba(var(--support-error), 0.2);
+	// 	}
+	// 	~ .form-icon {
+	// 		color: var(--support-error);
+	// 	}
+	// }
+
 	&--compact {
 		height: $control-size-lg;
 		padding-top: 0.6rem;
