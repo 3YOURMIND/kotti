@@ -73,14 +73,6 @@
 		font-weight: 600;
 		color: var(--form-border-color);
 	}
-	.form-radio,
-	.form-checkbox,
-	.form-switch {
-		input:checked + .form-icon {
-			background: var(--form-input-interactive-color);
-			border-color: var(--form-input-interactive-color);
-		}
-	}
 }
 
 // Disabled fields
