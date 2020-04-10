@@ -59,7 +59,7 @@ export const mutations = {
 			})
 		}
 	},
-	setSortedColumns(store, columns = store.state.sortedColumns) {
+	setSortedColumns(store, columns) {
 		setColumnsArray(store.state, 'sortedColumns', PUBLIC_SORT_PROPS, columns)
 		store.commit('updateColumns', { emitChange: false })
 	},
