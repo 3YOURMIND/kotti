@@ -1,10 +1,5 @@
 import pick from 'lodash/pick'
-import {
-	setColumnsArray,
-	getColumnsArray,
-	getColumnIndex,
-	getColumnRealIndex,
-} from './column'
+import { setColumnsArray, getColumnIndex, getColumnRealIndex } from './column'
 
 export const defaultState = {
 	orderedColumns: [],
@@ -36,11 +31,7 @@ export const mutations = {
 	},
 }
 
-export const getters = {
-	getOrderedColumns(state) {
-		return getColumnsArray(state, 'orderedColumns')
-	},
-}
+export const getters = {}
 
 export function resolveColumnsOrder({ _columns = {}, _columnsArray = [] }) {
 	for (const col of _columnsArray) {

@@ -2,7 +2,7 @@
 	<div :class="{ 'x-scroll': isScrollable }">
 		<div class="hidden-columns">
 			<TableColumn
-				v-for="(column, index) in formatedColumns"
+				v-for="(column, index) in formattedColumns"
 				:key="`${column.prop}_${index}`"
 				isPropDefined
 				v-bind="column"
@@ -124,7 +124,7 @@ export default {
 				? this[KT_TABLE_STATE_PROVIDER].store
 				: this.localStore
 		},
-		formatedColumns() {
+		formattedColumns() {
 			return this.columns
 				? this.columns.map((column) => {
 						if (column.key) {
@@ -267,6 +267,7 @@ export default {
 		tableIdSeed += 1
 	},
 	mounted() {
+		debugger
 		this.$ready = true
 		this.store.commit('updateColumns', { emitChange: false })
 		this.$on('selectionChange', (selection) => {
