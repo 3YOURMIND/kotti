@@ -267,7 +267,6 @@ export default {
 		tableIdSeed += 1
 	},
 	mounted() {
-		debugger
 		this.$ready = true
 		this.store.commit('updateColumns', { emitChange: false })
 		this.$on('selectionChange', (selection) => {
