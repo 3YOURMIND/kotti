@@ -64,11 +64,7 @@ export const mutations = {
 	},
 }
 
-export const getters = {
-	getColumns(state) {
-		return getColumnsArray(state, '_columns')
-	},
-}
+export const getters = {}
 
 export function getColumnRealIndex(state, column) {
 	return state._columnsArray.findIndex(({ id }) => id == column.id)
@@ -135,6 +131,7 @@ export function setColumnsArray(
 }
 
 export function getColumnsArray(state, prop) {
+	//please be sure to pass state[prop] that has an array type
 	return [...state[prop]]
 }
 

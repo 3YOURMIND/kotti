@@ -1,4 +1,4 @@
-import { setColumnsArray, getColumnsArray } from './column'
+import { setColumnsArray } from './column'
 
 export const defaultState = {
 	hiddenColumns: [],
@@ -30,11 +30,7 @@ export const mutations = {
 	},
 }
 
-export const getters = {
-	getHiddenColumns(state) {
-		return getColumnsArray(state, 'hiddenColumns')
-	},
-}
+export const getters = {}
 
 export function setHiddenColumn(state, column) {
 	const columnIndex = getHiddenColumnIndex(state, column)
