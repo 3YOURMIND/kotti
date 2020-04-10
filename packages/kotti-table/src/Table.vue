@@ -1,13 +1,17 @@
 <template>
 	<div :class="{ 'x-scroll': isScrollable }">
 		<div class="hidden-columns">
+			<!-- NOTE: The order is very important here as columns that are inserted-->
+			<!-- last take precedence over columns that are inserted before them. -->
+			<slot></slot>
+			<!-- NOTE: As the column prop should be the source of truth in case of conflict -->
+			<!-- the prop columns need to be added after the columns from the slot. -->
 			<TableColumn
 				v-for="(column, index) in formattedColumns"
 				:key="`${column.prop}_${index}`"
 				isPropDefined
 				v-bind="column"
 			/>
-			<slot></slot>
 		</div>
 		<table class="kt-table">
 			<TableHeader />
@@ -15,6 +19,7 @@
 		</table>
 	</div>
 </template>
+
 <script>
 import pick from 'lodash/pick'
 import TableStore from './logic/store'
