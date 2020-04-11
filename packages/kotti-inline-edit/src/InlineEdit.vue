@@ -86,10 +86,10 @@ export default {
 		},
 	},
 	methods: {
-		handleConfirm(event) {
+		handleConfirm() {
 			this.editMode = false
 			this.preValue = this.currentValue
-			this.$emit('confirm', event)
+			this.$emit('confirm', this.currentValue)
 		},
 		handleDismiss(event) {
 			this.editMode = false
