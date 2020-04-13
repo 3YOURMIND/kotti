@@ -33,9 +33,13 @@ export const mutations = {
 		const { state } = store
 		const pickedColumns = columns.map((col) => pick(col, PUBLIC_COLUMN_PROPS))
 		for (const col of pickedColumns) {
-			const column = getColumn(state, col)
+			const column = getColumn(state, col) //getColumn: returns state._columns[col.prop]
 			if (column) {
 				Object.assign(column, col)
+				// FIXME: The following mutation literally only works because
+				// Object.assign modifies the state directly
+				// without committing/emitting, of course
+				// column.hidden = col.hidden
 			}
 		}
 		store.commit('updateColumns', {
