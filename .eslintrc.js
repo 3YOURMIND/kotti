@@ -34,13 +34,14 @@ module.exports = {
 		'vue/require-component-is': 'warn',
 		'vue/html-indent': 'off',
 		'sonarjs/no-duplicate-string': 'warn',
+		'@typescript-eslint/member-delimiter-style': 'off',
+		'@typescript-eslint/explicit-function-return-type': 'off',
+		'prettier/prettier': 'warn',
 	},
 	overrides: [
 		{
 			files: ['**/*.vue', '**/*.js'],
-			rules: {
-				'@typescript-eslint/explicit-function-return-type': 'off',
-			},
+			rules: {},
 		},
 	],
 }
