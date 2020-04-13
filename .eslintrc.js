@@ -43,5 +43,12 @@ module.exports = {
 			files: ['**/*.vue', '**/*.js'],
 			rules: {},
 		},
+		{
+			files: ['**/*.spec.ts'],
+			env: {
+				jest: true,
+			},
+			plugins: ['plugin:jest/recommended'],
+		},
 	],
 }
