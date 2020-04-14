@@ -12,7 +12,7 @@ module.exports = {
 		ecmaVersion: 2020,
 		sourceType: 'module',
 	},
-	plugins: ['sonarjs'],
+	plugins: ['sonarjs', 'import'],
 	extends: [
 		'eslint:recommended',
 		'plugin:vue/recommended',
@@ -37,6 +37,16 @@ module.exports = {
 		'@typescript-eslint/member-delimiter-style': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'prettier/prettier': 'warn',
+		'import/order': [
+			'warn',
+			{
+				alphabetize: {
+					order: 'asc',
+					caseInsensitive: true,
+				},
+				'newlines-between': 'always',
+			},
+		],
 	},
 	overrides: [
 		{
