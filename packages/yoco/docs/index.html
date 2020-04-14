@@ -231,11 +231,18 @@
       xobj.send(null);
     }
     loadJSON(function (response) {
-      const json = JSON.parse(response).icons[0].selection;
+      console.log(JSON.parse(response));
+      const json = JSON.parse(response).icons;
       let iconMoonString = [];
       let solidIconMoonString = [];
       json.forEach(function (item) {
-        const liga = item.ligatures.split(",")[0];
+        let liga = item.properties.ligatures.split(",")[0];
+        if (!liga) {
+          console.warn(
+            `The ligatures attribute is not defined for the ${item.properties.name} icon. Falling back to name.`
+          );
+          liga = item.properties.name;
+        }
         if (liga.includes("solid")) {
           solidIconMoonString.push(liga);
         } else {
