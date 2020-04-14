@@ -139,10 +139,8 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '../../kotti-style/mixins';
-
 :root {
-	--form-input-border-focus: var(--interactive-03);
+	--form-input-focus: var(--interactive-03);
 }
 .form-input {
 	position: relative;
@@ -150,26 +148,11 @@ export default {
 	height: $control-size;
 	padding: 0 $unit-2;
 	line-height: $line-height;
-	color: $darkgray-500;
-	border: 1px solid $lightgray-400;
+	color: var(--text-01);
+	border: 1px solid var(--ui-02);
 	border-radius: $border-radius;
 	outline: none;
 	-webkit-appearance: none;
-
-	&:focus {
-		@include control-shadow();
-		border-color: var(--form-input-border-focus);
-	}
-
-	&:invalid {
-		border: 1px solid var(--support-error);
-		&:focus {
-			@include control-shadow($red-500);
-		}
-		~ .form-icon {
-			color: var(--support-error);
-		}
-	}
 	&--compact {
 		height: $control-size-lg;
 		padding-top: 0.6rem;
@@ -178,7 +161,7 @@ export default {
 			color: transparent;
 		}
 		&--focus::placeholder {
-			color: $lightgray-500;
+			color: var(--text-03);
 		}
 	}
 }

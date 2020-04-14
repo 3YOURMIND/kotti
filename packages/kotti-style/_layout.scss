@@ -20,7 +20,7 @@
 	padding-left: $layout-spacing;
 	margin-right: auto;
 	margin-left: auto;
-	@include clearfix();
+	clear: both;
 
 	$grid-spacing: ($layout-spacing / ($layout-spacing * 0 + 1)) * $html-font-size;
 
