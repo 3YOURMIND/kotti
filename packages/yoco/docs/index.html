@@ -223,18 +223,18 @@
       var xobj = new XMLHttpRequest();
       xobj.overrideMimeType("application/json");
       xobj.open("GET", "yoco-icon.json", true);
-      xobj.onreadystatechange = function() {
+      xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
           callback(xobj.responseText);
         }
       };
       xobj.send(null);
     }
-    loadJSON(function(response) {
-      const json = JSON.parse(response).iconSets[0].selection;
+    loadJSON(function (response) {
+      const json = JSON.parse(response).icons[0].selection;
       let iconMoonString = [];
       let solidIconMoonString = [];
-      json.forEach(function(item) {
+      json.forEach(function (item) {
         const liga = item.ligatures.split(",")[0];
         if (liga.includes("solid")) {
           solidIconMoonString.push(liga);
@@ -253,7 +253,7 @@
           iconString: [],
           solidIconString: [],
           previewIcon: "idea",
-          serachString: ""
+          serachString: "",
         };
       },
       methods: {
@@ -267,7 +267,7 @@
           }
         },
         searchResults(strings) {
-          let results = strings.filter(result =>
+          let results = strings.filter((result) =>
             result.includes(this.serachString.toLowerCase())
           );
           if (results.length === 1) {
@@ -280,8 +280,8 @@
             return this.searchResults(strings);
           }
           return strings;
-        }
-      }
+        },
+      },
     });
   </script>
 </html>
