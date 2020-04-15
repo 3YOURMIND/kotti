@@ -142,6 +142,18 @@ $narrow-navbar-width: 3.4rem;
 		--user-menu-background: var(--primary-20);
 		--user-menu-color: var(--primary-80);
 	}
+	&--theme-grayscale {
+		--navbar-background: var(--white);
+		--navbar-border: var(--gray-20);
+		--navbar-color: var(--gray-80);
+		--navbar-color-light: var(--gray-60);
+		--navbar-color-active: var(--gray-100);
+
+		--user-menu-border: var(--gray-30);
+		--user-menu-background-active: var(--gray-30);
+		--user-menu-background: var(--gray-20);
+		--user-menu-color: var(--gray-80);
+	}
 }
 
 .kt-navbar-wrapper {

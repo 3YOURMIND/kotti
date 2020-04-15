@@ -62,6 +62,7 @@ export default {
 			cursor: pointer;
 		}
 		&.active {
+			font-weight: 600;
 			color: var(--navbar-color-active);
 		}
 	}
