@@ -3,7 +3,6 @@
 		:is="element"
 		:class="mainClasses"
 		role="button"
-		v-bind="element === 'button' ? { type: 'button' } : {}"
 		@click="handleClick"
 	>
 		<i v-if="loading" class="kt-circle-loading" />

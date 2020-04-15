@@ -52,7 +52,7 @@
 		}
 	],
 	"dependencies": {
-		"@3yourmind/yoco": "^1.4.0",
+		"@3yourmind/yoco": "^1.4.2",
 		"@popperjs/core": "^2.0.5",
 		"color": "^3.1.2",
 		"css-vars-ponyfill": "^2.2.0",
@@ -148,5 +148,5 @@
 		"prepublishOnly": "yarn run build:kotti"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.9.6"
+	"version": "1.9.9"
 }

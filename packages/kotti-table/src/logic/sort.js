@@ -1,6 +1,6 @@
 import pick from 'lodash/pick'
 import property from 'lodash/property'
-import { setColumnsArray, getColumnsArray, getColumn } from './column'
+import { setColumnsArray, getColumn } from './column'
 import {
 	IS_ASC,
 	IS_DSC,
@@ -59,7 +59,7 @@ export const mutations = {
 			})
 		}
 	},
-	setSortedColumns(store, columns = store.state.sortedColumns) {
+	setSortedColumns(store, columns) {
 		setColumnsArray(store.state, 'sortedColumns', PUBLIC_SORT_PROPS, columns)
 		store.commit('updateColumns', { emitChange: false })
 	},
@@ -84,9 +84,6 @@ export const getters = {
 	isSortedByDsc(state, column) {
 		column = getSortedColumn(state, column)
 		return column && IS_DSC.test(String(column.sortOrder))
-	},
-	getSortedColumns(state) {
-		return getColumnsArray(state, 'sortedColumns')
 	},
 }
 
