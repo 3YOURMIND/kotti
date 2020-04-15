@@ -80,6 +80,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
 // Drawer with Vue Transition
 $default-drawer-width: 18.8rem;
 $wide-drawer-width: 26.8rem;

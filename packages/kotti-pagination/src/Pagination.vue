@@ -114,6 +114,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
 :root {
 	--pagination-color-active: var(--interactive-03);
 }

@@ -31,6 +31,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
 :root {
 	--action-bar-color-active: var(--interactive-03);
 	--action-bar-width: 16rem;

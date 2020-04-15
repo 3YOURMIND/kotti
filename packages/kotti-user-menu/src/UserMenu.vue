@@ -112,6 +112,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
 :root {
 	--user-menu-border: var(--primary-80);
 	--user-menu-background-active: var(--primary-70);

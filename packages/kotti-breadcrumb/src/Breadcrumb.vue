@@ -57,6 +57,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
 :root {
 	--breadcrumb-color-active: var(--interactive-03);
 }

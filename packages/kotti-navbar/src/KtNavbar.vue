@@ -105,6 +105,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
 $mobile-navbar-height: 2.4rem;
 $narrow-navbar-width: 3.4rem;
 

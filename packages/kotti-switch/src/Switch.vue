@@ -54,6 +54,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
 .form-switch {
 	padding-left: ($unit-8 + $control-padding-x);
 

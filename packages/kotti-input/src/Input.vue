@@ -139,6 +139,8 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
 :root {
 	--form-input-focus: var(--interactive-03);
 }
