@@ -44,12 +44,14 @@ export function resolveColumnsOrder({ _columns = {}, _columnsArray = [] }) {
 	// _columns --> _columnsArray
 	return Object.values(_columns)
 		.filter(({ _deleted }) => !_deleted)
-		.map((col, index) => ({
-			orderAdvantage: 'order' in col ? 1 : -1,
-			order: col.order || col.index,
-			index: col.index || index,
-			col,
-		}))
+		.map((col, index) => {
+			return {
+				orderAdvantage: 'order' in col ? 1 : -1,
+				order: typeof col.order === 'number' ? col.order : col.index,
+				index: typeof col.index === 'number' ? col.index : index,
+				col,
+			}
+		})
 		.sort(byOrder)
 		.map(({ col }, order) => {
 			// re-allign column index with new order
