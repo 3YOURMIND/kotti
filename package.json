@@ -75,6 +75,7 @@
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@nuxtjs/style-resources": "^1.0.0",
 		"@types/jest": "^24.0.19",
+		"@types/lodash": "^4.14.149",
 		"@typescript-eslint/eslint-plugin": "^2.26.0",
 		"@typescript-eslint/parser": "^2.26.0",
 		"@vue/cli-plugin-babel": "^4.4.4",

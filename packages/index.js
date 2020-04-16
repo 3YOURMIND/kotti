@@ -19,21 +19,24 @@ import KtDrawer from './kotti-drawer'
 import KtDropdown from './kotti-dropdown'
 import KtDropdownButton from './kotti-dropdown-button'
 import KtDropdownMenu from './kotti-dropdown-menu'
+import KtField from './next/kotti-field'
+import KtFieldText from './next/kotti-field-text'
+import KtForm from './next/kotti-form'
 import KtHeading from './kotti-heading'
-import KtLine from './kotti-line'
 import KtInlineEdit from './kotti-inline-edit'
 import KtInput from './kotti-input'
 import KtInputNumber from './kotti-input-number'
+import KtLine from './kotti-line'
 import KtModal from './kotti-modal'
 import KtNavbar from './kotti-navbar'
-import KtPopover from './kotti-popover'
 import KtPagenation from './kotti-pagination'
+import KtPopover from './kotti-popover'
 import KtRadio from './kotti-radio'
 import KtRow from './kotti-row'
 import KtSingleSelect from './kotti-single-select'
-import KtSwitch from './kotti-switch'
 import KtStep from './kotti-step'
 import KtSteps from './kotti-steps'
+import KtSwitch from './kotti-switch'
 import KtTable, {
 	KtTableColumn,
 	KtTableProvider,
@@ -64,11 +67,14 @@ const components = {
 	KtDropdown,
 	KtDropdownButton,
 	KtDropdownMenu,
+	KtField,
+	KtFieldText,
+	KtForm,
 	KtHeading,
-	KtLine,
 	KtInlineEdit,
 	KtInput,
 	KtInputNumber,
+	KtLine,
 	KtModal,
 	KtNavbar,
 	KtPagenation,
@@ -150,9 +156,9 @@ export {
 	KtRadioGroup,
 	KtRow,
 	KtSingleSelect,
-	KtSwitch,
 	KtStep,
 	KtSteps,
+	KtSwitch,
 	KtTable,
 	KtToaster,
 	KtUserMenu,
