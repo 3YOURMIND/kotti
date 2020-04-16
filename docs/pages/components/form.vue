@@ -4,8 +4,8 @@
 <ClientOnly>
 	<KtForm v-model="formData" :validators="validators">
 		<KtFieldText formKey="firstName" label="First Name"/>
-		<KtFieldText formKey="lastName" label="Last Name"/>
-		<KtFieldText formKey="lastName" label="Last Name"/>
+		<KtFieldText formKey="lastName"/>
+		<KtFieldText formKey="lastName" label="Last Name" isOptional />
 	</KtForm>
 </ClientOnly>
 </template>

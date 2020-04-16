@@ -1,4 +1,4 @@
-import { computed, inject, ref, watch } from '@vue/composition-api'
+import { computed, inject, ref } from '@vue/composition-api'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
@@ -13,6 +13,7 @@ export const useField = <DATA_TYPE>(
 	if (props.formKey === null) throw new Error('Not Implemented')
 
 	const currentValue = computed(() => {
+		// eslint-disable-next-line no-console
 		console.debug('COMPUTED: currentValue updated')
 
 		return context === null || props.formKey === null
@@ -44,7 +45,9 @@ export const useField = <DATA_TYPE>(
 		errorMessage,
 		currentValue,
 		isDisabled: ref(props.isDisabled),
+		isOptional: ref(props.isOptional),
 		isValid,
+		label: ref(props.label),
 		setValue: ref((newValue: DATA_TYPE) => {
 			if (context === null || props.formKey === null)
 				// FIXME: return (currentValue.value = newValue)

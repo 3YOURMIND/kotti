@@ -12,6 +12,10 @@ export namespace KottiField {
 	// 			type: null
 	// 	  }
 
+	/**
+	 * When adding a new prop, please make sure that no KtFormField
+	 * already uses a prop with the same name, to avoid conflicts
+	 */
 	export interface Props<DATA_TYPE extends any> {
 		/**
 		 * Specifies that the data KtFormContext[formKey]
@@ -23,6 +27,10 @@ export namespace KottiField {
 		 * This will e.g. prevent changing the value
 		 */
 		isDisabled: boolean
+
+		isOptional: boolean
+
+		label: string | null
 
 		validator: (value: any) => string | true
 
@@ -44,7 +52,9 @@ export namespace KottiField {
 		currentValue: Ref<DATA_TYPE>
 		errorMessage: Ref<string | null>
 		isDisabled: Ref<boolean>
+		isOptional: Ref<boolean>
 		isValid: Ref<boolean>
+		label: Ref<string | null>
 		setValue: Ref<(newValue: DATA_TYPE) => void>
 	}
 }

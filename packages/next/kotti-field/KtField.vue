@@ -10,18 +10,22 @@
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
 
-import { ktFieldProps } from './constants'
+import { KottiField } from './types'
 
 export default defineComponent({
 	name: 'KtField',
-	props: ktFieldProps,
-	setup() {
-		// FIXME: Temporarily Hard-Coded
-		const label = 'Some Label'
-		const required = true
-
+	props: {
+		field: { required: true, type: Object },
+	},
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	setup(props: { field: KottiField.Returns<any> }) {
 		const labelText = computed(() =>
-			[label, required ? '(Required)' : '(Optional)'].join(' '),
+			props.field.label.value === null
+				? null
+				: [
+						props.field.label.value,
+						props.field.isOptional.value ? '(Optional)' : '(Required)',
+				  ].join(' '),
 		)
 
 		return {

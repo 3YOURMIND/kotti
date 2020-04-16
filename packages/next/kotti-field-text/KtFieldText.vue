@@ -7,6 +7,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import KtField from '../kotti-field'
 import { ktFieldProps } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 
@@ -14,23 +15,21 @@ import { KtFieldTextProps } from './types'
 
 export default defineComponent({
 	name: 'KtFieldText',
+	components: { KtField },
 	props: {
 		...ktFieldProps,
-		myCustom: { default: true, type: Boolean },
 	},
-	setup({ myCustom, ...fieldProps }: KtFieldTextProps) {
-		const field = useField<string | null>(fieldProps)
+	setup(props: KtFieldTextProps) {
+		const field = useField<string | null>(props)
 
 		return {
 			field,
-			// FIXME: Find proper type. Thanks, Vue
-			// urw, child
+			// FIXME:
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			onInput: (event: any) => {
 				const newValue = event.target.value
 				field.setValue.value(newValue === '' ? null : newValue)
 			},
-			somethingCustom: myCustom === true ? 'kek' : 'topkek',
 		}
 	},
 })
