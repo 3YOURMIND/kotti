@@ -170,7 +170,7 @@ export const tokens = [
 	{
 		name: 'icon-01',
 		description: 'Primary icon',
-		reference: 'gray-100',
+		reference: 'gray-80',
 	},
 	{
 		name: 'icon-02',
