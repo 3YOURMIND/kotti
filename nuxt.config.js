@@ -34,7 +34,11 @@ const config = {
 	loading: {
 		color: '#2C64CC',
 	},
-	plugins: ['~/plugins/vue-clipboard2', '~/plugins/kotti-ui'],
+	plugins: [
+		'~/plugins/vue-clipboard2',
+		'~/plugins/kotti-ui',
+		'~/plugins/composition-api',
+	],
 	/*
 	 ** Build configuration
 	 */
@@ -53,6 +57,7 @@ const config = {
 			},
 		},
 	},
+	buildModules: ['@nuxt/typescript-build'],
 }
 
 if (process.env.DEPLOY_ENV === 'GH_PAGES') {
