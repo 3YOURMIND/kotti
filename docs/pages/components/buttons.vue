@@ -80,13 +80,17 @@
 	## Loading
 
 	<div class="element-example">
-		<KtButton type="primary" loading icon="edit">Loading button</KtButton>
-		<KtButton type="secondary" class="ml-16px" loading icon="edit">Loading</KtButton>
+		<KtButton loading class="mr-16px">Loading button</KtButton>
+		<KtButton type="primary" class="mr-16px" loading>Loading button</KtButton>
+		<KtButton type="secondary" class="mr-16px" loading>Loading</KtButton>
+		<KtButton type="danger" class="mr-16px" loading>Loading</KtButton>
 	</div>
 
 	```html
-	<KtButton type="primary" loading icon="edit">Loading button</KtButton>
-	<KtButton type="primary" class="ml-16px" loading icon="edit"/>
+	<KtButton loading>Loading button</KtButton>
+	<KtButton type="primary" loading>Loading button</KtButton>
+	<KtButton type="secondary" loading/>
+	<KtButton type="danger" loading/>
 	```
 
 	## Button Group
@@ -161,12 +165,6 @@
 	<KtButton type="primary" element="div">Primary Button</KtButton>
 	```
 
-	## Themes
-
-	<div class="element-example">
-		<KtButton @click="isThemeChange = !isThemeChange">Change Theme</KtButton>
-	</div>
-
 	<div v-html="buttonUsage" />
 
 </template>
@@ -180,37 +178,9 @@ export default {
 	components: {
 		ShowCase,
 	},
-	data() {
-		return {
-			isThemeChange: true,
-			themeProvider: {
-				brandColor: '#2c66c4',
-				dangerColor: '#d91919',
-			},
-			customizedTheme: {
-				brandColor: '#000',
-				dangerColor: '#f85a40',
-			},
-			defaultTheme: {
-				brandColor: '#2c66c4',
-				dangerColor: '#d91919',
-			},
-		}
-	},
 	computed: {
 		buttonUsage() {
 			return ButtonUsage
-		},
-	},
-	provide() {
-		return { KtTheme: this.themeProvider }
-	},
-	watch: {
-		isThemeChange(value) {
-			const theme = value ? this.customizedTheme : this.defaultTheme
-			Object.entries(theme).forEach(([key, value]) => {
-				this.$set(this.themeProvider, key, value)
-			})
 		},
 	},
 }

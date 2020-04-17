@@ -50,7 +50,7 @@ export default {
 		type: { default: 'text', type: String },
 		validate: { default: '', type: String },
 		validateText: { default: '', type: String },
-		labelFor: { default: null },
+		labelFor: { default: null, type: String },
 		value: { default: null, type: [String, Number, null] },
 	},
 	data() {
@@ -138,3 +138,33 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
+:root {
+	--form-input-focus: var(--interactive-03);
+}
+.form-input {
+	position: relative;
+	width: 100%;
+	height: $control-size;
+	padding: 0 $unit-2;
+	line-height: $line-height;
+	color: var(--text-01);
+	border: 1px solid var(--ui-02);
+	border-radius: $border-radius;
+	outline: none;
+	-webkit-appearance: none;
+	&--compact {
+		height: $control-size-lg;
+		padding-top: 0.6rem;
+		line-height: 0.8rem;
+		&::placeholder {
+			color: transparent;
+		}
+		&--focus::placeholder {
+			color: var(--text-03);
+		}
+	}
+}
+</style>

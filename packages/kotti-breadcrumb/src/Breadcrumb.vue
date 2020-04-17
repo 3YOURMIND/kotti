@@ -30,6 +30,7 @@ export default {
 	props: {
 		breadcrumbs: { type: Array, required: true },
 		separator: {
+			type: Object,
 			default() {
 				return {
 					style: 'icon',
@@ -55,3 +56,31 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
+:root {
+	--breadcrumb-color-active: var(--interactive-03);
+}
+.breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+}
+.breadcrumb li {
+	display: inline-block;
+	line-height: 1.2rem;
+}
+.breadcrumb__text-separator {
+	padding: 0 0.4rem;
+}
+.breadcrumb__text {
+	color: $darkgray-300;
+	&--completed {
+		font-weight: 600;
+		color: var(--breadcrumb-color-active);
+	}
+	&--completed:hover {
+		cursor: pointer;
+	}
+}
+</style>

@@ -15,6 +15,12 @@ h3 ~ table {
 	margin-top: 0;
 }
 
+pre.long {
+	max-height: 500px;
+	overflow-y: auto;
+	user-select: all;
+}
+
 .success-message {
 	position: fixed;
 	right: 1rem;
@@ -55,8 +61,8 @@ h3 ~ table {
 .danger-block {
 	padding: 1.2rem;
 	margin-bottom: 0.6rem;
-	color: $red-600;
-	background: #f8f8f8;
+	color: var(--support-error);
+	background: var(--ui-01);
 	a {
 		color: inherit;
 		text-decoration: underline;

@@ -113,3 +113,48 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
+:root {
+	--pagination-color-active: var(--interactive-03);
+}
+.pagination {
+	margin: 0;
+	list-style: none;
+	user-select: none;
+	.page-button {
+		display: inline-block;
+		padding: $unit-1;
+		background: $lightgray-300;
+		border-radius: $border-radius;
+		&:hover {
+			cursor: pointer;
+			background: $lightgray-400;
+		}
+	}
+	.fraction {
+		display: inline-block;
+	}
+	.page-item {
+		display: inline-block;
+		padding: $unit-2;
+		line-height: 24px;
+		text-align: center;
+		&--active {
+			color: var(--pagination-color-active);
+		}
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	.disabled {
+		cursor: not-allowed;
+
+		.page-button {
+			opacity: 0.46;
+		}
+	}
+}
+</style>

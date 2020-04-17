@@ -35,15 +35,15 @@ h3,
 .h3 {
 	padding-bottom: $unit-2;
 	font-size: 0.8rem;
-	border-bottom: 1px solid $lightgray-400;
+	border-bottom: 1px solid var(--ui-02);
 
 	span {
 		float: right;
 		font-weight: 500;
-		color: $primary-500;
+		color: var(--interactive-01);
 		&:hover {
 			font-weight: 700;
-			color: $primary-500;
+			color: var(--interactive-01);
 			cursor: pointer;
 		}
 	}
@@ -108,12 +108,12 @@ dl {
 .label-value {
 	position: relative;
 	line-height: 1.5;
-	color: $darkgray-500;
+	color: var(--text-01);
 
 	label {
 		font-size: 0.6rem;
 		font-weight: 700;
-		color: $darkgray-300;
+		color: var(--text-02);
 	}
 
 	.default {
@@ -135,10 +135,10 @@ dl {
 		top: 50%;
 		right: 0.2rem;
 		margin-top: -0.5rem;
-		color: $primary-500;
+		color: var(--interactive-01);
 
 		&:hover {
-			color: $primary-600;
+			color: var(--interactive-01-hover);
 			cursor: pointer;
 		}
 	}
@@ -150,7 +150,7 @@ dl {
 		}
 		&:hover {
 			cursor: pointer;
-			background: $lightgray-300;
+			background: var(--text-03);
 		}
 	}
 }

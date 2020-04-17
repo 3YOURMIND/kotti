@@ -1,3 +1,7 @@
+:root {
+	--loading-color: var(--interactive-01);
+}
+
 @keyframes skeleton-loading {
 	0% {
 		background-position: -50rem 0;
@@ -66,7 +70,7 @@
 	height: $unit-4;
 	margin-right: 0.2rem;
 	pointer-events: none;
-	border: $border-width-lg solid $primary-500;
+	border: $border-width-lg solid var(--loading-color);
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-radius: 50%;
@@ -89,7 +93,7 @@
 		margin-top: -$unit-2;
 		margin-left: -$unit-2;
 		content: '';
-		border: $border-width-lg solid $primary-500;
+		border: $border-width-lg solid var(--loading-color);
 		border-top-color: transparent;
 		border-right-color: transparent;
 		border-radius: 50%;

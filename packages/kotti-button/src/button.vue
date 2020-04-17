@@ -2,21 +2,15 @@
 	<component
 		:is="element"
 		:class="mainClasses"
-		:style="themeColor"
 		role="button"
 		@click="handleClick"
-		@mouseover="handleMouseover"
-		@mouseleave="handleMouseleave"
 	>
-		<i v-if="loading" class="kt-circle-loading" :style="loadingStyle" />
+		<i v-if="loading" class="kt-circle-loading" />
 		<i v-else-if="icon" class="yoco" v-text="icon" />
 		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />
 	</component>
 </template>
-
 <script>
-import color from 'color'
-
 export default {
 	name: 'KtButton',
 	props: {
@@ -27,14 +21,6 @@ export default {
 		size: { default: null, type: String },
 		type: { default: null, type: String },
 	},
-	inject: {
-		KtTheme: {
-			default: {
-				brandColor: '#2c66c4',
-				dangerColor: '#d91919',
-			},
-		},
-	},
 	data() {
 		return {
 			isHover: false,
@@ -43,14 +29,6 @@ export default {
 	computed: {
 		hasSlot() {
 			return Boolean(this.$slots.default)
-		},
-		loadingStyle() {
-			const circleColor =
-				this.type === 'primary' ? '#ffffff' : this.KtTheme.brandColor
-			return {
-				'border-left-color': circleColor,
-				'border-bottom-color': circleColor,
-			}
 		},
 		mainClasses() {
 			const classes = ['kt-button', this.type, this.objectClass]
@@ -64,52 +42,10 @@ export default {
 				'icon-only': this.icon && !this.$slots.default && !this.label,
 			}
 		},
-		themeColor() {
-			switch (this.type) {
-				case 'primary':
-					return {
-						color: color(this.KtTheme.brandColor).isDark()
-							? '#ffffff'
-							: '#3d3d3d',
-						'background-color': this.hoverColor(this.KtTheme.brandColor),
-						'border-color': color(this.KtTheme.brandColor).darken(0.24),
-					}
-
-				case 'danger':
-					return {
-						color: this.isHover ? '#ffffff' : this.KtTheme.dangerColor,
-						'background-color': this.isHover ? this.KtTheme.dangerColor : null,
-						'border-color': this.isHover ? this.KtTheme.dangerColor : null,
-					}
-
-				case 'secondary':
-					return {
-						color: this.hoverColor(this.KtTheme.brandColor),
-						'border-color': this.hoverColor(this.KtTheme.brandColor),
-					}
-
-				case 'text':
-					return { color: this.hoverColor(this.KtTheme.brandColor) }
-
-				default:
-					return { color: this.hoverColor(this.KtTheme.brandColor) }
-			}
-		},
 	},
 	methods: {
 		handleClick(event) {
 			this.$emit('click', event)
-		},
-		handleMouseover(event) {
-			this.isHover = true
-			this.$emit('mouseover', event)
-		},
-		handleMouseleave(event) {
-			this.isHover = false
-			this.$emit('mouseleave', event)
-		},
-		hoverColor(orginalColor) {
-			return this.isHover ? color(orginalColor).darken(0.24) : orginalColor
 		},
 	},
 }
@@ -117,91 +53,114 @@ export default {
 
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
+:root {
+	--default-button-height: var(--unit-8);
+	--large-button-height: var(--unit-9);
+	--small-button-height: var(--unit-6);
+	--button-main-color: var(--interactive-01);
+	--button-main-color-dark: var(--interactive-01-hover);
+	--button-main-color-light: var(--interactive-02-hover);
+}
 
-$default-button-height: $unit-8;
-$large-button-height: $unit-9;
-$small-button-height: $unit-6;
-
+// Base style
 .kt-button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 
-	height: $default-button-height;
-	padding: 0 1em;
+	height: var(--default-button-height);
+	padding: 0 var(--unit-4);
+
 	font-weight: 600;
-	color: $primary-600;
-	text-align: center;
+	cursor: pointer;
 	user-select: none;
-
-	background: $lightgray-300;
-
-	border: 1px solid $lightgray-400;
+	border: 1px solid transparent;
 	border-radius: $border-radius;
-	outline: none;
+	transition: 30ms opacity ease-in-out;
+
+	&:active {
+		opacity: 0.85;
+	}
+
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
 	}
-
-	&:hover {
-		color: $primary-600;
-		cursor: pointer;
-	}
 }
 
+// Size modifiers
 .kt-button.sm {
-	height: $small-button-height;
+	height: var(--small-button-height);
 }
 
 .kt-button.lg {
-	height: $large-button-height;
+	height: var(--large-button-height);
+}
+
+// Color modifier
+/* stylelint-disable-next-line */
+.kt-button {
+	color: var(--button-main-color-dark);
+	background-color: var(--interactive-02);
+	border-color: var(--ui-02);
+	&:hover {
+		background-color: var(--button-main-color-light);
+		border-color: var(--button-main-color-light);
+	}
+	.kt-circle-loading {
+		border-bottom-color: var(--button-main-color-dark);
+		border-left-color: var(--button-main-color-dark);
+	}
 }
 
 .kt-button.primary {
-	color: #ffffff;
-	background: $primary-500;
-	border: 1px solid $primary-600;
-
+	color: var(--text-04);
+	background-color: var(--button-main-color);
+	border-color: var(--button-main-color-dark);
 	&:hover {
-		background: $primary-400;
+		background-color: var(--button-main-color-dark);
+	}
+	.kt-circle-loading {
+		border-bottom-color: var(--text-04);
+		border-left-color: var(--text-04);
 	}
 }
 
 .kt-button.secondary {
-	font-weight: 600;
-	color: $primary-500;
-	background: #fff;
-	border: 1px solid $primary-500;
-
+	color: var(--button-main-color-dark);
+	background-color: var(--interactive-02);
+	border: 1px solid var(--button-main-color-dark);
 	&:hover {
-		color: $primary-400;
-		background: $lightgray-300;
-		border: 1px solid $primary-400;
+		background-color: var(--button-main-color-light);
 	}
 }
 
 .kt-button.text {
-	font-weight: 600;
-	color: $primary-500;
 	background: transparent;
 	border-color: transparent;
 	&:hover {
-		background: $lightgray-300;
+		background-color: var(--button-main-color-light);
 	}
 }
 
 .kt-button.danger {
-	font-weight: 600;
-	color: $red-500;
-	background: #f8f8f8;
-
+	color: var(--danger);
+	.kt-circle-loading {
+		border-bottom-color: var(--danger);
+		border-left-color: var(--danger);
+	}
 	&:hover {
-		color: #ffffff;
-		background: $red-400;
+		color: var(--text-04);
+		background-color: var(--danger);
+		border-color: transparent;
+		.kt-circle-loading {
+			border-bottom-color: var(--text-04);
+			border-left-color: var(--text-04);
+		}
 	}
 }
 
+// With icon
 .kt-button.icon i {
 	margin-right: 0.2rem;
 	font-size: 1rem;
@@ -214,6 +173,7 @@ $small-button-height: $unit-6;
 	}
 }
 
+// Disabled button
 .kt-button.disabled,
 .kt-button:disabled {
 	pointer-events: none;
@@ -222,6 +182,6 @@ $small-button-height: $unit-6;
 
 .kt-button.bottom {
 	min-width: 10rem;
-	margin-top: $unit-8;
+	margin-top: var(--unit-8);
 }
 </style>

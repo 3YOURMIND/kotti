@@ -35,43 +35,47 @@
 	}
 }
 
-@mixin form-state($color) {
+// Form states: warning, error, success
+
+:root {
+	--form-shadow-color: var(--support-info-light);
+	--form-border-color: var(--ui-02);
+}
+.is-success {
+	--form-shadow-color: var(--support-success-light);
+	--form-border-color: var(--support-success);
+}
+.is-error {
+	--form-shadow-color: var(--support-error-light);
+	--form-border-color: var(--support-error);
+}
+.is-warning {
+	--form-shadow-color: var(--support-warning-light);
+	--form-border-color: var(--support-warning);
+}
+
+.form-group {
 	.form-input,
 	.form-select {
 		&:focus {
-			@include control-shadow($color);
+			outline: none;
+			box-shadow: 0 0 0 0.1rem var(--form-shadow-color);
 		}
-		border: 1px solid $color;
+		border: 1px solid var(--form-border-color);
 	}
 
 	.form-icon {
-		color: $color;
+		color: var(--form-border-color);
 	}
 	.form-validation-text {
 		padding: 0.2rem;
 		font-size: $font-size-sm;
-		color: $color;
+		font-weight: 600;
+		color: var(--form-border-color);
 	}
-	.form-radio,
-	.form-checkbox,
-	.form-switch {
-		input:checked + .form-icon {
-			background: $color;
-			border-color: $color;
-		}
-	}
-}
-// Form misc: state
-.is-success {
-	@include form-state($green-500);
-}
-.is-error {
-	@include form-state($red-500);
-}
-.is-warning {
-	@include form-state($orange-500);
 }
 
+// Disabled fields
 .form-input,
 .form-select,
 .form-checkbox,
@@ -79,7 +83,7 @@
 .form-radio {
 	&:disabled,
 	&.disabled {
-		@include form-state($lightgray-400);
+		--form-input-interactive-color: var(--ui-03);
 		cursor: not-allowed;
 		background: $lightgray-300;
 		opacity: 0.46;

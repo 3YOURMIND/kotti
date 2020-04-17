@@ -279,7 +279,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-style/mixins/index.scss';
 @import '../../kotti-style/_variables.scss';
 .form-select {
 	width: 100%;
@@ -308,11 +307,6 @@ export default {
 		background: #fff
 			url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E")
 			no-repeat right 0.35rem center/.4rem 0.5rem;
-	}
-
-	&:focus {
-		@include control-shadow();
-		border-color: $primary-500;
 	}
 
 	&::-ms-expand {

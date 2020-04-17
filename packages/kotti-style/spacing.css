@@ -1,0 +1,17 @@
+:root {
+	/* spacing */
+	--unit-o: 0.05rem;
+	--unit-h: 0.1rem;
+	--unit-1: 0.2rem;
+	--unit-2: 0.4rem;
+	--unit-3: 0.6rem;
+	--unit-4: 0.8rem;
+	--unit-5: 1rem;
+	--unit-6: 1.2rem;
+	--unit-7: 1.4rem;
+	--unit-8: 1.6rem;
+	--unit-9: 1.8rem;
+	--unit-10: 2rem;
+	--unit-12: 2.4rem;
+	--unit-16: 3.2rem;
+}

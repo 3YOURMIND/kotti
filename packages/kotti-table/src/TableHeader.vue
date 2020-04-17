@@ -171,7 +171,7 @@ export default {
 @import '../../kotti-style/_variables.scss';
 
 .table-header-row {
-	background-color: $lightgray-300;
+	background-color: var(--ui-01);
 }
 .kt-table__checkbox-col .form-group {
 	position: relative;
@@ -188,7 +188,7 @@ export default {
 th {
 	box-sizing: border-box;
 	border-width: 0;
-	border-left-color: $lightgray-300;
+	border-left-color: var(--ui-03);
 	transition: border 0.2s ease-in-out;
 }
 th.dragOver {
@@ -227,9 +227,9 @@ th.sorted .kt-table__quick-sort-control {
 .kt-table__quick-sort-control .yoco {
 	height: 0.5rem;
 	line-height: 0.5;
-	color: $darkgray-300;
+	color: var(--text-03);
 }
 .kt-table__quick-sort-control .yoco.active {
-	color: $primary-400;
+	color: var(--interactive-01);
 }
 </style>

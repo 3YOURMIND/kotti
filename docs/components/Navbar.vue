@@ -13,23 +13,8 @@
 		</div>
 	</KtNavbar>
 </template>
-
-<style lang="scss" scoped>
-.github-link {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-li.nuxt-link-active {
-	font-weight: 600;
-	background: rgba(0, 0, 0, 0.2);
-	border-radius: 0.1rem;
-}
-</style>
-
 <script>
 import KtNavbar from '../../packages/kotti-navbar'
-import LogoSvg from '~/assets/img/nav_logo.svg'
 
 export default {
 	name: 'KtNavbarComponent',
@@ -85,6 +70,12 @@ export default {
 							isActive: this.isCurrentPage('/foundations'),
 						},
 						{
+							icon: 'json',
+							title: 'Tokens',
+							path: '/tokens/introduction',
+							isActive: this.isCurrentPage('/tokens'),
+						},
+						{
 							icon: 'dashboard',
 							title: 'Components',
 							path: '/components/avatars',
@@ -117,16 +108,18 @@ export default {
 				: this.$route.path.includes(path)
 		},
 	},
-	provide() {
-		return {
-			KtTheme: {
-				navbarBackgroundColor: '#122C56',
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255, 1)',
-				logoUrl: LogoSvg,
-				logoHeight: '40px',
-			},
-		}
-	},
 }
 </script>
+
+<style lang="scss" scoped>
+.github-link {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+li.nuxt-link-active {
+	font-weight: 600;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 0.1rem;
+}
+</style>

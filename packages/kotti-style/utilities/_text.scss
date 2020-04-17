@@ -25,6 +25,7 @@ $text-aligns: (
 	text-justify: justify,
 );
 
+/* stylelint-disable */
 @each $element, $color in $text-colors {
 	.#{$element} {
 		color: $color;
@@ -36,3 +37,4 @@ $text-aligns: (
 		text-align: $align;
 	}
 }
+/* stylelint-enable */

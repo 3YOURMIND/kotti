@@ -64,6 +64,12 @@ export default {
 			const pathName = this.$route.name ? this.$route.name.split('-')[0] : ''
 			return pathName.slice(0, 1).toUpperCase() + pathName.slice(1)
 		},
+		filteredSubmenus() {
+			return Submenu.filter(
+				(menu) =>
+					menu.parent.toLowerCase() === this.currentSection.toLowerCase(),
+			)
+		},
 	},
 }
 </script>
