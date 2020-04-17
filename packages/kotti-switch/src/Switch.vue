@@ -53,3 +53,55 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
+.form-switch {
+	padding-left: ($unit-8 + $control-padding-x);
+
+	.form-icon {
+		top: ($control-size-sm - $unit-4) / 2 - $border-width;
+		left: 0;
+		width: $unit-8;
+		height: $unit-4 + $border-width * 2;
+		background: var(--ui-02);
+		background-clip: padding-box;
+		border-radius: $unit-2 + $border-width;
+
+		&::before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: block;
+			width: $unit-4;
+			height: $unit-4;
+			content: '';
+			background: var(--ui-background);
+			border-radius: 50%;
+		}
+	}
+
+	input {
+		&:checked + .form-icon {
+			&::before {
+				left: 14px;
+			}
+		}
+		&:active + .form-icon {
+			&::before {
+				background: var(--ui-background);
+			}
+		}
+	}
+}
+
+.form-switch.form-switch-right {
+	padding-right: ($unit-8 + $control-padding-x);
+	padding-left: 0;
+
+	.form-icon {
+		right: 0;
+		left: auto;
+	}
+}
+</style>

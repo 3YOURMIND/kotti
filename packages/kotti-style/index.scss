@@ -1,7 +1,6 @@
 @import 'variables';
-
-// Mixins
-@import 'mixins/index';
+@import 'spacing';
+@import 'tokens';
 
 // Reset and dependencies
 @import '~normalize.css';
@@ -13,13 +12,10 @@
 
 // Layout
 @import 'layout';
-@import 'navbar';
-@import 'actionbar';
 @import 'workspace';
 @import 'grid';
 
 // Elements
-@import 'breadcrumb';
 @import 'banners';
 @import 'forms';
 @import 'codes';
@@ -28,11 +24,7 @@
 @import 'tooltip';
 @import 'typography';
 @import 'tables';
-@import 'paginations';
 @import 'modal';
-@import 'drawer';
-@import 'avatar';
 @import 'comments';
-@import 'usermenu';
 @import 'datepicker';
 @import 'line';

@@ -1,32 +1,26 @@
 <template>
-	<div :style="{ color: themeColor.textColor, height: '100%' }">
-		<div v-if="isNarrow" :class="objectClass" @click="$emit('logoClick')">
+	<div>
+		<div v-if="isNarrow" class="kt-navbar-logo" @click="$emit('logoClick')">
 			<i
 				:class="iconClass"
 				@click.stop="$KtNavbar.toggle()"
 				v-text="iconText"
 			/>
 		</div>
-		<div v-else :class="objectClass" @click="$emit('logoClick')">
-			<div
-				v-if="themeColor.logoUrl"
-				:style="[backgroundStyle, heightStyle]"
-				class="navbar-logo--logo"
-			/>
-			<div v-else v-text="labelText" />
+		<div v-else class="kt-navbar-logo" @click="$emit('logoClick')">
+			<div class="kt-navbar-logo__logo">
+				<slot />
+			</div>
 			<i
 				:class="iconClass"
 				@click.stop="$KtNavbar.toggle()"
 				v-text="iconText"
 			/>
 		</div>
-		<div class="navbar-logo--mobile">
-			<div
-				v-if="themeColor.logoUrl"
-				:style="backgroundStyle"
-				class="navbar-logo--logo"
-			/>
-			<div v-else v-text="labelText" />
+		<div class="kt-navbar-logo--mobile">
+			<div class="kt-navbar-logo__logo">
+				<slot />
+			</div>
 		</div>
 	</div>
 </template>
@@ -38,16 +32,6 @@ export default {
 		labelText: { type: String, default: null },
 	},
 	computed: {
-		backgroundStyle() {
-			return {
-				'background-image': `url(${this.themeColor.logoUrl})`,
-			}
-		},
-		heightStyle() {
-			return {
-				height: this.themeColor.logoHeight,
-			}
-		},
 		iconClass() {
 			return this.isNarrow ? 'yoco' : 'yoco expanded'
 		},
@@ -56,19 +40,6 @@ export default {
 		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
-		},
-		objectClass() {
-			return {
-				'navbar-logo': true,
-				'navbar-logo--narrow': this.isNarrow,
-			}
-		},
-		themeColor() {
-			return {
-				textColor: this.KtTheme.navbarTextColor,
-				logoHeight: this.KtTheme.logoHeight || '40px',
-				logoUrl: this.KtTheme.logoUrl,
-			}
 		},
 	},
 	methods: {
@@ -87,3 +58,35 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.kt-navbar-logo {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.8rem 1rem;
+	&__logo {
+		flex: 1;
+		background-repeat: no-repeat;
+		background-position: left;
+		background-size: contain;
+		.image {
+			max-width: 100%;
+			height: auto;
+		}
+	}
+	&--mobile {
+		display: none;
+		height: 100%;
+		padding: 0.2rem;
+	}
+	i {
+		opacity: 0.64;
+		&:hover {
+			opacity: 1;
+		}
+		&.expanded {
+			margin-left: 1.2rem;
+		}
+	}
+}
+</style>

@@ -10,7 +10,7 @@ Input Number is an input field which only supports the `Number` type.
 	<pre v-text="`value: ${number1}`" />
 </div>
 
-Bind a variable to `v-model` in `<KtInputNumber/>`.
+Bind a variable to `v-model` in `KtInputNumber`.
 
 ```html
 <KtInputNumber v-model="number1" />
@@ -79,8 +79,6 @@ When `max` attribute has a value, and `showMaxNumber` is `true`, the max number 
 ```html
 <KtInputNumber v-model="number5" :step="1" :min="0" :max="12" />
 ```
-
-
 </template>
 
 <script>

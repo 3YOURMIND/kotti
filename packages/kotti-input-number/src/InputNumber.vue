@@ -254,7 +254,7 @@ $size: 1.6rem;
 		border-radius: $border-radius;
 
 		&--error {
-			border-color: $red-500;
+			border-color: var(--support-error);
 		}
 	}
 

@@ -36,3 +36,34 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+:root {
+	--radio-color: var(--interactive-01);
+}
+.form-radio {
+	.form-icon {
+		border-radius: 50%;
+	}
+
+	input {
+		&:focus + .form-icon {
+			border-color: var(--radio-color);
+		}
+		&:checked + .form-icon {
+			background-color: var(--radio-color);
+			border-color: var(--radio-color);
+			&::before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 4px;
+				height: 4px;
+				content: '';
+				background: #fff;
+				border-radius: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+}
+</style>

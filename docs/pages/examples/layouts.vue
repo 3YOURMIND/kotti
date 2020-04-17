@@ -6,6 +6,7 @@
 			labelText="MultiText"
 			:notification="navbarNotification"
 			:quickLinks="quickLinksData"
+			logoUrl="placehold.it/160x50"
 		>
 			<div slot="navbar-footer">
 				<KtUserMenu
@@ -21,12 +22,7 @@
 			headerTitle="KtContainer Example"
 			:menu="actionbarMenu"
 		/>
-		<div slot="workspace">
-			KtContainer Content
-			<button @click="isDarkThemeEnabled = !isDarkThemeEnabled">
-				Toggle darkTheme
-			</button>
-		</div>
+		<div slot="workspace"></div>
 	</KtContainer>
 </template>
 
@@ -43,22 +39,6 @@ export default {
 	},
 	data() {
 		return {
-			isDarkThemeEnabled: false,
-			defaultTheme: {
-				navbarBackgroundColor: '#122C56',
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255, 1)',
-			},
-			darkTheme: {
-				navbarBackgroundColor: '#122C56',
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255, 1)',
-			},
-			lightTheme: {
-				navbarBackgroundColor: '#fff',
-				navbarTextColor: 'rgba(0,0,0,.54)',
-				navbarTextActiveColor: 'rgba(0,0,0, 1)',
-			},
 			quickLinksData: {
 				links: [
 					{

@@ -1,3 +1,6 @@
+// This should be called first
+import './kotti-style/index.scss'
+
 import KtAccordion from './kotti-accordion'
 import KtActionbar from './kotti-actionbar'
 import KtAvatar from './kotti-avatar'
@@ -36,10 +39,10 @@ import KtTable, {
 	KtTableProvider,
 	KtTableColumnsStateMixin,
 } from './kotti-table'
+import KtTheme from './kotti-theme'
 import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
 import KtRadioGroup from './kotti-radio-group'
-import './kotti-style/index.scss'
 
 const components = {
 	KtAccordion,
@@ -77,6 +80,7 @@ const components = {
 	KtStep,
 	KtSteps,
 	KtTable,
+	KtTheme,
 	KtToaster,
 	KtUserMenu,
 }
@@ -154,4 +158,5 @@ export {
 	KtTableColumn,
 	KtTableProvider,
 	KtTableColumnsStateMixin,
+	KtTheme,
 }

@@ -251,6 +251,7 @@ export default {
 		dangerouslyOverrideParser: (msg) => escape(msg),
 		postEscapeParser: (msg) => msg.replace(/\n/g, '</br>'),
 		handleEdit(payload) {
+			// eslint-disable-next-line
 			console.log(payload)
 		},
 		handleSubmit(payload) {

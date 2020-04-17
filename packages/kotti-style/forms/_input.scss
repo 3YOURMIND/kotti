@@ -1,33 +1,5 @@
 // Form element: Input
 
-.form-input {
-	position: relative;
-	width: 100%;
-	height: $control-size;
-	padding: 0 $unit-2;
-	line-height: $line-height;
-	color: $darkgray-500;
-	border: 1px solid $lightgray-400;
-	border-radius: $border-radius;
-	outline: none;
-	-webkit-appearance: none;
-
-	&:focus {
-		@include control-shadow();
-		border-color: $primary-500;
-	}
-
-	&:invalid {
-		border: 1px solid $red-500;
-		&:focus {
-			@include control-shadow($red-500);
-		}
-		~ .form-icon {
-			color: $red-500;
-		}
-	}
-}
-
 .dialog {
 	position: absolute;
 	z-index: $zindex-4;

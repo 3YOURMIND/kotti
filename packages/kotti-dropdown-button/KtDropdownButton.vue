@@ -1,11 +1,21 @@
 <template>
 	<div class="kt-dropdown-button">
-		<KtPopover v-bind="$attrs" :placement="placement">
+		<KtPopover
+			:disabled="disabled"
+			:size="size"
+			v-bind="$attrs"
+			:placement="placement"
+		>
 			<KtButtonGroup>
-				<KtButton class="kt-dropdown-button__button" v-bind="$attrs">
+				<KtButton
+					:disabled="disabled"
+					class="kt-dropdown-button__button"
+					v-bind="$attrs"
+				>
 					<slot>Dropdown Text</slot>
 				</KtButton>
 				<KtButton
+					:disabled="disabled"
 					class="kt-dropdown-button__icon"
 					v-bind="$attrs"
 					:icon="dropdownIcon"
@@ -13,7 +23,7 @@
 					<i class="yoco" v-text="dropdownIcon" />
 				</KtButton>
 			</KtButtonGroup>
-			<div slot="content">
+			<div v-if="!disabled" slot="content">
 				<slot name="content">Dropdown Menu</slot>
 			</div>
 		</KtPopover>
@@ -44,6 +54,10 @@ export default {
 			type: String,
 			default: null,
 		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
 	},
 }
 </script>
@@ -69,19 +83,19 @@ export default {
 .kt-dropdown-button__button {
 	position: relative;
 	z-index: 1;
-	pointer-events: none;
 }
 .kt-dropdown-button__icon {
 	position: absolute;
-	left: 0;
+	left: -1px;
 	padding: 0 $unit-2;
-	padding-left: 100%;
+	margin-left: 100%;
+	pointer-events: none;
 	border-left: 0 !important;
 	border-radius: 0.2em !important;
 	.yoco {
-		margin: 0;
-		margin-left: $unit-1;
 		padding-left: $unit-2;
+		margin: 0 !important;
+		margin-left: $unit-1;
 	}
 	span .yoco {
 		display: none;

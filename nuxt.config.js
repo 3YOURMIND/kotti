@@ -25,12 +25,6 @@ const config = {
 		'@3yourmind/yoco',
 	],
 	modules: ['@nuxtjs/markdownit', '@nuxtjs/axios', '@nuxtjs/style-resources'],
-	styleResources: {
-		scss: [
-			'./packages/kotti-style/_variables.scss',
-			'./packages/kotti-style/mixins/index.scss',
-		],
-	},
 	loading: {
 		color: '#2C64CC',
 	},

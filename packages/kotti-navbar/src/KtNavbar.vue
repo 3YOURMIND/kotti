@@ -1,34 +1,15 @@
 <template>
-	<nav
-		:class="objectClass('navbar')"
-		:style="{
-			background: themeColor.backgroundColor,
-			'border-color': themeColor.borderColor,
-		}"
-	>
-		<div
-			:class="objectClass('navbar-wrapper')"
-			:style="{ 'border-color': themeColor.borderColor }"
-		>
-			<div
-				class="navbar-toggle"
-				:style="navbarActiveToggleStyle"
-				@click="toggleMobileMenu"
-			>
-				<i
-					class="yoco"
-					:style="{ color: themeColor.textColor }"
-					v-text="'burger'"
-				/>
+	<nav class="kt-navbar" :class="classes">
+		<div class="kt-navbar-wrapper">
+			<div class="kt-navbar-toggle" @click="toggleMobileMenu">
+				<i class="yoco" v-text="'burger'" />
 			</div>
-			<div
-				:class="objectClass('navbar-header')"
-				:style="{ 'border-color': themeColor.borderColor }"
-			>
-				<kt-navbar-logo
-					:labelText="labelText"
-					@logoClick="$emit('logoClick')"
-				/>
+			<div class="kt-navbar__header">
+				<KtNavbarLogo :labelText="labelText" @logoClick="$emit('logoClick')">
+					<slot name="navbar-logo">
+						<img class="image" :src="logoUrl" alt="logo" />
+					</slot>
+				</KtNavbarLogo>
 			</div>
 			<kt-navbar-notification
 				v-if="notification"
@@ -36,8 +17,8 @@
 				:title="notification.title"
 				:link="notification.link"
 			/>
-			<div :class="objectClass('navbar-body')">
-				<kt-navbar-menu
+			<div class="kt-navbar__body">
+				<KtNavbarMenu
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
@@ -47,19 +28,11 @@
 					:links="quickLinks.links"
 				/>
 			</div>
-			<div
-				:class="objectClass('navbar-footer')"
-				:style="{ 'border-color': themeColor.borderColor }"
-			>
+			<div class="kt-navbar__footer">
 				<slot name="navbar-footer" />
 			</div>
-			<div
-				v-if="mobileMenuToggle"
-				class="navbar-dropdown"
-				:style="{ background: themeColor.backgroundColor }"
-			>
-				<kt-navbar-menu
-					v-on-clickaway="clickawayMobileMenu"
+			<div v-if="mobileMenuToggle" class="kt-navbar__dropdown">
+				<KtNavbarMenu
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
@@ -76,7 +49,6 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
-import color from 'color'
 import KtNavbarLogo from './KtNavbarLogo'
 import KtNavbarMenu from './KtNavbarMenu'
 import KtNavbarNotification from './KtNavbarNotification'
@@ -96,15 +68,8 @@ export default {
 		notification: { type: Object, default: null },
 		quickLinks: { type: Object, default: null },
 		labelText: { type: String, default: null },
-	},
-	inject: {
-		KtTheme: {
-			default: {
-				navbarBackgroundColor: '#122C56',
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarTextActiveColor: 'rgba(255,255,255, 1)',
-			},
-		},
+		logoUrl: { type: String },
+		theme: { type: String },
 	},
 	data() {
 		return {
@@ -112,25 +77,16 @@ export default {
 		}
 	},
 	computed: {
-		navbarActiveToggleStyle() {
-			return {
-				'background-color': this.mobileMenuToggle
-					? this.themeColor.borderColor
-					: '',
+		classes() {
+			const classes = []
+			if (this.$KtNavbar.isNarrow) {
+				classes.push('kt-navbar--narrow')
 			}
-		},
-		themeColor() {
-			return {
-				backgroundColor: this.KtTheme.navbarBackgroundColor,
-				textColor: this.KtTheme.navbarTextColor,
-				borderColor: color(this.KtTheme.navbarBackgroundColor).isDark()
-					? 'rgba(255,255,255,0.24)'
-					: 'rgba(0,0,0,0.24)',
+			if (this.theme) {
+				classes.push(`kt-navbar--theme-${this.theme}`)
 			}
+			return classes
 		},
-	},
-	created() {
-		this.$parent.$on('clickawayKtNavbarMobileMenu', this.clickawayMobileMenu)
 	},
 	methods: {
 		objectClass(className) {
@@ -148,3 +104,215 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+@import '../../kotti-style/_variables.scss';
+
+$mobile-navbar-height: 2.4rem;
+$narrow-navbar-width: 3.4rem;
+
+:root {
+	--navbar-background: var(--primary-70);
+	--navbar-border: var(--primary-60);
+	--navbar-color: var(--primary-10);
+	--navbar-color-light: var(--primary-20);
+	--navbar-color-active: var(--white);
+}
+
+.kt-navbar {
+	position: relative;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: $zindex-1;
+	flex: 0 0 $navbar-width;
+	width: $navbar-width;
+	min-height: 100vh;
+	color: var(--navbar-color);
+	background: var(--navbar-background);
+	border-right: 1px solid var(--navbar-border);
+	&--theme-reverse {
+		--navbar-background: var(--primary-10);
+		--navbar-border: var(--primary-20);
+		--navbar-color: var(--primary-80);
+		--navbar-color-light: var(--primary-60);
+		--navbar-color-active: var(--primary-100);
+
+		--user-menu-border: var(--primary-30);
+		--user-menu-background-active: var(--primary-30);
+		--user-menu-background: var(--primary-20);
+		--user-menu-color: var(--primary-80);
+	}
+	&--theme-grayscale {
+		--navbar-background: var(--white);
+		--navbar-border: var(--gray-20);
+		--navbar-color: var(--gray-80);
+		--navbar-color-light: var(--gray-60);
+		--navbar-color-active: var(--gray-100);
+
+		--user-menu-border: var(--gray-30);
+		--user-menu-background-active: var(--gray-30);
+		--user-menu-background: var(--gray-20);
+		--user-menu-color: var(--gray-80);
+	}
+}
+
+.kt-navbar-wrapper {
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	width: $navbar-width;
+	height: 100%;
+}
+
+.kt-navbar-toggle {
+	display: none;
+	flex: 0 0 2.4rem;
+	align-items: center;
+	justify-content: center;
+	width: 2.4rem;
+	height: $mobile-navbar-height;
+	color: #fff;
+	text-align: center;
+	cursor: pointer;
+}
+
+.kt-navbar__header {
+	flex: 1 1 auto;
+	cursor: pointer;
+	border-bottom: 1px solid var(--navbar-border);
+}
+
+.kt-navbar__body {
+	flex: 1 1 100%;
+	overflow-y: auto;
+}
+
+.kt-navbar__footer {
+	flex: 0 0 auto;
+	padding: 0.8rem;
+	border-top: 1px solid var(--navbar-border);
+}
+
+.kt-navbar__dropdown {
+	position: absolute;
+	top: $mobile-navbar-height;
+	display: none;
+	width: 100%;
+	background-color: var(--navbar-background);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+}
+
+// Narrowed navbar
+.kt-navbar--narrow {
+	flex: 0 0 $narrow-navbar-width;
+	.kt-navbar-wrapper {
+		flex: 0 0 $narrow-navbar-width;
+		width: $narrow-navbar-width;
+	}
+	.kt-navbar__header {
+		text-align: center;
+	}
+	.kt-navbar__body {
+		padding: 0;
+	}
+	.kt-navbar__footer {
+		display: flex;
+		justify-content: center;
+	}
+	.kt-navbar-logo__logo {
+		display: block;
+		padding: 0;
+	}
+	.kt-navbar-menu {
+		padding: 0.4rem 0;
+		margin: 0.8rem 0.2rem;
+		text-align: center;
+	}
+	.kt-navbar-notification {
+		justify-content: center;
+		padding: 0.8rem 0;
+		&__number {
+			position: absolute;
+			right: 0.4rem;
+		}
+	}
+	.kt-navbar-quick-links {
+		padding: 0.8rem 0;
+		text-align: center;
+		background: var(--navbar-border);
+		&__link {
+			display: block;
+		}
+	}
+}
+
+// Mobile version
+@media (max-width: $size-md) {
+	.kt-navbar {
+		z-index: $zindex-4;
+		flex: 0 0 $mobile-navbar-height;
+		width: auto;
+		height: 2.4rem;
+		min-height: auto;
+		border: 0;
+	}
+	.kt-navbar-wrapper {
+		position: relative;
+		flex: 0 0 $mobile-navbar-height;
+		flex-direction: row;
+		width: 100%;
+		height: $mobile-navbar-height;
+		padding: 0;
+		border-bottom: 1px solid var(--navbar-border);
+	}
+	.kt-navbar__header {
+		width: auto;
+		padding: 0.2rem 0;
+		border: 0;
+	}
+	.kt-navbar__footer {
+		display: flex;
+		flex: 0 0 2.4rem;
+		align-items: center;
+		justify-content: center;
+		border: 0;
+	}
+	.kt-navbar-logo {
+		display: none;
+		&--mobile {
+			display: flex;
+		}
+		&__logo {
+			background-position: center;
+		}
+	}
+	.kt-navbar-notification {
+		display: none;
+		&--mobile {
+			display: block;
+			width: 1.2rem;
+			height: 1.2rem;
+			margin: 0.6rem 0;
+			text-align: center;
+			border: 0;
+			border-radius: 1.2rem;
+			.yoco {
+				font-size: 1rem;
+			}
+		}
+	}
+	.kt-navbar__body {
+		display: none;
+	}
+	.kt-navbar__dropdown {
+		display: block;
+	}
+	.kt-navbar--narrow .kt-navbar-wrapper {
+		padding: 0;
+	}
+	.kt-navbar-toggle {
+		display: flex;
+	}
+}
+</style>
