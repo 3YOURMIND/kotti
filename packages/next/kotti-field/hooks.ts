@@ -134,6 +134,11 @@ export const useField = <DATA_TYPE>(
 		isOptional: ref(props.isOptional),
 		label: ref(props.label),
 		setValue: ref((newValue: DATA_TYPE) => {
+			if (props.isDisabled)
+				throw new Error(
+					`useField(${props.formKey}): attempting to setValue on a disabled field`,
+				)
+
 			if (
 				context === null ||
 				props.formKey === null ||

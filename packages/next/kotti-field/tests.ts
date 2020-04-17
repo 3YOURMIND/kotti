@@ -40,18 +40,55 @@ const TestComponent = defineComponent({
 })
 
 describe('useField', () => {
-	it('throws when formKey is null and context is provided', () => {
+	it('should throw if setValue is called on a disabled field', () => {
 		console.error = jest.fn()
 
+		const wrapper = shallowMount(TestComponent, {
+			localVue,
+			propsData: { isDisabled: true },
+		})
+
 		expect(() =>
-			shallowMount(TestComponent, {
-				localVue,
-				provide: {
-					[KT_FORM_CONTEXT]: {} as Partial<KottiForm.Context>,
-				},
-				propsData: { formKey: null },
-			}),
+			forceConvertToRef(wrapper.vm.field.setValue).value(null),
 		).toThrowError()
+	})
+
+	describe('setValue', () => {
+		it('should emit change when calling setValue on a field outside of a context', () => {
+			const wrapper = shallowMount(TestComponent, { localVue })
+
+			forceConvertToRef(wrapper.vm.field.setValue).value('something else')
+			forceConvertToRef(wrapper.vm.field.setValue).value(null)
+
+			expect(wrapper.emitted().input).toEqual([['something else'], [null]])
+		})
+
+		it('context should emit when when calling setValue inside a context', () => {
+			const setValue = jest.fn()
+
+			const wrapper = shallowMount(TestComponent, {
+				localVue,
+				propsData: { formKey: 'testKey' },
+				provide: {
+					[KT_FORM_CONTEXT]: {
+						values: { value: { testKey: 'something' } },
+						setValue,
+					} as Partial<KottiForm.Context>,
+				},
+			})
+
+			forceConvertToRef(wrapper.vm.field.setValue).value('something else')
+			forceConvertToRef(wrapper.vm.field.setValue).value(null)
+
+			expect(setValue.mock.calls).toEqual([
+				['testKey', 'something else'],
+				['testKey', null],
+			])
+
+			expect(forceConvertToRef(wrapper.vm.field.currentValue).value).toBe(
+				'something',
+			)
+		})
 	})
 
 	it('throws when formKey is provided and context is missing', () => {
