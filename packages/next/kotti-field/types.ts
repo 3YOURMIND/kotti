@@ -1,16 +1,18 @@
 import { Ref } from '@vue/composition-api'
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace KottiField {
-	// FIXME: Implement Proper Validation with Support for success warning and error messages
-	// export type Validation =
-	// 	| {
-	// 			type: 'success' | 'warning' | 'error'
-	// 			text: string
-	// 	  }
-	// 	| {
-	// 			type: null
-	// 	  }
+	export namespace Validation {
+		export type Function = (value: any) => KottiField.Validation.Result
+
+		export type Result =
+			| {
+					type: 'error' | 'success' | 'warning'
+					text: string
+			  }
+			| {
+					type: null
+			  }
+	}
 
 	/**
 	 * When adding a new prop, please make sure that no KtFormField
@@ -32,7 +34,7 @@ export namespace KottiField {
 
 		label: string | null
 
-		validator: (value: any) => string | true
+		validator: KottiField.Validation.Function
 
 		/**
 		 * @default props.formKey
@@ -50,11 +52,11 @@ export namespace KottiField {
 
 	export interface Returns<DATA_TYPE extends any> {
 		currentValue: Ref<DATA_TYPE>
-		errorMessage: Ref<string | null>
 		isDisabled: Ref<boolean>
 		isOptional: Ref<boolean>
-		isValid: Ref<boolean>
 		label: Ref<string | null>
 		setValue: Ref<(newValue: DATA_TYPE) => void>
+		hideValidation: Ref<boolean>
+		validation: Ref<KottiField.Validation.Result>
 	}
 }

@@ -12,41 +12,39 @@ export const useField = <DATA_TYPE>(
 
 	if (props.formKey === null) throw new Error('Not Implemented')
 
-	const currentValue = computed(() => {
-		// eslint-disable-next-line no-console
-		console.debug('COMPUTED: currentValue updated')
-
-		return context === null || props.formKey === null
+	const currentValue = computed(() =>
+		context === null || props.formKey === null
 			? props.value
-			: context.values[props.formKey]
-	})
+			: context.values.value[props.formKey],
+	)
 
-	const validatorResult = computed(() => {
-		const resolvedValidatorKey = props.validatorKey ?? props.formKey
+	const validation = computed(
+		(): KottiField.Validation.Result => {
+			const resolvedValidatorKey = props.validatorKey ?? props.formKey
 
-		/**
-		 * Return true here because without a validator, everything will always
-		 * default to being valid
-		 */
-		if (resolvedValidatorKey === null) return true
+			/**
+			 * Return true here because without a validator, everything will always
+			 * default to being valid
+			 */
+			if (resolvedValidatorKey === null) return { type: null }
 
-		if (context !== null && resolvedValidatorKey in context.validators)
-			return context.validators[resolvedValidatorKey](currentValue)
+			if (context !== null && resolvedValidatorKey in context.validators.value)
+				return context.validators.value[resolvedValidatorKey](
+					currentValue.value,
+				)
 
-		return props.validator(currentValue)
-	})
+			return props.validator(currentValue.value)
+		},
+	)
 
-	const isValid = computed(() => validatorResult.value === true)
-	const errorMessage = computed(() =>
-		validatorResult.value === true ? null : validatorResult.value,
+	const hideValidation = computed(() =>
+		context === null ? false : context.hideValidation.value,
 	)
 
 	return {
-		errorMessage,
 		currentValue,
 		isDisabled: ref(props.isDisabled),
 		isOptional: ref(props.isOptional),
-		isValid,
 		label: ref(props.label),
 		setValue: ref((newValue: DATA_TYPE) => {
 			if (context === null || props.formKey === null)
@@ -55,5 +53,7 @@ export const useField = <DATA_TYPE>(
 
 			return context.setValue(props.formKey, newValue)
 		}),
+		hideValidation,
+		validation,
 	}
 }

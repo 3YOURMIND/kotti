@@ -1,9 +1,14 @@
 <template>
 	<label class="ktfield-wrapper">
-		<div class="ktfield-label" v-text="labelText" />
-		<div class="ktfield-form-group">
+		<div v-if="labelText !== null" class="ktfield-label" v-text="labelText" />
+		<div :class="formFieldGroupClasses">
 			<slot name="default" />
 		</div>
+		<div
+			v-if="showValidation"
+			:class="formFieldValidationTextClasses"
+			v-text="field.validation.value.text"
+		/>
 	</label>
 </template>
 
@@ -28,8 +33,32 @@ export default defineComponent({
 				  ].join(' '),
 		)
 
+		const showValidation = computed(
+			() =>
+				props.field.validation.value.type !== null &&
+				!props.field.hideValidation.value,
+		)
+
+		const formFieldGroupClasses = computed(() => {
+			const classes = ['ktfield-form-group']
+
+			if (showValidation.value)
+				classes.push(`ktfield-form-group__${props.field.validation.value.type}`)
+
+			return classes
+		})
+
+		const formFieldValidationTextClasses = computed(() =>
+			showValidation.value
+				? [`ktfield-form-group__${props.field.validation.value.type}-text`]
+				: [],
+		)
+
 		return {
+			formFieldGroupClasses,
+			formFieldValidationTextClasses,
 			labelText,
+			showValidation,
 		}
 	},
 })
@@ -55,6 +84,30 @@ export default defineComponent({
 }
 
 .ktfield-form-group {
-	border: 1px solid red;
+	border: 1px solid #aaaaaa;
+
+	&__error {
+		border-color: #ff4136;
+
+		&-text {
+			color: #ff4136;
+		}
+	}
+
+	&__success {
+		border-color: #2ecc40;
+
+		&-text {
+			color: #2ecc40;
+		}
+	}
+
+	&__warning {
+		border-color: #ffdc00;
+
+		&-text {
+			color: #ffdc00;
+		}
+	}
 }
 </style>

@@ -36,6 +36,7 @@ module.exports = {
 		'sonarjs/no-duplicate-string': 'warn',
 		'@typescript-eslint/member-delimiter-style': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/no-namespace': 'off',
 		'prettier/prettier': 'warn',
 		'import/order': [
 			'warn',

@@ -1,7 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace KottiForm {
-	// export interface Props {}
+import { Ref } from '@vue/composition-api'
 
+import { KottiField } from '../kotti-field/types'
+
+export namespace KottiForm {
 	export interface Context<
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		CONTEXT_TYPE extends Record<string, any> = Record<string, any>
@@ -10,8 +11,8 @@ export namespace KottiForm {
 			formKey: T,
 			newValue: CONTEXT_TYPE[T],
 		) => void
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		validators: Record<string, (value: any) => string | true>
-		values: CONTEXT_TYPE
+		hideValidation: Ref<boolean>
+		validators: Ref<Record<string, KottiField.Validation.Function>>
+		values: Ref<CONTEXT_TYPE>
 	}
 }

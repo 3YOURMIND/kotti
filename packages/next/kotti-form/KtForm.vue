@@ -6,12 +6,7 @@
 </template>
 
 <script lang="ts">
-import {
-	computed,
-	defineComponent,
-	provide,
-	reactive,
-} from '@vue/composition-api'
+import { computed, defineComponent, provide } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
 import { KT_FORM_CONTEXT } from './constants'
@@ -20,28 +15,31 @@ import { KottiForm } from './types'
 export default defineComponent({
 	name: 'KtForm',
 	props: {
+		hideValidation: { default: false, type: Boolean },
 		validators: { default: {}, type: Object },
 		value: { required: true, type: Object },
 	},
 	setup(props, { emit }) {
-		const values = computed(() => {
-			console.debug('KtForm: value changed')
-			return cloneDeep(props.value)
-		})
+		const hideValidation = computed(() => props.hideValidation)
+		const validators = computed(() => props.validators)
+		const values = computed(() => cloneDeep(props.value))
 
-		const context = reactive<KottiForm.Context>({
+		const context: KottiForm.Context = {
+			hideValidation,
 			setValue(key, newValue) {
+				// eslint-disable-next-line no-console
 				console.debug('KtForm: setValue called')
 				emit('input', {
 					...props.value,
 					[key]: newValue,
 				})
 			},
-			validators: {},
+			validators,
 			values,
-		})
+		}
 
-		provide(KT_FORM_CONTEXT, context)
+		provide<KottiForm.Context>(KT_FORM_CONTEXT, context)
+
 
 		return {
 			onSubmit() {
