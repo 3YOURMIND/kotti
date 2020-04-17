@@ -19,8 +19,8 @@ export default defineComponent({
 	props: {
 		...ktFieldProps,
 	},
-	setup(props: KtFieldTextProps) {
-		const field = useField<string | null>(props)
+	setup(props: KtFieldTextProps, { emit }) {
+		const field = useField<string | null>(props, emit)
 
 		return {
 			field,

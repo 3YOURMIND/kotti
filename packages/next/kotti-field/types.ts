@@ -1,5 +1,7 @@
 import { Ref } from '@vue/composition-api'
 
+import { FORM_KEY_NONE } from './constants'
+
 export namespace KottiField {
 	export namespace Validation {
 		export type Function = (value: any) => KottiField.Validation.Result
@@ -21,8 +23,10 @@ export namespace KottiField {
 	export interface Props<DATA_TYPE extends any> {
 		/**
 		 * Specifies that the data KtFormContext[formKey]
+		 * If formKey is "NONE", it is treated as an explicit opt-out
+		 * of the context-based behavior
 		 */
-		formKey: string | null
+		formKey: typeof FORM_KEY_NONE | string | null
 
 		/**
 		 * Is the field disabled?
@@ -34,7 +38,7 @@ export namespace KottiField {
 
 		label: string | null
 
-		validator: KottiField.Validation.Function
+		validator: KottiField.Validation.Function | null
 
 		/**
 		 * @default props.formKey
