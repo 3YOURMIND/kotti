@@ -16,7 +16,7 @@ export default defineComponent({
 	name: 'KtForm',
 	props: {
 		hideValidation: { default: false, type: Boolean },
-		validators: { default: {}, type: Object },
+		validators: { default: () => ({}), type: Object },
 		value: { required: true, type: Object },
 	},
 	setup(props, { emit }) {

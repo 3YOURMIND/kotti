@@ -1,16 +1,17 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 
 import KtField from './KtField.vue'
 import { KottiField } from './types'
 import { KottiForm } from '../kotti-form/types'
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
-import { defineComponent, Ref } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { useField } from './hooks'
-import VueCompositionApi from '@vue/composition-api'
 import { ktFieldProps, FORM_KEY_NONE } from './constants'
-
-const localVue = createLocalVue()
-localVue.use(VueCompositionApi)
+import {
+	forceConvertToRef,
+	localVue,
+	forceVueToEvaluateComputedProperty,
+} from '../test-utils'
 
 describe('KtField', () => {
 	it('doesn’t crash when it renders witout context', () => {
@@ -19,12 +20,6 @@ describe('KtField', () => {
 		).not.toThrow()
 	})
 })
-
-/**
- * Vue’s type annotations are wrong. This function corrects it
- */
-const forceConvertToRef = <T extends any>(kottiFieldProp: T): Ref<T> =>
-	(kottiFieldProp as unknown) as Ref<T>
 
 const TestComponent = defineComponent({
 	name: 'TestComponent',
@@ -40,7 +35,7 @@ const TestComponent = defineComponent({
 })
 
 describe('useField', () => {
-	it('should throw if setValue is called on a disabled field', () => {
+	it('should throw if setValue is called on a disabled field', async () => {
 		console.error = jest.fn()
 
 		const wrapper = shallowMount(TestComponent, {
@@ -51,14 +46,23 @@ describe('useField', () => {
 		expect(() =>
 			forceConvertToRef(wrapper.vm.field.setValue).value(null),
 		).toThrowError()
+
+		wrapper.setProps({ isDisabled: false })
+		await wrapper.vm.$nextTick()
+
+		expect(() =>
+			forceConvertToRef(wrapper.vm.field.setValue).value(null),
+		).not.toThrowError()
 	})
 
 	describe('setValue', () => {
-		it('should emit change when calling setValue on a field outside of a context', () => {
+		it('should emit change when calling setValue on a field outside of a context', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
 			forceConvertToRef(wrapper.vm.field.setValue).value('something else')
 			forceConvertToRef(wrapper.vm.field.setValue).value(null)
+
+			await wrapper.vm.$nextTick()
 
 			expect(wrapper.emitted().input).toEqual([['something else'], [null]])
 		})
@@ -91,7 +95,7 @@ describe('useField', () => {
 		})
 	})
 
-	it('throws when formKey is provided and context is missing', () => {
+	it('throws when formKey is provided and context is missing', async () => {
 		console.error = jest.fn()
 
 		expect(() =>
@@ -100,6 +104,21 @@ describe('useField', () => {
 				propsData: { formKey: 'test' },
 			}),
 		).toThrowError()
+
+		const wrapper = shallowMount(TestComponent, { localVue })
+
+		console.error = jest.fn()
+
+		wrapper.setProps({ formKey: 'thisWillCrash' })
+		await wrapper.vm.$nextTick()
+
+		/**
+		 * Check console.error since Vue decides to just swallow errors
+		 * that get thrown in watchers (except for the first call, of course!)
+		 *
+		 * @see {@link https://github.com/vuejs/vue/issues/576}
+		 */
+		expect(console.error).toHaveBeenCalled()
 	})
 
 	it('doesn’t throw when formKey is NONE and context is provided', () => {
@@ -115,29 +134,44 @@ describe('useField', () => {
 	})
 
 	describe('validation', () => {
-		it('works with only props.validator', () => {
+		it('works with only props.validator', async () => {
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
 				propsData: { validator: () => ({ type: 'success', text: 'Testing' }) },
 			})
 
-			const validation = forceConvertToRef(wrapper.vm.field.validation).value
+			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+				type: 'success',
+				text: 'Testing',
+			})
 
-			expect(validation.type).toBe('success')
-			if (validation.type === 'success') expect(validation.text).toBe('Testing')
+			wrapper.setProps({
+				validator: () => ({ type: 'warning', text: 'Testing' }),
+			})
+
+			await wrapper.vm.$nextTick()
+
+			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+				type: 'warning',
+				text: 'Testing',
+			})
 		})
 
-		it('works with only validatorKey in a context', () => {
+		it('works with only validatorKey in a context', async () => {
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
-				propsData: { formKey: FORM_KEY_NONE, validatorKey: 'testKey' },
+				propsData: { formKey: FORM_KEY_NONE, validatorKey: 'testKey1' },
 				provide: {
 					[KT_FORM_CONTEXT]: {
 						validators: {
 							value: {
-								testKey: () => ({
+								testKey1: () => ({
 									type: 'warning',
-									text: 'This is a warning',
+									text: 'This is testKey1',
+								}),
+								testKey2: () => ({
+									type: 'error',
+									text: 'This is testKey2',
 								}),
 							},
 						},
@@ -145,26 +179,116 @@ describe('useField', () => {
 				},
 			})
 
-			const validation = forceConvertToRef(wrapper.vm.field.validation).value
+			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+				type: 'warning',
+				text: 'This is testKey1',
+			})
 
-			expect(validation.type).toBe('warning')
-			if (validation.type === 'warning')
-				expect(validation.text).toBe('This is a warning')
+			wrapper.setProps({ validatorKey: 'testKey2' })
+
+			await wrapper.vm.$nextTick()
+
+			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+				type: 'error',
+				text: 'This is testKey2',
+			})
 		})
 
-		it('throws for validatorKey outside of a context', () => {
+		it('throws for validatorKey outside of a context', async () => {
 			expect(() =>
 				shallowMount(TestComponent, {
 					localVue,
 					propsData: { validatorKey: 'testKey' },
 				}),
 			).toThrowError()
+
+			const wrapper = shallowMount(TestComponent, { localVue })
+
+			console.error = jest.fn()
+
+			wrapper.setProps({ validatorKey: 'thisWillCrash' })
+			await wrapper.vm.$nextTick()
+
+			/**
+			 * Check console.error since Vue decides to just swallow errors
+			 * that get thrown in watchers (except for the first call, of course!)
+			 *
+			 * @see {@link https://github.com/vuejs/vue/issues/576}
+			 */
+			expect(console.error).toHaveBeenCalled()
 		})
 
-		it('works with only formKey in a context', () => {
+		it('works with only formKey in a context', async () => {
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
-				propsData: { formKey: 'testKey' },
+				propsData: { formKey: 'testKey1' },
+				provide: {
+					[KT_FORM_CONTEXT]: {
+						validators: {
+							value: {
+								testKey1: () => ({
+									type: 'warning',
+									text: 'This is testKey1',
+								}),
+								testKey2: () => ({
+									type: 'warning',
+									text: 'This is testKey2',
+								}),
+							},
+						},
+						values: { value: { testKey: 'something' } },
+					} as Partial<KottiForm.Context>,
+				},
+			})
+
+			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+				type: 'warning',
+				text: 'This is testKey1',
+			})
+
+			wrapper.setProps({ formKey: 'testKey2' })
+
+			await wrapper.vm.$nextTick()
+
+			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+				type: 'warning',
+				text: 'This is testKey2',
+			})
+		})
+
+		it('throws when providing a validatorKey and a validator', async () => {
+			const validator = jest.fn()
+
+			expect(() => {
+				const wrapper = shallowMount(TestComponent, {
+					localVue,
+					propsData: {
+						formKey: 'testKey',
+						validator,
+						validatorKey: 'testKey',
+					},
+					provide: {
+						[KT_FORM_CONTEXT]: {
+							validators: {
+								value: {
+									testKey: () => ({
+										type: 'warning',
+										text: 'This is a warning',
+									}),
+								},
+							},
+							values: { value: { testKey: 'something' } },
+						} as Partial<KottiForm.Context>,
+					},
+				})
+
+				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation)
+			}).toThrowError()
+			expect(validator).not.toBeCalled()
+
+			const wrapper = shallowMount(TestComponent, {
+				localVue,
+				propsData: { formKey: 'testKey', validatorKey: 'testKey' },
 				provide: {
 					[KT_FORM_CONTEXT]: {
 						validators: {
@@ -180,45 +304,28 @@ describe('useField', () => {
 				},
 			})
 
-			const validation = forceConvertToRef(wrapper.vm.field.validation).value
+			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+				type: 'warning',
+				text: 'This is a warning',
+			})
 
-			expect(validation.type).toBe('warning')
-			if (validation.type === 'warning')
-				expect(validation.text).toBe('This is a warning')
-		})
-
-		it('throws when providing a validatorKey and a validator', () => {
-			const validator = jest.fn()
+			wrapper.setProps({ validator })
+			await wrapper.vm.$nextTick()
 
 			expect(() =>
-				shallowMount(TestComponent, {
-					localVue,
-					propsData: { validator, validatorKey: 'testKey' },
-					provide: {
-						[KT_FORM_CONTEXT]: {
-							validators: {
-								value: {
-									testKey: () => ({
-										type: 'warning',
-										text: 'This is a warning',
-									}),
-								},
-							},
-							values: { value: { testKey: 'something' } },
-						} as Partial<KottiForm.Context>,
-					},
-				}),
+				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation),
 			).toThrowError()
+
 			expect(validator).not.toBeCalled()
 		})
 
-		it('throws for an invalid validatorKey', () => {
+		it('throws for an invalid validatorKey', async () => {
 			const testKey = jest.fn()
 
-			expect(() =>
+			expect(() => {
 				shallowMount(TestComponent, {
 					localVue,
-					propsData: { validatorKey: 'wrongKey' },
+					propsData: { formKey: 'testKey', validatorKey: 'wrongKey' },
 					provide: {
 						[KT_FORM_CONTEXT]: {
 							validators: {
@@ -229,31 +336,62 @@ describe('useField', () => {
 							values: { value: { testKey: 'something' } },
 						} as Partial<KottiForm.Context>,
 					},
-				}),
-			).toThrowError()
-			expect(testKey).not.toBeCalled()
-		})
+				})
 
-		it('ignores an invalid formKey', () => {
-			const testKey = jest.fn()
+				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation)
+			}).toThrowError()
+			expect(testKey).not.toBeCalled()
+
+			const wrapper = shallowMount(TestComponent, {
+				localVue,
+				propsData: { formKey: 'testKey', validatorKey: 'testKey' },
+				provide: {
+					[KT_FORM_CONTEXT]: {
+						validators: {
+							value: {
+								testKey,
+							},
+						},
+						values: { value: { testKey: 'something' } },
+					} as Partial<KottiForm.Context>,
+				},
+			})
+
+			forceVueToEvaluateComputedProperty(wrapper.vm.field.validation)
+
+			expect(testKey).toBeCalled()
+
+			wrapper.setProps({ validatorKey: 'wrongKey' })
+
+			await wrapper.vm.$nextTick()
 
 			expect(() =>
-				shallowMount(TestComponent, {
-					localVue,
-					propsData: { formKey: 'wrongKey' },
-					provide: {
-						[KT_FORM_CONTEXT]: {
-							validators: {
-								value: {
-									testKey,
-								},
+				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation),
+			).toThrowError()
+		})
+
+		it('does not validate if formKey is not in validators', () => {
+			const testKey = jest.fn()
+
+			const wrapper = shallowMount(TestComponent, {
+				localVue,
+				propsData: { formKey: 'wrongKey' },
+				provide: {
+					[KT_FORM_CONTEXT]: {
+						validators: {
+							value: {
+								testKey,
 							},
-							values: { value: { wrongKey: 'something' } },
-						} as Partial<KottiForm.Context>,
-					},
-				}),
-			).not.toThrowError()
+						},
+						values: { value: { wrongKey: 'something' } },
+					} as Partial<KottiForm.Context>,
+				},
+			})
+
 			expect(testKey).not.toBeCalled()
+			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+				type: null,
+			})
 		})
 	})
 })
