@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@3yourmind/yoco@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@3yourmind/yoco/-/yoco-1.4.2.tgz#a19156309ef9cc4f72dd21a9857b08646834d49a"
-  integrity sha512-zdEJT50hCemjZywJ7W7x2tNFlnR8yUCaSrp/FTSE+FCRXOSajsBts+wLiFAmlhrahsu/W7oKEwQ6lcuL3TUjuA==
+"@3yourmind/yoco@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@3yourmind/yoco/-/yoco-1.4.3.tgz#892a4929f7391e7a50f064ee658c0f81456f64fd"
+  integrity sha512-+LuZYpccustCYyK0vy2tAgXOIAm4a7gZmCqrmLIRQUhPLKIkXkNn9ZT521sJ5qtVBd3hdj/yc3fVtqLfWs8cnA==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
