@@ -1,6 +1,15 @@
 <template>
 	<label class="ktfield-wrapper">
-		<div v-if="labelText !== null" class="ktfield-label" v-text="labelText" />
+		<div class="ktfield-label">
+			<div v-if="labelText !== null" v-text="labelText" />
+			<div
+				v-if="field.helpText.value"
+				class="ktfield-label__help-text-container"
+			>
+				<div class="ktfield-label__help-text-question">?</div>
+				<div class="ktfield-label__help-text">{{ field.helpText.value }}</div>
+			</div>
+		</div>
 		<div :class="formFieldGroupClasses">
 			<slot name="default" />
 		</div>
@@ -70,7 +79,52 @@ export default defineComponent({
 	flex-direction: column;
 
 	.ktfield-label {
+		position: relative;
+		display: flex;
+		align-items: center;
+
 		color: gray;
+
+		> * + * {
+			margin-left: 5px;
+		}
+
+		&__help-text-container {
+			&:hover {
+				.ktfield-label__help-text {
+					display: block;
+				}
+			}
+
+			.ktfield-label__help-text {
+				position: absolute;
+				bottom: 20px;
+
+				display: none;
+
+				padding: 5px;
+
+				background-color: #ffffff;
+				border: 1px solid #999;
+				border-radius: 3px;
+
+				transform: translateX(calc(-50% + 5px));
+
+				&-question {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					width: 15px;
+					height: 15px;
+					font-size: 12px;
+
+					color: white;
+					background-color: #999;
+					border-radius: 50%;
+				}
+			}
+		}
 	}
 
 	.ktfield-form-group {

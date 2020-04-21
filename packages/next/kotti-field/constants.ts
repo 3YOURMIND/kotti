@@ -6,6 +6,7 @@ import { ComponentPropsOptions } from '@vue/composition-api/dist/component/compo
  */
 export const ktFieldProps: ComponentPropsOptions = {
 	formKey: { default: null, type: String },
+	helpText: { default: null, type: String },
 	isDisabled: { default: false, type: Boolean },
 	isOptional: { default: false, type: Boolean },
 	label: { default: null, type: String },

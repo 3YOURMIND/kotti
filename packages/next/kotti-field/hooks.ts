@@ -116,6 +116,7 @@ export const useField = <DATA_TYPE>(
 	return {
 		currentValue,
 		hideValidation,
+		helpText: computed(() => props.helpText),
 		isDisabled: computed(() => props.isDisabled),
 		isOptional: computed(() => props.isOptional),
 		label: computed(() => props.label),

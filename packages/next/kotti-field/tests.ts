@@ -57,6 +57,19 @@ describe('useField', () => {
 	})
 
 	describe('props reactivity', () => {
+		it('helpText is reactive', async () => {
+			const wrapper = shallowMount(TestComponent, { localVue })
+
+			expect(forceConvertToRef(wrapper.vm.field.helpText).value).toBe(null)
+
+			wrapper.setProps({ helpText: 'something something' })
+			await wrapper.vm.$nextTick()
+
+			expect(forceConvertToRef(wrapper.vm.field.helpText).value).toBe(
+				'something something',
+			)
+		})
+
 		it('isDisabled is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 

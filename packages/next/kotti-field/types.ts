@@ -30,6 +30,12 @@ export namespace KottiField {
 		formKey: typeof FORM_KEY_NONE | string | null
 
 		/**
+		 * Adds a small questionmark popover to the label to explain
+		 * more complicated forms to the user on-demand
+		 */
+		helpText: string | null
+
+		/**
 		 * Is the field disabled?
 		 * This will e.g. prevent changing the value
 		 */
@@ -55,11 +61,13 @@ export namespace KottiField {
 		value: DATA_TYPE
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export interface Returns<DATA_TYPE extends any> {
 		currentValue: Ref<DATA_TYPE>
 		isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
 		isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
 		label: Ref<KottiField.Props<DATA_TYPE>['label']>
+		helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
 		setValue: Ref<(newValue: DATA_TYPE) => void>
 		hideValidation: Ref<boolean>
 		validation: Ref<KottiField.Validation.Result>

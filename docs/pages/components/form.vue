@@ -3,9 +3,9 @@
 
 <ClientOnly>
 	<KtForm v-model="formData" :hideValidation="hideValidation" :validators="validators">
-		<KtFieldText formKey="firstName" label="First Name"/>
-		<KtFieldText formKey="lastName" label="Last Name" />
-		<KtFieldText formKey="username" label="Username" isOptional />
+		<KtFieldText formKey="firstName" :helpText='`Help for ${formData.firstName}`' label="First Name"/>
+		<KtFieldText formKey="lastName" helpText="help for lastName" label="Last Name" />
+		<KtFieldText formKey="username" helpText="help for username" label="Username" isOptional />
 		<br/>
 		<br/>
 		<KtFieldText formKey="lastName" validatorKey="alwaysNeutral" />
