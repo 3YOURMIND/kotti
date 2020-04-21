@@ -10,8 +10,9 @@
   font-display: block;
 }
 
-i,
-.icomoon-liga {
+.yoco {
+  /* Use relative to the parent font size */
+  font-size: 0.9em;
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: "yoco" !important;
   speak: none;
