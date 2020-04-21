@@ -56,6 +56,22 @@ describe('useField', () => {
 		).not.toThrowError()
 	})
 
+	it('props.value gets deepCloned', async () => {
+		const VALUE_REFERENCE = { something: 'something' }
+
+		const wrapper = shallowMount(TestComponent, {
+			localVue,
+			propsData: { value: VALUE_REFERENCE },
+		})
+
+		expect(forceConvertToRef(wrapper.vm.field.currentValue).value).toEqual(
+			VALUE_REFERENCE,
+		)
+		expect(forceConvertToRef(wrapper.vm.field.currentValue).value).not.toBe(
+			VALUE_REFERENCE,
+		)
+	})
+
 	describe('props reactivity', () => {
 		it('helpText is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })

@@ -5,6 +5,7 @@ import {
 	watch,
 	SetupContext,
 } from '@vue/composition-api'
+import cloneDeep from 'lodash/cloneDeep'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
@@ -47,11 +48,11 @@ export const useField = <DATA_TYPE>(
 	// fetch value
 
 	const currentValue = computed(() => {
-		if (context === null) return props.value
+		if (context === null) return cloneDeep(props.value)
 
 		switch (props.formKey) {
 			case FORM_KEY_NONE:
-				return props.value
+				return cloneDeep(props.value)
 
 			case null:
 				throw new KtFieldErrors.ImplicitFormKeyNone(props)
