@@ -60,6 +60,7 @@
 		"dayjs": "^1.8.20",
 		"deep-eql": "^4.0.0",
 		"normalize.css": "^8.0.1",
+		"ts-custom-error": "^3.1.1",
 		"vue-clickaway": "^2.2.2"
 	},
 	"description": "Kotti Vue Component UI",

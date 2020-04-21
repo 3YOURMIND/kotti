@@ -20,6 +20,7 @@ describe('KtField', () => {
 		).not.toThrow()
 	})
 })
+import { KtFieldErrors } from './errors'
 
 const TestComponent = defineComponent({
 	name: 'TestComponent',
@@ -45,7 +46,7 @@ describe('useField', () => {
 
 		expect(() =>
 			forceConvertToRef(wrapper.vm.field.setValue).value(null),
-		).toThrowError()
+		).toThrowError(KtFieldErrors.DisabledSetValueCalled)
 
 		wrapper.setProps({ isDisabled: false })
 		await wrapper.vm.$nextTick()
@@ -103,7 +104,7 @@ describe('useField', () => {
 				localVue,
 				propsData: { formKey: 'test' },
 			}),
-		).toThrowError()
+		).toThrowError(KtFieldErrors.InvalidPropOutsideOfContext)
 
 		const wrapper = shallowMount(TestComponent, { localVue })
 
@@ -200,7 +201,7 @@ describe('useField', () => {
 					localVue,
 					propsData: { validatorKey: 'testKey' },
 				}),
-			).toThrowError()
+			).toThrowError(KtFieldErrors.InvalidPropOutsideOfContext)
 
 			const wrapper = shallowMount(TestComponent, { localVue })
 
@@ -283,7 +284,7 @@ describe('useField', () => {
 				})
 
 				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation)
-			}).toThrowError()
+			}).toThrowError(KtFieldErrors.NonDeterministicValidatorUsage)
 			expect(validator).not.toBeCalled()
 
 			const wrapper = shallowMount(TestComponent, {
@@ -314,32 +315,28 @@ describe('useField', () => {
 
 			expect(() =>
 				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation),
-			).toThrowError()
+			).toThrowError(KtFieldErrors.NonDeterministicValidatorUsage)
 
 			expect(validator).not.toBeCalled()
 		})
 
-		it('throws for an invalid validatorKey', async () => {
+		it('throws when validatorKey cannot be found in validators', async () => {
 			const testKey = jest.fn()
 
 			expect(() => {
-				shallowMount(TestComponent, {
+				const wrapper = shallowMount(TestComponent, {
 					localVue,
 					propsData: { formKey: 'testKey', validatorKey: 'wrongKey' },
 					provide: {
 						[KT_FORM_CONTEXT]: {
-							validators: {
-								value: {
-									testKey,
-								},
-							},
+							validators: { value: { testKey } },
 							values: { value: { testKey: 'something' } },
 						} as Partial<KottiForm.Context>,
 					},
 				})
 
 				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation)
-			}).toThrowError()
+			}).toThrowError(KtFieldErrors.ValidatorNotFound)
 			expect(testKey).not.toBeCalled()
 
 			const wrapper = shallowMount(TestComponent, {
@@ -367,7 +364,7 @@ describe('useField', () => {
 
 			expect(() =>
 				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation),
-			).toThrowError()
+			).toThrowError(KtFieldErrors.ValidatorNotFound)
 		})
 
 		it('does not validate if formKey is not in validators', () => {

@@ -10,6 +10,7 @@ import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
 
 import { FORM_KEY_NONE } from './constants'
+import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
 export const useField = <DATA_TYPE>(
@@ -25,12 +26,10 @@ export const useField = <DATA_TYPE>(
 		() => props.formKey,
 		(newFormKey) => {
 			if (context !== null && newFormKey === null)
-				throw new Error(
-					'Encountered a KtField without a formKey inside a KtForm',
-				)
+				throw new KtFieldErrors.ImplicitFormKeyNone(props)
 
 			if (context === null && newFormKey !== null)
-				throw new Error('Encountered a KtField with a formKey outside a KtForm')
+				throw new KtFieldErrors.InvalidPropOutsideOfContext(props, 'formKey')
 		},
 	)
 
@@ -38,8 +37,9 @@ export const useField = <DATA_TYPE>(
 		() => props.validatorKey,
 		(newValidatorKey) => {
 			if (context === null && newValidatorKey !== null)
-				throw new Error(
-					'Encountered a KtField with a validatorKey outside a KtForm',
+				throw new KtFieldErrors.InvalidPropOutsideOfContext(
+					props,
+					'validatorKey',
 				)
 		},
 	)
@@ -54,9 +54,7 @@ export const useField = <DATA_TYPE>(
 				return props.value
 
 			case null:
-				throw new Error(
-					'Encountered a KtField without a formKey inside a KtForm',
-				)
+				throw new KtFieldErrors.ImplicitFormKeyNone(props)
 
 			default:
 				return context.values.value[props.formKey]
@@ -72,25 +70,13 @@ export const useField = <DATA_TYPE>(
 	const validation = computed(
 		// eslint-disable-next-line sonarjs/cognitive-complexity
 		(): KottiField.Validation.Result => {
-			/**
-			 * Using both a validatorKey and a validator is most likely a mistake. Therefore,
-			 * this gets treated as an error here. If you need multiple validators, consider
-			 * implementing a custom validator that checks multiple conditions instead.
-			 */
 			if (props.validatorKey && props.validator)
-				throw new Error(
-					`useField(${props.formKey}): You cannot define a "validatorKey" and a "validator" function at the same time.`,
-				)
+				throw new KtFieldErrors.NonDeterministicValidatorUsage(props)
 
 			if (context) {
 				if (props.validatorKey) {
-					/**
-					 * If the validatorKey can’t be found in the context, this is most likely a mistake.
-					 */
 					if (!(props.validatorKey in context.validators.value))
-						throw new Error(
-							`useField(${props.formKey}): validatorKey “${props.validatorKey}” couldn’t be found in the KtFormContext validators`,
-						)
+						throw new KtFieldErrors.ValidatorNotFound(props)
 
 					return context.validators.value[props.validatorKey](
 						currentValue.value,
@@ -105,15 +91,14 @@ export const useField = <DATA_TYPE>(
 				)
 					return context.validators.value[props.formKey](currentValue.value)
 			} else {
-				const errors = [
-					props.validatorKey && `validatorKey: ${props.validatorKey}`,
-					props.formKey && `formKey: ${props.formKey}`,
-				].filter(Boolean)
-
-				if (errors.length !== 0)
-					throw new Error(
-						`${errors.join(',')} defined outside a KtForm context.`,
+				if (props.validatorKey)
+					throw new KtFieldErrors.InvalidPropOutsideOfContext(
+						props,
+						'validatorKey',
 					)
+
+				if (props.formKey)
+					throw new KtFieldErrors.InvalidPropOutsideOfContext(props, 'formKey')
 			}
 
 			/**
@@ -135,9 +120,7 @@ export const useField = <DATA_TYPE>(
 		label: ref(props.label),
 		setValue: ref((newValue: DATA_TYPE) => {
 			if (props.isDisabled)
-				throw new Error(
-					`useField(${props.formKey}): attempting to setValue on a disabled field`,
-				)
+				throw new KtFieldErrors.DisabledSetValueCalled(props)
 
 			if (
 				context === null ||
