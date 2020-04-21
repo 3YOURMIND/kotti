@@ -15,4 +15,7 @@ export const ktFieldProps: ComponentPropsOptions = {
 	value: { default: null },
 }
 
+/**
+ * Explicitly opt-out of using formKey within a KtFormContext
+ */
 export const FORM_KEY_NONE = 'NONE'

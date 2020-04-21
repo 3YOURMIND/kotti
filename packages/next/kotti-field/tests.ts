@@ -1,6 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
 
-import KtField from './KtField.vue'
 import { KottiField } from './types'
 import { KottiForm } from '../kotti-form/types'
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
@@ -12,21 +11,11 @@ import {
 	localVue,
 	forceVueToEvaluateComputedProperty,
 } from '../test-utils'
-
-describe('KtField', () => {
-	it('doesn’t crash when it renders witout context', () => {
-		expect(() =>
-			shallowMount(KtField, { propsData: { field: {} } }),
-		).not.toThrow()
-	})
-})
 import { KtFieldErrors } from './errors'
 
 const TestComponent = defineComponent({
 	name: 'TestComponent',
-	props: {
-		...ktFieldProps,
-	},
+	props: ktFieldProps,
 	setup(props: KottiField.Props<string | null>, { emit }) {
 		const field = useField(props, emit)
 
@@ -232,14 +221,8 @@ describe('useField', () => {
 					[KT_FORM_CONTEXT]: {
 						validators: {
 							value: {
-								testKey1: () => ({
-									type: 'warning',
-									text: 'This is testKey1',
-								}),
-								testKey2: () => ({
-									type: 'error',
-									text: 'This is testKey2',
-								}),
+								testKey1: () => ({ type: 'warning', text: 'This is testKey1' }),
+								testKey2: () => ({ type: 'error', text: 'This is testKey2' }),
 							},
 						},
 					} as Partial<KottiForm.Context>,
@@ -410,11 +393,7 @@ describe('useField', () => {
 				propsData: { formKey: 'testKey', validatorKey: 'testKey' },
 				provide: {
 					[KT_FORM_CONTEXT]: {
-						validators: {
-							value: {
-								testKey,
-							},
-						},
+						validators: { value: { testKey } },
 						values: { value: { testKey: 'something' } },
 					} as Partial<KottiForm.Context>,
 				},

@@ -3,19 +3,6 @@ import { Ref } from '@vue/composition-api'
 import { FORM_KEY_NONE } from './constants'
 
 export namespace KottiField {
-	export namespace Validation {
-		export type Function = (value: any) => KottiField.Validation.Result
-
-		export type Result =
-			| {
-					type: 'error' | 'success' | 'warning'
-					text: string
-			  }
-			| {
-					type: null
-			  }
-	}
-
 	/**
 	 * When adding a new prop, please make sure that no KtFormField
 	 * already uses a prop with the same name, to avoid conflicts
@@ -71,5 +58,19 @@ export namespace KottiField {
 		setValue: Ref<(newValue: DATA_TYPE) => void>
 		hideValidation: Ref<boolean>
 		validation: Ref<KottiField.Validation.Result>
+	}
+
+	export namespace Validation {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		export type Function = (value: any) => KottiField.Validation.Result
+
+		export type Result =
+			| {
+					type: 'error' | 'success' | 'warning'
+					text: string
+			  }
+			| {
+					type: null
+			  }
 	}
 }

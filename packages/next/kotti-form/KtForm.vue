@@ -27,8 +27,6 @@ export default defineComponent({
 		const context: KottiForm.Context = {
 			hideValidation,
 			setValue(key, newValue) {
-				// eslint-disable-next-line no-console
-				console.debug('KtForm: setValue called')
 				emit('input', {
 					...props.value,
 					[key]: newValue,
@@ -40,10 +38,11 @@ export default defineComponent({
 
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, context)
 
-
 		return {
 			onSubmit() {
+				// eslint-disable-next-line no-console
 				console.debug('onSubmit')
+				// eslint-disable-next-line no-debugger
 				debugger
 				throw new Error('Not Implemented')
 			},
