@@ -20,6 +20,7 @@ export namespace KottiField {
 	 * When adding a new prop, please make sure that no KtFormField
 	 * already uses a prop with the same name, to avoid conflicts
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export interface Props<DATA_TYPE extends any> {
 		/**
 		 * Specifies that the data KtFormContext[formKey]
@@ -56,9 +57,9 @@ export namespace KottiField {
 
 	export interface Returns<DATA_TYPE extends any> {
 		currentValue: Ref<DATA_TYPE>
-		isDisabled: Ref<boolean>
-		isOptional: Ref<boolean>
-		label: Ref<string | null>
+		isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
+		isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
+		label: Ref<KottiField.Props<DATA_TYPE>['label']>
 		setValue: Ref<(newValue: DATA_TYPE) => void>
 		hideValidation: Ref<boolean>
 		validation: Ref<KottiField.Validation.Result>

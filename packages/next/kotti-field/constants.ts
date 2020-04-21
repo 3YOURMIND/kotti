@@ -1,4 +1,10 @@
-export const ktFieldProps = {
+import { ComponentPropsOptions } from '@vue/composition-api/dist/component/componentProps'
+
+/**
+ * Default Props for Fields implementing KtField
+ * ensures compatibility with the useField hook
+ */
+export const ktFieldProps: ComponentPropsOptions = {
 	formKey: { default: null, type: String },
 	isDisabled: { default: false, type: Boolean },
 	isOptional: { default: false, type: Boolean },

@@ -56,6 +56,43 @@ describe('useField', () => {
 		).not.toThrowError()
 	})
 
+	describe('props reactivity', () => {
+		it('isDisabled is reactive', async () => {
+			const wrapper = shallowMount(TestComponent, { localVue })
+
+			expect(forceConvertToRef(wrapper.vm.field.isDisabled).value).toBe(false)
+
+			wrapper.setProps({ isDisabled: true })
+			await wrapper.vm.$nextTick()
+
+			expect(forceConvertToRef(wrapper.vm.field.isDisabled).value).toBe(true)
+		})
+
+		it('isOptional is reactive', async () => {
+			const wrapper = shallowMount(TestComponent, { localVue })
+
+			expect(forceConvertToRef(wrapper.vm.field.isOptional).value).toBe(false)
+
+			wrapper.setProps({ isOptional: true })
+			await wrapper.vm.$nextTick()
+
+			expect(forceConvertToRef(wrapper.vm.field.isOptional).value).toBe(true)
+		})
+
+		it('label is reactive', async () => {
+			const wrapper = shallowMount(TestComponent, { localVue })
+
+			expect(forceConvertToRef(wrapper.vm.field.label).value).toBe(null)
+
+			wrapper.setProps({ label: 'something something' })
+			await wrapper.vm.$nextTick()
+
+			expect(forceConvertToRef(wrapper.vm.field.label).value).toBe(
+				'something something',
+			)
+		})
+	})
+
 	describe('setValue', () => {
 		it('should emit change when calling setValue on a field outside of a context', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })

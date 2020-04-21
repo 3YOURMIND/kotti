@@ -115,9 +115,10 @@ export const useField = <DATA_TYPE>(
 
 	return {
 		currentValue,
-		isDisabled: ref(props.isDisabled),
-		isOptional: ref(props.isOptional),
-		label: ref(props.label),
+		hideValidation,
+		isDisabled: computed(() => props.isDisabled),
+		isOptional: computed(() => props.isOptional),
+		label: computed(() => props.label),
 		setValue: ref((newValue: DATA_TYPE) => {
 			if (props.isDisabled)
 				throw new KtFieldErrors.DisabledSetValueCalled(props)
@@ -131,7 +132,6 @@ export const useField = <DATA_TYPE>(
 
 			return context.setValue(props.formKey, newValue)
 		}),
-		hideValidation,
 		validation,
 	}
 }
