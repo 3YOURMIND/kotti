@@ -3,20 +3,27 @@
 
 <ClientOnly>
 	<KtForm v-model="formData" :hideValidation="hideValidation" :validators="validators">
-		<KtFieldText formKey="firstName" :helpText='`Help for ${formData.firstName}`' label="First Name"/>
+		<KtFieldText formKey="firstName" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText formKey="lastName" helpText="help for lastName" label="Last Name" />
 		<KtFieldText formKey="username" helpText="help for username" label="Username" isOptional />
-		<br/>
-		<br/>
+		<br />
+		<br />
 		<KtFieldText formKey="lastName" validatorKey="alwaysNeutral" />
-		<br/>
+		<br />
 		<KtFieldText formKey="lastName" label="Field That Always Errors" validatorKey="alwaysError" />
-		<br/>
+		<br />
 		<KtFieldText formKey="lastName" label="Field That Always Succeeds" validatorKey="alwaysSuccess" />
-		<br/>
+		<br />
 		<KtFieldText formKey="lastName" label="Field That Always Warns" validatorKey="alwaysWarning" />
+		<ul>
+			<KtFormControllerList formKey="myArray">
+				<li>
+					<KtFieldText formKey="someKeyInMyArray" label="I’m An Item In myArray" validatorKey="username"/>
+				</li>
+			</KtFormControllerList>
+		</ul>
 	</KtForm>
-	<br/>
+	<br />
 	<!-- FIXME: Use new Checkbox once it’s implemented -->
 	<input type="checkbox" v-model="hideValidation" /> Hide Validation
 </ClientOnly>
@@ -56,6 +63,7 @@ export default {
 				firstName: 'John',
 				lastName: 'Smith',
 				username: null,
+				myArray: [{ someKeyInMyArray: null }, { someKeyInMyArray: 'asdfhjkl' }],
 			},
 			hideValidation: false,
 			validators,

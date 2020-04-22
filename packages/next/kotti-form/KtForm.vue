@@ -24,7 +24,7 @@ export default defineComponent({
 		const validators = computed(() => props.validators)
 		const values = computed(() => cloneDeep(props.value))
 
-		const context: KottiForm.Context = {
+		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			hideValidation,
 			setValue(key, newValue) {
 				emit('input', {
@@ -34,9 +34,7 @@ export default defineComponent({
 			},
 			validators,
 			values,
-		}
-
-		provide<KottiForm.Context>(KT_FORM_CONTEXT, context)
+		})
 
 		return {
 			onSubmit() {

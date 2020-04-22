@@ -19,9 +19,6 @@ import KtDrawer from './kotti-drawer'
 import KtDropdown from './kotti-dropdown'
 import KtDropdownButton from './kotti-dropdown-button'
 import KtDropdownMenu from './kotti-dropdown-menu'
-import KtField from './next/kotti-field'
-import KtFieldText from './next/kotti-field-text'
-import KtForm from './next/kotti-form'
 import KtHeading from './kotti-heading'
 import KtInlineEdit from './kotti-inline-edit'
 import KtInput from './kotti-input'
@@ -32,6 +29,7 @@ import KtNavbar from './kotti-navbar'
 import KtPagenation from './kotti-pagination'
 import KtPopover from './kotti-popover'
 import KtRadio from './kotti-radio'
+import KtRadioGroup from './kotti-radio-group'
 import KtRow from './kotti-row'
 import KtSingleSelect from './kotti-single-select'
 import KtStep from './kotti-step'
@@ -45,7 +43,9 @@ import KtTable, {
 import KtTheme from './kotti-theme'
 import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
-import KtRadioGroup from './kotti-radio-group'
+import KtField from './next/kotti-field'
+import KtFieldText from './next/kotti-field-text'
+import { KtForm, KtFormControllerList } from './next/kotti-form'
 
 const components = {
 	KtAccordion,
@@ -70,6 +70,7 @@ const components = {
 	KtField,
 	KtFieldText,
 	KtForm,
+	KtFormControllerList,
 	KtHeading,
 	KtInlineEdit,
 	KtInput,
@@ -144,6 +145,8 @@ export {
 	KtDropdownButton,
 	KtDropdownMenu,
 	KtHeading,
+	KtForm,
+	KtFormControllerList,
 	KtLine,
 	KtInlineEdit,
 	KtInput,
