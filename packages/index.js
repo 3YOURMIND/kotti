@@ -45,7 +45,11 @@ import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
 import KtField from './next/kotti-field'
 import KtFieldText from './next/kotti-field-text'
-import { KtForm, KtFormControllerList } from './next/kotti-form'
+import {
+	KtForm,
+	KtFormControllerList,
+	KtFormControllerObject,
+} from './next/kotti-form'
 
 const components = {
 	KtAccordion,
@@ -71,6 +75,7 @@ const components = {
 	KtFieldText,
 	KtForm,
 	KtFormControllerList,
+	KtFormControllerObject,
 	KtHeading,
 	KtInlineEdit,
 	KtInput,

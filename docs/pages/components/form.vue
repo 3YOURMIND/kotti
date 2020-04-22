@@ -16,12 +16,15 @@
 		<br />
 		<KtFieldText formKey="lastName" label="Field That Always Warns" validatorKey="alwaysWarning" />
 		<ul>
-			<KtFormControllerList formKey="myArray">
+			<KtFormControllerList formKey="users">
 				<li>
-					<KtFieldText formKey="someKeyInMyArray" label="I’m An Item In myArray" validatorKey="username"/>
+					<KtFieldText formKey="firstName" label="I’m An Item In users" validatorKey="username"/>
 				</li>
 			</KtFormControllerList>
 		</ul>
+		<KtFormControllerObject formKey="user">
+			<KtFieldText formKey="lastName" label="I’m a Field In user" validatorKey="username"/>
+		</KtFormControllerObject>
 	</KtForm>
 	<br />
 	<!-- FIXME: Use new Checkbox once it’s implemented -->
@@ -62,8 +65,9 @@ export default {
 			formData: {
 				firstName: 'John',
 				lastName: 'Smith',
+				users: [{ firstName: null }, { firstName: 'asdfhjkl' }],
+				user: { lastName: 'pepe' },
 				username: null,
-				myArray: [{ someKeyInMyArray: null }, { someKeyInMyArray: 'asdfhjkl' }],
 			},
 			hideValidation: false,
 			validators,
