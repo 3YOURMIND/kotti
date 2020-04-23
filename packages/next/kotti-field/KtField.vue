@@ -20,6 +20,7 @@
 			<slot name="default" />
 			<button
 				v-if="!field.hideClear.value"
+				type="button"
 				@click="field.setValue.value(getEmptyValue())"
 			>
 				X

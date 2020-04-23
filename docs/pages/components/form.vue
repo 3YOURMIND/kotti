@@ -14,7 +14,7 @@
 		<div :style="{ marginLeft: '16px' }"><input type="checkbox" v-model="isLoading" /> Is Loading</div>
 	</div>
 	<h1>KtForm</h1>
-	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, validators }">
+	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, validators }" @submit="onSubmit">
 		<KtFieldText formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
 		<br />
@@ -102,6 +102,9 @@ export default {
 				...this.formData,
 				users: [...this.formData.users, { username: null }],
 			}
+		},
+		onSubmit() {
+			alert('onSubmit')
 		},
 	},
 }

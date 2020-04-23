@@ -1,7 +1,8 @@
 <template>
-	<!--<form @submit.prevent="onSubmit">-->
-	<form @submit.prevent>
+	<form @submit.prevent="onSubmit">
 		<slot name="default" />
+		<!-- onSubmit only triggers if there is a submit button in the form -->
+		<input v-show="false" type="submit" />
 	</form>
 </template>
 
@@ -41,11 +42,7 @@ export default defineComponent({
 
 		return {
 			onSubmit() {
-				// eslint-disable-next-line no-console
-				console.debug('onSubmit')
-				// eslint-disable-next-line no-debugger
-				debugger
-				throw new Error('Not Implemented')
+				emit('submit')
 			},
 		}
 	},
