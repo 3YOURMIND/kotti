@@ -19,7 +19,7 @@ const TestField = defineComponent({
 	setup: (props: KottiField.Props<string | null>, { emit }) => ({
 		field: useField(props, emit),
 	}),
-	template: `<KtField :field="field">FIELD</KtField>`,
+	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
 const TestControllerList = {
@@ -29,7 +29,11 @@ const TestControllerList = {
 
 const TestControllerListForm = {
 	components: { KtForm, TestControllerList },
-	template: `<KtForm v-bind="$attrs" @input="$event => $emit('input', $event)"><TestControllerList formKey="parentKey"/></KtForm>`,
+	props: {
+		controllerProps: { required: true, type: Object },
+		formProps: { required: true, type: Object },
+	},
+	template: `<KtForm v-bind="formProps" @input="$event => $emit('input', $event)"><TestControllerList v-bind="controllerProps"/></KtForm>`,
 }
 
 const TestControllerObject = {
@@ -39,7 +43,11 @@ const TestControllerObject = {
 
 const TestControllerObjectForm = {
 	components: { KtForm, TestControllerObject },
-	template: `<KtForm v-bind="$attrs" @input="$event => $emit('input', $event)"><TestControllerObject formKey="parentKey"/></KtForm>`,
+	props: {
+		controllerProps: { required: true, type: Object },
+		formProps: { required: true, type: Object },
+	},
+	template: `<KtForm v-bind="formProps" @input="$event => $emit('input', $event)"><TestControllerObject v-bind="controllerProps"/></KtForm>`,
 }
 
 const getField = (
@@ -50,26 +58,24 @@ const getField = (
 
 describe('KtFormControllerList', () => {
 	it('provides context with nested data, and passes-down the other properties of the KtFormContext', () => {
-		const wrapper = mount(TestControllerList, {
+		const wrapper = mount(TestControllerListForm, {
 			localVue,
-			propsData: { formKey: 'parentKey', validatorKey: 'testKey' },
-			provide: {
-				[KT_FORM_CONTEXT]: {
-					hideValidation: { value: true },
+			propsData: {
+				controllerProps: {
+					formKey: 'parentKey',
+				},
+				formProps: {
+					hideValidation: true,
 					validators: {
-						value: {
-							testKey: (v: unknown) =>
-								v === 'testName1'
-									? { type: 'error', text: 'test1' }
-									: { type: null },
-						},
+						testKey: (v: unknown) =>
+							v === 'testName1'
+								? { type: 'error', text: 'test1' }
+								: { type: null },
 					},
-					values: {
-						value: {
-							parentKey: [{ testKey: 'testName1' }, { testKey: 'testName2' }],
-						},
+					value: {
+						parentKey: [{ testKey: 'testName1' }, { testKey: 'testName2' }],
 					},
-				} as Partial<KottiForm.Context>,
+				},
 			},
 		})
 
@@ -84,59 +90,72 @@ describe('KtFormControllerList', () => {
 		expect(row2Field.validation.value).toEqual({ type: null })
 	})
 
-	it('implements setValue properly', () => {
-		const setValue = jest.fn()
-
-		const wrapper = mount(TestControllerList, {
+	it('implements setValue properly', async () => {
+		const wrapper = mount(TestControllerListForm, {
 			localVue,
-			propsData: { formKey: 'parentKey' },
-			provide: {
-				[KT_FORM_CONTEXT]: {
-					hideValidation: { value: true },
-					setValue,
-					validators: { value: {} },
-					values: {
-						value: {
-							parentKey: [
-								{ testKey: 'testName1a', somethingElse: true },
-								{ testKey: 'testName2a', somethingElse: false },
-							],
-						},
+			propsData: {
+				controllerProps: {
+					formKey: 'parentKey',
+				},
+				formProps: {
+					hideValidation: true,
+					value: {
+						parentKey: [
+							{ testKey: 'testName1a', somethingElse: true },
+							{ testKey: 'testName2a', somethingElse: false },
+						],
 					},
-				} as Partial<KottiForm.Context>,
+				},
 			},
 		})
 
 		const row1Field = getField(wrapper, 0)
 		row1Field.setValue.value('testName1b')
 
-		expect(setValue).toHaveBeenLastCalledWith('parentKey', [
-			{ testKey: 'testName1b', somethingElse: true },
-			{ testKey: 'testName2a', somethingElse: false },
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('input')[0]).toEqual([
+			{
+				parentKey: [
+					{ testKey: 'testName1b', somethingElse: true },
+					{ testKey: 'testName2a', somethingElse: false },
+				],
+			},
 		])
 
 		const row2Field = getField(wrapper, 1)
 		row2Field.setValue.value('testName2b')
 
-		expect(setValue).toHaveBeenLastCalledWith('parentKey', [
-			// testKey is still testName1a because setValue is mocked
-			{ testKey: 'testName1a', somethingElse: true },
-			{ testKey: 'testName2b', somethingElse: false },
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('input')[1]).toEqual([
+			{
+				parentKey: [
+					// testKey is still testName1a because @input is mocked
+					{ testKey: 'testName1a', somethingElse: true },
+					{ testKey: 'testName2b', somethingElse: false },
+				],
+			},
 		])
 	})
 
 	describe('reactivity', () => {
 		it('hideValidation', async () => {
+			const FORM_PROPS = {
+				hideValidation: false,
+				value: {
+					parentKey: [
+						{ testKey: 'testName1b', somethingElse: true },
+						{ testKey: 'testName2a', somethingElse: false },
+					],
+				},
+			}
+
 			const wrapper = mount(TestControllerListForm, {
 				localVue,
 				propsData: {
-					hideValidation: false,
-					value: {
-						parentKey: [
-							{ testKey: 'testName1b', somethingElse: true },
-							{ testKey: 'testName2a', somethingElse: false },
-						],
-					},
+					controllerProps: { formKey: 'parentKey' },
+					formProps: FORM_PROPS,
 				},
 			})
 
@@ -144,28 +163,33 @@ describe('KtFormControllerList', () => {
 
 			expect(row1Field.hideValidation.value).toBe(false)
 
-			wrapper.setProps({ hideValidation: true })
+			wrapper.setProps({ formProps: { ...FORM_PROPS, hideValidation: true } })
 
 			await wrapper.vm.$nextTick()
 
 			expect(row1Field.hideValidation.value).toBe(true)
+		})
+
+		xit('values', () => {
+			// TODO: Trust thyself
 		})
 	})
 })
 
 describe('KtFormControllerObject', () => {
 	it('provides context with nested data, and passes-down the other properties of the KtFormContext', () => {
-		const wrapper = mount(TestControllerObject, {
+		const wrapper = mount(TestControllerObjectForm, {
 			localVue,
-			propsData: { formKey: 'parentKey', validatorKey: 'testKey' },
-			provide: {
-				[KT_FORM_CONTEXT]: {
-					hideValidation: { value: true },
-					validators: { value: { testKey: () => ({ type: null }) } },
-					values: { value: { parentKey: { testKey: 'something' } } },
-				} as Partial<KottiForm.Context>,
+			propsData: {
+				controllerProps: { formKey: 'parentKey' },
+				formProps: {
+					hideValidation: true,
+					validators: { testKey: () => ({ type: null }) },
+					value: { parentKey: { testKey: 'something' } },
+				},
 			},
 		})
+
 		const field = getField(wrapper, 0)
 
 		expect(field.currentValue.value).toBe('something')
@@ -173,39 +197,45 @@ describe('KtFormControllerObject', () => {
 		expect(field.validation.value).toEqual({ type: null })
 	})
 
-	it('implements setValue properly', () => {
-		const setValue = jest.fn()
-
-		const wrapper = mount(TestControllerObject, {
+	it('implements setValue properly', async () => {
+		const wrapper = mount(TestControllerObjectForm, {
 			localVue,
-			propsData: { formKey: 'parentKey', validatorKey: 'testKey' },
-			provide: {
-				[KT_FORM_CONTEXT]: {
-					hideValidation: { value: true },
-					setValue,
-					validators: { value: { testKey: () => ({ type: null }) } },
-					values: { value: { parentKey: { testKey: 'something' } } },
-				} as Partial<KottiForm.Context>,
+			propsData: {
+				controllerProps: { formKey: 'parentKey' },
+				formProps: {
+					hideValidation: true,
+					validators: {
+						testKey: () => ({ type: null }),
+					},
+					value: { parentKey: { testKey: 'something' } },
+				},
 			},
 		})
 		const field = getField(wrapper, 0)
 
 		field.setValue.value('setSomething')
 
-		expect(setValue).toHaveBeenCalledWith('parentKey', {
-			testKey: 'setSomething',
-		})
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('input')).toEqual([
+			[{ parentKey: { testKey: 'setSomething' } }],
+		])
 	})
 
 	describe('reactivity', () => {
 		it('hideValidation', async () => {
+			const FORM_PROPS = {
+				hideValidation: false,
+				value: {
+					parentKey: { testKey: 'something' },
+				},
+			}
+
 			const wrapper = mount(TestControllerObjectForm, {
 				localVue,
 				propsData: {
-					hideValidation: false,
-					value: {
-						parentKey: { testKey: 'something' },
-					},
+					controllerProps: { formKey: 'parentKey' },
+					formProps: FORM_PROPS,
 				},
 			})
 
@@ -213,11 +243,15 @@ describe('KtFormControllerObject', () => {
 
 			expect(field.hideValidation.value).toBe(false)
 
-			wrapper.setProps({ hideValidation: true })
+			wrapper.setProps({ formProps: { ...FORM_PROPS, hideValidation: true } })
 
 			await wrapper.vm.$nextTick()
 
 			expect(field.hideValidation.value).toBe(true)
+		})
+
+		xit('values', () => {
+			// TODO: Trust thyself
 		})
 	})
 })

@@ -129,6 +129,7 @@ export const useField = <DATA_TYPE>(
 		hideValidation,
 		isLoading,
 		helpText: computed(() => props.helpText),
+		hideClear: computed(() => props.hideClear),
 		isDisabled: computed(() => props.isDisabled),
 		isOptional: computed(() => props.isOptional),
 		label: computed(() => props.label),
@@ -145,6 +146,7 @@ export const useField = <DATA_TYPE>(
 
 			return context.setValue(props.formKey, newValue)
 		}),
+		placeholder: computed(() => props.placeholder),
 		validation,
 	}
 }

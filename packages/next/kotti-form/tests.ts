@@ -15,7 +15,7 @@ const TestField = defineComponent({
 	setup: (props: KottiField.Props<string | null>, { emit }) => ({
 		field: useField(props, emit),
 	}),
-	template: `<KtField :field="field">FIELD</KtField>`,
+	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
 const TestForm = {
@@ -61,7 +61,7 @@ describe('KtForm', () => {
 		expect(field.currentValue.value).toBe('testing')
 	})
 
-	describe('ensures that props.value is cloned, to ensure consuming apps don’t rely on deeply mutation', () => {
+	describe('ensures that props.value is cloned, to ensure consuming apps don’t rely on deep mutation', () => {
 		it('should deepClone values before passing it to field, to prevent deep mutation madness', () => {
 			const DEEP_VALUE_REFERENCE = { deep: true }
 

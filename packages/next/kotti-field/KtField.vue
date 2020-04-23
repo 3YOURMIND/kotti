@@ -18,6 +18,12 @@
 		</div>
 		<div v-if="!field.isLoading.value" :class="formFieldGroupClasses">
 			<slot name="default" />
+			<button
+				v-if="!field.hideClear.value"
+				@click="field.setValue.value(getEmptyValue())"
+			>
+				X
+			</button>
 		</div>
 		<div v-else class="skeleton rectangle" :style="{ height: '40px' }" />
 		<div
@@ -37,6 +43,11 @@ export default defineComponent({
 	name: 'KtField',
 	props: {
 		field: { required: true, type: Object },
+		/**
+		 * What’s the appropriate value for an empty field of this data type?
+		 * Used when clearing the field. Most likely either null or []
+		 */
+		getEmptyValue: { required: true, type: Function },
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	setup(props: { field: KottiField.Returns<any> }) {

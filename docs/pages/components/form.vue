@@ -15,15 +15,15 @@
 	</div>
 	<h1>KtForm</h1>
 	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, validators }">
-		<KtFieldText formKey="firstName" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
-		<KtFieldText formKey="lastName" helpText="help for lastName" label="Last Name" />
+		<KtFieldText formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
+		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
 		<br />
 		<h2>Validation Example</h2>
-		<KtFieldText formKey="lastName" validatorKey="alwaysNeutral" />
-		<KtFieldText formKey="lastName" label="Field That Always Errors" validatorKey="alwaysError" />
-		<KtFieldText formKey="lastName" label="Field That Always Succeeds" validatorKey="alwaysSuccess" />
-		<KtFieldText formKey="lastName" label="Field That Always Warns" validatorKey="alwaysWarning" />
-		<KtFieldText formKey="username" helpText="help for username" label="Username" isOptional />
+		<KtFieldText formKey="lastName" hideClear validatorKey="alwaysNeutral" />
+		<KtFieldText formKey="lastName" hideClear label="Field That Always Errors" validatorKey="alwaysError" />
+		<KtFieldText formKey="lastName" hideClear label="Field That Always Succeeds" validatorKey="alwaysSuccess" />
+		<KtFieldText formKey="lastName" hideClear label="Field That Always Warns" validatorKey="alwaysWarning" />
+		<KtFieldText formKey="username" hideClear helpText="help for username" label="Username" isOptional />
 		<br />
 		<h2>KtFormControllerList</h2>
 		<ul>

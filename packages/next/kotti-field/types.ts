@@ -25,6 +25,11 @@ export namespace KottiField {
 		helpText: string | null
 
 		/**
+		 * Should the user have the option to clear the field
+		 */
+		hideClear: boolean
+
+		/**
 		 * Is the field disabled?
 		 * This will e.g. prevent changing the value
 		 */
@@ -34,6 +39,8 @@ export namespace KottiField {
 		isOptional: boolean
 
 		label: string | null
+
+		placeholder: string | null
 
 		validator: KottiField.Validation.Function | null
 
@@ -51,16 +58,17 @@ export namespace KottiField {
 		value: DATA_TYPE
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	export interface Returns<DATA_TYPE extends any> {
+	export interface Returns<DATA_TYPE extends unknown> {
 		currentValue: Ref<DATA_TYPE>
+		helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
+		hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
+		hideValidation: KottiForm.Context['hideValidation']
 		isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
 		isLoading: KottiForm.Context['isLoading']
 		isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
 		label: Ref<KottiField.Props<DATA_TYPE>['label']>
-		helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
+		placeholder: Ref<KottiField.Props<DATA_TYPE>['placeholder']>
 		setValue: Ref<(newValue: DATA_TYPE) => void>
-		hideValidation: KottiForm.Context['hideValidation']
 		validation: Ref<KottiField.Validation.Result>
 	}
 

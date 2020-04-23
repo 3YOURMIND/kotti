@@ -1,11 +1,11 @@
 <template>
-	<KtField :field="field">
-		<input type="text" :value="field.currentValue.value" @input="onInput" />
+	<KtField :getEmptyValue="() => null" v-bind="{ field }">
+		<input v-bind="inputAttributes" @input="onInput" />
 	</KtField>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 
 import KtField from '../kotti-field'
 import { ktFieldProps } from '../kotti-field/constants'
@@ -24,6 +24,11 @@ export default defineComponent({
 
 		return {
 			field,
+			inputAttributes: computed(() => ({
+				type: 'text',
+				value: field.currentValue.value,
+				placeholder: field.placeholder.value ?? undefined,
+			})),
 			// FIXME:
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			onInput: (event: any) => {
