@@ -28,10 +28,19 @@
 		<h2>KtFormControllerList</h2>
 		<ul>
 			<KtFormControllerList formKey="users">
-				<li>
-					<KtFieldText formKey="firstName" label="I’m An Item In users" validatorKey="username"/>
-				</li>
+				<template v-slot:default="{ addAfter, addBefore, deleteSelf, index, setValues, values }">
+					<li>
+						<h3 v-text="`Item ${index}`" />
+						<KtFieldText formKey="username" label="Username" validatorKey="username"/>
+						<button type="button" @click="deleteSelf">Delete {{ values.username }}</button>
+						<button type="button" @click="addBefore({ username: `before ${values.username}` })">Add Before</button>
+						<button type="button" @click="addAfter({ username: `after ${values.username}` })">Add After</button>
+						<button type="button" @click="setValues({ ...values, username: `replaced ${values.username}` })">Set Values</button>
+					</li>
+				</template>
 			</KtFormControllerList>
+			<br/>
+			Custom Button: <button type="button" @click="addUser">Add User</button>
 		</ul>
 		<br />
 		<h2>KtFormControllerObject</h2>
@@ -78,7 +87,7 @@ export default {
 			formData: {
 				firstName: 'John',
 				lastName: 'Smith',
-				users: [{ firstName: null }, { firstName: 'asdfhjkl' }],
+				users: [{ username: null }, { username: 'anything' }],
 				user: { lastName: 'pepe' },
 				username: null,
 			},
@@ -86,6 +95,14 @@ export default {
 			isLoading: false,
 			validators,
 		}
+	},
+	methods: {
+		addUser() {
+			this.formData = {
+				...this.formData,
+				users: [...this.formData.users, { username: null }],
+			}
+		},
 	},
 }
 </script>

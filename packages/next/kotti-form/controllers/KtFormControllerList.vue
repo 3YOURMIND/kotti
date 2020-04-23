@@ -1,19 +1,28 @@
 <template>
 	<div>
 		<KtFormControllerListItem
-			v-for="(value, index) in currentValue"
+			v-for="(values, index) in valuesList"
 			:key="index"
 			:context="context"
-			:value="value"
+			:values="values"
 			@setValue="setValue({ ...$event, index })"
 		>
-			<slot />
+			<slot
+				name="default"
+				:addAfter="(newRow) => addAfter(index, newRow)"
+				:addBefore="(newRow) => addBefore(index, newRow)"
+				:deleteSelf="() => deleteSelf(index)"
+				:index="index"
+				:setValues="(newValue) => setValues(index, newValue)"
+				:values="cloneDeep(values)"
+			/>
 		</KtFormControllerListItem>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject, computed } from '@vue/composition-api'
+import cloneDeep from 'lodash/cloneDeep'
 
 import { KT_FORM_CONTEXT } from '../constants'
 import { KottiForm } from '../types'
@@ -31,33 +40,79 @@ export default defineComponent({
 		if (context === null)
 			throw new Error('KtFormControllerList: Could Not Find KtFormContext')
 
-		const currentValue = computed<unknown[]>(() => {
+		const valuesList = computed<object[]>(() => {
 			const result = context.values.value[props.formKey]
+
 			if (!Array.isArray(result))
 				throw new Error(
 					`KtFormControllerList: Unexpected Data Type ${typeof result}. Expected Array`,
 				)
+
 			return result
 		})
 
-		const setValue = ({
-			formKey,
-			index,
-			newValue,
-		}: {
-			formKey: string
-			index: number
-			newValue: unknown
-		}) => {
-			context.setValue(
-				props.formKey,
-				context.values.value[props.formKey].map((oldValue: object, i: number) =>
-					i === index ? { ...oldValue, [formKey]: newValue } : oldValue,
+		return {
+			/**
+			 * Adds a new valuesList entry after the given index
+			 */
+			addAfter: (index: number, newRow: object) =>
+				context.setValue(props.formKey, [
+					...valuesList.value.slice(0, index + 1),
+					newRow,
+					...valuesList.value.slice(index + 1, valuesList.value.length),
+				]),
+			/**
+			 * Adds a new valuesList entry before the given index
+			 */
+			addBefore: (index: number, newRow: object) =>
+				context.setValue(props.formKey, [
+					...valuesList.value.slice(0, index),
+					newRow,
+					...valuesList.value.slice(index, valuesList.value.length),
+				]),
+			/**
+			 * Makes sure that consumers cannot accidentally modify the internal state
+			 */
+			cloneDeep,
+			context,
+			/**
+			 * Deletes the given index from the valuesList
+			 */
+			deleteSelf: (index: number) =>
+				context.setValue(
+					props.formKey,
+					valuesList.value.filter((_, i) => (i === index ? false : true)),
 				),
-			)
+			/**
+			 * Updates a single formKey in a valuesList entry
+			 */
+			setValue: ({
+				formKey,
+				index,
+				newValue,
+			}: {
+				formKey: string
+				index: number
+				newValue: unknown
+			}) =>
+				context.setValue(
+					props.formKey,
+					valuesList.value.map((oldValue, i) =>
+						i === index ? { ...oldValue, [formKey]: newValue } : oldValue,
+					),
+				),
+			/**
+			 * Replaces an entire valuesListEntry with new data
+			 */
+			setValues: (index: number, newValue: object) =>
+				context.setValue(
+					props.formKey,
+					valuesList.value.map((oldValue, i) =>
+						i === index ? newValue : oldValue,
+					),
+				),
+			valuesList,
 		}
-
-		return { context, currentValue, setValue }
 	},
 })
 </script>

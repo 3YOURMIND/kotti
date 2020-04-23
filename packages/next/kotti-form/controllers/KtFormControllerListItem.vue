@@ -12,12 +12,12 @@ export default defineComponent({
 	name: 'KtFormControllerListItem',
 	props: {
 		context: { required: true, type: Object },
-		value: { required: true, type: Object },
+		values: { required: true, type: Object },
 	},
 	setup(
 		props: {
 			context: KottiForm.Context
-			value: Record<string, unknown>
+			values: Record<string, unknown>
 		},
 		{ emit },
 	) {
@@ -26,7 +26,7 @@ export default defineComponent({
 			isLoading: props.context.isLoading,
 			setValue: (formKey, newValue) => emit('setValue', { formKey, newValue }),
 			validators: props.context.validators,
-			values: computed(() => props.value),
+			values: computed(() => props.values),
 		})
 	},
 })
