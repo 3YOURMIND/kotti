@@ -23,6 +23,7 @@ export default defineComponent({
 	) {
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			hideValidation: props.context.hideValidation,
+			isLoading: props.context.isLoading,
 			setValue: (formKey, newValue) => emit('setValue', { formKey, newValue }),
 			validators: props.context.validators,
 			values: computed(() => props.value),

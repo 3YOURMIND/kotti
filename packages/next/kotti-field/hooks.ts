@@ -64,8 +64,18 @@ export const useField = <DATA_TYPE>(
 
 	// validation
 
+	const isLoading = computed(() => {
+		if (props.isLoading) return true
+		if (context !== null) return context.isLoading.value
+		return false
+	})
+
 	const hideValidation = computed(() =>
-		context === null ? false : context.hideValidation.value,
+		isLoading.value
+			? true
+			: context === null
+			? false
+			: context.hideValidation.value,
 	)
 
 	const validation = computed(
@@ -117,6 +127,7 @@ export const useField = <DATA_TYPE>(
 	return {
 		currentValue,
 		hideValidation,
+		isLoading,
 		helpText: computed(() => props.helpText),
 		isDisabled: computed(() => props.isDisabled),
 		isOptional: computed(() => props.isOptional),

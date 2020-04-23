@@ -8,6 +8,7 @@ export const ktFieldProps: ComponentPropsOptions = {
 	formKey: { default: null, type: String },
 	helpText: { default: null, type: String },
 	isDisabled: { default: false, type: Boolean },
+	isLoading: { default: false, type: Boolean },
 	isOptional: { default: false, type: Boolean },
 	label: { default: null, type: String },
 	validator: { default: null, type: Function },

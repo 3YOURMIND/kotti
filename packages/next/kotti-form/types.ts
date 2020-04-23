@@ -12,6 +12,7 @@ export namespace KottiForm {
 			newValue: CONTEXT_TYPE[T],
 		) => void
 		hideValidation: Ref<boolean>
+		isLoading: Ref<boolean>
 		validators: Ref<Record<string, KottiField.Validation.Function>>
 		values: Ref<CONTEXT_TYPE>
 	}

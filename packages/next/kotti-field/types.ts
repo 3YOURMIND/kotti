@@ -1,5 +1,7 @@
 import { Ref } from '@vue/composition-api'
 
+import { KottiForm } from '../kotti-form/types'
+
 import { FORM_KEY_NONE } from './constants'
 
 export namespace KottiField {
@@ -28,6 +30,7 @@ export namespace KottiField {
 		 */
 		isDisabled: boolean
 
+		isLoading: boolean
 		isOptional: boolean
 
 		label: string | null
@@ -52,11 +55,12 @@ export namespace KottiField {
 	export interface Returns<DATA_TYPE extends any> {
 		currentValue: Ref<DATA_TYPE>
 		isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
+		isLoading: KottiForm.Context['isLoading']
 		isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
 		label: Ref<KottiField.Props<DATA_TYPE>['label']>
 		helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
 		setValue: Ref<(newValue: DATA_TYPE) => void>
-		hideValidation: Ref<boolean>
+		hideValidation: KottiForm.Context['hideValidation']
 		validation: Ref<KottiField.Validation.Result>
 	}
 

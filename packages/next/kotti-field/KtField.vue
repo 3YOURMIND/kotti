@@ -1,6 +1,6 @@
 <template>
 	<label class="ktfield-wrapper">
-		<div class="ktfield-label">
+		<div v-if="!field.isLoading.value" class="ktfield-label">
 			<div v-if="labelText !== null" v-text="labelText" />
 			<div
 				v-if="field.helpText.value"
@@ -10,9 +10,16 @@
 				<div class="ktfield-label__help-text">{{ field.helpText.value }}</div>
 			</div>
 		</div>
-		<div :class="formFieldGroupClasses">
+		<div v-else class="ktfield-label">
+			<div
+				class="skeleton rectangle"
+				:style="{ height: '20px', maxWidth: '200px' }"
+			/>
+		</div>
+		<div v-if="!field.isLoading.value" :class="formFieldGroupClasses">
 			<slot name="default" />
 		</div>
+		<div v-else class="skeleton rectangle" :style="{ height: '40px' }" />
 		<div
 			v-if="showValidation"
 			:class="formFieldValidationTextClasses"
