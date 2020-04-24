@@ -23,28 +23,32 @@ export default defineComponent({
 		if (context === null)
 			throw new Error('KtFormControllerObject: Could Not Find KtFormContext')
 
-		const values = computed<object>(() => {
-			const result = context.values.value[props.formKey]
+		const values = computed(
+			(): KottiForm.ContextType => {
+				const result = context.values.value[props.formKey]
 
-			const errorText = (type: string) =>
-				`KtFormControllerObject: Unexpected Data Type ${type}. Expected Object`
+				const errorText = (type: string) =>
+					`KtFormControllerObject: Unexpected Data Type ${type}. Expected Object`
 
-			if (result === null) throw new Error(errorText('null'))
-			if (Array.isArray(result)) throw new Error(errorText('array'))
-			if (typeof result !== 'object') throw new Error(errorText(typeof result))
+				if (result === null) throw new Error(errorText('null'))
+				if (Array.isArray(result)) throw new Error(errorText('array'))
+				if (typeof result !== 'object')
+					throw new Error(errorText(typeof result))
 
-			return result
-		})
+				return result as KottiForm.ContextType
+			},
+		)
 
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			hideValidation: context.hideValidation,
 			isLoading: context.isLoading,
-			setValue: (key, newValue) => {
+			onAddField: context.onAddField,
+			onRemoveField: context.onRemoveField,
+			setValue: (key, newValue) =>
 				context.setValue(props.formKey, {
-					...context.values.value[props.formKey],
+					...values.value,
 					[key]: newValue,
-				})
-			},
+				}),
 			validators: context.validators,
 			values,
 		})

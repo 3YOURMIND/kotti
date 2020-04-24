@@ -55,7 +55,11 @@ module.exports = {
 			rules: {},
 		},
 		{
-			files: ['packages/**/tests.ts', 'packages/**/*.test.ts'],
+			files: [
+				'packages/**/tests.ts',
+				'packages/**/*.test.ts',
+				'packages/next/test-utils/**/*.ts',
+			],
 			env: {
 				jest: true,
 			},

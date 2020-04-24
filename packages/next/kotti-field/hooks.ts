@@ -5,6 +5,8 @@ import {
 	watch,
 	SetupContext,
 	reactive,
+	onUnmounted,
+	onMounted,
 } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -48,20 +50,22 @@ export const useField = <DATA_TYPE>(
 
 	// fetch value
 
-	const currentValue = computed(() => {
-		if (context === null) return cloneDeep(props.value)
+	const currentValue = computed(
+		(): DATA_TYPE => {
+			if (context === null) return cloneDeep(props.value)
 
-		switch (props.formKey) {
-			case FORM_KEY_NONE:
-				return cloneDeep(props.value)
+			switch (props.formKey) {
+				case FORM_KEY_NONE:
+					return cloneDeep(props.value)
 
-			case null:
-				throw new KtFieldErrors.ImplicitFormKeyNone(props)
+				case null:
+					throw new KtFieldErrors.ImplicitFormKeyNone(props)
 
-			default:
-				return context.values.value[props.formKey]
-		}
-	})
+				default:
+					return context.values.value[props.formKey] as DATA_TYPE
+			}
+		},
+	)
 
 	// validation
 
@@ -125,7 +129,7 @@ export const useField = <DATA_TYPE>(
 
 	// export
 
-	return reactive<KottiField.ReturnsWithRefs<DATA_TYPE>>({
+	const field = reactive<KottiField.ReturnsWithRefs<DATA_TYPE>>({
 		currentValue,
 		hideValidation,
 		isLoading,
@@ -150,4 +154,14 @@ export const useField = <DATA_TYPE>(
 		placeholder: computed(() => props.placeholder),
 		validation,
 	})
+
+	onMounted(() => {
+		if (context) context.onAddField(field)
+	})
+
+	onUnmounted(() => {
+		if (context) context.onRemoveField(field)
+	})
+
+	return field
 }

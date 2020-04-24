@@ -78,16 +78,31 @@ export namespace KottiField {
 	>
 
 	export namespace Validation {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		export type Function = (value: any) => KottiField.Validation.Result
+		export type Empty = {
+			type: null
+		}
+
+		export type Error = {
+			type: 'error'
+			text: string
+		}
+
+		export type Success = {
+			type: 'success'
+			text: string
+		}
+
+		export type Warning = {
+			type: 'warning'
+			text: string
+		}
 
 		export type Result =
-			| {
-					type: 'error' | 'success' | 'warning'
-					text: string
-			  }
-			| {
-					type: null
-			  }
+			| KottiField.Validation.Empty
+			| KottiField.Validation.Error
+			| KottiField.Validation.Success
+			| KottiField.Validation.Warning
+
+		export type Function = (value: unknown) => KottiField.Validation.Result
 	}
 }

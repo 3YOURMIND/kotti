@@ -1,12 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
 
 import { KottiField } from './types'
-import { KottiForm } from '../kotti-form/types'
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { defineComponent } from '@vue/composition-api'
 import { useField } from './hooks'
 import { ktFieldProps, FORM_KEY_NONE } from './constants'
-import { localVue, forceVueToEvaluateComputedProperty } from '../test-utils'
+import {
+	localVue,
+	forceVueToEvaluateComputedProperty,
+	getMockContext,
+} from '../test-utils'
 import { KtFieldErrors } from './errors'
 
 const TestComponent = defineComponent({
@@ -110,23 +113,20 @@ describe('useField', () => {
 		})
 
 		it('context should emit when when calling setValue inside a context', () => {
-			const setValue = jest.fn()
+			const context = getMockContext({ values: { testKey: 'something' } })
 
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
 				propsData: { formKey: 'testKey' },
 				provide: {
-					[KT_FORM_CONTEXT]: {
-						values: { value: { testKey: 'something' } },
-						setValue,
-					} as Partial<KottiForm.Context>,
+					[KT_FORM_CONTEXT]: context,
 				},
 			})
 
 			wrapper.vm.field.setValue('something else')
 			wrapper.vm.field.setValue(null)
 
-			expect(setValue.mock.calls).toEqual([
+			expect(context.setValue.mock.calls).toEqual([
 				['testKey', 'something else'],
 				['testKey', null],
 			])
@@ -166,7 +166,7 @@ describe('useField', () => {
 			shallowMount(TestComponent, {
 				localVue,
 				provide: {
-					[KT_FORM_CONTEXT]: {} as Partial<KottiForm.Context>,
+					[KT_FORM_CONTEXT]: getMockContext(),
 				},
 				propsData: { formKey: FORM_KEY_NONE },
 			}),
@@ -177,7 +177,9 @@ describe('useField', () => {
 		it('works with only props.validator', async () => {
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
-				propsData: { validator: () => ({ type: 'success', text: 'Testing' }) },
+				propsData: {
+					validator: () => ({ type: 'success', text: 'Testing' }),
+				},
 			})
 
 			expect(wrapper.vm.field.validation).toEqual({
@@ -202,14 +204,12 @@ describe('useField', () => {
 				localVue,
 				propsData: { formKey: FORM_KEY_NONE, validatorKey: 'testKey1' },
 				provide: {
-					[KT_FORM_CONTEXT]: {
+					[KT_FORM_CONTEXT]: getMockContext({
 						validators: {
-							value: {
-								testKey1: () => ({ type: 'warning', text: 'This is testKey1' }),
-								testKey2: () => ({ type: 'error', text: 'This is testKey2' }),
-							},
+							testKey1: () => ({ type: 'warning', text: 'This is testKey1' }),
+							testKey2: () => ({ type: 'error', text: 'This is testKey2' }),
 						},
-					} as Partial<KottiForm.Context>,
+					}),
 				},
 			})
 
@@ -257,21 +257,19 @@ describe('useField', () => {
 				localVue,
 				propsData: { formKey: 'testKey1' },
 				provide: {
-					[KT_FORM_CONTEXT]: {
+					[KT_FORM_CONTEXT]: getMockContext({
 						validators: {
-							value: {
-								testKey1: () => ({
-									type: 'warning',
-									text: 'This is testKey1',
-								}),
-								testKey2: () => ({
-									type: 'warning',
-									text: 'This is testKey2',
-								}),
-							},
+							testKey1: () => ({
+								type: 'warning',
+								text: 'This is testKey1',
+							}),
+							testKey2: () => ({
+								type: 'warning',
+								text: 'This is testKey2',
+							}),
 						},
 						values: { value: { testKey: 'something' } },
-					} as Partial<KottiForm.Context>,
+					}),
 				},
 			})
 
@@ -302,17 +300,15 @@ describe('useField', () => {
 						validatorKey: 'testKey',
 					},
 					provide: {
-						[KT_FORM_CONTEXT]: {
+						[KT_FORM_CONTEXT]: getMockContext({
 							validators: {
-								value: {
-									testKey: () => ({
-										type: 'warning',
-										text: 'This is a warning',
-									}),
-								},
+								testKey: () => ({
+									type: 'warning',
+									text: 'This is a warning',
+								}),
 							},
-							values: { value: { testKey: 'something' } },
-						} as Partial<KottiForm.Context>,
+							values: { testKey: 'something' },
+						}),
 					},
 				})
 
@@ -324,17 +320,12 @@ describe('useField', () => {
 				localVue,
 				propsData: { formKey: 'testKey', validatorKey: 'testKey' },
 				provide: {
-					[KT_FORM_CONTEXT]: {
+					[KT_FORM_CONTEXT]: getMockContext({
 						validators: {
-							value: {
-								testKey: () => ({
-									type: 'warning',
-									text: 'This is a warning',
-								}),
-							},
+							testKey: () => ({ type: 'warning', text: 'This is a warning' }),
 						},
-						values: { value: { testKey: 'something' } },
-					} as Partial<KottiForm.Context>,
+						values: { testKey: 'something' },
+					}),
 				},
 			})
 
@@ -361,10 +352,10 @@ describe('useField', () => {
 					localVue,
 					propsData: { formKey: 'testKey', validatorKey: 'wrongKey' },
 					provide: {
-						[KT_FORM_CONTEXT]: {
-							validators: { value: { testKey } },
-							values: { value: { testKey: 'something' } },
-						} as Partial<KottiForm.Context>,
+						[KT_FORM_CONTEXT]: getMockContext({
+							validators: { testKey },
+							values: { testKey: 'something' },
+						}),
 					},
 				})
 
@@ -376,10 +367,10 @@ describe('useField', () => {
 				localVue,
 				propsData: { formKey: 'testKey', validatorKey: 'testKey' },
 				provide: {
-					[KT_FORM_CONTEXT]: {
-						validators: { value: { testKey } },
-						values: { value: { testKey: 'something' } },
-					} as Partial<KottiForm.Context>,
+					[KT_FORM_CONTEXT]: getMockContext({
+						validators: { testKey },
+						values: { testKey: 'something' },
+					}),
 				},
 			})
 
@@ -403,14 +394,10 @@ describe('useField', () => {
 				localVue,
 				propsData: { formKey: 'wrongKey' },
 				provide: {
-					[KT_FORM_CONTEXT]: {
-						validators: {
-							value: {
-								testKey,
-							},
-						},
-						values: { value: { wrongKey: 'something' } },
-					} as Partial<KottiForm.Context>,
+					[KT_FORM_CONTEXT]: getMockContext({
+						validators: { testKey },
+						values: { wrongKey: 'something' },
+					}),
 				},
 			})
 
