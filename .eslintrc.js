@@ -60,6 +60,18 @@ module.exports = {
 				jest: true,
 			},
 			plugins: ['plugin:jest/recommended'],
+			rules: {
+				'import/order': [
+					'warn',
+					{
+						alphabetize: {
+							order: 'asc',
+							caseInsensitive: true,
+						},
+						'newlines-between': 'always',
+					},
+				],
+			},
 		},
 	],
 }

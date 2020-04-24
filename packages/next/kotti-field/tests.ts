@@ -6,11 +6,7 @@ import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { defineComponent } from '@vue/composition-api'
 import { useField } from './hooks'
 import { ktFieldProps, FORM_KEY_NONE } from './constants'
-import {
-	forceConvertToRef,
-	localVue,
-	forceVueToEvaluateComputedProperty,
-} from '../test-utils'
+import { localVue, forceVueToEvaluateComputedProperty } from '../test-utils'
 import { KtFieldErrors } from './errors'
 
 const TestComponent = defineComponent({
@@ -33,16 +29,14 @@ describe('useField', () => {
 			propsData: { isDisabled: true },
 		})
 
-		expect(() =>
-			forceConvertToRef(wrapper.vm.field.setValue).value(null),
-		).toThrowError(KtFieldErrors.DisabledSetValueCalled)
+		expect(() => wrapper.vm.field.setValue(null)).toThrowError(
+			KtFieldErrors.DisabledSetValueCalled,
+		)
 
 		wrapper.setProps({ isDisabled: false })
 		await wrapper.vm.$nextTick()
 
-		expect(() =>
-			forceConvertToRef(wrapper.vm.field.setValue).value(null),
-		).not.toThrowError()
+		expect(() => wrapper.vm.field.setValue(null)).not.toThrowError()
 	})
 
 	it('props.value gets deepCloned', async () => {
@@ -53,61 +47,53 @@ describe('useField', () => {
 			propsData: { value: VALUE_REFERENCE },
 		})
 
-		expect(forceConvertToRef(wrapper.vm.field.currentValue).value).toEqual(
-			VALUE_REFERENCE,
-		)
-		expect(forceConvertToRef(wrapper.vm.field.currentValue).value).not.toBe(
-			VALUE_REFERENCE,
-		)
+		expect(wrapper.vm.field.currentValue).toEqual(VALUE_REFERENCE)
+		expect(wrapper.vm.field.currentValue).not.toBe(VALUE_REFERENCE)
 	})
 
 	describe('props reactivity', () => {
 		it('helpText is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			expect(forceConvertToRef(wrapper.vm.field.helpText).value).toBe(null)
+			expect(wrapper.vm.field.helpText).toBe(null)
 
 			wrapper.setProps({ helpText: 'something something' })
 			await wrapper.vm.$nextTick()
 
-			expect(forceConvertToRef(wrapper.vm.field.helpText).value).toBe(
-				'something something',
-			)
+			expect(wrapper.vm.field.helpText).toBe('something something')
 		})
 
 		it('isDisabled is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			expect(forceConvertToRef(wrapper.vm.field.isDisabled).value).toBe(false)
+			expect(wrapper.vm.field.isDisabled).toBe(false)
 
 			wrapper.setProps({ isDisabled: true })
 			await wrapper.vm.$nextTick()
 
-			expect(forceConvertToRef(wrapper.vm.field.isDisabled).value).toBe(true)
+			expect(wrapper.vm.field.isDisabled).toBe(true)
 		})
 
 		it('isOptional is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			expect(forceConvertToRef(wrapper.vm.field.isOptional).value).toBe(false)
+			expect(wrapper.vm.field.isOptional).toBe(false)
 
 			wrapper.setProps({ isOptional: true })
 			await wrapper.vm.$nextTick()
 
-			expect(forceConvertToRef(wrapper.vm.field.isOptional).value).toBe(true)
+			expect(wrapper.vm.field.isOptional).toBe(true)
 		})
 
 		it('label is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			expect(forceConvertToRef(wrapper.vm.field.label).value).toBe(null)
+			expect(wrapper.vm.field.label).toBe(null)
 
 			wrapper.setProps({ label: 'something something' })
 			await wrapper.vm.$nextTick()
 
-			expect(forceConvertToRef(wrapper.vm.field.label).value).toBe(
-				'something something',
-			)
+			expect(wrapper.vm.field.label).toBe('something something')
 		})
 	})
 
@@ -115,8 +101,8 @@ describe('useField', () => {
 		it('should emit change when calling setValue on a field outside of a context', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			forceConvertToRef(wrapper.vm.field.setValue).value('something else')
-			forceConvertToRef(wrapper.vm.field.setValue).value(null)
+			wrapper.vm.field.setValue('something else')
+			wrapper.vm.field.setValue(null)
 
 			await wrapper.vm.$nextTick()
 
@@ -137,17 +123,15 @@ describe('useField', () => {
 				},
 			})
 
-			forceConvertToRef(wrapper.vm.field.setValue).value('something else')
-			forceConvertToRef(wrapper.vm.field.setValue).value(null)
+			wrapper.vm.field.setValue('something else')
+			wrapper.vm.field.setValue(null)
 
 			expect(setValue.mock.calls).toEqual([
 				['testKey', 'something else'],
 				['testKey', null],
 			])
 
-			expect(forceConvertToRef(wrapper.vm.field.currentValue).value).toBe(
-				'something',
-			)
+			expect(wrapper.vm.field.currentValue).toBe('something')
 		})
 	})
 
@@ -196,7 +180,7 @@ describe('useField', () => {
 				propsData: { validator: () => ({ type: 'success', text: 'Testing' }) },
 			})
 
-			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				type: 'success',
 				text: 'Testing',
 			})
@@ -207,7 +191,7 @@ describe('useField', () => {
 
 			await wrapper.vm.$nextTick()
 
-			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				type: 'warning',
 				text: 'Testing',
 			})
@@ -229,7 +213,7 @@ describe('useField', () => {
 				},
 			})
 
-			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				type: 'warning',
 				text: 'This is testKey1',
 			})
@@ -238,7 +222,7 @@ describe('useField', () => {
 
 			await wrapper.vm.$nextTick()
 
-			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				type: 'error',
 				text: 'This is testKey2',
 			})
@@ -291,7 +275,7 @@ describe('useField', () => {
 				},
 			})
 
-			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				type: 'warning',
 				text: 'This is testKey1',
 			})
@@ -300,7 +284,7 @@ describe('useField', () => {
 
 			await wrapper.vm.$nextTick()
 
-			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				type: 'warning',
 				text: 'This is testKey2',
 			})
@@ -354,7 +338,7 @@ describe('useField', () => {
 				},
 			})
 
-			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				type: 'warning',
 				text: 'This is a warning',
 			})
@@ -431,9 +415,7 @@ describe('useField', () => {
 			})
 
 			expect(testKey).not.toBeCalled()
-			expect(forceConvertToRef(wrapper.vm.field.validation).value).toEqual({
-				type: null,
-			})
+			expect(wrapper.vm.field.validation).toEqual({ type: null })
 		})
 	})
 })

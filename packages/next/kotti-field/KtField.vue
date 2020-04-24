@@ -1,13 +1,10 @@
 <template>
 	<label class="ktfield-wrapper">
-		<div v-if="!field.isLoading.value" class="ktfield-label">
+		<div v-if="!field.isLoading" class="ktfield-label">
 			<div v-if="labelText !== null" v-text="labelText" />
-			<div
-				v-if="field.helpText.value"
-				class="ktfield-label__help-text-container"
-			>
+			<div v-if="field.helpText" class="ktfield-label__help-text-container">
 				<div class="ktfield-label__help-text-question">?</div>
-				<div class="ktfield-label__help-text">{{ field.helpText.value }}</div>
+				<div class="ktfield-label__help-text">{{ field.helpText }}</div>
 			</div>
 		</div>
 		<div v-else class="ktfield-label">
@@ -16,12 +13,12 @@
 				:style="{ height: '20px', maxWidth: '200px' }"
 			/>
 		</div>
-		<div v-if="!field.isLoading.value" :class="formFieldGroupClasses">
+		<div v-if="!field.isLoading" :class="formFieldGroupClasses">
 			<slot name="default" />
 			<button
-				v-if="!field.hideClear.value"
+				v-if="!field.hideClear"
 				type="button"
-				@click="field.setValue.value(getEmptyValue())"
+				@click="field.setValue(getEmptyValue())"
 			>
 				X
 			</button>
@@ -30,7 +27,7 @@
 		<div
 			v-if="showValidation"
 			:class="formFieldValidationTextClasses"
-			v-text="field.validation.value.text"
+			v-text="field.validation.text"
 		/>
 	</label>
 </template>
@@ -53,32 +50,30 @@ export default defineComponent({
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	setup(props: { field: KottiField.Returns<any> }) {
 		const labelText = computed(() =>
-			props.field.label.value === null
+			props.field.label === null
 				? null
 				: [
-						props.field.label.value,
-						props.field.isOptional.value ? '(Optional)' : '(Required)',
+						props.field.label,
+						props.field.isOptional ? '(Optional)' : '(Required)',
 				  ].join(' '),
 		)
 
 		const showValidation = computed(
-			() =>
-				props.field.validation.value.type !== null &&
-				!props.field.hideValidation.value,
+			() => props.field.validation.type !== null && !props.field.hideValidation,
 		)
 
 		const formFieldGroupClasses = computed(() => {
 			const classes = ['ktfield-form-group']
 
 			if (showValidation.value)
-				classes.push(`ktfield-form-group__${props.field.validation.value.type}`)
+				classes.push(`ktfield-form-group__${props.field.validation.type}`)
 
 			return classes
 		})
 
 		const formFieldValidationTextClasses = computed(() =>
 			showValidation.value
-				? [`ktfield-form-group__${props.field.validation.value.type}-text`]
+				? [`ktfield-form-group__${props.field.validation.type}-text`]
 				: [],
 		)
 

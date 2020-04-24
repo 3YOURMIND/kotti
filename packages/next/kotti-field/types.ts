@@ -1,4 +1,5 @@
 import { Ref } from '@vue/composition-api'
+import { UnwrapRef } from '@vue/composition-api/dist/reactivity'
 
 import { KottiForm } from '../kotti-form/types'
 
@@ -58,7 +59,7 @@ export namespace KottiField {
 		value: DATA_TYPE
 	}
 
-	export interface Returns<DATA_TYPE extends unknown> {
+	export interface ReturnsWithRefs<DATA_TYPE extends unknown> {
 		currentValue: Ref<DATA_TYPE>
 		helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
 		hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
@@ -71,6 +72,10 @@ export namespace KottiField {
 		setValue: Ref<(newValue: DATA_TYPE) => void>
 		validation: Ref<KottiField.Validation.Result>
 	}
+
+	export type Returns<DATA_TYPE = unknown> = UnwrapRef<
+		KottiField.ReturnsWithRefs<DATA_TYPE>
+	>
 
 	export namespace Validation {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

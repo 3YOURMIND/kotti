@@ -4,6 +4,7 @@ import {
 	ref,
 	watch,
 	SetupContext,
+	reactive,
 } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -124,7 +125,7 @@ export const useField = <DATA_TYPE>(
 
 	// export
 
-	return {
+	return reactive<KottiField.ReturnsWithRefs<DATA_TYPE>>({
 		currentValue,
 		hideValidation,
 		isLoading,
@@ -148,5 +149,5 @@ export const useField = <DATA_TYPE>(
 		}),
 		placeholder: computed(() => props.placeholder),
 		validation,
-	}
+	})
 }

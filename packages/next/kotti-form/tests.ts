@@ -37,7 +37,7 @@ describe('KtForm', () => {
 
 		const field = getField(wrapper)
 
-		expect(field.currentValue.value).toBe('testing')
+		expect(field.currentValue).toBe('testing')
 	})
 
 	it('emits on setValue', async () => {
@@ -50,15 +50,15 @@ describe('KtForm', () => {
 
 		const field = getField(wrapper)
 
-		expect(field.currentValue.value).toBe('testing')
+		expect(field.currentValue).toBe('testing')
 
-		field.setValue.value('new value')
+		field.setValue('new value')
 
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted().input).toEqual([[{ testKey: 'new value' }]])
 
-		expect(field.currentValue.value).toBe('testing')
+		expect(field.currentValue).toBe('testing')
 	})
 
 	describe('ensures that props.value is cloned, to ensure consuming apps don’t rely on deep mutation', () => {
@@ -74,8 +74,8 @@ describe('KtForm', () => {
 
 			const field = getField(wrapper)
 
-			expect(field.currentValue.value).toEqual(DEEP_VALUE_REFERENCE)
-			expect(field.currentValue.value).not.toBe(DEEP_VALUE_REFERENCE)
+			expect(field.currentValue).toEqual(DEEP_VALUE_REFERENCE)
+			expect(field.currentValue).not.toBe(DEEP_VALUE_REFERENCE)
 		})
 
 		it('setValue updates reference, and doesn’t perform deep mutations', () => {
@@ -90,7 +90,7 @@ describe('KtForm', () => {
 
 			const field = getField(wrapper)
 
-			field.setValue.value('wowspin')
+			field.setValue('wowspin')
 
 			expect(wrapper.emitted().input[0][0]).not.toBe(VALUE_REFERENCE)
 			expect(wrapper.emitted().input[0][0]).toEqual({
@@ -112,13 +112,13 @@ describe('KtForm', () => {
 
 			const field = getField(wrapper)
 
-			expect(field.hideValidation.value).toEqual(false)
+			expect(field.hideValidation).toEqual(false)
 
 			wrapper.setProps({ hideValidation: true })
 
 			await wrapper.vm.$nextTick()
 
-			expect(field.hideValidation.value).toEqual(true)
+			expect(field.hideValidation).toEqual(true)
 		})
 
 		it('validators', async () => {
@@ -132,7 +132,7 @@ describe('KtForm', () => {
 
 			const field = getField(wrapper)
 
-			expect(field.validation.value).toEqual({ type: null })
+			expect(field.validation).toEqual({ type: null })
 
 			wrapper.setProps({
 				validators: {
@@ -142,7 +142,7 @@ describe('KtForm', () => {
 
 			await wrapper.vm.$nextTick()
 
-			expect(field.validation.value).toEqual({
+			expect(field.validation).toEqual({
 				type: 'success',
 				text: 'Testing',
 			})
@@ -158,13 +158,13 @@ describe('KtForm', () => {
 
 			const field = getField(wrapper)
 
-			expect(field.currentValue.value).toEqual('testing')
+			expect(field.currentValue).toEqual('testing')
 
 			wrapper.setProps({ value: { testKey: null } })
 
 			await wrapper.vm.$nextTick()
 
-			expect(field.currentValue.value).toEqual(null)
+			expect(field.currentValue).toEqual(null)
 		})
 	})
 })

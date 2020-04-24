@@ -1,14 +1,12 @@
 import { mount, Wrapper } from '@vue/test-utils'
+
 import KtFormControllerList from './KtFormControllerList.vue'
 import KtFormControllerObject from './KtFormControllerObject.vue'
 import { defineComponent } from '@vue/composition-api'
 import { KottiField } from '../../kotti-field/types'
 import { useField } from '../../kotti-field/hooks'
 import { ktFieldProps } from '../../kotti-field/constants'
-
 import KtField from '../../kotti-field/KtField.vue'
-import { KottiForm } from '../types'
-import { KT_FORM_CONTEXT } from '../constants'
 import { localVue } from '../../test-utils/index'
 import KtForm from '../KtForm.vue'
 
@@ -80,14 +78,14 @@ describe('KtFormControllerList', () => {
 		})
 
 		const row1Field = getField(wrapper, 0)
-		expect(row1Field.currentValue.value).toBe('testName1')
-		expect(row1Field.hideValidation.value).toBe(true)
-		expect(row1Field.validation.value).toEqual({ type: 'error', text: 'test1' })
+		expect(row1Field.currentValue).toBe('testName1')
+		expect(row1Field.hideValidation).toBe(true)
+		expect(row1Field.validation).toEqual({ type: 'error', text: 'test1' })
 
 		const row2Field = getField(wrapper, 1)
-		expect(row2Field.currentValue.value).toBe('testName2')
-		expect(row2Field.hideValidation.value).toBe(true)
-		expect(row2Field.validation.value).toEqual({ type: null })
+		expect(row2Field.currentValue).toBe('testName2')
+		expect(row2Field.hideValidation).toBe(true)
+		expect(row2Field.validation).toEqual({ type: null })
 	})
 
 	it('implements setValue properly', async () => {
@@ -110,7 +108,7 @@ describe('KtFormControllerList', () => {
 		})
 
 		const row1Field = getField(wrapper, 0)
-		row1Field.setValue.value('testName1b')
+		row1Field.setValue('testName1b')
 
 		await wrapper.vm.$nextTick()
 
@@ -124,7 +122,7 @@ describe('KtFormControllerList', () => {
 		])
 
 		const row2Field = getField(wrapper, 1)
-		row2Field.setValue.value('testName2b')
+		row2Field.setValue('testName2b')
 
 		await wrapper.vm.$nextTick()
 
@@ -161,13 +159,13 @@ describe('KtFormControllerList', () => {
 
 			const row1Field = getField(wrapper, 0)
 
-			expect(row1Field.hideValidation.value).toBe(false)
+			expect(row1Field.hideValidation).toBe(false)
 
 			wrapper.setProps({ formProps: { ...FORM_PROPS, hideValidation: true } })
 
 			await wrapper.vm.$nextTick()
 
-			expect(row1Field.hideValidation.value).toBe(true)
+			expect(row1Field.hideValidation).toBe(true)
 		})
 
 		xit('values', () => {
@@ -192,9 +190,9 @@ describe('KtFormControllerObject', () => {
 
 		const field = getField(wrapper, 0)
 
-		expect(field.currentValue.value).toBe('something')
-		expect(field.hideValidation.value).toBe(true)
-		expect(field.validation.value).toEqual({ type: null })
+		expect(field.currentValue).toBe('something')
+		expect(field.hideValidation).toBe(true)
+		expect(field.validation).toEqual({ type: null })
 	})
 
 	it('implements setValue properly', async () => {
@@ -213,7 +211,7 @@ describe('KtFormControllerObject', () => {
 		})
 		const field = getField(wrapper, 0)
 
-		field.setValue.value('setSomething')
+		field.setValue('setSomething')
 
 		await wrapper.vm.$nextTick()
 
@@ -241,13 +239,13 @@ describe('KtFormControllerObject', () => {
 
 			const field = getField(wrapper, 0)
 
-			expect(field.hideValidation.value).toBe(false)
+			expect(field.hideValidation).toBe(false)
 
 			wrapper.setProps({ formProps: { ...FORM_PROPS, hideValidation: true } })
 
 			await wrapper.vm.$nextTick()
 
-			expect(field.hideValidation.value).toBe(true)
+			expect(field.hideValidation).toBe(true)
 		})
 
 		xit('values', () => {

@@ -26,14 +26,14 @@ export default defineComponent({
 			field,
 			inputAttributes: computed(() => ({
 				type: 'text',
-				value: field.currentValue.value,
-				placeholder: field.placeholder.value ?? undefined,
+				value: field.currentValue,
+				placeholder: field.placeholder ?? undefined,
 			})),
 			// FIXME:
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			onInput: (event: any) => {
 				const newValue = event.target.value
-				field.setValue.value(newValue === '' ? null : newValue)
+				field.setValue(newValue === '' ? null : newValue)
 			},
 		}
 	},
