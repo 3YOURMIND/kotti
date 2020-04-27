@@ -131,13 +131,17 @@ export const useField = <DATA_TYPE>(
 
 	const field = reactive<KottiField.ReturnsWithRefs<DATA_TYPE>>({
 		currentValue,
-		hideValidation,
-		isLoading,
 		helpText: computed(() => props.helpText),
 		hideClear: computed(() => props.hideClear),
+		hideValidation,
 		isDisabled: computed(() => props.isDisabled),
+		isLoading,
 		isOptional: computed(() => props.isOptional),
 		label: computed(() => props.label),
+		leftIcon: computed(() => props.leftIcon),
+		placeholder: computed(() => props.placeholder),
+		prefix: computed(() => props.prefix),
+		rightIcon: computed(() => props.rightIcon),
 		setValue: ref((newValue: DATA_TYPE) => {
 			if (props.isDisabled)
 				throw new KtFieldErrors.DisabledSetValueCalled(props)
@@ -151,7 +155,8 @@ export const useField = <DATA_TYPE>(
 
 			return context.setValue(props.formKey, newValue)
 		}),
-		placeholder: computed(() => props.placeholder),
+		suffix: computed(() => props.suffix),
+		tabIndex: computed(() => props.tabIndex),
 		validation,
 	})
 

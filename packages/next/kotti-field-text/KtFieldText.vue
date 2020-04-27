@@ -1,6 +1,6 @@
 <template>
 	<KtField :getEmptyValue="() => null" v-bind="{ field }">
-		<input v-bind="inputAttributes" @input="onInput" />
+		<input v-bind="inputAttributes" style="width: 100%;" @input="onInput" />
 	</KtField>
 </template>
 
@@ -25,6 +25,7 @@ export default defineComponent({
 		return {
 			field,
 			inputAttributes: computed(() => ({
+				tabIndex: field.tabIndex,
 				type: 'text',
 				value: field.currentValue,
 				placeholder: field.placeholder ?? undefined,
@@ -39,17 +40,3 @@ export default defineComponent({
 	},
 })
 </script>
-
-<style lang="scss" scoped>
-.ktfield-wrapper {
-	display: flex;
-
-	> * + * {
-		margin-top: 8px;
-	}
-}
-
-.ktfield-form-group {
-	border: 1px solid red;
-}
-</style>

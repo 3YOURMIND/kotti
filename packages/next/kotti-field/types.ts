@@ -2,6 +2,7 @@ import { Ref } from '@vue/composition-api'
 import { UnwrapRef } from '@vue/composition-api/dist/reactivity'
 
 import { KottiForm } from '../kotti-form/types'
+import { Yoco } from '../types'
 
 import { FORM_KEY_NONE } from './constants'
 
@@ -31,18 +32,35 @@ export namespace KottiField {
 		hideClear: boolean
 
 		/**
+		 * Shows a Yoco icon on the left side of the field
+		 */
+		leftIcon: Yoco.Icon | null
+
+		/**
+		 * Shows a Yoco icon on the right side of the field
+		 */
+		rightIcon: Yoco.Icon | null
+
+		/**
 		 * Is the field disabled?
 		 * This will e.g. prevent changing the value
 		 */
 		isDisabled: boolean
-
 		isLoading: boolean
 		isOptional: boolean
-
 		label: string | null
-
 		placeholder: string | null
 
+		/**
+		 * Show some string before the field
+		 */
+		prefix: string | null
+
+		/**
+		 * Show some string after the field
+		 */
+		suffix: string | null
+		tabIndex: number
 		validator: KottiField.Validation.Function | null
 
 		/**
@@ -68,8 +86,13 @@ export namespace KottiField {
 		isLoading: KottiForm.Context['isLoading']
 		isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
 		label: Ref<KottiField.Props<DATA_TYPE>['label']>
+		leftIcon: Ref<KottiField.Props<DATA_TYPE>['leftIcon']>
 		placeholder: Ref<KottiField.Props<DATA_TYPE>['placeholder']>
+		prefix: Ref<KottiField.Props<DATA_TYPE>['prefix']>
+		rightIcon: Ref<KottiField.Props<DATA_TYPE>['rightIcon']>
 		setValue: Ref<(newValue: DATA_TYPE) => void>
+		suffix: Ref<KottiField.Props<DATA_TYPE>['suffix']>
+		tabIndex: Ref<KottiField.Props<DATA_TYPE>['tabIndex']>
 		validation: Ref<KottiField.Validation.Result>
 	}
 

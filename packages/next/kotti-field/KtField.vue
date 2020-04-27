@@ -14,7 +14,17 @@
 			/>
 		</div>
 		<div v-if="!field.isLoading" :class="formFieldGroupClasses">
-			<slot name="default" />
+			<div
+				v-if="field.prefix"
+				class="ktfield-form-group__affix"
+				v-text="field.prefix"
+			/>
+			<div v-if="field.leftIcon" class="ktfield-form-group__icon">
+				<i class="yoco" v-text="field.leftIcon" />
+			</div>
+			<div class="ktfield-form-group__slot">
+				<slot name="default" />
+			</div>
 			<button
 				v-if="!field.hideClear"
 				type="button"
@@ -22,6 +32,14 @@
 			>
 				X
 			</button>
+			<div v-if="field.rightIcon" class="ktfield-form-group__icon">
+				<i class="yoco" v-text="field.rightIcon" />
+			</div>
+			<div
+				v-if="field.suffix"
+				class="ktfield-form-group__affix"
+				v-text="field.suffix"
+			/>
 		</div>
 		<div v-else class="skeleton rectangle" :style="{ height: '40px' }" />
 		<div
@@ -47,8 +65,10 @@ export default defineComponent({
 		 */
 		getEmptyValue: { required: true, type: Function },
 	},
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	setup(props: { field: KottiField.Returns<any> }) {
+	setup<DATA_TYPE>(props: {
+		field: KottiField.Returns<DATA_TYPE>
+		getEmptyValue: () => DATA_TYPE
+	}) {
 		const labelText = computed(() =>
 			props.field.label === null
 				? null
@@ -142,8 +162,37 @@ export default defineComponent({
 	}
 
 	.ktfield-form-group {
+		display: flex;
+		align-items: center;
+
 		padding: 8px;
 		border-radius: 4px;
+
+		&__affix {
+			display: flex;
+			align-items: center;
+			align-self: stretch;
+			justify-content: center;
+
+			padding: 0 4px;
+			background-color: #999;
+			border: 1px solid #444;
+		}
+
+		&__icon {
+			display: flex;
+			align-items: center;
+			align-self: stretch;
+			justify-content: center;
+
+			padding: 0 4px;
+			background-color: #ccc;
+			border: 1px solid #999;
+		}
+
+		&__slot {
+			flex: 1;
+		}
 	}
 
 	> * + * {

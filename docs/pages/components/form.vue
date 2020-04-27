@@ -26,11 +26,11 @@
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
 		<br />
 		<h2>Validation Example</h2>
-		<KtFieldText formKey="lastName" hideClear validatorKey="alwaysNeutral" />
-		<KtFieldText formKey="lastName" hideClear label="Field That Always Errors" validatorKey="alwaysError" />
-		<KtFieldText formKey="lastName" hideClear label="Field That Always Succeeds" validatorKey="alwaysSuccess" />
-		<KtFieldText formKey="lastName" hideClear label="Field That Always Warns" validatorKey="alwaysWarning" />
-		<KtFieldText formKey="username" hideClear helpText="help for username" label="Username" isOptional />
+		<KtFieldText formKey="lastName" validatorKey="alwaysNeutral" prefix="Prefix" hideClear :tabIndex="5" />
+		<KtFieldText formKey="lastName" validatorKey="alwaysError" suffix="Suffix" hideClear label="Field That Always Errors" :tabIndex="4" />
+		<KtFieldText formKey="lastName" validatorKey="alwaysSuccess" leftIcon="cloud" hideClear label="Field That Always Succeeds" :tabIndex="3" />
+		<KtFieldText formKey="lastName" validatorKey="alwaysWarning" rightIcon="location" hideClear label="Field That Always Warns" :tabIndex="2" />
+		<KtFieldText formKey="username" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="calendar" hideClear helpText="help for username" label="Username" isOptional :tabIndex="1" />
 		<br />
 		<h2>KtFormControllerList</h2>
 		<ul>
