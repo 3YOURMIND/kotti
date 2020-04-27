@@ -1,38 +1,47 @@
 <template>
-	<label class="ktfield-wrapper">
-		<div v-if="!field.isLoading" class="ktfield-label">
+	<label :class="`ktfield-wrapper ${field.classes.wrapper}`">
+		<div
+			v-if="!field.isLoading"
+			:class="`ktfield-label ${field.classes.label}`"
+		>
 			<div v-if="labelText !== null" v-text="labelText" />
 			<div v-if="field.helpText" class="ktfield-label__help-text-container">
 				<div class="ktfield-label__help-text-question">?</div>
 				<div class="ktfield-label__help-text">{{ field.helpText }}</div>
 			</div>
 		</div>
-		<div v-else class="ktfield-label">
-			<div
-				class="skeleton rectangle"
-				:style="{ height: '20px', maxWidth: '200px' }"
-			/>
-		</div>
+		<div
+			v-else
+			class="skeleton rectangle"
+			:style="{ height: '20px', maxWidth: '200px' }"
+		/>
 		<div v-if="!field.isLoading" :class="formFieldGroupClasses">
 			<div
 				v-if="field.prefix"
 				class="ktfield-form-group__affix"
 				v-text="field.prefix"
 			/>
-			<div v-if="field.leftIcon" class="ktfield-form-group__icon">
+			<div
+				v-if="field.leftIcon"
+				:class="`ktfield-form-group__icon ${field.classes.leftIcon}`"
+			>
 				<i class="yoco" v-text="field.leftIcon" />
 			</div>
-			<div class="ktfield-form-group__slot">
+			<div :class="`ktfield-form-group__slot ${field.classes.field}`">
 				<slot name="default" />
 			</div>
-			<button
+			<i
 				v-if="!field.hideClear"
-				type="button"
+				class="yoco"
+				style="margin-left: 4px; font-size: 1.25em; cursor: pointer;"
+				role="button"
 				@click="field.setValue(getEmptyValue())"
+				v-text="'circle_cross'"
+			/>
+			<div
+				v-if="field.rightIcon"
+				:class="`ktfield-form-group__icon ${field.classes.rightIcon}`"
 			>
-				X
-			</button>
-			<div v-if="field.rightIcon" class="ktfield-form-group__icon">
 				<i class="yoco" v-text="field.rightIcon" />
 			</div>
 			<div
@@ -84,6 +93,8 @@ export default defineComponent({
 
 		const formFieldGroupClasses = computed(() => {
 			const classes = ['ktfield-form-group']
+
+			if (props.field.classes.group) classes.push(props.field.classes.group)
 
 			if (showValidation.value)
 				classes.push(`ktfield-form-group__${props.field.validation.type}`)
@@ -165,7 +176,7 @@ export default defineComponent({
 		display: flex;
 		align-items: center;
 
-		padding: 8px;
+		overflow: hidden;
 		border-radius: 4px;
 
 		&__affix {

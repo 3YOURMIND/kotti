@@ -130,6 +130,7 @@ export const useField = <DATA_TYPE>(
 	// export
 
 	const field = reactive<KottiField.ReturnsWithRefs<DATA_TYPE>>({
+		classes: computed(() => props.classes),
 		currentValue,
 		helpText: computed(() => props.helpText),
 		hideClear: computed(() => props.hideClear),

@@ -52,7 +52,7 @@
 		<br />
 		<h2>KtFormControllerObject</h2>
 		<KtFormControllerObject formKey="user">
-			<KtFieldText formKey="lastName" label="I’m a Field In user" validatorKey="username"/>
+			<KtFieldText :classes="{ wrapper: 'custom-wrapper' }" formKey="lastName" label="I’m a Field In user" validatorKey="username"/>
 		</KtFormControllerObject>
 	</KtForm>
 	<br />
@@ -120,3 +120,9 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss">
+.custom-wrapper {
+	background-color: rgba(255, 0, 255, 0.2);
+}
+</style>
