@@ -10,8 +10,10 @@ export namespace KottiForm {
 		setValue: (formKey: T, newValue: CONTEXT_TYPE[T]) => void
 		hideValidation: Ref<boolean>
 		isLoading: Ref<boolean>
-		onAddField: <DATA_TYPE>(toAdd: KottiField.Returns<DATA_TYPE>) => void
-		onRemoveField: <DATA_TYPE>(toRemove: KottiField.Returns<DATA_TYPE>) => void
+		onAddField: <DATA_TYPE>(toAdd: KottiField.Hook.Returns<DATA_TYPE>) => void
+		onRemoveField: <DATA_TYPE>(
+			toRemove: KottiField.Hook.Returns<DATA_TYPE>,
+		) => void
 		validators: Ref<Record<string, KottiField.Validation.Function>>
 		values: Ref<CONTEXT_TYPE>
 	}

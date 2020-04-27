@@ -20,7 +20,12 @@ export default defineComponent({
 		...ktFieldProps,
 	},
 	setup(props: KtFieldTextProps, { emit }) {
-		const field = useField<string | null>(props, emit)
+		const field = useField<string | null>({
+			emit,
+			isCorrectDataType: (value): value is string | null =>
+				typeof value === 'string' || value === null,
+			props,
+		})
 
 		return {
 			field,
@@ -30,7 +35,7 @@ export default defineComponent({
 				value: field.currentValue,
 				placeholder: field.placeholder ?? undefined,
 			})),
-			// FIXME:
+			// FIXME: Find proper Types for this
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			onInput: (event: any) => {
 				const newValue = event.target.value

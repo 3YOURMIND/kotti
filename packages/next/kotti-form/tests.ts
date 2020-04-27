@@ -13,7 +13,12 @@ const TestField = defineComponent({
 	components: { KtField },
 	props: ktFieldProps,
 	setup: (props: KottiField.Props<string | null>, { emit }) => ({
-		field: useField(props, emit),
+		field: useField({
+			emit,
+			isCorrectDataType: (value): value is string | null =>
+				typeof value === 'string' || value === null,
+			props,
+		}),
 	}),
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
@@ -23,7 +28,9 @@ const TestForm = {
 	template: `<KtForm v-bind="$attrs" @input="$event => $emit('input', $event)"><TestField formKey="testKey"/></KtForm>`,
 }
 
-const getField = (wrapper: Wrapper<any>): KottiField.Returns<string | null> =>
+const getField = (
+	wrapper: Wrapper<any>,
+): KottiField.Hook.Returns<string | null> =>
 	(wrapper.vm.$children[0].$children[0] as any).field
 
 describe('KtForm', () => {

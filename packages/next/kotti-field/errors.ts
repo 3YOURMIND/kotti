@@ -68,9 +68,20 @@ class NonDeterministicValidatorUsage extends CustomError {
 	}
 }
 
+class InvalidDataType extends CustomError {
+	public constructor(props: KottiField.Props<unknown>, newValue: unknown) {
+		super(
+			createErrorMessage(props, [
+				`Encountered invalid data type, “${typeof newValue}” with value “${newValue}”.`,
+			]),
+		)
+	}
+}
+
 export const KtFieldErrors = {
 	DisabledSetValueCalled,
 	ImplicitFormKeyNone,
+	InvalidDataType,
 	InvalidPropOutsideOfContext,
 	NonDeterministicValidatorUsage,
 	ValidatorNotFound,

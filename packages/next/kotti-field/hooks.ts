@@ -3,7 +3,6 @@ import {
 	inject,
 	ref,
 	watch,
-	SetupContext,
 	reactive,
 	onUnmounted,
 	onMounted,
@@ -17,11 +16,13 @@ import { FORM_KEY_NONE } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
-export const useField = <DATA_TYPE>(
-	props: KottiField.Props<DATA_TYPE>,
-	emit: SetupContext['emit'],
-	// eslint-disable-next-line sonarjs/cognitive-complexity
-): KottiField.Returns<DATA_TYPE> => {
+export const useField = <DATA_TYPE>({
+	emit,
+	isCorrectDataType,
+	props,
+}: KottiField.Hook.Parameters<
+	DATA_TYPE
+>): KottiField.Hook.Returns<DATA_TYPE> => {
 	const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 
 	// sanity-checks
@@ -129,7 +130,7 @@ export const useField = <DATA_TYPE>(
 
 	// export
 
-	const field = reactive<KottiField.ReturnsWithRefs<DATA_TYPE>>({
+	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
 		classes: computed(() => props.classes),
 		currentValue,
 		helpText: computed(() => props.helpText),
@@ -143,7 +144,10 @@ export const useField = <DATA_TYPE>(
 		placeholder: computed(() => props.placeholder),
 		prefix: computed(() => props.prefix),
 		rightIcon: computed(() => props.rightIcon),
-		setValue: ref((newValue: DATA_TYPE) => {
+		setValue: ref((newValue: unknown) => {
+			if (!isCorrectDataType(newValue))
+				throw new KtFieldErrors.InvalidDataType(props, newValue)
+
 			if (props.isDisabled)
 				throw new KtFieldErrors.DisabledSetValueCalled(props)
 

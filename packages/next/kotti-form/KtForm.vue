@@ -46,7 +46,7 @@ export default defineComponent({
 
 		const currentFieldsWrapper = reactive<{
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			currentFields: KottiField.Returns<any>[]
+			currentFields: KottiField.Hook.Returns<any>[]
 		}>({ currentFields: [] })
 
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {

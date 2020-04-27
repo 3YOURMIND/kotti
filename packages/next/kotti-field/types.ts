@@ -1,4 +1,4 @@
-import { Ref } from '@vue/composition-api'
+import { Ref, SetupContext } from '@vue/composition-api'
 import { UnwrapRef } from '@vue/composition-api/dist/reactivity'
 
 import { KottiForm } from '../kotti-form/types'
@@ -7,6 +7,43 @@ import { Yoco } from '../types'
 import { FORM_KEY_NONE } from './constants'
 
 export namespace KottiField {
+	export namespace Hook {
+		export interface Parameters<DATA_TYPE> {
+			emit: SetupContext['emit']
+
+			/**
+			 * This is a function that will be called when the value of
+			 * the field changes to ensure that the data type is correct
+			 */
+			isCorrectDataType: (value: unknown) => value is DATA_TYPE
+			props: KottiField.Props<DATA_TYPE>
+		}
+
+		export type Returns<DATA_TYPE = unknown> = UnwrapRef<
+			KottiField.Hook.ReturnsWithRefs<DATA_TYPE>
+		>
+
+		export interface ReturnsWithRefs<DATA_TYPE extends unknown> {
+			classes: Ref<KottiField.Props<DATA_TYPE>['classes']>
+			currentValue: Ref<DATA_TYPE>
+			helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
+			hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
+			hideValidation: KottiForm.Context['hideValidation']
+			isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
+			isLoading: KottiForm.Context['isLoading']
+			isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
+			label: Ref<KottiField.Props<DATA_TYPE>['label']>
+			leftIcon: Ref<KottiField.Props<DATA_TYPE>['leftIcon']>
+			placeholder: Ref<KottiField.Props<DATA_TYPE>['placeholder']>
+			prefix: Ref<KottiField.Props<DATA_TYPE>['prefix']>
+			rightIcon: Ref<KottiField.Props<DATA_TYPE>['rightIcon']>
+			setValue: Ref<(newValue: DATA_TYPE) => void>
+			suffix: Ref<KottiField.Props<DATA_TYPE>['suffix']>
+			tabIndex: Ref<KottiField.Props<DATA_TYPE>['tabIndex']>
+			validation: Ref<KottiField.Validation.Result>
+		}
+	}
+
 	/**
 	 * When adding a new prop, please make sure that no KtFormField
 	 * already uses a prop with the same name, to avoid conflicts
@@ -108,30 +145,6 @@ export namespace KottiField {
 		 */
 		value: DATA_TYPE
 	}
-
-	export interface ReturnsWithRefs<DATA_TYPE extends unknown> {
-		classes: Ref<KottiField.Props<DATA_TYPE>['classes']>
-		currentValue: Ref<DATA_TYPE>
-		helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
-		hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
-		hideValidation: KottiForm.Context['hideValidation']
-		isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
-		isLoading: KottiForm.Context['isLoading']
-		isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
-		label: Ref<KottiField.Props<DATA_TYPE>['label']>
-		leftIcon: Ref<KottiField.Props<DATA_TYPE>['leftIcon']>
-		placeholder: Ref<KottiField.Props<DATA_TYPE>['placeholder']>
-		prefix: Ref<KottiField.Props<DATA_TYPE>['prefix']>
-		rightIcon: Ref<KottiField.Props<DATA_TYPE>['rightIcon']>
-		setValue: Ref<(newValue: DATA_TYPE) => void>
-		suffix: Ref<KottiField.Props<DATA_TYPE>['suffix']>
-		tabIndex: Ref<KottiField.Props<DATA_TYPE>['tabIndex']>
-		validation: Ref<KottiField.Validation.Result>
-	}
-
-	export type Returns<DATA_TYPE = unknown> = UnwrapRef<
-		KottiField.ReturnsWithRefs<DATA_TYPE>
-	>
 
 	export namespace Validation {
 		export type Empty = {

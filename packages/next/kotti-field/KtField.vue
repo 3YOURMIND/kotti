@@ -75,7 +75,7 @@ export default defineComponent({
 		getEmptyValue: { required: true, type: Function },
 	},
 	setup<DATA_TYPE>(props: {
-		field: KottiField.Returns<DATA_TYPE>
+		field: KottiField.Hook.Returns<DATA_TYPE>
 		getEmptyValue: () => DATA_TYPE
 	}) {
 		const labelText = computed(() =>

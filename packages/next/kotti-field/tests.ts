@@ -15,11 +15,14 @@ import { KtFieldErrors } from './errors'
 const TestComponent = defineComponent({
 	name: 'TestComponent',
 	props: ktFieldProps,
-	setup(props: KottiField.Props<string | null>, { emit }) {
-		const field = useField(props, emit)
-
-		return { field }
-	},
+	setup: (props: KottiField.Props<string | null>, { emit }) => ({
+		field: useField({
+			emit,
+			isCorrectDataType: (value): value is string | null =>
+				typeof value === 'string' || value === null,
+			props,
+		}),
+	}),
 	template: `<div></div>`,
 })
 
