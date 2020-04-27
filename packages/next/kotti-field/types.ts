@@ -103,6 +103,7 @@ export namespace KottiField {
 			| KottiField.Validation.Success
 			| KottiField.Validation.Warning
 
-		export type Function = (value: unknown) => KottiField.Validation.Result
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		export type Function = (value: any) => KottiField.Validation.Result
 	}
 }

@@ -18,6 +18,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { KottiField } from '../kotti-field/types'
 
 import { KT_FORM_CONTEXT } from './constants'
+import { KtFormErrors } from './errors'
 import { KottiForm } from './types'
 import { getValidationSummary } from './utilities'
 
@@ -26,10 +27,18 @@ export default defineComponent({
 	props: {
 		hideValidation: { default: false, type: Boolean },
 		isLoading: { default: false, type: Boolean },
+		preventSubmissionOn: {
+			default: 'error',
+			type: String,
+			validator: (
+				value: string,
+			): value is KottiForm.Props['preventSubmissionOn'] =>
+				['error', 'warning', 'NEVER'].includes(value),
+		},
 		validators: { default: () => ({}), type: Object },
 		value: { required: true, type: Object },
 	},
-	setup(props, { emit }) {
+	setup(props: KottiForm.Props, { emit }) {
 		const hideValidation = computed(() => props.hideValidation)
 		const isLoading = computed(() => props.isLoading)
 		const validators = computed(() => props.validators)
@@ -68,23 +77,58 @@ export default defineComponent({
 			currentFieldsWrapper.currentFields.map((field) => field.validation),
 		)
 
-		const isValid = computed(() =>
-			validations.value.every((validation) =>
-				// TODO: Implement props.validation strict level flag
-				['warning', 'success', null].includes(validation.type),
-			),
-		)
+		const valueIsValid = ({ type }: KottiField.Validation.Result) => {
+			switch (props.preventSubmissionOn) {
+				case 'warning':
+					if (type === 'warning') return false
+				// fall through
+				case 'error':
+					if (type === 'error') return false
+				// fall through
+				default:
+					return true
+			}
+		}
+
+		const isValid = computed(() => validations.value.every(valueIsValid))
 
 		return {
 			onSubmit() {
-				if (isValid.value) {
-					const validationSummary = getValidationSummary(validations.value)
+				const validationSummary = getValidationSummary(validations.value)
 
-					emit('submit', {
-						validationSummary,
-						values: values.value,
-					} as KottiForm.Events.Submit)
+				switch (props.preventSubmissionOn) {
+					case 'warning':
+						if (validationSummary.warnings.length > 0)
+							throw new KtFormErrors.ValidationError(
+								props,
+								'warning',
+								validationSummary.warnings,
+							)
+					// fall through
+					case 'error':
+						if (validationSummary.errors.length > 0)
+							throw new KtFormErrors.ValidationError(
+								props,
+								'error',
+								validationSummary.errors,
+							)
+					// fall through
+					case 'NEVER':
+						break
 				}
+
+				if (!isValid.value)
+					throw new KtFormErrors.UnexpectedValidationState(props)
+
+				const onSubmitData: KottiForm.Events.Submit = {
+					validationSummary,
+					values: values.value,
+				}
+
+				/**
+				 * Deep-clone to prevent users from accidentally modifying the internal state
+				 */
+				emit('submit', cloneDeep(onSubmitData))
 			},
 			validations,
 		}

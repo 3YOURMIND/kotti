@@ -17,6 +17,21 @@ export namespace KottiForm {
 	}
 
 	export type ContextType = Record<string, unknown>
+
+	export interface Props {
+		hideValidation: boolean
+		isLoading: boolean
+		/**
+		 * @default warning
+		 * error: prevent if errors.length > 0
+		 * warning: prevent if [...errors, ...warnings].length > 0
+		 * NEVER: allow submission, regardless of validation status
+		 */
+		preventSubmissionOn: 'error' | 'warning' | 'NEVER'
+		validators: Record<string, KottiField.Validation.Function>
+		value: ContextType
+	}
+
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface
 	export interface AdditionalContext {
 		// TODO: notReallyFormKey: Array<string | number>

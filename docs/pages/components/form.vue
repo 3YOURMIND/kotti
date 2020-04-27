@@ -12,9 +12,16 @@
 	}">
 		<div><input type="checkbox" v-model="hideValidation" /> Hide Validation</div>
 		<div :style="{ marginLeft: '16px' }"><input type="checkbox" v-model="isLoading" /> Is Loading</div>
+		<div :style="{ marginLeft: '16px' }">
+			preventSubmissionOn:
+			<br />
+			<button @click="preventSubmissionOn = 'error'">error {{preventSubmissionOn === 'error' ? '(selected)': ''}}</button>
+			<button @click="preventSubmissionOn = 'warning'">warning {{preventSubmissionOn === 'warning' ? '(selected)': ''}} (default)</button>
+			<button @click="preventSubmissionOn = 'NEVER'">NEVER {{preventSubmissionOn === 'NEVER' ? '(selected)': ''}}</button>
+		</div>
 	</div>
 	<h1>KtForm</h1>
-	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, validators }" @submit="onSubmit">
+	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, preventSubmissionOn, validators }" @submit="onSubmit">
 		<KtFieldText formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
 		<br />
@@ -56,6 +63,7 @@
 
 <script lang="ts">
 import { KottiField } from '../../../packages/next/kotti-field/types'
+import { KottiForm } from '../../../packages/next/kotti-form/types'
 
 export default {
 	name: 'KtFormDoc',
@@ -93,6 +101,7 @@ export default {
 			},
 			hideValidation: false,
 			isLoading: false,
+			preventSubmissionOn: 'NEVER',
 			validators,
 		}
 	},
@@ -103,8 +112,10 @@ export default {
 				users: [...this.formData.users, { username: null }],
 			}
 		},
-		onSubmit() {
-			alert('onSubmit')
+		onSubmit(event: KottiForm.Events.Submit) {
+			// eslint-disable-next-line no-console
+			console.debug('onSubmit', event)
+			alert('onSubmit: See Console for Event Details')
 		},
 	},
 }
