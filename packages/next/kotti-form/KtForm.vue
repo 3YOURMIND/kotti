@@ -17,7 +17,7 @@ import cloneDeep from 'lodash/cloneDeep'
 
 import { KottiField } from '../kotti-field/types'
 
-import { KT_FORM_CONTEXT } from './constants'
+import { KT_FORM_CONTEXT, KT_FORM_SUBMIT_CONTEXT } from './constants'
 import { KtFormErrors } from './errors'
 import { KottiForm } from './types'
 import { getValidationSummary } from './utilities'
@@ -91,27 +91,34 @@ export default defineComponent({
 			}
 		}
 
+		const validationSummary = computed(() =>
+			getValidationSummary(validations.value),
+		)
+
 		const isValid = computed(() => validations.value.every(valueIsValid))
+
+		provide<KottiForm.SubmitContext>(KT_FORM_SUBMIT_CONTEXT, {
+			isValid,
+			validationSummary,
+		})
 
 		return {
 			onSubmit() {
-				const validationSummary = getValidationSummary(validations.value)
-
 				switch (props.preventSubmissionOn) {
 					case 'warning':
-						if (validationSummary.warnings.length > 0)
+						if (validationSummary.value.warnings.length > 0)
 							throw new KtFormErrors.ValidationError(
 								props,
 								'warning',
-								validationSummary.warnings,
+								validationSummary.value.warnings,
 							)
 					// fall through
 					case 'error':
-						if (validationSummary.errors.length > 0)
+						if (validationSummary.value.errors.length > 0)
 							throw new KtFormErrors.ValidationError(
 								props,
 								'error',
-								validationSummary.errors,
+								validationSummary.value.errors,
 							)
 					// fall through
 					case 'NEVER':
@@ -122,7 +129,7 @@ export default defineComponent({
 					throw new KtFormErrors.UnexpectedValidationState(props)
 
 				const onSubmitData: KottiForm.Events.Submit = {
-					validationSummary,
+					validationSummary: validationSummary.value,
 					values: values.value,
 				}
 

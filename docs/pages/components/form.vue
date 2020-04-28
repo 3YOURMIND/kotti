@@ -54,6 +54,7 @@
 		<KtFormControllerObject formKey="user">
 			<KtFieldText :classes="{ wrapper: 'custom-wrapper' }" formKey="lastName" label="I’m a Field In user" validatorKey="username"/>
 		</KtFormControllerObject>
+		<KtFormSubmit />
 	</KtForm>
 	<br />
 	<h2>formData</h2>

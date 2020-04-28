@@ -20,6 +20,11 @@ export namespace KottiForm {
 		values: Ref<CONTEXT_TYPE>
 	}
 
+	export interface SubmitContext {
+		isValid: Ref<boolean>
+		validationSummary: Ref<KottiForm.ValidationSummary>
+	}
+
 	export type ContextType = Record<string, unknown>
 
 	export interface Props {

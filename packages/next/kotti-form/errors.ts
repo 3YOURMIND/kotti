@@ -5,7 +5,7 @@ import { KottiField } from '../kotti-field/types'
 import { KottiForm } from './types'
 
 const createOnSubmitErrorMessage = (messages: string[]) =>
-	`KottForm(onSubmit): ${messages.join('\n')}`
+	`KottiForm(onSubmit): ${messages.join('\n')}`
 
 class UnexpectedValidationState extends CustomError {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -32,7 +32,16 @@ class ValidationError extends CustomError {
 	}
 }
 
+class InvalidSubmitOutsideContext extends CustomError {
+	public constructor() {
+		const messages = [
+			'Encountered a “<KtFormSubmit />” outside of a “<KtForm/>”',
+		]
+		super(`KtFormSubmit: ${messages.join('\n')}`)
+	}
+}
 export const KtFormErrors = {
+	InvalidSubmitOutsideContext,
 	UnexpectedValidationState,
 	ValidationError,
 }
