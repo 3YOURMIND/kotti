@@ -4,6 +4,8 @@
 			v-for="(values, index) in valuesList"
 			:key="index"
 			:context="context"
+			:formKey="formKey"
+			:index="index"
 			:values="values"
 			@setValue="setValue({ ...$event, index })"
 		>

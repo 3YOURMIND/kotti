@@ -1,6 +1,6 @@
 <template>
 	<KtField :getEmptyValue="() => null" v-bind="{ field }">
-		<input v-bind="inputAttributes" style="width: 100%;" @input="onInput" />
+		<input v-bind="inputProps" style="width: 100%;" @input="onInput" />
 	</KtField>
 </template>
 
@@ -29,8 +29,8 @@ export default defineComponent({
 
 		return {
 			field,
-			inputAttributes: computed(() => ({
-				tabIndex: field.tabIndex,
+			inputProps: computed(() => ({
+				...field.inputProps,
 				type: 'text',
 				value: field.currentValue,
 				placeholder: field.placeholder ?? undefined,

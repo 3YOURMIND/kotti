@@ -29,6 +29,15 @@ export namespace KottiField {
 			helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
 			hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
 			hideValidation: KottiForm.Context['hideValidation']
+			inputProps: Ref<
+				/**
+				 * Native HTML Props should have lowercase keys
+				 */
+				Readonly<{
+					'data-test': string
+					tabindex: KottiField.Props<DATA_TYPE>['tabIndex']
+				}>
+			>
 			isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
 			isLoading: KottiForm.Context['isLoading']
 			isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
@@ -39,7 +48,6 @@ export namespace KottiField {
 			rightIcon: Ref<KottiField.Props<DATA_TYPE>['rightIcon']>
 			setValue: Ref<(newValue: DATA_TYPE) => void>
 			suffix: Ref<KottiField.Props<DATA_TYPE>['suffix']>
-			tabIndex: Ref<KottiField.Props<DATA_TYPE>['tabIndex']>
 			validation: Ref<KottiField.Validation.Result>
 		}
 	}

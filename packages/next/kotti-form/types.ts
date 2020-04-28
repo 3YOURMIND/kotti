@@ -7,13 +7,15 @@ export namespace KottiForm {
 		CONTEXT_TYPE extends ContextType = ContextType,
 		T extends keyof CONTEXT_TYPE = keyof CONTEXT_TYPE
 	> {
-		setValue: (formKey: T, newValue: CONTEXT_TYPE[T]) => void
-		hideValidation: Ref<boolean>
-		isLoading: Ref<boolean>
+		formPath: Ref<ReadonlyArray<string | number>>
+		hideValidation: Ref<KottiForm.Props['hideValidation']>
+		isLoading: Ref<KottiForm.Props['isLoading']>
 		onAddField: <DATA_TYPE>(toAdd: KottiField.Hook.Returns<DATA_TYPE>) => void
 		onRemoveField: <DATA_TYPE>(
 			toRemove: KottiField.Hook.Returns<DATA_TYPE>,
 		) => void
+
+		setValue: (formKey: T, newValue: CONTEXT_TYPE[T]) => void
 		validators: Ref<Record<string, KottiField.Validation.Function>>
 		values: Ref<CONTEXT_TYPE>
 	}
@@ -21,6 +23,14 @@ export namespace KottiForm {
 	export type ContextType = Record<string, unknown>
 
 	export interface Props {
+		/**
+		 * Form Identifier
+		 * defaults to sequential identifier
+		 * can otherwise be provided
+		 * current use-case: for computed dataTest prop
+		 * can be useful otherwise
+		 */
+		formId: string
 		hideValidation: boolean
 		isLoading: boolean
 		/**

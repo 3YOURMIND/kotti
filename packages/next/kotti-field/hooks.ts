@@ -68,6 +68,19 @@ export const useField = <DATA_TYPE>({
 		},
 	)
 
+	// formPath
+
+	const formPath = computed(() => {
+		if (context === null) return []
+
+		if (props.formKey === null)
+			throw new KtFieldErrors.ImplicitFormKeyNone(props)
+
+		return props.formKey === FORM_KEY_NONE
+			? [...context.formPath.value]
+			: [...context.formPath.value, props.formKey]
+	})
+
 	// validation
 
 	const isLoading = computed(() => {
@@ -136,6 +149,19 @@ export const useField = <DATA_TYPE>({
 		helpText: computed(() => props.helpText),
 		hideClear: computed(() => props.hideClear),
 		hideValidation,
+		inputProps: computed(() => ({
+			/**
+			 * in a controllerListItem, we want to identify a field by
+			 * the formId.formKey without the index
+			 * thus, we’re only including strings in order to get rid of array indices
+			 */
+			'data-test': formPath.value
+				.filter(
+					(pathSegment: string | number) => typeof pathSegment === 'string',
+				)
+				.join('.'),
+			tabindex: props.tabIndex,
+		})),
 		isDisabled: computed(() => props.isDisabled),
 		isLoading,
 		isOptional: computed(() => props.isOptional),
@@ -161,7 +187,6 @@ export const useField = <DATA_TYPE>({
 			return context.setValue(props.formKey, newValue)
 		}),
 		suffix: computed(() => props.suffix),
-		tabIndex: computed(() => props.tabIndex),
 		validation,
 	})
 

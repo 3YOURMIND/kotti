@@ -40,6 +40,7 @@ export default defineComponent({
 		)
 
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
+			formPath: computed(() => [...context.formPath.value, props.formKey]),
 			hideValidation: context.hideValidation,
 			isLoading: context.isLoading,
 			onAddField: context.onAddField,
