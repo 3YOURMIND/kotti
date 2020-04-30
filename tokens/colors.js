@@ -138,6 +138,11 @@ export const tokens = [
 		reference: 'primary-20',
 	},
 	{
+		name: 'interactive-05',
+		description: 'Active element border',
+		reference: 'primary-40',
+	},
+	{
 		name: 'danger',
 		description: 'Danger button background',
 		reference: 'red-50',
