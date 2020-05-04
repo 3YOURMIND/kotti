@@ -24,7 +24,6 @@ export namespace KottiField {
 		>
 
 		export interface ReturnsWithRefs<DATA_TYPE extends unknown> {
-			classes: Ref<KottiField.Props<DATA_TYPE>['classes']>
 			currentValue: Ref<DATA_TYPE>
 			helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
 			hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
@@ -58,38 +57,6 @@ export namespace KottiField {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export interface Props<DATA_TYPE extends any> {
-		classes: {
-			/**
-			 * Adds custom classes to the main part of the input field
-			 */
-			field?: string
-
-			/**
-			 * Adds custom classes to the grouping wrapper around the main part of the input field
-			 */
-			group?: string
-
-			/**
-			 * Adds custom classes to the label of the field
-			 */
-			label?: string
-
-			/**
-			 * Adds custom classes to the left icon of the field. This is mostly useful for coloring
-			 */
-			leftIcon?: string
-
-			/**
-			 * Adds custom classes to the right icon of the field. This is mostly useful for coloring
-			 */
-			rightIcon?: string
-
-			/**
-			 * Adds custom classes to the wrapper around the field
-			 */
-			wrapper?: string
-		}
-
 		/**
 		 * Specifies that the data KtFormContext[formKey]
 		 * If formKey is "NONE", it is treated as an explicit opt-out

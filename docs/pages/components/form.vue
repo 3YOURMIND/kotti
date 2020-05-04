@@ -47,7 +47,7 @@
 		<br />
 		<h2>KtFormControllerObject</h2>
 		<KtFormControllerObject formKey="user">
-			<KtFieldText :classes="{ wrapper: 'custom-wrapper', group: 'custom-group', rightIcon: 'custom-right-icon' }" formKey="lastName" label="I’m a Field In user" validatorKey="username" rightIcon="user"/>
+			<KtFieldText formKey="lastName" label="I’m a Field In user" validatorKey="username" rightIcon="user"/>
 		</KtFormControllerObject>
 		<KtFormSubmit />
 	</KtForm>
@@ -150,29 +150,30 @@ h3 {
 	align-items: 'center';
 }
 
-.custom-wrapper {
-	display: flex;
-	flex-direction: row;
-	background-color: var(--ui-01);
-	border: 4px double var(--interactive-04);
-	border-radius: $border-radius;
-	padding: 1.25em;
-	~ .custom-group {
-		border: $border-width solid magenta;
-		border-radius: $border-radius;
+// .custom-wrapper {
+// 	display: flex;
+// 	flex-direction: row;
+// 	background-color: var(--ui-01);
+// 	border: 4px double var(--interactive-04);
+// 	border-radius: $border-radius;
+// 	padding: 1.25em;
+// 	~ .custom-group {
+// 		border: $border-width solid magenta;
+// 		border-radius: $border-radius;
 
-		&:active {
-			box-shadow: 0 0 0 1px violet, 0 0 0 2px indigo, 0 0 0 3px blue,
-				0 0 0 4px green, 0 0 0 5px yellow, 0 0 0 6px orange, 0 0 0 7px red;
-		}
+// 		&:active {
+// 			box-shadow: 0 0 0 1px violet, 0 0 0 2px indigo, 0 0 0 3px blue,
+// 				0 0 0 4px green, 0 0 0 5px yellow, 0 0 0 6px orange, 0 0 0 7px red;
+// 		}
 
-		&:focus-within {
-			box-shadow: 0 0 0 1px violet, 0 0 0 2px indigo, 0 0 0 3px blue,
-				0 0 0 4px green, 0 0 0 5px yellow, 0 0 0 6px orange, 0 0 0 7px red;
-		}
-	}
-}
+// 		&:focus-within {
+// 			box-shadow: 0 0 0 1px violet, 0 0 0 2px indigo, 0 0 0 3px blue,
+// 				0 0 0 4px green, 0 0 0 5px yellow, 0 0 0 6px orange, 0 0 0 7px red;
+// 		}
+// 	}
+// }
 
-.custom-right-icon {
-}
+// .custom-right-icon {
+// 	border: 1px solid black;
+// }
 </style>

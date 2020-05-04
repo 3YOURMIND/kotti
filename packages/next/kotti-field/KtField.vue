@@ -1,19 +1,19 @@
 <template>
-	<label :class="`ktfield-wrapper ${field.classes.wrapper || ''}`">
-		<div
-			v-if="!field.isLoading"
-			:class="`ktfield-label ${field.classes.label || ''}`"
-		>
+	<label class="kt-field-wrapper">
+		<div v-if="!field.isLoading" class="ktfield-label">
 			<div v-if="labelText !== null" v-text="labelText" />
+			<!-- TODO: implement the final design for the tooltip for helptext -->
 			<div v-if="field.helpText" class="ktfield-label__help-text">
 				<div :class="formFieldLabelHelpIconClasses">
 					<i class="yoco">circle_question</i>
 				</div>
-				<div class="ktfield-label__help-text__tooltip">
-					{{ field.helpText }}
-				</div>
+				<div
+					class="ktfield-label__help-text__tooltip"
+					v-text="field.helpText"
+				/>
 			</div>
 		</div>
+
 		<div
 			v-else
 			class="skeleton rectangle"
@@ -32,7 +32,7 @@
 			>
 				<i class="yoco" v-text="field.leftIcon" />
 			</div>
-			<div :class="`ktfield-form-group__slot ${field.classes.field || ''}`">
+			<div class="ktfield-form-group__slot">
 				<slot name="default" />
 			</div>
 			<div
@@ -108,8 +108,6 @@ export default defineComponent({
 			if (showValidation.value)
 				classes.push(`ktfield-form-group--${validationType.value}`)
 
-			if (props.field.classes.group) classes.push(props.field.classes.group)
-
 			return classes
 		})
 
@@ -133,19 +131,8 @@ export default defineComponent({
 					it's only styled with hover or click interactions
 					by default, it's styled with primary colors upon hover/activate
 				*/
-				if (!modifications.includes('interactive')) {
-					const customIconClassName = `${placement}Icon` as keyof Pick<
-						KottiField.Props<DATA_TYPE>['classes'],
-						'leftIcon' | 'rightIcon'
-					>
-
-					if (customIconClassName in props.field.classes) {
-						const customIconClass = props.field.classes[customIconClassName]
-						if (customIconClass) classes.push(customIconClass)
-					}
-
-					if (showValidation.value)
-						classes.push(`ktfield-form-group__icon--${validationType.value}`)
+				if (!modifications.includes('interactive') && showValidation.value) {
+					classes.push(`ktfield-form-group__icon--${validationType.value}`)
 				}
 
 				return classes
