@@ -1,6 +1,6 @@
 <template>
 	<KtField :getEmptyValue="() => null" v-bind="{ field }">
-		<input v-bind="inputProps" style="width: 100%;" @input="onInput" />
+		<input v-bind="inputProps" :class="textInputClasses" @input="onInput" />
 	</KtField>
 </template>
 
@@ -27,6 +27,8 @@ export default defineComponent({
 			props,
 		})
 
+		const textInputClasses = ['ktfield-text__wrapper']
+
 		return {
 			field,
 			inputProps: computed(() => ({
@@ -41,7 +43,28 @@ export default defineComponent({
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)
 			},
+			textInputClasses,
 		}
 	},
 })
 </script>
+
+<style lang="scss" scoped>
+.ktfield-text__wrapper {
+	display: flex;
+	align-self: center;
+	background: transparent;
+	border: 0;
+	line-height: 1.6;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	width: 100%;
+
+	&::-webkit-input-placeholder, /* Edge */
+	&:-ms-input-placeholder, /* Internet Explorer */ 
+	&::placeholder {
+		color: var(--text-03);
+	}
+}
+</style>
