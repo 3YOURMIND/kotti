@@ -48,11 +48,12 @@ export default defineComponent({
 		}>({ currentFields: [] })
 
 		const values = computed(() => cloneDeep(props.value))
+		const isLoading = computed(() => props.isLoading)
 
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			formPath: computed(() => [props.formId]),
 			hideValidation: computed(() => props.hideValidation),
-			isLoading: computed(() => props.isLoading),
+			isLoading,
 			onAddField(toAdd) {
 				currentFieldsWrapper.currentFields = [
 					...currentFieldsWrapper.currentFields,
@@ -98,6 +99,7 @@ export default defineComponent({
 		const isValid = computed(() => validations.value.every(valueIsValid))
 
 		provide<KottiForm.SubmitContext>(KT_FORM_SUBMIT_CONTEXT, {
+			isLoading,
 			isValid,
 			validationSummary,
 		})

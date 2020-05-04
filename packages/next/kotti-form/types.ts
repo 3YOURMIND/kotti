@@ -21,6 +21,7 @@ export namespace KottiForm {
 	}
 
 	export interface SubmitContext {
+		isLoading: Ref<boolean>
 		isValid: Ref<boolean>
 		validationSummary: Ref<KottiForm.ValidationSummary>
 	}
