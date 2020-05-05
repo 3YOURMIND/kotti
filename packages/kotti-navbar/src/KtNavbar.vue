@@ -178,7 +178,7 @@ $narrow-navbar-width: 3.4rem;
 }
 
 .kt-navbar__header {
-	flex: 1 1 auto;
+	flex: 0 0 auto;
 	cursor: pointer;
 	border-bottom: 1px solid var(--navbar-border);
 }
