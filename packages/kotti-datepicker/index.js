@@ -6,5 +6,5 @@ KtDatePicker.install = function(Vue) {
 	Vue.component(KtDatePicker.name, KtDatePicker)
 }
 
-export { KtDateInput }
+export { KtDateInput, KtDatePicker }
 export default KtDatePicker
