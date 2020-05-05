@@ -17,5 +17,8 @@
 	"vetur.format.enable": false,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true
+	},
+	"files.watcherExclude": {
+		"**/node_modules/**": true
 	}
 }

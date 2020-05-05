@@ -3,3 +3,4 @@ gh-pages
 node_modules
 .nuxt/
 yarn-error.log
+.vscode/settings.json
