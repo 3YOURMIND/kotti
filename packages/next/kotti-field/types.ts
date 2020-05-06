@@ -34,6 +34,7 @@ export namespace KottiField {
 				 */
 				Readonly<{
 					'data-test': string
+					disabled: boolean
 					tabindex: KottiField.Props<DATA_TYPE>['tabIndex']
 				}>
 			>

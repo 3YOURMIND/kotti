@@ -143,6 +143,8 @@ export const useField = <DATA_TYPE>({
 
 	// export
 
+	const isDisabled = computed(() => props.isDisabled)
+
 	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
 		currentValue,
 		helpText: computed(() => props.helpText),
@@ -159,9 +161,10 @@ export const useField = <DATA_TYPE>({
 					(pathSegment: string | number) => typeof pathSegment === 'string',
 				)
 				.join('.'),
+			disabled: isDisabled.value,
 			tabindex: props.tabIndex,
 		})),
-		isDisabled: computed(() => props.isDisabled),
+		isDisabled,
 		isLoading,
 		isOptional: computed(() => props.isOptional),
 		label: computed(() => props.label),
@@ -169,6 +172,8 @@ export const useField = <DATA_TYPE>({
 		placeholder: computed(() => props.placeholder),
 		prefix: computed(() => props.prefix),
 		rightIcon: computed(() => props.rightIcon),
+		// FIXME: Maybe this needs to be a computed, because props.isDisabled wouldn’t change otherwise
+		// not sure though, might need to write a unit test for this case to figure it out
 		setValue: ref((newValue: unknown) => {
 			if (!isCorrectDataType(newValue))
 				throw new KtFieldErrors.InvalidDataType(props, newValue)
@@ -189,6 +194,8 @@ export const useField = <DATA_TYPE>({
 		validation,
 	})
 
+	// hook into lifecycle events
+
 	onMounted(() => {
 		if (context) context.onAddField(field)
 	})
@@ -198,4 +205,24 @@ export const useField = <DATA_TYPE>({
 	})
 
 	return field
+}
+
+/**
+ * Vue doesn't support controlled input fields without explicitly re-rendering.
+ * Therefore, in case nothing changed, we may need to re-render
+ *
+ * @description Vue doesn't alter native html input behavior; that is, the emitted value is immediately bound to :value
+ * We need to force the component to re-render with the value that we actually last wanted to bind to `:value`
+ * The emitted value doesn't immediately have to be the actually bound value; making the input `controlled`
+ */
+export const useForceUpdate = () => {
+	const forceUpdateKey = ref(0)
+
+	return {
+		forceUpdateKey,
+		forceUpdate: () => {
+			// HACK: This basically just updates some arbitrary ref so that vue thinks the input element needs to be re-rendered
+			forceUpdateKey.value++
+		},
+	}
 }

@@ -1,6 +1,6 @@
 <template>
 	<KtField :getEmptyValue="() => null" v-bind="{ field }">
-		<input v-bind="inputProps" :class="textInputClasses" @input="onInput" />
+		<input v-bind="inputProps" @input="onInput" />
 	</KtField>
 </template>
 
@@ -9,7 +9,7 @@ import { defineComponent, computed } from '@vue/composition-api'
 
 import KtField from '../kotti-field'
 import { ktFieldProps } from '../kotti-field/constants'
-import { useField } from '../kotti-field/hooks'
+import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import { KtFieldTextProps } from './types'
 
@@ -27,23 +27,27 @@ export default defineComponent({
 			props,
 		})
 
-		const textInputClasses = ['kt-field-text__wrapper']
+		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 
 		return {
 			field,
-			inputProps: computed(() => ({
+			inputProps: computed((): Partial<HTMLInputElement> & {
+				class: unknown
+				forceUpdateKey: number
+			} => ({
 				...field.inputProps,
+				class: ['kt-field-text__wrapper'],
+				forceUpdateKey: forceUpdateKey.value,
 				type: 'text',
-				value: field.currentValue,
+				value: field.currentValue ?? '',
 				placeholder: field.placeholder ?? undefined,
 			})),
-			// FIXME: Find proper Types for this
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			onInput: (event: any) => {
+			onInput: (event: { target: HTMLInputElement }) => {
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)
+
+				forceUpdate()
 			},
-			textInputClasses,
 		}
 	},
 })
@@ -62,7 +66,7 @@ export default defineComponent({
 	outline: none;
 
 	&::-webkit-input-placeholder, /* Edge */
-	&:-ms-input-placeholder, /* Internet Explorer */ 
+	&:-ms-input-placeholder, /* Internet Explorer */
 	&::placeholder {
 		color: var(--text-03);
 	}
