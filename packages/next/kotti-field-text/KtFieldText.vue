@@ -27,7 +27,7 @@ export default defineComponent({
 			props,
 		})
 
-		const textInputClasses = ['ktfield-text__wrapper']
+		const textInputClasses = ['kt-field-text__wrapper']
 
 		return {
 			field,
@@ -50,16 +50,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.ktfield-text__wrapper {
+.kt-field-text__wrapper {
 	display: flex;
 	align-self: center;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	line-height: 1.6;
 	background: transparent;
 	border: 0;
-	line-height: 1.6;
-	margin: 0;
-	padding: 0;
 	outline: none;
-	width: 100%;
 
 	&::-webkit-input-placeholder, /* Edge */
 	&:-ms-input-placeholder, /* Internet Explorer */ 

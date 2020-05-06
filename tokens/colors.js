@@ -90,7 +90,7 @@ export const tokens = [
 	{
 		name: 'text-02',
 		description: 'Secondary text\nForm labels',
-		reference: 'gray-50',
+		reference: 'gray-60',
 	},
 	{
 		name: 'text-03',

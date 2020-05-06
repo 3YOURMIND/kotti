@@ -15,6 +15,7 @@
 	</div>
 	<h1>KtForm</h1>
 	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, preventSubmissionOn, validators }" @submit="onSubmit">
+		<KtFieldText formKey="firstName" placeholder="Klaus" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="location" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
 		<br />
@@ -133,12 +134,12 @@ h3 {
 
 .wrapper {
 	display: flex;
+	flex-direction: column;
+	padding: 1.5em;
+	margin: 0;
 	background-color: var(--ui-01);
 	border: 1px solid var(--ui-03);
 	border-radius: $border-radius;
-	flex-direction: column;
-	margin: 0;
-	padding: 1.5em;
 
 	:not(:last-child) {
 		margin-bottom: 1.25em;
@@ -146,8 +147,8 @@ h3 {
 }
 
 .row {
-	display: 'flex';
-	align-items: 'center';
+	display: flex;
+	align-items: center;
 }
 
 // .custom-wrapper {
