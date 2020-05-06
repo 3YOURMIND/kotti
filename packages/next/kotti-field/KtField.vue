@@ -73,7 +73,7 @@ import { defineComponent, computed } from '@vue/composition-api'
 import { KottiField } from './types'
 
 export default defineComponent({
-	name: 'Kt-Field',
+	name: 'KtField',
 	props: {
 		field: { required: true, type: Object },
 		/**
@@ -123,12 +123,12 @@ export default defineComponent({
 		})
 
 		return {
-			wrapperClass,
 			formFieldLabelHelpIconClasses,
 			labelText,
 			showValidation,
 			validationIcon,
 			validationType,
+			wrapperClass,
 		}
 	},
 })
@@ -138,6 +138,7 @@ export default defineComponent({
 @import '../../kotti-style/_variables.scss';
 
 :root {
+	// TODO: Clarify why this is not global
 	--field-border-radius: 2px;
 }
 
@@ -145,17 +146,20 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	margin-bottom: 0.8rem;
+	// TODO: Discuss: Spacing & Sizing should be handled by the parent
+	/* margin-bottom: 0.8rem; */
 
-	> * + * {
+	> :not(:first-child) {
 		margin-top: 0.4rem;
 	}
 }
 
 .kt-field {
 	&__header {
+		// FIXME: maybe this should be rem-based
 		font-size: 0.9em;
-		> * + * {
+
+		> :not(:first-child) {
 			margin-top: 0.2rem;
 		}
 	}
@@ -187,11 +191,13 @@ export default defineComponent({
 	// Prefix and suffix
 	&__input-container__affix {
 		color: var(--text-02);
+
 		&--left {
 			padding-right: 0.8rem;
 			margin-right: 0.8rem;
 			border-right: 1px solid var(--ui-02);
 		}
+
 		&--right {
 			padding-left: 0.8rem;
 			margin-left: 0.8rem;
@@ -204,32 +210,51 @@ export default defineComponent({
 		font-size: 1rem;
 		line-height: 1;
 		color: var(--icon-02);
+
 		.yoco {
-			display: inline-block;
+			display: flex;
+
+			// TODO: Why was this inline-block?
+			/* display: inline-block; */
 		}
+
 		&--left .yoco {
-			display: inline-block;
+			display: flex;
+			// TODO: Why was this inline-block?
+			/* display: inline-block; */
+
 			transform: translateX(-0.2rem);
 		}
+
 		&--right .yoco {
 			transform: translateX(0.2rem);
 		}
+
 		&--clear {
 			cursor: pointer;
 		}
 	}
 
 	// states
-	&--warning {
-		.kt-field__input-container {
-			box-shadow: 0 0 0 2px var(--support-warning-light);
-		}
-	}
+
 	&--error {
 		.kt-field__input-container {
 			box-shadow: 0 0 0 2px var(--support-error-light);
 		}
 	}
+
+	&--success {
+		.kt-field__input-container {
+			box-shadow: 0 0 0 2px var(--support-success-light);
+		}
+	}
+
+	&--warning {
+		.kt-field__input-container {
+			box-shadow: 0 0 0 2px var(--support-warning-light);
+		}
+	}
+
 	&--focus {
 		.kt-field__input-container {
 			box-shadow: 0 0 0 2px var(--interactive-05);
@@ -243,7 +268,7 @@ export default defineComponent({
 	align-items: center;
 	color: var(--text-02);
 
-	> * + * {
+	> :not(:first-child) {
 		margin-left: 0.2em;
 	}
 }

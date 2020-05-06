@@ -33,7 +33,7 @@
 					<li>
 						<h3 v-text="`Item ${index}`" />
 						<KtFieldText formKey="username" label="Username" validatorKey="username" leftIcon="user"/>
-						<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }"> 
+						<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }">
 							<button @click="deleteSelf" type="button" class="kt-button danger">Delete "{{ values.username }}"</button>
 							<button @click="addBefore({ username: `before Item${index}` })" type="button" class="kt-button secondary">Add Before</button>
 							<button @click="addAfter({ username: `after Item${index}` })" type="button" class="kt-button secondary">Add After</button>
@@ -141,14 +141,19 @@ h3 {
 	border: 1px solid var(--ui-03);
 	border-radius: $border-radius;
 
-	:not(:last-child) {
+	> :not(:last-child) {
 		margin-bottom: 1.25em;
 	}
 }
 
 .row {
 	display: flex;
+	flex-direction: row;
 	align-items: center;
+
+	> * {
+		margin-left: 4px;
+	}
 }
 
 // .custom-wrapper {
