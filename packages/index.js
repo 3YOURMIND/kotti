@@ -45,6 +45,7 @@ import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
 import KtField from './next/kotti-field'
 import KtFieldCheckbox from './next/kotti-field-checkbox'
+import KtFieldRadioGroup from './next/kotti-field-radio-group'
 import KtFieldText from './next/kotti-field-text'
 import {
 	KtForm,
@@ -75,6 +76,7 @@ const components = {
 	KtField,
 	KtFieldText,
 	KtFieldCheckbox,
+	KtFieldRadioGroup,
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
@@ -151,13 +153,16 @@ export {
 	KtDropdown,
 	KtDropdownButton,
 	KtDropdownMenu,
-	KtHeading,
+	KtFieldCheckbox,
+	KtFieldRadioGroup,
+	KtFieldText,
 	KtForm,
 	KtFormControllerList,
-	KtLine,
+	KtHeading,
 	KtInlineEdit,
 	KtInput,
 	KtInputNumber,
+	KtLine,
 	KtModal,
 	KtNavbar,
 	KtPagenation,
@@ -170,10 +175,10 @@ export {
 	KtSteps,
 	KtSwitch,
 	KtTable,
+	KtTableColumn,
+	KtTableColumnsStateMixin,
+	KtTableProvider,
+	KtTheme,
 	KtToaster,
 	KtUserMenu,
-	KtTableColumn,
-	KtTableProvider,
-	KtTableColumnsStateMixin,
-	KtTheme,
 }

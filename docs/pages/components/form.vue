@@ -15,6 +15,7 @@
 	</div>
 	<h1>KtForm</h1>
 	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, preventSubmissionOn, validators}" @submit="onSubmit">
+		<KtFieldRadioGroup formKey="radioGroup" label="Some Radio Group" :options="[{ label: 'a', value: 'a' }, { label: 'b', value: 'b' }]"/> 
 		<KtFieldText formKey="firstName" placeholder="Klaus" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="location" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText class="lol" formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
@@ -92,6 +93,7 @@ export default {
 			formData: {
 				firstName: 'John',
 				lastName: 'Smith',
+				radioGroup: null,
 				users: [{ username: null }, { username: 'anything' }],
 				user: { lastName: 'pepe' },
 				username: null,

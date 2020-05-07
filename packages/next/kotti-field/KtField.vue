@@ -1,7 +1,12 @@
 <template>
-	<label class="kt-field-wrapper" :class="wrapperClass">
+	<component
+		:is="isGroup ? 'fieldset' : 'label'"
+		class="kt-field-wrapper"
+		:class="wrapperClass"
+	>
 		<div v-if="!field.isLoading" class="kt-field__header">
-			<div
+			<component
+				:is="isGroup ? 'legend' : 'div'"
 				v-if="labelText !== null"
 				class="kt-field__label"
 				v-text="labelText"
@@ -64,7 +69,7 @@
 			<i class="yoco">{{ validationIcon }}</i>
 			{{ field.validation.text }}
 		</div>
-	</label>
+	</component>
 </template>
 
 <script lang="ts">
@@ -81,9 +86,11 @@ export default defineComponent({
 		 * Used when clearing the field. Most likely either null or []
 		 */
 		getEmptyValue: { required: true, type: Function },
+		isGroup: { default: false, type: Boolean },
 	},
 	setup<DATA_TYPE>(props: {
 		field: KottiField.Hook.Returns<DATA_TYPE>
+		isGroup: boolean
 		getEmptyValue: () => DATA_TYPE
 	}) {
 		const labelText = computed(() =>
