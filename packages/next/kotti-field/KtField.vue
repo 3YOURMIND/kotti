@@ -146,8 +146,15 @@ export default defineComponent({
 	flex-direction: column;
 	justify-content: space-between;
 	margin-bottom: 0.8rem;
+
 	:last-child {
 		margin-bottom: 0;
+	}
+
+	&:focus-within {
+		.kt-field__input-container {
+			box-shadow: 0 0 0 2px var(--interactive-05);
+		}
 	}
 }
 
@@ -242,12 +249,6 @@ export default defineComponent({
 	&--warning {
 		.kt-field__input-container {
 			box-shadow: 0 0 0 2px var(--support-warning-light);
-		}
-	}
-
-	&--focus {
-		.kt-field__input-container {
-			box-shadow: 0 0 0 2px var(--interactive-05);
 		}
 	}
 }
