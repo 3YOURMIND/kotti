@@ -45,6 +45,7 @@ import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
 import KtField from './next/kotti-field'
 import KtFieldCheckbox from './next/kotti-field-checkbox'
+import KtFieldCheckboxGroup from './next/kotti-field-checkbox-group'
 import KtFieldRadioGroup from './next/kotti-field-radio-group'
 import KtFieldText from './next/kotti-field-text'
 import {
@@ -74,9 +75,10 @@ const components = {
 	KtDropdownButton,
 	KtDropdownMenu,
 	KtField,
-	KtFieldText,
 	KtFieldCheckbox,
+	KtFieldCheckboxGroup,
 	KtFieldRadioGroup,
+	KtFieldText,
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
@@ -93,9 +95,9 @@ const components = {
 	KtRadioGroup,
 	KtRow,
 	KtSingleSelect,
-	KtSwitch,
 	KtStep,
 	KtSteps,
+	KtSwitch,
 	KtTable,
 	KtTheme,
 	KtToaster,
@@ -116,9 +118,11 @@ function install(Vue) {
 		},
 	})
 
+	const DEFAULT_YODIFY_DURATION = 3000
+
 	Vue.prototype.$yodifyBuffer = []
 	Vue.prototype.$yodify = function({
-		duration = 3000,
+		duration = DEFAULT_YODIFY_DURATION,
 		text,
 		type = 'success',
 	}) {
@@ -153,11 +157,14 @@ export {
 	KtDropdown,
 	KtDropdownButton,
 	KtDropdownMenu,
+	KtField,
 	KtFieldCheckbox,
+	KtFieldCheckboxGroup,
 	KtFieldRadioGroup,
 	KtFieldText,
 	KtForm,
 	KtFormControllerList,
+	KtFormControllerObject,
 	KtHeading,
 	KtInlineEdit,
 	KtInput,
@@ -175,9 +182,6 @@ export {
 	KtSteps,
 	KtSwitch,
 	KtTable,
-	KtTableColumn,
-	KtTableColumnsStateMixin,
-	KtTableProvider,
 	KtTheme,
 	KtToaster,
 	KtUserMenu,

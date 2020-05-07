@@ -6,16 +6,35 @@
 	<div class="wrapper">
 		<KtFieldCheckbox v-model="hideValidation">Hide Validation</KtFieldCheckbox>
 		<KtFieldCheckbox v-model="isLoading">IsLoading</KtFieldCheckbox>
-		<div class="row">
-			Prevent Submission On:
-			<button @click="preventSubmissionOn = 'error'" :class="`kt-button ${preventSubmissionOn === 'error'?'primary':'secondary'}`">Error </button>
-			<button @click="preventSubmissionOn = 'warning'" :class="`kt-button ${preventSubmissionOn === 'warning'?'primary':'secondary'}`">Warning (default)</button>
-			<button @click="preventSubmissionOn = 'NEVER'" :class="`kt-button ${preventSubmissionOn === 'NEVER'?'primary':'secondary'}`">Never</button>
-		</div>
+		<KtFieldRadioGroup
+			v-model="preventSubmissionOn"
+			label="Prevent Submission On" 
+			:options="[
+				{ label: 'error', value: 'error' },
+				{ label: 'warning', value: 'warning' },
+				{ label: 'NEVER', value: 'NEVER' }
+			]"
+		/>
 	</div>
 	<h1>KtForm</h1>
 	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, preventSubmissionOn, validators}" @submit="onSubmit">
-		<KtFieldRadioGroup formKey="radioGroup" label="Some Radio Group" :options="[{ label: 'a', value: 'a' }, { label: 'b', value: 'b' }]"/> 
+		<KtFieldRadioGroup
+			formKey="radioGroup"
+			label="Some RadioGroup" 
+			:options="[
+				{ label: 'a', value: 'a' },
+				{ label: 'b', value: 'b' }
+			]"
+		/>
+		<KtFieldCheckboxGroup
+			formKey="checkboxGroup"
+			label="Some CheckboxGroup"
+			:options="[
+				{ key: 'initiallyFalse', label: 'A (initiallyFalse)' },
+				{ key: 'initiallyNull', label: 'B (initiallyNull)' },
+				{ key: 'initiallyTrue', label: 'C (initiallyTrue)' }, 
+			]"
+		/>
 		<KtFieldText formKey="firstName" placeholder="Klaus" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="location" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText class="lol" formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
@@ -91,6 +110,11 @@ export default {
 
 		return {
 			formData: {
+				checkboxGroup: {
+					initiallyFalse: false,
+					initiallyNull: null,
+					initiallyTrue: true,
+				},
 				firstName: 'John',
 				lastName: 'Smith',
 				radioGroup: null,
@@ -145,16 +169,6 @@ h3 {
 
 	> :not(:last-child) {
 		margin-bottom: 1.25em;
-	}
-}
-
-.row {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-
-	> * {
-		margin-left: 4px;
 	}
 }
 
