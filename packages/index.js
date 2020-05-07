@@ -44,6 +44,7 @@ import KtTheme from './kotti-theme'
 import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
 import KtField from './next/kotti-field'
+import KtFieldCheckbox from './next/kotti-field-checkbox'
 import KtFieldText from './next/kotti-field-text'
 import {
 	KtForm,
@@ -73,6 +74,7 @@ const components = {
 	KtDropdownMenu,
 	KtField,
 	KtFieldText,
+	KtFieldCheckbox,
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,

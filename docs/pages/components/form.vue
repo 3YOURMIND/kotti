@@ -4,8 +4,8 @@
 <ClientOnly>
 	<h1>KtForm Settings</h1>
 	<div class="wrapper">
-		<div><input type="checkbox" v-model="hideValidation" /> Hide Validation</div>
-		<div><input type="checkbox" v-model="isLoading" /> Is Loading</div>
+		<KtFieldCheckbox v-model="hideValidation">Hide Validation</KtFieldCheckbox>
+		<KtFieldCheckbox v-model="isLoading">IsLoading</KtFieldCheckbox>
 		<div class="row">
 			Prevent Submission On:
 			<button @click="preventSubmissionOn = 'error'" :class="`kt-button ${preventSubmissionOn === 'error'?'primary':'secondary'}`">Error </button>
