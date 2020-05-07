@@ -1,10 +1,10 @@
 <template>
-	<KtField :getEmptyValue="() => null" v-bind="{ field }">
+	<KtField v-bind="{ field }" :getEmptyValue="() => null">
 		<div slot="container" class="kt-field-checkbox__wrapper">
 			<label class="kt-field-checkbox__wrapper__label">
 				<input
-					class="kt-field-checkbox__wrapper__input"
 					v-bind="inputProps"
+					class="kt-field-checkbox__wrapper__input"
 					@change="onChange"
 				/>
 				<div
@@ -13,16 +13,16 @@
 				>
 					<svg
 						class="kt-field-checkbox__wrapper__checkbox__check"
-						width="9"
+						fill="none"
 						height="8"
 						viewBox="0 0 9 8"
-						fill="none"
+						width="9"
 						xmlns="http://www.w3.org/2000/svg"
 					>
 						<path
 							d="M1 3.92761L2.92242 6L8 1"
-							stroke-width="2"
 							stroke-linecap="round"
+							stroke-width="2"
 						/>
 					</svg>
 				</div>

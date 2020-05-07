@@ -38,8 +38,8 @@
 
 		<button
 			class="kt-button primary submit__button"
-			type="submit"
 			:disabled="isDisabled"
+			type="submit"
 		>
 			<i v-if="isLoading" class="kt-circle-loading" />
 			{{ label }}

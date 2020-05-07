@@ -55,6 +55,7 @@
 		"@3yourmind/yoco": "^1.4.3",
 		"@metatypes/units": "^0.4.0",
 		"@popperjs/core": "^2.0.5",
+		"@vue/eslint-config-typescript": "^5.0.2",
 		"color": "^3.1.2",
 		"css-vars-ponyfill": "^2.2.0",
 		"dayjs": "^1.8.20",

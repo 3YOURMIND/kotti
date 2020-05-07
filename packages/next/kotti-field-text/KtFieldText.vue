@@ -1,5 +1,5 @@
 <template>
-	<KtField :getEmptyValue="() => null" v-bind="{ field }">
+	<KtField v-bind="{ field }" :getEmptyValue="() => null">
 		<input v-bind="inputProps" @input="onInput" />
 	</KtField>
 </template>

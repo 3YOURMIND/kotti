@@ -10,11 +10,11 @@
 			@setValue="setValue({ ...$event, index })"
 		>
 			<slot
-				name="default"
 				:addAfter="(newRow) => addAfter(index, newRow)"
 				:addBefore="(newRow) => addBefore(index, newRow)"
 				:deleteSelf="() => deleteSelf(index)"
 				:index="index"
+				name="default"
 				:setValues="(newValue) => setValues(index, newValue)"
 				:values="cloneDeep(values)"
 			/>

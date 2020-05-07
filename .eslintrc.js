@@ -19,6 +19,7 @@ module.exports = {
 		'plugin:sonarjs/recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:prettier/recommended',
+		'@vue/typescript',
 		'prettier/vue',
 	],
 	rules: {
@@ -48,6 +49,8 @@ module.exports = {
 				'newlines-between': 'always',
 			},
 		],
+		'vue/attribute-hyphenation': ['error', 'never'],
+		'vue/attributes-order': ['error', { alphabetical: true }],
 	},
 	overrides: [
 		{
