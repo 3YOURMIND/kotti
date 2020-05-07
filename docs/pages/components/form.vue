@@ -14,9 +14,9 @@
 		</div>
 	</div>
 	<h1>KtForm</h1>
-	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, preventSubmissionOn, validators }" @submit="onSubmit">
+	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, validators }" @submit="onSubmit">
 		<KtFieldText formKey="firstName" placeholder="Klaus" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="location" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
-		<KtFieldText formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
+		<KtFieldText class="lol" formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
 		<br />
 		<h2>Validation Example</h2>

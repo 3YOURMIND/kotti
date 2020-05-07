@@ -138,7 +138,6 @@ export default defineComponent({
 @import '../../kotti-style/_variables.scss';
 
 :root {
-	// TODO: Clarify why this is not global
 	--field-border-radius: 2px;
 }
 
@@ -146,17 +145,15 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	// TODO: Discuss: Spacing & Sizing should be handled by the parent
-	/* margin-bottom: 0.8rem; */
-
-	> :not(:first-child) {
-		margin-top: 0.4rem;
+	margin-bottom: 0.8rem;
+	:last-child {
+		margin-bottom: 0;
 	}
 }
 
 .kt-field {
 	&__header {
-		// FIXME: maybe this should be rem-based
+		margin-bottom: 0.4rem;
 		font-size: 0.9em;
 
 		> :not(:first-child) {
@@ -213,16 +210,9 @@ export default defineComponent({
 
 		.yoco {
 			display: flex;
-
-			// TODO: Why was this inline-block?
-			/* display: inline-block; */
 		}
 
 		&--left .yoco {
-			display: flex;
-			// TODO: Why was this inline-block?
-			/* display: inline-block; */
-
 			transform: translateX(-0.2rem);
 		}
 
@@ -272,181 +262,4 @@ export default defineComponent({
 		margin-left: 0.2em;
 	}
 }
-
-// .kt-field__input-container {
-// 	display: flex;
-// 	align-items: center;
-// 	min-height: 1.4em;
-// 	overflow: hidden;
-
-// 	border: $border-width solid var(--ui-03);
-// 	border-radius: $border-radius;
-
-// 	&:not(.kt-field__input-container--error):not(.kt-field__input-container--success):not(.kt-field__input-container--warning) {
-// 		&:active {
-// 			border-color: var(--interactive-04);
-// 			> .kt-field__input-container__icon:not(.kt-field__input-container__icon--interactive) {
-// 				color: var(--interactive-04);
-// 			}
-// 		}
-
-// 		&:focus-within {
-// 			box-shadow: 0 0 0 0.1em var(--interactive-04);
-// 		}
-// 	}
-
-// 	&--error {
-// 		border-color: var(--support-error);
-
-// 		&:active {
-// 			border-color: var(--support-error-light);
-// 			> .kt-field__input-container__icon--error {
-// 				color: var(--support-error-light);
-// 			}
-// 		}
-
-// 		&:focus-within {
-// 			box-shadow: 0 0 0 0.1em var(--support-error-light);
-// 		}
-// 	}
-
-// 	&--success {
-// 		border-color: var(--support-success);
-
-// 		&:active {
-// 			border-color: var(--support-success-light);
-
-// 			> .kt-field__input-container__icon--success {
-// 				color: var(--support-success-light);
-// 			}
-// 		}
-
-// 		&:focus-within {
-// 			box-shadow: 0 0 0 0.1em var(--support-success-light);
-// 		}
-// 	}
-
-// 	&--warning {
-// 		border-color: var(--support-warning);
-
-// 		&:active {
-// 			border-color: var(--support-warning-light);
-
-// 			> .kt-field__input-container__icon--warning {
-// 				color: var(--support-warning-light);
-// 			}
-// 		}
-
-// 		&:focus-within {
-// 			box-shadow: 0 0 0 0.1em var(--support-warning-light);
-// 		}
-// 	}
-
-// 	&__icon {
-// 		display: flex;
-// 		align-items: center;
-// 		align-self: stretch;
-// 		justify-content: center;
-// 		font-size: 1.25em;
-// 		color: var(--icon-01);
-// 		background: transparent;
-
-// 		&--error {
-// 			color: var(--support-error);
-// 		}
-
-// 		&--success {
-// 			color: var(--support-success);
-// 		}
-
-// 		&--warning {
-// 			color: var(--support-warning);
-// 		}
-
-// 		&--interactive {
-// 			color: var(--icon-02);
-// 			cursor: pointer;
-// 		}
-
-// 		&--interactive.kt-field__input-container__icon--danger {
-// 			&:hover {
-// 				color: var(--hover-danger);
-// 			}
-
-// 			&:active {
-// 				color: var(--danger);
-// 			}
-// 		}
-// 	}
-
-// 	&__affix {
-// 		display: flex;
-// 		align-items: center;
-// 		align-self: stretch;
-// 		justify-content: center;
-// 		color: var(--text-01);
-// 		white-space: nowrap;
-// 		background-color: var(--ui-01);
-// 		border: 0;
-// 	}
-
-// 	&__affix,
-// 	&__icon {
-// 		padding: 0.4em 0.2em;
-
-// 		/* any left affix/icon that is not followed by a left icon, needs to be extra padded from right */
-// 		&--left > *:not(.kt-field__input-container__icon--left) {
-// 			padding-right: 0.4em;
-// 		}
-
-// 		/* any right icon/affix that has an icon--right/suffix to its right, should be extra padded from left */
-// 		// https://stackoverflow.com/questions/2717480/css-selector-for-first-element-with-class/8539107
-// 		&--right {
-// 			// pad all right icons and the suffix
-// 			padding-left: 0.4em;
-// 		}
-
-// 		&--right ~ .kt-field__input-container__affix--right,
-// 		&--right ~ .kt-field__input-container__icon--right {
-// 			// restore normal padding to any --right encountered after the first --right class
-// 			padding-left: 0.2em;
-// 		}
-// 	}
-
-// 	/* field part of the field-group, other styles go to the component itself */
-// 	&__slot {
-// 		flex: 1;
-// 		padding: 0.4em 0.2em;
-
-// 		&:first-child {
-// 			padding-left: 0.4em;
-// 		}
-
-// 		&:last-child {
-// 			padding-right: 0.4em;
-// 		}
-// 	}
-// }
-
-// .kt-field-validation {
-// 	&--error,
-// 	&--success,
-// 	&--warning {
-// 		display: flex;
-// 		align-items: center;
-// 		line-height: 1.6;
-// 	}
-
-// 	&--error {
-// 		color: var(--support-error);
-// 	}
-
-// 	&--success {
-// 		color: var(--support-success);
-// 	}
-
-// 	&--warning {
-// 		color: var(--support-warning);
-// 	}
-// }
 </style>
