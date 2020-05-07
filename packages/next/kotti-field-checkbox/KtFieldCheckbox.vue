@@ -110,13 +110,14 @@ export default defineComponent({
 		width: 0.8rem;
 		height: 0.8rem;
 		margin-right: 0.4rem;
+		margin-left: 0.1rem;
 		background: var(--ui-background);
 		border: 1px solid var(--ui-02);
 		border-radius: var(--checkbox-border-radius);
 		transition: all ease-in-out var(--transition-short);
 
 		&__check {
-			opacity: 0;
+			opacity: 0.2;
 			transition: all ease-in-out var(--transition-short);
 			transform: scale(0.2);
 			path {
