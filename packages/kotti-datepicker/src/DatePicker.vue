@@ -109,11 +109,11 @@ export default {
 	methods: {
 		monthPrevious() {
 			this.date = this.date.subtract(1, 'month')
-			this.$emit('KtDateSelected', this.date.toDate())
+			this.$emit('KtMonthChanged', this.date.toDate())
 		},
 		monthNext() {
 			this.date = this.date.add(1, 'month')
-			this.$emit('KtDateSelected', this.date.toDate())
+			this.$emit('KtMonthChanged', this.date.toDate())
 		},
 		selectDay(day) {
 			this.date = this.date.set('date', day)
