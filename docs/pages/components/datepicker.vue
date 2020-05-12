@@ -28,9 +28,8 @@
 		label="Delivery Date"
 		mondayFirst
 		placeholder="Choose a date"
-		:initialValue="new Date()"
 	/>
-	{{ date }}
+	{{ date2 }}
 </div>
 
 ```html
@@ -39,7 +38,6 @@
 		label="Delivery Date"
 		mondayFirst
 		placeholder="Choose a date"
-		:initialValue="new Date()"
 />
 ```
 
@@ -105,7 +103,7 @@ export default {
 	data() {
 		return {
 			date: null,
-			date2: null,
+			date2: new Date(),
 			date3: null,
 			date4: null,
 			monthCN: [

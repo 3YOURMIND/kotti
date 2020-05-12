@@ -19,6 +19,7 @@
 					:daysTranslations="daysTranslations"
 					:monthsTranslations="monthsTranslations"
 					@KtDateSelected="setDate"
+					@KtMonthChanged="setDate($event, true)"
 				/>
 			</div>
 		</div>
@@ -38,12 +39,12 @@ export default {
 	},
 	mixins: [clickaway],
 	props: {
-		initialValue: { type: [Date, Number, String] },
+		daysTranslations: { type: Array },
 		label: { type: String, default: null },
 		mondayFirst: { type: Boolean, default: false },
-		daysTranslations: { type: Array },
 		monthsTranslations: { type: Array },
 		required: { type: Boolean, default: false },
+		value: { type: [Date, Number, String] },
 	},
 	data() {
 		return {
@@ -64,11 +65,11 @@ export default {
 		},
 	},
 	watch: {
-		initialValue: {
+		value: {
+			immediate: true,
 			handler(value) {
 				this.currentDate = value ? new Date(value) : null
 			},
-			immediate: true,
 		},
 	},
 	methods: {
@@ -78,9 +79,9 @@ export default {
 		handleBlur() {
 			this.showDatePicker = false
 		},
-		setDate(value) {
+		setDate(value, showDatePicker = false) {
 			this.currentDate = value
-			this.showDatePicker = false
+			this.showDatePicker = showDatePicker
 			this.$emit('input', value)
 		},
 	},
