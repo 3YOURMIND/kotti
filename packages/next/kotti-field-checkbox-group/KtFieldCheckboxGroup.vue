@@ -5,13 +5,20 @@
 			class="kt-field-checkbox-group__wrapper"
 			:forceUpdateKey="forceUpdateKey"
 		>
-			<label v-for="option of optionsWithChecked" :key="option.key">
+			<label
+				v-for="option of optionsWithChecked"
+				:key="option.key"
+				class="kt-field-checkbox__wrapper__label"
+			>
 				<input
 					v-bind="field.inputProps"
 					:checked="option.checked"
+					class="kt-field-checkbox__wrapper__input"
 					type="checkbox"
 					@change="onChange(option.key, $event)"
 				/>
+				<KtCheckbox :value="option.checked" />
+
 				<div v-text="option.label" />
 			</label>
 		</div>
@@ -22,6 +29,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import KtField from '../kotti-field'
+import KtCheckbox from '../kotti-field-checkbox/KtCheckbox.vue'
 import { ktFieldProps } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
@@ -29,7 +37,7 @@ import { KtFieldCheckboxGroup } from './types'
 
 export default defineComponent({
 	name: 'KtFieldCheckboxGroup',
-	components: { KtField },
+	components: { KtField, KtCheckbox },
 	props: {
 		...ktFieldProps,
 		options: { required: true, type: Array },
@@ -78,12 +86,11 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 
-	> * {
+	&__label {
 		display: flex;
-
-		> :not(:first-child) {
-			margin-left: 8px;
-		}
+	}
+	&__input {
+		display: none;
 	}
 }
 </style>

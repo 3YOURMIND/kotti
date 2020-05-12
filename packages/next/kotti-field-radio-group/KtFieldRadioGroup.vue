@@ -98,7 +98,6 @@ export default defineComponent({
 		margin-bottom: 0.8em;
 	}
 	&__radio {
-		// position: relative;
 		display: grid;
 		place-items: center;
 		width: var(--radio-size);
