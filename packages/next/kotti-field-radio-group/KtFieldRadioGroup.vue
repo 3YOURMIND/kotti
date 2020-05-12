@@ -92,10 +92,10 @@ export default defineComponent({
 .kt-field-radio-group__wrapper {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 1.25em;
+	margin-bottom: 0.8rem;
 	&__label {
 		display: flex;
-		margin-bottom: 0.8em;
+		margin-bottom: 0.4rem;
 	}
 	&__radio {
 		display: grid;

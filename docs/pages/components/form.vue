@@ -166,10 +166,6 @@ h3 {
 	background-color: var(--ui-01);
 	border: 1px solid var(--ui-03);
 	border-radius: $border-radius;
-
-	> :not(:last-child) {
-		margin-bottom: 1.25em;
-	}
 }
 
 // .custom-wrapper {

@@ -8,12 +8,12 @@
 			<label
 				v-for="option of optionsWithChecked"
 				:key="option.key"
-				class="kt-field-checkbox__wrapper__label"
+				class="kt-field-checkbox-group__wrapper__label"
 			>
 				<input
 					v-bind="field.inputProps"
 					:checked="option.checked"
-					class="kt-field-checkbox__wrapper__input"
+					class="kt-field-checkbox-group__wrapper__input"
 					type="checkbox"
 					@change="onChange(option.key, $event)"
 				/>
@@ -88,7 +88,9 @@ export default defineComponent({
 
 	&__label {
 		display: flex;
+		margin-bottom: 0.4rem;
 	}
+
 	&__input {
 		display: none;
 	}
