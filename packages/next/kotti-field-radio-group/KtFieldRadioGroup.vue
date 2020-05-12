@@ -5,15 +5,29 @@
 			slot="container"
 			class="kt-field-radio-group__wrapper"
 		>
-			<label v-for="option in options" :key="option.value">
+			<label
+				v-for="option in options"
+				:key="option.value"
+				class="kt-field-radio-group__wrapper__label"
+			>
 				<input
 					v-bind="field.inputProps"
 					:checked="field.currentValue === option.value"
+					class="kt-field-radio-group__wrapper__input"
 					:name="name"
 					type="radio"
 					:value="option.value"
 					@change="onChange(option.value)"
 				/>
+				<div
+					class="kt-field-radio-group__wrapper__radio"
+					:class="{
+						'kt-field-radio-group__wrapper__radio--checked':
+							option.value === value,
+					}"
+				>
+					<div class="kt-field-radio-group__wrapper__radio__inside"></div>
+				</div>
 				<div v-text="option.label" />
 			</label>
 		</div>
@@ -70,17 +84,47 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+:root {
+	--radio-size: 0.8rem;
+	--radio-inside-side: 0.2rem;
+}
 .kt-field-radio-group__wrapper {
 	display: flex;
 	flex-direction: column;
-
-	> * {
+	margin-bottom: 1.25em;
+	&__label {
 		display: flex;
+		margin-bottom: 0.8em;
+	}
+	&__radio {
+		// position: relative;
+		display: grid;
+		place-items: center;
+		width: var(--radio-size);
+		height: var(--radio-size);
+		margin-right: 0.4rem;
+		margin-left: 0.1rem;
+		background-color: var(--ui-background);
+		border: 1px solid var(--ui-02);
+		border-radius: 50%;
+		transition: all ease-in-out var(--transition-short);
 
-		> :not(:first-child) {
-			margin-left: 8px;
+		&__inside {
+			display: block;
+			width: var(--radio-inside-side);
+			height: var(--radio-inside-side);
+			background-color: var(--ui-background);
+			border-radius: 50%;
 		}
+		&--checked {
+			background-color: var(--interactive-01);
+			border-color: var(--interactive-01);
+			box-shadow: var(--shadow-base);
+		}
+	}
+	&__input {
+		display: none;
 	}
 }
 </style>
