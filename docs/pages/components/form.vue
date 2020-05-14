@@ -2,13 +2,17 @@
 # Form
 
 <ClientOnly>
+	<h1>KtFields Without Form</h1>
+	<div>
+		<KtFieldText v-model="textValue"> </KtFieldText>
+	</div>
 	<h1>KtForm Settings</h1>
 	<div class="wrapper">
 		<KtFieldCheckbox v-model="hideValidation">Hide Validation</KtFieldCheckbox>
 		<KtFieldCheckbox v-model="isLoading">IsLoading</KtFieldCheckbox>
 		<KtFieldRadioGroup
 			v-model="preventSubmissionOn"
-			label="Prevent Submission On" 
+			label="Prevent Submission On"
 			:options="[
 				{ label: 'error', value: 'error' },
 				{ label: 'warning', value: 'warning' },
@@ -20,7 +24,7 @@
 	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, preventSubmissionOn, validators}" @submit="onSubmit">
 		<KtFieldRadioGroup
 			formKey="radioGroup"
-			label="Some RadioGroup" 
+			label="Some RadioGroup"
 			:options="[
 				{ label: 'a', value: 'a' },
 				{ label: 'b', value: 'b' }
@@ -32,11 +36,11 @@
 			:options="[
 				{ key: 'initiallyFalse', label: 'A (initiallyFalse)' },
 				{ key: 'initiallyNull', label: 'B (initiallyNull)' },
-				{ key: 'initiallyTrue', label: 'C (initiallyTrue)' }, 
+				{ key: 'initiallyTrue', label: 'C (initiallyTrue)' },
 			]"
 		/>
-		<KtFieldText formKey="firstName" placeholder="Klaus" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="location" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
-		<KtFieldText class="lol" formKey="firstName" placeholder="Klaus" :helpText="`Help for ${formData.firstName}`" label="First Name"/>
+		<KtFieldText :isDisabled="formData['disableTextField']" formKey="firstName" placeholder="Klaus" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="location" :helpText="`Help for firstName`" label="First Name"/>
+		<KtFieldCheckbox formKey="disableTextField">Disable FirstName</KtFieldCheckbox>
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
 		<br />
 		<h2>Validation Example</h2>
@@ -110,6 +114,7 @@ export default {
 
 		return {
 			formData: {
+				disableTextField: false,
 				checkboxGroup: {
 					initiallyFalse: false,
 					initiallyNull: null,
@@ -125,6 +130,7 @@ export default {
 			hideValidation: false,
 			isLoading: false,
 			preventSubmissionOn: 'NEVER',
+			textValue: null,
 			validators,
 		}
 	},

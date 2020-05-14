@@ -28,34 +28,28 @@
 			<div class="kt-field__input-container">
 				<div
 					v-if="field.prefix"
-					class="kt-field__input-container__affix kt-field__input-container__affix--left"
+					:class="affixClasses(['left'])"
 					v-text="field.prefix"
 				/>
-				<div
-					v-if="field.leftIcon"
-					class="kt-field__input-container__icon kt-field__input-container__icon--left"
-				>
+				<div v-if="field.leftIcon" :class="iconClasses(['left'])">
 					<i class="yoco" v-text="field.leftIcon" />
 				</div>
 				<div class="kt-field__input-container__slot">
 					<slot name="default" />
 				</div>
 				<div
-					v-if="!field.hideClear && field.currentValue !== getEmptyValue()"
-					class="kt-field__input-container__icon kt-field__input-container__icon--clear"
+					v-if="showClear"
+					:class="iconClasses(['clear'])"
 					@click="field.setValue(getEmptyValue())"
 				>
 					<i class="yoco" role="button" v-text="'close'" />
 				</div>
-				<div
-					v-if="field.rightIcon"
-					class="kt-field__input-container__icon kt-field__input-container__icon--right"
-				>
+				<div v-if="field.rightIcon" :class="iconClasses(['right'])">
 					<i class="yoco" v-text="field.rightIcon" />
 				</div>
 				<div
 					v-if="field.suffix"
-					class="kt-field__input-container__affix kt-field__input-container__affix--right"
+					:class="affixClasses(['right'])"
 					v-text="field.suffix"
 				/>
 			</div>
@@ -64,7 +58,7 @@
 
 		<div
 			v-if="!field.isLoading && showValidation"
-			:class="`kt-field-validation--${validationType}`"
+			:class="`kt-field__validation kt-field__validation--${validationType}`"
 		>
 			<i class="yoco">{{ validationIcon }}</i>
 			{{ field.validation.text }}
@@ -102,6 +96,39 @@ export default defineComponent({
 				  ].join(' '),
 		)
 
+		const affixClasses = computed(() => (modifications: string[]) => ({
+			'kt-field__input-container__affix': true,
+			'kt-field__input-container__affix--disabled': props.field.isDisabled,
+			...modifications.reduce(
+				(acc: { [key: string]: boolean }, mod) => ({
+					...acc,
+					[`kt-field__input-container__affix--${mod}`]: true,
+				}),
+				{},
+			),
+		}))
+
+		const iconClasses = computed(() => (modifications: string[]) => {
+			return {
+				'kt-field__input-container__icon': true,
+				'kt-field__input-container__icon--disabled': props.field.isDisabled,
+				...modifications.reduce(
+					(acc: { [key: string]: boolean }, mod) => ({
+						...acc,
+						[`kt-field__input-container__icon--${mod}`]: true,
+					}),
+					{},
+				),
+			}
+		})
+
+		const showClear = computed(
+			() =>
+				!props.field.hideClear &&
+				props.field.currentValue !== props.getEmptyValue() &&
+				!props.field.isDisabled,
+		)
+
 		const validationType = computed(() => props.field.validation.type)
 
 		const showValidation = computed(
@@ -124,7 +151,10 @@ export default defineComponent({
 		})
 
 		return {
+			affixClasses,
+			iconClasses,
 			labelText,
+			showClear,
 			showValidation,
 			validationIcon,
 			validationType,
@@ -135,8 +165,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../../kotti-style/_variables.scss';
-
 :root {
 	--field-border-radius: 2px;
 }
@@ -147,8 +175,8 @@ export default defineComponent({
 	justify-content: space-between;
 	margin-bottom: 0.8rem;
 
-	:last-child {
-		margin-bottom: 0;
+	> :not(:last-child) {
+		margin-bottom: 0.4rem;
 	}
 
 	&:focus-within {
@@ -160,7 +188,6 @@ export default defineComponent({
 
 .kt-field {
 	&__header {
-		margin-bottom: 0.4rem;
 		font-size: 0.9em;
 
 		> :not(:first-child) {
@@ -177,6 +204,11 @@ export default defineComponent({
 		color: var(--text-03);
 	}
 
+	&__validation {
+		display: flex;
+		align-items: center;
+	}
+
 	&__input-container {
 		display: flex;
 		align-items: center;
@@ -188,47 +220,56 @@ export default defineComponent({
 		// The actual input
 		&__slot {
 			flex-grow: 1;
-			color: var(--text-01);
-		}
-	}
-
-	// Prefix and suffix
-	&__input-container__affix {
-		color: var(--text-02);
-
-		&--left {
-			padding-right: 0.8rem;
-			margin-right: 0.8rem;
-			border-right: 1px solid var(--ui-02);
 		}
 
-		&--right {
-			padding-left: 0.8rem;
-			margin-left: 0.8rem;
-			border-left: 1px solid var(--ui-02);
-		}
-	}
+		// Prefix and suffix
+		&__affix {
+			color: var(--text-02);
 
-	// Icon before and after
-	&__input-container__icon {
-		font-size: 1rem;
-		line-height: 1;
-		color: var(--icon-02);
+			&--left {
+				padding-right: 0.8rem;
+				margin-right: 0.8rem;
+				border-right: 1px solid var(--ui-02);
+			}
 
-		.yoco {
-			display: flex;
-		}
+			&--right {
+				padding-left: 0.8rem;
+				margin-left: 0.8rem;
+				border-left: 1px solid var(--ui-02);
+			}
 
-		&--left .yoco {
-			transform: translateX(-0.2rem);
-		}
-
-		&--right .yoco {
-			transform: translateX(0.2rem);
+			&--disabled {
+				color: var(--text-05);
+			}
 		}
 
-		&--clear {
-			cursor: pointer;
+		// Icon before and after
+		&__icon {
+			font-size: 1rem;
+			line-height: 1;
+			color: var(--icon-02);
+
+			.yoco {
+				display: flex;
+			}
+
+			&--left {
+				transform: translateX(-0.2rem);
+			}
+
+			&--right {
+				transform: translateX(0.2rem);
+			}
+
+			&--clear {
+				&:hover {
+					cursor: pointer;
+				}
+			}
+
+			&--disabled {
+				color: var(--text-05); //no icon--disabled token
+			}
 		}
 	}
 
@@ -238,11 +279,19 @@ export default defineComponent({
 		.kt-field__input-container {
 			box-shadow: 0 0 0 2px var(--support-error-light);
 		}
+
+		.kt-field__validation--error {
+			color: var(--support-error);
+		}
 	}
 
 	&--success {
 		.kt-field__input-container {
 			box-shadow: 0 0 0 2px var(--support-success-light);
+		}
+
+		.kt-field__validation--success {
+			color: var(--support-success);
 		}
 	}
 
@@ -250,6 +299,14 @@ export default defineComponent({
 		.kt-field__input-container {
 			box-shadow: 0 0 0 2px var(--support-warning-light);
 		}
+
+		.kt-field__validation--warning {
+			color: var(--support-warning);
+		}
+	}
+
+	&--disabled {
+		border-color: var(--ui-01);
 	}
 }
 
