@@ -4,6 +4,8 @@
 <ClientOnly>
 	<h1>KtFields Without Form</h1>
 	<div>
+		<KtFieldCheckbox v-model="disableSingleSelect">Disable Single Select</KtFieldCheckbox>
+		<KtFieldSingleSelect :options="singleSelectOptions" placeholder='select something' :isDisabled="disableSingleSelect" v-model="selectedOption"/>
 		<KtFieldText v-model="textValue"> </KtFieldText>
 	</div>
 	<h1>KtForm Settings</h1>
@@ -113,6 +115,7 @@ export default {
 		}
 
 		return {
+			disableSingleSelect: false,
 			formData: {
 				disableTextField: false,
 				checkboxGroup: {
@@ -131,6 +134,11 @@ export default {
 			isLoading: false,
 			preventSubmissionOn: 'NEVER',
 			textValue: null,
+			selectedOption: 0,
+			singleSelectOptions: [
+				{ label: 'label 1', value: 0 },
+				{ label: 'label 2', value: 1 },
+			],
 			validators,
 		}
 	},

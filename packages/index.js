@@ -47,6 +47,7 @@ import KtField from './next/kotti-field'
 import KtFieldCheckbox from './next/kotti-field-checkbox'
 import KtFieldCheckboxGroup from './next/kotti-field-checkbox-group'
 import KtFieldRadioGroup from './next/kotti-field-radio-group'
+import KtFieldSingleSelect from './next/kotti-field-single-select'
 import KtFieldText from './next/kotti-field-text'
 import {
 	KtForm,
@@ -77,6 +78,7 @@ const components = {
 	KtField,
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
+	KtFieldSingleSelect,
 	KtFieldRadioGroup,
 	KtFieldText,
 	KtForm,
@@ -161,6 +163,7 @@ export {
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
 	KtFieldRadioGroup,
+	KtFieldSingleSelect,
 	KtFieldText,
 	KtForm,
 	KtFormControllerList,
