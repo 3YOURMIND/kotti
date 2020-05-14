@@ -6,7 +6,11 @@
 	<div>
 		<KtFieldCheckbox v-model="disableSingleSelect">Disable Single Select</KtFieldCheckbox>
 		<KtFieldSingleSelect :options="singleSelectOptions" placeholder='select something' :isDisabled="disableSingleSelect" v-model="selectedOption"/>
-		<KtFieldText v-model="textValue"> </KtFieldText>
+		<KtFieldText
+			label="Some Label"
+			v-model="textValue"
+			:validator="(val)=> val === null? {type: 'error', text: 'required field can not be left empty'}:{type: null}"
+		/>
 	</div>
 	<h1>KtForm Settings</h1>
 	<div class="wrapper">

@@ -207,6 +207,9 @@ export default defineComponent({
 	&__validation {
 		display: flex;
 		align-items: center;
+		> i {
+			margin-right: 0.1rem;
+		}
 	}
 
 	&__input-container {
