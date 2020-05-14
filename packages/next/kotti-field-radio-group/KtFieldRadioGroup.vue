@@ -23,7 +23,7 @@
 					class="kt-field-radio-group__wrapper__radio"
 					:class="{
 						'kt-field-radio-group__wrapper__radio--checked':
-							option.value === value,
+							field.currentValue === option.value,
 					}"
 				>
 					<div class="kt-field-radio-group__wrapper__radio__inside"></div>
