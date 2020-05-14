@@ -24,7 +24,7 @@ export namespace KottiField {
 		>
 
 		export interface ReturnsWithRefs<DATA_TYPE extends unknown> {
-			currentValue: Ref<DATA_TYPE>
+			currentValue: Ref<KottiField.Props<DATA_TYPE>['value']>
 			helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
 			hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
 			hideValidation: KottiForm.Context['hideValidation']
