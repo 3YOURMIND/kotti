@@ -41,7 +41,7 @@
 					<slot name="default" />
 				</div>
 				<div
-					v-if="!field.hideClear"
+					v-if="!field.hideClear && field.currentValue !== getEmptyValue()"
 					class="kt-field__input-container__icon kt-field__input-container__icon--clear"
 					@click="field.setValue(getEmptyValue())"
 				>
