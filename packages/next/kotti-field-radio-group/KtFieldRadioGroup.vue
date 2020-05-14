@@ -66,7 +66,8 @@ export default defineComponent({
 		const field = useField<KtFieldRadioGroup.Value | null>({
 			emit,
 			isCorrectDataType: (value): value is KtFieldRadioGroup.Value | null =>
-				['number', 'string'].includes(typeof value) || value === null,
+				['number', 'string', 'boolean'].includes(typeof value) ||
+				value === null,
 			props,
 		})
 

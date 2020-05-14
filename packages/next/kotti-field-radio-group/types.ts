@@ -12,5 +12,5 @@ export namespace KtFieldRadioGroup {
 		options: KtFieldRadioGroup.Entry[]
 	}
 
-	export type Value = string | number
+	export type Value = string | number | boolean
 }
