@@ -113,12 +113,6 @@ export default defineComponent({
 			return null
 		})
 
-		const formFieldLabelHelpIconClasses = [
-			'kt-field-label__help-text__icon',
-			'kt-field-label__help-text__icon--interactive',
-			'kt-field-label__help-text__icon--primary',
-		]
-
 		const validationIcon = computed(() => {
 			if (validationType.value === null) return ''
 
@@ -130,7 +124,6 @@ export default defineComponent({
 		})
 
 		return {
-			formFieldLabelHelpIconClasses,
 			labelText,
 			showValidation,
 			validationIcon,
