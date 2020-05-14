@@ -29,7 +29,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import KtField from '../kotti-field'
-import KtCheckbox from '../kotti-field-checkbox/KtCheckbox.vue'
+import { KtCheckbox } from '../kotti-field-shared'
 import { ktFieldProps } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
