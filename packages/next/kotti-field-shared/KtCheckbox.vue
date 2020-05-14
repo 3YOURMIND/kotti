@@ -16,9 +16,10 @@
 		</svg>
 	</div>
 </template>
+
 <script>
 export default {
-	name: 'KtCheckbox',
+	name: 'KtFieldCheckboxStyleWrapper',
 	props: {
 		value: {
 			required: true,
@@ -32,7 +33,9 @@ export default {
 	},
 }
 </script>
-<style lang="scss">
+
+<style lang="scss" scoped>
+// this has to be scoped
 .kt-checkbox {
 	display: inline-grid;
 	place-items: center;
