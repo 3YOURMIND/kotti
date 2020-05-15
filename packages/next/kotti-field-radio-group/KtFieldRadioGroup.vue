@@ -94,10 +94,12 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 0.8rem;
+
 	&__label {
 		display: flex;
 		margin-bottom: 0.4rem;
 	}
+
 	&__radio {
 		display: grid;
 		place-items: center;
@@ -117,12 +119,14 @@ export default defineComponent({
 			background-color: var(--ui-background);
 			border-radius: 50%;
 		}
+
 		&--checked {
 			background-color: var(--interactive-01);
 			border-color: var(--interactive-01);
 			box-shadow: var(--shadow-base);
 		}
 	}
+
 	&__input {
 		display: none;
 	}

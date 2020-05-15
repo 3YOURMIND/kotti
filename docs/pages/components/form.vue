@@ -20,9 +20,9 @@
 			v-model="preventSubmissionOn"
 			label="Prevent Submission On"
 			:options="[
-				{ label: 'error', value: 'error' },
-				{ label: 'warning', value: 'warning' },
-				{ label: 'NEVER', value: 'NEVER' }
+				{ label: 'Error', value: 'error' },
+				{ label: 'Warning', value: 'warning' },
+				{ label: 'Never', value: 'NEVER' }
 			]"
 		/>
 	</div>
@@ -114,7 +114,7 @@ export default {
 				if (value.length < 5)
 					return { type: 'warning', text: 'Your username is already taken' }
 
-				return { type: 'success', text: 'Your username is available' }
+				return { type: 'success', text: '' }
 			},
 		}
 
@@ -185,31 +185,4 @@ h3 {
 	border: 1px solid var(--ui-03);
 	border-radius: $border-radius;
 }
-
-// .custom-wrapper {
-// 	display: flex;
-// 	flex-direction: row;
-// 	background-color: var(--ui-01);
-// 	border: 4px double var(--interactive-04);
-// 	border-radius: $border-radius;
-// 	padding: 1.25em;
-// 	~ .custom-group {
-// 		border: $border-width solid magenta;
-// 		border-radius: $border-radius;
-
-// 		&:active {
-// 			box-shadow: 0 0 0 1px violet, 0 0 0 2px indigo, 0 0 0 3px blue,
-// 				0 0 0 4px green, 0 0 0 5px yellow, 0 0 0 6px orange, 0 0 0 7px red;
-// 		}
-
-// 		&:focus-within {
-// 			box-shadow: 0 0 0 1px violet, 0 0 0 2px indigo, 0 0 0 3px blue,
-// 				0 0 0 4px green, 0 0 0 5px yellow, 0 0 0 6px orange, 0 0 0 7px red;
-// 		}
-// 	}
-// }
-
-// .custom-right-icon {
-// 	border: 1px solid black;
-// }
 </style>

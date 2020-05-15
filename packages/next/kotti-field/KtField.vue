@@ -1,9 +1,5 @@
 <template>
-	<component
-		:is="isGroup ? 'fieldset' : 'label'"
-		class="kt-field-wrapper"
-		:class="wrapperClass"
-	>
+	<component :is="isGroup ? 'fieldset' : 'label'" :class="wrapperClasses">
 		<div v-if="!field.isLoading" class="kt-field__header">
 			<component
 				:is="isGroup ? 'legend' : 'div'"
@@ -60,8 +56,8 @@
 			v-if="!field.isLoading && showValidation"
 			:class="`kt-field__validation kt-field__validation--${validationType}`"
 		>
-			<i class="yoco">{{ validationIcon }}</i>
-			{{ field.validation.text }}
+			<i v-if="validationText.length > 0" class="yoco">{{ validationIcon }}</i>
+			{{ validationText }}
 		</div>
 	</component>
 </template>
@@ -98,7 +94,6 @@ export default defineComponent({
 
 		const affixClasses = computed(() => (modifications: string[]) => ({
 			'kt-field__input-container__affix': true,
-			'kt-field__input-container__affix--disabled': props.field.isDisabled,
 			...modifications.reduce(
 				(acc: { [key: string]: boolean }, mod) => ({
 					...acc,
@@ -111,7 +106,6 @@ export default defineComponent({
 		const iconClasses = computed(() => (modifications: string[]) => {
 			return {
 				'kt-field__input-container__icon': true,
-				'kt-field__input-container__icon--disabled': props.field.isDisabled,
 				...modifications.reduce(
 					(acc: { [key: string]: boolean }, mod) => ({
 						...acc,
@@ -129,15 +123,22 @@ export default defineComponent({
 				!props.field.isDisabled,
 		)
 
+		const validationText = computed(
+			() => props.field.validation.type !== null && props.field.validation.text,
+		)
+
 		const validationType = computed(() => props.field.validation.type)
 
 		const showValidation = computed(
-			() => validationType.value !== null && !props.field.hideValidation,
+			() => props.field.validation.type !== null && !props.field.hideValidation,
 		)
 
-		const wrapperClass = computed(() => {
-			if (showValidation.value) return `kt-field--${validationType.value}`
-			return null
+		const wrapperClasses = computed(() => {
+			return {
+				'kt-field-wrapper': true,
+				'kt-field-wrapper--disabled': props.field.isDisabled,
+				[`kt-field-wrapper--${validationType.value}`]: showValidation.value,
+			}
 		})
 
 		const validationIcon = computed(() => {
@@ -157,8 +158,9 @@ export default defineComponent({
 			showClear,
 			showValidation,
 			validationIcon,
+			validationText,
 			validationType,
-			wrapperClass,
+			wrapperClasses,
 		}
 	},
 })
@@ -180,8 +182,71 @@ export default defineComponent({
 	}
 
 	&:focus-within {
+		&:not(.kt-field-wrapper--error):not(.kt-field-wrapper--success):not(.kt-field-wrapper--warning) {
+			.kt-field__input-container {
+				box-shadow: 0 0 0 2px var(--interactive-05);
+			}
+		}
+		&.kt-field-wrapper--error {
+			.kt-field__input-container {
+				box-shadow: 0 0 0 2px var(--support-error-light);
+			}
+		}
+		&.kt-field-wrapper--success {
+			.kt-field__input-container {
+				box-shadow: 0 0 0 2px var(--support-success-light);
+			}
+		}
+		&.kt-field-wrapper--warning {
+			.kt-field__input-container {
+				box-shadow: 0 0 0 2px var(--support-warning-light);
+			}
+		}
+	}
+	// states
+
+	&--error {
 		.kt-field__input-container {
-			box-shadow: 0 0 0 2px var(--interactive-05);
+			box-shadow: 0 0 0 1px var(--support-error-light);
+		}
+
+		.kt-field__validation--error {
+			color: var(--support-error);
+		}
+	}
+
+	&--success {
+		.kt-field__input-container {
+			box-shadow: 0 0 0 1px var(--support-success-light);
+		}
+
+		.kt-field__validation--success {
+			color: var(--support-success);
+		}
+	}
+
+	&--warning {
+		.kt-field__input-container {
+			box-shadow: 0 0 0 1px var(--support-warning-light);
+		}
+
+		.kt-field__validation--warning {
+			color: var(--support-warning);
+		}
+	}
+
+	&--disabled {
+		.kt-field__input-container {
+			border: 2px solid var(--ui-01);
+
+			&__affix {
+				color: var(--text-05);
+			}
+
+			&__icon {
+				// no icon--disabled token
+				color: var(--text-05);
+			}
 		}
 	}
 }
@@ -202,14 +267,6 @@ export default defineComponent({
 
 	&__help-text {
 		color: var(--text-03);
-	}
-
-	&__validation {
-		display: flex;
-		align-items: center;
-		> i {
-			margin-right: 0.1rem;
-		}
 	}
 
 	&__input-container {
@@ -240,10 +297,6 @@ export default defineComponent({
 				margin-left: 0.8rem;
 				border-left: 1px solid var(--ui-02);
 			}
-
-			&--disabled {
-				color: var(--text-05);
-			}
 		}
 
 		// Icon before and after
@@ -269,47 +322,15 @@ export default defineComponent({
 					cursor: pointer;
 				}
 			}
-
-			&--disabled {
-				color: var(--text-05); //no icon--disabled token
-			}
 		}
 	}
 
-	// states
-
-	&--error {
-		.kt-field__input-container {
-			box-shadow: 0 0 0 2px var(--support-error-light);
+	&__validation {
+		display: flex;
+		align-items: center;
+		> i {
+			margin-right: 0.1rem;
 		}
-
-		.kt-field__validation--error {
-			color: var(--support-error);
-		}
-	}
-
-	&--success {
-		.kt-field__input-container {
-			box-shadow: 0 0 0 2px var(--support-success-light);
-		}
-
-		.kt-field__validation--success {
-			color: var(--support-success);
-		}
-	}
-
-	&--warning {
-		.kt-field__input-container {
-			box-shadow: 0 0 0 2px var(--support-warning-light);
-		}
-
-		.kt-field__validation--warning {
-			color: var(--support-warning);
-		}
-	}
-
-	&--disabled {
-		border-color: var(--ui-01);
 	}
 }
 
