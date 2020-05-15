@@ -65,6 +65,7 @@ export default defineComponent({
 	border: 0;
 	outline: none;
 	color: var(--text-01);
+
 	&:disabled {
 		color: var(--text-05);
 	}
