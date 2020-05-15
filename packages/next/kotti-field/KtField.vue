@@ -36,7 +36,7 @@
 				<div
 					v-if="showClear"
 					:class="iconClasses(['clear'])"
-					@click="field.setValue(getEmptyValue())"
+					@click.stop="field.setValue(getEmptyValue())"
 				>
 					<i class="yoco" role="button" v-text="'close'" />
 				</div>
@@ -241,12 +241,22 @@ export default defineComponent({
 		.kt-field__input-container {
 			border: 2px solid var(--ui-01);
 
-			&__slot * {
-				cursor: not-allowed;
-			}
-
 			&__affix {
 				color: var(--text-05);
+			}
+
+			&__slot {
+				input {
+					// to overwrite native disabled bg for inputs
+					background-color: transparent;
+					cursor: not-allowed;
+
+					&::-webkit-input-placeholder, /* Edge */
+					&:-ms-input-placeholder, /* Internet Explorer */
+					&::placeholder {
+						color: var(--text-05);
+					}
+				}
 			}
 
 			&__icon {
@@ -286,6 +296,14 @@ export default defineComponent({
 		// The actual input
 		&__slot {
 			flex-grow: 1;
+
+			input {
+				&::-webkit-input-placeholder, /* Edge */
+				&:-ms-input-placeholder, /* Internet Explorer */
+				&::placeholder {
+					color: var(--text-03);
+				}
+			}
 		}
 
 		// Prefix and suffix

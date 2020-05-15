@@ -61,19 +61,12 @@ export default defineComponent({
 	padding: 0;
 	margin: 0;
 	line-height: 1.6;
-	background: transparent;
 	border: 0;
 	outline: none;
 	color: var(--text-01);
 
 	&:disabled {
 		color: var(--text-05);
-	}
-
-	&::-webkit-input-placeholder, /* Edge */
-	&:-ms-input-placeholder, /* Internet Explorer */
-	&::placeholder {
-		color: var(--text-03);
 	}
 }
 </style>
