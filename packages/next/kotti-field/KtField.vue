@@ -56,7 +56,7 @@
 			v-if="!field.isLoading && showValidation"
 			:class="`kt-field__validation kt-field__validation--${validationType}`"
 		>
-			<i v-if="validationText.length > 0" class="yoco">{{ validationIcon }}</i>
+			<i v-if="validationText" class="yoco">{{ validationIcon }}</i>
 			{{ validationText }}
 		</div>
 	</component>

@@ -129,17 +129,17 @@ export namespace KottiField {
 
 		export type Error = {
 			type: 'error'
-			text: string
+			text: string | null
 		}
 
 		export type Success = {
 			type: 'success'
-			text: string
+			text: string | null
 		}
 
 		export type Warning = {
 			type: 'warning'
-			text: string
+			text: string | null
 		}
 
 		export type Result =
