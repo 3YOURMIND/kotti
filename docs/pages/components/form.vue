@@ -4,8 +4,19 @@
 <ClientOnly>
 	<h1>KtFields Without Form</h1>
 	<div>
+		<h5>KtFieldCheckbox</h5>
 		<KtFieldCheckbox v-model="disableSingleSelect">Disable Single Select</KtFieldCheckbox>
-		<KtFieldSingleSelect :options="singleSelectOptions" placeholder='select something' :isDisabled="disableSingleSelect" v-model="selectedOption"/>
+		<h5>KtFieldSelects</h5>
+		<KtFieldSingleSelect
+			prefix="Prefix"
+			suffix="Suffix"
+			:options="singleSelectOptions"
+			placeholder='select something'
+			leftIcon="shipping"
+			:isDisabled="disableSingleSelect"
+			v-model="selectedOption"
+		/>
+		<h5>KtFieldText</h5>
 		<KtFieldText
 			label="Some Label"
 			v-model="textValue"
@@ -114,7 +125,7 @@ export default {
 				if (value.length < 5)
 					return { type: 'warning', text: 'Your username is already taken' }
 
-				return { type: 'success', text: '' }
+				return { type: 'success' }
 			},
 		}
 

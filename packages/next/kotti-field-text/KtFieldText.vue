@@ -56,7 +56,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .kt-field-text__wrapper {
 	display: flex;
-	align-self: center;
 	width: 100%;
 	padding: 0;
 	margin: 0;
