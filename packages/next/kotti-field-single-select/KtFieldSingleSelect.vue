@@ -24,6 +24,8 @@ import {
 	defineComponent,
 	computed,
 	ref,
+	onMounted,
+	watchEffect,
 } from '@vue/composition-api'
 import { Select as ElSelect, Option as ElOption } from 'element-ui'
 
@@ -67,6 +69,62 @@ export default defineComponent({
 		const elSelectClasses = computed(() => ({
 			'el-select--disabled': field.isDisabled,
 		}))
+
+		const elSelectRef = ref<ElSelect & { inputWidth: number }>(null)
+		const ktFieldRef = ref<typeof KtField>(null)
+
+		watchEffect(() => {
+			const elSelectComponent = elSelectRef.value
+			const ktFieldComponent = ktFieldRef.value
+			if (elSelectComponent === null) throw new Error('el-select not ready')
+			if (ktFieldComponent === null) throw new Error('kt-field not ready')
+
+			// just used to add this as a dependency
+			elSelectComponent.inputWidth
+
+			const ktFieldContainerElement = ktFieldComponent.$refs
+				.inputContainerRef as Element
+			const newWidth = ktFieldContainerElement.getBoundingClientRect().width
+			const popperComponent = elSelectComponent.$refs.popper as Vue
+			const popperElement = popperComponent.$el as HTMLElement
+
+			popperElement.style.width = `${newWidth}px`
+			elSelectComponent.inputWidth = newWidth
+		})
+
+		onMounted(() => {
+			const selectComponent = elSelectRef.value // div.el-select
+			if (selectComponent === null) throw new Error('el-select not available')
+
+			const ktFieldComponent = ktFieldRef.value
+			if (ktFieldComponent === null) throw new Error('kt-field not available')
+
+			/**
+			 * ^ `popperComponent` is an internal `element-ui` component that computes the placement
+			 * of the dropdown based on the input element of `el-select`.
+			 *
+			 * [select.vue]{@link ./node_modules/element-ui/packages/select/src/select.vue} adds `ref="reference"`
+			 * to the input.
+			 *
+			 * [vue-popper.js]{@link ./node_modules/element-ui/src/utils/vue-popper.js} uses `parent.$ref.reference`
+			 * to compute the `referenceElm`.
+			 *
+			 * So, here, we overwrite the internal property `referenceElm` of the component, to place the dropdown
+			 * in accordance to our input component instead (which is accessed by the `$refs.inputContainerRef`)
+			 */
+			const setUpPopper = () => {
+				const popperComponent = selectComponent.$refs.popper as Vue & {
+					referenceElm: Element
+				}
+				const ktFieldInputEl = ktFieldComponent.$refs
+					.inputContainerRef as Element
+
+				popperComponent.referenceElm = ktFieldInputEl
+			}
+
+			setUpPopper()
+		})
+
 		return {
 			elSelectClasses,
 			elSelectRef,
