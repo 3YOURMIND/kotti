@@ -21,7 +21,7 @@
 		/>
 
 		<slot v-if="!field.isLoading" name="container">
-			<div class="kt-field__input-container">
+			<div ref="inputContainerRef" class="kt-field__input-container">
 				<div
 					v-if="field.prefix"
 					:class="affixClasses(['left'])"
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed, ref } from '@vue/composition-api'
 
 import { KottiField } from './types'
 
@@ -154,6 +154,7 @@ export default defineComponent({
 		return {
 			affixClasses,
 			iconClasses,
+			inputContainerRef: ref('kt-field-input-container'),
 			labelText,
 			showClear,
 			showValidation,
@@ -247,8 +248,6 @@ export default defineComponent({
 
 			&__slot {
 				input {
-					// to overwrite native disabled bg for inputs
-					background-color: transparent;
 					cursor: not-allowed;
 
 					&::-webkit-input-placeholder, /* Edge */
@@ -298,6 +297,9 @@ export default defineComponent({
 			flex-grow: 1;
 
 			input {
+				// to overwrite native disabled bg for inputs
+				background-color: transparent;
+
 				&::-webkit-input-placeholder, /* Edge */
 				&:-ms-input-placeholder, /* Internet Explorer */
 				&::placeholder {
