@@ -1,6 +1,11 @@
 <template>
-	<component :is="isGroup ? 'fieldset' : 'label'" :class="wrapperClasses">
-		<div v-if="!field.isLoading" class="kt-field__header">
+	<component
+		:is="isGroup ? 'fieldset' : 'label'"
+		v-if="!field.isLoading"
+		:class="wrapperClasses"
+		@click.stop
+	>
+		<div class="kt-field__header">
 			<component
 				:is="isGroup ? 'legend' : 'div'"
 				v-if="labelText !== null"
@@ -14,13 +19,7 @@
 			/>
 		</div>
 
-		<div
-			v-else
-			class="kt-field__loading skeleton rectangle"
-			:style="{ height: '20px', maxWidth: '200px' }"
-		/>
-
-		<slot v-if="!field.isLoading" name="container">
+		<slot name="container">
 			<div ref="inputContainerRef" class="kt-field__input-container">
 				<div
 					v-if="field.prefix"
@@ -50,7 +49,6 @@
 				/>
 			</div>
 		</slot>
-		<div v-else class="skeleton rectangle" :style="{ height: '40px' }" />
 
 		<div
 			v-if="!field.isLoading && showValidation"
@@ -60,6 +58,10 @@
 			{{ validationText }}
 		</div>
 	</component>
+	<div v-else class="kt-field-wrapper">
+		<div class="kt-field__header--loading skeleton rectangle" />
+		<div class="kt-field__input-container--loading skeleton rectangle" />
+	</div>
 </template>
 
 <script lang="ts">
@@ -273,6 +275,11 @@ export default defineComponent({
 		> :not(:first-child) {
 			margin-top: 0.2rem;
 		}
+
+		&--loading {
+			height: 20px !important;
+			max-width: 200px;
+		}
 	}
 
 	&__label {
@@ -291,6 +298,10 @@ export default defineComponent({
 		padding: 0 0.8rem;
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
+
+		&--loading {
+			height: 40px !important;
+		}
 
 		// The actual input
 		&__slot {
