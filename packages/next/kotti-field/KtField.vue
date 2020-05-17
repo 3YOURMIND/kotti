@@ -1,6 +1,6 @@
 <template>
 	<component
-		:is="isGroup ? 'fieldset' : 'label'"
+		:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
 		v-if="!field.isLoading"
 		:class="wrapperClasses"
 		@click.stop
@@ -78,10 +78,12 @@ export default defineComponent({
 		 * Used when clearing the field. Most likely either null or []
 		 */
 		getEmptyValue: { required: true, type: Function },
+		isComponent: { default: null, type: String },
 		isGroup: { default: false, type: Boolean },
 	},
 	setup<DATA_TYPE>(props: {
 		field: KottiField.Hook.Returns<DATA_TYPE>
+		isComponent: string | null
 		isGroup: boolean
 		getEmptyValue: () => DATA_TYPE
 	}) {

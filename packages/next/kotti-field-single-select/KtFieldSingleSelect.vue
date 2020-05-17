@@ -3,7 +3,7 @@
 		ref="ktFieldRef"
 		v-bind="{ field }"
 		:getEmptyValue="() => null"
-		isGroup
+		isComponent="div"
 	>
 		<ElSelect
 			ref="elSelectRef"
