@@ -1,5 +1,10 @@
 <template>
-	<KtField ref="ktFieldRef" v-bind="{ field }" :getEmptyValue="() => null">
+	<KtField
+		ref="ktFieldRef"
+		v-bind="{ field }"
+		:getEmptyValue="() => null"
+		isGroup
+	>
 		<ElSelect
 			ref="elSelectRef"
 			:class="elSelectClasses"
@@ -7,7 +12,7 @@
 			filterable
 			:placeholder="field.placeholder"
 			:value="field.currentValue"
-			@change="onChange"
+			@input="onChange"
 		>
 			<ElOption
 				v-for="option in options"
@@ -107,7 +112,7 @@ export default defineComponent({
 			 * to the input.
 			 *
 			 * [vue-popper.js]{@link ./node_modules/element-ui/src/utils/vue-popper.js} uses `parent.$ref.reference`
-			 * to compute the `referenceElm`.
+			 * to obtain the `referenceElm`.
 			 *
 			 * So, here, we overwrite the internal property `referenceElm` of the component, to place the dropdown
 			 * in accordance to our input component instead (which is accessed by the `$refs.inputContainerRef`)
@@ -174,14 +179,115 @@ export default defineComponent({
 
 .el-select-dropdown.el-popper {
 	display: flex;
+	position: absolute;
 	background: var(--ui-background);
 	border-radius: var(--field-border-radius);
 	border: 1px solid var(--ui-02);
 	/* shadow-base */
 	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+	box-sizing: border-box;
 	color: var(--text-01);
 	padding: 0;
 	margin: 5px 0;
+	z-index: 1001;
+
+	&[x-placement^='top'] {
+		margin-bottom: 12px;
+
+		.popper__arrow {
+			bottom: -6px;
+			left: 50%;
+			margin-right: 3px;
+			border-top-color: var(--ui-02);
+			border-bottom-width: 0;
+
+			&:after {
+				bottom: 1px;
+				margin-left: -6px;
+				border-top-color: var(--ui-background);
+				border-bottom-width: 0;
+			}
+		}
+	}
+
+	&[x-placement^='right'] {
+		margin-left: 12px;
+
+		.popper__arrow {
+			top: 50%;
+			left: -6px;
+			margin-bottom: 3px;
+			border-right-color: var(--ui-02);
+			border-left-width: 0;
+
+			&:after {
+				bottom: -6px;
+				left: 1px;
+				border-right-color: var(--ui-background);
+				border-left-width: 0;
+			}
+		}
+	}
+
+	&[x-placement^='bottom'] {
+		margin-top: 12px;
+
+		.popper__arrow {
+			top: -6px;
+			left: 50%;
+			margin-right: 3px;
+			border-top-width: 0;
+			border-bottom-color: var(--ui-02);
+
+			&:after {
+				top: 1px;
+				margin-left: -6px;
+				border-top-width: 0;
+				border-bottom-color: var(--ui-background);
+			}
+		}
+	}
+
+	&[x-placement^='left'] {
+		margin-right: 12px;
+
+		.popper__arrow {
+			top: 50%;
+			right: -6px;
+			margin-bottom: 3px;
+			border-right-width: 0;
+			border-left-color: var(--ui-02);
+
+			&:after {
+				right: 1px;
+				bottom: -6px;
+				margin-left: -6px;
+				border-right-width: 0;
+				border-left-color: var(--ui-background);
+			}
+		}
+	}
+
+	.popper__arrow {
+		border-width: 6px;
+		filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03));
+
+		&,
+		&:after {
+			position: absolute;
+			display: block;
+			width: 0;
+			height: 0;
+			border-color: transparent;
+			border-style: solid;
+		}
+
+		&:after {
+			content: ' ';
+			border-width: 6px;
+		}
+	}
+
 	.el-scrollbar {
 		/*
 			has 3 children:
@@ -190,13 +296,15 @@ export default defineComponent({
 				&__bar is-vertical
 		*/
 		width: 100%;
+		overflow: hidden;
+		position: relative;
 
 		&__bar {
 			position: absolute;
 			right: 2px;
 			bottom: 2px;
 			z-index: 1;
-			border-radius: 4px;
+			border-radius: var(--field-border-radius);
 			opacity: 0;
 			transition: opacity 120ms ease-out;
 
@@ -206,16 +314,29 @@ export default defineComponent({
 			}
 
 			&.is-vertical {
-				width: 6px;
 				top: 2px;
+				width: 6px;
+			}
+		}
+
+		&:active,
+		&:focus,
+		&:hover {
+			.el-scrollbar__bar {
+				opacity: 1;
+				transition: opacity 0.34s ease-out;
 			}
 		}
 
 		&__wrap.el-select-dropdown__wrap {
 			display: flex;
 			flex: 1;
-			margin: 0 !important;
-			padding: 0;
+			// margin: 0 !important;
+			// padding: 0;
+
+			overflow: scroll;
+			height: 100%;
+			max-height: 274px;
 
 			ul.el-scrollbar__view.el-select-dropdown__list {
 				display: flex;
