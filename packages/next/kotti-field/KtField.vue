@@ -242,7 +242,7 @@ export default defineComponent({
 		cursor: not-allowed;
 
 		.kt-field__input-container {
-			border: 2px solid var(--ui-01);
+			border: 1px solid var(--ui-01);
 
 			&__affix {
 				color: var(--text-05);
