@@ -210,7 +210,7 @@ export default defineComponent({
 	}
 	// states
 
-	&--error {
+	&--error:not(.kt-field-wrapper--disabled) {
 		.kt-field__input-container {
 			box-shadow: 0 0 0 1px var(--support-error-light);
 		}
@@ -220,7 +220,7 @@ export default defineComponent({
 		}
 	}
 
-	&--success {
+	&--success:not(.kt-field-wrapper--disabled) {
 		.kt-field__input-container {
 			box-shadow: 0 0 0 1px var(--support-success-light);
 		}
@@ -230,7 +230,7 @@ export default defineComponent({
 		}
 	}
 
-	&--warning {
+	&--warning:not(.kt-field-wrapper--disabled) {
 		.kt-field__input-container {
 			box-shadow: 0 0 0 1px var(--support-warning-light);
 		}
@@ -365,6 +365,7 @@ export default defineComponent({
 	}
 
 	&__validation {
+		color: var(--text-03);
 		display: flex;
 		align-items: center;
 		> i {
