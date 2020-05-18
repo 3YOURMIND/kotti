@@ -120,7 +120,7 @@
 	},
 	"files": [
 		"dist",
-		"packages/kotti-style/_variables.scss"
+		"packages"
 	],
 	"husky": {
 		"hooks": {
