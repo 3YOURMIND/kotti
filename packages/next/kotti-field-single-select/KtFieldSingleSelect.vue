@@ -153,20 +153,20 @@ export default defineComponent({
 			div.el-input__inner
 			div.el-input__suffix
 		*/
-		flex: 1;
 		display: flex;
+		flex: 1;
 
 		.el-input__inner {
 			display: flex;
-			align-self: center;
-			border: 0;
-			color: var(--text-01);
 			flex: 1; // don't allow for el-input__suffix
-			line-height: 1.6;
-			margin: 0;
-			outline: none;
-			padding: 0;
+			align-self: center;
 			width: 100%;
+			padding: 0;
+			margin: 0;
+			line-height: 1.6;
+			color: var(--text-01);
+			border: 0;
+			outline: none;
 		}
 	}
 	// order matters
@@ -178,18 +178,20 @@ export default defineComponent({
 }
 
 .el-select-dropdown.el-popper {
-	display: flex;
 	position: absolute;
-	background: var(--ui-background);
-	border-radius: var(--field-border-radius);
-	border: 1px solid var(--ui-02);
-	/* shadow-base */
-	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+	z-index: 1001;
 	box-sizing: border-box;
-	color: var(--text-01);
+
+	display: flex;
 	padding: 0;
 	margin: 5px 0;
-	z-index: 1001;
+
+	color: var(--text-01);
+	background: var(--ui-background);
+	border: 1px solid var(--ui-02);
+	border-radius: var(--field-border-radius);
+	/* shadow-base */
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
 
 	&[x-placement^='top'] {
 		margin-bottom: 12px;
@@ -269,8 +271,8 @@ export default defineComponent({
 	}
 
 	.popper__arrow {
-		border-width: 6px;
 		filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03));
+		border-width: 6px;
 
 		&,
 		&:after {
@@ -295,9 +297,9 @@ export default defineComponent({
 				&__bar is-horizontal,
 				&__bar is-vertical
 		*/
+		position: relative;
 		width: 100%;
 		overflow: hidden;
-		position: relative;
 
 		&__bar {
 			position: absolute;
@@ -309,8 +311,8 @@ export default defineComponent({
 			transition: opacity 120ms ease-out;
 
 			&.is-horizontal {
-				height: 6px;
 				left: 2px;
+				height: 6px;
 			}
 
 			&.is-vertical {
@@ -334,22 +336,23 @@ export default defineComponent({
 			// margin: 0 !important;
 			// padding: 0;
 
-			overflow: scroll;
 			height: 100%;
 			max-height: 274px;
+			overflow: scroll;
 
 			ul.el-scrollbar__view.el-select-dropdown__list {
 				display: flex;
 				flex-direction: column;
 				width: 100%;
-				margin: 0;
 				padding: 0;
+				margin: 0;
 
 				.el-select-dropdown__item {
-					color: var(--text-01);
 					flex: 1;
-					margin: 0;
 					padding: 0.8rem;
+					margin: 0;
+					color: var(--text-01);
+					cursor: pointer;
 
 					&.selected {
 						color: var(--interactive-03);
