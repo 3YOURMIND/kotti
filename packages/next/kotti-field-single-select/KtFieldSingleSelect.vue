@@ -365,7 +365,6 @@ export default defineComponent({
 					&.hover {
 						background-color: var(--ui-01); // var(--interactive-02-hover)
 						// color: var(--interactive-01-hover);
-						cursor: pointer;
 					}
 				}
 			}
