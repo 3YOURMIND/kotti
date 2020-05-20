@@ -3,7 +3,7 @@
 		:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
 		v-if="!field.isLoading"
 		:class="wrapperClasses"
-		@click.stop
+		@click="emit('click', $event)"
 	>
 		<div class="kt-field__header">
 			<component
@@ -73,7 +73,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from '@vue/composition-api'
+import {
+	defineComponent,
+	computed,
+	ref,
+	SetupContext,
+} from '@vue/composition-api'
 
 import { KottiField } from './types'
 
@@ -89,12 +94,15 @@ export default defineComponent({
 		isComponent: { default: null, type: String },
 		isGroup: { default: false, type: Boolean },
 	},
-	setup<DATA_TYPE>(props: {
-		field: KottiField.Hook.Returns<DATA_TYPE>
-		isComponent: string | null
-		isGroup: boolean
-		getEmptyValue: () => DATA_TYPE
-	}) {
+	setup<DATA_TYPE>(
+		props: {
+			field: KottiField.Hook.Returns<DATA_TYPE>
+			isComponent: string | null
+			isGroup: boolean
+			getEmptyValue: () => DATA_TYPE
+		},
+		{ emit }: SetupContext,
+	) {
 		const labelText = computed(() =>
 			props.field.label === null
 				? null
@@ -167,6 +175,7 @@ export default defineComponent({
 
 		return {
 			affixClasses,
+			emit,
 			iconClasses,
 			handleClear: () => props.field.setValue(props.getEmptyValue()),
 			inputContainerRef: ref('kt-field-input-container'),
