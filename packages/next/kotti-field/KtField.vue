@@ -32,13 +32,21 @@
 				<div class="kt-field__input-container__slot">
 					<slot name="default" />
 				</div>
-				<div
-					v-if="showClear"
-					:class="iconClasses(['clear'])"
-					@click.stop="field.setValue(getEmptyValue())"
+				<slot
+					:classes="iconClasses(['interactive'])"
+					:handleClear="handleClear"
+					name="actionIcon"
+					:showClear="showClear"
 				>
-					<i class="yoco" role="button" v-text="'close'" />
-				</div>
+					<div
+						v-if="showClear"
+						:class="iconClasses(['interactive'])"
+						role="button"
+						@click.stop="handleClear"
+					>
+						<i class="yoco" v-text="'close'" />
+					</div>
+				</slot>
 				<div v-if="field.rightIcon" :class="iconClasses(['right'])">
 					<i class="yoco" v-text="field.rightIcon" />
 				</div>
@@ -122,9 +130,11 @@ export default defineComponent({
 
 		const showClear = computed(
 			() =>
-				!props.field.hideClear &&
-				props.field.currentValue !== props.getEmptyValue() &&
-				!props.field.isDisabled,
+				!(
+					props.field.hideClear ||
+					props.field.currentValue === props.getEmptyValue() ||
+					props.field.isDisabled
+				),
 		)
 
 		const validationText = computed(
@@ -158,6 +168,7 @@ export default defineComponent({
 		return {
 			affixClasses,
 			iconClasses,
+			handleClear: () => props.field.setValue(props.getEmptyValue()),
 			inputContainerRef: ref('kt-field-input-container'),
 			labelText,
 			showClear,
