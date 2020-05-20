@@ -4,23 +4,45 @@
 		v-bind="{ field }"
 		:getEmptyValue="() => null"
 		isComponent="div"
+		@click.stop="handleFieldClick"
+		@mousedown="handleFieldMouseDown"
 	>
-		<ElSelect
-			ref="elSelectRef"
-			:class="elSelectClasses"
-			:disabled="field.isDisabled"
-			filterable
-			:placeholder="field.placeholder"
-			:value="field.currentValue"
-			@input="onChange"
-		>
-			<ElOption
-				v-for="option in options"
-				:key="option.value"
-				:label="option.label"
-				:value="option.value"
-			/>
-		</ElSelect>
+		<!-- needs to be on a separate element because it doesn’t work when put on ElSelect-->
+		<div @mousedown.stop>
+			<ElSelect
+				ref="elSelectRef"
+				:class="elSelectClasses"
+				defaultFirstOption
+				:disabled="field.isDisabled"
+				filterable
+				:placeholder="field.placeholder"
+				:value="field.currentValue"
+				@input="onChange"
+				@visible-change="(showPopper) => (isDropdownOpen = showPopper)"
+			>
+				<ElOption
+					v-for="option in options"
+					:key="option.value"
+					:label="option.label"
+					:value="option.value"
+				/>
+			</ElSelect>
+		</div>
+		<template v-slot:actionIcon="{ classes, handleClear, showClear }">
+			<div
+				:class="classes"
+				role="button"
+				@click="handleChevronClick($event, { handleClear, showClear })"
+				@mousedown="handleChevronMouseDown({ showClear })"
+				@mouseenter="hoverOnClear = true"
+				@mouseleave="hoverOnClear = false"
+			>
+				<i
+					class="yoco"
+					v-text="hoverOnClear && showClear ? 'close' : chevronIcon"
+				/>
+			</div>
+		</template>
 	</KtField>
 </template>
 
@@ -71,11 +93,12 @@ export default defineComponent({
 			props,
 		})
 
-		const elSelectClasses = computed(() => ({
-			'el-select--disabled': field.isDisabled,
-		}))
-
-		const elSelectRef = ref<ElSelect & { inputWidth: number }>(null)
+		const elSelectRef = ref<
+			ElSelect & {
+				inputWidth: number
+				setSoftFocus(): void
+			}
+		>(null)
 		const ktFieldRef = ref<typeof KtField>(null)
 
 		watchEffect(() => {
@@ -130,11 +153,92 @@ export default defineComponent({
 			setUpPopper()
 		})
 
+		const isDropdownOpen = ref(false)
+
+		const scheduleFocusAfterFieldClick = ref(false)
+		const scheduleRefocusAfterChevronClick = ref(false)
+
 		return {
-			elSelectClasses,
+			chevronIcon: computed(
+				() => `chevron_${isDropdownOpen.value ? 'up' : 'down'}`,
+			),
+			elSelectClasses: computed(() => ({
+				'el-select--disabled': field.isDisabled,
+			})),
 			elSelectRef,
 			field,
+			handleChevronClick: (
+				$event: { stopPropagation(): void },
+				{ handleClear, showClear }: { showClear: boolean; handleClear(): void },
+			) => {
+				const elSelect = elSelectRef.value
+				if (!elSelect) throw new Error('ElSelect is not ready yet')
+
+				if (showClear) {
+					$event.stopPropagation()
+					handleClear()
+
+					/**
+					 * if the clear button was clicked the input should be closed but not be blurred
+					 * therefore, ElSelect’s setSoftFocus is appropriate
+					 */
+					if (scheduleRefocusAfterChevronClick) {
+						elSelect.setSoftFocus()
+						scheduleRefocusAfterChevronClick.value = false // done, so reset flag
+					}
+				}
+			},
+			handleChevronMouseDown: ({ showClear }: { showClear: boolean }) => {
+				/**
+				 * ElSelect blurs the field entirely because it considers this to be a clickOutside
+				 * Since we only cleared the field, we want to close the dropdown (which ElSelect does)
+				 * but without blurring. Therefore, we schedule a soft refocus after the click is done
+				 */
+				if (showClear && isDropdownOpen)
+					scheduleRefocusAfterChevronClick.value = true
+			},
+			handleFieldClick: () => {
+				const elSelect = elSelectRef.value
+				if (!elSelect) throw new Error('elSelect is not ready')
+
+				/**
+				 * the dropdown was previously closed and should not be opened
+				 */
+				if (scheduleFocusAfterFieldClick.value) {
+					elSelect.focus()
+					scheduleFocusAfterFieldClick.value = false // done, so reset flag
+				} else {
+					/**
+					 * the dropdown was previously open and input was focused.
+					 * clicking closes the dropdown but blurs the input
+					 * because the field is not part of the input (defined within `<ElSelect />`)
+					 * (i.e: from the perspective of the input, it's a different component, so the input blurs).
+					 *
+					 * For a smooth experience, we set `softFocus` which focuses on the input
+					 * without making the dropdown visible
+					 * [setSoftFocus()]{@link ./node_modules/element-ui/packages/select/src/select.vue}
+					 */
+					elSelect.setSoftFocus()
+				}
+			},
+			handleFieldMouseDown: () => {
+				/**
+				 * mousedown handlers get triggered first
+				 * so we use them to set flags that should initiate actions
+				 * when their corresponding click handlers are called
+				 * the combination of a mouse-down handler and a click handler lets us define a start
+				 * and an end marker to a flow of events that uniquely identifies scenarios.
+				 *
+				 * If the dropdown was closed before, the field should be focused and the dropdown should open
+				 * on the corresponding click handler `handleFieldClick`
+				 */
+				if (!isDropdownOpen.value) scheduleFocusAfterFieldClick.value = true
+			},
+			hoverOnClear: ref(false),
+			isDropdownOpen,
 			ktFieldRef,
+			scheduleFocusAfterFieldClick,
+			scheduleRefocusAfterChevronClick,
 			onChange: (value: KtFieldSingleSelect.Entry['value']) => {
 				field.setValue(value)
 			},

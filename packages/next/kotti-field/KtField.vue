@@ -4,6 +4,7 @@
 		v-if="!field.isLoading"
 		:class="wrapperClasses"
 		@click="emit('click', $event)"
+		@mousedown="emit('mousedown', $event)"
 	>
 		<div class="kt-field__header">
 			<component
