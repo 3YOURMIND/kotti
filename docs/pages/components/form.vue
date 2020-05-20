@@ -5,7 +5,9 @@
 	<h1>KtFields Without Form</h1>
 	<div>
 		<h5>KtFieldCheckbox</h5>
-		<KtFieldCheckbox v-model="disableSingleSelect">Disable Single Select</KtFieldCheckbox>
+		<KtFieldCheckbox v-model="disableSingleSelect">
+			Disable Single Select
+		</KtFieldCheckbox>
 		<h5>KtFieldSelects</h5>
 		<KtFieldSingleSelect
 			prefix="Prefix"
@@ -20,6 +22,7 @@
 		<KtFieldText
 			label="Some Label"
 			v-model="textValue"
+			placeholder="type something"
 			:validator="(val)=> val === null? {type: 'error', text: 'required field can not be left empty'}:{type: null}"
 		/>
 	</div>
@@ -149,7 +152,7 @@ export default {
 			isLoading: false,
 			preventSubmissionOn: 'NEVER',
 			textValue: null,
-			selectedOption: 1,
+			selectedOption: null,
 			singleSelectOptions: [
 				{ label: 'label 1', value: 1 },
 				{ label: 'label 2', value: 2 },
