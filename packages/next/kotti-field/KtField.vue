@@ -284,6 +284,7 @@ export default defineComponent({
 
 			&__icon {
 				// no icon--disabled token
+				cursor: not-allowed;
 				color: var(--text-05);
 			}
 		}
@@ -376,10 +377,8 @@ export default defineComponent({
 				transform: translateX(0.2rem);
 			}
 
-			&--clear {
-				&:hover {
-					cursor: pointer;
-				}
+			&--interactive {
+				cursor: pointer;
 			}
 		}
 	}
