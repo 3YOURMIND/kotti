@@ -479,11 +479,6 @@ export default defineComponent({
 				}
 
 				&.el-select-dropdown__wrap {
-					// display: flex;
-					// flex: 1;
-					// margin: 0 !important;
-					// padding: 0;
-
 					.el-scrollbar__view.el-select-dropdown__list {
 						box-sizing: border-box;
 						display: flex;
@@ -505,17 +500,26 @@ export default defineComponent({
 							white-space: nowrap;
 							cursor: pointer;
 
+							&.is-disabled {
+								color: var(--text-05);
+								cursor: not-allowed;
+							}
+
 							&.selected {
+								font-weight: 700;
 								color: var(--interactive-03);
-								// display: none; // hideSelected
-								&.hover {
+
+								&.hover,
+								&:hover {
 									color: var(--interactive-01-hover);
 								}
 							}
 
+							&:hover,
 							&.hover {
-								background-color: var(--ui-01); // var(--interactive-02-hover)
-								// color: var(--interactive-01-hover);
+								&:not(.is-disabled) {
+									background-color: var(--ui-01);
+								}
 							}
 						}
 					}
