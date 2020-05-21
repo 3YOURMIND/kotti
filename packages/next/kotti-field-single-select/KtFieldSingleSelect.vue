@@ -15,6 +15,8 @@
 				defaultFirstOption
 				:disabled="field.isDisabled"
 				filterable
+				noDataText="TODO"
+				noMatchText="TODO"
 				:placeholder="field.placeholder"
 				:value="field.currentValue"
 				@input="onChange"
@@ -281,194 +283,241 @@ export default defineComponent({
 	}
 }
 
-.el-select-dropdown.el-popper {
-	position: absolute;
-	z-index: 1001;
-	box-sizing: border-box;
+.el-select-dropdown {
+	&__empty {
+		width: 100%;
+		padding: 10px 0;
+		margin: 0;
+		color: var(--text-05);
+		text-align: center;
+	}
 
-	display: flex;
-	padding: 0;
-	margin: 5px 0;
+	&.el-popper {
+		position: absolute;
+		z-index: 1001;
+		box-sizing: border-box;
 
-	color: var(--text-01);
-	background: var(--ui-background);
-	border: 1px solid var(--ui-02);
-	border-radius: var(--field-border-radius);
-	/* shadow-base */
-	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+		display: flex;
+		padding: 0;
+		margin: 5px 0;
 
-	&[x-placement^='top'] {
-		margin-bottom: 12px;
+		color: var(--text-01);
+		background: var(--ui-background);
+		border: 1px solid var(--ui-02);
+		border-radius: var(--field-border-radius);
+		/* shadow-base */
+		box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
 
-		.popper__arrow {
-			bottom: -6px;
-			left: 50%;
-			margin-right: 3px;
-			border-top-color: var(--ui-02);
-			border-bottom-width: 0;
+		&[x-placement^='top'] {
+			margin-bottom: 12px;
 
-			&:after {
-				bottom: 1px;
-				margin-left: -6px;
-				border-top-color: var(--ui-background);
+			.popper__arrow {
+				bottom: -6px;
+				left: 50%;
+				margin-right: 3px;
+				border-top-color: var(--ui-02);
 				border-bottom-width: 0;
+
+				&:after {
+					bottom: 1px;
+					margin-left: -6px;
+					border-top-color: var(--ui-background);
+					border-bottom-width: 0;
+				}
 			}
 		}
-	}
 
-	&[x-placement^='right'] {
-		margin-left: 12px;
+		&[x-placement^='right'] {
+			margin-left: 12px;
 
-		.popper__arrow {
-			top: 50%;
-			left: -6px;
-			margin-bottom: 3px;
-			border-right-color: var(--ui-02);
-			border-left-width: 0;
-
-			&:after {
-				bottom: -6px;
-				left: 1px;
-				border-right-color: var(--ui-background);
+			.popper__arrow {
+				top: 50%;
+				left: -6px;
+				margin-bottom: 3px;
+				border-right-color: var(--ui-02);
 				border-left-width: 0;
+
+				&:after {
+					bottom: -6px;
+					left: 1px;
+					border-right-color: var(--ui-background);
+					border-left-width: 0;
+				}
 			}
 		}
-	}
 
-	&[x-placement^='bottom'] {
-		margin-top: 12px;
+		&[x-placement^='bottom'] {
+			margin-top: 12px;
 
-		.popper__arrow {
-			top: -6px;
-			left: 50%;
-			margin-right: 3px;
-			border-top-width: 0;
-			border-bottom-color: var(--ui-02);
-
-			&:after {
-				top: 1px;
-				margin-left: -6px;
+			.popper__arrow {
+				top: -6px;
+				left: 50%;
+				margin-right: 3px;
 				border-top-width: 0;
-				border-bottom-color: var(--ui-background);
+				border-bottom-color: var(--ui-02);
+
+				&:after {
+					top: 1px;
+					margin-left: -6px;
+					border-top-width: 0;
+					border-bottom-color: var(--ui-background);
+				}
 			}
 		}
-	}
 
-	&[x-placement^='left'] {
-		margin-right: 12px;
+		&[x-placement^='left'] {
+			margin-right: 12px;
+
+			.popper__arrow {
+				top: 50%;
+				right: -6px;
+				margin-bottom: 3px;
+				border-right-width: 0;
+				border-left-color: var(--ui-02);
+
+				&:after {
+					right: 1px;
+					bottom: -6px;
+					margin-left: -6px;
+					border-right-width: 0;
+					border-left-color: var(--ui-background);
+				}
+			}
+		}
 
 		.popper__arrow {
-			top: 50%;
-			right: -6px;
-			margin-bottom: 3px;
-			border-right-width: 0;
-			border-left-color: var(--ui-02);
+			filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03));
+			border-width: 6px;
+
+			&,
+			&:after {
+				position: absolute;
+				display: block;
+				width: 0;
+				height: 0;
+				border-color: transparent;
+				border-style: solid;
+			}
 
 			&:after {
-				right: 1px;
-				bottom: -6px;
-				margin-left: -6px;
-				border-right-width: 0;
-				border-left-color: var(--ui-background);
+				content: ' ';
+				border-width: 6px;
 			}
 		}
-	}
 
-	.popper__arrow {
-		filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03));
-		border-width: 6px;
-
-		&,
-		&:after {
-			position: absolute;
-			display: block;
-			width: 0;
-			height: 0;
-			border-color: transparent;
-			border-style: solid;
-		}
-
-		&:after {
-			content: ' ';
-			border-width: 6px;
-		}
-	}
-
-	.el-scrollbar {
-		/*
+		.el-scrollbar {
+			/*
 			has 3 children:
 				&__wrap,
 				&__bar is-horizontal,
 				&__bar is-vertical
 		*/
-		position: relative;
-		width: 100%;
-		overflow: hidden;
+			position: relative;
+			width: 100%;
+			overflow: hidden;
 
-		&__bar {
-			position: absolute;
-			right: 2px;
-			bottom: 2px;
-			z-index: 1;
-			border-radius: var(--field-border-radius);
-			opacity: 0;
-			transition: opacity 120ms ease-out;
+			&__bar {
+				position: absolute;
+				right: 2px;
+				bottom: 2px;
+				z-index: 1;
+				border-radius: var(--field-border-radius);
+				opacity: 0;
+				transition: opacity 120ms ease-out;
 
-			&.is-horizontal {
-				left: 2px;
-				height: 6px;
-			}
+				&.is-horizontal {
+					left: 2px;
+					height: 6px;
 
-			&.is-vertical {
-				top: 2px;
-				width: 6px;
-			}
-		}
-
-		&:active,
-		&:focus,
-		&:hover {
-			.el-scrollbar__bar {
-				opacity: 1;
-				transition: opacity 0.34s ease-out;
-			}
-		}
-
-		&__wrap.el-select-dropdown__wrap {
-			display: flex;
-			flex: 1;
-			// margin: 0 !important;
-			// padding: 0;
-
-			height: 100%;
-			max-height: 274px;
-			overflow: scroll;
-
-			ul.el-scrollbar__view.el-select-dropdown__list {
-				display: flex;
-				flex-direction: column;
-				width: 100%;
-				padding: 0;
-				margin: 0;
-
-				.el-select-dropdown__item {
-					flex: 1;
-					padding: 0.8rem;
-					margin: 0;
-					color: var(--text-01);
-					cursor: pointer;
-
-					&.selected {
-						color: var(--interactive-03);
-						// display: none; // hideSelected
-						&.hover {
-							color: var(--interactive-01-hover);
-						}
+					> div.el-scrollbar__thumb {
+						height: 100%;
 					}
+				}
 
-					&.hover {
-						background-color: var(--ui-01); // var(--interactive-02-hover)
-						// color: var(--interactive-01-hover);
+				&.is-vertical {
+					top: 2px;
+					width: 6px;
+
+					> div.el-scrollbar__thumb {
+						width: 100%;
+					}
+				}
+
+				.el-scrollbar__thumb {
+					position: relative;
+					display: block;
+					width: 0;
+					height: 0;
+					cursor: pointer;
+					background-color: rgba(144, 147, 153, 0.3);
+					border-radius: inherit;
+					transition: background-color 0.3s;
+
+					&:hover {
+						background-color: rgba(144, 147, 153, 0.5);
+					}
+				}
+			}
+
+			&:active,
+			&:focus,
+			&:hover {
+				.el-scrollbar__bar {
+					opacity: 1;
+					transition: opacity 0.34s ease-out;
+				}
+			}
+
+			&__wrap {
+				height: 100%;
+				overflow: scroll;
+
+				scrollbar-width: none;
+				&::-webkit-scrollbar {
+					width: 0;
+					height: 0;
+				}
+
+				&.el-select-dropdown__wrap {
+					// display: flex;
+					// flex: 1;
+					// margin: 0 !important;
+					// padding: 0;
+
+					.el-scrollbar__view.el-select-dropdown__list {
+						box-sizing: border-box;
+						display: flex;
+						flex-direction: column;
+						width: 100%;
+						padding: 6px 0;
+						margin: 0;
+						list-style: none;
+
+						.el-select-dropdown__item {
+							position: relative;
+							box-sizing: border-box;
+							flex: 1;
+							padding: 0.8rem;
+							margin: 0;
+							overflow: hidden;
+							color: var(--text-01);
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							cursor: pointer;
+
+							&.selected {
+								color: var(--interactive-03);
+								// display: none; // hideSelected
+								&.hover {
+									color: var(--interactive-01-hover);
+								}
+							}
+
+							&.hover {
+								background-color: var(--ui-01); // var(--interactive-02-hover)
+								// color: var(--interactive-01-hover);
+							}
+						}
 					}
 				}
 			}
