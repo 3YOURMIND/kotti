@@ -284,9 +284,9 @@ export default defineComponent({
 			}
 
 			&__icon {
+				color: var(--text-05);
 				// no icon--disabled token
 				cursor: not-allowed;
-				color: var(--text-05);
 			}
 		}
 	}
@@ -301,8 +301,8 @@ export default defineComponent({
 		}
 
 		&--loading {
-			height: 20px !important;
 			max-width: 200px;
+			height: 20px !important;
 		}
 	}
 
@@ -385,9 +385,9 @@ export default defineComponent({
 	}
 
 	&__validation {
-		color: var(--text-03);
 		display: flex;
 		align-items: center;
+		color: var(--text-03);
 		> i {
 			margin-right: 0.1rem;
 		}
