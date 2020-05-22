@@ -95,6 +95,13 @@ export default defineComponent({
 		usePopperPlacementFix(elSelectRef, ktFieldRef)
 
 		watchEffect(() => {
+			/**
+			 * If the field is loading and something triggers and update, this
+			 * watchEffect might accidentally throw an error. Therefore, we
+			 * early exit it so no error will be thrown
+			 */
+			if (field.isLoading) return
+
 			const elSelectComponent = elSelectRef.value
 			const ktFieldComponent = ktFieldRef.value
 			if (elSelectComponent === null) throw new Error('el-select not ready')
