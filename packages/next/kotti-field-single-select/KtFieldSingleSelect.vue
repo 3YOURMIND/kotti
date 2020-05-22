@@ -15,6 +15,7 @@
 				defaultFirstOption
 				:disabled="field.isDisabled"
 				filterable
+				loadingText="TODO"
 				noDataText="TODO"
 				noMatchText="TODO"
 				:placeholder="field.placeholder"
