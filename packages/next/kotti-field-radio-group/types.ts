@@ -4,6 +4,7 @@ export namespace KtFieldRadioGroup {
 	export type Entry = {
 		label: string
 		value: KtFieldRadioGroup.Value
+		disabled: boolean
 	}
 
 	export interface Props

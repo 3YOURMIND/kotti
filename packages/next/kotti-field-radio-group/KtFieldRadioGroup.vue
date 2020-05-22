@@ -14,6 +14,7 @@
 					v-bind="field.inputProps"
 					:checked="field.currentValue === option.value"
 					class="kt-field-radio-group__wrapper__input"
+					:disabled="field.isDisabled || Boolean(option.disabled)"
 					:name="name"
 					type="radio"
 					:value="option.value"
