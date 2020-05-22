@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import KtField from '../kotti-field'
+import { KtField } from '../kotti-field'
 import { ktFieldProps } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 

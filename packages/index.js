@@ -43,18 +43,19 @@ import KtTable, {
 import KtTheme from './kotti-theme'
 import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
-import KtField from './next/kotti-field'
+import { KtField } from './next/kotti-field'
 import {
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
 } from './next/kotti-field-checkbox'
-import KtFieldRadioGroup from './next/kotti-field-radio-group'
-import KtFieldSingleSelect from './next/kotti-field-single-select'
-import KtFieldText from './next/kotti-field-text'
+import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
+import { KtFieldSingleSelect } from './next/kotti-field-single-select'
+import { KtFieldText } from './next/kotti-field-text'
 import {
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
+	KtFormSubmit,
 } from './next/kotti-form'
 
 const components = {
@@ -86,6 +87,7 @@ const components = {
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
+	KtFormSubmit,
 	KtHeading,
 	KtInlineEdit,
 	KtInput,
@@ -170,6 +172,7 @@ export {
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
+	KtFormSubmit,
 	KtHeading,
 	KtInlineEdit,
 	KtInput,
@@ -187,6 +190,9 @@ export {
 	KtSteps,
 	KtSwitch,
 	KtTable,
+	KtTableColumn,
+	KtTableProvider,
+	KtTableColumnsStateMixin,
 	KtTheme,
 	KtToaster,
 	KtUserMenu,

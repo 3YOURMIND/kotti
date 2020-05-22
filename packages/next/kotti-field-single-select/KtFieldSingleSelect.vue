@@ -60,7 +60,7 @@ import {
 } from '@vue/composition-api'
 import { Select as ElSelect, Option as ElOption } from 'element-ui'
 
-import KtField from '../kotti-field'
+import { KtField } from '../kotti-field'
 import { ktFieldProps } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 
@@ -103,7 +103,10 @@ export default defineComponent({
 				setSoftFocus(): void
 			}
 		>(null)
-		const ktFieldRef = ref<typeof KtField>(null)
+
+		// FIXME: Should be typeof KtField in theory, but right now
+		// this gets resolved wrongly by vetur
+		const ktFieldRef = ref<Vue>(null)
 
 		watchEffect(() => {
 			const elSelectComponent = elSelectRef.value
