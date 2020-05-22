@@ -4,20 +4,6 @@
 <ClientOnly>
 	<h1>KtFields Without Form</h1>
 	<div>
-		<h5>KtFieldCheckbox</h5>
-		<KtFieldCheckbox v-model="disableSingleSelect" isOptional>
-			Disable Single Select
-		</KtFieldCheckbox>
-		<h5>KtFieldSelects</h5>
-		<KtFieldSingleSelect
-			prefix="Prefix"
-			suffix="Suffix"
-			:options="singleSelectOptions"
-			placeholder='select something'
-			leftIcon="shipping"
-			:isDisabled="disableSingleSelect"
-			v-model="selectedOption"
-		/>
 		<h5>KtFieldText</h5>
 		<KtFieldText
 			label="Some Label"
@@ -27,8 +13,6 @@
 	</div>
 	<h1>KtForm Settings</h1>
 	<div class="wrapper">
-		<KtFieldCheckbox v-model="hideValidation" isOptional>Hide Validation</KtFieldCheckbox>
-		<KtFieldCheckbox v-model="isLoading" isOptional>IsLoading</KtFieldCheckbox>
 		<KtFieldRadioGroup
 			v-model="preventSubmissionOn"
 			isOptional
@@ -39,36 +23,108 @@
 				{ label: 'Never', value: 'NEVER' }
 			]"
 		/>
+		<KtFieldCheckboxGroup
+			isOptional
+			:options="[
+				{ key: 'hideValidation', label: 'Hide validation' },
+				{ key: 'isLoading', label: 'Is Loading' },
+				{ key: 'disableFormFields', label: 'Disable Form Fields' },
+			]"
+			v-model="formSettings"
+		/>
 	</div>
 	<h1>KtForm</h1>
-	<KtForm v-model="formData" v-bind="{ hideValidation, isLoading, preventSubmissionOn, validators}" @submit="onSubmit">
+	<KtForm
+		v-model="formData"
+		:hideValidation="formSettings.hideValidation"
+		:isLoading="formSettings.isLoading"
+		v-bind="{ preventSubmissionOn, validators}"
+		@submit="onSubmit"
+	>
+		<KtFieldSingleSelect
+			:isDisabled="formSettings.disableFormFields"
+			prefix="Prefix"
+			suffix="Suffix"
+			:options="radioGroupAndSingleSelectOptions"
+			placeholder='select something'
+			leftIcon="shipping"
+			rightIcon="calendar"
+			formKey="radioGroupAndSingleSelect"
+		/>
 		<KtFieldRadioGroup
-			formKey="radioGroup"
+			formKey="radioGroupAndSingleSelect"
 			label="Some RadioGroup"
-			:options="[
-				{ label: 'a', value: 'a' },
-				{ label: 'b', value: 'b' }
-			]"
+			:isDisabled="formSettings.disableFormFields"
+			:options="radioGroupAndSingleSelectOptions"
 		/>
 		<KtFieldCheckboxGroup
 			formKey="checkboxGroup"
 			label="Some CheckboxGroup"
+			:isDisabled="formSettings.disableFormFields"
 			:options="[
 				{ key: 'initiallyFalse', label: 'A (initiallyFalse)' },
 				{ key: 'initiallyNull', label: 'B (initiallyNull)' },
 				{ key: 'initiallyTrue', label: 'C (initiallyTrue)' },
 			]"
 		/>
-		<KtFieldText :isDisabled="formData['disableTextField']" formKey="firstName" placeholder="Klaus" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="location" :helpText="`Help for firstName`" label="First Name"/>
-		<KtFieldCheckbox formKey="disableTextField" isOptional>Disable FirstName</KtFieldCheckbox>
-		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
+		<KtFieldText
+			:isDisabled="formSettings.disableFormFields"
+			formKey="firstName"
+			placeholder="Klaus"
+			prefix="Prefix"
+			suffix="Suffix"
+			leftIcon="comment"
+			rightIcon="location"
+			helpText="Help for firstName"
+			label="First Name"
+		/>
+		<KtFieldText
+			formKey="lastName"
+			placeholder="Dieter"
+			helpText="help for lastName"
+			label="Last Name"
+		/>
 		<br />
 		<h2>Validation Example</h2>
-		<KtFieldText formKey="lastName" validatorKey="alwaysNeutral" prefix="Prefix" :tabIndex="5" />
-		<KtFieldText formKey="lastName" validatorKey="alwaysError" suffix="Suffix" label="Field That Always Errors" :tabIndex="4" />
-		<KtFieldText formKey="lastName" validatorKey="alwaysSuccess" leftIcon="cloud" label="Field That Always Succeeds" :tabIndex="3" />
-		<KtFieldText formKey="lastName" validatorKey="alwaysWarning" rightIcon="location" hideClear label="Field That Always Warns" :tabIndex="2" />
-		<KtFieldText formKey="username" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="calendar" helpText="help for username" label="Username" isOptional :tabIndex="1" />
+		<KtFieldText
+			formKey="lastName"
+			validatorKey="alwaysNeutral"
+			prefix="Prefix"
+			:tabIndex="5"
+		/>
+		<KtFieldText
+			formKey="lastName"
+			validatorKey="alwaysError"
+			suffix="Suffix"
+			label="Field That Always Errors"
+			:tabIndex="4"
+		/>
+		<KtFieldText
+			formKey="lastName"
+			validatorKey="alwaysSuccess"
+			leftIcon="cloud"
+			label="Field That Always Succeeds"
+			:tabIndex="3"
+		/>
+		<KtFieldText
+			formKey="lastName"
+			validatorKey="alwaysWarning"
+			rightIcon="location"
+			hideClear
+			label="Field That Always Warns"
+			:tabIndex="2"
+		/>
+		<KtFieldText
+			formKey="username"
+			prefix="Prefix"
+			suffix="Suffix"
+			leftIcon="comment"
+			rightIcon="calendar"
+			helpText="help for username"
+			label="Username"
+			isOptional
+			:tabIndex="1"
+		/>
 		<br />
 		<h2>KtFormControllerList</h2>
 		<ul>
@@ -76,12 +132,25 @@
 				<template v-slot:default="{ addAfter, addBefore, deleteSelf, index, setValues, values }">
 					<li>
 						<h3 v-text="`Item ${index}`" />
-						<KtFieldText formKey="username" label="Username" validatorKey="username" leftIcon="user"/>
+						<KtFieldText
+							:isDisabled="formSettings.disableFormFields"
+							formKey="username" label="Username"
+							validatorKey="username"
+							leftIcon="user"
+						/>
 						<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }">
-							<button @click="deleteSelf" type="button" class="kt-button danger">Delete "{{ values.username }}"</button>
-							<button @click="addBefore({ username: `before Item${index}` })" type="button" class="kt-button secondary">Add Before</button>
-							<button @click="addAfter({ username: `after Item${index}` })" type="button" class="kt-button secondary">Add After</button>
-							<button @click="setValues({ ...values, username: `replaced Item${index}` })" type="button" class="kt-button seondary">Set Values</button>
+							<button @click="deleteSelf" type="button" class="kt-button danger">
+								Delete "{{ values.username }}"
+							</button>
+							<button @click="addBefore({ username: `before Item${index}` })" type="button" class="kt-button secondary">
+								Add Before
+							</button>
+							<button @click="addAfter({ username: `after Item${index}` })" type="button" class="kt-button secondary">
+								Add After
+							</button>
+							<button @click="setValues({ ...values, username: `replaced Item${index}` })" type="button" class="kt-button seondary">
+								Set Values
+							</button>
 						</div>
 					</li>
 				</template>
@@ -133,9 +202,8 @@ export default {
 		}
 
 		return {
-			disableSingleSelect: false,
+			disableFormFields: false,
 			formData: {
-				disableTextField: false,
 				checkboxGroup: {
 					initiallyFalse: false,
 					initiallyNull: null,
@@ -143,17 +211,19 @@ export default {
 				},
 				firstName: 'John',
 				lastName: 'Smith',
-				radioGroup: null,
+				radioGroupAndSingleSelect: null,
 				users: [{ username: null }, { username: 'anything' }],
 				user: { lastName: 'pepe' },
 				username: null,
 			},
-			hideValidation: false,
-			isLoading: false,
+			formSettings: {
+				hideValidation: false,
+				isLoading: false,
+				disableFormFields: false,
+			},
 			preventSubmissionOn: 'NEVER',
 			textValue: null,
-			selectedOption: null,
-			singleSelectOptions: [
+			radioGroupAndSingleSelectOptions: [
 				{ label: 'label 1', value: 1 },
 				{ label: 'label 2', value: 2 },
 				{ label: 'label 3', value: 3 },
