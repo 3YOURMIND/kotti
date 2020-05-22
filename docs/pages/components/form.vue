@@ -6,8 +6,8 @@
 	<div>
 		<h5>KtFieldText</h5>
 		<KtFieldText
-			label="Some Label"
 			v-model="textValue"
+			label="Some Label"
 			placeholder="type something"
 		/>
 	</div>
@@ -24,13 +24,13 @@
 			]"
 		/>
 		<KtFieldCheckboxGroup
+			v-model="formSettings"
 			isOptional
 			:options="[
 				{ key: 'hideValidation', label: 'Hide validation' },
 				{ key: 'isLoading', label: 'Is Loading' },
 				{ key: 'disableFormFields', label: 'Disable Form Fields' },
 			]"
-			v-model="formSettings"
 		/>
 	</div>
 	<h1>KtForm</h1>
@@ -42,25 +42,26 @@
 		@submit="onSubmit"
 	>
 		<KtFieldSingleSelect
+			formKey="radioGroupAndSingleSelect"
 			:isDisabled="formSettings.disableFormFields"
-			prefix="Prefix"
-			suffix="Suffix"
+			leftIcon="shipping"
 			:options="radioGroupAndSingleSelectOptions"
 			placeholder='select something'
-			leftIcon="shipping"
+			prefix="Prefix"
 			rightIcon="calendar"
-			formKey="radioGroupAndSingleSelect"
+			suffix="Suffix"
 		/>
 		<KtFieldRadioGroup
 			formKey="radioGroupAndSingleSelect"
-			label="Some RadioGroup"
 			:isDisabled="formSettings.disableFormFields"
+			isOptional
+			label="Some RadioGroup"
 			:options="radioGroupAndSingleSelectOptions"
 		/>
 		<KtFieldCheckboxGroup
 			formKey="checkboxGroup"
-			label="Some CheckboxGroup"
 			:isDisabled="formSettings.disableFormFields"
+			label="Some CheckboxGroup"
 			:options="[
 				{ key: 'initiallyFalse', label: 'A (initiallyFalse)' },
 				{ key: 'initiallyNull', label: 'B (initiallyNull)' },
@@ -68,61 +69,61 @@
 			]"
 		/>
 		<KtFieldText
-			:isDisabled="formSettings.disableFormFields"
 			formKey="firstName"
+			helpText="Help for firstName"
+			:isDisabled="formSettings.disableFormFields"
+			label="First Name"
+			leftIcon="comment"
 			placeholder="Klaus"
 			prefix="Prefix"
-			suffix="Suffix"
-			leftIcon="comment"
 			rightIcon="location"
-			helpText="Help for firstName"
-			label="First Name"
+			suffix="Suffix"
 		/>
 		<KtFieldText
 			formKey="lastName"
-			placeholder="Dieter"
 			helpText="help for lastName"
 			label="Last Name"
+			placeholder="Dieter"
 		/>
 		<br />
 		<h2>Validation Example</h2>
 		<KtFieldText
 			formKey="lastName"
-			validatorKey="alwaysNeutral"
 			prefix="Prefix"
 			:tabIndex="5"
+			validatorKey="alwaysNeutral"
 		/>
 		<KtFieldText
 			formKey="lastName"
-			validatorKey="alwaysError"
-			suffix="Suffix"
 			label="Field That Always Errors"
+			suffix="Suffix"
 			:tabIndex="4"
+			validatorKey="alwaysError"
 		/>
 		<KtFieldText
 			formKey="lastName"
-			validatorKey="alwaysSuccess"
-			leftIcon="cloud"
 			label="Field That Always Succeeds"
+			leftIcon="cloud"
 			:tabIndex="3"
+			validatorKey="alwaysSuccess"
 		/>
 		<KtFieldText
 			formKey="lastName"
-			validatorKey="alwaysWarning"
-			rightIcon="location"
 			hideClear
 			label="Field That Always Warns"
+			rightIcon="location"
 			:tabIndex="2"
+			validatorKey="alwaysWarning"
 		/>
 		<KtFieldText
 			formKey="username"
-			prefix="Prefix"
-			suffix="Suffix"
-			leftIcon="comment"
-			rightIcon="calendar"
 			helpText="help for username"
-			label="Username"
 			isOptional
+			label="Username"
+			leftIcon="comment"
+			prefix="Prefix"
+			rightIcon="calendar"
+			suffix="Suffix"
 			:tabIndex="1"
 		/>
 		<br />
@@ -133,22 +134,22 @@
 					<li>
 						<h3 v-text="`Item ${index}`" />
 						<KtFieldText
-							:isDisabled="formSettings.disableFormFields"
 							formKey="username" label="Username"
-							validatorKey="username"
+							:isDisabled="formSettings.disableFormFields"
 							leftIcon="user"
+							validatorKey="username"
 						/>
 						<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }">
-							<button @click="deleteSelf" type="button" class="kt-button danger">
+							<button class="kt-button danger" type="button"  @click="deleteSelf">
 								Delete "{{ values.username }}"
 							</button>
-							<button @click="addBefore({ username: `before Item${index}` })" type="button" class="kt-button secondary">
+							<button class="kt-button secondary" type="button" @click="addBefore({ username: `before Item${index}` })">
 								Add Before
 							</button>
-							<button @click="addAfter({ username: `after Item${index}` })" type="button" class="kt-button secondary">
+							<button class="kt-button secondary" type="button" @click="addAfter({ username: `after Item${index}` })">
 								Add After
 							</button>
-							<button @click="setValues({ ...values, username: `replaced Item${index}` })" type="button" class="kt-button seondary">
+							<button class="kt-button seondary" type="button" @click="setValues({ ...values, username: `replaced Item${index}` })">
 								Set Values
 							</button>
 						</div>
@@ -156,15 +157,21 @@
 				</template>
 			</KtFormControllerList>
 			<br/>
-			Custom Button: <button @click="addUser" type="button" class="kt-button primary">Add User</button>
+			Custom Button: <button class="kt-button primary" type="button" @click="addUser">Add User</button>
 		</ul>
 		<br />
 		<h2>KtFormControllerObject</h2>
 		<KtFormControllerObject formKey="user">
-			<KtFieldText formKey="lastName" label="I’m a Field In user" validatorKey="username" rightIcon="user"/>
+			<KtFieldText
+				formKey="lastName"
+				label="I’m a Field In user"
+				rightIcon="user"
+				validatorKey="username"
+			/>
 		</KtFormControllerObject>
 		<KtFormSubmit />
 	</KtForm>
+	<br />
 	<br />
 	<h2>formData</h2>
 	<pre v-text="JSON.stringify(formData, null, '\t')" />
@@ -189,15 +196,15 @@ export default {
 				// eslint-disable-next-line no-magic-numbers
 				if (value.length < 3)
 					return {
-						type: 'error',
 						text: 'Your Username is too short',
+						type: 'error',
 					}
 
 				// eslint-disable-next-line no-magic-numbers
 				if (value.length < 5)
-					return { type: 'warning', text: 'Your username is already taken' }
+					return { text: 'Your username is already taken', type: 'warning' }
 
-				return { type: 'success' }
+				return { text: null, type: 'success' }
 			},
 		}
 
