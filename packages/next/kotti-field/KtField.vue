@@ -1,75 +1,77 @@
 <template>
-	<component
-		:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
-		v-if="!field.isLoading"
-		:class="wrapperClasses"
-		@click="emit('click', $event)"
-		@mousedown="emit('mousedown', $event)"
-	>
-		<div class="kt-field__header">
-			<component
-				:is="isGroup ? 'legend' : 'div'"
-				v-if="labelText !== null"
-				class="kt-field__label"
-				v-text="labelText"
-			/>
-			<div
-				v-if="field.helpText"
-				class="kt-field__help-text"
-				v-text="field.helpText"
-			/>
-		</div>
-
-		<slot name="container">
-			<div ref="inputContainerRef" class="kt-field__input-container">
-				<div
-					v-if="field.prefix"
-					:class="affixClasses(['left'])"
-					v-text="field.prefix"
+	<div>
+		<component
+			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
+			v-show="!field.isLoading"
+			:class="wrapperClasses"
+			@click="emit('click', $event)"
+			@mousedown="emit('mousedown', $event)"
+		>
+			<div class="kt-field__header">
+				<component
+					:is="isGroup ? 'legend' : 'div'"
+					v-if="labelText !== null"
+					class="kt-field__label"
+					v-text="labelText"
 				/>
-				<div v-if="field.leftIcon" :class="iconClasses(['left'])">
-					<i class="yoco" v-text="field.leftIcon" />
-				</div>
-				<div class="kt-field__input-container__slot">
-					<slot name="default" />
-				</div>
-				<slot
-					:classes="iconClasses(['interactive'])"
-					:handleClear="handleClear"
-					name="actionIcon"
-					:showClear="showClear"
-				>
-					<div
-						v-if="showClear"
-						:class="iconClasses(['interactive'])"
-						role="button"
-						@click.stop="handleClear"
-					>
-						<i class="yoco" v-text="'close'" />
-					</div>
-				</slot>
-				<div v-if="field.rightIcon" :class="iconClasses(['right'])">
-					<i class="yoco" v-text="field.rightIcon" />
-				</div>
 				<div
-					v-if="field.suffix"
-					:class="affixClasses(['right'])"
-					v-text="field.suffix"
+					v-if="field.helpText"
+					class="kt-field__help-text"
+					v-text="field.helpText"
 				/>
 			</div>
-		</slot>
 
-		<div
-			v-if="!field.isLoading && showValidation"
-			:class="`kt-field__validation kt-field__validation--${validationType}`"
-		>
-			<i v-if="validationText" class="yoco">{{ validationIcon }}</i>
-			{{ validationText }}
+			<slot name="container">
+				<div ref="inputContainerRef" class="kt-field__input-container">
+					<div
+						v-if="field.prefix"
+						:class="affixClasses(['left'])"
+						v-text="field.prefix"
+					/>
+					<div v-if="field.leftIcon" :class="iconClasses(['left'])">
+						<i class="yoco" v-text="field.leftIcon" />
+					</div>
+					<div class="kt-field__input-container__slot">
+						<slot name="default" />
+					</div>
+					<slot
+						:classes="iconClasses(['interactive'])"
+						:handleClear="handleClear"
+						name="actionIcon"
+						:showClear="showClear"
+					>
+						<div
+							v-if="showClear"
+							:class="iconClasses(['interactive'])"
+							role="button"
+							@click.stop="handleClear"
+						>
+							<i class="yoco" v-text="'close'" />
+						</div>
+					</slot>
+					<div v-if="field.rightIcon" :class="iconClasses(['right'])">
+						<i class="yoco" v-text="field.rightIcon" />
+					</div>
+					<div
+						v-if="field.suffix"
+						:class="affixClasses(['right'])"
+						v-text="field.suffix"
+					/>
+				</div>
+			</slot>
+
+			<div
+				v-if="!field.isLoading && showValidation"
+				:class="`kt-field__validation kt-field__validation--${validationType}`"
+			>
+				<i v-if="validationText" class="yoco">{{ validationIcon }}</i>
+				{{ validationText }}
+			</div>
+		</component>
+		<div v-if="field.isLoading" class="kt-field-wrapper">
+			<div class="kt-field__header--loading skeleton rectangle" />
+			<div class="kt-field__input-container--loading skeleton rectangle" />
 		</div>
-	</component>
-	<div v-else class="kt-field-wrapper">
-		<div class="kt-field__header--loading skeleton rectangle" />
-		<div class="kt-field__input-container--loading skeleton rectangle" />
 	</div>
 </template>
 
