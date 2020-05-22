@@ -61,34 +61,20 @@ import { ktFieldProps } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
-import { KtFieldSingleSelect } from './types'
+import { ktFieldSelectSharedProps } from './constants'
+import { KtFieldSelect } from './types'
 
 export default defineComponent({
 	name: 'KtFieldSingleSelect',
 	components: { ElOption, ElSelect, KtField, ActionIcon },
 	props: {
 		...ktFieldProps,
-		options: {
-			required: true,
-			type: Array,
-			validator: (
-				value: unknown[],
-			): value is KtFieldSingleSelect.Props['options'] =>
-				value.every(
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					(option: any): option is KtFieldSingleSelect.Entry =>
-						typeof option === 'object' &&
-						option !== null &&
-						typeof option.label === 'string' &&
-						(option.value === null ||
-							['string', 'number', 'boolean'].includes(typeof option.value)),
-				),
-		},
+		...ktFieldSelectSharedProps,
 	},
-	setup(props: KtFieldSingleSelect.Props, { emit }) {
-		const field = useField<KtFieldSingleSelect.Value>({
+	setup(props: KtFieldSelect.Single.Props, { emit }) {
+		const field = useField<KtFieldSelect.Single.Value>({
 			emit,
-			isCorrectDataType: (value): value is KtFieldSingleSelect.Value =>
+			isCorrectDataType: (value): value is KtFieldSelect.Single.Value =>
 				['string', 'number', 'boolean'].includes(typeof value) ||
 				value === null,
 			props,
@@ -207,7 +193,7 @@ export default defineComponent({
 			isDropdownOpen,
 			ktFieldRef,
 			scheduleFocusAfterFieldClick,
-			onChange: (value: KtFieldSingleSelect.Entry['value']) => {
+			onChange: (value: KtFieldSelect.Single.Value) => {
 				field.setValue(value)
 			},
 		}
