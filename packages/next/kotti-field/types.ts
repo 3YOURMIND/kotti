@@ -16,6 +16,11 @@ export namespace KottiField {
 			 * the field changes to ensure that the data type is correct
 			 */
 			isCorrectDataType: (value: unknown) => value is DATA_TYPE
+
+			/**
+			 * Useful for checking validation on required fields
+			 */
+			isEmpty: (value: DATA_TYPE) => boolean
 			props: KottiField.Props<DATA_TYPE>
 		}
 

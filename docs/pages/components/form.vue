@@ -5,7 +5,7 @@
 	<h1>KtFields Without Form</h1>
 	<div>
 		<h5>KtFieldCheckbox</h5>
-		<KtFieldCheckbox v-model="disableSingleSelect">
+		<KtFieldCheckbox v-model="disableSingleSelect" isOptional>
 			Disable Single Select
 		</KtFieldCheckbox>
 		<h5>KtFieldSelects</h5>
@@ -23,15 +23,15 @@
 			label="Some Label"
 			v-model="textValue"
 			placeholder="type something"
-			:validator="(val)=> val === null? {type: 'error', text: 'required field can not be left empty'}:{type: null}"
 		/>
 	</div>
 	<h1>KtForm Settings</h1>
 	<div class="wrapper">
-		<KtFieldCheckbox v-model="hideValidation">Hide Validation</KtFieldCheckbox>
-		<KtFieldCheckbox v-model="isLoading">IsLoading</KtFieldCheckbox>
+		<KtFieldCheckbox v-model="hideValidation" isOptional>Hide Validation</KtFieldCheckbox>
+		<KtFieldCheckbox v-model="isLoading" isOptional>IsLoading</KtFieldCheckbox>
 		<KtFieldRadioGroup
 			v-model="preventSubmissionOn"
+			isOptional
 			label="Prevent Submission On"
 			:options="[
 				{ label: 'Error', value: 'error' },
@@ -60,7 +60,7 @@
 			]"
 		/>
 		<KtFieldText :isDisabled="formData['disableTextField']" formKey="firstName" placeholder="Klaus" prefix="Prefix" suffix="Suffix" leftIcon="comment" rightIcon="location" :helpText="`Help for firstName`" label="First Name"/>
-		<KtFieldCheckbox formKey="disableTextField">Disable FirstName</KtFieldCheckbox>
+		<KtFieldCheckbox formKey="disableTextField" isOptional>Disable FirstName</KtFieldCheckbox>
 		<KtFieldText formKey="lastName" placeholder="Dieter" helpText="help for lastName" label="Last Name" />
 		<br />
 		<h2>Validation Example</h2>

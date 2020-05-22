@@ -68,6 +68,7 @@ export default defineComponent({
 			isCorrectDataType: (value): value is KtFieldRadioGroup.Value | null =>
 				['number', 'string', 'boolean'].includes(typeof value) ||
 				value === null,
+			isEmpty: (value) => value === null,
 			props,
 		})
 

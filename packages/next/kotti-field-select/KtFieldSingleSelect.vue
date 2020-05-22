@@ -77,6 +77,7 @@ export default defineComponent({
 			isCorrectDataType: (value): value is KtFieldSelect.Single.Value =>
 				['string', 'number', 'boolean'].includes(typeof value) ||
 				value === null,
+			isEmpty: (value) => value === null,
 			props,
 		})
 

@@ -51,6 +51,10 @@ export default defineComponent({
 				Object.values(value).every(
 					(value) => typeof value === 'boolean' || value === null,
 				),
+			isEmpty: (value) =>
+				value !== null &&
+				typeof value === 'object' &&
+				Object.values(value).every((value) => value !== true),
 			props,
 		})
 

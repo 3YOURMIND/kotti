@@ -35,6 +35,7 @@ export default defineComponent({
 			emit,
 			isCorrectDataType: (value): value is boolean | null =>
 				typeof value === 'boolean' || value === null,
+			isEmpty: (value) => value !== true,
 			props,
 		})
 

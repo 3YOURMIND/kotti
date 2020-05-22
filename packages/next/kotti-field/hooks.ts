@@ -19,6 +19,7 @@ import { KottiField } from './types'
 export const useField = <DATA_TYPE>({
 	emit,
 	isCorrectDataType,
+	isEmpty,
 	props,
 }: KottiField.Hook.Parameters<
 	DATA_TYPE
@@ -95,6 +96,10 @@ export const useField = <DATA_TYPE>({
 			: context === null
 			? false
 			: context.hideValidation.value,
+	)
+
+	const isMissingRequiredField = computed(
+		(): boolean => !props.isOptional && isEmpty(currentValue.value),
 	)
 
 	const validation = computed(
@@ -191,7 +196,14 @@ export const useField = <DATA_TYPE>({
 			return context.setValue(props.formKey, newValue)
 		}),
 		suffix: computed(() => props.suffix),
-		validation,
+		validation: computed(
+			(): KottiField.Validation.Result =>
+				isMissingRequiredField.value
+					? validation.value.type === 'error'
+						? validation.value
+						: { type: 'error', text: 'This Field is Required' }
+					: validation.value,
+		),
 	})
 
 	// hook into lifecycle events

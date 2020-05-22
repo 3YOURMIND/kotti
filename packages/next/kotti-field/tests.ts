@@ -20,6 +20,7 @@ const TestComponent = defineComponent({
 			emit,
 			isCorrectDataType: (value): value is string | null =>
 				typeof value === 'string' || value === null,
+			isEmpty: (value) => value === null,
 			props,
 		}),
 	}),
