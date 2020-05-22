@@ -61,7 +61,7 @@ import { useField } from '../kotti-field/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
 import { ktFieldSelectSharedProps } from './constants'
-import { usePopperPlacementFix } from './hooks'
+import { usePopperPlacementFix, usePopperWidthFix } from './hooks'
 import { KtFieldSelect } from './types'
 
 export default defineComponent({
@@ -93,33 +93,7 @@ export default defineComponent({
 		const ktFieldRef = ref<Vue>(null)
 
 		usePopperPlacementFix(elSelectRef, ktFieldRef)
-
-		watchEffect(() => {
-			/**
-			 * If the field is loading, we want to unfocus in case the popper is open
-			 * so that when isLoading changes, the popper isn't misplaced
-			 */
-			const elSelectComponent = elSelectRef.value
-			if (elSelectComponent === null) throw new Error('el-select not ready')
-			if (field.isLoading) {
-				return elSelectComponent.blur()
-			}
-
-			const ktFieldComponent = ktFieldRef.value
-			if (ktFieldComponent === null) throw new Error('kt-field not ready')
-
-			// just used to add this as a dependency
-			elSelectComponent.inputWidth
-
-			const ktFieldContainerElement = ktFieldComponent.$refs
-				.inputContainerRef as Element
-			const newWidth = ktFieldContainerElement.getBoundingClientRect().width
-			const popperComponent = elSelectComponent.$refs.popper as Vue
-			const popperElement = popperComponent.$el as HTMLElement
-
-			popperElement.style.width = `${newWidth}px`
-			elSelectComponent.inputWidth = newWidth
-		})
+		usePopperWidthFix(elSelectRef, ktFieldRef, field)
 
 		const isDropdownOpen = ref(false)
 
