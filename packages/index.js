@@ -49,7 +49,10 @@ import {
 	KtFieldCheckboxGroup,
 } from './next/kotti-field-checkbox'
 import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
-import { KtFieldSingleSelect } from './next/kotti-field-select'
+import {
+	KtFieldSingleSelect,
+	KtFieldMultiSelect,
+} from './next/kotti-field-select'
 import { KtFieldText } from './next/kotti-field-text'
 import {
 	KtForm,
@@ -81,6 +84,7 @@ const components = {
 	KtField,
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
+	KtFieldMultiSelect,
 	KtFieldSingleSelect,
 	KtFieldRadioGroup,
 	KtFieldText,
@@ -167,6 +171,7 @@ export {
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
 	KtFieldRadioGroup,
+	KtFieldMultiSelect,
 	KtFieldSingleSelect,
 	KtFieldText,
 	KtForm,
