@@ -51,7 +51,6 @@ import {
 	defineComponent,
 	computed,
 	ref,
-	onMounted,
 	watchEffect,
 } from '@vue/composition-api'
 import { Select as ElSelect, Option as ElOption } from 'element-ui'
@@ -62,6 +61,7 @@ import { useField } from '../kotti-field/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
 import { ktFieldSelectSharedProps } from './constants'
+import { usePopperPlacementFix } from './hooks'
 import { KtFieldSelect } from './types'
 
 export default defineComponent({
@@ -92,6 +92,8 @@ export default defineComponent({
 		// this gets resolved wrongly by vetur
 		const ktFieldRef = ref<Vue>(null)
 
+		usePopperPlacementFix(elSelectRef, ktFieldRef)
+
 		watchEffect(() => {
 			const elSelectComponent = elSelectRef.value
 			const ktFieldComponent = ktFieldRef.value
@@ -109,39 +111,6 @@ export default defineComponent({
 
 			popperElement.style.width = `${newWidth}px`
 			elSelectComponent.inputWidth = newWidth
-		})
-
-		onMounted(() => {
-			const selectComponent = elSelectRef.value // div.el-select
-			if (selectComponent === null) throw new Error('el-select not available')
-
-			const ktFieldComponent = ktFieldRef.value
-			if (ktFieldComponent === null) throw new Error('kt-field not available')
-
-			/**
-			 * ^ `popperComponent` is an internal `element-ui` component that computes the placement
-			 * of the dropdown based on the input element of `el-select`.
-			 *
-			 * [select.vue]{@link ./node_modules/element-ui/packages/select/src/select.vue} adds `ref="reference"`
-			 * to the input.
-			 *
-			 * [vue-popper.js]{@link ./node_modules/element-ui/src/utils/vue-popper.js} uses `parent.$ref.reference`
-			 * to obtain the `referenceElm`.
-			 *
-			 * So, here, we overwrite the internal property `referenceElm` of the component, to place the dropdown
-			 * in accordance to our input component instead (which is accessed by the `$refs.inputContainerRef`)
-			 */
-			const setUpPopper = () => {
-				const popperComponent = selectComponent.$refs.popper as Vue & {
-					referenceElm: Element
-				}
-				const ktFieldInputEl = ktFieldComponent.$refs
-					.inputContainerRef as Element
-
-				popperComponent.referenceElm = ktFieldInputEl
-			}
-
-			setUpPopper()
 		})
 
 		const isDropdownOpen = ref(false)
