@@ -96,15 +96,16 @@ export default defineComponent({
 
 		watchEffect(() => {
 			/**
-			 * If the field is loading and something triggers and update, this
-			 * watchEffect might accidentally throw an error. Therefore, we
-			 * early exit it so no error will be thrown
+			 * If the field is loading, we want to unfocus in case the popper is open
+			 * so that when isLoading changes, the popper isn't misplaced
 			 */
-			if (field.isLoading) return
-
 			const elSelectComponent = elSelectRef.value
-			const ktFieldComponent = ktFieldRef.value
 			if (elSelectComponent === null) throw new Error('el-select not ready')
+			if (field.isLoading) {
+				return elSelectComponent.blur()
+			}
+
+			const ktFieldComponent = ktFieldRef.value
 			if (ktFieldComponent === null) throw new Error('kt-field not ready')
 
 			// just used to add this as a dependency
