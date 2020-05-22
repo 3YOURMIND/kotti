@@ -193,7 +193,6 @@ export default defineComponent({
 			},
 			isDropdownOpen,
 			ktFieldRef,
-			scheduleFocusAfterFieldClick,
 			onChange: (value: KtFieldSelect.Single.Value) => {
 				field.setValue(value)
 			},
