@@ -49,7 +49,7 @@ import {
 	KtFieldCheckboxGroup,
 } from './next/kotti-field-checkbox'
 import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
-import { KtFieldSingleSelect } from './next/kotti-field-single-select'
+import { KtFieldSingleSelect } from './next/kotti-field-select'
 import { KtFieldText } from './next/kotti-field-text'
 import {
 	KtForm,

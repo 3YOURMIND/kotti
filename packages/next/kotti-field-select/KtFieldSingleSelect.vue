@@ -33,19 +33,15 @@
 			</ElSelect>
 		</div>
 		<template v-slot:actionIcon="{ classes, handleClear, showClear }">
-			<div
-				:class="classes"
-				role="button"
-				@click="handleChevronClick($event, { handleClear, showClear })"
-				@mousedown="handleChevronMouseDown({ showClear })"
-				@mouseenter="hoverOnClear = true"
-				@mouseleave="hoverOnClear = false"
-			>
-				<i
-					class="yoco"
-					v-text="hoverOnClear && showClear ? 'close' : chevronIcon"
-				/>
-			</div>
+			<ActionIcon
+				v-bind="{
+					classes,
+					elSelectRef,
+					handleClear,
+					isDropdownOpen,
+					showClear,
+				}"
+			/>
 		</template>
 	</KtField>
 </template>
@@ -64,11 +60,12 @@ import { KtField } from '../kotti-field'
 import { ktFieldProps } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 
+import ActionIcon from './components/ActionIcon.vue'
 import { KtFieldSingleSelect } from './types'
 
 export default defineComponent({
 	name: 'KtFieldSingleSelect',
-	components: { ElOption, ElSelect, KtField },
+	components: { ElOption, ElSelect, KtField, ActionIcon },
 	props: {
 		...ktFieldProps,
 		options: {
@@ -163,47 +160,13 @@ export default defineComponent({
 		const isDropdownOpen = ref(false)
 
 		const scheduleFocusAfterFieldClick = ref(false)
-		const scheduleRefocusAfterChevronClick = ref(false)
 
 		return {
-			chevronIcon: computed(
-				() => `chevron_${isDropdownOpen.value ? 'up' : 'down'}`,
-			),
 			elSelectClasses: computed(() => ({
 				'el-select--disabled': field.isDisabled,
 			})),
 			elSelectRef,
 			field,
-			handleChevronClick: (
-				$event: { stopPropagation(): void },
-				{ handleClear, showClear }: { showClear: boolean; handleClear(): void },
-			) => {
-				const elSelect = elSelectRef.value
-				if (!elSelect) throw new Error('ElSelect is not ready yet')
-
-				if (showClear) {
-					$event.stopPropagation()
-					handleClear()
-
-					/**
-					 * if the clear button was clicked the input should be closed but not be blurred
-					 * therefore, ElSelect’s setSoftFocus is appropriate
-					 */
-					if (scheduleRefocusAfterChevronClick) {
-						elSelect.setSoftFocus()
-						scheduleRefocusAfterChevronClick.value = false // done, so reset flag
-					}
-				}
-			},
-			handleChevronMouseDown: ({ showClear }: { showClear: boolean }) => {
-				/**
-				 * ElSelect blurs the field entirely because it considers this to be a clickOutside
-				 * Since we only cleared the field, we want to close the dropdown (which ElSelect does)
-				 * but without blurring. Therefore, we schedule a soft refocus after the click is done
-				 */
-				if (showClear && isDropdownOpen)
-					scheduleRefocusAfterChevronClick.value = true
-			},
 			handleFieldClick: () => {
 				const elSelect = elSelectRef.value
 				if (!elSelect) throw new Error('elSelect is not ready')
@@ -241,11 +204,9 @@ export default defineComponent({
 				 */
 				if (!isDropdownOpen.value) scheduleFocusAfterFieldClick.value = true
 			},
-			hoverOnClear: ref(false),
 			isDropdownOpen,
 			ktFieldRef,
 			scheduleFocusAfterFieldClick,
-			scheduleRefocusAfterChevronClick,
 			onChange: (value: KtFieldSingleSelect.Entry['value']) => {
 				field.setValue(value)
 			},
