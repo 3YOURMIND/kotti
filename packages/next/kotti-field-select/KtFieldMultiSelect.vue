@@ -2,7 +2,7 @@
 	<KtField
 		ref="ktFieldRef"
 		v-bind="{ field }"
-		:getEmptyValue="() => null"
+		:getEmptyValue="() => []"
 		isComponent="div"
 		@click.stop="handleFieldClick"
 		@mousedown="handleFieldMouseDown"
@@ -71,10 +71,14 @@ export default defineComponent({
 	setup(props: KtFieldSelect.Multiple.Props, { emit }) {
 		const field = useField<KtFieldSelect.Multiple.Value>({
 			emit,
-			isCorrectDataType: (value): value is KtFieldSelect.Multiple.Value =>
-				['string', 'number', 'boolean'].includes(typeof value) ||
-				value === null,
-			isEmpty: (value) => value === null,
+			isCorrectDataType: (values): values is KtFieldSelect.Multiple.Value =>
+				Array.isArray(values) &&
+				values.every(
+					(value) =>
+						['string', 'number', 'boolean'].includes(typeof value) ||
+						value === null,
+				),
+			isEmpty: (value) => value.length === 0,
 			props,
 		})
 
@@ -141,8 +145,15 @@ export default defineComponent({
 			},
 			isDropdownOpen,
 			ktFieldRef,
-			onChange: (value: KtFieldSelect.Multi.Value) => {
-				field.setValue(value)
+			onChange: (values: KtFieldSelect.Multiple.Value) => {
+				const getOptionIndex = (value: KtFieldSelect.Shared.Entry['value']) =>
+					props.options.findIndex((option) => option.value === value)
+
+				const sortedValues = values.sort(
+					(a, b) => getOptionIndex(a) - getOptionIndex(b),
+				)
+
+				field.setValue(sortedValues)
 			},
 		}
 	},

@@ -2,6 +2,16 @@
 # Form
 
 <ClientOnly>
+	<KtFieldMultiSelect
+		isOptional
+		leftIcon="shipping"
+		:options="radioGroupAndSelectOptions"
+		placeholder="select something"
+		prefix="Prefix"
+		rightIcon="calendar"
+		suffix="Suffix"
+		v-model="selectedMultiSelects"
+	/>
 	<h1>KtFields Without Form</h1>
 	<div>
 		<h5>KtFieldText</h5>
@@ -45,7 +55,7 @@
 			formKey="radioGroupAndSingleSelect"
 			:isDisabled="formSettings.disableFormFields"
 			leftIcon="shipping"
-			:options="radioGroupAndSingleSelectOptions"
+			:options="radioGroupAndSelectOptions"
 			placeholder='select something'
 			prefix="Prefix"
 			rightIcon="calendar"
@@ -56,7 +66,7 @@
 			:isDisabled="formSettings.disableFormFields"
 			isOptional
 			label="Some RadioGroup"
-			:options="radioGroupAndSingleSelectOptions"
+			:options="radioGroupAndSelectOptions"
 		/>
 		<KtFieldCheckboxGroup
 			formKey="checkboxGroup"
@@ -209,6 +219,7 @@ export default {
 		}
 
 		return {
+			selectedMultiSelects: [1, 2, 3, 4, 5, 6],
 			disableFormFields: false,
 			formData: {
 				checkboxGroup: {
@@ -230,7 +241,7 @@ export default {
 			},
 			preventSubmissionOn: 'NEVER',
 			textValue: null,
-			radioGroupAndSingleSelectOptions: [
+			radioGroupAndSelectOptions: [
 				{ label: 'label 1', value: 1 },
 				{ label: 'label 2', value: 2 },
 				{ label: 'label 3', value: 3 },
