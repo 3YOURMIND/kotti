@@ -93,49 +93,49 @@ export default defineComponent({
 <style lang="scss" scoped>
 .submit {
 	&__validation-popup {
-		background-color: var(--ui-01);
 		display: flex;
 		flex: 1;
 		flex-direction: column;
 		justify-content: space-between;
 		padding: 1em;
+		background-color: var(--ui-01);
 
 		> div:not(:last-child) {
 			margin-bottom: 1em;
 		}
 
 		&__title {
-			color: var(--text-01);
 			font-weight: bold;
+			color: var(--text-01);
 		}
 
 		&__errors,
 		&__warnings {
 			display: flex;
 			flex-direction: column;
-			list-style: none;
 			margin: 0;
+			list-style: none;
 
 			&__item__icon {
-				height: 1em;
 				width: 1em;
-				margin: 0;
+				height: 1em;
 				padding-right: 0.5em;
+				margin: 0;
 			}
 		}
 
 		&__warnings__item {
 			display: flex;
 			align-items: center;
-			color: var(--support-warning);
 			justify-content: flex-start;
+			color: var(--support-warning);
 		}
 
 		&__errors__item {
 			display: flex;
 			align-items: center;
-			color: var(--support-error);
 			justify-content: flex-start;
+			color: var(--support-error);
 		}
 
 		&__button {
