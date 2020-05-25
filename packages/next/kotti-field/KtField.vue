@@ -298,6 +298,12 @@ export default defineComponent({
 		margin-bottom: 0.8rem;
 	}
 
+	fieldset {
+		padding: 0;
+		margin: 0;
+		border: 0;
+	}
+
 	&__header {
 		font-size: 0.9em;
 
