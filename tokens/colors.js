@@ -78,6 +78,11 @@ export const tokens = [
 		reference: 'gray-60',
 	},
 	{
+		name: 'ui-05',
+		description: 'Lightly colored background',
+		reference: 'primary-10',
+	},
+	{
 		name: 'text-01',
 		description: 'Primary text\nHeaders',
 		reference: 'gray-80',
