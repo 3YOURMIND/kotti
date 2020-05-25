@@ -71,6 +71,12 @@ export default defineComponent({
 				value === null,
 			isEmpty: (value) => value === null,
 			props,
+			supports: {
+				clear: false,
+				decoration: false,
+				placeholder: false,
+				tabIndex: true,
+			},
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()

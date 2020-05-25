@@ -37,6 +37,12 @@ export default defineComponent({
 				typeof value === 'boolean' || value === null,
 			isEmpty: (value) => value !== true,
 			props,
+			supports: {
+				clear: false,
+				decoration: false,
+				placeholder: false,
+				tabIndex: true,
+			},
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()

@@ -56,6 +56,12 @@ export default defineComponent({
 				typeof value === 'object' &&
 				Object.values(value).every((value) => value !== true),
 			props,
+			supports: {
+				clear: false,
+				decoration: false,
+				placeholder: false,
+				tabIndex: true,
+			},
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()

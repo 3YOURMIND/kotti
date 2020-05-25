@@ -78,11 +78,34 @@ class InvalidDataType extends CustomError {
 	}
 }
 
+class UnsupportedProp extends CustomError {
+	public constructor(
+		props: KottiField.Props<unknown>,
+		{
+			supportsKey,
+			propKey,
+			value,
+		}: {
+			supportsKey: string
+			propKey: string
+			value: unknown
+		},
+	) {
+		super(
+			createErrorMessage(props, [
+				`Encountered Unsupported Prop “${propKey}” with value “${value}”.`,
+				`“${supportsKey}” is not supported in this field.`,
+			]),
+		)
+	}
+}
+
 export const KtFieldErrors = {
 	DisabledSetValueCalled,
 	ImplicitFormKeyNone,
 	InvalidDataType,
 	InvalidPropOutsideOfContext,
 	NonDeterministicValidatorUsage,
+	UnsupportedProp,
 	ValidatorNotFound,
 }

@@ -101,6 +101,12 @@ export default defineComponent({
 				),
 			isEmpty: (value) => value.length === 0,
 			props,
+			supports: {
+				clear: true,
+				decoration: true,
+				placeholder: true,
+				tabIndex: false,
+			},
 		})
 
 		const elSelectRef = ref<

@@ -19,6 +19,12 @@ const TestField = defineComponent({
 				typeof value === 'string' || value === null,
 			isEmpty: (value) => value === null,
 			props,
+			supports: {
+				clear: true,
+				decoration: true,
+				placeholder: true,
+				tabIndex: true,
+			},
 		}),
 	}),
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,

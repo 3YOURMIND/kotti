@@ -22,6 +22,7 @@ export namespace KottiField {
 			 */
 			isEmpty: (value: DATA_TYPE) => boolean
 			props: KottiField.Props<DATA_TYPE>
+			supports: KottiField.Supports
 		}
 
 		export type Returns<DATA_TYPE = unknown> = UnwrapRef<
@@ -126,6 +127,34 @@ export namespace KottiField {
 		 * v-model value
 		 */
 		value: DATA_TYPE
+	}
+
+	/**
+	 * Object that explicitly specifies which of the KtField.Props are
+	 * supported, since it may not always make sense to have some of
+	 * the props on certain fields.
+	 */
+	export type Supports = {
+		/**
+		 * In some fields, having a clear button would be nonsensical (e.g. KtFieldCheckbox)
+		 */
+		clear: boolean
+
+		/**
+		 * Affects all decoration properties like icons and affixes.
+		 * These aren’t supported on e.g. the KtFieldCheckboxGroup
+		 */
+		decoration: boolean
+
+		/**
+		 * E.g. KtFieldCheckbox can’t have a reasonable implementation for a placeholder text
+		 */
+		placeholder: boolean
+
+		/**
+		 * Some third-party components do not support passing a custom tabIndex
+		 */
+		tabIndex: boolean
 	}
 
 	export namespace Validation {

@@ -6,6 +6,7 @@ import {
 	reactive,
 	onUnmounted,
 	onMounted,
+	watchEffect,
 } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -13,6 +14,7 @@ import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
 
 import { FORM_KEY_NONE } from './constants'
+import { ktFieldProps } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
@@ -21,6 +23,7 @@ export const useField = <DATA_TYPE>({
 	isCorrectDataType,
 	isEmpty,
 	props,
+	supports,
 }: KottiField.Hook.Parameters<
 	DATA_TYPE
 >): KottiField.Hook.Returns<DATA_TYPE> => {
@@ -49,6 +52,36 @@ export const useField = <DATA_TYPE>({
 				)
 		},
 	)
+
+	/**
+	 * Some fields do not support a subset of the KtField.Props.
+	 * We explicitly throw errors for props that are not effectively
+	 * consumed (i.e. not to be displayed). This prevents users
+	 * from accidentally passing unneeded or misleading props.
+	 */
+	watchEffect(() => {
+		type Key = keyof KottiField.Supports
+		type Value = Array<keyof KottiField.Props<DATA_TYPE>>
+
+		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
+			clear: ['hideClear'],
+			decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix'],
+			placeholder: ['placeholder'],
+			tabIndex: ['tabIndex'],
+		}
+
+		for (const [supportsKey, propsToCheck] of Object.entries(
+			PROPS_TO_CHECK_FOR_SUPPORTS,
+		) as Array<[Key, Value]>)
+			if (!supports[supportsKey])
+				for (const propKey of propsToCheck)
+					if (props[propKey] !== ktFieldProps[propKey].default)
+						throw new KtFieldErrors.UnsupportedProp(props, {
+							supportsKey,
+							propKey,
+							value: props[propKey],
+						})
+	})
 
 	// fetch value
 
