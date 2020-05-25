@@ -2,16 +2,15 @@
 # Form
 
 <ClientOnly>
-	<h1>KtFields Without Form</h1>
+	<h2>KtFields Without Form</h2>
 	<div>
-		<h5>KtFieldText</h5>
 		<KtFieldText
 			v-model="textValue"
-			label="Some Label"
+			label="KtFieldText"
 			placeholder="type something"
 		/>
 	</div>
-	<h1>KtForm Settings</h1>
+	<h2>KtForm Settings</h2>
 	<div class="wrapper">
 		<KtFieldRadioGroup
 			v-model="preventSubmissionOn"
@@ -33,7 +32,7 @@
 			]"
 		/>
 	</div>
-	<h1>KtForm</h1>
+	<h2>KtForm</h2>
 	<KtForm
 		v-model="formData"
 		:hideValidation="formSettings.hideValidation"
