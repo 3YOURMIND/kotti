@@ -2,6 +2,7 @@
 	<KtField
 		ref="ktFieldRef"
 		v-bind="{ field }"
+		class="kt-field-select kt-field-select--single"
 		:getEmptyValue="() => null"
 		isComponent="div"
 		@click.stop="handleFieldClick"

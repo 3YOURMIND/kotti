@@ -320,7 +320,7 @@ export default defineComponent({
 	&__input-container {
 		display: flex;
 		align-items: center;
-		height: 2rem;
+		min-height: 2rem;
 		padding: 0 0.8rem;
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);

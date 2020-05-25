@@ -1,18 +1,31 @@
-.el-select {
-	display: flex;
-
-	.el-input.el-input--suffix {
-		/*
-		has 2 children:
-			div.el-input__inner
-			div.el-input__suffix
-		*/
+.kt-field-select {
+	.el-select {
+		position: relative;
 		display: flex;
-		flex: 1;
+
+		.el-input {
+			display: flex;
+		}
+
+		// order matters
+		&--disabled {
+			> .el-input .el-input__inner {
+				color: var(--text-05);
+			}
+
+			.el-select__tags .el-select__input {
+				color: var(--text-05);
+			}
+		}
+	}
+
+	&--single {
+		.el-input {
+			flex: 1;
+		}
 
 		.el-input__inner {
 			display: flex;
-			flex: 1; // don't allow for el-input__suffix
 			align-self: center;
 			width: 100%;
 			padding: 0;
@@ -23,10 +36,99 @@
 			outline: none;
 		}
 	}
-	// order matters
-	&--disabled {
-		> .el-input.el-input--suffix > .el-input__inner {
-			color: var(--text-05);
+
+	&--multiple {
+		$vertical-tag-gap: 2px;
+		$horizontal-tag-gap: 4px;
+		$tag-padding: 0.4em;
+		$tag-border: 1px;
+
+		.el-select {
+			flex-direction: row-reverse;
+			flex-wrap: wrap-reverse;
+
+			&__tags {
+				/* has the input we care about in multiple */
+				display: inline-flex;
+				flex: 1;
+				width: unset !important;
+				line-height: normal;
+				white-space: normal;
+
+				> span {
+					/* remove el-tag container */
+					display: none;
+				}
+
+				// only in case of multiple, we have this input
+				.el-select__input {
+					padding: 0;
+					margin: 0;
+					margin-left: calc(#{$tag-padding} + #{$tag-border});
+					line-height: 1.6;
+					color: var(--text-01);
+					border: 0;
+					outline: none;
+					appearance: none;
+				}
+			}
+			.el-input {
+				.el-input__inner {
+					display: none;
+				}
+
+				.el-input__prefix {
+					width: 100%;
+				}
+			}
+		}
+
+		.kt-tags {
+			display: flex;
+			flex-wrap: wrap;
+
+			// HACK: use negative margins to align multi-line grids of tags
+			margin: #{-$vertical-tag-gap + 4px} #{-$horizontal-tag-gap};
+
+			&__tag {
+				display: flex;
+				align-items: center;
+				padding: $tag-padding;
+				margin: $vertical-tag-gap $horizontal-tag-gap;
+
+				font-size: 0.875em;
+
+				color: var(--text-02);
+				white-space: nowrap;
+				background-color: var(--interactive-02);
+				border: $tag-border solid var(--ui-02);
+				border-radius: var(--field-border-radius);
+
+				&-icon {
+					$size: 16px;
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: $size;
+					height: $size;
+					margin-left: 4px;
+					cursor: pointer;
+
+					background-color: var(--ui-02);
+					border-radius: 50%;
+
+					// clipping also affects the clickable area
+					@supports (clip-path: circle(#{$size / 2} at center)) {
+						border-radius: 0;
+						clip-path: circle(#{$size / 2} at center);
+					}
+
+					&:hover {
+						background-color: var(--interactive-02-hover);
+					}
+				}
+			}
 		}
 	}
 }
@@ -40,7 +142,8 @@
 		text-align: center;
 	}
 
-	&.el-popper {
+	&.el-popper,
+	&.el-popper.is-multiple {
 		position: absolute;
 		z-index: 1001;
 		box-sizing: border-box;
@@ -163,6 +266,10 @@
 			position: relative;
 			width: 100%;
 			overflow: hidden;
+
+			&.is-empty {
+				display: none;
+			}
 
 			&__bar {
 				position: absolute;

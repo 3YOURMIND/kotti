@@ -2,6 +2,7 @@
 	<KtField
 		ref="ktFieldRef"
 		v-bind="{ field }"
+		class="kt-field-select kt-field-select--multiple"
 		:getEmptyValue="() => []"
 		isComponent="div"
 		@click.stop="handleFieldClick"
@@ -24,6 +25,22 @@
 				@input="onChange"
 				@visible-change="(showPopper) => (isDropdownOpen = showPopper)"
 			>
+				<div slot="prefix" class="kt-tags">
+					<div
+						v-for="option in valuesAsOptions"
+						:key="option.value"
+						class="kt-tags__tag"
+					>
+						<div class="kt-tags__tag-text" v-text="option.label" />
+						<div
+							v-if="!(field.isDisabled || option.disabled)"
+							class="kt-tags__tag-icon"
+							@click.stop="removeTag(option.value)"
+						>
+							<i class="yoco" v-text="'close'" />
+						</div>
+					</div>
+				</div>
 				<ElOption
 					v-for="option in options"
 					:key="option.value"
@@ -155,6 +172,19 @@ export default defineComponent({
 
 				field.setValue(sortedValues)
 			},
+			removeTag: (value: KtFieldSelect.Shared.Entry['value']) => {
+				field.setValue(field.currentValue.filter((v) => v !== value))
+			},
+			valuesAsOptions: computed(() =>
+				field.currentValue.map((value) => {
+					const option = props.options.find((option) => option.value === value)
+
+					if (!option)
+						throw new Error(`Couldn’t find option with value “${value}”`)
+
+					return option
+				}),
+			),
 		}
 	},
 })
