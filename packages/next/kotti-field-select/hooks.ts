@@ -18,7 +18,6 @@ import { KtFieldSelect } from './types'
  * So, here, we overwrite the internal property `referenceElm` of the component, to place the dropdown
  * in accordance to our input component instead (which is accessed by the `$refs.inputContainerRef`)
  */
-
 export const usePopperPlacementFix = (
 	elSelectRef: Ref<
 		| (ElSelect & {

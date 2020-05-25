@@ -45,6 +45,7 @@
 			formKey="multiSelect"
 			:isDisabled="formSettings.disableFormFields"
 			isOptional
+			label="Multi Select"
 			leftIcon="shipping"
 			:options="radioGroupAndSelectOptions"
 			placeholder="select something"
@@ -55,6 +56,7 @@
 		<KtFieldSingleSelect
 			formKey="radioGroupAndSingleSelect"
 			:isDisabled="formSettings.disableFormFields"
+			label="Single Select"
 			leftIcon="shipping"
 			:options="radioGroupAndSelectOptions"
 			placeholder='select something'

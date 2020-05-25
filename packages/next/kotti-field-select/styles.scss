@@ -5,6 +5,13 @@
 
 		.el-input {
 			display: flex;
+
+			&__inner {
+				padding: 0;
+				margin: 0;
+				border: 0;
+				outline: none;
+			}
 		}
 
 		// order matters
@@ -28,12 +35,8 @@
 			display: flex;
 			align-self: center;
 			width: 100%;
-			padding: 0;
-			margin: 0;
 			line-height: 1.6;
 			color: var(--text-01);
-			border: 0;
-			outline: none;
 		}
 	}
 
@@ -72,12 +75,15 @@
 					appearance: none;
 				}
 			}
+
 			.el-input {
-				.el-input__inner {
-					display: none;
+				&__inner {
+					// display: none would break focusing
+					width: 0 !important;
+					height: 0 !important;
 				}
 
-				.el-input__prefix {
+				&__prefix {
 					width: 100%;
 				}
 			}
