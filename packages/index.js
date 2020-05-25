@@ -54,6 +54,7 @@ import {
 	KtFieldMultiSelect,
 } from './next/kotti-field-select'
 import { KtFieldText } from './next/kotti-field-text'
+import { KtFieldTextArea } from './next/kotti-field-text-area'
 import {
 	KtForm,
 	KtFormControllerList,
@@ -88,6 +89,7 @@ const components = {
 	KtFieldSingleSelect,
 	KtFieldRadioGroup,
 	KtFieldText,
+	KtFieldTextArea,
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
@@ -174,6 +176,7 @@ export {
 	KtFieldMultiSelect,
 	KtFieldSingleSelect,
 	KtFieldText,
+	KtFieldTextArea,
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,

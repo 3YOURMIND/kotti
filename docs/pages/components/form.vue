@@ -9,6 +9,12 @@
 			label="KtFieldText"
 			placeholder="type something"
 		/>
+		<KtFieldTextArea
+			v-model="textAreaValue"
+			isOptional
+			label="KtFieldTextArea"
+			placeholder="type something"
+		/>
 	</div>
 	<h2>KtForm Settings</h2>
 	<div class="wrapper">
@@ -243,6 +249,7 @@ export default {
 				disableFormFields: false,
 			},
 			preventSubmissionOn: 'NEVER',
+			textAreaValue: null,
 			textValue: null,
 			radioGroupAndSelectOptions: [
 				{ label: 'label 1', value: 1 },
