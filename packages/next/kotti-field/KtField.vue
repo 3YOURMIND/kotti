@@ -143,7 +143,7 @@ export default defineComponent({
 			() =>
 				!(
 					props.field.hideClear ||
-					props.field.currentValue === props.getEmptyValue() ||
+					props.field.isEmpty ||
 					props.field.isDisabled
 				),
 		)

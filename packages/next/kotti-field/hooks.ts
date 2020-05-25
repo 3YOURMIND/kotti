@@ -170,6 +170,7 @@ export const useField = <DATA_TYPE>({
 			tabindex: props.tabIndex,
 		})),
 		isDisabled,
+		isEmpty: computed(() => isEmpty(currentValue.value)),
 		isLoading,
 		isOptional: computed(() => props.isOptional),
 		label: computed(() => props.label),
