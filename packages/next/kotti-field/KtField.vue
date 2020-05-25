@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="kt-field">
 		<component
 			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
 			v-show="!field.isLoading"
@@ -203,7 +203,6 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	margin-bottom: 0.8rem;
 
 	> :not(:last-child) {
 		margin-bottom: 0.4rem;
@@ -295,6 +294,10 @@ export default defineComponent({
 }
 
 .kt-field {
+	&:not(:last-child) {
+		margin-bottom: 0.8rem;
+	}
+
 	&__header {
 		font-size: 0.9em;
 
