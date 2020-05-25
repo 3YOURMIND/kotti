@@ -3,7 +3,9 @@ import { KottiField } from '../kotti-field/types'
 export namespace KtFieldSelect {
 	export namespace Multiple {
 		export type Props = KottiField.Props<KtFieldSelect.Multiple.Value> &
-			Shared.Props
+			Shared.Props & {
+				collapseTagsAfter: number
+			}
 
 		export type Value = Shared.Entry['value'][]
 	}

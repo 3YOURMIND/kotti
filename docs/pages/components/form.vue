@@ -42,6 +42,7 @@
 		@submit="onSubmit"
 	>
 		<KtFieldMultiSelect
+			:collapseTagsAfter="3"
 			formKey="multiSelect"
 			:isDisabled="formSettings.disableFormFields"
 			isOptional

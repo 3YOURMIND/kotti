@@ -27,7 +27,7 @@
 			>
 				<div slot="prefix" class="kt-tags">
 					<div
-						v-for="option in valuesAsOptions"
+						v-for="option in visibleSelectedOptions"
 						:key="option.value"
 						class="kt-tags__tag"
 					>
@@ -39,6 +39,9 @@
 						>
 							<i class="yoco" v-text="'close'" />
 						</div>
+					</div>
+					<div v-if="invisibleTagCount > 0" class="kt-tags__tag">
+						<div class="kt-tags__tag-text" v-text="`+${invisibleTagCount}`" />
 					</div>
 				</div>
 				<ElOption
@@ -84,6 +87,7 @@ export default defineComponent({
 	props: {
 		...ktFieldProps,
 		...ktFieldSelectSharedProps,
+		collapseTagsAfter: { default: Number.MAX_SAFE_INTEGER, type: Number },
 	},
 	setup(props: KtFieldSelect.Multiple.Props, { emit }) {
 		const field = useField<KtFieldSelect.Multiple.Value>({
@@ -160,6 +164,9 @@ export default defineComponent({
 				 */
 				if (!isDropdownOpen.value) scheduleFocusAfterFieldClick.value = true
 			},
+			invisibleTagCount: computed(
+				() => field.currentValue.length - props.collapseTagsAfter,
+			),
 			isDropdownOpen,
 			ktFieldRef,
 			onChange: (values: KtFieldSelect.Multiple.Value) => {
@@ -175,16 +182,22 @@ export default defineComponent({
 			removeTag: (value: KtFieldSelect.Shared.Entry['value']) => {
 				field.setValue(field.currentValue.filter((v) => v !== value))
 			},
-			valuesAsOptions: computed(() =>
-				field.currentValue.map((value) => {
-					const option = props.options.find((option) => option.value === value)
+			visibleSelectedOptions: computed(() => {
+				return field.currentValue
+					.filter((_, index) => index < props.collapseTagsAfter)
+					.map(
+						(value): KtFieldSelect.Shared.Entry => {
+							const option = props.options.find(
+								(option) => option.value === value,
+							)
 
-					if (!option)
-						throw new Error(`Couldn’t find option with value “${value}”`)
+							if (!option)
+								throw new Error(`Couldn’t find option with value “${value}”`)
 
-					return option
-				}),
-			),
+							return option
+						},
+					)
+			}),
 		}
 	},
 })
