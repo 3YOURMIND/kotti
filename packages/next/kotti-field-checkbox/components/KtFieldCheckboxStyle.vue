@@ -1,7 +1,7 @@
 <template>
-	<div class="kt-checkbox" :class="checkboxClass">
+	<div :class="checkboxClass">
 		<svg
-			class="kt-checkbox__check"
+			class="kt-field-checkbox__check"
 			fill="none"
 			height="8"
 			viewBox="0 0 9 8"
@@ -17,26 +17,30 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'KtFieldCheckboxStyleWrapper',
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
+
+export default defineComponent({
+	name: 'KtFieldCheckboxStyle',
 	props: {
 		value: {
 			required: true,
 			type: Boolean,
 		},
 	},
-	computed: {
-		checkboxClass() {
-			return `kt-checkbox--${this.value ? 'checked' : 'unchecked'}`
-		},
+	setup(props) {
+		return {
+			checkboxClass: computed(() => ({
+				'kt-field-checkbox': true,
+				'kt-field-checkbox--checked': props.value,
+			})),
+		}
 	},
-}
+})
 </script>
 
-<style lang="scss" scoped>
-// this has to be scoped
-.kt-checkbox {
+<style lang="scss">
+.kt-field-checkbox {
 	display: inline-grid;
 	place-items: center;
 	width: 0.8rem;
@@ -47,10 +51,12 @@ export default {
 	border: 1px solid var(--ui-02);
 	border-radius: var(--checkbox-border-radius);
 	transition: all ease-in-out var(--transition-short);
+
 	&__check {
 		opacity: 0.2;
 		transition: all ease-in-out var(--transition-short);
 		transform: scale(0.2);
+
 		path {
 			stroke: var(--interactive-01);
 		}
@@ -59,7 +65,8 @@ export default {
 	&--checked {
 		border-color: var(--interactive-01);
 		box-shadow: var(--shadow-base), 0px 0px 0px 1px var(--interactive-01) inset;
-		.kt-checkbox__check {
+
+		.kt-field-checkbox__check {
 			opacity: 1;
 			transform: scale(1);
 		}

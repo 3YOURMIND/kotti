@@ -21,7 +21,7 @@ import { KtField } from '../kotti-field'
 import { ktFieldProps } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
-import KtCheckbox from './components/KtCheckbox.vue'
+import KtCheckbox from './components/KtFieldCheckboxStyle.vue'
 import { KtFieldCheckboxProps } from './types'
 
 export default defineComponent({
