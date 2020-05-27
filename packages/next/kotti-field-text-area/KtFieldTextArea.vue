@@ -61,7 +61,9 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import '../kotti-field/mixins';
+
 .kt-field-text-area__wrapper {
 	display: flex;
 	width: 100%;
@@ -72,9 +74,34 @@ export default defineComponent({
 	resize: vertical;
 	border: 0;
 	outline: none;
+}
 
-	&:disabled {
-		color: var(--text-05);
+.kt-field__wrapper {
+	@include validation using ($type) {
+		&:not(.kt-field__wrapper--disabled) {
+			@if $type != no-validation {
+				/* stylelint-disable */
+				.kt-field-text-area__wrapper {
+					border-color: var(--support-#{$type}-light);
+				}
+			}
+
+			&:focus-within {
+				--support-no-validation-light: var(--interactive-05);
+				.kt-field-text-area__wrapper {
+					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
+					border-color: var(--support-#{$type}-light);
+				}
+				/* stylelint-enable */
+			}
+		}
+	}
+
+	&--disabled {
+		.kt-field-text-area__wrapper {
+			color: var(--text-05);
+			border-color: var(--ui-01);
+		}
 	}
 }
 </style>

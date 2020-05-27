@@ -1,0 +1,9 @@
+@mixin validation {
+	$types: 'error', 'warning', 'success', 'no-validation';
+
+	@each $type in $types {
+		&.kt-field__wrapper--#{$type} {
+			@content ($type);
+		}
+	}
+}

@@ -68,7 +68,8 @@
 				{{ validationText }}
 			</div>
 		</component>
-		<div v-if="field.isLoading" class="kt-field-wrapper">
+
+		<div v-if="field.isLoading" class="kt-field__wrapper">
 			<div class="kt-field__header--loading skeleton rectangle" />
 			<div class="kt-field__input-container--loading skeleton rectangle" />
 		</div>
@@ -195,11 +196,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import './mixins';
+
 :root {
 	--field-border-radius: 2px;
 }
 
-.kt-field-wrapper {
+.kt-field__wrapper {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -208,62 +211,34 @@ export default defineComponent({
 		margin-bottom: 0.4rem;
 	}
 
-	&:focus-within {
-		&:not(.kt-field-wrapper--error):not(.kt-field-wrapper--success):not(.kt-field-wrapper--warning) {
-			.kt-field__input-container {
-				box-shadow: 0 0 0 2px var(--interactive-05);
+	@include validation using ($type) {
+		/* stylelint-disable */
+		&:not(.kt-field__wrapper--disabled) {
+			@if $type != no-validation {
+				.kt-field__input-container {
+					border-color: var(--support-#{$type}-light);
+				}
+
+				.kt-field__validation-text {
+					color: var(--support-#{$type});
+				}
 			}
-		}
-		&.kt-field-wrapper--error {
-			.kt-field__input-container {
-				box-shadow: 0 0 0 2px var(--support-error-light);
+
+			&:focus-within {
+				--support-no-validation-light: var(--interactive-05);
+				.kt-field__input-container {
+					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
+					border-color: var(--support-#{$type}-light);
+				}
 			}
-		}
-		&.kt-field-wrapper--success {
-			.kt-field__input-container {
-				box-shadow: 0 0 0 2px var(--support-success-light);
-			}
-		}
-		&.kt-field-wrapper--warning {
-			.kt-field__input-container {
-				box-shadow: 0 0 0 2px var(--support-warning-light);
-			}
-		}
-	}
-	// states
-
-	&--error:not(.kt-field-wrapper--disabled) {
-		.kt-field__input-container {
-			box-shadow: 0 0 0 1px var(--support-error-light);
-		}
-
-		.kt-field__validation--error {
-			color: var(--support-error);
-		}
-	}
-
-	&--success:not(.kt-field-wrapper--disabled) {
-		.kt-field__input-container {
-			box-shadow: 0 0 0 1px var(--support-success-light);
-		}
-
-		.kt-field__validation--success {
-			color: var(--support-success);
-		}
-	}
-
-	&--warning:not(.kt-field-wrapper--disabled) {
-		.kt-field__input-container {
-			box-shadow: 0 0 0 1px var(--support-warning-light);
-		}
-
-		.kt-field__validation--warning {
-			color: var(--support-warning);
+			/* stylelint-enable */
 		}
 	}
 
 	&--disabled {
-		cursor: not-allowed;
+		* {
+			cursor: not-allowed;
+		}
 
 		.kt-field__input-container {
 			border: 1px solid var(--ui-01);

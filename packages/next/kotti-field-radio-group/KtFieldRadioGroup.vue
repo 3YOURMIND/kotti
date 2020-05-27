@@ -27,7 +27,7 @@
 							field.currentValue === option.value,
 					}"
 				>
-					<div class="kt-field-radio-group__wrapper__radio__inside"></div>
+					<div class="kt-field-radio-group__wrapper__radio__inside" />
 				</div>
 				<div v-text="option.label" />
 			</label>
@@ -94,10 +94,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '../kotti-field/mixins';
+
 :root {
 	--radio-size: 0.8rem;
 	--radio-inside-side: 0.2rem;
 }
+
 .kt-field-radio-group__wrapper {
 	display: flex;
 	flex-direction: column;
@@ -105,6 +108,10 @@ export default defineComponent({
 	&__label {
 		display: flex;
 		margin-bottom: 0.4rem;
+	}
+
+	&__input {
+		display: none;
 	}
 
 	&__radio {
@@ -133,9 +140,43 @@ export default defineComponent({
 			box-shadow: var(--shadow-base);
 		}
 	}
+}
 
-	&__input {
-		display: none;
+.kt-field__wrapper {
+	@include validation using ($type) {
+		@if $type != no-validation {
+			&:not(.kt-field__wrapper--disabled) {
+				.kt-field-radio-group__wrapper {
+					/* stylelint-disable */
+					&__radio {
+						border-color: var(--support-#{$type});
+
+						&--checked {
+							background-color: var(--support-#{$type});
+							box-shadow: var(--shadow-base);
+						}
+					}
+					/* stylelint-enable */
+				}
+			}
+		}
+	}
+
+	&--disabled {
+		.kt-field-radio-group__wrapper {
+			&__label {
+				color: var(--text-05);
+			}
+
+			&__radio {
+				border-color: var(--ui-02);
+
+				&--checked {
+					background-color: var(--ui-02);
+					box-shadow: var(--shadow-base);
+				}
+			}
+		}
 	}
 }
 </style>

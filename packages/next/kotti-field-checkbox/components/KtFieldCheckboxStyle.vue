@@ -40,6 +40,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '../../kotti-field/mixins';
+
 .kt-field-checkbox {
 	display: inline-grid;
 	place-items: center;
@@ -69,6 +71,61 @@ export default defineComponent({
 		.kt-field-checkbox__check {
 			opacity: 1;
 			transform: scale(1);
+		}
+	}
+}
+
+.kt-field__wrapper {
+	@include validation using ($type) {
+		@if $type != no-validation {
+			&:not(.kt-field__wrapper--disabled) {
+				.kt-field-checkbox {
+					/* stylelint-disable */
+					border-color: var(--support-#{$type});
+					box-shadow: var(--shadow-base),
+						0px 0px 0px 1px var(--support-#{$type}-light) inset;
+
+					&__check {
+						path {
+							stroke: var(--support-#{$type});
+						}
+					}
+					/* stylelint-enable */
+				}
+			}
+		}
+	}
+
+	&:focus-within {
+		&.kt-field__wrapper--no-validation {
+			.kt-field-checkbox {
+				border-color: var(--interactive-03);
+
+				box-shadow: var(--shadow-base),
+					0px 0px 0px 1px var(--interactive-03) inset;
+
+				&__check {
+					path {
+						stroke: var(--interactive-03);
+					}
+				}
+			}
+		}
+	}
+
+	&--disabled {
+		cursor: not-allowed;
+
+		.kt-field-checkbox {
+			background-color: var(--ui-02);
+			border-color: var(--ui-02);
+
+			box-shadow: var(--shadow-base), 0px 0px 0px 1px var(--ui-01) inset;
+			&__check {
+				path {
+					stroke: var(--text-05);
+				}
+			}
 		}
 	}
 }
