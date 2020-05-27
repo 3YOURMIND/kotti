@@ -1,6 +1,6 @@
 <template>
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
-		<textarea v-bind="inputProps" @input="onInput" />
+		<textarea slot="container" v-bind="inputProps" @input="onInput" />
 	</KtField>
 </template>
 
@@ -67,12 +67,13 @@ export default defineComponent({
 .kt-field-text-area__wrapper {
 	display: flex;
 	width: 100%;
-	padding: 8px 0;
+	padding: 0.6rem 0.8rem;
 	margin: 0;
 	line-height: 1.6;
 	color: var(--text-01);
 	resize: vertical;
-	border: 0;
+	border: 1px solid var(--ui-02);
+	border-radius: var(--field-border-radius);
 	outline: none;
 }
 
