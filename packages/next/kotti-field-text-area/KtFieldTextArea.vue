@@ -1,7 +1,6 @@
 <template>
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
 		<textarea v-bind="inputProps" @input="onInput" />
-		<div slot="actionIcon" />
 	</KtField>
 </template>
 
@@ -51,7 +50,7 @@ export default defineComponent({
 				rows: props.rows,
 				value: field.currentValue ?? '',
 			})),
-			onInput: (event: { target: HTMLInputElement }) => {
+			onInput: (event: { target: HTMLTextAreaElement }) => {
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)
 

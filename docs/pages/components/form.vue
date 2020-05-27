@@ -9,12 +9,6 @@
 			label="KtFieldText"
 			placeholder="type something"
 		/>
-		<KtFieldTextArea
-			v-model="textAreaValue"
-			isOptional
-			label="KtFieldTextArea"
-			placeholder="type something"
-		/>
 	</div>
 	<h2>KtForm Settings</h2>
 	<div class="wrapper">
@@ -27,6 +21,10 @@
 				{ label: 'Warning', value: 'warning' },
 				{ label: 'Never', value: 'NEVER' }
 			]"
+			:validator="(value) => ({
+				text: null,
+				type: value === 'NEVER' ? 'success' : value
+			})"
 		/>
 		<KtFieldCheckboxGroup
 			v-model="formSettings"
@@ -108,12 +106,14 @@
 		<h2>Validation Example</h2>
 		<KtFieldText
 			formKey="lastName"
+			:isDisabled="formSettings.disableFormFields"
 			prefix="Prefix"
 			:tabIndex="5"
 			validatorKey="alwaysNeutral"
 		/>
 		<KtFieldText
 			formKey="lastName"
+			:isDisabled="formSettings.disableFormFields"
 			label="Field That Always Errors"
 			suffix="Suffix"
 			:tabIndex="4"
@@ -121,6 +121,7 @@
 		/>
 		<KtFieldText
 			formKey="lastName"
+			:isDisabled="formSettings.disableFormFields"
 			label="Field That Always Succeeds"
 			leftIcon="cloud"
 			:tabIndex="3"
@@ -129,6 +130,7 @@
 		<KtFieldText
 			formKey="lastName"
 			hideClear
+			:isDisabled="formSettings.disableFormFields"
 			label="Field That Always Warns"
 			rightIcon="location"
 			:tabIndex="2"
@@ -137,6 +139,7 @@
 		<KtFieldText
 			formKey="username"
 			helpText="help for username"
+			:isDisabled="formSettings.disableFormFields"
 			isOptional
 			label="Username"
 			leftIcon="comment"
@@ -144,6 +147,12 @@
 			rightIcon="calendar"
 			suffix="Suffix"
 			:tabIndex="1"
+		/>
+		<KtFieldTextArea
+			formKey="description"
+			:isDisabled="formSettings.disableFormFields"
+			label="description"
+			placeholder="type something"
 		/>
 		<br />
 		<h2>KtFormControllerList</h2>
@@ -159,7 +168,7 @@
 							validatorKey="username"
 						/>
 						<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }">
-							<button class="kt-button danger" type="button"  @click="deleteSelf">
+							<button class="kt-button danger" type="button" @click="deleteSelf">
 								Delete "{{ values.username }}"
 							</button>
 							<button class="kt-button secondary" type="button" @click="addBefore({ username: `before Item${index}` })">
@@ -183,6 +192,7 @@
 		<KtFormControllerObject formKey="user">
 			<KtFieldText
 				formKey="lastName"
+				:isDisabled="formSettings.disableFormFields"
 				label="I’m a Field In user"
 				rightIcon="user"
 				validatorKey="username"
@@ -204,6 +214,21 @@ import { KottiForm } from '../../../packages/next/kotti-form/types'
 export default {
 	name: 'KtFormDoc',
 	data() {
+		const alwaysError = () => ({
+			type: 'error',
+			text: 'Always Error!',
+		})
+
+		const alwaysSuccess = () => ({
+			type: 'success',
+			text: 'Always Success!',
+		})
+
+		const alwaysWarning = () => ({
+			type: 'warning',
+			text: 'Always Warning!',
+		})
+
 		const validators: Record<string, KottiField.Validation.Function> = {
 			alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
 			alwaysNeutral: () => ({ type: null }),
@@ -235,6 +260,7 @@ export default {
 					initiallyNull: null,
 					initiallyTrue: true,
 				},
+				description: null,
 				firstName: 'John',
 				lastName: 'Smith',
 				radioGroupAndSingleSelect: null,
@@ -249,7 +275,6 @@ export default {
 				disableFormFields: false,
 			},
 			preventSubmissionOn: 'NEVER',
-			textAreaValue: null,
 			textValue: null,
 			radioGroupAndSelectOptions: [
 				{ label: 'label 1', value: 1 },
@@ -260,6 +285,11 @@ export default {
 				{ label: 'label 6', value: 6 },
 			],
 			validators,
+			alwaysError,
+			alwaysWarning,
+			alwaysSuccess,
+			testCheckbox: true,
+			testLabel: 'hi',
 		}
 	},
 	methods: {
