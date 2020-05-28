@@ -90,7 +90,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .kt-field-checkbox-group__wrapper {
 	display: flex;
 	flex-direction: column;
@@ -102,6 +102,14 @@ export default defineComponent({
 
 	&__input {
 		display: none;
+	}
+}
+
+.kt-field__wrapper {
+	&--disabled {
+		.kt-field-checkbox-group__wrapper__label {
+			color: var(--text-05);
+		}
 	}
 }
 </style>

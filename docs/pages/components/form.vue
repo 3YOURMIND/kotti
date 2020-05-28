@@ -99,6 +99,7 @@
 		<KtFieldText
 			formKey="lastName"
 			helpText="help for lastName"
+			:isDisabled="formSettings.disableFormFields"
 			label="Last Name"
 			placeholder="Dieter"
 		/>

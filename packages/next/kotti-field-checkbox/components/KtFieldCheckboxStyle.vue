@@ -117,7 +117,6 @@ export default defineComponent({
 		cursor: not-allowed;
 
 		.kt-field-checkbox {
-			background-color: var(--ui-02);
 			border-color: var(--ui-02);
 
 			box-shadow: var(--shadow-base), 0px 0px 0px 1px var(--ui-01) inset;

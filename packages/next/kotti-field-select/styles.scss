@@ -313,7 +313,7 @@
 					cursor: pointer;
 					background-color: rgba(var(--rgb-ui-04), 0.3);
 					border-radius: inherit;
-					transition: background-color 0.3s;
+					transition: background-color 300ms;
 
 					&:hover {
 						background-color: rgba(var(--rgb-ui-04), 0.5);

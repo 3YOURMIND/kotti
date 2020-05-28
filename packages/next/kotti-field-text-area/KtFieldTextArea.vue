@@ -64,17 +64,47 @@ export default defineComponent({
 <style lang="scss">
 @import '../kotti-field/mixins';
 
-.kt-field-text-area__wrapper {
-	display: flex;
-	width: 100%;
-	padding: 0.6rem 0.8rem;
-	margin: 0;
-	line-height: 1.6;
-	color: var(--text-01);
-	resize: vertical;
-	border: 1px solid var(--ui-02);
-	border-radius: var(--field-border-radius);
-	outline: none;
+.kt-field-text-area {
+	$vertical-padding: 0.6em;
+	&__wrapper {
+		display: flex;
+		min-height: calc(#{$vertical-padding} * 2 + 1rem);
+		padding: $vertical-padding 0.8em;
+		margin: 0;
+		resize: none;
+		border: 1px solid var(--ui-02);
+		border-radius: var(--field-border-radius);
+		outline: none;
+
+		// remove it from IE entirely
+		-ms-overflow-style: none;
+
+		&::-webkit-scrollbar {
+			opacity: 0;
+		}
+
+		scrollbar-width: thin;
+		scrollbar-color: var(--ui-background) var(--ui-background);
+
+		&:active,
+		&:hover {
+			scrollbar-color: var(--ui-03) var(--ui-background);
+			transition: scrollbar-color 0.34s ease-out;
+
+			&::-webkit-scrollbar {
+				width: 5px;
+				opacity: 1;
+				transition: opacity 0.34s ease-out;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				cursor: all-scroll;
+
+				background-color: var(--ui-03);
+				border-radius: var(--field-border-radius);
+			}
+		}
+	}
 }
 
 .kt-field__wrapper {
