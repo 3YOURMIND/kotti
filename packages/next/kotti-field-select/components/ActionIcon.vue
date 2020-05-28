@@ -17,7 +17,7 @@ import { Select as ElSelect } from 'element-ui'
 export default defineComponent({
 	name: 'ActionIcon',
 	props: {
-		classes: { required: true, type: Object },
+		classes: { required: true, type: Array },
 		elSelectRef: {
 			type: Object,
 			/**
@@ -32,7 +32,7 @@ export default defineComponent({
 		showClear: { required: true, type: Boolean },
 	},
 	setup(props: {
-		classes: object
+		classes: string[]
 		elSelectRef:
 			| (ElSelect & {
 					inputWidth: number
