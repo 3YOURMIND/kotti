@@ -62,7 +62,7 @@
 
 			<div
 				v-if="!field.isLoading && showValidation"
-				:class="`kt-field__validation kt-field__validation--${validationType}`"
+				class="kt-field__validation-text"
 			>
 				<i v-if="validationText" class="yoco">{{ validationIcon }}</i>
 				{{ validationText }}
@@ -107,89 +107,71 @@ export default defineComponent({
 		},
 		{ emit }: SetupContext,
 	) {
-		const labelText = computed(() =>
-			props.field.label === null
-				? null
-				: [
-						props.field.label,
-						props.field.isOptional ? '(Optional)' : '(Required)',
-				  ].join(' '),
-		)
-
-		const affixClasses = computed(() => (modifications: string[]) => ({
-			'kt-field__input-container__affix': true,
-			...modifications.reduce(
-				(acc: { [key: string]: boolean }, mod) => ({
-					...acc,
-					[`kt-field__input-container__affix--${mod}`]: true,
-				}),
-				{},
-			),
-		}))
-
-		const iconClasses = computed(() => (modifications: string[]) => {
-			return {
-				'kt-field__input-container__icon': true,
-				...modifications.reduce(
-					(acc: { [key: string]: boolean }, mod) => ({
-						...acc,
-						[`kt-field__input-container__icon--${mod}`]: true,
-					}),
-					{},
-				),
-			}
-		})
-
-		const showClear = computed(
-			() =>
-				!(
-					props.field.hideClear ||
-					props.field.isEmpty ||
-					props.field.isDisabled
-				),
-		)
-
-		const validationText = computed(
-			() => props.field.validation.type !== null && props.field.validation.text,
-		)
-
 		const validationType = computed(() => props.field.validation.type)
-
 		const showValidation = computed(
-			() => props.field.validation.type !== null && !props.field.hideValidation,
+			() => !(props.field.hideValidation || validationType.value === null),
 		)
-
-		const wrapperClasses = computed(() => {
-			return {
-				'kt-field-wrapper': true,
-				'kt-field-wrapper--disabled': props.field.isDisabled,
-				[`kt-field-wrapper--${validationType.value}`]: showValidation.value,
-			}
-		})
-
-		const validationIcon = computed(() => {
-			if (validationType.value === null) return ''
-
-			return {
-				error: 'circle_cross',
-				success: 'circle_check',
-				warning: 'circle_attention',
-			}[validationType.value]
-		})
 
 		return {
-			affixClasses,
+			affixClasses: computed(() => (modifications: string[]) => [
+				'kt-field__input-container__affix',
+				...modifications.map(
+					(modification) => `kt-field__input-container__affix--${modification}`,
+				),
+			]),
 			emit,
-			iconClasses,
 			handleClear: () => props.field.setValue(props.getEmptyValue()),
-			inputContainerRef: ref('kt-field-input-container'),
-			labelText,
-			showClear,
+			iconClasses: computed(() => (modifications: string[]) => [
+				'kt-field__input-container__icon',
+				...modifications.map(
+					(modification) => `kt-field__input-container__icon--${modification}`,
+				),
+			]),
+			inputContainerRef: ref(null),
+			labelText: computed(() =>
+				props.field.label === null
+					? null
+					: [
+							props.field.label,
+							props.field.isOptional ? '(Optional)' : '(Required)',
+					  ].join(' '),
+			),
+			showClear: computed(
+				() =>
+					!(
+						props.field.hideClear ||
+						props.field.isEmpty ||
+						props.field.isDisabled
+					),
+			),
 			showValidation,
-			validationIcon,
-			validationText,
+			validationIcon: computed(() => {
+				if (validationType.value === null) return ''
+
+				return {
+					error: 'circle_cross',
+					success: 'circle_check',
+					warning: 'circle_attention',
+				}[validationType.value]
+			}),
+			validationText: computed(
+				() =>
+					props.field.validation.type !== null && props.field.validation.text,
+			),
 			validationType,
-			wrapperClasses,
+			wrapperClasses: computed(() => {
+				const classes = ['kt-field__wrapper']
+
+				if (props.field.isDisabled) classes.push('kt-field__wrapper--disabled')
+
+				classes.push(
+					showValidation.value
+						? `kt-field__wrapper--${validationType.value ?? 'no-validation'}`
+						: `kt-field__wrapper--no-validation`,
+				)
+
+				return classes
+			}),
 		}
 	},
 })
@@ -249,8 +231,6 @@ export default defineComponent({
 
 			&__slot {
 				input {
-					cursor: not-allowed;
-
 					&::-webkit-input-placeholder, /* Edge */
 					&:-ms-input-placeholder, /* Internet Explorer */
 					&::placeholder {
@@ -261,8 +241,6 @@ export default defineComponent({
 
 			&__icon {
 				color: var(--text-05);
-				// no icon--disabled token
-				cursor: not-allowed;
 			}
 		}
 	}
@@ -370,7 +348,7 @@ export default defineComponent({
 		}
 	}
 
-	&__validation {
+	&__validation-text {
 		display: flex;
 		align-items: center;
 		color: var(--text-03);
