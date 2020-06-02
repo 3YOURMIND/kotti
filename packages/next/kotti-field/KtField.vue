@@ -307,7 +307,7 @@ export default defineComponent({
 			}
 		}
 
-		// Prefix and suffix
+		// Prefix and Suffix
 		&__affix {
 			color: var(--text-02);
 
@@ -324,10 +324,9 @@ export default defineComponent({
 			}
 		}
 
-		// Icon before and after
+		// Icons (left or right)
 		&__icon {
 			font-size: 1rem;
-			line-height: 1;
 			color: var(--icon-02);
 
 			.yoco {

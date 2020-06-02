@@ -46,7 +46,7 @@ export namespace KottiField {
 			>
 			isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
 			isEmpty: Ref<boolean>
-			isLoading: KottiForm.Context['isLoading']
+			isLoading: Ref<KottiForm.Props['isLoading']>
 			isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
 			label: Ref<KottiField.Props<DATA_TYPE>['label']>
 			leftIcon: Ref<KottiField.Props<DATA_TYPE>['leftIcon']>

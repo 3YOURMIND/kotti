@@ -38,9 +38,10 @@ export const usePopperPlacementFix = (
 		const popperComponent = elSelectComponent.$refs.popper as Vue & {
 			referenceElm: Element
 		}
-		const ktFieldInputEl = ktFieldComponent.$refs.inputContainerRef as Element
+		const ktFieldContainerElement = ktFieldComponent.$refs
+			.inputContainerRef as Element
 
-		popperComponent.referenceElm = ktFieldInputEl
+		popperComponent.referenceElm = ktFieldContainerElement
 	})
 }
 export const usePopperWidthFix = <
@@ -65,7 +66,7 @@ export const usePopperWidthFix = <
 		 */
 		const elSelectComponent = elSelectRef.value
 		if (elSelectComponent === null) throw new Error('el-select not ready')
-		if (field.isLoading) {
+		if (field.isLoading || field.isDisabled) {
 			return elSelectComponent.blur()
 		}
 
