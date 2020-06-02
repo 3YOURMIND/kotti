@@ -39,6 +39,7 @@ import {
 	DATE_INTERNAL_PROPS,
 	DATE_FORMAT_REGEX,
 } from './constants'
+import { usePicker } from './hooks'
 import { KtFieldDate } from './types'
 
 export default defineComponent({
@@ -76,6 +77,8 @@ export default defineComponent({
 		>(null)
 
 		const inputContainerRef = ref<Element>(null)
+
+		usePicker(elDateRef, inputContainerRef, field)
 
 		return {
 			elDatePickerProps: {
