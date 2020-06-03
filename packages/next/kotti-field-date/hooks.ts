@@ -70,8 +70,25 @@ export const usePicker = <
 		elDateComponent.pickerVisible
 		if (elDateComponent.picker && elDateComponent.pickerVisible) {
 			const newWidth = ktFieldDateInputContainer.getBoundingClientRect().width
-			elDateComponent.picker.width = newWidth
-			elDateComponent.picker.$el.style.width = `${newWidth}px`
+			// elDateComponent.picker.width = newWidth
+			elDateComponent.picker.$el.style.minWidth = `${(newWidth * 70) / 100}px`
+
+			// add yoco class to header icons to enable yoco icons
+			const pickerHeaderIcons: Array<HTMLElement> = [].slice.call(
+				elDateComponent.picker.$el.querySelectorAll(
+					'.el-picker-panel__icon-btn',
+				),
+			)
+			const headerYocoIcons = [
+				'<i class="yoco">chevron_left</i><i class="yoco">chevron_left</i>',
+				'<i class="yoco">chevron_left</i>',
+				'<i class="yoco">chevron_right</i><i class="yoco">chevron_right</i>',
+				'<i class="yoco">chevron_right</i>',
+			]
+			pickerHeaderIcons.forEach((icon, index) => {
+				icon.innerHTML = headerYocoIcons[index]
+			})
+
 			elDateComponent.updatePopper()
 		}
 	})

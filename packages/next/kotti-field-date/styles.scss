@@ -3,27 +3,65 @@
 		width: 100%;
 		margin: 0;
 
+		&:not(:last-child) {
+			margin-bottom: 0.4rem;
+		}
+
 		.el-date-editor {
 			width: 100%;
 
 			&--date {
-				// TODO: add styles to account for prefix and suffixes
 				display: flex;
+				justify-content: space-evenly;
 
 				.el-input__inner {
 					flex: 1;
+					-webkit-order: 2;
+					order: 2;
 					padding: 0;
 					margin: 0;
 					border: 0;
 					outline: none;
+
+					&::-webkit-input-placeholder, /* Edge */
+					&:-ms-input-placeholder, /* Internet Explorer */
+					&::placeholder {
+						color: var(--text-05);
+					}
 				}
-				.el-input__prefix {
+
+				.el-input__prefix,
+				.el-input__suffix {
+					display: flex;
+					align-items: center;
 					font-size: 1rem;
 					color: var(--icon-02);
+					cursor: pointer;
+					i {
+						line-height: unset;
+					}
+				}
+
+				.el-input__prefix {
+					-webkit-order: 1;
+					order: 1;
+
+					.el-input__icon {
+						&:before {
+							content: 'calendar';
+						}
+					}
 				}
 
 				.el-input__suffix {
-					display: none;
+					-webkit-order: 3;
+					order: 3;
+
+					.el-input__icon {
+						&:before {
+							content: 'close';
+						}
+					}
 				}
 			}
 		}
@@ -31,10 +69,8 @@
 }
 
 .el-picker-panel {
-	// TODO: start removing
 	&.el-popper {
 		position: absolute;
-		// z-index: 1001;
 		box-sizing: border-box;
 
 		display: flex;
@@ -142,6 +178,198 @@
 			&:after {
 				content: ' ';
 				border-width: 6px;
+			}
+		}
+	}
+
+	&__body-wrapper {
+		width: 100%;
+		color: var(--text-01);
+
+		.el-picker-panel__body {
+			display: flex;
+			flex-direction: column;
+
+			.el-date-picker__header {
+				padding: 0.8rem 0 0.6rem 0;
+				margin: 0 0.8rem;
+				font-size: 1.2em;
+
+				text-align: center;
+				border-bottom: 1px solid var(--ui-02);
+
+				button.el-picker-panel__icon-btn {
+					display: flex;
+					padding: 0;
+					color: var(--icon-02);
+					cursor: pointer;
+					background: transparent;
+					border: 0;
+					outline: none;
+				}
+
+				span.el-date-picker__header-label {
+					color: var(--text-01);
+					cursor: pointer;
+
+					&:hover {
+						color: var(--interactive-01-hover);
+					}
+
+					&:first-of-type {
+						-webkit-order: 3;
+						order: 3;
+
+						+ span.el-date-picker__header-label {
+							margin-left: 0.2rem;
+						}
+					}
+
+					&:last-of-type {
+						-webkit-order: 4;
+						order: 4;
+					}
+				}
+
+				span.el-date-picker__header-label[style*='display: none;'] {
+					*.el-date-picker__header-label {
+						text-align: right;
+					}
+				}
+
+				.el-date-picker {
+					&__prev-btn {
+						float: left;
+						&.el-icon-d-arrow-left {
+							-webkit-order: 1;
+							order: 1;
+							> :last-child {
+								transform: translateX(-12px);
+							}
+						}
+
+						&.el-icon-arrow-left {
+							-webkit-order: 2;
+							order: 2;
+						}
+					}
+
+					&__next-btn {
+						float: right;
+						&.el-icon-arrow-right {
+							-webkit-order: 5;
+							order: 5;
+						}
+
+						&.el-icon-d-arrow-right {
+							-webkit-order: 6;
+							order: 6;
+
+							> :first-child {
+								transform: translateX(12px);
+							}
+						}
+					}
+				}
+			}
+
+			.el-picker-panel__content {
+				$size: 1rem;
+				table {
+					padding: 0.8em;
+					margin: 0;
+					text-align: center;
+					border: 0;
+
+					tbody {
+						display: flex;
+						flex-direction: column;
+
+						tr {
+							display: flex;
+							td,
+							th {
+								flex: 1;
+							}
+						}
+					}
+
+					th {
+						padding: 0.4rem;
+						color: var(--text-02);
+						text-transform: uppercase;
+						border: 0;
+					}
+
+					td {
+						padding: 0.8em;
+						color: var(--text-05);
+						cursor: pointer;
+						border: 0;
+
+						&.available {
+							color: var(--text-01);
+
+							&.today {
+								color: var(--interactive-03);
+							}
+						}
+					}
+
+					&.el-year-table,
+					&.el-month-table {
+						td {
+							&.available {
+								a {
+									color: var(--text-02);
+
+									&:hover {
+										color: var(--interactive-01-hover);
+									}
+								}
+
+								&.current {
+									a {
+										color: var(--interactive-03);
+									}
+								}
+
+								&.today {
+									-moz-text-decoration-line: underline;
+									text-decoration-line: underline;
+									// border-bottom: 1px solid var(--interactive-04);
+								}
+							}
+						}
+					}
+
+					&.el-date-table {
+						td {
+							// background-color: cyan;
+
+							&.available {
+								&:hover {
+									color: var(--interactive-01-hover);
+								}
+
+								&.today {
+									// font-weight: 700;
+									border: 1px solid var(--interactive-03);
+									border-radius: 50%;
+									@supports (clip-path: circle(#{$size / 2} at center)) {
+										// border-radius: 0;
+										clip-path: circle(#{$size / 2} at center);
+									}
+
+									&.current {
+										color: var(--interactive-02);
+										background-color: var(--interactive-03);
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}

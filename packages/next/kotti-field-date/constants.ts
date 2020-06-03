@@ -1,10 +1,8 @@
 import { Dashes } from '@metatypes/typography'
 
 export const COMMON_INTERNAL_PROPS = {
-	// clearIcon: 'yoco close',
-	// prefixIcon: 'yoco calendar',
-	editable: true,
 	clearable: true,
+	editable: true,
 }
 
 export const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}/
