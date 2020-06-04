@@ -9,7 +9,6 @@ export namespace KtFieldRadioGroup {
 
 	export interface Props
 		extends KottiField.Props<KtFieldRadioGroup.Value | null> {
-		name: string
 		options: KtFieldRadioGroup.Entry[]
 	}
 
