@@ -27,6 +27,7 @@
 				<ElOption
 					v-for="option in options"
 					:key="option.value"
+					class="test"
 					:disabled="field.isDisabled || Boolean(option.disabled)"
 					:label="option.label"
 					:value="option.value"
@@ -154,3 +155,9 @@ export default defineComponent({
 	},
 })
 </script>
+<style lang="scss">
+.el-select-dropdown.el-popper[x-placement^='bottom'],
+.el-select-dropdown.el-popper.is-multiple[x-placement^='bottom'] {
+	margin-top: 0.4rem;
+}
+</style>
