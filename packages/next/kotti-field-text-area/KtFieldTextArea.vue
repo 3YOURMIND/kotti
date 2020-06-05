@@ -71,7 +71,7 @@ export default defineComponent({
 		min-height: calc(#{$vertical-padding} * 2 + 1rem);
 		padding: $vertical-padding 0.8em;
 		margin: 0;
-		resize: none;
+		resize: vertical;
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
 		outline: none;
@@ -89,12 +89,12 @@ export default defineComponent({
 		&:active,
 		&:hover {
 			scrollbar-color: var(--ui-03) var(--ui-background);
-			transition: scrollbar-color 0.34s ease-out;
+			transition: scrollbar-color var(--transition-medium) ease-out;
 
 			&::-webkit-scrollbar {
 				width: 5px;
 				opacity: 1;
-				transition: opacity 0.34s ease-out;
+				transition: opacity var(--transition-medium) ease-out;
 			}
 
 			&::-webkit-scrollbar-thumb {
