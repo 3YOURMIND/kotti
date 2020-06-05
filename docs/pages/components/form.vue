@@ -97,6 +97,18 @@
 			suffix="Suffix"
 		/>
 		<KtFieldText
+			formKey="firstName"
+			helpText="Help for firstName"
+			:isDisabled="formSettings.disableFormFields"
+			label="First Name"
+			leftIcon="comment"
+			placeholder="Klaus"
+			prefix="Prefix"
+			rightIcon="location"
+			suffix="Suffix"
+			isSmall
+		/>
+		<KtFieldText
 			formKey="lastName"
 			helpText="help for lastName"
 			:isDisabled="formSettings.disableFormFields"

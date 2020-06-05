@@ -162,6 +162,7 @@ export default defineComponent({
 				const classes = ['kt-field__wrapper']
 
 				if (props.field.isDisabled) classes.push('kt-field__wrapper--disabled')
+				if (props.field.isSmall) classes.push('kt-field__wrapper--small')
 
 				classes.push(
 					showValidation.value

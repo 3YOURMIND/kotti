@@ -10,6 +10,7 @@ export const ktFieldProps = {
 	isDisabled: { default: false, type: Boolean },
 	isLoading: { default: false, type: Boolean },
 	isOptional: { default: false, type: Boolean },
+	isSmall: { default: false, type: Boolean },
 	label: { default: null, type: String },
 	leftIcon: { default: null, type: String },
 	placeholder: { default: null, type: String },
