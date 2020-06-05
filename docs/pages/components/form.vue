@@ -98,14 +98,10 @@
 		/>
 		<KtFieldText
 			formKey="firstName"
-			helpText="Help for firstName"
+			helpText="Small field, is used inside Datetime picker"
 			:isDisabled="formSettings.disableFormFields"
-			label="First Name"
-			leftIcon="comment"
+			label="First Name (Small field)"
 			placeholder="Klaus"
-			prefix="Prefix"
-			rightIcon="location"
-			suffix="Suffix"
 			isSmall
 		/>
 		<KtFieldText

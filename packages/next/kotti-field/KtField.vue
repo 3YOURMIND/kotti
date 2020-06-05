@@ -217,6 +217,14 @@ export default defineComponent({
 		}
 	}
 
+	&--small {
+		font-size: 0.9em;
+
+		.kt-field__input-container {
+			min-height: 1.6rem;
+		}
+	}
+
 	&--disabled {
 		* {
 			cursor: not-allowed;
