@@ -12,9 +12,9 @@ export namespace KtFieldSelect {
 
 	export namespace Shared {
 		export type Entry = {
-			disabled: boolean
+			disabled?: boolean
 			label: string
-			value: string | number | boolean | null
+			value: string | number | boolean | symbol | null
 		}
 
 		export type Props = {

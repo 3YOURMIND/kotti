@@ -198,7 +198,9 @@ export default defineComponent({
 							)
 
 							if (!option)
-								throw new Error(`Couldn’t find option with value “${value}”`)
+								throw new Error(
+									`Couldn’t find option with value “${String(value)}”`,
+								)
 
 							return option
 						},

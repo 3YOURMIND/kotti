@@ -13,8 +13,11 @@ export const ktFieldSelectSharedProps = {
 					typeof option === 'object' &&
 					option !== null &&
 					typeof option.label === 'string' &&
+					['boolean', 'undefined'].includes(typeof option.disabled) &&
 					(option.value === null ||
-						['string', 'number', 'boolean'].includes(typeof option.value)),
+						['string', 'number', 'boolean', 'symbol'].includes(
+							typeof option.value,
+						)),
 			),
 	},
 }
