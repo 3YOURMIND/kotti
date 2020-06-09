@@ -189,6 +189,15 @@ export default defineComponent({
 	flex-direction: column;
 	justify-content: space-between;
 
+	// overwrite native outline behavior
+	* {
+		outline: none;
+		&:focus,
+		&::-moz-focus-inner {
+			outline: none;
+		}
+	}
+
 	> :not(:last-child) {
 		margin-bottom: 0.4rem;
 	}

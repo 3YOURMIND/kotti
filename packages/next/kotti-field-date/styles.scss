@@ -21,7 +21,6 @@
 					padding: 0;
 					margin: 0;
 					border: 0;
-					outline: none;
 
 					&::-webkit-input-placeholder, /* Edge */
 					&:-ms-input-placeholder, /* Internet Explorer */
@@ -37,6 +36,7 @@
 					font-size: 1rem;
 					color: var(--icon-02);
 					cursor: pointer;
+
 					i {
 						line-height: unset;
 					}
@@ -45,23 +45,11 @@
 				.el-input__prefix {
 					-webkit-order: 1;
 					order: 1;
-
-					.el-input__icon {
-						&:before {
-							content: 'calendar';
-						}
-					}
 				}
 
 				.el-input__suffix {
 					-webkit-order: 3;
 					order: 3;
-
-					.el-input__icon {
-						&:before {
-							content: 'close';
-						}
-					}
 				}
 			}
 		}
@@ -94,7 +82,7 @@
 				border-top-color: var(--ui-02);
 				border-bottom-width: 0;
 
-				&:after {
+				&::after {
 					bottom: 1px;
 					margin-left: -6px;
 					border-top-color: var(--ui-background);
@@ -113,7 +101,7 @@
 				border-right-color: var(--ui-02);
 				border-left-width: 0;
 
-				&:after {
+				&::after {
 					bottom: -6px;
 					left: 1px;
 					border-right-color: var(--ui-background);
@@ -132,7 +120,7 @@
 				border-top-width: 0;
 				border-bottom-color: var(--ui-02);
 
-				&:after {
+				&::after {
 					top: 1px;
 					margin-left: -6px;
 					border-top-width: 0;
@@ -151,7 +139,7 @@
 				border-right-width: 0;
 				border-left-color: var(--ui-02);
 
-				&:after {
+				&::after {
 					right: 1px;
 					bottom: -6px;
 					margin-left: -6px;
@@ -166,7 +154,7 @@
 			border-width: 6px;
 
 			&,
-			&:after {
+			&::after {
 				position: absolute;
 				display: block;
 				width: 0;
@@ -175,7 +163,7 @@
 				border-style: solid;
 			}
 
-			&:after {
+			&::after {
 				content: ' ';
 				border-width: 6px;
 			}

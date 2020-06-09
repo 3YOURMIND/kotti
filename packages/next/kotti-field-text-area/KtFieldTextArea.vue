@@ -74,9 +74,8 @@ export default defineComponent({
 		resize: vertical;
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
-		outline: none;
 
-		// remove it from IE entirely
+		// remove scrollbar from IE entirely
 		-ms-overflow-style: none;
 
 		&::-webkit-scrollbar {

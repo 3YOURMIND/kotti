@@ -10,7 +10,6 @@
 				padding: 0;
 				margin: 0;
 				border: 0;
-				outline: none;
 			}
 		}
 
@@ -71,7 +70,6 @@
 					line-height: 1.6;
 					color: var(--text-01);
 					border: 0;
-					outline: none;
 					appearance: none;
 				}
 			}
@@ -105,6 +103,7 @@
 				font-size: 0.875em;
 
 				color: var(--text-02);
+				text-transform: capitalize;
 				white-space: nowrap;
 				background-color: var(--interactive-02);
 				border: $tag-border solid var(--ui-02);
@@ -175,7 +174,7 @@
 				border-top-color: var(--ui-02);
 				border-bottom-width: 0;
 
-				&:after {
+				&::after {
 					bottom: 1px;
 					margin-left: -6px;
 					border-top-color: var(--ui-background);
@@ -194,7 +193,7 @@
 				border-right-color: var(--ui-02);
 				border-left-width: 0;
 
-				&:after {
+				&::after {
 					bottom: -6px;
 					left: 1px;
 					border-right-color: var(--ui-background);
@@ -213,7 +212,7 @@
 				border-top-width: 0;
 				border-bottom-color: var(--ui-02);
 
-				&:after {
+				&::after {
 					top: 1px;
 					margin-left: -6px;
 					border-top-width: 0;
@@ -232,7 +231,7 @@
 				border-right-width: 0;
 				border-left-color: var(--ui-02);
 
-				&:after {
+				&::after {
 					right: 1px;
 					bottom: -6px;
 					margin-left: -6px;
@@ -247,7 +246,7 @@
 			border-width: 6px;
 
 			&,
-			&:after {
+			&::after {
 				position: absolute;
 				display: block;
 				width: 0;
@@ -256,7 +255,7 @@
 				border-style: solid;
 			}
 
-			&:after {
+			&::after {
 				content: ' ';
 				border-width: 6px;
 			}

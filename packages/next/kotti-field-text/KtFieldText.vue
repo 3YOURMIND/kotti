@@ -69,7 +69,6 @@ export default defineComponent({
 	line-height: 1.6;
 	color: var(--text-01);
 	border: 0;
-	outline: none;
 
 	&:disabled {
 		color: var(--text-05);
