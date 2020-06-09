@@ -1,15 +1,16 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KtFieldDateShared {
-	export type ShortcutEntry = {
+	export type ShortcutEntry<VALUE> = {
+		keepOpen?: boolean
 		label: string
-		value: string | null
+		value: VALUE
 	}
 
-	export type Props = {
+	export interface Props<VALUE> extends KottiField.Props<VALUE> {
 		maximumDate: string | null
 		minimumDate: string | null
-		shortcuts: KtFieldDateShared.ShortcutEntry[]
+		shortcuts: KtFieldDateShared.ShortcutEntry<VALUE>[]
 	}
 
 	/**
@@ -21,25 +22,25 @@ export namespace KtFieldDateShared {
 }
 
 export namespace KtFieldDate {
-	export type Props = KottiField.Props<Value> & KtFieldDateShared.Props
+	export type Props = KtFieldDateShared.Props<Value>
 
 	export type Value = KtFieldDateShared.Value
 }
 
 export namespace KtFieldDateRange {
-	export type Props = KottiField.Props<Value> & KtFieldDateShared.Props
+	export type Props = KtFieldDateShared.Props<Value>
 
 	export type Value = KtFieldDateShared.RangeValue
 }
 
 export namespace KtFieldDateTime {
-	export type Props = KottiField.Props<Value> & KtFieldDateShared.Props
+	export type Props = KtFieldDateShared.Props<Value>
 
 	export type Value = KtFieldDateShared.Value
 }
 
 export namespace KtFieldDateTimeRange {
-	export type Props = KottiField.Props<Value> & KtFieldDateShared.Props
+	export type Props = KtFieldDateShared.Props<Value>
 
 	export type Value = KtFieldDateShared.RangeValue
 }
