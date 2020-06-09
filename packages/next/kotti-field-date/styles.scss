@@ -171,187 +171,389 @@
 	}
 
 	&__body-wrapper {
+		display: flex;
+		flex-direction: column-reverse;
+		justify-content: space-between;
 		width: 100%;
+		padding: 1rem 1.2rem;
 		color: var(--text-01);
 
-		.el-picker-panel__body {
-			display: flex;
-			flex-direction: column;
+		* {
+			outline: none;
 
-			.el-date-picker__header {
-				padding: 0.8rem 0 0.6rem 0;
-				margin: 0 0.8rem;
-				font-size: 1.2em;
+			&:focus,
+			&::-moz-focus-inner {
+				outline: none;
+			}
+		}
 
-				text-align: center;
-				border-bottom: 1px solid var(--ui-02);
+		.el-picker-panel {
+			&__sidebar {
+				display: flex;
+				justify-content: flex-start;
+				padding: 0 1rem;
+				border-top: 1px solid var(--ui-02);
 
-				button.el-picker-panel__icon-btn {
-					display: flex;
-					padding: 0;
-					color: var(--icon-02);
+				> button {
+					padding: 0.4rem 0;
+					font-size: 0.8rem;
+					color: var(--link-02);
 					cursor: pointer;
-					background: transparent;
+					background-color: transparent;
 					border: 0;
-					outline: none;
-				}
+					-moz-text-decoration-line: underline;
+					-moz-text-decoration-style: solid;
+					text-decoration-line: underline;
+					text-decoration-style: solid;
 
-				span.el-date-picker__header-label {
-					color: var(--text-01);
-					cursor: pointer;
+					& + button {
+						margin-left: 0.8rem;
+					}
 
 					&:hover {
-						color: var(--interactive-01-hover);
+						color: var(--link-03);
 					}
 
-					&:first-of-type {
-						-webkit-order: 3;
-						order: 3;
-
-						+ span.el-date-picker__header-label {
-							margin-left: 0.2rem;
-						}
-					}
-
-					&:last-of-type {
-						-webkit-order: 4;
-						order: 4;
-					}
-				}
-
-				span.el-date-picker__header-label[style*='display: none;'] {
-					*.el-date-picker__header-label {
-						text-align: right;
-					}
-				}
-
-				.el-date-picker {
-					&__prev-btn {
-						float: left;
-						&.el-icon-d-arrow-left {
-							-webkit-order: 1;
-							order: 1;
-							> :last-child {
-								transform: translateX(-12px);
-							}
-						}
-
-						&.el-icon-arrow-left {
-							-webkit-order: 2;
-							order: 2;
-						}
-					}
-
-					&__next-btn {
-						float: right;
-						&.el-icon-arrow-right {
-							-webkit-order: 5;
-							order: 5;
-						}
-
-						&.el-icon-d-arrow-right {
-							-webkit-order: 6;
-							order: 6;
-
-							> :first-child {
-								transform: translateX(12px);
-							}
-						}
+					&:active {
+						color: var(--link-01);
 					}
 				}
 			}
 
-			.el-picker-panel__content {
-				$size: 1rem;
-				table {
-					padding: 0.8em;
-					margin: 0;
+			&__body {
+				$td-diameter: 1.5rem;
+				$icon-size: 1.3rem;
+				$double-chevron-translate: 1rem;
+				$month-font-size: 1.3rem;
+				$label-font-size: 1.1rem;
+
+				.el-date-picker__header {
+					display: flex;
+					justify-content: flex-end;
+					padding: 0.8rem 0;
+					margin: 0 1rem;
+					font-size: 1.2em;
+
 					text-align: center;
-					border: 0;
 
-					tbody {
+					button.el-picker-panel__icon-btn {
 						display: flex;
-						flex-direction: column;
+						align-items: flex-end;
+						justify-content: center;
 
-						tr {
-							display: flex;
-							td,
-							th {
-								flex: 1;
-							}
-						}
-					}
-
-					th {
-						padding: 0.4rem;
-						color: var(--text-02);
-						text-transform: uppercase;
-						border: 0;
-					}
-
-					td {
-						padding: 0.8em;
-						color: var(--text-05);
+						padding: 0;
+						color: var(--icon-02);
 						cursor: pointer;
+						background: transparent;
 						border: 0;
 
-						&.available {
-							color: var(--text-01);
+						i {
+							font-size: $icon-size;
+						}
 
-							&.today {
-								color: var(--interactive-03);
+						&:hover {
+							color: var(--interactive-01);
+						}
+					}
+
+					// styles specific to el-date-picker header
+					&:not(.el-date-picker__header--bordered) {
+						button.el-icon-d-arrow-left {
+							@supports (clip-path: inset(50% 10% 0% 10%)) {
+								clip-path: inset(50% 10% 0% 10%);
+							}
+						}
+
+						button.el-icon-d-arrow-right {
+							@supports (clip-path: inset(50% 10% 0% 10%)) {
+								clip-path: inset(50% 10% 0% 10%);
+							}
+						}
+
+						span.el-date-picker__header-label {
+							&:hover {
+								color: var(--interactive-01);
+							}
+
+							&:first-of-type {
+								margin-top: 0.5 * $label-font-size;
+								margin-right: auto;
+								color: var(--text-02);
+								// longest month is 8 chars long
+								transform: translateX(calc(-8 * #{$month-font-size} - 5px));
+
+								// clips a box shape with radius 0 from the top by 50%
+								// transforming the year that's preceded by a line break means that
+								// hovering over the year will cover the click area of the month
+								// (i.e. the area in which user can click on month is very limited)
+								@supports (clip-path: inset(50% 0% 0% 0%)) {
+									clip-path: inset(50% 0% 0% 0%);
+								}
+
+								// add a line-break before year in the header of the el-date-picker table
+								&::before {
+									white-space: pre;
+									content: '\a';
+								}
+
+								&:hover {
+									color: var(--interactive-01);
+								}
+							}
+
+							&:last-of-type {
+								@supports (clip-path: inset(0% 0% 50% 0%)) {
+									clip-path: inset(0% 0% 50% 0%);
+								}
 							}
 						}
 					}
 
-					&.el-year-table,
-					&.el-month-table {
+					span.el-date-picker__header-label {
+						color: var(--text-01);
+						cursor: pointer;
+
+						&:first-of-type {
+							-webkit-order: 2;
+							order: 2;
+							font-size: $label-font-size;
+						}
+
+						&:last-of-type {
+							display: flex;
+							-webkit-order: 1;
+							order: 1;
+							width: calc(
+								8 * #{$month-font-size} + 5px
+							); // longest month has 8 chars
+
+							font-size: $month-font-size;
+							text-transform: uppercase;
+						}
+					}
+
+					.el-date-picker {
+						&__prev-btn {
+							&.el-icon-d-arrow-left {
+								-webkit-order: 3;
+								order: 3;
+
+								> :last-child {
+									margin-right: -$double-chevron-translate;
+									transform: translateX(-1 * $double-chevron-translate);
+								}
+							}
+
+							&.el-icon-arrow-left {
+								-webkit-order: 4;
+								order: 4;
+
+								@supports (clip-path: inset(50% 10% 0% 10%)) {
+									clip-path: inset(50% 10% 0% 10%);
+								}
+							}
+						}
+
+						&__next-btn {
+							&.el-icon-arrow-right {
+								-webkit-order: 5;
+								order: 5;
+
+								@supports (clip-path: inset(50% 10% 0% 10%)) {
+									clip-path: inset(50% 10% 0% 10%);
+								}
+							}
+
+							&.el-icon-d-arrow-right {
+								-webkit-order: 6;
+								order: 6;
+
+								> :first-child {
+									margin-left: -$double-chevron-translate;
+									transform: translateX($double-chevron-translate);
+								}
+							}
+						}
+					}
+
+					&--bordered {
+						justify-content: space-between;
+						margin: 0;
+						margin-bottom: 0.4rem;
+						border-bottom: 1px solid var(--ui-02);
+
+						span.el-date-picker__header-label:not([style*='display: none;']) {
+							-webkit-order: 4;
+							order: 4;
+							margin-right: unset;
+							color: var(--text-01);
+						}
+					}
+				}
+
+				.el-picker-panel__content {
+					margin: 0;
+
+					table {
+						padding: 0.8em;
+						margin: 0;
+						text-align: center;
+						border: 0;
+
+						tbody {
+							display: flex;
+							flex-direction: column;
+
+							tr {
+								display: flex;
+
+								td,
+								th {
+									flex: 1;
+								}
+							}
+						}
+
+						th {
+							padding: 0;
+							color: var(--text-03);
+							text-transform: uppercase;
+							border: 0;
+						}
+
 						td {
+							padding: 0;
+							color: var(--text-03);
+							cursor: pointer;
+							border: 0;
+
 							&.available {
+								color: var(--text-01);
+
+								&.today {
+									color: var(--interactive-03);
+								}
+							}
+
+							&.disabled {
+								cursor: not-allowed;
+								background-color: var(--ui-01);
+							}
+						}
+
+						&.el-year-table,
+						&.el-month-table {
+							tr {
+								padding: 0.8rem 0;
+							}
+
+							td {
+								margin: 0 0.8em;
+								border-radius: var(--field-border-radius);
 								a {
+									display: flex;
+									align-items: center;
+									justify-content: center;
 									color: var(--text-02);
+									text-transform: uppercase;
 
 									&:hover {
-										color: var(--interactive-01-hover);
+										color: var(--interactive-01);
 									}
 								}
 
 								&.current {
+									background-color: var(--interactive-03);
+
+									&:hover {
+										background-color: var(--interactive-01);
+									}
+
 									a {
-										color: var(--interactive-03);
+										color: var(--text-04);
 									}
 								}
 
 								&.today {
-									-moz-text-decoration-line: underline;
-									text-decoration-line: underline;
-									// border-bottom: 1px solid var(--interactive-04);
+									border: 1px solid var(--link-04);
 								}
 							}
 						}
-					}
 
-					&.el-date-table {
-						td {
-							// background-color: cyan;
+						&.el-date-table {
+							tr:first-of-type {
+								border-bottom: 1px solid var(--ui-02);
+							}
 
-							&.available {
-								&:hover {
-									color: var(--interactive-01-hover);
+							td,
+							th {
+								padding: 0.4rem 0;
+							}
+
+							th {
+								font-weight: bold;
+							}
+
+							td {
+								display: flex;
+								align-items: center;
+								justify-content: center;
+
+								> div {
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									width: $td-diameter;
+									height: $td-diameter;
+									border-radius: 50%;
 								}
 
-								&.today {
-									// font-weight: 700;
-									border: 1px solid var(--interactive-03);
-									border-radius: 50%;
-									@supports (clip-path: circle(#{$size / 2} at center)) {
-										// border-radius: 0;
-										clip-path: circle(#{$size / 2} at center);
+								&:not(.disabled) {
+									@supports (
+										clip-path: circle(calc(#{$td-diameter/2} + 2px) at center)
+									) {
+										clip-path: circle(calc(#{$td-diameter/2} + 2px) at center);
+									}
+
+									&:hover {
+										background-color: var(--interactive-02-hover);
+										transition: background-color var(--transition-short);
+									}
+								}
+
+								&.available {
+									&:hover {
+										font-weight: bold;
+										color: var(--link-03);
+										transition: font-weight ease var(--transition-short);
+									}
+
+									&.today,
+									&.current {
+										> div {
+											border: 1px solid var(--link-04);
+										}
+										&:hover {
+											> div {
+												border: 2px solid var(--link-03);
+												transition: border ease var(--transition-short);
+											}
+										}
 									}
 
 									&.current {
-										color: var(--interactive-02);
-										background-color: var(--interactive-03);
+										> div {
+											background-color: var(--interactive-03);
+
+											&:hover {
+												background-color: var(--interactive-01);
+											}
+
+											> span {
+												font-weight: bold;
+												color: var(--interactive-02);
+											}
+										}
 									}
 								}
 							}
