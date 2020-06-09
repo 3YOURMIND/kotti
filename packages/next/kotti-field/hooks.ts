@@ -87,18 +87,25 @@ export const useField = <DATA_TYPE>({
 
 	const currentValue = computed(
 		(): DATA_TYPE => {
-			if (context === null) return cloneDeep(props.value)
+			const value = (() => {
+				if (context === null) return cloneDeep(props.value)
 
-			switch (props.formKey) {
-				case FORM_KEY_NONE:
-					return cloneDeep(props.value)
+				switch (props.formKey) {
+					case FORM_KEY_NONE:
+						return cloneDeep(props.value)
 
-				case null:
-					throw new KtFieldErrors.ImplicitFormKeyNone(props)
+					case null:
+						throw new KtFieldErrors.ImplicitFormKeyNone(props)
 
-				default:
-					return context.values.value[props.formKey] as DATA_TYPE
-			}
+					default:
+						return context.values.value[props.formKey] as DATA_TYPE
+				}
+			})()
+
+			if (!isCorrectDataType(value))
+				throw new KtFieldErrors.InvalidDataType(props, value)
+
+			return value
 		},
 	)
 
