@@ -59,6 +59,7 @@ export const usePicker = <
 		if (field.isLoading || field.isDisabled) {
 			return elDateComponent.blur()
 		}
+
 		const ktFieldDateInputContainer = inputContainerRef.value
 		if (ktFieldDateInputContainer === null)
 			throw new Error('kt-field-date__input-container not available')
@@ -72,6 +73,7 @@ export const usePicker = <
 			const newWidth = ktFieldDateInputContainer.getBoundingClientRect().width
 			// elDateComponent.picker.width = newWidth
 			elDateComponent.picker.$el.style.minWidth = `${(newWidth * 70) / 100}px`
+			elDateComponent.picker.$el.style.minHeight = `${(newWidth * 50) / 100}px`
 
 			// add yoco class to header icons to enable yoco icons
 			const pickerHeaderIcons: Array<HTMLElement> = [].slice.call(
@@ -91,5 +93,28 @@ export const usePicker = <
 
 			elDateComponent.updatePopper()
 		}
+
+		const elInputIcons: Array<HTMLElement> = [].slice.call(
+			elDateComponent.$el.querySelectorAll('.el-input__icon'),
+		)
+
+		elInputIcons.forEach((icon) => icon.classList.add('yoco'))
+
+		const prefixIcon = elDateComponent.$el.querySelectorAll(
+			'.el-input__icon.el-icon-time, .el-input__icon.el-icon-date',
+		)
+
+		const prefixIconArray: Array<HTMLElement> = [].slice.call(prefixIcon)
+
+		prefixIconArray[0].classList.contains('el-icon-time')
+			? (prefixIconArray[0].innerText = 'clock')
+			: (prefixIconArray[0].innerText = 'calendar')
+
+		const suffixIcon: Array<HTMLElement> = [].slice.call(
+			elDateComponent.$el.querySelectorAll(
+				'.el-input__icon:not(.el-icon-time):not(.el-icon-date)',
+			),
+		)
+		suffixIcon[0].innerText = 'close'
 	})
 }
