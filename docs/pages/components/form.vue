@@ -3,6 +3,18 @@
 
 <ClientOnly>
 	<h2>KtFields Without Form</h2>
+	<KtFieldDate
+		v-model="date"
+		label="KtFieldDate"
+		:maximumDate="null"
+		minimumDate="2020-06-05"
+		placeholder="Select Date"
+		:shortcuts="[
+			{label: 'Today', value: today },
+			{label: 'Yesterday', value: yesterday },
+			{label: 'Jump One Week', value: jumpOneWeek, keepOpen: true }
+		]"
+	/>
 	<div>
 		<KtFieldText
 			v-model="textValue"
@@ -217,6 +229,8 @@
 </template>
 
 <script lang="ts">
+import dayjs from 'dayjs'
+
 import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiForm } from '../../../packages/next/kotti-form/types'
 
@@ -262,6 +276,7 @@ export default {
 		}
 
 		return {
+			date: null,
 			disableFormFields: false,
 			formData: {
 				checkboxGroup: {
@@ -300,6 +315,23 @@ export default {
 			testCheckbox: true,
 			testLabel: 'hi',
 		}
+	},
+	computed: {
+		today() {
+			return dayjs().format('YYYY-MM-DD')
+		},
+		yesterday() {
+			return dayjs()
+				.subtract(1, 'day')
+				.format('YYYY-MM-DD')
+		},
+		jumpOneWeek() {
+			return dayjs(
+				((this as unknown) as { date: string | null }).date ?? undefined,
+			)
+				.add(1, 'week')
+				.format('YYYY-MM-DD')
+		},
 	},
 	methods: {
 		addUser() {
