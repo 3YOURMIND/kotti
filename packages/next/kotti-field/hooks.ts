@@ -14,7 +14,7 @@ import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
 
 import { FORM_KEY_NONE } from './constants'
-import { ktFieldProps } from './constants'
+import { KOTTI_FIELD_PROPS } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
@@ -75,7 +75,7 @@ export const useField = <DATA_TYPE>({
 		) as Array<[Key, Value]>)
 			if (!supports[supportsKey])
 				for (const propKey of propsToCheck)
-					if (props[propKey] !== ktFieldProps[propKey].default)
+					if (props[propKey] !== KOTTI_FIELD_PROPS[propKey].default)
 						throw new KtFieldErrors.UnsupportedProp(props, {
 							supportsKey,
 							propKey,

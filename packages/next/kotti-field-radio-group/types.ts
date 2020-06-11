@@ -1,15 +1,14 @@
 import { KottiField } from '../kotti-field/types'
 
-export namespace KtFieldRadioGroup {
+export namespace KottiFieldRadioGroup {
 	export type Entry = {
 		label: string
-		value: KtFieldRadioGroup.Value
+		value: Value
 		disabled: boolean
 	}
 
-	export interface Props
-		extends KottiField.Props<KtFieldRadioGroup.Value | null> {
-		options: KtFieldRadioGroup.Entry[]
+	export type Props = KottiField.Props<Value | null> & {
+		options: Entry[]
 	}
 
 	export type Value = string | number | boolean

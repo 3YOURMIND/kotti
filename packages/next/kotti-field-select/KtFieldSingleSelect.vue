@@ -54,25 +54,25 @@ import { defineComponent, computed, ref } from '@vue/composition-api'
 import { Select as ElSelect, Option as ElOption } from 'element-ui'
 
 import { KtField } from '../kotti-field'
-import { ktFieldProps } from '../kotti-field/constants'
+import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
-import { ktFieldSelectSharedProps } from './constants'
+import { KOTTI_FIELD_SINGLE_SELECT_PROPS } from './constants'
 import { usePopperPlacementFix, usePopperWidthFix } from './hooks'
-import { KtFieldSelect } from './types'
+import { KottiFieldSingleSelect } from './types'
 
 export default defineComponent({
 	name: 'KtFieldSingleSelect',
 	components: { ElOption, ElSelect, KtField, ActionIcon },
 	props: {
-		...ktFieldProps,
-		...ktFieldSelectSharedProps,
+		...KOTTI_FIELD_PROPS,
+		...KOTTI_FIELD_SINGLE_SELECT_PROPS,
 	},
-	setup(props: KtFieldSelect.Single.Props, { emit }) {
-		const field = useField<KtFieldSelect.Single.Value>({
+	setup(props: KottiFieldSingleSelect.Props, { emit }) {
+		const field = useField<KottiFieldSingleSelect.Value>({
 			emit,
-			isCorrectDataType: (value): value is KtFieldSelect.Single.Value =>
+			isCorrectDataType: (value): value is KottiFieldSingleSelect.Value =>
 				['string', 'number', 'boolean'].includes(typeof value) ||
 				value === null,
 			isEmpty: (value) => value === null,
@@ -148,7 +148,7 @@ export default defineComponent({
 			},
 			isDropdownOpen,
 			ktFieldRef,
-			onChange: (value: KtFieldSelect.Single.Value) => {
+			onChange: (value: KottiFieldSingleSelect.Value) => {
 				field.setValue(value)
 			},
 		}

@@ -3,7 +3,7 @@ import { Select as ElSelect } from 'element-ui'
 
 import { KottiField } from '../kotti-field/types'
 
-import { KtFieldSelect } from './types'
+import { KottiFieldSingleSelect, KottiFieldMultiSelect } from './types'
 
 /**
  * ^ `popperComponent` is an internal `element-ui` component that computes the placement
@@ -46,8 +46,8 @@ export const usePopperPlacementFix = (
 }
 export const usePopperWidthFix = <
 	SELECT_DATA_TYPE extends
-		| KtFieldSelect.Single.Value
-		| KtFieldSelect.Multiple.Value
+		| KottiFieldSingleSelect.Value
+		| KottiFieldMultiSelect.Value
 >(
 	elSelectRef: Ref<
 		| (ElSelect & {

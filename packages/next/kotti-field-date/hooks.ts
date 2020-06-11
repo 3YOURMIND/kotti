@@ -4,32 +4,31 @@ import { DatePicker as ElDate } from 'element-ui'
 import { KottiField } from '../kotti-field/types'
 
 import {
-	KtFieldDate,
-	KtFieldDateRange,
-	KtFieldDateTime,
-	KtFieldDateTimeRange,
+	KottiFieldDate,
+	KottiFieldDateRange,
+	KottiFieldDateTime,
+	KottiFieldDateTimeRange,
 } from './types'
+
+export type ElDateComponent = ElDate & {
+	blur(): void
+	referenceElm: Element
+	picker: Vue & {
+		width: number
+		$el: HTMLElement
+	}
+	pickerVisible: boolean
+	updatePopper(): void
+}
 
 export const usePicker = <
 	DATE_PICKER_DATA_TYPE extends
-		| KtFieldDate.Value
-		| KtFieldDateRange.Value
-		| KtFieldDateTime.Value
-		| KtFieldDateTimeRange.Value
+		| KottiFieldDate.Value
+		| KottiFieldDateRange.Value
+		| KottiFieldDateTime.Value
+		| KottiFieldDateTimeRange.Value
 >(
-	elDateRef: Ref<
-		| (ElDate & {
-				blur(): void
-				referenceElm: Element
-				picker: Vue & {
-					width: number
-					$el: HTMLElement
-				}
-				pickerVisible: boolean
-				updatePopper(): void
-		  })
-		| null
-	>,
+	elDateRef: Ref<ElDateComponent | null>,
 	inputContainerRef: Ref<Element | null>,
 	field: KottiField.Hook.Returns<DATE_PICKER_DATA_TYPE>,
 ) => {
@@ -71,9 +70,12 @@ export const usePicker = <
 		elDateComponent.pickerVisible
 		if (elDateComponent.picker && elDateComponent.pickerVisible) {
 			const newWidth = ktFieldDateInputContainer.getBoundingClientRect().width
-			// elDateComponent.picker.width = newWidth
-			elDateComponent.picker.$el.style.minWidth = `${(newWidth * 70) / 100}px`
-			elDateComponent.picker.$el.style.minHeight = `${(newWidth * 50) / 100}px`
+
+			/* eslint-disable no-magic-numbers */
+			elDateComponent.picker.$el.style.width = `${(newWidth * 50) / 100}px`
+			elDateComponent.picker.$el.style.minWidth = '400px'
+			elDateComponent.picker.$el.style.height = '500px'
+			/* eslint-enable no-magic-numbers */
 
 			// add yoco class to header icons to enable yoco icons
 			const pickerHeaderIcons: Array<HTMLElement> = [].slice.call(
@@ -94,7 +96,10 @@ export const usePicker = <
 			elDateComponent.updatePopper()
 		}
 
-		const elInputIcons: Array<HTMLElement> = [].slice.call(
+		const elInput = elDateComponent.$el.querySelector('.el-input__inner')
+		elInput?.setAttribute('size', '1')
+
+		const elInputIcons: Array<HTMLElement> = Array.from(
 			elDateComponent.$el.querySelectorAll('.el-input__icon'),
 		)
 

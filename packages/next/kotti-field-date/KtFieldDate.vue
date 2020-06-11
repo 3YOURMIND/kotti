@@ -31,29 +31,30 @@ import { DatePicker as ElDate } from 'element-ui'
 import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
 
 import { KtField } from '../kotti-field'
-import { ktFieldProps } from '../kotti-field/constants'
+import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 
 import {
-	COMMON_INTERNAL_PROPS,
 	DATE_INTERNAL_PROPS,
 	DATE_FORMAT_REGEX,
-	ktFieldDateSharedProps,
+	KOTTI_FIELD_DATE_SHARED_PROPS,
+	KOTTI_FIELD_DATE_PROPS,
 } from './constants'
-import { usePicker } from './hooks'
-import { KtFieldDate, KtFieldDateShared } from './types'
+import { usePicker, ElDateComponent } from './hooks'
+import { KottiFieldDate } from './types'
 
 export default defineComponent({
 	name: 'KtFieldDate',
 	components: { ElDate, KtField },
 	props: {
-		...ktFieldProps,
-		...ktFieldDateSharedProps,
+		...KOTTI_FIELD_PROPS,
+		...KOTTI_FIELD_DATE_PROPS,
+		...KOTTI_FIELD_DATE_SHARED_PROPS,
 	},
-	setup(props: KtFieldDate.Props, { emit }) {
-		const field = useField<KtFieldDate.Value>({
+	setup(props: KottiFieldDate.Props, { emit }) {
+		const field = useField<KottiFieldDate.Value>({
 			emit,
-			isCorrectDataType: (value): value is KtFieldDate.Value =>
+			isCorrectDataType: (value): value is KottiFieldDate.Value =>
 				(typeof value === 'string' && DATE_FORMAT_REGEX.test(value)) ||
 				value === null,
 			isEmpty: (value) => value === '',
@@ -66,18 +67,7 @@ export default defineComponent({
 			},
 		})
 
-		const elDateRef = ref<
-			ElDate & {
-				blur(): void
-				referenceElm: Element
-				picker: Vue & {
-					width: number
-					$el: HTMLElement
-				}
-				pickerVisible: boolean
-				updatePopper(): void
-			}
-		>(null)
+		const elDateRef = ref<ElDateComponent>(null)
 
 		const inputContainerRef = ref<Element>(null)
 
@@ -99,11 +89,7 @@ export default defineComponent({
 				return false
 			},
 			shortcuts: props.shortcuts.map(
-				({
-					label,
-					value,
-					keepOpen,
-				}: KtFieldDateShared.ShortcutEntry<KtFieldDate.Value>) => ({
+				({ label, value, keepOpen }: KottiFieldDate.Props['shortcuts'][0]) => ({
 					text: label,
 					onClick(_picker: ElDatePicker) {
 						if (keepOpen !== true) _picker.$emit('pick', value)
@@ -117,7 +103,6 @@ export default defineComponent({
 			elDatePickerProps: computed(
 				() =>
 					({
-						...COMMON_INTERNAL_PROPS,
 						...DATE_INTERNAL_PROPS,
 						pickerOptions: pickerOptions.value,
 					} as Partial<ElDate>),
@@ -125,7 +110,7 @@ export default defineComponent({
 			elDateRef,
 			field,
 			inputContainerRef,
-			onChange: (value: KtFieldDate.Value) => field.setValue(value),
+			onChange: (value: KottiFieldDate.Value) => field.setValue(value),
 		}
 	},
 })

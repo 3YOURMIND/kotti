@@ -64,8 +64,7 @@ export namespace KottiField {
 	 * When adding a new prop, please make sure that no KtFormField
 	 * already uses a prop with the same name, to avoid conflicts
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	export interface Props<DATA_TYPE extends any> {
+	export type Props<DATA_TYPE> = {
 		/**
 		 * Specifies that the data KtFormContext[formKey]
 		 * If formKey is "NONE", it is treated as an explicit opt-out

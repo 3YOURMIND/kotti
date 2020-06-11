@@ -5,13 +5,13 @@ import KtForm from './KtForm.vue'
 import { defineComponent } from '@vue/composition-api'
 import { useField } from '../kotti-field/hooks'
 import { KottiField } from '../kotti-field/types'
-import { ktFieldProps } from '../kotti-field/constants'
+import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { localVue } from '../test-utils'
 
 const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
-	props: ktFieldProps,
+	props: KOTTI_FIELD_PROPS,
 	setup: (props: KottiField.Props<string | null>, { emit }) => ({
 		field: useField({
 			emit,
@@ -30,14 +30,43 @@ const TestField = defineComponent({
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
+const TestFieldObject = defineComponent({
+	name: 'TestFieldObject',
+	components: { KtField },
+	props: KOTTI_FIELD_PROPS,
+	setup: (props: KottiField.Props<object | string | null>, { emit }) => ({
+		field: useField({
+			emit,
+			isCorrectDataType: (value): value is object | null =>
+				typeof value === 'object' ||
+				typeof value === 'string' ||
+				value === null,
+			isEmpty: (value) => value === null,
+			props,
+			supports: {
+				clear: true,
+				decoration: true,
+				placeholder: true,
+				tabIndex: true,
+			},
+		}),
+	}),
+	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
+})
+
 const TestForm = {
 	components: { KtForm, TestField },
 	template: `<KtForm v-bind="$attrs" @input="$event => $emit('input', $event)"><TestField formKey="testKey"/></KtForm>`,
 }
 
+const TestForm2 = {
+	components: { KtForm, TestFieldObject },
+	template: `<KtForm v-bind="$attrs" @input="$event => $emit('input', $event)"><TestFieldObject formKey="testKey"/></KtForm>`,
+}
+
 const getField = (
 	wrapper: Wrapper<any>,
-): KottiField.Hook.Returns<string | null> =>
+): KottiField.Hook.Returns<string | object | null> =>
 	(wrapper.vm.$children[0].$children[0] as any).field
 
 describe('KtForm', () => {
@@ -79,7 +108,7 @@ describe('KtForm', () => {
 		it('should deepClone values before passing it to field, to prevent deep mutation madness', () => {
 			const DEEP_VALUE_REFERENCE = { deep: true }
 
-			const wrapper = mount(TestForm, {
+			const wrapper = mount(TestForm2, {
 				localVue,
 				propsData: {
 					value: { testKey: DEEP_VALUE_REFERENCE },
@@ -92,8 +121,8 @@ describe('KtForm', () => {
 			expect(field.currentValue).not.toBe(DEEP_VALUE_REFERENCE)
 		})
 
-		it('setValue updates reference, and doesn’t perform deep mutations', () => {
-			const VALUE_REFERENCE = { treatedAsImmutable: true }
+		it('setValue updates reference, and doesn’t perform deep mutations', async () => {
+			const VALUE_REFERENCE = { treatedAsImmutable: 'true', testKey: 'wow' }
 
 			const wrapper = mount(TestForm, {
 				localVue,
@@ -105,10 +134,11 @@ describe('KtForm', () => {
 			const field = getField(wrapper)
 
 			field.setValue('wowspin')
+			await wrapper.vm.$nextTick()
 
 			expect(wrapper.emitted().input[0][0]).not.toBe(VALUE_REFERENCE)
 			expect(wrapper.emitted().input[0][0]).toEqual({
-				treatedAsImmutable: true,
+				treatedAsImmutable: 'true',
 				testKey: 'wowspin',
 			})
 		})

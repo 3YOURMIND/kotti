@@ -18,19 +18,19 @@
 import { defineComponent, computed } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
-import { ktFieldProps } from '../kotti-field/constants'
+import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import KtCheckbox from './components/KtFieldCheckboxStyle.vue'
-import { KtFieldCheckboxProps } from './types'
+import { KottiFieldCheckbox } from './types'
 
 export default defineComponent({
 	name: 'KtFieldCheckbox',
 	components: { KtField, KtCheckbox },
 	props: {
-		...ktFieldProps,
+		...KOTTI_FIELD_PROPS,
 	},
-	setup(props: KtFieldCheckboxProps, { emit }) {
+	setup(props: KottiFieldCheckbox.Props, { emit }) {
 		const field = useField<boolean | null>({
 			emit,
 			isCorrectDataType: (value): value is boolean | null =>

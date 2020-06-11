@@ -1,17 +1,17 @@
 import { KottiField } from '../kotti-field/types'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface KtFieldCheckboxProps
-	extends KottiField.Props<boolean | null> {}
+export namespace KottiFieldCheckbox {
+	export type Props = KottiField.Props<boolean | null>
+}
 
-export namespace KtFieldCheckboxGroup {
+export namespace KottiFieldCheckboxGroup {
 	export type Entry = {
-		key: keyof KtFieldCheckboxGroup.Value
+		key: keyof Value
 		label: string
 	}
 
-	export interface Props extends KottiField.Props<KtFieldCheckboxGroup.Value> {
-		options: KtFieldCheckboxGroup.Entry[]
+	export type Props = KottiField.Props<Value> & {
+		options: Entry[]
 	}
 
 	export type Value = Record<string, boolean | null>

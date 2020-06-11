@@ -1,4 +1,6 @@
 import { KottiField } from '../kotti-field/types'
 
-export type KtFieldTextAreaProps = KottiField.Props<string | null> &
-	Pick<HTMLTextAreaElement, 'rows'>
+export namespace KottiFieldTextArea {
+	export type Props = KottiField.Props<string | null> &
+		Pick<HTMLTextAreaElement, 'rows'>
+}

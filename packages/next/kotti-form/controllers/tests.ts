@@ -5,7 +5,7 @@ import KtFormControllerObject from './KtFormControllerObject.vue'
 import { defineComponent } from '@vue/composition-api'
 import { KottiField } from '../../kotti-field/types'
 import { useField } from '../../kotti-field/hooks'
-import { ktFieldProps } from '../../kotti-field/constants'
+import { KOTTI_FIELD_PROPS } from '../../kotti-field/constants'
 import KtField from '../../kotti-field/KtField.vue'
 import { localVue } from '../../test-utils/index'
 import KtForm from '../KtForm.vue'
@@ -13,7 +13,7 @@ import KtForm from '../KtForm.vue'
 const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
-	props: ktFieldProps,
+	props: KOTTI_FIELD_PROPS,
 	setup: (props: KottiField.Props<string | null>, { emit }) => ({
 		field: useField({
 			emit,

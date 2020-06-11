@@ -73,26 +73,27 @@ import { defineComponent, computed, ref } from '@vue/composition-api'
 import { Select as ElSelect, Option as ElOption } from 'element-ui'
 
 import { KtField } from '../kotti-field'
-import { ktFieldProps } from '../kotti-field/constants'
+import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
-import { ktFieldSelectSharedProps } from './constants'
+import { KOTTI_FIELD_MULTI_SELECT_PROPS } from './constants'
 import { usePopperPlacementFix, usePopperWidthFix } from './hooks'
-import { KtFieldSelect } from './types'
+import { KottiFieldMultiSelect } from './types'
+
+type Entry = KottiFieldMultiSelect.Props['options'][0]
 
 export default defineComponent({
 	name: 'KtFieldMultiSelect',
 	components: { ElOption, ElSelect, KtField, ActionIcon },
 	props: {
-		...ktFieldProps,
-		...ktFieldSelectSharedProps,
-		collapseTagsAfter: { default: Number.MAX_SAFE_INTEGER, type: Number },
+		...KOTTI_FIELD_PROPS,
+		...KOTTI_FIELD_MULTI_SELECT_PROPS,
 	},
-	setup(props: KtFieldSelect.Multiple.Props, { emit }) {
-		const field = useField<KtFieldSelect.Multiple.Value>({
+	setup(props: KottiFieldMultiSelect.Props, { emit }) {
+		const field = useField<KottiFieldMultiSelect.Value>({
 			emit,
-			isCorrectDataType: (values): values is KtFieldSelect.Multiple.Value =>
+			isCorrectDataType: (values): values is KottiFieldMultiSelect.Value =>
 				Array.isArray(values) &&
 				values.every(
 					(value) =>
@@ -175,8 +176,8 @@ export default defineComponent({
 			),
 			isDropdownOpen,
 			ktFieldRef,
-			onChange: (values: KtFieldSelect.Multiple.Value) => {
-				const getOptionIndex = (value: KtFieldSelect.Shared.Entry['value']) =>
+			onChange: (values: KottiFieldMultiSelect.Value) => {
+				const getOptionIndex = (value: Entry['value']) =>
 					props.options.findIndex((option) => option.value === value)
 
 				const sortedValues = values.sort(
@@ -185,14 +186,14 @@ export default defineComponent({
 
 				field.setValue(sortedValues)
 			},
-			removeTag: (value: KtFieldSelect.Shared.Entry['value']) => {
+			removeTag: (value: Entry['value']) => {
 				field.setValue(field.currentValue.filter((v) => v !== value))
 			},
 			visibleSelectedOptions: computed(() => {
 				return field.currentValue
 					.filter((_, index) => index < props.collapseTagsAfter)
 					.map(
-						(value): KtFieldSelect.Shared.Entry => {
+						(value): Entry => {
 							const option = props.options.find(
 								(option) => option.value === value,
 							)

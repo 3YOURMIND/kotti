@@ -28,23 +28,24 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
-import { ktFieldProps } from '../kotti-field/constants'
+import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import KtCheckbox from './components/KtFieldCheckboxStyle.vue'
-import { KtFieldCheckboxGroup } from './types'
+import { KOTTI_FIELD_CHECKBOX_GROUP_PROPS } from './constants'
+import { KottiFieldCheckboxGroup } from './types'
 
 export default defineComponent({
 	name: 'KtFieldCheckboxGroup',
 	components: { KtField, KtCheckbox },
 	props: {
-		...ktFieldProps,
-		options: { required: true, type: Array },
+		...KOTTI_FIELD_PROPS,
+		...KOTTI_FIELD_CHECKBOX_GROUP_PROPS,
 	},
-	setup(props: KtFieldCheckboxGroup.Props, { emit }) {
-		const field = useField<KtFieldCheckboxGroup.Value>({
+	setup(props: KottiFieldCheckboxGroup.Props, { emit }) {
+		const field = useField<KottiFieldCheckboxGroup.Value>({
 			emit,
-			isCorrectDataType: (value): value is KtFieldCheckboxGroup.Value =>
+			isCorrectDataType: (value): value is KottiFieldCheckboxGroup.Value =>
 				typeof value === 'object' &&
 				value !== null &&
 				Object.values(value).every(
@@ -69,7 +70,7 @@ export default defineComponent({
 			field,
 			forceUpdateKey,
 			onChange: (
-				key: KtFieldCheckboxGroup.Entry['key'],
+				key: KottiFieldCheckboxGroup.Entry['key'],
 				event: { target: HTMLInputElement },
 			) => {
 				const newValue = event.target.checked

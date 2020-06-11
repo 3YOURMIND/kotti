@@ -4,7 +4,7 @@ import { KottiField } from './types'
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { defineComponent } from '@vue/composition-api'
 import { useField } from './hooks'
-import { ktFieldProps, FORM_KEY_NONE } from './constants'
+import { KOTTI_FIELD_PROPS, FORM_KEY_NONE } from './constants'
 import {
 	localVue,
 	forceVueToEvaluateComputedProperty,
@@ -14,12 +14,33 @@ import { KtFieldErrors } from './errors'
 
 const TestComponent = defineComponent({
 	name: 'TestComponent',
-	props: ktFieldProps,
+	props: KOTTI_FIELD_PROPS,
 	setup: (props: KottiField.Props<string | null>, { emit }) => ({
 		field: useField({
 			emit,
 			isCorrectDataType: (value): value is string | null =>
 				typeof value === 'string' || value === null,
+			isEmpty: (value) => value === null,
+			props,
+			supports: {
+				clear: true,
+				decoration: true,
+				placeholder: true,
+				tabIndex: true,
+			},
+		}),
+	}),
+	template: `<div></div>`,
+})
+
+const TestComponentObject = defineComponent({
+	name: 'TestComponentObject',
+	props: KOTTI_FIELD_PROPS,
+	setup: (props: KottiField.Props<object | null>, { emit }) => ({
+		field: useField({
+			emit,
+			isCorrectDataType: (value): value is object | null =>
+				value === null || typeof value === 'object',
 			isEmpty: (value) => value === null,
 			props,
 			supports: {
@@ -55,9 +76,12 @@ describe('useField', () => {
 	it('props.value gets deepCloned', async () => {
 		const VALUE_REFERENCE = { something: 'something' }
 
-		const wrapper = shallowMount(TestComponent, {
+		const wrapper = shallowMount(TestComponentObject, {
 			localVue,
-			propsData: { value: VALUE_REFERENCE },
+			propsData: {
+				label: 'Test_Component_Object',
+				value: VALUE_REFERENCE,
+			},
 		})
 
 		expect(wrapper.vm.field.currentValue).toEqual(VALUE_REFERENCE)
@@ -188,6 +212,8 @@ describe('useField', () => {
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
 				propsData: {
+					value: `as long as it has a value, or is Optional, validator
+					won't throw internal error about a missing required filed`,
 					validator: () => ({ type: 'success', text: 'Testing' }),
 				},
 			})
@@ -212,7 +238,11 @@ describe('useField', () => {
 		it('works with only validatorKey in a context', async () => {
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
-				propsData: { formKey: FORM_KEY_NONE, validatorKey: 'testKey1' },
+				propsData: {
+					formKey: FORM_KEY_NONE,
+					isOptional: true,
+					validatorKey: 'testKey1',
+				},
 				provide: {
 					[KT_FORM_CONTEXT]: getMockContext({
 						validators: {
@@ -242,7 +272,10 @@ describe('useField', () => {
 			expect(() =>
 				shallowMount(TestComponent, {
 					localVue,
-					propsData: { validatorKey: 'testKey' },
+					propsData: {
+						validatorKey: 'testKey',
+						value: 'field is not optional',
+					},
 				}),
 			).toThrowError(KtFieldErrors.InvalidPropOutsideOfContext)
 
@@ -278,7 +311,7 @@ describe('useField', () => {
 								text: 'This is testKey2',
 							}),
 						},
-						values: { value: { testKey: 'something' } },
+						values: { testKey1: 'something1', testKey2: 'something2' },
 					}),
 				},
 			})

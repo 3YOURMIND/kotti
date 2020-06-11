@@ -8,18 +8,18 @@
 import { defineComponent, computed } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
-import { ktFieldProps } from '../kotti-field/constants'
+import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
-import { KtFieldTextProps } from './types'
+import { KottiFieldText } from './types'
 
 export default defineComponent({
 	name: 'KtFieldText',
 	components: { KtField },
 	props: {
-		...ktFieldProps,
+		...KOTTI_FIELD_PROPS,
 	},
-	setup(props: KtFieldTextProps, { emit }) {
+	setup(props: KottiFieldText.Props, { emit }) {
 		const field = useField<string | null>({
 			emit,
 			isCorrectDataType: (value): value is string | null =>

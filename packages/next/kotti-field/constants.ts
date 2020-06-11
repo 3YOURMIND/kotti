@@ -3,7 +3,7 @@
  * ensures compatibility with the useField hook
  * @see {@link ./types.ts}
  */
-export const ktFieldProps = {
+export const KOTTI_FIELD_PROPS = {
 	formKey: { default: null, type: String },
 	helpText: { default: null, type: String },
 	hideClear: { default: false, type: Boolean },
