@@ -162,7 +162,8 @@ export default defineComponent({
 				const classes = ['kt-field__wrapper']
 
 				if (props.field.isDisabled) classes.push('kt-field__wrapper--disabled')
-				if (props.field.isSmall) classes.push('kt-field__wrapper--small')
+				if (props.field.size)
+					classes.push(`kt-field__wrapper--is-${props.field.size}`)
 
 				classes.push(
 					showValidation.value
@@ -202,6 +203,8 @@ export default defineComponent({
 		margin-bottom: 0.4rem;
 	}
 
+	@include sizes;
+
 	@include validation using ($type) {
 		/* stylelint-disable */
 		&:not(.kt-field__wrapper--disabled) {
@@ -217,21 +220,14 @@ export default defineComponent({
 
 			&:focus-within {
 				--support-no-validation-light: var(--interactive-05);
+
 				.kt-field__input-container {
 					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 					border-color: var(--support-#{$type}-light);
 				}
 			}
-			/* stylelint-enable */
 		}
-	}
-
-	&--small {
-		font-size: 0.9em;
-
-		.kt-field__input-container {
-			min-height: 1.6rem;
-		}
+		/* stylelint-enable */
 	}
 
 	&--disabled {
@@ -299,8 +295,8 @@ export default defineComponent({
 	&__input-container {
 		display: flex;
 		align-items: center;
-		min-height: 2rem;
 		padding: 0 0.8rem;
+
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
 
@@ -343,11 +339,10 @@ export default defineComponent({
 
 		// Icons (left or right)
 		&__icon {
-			font-size: 1rem;
 			color: var(--icon-02);
-
 			.yoco {
 				display: flex;
+				font-size: 1.1em;
 			}
 
 			&--left {

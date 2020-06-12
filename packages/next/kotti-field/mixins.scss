@@ -1,9 +1,37 @@
+@use "sass:map";
+
 @mixin validation {
 	$types: 'error', 'warning', 'success', 'no-validation';
 
 	@each $type in $types {
 		&.kt-field__wrapper--#{$type} {
 			@content ($type);
+		}
+	}
+}
+
+@mixin sizes {
+	$fontSizes: (
+		'small': var(--font-size-small),
+		'medium': var(--font-size-medium),
+		'large': var(--font-size-large),
+	);
+
+	$heights: (
+		'small': 1.6rem,
+		'medium': 2rem,
+		'large': 2.4rem,
+	);
+
+	@each $type in 'small', 'medium', 'large' {
+		&--is-#{$type} {
+			/* stylelint-disable */
+			font-size: map.get($fontSizes, $type);
+
+			.kt-field__input-container {
+				min-height: map.get($heights, $type);
+			}
+			/* stylelint-enable */
 		}
 	}
 }

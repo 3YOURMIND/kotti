@@ -213,7 +213,7 @@ export const useField = <DATA_TYPE>({
 		isEmpty: computed(() => isEmpty(currentValue.value)),
 		isLoading,
 		isOptional: computed(() => props.isOptional),
-		isSmall: computed(() => props.isSmall),
+		size: computed(() => props.size),
 		label: computed(() => props.label),
 		leftIcon: computed(() => props.leftIcon),
 		placeholder: computed(() => props.placeholder),

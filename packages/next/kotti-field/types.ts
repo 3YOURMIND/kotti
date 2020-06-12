@@ -48,7 +48,7 @@ export namespace KottiField {
 			isEmpty: Ref<boolean>
 			isLoading: Ref<KottiForm.Props['isLoading']>
 			isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
-			isSmall: Ref<KottiField.Props<DATA_TYPE>['isSmall']>
+			size: Ref<KottiField.Props<DATA_TYPE>['size']>
 			label: Ref<KottiField.Props<DATA_TYPE>['label']>
 			leftIcon: Ref<KottiField.Props<DATA_TYPE>['leftIcon']>
 			placeholder: Ref<KottiField.Props<DATA_TYPE>['placeholder']>
@@ -100,7 +100,6 @@ export namespace KottiField {
 		isDisabled: boolean
 		isLoading: boolean
 		isOptional: boolean
-		isSmall: boolean
 		label: string | null
 		placeholder: string | null
 
@@ -108,6 +107,7 @@ export namespace KottiField {
 		 * Show some string before the field
 		 */
 		prefix: string | null
+		size: 'small' | 'medium' | 'large'
 
 		/**
 		 * Show some string after the field
