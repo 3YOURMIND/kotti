@@ -155,9 +155,3 @@ export default defineComponent({
 	},
 })
 </script>
-<style lang="scss">
-.el-select-dropdown.el-popper[x-placement^='bottom'],
-.el-select-dropdown.el-popper.is-multiple[x-placement^='bottom'] {
-	margin-top: 0.4rem;
-}
-</style>
