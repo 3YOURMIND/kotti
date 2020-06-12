@@ -1362,6 +1362,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@metatypes/units@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@metatypes/units/-/units-0.4.0.tgz#6135a5ce92f0f54412424dd01c5d00d6ec32d8a5"
+  integrity sha512-Oo8qHVQiDbPQ5I4mk735WiigJ0I1x72KhsK812NVtBrosm0smBg21evv8pCN3H/pBoDT8IhEAX7lL4ANTYCD8A==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
