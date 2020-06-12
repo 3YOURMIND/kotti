@@ -16,9 +16,9 @@
 			</div>
 		</div>
 		<div
-			:style="`--height: ${contentHeight}px`"
-			:class="isOpen ? 'is-open' : 'is-close'"
 			class="accordion__content"
+			:class="isOpen ? 'is-open' : 'is-close'"
+			:style="`--height: ${contentHeight}px`"
 			@click="setHeight"
 		>
 			<div ref="contentInner" class="inner">

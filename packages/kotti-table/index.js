@@ -1,8 +1,8 @@
+import { TableColumnsStateMixin } from './src/mixins'
 import KtTable from './src/Table'
 import KtTableColumn from './src/TableColumn'
-import KtTableProvider from './src/TableProvider'
 import KtTableConsumer from './src/TableConsumer'
-import { TableColumnsStateMixin } from './src/mixins'
+import KtTableProvider from './src/TableProvider'
 
 KtTable.install = function(Vue) {
 	Vue.component(KtTable.name, KtTable)

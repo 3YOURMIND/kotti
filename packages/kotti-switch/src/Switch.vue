@@ -2,7 +2,7 @@
 	<div class="form-group">
 		<label class="form-label" v-text="label" />
 		<label :class="switchClass">
-			<input type="checkbox" :checked="checkboxValue" @change="handleChange" />
+			<input :checked="checkboxValue" type="checkbox" @change="handleChange" />
 			<i class="form-icon" />
 			<span v-if="!$slots.default" v-text="switchMessage" />
 			<slot />

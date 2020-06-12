@@ -1,5 +1,5 @@
-import TableCell from './TableRowCell'
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
+import TableCell from './TableRowCell'
 
 export default {
 	name: 'KtTableRow',

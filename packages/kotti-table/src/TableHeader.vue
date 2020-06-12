@@ -5,10 +5,10 @@
 			<th v-if="isSelectable" class="th-selectable kt-table__checkbox-col">
 				<div class="form-group">
 					<label class="form-checkbox">
-						<input type="checkbox" :checked="isAllSelected" />
+						<input :checked="isAllSelected" type="checkbox" />
 						<i
-							:style="isAllRowsDisabled ? { cursor: 'not-allowed' } : {}"
 							class="form-icon"
+							:style="isAllRowsDisabled ? { cursor: 'not-allowed' } : {}"
 						></i>
 					</label>
 					<div
@@ -21,14 +21,14 @@
 				v-for="(column, columnIndex) in tableColumns"
 				:key="column.prop"
 				:class="getThClasses(column)"
-				:style="getThStyle(column)"
 				:draggable="isDraggable"
+				:style="getThStyle(column)"
 				@click="handleThClick(column)"
-				@dragstart="dragStart($event, column)"
-				@dragenter="dragEnter($event, column)"
 				@dragend="dragEnd"
-				@drop="drop($event, column)"
+				@dragenter="dragEnter($event, column)"
 				@dragover.prevent
+				@dragstart="dragStart($event, column)"
+				@drop="drop($event, column)"
 			>
 				<div
 					:class="[
@@ -59,8 +59,8 @@
 	</thead>
 </template>
 <script>
-import TableHeaderCell from './TableHeaderCell'
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
+import TableHeaderCell from './TableHeaderCell'
 
 export default {
 	name: 'KtTableHeader',

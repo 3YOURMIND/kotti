@@ -1,6 +1,6 @@
 <template>
 	<div class="comment-reply">
-		<KtAvatar small :src="userAvatar" class="comment-reply__avatar" />
+		<KtAvatar class="comment-reply__avatar" small :src="userAvatar" />
 		<div class="comment-reply__wrapper">
 			<div class="comment-reply__info">
 				<div class="comment-reply__name" v-text="userName" />
@@ -12,9 +12,11 @@
 					class="comment-reply__message"
 					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
+					<!-- eslint-disable vue/no-v-html -->
 					<span
 						v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 					/>
+					<!-- eslint-enable vue/no-v-html -->
 					<i class="yoco" v-text="'comment'" />
 				</div>
 				<div v-else class="comment-inline-edit form-group">
@@ -44,6 +46,7 @@
 
 <script>
 import escape from 'lodash/escape'
+
 import KtAvatar from '../../kotti-avatar'
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group'
@@ -93,7 +96,7 @@ export default {
 		handleConfirm() {
 			this.isInlineEdit = false
 			if (!this.inlineMessageValue) return
-			let _payload = {
+			const _payload = {
 				message: this.inlineMessageValue,
 				id: this.id,
 			}

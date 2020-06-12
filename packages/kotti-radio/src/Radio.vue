@@ -1,6 +1,6 @@
 <template>
 	<label class="form-radio">
-		<input v-model="model" :name="radioName" :value="value" type="radio" />
+		<input v-model="model" :name="radioName" type="radio" :value="value" />
 		<i class="form-icon" />
 		<slot v-if="$slots.default" />
 		<span v-else v-text="label" />

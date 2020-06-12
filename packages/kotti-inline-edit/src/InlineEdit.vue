@@ -1,24 +1,26 @@
 <template>
 	<div :class="objectClass">
 		<label class="form-label" v-text="label" />
+		<!-- eslint-disable vue/no-v-html -->
 		<div
 			v-if="!editMode"
 			:class="representTextClass"
 			@click="editMode = true"
 			v-html="postParser(dangerouslyOverrideParser(representValue))"
 		/>
+		<!-- eslint-enable vue/no-v-html -->
 		<div v-else>
 			<component
 				:is="inputComponent"
 				v-bind="$attrs"
-				:value="currentValue"
 				class="form-input"
 				type="text"
+				:value="currentValue"
 				@change="handleChange"
 				@input="handleInput"
 				v-text="currentValue"
 			/>
-			<KtButtonGroup shadow class="inline-edit__edit-buttons">
+			<KtButtonGroup class="inline-edit__edit-buttons" shadow>
 				<KtButton icon="close" @click="handleDismiss" />
 				<KtButton icon="check" @click="handleConfirm" />
 			</KtButtonGroup>
@@ -27,6 +29,7 @@
 </template>
 <script>
 import escape from 'lodash/escape'
+
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group'
 

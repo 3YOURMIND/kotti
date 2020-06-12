@@ -1,5 +1,5 @@
-import KtDatePicker from './src/DatePicker'
 import KtDateInput from './src/DateInput'
+import KtDatePicker from './src/DatePicker'
 
 KtDatePicker.install = function(Vue) {
 	Vue.component(KtDateInput.name, KtDateInput)

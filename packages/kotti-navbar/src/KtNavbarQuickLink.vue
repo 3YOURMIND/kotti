@@ -6,8 +6,8 @@
 			:key="index"
 			class="kt-navbar-quick-links__link"
 			:href="item.link"
-			target="_blank"
 			rel="noopener noreferrer"
+			target="_blank"
 		>
 			<span v-if="!isNarrow" v-text="item.title" /> <i class="yoco">link</i>
 		</a>

@@ -6,12 +6,12 @@
 		<KtAvatar
 			v-for="(item, index) in visibleItems"
 			:key="index"
-			:name="item.name"
-			:src="item.src"
 			:hoverable="hoverable"
+			:name="item.name"
 			:selected="item.selected"
-			:small="item.small"
 			:showTooltip="showTooltip"
+			:small="item.small"
+			:src="item.src"
 		/>
 	</div>
 </template>

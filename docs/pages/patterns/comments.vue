@@ -173,6 +173,7 @@ import escape from 'lodash/escape'
 export default {
 	name: 'KtCommentDoc',
 	data() {
+		/* eslint-disable sonarjs/no-duplicate-string */
 		return {
 			currentUuid: '',
 			currentUser: {
@@ -238,6 +239,7 @@ export default {
 				},
 			],
 		}
+		/* eslint-enable sonarjs/no-duplicate-string */
 	},
 	computed: {
 		replyName() {
@@ -257,14 +259,15 @@ export default {
 		handleSubmit(payload) {
 			const _message = {
 				...this.currentUser,
+				// eslint-disable-next-line no-magic-numbers
 				id: Math.floor(Math.random() * 101),
 				message: payload.message,
 				createdTime: new Date().toDateString(),
 				replies: [],
 			}
-			const parentComment = this.comments.find((comment) => {
-				return comment.id === payload.parentId
-			})
+			const parentComment = this.comments.find(
+				(comment) => comment.id === payload.parentId,
+			)
 			if (parentComment) {
 				parentComment.replies.push(_message)
 				return
@@ -273,7 +276,7 @@ export default {
 		},
 		handelDelete(payload) {
 			if (payload.parentId) {
-				let parentComment = this.comments.find(
+				const parentComment = this.comments.find(
 					(comment) => comment.id === payload.parentId,
 				)
 				parentComment.replies = parentComment.replies.filter(

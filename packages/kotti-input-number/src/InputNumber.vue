@@ -6,12 +6,12 @@
 		<div :class="middleClasses" @click="$refs.input.focus()">
 			<input
 				ref="input"
-				type="text"
 				:class="inputClasses"
 				:disabled="disabled"
 				:max="max"
 				:min="min"
 				:step="step"
+				type="text"
 				:value="internalStringValue"
 				@blur="handleBlur"
 				@input="handleInput($event.target.value)"

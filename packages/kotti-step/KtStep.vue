@@ -81,6 +81,7 @@ export default {
 			}
 		},
 		lineStyle() {
+			// eslint-disable-next-line no-magic-numbers
 			const lightBrandColor = color(this.KtTheme.brandColor).lighten(0.5)
 			if (this.currentStatus === 'finished' || this.currentStatus === null)
 				return {
@@ -91,6 +92,7 @@ export default {
 				return {
 					background: `linear-gradient(${this.KtTheme.brandColor}, ${lightBrandColor},${this.KtTheme.brandColor})`,
 				}
+
 			return ''
 		},
 	},

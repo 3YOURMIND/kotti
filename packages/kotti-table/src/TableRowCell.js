@@ -1,4 +1,5 @@
 import property from 'lodash/property'
+
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
 
 export default {

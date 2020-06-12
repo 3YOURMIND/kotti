@@ -1,23 +1,23 @@
 <template>
 	<div class="kt-dropdown-button">
 		<KtPopover
-			:disabled="disabled"
-			:size="size"
 			v-bind="$attrs"
+			:disabled="disabled"
 			:placement="placement"
+			:size="size"
 		>
 			<KtButtonGroup>
 				<KtButton
-					:disabled="disabled"
-					class="kt-dropdown-button__button"
 					v-bind="$attrs"
+					class="kt-dropdown-button__button"
+					:disabled="disabled"
 				>
 					<slot>Dropdown Text</slot>
 				</KtButton>
 				<KtButton
-					:disabled="disabled"
-					class="kt-dropdown-button__icon"
 					v-bind="$attrs"
+					class="kt-dropdown-button__icon"
+					:disabled="disabled"
 					:icon="dropdownIcon"
 				>
 					<i class="yoco" v-text="dropdownIcon" />

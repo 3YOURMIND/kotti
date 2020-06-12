@@ -4,6 +4,7 @@
 			<li
 				v-for="(breadcrumb, index) in breadcrumbs"
 				:key="index"
+				class="breadcrumb__text"
 				:class="textClasses(breadcrumb)"
 			>
 				<span @click="handleClick(breadcrumb)" v-text="breadcrumb.title" />
@@ -45,7 +46,6 @@ export default {
 		},
 		textClasses(item) {
 			return {
-				breadcrumb__text: true,
 				'breadcrumb__text--completed': item.isCompleted,
 			}
 		},

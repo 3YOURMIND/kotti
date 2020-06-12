@@ -9,8 +9,8 @@
 			<a
 				v-for="(link, linkIndex) in item.links"
 				:key="linkIndex"
-				:class="{ active: link.isActive }"
 				class="kt-navbar-menu__item"
+				:class="{ active: link.isActive }"
 				:href="link.link ? link.link : null"
 				@click="$emit('menuLinkClick', link)"
 			>

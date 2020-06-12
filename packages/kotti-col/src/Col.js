@@ -33,8 +33,8 @@ export default {
 		},
 	},
 	render(h) {
-		let classList = []
-		let style = {}
+		const classList = []
+		const style = {}
 
 		if (this.space.gutter) {
 			style.paddingLeft = this.space.gutter / 2 + 'px'
@@ -58,7 +58,7 @@ export default {
 			if (typeof this[size] === 'number') {
 				classList.push(`kt-col-${size}-${this[size]}`)
 			} else if (typeof this[size] === 'object') {
-				let props = this[size]
+				const props = this[size]
 				Object.keys(props).forEach((prop) => {
 					classList.push(
 						prop !== 'span'

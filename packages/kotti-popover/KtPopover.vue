@@ -8,28 +8,26 @@
 			<slot>Anchor</slot>
 		</div>
 		<div v-if="showPopper" ref="content" :class="popperClass">
-			<slot name="content" :close="handleClickaway">
+			<slot :close="handleClickaway" name="content">
 				{{ content }}
 			</slot>
 		</div>
 	</div>
 </template>
+
 <script>
 import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
+
 export default {
 	name: 'KtPopover',
 	mixins: [clickaway],
 	props: {
-		placement: { type: String, default: 'bottom' },
-		size: { type: String, default: null },
-		content: { type: String, default: '' },
-		options: { type: Object, default: () => {} },
-		forceShowPopover: {
-			type: Boolean,
-			required: false,
-			default: null,
-		},
+		content: { default: '', type: String },
+		forceShowPopover: { default: null, type: Boolean },
+		options: { default: () => ({}), type: Object },
+		placement: { default: 'bottom', type: String },
+		size: { default: null, type: String },
 	},
 	data() {
 		return {
@@ -86,7 +84,7 @@ export default {
 			this.showPopper = false
 		},
 		initPopper() {
-			let propsOptions = {
+			const propsOptions = {
 				placement: this.placement,
 				modifiers: [
 					{
@@ -99,6 +97,7 @@ export default {
 					{
 						name: 'offset',
 						options: {
+							// eslint-disable-next-line no-magic-numbers
 							offset: [0, 8],
 						},
 					},
@@ -111,8 +110,10 @@ export default {
 					},
 				],
 			}
-			let options = { ...options, ...propsOptions }
-			this.popper = createPopper(this.$refs.anchor, this.$refs.content, options)
+
+			this.popper = createPopper(this.$refs.anchor, this.$refs.content, {
+				...propsOptions,
+			})
 		},
 		destroyPopper() {
 			if (this.forceShowPopoverIsNull && this.popper) {
@@ -142,21 +143,27 @@ export default {
 	background: #fff;
 	border-radius: $border-radius;
 	box-shadow: $box-shadow;
+
 	&--sm {
 		width: 12rem;
 	}
+
 	&--md {
 		width: 16rem;
 	}
+
 	&--lg {
 		width: 20rem;
 	}
+
 	&--xl {
 		width: 24rem;
 	}
+
 	&--xxl {
 		width: 28rem;
 	}
+
 	&--xxxl {
 		width: 32rem;
 	}

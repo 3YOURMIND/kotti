@@ -4,6 +4,15 @@ export const defaultState = {
 	enabledRows: [],
 	isAllRowsDisabled: false,
 }
+export function getDisabledRows(rows, disableRow) {
+	return rows.filter((row, rowIndex) => {
+		return disableRow ? disableRow({ row, rowIndex }) : false
+	})
+}
+
+export function getEnabledRows(rows, disableRow) {
+	return getDisabledRows(rows, negate(disableRow))
+}
 
 export const mutations = {
 	updateDisabledRows({ state, table }) {
@@ -18,14 +27,4 @@ export const getters = {
 			state.rows.length === getDisabledRows(state.rows, this.table.disableRow)
 		)
 	},
-}
-
-export function getDisabledRows(rows, disableRow) {
-	return rows.filter((row, rowIndex) => {
-		return disableRow ? disableRow({ row, rowIndex }) : false
-	})
-}
-
-export function getEnabledRows(rows, disableRow) {
-	return getDisabledRows(rows, negate(disableRow))
 }

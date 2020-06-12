@@ -7,13 +7,13 @@
 
 <div class="form-group">
 	<label class="form-label" for="input-example-1">Name</label>
-	<input type="text" class="form-input" placeholder="Add your name">
+	<input type="text" class="form-input" placeholder="Add your name" />
 </div>
 
 ```html
 <div class="form-group">
 	<label class="form-label" for="input-example-1">Name</label>
-	<input type="text" class="form-input" placeholder="Add your name">
+	<input type="text" class="form-input" placeholder="Add your name" />
 </div>
 ```
 
@@ -43,12 +43,12 @@
 <div class="form-group">
 	<label class="form-label">Gender</label>
 	<label class="form-radio">
-		<input type="radio" name="gender" checked>
-		<i class="form-icon"></i> Male
+		<input type="radio" name="gender" checked />
+		<i class="form-icon" /> Male
 	</label>
 	<label class="form-radio">
-		<input type="radio" name="gender">
-		<i class="form-icon"></i> Female
+		<input type="radio" name="gender" />
+		<i class="form-icon" /> Female
 	</label>
 </div>
 
@@ -56,12 +56,12 @@
 <div class="form-group">
 	<label class="form-label">Gender</label>
 	<label class="form-radio">
-		<input type="radio" name="gender" checked>
-		<i class="form-icon"></i> Male
+		<input type="radio" name="gender" checked />
+		<i class="form-icon" /> Male
 	</label>
 	<label class="form-radio">
-		<input type="radio" name="gender">
-		<i class="form-icon"></i> Female
+		<input type="radio" name="gender" />
+		<i class="form-icon" /> Female
 	</label>
 </div>
 ```
@@ -71,30 +71,30 @@
 
 <div class="form-group">
 	<label class="form-switch">
-		<input type="checkbox">
-		<i class="form-icon"></i> Send me emails with news and tips
+		<input type="checkbox" />
+		<i class="form-icon" /> Send me emails with news and tips
 	</label>
 </div>
 
 <div class="form-group">
 	<label class="form-switch form-switch-right w-100">
-		<input type="checkbox">
-		<i class="form-icon"></i> Switch is on the right side
+		<input type="checkbox" />
+		<i class="form-icon" /> Switch is on the right side
 	</label>
 </div>
 
 ```html
 <div class="form-group">
 	<label class="form-switch">
-		<input type="checkbox">
-		<i class="form-icon"></i> Send me emails with news and tips
+		<input type="checkbox" />
+		<i class="form-icon" /> Send me emails with news and tips
 	</label>
 </div>
 
 <div class="form-group">
 	<label class="form-switch form-switch-right w-100">
-		<input type="checkbox">
-		<i class="form-icon"></i> Switch is on the right side
+		<input type="checkbox" />
+		<i class="form-icon" /> Switch is on the right side
 	</label>
 </div>
 ```
@@ -103,16 +103,16 @@
 
 <div class="form-group">
 	<label class="form-checkbox">
-		<input type="checkbox">
-		<i class="form-icon"></i> Remember me
+		<input type="checkbox" />
+		<i class="form-icon" /> Remember me
 	</label>
 </div>
 
 ```html
 <div class="form-group">
 	<label class="form-checkbox">
-		<input type="checkbox">
-		<i class="form-icon"></i> Remember me
+		<input type="checkbox" />
+		<i class="form-icon" /> Remember me
 	</label>
 </div>
 ```
@@ -126,7 +126,7 @@ use an add-on input to indicate that system has already pre-input this value.
 	<label class="form-label" for="input-example-1">Price</label>
 	<div class="input-group">
 		<span class="input-group-addon">$</span>
-		<input type="text" class="form-input" placeholder="...">
+		<input type="text" class="form-input" placeholder="..." />
 	</div>
 </div>
 
@@ -135,7 +135,7 @@ use an add-on input to indicate that system has already pre-input this value.
 	<label class="form-label" for="input-example-1">Price</label>
 	<div class="input-group">
 		<span class="input-group-addon">$</span>
-		<input type="text" class="form-input" placeholder="...">
+		<input type="text" class="form-input" placeholder="..." />
 	</div>
 </div>
 ```
@@ -146,12 +146,12 @@ There are three types of validation: `is-error`, `is-success` and `is-warning`.
 
 <div class="form-group is-error">
 	<label class="form-label">Name</label>
-	<input class="form-input" type="text" placeholder="Search 3D Project">
+	<input class="form-input" type="text" placeholder="Search 3D Project" />
 </div>
 
 <div class="form-group">
 	<label class="form-label">Email</label>
-	<input class="form-input" type="email" placeholder="Non email text will be invalid" value="Change to email address">
+	<input class="form-input" type="email" placeholder="Non email text will be invalid" value="Change to email address" />
 </div>
 
 <div class="form-group is-success">
@@ -165,19 +165,19 @@ There are three types of validation: `is-error`, `is-success` and `is-warning`.
 <div class="form-group is-warning">
 	<label class="form-label">Gender</label>
 	<label class="form-radio">
-		<input type="radio" name="gender" checked>
-		<i class="form-icon"></i> Male
+		<input type="radio" name="gender" checked />
+		<i class="form-icon" /> Male
 	</label>
 	<label class="form-radio">
-		<input type="radio" name="gender">
-		<i class="form-icon"></i> Female
+		<input type="radio" name="gender" />
+		<i class="form-icon" /> Female
 	</label>
 </div>
 
 ```html
 <div class="form-group is-error">
 	<label class="form-label">Name</label>
-	<input class="form-input" type="text" placeholder="Search 3D Project">
+	<input class="form-input" type="text" placeholder="Search 3D Project" />
 </div>
 <div class="form-group is-success">
 	...
@@ -196,7 +196,7 @@ You can add icon to `input` and `select` elements by adding `has-icon-left` or `
 	<div class="column col-6">
 		<div class="form-group">
 			<div class="has-icon-right">
-				<input class="form-input" type="text" placeholder="Search 3D Project">
+				<input class="form-input" type="text" placeholder="Search 3D Project" />
 				<i class="form-icon yoco">search</i>
 			</div>
 		</div>
@@ -218,7 +218,7 @@ You can add icon to `input` and `select` elements by adding `has-icon-left` or `
 ```html
 <div class="form-group">
 	<div class="has-icon-right">
-		<input class="form-input" type="text" placeholder="Search 3D Project">
+		<input class="form-input" type="text" placeholder="Search 3D Project" />
 		<i class="form-icon yoco">search</i>
 	</div>
 </div>
@@ -226,44 +226,43 @@ You can add icon to `input` and `select` elements by adding `has-icon-left` or `
 
 ## From Disabled
 
-Add the `disabled` attribute to the element or `<fieldset>` for a disabled form components style.
+Add the `disabled` attribute to the element or `<fieldset />` for a disabled form components style.
 
 <fieldset disabled>
-<div class="form-group">
-	<label class="form-label" for="input-example-1">Name</label>
-	<input type="text" class="form-input" placeholder="Add your name">
-</div>
-<div class="form-group">
-	<label class="form-label">options</label>
-	<select class="form-select disabled">
-		<option>Default options</option>
-		<option>Second options</option>
-	</select>
-</div>
-<div class="form-group">
-	<label class="form-checkbox disabled">
-		<input type="checkbox">
-		<i class="form-icon"></i> Remember me
-	</label>
-</div>
-<div class="form-group">
-	<label class="form-label">Gender</label>
-	<label class="form-radio disabled">
-		<input type="radio" name="gender" disabled checked>
-		<i class="form-icon"></i> Male
-	</label>
-	<label class="form-radio disabled">
-		<input type="radio" name="gender">
-		<i class="form-icon"></i> Female
-	</label>
-</div>
-<div class="form-group ">
-	<label class="form-switch disabled">
-		<input type="checkbox">
-		<i class="form-icon"></i> Send me emails with news and tips
-	</label>
-</div>
-
+	<div class="form-group">
+		<label class="form-label" for="input-example-1">Name</label>
+		<input type="text" class="form-input" placeholder="Add your name" />
+	</div>
+	<div class="form-group">
+		<label class="form-label">options</label>
+		<select class="form-select disabled">
+			<option>Default options</option>
+			<option>Second options</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label class="form-checkbox disabled">
+			<input type="checkbox" />
+			<i class="form-icon" /> Remember me
+		</label>
+	</div>
+	<div class="form-group">
+		<label class="form-label">Gender</label>
+		<label class="form-radio disabled">
+			<input type="radio" name="gender" disabled checked />
+			<i class="form-icon" /> Male
+		</label>
+		<label class="form-radio disabled">
+			<input type="radio" name="gender" />
+			<i class="form-icon" /> Female
+		</label>
+	</div>
+	<div class="form-group">
+		<label class="form-switch disabled">
+			<input type="checkbox" />
+			<i class="form-icon" /> Send me emails with news and tips
+		</label>
+	</div>
 </fieldset>
 
 ```html

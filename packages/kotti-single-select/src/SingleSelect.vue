@@ -2,20 +2,20 @@
 	<div class="selects">
 		<div class="form-group">
 			<label v-if="hasLabel" :class="formLabelClass" v-text="labelRep" />
-			<div :class="{ 'has-icon-left': icon }" class="has-icon-right">
+			<div class="has-icon-right" :class="{ 'has-icon-left': icon }">
 				<input
 					ref="input"
 					v-model="selectedLabel"
+					v-bind="$attrs"
 					:class="formInputClass"
 					:disabled="disabled"
 					:placeholder="placeholder"
 					:required="required"
-					v-bind="$attrs"
 					type="text"
-					@input="handleInputChange($event.target.value)"
-					@focus="handleInputFocus"
-					@keydown.esc.stop.prevent="visible = false"
 					@click.stop="show"
+					@focus="handleInputFocus"
+					@input="handleInputChange($event.target.value)"
+					@keydown.esc.stop.prevent="visible = false"
 				/>
 				<i
 					v-if="icon"
@@ -32,8 +32,8 @@
 					<template v-if="visible">
 						<div
 							v-on-clickaway="handleClickOutside"
-							:style="selectorOptionStyle"
 							class="kt-select-options"
+							:style="selectorOptionStyle"
 						>
 							<ul>
 								<li
@@ -65,8 +65,9 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
-import { Portal } from '../../util/portal'
+
 import { isBrowser } from '../../util'
+import { Portal } from '../../util/portal'
 
 export default {
 	name: 'KtSelect',

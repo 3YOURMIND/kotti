@@ -48,7 +48,7 @@ export default {
 		}
 	},
 	methods: {
-		renderColor(h, { value, row, rowIndex, column, columnIndex }) {
+		renderColor(h, { row }) {
 			const color = baseColorsFactory.object[row.reference]
 			if (!color) return 'No color'
 			return (
@@ -57,7 +57,7 @@ export default {
 				</div>
 			)
 		},
-		renderColorVar(h, { value, row, rowIndex, column, columnIndex }) {
+		renderColorVar(h, { value }) {
 			return <code>--{value}</code>
 		},
 	},
