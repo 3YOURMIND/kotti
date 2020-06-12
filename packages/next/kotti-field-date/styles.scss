@@ -33,11 +33,14 @@
 				.el-input__suffix {
 					display: flex;
 					align-items: center;
-					font-size: 1rem;
+					font-size: 1.1em;
 					color: var(--icon-02);
 					cursor: pointer;
 
 					i {
+						display: flex;
+						align-items: center;
+						justify-content: center;
 						line-height: unset;
 					}
 				}
@@ -189,6 +192,7 @@
 		.el-picker-panel {
 			&__sidebar {
 				display: flex;
+				flex-wrap: wrap;
 				justify-content: flex-start;
 				padding: 0 1rem;
 				border-top: 1px solid var(--ui-02);
@@ -223,7 +227,7 @@
 				$td-diameter: 1.5rem;
 				$icon-size: 1.3rem;
 				$double-chevron-translate: 1rem;
-				$month-font-size: 1.3rem;
+				$month-font-size: 1.2rem;
 				$label-font-size: 1.1rem;
 
 				.el-date-picker__header {
@@ -256,6 +260,8 @@
 
 					// styles specific to el-date-picker header
 					&:not(.el-date-picker__header--bordered) {
+						position: relative;
+
 						button.el-icon-d-arrow-left {
 							@supports (clip-path: inset(50% 10% 0% 10%)) {
 								clip-path: inset(50% 10% 0% 10%);
@@ -276,9 +282,8 @@
 							&:first-of-type {
 								margin-top: 0.5 * $label-font-size;
 								margin-right: auto;
+
 								color: var(--text-02);
-								// longest month is 8 chars long
-								transform: translateX(calc(-8 * #{$month-font-size} - 5px));
 
 								// clips a box shape with radius 0 from the top by 50%
 								// transforming the year that's preceded by a line break means that
@@ -300,9 +305,8 @@
 							}
 
 							&:last-of-type {
-								@supports (clip-path: inset(0% 0% 50% 0%)) {
-									clip-path: inset(0% 0% 50% 0%);
-								}
+								position: absolute;
+								left: 0;
 							}
 						}
 					}
@@ -319,11 +323,9 @@
 
 						&:last-of-type {
 							display: flex;
+							flex: 1;
 							-webkit-order: 1;
 							order: 1;
-							width: calc(
-								8 * #{$month-font-size} + 5px
-							); // longest month has 8 chars
 
 							font-size: $month-font-size;
 							text-transform: uppercase;
