@@ -107,7 +107,7 @@ export default defineComponent({
 }
 
 .kt-field__wrapper {
-	@include validation using ($type) {
+	@include validations using ($type) {
 		&:not(.kt-field__wrapper--disabled) {
 			@if $type != no-validation {
 				/* stylelint-disable */

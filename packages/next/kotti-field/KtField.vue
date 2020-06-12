@@ -205,7 +205,7 @@ export default defineComponent({
 
 	@include sizes;
 
-	@include validation using ($type) {
+	@include validations using ($type) {
 		/* stylelint-disable */
 		&:not(.kt-field__wrapper--disabled) {
 			@if $type != no-validation {

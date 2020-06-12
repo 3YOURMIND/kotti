@@ -140,7 +140,7 @@ export default defineComponent({
 }
 
 .kt-field__wrapper {
-	@include validation using ($type) {
+	@include validations using ($type) {
 		@if $type != no-validation {
 			&:not(.kt-field__wrapper--disabled) {
 				.kt-field-radio-group__wrapper {

@@ -1,6 +1,6 @@
 @use "sass:map";
 
-@mixin validation {
+@mixin validations {
 	$types: 'error', 'warning', 'success', 'no-validation';
 
 	@each $type in $types {
