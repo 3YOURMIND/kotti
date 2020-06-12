@@ -1,7 +1,7 @@
 /*
-// This file is auto generated
-// PLEASE DO NOT EDIT
-// Run `yarn tokens` to egenrate again
+	This file is auto generated
+	PLEASE DO NOT EDIT
+	Run `yarn tokens` to generate again
 */
 
 :root {
@@ -47,7 +47,6 @@
 	--orange-50: #ff9333;
 	--orange-60: #ff7800;
 	--orange-70: #ba6820;
-
 	--ui-background: var(--white);
 	--ui-01: var(--gray-10);
 	--ui-02: var(--gray-20);

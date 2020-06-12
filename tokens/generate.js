@@ -1,21 +1,23 @@
-import { tokens, baseColors } from './colors'
-import { arrayToCustomProperties, objectToArray } from './utilities'
 import fs from 'fs'
 
+import { tokens, baseColors } from './colors'
+import { arrayToCustomProperties, objectToArray } from './utilities'
+
 // get CSS
-let output = `
+const output = `
 /*
-// This file is auto generated
-// PLEASE DO NOT EDIT
-// Run \`yarn tokens\` to egenrate again
+	This file is auto generated
+	PLEASE DO NOT EDIT
+	Run \`yarn tokens\` to generate again
 */
 
 :root{
-${arrayToCustomProperties(objectToArray(baseColors), 'color')}
-${arrayToCustomProperties(tokens)}
+	${arrayToCustomProperties(objectToArray(baseColors), 'color')}
+	${arrayToCustomProperties(tokens)}
 }`
 
 // Write it
-fs.writeFile('./packages/kotti-style/tokens.css', output, err => {
+fs.writeFile('./packages/kotti-style/tokens.css', output, (err) => {
+	// eslint-disable-next-line no-console
 	err ? console.log(err) : console.log('File written')
 })

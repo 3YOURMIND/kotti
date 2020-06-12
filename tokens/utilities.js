@@ -1,31 +1,20 @@
-export const arrayToCustomProperties = (colors, type = 'reference') => {
-	return colors.reduce((acc, current) => {
-		const valueRepr =
-			type === 'reference' ? `var(--${current.reference})` : current.value
-		acc += `--${current.name}: ${valueRepr};
-`
-		return acc
-	}, '')
-}
+export const arrayToCustomProperties = (colors, type = 'reference') =>
+	colors
+		.map(
+			(color) =>
+				`--${color.name}: ${
+					type === 'reference' ? `var(--${color.reference})` : color.value
+				};`,
+		)
+		.join('\n')
 
-export const tokenObjectToColorObject = tokens => {
-	return tokens.map(({ name, reference }) => {
-		return { name, value: reference }
-	})
-}
+export const tokenObjectToColorObject = (tokens) =>
+	tokens.map(({ name, reference }) => ({ name, value: reference }))
 
-export const objectToArray = colors => {
-	const output = []
-	for (let key in colors) {
-		output.push({ name: key, value: colors[key] })
-	}
-	return output
-}
+export const objectToArray = (colors) =>
+	Object.entries(colors).map(([name, value]) => ({ name, value }))
 
-export const arrayToObject = colors => {
-	const output = {}
-	colors.forEach(color => {
-		output[color.name] = color.value || color.reference
-	})
-	return output
-}
+export const arrayToObject = (colors) =>
+	Object.fromEntries(
+		colors.map((color) => [color.name, color.value || color.reference]),
+	)
