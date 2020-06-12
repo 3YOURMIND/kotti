@@ -66,7 +66,8 @@ module.exports = {
 			env: {
 				jest: true,
 			},
-			plugins: ['plugin:jest/recommended'],
+			plugins: ['jest'],
+			extends: ['plugin:jest/recommended'],
 			rules: {
 				'import/order': [
 					'warn',
