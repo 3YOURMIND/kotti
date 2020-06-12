@@ -42,6 +42,17 @@ export default defineComponent({
 <style lang="scss">
 @import '../../kotti-field/mixins';
 
+@mixin checkbox-colors($check-stroke-color, $border-color, $shadow-main) {
+	border-color: $border-color;
+	box-shadow: var(--shadow-base), 0px 0px 0px 1px $shadow-main inset;
+
+	.kt-field-checkbox__check {
+		path {
+			stroke: $check-stroke-color;
+		}
+	}
+}
+
 .kt-field-checkbox {
 	display: inline-grid;
 	place-items: center;
@@ -52,25 +63,26 @@ export default defineComponent({
 	background: var(--ui-background);
 	border: 1px solid var(--ui-02);
 	border-radius: var(--checkbox-border-radius);
-	transition: all ease-in-out var(--transition-short);
+	transition: border-color ease-in-out var(--transition-short);
 
 	&__check {
 		opacity: 0.2;
 		transition: all ease-in-out var(--transition-short);
 		transform: scale(0.2);
-
-		path {
-			stroke: var(--interactive-01);
-		}
 	}
 
 	&--checked {
-		border-color: var(--interactive-01);
-		box-shadow: var(--shadow-base), 0px 0px 0px 1px var(--interactive-01) inset;
+		@include checkbox-colors(
+			var(--interactive-01),
+			var(--interactive-01),
+			var(--interactive-01)
+		);
 
-		.kt-field-checkbox__check {
-			opacity: 1;
-			transform: scale(1);
+		.kt-field-checkbox {
+			&__check {
+				opacity: 1;
+				transform: scale(1);
+			}
 		}
 	}
 }
@@ -81,15 +93,11 @@ export default defineComponent({
 			&:not(.kt-field__wrapper--disabled) {
 				.kt-field-checkbox {
 					/* stylelint-disable */
-					border-color: var(--support-#{$type});
-					box-shadow: var(--shadow-base),
-						0px 0px 0px 1px var(--support-#{$type}-light) inset;
-
-					&__check {
-						path {
-							stroke: var(--support-#{$type});
-						}
-					}
+					@include checkbox-colors(
+						var(--support-#{$type}),
+						var(--support-#{$type}),
+						var(--support-#{$type}-light)
+					);
 					/* stylelint-enable */
 				}
 			}
@@ -99,16 +107,11 @@ export default defineComponent({
 	&:focus-within {
 		&.kt-field__wrapper--no-validation {
 			.kt-field-checkbox {
-				border-color: var(--interactive-03);
-
-				box-shadow: var(--shadow-base),
-					0px 0px 0px 1px var(--interactive-03) inset;
-
-				&__check {
-					path {
-						stroke: var(--interactive-03);
-					}
-				}
+				@include checkbox-colors(
+					var(--interactive-03),
+					var(--interactive-03),
+					var(--interactive-03)
+				);
 			}
 		}
 	}
@@ -117,14 +120,7 @@ export default defineComponent({
 		cursor: not-allowed;
 
 		.kt-field-checkbox {
-			border-color: var(--ui-02);
-
-			box-shadow: var(--shadow-base), 0px 0px 0px 1px var(--ui-01) inset;
-			&__check {
-				path {
-					stroke: var(--text-05);
-				}
-			}
+			@include checkbox-colors(var(--text-05), var(--ui-02), var(--ui-01));
 		}
 	}
 }
