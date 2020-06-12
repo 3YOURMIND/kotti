@@ -14,17 +14,6 @@
 				border: 0;
 			}
 		}
-
-		// order matters
-		&--disabled {
-			> .el-input .el-input__inner {
-				color: var(--text-05);
-			}
-
-			.el-select__tags .el-select__input {
-				color: var(--text-05);
-			}
-		}
 	}
 
 	&--single {
@@ -37,7 +26,6 @@
 			align-self: center;
 			width: 100%;
 			line-height: 1.6;
-			color: var(--text-01);
 		}
 	}
 
@@ -70,7 +58,6 @@
 					margin: 0;
 					margin-left: calc(#{$tag-padding} + #{$tag-border});
 					line-height: 1.6;
-					color: var(--text-01);
 					border: 0;
 					appearance: none;
 				}
@@ -247,7 +234,6 @@
 						padding: 0.8rem;
 						margin: 0;
 						overflow: hidden;
-						color: var(--text-01);
 						text-overflow: ellipsis;
 						white-space: nowrap;
 						cursor: pointer;

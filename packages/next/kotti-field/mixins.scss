@@ -46,7 +46,6 @@
 		padding: 0;
 		margin: 5px 0;
 
-		color: var(--text-01);
 		background: var(--ui-background);
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
@@ -147,6 +146,33 @@
 				content: ' ';
 				border-width: 6px;
 			}
+		}
+	}
+}
+
+@mixin input-colors(
+	$main-color: var(--text-01),
+	$disabled-color: var(--text-05),
+	$placeholder-color: var(--text-05)
+) {
+	.kt-field__input-container__slot input,
+	.kt-field__input-container__slot textarea,
+	input,
+	> * input,
+	textarea,
+	> * textarea {
+		color: $main-color;
+		// overwrites native behavior when disabled
+		background-color: transparent;
+
+		&:disabled {
+			color: $disabled-color;
+		}
+
+		&::-webkit-input-placeholder, /* Edge */
+		&:-ms-input-placeholder, /* Internet Explorer */
+		&::placeholder {
+			color: $placeholder-color;
 		}
 	}
 }

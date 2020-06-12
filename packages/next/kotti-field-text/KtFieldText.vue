@@ -60,18 +60,13 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .kt-field-text__wrapper {
 	display: flex;
 	width: 100%;
 	padding: 0;
 	margin: 0;
 	line-height: 1.6;
-	color: var(--text-01);
 	border: 0;
-
-	&:disabled {
-		color: var(--text-05);
-	}
 }
 </style>

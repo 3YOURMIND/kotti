@@ -129,7 +129,6 @@ export default defineComponent({
 
 	&--disabled {
 		.kt-field-text-area__wrapper {
-			color: var(--text-05);
 			border-color: var(--ui-01);
 		}
 	}

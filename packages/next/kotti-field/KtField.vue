@@ -204,6 +204,7 @@ export default defineComponent({
 	}
 
 	@include sizes;
+	@include input-colors();
 
 	@include validations using ($type) {
 		/* stylelint-disable */
@@ -240,16 +241,6 @@ export default defineComponent({
 
 			&__affix {
 				color: var(--text-05);
-			}
-
-			&__slot {
-				input {
-					&::-webkit-input-placeholder, /* Edge */
-					&:-ms-input-placeholder, /* Internet Explorer */
-					&::placeholder {
-						color: var(--text-05);
-					}
-				}
 			}
 
 			&__icon {
