@@ -44,6 +44,26 @@ export const usePopperPlacementFix = (
 		popperComponent.referenceElm = ktFieldContainerElement
 	})
 }
+
+// adds size attribute to avoid overflow of icons
+export const useSelectInputFixes = (
+	elSelectRef: Ref<ElSelect | null>,
+	ktFieldRef: Ref<Vue | null>,
+	inputQueries: string[],
+) => {
+	onMounted(() => {
+		const ktFieldComponent = ktFieldRef.value
+		if (ktFieldComponent === null) throw new Error('kt-field not available')
+
+		const ktFieldContainerElement = ktFieldComponent.$refs
+			.inputContainerRef as Element
+
+		inputQueries.forEach((query) =>
+			ktFieldContainerElement.querySelector(query)?.setAttribute('size', '1'),
+		)
+	})
+}
+
 export const usePopperWidthFix = <
 	SELECT_DATA_TYPE extends
 		| KottiFieldSingleSelect.Value

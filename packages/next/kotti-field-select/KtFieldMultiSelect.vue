@@ -78,7 +78,11 @@ import { useField } from '../kotti-field/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
 import { KOTTI_FIELD_MULTI_SELECT_PROPS } from './constants'
-import { usePopperPlacementFix, usePopperWidthFix } from './hooks'
+import {
+	usePopperPlacementFix,
+	usePopperWidthFix,
+	useSelectInputFixes,
+} from './hooks'
 import { KottiFieldMultiSelect } from './types'
 
 type Entry = KottiFieldMultiSelect.Props['options'][0]
@@ -123,6 +127,10 @@ export default defineComponent({
 
 		usePopperPlacementFix(elSelectRef, ktFieldRef)
 		usePopperWidthFix(elSelectRef, ktFieldRef, field)
+		useSelectInputFixes(elSelectRef, ktFieldRef, [
+			'.el-input__inner',
+			'.el-select__tags .el-select__input',
+		])
 
 		const isDropdownOpen = ref(false)
 
