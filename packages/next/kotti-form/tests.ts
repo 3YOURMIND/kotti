@@ -1,12 +1,13 @@
+import { defineComponent } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
 
-import KtField from '../kotti-field/KtField.vue'
-import KtForm from './KtForm.vue'
-import { defineComponent } from '@vue/composition-api'
-import { useField } from '../kotti-field/hooks'
-import { KottiField } from '../kotti-field/types'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
+import { useField } from '../kotti-field/hooks'
+import KtField from '../kotti-field/KtField.vue'
+import { KottiField } from '../kotti-field/types'
 import { localVue } from '../test-utils'
+
+import KtForm from './KtForm.vue'
 
 const TestField = defineComponent({
 	name: 'TestField',

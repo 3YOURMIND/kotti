@@ -1,14 +1,15 @@
+import { defineComponent } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
+
+import { KOTTI_FIELD_PROPS } from '../../kotti-field/constants'
+import { useField } from '../../kotti-field/hooks'
+import KtField from '../../kotti-field/KtField.vue'
+import { KottiField } from '../../kotti-field/types'
+import { localVue } from '../../test-utils/index'
+import KtForm from '../KtForm.vue'
 
 import KtFormControllerList from './KtFormControllerList.vue'
 import KtFormControllerObject from './KtFormControllerObject.vue'
-import { defineComponent } from '@vue/composition-api'
-import { KottiField } from '../../kotti-field/types'
-import { useField } from '../../kotti-field/hooks'
-import { KOTTI_FIELD_PROPS } from '../../kotti-field/constants'
-import KtField from '../../kotti-field/KtField.vue'
-import { localVue } from '../../test-utils/index'
-import KtForm from '../KtForm.vue'
 
 const TestField = defineComponent({
 	name: 'TestField',
@@ -179,10 +180,6 @@ describe('KtFormControllerList', () => {
 
 			expect(row1Field.hideValidation).toBe(true)
 		})
-
-		xit('values', () => {
-			// TODO: Trust thyself
-		})
 	})
 })
 
@@ -258,10 +255,6 @@ describe('KtFormControllerObject', () => {
 			await wrapper.vm.$nextTick()
 
 			expect(field.hideValidation).toBe(true)
-		})
-
-		xit('values', () => {
-			// TODO: Trust thyself
 		})
 	})
 })
