@@ -298,17 +298,6 @@ export default defineComponent({
 		// The actual input
 		&__slot {
 			flex-grow: 1;
-
-			input {
-				// to overwrite native disabled bg for inputs
-				background-color: transparent;
-
-				&::-webkit-input-placeholder, /* Edge */
-				&:-ms-input-placeholder, /* Internet Explorer */
-				&::placeholder {
-					color: var(--text-03);
-				}
-			}
 		}
 
 		// Prefix and Suffix
