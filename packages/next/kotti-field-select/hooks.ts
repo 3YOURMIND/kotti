@@ -12,17 +12,43 @@ export type ElSelectWithInternalAPI =
 	  })
 	| null
 
-type Hook<DATA_TYPE extends Values> = {
+type HookParameters<DATA_TYPE extends Values> = {
 	elSelectRef: Ref<ElSelectWithInternalAPI>
 	field: KottiField.Hook.Returns<DATA_TYPE>
 	inputSelectors: string[]
-	/**
-	 * FIXME: Should be typeof KtField in theory, but right now this gets resolved wrongly to VueConstructor<Vue>
-	 */
 	ktFieldRef: Ref<Vue | null>
 }
 
 type Values = KottiFieldSingleSelect.Value | KottiFieldMultiSelect.Value
+
+const getComponents = <DATA_TYPE extends Values>({
+	elSelectRef,
+	ktFieldRef,
+}: Pick<HookParameters<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef'>) => {
+	const elSelectComponent = elSelectRef.value
+	const ktFieldComponent = ktFieldRef.value
+
+	if (elSelectComponent === null) throw new Error('el-select not available')
+
+	if (ktFieldComponent === null) throw new Error('kt-field not available')
+
+	return { elSelectComponent, ktFieldComponent }
+}
+
+/**
+ * If the field is loading, we want to unfocus in case the popper is open
+ * so that when isLoading changes, the popper isn't misplaced
+ */
+const usePopperMisplacementFix = <DATA_TYPE extends Values>({
+	elSelectRef,
+	field,
+	ktFieldRef,
+}: Pick<HookParameters<DATA_TYPE>, 'elSelectRef' | 'field' | 'ktFieldRef'>) => {
+	watchEffect(() => {
+		const { elSelectComponent } = getComponents({ elSelectRef, ktFieldRef })
+		if (field.isLoading || field.isDisabled) return elSelectComponent.blur()
+	})
+}
 
 /**
  * ^ `popperComponent` is an internal `element-ui` component that computes the placement
@@ -40,13 +66,12 @@ type Values = KottiFieldSingleSelect.Value | KottiFieldMultiSelect.Value
 const usePopperPlacementFix = <DATA_TYPE extends Values>({
 	elSelectRef,
 	ktFieldRef,
-}: Pick<Hook<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef'>) => {
+}: Pick<HookParameters<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef'>) => {
 	onMounted(() => {
-		const elSelectComponent = elSelectRef.value
-		if (elSelectComponent === null) throw new Error('el-select not available')
-
-		const ktFieldComponent = ktFieldRef.value
-		if (ktFieldComponent === null) throw new Error('kt-field not available')
+		const { elSelectComponent, ktFieldComponent } = getComponents({
+			elSelectRef,
+			ktFieldRef,
+		})
 
 		const popperComponent = elSelectComponent.$refs.popper as Vue & {
 			referenceElm: Element
@@ -58,44 +83,15 @@ const usePopperPlacementFix = <DATA_TYPE extends Values>({
 	})
 }
 
-/**
- * adds size attribute to avoid overflow of icons
- */
-const useSelectInputFixes = <DATA_TYPE extends Values>({
-	inputSelectors,
-	ktFieldRef,
-}: Pick<Hook<DATA_TYPE>, 'ktFieldRef' | 'inputSelectors'>) => {
-	onMounted(() => {
-		const ktFieldComponent = ktFieldRef.value
-		if (ktFieldComponent === null) throw new Error('kt-field not available')
-
-		const ktFieldContainerElement = ktFieldComponent.$refs
-			.inputContainerRef as Element
-
-		inputSelectors.forEach((query) =>
-			ktFieldContainerElement.querySelector(query)?.setAttribute('size', '1'),
-		)
-	})
-}
-
 const usePopperWidthFix = <DATA_TYPE extends Values>({
 	elSelectRef,
-	field,
 	ktFieldRef,
-}: Pick<Hook<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef' | 'field'>) => {
+}: Pick<HookParameters<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef' | 'field'>) => {
 	watchEffect(() => {
-		/**
-		 * If the field is loading, we want to unfocus in case the popper is open
-		 * so that when isLoading changes, the popper isn't misplaced
-		 */
-		const elSelectComponent = elSelectRef.value
-		if (elSelectComponent === null) throw new Error('el-select not ready')
-		if (field.isLoading || field.isDisabled) {
-			return elSelectComponent.blur()
-		}
-
-		const ktFieldComponent = ktFieldRef.value
-		if (ktFieldComponent === null) throw new Error('kt-field not ready')
+		const { elSelectComponent, ktFieldComponent } = getComponents({
+			elSelectRef,
+			ktFieldRef,
+		})
 
 		// just used to add this as a dependency
 		elSelectComponent.inputWidth
@@ -111,13 +107,37 @@ const usePopperWidthFix = <DATA_TYPE extends Values>({
 	})
 }
 
+/**
+ * adds size attribute to avoid overflow of icons
+ */
+const useSelectInputSizeFix = <DATA_TYPE extends Values>({
+	elSelectRef,
+	inputSelectors,
+	ktFieldRef,
+}: Pick<
+	HookParameters<DATA_TYPE>,
+	'elSelectRef' | 'ktFieldRef' | 'inputSelectors'
+>) => {
+	onMounted(() => {
+		const { ktFieldComponent } = getComponents({ elSelectRef, ktFieldRef })
+
+		const ktFieldContainerElement = ktFieldComponent.$refs
+			.inputContainerRef as Element
+
+		inputSelectors.forEach((query) =>
+			ktFieldContainerElement.querySelector(query)?.setAttribute('size', '1'),
+		)
+	})
+}
+
 export const useSelectFixes = <DATA_TYPE extends Values>({
 	elSelectRef,
 	field,
 	inputSelectors,
 	ktFieldRef,
-}: Hook<DATA_TYPE>) => {
+}: HookParameters<DATA_TYPE>) => {
+	usePopperMisplacementFix({ elSelectRef, field, ktFieldRef })
 	usePopperPlacementFix({ elSelectRef, ktFieldRef })
 	usePopperWidthFix({ elSelectRef, field, ktFieldRef })
-	useSelectInputFixes({ ktFieldRef, inputSelectors })
+	useSelectInputSizeFix({ elSelectRef, inputSelectors, ktFieldRef })
 }
