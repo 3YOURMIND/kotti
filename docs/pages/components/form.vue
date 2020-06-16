@@ -3,18 +3,14 @@
 
 <ClientOnly>
 	<h2>KtFields Without Form</h2>
-	<KtFieldDate
-		v-model="date"
-		label="KtFieldDate"
+	<KtFieldDateRange
+		v-model="dateRange"
+		label="KtFieldDateRange"
 		:maximumDate="null"
 		minimumDate="2020-06-05"
-		placeholder="Select Date"
-		:shortcuts="[
-			{label: 'Today', value: today },
-			{label: 'Yesterday', value: yesterday },
-			{label: 'Jump One Week', value: jumpOneWeek, keepOpen: true }
-		]"
+		:shortcuts="dateRangeShortcuts"
 	/>
+	<!-- placeholder="Select Date" -->
 	<div>
 		<KtFieldText
 			v-model="textValue"
@@ -38,6 +34,16 @@
 				type: value === 'NEVER' ? 'success' : value
 			})"
 		/>
+		<KtFieldRadioGroup
+			v-model="fieldSize"
+			isOptional
+			label="Field Size"
+			:options="[
+				{ label: 'Small', value: 'small' },
+				{ label: 'Medium', value: 'medium' },
+				{ label: 'Large', value: 'large' }
+			]"
+		/>
 		<KtFieldCheckboxGroup
 			v-model="formSettings"
 			isOptional
@@ -56,6 +62,16 @@
 		v-bind="{ preventSubmissionOn, validators}"
 		@submit="onSubmit"
 	>
+		<KtFieldDate
+			formKey="date"
+			label="KtFieldDate"
+			:isDisabled="formSettings.disabledFormFields"
+			:maximumDate="null"
+			minimumDate="2020-06-05"
+			placeholder="Select Date"
+			:shortcuts="dateShortcuts"
+			:size="fieldSize"
+		/>
 		<KtFieldMultiSelect
 			:collapseTagsAfter="3"
 			formKey="multiSelect"
@@ -67,6 +83,7 @@
 			placeholder="select something"
 			prefix="Prefix"
 			rightIcon="calendar"
+			:size="fieldSize"
 			suffix="Suffix"
 		/>
 		<KtFieldSingleSelect
@@ -78,6 +95,7 @@
 			placeholder='select something'
 			prefix="Prefix"
 			rightIcon="calendar"
+			:size="fieldSize"
 			suffix="Suffix"
 		/>
 		<KtFieldRadioGroup
@@ -86,6 +104,7 @@
 			isOptional
 			label="Some RadioGroup"
 			:options="radioGroupAndSelectOptions"
+			:size="fieldSize"
 		/>
 		<KtFieldCheckboxGroup
 			formKey="checkboxGroup"
@@ -96,6 +115,7 @@
 				{ key: 'initiallyNull', label: 'B (initiallyNull)' },
 				{ key: 'initiallyTrue', label: 'C (initiallyTrue)' },
 			]"
+			:size="fieldSize"
 		/>
 		<KtFieldText
 			formKey="firstName"
@@ -106,15 +126,8 @@
 			placeholder="Klaus"
 			prefix="Prefix"
 			rightIcon="location"
+			:size="fieldSize"
 			suffix="Suffix"
-		/>
-		<KtFieldText
-			formKey="firstName"
-			helpText="Small field, is used inside Datetime picker"
-			:isDisabled="formSettings.disableFormFields"
-			label="First Name (Small field)"
-			placeholder="Klaus"
-			isSmall
 		/>
 		<KtFieldText
 			formKey="lastName"
@@ -122,6 +135,7 @@
 			:isDisabled="formSettings.disableFormFields"
 			label="Last Name"
 			placeholder="Dieter"
+			:size="fieldSize"
 		/>
 		<br />
 		<h2>Validation Example</h2>
@@ -129,6 +143,7 @@
 			formKey="lastName"
 			:isDisabled="formSettings.disableFormFields"
 			prefix="Prefix"
+			:size="fieldSize"
 			:tabIndex="5"
 			validatorKey="alwaysNeutral"
 		/>
@@ -136,6 +151,7 @@
 			formKey="lastName"
 			:isDisabled="formSettings.disableFormFields"
 			label="Field That Always Errors"
+			:size="fieldSize"
 			suffix="Suffix"
 			:tabIndex="4"
 			validatorKey="alwaysError"
@@ -145,6 +161,7 @@
 			:isDisabled="formSettings.disableFormFields"
 			label="Field That Always Succeeds"
 			leftIcon="cloud"
+			:size="fieldSize"
 			:tabIndex="3"
 			validatorKey="alwaysSuccess"
 		/>
@@ -154,6 +171,7 @@
 			:isDisabled="formSettings.disableFormFields"
 			label="Field That Always Warns"
 			rightIcon="location"
+			:size="fieldSize"
 			:tabIndex="2"
 			validatorKey="alwaysWarning"
 		/>
@@ -166,6 +184,7 @@
 			leftIcon="comment"
 			prefix="Prefix"
 			rightIcon="calendar"
+			:size="fieldSize"
 			suffix="Suffix"
 			:tabIndex="1"
 		/>
@@ -174,6 +193,7 @@
 			:isDisabled="formSettings.disableFormFields"
 			label="description"
 			placeholder="type something"
+			:size="fieldSize"
 		/>
 		<br />
 		<h2>KtFormControllerList</h2>
@@ -186,6 +206,7 @@
 							formKey="username" label="Username"
 							:isDisabled="formSettings.disableFormFields"
 							leftIcon="user"
+							:size="fieldSize"
 							validatorKey="username"
 						/>
 						<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }">
@@ -216,6 +237,7 @@
 				:isDisabled="formSettings.disableFormFields"
 				label="I’m a Field In user"
 				rightIcon="user"
+				:size="fieldSize"
 				validatorKey="username"
 			/>
 		</KtFormControllerObject>
@@ -233,6 +255,8 @@ import dayjs from 'dayjs'
 
 import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiForm } from '../../../packages/next/kotti-form/types'
+
+const DATE_ISO_FORMAT = 'YYYY-MM-DD'
 
 export default {
 	name: 'KtFormDoc',
@@ -276,7 +300,8 @@ export default {
 		}
 
 		return {
-			date: null,
+			// dateRange: [null, '2020-06-16'],
+			dateRange: [],
 			disableFormFields: false,
 			formData: {
 				checkboxGroup: {
@@ -284,6 +309,7 @@ export default {
 					initiallyNull: null,
 					initiallyTrue: true,
 				},
+				date: null,
 				description: null,
 				firstName: 'John',
 				lastName: 'Smith',
@@ -293,6 +319,7 @@ export default {
 				username: null,
 				multiSelect: [1, 2],
 			},
+			fieldSize: 'medium',
 			formSettings: {
 				hideValidation: false,
 				isLoading: false,
@@ -318,19 +345,63 @@ export default {
 	},
 	computed: {
 		today() {
-			return dayjs().format('YYYY-MM-DD')
+			return dayjs().format(DATE_ISO_FORMAT)
 		},
 		yesterday() {
 			return dayjs()
 				.subtract(1, 'day')
-				.format('YYYY-MM-DD')
+				.format(DATE_ISO_FORMAT)
 		},
 		jumpOneWeek() {
 			return dayjs(
-				((this as unknown) as { date: string | null }).date ?? undefined,
+				((this as unknown) as { formData: { date: string | null } }).formData
+					?.date ?? undefined,
 			)
 				.add(1, 'week')
-				.format('YYYY-MM-DD')
+				.format(DATE_ISO_FORMAT)
+		},
+		dateShortcuts() {
+			return [
+				{
+					label: 'Today',
+					value: ((this as unknown) as { today: string | undefined }).today,
+				},
+				{
+					label: 'Yesterday',
+					value: ((this as unknown) as { yesterday: string | undefined })
+						.yesterday,
+				},
+				{
+					label: 'Jump One Week',
+					value: ((this as unknown) as { jumpOneWeek: string | undefined })
+						.jumpOneWeek,
+					keeOpen: true,
+				},
+			]
+		},
+		dateRangeShortcuts() {
+			const { today, yesterday, jumpOneWeek, formData } = (this as unknown) as {
+				today: string | undefined
+				yesterday: string | undefined
+				jumpOneWeek: string | undefined
+				formData: { date: string | null }
+			}
+
+			return [
+				{
+					label: 'Today',
+					value: [today, today],
+				},
+				{
+					label: 'Yesterday',
+					value: [yesterday, today],
+				},
+				{
+					label: 'Jump One Week',
+					value: [formData.date, jumpOneWeek],
+					keepOpen: true,
+				},
+			]
 		},
 	},
 	methods: {
