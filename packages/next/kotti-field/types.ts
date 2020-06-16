@@ -119,8 +119,6 @@ export namespace KottiField {
 		/**
 		 * @default props.formKey
 		 * Explicitly overwrite the used validator in case it differs from the formKey
-		 * @example
-		 * FIXME: Add Example
 		 */
 		validatorKey: string | null
 

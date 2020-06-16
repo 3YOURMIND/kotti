@@ -44,7 +44,6 @@ export const dateRangeShortcutValidator = (
 	typeof option === 'object' &&
 	option !== null &&
 	typeof option.label === 'string' &&
-	// (typeof option.value === 'string' && DATE_FORMAT_REGEX.test(option.value)) ||
 	Array.isArray(option.value) &&
 	option.value.length === 2 &&
 	option.value.every(

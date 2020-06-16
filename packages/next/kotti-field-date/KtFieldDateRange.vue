@@ -89,21 +89,6 @@ export default defineComponent({
 				}: KottiFieldDateRange.Props['shortcuts'][0]) => ({
 					text: label,
 					onClick(_picker: ElDatePicker) {
-						// const newValue = (() => {
-						// 	if (typeof value === 'string') {
-						// 		if (!dayjs(value).isValid()) return field.currentValue
-
-						// 		const [start, end] = field.currentValue
-						// 		if (start !== null && dayjs(start).isBefore(value))
-						// 			return [start, value]
-						// 		if (end !== null && dayjs(end).isAfter(value))
-						// 			return [value, end]
-
-						// 		return [value, end]
-						// 	}
-						// })()
-						// if (keepOpen !== true) _picker.$emit('pick', newValue)
-						// field.setValue(newValue)
 						if (keepOpen !== true) _picker.$emit('pick', value)
 						field.setValue(value)
 					},

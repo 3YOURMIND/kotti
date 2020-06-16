@@ -1,16 +1,17 @@
+import { defineComponent } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
 
-import { KottiField } from './types'
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
-import { defineComponent } from '@vue/composition-api'
-import { useField } from './hooks'
-import { KOTTI_FIELD_PROPS, FORM_KEY_NONE } from './constants'
 import {
 	localVue,
 	forceVueToEvaluateComputedProperty,
 	getMockContext,
 } from '../test-utils'
+
+import { KOTTI_FIELD_PROPS, FORM_KEY_NONE } from './constants'
 import { KtFieldErrors } from './errors'
+import { useField } from './hooks'
+import { KottiField } from './types'
 
 const TestComponent = defineComponent({
 	name: 'TestComponent',
