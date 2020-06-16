@@ -48,7 +48,7 @@ import {
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
 } from './next/kotti-field-checkbox'
-import { KtFieldDate } from './next/kotti-field-date'
+import { KtFieldDate, KtFieldDateRange } from './next/kotti-field-date'
 import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
 import {
 	KtFieldSingleSelect,
@@ -87,6 +87,7 @@ const components = {
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
 	KtFieldDate,
+	KtFieldDateRange,
 	KtFieldMultiSelect,
 	KtFieldSingleSelect,
 	KtFieldRadioGroup,
@@ -175,6 +176,7 @@ export {
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
 	KtFieldDate,
+	KtFieldDateRange,
 	KtFieldRadioGroup,
 	KtFieldMultiSelect,
 	KtFieldSingleSelect,

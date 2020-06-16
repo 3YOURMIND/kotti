@@ -1,6 +1,7 @@
 @import '../kotti-field/mixins.scss';
 
-.kt-field-date {
+.kt-field-date,
+.kt-field-daterange {
 	.kt-field__input-container {
 		width: 100%;
 		margin: 0;
@@ -12,18 +13,33 @@
 		.el-date-editor {
 			width: 100%;
 
-			&--date {
+			&--date,
+			&--daterange {
 				display: flex;
-				justify-content: space-evenly;
+				justify-content: space-between;
 
+				i,
+				span.el-range-separator {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					line-height: unset;
+				}
+			}
+
+			&--date .el-input__inner,
+			&--daterange .el-range-input {
+				flex: 1;
+				padding: 0;
+				margin: 0;
+				line-height: 1.6;
+				border: 0;
+			}
+
+			&--date {
 				.el-input__inner {
-					flex: 1;
 					-webkit-order: 2;
 					order: 2;
-					padding: 0;
-					margin: 0;
-					line-height: 1.6;
-					border: 0;
 				}
 
 				.el-input__prefix,
@@ -33,13 +49,6 @@
 					font-size: 1.1em;
 					color: var(--icon-02);
 					cursor: pointer;
-
-					i {
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						line-height: unset;
-					}
 				}
 
 				.el-input__prefix {
@@ -59,13 +68,17 @@
 .el-picker-panel {
 	@include el-popper;
 
+	> * a {
+		color: var(--link-02);
+	}
+
 	&__body-wrapper {
 		display: flex;
 		flex-direction: column-reverse;
 		justify-content: space-between;
 		width: 100%;
-		padding: 1rem 1.2rem;
-		color: var(--text-01);
+		height: 100%;
+		padding: 1.2rem 0;
 
 		* {
 			outline: none;
@@ -79,10 +92,10 @@
 		.el-picker-panel {
 			&__sidebar {
 				display: flex;
+				flex: 1;
 				flex-wrap: wrap;
 				justify-content: flex-start;
-				padding: 0 1rem;
-				border-top: 1px solid var(--ui-02);
+				padding: 0 1.2rem;
 
 				> button {
 					padding: 0.4rem 0;
@@ -111,17 +124,20 @@
 			}
 
 			&__body {
+				flex: 1;
 				$td-diameter: 1.5rem;
 				$icon-size: 1.3rem;
 				$double-chevron-translate: 1rem;
 				$month-font-size: 1.2rem;
 				$label-font-size: 1.1rem;
 
-				.el-date-picker__header {
+				.el-date-picker__header,
+				.el-date-range-picker__header {
 					display: flex;
 					justify-content: flex-end;
-					padding: 0.8rem 0;
-					margin: 0 1rem;
+					// padding: 0.8rem 0;
+					padding: 0 1.2rem 0.8rem 1.2rem;
+					// margin: 0 1rem;
 					font-size: 1.2em;
 
 					text-align: center;
@@ -193,7 +209,7 @@
 
 							&:last-of-type {
 								position: absolute;
-								left: 0;
+								left: 1.2rem;
 							}
 						}
 					}
@@ -277,7 +293,23 @@
 				}
 
 				.el-picker-panel__content {
+					padding: 0 1.2rem;
 					margin: 0;
+
+					// for the range pickers
+					&.is-left,
+					&.is-right {
+						flex: 1;
+					}
+
+					&.is-left {
+						padding-right: 0.6rem;
+						border-right: 1px solid var(--ui-02);
+					}
+
+					&.is-right {
+						padding-left: 0.6rem;
+					}
 
 					table {
 						padding: 0.8em;
@@ -312,15 +344,17 @@
 							cursor: pointer;
 							border: 0;
 
-							&.available {
+							&.available.today {
 								color: var(--interactive-03);
+							}
 
-								&.today {
-									color: var(--interactive-03);
-								}
+							&.prev-month,
+							&.next-month {
+								color: var(--text-03);
 							}
 
 							&.disabled {
+								color: var(--text-05);
 								cursor: not-allowed;
 								background-color: var(--ui-01);
 							}
@@ -335,11 +369,11 @@
 							td {
 								margin: 0 0.8em;
 								border-radius: var(--field-border-radius);
+
 								a {
 									display: flex;
 									align-items: center;
 									justify-content: center;
-									color: var(--text-02);
 									text-transform: uppercase;
 
 									&:hover {
@@ -361,12 +395,17 @@
 
 								&.today {
 									border: 1px solid var(--link-04);
+
+									// a {
+									// 	color: var(--link-04);
+									// }
 								}
 							}
 						}
 
 						&.el-date-table {
-							tr:first-of-type {
+							tr:first-of-type,
+							tr:last-of-type {
 								border-bottom: 1px solid var(--ui-02);
 							}
 
@@ -445,6 +484,37 @@
 						}
 					}
 				}
+			}
+		}
+	}
+}
+
+.el-date-range-picker {
+	.el-picker-panel__body {
+		display: flex;
+
+		.el-date-range-picker__header {
+			position: relative;
+
+			div {
+				position: absolute;
+				left: 1.2rem;
+
+				-webkit-order: 1;
+				order: 1;
+				text-transform: uppercase;
+			}
+
+			button.el-icon-d-arrow-left,
+			button.el-icon-arrow-right {
+				-webkit-order: 2;
+				order: 2;
+			}
+
+			button.el-icon-arrow-left,
+			button.el-icon-d-arrow-right {
+				-webkit-order: 3;
+				order: 3;
 			}
 		}
 	}

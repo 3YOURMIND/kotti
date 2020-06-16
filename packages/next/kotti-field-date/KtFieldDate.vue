@@ -1,4 +1,5 @@
 <template>
+	<!-- FIXME: getEmptyValue doesn't match Empty check -->
 	<KtField
 		v-bind="{ field }"
 		class="kt-field-date"
@@ -35,13 +36,13 @@ import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 
 import {
-	DATE_INTERNAL_PROPS,
 	DATE_FORMAT_REGEX,
-	KOTTI_FIELD_DATE_SHARED_PROPS,
 	KOTTI_FIELD_DATE_PROPS,
+	EL_DATE_PROPS,
 } from './constants'
 import { usePicker, ElDateComponent } from './hooks'
 import { KottiFieldDate } from './types'
+import { isInvalidDate } from './utils'
 
 export default defineComponent({
 	name: 'KtFieldDate',
@@ -49,7 +50,6 @@ export default defineComponent({
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_DATE_PROPS,
-		...KOTTI_FIELD_DATE_SHARED_PROPS,
 	},
 	setup(props: KottiFieldDate.Props, { emit }) {
 		const field = useField<KottiFieldDate.Value>({
@@ -71,23 +71,13 @@ export default defineComponent({
 
 		const inputContainerRef = ref<Element>(null)
 
-		usePicker(elDateRef, inputContainerRef, field)
+		usePicker(elDateRef, inputContainerRef, field, '400px')
 
 		const pickerOptions: Ref<Pick<
 			DatePickerOptions,
-			'shortcuts' | 'disabledDate'
+			'disabledDate' | 'shortcuts'
 		>> = computed(() => ({
-			disabledDate: (date: Date) => {
-				const { maximumDate, minimumDate } = props
-
-				if (maximumDate !== null && dayjs(date).isAfter(maximumDate, 'day'))
-					return true
-
-				if (minimumDate !== null && dayjs(date).isBefore(minimumDate, 'day'))
-					return true
-
-				return false
-			},
+			disabledDate: (date: Date) => isInvalidDate(props, date),
 			shortcuts: props.shortcuts.map(
 				({ label, value, keepOpen }: KottiFieldDate.Props['shortcuts'][0]) => ({
 					text: label,
@@ -103,7 +93,7 @@ export default defineComponent({
 			elDatePickerProps: computed(
 				() =>
 					({
-						...DATE_INTERNAL_PROPS,
+						...EL_DATE_PROPS,
 						pickerOptions: pickerOptions.value,
 					} as Partial<ElDate>),
 			),

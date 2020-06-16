@@ -31,6 +31,7 @@ export const usePicker = <
 	elDateRef: Ref<ElDateComponent | null>,
 	inputContainerRef: Ref<Element | null>,
 	field: KottiField.Hook.Returns<DATE_PICKER_DATA_TYPE>,
+	popperWidth: string,
 ) => {
 	onMounted(() => {
 		const elDateComponent = elDateRef.value
@@ -39,14 +40,41 @@ export const usePicker = <
 		const ktFieldDateInputContainer = inputContainerRef.value
 		if (ktFieldDateInputContainer === null)
 			throw new Error('kt-field-date__input-container not available')
-
 		// placement fix
 		// same hack as the one used in the selects but for the datepickers, the popper component.data
 		// are merged with the DateComponent's own data, therefore allowing access to properties on popper component
 		// directly through elDateComponent
 
 		elDateComponent.referenceElm = ktFieldDateInputContainer
+
+		// replace el-input affix icons with yoco icons
+		const elInput = elDateComponent.$el.querySelector('.el-input__inner')
+		elInput?.setAttribute('size', '1')
+
+		const elInputIcons: Array<HTMLElement> = Array.from(
+			elDateComponent.$el.querySelectorAll('.el-input__icon'),
+		)
+
+		elInputIcons.forEach((icon) => icon.classList.add('yoco'))
+
+		const prefixIcon = elDateComponent.$el.querySelectorAll(
+			'.el-input__icon.el-icon-time, .el-input__icon.el-icon-date',
+		)
+
+		const prefixIconArray: Array<HTMLElement> = [].slice.call(prefixIcon)
+
+		prefixIconArray[0].classList.contains('el-icon-time')
+			? (prefixIconArray[0].innerText = 'clock')
+			: (prefixIconArray[0].innerText = 'calendar')
+
+		const suffixIcon: Array<HTMLElement> = Array.from(
+			elDateComponent.$el.querySelectorAll(
+				'.el-input__icon:not(.el-icon-time):not(.el-icon-date)',
+			),
+		)
+		suffixIcon[0].innerText = 'close'
 	})
+
 	watchEffect(() => {
 		/**
 		 * If the field is loading, we want to unfocus in case the popper is open
@@ -73,12 +101,12 @@ export const usePicker = <
 
 			/* eslint-disable no-magic-numbers */
 			elDateComponent.picker.$el.style.width = `${(newWidth * 50) / 100}px`
-			elDateComponent.picker.$el.style.minWidth = '400px'
+			elDateComponent.picker.$el.style.minWidth = popperWidth
 			elDateComponent.picker.$el.style.height = '500px'
 			/* eslint-enable no-magic-numbers */
 
 			// add yoco class to header icons to enable yoco icons
-			const pickerHeaderIcons: Array<HTMLElement> = [].slice.call(
+			const pickerHeaderIcons: Array<HTMLElement> = Array.from(
 				elDateComponent.picker.$el.querySelectorAll(
 					'.el-picker-panel__icon-btn',
 				),
@@ -95,31 +123,5 @@ export const usePicker = <
 
 			elDateComponent.updatePopper()
 		}
-
-		const elInput = elDateComponent.$el.querySelector('.el-input__inner')
-		elInput?.setAttribute('size', '1')
-
-		const elInputIcons: Array<HTMLElement> = Array.from(
-			elDateComponent.$el.querySelectorAll('.el-input__icon'),
-		)
-
-		elInputIcons.forEach((icon) => icon.classList.add('yoco'))
-
-		const prefixIcon = elDateComponent.$el.querySelectorAll(
-			'.el-input__icon.el-icon-time, .el-input__icon.el-icon-date',
-		)
-
-		const prefixIconArray: Array<HTMLElement> = [].slice.call(prefixIcon)
-
-		prefixIconArray[0].classList.contains('el-icon-time')
-			? (prefixIconArray[0].innerText = 'clock')
-			: (prefixIconArray[0].innerText = 'calendar')
-
-		const suffixIcon: Array<HTMLElement> = [].slice.call(
-			elDateComponent.$el.querySelectorAll(
-				'.el-input__icon:not(.el-icon-time):not(.el-icon-date)',
-			),
-		)
-		suffixIcon[0].innerText = 'close'
 	})
 }
