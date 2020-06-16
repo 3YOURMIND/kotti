@@ -61,11 +61,10 @@
 			</slot>
 
 			<div
-				v-if="!field.isLoading && showValidation"
+				v-if="!field.isLoading && showValidation && validationText !== null"
 				class="kt-field__validation-text"
-			>
-				{{ validationText }}
-			</div>
+				v-text="validationText"
+			/>
 		</component>
 
 		<div v-if="field.isLoading" class="kt-field__wrapper">
@@ -144,18 +143,10 @@ export default defineComponent({
 					),
 			),
 			showValidation,
-			validationIcon: computed(() => {
-				if (validationType.value === null) return ''
-
-				return {
-					error: 'circle_cross',
-					success: 'circle_check',
-					warning: 'circle_attention',
-				}[validationType.value]
-			}),
-			validationText: computed(
-				() =>
-					props.field.validation.type !== null && props.field.validation.text,
+			validationText: computed(() =>
+				props.field.validation.type === null
+					? null
+					: props.field.validation.text,
 			),
 			validationType,
 			wrapperClasses: computed(() => {
