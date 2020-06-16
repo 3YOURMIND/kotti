@@ -176,74 +176,74 @@ export default defineComponent({
 	--field-border-radius: 2px;
 }
 
-.kt-field__wrapper {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-
-	// overwrite native outline behavior
-	* {
-		outline: none;
-		&:focus,
-		&::-moz-focus-inner {
-			outline: none;
-		}
-	}
-
-	> :not(:last-child) {
-		margin-bottom: 0.4rem;
-	}
-
-	@include sizes;
-	@include input-colors();
-
-	@include validations using ($type) {
-		/* stylelint-disable */
-		&:not(.kt-field__wrapper--disabled) {
-			@if $type != no-validation {
-				.kt-field__input-container {
-					border-color: var(--support-#{$type}-light);
-				}
-
-				.kt-field__validation-text {
-					color: var(--support-#{$type});
-				}
-			}
-
-			&:focus-within {
-				--support-no-validation-light: var(--interactive-05);
-
-				.kt-field__input-container {
-					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
-					border-color: var(--support-#{$type}-light);
-				}
-			}
-		}
-		/* stylelint-enable */
-	}
-
-	&--disabled {
-		* {
-			cursor: not-allowed;
-		}
-
-		.kt-field__input-container {
-			border: 1px solid var(--ui-01);
-
-			&__affix {
-				color: var(--text-05);
-			}
-
-			&__icon {
-				color: var(--text-05);
-			}
-		}
-	}
-}
-
 .kt-field {
 	&:not(:last-child) {
 		margin-bottom: 0.8rem;
+	}
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		// overwrite native outline behavior
+		* {
+			outline: none;
+			&:focus,
+			&::-moz-focus-inner {
+				outline: none;
+			}
+		}
+
+		> :not(:last-child) {
+			margin-bottom: 0.4rem;
+		}
+
+		@include sizes;
+		@include input-colors();
+
+		@include validations using ($type) {
+			/* stylelint-disable */
+			&:not(.kt-field__wrapper--disabled) {
+				@if $type != no-validation {
+					.kt-field__input-container {
+						border-color: var(--support-#{$type}-light);
+					}
+
+					.kt-field__validation-text {
+						color: var(--support-#{$type});
+					}
+				}
+
+				&:focus-within {
+					--support-no-validation-light: var(--interactive-05);
+
+					.kt-field__input-container {
+						box-shadow: 0 0 0 1px var(--support-#{$type}-light);
+						border-color: var(--support-#{$type}-light);
+					}
+				}
+			}
+			/* stylelint-enable */
+		}
+
+		&--disabled {
+			* {
+				cursor: not-allowed;
+			}
+
+			.kt-field__input-container {
+				border: 1px solid var(--ui-01);
+
+				&__affix {
+					color: var(--text-05);
+				}
+
+				&__icon {
+					color: var(--text-05);
+				}
+			}
+		}
 	}
 
 	fieldset {
@@ -266,6 +266,8 @@ export default defineComponent({
 	}
 
 	&__label {
+		display: flex;
+		align-items: center;
 		font-weight: 500;
 		color: var(--text-02);
 	}
@@ -337,17 +339,6 @@ export default defineComponent({
 		> i {
 			margin-right: 0.1rem;
 		}
-	}
-}
-
-.kt-field-label {
-	position: relative;
-	display: flex;
-	align-items: center;
-	color: var(--text-02);
-
-	> :not(:first-child) {
-		margin-left: 0.2em;
 	}
 }
 </style>

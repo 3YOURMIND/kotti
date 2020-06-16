@@ -104,7 +104,10 @@ export default defineComponent({
 
 	&__label {
 		display: flex;
-		margin-bottom: 0.4rem;
+
+		&:not(:last-child) {
+			margin-bottom: 0.4rem;
+		}
 	}
 
 	&__input {
