@@ -5,6 +5,25 @@ import { KottiField } from '../kotti-field/types'
 
 import { KottiFieldSingleSelect, KottiFieldMultiSelect } from './types'
 
+export type ElSelectWithInternalAPI =
+	| (ElSelect & {
+			inputWidth: number
+			setSoftFocus(): void
+	  })
+	| null
+
+type Hook<DATA_TYPE extends Values> = {
+	elSelectRef: Ref<ElSelectWithInternalAPI>
+	field: KottiField.Hook.Returns<DATA_TYPE>
+	inputSelectors: string[]
+	/**
+	 * FIXME: Should be typeof KtField in theory, but right now this gets resolved wrongly to VueConstructor<Vue>
+	 */
+	ktFieldRef: Ref<Vue | null>
+}
+
+type Values = KottiFieldSingleSelect.Value | KottiFieldMultiSelect.Value
+
 /**
  * ^ `popperComponent` is an internal `element-ui` component that computes the placement
  * of the dropdown based on the input element of `el-select`.
@@ -18,16 +37,10 @@ import { KottiFieldSingleSelect, KottiFieldMultiSelect } from './types'
  * So, here, we overwrite the internal property `referenceElm` of the component, to place the dropdown
  * in accordance to our input component instead (which is accessed by the `$refs.inputContainerRef`)
  */
-export const usePopperPlacementFix = (
-	elSelectRef: Ref<
-		| (ElSelect & {
-				inputWidth: number
-				setSoftFocus(): void
-		  })
-		| null
-	>,
-	ktFieldRef: Ref<Vue | null>,
-) => {
+const usePopperPlacementFix = <DATA_TYPE extends Values>({
+	elSelectRef,
+	ktFieldRef,
+}: Pick<Hook<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef'>) => {
 	onMounted(() => {
 		const elSelectComponent = elSelectRef.value
 		if (elSelectComponent === null) throw new Error('el-select not available')
@@ -45,12 +58,13 @@ export const usePopperPlacementFix = (
 	})
 }
 
-// adds size attribute to avoid overflow of icons
-export const useSelectInputFixes = (
-	elSelectRef: Ref<ElSelect | null>,
-	ktFieldRef: Ref<Vue | null>,
-	inputQueries: string[],
-) => {
+/**
+ * adds size attribute to avoid overflow of icons
+ */
+const useSelectInputFixes = <DATA_TYPE extends Values>({
+	inputSelectors,
+	ktFieldRef,
+}: Pick<Hook<DATA_TYPE>, 'ktFieldRef' | 'inputSelectors'>) => {
 	onMounted(() => {
 		const ktFieldComponent = ktFieldRef.value
 		if (ktFieldComponent === null) throw new Error('kt-field not available')
@@ -58,27 +72,17 @@ export const useSelectInputFixes = (
 		const ktFieldContainerElement = ktFieldComponent.$refs
 			.inputContainerRef as Element
 
-		inputQueries.forEach((query) =>
+		inputSelectors.forEach((query) =>
 			ktFieldContainerElement.querySelector(query)?.setAttribute('size', '1'),
 		)
 	})
 }
 
-export const usePopperWidthFix = <
-	SELECT_DATA_TYPE extends
-		| KottiFieldSingleSelect.Value
-		| KottiFieldMultiSelect.Value
->(
-	elSelectRef: Ref<
-		| (ElSelect & {
-				inputWidth: number
-				setSoftFocus(): void
-		  })
-		| null
-	>,
-	ktFieldRef: Ref<Vue | null>,
-	field: KottiField.Hook.Returns<SELECT_DATA_TYPE>,
-) => {
+const usePopperWidthFix = <DATA_TYPE extends Values>({
+	elSelectRef,
+	field,
+	ktFieldRef,
+}: Pick<Hook<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef' | 'field'>) => {
 	watchEffect(() => {
 		/**
 		 * If the field is loading, we want to unfocus in case the popper is open
@@ -105,4 +109,15 @@ export const usePopperWidthFix = <
 		popperElement.style.width = `${newWidth}px`
 		elSelectComponent.inputWidth = newWidth
 	})
+}
+
+export const useSelectFixes = <DATA_TYPE extends Values>({
+	elSelectRef,
+	field,
+	inputSelectors,
+	ktFieldRef,
+}: Hook<DATA_TYPE>) => {
+	usePopperPlacementFix({ elSelectRef, ktFieldRef })
+	usePopperWidthFix({ elSelectRef, field, ktFieldRef })
+	useSelectInputFixes({ ktFieldRef, inputSelectors })
 }

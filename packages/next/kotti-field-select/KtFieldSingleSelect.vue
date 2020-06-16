@@ -58,11 +58,7 @@ import { useField } from '../kotti-field/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
 import { KOTTI_FIELD_SINGLE_SELECT_PROPS } from './constants'
-import {
-	usePopperPlacementFix,
-	usePopperWidthFix,
-	useSelectInputFixes,
-} from './hooks'
+import { useSelectFixes, ElSelectWithInternalAPI } from './hooks'
 import { KottiFieldSingleSelect } from './types'
 
 export default defineComponent({
@@ -88,23 +84,17 @@ export default defineComponent({
 			},
 		})
 
-		const elSelectRef = ref<
-			ElSelect & {
-				inputWidth: number
-				setSoftFocus(): void
-			}
-		>(null)
-
-		// FIXME: Should be typeof KtField in theory, but right now
-		// this gets resolved wrongly by vetur
+		const elSelectRef = ref<ElSelectWithInternalAPI>(null)
 		const ktFieldRef = ref<Vue>(null)
 
-		usePopperPlacementFix(elSelectRef, ktFieldRef)
-		usePopperWidthFix(elSelectRef, ktFieldRef, field)
-		useSelectInputFixes(elSelectRef, ktFieldRef, ['.el-input__inner'])
+		useSelectFixes({
+			elSelectRef,
+			field,
+			inputSelectors: ['.el-input__inner'],
+			ktFieldRef,
+		})
 
 		const isDropdownOpen = ref(false)
-
 		const scheduleFocusAfterFieldClick = ref(false)
 
 		return {

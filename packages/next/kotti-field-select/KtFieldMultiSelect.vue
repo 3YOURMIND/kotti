@@ -78,11 +78,7 @@ import { useField } from '../kotti-field/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
 import { KOTTI_FIELD_MULTI_SELECT_PROPS } from './constants'
-import {
-	usePopperPlacementFix,
-	usePopperWidthFix,
-	useSelectInputFixes,
-} from './hooks'
+import { useSelectFixes, ElSelectWithInternalAPI } from './hooks'
 import { KottiFieldMultiSelect } from './types'
 
 type Entry = KottiFieldMultiSelect.Props['options'][0]
@@ -114,23 +110,18 @@ export default defineComponent({
 			},
 		})
 
-		const elSelectRef = ref<
-			ElSelect & {
-				inputWidth: number
-				setSoftFocus(): void
-			}
-		>(null)
-
-		// FIXME: Should be typeof KtField in theory, but right now
-		// this gets resolved wrongly by vetur
+		const elSelectRef = ref<ElSelectWithInternalAPI>(null)
 		const ktFieldRef = ref<Vue>(null)
 
-		usePopperPlacementFix(elSelectRef, ktFieldRef)
-		usePopperWidthFix(elSelectRef, ktFieldRef, field)
-		useSelectInputFixes(elSelectRef, ktFieldRef, [
-			'.el-input__inner',
-			'.el-select__tags .el-select__input',
-		])
+		useSelectFixes({
+			field,
+			elSelectRef,
+			ktFieldRef,
+			inputSelectors: [
+				'.el-input__inner',
+				'.el-select__tags .el-select__input',
+			],
+		})
 
 		const isDropdownOpen = ref(false)
 
