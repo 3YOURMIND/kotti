@@ -38,7 +38,7 @@ import {
 	EL_DATE_PROPS,
 	EL_DATE_RANGE_PROPS,
 } from './constants'
-import { usePicker, ElDateComponent } from './hooks'
+import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDateRange } from './types'
 import { isInvalidDate } from './utils'
 
@@ -70,11 +70,11 @@ export default defineComponent({
 			},
 		})
 
-		const elDateRef = ref<ElDateComponent>(null)
+		const elDateRef = ref<ElDateWithInternalAPI>(null)
 
 		const inputContainerRef = ref<Element>(null)
 
-		usePicker(elDateRef, inputContainerRef, field, '700px')
+		usePicker({ elDateRef, field, inputContainerRef, popperWidth: '700px' })
 
 		const pickerOptions: Ref<Pick<
 			DatePickerOptions,

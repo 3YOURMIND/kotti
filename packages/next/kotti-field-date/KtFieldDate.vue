@@ -27,7 +27,6 @@
 <script lang="ts">
 import './styles.scss'
 import { defineComponent, ref, Ref, computed } from '@vue/composition-api'
-import dayjs from 'dayjs'
 import { DatePicker as ElDate } from 'element-ui'
 import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
 
@@ -40,7 +39,7 @@ import {
 	KOTTI_FIELD_DATE_PROPS,
 	EL_DATE_PROPS,
 } from './constants'
-import { usePicker, ElDateComponent } from './hooks'
+import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDate } from './types'
 import { isInvalidDate } from './utils'
 
@@ -67,11 +66,10 @@ export default defineComponent({
 			},
 		})
 
-		const elDateRef = ref<ElDateComponent>(null)
-
+		const elDateRef = ref<ElDateWithInternalAPI>(null)
 		const inputContainerRef = ref<Element>(null)
 
-		usePicker(elDateRef, inputContainerRef, field, '400px')
+		usePicker({ elDateRef, field, inputContainerRef, popperWidth: '400px' })
 
 		const pickerOptions: Ref<Pick<
 			DatePickerOptions,
