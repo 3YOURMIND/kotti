@@ -59,8 +59,8 @@ export default defineComponent({
 						date === null ||
 						(typeof date === 'string' && DATE_FORMAT_REGEX.test(date)),
 				),
-
-			isEmpty: (dateRangeValue) => dateRangeValue.every((date) => date === ''),
+			isEmpty: (dateRangeValue) =>
+				dateRangeValue.every((date) => date === null),
 			props,
 			supports: {
 				clear: false,

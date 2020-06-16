@@ -1,5 +1,4 @@
 <template>
-	<!-- FIXME: getEmptyValue doesn't match Empty check -->
 	<KtField
 		v-bind="{ field }"
 		class="kt-field-date"
@@ -56,7 +55,7 @@ export default defineComponent({
 			isCorrectDataType: (value): value is KottiFieldDate.Value =>
 				(typeof value === 'string' && DATE_FORMAT_REGEX.test(value)) ||
 				value === null,
-			isEmpty: (value) => value === '',
+			isEmpty: (value) => value === null,
 			props,
 			supports: {
 				clear: false, // rely on el-ui
@@ -79,8 +78,12 @@ export default defineComponent({
 			shortcuts: props.shortcuts.map(
 				({ label, value, keepOpen }: KottiFieldDate.Props['shortcuts'][0]) => ({
 					text: label,
-					onClick(_picker: ElDatePicker) {
-						if (keepOpen !== true) _picker.$emit('pick', value)
+					onClick(picker: ElDatePicker) {
+						/**
+						 * close the picker if it shouldn’t stay open
+						 */
+						if (keepOpen !== true) picker.$emit('pick', value)
+
 						field.setValue(value)
 					},
 				}),
