@@ -2,28 +2,12 @@
 # Form
 
 <ClientOnly>
-	<h2>KtFields Without Form</h2>
-	<KtFieldDateRange
-		v-model="dateRange"
-		label="KtFieldDateRange"
-		:maximumDate="null"
-		minimumDate="2020-06-05"
-		:shortcuts="dateRangeShortcuts"
-	/>
-	<!-- placeholder="Select Date" -->
-	<div>
-		<KtFieldText
-			v-model="textValue"
-			label="KtFieldText"
-			placeholder="type something"
-		/>
-	</div>
 	<h2>KtForm Settings</h2>
 	<div class="wrapper">
 		<KtFieldRadioGroup
 			v-model="preventSubmissionOn"
 			isOptional
-			label="Prevent Submission On"
+			label="Prevent Submission"
 			:options="[
 				{ label: 'Error', value: 'error' },
 				{ label: 'Warning', value: 'warning' },
@@ -47,6 +31,7 @@
 		<KtFieldCheckboxGroup
 			v-model="formSettings"
 			isOptional
+			label="Miscellaneous"
 			:options="[
 				{ key: 'hideValidation', label: 'Hide validation' },
 				{ key: 'isLoading', label: 'Is Loading' },
@@ -69,8 +54,8 @@
 			:maximumDate="null"
 			minimumDate="2020-06-05"
 			placeholder="Select Date"
-			:shortcuts="dateShortcuts"
 			:size="fieldSize"
+			:shortcuts="dateShortcuts"
 		/>
 		<KtFieldMultiSelect
 			:collapseTagsAfter="3"
@@ -247,6 +232,22 @@
 	<br />
 	<h2>formData</h2>
 	<pre v-text="JSON.stringify(formData, null, '\t')" />
+	<h2>KtFields Without Form</h2>
+	<KtFieldDateRange
+		v-model="dateRange"
+		label="KtFieldDateRange"
+		:maximumDate="null"
+		minimumDate="2020-06-05"
+		:shortcuts="dateRangeShortcuts"
+	/>
+	<!-- placeholder="Select Date" -->
+	<div>
+		<KtFieldText
+			v-model="textValue"
+			label="KtFieldText"
+			placeholder="type something"
+		/>
+	</div>
 </ClientOnly>
 </template>
 
@@ -426,9 +427,6 @@ export default {
 li {
 	list-style: none;
 }
-.ktfield-wrapper {
-	margin-bottom: 15px;
-}
 
 h3 {
 	border-bottom: 0;
@@ -436,11 +434,21 @@ h3 {
 
 .wrapper {
 	display: flex;
-	flex-direction: column;
-	padding: 1.5em;
+	flex-direction: row;
 	margin: 0;
+	margin-bottom: 1.5em;
 	background-color: var(--ui-01);
-	border: 1px solid var(--ui-03);
+	border: 1px solid var(--ui-02);
 	border-radius: $border-radius;
+
+	> * {
+		flex: 1;
+		padding: 1.5em;
+		margin: 0 !important;
+	}
+
+	> *:not(:last-child) {
+		border-right: 1px solid var(--ui-02);
+	}
 }
 </style>
