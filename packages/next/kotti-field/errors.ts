@@ -72,7 +72,9 @@ class InvalidDataType extends CustomError {
 	public constructor(props: KottiField.Props<unknown>, newValue: unknown) {
 		super(
 			createErrorMessage(props, [
-				`Encountered invalid data type, “${typeof newValue}” with value “${newValue}”.`,
+				`Encountered invalid data type, “${typeof newValue}” with value “${JSON.stringify(
+					newValue,
+				)}”.`,
 			]),
 		)
 	}
