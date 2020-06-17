@@ -162,5 +162,5 @@
 		"test:unit": "vue-cli-service test:unit"
 	},
 	"style": "dist/KottiUI.css",
-	"version": "1.10.5"
+	"version": "1.11.0"
 }
