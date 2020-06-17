@@ -252,173 +252,140 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, computed, ref } from '@vue/composition-api'
 import dayjs from 'dayjs'
 
+import {
+	KottiFieldDateRange,
+	KottiFieldDate,
+} from '../../../packages/next/kotti-field-date/types'
 import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiForm } from '../../../packages/next/kotti-form/types'
 
 const DATE_ISO_FORMAT = 'YYYY-MM-DD'
 
-export default {
+export default defineComponent({
 	name: 'KtFormDoc',
-	data() {
-		const alwaysError = () => ({
-			type: 'error',
-			text: 'Always Error!',
-		})
-
-		const alwaysSuccess = () => ({
-			type: 'success',
-			text: 'Always Success!',
-		})
-
-		const alwaysWarning = () => ({
-			type: 'warning',
-			text: 'Always Warning!',
-		})
-
-		const validators: Record<string, KottiField.Validation.Function> = {
-			alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
-			alwaysNeutral: () => ({ type: null }),
-			alwaysSuccess: () => ({ type: 'success', text: 'Always Success!' }),
-			alwaysWarning: () => ({ type: 'warning', text: 'Always Warning!' }),
-			username: (value: string | null) => {
-				if (value === null) return { type: null }
-
-				// eslint-disable-next-line no-magic-numbers
-				if (value.length < 3)
-					return {
-						text: 'Your Username is too short',
-						type: 'error',
-					}
-
-				// eslint-disable-next-line no-magic-numbers
-				if (value.length < 5)
-					return { text: 'Your username is already taken', type: 'warning' }
-
-				return { text: null, type: 'success' }
+	setup() {
+		const dateRange = ref([null, null])
+		const formData = ref({
+			date: null,
+			checkboxGroup: {
+				initiallyFalse: false,
+				initiallyNull: null,
+				initiallyTrue: true,
 			},
-		}
+			description: null,
+			firstName: 'John',
+			lastName: 'Smith',
+			multiSelect: [1, 2],
+			radioGroupAndSingleSelect: null,
+			user: { lastName: 'pepe' },
+			username: null,
+			users: [{ username: null }, { username: 'anything' }],
+		})
+
+		const today = dayjs().format(DATE_ISO_FORMAT)
+
+		const jumpOneWeek = (fromDate: string | null) =>
+			dayjs(fromDate ?? undefined)
+				.add(1, 'week')
+				.format(DATE_ISO_FORMAT)
+
+		const yesterday = dayjs()
+			.subtract(1, 'day')
+			.format(DATE_ISO_FORMAT)
 
 		return {
-			// dateRange: [null, '2020-06-16'],
-			dateRange: [],
-			disableFormFields: false,
-			formData: {
-				checkboxGroup: {
-					initiallyFalse: false,
-					initiallyNull: null,
-					initiallyTrue: true,
-				},
-				date: null,
-				description: null,
-				firstName: 'John',
-				lastName: 'Smith',
-				radioGroupAndSingleSelect: null,
-				users: [{ username: null }, { username: 'anything' }],
-				user: { lastName: 'pepe' },
-				username: null,
-				multiSelect: [1, 2],
+			addUser: () => {
+				formData.value = {
+					...formData.value,
+					users: [...formData.value.users, { username: null }],
+				}
 			},
-			fieldSize: 'medium',
-			formSettings: {
+			alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
+			alwaysSuccess: () => ({ type: 'success', text: 'Always Success!' }),
+			alwaysWarning: () => ({ type: 'warning', text: 'Always Warning!' }),
+			dateRange,
+			dateRangeShortcuts: computed(
+				(): KottiFieldDateRange.Props['shortcuts'] => [
+					{
+						label: 'Today',
+						value: [today, today],
+					},
+					{
+						label: 'Yesterday',
+						value: [yesterday, today],
+					},
+					{
+						label: 'Jump One Week',
+						value: [dateRange.value[1], jumpOneWeek(dateRange.value[1])],
+						keepOpen: true,
+					},
+				],
+			),
+			dateShortcuts: computed((): KottiFieldDate.Props['shortcuts'] => [
+				{ label: 'Today', value: today },
+				{ label: 'Yesterday', value: yesterday },
+				{
+					label: 'Jump One Week',
+					keepOpen: true,
+					value: jumpOneWeek(formData.value.date),
+				},
+			]),
+			disableFormFields: ref(false),
+			formData,
+			fieldSize: ref('medium'),
+			formSettings: ref({
 				hideValidation: false,
 				isLoading: false,
 				disableFormFields: false,
+			}),
+			onSubmit: (event: KottiForm.Events.Submit) => {
+				// eslint-disable-next-line no-console
+				console.debug('onSubmit', event)
+				alert('onSubmit: See Console for Event Details')
 			},
-			preventSubmissionOn: 'NEVER',
-			textValue: null,
-			radioGroupAndSelectOptions: [
+			preventSubmissionOn: ref('NEVER'),
+			radioGroupAndSelectOptions: ref([
 				{ label: 'label 1', value: 1 },
 				{ label: 'label 2', value: 2 },
 				{ label: 'label 3', value: 3 },
-				{ label: 'label 4', value: 4, disabled: true },
+				{ disabled: true, label: 'label 4', value: 4 },
 				{ label: 'label 5', value: 5 },
 				{ label: 'label 6', value: 6 },
-			],
-			validators,
-			alwaysError,
-			alwaysWarning,
-			alwaysSuccess,
-			testCheckbox: true,
-			testLabel: 'hi',
+			]),
+			textValue: ref(null),
+			validators: computed(
+				(): Record<string, KottiField.Validation.Function> => ({
+					alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
+					alwaysNeutral: () => ({ type: null }),
+					alwaysSuccess: () => ({ type: 'success', text: 'Always Success!' }),
+					alwaysWarning: () => ({ type: 'warning', text: 'Always Warning!' }),
+					username: (value: string | null) => {
+						if (value === null) return { type: null }
+
+						// eslint-disable-next-line no-magic-numbers
+						if (value.length < 3)
+							return {
+								text: 'Your Username is too short',
+								type: 'error',
+							}
+
+						// eslint-disable-next-line no-magic-numbers
+						if (value.length < 5)
+							return {
+								text: 'Your username is already taken',
+								type: 'warning',
+							}
+
+						return { text: null, type: 'success' }
+					},
+				}),
+			),
 		}
 	},
-	computed: {
-		today() {
-			return dayjs().format(DATE_ISO_FORMAT)
-		},
-		yesterday() {
-			return dayjs()
-				.subtract(1, 'day')
-				.format(DATE_ISO_FORMAT)
-		},
-		jumpOneWeek() {
-			return dayjs(
-				((this as unknown) as { formData: { date: string | null } }).formData
-					?.date ?? undefined,
-			)
-				.add(1, 'week')
-				.format(DATE_ISO_FORMAT)
-		},
-		dateShortcuts() {
-			return [
-				{
-					label: 'Today',
-					value: ((this as unknown) as { today: string | undefined }).today,
-				},
-				{
-					label: 'Yesterday',
-					value: ((this as unknown) as { yesterday: string | undefined })
-						.yesterday,
-				},
-				{
-					label: 'Jump One Week',
-					value: ((this as unknown) as { jumpOneWeek: string | undefined })
-						.jumpOneWeek,
-					keeOpen: true,
-				},
-			]
-		},
-		dateRangeShortcuts() {
-			const { today, yesterday, jumpOneWeek, formData } = (this as unknown) as {
-				today: string | undefined
-				yesterday: string | undefined
-				jumpOneWeek: string | undefined
-				formData: { date: string | null }
-			}
-
-			return [
-				{
-					label: 'Today',
-					value: [today, today],
-				},
-				{
-					label: 'Yesterday',
-					value: [yesterday, today],
-				},
-				{
-					label: 'Jump One Week',
-					value: [formData.date, jumpOneWeek],
-					keepOpen: true,
-				},
-			]
-		},
-	},
-	methods: {
-		addUser() {
-			this.formData = {
-				...this.formData,
-				users: [...this.formData.users, { username: null }],
-			}
-		},
-		onSubmit(event: KottiForm.Events.Submit) {
-			// eslint-disable-next-line no-console
-			console.debug('onSubmit', event)
-			alert('onSubmit: See Console for Event Details')
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss">
