@@ -119,12 +119,14 @@ export default {
 	methods: {
 		handleBlur() {
 			this.isFocused = false
+			this.$emit('blur')
 		},
 		handleChange(event) {
 			this.$emit('change', event.target.value)
 		},
 		handleFocus() {
 			this.isFocused = true
+			this.$emit('focus')
 		},
 		handleInput(event) {
 			const { value } = event.target
