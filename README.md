@@ -137,9 +137,9 @@ npm version {patch, minor, major}
 # OR change the version directly in package.json
 # then commit & push
 
-# finally, publish
 npm publish
-
 # the postPublish hook will create and automatically push the new tag
 
+# publish github pages
+./github-deploy.sh
 ```
