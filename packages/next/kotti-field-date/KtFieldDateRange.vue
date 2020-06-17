@@ -13,9 +13,6 @@
 			<ElDate
 				ref="elDateRef"
 				v-bind="elDateRangePickerProps"
-				:disabled="field.isDisabled"
-				type="daterange"
-				:value="field.currentValue"
 				@input="onChange"
 			/>
 		</div>
@@ -54,6 +51,7 @@ export default defineComponent({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldDateRange.Value =>
 				Array.isArray(value) &&
+				value.length === 2 &&
 				value.every(
 					(date) =>
 						date === null ||
@@ -102,14 +100,21 @@ export default defineComponent({
 					({
 						...EL_DATE_PROPS,
 						...EL_DATE_RANGE_PROPS,
+						disabled: field.isDisabled,
 						pickerOptions: pickerOptions.value,
+						type: 'daterange',
+						value: field.currentValue.map((date) => date ?? ''),
 						//TODO add start/end placeholder logic
 					} as Partial<ElDate>),
 			),
 			elDateRef,
 			field,
 			inputContainerRef,
-			onChange: (value: KottiFieldDateRange.Value) => field.setValue(value),
+			/**
+			 * element-ui emits `null` on clear
+			 */
+			onChange: (value: KottiFieldDateRange.Value | null) =>
+				field.setValue(value === null ? [null, null] : value),
 		}
 	},
 })

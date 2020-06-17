@@ -48,6 +48,7 @@ export const dateRangeShortcutValidator = (
 	option.value.length === 2 &&
 	option.value.every(
 		(date: KottiFieldDateRange.Value) =>
-			typeof date === 'string' && DATE_FORMAT_REGEX.test(date),
+			date === null ||
+			(typeof date === 'string' && DATE_FORMAT_REGEX.test(date)),
 	) &&
 	['boolean', 'undefined'].includes(typeof option.keepOpen)
