@@ -3,7 +3,6 @@
 		v-bind="{ field }"
 		class="kt-field-daterange"
 		:getEmptyValue="() => [null, null]"
-		isComponent="div"
 	>
 		<div
 			ref="inputContainerRef"

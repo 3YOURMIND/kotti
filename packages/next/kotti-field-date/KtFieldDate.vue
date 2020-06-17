@@ -1,10 +1,5 @@
 <template>
-	<KtField
-		v-bind="{ field }"
-		class="kt-field-date"
-		:getEmptyValue="() => null"
-		isComponent="div"
-	>
+	<KtField v-bind="{ field }" class="kt-field-date" :getEmptyValue="() => null">
 		<div
 			ref="inputContainerRef"
 			slot="container"
