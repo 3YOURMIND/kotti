@@ -13,6 +13,7 @@
 		</div>
 	</KtNavbar>
 </template>
+
 <script>
 import KtNavbar from '../../packages/kotti-navbar'
 

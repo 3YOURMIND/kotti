@@ -58,6 +58,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 .kt-navbar-logo {
 	display: flex;

@@ -5,7 +5,7 @@ Design token are abstracting values used for our design system. It allow us to u
 names and to never use hardcoded values.
 It also open us to a lot of theming features.
 
-## Usage 
+## Usage
 
 We store the tokens in JSON files. We can then easily export these to SCSS, CSS custom properties
 and even figma styles for colors!
@@ -16,7 +16,7 @@ Here is how weuse CSS custom properties:
 ``` css
   /* set a css custom property */
   --text-01: #000;
-  --background-01: #f5f5f5; 
+  --background-01: #f5f5f5;
 
   /* read a property */
   color: var(--text-01)
@@ -25,6 +25,7 @@ Here is how weuse CSS custom properties:
 
 
 </template>
+
 <script>
 export default {
 	name: 'Index',

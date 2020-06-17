@@ -12,7 +12,7 @@ import {
 	DEFAULT_RENDER_HEADER,
 } from './constants'
 
-const columnIdSeed = 1
+let columnIdSeed = 1
 
 function updateColumnsfor(prop) {
 	return function updateColumnProp(newVal) {
@@ -109,7 +109,6 @@ function createColumn(column = {}) {
 	let columnId = column.id
 	if (!columnId) {
 		columnId = `${_self[KT_TABLE].tableId}_column_${columnIdSeed}`
-		// eslint-disable-next-line no-const-assign
 		columnIdSeed++
 	}
 	// eslint-disable-next-line no-param-reassign

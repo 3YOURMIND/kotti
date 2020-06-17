@@ -10,6 +10,7 @@
 		</div>
 	</div>
 </template>
+
 <script>
 import Popper from 'popper.js'
 import { mixin as clickaway } from 'vue-clickaway'
@@ -37,7 +38,10 @@ export default {
 	},
 	computed: {
 		popperClass() {
-			return this.size ? `kt-popper kt-popper--${this.size}` : `kt-popper`
+			return {
+				'kt-popper': true,
+				[`kt-popper kt-popper--${this.size}`]: this.size,
+			}
 		},
 	},
 	watch: {

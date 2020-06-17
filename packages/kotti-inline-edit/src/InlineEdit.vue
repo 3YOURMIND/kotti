@@ -27,6 +27,7 @@
 		</div>
 	</div>
 </template>
+
 <script>
 import escape from 'lodash/escape'
 

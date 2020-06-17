@@ -29,6 +29,7 @@
 		</KtPopover>
 	</div>
 </template>
+
 <script>
 import KtButton from '../kotti-button'
 import KtButtonGroup from '../kotti-button-group'
@@ -61,6 +62,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 @import '../kotti-style/_variables.scss';
 .kt-dropdown-button {

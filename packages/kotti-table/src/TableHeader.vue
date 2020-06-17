@@ -58,6 +58,7 @@
 		</tr>
 	</thead>
 </template>
+
 <script>
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
 import TableHeaderCell from './TableHeaderCell'
@@ -167,6 +168,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
 

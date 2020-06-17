@@ -50,6 +50,7 @@ Example of using the required field:
 | `value`   | value                        | `Boolean` | [true, false]   | false   |
 | `required`| required                     | `Boolean` | [true, false]   | false   |
 </template>
+
 <script>
 export default {
 	name: 'KtCheckboxDoc',

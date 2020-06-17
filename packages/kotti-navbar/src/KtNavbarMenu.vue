@@ -38,6 +38,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 .kt-navbar-menu {
 	box-sizing: border-box;

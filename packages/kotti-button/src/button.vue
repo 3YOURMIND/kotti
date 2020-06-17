@@ -10,6 +10,7 @@
 		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />
 	</component>
 </template>
+
 <script>
 export default {
 	name: 'KtButton',

@@ -80,6 +80,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 :root {
 	--accordion-color: var(--interactive-03);
