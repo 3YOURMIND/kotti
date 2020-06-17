@@ -1,5 +1,5 @@
-import { sortData } from './sort'
 import { updateAllSelected, cleanSelection, clearSelection } from './select'
+import { sortData } from './sort'
 
 export const defaultState = {
 	_data: [],

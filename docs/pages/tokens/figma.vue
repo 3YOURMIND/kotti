@@ -1,22 +1,22 @@
 <template lang="md">
-  
+
 # Figma
 
 We are using figma for proptotyping and managing our components.
-Our goal is to keep everything updated between the code and the figma files. 
+Our goal is to keep everything updated between the code and the figma files.
 
 We wrote few scripts that uses the figma API to avoid us any manual work.
 
 ## Import into figma
-Figma let you use the `figma` object in the console, so we can easily interact with 
-the API without even having to create or publish plugins. We'll use that feature to 
+Figma let you use the `figma` object in the console, so we can easily interact with
+the API without even having to create or publish plugins. We'll use that feature to
 easily import the colors into figma as styles.
 
 ### Clean up old color styles
-This snippet will help you delete every color style (paint style, also include gradients 
-and patterns) on a project. 
+This snippet will help you delete every color style (paint style, also include gradients
+and patterns) on a project.
 
-**It should not be used in a production file, it is just for cleaning up tests, 
+**It should not be used in a production file, it is just for cleaning up tests,
 if you use it on the library file, you will break every team projects!**
 
 <pre class="long">
@@ -25,24 +25,24 @@ existingStyles = figma.getLocalPaintStyles()
 existingStyles.forEach(style=> style.remove())
 </pre>
 
-### Color list 
+### Color list
 
 This is useful if you use the color importer figma plugin (TBA).
 
-#### Base colors 
+#### Base colors
 <pre class="long">
 {{baseImportableList}}
 </pre>
 
-#### Tokens 
+#### Tokens
 <pre class="long">
 {{tokenImportableList}}
 </pre>
 
-### The script 
+### The script
 
 This can be copy and pasted directly into the console and will import your colors.
-It will also edit existant colors if they exists already. Name will be used to 
+It will also edit existant colors if they exists already. Name will be used to
 check existence.
 
 #### Base colors only
@@ -67,6 +67,7 @@ tokens = {{[...baseImportableList,...tokenImportableList]}}
 </pre>
 
 </template>
+
 <script>
 import {
 	baseColorsFactory,

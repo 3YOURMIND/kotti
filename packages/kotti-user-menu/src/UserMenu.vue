@@ -16,7 +16,6 @@
 					<a
 						v-for="(link, linkIndex) in section.links"
 						:key="linkIndex"
-						:href="link.link"
 						class="user-menu__section__item"
 						:data-test="
 							`navbar:footer:element:${link.title
@@ -24,6 +23,7 @@
 								.split(' ')
 								.join('-')}`
 						"
+						:href="link.link"
 						@click="$emit('click', link)"
 						v-text="link.title"
 					/>
@@ -47,8 +47,9 @@
 </template>
 
 <script>
-import KtAvatar from '../../kotti-avatar'
 import { mixin as clickaway } from 'vue-clickaway'
+
+import KtAvatar from '../../kotti-avatar'
 
 const linkIsValid = (link) => Boolean(link.title)
 
@@ -111,6 +112,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
 

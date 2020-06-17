@@ -1,4 +1,7 @@
 import { setColumnsArray } from './column'
+function getFilteredColumnIndex(state, column) {
+	return state.filteredColumns.findIndex(({ prop }) => prop === column.prop)
+}
 
 export const defaultState = {
 	filteredColumns: [],
@@ -20,8 +23,4 @@ export function setFilteredColumn(state, column) {
 	} else {
 		state.filteredColumns.push(column)
 	}
-}
-
-function getFilteredColumnIndex(state, column) {
-	return state.filteredColumns.findIndex(({ prop }) => prop === column.prop)
 }

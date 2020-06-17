@@ -27,8 +27,8 @@ Kotti uses custom icons — [Yoco](https://www.github.com/3yourmind/yoco)
 </template>
 
 <script>
-import IconFont from '~/components/IconFont.vue'
 import YocoLiga from '~/assets/json/yocoString.json'
+import IconFont from '~/components/IconFont.vue'
 import YocoPreview from '~/components/YocoPreview.vue'
 
 export default {

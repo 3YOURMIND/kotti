@@ -12,8 +12,8 @@
 				v-model="text"
 				class="comment-input__textarea"
 				:placeholder="placeholder"
-				@focus="textFocused = true"
 				@blur="textFocused = false"
+				@focus="textFocused = true"
 				@input="updateHeight"
 			></textarea>
 			<KtButton
@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import KtButton from '../../kotti-button'
 import KtAvatar from '../../kotti-avatar'
+import KtButton from '../../kotti-button'
 
 export default {
 	name: 'KtCommentInput',

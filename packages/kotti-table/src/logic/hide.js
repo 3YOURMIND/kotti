@@ -1,5 +1,29 @@
 import { setColumnsArray } from './column'
 
+export function getHiddenColumnIndex(state, column) {
+	return state.hiddenColumns.findIndex(({ prop }) => prop === column.prop)
+}
+
+export function getResolvedHiddenColumns(columns) {
+	return columns.filter(({ _deleted, hidden }) => !_deleted && !hidden)
+}
+
+function removeHiddenColumn(state, column) {
+	const columnIndex = getHiddenColumnIndex(state, column)
+	if (columnIndex !== -1) {
+		state.hiddenColumns.splice(columnIndex, 1)
+	}
+}
+
+export function setHiddenColumn(state, column) {
+	const columnIndex = getHiddenColumnIndex(state, column)
+	if (columnIndex !== -1) {
+		state.hiddenColumns[columnIndex] = column
+	} else {
+		state.hiddenColumns.push(column)
+	}
+}
+
 export const defaultState = {
 	hiddenColumns: [],
 }
@@ -31,27 +55,3 @@ export const mutations = {
 }
 
 export const getters = {}
-
-export function setHiddenColumn(state, column) {
-	const columnIndex = getHiddenColumnIndex(state, column)
-	if (columnIndex !== -1) {
-		state.hiddenColumns[columnIndex] = column
-	} else {
-		state.hiddenColumns.push(column)
-	}
-}
-
-function removeHiddenColumn(state, column) {
-	const columnIndex = getHiddenColumnIndex(state, column)
-	if (columnIndex !== -1) {
-		state.hiddenColumns.splice(columnIndex, 1)
-	}
-}
-
-export function getHiddenColumnIndex(state, column) {
-	return state.hiddenColumns.findIndex(({ prop }) => prop === column.prop)
-}
-
-export function getResolvedHiddenColumns(columns) {
-	return columns.filter(({ _deleted, hidden }) => !_deleted && !hidden)
-}

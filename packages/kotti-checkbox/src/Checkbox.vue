@@ -2,10 +2,10 @@
 	<label class="form-checkbox">
 		<input
 			v-model="model"
-			class="form-checkbox__input"
-			type="checkbox"
 			v-bind="$attrs"
+			class="form-checkbox__input"
 			:required="required"
+			type="checkbox"
 		/>
 		<i class="form-icon" />
 		<slot>
@@ -13,6 +13,7 @@
 		</slot>
 	</label>
 </template>
+
 <script>
 export default {
 	name: 'KtCheckbox',
@@ -39,6 +40,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
 

@@ -1,15 +1,16 @@
 <template>
 	<div
+		v-on-clickaway="handleClickaway"
 		class="kt-popover"
 		:class="{ showPopper }"
-		v-on-clickaway="handleClickaway"
 	>
 		<div ref="anchor" @click="handleClick"><slot>Anchor</slot></div>
-		<div :class="popperClass" v-if="showPopper" ref="content">
-			<slot name="content" :close="handleClickaway">{{ content }}</slot>
+		<div v-if="showPopper" ref="content" :class="popperClass">
+			<slot :close="handleClickaway" name="content">{{ content }}</slot>
 		</div>
 	</div>
 </template>
+
 <script>
 import Popper from 'popper.js'
 import { mixin as clickaway } from 'vue-clickaway'
@@ -35,9 +36,17 @@ export default {
 			}
 		})
 	},
+	computed: {
+		popperClass() {
+			return {
+				'kt-popper': true,
+				[`kt-popper kt-popper--${this.size}`]: this.size,
+			}
+		},
+	},
 	watch: {
-		showPopper(val, oldVal) {
-			if (!!this.showPopper) {
+		showPopper() {
+			if (this.showPopper) {
 				this.$nextTick(() => {
 					this.initPopper()
 				})
@@ -46,11 +55,6 @@ export default {
 	},
 	destroyed() {
 		this.destroyPopper()
-	},
-	computed: {
-		popperClass() {
-			return this.size ? `kt-popper kt-popper--${this.size}` : `kt-popper`
-		},
 	},
 	methods: {
 		handleClick() {

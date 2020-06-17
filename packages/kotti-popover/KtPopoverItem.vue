@@ -1,5 +1,5 @@
 <template>
-	<div class="kt-popover-item" v-bind="$attrs" v-on="$listeners">
+	<div v-bind="$attrs" class="kt-popover-item" v-on="$listeners">
 		<i v-show="icon" class="yoco" v-text="icon" />
 		<slot />
 	</div>
@@ -16,6 +16,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 @import '../kotti-style/_variables.scss';
 .kt-popover-item {

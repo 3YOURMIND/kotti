@@ -1,4 +1,5 @@
 import pick from 'lodash/pick'
+
 import {
 	SORT_ASC,
 	SORT_DSC,
@@ -11,7 +12,16 @@ import {
 	DEFAULT_RENDER_HEADER,
 } from './constants'
 
-export let columnIdSeed = 1
+let columnIdSeed = 1
+
+function updateColumnsfor(prop) {
+	return function updateColumnProp(newVal) {
+		if (this.columnConfig) {
+			this.columnConfig[prop] = newVal
+			this[KT_STORE].commit('updateColumns')
+		}
+	}
+}
 
 const TableColumn = {
 	name: 'KtTableColumn',
@@ -58,6 +68,7 @@ const TableColumn = {
 		this.columnConfig = {}
 	},
 	created() {
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		this.columnConfig = createColumn(this)
 	},
 	watch: {
@@ -92,17 +103,6 @@ const TableColumn = {
 	},
 }
 
-export default TableColumn
-
-function updateColumnsfor(prop) {
-	return function updateColumnProp(newVal) {
-		if (this.columnConfig) {
-			this.columnConfig[prop] = newVal
-			this[KT_STORE].commit('updateColumns')
-		}
-	}
-}
-
 function createColumn(column = {}) {
 	const _self = column
 
@@ -111,6 +111,7 @@ function createColumn(column = {}) {
 		columnId = `${_self[KT_TABLE].tableId}_column_${columnIdSeed}`
 		columnIdSeed++
 	}
+	// eslint-disable-next-line no-param-reassign
 	column = pick(column, [...Object.keys(TableColumn.props), '$attrs'])
 
 	column.sortOrder = column.sortOrder || SORT_NONE
@@ -150,3 +151,5 @@ function createColumn(column = {}) {
 
 	return column
 }
+
+export default TableColumn

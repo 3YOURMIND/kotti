@@ -1,5 +1,5 @@
 <template>
-	<transition name="modal" mode="out-in">
+	<transition mode="out-in" name="modal">
 		<div class="modal-mask" @click.self="closeModal">
 			<slot name="modal-container">
 				<div :class="modalClass">

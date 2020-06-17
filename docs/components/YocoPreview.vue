@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { TimeConversion } from '@metatypes/units'
+
 export default {
 	name: 'YocoPreview',
 	props: {
@@ -33,7 +35,7 @@ export default {
 					this.copySuccess = true
 					setTimeout(() => {
 						this.copySuccess = false
-					}, 2000)
+					}, 2 * TimeConversion.MILLISECONDS_PER_SECOND)
 				},
 				() => {
 					alert('failed')

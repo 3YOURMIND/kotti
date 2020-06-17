@@ -1,5 +1,6 @@
-import KtInlineEdit from './src/InlineEdit'
 import escape from 'lodash/escape'
+
+import KtInlineEdit from './src/InlineEdit'
 
 export const defaultParser = (message) => escape(message)
 

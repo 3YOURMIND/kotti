@@ -1,18 +1,19 @@
 <template>
 	<KtNavbar
 		:isNarrow="isNarrow"
-		:sections="globalMenu"
 		:quickLinks="quickLinksData"
+		:sections="globalMenu"
 		@linkClick="redirectRouter($event)"
 		@logoClick="$router.push('/')"
 	>
 		<div slot="navbar-footer">
-			<a href="https://github.com/3YOURMIND/kotti" class="github-link">
-				<img src="~/assets/img/icon_github.svg" width="24" height="24" />
+			<a class="github-link" href="https://github.com/3YOURMIND/kotti">
+				<img height="24" src="~/assets/img/icon_github.svg" width="24" />
 			</a>
 		</div>
 	</KtNavbar>
 </template>
+
 <script>
 import KtNavbar from '../../packages/kotti-navbar'
 

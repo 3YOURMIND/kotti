@@ -1,6 +1,17 @@
 import Vue from 'vue'
+
 import config, { isBrowser } from '../config'
+
 import TargetContainer from './TargetContainer'
+
+const append = (targetEl, el) => {
+	if (targetEl.append) {
+		targetEl.append(el)
+	} else if (targetEl.appendChild) {
+		targetEl.appendChild(el)
+	}
+}
+
 export default Vue.extend({
 	name: 'VueSimplePortal',
 	props: {
@@ -29,18 +40,20 @@ export default Vue.extend({
 			},
 		},
 	},
-	created: function created() {
+	created() {
 		if (!this.getTargetEl()) {
 			this.insertTargetEl()
 		}
 	},
-	updated: function updated() {
-		var _this = this
+	updated() {
+		// eslint-disable-next-line @typescript-eslint/no-this-alias
+		const _this = this
 
 		// We only update the target container component
 		// if the scoped slot function is a fresh one
 		// The new slot syntax (since Vue 2.6) can cache unchanged slot functions
 		// and we want to respect that here.
+		// FIXME: Removing the function() in favor of arrow functions will most likely fix the need for the _this alias
 		this.$nextTick(function() {
 			if (!_this.disabled && _this.slotFn !== _this.$scopedSlots.default) {
 				_this.container.updatedNodes = _this.$scopedSlots.default
@@ -49,26 +62,26 @@ export default Vue.extend({
 			_this.slotFn = _this.$scopedSlots.default
 		})
 	},
-	beforeDestroy: function beforeDestroy() {
+	beforeDestroy() {
 		this.unmount()
 	},
 	methods: {
 		// This returns the element into which the content should be mounted.
-		getTargetEl: function getTargetEl() {
+		getTargetEl() {
 			if (!isBrowser) return
 			return document.querySelector(this.selector)
 		},
-		insertTargetEl: function insertTargetEl() {
+		insertTargetEl() {
 			if (!isBrowser) return
-			var parent = document.querySelector('body')
-			var child = document.createElement(this.tag)
+			const parent = document.querySelector('body')
+			const child = document.createElement(this.tag)
 			child.id = this.selector.substring(1)
 			append(parent, child)
 		},
-		mount: function mount() {
+		mount() {
 			if (!isBrowser) return
-			var targetEl = this.getTargetEl()
-			var el = document.createElement('DIV')
+			const targetEl = this.getTargetEl()
+			const el = document.createElement('DIV')
 
 			if (this.prepend && targetEl.firstChild) {
 				targetEl.insertBefore(el, targetEl.firstChild)
@@ -85,16 +98,16 @@ export default Vue.extend({
 				},
 			})
 		},
-		unmount: function unmount() {
+		unmount() {
 			if (this.container) {
 				this.container.$destroy()
 				delete this.container
 			}
 		},
 	},
-	render: function render(h) {
+	render(h) {
 		if (this.disabled) {
-			var nodes = this.$scopedSlots && this.$scopedSlots.default()
+			const nodes = this.$scopedSlots && this.$scopedSlots.default()
 			if (!nodes) return h()
 			return nodes.length < 2 && !nodes[0].text ? nodes : h(this.tag, nodes)
 		}
@@ -102,11 +115,3 @@ export default Vue.extend({
 		return h()
 	},
 })
-
-function append(targetEl, el) {
-	if (targetEl.append) {
-		targetEl.append(el)
-	} else if (targetEl.appendChild) {
-		targetEl.appendChild(el)
-	}
-}

@@ -9,8 +9,8 @@
 				:class="formInputClass"
 				:placeholder="placeholder"
 				:required="required"
-				:type="type"
 				:step="inputStep"
+				:type="type"
 				:value="currentValue"
 				@blur="handleBlur"
 				@change="handleChange"
@@ -20,8 +20,8 @@
 			<i
 				ref="inputIcon"
 				:class="iconClass"
-				@mouseover="showDialog = true"
 				@mouseleave="showDialog = false"
+				@mouseover="showDialog = true"
 				v-text="icon"
 			/>
 			<div v-show="showDialog && hasDialog" :class="dialogClass">
@@ -138,6 +138,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
 

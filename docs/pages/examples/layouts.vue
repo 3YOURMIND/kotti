@@ -2,17 +2,17 @@
 	<KtContainer>
 		<KtNavbar
 			slot="navbar"
-			:sections="navbarMenu"
 			labelText="MultiText"
+			logoUrl="placehold.it/160x50"
 			:notification="navbarNotification"
 			:quickLinks="quickLinksData"
-			logoUrl="placehold.it/160x50"
+			:sections="navbarMenu"
 		>
 			<div slot="navbar-footer">
 				<KtUserMenu
+					:sections="userMenuData"
 					userName="Jony'O Five"
 					userStatus="Invisible"
-					:sections="userMenuData"
 					@click="handleMenuClick($event)"
 				/>
 			</div>

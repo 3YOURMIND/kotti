@@ -4,8 +4,8 @@
 		<div
 			v-for="color in colors"
 			:key="color.name"
-			:style="{ background: color.code, color: textColor(color.name) }"
 			class="color-palette__block c-hand"
+			:style="{ background: color.code, color: textColor(color.name) }"
 			@click="copyColor(color.code)"
 		>
 			<div class="color-palette__name" v-text="color.name" />
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { TimeConversion } from '@metatypes/units'
+
 export default {
 	name: 'ColorPalette',
 	props: {
@@ -37,7 +39,7 @@ export default {
 					this.copySuccess = true
 					setTimeout(() => {
 						this.copySuccess = false
-					}, 1000)
+					}, TimeConversion.MILLISECONDS_PER_SECOND)
 				},
 				() => {
 					alert('failed')

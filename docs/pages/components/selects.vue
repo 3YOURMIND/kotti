@@ -117,7 +117,7 @@
 	<h5 v-text="`English: ${value3}`" class="mt-16px"/>
 </div>
 
-## Required 
+## Required
 
 <div class="element-example">
 	<KtSelect label="Words"
@@ -238,7 +238,7 @@ export default {
 			await this.$axios
 				.$get(queryURL)
 				.then((response) => {
-					let coutriesOptions = response.map((country) => ({
+					const coutriesOptions = response.map((country) => ({
 						label: country.name,
 						value: country.nativeName,
 					}))

@@ -1,5 +1,5 @@
 <template>
-	<transition name="drawer" mode="out-in">
+	<transition mode="out-in" name="drawer">
 		<div class="drawer-mask" @click.self="onOutsideDrawerClick">
 			<div :class="drawerClass" :style="drawerWidth">
 				<div class="drawer-header">
@@ -79,6 +79,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
 

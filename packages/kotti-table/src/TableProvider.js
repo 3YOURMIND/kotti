@@ -1,7 +1,8 @@
 import pick from 'lodash/pick'
+
 import { KT_TABLE_STATE_PROVIDER } from './constants'
-import Table, { INITIAL_TABLE_STORE_PROPS } from './Table'
 import TableStore from './logic/store'
+import Table, { INITIAL_TABLE_STORE_PROPS } from './Table'
 
 let tableProviderIdSeed = 1
 

@@ -1,71 +1,5 @@
-import debounce from 'lodash/debounce'
 import deepEql from 'deep-eql'
-
-export const defaultState = {
-	selection: [],
-	isAllSelected: false,
-	reserveSelection: false,
-}
-
-export const mutations = {
-	selectRow(store, row, selected) {
-		const { state } = store
-		const changed = toggleRowSelection(state, row, selected)
-		const { selection } = state
-		if (changed) {
-			store.emit('selectionChange', [...selection])
-			store.emit('select', selection, row)
-		}
-		updateAllSelected(state)
-	},
-	toggleAllSelection: debounce((store) => {
-		const { state } = store
-		// refresh disabled rows status in case of external influence
-		store.commit('updateDisabledRows')
-		const { rows = [], isAllRowsDisabled, enabledRows } = state
-		if (rows.length === 0 || isAllRowsDisabled) {
-			store.commit('setSelected', [])
-			return
-		}
-
-		const shouldSelectAll = !state.isAllSelected
-
-		store.commit('setSelected', shouldSelectAll ? [...enabledRows] : [])
-
-		const selection = [...state.selection]
-		store.emit('selectionChange', selection)
-		store.emit('selectAll', selection)
-	}),
-
-	setSelectedIndices(store, indices) {
-		store.commit(
-			'setSelected',
-			indices.map((index) => store.get('getRowByVisibleIndex', index)),
-		)
-	},
-
-	setSelected({ state }, selection) {
-		state.selection = selection
-		updateAllSelected(state)
-	},
-}
-
-export const getters = {
-	getRowByVisibleIndex(state, index) {
-		return state.rows[index]
-	},
-	getIndexByRow(state, row) {
-		return state.rows.findIndex((r) => r === row)
-	},
-	getRowKey(state, row) {
-		return typeof state.rowKey === 'function'
-			? state.rowKey(row)
-			: row[state.rowKey]
-	},
-	isSelected(state, row) {
-		return state.selection.some((e) => deepEql(e, row))
-	},
-}
+import debounce from 'lodash/debounce'
 
 export function toggleRowSelection(state, row, selected) {
 	let changed = false
@@ -134,4 +68,70 @@ export function clearSelection(store) {
 		state.selection = []
 		store.emit('selectionChange', [])
 	}
+}
+
+export const defaultState = {
+	selection: [],
+	isAllSelected: false,
+	reserveSelection: false,
+}
+
+export const mutations = {
+	selectRow(store, row, selected) {
+		const { state } = store
+		const changed = toggleRowSelection(state, row, selected)
+		const { selection } = state
+		if (changed) {
+			store.emit('selectionChange', [...selection])
+			store.emit('select', selection, row)
+		}
+		updateAllSelected(state)
+	},
+	toggleAllSelection: debounce((store) => {
+		const { state } = store
+		// refresh disabled rows status in case of external influence
+		store.commit('updateDisabledRows')
+		const { rows = [], isAllRowsDisabled, enabledRows } = state
+		if (rows.length === 0 || isAllRowsDisabled) {
+			store.commit('setSelected', [])
+			return
+		}
+
+		const shouldSelectAll = !state.isAllSelected
+
+		store.commit('setSelected', shouldSelectAll ? [...enabledRows] : [])
+
+		const selection = [...state.selection]
+		store.emit('selectionChange', selection)
+		store.emit('selectAll', selection)
+	}),
+
+	setSelectedIndices(store, indices) {
+		store.commit(
+			'setSelected',
+			indices.map((index) => store.get('getRowByVisibleIndex', index)),
+		)
+	},
+
+	setSelected({ state }, selection) {
+		state.selection = selection
+		updateAllSelected(state)
+	},
+}
+
+export const getters = {
+	getRowByVisibleIndex(state, index) {
+		return state.rows[index]
+	},
+	getIndexByRow(state, row) {
+		return state.rows.findIndex((r) => r === row)
+	},
+	getRowKey(state, row) {
+		return typeof state.rowKey === 'function'
+			? state.rowKey(row)
+			: row[state.rowKey]
+	},
+	isSelected(state, row) {
+		return state.selection.some((e) => deepEql(e, row))
+	},
 }

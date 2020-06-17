@@ -7,15 +7,15 @@
 			<div class="kt-navbar__header">
 				<KtNavbarLogo :labelText="labelText" @logoClick="$emit('logoClick')">
 					<slot name="navbar-logo">
-						<img class="image" :src="logoUrl" alt="logo" />
+						<img alt="logo" class="image" :src="logoUrl" />
 					</slot>
 				</KtNavbarLogo>
 			</div>
 			<kt-navbar-notification
 				v-if="notification"
 				:count="notification.count"
-				:title="notification.title"
 				:link="notification.link"
+				:title="notification.title"
 			/>
 			<div class="kt-navbar__body">
 				<KtNavbarMenu
@@ -24,8 +24,8 @@
 				/>
 				<kt-navbar-quick-link
 					v-if="quickLinks"
-					:title="quickLinks.title"
 					:links="quickLinks.links"
+					:title="quickLinks.title"
 				/>
 			</div>
 			<div class="kt-navbar__footer">
@@ -39,8 +39,8 @@
 				<kt-navbar-quick-link
 					v-if="quickLinks"
 					v-on-clickaway="clickawayMobileMenu"
-					:title="quickLinks.title"
 					:links="quickLinks.links"
+					:title="quickLinks.title"
 				/>
 			</div>
 		</div>
@@ -49,6 +49,7 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
+
 import KtNavbarLogo from './KtNavbarLogo'
 import KtNavbarMenu from './KtNavbarMenu'
 import KtNavbarNotification from './KtNavbarNotification'
@@ -104,6 +105,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 @import '../../kotti-style/_variables.scss';
 

@@ -48,6 +48,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 .kt-navbar-notification {
 	display: flex;

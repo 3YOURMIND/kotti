@@ -6,18 +6,18 @@
 				<input
 					v-bind="$attrs"
 					class="form-input"
-					:value="formattedDate"
 					:required="required"
+					:value="formattedDate"
 					@focus.prevent="handleFocus"
 				/>
 				<i class="form-icon yoco" v-text="'calendar'" />
 			</div>
 			<div v-if="showDatePicker">
 				<KtDatePicker
-					:mondayFirst="mondayFirst"
-					:selectedDate="currentDate"
 					:daysTranslations="daysTranslations"
+					:mondayFirst="mondayFirst"
 					:monthsTranslations="monthsTranslations"
+					:selectedDate="currentDate"
 					@KtDateSelected="setDate"
 				/>
 			</div>

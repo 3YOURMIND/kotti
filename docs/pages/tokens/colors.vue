@@ -30,6 +30,7 @@ Again, these are automatically generated so it can be considered source of truth
 </pre>
 
 </template>
+
 <script>
 import { baseColorsFactory, tokenColorsFactory } from '../../../tokens'
 
@@ -48,7 +49,7 @@ export default {
 		}
 	},
 	methods: {
-		renderColor(h, { value, row, rowIndex, column, columnIndex }) {
+		renderColor(h, { row }) {
 			const color = baseColorsFactory.object[row.reference]
 			if (!color) return 'No color'
 			return (
@@ -57,20 +58,21 @@ export default {
 				</div>
 			)
 		},
-		renderColorVar(h, { value, row, rowIndex, column, columnIndex }) {
+		renderColorVar(h, { value }) {
 			return <code>--{value}</code>
 		},
 	},
 }
 </script>
+
 <style>
 .color-box {
 	width: 50px;
 	height: 50px;
+	margin: 8px;
+	background: var(--localColor);
+	border: 4px solid #fff;
 	border-radius: 50%;
 	box-shadow: 2px 2px 5px #ccc;
-	border: 4px solid #fff;
-	background: var(--localColor);
-	margin: 8px;
 }
 </style>

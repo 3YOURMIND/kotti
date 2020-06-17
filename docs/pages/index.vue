@@ -1,4 +1,5 @@
 <template>
+	<!-- eslint-disable-next-line vue/no-v-html -->
 	<div v-html="KottiReadMe" />
 </template>
 
@@ -8,10 +9,8 @@ import KottiReadMe from '../../README.md'
 export default {
 	name: 'IndexPage',
 	layout: 'fullpage',
-	computed: {
-		KottiReadMe() {
-			return KottiReadMe
-		},
+	data() {
+		return { KottiReadMe }
 	},
 }
 </script>

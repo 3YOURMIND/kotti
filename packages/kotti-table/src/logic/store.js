@@ -1,16 +1,17 @@
 import clone from 'lodash/cloneDeep'
-import pickBy from 'lodash/pickBy'
 import isUndefined from 'lodash/isUndefined'
 import negate from 'lodash/negate'
+import pickBy from 'lodash/pickBy'
+
 import * as column from './column'
-import * as rows from './row'
+import * as disable from './disable'
 import * as expand from './expand'
-import * as order from './order'
+import * as filter from './filter'
 import * as hide from './hide'
+import * as order from './order'
+import * as rows from './row'
 import * as select from './select'
 import * as sort from './sort'
-import * as filter from './filter'
-import * as disable from './disable'
 
 export default class TableStore {
 	constructor(table, initialState = {}) {

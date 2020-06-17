@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { TimeConversion } from '@metatypes/units'
 import dayjs from 'dayjs'
 
 const range = (start, end) => {
@@ -51,7 +52,7 @@ export default {
 		daysTranslations: {
 			type: Array,
 			default: () =>
-				range(0, 6).map((day) =>
+				range(0, TimeConversion.DAYS_PER_WEEK - 1).map((day) =>
 					dayjs()
 						.set('day', day)
 						.format('ddd'),
@@ -61,7 +62,7 @@ export default {
 		monthsTranslations: {
 			type: Array,
 			default: () =>
-				range(0, 11).map((month) =>
+				range(0, TimeConversion.MONTHS_PER_YEAR - 1).map((month) =>
 					dayjs()
 						.set('date', 1)
 						.set('month', month)
@@ -97,7 +98,10 @@ export default {
 			const day = this.date.day()
 			// use +6 instead of -1 because negative numbers will yield
 			// negative results when using the division rest operator (%)
-			return (this.mondayFirst ? day + 6 : day) % 7
+			return (
+				(this.mondayFirst ? day + (TimeConversion.DAYS_PER_WEEK - 1) : day) %
+				TimeConversion.DAYS_PER_WEEK
+			)
 		},
 	},
 	watch: {

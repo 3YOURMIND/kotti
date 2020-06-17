@@ -1,13 +1,13 @@
 <template>
 	<div class="card">
 		<div v-if="displayImagePostion('top')" class="card-image">
-			<img :src="imgUrl" class="img-responsive" />
+			<img class="img-responsive" :src="imgUrl" />
 		</div>
 		<div class="card-header">
 			<slot name="card-header" />
 		</div>
 		<div v-if="displayImagePostion('middle')" class="card-image">
-			<img :src="imgUrl" class="img-responsive" />
+			<img class="img-responsive" :src="imgUrl" />
 		</div>
 		<div class="card-body">
 			<slot name="card-body" />
@@ -16,7 +16,7 @@
 			<slot name="card-footer" />
 		</div>
 		<div v-if="displayImagePostion('bottom')" class="card-image">
-			<img :src="imgUrl" class="img-responsive" />
+			<img class="img-responsive" :src="imgUrl" />
 		</div>
 	</div>
 </template>

@@ -9,8 +9,8 @@
 			<TableColumn
 				v-for="(column, index) in formattedColumns"
 				:key="`${column.prop}_${index}`"
-				isPropDefined
 				v-bind="column"
+				isPropDefined
 			/>
 		</div>
 		<table class="kt-table">
@@ -21,12 +21,9 @@
 </template>
 
 <script>
+import deepEql from 'deep-eql'
 import pick from 'lodash/pick'
-import TableStore from './logic/store'
-import TableLayout from './table-layout'
-import TableColumn from './TableColumn'
-import TableHeader from './TableHeader'
-import TableBody from './TableBody'
+
 import {
 	KT_TABLE,
 	KT_STORE,
@@ -34,7 +31,11 @@ import {
 	KT_TABLE_STATE_PROVIDER,
 	DEFAULT_DISABLE_ROW,
 } from './constants'
-import deepEql from 'deep-eql'
+import TableStore from './logic/store'
+import TableLayout from './table-layout'
+import TableBody from './TableBody'
+import TableColumn from './TableColumn'
+import TableHeader from './TableHeader'
 
 let tableIdSeed = 1
 
@@ -139,6 +140,7 @@ export default {
 							)
 							return { ...column, prop: column.prop || column.key }
 						}
+
 						return column
 				  })
 				: []
@@ -158,48 +160,47 @@ export default {
 			return Boolean(this.$scopedSlots.actions || this.renderActions)
 		},
 		_renderExpand() {
+			// eslint-disable-next-line @typescript-eslint/no-this-alias
 			const table = this
 			return (h, rowData) => {
-				if (table.renderExpand) {
-					return table.renderExpand(h, rowData)
-				} else {
-					return table.$scopedSlots.expand(rowData)
-				}
+				if (table.renderExpand) return table.renderExpand(h, rowData)
+
+				return table.$scopedSlots.expand(rowData)
 			}
 		},
 		_renderActions() {
+			// eslint-disable-next-line @typescript-eslint/no-this-alias
 			const table = this
+
 			return (h, rowData) => {
-				if (table.renderActions) {
-					return table.renderActions(h, rowData)
-				} else {
-					return table.$scopedSlots.actions(rowData)
-				}
+				if (table.renderActions) return table.renderActions(h, rowData)
+
+				return table.$scopedSlots.actions(rowData)
 			}
 		},
 		_renderLoading() {
+			// eslint-disable-next-line @typescript-eslint/no-this-alias
 			const table = this
+
 			return (h) => {
-				if (table.renderLoading) {
-					return table.renderLoading(h)
-				} else {
-					return table.$slots.loading || <div class="loading lg" />
-				}
+				if (table.renderLoading) return table.renderLoading(h)
+
+				return table.$slots.loading || <div class="loading lg" />
 			}
 		},
 		_renderEmpty() {
+			// eslint-disable-next-line @typescript-eslint/no-this-alias
 			const table = this
+
 			return (h) => {
-				if (table.renderEmpty) {
-					return table.renderEmpty(h)
-				} else {
-					return (
-						table.$slots.empty ||
-						table.emptyText ||
-						(this.$t && this.$t('table.emptyText')) ||
-						'No Data'
-					)
-				}
+				if (table.renderEmpty) return table.renderEmpty(h)
+
+				return (
+					table.$slots.empty ||
+					table.emptyText ||
+					(this.$t && this.$t('table.emptyText')) ||
+					'No Data'
+				)
 			}
 		},
 	},

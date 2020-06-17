@@ -20,7 +20,11 @@
 </template>
 
 <script>
+import { TimeConversion } from '@metatypes/units'
+
 import { generateId, notId } from './utilities.js'
+
+const DEFAULT_DURATION_IN_SECONDS = 3
 
 export default {
 	name: 'KtToaster',
@@ -38,7 +42,13 @@ export default {
 		this.$root.$off('vue-yodify', this.addNotification)
 	},
 	methods: {
-		addNotification({ id = generateId(), text, type, duration = 3000 }) {
+		addNotification({
+			id = generateId(),
+			text,
+			type,
+			duration = DEFAULT_DURATION_IN_SECONDS *
+				TimeConversion.MILLISECONDS_PER_SECOND,
+		}) {
 			this.queue.push({ id, text, type })
 
 			window.setTimeout(() => this.deleteNotification(id), duration)

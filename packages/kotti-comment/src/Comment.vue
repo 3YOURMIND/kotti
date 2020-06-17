@@ -6,11 +6,13 @@
 				<div class="info__name" v-text="userName" />
 				<div class="info__time" v-text="createdTime" />
 			</div>
+			<!-- eslint-disable vue/no-v-html -->
 			<div
 				v-if="!isInlineEdit"
 				class="comment__message"
 				v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 			/>
+			<!-- eslint-enable vue/no-v-html -->
 			<div v-else class="comment-inline-edit form-group">
 				<textarea
 					v-model="inlineMessageValue"
@@ -39,25 +41,25 @@
 			<div v-for="reply in replies" :key="reply.id">
 				<KtCommentReply
 					:id="reply.id"
-					:userName="reply.userName"
+					:allowChange="reply.allowChange"
+					:createdTime="reply.createdTime"
+					:dangerouslyOverrideParser="dangerouslyOverrideParser"
+					:message="reply.message"
+					:postEscapeParser="postEscapeParser"
 					:userAvatar="reply.userAvatar"
 					:userId="reply.userId"
-					:message="reply.message"
-					:createdTime="reply.createdTime"
-					:allowChange="reply.allowChange"
-					:dangerouslyOverrideParser="dangerouslyOverrideParser"
-					:postEscapeParser="postEscapeParser"
-					@_inlineReplyClick="handleInlineReplyClick"
+					:userName="reply.userName"
 					@_inlineDeleteClick="handleDelete($event, 'INLINE')"
 					@_inlineEditSumbit="$emit('edit', $event)"
+					@_inlineReplyClick="handleInlineReplyClick"
 				/>
 			</div>
 			<KtCommentInput
 				v-if="showInlineReply"
 				isInline
 				:parentId="id"
-				:replyToUserId="replyToUserId"
 				:placeholder="replyToText"
+				:replyToUserId="replyToUserId"
 				:userAvatar="userAvatar"
 				@submit="handleInlineSubmit($event)"
 			/>
@@ -67,11 +69,13 @@
 
 <script>
 import escape from 'lodash/escape'
+
 import KtAvatar from '../../kotti-avatar'
 import KtButton from '../../kotti-button'
 import KtButtonGroup from '../../kotti-button-group/'
-import KtCommentReply from './CommentReply.vue'
+
 import KtCommentInput from './CommentInput.vue'
+import KtCommentReply from './CommentReply.vue'
 
 export default {
 	name: 'KtComment',

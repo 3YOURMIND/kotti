@@ -2,10 +2,10 @@
 	<div :class="formRadioStyle">
 		<label v-if="hasLabel" class="form-label" v-text="labelRep" />
 		<input
-			:required="required"
-			:value="invalidInput ? '' : 'notempty'"
-			type="text"
 			class="radio-input--hidden"
+			:required="required"
+			type="text"
+			:value="invalidInput ? '' : 'notempty'"
 		/>
 		<slot />
 	</div>

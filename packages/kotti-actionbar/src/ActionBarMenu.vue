@@ -1,13 +1,19 @@
 <template>
 	<div class="actionbar-nav">
+		<!-- FIXME: External Dependencies Should not Be Used without Injection -->
 		<router-link
 			v-for="(item, index) in menu"
 			:key="index"
+			class="actionbar-nav__item"
+			:class="navItemClass(item)"
 			tag="li"
 			:to="item.to"
-			:class="navItemClass(item)"
 		>
-			<i :class="navItemIconClass" v-text="item.icon" />
+			<i
+				class="yoco actionbar-nav__item__icon"
+				:class="navItemIconClass"
+				v-text="item.icon"
+			/>
 			<span class="actionbar-nav__item__label" v-text="item.label" />
 		</router-link>
 	</div>
@@ -17,21 +23,20 @@
 export default {
 	name: 'KtActionBarMenu',
 	props: {
-		menu: { type: Array, default: null },
-		menuStyle: { default: null },
+		menu: { default: () => [], type: Array },
+		menuStyle: { default: () => ({}), type: Object },
 	},
 	computed: {
 		navItemIconClass() {
-			return [
-				'yoco actionbar-nav__item__icon',
-				`actionbar-nav__item__icon--${this.menuStyle.iconPosition}`,
-			]
+			return {
+				[`actionbar-nav__item__icon--${this.menuStyle.iconPosition}`]:
+					this.menuStyle.iconPosition ?? false,
+			}
 		},
 	},
 	methods: {
 		navItemClass(item) {
 			return {
-				'actionbar-nav__item': true,
 				'actionbar-nav__item--active': item.active,
 				'actionbar-nav__item--disabled': item.disabled,
 			}
