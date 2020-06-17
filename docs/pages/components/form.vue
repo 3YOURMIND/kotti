@@ -47,6 +47,14 @@
 		v-bind="{ preventSubmissionOn, validators}"
 		@submit="onSubmit"
 	>
+		<KtFieldDateRange
+			formKey="dateRange"
+			:isDisabled="formSettings.disabledFormFields"
+			label="KtFieldDateRange"
+			:maximumDate="null"
+			minimumDate="2020-06-05"
+			:shortcuts="dateRangeShortcuts"
+		/>
 		<KtFieldDate
 			formKey="date"
 			label="KtFieldDate"
@@ -233,14 +241,6 @@
 	<h2>formData</h2>
 	<pre v-text="JSON.stringify(formData, null, '\t')" />
 	<h2>KtFields Without Form</h2>
-	<KtFieldDateRange
-		v-model="dateRange"
-		label="KtFieldDateRange"
-		:maximumDate="null"
-		minimumDate="2020-06-05"
-		:shortcuts="dateRangeShortcuts"
-	/>
-	<!-- placeholder="Select Date" -->
 	<div>
 		<KtFieldText
 			v-model="textValue"
@@ -267,9 +267,9 @@ const DATE_ISO_FORMAT = 'YYYY-MM-DD'
 export default defineComponent({
 	name: 'KtFormDoc',
 	setup() {
-		const dateRange = ref([null, null])
 		const formData = ref({
 			date: null,
+			dateRange: ref([null, null]),
 			checkboxGroup: {
 				initiallyFalse: false,
 				initiallyNull: null,
@@ -306,7 +306,6 @@ export default defineComponent({
 			alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
 			alwaysSuccess: () => ({ type: 'success', text: 'Always Success!' }),
 			alwaysWarning: () => ({ type: 'warning', text: 'Always Warning!' }),
-			dateRange,
 			dateRangeShortcuts: computed(
 				(): KottiFieldDateRange.Props['shortcuts'] => [
 					{
@@ -319,7 +318,10 @@ export default defineComponent({
 					},
 					{
 						label: 'Jump One Week',
-						value: [dateRange.value[1], jumpOneWeek(dateRange.value[1])],
+						value: [
+							formData.value?.dateRange[1],
+							jumpOneWeek(formData.value?.dateRange[1]),
+						],
 						keepOpen: true,
 					},
 				],
