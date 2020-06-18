@@ -17,10 +17,19 @@
 				<div
 					v-if="field.helpText"
 					class="kt-field__help-text"
-					v-text="field.helpText"
-				/>
+					:class="iconClasses(['interactive'])"
+				>
+					<div class="ktfield-label__help-text__icon">
+						<i class="yoco">circle_question</i>
+					</div>
+					<div class="kt-field__help-text__tooltip" v-text="field.helpText" />
+				</div>
 			</div>
-
+			<div
+				v-if="field.helpDescription"
+				class="kt-field__help-description"
+				v-text="field.helpDescription"
+			/>
 			<slot name="container">
 				<div ref="inputContainerRef" class="kt-field__input-container">
 					<div
@@ -253,10 +262,11 @@ export default defineComponent({
 	}
 
 	&__header {
+		display: flex;
 		font-size: 0.9em;
 
 		> :not(:first-child) {
-			margin-top: 0.2rem;
+			margin-left: 0.2rem;
 		}
 
 		&--loading {
@@ -272,8 +282,47 @@ export default defineComponent({
 		color: var(--text-02);
 	}
 
-	&__help-text {
-		color: var(--text-03);
+	&__help {
+		&-description {
+			color: var(--text-03);
+		}
+
+		&-text {
+			position: relative;
+			display: flex;
+			align-items: center;
+
+			&__tooltip {
+				position: absolute;
+				bottom: 20px;
+				display: none;
+				padding: 0.25em;
+				color: var(--support-info);
+				cursor: none;
+				background-color: var(--ui-01);
+				border: 1px solid var(--ui-02);
+				border-radius: 3px;
+				transform: translateX(calc(-50% + 5px));
+			}
+
+			// &__icon {
+			// 	font-size: 1.25em;
+			// 	color: var(--icon-02);
+			// 	cursor: help;
+			//
+			// 	&--interactive.ktfield-label__help-text__icon--primary {
+			// 		&:hover {
+			// 			color: var(--interactive-01-hover);
+			// 		}
+			// 	}
+			// }
+
+			&:hover {
+				.kt-field__help-text__tooltip {
+					display: block;
+				}
+			}
+		}
 	}
 
 	&__input-container {
@@ -313,6 +362,7 @@ export default defineComponent({
 		// Icons (left or right)
 		&__icon {
 			color: var(--icon-02);
+
 			.yoco {
 				display: flex;
 				font-size: 1.1em;

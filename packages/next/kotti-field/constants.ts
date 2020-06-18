@@ -5,6 +5,7 @@
  */
 export const KOTTI_FIELD_PROPS = {
 	formKey: { default: null, type: String },
+	helpDescription: { default: null, type: String },
 	helpText: { default: null, type: String },
 	hideClear: { default: false, type: Boolean },
 	isDisabled: { default: false, type: Boolean },

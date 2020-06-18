@@ -31,6 +31,7 @@ export namespace KottiField {
 
 		export interface ReturnsWithRefs<DATA_TYPE extends unknown> {
 			currentValue: Ref<KottiField.Props<DATA_TYPE>['value']>
+			helpDescription: Ref<KottiField.Props<DATA_TYPE>['helpDescription']>
 			helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
 			hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
 			hideValidation: KottiForm.Context['hideValidation']
@@ -75,6 +76,11 @@ export namespace KottiField {
 		/**
 		 * Adds a small questionmark popover to the label to explain
 		 * more complicated forms to the user on-demand
+		 */
+		helpDescription: string | null
+
+		/**
+		 * Adds a description below the label
 		 */
 		helpText: string | null
 
