@@ -113,6 +113,7 @@
 		<KtFieldText
 			formKey="firstName"
 			helpText="Help for firstName"
+			helpDescription="help description"
 			:isDisabled="formSettings.disableFormFields"
 			label="First Name"
 			leftIcon="comment"
@@ -269,7 +270,8 @@ export default defineComponent({
 	setup() {
 		const formData = ref({
 			date: null,
-			dateRange: ref([null, null]),
+			dateRange: [null, null],
+			dateTime: null,
 			checkboxGroup: {
 				initiallyFalse: false,
 				initiallyNull: null,
@@ -300,7 +302,7 @@ export default defineComponent({
 			addUser: () => {
 				formData.value = {
 					...formData.value,
-					users: [...formData.value.users, { username: null }],
+					users: [...formData.value?.users, { username: null }],
 				}
 			},
 			alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
@@ -332,7 +334,7 @@ export default defineComponent({
 				{
 					label: 'Jump One Week',
 					keepOpen: true,
-					value: jumpOneWeek(formData.value.date),
+					value: jumpOneWeek(formData.value?.date),
 				},
 			]),
 			disableFormFields: ref(false),
