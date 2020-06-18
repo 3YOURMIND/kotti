@@ -47,6 +47,11 @@
 		v-bind="{ preventSubmissionOn, validators}"
 		@submit="onSubmit"
 	>
+		<KtFieldDateTime
+			formKey="dateTime"
+			:isDisabled="formSettings.disabledFormFields"
+			label="KtFieldDateTime"
+		/>
 		<KtFieldDateRange
 			formKey="dateRange"
 			:isDisabled="formSettings.disabledFormFields"

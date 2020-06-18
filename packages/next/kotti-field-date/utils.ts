@@ -1,7 +1,12 @@
 import dayjs from 'dayjs'
 
-import { DATE_FORMAT_REGEX } from './constants'
-import { KottiFieldDate, KottiFieldDateRange, Shared } from './types'
+import { DATE_FORMAT_REGEX, DATE_TIME_FORMAT_REGEX } from './constants'
+import {
+	KottiFieldDate,
+	KottiFieldDateRange,
+	KottiFieldDateTime,
+	Shared,
+} from './types'
 
 export const isInvalidDate = (
 	props: Pick<Shared.Props<unknown>, 'maximumDate' | 'minimumDate'>,
@@ -26,17 +31,6 @@ export const dateLimitValidator = (
 	value === null ||
 	(typeof value === 'string' && dayjs(value).format('YYYY-MM-DD') === value)
 
-export const dateShortcutValidator = (
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	option: any,
-): option is Shared.Props<KottiFieldDate.Value>['shortcuts'][0] =>
-	typeof option === 'object' &&
-	option !== null &&
-	typeof option.label === 'string' &&
-	typeof option.value === 'string' &&
-	DATE_FORMAT_REGEX.test(option.value) &&
-	['boolean', 'undefined'].includes(typeof option.keepOpen)
-
 export const dateRangeShortcutValidator = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	option: any,
@@ -51,4 +45,26 @@ export const dateRangeShortcutValidator = (
 			date === null ||
 			(typeof date === 'string' && DATE_FORMAT_REGEX.test(date)),
 	) &&
+	['boolean', 'undefined'].includes(typeof option.keepOpen)
+
+export const dateShortcutValidator = (
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	option: any,
+): option is Shared.Props<KottiFieldDate.Value>['shortcuts'][0] =>
+	typeof option === 'object' &&
+	option !== null &&
+	typeof option.label === 'string' &&
+	typeof option.value === 'string' &&
+	DATE_FORMAT_REGEX.test(option.value) &&
+	['boolean', 'undefined'].includes(typeof option.keepOpen)
+
+export const dateTimeShortcutValidator = (
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	option: any,
+): option is Shared.Props<KottiFieldDateTime.Value>['shortcuts'][0] =>
+	typeof option === 'object' &&
+	option !== null &&
+	typeof option.label === 'string' &&
+	typeof option.value === 'string' &&
+	DATE_TIME_FORMAT_REGEX.test(option.value) &&
 	['boolean', 'undefined'].includes(typeof option.keepOpen)

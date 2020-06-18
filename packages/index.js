@@ -48,7 +48,11 @@ import {
 	KtFieldCheckbox,
 	KtFieldCheckboxGroup,
 } from './next/kotti-field-checkbox'
-import { KtFieldDate, KtFieldDateRange } from './next/kotti-field-date'
+import {
+	KtFieldDate,
+	KtFieldDateRange,
+	KtFieldDateTime,
+} from './next/kotti-field-date'
 import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
 import {
 	KtFieldSingleSelect,
@@ -77,8 +81,8 @@ const components = {
 	KtCol,
 	KtComment,
 	KtCommentInput,
-	KtDatePicker,
 	KtDateInput,
+	KtDatePicker,
 	KtDrawer,
 	KtDropdown,
 	KtDropdownButton,
@@ -88,9 +92,10 @@ const components = {
 	KtFieldCheckboxGroup,
 	KtFieldDate,
 	KtFieldDateRange,
+	KtFieldDateTime,
 	KtFieldMultiSelect,
-	KtFieldSingleSelect,
 	KtFieldRadioGroup,
+	KtFieldSingleSelect,
 	KtFieldText,
 	KtFieldTextArea,
 	KtForm,
@@ -177,8 +182,9 @@ export {
 	KtFieldCheckboxGroup,
 	KtFieldDate,
 	KtFieldDateRange,
-	KtFieldRadioGroup,
+	KtFieldDateTime,
 	KtFieldMultiSelect,
+	KtFieldRadioGroup,
 	KtFieldSingleSelect,
 	KtFieldText,
 	KtFieldTextArea,
@@ -204,8 +210,8 @@ export {
 	KtSwitch,
 	KtTable,
 	KtTableColumn,
-	KtTableProvider,
 	KtTableColumnsStateMixin,
+	KtTableProvider,
 	KtTheme,
 	KtToaster,
 	KtUserMenu,

@@ -7,7 +7,7 @@ import KtFieldDateTimeRange from './KtFieldDateTimeRange.vue'
 
 makeInstallable(KtFieldDate)
 makeInstallable(KtFieldDateRange)
-// makeInstallable(KtFieldDateTime)
+makeInstallable(KtFieldDateTime)
 // makeInstallable(KtFieldDateTimeRange)
 
 export { KtFieldDate, KtFieldDateRange, KtFieldDateTime, KtFieldDateTimeRange }
