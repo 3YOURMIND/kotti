@@ -141,7 +141,7 @@ npm publish
 # the postPublish hook will create and automatically push the new tag
 
 # update release notes
-# https://github.com/3YOURMIND/kotti/releases
+# https://github.com/3YOURMIND/kotti/releases/new
 
 # publish github pages
 ./github-deploy.sh
