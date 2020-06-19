@@ -1,132 +1,115 @@
-<h1 align="center">Kotti UI</h1>
+<h1 align="center">@3yourmind/kotti-ui</h1>
 
 <p align="center">
-	<a href="https://github.com/3yourmind">@3YOURMIND</a>’s Vue.js UI Framework
+	<a href="https://npmjs.com/package/@3yourmind/kotti-ui"><img src="https://img.shields.io/npm/dm/@3yourmind/kotti-ui.svg?style=for-the-badge"/></a>
+	<a href="https://david-dm.org/3yourmind/kotti"><img src="https://img.shields.io/david/3yourmind/kotti.svg?style=for-the-badge"/></a>
 </p>
-
 <p align="center">
-	<a href="https://npmjs.com/package/@3yourmind/kotti-ui"><img src="https://img.shields.io/npm/dm/@3yourmind/kotti-ui.svg"/></a>
-	<a href="https://npmjs.com/package/@3yourmind/kotti-ui"><img src="https://david-dm.org/3yourmind/kotti.svg"/></a>
-	<a href="https://bundlephobia.com/result?p=@3yourmind/kotti-ui"><img src="https://img.shields.io/bundlephobia/minzip/@3yourmind/kotti-ui.svg"/></a>
+	<a href="https://bundlephobia.com/result?p=@3yourmind/kotti-ui"><img src="https://img.shields.io/bundlephobia/minzip/@3yourmind/kotti-ui.svg?style=for-the-badge"/></a>
+	<a href="https://www.npmjs.com/package/@3yourmind/kotti-ui"><img src="https://img.shields.io/npm/v/@3yourmind/kotti-ui.svg?style=for-the-badge"/></a>
 </p>
 
-## Overview
+<table border="0" width="100%">
+<col style="width:33%">
+<col style="width:33%">
+<col style="width:33%">
+<tbody>
+<tr style="border: 0px !important;">
+<td valign="top" style="border: 0px !important;"><b>Complete</b>. The most commonly-needed components are implemented in Kotti. More components will be implemented when there is a specific need for them.</td>
+<td valign="top" style="border: 0px !important;"><b>TypeScript Support</b>. Kotti is transitioning to a fully TypeScript-based code-base. While Vue doesn’t support all TS features, we believe that it’s still benefitial in the supported cases.</td>
+<td valign="top" style="border: 0px !important;"><b>Modern</b>. Kotti aims to be a modern UI framework, regularly iterating over the existing design and adjusting it with newer UX improvements.</td>
+</tr>
+<tr style="border: 0px !important;">
+<td valign="top" style="border: 0px !important;"><b>Consistent</b>. The goal is to provide consistent, intuitive, and easy-to-use Vue components that users can immediately understand. Similar components shouldn’t defy expectations.</td>
+<td valign="top" style="border: 0px !important;"><b>Fail-fast</b>. We believe that it’s better to error early than to have hard-to-catch bugs due to API misuse. Our components provide prop validation to catch common mistakes and throw errors in unexpected situations.</td>
+<td valign="top" style="border: 0px !important;"><b>Open-Source</b>. Kotti is licensed under the MIT License — one of the most-permissible software licenses out there. Feel free to fork, modify, and use it. For any project you want.</td>
+</tr>
+</tbody>
+</table>
 
-This design system helps to unify our design language and provides the
-documentation for further product design decisions. The Kotti design system has
-two main parts: foundation and components.
+## Installation
 
-The foundation is higher level and works as a guideline for the whole system,
-which defines the layout, color, icons, typography and writing style. It also
-creates styles and characteristics which are different from other design
-systems.
+<pre>
+<a href="https://yarnpkg.com">yarn</a> add <a href="https://yarnpkg.com/en/package/@3yourmind/kotti-ui">@3yourmind/kotti-ui</a>
+</pre>
 
-Components are more concrete elements. They are pre-defined and cannot be
-changed in most cases. These components include banners, buttons, drawers and
-more.
+or
 
-## Design Principles
+<pre>
+<a href="https://npmjs.com">npm</a> install --save <a href="https://npmjs.com/package/@3yourmind/kotti-ui">@3yourmind/kotti-ui</a>
+</pre>
 
-**Keen:** The design should encourage users to engage with the product.
+## Documentation & Usage
 
-**Okay:** It’s okay not to follow the foundation if there's good reason. It’s
-okay to break the design principles when it’s the only way to solve the
-requirement.
+**Documentation**: [current release](https://3yourmind.github.io/kotti/) or [current master](https://kotti.netlify.com/)
 
-**Transparent:** Making the design easy to perceive or detect, user can process
-smoothly without being aware of its presence.
-
-**Timely:** The design need to response and help user finish their task in a
-timely matter.
-
-**Intuitive:** The design should be intuitive and easy to understand, and
-decrease the learning curve.
-
-## Documentation
-
-### Stable Documentation
-
-Build after every release → https://3yourmind.github.io/kotti/
-
-### Nightly Documentation
-
-Auto build after PR merged to master → https://kotti.netlify.com/
-
-## Project Scope
-
-Kotti Design System includes:
-
-| Item                | Meaning                                                                      | Purpose                                                                         |
-| :------------------ | :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
-| Design Guideline    | A suggestion documentation for non-developer to understand the design system | Give UX/UI designer a single source of truth and make sure design is consistent |
-| Kotti-UI Components | Modular and functional components based on design guideline                  | Replace the shared components in our project                                    |
-| Usage Documents     | Example based documentation                                                  | Help developer to use the component                                             |
-| Test                | UI Test                                                                      | —                                                                               |
-
-## Folder Structure
-
-```text
-kotti
-├─ docs // nuxt.js managed design guideline & usage documentation
-│  ├─ assets
-|  ├─ pages
-├─ packages
-│  ├─ kotti-style // scss file documentation
-│  └─ kotti-button
-│     ├─ src
-│     ├─ index.js
-├─ package.json
-├─ CHANGELOG.md
-└─ README.md
-```
-
-## Install
-
-[![npm version](https://badge.fury.io/js/%403yourmind%2Fkotti-ui.svg)](https://www.npmjs.com/package/@3yourmind/kotti-ui)
-
-```bash
-# add kotti-ui package to your project
-yarn add @3yourmind/kotti-ui
-```
-
-```js
-// in main.js
+```typescript
+// in main.js / entrypoint
 import Vue from 'vue'
 import KottiUI from '@3yourmind/kotti-ui'
-
-// from v.0.0.4 kotti-ui includes kotti-style
 import '@3yourmind/kotti-ui/dist/KottiUI.css'
 
+// register all KtComponents globally
 Vue.use(KottiUI)
+
+// Alternatively, import the components you need
+import { KtForm } from '@3yourmind/kotti-ui'
+
+const CustomVueComponent = {
+	// ...
+	components: {
+		//...
+		KtForm,
+	},
+}
 ```
 
-## Build
+## Development Workflow
+
+### Initial Setup
+
+Remember to use [your GitHub email](https://github.com/settings/emails) for this repo
 
 ```bash
+git clone git@github.com:3yourmind/kotti
+
+cd kotti
+
+# configure github email for this repository
+git config user.email "123456+githubusername@users.noreply.github.com"
+
 # install dependencies
 yarn install
-
-# build kott-ui
-yarn run build:kotti
-
-# generate kotti-docs for github pages to /gh-pages
-yarn run build:gh-pages
 ```
 
-## Develop
+### Develop
 
 ```bash
-# install dependencies
-yarn install
-
-# serve with hot reload at localhost:3000
-yarn dev:docs
-
-# deploy documents on github
-yarn deploy:docs
+# serve with hot reload at http://localhost:3000
+yarn run dev:docs
 ```
 
-## Publish
+### Linting
+
+```bash
+# es-lint (with --fix)
+yarn run lint:script
+# es-lint (without --fix)
+yarn run check:script
+
+# stylelint (with --fix)
+yarn run lint:style
+# stylelint (without --fix)
+yarn run check:style
+```
+
+### Testing
+
+```bash
+yarn run test:unit
+```
+
+### Publish
 
 ```bash
 # you may need login to npm with your credentials if you have publishing rights
@@ -146,3 +129,22 @@ npm publish
 # publish github pages
 ./github-deploy.sh
 ```
+
+### Build
+
+```bash
+# build dist folder for package (automatically done before publish)
+yarn run build:kotti
+
+# generate kotti-docs for github pages to /gh-pages (automatically done after publish)
+yarn run build:gh-pages
+```
+
+## Internals
+
+### Important Folders
+
+| Path        | Purpose                              |
+| :---------- | :----------------------------------- |
+| `/docs`     | Nuxt-managed documentation           |
+| `/packages` | Source-code for all Kotti Components |
