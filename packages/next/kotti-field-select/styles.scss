@@ -169,7 +169,7 @@
 			z-index: 1;
 			border-radius: var(--field-border-radius);
 			opacity: 0;
-			transition: opacity 120ms ease-out;
+			transition: opacity var(--transition-short) ease-out;
 
 			&.is-horizontal {
 				left: 2px;
@@ -198,7 +198,7 @@
 				cursor: pointer;
 				background-color: rgba(var(--rgb-ui-04), 0.3);
 				border-radius: inherit;
-				transition: background-color 300ms;
+				transition: background-color var(--transition-medium);
 
 				&:hover {
 					background-color: rgba(var(--rgb-ui-04), 0.5);
@@ -211,7 +211,7 @@
 		&:hover {
 			.el-scrollbar__bar {
 				opacity: 1;
-				transition: opacity 0.34s ease-out;
+				transition: opacity var(--transition-long) ease-out;
 			}
 		}
 
