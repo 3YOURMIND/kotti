@@ -1,9 +1,9 @@
 <template>
 	<KtField v-bind="{ field }" :getEmptyValue="() => null" isGroup>
 		<div
-			:key="forceUpdateKey.value"
 			slot="container"
 			class="kt-field-radio-group__wrapper"
+			:forceUpdateKey="forceUpdateKey"
 		>
 			<label
 				v-for="option in options"
@@ -83,7 +83,7 @@ export default defineComponent({
 				type: 'radio',
 			})),
 			field,
-			forceUpdateKey,
+			forceUpdateKey: forceUpdateKey.value,
 			onChange: (value: KottiFieldRadioGroup.Entry['value']) => {
 				field.setValue(value)
 
