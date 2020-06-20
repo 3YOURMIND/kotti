@@ -104,7 +104,7 @@ export default defineComponent({
 						pickerOptions: pickerOptions.value,
 						placeholder: field.placeholder,
 						type: 'datetime',
-						value: field.currentValue,
+						value: field.currentValue ?? '',
 					} as Partial<ElDate>),
 			),
 			elDateRef,

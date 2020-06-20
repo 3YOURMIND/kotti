@@ -37,11 +37,11 @@ export const EL_DATE_PROPS = {
 export const EL_DATE_TIME_PROPS = {
 	...EL_SHARED_INTERNAL_PROPS,
 	format: 'yyyy-MM-dd HH:mm',
-	valueFormat: 'yyyy-MM-dd[T]HH:mm:ss',
+	valueFormat: 'yyyy-MM-dd HH:mm:ss',
 }
 
 export const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/
-export const DATE_TIME_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}(\[T\]| )\d{2}:\d{2}(:\d{2})?$/
+export const DATE_TIME_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/
 
 const KOTTI_FIELD_DATE_SHARED_PROPS = {
 	maximumDate: {
