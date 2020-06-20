@@ -44,7 +44,7 @@
 
 		display: flex;
 		padding: 0;
-		margin: 5px 0;
+		margin: 0.4rem 0;
 
 		background: var(--ui-background);
 		border: 1px solid var(--ui-02);
@@ -173,6 +173,18 @@
 		&:-ms-input-placeholder, /* Internet Explorer */
 		&::placeholder {
 			color: $placeholder-color;
+		}
+	}
+}
+
+@mixin no-outline-or-border {
+	// overwrite native outline behavior
+	* {
+		border: 0;
+		outline: none;
+		&:focus,
+		&::-moz-focus-inner {
+			outline: none;
 		}
 	}
 }
