@@ -11,16 +11,7 @@
 		<div @mousedown.stop>
 			<ElSelect
 				ref="elSelectRef"
-				:class="elSelectClasses"
-				defaultFirstOption
-				:disabled="field.isDisabled"
-				filterable
-				loadingText="TODO"
-				multiple
-				noDataText="TODO"
-				noMatchText="TODO"
-				:placeholder="field.placeholder"
-				:value="field.currentValue"
+				v-bind="elMultipleSelectProps"
 				@input="onChange"
 				@visible-change="(showPopper) => (isDropdownOpen = showPopper)"
 			>
@@ -32,7 +23,7 @@
 					>
 						<div class="kt-tags__tag-text" v-text="option.label" />
 						<div
-							v-if="!(field.isDisabled || option.disabled)"
+							v-if="!(field.isDisabled || Boolean(option.disabled))"
 							class="kt-tags__tag-icon"
 							@click.stop="removeTag(option.value)"
 						>
@@ -125,11 +116,23 @@ export default defineComponent({
 		const isDropdownOpen = ref(false)
 
 		const scheduleFocusAfterFieldClick = ref(false)
+		const elSelectClasses = computed(() => ({
+			'el-select--disabled': field.isDisabled,
+		}))
 
 		return {
-			elSelectClasses: computed(() => ({
-				'el-select--disabled': field.isDisabled,
+			elMultipleSelectProps: computed(() => ({
+				defaultFirstOption: true,
+				disabled: field.isDisabled,
+				filterable: true,
+				loadingText: 'TODO',
+				multiple: true,
+				noDataText: 'TODO',
+				noMatchText: 'TODO',
+				placeholder: field.placeholder,
+				value: field.currentValue,
 			})),
+			elSelectClasses: elSelectClasses.value,
 			elSelectRef,
 			field,
 			handleFieldClick: () => {

@@ -44,7 +44,7 @@ export default defineComponent({
 				forceUpdateKey: number
 			} => ({
 				...field.inputProps,
-				class: ['kt-field-text-area__wrapper'],
+				class: 'kt-field-text-area__wrapper',
 				forceUpdateKey: forceUpdateKey.value,
 				placeholder: field.placeholder ?? undefined,
 				rows: props.rows,

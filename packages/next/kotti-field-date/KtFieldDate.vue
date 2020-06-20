@@ -5,15 +5,7 @@
 			slot="container"
 			class="kt-field__input-container"
 		>
-			<ElDate
-				ref="elDateRef"
-				v-bind="elDatePickerProps"
-				:disabled="field.isDisabled"
-				:placeholder="field.placeholder"
-				type="date"
-				:value="field.currentValue"
-				@input="onChange"
-			/>
+			<ElDate ref="elDateRef" v-bind="elDatePickerProps" @input="onChange" />
 		</div>
 	</KtField>
 </template>
@@ -90,7 +82,11 @@ export default defineComponent({
 				() =>
 					({
 						...EL_DATE_PROPS,
+						disabled: field.isDisabled,
+						placeholder: field.placeholder,
 						pickerOptions: pickerOptions.value,
+						type: 'date',
+						value: field.currentValue ?? '',
 					} as Partial<ElDate>),
 			),
 			elDateRef,

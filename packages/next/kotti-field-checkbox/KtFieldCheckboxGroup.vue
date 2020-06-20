@@ -11,10 +11,8 @@
 				class="kt-field-checkbox-group__wrapper__label"
 			>
 				<input
-					v-bind="field.inputProps"
+					v-bind="inputProps"
 					:checked="option.checked"
-					class="kt-field-checkbox-group__wrapper__input"
-					type="checkbox"
 					@change="onChange(option.key, $event)"
 				/>
 				<KtCheckbox :value="option.checked" />
@@ -68,7 +66,12 @@ export default defineComponent({
 
 		return {
 			field,
-			forceUpdateKey,
+			forceUpdateKey: forceUpdateKey.value,
+			inputProps: computed(() => ({
+				...field.inputProps,
+				class: 'kt-field-checkbox-group__wrapper__input',
+				type: 'checkbox',
+			})),
 			onChange: (
 				key: KottiFieldCheckboxGroup.Entry['key'],
 				event: { target: HTMLInputElement },
@@ -78,6 +81,7 @@ export default defineComponent({
 					...field.currentValue,
 					[key]: typeof newValue === 'boolean' ? newValue : null,
 				})
+
 				forceUpdate()
 			},
 			optionsWithChecked: computed(() =>

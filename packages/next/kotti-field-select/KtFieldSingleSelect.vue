@@ -11,15 +11,7 @@
 		<div @mousedown.stop>
 			<ElSelect
 				ref="elSelectRef"
-				:class="elSelectClasses"
-				defaultFirstOption
-				:disabled="field.isDisabled"
-				filterable
-				loadingText="TODO"
-				noDataText="TODO"
-				noMatchText="TODO"
-				:placeholder="field.placeholder"
-				:value="field.currentValue"
+				v-bind="elSingleSelectProps"
 				@input="onChange"
 				@visible-change="(showPopper) => (isDropdownOpen = showPopper)"
 			>
@@ -97,9 +89,6 @@ export default defineComponent({
 		const scheduleFocusAfterFieldClick = ref(false)
 
 		return {
-			elSelectClasses: computed(() => ({
-				'el-select--disabled': field.isDisabled,
-			})),
 			elSelectRef,
 			field,
 			handleFieldClick: () => {
@@ -139,6 +128,16 @@ export default defineComponent({
 				 */
 				if (!isDropdownOpen.value) scheduleFocusAfterFieldClick.value = true
 			},
+			elSingleSelectProps: computed(() => ({
+				defaultFirstOption: true,
+				disabled: field.isDisabled,
+				filterable: true,
+				loadingText: 'TODO',
+				noDataText: 'TODO',
+				noMatchText: 'TODO',
+				placeholder: field.placeholder,
+				value: field.currentValue,
+			})),
 			isDropdownOpen,
 			ktFieldRef,
 			onChange: (value: KottiFieldSingleSelect.Value) => {

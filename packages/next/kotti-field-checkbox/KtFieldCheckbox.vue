@@ -2,11 +2,7 @@
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
 		<div slot="container" class="kt-field-checkbox__wrapper">
 			<label class="kt-field-checkbox__wrapper__label">
-				<input
-					v-bind="inputProps"
-					class="kt-field-checkbox__wrapper__input"
-					@change="onChange"
-				/>
+				<input v-bind="inputProps" @change="onChange" />
 				<KtCheckbox :value="field.currentValue" />
 				<slot name="default" />
 			</label>
@@ -49,11 +45,10 @@ export default defineComponent({
 
 		return {
 			field,
-			inputProps: computed((): Partial<HTMLInputElement> & {
-				forceUpdateKey: number
-			} => ({
+			inputProps: computed(() => ({
 				...field.inputProps,
 				checked: field.currentValue ?? false,
+				class: 'kt-field-checkbox__wrapper__input',
 				forceUpdateKey: forceUpdateKey.value,
 				type: 'checkbox',
 			})),
