@@ -181,6 +181,38 @@ const usePickerMisplacementFix = <DATA_TYPE extends Values>({
 	})
 }
 
+const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
+	elDateRef,
+}: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
+	watchEffect(() => {
+		const dateComponent = getDateComponent({ elDateRef })
+		if (isPickerVisible(dateComponent)) {
+			const innerInputsWrapper: Array<Element> = Array.from(
+				dateComponent.picker.$el.querySelectorAll(
+					'.el-date-picker__editor-wrap',
+				),
+			)
+			innerInputsWrapper.forEach((input) =>
+				input.classList.add(
+					...[
+						'kt-field__wrapper',
+						'kt-field__wrapper--is-small',
+						'kt-field__wrapper--no-validation',
+					],
+				),
+			)
+
+			const innerInputs: Array<Element> = Array.from(
+				dateComponent.picker.$el.querySelectorAll('.el-input__inner'),
+			)
+
+			innerInputs.forEach((input) => {
+				input.classList.add('kt-field__input-container')
+			})
+		}
+	})
+}
+
 export const usePicker = <DATA_TYPE extends Values>({
 	elDateRef,
 	field,
@@ -199,4 +231,5 @@ export const usePicker = <DATA_TYPE extends Values>({
 		popperWidth,
 		popperHeight: popperHeight ?? '500px',
 	})
+	usePickerInnerInputsFix({ elDateRef })
 }
