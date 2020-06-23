@@ -21,8 +21,8 @@ type HookParameters<DATA_TYPE extends Values> = {
 	elDateRef: Ref<ElDateWithInternalAPI | null>
 	field: KottiField.Hook.Returns<DATA_TYPE>
 	inputContainerRef: Ref<Element | null>
+	popperHeight: string
 	popperWidth: string
-	popperHeight?: string
 }
 
 export type ElDateWithInternalAPI = ElDate & {
@@ -109,14 +109,14 @@ const useInputSizeFix = <DATA_TYPE extends Values>({
 	})
 }
 
-const usePickerWidthFix = <DATA_TYPE extends Values>({
+const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 	elDateRef,
 	inputContainerRef,
 	popperWidth,
 	popperHeight,
 }: Pick<
 	HookParameters<DATA_TYPE>,
-	'elDateRef' | 'inputContainerRef' | 'popperWidth' | 'popperHeight'
+	'elDateRef' | 'inputContainerRef' | 'popperHeight' | 'popperWidth'
 >) => {
 	watchEffect(() => {
 		const dateComponent = getDateComponent({ elDateRef })
@@ -217,19 +217,19 @@ export const usePicker = <DATA_TYPE extends Values>({
 	elDateRef,
 	field,
 	inputContainerRef,
-	popperWidth,
 	popperHeight,
+	popperWidth,
 }: HookParameters<DATA_TYPE>) => {
 	useInputSizeFix({ elDateRef })
 	useInputDecoration({ elDateRef })
 	usePickerMisplacementFix({ elDateRef, field })
 	usePickerNavigationIcons({ elDateRef })
 	usePickerPlacementFix({ elDateRef, inputContainerRef })
-	usePickerWidthFix({
+	usePickerDimensionsFix({
 		elDateRef,
 		inputContainerRef,
+		popperHeight,
 		popperWidth,
-		popperHeight: popperHeight ?? '500px',
 	})
 	usePickerInnerInputsFix({ elDateRef })
 }

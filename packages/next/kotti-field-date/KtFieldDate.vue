@@ -55,7 +55,13 @@ export default defineComponent({
 		const elDateRef = ref<ElDateWithInternalAPI>(null)
 		const inputContainerRef = ref<Element>(null)
 
-		usePicker({ elDateRef, field, inputContainerRef, popperWidth: '400px' })
+		usePicker({
+			elDateRef,
+			field,
+			inputContainerRef,
+			popperHeight: '500px',
+			popperWidth: '400px',
+		})
 
 		const pickerOptions: Ref<Pick<
 			DatePickerOptions,

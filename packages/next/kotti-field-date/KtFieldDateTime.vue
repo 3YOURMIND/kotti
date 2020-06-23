@@ -67,8 +67,8 @@ export default defineComponent({
 			elDateRef,
 			field,
 			inputContainerRef,
-			popperWidth: '470px',
 			popperHeight: '600px',
+			popperWidth: '470px',
 		})
 
 		const pickerOptions: Ref<Pick<
