@@ -1,43 +1,41 @@
 <template>
-	<div class="submit">
+	<div>
 		<!-- TODO: implement popover -->
-		<div v-if="showPopup" class="submit__validation-popup">
+		<div v-if="showPopup" class="kt-form-submit__popup">
 			<h4
-				class="submit__validation-popup__title"
+				class="kt-form-submit__popup__title"
 				v-text="'Form Submission Not Allowed:'"
 			/>
 
-			<div v-if="errors.length">
-				<h5 class="submit__validation-popup__title" v-text="'Errors'" />
-				<ul class="submit__validation-popup__errors">
-					<li
-						v-for="(error, index) in errors"
-						:key="index"
-						class="submit__validation-popup__errors__item"
-					>
-						<i :class="validationIconClasses">circle_cross</i>
-						{{ error.text }}
+			<div
+				v-if="errors.length"
+				class="kt-form-submit__popup__section kt-form-submit__popup__section--error"
+			>
+				<h5 v-text="'Errors'" />
+				<ul>
+					<li v-for="(error, index) in errors" :key="index">
+						<i class="yoco" v-text="'circle_cross'" />
+						<span v-text="error.text" />
 					</li>
 				</ul>
 			</div>
 
-			<div v-if="warnings.length">
-				<h5 class="submit__validation-popup__title" v-text="'Warnings'" />
-				<ul class="submit__validation-popup__warnings">
-					<li
-						v-for="(warning, index) in warnings"
-						:key="index"
-						class="submit__validation-popup__warnings__item"
-					>
-						<i :class="validationIconClasses">circle_attention</i>
-						{{ warning.text }}
+			<div
+				v-if="warnings.length"
+				class="kt-form-submit__popup__section kt-form-submit__popup__section--warning"
+			>
+				<h5 v-text="'Warnings'" />
+				<ul>
+					<li v-for="(warning, index) in warnings" :key="index">
+						<i class="yoco" v-text="'circle_attention'" />
+						<span v-text="warning.text" />
 					</li>
 				</ul>
 			</div>
 		</div>
 
 		<button
-			class="kt-button primary submit__button"
+			class="kt-button primary kt-form-submit__button"
 			:disabled="isDisabled"
 			type="submit"
 		>
@@ -70,11 +68,6 @@ export default defineComponent({
 		const { isLoading, isValid, validationSummary } = context
 		const errors = computed(() => validationSummary.value.errors)
 		const warnings = computed(() => validationSummary.value.warnings)
-		//styles
-		const validationIconClasses = [
-			'yoco',
-			'submit__validation-popup__errors__item__icon',
-		]
 
 		return {
 			errors,
@@ -84,15 +77,18 @@ export default defineComponent({
 				() => errors.value.length > 0 || warnings.value.length > 0,
 			),
 			warnings,
-			validationIconClasses,
 		}
 	},
 })
 </script>
 
-<style lang="scss" scoped>
-.submit {
-	&__validation-popup {
+<style lang="scss">
+.kt-form-submit {
+	&__button {
+		display: flex;
+	}
+
+	&__popup {
 		display: flex;
 		flex: 1;
 		flex-direction: column;
@@ -100,46 +96,42 @@ export default defineComponent({
 		padding: 1em;
 		background-color: var(--ui-01);
 
-		> div:not(:last-child) {
+		> *:not(:last-child) {
 			margin-bottom: 1em;
 		}
 
-		&__title {
-			font-weight: bold;
-			color: var(--text-01);
-		}
-
-		&__errors,
-		&__warnings {
-			display: flex;
-			flex-direction: column;
-			margin: 0;
-			list-style: none;
-
-			&__item__icon {
-				width: 1em;
-				height: 1em;
-				padding-right: 0.5em;
+		&__section {
+			ul {
+				display: flex;
+				flex-direction: column;
 				margin: 0;
+				list-style: none;
+
+				li {
+					display: flex;
+					align-items: center;
+					margin: 0.2rem 0;
+					line-height: 1;
+
+					i.yoco {
+						display: flex;
+						align-items: center;
+						margin: 0 0.5em 0 0;
+					}
+				}
+			}
+
+			@each $type in 'warning', 'error' {
+				&--#{$type} ul {
+					color: var(--support-#{$type}); /* stylelint-disable-line */
+				}
 			}
 		}
 
-		&__warnings__item {
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-			color: var(--support-warning);
-		}
-
-		&__errors__item {
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-			color: var(--support-error);
-		}
-
-		&__button {
-			display: flex;
+		&__title,
+		h5 {
+			font-weight: bold;
+			color: var(--text-01);
 		}
 	}
 }
