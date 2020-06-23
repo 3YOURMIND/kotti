@@ -1,7 +1,7 @@
 <template>
 	<KtField
 		v-bind="{ field }"
-		class="kt-field-daterange"
+		class="kt-field-date-range"
 		:getEmptyValue="() => [null, null]"
 	>
 		<div
