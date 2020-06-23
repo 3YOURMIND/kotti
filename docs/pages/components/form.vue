@@ -47,10 +47,19 @@
 		v-bind="{ preventSubmissionOn, validators}"
 		@submit="onSubmit"
 	>
+		<KtFieldDateTimeRange
+			formKey="dateTimeRange"
+			:isDisabled="formSettings.disabledFormFields"
+			label="KtFieldDateTimeRange"
+			:maximumDate="null"
+			minimumDate="2020-06-05"
+			:size="fieldSize"
+		/>
 		<KtFieldDateTime
 			formKey="dateTime"
 			:isDisabled="formSettings.disabledFormFields"
 			label="KtFieldDateTime"
+			:size="fieldSize"
 		/>
 		<KtFieldDateRange
 			formKey="dateRange"
@@ -58,6 +67,7 @@
 			label="KtFieldDateRange"
 			:maximumDate="null"
 			minimumDate="2020-06-05"
+			:size="fieldSize"
 			:shortcuts="dateRangeShortcuts"
 		/>
 		<KtFieldDate
@@ -277,6 +287,7 @@ export default defineComponent({
 			date: null,
 			dateRange: [null, null],
 			dateTime: null,
+			dateTimeRange: [null, null],
 			checkboxGroup: {
 				initiallyFalse: false,
 				initiallyNull: null,

@@ -11,12 +11,14 @@ import {
 	KottiFieldDate,
 	KottiFieldDateRange,
 	KottiFieldDateTime,
+	KottiFieldDateTimeRange,
 } from './types'
 import {
 	dateLimitValidator,
 	dateRangeShortcutValidator,
 	dateShortcutValidator,
 	dateTimeShortcutValidator,
+	dateTimeRangeShortcutValidator,
 } from './utils'
 
 const EL_SHARED_INTERNAL_PROPS = {
@@ -88,5 +90,18 @@ export const KOTTI_FIELD_DATE_TIME_PROPS = {
 			value: unknown,
 		): value is KottiFieldDateTime.Props['shortcuts'] =>
 			Array.isArray(value) && value.every(dateTimeShortcutValidator),
+	},
+}
+
+export const KOTTI_FIELD_DATE_TIME_RANGE_PROPS = {
+	...KOTTI_FIELD_DATE_SHARED_PROPS,
+	//TODO should / will need more limits for the time
+	shortcuts: {
+		default: () => [],
+		type: Array,
+		validator: (
+			value: unknown,
+		): value is KottiFieldDateTimeRange.Props['shortcuts'] =>
+			Array.isArray(value) && value.every(dateTimeRangeShortcutValidator),
 	},
 }
