@@ -54,6 +54,7 @@
 			:maximumDate="null"
 			minimumDate="2020-06-05"
 			:size="fieldSize"
+			:shortcuts="dateTimeRangeShortcuts"
 		/>
 		<KtFieldDateTime
 			formKey="dateTime"
@@ -274,11 +275,13 @@ import dayjs from 'dayjs'
 import {
 	KottiFieldDateRange,
 	KottiFieldDate,
+	KottiFieldDateTimeRange,
 } from '../../../packages/next/kotti-field-date/types'
 import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiForm } from '../../../packages/next/kotti-form/types'
 
 const DATE_ISO_FORMAT = 'YYYY-MM-DD'
+const DATE_TIME_ISO_FORMAT = 'YYYY-MM-DDTHH:mm:ss'
 
 export default defineComponent({
 	name: 'KtFormDoc',
@@ -303,16 +306,22 @@ export default defineComponent({
 			users: [{ username: null }, { username: 'anything' }],
 		})
 
-		const today = dayjs().format(DATE_ISO_FORMAT)
+		const today = (format: string) =>
+			dayjs()
+				.format(format)
+				.replace('T', ' ')
 
-		const jumpOneWeek = (fromDate: string | null) =>
+		const jumpOneWeek = (fromDate: string | null, format: string) =>
 			dayjs(fromDate ?? undefined)
 				.add(1, 'week')
-				.format(DATE_ISO_FORMAT)
+				.format(format)
+				.replace('T', ' ')
 
-		const yesterday = dayjs()
-			.subtract(1, 'day')
-			.format(DATE_ISO_FORMAT)
+		const yesterday = (format: string) =>
+			dayjs()
+				.subtract(1, 'day')
+				.format(format)
+				.replace('T', ' ')
 
 		return {
 			addUser: () => {
@@ -324,33 +333,59 @@ export default defineComponent({
 			alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
 			alwaysSuccess: () => ({ type: 'success', text: 'Always Success!' }),
 			alwaysWarning: () => ({ type: 'warning', text: 'Always Warning!' }),
+			dateTimeRangeShortcuts: computed(
+				(): KottiFieldDateTimeRange.Props['shortcuts'] => [
+					{
+						label: 'Today',
+						value: [today(DATE_TIME_ISO_FORMAT), today(DATE_TIME_ISO_FORMAT)],
+					},
+					{
+						label: 'Yesterday',
+						value: [
+							yesterday(DATE_TIME_ISO_FORMAT),
+							today(DATE_TIME_ISO_FORMAT),
+						],
+					},
+					{
+						label: 'Jump One Week',
+						value: [
+							formData.value?.dateTimeRange[1],
+							jumpOneWeek(
+								formData.value?.dateTimeRange[1],
+								DATE_TIME_ISO_FORMAT,
+							),
+						],
+						keepOpen: true,
+					},
+				],
+			),
 			dateRangeShortcuts: computed(
 				(): KottiFieldDateRange.Props['shortcuts'] => [
 					{
 						label: 'Today',
-						value: [today, today],
+						value: [today(DATE_ISO_FORMAT), today(DATE_ISO_FORMAT)],
 					},
 					{
 						label: 'Yesterday',
-						value: [yesterday, today],
+						value: [yesterday(DATE_ISO_FORMAT), today(DATE_ISO_FORMAT)],
 					},
 					{
 						label: 'Jump One Week',
 						value: [
 							formData.value?.dateRange[1],
-							jumpOneWeek(formData.value?.dateRange[1]),
+							jumpOneWeek(formData.value?.dateRange[1], DATE_ISO_FORMAT),
 						],
 						keepOpen: true,
 					},
 				],
 			),
 			dateShortcuts: computed((): KottiFieldDate.Props['shortcuts'] => [
-				{ label: 'Today', value: today },
-				{ label: 'Yesterday', value: yesterday },
+				{ label: 'Today', value: today(DATE_ISO_FORMAT) },
+				{ label: 'Yesterday', value: yesterday(DATE_ISO_FORMAT) },
 				{
 					label: 'Jump One Week',
 					keepOpen: true,
-					value: jumpOneWeek(formData.value?.date),
+					value: jumpOneWeek(formData.value?.date, DATE_ISO_FORMAT),
 				},
 			]),
 			disableFormFields: ref(false),
