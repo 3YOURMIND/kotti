@@ -75,7 +75,7 @@ export default defineComponent({
 			elDateRef,
 			field,
 			inputContainerRef,
-			popperHeight: '600px',
+			popperHeight: '550px',
 			popperWidth: '700px',
 		})
 

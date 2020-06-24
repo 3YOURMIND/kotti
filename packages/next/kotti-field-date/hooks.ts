@@ -189,7 +189,7 @@ const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 		if (isPickerVisible(dateComponent)) {
 			const innerInputsWrapper: Array<Element> = Array.from(
 				dateComponent.picker.$el.querySelectorAll(
-					'.el-date-picker__editor-wrap',
+					'.el-date-picker__editor-wrap, .el-date-range-picker__time-picker-wrap',
 				),
 			)
 			innerInputsWrapper.forEach((input) =>
@@ -208,6 +208,7 @@ const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 
 			innerInputs.forEach((input) => {
 				input.classList.add('kt-field__input-container')
+				input.setAttribute('size', '1')
 			})
 		}
 	})
