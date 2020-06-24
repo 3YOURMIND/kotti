@@ -153,9 +153,10 @@ const usePickerNavigationIcons = <DATA_TYPE extends Values>({
 			)
 
 			const headerYocoIcons = [
-				getIcons('chevron_left', 'chevron_left'),
+				// TODO: replace triangle_* with double_chevron*
+				getIcons('triangle_left'),
 				getIcons('chevron_left'),
-				getIcons('chevron_right', 'chevron_right'),
+				getIcons('triangle_right'),
 				getIcons('chevron_right'),
 			]
 
