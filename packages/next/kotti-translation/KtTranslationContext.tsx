@@ -9,7 +9,7 @@ const KtTranslationContext = defineComponent({
 	name: 'KtTranslationContext',
 	props: {
 		locale: { required: true, type: String },
-		messages: { required: true, type: Object },
+		messages: { default: () => ({}), type: Object },
 	},
 	setup(props: KottiTranslation.Props, { slots }) {
 		useTranslationProvide(

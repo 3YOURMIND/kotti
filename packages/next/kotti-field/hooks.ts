@@ -243,7 +243,7 @@ export const useField = <DATA_TYPE>({
 				isMissingRequiredField.value
 					? validation.value.type === 'error'
 						? validation.value
-						: { type: 'error', text: translations.requiredMessage }
+						: { type: 'error', text: translations.value.requiredMessage }
 					: validation.value,
 		),
 	})

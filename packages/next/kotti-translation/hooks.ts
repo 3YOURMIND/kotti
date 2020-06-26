@@ -1,4 +1,11 @@
-import { computed, inject, provide, Ref, watch } from '@vue/composition-api'
+import {
+	computed,
+	inject,
+	provide,
+	reactive,
+	Ref,
+	watch,
+} from '@vue/composition-api'
 import elementLocale from 'element-ui/lib/locale'
 import elementDe from 'element-ui/lib/locale/lang/de'
 import elementEn from 'element-ui/lib/locale/lang/en'
@@ -15,7 +22,7 @@ import { jaJP } from './locales/ja-JP'
 import { KottiTranslation, DeepPartial } from './types'
 import { fixDeepMerge } from './utilities'
 
-export const useTranslationContext = (): KottiTranslation.Context => {
+export const useTranslationContext = () => {
 	const context = inject<KottiTranslation.Context | null>(
 		KT_TRANSLATION_CONTEXT,
 		null,
@@ -27,22 +34,24 @@ export const useTranslationContext = (): KottiTranslation.Context => {
 			'useTranslationContext: Missing Translation Context, falling back to English',
 		)
 
-	return {
-		locale: computed(() => (context === null ? 'en-US' : context.locale.value)),
-		messages: computed(() =>
-			context === null ? enUS : context.messages.value,
-		),
-	}
+	const locale = computed(() =>
+		context === null ? 'en-US' : context.locale.value,
+	)
+	const messages = computed(() =>
+		context === null ? enUS : context.messages.value,
+	)
+
+	return reactive({ locale, messages })
 }
 
 export const useTranslationNamespace = <
 	NS extends keyof KottiTranslation.Messages
 >(
 	namespace: NS,
-): KottiTranslation.Messages[NS] => {
+): Ref<Readonly<KottiTranslation.Messages[NS]>> => {
 	const context = useTranslationContext()
 
-	return context.messages.value[namespace]
+	return computed(() => context.messages[namespace])
 }
 
 /**
@@ -66,7 +75,7 @@ export const useTranslationProvide = (
 	/**
 	 * Necessary for the date pickers
 	 */
-	watch(locale, () => {
+	watch(locale, (newValue) => {
 		elementLocale.use(
 			{
 				'en-US': elementEn,
@@ -74,7 +83,7 @@ export const useTranslationProvide = (
 				'es-ES': elementEs,
 				'fr-FR': elementFr,
 				'ja-JP': elementJa,
-			}[locale.value],
+			}[newValue],
 		)
 	})
 

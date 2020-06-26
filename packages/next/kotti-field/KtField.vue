@@ -146,8 +146,8 @@ export default defineComponent({
 							props.field.label,
 							`(${
 								props.field.isOptional
-									? translations.optionalLabel
-									: translations.requiredLabel
+									? translations.value.optionalLabel
+									: translations.value.requiredLabel
 							})`,
 					  ].join(' '),
 			),
