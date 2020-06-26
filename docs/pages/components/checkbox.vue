@@ -1,6 +1,11 @@
 <template lang="md">
-
 # Checkbox
+
+<DeprecationWarning
+	componentName="KtFieldCheckbox"
+	link="/components/form"
+	version="3.0"
+/>
 
 ## Basic usage
 
@@ -52,8 +57,11 @@ Example of using the required field:
 </template>
 
 <script>
+import DeprecationWarning from '../../components/DeprecationWarning.vue'
+
 export default {
 	name: 'KtCheckboxDoc',
+	components: { DeprecationWarning },
 	data() {
 		return {
 			value1: true,

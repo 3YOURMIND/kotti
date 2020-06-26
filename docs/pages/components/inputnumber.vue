@@ -1,7 +1,11 @@
 <template lang="md">
 # Input Number
 
-Input Number is an input field which only supports the `Number` type.
+<DeprecationWarning
+	componentName="KtFieldNumber"
+	link="/components/form"
+	version="3.0"
+/>
 
 ## Basic Usage
 
@@ -63,11 +67,11 @@ When `max` attribute has a value, and `showMaxNumber` is `true`, the max number 
 
 ### Null Value
 
-if the bound value is `null` or if the user clears the input (making the internal value we track null), 
-both increment/decrement buttons will be enabled but clicking them will initialize the inputNumber to `0`. 
+if the bound value is `null` or if the user clears the input (making the internal value we track null),
+both increment/decrement buttons will be enabled but clicking them will initialize the inputNumber to `0`.
 
-Thus, note that if the bound value is `null` or the input is an empty string, the min/max range checks are disregarded 
-until the user inputs an actual value or tries to decrement/increment, 
+Thus, note that if the bound value is `null` or the input is an empty string, the min/max range checks are disregarded
+until the user inputs an actual value or tries to decrement/increment,
 after which the component behaves as in the above examples.
 
 <div class="element-example white">
@@ -82,8 +86,11 @@ When `max` attribute has a value, and `showMaxNumber` is `true`, the max number 
 </template>
 
 <script>
+import DeprecationWarning from '../../components/DeprecationWarning.vue'
+
 export default {
 	name: 'KtInputNumberDoc',
+	components: { DeprecationWarning },
 	data() {
 		return {
 			number1: 12,

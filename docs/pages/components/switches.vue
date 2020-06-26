@@ -1,8 +1,11 @@
 <template lang="md">
 # Switch
 
-Using swtich to change the value between `true` or `false` quickly.
-Since switch only has two values, using radio or select when values are more than two.
+<DeprecationWarning
+	componentName="KtFieldText"
+	link="/components/form"
+	version="3.0"
+/>
 
 ## Default
 
@@ -49,11 +52,11 @@ Default slot is for customize template.
 
 <div class="element-example">
 	<KtSwitch v-model="checkbox3" :right="true">
-		Right Swtich
+		Right Switch
 	</KtSwitch>
 </div>
 
-By default swicth button is located left side of the text,
+By default switch button is located left side of the text,
 using `right` to change the position.
 
 ```html
@@ -76,8 +79,11 @@ using `right` to change the position.
 </template>
 
 <script>
+import DeprecationWarning from '../../components/DeprecationWarning.vue'
+
 export default {
 	name: 'KtSwitchDoc',
+	components: { DeprecationWarning },
 	data() {
 		return {
 			checkbox1: false,

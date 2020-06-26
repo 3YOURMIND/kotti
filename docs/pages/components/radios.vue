@@ -1,6 +1,11 @@
 <template lang="md">
-
 # Radio
+
+<DeprecationWarning
+	componentName="KtFieldRadio/KtFieldRadioGroup"
+	link="/components/form"
+	version="3.0"
+/>
 
 ## Basic
 
@@ -54,7 +59,7 @@ Radio button support list style by setting `listStyle` to `true`;
 </KtRadioGroup>
 ```
 
-## Required 
+## Required
 
 ```html
 <div class="element-example">
@@ -93,8 +98,11 @@ options: [{
 </template>
 
 <script>
+import DeprecationWarning from '../../components/DeprecationWarning.vue'
+
 export default {
 	name: 'KtRadioDoc',
+	components: { DeprecationWarning },
 	data() {
 		return {
 			radio1: 'morning',
