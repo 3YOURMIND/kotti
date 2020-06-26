@@ -2,7 +2,20 @@
 # Form
 
 <ClientOnly>
-	<KtTranslationContext locale="en-US" :messages="{}">
+	<KtTranslationContext :locale="locale">
+		<KtFieldSingleSelect
+			v-model="locale"
+			hideClear
+			label="Language"
+			leftIcon="global"
+			:options="[
+				{ label: 'German (de-DE)', value: 'de-DE' },
+				{ label: 'English (en-US)', value: 'en-US' },
+				{ label: 'Spanish (es-ES)', value: 'es-ES' },
+				{ label: 'French (fr-FR)', value: 'fr-FR' },
+				{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+			]"
+		/>
 		<h2>KtForm Settings</h2>
 		<div class="wrapper">
 			<KtFieldRadioGroup
@@ -334,6 +347,7 @@ export default defineComponent({
 			alwaysWarning: () => ({ type: 'warning', text: 'Always Warning!' }),
 			DATE_ISO_FORMAT,
 			DATE_TIME_ISO_FORMAT,
+			locale: ref('en-US'),
 			shortcuts: computed(
 				() => (
 					formValueKey: 'date' | 'dateRange' | 'dateTime' | 'dateTimeRange',
@@ -341,6 +355,7 @@ export default defineComponent({
 				): {
 					keepOpen?: boolean
 					label: string
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					value: any
 				}[] => {
 					const dateValue = formData.value ? formData.value[formValueKey] : null
