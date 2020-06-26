@@ -23,7 +23,6 @@ const TestField = defineComponent({
 			supports: {
 				clear: true,
 				decoration: true,
-				placeholder: true,
 				tabIndex: true,
 			},
 		}),
@@ -47,7 +46,6 @@ const TestFieldObject = defineComponent({
 			supports: {
 				clear: true,
 				decoration: true,
-				placeholder: true,
 				tabIndex: true,
 			},
 		}),

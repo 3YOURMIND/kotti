@@ -96,7 +96,6 @@ export default defineComponent({
 			supports: {
 				clear: true,
 				decoration: true,
-				placeholder: true,
 				tabIndex: false,
 			},
 		})
@@ -123,17 +122,19 @@ export default defineComponent({
 		}))
 
 		return {
-			elMultipleSelectProps: computed(() => ({
-				defaultFirstOption: true,
-				disabled: field.isDisabled,
-				filterable: true,
-				loadingText: translations.loadingText,
-				multiple: true,
-				noDataText: translations.noDataText,
-				noMatchText: translations.noMatchText,
-				placeholder: field.placeholder,
-				value: field.currentValue,
-			})),
+			elMultipleSelectProps: computed(
+				(): Partial<ElSelect> => ({
+					defaultFirstOption: true,
+					disabled: field.isDisabled,
+					filterable: true,
+					loadingText: translations.loadingText,
+					multiple: true,
+					noDataText: translations.noDataText,
+					noMatchText: translations.noMatchText,
+					placeholder: props.placeholder ?? undefined,
+					value: field.currentValue,
+				}),
+			),
 			elSelectClasses: elSelectClasses.value,
 			elSelectRef,
 			field,

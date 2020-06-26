@@ -62,7 +62,6 @@ export default defineComponent({
 			supports: {
 				clear: false,
 				decoration: false,
-				placeholder: false,
 				tabIndex: false,
 			},
 		})
@@ -101,16 +100,16 @@ export default defineComponent({
 
 		return {
 			elDateRangePickerProps: computed(
-				() =>
-					({
-						...EL_DATE_PROPS,
-						...EL_DATE_RANGE_PROPS,
-						disabled: field.isDisabled,
-						pickerOptions: pickerOptions.value,
-						type: 'daterange',
-						value: field.currentValue.map((date) => date ?? ''),
-						//TODO add start/end placeholder logic
-					} as Partial<ElDate>),
+				(): Partial<ElDate> => ({
+					...EL_DATE_PROPS,
+					...EL_DATE_RANGE_PROPS,
+					disabled: field.isDisabled,
+					endPlaceholder: props.placeholder?.[1] ?? undefined,
+					pickerOptions: pickerOptions.value,
+					startPlaceholder: props.placeholder?.[0] ?? undefined,
+					type: 'daterange',
+					value: field.currentValue.map((date) => date ?? ''),
+				}),
 			),
 			elDateRef,
 			field,

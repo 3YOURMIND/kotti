@@ -52,7 +52,6 @@ export namespace KottiField {
 			size: Ref<KottiField.Props<DATA_TYPE>['size']>
 			label: Ref<KottiField.Props<DATA_TYPE>['label']>
 			leftIcon: Ref<KottiField.Props<DATA_TYPE>['leftIcon']>
-			placeholder: Ref<KottiField.Props<DATA_TYPE>['placeholder']>
 			prefix: Ref<KottiField.Props<DATA_TYPE>['prefix']>
 			rightIcon: Ref<KottiField.Props<DATA_TYPE>['rightIcon']>
 			setValue: Ref<(newValue: DATA_TYPE) => void>
@@ -107,7 +106,6 @@ export namespace KottiField {
 		isLoading: boolean
 		isOptional: boolean
 		label: string | null
-		placeholder: string | null
 
 		/**
 		 * Show some string before the field
@@ -150,11 +148,6 @@ export namespace KottiField {
 		 * These aren’t supported on e.g. the KtFieldCheckboxGroup
 		 */
 		decoration: boolean
-
-		/**
-		 * E.g. KtFieldCheckbox can’t have a reasonable implementation for a placeholder text
-		 */
-		placeholder: boolean
 
 		/**
 		 * Some third-party components do not support passing a custom tabIndex

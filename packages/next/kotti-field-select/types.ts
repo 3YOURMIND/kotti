@@ -20,6 +20,7 @@ export namespace Shared {
 
 	export type Props = {
 		options: Shared.Entry[]
+		placeholder: string | null
 	}
 
 	export type Translations = {

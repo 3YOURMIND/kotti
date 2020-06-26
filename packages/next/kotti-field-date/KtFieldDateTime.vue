@@ -55,7 +55,6 @@ export default defineComponent({
 			supports: {
 				clear: false, // rely on el-ui
 				decoration: false,
-				placeholder: true,
 				tabIndex: false,
 			},
 		})
@@ -97,15 +96,14 @@ export default defineComponent({
 
 		return {
 			elDateTimePickerProps: computed(
-				() =>
-					({
-						...EL_DATE_TIME_PROPS,
-						disabled: field.isDisabled,
-						pickerOptions: pickerOptions.value,
-						placeholder: field.placeholder,
-						type: 'datetime',
-						value: field.currentValue ?? '',
-					} as Partial<ElDate>),
+				(): Partial<ElDate> => ({
+					...EL_DATE_TIME_PROPS,
+					disabled: field.isDisabled,
+					pickerOptions: pickerOptions.value,
+					placeholder: props.placeholder ?? undefined,
+					type: 'datetime',
+					value: field.currentValue ?? '',
+				}),
 			),
 			elDateRef,
 			field,

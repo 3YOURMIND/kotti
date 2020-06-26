@@ -1,5 +1,7 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldText {
-	export type Props = KottiField.Props<string | null>
+	export type Props = KottiField.Props<string | null> & {
+		placeholder: string | null
+	}
 }

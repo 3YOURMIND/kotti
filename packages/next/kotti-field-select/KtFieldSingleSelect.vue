@@ -71,7 +71,6 @@ export default defineComponent({
 			supports: {
 				clear: true,
 				decoration: true,
-				placeholder: true,
 				tabIndex: false,
 			},
 		})
@@ -130,16 +129,18 @@ export default defineComponent({
 				 */
 				if (!isDropdownOpen.value) scheduleFocusAfterFieldClick.value = true
 			},
-			elSingleSelectProps: computed(() => ({
-				defaultFirstOption: true,
-				disabled: field.isDisabled,
-				filterable: true,
-				loadingText: translations.loadingText,
-				noDataText: translations.noDataText,
-				noMatchText: translations.noMatchText,
-				placeholder: field.placeholder,
-				value: field.currentValue,
-			})),
+			elSingleSelectProps: computed(
+				(): Partial<ElSelect> => ({
+					defaultFirstOption: true,
+					disabled: field.isDisabled,
+					filterable: true,
+					loadingText: translations.loadingText,
+					noDataText: translations.noDataText,
+					noMatchText: translations.noMatchText,
+					placeholder: props.placeholder ?? undefined,
+					value: field.currentValue,
+				}),
+			),
 			isDropdownOpen,
 			ktFieldRef,
 			onChange: (value: KottiFieldSingleSelect.Value) => {

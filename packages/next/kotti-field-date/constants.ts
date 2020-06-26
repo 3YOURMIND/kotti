@@ -19,6 +19,7 @@ import {
 	dateShortcutValidator,
 	dateTimeShortcutValidator,
 	dateTimeRangeShortcutValidator,
+	rangePlaceholderValidator,
 } from './utils'
 
 const EL_SHARED_INTERNAL_PROPS = {
@@ -60,6 +61,7 @@ const KOTTI_FIELD_DATE_SHARED_PROPS = {
 
 export const KOTTI_FIELD_DATE_PROPS = {
 	...KOTTI_FIELD_DATE_SHARED_PROPS,
+	placeholder: { default: null, type: String },
 	shortcuts: {
 		default: () => [],
 		type: Array,
@@ -70,6 +72,11 @@ export const KOTTI_FIELD_DATE_PROPS = {
 
 export const KOTTI_FIELD_DATE_RANGE_PROPS = {
 	...KOTTI_FIELD_DATE_SHARED_PROPS,
+	placeholder: {
+		default: null,
+		type: Array,
+		validator: rangePlaceholderValidator,
+	},
 	shortcuts: {
 		default: () => [],
 		type: Array,
@@ -82,6 +89,7 @@ export const KOTTI_FIELD_DATE_RANGE_PROPS = {
 
 export const KOTTI_FIELD_DATE_TIME_PROPS = {
 	...KOTTI_FIELD_DATE_SHARED_PROPS,
+	placeholder: { default: null, type: String },
 	//TODO should / will need more limits for the time
 	shortcuts: {
 		default: () => [],
@@ -95,6 +103,11 @@ export const KOTTI_FIELD_DATE_TIME_PROPS = {
 
 export const KOTTI_FIELD_DATE_TIME_RANGE_PROPS = {
 	...KOTTI_FIELD_DATE_SHARED_PROPS,
+	placeholder: {
+		default: null,
+		type: Array,
+		validator: rangePlaceholderValidator,
+	},
 	//TODO should / will need more limits for the time
 	shortcuts: {
 		default: () => [],

@@ -20,25 +20,33 @@ export namespace Shared {
 }
 
 export namespace KottiFieldDate {
-	export type Props = Shared.Props<Value>
+	export type Props = Shared.Props<Value> & {
+		placeholder: string | null
+	}
 
 	export type Value = Shared.Value
 }
 
 export namespace KottiFieldDateRange {
-	export type Props = Shared.Props<Value>
+	export type Props = Shared.Props<Value> & {
+		placeholder: [string, string] | null
+	}
 
 	export type Value = [Shared.Value, Shared.Value]
 }
 
 export namespace KottiFieldDateTime {
-	export type Props = Shared.Props<Value>
+	export type Props = Shared.Props<Value> & {
+		placeholder: string | null
+	}
 
 	export type Value = Shared.Value
 }
 
 export namespace KottiFieldDateTimeRange {
-	export type Props = Shared.Props<Value>
+	export type Props = Shared.Props<Value> & {
+		placeholder: [string, string] | null
+	}
 
 	export type Value = [Shared.Value, Shared.Value]
 }

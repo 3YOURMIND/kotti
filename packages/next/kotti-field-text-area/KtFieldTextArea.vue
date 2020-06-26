@@ -18,6 +18,7 @@ export default defineComponent({
 	components: { KtField },
 	props: {
 		...KOTTI_FIELD_PROPS,
+		placeholder: { default: null, type: String },
 		rows: { default: 5, type: Number },
 	},
 	setup(props: KottiFieldTextArea.Props, { emit }) {
@@ -30,7 +31,6 @@ export default defineComponent({
 			supports: {
 				clear: false,
 				decoration: false,
-				placeholder: true,
 				tabIndex: true,
 			},
 		})
@@ -46,7 +46,7 @@ export default defineComponent({
 				...field.inputProps,
 				class: 'kt-field-text-area__wrapper',
 				forceUpdateKey: forceUpdateKey.value,
-				placeholder: field.placeholder ?? undefined,
+				placeholder: props.placeholder ?? undefined,
 				rows: props.rows,
 				value: field.currentValue ?? '',
 			})),

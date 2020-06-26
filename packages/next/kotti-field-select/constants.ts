@@ -18,6 +18,7 @@ const KOTTI_FIELD_SELECT_PROPS = {
 						)),
 			),
 	},
+	placeholder: { default: null, type: String },
 }
 
 export const KOTTI_FIELD_SINGLE_SELECT_PROPS = {

@@ -13,7 +13,6 @@ export const KOTTI_FIELD_PROPS = {
 	isOptional: { default: false, type: Boolean },
 	label: { default: null, type: String },
 	leftIcon: { default: null, type: String },
-	placeholder: { default: null, type: String },
 	prefix: { default: null, type: String },
 	rightIcon: { default: null, type: String },
 	size: { default: 'medium', type: String },

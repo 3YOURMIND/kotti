@@ -68,7 +68,6 @@ export const useField = <DATA_TYPE>({
 		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
 			clear: ['hideClear'],
 			decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix'],
-			placeholder: ['placeholder'],
 			tabIndex: ['tabIndex'],
 		}
 
@@ -219,7 +218,6 @@ export const useField = <DATA_TYPE>({
 		size: computed(() => props.size),
 		label: computed(() => props.label),
 		leftIcon: computed(() => props.leftIcon),
-		placeholder: computed(() => props.placeholder),
 		prefix: computed(() => props.prefix),
 		rightIcon: computed(() => props.rightIcon),
 		// FIXME: Maybe this needs to be a computed, because props.isDisabled wouldn’t change otherwise

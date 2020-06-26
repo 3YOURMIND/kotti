@@ -36,7 +36,6 @@ export default defineComponent({
 			supports: {
 				clear: false,
 				decoration: false,
-				placeholder: false,
 				tabIndex: true,
 			},
 		})

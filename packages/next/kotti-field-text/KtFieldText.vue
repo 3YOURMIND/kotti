@@ -18,6 +18,7 @@ export default defineComponent({
 	components: { KtField },
 	props: {
 		...KOTTI_FIELD_PROPS,
+		placeholder: { default: null, type: String },
 	},
 	setup(props: KottiFieldText.Props, { emit }) {
 		const field = useField<string | null>({
@@ -29,7 +30,6 @@ export default defineComponent({
 			supports: {
 				clear: true,
 				decoration: true,
-				placeholder: true,
 				tabIndex: true,
 			},
 		})
@@ -47,7 +47,7 @@ export default defineComponent({
 				forceUpdateKey: forceUpdateKey.value,
 				type: 'text',
 				value: field.currentValue ?? '',
-				placeholder: field.placeholder ?? undefined,
+				placeholder: props.placeholder ?? undefined,
 			})),
 			onInput: (event: { target: HTMLInputElement }) => {
 				const newValue = event.target.value
