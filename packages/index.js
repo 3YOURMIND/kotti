@@ -67,6 +67,7 @@ import {
 	KtFormControllerObject,
 	KtFormSubmit,
 } from './next/kotti-form'
+import { KtTranslationContext } from './next/kotti-translation/KtTranslationContext'
 
 const components = {
 	KtAccordion,
@@ -123,6 +124,7 @@ const components = {
 	KtTable,
 	KtTheme,
 	KtToaster,
+	KtTranslationContext,
 	KtUserMenu,
 }
 
@@ -217,5 +219,6 @@ export {
 	KtTableProvider,
 	KtTheme,
 	KtToaster,
+	KtTranslationContext,
 	KtUserMenu,
 }

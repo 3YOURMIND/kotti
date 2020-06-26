@@ -26,6 +26,7 @@ export namespace Shared {
 		loadingText: string
 		noDataText: string
 		noMatchText: string
+		placeholder: string
 	}
 }
 

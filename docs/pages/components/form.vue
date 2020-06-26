@@ -2,270 +2,272 @@
 # Form
 
 <ClientOnly>
-	<h2>KtForm Settings</h2>
-	<div class="wrapper">
-		<KtFieldRadioGroup
-			v-model="preventSubmissionOn"
-			isOptional
-			label="Prevent Submission"
-			:options="[
-				{ label: 'Error', value: 'error' },
-				{ label: 'Warning', value: 'warning' },
-				{ label: 'Never', value: 'NEVER' }
-			]"
-			:validator="(value) => ({
-				text: null,
-				type: value === 'NEVER' ? 'success' : value
-			})"
-		/>
-		<KtFieldRadioGroup
-			v-model="fieldSize"
-			isOptional
-			label="Field Size"
-			:options="[
-				{ label: 'Small', value: 'small' },
-				{ label: 'Medium', value: 'medium' },
-				{ label: 'Large', value: 'large' }
-			]"
-		/>
-		<KtFieldCheckboxGroup
-			v-model="formSettings"
-			isOptional
-			label="Miscellaneous"
-			:options="[
-				{ key: 'hideValidation', label: 'Hide validation' },
-				{ key: 'isLoading', label: 'Is Loading' },
-				{ key: 'disableFormFields', label: 'Disable Form Fields' },
-			]"
-		/>
-	</div>
-	<h2>KtForm</h2>
-	<KtForm
-		v-model="formData"
-		:hideValidation="formSettings.hideValidation"
-		:isLoading="formSettings.isLoading"
-		v-bind="{ preventSubmissionOn, validators}"
-		@submit="onSubmit"
-	>
-		<KtFieldDateTimeRange
-			formKey="dateTimeRange"
-			:isDisabled="formSettings.disabledFormFields"
-			label="KtFieldDateTimeRange"
-			:maximumDate="null"
-			minimumDate="2020-06-05"
-			:size="fieldSize"
-			:shortcuts="shortcuts('dateTimeRange', DATE_TIME_ISO_FORMAT)"
-		/>
-		<KtFieldDateTime
-			formKey="dateTime"
-			:isDisabled="formSettings.disabledFormFields"
-			label="KtFieldDateTime"
-			:size="fieldSize"
-			:shortcuts="shortcuts('dateTime', DATE_TIME_ISO_FORMAT)"
-		/>
-		<KtFieldDateRange
-			formKey="dateRange"
-			:isDisabled="formSettings.disabledFormFields"
-			label="KtFieldDateRange"
-			:maximumDate="null"
-			minimumDate="2020-06-05"
-			:size="fieldSize"
-			:shortcuts="shortcuts('dateRange', DATE_ISO_FORMAT)"
-		/>
-		<KtFieldDate
-			formKey="date"
-			label="KtFieldDate"
-			:isDisabled="formSettings.disabledFormFields"
-			:maximumDate="null"
-			minimumDate="2020-06-05"
-			placeholder="Select Date"
-			:size="fieldSize"
-			:shortcuts="shortcuts('date', DATE_ISO_FORMAT)"
-		/>
-		<KtFieldMultiSelect
-			:collapseTagsAfter="3"
-			formKey="multiSelect"
-			:isDisabled="formSettings.disableFormFields"
-			isOptional
-			label="Multi Select"
-			leftIcon="shipping"
-			:options="radioGroupAndSelectOptions"
-			placeholder="select something"
-			prefix="Prefix"
-			rightIcon="calendar"
-			:size="fieldSize"
-			suffix="Suffix"
-		/>
-		<KtFieldSingleSelect
-			formKey="radioGroupAndSingleSelect"
-			:isDisabled="formSettings.disableFormFields"
-			label="Single Select"
-			leftIcon="shipping"
-			:options="radioGroupAndSelectOptions"
-			placeholder='select something'
-			prefix="Prefix"
-			rightIcon="calendar"
-			:size="fieldSize"
-			suffix="Suffix"
-		/>
-		<KtFieldRadioGroup
-			formKey="radioGroupAndSingleSelect"
-			:isDisabled="formSettings.disableFormFields"
-			isOptional
-			label="Some RadioGroup"
-			:options="radioGroupAndSelectOptions"
-			:size="fieldSize"
-		/>
-		<KtFieldCheckboxGroup
-			formKey="checkboxGroup"
-			:isDisabled="formSettings.disableFormFields"
-			label="Some CheckboxGroup"
-			:options="[
-				{ key: 'initiallyFalse', label: 'A (initiallyFalse)' },
-				{ key: 'initiallyNull', label: 'B (initiallyNull)' },
-				{ key: 'initiallyTrue', label: 'C (initiallyTrue)' },
-			]"
-			:size="fieldSize"
-		/>
-		<KtFieldText
-			formKey="firstName"
-			helpText="Help for firstName"
-			helpDescription="help description"
-			:isDisabled="formSettings.disableFormFields"
-			label="First Name"
-			leftIcon="comment"
-			placeholder="Klaus"
-			prefix="Prefix"
-			rightIcon="location"
-			:size="fieldSize"
-			suffix="Suffix"
-		/>
-		<KtFieldText
-			formKey="lastName"
-			helpText="help for lastName"
-			:isDisabled="formSettings.disableFormFields"
-			label="Last Name"
-			placeholder="Dieter"
-			:size="fieldSize"
-		/>
-		<br />
-		<h2>Validation Example</h2>
-		<KtFieldText
-			formKey="lastName"
-			:isDisabled="formSettings.disableFormFields"
-			prefix="Prefix"
-			:size="fieldSize"
-			:tabIndex="5"
-			validatorKey="alwaysNeutral"
-		/>
-		<KtFieldText
-			formKey="lastName"
-			:isDisabled="formSettings.disableFormFields"
-			label="Field That Always Errors"
-			:size="fieldSize"
-			suffix="Suffix"
-			:tabIndex="4"
-			validatorKey="alwaysError"
-		/>
-		<KtFieldText
-			formKey="lastName"
-			:isDisabled="formSettings.disableFormFields"
-			label="Field That Always Succeeds"
-			leftIcon="cloud"
-			:size="fieldSize"
-			:tabIndex="3"
-			validatorKey="alwaysSuccess"
-		/>
-		<KtFieldText
-			formKey="lastName"
-			hideClear
-			:isDisabled="formSettings.disableFormFields"
-			label="Field That Always Warns"
-			rightIcon="location"
-			:size="fieldSize"
-			:tabIndex="2"
-			validatorKey="alwaysWarning"
-		/>
-		<KtFieldText
-			formKey="username"
-			helpText="help for username"
-			:isDisabled="formSettings.disableFormFields"
-			isOptional
-			label="Username"
-			leftIcon="comment"
-			prefix="Prefix"
-			rightIcon="calendar"
-			:size="fieldSize"
-			suffix="Suffix"
-			:tabIndex="1"
-		/>
-		<KtFieldTextArea
-			formKey="description"
-			:isDisabled="formSettings.disableFormFields"
-			label="description"
-			placeholder="type something"
-			:size="fieldSize"
-		/>
-		<br />
-		<h2>KtFormControllerList</h2>
-		<ul>
-			<KtFormControllerList formKey="users">
-				<template v-slot:default="{ addAfter, addBefore, deleteSelf, index, setValues, values }">
-					<li>
-						<h3 v-text="`Item ${index}`" />
-						<KtFieldText
-							formKey="username" label="Username"
-							:isDisabled="formSettings.disableFormFields"
-							leftIcon="user"
-							:size="fieldSize"
-							validatorKey="username"
-						/>
-						<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }">
-							<button class="kt-button danger" type="button" @click="deleteSelf">
-								Delete "{{ values.username }}"
-							</button>
-							<button class="kt-button secondary" type="button" @click="addBefore({ username: `before Item${index}` })">
-								Add Before
-							</button>
-							<button class="kt-button secondary" type="button" @click="addAfter({ username: `after Item${index}` })">
-								Add After
-							</button>
-							<button class="kt-button seondary" type="button" @click="setValues({ ...values, username: `replaced Item${index}` })">
-								Set Values
-							</button>
-						</div>
-					</li>
-				</template>
-			</KtFormControllerList>
-			<br/>
-			Custom Button: <button class="kt-button primary" type="button" @click="addUser">Add User</button>
-		</ul>
-		<br />
-		<h2>KtFormControllerObject</h2>
-		<KtFormControllerObject formKey="user">
+	<KtTranslationContext locale="en-US" :messages="{}">
+		<h2>KtForm Settings</h2>
+		<div class="wrapper">
+			<KtFieldRadioGroup
+				v-model="preventSubmissionOn"
+				isOptional
+				label="Prevent Submission"
+				:options="[
+					{ label: 'Error', value: 'error' },
+					{ label: 'Warning', value: 'warning' },
+					{ label: 'Never', value: 'NEVER' }
+				]"
+				:validator="(value) => ({
+					text: null,
+					type: value === 'NEVER' ? 'success' : value
+				})"
+			/>
+			<KtFieldRadioGroup
+				v-model="fieldSize"
+				isOptional
+				label="Field Size"
+				:options="[
+					{ label: 'Small', value: 'small' },
+					{ label: 'Medium', value: 'medium' },
+					{ label: 'Large', value: 'large' }
+				]"
+			/>
+			<KtFieldCheckboxGroup
+				v-model="formSettings"
+				isOptional
+				label="Miscellaneous"
+				:options="[
+					{ key: 'hideValidation', label: 'Hide validation' },
+					{ key: 'isLoading', label: 'Is Loading' },
+					{ key: 'disableFormFields', label: 'Disable Form Fields' },
+				]"
+			/>
+		</div>
+		<h2>KtForm</h2>
+		<KtForm
+			v-model="formData"
+			:hideValidation="formSettings.hideValidation"
+			:isLoading="formSettings.isLoading"
+			v-bind="{ preventSubmissionOn, validators}"
+			@submit="onSubmit"
+		>
+			<KtFieldDateTimeRange
+				formKey="dateTimeRange"
+				:isDisabled="formSettings.disabledFormFields"
+				label="KtFieldDateTimeRange"
+				:maximumDate="null"
+				minimumDate="2020-06-05"
+				:size="fieldSize"
+				:shortcuts="shortcuts('dateTimeRange', DATE_TIME_ISO_FORMAT)"
+			/>
+			<KtFieldDateTime
+				formKey="dateTime"
+				:isDisabled="formSettings.disabledFormFields"
+				label="KtFieldDateTime"
+				:size="fieldSize"
+				:shortcuts="shortcuts('dateTime', DATE_TIME_ISO_FORMAT)"
+			/>
+			<KtFieldDateRange
+				formKey="dateRange"
+				:isDisabled="formSettings.disabledFormFields"
+				label="KtFieldDateRange"
+				:maximumDate="null"
+				minimumDate="2020-06-05"
+				:size="fieldSize"
+				:shortcuts="shortcuts('dateRange', DATE_ISO_FORMAT)"
+			/>
+			<KtFieldDate
+				formKey="date"
+				label="KtFieldDate"
+				:isDisabled="formSettings.disabledFormFields"
+				:maximumDate="null"
+				minimumDate="2020-06-05"
+				placeholder="Select Date"
+				:size="fieldSize"
+				:shortcuts="shortcuts('date', DATE_ISO_FORMAT)"
+			/>
+			<KtFieldMultiSelect
+				:collapseTagsAfter="3"
+				formKey="multiSelect"
+				:isDisabled="formSettings.disableFormFields"
+				isOptional
+				label="Multi Select"
+				leftIcon="shipping"
+				:options="radioGroupAndSelectOptions"
+				placeholder="select something"
+				prefix="Prefix"
+				rightIcon="calendar"
+				:size="fieldSize"
+				suffix="Suffix"
+			/>
+			<KtFieldSingleSelect
+				formKey="radioGroupAndSingleSelect"
+				:isDisabled="formSettings.disableFormFields"
+				label="Single Select"
+				leftIcon="shipping"
+				:options="radioGroupAndSelectOptions"
+				placeholder='select something'
+				prefix="Prefix"
+				rightIcon="calendar"
+				:size="fieldSize"
+				suffix="Suffix"
+			/>
+			<KtFieldRadioGroup
+				formKey="radioGroupAndSingleSelect"
+				:isDisabled="formSettings.disableFormFields"
+				isOptional
+				label="Some RadioGroup"
+				:options="radioGroupAndSelectOptions"
+				:size="fieldSize"
+			/>
+			<KtFieldCheckboxGroup
+				formKey="checkboxGroup"
+				:isDisabled="formSettings.disableFormFields"
+				label="Some CheckboxGroup"
+				:options="[
+					{ key: 'initiallyFalse', label: 'A (initiallyFalse)' },
+					{ key: 'initiallyNull', label: 'B (initiallyNull)' },
+					{ key: 'initiallyTrue', label: 'C (initiallyTrue)' },
+				]"
+				:size="fieldSize"
+			/>
+			<KtFieldText
+				formKey="firstName"
+				helpText="Help for firstName"
+				helpDescription="help description"
+				:isDisabled="formSettings.disableFormFields"
+				label="First Name"
+				leftIcon="comment"
+				placeholder="Klaus"
+				prefix="Prefix"
+				rightIcon="location"
+				:size="fieldSize"
+				suffix="Suffix"
+			/>
+			<KtFieldText
+				formKey="lastName"
+				helpText="help for lastName"
+				:isDisabled="formSettings.disableFormFields"
+				label="Last Name"
+				placeholder="Dieter"
+				:size="fieldSize"
+			/>
+			<br />
+			<h2>Validation Example</h2>
 			<KtFieldText
 				formKey="lastName"
 				:isDisabled="formSettings.disableFormFields"
-				label="I’m a Field In user"
-				rightIcon="user"
+				prefix="Prefix"
 				:size="fieldSize"
-				validatorKey="username"
+				:tabIndex="5"
+				validatorKey="alwaysNeutral"
 			/>
-		</KtFormControllerObject>
-		<KtFormSubmit />
-	</KtForm>
-	<br />
-	<br />
-	<h2>formData</h2>
-	<pre v-text="JSON.stringify(formData, null, '\t')" />
-	<h2>KtFields Without Form</h2>
-	<div>
-		<KtFieldText
-			v-model="textValue"
-			label="KtFieldText"
-			placeholder="type something"
-		/>
-	</div>
+			<KtFieldText
+				formKey="lastName"
+				:isDisabled="formSettings.disableFormFields"
+				label="Field That Always Errors"
+				:size="fieldSize"
+				suffix="Suffix"
+				:tabIndex="4"
+				validatorKey="alwaysError"
+			/>
+			<KtFieldText
+				formKey="lastName"
+				:isDisabled="formSettings.disableFormFields"
+				label="Field That Always Succeeds"
+				leftIcon="cloud"
+				:size="fieldSize"
+				:tabIndex="3"
+				validatorKey="alwaysSuccess"
+			/>
+			<KtFieldText
+				formKey="lastName"
+				hideClear
+				:isDisabled="formSettings.disableFormFields"
+				label="Field That Always Warns"
+				rightIcon="location"
+				:size="fieldSize"
+				:tabIndex="2"
+				validatorKey="alwaysWarning"
+			/>
+			<KtFieldText
+				formKey="username"
+				helpText="help for username"
+				:isDisabled="formSettings.disableFormFields"
+				isOptional
+				label="Username"
+				leftIcon="comment"
+				prefix="Prefix"
+				rightIcon="calendar"
+				:size="fieldSize"
+				suffix="Suffix"
+				:tabIndex="1"
+			/>
+			<KtFieldTextArea
+				formKey="description"
+				:isDisabled="formSettings.disableFormFields"
+				label="description"
+				placeholder="type something"
+				:size="fieldSize"
+			/>
+			<br />
+			<h2>KtFormControllerList</h2>
+			<ul>
+				<KtFormControllerList formKey="users">
+					<template v-slot:default="{ addAfter, addBefore, deleteSelf, index, setValues, values }">
+						<li>
+							<h3 v-text="`Item ${index}`" />
+							<KtFieldText
+								formKey="username" label="Username"
+								:isDisabled="formSettings.disableFormFields"
+								leftIcon="user"
+								:size="fieldSize"
+								validatorKey="username"
+							/>
+							<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }">
+								<button class="kt-button danger" type="button" @click="deleteSelf">
+									Delete "{{ values.username }}"
+								</button>
+								<button class="kt-button secondary" type="button" @click="addBefore({ username: `before Item${index}` })">
+									Add Before
+								</button>
+								<button class="kt-button secondary" type="button" @click="addAfter({ username: `after Item${index}` })">
+									Add After
+								</button>
+								<button class="kt-button seondary" type="button" @click="setValues({ ...values, username: `replaced Item${index}` })">
+									Set Values
+								</button>
+							</div>
+						</li>
+					</template>
+				</KtFormControllerList>
+				<br/>
+				Custom Button: <button class="kt-button primary" type="button" @click="addUser">Add User</button>
+			</ul>
+			<br />
+			<h2>KtFormControllerObject</h2>
+			<KtFormControllerObject formKey="user">
+				<KtFieldText
+					formKey="lastName"
+					:isDisabled="formSettings.disableFormFields"
+					label="I’m a Field In user"
+					rightIcon="user"
+					:size="fieldSize"
+					validatorKey="username"
+				/>
+			</KtFormControllerObject>
+			<KtFormSubmit />
+		</KtForm>
+		<br />
+		<br />
+		<h2>formData</h2>
+		<pre v-text="JSON.stringify(formData, null, '\t')" />
+		<h2>KtFields Without Form</h2>
+		<div>
+			<KtFieldText
+				v-model="textValue"
+				label="KtFieldText"
+				placeholder="type something"
+			/>
+		</div>
+	</KtTranslationContext>
 </ClientOnly>
 </template>
 

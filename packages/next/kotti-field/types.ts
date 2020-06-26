@@ -162,6 +162,10 @@ export namespace KottiField {
 		tabIndex: boolean
 	}
 
+	export type Translations = {
+		requiredMessage: string
+	}
+
 	export namespace Validation {
 		export type Empty = {
 			type: null

@@ -2,16 +2,13 @@
 	<div>
 		<!-- TODO: implement popover -->
 		<div v-if="showPopup" class="kt-form-submit__popup">
-			<h4
-				class="kt-form-submit__popup__title"
-				v-text="'Form Submission Not Allowed:'"
-			/>
+			<h4 class="kt-form-submit__popup__title" v-text="translations.title" />
 
 			<div
 				v-if="errors.length"
 				class="kt-form-submit__popup__section kt-form-submit__popup__section--error"
 			>
-				<h5 v-text="'Errors'" />
+				<h5 v-text="translations.errorsSectionTitle" />
 				<ul>
 					<li v-for="(error, index) in errors" :key="index">
 						<i class="yoco" v-text="'circle_cross'" />
@@ -24,7 +21,7 @@
 				v-if="warnings.length"
 				class="kt-form-submit__popup__section kt-form-submit__popup__section--warning"
 			>
-				<h5 v-text="'Warnings'" />
+				<h5 v-text="translations.warningsSectionTitle" />
 				<ul>
 					<li v-for="(warning, index) in warnings" :key="index">
 						<i class="yoco" v-text="'circle_attention'" />
@@ -47,6 +44,8 @@
 
 <script lang="ts">
 import { defineComponent, inject, computed } from '@vue/composition-api'
+
+import { useTranslationNamespace } from '../kotti-translation/hooks'
 
 import { KT_FORM_SUBMIT_CONTEXT } from './constants'
 import { KtFormErrors } from './errors'
@@ -76,6 +75,7 @@ export default defineComponent({
 			showPopup: computed(
 				() => errors.value.length > 0 || warnings.value.length > 0,
 			),
+			translations: useTranslationNamespace('KtFormSubmit'),
 			warnings,
 		}
 	},

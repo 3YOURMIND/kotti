@@ -12,6 +12,7 @@ import cloneDeep from 'lodash/cloneDeep'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
+import { useTranslationNamespace } from '../kotti-translation/hooks'
 
 import { FORM_KEY_NONE } from './constants'
 import { KOTTI_FIELD_PROPS } from './constants'
@@ -28,6 +29,7 @@ export const useField = <DATA_TYPE>({
 	DATA_TYPE
 >): KottiField.Hook.Returns<DATA_TYPE> => {
 	const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
+	const translations = useTranslationNamespace('KtFields')
 
 	// sanity-checks
 
@@ -244,7 +246,7 @@ export const useField = <DATA_TYPE>({
 				isMissingRequiredField.value
 					? validation.value.type === 'error'
 						? validation.value
-						: { type: 'error', text: 'This Field is Required' }
+						: { type: 'error', text: translations.requiredMessage }
 					: validation.value,
 		),
 	})
