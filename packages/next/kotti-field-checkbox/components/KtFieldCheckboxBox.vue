@@ -21,7 +21,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-	name: 'KtFieldCheckboxStyle',
+	name: 'KtFieldCheckboxBox',
 	props: {
 		value: {
 			required: true,

@@ -3,7 +3,7 @@
 		<div slot="container" class="kt-field-checkbox__wrapper">
 			<label class="kt-field-checkbox__wrapper__label">
 				<input v-bind="inputProps" @change="onChange" />
-				<KtCheckbox :value="field.currentValue" />
+				<KtFieldCheckboxBox :value="field.currentValue" />
 				<slot name="default" />
 			</label>
 		</div>
@@ -17,12 +17,12 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
-import KtCheckbox from './components/KtFieldCheckboxStyle.vue'
+import KtFieldCheckboxBox from './components/KtFieldCheckboxBox.vue'
 import { KottiFieldCheckbox } from './types'
 
 export default defineComponent({
 	name: 'KtFieldCheckbox',
-	components: { KtField, KtCheckbox },
+	components: { KtField, KtFieldCheckboxBox },
 	props: {
 		...KOTTI_FIELD_PROPS,
 	},

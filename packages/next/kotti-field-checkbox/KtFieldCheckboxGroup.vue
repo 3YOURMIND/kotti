@@ -15,7 +15,7 @@
 					:checked="option.checked"
 					@change="onChange(option.key, $event)"
 				/>
-				<KtCheckbox :value="option.checked" />
+				<KtFieldCheckboxBox :value="option.checked" />
 				<div v-text="option.label" />
 			</label>
 		</div>
@@ -29,13 +29,13 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
-import KtCheckbox from './components/KtFieldCheckboxStyle.vue'
+import KtFieldCheckboxBox from './components/KtFieldCheckboxBox.vue'
 import { KOTTI_FIELD_CHECKBOX_GROUP_PROPS } from './constants'
 import { KottiFieldCheckboxGroup } from './types'
 
 export default defineComponent({
 	name: 'KtFieldCheckboxGroup',
-	components: { KtField, KtCheckbox },
+	components: { KtField, KtFieldCheckboxBox },
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_CHECKBOX_GROUP_PROPS,
