@@ -1,9 +1,11 @@
 <template>
+	<!-- isComponent is necessary to prevent the weird opening behavior when clicking the current value text inside the input -->
 	<KtField
 		ref="ktFieldRef"
 		v-bind="{ field }"
 		class="kt-field-select kt-field-select--single"
 		:getEmptyValue="() => null"
+		isComponent="div"
 		@click.stop="handleFieldClick"
 		@mousedown="handleFieldMouseDown"
 	>

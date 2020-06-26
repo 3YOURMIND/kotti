@@ -1,9 +1,11 @@
 <template>
+	<!-- isComponent is necessary to prevent the dropdown from opening when removing a tag -->
 	<KtField
 		ref="ktFieldRef"
 		v-bind="{ field }"
 		class="kt-field-select kt-field-select--multiple"
 		:getEmptyValue="() => []"
+		isComponent="div"
 		@click.stop="handleFieldClick"
 		@mousedown="handleFieldMouseDown"
 	>
