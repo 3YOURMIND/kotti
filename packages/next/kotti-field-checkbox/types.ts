@@ -1,7 +1,9 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldCheckbox {
-	export type Props = KottiField.Props<boolean | null>
+	export type Props = KottiField.Props<Value>
+
+	export type Value = boolean | null
 }
 
 export namespace KottiFieldCheckboxGroup {

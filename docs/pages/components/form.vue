@@ -288,6 +288,21 @@
 import { defineComponent, computed, ref, Ref } from '@vue/composition-api'
 import dayjs from 'dayjs'
 
+import {
+	KottiFieldCheckboxGroup,
+} from '../../../packages/next/kotti-field-checkbox/types'
+import {
+	KottiFieldDate,
+	KottiFieldDateRange,
+	KottiFieldDateTime,
+	KottiFieldDateTimeRange,
+} from '../../../packages/next/kotti-field-date/types'
+import {
+	KottiFieldMultiSelect,
+	KottiFieldSingleSelect,
+} from '../../../packages/next/kotti-field-select/types'
+import { KottiFieldTextArea } from '../../../packages/next/kotti-field-text-area/types'
+import { KottiFieldText } from '../../../packages/next/kotti-field-text/types'
 import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiForm } from '../../../packages/next/kotti-form/types'
 
@@ -298,23 +313,19 @@ export default defineComponent({
 	name: 'KtFormDoc',
 	setup() {
 		const formData: Ref<{
-			date: string | null
-			dateRange: string[] | null[]
-			dateTime: string | null
-			dateTimeRange: string[] | null[]
-			checkboxGroup: {
-				initiallyFalse: boolean
-				initiallyNull: null
-				initiallyTrue: boolean
-			}
-			description: string | null
-			firstName: string | null
-			lastName: string | null
-			multiSelect: number[]
-			radioGroupAndSingleSelect: string | null
-			user: { lastName: string | null }
-			username: string | null
-			users: { username: string | null }[]
+			date: KottiFieldDate.Value
+			dateRange: KottiFieldDateRange.Value
+			dateTime: KottiFieldDateTime.Value
+			dateTimeRange: KottiFieldDateTimeRange.Value
+			checkboxGroup: KottiFieldCheckboxGroup.Value
+			description: KottiFieldTextArea.Value
+			firstName: KottiFieldText.Value
+			lastName: KottiFieldText.Value
+			multiSelect: KottiFieldMultiSelect.Value
+			radioGroupAndSingleSelect: KottiFieldSingleSelect.Value
+			user: { lastName: KottiFieldText.Value }
+			username: KottiFieldText.Value
+			users: Array<{ username: KottiFieldText.Value }>
 		}> = ref({
 			date: null,
 			dateRange: [null, null],
@@ -342,9 +353,18 @@ export default defineComponent({
 					users: [...formData.value?.users, { username: null }],
 				}
 			},
-			alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
-			alwaysSuccess: () => ({ type: 'success', text: 'Always Success!' }),
-			alwaysWarning: () => ({ type: 'warning', text: 'Always Warning!' }),
+			alwaysError: (): KottiField.Validation.Result => ({
+				type: 'error',
+				text: 'Always Error!',
+			}),
+			alwaysSuccess: (): KottiField.Validation.Result => ({
+				type: 'success',
+				text: 'Always Success!',
+			}),
+			alwaysWarning: (): KottiField.Validation.Result => ({
+				type: 'warning',
+				text: 'Always Warning!',
+			}),
 			DATE_ISO_FORMAT,
 			DATE_TIME_ISO_FORMAT,
 			locale: ref('en-US'),
