@@ -91,6 +91,8 @@ import {
 	SetupContext,
 } from '@vue/composition-api'
 
+import { useTranslationNamespace } from '../kotti-translation/hooks'
+
 import { KottiField } from './types'
 
 export default defineComponent({
@@ -119,6 +121,8 @@ export default defineComponent({
 			() => !(props.field.hideValidation || validationType.value === null),
 		)
 
+		const translations = useTranslationNamespace('KtFields')
+
 		return {
 			affixClasses: computed(() => (modifications: string[]) => [
 				'kt-field__input-container__affix',
@@ -140,7 +144,11 @@ export default defineComponent({
 					? null
 					: [
 							props.field.label,
-							props.field.isOptional ? '(Optional)' : '(Required)',
+							`(${
+								props.field.isOptional
+									? translations.optionalLabel
+									: translations.requiredLabel
+							})`,
 					  ].join(' '),
 			),
 			showClear: computed(

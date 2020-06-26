@@ -2,7 +2,9 @@ import { KottiTranslation } from '../types'
 
 export const esES: KottiTranslation.Messages = {
 	KtFields: {
-		requiredMessage: 'TODO',
+		optionalLabel: 'Opcional',
+		requiredLabel: 'Requerido',
+		requiredMessage: 'Este campo es requerido',
 	},
 	KtFieldSelects: {
 		loadingText: 'Cargando',

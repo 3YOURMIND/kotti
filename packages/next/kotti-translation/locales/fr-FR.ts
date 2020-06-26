@@ -2,7 +2,9 @@ import { KottiTranslation } from '../types'
 
 export const frFR: KottiTranslation.Messages = {
 	KtFields: {
-		requiredMessage: 'TODO',
+		optionalLabel: 'Facultatif',
+		requiredLabel: 'Obligatoire',
+		requiredMessage: 'Ce champ est obligatoire',
 	},
 	KtFieldSelects: {
 		loadingText: 'Chargement',

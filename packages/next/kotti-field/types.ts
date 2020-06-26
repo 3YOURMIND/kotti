@@ -156,6 +156,8 @@ export namespace KottiField {
 	}
 
 	export type Translations = {
+		optionalLabel: string
+		requiredLabel: string
 		requiredMessage: string
 	}
 

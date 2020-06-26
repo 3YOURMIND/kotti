@@ -2,6 +2,8 @@ import { KottiTranslation } from '../types'
 
 export const jaJP: KottiTranslation.Messages = {
 	KtFields: {
+		optionalLabel: 'TODO',
+		requiredLabel: 'TODO',
 		requiredMessage: 'TODO',
 	},
 	KtFieldSelects: {
