@@ -141,6 +141,17 @@
 				]"
 				:size="fieldSize"
 			/>
+			<KtFieldCheckbox
+				formKey="checkbox"
+				:isDisabled="formSettings.disableFormFields"
+				label="KtFieldCheckbox"
+				:size="fieldSize"
+				isOptional
+			>
+				<template v-slot="{ value }">
+					The Value is&nbsp;<a @click.prevent>{{value}}</a>
+				</template>
+			</KtFieldCheckbox>
 			<KtFieldText
 				formKey="firstName"
 				helpText="Help for firstName"
@@ -289,6 +300,7 @@ import { defineComponent, computed, ref, Ref } from '@vue/composition-api'
 import dayjs from 'dayjs'
 
 import {
+	KottiFieldCheckbox,
 	KottiFieldCheckboxGroup,
 } from '../../../packages/next/kotti-field-checkbox/types'
 import {
@@ -313,6 +325,7 @@ export default defineComponent({
 	name: 'KtFormDoc',
 	setup() {
 		const formData: Ref<{
+			checkbox: KottiFieldCheckbox.Value
 			date: KottiFieldDate.Value
 			dateRange: KottiFieldDateRange.Value
 			dateTime: KottiFieldDateTime.Value
@@ -327,6 +340,7 @@ export default defineComponent({
 			username: KottiFieldText.Value
 			users: Array<{ username: KottiFieldText.Value }>
 		}> = ref({
+			checkbox: true,
 			date: null,
 			dateRange: [null, null],
 			dateTime: null,

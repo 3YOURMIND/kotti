@@ -4,7 +4,7 @@
 			<label class="kt-field-checkbox__wrapper__label">
 				<input v-bind="inputProps" @change="onChange" />
 				<KtFieldCheckboxBox :value="field.currentValue" />
-				<slot name="default" />
+				<slot name="default" :value="field.currentValue" />
 			</label>
 		</div>
 	</KtField>
