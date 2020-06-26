@@ -220,8 +220,7 @@ export const useField = <DATA_TYPE>({
 		leftIcon: computed(() => props.leftIcon),
 		prefix: computed(() => props.prefix),
 		rightIcon: computed(() => props.rightIcon),
-		// FIXME: Maybe this needs to be a computed, because props.isDisabled wouldn’t change otherwise
-		// not sure though, might need to write a unit test for this case to figure it out
+		// TODO: Write unit test to figure out if props.isDisabled affects this function or if a computed() is necessary
 		setValue: ref((newValue: unknown) => {
 			if (!isCorrectDataType(newValue))
 				throw new KtFieldErrors.InvalidDataType(props, newValue)

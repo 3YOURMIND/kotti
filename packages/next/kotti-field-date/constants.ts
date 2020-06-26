@@ -1,11 +1,4 @@
 import { Dashes } from '@metatypes/typography'
-import ElementLocale from 'element-ui/lib/locale'
-// import german from 'element-ui/lib/locale/lang/de'
-import english from 'element-ui/lib/locale/lang/en'
-// import french from 'element-ui/lib/locale/lang/fr'
-// import japanese from 'element-ui/lib/locale/lang/ja'
-//TODO inject context, and fetch locale key
-ElementLocale.use(english)
 
 import {
 	KottiFieldDate,
