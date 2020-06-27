@@ -3,7 +3,8 @@
 		<div slot="container" class="kt-field-toggle__wrapper">
 			<label class="kt-field-toggle__wrapper__label">
 				<input v-bind="inputProps" @change="onChange" />
-				<ToggleBox :value="field.currentValue" />
+				<ToggleBox v-if="type === 'checkbox'" :value="field.currentValue" />
+				<ToggleSwitch v-else :value="field.currentValue" />
 				<slot name="default" :value="field.currentValue" />
 			</label>
 		</div>
@@ -18,13 +19,19 @@ import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import ToggleBox from './components/ToggleBox.vue'
+import ToggleSwitch from './components/ToggleSwitch.vue'
 import { KottiFieldToggle } from './types'
 
 export default defineComponent({
 	name: 'KtFieldToggle',
-	components: { KtField, ToggleBox },
+	components: { KtField, ToggleBox, ToggleSwitch },
 	props: {
 		...KOTTI_FIELD_PROPS,
+		type: {
+			default: 'checkbox',
+			type: String,
+			validator: (value: unknown) => value === 'checkbox' || value === 'switch',
+		},
 	},
 	setup(props: KottiFieldToggle.Props, { emit }) {
 		const field = useField<boolean | null>({

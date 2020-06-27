@@ -1,7 +1,7 @@
 <template>
-	<div class="kt-field-toggle" :class="toggleClasses">
+	<div class="kt-field-toggle-box" :class="toggleClasses">
 		<svg
-			class="kt-field-toggle__check"
+			class="kt-field-toggle-box__check"
 			fill="none"
 			height="8"
 			viewBox="0 0 9 8"
@@ -23,15 +23,12 @@ import { computed, defineComponent } from '@vue/composition-api'
 export default defineComponent({
 	name: 'ToggleBox',
 	props: {
-		value: {
-			required: true,
-			type: Boolean,
-		},
+		value: { required: true, type: Boolean },
 	},
 	setup(props) {
 		return {
 			toggleClasses: computed(() => ({
-				'kt-field-toggle--checked': props.value,
+				'kt-field-toggle-box--checked': props.value,
 			})),
 		}
 	},
@@ -45,14 +42,14 @@ export default defineComponent({
 	border-color: $border-color;
 	box-shadow: var(--shadow-base), 0px 0px 0px 1px $shadow-main inset;
 
-	.kt-field-toggle__check {
+	.kt-field-toggle-box__check {
 		path {
 			stroke: $check-stroke-color;
 		}
 	}
 }
 
-.kt-field-toggle {
+.kt-field-toggle-box {
 	display: inline-grid;
 	place-items: center;
 	width: 0.8rem;
@@ -77,7 +74,7 @@ export default defineComponent({
 			var(--interactive-01)
 		);
 
-		.kt-field-toggle {
+		.kt-field-toggle-box {
 			&__check {
 				opacity: 1;
 				transform: scale(1);
@@ -90,7 +87,7 @@ export default defineComponent({
 	@include validations using ($type) {
 		@if $type != no-validation {
 			&:not(.kt-field__wrapper--disabled) {
-				.kt-field-toggle {
+				.kt-field-toggle-box {
 					/* stylelint-disable */
 					@include toggle-colors(
 						var(--support-#{$type}),
@@ -105,7 +102,7 @@ export default defineComponent({
 
 	&:focus-within {
 		&.kt-field__wrapper--no-validation {
-			.kt-field-toggle {
+			.kt-field-toggle-box {
 				@include toggle-colors(
 					var(--interactive-03),
 					var(--interactive-03),
@@ -118,7 +115,7 @@ export default defineComponent({
 	&--disabled {
 		cursor: not-allowed;
 
-		.kt-field-toggle {
+		.kt-field-toggle-box {
 			@include toggle-colors(var(--text-05), var(--ui-02), var(--ui-01));
 		}
 	}

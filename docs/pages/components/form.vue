@@ -144,12 +144,13 @@
 			<KtFieldToggle
 				formKey="toggle"
 				:isDisabled="formSettings.disableFormFields"
+				isOptional
 				label="KtFieldToggle"
 				:size="fieldSize"
-				isOptional
+				:type="formData.toggle ? 'checkbox' : 'switch'"
 			>
 				<template v-slot="{ value }">
-					The Value is&nbsp;<a @click.prevent>{{value}}</a>
+					{{ value ? 'Make Switch' : 'Make Checkbox' }}
 				</template>
 			</KtFieldToggle>
 			<KtFieldText
