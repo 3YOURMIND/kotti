@@ -1,7 +1,7 @@
 <template>
-	<div :class="checkboxClass">
+	<div class="kt-field-toggle" :class="toggleClasses">
 		<svg
-			class="kt-field-checkbox__check"
+			class="kt-field-toggle__check"
 			fill="none"
 			height="8"
 			viewBox="0 0 9 8"
@@ -21,7 +21,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-	name: 'KtFieldCheckboxBox',
+	name: 'ToggleBox',
 	props: {
 		value: {
 			required: true,
@@ -30,9 +30,8 @@ export default defineComponent({
 	},
 	setup(props) {
 		return {
-			checkboxClass: computed(() => ({
-				'kt-field-checkbox': true,
-				'kt-field-checkbox--checked': props.value,
+			toggleClasses: computed(() => ({
+				'kt-field-toggle--checked': props.value,
 			})),
 		}
 	},
@@ -42,18 +41,18 @@ export default defineComponent({
 <style lang="scss">
 @import '../../kotti-field/mixins';
 
-@mixin checkbox-colors($check-stroke-color, $border-color, $shadow-main) {
+@mixin toggle-colors($check-stroke-color, $border-color, $shadow-main) {
 	border-color: $border-color;
 	box-shadow: var(--shadow-base), 0px 0px 0px 1px $shadow-main inset;
 
-	.kt-field-checkbox__check {
+	.kt-field-toggle__check {
 		path {
 			stroke: $check-stroke-color;
 		}
 	}
 }
 
-.kt-field-checkbox {
+.kt-field-toggle {
 	display: inline-grid;
 	place-items: center;
 	width: 0.8rem;
@@ -62,7 +61,7 @@ export default defineComponent({
 	margin-left: 0.1rem;
 	background: var(--ui-background);
 	border: 1px solid var(--ui-02);
-	border-radius: var(--checkbox-border-radius);
+	border-radius: var(--toggle-border-radius);
 	transition: border-color ease-in-out var(--transition-short);
 
 	&__check {
@@ -72,13 +71,13 @@ export default defineComponent({
 	}
 
 	&--checked {
-		@include checkbox-colors(
+		@include toggle-colors(
 			var(--interactive-01),
 			var(--interactive-01),
 			var(--interactive-01)
 		);
 
-		.kt-field-checkbox {
+		.kt-field-toggle {
 			&__check {
 				opacity: 1;
 				transform: scale(1);
@@ -91,9 +90,9 @@ export default defineComponent({
 	@include validations using ($type) {
 		@if $type != no-validation {
 			&:not(.kt-field__wrapper--disabled) {
-				.kt-field-checkbox {
+				.kt-field-toggle {
 					/* stylelint-disable */
-					@include checkbox-colors(
+					@include toggle-colors(
 						var(--support-#{$type}),
 						var(--support-#{$type}),
 						var(--support-#{$type}-light)
@@ -106,8 +105,8 @@ export default defineComponent({
 
 	&:focus-within {
 		&.kt-field__wrapper--no-validation {
-			.kt-field-checkbox {
-				@include checkbox-colors(
+			.kt-field-toggle {
+				@include toggle-colors(
 					var(--interactive-03),
 					var(--interactive-03),
 					var(--interactive-03)
@@ -119,8 +118,8 @@ export default defineComponent({
 	&--disabled {
 		cursor: not-allowed;
 
-		.kt-field-checkbox {
-			@include checkbox-colors(var(--text-05), var(--ui-02), var(--ui-01));
+		.kt-field-toggle {
+			@include toggle-colors(var(--text-05), var(--ui-02), var(--ui-01));
 		}
 	}
 }

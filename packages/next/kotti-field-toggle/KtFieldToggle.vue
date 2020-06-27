@@ -1,9 +1,9 @@
 <template>
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
-		<div slot="container" class="kt-field-checkbox__wrapper">
-			<label class="kt-field-checkbox__wrapper__label">
+		<div slot="container" class="kt-field-toggle__wrapper">
+			<label class="kt-field-toggle__wrapper__label">
 				<input v-bind="inputProps" @change="onChange" />
-				<KtFieldCheckboxBox :value="field.currentValue" />
+				<ToggleBox :value="field.currentValue" />
 				<slot name="default" :value="field.currentValue" />
 			</label>
 		</div>
@@ -17,16 +17,16 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
-import KtFieldCheckboxBox from './components/KtFieldCheckboxBox.vue'
-import { KottiFieldCheckbox } from './types'
+import ToggleBox from './components/ToggleBox.vue'
+import { KottiFieldToggle } from './types'
 
 export default defineComponent({
-	name: 'KtFieldCheckbox',
-	components: { KtField, KtFieldCheckboxBox },
+	name: 'KtFieldToggle',
+	components: { KtField, ToggleBox },
 	props: {
 		...KOTTI_FIELD_PROPS,
 	},
-	setup(props: KottiFieldCheckbox.Props, { emit }) {
+	setup(props: KottiFieldToggle.Props, { emit }) {
 		const field = useField<boolean | null>({
 			emit,
 			isCorrectDataType: (value): value is boolean | null =>
@@ -47,7 +47,7 @@ export default defineComponent({
 			inputProps: computed(() => ({
 				...field.inputProps,
 				checked: field.currentValue ?? false,
-				class: 'kt-field-checkbox__wrapper__input',
+				class: 'kt-field-toggle__wrapper__input',
 				forceUpdateKey: forceUpdateKey.value,
 				type: 'checkbox',
 			})),
@@ -64,10 +64,10 @@ export default defineComponent({
 
 <style lang="scss">
 :root {
-	--checkbox-border-radius: 0.1rem;
+	--toggle-border-radius: 0.1rem;
 }
 
-.kt-field-checkbox__wrapper {
+.kt-field-toggle__wrapper {
 	display: flex;
 	align-items: center;
 

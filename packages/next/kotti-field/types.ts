@@ -139,13 +139,13 @@ export namespace KottiField {
 	 */
 	export type Supports = {
 		/**
-		 * In some fields, having a clear button would be nonsensical (e.g. KtFieldCheckbox)
+		 * In some fields, having a clear button would be nonsensical (e.g. KtFieldToggle)
 		 */
 		clear: boolean
 
 		/**
 		 * Affects all decoration properties like icons and affixes.
-		 * These aren’t supported on e.g. the KtFieldCheckboxGroup
+		 * These aren’t supported on e.g. the KtFieldToggleGroup
 		 */
 		decoration: boolean
 

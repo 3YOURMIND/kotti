@@ -2,7 +2,7 @@
 # Date Picker
 
 <DeprecationWarning
-	componentName="KtFieldCheckbox"
+	componentName="KtFieldDate/KtFieldDateRange/KtFieldDateTime/KtFieldDateTimeRange"
 	link="/components/form"
 	version="3.0"
 />

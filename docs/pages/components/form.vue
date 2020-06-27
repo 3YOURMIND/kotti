@@ -42,7 +42,7 @@
 					{ label: 'Large', value: 'large' }
 				]"
 			/>
-			<KtFieldCheckboxGroup
+			<KtFieldToggleGroup
 				v-model="formSettings"
 				isOptional
 				label="Miscellaneous"
@@ -130,10 +130,10 @@
 				:options="radioGroupAndSelectOptions"
 				:size="fieldSize"
 			/>
-			<KtFieldCheckboxGroup
-				formKey="checkboxGroup"
+			<KtFieldToggleGroup
+				formKey="toggleGroup"
 				:isDisabled="formSettings.disableFormFields"
-				label="Some CheckboxGroup"
+				label="Some ToggleGroup"
 				:options="[
 					{ key: 'initiallyFalse', label: 'A (initiallyFalse)' },
 					{ key: 'initiallyNull', label: 'B (initiallyNull)' },
@@ -141,17 +141,17 @@
 				]"
 				:size="fieldSize"
 			/>
-			<KtFieldCheckbox
-				formKey="checkbox"
+			<KtFieldToggle
+				formKey="toggle"
 				:isDisabled="formSettings.disableFormFields"
-				label="KtFieldCheckbox"
+				label="KtFieldToggle"
 				:size="fieldSize"
 				isOptional
 			>
 				<template v-slot="{ value }">
 					The Value is&nbsp;<a @click.prevent>{{value}}</a>
 				</template>
-			</KtFieldCheckbox>
+			</KtFieldToggle>
 			<KtFieldText
 				formKey="firstName"
 				helpText="Help for firstName"
@@ -300,10 +300,6 @@ import { defineComponent, computed, ref, Ref } from '@vue/composition-api'
 import dayjs from 'dayjs'
 
 import {
-	KottiFieldCheckbox,
-	KottiFieldCheckboxGroup,
-} from '../../../packages/next/kotti-field-checkbox/types'
-import {
 	KottiFieldDate,
 	KottiFieldDateRange,
 	KottiFieldDateTime,
@@ -315,6 +311,10 @@ import {
 } from '../../../packages/next/kotti-field-select/types'
 import { KottiFieldTextArea } from '../../../packages/next/kotti-field-text-area/types'
 import { KottiFieldText } from '../../../packages/next/kotti-field-text/types'
+import {
+	KottiFieldToggle,
+	KottiFieldToggleGroup,
+} from '../../../packages/next/kotti-field-toggle/types'
 import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiForm } from '../../../packages/next/kotti-form/types'
 
@@ -325,27 +325,27 @@ export default defineComponent({
 	name: 'KtFormDoc',
 	setup() {
 		const formData: Ref<{
-			checkbox: KottiFieldCheckbox.Value
 			date: KottiFieldDate.Value
 			dateRange: KottiFieldDateRange.Value
 			dateTime: KottiFieldDateTime.Value
 			dateTimeRange: KottiFieldDateTimeRange.Value
-			checkboxGroup: KottiFieldCheckboxGroup.Value
 			description: KottiFieldTextArea.Value
 			firstName: KottiFieldText.Value
 			lastName: KottiFieldText.Value
 			multiSelect: KottiFieldMultiSelect.Value
 			radioGroupAndSingleSelect: KottiFieldSingleSelect.Value
+			toggle: KottiFieldToggle.Value
+			toggleGroup: KottiFieldToggleGroup.Value
 			user: { lastName: KottiFieldText.Value }
 			username: KottiFieldText.Value
 			users: Array<{ username: KottiFieldText.Value }>
 		}> = ref({
-			checkbox: true,
+			toggle: true,
 			date: null,
 			dateRange: [null, null],
 			dateTime: null,
 			dateTimeRange: [null, null],
-			checkboxGroup: {
+			toggleGroup: {
 				initiallyFalse: false,
 				initiallyNull: null,
 				initiallyTrue: true,

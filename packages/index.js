@@ -45,10 +45,6 @@ import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
 import { KtField } from './next/kotti-field'
 import {
-	KtFieldCheckbox,
-	KtFieldCheckboxGroup,
-} from './next/kotti-field-checkbox'
-import {
 	KtFieldDate,
 	KtFieldDateRange,
 	KtFieldDateTime,
@@ -61,6 +57,7 @@ import {
 } from './next/kotti-field-select'
 import { KtFieldText } from './next/kotti-field-text'
 import { KtFieldTextArea } from './next/kotti-field-text-area'
+import { KtFieldToggle, KtFieldToggleGroup } from './next/kotti-field-toggle'
 import {
 	KtForm,
 	KtFormControllerList,
@@ -90,8 +87,6 @@ const components = {
 	KtDropdownButton,
 	KtDropdownMenu,
 	KtField,
-	KtFieldCheckbox,
-	KtFieldCheckboxGroup,
 	KtFieldDate,
 	KtFieldDateRange,
 	KtFieldDateTime,
@@ -101,6 +96,8 @@ const components = {
 	KtFieldSingleSelect,
 	KtFieldText,
 	KtFieldTextArea,
+	KtFieldToggle,
+	KtFieldToggleGroup,
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
@@ -182,8 +179,6 @@ export {
 	KtDropdownButton,
 	KtDropdownMenu,
 	KtField,
-	KtFieldCheckbox,
-	KtFieldCheckboxGroup,
 	KtFieldDate,
 	KtFieldDateRange,
 	KtFieldDateTime,
@@ -193,6 +188,8 @@ export {
 	KtFieldSingleSelect,
 	KtFieldText,
 	KtFieldTextArea,
+	KtFieldToggle,
+	KtFieldToggleGroup,
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,

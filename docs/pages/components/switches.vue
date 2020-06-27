@@ -2,7 +2,7 @@
 # Switch
 
 <DeprecationWarning
-	componentName="KtFieldText"
+	componentName="KtFieldToggle"
 	link="/components/form"
 	version="3.0"
 />

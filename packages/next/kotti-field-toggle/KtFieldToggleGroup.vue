@@ -2,20 +2,20 @@
 	<KtField v-bind="{ field }" :getEmptyValue="() => null" isGroup>
 		<div
 			slot="container"
-			class="kt-field-checkbox-group__wrapper"
+			class="kt-field-toggle-group__wrapper"
 			:forceUpdateKey="forceUpdateKey"
 		>
 			<label
 				v-for="option of optionsWithChecked"
 				:key="option.key"
-				class="kt-field-checkbox-group__wrapper__label"
+				class="kt-field-toggle-group__wrapper__label"
 			>
 				<input
 					v-bind="inputProps"
 					:checked="option.checked"
 					@change="onChange(option.key, $event)"
 				/>
-				<KtFieldCheckboxBox :value="option.checked" />
+				<ToggleBox :value="option.checked" />
 				<div v-text="option.label" />
 			</label>
 		</div>
@@ -29,21 +29,21 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
-import KtFieldCheckboxBox from './components/KtFieldCheckboxBox.vue'
-import { KOTTI_FIELD_CHECKBOX_GROUP_PROPS } from './constants'
-import { KottiFieldCheckboxGroup } from './types'
+import ToggleBox from './components/ToggleBox.vue'
+import { KOTTI_FIELD_TOGGLE_GROUP_PROPS } from './constants'
+import { KottiFieldToggleGroup } from './types'
 
 export default defineComponent({
-	name: 'KtFieldCheckboxGroup',
-	components: { KtField, KtFieldCheckboxBox },
+	name: 'KtFieldToggleGroup',
+	components: { KtField, ToggleBox },
 	props: {
 		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_CHECKBOX_GROUP_PROPS,
+		...KOTTI_FIELD_TOGGLE_GROUP_PROPS,
 	},
-	setup(props: KottiFieldCheckboxGroup.Props, { emit }) {
-		const field = useField<KottiFieldCheckboxGroup.Value>({
+	setup(props: KottiFieldToggleGroup.Props, { emit }) {
+		const field = useField<KottiFieldToggleGroup.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldCheckboxGroup.Value =>
+			isCorrectDataType: (value): value is KottiFieldToggleGroup.Value =>
 				typeof value === 'object' &&
 				value !== null &&
 				Object.values(value).every(
@@ -68,11 +68,11 @@ export default defineComponent({
 			forceUpdateKey: forceUpdateKey.value,
 			inputProps: computed(() => ({
 				...field.inputProps,
-				class: 'kt-field-checkbox-group__wrapper__input',
+				class: 'kt-field-toggle-group__wrapper__input',
 				type: 'checkbox',
 			})),
 			onChange: (
-				key: KottiFieldCheckboxGroup.Entry['key'],
+				key: KottiFieldToggleGroup.Entry['key'],
 				event: { target: HTMLInputElement },
 			) => {
 				const newValue = event.target.checked
@@ -95,7 +95,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.kt-field-checkbox-group__wrapper {
+.kt-field-toggle-group__wrapper {
 	display: flex;
 	flex-direction: column;
 
@@ -114,7 +114,7 @@ export default defineComponent({
 
 .kt-field__wrapper {
 	&--disabled {
-		.kt-field-checkbox-group__wrapper__label {
+		.kt-field-toggle-group__wrapper__label {
 			color: var(--text-05);
 		}
 	}
