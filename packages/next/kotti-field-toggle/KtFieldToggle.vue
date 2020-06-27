@@ -2,10 +2,10 @@
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
 		<div slot="container" class="kt-field-toggle__wrapper">
 			<label class="kt-field-toggle__wrapper__label">
-				<input v-bind="inputProps" @change="onChange" />
 				<ToggleBox v-if="type === 'checkbox'" :value="field.currentValue" />
 				<ToggleSwitch v-else :value="field.currentValue" />
 				<slot name="default" :value="field.currentValue" />
+				<input v-bind="inputProps" @change="onChange" />
 			</label>
 		</div>
 	</KtField>
@@ -79,13 +79,18 @@ export default defineComponent({
 	align-items: center;
 
 	&__input {
-		// margin-right: 0.4rem;
 		display: none;
 	}
 
 	&__label {
 		display: flex;
 		align-items: center;
+	}
+}
+
+.kt-field__wrapper--disabled {
+	.kt-field-toggle__wrapper__label {
+		color: var(--text-05);
 	}
 }
 </style>

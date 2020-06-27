@@ -145,12 +145,24 @@
 				formKey="toggle"
 				:isDisabled="formSettings.disableFormFields"
 				isOptional
-				label="KtFieldToggle"
+				label="KtFieldToggle type=checkbox"
 				:size="fieldSize"
-				:type="formData.toggle ? 'checkbox' : 'switch'"
+				type="checkbox"
 			>
 				<template v-slot="{ value }">
-					{{ value ? 'Make Switch' : 'Make Checkbox' }}
+					<span>Value is <a @click.prevent v-text="String(value)"/></span>
+				</template>
+			</KtFieldToggle>
+			<KtFieldToggle
+				formKey="toggle"
+				:isDisabled="formSettings.disableFormFields"
+				isOptional
+				label="KtFieldToggle type=switch"
+				:size="fieldSize"
+				type="switch"
+			>
+				<template v-slot="{ value }">
+					<span>Value is <a @click.prevent v-text="String(value)"/></span>
 				</template>
 			</KtFieldToggle>
 			<KtFieldText
@@ -341,11 +353,11 @@ export default defineComponent({
 			username: KottiFieldText.Value
 			users: Array<{ username: KottiFieldText.Value }>
 		}> = ref({
-			toggle: true,
 			date: null,
 			dateRange: [null, null],
 			dateTime: null,
 			dateTimeRange: [null, null],
+			toggle: null,
 			toggleGroup: {
 				initiallyFalse: false,
 				initiallyNull: null,

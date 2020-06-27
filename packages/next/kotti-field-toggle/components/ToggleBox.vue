@@ -23,7 +23,7 @@ import { computed, defineComponent } from '@vue/composition-api'
 export default defineComponent({
 	name: 'ToggleBox',
 	props: {
-		value: { required: true, type: Boolean },
+		value: { default: null, type: Boolean },
 	},
 	setup(props) {
 		return {
@@ -55,7 +55,6 @@ export default defineComponent({
 	width: 0.8rem;
 	height: 0.8rem;
 	margin-right: 0.4rem;
-	margin-left: 0.1rem;
 	background: var(--ui-background);
 	border: 1px solid var(--ui-02);
 	border-radius: var(--toggle-border-radius);
