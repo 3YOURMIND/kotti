@@ -33,6 +33,7 @@ import {
 	EL_DATE_RANGE_PROPS,
 	EL_DATE_TIME_PROPS,
 	KOTTI_FIELD_DATE_TIME_RANGE_PROPS,
+	KOTTI_FIELD_DATE_SUPPORTS,
 } from './constants'
 import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDateTimeRange } from './types'
@@ -59,11 +60,7 @@ export default defineComponent({
 			isEmpty: (dateTimeRangeValue) =>
 				dateTimeRangeValue.every((dateTime) => dateTime === null),
 			props,
-			supports: {
-				clear: false,
-				decoration: false,
-				tabIndex: false,
-			},
+			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
 		const elDateRef = ref<ElDateWithInternalAPI>(null)
@@ -103,6 +100,7 @@ export default defineComponent({
 				(): Partial<ElDate> => ({
 					...EL_DATE_TIME_PROPS,
 					...EL_DATE_RANGE_PROPS,
+					clearable: !field.hideClear,
 					disabled: field.isDisabled,
 					endPlaceholder: props.placeholder?.[1] ?? undefined,
 					pickerOptions: pickerOptions.value,

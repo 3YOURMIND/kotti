@@ -39,6 +39,7 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
+import { KOTTI_FIELD_RADIO_GROUP_SUPPORTS } from './constants'
 import { KottiFieldRadioGroup } from './types'
 
 let nameIndex = 0
@@ -64,11 +65,7 @@ export default defineComponent({
 				value === null,
 			isEmpty: (value) => value === null,
 			props,
-			supports: {
-				clear: false,
-				decoration: false,
-				tabIndex: true,
-			},
+			supports: KOTTI_FIELD_RADIO_GROUP_SUPPORTS,
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()

@@ -51,7 +51,10 @@ import { useField } from '../kotti-field/hooks'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
-import { KOTTI_FIELD_SINGLE_SELECT_PROPS } from './constants'
+import {
+	KOTTI_FIELD_SINGLE_SELECT_PROPS,
+	KOTTI_FIELD_SELECT_SUPPORTS,
+} from './constants'
 import { useSelectFixes, ElSelectWithInternalAPI } from './hooks'
 import { KottiFieldSingleSelect } from './types'
 
@@ -70,11 +73,7 @@ export default defineComponent({
 				value === null,
 			isEmpty: (value) => value === null,
 			props,
-			supports: {
-				clear: true,
-				decoration: true,
-				tabIndex: false,
-			},
+			supports: KOTTI_FIELD_SELECT_SUPPORTS,
 		})
 		const translations = useTranslationNamespace('KtFieldSelects')
 

@@ -1,3 +1,5 @@
+import { KottiField } from '../kotti-field/types'
+
 import { Shared } from './types'
 
 const KOTTI_FIELD_SELECT_PROPS = {
@@ -19,6 +21,12 @@ const KOTTI_FIELD_SELECT_PROPS = {
 			),
 	},
 	placeholder: { default: null, type: String },
+}
+
+export const KOTTI_FIELD_SELECT_SUPPORTS: KottiField.Supports = {
+	clear: true,
+	decoration: true,
+	tabIndex: false,
 }
 
 export const KOTTI_FIELD_SINGLE_SELECT_PROPS = {

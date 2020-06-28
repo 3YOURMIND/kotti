@@ -11,6 +11,7 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
+import { KOTTI_FIELD_TEXT_SUPPORTS } from './constants'
 import { KottiFieldText } from './types'
 
 export default defineComponent({
@@ -27,11 +28,7 @@ export default defineComponent({
 				typeof value === 'string' || value === null,
 			isEmpty: (value) => value === null,
 			props,
-			supports: {
-				clear: true,
-				decoration: true,
-				tabIndex: true,
-			},
+			supports: KOTTI_FIELD_TEXT_SUPPORTS,
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()

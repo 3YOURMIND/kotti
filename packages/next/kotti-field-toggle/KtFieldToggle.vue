@@ -20,6 +20,7 @@ import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import ToggleBox from './components/ToggleBox.vue'
 import ToggleSwitch from './components/ToggleSwitch.vue'
+import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import { KottiFieldToggle } from './types'
 
 export default defineComponent({
@@ -40,11 +41,7 @@ export default defineComponent({
 				typeof value === 'boolean' || value === null,
 			isEmpty: (value) => value !== true,
 			props,
-			supports: {
-				clear: false,
-				decoration: false,
-				tabIndex: true,
-			},
+			supports: KOTTI_FIELD_TOGGLE_SUPPORTS,
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()

@@ -24,6 +24,7 @@ import {
 	DATE_FORMAT_REGEX,
 	KOTTI_FIELD_DATE_PROPS,
 	EL_DATE_PROPS,
+	KOTTI_FIELD_DATE_SUPPORTS,
 } from './constants'
 import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDate } from './types'
@@ -44,11 +45,7 @@ export default defineComponent({
 				value === null,
 			isEmpty: (value) => value === null,
 			props,
-			supports: {
-				clear: false, // rely on el-ui
-				decoration: false,
-				tabIndex: false,
-			},
+			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
 		const elDateRef = ref<ElDateWithInternalAPI>(null)
@@ -86,6 +83,7 @@ export default defineComponent({
 			elDatePickerProps: computed(
 				(): Partial<ElDate> => ({
 					...EL_DATE_PROPS,
+					clearable: !field.hideClear,
 					disabled: field.isDisabled,
 					pickerOptions: pickerOptions.value,
 					placeholder: props.placeholder ?? undefined,

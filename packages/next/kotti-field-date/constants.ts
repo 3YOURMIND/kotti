@@ -1,5 +1,7 @@
 import { Dashes } from '@metatypes/typography'
 
+import { KottiField } from '../kotti-field/types'
+
 import {
 	KottiFieldDate,
 	KottiFieldDateRange,
@@ -50,6 +52,12 @@ const KOTTI_FIELD_DATE_SHARED_PROPS = {
 		type: String,
 		validator: dateLimitValidator,
 	},
+}
+
+export const KOTTI_FIELD_DATE_SUPPORTS: KottiField.Supports = {
+	clear: true,
+	decoration: false,
+	tabIndex: false,
 }
 
 export const KOTTI_FIELD_DATE_PROPS = {

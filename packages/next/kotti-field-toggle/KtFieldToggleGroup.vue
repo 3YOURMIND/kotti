@@ -30,7 +30,10 @@ import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import ToggleBox from './components/ToggleBox.vue'
-import { KOTTI_FIELD_TOGGLE_GROUP_PROPS } from './constants'
+import {
+	KOTTI_FIELD_TOGGLE_GROUP_PROPS,
+	KOTTI_FIELD_TOGGLE_SUPPORTS,
+} from './constants'
 import { KottiFieldToggleGroup } from './types'
 
 export default defineComponent({
@@ -54,11 +57,7 @@ export default defineComponent({
 				typeof value === 'object' &&
 				Object.values(value).every((value) => value !== true),
 			props,
-			supports: {
-				clear: false,
-				decoration: false,
-				tabIndex: true,
-			},
+			supports: KOTTI_FIELD_TOGGLE_SUPPORTS,
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()

@@ -71,6 +71,7 @@ import { useTranslationNamespace } from '../kotti-translation/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
 import { KOTTI_FIELD_MULTI_SELECT_PROPS } from './constants'
+import { KOTTI_FIELD_SELECT_SUPPORTS } from './constants'
 import { useSelectFixes, ElSelectWithInternalAPI } from './hooks'
 import { KottiFieldMultiSelect } from './types'
 
@@ -95,11 +96,7 @@ export default defineComponent({
 				),
 			isEmpty: (value) => value.length === 0,
 			props,
-			supports: {
-				clear: true,
-				decoration: true,
-				tabIndex: false,
-			},
+			supports: KOTTI_FIELD_SELECT_SUPPORTS,
 		})
 		const translations = useTranslationNamespace('KtFieldSelects')
 
