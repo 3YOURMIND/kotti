@@ -18,7 +18,6 @@ import {
 } from './utils'
 
 const EL_SHARED_INTERNAL_PROPS = {
-	clearable: true,
 	editable: true,
 }
 
