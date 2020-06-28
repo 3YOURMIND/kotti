@@ -16,11 +16,11 @@
 			>
 				<input
 					v-bind="inputProps"
-					:checked="option.checked"
+					:checked="option.value === true"
 					@change="option.disabled !== true && onChange(option.key, $event)"
 				/>
-				<ToggleBox v-if="type === 'checkbox'" :value="option.checked" />
-				<ToggleSwitch v-else :value="option.checked" />
+				<ToggleBox v-if="type === 'checkbox'" :value="option.value" />
+				<ToggleSwitch v-else :value="option.value" />
 				<div v-text="option.label" />
 			</label>
 		</div>
@@ -91,7 +91,7 @@ export default defineComponent({
 			optionsWithChecked: computed(() =>
 				props.options.map((option) => ({
 					...option,
-					checked: field.currentValue[option.key] ?? false,
+					value: field.currentValue[option.key],
 				})),
 			),
 		}
