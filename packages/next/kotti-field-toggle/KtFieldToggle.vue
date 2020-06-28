@@ -1,12 +1,15 @@
 <template>
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
 		<div slot="container" class="kt-field-toggle__wrapper">
-			<label class="kt-field-toggle__wrapper__label">
-				<ToggleBox v-if="type === 'checkbox'" :value="field.currentValue" />
-				<ToggleSwitch v-else :value="field.currentValue" />
+			<ToggleInner
+				component="div"
+				:inputProps="inputProps"
+				:type="type"
+				:value="field.currentValue"
+				@input="onInput"
+			>
 				<slot name="default" :value="field.currentValue" />
-				<input v-bind="inputProps" @change="onChange" />
-			</label>
+			</ToggleInner>
 		</div>
 	</KtField>
 </template>
@@ -18,8 +21,7 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
-import ToggleBox from './components/ToggleBox.vue'
-import ToggleSwitch from './components/ToggleSwitch.vue'
+import ToggleInner from './components/ToggleInner.vue'
 import {
 	KOTTI_FIELD_TOGGLE_SUPPORTS,
 	KOTTI_FIELD_TOGGLE_PROPS,
@@ -28,7 +30,7 @@ import { KottiFieldToggle } from './types'
 
 export default defineComponent({
 	name: 'KtFieldToggle',
-	components: { KtField, ToggleBox, ToggleSwitch },
+	components: { KtField, ToggleInner },
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_TOGGLE_PROPS,
@@ -49,14 +51,10 @@ export default defineComponent({
 			field,
 			inputProps: computed(() => ({
 				...field.inputProps,
-				checked: field.currentValue ?? false,
-				class: 'kt-field-toggle__wrapper__input',
 				forceUpdateKey: forceUpdateKey.value,
-				type: 'checkbox',
 			})),
-			onChange: (event: { target: HTMLInputElement }) => {
-				const newValue = event.target.checked
-				field.setValue(typeof newValue === 'boolean' ? newValue : null)
+			onInput: (newValue: boolean | undefined) => {
+				field.setValue(newValue ?? null)
 
 				forceUpdate()
 			},
@@ -66,27 +64,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-:root {
-	--toggle-border-radius: 0.1rem;
-}
-
 .kt-field-toggle__wrapper {
 	display: flex;
 	align-items: center;
-
-	&__input {
-		display: none;
-	}
-
-	&__label {
-		display: flex;
-		align-items: center;
-	}
-}
-
-.kt-field__wrapper--disabled {
-	.kt-field-toggle__wrapper__label {
-		color: var(--text-05);
-	}
 }
 </style>

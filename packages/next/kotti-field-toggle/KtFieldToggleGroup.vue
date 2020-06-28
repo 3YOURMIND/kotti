@@ -1,28 +1,18 @@
 <template>
 	<KtField v-bind="{ field }" :getEmptyValue="() => null" isGroup>
-		<div
-			slot="container"
-			class="kt-field-toggle-group__wrapper"
-			:forceUpdateKey="forceUpdateKey"
-		>
-			<label
+		<div slot="container" class="kt-field-toggle-group__wrapper">
+			<ToggleInner
 				v-for="option of optionsWithChecked"
 				:key="option.key"
-				class="kt-field-toggle-group__wrapper__label"
-				:class="{
-					'kt-field-toggle-group__wrapper--is-disabled':
-						option.disabled === true,
-				}"
+				component="label"
+				:disabled="option.disabled"
+				:inputProps="inputProps"
+				:type="type"
+				:value="option.value"
+				@input="onInput(option.key, $event)"
 			>
-				<input
-					v-bind="inputProps"
-					:checked="option.value === true"
-					@change="option.disabled !== true && onChange(option.key, $event)"
-				/>
-				<ToggleBox v-if="type === 'checkbox'" :value="option.value" />
-				<ToggleSwitch v-else :value="option.value" />
-				<div v-text="option.label" />
-			</label>
+				{{ option.label }}
+			</ToggleInner>
 		</div>
 	</KtField>
 </template>
@@ -34,8 +24,7 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
-import ToggleBox from './components/ToggleBox.vue'
-import ToggleSwitch from './components/ToggleSwitch.vue'
+import ToggleInner from './components/ToggleInner.vue'
 import {
 	KOTTI_FIELD_TOGGLE_GROUP_PROPS,
 	KOTTI_FIELD_TOGGLE_GROUP_SUPPORTS,
@@ -44,7 +33,7 @@ import { KottiFieldToggleGroup } from './types'
 
 export default defineComponent({
 	name: 'KtFieldToggleGroup',
-	components: { KtField, ToggleBox, ToggleSwitch },
+	components: { KtField, ToggleInner },
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_TOGGLE_GROUP_PROPS,
@@ -70,22 +59,18 @@ export default defineComponent({
 
 		return {
 			field,
-			forceUpdateKey: forceUpdateKey.value,
 			inputProps: computed(() => ({
 				...field.inputProps,
-				class: 'kt-field-toggle-group__wrapper__input',
-				type: 'checkbox',
+				forceUpdateKey: forceUpdateKey.value,
 			})),
-			onChange: (
+			onInput: (
 				key: KottiFieldToggleGroup.Entry['key'],
-				event: { target: HTMLInputElement },
+				newValue: boolean | undefined,
 			) => {
-				const newValue = event.target.checked
 				field.setValue({
 					...field.currentValue,
-					[key]: typeof newValue === 'boolean' ? newValue : null,
+					[key]: newValue ?? null,
 				})
-
 				forceUpdate()
 			},
 			optionsWithChecked: computed(() =>
@@ -104,28 +89,8 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 
-	&--is-disabled {
-		color: var(--text-05);
-	}
-
-	&__label {
-		display: flex;
-
-		&:not(:last-child) {
-			margin-bottom: 0.4rem;
-		}
-	}
-
-	&__input {
-		display: none;
-	}
-}
-
-.kt-field__wrapper {
-	&--disabled {
-		.kt-field-toggle-group__wrapper__label {
-			color: var(--text-05);
-		}
+	> *:not(:first-child) {
+		margin-top: 0.4rem;
 	}
 }
 </style>
