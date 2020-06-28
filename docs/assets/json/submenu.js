@@ -93,6 +93,10 @@ const submenu = [
 				to: 'form',
 			},
 			{
+				label: 'Form Fields',
+				to: 'form-fields',
+			},
+			{
 				label: 'Headings',
 				to: 'headings',
 			},

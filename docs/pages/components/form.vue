@@ -47,9 +47,9 @@
 				isOptional
 				label="Miscellaneous"
 				:options="[
+					{ key: 'disableFormFields', label: 'Disable Form Fields' },
 					{ key: 'hideValidation', label: 'Hide validation' },
 					{ key: 'isLoading', label: 'Is Loading' },
-					{ key: 'disableFormFields', label: 'Disable Form Fields' },
 				]"
 			/>
 		</div>
