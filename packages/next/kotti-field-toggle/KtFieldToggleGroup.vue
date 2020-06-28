@@ -19,7 +19,8 @@
 					:checked="option.checked"
 					@change="option.disabled !== true && onChange(option.key, $event)"
 				/>
-				<ToggleBox :value="option.checked" />
+				<ToggleBox v-if="type === 'checkbox'" :value="option.checked" />
+				<ToggleSwitch v-else :value="option.checked" />
 				<div v-text="option.label" />
 			</label>
 		</div>
@@ -34,6 +35,7 @@ import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import ToggleBox from './components/ToggleBox.vue'
+import ToggleSwitch from './components/ToggleSwitch.vue'
 import {
 	KOTTI_FIELD_TOGGLE_GROUP_PROPS,
 	KOTTI_FIELD_TOGGLE_SUPPORTS,
@@ -42,7 +44,7 @@ import { KottiFieldToggleGroup } from './types'
 
 export default defineComponent({
 	name: 'KtFieldToggleGroup',
-	components: { KtField, ToggleBox },
+	components: { KtField, ToggleBox, ToggleSwitch },
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_TOGGLE_GROUP_PROPS,

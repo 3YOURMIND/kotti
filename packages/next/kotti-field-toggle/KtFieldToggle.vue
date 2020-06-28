@@ -20,7 +20,10 @@ import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import ToggleBox from './components/ToggleBox.vue'
 import ToggleSwitch from './components/ToggleSwitch.vue'
-import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
+import {
+	KOTTI_FIELD_TOGGLE_SUPPORTS,
+	KOTTI_FIELD_TOGGLE_PROPS,
+} from './constants'
 import { KottiFieldToggle } from './types'
 
 export default defineComponent({
@@ -28,11 +31,7 @@ export default defineComponent({
 	components: { KtField, ToggleBox, ToggleSwitch },
 	props: {
 		...KOTTI_FIELD_PROPS,
-		type: {
-			default: 'checkbox',
-			type: String,
-			validator: (value: unknown) => value === 'checkbox' || value === 'switch',
-		},
+		...KOTTI_FIELD_TOGGLE_PROPS,
 	},
 	setup(props: KottiFieldToggle.Props, { emit }) {
 		const field = useField<boolean | null>({

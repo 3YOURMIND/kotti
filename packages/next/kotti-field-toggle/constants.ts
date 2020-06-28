@@ -2,7 +2,16 @@ import { KottiField } from '../kotti-field/types'
 
 import { KottiFieldToggleGroup } from './types'
 
+export const KOTTI_FIELD_TOGGLE_PROPS = {
+	type: {
+		default: 'checkbox',
+		type: String,
+		validator: (value: unknown) => value === 'checkbox' || value === 'switch',
+	},
+}
+
 export const KOTTI_FIELD_TOGGLE_GROUP_PROPS = {
+	...KOTTI_FIELD_TOGGLE_PROPS,
 	options: {
 		required: true,
 		type: Array,
