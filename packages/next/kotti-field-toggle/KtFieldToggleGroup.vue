@@ -38,7 +38,7 @@ import ToggleBox from './components/ToggleBox.vue'
 import ToggleSwitch from './components/ToggleSwitch.vue'
 import {
 	KOTTI_FIELD_TOGGLE_GROUP_PROPS,
-	KOTTI_FIELD_TOGGLE_SUPPORTS,
+	KOTTI_FIELD_TOGGLE_GROUP_SUPPORTS,
 } from './constants'
 import { KottiFieldToggleGroup } from './types'
 
@@ -63,7 +63,7 @@ export default defineComponent({
 				typeof value === 'object' &&
 				Object.values(value).every((value) => value !== true),
 			props,
-			supports: KOTTI_FIELD_TOGGLE_SUPPORTS,
+			supports: KOTTI_FIELD_TOGGLE_GROUP_SUPPORTS,
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()

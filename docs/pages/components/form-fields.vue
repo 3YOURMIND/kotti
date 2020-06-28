@@ -182,7 +182,10 @@ import {
 import { KOTTI_FIELD_TEXT_AREA_SUPPORTS } from '../../../packages/next/kotti-field-text-area/constants'
 import { KOTTI_FIELD_TEXT_SUPPORTS } from '../../../packages/next/kotti-field-text/constants'
 import { KottiFieldText } from '../../../packages/next/kotti-field-text/types'
-import { KOTTI_FIELD_TOGGLE_SUPPORTS } from '../../../packages/next/kotti-field-toggle/constants'
+import {
+	KOTTI_FIELD_TOGGLE_SUPPORTS,
+	KOTTI_FIELD_TOGGLE_GROUP_SUPPORTS,
+} from '../../../packages/next/kotti-field-toggle/constants'
 import {
 	KottiFieldToggle,
 	KottiFieldToggleGroup,
@@ -277,7 +280,7 @@ const components: Array<{
 		additionalProps: ['toggleType'],
 		formKey: 'toggleGroupValue',
 		name: 'KtFieldToggleGroup',
-		supports: KOTTI_FIELD_TOGGLE_SUPPORTS,
+		supports: KOTTI_FIELD_TOGGLE_GROUP_SUPPORTS,
 	},
 ]
 
