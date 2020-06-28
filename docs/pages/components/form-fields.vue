@@ -16,6 +16,7 @@
 			<div class="overview__code">
 				<h4>Code</h4>
 				<pre v-text="code" />
+				<button @click="savedFieldsAdd">Save to LocalStorage</button>
 			</div>
 		</div>
 		<KtForm v-model="settings">
@@ -144,13 +145,26 @@
 					</div>
 				</div>
 			</div>
+			<KtForm v-model="values" v-if="savedFieldsMap.length > 0">
+				<h3>Saved Fields</h3>
+				<div v-for="(savedField, index) in savedFieldsMap" class="overview" :key="index">
+					<div class="overview__component">
+						<component :is="savedField.name" v-bind="savedField.props">Default Slot</component>
+						<button @click="savedFieldsRemove(index)">Remove</button>
+					</div>
+					<div class="overview__code">
+						<pre v-text="savedField.code" />
+					</div>
+				</div>
+			</KtForm>
 		</KtForm>
 	</KtTranslationContext>
 </ClientOnly>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref, computed } from '@vue/composition-api'
+import { defineComponent, ref, computed } from '@vue/composition-api'
+import cloneDeep from 'lodash/cloneDeep'
 
 import { KOTTI_FIELD_DATE_SUPPORTS } from '../../../packages/next/kotti-field-date/constants'
 import {
@@ -177,6 +191,21 @@ import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiTranslation } from '../../../packages/next/kotti-translation/types'
 import { Yoco } from '../../../packages/next/types'
 import yocoString from '../../assets/json/yocoString.json'
+
+const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
+	'kotti-documentation-form-fields-saved-components'
+
+const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
+	try {
+		window.localStorage.setItem(
+			LOCALSTORAGE_SAVED_COMPONENTS_KEY,
+			JSON.stringify(savedFields),
+		)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.warn('could not save to localStorage')
+	}
+}
 
 const components: Array<{
 	additionalProps: Array<string>
@@ -281,9 +310,9 @@ const INITIAL_VALUES: {
 export default defineComponent({
 	name: 'KtFormFieldsDocumentation',
 	setup() {
-		const values: Ref<typeof INITIAL_VALUES> = ref(INITIAL_VALUES)
+		const values = ref<typeof INITIAL_VALUES>(INITIAL_VALUES)
 
-		const settings: Ref<{
+		const settings = ref<{
 			additionalProps: {
 				toggleType: 'checkbox' | 'switch'
 			}
@@ -305,7 +334,7 @@ export default defineComponent({
 			size: 'small' | 'medium' | 'large'
 			suffix: KottiFieldText.Value
 			validation: KottiField.Validation.Result['type']
-		}> = ref({
+		}>({
 			additionalProps: {
 				toggleType: 'checkbox',
 			},
@@ -423,34 +452,60 @@ export default defineComponent({
 			return { ...standardProps, ...additionalProps }
 		})
 
+		const savedFields = ref<Array<{ name: string; props: object }>>(
+			(() => {
+				try {
+					const value = window.localStorage.getItem(
+						LOCALSTORAGE_SAVED_COMPONENTS_KEY,
+					)
+					if (value) return JSON.parse(value)
+				} catch (error) {
+					// eslint-disable-next-line no-console
+					console.warn('could not read localStorage')
+				}
+				return []
+			})(),
+		)
+
+		const generateCode = (
+			componentName: string,
+			props: object,
+			validation: string | null,
+		) =>
+			[
+				`<${componentName}`,
+				...Object.entries(props)
+					.sort(([a], [b]) => a.localeCompare(b))
+					.filter(([key]) => !['validator'].includes(key))
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					.filter(([_, value]) => value !== null && value !== false)
+					.filter(([key, value]) => !(key === 'size' && value === 'medium'))
+					.map(([key, value]) => {
+						switch (typeof value) {
+							case 'boolean':
+								return key
+							case 'string':
+								return `${key}="${value}"`
+							default:
+								return `:${key}="${JSON.stringify(value).replace(/"/g, "'")}"`
+						}
+					})
+					.map((prop) => `\t${prop}`),
+				...(validation === null
+					? []
+					: [
+							`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${validation}" })"`,
+					  ]),
+				'/>',
+			].join('\n')
+
 		return {
 			code: computed(() =>
-				[
-					`<${settings.value.component}`,
-					...Object.entries(componentProps.value)
-						.sort(([a], [b]) => a.localeCompare(b))
-						.filter(([key]) => !['validator'].includes(key))
-						// eslint-disable-next-line @typescript-eslint/no-unused-vars
-						.filter(([_, value]) => value !== null && value !== false)
-						.filter(([key, value]) => !(key === 'size' && value === 'medium'))
-						.map(([key, value]) => {
-							switch (typeof value) {
-								case 'boolean':
-									return key
-								case 'string':
-									return `${key}="${value}"`
-								default:
-									return `:${key}="${JSON.stringify(value).replace(/"/g, "'")}"`
-							}
-						})
-						.map((prop) => `\t${prop}`),
-					...(settings.value.validation === null
-						? []
-						: [
-								`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${settings.value.validation}" })"`,
-						  ]),
-					'/>',
-				].join('\n'),
+				generateCode(
+					settings.value.component,
+					componentProps.value,
+					settings.value.validation,
+				),
 			),
 			componentDefinition,
 			componentOptions: components.map((component) => ({
@@ -460,6 +515,32 @@ export default defineComponent({
 			componentProps,
 			reset: () => {
 				values.value = INITIAL_VALUES
+			},
+			savedFieldsMap: computed(() =>
+				savedFields.value.map((savedField) => ({
+					...savedField,
+					code: generateCode(
+						savedField.name,
+						savedField.props,
+						settings.value.validation,
+					),
+				})),
+			),
+			savedFieldsAdd: () => {
+				savedFields.value = [
+					...savedFields.value,
+					{
+						name: settings.value.component,
+						props: cloneDeep(componentProps.value),
+					},
+				]
+				saveSavedFieldsToLocalStorage(savedFields.value)
+			},
+			savedFieldsRemove: (toRemove: number) => {
+				savedFields.value = savedFields.value.filter(
+					(_, index) => index !== toRemove,
+				)
+				saveSavedFieldsToLocalStorage(savedFields.value)
 			},
 			settings,
 			values,
