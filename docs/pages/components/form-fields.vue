@@ -252,34 +252,36 @@ const components: Array<{
 	},
 ]
 
+const INITIAL_VALUES: {
+	dateRangeValue: KottiFieldDateRange.Value
+	dateTimeRangeValue: KottiFieldDateTimeRange.Value
+	dateTimeValue: KottiFieldDateTime.Value
+	dateValue: KottiFieldDate.Value
+	multiSelectValue: KottiFieldMultiSelect.Value
+	singleSelectValue: KottiFieldSingleSelect.Value
+	textValue: KottiFieldText.Value
+	toggleGroupValue: KottiFieldToggleGroup.Value
+	toggleValue: KottiFieldToggle.Value
+} = {
+	dateRangeValue: [null, null],
+	dateTimeRangeValue: [null, null],
+	dateTimeValue: null,
+	dateValue: null,
+	multiSelectValue: [],
+	singleSelectValue: null,
+	textValue: null,
+	toggleGroupValue: {
+		initiallyFalse: false,
+		initiallyNull: null,
+		initiallyTrue: true,
+	},
+	toggleValue: null,
+}
+
 export default defineComponent({
 	name: 'KtFormFieldsDocumentation',
 	setup() {
-		const values: Ref<{
-			dateRangeValue: KottiFieldDateRange.Value
-			dateTimeRangeValue: KottiFieldDateTimeRange.Value
-			dateTimeValue: KottiFieldDateTime.Value
-			dateValue: KottiFieldDate.Value
-			multiSelectValue: KottiFieldMultiSelect.Value
-			singleSelectValue: KottiFieldSingleSelect.Value
-			textValue: KottiFieldText.Value
-			toggleGroupValue: KottiFieldToggleGroup.Value
-			toggleValue: KottiFieldToggle.Value
-		}> = ref({
-			dateRangeValue: [null, null],
-			dateTimeRangeValue: [null, null],
-			dateTimeValue: null,
-			dateValue: null,
-			multiSelectValue: [],
-			singleSelectValue: null,
-			textValue: null,
-			toggleGroupValue: {
-				initiallyFalse: false,
-				initiallyNull: null,
-				initiallyTrue: true,
-			},
-			toggleValue: null,
-		})
+		const values: Ref<typeof INITIAL_VALUES> = ref(INITIAL_VALUES)
 
 		const settings: Ref<{
 			additionalProps: {
@@ -457,15 +459,7 @@ export default defineComponent({
 			})),
 			componentProps,
 			reset: () => {
-				const { formKey } = componentProps.value
-
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				const value = (values.value as any)[formKey]
-
-				values.value = {
-					...values.value,
-					[formKey]: Array.isArray(value) ? [] : null,
-				}
+				values.value = INITIAL_VALUES
 			},
 			settings,
 			values,
