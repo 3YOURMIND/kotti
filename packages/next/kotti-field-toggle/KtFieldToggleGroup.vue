@@ -9,11 +9,15 @@
 				v-for="option of optionsWithChecked"
 				:key="option.key"
 				class="kt-field-toggle-group__wrapper__label"
+				:class="{
+					'kt-field-toggle-group__wrapper--is-disabled':
+						option.disabled === true,
+				}"
 			>
 				<input
 					v-bind="inputProps"
 					:checked="option.checked"
-					@change="onChange(option.key, $event)"
+					@change="option.disabled !== true && onChange(option.key, $event)"
 				/>
 				<ToggleBox :value="option.checked" />
 				<div v-text="option.label" />
@@ -97,6 +101,10 @@ export default defineComponent({
 .kt-field-toggle-group__wrapper {
 	display: flex;
 	flex-direction: column;
+
+	&--is-disabled {
+		color: var(--text-05);
+	}
 
 	&__label {
 		display: flex;

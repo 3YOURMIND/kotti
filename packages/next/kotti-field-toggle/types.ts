@@ -8,6 +8,7 @@ export namespace KottiFieldToggle {
 
 export namespace KottiFieldToggleGroup {
 	export type Entry = {
+		disabled?: boolean
 		key: keyof Value
 		label: string
 	}
