@@ -4,6 +4,7 @@
 			<ToggleInner
 				component="div"
 				:inputProps="inputProps"
+				:isDisabled="field.isDisabled"
 				:type="type"
 				:value="field.currentValue"
 				@input="onInput"

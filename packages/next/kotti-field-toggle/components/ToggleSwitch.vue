@@ -1,26 +1,14 @@
 <template>
-	<div class="kt-field-toggle-switch" :class="switchClasses">
+	<div class="kt-field-toggle-switch">
 		<div class="kt-field-toggle-switch__inner" />
 	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
 	name: 'ToggleSwitch',
-	props: {
-		value: { default: null, type: Boolean },
-	},
-	setup(props) {
-		return {
-			switchClasses: computed(() => ({
-				'kt-field-toggle-switch--is-indeterminate': props.value === null,
-				'kt-field-toggle-switch--is-off': props.value === false,
-				'kt-field-toggle-switch--is-on': props.value === true,
-			})),
-		}
-	},
 })
 </script>
 
@@ -48,6 +36,15 @@ $track-width: $inner-size * 2.25;
 	background-color: var(--ui-02);
 	border-radius: #{$outer-size / 2};
 
+	&__inner {
+		width: $inner-size;
+		height: $inner-size;
+		border-radius: $inner-size / 2;
+		transition: all 0.2s ease-in-out;
+	}
+}
+
+.kt-field-toggle__inner {
 	&--is-indeterminate .kt-field-toggle-switch__inner {
 		width: $track-width;
 		background-color: var(--ui-01);
@@ -62,33 +59,24 @@ $track-width: $inner-size * 2.25;
 		margin-left: 0;
 		background-color: var(--ui-03);
 	}
-
-	&__inner {
-		width: $inner-size;
-		height: $inner-size;
-		border-radius: $inner-size / 2;
-		transition: all 0.2s ease-in-out;
-	}
 }
 
 .kt-field__wrapper {
 	@include validations using ($type) {
 		@if $type != no-validation {
-			&:not(.kt-field__wrapper--disabled) {
-				.kt-field-toggle-switch {
-					/* stylelint-disable */
-					@include switch-colors(
-						var(--support-#{$type}-light),
-						var(--support-#{$type})
-					);
-					/* stylelint-enable */
-				}
+			:not(.kt-field-toggle__inner--is-disabled) .kt-field-toggle-switch {
+				/* stylelint-disable */
+				@include switch-colors(
+					var(--support-#{$type}-light),
+					var(--support-#{$type})
+				);
+				/* stylelint-enable */
 			}
 		}
 	}
 }
 
-.kt-field__wrapper--disabled .kt-field-toggle-switch {
+.kt-field-toggle__inner--is-disabled {
 	opacity: 0.5;
 }
 </style>

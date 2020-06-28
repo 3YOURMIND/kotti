@@ -2,12 +2,10 @@
 	<component
 		:is="component"
 		class="kt-field-toggle__inner"
-		:class="{
-			'kt-field-toggle__inner--is-disabled': disabled === true,
-		}"
+		:class="toggleClasses"
 	>
-		<ToggleBox v-if="type === 'checkbox'" :value="value" />
-		<ToggleSwitch v-else :value="value" />
+		<ToggleBox v-if="type === 'checkbox'" />
+		<ToggleSwitch v-else />
 		<slot name="default" />
 		<input
 			v-bind="inputProps"
@@ -19,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 
 import ToggleBox from './ToggleBox.vue'
 import ToggleSwitch from './ToggleSwitch.vue'
@@ -29,10 +27,20 @@ export default defineComponent({
 	components: { ToggleBox, ToggleSwitch },
 	props: {
 		component: { required: true, type: String },
-		disabled: { default: false, type: Boolean },
 		inputProps: { required: true, type: Object },
+		isDisabled: { required: true, type: Boolean },
 		type: { default: 'checkbox', type: String },
 		value: { default: null, type: Boolean },
+	},
+	setup(props) {
+		return {
+			toggleClasses: computed(() => ({
+				'kt-field-toggle__inner--is-disabled': props.isDisabled === true,
+				'kt-field-toggle__inner--is-indeterminate': props.value === null,
+				'kt-field-toggle__inner--is-off': props.value === false,
+				'kt-field-toggle__inner--is-on': props.value === true,
+			})),
+		}
 	},
 })
 </script>

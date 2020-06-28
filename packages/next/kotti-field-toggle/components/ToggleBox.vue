@@ -1,37 +1,29 @@
 <template>
-	<div class="kt-field-toggle-box" :class="toggleClasses">
-		<svg
-			class="kt-field-toggle-box__check"
-			fill="none"
-			height="8"
-			viewBox="0 0 9 8"
-			width="9"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M1 3.92761L2.92242 6L8 1"
-				stroke-linecap="round"
-				stroke-width="2"
-			/>
-		</svg>
+	<div class="kt-field-toggle-box">
+		<div class="kt-field-toggle-box__inner">
+			<svg
+				class="kt-field-toggle-box__check"
+				fill="none"
+				height="8"
+				viewBox="0 0 9 8"
+				width="9"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					d="M1 3.92761L2.92242 6L8 1"
+					stroke-linecap="round"
+					stroke-width="2"
+				/>
+			</svg>
+		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
 	name: 'ToggleBox',
-	props: {
-		value: { default: null, type: Boolean },
-	},
-	setup(props) {
-		return {
-			toggleClasses: computed(() => ({
-				'kt-field-toggle-box--checked': props.value,
-			})),
-		}
-	},
 })
 </script>
 
@@ -50,8 +42,9 @@ export default defineComponent({
 }
 
 .kt-field-toggle-box {
-	display: inline-grid;
-	place-items: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 0.8rem;
 	height: 0.8rem;
 	margin-right: 0.4rem;
@@ -61,23 +54,67 @@ export default defineComponent({
 	transition: border-color ease-in-out var(--transition-short);
 
 	&__check {
-		opacity: 0.2;
 		transition: all ease-in-out var(--transition-short);
-		transform: scale(0.2);
 	}
 
-	&--checked {
+	&__inner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 0.5rem;
+		height: 0.5rem;
+		background-color: transparent;
+		transition: all ease-in-out var(--transition-short);
+	}
+}
+
+.kt-field-toggle__inner {
+	&--is-indeterminate .kt-field-toggle-box {
 		@include toggle-colors(
 			var(--interactive-01),
 			var(--interactive-01),
 			var(--interactive-01)
 		);
 
-		.kt-field-toggle-box {
-			&__check {
-				opacity: 1;
-				transform: scale(1);
-			}
+		.kt-field-toggle-box__inner {
+			background-color: var(--interactive-01);
+		}
+
+		&__check {
+			opacity: 0;
+			transform: scale(0);
+		}
+
+		&__inner {
+			opacity: 0.5;
+		}
+	}
+
+	&--is-on .kt-field-toggle-box {
+		@include toggle-colors(
+			var(--interactive-01),
+			var(--interactive-01),
+			var(--interactive-01)
+		);
+
+		&__check {
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		&__inner {
+			opacity: 1;
+		}
+	}
+
+	&--is-off .kt-field-toggle-box {
+		&__check {
+			opacity: 0.2;
+			transform: scale(0.2);
+		}
+
+		&__inner {
+			opacity: 1;
 		}
 	}
 }
@@ -85,7 +122,7 @@ export default defineComponent({
 .kt-field__wrapper {
 	@include validations using ($type) {
 		@if $type != no-validation {
-			&:not(.kt-field__wrapper--disabled) {
+			:not(.kt-field-toggle__inner--is-disabled) {
 				.kt-field-toggle-box {
 					/* stylelint-disable */
 					@include toggle-colors(
@@ -110,13 +147,13 @@ export default defineComponent({
 			}
 		}
 	}
+}
 
-	&--disabled {
-		cursor: not-allowed;
+.kt-field-toggle__inner--is-disabled {
+	cursor: not-allowed;
 
-		.kt-field-toggle-box {
-			@include toggle-colors(var(--text-05), var(--ui-02), var(--ui-01));
-		}
+	.kt-field-toggle-box {
+		opacity: 0.7;
 	}
 }
 </style>
