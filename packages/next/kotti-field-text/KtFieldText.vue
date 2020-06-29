@@ -22,9 +22,9 @@ export default defineComponent({
 		placeholder: { default: null, type: String },
 	},
 	setup(props: KottiFieldText.Props, { emit }) {
-		const field = useField<string | null>({
+		const field = useField<KottiFieldText.Value>({
 			emit,
-			isCorrectDataType: (value): value is string | null =>
+			isCorrectDataType: (value): value is KottiFieldText.Value =>
 				typeof value === 'string' || value === null,
 			isEmpty: (value) => value === null,
 			props,

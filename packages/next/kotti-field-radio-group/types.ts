@@ -7,9 +7,9 @@ export namespace KottiFieldRadioGroup {
 		disabled: boolean
 	}
 
-	export type Props = KottiField.Props<Value | null> & {
+	export type Props = KottiField.Props<Value> & {
 		options: Entry[]
 	}
 
-	export type Value = string | number | boolean
+	export type Value = string | number | boolean | null
 }

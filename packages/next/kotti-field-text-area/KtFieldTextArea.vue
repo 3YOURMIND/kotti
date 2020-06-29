@@ -23,9 +23,9 @@ export default defineComponent({
 		rows: { default: 5, type: Number },
 	},
 	setup(props: KottiFieldTextArea.Props, { emit }) {
-		const field = useField<string | null>({
+		const field = useField<KottiFieldTextArea.Value>({
 			emit,
-			isCorrectDataType: (value): value is string | null =>
+			isCorrectDataType: (value): value is KottiFieldTextArea.Value =>
 				typeof value === 'string' || value === null,
 			isEmpty: (value) => value === null,
 			props,
