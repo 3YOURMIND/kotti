@@ -34,9 +34,3 @@ export const KOTTI_FIELD_TOGGLE_SUPPORTS: KottiField.Supports = {
 	decoration: false,
 	tabIndex: true,
 }
-
-export const KOTTI_FIELD_TOGGLE_GROUP_SUPPORTS: KottiField.Supports = {
-	clear: false,
-	decoration: false,
-	tabIndex: false,
-}
