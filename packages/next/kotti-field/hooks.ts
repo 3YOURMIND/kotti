@@ -143,50 +143,6 @@ export const useField = <DATA_TYPE>({
 		(): boolean => !props.isOptional && isEmpty(currentValue.value),
 	)
 
-	const validation = computed(
-		// eslint-disable-next-line sonarjs/cognitive-complexity
-		(): KottiField.Validation.Result => {
-			if (props.validatorKey && props.validator)
-				throw new KtFieldErrors.NonDeterministicValidatorUsage(props)
-
-			if (context) {
-				if (props.validatorKey) {
-					if (!(props.validatorKey in context.validators.value))
-						throw new KtFieldErrors.ValidatorNotFound(props)
-
-					return context.validators.value[props.validatorKey](
-						currentValue.value,
-					)
-				}
-
-				// if no validatorKey is defined, we should try to fall-back to using the formKey
-				if (
-					props.formKey !== null &&
-					props.formKey !== FORM_KEY_NONE &&
-					props.formKey in context.validators.value
-				)
-					return context.validators.value[props.formKey](currentValue.value)
-			} else {
-				if (props.validatorKey)
-					throw new KtFieldErrors.InvalidPropOutsideOfContext(
-						props,
-						'validatorKey',
-					)
-
-				if (props.formKey)
-					throw new KtFieldErrors.InvalidPropOutsideOfContext(props, 'formKey')
-			}
-
-			/**
-			 * Return default validator result here because without a validator, everything will always
-			 * default to being valid
-			 */
-			return props.validator
-				? props.validator(currentValue.value)
-				: { type: null }
-		},
-	)
-
 	// export
 
 	const isDisabled = computed(() => props.isDisabled)
@@ -239,12 +195,58 @@ export const useField = <DATA_TYPE>({
 		}),
 		suffix: computed(() => props.suffix),
 		validation: computed(
-			(): KottiField.Validation.Result =>
-				isMissingRequiredField.value
-					? validation.value.type === 'error'
-						? validation.value
+			// eslint-disable-next-line sonarjs/cognitive-complexity
+			(): KottiField.Validation.Result => {
+				const customValidation = (() => {
+					if (props.validatorKey && props.validator)
+						throw new KtFieldErrors.NonDeterministicValidatorUsage(props)
+
+					if (context) {
+						if (props.validatorKey) {
+							if (!(props.validatorKey in context.validators.value))
+								throw new KtFieldErrors.ValidatorNotFound(props)
+
+							return context.validators.value[props.validatorKey](
+								currentValue.value,
+							)
+						}
+
+						// if no validatorKey is defined, we should try to fall-back to using the formKey
+						if (
+							props.formKey !== null &&
+							props.formKey !== FORM_KEY_NONE &&
+							props.formKey in context.validators.value
+						)
+							return context.validators.value[props.formKey](currentValue.value)
+					} else {
+						if (props.validatorKey)
+							throw new KtFieldErrors.InvalidPropOutsideOfContext(
+								props,
+								'validatorKey',
+							)
+
+						if (props.formKey)
+							throw new KtFieldErrors.InvalidPropOutsideOfContext(
+								props,
+								'formKey',
+							)
+					}
+
+					/**
+					 * Return default validator result here because without a validator, everything will always
+					 * default to being valid
+					 */
+					return props.validator
+						? props.validator(currentValue.value)
+						: { type: null }
+				})()
+
+				return isMissingRequiredField.value
+					? customValidation.type === 'error'
+						? customValidation
 						: { type: 'error', text: translations.value.requiredMessage }
-					: validation.value,
+					: customValidation
+			},
 		),
 	})
 
