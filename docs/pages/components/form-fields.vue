@@ -7,7 +7,13 @@
 			<div class="overview__component">
 				<h4>Component</h4>
 				<KtForm v-model="values" :isLoading="settings.booleanFlags.isLoading">
-					<component :is="componentRepresenation.name" v-bind="componentRepresenation.props">Default Slot</component>
+					<component
+						:is="componentRepresenation.name"
+						:validator="componentRepresenation.validator"
+						v-bind="componentRepresenation.props"
+					>
+						Default Slot
+					</component>
 				</KtForm>
 				<div class="overview__component__value">
 					<strong>Value</strong>: <span v-text="JSON.stringify(values[componentProps.formKey])"/> <a @click.prevent="reset">reset</a>
@@ -15,7 +21,7 @@
 			</div>
 			<div class="overview__code">
 				<h4>Code</h4>
-				<pre v-text="code" />
+				<pre v-text="componentRepresenation.code" />
 				<button @click="savedFieldsAdd">Save to LocalStorage</button>
 			</div>
 		</div>
@@ -149,7 +155,11 @@
 				<h3>Saved Fields</h3>
 				<div v-for="(savedField, index) in savedFieldsMap" class="overview" :key="index">
 					<div class="overview__component">
-						<component :is="savedField.name" v-bind="savedField.props">Default Slot</component>
+						<component
+							:is="savedField.name"
+							:validator="savedField.validator"
+							v-bind="savedField.props"
+						>Default Slot</component>
 						<button @click="savedFieldsRemove(index)">Remove</button>
 					</div>
 					<div class="overview__code">
@@ -173,6 +183,8 @@ import {
 	KottiFieldDateTimeRange,
 	KottiFieldDateTime,
 } from '../../../packages/next/kotti-field-date/types'
+import { KOTTI_FIELD_NUMBER_SUPPORTS } from '../../../packages/next/kotti-field-number/constants'
+import { KottiFieldNumber } from '../../../packages/next/kotti-field-number/types'
 import { KOTTI_FIELD_RADIO_GROUP_SUPPORTS } from '../../../packages/next/kotti-field-radio-group/constants'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from '../../../packages/next/kotti-field-select/constants'
 import {
@@ -287,6 +299,7 @@ const INITIAL_VALUES: {
 	dateTimeValue: KottiFieldDateTime.Value
 	dateValue: KottiFieldDate.Value
 	multiSelectValue: KottiFieldMultiSelect.Value
+	numberValue: KottiFieldNumber.Value
 	singleSelectValue: KottiFieldSingleSelect.Value
 	textValue: KottiFieldText.Value
 	toggleGroupValue: KottiFieldToggleGroup.Value
@@ -297,6 +310,7 @@ const INITIAL_VALUES: {
 	dateTimeValue: null,
 	dateValue: null,
 	multiSelectValue: [],
+	numberValue: null,
 	singleSelectValue: null,
 	textValue: null,
 	toggleGroupValue: {
@@ -307,11 +321,53 @@ const INITIAL_VALUES: {
 	toggleValue: null,
 }
 
-type ComponentRepresenation = {
+type ComponentValue = {
 	name: string
 	props: object
 	validation: KottiField.Validation.Result['type']
 }
+
+type ComponentRepresenation = ComponentValue & {
+	code: string
+	validator: KottiField.Validation.Function
+}
+
+const createValidator = (
+	validation: KottiField.Validation.Result['type'],
+) => (): KottiField.Validation.Result =>
+	validation === null
+		? { type: null }
+		: {
+				text: `Some Validation Text`,
+				type: validation,
+		  }
+
+const generateCode = (component: ComponentValue) =>
+	[
+		`<${component.name}`,
+		...Object.entries(component.props)
+			.sort(([a], [b]) => a.localeCompare(b))
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			.filter(([_, value]) => value !== null && value !== false)
+			.filter(([key, value]) => !(key === 'size' && value === 'medium'))
+			.map(([key, value]) => {
+				switch (typeof value) {
+					case 'boolean':
+						return key
+					case 'string':
+						return `${key}="${value}"`
+					default:
+						return `:${key}="${JSON.stringify(value).replace(/"/g, "'")}"`
+				}
+			})
+			.map((prop) => `\t${prop}`),
+		...(component.validation === null
+			? []
+			: [
+					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
+			  ]),
+		'/>',
+	].join('\n')
 
 export default defineComponent({
 	name: 'KtFormFieldsDocumentation',
@@ -385,13 +441,6 @@ export default defineComponent({
 				isOptional: settings.value.booleanFlags.isOptional,
 				label: settings.value.label,
 				size: settings.value.size,
-				validator: (): KottiField.Validation.Result =>
-					settings.value.validation === null
-						? { type: null }
-						: {
-								text: `Some Validation Text`,
-								type: settings.value.validation,
-						  },
 			}
 
 			const additionalProps = {}
@@ -458,7 +507,7 @@ export default defineComponent({
 			return { ...standardProps, ...additionalProps }
 		})
 
-		const savedFields = ref<ComponentRepresenation[]>(
+		const savedFields = ref<ComponentValue[]>(
 			(() => {
 				try {
 					const value = window.localStorage.getItem(
@@ -473,40 +522,8 @@ export default defineComponent({
 			})(),
 		)
 
-		const generateCode = (
-			componentName: string,
-			props: object,
-			validation: string | null,
-		) =>
-			[
-				`<${componentName}`,
-				...Object.entries(props)
-					.sort(([a], [b]) => a.localeCompare(b))
-					.filter(([key]) => !['validator'].includes(key))
-					// eslint-disable-next-line @typescript-eslint/no-unused-vars
-					.filter(([_, value]) => value !== null && value !== false)
-					.filter(([key, value]) => !(key === 'size' && value === 'medium'))
-					.map(([key, value]) => {
-						switch (typeof value) {
-							case 'boolean':
-								return key
-							case 'string':
-								return `${key}="${value}"`
-							default:
-								return `:${key}="${JSON.stringify(value).replace(/"/g, "'")}"`
-						}
-					})
-					.map((prop) => `\t${prop}`),
-				...(validation === null
-					? []
-					: [
-							`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${validation}" })"`,
-					  ]),
-				'/>',
-			].join('\n')
-
-		const componentRepresenation = computed(
-			(): ComponentRepresenation => ({
+		const componentValue = computed(
+			(): ComponentValue => ({
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),
 				validation: settings.value.validation,
@@ -514,47 +531,35 @@ export default defineComponent({
 		)
 
 		return {
-			code: computed(() =>
-				generateCode(
-					settings.value.component,
-					componentProps.value,
-					settings.value.validation,
-				),
-			),
 			componentDefinition,
 			componentOptions: components.map((component) => ({
 				label: component.name,
 				value: component.name,
 			})),
 			componentProps,
-			componentRepresenation,
+			componentRepresenation: computed(
+				(): ComponentRepresenation => ({
+					...componentValue.value,
+					code: generateCode(componentValue.value),
+					validator: createValidator(componentValue.value.validation),
+				}),
+			),
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},
 			savedFieldsMap: computed(() =>
-				savedFields.value.map((savedField) => ({
-					...savedField,
-					code: generateCode(
-						savedField.name,
-						savedField.props,
-						settings.value.validation,
-					),
-					props: {
-						...savedField.props,
-						validator: (): KottiField.Validation.Result =>
-							savedField.validation === null
-								? { type: null }
-								: {
-										text: `Some Validation Text`,
-										type: savedField.validation,
-								  },
-					},
-				})),
+				savedFields.value.map(
+					(component): ComponentRepresenation => ({
+						...component,
+						code: generateCode(component),
+						validator: createValidator(component.validation),
+					}),
+				),
 			),
 			savedFieldsAdd: () => {
 				savedFields.value = [
 					...savedFields.value,
-					cloneDeep(componentRepresenation.value),
+					cloneDeep(componentValue.value),
 				]
 				saveSavedFieldsToLocalStorage(savedFields.value)
 			},
