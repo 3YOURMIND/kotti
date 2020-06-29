@@ -76,11 +76,15 @@
 	--icon-02: var(--gray-50);
 	--icon-03: var(--white);
 	--support-error: var(--red-50);
+	--support-error-dark: var(--red-70);
 	--support-error-light: var(--red-20);
 	--support-warning: var(--orange-50);
+	--support-warning-dark: var(--orange-70);
 	--support-warning-light: var(--orange-20);
 	--support-success: var(--green-50);
+	--support-success-dark: var(--green-70);
 	--support-success-light: var(--green-20);
 	--support-info: var(--primary-50);
+	--support-info-dark: var(--primary-70);
 	--support-info-light: var(--primary-20);
 }

@@ -21,7 +21,8 @@ $inner-gap: ($outer-size - $inner-size) / 2;
 $track-width: $inner-size * 2.25;
 
 @mixin switch-colors($outer-color, $inner-color) {
-	background-color: $outer-color;
+	/* background-color: $outer-color; */
+	box-shadow: 0 0 1px $outer-color;
 
 	.kt-field-toggle-switch__inner {
 		background-color: $inner-color;
@@ -67,8 +68,8 @@ $track-width: $inner-size * 2.25;
 			:not(.kt-field-toggle__inner--is-disabled) .kt-field-toggle-switch {
 				/* stylelint-disable */
 				@include switch-colors(
-					var(--support-#{$type}-light),
-					var(--support-#{$type})
+					var(--support-#{$type}),
+					var(--support-#{$type}-dark)
 				);
 				/* stylelint-enable */
 			}
