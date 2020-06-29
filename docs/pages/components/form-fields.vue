@@ -7,7 +7,7 @@
 			<div class="overview__component">
 				<h4>Component</h4>
 				<KtForm v-model="values" :isLoading="settings.booleanFlags.isLoading">
-					<component :is="settings.component" v-bind="componentProps">Default Slot</component>
+					<component :is="componentRepresenation.name" v-bind="componentRepresenation.props">Default Slot</component>
 				</KtForm>
 				<div class="overview__component__value">
 					<strong>Value</strong>: <span v-text="JSON.stringify(values[componentProps.formKey])"/> <a @click.prevent="reset">reset</a>
@@ -310,6 +310,12 @@ const INITIAL_VALUES: {
 	toggleValue: null,
 }
 
+type ComponentRepresenation = {
+	name: string
+	props: object
+	validation: KottiField.Validation.Result['type']
+}
+
 export default defineComponent({
 	name: 'KtFormFieldsDocumentation',
 	setup() {
@@ -455,7 +461,7 @@ export default defineComponent({
 			return { ...standardProps, ...additionalProps }
 		})
 
-		const savedFields = ref<Array<{ name: string; props: object }>>(
+		const savedFields = ref<ComponentRepresenation[]>(
 			(() => {
 				try {
 					const value = window.localStorage.getItem(
@@ -502,6 +508,14 @@ export default defineComponent({
 				'/>',
 			].join('\n')
 
+		const componentRepresenation = computed(
+			(): ComponentRepresenation => ({
+				name: settings.value.component,
+				props: cloneDeep(componentProps.value),
+				validation: settings.value.validation,
+			}),
+		)
+
 		return {
 			code: computed(() =>
 				generateCode(
@@ -516,6 +530,7 @@ export default defineComponent({
 				value: component.name,
 			})),
 			componentProps,
+			componentRepresenation,
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},
@@ -527,15 +542,22 @@ export default defineComponent({
 						savedField.props,
 						settings.value.validation,
 					),
+					props: {
+						...savedField.props,
+						validator: (): KottiField.Validation.Result =>
+							savedField.validation === null
+								? { type: null }
+								: {
+										text: `Some Validation Text`,
+										type: savedField.validation,
+								  },
+					},
 				})),
 			),
 			savedFieldsAdd: () => {
 				savedFields.value = [
 					...savedFields.value,
-					{
-						name: settings.value.component,
-						props: cloneDeep(componentProps.value),
-					},
+					cloneDeep(componentRepresenation.value),
 				]
 				saveSavedFieldsToLocalStorage(savedFields.value)
 			},
