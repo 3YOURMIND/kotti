@@ -147,6 +147,8 @@
 
 	@include el-popper {
 		@include el-scrollbar {
+			max-height: 40vh;
+
 			.el-select-dropdown__list {
 				box-sizing: border-box;
 				display: flex;
