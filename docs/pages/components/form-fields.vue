@@ -22,7 +22,7 @@
 			<div class="overview__code">
 				<h4>Code</h4>
 				<pre v-text="componentRepresenation.code" />
-				<button @click="savedFieldsAdd">Save to LocalStorage</button>
+				<button @click="savedFieldsAdd" type="button">Save to LocalStorage</button>
 			</div>
 		</div>
 		<KtForm v-model="settings">
@@ -160,7 +160,7 @@
 							:validator="savedField.validator"
 							v-bind="savedField.props"
 						>Default Slot</component>
-						<button @click="savedFieldsRemove(index)">Remove</button>
+						<button @click="savedFieldsRemove(index)" type="button">Remove</button>
 					</div>
 					<div class="overview__code">
 						<pre v-text="savedField.code" />
