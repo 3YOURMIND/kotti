@@ -199,6 +199,7 @@
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
+import data from '../../../packages/next/data.json'
 import { KOTTI_FIELD_DATE_SUPPORTS } from '../../../packages/next/kotti-field-date/constants'
 import {
 	KottiFieldDate,
@@ -225,7 +226,6 @@ import {
 import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiTranslation } from '../../../packages/next/kotti-translation/types'
 import { Yoco } from '../../../packages/next/types'
-import yocoString from '../../assets/json/yocoString.json'
 
 const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
 	'kotti-documentation-form-fields-saved-components'
@@ -624,7 +624,7 @@ export default defineComponent({
 			},
 			settings,
 			values,
-			yocoIconOptions: (yocoString.data as Yoco.Icon[]).map((icon) => ({
+			yocoIconOptions: (data.yocoIcons as Yoco.Icon[]).map((icon) => ({
 				label: icon,
 				value: icon,
 			})),

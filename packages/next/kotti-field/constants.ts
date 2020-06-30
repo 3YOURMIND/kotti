@@ -1,3 +1,5 @@
+import { isYocoIcon } from '../validators'
+
 /**
  * Default Props for Fields implementing KtField
  * ensures compatibility with the useField hook
@@ -12,10 +14,10 @@ export const KOTTI_FIELD_PROPS = {
 	isLoading: { default: false, type: Boolean },
 	isOptional: { default: false, type: Boolean },
 	label: { default: null, type: String },
-	leftIcon: { default: null, type: String },
+	leftIcon: { default: null, type: String, validator: isYocoIcon },
 	prefix: { default: null, type: String },
-	rightIcon: { default: null, type: String },
 	size: { default: 'medium', type: String },
+	rightIcon: { default: null, type: String, validator: isYocoIcon },
 	suffix: { default: null, type: String },
 	tabIndex: { default: 0, type: Number },
 	validator: { default: null, type: Function },

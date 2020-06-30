@@ -1,7 +1,7 @@
 export namespace Yoco {
 	/**
 	 * Should be kept up-to-date with yoco
-	 * @see {@link ../../../docs/assets/yocoString.json}
+	 * @see {@link ./data.json}
 	 */
 	export type Icon =
 		| '3dbox'
