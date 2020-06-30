@@ -27,13 +27,12 @@ export default defineComponent({
 		{ emit },
 	) {
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
+			fieldInheritableProps: props.context.fieldInheritableProps,
 			formPath: computed(() => [
 				...props.context.formPath.value,
 				props.index,
 				props.formKey,
 			]),
-			hideValidation: props.context.hideValidation,
-			isLoading: props.context.isLoading,
 			onAddField: props.context.onAddField,
 			onRemoveField: props.context.onRemoveField,
 			setValue: (formKey, newValue) => emit('setValue', { formKey, newValue }),

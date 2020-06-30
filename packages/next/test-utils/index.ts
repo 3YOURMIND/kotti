@@ -17,14 +17,21 @@ export const getMockContext = (
 	{ validators = {}, values = {} } = { validators: {}, values: {} },
 ): Pick<
 	KottiForm.Context,
-	'hideValidation' | 'isLoading' | 'validators' | 'values'
+	'fieldInheritableProps' | 'validators' | 'values'
 > & {
 	onAddField: jest.Mock
 	onRemoveField: jest.Mock
 	setValue: jest.Mock
 } => ({
-	hideValidation: { value: false },
-	isLoading: { value: false },
+	fieldInheritableProps: {
+		value: {
+			hideClear: false,
+			hideValidation: false,
+			isDisabled: false,
+			isLoading: false,
+			size: 'medium',
+		},
+	},
 	onAddField: jest.fn(),
 	onRemoveField: jest.fn(),
 	setValue: jest.fn(),

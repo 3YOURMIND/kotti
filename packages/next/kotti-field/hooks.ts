@@ -7,6 +7,7 @@ import {
 	ref,
 	watch,
 	watchEffect,
+	Ref,
 } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -169,14 +170,15 @@ const useValidation = <DATA_TYPE>({
 	currentValue,
 	context,
 	isEmpty,
-	isLoading,
+	hideValidation,
 	props,
 }: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> &
 	Pick<
 		KottiField.Hook.ReturnsWithRefs<DATA_TYPE>,
-		'currentValue' | 'isEmpty' | 'isLoading'
+		'currentValue' | 'isEmpty'
 	> & {
 		context: KottiForm.Context | null
+		hideValidation: Ref<KottiField.InhertiableProps['hideValidation']>
 	}) => {
 	const translations = useTranslationNamespace('KtFields')
 
@@ -189,14 +191,6 @@ const useValidation = <DATA_TYPE>({
 					'validatorKey',
 				)
 		},
-	)
-
-	const hideValidation = computed(() =>
-		isLoading.value
-			? true
-			: context === null
-			? false
-			: context.hideValidation.value,
 	)
 
 	const isMissingRequiredField = computed(
@@ -260,6 +254,43 @@ const useValidation = <DATA_TYPE>({
 					: customValidation
 			},
 		),
+	}
+}
+
+/**
+ * Implements KottiField.InhertiableProps
+ * Prioritizes the field props, the context, and the passed default, respectively
+ */
+const useInheritableProperties = <DATA_TYPE>({
+	context,
+	props,
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> & {
+	context: KottiForm.Context | null
+}) => {
+	/**
+	 * Get a single property from either the KtFieldComponents or the KtFormContext
+	 * Gives priority to the KtFieldComponents and implements default fallbacks
+	 */
+	const useShared = <KEY extends keyof KottiField.InhertiableProps>(
+		key: KEY,
+		defaultValue: KottiField.InhertiableProps[KEY],
+	) =>
+		computed((): KottiField.InhertiableProps[KEY] => {
+			if (props[key]) return props[key]
+			if (context !== null) return context.fieldInheritableProps.value[key]
+			return defaultValue
+		})
+
+	const isLoading = useShared('isLoading', false)
+
+	return {
+		hideClear: useShared('hideClear', false),
+		hideValidation: computed(() =>
+			isLoading.value ? true : useShared('hideValidation', false).value,
+		),
+		isDisabled: useShared('isDisabled', false),
+		isLoading,
+		size: useShared('size', 'medium'),
 	}
 }
 
@@ -329,32 +360,26 @@ export const useField = <DATA_TYPE>({
 
 	useSupports({ props, supports })
 
-	const isLoading = computed(() => {
-		if (props.isLoading) return true
-		if (context !== null) return context.isLoading.value
-		return false
-	})
-
+	const sharedProperties = useInheritableProperties({ context, props })
 	const values = useValue({ context, emit, isEmpty, isCorrectDataType, props })
 
 	// export
 
 	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
+		...sharedProperties,
 		...useClear({ isEmpty: values.isEmpty, props, supports }),
 		...useDecoration({ props }),
 		...useInputProps({ context, props }),
 		...useTexts(props),
-		...values,
 		...useValidation({
 			context,
 			currentValue: values.currentValue,
+			hideValidation: sharedProperties.hideValidation,
 			isEmpty: values.isEmpty,
-			isLoading,
 			props,
 		}),
-		isLoading,
+		...values,
 		isOptional: computed(() => props.isOptional),
-		size: computed(() => props.size),
 	})
 
 	useNotifyContext({ context, field })

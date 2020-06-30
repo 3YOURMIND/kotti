@@ -8,8 +8,9 @@ export namespace KottiForm {
 		T extends keyof CONTEXT_TYPE = keyof CONTEXT_TYPE
 	> {
 		formPath: Ref<ReadonlyArray<string | number>>
-		hideValidation: Ref<KottiForm.Props['hideValidation']>
-		isLoading: Ref<KottiForm.Props['isLoading']>
+
+		fieldInheritableProps: Ref<KottiField.InhertiableProps>
+
 		onAddField: <DATA_TYPE>(toAdd: KottiField.Hook.Returns<DATA_TYPE>) => void
 		onRemoveField: <DATA_TYPE>(
 			toRemove: KottiField.Hook.Returns<DATA_TYPE>,
@@ -28,7 +29,7 @@ export namespace KottiForm {
 
 	export type ContextType = Record<string, unknown>
 
-	export interface Props {
+	export type Props = KottiField.InhertiableProps & {
 		/**
 		 * Form Identifier
 		 * defaults to sequential identifier
@@ -37,8 +38,7 @@ export namespace KottiForm {
 		 * can be useful otherwise
 		 */
 		formId: string
-		hideValidation: boolean
-		isLoading: boolean
+
 		/**
 		 * @default warning
 		 * error: prevent if errors.length > 0
@@ -46,7 +46,9 @@ export namespace KottiForm {
 		 * NEVER: allow submission, regardless of validation status
 		 */
 		preventSubmissionOn: 'error' | 'warning' | 'NEVER'
+
 		validators: Record<string, KottiField.Validation.Function>
+
 		value: ContextType
 	}
 

@@ -34,7 +34,7 @@ export namespace KottiField {
 			helpDescription: Ref<KottiField.Props<DATA_TYPE>['helpDescription']>
 			helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
 			hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
-			hideValidation: KottiForm.Context['hideValidation']
+			hideValidation: Ref<KottiField.Props<DATA_TYPE>['hideValidation']>
 			inputProps: Ref<
 				/**
 				 * Native HTML Props should have lowercase keys
@@ -61,10 +61,46 @@ export namespace KottiField {
 	}
 
 	/**
+	 * Includes, but is not limited to, properties that are not consumed by the KtForm itself,
+	 * but rather just passed-down to all fields inside the form to make common
+	 * tasks like disabling the entire form or hiding validation easier.
+	 *
+	 * These values can be explicitly overriden in the field usage
+	 */
+	export type InhertiableProps = {
+		/**
+		 * Is the field disabled?
+		 * This will e.g. prevent changing the value
+		 */
+		isDisabled: boolean
+
+		/**
+		 * Show a skeleton in place of the field
+		 */
+		isLoading: boolean
+
+		/**
+		 * Should the user have the option to clear the field
+		 */
+		hideClear: boolean
+
+		/**
+		 * Prevents the validation (e.g. color, text) from being shown
+		 */
+		hideValidation: boolean
+
+		/**
+		 * Defines the size of the field which influences child styles
+		 * to make fields e.g. appear more compact
+		 */
+		size: 'small' | 'medium' | 'large' | null
+	}
+
+	/**
 	 * When adding a new prop, please make sure that no KtFormField
 	 * already uses a prop with the same name, to avoid conflicts
 	 */
-	export type Props<DATA_TYPE> = {
+	export type Props<DATA_TYPE> = InhertiableProps & {
 		/**
 		 * Specifies that the data KtFormContext[formKey]
 		 * If formKey is "NONE", it is treated as an explicit opt-out
@@ -84,11 +120,6 @@ export namespace KottiField {
 		helpText: string | null
 
 		/**
-		 * Should the user have the option to clear the field
-		 */
-		hideClear: boolean
-
-		/**
 		 * Shows a Yoco icon on the left side of the field
 		 */
 		leftIcon: Yoco.Icon | null
@@ -98,12 +129,6 @@ export namespace KottiField {
 		 */
 		rightIcon: Yoco.Icon | null
 
-		/**
-		 * Is the field disabled?
-		 * This will e.g. prevent changing the value
-		 */
-		isDisabled: boolean
-		isLoading: boolean
 		isOptional: boolean
 		label: string | null
 
@@ -111,7 +136,6 @@ export namespace KottiField {
 		 * Show some string before the field
 		 */
 		prefix: string | null
-		size: 'small' | 'medium' | 'large'
 
 		/**
 		 * Show some string after the field
