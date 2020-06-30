@@ -11,18 +11,23 @@
 				<component
 					:is="isGroup ? 'legend' : 'div'"
 					v-if="labelText !== null"
-					class="kt-field__label"
-					v-text="labelText"
-				/>
+					class="kt-field__header__label"
+				>
+					<span class="kt-field__header__label__text" v-text="field.label" />
+					<span class="kt-field__header__label__suffix" v-text="labelSuffix" />
+				</component>
 				<div
 					v-if="field.helpText"
-					class="kt-field__help-text"
+					class="kt-field__header__help-text"
 					:class="iconClasses(['interactive'])"
 				>
-					<div class="ktfield-label__help-text__icon">
-						<i class="yoco">circle_question</i>
+					<div class="kt-field__header__help-text__icon">
+						<i class="yoco" v-text="'circle_question'" />
 					</div>
-					<div class="kt-field__help-text__tooltip" v-text="field.helpText" />
+					<div
+						class="kt-field__header__help-text__tooltip"
+						v-text="field.helpText"
+					/>
 				</div>
 			</div>
 			<div
@@ -77,8 +82,8 @@
 		</component>
 
 		<div v-if="field.isLoading" class="kt-field__wrapper">
-			<div class="kt-field__header--loading skeleton rectangle" />
-			<div class="kt-field__input-container--loading skeleton rectangle" />
+			<div class="kt-field__loading__header skeleton rectangle" />
+			<div class="kt-field__loading__input-container skeleton rectangle" />
 		</div>
 	</div>
 </template>
@@ -139,17 +144,13 @@ export default defineComponent({
 				),
 			]),
 			inputContainerRef: ref(null),
-			labelText: computed(() =>
-				props.field.label === null
-					? null
-					: [
-							props.field.label,
-							`(${
-								props.field.isOptional
-									? translations.value.optionalLabel
-									: translations.value.requiredLabel
-							})`,
-					  ].join(' '),
+			labelSuffix: computed(
+				() =>
+					`(${
+						props.field.isOptional
+							? translations.value.optionalLabel
+							: translations.value.requiredLabel
+					})`,
 			),
 			showClear: computed(
 				() =>
@@ -196,6 +197,17 @@ export default defineComponent({
 .kt-field {
 	&:not(:last-child) {
 		margin-bottom: 0.8rem;
+	}
+
+	&__loading {
+		&__header {
+			max-width: 200px;
+			height: 20px !important;
+		}
+
+		&__input-container {
+			height: 40px !important;
+		}
 	}
 
 	&__wrapper {
@@ -269,25 +281,7 @@ export default defineComponent({
 			margin-left: 0.2rem;
 		}
 
-		&--loading {
-			max-width: 200px;
-			height: 20px !important;
-		}
-	}
-
-	&__label {
-		display: flex;
-		align-items: center;
-		font-weight: 500;
-		color: var(--text-02);
-	}
-
-	&__help {
-		&-description {
-			color: var(--text-03);
-		}
-
-		&-text {
+		&__help-text {
 			position: relative;
 			display: flex;
 			align-items: center;
@@ -306,11 +300,29 @@ export default defineComponent({
 			}
 
 			&:hover {
-				.kt-field__help-text__tooltip {
+				.kt-field__header__help-text__tooltip {
 					display: block;
 				}
 			}
 		}
+
+		&__label {
+			display: flex;
+			align-items: center;
+			color: var(--text-02);
+
+			&__suffix {
+				margin-left: 0.2rem;
+			}
+
+			&__text {
+				font-weight: 500;
+			}
+		}
+	}
+
+	&__help-description {
+		color: var(--text-03);
 	}
 
 	&__input-container {
@@ -320,10 +332,6 @@ export default defineComponent({
 
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
-
-		&--loading {
-			height: 40px !important;
-		}
 
 		// The actual input
 		&__slot {
@@ -374,6 +382,7 @@ export default defineComponent({
 		display: flex;
 		align-items: center;
 		color: var(--text-03);
+
 		> i {
 			margin-right: 0.1rem;
 		}
