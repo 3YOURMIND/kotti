@@ -1,10 +1,11 @@
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
 
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import KtField from '../kotti-field/KtField.vue'
 import { KottiField } from '../kotti-field/types'
+import { useTranslationProvide } from '../kotti-translation/hooks'
 import { localVue } from '../test-utils'
 
 import KtForm from './KtForm.vue'
@@ -13,20 +14,24 @@ const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null>, { emit }) => ({
-		field: useField({
-			emit,
-			isCorrectDataType: (value): value is string | null =>
-				typeof value === 'string' || value === null,
-			isEmpty: (value) => value === null,
-			props,
-			supports: {
-				clear: true,
-				decoration: true,
-				tabIndex: true,
-			},
-		}),
-	}),
+	setup: (props: KottiField.Props<string | null>, { emit }) => {
+		useTranslationProvide(ref('en-US'), ref({}))
+
+		return {
+			field: useField({
+				emit,
+				isCorrectDataType: (value): value is string | null =>
+					typeof value === 'string' || value === null,
+				isEmpty: (value) => value === null,
+				props,
+				supports: {
+					clear: true,
+					decoration: true,
+					tabIndex: true,
+				},
+			}),
+		}
+	},
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
@@ -34,22 +39,26 @@ const TestFieldObject = defineComponent({
 	name: 'TestFieldObject',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<object | string | null>, { emit }) => ({
-		field: useField({
-			emit,
-			isCorrectDataType: (value): value is object | null =>
-				typeof value === 'object' ||
-				typeof value === 'string' ||
-				value === null,
-			isEmpty: (value) => value === null,
-			props,
-			supports: {
-				clear: true,
-				decoration: true,
-				tabIndex: true,
-			},
-		}),
-	}),
+	setup: (props: KottiField.Props<object | string | null>, { emit }) => {
+		useTranslationProvide(ref('en-US'), ref({}))
+
+		return {
+			field: useField({
+				emit,
+				isCorrectDataType: (value): value is object | null =>
+					typeof value === 'object' ||
+					typeof value === 'string' ||
+					value === null,
+				isEmpty: (value) => value === null,
+				props,
+				supports: {
+					clear: true,
+					decoration: true,
+					tabIndex: true,
+				},
+			}),
+		}
+	},
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
@@ -135,8 +144,8 @@ describe('KtForm', () => {
 			field.setValue('wowspin')
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.emitted().input[0][0]).not.toBe(VALUE_REFERENCE)
-			expect(wrapper.emitted().input[0][0]).toEqual({
+			expect(wrapper.emitted().input?.[0]?.[0]).not.toBe(VALUE_REFERENCE)
+			expect(wrapper.emitted().input?.[0]?.[0]).toEqual({
 				treatedAsImmutable: 'true',
 				testKey: 'wowspin',
 			})

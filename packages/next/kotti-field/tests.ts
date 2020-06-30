@@ -1,7 +1,8 @@
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
+import { useTranslationProvide } from '../kotti-translation/hooks'
 import {
 	localVue,
 	forceVueToEvaluateComputedProperty,
@@ -16,40 +17,48 @@ import { KottiField } from './types'
 const TestComponent = defineComponent({
 	name: 'TestComponent',
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null>, { emit }) => ({
-		field: useField({
-			emit,
-			isCorrectDataType: (value): value is string | null =>
-				typeof value === 'string' || value === null,
-			isEmpty: (value) => value === null,
-			props,
-			supports: {
-				clear: true,
-				decoration: true,
-				tabIndex: true,
-			},
-		}),
-	}),
+	setup: (props: KottiField.Props<string | null>, { emit }) => {
+		useTranslationProvide(ref('en-US'), ref({}))
+
+		return {
+			field: useField({
+				emit,
+				isCorrectDataType: (value): value is string | null =>
+					typeof value === 'string' || value === null,
+				isEmpty: (value) => value === null,
+				props,
+				supports: {
+					clear: true,
+					decoration: true,
+					tabIndex: true,
+				},
+			}),
+		}
+	},
 	template: `<div></div>`,
 })
 
 const TestComponentObject = defineComponent({
 	name: 'TestComponentObject',
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<object | null>, { emit }) => ({
-		field: useField({
-			emit,
-			isCorrectDataType: (value): value is object | null =>
-				value === null || typeof value === 'object',
-			isEmpty: (value) => value === null,
-			props,
-			supports: {
-				clear: true,
-				decoration: true,
-				tabIndex: true,
-			},
-		}),
-	}),
+	setup: (props: KottiField.Props<object | null>, { emit }) => {
+		useTranslationProvide(ref('en-US'), ref({}))
+
+		return {
+			field: useField({
+				emit,
+				isCorrectDataType: (value): value is object | null =>
+					value === null || typeof value === 'object',
+				isEmpty: (value) => value === null,
+				props,
+				supports: {
+					clear: true,
+					decoration: true,
+					tabIndex: true,
+				},
+			}),
+		}
+	},
 	template: `<div></div>`,
 })
 

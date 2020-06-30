@@ -1,10 +1,11 @@
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
 
 import { KOTTI_FIELD_PROPS } from '../../kotti-field/constants'
 import { useField } from '../../kotti-field/hooks'
 import KtField from '../../kotti-field/KtField.vue'
 import { KottiField } from '../../kotti-field/types'
+import { useTranslationProvide } from '../../kotti-translation/hooks'
 import { localVue } from '../../test-utils/index'
 import KtForm from '../KtForm.vue'
 
@@ -15,20 +16,24 @@ const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null>, { emit }) => ({
-		field: useField({
-			emit,
-			isCorrectDataType: (value): value is string | null =>
-				typeof value === 'string' || value === null,
-			isEmpty: (value) => value === null,
-			props,
-			supports: {
-				clear: true,
-				decoration: true,
-				tabIndex: true,
-			},
-		}),
-	}),
+	setup: (props: KottiField.Props<string | null>, { emit }) => {
+		useTranslationProvide(ref('en-US'), ref({}))
+
+		return {
+			field: useField({
+				emit,
+				isCorrectDataType: (value): value is string | null =>
+					typeof value === 'string' || value === null,
+				isEmpty: (value) => value === null,
+				props,
+				supports: {
+					clear: true,
+					decoration: true,
+					tabIndex: true,
+				},
+			}),
+		}
+	},
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
@@ -64,7 +69,7 @@ const getField = (
 	wrapper: Wrapper<any>,
 	index: number,
 ): KottiField.Hook.Returns<string | null> =>
-	(wrapper.findAll({ name: 'KtField' }).at(index).vm as any).field
+	(wrapper.findAllComponents({ name: 'KtField' }).at(index).vm as any).field
 
 describe('KtFormControllerList', () => {
 	it('provides context with nested data, and passes-down the other properties of the KtFormContext', () => {
@@ -124,7 +129,7 @@ describe('KtFormControllerList', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('input')[0]).toEqual([
+		expect(wrapper.emitted('input')?.[0]).toEqual([
 			{
 				parentKey: [
 					{ testKey: 'testName1b', somethingElse: true },
@@ -138,7 +143,7 @@ describe('KtFormControllerList', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('input')[1]).toEqual([
+		expect(wrapper.emitted('input')?.[1]).toEqual([
 			{
 				parentKey: [
 					// testKey is still testName1a because @input is mocked
