@@ -301,21 +301,9 @@ export default defineComponent({
 				cursor: none;
 				background-color: var(--ui-01);
 				border: 1px solid var(--ui-02);
-				border-radius: 3px;
+				border-radius: var(--field-border-radius);
 				transform: translateX(calc(-50% + 5px));
 			}
-
-			// &__icon {
-			// 	font-size: 1.25em;
-			// 	color: var(--icon-02);
-			// 	cursor: help;
-			//
-			// 	&--interactive.ktfield-label__help-text__icon--primary {
-			// 		&:hover {
-			// 			color: var(--interactive-01-hover);
-			// 		}
-			// 	}
-			// }
 
 			&:hover {
 				.kt-field__help-text__tooltip {
