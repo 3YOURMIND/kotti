@@ -6,7 +6,7 @@
 		<div class="overview">
 			<div class="overview__component">
 				<h4>Component</h4>
-				<KtForm v-model="values" :isLoading="settings.booleanFlags.isLoading">
+				<KtForm v-model="values">
 					<component
 						:is="componentRepresenation.name"
 						:validator="componentRepresenation.validator"
@@ -473,6 +473,7 @@ export default defineComponent({
 				helpDescription: settings.value.helpDescription,
 				helpText: settings.value.helpText,
 				isDisabled: settings.value.booleanFlags.isDisabled,
+				isLoading: settings.value.booleanFlags.isLoading,
 				isOptional: settings.value.booleanFlags.isOptional,
 				label: settings.value.label,
 				size: settings.value.size,
