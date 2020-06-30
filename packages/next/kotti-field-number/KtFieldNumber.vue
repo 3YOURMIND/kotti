@@ -35,20 +35,25 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref, watch } from '@vue/composition-api'
-import isNumber from 'is-number'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
 import {
-	KOTTI_FIELD_NUMBER_SUPPORTS,
 	KOTTI_FIELD_NUMBER_PROPS,
+	KOTTI_FIELD_NUMBER_SUPPORTS,
 	LEADING_ZEROES_REGEX,
 	VALID_REGEX,
 } from './constants'
 import { KottiFieldNumber } from './types'
-import { isStepMultiple, toNumber, toString, isInRange } from './utilities'
+import {
+	isInRange,
+	isNumber,
+	isStepMultiple,
+	toNumber,
+	toString,
+} from './utilities'
 
 export default defineComponent({
 	name: 'KtFieldNumber',
