@@ -37,7 +37,7 @@ import {
 } from './constants'
 import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDateTimeRange } from './types'
-import { isInvalidDate } from './utils'
+import { isInvalidDate } from './utilities'
 
 export default defineComponent({
 	name: 'KtFieldDateTimeRange',

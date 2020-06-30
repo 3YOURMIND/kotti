@@ -15,7 +15,7 @@ import {
 	dateTimeShortcutValidator,
 	dateTimeRangeShortcutValidator,
 	rangePlaceholderValidator,
-} from './utils'
+} from './utilities'
 
 const EL_SHARED_INTERNAL_PROPS = {
 	editable: true,
