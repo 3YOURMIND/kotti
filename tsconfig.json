@@ -23,6 +23,8 @@
 			"~/*": ["./*"]
 		},
 		"resolveJsonModule": true,
+		// FIXME: remove skipLibCheck when [https://github.com/ElemeFE/element/issues/17329] is resolved
+		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
 		"target": "esnext",
