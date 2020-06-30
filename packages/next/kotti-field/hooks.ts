@@ -318,13 +318,16 @@ const useSupports = <DATA_TYPE>({
 			PROPS_TO_CHECK_FOR_SUPPORTS,
 		) as Array<[Key, Value]>)
 			if (!supports[supportsKey])
-				for (const propKey of propsToCheck)
-					if (props[propKey] !== KOTTI_FIELD_PROPS[propKey].default)
+				for (const propKey of propsToCheck) {
+					const propValue = props[propKey]
+
+					if (propValue !== KOTTI_FIELD_PROPS[propKey].default)
 						throw new KtFieldErrors.UnsupportedProp(props, {
 							supportsKey,
 							propKey,
-							value: props[propKey],
+							value: propValue,
 						})
+				}
 	})
 }
 
