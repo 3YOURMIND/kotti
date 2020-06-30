@@ -10,7 +10,7 @@
 			<div class="kt-field__header">
 				<component
 					:is="isGroup ? 'legend' : 'div'"
-					v-if="labelText !== null"
+					v-if="field.label !== null"
 					class="kt-field__header__label"
 				>
 					<span class="kt-field__header__label__text" v-text="field.label" />
