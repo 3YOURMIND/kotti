@@ -93,6 +93,7 @@
 					<KtFormControllerObject formKey="additionalProps" v-if="componentDefinition.additionalProps.length > 0">
 						<h4>Additional Props</h4>
 						<KtFieldSingleSelect
+						 	v-if="componentDefinition.additionalProps.includes('toggleType')"
 							formKey="toggleType"
 							isOptional
 							label="type"
@@ -101,6 +102,28 @@
 								{ label: 'switch', value: 'switch' },
 							]"
 							size="small"
+						/>
+						<div class="field-row" v-if="componentDefinition.additionalProps.includes('numberMaximum')">
+							<KtFieldNumber
+								formKey="numberMaximum"
+								isOptional
+								label="maximum"
+								size="small"
+							/>
+							<KtFieldNumber
+								formKey="numberMinimum"
+								isOptional
+								label="minimum"
+								size="small"
+							/>
+						</div>
+						<KtFieldToggle
+							v-if="componentDefinition.additionalProps.includes('numberHideMaximum')"
+							formKey="numberHideMaximum"
+							isOptional
+							label="hideMaximum"
+							size="small"
+							type="switch"
 						/>
 					</KtFormControllerObject>
 				</div>
@@ -250,6 +273,12 @@ const components: Array<{
 		supports: KOTTI_FIELD_DATE_SUPPORTS,
 	},
 	{
+		additionalProps: ['numberHideMaximum', 'numberMaximum', 'numberMinimum'],
+		formKey: 'numberValue',
+		name: 'KtFieldNumber',
+		supports: KOTTI_FIELD_NUMBER_SUPPORTS,
+	},
+	{
 		additionalProps: [],
 		formKey: 'multiSelectValue',
 		name: 'KtFieldMultiSelect',
@@ -376,6 +405,9 @@ export default defineComponent({
 
 		const settings = ref<{
 			additionalProps: {
+				numberHideMaximum: boolean
+				numberMaximum: number | null
+				numberMinimum: number | null
 				toggleType: 'checkbox' | 'switch'
 			}
 			booleanFlags: {
@@ -398,6 +430,9 @@ export default defineComponent({
 			validation: KottiField.Validation.Result['type']
 		}>({
 			additionalProps: {
+				numberHideMaximum: false,
+				numberMaximum: null,
+				numberMinimum: null,
 				toggleType: 'checkbox',
 			},
 			booleanFlags: {
@@ -464,6 +499,23 @@ export default defineComponent({
 			)
 				Object.assign(additionalProps, {
 					type: settings.value.additionalProps.toggleType,
+				})
+
+			if (
+				componentDefinition.value.additionalProps.includes('numberHideMaximum')
+			)
+				Object.assign(additionalProps, {
+					hideMaximum: settings.value.additionalProps.numberHideMaximum,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('numberMaximum'))
+				Object.assign(additionalProps, {
+					maximum: settings.value.additionalProps.numberMaximum,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('numberMinimum'))
+				Object.assign(additionalProps, {
+					minimum: settings.value.additionalProps.numberMinimum,
 				})
 
 			if (

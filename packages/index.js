@@ -50,6 +50,7 @@ import {
 	KtFieldDateTime,
 	KtFieldDateTimeRange,
 } from './next/kotti-field-date'
+import { KtFieldNumber } from './next/kotti-field-number'
 import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
 import {
 	KtFieldSingleSelect,
@@ -92,6 +93,7 @@ const components = {
 	KtFieldDateTime,
 	KtFieldDateTimeRange,
 	KtFieldMultiSelect,
+	KtFieldNumber,
 	KtFieldRadioGroup,
 	KtFieldSingleSelect,
 	KtFieldText,
@@ -184,6 +186,7 @@ export {
 	KtFieldDateTime,
 	KtFieldDateTimeRange,
 	KtFieldMultiSelect,
+	KtFieldNumber,
 	KtFieldRadioGroup,
 	KtFieldSingleSelect,
 	KtFieldText,
