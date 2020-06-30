@@ -151,7 +151,7 @@ export const useField = <DATA_TYPE>({
 		currentValue,
 		helpDescription: computed(() => props.helpDescription),
 		helpText: computed(() => props.helpText),
-		hideClear: computed(() => props.hideClear),
+		hideClear: computed(() => (supports.clear ? props.hideClear : true)),
 		hideValidation,
 		inputProps: computed(() => ({
 			/**
