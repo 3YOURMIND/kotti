@@ -13,8 +13,8 @@ export const esES: KottiTranslation.Messages = {
 		placeholder: 'Seleccionar',
 	},
 	KtFormSubmit: {
-		errorsSectionTitle: 'TODO',
-		title: 'TODO',
-		warningsSectionTitle: 'TODO',
+		errorsSectionTitle: 'Errores',
+		title: 'Envío de formulario no permitido',
+		warningsSectionTitle: 'Avisos',
 	},
 }
