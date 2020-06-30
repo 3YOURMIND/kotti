@@ -52,10 +52,10 @@
 						:classes="iconClasses(['interactive'])"
 						:handleClear="handleClear"
 						name="actionIcon"
-						:showClear="showClear"
+						:showClear="!field.hideClear"
 					>
 						<div
-							v-if="showClear"
+							v-if="!field.hideClear"
 							:class="iconClasses(['interactive'])"
 							role="button"
 							@click.stop="handleClear"
@@ -151,14 +151,6 @@ export default defineComponent({
 							? translations.value.optionalLabel
 							: translations.value.requiredLabel
 					})`,
-			),
-			showClear: computed(
-				() =>
-					!(
-						props.field.hideClear ||
-						props.field.isEmpty ||
-						props.field.isDisabled
-					),
 			),
 			showValidation,
 			validationText: computed(() =>

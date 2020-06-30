@@ -1,11 +1,11 @@
 import {
 	computed,
 	inject,
+	onMounted,
+	onUnmounted,
+	reactive,
 	ref,
 	watch,
-	reactive,
-	onUnmounted,
-	onMounted,
 	watchEffect,
 } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
@@ -19,20 +19,93 @@ import { KOTTI_FIELD_PROPS } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
-export const useField = <DATA_TYPE>({
+const useClear = <DATA_TYPE>({
+	props,
+	supports,
+	isEmpty,
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props' | 'supports'> &
+	Pick<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>, 'isEmpty'>) => {
+	return {
+		hideClear: computed(
+			() =>
+				!(
+					(supports.clear ? props.hideClear : true) ||
+					isEmpty ||
+					props.isDisabled
+				),
+		),
+	}
+}
+
+const useDecoration = <DATA_TYPE>({
+	props,
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'>) => {
+	return {
+		leftIcon: computed(() => props.leftIcon),
+		prefix: computed(() => props.prefix),
+		rightIcon: computed(() => props.rightIcon),
+		suffix: computed(() => props.suffix),
+	}
+}
+
+const useInputProps = <DATA_TYPE>({
+	context,
+	props,
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> & {
+	context: KottiForm.Context | null
+}) => {
+	const formPath = computed(() => {
+		if (context === null) return []
+
+		if (props.formKey === null)
+			throw new KtFieldErrors.ImplicitFormKeyNone(props)
+
+		return props.formKey === FORM_KEY_NONE
+			? [...context.formPath.value]
+			: [...context.formPath.value, props.formKey]
+	})
+
+	const isDisabled = computed(() => props.isDisabled)
+
+	return {
+		inputProps: computed(() => ({
+			/**
+			 * in a controllerListItem, we want to identify a field by
+			 * the formId.formKey without the index
+			 * thus, we’re only including strings in order to get rid of array indices
+			 */
+			'data-test': formPath.value
+				.filter(
+					(pathSegment: string | number) => typeof pathSegment === 'string',
+				)
+				.join('.'),
+			disabled: isDisabled.value,
+			tabindex: props.tabIndex,
+		})),
+		isDisabled,
+	}
+}
+
+const useTexts = <DATA_TYPE>(props: KottiField.Props<DATA_TYPE>) => {
+	return {
+		helpDescription: computed(() => props.helpDescription),
+		helpText: computed(() => props.helpText),
+		label: computed(() => props.label),
+	}
+}
+
+const useValue = <DATA_TYPE>({
+	context,
 	emit,
 	isCorrectDataType,
 	isEmpty,
 	props,
-	supports,
-}: KottiField.Hook.Parameters<
-	DATA_TYPE
->): KottiField.Hook.Returns<DATA_TYPE> => {
-	const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
-	const translations = useTranslationNamespace('KtFields')
-
-	// sanity-checks
-
+}: Pick<
+	KottiField.Hook.Parameters<DATA_TYPE>,
+	'emit' | 'isCorrectDataType' | 'isEmpty' | 'props'
+> & {
+	context: KottiForm.Context | null
+}) => {
 	watch(
 		() => props.formKey,
 		(newFormKey) => {
@@ -43,46 +116,6 @@ export const useField = <DATA_TYPE>({
 				throw new KtFieldErrors.InvalidPropOutsideOfContext(props, 'formKey')
 		},
 	)
-
-	watch(
-		() => props.validatorKey,
-		(newValidatorKey) => {
-			if (context === null && newValidatorKey !== null)
-				throw new KtFieldErrors.InvalidPropOutsideOfContext(
-					props,
-					'validatorKey',
-				)
-		},
-	)
-
-	/**
-	 * Some fields do not support a subset of the KtField.Props.
-	 * We explicitly throw errors for props that are not effectively
-	 * consumed (i.e. not to be displayed). This prevents users
-	 * from accidentally passing unneeded or misleading props.
-	 */
-	watchEffect(() => {
-		type Key = keyof KottiField.Supports
-		type Value = Array<keyof KottiField.Props<DATA_TYPE>>
-
-		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
-			clear: ['hideClear'],
-			decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix'],
-			tabIndex: ['tabIndex'],
-		}
-
-		for (const [supportsKey, propsToCheck] of Object.entries(
-			PROPS_TO_CHECK_FOR_SUPPORTS,
-		) as Array<[Key, Value]>)
-			if (!supports[supportsKey])
-				for (const propKey of propsToCheck)
-					if (props[propKey] !== KOTTI_FIELD_PROPS[propKey].default)
-						throw new KtFieldErrors.UnsupportedProp(props, {
-							supportsKey,
-							propKey,
-							value: props[propKey],
-						})
-	})
 
 	// fetch value
 
@@ -110,73 +143,9 @@ export const useField = <DATA_TYPE>({
 		},
 	)
 
-	// formPath
-
-	const formPath = computed(() => {
-		if (context === null) return []
-
-		if (props.formKey === null)
-			throw new KtFieldErrors.ImplicitFormKeyNone(props)
-
-		return props.formKey === FORM_KEY_NONE
-			? [...context.formPath.value]
-			: [...context.formPath.value, props.formKey]
-	})
-
-	// validation
-
-	const isLoading = computed(() => {
-		if (props.isLoading) return true
-		if (context !== null) return context.isLoading.value
-		return false
-	})
-
-	const hideValidation = computed(() =>
-		isLoading.value
-			? true
-			: context === null
-			? false
-			: context.hideValidation.value,
-	)
-
-	const isMissingRequiredField = computed(
-		(): boolean => !props.isOptional && isEmpty(currentValue.value),
-	)
-
-	// export
-
-	const isDisabled = computed(() => props.isDisabled)
-
-	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
+	return {
 		currentValue,
-		helpDescription: computed(() => props.helpDescription),
-		helpText: computed(() => props.helpText),
-		hideClear: computed(() => (supports.clear ? props.hideClear : true)),
-		hideValidation,
-		inputProps: computed(() => ({
-			/**
-			 * in a controllerListItem, we want to identify a field by
-			 * the formId.formKey without the index
-			 * thus, we’re only including strings in order to get rid of array indices
-			 */
-			'data-test': formPath.value
-				.filter(
-					(pathSegment: string | number) => typeof pathSegment === 'string',
-				)
-				.join('.'),
-			disabled: isDisabled.value,
-			tabindex: props.tabIndex,
-		})),
-		isDisabled,
 		isEmpty: computed(() => isEmpty(currentValue.value)),
-		isLoading,
-		isOptional: computed(() => props.isOptional),
-		size: computed(() => props.size),
-		label: computed(() => props.label),
-		leftIcon: computed(() => props.leftIcon),
-		prefix: computed(() => props.prefix),
-		rightIcon: computed(() => props.rightIcon),
-		// TODO: Write unit test to figure out if props.isDisabled affects this function or if a computed() is necessary
 		setValue: ref((newValue: unknown) => {
 			if (!isCorrectDataType(newValue))
 				throw new KtFieldErrors.InvalidDataType(props, newValue)
@@ -193,7 +162,50 @@ export const useField = <DATA_TYPE>({
 
 			return context.setValue(props.formKey, newValue)
 		}),
-		suffix: computed(() => props.suffix),
+	}
+}
+
+const useValidation = <DATA_TYPE>({
+	currentValue,
+	context,
+	isEmpty,
+	isLoading,
+	props,
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> &
+	Pick<
+		KottiField.Hook.ReturnsWithRefs<DATA_TYPE>,
+		'currentValue' | 'isEmpty' | 'isLoading'
+	> & {
+		context: KottiForm.Context | null
+	}) => {
+	const translations = useTranslationNamespace('KtFields')
+
+	watch(
+		() => props.validatorKey,
+		(newValidatorKey) => {
+			if (context === null && newValidatorKey !== null)
+				throw new KtFieldErrors.InvalidPropOutsideOfContext(
+					props,
+					'validatorKey',
+				)
+		},
+	)
+
+	const hideValidation = computed(() =>
+		isLoading.value
+			? true
+			: context === null
+			? false
+			: context.hideValidation.value,
+	)
+
+	const isMissingRequiredField = computed(
+		(): boolean => !props.isOptional && isEmpty.value,
+	)
+
+	return {
+		hideValidation,
+		// TODO: Write unit test to figure out if props.isDisabled affects this function or if a computed() is necessary
 		validation: computed(
 			// eslint-disable-next-line sonarjs/cognitive-complexity
 			(): KottiField.Validation.Result => {
@@ -248,10 +260,53 @@ export const useField = <DATA_TYPE>({
 					: customValidation
 			},
 		),
+	}
+}
+
+/**
+ * Some fields do not support a subset of the KtField.Props.
+ * We explicitly throw errors for props that are not effectively
+ * consumed (i.e. not to be displayed). This prevents users
+ * from accidentally passing unneeded or misleading props.
+ */
+const useSupports = <DATA_TYPE>({
+	props,
+	supports,
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props' | 'supports'>) => {
+	watchEffect(() => {
+		type Key = keyof KottiField.Supports
+		type Value = Array<keyof KottiField.Props<DATA_TYPE>>
+
+		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
+			clear: ['hideClear'],
+			decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix'],
+			tabIndex: ['tabIndex'],
+		}
+
+		for (const [supportsKey, propsToCheck] of Object.entries(
+			PROPS_TO_CHECK_FOR_SUPPORTS,
+		) as Array<[Key, Value]>)
+			if (!supports[supportsKey])
+				for (const propKey of propsToCheck)
+					if (props[propKey] !== KOTTI_FIELD_PROPS[propKey].default)
+						throw new KtFieldErrors.UnsupportedProp(props, {
+							supportsKey,
+							propKey,
+							value: props[propKey],
+						})
 	})
+}
 
-	// hook into lifecycle events
-
+/**
+ * hook into lifecycle events
+ */
+const useNotifyContext = <DATA_TYPE>({
+	context,
+	field,
+}: {
+	context: KottiForm.Context | null
+	field: KottiField.Hook.Returns<DATA_TYPE>
+}) => {
 	onMounted(() => {
 		if (context) context.onAddField(field)
 	})
@@ -259,6 +314,50 @@ export const useField = <DATA_TYPE>({
 	onUnmounted(() => {
 		if (context) context.onRemoveField(field)
 	})
+}
+
+export const useField = <DATA_TYPE>({
+	emit,
+	isCorrectDataType,
+	isEmpty,
+	props,
+	supports,
+}: KottiField.Hook.Parameters<
+	DATA_TYPE
+>): KottiField.Hook.Returns<DATA_TYPE> => {
+	const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
+
+	useSupports({ props, supports })
+
+	const isLoading = computed(() => {
+		if (props.isLoading) return true
+		if (context !== null) return context.isLoading.value
+		return false
+	})
+
+	const values = useValue({ context, emit, isEmpty, isCorrectDataType, props })
+
+	// export
+
+	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
+		...useClear({ isEmpty: values.isEmpty, props, supports }),
+		...useDecoration({ props }),
+		...useInputProps({ context, props }),
+		...useTexts(props),
+		...values,
+		...useValidation({
+			context,
+			currentValue: values.currentValue,
+			isEmpty: values.isEmpty,
+			isLoading,
+			props,
+		}),
+		isLoading,
+		isOptional: computed(() => props.isOptional),
+		size: computed(() => props.size),
+	})
+
+	useNotifyContext({ context, field })
 
 	return field
 }
