@@ -83,6 +83,7 @@
 						label="Boolean Flags"
 						:options="[
 							{ disabled: !componentDefinition.supports.decoration, key: 'hideClear', label: 'hideClear' },
+							{ key: 'hideValidation', label: 'hideValidation' },
 							{ key: 'isDisabled', label: 'isDisabled' },
 							{ key: 'isLoading', label: 'isLoading' },
 							{ key: 'isOptional', label: 'isOptional' },
@@ -412,6 +413,7 @@ export default defineComponent({
 			}
 			booleanFlags: {
 				hideClear: KottiFieldToggle.Value
+				hideValidation: KottiFieldToggle.Value
 				isDisabled: KottiFieldToggle.Value
 				isLoading: KottiFieldToggle.Value
 				isOptional: KottiFieldToggle.Value
@@ -437,6 +439,7 @@ export default defineComponent({
 			},
 			booleanFlags: {
 				hideClear: false,
+				hideValidation: false,
 				isDisabled: false,
 				isLoading: false,
 				isOptional: true,
@@ -472,6 +475,7 @@ export default defineComponent({
 				formKey: componentDefinition.value.formKey,
 				helpDescription: settings.value.helpDescription,
 				helpText: settings.value.helpText,
+				hideValidation: settings.value.booleanFlags.hideValidation,
 				isDisabled: settings.value.booleanFlags.isDisabled,
 				isLoading: settings.value.booleanFlags.isLoading,
 				isOptional: settings.value.booleanFlags.isOptional,
