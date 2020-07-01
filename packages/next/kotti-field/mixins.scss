@@ -231,6 +231,10 @@
 				height: 0;
 			}
 
+			&:not(.el-scrollbar__wrap--hidden-default) {
+				padding-bottom: 15px;
+			}
+
 			@content;
 		}
 	}
