@@ -13,12 +13,14 @@ import {
 import { KT_FORM_CONTEXT } from '../constants'
 import { KottiForm } from '../types'
 
+import { KottiFormControllerObject } from './types'
+
 export default defineComponent({
 	name: 'KtFormControllerObject',
 	props: {
 		formKey: { required: true, type: String },
 	},
-	setup(props) {
+	setup(props: KottiFormControllerObject.Props) {
 		const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 		if (context === null)
 			throw new Error('KtFormControllerObject: Could Not Find KtFormContext')

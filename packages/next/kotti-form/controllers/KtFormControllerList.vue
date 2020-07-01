@@ -30,6 +30,7 @@ import { KT_FORM_CONTEXT } from '../constants'
 import { KottiForm } from '../types'
 
 import KtFormControllerListItem from './KtFormControllerListItem.vue'
+import { KottiFormControllerList } from './types'
 
 export default defineComponent({
 	name: 'KtFormControllerList',
@@ -37,7 +38,7 @@ export default defineComponent({
 	props: {
 		formKey: { required: true, type: String },
 	},
-	setup(props) {
+	setup(props: KottiFormControllerList.Props) {
 		const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 		if (context === null)
 			throw new Error('KtFormControllerList: Could Not Find KtFormContext')

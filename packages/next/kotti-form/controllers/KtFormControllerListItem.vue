@@ -5,9 +5,10 @@
 <script lang="ts">
 import { defineComponent, provide, computed } from '@vue/composition-api'
 
-import { KottiField } from '../../kotti-field/types'
 import { KT_FORM_CONTEXT } from '../constants'
 import { KottiForm } from '../types'
+
+import { KottiFormControllerListItem } from './types'
 
 export default defineComponent({
 	name: 'KtFormControllerListItem',
@@ -17,15 +18,7 @@ export default defineComponent({
 		index: { required: true, type: Number },
 		values: { required: true, type: Object },
 	},
-	setup(
-		props: {
-			context: KottiForm.Context
-			formKey: Exclude<KottiField.Props<object[]>['formKey'], null>
-			index: number
-			values: Record<string, unknown>
-		},
-		{ emit },
-	) {
+	setup(props: KottiFormControllerListItem.Props, { emit }) {
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			fieldInheritableProps: props.context.fieldInheritableProps,
 			formPath: computed(() => [

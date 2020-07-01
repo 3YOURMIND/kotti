@@ -154,7 +154,8 @@
 	"name": "@3yourmind/kotti-ui",
 	"scripts": {
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
-		"build:kotti": "yarn run build:tokens && vue-cli-service build --target lib --name KottiUI packages/index.js",
+		"build:kotti": "yarn run build:tokens && vue-cli-service build --target lib --name KottiUI packages/index.ts && yarn run build:types",
+		"build:types": "tsc --emitDeclarationOnly",
 		"build:tokens": "node -r esm tokens/generate.js && prettier --write packages/kotti-style/tokens.css",
 		"check:script": "eslint --ignore-path .gitignore '**/*.{js,ts,vue}'",
 		"check:style": "stylelint **/*.{css,scss,vue}",
@@ -168,5 +169,6 @@
 		"test:unit": "vue-cli-service test:unit"
 	},
 	"style": "dist/KottiUI.css",
+	"types": "dist/index.d.ts",
 	"version": "1.11.1"
 }

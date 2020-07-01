@@ -1,6 +1,9 @@
 // This should be called first
 import './kotti-style/index.scss'
 
+// eslint-disable-next-line prettier/prettier
+export * as Kotti from './types'
+
 import KtAccordion from './kotti-accordion'
 import KtActionbar from './kotti-actionbar'
 import KtAvatar from './kotti-avatar'
@@ -127,7 +130,8 @@ const components = {
 	KtUserMenu,
 }
 
-function install(Vue) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function install(Vue: any) {
 	for (const component of Object.values(components)) Vue.use(component)
 
 	Vue.prototype.$KtNavbar = new Vue({
@@ -136,6 +140,8 @@ function install(Vue) {
 		},
 		methods: {
 			toggle(value = null) {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+				// @ts-ignore
 				this.isNarrow = value === null ? !this.isNarrow : value
 			},
 		},
@@ -148,6 +154,10 @@ function install(Vue) {
 		duration = DEFAULT_YODIFY_DURATION,
 		text,
 		type = 'success',
+	}: {
+		duration: number
+		text: string
+		type: 'success' | 'error'
 	}) {
 		const notification = { duration, text, type }
 
@@ -156,9 +166,8 @@ function install(Vue) {
 		else this.$root.$emit('vue-yodify', notification)
 	}
 }
-if (typeof window !== 'undefined' && window.Vue) {
-	install(window.Vue)
-}
+
+if (typeof window !== 'undefined' && window.Vue) install(window.Vue)
 
 export default { ...components, install }
 export {
