@@ -1,9 +1,6 @@
 // This should be called first
 import './kotti-style/index.scss'
 
-// eslint-disable-next-line prettier/prettier
-export * as Kotti from './types'
-
 import KtAccordion from './kotti-accordion'
 import KtActionbar from './kotti-actionbar'
 import KtAvatar from './kotti-avatar'
@@ -69,6 +66,7 @@ import {
 	KtFormSubmit,
 } from './next/kotti-form'
 import { KtTranslationContext } from './next/kotti-translation/KtTranslationContext'
+import * as Kotti from './types'
 
 const components = {
 	KtAccordion,
@@ -169,6 +167,7 @@ function install(Vue: any) {
 
 if (typeof window !== 'undefined' && window.Vue) install(window.Vue)
 
+export { Kotti }
 export default { ...components, install }
 export {
 	KtAccordion,

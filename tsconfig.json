@@ -7,7 +7,8 @@
 		"declarationDir": "dist",
 		"esModuleInterop": true,
 		"importHelpers": true,
-		"jsx": "preserve",
+		"jsx": "react",
+		"jsxFactory": "h",
 		"lib": [
 			"dom.iterable",
 			"dom",
@@ -28,7 +29,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "esnext",
-		"types": ["webpack-env", "@types/node", "@nuxt/types", "jest"]
+		"types": ["webpack-env", "node", "@nuxt/types", "jest"]
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": [
