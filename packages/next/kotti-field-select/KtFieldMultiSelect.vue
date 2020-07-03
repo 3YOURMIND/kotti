@@ -116,9 +116,6 @@ export default defineComponent({
 		const isDropdownOpen = ref(false)
 
 		const scheduleFocusAfterFieldClick = ref(false)
-		const elSelectClasses = computed(() => ({
-			'el-select--disabled': field.isDisabled,
-		}))
 
 		return {
 			elMultipleSelectProps: computed(
@@ -134,7 +131,6 @@ export default defineComponent({
 					value: field.currentValue,
 				}),
 			),
-			elSelectClasses: elSelectClasses.value,
 			elSelectRef,
 			field,
 			handleFieldClick: () => {
