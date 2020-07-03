@@ -52,11 +52,18 @@ const getDateComponent = <DATA_TYPE extends Values>({
  * `picker` (the popper component) is (un)set with `(un)mountPicker`.
  * dependency tracking is done through `pickerVisible`, an internally computed prop,
  * because the `picker` gets a new reference on each call of `mountPicker()`.
- * so using any property on the picker to trigger the `watchEffect` won’t work
- * NOTE: The order inside the condition matters as pickerVisible needs to be accessed first
+ * so using any property on the picker to trigger the `watchEffect` won’t work.
+ *
+ * if a field is disabled, clicking on it, will set dateComponent.pickerVisible to true
+ * instaneously but won't open the picker (dateComponent.picker will remain null)
+ * and `pickerVisible` will reset itself
+ * therefore, isPickerVisible() has to guard that picker exists
+ *
+ * NOTE: The order inside if-condition in any `watchEffect` hook matters
+ * so pickerVisible needs to be accessed first
  */
 const isPickerVisible = (dateComponent: ElDateWithInternalAPI) =>
-	dateComponent.pickerVisible
+	dateComponent.pickerVisible && dateComponent.picker
 
 const useInputDecoration = <DATA_TYPE extends Values>({
 	elDateRef,
