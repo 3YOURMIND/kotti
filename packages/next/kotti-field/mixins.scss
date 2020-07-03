@@ -9,6 +9,9 @@
 		padding: 0;
 		margin: 0.4rem 0;
 
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 		background: var(--ui-background);
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
@@ -214,7 +217,6 @@
 			flex-direction: column;
 			width: 180px;
 			margin: 0;
-			user-select: none;
 		}
 
 		&__content {
