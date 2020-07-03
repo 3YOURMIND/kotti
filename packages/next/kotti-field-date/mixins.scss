@@ -24,7 +24,6 @@
 			// shortcuts
 			&__sidebar {
 				display: flex;
-				flex: 1;
 				flex-wrap: wrap;
 				align-items: flex-end;
 				justify-content: flex-start;
@@ -62,6 +61,7 @@
 			}
 
 			&__body {
+				display: flex;
 				flex: 1;
 
 				> * {
@@ -73,6 +73,10 @@
 					display: flex;
 					text-align: center;
 					cursor: default;
+
+					&-label {
+						text-transform: uppercase;
+					}
 
 					button.el-picker-panel__icon-btn {
 						display: flex;
@@ -92,15 +96,12 @@
 							color: var(--interactive-01);
 						}
 					}
-
-					&-label {
-						text-transform: uppercase;
-					}
 				}
 
 				.el-picker-panel__content {
+					flex: 1;
+
 					table {
-						padding: 0.8em;
 						margin: 0;
 						text-align: center;
 						border: 0;
@@ -135,12 +136,15 @@
 
 						&.el-year-table,
 						&.el-month-table {
+							tbody {
+								height: 100%;
+							}
 							tr {
-								padding: 0.8rem 0;
+								margin: 0.4rem 0;
 							}
 
 							td {
-								margin: 0 0.8em;
+								margin: 0 0.4em;
 								border-radius: var(--field-border-radius);
 
 								a {
@@ -148,26 +152,38 @@
 									align-items: center;
 									justify-content: center;
 									text-transform: uppercase;
+								}
 
-									&:hover {
-										color: var(--interactive-01);
+								&:hover:not(.disabled) {
+									a {
+										font-weight: bold;
+										transition: font-weight ease var(--transition-short);
+									}
+
+									&:not(.current) a {
+										color: var(--link-03);
+										background-color: var(--interactive-02-hover);
+									}
+
+									&.current a {
+										background-color: var(--interactive-01-hover);
 									}
 								}
 
 								&.current {
 									background-color: var(--interactive-03);
 
-									&:hover {
-										background-color: var(--interactive-01);
-									}
-
 									a {
 										color: var(--text-04);
 									}
 								}
 
-								&.today {
+								&.today:not(.disabled) {
 									border: 1px solid var(--link-04);
+
+									&:not(.current) a {
+										color: var(--link-03);
+									}
 								}
 							}
 						}

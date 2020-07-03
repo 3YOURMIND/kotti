@@ -89,7 +89,6 @@ $year-font-size: 1rem;
 
 	&.el-date-range-picker {
 		.el-picker-panel__body {
-			display: flex;
 			flex-wrap: wrap;
 
 			.el-date-range-picker__time-header {
@@ -169,120 +168,133 @@ $year-font-size: 1rem;
 	}
 
 	// NON-RANGE PICKERS SPECIFIC STYLES [date(Time)Picker]
-
-	.el-date-picker__header {
-		// bordered headers are only in year-/month-tables
-		&--bordered {
-			justify-content: space-between;
-			margin: 0;
-			margin-bottom: 0.4rem;
-			border-bottom: 1px solid var(--ui-02);
-
-			button.el-icon-d-arrow-left {
-				-webkit-order: 1;
-				order: 1;
-			}
-
-			span.el-date-picker__header-label {
-				&:first-of-type {
-					// year label
-					-webkit-order: 2;
-					order: 2;
-					font-size: $year-font-size;
-				}
-
-				&:last-of-type {
-					// month label
-					display: flex;
-					flex: 1;
-					-webkit-order: 1;
-					order: 1;
-					font-size: $month-font-size;
-				}
-			}
-
-			button.el-icon-d-arrow-right {
-				-webkit-order: 3;
-				order: 3;
-			}
+	&:not(.el-date-range-picker) {
+		.el-picker-panel__body {
+			flex-direction: column;
 		}
 
-		&:not(.el-date-picker__header--bordered) {
-			position: relative;
-			cursor: pointer;
+		.el-date-picker__header {
+			// bordered headers are only in year-/month-tables
+			&--bordered {
+				justify-content: space-between;
+				margin: 0;
+				margin-bottom: 0.4rem;
+				border-bottom: 1px solid var(--ui-02);
 
-			button.el-icon-d-arrow-left {
-				-webkit-order: 3;
-				order: 3;
+				+ .el-picker-panel__content {
+					display: flex;
 
-				@supports (clip-path: inset(50% 10% 0% 10%)) {
-					clip-path: inset(50% 10% 0% 10%);
-				}
-			}
-
-			button.el-icon-arrow-left {
-				-webkit-order: 4;
-				order: 4;
-
-				@supports (clip-path: inset(50% 10% 0% 10%)) {
-					clip-path: inset(50% 10% 0% 10%);
-				}
-			}
-
-			button.el-icon-d-arrow-right {
-				-webkit-order: 6;
-				order: 6;
-
-				@supports (clip-path: inset(50% 10% 0% 10%)) {
-					clip-path: inset(50% 10% 0% 10%);
-				}
-			}
-
-			button.el-icon-arrow-right {
-				-webkit-order: 5;
-				order: 5;
-
-				@supports (clip-path: inset(50% 10% 0% 10%)) {
-					clip-path: inset(50% 10% 0% 10%);
-				}
-			}
-
-			span.el-date-picker__header-label {
-				&:hover {
-					color: var(--interactive-01);
-				}
-
-				// year label
-				&:first-of-type {
-					margin-top: 0.5 * $year-font-size;
-					margin-right: auto;
-					font-size: $year-font-size;
-
-					&:not(:hover) {
-						color: var(--text-02);
-					}
-
-					// clips a box shape with radius 0 from the top by 50%
-					// cropping the top half of the year part of the label,
-					// which is preceded by a line break (css hack). This means that
-					// hovering over the year will cover the click area of the month
-					// (i.e. the area in which user can click on month is very limited)
-					@supports (clip-path: inset(50% 0% 0% 0%)) {
-						clip-path: inset(50% 0% 0% 0%);
-					}
-
-					// add line-break before  year label
-					&::before {
-						white-space: pre;
-						content: '\a';
+					> table:not([style*='display:none']) {
+						align-self: stretch;
 					}
 				}
 
-				// month label
-				&:last-of-type {
-					position: absolute;
-					left: 0;
-					font-size: $month-font-size;
+				button.el-icon-d-arrow-left {
+					-webkit-order: 1;
+					order: 1;
+				}
+
+				span.el-date-picker__header-label {
+					&:first-of-type {
+						// year label
+						-webkit-order: 2;
+						order: 2;
+						font-size: $year-font-size;
+					}
+
+					&:last-of-type {
+						// month label
+						display: flex;
+						flex: 1;
+						-webkit-order: 1;
+						order: 1;
+						font-size: $month-font-size;
+					}
+				}
+
+				button.el-icon-d-arrow-right {
+					-webkit-order: 3;
+					order: 3;
+				}
+			}
+
+			&:not(.el-date-picker__header--bordered) {
+				position: relative;
+				cursor: pointer;
+
+				button.el-icon-d-arrow-left {
+					-webkit-order: 3;
+					order: 3;
+
+					@supports (clip-path: inset(50% 10% 0% 10%)) {
+						clip-path: inset(50% 10% 0% 10%);
+					}
+				}
+
+				button.el-icon-arrow-left {
+					-webkit-order: 4;
+					order: 4;
+
+					@supports (clip-path: inset(50% 10% 0% 10%)) {
+						clip-path: inset(50% 10% 0% 10%);
+					}
+				}
+
+				button.el-icon-d-arrow-right {
+					-webkit-order: 6;
+					order: 6;
+
+					@supports (clip-path: inset(50% 10% 0% 10%)) {
+						clip-path: inset(50% 10% 0% 10%);
+					}
+				}
+
+				button.el-icon-arrow-right {
+					-webkit-order: 5;
+					order: 5;
+
+					@supports (clip-path: inset(50% 10% 0% 10%)) {
+						clip-path: inset(50% 10% 0% 10%);
+					}
+				}
+
+				span.el-date-picker__header-label {
+					&:hover {
+						color: var(--interactive-01);
+					}
+
+					// year label
+					&:first-of-type {
+						margin-top: 0.5 * $year-font-size;
+						margin-right: auto;
+						font-size: $year-font-size;
+
+						&:not(:hover) {
+							color: var(--text-02);
+						}
+
+						// clips a box shape with radius 0 from the top by 50%
+						// cropping the top half of the year part of the label,
+						// which is preceded by a line break (css hack). This means that
+						// hovering over the year will cover the click area of the month
+						// (i.e. the area in which user can click on month is very limited)
+						@supports (clip-path: inset(50% 0% 0% 0%)) {
+							clip-path: inset(50% 0% 0% 0%);
+						}
+
+						// add line-break before  year label
+						&::before {
+							white-space: pre;
+							content: '\a';
+						}
+					}
+
+					// month label
+					&:last-of-type {
+						position: absolute;
+						left: 0;
+						font-size: $month-font-size;
+					}
 				}
 			}
 		}
