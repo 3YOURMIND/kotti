@@ -243,7 +243,9 @@
 										}
 									}
 
-									&.current {
+									&.current,
+									&.start-date,
+									&.end-date {
 										> div {
 											background-color: var(--interactive-03);
 
