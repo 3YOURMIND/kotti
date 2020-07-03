@@ -1,41 +1,5 @@
 @use "sass:map";
-
-@mixin validations {
-	$types: 'error', 'warning', 'success', 'no-validation';
-
-	@each $type in $types {
-		&.kt-field__wrapper--#{$type} {
-			@content ($type);
-		}
-	}
-}
-
-@mixin sizes {
-	$fontSizes: (
-		'small': var(--font-size-small),
-		'medium': var(--font-size-medium),
-		'large': var(--font-size-large),
-	);
-
-	$heights: (
-		'small': 1.6rem,
-		'medium': 2rem,
-		'large': 2.4rem,
-	);
-
-	@each $type in 'small', 'medium', 'large' {
-		&--is-#{$type} {
-			/* stylelint-disable */
-			font-size: map.get($fontSizes, $type);
-
-			.kt-field__input-container {
-				min-height: map.get($heights, $type);
-			}
-			/* stylelint-enable */
-		}
-	}
-}
-
+// mixins prefixed with el- are specific to element-ui components
 @mixin el-popper {
 	&.el-popper {
 		position: absolute;
@@ -240,6 +204,152 @@
 	}
 }
 
+@mixin el-time-spinner-popper {
+	.el-time-panel {
+		@include el-popper {
+			position: absolute;
+			left: 0;
+			z-index: 1000;
+			box-sizing: content-box;
+			flex-direction: column;
+			width: 180px;
+			margin: 0;
+			user-select: none;
+		}
+
+		&__content {
+			position: relative;
+			overflow: hidden;
+			font-size: 0;
+
+			&:after,
+			&:before {
+				position: absolute;
+				top: 50%;
+				right: 0;
+				left: 0;
+				z-index: -1;
+				box-sizing: border-box;
+				height: 32px;
+				padding-top: 6px;
+				margin-top: -15px;
+				text-align: left;
+				content: '';
+				border-top: 1px solid var(--ui-02);
+				border-bottom: 1px solid var(--ui-02);
+			}
+
+			&:after {
+				left: 50%;
+				margin-right: 12%;
+				margin-left: 12%;
+			}
+
+			&:before {
+				padding-left: 50%;
+				margin-right: 12%;
+				margin-left: 12%;
+			}
+
+			.el-time-spinner {
+				width: 100%;
+				white-space: nowrap;
+
+				&__wrapper {
+					position: relative;
+					display: inline-block;
+					width: 50%;
+					max-height: 190px;
+					overflow: auto;
+					vertical-align: top;
+				}
+
+				@include el-scrollbar {
+					.el-scrollbar__view.el-time-spinner__list {
+						margin: 0;
+						text-align: center;
+						list-style: none;
+
+						&:after,
+						&:before {
+							display: block;
+							width: 100%;
+							height: 80px;
+							content: '';
+						}
+
+						li.el-time-spinner__item {
+							height: 32px;
+							margin: 0;
+							font-size: 12px;
+							line-height: 32px;
+							color: var(--text-01);
+
+							&:hover:not(.disabled):not(.active) {
+								cursor: pointer;
+								// TODO: maybe make it same as calendar content colors
+								// background: #f5f7fa;
+							}
+
+							&.active:not(.disabled) {
+								font-weight: 700;
+							}
+
+							&.disabled {
+								color: var(--text-05);
+								cursor: not-allowed;
+							}
+						}
+					}
+				}
+
+				.el-scrollbar {
+					width: 50%;
+				}
+			}
+		}
+
+		&__footer {
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			// height: 36px;
+			padding: 4px;
+			border-top: 1px solid var(--ui-02);
+
+			button.el-time-panel__btn {
+				padding: 0 5px;
+				margin: 0 5px;
+				line-height: 28px;
+				color: var(--text-01);
+				text-transform: uppercase;
+				cursor: pointer;
+				background-color: transparent;
+				@include no-outline-or-border;
+
+				&:hover {
+					color: var(--hover-danger);
+				}
+
+				&:active {
+					color: var(--danger);
+				}
+
+				&.confirm {
+					font-weight: 800;
+					color: var(--interactive-01);
+
+					&:hover {
+						color: var(--interactive-01-hover);
+					}
+				}
+			}
+		}
+	}
+}
+
 @mixin input-colors(
 	$main-color: var(--text-01),
 	$disabled-color: var(--text-05),
@@ -267,14 +377,56 @@
 	}
 }
 
-@mixin no-outline-or-border {
+@mixin no-outline {
 	// overwrite native outline behavior
 	* {
-		border: 0;
 		outline: none;
 		&:focus,
 		&::-moz-focus-inner {
 			outline: none;
+		}
+		@content;
+	}
+}
+
+@mixin no-outline-or-border {
+	@include no-outline {
+		border: 0;
+	}
+}
+
+@mixin sizes {
+	$fontSizes: (
+		'small': var(--font-size-small),
+		'medium': var(--font-size-medium),
+		'large': var(--font-size-large),
+	);
+
+	$heights: (
+		'small': 1.6rem,
+		'medium': 2rem,
+		'large': 2.4rem,
+	);
+
+	@each $type in 'small', 'medium', 'large' {
+		&--is-#{$type} {
+			/* stylelint-disable */
+			font-size: map.get($fontSizes, $type);
+
+			.kt-field__input-container {
+				min-height: map.get($heights, $type);
+			}
+			/* stylelint-enable */
+		}
+	}
+}
+
+@mixin validations {
+	$types: 'error', 'warning', 'success', 'no-validation';
+
+	@each $type in $types {
+		&.kt-field__wrapper--#{$type} {
+			@content ($type);
 		}
 	}
 }
