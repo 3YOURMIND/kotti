@@ -126,6 +126,12 @@
 	}
 }
 
+.kt-field__wrapper--disabled {
+	.kt-tags__tag {
+		color: var(--text-05);
+	}
+}
+
 .el-select-dropdown,
 .el-select-dropdown.is-multiple {
 	&__empty {
