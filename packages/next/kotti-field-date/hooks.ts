@@ -1,5 +1,5 @@
 import { onMounted, Ref, watchEffect } from '@vue/composition-api'
-import { DatePicker as ElDate, Header } from 'element-ui'
+import { DatePicker as ElDate } from 'element-ui'
 
 import { KottiField } from '../kotti-field/types'
 import { Yoco } from '../types'
@@ -27,6 +27,7 @@ type HookParameters<DATA_TYPE extends Values> = {
 
 export type ElDateWithInternalAPI = ElDate & {
 	blur(): void
+	haveTrigger: boolean
 	picker: Vue & {
 		$el: HTMLElement
 		leftLabel: string
@@ -35,6 +36,7 @@ export type ElDateWithInternalAPI = ElDate & {
 	}
 	pickerVisible: boolean
 	referenceElm: Element
+	showClose: boolean
 }
 
 const getDateComponent = <DATA_TYPE extends Values>({
@@ -68,17 +70,49 @@ const useInputDecoration = <DATA_TYPE extends Values>({
 
 		const prefixIcon = dateComponent.$el.querySelector(
 			'.el-input__icon.el-icon-time, .el-input__icon.el-icon-date',
-		) as HTMLElement
+		)
 
-		prefixIcon.innerText = prefixIcon.classList.contains('el-icon-time')
-			? 'clock'
-			: 'calendar'
+		// DO NOT misuse `append` in an dependency-triggered hook;
+		// make sure the node you're adding is not already there (see other usage here) OR use `innerHTML`
+		prefixIcon?.append(
+			// TODO: add the dateTime yoco Icon when it's done
+			prefixIcon.classList.contains('el-icon-time') ? 'clock' : 'calendar',
+		)
+	})
 
-		const suffixIcon = dateComponent.$el.querySelector(
-			'.el-input__icon:not(.el-icon-time):not(.el-icon-date)',
-		) as HTMLElement
+	let suffixIcon: Element | null = null
 
-		suffixIcon.innerText = 'close'
+	watchEffect(() => {
+		const dateComponent = getDateComponent({ elDateRef }) // don't refactor out of hooks
+
+		// if `haveTrigger` is false, the suffixIcon is not rendered; `v-if` condition on the suffixIcon of el-ui dates
+		if (dateComponent.haveTrigger) {
+			// these are the default classes added to suffixIcon
+			// there are more classes added when the clearIcon is hidden/shown
+			// selecting with default selectors guarantees we get a suffixIcon even if it's hidden as long
+			// as it's rendered. The other hook will handle the show/hide effect, while this should handle the existence of suffixIcon
+			suffixIcon = dateComponent.$el.querySelector(
+				'.el-input__icon.el-range__close-icon, .el-input__icon:not(.el-icon-date):not(.el-icon-time)',
+			)
+		}
+	})
+
+	watchEffect(() => {
+		const dateComponent = getDateComponent({ elDateRef })
+		// true onMouseEnter (when value is not Empty & field is clearable), false onMouseLeave or when value is Empty
+		const showClear = dateComponent.showClose
+
+		if (suffixIcon) {
+			if (!suffixIcon.classList.contains('yoco'))
+				suffixIcon.classList.add('yoco')
+
+			if (showClear) {
+				if (!suffixIcon.hasChildNodes()) suffixIcon.append('close')
+			} else {
+				if (suffixIcon.hasChildNodes() && suffixIcon.lastChild)
+					suffixIcon.removeChild(suffixIcon.lastChild)
+			}
+		}
 	})
 }
 
