@@ -9,6 +9,11 @@
 				v-for="option in options"
 				:key="option.value"
 				class="kt-field-radio-group__wrapper__label"
+				:class="{
+					'kt-field-radio-group__wrapper__label--disabled': Boolean(
+						option.disabled,
+					),
+				}"
 			>
 				<input
 					v-bind="inputProps"
@@ -108,6 +113,21 @@ export default defineComponent({
 		&:not(:last-child) {
 			margin-bottom: 0.4rem;
 		}
+		cursor: pointer;
+
+		&--disabled {
+			color: var(--text-05);
+			cursor: not-allowed;
+
+			.kt-field-radio-group__wrapper__radio {
+				border-color: var(--ui-02);
+
+				&--checked {
+					background-color: var(--ui-02);
+					box-shadow: var(--shadow-base);
+				}
+			}
+		}
 	}
 
 	&__input {
@@ -162,7 +182,10 @@ export default defineComponent({
 		}
 	}
 
+	// entire radiogroup is disabled (field.isDisabled)
 	&--disabled {
+		cursor: not-allowed;
+
 		.kt-field-radio-group__wrapper {
 			&__label {
 				color: var(--text-05);
