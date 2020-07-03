@@ -63,7 +63,7 @@
 		>
 			<KtFieldDateTimeRange
 				formKey="dateTimeRange"
-				:isDisabled="formSettings.disabledFormFields"
+				:isDisabled="formSettings.disableFormFields"
 				label="KtFieldDateTimeRange"
 				:maximumDate="null"
 				minimumDate="2020-06-05"
@@ -72,14 +72,14 @@
 			/>
 			<KtFieldDateTime
 				formKey="dateTime"
-				:isDisabled="formSettings.disabledFormFields"
+				:isDisabled="formSettings.disableFormFields"
 				label="KtFieldDateTime"
 				:size="fieldSize"
 				:shortcuts="shortcuts('dateTime', DATE_TIME_ISO_FORMAT)"
 			/>
 			<KtFieldDateRange
 				formKey="dateRange"
-				:isDisabled="formSettings.disabledFormFields"
+				:isDisabled="formSettings.disableFormFields"
 				label="KtFieldDateRange"
 				:maximumDate="null"
 				minimumDate="2020-06-05"
@@ -89,7 +89,7 @@
 			<KtFieldDate
 				formKey="date"
 				label="KtFieldDate"
-				:isDisabled="formSettings.disabledFormFields"
+				:isDisabled="formSettings.disableFormFields"
 				:maximumDate="null"
 				minimumDate="2020-06-05"
 				placeholder="Select Date"
