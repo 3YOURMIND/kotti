@@ -1,5 +1,5 @@
 import { onMounted, Ref, watchEffect } from '@vue/composition-api'
-import { DatePicker as ElDate } from 'element-ui'
+import { DatePicker as ElDate, Header } from 'element-ui'
 
 import { KottiField } from '../kotti-field/types'
 import { Yoco } from '../types'
@@ -27,7 +27,12 @@ type HookParameters<DATA_TYPE extends Values> = {
 
 export type ElDateWithInternalAPI = ElDate & {
 	blur(): void
-	picker: Vue & { width: number; $el: HTMLElement }
+	picker: Vue & {
+		$el: HTMLElement
+		leftLabel: string
+		rightLabel: string
+		width: number
+	}
 	pickerVisible: boolean
 	referenceElm: Element
 }
@@ -50,27 +55,6 @@ const getDateComponent = <DATA_TYPE extends Values>({
  */
 const isPickerVisible = (dateComponent: ElDateWithInternalAPI) =>
 	dateComponent.pickerVisible
-
-/**
- * placement fix
- * same hack as the one used in the selects but for the datepickers, the popper component.data
- * are merged with the DateComponent’s own data, therefore allowing access to properties on popper component
- * directly through dateComponent
- */
-const usePickerPlacementFix = <DATA_TYPE extends Values>({
-	elDateRef,
-	inputContainerRef,
-}: Pick<HookParameters<DATA_TYPE>, 'elDateRef' | 'inputContainerRef'>) => {
-	onMounted(() => {
-		const dateComponent = getDateComponent({ elDateRef })
-
-		const ktFieldDateInputContainer = inputContainerRef.value
-		if (ktFieldDateInputContainer === null)
-			throw new Error('kt-field-date__input-container not available')
-
-		dateComponent.referenceElm = ktFieldDateInputContainer
-	})
-}
 
 const useInputDecoration = <DATA_TYPE extends Values>({
 	elDateRef,
@@ -135,53 +119,6 @@ const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 	})
 }
 
-/**
- * add yoco class to header icons to enable yoco icons
- */
-const usePickerNavigationIcons = <DATA_TYPE extends Values>({
-	elDateRef,
-}: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef })
-
-		if (isPickerVisible(dateComponent)) {
-			const getIcons = (...icons: Yoco.Icon[]) =>
-				icons.map((icon) => `<i class="yoco">${icon}</i>`).join('')
-
-			const pickerHeaderIcons: Array<HTMLElement> = Array.from(
-				dateComponent.picker.$el.querySelectorAll('.el-picker-panel__icon-btn'),
-			)
-
-			const headerYocoIcons = [
-				// TODO: replace triangle_* with double_chevron*
-				getIcons('triangle_left'),
-				getIcons('chevron_left'),
-				getIcons('triangle_right'),
-				getIcons('chevron_right'),
-			]
-
-			pickerHeaderIcons.forEach((icon, index) => {
-				icon.innerHTML = headerYocoIcons[index]
-			})
-		}
-	})
-}
-
-/**
- * If the field is loading, we want to unfocus in case the popper is open
- * so that when isLoading changes, the popper isn't misplaced
- */
-const usePickerMisplacementFix = <DATA_TYPE extends Values>({
-	elDateRef,
-	field,
-}: Pick<HookParameters<DATA_TYPE>, 'elDateRef' | 'field'>) => {
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef })
-
-		if (field.isLoading || field.isDisabled) return dateComponent.blur()
-	})
-}
-
 const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
@@ -215,6 +152,104 @@ const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 	})
 }
 
+/**
+ * If the field is loading, we want to unfocus in case the popper is open
+ * so that when isLoading changes, the popper isn't misplaced
+ */
+const usePickerMisplacementFix = <DATA_TYPE extends Values>({
+	elDateRef,
+	field,
+}: Pick<HookParameters<DATA_TYPE>, 'elDateRef' | 'field'>) => {
+	watchEffect(() => {
+		const dateComponent = getDateComponent({ elDateRef })
+
+		if (field.isLoading || field.isDisabled) return dateComponent.blur()
+	})
+}
+
+/**
+ * add yoco class to header icons to enable yoco icons
+ */
+const usePickerNavigationIcons = <DATA_TYPE extends Values>({
+	elDateRef,
+}: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
+	watchEffect(() => {
+		const dateComponent = getDateComponent({ elDateRef })
+
+		if (isPickerVisible(dateComponent)) {
+			const insertYocoIcon = (icon: Yoco.Icon) => `<i class="yoco">${icon}</i>`
+
+			const pickerHeaderIcons: Array<HTMLElement> = Array.from(
+				dateComponent.picker.$el.querySelectorAll('.el-picker-panel__icon-btn'),
+			)
+
+			const headerYocoIcons = [
+				// TODO: replace triangle_* with double_chevron*
+				insertYocoIcon('triangle_left'),
+				insertYocoIcon('chevron_left'),
+				insertYocoIcon('triangle_right'),
+				insertYocoIcon('chevron_right'),
+			]
+
+			pickerHeaderIcons.forEach((icon, index) => {
+				icon.innerHTML = headerYocoIcons[index]
+			})
+		}
+	})
+}
+
+/**
+ * placement fix
+ * same hack as the one used in the selects but for the datepickers, the popper component.data
+ * are merged with the DateComponent’s own data, therefore allowing access to properties on popper component
+ * directly through dateComponent
+ */
+const usePickerPlacementFix = <DATA_TYPE extends Values>({
+	elDateRef,
+	inputContainerRef,
+}: Pick<HookParameters<DATA_TYPE>, 'elDateRef' | 'inputContainerRef'>) => {
+	onMounted(() => {
+		const dateComponent = getDateComponent({ elDateRef })
+
+		const ktFieldDateInputContainer = inputContainerRef.value
+		if (ktFieldDateInputContainer === null)
+			throw new Error('kt-field-date__input-container not available')
+
+		dateComponent.referenceElm = ktFieldDateInputContainer
+	})
+}
+
+const useRangePickerHeaderFix = <DATA_TYPE extends Values>({
+	elDateRef,
+}: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
+	watchEffect(() => {
+		const dateComponent = getDateComponent({ elDateRef })
+		if (isPickerVisible(dateComponent)) {
+			// change when any of the navigation buttons in the range-pickers are clicked
+			const dates = [
+				dateComponent.picker.leftLabel?.split(/\s+/) ?? ['', ''],
+				dateComponent.picker.rightLabel?.split(/\s+/) ?? ['', ''],
+			]
+
+			const headers = dateComponent.picker.$el.querySelectorAll(
+				'.el-date-range-picker__header',
+			)
+
+			headers.forEach((header, index) => {
+				const fullDate = header.querySelector('div')
+				if (fullDate) {
+					fullDate.innerHTML = dates[index][0] // leftMonth or rightMonth
+					if (header.lastChild?.nodeType === Node.TEXT_NODE) {
+						// we add a text node each call with the new year value, thus need to remove the old first
+						header.removeChild(header.lastChild)
+					}
+					header.append(dates[index][1])
+				}
+			})
+		}
+	})
+}
+
 export const usePicker = <DATA_TYPE extends Values>({
 	elDateRef,
 	field,
@@ -222,11 +257,8 @@ export const usePicker = <DATA_TYPE extends Values>({
 	popperHeight,
 	popperWidth,
 }: HookParameters<DATA_TYPE>) => {
-	useInputSizeFix({ elDateRef })
 	useInputDecoration({ elDateRef })
-	usePickerMisplacementFix({ elDateRef, field })
-	usePickerNavigationIcons({ elDateRef })
-	usePickerPlacementFix({ elDateRef, inputContainerRef })
+	useInputSizeFix({ elDateRef })
 	usePickerDimensionsFix({
 		elDateRef,
 		inputContainerRef,
@@ -234,4 +266,8 @@ export const usePicker = <DATA_TYPE extends Values>({
 		popperWidth,
 	})
 	usePickerInnerInputsFix({ elDateRef })
+	usePickerMisplacementFix({ elDateRef, field })
+	usePickerNavigationIcons({ elDateRef })
+	usePickerPlacementFix({ elDateRef, inputContainerRef })
+	useRangePickerHeaderFix({ elDateRef })
 }
