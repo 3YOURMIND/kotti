@@ -10,9 +10,8 @@
 				:key="option.value"
 				class="kt-field-radio-group__wrapper__label"
 				:class="{
-					'kt-field-radio-group__wrapper__label--disabled': Boolean(
-						option.disabled,
-					),
+					'kt-field-radio-group__wrapper__label--disabled':
+						field.isDisabled || Boolean(option.disabled),
 				}"
 			>
 				<input
@@ -177,26 +176,6 @@ export default defineComponent({
 						}
 					}
 					/* stylelint-enable */
-				}
-			}
-		}
-	}
-
-	// entire radiogroup is disabled (field.isDisabled)
-	&--disabled {
-		cursor: not-allowed;
-
-		.kt-field-radio-group__wrapper {
-			&__label {
-				color: var(--text-05);
-			}
-
-			&__radio {
-				border-color: var(--ui-02);
-
-				&--checked {
-					background-color: var(--ui-02);
-					box-shadow: var(--shadow-base);
 				}
 			}
 		}
