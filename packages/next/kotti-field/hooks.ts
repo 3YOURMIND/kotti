@@ -20,24 +20,6 @@ import { KOTTI_FIELD_PROPS } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
-const useClear = <DATA_TYPE>({
-	props,
-	supports,
-	isEmpty,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props' | 'supports'> &
-	Pick<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>, 'isEmpty'>) => {
-	return {
-		hideClear: computed(
-			() =>
-				!(
-					(supports.clear ? props.hideClear : true) ||
-					isEmpty ||
-					props.isDisabled
-				),
-		),
-	}
-}
-
 const useDecoration = <DATA_TYPE>({
 	props,
 }: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'>) => {
@@ -51,9 +33,11 @@ const useDecoration = <DATA_TYPE>({
 
 const useInputProps = <DATA_TYPE>({
 	context,
+	isDisabled,
 	props,
 }: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> & {
 	context: KottiForm.Context | null
+	isDisabled: Ref<boolean>
 }) => {
 	const formPath = computed(() => {
 		if (context === null) return []
@@ -65,8 +49,6 @@ const useInputProps = <DATA_TYPE>({
 			? [...context.formPath.value]
 			: [...context.formPath.value, props.formKey]
 	})
-
-	const isDisabled = computed(() => props.isDisabled)
 
 	return {
 		inputProps: computed(() => ({
@@ -83,7 +65,6 @@ const useInputProps = <DATA_TYPE>({
 			disabled: isDisabled.value,
 			tabindex: props.tabIndex,
 		})),
-		isDisabled,
 	}
 }
 
@@ -99,6 +80,7 @@ const useValue = <DATA_TYPE>({
 	context,
 	emit,
 	isCorrectDataType,
+	isDisabled,
 	isEmpty,
 	props,
 }: Pick<
@@ -106,6 +88,7 @@ const useValue = <DATA_TYPE>({
 	'emit' | 'isCorrectDataType' | 'isEmpty' | 'props'
 > & {
 	context: KottiForm.Context | null
+	isDisabled: Ref<boolean>
 }) => {
 	watch(
 		() => props.formKey,
@@ -151,7 +134,7 @@ const useValue = <DATA_TYPE>({
 			if (!isCorrectDataType(newValue))
 				throw new KtFieldErrors.InvalidDataType(props, newValue)
 
-			if (props.isDisabled)
+			if (isDisabled.value)
 				throw new KtFieldErrors.DisabledSetValueCalled(props)
 
 			if (
@@ -277,7 +260,10 @@ const useInheritableProperties = <DATA_TYPE>({
 	) =>
 		computed((): KottiField.InhertiableProps[KEY] => {
 			if (props[key]) return props[key]
-			if (context !== null) return context.fieldInheritableProps.value[key]
+
+			if (context !== null && context.fieldInheritableProps.value[key])
+				return context.fieldInheritableProps.value[key]
+
 			return defaultValue
 		})
 
@@ -364,15 +350,25 @@ export const useField = <DATA_TYPE>({
 	useSupports({ props, supports })
 
 	const sharedProperties = useInheritableProperties({ context, props })
-	const values = useValue({ context, emit, isEmpty, isCorrectDataType, props })
+	const values = useValue({
+		context,
+		emit,
+		isEmpty,
+		isDisabled: sharedProperties.isDisabled,
+		isCorrectDataType,
+		props,
+	})
 
 	// export
 
 	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
 		...sharedProperties,
-		...useClear({ isEmpty: values.isEmpty, props, supports }),
 		...useDecoration({ props }),
-		...useInputProps({ context, props }),
+		...useInputProps({
+			context,
+			isDisabled: sharedProperties.isDisabled,
+			props,
+		}),
 		...useTexts(props),
 		...useValidation({
 			context,
@@ -382,6 +378,12 @@ export const useField = <DATA_TYPE>({
 			props,
 		}),
 		...values,
+		hideClear: computed(
+			() =>
+				values.isEmpty.value ||
+				sharedProperties.isDisabled.value ||
+				(supports.clear ? sharedProperties.hideClear.value : true),
+		),
 		isOptional: computed(() => props.isOptional),
 	})
 
