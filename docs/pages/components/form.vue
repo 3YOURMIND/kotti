@@ -332,7 +332,7 @@ import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiForm } from '../../../packages/next/kotti-form/types'
 
 const DATE_ISO_FORMAT = 'YYYY-MM-DD'
-const DATE_TIME_ISO_FORMAT = 'YYYY-MM-DDTHH:mm:ss'
+const DATE_TIME_ISO_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 export default defineComponent({
 	name: 'KtFormDoc',
@@ -412,23 +412,18 @@ export default defineComponent({
 							: dateValue
 					const isRange = Array.isArray(dateValue)
 
-					const today = (format: string) =>
-						dayjs()
-							.format(format)
-							.replace('T', ' ')
+					const today = (format: string) => dayjs().format(format)
 
 					const jumpOneWeek = (fromDate: string | null, format: string) =>
 						// null is interpreted as epoch date by dayjs
 						dayjs(fromDate ?? undefined)
 							.add(1, 'week')
 							.format(format)
-							.replace('T', ' ')
 
 					const yesterday = (format: string) =>
 						dayjs()
 							.subtract(1, 'day')
 							.format(format)
-							.replace('T', ' ')
 
 					return [
 						{

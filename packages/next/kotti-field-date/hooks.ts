@@ -79,7 +79,7 @@ const useInputDecoration = <DATA_TYPE extends Values>({
 			'.el-input__icon.el-icon-time, .el-input__icon.el-icon-date',
 		)
 
-		// DO NOT misuse `append` in an dependency-triggered hook;
+		// DO NOT misuse `append` in a hook that will retriger multiple times in the same lifecycle;
 		// make sure the node you're adding is not already there (see other usage here) OR use `innerHTML`
 		prefixIcon?.append(
 			// TODO: add the dateTime yoco Icon when it's done
@@ -106,7 +106,11 @@ const useInputDecoration = <DATA_TYPE extends Values>({
 
 	watchEffect(() => {
 		const dateComponent = getDateComponent({ elDateRef })
-		// true onMouseEnter (when value is not Empty & field is clearable), false onMouseLeave or when value is Empty
+
+		/**
+		 * true onMouseEnter (when value is not Empty & field is clearable)
+		 * false onMouseLeave or when value is Empty or when the field is not clearable
+		 */
 		const showClear = dateComponent.showClose
 
 		if (suffixIcon) {
