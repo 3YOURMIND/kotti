@@ -12,7 +12,7 @@
 
 html {
 	box-sizing: border-box;
-	font-size: $html-font-size;
+	font-size: var(--font-size-root);
 	line-height: $html-line-height;
 	-webkit-tap-highlight-color: transparent;
 }

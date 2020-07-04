@@ -1,7 +1,7 @@
 /*
-// This file is auto generated
-// PLEASE DO NOT EDIT
-// Run `yarn tokens` to egenrate again
+	This file is auto generated
+	PLEASE DO NOT EDIT
+	Run `yarn tokens` to generate again
 */
 
 :root {
@@ -47,7 +47,6 @@
 	--orange-50: #ff9333;
 	--orange-60: #ff7800;
 	--orange-70: #ba6820;
-
 	--ui-background: var(--white);
 	--ui-01: var(--gray-10);
 	--ui-02: var(--gray-20);
@@ -55,7 +54,7 @@
 	--ui-04: var(--gray-60);
 	--ui-05: var(--primary-10);
 	--text-01: var(--gray-80);
-	--text-02: var(--gray-50);
+	--text-02: var(--gray-60);
 	--text-03: var(--gray-40);
 	--text-04: var(--white);
 	--text-05: var(--gray-30);
@@ -65,6 +64,7 @@
 	--interactive-02-hover: var(--primary-10);
 	--interactive-03: var(--primary-50);
 	--interactive-04: var(--primary-20);
+	--interactive-05: var(--primary-40);
 	--danger: var(--red-50);
 	--hover-danger: var(--red-70);
 	--link-01: var(--primary-60);
@@ -76,11 +76,15 @@
 	--icon-02: var(--gray-50);
 	--icon-03: var(--white);
 	--support-error: var(--red-50);
+	--support-error-dark: var(--red-70);
 	--support-error-light: var(--red-20);
 	--support-warning: var(--orange-50);
+	--support-warning-dark: var(--orange-70);
 	--support-warning-light: var(--orange-20);
 	--support-success: var(--green-50);
+	--support-success-dark: var(--green-70);
 	--support-success-light: var(--green-20);
 	--support-info: var(--primary-50);
+	--support-info-dark: var(--primary-70);
 	--support-info-light: var(--primary-20);
 }

@@ -1,0 +1,5 @@
+:root {
+	--transition-short: 120ms;
+	--transition-medium: 220ms;
+	--transition-long: 320ms;
+}

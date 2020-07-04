@@ -1,11 +1,11 @@
 <template lang="md">
-
 # Dropdowns
 
-<div class="danger-block">
-	This component is deprecated and will be removed in kotti 2.0.<br/>
-	Please use <a href="/components/popovers">KtPopover</a> instead.
-</div>
+<DeprecationWarning
+	componentName="KtPopover"
+	link="/components/popovers"
+	version="2.0"
+/>
 
 ## Basic Usage
 
@@ -36,9 +36,9 @@ In `KtDropdownMenus` slot, you can write your own stylied element. However, we s
 </KtDropdown>
 ```
 
-## Dropdown button 
+## Dropdown button
 
-A dropdown button is a current pattern nowadays. 
+A dropdown button is a current pattern nowadays.
 It allows to have a subaction without changing page or opening a modal.
 
 Note the `dropdownIcon` prop. It will default to `chevron_down`.
@@ -65,8 +65,8 @@ You can also use any attribute you would pass to `KtPopover` or `KtButton`. They
 	</KtDropdownButton>
 </div>
 
-``` html
-	<KtDropdownButton type="primary" v-t="'Dropdown button'" >
+```html
+	<KtDropdownButton type="primary" v-t="'Dropdown button'">
 		<div slot="KtDropdownMenus">
 			<KtDropdownMenu>Request item</KtDropdownMenu>
 			<KtDropdownMenu>Download Item</KtDropdownMenu>
@@ -167,7 +167,10 @@ The `placement` prop accepts same values as `KtPopover`. We suggest using the de
 </template>
 
 <script>
+import DeprecationWarning from '../../components/DeprecationWarning.vue'
+
 export default {
 	name: 'KtDropdownsDocs',
+	components: { DeprecationWarning },
 }
 </script>

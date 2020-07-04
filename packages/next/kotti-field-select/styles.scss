@@ -1,0 +1,196 @@
+@import '../kotti-field/mixins.scss';
+
+.kt-field-select {
+	.el-select {
+		position: relative;
+		display: flex;
+
+		.el-input {
+			display: flex;
+
+			&__inner {
+				padding: 0;
+				margin: 0;
+				border: 0;
+			}
+		}
+	}
+
+	&--single {
+		.el-input {
+			flex: 1;
+		}
+
+		.el-input__inner {
+			display: flex;
+			align-self: center;
+			width: 100%;
+			line-height: 1.6;
+		}
+	}
+
+	&--multiple {
+		$vertical-tag-gap: 2px;
+		$horizontal-tag-gap: 4px;
+		$tag-padding: 0.4em;
+		$tag-border: 1px;
+
+		.el-select {
+			flex-direction: row-reverse;
+			flex-wrap: wrap-reverse;
+
+			&__tags {
+				/* has the input we care about in multiple */
+				display: inline-flex;
+				flex: 1;
+				line-height: normal;
+				white-space: normal;
+
+				> span {
+					/* remove el-tag container */
+					display: none;
+				}
+
+				// only in case of multiple, we have this input
+				.el-select__input {
+					padding: 0;
+					margin: 0;
+					margin-left: calc(#{$tag-padding} + #{$tag-border});
+					line-height: 1.6;
+					border: 0;
+					appearance: none;
+				}
+			}
+
+			.el-input {
+				&__inner {
+					// display: none would break focusing
+					width: 0 !important;
+					height: 0 !important;
+				}
+
+				&__prefix {
+					width: 100%;
+				}
+			}
+		}
+
+		.kt-tags {
+			display: flex;
+			flex-wrap: wrap;
+
+			// HACK: use negative margins to align multi-line grids of tags
+			margin: #{-$vertical-tag-gap + 4px} #{-$horizontal-tag-gap};
+
+			&__tag {
+				display: flex;
+				align-items: center;
+				padding: $tag-padding;
+				margin: $vertical-tag-gap $horizontal-tag-gap;
+
+				font-size: 0.875em;
+
+				color: var(--text-02);
+				text-transform: capitalize;
+				white-space: nowrap;
+				background-color: var(--interactive-02);
+				border: $tag-border solid var(--ui-02);
+				border-radius: var(--field-border-radius);
+
+				&-icon {
+					$size: 1.25em;
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: $size;
+					height: $size;
+					margin-left: 4px;
+					cursor: pointer;
+
+					background-color: var(--ui-02);
+					border-radius: 50%;
+
+					// clipping also affects the clickable area
+					@supports (clip-path: circle(#{$size / 2} at center)) {
+						border-radius: 0;
+						clip-path: circle(#{$size / 2} at center);
+					}
+
+					&:hover {
+						background-color: var(--interactive-02-hover);
+					}
+				}
+			}
+		}
+	}
+}
+
+.kt-field__wrapper--disabled {
+	.kt-tags__tag {
+		color: var(--text-05);
+	}
+}
+
+.el-select-dropdown,
+.el-select-dropdown.is-multiple {
+	&__empty {
+		width: 100%;
+		padding: 10px 0;
+		margin: 0;
+		color: var(--text-05);
+		text-align: center;
+	}
+
+	@include el-popper {
+		@include el-scrollbar {
+			.el-select-dropdown__list {
+				box-sizing: border-box;
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				padding: 6px 0;
+				margin: 0;
+				list-style: none;
+
+				.el-select-dropdown__item {
+					position: relative;
+					box-sizing: border-box;
+					flex: 1;
+					padding: 0.8rem;
+					margin: 0;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					cursor: pointer;
+
+					&.is-disabled {
+						color: var(--text-05);
+						cursor: not-allowed;
+					}
+
+					&.selected {
+						font-weight: 700;
+						color: var(--interactive-03);
+
+						&.hover,
+						&:hover {
+							color: var(--interactive-01-hover);
+						}
+					}
+
+					&:hover,
+					&.hover {
+						&:not(.is-disabled) {
+							background-color: var(--ui-01);
+						}
+					}
+				}
+			}
+		}
+
+		.el-scrollbar {
+			max-height: 40vh;
+		}
+	}
+}

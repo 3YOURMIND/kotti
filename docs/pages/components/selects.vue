@@ -2,6 +2,12 @@
 
 # Select
 
+<DeprecationWarning
+	componentName="KtFieldSingleSelect/KtFieldMultipleSelect"
+	link="/components/form"
+	version="3.0"
+/>
+
 ## Default
 
 <div class="element-example">
@@ -37,8 +43,7 @@
 
 ## Disable
 
-```js
-
+```html
 <div class="element-example">
 	<KtSelect label="Words"
 		placeholder="Select Word"
@@ -49,7 +54,6 @@
 	<h5 v-text="`English: ${value2}`" class="mt-16px"/>
 	<button @click="value2=null">Reset</button>
 </div>
-
 ```
 
 <div class="element-example">
@@ -129,7 +133,7 @@
 	<h5 v-text="`English: ${value5}`" class="mt-16px"/>
 </div>
 
-if you allowEmpty, you can't make the field required. allowEmpty will make field valid in that case
+if you `allowEmpty`, you can't make the field `required`. `allowEmpty` will make field valid in that case
 
 ```html
 	<KtSelect label="Words"
@@ -137,7 +141,8 @@ if you allowEmpty, you can't make the field required. allowEmpty will make field
 		v-model="value5"
 		required
 		icon="user"
-		:options="words"/>
+		:options="words"
+	/>
 ```
 
 ## Async Search
@@ -184,14 +189,17 @@ async asyncFind(query) {
 	}).catch(()=>{
 		this.loadingOnRequest = false
 	})
-},
+}
 ```
 
 </template>
 
 <script>
+import DeprecationWarning from '../../components/DeprecationWarning.vue'
+
 export default {
 	name: 'KtSelectDoc',
+	components: { DeprecationWarning },
 	data() {
 		return {
 			value1: null,

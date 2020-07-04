@@ -3,11 +3,6 @@ fieldset {
 	margin-bottom: $layout-spacing-lg;
 }
 
-legend {
-	margin-bottom: $layout-spacing-lg;
-	font-size: $font-size-lg;
-	font-weight: 500;
-}
 .form-group {
 	position: relative;
 	&:not(:last-child) {

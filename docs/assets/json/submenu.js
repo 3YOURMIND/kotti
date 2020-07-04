@@ -89,6 +89,14 @@ const submenu = [
 				to: 'dropdowns',
 			},
 			{
+				label: 'Form',
+				to: 'form',
+			},
+			{
+				label: 'Form Fields',
+				to: 'form-fields',
+			},
+			{
 				label: 'Headings',
 				to: 'headings',
 			},

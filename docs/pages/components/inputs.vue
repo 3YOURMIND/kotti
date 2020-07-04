@@ -1,6 +1,25 @@
 <template lang="md">
 	# Inputs
 
+	<DeprecationWarning
+		componentName="KtFieldText"
+		link="/components/form"
+		version="3.0"
+	/>
+
+	<DeprecationWarning
+		componentName="KtFieldNumber"
+		link="/components/form"
+		version="3.0"
+	/>
+
+	<DeprecationWarning
+		componentName="KtFieldEmail/KtFieldPassword"
+		link="/components/form"
+		version="3.0"
+	/>
+
+
 	## Label
 
 	<div class="element-example">
@@ -14,7 +33,7 @@
 	</div>
 
 	`label` props accept `String` and show on the top of `input`.
-	
+
 	`labelFor` define the `for` attributes in `label`.
 
 	```html
@@ -219,12 +238,14 @@
 	<KtInput label="Company" isCompact/>
 	```
 
-
 </template>
 
 <script>
+import DeprecationWarning from '../../components/DeprecationWarning.vue'
+
 export default {
 	name: 'KtInputDoc',
+	components: { DeprecationWarning },
 	data() {
 		return {
 			v1: 'Jony One O',

@@ -3,31 +3,35 @@
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
+		"declaration": true,
+		"declarationDir": "dist",
 		"esModuleInterop": true,
 		"importHelpers": true,
-		"jsx": "preserve",
+		"jsx": "react",
+		"jsxFactory": "h",
 		"lib": [
-			"esnext",
-			"dom",
 			"dom.iterable",
-			"scripthost",
-			"esnext",
+			"dom",
 			"esnext.asynciterable",
-			"dom"
+			"esnext",
+			"scripthost"
 		],
 		"module": "esnext",
 		"moduleResolution": "node",
-		"noEmit": true,
+		"outDir": "dist",
 		"paths": {
 			"@/*": ["./*"],
 			"~/*": ["./*"]
 		},
+		"resolveJsonModule": true,
+		// FIXME: remove skipLibCheck when [https://github.com/ElemeFE/element/issues/17329] is resolved
+		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
 		"target": "esnext",
-		"types": ["webpack-env", "@types/node", "@nuxt/types", "jest"]
+		"types": ["webpack-env", "node", "@nuxt/types", "jest"]
 	},
-	"exclude": ["node_modules"],
+	"exclude": ["node_modules", "dist"],
 	"include": [
 		"packages/**/*.ts",
 		"packages/**/*.tsx",

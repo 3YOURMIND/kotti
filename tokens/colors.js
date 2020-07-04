@@ -90,7 +90,7 @@ export const tokens = [
 	{
 		name: 'text-02',
 		description: 'Secondary text\nForm labels',
-		reference: 'gray-50',
+		reference: 'gray-60',
 	},
 	{
 		name: 'text-03',
@@ -136,6 +136,11 @@ export const tokens = [
 		name: 'interactive-04',
 		description: 'Selected elements light\n Alternative border',
 		reference: 'primary-20',
+	},
+	{
+		name: 'interactive-05',
+		description: 'Active element border',
+		reference: 'primary-40',
 	},
 	{
 		name: 'danger',
@@ -193,6 +198,11 @@ export const tokens = [
 		reference: 'red-50',
 	},
 	{
+		name: 'support-error-dark',
+		description: 'Error dark',
+		reference: 'red-70',
+	},
+	{
 		name: 'support-error-light',
 		description: 'Error light',
 		reference: 'red-20',
@@ -201,6 +211,11 @@ export const tokens = [
 		name: 'support-warning',
 		description: 'Warning',
 		reference: 'orange-50',
+	},
+	{
+		name: 'support-warning-dark',
+		description: 'Warning dark',
+		reference: 'orange-70',
 	},
 	{
 		name: 'support-warning-light',
@@ -213,6 +228,11 @@ export const tokens = [
 		reference: 'green-50',
 	},
 	{
+		name: 'support-success-dark',
+		description: 'Success dark',
+		reference: 'green-70',
+	},
+	{
 		name: 'support-success-light',
 		description: 'Success light',
 		reference: 'green-20',
@@ -221,6 +241,11 @@ export const tokens = [
 		name: 'support-info',
 		description: 'Information',
 		reference: 'primary-50',
+	},
+	{
+		name: 'support-info-dark',
+		description: 'Information dark',
+		reference: 'primary-70',
 	},
 	{
 		name: 'support-info-light',

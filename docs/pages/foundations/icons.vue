@@ -1,8 +1,6 @@
 <template lang="md">
 # Icons
 
-<icon-font />
-
 <h2>
 	Preview
 	<span class="tooltip c-hand" data-tooltip="Click icon to copy">
@@ -15,19 +13,22 @@ Kotti uses custom icons — [Yoco](https://www.github.com/3yourmind/yoco)
 ![npm-version](https://badge.fury.io/js/%403yourmind%2Fyoco.svg)
 
 <div class="columns">
-	<yoco-preview
-		:icon="liga"
-		:key="liga"
-		@click="copyLiga(liga)"
-		class="column col-2 col-md-6"
+	<YocoPreview
 		v-for="liga in iconLigas"
+		:key="liga"
+		:icon="liga"
+		class="column col-2 col-md-6"
+		@click="copyLiga(liga)"
 	/>
 </div>
+
+<icon-font />
 
 </template>
 
 <script>
-import YocoLiga from '~/assets/json/yocoString.json'
+import data from '../../../packages/next/data.json'
+
 import IconFont from '~/components/IconFont.vue'
 import YocoPreview from '~/components/YocoPreview.vue'
 
@@ -40,7 +41,7 @@ export default {
 	data() {
 		return {
 			copySuccess: false,
-			iconLigas: YocoLiga.data,
+			iconLigas: data.yocoIcons,
 		}
 	},
 }

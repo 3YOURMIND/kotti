@@ -12,13 +12,14 @@ module.exports = {
 		ecmaVersion: 2020,
 		sourceType: 'module',
 	},
-	plugins: ['sonarjs'],
+	plugins: ['sonarjs', 'import'],
 	extends: [
 		'eslint:recommended',
 		'plugin:vue/recommended',
 		'plugin:sonarjs/recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:prettier/recommended',
+		'@vue/typescript',
 		'prettier/vue',
 	],
 	rules: {
@@ -36,7 +37,20 @@ module.exports = {
 		'sonarjs/no-duplicate-string': 'warn',
 		'@typescript-eslint/member-delimiter-style': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/no-namespace': 'off',
 		'prettier/prettier': 'warn',
+		'import/order': [
+			'warn',
+			{
+				alphabetize: {
+					order: 'asc',
+					caseInsensitive: true,
+				},
+				'newlines-between': 'always',
+			},
+		],
+		'vue/attribute-hyphenation': ['error', 'never'],
+		'vue/attributes-order': ['error', { alphabetical: true }],
 	},
 	overrides: [
 		{
@@ -44,11 +58,30 @@ module.exports = {
 			rules: {},
 		},
 		{
-			files: ['**/*.spec.ts'],
+			files: [
+				'packages/**/tests.ts',
+				'packages/**/*.test.ts',
+				'packages/next/test-utils/**/*.ts',
+			],
 			env: {
 				jest: true,
 			},
-			plugins: ['plugin:jest/recommended'],
+			plugins: ['jest'],
+			extends: ['plugin:jest/recommended'],
+			rules: {
+				'sonarjs/no-duplicate-string': 'off',
+				'no-console': 'off',
+				'import/order': [
+					'warn',
+					{
+						alphabetize: {
+							order: 'asc',
+							caseInsensitive: true,
+						},
+						'newlines-between': 'always',
+					},
+				],
+			},
 		},
 	],
 }

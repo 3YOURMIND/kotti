@@ -1,0 +1,430 @@
+@use "sass:map";
+// mixins prefixed with el- are specific to element-ui components
+@mixin el-popper {
+	&.el-popper {
+		position: absolute;
+		box-sizing: border-box;
+		display: flex;
+		padding: 0;
+		margin: 0.4rem 0;
+		user-select: none;
+		background: var(--ui-background);
+		border: 1px solid var(--ui-02);
+		border-radius: var(--field-border-radius);
+		box-shadow: var(--shadow-base);
+
+		&[x-placement^='top'] {
+			margin-bottom: 0.4rem;
+
+			.popper__arrow {
+				bottom: -6px;
+				left: 50%;
+				margin-right: 3px;
+				border-top-color: var(--ui-02);
+				border-bottom-width: 0;
+
+				&::after {
+					bottom: 1px;
+					margin-left: -6px;
+					border-top-color: var(--ui-background);
+					border-bottom-width: 0;
+				}
+			}
+		}
+
+		&[x-placement^='right'] {
+			margin-left: 0.4rem;
+
+			.popper__arrow {
+				top: 50%;
+				left: -6px;
+				margin-bottom: 3px;
+				border-right-color: var(--ui-02);
+				border-left-width: 0;
+
+				&::after {
+					bottom: -6px;
+					left: 1px;
+					border-right-color: var(--ui-background);
+					border-left-width: 0;
+				}
+			}
+		}
+
+		&[x-placement^='bottom'] {
+			margin-top: 0.4rem;
+
+			.popper__arrow {
+				top: -6px;
+				left: 50%;
+				margin-right: 3px;
+				border-top-width: 0;
+				border-bottom-color: var(--ui-02);
+
+				&::after {
+					top: 1px;
+					margin-left: -6px;
+					border-top-width: 0;
+					border-bottom-color: var(--ui-background);
+				}
+			}
+		}
+
+		&[x-placement^='left'] {
+			margin-right: 0.4rem;
+
+			.popper__arrow {
+				top: 50%;
+				right: -6px;
+				margin-bottom: 3px;
+				border-right-width: 0;
+				border-left-color: var(--ui-02);
+
+				&::after {
+					right: 1px;
+					bottom: -6px;
+					margin-left: -6px;
+					border-right-width: 0;
+					border-left-color: var(--ui-background);
+				}
+			}
+		}
+
+		.popper__arrow {
+			filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03));
+			border-width: 6px;
+
+			&,
+			&::after {
+				position: absolute;
+				display: block;
+				width: 0;
+				height: 0;
+				border-color: transparent;
+				border-style: solid;
+			}
+
+			&::after {
+				content: ' ';
+				border-width: 6px;
+			}
+		}
+
+		// allows for overwrites
+		@content;
+	}
+}
+
+@mixin el-scrollbar {
+	.el-scrollbar {
+		/*
+			has 3 children:
+				&__wrap,
+				&__bar is-horizontal,
+				&__bar is-vertical
+		*/
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+
+		&.is-empty {
+			display: none;
+		}
+
+		&:active,
+		&:focus,
+		&:hover {
+			.el-scrollbar__bar {
+				opacity: 1;
+				transition: opacity var(--transition-long) ease-out;
+			}
+		}
+
+		&__bar {
+			position: absolute;
+			right: 2px;
+			bottom: 2px;
+			z-index: 1;
+			border-radius: var(--field-border-radius);
+			opacity: 0;
+			transition: opacity var(--transition-short) ease-out;
+
+			&.is-horizontal {
+				left: 2px;
+				height: 6px;
+
+				> div.el-scrollbar__thumb {
+					height: 100%;
+				}
+			}
+
+			&.is-vertical {
+				top: 2px;
+				width: 6px;
+
+				> div.el-scrollbar__thumb {
+					width: 100%;
+				}
+			}
+
+			.el-scrollbar__thumb {
+				--rgb-ui-04: 107, 107, 107;
+				position: relative;
+				display: block;
+				width: 0;
+				height: 0;
+				cursor: pointer;
+				background-color: rgba(var(--rgb-ui-04), 0.3);
+				border-radius: inherit;
+				transition: background-color var(--transition-medium);
+
+				&:hover {
+					background-color: rgba(var(--rgb-ui-04), 0.5);
+				}
+			}
+		}
+
+		&__wrap {
+			height: 100%;
+			overflow: scroll;
+
+			scrollbar-width: none;
+			&::-webkit-scrollbar {
+				width: 0;
+				height: 0;
+			}
+
+			&:not(.el-scrollbar__wrap--hidden-default) {
+				padding-bottom: 15px;
+			}
+
+			@content;
+		}
+	}
+}
+
+@mixin el-time-spinner-popper {
+	.el-time-panel {
+		@include el-popper {
+			position: absolute;
+			left: 0;
+			z-index: 1000;
+			box-sizing: content-box;
+			flex-direction: column;
+			width: 180px;
+			margin: 0;
+		}
+
+		&__content {
+			position: relative;
+			overflow: hidden;
+			font-size: 0;
+
+			&:after,
+			&:before {
+				position: absolute;
+				top: 50%;
+				right: 0;
+				left: 0;
+				z-index: -1;
+				box-sizing: border-box;
+				height: 32px;
+				padding-top: 6px;
+				margin-top: -15px;
+				text-align: left;
+				content: '';
+				border-top: 1px solid var(--ui-02);
+				border-bottom: 1px solid var(--ui-02);
+			}
+
+			&:after {
+				left: 50%;
+				margin-right: 12%;
+				margin-left: 12%;
+			}
+
+			&:before {
+				padding-left: 50%;
+				margin-right: 12%;
+				margin-left: 12%;
+			}
+
+			.el-time-spinner {
+				width: 100%;
+				white-space: nowrap;
+
+				&__wrapper {
+					position: relative;
+					display: inline-block;
+					width: 50%;
+					max-height: 190px;
+					overflow: auto;
+					vertical-align: top;
+				}
+
+				@include el-scrollbar {
+					.el-scrollbar__view.el-time-spinner__list {
+						margin: 0;
+						text-align: center;
+						list-style: none;
+
+						&:after,
+						&:before {
+							display: block;
+							width: 100%;
+							height: 80px;
+							content: '';
+						}
+
+						li.el-time-spinner__item {
+							height: 32px;
+							margin: 0;
+							font-size: 12px;
+							line-height: 32px;
+							color: var(--text-01);
+
+							&:hover:not(.disabled):not(.active) {
+								cursor: pointer;
+								// TODO: maybe make it same as calendar content colors
+								// background: #f5f7fa;
+							}
+
+							&.active:not(.disabled) {
+								font-weight: 700;
+							}
+
+							&.disabled {
+								color: var(--text-05);
+								cursor: not-allowed;
+							}
+						}
+					}
+				}
+
+				.el-scrollbar {
+					width: 50%;
+				}
+			}
+		}
+
+		&__footer {
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			// height: 36px;
+			padding: 4px;
+			border-top: 1px solid var(--ui-02);
+
+			button.el-time-panel__btn {
+				padding: 0 5px;
+				margin: 0 5px;
+				line-height: 28px;
+				color: var(--text-01);
+				text-transform: uppercase;
+				cursor: pointer;
+				background-color: transparent;
+				@include no-outline-or-border;
+
+				&:hover {
+					color: var(--hover-danger);
+				}
+
+				&:active {
+					color: var(--danger);
+				}
+
+				&.confirm {
+					font-weight: 800;
+					color: var(--interactive-01);
+
+					&:hover {
+						color: var(--interactive-01-hover);
+					}
+				}
+			}
+		}
+	}
+}
+
+@mixin input-colors(
+	$main-color: var(--text-01),
+	$disabled-color: var(--text-05),
+	$placeholder-color: var(--text-05)
+) {
+	.kt-field__input-container__slot input,
+	.kt-field__input-container__slot textarea,
+	input,
+	> * input,
+	textarea,
+	> * textarea {
+		color: $main-color;
+		// overwrites native behavior when disabled
+		background-color: transparent;
+
+		&:disabled {
+			color: $disabled-color;
+		}
+
+		&::-webkit-input-placeholder, /* Edge */
+		&:-ms-input-placeholder, /* Internet Explorer */
+		&::placeholder {
+			color: $placeholder-color;
+		}
+	}
+}
+
+@mixin no-outline {
+	// overwrite native outline behavior
+	* {
+		outline: none;
+		&:focus,
+		&::-moz-focus-inner {
+			outline: none;
+		}
+		@content;
+	}
+}
+
+@mixin no-outline-or-border {
+	@include no-outline {
+		border: 0;
+	}
+}
+
+@mixin sizes {
+	$fontSizes: (
+		'small': var(--font-size-small),
+		'medium': var(--font-size-medium),
+		'large': var(--font-size-large),
+	);
+
+	$heights: (
+		'small': 1.6rem,
+		'medium': 2rem,
+		'large': 2.4rem,
+	);
+
+	@each $type in 'small', 'medium', 'large' {
+		&--is-#{$type} {
+			/* stylelint-disable */
+			font-size: map.get($fontSizes, $type);
+
+			.kt-field__input-container {
+				min-height: map.get($heights, $type);
+			}
+			/* stylelint-enable */
+		}
+	}
+}
+
+@mixin validations {
+	$types: 'error', 'warning', 'success', 'no-validation';
+
+	@each $type in $types {
+		&.kt-field__wrapper--#{$type} {
+			@content ($type);
+		}
+	}
+}

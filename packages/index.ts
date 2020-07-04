@@ -20,20 +20,21 @@ import KtDropdown from './kotti-dropdown'
 import KtDropdownButton from './kotti-dropdown-button'
 import KtDropdownMenu from './kotti-dropdown-menu'
 import KtHeading from './kotti-heading'
-import KtLine from './kotti-line'
 import KtInlineEdit from './kotti-inline-edit'
 import KtInput from './kotti-input'
 import KtInputNumber from './kotti-input-number'
+import KtLine from './kotti-line'
 import KtModal from './kotti-modal'
 import KtNavbar from './kotti-navbar'
-import KtPopover from './kotti-popover'
 import KtPagenation from './kotti-pagination'
+import KtPopover from './kotti-popover'
 import KtRadio from './kotti-radio'
+import KtRadioGroup from './kotti-radio-group'
 import KtRow from './kotti-row'
 import KtSingleSelect from './kotti-single-select'
-import KtSwitch from './kotti-switch'
 import KtStep from './kotti-step'
 import KtSteps from './kotti-steps'
+import KtSwitch from './kotti-switch'
 import KtTable, {
 	KtTableColumn,
 	KtTableProvider,
@@ -42,7 +43,30 @@ import KtTable, {
 import KtTheme from './kotti-theme'
 import KtToaster from './kotti-toaster'
 import KtUserMenu from './kotti-user-menu'
-import KtRadioGroup from './kotti-radio-group'
+import { KtField } from './next/kotti-field'
+import {
+	KtFieldDate,
+	KtFieldDateRange,
+	KtFieldDateTime,
+	KtFieldDateTimeRange,
+} from './next/kotti-field-date'
+import { KtFieldNumber } from './next/kotti-field-number'
+import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
+import {
+	KtFieldSingleSelect,
+	KtFieldMultiSelect,
+} from './next/kotti-field-select'
+import { KtFieldText } from './next/kotti-field-text'
+import { KtFieldTextArea } from './next/kotti-field-text-area'
+import { KtFieldToggle, KtFieldToggleGroup } from './next/kotti-field-toggle'
+import {
+	KtForm,
+	KtFormControllerList,
+	KtFormControllerObject,
+	KtFormSubmit,
+} from './next/kotti-form'
+import { KtTranslationContext } from './next/kotti-translation/KtTranslationContext'
+import * as Kotti from './types'
 
 const components = {
 	KtAccordion,
@@ -58,17 +82,34 @@ const components = {
 	KtCol,
 	KtComment,
 	KtCommentInput,
-	KtDatePicker,
 	KtDateInput,
+	KtDatePicker,
 	KtDrawer,
 	KtDropdown,
 	KtDropdownButton,
 	KtDropdownMenu,
+	KtField,
+	KtFieldDate,
+	KtFieldDateRange,
+	KtFieldDateTime,
+	KtFieldDateTimeRange,
+	KtFieldMultiSelect,
+	KtFieldNumber,
+	KtFieldRadioGroup,
+	KtFieldSingleSelect,
+	KtFieldText,
+	KtFieldTextArea,
+	KtFieldToggle,
+	KtFieldToggleGroup,
+	KtForm,
+	KtFormControllerList,
+	KtFormControllerObject,
+	KtFormSubmit,
 	KtHeading,
-	KtLine,
 	KtInlineEdit,
 	KtInput,
 	KtInputNumber,
+	KtLine,
 	KtModal,
 	KtNavbar,
 	KtPagenation,
@@ -77,16 +118,18 @@ const components = {
 	KtRadioGroup,
 	KtRow,
 	KtSingleSelect,
-	KtSwitch,
 	KtStep,
 	KtSteps,
+	KtSwitch,
 	KtTable,
 	KtTheme,
 	KtToaster,
+	KtTranslationContext,
 	KtUserMenu,
 }
 
-function install(Vue) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function install(Vue: any) {
 	for (const component of Object.values(components)) Vue.use(component)
 
 	Vue.prototype.$KtNavbar = new Vue({
@@ -95,16 +138,24 @@ function install(Vue) {
 		},
 		methods: {
 			toggle(value = null) {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+				// @ts-ignore
 				this.isNarrow = value === null ? !this.isNarrow : value
 			},
 		},
 	})
 
+	const DEFAULT_YODIFY_DURATION = 3000
+
 	Vue.prototype.$yodifyBuffer = []
 	Vue.prototype.$yodify = function({
-		duration = 3000,
+		duration = DEFAULT_YODIFY_DURATION,
 		text,
 		type = 'success',
+	}: {
+		duration: number
+		text: string
+		type: 'success' | 'error'
 	}) {
 		const notification = { duration, text, type }
 
@@ -113,10 +164,10 @@ function install(Vue) {
 		else this.$root.$emit('vue-yodify', notification)
 	}
 }
-if (typeof window !== 'undefined' && window.Vue) {
-	install(window.Vue)
-}
 
+if (typeof window !== 'undefined' && window.Vue) install(window.Vue)
+
+export { Kotti }
 export default { ...components, install }
 export {
 	KtAccordion,
@@ -137,11 +188,28 @@ export {
 	KtDropdown,
 	KtDropdownButton,
 	KtDropdownMenu,
+	KtField,
+	KtFieldDate,
+	KtFieldDateRange,
+	KtFieldDateTime,
+	KtFieldDateTimeRange,
+	KtFieldMultiSelect,
+	KtFieldNumber,
+	KtFieldRadioGroup,
+	KtFieldSingleSelect,
+	KtFieldText,
+	KtFieldTextArea,
+	KtFieldToggle,
+	KtFieldToggleGroup,
+	KtForm,
+	KtFormControllerList,
+	KtFormControllerObject,
+	KtFormSubmit,
 	KtHeading,
-	KtLine,
 	KtInlineEdit,
 	KtInput,
 	KtInputNumber,
+	KtLine,
 	KtModal,
 	KtNavbar,
 	KtPagenation,
@@ -150,14 +218,15 @@ export {
 	KtRadioGroup,
 	KtRow,
 	KtSingleSelect,
-	KtSwitch,
 	KtStep,
 	KtSteps,
+	KtSwitch,
 	KtTable,
-	KtToaster,
-	KtUserMenu,
 	KtTableColumn,
-	KtTableProvider,
 	KtTableColumnsStateMixin,
+	KtTableProvider,
 	KtTheme,
+	KtToaster,
+	KtTranslationContext,
+	KtUserMenu,
 }

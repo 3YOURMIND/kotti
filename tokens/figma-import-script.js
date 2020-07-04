@@ -5,7 +5,7 @@ export default `tokens.forEach(token => {
 	let figmaStyle
 	if (existing) {
 		figmaStyle = existing
-	}else{
+	} else {
 		figmaStyle = figma.createPaintStyle()
 	}
 

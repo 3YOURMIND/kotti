@@ -1,6 +1,11 @@
 <template lang="md">
-
 # Date Picker
+
+<DeprecationWarning
+	componentName="KtFieldDate/KtFieldDateRange/KtFieldDateTime/KtFieldDateTimeRange"
+	link="/components/form"
+	version="3.0"
+/>
 
 <div class="element-example">
 	<KtDateInput
@@ -100,8 +105,11 @@
 </template>
 
 <script>
+import DeprecationWarning from '../../components/DeprecationWarning.vue'
+
 export default {
 	name: 'DatePickerDoc',
+	components: { DeprecationWarning },
 	data() {
 		return {
 			date: null,

@@ -1,10 +1,11 @@
+import Color from 'color'
+
 import { tokens, baseColors } from './colors'
 import {
 	objectToArray,
 	arrayToCustomProperties,
 	arrayToObject,
 } from './utilities'
-import Color from 'color'
 
 export const baseColorsFactory = {
 	object: baseColors,
@@ -30,7 +31,7 @@ export const factoryToFigmaImportable = (
 	splitDashIntoGroups = false,
 ) => {
 	const output = []
-	tokenColorsFactory.array.forEach(token => {
+	tokenColorsFactory.array.forEach((token) => {
 		let name = token.name.split('--').join('')
 		if (splitDashIntoGroups) {
 			name = name.split('-').join(' / ')
@@ -42,7 +43,7 @@ export const factoryToFigmaImportable = (
 			.rgb()
 			.object()
 		const description = token.description
-			? `${token.description}. 
+			? `${token.description}.
 Original color: '${token.reference}'`
 			: ''
 		output.push({
