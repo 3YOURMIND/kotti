@@ -2,493 +2,247 @@
 # Form
 
 <ClientOnly>
-	<KtTranslationContext :locale="locale">
-		<KtFieldSingleSelect
-			v-model="locale"
-			hideClear
-			label="Language"
-			leftIcon="global"
-			:options="[
-				{ label: 'German (de-DE)', value: 'de-DE' },
-				{ label: 'English (en-US)', value: 'en-US' },
-				{ label: 'Spanish (es-ES)', value: 'es-ES' },
-				{ label: 'French (fr-FR)', value: 'fr-FR' },
-				{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
-			]"
-		/>
-		<h2>KtForm Settings</h2>
-		<div class="wrapper">
-			<KtFieldRadioGroup
-				v-model="preventSubmissionOn"
-				isOptional
-				label="Prevent Submission"
-				:options="[
-					{ label: 'Error', value: 'error' },
-					{ label: 'Warning', value: 'warning' },
-					{ label: 'Never', value: 'NEVER' }
-				]"
-				:validator="(value) => ({
-					text: null,
-					type: value === 'NEVER' ? 'success' : value
-				})"
-			/>
-			<KtFieldRadioGroup
-				v-model="fieldSize"
-				isOptional
-				label="Field Size"
-				:options="[
-					{ label: 'Small', value: 'small' },
-					{ label: 'Medium', value: 'medium' },
-					{ label: 'Large', value: 'large' }
-				]"
-			/>
-			<KtFieldToggleGroup
-				v-model="formSettings"
-				isOptional
-				label="Miscellaneous"
-				:options="[
-					{ key: 'disableFormFields', label: 'Disable Form Fields' },
-					{ key: 'hideValidation', label: 'Hide validation' },
-					{ key: 'isLoading', label: 'Is Loading' },
-				]"
-			/>
-		</div>
-		<h2>KtForm</h2>
+	<KtTranslationContext :locale="settings.locale">
+		<KtForm v-model="settings">
+			<div class="wrapper">
+				<section>
+					<h3>Shared Form ↔ Field Settings</h3>
+					<KtFieldSingleSelect
+						formKey="size"
+						helpDescription="Can be overridden in individual fields"
+						isOptional
+						label="Size"
+						:options="[
+							{ label: 'small', value: 'small' },
+							{ label: 'medium (default)', value: 'medium' },
+							{ label: 'large', value: 'large' },
+						]"
+					/>
+					<KtFieldToggleGroup
+						formKey="booleanFlags"
+						helpDescription="Can be overridden in individual fields"
+						isOptional
+						label="Boolean Flags"
+						:options="[
+							{ key: 'isDisabled', label: 'isDisabled' },
+							{ key: 'hideClear', label: 'hideClear' },
+							{ key: 'hideValidation', label: 'hideValidation' },
+							{ key: 'isLoading', label: 'isLoading' },
+						]"
+						type="switch"
+					/>
+				</section>
+				<div>
+					<h3>Form Settings</h3>
+					<KtFieldSingleSelect
+						formKey="preventSubmissionOn"
+						helpDescription="Which types of validation error prevent the form from submitting?"
+						isOptional
+						label="Prevent Submission"
+						:options="[
+							{ label: 'error (default)', value: 'error' },
+							{ label: 'warning', value: 'warning' },
+							{ label: 'NEVER', value: 'NEVER' },
+						]"
+					/>
+					<h3>Kotti Settings</h3>
+					<KtFieldSingleSelect
+						formKey="locale"
+						helpDescription="Can be set via KtTranslationContext"
+						hideClear
+						label="Language"
+						leftIcon="global"
+						:options="[
+							{ label: 'German (de-DE)', value: 'de-DE' },
+							{ label: 'English (en-US)', value: 'en-US' },
+							{ label: 'Spanish (es-ES)', value: 'es-ES' },
+							{ label: 'French (fr-FR)', value: 'fr-FR' },
+							{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+						]"
+					/>
+				</div>
+			</div>
+		</KtForm>
 		<KtForm
-			v-model="formData"
-			:hideValidation="formSettings.hideValidation"
-			:isLoading="formSettings.isLoading"
-			v-bind="{ preventSubmissionOn, validators}"
+			v-model="values"
+			:preventSubmissionOn="settings.preventSubmissionOn"
+			:size="settings.size"
+			:validators="validators"
+			v-bind="settings.booleanFlags"
 			@submit="onSubmit"
 		>
-			<KtFieldDateTimeRange
-				formKey="dateTimeRange"
-				:isDisabled="formSettings.disableFormFields"
-				label="KtFieldDateTimeRange"
-				:maximumDate="null"
-				minimumDate="2020-06-05"
-				:size="fieldSize"
-				:shortcuts="shortcuts('dateTimeRange', DATE_TIME_ISO_FORMAT)"
-			/>
-			<KtFieldDateTime
-				formKey="dateTime"
-				:isDisabled="formSettings.disableFormFields"
-				label="KtFieldDateTime"
-				:size="fieldSize"
-				:shortcuts="shortcuts('dateTime', DATE_TIME_ISO_FORMAT)"
-			/>
-			<KtFieldDateRange
-				formKey="dateRange"
-				:isDisabled="formSettings.disableFormFields"
-				label="KtFieldDateRange"
-				:maximumDate="null"
-				minimumDate="2020-06-05"
-				:size="fieldSize"
-				:shortcuts="shortcuts('dateRange', DATE_ISO_FORMAT)"
-			/>
-			<KtFieldDate
-				formKey="date"
-				label="KtFieldDate"
-				:isDisabled="formSettings.disableFormFields"
-				:maximumDate="null"
-				minimumDate="2020-06-05"
-				placeholder="Select Date"
-				:size="fieldSize"
-				:shortcuts="shortcuts('date', DATE_ISO_FORMAT)"
-			/>
-			<KtFieldMultiSelect
-				:collapseTagsAfter="3"
-				formKey="multiSelect"
-				:isDisabled="formSettings.disableFormFields"
-				isOptional
-				label="Multi Select"
-				leftIcon="shipping"
-				:options="radioGroupAndSelectOptions"
-				placeholder="select something"
-				prefix="Prefix"
-				rightIcon="calendar"
-				:size="fieldSize"
-				suffix="Suffix"
-			/>
-			<KtFieldSingleSelect
-				formKey="radioGroupAndSingleSelect"
-				:isDisabled="formSettings.disableFormFields"
-				label="Single Select"
-				leftIcon="shipping"
-				:options="radioGroupAndSelectOptions"
-				placeholder='select something'
-				prefix="Prefix"
-				rightIcon="calendar"
-				:size="fieldSize"
-				suffix="Suffix"
-			/>
-			<KtFieldRadioGroup
-				formKey="radioGroupAndSingleSelect"
-				:isDisabled="formSettings.disableFormFields"
-				isOptional
-				label="Some RadioGroup"
-				:options="radioGroupAndSelectOptions"
-				:size="fieldSize"
-			/>
-			<KtFieldToggleGroup
-				formKey="toggleGroup"
-				:isDisabled="formSettings.disableFormFields"
-				label="Some ToggleGroup"
-				:options="[
-					{ key: 'initiallyFalse', label: 'A (initiallyFalse)' },
-					{ key: 'initiallyNull', label: 'B (initiallyNull)' },
-					{ key: 'initiallyTrue', label: 'C (initiallyTrue)' },
-				]"
-				:size="fieldSize"
-			/>
-			<KtFieldToggle
-				formKey="toggle"
-				:isDisabled="formSettings.disableFormFields"
-				isOptional
-				label="KtFieldToggle type=checkbox"
-				:size="fieldSize"
-				type="checkbox"
-			>
-				<template v-slot="{ value }">
-					<span>Value is <a @click.prevent v-text="String(value)"/></span>
-				</template>
-			</KtFieldToggle>
-			<KtFieldToggle
-				formKey="toggle"
-				:isDisabled="formSettings.disableFormFields"
-				isOptional
-				label="KtFieldToggle type=switch"
-				:size="fieldSize"
-				type="switch"
-			>
-				<template v-slot="{ value }">
-					<span>Value is <a @click.prevent v-text="String(value)"/></span>
-				</template>
-			</KtFieldToggle>
-			<KtFieldText
-				formKey="firstName"
-				helpText="Help for firstName"
-				helpDescription="help description"
-				:isDisabled="formSettings.disableFormFields"
-				label="First Name"
-				leftIcon="comment"
-				placeholder="Klaus"
-				prefix="Prefix"
-				rightIcon="location"
-				:size="fieldSize"
-				suffix="Suffix"
-			/>
-			<KtFieldText
-				formKey="lastName"
-				helpText="help for lastName"
-				:isDisabled="formSettings.disableFormFields"
-				label="Last Name"
-				placeholder="Dieter"
-				:size="fieldSize"
-			/>
-			<br />
-			<h2>Validation Example</h2>
-			<KtFieldText
-				formKey="lastName"
-				:isDisabled="formSettings.disableFormFields"
-				prefix="Prefix"
-				:size="fieldSize"
-				:tabIndex="5"
-				validatorKey="alwaysNeutral"
-			/>
-			<KtFieldText
-				formKey="lastName"
-				:isDisabled="formSettings.disableFormFields"
-				label="Field That Always Errors"
-				:size="fieldSize"
-				suffix="Suffix"
-				:tabIndex="4"
-				validatorKey="alwaysError"
-			/>
-			<KtFieldText
-				formKey="lastName"
-				:isDisabled="formSettings.disableFormFields"
-				label="Field That Always Succeeds"
-				leftIcon="cloud"
-				:size="fieldSize"
-				:tabIndex="3"
-				validatorKey="alwaysSuccess"
-			/>
-			<KtFieldText
-				formKey="lastName"
-				hideClear
-				:isDisabled="formSettings.disableFormFields"
-				label="Field That Always Warns"
-				rightIcon="location"
-				:size="fieldSize"
-				:tabIndex="2"
-				validatorKey="alwaysWarning"
-			/>
 			<KtFieldText
 				formKey="username"
-				helpText="help for username"
-				:isDisabled="formSettings.disableFormFields"
-				isOptional
 				label="Username"
-				leftIcon="comment"
-				prefix="Prefix"
-				rightIcon="calendar"
-				:size="fieldSize"
-				suffix="Suffix"
-				:tabIndex="1"
-			/>
-			<KtFieldTextArea
-				formKey="description"
-				:isDisabled="formSettings.disableFormFields"
-				label="description"
-				placeholder="type something"
-				:size="fieldSize"
+				rightIcon="user"
+				validatorKey="username"
 			/>
 			<br />
-			<h2>KtFormControllerList</h2>
+			<h2>Personal Details (KtFormControllerObject)</h2>
+			<KtFormControllerObject formKey="personalDetails">
+				<KtFieldText
+					formKey="firstName"
+					helpText="help for lastName"
+					label="First Name"
+					placeholder="Klaus"
+				/>
+				<KtFieldText
+					formKey="lastName"
+					helpText="help for lastName"
+					label="Last Name"
+					placeholder="Dieter"
+				/>
+			</KtFormControllerObject>
+			<br />
+			<h2>Addresses (KtFormControllerList)</h2>
 			<ul>
-				<KtFormControllerList formKey="users">
+				<KtFormControllerList formKey="addresses" class="address-controller">
 					<template v-slot:default="{ addAfter, addBefore, deleteSelf, index, setValues, values }">
-						<li>
-							<h3 v-text="`Item ${index}`" />
-							<KtFieldText
-								formKey="username" label="Username"
-								:isDisabled="formSettings.disableFormFields"
-								leftIcon="user"
-								:size="fieldSize"
-								validatorKey="username"
-							/>
-							<div :style="{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }">
-								<button class="kt-button danger" type="button" @click="deleteSelf">
-									Delete "{{ values.username }}"
+						<li class="address">
+							<div class="address__content">
+								<div class="address__content__header">
+									<h3 v-text="`Address #${index + 1}`" />
+								</div>
+								<div class="address__content__fields">
+									<KtFieldText
+										formKey="streetName"
+										isOptional
+										label="Street Name"
+										leftIcon="address_book"
+									/>
+									<KtFieldText
+										formKey="houseNumber"
+										isOptional
+										label="House Number"
+										leftIcon="address_book"
+									/>
+									<KtFieldSingleSelect
+										formKey="country"
+										isOptional
+										label="Country"
+										leftIcon="global"
+										:options="[
+											{ label: 'Egypt', value: 'eg' },
+											{ label: 'France', value: 'fr' },
+											{ label: 'Germany', value: 'de' },
+											{ label: 'USA', value: 'us' },
+										]"
+									/>
+								</div>
+								<div class="address__content__footer">
+									<button
+										class="kt-button secondary"
+										type="button"
+										@click="setValues({
+											country: Math.random() > 0.5 ? 'eg' : 'de',
+											houseNumber: `${Math.ceil(Math.random() * 999)}${Math.random() > 0.5 ? 'a': ''}`,
+											streetName: `${Math.random() > 0.5 ? 'Bismarck' : 'Other'}${Math.random() > 0.5 ? 'street': 'straße'}`,
+										})"
+									>
+										setValues
+									</button>
+								</div>
+							</div>
+							<div class="address__buttons">
+								<button
+									class="kt-button secondary"
+									title="Add Field Before"
+									type="button"
+									@click="addBefore({
+										country: null,
+										houseNumber: null,
+										streetName: null
+									})"
+								>
+									<i class="yoco">plus</i><i class="yoco">triangle_up</i>
 								</button>
-								<button class="kt-button secondary" type="button" @click="addBefore({ username: `before Item${index}` })">
-									Add Before
+								<button
+									class="kt-button danger"
+									:disabled="isDeleteDisabled"
+									title="deleteSelf"
+									type="button"
+									@click="deleteSelf"
+								>
+									<i class="yoco">close</i>
 								</button>
-								<button class="kt-button secondary" type="button" @click="addAfter({ username: `after Item${index}` })">
-									Add After
-								</button>
-								<button class="kt-button seondary" type="button" @click="setValues({ ...values, username: `replaced Item${index}` })">
-									Set Values
+								<button
+									class="kt-button secondary"
+									title="Add Field After"
+									type="button"
+									@click="addAfter({
+										country: null,
+										houseNumber: null,
+										streetName: null
+									})"
+								>
+									<i class="yoco">plus</i><i class="yoco">triangle_down</i>
 								</button>
 							</div>
 						</li>
 					</template>
 				</KtFormControllerList>
-				<br/>
-				Custom Button: <button class="kt-button primary" type="button" @click="addUser">Add User</button>
 			</ul>
-			<br />
-			<h2>KtFormControllerObject</h2>
-			<KtFormControllerObject formKey="user">
-				<KtFieldText
-					formKey="lastName"
-					:isDisabled="formSettings.disableFormFields"
-					label="I’m a Field In user"
-					rightIcon="user"
-					:size="fieldSize"
-					validatorKey="username"
-				/>
-			</KtFormControllerObject>
 			<KtFormSubmit />
 		</KtForm>
 		<br />
-		<br />
-		<h2>formData</h2>
-		<pre v-text="JSON.stringify(formData, null, '\t')" />
-		<h2>KtFields Without Form</h2>
-		<div>
-			<KtFieldText
-				v-model="textValue"
-				label="KtFieldText"
-				placeholder="type something"
-			/>
-		</div>
+		<h2>values</h2>
+		<pre v-text="JSON.stringify(values, null, '\t')" />
 	</KtTranslationContext>
 </ClientOnly>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, Ref } from '@vue/composition-api'
-import dayjs from 'dayjs'
+import { defineComponent, computed, ref } from '@vue/composition-api'
 
-import {
-	KottiFieldDate,
-	KottiFieldDateRange,
-	KottiFieldDateTime,
-	KottiFieldDateTimeRange,
-} from '../../../packages/next/kotti-field-date/types'
-import {
-	KottiFieldMultiSelect,
-	KottiFieldSingleSelect,
-} from '../../../packages/next/kotti-field-select/types'
-import { KottiFieldTextArea } from '../../../packages/next/kotti-field-text-area/types'
-import { KottiFieldText } from '../../../packages/next/kotti-field-text/types'
-import {
-	KottiFieldToggle,
-	KottiFieldToggleGroup,
-} from '../../../packages/next/kotti-field-toggle/types'
 import { KottiField } from '../../../packages/next/kotti-field/types'
 import { KottiForm } from '../../../packages/next/kotti-form/types'
 
-const DATE_ISO_FORMAT = 'YYYY-MM-DD'
-const DATE_TIME_ISO_FORMAT = 'YYYY-MM-DD HH:mm:ss'
-
 export default defineComponent({
-	name: 'KtFormDoc',
+	name: 'KtFormDocumentation',
 	setup() {
-		const formData: Ref<{
-			date: KottiFieldDate.Value
-			dateRange: KottiFieldDateRange.Value
-			dateTime: KottiFieldDateTime.Value
-			dateTimeRange: KottiFieldDateTimeRange.Value
-			description: KottiFieldTextArea.Value
-			firstName: KottiFieldText.Value
-			lastName: KottiFieldText.Value
-			multiSelect: KottiFieldMultiSelect.Value
-			radioGroupAndSingleSelect: KottiFieldSingleSelect.Value
-			toggle: KottiFieldToggle.Value
-			toggleGroup: KottiFieldToggleGroup.Value
-			user: { lastName: KottiFieldText.Value }
-			username: KottiFieldText.Value
-			users: Array<{ username: KottiFieldText.Value }>
-		}> = ref({
-			date: null,
-			dateRange: [null, null],
-			dateTime: null,
-			dateTimeRange: [null, null],
-			toggle: null,
-			toggleGroup: {
-				initiallyFalse: false,
-				initiallyNull: null,
-				initiallyTrue: true,
+		const values = ref({
+			addresses: [{ country: null, houseNumber: null, streetName: null }],
+			personalDetails: {
+				firstName: 'John',
+				lastName: 'Smith',
 			},
-			description: null,
-			firstName: 'John',
-			lastName: 'Smith',
-			multiSelect: [1, 2],
-			radioGroupAndSingleSelect: null,
-			user: { lastName: 'pepe' },
 			username: null,
-			users: [{ username: null }, { username: 'anything' }],
 		})
 
 		return {
-			addUser: () => {
-				formData.value = {
-					...formData.value,
-					users: [...formData.value?.users, { username: null }],
-				}
-			},
-			alwaysError: (): KottiField.Validation.Result => ({
-				type: 'error',
-				text: 'Always Error!',
-			}),
-			alwaysSuccess: (): KottiField.Validation.Result => ({
-				type: 'success',
-				text: 'Always Success!',
-			}),
-			alwaysWarning: (): KottiField.Validation.Result => ({
-				type: 'warning',
-				text: 'Always Warning!',
-			}),
-			DATE_ISO_FORMAT,
-			DATE_TIME_ISO_FORMAT,
-			locale: ref('en-US'),
-			shortcuts: computed(
-				() => (
-					formValueKey: 'date' | 'dateRange' | 'dateTime' | 'dateTimeRange',
-					format: typeof DATE_ISO_FORMAT | typeof DATE_TIME_ISO_FORMAT,
-				): {
-					keepOpen?: boolean
-					label: string
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					value: any
-				}[] => {
-					const dateValue = formData.value ? formData.value[formValueKey] : null
-					const dateString =
-						dateValue !== null && Array.isArray(dateValue)
-							? dateValue[1]
-							: dateValue
-					const isRange = Array.isArray(dateValue)
-
-					const today = (format: string) => dayjs().format(format)
-
-					const jumpOneWeek = (fromDate: string | null, format: string) =>
-						// null is interpreted as epoch date by dayjs
-						dayjs(fromDate ?? undefined)
-							.add(1, 'week')
-							.format(format)
-
-					const yesterday = (format: string) =>
-						dayjs()
-							.subtract(1, 'day')
-							.format(format)
-
-					return [
-						{
-							label: 'Today',
-							value: isRange ? [today(format), today(format)] : today(format),
-						},
-						{
-							label: 'Yesterday',
-							value: isRange
-								? [yesterday(format), today(format)]
-								: yesterday(format),
-						},
-						{
-							label: 'Next Week',
-							value: isRange
-								? [dateString ?? today(format), jumpOneWeek(dateString, format)]
-								: jumpOneWeek(dateString, format),
-							keepOpen: true,
-						},
-					]
-				},
-			),
-			disableFormFields: ref(false),
-			formData,
-			fieldSize: ref('medium'),
-			formSettings: ref({
-				hideValidation: false,
-				isLoading: false,
-				disableFormFields: false,
-			}),
+			isDeleteDisabled: computed(() => values.value.addresses.length === 1),
 			onSubmit: (event: KottiForm.Events.Submit) => {
 				// eslint-disable-next-line no-console
 				console.debug('onSubmit', event)
 				alert('onSubmit: See Console for Event Details')
 			},
-			preventSubmissionOn: ref('NEVER'),
-			radioGroupAndSelectOptions: ref([
-				{ label: 'label 1', value: 1 },
-				{ label: 'label 2', value: 2 },
-				{ label: 'label 3', value: 3 },
-				{ disabled: true, label: 'label 4', value: 4 },
-				{ label: 'label 5', value: 5 },
-				{ label: 'label 6', value: 6 },
-			]),
-			textValue: ref(null),
+			settings: ref({
+				booleanFlags: {
+					hideClear: false,
+					hideValidation: false,
+					isDisabled: false,
+					isLoading: false,
+				},
+				locale: ref('en-US'),
+				preventSubmissionOn: 'error',
+				size: 'medium',
+			}),
 			validators: computed(
 				(): Record<string, KottiField.Validation.Function> => ({
-					alwaysError: () => ({ type: 'error', text: 'Always Error!' }),
-					alwaysNeutral: () => ({ type: null }),
-					alwaysSuccess: () => ({ type: 'success', text: 'Always Success!' }),
-					alwaysWarning: () => ({ type: 'warning', text: 'Always Warning!' }),
 					username: (value: string | null) => {
 						if (value === null) return { type: null }
 
 						// eslint-disable-next-line no-magic-numbers
 						if (value.length < 3)
 							return {
-								text: 'Your Username is too short',
+								text: 'Username is too short',
 								type: 'error',
 							}
 
 						// eslint-disable-next-line no-magic-numbers
 						if (value.length < 5)
 							return {
-								text: 'Your username is already taken',
+								text: 'Username is already taken',
 								type: 'warning',
 							}
 
@@ -496,6 +250,7 @@ export default defineComponent({
 					},
 				}),
 			),
+			values,
 		}
 	},
 })
@@ -504,7 +259,69 @@ export default defineComponent({
 <style lang="scss">
 @import '../../../packages/kotti-style/_variables.scss';
 
+.address-controller {
+	> *:not(:first-child) {
+		padding-top: 20px;
+		margin-top: 20px;
+		border-top: 1px solid var(--ui-02);
+	}
+}
+
+.address {
+	display: flex;
+	align-items: center;
+
+	button {
+		outline: none;
+	}
+
+	> *:not(:first-child) {
+		margin-left: 20px;
+	}
+
+	&__content {
+		flex: 1;
+
+		&__fields {
+			display: flex;
+			align-items: center;
+
+			> * {
+				flex: 1;
+				margin-bottom: 0 !important;
+
+				&:not(:first-child) {
+					margin-left: 20px;
+				}
+			}
+		}
+
+		&__footer {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: 10px;
+		}
+
+		&__header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+
+	&__buttons {
+		display: flex;
+		flex-direction: column;
+
+		> *:not(:first-child) {
+			margin-top: 5px;
+		}
+	}
+}
+
 li {
+	margin: 0;
 	list-style: none;
 }
 
