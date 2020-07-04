@@ -57,10 +57,10 @@ export default defineComponent({
 	input {
 		display: none;
 	}
-}
 
-.kt-field__wrapper--disabled .kt-field-toggle__inner,
-.kt-field-toggle-group__inner--is-disabled {
-	color: var(--text-05);
+	&--is-disabled {
+		color: var(--text-05);
+		cursor: not-allowed;
+	}
 }
 </style>

@@ -76,17 +76,13 @@ export default defineComponent({
 			var(--interactive-01)
 		);
 
-		.kt-field-toggle-box__inner {
-			background-color: var(--interactive-01);
-		}
-
 		&__check {
 			opacity: 0;
 			transform: scale(0);
 		}
 
 		&__inner {
-			opacity: 0.5;
+			background-color: var(--interactive-04);
 		}
 	}
 
@@ -101,20 +97,12 @@ export default defineComponent({
 			opacity: 1;
 			transform: scale(1);
 		}
-
-		&__inner {
-			opacity: 1;
-		}
 	}
 
 	&--is-off .kt-field-toggle-box {
 		&__check {
-			opacity: 0.2;
-			transform: scale(0.2);
-		}
-
-		&__inner {
-			opacity: 1;
+			opacity: 0;
+			transform: scale(0);
 		}
 	}
 }
@@ -150,10 +138,28 @@ export default defineComponent({
 }
 
 .kt-field-toggle__inner--is-disabled {
-	cursor: not-allowed;
+	&.kt-field-toggle__inner {
+		&--is-indeterminate .kt-field-toggle-box {
+			/* stylelint-disable */
+			@include toggle-colors(var(--ui-02), var(--ui-02), var(--ui-01));
+			/* stylelint-enable */
 
-	.kt-field-toggle-box {
-		opacity: 0.7;
+			.kt-field-toggle-box__inner {
+				background-color: var(--ui-02);
+			}
+		}
+
+		&--is-off .kt-field-toggle-box {
+			/* stylelint-disable */
+			@include toggle-colors(var(--ui-02), var(--ui-02), var(--ui-01));
+			/* stylelint-enable */
+		}
+
+		&--is-on .kt-field-toggle-box {
+			/* stylelint-disable */
+			@include toggle-colors(var(--ui-02), var(--ui-02), var(--ui-01));
+			/* stylelint-enable */
+		}
 	}
 }
 </style>
