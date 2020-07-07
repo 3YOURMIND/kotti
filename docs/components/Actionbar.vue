@@ -17,6 +17,9 @@
 								<li>
 									<span v-text="child.label" />
 									<span v-if="child.isCSS" class="indicator-only-css">CSS</span>
+									<span v-if="child.isDeprecated" class="indicator-deprecated"
+										>Deprecated</span
+									>
 									<i class="yoco">chevron_right</i>
 								</li>
 							</nuxt-link>
@@ -38,14 +41,21 @@
 	}
 }
 
-.indicator-only-css {
+.indicator-only-css,
+.indicator-deprecated {
 	padding: 0.1rem 0.2rem;
 	margin-left: 0.2rem;
 	font-size: 0.6em;
+	font-weight: 600;
 	line-height: 1em;
 	color: #fff;
+	text-transform: uppercase;
 	background: #64ad13;
 	border-radius: 0.2rem;
+}
+.indicator-deprecated {
+	color: var(--red-70);
+	background: var(--support-error-light);
 }
 </style>
 

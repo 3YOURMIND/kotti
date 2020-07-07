@@ -73,10 +73,12 @@ const submenu = [
 				to: 'cards',
 			},
 			{
+				isDeprecated: true,
 				label: 'Checkboxes',
 				to: 'checkbox',
 			},
 			{
+				isDeprecated: true,
 				label: 'DatePicker',
 				to: 'datepicker',
 			},
@@ -105,10 +107,12 @@ const submenu = [
 				to: 'lines',
 			},
 			{
+				isDeprecated: true,
 				label: 'Inputs',
 				to: 'inputs',
 			},
 			{
+				isDeprecated: true,
 				label: 'InputNumber',
 				to: 'inputnumber',
 			},
@@ -130,6 +134,7 @@ const submenu = [
 				to: 'popovers',
 			},
 			{
+				isDeprecated: true,
 				label: 'Radios',
 				to: 'radios',
 			},
@@ -142,6 +147,7 @@ const submenu = [
 				to: 'toaster',
 			},
 			{
+				isDeprecated: true,
 				label: 'Selects',
 				to: 'selects',
 			},
@@ -150,6 +156,7 @@ const submenu = [
 				to: 'steps',
 			},
 			{
+				isDeprecated: true,
 				label: 'Switches',
 				to: 'switches',
 			},
