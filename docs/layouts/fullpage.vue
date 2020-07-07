@@ -1,17 +1,17 @@
 <template>
 	<div class="d-flex responsive">
-		<Navbar />
+		<NavBar />
 		<div class="workspace"><nuxt class="content" /></div>
 	</div>
 </template>
 
 <script>
-import Navbar from '~/components/Navbar.vue'
+import NavBar from '~/components/NavBar.vue'
 
 export default {
 	name: 'FullPageLayout',
 	components: {
-		Navbar,
+		NavBar,
 	},
 }
 </script>

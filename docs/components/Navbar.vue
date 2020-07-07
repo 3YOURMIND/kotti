@@ -1,9 +1,7 @@
 <template>
 	<KtNavbar
-		:isNarrow="isNarrow"
-		:quickLinks="quickLinksData"
-		:sections="globalMenu"
-		@linkClick="redirectRouter($event)"
+		v-bind="{ isNarrow, sections, quickLinks }"
+		@linkClick="handleLinkClick"
 		@logoClick="$router.push('/')"
 	>
 		<div slot="navbar-footer">
@@ -14,20 +12,29 @@
 	</KtNavbar>
 </template>
 
-<script>
-import KtNavbar from '../../packages/kotti-navbar'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { Route } from 'vue-router'
 
-export default {
-	name: 'KtNavbarComponent',
-	components: {
-		KtNavbar,
-	},
+import { Yoco } from '../../packages/next/types'
+import { menu } from '../data/menu'
+import { useRoute } from '../hooks/use-route'
+import { useRouter } from '../hooks/use-router'
+
+export default defineComponent({
+	name: 'NavBar',
 	props: {
 		isNarrow: { type: Boolean, default: false },
 	},
-	data() {
+	setup() {
+		const route = useRoute()
+		const router = useRouter()
+
 		return {
-			quickLinksData: {
+			handleLinkClick(link: Route) {
+				router.value.push(link.path)
+			},
+			quickLinks: {
 				links: [
 					{
 						title: 'Create New Issue',
@@ -39,77 +46,31 @@ export default {
 					},
 				],
 			},
+			sections: menu.map((section): {
+				title: string
+				links: Array<{
+					icon: Yoco.Icon
+					title: string
+					path: string
+					isActive: boolean
+				}>
+			} => ({
+				links: section.subsections.map((subsection) => ({
+					icon: subsection.icon,
+					title: subsection.title,
+					path: `/${subsection.path}${
+						subsection.pages.length >= 1 ? `/${subsection.pages[0].path}` : ''
+					}`,
+					isActive:
+						subsection.path === ''
+							? route.value.path === '/'
+							: route.value.path.startsWith(`/${subsection.path}`),
+				})),
+				title: section.title,
+			})),
 		}
 	},
-	computed: {
-		globalMenu() {
-			return [
-				{
-					title: 'Guide',
-					links: [
-						{
-							icon: 'file',
-							title: 'Overview',
-							path: '/',
-							isActive: this.isCurrentPage('/'),
-						},
-						{
-							icon: 'version',
-							title: 'Changelog',
-							path: '/changelog',
-							isActive: this.isCurrentPage('/changelog'),
-						},
-					],
-				},
-				{
-					title: 'Usage',
-					links: [
-						{
-							icon: 'layer',
-							title: 'Foundations',
-							path: '/foundations/layout',
-							isActive: this.isCurrentPage('/foundations'),
-						},
-						{
-							icon: 'json',
-							title: 'Tokens',
-							path: '/tokens/introduction',
-							isActive: this.isCurrentPage('/tokens'),
-						},
-						{
-							icon: 'dashboard',
-							title: 'Components',
-							path: '/components/avatars',
-							isActive: this.isCurrentPage('/components'),
-						},
-						{
-							icon: 'sidebar',
-							title: 'Patterns',
-							path: '/patterns/actionbar',
-							isActive: this.isCurrentPage('/patterns'),
-						},
-						{
-							icon: 'markup',
-							title: 'DesignKit',
-							path: '/designkit',
-							isActive: this.isCurrentPage('/designkit'),
-						},
-					],
-				},
-			]
-		},
-	},
-	methods: {
-		redirectRouter(link) {
-			this.$router.push(link.path)
-		},
-		isCurrentPage(path) {
-			return path === '/'
-				? this.$route.path === '/'
-				: this.$route.path.includes(path)
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss" scoped>
@@ -118,6 +79,7 @@ export default {
 	justify-content: center;
 	width: 100%;
 }
+
 li.nuxt-link-active {
 	font-weight: 600;
 	background: rgba(0, 0, 0, 0.2);
