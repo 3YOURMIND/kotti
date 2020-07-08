@@ -1,7 +1,7 @@
 <template>
 	<KtContainer :hasActionBar="showActionbar">
-		<Navbar slot="navbar" />
-		<Actionbar slot="actionbar" />
+		<NavBar slot="navbar" />
+		<ActionBar slot="actionbar" />
 		<div slot="workspace">
 			<nuxt class="content" />
 		</div>
@@ -13,14 +13,14 @@ import cssVars from 'css-vars-ponyfill'
 
 import KtContainer from '../../packages/kotti-container'
 
-import Actionbar from '~/components/Actionbar.vue'
-import Navbar from '~/components/Navbar.vue'
+import ActionBar from '~/components/ActionBar.vue'
+import NavBar from '~/components/NavBar.vue'
 
 export default {
 	name: 'DefaultLayout',
 	components: {
-		Actionbar,
-		Navbar,
+		ActionBar,
+		NavBar,
 		KtContainer,
 	},
 	computed: {
