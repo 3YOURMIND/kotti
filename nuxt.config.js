@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+
 const config = {
 	srcDir: './docs/',
 	/*
@@ -49,6 +52,9 @@ const config = {
 					],
 				]
 			},
+		},
+		extend(config) {
+			config.plugins.push(new CaseSensitivePathsPlugin())
 		},
 	},
 	buildModules: ['@nuxt/typescript-build'],
