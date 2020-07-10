@@ -1,3 +1,4 @@
+import VueCompositionApi from '@vue/composition-api'
 import { VueConstructor } from 'vue/types/umd'
 
 /**
@@ -6,5 +7,8 @@ import { VueConstructor } from 'vue/types/umd'
  */
 export const makeInstallable = (component: VueConstructor<Vue>) =>
 	Object.assign(component, {
-		install: (Vue) => Vue.component(component.name, component),
+		install: (Vue) => {
+			Vue.use(VueCompositionApi)
+			return Vue.component(component.name, component)
+		},
 	} as Vue.PluginObject<{}>)
