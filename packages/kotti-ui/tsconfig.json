@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"declaration": true,
+		"declarationDir": "dist",
+		"lib": ["esnext"],
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "esnext"
+	},
+	"exclude": ["node_modules", "dist"],
+	"include": [
+		"source/**/*.ts",
+		"source/**/*.tsx",
+		"source/**/*.js",
+		"source/**/*.jsx",
+		"source/**/*.vue"
+	]
+}

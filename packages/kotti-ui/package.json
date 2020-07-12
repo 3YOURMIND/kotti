@@ -1,0 +1,27 @@
+{
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"devDependencies": {
+		"@vue/composition-api": "0.5.x"
+	},
+	"homepage": "https://github.com/3YOURMIND/kotti#readme",
+	"license": "MIT",
+	"main": "dist/index.cjs.js",
+	"module": "dist/index.esm.js",
+	"types": "dist/index.d.ts",
+	"name": "@3yourmind/kotti-ui",
+	"peerDependencies": {
+		"@vue/composition-api": "0.5.x"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
+	"scripts": {
+		"build": "rm -rf dist && rollup -c rollup.config.js",
+		"test": "echo \"Error: run tests from root\" && exit 1"
+	},
+	"sideEffects": false,
+	"version": "2.0.0"
+}
