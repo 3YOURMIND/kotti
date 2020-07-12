@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"esModuleInterop": true,
+		"lib": ["ESNext", "ESNext.AsyncIterable", "DOM", "es2019", "DOM.Iterable"],
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"noEmit": true,
+		"paths": {
+			"@/*": ["./*"],
+			"~/*": ["./*"]
+		},
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "ES2018",
+		"types": ["webpack-env", "node", "@nuxt/types"]
+	},
+	"exclude": ["node_modules"],
+	"include": [
+		"../kotti-ui/source/next/data.json",
+		"./**/*.ts",
+		"./**/*.tsx",
+		"./**/*.js",
+		"./**/*.jsx",
+		"./**/*.vue"
+	]
+}
