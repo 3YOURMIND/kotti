@@ -385,7 +385,7 @@ export const useField = <DATA_TYPE>({
 				(supports.clear ? sharedProperties.hideClear.value : true),
 		),
 		isOptional: computed(() => props.isOptional),
-	})
+	}) as KottiField.Hook.Returns<DATA_TYPE>
 
 	useNotifyContext({ context, field })
 
