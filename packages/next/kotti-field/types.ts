@@ -25,38 +25,36 @@ export namespace KottiField {
 			supports: KottiField.Supports
 		}
 
-		export type Returns<DATA_TYPE = unknown> = UnwrapRef<
-			KottiField.Hook.ReturnsWithRefs<DATA_TYPE>
-		>
-
-		export interface ReturnsWithRefs<DATA_TYPE extends unknown> {
-			currentValue: Ref<KottiField.Props<DATA_TYPE>['value']>
-			helpDescription: Ref<KottiField.Props<DATA_TYPE>['helpDescription']>
-			helpText: Ref<KottiField.Props<DATA_TYPE>['helpText']>
-			hideClear: Ref<KottiField.Props<DATA_TYPE>['hideClear']>
-			hideValidation: Ref<KottiField.Props<DATA_TYPE>['hideValidation']>
-			inputProps: Ref<
+		export type Returns<DATA_TYPE> = {
+			currentValue: KottiField.Props<DATA_TYPE>['value']
+			helpDescription: KottiField.Props<DATA_TYPE>['helpDescription']
+			helpText: KottiField.Props<DATA_TYPE>['helpText']
+			hideClear: KottiField.Props<DATA_TYPE>['hideClear']
+			hideValidation: KottiField.Props<DATA_TYPE>['hideValidation']
+			inputProps: Readonly<{
 				/**
 				 * Native HTML Props should have lowercase keys
 				 */
-				Readonly<{
-					'data-test': string
-					disabled: boolean
-					tabindex: KottiField.Props<DATA_TYPE>['tabIndex']
-				}>
-			>
-			isDisabled: Ref<KottiField.Props<DATA_TYPE>['isDisabled']>
-			isEmpty: Ref<boolean>
-			isLoading: Ref<KottiForm.Props['isLoading']>
-			isOptional: Ref<KottiField.Props<DATA_TYPE>['isOptional']>
-			size: Ref<KottiField.Props<DATA_TYPE>['size']>
-			label: Ref<KottiField.Props<DATA_TYPE>['label']>
-			leftIcon: Ref<KottiField.Props<DATA_TYPE>['leftIcon']>
-			prefix: Ref<KottiField.Props<DATA_TYPE>['prefix']>
-			rightIcon: Ref<KottiField.Props<DATA_TYPE>['rightIcon']>
-			setValue: Ref<(newValue: DATA_TYPE) => void>
-			suffix: Ref<KottiField.Props<DATA_TYPE>['suffix']>
-			validation: Ref<KottiField.Validation.Result>
+				'data-test': string
+				disabled: boolean
+				tabindex: KottiField.Props<DATA_TYPE>['tabIndex']
+			}>
+			isDisabled: KottiField.Props<DATA_TYPE>['isDisabled']
+			isEmpty: boolean
+			isLoading: KottiForm.Props['isLoading']
+			isOptional: KottiField.Props<DATA_TYPE>['isOptional']
+			size: KottiField.Props<DATA_TYPE>['size']
+			label: KottiField.Props<DATA_TYPE>['label']
+			leftIcon: KottiField.Props<DATA_TYPE>['leftIcon']
+			prefix: KottiField.Props<DATA_TYPE>['prefix']
+			rightIcon: KottiField.Props<DATA_TYPE>['rightIcon']
+			setValue: (newValue: DATA_TYPE) => void
+			suffix: KottiField.Props<DATA_TYPE>['suffix']
+			validation: Readonly<KottiField.Validation.Result>
+		}
+
+		export type ReturnsWithRefs<DATA_TYPE> = {
+			[KEY in keyof Returns<DATA_TYPE>]: Ref<Returns<DATA_TYPE>[KEY]>
 		}
 	}
 
