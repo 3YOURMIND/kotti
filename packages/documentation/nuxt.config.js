@@ -25,9 +25,9 @@ const config = {
 		color: '#2C64CC',
 	},
 	plugins: [
+		'~/plugins/composition-api',
 		'~/plugins/vue-clipboard2',
 		{ src: '~/plugins/kotti-ui', ssr: false },
-		'~/plugins/composition-api',
 	],
 	/*
 	 ** Build configuration
