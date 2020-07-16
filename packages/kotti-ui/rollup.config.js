@@ -1,5 +1,3 @@
-import path from 'path'
-
 import babel, { getBabelOutputPlugin } from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
@@ -58,7 +56,7 @@ const plugins = [
 	}),
 	postcssPlugin({
 		// modules: true,
-		extract: path.resolve(packageJSON.style),
+		extract: true,
 	}),
 	// css({
 	// 	output: packageJSON.style,
@@ -79,6 +77,7 @@ export default [
 	{
 		input: 'source/index.ts',
 		output: {
+			exports: 'named',
 			format: 'cjs',
 			file: packageJSON.main,
 			sourcemap: false,

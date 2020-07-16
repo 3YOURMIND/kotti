@@ -64,26 +64,6 @@ export default {
 </script>
 
 <style lang="scss">
-// It may not look like much, but this actually does fix the build
-// I’m sorry
-// FIXME: pls someone remove this monstrosity
-.some,
-.ok {
-	.noise,
-	.then {
-		.pls,
-		.that {
-			.fix,
-			.this {
-				.this,
-				.thus {
-					color: red;
-				}
-			}
-		}
-	}
-}
-
 @import '../kotti-style/_variables.scss';
 .kt-dropdown-button {
 	display: inline-block;
