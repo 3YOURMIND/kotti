@@ -77,7 +77,7 @@ export default [
 	{
 		input: 'source/index.ts',
 		output: {
-			exports: 'named',
+			//exports: 'named',
 			format: 'cjs',
 			file: packageJSON.main,
 			sourcemap: false,
