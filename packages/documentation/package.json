@@ -28,7 +28,7 @@
 	"scripts": {
 		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
 		"deploy:docs": "./github-deploy.sh",
-		"dev:docs": "yarn run build:tokens && nuxt"
+		"dev:docs": "nuxt"
 	},
 	"version": "2.0.0"
 }
