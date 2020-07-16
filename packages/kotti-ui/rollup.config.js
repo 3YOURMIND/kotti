@@ -17,16 +17,16 @@ import packageJSON from './package.json'
 const external = [...Object.keys(packageJSON.peerDependencies)]
 
 const plugins = [
+	nodeResolve({
+		extensions: ['.js', '.jsx', '.ts', '.tsx'],
+	}),
 	commonjs({
-		include: /node_modules/,
+		include: /\/node_modules\//,
 	}),
 	getBabelOutputPlugin({
 		presets: ['@babel/preset-env'],
 	}),
 	json(),
-	nodeResolve({
-		extensions: ['.js', '.jsx', '.ts', '.tsx'],
-	}),
 	babel({
 		babelHelpers: 'bundled',
 	}),
@@ -77,7 +77,6 @@ export default [
 	{
 		input: 'source/index.ts',
 		output: {
-			//exports: 'named',
 			format: 'cjs',
 			file: packageJSON.main,
 			sourcemap: false,
