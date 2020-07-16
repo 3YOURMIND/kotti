@@ -7,7 +7,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
-		"@popperjs/core": "^2.0.5",
+		"@popperjs/core": "2.0.6",
 		"deep-eql": "^4.0.0",
 		"deepmerge": "^4.2.2",
 		"element-ui": "2.13.1",
