@@ -19,7 +19,11 @@
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import ToggleBox from './ToggleBox.vue'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import ToggleSwitch from './ToggleSwitch.vue'
 
 export default defineComponent({

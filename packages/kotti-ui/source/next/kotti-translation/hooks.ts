@@ -75,14 +75,6 @@ export const useTranslationProvide = (
 	/**
 	 * Necessary for the date pickers
 	 */
-	/**
-	 * HACK: Need to use .default here because rollup somehow doesn’t manage to
-	 * resolve the .default on its own, but only in this specific case
-	 * What’s special about this is that it’s part of the node_modules, but it
-	 * still uses export default
-	 *
-	 * FIXME: Please remove this ASAP
-	 */
 	watch(locale, (newValue) => {
 		elementLocale.use(
 			{
@@ -91,7 +83,7 @@ export const useTranslationProvide = (
 				'es-ES': elementEs,
 				'fr-FR': elementFr,
 				'ja-JP': elementJa,
-			}[newValue].default,
+			}[newValue],
 		)
 	})
 

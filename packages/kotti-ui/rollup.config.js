@@ -23,7 +23,7 @@ const babelOptions = {
 	plugins: ['@babel/plugin-transform-runtime'],
 }
 
-const getPlugins = (includeDeclarations) => [
+const plugins = [
 	nodeResolve({
 		extensions: ['.js', '.jsx', '.ts', '.tsx'],
 	}),
@@ -40,8 +40,8 @@ const getPlugins = (includeDeclarations) => [
 		babelHelpers: 'runtime',
 	}),
 	typescript2({
-		check: false,
-		tsconfigOverride: { declaration: includeDeclarations },
+		allowSyntheticDefaultImports: true,
+		clean: true,
 		tsconfig: 'tsconfig.json',
 		useTsconfigDeclarationDir: true,
 		experimentalDecorators: true,
@@ -66,16 +66,16 @@ const getPlugins = (includeDeclarations) => [
 ]
 
 export default [
-	// {
-	// 	input: 'source/index.ts',
-	// 	output: {
-	// 		format: 'esm',
-	// 		file: packageJSON.module,
-	// 		sourcemap: true,
-	// 	},
-	// 	external,
-	// 	plugins: getPlugins(true),
-	// },
+	{
+		input: 'source/index.ts',
+		output: {
+			format: 'esm',
+			file: packageJSON.module,
+			sourcemap: true,
+		},
+		external,
+		plugins,
+	},
 	{
 		input: 'source/index.ts',
 		output: {
@@ -84,6 +84,6 @@ export default [
 			sourcemap: false,
 		},
 		external,
-		plugins: getPlugins(false),
+		plugins,
 	},
 ]

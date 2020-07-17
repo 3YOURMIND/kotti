@@ -68,6 +68,8 @@ import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import ActionIcon from './components/ActionIcon.vue'
 import { KOTTI_FIELD_MULTI_SELECT_PROPS } from './constants'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from './constants'
@@ -150,7 +152,7 @@ export default defineComponent({
 				 * the dropdown was previously closed and should not be opened
 				 */
 				if (scheduleFocusAfterFieldClick.value) {
-					elSelect.focus()
+					;(elSelect as ElSelectWithInternalAPI).focus()
 					scheduleFocusAfterFieldClick.value = false // done, so reset flag
 				} else {
 					/**
@@ -163,7 +165,7 @@ export default defineComponent({
 					 * without making the dropdown visible
 					 * [setSoftFocus()]{@link ./node_modules/element-ui/packages/select/src/select.vue}
 					 */
-					elSelect.setSoftFocus()
+					;(elSelect as ElSelectWithInternalAPI).setSoftFocus()
 				}
 			},
 			handleFieldMouseDown: () => {

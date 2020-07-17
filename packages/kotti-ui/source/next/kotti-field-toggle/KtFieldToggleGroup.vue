@@ -24,6 +24,8 @@ import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import ToggleInner from './components/ToggleInner.vue'
 import {
 	KOTTI_FIELD_TOGGLE_GROUP_PROPS,
