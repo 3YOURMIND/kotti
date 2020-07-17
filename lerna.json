@@ -1,4 +1,9 @@
 {
+	"command": {
+		"version": {
+			"allowBranch": "master"
+		}
+	},
 	"npmClient": "yarn",
 	"packages": ["packages/*"],
 	"useWorkspaces": true,

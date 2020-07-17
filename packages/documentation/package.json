@@ -16,6 +16,7 @@
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@nuxtjs/style-resources": "^1.0.0",
 		"@types/lodash": "^4.14.157",
+		"case-sensitive-paths-webpack-plugin": "^2.3.0",
 		"css-vars-ponyfill": "^2.2.0",
 		"dayjs": "^1.8.20",
 		"nuxt": "^2.13.3",
@@ -26,9 +27,10 @@
 	"name": "@3yourmind/documentation",
 	"private": true,
 	"scripts": {
-		"build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
-		"deploy:docs": "./github-deploy.sh",
-		"dev:docs": "nuxt"
+		"build": "DEPLOY_ENV=GH_PAGES nuxt generate",
+		"deploy": "./github-deploy.sh",
+		"format": "prettier --write **/*.{vue,js,json,jsx,ts,tsx,md}",
+		"serve": "nuxt"
 	},
 	"version": "2.0.0"
 }

@@ -79,14 +79,18 @@ cd kotti
 git config user.email "123456+githubusername@users.noreply.github.com"
 
 # install dependencies
+yarn config set workspaces-experimental true
 yarn install
+yarn run lerna bootstrap
 ```
 
 ### Develop
 
 ```bash
+# having to build should hopefully be resolved in a future update
+yarn --cwd packages/kotti-ui run build
 # serve with hot reload at http://localhost:3000
-yarn run dev:docs
+yarn --cwd packages/documentation run serve
 ```
 
 ### Linting
@@ -106,7 +110,7 @@ yarn run check:style
 ### Testing
 
 ```bash
-yarn run test:unit
+yarn run test
 ```
 
 ### Publish
@@ -115,29 +119,16 @@ yarn run test:unit
 # you may need login to npm with your credentials if you have publishing rights
 npm login
 
-# update version according to one of the valid options
-npm version {patch, minor, major}
-# OR change the version directly in package.json
-# then commit & push
-
-npm publish
-# the postPublish hook will create and automatically push the new tag
+yarn run lerna publish from-package
 
 # update release notes
 # https://github.com/3YOURMIND/kotti/releases/new
-
-# publish github pages
-./github-deploy.sh
 ```
 
 ### Build
 
 ```bash
-# build dist folder for package (automatically done before publish)
-yarn run build:kotti
-
-# generate kotti-docs for github pages to /gh-pages (automatically done after publish)
-yarn run build:gh-pages
+yarn run lerna run build
 ```
 
 ## Internals

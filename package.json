@@ -1,10 +1,56 @@
 {
+	"contributors": [
+		{
+			"email": "pujunyu@gmail.com",
+			"name": "Junyu Pu",
+			"url": "https://ostoc.github.io/"
+		},
+		{
+			"email": "kevinigeligeligel@gmail.com",
+			"name": "Kevin Peters",
+			"url": "https://www.kevinpeters.net/"
+		},
+		{
+			"email": "fw@3yourmind.com",
+			"name": "Florian Wendelborn",
+			"url": "https://hello.dodekeract.com/npm/@3yourmind/kotti-ui"
+		},
+		{
+			"email": "jo@3yourmind.com",
+			"name": "James O'Shea",
+			"url": "https://github.com/jamesoshea"
+		},
+		{
+			"email": "tquinonero@gmail.com",
+			"name": "Tom Quinonero",
+			"url": "https://github.com/tomquinonero"
+		},
+		{
+			"email": "melvinvangent@gmail.com",
+			"name": "Melvin van Gent",
+			"url": "https://github.com/mvangent"
+		},
+		{
+			"email": "nhirschfeld@gmail.com",
+			"name": "Na'aman Hirschfeld",
+			"url": "https://github.com/Goldziher"
+		},
+		{
+			"email": "amr.m.draz@gmail.com",
+			"name": "Amr Draz",
+			"url": "https://github.com/amrdraz"
+		},
+		{
+			"email": "caroleemad96@gmail.com",
+			"name": "Carol Soliman",
+			"url": "https://github.com/carsoli"
+		}
+	],
+	"dependencies": {
+		"typescript": "^3.9.6"
+	},
 	"devDependencies": {
 		"@babel/core": "7.x",
-		"@rollup/plugin-babel": "^5.1.0",
-		"@rollup/plugin-commonjs": "^14.0.0",
-		"@rollup/plugin-json": "^4.1.0",
-		"@rollup/plugin-node-resolve": "^8.4.0",
 		"@typescript-eslint/eslint-plugin": "^2.26.0",
 		"@typescript-eslint/parser": "^2.26.0",
 		"@vue/eslint-config-typescript": "^5.0.2",
@@ -20,20 +66,41 @@
 		"eslint-plugin-prettier": "^3.1.2",
 		"eslint-plugin-sonarjs": "^0.5.0",
 		"eslint-plugin-vue": "^6.1.2",
+		"husky": "^4.2.5",
 		"lerna": "^3.22.1",
+		"lint-staged": "^10.2.11",
 		"postcss": "^7.0.32",
 		"prettier": "^2.0.5",
-		"rollup": "^2.21.0",
-		"rollup-plugin-css-only": "^2.1.0",
-		"rollup-plugin-sass": "^1.2.2",
-		"rollup-plugin-typescript2": "^0.27.1",
-		"rollup-plugin-vue": "^5.1.9",
 		"sass": "^1.26.10",
 		"sass-loader": "^9.0.2",
+		"stylelint": "^13.1.0",
+		"stylelint-config-prettier": "^8.0.1",
+		"stylelint-config-recess-order": "^2.0.3",
+		"stylelint-config-recommended-scss": "^4.2.0",
+		"stylelint-csstree-validator": "^1.8.0",
+		"stylelint-prettier": "^1.1.2",
+		"stylelint-scss": "^3.14.2",
+		"stylelint-selector-no-empty": "^1.0.7",
 		"vue": "^2.6.11",
 		"vue-template-compiler": "^2.6.11"
 	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
 	"license": "MIT",
+	"lint-staged": {
+		"*.{css,scss,vue}": [
+			"stylelint --fix"
+		],
+		"*.{js,jsx,vue,ts,tsx}": [
+			"eslint --fix"
+		],
+		"*.{json,md}": [
+			"prettier --write"
+		]
+	},
 	"prettier": {
 		"arrowParens": "always",
 		"quoteProps": "as-needed",
@@ -46,14 +113,19 @@
 	"private": true,
 	"repository": "git@github.com:3YOURMIND/kotti",
 	"scripts": {
+		"check": "yarn run check:script && yarn run check:style",
 		"check:script": "eslint --ignore-path .gitignore '**/*.{js,ts,vue}'",
-		"lint:script": "eslint --fix --ignore-path .gitignore '**/*.{js,ts,vue}'"
+		"check:style": "stylelint '**/*.{css,scss,vue}'",
+		"lint": "yarn run lint:script && yarn run lint:style",
+		"lint:script": "yarn run check:script --fix",
+		"lint:style": "yarn run check:style --fix",
+		"postpublish": "yarn run postpublish:deploy",
+		"postpublish:deploy": "yarn --cwd packages/documentation run deploy",
+		"prepublishOnly": "yarn run lint && yarn run prepublishOnly:check-dirty && lerna run build",
+		"prepublishOnly:check-dirty": "git update-index --refresh && git diff-index --quiet HEAD --"
 	},
 	"version": "1.0.0",
 	"workspaces": [
 		"packages/*"
-	],
-	"dependencies": {
-		"typescript": "^3.9.6"
-	}
+	]
 }
