@@ -19,8 +19,8 @@
 	},
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
-	"main": "source/index.ts",
-	"name": "@3yourmind/fakeyoda",
+	"main": "src/main.ts",
+	"name": "@3yourmind/test-app",
 	"private": true,
 	"repository": {
 		"type": "git",
