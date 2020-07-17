@@ -2,11 +2,10 @@ import babel, { getBabelOutputPlugin } from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-// import autoprefixer from 'autoprefixer'
-// import postcss from 'postcss'
-// import css from 'rollup-plugin-css-only'
-import postcssPlugin from 'rollup-plugin-postcss'
-// import typescript from '@rollup/plugin-typescript'
+import postcssPluginAutoprefixer from 'autoprefixer'
+import postcss from 'postcss'
+import postcssPluginFlexbugs from 'postcss-flexbugs-fixes'
+import postcssPluginPresetEnv from 'postcss-preset-env'
 import scss from 'rollup-plugin-scss'
 import typescript2 from 'rollup-plugin-typescript2'
 import vue from 'rollup-plugin-vue'
@@ -30,11 +29,6 @@ const plugins = [
 	babel({
 		babelHelpers: 'bundled',
 	}),
-	// typescript({
-	// 	tsconfig: false,
-	// 	experimentalDecorators: true,
-	// 	module: 'es2015',
-	// }),
 	typescript2({
 		check: false,
 		tsconfig: 'tsconfig.json',
@@ -49,18 +43,15 @@ const plugins = [
 	scss({
 		sass,
 		output: packageJSON.style,
-		// processor: (css) =>
-		// 	postcss([autoprefixer])
-		// 		.process(css)
-		// 		.then((result) => result.css),
+		processor: (css) =>
+			postcss([
+				postcssPluginAutoprefixer,
+				postcssPluginFlexbugs,
+				postcssPluginPresetEnv,
+			])
+				.process(css)
+				.then((result) => result.css),
 	}),
-	postcssPlugin({
-		// modules: true,
-		extract: true,
-	}),
-	// css({
-	// 	output: packageJSON.style,
-	// }),
 ]
 
 export default [
