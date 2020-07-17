@@ -9,6 +9,7 @@
 	},
 	"dependencies": {
 		"@3yourmind/kotti-ui": "*",
+		"@3yourmind/yoco": "*",
 		"@vue/composition-api": "0.5.x",
 		"core-js": "^3.6.5"
 	},
