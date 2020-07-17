@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Kotti } from '@3yourmind/kotti-ui'
+import { Yoco } from '@3yourmind/kotti-ui'
 import { defineComponent } from '@vue/composition-api'
 import { Route } from 'vue-router'
 
@@ -49,7 +49,7 @@ export default defineComponent({
 			sections: menu.map((section): {
 				title: string
 				links: Array<{
-					icon: Kotti.Yoco.Icon
+					icon: Yoco.Icon
 					title: string
 					path: string
 					isActive: boolean

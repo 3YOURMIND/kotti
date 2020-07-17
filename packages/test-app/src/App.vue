@@ -7,6 +7,7 @@
 </template>
 
 <script lang="ts">
+import '@3yourmind/kotti-ui/dist/styles.css'
 import { KtForm, KtFieldText } from '@3yourmind/kotti-ui'
 import Vue from 'vue'
 
@@ -18,14 +19,3 @@ export default Vue.extend({
 	},
 })
 </script>
-
-<style>
-#app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-	margin-top: 60px;
-}
-</style>

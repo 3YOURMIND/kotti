@@ -47,7 +47,7 @@ or
 // in main.js / entrypoint
 import Vue from 'vue'
 import KottiUI from '@3yourmind/kotti-ui'
-import '@3yourmind/kotti-ui/dist/KottiUI.css'
+import '@3yourmind/kotti-ui/dist/styles.css'
 
 // register all KtComponents globally
 Vue.use(KottiUI)

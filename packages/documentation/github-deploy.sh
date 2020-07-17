@@ -4,7 +4,7 @@
 set -e
 
 # build
-yarn run build:gh-pages
+yarn run build
 
 # navigate into the build output directory
 cd gh-pages/

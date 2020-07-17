@@ -1,4 +1,8 @@
+// styles
+import 'normalize.css'
 import './kotti-style/index.scss'
+
+// components
 import KtAccordion from './kotti-accordion'
 import KtActionbar from './kotti-actionbar'
 import KtAvatar from './kotti-avatar'

@@ -206,6 +206,7 @@ import {
 	KOTTI_FIELD_TEXT_AREA_SUPPORTS,
 	KOTTI_FIELD_TEXT_SUPPORTS,
 	KOTTI_FIELD_TOGGLE_SUPPORTS,
+	Yoco,
 } from '@3yourmind/kotti-ui'
 import data from '@3yourmind/kotti-ui/source/next/data.json'
 import { defineComponent, ref, computed } from '@vue/composition-api'
@@ -405,11 +406,11 @@ export default defineComponent({
 			helpDescription: Kotti.FieldText.Value
 			helpText: Kotti.FieldText.Value
 			label: Kotti.FieldText.Value
-			leftIcon: Kotti.Yoco.Icon | null
+			leftIcon: Yoco.Icon | null
 			locale: Kotti.Translation.SupportedLanguages
 			placeholder: Kotti.FieldText.Value
 			prefix: Kotti.FieldText.Value
-			rightIcon: Kotti.Yoco.Icon | null
+			rightIcon: Yoco.Icon | null
 			size: 'small' | 'medium' | 'large'
 			suffix: Kotti.FieldText.Value
 			validation: Kotti.Field.Validation.Result['type']
@@ -611,7 +612,7 @@ export default defineComponent({
 			},
 			settings,
 			values,
-			yocoIconOptions: (data.yocoIcons as Kotti.Yoco.Icon[]).map((icon) => ({
+			yocoIconOptions: (data.yocoIcons as Yoco.Icon[]).map((icon) => ({
 				label: icon,
 				value: icon,
 			})),
