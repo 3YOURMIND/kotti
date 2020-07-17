@@ -1,8 +1,8 @@
 import { onMounted, Ref, watchEffect } from '@vue/composition-api'
 import { DatePicker as ElDate } from 'element-ui'
 
+import { Yoco } from '../../types'
 import { KottiField } from '../kotti-field/types'
-import { Yoco } from '../types'
 
 import {
 	KottiFieldDate,

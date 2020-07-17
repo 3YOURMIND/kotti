@@ -1,4 +1,4 @@
-import { Yoco } from '@3yourmind/kotti-ui/source/next/types'
+import { Kotti } from '@3yourmind/kotti-ui'
 
 export type SubsectionPage = {
 	label: string
@@ -7,7 +7,7 @@ export type SubsectionPage = {
 }
 
 export type Subsection = {
-	icon: Yoco.Icon
+	icon: Kotti.Yoco.Icon
 	title: string
 	path: string
 	pages: Array<SubsectionPage>

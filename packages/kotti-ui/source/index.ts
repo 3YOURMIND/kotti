@@ -74,7 +74,7 @@ import {
 export * from './next/kotti-form'
 import { KtTranslationContext } from './next/kotti-translation/KtTranslationContext'
 export * from './next/kotti-translation'
-import * as Kotti from './types'
+export * from './types'
 
 const components = {
 	KtAccordion,
@@ -175,7 +175,6 @@ function install(Vue: any) {
 
 if (typeof window !== 'undefined' && window.Vue) install(window.Vue)
 
-export { Kotti }
 export default { ...components, install }
 export {
 	KtAccordion,
