@@ -35,10 +35,11 @@ export default defineComponent({
 
 		return {
 			field,
-			inputProps: computed((): Partial<HTMLInputElement> & {
-				class: unknown
-				forceUpdateKey: number
-			} => ({
+			/**
+			 * FIXME: Type definition for HTMLInputElement was removed due to a bug
+			 * when generating the types using rollup
+			 */
+			inputProps: computed(() => ({
 				...field.inputProps,
 				class: ['kt-field-text__wrapper'],
 				forceUpdateKey: forceUpdateKey.value,

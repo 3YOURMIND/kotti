@@ -20,6 +20,7 @@
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
+		"@babel/plugin-transform-runtime": "^7.10.5",
 		"@rollup/plugin-babel": "^5.1.0",
 		"@rollup/plugin-commonjs": "^14.0.0",
 		"@rollup/plugin-json": "^4.1.0",
@@ -44,7 +45,9 @@
 	"module": "dist/index.esm.js",
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
+		"@babel/runtime": "^7.10.5",
 		"@vue/composition-api": "0.5.x",
+		"core-js": "*",
 		"vue": "2.x"
 	},
 	"repository": {

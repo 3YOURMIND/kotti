@@ -2,6 +2,8 @@
 	"dependencies": {
 		"@3yourmind/kotti-ui": "*",
 		"@3yourmind/yoco": "*",
+		"@babel/runtime": "^7.10.5",
+		"core-js": "^3.6.5",
 		"lodash": "^4.17.19"
 	},
 	"description": "Kotti-ui Doc Pages",

@@ -1,8 +1,6 @@
-export default {
+const KtRow = {
 	name: 'KtRow',
-
 	componentName: 'KtRow',
-
 	props: {
 		tag: {
 			type: String,
@@ -23,7 +21,6 @@ export default {
 		},
 		gap: Number,
 	},
-
 	computed: {
 		style() {
 			const result = {}
@@ -36,7 +33,6 @@ export default {
 			return result
 		},
 	},
-
 	render(h) {
 		return h(
 			this.tag,
@@ -52,3 +48,9 @@ export default {
 		)
 	},
 }
+
+KtRow.install = function (Vue) {
+	Vue.component(KtRow.name, KtRow)
+}
+
+export default KtRow

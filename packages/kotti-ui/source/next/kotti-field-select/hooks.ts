@@ -5,18 +5,24 @@ import { KottiField } from '../kotti-field/types'
 
 import { KottiFieldSingleSelect, KottiFieldMultiSelect } from './types'
 
-export type ElSelectWithInternalAPI =
-	| (ElSelect & {
-			inputWidth: number
-			setSoftFocus(): void
-	  })
-	| null
+export type ElSelectWithInternalAPI = ElSelect & {
+	inputWidth: number
+	setSoftFocus(): void
+}
 
 type HookParameters<DATA_TYPE extends Values> = {
-	elSelectRef: Ref<ElSelectWithInternalAPI>
+	/**
+	 * FIXME: Type definition for ElSelectWithInternalAPI was removed due to a bug
+	 * when generating the types using rollup
+	 */
+	elSelectRef: Ref<unknown>
 	field: KottiField.Hook.Returns<DATA_TYPE>
 	inputSelectors: string[]
-	ktFieldRef: Ref<Vue | null>
+	/**
+	 * FIXME: Type definition for Vue | null was removed due to a bug
+	 * when generating the types using rollup
+	 */
+	ktFieldRef: Ref<unknown>
 }
 
 type Values = KottiFieldSingleSelect.Value | KottiFieldMultiSelect.Value
@@ -32,7 +38,10 @@ const getComponents = <DATA_TYPE extends Values>({
 
 	if (ktFieldComponent === null) throw new Error('kt-field not available')
 
-	return { elSelectComponent, ktFieldComponent }
+	return {
+		elSelectComponent: elSelectComponent as ElSelectWithInternalAPI,
+		ktFieldComponent: ktFieldComponent as Vue,
+	}
 }
 
 /**

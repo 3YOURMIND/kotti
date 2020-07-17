@@ -1,213 +1,201 @@
 <template lang="md">
 # Form Fields
 
-<ClientOnly>
-	<KtTranslationContext :locale="settings.locale">
-		<div class="overview">
-			<div class="overview__component">
-				<h4>Component</h4>
-				<KtForm v-model="values">
-					<component
-						:is="componentRepresenation.name"
-						:validator="componentRepresenation.validator"
-						v-bind="componentRepresenation.props"
-					>
-						Default Slot
-					</component>
-				</KtForm>
-				<div class="overview__component__value">
-					<strong>Value</strong>: <span v-text="JSON.stringify(values[componentProps.formKey])"/> <a @click.prevent="reset">reset</a>
-				</div>
-			</div>
-			<div class="overview__code">
-				<h4>Code</h4>
-				<pre v-text="componentRepresenation.code" />
-				<button @click="savedFieldsAdd" type="button">Save to LocalStorage</button>
+<KtTranslationContext :locale="settings.locale">
+	<div class="overview">
+		<div class="overview__component">
+			<h4>Component</h4>
+			<KtForm v-model="values">
+				<component
+					:is="componentRepresenation.name"
+					:validator="componentRepresenation.validator"
+					v-bind="componentRepresenation.props"
+				>
+					Default Slot
+				</component>
+			</KtForm>
+			<div class="overview__component__value">
+				<strong>Value</strong>: <span v-text="JSON.stringify(values[componentProps.formKey])"/> <a @click.prevent="reset">reset</a>
 			</div>
 		</div>
-		<KtForm v-model="settings">
-			<div class="wrapper">
-				<div>
-					<h4>Settings</h4>
+		<div class="overview__code">
+			<h4>Code</h4>
+			<pre v-text="componentRepresenation.code" />
+			<button @click="savedFieldsAdd" type="button">Save to LocalStorage</button>
+		</div>
+	</div>
+	<KtForm v-model="settings">
+		<div class="wrapper">
+			<div>
+				<h4>Settings</h4>
+				<KtFieldSingleSelect
+					formKey="component"
+					hideClear
+					label="Component"
+					:options="componentOptions"
+					size="small"
+				/>
+				<KtFieldSingleSelect
+					formKey="locale"
+					hideClear
+					helpText="Can be set via KtTranslationContext"
+					label="Language"
+					leftIcon="global"
+					:options="[
+						{ label: 'German (de-DE)', value: 'de-DE' },
+						{ label: 'English (en-US)', value: 'en-US' },
+						{ label: 'Spanish (es-ES)', value: 'es-ES' },
+						{ label: 'French (fr-FR)', value: 'fr-FR' },
+						{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+					]"
+					size="small"
+				/>
+				<KtFieldSingleSelect
+					formKey="size"
+					hideClear
+					isOptional
+					label="Size"
+					:options="[
+						{ label: 'Small', value: 'small' },
+						{ label: 'Medium (Default)', value: 'medium' },
+						{ label: 'Large', value: 'large' }
+					]"
+					size="small"
+				/>
+				<KtFieldSingleSelect
+					formKey="validation"
+					isOptional
+					label="Validation State"
+					helpText="Passed as a validation function or via KtForm.validators & validatorKey"
+					:options="[
+						{ label: 'None (Default)', value: null },
+						{ label: 'Success', value: 'success' },
+						{ label: 'Warning', value: 'warning' },
+						{ label: 'Error', value: 'error' },
+					]"
+					size="small"
+				/>
+				<KtFieldToggleGroup
+					formKey="booleanFlags"
+					isOptional
+					helpText="hideClear Support Varies"
+					label="Boolean Flags"
+					:options="[
+						{ disabled: !componentDefinition.supports.decoration, key: 'hideClear', label: 'hideClear' },
+						{ key: 'hideValidation', label: 'hideValidation' },
+						{ key: 'isDisabled', label: 'isDisabled' },
+						{ key: 'isLoading', label: 'isLoading' },
+						{ key: 'isOptional', label: 'isOptional' },
+					]"
+					type="switch"
+					size="small"
+				/>
+				<KtFormControllerObject formKey="additionalProps" v-if="componentDefinition.additionalProps.length > 0">
+					<h4>Additional Props</h4>
 					<KtFieldSingleSelect
-						formKey="component"
-						hideClear
-						label="Component"
-						:options="componentOptions"
-						size="small"
-					/>
-					<KtFieldSingleSelect
-						formKey="locale"
-						hideClear
-						helpText="Can be set via KtTranslationContext"
-						label="Language"
-						leftIcon="global"
-						:options="[
-							{ label: 'German (de-DE)', value: 'de-DE' },
-							{ label: 'English (en-US)', value: 'en-US' },
-							{ label: 'Spanish (es-ES)', value: 'es-ES' },
-							{ label: 'French (fr-FR)', value: 'fr-FR' },
-							{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
-						]"
-						size="small"
-					/>
-					<KtFieldSingleSelect
-						formKey="size"
-						hideClear
+						v-if="componentDefinition.additionalProps.includes('toggleType')"
+						formKey="toggleType"
 						isOptional
-						label="Size"
+						label="type"
 						:options="[
-							{ label: 'Small', value: 'small' },
-							{ label: 'Medium (Default)', value: 'medium' },
-							{ label: 'Large', value: 'large' }
+							{ label: 'checkbox (Default)', value: 'checkbox' },
+							{ label: 'switch', value: 'switch' },
 						]"
 						size="small"
 					/>
-					<KtFieldSingleSelect
-						formKey="validation"
+					<div class="field-row" v-if="componentDefinition.additionalProps.includes('numberMaximum')">
+						<KtFieldNumber
+							formKey="numberMaximum"
+							isOptional
+							label="maximum"
+							size="small"
+						/>
+						<KtFieldNumber
+							formKey="numberMinimum"
+							isOptional
+							label="minimum"
+							size="small"
+						/>
+					</div>
+					<KtFieldToggle
+						v-if="componentDefinition.additionalProps.includes('numberHideMaximum')"
+						formKey="numberHideMaximum"
 						isOptional
-						label="Validation State"
-						helpText="Passed as a validation function or via KtForm.validators & validatorKey"
-						:options="[
-							{ label: 'None (Default)', value: null },
-							{ label: 'Success', value: 'success' },
-							{ label: 'Warning', value: 'warning' },
-							{ label: 'Error', value: 'error' },
-						]"
+						label="hideMaximum"
 						size="small"
-					/>
-					<KtFieldToggleGroup
-						formKey="booleanFlags"
-						isOptional
-						helpText="hideClear Support Varies"
-						label="Boolean Flags"
-						:options="[
-							{ disabled: !componentDefinition.supports.decoration, key: 'hideClear', label: 'hideClear' },
-							{ key: 'hideValidation', label: 'hideValidation' },
-							{ key: 'isDisabled', label: 'isDisabled' },
-							{ key: 'isLoading', label: 'isLoading' },
-							{ key: 'isOptional', label: 'isOptional' },
-						]"
 						type="switch"
-						size="small"
 					/>
-					<KtFormControllerObject formKey="additionalProps" v-if="componentDefinition.additionalProps.length > 0">
-						<h4>Additional Props</h4>
-						<KtFieldSingleSelect
-						 	v-if="componentDefinition.additionalProps.includes('toggleType')"
-							formKey="toggleType"
-							isOptional
-							label="type"
-							:options="[
-								{ label: 'checkbox (Default)', value: 'checkbox' },
-								{ label: 'switch', value: 'switch' },
-							]"
-							size="small"
-						/>
-						<div class="field-row" v-if="componentDefinition.additionalProps.includes('numberMaximum')">
-							<KtFieldNumber
-								formKey="numberMaximum"
-								isOptional
-								label="maximum"
-								size="small"
-							/>
-							<KtFieldNumber
-								formKey="numberMinimum"
-								isOptional
-								label="minimum"
-								size="small"
-							/>
-						</div>
-						<KtFieldToggle
-							v-if="componentDefinition.additionalProps.includes('numberHideMaximum')"
-							formKey="numberHideMaximum"
-							isOptional
-							label="hideMaximum"
-							size="small"
-							type="switch"
-						/>
-					</KtFormControllerObject>
+				</KtFormControllerObject>
+			</div>
+			<div>
+				<h4>Texts</h4>
+				<KtFieldText formKey="label" isOptional label="label" size="small" />
+				<KtFieldText formKey="helpDescription" isOptional label="helpDescription" size="small" />
+				<KtFieldText formKey="helpText" isOptional label="helpText" size="small" />
+				<KtFieldText formKey="placeholder" isOptional label="placeholder" size="small" helpText="Support Varies" />
+				<h4>Decoration</h4>
+				<div class="field-row">
+					<KtFieldText
+						formKey="prefix"
+						:isDisabled="!componentDefinition.supports.decoration"
+						isOptional
+						label="prefix"
+						size="small"
+						helpText="Support Varies"
+					/>
+					<KtFieldText
+						formKey="suffix"
+						:isDisabled="!componentDefinition.supports.decoration"
+						isOptional
+						label="suffix"
+						size="small"
+						helpText="Support Varies"
+					/>
 				</div>
-				<div>
-					<h4>Texts</h4>
-					<KtFieldText formKey="label" isOptional label="label" size="small" />
-					<KtFieldText formKey="helpDescription" isOptional label="helpDescription" size="small" />
-					<KtFieldText formKey="helpText" isOptional label="helpText" size="small" />
-					<KtFieldText formKey="placeholder" isOptional label="placeholder" size="small" helpText="Support Varies" />
-					<h4>Decoration</h4>
-					<div class="field-row">
-						<KtFieldText
-							formKey="prefix"
-							:isDisabled="!componentDefinition.supports.decoration"
-							isOptional
-							label="prefix"
-							size="small"
-							helpText="Support Varies"
-						/>
-						<KtFieldText
-							formKey="suffix"
-							:isDisabled="!componentDefinition.supports.decoration"
-							isOptional
-							label="suffix"
-							size="small"
-							helpText="Support Varies"
-						/>
-					</div>
-					<div class="field-row">
-						<KtFieldSingleSelect
-							formKey="leftIcon"
-							:isDisabled="!componentDefinition.supports.decoration"
-							isOptional
-							label="leftIcon"
-							:options="yocoIconOptions"
-							size="small"
-							helpText="Support Varies"
-						/>
-						<KtFieldSingleSelect
-							formKey="rightIcon"
-							:isDisabled="!componentDefinition.supports.decoration"
-							isOptional
-							label="rightIcon"
-							:options="yocoIconOptions"
-							size="small"
-							helpText="Support Varies"
-						/>
-					</div>
+				<div class="field-row">
+					<KtFieldSingleSelect
+						formKey="leftIcon"
+						:isDisabled="!componentDefinition.supports.decoration"
+						isOptional
+						label="leftIcon"
+						:options="yocoIconOptions"
+						size="small"
+						helpText="Support Varies"
+					/>
+					<KtFieldSingleSelect
+						formKey="rightIcon"
+						:isDisabled="!componentDefinition.supports.decoration"
+						isOptional
+						label="rightIcon"
+						:options="yocoIconOptions"
+						size="small"
+						helpText="Support Varies"
+					/>
 				</div>
 			</div>
-			<KtForm v-model="values" v-if="savedFieldsMap.length > 0">
-				<h3>Saved Fields</h3>
-				<div v-for="(savedField, index) in savedFieldsMap" class="overview" :key="index">
-					<div class="overview__component">
-						<component
-							:is="savedField.name"
-							:validator="savedField.validator"
-							v-bind="savedField.props"
-						>Default Slot</component>
-						<button @click="savedFieldsRemove(index)" type="button">Remove</button>
-					</div>
-					<div class="overview__code">
-						<pre v-text="savedField.code" />
-					</div>
+		</div>
+		<KtForm v-model="values" v-if="savedFieldsMap.length > 0">
+			<h3>Saved Fields</h3>
+			<div v-for="(savedField, index) in savedFieldsMap" class="overview" :key="index">
+				<div class="overview__component">
+					<component
+						:is="savedField.name"
+						:validator="savedField.validator"
+						v-bind="savedField.props"
+					>Default Slot</component>
+					<button @click="savedFieldsRemove(index)" type="button">Remove</button>
 				</div>
-			</KtForm>
+				<div class="overview__code">
+					<pre v-text="savedField.code" />
+				</div>
+			</div>
 		</KtForm>
-	</KtTranslationContext>
-</ClientOnly>
+	</KtForm>
+</KtTranslationContext>
 </template>
 
 <script lang="ts">
-import {
-	Kotti,
-	KOTTI_FIELD_DATE_SUPPORTS,
-	KOTTI_FIELD_NUMBER_SUPPORTS,
-	KOTTI_FIELD_RADIO_GROUP_SUPPORTS,
-	KOTTI_FIELD_SELECT_SUPPORTS,
-	KOTTI_FIELD_TEXT_AREA_SUPPORTS,
-	KOTTI_FIELD_TEXT_SUPPORTS,
-	KOTTI_FIELD_TOGGLE_SUPPORTS,
-	Yoco,
-} from '@3yourmind/kotti-ui'
+import { Kotti, Yoco } from '@3yourmind/kotti-ui'
 import data from '@3yourmind/kotti-ui/source/next/data.json'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
@@ -217,10 +205,11 @@ const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
 
 const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 	try {
-		window.localStorage.setItem(
-			LOCALSTORAGE_SAVED_COMPONENTS_KEY,
-			JSON.stringify(savedFields),
-		)
+		if (typeof window !== 'undefined' && window.document)
+			window.localStorage.setItem(
+				LOCALSTORAGE_SAVED_COMPONENTS_KEY,
+				JSON.stringify(savedFields),
+			)
 	} catch (error) {
 		// eslint-disable-next-line no-console
 		console.warn('could not save to localStorage')
@@ -237,73 +226,73 @@ const components: Array<{
 		additionalProps: [],
 		formKey: 'dateValue',
 		name: 'KtFieldDate',
-		supports: KOTTI_FIELD_DATE_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: [],
 		formKey: 'dateRangeValue',
 		name: 'KtFieldDateRange',
-		supports: KOTTI_FIELD_DATE_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: [],
 		formKey: 'dateTimeValue',
 		name: 'KtFieldDateTime',
-		supports: KOTTI_FIELD_DATE_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: [],
 		formKey: 'dateTimeRangeValue',
 		name: 'KtFieldDateTimeRange',
-		supports: KOTTI_FIELD_DATE_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: ['numberHideMaximum', 'numberMaximum', 'numberMinimum'],
 		formKey: 'numberValue',
 		name: 'KtFieldNumber',
-		supports: KOTTI_FIELD_NUMBER_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: [],
 		formKey: 'multiSelectValue',
 		name: 'KtFieldMultiSelect',
-		supports: KOTTI_FIELD_SELECT_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: [],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldRadioGroup',
-		supports: KOTTI_FIELD_RADIO_GROUP_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: [],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
-		supports: KOTTI_FIELD_SELECT_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: [],
 		formKey: 'textValue',
 		name: 'KtFieldText',
-		supports: KOTTI_FIELD_TEXT_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: [],
 		formKey: 'textValue',
 		name: 'KtFieldTextArea',
-		supports: KOTTI_FIELD_TEXT_AREA_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: ['toggleType'],
 		formKey: 'toggleValue',
 		name: 'KtFieldToggle',
-		supports: KOTTI_FIELD_TOGGLE_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
 		additionalProps: ['toggleType'],
 		formKey: 'toggleGroupValue',
 		name: 'KtFieldToggleGroup',
-		supports: KOTTI_FIELD_TOGGLE_SUPPORTS,
+		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 ]
 
@@ -551,10 +540,12 @@ export default defineComponent({
 		const savedFields = ref<ComponentValue[]>(
 			(() => {
 				try {
-					const value = window.localStorage.getItem(
-						LOCALSTORAGE_SAVED_COMPONENTS_KEY,
-					)
-					if (value) return JSON.parse(value)
+					if (typeof window !== 'undefined' && window.document) {
+						const value = window.localStorage.getItem(
+							LOCALSTORAGE_SAVED_COMPONENTS_KEY,
+						)
+						if (value) return JSON.parse(value)
+					}
 				} catch (error) {
 					// eslint-disable-next-line no-console
 					console.warn('could not read localStorage')

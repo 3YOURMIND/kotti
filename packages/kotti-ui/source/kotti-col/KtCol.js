@@ -1,6 +1,5 @@
-export default {
+const KtCol = {
 	name: 'KtCol',
-
 	props: {
 		span: {
 			type: Number,
@@ -19,7 +18,6 @@ export default {
 		lg: [Number, Object],
 		xl: [Number, Object],
 	},
-
 	computed: {
 		space() {
 			let parent = this.$parent
@@ -79,3 +77,9 @@ export default {
 		)
 	},
 }
+
+KtCol.install = function (Vue) {
+	Vue.component(KtCol.name, KtCol)
+}
+
+export default KtCol

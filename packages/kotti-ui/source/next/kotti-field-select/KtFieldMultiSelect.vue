@@ -99,8 +99,16 @@ export default defineComponent({
 		})
 		const translations = useTranslationNamespace('KtFieldSelects')
 
-		const elSelectRef = ref<ElSelectWithInternalAPI>(null)
-		const ktFieldRef = ref<Vue>(null)
+		/**
+		 * FIXME: Type definition for ElSelectWithInternalAPI was removed due to a bug
+		 * when generating the types using rollup
+		 */
+		const elSelectRef = ref<unknown>(null)
+		/**
+		 * FIXME: Type definition for Vue was removed due to a bug
+		 * when generating the types using rollup
+		 */
+		const ktFieldRef = ref<unknown>(null)
 
 		useSelectFixes({
 			field,
@@ -117,19 +125,21 @@ export default defineComponent({
 		const scheduleFocusAfterFieldClick = ref(false)
 
 		return {
-			elMultipleSelectProps: computed(
-				(): Partial<ElSelect> => ({
-					defaultFirstOption: true,
-					disabled: field.isDisabled,
-					filterable: true,
-					loadingText: translations.value.loadingText,
-					multiple: true,
-					noDataText: translations.value.noDataText,
-					noMatchText: translations.value.noMatchText,
-					placeholder: props.placeholder ?? undefined,
-					value: field.currentValue,
-				}),
-			),
+			/**
+			 * FIXME: Type definition for Partial<ElSelect> was removed due to a bug
+			 * when generating the types using rollup
+			 */
+			elMultipleSelectProps: computed(() => ({
+				defaultFirstOption: true,
+				disabled: field.isDisabled,
+				filterable: true,
+				loadingText: translations.value.loadingText,
+				multiple: true,
+				noDataText: translations.value.noDataText,
+				noMatchText: translations.value.noMatchText,
+				placeholder: props.placeholder ?? undefined,
+				value: field.currentValue,
+			})),
 			elSelectRef,
 			field,
 			handleFieldClick: () => {

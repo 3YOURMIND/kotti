@@ -13,9 +13,17 @@ import sass from 'sass'
 
 import packageJSON from './package.json'
 
-const external = [...Object.keys(packageJSON.peerDependencies)]
+const external = [
+	/@babel\/runtime/,
+	...Object.keys(packageJSON.peerDependencies),
+]
 
-const plugins = [
+const babelOptions = {
+	presets: ['@babel/preset-env'],
+	plugins: ['@babel/plugin-transform-runtime'],
+}
+
+const getPlugins = (includeDeclarations) => [
 	nodeResolve({
 		extensions: ['.js', '.jsx', '.ts', '.tsx'],
 	}),
@@ -23,14 +31,17 @@ const plugins = [
 		include: /\/node_modules\//,
 	}),
 	getBabelOutputPlugin({
-		presets: ['@babel/preset-env'],
+		...babelOptions,
 	}),
 	json(),
 	babel({
-		babelHelpers: 'bundled',
+		...babelOptions,
+		skipPreflightCheck: true,
+		babelHelpers: 'runtime',
 	}),
 	typescript2({
 		check: false,
+		tsconfigOverride: { declaration: includeDeclarations },
 		tsconfig: 'tsconfig.json',
 		useTsconfigDeclarationDir: true,
 		experimentalDecorators: true,
@@ -55,16 +66,16 @@ const plugins = [
 ]
 
 export default [
-	{
-		input: 'source/index.ts',
-		output: {
-			format: 'esm',
-			file: packageJSON.module,
-			sourcemap: true,
-		},
-		external,
-		plugins,
-	},
+	// {
+	// 	input: 'source/index.ts',
+	// 	output: {
+	// 		format: 'esm',
+	// 		file: packageJSON.module,
+	// 		sourcemap: true,
+	// 	},
+	// 	external,
+	// 	plugins: getPlugins(true),
+	// },
 	{
 		input: 'source/index.ts',
 		output: {
@@ -73,6 +84,6 @@ export default [
 			sourcemap: false,
 		},
 		external,
-		plugins,
+		plugins: getPlugins(false),
 	},
 ]
