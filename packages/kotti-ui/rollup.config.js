@@ -1,4 +1,4 @@
-import babel, { getBabelOutputPlugin } from '@rollup/plugin-babel'
+import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
@@ -16,28 +16,40 @@ import packageJSON from './package.json'
 const external = [
 	/@babel\/runtime/,
 	...Object.keys(packageJSON.peerDependencies),
+	...Object.keys(packageJSON.dependencies),
 ]
-
-const babelOptions = {
-	presets: ['@babel/preset-env'],
-	plugins: ['@babel/plugin-transform-runtime'],
-}
 
 const plugins = [
 	nodeResolve({
 		extensions: ['.js', '.jsx', '.ts', '.tsx'],
 	}),
 	commonjs({
-		include: /\/node_modules\//,
-	}),
-	getBabelOutputPlugin({
-		...babelOptions,
+		include: [/\/node_modules\//],
 	}),
 	json(),
 	babel({
-		...babelOptions,
+		plugins: [
+			[
+				'@babel/plugin-transform-runtime',
+				{
+					useESModules: true,
+				},
+			],
+			'transform-vue-jsx',
+		],
 		skipPreflightCheck: true,
 		babelHelpers: 'runtime',
+		exclude: ['node_modules/@babel/**', /\/core-js\//],
+		presets: [
+			[
+				'@babel/preset-env',
+				{
+					corejs: 3,
+					targets: '> 0.25%, not dead, IE > 10',
+					useBuiltIns: 'usage',
+				},
+			],
+		],
 	}),
 	typescript2({
 		allowSyntheticDefaultImports: true,
@@ -79,8 +91,9 @@ export default [
 	{
 		input: 'source/index.ts',
 		output: {
-			format: 'cjs',
+			format: 'umd',
 			file: packageJSON.main,
+			name: 'KottiUI',
 			sourcemap: false,
 		},
 		external,

@@ -76,15 +76,18 @@ export const useTranslationProvide = (
 	 * Necessary for the date pickers
 	 */
 	watch(locale, (newValue) => {
-		elementLocale.use(
-			{
-				'en-US': elementEn,
-				'de-DE': elementDe,
-				'es-ES': elementEs,
-				'fr-FR': elementFr,
-				'ja-JP': elementJa,
-			}[newValue],
-		)
+		const elementUiTranslations = {
+			'en-US': elementEn,
+			'de-DE': elementDe,
+			'es-ES': elementEs,
+			'fr-FR': elementFr,
+			'ja-JP': elementJa,
+		}[newValue]
+
+		if ('default' in elementUiTranslations)
+			throw new Error('Detected Broken Build')
+
+		elementLocale.use(elementUiTranslations)
 	})
 
 	provide<KottiTranslation.Context>(KT_TRANSLATION_CONTEXT, {
