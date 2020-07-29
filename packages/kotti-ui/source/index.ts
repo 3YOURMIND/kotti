@@ -40,6 +40,7 @@ import KtSwitch from './kotti-switch'
 import KtTable, {
 	KtTableColumn,
 	KtTableProvider,
+	KtTableConsumer,
 	KtTableColumnsStateMixin,
 } from './kotti-table'
 import KtTheme from './kotti-theme'
@@ -134,6 +135,9 @@ const components = {
 	KtSteps,
 	KtSwitch,
 	KtTable,
+	// KtTableProvider,
+	KtTableColumn,
+	KtTableConsumer,
 	KtTheme,
 	KtToaster,
 	KtTranslationContext,
@@ -180,6 +184,7 @@ function install(Vue: any) {
 if (typeof window !== 'undefined' && window.Vue) install(window.Vue)
 
 export default { ...components, install }
+
 export {
 	KtAccordion,
 	KtActionbar,
@@ -217,6 +222,7 @@ export {
 	KtSwitch,
 	KtTable,
 	KtTableColumn,
+	KtTableConsumer,
 	KtTableColumnsStateMixin,
 	KtTableProvider,
 	KtTheme,
