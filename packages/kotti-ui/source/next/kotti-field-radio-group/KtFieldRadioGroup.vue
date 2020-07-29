@@ -3,6 +3,7 @@
 		<div
 			slot="container"
 			class="kt-field-radio-group__wrapper"
+			:class="isInline ? 'kt-field-radio-group__wrapper--inline' : ''"
 			:forceUpdateKey="forceUpdateKey"
 		>
 			<label
@@ -60,6 +61,9 @@ export default defineComponent({
 				[...new Set(options.map(({ value }) => value))].length ===
 				options.length,
 		},
+		isInline: {
+			type: Boolean,
+		},
 	},
 	setup(props: KottiFieldRadioGroup.Props, { emit }) {
 		const field = useField<KottiFieldRadioGroup.Value>({
@@ -78,7 +82,10 @@ export default defineComponent({
 		return {
 			inputProps: computed(() => ({
 				...field.inputProps,
-				class: 'kt-field-radio-group__wrapper__input',
+				class: [
+					'kt-field-radio-group__wrapper__input',
+					props.isInline ? 'is-inline' : '',
+				],
 				name,
 				type: 'radio',
 			})),
@@ -105,6 +112,14 @@ export default defineComponent({
 .kt-field-radio-group__wrapper {
 	display: flex;
 	flex-direction: column;
+
+	&--inline {
+		display: block;
+		.kt-field-radio-group__wrapper__label {
+			display: inline-flex;
+			margin-right: 1rem;
+		}
+	}
 
 	&__label {
 		display: flex;
