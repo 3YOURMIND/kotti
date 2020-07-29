@@ -1,8 +1,8 @@
 import {
-	KT_TABLE,
-	KT_STORE,
 	KT_LAYOUT,
+	KT_STORE,
 	KT_TABLE_STATE_PROVIDER,
+	KT_TABLE,
 } from './constants'
 
 export const tableInjectedMixin = {
@@ -11,8 +11,8 @@ export const tableInjectedMixin = {
 
 export const TableColumnsStateMixin = {
 	inject: {
-		KT_TABLE: { default: false },
-		KT_STORE: { default: false },
+		[KT_TABLE]: { default: false },
+		[KT_STORE]: { default: false },
 		[KT_TABLE_STATE_PROVIDER]: {
 			default: {
 				get store() {
