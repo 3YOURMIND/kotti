@@ -8,89 +8,6 @@ export default {
 		row: Object,
 	},
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
-	render(h) {
-		const {
-			row,
-			rowIndex,
-			isExpandable,
-			expandToggleIcon,
-			isInteractive,
-			_trClasses,
-			isSelectable,
-			isSelected,
-			tableColumns,
-			handleSelect,
-			handleClick,
-			handleFocus,
-			handleBlur,
-			handleKey,
-			handleExpand,
-			handleActionsClick,
-			hasActions,
-			renderActions,
-			isDisabled,
-		} = this
-		return (
-			<tr
-				class={_trClasses}
-				role={isInteractive && !isDisabled ? 'button' : false}
-				tabindex={isInteractive && !isDisabled ? 0 : false}
-				onClick={($event) => handleClick($event, row, rowIndex)}
-				onFocus={($event) => handleFocus($event, row, rowIndex)}
-				onBlur={($event) => handleBlur($event, row, rowIndex)}
-				onKeyup={($event) => handleKey($event, row, rowIndex)}
-			>
-				{isExpandable && (
-					<td
-						class="c-hand"
-						onClick={($event) => handleExpand($event, row, rowIndex)}
-					>
-						<div class="toggle">
-							<i class="yoco">{expandToggleIcon}</i>
-						</div>
-					</td>
-				)}
-				{isSelectable && (
-					<td
-						class="td-selectable kt-table__checkbox-col"
-						onClick={($event) => $event.stopPropagation()}
-					>
-						<div class="form-group">
-							<label class="form-checkbox">
-								<input
-									disabled={isDisabled}
-									type="checkbox"
-									checked={isSelected}
-									onChange={($event) => handleSelect($event, row)}
-								/>
-								<i
-									style={isDisabled ? { cursor: 'not-allowed' } : {}}
-									class="form-icon"
-								/>
-							</label>
-						</div>
-					</td>
-				)}
-				{tableColumns.map((column, columnIndex) => (
-					<TableCell
-						key={column.prop || columnIndex}
-						column={column}
-						row={row}
-						rowIndex={rowIndex}
-						columnIndex={columnIndex}
-					/>
-				))}
-				{hasActions && (
-					<td onClick={handleActionsClick}>
-						<div class="table-actions">
-							{renderActions(h, { row, data: row, rowIndex })}
-						</div>
-					</td>
-				)}
-			</tr>
-		)
-	},
-
 	computed: {
 		_trClasses() {
 			const classes = []
@@ -191,5 +108,87 @@ export default {
 				this[KT_TABLE].$emit('rowBlur', row, index)
 			}
 		},
+	},
+	render(h) {
+		const {
+			row,
+			rowIndex,
+			isExpandable,
+			expandToggleIcon,
+			isInteractive,
+			_trClasses,
+			isSelectable,
+			isSelected,
+			tableColumns,
+			handleSelect,
+			handleClick,
+			handleFocus,
+			handleBlur,
+			handleKey,
+			handleExpand,
+			handleActionsClick,
+			hasActions,
+			renderActions,
+			isDisabled,
+		} = this
+		return (
+			<tr
+				class={_trClasses}
+				role={isInteractive && !isDisabled ? 'button' : false}
+				tabindex={isInteractive && !isDisabled ? 0 : false}
+				onClick={($event) => handleClick($event, row, rowIndex)}
+				onFocus={($event) => handleFocus($event, row, rowIndex)}
+				onBlur={($event) => handleBlur($event, row, rowIndex)}
+				onKeyup={($event) => handleKey($event, row, rowIndex)}
+			>
+				{isExpandable && (
+					<td
+						class="c-hand"
+						onClick={($event) => handleExpand($event, row, rowIndex)}
+					>
+						<div class="toggle">
+							<i class="yoco">{expandToggleIcon}</i>
+						</div>
+					</td>
+				)}
+				{isSelectable && (
+					<td
+						class="td-selectable kt-table__checkbox-col"
+						onClick={($event) => $event.stopPropagation()}
+					>
+						<div class="form-group">
+							<label class="form-checkbox">
+								<input
+									disabled={isDisabled}
+									type="checkbox"
+									checked={isSelected}
+									onChange={($event) => handleSelect($event, row)}
+								/>
+								<i
+									style={isDisabled ? { cursor: 'not-allowed' } : {}}
+									class="form-icon"
+								/>
+							</label>
+						</div>
+					</td>
+				)}
+				{tableColumns.map((column, columnIndex) => (
+					<TableCell
+						key={column.prop || columnIndex}
+						column={column}
+						row={row}
+						rowIndex={rowIndex}
+						columnIndex={columnIndex}
+					/>
+				))}
+				{hasActions && (
+					<td onClick={handleActionsClick}>
+						<div class="table-actions">
+							{renderActions(h, { row, data: row, rowIndex })}
+						</div>
+					</td>
+				)}
+			</tr>
+		)
 	},
 }

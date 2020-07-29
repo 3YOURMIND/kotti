@@ -34,7 +34,7 @@ import {
 import TableStore from './logic/store'
 import TableLayout from './table-layout'
 import TableBody from './TableBody'
-import TableColumn from './TableColumn'
+import { TableColumn } from './TableColumn'
 import TableHeader from './TableHeader.vue'
 
 let tableIdSeed = 1

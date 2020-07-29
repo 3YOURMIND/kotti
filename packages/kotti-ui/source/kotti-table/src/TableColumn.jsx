@@ -26,8 +26,6 @@ function updateColumnsfor(prop) {
 const TableColumn = {
 	name: 'KtTableColumn',
 	inheritAttrs: false,
-	render: () => null,
-	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 	props: {
 		prop: { required: true, type: String },
 		index: Number,
@@ -64,13 +62,6 @@ const TableColumn = {
 		 */
 		isPropDefined: { default: false, type: Boolean },
 	},
-	beforeCreate() {
-		this.columnConfig = {}
-	},
-	created() {
-		// eslint-disable-next-line @typescript-eslint/no-use-before-define
-		this.columnConfig = createColumn(this)
-	},
 	watch: {
 		label: updateColumnsfor('label'),
 		index: updateColumnsfor('index'),
@@ -88,6 +79,13 @@ const TableColumn = {
 		align: updateColumnsfor('align'),
 		default: updateColumnsfor('default'),
 	},
+	beforeCreate() {
+		this.columnConfig = {}
+	},
+	created() {
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
+		this.columnConfig = createColumn(this)
+	},
 	mounted() {
 		const columnIndex = this[KT_TABLE].$children.indexOf(this)
 		this[KT_STORE].commit('insertColumn', {
@@ -101,6 +99,8 @@ const TableColumn = {
 		this.columnConfig &&
 			this[KT_STORE].commit('removeColumn', this.columnConfig)
 	},
+	render: () => null,
+	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 }
 
 function createColumn(column = {}) {
@@ -152,4 +152,4 @@ function createColumn(column = {}) {
 	return column
 }
 
-export default TableColumn
+export { TableColumn }

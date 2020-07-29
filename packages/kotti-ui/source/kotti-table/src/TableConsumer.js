@@ -1,19 +1,19 @@
 import { TableColumnsStateMixin } from './mixins'
 
-export default {
-	components: {},
+const KtTableConsumer = {
 	name: 'KtTableConsumer',
+	components: {},
 	mixins: [TableColumnsStateMixin],
 	props: {
 		id: { default: null, type: String },
-	},
-	created() {
-		this.KtSelectedTableId = this.id
 	},
 	watch: {
 		id(id) {
 			this.KtSelectedTableId = id
 		},
+	},
+	created() {
+		this.KtSelectedTableId = this.id
 	},
 	render() {
 		const {
@@ -38,3 +38,5 @@ export default {
 		})
 	},
 }
+
+export { KtTableConsumer }
