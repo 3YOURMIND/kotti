@@ -48,7 +48,7 @@
 		"@babel/runtime": "^7.10.5",
 		"@vue/composition-api": "0.5.x",
 		"core-js": "*",
-		"vue": "2.x"
+		"vue": "^2.2.1"
 	},
 	"repository": {
 		"type": "git",
