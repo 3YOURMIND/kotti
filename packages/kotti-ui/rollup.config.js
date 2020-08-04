@@ -91,7 +91,7 @@ export default [
 	{
 		input: 'source/index.ts',
 		output: {
-			format: 'umd',
+			format: 'cjs',
 			file: packageJSON.main,
 			name: 'KottiUI',
 			sourcemap: false,

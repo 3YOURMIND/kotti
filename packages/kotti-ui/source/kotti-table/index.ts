@@ -3,6 +3,8 @@ import { VueConstructor } from 'vue/types/umd'
 import { makeInstallable } from '../next/utilities'
 
 import { TableColumnsStateMixin } from './src/mixins'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import KtTable from './src/Table.vue'
 import { TableColumn as KtTableColumn } from './src/TableColumn'
 import { KtTableConsumer } from './src/TableConsumer'

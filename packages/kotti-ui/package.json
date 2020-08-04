@@ -41,7 +41,7 @@
 	],
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
-	"main": "dist/index.umd.js",
+	"main": "dist/index.cjs.js",
 	"module": "dist/index.esm.js",
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
