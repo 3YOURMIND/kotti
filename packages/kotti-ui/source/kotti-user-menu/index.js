@@ -1,4 +1,4 @@
-import KtUserMenu from './src/UserMenu.vue'
+import KtUserMenu from './KtUserMenu.vue'
 
 KtUserMenu.install = function (Vue) {
 	Vue.component(KtUserMenu.name, KtUserMenu)

@@ -1,4 +1,4 @@
-import KtInputNumber from './src/InputNumber.vue'
+import KtInputNumber from './KtInputNumber.vue'
 
 KtInputNumber.install = function (Vue) {
 	Vue.component(KtInputNumber.name, KtInputNumber)

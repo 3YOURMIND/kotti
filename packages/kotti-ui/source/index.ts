@@ -4,39 +4,71 @@ import './kotti-style/index.scss'
 
 // components
 import { KtAccordion } from './kotti-accordion'
+export * from './kotti-accordion'
 import { KtActionbar } from './kotti-actionbar'
+export * from './kotti-actionbar'
 import { KtAvatar } from './kotti-avatar'
+export * from './kotti-avatar'
 import { KtAvatarGroup } from './kotti-avatar-group'
+export * from './kotti-avatar-group'
 import { KtBanner } from './kotti-banner'
+export * from './kotti-banner'
 import { KtBreadcrumb } from './kotti-breadcrumb'
+export * from './kotti-breadcrumb'
 import { KtButton } from './kotti-button'
+export * from './kotti-button'
 import { KtButtonGroup } from './kotti-button-group'
+export * from './kotti-button-group'
 import { KtCard } from './kotti-card'
+export * from './kotti-card'
 import { KtCheckbox } from './kotti-checkbox'
+export * from './kotti-checkbox'
 import { KtCol } from './kotti-col'
-import { KtComment } from './kotti-comment'
-import { KtCommentInput } from './kotti-comment-input'
+export * from './kotti-col'
+import { KtComment, KtCommentInput } from './kotti-comment'
+export * from './kotti-comment'
 import { KtDatePicker, KtDateInput } from './kotti-datepicker'
+export * from './kotti-datepicker'
 import { KtDrawer } from './kotti-drawer'
+export * from './kotti-drawer'
 import { KtDropdown } from './kotti-dropdown'
+export * from './kotti-dropdown'
 import { KtDropdownButton } from './kotti-dropdown-button'
+export * from './kotti-dropdown-button'
 import { KtDropdownMenu } from './kotti-dropdown-menu'
+export * from './kotti-dropdown-menu'
 import { KtHeading } from './kotti-heading'
+export * from './kotti-heading'
 import { KtInlineEdit } from './kotti-inline-edit'
+export * from './kotti-inline-edit'
 import { KtInput } from './kotti-input'
+export * from './kotti-input'
 import { KtInputNumber } from './kotti-input-number'
+export * from './kotti-input-number'
 import { KtLine } from './kotti-line'
+export * from './kotti-line'
 import { KtModal } from './kotti-modal'
+export * from './kotti-modal'
 import { KtNavbar } from './kotti-navbar'
+export * from './kotti-navbar'
 import { KtPagination } from './kotti-pagination'
+export * from './kotti-pagination'
 import { KtPopover } from './kotti-popover'
+export * from './kotti-popover'
 import { KtRadio } from './kotti-radio'
+export * from './kotti-radio'
 import { KtRadioGroup } from './kotti-radio-group'
+export * from './kotti-radio-group'
 import { KtRow } from './kotti-row'
+export * from './kotti-row'
 import { KtSingleSelect } from './kotti-single-select'
+export * from './kotti-single-select'
 import { KtStep } from './kotti-step'
+export * from './kotti-step'
 import { KtSteps } from './kotti-steps'
+export * from './kotti-steps'
 import { KtSwitch } from './kotti-switch'
+export * from './kotti-switch'
 import {
 	KtTable,
 	KtTableColumn,
@@ -44,9 +76,13 @@ import {
 	KtTableConsumer,
 	KtTableColumnsStateMixin,
 } from './kotti-table'
+export * from './kotti-table'
 import { KtTheme } from './kotti-theme'
+export * from './kotti-theme'
 import { KtToaster } from './kotti-toaster'
+export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
+export * from './kotti-user-menu'
 import { KtField } from './next/kotti-field'
 export * from './next/kotti-field'
 import {
@@ -183,49 +219,4 @@ export default {
 			else this.$root.$emit('vue-yodify', notification)
 		}
 	},
-}
-
-export {
-	KtAccordion,
-	KtActionbar,
-	KtAvatar,
-	KtAvatarGroup,
-	KtBanner,
-	KtBreadcrumb,
-	KtButton,
-	KtButtonGroup,
-	KtCard,
-	KtCheckbox,
-	KtCol,
-	KtComment,
-	KtCommentInput,
-	KtDatePicker,
-	KtDrawer,
-	KtDropdown,
-	KtDropdownButton,
-	KtDropdownMenu,
-	KtHeading,
-	KtInlineEdit,
-	KtInput,
-	KtInputNumber,
-	KtLine,
-	KtModal,
-	KtNavbar,
-	KtPagination,
-	KtPopover,
-	KtRadio,
-	KtRadioGroup,
-	KtRow,
-	KtSingleSelect,
-	KtStep,
-	KtSteps,
-	KtSwitch,
-	KtTable,
-	KtTableColumn,
-	KtTableConsumer,
-	KtTableColumnsStateMixin,
-	KtTableProvider,
-	KtTheme,
-	KtToaster,
-	KtUserMenu,
 }

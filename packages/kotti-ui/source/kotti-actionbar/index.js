@@ -1,4 +1,4 @@
-import KtActionbar from './ActionBar.vue'
+import KtActionbar from './KtActionBar.vue'
 
 KtActionbar.install = function (Vue) {
 	Vue.component(KtActionbar.name, KtActionbar)

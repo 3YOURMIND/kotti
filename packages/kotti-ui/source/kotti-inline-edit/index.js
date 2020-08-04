@@ -1,8 +1,5 @@
-import escape from 'lodash/escape'
-
-import KtInlineEdit from './src/InlineEdit.vue'
-
-export const defaultParser = (message) => escape(message)
+import KtInlineEdit from './KtInlineEdit.vue'
+import { defaultParser } from './utilities'
 
 KtInlineEdit.install = function (Vue) {
 	Vue.component(KtInlineEdit.name, KtInlineEdit)

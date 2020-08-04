@@ -1,4 +1,4 @@
-import KtCard from './src/Card.vue'
+import KtCard from './KtCard.vue'
 
 KtCard.install = function (Vue) {
 	Vue.component(KtCard.name, KtCard)

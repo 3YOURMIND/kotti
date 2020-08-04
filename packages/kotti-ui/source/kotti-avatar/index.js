@@ -1,4 +1,4 @@
-import KtAvatar from './src/avatar.vue'
+import KtAvatar from './KtAvatar.vue'
 
 KtAvatar.install = function (Vue) {
 	Vue.component(KtAvatar.name, KtAvatar)

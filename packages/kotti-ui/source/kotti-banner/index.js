@@ -1,4 +1,4 @@
-import KtBanner from './src/Banner.vue'
+import KtBanner from './KtBanner.vue'
 
 KtBanner.install = function (Vue) {
 	Vue.component(KtBanner.name, KtBanner)

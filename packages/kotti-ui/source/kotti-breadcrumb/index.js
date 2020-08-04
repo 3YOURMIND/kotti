@@ -1,4 +1,4 @@
-import KtBreadcrumb from './src/Breadcrumb.vue'
+import KtBreadcrumb from './KtBreadcrumb.vue'
 
 KtBreadcrumb.install = function (Vue) {
 	Vue.component(KtBreadcrumb.name, KtBreadcrumb)

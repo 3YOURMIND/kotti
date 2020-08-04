@@ -2,10 +2,10 @@ import { makeInstallable } from '../next/utilities'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import KtDateInput from './DateInput.vue'
+import KtDateInput from './KtDateInput.vue'
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import KtDatePicker from './DatePicker.vue'
+import KtDatePicker from './KtDatePicker.vue'
 
 makeInstallable(KtDateInput)
 makeInstallable(KtDatePicker)

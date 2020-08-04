@@ -1,4 +1,4 @@
-import KtRadio from './src/Radio.vue'
+import KtRadio from './KtRadio.vue'
 
 KtRadio.install = function (Vue) {
 	Vue.component(KtRadio.name, KtRadio)

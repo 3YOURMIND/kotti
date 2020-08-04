@@ -1,13 +1,15 @@
-import escape from 'lodash/escape'
-
-import KtComment from './src/Comment.vue'
-
-export const defaultParser = (message) => escape(message)
+import KtComment from './KtComment.vue'
+import KtCommentInput from './KtCommentInput.vue'
+import { defaultParser } from './utilities'
 
 KtComment.install = function (Vue) {
 	Vue.component(KtComment.name, KtComment)
 }
 
+KtCommentInput.install = function (Vue) {
+	Vue.component(KtCommentInput.name, KtCommentInput)
+}
+
 KtComment.defaultParser = defaultParser
 
-export { KtComment }
+export { KtComment, KtCommentInput }

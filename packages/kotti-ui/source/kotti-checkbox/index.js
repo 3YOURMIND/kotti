@@ -1,4 +1,4 @@
-import KtCheckbox from './src/Checkbox.vue'
+import KtCheckbox from './KtCheckbox.vue'
 
 KtCheckbox.install = function (Vue) {
 	Vue.component(KtCheckbox.name, KtCheckbox)

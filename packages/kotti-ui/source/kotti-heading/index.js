@@ -1,4 +1,4 @@
-import KtHeading from './src/Heading.vue'
+import KtHeading from './KtHeading.vue'
 
 KtHeading.install = function (Vue) {
 	Vue.component(KtHeading.name, KtHeading)
