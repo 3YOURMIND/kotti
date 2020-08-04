@@ -1,7 +1,7 @@
-import KtComment from '../kotti-comment/src/CommentInput.vue'
+import KtCommentInput from '../kotti-comment/src/CommentInput.vue'
 
-KtComment.install = function (Vue) {
-	Vue.component(KtComment.name, KtComment)
+KtCommentInput.install = function (Vue) {
+	Vue.component(KtCommentInput.name, KtCommentInput)
 }
 
-export default KtComment
+export { KtCommentInput }

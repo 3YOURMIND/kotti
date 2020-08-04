@@ -10,4 +10,4 @@ KtInlineEdit.install = function (Vue) {
 
 KtInlineEdit.defaultParser = defaultParser
 
-export default KtInlineEdit
+export { KtInlineEdit }

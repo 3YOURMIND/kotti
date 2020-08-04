@@ -6,7 +6,7 @@
 			</div>
 			<div class="actionbar-body">
 				<slot name="actionbar-body">
-					<KtActionBarMenu v-if="menu" :menu="menu" :menuStyle="menuStyle" />
+					<KtActionbarMenu v-if="menu" :menu="menu" :menuStyle="menuStyle" />
 				</slot>
 			</div>
 			<div class="actionbar-footer">
@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import KtActionBarMenu from './ActionBarMenu.vue'
+import KtActionbarMenu from './ActionbarMenu.vue'
 
 export default {
 	name: 'KtActionbar',
 	components: {
-		KtActionBarMenu,
+		KtActionbarMenu,
 	},
 	props: {
 		headerTitle: { default: 'Actionbar Header', type: String },
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../kotti-style/_variables.scss';
+@import '../kotti-style/_variables.scss';
 
 :root {
 	--action-bar-color-active: var(--interactive-03);

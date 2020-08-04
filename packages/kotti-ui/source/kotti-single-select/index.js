@@ -4,4 +4,4 @@ KtSingleSelect.install = function (Vue) {
 	Vue.component(KtSingleSelect.name, KtSingleSelect)
 }
 
-export default KtSingleSelect
+export { KtSingleSelect }

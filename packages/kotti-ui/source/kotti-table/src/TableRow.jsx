@@ -1,8 +1,8 @@
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
-import TableCell from './TableRowCell'
+import { TableRowCell } from './TableRowCell'
 
-export default {
-	name: 'KtTableRow',
+export const TableRow = {
+	name: 'TableRow',
 	props: {
 		rowIndex: Number,
 		row: Object,
@@ -173,7 +173,7 @@ export default {
 					</td>
 				)}
 				{tableColumns.map((column, columnIndex) => (
-					<TableCell
+					<TableRowCell
 						key={column.prop || columnIndex}
 						column={column}
 						row={row}

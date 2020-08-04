@@ -2,7 +2,6 @@ import { TableColumnsStateMixin } from './mixins'
 
 const KtTableConsumer = {
 	name: 'KtTableConsumer',
-	components: {},
 	mixins: [TableColumnsStateMixin],
 	props: {
 		id: { default: null, type: String },

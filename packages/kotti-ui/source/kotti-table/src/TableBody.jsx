@@ -1,11 +1,11 @@
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
-import TableBodyEmptyRow from './TableBodyEmptyRow'
-import TableBodyExpandRow from './TableBodyExpandRow'
-import TableBodyLoadingRow from './TableBodyLoadingRow'
-import TableRow from './TableRow'
+import { TableBodyEmptyRow } from './TableBodyEmptyRow'
+import { TableBodyExpandRow } from './TableBodyExpandRow'
+import { TableBodyLoadingRow } from './TableBodyLoadingRow'
+import { TableRow } from './TableRow'
 
-export default {
-	name: 'KtTableBody',
+export const TableBody = {
+	name: 'TableBody',
 	components: { TableRow },
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 	computed: {
@@ -29,6 +29,7 @@ export default {
 	},
 	render() {
 		const { showEmptyText, loading, rows, isExpandable, getRowKey } = this
+
 		return (
 			<tbody>
 				{showEmptyText && <TableBodyEmptyRow />}

@@ -1,7 +1,7 @@
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
 
-export default {
-	name: 'KtTableBodyEmptyRow',
+export const TableBodyEmptyRow = {
+	name: 'TableBodyEmptyRow',
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 	render(h) {
 		const { colSpan, render } = this

@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import KtButtonGroup from '../kotti-button-group/src/ButtonGroup.vue'
-import KtButton from '../kotti-button/src/button.vue'
-import KtPopover from '../kotti-popover/KtPopover.vue'
+import { KtButton } from '../kotti-button'
+import { KtButtonGroup } from '../kotti-button-group'
+import { KtPopover } from '../kotti-popover'
 
 export default {
 	name: 'KtDropdownButton',

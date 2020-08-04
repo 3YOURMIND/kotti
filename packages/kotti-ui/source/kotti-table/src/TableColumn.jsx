@@ -23,7 +23,7 @@ function updateColumnsfor(prop) {
 	}
 }
 
-const TableColumn = {
+export const KtTableColumn = {
 	name: 'KtTableColumn',
 	inheritAttrs: false,
 	props: {
@@ -151,5 +151,3 @@ function createColumn(column = {}) {
 
 	return column
 }
-
-export { TableColumn }

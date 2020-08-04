@@ -3,49 +3,50 @@ import 'normalize.css'
 import './kotti-style/index.scss'
 
 // components
-import KtAccordion from './kotti-accordion'
-import KtActionbar from './kotti-actionbar'
-import KtAvatar from './kotti-avatar'
-import KtAvatarGroup from './kotti-avatar-group'
-import KtBanner from './kotti-banner'
-import KtBreadcrumb from './kotti-breadcrumb'
-import KtButton from './kotti-button'
-import KtButtonGroup from './kotti-button-group'
-import KtCard from './kotti-card'
-import KtCheckbox from './kotti-checkbox'
+import { KtAccordion } from './kotti-accordion'
+import { KtActionbar } from './kotti-actionbar'
+import { KtAvatar } from './kotti-avatar'
+import { KtAvatarGroup } from './kotti-avatar-group'
+import { KtBanner } from './kotti-banner'
+import { KtBreadcrumb } from './kotti-breadcrumb'
+import { KtButton } from './kotti-button'
+import { KtButtonGroup } from './kotti-button-group'
+import { KtCard } from './kotti-card'
+import { KtCheckbox } from './kotti-checkbox'
 import { KtCol } from './kotti-col'
-import KtComment from './kotti-comment'
-import KtCommentInput from './kotti-comment-input'
+import { KtComment } from './kotti-comment'
+import { KtCommentInput } from './kotti-comment-input'
 import { KtDatePicker, KtDateInput } from './kotti-datepicker'
-import KtDrawer from './kotti-drawer'
-import KtDropdown from './kotti-dropdown'
-import KtDropdownButton from './kotti-dropdown-button'
-import KtDropdownMenu from './kotti-dropdown-menu'
-import KtHeading from './kotti-heading'
-import KtInlineEdit from './kotti-inline-edit'
-import KtInput from './kotti-input'
-import KtInputNumber from './kotti-input-number'
-import KtLine from './kotti-line'
-import KtModal from './kotti-modal'
-import KtNavbar from './kotti-navbar'
-import KtPagenation from './kotti-pagination'
-import KtPopover from './kotti-popover'
-import KtRadio from './kotti-radio'
-import KtRadioGroup from './kotti-radio-group'
+import { KtDrawer } from './kotti-drawer'
+import { KtDropdown } from './kotti-dropdown'
+import { KtDropdownButton } from './kotti-dropdown-button'
+import { KtDropdownMenu } from './kotti-dropdown-menu'
+import { KtHeading } from './kotti-heading'
+import { KtInlineEdit } from './kotti-inline-edit'
+import { KtInput } from './kotti-input'
+import { KtInputNumber } from './kotti-input-number'
+import { KtLine } from './kotti-line'
+import { KtModal } from './kotti-modal'
+import { KtNavbar } from './kotti-navbar'
+import { KtPagination } from './kotti-pagination'
+import { KtPopover } from './kotti-popover'
+import { KtRadio } from './kotti-radio'
+import { KtRadioGroup } from './kotti-radio-group'
 import { KtRow } from './kotti-row'
-import KtSingleSelect from './kotti-single-select'
-import KtStep from './kotti-step'
-import KtSteps from './kotti-steps'
-import KtSwitch from './kotti-switch'
-import KtTable, {
+import { KtSingleSelect } from './kotti-single-select'
+import { KtStep } from './kotti-step'
+import { KtSteps } from './kotti-steps'
+import { KtSwitch } from './kotti-switch'
+import {
+	KtTable,
 	KtTableColumn,
 	KtTableProvider,
 	KtTableConsumer,
 	KtTableColumnsStateMixin,
 } from './kotti-table'
-import KtTheme from './kotti-theme'
-import KtToaster from './kotti-toaster'
-import KtUserMenu from './kotti-user-menu'
+import { KtTheme } from './kotti-theme'
+import { KtToaster } from './kotti-toaster'
+import { KtUserMenu } from './kotti-user-menu'
 import { KtField } from './next/kotti-field'
 export * from './next/kotti-field'
 import {
@@ -125,7 +126,7 @@ const components = {
 	KtLine,
 	KtModal,
 	KtNavbar,
-	KtPagenation,
+	KtPagination,
 	KtPopover,
 	KtRadio,
 	KtRadioGroup,
@@ -135,55 +136,54 @@ const components = {
 	KtSteps,
 	KtSwitch,
 	KtTable,
-	// KtTableProvider,
 	KtTableColumn,
+	KtTableProvider,
 	KtTableConsumer,
+	KtTableColumnsStateMixin,
 	KtTheme,
 	KtToaster,
 	KtTranslationContext,
 	KtUserMenu,
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function install(Vue: any) {
-	for (const component of Object.values(components)) Vue.use(component)
+export default {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	install(Vue: any) {
+		for (const component of Object.values(components)) Vue.use(component)
 
-	Vue.prototype.$KtNavbar = new Vue({
-		data: {
-			isNarrow: false,
-		},
-		methods: {
-			toggle(value = null) {
-				// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-				// @ts-ignore
-				this.isNarrow = value === null ? !this.isNarrow : value
+		Vue.prototype.$KtNavbar = new Vue({
+			data: {
+				isNarrow: false,
 			},
-		},
-	})
+			methods: {
+				toggle(value = null) {
+					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+					// @ts-ignore
+					this.isNarrow = value === null ? !this.isNarrow : value
+				},
+			},
+		})
 
-	const DEFAULT_YODIFY_DURATION = 3000
+		const DEFAULT_YODIFY_DURATION = 3000
 
-	Vue.prototype.$yodifyBuffer = []
-	Vue.prototype.$yodify = function ({
-		duration = DEFAULT_YODIFY_DURATION,
-		text,
-		type = 'success',
-	}: {
-		duration: number
-		text: string
-		type: 'success' | 'error'
-	}) {
-		const notification = { duration, text, type }
+		Vue.prototype.$yodifyBuffer = []
+		Vue.prototype.$yodify = function ({
+			duration = DEFAULT_YODIFY_DURATION,
+			text,
+			type = 'success',
+		}: {
+			duration: number
+			text: string
+			type: 'success' | 'error'
+		}) {
+			const notification = { duration, text, type }
 
-		// buffer notifications if vue isn't ready
-		if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)
-		else this.$root.$emit('vue-yodify', notification)
-	}
+			// buffer notifications if vue isn't ready
+			if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)
+			else this.$root.$emit('vue-yodify', notification)
+		}
+	},
 }
-
-if (typeof window !== 'undefined' && window.Vue) install(window.Vue)
-
-export default { ...components, install }
 
 export {
 	KtAccordion,
@@ -211,7 +211,7 @@ export {
 	KtLine,
 	KtModal,
 	KtNavbar,
-	KtPagenation,
+	KtPagination,
 	KtPopover,
 	KtRadio,
 	KtRadioGroup,

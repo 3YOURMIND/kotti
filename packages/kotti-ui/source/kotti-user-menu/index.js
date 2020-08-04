@@ -4,4 +4,4 @@ KtUserMenu.install = function (Vue) {
 	Vue.component(KtUserMenu.name, KtUserMenu)
 }
 
-export default KtUserMenu
+export { KtUserMenu }

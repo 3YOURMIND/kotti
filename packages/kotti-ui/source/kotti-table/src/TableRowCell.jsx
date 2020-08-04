@@ -2,8 +2,8 @@ import property from 'lodash/property'
 
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
 
-export default {
-	name: 'KtTableRowCell',
+export const TableRowCell = {
+	name: 'TableRowCell',
 	props: {
 		column: Object,
 		row: Object,

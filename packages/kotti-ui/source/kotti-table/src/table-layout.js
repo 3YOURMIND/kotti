@@ -1,4 +1,4 @@
-export default class TableLayout {
+export class TableLayout {
 	constructor(table) {
 		this.table = table
 	}

@@ -6,7 +6,7 @@
 			<slot></slot>
 			<!-- NOTE: As the column prop should be the source of truth in case of conflict -->
 			<!-- the prop columns need to be added after the columns from the slot. -->
-			<TableColumn
+			<KtTableColumn
 				v-for="(column, index) in formattedColumns"
 				:key="`${column.prop}_${index}`"
 				v-bind="column"
@@ -31,10 +31,10 @@ import {
 	KT_TABLE_STATE_PROVIDER,
 	DEFAULT_DISABLE_ROW,
 } from './constants'
-import TableStore from './logic/store'
-import TableLayout from './table-layout'
-import TableBody from './TableBody'
-import { TableColumn } from './TableColumn'
+import { TableStore } from './logic/store'
+import { TableLayout } from './table-layout'
+import { TableBody } from './TableBody'
+import { KtTableColumn } from './TableColumn'
 import TableHeader from './TableHeader.vue'
 
 let tableIdSeed = 1
@@ -52,7 +52,7 @@ export const INITIAL_TABLE_STORE_PROPS = [
 
 export default {
 	name: 'KtTable',
-	components: { TableBody, TableHeader, TableColumn },
+	components: { TableBody, TableHeader, KtTableColumn },
 	props: {
 		id: { default: null, type: String },
 		rowKey: { type: String },

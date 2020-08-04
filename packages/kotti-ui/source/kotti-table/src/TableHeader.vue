@@ -61,7 +61,7 @@
 
 <script>
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
-import TableHeaderCell from './TableHeaderCell'
+import { TableHeaderCell } from './TableHeaderCell'
 
 export default {
 	name: 'KtTableHeader',

@@ -4,4 +4,4 @@ KtToaster.install = function (Vue) {
 	Vue.component(KtToaster.name, KtToaster)
 }
 
-export default KtToaster
+export { KtToaster }

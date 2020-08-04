@@ -4,4 +4,4 @@ KtRadio.install = function (Vue) {
 	Vue.component(KtRadio.name, KtRadio)
 }
 
-export default KtRadio
+export { KtRadio }

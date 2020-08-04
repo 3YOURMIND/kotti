@@ -4,4 +4,4 @@ KtBreadcrumb.install = function (Vue) {
 	Vue.component(KtBreadcrumb.name, KtBreadcrumb)
 }
 
-export default KtBreadcrumb
+export { KtBreadcrumb }

@@ -1,7 +1,7 @@
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
 
-export default {
-	name: 'KtTableBodyLoadingRow',
+export const TableBodyLoadingRow = {
+	name: 'TableBodyLoadingRow',
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 	computed: {
 		colSpan() {

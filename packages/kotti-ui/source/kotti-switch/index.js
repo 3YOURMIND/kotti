@@ -4,4 +4,4 @@ KtSwitch.install = function (Vue) {
 	Vue.component(KtSwitch.name, KtSwitch)
 }
 
-export default KtSwitch
+export { KtSwitch }

@@ -1,4 +1,4 @@
-const KtRow = {
+export const KtRow = {
 	name: 'KtRow',
 	componentName: 'KtRow',
 	props: {
@@ -48,9 +48,3 @@ const KtRow = {
 		)
 	},
 }
-
-KtRow.install = function (Vue) {
-	Vue.component(KtRow.name, KtRow)
-}
-
-export default KtRow

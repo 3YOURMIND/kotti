@@ -21,7 +21,7 @@
 
 <script>
 export default {
-	name: 'KtActionBarMenu',
+	name: 'KtActionbarMenu',
 	props: {
 		menu: { default: () => [], type: Array },
 		menuStyle: { default: () => ({}), type: Object },

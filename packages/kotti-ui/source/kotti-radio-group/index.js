@@ -4,4 +4,4 @@ KtRadioGroup.install = function (Vue) {
 	Vue.component(KtRadioGroup.name, KtRadioGroup)
 }
 
-export default KtRadioGroup
+export { KtRadioGroup }

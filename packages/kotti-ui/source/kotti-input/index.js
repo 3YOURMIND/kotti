@@ -4,4 +4,4 @@ KtInput.install = function (Vue) {
 	Vue.component(KtInput.name, KtInput)
 }
 
-export default KtInput
+export { KtInput }

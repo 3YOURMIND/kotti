@@ -6,4 +6,4 @@ KtPopover.install = function (Vue) {
 	Vue.component(KtPopoverItem.name, KtPopoverItem)
 }
 
-export default KtPopover
+export { KtPopover }

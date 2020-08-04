@@ -1,4 +1,4 @@
-const KtCol = {
+export const KtCol = {
 	name: 'KtCol',
 	props: {
 		span: {
@@ -77,9 +77,3 @@ const KtCol = {
 		)
 	},
 }
-
-KtCol.install = function (Vue) {
-	Vue.component(KtCol.name, KtCol)
-}
-
-export default KtCol

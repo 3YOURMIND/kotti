@@ -4,4 +4,4 @@ KtButtonGroup.install = function (Vue) {
 	Vue.component(KtButtonGroup.name, KtButtonGroup)
 }
 
-export default KtButtonGroup
+export { KtButtonGroup }

@@ -3,10 +3,10 @@ function id() {
 	return `${Date.now()}${(Math.random() * 1000000).toFixed()}`
 }
 
-const config = {
+export const config = {
 	selector: 'vue-portal-target-'.concat(id()),
 }
-export default config
+
 export const setSelector = function setSelector(selector) {
 	return (config.selector = selector)
 }

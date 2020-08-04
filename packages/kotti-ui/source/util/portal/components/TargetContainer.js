@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-export default Vue.extend({
+export const TargetContainer = Vue.extend({
 	// as an abstract component, it doesn't appear in
 	// the $parent chain of components.
 	// which means the next parent of any component rendered inside of this one

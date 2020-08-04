@@ -1,18 +1,15 @@
 import Vue from 'vue'
 
-import config, { isBrowser } from '../config'
+import { config, isBrowser } from '../config'
 
-import TargetContainer from './TargetContainer'
+import { TargetContainer } from './TargetContainer'
 
 const append = (targetEl, el) => {
-	if (targetEl.append) {
-		targetEl.append(el)
-	} else if (targetEl.appendChild) {
-		targetEl.appendChild(el)
-	}
+	if (targetEl.append) targetEl.append(el)
+	else if (targetEl.appendChild) targetEl.appendChild(el)
 }
 
-export default Vue.extend({
+export const VueSimplePortal = Vue.extend({
 	name: 'VueSimplePortal',
 	props: {
 		disabled: {

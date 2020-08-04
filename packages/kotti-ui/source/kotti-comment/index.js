@@ -10,4 +10,4 @@ KtComment.install = function (Vue) {
 
 KtComment.defaultParser = defaultParser
 
-export default KtComment
+export { KtComment }

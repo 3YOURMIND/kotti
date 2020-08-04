@@ -1,7 +1,7 @@
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
 
-export default {
-	name: 'KtTableBodyExpandRow',
+export const TableBodyExpandRow = {
+	name: 'TableBodyExpandRow',
 	props: {
 		row: Object,
 		rowIndex: Number,

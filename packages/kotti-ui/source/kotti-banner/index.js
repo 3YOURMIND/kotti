@@ -4,4 +4,4 @@ KtBanner.install = function (Vue) {
 	Vue.component(KtBanner.name, KtBanner)
 }
 
-export default KtBanner
+export { KtBanner }

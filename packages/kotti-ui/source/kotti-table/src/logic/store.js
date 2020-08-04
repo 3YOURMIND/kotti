@@ -13,7 +13,7 @@ import * as rows from './row'
 import * as select from './select'
 import * as sort from './sort'
 
-export default class TableStore {
+export class TableStore {
 	constructor(table, initialState = {}) {
 		this.setTable(table)
 		// we deep clone initial state in order to not refer to the same objects

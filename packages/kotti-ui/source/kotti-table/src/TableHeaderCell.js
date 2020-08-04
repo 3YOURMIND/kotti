@@ -1,5 +1,5 @@
-export default {
-	name: 'KtTableHeaderCell',
+export const TableHeaderCell = {
+	name: 'TableHeaderCell',
 	functional: true,
 	props: ['column', 'columnIndex'],
 	render(h, context) {
