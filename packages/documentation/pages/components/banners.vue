@@ -23,37 +23,9 @@ Only use this type of banner when this issue will cause a significant error.
 	<KtBanner message="You material is not available to users" icon="announce" actionText="Publish" />
 </div>
 
-<ShowCase>
-
-<div slot="vue">
-
 ```html
 <KtBanner message="You material is not available to users" icon="announce" actionText="Publish" />
 ```
-
-</div>
-
-<div slot="style">
-
-```html
-<div class="banner">
-	<div class="collapse">
-		<div class="glyph">
-			<i class="yoco">announce</i>
-		</div>
-		<div class="message">
-			You material is not available to users
-		</div>
-		<div class="action">
-			<button class="text">Publish</button>
-		</div>
-	</div>
-</div>
-```
-
-</div>
-
-</ShowCase>
 
 ### Expand Banner
 
@@ -62,20 +34,20 @@ information. Use it when you want to create a clear, non-interrupting
 interface.
 
 <div class="element-example">
-<KtBanner
-	message="You material is not available to users"
-	icon="cloud"
-	actionText="Publish"
-	expandable="true"
-	switchText="Open"
-	switchCloseText="None">
-	<div slot="expand">
-	<h2>Order #100002</h2>
-	<h3>Order information</h3>
-	....
-	....
-	</div>
-</KtBanner>
+	<KtBanner
+		message="You material is not available to users"
+		icon="cloud"
+		actionText="Publish"
+		expandable="true"
+		switchText="Open"
+		switchCloseText="None">
+		<div slot="expand">
+		<h2>Order #100002</h2>
+		<h3>Order information</h3>
+		....
+		....
+		</div>
+	</KtBanner>
 </div>
 
 ```html

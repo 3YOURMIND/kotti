@@ -13,11 +13,15 @@
 			</div>
 			<div class="message" v-text="message" />
 			<div v-if="!expandable" class="action" @click="handleClick">
-				<button v-if="actionText.length" class="text" v-text="actionText" />
+				<button
+					v-if="actionText.length"
+					class="kt-button text"
+					v-text="actionText"
+				/>
 			</div>
 			<div v-else class="action" @click="isExpand = !isExpand">
-				<button v-if="!isExpand" class="text" v-text="switchText" />
-				<button v-else class="text" v-text="switchCloseText" />
+				<button v-if="!isExpand" class="kt-button text" v-text="switchText" />
+				<button v-else class="kt-button text" v-text="switchCloseText" />
 			</div>
 		</div>
 		<div v-if="isExpand" class="expand">
