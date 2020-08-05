@@ -1,4 +1,4 @@
-dist/*
-node_modules/*
 gh-pages/*
-.nuxt/*
+node_modules/*
+packages/documentation/.nuxt/*
+packages/kotti-ui/dist/*

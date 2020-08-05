@@ -1,0 +1,38 @@
+{
+	"dependencies": {
+		"@3yourmind/kotti-ui": "*",
+		"@3yourmind/yoco": "*",
+		"@babel/runtime": "^7.10.5",
+		"core-js": "^3.6.5",
+		"lodash": "^4.17.19"
+	},
+	"description": "Kotti-ui Doc Pages",
+	"devDependencies": {
+		"@metatypes/typography": "^0.4.0",
+		"@metatypes/units": "^0.4.0",
+		"@nuxt/types": "^2.13.2",
+		"@nuxt/typescript-build": "^1.0.3",
+		"@nuxt/typescript-runtime": "^0.4.10",
+		"@nuxtjs/axios": "^5.11.0",
+		"@nuxtjs/markdownit": "^1.2.7",
+		"@nuxtjs/markdownit-loader": "^1.1.1",
+		"@nuxtjs/style-resources": "^1.0.0",
+		"@types/lodash": "^4.14.157",
+		"case-sensitive-paths-webpack-plugin": "^2.3.0",
+		"css-vars-ponyfill": "^2.2.0",
+		"dayjs": "^1.8.20",
+		"nuxt": "^2.13.3",
+		"vue-clipboard2": "^0.3.1"
+	},
+	"homepage": "https://github.com/3YOURMIND/kotti#readme",
+	"license": "MIT",
+	"name": "@3yourmind/documentation",
+	"private": true,
+	"scripts": {
+		"build": "DEPLOY_ENV=GH_PAGES nuxt generate",
+		"deploy": "./github-deploy.sh",
+		"format": "prettier --write **/*.{vue,js,json,jsx,ts,tsx,md}",
+		"serve": "nuxt"
+	},
+	"version": "2.0.0"
+}

@@ -1,0 +1,71 @@
+{
+	"author": "3YOURMIND GmbH",
+	"browserslist": [
+		"defaults",
+		"IE 11"
+	],
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"dependencies": {
+		"@popperjs/core": "2.0.6",
+		"color": "3.x",
+		"deep-eql": "^4.0.0",
+		"deepmerge": "^4.2.2",
+		"element-ui": "2.13.1",
+		"lodash": "^4.17.19",
+		"normalize.css": "^8.0.1",
+		"ts-custom-error": "^3.1.1",
+		"vue-clickaway": "^2.2.2"
+	},
+	"description": "Kotti Vue Component UI",
+	"devDependencies": {
+		"@babel/plugin-transform-runtime": "^7.10.5",
+		"@rollup/plugin-babel": "^5.1.0",
+		"@rollup/plugin-commonjs": "12",
+		"@rollup/plugin-json": "^4.1.0",
+		"@rollup/plugin-node-resolve": "^8.4.0",
+		"@types/jest": "^26.0.4",
+		"@types/lodash": "^4.14.157",
+		"@vue/composition-api": "0.5.x",
+		"@vue/test-utils": "^1.0.3",
+		"postcss-flexbugs-fixes": "^4.2.0",
+		"postcss-preset-env": "^6.7.0",
+		"rollup": "^2.21.0",
+		"rollup-plugin-scss": "^2.5.0",
+		"rollup-plugin-typescript2": "^0.27.1",
+		"rollup-plugin-vue": "^5.1.9"
+	},
+	"files": [
+		"dist"
+	],
+	"homepage": "https://github.com/3YOURMIND/kotti#readme",
+	"license": "MIT",
+	"main": "dist/index.cjs.js",
+	"module": "dist/index.esm.js",
+	"name": "@3yourmind/kotti-ui",
+	"peerDependencies": {
+		"@babel/runtime": "^7.10.5",
+		"@vue/composition-api": "0.5.x",
+		"core-js": "*",
+		"vue": "^2.2.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
+	"scripts": {
+		"build": "yarn run build:tokens && yarn run build:kotti && yarn run build:scss-variables",
+		"build:kotti": "rollup -c rollup.config.js",
+		"build:scss-variables": "cp source/kotti-style/_variables.scss dist/variables.scss",
+		"build:tokens": "node -r esm tokens/generate.js && prettier --write source/kotti-style/tokens.css",
+		"check:style": "stylelint **/*.{css,scss,vue}",
+		"format": "prettier --write '**/*.{vue,js,json,jsx,ts,tsx,md}'",
+		"test": "echo \"Error: run tests from root\" && exit 1",
+		"watch": "rollup -wc rollup.config.js"
+	},
+	"sideEffects": true,
+	"style": "dist/styles.css",
+	"types": "dist/index.d.ts",
+	"version": "2.0.2"
+}

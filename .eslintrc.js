@@ -61,7 +61,8 @@ module.exports = {
 			files: [
 				'packages/**/tests.ts',
 				'packages/**/*.test.ts',
-				'packages/next/test-utils/**/*.ts',
+				'packages/kotti-ui/source/next/test-utils/**/*.ts',
+				'packages/storybook/**/*',
 			],
 			env: {
 				jest: true,

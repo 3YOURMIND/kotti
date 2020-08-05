@@ -1,0 +1,36 @@
+{
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not dead"
+	],
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"dependencies": {
+		"@3yourmind/kotti-ui": "*",
+		"@3yourmind/yoco": "*",
+		"@babel/runtime": "^7.10.5",
+		"@vue/composition-api": "0.5.x",
+		"core-js": "^3.6.5"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "~4.4.0",
+		"@vue/cli-plugin-typescript": "~4.4.0",
+		"@vue/cli-service": "~4.4.0"
+	},
+	"homepage": "https://github.com/3YOURMIND/kotti#readme",
+	"license": "MIT",
+	"main": "src/main.ts",
+	"name": "@3yourmind/test-app",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
+	"scripts": {
+		"build": "vue-cli-service build",
+		"serve": "vue-cli-service serve"
+	},
+	"version": "2.0.0"
+}
