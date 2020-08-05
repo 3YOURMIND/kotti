@@ -61,7 +61,7 @@ export default {
 		},
 		component() {
 			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
-			if (!isFlexLogical || this.pageAmount < 2) return 'KtPaginationExpanded'
+			if (!isFlexLogical || this.pageAmount < 2) return 'PaginationExpanded'
 
 			if (this.fractionStyle) {
 				// eslint-disable-next-line no-console
