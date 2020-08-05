@@ -112,7 +112,7 @@ function createColumn(column = {}) {
 		columnIdSeed++
 	}
 	// eslint-disable-next-line no-param-reassign
-	column = pick(column, [...Object.keys(TableColumn.props), '$attrs'])
+	column = pick(column, [...Object.keys(KtTableColumn.props), '$attrs'])
 
 	column.sortOrder = column.sortOrder || SORT_NONE
 	column.sortOrders = column.sortOrders || [SORT_ASC, SORT_DSC, SORT_NONE]
