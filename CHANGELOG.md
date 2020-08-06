@@ -68,7 +68,7 @@ _Winter Solstice Update_
 point is also changed from last version. Please check README for installation
 guides.**
 
-- Fxied: Nuxt to use Kotti globally
+- Fixed: Nuxt to use Kotti globally
 - Added: Merge vue-yodify into Kotti- Added: KtActionbar and KtPagination to the
   package
 - Changed: KtComments switch to inline reply

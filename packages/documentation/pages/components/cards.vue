@@ -15,7 +15,7 @@
 			</p>
 		</div>
 		<div slot="card-footer">
-			<button>Button</button>
+			<KtButton label="Button" />
 		</div>
 	</KtCard>
 </div>
