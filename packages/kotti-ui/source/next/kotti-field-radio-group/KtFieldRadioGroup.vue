@@ -122,6 +122,10 @@ export default defineComponent({
 	&__label {
 		display: flex;
 
+		input[type='radio'] {
+			display: none;
+		}
+
 		&:not(:last-child) {
 			margin-bottom: 0.4rem;
 		}
