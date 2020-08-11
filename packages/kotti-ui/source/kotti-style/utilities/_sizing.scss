@@ -1,4 +1,6 @@
 // Sizing
+$sizes: () !default;
+/* stylelint-disable-next-line */
 $sizes: map-merge(
 	(
 		25: 25%,
