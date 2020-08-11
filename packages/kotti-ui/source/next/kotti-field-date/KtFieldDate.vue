@@ -103,6 +103,4 @@ export default defineComponent({
 
 <style lang="scss">
 @import 'styles';
-@import '../kotti-field/mixins';
-@import 'mixins';
 </style>
