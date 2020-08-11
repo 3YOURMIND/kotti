@@ -156,9 +156,7 @@ const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 
 		if (isPickerVisible(dateComponent)) {
 			const newWidth = ktFieldDateInputContainer.getBoundingClientRect().width
-			// eslint-disable-next-line no-magic-numbers
-			dateComponent.picker.$el.style.width = `${(newWidth * 50) / 100}px`
-			dateComponent.picker.$el.style.minWidth = popperWidth
+			dateComponent.picker.$el.style.width = popperWidth
 			dateComponent.picker.$el.style.height = popperHeight
 		}
 	})
