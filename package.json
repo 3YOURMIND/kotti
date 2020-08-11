@@ -121,7 +121,7 @@
 		"lint:style": "yarn run check:style --fix",
 		"postpublish": "yarn run postpublish:deploy",
 		"postpublish:deploy": "yarn --cwd packages/documentation run deploy",
-		"prepublishOnly": "yarn run lint && yarn run prepublishOnly:check-dirty && lerna run build",
+		"prepublishOnly": "yarn run lint && lerna run build",
 		"prepublishOnly:check-dirty": "git update-index --refresh && git diff-index --quiet HEAD --"
 	},
 	"version": "1.0.0",
