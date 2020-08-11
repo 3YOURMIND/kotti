@@ -12,9 +12,11 @@ $cursors: (
 );
 
 @each $element, $cursor in $cursors {
+	/* stylelint-disable-next-line */
 	.#{$element} {
 		cursor: $cursor;
 	}
+	/* stylelint-disable-next-line */
 	.#{$element}-important {
 		cursor: $cursor !important;
 	}

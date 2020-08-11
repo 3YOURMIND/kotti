@@ -1,5 +1,4 @@
 // Sizing
-$sizes: () !default;
 $sizes: map-merge(
 	(
 		25: 25%,
@@ -13,6 +12,7 @@ $sizes: map-merge(
 
 @each $prop, $abbrev in (width: w, height: h) {
 	@each $size, $length in $sizes {
+		/* stylelint-disable-next-line */
 		.#{$abbrev}-#{$size} {
 			#{$prop}: $length !important;
 		}
