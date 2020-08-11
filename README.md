@@ -119,6 +119,8 @@ yarn run test
 # you may need login to npm with your credentials if you have publishing rights
 npm login
 
+# update the version in `package.json`
+# make sure to commit the version bump changes before publishing then run:
 yarn run lerna publish from-package
 
 # update release notes
