@@ -74,9 +74,11 @@ const TestControllerObjectForm = {
 }
 
 const getField = (
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
 	index: number,
 ): KottiField.Hook.Returns<string | null> =>
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(wrapper.findAllComponents({ name: 'KtField' }).at(index).vm as any).field
 
 describe('KtFormControllerList', () => {

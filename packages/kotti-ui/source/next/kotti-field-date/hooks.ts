@@ -140,22 +140,16 @@ const useInputSizeFix = <DATA_TYPE extends Values>({
 
 const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 	elDateRef,
-	inputContainerRef,
 	popperWidth,
 	popperHeight,
 }: Pick<
 	HookParameters<DATA_TYPE>,
-	'elDateRef' | 'inputContainerRef' | 'popperHeight' | 'popperWidth'
+	'elDateRef' | 'popperHeight' | 'popperWidth'
 >) => {
 	watchEffect(() => {
 		const dateComponent = getDateComponent({ elDateRef })
 
-		const ktFieldDateInputContainer = inputContainerRef.value
-		if (ktFieldDateInputContainer === null)
-			throw new Error('kt-field-date__input-container not available')
-
 		if (isPickerVisible(dateComponent)) {
-			const newWidth = ktFieldDateInputContainer.getBoundingClientRect().width
 			dateComponent.picker.$el.style.width = popperWidth
 			dateComponent.picker.$el.style.height = popperHeight
 		}
@@ -304,7 +298,6 @@ export const usePicker = <DATA_TYPE extends Values>({
 	useInputSizeFix({ elDateRef })
 	usePickerDimensionsFix({
 		elDateRef,
-		inputContainerRef,
 		popperHeight,
 		popperWidth,
 	})

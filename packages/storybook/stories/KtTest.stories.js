@@ -1,5 +1,4 @@
 import { Test } from '@3yourmind/kotti-ui'
-import { action } from '@storybook/addon-actions'
 import { linkTo } from '@storybook/addon-links'
 
 export default {
@@ -9,6 +8,7 @@ export default {
 
 export const Example = () => ({
 	components: { Test },
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	render(h) {
 		return <Test onClick={this.action}>With JSX</Test>
 	},
