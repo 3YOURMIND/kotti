@@ -139,7 +139,7 @@ export default defineComponent({
 				multiple: true,
 				noDataText: translations.value.noDataText,
 				noMatchText: translations.value.noMatchText,
-				placeholder: props.placeholder ?? undefined,
+				placeholder: props.placeholder ?? '',
 				value: field.currentValue,
 			})),
 			elSelectRef,

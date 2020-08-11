@@ -100,7 +100,7 @@ export default defineComponent({
 				clearable: !field.hideClear,
 				disabled: field.isDisabled,
 				pickerOptions: pickerOptions.value,
-				placeholder: props.placeholder ?? undefined,
+				placeholder: props.placeholder ?? '',
 				type: 'datetime',
 				value: field.currentValue ?? '',
 			})),
