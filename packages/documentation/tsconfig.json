@@ -4,7 +4,7 @@
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
 		"esModuleInterop": true,
-		"lib": ["ESNext", "ESNext.AsyncIterable", "DOM", "es2019", "DOM.Iterable"],
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"noEmit": true,
