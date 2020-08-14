@@ -58,8 +58,8 @@ export const useTranslationNamespace = <
  * Provides the translation context to child components
  */
 export const useTranslationProvide = (
-	locale: Ref<KottiTranslation.SupportedLanguages>,
-	messages: Ref<DeepPartial<KottiTranslation.Messages>>,
+	locale: Ref<KottiTranslation.Props['locale']>,
+	messages: Ref<KottiTranslation.Props['messages']>,
 ) => {
 	const defaultMessages = computed(
 		(): KottiTranslation.Messages =>

@@ -1,7 +1,5 @@
 import { computed, createElement, defineComponent } from '@vue/composition-api'
 
-import { makeInstallable } from '../utilities'
-
 import { useTranslationProvide } from './hooks'
 import { KottiTranslation } from './types'
 
