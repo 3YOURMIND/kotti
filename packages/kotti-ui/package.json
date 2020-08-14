@@ -25,6 +25,7 @@
 		"@rollup/plugin-commonjs": "12",
 		"@rollup/plugin-json": "^4.1.0",
 		"@rollup/plugin-node-resolve": "^8.4.0",
+		"@rollup/plugin-typescript": "^5.0.2",
 		"@types/jest": "^26.0.4",
 		"@types/lodash": "^4.14.157",
 		"@vue/composition-api": "0.5.x",
@@ -33,7 +34,6 @@
 		"postcss-preset-env": "^6.7.0",
 		"rollup": "^2.21.0",
 		"rollup-plugin-scss": "^2.5.0",
-		"rollup-plugin-typescript2": "^0.27.1",
 		"rollup-plugin-vue": "^5.1.9"
 	},
 	"files": [
@@ -41,8 +41,8 @@
 	],
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
-	"main": "dist/index.cjs.js",
-	"module": "dist/index.esm.js",
+	"main": "dist/cjs/index.js",
+	"module": "dist/esm/index.js",
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
 		"@babel/runtime": "^7.10.5",
@@ -55,18 +55,18 @@
 		"url": "git+https://github.com/3YOURMIND/kotti.git"
 	},
 	"scripts": {
-		"build": "yarn run build:tokens && yarn run build:kotti && yarn run build:scss-variables",
+		"build": "rm -rf dist && yarn run build:tokens && yarn run build:kotti && yarn run build:scss-variables",
 		"build:kotti": "rollup -c rollup.config.js",
 		"build:scss-variables": "cp source/kotti-style/_variables.scss dist/variables.scss",
 		"build:tokens": "node -r esm tokens/generate.js && prettier --write source/kotti-style/tokens.css",
+		"check:es5": "es-check es5 './dist/cjs/*.js'",
 		"check:style": "stylelint **/*.{css,scss,vue}",
 		"format": "prettier --write '**/*.{vue,js,json,jsx,ts,tsx,md}'",
-		"check:es5": "es-check es5 './dist/cjs/*.js'",
 		"test": "echo \"Error: run tests from root\" && exit 1",
 		"watch": "rollup -wc rollup.config.js"
 	},
 	"sideEffects": true,
 	"style": "dist/styles.css",
-	"types": "dist/index.d.ts",
+	"types": "dist/esm/index.d.ts",
 	"version": "2.0.3"
 }

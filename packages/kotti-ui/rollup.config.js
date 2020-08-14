@@ -1,13 +1,14 @@
+import { DEFAULT_EXTENSIONS } from '@babel/core'
 import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
 import postcssPluginAutoprefixer from 'autoprefixer'
 import postcss from 'postcss'
 import postcssPluginFlexbugs from 'postcss-flexbugs-fixes'
 import postcssPluginPresetEnv from 'postcss-preset-env'
 import scss from 'rollup-plugin-scss'
-import typescript2 from 'rollup-plugin-typescript2'
 import vue from 'rollup-plugin-vue'
 import sass from 'sass'
 
@@ -18,16 +19,43 @@ const external = [
 	...Object.keys(packageJSON.peerDependencies),
 	...Object.keys(packageJSON.dependencies),
 ]
-
-const plugins = [
-	nodeResolve({
-		extensions: ['.js', '.jsx', '.ts', '.tsx'],
+const plugins = (module) => [
+	nodeResolve(),
+	vue({
+		css: false,
+		needMap: false,
+	}),
+	typescript({
+		declarationDir: `dist/${module}`,
+		outDir: `dist/${module}`,
+		tsconfig: 'tsconfig.json',
 	}),
 	commonjs({
 		include: [/\/node_modules\//],
 	}),
 	json(),
 	babel({
+		skipPreflightCheck: true,
+		babelHelpers: 'runtime',
+		exclude: ['node_modules/@babel/**', /\/core-js\//],
+		sourceMap: true,
+		extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx', '.vue'],
+		presets: [
+			[
+				'@babel/preset-env',
+				{
+					corejs: 3,
+					useBuiltIns: 'usage',
+					forceAllTransforms: true,
+				},
+			],
+			[
+				'@babel/preset-typescript',
+				{
+					allowNamespaces: true,
+				},
+			],
+		],
 		plugins: [
 			[
 				'@babel/plugin-transform-runtime',
@@ -35,33 +63,11 @@ const plugins = [
 					useESModules: true,
 				},
 			],
+			'@babel/plugin-proposal-nullish-coalescing-operator',
+			'@babel/plugin-proposal-optional-chaining',
+			'@babel/plugin-syntax-dynamic-import',
 			'transform-vue-jsx',
 		],
-		skipPreflightCheck: true,
-		babelHelpers: 'runtime',
-		exclude: ['node_modules/@babel/**', /\/core-js\//],
-		presets: [
-			[
-				'@babel/preset-env',
-				{
-					corejs: 3,
-					targets: '> 0.25%, not dead, IE > 10',
-					useBuiltIns: 'usage',
-				},
-			],
-		],
-	}),
-	typescript2({
-		allowSyntheticDefaultImports: true,
-		clean: true,
-		tsconfig: 'tsconfig.json',
-		useTsconfigDeclarationDir: true,
-		experimentalDecorators: true,
-		module: 'esnext',
-	}),
-	vue({
-		css: false,
-		needMap: false,
 	}),
 	scss({
 		sass,
@@ -81,22 +87,24 @@ export default [
 	{
 		input: 'source/index.ts',
 		output: {
+			dir: 'dist/esm',
 			format: 'esm',
-			file: packageJSON.module,
+			// file: packageJSON.module,
 			sourcemap: true,
 		},
 		external,
-		plugins,
+		plugins: plugins('esm'),
 	},
 	{
 		input: 'source/index.ts',
 		output: {
+			dir: 'dist/cjs',
 			format: 'cjs',
-			file: packageJSON.main,
+			// file: packageJSON.main,
 			name: 'KottiUI',
-			sourcemap: false,
+			sourcemap: true,
 		},
 		external,
-		plugins,
+		plugins: plugins('cjs'),
 	},
 ]
