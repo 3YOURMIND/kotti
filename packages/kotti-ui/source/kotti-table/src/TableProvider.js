@@ -51,8 +51,8 @@ export const KtTableProvider = {
 			return this.stores[id] || this.defaultStore
 		},
 	},
-	render() {
-		return <div>{this.$slots.default}</div>
+	render(h) {
+		return h('div', {}, [this.$slots.default])
 	},
 	provide() {
 		return {
