@@ -36,11 +36,10 @@ export default defineComponent({
 
 		return {
 			field,
-			/**
-			 * FIXME: Type definition for HTMLTextAreaElement was removed due to a bug
-			 * when generating the types using rollup
-			 */
-			inputProps: computed(() => ({
+			inputProps: computed((): Partial<HTMLTextAreaElement> & {
+				class: string
+				forceUpdateKey: number
+			} => ({
 				...field.inputProps,
 				class: 'kt-field-text-area__wrapper',
 				forceUpdateKey: forceUpdateKey.value,

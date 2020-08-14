@@ -25,6 +25,7 @@ const KtTableConsumer = {
 			KtTableShowAllColumns: showAllColumns,
 			KtTableOrderBeforeColumn: orderBeforeColumn,
 		} = this
+
 		return this.$scopedSlots.default({
 			store,
 			columns,

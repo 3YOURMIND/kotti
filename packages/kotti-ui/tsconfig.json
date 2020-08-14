@@ -3,9 +3,8 @@
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"declaration": true,
-		"declarationDir": "dist",
+		"experimentalDecorators": true,
 		"lib": ["ESNext", "DOM", "DOM.Iterable"],
-		"outDir": "dist",
 		"module": "ESNext",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
@@ -20,6 +19,7 @@
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": [
+		"source/*.ts",
 		"source/**/*.ts",
 		"source/**/*.tsx",
 		"source/**/*.js",
