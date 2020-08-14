@@ -1,4 +1,4 @@
-import { createElement, defineComponent, computed } from '@vue/composition-api'
+import { computed, createElement, defineComponent } from '@vue/composition-api'
 
 import { makeInstallable } from '../utilities'
 
@@ -20,7 +20,5 @@ const KtTranslationContext = defineComponent({
 		return () => createElement('div', [slots.default()])
 	},
 })
-
-makeInstallable(KtTranslationContext)
 
 export { KtTranslationContext }

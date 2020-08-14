@@ -114,7 +114,8 @@ import {
 	KtFormSubmit,
 } from './next/kotti-form'
 export * from './next/kotti-form'
-import { KtTranslationContext } from './next/kotti-translation/KtTranslationContext'
+import { KtTranslationContext } from './next/kotti-translation'
+
 export * from './next/kotti-translation'
 export * from './types'
 
