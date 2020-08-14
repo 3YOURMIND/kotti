@@ -78,16 +78,8 @@ export default defineComponent({
 		})
 		const translations = useTranslationNamespace('KtFieldSelects')
 
-		/**
-		 * FIXME: Type definition for ElSelectWithInternalAPI was removed due to a bug
-		 * when generating the types using rollup
-		 */
-		const elSelectRef = ref<unknown>(null)
-		/**
-		 * FIXME: Type definition for Vue was removed due to a bug
-		 * when generating the types using rollup
-		 */
-		const ktFieldRef = ref<unknown>(null)
+		const elSelectRef = ref<ElSelectWithInternalAPI | null>(null)
+		const ktFieldRef = ref<Vue | null>(null)
 
 		useSelectFixes({
 			elSelectRef,
@@ -139,20 +131,19 @@ export default defineComponent({
 				 */
 				if (!isDropdownOpen.value) scheduleFocusAfterFieldClick.value = true
 			},
-			/**
-			 * FIXME: Type definition for Partial<ElSelect> was removed due to a bug
-			 * when generating the types using rollup
-			 */
-			elSingleSelectProps: computed(() => ({
-				defaultFirstOption: true,
-				disabled: field.isDisabled,
-				filterable: true,
-				loadingText: translations.value.loadingText,
-				noDataText: translations.value.noDataText,
-				noMatchText: translations.value.noMatchText,
-				placeholder: props.placeholder ?? '',
-				value: field.currentValue,
-			})),
+
+			elSingleSelectProps: computed(
+				(): Partial<ElSelect> => ({
+					defaultFirstOption: true,
+					disabled: field.isDisabled,
+					filterable: true,
+					loadingText: translations.value.loadingText,
+					noDataText: translations.value.noDataText,
+					noMatchText: translations.value.noMatchText,
+					placeholder: props.placeholder ?? '',
+					value: field.currentValue,
+				}),
+			),
 			isDropdownOpen,
 			ktFieldRef,
 			onChange: (value: KottiFieldSingleSelect.Value) => {

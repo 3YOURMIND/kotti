@@ -91,19 +91,17 @@ export default defineComponent({
 		}))
 
 		return {
-			/**
-			 * FIXME: Type definition for Partial<ElDate> was removed due to a bug
-			 * when generating the types using rollup
-			 */
-			elDateTimePickerProps: computed(() => ({
-				...EL_DATE_TIME_PROPS,
-				clearable: !field.hideClear,
-				disabled: field.isDisabled,
-				pickerOptions: pickerOptions.value,
-				placeholder: props.placeholder ?? '',
-				type: 'datetime',
-				value: field.currentValue ?? '',
-			})),
+			elDateTimePickerProps: computed(
+				(): Partial<ElDate> => ({
+					...EL_DATE_TIME_PROPS,
+					clearable: !field.hideClear,
+					disabled: field.isDisabled,
+					pickerOptions: pickerOptions.value,
+					placeholder: props.placeholder ?? '',
+					type: 'datetime',
+					value: field.currentValue ?? '',
+				}),
+			),
 			elDateRef,
 			field,
 			inputContainerRef,

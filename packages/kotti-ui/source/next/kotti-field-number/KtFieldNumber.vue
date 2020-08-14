@@ -168,11 +168,10 @@ export default defineComponent({
 				)
 			},
 			internalStringValue,
-			/**
-			 * FIXME: Type definition for HTMLInputElement was removed due to a bug
-			 * when generating the types using rollup
-			 */
-			inputProps: computed(() => ({
+			inputProps: computed((): Partial<HTMLInputElement> & {
+				class: object
+				forceUpdateKey: number
+			} => ({
 				...field.inputProps,
 				class: {
 					'kt-field-number__middle__input': true,

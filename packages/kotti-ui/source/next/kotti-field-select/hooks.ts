@@ -11,18 +11,10 @@ export type ElSelectWithInternalAPI = ElSelect & {
 }
 
 type HookParameters<DATA_TYPE extends Values> = {
-	/**
-	 * FIXME: Type definition for ElSelectWithInternalAPI was removed due to a bug
-	 * when generating the types using rollup
-	 */
-	elSelectRef: Ref<unknown>
+	elSelectRef: Ref<ElSelectWithInternalAPI | null>
 	field: KottiField.Hook.Returns<DATA_TYPE>
 	inputSelectors: string[]
-	/**
-	 * FIXME: Type definition for Vue | null was removed due to a bug
-	 * when generating the types using rollup
-	 */
-	ktFieldRef: Ref<unknown>
+	ktFieldRef: Ref<Vue | null>
 }
 
 type Values = KottiFieldSingleSelect.Value | KottiFieldMultiSelect.Value
