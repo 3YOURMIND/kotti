@@ -53,6 +53,7 @@ export default defineComponent({
 	components: { KtField },
 	props: {
 		...KOTTI_FIELD_PROPS,
+		isInline: { default: false, type: Boolean },
 		options: {
 			required: true,
 			type: Array,
@@ -60,7 +61,6 @@ export default defineComponent({
 				[...new Set(options.map(({ value }) => value))].length ===
 				options.length,
 		},
-		isInline: { default: false, type: Boolean },
 	},
 	setup(props: KottiFieldRadioGroup.Props, { emit }) {
 		const field = useField<KottiFieldRadioGroup.Value>({
