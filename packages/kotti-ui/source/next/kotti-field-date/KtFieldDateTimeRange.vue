@@ -52,9 +52,9 @@ export default defineComponent({
 				Array.isArray(value) &&
 				value.length === 2 &&
 				value.every(
-					(date) =>
-						date === null ||
-						(typeof date === 'string' && DATE_TIME_FORMAT_REGEX.test(date)),
+					(value) =>
+						value === null ||
+						(typeof value === 'string' && DATE_TIME_FORMAT_REGEX.test(value)),
 				),
 			isEmpty: (dateTimeRangeValue) =>
 				dateTimeRangeValue.every((dateTime) => dateTime === null),
