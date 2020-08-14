@@ -49,7 +49,7 @@ export default defineComponent({
 		const subsection = computed(
 			(): Subsection => {
 				const match = menu
-					.flatMap((menuItem: Section) => menuItem.subsections) // FIXME: weirdness
+					.flatMap((menuItem: Section) => menuItem.subsections)
 					.find((link) => link.path === path.value)
 
 				if (!match) throw new Error('Actionbar.vue: Could not find Subsection')
