@@ -19,7 +19,7 @@ import { enUS } from './locales/en-US'
 import { esES } from './locales/es-ES'
 import { frFR } from './locales/fr-FR'
 import { jaJP } from './locales/ja-JP'
-import { KottiTranslation, DeepPartial } from './types'
+import { KottiTranslation } from './types'
 import { fixDeepMerge } from './utilities'
 
 export const useTranslationContext = () => {
