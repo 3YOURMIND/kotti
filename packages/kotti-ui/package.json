@@ -68,5 +68,5 @@
 	"sideEffects": true,
 	"style": "dist/styles.css",
 	"types": "dist/esm/index.d.ts",
-	"version": "2.0.3"
+	"version": "2.0.4"
 }
