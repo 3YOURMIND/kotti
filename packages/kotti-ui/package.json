@@ -60,7 +60,7 @@
 		"build:scss-variables": "cp source/kotti-style/_variables.scss dist/variables.scss",
 		"build:tokens": "node -r esm tokens/generate.js && prettier --write source/kotti-style/tokens.css",
 		"check:es5": "es-check es5 './dist/cjs/*.js'",
-		"check:style": "stylelint **/*.{css,scss,vue}",
+		"check:style": "stylelint ./source{/**,}/*.{css,scss,vue}",
 		"format": "prettier --write '**/*.{vue,js,json,jsx,ts,tsx,md}'",
 		"test": "echo \"Error: run tests from root\" && exit 1",
 		"watch": "rollup -wc rollup.config.js"

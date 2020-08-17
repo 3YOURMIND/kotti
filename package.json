@@ -120,10 +120,9 @@
 	"scripts": {
 		"check": "yarn run check:script && yarn run check:style",
 		"check:script": "eslint --ignore-path .gitignore '**/*.{js,ts,vue}'",
-		"check:style": "stylelint '**/*.{css,scss,vue}'",
 		"lint": "yarn run lint:script && yarn run lint:style",
 		"lint:script": "yarn run check:script --fix",
-		"lint:style": "yarn run check:style --fix",
+		"lint:style": "lerna run check:style --fix",
 		"postpublish": "yarn run postpublish:deploy",
 		"postpublish:deploy": "yarn --cwd packages/documentation run deploy",
 		"prepublishOnly": "yarn run lint && lerna run build",
