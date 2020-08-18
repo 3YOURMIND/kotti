@@ -1,87 +1,78 @@
-import { createElement, computed, defineComponent } from '@vue/composition-api'
+import {
+	createElement,
+	computed,
+	defineComponent,
+	inject,
+} from '@vue/composition-api'
 
+import { KT_ROW_CONTEXT } from '../kotti-row/constants'
+import { KottiRow } from '../kotti-row/types'
 import { makeInstallable } from '../next/utilities'
+
+type MediaQueryProps = {
+	[KEY in 'lg' | 'md' | 'sm' | 'xl' | 'xs']: number | null
+}
 
 export const KtCol = makeInstallable(
 	defineComponent({
 		name: 'KtCol',
 		props: {
-			lg: { default: null, type: [Number, Object] },
-			md: { default: null, type: [Number, Object] },
+			lg: { default: null, type: Number },
+			md: { default: null, type: Number },
 			offset: { default: null, type: Number },
 			pull: { default: null, type: Number },
 			push: { default: null, type: Number },
-			sm: { default: null, type: [Number, Object] },
+			sm: { default: null, type: Number },
 			span: { default: 24, type: Number },
 			tag: { default: 'div', type: String },
-			xl: { default: null, type: [Number, Object] },
-			xs: { default: null, type: [Number, Object] },
+			xl: { default: null, type: Number },
+			xs: { default: null, type: Number },
 		},
-		setup(props, { parent, slots }) {
-			const space = computed(() => {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				let parentPointer: any = parent
+		setup(
+			props: {
+				offset: number | null
+				pull: number | null
+				push: number | null
+				span: number
+				tag: string
+			} & MediaQueryProps,
+			{ slots },
+		) {
+			const context = inject<KottiRow.Context | null>(KT_ROW_CONTEXT, null)
 
-				while (
-					parentPointer &&
-					parentPointer.$options.componentName !== 'KtRow'
-				)
-					parentPointer = parentPointer.$parent
+			const style = computed(() => {
+				if (context === null) return undefined
+
+				const { gap, gutter } = context
 
 				return {
-					gap: parentPointer?.gap ?? 0,
-					gutter: parentPointer?.gutter ?? 0,
+					paddingBottom: `${gap.value / 2}px`,
+					paddingLeft: `${gutter.value / 2}px`,
+					paddingRight: `${gutter.value / 2}px`,
+					paddingTop: `${gap.value / 2}px`,
 				}
 			})
 
-			const style = computed(() => {
-				const result: Record<string, string> = {}
-
-				const { gap, gutter } = space.value
-
-				if (gap) result.paddingTop = result.paddingBottom = `${gap / 2}px`
-				if (gutter) result.paddingLeft = result.paddingRight = `${gutter / 2}px`
-
-				return result
-			})
-
-			const classes = computed(() => {
-				const classList = ['kt-col']
-
-				;(['span', 'offset', 'pull', 'push'] as Array<
-					keyof typeof props
-				>).forEach((key) => {
-					const value = props[key]
-
-					if (value !== null)
-						classList.push(
-							key === 'span'
-								? `kt-col-${value}`
-								: `kt-col-${String(key)}-${value}`,
-						)
-				})
-				;(['span', 'offset', 'pull', 'push'] as Array<
-					keyof typeof props
-				>).forEach((key) => {
-					const value = props[key]
-
-					if (typeof value === 'number')
-						classList.push(`kt-col-${String(key)}-${value}`)
-					else if (typeof value === 'object')
-						Object.keys(value).forEach((prop) =>
-							classList.push(`kt-col-${String(key)}-${prop}-${value}`),
-						)
-				})
-
-				return classList
-			})
+			const classes = computed(() => [
+				'kt-col',
+				`kt-col-${props.span}`,
+				...Object.entries(props)
+					.filter(
+						([key, value]) =>
+							value !== null &&
+							['offset', 'pull', 'push', 'xs', 'sm', 'md', 'lg', 'xl'].includes(
+								key,
+							),
+					)
+					.map(([key, value]) => `kt-col-${key}-${value}`),
+			])
 
 			return () =>
 				createElement(
 					props.tag,
 					{
-						class: classes,
-						style,
+						class: classes.value,
+						style: style.value,
 					},
 					[slots.default()],
 				)
