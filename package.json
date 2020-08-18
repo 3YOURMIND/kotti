@@ -74,6 +74,7 @@
 		"husky": "^4.2.5",
 		"lerna": "^3.22.1",
 		"lint-staged": "^10.2.11",
+		"nodemon": "^2.0.4",
 		"postcss": "^7.0.32",
 		"prettier": "^2.0.5",
 		"sass": "^1.26.10",
@@ -126,7 +127,7 @@
 		"postpublish": "yarn run postpublish:deploy",
 		"postpublish:deploy": "yarn --cwd packages/documentation run deploy",
 		"prepublishOnly": "yarn run lint && lerna run build",
-		"prepublishOnly:check-dirty": "git update-index --refresh && git diff-index --quiet HEAD --"
+		"watch": "nodemon --watch packages/kotti-ui/source --ignore packages/kotti-ui/source/kotti-style/tokens.css -e js,jsx,ts,tsx,vue,scss,css,json --exec \"yarn --cwd packages/kotti-ui run build && yarn --cwd packages/documentation run serve\""
 	},
 	"version": "1.0.0",
 	"workspaces": [
