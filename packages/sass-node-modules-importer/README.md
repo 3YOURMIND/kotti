@@ -24,7 +24,7 @@ export default [
 @import '~normalize.css/'; // Trailing slash is important if module ends with .css as sass will not call the importer otherwise
 ```
 
-## Supported Source
+## Supported Sources
 
 - (recursive) parent `node_modules`
 - `package.json` `style` property

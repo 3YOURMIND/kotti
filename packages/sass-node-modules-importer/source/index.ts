@@ -24,7 +24,7 @@ const tryResolvers = (
 const resolve = (options: Options, targetUrl: string, source: string) => {
 	const nodeModulesList = findNodeModules({ cwd: path.resolve(source) })
 
-	log(options, 'found node_modules', { targetUrl, source, nodeModulesList })
+	log(options, 'found node_modules', nodeModulesList)
 
 	for (const nodeModules of nodeModulesList) {
 		const filePath = path.resolve(nodeModules, targetUrl)
@@ -56,7 +56,7 @@ const resolve = (options: Options, targetUrl: string, source: string) => {
 export default (partialOptions: Partial<Options> = {}) => {
 	if (typeof partialOptions !== 'object' || partialOptions === null)
 		throw new Error(
-			'This is a curried function. You need to call it (with or without options) before passing it to sass',
+			'This is a curried function. You need to call it (with or without options) before passing it to sass (@3yourmind/sass-node-modules-importer)',
 		)
 
 	return (url: string, prev: string) => {
