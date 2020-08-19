@@ -18,7 +18,6 @@ import sass from 'sass'
 import packageJSON from './package.json'
 
 const external = [
-	/@babel\/runtime/,
 	...Object.keys(packageJSON.peerDependencies),
 	...Object.keys(packageJSON.dependencies),
 ]
@@ -61,12 +60,7 @@ const plugins = (module) => [
 			],
 		],
 		plugins: [
-			[
-				'@babel/plugin-transform-runtime',
-				{
-					useESModules: true,
-				},
-			],
+			'@babel/plugin-transform-runtime',
 			'@babel/plugin-proposal-nullish-coalescing-operator',
 			'@babel/plugin-proposal-optional-chaining',
 			'@babel/plugin-syntax-dynamic-import',

@@ -22,6 +22,7 @@
 	"devDependencies": {
 		"@3yourmind/sass-node-modules-importer": "*",
 		"@babel/plugin-transform-runtime": "^7.10.5",
+		"@babel/runtime": "^7.11.2",
 		"@rollup/plugin-babel": "^5.1.0",
 		"@rollup/plugin-commonjs": "12",
 		"@rollup/plugin-json": "^4.1.0",
@@ -46,7 +47,6 @@
 	"module": "dist/esm/index.js",
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
-		"@babel/runtime": "^7.10.5",
 		"@vue/composition-api": "0.5.x",
 		"core-js": "*",
 		"vue": "^2.2.1"
