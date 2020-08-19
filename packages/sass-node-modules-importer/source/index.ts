@@ -27,9 +27,9 @@ const resolve = (options: Options, targetUrl: string, source: string) => {
 	log(options, 'found node_modules', { targetUrl, source, nodeModulesList })
 
 	for (const nodeModules of nodeModulesList) {
-		log(options, 'attempting to resolve', nodeModules)
-
 		const filePath = path.resolve(nodeModules, targetUrl)
+
+		log(options, `attempting to resolve ${filePath}`)
 
 		const isExisting = fs.existsSync(filePath)
 		if (isExisting) {
@@ -53,26 +53,35 @@ const resolve = (options: Options, targetUrl: string, source: string) => {
 	return null
 }
 
-export default ({
-	debug = false,
-	indexExtensions = ['.css', '.sass', '.scss'],
-	start = '~',
-}: Partial<Options> = {}) => (url: string, prev: string, done: unknown) => {
-	const options: Options = { debug, indexExtensions, start }
+export default (partialOptions: Partial<Options> = {}) => {
+	if (typeof partialOptions !== 'object' || partialOptions === null)
+		throw new Error(
+			'This is a curried function. You need to call it (with or without options) before passing it to sass',
+		)
 
-	log(options, 'called by sass with', { url, prev, done })
+	return (url: string, prev: string) => {
+		/**
+		 * assign default options
+		 */
+		const options: Options = Object.assign(
+			{ debug: false, indexExtensions: ['.css', '.sass', '.scss'], start: '~' },
+			partialOptions,
+		)
 
-	const isTildeImport = url.startsWith(options.start)
+		log(options, 'called by sass with', { url, prev })
 
-	if (!isTildeImport) return null
+		const isTildeImport = url.startsWith(options.start)
 
-	const toResolve = url.substr(options.start.length)
+		if (!isTildeImport) return null
 
-	log(options, 'attempting to resolve', toResolve)
+		const toResolve = url.substr(options.start.length)
 
-	const file = resolve(options, toResolve, prev === 'stdin' ? '.' : prev)
+		log(options, `attempting to resolve ${toResolve}`)
 
-	log(options, '=> resolved', file)
+		const file = resolve(options, toResolve, prev === 'stdin' ? '.' : prev)
 
-	return file === null ? null : { file }
+		log(options, `=> resolved to ${file}`)
+
+		return file === null ? null : { file }
+	}
 }

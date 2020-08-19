@@ -4,6 +4,8 @@ import * as path from 'path'
 import { log } from '../logger'
 import { Resolver } from '../types'
 
+import { resolveFromExtension } from './file'
+
 /**
  * Directory resolver that attempts to look for a package.json
  * if a package.json is found, it’ll check for a style property inside and resolve to it
@@ -13,13 +15,13 @@ import { Resolver } from '../types'
  * E.g. the style might be misconfigured or the build doesn’t properly generate the css file
  */
 export const resolveFromPackageJson: Resolver = (options, directory) => {
-	log(options, 'attempting to resolve package.json')
+	log(options, `attempting to resolve package.json in ${directory}`)
 
 	const packageJsonPath = path.resolve(directory, 'package.json')
 
 	if (!fs.existsSync(packageJsonPath)) return null
 
-	log(options, 'found package.json')
+	log(options, `found package.json at ${packageJsonPath}`)
 	const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString())
 
 	if (!Object.prototype.hasOwnProperty.call(packageJson, 'style')) {
@@ -27,8 +29,10 @@ export const resolveFromPackageJson: Resolver = (options, directory) => {
 		return null
 	}
 
-	log(options, 'found style')
-	return path.resolve(directory, packageJson.style)
+	const stylePath = path.resolve(directory, packageJson.style)
+
+	log(options, `found style at ${stylePath}`)
+	return stylePath
 }
 
 /**
@@ -36,11 +40,8 @@ export const resolveFromPackageJson: Resolver = (options, directory) => {
  * if the file exists, it’ll resolve to it
  */
 export const resolveFromIndexCss: Resolver = (options, directory) => {
-	log(options, 'attempting to resolve index.css')
-
-	const indexCss = path.resolve(directory, 'index.css')
-
-	return fs.existsSync(indexCss) ? indexCss : null
+	log(options, `attempting to resolve ${directory}/index`)
+	return resolveFromExtension(options, path.resolve(directory, 'index'))
 }
 
 /**
