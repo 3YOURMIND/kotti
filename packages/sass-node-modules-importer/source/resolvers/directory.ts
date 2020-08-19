@@ -10,6 +10,7 @@ import { Resolver } from '../types'
  *
  * NOTE: Whether or not the resolved file actually exists is intentionally ignored, as
  * sass should tell the user that the style’s file couldn’t be found so they can fix the package
+ * E.g. the style might be misconfigured or the build doesn’t properly generate the css file
  */
 export const resolveFromPackageJson: Resolver = (options, directory) => {
 	log(options, 'attempting to resolve package.json')
