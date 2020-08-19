@@ -1,5 +1,4 @@
 // styles
-import 'normalize.css'
 import './kotti-style/index.scss'
 
 // components

@@ -1,3 +1,6 @@
+import path from 'path'
+
+import sassNodeModulesImporter from '@3yourmind/sass-node-modules-importer'
 import { DEFAULT_EXTENSIONS } from '@babel/core'
 import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
@@ -19,6 +22,7 @@ const external = [
 	...Object.keys(packageJSON.peerDependencies),
 	...Object.keys(packageJSON.dependencies),
 ]
+
 const plugins = (module) => [
 	nodeResolve(),
 	vue({
@@ -70,7 +74,7 @@ const plugins = (module) => [
 		],
 	}),
 	scss({
-		sass,
+		importer: sassNodeModulesImporter(),
 		output: packageJSON.style,
 		processor: (css) =>
 			postcss([
@@ -80,6 +84,7 @@ const plugins = (module) => [
 			])
 				.process(css)
 				.then((result) => result.css),
+		sass,
 	}),
 ]
 
@@ -87,9 +92,8 @@ export default [
 	{
 		input: 'source/index.ts',
 		output: {
-			dir: 'dist/esm',
+			dir: path.dirname(packageJSON.module),
 			format: 'esm',
-			// file: packageJSON.module,
 			sourcemap: true,
 		},
 		external,
@@ -98,9 +102,8 @@ export default [
 	{
 		input: 'source/index.ts',
 		output: {
-			dir: 'dist/cjs',
+			dir: path.dirname(packageJSON.main),
 			format: 'cjs',
-			// file: packageJSON.main,
 			name: 'KottiUI',
 			sourcemap: true,
 		},
