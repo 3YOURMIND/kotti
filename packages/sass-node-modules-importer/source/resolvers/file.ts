@@ -17,4 +17,8 @@ export const resolveFromExtension: Resolver = (options, file) => {
 	return null
 }
 
+/**
+ * File resolvers guess based on not existing files. For example, when some-file doesn’t exist,
+ * some-file.css might still exist and would be considered valid.
+ */
 export const FILE_RESOLVERS: Resolver[] = [resolveFromExtension]
