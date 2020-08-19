@@ -126,7 +126,7 @@
 		"lint:style": "lerna run check:style -- --fix",
 		"postpublish": "yarn run postpublish:deploy",
 		"postpublish:deploy": "yarn --cwd packages/documentation run deploy",
-		"prepublishOnly": "yarn run lint && lerna run build",
+		"prepublishOnly": "yarn run lint && lerna run --no-private build",
 		"watch": "nodemon --watch packages/kotti-ui/source --ignore packages/kotti-ui/source/kotti-style/tokens.css -e js,jsx,ts,tsx,vue,scss,css,json --exec \"yarn --cwd packages/kotti-ui run build && yarn --cwd packages/documentation run serve\""
 	},
 	"version": "1.0.0",
