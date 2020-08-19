@@ -33,8 +33,8 @@ export default [
 
 ## Options
 
-|              name | default                      |    type    |                                           description |
-| ----------------: | :--------------------------- | :--------: | ----------------------------------------------------: |
-|           `debug` | `false`                      | `boolean`  |                                      activates logger |
-| `indexExtensions` | `['.css', '.sass', '.scss']` | `string[]` |       extensions to resolve when extension is omitted |
-|           `start` | `~`                          |  `string`  | prefix string/char to refer to `node_modules` folders |
+|              name | default                      |    type    | description                                                                  |
+| ----------------: | :--------------------------- | :--------: | :--------------------------------------------------------------------------- |
+|           `debug` | `false`                      | `boolean`  | Enable debug logs                                                            |
+| `indexExtensions` | `['.css', '.sass', '.scss']` | `string[]` | Extensions to resolve when extension is omitted. Will prefer based on order. |
+|           `start` | `~`                          |  `string`  | Prefix string/char to refer to `node_modules` folders                        |

@@ -57,7 +57,7 @@ export default ({
 	debug = false,
 	indexExtensions = ['.css', '.sass', '.scss'],
 	start = '~',
-} = {}) => (url: string, prev: string, done: unknown) => {
+}: Partial<Options> = {}) => (url: string, prev: string, done: unknown) => {
 	const options: Options = { debug, indexExtensions, start }
 
 	log(options, 'called by sass with', { url, prev, done })
