@@ -20,6 +20,7 @@
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
+		"@3yourmind/sass-node-modules-importer": "*",
 		"@babel/plugin-transform-runtime": "^7.10.5",
 		"@rollup/plugin-babel": "^5.1.0",
 		"@rollup/plugin-commonjs": "12",

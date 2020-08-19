@@ -1,0 +1,36 @@
+{
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"dependencies": {
+		"find-node-modules": "^2.1.0"
+	},
+	"description": "SASS Importer That Handles node_modules with support for Lerna, package.json style, etc.",
+	"directories": {
+		"dist": "dist"
+	},
+	"homepage": "https://github.com/3YOURMIND/kotti/tree/master/packages/sass-node-modules-importer",
+	"keywords": [
+		"sass",
+		"importer",
+		"scss",
+		"node_modules",
+		"tilde",
+		"recursive",
+		"lerna"
+	],
+	"license": "MIT",
+	"main": "dist/index.js",
+	"name": "@3yourmind/sass-node-modules-importer",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
+	"scripts": {
+		"build": "rm -rf dist && tsc"
+	},
+	"version": "1.0.0"
+}
