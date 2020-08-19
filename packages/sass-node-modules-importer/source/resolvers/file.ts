@@ -3,6 +3,12 @@ import * as fs from 'fs'
 import { log } from '../logger'
 import { Resolver } from '../types'
 
+/**
+ * File resolve that attempts to guess missing extensions.
+ * E.g. some-file might be referring to some-file.css
+ *
+ * Will only resolve valid files.
+ */
 export const resolveFromExtension: Resolver = (options, file) => {
 	log(options, 'attempting to resolve from index')
 
@@ -11,7 +17,8 @@ export const resolveFromExtension: Resolver = (options, file) => {
 
 		const extensionPath = `${file}${extension}`
 
-		if (fs.existsSync(extensionPath)) return extensionPath
+		if (fs.existsSync(extensionPath) && fs.lstatSync(extensionPath).isFile())
+			return extensionPath
 	}
 
 	return null
