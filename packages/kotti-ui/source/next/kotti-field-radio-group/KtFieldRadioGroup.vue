@@ -17,7 +17,6 @@
 				<input
 					v-bind="inputProps"
 					:checked="field.currentValue === option.value"
-					class="kt-field-radio-group__wrapper__input"
 					:disabled="field.isDisabled || Boolean(option.disabled)"
 					:value="option.value"
 					@change="onChange(option.value)"
@@ -80,6 +79,7 @@ export default defineComponent({
 		return {
 			inputProps: computed(() => ({
 				...field.inputProps,
+				class: 'kt-field-radio-group__wrapper__input',
 				name,
 				type: 'radio',
 			})),
