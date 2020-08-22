@@ -127,14 +127,20 @@ const useInputDecoration = <DATA_TYPE extends Values>({
 	})
 }
 
+/**
+ * Allow Inputs to Shrink
+ * @see {@link https://stackoverflow.com/a/29990524/2857873}
+ */
 const useInputSizeFix = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
 	onMounted(() => {
 		const dateComponent = getDateComponent({ elDateRef })
 
-		const elInput = dateComponent.$el.querySelector('.el-input__inner')
-		elInput?.setAttribute('size', '1')
+		const elInputs = dateComponent.$el.querySelectorAll(
+			'.el-input__inner, .el-range-input',
+		)
+		Array.from(elInputs).forEach((element) => element.setAttribute('size', '1'))
 	})
 }
 
