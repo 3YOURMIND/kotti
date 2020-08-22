@@ -27,7 +27,7 @@ const resolve = (options: Options, targetUrl: string, source: string) => {
 	log(options, 'found node_modules', nodeModulesList)
 
 	for (const nodeModules of nodeModulesList) {
-		const filePath = path.resolve(nodeModules, targetUrl)
+		const filePath = path.resolve(source, nodeModules, targetUrl)
 
 		log(options, `attempting to resolve ${filePath}`)
 

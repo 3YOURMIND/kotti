@@ -1,5 +1,7 @@
 {
-	"dependencies": {},
+	"dependencies": {
+		"@3yourmind/kotti-ui": "*"
+	},
 	"devDependencies": {
 		"@babel/core": "^7.10.4",
 		"@storybook/addon-actions": "^5.3.19",
@@ -10,8 +12,8 @@
 		"babel-preset-vue": "^2.0.2"
 	},
 	"license": "MIT",
-	"private": true,
 	"name": "@3yourmind/storybook",
+	"private": true,
 	"scripts": {
 		"build": "build-storybook",
 		"storybook": "start-storybook -p 6006"
