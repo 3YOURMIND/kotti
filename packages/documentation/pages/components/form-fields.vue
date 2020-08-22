@@ -133,6 +133,27 @@
 						size="small"
 						type="switch"
 					/>
+					<KtFieldDate
+						v-if="componentDefinition.additionalProps.includes('maximumDate')"
+						formKey="maximumDate"
+						isOptional
+						label="maximumDate"
+						size="small"
+					/>
+					<KtFieldDate
+						v-if="componentDefinition.additionalProps.includes('minimumDate')"
+						formKey="minimumDate"
+						isOptional
+						label="minimumDate"
+						size="small"
+					/>
+					<KtFieldNumber
+						v-if="componentDefinition.additionalProps.includes('collapseTagsAfter')"
+						formKey="collapseTagsAfter"
+						isOptional
+						label="collapseTagsAfter"
+						size="small"
+					/>
 				</KtFormControllerObject>
 			</div>
 			<div>
@@ -224,6 +245,8 @@ const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 	}
 }
 
+const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate']
+
 const components: Array<{
 	additionalProps: Array<string>
 	formKey: string
@@ -231,25 +254,25 @@ const components: Array<{
 	supports: Kotti.Field.Supports
 }> = [
 	{
-		additionalProps: [],
+		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateValue',
 		name: 'KtFieldDate',
 		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
-		additionalProps: [],
+		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateRangeValue',
 		name: 'KtFieldDateRange',
 		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
-		additionalProps: [],
+		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateTimeValue',
 		name: 'KtFieldDateTime',
 		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
-		additionalProps: [],
+		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateTimeRangeValue',
 		name: 'KtFieldDateTimeRange',
 		supports: { clear: false, decoration: false, tabIndex: false },
@@ -261,7 +284,7 @@ const components: Array<{
 		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
-		additionalProps: [],
+		additionalProps: ['collapseTagsAfter'],
 		formKey: 'multiSelectValue',
 		name: 'KtFieldMultiSelect',
 		supports: { clear: false, decoration: false, tabIndex: false },
@@ -387,7 +410,10 @@ export default defineComponent({
 
 		const settings = ref<{
 			additionalProps: {
+				collapseTagsAfter: Kotti.FieldNumber.Value
 				isInline: boolean
+				maximumDate: Kotti.FieldDate.Value
+				minimumDate: Kotti.FieldDate.Value
 				numberHideMaximum: boolean
 				numberMaximum: number | null
 				numberMinimum: number | null
@@ -414,7 +440,10 @@ export default defineComponent({
 			validation: Kotti.Field.Validation.Result['type']
 		}>({
 			additionalProps: {
+				collapseTagsAfter: null,
 				isInline: false,
+				maximumDate: null,
+				minimumDate: null,
 				numberHideMaximum: false,
 				numberMaximum: null,
 				numberMinimum: null,
@@ -509,6 +538,23 @@ export default defineComponent({
 			if (componentDefinition.value.additionalProps.includes('isInline'))
 				Object.assign(additionalProps, {
 					isInline: settings.value.additionalProps.isInline,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('maximumDate'))
+				Object.assign(additionalProps, {
+					maximumDate: settings.value.additionalProps.maximumDate,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('minimumDate'))
+				Object.assign(additionalProps, {
+					minimumDate: settings.value.additionalProps.minimumDate,
+				})
+
+			if (
+				componentDefinition.value.additionalProps.includes('collapseTagsAfter')
+			)
+				Object.assign(additionalProps, {
+					collapseTagsAfter: settings.value.additionalProps.collapseTagsAfter,
 				})
 
 			if (
