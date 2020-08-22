@@ -1,5 +1,6 @@
-node_modules/
-yarn-error.log
-.DS_Store
 dist/
 gh-pages/
+docs/
+!docs/index.html
+!docs/icons.json
+fonts/

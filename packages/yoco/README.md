@@ -1,48 +1,61 @@
 # Yoco Icon
 
-In house designed icons for [kotti design system](https://3yourmind.github.io/kotti/).
+In-house-designed icons for [kotti design system](https://3yourmind.github.io/kotti/).
 
-[👓 Check the Icons](https://3yourmind.github.io/yoco/)
+[👓 Check the Icons](https://3yourmind.github.io/kotti/foundations/icons/)
 
-## Get yoco
+## Installation
+
+**Using yarn**
+
+```bash
+yarn add @3yourmind/yoco
+```
 
 **Using npm**
 
 ```bash
-$ npm install @3yourmind/yoco
-```
-
-**Using yarn**
-
-```
-$ yarn add @3yourmind/yoco
+npm install --save @3yourmind/yoco
 ```
 
 ## Add Yoco Icon to your project
 
 **With module bundler**
 
-```bash
-@import "@3yourmind/yoco";
+```scss
+@import '~@3yourmind/yoco'; // might need a sass importer like @3yourmind/sass-node-modules-importer
+```
+
+```typescript
+// enum of icons and the associated ligature / svg name
+import { Icons } "@3yourmind/yoco";
+
+console.log(Icons.ANNOUNCE)
+// 'announce'
 ```
 
 **With HTML**
 
 ```html
-<!-- Add yoco.css to your project -->
-<link rel="stylesheet" href="./path/to/yoco-icon.css">
+<link rel="stylesheet" href="./path/to/yoco/styles.css" />
 ```
 
 ## Using yoco icons
 
-Yoco use ligatures feature, which allows rendering of an icon glyph simply by using its textual name.
+Yoco use ligatures, which allows rendering the icon glyph by simply using its name with the `yoco` font.
 
 ```html
-<!-- cloud is icon's textual name -->
 <i class="yoco">cloud</i>
+
+<!-- or, use .svg -->
+
+<img src="./path/to/yoco/svg/cloud.svg" />
 ```
 
 ## How to Build and Generate Yoco Font
 
-[More details are here](https://github.com/3YOURMIND/yoco/blob/master/docs/howto.md)
-
+```bash
+yarn --cwd packages/yoco run build
+# or
+yarn run build
+```
