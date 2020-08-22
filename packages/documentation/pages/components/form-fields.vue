@@ -133,6 +133,14 @@
 						/>
 					</div>
 					<KtFieldToggle
+						v-if="componentDefinition.additionalProps.includes('showChangeButtons')"
+						formKey="showChangeButtons"
+						isOptional
+						label="showChangeButtons"
+						size="small"
+						type="switch"
+					/>
+					<KtFieldToggle
 						v-if="componentDefinition.additionalProps.includes('isInline')"
 						formKey="isInline"
 						isOptional
@@ -289,6 +297,7 @@ const components: Array<{
 			'numberHideMaximum',
 			'numberMaximum',
 			'numberMinimum',
+			'showChangeButtons',
 			'step',
 		],
 		formKey: 'numberValue',
@@ -429,6 +438,7 @@ export default defineComponent({
 				numberHideMaximum: boolean
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
+				showChangeButtons: boolean
 				step: Kotti.FieldNumber.Value
 				toggleType: 'checkbox' | 'switch'
 			}
@@ -460,6 +470,7 @@ export default defineComponent({
 				numberHideMaximum: false,
 				numberMaximum: null,
 				numberMinimum: null,
+				showChangeButtons: false,
 				step: null,
 				toggleType: 'checkbox',
 			},
@@ -494,6 +505,7 @@ export default defineComponent({
 			return result
 		})
 
+		// eslint-disable-next-line sonarjs/cognitive-complexity
 		const componentProps = computed(() => {
 			const { component } = settings.value
 
@@ -574,6 +586,13 @@ export default defineComponent({
 			)
 				Object.assign(additionalProps, {
 					collapseTagsAfter: settings.value.additionalProps.collapseTagsAfter,
+				})
+
+			if (
+				componentDefinition.value.additionalProps.includes('showChangeButtons')
+			)
+				Object.assign(additionalProps, {
+					showChangeButtons: settings.value.additionalProps.showChangeButtons,
 				})
 
 			if (
