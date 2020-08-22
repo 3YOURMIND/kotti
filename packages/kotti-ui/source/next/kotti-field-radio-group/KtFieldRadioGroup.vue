@@ -2,7 +2,7 @@
 	<KtField v-bind="{ field }" :getEmptyValue="() => null" isGroup>
 		<div
 			slot="container"
-			class="kt-field-radio-group__wrapper"
+			:class="wrapperClasses"
 			:forceUpdateKey="forceUpdateKey"
 		>
 			<label
@@ -53,6 +53,7 @@ export default defineComponent({
 	components: { KtField },
 	props: {
 		...KOTTI_FIELD_PROPS,
+		isInline: { default: false, type: Boolean },
 		options: {
 			required: true,
 			type: Array,
@@ -89,6 +90,10 @@ export default defineComponent({
 
 				forceUpdate()
 			},
+			wrapperClasses: computed(() => ({
+				'kt-field-radio-group__wrapper': true,
+				'kt-field-radio-group__wrapper--inline': props.isInline,
+			})),
 		}
 	},
 })
@@ -105,6 +110,15 @@ export default defineComponent({
 .kt-field-radio-group__wrapper {
 	display: flex;
 	flex-direction: column;
+
+	&--inline {
+		display: block;
+
+		.kt-field-radio-group__wrapper__label {
+			display: inline-flex;
+			margin-right: 1rem;
+		}
+	}
 
 	&__label {
 		display: flex;

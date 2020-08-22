@@ -125,6 +125,14 @@
 						size="small"
 						type="switch"
 					/>
+					<KtFieldToggle
+						v-if="componentDefinition.additionalProps.includes('isInline')"
+						formKey="isInline"
+						isOptional
+						label="isInline"
+						size="small"
+						type="switch"
+					/>
 				</KtFormControllerObject>
 			</div>
 			<div>
@@ -259,7 +267,7 @@ const components: Array<{
 		supports: { clear: false, decoration: false, tabIndex: false },
 	},
 	{
-		additionalProps: [],
+		additionalProps: ['isInline'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldRadioGroup',
 		supports: { clear: false, decoration: false, tabIndex: false },
@@ -379,6 +387,7 @@ export default defineComponent({
 
 		const settings = ref<{
 			additionalProps: {
+				isInline: boolean
 				numberHideMaximum: boolean
 				numberMaximum: number | null
 				numberMinimum: number | null
@@ -405,6 +414,7 @@ export default defineComponent({
 			validation: Kotti.Field.Validation.Result['type']
 		}>({
 			additionalProps: {
+				isInline: false,
 				numberHideMaximum: false,
 				numberMaximum: null,
 				numberMinimum: null,
@@ -494,6 +504,11 @@ export default defineComponent({
 			if (componentDefinition.value.additionalProps.includes('numberMinimum'))
 				Object.assign(additionalProps, {
 					minimum: settings.value.additionalProps.numberMinimum,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('isInline'))
+				Object.assign(additionalProps, {
+					isInline: settings.value.additionalProps.isInline,
 				})
 
 			if (
