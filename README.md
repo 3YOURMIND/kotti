@@ -2,7 +2,7 @@
 
 <p align="center">
 	<a href="https://npmjs.com/package/@3yourmind/kotti-ui"><img src="https://img.shields.io/npm/dm/@3yourmind/kotti-ui.svg?style=for-the-badge"/></a>
-	<a href="https://david-dm.org/3yourmind/kotti"><img src="https://img.shields.io/david/3yourmind/kotti.svg?style=for-the-badge"/></a>
+	<a href="https://npmjs.com/package/@3yourmind/kotti-ui"><img src="https://img.shields.io/npm/types/@3yourmind/kotti-ui.svg?style=for-the-badge"/></a>
 </p>
 <p align="center">
 	<a href="https://bundlephobia.com/result?p=@3yourmind/kotti-ui"><img src="https://img.shields.io/bundlephobia/minzip/@3yourmind/kotti-ui.svg?style=for-the-badge"/></a>
