@@ -20,10 +20,8 @@ export const DEFAULT_RENDER_CELL = function DEFAULT_RENDER_CELL(
 	{ row, rowIndex, column, columnIndex, value },
 ) {
 	return [
-		column.formatter(value, row, column, columnIndex, rowIndex) ||
-			(typeof column.default === 'function'
-				? column.default(value, row, column, columnIndex, rowIndex)
-				: column.default),
+		column.formatter(value, row, column, columnIndex, rowIndex) ??
+			column.default,
 	]
 }
 
