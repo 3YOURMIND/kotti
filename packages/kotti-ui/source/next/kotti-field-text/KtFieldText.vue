@@ -43,6 +43,7 @@ export default defineComponent({
 				class: ['kt-field-text__wrapper'],
 				forceUpdateKey: forceUpdateKey.value,
 				type: 'text',
+				size: 1,
 				value: field.currentValue ?? '',
 				placeholder: props.placeholder ?? undefined,
 			})),
