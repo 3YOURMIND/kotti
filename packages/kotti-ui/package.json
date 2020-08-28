@@ -57,7 +57,9 @@
 	},
 	"scripts": {
 		"build": "rm -rf dist && yarn run build:tokens && yarn run build:kotti && yarn run build:scss-variables",
-		"build:kotti": "rollup -c rollup.config.js",
+		"build:kotti": "concurrently \"yarn run build:kotti:cjs\" \"yarn run build:kotti:esm\"",
+		"build:kotti:cjs": "rollup -c rollup.config.js --environment MODULE:cjs",
+		"build:kotti:esm": "rollup -c rollup.config.js --environment MODULE:esm",
 		"build:scss-variables": "cp source/kotti-style/_variables.scss dist/variables.scss",
 		"build:tokens": "node -r esm tokens/generate.js && prettier --write source/kotti-style/tokens.css",
 		"check:es5": "es-check es5 './dist/cjs/*.js'",

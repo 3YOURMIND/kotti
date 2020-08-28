@@ -83,26 +83,20 @@ const plugins = (module) => [
 	}),
 ]
 
-export default [
-	{
-		input: 'source/index.ts',
-		output: {
-			dir: path.dirname(packageJSON.module),
-			format: 'esm',
-			sourcemap: true,
-		},
-		external,
-		plugins: plugins('esm'),
+const { MODULE } = process.env
+
+if (!['cjs', 'esm'].includes(MODULE))
+	throw new Error(
+		'Expected --environment MODULE:cjs or --environment MODULE:esm',
+	)
+
+export default {
+	input: 'source/index.ts',
+	output: {
+		dir: path.dirname(MODULE === 'esm' ? packageJSON.module : packageJSON.main),
+		format: MODULE,
+		sourcemap: true,
 	},
-	{
-		input: 'source/index.ts',
-		output: {
-			dir: path.dirname(packageJSON.main),
-			format: 'cjs',
-			name: 'KottiUI',
-			sourcemap: true,
-		},
-		external,
-		plugins: plugins('cjs'),
-	},
-]
+	external,
+	plugins: plugins(MODULE),
+}
