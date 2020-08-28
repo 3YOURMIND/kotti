@@ -20,6 +20,7 @@ import packageJSON from './package.json'
 const external = [
 	...Object.keys(packageJSON.peerDependencies),
 	...Object.keys(packageJSON.dependencies),
+	/.*element-ui.*/,
 ]
 
 const plugins = (module) => [
