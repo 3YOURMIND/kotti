@@ -81,7 +81,7 @@
 					helpText="hideClear Support Varies"
 					label="Boolean Flags"
 					:options="[
-						{ disabled: !componentDefinition.supports.decoration, key: 'hideClear', label: 'hideClear' },
+						{ disabled: !componentDefinition.supports.clear, key: 'hideClear', label: 'hideClear' },
 						{ key: 'hideValidation', label: 'hideValidation' },
 						{ key: 'isDisabled', label: 'isDisabled' },
 						{ key: 'isLoading', label: 'isLoading' },
