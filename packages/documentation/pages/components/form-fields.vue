@@ -117,14 +117,21 @@
 							size="small"
 						/>
 					</div>
-					<KtFieldToggle
-						v-if="componentDefinition.additionalProps.includes('numberHideMaximum')"
-						formKey="numberHideMaximum"
-						isOptional
-						label="hideMaximum"
-						size="small"
-						type="switch"
-					/>
+					<div class="field-row" v-if="componentDefinition.additionalProps.includes('numberHideMaximum')">
+						<KtFieldToggle
+							formKey="numberHideMaximum"
+							isOptional
+							label="hideMaximum"
+							size="small"
+							type="switch"
+						/>
+						<KtFieldNumber
+							formKey="step"
+							isOptional
+							label="step"
+							size="small"
+						/>
+					</div>
 					<KtFieldToggle
 						v-if="componentDefinition.additionalProps.includes('isInline')"
 						formKey="isInline"
@@ -278,7 +285,12 @@ const components: Array<{
 		supports: { clear: true, decoration: false, tabIndex: false },
 	},
 	{
-		additionalProps: ['numberHideMaximum', 'numberMaximum', 'numberMinimum'],
+		additionalProps: [
+			'numberHideMaximum',
+			'numberMaximum',
+			'numberMinimum',
+			'step',
+		],
 		formKey: 'numberValue',
 		name: 'KtFieldNumber',
 		supports: { clear: false, decoration: true, tabIndex: true },
@@ -415,8 +427,9 @@ export default defineComponent({
 				maximumDate: Kotti.FieldDate.Value
 				minimumDate: Kotti.FieldDate.Value
 				numberHideMaximum: boolean
-				numberMaximum: number | null
-				numberMinimum: number | null
+				numberMaximum: Kotti.FieldNumber.Value
+				numberMinimum: Kotti.FieldNumber.Value
+				step: Kotti.FieldNumber.Value
 				toggleType: 'checkbox' | 'switch'
 			}
 			booleanFlags: {
@@ -447,6 +460,7 @@ export default defineComponent({
 				numberHideMaximum: false,
 				numberMaximum: null,
 				numberMinimum: null,
+				step: null,
 				toggleType: 'checkbox',
 			},
 			booleanFlags: {
@@ -533,6 +547,11 @@ export default defineComponent({
 			if (componentDefinition.value.additionalProps.includes('numberMinimum'))
 				Object.assign(additionalProps, {
 					minimum: settings.value.additionalProps.numberMinimum,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('step'))
+				Object.assign(additionalProps, {
+					step: settings.value.additionalProps.step,
 				})
 
 			if (componentDefinition.value.additionalProps.includes('isInline'))
