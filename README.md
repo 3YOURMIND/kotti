@@ -96,9 +96,9 @@ yarn run lerna bootstrap
 
 ```bash
 # having to build should hopefully be resolved in a future update
-yarn --cwd packages/kotti-ui run build
+yarn workspace @3yourmind/kotti-ui run build
 # serve with hot reload at http://localhost:3000
-yarn --cwd packages/documentation run serve
+yarn workspace @3yourmind/documentation run serve
 ```
 
 ### Linting
