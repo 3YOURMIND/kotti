@@ -71,5 +71,5 @@
 	"sideEffects": true,
 	"style": "dist/styles.css",
 	"types": "dist/esm/index.d.ts",
-	"version": "2.1.1"
+	"version": "2.1.2"
 }
