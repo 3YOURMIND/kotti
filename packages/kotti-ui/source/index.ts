@@ -52,7 +52,7 @@ import { KtNavbar } from './kotti-navbar'
 export * from './kotti-navbar'
 import { KtPagination } from './kotti-pagination'
 export * from './kotti-pagination'
-import { KtPopover } from './kotti-popover'
+import { KtPopover, KtPopoverItem } from './kotti-popover'
 export * from './kotti-popover'
 import { KtRadio } from './kotti-radio'
 export * from './kotti-radio'
@@ -164,6 +164,7 @@ const components = {
 	KtNavbar,
 	KtPagination,
 	KtPopover,
+	KtPopoverItem,
 	KtRadio,
 	KtRadioGroup,
 	KtRow,

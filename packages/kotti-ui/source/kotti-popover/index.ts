@@ -8,4 +8,4 @@ import KtPopoverItem from './KtPopoverItem.vue'
 makeInstallable(KtPopover)
 makeInstallable(KtPopoverItem)
 
-export { KtPopover }
+export { KtPopover, KtPopoverItem }
