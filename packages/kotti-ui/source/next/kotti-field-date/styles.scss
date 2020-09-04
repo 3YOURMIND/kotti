@@ -164,6 +164,34 @@ $year-font-size: 1rem;
 				}
 			}
 		}
+
+		.in-range {
+			background-color: var(--interactive-04);
+			clip-path: inset(15% -50% 15% -50%) !important;
+			&.start-date {
+				background: linear-gradient(
+					270deg,
+					var(--interactive-04) 0%,
+					var(--interactive-04) 50%,
+					rgba(0, 0, 0, 0) 50%
+				);
+			}
+			&.end-date {
+				background: linear-gradient(
+					90deg,
+					var(--interactive-04) 0%,
+					var(--interactive-04) 50%,
+					rgba(0, 0, 0, 0) 50%
+				);
+			}
+			&.start-date.end-date {
+				background: transparent !important;
+			}
+		}
+		.start-date:hover,
+		.end-date:hover {
+			background-color: transparent !important;
+		}
 	}
 
 	// NON-RANGE PICKERS SPECIFIC STYLES [date(Time)Picker]
