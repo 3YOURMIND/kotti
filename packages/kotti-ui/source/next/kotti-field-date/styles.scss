@@ -167,7 +167,11 @@ $year-font-size: 1rem;
 
 		.in-range {
 			background-color: var(--interactive-04);
-			clip-path: inset(15% -50% 15% -50%) !important;
+
+			@supports (clip-path: inset(15% -50% 15% -50%)) {
+				clip-path: inset(15% -50% 15% -50%);
+			}
+
 			--start-background: linear-gradient(
 				270deg,
 				var(--interactive-04) 0%,
