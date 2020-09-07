@@ -60,6 +60,7 @@ export default defineComponent({
 .kt-field-toggle__inner {
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 
 	input {
 		display: none;
