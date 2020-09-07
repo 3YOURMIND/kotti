@@ -234,11 +234,11 @@
 												calc(#{$td-diameter/2} + 2px) at center
 											);
 										}
-									}
 
-									&:hover {
-										background-color: var(--interactive-02-hover);
-										transition: background-color var(--transition-short);
+										&:hover {
+											background-color: var(--interactive-02-hover);
+											transition: background-color var(--transition-short);
+										}
 									}
 								}
 
@@ -303,23 +303,23 @@
 
 									&.start-date.end-date,
 									&.start-date.end-date:hover {
-										background: transparent !important;
+										background: transparent;
 									}
 
 									&.start-date,
 									&.start-date:hover {
-										background: var(--start-background) !important;
+										background: var(--start-background);
 									}
 
 									&.end-date,
 									&.end-date:hover {
-										background: var(--end-background) !important;
+										background: var(--end-background);
 									}
 
 									// Disabled handling
 
 									&.disabled {
-										background-color: var(--primary-10) !important;
+										background-color: var(--primary-10);
 
 										&.start-date > div,
 										&.end-date > div {
@@ -333,7 +333,7 @@
 												var(--primary-10) 0%,
 												var(--primary-10) 50%,
 												var(--ui-01) 50%
-											) !important;
+											);
 										}
 
 										&.end-date {
@@ -342,7 +342,7 @@
 												var(--primary-10) 0%,
 												var(--primary-10) 50%,
 												var(--ui-01) 50%
-											) !important;
+											);
 										}
 									}
 								}
