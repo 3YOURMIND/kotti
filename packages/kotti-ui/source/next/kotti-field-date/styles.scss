@@ -168,29 +168,59 @@ $year-font-size: 1rem;
 		.in-range {
 			background-color: var(--interactive-04);
 			clip-path: inset(15% -50% 15% -50%) !important;
-			&.start-date {
-				background: linear-gradient(
-					270deg,
-					var(--interactive-04) 0%,
-					var(--interactive-04) 50%,
-					rgba(0, 0, 0, 0) 50%
-				);
+			--start-background: linear-gradient(
+				270deg,
+				var(--interactive-04) 0%,
+				var(--interactive-04) 50%,
+				rgba(0, 0, 0, 0) 50%
+			);
+			--end-background: linear-gradient(
+				90deg,
+				var(--interactive-04) 0%,
+				var(--interactive-04) 50%,
+				rgba(0, 0, 0, 0) 50%
+			);
+
+			&.start-date,
+			&.start-date:hover {
+				background: var(--start-background) !important;
 			}
-			&.end-date {
-				background: linear-gradient(
-					90deg,
-					var(--interactive-04) 0%,
-					var(--interactive-04) 50%,
-					rgba(0, 0, 0, 0) 50%
-				);
+
+			&.end-date,
+			&.end-date:hover {
+				background: var(--end-background) !important;
 			}
-			&.start-date.end-date {
-				background: transparent !important;
+
+			// Disabled handling
+
+			&.disabled {
+				color: var(--text-03) !important;
+				background-color: var(--primary-10) !important;
+
+				&.start-date > div,
+				&.end-date > div {
+					color: var(--text-02);
+					background: var(--interactive-04);
+				}
+
+				&.start-date {
+					background: linear-gradient(
+						270deg,
+						var(--primary-10) 0%,
+						var(--primary-10) 50%,
+						var(--ui-01) 50%
+					) !important;
+				}
+
+				&.end-date {
+					background: linear-gradient(
+						90deg,
+						var(--primary-10) 0%,
+						var(--primary-10) 50%,
+						var(--ui-01) 50%
+					) !important;
+				}
 			}
-		}
-		.start-date:hover,
-		.end-date:hover {
-			background-color: transparent !important;
 		}
 	}
 
