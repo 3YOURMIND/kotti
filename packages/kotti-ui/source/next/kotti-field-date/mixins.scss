@@ -226,15 +226,19 @@
 								}
 
 								&:not(.disabled) {
-									@supports (
-										clip-path: circle(calc(#{$td-diameter/2} + 2px) at center)
-									) {
-										clip-path: circle(calc(#{$td-diameter/2} + 2px) at center);
-									}
+									&:not(.in-range) {
+										@supports (
+											clip-path: circle(calc(#{$td-diameter/2} + 2px) at center)
+										) {
+											clip-path: circle(
+												calc(#{$td-diameter/2} + 2px) at center
+											);
+										}
 
-									&:hover {
-										background-color: var(--interactive-02-hover);
-										transition: background-color var(--transition-short);
+										&:hover {
+											background-color: var(--interactive-02-hover);
+											transition: background-color var(--transition-short);
+										}
 									}
 								}
 
@@ -273,6 +277,72 @@
 												font-weight: bold;
 												color: var(--interactive-02);
 											}
+										}
+									}
+								}
+
+								&.in-range {
+									background-color: var(--interactive-04);
+
+									@supports (clip-path: inset(15% -50% 15% -50%)) {
+										clip-path: inset(15% -50% 15% -50%);
+									}
+
+									--start-background: linear-gradient(
+										270deg,
+										var(--interactive-04) 0%,
+										var(--interactive-04) 50%,
+										rgba(0, 0, 0, 0) 50%
+									);
+									--end-background: linear-gradient(
+										90deg,
+										var(--interactive-04) 0%,
+										var(--interactive-04) 50%,
+										rgba(0, 0, 0, 0) 50%
+									);
+
+									&.start-date.end-date,
+									&.start-date.end-date:hover {
+										background: transparent;
+									}
+
+									&.start-date,
+									&.start-date:hover {
+										background: var(--start-background);
+									}
+
+									&.end-date,
+									&.end-date:hover {
+										background: var(--end-background);
+									}
+
+									// Disabled handling
+
+									&.disabled {
+										background-color: var(--primary-10);
+
+										&.start-date > div,
+										&.end-date > div {
+											color: var(--text-02);
+											background: var(--interactive-04);
+										}
+
+										&.start-date {
+											background: linear-gradient(
+												270deg,
+												var(--primary-10) 0%,
+												var(--primary-10) 50%,
+												var(--ui-01) 50%
+											);
+										}
+
+										&.end-date {
+											background: linear-gradient(
+												90deg,
+												var(--primary-10) 0%,
+												var(--primary-10) 50%,
+												var(--ui-01) 50%
+											);
 										}
 									}
 								}
