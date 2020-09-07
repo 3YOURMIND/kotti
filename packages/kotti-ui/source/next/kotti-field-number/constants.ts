@@ -7,7 +7,8 @@ export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {
 }
 
 export const KOTTI_FIELD_NUMBER_PROPS = {
-	hideMaximum: { default: false, type: Boolean }, // TODO: error if we showMaxNumber is passed when no max is defined
+	hideChangeButtons: { default: false, type: Boolean },
+	hideMaximum: { default: false, type: Boolean },
 	maximum: { default: null, type: Number },
 	minimum: { default: null, type: Number },
 	placeholder: { default: null, type: String },
