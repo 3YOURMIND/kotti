@@ -297,6 +297,7 @@ export default defineComponent({
 		&__input {
 			width: 100%;
 			text-align: center;
+			border: none;
 
 			&::-webkit-outer-spin-button,
 			&::-webkit-inner-spin-button {

@@ -325,14 +325,14 @@
 				text-transform: uppercase;
 				cursor: pointer;
 				background-color: transparent;
-				@include no-outline-or-border;
-
-				&:hover {
-					color: var(--hover-danger);
-				}
+				border: none;
 
 				&:active {
 					color: var(--danger);
+				}
+
+				&:hover:not(:active) {
+					color: var(--hover-danger);
 				}
 
 				&.confirm {
@@ -383,13 +383,6 @@
 		&::-moz-focus-inner {
 			outline: none;
 		}
-		@content;
-	}
-}
-
-@mixin no-outline-or-border {
-	@include no-outline {
-		border: 0;
 	}
 }
 
