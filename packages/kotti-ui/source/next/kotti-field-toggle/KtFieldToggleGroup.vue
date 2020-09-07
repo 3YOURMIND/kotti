@@ -1,6 +1,6 @@
 <template>
 	<KtField v-bind="{ field }" :getEmptyValue="() => null" isGroup>
-		<div slot="container" class="kt-field-toggle-group__wrapper">
+		<div slot="container" :class="wrapperClasses">
 			<ToggleInner
 				v-for="option of optionsWithChecked"
 				:key="option.key"
@@ -64,6 +64,7 @@ export default defineComponent({
 			inputProps: computed(() => ({
 				...field.inputProps,
 				forceUpdateKey: forceUpdateKey.value,
+				'kt-field-radio-group__wrapper--inline': props.isInline,
 			})),
 			onInput: (
 				key: KottiFieldToggleGroup.Entry['key'],
@@ -81,6 +82,10 @@ export default defineComponent({
 					value: field.currentValue[option.key],
 				})),
 			),
+			wrapperClasses: computed(() => ({
+				'kt-field-toggle-group__wrapper': true,
+				'kt-field-toggle-group__wrapper--inline': props.isInline,
+			})),
 		}
 	},
 })
@@ -89,10 +94,21 @@ export default defineComponent({
 <style lang="scss">
 .kt-field-toggle-group__wrapper {
 	display: flex;
-	flex-direction: column;
 
-	> *:not(:first-child) {
-		margin-top: 0.4rem;
+	&--inline {
+		flex-direction: row;
+
+		> *:not(:first-child) {
+			margin-left: 1rem;
+		}
+	}
+
+	&:not(&--inline) {
+		flex-direction: column;
+
+		> *:not(:first-child) {
+			margin-top: 0.4rem;
+		}
 	}
 }
 </style>

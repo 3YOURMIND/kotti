@@ -341,7 +341,7 @@ const components: Array<{
 		supports: { clear: false, decoration: false, tabIndex: true },
 	},
 	{
-		additionalProps: ['toggleType'],
+		additionalProps: ['isInline', 'toggleType'],
 		formKey: 'toggleGroupValue',
 		name: 'KtFieldToggleGroup',
 		supports: { clear: false, decoration: false, tabIndex: true },

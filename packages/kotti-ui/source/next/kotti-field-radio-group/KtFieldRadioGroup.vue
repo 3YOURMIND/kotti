@@ -111,7 +111,6 @@ export default defineComponent({
 
 .kt-field-radio-group__wrapper {
 	display: flex;
-	flex-direction: column;
 
 	&--inline {
 		flex-direction: row;
@@ -122,6 +121,8 @@ export default defineComponent({
 	}
 
 	&:not(&--inline) {
+		flex-direction: column;
+
 		.kt-field-radio-group__wrapper__label:not(:first-child) {
 			margin-top: 0.4rem;
 		}
