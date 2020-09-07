@@ -114,11 +114,16 @@ export default defineComponent({
 	flex-direction: column;
 
 	&--inline {
-		display: block;
+		flex-direction: row;
 
-		.kt-field-radio-group__wrapper__label {
-			display: inline-flex;
-			margin-right: 1rem;
+		.kt-field-radio-group__wrapper__label:not(:first-child) {
+			margin-left: 1rem;
+		}
+	}
+
+	&:not(&--inline) {
+		.kt-field-radio-group__wrapper__label:not(:first-child) {
+			margin-top: 0.4rem;
 		}
 	}
 
@@ -126,9 +131,6 @@ export default defineComponent({
 		display: flex;
 		align-items: center;
 
-		&:not(:last-child) {
-			margin-bottom: 0.4rem;
-		}
 		cursor: pointer;
 
 		&--disabled {
