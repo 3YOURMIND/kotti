@@ -2,7 +2,7 @@
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
 		<div class="kt-field-number">
 			<div
-				v-if="showChangeButtons"
+				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
 				:class="decrementButtonClasses"
 				@click="decrementValue"
@@ -24,7 +24,7 @@
 				/>
 			</div>
 			<div
-				v-if="showChangeButtons"
+				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
 				:class="incrementButtonClasses"
 				@click="incrementValue"

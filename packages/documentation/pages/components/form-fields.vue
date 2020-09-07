@@ -133,10 +133,10 @@
 						/>
 					</div>
 					<KtFieldToggle
-						v-if="componentDefinition.additionalProps.includes('showChangeButtons')"
-						formKey="showChangeButtons"
+						v-if="componentDefinition.additionalProps.includes('hideChangeButtons')"
+						formKey="hideChangeButtons"
 						isOptional
-						label="showChangeButtons"
+						label="hideChangeButtons"
 						size="small"
 						type="switch"
 					/>
@@ -294,10 +294,10 @@ const components: Array<{
 	},
 	{
 		additionalProps: [
+			'hideChangeButtons',
 			'numberHideMaximum',
 			'numberMaximum',
 			'numberMinimum',
-			'showChangeButtons',
 			'step',
 		],
 		formKey: 'numberValue',
@@ -432,13 +432,13 @@ export default defineComponent({
 		const settings = ref<{
 			additionalProps: {
 				collapseTagsAfter: Kotti.FieldNumber.Value
+				hideChangeButtons: boolean
 				isInline: boolean
 				maximumDate: Kotti.FieldDate.Value
 				minimumDate: Kotti.FieldDate.Value
 				numberHideMaximum: boolean
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
-				showChangeButtons: boolean
 				step: Kotti.FieldNumber.Value
 				toggleType: 'checkbox' | 'switch'
 			}
@@ -464,13 +464,13 @@ export default defineComponent({
 		}>({
 			additionalProps: {
 				collapseTagsAfter: null,
+				hideChangeButtons: false,
 				isInline: false,
 				maximumDate: null,
 				minimumDate: null,
 				numberHideMaximum: false,
 				numberMaximum: null,
 				numberMinimum: null,
-				showChangeButtons: false,
 				step: null,
 				toggleType: 'checkbox',
 			},
@@ -589,10 +589,10 @@ export default defineComponent({
 				})
 
 			if (
-				componentDefinition.value.additionalProps.includes('showChangeButtons')
+				componentDefinition.value.additionalProps.includes('hideChangeButtons')
 			)
 				Object.assign(additionalProps, {
-					showChangeButtons: settings.value.additionalProps.showChangeButtons,
+					hideChangeButtons: settings.value.additionalProps.hideChangeButtons,
 				})
 
 			if (
