@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@3yourmind/kotti-ui": "*",
 		"@3yourmind/yoco": "*",
 		"core-js": "^3.6.5",
 		"lodash": "^4.17.19"

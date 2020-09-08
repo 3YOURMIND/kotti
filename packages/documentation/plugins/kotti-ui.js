@@ -1,7 +1,6 @@
+import KottiUI from '@3yourmind/kotti-ui'
 import Vue from 'vue'
 
-import KottiUI from '../../kotti-ui/source/index'
-
-// import '../../kotti-ui/dist/esm/index'
+import '@3yourmind/kotti-ui/dist/styles.css'
 
 Vue.use(KottiUI)
