@@ -15,8 +15,10 @@
 export default {
 	name: 'KtButton',
 	props: {
-		icon: { default: '', type: String },
 		element: { type: String, default: 'button' },
+		icon: { default: '', type: String },
+		isBlock: { default: false, type: Boolean },
+		isMultiline: { default: false, type: Boolean },
 		label: { default: null, type: String },
 		loading: { default: false, type: Boolean },
 		size: { default: null, type: String },
@@ -33,8 +35,9 @@ export default {
 		},
 		mainClasses() {
 			const classes = ['kt-button', this.type, this.objectClass]
+			if (this.isBlock) classes.push('kt-button--is-block')
+			if (this.isMultiline) classes.push('kt-button--is-multiline')
 			if (this.size === 'small') classes.push('sm')
-			if (this.size === 'large') classes.push('lg')
 			return classes
 		},
 		objectClass() {
@@ -57,6 +60,7 @@ export default {
 
 :root {
 	--default-button-height: var(--unit-8);
+	--default-button-line-height: var(--unit-6);
 	--large-button-height: var(--unit-9);
 	--small-button-height: var(--unit-6);
 	--button-main-color: var(--interactive-01);
@@ -87,6 +91,26 @@ export default {
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
+	}
+
+	&--is-block {
+		display: flex;
+		width: 100%;
+	}
+
+	&--is-multiline {
+		height: auto;
+		padding-top: var(--unit-1);
+		padding-bottom: var(--unit-1);
+		line-height: var(--default-button-line-height);
+		&.icon {
+			align-items: baseline;
+			text-align: left;
+			.yoco {
+				position: relative;
+				left: calc(var(--unit-1) * -1);
+			}
+		}
 	}
 }
 
