@@ -95,9 +95,17 @@ yarn run lerna bootstrap
 ### Develop
 
 ```bash
+# auto-build/watch
+yarn run watch
+```
+
+or
+
+```
 # having to build should hopefully be resolved in a future update
+yarn workspace @3yourmind/sass-node-modules-importer run build
 yarn workspace @3yourmind/kotti-ui run build
-# serve with hot reload at http://localhost:3000
+# serve at http://localhost:3000
 yarn workspace @3yourmind/documentation run serve
 ```
 
