@@ -169,6 +169,16 @@
 						label="collapseTagsAfter"
 						size="small"
 					/>
+					<KtFieldSingleSelect
+						v-if="componentDefinition.additionalProps.includes('autoComplete')"
+						formKey="autoComplete"
+						label="autoComplete"
+						:options="[
+							{ label: 'current-password', value: 'current-password' },
+							{ label: 'new-password', value: 'new-password' }
+						]"
+						size="small"
+					/>
 				</KtFormControllerObject>
 			</div>
 			<div>
@@ -311,6 +321,12 @@ const components: Array<{
 		supports: { clear: true, decoration: true, tabIndex: false },
 	},
 	{
+		additionalProps: ['autoComplete'],
+		formKey: 'textValue',
+		name: 'KtFieldPassword',
+		supports: { clear: true, decoration: true, tabIndex: true },
+	},
+	{
 		additionalProps: ['isInline'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldRadioGroup',
@@ -431,6 +447,7 @@ export default defineComponent({
 
 		const settings = ref<{
 			additionalProps: {
+				autoComplete: 'current-password' | 'new-password'
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				hideChangeButtons: boolean
 				isInline: boolean
@@ -463,6 +480,7 @@ export default defineComponent({
 			validation: Kotti.Field.Validation.Result['type']
 		}>({
 			additionalProps: {
+				autoComplete: 'current-password',
 				collapseTagsAfter: null,
 				hideChangeButtons: false,
 				isInline: false,
@@ -542,6 +560,11 @@ export default defineComponent({
 			)
 				Object.assign(additionalProps, {
 					type: settings.value.additionalProps.toggleType,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('autoComplete'))
+				Object.assign(additionalProps, {
+					autoComplete: settings.value.additionalProps.autoComplete,
 				})
 
 			if (
