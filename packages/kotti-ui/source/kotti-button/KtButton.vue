@@ -15,10 +15,10 @@
 export default {
 	name: 'KtButton',
 	props: {
-		block: { default: false, type: Boolean },
-		icon: { default: '', type: String },
 		element: { type: String, default: 'button' },
-		multiline: { default: false, type: Boolean },
+		icon: { default: '', type: String },
+		isBlock: { default: false, type: Boolean },
+		isMultiline: { default: false, type: Boolean },
 		label: { default: null, type: String },
 		loading: { default: false, type: Boolean },
 		size: { default: null, type: String },
@@ -35,9 +35,9 @@ export default {
 		},
 		mainClasses() {
 			const classes = ['kt-button', this.type, this.objectClass]
+			if (this.isBlock) classes.push('kt-button--is-block')
+			if (this.isMultiline) classes.push('kt-button--is-multiline')
 			if (this.size === 'small') classes.push('sm')
-			if (this.multiline) classes.push('kt-button--multiline')
-			if (this.block) classes.push('kt-button--block')
 			return classes
 		},
 		objectClass() {
@@ -93,14 +93,12 @@ export default {
 		text-transform: none;
 	}
 
-	// block modifier
-	&--block {
+	&--is-block {
 		display: flex;
 		width: 100%;
 	}
 
-	// multiline modifier
-	&--multiline {
+	&--is-multiline {
 		height: auto;
 		padding-top: var(--unit-1);
 		padding-bottom: var(--unit-1);
