@@ -12,6 +12,7 @@ export const KOTTI_FIELD_TOGGLE_PROPS = {
 
 export const KOTTI_FIELD_TOGGLE_GROUP_PROPS = {
 	...KOTTI_FIELD_TOGGLE_PROPS,
+	isInline: { default: false, type: Boolean },
 	options: {
 		required: true,
 		type: Array,
