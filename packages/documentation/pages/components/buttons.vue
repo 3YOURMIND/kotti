@@ -77,6 +77,27 @@
 	<KtButton type="primary" icon="edit" label="Edit Button" />
 	<KtButton type="primary" icon="edit"/>
 	```
+	## Multiline button
+
+	For handling long text, we can use the `multiline` property.
+
+	```html
+	<KtButton>Purchase</KtButton>
+	<KtButton multiline>Purchase this product without the 5 year garantee and proceed with the 2 year only garantee</KtButton>
+	```
+
+	<div class="element-example">
+		<div style="width: 200px;">
+			<KtButton block type="primary">Purchase</KtButton><br>
+			<KtButton icon="save" block multiline>Purchase this product without the 5 year garantee</KtButton><br>
+			<KtButton block multiline>Purchase this product without the 5 year garantee and proceed with the 2 year only garantee</KtButton>
+		</div>
+		<br>
+		<br>
+			<KtButton multiline>Multiline works on one line if the parent does not constraint the width</KtButton><br>
+			<KtButton multiline>(But the height is less reliable as it uses <code>line-height</code>)</KtButton>
+	</div>
+
 	## Loading
 
 	<div class="element-example">
