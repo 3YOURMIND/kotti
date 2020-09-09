@@ -92,28 +92,6 @@ export default {
 		font-size: $font-size-sm;
 		text-transform: none;
 	}
-
-	// block modifier
-	&--block {
-		display: flex;
-		width: 100%;
-	}
-
-	// multiline modifier
-	&--multiline {
-		height: auto;
-		padding-top: var(--unit-1);
-		padding-bottom: var(--unit-1);
-		line-height: var(--default-button-line-height);
-		&.icon {
-			align-items: baseline;
-			text-align: left;
-			.yoco {
-				position: relative;
-				left: calc(var(--unit-1) * -1);
-			}
-		}
-	}
 }
 
 // Size modifiers
@@ -219,5 +197,27 @@ export default {
 .kt-button.bottom {
 	min-width: 10rem;
 	margin-top: var(--unit-8);
+}
+
+// block modifier
+.kt-button.kt-button--block {
+	display: flex;
+	width: 100%;
+}
+
+// multiline modifier
+.kt-button.kt-button--multiline {
+	height: auto;
+	padding-top: var(--unit-1);
+	padding-bottom: var(--unit-1);
+	line-height: var(--default-button-line-height);
+	&.icon {
+		align-items: baseline;
+		text-align: left;
+		.yoco {
+			position: relative;
+			left: calc(var(--unit-1) * -1);
+		}
+	}
 }
 </style>
