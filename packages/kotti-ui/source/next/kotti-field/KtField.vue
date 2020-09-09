@@ -211,7 +211,7 @@ export default defineComponent({
 			margin-bottom: 0.4rem;
 		}
 
-		@include no-outline-or-border;
+		@include no-outline;
 		@include sizes;
 		@include input-colors();
 

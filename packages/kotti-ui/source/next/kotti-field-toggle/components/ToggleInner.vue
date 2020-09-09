@@ -11,7 +11,7 @@
 			v-bind="inputProps"
 			:checked="value === true"
 			type="checkbox"
-			@change="$emit('input', $event.target.checked)"
+			@change="(e) => onInput(e.target.checked)"
 		/>
 	</component>
 </template>
@@ -36,8 +36,11 @@ export default defineComponent({
 		type: { default: 'checkbox', type: String },
 		value: { default: null, type: Boolean },
 	},
-	setup(props) {
+	setup(props, { emit }) {
 		return {
+			onInput: (newValue: boolean) => {
+				if (!props.isDisabled) emit('input', newValue)
+			},
 			toggleClasses: computed(() => ({
 				'kt-field-toggle__inner--is-disabled': props.isDisabled === true,
 				'kt-field-toggle__inner--is-indeterminate': props.value === null,
@@ -57,6 +60,7 @@ export default defineComponent({
 .kt-field-toggle__inner {
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 
 	input {
 		display: none;

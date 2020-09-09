@@ -133,6 +133,14 @@
 						/>
 					</div>
 					<KtFieldToggle
+						v-if="componentDefinition.additionalProps.includes('hideChangeButtons')"
+						formKey="hideChangeButtons"
+						isOptional
+						label="hideChangeButtons"
+						size="small"
+						type="switch"
+					/>
+					<KtFieldToggle
 						v-if="componentDefinition.additionalProps.includes('isInline')"
 						formKey="isInline"
 						isOptional
@@ -286,6 +294,7 @@ const components: Array<{
 	},
 	{
 		additionalProps: [
+			'hideChangeButtons',
 			'numberHideMaximum',
 			'numberMaximum',
 			'numberMinimum',
@@ -332,7 +341,7 @@ const components: Array<{
 		supports: { clear: false, decoration: false, tabIndex: true },
 	},
 	{
-		additionalProps: ['toggleType'],
+		additionalProps: ['isInline', 'toggleType'],
 		formKey: 'toggleGroupValue',
 		name: 'KtFieldToggleGroup',
 		supports: { clear: false, decoration: false, tabIndex: true },
@@ -423,6 +432,7 @@ export default defineComponent({
 		const settings = ref<{
 			additionalProps: {
 				collapseTagsAfter: Kotti.FieldNumber.Value
+				hideChangeButtons: boolean
 				isInline: boolean
 				maximumDate: Kotti.FieldDate.Value
 				minimumDate: Kotti.FieldDate.Value
@@ -454,6 +464,7 @@ export default defineComponent({
 		}>({
 			additionalProps: {
 				collapseTagsAfter: null,
+				hideChangeButtons: false,
 				isInline: false,
 				maximumDate: null,
 				minimumDate: null,
@@ -494,6 +505,7 @@ export default defineComponent({
 			return result
 		})
 
+		// eslint-disable-next-line sonarjs/cognitive-complexity
 		const componentProps = computed(() => {
 			const { component } = settings.value
 
@@ -574,6 +586,13 @@ export default defineComponent({
 			)
 				Object.assign(additionalProps, {
 					collapseTagsAfter: settings.value.additionalProps.collapseTagsAfter,
+				})
+
+			if (
+				componentDefinition.value.additionalProps.includes('hideChangeButtons')
+			)
+				Object.assign(additionalProps, {
+					hideChangeButtons: settings.value.additionalProps.hideChangeButtons,
 				})
 
 			if (

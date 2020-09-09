@@ -6,6 +6,11 @@
 .kt-field-date-range,
 .kt-field-datetime,
 .kt-field-datetime-range {
+	input,
+	button {
+		border: none;
+	}
+
 	.kt-field__input-container {
 		width: 100%;
 		margin: 0;
@@ -358,7 +363,6 @@ $year-font-size: 1rem;
 		flex: 0.5;
 		align-items: center;
 		justify-content: space-between;
-		@include no-outline-or-border;
 
 		button {
 			width: 75px;
@@ -366,6 +370,7 @@ $year-font-size: 1rem;
 			font-size: var(--font-size-small);
 			text-transform: uppercase;
 			cursor: pointer;
+			border: none;
 			border-radius: var(--field-border-radius);
 
 			+ button {

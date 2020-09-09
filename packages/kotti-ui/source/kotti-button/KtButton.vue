@@ -15,10 +15,10 @@
 export default {
 	name: 'KtButton',
 	props: {
-		block: { default: false, type: Boolean },
-		icon: { default: '', type: String },
 		element: { type: String, default: 'button' },
-		multiline: { default: false, type: Boolean },
+		icon: { default: '', type: String },
+		isBlock: { default: false, type: Boolean },
+		isMultiline: { default: false, type: Boolean },
 		label: { default: null, type: String },
 		loading: { default: false, type: Boolean },
 		size: { default: null, type: String },
@@ -35,9 +35,9 @@ export default {
 		},
 		mainClasses() {
 			const classes = ['kt-button', this.type, this.objectClass]
+			if (this.isBlock) classes.push('kt-button--is-block')
+			if (this.isMultiline) classes.push('kt-button--is-multiline')
 			if (this.size === 'small') classes.push('sm')
-			if (this.multiline) classes.push('kt-button--multiline')
-			if (this.block) classes.push('kt-button--block')
 			return classes
 		},
 		objectClass() {
@@ -91,6 +91,26 @@ export default {
 	&.tooltip::after {
 		font-size: $font-size-sm;
 		text-transform: none;
+	}
+
+	&--is-block {
+		display: flex;
+		width: 100%;
+	}
+
+	&--is-multiline {
+		height: auto;
+		padding-top: var(--unit-1);
+		padding-bottom: var(--unit-1);
+		line-height: var(--default-button-line-height);
+		&.icon {
+			align-items: baseline;
+			text-align: left;
+			.yoco {
+				position: relative;
+				left: calc(var(--unit-1) * -1);
+			}
+		}
 	}
 }
 

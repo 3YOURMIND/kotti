@@ -16,6 +16,7 @@ export namespace KottiFieldToggleGroup {
 	}
 
 	export type Props = KottiField.Props<Value> & {
+		isInline: boolean
 		options: Entry[]
 		type: 'checkbox' | 'switch'
 	}

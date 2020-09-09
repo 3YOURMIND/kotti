@@ -2,6 +2,7 @@
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
 		<div class="kt-field-number">
 			<div
+				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
 				:class="decrementButtonClasses"
 				@click="decrementValue"
@@ -23,6 +24,7 @@
 				/>
 			</div>
 			<div
+				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
 				:class="incrementButtonClasses"
 				@click="incrementValue"
@@ -297,6 +299,7 @@ export default defineComponent({
 		&__input {
 			width: 100%;
 			text-align: center;
+			border: none;
 
 			&::-webkit-outer-spin-button,
 			&::-webkit-inner-spin-button {
