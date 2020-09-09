@@ -51,7 +51,7 @@ import '@3yourmind/kotti-ui/dist/styles.css'
 
 // also make sure to set-up @vue/composition-api as it’s required for newer Kotti features
 import VueCompositionAPI from '@vue/composition-api' // right now, 0.5.0 is recommended
-Vue.use(VueCompositionAPI)
+Vue.use(VueCompositionAPI) // should be added before KottiUi
 
 // (optional) register all KtComponents globally
 Vue.use(KottiUI)
