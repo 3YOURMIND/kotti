@@ -44,12 +44,16 @@ or
 **Documentation**: [current release](https://3yourmind.github.io/kotti/) or [current master](https://kotti.netlify.com/)
 
 ```typescript
-// in main.js / entrypoint
+// in main.ts / entrypoint
 import Vue from 'vue'
 import KottiUI from '@3yourmind/kotti-ui'
 import '@3yourmind/kotti-ui/dist/styles.css'
 
-// register all KtComponents globally
+// also make sure to set-up @vue/composition-api as it’s required for newer Kotti features
+import VueCompositionAPI from '@vue/composition-api' // right now, 0.5.0 is recommended
+Vue.use(VueCompositionAPI)
+
+// (optional) register all KtComponents globally
 Vue.use(KottiUI)
 
 // Alternatively, import the components you need
