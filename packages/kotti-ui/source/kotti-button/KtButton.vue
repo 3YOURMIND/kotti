@@ -92,26 +92,6 @@ export default {
 		font-size: $font-size-sm;
 		text-transform: none;
 	}
-
-	&--is-block {
-		display: flex;
-		width: 100%;
-	}
-
-	&--is-multiline {
-		height: auto;
-		padding-top: var(--unit-1);
-		padding-bottom: var(--unit-1);
-		line-height: var(--default-button-line-height);
-		&.icon {
-			align-items: baseline;
-			text-align: left;
-			.yoco {
-				position: relative;
-				left: calc(var(--unit-1) * -1);
-			}
-		}
-	}
 }
 
 // Size modifiers
