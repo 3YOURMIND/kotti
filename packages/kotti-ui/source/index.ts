@@ -93,6 +93,8 @@ import {
 export * from './next/kotti-field-date'
 import { KtFieldNumber } from './next/kotti-field-number'
 export * from './next/kotti-field-number'
+import { KtFieldPassword } from './next/kotti-field-password'
+export * from './next/kotti-field-password'
 import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
 export * from './next/kotti-field-radio-group'
 import {
@@ -145,6 +147,7 @@ const components = {
 	KtFieldDateTimeRange,
 	KtFieldMultiSelect,
 	KtFieldNumber,
+	KtFieldPassword,
 	KtFieldRadioGroup,
 	KtFieldSingleSelect,
 	KtFieldText,
