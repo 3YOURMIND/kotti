@@ -1,3 +1,4 @@
+import { vuePropsValidators } from '@3yourmind/vue-props-validators'
 import {
 	createElement,
 	computed,
@@ -16,18 +17,59 @@ type MediaQueryProps = {
 export const KtCol = makeInstallable(
 	defineComponent({
 		name: 'KtCol',
-		props: {
-			lg: { default: null, type: Number },
-			md: { default: null, type: Number },
-			offset: { default: null, type: Number },
-			pull: { default: null, type: Number },
-			push: { default: null, type: Number },
-			sm: { default: null, type: Number },
-			span: { default: 24, type: Number },
-			tag: { default: 'div', type: String },
-			xl: { default: null, type: Number },
-			xs: { default: null, type: Number },
-		},
+		props: vuePropsValidators.create({
+			lg: {
+				default: () => null,
+				nullable: true,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+			md: {
+				default: () => null,
+				nullable: true,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+			offset: {
+				default: () => null,
+				nullable: true,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+			pull: {
+				default: () => null,
+				nullable: true,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+			push: {
+				default: () => null,
+				nullable: true,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+			sm: {
+				default: () => null,
+				nullable: true,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+			span: {
+				// eslint-disable-next-line no-magic-numbers
+				default: () => 24,
+				nullable: false,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+			tag: {
+				default: () => 'div',
+				nullable: false,
+				type: vuePropsValidators.Type.STRING,
+			},
+			xl: {
+				default: () => null,
+				nullable: false,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+			xs: {
+				default: () => null,
+				nullable: false,
+				type: vuePropsValidators.Type.INTEGER,
+			},
+		}),
 		setup(
 			props: {
 				offset: number | null

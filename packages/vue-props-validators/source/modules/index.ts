@@ -10,4 +10,11 @@ export type TypeBase = {
 	nullable: boolean
 }
 
+export enum Type {
+	ENUM = 'enum',
+	FLOAT = 'float',
+	INTEGER = 'integer',
+	STRING = 'string',
+}
+
 export type Option = TypeEnum | TypeFloat | TypeInteger | TypeString

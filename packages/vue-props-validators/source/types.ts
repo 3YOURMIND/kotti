@@ -1,5 +1,5 @@
 import { REQUIRED } from './constants'
-import { Option } from './modules'
+import { Option, Type } from './modules'
 
 type Id<T extends object> = { [KEY in keyof T]: T[KEY] }
 
@@ -7,14 +7,22 @@ export type Options = Record<string, Option>
 
 export type ExtendsOne<
 	INPUT extends Option,
-	IF extends Option['type'],
-	RESULT,
+	IF extends Type,
+	THEN,
 	ELSE
-> = INPUT['type'] extends IF ? RESULT : ELSE
+> = INPUT['type'] extends IF ? THEN : ELSE
 
 export type Result<
 	INPUT extends Option,
-	TYPE extends typeof String | typeof Number
+	TYPE extends
+		| ArrayConstructor
+		| BooleanConstructor
+		| DateConstructor
+		| FunctionConstructor
+		| NumberConstructor
+		| ObjectConstructor
+		| StringConstructor
+		| SymbolConstructor
 > = Id<
 	{
 		type: TYPE

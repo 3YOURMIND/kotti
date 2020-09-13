@@ -8,7 +8,7 @@
 import { vuePropsValidators } from '@3yourmind/vue-props-validators'
 
 export default defineComponent {
-	props: vuePropsValidators({
+	props: vuePropsValidators.create({
 		example: {
 			nullable: true,
 			required: true,

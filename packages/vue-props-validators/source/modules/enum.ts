@@ -2,11 +2,11 @@ import { baseValidator } from '../common/base-validator'
 import { resolveDefault } from '../common/resolve-default'
 import { Result } from '../types'
 
-import { TypeBase } from '.'
+import { TypeBase, Type } from '.'
 
 export type TypeEnum = TypeBase & {
-	options: string[]
-	type: 'enum'
+	options: ReadonlyArray<string>
+	type: Type.ENUM
 }
 
 export const createEnum = <OPTION extends TypeEnum>(
