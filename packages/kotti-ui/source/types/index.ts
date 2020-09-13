@@ -1,6 +1,5 @@
 // namespace into Kotti
-import * as Kotti from './kotti'
-export { Kotti }
+export * as Kotti from './kotti'
 
 // export yoco as-is
 export * from './yoco'

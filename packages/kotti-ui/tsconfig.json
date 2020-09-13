@@ -4,7 +4,7 @@
 		"allowSyntheticDefaultImports": true,
 		"declaration": true,
 		"experimentalDecorators": true,
-		"lib": ["ESNext", "DOM", "DOM.Iterable", "ES2019"],
+		"lib": ["ESNext", "DOM", "DOM.Iterable", "ES2019", "ES2020"],
 		"module": "ESNext",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
