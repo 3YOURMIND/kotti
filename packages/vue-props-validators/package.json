@@ -1,0 +1,34 @@
+{
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"dependencies": {},
+	"description": "Vue Props Validators",
+	"directories": {
+		"dist": "dist"
+	},
+	"homepage": "https://github.com/3YOURMIND/kotti/tree/master/packages/vue-props-validators",
+	"keywords": [
+		"vue",
+		"props",
+		"validators",
+		"validator",
+		"vuejs"
+	],
+	"license": "MIT",
+	"main": "dist/index.js",
+	"name": "@3yourmind/vue-props-validators",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
+	"scripts": {
+		"build": "rm -rf dist && tsc",
+		"test": "jest",
+		"test:watch": "jest --watch"
+	},
+	"version": "1.0.0"
+}
