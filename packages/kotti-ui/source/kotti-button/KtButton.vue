@@ -1,58 +1,87 @@
 <template>
-	<component
-		:is="element"
-		:class="mainClasses"
-		role="button"
-		@click="handleClick"
-	>
+	<component :is="element" :class="mainClasses" role="button" @click="onClick">
 		<i v-if="loading" class="kt-circle-loading" />
 		<i v-else-if="icon" class="yoco" v-text="icon" />
-		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />
+		<span v-if="hasSlot"><slot /></span>
+		<span v-else v-text="label" />
 	</component>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { vuePropsValidators } from '@3yourmind/vue-props-validators'
+import { Yoco } from '@3yourmind/yoco'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
+export default defineComponent({
 	name: 'KtButton',
-	props: {
-		element: { type: String, default: 'button' },
-		icon: { default: '', type: String },
-		isBlock: { default: false, type: Boolean },
-		isMultiline: { default: false, type: Boolean },
-		label: { default: null, type: String },
-		loading: { default: false, type: Boolean },
-		size: { default: null, type: String },
-		type: { default: null, type: String },
-	},
-	data() {
+	props: vuePropsValidators.create({
+		element: {
+			default: () => 'button',
+			nullable: false,
+			type: vuePropsValidators.Type.STRING,
+		},
+		icon: {
+			default: () => null,
+			nullable: true,
+			type: vuePropsValidators.Type.ENUM,
+			options: Object.values(Yoco.Icon),
+		},
+		isBlock: {
+			default: () => false,
+			nullable: false,
+			type: vuePropsValidators.Type.BOOLEAN,
+		},
+		isMultiline: {
+			default: () => false,
+			nullable: false,
+			type: vuePropsValidators.Type.BOOLEAN,
+		},
+		label: {
+			default: () => null,
+			nullable: true,
+			type: vuePropsValidators.Type.STRING,
+		},
+		loading: {
+			default: () => false,
+			nullable: false,
+			type: vuePropsValidators.Type.BOOLEAN,
+		},
+		size: {
+			default: () => null,
+			nullable: true,
+			type: vuePropsValidators.Type.STRING,
+		},
+		type: {
+			default: () => null,
+			nullable: true,
+			type: vuePropsValidators.Type.STRING,
+		},
+	}),
+	setup(props, { emit, slots }) {
+		const hasSlot = computed(() => Boolean(slots.default))
+		const isHover = ref(false)
+
+		const onClick = (event) => emit('click', event)
+
 		return {
-			isHover: false,
+			mainClasses: computed(() => {
+				const classes = ['kt-button', props.type]
+
+				if (props.icon) classes.push('icon')
+				if (props.icon && !props.label && !hasSlot.value)
+					classes.push('icon-only')
+				if (props.isBlock) classes.push('kt-button--is-block')
+				if (props.isMultiline) classes.push('kt-button--is-multiline')
+				if (props.size === 'small') classes.push('sm')
+
+				return classes
+			}),
+			hasSlot,
+			isHover,
+			onClick,
 		}
 	},
-	computed: {
-		hasSlot() {
-			return Boolean(this.$slots.default)
-		},
-		mainClasses() {
-			const classes = ['kt-button', this.type, this.objectClass]
-			if (this.isBlock) classes.push('kt-button--is-block')
-			if (this.isMultiline) classes.push('kt-button--is-multiline')
-			if (this.size === 'small') classes.push('sm')
-			return classes
-		},
-		objectClass() {
-			return {
-				icon: this.icon,
-				'icon-only': this.icon && !this.$slots.default && !this.label,
-			}
-		},
-	},
-	methods: {
-		handleClick(event) {
-			this.$emit('click', event)
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss">
