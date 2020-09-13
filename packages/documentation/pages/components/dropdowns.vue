@@ -45,19 +45,19 @@ Note the `dropdownIcon` prop. It will default to `chevron_down`.
 You can also use any attribute you would pass to `KtPopover` or `KtButton`. They will be passed.
 
 <div class="element-example">
-	<KtDropdownButton type="primary" v-t="'Dropdown button'" >
+	<KtDropdownButton type="primary" label="Dropdown button" >
 		<div slot="KtDropdownMenus">
 			<KtDropdownMenu>Request item</KtDropdownMenu>
 			<KtDropdownMenu>Download Item</KtDropdownMenu>
 		</div>
 	</KtDropdownButton>
-	<KtDropdownButton placement="top-end" dropdownIcon="chevron_up" size="sm" type="primary" v-t="'Dropdown button'" >
+	<KtDropdownButton placement="top-end" dropdownIcon="chevron_up" size="sm" type="primary" label="Dropdown button" >
 		<div slot="KtDropdownMenus">
 			<KtDropdownMenu>Request item</KtDropdownMenu>
 			<KtDropdownMenu>Download Item</KtDropdownMenu>
 		</div>
 	</KtDropdownButton>
-	<KtDropdownButton :disabled="true" size="sm" type="primary" v-t="'Dropdown button'" >
+	<KtDropdownButton :disabled="true" size="sm" type="primary" label="Dropdown button" >
 		<div slot="KtDropdownMenus">
 			<KtDropdownMenu>Request item</KtDropdownMenu>
 			<KtDropdownMenu>Download Item</KtDropdownMenu>
@@ -66,19 +66,19 @@ You can also use any attribute you would pass to `KtPopover` or `KtButton`. They
 </div>
 
 ```html
-	<KtDropdownButton type="primary" v-t="'Dropdown button'">
+	<KtDropdownButton type="primary" label="Dropdown button">
 		<div slot="KtDropdownMenus">
 			<KtDropdownMenu>Request item</KtDropdownMenu>
 			<KtDropdownMenu>Download Item</KtDropdownMenu>
 		</div>
 	</KtDropdownButton>
-		<KtDropdownButton placement="top-end" dropdownIcon="chevron_up" size="sm" type="primary" v-t="'Dropdown button'" >
+		<KtDropdownButton placement="top-end" dropdownIcon="chevron_up" size="sm" type="primary" label="Dropdown button" >
 		<div slot="KtDropdownMenus">
 			<KtDropdownMenu>Request item</KtDropdownMenu>
 			<KtDropdownMenu>Download Item</KtDropdownMenu>
 		</div>
 	</KtDropdownButton>
-	<KtDropdownButton :disabled="true" size="sm" type="primary" v-t="'Dropdown button'" >
+	<KtDropdownButton :disabled="true" size="sm" type="primary" label="Dropdown button" >
 		<div slot="KtDropdownMenus">
 			<KtDropdownMenu>Request item</KtDropdownMenu>
 			<KtDropdownMenu>Download Item</KtDropdownMenu>

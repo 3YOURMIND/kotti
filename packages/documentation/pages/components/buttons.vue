@@ -16,11 +16,11 @@
 	## Types
 
 	<div class="element-example white">
-		<KtButton type="primary" class="mt-4 mr-4">Primary Button</KtButton>
-		<KtButton type="secondary" class="mt-4 mr-4">Secondary Button</KtButton>
-		<KtButton type="danger" class="mt-4 mr-4">Danger Button</KtButton>
-		<KtButton class="mt-4 mr-4">Default Button</KtButton>
-		<KtButton type="text" class="mt-4 mr-4">Text Button</KtButton>
+		<KtButton type="primary" class="mt-4 mr-4" @click="alert('primary')">Primary Button</KtButton>
+		<KtButton type="secondary" class="mt-4 mr-4" @click="alert('secondary')">Secondary Button</KtButton>
+		<KtButton type="danger" class="mt-4 mr-4" @click="alert('danger')">Danger Button</KtButton>
+		<KtButton class="mt-4 mr-4" @click="alert('default')">Default Button</KtButton>
+		<KtButton type="text" class="mt-4 mr-4" @click="alert('text')">Text Button</KtButton>
 	</div>
 
 	**Primary button**
@@ -54,7 +54,7 @@
 		<KtButton type="primary" icon="edit" label="Edit Button"/>
 	</div>
 
-	Instead of using the default slot, you can also provide text via the `label` property. Note that `v-text` and `v-t` will **not** be compatible with the `icon` property.
+	Instead of using the default slot, you can also provide text via the `label` property. Note that `v-text` and `v-t` are **NOT SUPPORTED**.
 
 	```html
 	<KtButton type="primary" icon="edit" label="Edit Button"/>
@@ -139,7 +139,7 @@
 	You can also use any attribute you would pass to `KtPopover` or `KtButton`. They will be passed.
 
 	<div class="element-example">
-		<KtDropdownButton size="sm" type="primary" v-t="'Dropdown button'" >
+		<KtDropdownButton size="sm" type="primary" label="Dropdown button" >
 			<div slot="content">
 				<KtPopoverItem>Request item</KtPopoverItem>
 				<KtPopoverItem>Download Item</KtPopoverItem>
@@ -149,7 +149,7 @@
 
 	``` html
 	<div class="element-example">
-		<KtDropdownButton size="sm" type="primary" v-t="'Dropdown button'" >
+		<KtDropdownButton size="sm" type="primary" label="Dropdown button" >
 			<div slot="content">
 				<KtPopoverItem>Request item</KtPopoverItem>
 				<KtPopoverItem>Download Item</KtPopoverItem>
@@ -203,6 +203,11 @@ export default {
 	computed: {
 		buttonUsage() {
 			return ButtonUsage
+		},
+	},
+	methods: {
+		alert(value) {
+			window.alert(value)
 		},
 	},
 }

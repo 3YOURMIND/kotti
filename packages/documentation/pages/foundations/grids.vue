@@ -194,10 +194,12 @@
 </template>
 
 <script>
-export default { name: 'KtGridDoc' }
+export default {
+	name: 'KtGridDoc',
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .grid-content {
 	height: 40px;
 	border-radius: 4px;
