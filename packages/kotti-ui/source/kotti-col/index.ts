@@ -20,37 +20,51 @@ export const KtCol = makeInstallable(
 		props: vuePropsValidators.create({
 			lg: {
 				default: () => null,
+				maximum: 24,
+				minimum: 1,
 				nullable: true,
 				type: vuePropsValidators.Type.INTEGER,
 			},
 			md: {
 				default: () => null,
+				maximum: 24,
+				minimum: 1,
 				nullable: true,
 				type: vuePropsValidators.Type.INTEGER,
 			},
 			offset: {
 				default: () => null,
+				maximum: 24,
+				minimum: 1,
 				nullable: true,
 				type: vuePropsValidators.Type.INTEGER,
 			},
 			pull: {
 				default: () => null,
+				maximum: 24,
+				minimum: 1,
 				nullable: true,
 				type: vuePropsValidators.Type.INTEGER,
 			},
 			push: {
 				default: () => null,
+				maximum: 24,
+				minimum: 1,
 				nullable: true,
 				type: vuePropsValidators.Type.INTEGER,
 			},
 			sm: {
 				default: () => null,
+				maximum: 24,
+				minimum: 1,
 				nullable: true,
 				type: vuePropsValidators.Type.INTEGER,
 			},
 			span: {
 				// eslint-disable-next-line no-magic-numbers
 				default: () => 24,
+				maximum: 24,
+				minimum: 1,
 				nullable: false,
 				type: vuePropsValidators.Type.INTEGER,
 			},
@@ -61,11 +75,15 @@ export const KtCol = makeInstallable(
 			},
 			xl: {
 				default: () => null,
+				maximum: 24,
+				minimum: 1,
 				nullable: false,
 				type: vuePropsValidators.Type.INTEGER,
 			},
 			xs: {
 				default: () => null,
+				maximum: 24,
+				minimum: 1,
 				nullable: false,
 				type: vuePropsValidators.Type.INTEGER,
 			},

@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import { vuePropsValidators } from '..'
 import { REQUIRED } from '../constants'
 
@@ -23,12 +24,32 @@ test('integer validator works', () => {
 
 	expect(example.validator('test')).toBeFalsy()
 	expect(example.validator(undefined)).toBeFalsy()
-	/* eslint-disable no-magic-numbers */
 	expect(example.validator(42)).toBeTruthy()
 	expect(example.validator(420)).toBeTruthy()
 	expect(example.validator(2.3)).toBeFalsy()
 	expect(example.validator(NaN)).toBeFalsy()
-	/* eslint-enable no-magic-numbers */
+})
+
+test('integer (maximum)', () => {
+	const { example } = vuePropsValidators.create({
+		example: { ...BASE_INTEGER, maximum: 5 },
+	})
+
+	expect(example.validator(1)).toBeTruthy()
+	expect(example.validator(5)).toBeTruthy()
+	expect(example.validator(6)).toBeFalsy()
+	expect(example.validator(420)).toBeFalsy()
+})
+
+test('integer (minimum)', () => {
+	const { example } = vuePropsValidators.create({
+		example: { ...BASE_INTEGER, minimum: 5 },
+	})
+
+	expect(example.validator(1)).toBeFalsy()
+	expect(example.validator(4)).toBeFalsy()
+	expect(example.validator(5)).toBeTruthy()
+	expect(example.validator(420)).toBeTruthy()
 })
 
 test('integer (nullable: false)', () =>

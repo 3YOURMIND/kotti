@@ -6,6 +6,8 @@ import { isNumber } from '../utilities'
 import { TypeBase, Type } from '.'
 
 export type TypeFloat = TypeBase & {
+	maximum?: number
+	minimum?: number
 	type: Type.FLOAT
 }
 
@@ -14,5 +16,11 @@ export const createFloat = <OPTION extends TypeFloat>(
 ): Result<OPTION, NumberConstructor> => ({
 	...resolveDefault(option),
 	type: Number,
-	validator: baseValidator(option, (value: unknown) => isNumber(value)),
+	validator: baseValidator(
+		option,
+		(value: unknown) =>
+			isNumber(value) &&
+			(option.maximum === undefined || value <= option.maximum) &&
+			(option.minimum === undefined || value >= option.minimum),
+	),
 })

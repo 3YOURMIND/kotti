@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import { vuePropsValidators } from '..'
 import { REQUIRED } from '../constants'
 
@@ -23,12 +24,35 @@ test('float validator works', () => {
 
 	expect(example.validator('test')).toBeFalsy()
 	expect(example.validator(undefined)).toBeFalsy()
-	/* eslint-disable no-magic-numbers */
 	expect(example.validator(42)).toBeTruthy()
 	expect(example.validator(420)).toBeTruthy()
 	expect(example.validator(2.3)).toBeTruthy()
 	expect(example.validator(NaN)).toBeFalsy()
-	/* eslint-enable no-magic-numbers */
+})
+
+test('float (maximum)', () => {
+	const { example } = vuePropsValidators.create({
+		example: { ...BASE_FLOAT, maximum: 5.2 },
+	})
+
+	expect(example.validator(1)).toBeTruthy()
+	expect(example.validator(5)).toBeTruthy()
+	expect(example.validator(5.2)).toBeTruthy()
+	expect(example.validator(5.21)).toBeFalsy()
+	expect(example.validator(420)).toBeFalsy()
+})
+
+test('float (minimum)', () => {
+	const { example } = vuePropsValidators.create({
+		example: { ...BASE_FLOAT, minimum: 5.2 },
+	})
+
+	expect(example.validator(1)).toBeFalsy()
+	expect(example.validator(4)).toBeFalsy()
+	expect(example.validator(5)).toBeFalsy()
+	expect(example.validator(5.19)).toBeFalsy()
+	expect(example.validator(5.2)).toBeTruthy()
+	expect(example.validator(420)).toBeTruthy()
 })
 
 test('float (nullable: false)', () =>

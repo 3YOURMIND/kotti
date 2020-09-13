@@ -13,7 +13,7 @@ const BASE_STRING: TypeString = {
 
 test('string has correct type', () =>
 	expect(vuePropsValidators.create({ example: BASE_STRING })).toMatchObject({
-		example: { type: Number },
+		example: { type: String },
 	}))
 
 test('string validator works', () => {
