@@ -1,4 +1,5 @@
 import { Type, Option } from './modules'
+import { createBoolean } from './modules/boolean'
 import { createEnum } from './modules/enum'
 import { createFloat } from './modules/float'
 import { createInteger } from './modules/integer'
@@ -6,6 +7,7 @@ import { createString } from './modules/string'
 import { Options, Result } from './types'
 
 type ResultMap<OPTION extends Option> = {
+	[Type.BOOLEAN]: Result<OPTION, BooleanConstructor>
 	[Type.ENUM]: Result<OPTION, StringConstructor>
 	[Type.FLOAT]: Result<OPTION, NumberConstructor>
 	[Type.INTEGER]: Result<OPTION, NumberConstructor>
@@ -20,6 +22,9 @@ export const create = <PROPS extends Options>(
 	Object.fromEntries(
 		Object.entries(props).map(([prop, option]) => {
 			switch (option.type) {
+				case Type.BOOLEAN:
+					return [prop, createBoolean(option)]
+
 				case Type.ENUM:
 					return [prop, createEnum(option)]
 

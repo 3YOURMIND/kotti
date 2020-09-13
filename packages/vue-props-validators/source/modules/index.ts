@@ -1,5 +1,6 @@
 import { REQUIRED } from '../constants'
 
+import { TypeBoolean } from './boolean'
 import { TypeEnum } from './enum'
 import { TypeFloat } from './float'
 import { TypeInteger } from './integer'
@@ -11,10 +12,16 @@ export type TypeBase = {
 }
 
 export enum Type {
+	BOOLEAN = 'boolean',
 	ENUM = 'enum',
 	FLOAT = 'float',
 	INTEGER = 'integer',
 	STRING = 'string',
 }
 
-export type Option = TypeEnum | TypeFloat | TypeInteger | TypeString
+export type Option =
+	| TypeBoolean
+	| TypeEnum
+	| TypeFloat
+	| TypeInteger
+	| TypeString
