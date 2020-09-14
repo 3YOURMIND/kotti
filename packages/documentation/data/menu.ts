@@ -35,7 +35,7 @@ export const menu: Array<Section> = [
 				path: 'foundations',
 				pages: [
 					{ label: 'Layout', tags: [], path: 'layout' },
-					{ label: 'Grids', tags: [], path: 'grids' },
+					{ label: 'Grids', tags: ['ts'], path: 'grids' },
 					{ label: 'Icons', tags: ['css'], path: 'icons' },
 					{ label: 'Typography', tags: ['css'], path: 'typography' },
 					{ label: 'Writing Style', tags: [], path: 'writing' },
