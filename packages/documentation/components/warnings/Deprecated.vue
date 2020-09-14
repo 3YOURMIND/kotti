@@ -10,7 +10,7 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-	name: 'DeprecationWarning',
+	name: 'WarningDeprecated',
 	props: {
 		componentName: { required: true, type: String },
 		link: { required: true, type: String },

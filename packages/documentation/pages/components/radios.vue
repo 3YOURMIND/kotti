@@ -1,7 +1,7 @@
 <template lang="md">
 # Radio
 
-<DeprecationWarning
+<WarningDeprecated
 	componentName="KtFieldRadio/KtFieldRadioGroup"
 	link="/components/form"
 	version="3.0"
@@ -98,11 +98,11 @@ options: [{
 </template>
 
 <script>
-import DeprecationWarning from '../../components/DeprecationWarning.vue'
+import WarningDeprecated from '../../components/warnings/Deprecated.vue'
 
 export default {
 	name: 'KtRadioDoc',
-	components: { DeprecationWarning },
+	components: { WarningDeprecated },
 	data() {
 		return {
 			radio1: 'morning',

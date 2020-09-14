@@ -1,7 +1,7 @@
 <template lang="md">
 # Input Number
 
-<DeprecationWarning
+<WarningDeprecated
 	componentName="KtFieldNumber"
 	link="/components/form"
 	version="3.0"
@@ -86,11 +86,11 @@ When `max` attribute has a value, and `showMaxNumber` is `true`, the max number 
 </template>
 
 <script>
-import DeprecationWarning from '../../components/DeprecationWarning.vue'
+import WarningDeprecated from '../../components/warnings/Deprecated.vue'
 
 export default {
 	name: 'KtInputNumberDoc',
-	components: { DeprecationWarning },
+	components: { WarningDeprecated },
 	data() {
 		return {
 			number1: 12,

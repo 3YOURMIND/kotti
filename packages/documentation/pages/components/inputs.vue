@@ -1,19 +1,19 @@
 <template lang="md">
 	# Inputs
 
-	<DeprecationWarning
+	<WarningDeprecated
 		componentName="KtFieldText"
 		link="/components/form"
 		version="3.0"
 	/>
 
-	<DeprecationWarning
+	<WarningDeprecated
 		componentName="KtFieldNumber"
 		link="/components/form"
 		version="3.0"
 	/>
 
-	<DeprecationWarning
+	<WarningDeprecated
 		componentName="KtFieldEmail/KtFieldPassword"
 		link="/components/form"
 		version="3.0"
@@ -241,11 +241,11 @@
 </template>
 
 <script>
-import DeprecationWarning from '../../components/DeprecationWarning.vue'
+import WarningDeprecated from '../../components/warnings/Deprecated.vue'
 
 export default {
 	name: 'KtInputDoc',
-	components: { DeprecationWarning },
+	components: { WarningDeprecated },
 	data() {
 		return {
 			v1: 'Jony One O',

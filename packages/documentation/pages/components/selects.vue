@@ -2,7 +2,7 @@
 
 # Select
 
-<DeprecationWarning
+<WarningDeprecated
 	componentName="KtFieldSingleSelect/KtFieldMultipleSelect"
 	link="/components/form"
 	version="3.0"
@@ -195,11 +195,11 @@ async asyncFind(query) {
 </template>
 
 <script>
-import DeprecationWarning from '../../components/DeprecationWarning.vue'
+import WarningDeprecated from '../../components/warnings/Deprecated.vue'
 
 export default {
 	name: 'KtSelectDoc',
-	components: { DeprecationWarning },
+	components: { WarningDeprecated },
 	data() {
 		return {
 			value1: null,

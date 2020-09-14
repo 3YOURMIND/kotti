@@ -1,7 +1,7 @@
 <template lang="md">
 # Switch
 
-<DeprecationWarning
+<WarningDeprecated
 	componentName="KtFieldToggle"
 	link="/components/form"
 	version="3.0"
@@ -79,11 +79,11 @@ using `right` to change the position.
 </template>
 
 <script>
-import DeprecationWarning from '../../components/DeprecationWarning.vue'
+import WarningDeprecated from '../../components/warnings/Deprecated.vue'
 
 export default {
 	name: 'KtSwitchDoc',
-	components: { DeprecationWarning },
+	components: { WarningDeprecated },
 	data() {
 		return {
 			checkbox1: false,
