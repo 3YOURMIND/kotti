@@ -74,7 +74,7 @@ export const KtCol = makeInstallable(
 						class: classes.value,
 						style: style.value,
 					},
-					[slots.default()],
+					[slots.default?.() ?? null],
 				)
 		},
 	}),

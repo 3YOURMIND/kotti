@@ -46,7 +46,7 @@ const KtRow = defineComponent({
 					],
 					style: style.value,
 				},
-				[slots.default()],
+				[slots.default?.() ?? null],
 			)
 	},
 })
