@@ -1,6 +1,8 @@
 <template lang="md">
 	# Grid System
 
+	<WarningUnsupported/>
+
 	Kotti uses 24 columns `span` grid system. With `row` and `col` it can create dynamic layout.
 	Grid can be also easily customized.
 
@@ -193,10 +195,15 @@
 
 </template>
 
-<script>
-export default {
-	name: 'KtGridDoc',
-}
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+
+import WarningUnsupported from '../../components/warnings/Unsupported.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageFoundationsGrids',
+	components: { WarningUnsupported },
+})
 </script>
 
 <style lang="scss" scoped>

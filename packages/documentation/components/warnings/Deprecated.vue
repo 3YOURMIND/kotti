@@ -19,11 +19,11 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .danger-block {
 	padding: 1.2rem;
 	margin-bottom: 0.6rem;
-	color: var(--red-70);
+	color: var(--support-error-dark);
 	background: var(--support-error-light);
 	border-radius: 5px;
 

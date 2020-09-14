@@ -1,6 +1,8 @@
 <template lang="md">
 	# Buttons
 
+	<WarningUnsupported/>
+
 	Use buttons to lead a call to action or guide a user to their next steps.
 
 	## Labels
@@ -186,29 +188,29 @@
 	<KtButton type="primary" element="div">Primary Button</KtButton>
 	```
 
-	<div v-html="buttonUsage" />
+	<div v-html="KtButtonReadmeMd" />
 
 </template>
 
-<script>
-import ButtonUsage from '@3yourmind/kotti-ui/source/kotti-button/README.md'
+<script lang="ts">
+// @ts-expect-error markdown files are not declared and therefore error
+import KtButtonReadmeMd from '@3yourmind/kotti-ui/source/kotti-button/README.md'
+import { defineComponent } from '@vue/composition-api'
 
-import ShowCase from '../../components/ShowCase'
+import ShowCase from '../../components/ShowCase.vue'
+import WarningUnsupported from '../../components/warnings/Unsupported.vue'
 
-export default {
-	name: 'Buttons',
+export default defineComponent({
+	name: 'DocumentationPageComponentsButtons',
 	components: {
 		ShowCase,
+		WarningUnsupported,
 	},
-	computed: {
-		buttonUsage() {
-			return ButtonUsage
-		},
+	setup() {
+		return {
+			alert: (message: string) => window.alert(message),
+			KtButtonReadmeMd,
+		}
 	},
-	methods: {
-		alert(value) {
-			window.alert(value)
-		},
-	},
-}
+})
 </script>
