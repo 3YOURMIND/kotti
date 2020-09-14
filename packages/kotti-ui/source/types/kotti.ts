@@ -1,3 +1,4 @@
+export { KottiCol as Col } from '../kotti-col/types'
 export { KottiField as Field } from '../next/kotti-field/types'
 export { KottiFieldNumber as FieldNumber } from '../next/kotti-field-number/types'
 export { KottiFieldText as FieldText } from '../next/kotti-field-text/types'
@@ -26,6 +27,7 @@ export {
 	KottiFormControllerObject as FormControllerObject,
 	KottiFormControllerList as FormControllerList,
 } from '../next/kotti-form/controllers/types'
+export { KottiRow as Row } from '../kotti-row/types'
 
 export type Meta = {
 	addedVersion: string | null
