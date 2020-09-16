@@ -16,12 +16,13 @@
 	],
 	"description": "3YOURMIND Icon Font",
 	"devDependencies": {
-		"http-server": "^0.12.3",
 		"icon-font-buildr": "^1.3.4"
 	},
 	"files": [
+		"fonts",
 		"dist",
-		"svg"
+		"svg",
+		"style.css"
 	],
 	"homepage": "https://3yourmind.github.io/kotti/foundations/icons",
 	"keywords": [
@@ -33,8 +34,7 @@
 	"name": "@3yourmind/yoco",
 	"repository": "git+https://github.com/3YOURMIND/kotti.git",
 	"scripts": {
-		"build": "tsc && node dist/generate",
-		"serve": "cp style.css docs/style.css && cp -r fonts docs/fonts && http-server -p 3001 docs"
+		"build": "tsc && node dist/generate"
 	},
 	"style": "style.css",
 	"version": "1.4.3"
