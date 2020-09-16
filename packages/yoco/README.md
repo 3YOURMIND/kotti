@@ -28,9 +28,9 @@ npm install --save @3yourmind/yoco
 
 ```typescript
 // enum of icons and the associated ligature / svg name
-import { Icons } "@3yourmind/yoco";
+import { Icon } "@3yourmind/yoco";
 
-console.log(Icons.ANNOUNCE)
+console.log(Icon.ANNOUNCE)
 // 'announce'
 ```
 
@@ -42,7 +42,7 @@ console.log(Icons.ANNOUNCE)
 
 ## Using yoco icons
 
-Yoco use ligatures, which allows rendering the icon glyph by simply using its name with the `yoco` font.
+Yoco uses ligatures, which allows rendering the icon glyph by simply using its name with the `yoco` font.
 
 ```html
 <i class="yoco">cloud</i>
