@@ -1,0 +1,38 @@
+{
+  "author": "3YOURMIND GmbH",
+  "bugs": {
+    "url": "https://github.com/3YOURMIND/yoco/issues"
+  },
+  "contributors": [
+    {
+      "email": "jp@3yourmind.com",
+      "name": "Junyu Pu"
+    },
+    {
+      "email": "fw@3yourmind.com",
+      "name": "Florian Wendelborn",
+      "url": "https://hello.dodekeract.com/npm/@3yourmind/yoco"
+    }
+  ],
+  "description": "3YOURMIND Icon Font",
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://3yourmind.github.io/yoco",
+  "keywords": [
+    "icon",
+    "font"
+  ],
+  "license": "MIT",
+  "main": "dist/yoco-icon.css",
+  "name": "@3yourmind/yoco",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3YOURMIND/yoco.git"
+  },
+  "scripts": {
+    "build": "./build.sh",
+    "prepublish": "yarn run build"
+  },
+  "version": "1.4.3"
+}

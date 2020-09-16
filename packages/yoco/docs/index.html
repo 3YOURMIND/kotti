@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Yoco Icons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./yoco-icon.css" />
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+      body {
+        margin: 0 auto;
+        font-size: 16px;
+        color: #555;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        max-width: 60rem;
+        text-align: center;
+        padding: 0 16px;
+        font-weight: 400;
+      }
+
+      h1 {
+        font-size: 4em;
+        text-align: center;
+        font-weight: 300;
+        margin: 0;
+        width: auto;
+        position: relative;
+      }
+
+      h1:hover {
+        cursor: pointer;
+      }
+
+      h2 {
+        font-weight: 300;
+      }
+
+      a,
+      a:visited {
+        color: #2c66c4;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .header {
+        margin: 2rem 0;
+      }
+
+      .divider {
+        font-size: 12px;
+        color: #8a8a8a;
+        font-weight: 700;
+      }
+
+      .yoco.icon-preview {
+        font-size: 4rem;
+      }
+
+      .icon-container {
+        float: left;
+        text-align: center;
+        width: 25%;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+
+      .icons {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 8px -8px;
+      }
+
+      .icon {
+        border-radius: 4px;
+        padding: 16px;
+        box-sizing: border-box;
+        background: #f8f8f8;
+      }
+
+      .icon-container:hover .icon {
+        background: #fff;
+        padding: 14px;
+        cursor: pointer;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .icon-liga {
+        font-size: 0.875em;
+        line-height: 2em;
+        opacity: 0.84;
+      }
+
+      .icon-container .yoco {
+        font-size: 32px;
+      }
+
+      .input-wrapper {
+        margin: 2rem auto;
+        width: 50%;
+        position: relative;
+        text-align: center;
+        transition: ease-in 0.22s width;
+        border-radius: 4px;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-wrapper:focus-within {
+        width: 65%;
+        box-shadow: 0 0 0 1px rgba(44, 100, 204, 1),
+          0 4px 16px rgba(0, 0, 0, 0.1);
+        transition: ease-out 0.22s width;
+      }
+
+      .input-wrapper span {
+        position: absolute;
+        left: 8px;
+        color: #a8a8a8;
+        top: 16px;
+      }
+
+      .input-wrapper button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 56px;
+        height: 56px;
+        border: 0;
+        color: #a8a8a8;
+        background: transparent;
+        outline: none;
+      }
+
+      .input-wrapper button:hover {
+        color: #8a8a8a;
+        cursor: pointer;
+      }
+
+      input {
+        box-sizing: border-box;
+        width: 100%;
+        height: 56px;
+        line-height: 2em;
+        border-radius: 0.4rem;
+        border: 0;
+        padding: 0.8rem 40px;
+        font-size: 16px;
+      }
+
+      input:focus {
+        outline: none;
+      }
+
+      @media (max-width: 480px) {
+        .icon-container {
+          width: 50%;
+        }
+
+        .input-wrapper,
+        .input-wrapper:focus-within {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="header">
+        <h1 @click="feelLucky">
+          yoco icon <i class="yoco icon-preview">{{ previewIcon }}</i>
+        </h1>
+        <h2>
+          In house designed icons for
+          <a href="https://3yourmind.github.io/kotti/foundations/icons"
+            >kotti design system</a
+          >
+        </h2>
+        <p v-if="!previewIcon">
+          You got an empty icon,
+          <a href="https://github.com/3YOURMIND/yoco/issues/new">it's a bug</a>
+        </p>
+      </div>
+      <div class="input-wrapper">
+        <span> <i class="yoco">search</i> </span>
+        <input v-model="serachString" placeholder="Search icon" />
+        <button @click="serachString=''" v-if="serachString">
+          <i class="yoco">close</i>
+        </button>
+      </div>
+      <div class="divider">Solid</div>
+      <div class="icons">
+        <div
+          class="icon-container"
+          v-for="icon in displayString(solidIconString)"
+          @click="previewIcon=icon"
+        >
+          <div class="icon">
+            <i class="yoco" ref="liga">{{ icon }}</i>
+            <div class="icon-liga" v-text="icon"></div>
+          </div>
+        </div>
+      </div>
+      <div class="divider">Line</div>
+      <div class="icons">
+        <div
+          class="icon-container"
+          v-for="icon in displayString(iconString)"
+          @click="previewIcon=icon"
+        >
+          <div class="icon">
+            <i class="yoco" ref="liga">{{ icon }}</i>
+            <div class="icon-liga" v-text="icon"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function loadJSON(callback) {
+      var xobj = new XMLHttpRequest();
+      xobj.overrideMimeType("application/json");
+      xobj.open("GET", "yoco-icon.json", true);
+      xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+          callback(xobj.responseText);
+        }
+      };
+      xobj.send(null);
+    }
+    loadJSON(function (response) {
+      console.log(JSON.parse(response));
+      const json = JSON.parse(response).icons;
+      let iconMoonString = [];
+      let solidIconMoonString = [];
+      json.forEach(function (item) {
+        let liga = item.properties.ligatures.split(",")[0];
+        if (!liga) {
+          console.warn(
+            `The ligatures attribute is not defined for the ${item.properties.name} icon. Falling back to name.`
+          );
+          liga = item.properties.name;
+        }
+        if (liga.includes("solid")) {
+          solidIconMoonString.push(liga);
+        } else {
+          iconMoonString.push(liga);
+        }
+      });
+      app.solidIconString = solidIconMoonString;
+      app.iconString = iconMoonString;
+    });
+
+    var app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          iconString: [],
+          solidIconString: [],
+          previewIcon: "idea",
+          serachString: "",
+        };
+      },
+      methods: {
+        feelLucky() {
+          for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+              this.previewIcon = this.iconString[
+                Math.floor(Math.random() * this.iconString.length) - 1
+              ];
+            }, i * 100);
+          }
+        },
+        searchResults(strings) {
+          let results = strings.filter((result) =>
+            result.includes(this.serachString.toLowerCase())
+          );
+          if (results.length === 1) {
+            this.previewIcon = results[0];
+          }
+          return results;
+        },
+        displayString(strings) {
+          if (this.serachString) {
+            return this.searchResults(strings);
+          }
+          return strings;
+        },
+      },
+    });
+  </script>
+</html>

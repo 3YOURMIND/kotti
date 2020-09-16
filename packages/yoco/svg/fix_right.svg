@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>fix_right</title>
+    <desc>Created with Sketch.</desc>
+    <g id="fix_right" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M12,8 L12,16 L18,16 L18,8 L12,8 Z M12,18 L12,19.5 C12,19.7761424 11.7761424,20 11.5,20 L10.5,20 C10.2238576,20 10,19.7761424 10,19.5 L10,4.5 C10,4.22385763 10.2238576,4 10.5,4 L11.5,4 C11.7761424,4 12,4.22385763 12,4.5 L12,6 L19.5,6 C19.7761424,6 20,6.22385763 20,6.5 L20,17.5 C20,17.7761424 19.7761424,18 19.5,18 L12,18 Z M16,11 L17,11 L17,14 L13,14 L13,11 L14,11 C14,10.4477153 14.4477153,10 15,10 C15.5522847,10 16,10.4477153 16,11 Z M9,16 L9,18 L4.5,18 C4.22385763,18 4,17.7761424 4,17.5 L4,6.5 C4,6.22385763 4.22385763,6 4.5,6 L9,6 L9,8 L6,8 L6,16 L9,16 Z" id="Shape" fill="#000000" fill-rule="nonzero"></path>
+    </g>
+</svg>
