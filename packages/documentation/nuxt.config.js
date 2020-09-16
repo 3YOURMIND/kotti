@@ -19,7 +19,7 @@ const config = {
 		],
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
 	},
-	css: ['@3yourmind/yoco', './assets/css/main.scss'],
+	css: ['./assets/css/main.scss'],
 	modules: ['@nuxtjs/markdownit', '@nuxtjs/axios', '@nuxtjs/style-resources'],
 	loading: {
 		color: '#2C64CC',
@@ -27,6 +27,7 @@ const config = {
 	plugins: [
 		'~/plugins/composition-api',
 		'~/plugins/vue-clipboard2',
+		'~/plugins/yoco',
 		{ src: '~/plugins/kotti-ui', ssr: false },
 	],
 	/*
