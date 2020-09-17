@@ -7,7 +7,7 @@
 				:class="decrementButtonClasses"
 				@click="decrementValue"
 			>
-				<i class="yoco" v-text="'minus'" />
+				<i class="yoco" v-text="Yoco.Icon.MINUS" />
 			</div>
 			<div class="kt-field-number__middle" @click="$refs.input.focus()">
 				<input
@@ -29,13 +29,14 @@
 				:class="incrementButtonClasses"
 				@click="incrementValue"
 			>
-				<i class="yoco" v-text="'plus'" />
+				<i class="yoco" v-text="Yoco.Icon.PLUS" />
 			</div>
 		</div>
 	</KtField>
 </template>
 
 <script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref, watch } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
@@ -218,6 +219,7 @@ export default defineComponent({
 				forceUpdate()
 			},
 			showMaximum,
+			Yoco,
 		}
 	},
 })

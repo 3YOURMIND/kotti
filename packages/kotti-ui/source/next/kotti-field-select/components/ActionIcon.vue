@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import { Select as ElSelect } from 'element-ui'
 
@@ -58,10 +59,13 @@ export default defineComponent({
 				}
 			},
 			hoverOnClear,
-			icon: computed(() =>
-				hoverOnClear.value && props.showClear
-					? 'close'
-					: `chevron_${props.isDropdownOpen ? 'up' : 'down'}`,
+			icon: computed(
+				(): Yoco.Icon =>
+					hoverOnClear.value && props.showClear
+						? Yoco.Icon.CLOSE
+						: props.isDropdownOpen
+						? Yoco.Icon.CHEVRON_UP
+						: Yoco.Icon.CHEVRON_DOWN,
 			),
 		}
 	},

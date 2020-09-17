@@ -1,1 +1,1 @@
-export { Icon } from './types'
+export * as Yoco from './types'

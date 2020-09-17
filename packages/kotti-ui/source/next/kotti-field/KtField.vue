@@ -22,7 +22,7 @@
 					:class="iconClasses(['interactive'])"
 				>
 					<div class="kt-field__header__help-text__icon">
-						<i class="yoco" v-text="'circle_question'" />
+						<i class="yoco" v-text="Yoco.Icon.CIRCLE_QUESTION" />
 					</div>
 					<div
 						class="kt-field__header__help-text__tooltip"
@@ -60,7 +60,7 @@
 							role="button"
 							@click.stop="handleClear"
 						>
-							<i class="yoco" v-text="'close'" />
+							<i class="yoco" v-text="Yoco.Icon.CLOSE" />
 						</div>
 					</slot>
 					<div v-if="field.rightIcon" :class="iconClasses(['right'])">
@@ -89,6 +89,7 @@
 </template>
 
 <script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
 import {
 	defineComponent,
 	computed,
@@ -174,6 +175,7 @@ export default defineComponent({
 
 				return classes
 			}),
+			Yoco,
 		}
 	},
 })

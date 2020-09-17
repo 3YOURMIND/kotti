@@ -17,7 +17,7 @@ console.log(Icon.ANNOUNCE)
 
 <div class="columns">
 	<YocoPreview
-		v-for="[key, value] in Object.entries(Icon)"
+		v-for="[key, value] in Object.entries(Yoco.Icon)"
 		class="column col-2 col-md-6"
 		:key="value"
 		:enum="key"
@@ -31,7 +31,7 @@ console.log(Icon.ANNOUNCE)
 </template>
 
 <script>
-import { Icon } from '@3yourmind/yoco'
+import { Yoco } from '@3yourmind/yoco'
 
 import IconFont from '~/components/IconFont.vue'
 import YocoPreview from '~/components/YocoPreview.vue'
@@ -45,7 +45,7 @@ export default {
 	data() {
 		return {
 			copySuccess: false,
-			Icon,
+			Yoco,
 		}
 	},
 }

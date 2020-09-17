@@ -11,7 +11,7 @@
 				<h5 v-text="translations.errorsSectionTitle" />
 				<ul>
 					<li v-for="(error, index) in errors" :key="index">
-						<i class="yoco" v-text="'circle_cross'" />
+						<i class="yoco" v-text="Yoco.Icon.CIRCLE_CROSS" />
 						<span v-text="error.text" />
 					</li>
 				</ul>
@@ -24,7 +24,7 @@
 				<h5 v-text="translations.warningsSectionTitle" />
 				<ul>
 					<li v-for="(warning, index) in warnings" :key="index">
-						<i class="yoco" v-text="'circle_attention'" />
+						<i class="yoco" v-text="Yoco.Icon.CIRCLE_ATTENTION" />
 						<span v-text="warning.text" />
 					</li>
 				</ul>
@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, inject, computed } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../kotti-translation/hooks'
@@ -77,6 +78,7 @@ export default defineComponent({
 			),
 			translations: useTranslationNamespace('KtFormSubmit'),
 			warnings,
+			Yoco,
 		}
 	},
 })

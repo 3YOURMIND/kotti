@@ -1,7 +1,7 @@
+import { Yoco } from '@3yourmind/yoco'
 import { onMounted, Ref, watchEffect } from '@vue/composition-api'
 import { DatePicker as ElDate } from 'element-ui'
 
-import { Yoco } from '../../types'
 import { KottiField } from '../kotti-field/types'
 
 import {
@@ -227,11 +227,10 @@ const usePickerNavigationIcons = <DATA_TYPE extends Values>({
 			)
 
 			const headerYocoIcons = [
-				// TODO: replace triangle_* with double_chevron*
-				insertYocoIcon('triangle_left'),
-				insertYocoIcon('chevron_left'),
-				insertYocoIcon('triangle_right'),
-				insertYocoIcon('chevron_right'),
+				insertYocoIcon(Yoco.Icon.CHEVRON_LEFT_DOUBLE),
+				insertYocoIcon(Yoco.Icon.CHEVRON_LEFT),
+				insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT_DOUBLE),
+				insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT),
 			]
 
 			pickerHeaderIcons.forEach((icon, index) => {

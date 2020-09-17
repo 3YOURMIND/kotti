@@ -1,4 +1,4 @@
-import { Yoco } from '@3yourmind/kotti-ui'
+import { Yoco } from '@3yourmind/yoco'
 
 export type SubsectionPage = {
 	label: string
@@ -22,30 +22,32 @@ export const menu: Array<Section> = [
 	{
 		title: 'Guide',
 		subsections: [
-			{ icon: 'file', title: 'Overview', path: '', pages: [] },
-			{ icon: 'version', title: 'Changelog', path: 'changelog', pages: [] },
+			{ icon: Yoco.Icon.FILE, title: 'Overview', path: '', pages: [] },
+			{
+				icon: Yoco.Icon.VERSION,
+				title: 'Changelog',
+				path: 'changelog',
+				pages: [],
+			},
 		],
 	},
 	{
 		title: 'Usage',
 		subsections: [
 			{
-				icon: 'layer',
+				icon: Yoco.Icon.LAYER,
 				title: 'Foundations',
 				path: 'foundations',
 				pages: [
 					{ label: 'Layout', tags: [], path: 'layout' },
 					{ label: 'Grids', tags: ['ts'], path: 'grids' },
-					{ label: 'Icons', tags: ['css'], path: 'icons' },
+					{ label: 'Icons', tags: ['css', 'ts'], path: 'icons' },
 					{ label: 'Typography', tags: ['css'], path: 'typography' },
 					{ label: 'Writing Style', tags: [], path: 'writing' },
 				],
 			},
 			{
-				// FIXME: Yoco.Icon still isn’t complete. Let’s find a way to actually ensure it’s always complete
-				// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-				// @ts-ignore
-				icon: 'json',
+				icon: Yoco.Icon.JSON,
 				title: 'Tokens',
 				path: 'tokens',
 				pages: [
@@ -56,7 +58,7 @@ export const menu: Array<Section> = [
 				],
 			},
 			{
-				icon: 'dashboard',
+				icon: Yoco.Icon.DASHBOARD,
 				title: 'Components',
 				path: 'components',
 				pages: [
@@ -90,7 +92,7 @@ export const menu: Array<Section> = [
 				],
 			},
 			{
-				icon: 'sidebar',
+				icon: Yoco.Icon.SIDEBAR,
 				title: 'Patterns',
 				path: 'patterns',
 				pages: [
@@ -103,7 +105,7 @@ export const menu: Array<Section> = [
 				],
 			},
 			{
-				icon: 'markup',
+				icon: Yoco.Icon.MARKUP,
 				title: 'DesignKit',
 				path: 'designkit',
 				pages: [],

@@ -1,6 +1,6 @@
+import { Yoco } from '@3yourmind/yoco'
 import { Ref, SetupContext } from '@vue/composition-api'
 
-import { Yoco } from '../../types'
 import { KottiForm } from '../kotti-form/types'
 
 import { FORM_KEY_NONE } from './constants'

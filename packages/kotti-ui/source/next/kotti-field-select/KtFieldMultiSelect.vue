@@ -29,7 +29,7 @@
 							class="kt-tags__tag-icon"
 							@click.stop="removeTag(option.value)"
 						>
-							<i class="yoco" v-text="'close'" />
+							<i class="yoco" v-text="Yoco.Icon.CLOSE" />
 						</div>
 					</div>
 					<div v-if="invisibleTagCount > 0" class="kt-tags__tag">
@@ -60,6 +60,7 @@
 </template>
 
 <script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref } from '@vue/composition-api'
 import { Select as ElSelect, Option as ElOption } from 'element-ui'
 
@@ -207,6 +208,7 @@ export default defineComponent({
 						},
 					)
 			}),
+			Yoco,
 		}
 	},
 })
