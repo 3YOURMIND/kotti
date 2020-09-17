@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/kotti-ui'
+import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
 import { Route } from 'vue-router'
 

@@ -249,8 +249,8 @@
 </template>
 
 <script lang="ts">
-import { Kotti, Yoco } from '@3yourmind/kotti-ui'
-import data from '@3yourmind/kotti-ui/source/next/data.json'
+import { Kotti } from '@3yourmind/kotti-ui'
+import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -725,7 +725,7 @@ export default defineComponent({
 			},
 			settings,
 			values,
-			yocoIconOptions: (data.yocoIcons as Yoco.Icon[]).map((icon) => ({
+			yocoIconOptions: Object.values(Yoco.Icon).map((icon) => ({
 				label: icon,
 				value: icon,
 			})),

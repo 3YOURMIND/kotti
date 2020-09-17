@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>mobile</title>
+    <desc>Created with Sketch.</desc>
+    <g id="mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M5.875,2 L18.125,2 C18.6082492,2 19,2.44771525 19,3 L19,21 C19,21.5522847 18.6082492,22 18.125,22 L5.875,22 C5.39175084,22 5,21.5522847 5,21 L5,3 C5,2.44771525 5.39175084,2 5.875,2 Z M7,4 L7,18 L17,18 L17,4 L7,4 Z M12,21 C12.5522847,21 13,20.5522847 13,20 C13,19.4477153 12.5522847,19 12,19 C11.4477153,19 11,19.4477153 11,20 C11,20.5522847 11.4477153,21 12,21 Z" id="Rectangle" fill="#000000" fill-rule="nonzero"></path>
+    </g>
+</svg>

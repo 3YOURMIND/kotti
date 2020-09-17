@@ -1,24 +1,28 @@
 <template lang="md">
 # Icons
 
-<h2>
-	Preview
-	<span class="tooltip c-hand" data-tooltip="Click icon to copy">
-		<i class="yoco">circle_question</i>
-	</span>
-</h2>
-
-Kotti uses custom icons — [Yoco](https://www.github.com/3yourmind/yoco)
-
 ![npm-version](https://badge.fury.io/js/%403yourmind%2Fyoco.svg)
+
+### TypeScript Usage
+
+```typescript
+// enum of icons and the associated ligature / svg name
+import { Icon } "@3yourmind/yoco";
+
+console.log(Icon.ANNOUNCE)
+// 'announce'
+```
+
+### List of Icons
 
 <div class="columns">
 	<YocoPreview
-		v-for="liga in iconLigas"
-		:key="liga"
-		:icon="liga"
+		v-for="[key, value] in Object.entries(Yoco.Icon)"
 		class="column col-2 col-md-6"
-		@click="copyLiga(liga)"
+		:key="value"
+		:enum="key"
+		:icon="value"
+		@click="copyLiga(value)"
 	/>
 </div>
 
@@ -27,7 +31,7 @@ Kotti uses custom icons — [Yoco](https://www.github.com/3yourmind/yoco)
 </template>
 
 <script>
-import data from '@3yourmind/kotti-ui/source/next/data.json'
+import { Yoco } from '@3yourmind/yoco'
 
 import IconFont from '~/components/IconFont.vue'
 import YocoPreview from '~/components/YocoPreview.vue'
@@ -41,7 +45,7 @@ export default {
 	data() {
 		return {
 			copySuccess: false,
-			iconLigas: data.yocoIcons,
+			Yoco,
 		}
 	},
 }
