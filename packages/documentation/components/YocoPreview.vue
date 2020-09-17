@@ -1,7 +1,23 @@
 <template>
 	<div class="icon-container" @click="copyLiga(icon)">
-		<div><i ref="liga" class="yoco" v-text="icon" /></div>
-		<div class="icon-liga" v-text="icon" />
+		<div class="yoco-flex">
+			<div class="yoco-container">
+				<i ref="liga" class="yoco size-1" v-text="icon" />
+			</div>
+			<div class="yoco-container">
+				<i ref="liga" class="yoco size-2" v-text="icon" />
+			</div>
+			<div class="yoco-container">
+				<i ref="liga" class="yoco size-3" v-text="icon" />
+			</div>
+		</div>
+		<div class="copy copy-nohover">
+			<div class="icon-liga" v-text="icon" />
+			<div class="icon-enum" v-text="enumRepresentation" />
+		</div>
+		<div class="copy copy-hover">
+			<div>Click to Copy</div>
+		</div>
 		<div
 			v-if="copySuccess"
 			class="success-message"
@@ -16,15 +32,16 @@ import { TimeConversion } from '@metatypes/units'
 export default {
 	name: 'YocoPreview',
 	props: {
-		copySuccess: {
-			type: Boolean,
-			default: false,
-		},
-		icon: String,
+		copySuccess: { default: false, type: Boolean },
+		enum: { required: true, type: String },
+		icon: { required: true, type: String },
 	},
 	computed: {
 		copyIconSuccessMessage() {
 			return `Copied icon "${this.icon}"`
+		},
+		enumRepresentation() {
+			return `Icon.${this.enum}`
 		},
 	},
 	methods: {
@@ -47,11 +64,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.copy {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 45px;
+
+	font-size: 0.875em;
+	line-height: 2em;
+}
+
 .icon-container {
 	box-sizing: border-box;
 	float: left;
-	padding: 24px;
+	padding: 24px 0;
 	text-align: center;
+
+	.size-1,
+	.size-3 {
+		opacity: 0;
+	}
+
+	.copy-hover {
+		display: none;
+	}
+
+	.copy-nohover {
+		display: block;
+	}
 }
 
 .icon-container:hover {
@@ -59,14 +99,57 @@ export default {
 	cursor: pointer;
 	background: #f8f8f8;
 	box-shadow: 0 2px 2px #ddd;
+
+	.size-1,
+	.size-3 {
+		opacity: 1;
+	}
+
+	.copy-hover {
+		display: block;
+	}
+
+	.copy-nohover {
+		display: none;
+	}
 }
 
 .icon-liga {
-	font-size: 0.875em;
+	font-weight: bold;
 	line-height: 2em;
 }
 
-.icon-container .yoco {
-	font-size: 32px !important;
+.icon-enum {
+	font-size: 0.7em;
+	line-height: 2em;
+	color: #ccc;
+}
+
+.yoco-flex {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.yoco-container {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+}
+
+.yoco {
+	&.size-1 {
+		font-size: 16px !important;
+	}
+
+	&.size-2 {
+		font-size: 24px !important;
+	}
+
+	&.size-3 {
+		font-size: 32px !important;
+	}
 }
 </style>
