@@ -28,9 +28,9 @@ npm install --save @3yourmind/yoco
 
 ```typescript
 // enum of icons and the associated ligature / svg name
-import { Icon } "@3yourmind/yoco";
+import { Yoco } from '@3yourmind/yoco'
 
-console.log(Icon.ANNOUNCE)
+console.log(Yoco.Icon.ANNOUNCE)
 // 'announce'
 ```
 

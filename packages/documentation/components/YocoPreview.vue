@@ -41,7 +41,7 @@ export default {
 			return `Copied icon "${this.icon}"`
 		},
 		enumRepresentation() {
-			return `Icon.${this.enum}`
+			return `Yoco.Icon.${this.enum}`
 		},
 	},
 	methods: {
@@ -120,7 +120,7 @@ export default {
 }
 
 .icon-enum {
-	font-size: 0.7em;
+	font-size: 0.6em;
 	line-height: 2em;
 	color: #ccc;
 }
