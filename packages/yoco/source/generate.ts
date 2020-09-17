@@ -20,7 +20,9 @@ async function build() {
 	const ligatures = builder.getIconsLigatures()
 
 	// eslint-disable-next-line no-console
-	console.log(ligatures)
+	console.log(
+		`GENERATED ICON FONT WITH ${Object.values(ligatures).length} ICONS`,
+	)
 }
 
 build()
