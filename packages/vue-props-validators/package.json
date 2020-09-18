@@ -8,6 +8,12 @@
 		"dist": "dist"
 	},
 	"homepage": "https://github.com/3YOURMIND/kotti/tree/master/packages/vue-props-validators",
+	"jest": {
+		"testPathIgnorePatterns": [
+			"dist",
+			"node_modules"
+		]
+	},
 	"keywords": [
 		"vue",
 		"props",
