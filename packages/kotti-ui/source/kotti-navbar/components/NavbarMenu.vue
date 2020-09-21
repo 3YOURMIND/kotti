@@ -44,6 +44,7 @@ export default {
 	box-sizing: border-box;
 	padding: 0.4rem 1rem;
 	text-align: left;
+
 	&__section {
 		display: block;
 		padding: 0.2rem 0;
@@ -53,23 +54,29 @@ export default {
 		color: var(--navbar-color-light);
 		text-transform: uppercase;
 	}
+
 	&__item {
-		display: block;
+		display: flex;
+		align-items: center;
 		padding: 0.6rem 0;
 		font-size: 0.75rem;
 		color: inherit;
+
 		&:hover {
 			color: var(--navbar-color-active);
 			cursor: pointer;
 		}
+
 		&.active {
 			font-weight: 600;
 			color: var(--navbar-color-active);
 		}
 	}
+
 	&__item span {
 		margin-left: 0.8rem;
 	}
+
 	.yoco {
 		font-size: 1rem;
 	}
