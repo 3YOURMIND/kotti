@@ -4,7 +4,7 @@ import { Result } from '../types'
 
 import { TypeBase, Type } from '.'
 
-export type TypeString = TypeBase & {
+export type TypeString = TypeBase<string> & {
 	type: Type.STRING
 }
 

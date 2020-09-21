@@ -5,7 +5,7 @@ import { isNumber } from '../utilities'
 
 import { TypeBase, Type } from '.'
 
-export type TypeInteger = TypeBase & {
+export type TypeInteger = TypeBase<number> & {
 	maximum?: number
 	minimum?: number
 	type: Type.INTEGER

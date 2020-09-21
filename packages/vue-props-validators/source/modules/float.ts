@@ -5,7 +5,7 @@ import { isNumber } from '../utilities'
 
 import { TypeBase, Type } from '.'
 
-export type TypeFloat = TypeBase & {
+export type TypeFloat = TypeBase<number> & {
 	maximum?: number
 	minimum?: number
 	type: Type.FLOAT

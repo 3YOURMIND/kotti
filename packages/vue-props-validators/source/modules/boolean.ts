@@ -4,7 +4,7 @@ import { Result } from '../types'
 
 import { TypeBase, Type } from '.'
 
-export type TypeBoolean = TypeBase & {
+export type TypeBoolean = TypeBase<boolean> & {
 	type: Type.BOOLEAN
 }
 

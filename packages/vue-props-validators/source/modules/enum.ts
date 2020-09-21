@@ -4,7 +4,7 @@ import { Result } from '../types'
 
 import { TypeBase, Type } from '.'
 
-export type TypeEnum = TypeBase & {
+export type TypeEnum = TypeBase<string> & {
 	options: ReadonlyArray<string>
 	type: Type.ENUM
 }

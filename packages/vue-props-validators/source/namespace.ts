@@ -42,4 +42,5 @@ export const create = <PROPS extends Options>(
 		}),
 	)
 
+export { REQUIRED } from './constants'
 export { Type } from './modules'

@@ -6,8 +6,8 @@ import { TypeFloat } from './float'
 import { TypeInteger } from './integer'
 import { TypeString } from './string'
 
-export type TypeBase = {
-	default: typeof REQUIRED | (() => unknown)
+export type TypeBase<TYPE> = {
+	default: typeof REQUIRED | (() => TYPE | null)
 	nullable: boolean
 }
 
