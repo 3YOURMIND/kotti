@@ -12,52 +12,56 @@ import { vuePropsValidators } from '@3yourmind/vue-props-validators'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+const { props, useProps } = vuePropsValidators.create({
+	element: {
+		default: () => 'button',
+		nullable: false,
+		type: vuePropsValidators.Type.STRING,
+	},
+	icon: {
+		default: () => null,
+		nullable: true,
+		type: vuePropsValidators.Type.ENUM,
+		options: Object.values(Yoco.Icon),
+	},
+	isBlock: {
+		default: () => false,
+		nullable: false,
+		type: vuePropsValidators.Type.BOOLEAN,
+	},
+	isMultiline: {
+		default: () => false,
+		nullable: false,
+		type: vuePropsValidators.Type.BOOLEAN,
+	},
+	label: {
+		default: () => null,
+		nullable: true,
+		type: vuePropsValidators.Type.STRING,
+	},
+	loading: {
+		default: () => false,
+		nullable: false,
+		type: vuePropsValidators.Type.BOOLEAN,
+	},
+	size: {
+		default: () => null,
+		nullable: true,
+		type: vuePropsValidators.Type.STRING,
+	},
+	type: {
+		default: () => null,
+		nullable: true,
+		type: vuePropsValidators.Type.STRING,
+	},
+})
+
 export default defineComponent({
 	name: 'KtButton',
-	props: vuePropsValidators.create({
-		element: {
-			default: () => 'button',
-			nullable: false,
-			type: vuePropsValidators.Type.STRING,
-		},
-		icon: {
-			default: () => null,
-			nullable: true,
-			type: vuePropsValidators.Type.ENUM,
-			options: Object.values(Yoco.Icon),
-		},
-		isBlock: {
-			default: () => false,
-			nullable: false,
-			type: vuePropsValidators.Type.BOOLEAN,
-		},
-		isMultiline: {
-			default: () => false,
-			nullable: false,
-			type: vuePropsValidators.Type.BOOLEAN,
-		},
-		label: {
-			default: () => null,
-			nullable: true,
-			type: vuePropsValidators.Type.STRING,
-		},
-		loading: {
-			default: () => false,
-			nullable: false,
-			type: vuePropsValidators.Type.BOOLEAN,
-		},
-		size: {
-			default: () => null,
-			nullable: true,
-			type: vuePropsValidators.Type.STRING,
-		},
-		type: {
-			default: () => null,
-			nullable: true,
-			type: vuePropsValidators.Type.STRING,
-		},
-	}),
+	props,
 	setup(props, { emit, slots }) {
+		useProps(props)
+
 		const hasSlot = computed(() => Boolean(slots.default))
 		const isHover = ref(false)
 

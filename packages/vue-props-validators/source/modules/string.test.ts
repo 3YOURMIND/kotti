@@ -12,14 +12,16 @@ const BASE_STRING: TypeString = {
 }
 
 test('string has correct type', () =>
-	expect(vuePropsValidators.create({ example: BASE_STRING })).toMatchObject({
+	expect(
+		vuePropsValidators.create({ example: BASE_STRING }).props,
+	).toMatchObject({
 		example: { type: String },
 	}))
 
 test('string validator works', () => {
 	const { example } = vuePropsValidators.create({
 		example: BASE_STRING,
-	})
+	}).props
 
 	expect(example.validator('test')).toBeTruthy()
 	expect(example.validator(false)).toBeFalsy()
@@ -37,7 +39,7 @@ test('string (nullable: false)', () =>
 			.create({
 				example: { ...BASE_STRING, nullable: false },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeFalsy())
 
 test('string (nullable: true)', () =>
@@ -46,7 +48,7 @@ test('string (nullable: true)', () =>
 			.create({
 				example: { ...BASE_STRING, nullable: true },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeTruthy())
 
 test('string (default)', () =>
@@ -55,14 +57,14 @@ test('string (default)', () =>
 			.create({
 				example: { ...BASE_STRING, default: () => null },
 			})
-			.example.default(),
+			.props.example.default(),
 	).toBe(null))
 
 test('string (required)', () =>
 	expect(
 		vuePropsValidators.create({
 			example: { ...BASE_STRING, default: REQUIRED },
-		}),
+		}).props,
 	).toMatchObject({
 		example: {
 			required: true,

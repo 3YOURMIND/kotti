@@ -13,14 +13,16 @@ const BASE_OBJECT: TypeObject = {
 }
 
 test('object has correct type', () =>
-	expect(vuePropsValidators.create({ example: BASE_OBJECT })).toMatchObject({
+	expect(
+		vuePropsValidators.create({ example: BASE_OBJECT }).props,
+	).toMatchObject({
 		example: { type: Object },
 	}))
 
 test('object validator works', () => {
 	const { example } = vuePropsValidators.create({
 		example: BASE_OBJECT,
-	})
+	}).props
 
 	expect(example.validator('test')).toBeFalsy()
 	expect(example.validator(false)).toBeFalsy()
@@ -40,7 +42,7 @@ test('object (nullable: false)', () =>
 			.create({
 				example: { ...BASE_OBJECT, nullable: false },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeFalsy())
 
 test('object (nullable: true)', () =>
@@ -49,7 +51,7 @@ test('object (nullable: true)', () =>
 			.create({
 				example: { ...BASE_OBJECT, nullable: true },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeTruthy())
 
 test('object (default)', () =>
@@ -58,14 +60,14 @@ test('object (default)', () =>
 			.create({
 				example: { ...BASE_OBJECT, default: () => null },
 			})
-			.example.default(),
+			.props.example.default(),
 	).toBe(null))
 
 test('object (required)', () =>
 	expect(
 		vuePropsValidators.create({
 			example: { ...BASE_OBJECT, default: REQUIRED },
-		}),
+		}).props,
 	).toMatchObject({
 		example: {
 			required: true,

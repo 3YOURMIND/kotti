@@ -13,14 +13,16 @@ const BASE_ARRAY: TypeArray = {
 }
 
 test('array has correct type', () =>
-	expect(vuePropsValidators.create({ example: BASE_ARRAY })).toMatchObject({
+	expect(
+		vuePropsValidators.create({ example: BASE_ARRAY }).props,
+	).toMatchObject({
 		example: { type: Array },
 	}))
 
 test('array validator works', () => {
 	const { example } = vuePropsValidators.create({
 		example: BASE_ARRAY,
-	})
+	}).props
 
 	expect(example.validator('test')).toBeFalsy()
 	expect(example.validator(false)).toBeFalsy()
@@ -40,7 +42,7 @@ test('array (nullable: false)', () =>
 			.create({
 				example: { ...BASE_ARRAY, nullable: false },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeFalsy())
 
 test('array (nullable: true)', () =>
@@ -49,7 +51,7 @@ test('array (nullable: true)', () =>
 			.create({
 				example: { ...BASE_ARRAY, nullable: true },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeTruthy())
 
 test('array (default)', () =>
@@ -58,7 +60,7 @@ test('array (default)', () =>
 			.create({
 				example: { ...BASE_ARRAY, default: () => null },
 			})
-			.example.default(),
+			.props.example.default(),
 	).toBe(null))
 
 test('array (default with an actual value)', () =>
@@ -67,14 +69,14 @@ test('array (default with an actual value)', () =>
 			.create({
 				example: { ...BASE_ARRAY, default: () => [-1] },
 			})
-			.example.default(),
+			.props.example.default(),
 	).toEqual([-1]))
 
 test('array (required)', () =>
 	expect(
 		vuePropsValidators.create({
 			example: { ...BASE_ARRAY, default: REQUIRED },
-		}),
+		}).props,
 	).toMatchObject({
 		example: {
 			required: true,

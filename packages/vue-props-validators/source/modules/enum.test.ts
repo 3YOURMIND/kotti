@@ -13,14 +13,16 @@ const BASE_ENUM: TypeEnum = {
 }
 
 test('enum has correct type', () =>
-	expect(vuePropsValidators.create({ example: BASE_ENUM })).toMatchObject({
-		example: { type: String },
-	}))
+	expect(vuePropsValidators.create({ example: BASE_ENUM }).props).toMatchObject(
+		{
+			example: { type: String },
+		},
+	))
 
 test('enum validator works', () => {
 	const { example } = vuePropsValidators.create({
 		example: { ...BASE_ENUM, options: ['test', 'example'] },
-	})
+	}).props
 
 	expect(example.validator('test')).toBeTruthy()
 	expect(example.validator('example')).toBeTruthy()
@@ -33,7 +35,7 @@ test('enum (nullable: false)', () =>
 			.create({
 				example: { ...BASE_ENUM, nullable: false },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeFalsy())
 
 test('enum (nullable: true)', () =>
@@ -42,7 +44,7 @@ test('enum (nullable: true)', () =>
 			.create({
 				example: { ...BASE_ENUM, nullable: true },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeTruthy())
 
 test('enum (default)', () =>
@@ -51,14 +53,14 @@ test('enum (default)', () =>
 			.create({
 				example: { ...BASE_ENUM, default: () => null },
 			})
-			.example.default(),
+			.props.example.default(),
 	).toBe(null))
 
 test('enum (required)', () =>
 	expect(
 		vuePropsValidators.create({
 			example: { ...BASE_ENUM, default: REQUIRED },
-		}),
+		}).props,
 	).toMatchObject({
 		example: {
 			required: true,

@@ -13,14 +13,16 @@ const BASE_BOOLEAN: TypeBoolean = {
 }
 
 test('boolean has correct type', () =>
-	expect(vuePropsValidators.create({ example: BASE_BOOLEAN })).toMatchObject({
+	expect(
+		vuePropsValidators.create({ example: BASE_BOOLEAN }).props,
+	).toMatchObject({
 		example: { type: Boolean },
 	}))
 
 test('boolean validator works', () => {
 	const { example } = vuePropsValidators.create({
 		example: BASE_BOOLEAN,
-	})
+	}).props
 
 	expect(example.validator('test')).toBeFalsy()
 	expect(example.validator(false)).toBeTruthy()
@@ -37,7 +39,7 @@ test('boolean (nullable: false)', () =>
 			.create({
 				example: { ...BASE_BOOLEAN, nullable: false },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeFalsy())
 
 test('boolean (nullable: true)', () =>
@@ -46,7 +48,7 @@ test('boolean (nullable: true)', () =>
 			.create({
 				example: { ...BASE_BOOLEAN, nullable: true },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeTruthy())
 
 test('boolean (default)', () =>
@@ -55,14 +57,14 @@ test('boolean (default)', () =>
 			.create({
 				example: { ...BASE_BOOLEAN, default: () => null },
 			})
-			.example.default(),
+			.props.example.default(),
 	).toBe(null))
 
 test('boolean (required)', () =>
 	expect(
 		vuePropsValidators.create({
 			example: { ...BASE_BOOLEAN, default: REQUIRED },
-		}),
+		}).props,
 	).toMatchObject({
 		example: {
 			required: true,

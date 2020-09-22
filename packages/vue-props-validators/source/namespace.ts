@@ -1,3 +1,5 @@
+import { watch } from '@vue/composition-api'
+
 import { Type, Option } from './modules'
 import { createArray } from './modules/array'
 import { createBoolean } from './modules/boolean'
@@ -18,7 +20,9 @@ type ResultMap<OPTION extends Option> = {
 	[Type.STRING]: Result<OPTION, StringConstructor>
 }
 
-export const create = <PROPS extends Options>(
+type Hook = any
+
+const createProps = <PROPS extends Options>(
 	props: PROPS,
 ): {
 	[KEY in keyof PROPS]: ResultMap<PROPS[KEY]>[PROPS[KEY]['type']]
@@ -51,6 +55,28 @@ export const create = <PROPS extends Options>(
 			throw new Error('invalid')
 		}),
 	)
+
+export const create = <PROPS extends Options>(
+	props: PROPS,
+): {
+	props: {
+		[KEY in keyof PROPS]: ResultMap<PROPS[KEY]>[PROPS[KEY]['type']]
+	}
+	useProps: Hook
+} => ({
+	props: createProps(props),
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	useProps: function useProps(props: any) {
+		watch(
+			() => props,
+			() => {
+				// eslint-disable-next-line no-console
+				console.info('props changed', props)
+				// TODO: Add More Features Here
+			},
+		)
+	},
+})
 
 export { REQUIRED } from './constants'
 export { Type } from './modules'

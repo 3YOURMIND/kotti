@@ -13,14 +13,16 @@ const BASE_FLOAT: TypeFloat = {
 }
 
 test('float has correct type', () =>
-	expect(vuePropsValidators.create({ example: BASE_FLOAT })).toMatchObject({
+	expect(
+		vuePropsValidators.create({ example: BASE_FLOAT }).props,
+	).toMatchObject({
 		example: { type: Number },
 	}))
 
 test('float validator works', () => {
 	const { example } = vuePropsValidators.create({
 		example: BASE_FLOAT,
-	})
+	}).props
 
 	expect(example.validator('test')).toBeFalsy()
 	expect(example.validator(undefined)).toBeFalsy()
@@ -33,7 +35,7 @@ test('float validator works', () => {
 test('float (maximum)', () => {
 	const { example } = vuePropsValidators.create({
 		example: { ...BASE_FLOAT, maximum: 5.2 },
-	})
+	}).props
 
 	expect(example.validator(1)).toBeTruthy()
 	expect(example.validator(5)).toBeTruthy()
@@ -45,7 +47,7 @@ test('float (maximum)', () => {
 test('float (minimum)', () => {
 	const { example } = vuePropsValidators.create({
 		example: { ...BASE_FLOAT, minimum: 5.2 },
-	})
+	}).props
 
 	expect(example.validator(1)).toBeFalsy()
 	expect(example.validator(4)).toBeFalsy()
@@ -61,7 +63,7 @@ test('float (nullable: false)', () =>
 			.create({
 				example: { ...BASE_FLOAT, nullable: false },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeFalsy())
 
 test('float (nullable: true)', () =>
@@ -70,7 +72,7 @@ test('float (nullable: true)', () =>
 			.create({
 				example: { ...BASE_FLOAT, nullable: true },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeTruthy())
 
 test('float (default)', () =>
@@ -79,14 +81,14 @@ test('float (default)', () =>
 			.create({
 				example: { ...BASE_FLOAT, default: () => null },
 			})
-			.example.default(),
+			.props.example.default(),
 	).toBe(null))
 
 test('float (required)', () =>
 	expect(
 		vuePropsValidators.create({
 			example: { ...BASE_FLOAT, default: REQUIRED },
-		}),
+		}).props,
 	).toMatchObject({
 		example: {
 			required: true,

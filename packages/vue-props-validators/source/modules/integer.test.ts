@@ -13,14 +13,16 @@ const BASE_INTEGER: TypeInteger = {
 }
 
 test('integer has correct type', () =>
-	expect(vuePropsValidators.create({ example: BASE_INTEGER })).toMatchObject({
+	expect(
+		vuePropsValidators.create({ example: BASE_INTEGER }).props,
+	).toMatchObject({
 		example: { type: Number },
 	}))
 
 test('integer validator works', () => {
 	const { example } = vuePropsValidators.create({
 		example: BASE_INTEGER,
-	})
+	}).props
 
 	expect(example.validator('test')).toBeFalsy()
 	expect(example.validator(undefined)).toBeFalsy()
@@ -33,7 +35,7 @@ test('integer validator works', () => {
 test('integer (maximum)', () => {
 	const { example } = vuePropsValidators.create({
 		example: { ...BASE_INTEGER, maximum: 5 },
-	})
+	}).props
 
 	expect(example.validator(1)).toBeTruthy()
 	expect(example.validator(5)).toBeTruthy()
@@ -44,7 +46,7 @@ test('integer (maximum)', () => {
 test('integer (minimum)', () => {
 	const { example } = vuePropsValidators.create({
 		example: { ...BASE_INTEGER, minimum: 5 },
-	})
+	}).props
 
 	expect(example.validator(1)).toBeFalsy()
 	expect(example.validator(4)).toBeFalsy()
@@ -58,7 +60,7 @@ test('integer (nullable: false)', () =>
 			.create({
 				example: { ...BASE_INTEGER, nullable: false },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeFalsy())
 
 test('integer (nullable: true)', () =>
@@ -67,7 +69,7 @@ test('integer (nullable: true)', () =>
 			.create({
 				example: { ...BASE_INTEGER, nullable: true },
 			})
-			.example.validator(null),
+			.props.example.validator(null),
 	).toBeTruthy())
 
 test('integer (default)', () =>
@@ -76,14 +78,14 @@ test('integer (default)', () =>
 			.create({
 				example: { ...BASE_INTEGER, default: () => null },
 			})
-			.example.default(),
+			.props.example.default(),
 	).toBe(null))
 
 test('integer (required)', () =>
 	expect(
 		vuePropsValidators.create({
 			example: { ...BASE_INTEGER, default: REQUIRED },
-		}),
+		}).props,
 	).toMatchObject({
 		example: {
 			required: true,
