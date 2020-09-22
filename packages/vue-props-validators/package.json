@@ -24,6 +24,9 @@
 	"license": "MIT",
 	"main": "dist/index.js",
 	"name": "@3yourmind/vue-props-validators",
+	"peerDependencies": {
+		"@vue/composition-api": "0.5.x"
+	},
 	"publishConfig": {
 		"access": "public"
 	},
