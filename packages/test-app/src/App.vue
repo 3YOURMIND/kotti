@@ -1,20 +1,26 @@
 <template>
-	<div id="app">
-		<KtForm v-model="values">
-			<KtTranslationContext locale="en-US">
-				<KtFieldText formKey="text" label="Text" />
-				<KtFieldDate formKey="date" label="Date"
-			/></KtTranslationContext>
-		</KtForm>
-	</div>
+	<KtTranslationContext locale="en-US">
+		<div style="padding: 50px;">
+			<KtAccordion title="Hello Tree Shaking">
+				<KtForm v-model="values">
+					<KtHeading text="Test App" />
+					<KtFieldText formKey="text" label="Text" />
+					<!-- <KtFieldDate formKey="date" label="Date" /> -->
+					<KtButton label="Submit" />
+				</KtForm>
+			</KtAccordion>
+		</div>
+	</KtTranslationContext>
 </template>
 
 <script lang="ts">
-import '@3yourmind/yoco'
-import '@3yourmind/kotti-ui/dist/styles.css'
+import '@3yourmind/yoco/style.css'
 import {
-	KtFieldDate,
+	KtAccordion,
+	KtButton,
+	// KtFieldDate,
 	KtFieldText,
+	KtHeading,
 	KtForm,
 	KtTranslationContext,
 } from '@3yourmind/kotti-ui'
@@ -23,9 +29,12 @@ import Vue from 'vue'
 export default Vue.extend({
 	name: 'App',
 	components: {
-		KtFieldDate,
+		KtAccordion,
+		KtButton,
+		// KtFieldDate,
 		KtFieldText,
 		KtForm,
+		KtHeading,
 		KtTranslationContext,
 	},
 	data() {
@@ -38,3 +47,7 @@ export default Vue.extend({
 	},
 })
 </script>
+
+<style lang="scss">
+@import '../../../node_modules/@3yourmind/kotti-ui/dist/styles.css';
+</style>
