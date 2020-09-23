@@ -2,6 +2,9 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 
 import KtDropdownVue from './KtDropdown.vue'
 
+/**
+ * @deprecated
+ */
 export const KtDropdown = attachMeta(makeInstallable(KtDropdownVue), {
 	addedVersion: null,
 	deprecated: {

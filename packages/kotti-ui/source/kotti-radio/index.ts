@@ -2,6 +2,9 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 
 import KtRadioVue from './KtRadio.vue'
 
+/**
+ * @deprecated
+ */
 export const KtRadio = attachMeta(makeInstallable(KtRadioVue), {
 	addedVersion: 'unkown',
 	deprecated: {

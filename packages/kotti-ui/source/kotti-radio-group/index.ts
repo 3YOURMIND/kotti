@@ -2,6 +2,9 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 
 import KtRadioGroupVue from './KtRadioGroup.vue'
 
+/**
+ * @deprecated
+ */
 export const KtRadioGroup = attachMeta(makeInstallable(KtRadioGroupVue), {
 	addedVersion: 'unkown',
 	deprecated: {

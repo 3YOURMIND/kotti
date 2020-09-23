@@ -2,6 +2,9 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 
 import KtSwitchVue from './KtSwitch.vue'
 
+/**
+ * @deprecated
+ */
 export const KtSwitch = attachMeta(makeInstallable(KtSwitchVue), {
 	addedVersion: null,
 	deprecated: {

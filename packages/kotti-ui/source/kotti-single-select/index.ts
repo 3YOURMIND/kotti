@@ -2,6 +2,9 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 
 import KtSingleSelectVue from './KtSingleSelect.vue'
 
+/**
+ * @deprecated
+ */
 export const KtSingleSelect = attachMeta(makeInstallable(KtSingleSelectVue), {
 	addedVersion: null,
 	deprecated: {

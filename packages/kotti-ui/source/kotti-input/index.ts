@@ -2,6 +2,9 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 
 import KtInputVue from './KtInput.vue'
 
+/**
+ * @deprecated
+ */
 export const KtInput = attachMeta(makeInstallable(KtInputVue), {
 	addedVersion: null,
 	deprecated: {

@@ -19,5 +19,12 @@ const META: Kotti.Meta = {
 	},
 }
 
+/**
+ * @deprecated
+ */
 export const KtDateInput = attachMeta(makeInstallable(KtDateInputVue), META)
+
+/**
+ * @deprecated
+ */
 export const KtDatePicker = attachMeta(makeInstallable(KtDatePickerVue), META)
