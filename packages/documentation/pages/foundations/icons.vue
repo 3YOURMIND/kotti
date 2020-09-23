@@ -1,5 +1,5 @@
 <template lang="md">
-# Icons
+<ComponentInfo title="Icons" :meta="meta" />
 
 ![npm-version](https://badge.fury.io/js/%403yourmind%2Fyoco.svg)
 
@@ -30,25 +30,39 @@ console.log(Yoco.Icon.ANNOUNCE)
 
 </template>
 
-<script>
+<script lang="ts">
+import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
+import { defineComponent, ref } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
 
 import IconFont from '~/components/IconFont.vue'
 import YocoPreview from '~/components/YocoPreview.vue'
 
-export default {
-	name: 'Icons',
+export default defineComponent({
+	name: 'DocumentationPageFundationsIcons',
 	components: {
+		ComponentInfo,
 		IconFont,
 		YocoPreview,
 	},
-	data() {
+	setup() {
+		const meta: Kotti.Meta = {
+			addedVersion: null,
+			deprecated: null,
+			typeScript: {
+				namespace: 'Yoco.Icon',
+			},
+		}
+
 		return {
-			copySuccess: false,
+			copySuccess: ref(false),
+			meta,
 			Yoco,
 		}
 	},
-}
+})
 </script>
 
 <style lang="scss" scoped>

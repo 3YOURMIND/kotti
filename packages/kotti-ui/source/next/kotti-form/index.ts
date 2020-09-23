@@ -1,4 +1,5 @@
-import { makeInstallable } from '../utilities'
+import { Kotti } from '../../types'
+import { makeInstallable, attachMeta } from '../utilities'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -13,10 +14,18 @@ import KtForm from './KtForm.vue'
 // @ts-ignore
 import KtFormSubmit from './KtFormSubmit.vue'
 
-makeInstallable(KtForm)
-makeInstallable(KtFormControllerList)
-makeInstallable(KtFormControllerObject)
-makeInstallable(KtFormSubmit)
+const META: Kotti.Meta = {
+	addedVersion: '2.0.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.Form',
+	},
+}
+
+attachMeta(makeInstallable(KtForm), META)
+attachMeta(makeInstallable(KtFormControllerList), META)
+attachMeta(makeInstallable(KtFormControllerObject), META)
+attachMeta(makeInstallable(KtFormSubmit), META)
 
 export { KtForm, KtFormControllerList, KtFormControllerObject, KtFormSubmit }
 export * from './constants'

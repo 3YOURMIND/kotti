@@ -1,5 +1,5 @@
 <template lang="md">
-# Avatars
+<ComponentInfo title="Avatars" :meta="meta" />
 
 Avatar is a round object to help identify the user information.
 
@@ -119,10 +119,17 @@ You can control how many avatar items are displayed with `showItems`.
 | `showTooltip` | show avatar name in tooltip                       | `Boolean` | —               | `false` |
 </template>
 
-<script>
+<script lang="ts">
+import { KtAvatar } from '@3yourmind/kotti-ui'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
 export default {
 	name: 'Avatar',
-	data() {
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
 			avatarData: [
 				{ name: 'Beoncye', src: 'https://picsum.photos/200' },
@@ -131,6 +138,7 @@ export default {
 				{ name: 'Simens', src: 'https://picsum.photos/140' },
 				{ name: 'Simens', src: 'https://picsum.photos/150' },
 			],
+			meta: KtAvatar.meta,
 		}
 	},
 }

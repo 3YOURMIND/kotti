@@ -1,11 +1,5 @@
 <template lang="md">
-# Switch
-
-<WarningDeprecated
-	componentName="KtFieldToggle"
-	link="/components/form"
-	version="3.0"
-/>
+<ComponentInfo title="Switch" :meta="meta" />
 
 ## Default
 
@@ -78,18 +72,24 @@ using `right` to change the position.
 | value           | value of switch                | `Boolean`          | —               | —       |
 </template>
 
-<script>
-import WarningDeprecated from '../../components/warnings/Deprecated.vue'
+<script lang="ts">
+import { KtSwitch } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
 
-export default {
-	name: 'KtSwitchDoc',
-	components: { WarningDeprecated },
-	data() {
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsSwitches',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
-			checkbox1: false,
-			checkbox2: false,
-			checkbox3: false,
+			checkbox1: ref(false),
+			checkbox2: ref(false),
+			checkbox3: ref(false),
+			meta: KtSwitch.meta,
 		}
 	},
-}
+})
 </script>

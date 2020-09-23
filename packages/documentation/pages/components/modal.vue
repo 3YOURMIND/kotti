@@ -1,6 +1,5 @@
 <template lang="md">
-
-# Modal
+<ComponentInfo title="Modal" :meta="meta" />
 
 ## Size
 
@@ -67,15 +66,24 @@ When `closeOutside` set to `false`, it disables closing the modal from the outsi
 | `modal-footer` | footer section of modal |
 </template>
 
-<script>
-export default {
-	name: 'KtModalDocs',
+<script lang="ts">
+import { KtModal } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsModal',
+	components: {
+		ComponentInfo,
+	},
 	data() {
 		return {
 			closeOutside: true,
+			meta: KtModal.meta,
 			modalSize: 'md',
 			showModal: false,
 		}
 	},
-}
+})
 </script>

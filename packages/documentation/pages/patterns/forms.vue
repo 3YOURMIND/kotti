@@ -1,5 +1,5 @@
 <template lang="md">
-# Forms
+<ComponentInfo title="Forms" :meta="meta" />
 
 ## Input Types
 
@@ -277,6 +277,31 @@ Add the `disabled` attribute to the element or `<fieldset />` for a disabled for
 
 </template>
 
-<script>
-export default { name: 'FormDoc' }
+<script lang="ts">
+import { Kotti } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPagePatternsForms',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		const meta: Kotti.Meta = {
+			addedVersion: null,
+			deprecated: {
+				alternatives: ['KtForm', 'KtField*'],
+				reason: 'Replaced by Kotti v2.0.0 Forms',
+				version: '3.0.0',
+			},
+			typeScript: null,
+		}
+
+		return {
+			meta,
+		}
+	},
+})
 </script>

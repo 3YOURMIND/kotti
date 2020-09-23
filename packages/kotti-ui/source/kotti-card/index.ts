@@ -1,7 +1,12 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
 // @ts-expect-error
 import KtCard from './KtCard.vue'
 
-makeInstallable(KtCard)
+attachMeta(makeInstallable(KtCard), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})
+
 export { KtCard }

@@ -1,11 +1,5 @@
 <template lang="md">
-# Dropdowns
-
-<WarningDeprecated
-	componentName="KtPopover"
-	link="/components/popovers"
-	version="3.0"
-/>
+<ComponentInfo title="Dropdowns" :meta="meta" />
 
 ## Basic Usage
 
@@ -166,11 +160,21 @@ The `placement` prop accepts same values as `KtPopover`. We suggest using the de
 
 </template>
 
-<script>
-import WarningDeprecated from '../../components/warnings/Deprecated.vue'
+<script lang="ts">
+import { KtDropdown } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
 
-export default {
-	name: 'KtDropdownsDocs',
-	components: { WarningDeprecated },
-}
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsDropdowns',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtDropdown.meta,
+		}
+	},
+})
 </script>

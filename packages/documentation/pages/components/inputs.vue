@@ -1,24 +1,5 @@
 <template lang="md">
-	# Inputs
-
-	<WarningDeprecated
-		componentName="KtFieldText"
-		link="/components/form"
-		version="3.0"
-	/>
-
-	<WarningDeprecated
-		componentName="KtFieldNumber"
-		link="/components/form"
-		version="3.0"
-	/>
-
-	<WarningDeprecated
-		componentName="KtFieldEmail/KtFieldPassword"
-		link="/components/form"
-		version="3.0"
-	/>
-
+	<ComponentInfo title="Inputs" :meta="meta" />
 
 	## Label
 
@@ -240,26 +221,27 @@
 
 </template>
 
-<script>
-import WarningDeprecated from '../../components/warnings/Deprecated.vue'
+<script lang="ts">
+import { KtInput } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
 
-export default {
-	name: 'KtInputDoc',
-	components: { WarningDeprecated },
-	data() {
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsInputs',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
-			v1: 'Jony One O',
-			v2: '',
-			v3: 'Jony Three O',
-			v4: 4,
-			v5: 'email@example.com',
-			dialog: {
-				enabled: true,
-				message: 'Help Message',
-				position: 'right',
-				html: '',
-			},
+			v1: ref('Jony One O'),
+			v2: ref(''),
+			v3: ref('Jony Three O'),
+			// eslint-disable-next-line no-magic-numbers
+			v4: ref(4),
+			v5: ref('email@example.com'),
+			meta: KtInput.meta,
 		}
 	},
-}
+})
 </script>

@@ -1,5 +1,5 @@
 <template lang="md">
-# Form Fields
+<ComponentInfo title="Form Fields" :meta="meta" />
 
 <KtTranslationContext :locale="settings.locale">
 	<div class="overview">
@@ -254,6 +254,8 @@ import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
 const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
 	'kotti-documentation-form-fields-saved-components'
 
@@ -442,6 +444,9 @@ const generateCode = (component: ComponentValue) =>
 
 export default defineComponent({
 	name: 'KtFormFieldsDocumentation',
+	components: {
+		ComponentInfo,
+	},
 	setup() {
 		const values = ref<typeof INITIAL_VALUES>(INITIAL_VALUES)
 
@@ -684,6 +689,14 @@ export default defineComponent({
 			}),
 		)
 
+		const meta: Kotti.Meta = {
+			addedVersion: '2.0.0',
+			deprecated: null,
+			typeScript: {
+				namespace: 'Kotti.Field*',
+			},
+		}
+
 		return {
 			componentDefinition,
 			componentOptions: components.map((component) => ({
@@ -698,6 +711,7 @@ export default defineComponent({
 					validator: createValidator(componentValue.value.validation),
 				}),
 			),
+			meta,
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},

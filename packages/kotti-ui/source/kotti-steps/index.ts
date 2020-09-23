@@ -1,7 +1,12 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
 // @ts-expect-error
 import KtSteps from './KtSteps.vue'
 
-makeInstallable(KtSteps)
+attachMeta(makeInstallable(KtSteps), {
+	addedVersion: '1.1.0',
+	deprecated: null,
+	typeScript: null,
+})
+
 export { KtSteps }

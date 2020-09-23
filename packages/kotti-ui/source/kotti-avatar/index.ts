@@ -1,7 +1,12 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
 // @ts-expect-error
 import KtAvatar from './KtAvatar.vue'
 
-makeInstallable(KtAvatar)
+attachMeta(makeInstallable(KtAvatar), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})
+
 export { KtAvatar }

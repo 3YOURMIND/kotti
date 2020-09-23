@@ -1,6 +1,5 @@
 <template lang="md">
-
-# Steps
+<ComponentInfo title="Steps" :meta="meta" />
 
 ## Step Status
 
@@ -99,19 +98,28 @@ Each `KtStep` has four elements:
 | `brandColor` | Changes the color of indicator and line |
 </template>
 
-<script>
-export default {
-	name: 'StepsDocs',
-	data() {
+<script lang="ts">
+import { KtSteps } from '@3yourmind/kotti-ui'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsSteps',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		const current = ref(1)
+
 		return {
-			current: 1,
-			status: 'error',
+			current,
+			labelText: computed(() =>
+				current.value > 2 ? 'Finished' : 'Next Status',
+			),
+			meta: KtSteps.meta,
+			status: ref('error'),
 		}
 	},
-	computed: {
-		labelText() {
-			return this.current > 2 ? 'Finished' : 'Next Status'
-		},
-	},
-}
+})
 </script>

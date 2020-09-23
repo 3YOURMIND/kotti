@@ -1,5 +1,5 @@
 <template lang="md">
-# Banners
+<ComponentInfo title="Banners" :meta="meta" />
 
 Banners can be used as an alert at the top of the screen to display
 critical messages or expandable information. It should not include a
@@ -132,13 +132,23 @@ If you don't specify the icon text, you need to use the `glyph` slot.
 | `glyph`  | button icons | `String` | icon name in `yoco`              | —       |
 </template>
 
-<script>
-import ShowCase from '../../components/ShowCase'
+<script lang="ts">
+import { KtBanner } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
 
-export default {
+import ComponentInfo from '../../components/ComponentInfo.vue'
+import ShowCase from '../../components/ShowCase.vue'
+
+export default defineComponent({
 	name: 'Banners',
 	components: {
+		ComponentInfo,
 		ShowCase,
 	},
-}
+	setup() {
+		return {
+			meta: KtBanner.meta,
+		}
+	},
+})
 </script>

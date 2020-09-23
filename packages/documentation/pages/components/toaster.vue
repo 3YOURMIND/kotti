@@ -1,5 +1,5 @@
 <template lang="md">
-# Toaster
+<ComponentInfo title="Toaster" :meta="meta" />
 
 A toaster is a small message shown in the upper right corner of the screen, which disappears after few seconds.
 
@@ -68,6 +68,21 @@ this.$yodify({
 | `type`     | define the type of the toaster              | `String` | `success`, `error`, `warning` | `success` |
 </template>
 
-<script>
-export default { name: 'KtToasterDoc' }
+<script lang="ts">
+import { KtToaster } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'KtToasterDoc',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtToaster.meta,
+		}
+	},
+})
 </script>

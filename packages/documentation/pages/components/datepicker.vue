@@ -1,11 +1,5 @@
 <template lang="md">
-# Date Picker
-
-<WarningDeprecated
-	componentName="KtFieldDate/KtFieldDateRange/KtFieldDateTime/KtFieldDateTimeRange"
-	link="/components/form"
-	version="3.0"
-/>
+<ComponentInfo title="Date Picker" :meta="meta" />
 
 <div class="element-example">
 	<KtDateInput
@@ -104,18 +98,24 @@
 | `required`           | sets it as a requiredf field           | `Boolean` | [true, false]   | `false` |
 </template>
 
-<script>
-import WarningDeprecated from '../../components/warnings/Deprecated.vue'
+<script lang="ts">
+import { KtDateInput } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
 
-export default {
-	name: 'DatePickerDoc',
-	components: { WarningDeprecated },
-	data() {
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsDatepicker',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
-			date: null,
-			date2: null,
-			date3: null,
-			date4: null,
+			date: ref(null),
+			date2: ref(null),
+			date3: ref(null),
+			date4: ref(null),
+			meta: KtDateInput.meta,
 			monthCN: [
 				'一月',
 				'二月',
@@ -133,5 +133,5 @@ export default {
 			dayCN: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
 		}
 	},
-}
+})
 </script>

@@ -1,5 +1,5 @@
 <template lang="md">
-# Paginations
+<ComponentInfo title="Paginations" :meta="meta" />
 
 ## Basic Usage
 
@@ -95,6 +95,21 @@
 
 </template>
 
-<script>
-export default { name: 'KtPaginationDocs' }
+<script lang="ts">
+import { KtPagination } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'KtPaginationDocs',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtPagination.meta,
+		}
+	},
+})
 </script>

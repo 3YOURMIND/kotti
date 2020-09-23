@@ -1,7 +1,16 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
 // @ts-expect-error
 import KtSingleSelect from './KtSingleSelect.vue'
 
-makeInstallable(KtSingleSelect)
+attachMeta(makeInstallable(KtSingleSelect), {
+	addedVersion: null,
+	deprecated: {
+		alternatives: ['KtFieldSingleSelect', 'KtFieldMultipleSelect'],
+		reason: 'Replaced by Kotti v2.0.0 Forms',
+		version: '3.0.0',
+	},
+	typeScript: null,
+})
+
 export { KtSingleSelect }

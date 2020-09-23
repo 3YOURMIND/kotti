@@ -1,6 +1,5 @@
 <template lang="md">
-
-# Action Bar
+<ComponentInfo title="Action Bar" :meta="meta" />
 
 <nuxt-link to="/examples/layouts">
 	<button class="primary">Show Layout Example</button>
@@ -42,5 +41,23 @@ menu: [
 	},
 ],
 ```
-
 </template>
+
+<script lang="ts">
+import { KtActionbar } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPagePatternsActionbar',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtActionbar.meta,
+		}
+	},
+})
+</script>

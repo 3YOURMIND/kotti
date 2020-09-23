@@ -1,6 +1,5 @@
 <template lang="md">
-
-# User Menu
+<ComponentInfo title="User Menu" :meta="meta" />
 
 <nuxt-link to="/examples/layouts">
 	<button class="primary">Show Layout Example</button>
@@ -32,6 +31,21 @@
 
 </template>
 
-<script>
-export default { name: 'KtNavbarDoc' }
+<script lang="ts">
+import { KtUserMenu } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPagePatternsUserMenu',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtUserMenu.meta,
+		}
+	},
+})
 </script>

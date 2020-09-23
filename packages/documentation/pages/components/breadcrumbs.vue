@@ -1,6 +1,5 @@
 <template lang="md">
-
-# Breadcrumbs
+<ComponentInfo title="Breadcrumbs" :meta="meta" />
 
 Indicate the current page’s location within a navigational hierarchy.
 
@@ -57,11 +56,20 @@ textSeparator: {
 ```
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { KtBreadcrumb } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
 	name: 'KtBreadCrumbDoc',
-	data() {
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
+			meta: KtBreadcrumb.meta,
 			textSeparator: {
 				style: 'text',
 				value: '/',
@@ -85,5 +93,5 @@ export default {
 			],
 		}
 	},
-}
+})
 </script>

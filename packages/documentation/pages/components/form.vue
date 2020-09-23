@@ -1,5 +1,5 @@
 <template lang="md">
-# Form
+<ComponentInfo title="Form" :meta="meta" />
 
 <ClientOnly>
 	<KtTranslationContext :locale="settings.locale">
@@ -192,11 +192,16 @@
 </template>
 
 <script lang="ts">
-import { Kotti } from '@3yourmind/kotti-ui'
+import { Kotti, KtForm } from '@3yourmind/kotti-ui'
 import { defineComponent, computed, ref } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'KtFormDocumentation',
+	components: {
+		ComponentInfo,
+	},
 	setup() {
 		const values = ref({
 			addresses: [{ country: null, houseNumber: null, streetName: null }],
@@ -209,6 +214,7 @@ export default defineComponent({
 
 		return {
 			isDeleteDisabled: computed(() => values.value.addresses.length === 1),
+			meta: KtForm.meta,
 			onSubmit: (event: Kotti.Form.Events.Submit) => {
 				// eslint-disable-next-line no-console
 				console.debug('onSubmit', event)

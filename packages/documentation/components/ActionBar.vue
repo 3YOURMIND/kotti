@@ -94,6 +94,11 @@ export default defineComponent({
 		background: var(--red-20);
 	}
 
+	&--is-guide {
+		color: var(--yellow-70);
+		background: var(--yellow-20);
+	}
+
 	&--is-ts {
 		color: var(--primary-70);
 		background: var(--primary-20);

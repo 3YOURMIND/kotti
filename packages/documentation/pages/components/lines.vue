@@ -1,6 +1,5 @@
 <template lang="md">
-
-	# Horizontal Lines
+	<ComponentInfo title="Horizontal Lines" :meta="meta" />
 
 	You can use horizontal row to separte similar elements to create a better information structure.
 
@@ -21,9 +20,23 @@
 	```html
 	<KtLine text="Or Login with Google"/>
 	```
-
 </template>
 
-<script>
-export default { name: 'KtHorizontalLineDoc' }
+<script lang="ts">
+import { KtLine } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'KtHorizontalLineDoc',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtLine.meta,
+		}
+	},
+})
 </script>

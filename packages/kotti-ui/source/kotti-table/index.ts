@@ -1,17 +1,23 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
+import { Kotti } from '../types'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+// @ts-expect-error
 import KtTable from './src/KtTable.vue'
 import { TableColumnsStateMixin } from './src/mixins'
 import { KtTableColumn } from './src/TableColumn'
 import { KtTableConsumer } from './src/TableConsumer'
 import { KtTableProvider } from './src/TableProvider'
 
-makeInstallable(KtTable)
-makeInstallable(KtTableColumn)
-makeInstallable(KtTableProvider)
-makeInstallable(KtTableConsumer)
+const META: Kotti.Meta = {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+}
+
+attachMeta(makeInstallable(KtTable), META)
+attachMeta(makeInstallable(KtTableColumn), META)
+attachMeta(makeInstallable(KtTableProvider), META)
+attachMeta(makeInstallable(KtTableConsumer), META)
 
 export { KtTable, KtTableColumn, KtTableProvider, KtTableConsumer }
 export const KtTableColumnsStateMixin = TableColumnsStateMixin

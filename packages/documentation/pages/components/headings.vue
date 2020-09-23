@@ -1,5 +1,5 @@
 <template lang="md">
-# Headings
+<ComponentInfo title="Headings" :meta="meta" />
 
 H3 heading supports customize actions, and also can work as section toggles.
 
@@ -89,18 +89,25 @@ You can change the `toggleStatus` dynamically by binding value to it.
 | `click`    | trigger when action button clicked | `(event: Event)` |
 </template>
 
-<script>
-export default {
-	name: 'KtHeadingDocs',
-	data() {
+<script lang="ts">
+import { KtHeading } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsHeadings',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
-			toggle: false,
+			meta: KtHeading.meta,
+			toggle: ref(false),
+			showAlert() {
+				window.alert('H3 Action Clicked')
+			},
 		}
 	},
-	methods: {
-		showAlert() {
-			alert('H3 Action Clicked')
-		},
-	},
-}
+})
 </script>

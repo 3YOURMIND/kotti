@@ -1,13 +1,27 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
+import { Kotti } from '../types'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+// @ts-expect-error
 import KtDateInput from './KtDateInput.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+// @ts-expect-error
 import KtDatePicker from './KtDatePicker.vue'
 
-makeInstallable(KtDateInput)
-makeInstallable(KtDatePicker)
+const META: Kotti.Meta = {
+	addedVersion: '0.0.4',
+	typeScript: null,
+	deprecated: {
+		alternatives: [
+			'KtFieldDate',
+			'KtFieldDateRange',
+			'KtFieldDateTime',
+			'KtFieldDateTimeRange',
+		],
+		reason: 'Replaced by Kotti v2.0.0 Forms',
+		version: '3.0.0',
+	},
+}
+
+attachMeta(makeInstallable(KtDateInput), META)
+attachMeta(makeInstallable(KtDatePicker), META)
 
 export { KtDateInput, KtDatePicker }

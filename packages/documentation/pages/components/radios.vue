@@ -1,11 +1,5 @@
 <template lang="md">
-# Radio
-
-<WarningDeprecated
-	componentName="KtFieldRadio/KtFieldRadioGroup"
-	link="/components/form"
-	version="3.0"
-/>
+<ComponentInfo title="Radio" :meta="meta" />
 
 ## Basic
 
@@ -97,18 +91,24 @@ options: [{
 
 </template>
 
-<script>
-import WarningDeprecated from '../../components/warnings/Deprecated.vue'
+<script lang="ts">
+import { KtRadioGroup } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
 
-export default {
-	name: 'KtRadioDoc',
-	components: { WarningDeprecated },
-	data() {
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsRadios',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
-			radio1: 'morning',
-			radio2: 'option1',
-			radio3: null,
-			title: 'Test',
+			meta: KtRadioGroup.meta,
+			radio1: ref('morning'),
+			radio2: ref('option1'),
+			radio3: ref(null),
+			title: ref('Test'),
 			options: [
 				{
 					label: 'Good Day',
@@ -125,5 +125,5 @@ export default {
 			],
 		}
 	},
-}
+})
 </script>
