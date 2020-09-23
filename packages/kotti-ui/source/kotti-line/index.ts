@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtLine from './KtLine.vue'
+import KtLineVue from './KtLine.vue'
 
-makeInstallable(KtLine)
-export { KtLine }
+export const KtLine = attachMeta(makeInstallable(KtLineVue), {
+	addedVersion: '1.0.1',
+	deprecated: null,
+	typeScript: null,
+})

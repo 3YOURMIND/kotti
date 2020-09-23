@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtButton from './KtButton.vue'
+import KtButtonVue from './KtButton.vue'
 
-makeInstallable(KtButton)
-export { KtButton }
+export const KtButton = attachMeta(makeInstallable(KtButtonVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})

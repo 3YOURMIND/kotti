@@ -1,6 +1,5 @@
 <template lang="md">
-
-# Accordion
+<ComponentInfo title="Accordion" :meta="meta" />
 
 An accordion for hiding content on click.
 It is animated but the animation doesn't work with IE11.
@@ -67,8 +66,21 @@ We might want to use the whole header as a toggling zone:
 
 </template>
 
-<script>
-export default {
-	name: 'KtAccordionDocs',
-}
+<script lang="ts">
+import { KtAccordion } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsAccordion',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtAccordion.meta,
+		}
+	},
+})
 </script>

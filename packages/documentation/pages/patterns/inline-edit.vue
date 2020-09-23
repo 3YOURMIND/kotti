@@ -54,18 +54,23 @@
 
 </template>
 
-<script>
-export default {
-	name: 'KtInlineEditDoc',
-	data() {
+<script lang="ts">
+import { KtInlineEdit } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPagePatternsInlineEdit',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
-			value1: '',
+			meta: KtInlineEdit.meta,
+			showAlert: (message: string) => window.alert(message),
+			value1: ref(''),
 		}
 	},
-	methods: {
-		showAlert(msg) {
-			if (typeof window !== 'undefined' && window.document) window.alert(msg)
-		},
-	},
-}
+})
 </script>

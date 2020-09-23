@@ -1,5 +1,5 @@
 <template lang="md">
-	# Buttons
+	<ComponentInfo title="Buttons" :meta="meta" />
 
 	Use buttons to lead a call to action or guide a user to their next steps.
 
@@ -186,29 +186,31 @@
 	<KtButton type="primary" element="div">Primary Button</KtButton>
 	```
 
-	<div v-html="buttonUsage" />
+	<div v-html="ButtonUsage" />
 
 </template>
 
-<script>
+<script lang="ts">
+import { KtButton } from '@3yourmind/kotti-ui'
+// @ts-expect-error legacy markdown import
 import ButtonUsage from '@3yourmind/kotti-ui/source/kotti-button/README.md'
+import { defineComponent } from '@vue/composition-api'
 
-import ShowCase from '../../components/ShowCase'
+import ComponentInfo from '../../components/ComponentInfo.vue'
+import ShowCase from '../../components/ShowCase.vue'
 
-export default {
+export default defineComponent({
 	name: 'Buttons',
 	components: {
+		ComponentInfo,
 		ShowCase,
 	},
-	computed: {
-		buttonUsage() {
-			return ButtonUsage
-		},
+	setup() {
+		return {
+			alert: (value: string) => window.alert(value),
+			ButtonUsage,
+			meta: KtButton.meta,
+		}
 	},
-	methods: {
-		alert(value) {
-			window.alert(value)
-		},
-	},
-}
+})
 </script>

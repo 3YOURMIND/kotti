@@ -1,12 +1,5 @@
 <template lang="md">
-
-# Select
-
-<WarningDeprecated
-	componentName="KtFieldSingleSelect/KtFieldMultipleSelect"
-	link="/components/form"
-	version="3.0"
-/>
+<ComponentInfo title="Select" :meta="meta" />
 
 ## Default
 
@@ -195,13 +188,18 @@ async asyncFind(query) {
 </template>
 
 <script>
-import WarningDeprecated from '../../components/warnings/Deprecated.vue'
+import { KtSingleSelect } from '@3yourmind/kotti-ui'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
 
 export default {
-	name: 'KtSelectDoc',
-	components: { WarningDeprecated },
+	name: 'DocumentationPageComponentsSelects',
+	components: {
+		ComponentInfo,
+	},
 	data() {
 		return {
+			meta: KtSingleSelect.meta,
 			value1: null,
 			value2: null,
 			value3: 'Avocados',

@@ -1,14 +1,28 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldMultiSelect from './KtFieldMultiSelect.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldSingleSelect from './KtFieldSingleSelect.vue'
+import KtFieldMultiSelectVue from './KtFieldMultiSelect.vue'
+import KtFieldSingleSelectVue from './KtFieldSingleSelect.vue'
 
-makeInstallable(KtFieldSingleSelect)
-makeInstallable(KtFieldMultiSelect)
+export const KtFieldSingleSelect = attachMeta(
+	makeInstallable(KtFieldSingleSelectVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.KtFieldSingleSelect',
+		},
+	},
+)
 
-export { KtFieldSingleSelect, KtFieldMultiSelect }
+export const KtFieldMultiSelect = attachMeta(
+	makeInstallable(KtFieldMultiSelectVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.KtFieldMultiSelect',
+		},
+	},
+)
+
 export * from './constants'

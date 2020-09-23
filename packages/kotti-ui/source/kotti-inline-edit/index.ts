@@ -1,10 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtInlineEdit from './KtInlineEdit.vue'
-import { defaultParser } from './utilities'
+import KtInlineEditVue from './KtInlineEdit.vue'
 
-KtInlineEdit.defaultParser = defaultParser
-
-makeInstallable(KtInlineEdit)
-export { KtInlineEdit }
+export const KtInlineEdit = attachMeta(makeInstallable(KtInlineEditVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})

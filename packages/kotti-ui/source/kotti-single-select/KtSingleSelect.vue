@@ -70,7 +70,7 @@ import { isBrowser } from '../util'
 import { Portal } from '../util/portal'
 
 export default {
-	name: 'KtSelect',
+	name: 'KtSelect', // FIXME: Wrong Name
 	components: { Portal },
 	mixins: [clickaway],
 	inheritAttrs: false,

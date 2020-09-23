@@ -1,11 +1,5 @@
 <template lang="md">
-# Input Number
-
-<WarningDeprecated
-	componentName="KtFieldNumber"
-	link="/components/form"
-	version="3.0"
-/>
+<ComponentInfo title="Input Number" :meta="meta" />
 
 ## Basic Usage
 
@@ -85,20 +79,27 @@ When `max` attribute has a value, and `showMaxNumber` is `true`, the max number 
 ```
 </template>
 
-<script>
-import WarningDeprecated from '../../components/warnings/Deprecated.vue'
+<script lang="ts">
+import { KtInputNumber } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
 
-export default {
-	name: 'KtInputNumberDoc',
-	components: { WarningDeprecated },
-	data() {
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsInputNumber',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
-			number1: 12,
-			number2: 0,
-			number3: 0,
-			number4: 0,
-			number5: null,
+			meta: KtInputNumber.meta,
+			// eslint-disable-next-line no-magic-numbers
+			number1: ref(12),
+			number2: ref(0),
+			number3: ref(0),
+			number4: ref(0),
+			number5: ref(null),
 		}
 	},
-}
+})
 </script>

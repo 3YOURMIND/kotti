@@ -1,7 +1,13 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtRadioGroup from './KtRadioGroup.vue'
+import KtRadioGroupVue from './KtRadioGroup.vue'
 
-makeInstallable(KtRadioGroup)
-export { KtRadioGroup }
+export const KtRadioGroup = attachMeta(makeInstallable(KtRadioGroupVue), {
+	addedVersion: 'unkown',
+	deprecated: {
+		alternatives: ['KtFieldRadioGroup'],
+		reason: 'Replaced by Kotti v2.0.0 Forms',
+		version: '3.0.0',
+	},
+	typeScript: null,
+})

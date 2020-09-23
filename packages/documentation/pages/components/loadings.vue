@@ -1,5 +1,5 @@
 <template lang="md">
-	# Loadings
+	<ComponentInfo title="Loadings" :meta="meta" />
 
 	## Skeleton Screen
 
@@ -102,6 +102,27 @@
 	```
 </template>
 
-<script>
-export default { name: 'KtLoadingDocs' }
+<script lang="ts">
+import { Kotti } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsLoading',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		const meta: Kotti.Meta = {
+			addedVersion: null,
+			deprecated: null,
+			typeScript: null,
+		}
+
+		return {
+			meta,
+		}
+	},
+})
 </script>

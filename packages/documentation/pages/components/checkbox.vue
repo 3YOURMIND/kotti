@@ -1,11 +1,5 @@
 <template lang="md">
-# Checkbox
-
-<WarningDeprecated
-	componentName="KtFieldToggle"
-	link="/components/form"
-	version="3.0"
-/>
+<ComponentInfo title="Checkbox" :meta="meta" />
 
 ## Basic usage
 
@@ -56,18 +50,24 @@ Example of using the required field:
 | `required`| required                     | `Boolean` | [true, false]   | false   |
 </template>
 
-<script>
-import WarningDeprecated from '../../components/warnings/Deprecated.vue'
+<script lang="ts">
+import { KtCheckbox } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
 
-export default {
-	name: 'KtCheckboxDoc',
-	components: { WarningDeprecated },
-	data() {
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsCheckbox',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
 		return {
-			value1: true,
-			value2: false,
-			value3: undefined,
+			meta: KtCheckbox.meta,
+			value1: ref(true),
+			value2: ref(false),
+			value3: ref(undefined),
 		}
 	},
-}
+})
 </script>

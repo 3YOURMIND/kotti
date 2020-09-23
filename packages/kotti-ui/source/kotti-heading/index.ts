@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtHeading from './KtHeading.vue'
+import KtHeadingVue from './KtHeading.vue'
 
-makeInstallable(KtHeading)
-export { KtHeading }
+export const KtHeading = attachMeta(makeInstallable(KtHeadingVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})

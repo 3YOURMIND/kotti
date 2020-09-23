@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtModal from './KtModal.vue'
+import KtModalVue from './KtModal.vue'
 
-makeInstallable(KtModal)
-export { KtModal }
+export const KtModal = attachMeta(makeInstallable(KtModalVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})

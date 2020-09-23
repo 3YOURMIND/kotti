@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtUserMenu from './KtUserMenu.vue'
+import KtUserMenuVue from './KtUserMenu.vue'
 
-makeInstallable(KtUserMenu)
-export { KtUserMenu }
+export const KtUserMenu = attachMeta(makeInstallable(KtUserMenuVue), {
+	addedVersion: '0.0.3',
+	deprecated: null,
+	typeScript: null,
+})

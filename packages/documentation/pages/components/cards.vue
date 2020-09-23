@@ -1,5 +1,5 @@
 <template lang="md">
-# Cards
+<ComponentInfo title="Cards" :meta="meta" />
 
 ## Structure
 
@@ -131,6 +131,21 @@ The `imgUrl` property defines the image’s `url`.
 
 </template>
 
-<script>
-export default { name: 'CardsDocs' }
+<script lang="ts">
+import { KtCard } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsCards',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtCard.meta,
+		}
+	},
+})
 </script>

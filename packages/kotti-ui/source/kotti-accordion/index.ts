@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtAccordion from './KtAccordion.vue'
+import KtAccordionVue from './KtAccordion.vue'
 
-makeInstallable(KtAccordion)
-export { KtAccordion }
+export const KtAccordion = attachMeta(makeInstallable(KtAccordionVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})

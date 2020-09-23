@@ -1,10 +1,9 @@
 <template lang="md">
-
-# Popovers
+<ComponentInfo title="Popover" :meta="meta" />
 
 Use popovers to provide extra information or actions. Compared to `tooltip`, `popovers` can carry more information.
 It uses `popper.js` library for position and `placement` attribute can be anything supported by the library.
-You can also directly use the `popper.js` constructor by passing an `options` props. refer to the [popper.js 
+You can also directly use the `popper.js` constructor by passing an `options` props. refer to the [popper.js
 documentation](https://popper.js.org/docs/v2/constructors/) for more informations.
 
 ## Placement
@@ -58,7 +57,7 @@ You can append `-start` and `-end` to the placement as well.
 
 ## Overflowing behavior
 
-Using `popper.js` allows us to handle overflow easily. 
+Using `popper.js` allows us to handle overflow easily.
 If the parent element has an `overflow` attribute, `popper.js` will handle that nicely:
 
 <div class="element-example" style="overflow: hidden;">
@@ -110,7 +109,7 @@ an increment of '4rem'.
 
 ## Items
 
-We also provide a nice way of displaying items inside popovers. 
+We also provide a nice way of displaying items inside popovers.
 It replaces the old `KtDropdownMenu`.
 
 
@@ -184,7 +183,7 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 
 ## Usage
 
-### Attributes, 
+### Attributes,
 | Attribute   | Description                   | Type     | Accepted Values                  | Default  |
 |:------------|:------------------------------|:---------|:---------------------------------|:---------|
 | `placement` | postion of popover content    | `String` | `auto`, `auto-start`, `auto-end`, `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `right`, `right-start`, `right-end`, `left`, `left-start`, `left-end` | `bottom` |
@@ -201,8 +200,21 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 
 </template>
 
-<script>
-export default {
-	name: 'PopoversDoc',
-}
+<script lang="ts">
+import { KtPopover } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsPopever',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtPopover.meta,
+		}
+	},
+})
 </script>

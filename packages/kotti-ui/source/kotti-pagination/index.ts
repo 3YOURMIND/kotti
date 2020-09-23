@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtPagination from './KtPagination.vue'
+import KtPaginationVue from './KtPagination.vue'
 
-makeInstallable(KtPagination)
-export { KtPagination }
+export const KtPagination = attachMeta(makeInstallable(KtPaginationVue), {
+	addedVersion: '0.0.6',
+	deprecated: null,
+	typeScript: null,
+})

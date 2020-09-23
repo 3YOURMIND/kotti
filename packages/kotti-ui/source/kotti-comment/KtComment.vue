@@ -76,8 +76,10 @@ import { KtButtonGroup } from '../kotti-button-group'
 
 import CommentReply from './components/CommentReply.vue'
 import KtCommentInput from './KtCommentInput.vue'
+import { defaultParser } from './utilities'
 
 export default {
+	defaultParser,
 	name: 'KtComment',
 	components: {
 		KtAvatar,

@@ -1,14 +1,17 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
+import { Kotti } from '../types'
 
-// @ts-expect-error
-import KtComment from './KtComment.vue'
-// @ts-expect-error
-import KtCommentInput from './KtCommentInput.vue'
-import { defaultParser } from './utilities'
+import KtCommentVue from './KtComment.vue'
+import KtCommentInputVue from './KtCommentInput.vue'
 
-KtComment.defaultParser = defaultParser
+const META: Kotti.Meta = {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+}
 
-makeInstallable(KtComment)
-makeInstallable(KtCommentInput)
-
-export { KtComment, KtCommentInput }
+export const KtComment = attachMeta(makeInstallable(KtCommentVue), META)
+export const KtCommentInput = attachMeta(
+	makeInstallable(KtCommentInputVue),
+	META,
+)

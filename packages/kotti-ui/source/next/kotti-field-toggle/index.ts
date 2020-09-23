@@ -1,14 +1,25 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldToggle from './KtFieldToggle.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldToggleGroup from './KtFieldToggleGroup.vue'
+import KtFieldToggleVue from './KtFieldToggle.vue'
+import KtFieldToggleGroupVue from './KtFieldToggleGroup.vue'
 
-makeInstallable(KtFieldToggle)
-makeInstallable(KtFieldToggleGroup)
+export const KtFieldToggle = attachMeta(makeInstallable(KtFieldToggleVue), {
+	addedVersion: '2.0.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.FieldToggle',
+	},
+})
 
-export { KtFieldToggle, KtFieldToggleGroup }
+export const KtFieldToggleGroup = attachMeta(
+	makeInstallable(KtFieldToggleGroupVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.FieldToggleGroup',
+		},
+	},
+)
+
 export * from './constants'

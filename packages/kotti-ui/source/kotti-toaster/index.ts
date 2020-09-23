@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtToaster from './KtToaster.vue'
+import KtToasterVue from './KtToaster.vue'
 
-makeInstallable(KtToaster)
-export { KtToaster }
+export const KtToaster = attachMeta(makeInstallable(KtToasterVue), {
+	addedVersion: '1.0.0',
+	deprecated: null,
+	typeScript: null,
+})

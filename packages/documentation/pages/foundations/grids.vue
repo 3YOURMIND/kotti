@@ -1,5 +1,5 @@
 <template lang="md">
-	# Grid System
+	<ComponentInfo title="Grid System" :meta="meta" />
 
 	Kotti uses 24 columns `span` grid system. With `row` and `col` it can create dynamic layout.
 	Grid can be also easily customized.
@@ -193,10 +193,21 @@
 
 </template>
 
-<script>
-export default {
-	name: 'KtGridDoc',
-}
+<script lang="ts">
+import { KtRow } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageFoundationsGrids',
+	components: { ComponentInfo },
+	setup() {
+		return {
+			meta: KtRow.meta,
+		}
+	},
+})
 </script>
 
 <style lang="scss" scoped>

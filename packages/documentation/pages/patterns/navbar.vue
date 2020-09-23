@@ -1,5 +1,5 @@
 <template lang="md">
-# Navbar
+<ComponentInfo title="Navbar" :meta="meta" />
 
 ## Structure
 
@@ -152,5 +152,23 @@ You can get the value of narrow navbar via `$KtNavbar.isNarrow`
 | Slot Name       | Description              |
 |:----------------|:-------------------------|
 | `navbar-footer` | footer section of navbar |
-
 </template>
+
+<script lang="ts">
+import { KtNavbar } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
+
+import ComponentInfo from '../../components/ComponentInfo.vue'
+
+export default defineComponent({
+	name: 'DocumentationPagePatternsNavbar',
+	components: {
+		ComponentInfo,
+	},
+	setup() {
+		return {
+			meta: KtNavbar.meta,
+		}
+	},
+})
+</script>

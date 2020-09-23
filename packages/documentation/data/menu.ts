@@ -1,8 +1,15 @@
 import { Yoco } from '@3yourmind/yoco'
 
+export enum Tag {
+	CSS = 'css',
+	DEPRECATED = 'deprecated',
+	GUIDE = 'guide',
+	TS = 'ts',
+}
+
 export type SubsectionPage = {
 	label: string
-	tags: Array<'deprecated' | 'css' | 'ts'>
+	tags: Array<Tag>
 	path: string
 }
 
@@ -39,11 +46,11 @@ export const menu: Array<Section> = [
 				title: 'Foundations',
 				path: 'foundations',
 				pages: [
-					{ label: 'Layout', tags: [], path: 'layout' },
-					{ label: 'Grids', tags: ['ts'], path: 'grids' },
-					{ label: 'Icons', tags: ['css', 'ts'], path: 'icons' },
-					{ label: 'Typography', tags: ['css'], path: 'typography' },
-					{ label: 'Writing Style', tags: [], path: 'writing' },
+					{ label: 'Layout', path: 'layout', tags: [Tag.GUIDE] },
+					{ label: 'Grids', path: 'grids', tags: [Tag.TS] },
+					{ label: 'Icons', path: 'icons', tags: [Tag.CSS, Tag.TS] },
+					{ label: 'Typography', path: 'typography', tags: [Tag.CSS] },
+					{ label: 'Writing Style ', path: 'writing', tags: [Tag.GUIDE] },
 				],
 			},
 			{
@@ -51,10 +58,14 @@ export const menu: Array<Section> = [
 				title: 'Tokens',
 				path: 'tokens',
 				pages: [
-					{ label: 'Introduction to tokens', tags: [], path: 'introduction' },
-					{ label: 'Colors', tags: ['css'], path: 'colors' },
-					{ label: 'Figma', tags: [], path: 'figma' },
-					{ label: 'Theming', tags: [], path: 'theming' },
+					{
+						label: 'Introduction to tokens',
+						path: 'introduction',
+						tags: [Tag.GUIDE],
+					},
+					{ label: 'Colors', path: 'colors', tags: [Tag.CSS] },
+					{ label: 'Figma', path: 'figma', tags: [Tag.GUIDE] },
+					{ label: 'Theming', path: 'theming', tags: [Tag.GUIDE] },
 				],
 			},
 			{
@@ -62,33 +73,34 @@ export const menu: Array<Section> = [
 				title: 'Components',
 				path: 'components',
 				pages: [
-					{ label: 'Accordion', tags: [], path: 'accordion' },
-					{ label: 'Avatars', tags: [], path: 'avatars' },
-					{ label: 'Banners', tags: [], path: 'banners' },
-					{ label: 'Buttons', tags: [], path: 'buttons' },
-					{ label: 'Breadcrumbs', tags: [], path: 'breadcrumbs' },
-					{ label: 'Cards', tags: [], path: 'cards' },
-					{ label: 'Checkboxes', tags: ['deprecated'], path: 'checkbox' },
-					{ label: 'DatePicker', tags: ['deprecated'], path: 'datepicker' },
-					{ label: 'Drawers', tags: [], path: 'drawer' },
-					{ label: 'Dropdowns', tags: ['deprecated'], path: 'dropdowns' },
-					{ label: 'Form', tags: ['ts'], path: 'form' },
-					{ label: 'Form Fields', tags: ['ts'], path: 'form-fields' },
-					{ label: 'Headings', tags: [], path: 'headings' },
-					{ label: 'Horizontal Lines', tags: [], path: 'lines' },
-					{ label: 'Inputs', tags: ['deprecated'], path: 'inputs' },
-					{ label: 'InputNumber', tags: ['deprecated'], path: 'inputnumber' },
-					{ label: 'Loadings', tags: ['css'], path: 'loadings' },
-					{ label: 'Modal', tags: [], path: 'modal' },
-					{ label: 'Paginations', tags: [], path: 'paginations' },
-					{ label: 'Popovers', tags: [], path: 'popovers' },
-					{ label: 'Radios', tags: ['deprecated'], path: 'radios' },
-					{ label: 'Tables', tags: [], path: 'tables' },
-					{ label: 'Toaster', tags: [], path: 'toaster' },
-					{ label: 'Selects', tags: ['deprecated'], path: 'selects' },
-					{ label: 'Steps', tags: [], path: 'steps' },
-					{ label: 'Switches', tags: ['deprecated'], path: 'switches' },
-					{ label: 'Utilities', tags: ['css'], path: 'utilities' },
+					{ label: 'Accordion', path: 'accordion', tags: [] },
+					{ label: 'Avatars', path: 'avatars', tags: [] },
+					{ label: 'Banners', path: 'banners', tags: [] },
+					{ label: 'Buttons', path: 'buttons', tags: [] },
+					{ label: 'Breadcrumbs', path: 'breadcrumbs', tags: [] },
+					{ label: 'Cards', path: 'cards', tags: [] },
+					{ label: 'Checkboxes', path: 'checkbox', tags: [Tag.DEPRECATED] },
+					{ label: 'Comments', path: 'comments', tags: [] },
+					{ label: 'DatePicker', path: 'datepicker', tags: [Tag.DEPRECATED] },
+					{ label: 'Drawers', path: 'drawer', tags: [] },
+					{ label: 'Dropdowns', path: 'dropdowns', tags: [Tag.DEPRECATED] },
+					{ label: 'Form', path: 'form', tags: [Tag.TS] },
+					{ label: 'Form Fields', path: 'form-fields', tags: [Tag.TS] },
+					{ label: 'Headings', path: 'headings', tags: [] },
+					{ label: 'Horizontal Lines', path: 'lines', tags: [] },
+					{ label: 'Inputs', path: 'inputs', tags: [Tag.DEPRECATED] },
+					{ label: 'InputNumber', path: 'inputnumber', tags: [Tag.DEPRECATED] },
+					{ label: 'Loadings', path: 'loadings', tags: [Tag.CSS] },
+					{ label: 'Modal', path: 'modal', tags: [] },
+					{ label: 'Paginations', path: 'paginations', tags: [] },
+					{ label: 'Popovers', path: 'popovers', tags: [] },
+					{ label: 'Radios', path: 'radios', tags: [Tag.DEPRECATED] },
+					{ label: 'Tables', path: 'tables', tags: [] },
+					{ label: 'Toaster', path: 'toaster', tags: [] },
+					{ label: 'Selects', path: 'selects', tags: [Tag.DEPRECATED] },
+					{ label: 'Steps', path: 'steps', tags: [] },
+					{ label: 'Switches', path: 'switches', tags: [Tag.DEPRECATED] },
+					{ label: 'Utilities', tags: [Tag.CSS], path: 'utilities' },
 				],
 			},
 			{
@@ -96,12 +108,11 @@ export const menu: Array<Section> = [
 				title: 'Patterns',
 				path: 'patterns',
 				pages: [
-					{ tags: [], label: 'ActionBar', path: 'actionbar' },
-					{ tags: [], label: 'Comments', path: 'comments' },
-					{ tags: ['deprecated'], label: 'Container', path: 'container' },
-					{ tags: [], label: 'NavBar', path: 'navbar' },
-					{ tags: [], label: 'Inline Edit', path: 'inline-edit' },
-					{ tags: [], label: 'User Menu', path: 'user-menu' },
+					{ label: 'ActionBar', path: 'actionbar', tags: [] },
+					{ label: 'Forms', path: 'forms', tags: [Tag.DEPRECATED] },
+					{ label: 'NavBar', path: 'navbar', tags: [] },
+					{ label: 'Inline Edit', path: 'inline-edit', tags: [] },
+					{ label: 'User Menu', path: 'user-menu', tags: [] },
 				],
 			},
 			{

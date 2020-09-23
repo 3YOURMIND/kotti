@@ -1,5 +1,5 @@
 <template lang="md">
-# Tables
+<ComponentInfo title="Table" :meta="meta" />
 
 ## Elements
 
@@ -1103,16 +1103,18 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 </template>
 
 <script>
-import { KtAvatar, KtBanner } from '@3yourmind/kotti-ui'
+import { KtAvatar, KtBanner, KtTable } from '@3yourmind/kotti-ui'
 
-import ShowCase from '../../components/ShowCase'
+import ComponentInfo from '../../components/ComponentInfo.vue'
+import ShowCase from '../../components/ShowCase.vue'
 
 export default {
 	name: 'Tables',
-	components: { KtBanner, ShowCase },
+	components: { ComponentInfo, KtBanner, ShowCase },
 	data() {
 		/* eslint-disable sonarjs/no-duplicate-string */
 		return {
+			meta: KtTable.meta,
 			select: [0, 1],
 			selected: [
 				{

@@ -1,10 +1,16 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldRadioGroup from './KtFieldRadioGroup.vue'
+import KtFieldRadioGroupVue from './KtFieldRadioGroup.vue'
 
-makeInstallable(KtFieldRadioGroup)
+export const KtFieldRadioGroup = attachMeta(
+	makeInstallable(KtFieldRadioGroupVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.FieldRadioGroup',
+		},
+	},
+)
 
-export { KtFieldRadioGroup }
 export * from './constants'

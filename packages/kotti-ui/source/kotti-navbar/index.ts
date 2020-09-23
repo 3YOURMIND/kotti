@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtNavbar from './KtNavbar.vue'
+import KtNavbarVue from './KtNavbar.vue'
 
-makeInstallable(KtNavbar)
-export { KtNavbar }
+export const KtNavbar = attachMeta(makeInstallable(KtNavbarVue), {
+	addedVersion: '0.0.3',
+	deprecated: null,
+	typeScript: null,
+})

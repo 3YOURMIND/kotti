@@ -1,10 +1,13 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldTextArea from './KtFieldTextArea.vue'
+import KtFieldTextAreaVue from './KtFieldTextArea.vue'
 
-makeInstallable(KtFieldTextArea)
+export const KtFieldTextArea = attachMeta(makeInstallable(KtFieldTextAreaVue), {
+	addedVersion: '2.0.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.FieldTextArea',
+	},
+})
 
-export { KtFieldTextArea }
 export * from './constants'

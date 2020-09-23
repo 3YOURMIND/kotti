@@ -7,75 +7,89 @@ import {
 
 import { KT_ROW_CONTEXT } from '../kotti-row/constants'
 import { KottiRow } from '../kotti-row/types'
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
 type MediaQueryProps = {
 	[KEY in 'lg' | 'md' | 'sm' | 'xl' | 'xs']: number | null
 }
 
-export const KtCol = makeInstallable(
-	defineComponent({
-		name: 'KtCol',
-		props: {
-			lg: { default: null, type: Number },
-			md: { default: null, type: Number },
-			offset: { default: null, type: Number },
-			pull: { default: null, type: Number },
-			push: { default: null, type: Number },
-			sm: { default: null, type: Number },
-			span: { default: 24, type: Number },
-			tag: { default: 'div', type: String },
-			xl: { default: null, type: Number },
-			xs: { default: null, type: Number },
-		},
-		setup(
+export const KtCol = attachMeta(
+	makeInstallable(
+		defineComponent({
+			name: 'KtCol',
 			props: {
-				offset: number | null
-				pull: number | null
-				push: number | null
-				span: number
-				tag: string
-			} & MediaQueryProps,
-			{ slots },
-		) {
-			const context = inject<KottiRow.Context | null>(KT_ROW_CONTEXT, null)
+				lg: { default: null, type: Number },
+				md: { default: null, type: Number },
+				offset: { default: null, type: Number },
+				pull: { default: null, type: Number },
+				push: { default: null, type: Number },
+				sm: { default: null, type: Number },
+				span: { default: 24, type: Number },
+				tag: { default: 'div', type: String },
+				xl: { default: null, type: Number },
+				xs: { default: null, type: Number },
+			},
+			setup(
+				props: {
+					offset: number | null
+					pull: number | null
+					push: number | null
+					span: number
+					tag: string
+				} & MediaQueryProps,
+				{ slots },
+			) {
+				const context = inject<KottiRow.Context | null>(KT_ROW_CONTEXT, null)
 
-			const style = computed(() => {
-				if (context === null) return undefined
+				const style = computed(() => {
+					if (context === null) return undefined
 
-				const { gap, gutter } = context
+					const { gap, gutter } = context
 
-				return {
-					paddingBottom: `${gap.value / 2}px`,
-					paddingLeft: `${gutter.value / 2}px`,
-					paddingRight: `${gutter.value / 2}px`,
-					paddingTop: `${gap.value / 2}px`,
-				}
-			})
+					return {
+						paddingBottom: `${gap.value / 2}px`,
+						paddingLeft: `${gutter.value / 2}px`,
+						paddingRight: `${gutter.value / 2}px`,
+						paddingTop: `${gap.value / 2}px`,
+					}
+				})
 
-			const classes = computed(() => [
-				'kt-col',
-				`kt-col-${props.span}`,
-				...Object.entries(props)
-					.filter(
-						([key, value]) =>
-							value !== null &&
-							['offset', 'pull', 'push', 'xs', 'sm', 'md', 'lg', 'xl'].includes(
-								key,
-							),
+				const classes = computed(() => [
+					'kt-col',
+					`kt-col-${props.span}`,
+					...Object.entries(props)
+						.filter(
+							([key, value]) =>
+								value !== null &&
+								[
+									'offset',
+									'pull',
+									'push',
+									'xs',
+									'sm',
+									'md',
+									'lg',
+									'xl',
+								].includes(key),
+						)
+						.map(([key, value]) => `kt-col-${key}-${value}`),
+				])
+
+				return () =>
+					createElement(
+						props.tag,
+						{
+							class: classes.value,
+							style: style.value,
+						},
+						[slots.default?.() ?? null],
 					)
-					.map(([key, value]) => `kt-col-${key}-${value}`),
-			])
-
-			return () =>
-				createElement(
-					props.tag,
-					{
-						class: classes.value,
-						style: style.value,
-					},
-					[slots.default?.() ?? null],
-				)
-		},
-	}),
+			},
+		}),
+	),
+	{
+		addedVersion: null,
+		deprecated: null,
+		typeScript: null,
+	},
 )

@@ -1,6 +1,5 @@
 <template lang="md">
-
-# Drawer
+<ComponentInfo title="Drawer" :meta="meta" />
 
 Drawer is another layer of the interface. It adds more information or functionality to the current layout without messing up the elements.
 
@@ -144,18 +143,26 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 | `drawer-footer` | footer section |
 </template>
 
-<script>
-import ShowCase from '../../components/ShowCase'
+<script lang="ts">
+import { KtDrawer } from '@3yourmind/kotti-ui'
+import { defineComponent } from '@vue/composition-api'
 
-export default {
-	name: 'DrawerDocs',
-	components: { ShowCase },
+import ComponentInfo from '../../components/ComponentInfo.vue'
+import ShowCase from '../../components/ShowCase.vue'
+
+export default defineComponent({
+	name: 'DocumentationPageComponentsDrawer',
+	components: {
+		ComponentInfo,
+		ShowCase,
+	},
 	data() {
 		return {
 			customizeWidthDrawer: false,
+			meta: KtDrawer.meta,
 			showDrawer: false,
 			showWideDrawer: false,
 		}
 	},
-}
+})
 </script>

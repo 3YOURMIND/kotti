@@ -26,3 +26,13 @@ export {
 	KottiFormControllerObject as FormControllerObject,
 	KottiFormControllerList as FormControllerList,
 } from '../next/kotti-form/controllers/types'
+
+export type Meta = {
+	addedVersion: string | null
+	deprecated: {
+		alternatives: string[]
+		reason: string
+		version: string
+	} | null
+	typeScript: { namespace: string } | null
+}

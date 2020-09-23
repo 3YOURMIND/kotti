@@ -1,7 +1,13 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtCheckbox from './KtCheckbox.vue'
+import KtCheckboxVue from './KtCheckbox.vue'
 
-makeInstallable(KtCheckbox)
-export { KtCheckbox }
+export const KtCheckbox = attachMeta(makeInstallable(KtCheckboxVue), {
+	addedVersion: '1.0.0',
+	deprecated: {
+		alternatives: ['KtFieldToggle'],
+		reason: 'Replaced by Kotti v2.0.0 Forms',
+		version: '3.0.0',
+	},
+	typeScript: null,
+})

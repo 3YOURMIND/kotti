@@ -1,6 +1,5 @@
 <template lang="md">
-
-# Comments
+<ComponentInfo title="Comments" :meta="meta" />
 
 ## Example
 
@@ -169,9 +168,16 @@ methods: {
 </template>
 
 <script>
+import { KtComment } from '@3yourmind/kotti-ui'
 import escape from 'lodash/escape'
+
+import ComponentInfo from '../../components/ComponentInfo'
+
 export default {
 	name: 'KtCommentDoc',
+	components: {
+		ComponentInfo,
+	},
 	data() {
 		/* eslint-disable sonarjs/no-duplicate-string */
 		return {
@@ -238,6 +244,7 @@ export default {
 					],
 				},
 			],
+			meta: KtComment.meta,
 		}
 		/* eslint-enable sonarjs/no-duplicate-string */
 	},

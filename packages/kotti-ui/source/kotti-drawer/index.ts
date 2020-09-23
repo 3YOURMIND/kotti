@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtDrawer from './KtDrawer.vue'
+import KtDrawerVue from './KtDrawer.vue'
 
-makeInstallable(KtDrawer)
-export { KtDrawer }
+export const KtDrawer = attachMeta(makeInstallable(KtDrawerVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})

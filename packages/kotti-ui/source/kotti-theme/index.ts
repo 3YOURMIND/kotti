@@ -1,7 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
-import KtTheme from './KtTheme.vue'
+import KtThemeVue from './KtTheme.vue'
 
-makeInstallable(KtTheme)
-export { KtTheme }
+export const KtTheme = attachMeta(makeInstallable(KtThemeVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})
