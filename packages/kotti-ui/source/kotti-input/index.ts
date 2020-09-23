@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtInput from './KtInput.vue'
 
 attachMeta(makeInstallable(KtInput), {

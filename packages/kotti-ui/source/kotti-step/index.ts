@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtStep from './KtStep.vue'
 
 attachMeta(makeInstallable(KtStep), {

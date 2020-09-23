@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtToaster from './KtToaster.vue'
 
 attachMeta(makeInstallable(KtToaster), {

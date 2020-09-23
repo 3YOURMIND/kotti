@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtHeading from './KtHeading.vue'
 
 attachMeta(makeInstallable(KtHeading), {

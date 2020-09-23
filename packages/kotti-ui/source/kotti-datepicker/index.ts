@@ -1,9 +1,7 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
 
-// @ts-expect-error
 import KtDateInput from './KtDateInput.vue'
-// @ts-expect-error
 import KtDatePicker from './KtDatePicker.vue'
 
 const META: Kotti.Meta = {

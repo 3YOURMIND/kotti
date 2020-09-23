@@ -1,7 +1,6 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
 
-// @ts-expect-error
 import KtTable from './src/KtTable.vue'
 import { TableColumnsStateMixin } from './src/mixins'
 import { KtTableColumn } from './src/TableColumn'

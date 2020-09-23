@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtPagination from './KtPagination.vue'
 
 attachMeta(makeInstallable(KtPagination), {

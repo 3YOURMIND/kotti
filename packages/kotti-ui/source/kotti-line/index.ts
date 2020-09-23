@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtLine from './KtLine.vue'
 
 attachMeta(makeInstallable(KtLine), {

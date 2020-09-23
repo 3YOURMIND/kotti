@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtSwitch from './KtSwitch.vue'
 
 attachMeta(makeInstallable(KtSwitch), {

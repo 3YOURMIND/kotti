@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtBreadcrumb from './KtBreadcrumb.vue'
 
 attachMeta(makeInstallable(KtBreadcrumb), {

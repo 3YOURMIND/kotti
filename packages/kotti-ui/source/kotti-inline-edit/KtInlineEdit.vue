@@ -34,11 +34,14 @@ import escape from 'lodash/escape'
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
 
+import { defaultParser } from './utilities'
+
 const DEFAULT_POST_PARSER = (_) => _
 const newLineParser = (t) => t.replace(/\n/gm, '<br/>')
 
 export default {
 	name: 'KtInlineEdit',
+	defaultParser,
 	components: {
 		KtButton,
 		KtButtonGroup,

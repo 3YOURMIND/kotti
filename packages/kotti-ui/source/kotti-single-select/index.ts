@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtSingleSelect from './KtSingleSelect.vue'
 
 attachMeta(makeInstallable(KtSingleSelect), {

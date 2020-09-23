@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtDrawer from './KtDrawer.vue'
 
 attachMeta(makeInstallable(KtDrawer), {

@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtCheckbox from './KtCheckbox.vue'
 
 attachMeta(makeInstallable(KtCheckbox), {

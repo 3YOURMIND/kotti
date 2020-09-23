@@ -1,6 +1,5 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-// @ts-expect-error
 import KtRadioGroup from './KtRadioGroup.vue'
 
 attachMeta(makeInstallable(KtRadioGroup), {
