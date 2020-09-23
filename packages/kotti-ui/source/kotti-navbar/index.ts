@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtNavbar from './KtNavbar.vue'
+import KtNavbarVue from './KtNavbar.vue'
 
-attachMeta(makeInstallable(KtNavbar), {
+export const KtNavbar = attachMeta(makeInstallable(KtNavbarVue), {
 	addedVersion: '0.0.3',
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtNavbar }

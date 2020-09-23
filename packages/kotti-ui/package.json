@@ -68,7 +68,7 @@
 		"format": "prettier --write '**/*.{vue,js,json,jsx,ts,tsx,md}'",
 		"watch": "rollup -wc rollup.config.js"
 	},
-	"sideEffects": true,
+	"sideEffects": false,
 	"style": "dist/styles.css",
 	"types": "dist/esm/index.d.ts",
 	"version": "2.4.1"

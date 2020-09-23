@@ -1,6 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtDropdownMenu from './KtDropdownMenu.vue'
+import KtDropdownMenuVue from './KtDropdownMenu.vue'
 
-makeInstallable(KtDropdownMenu)
-export { KtDropdownMenu }
+export const KtDropdownMenu = attachMeta(makeInstallable(KtDropdownMenuVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})

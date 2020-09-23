@@ -1,10 +1,13 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldPassword from './KtFieldPassword.vue'
+import KtFieldPasswordVue from './KtFieldPassword.vue'
 
-makeInstallable(KtFieldPassword)
+export const KtFieldPassword = attachMeta(makeInstallable(KtFieldPasswordVue), {
+	addedVersion: '2.3.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.FieldPassword',
+	},
+})
 
-export { KtFieldPassword }
 export * from './constants'

@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtInputNumber from './KtInputNumber.vue'
+import KtInputNumberVue from './KtInputNumber.vue'
 
-attachMeta(makeInstallable(KtInputNumber), {
+export const KtInputNumber = attachMeta(makeInstallable(KtInputNumberVue), {
 	addedVersion: '0.0.4',
 	deprecated: {
 		alternatives: ['KtFieldNumber'],
@@ -11,5 +11,3 @@ attachMeta(makeInstallable(KtInputNumber), {
 	},
 	typeScript: null,
 })
-
-export { KtInputNumber }

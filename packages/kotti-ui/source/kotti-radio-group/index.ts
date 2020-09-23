@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtRadioGroup from './KtRadioGroup.vue'
+import KtRadioGroupVue from './KtRadioGroup.vue'
 
-attachMeta(makeInstallable(KtRadioGroup), {
+export const KtRadioGroup = attachMeta(makeInstallable(KtRadioGroupVue), {
 	addedVersion: 'unkown',
 	deprecated: {
 		alternatives: ['KtFieldRadioGroup'],
@@ -11,5 +11,3 @@ attachMeta(makeInstallable(KtRadioGroup), {
 	},
 	typeScript: null,
 })
-
-export { KtRadioGroup }

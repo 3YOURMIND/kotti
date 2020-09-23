@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
 
-import KtDateInput from './KtDateInput.vue'
-import KtDatePicker from './KtDatePicker.vue'
+import KtDateInputVue from './KtDateInput.vue'
+import KtDatePickerVue from './KtDatePicker.vue'
 
 const META: Kotti.Meta = {
 	addedVersion: '0.0.4',
@@ -19,7 +19,5 @@ const META: Kotti.Meta = {
 	},
 }
 
-attachMeta(makeInstallable(KtDateInput), META)
-attachMeta(makeInstallable(KtDatePicker), META)
-
-export { KtDateInput, KtDatePicker }
+export const KtDateInput = attachMeta(makeInstallable(KtDateInputVue), META)
+export const KtDatePicker = attachMeta(makeInstallable(KtDatePickerVue), META)

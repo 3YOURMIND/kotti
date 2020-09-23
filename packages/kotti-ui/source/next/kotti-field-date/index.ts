@@ -1,22 +1,46 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldDate from './KtFieldDate.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldDateRange from './KtFieldDateRange.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldDateTime from './KtFieldDateTime.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldDateTimeRange from './KtFieldDateTimeRange.vue'
+import KtFieldDateVue from './KtFieldDate.vue'
+import KtFieldDateRangeVue from './KtFieldDateRange.vue'
+import KtFieldDateTimeVue from './KtFieldDateTime.vue'
+import KtFieldDateTimeRangeVue from './KtFieldDateTimeRange.vue'
 
-makeInstallable(KtFieldDate)
-makeInstallable(KtFieldDateRange)
-makeInstallable(KtFieldDateTime)
-makeInstallable(KtFieldDateTimeRange)
+export const KtFieldDate = attachMeta(makeInstallable(KtFieldDateVue), {
+	addedVersion: '2.0.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.FieldDate',
+	},
+})
 
-export { KtFieldDate, KtFieldDateRange, KtFieldDateTime, KtFieldDateTimeRange }
+export const KtFieldDateRange = attachMeta(
+	makeInstallable(KtFieldDateRangeVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.FieldDateRange',
+		},
+	},
+)
+
+export const KtFieldDateTime = attachMeta(makeInstallable(KtFieldDateTimeVue), {
+	addedVersion: '2.0.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.FieldDateTime',
+	},
+})
+
+export const KtFieldDateTimeRange = attachMeta(
+	makeInstallable(KtFieldDateTimeRangeVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.FieldDateTimeRange',
+		},
+	},
+)
+
 export * from './constants'

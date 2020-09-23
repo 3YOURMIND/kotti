@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtSingleSelect from './KtSingleSelect.vue'
+import KtSingleSelectVue from './KtSingleSelect.vue'
 
-attachMeta(makeInstallable(KtSingleSelect), {
+export const KtSingleSelect = attachMeta(makeInstallable(KtSingleSelectVue), {
 	addedVersion: null,
 	deprecated: {
 		alternatives: ['KtFieldSingleSelect', 'KtFieldMultipleSelect'],
@@ -11,5 +11,3 @@ attachMeta(makeInstallable(KtSingleSelect), {
 	},
 	typeScript: null,
 })
-
-export { KtSingleSelect }

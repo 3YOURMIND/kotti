@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtCard from './KtCard.vue'
+import KtCardVue from './KtCard.vue'
 
-attachMeta(makeInstallable(KtCard), {
+export const KtCard = attachMeta(makeInstallable(KtCardVue), {
 	addedVersion: null,
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtCard }

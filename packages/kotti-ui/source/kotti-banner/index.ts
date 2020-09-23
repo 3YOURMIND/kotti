@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtBanner from './KtBanner.vue'
+import KtBannerVue from './KtBanner.vue'
 
-attachMeta(makeInstallable(KtBanner), {
+export const KtBanner = attachMeta(makeInstallable(KtBannerVue), {
 	addedVersion: null,
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtBanner }

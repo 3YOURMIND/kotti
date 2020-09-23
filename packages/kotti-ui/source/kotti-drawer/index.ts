@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtDrawer from './KtDrawer.vue'
+import KtDrawerVue from './KtDrawer.vue'
 
-attachMeta(makeInstallable(KtDrawer), {
+export const KtDrawer = attachMeta(makeInstallable(KtDrawerVue), {
 	addedVersion: null,
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtDrawer }

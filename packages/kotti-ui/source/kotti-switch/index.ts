@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtSwitch from './KtSwitch.vue'
+import KtSwitchVue from './KtSwitch.vue'
 
-attachMeta(makeInstallable(KtSwitch), {
+export const KtSwitch = attachMeta(makeInstallable(KtSwitchVue), {
 	addedVersion: null,
 	deprecated: {
 		alternatives: ['KtFieldToggle'],
@@ -11,5 +11,3 @@ attachMeta(makeInstallable(KtSwitch), {
 	},
 	typeScript: null,
 })
-
-export { KtSwitch }

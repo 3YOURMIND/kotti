@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtInlineEdit from './KtInlineEdit.vue'
+import KtInlineEditVue from './KtInlineEdit.vue'
 
-attachMeta(makeInstallable(KtInlineEdit), {
+export const KtInlineEdit = attachMeta(makeInstallable(KtInlineEditVue), {
 	addedVersion: null,
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtInlineEdit }

@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtCheckbox from './KtCheckbox.vue'
+import KtCheckboxVue from './KtCheckbox.vue'
 
-attachMeta(makeInstallable(KtCheckbox), {
+export const KtCheckbox = attachMeta(makeInstallable(KtCheckboxVue), {
 	addedVersion: '1.0.0',
 	deprecated: {
 		alternatives: ['KtFieldToggle'],
@@ -11,4 +11,3 @@ attachMeta(makeInstallable(KtCheckbox), {
 	},
 	typeScript: null,
 })
-export { KtCheckbox }

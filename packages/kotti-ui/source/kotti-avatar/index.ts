@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtAvatar from './KtAvatar.vue'
+import KtAvatarVue from './KtAvatar.vue'
 
-attachMeta(makeInstallable(KtAvatar), {
+export const KtAvatar = attachMeta(makeInstallable(KtAvatarVue), {
 	addedVersion: null,
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtAvatar }

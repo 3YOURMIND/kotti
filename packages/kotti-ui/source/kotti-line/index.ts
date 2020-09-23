@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtLine from './KtLine.vue'
+import KtLineVue from './KtLine.vue'
 
-attachMeta(makeInstallable(KtLine), {
+export const KtLine = attachMeta(makeInstallable(KtLineVue), {
 	addedVersion: '1.0.1',
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtLine }

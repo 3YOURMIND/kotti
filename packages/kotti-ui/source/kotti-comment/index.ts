@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
 
-import KtComment from './KtComment.vue'
-import KtCommentInput from './KtCommentInput.vue'
+import KtCommentVue from './KtComment.vue'
+import KtCommentInputVue from './KtCommentInput.vue'
 
 const META: Kotti.Meta = {
 	addedVersion: null,
@@ -10,7 +10,8 @@ const META: Kotti.Meta = {
 	typeScript: null,
 }
 
-attachMeta(makeInstallable(KtComment), META)
-attachMeta(makeInstallable(KtCommentInput), META)
-
-export { KtComment, KtCommentInput }
+export const KtComment = attachMeta(makeInstallable(KtCommentVue), META)
+export const KtCommentInput = attachMeta(
+	makeInstallable(KtCommentInputVue),
+	META,
+)

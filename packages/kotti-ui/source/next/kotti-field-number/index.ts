@@ -1,10 +1,13 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldNumber from './KtFieldNumber.vue'
+import KtFieldNumberVue from './KtFieldNumber.vue'
 
-makeInstallable(KtFieldNumber)
+export const KtFieldNumber = attachMeta(makeInstallable(KtFieldNumberVue), {
+	addedVersion: '2.0.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.FieldNumber',
+	},
+})
 
-export { KtFieldNumber }
 export * from './constants'

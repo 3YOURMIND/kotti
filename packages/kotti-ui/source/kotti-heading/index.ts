@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtHeading from './KtHeading.vue'
+import KtHeadingVue from './KtHeading.vue'
 
-attachMeta(makeInstallable(KtHeading), {
+export const KtHeading = attachMeta(makeInstallable(KtHeadingVue), {
 	addedVersion: null,
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtHeading }

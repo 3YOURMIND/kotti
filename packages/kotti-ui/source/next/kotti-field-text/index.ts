@@ -1,10 +1,13 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFieldText from './KtFieldText.vue'
+import KtFieldTextVue from './KtFieldText.vue'
 
-makeInstallable(KtFieldText)
+export const KtFieldText = attachMeta(makeInstallable(KtFieldTextVue), {
+	addedVersion: '2.0.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.FieldText',
+	},
+})
 
-export { KtFieldText }
 export * from './constants'

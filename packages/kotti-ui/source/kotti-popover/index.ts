@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
 
-import KtPopover from './KtPopover.vue'
-import KtPopoverItem from './KtPopoverItem.vue'
+import KtPopoverVue from './KtPopover.vue'
+import KtPopoverItemVue from './KtPopoverItem.vue'
 
 const META: Kotti.Meta = {
 	addedVersion: '0.0.8',
@@ -10,7 +10,5 @@ const META: Kotti.Meta = {
 	typeScript: null,
 }
 
-attachMeta(makeInstallable(KtPopover), META)
-attachMeta(makeInstallable(KtPopoverItem), META)
-
-export { KtPopover, KtPopoverItem }
+export const KtPopover = attachMeta(makeInstallable(KtPopoverVue), META)
+export const KtPopoverItem = attachMeta(makeInstallable(KtPopoverItemVue), META)

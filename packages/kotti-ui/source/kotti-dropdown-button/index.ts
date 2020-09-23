@@ -1,6 +1,12 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtDropdownButton from './KtDropdownButton.vue'
+import KtDropdownButtonVue from './KtDropdownButton.vue'
 
-makeInstallable(KtDropdownButton)
-export { KtDropdownButton }
+export const KtDropdownButton = attachMeta(
+	makeInstallable(KtDropdownButtonVue),
+	{
+		addedVersion: null,
+		deprecated: null,
+		typeScript: null,
+	},
+)

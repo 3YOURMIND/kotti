@@ -1,8 +1,8 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtDropdown from './KtDropdown.vue'
+import KtDropdownVue from './KtDropdown.vue'
 
-attachMeta(makeInstallable(KtDropdown), {
+export const KtDropdown = attachMeta(makeInstallable(KtDropdownVue), {
 	addedVersion: null,
 	deprecated: {
 		alternatives: ['KtPopover'],
@@ -11,5 +11,3 @@ attachMeta(makeInstallable(KtDropdown), {
 	},
 	typeScript: null,
 })
-
-export { KtDropdown }

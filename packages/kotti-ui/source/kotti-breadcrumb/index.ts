@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtBreadcrumb from './KtBreadcrumb.vue'
+import KtBreadcrumbVue from './KtBreadcrumb.vue'
 
-attachMeta(makeInstallable(KtBreadcrumb), {
+export const KtBreadcrumb = attachMeta(makeInstallable(KtBreadcrumbVue), {
 	addedVersion: '0.0.5',
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtBreadcrumb }

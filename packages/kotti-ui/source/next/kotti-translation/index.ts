@@ -1,8 +1,16 @@
-import { makeInstallable } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-import { KtTranslationContext } from './KtTranslationContext'
+import { KtTranslationContext as KtTranslationContextVue } from './KtTranslationContext'
 
-makeInstallable(KtTranslationContext)
+export const KtTranslationContext = attachMeta(
+	makeInstallable(KtTranslationContextVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.Translation',
+		},
+	},
+)
 
-export { KtTranslationContext }
 export * from './constants'

@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtUserMenu from './KtUserMenu.vue'
+import KtUserMenuVue from './KtUserMenu.vue'
 
-attachMeta(makeInstallable(KtUserMenu), {
+export const KtUserMenu = attachMeta(makeInstallable(KtUserMenuVue), {
 	addedVersion: '0.0.3',
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtUserMenu }

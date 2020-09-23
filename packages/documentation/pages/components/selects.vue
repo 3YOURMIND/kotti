@@ -187,7 +187,7 @@ async asyncFind(query) {
 
 </template>
 
-<script lang="ts">
+<script>
 import { KtSingleSelect } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '../../components/ComponentInfo.vue'

@@ -1,31 +1,46 @@
-import { Kotti } from '../../types'
-import { makeInstallable, attachMeta } from '../utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFormControllerList from './controllers/KtFormControllerList.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFormControllerObject from './controllers/KtFormControllerObject.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtForm from './KtForm.vue'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import KtFormSubmit from './KtFormSubmit.vue'
+import KtFormControllerListVue from './controllers/KtFormControllerList.vue'
+import KtFormControllerObjectVue from './controllers/KtFormControllerObject.vue'
+import KtFormVue from './KtForm.vue'
+import KtFormSubmitVue from './KtFormSubmit.vue'
 
-const META: Kotti.Meta = {
+export const KtFormControllerList = attachMeta(
+	makeInstallable(KtFormControllerListVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.FormControllerList',
+		},
+	},
+)
+
+export const KtFormControllerObject = attachMeta(
+	makeInstallable(KtFormControllerObjectVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		typeScript: {
+			namespace: 'Kotti.FormControllerObject',
+		},
+	},
+)
+
+export const KtFormSubmit = attachMeta(makeInstallable(KtFormSubmitVue), {
+	addedVersion: '2.0.0',
+	deprecated: null,
+	typeScript: {
+		namespace: 'Kotti.FormSubmit',
+	},
+})
+
+export const KtForm = attachMeta(makeInstallable(KtFormVue), {
 	addedVersion: '2.0.0',
 	deprecated: null,
 	typeScript: {
 		namespace: 'Kotti.Form',
 	},
-}
+})
 
-attachMeta(makeInstallable(KtForm), META)
-attachMeta(makeInstallable(KtFormControllerList), META)
-attachMeta(makeInstallable(KtFormControllerObject), META)
-attachMeta(makeInstallable(KtFormSubmit), META)
-
-export { KtForm, KtFormControllerList, KtFormControllerObject, KtFormSubmit }
 export * from './constants'

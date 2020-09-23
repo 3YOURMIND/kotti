@@ -1,6 +1,9 @@
-import { makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtButtonGroup from './KtButtonGroup.vue'
+import KtButtonGroupVue from './KtButtonGroup.vue'
 
-makeInstallable(KtButtonGroup)
-export { KtButtonGroup }
+export const KtButtonGroup = attachMeta(makeInstallable(KtButtonGroupVue), {
+	addedVersion: null,
+	deprecated: null,
+	typeScript: null,
+})

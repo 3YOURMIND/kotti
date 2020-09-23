@@ -1,11 +1,9 @@
 import { attachMeta, makeInstallable } from '../next/utilities'
 
-import KtStep from './KtStep.vue'
+import KtStepVue from './KtStep.vue'
 
-attachMeta(makeInstallable(KtStep), {
+export const KtStep = attachMeta(makeInstallable(KtStepVue), {
 	addedVersion: '1.1.0',
 	deprecated: null,
 	typeScript: null,
 })
-
-export { KtStep }
