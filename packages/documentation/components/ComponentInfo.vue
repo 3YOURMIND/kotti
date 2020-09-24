@@ -119,19 +119,34 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import '@3yourmind/kotti-ui/dist/variables.scss';
+
 $radius: 3px;
 
 .component-info {
 	display: flex;
-	align-items: center;
+
+	@media (max-width: #{$size-lg - 1px}) {
+		flex-direction: column;
+		align-items: flex-start;
+
+		> *:not(:first-child) {
+			margin-top: 5px;
+		}
+	}
+
+	@media (min-width: $size-lg) {
+		flex-direction: row;
+		align-items: center;
+
+		> *:not(:first-child) {
+			margin-left: 20px;
+		}
+	}
 
 	> * {
 		display: flex;
 		margin: 0;
-	}
-
-	> *:not(:first-child) {
-		margin-left: 20px;
 	}
 
 	&__label {

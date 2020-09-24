@@ -768,14 +768,26 @@ h3 {
 	border: 1px solid var(--ui-02);
 	border-radius: $border-radius;
 
+	@media (max-width: #{$size-lg - 1px}) {
+		flex-direction: column;
+
+		> *:not(:first-child) {
+			border-top: 1px solid var(--ui-02);
+		}
+	}
+
+	@media (min-width: $size-lg) {
+		flex-direction: row;
+
+		> *:not(:last-child) {
+			border-right: 1px solid var(--ui-02);
+		}
+	}
+
 	> * {
 		flex: 1;
 		padding: 1.5em;
 		margin: 0 !important;
-	}
-
-	> *:not(:last-child) {
-		border-right: 1px solid var(--ui-02);
 	}
 }
 
@@ -794,6 +806,18 @@ h3 {
 .overview {
 	display: flex;
 	margin-bottom: 20px;
+
+	@media (max-width: #{$size-lg - 1px}) {
+		flex-direction: column;
+
+		> *:not(:first-child) {
+			margin-top: 5px;
+		}
+	}
+
+	@media (min-width: $size-lg) {
+		flex-direction: row;
+	}
 
 	> * {
 		flex: 1;
