@@ -779,13 +779,16 @@ h3 {
 	@media (min-width: $size-lg) {
 		flex-direction: row;
 
+		> * {
+			flex: 1;
+		}
+
 		> *:not(:last-child) {
 			border-right: 1px solid var(--ui-02);
 		}
 	}
 
 	> * {
-		flex: 1;
 		padding: 1.5em;
 		margin: 0 !important;
 	}
@@ -818,6 +821,11 @@ h3 {
 	@media (min-width: $size-lg) {
 		flex-direction: row;
 
+		> * {
+			flex: 1;
+			flex-basis: 0;
+		}
+
 		&__code > pre {
 			max-width: 400px;
 		}
@@ -827,11 +835,6 @@ h3 {
 				margin-right: 20px;
 			}
 		}
-	}
-
-	> * {
-		flex: 1;
-		flex-basis: 0;
 	}
 
 	&__component {
