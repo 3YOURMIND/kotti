@@ -11,8 +11,14 @@
 				class="component-info__label"
 				:style="`--background-color: ${label.backgroundColor}; --color: ${label.color}`"
 			>
-				<div class="component-info__label__left">{{ label.left }}</div>
-				<div class="component-info__label__right">{{ label.right }}</div>
+				<div class="component-info__label__left" v-text="label.left" />
+				<a
+					v-if="label.link"
+					class="component-info__label__right"
+					:href="label.link"
+					v-text="label.right"
+				/>
+				<div v-else class="component-info__label__right" v-text="label.right" />
 			</div>
 		</div>
 		<article v-if="meta.deprecated !== null" class="danger-block">
@@ -69,6 +75,7 @@ export default defineComponent({
 					backgroundColor: string
 					color: string
 					left: string
+					link?: string
 					right: string
 				}> = []
 
@@ -93,10 +100,14 @@ export default defineComponent({
 						backgroundColor: 'var(--green-20)',
 						color: 'var(--green-70)',
 						left: 'Added',
-						right:
-							props.meta.addedVersion === null
-								? 'unknown'
-								: `v${props.meta.addedVersion}`,
+						...(props.meta.addedVersion === null
+							? {
+									right: 'unknown',
+							  }
+							: {
+									link: `https://github.com/3YOURMIND/kotti/releases/tag/v${props.meta.addedVersion}`,
+									right: `v${props.meta.addedVersion}`,
+							  }),
 					})
 				}
 
@@ -131,6 +142,12 @@ $radius: 3px;
 		&__left,
 		&__right {
 			padding: 2px 8px;
+		}
+
+		a.component-info__label__right {
+			&:hover {
+				text-decoration: underline;
+			}
 		}
 
 		&__left {
