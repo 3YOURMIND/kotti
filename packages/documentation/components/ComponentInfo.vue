@@ -189,11 +189,11 @@ $radius: 3px;
 }
 
 .danger-block {
-	border-radius: $radius;
-
 	color: var(--red-70);
 	background: var(--support-error-light);
+
 	border: 1px solid var(--support-error-dark);
+	border-radius: $radius;
 
 	a {
 		color: inherit;

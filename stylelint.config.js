@@ -17,5 +17,11 @@ module.exports = {
 		'scss/no-duplicate-dollar-variables': true,
 		'csstree/validator': true,
 		'plugin/stylelint-selector-no-empty': true,
+		'selector-pseudo-element-no-unknown': [
+			true,
+			{
+				ignorePseudoElements: ['v-deep'],
+			},
+		],
 	},
 }
