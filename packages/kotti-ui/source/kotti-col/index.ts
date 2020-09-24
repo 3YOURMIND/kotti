@@ -6,12 +6,8 @@ import {
 } from '@vue/composition-api'
 
 import { KT_ROW_CONTEXT } from '../kotti-row/constants'
-import { KottiRow } from '../kotti-row/types'
 import { attachMeta, makeInstallable } from '../next/utilities'
-
-type MediaQueryProps = {
-	[KEY in 'lg' | 'md' | 'sm' | 'xl' | 'xs']: number | null
-}
+import { Kotti } from '../types'
 
 export const KtCol = attachMeta(
 	makeInstallable(
@@ -29,17 +25,8 @@ export const KtCol = attachMeta(
 				xl: { default: null, type: Number },
 				xs: { default: null, type: Number },
 			},
-			setup(
-				props: {
-					offset: number | null
-					pull: number | null
-					push: number | null
-					span: number
-					tag: string
-				} & MediaQueryProps,
-				{ slots },
-			) {
-				const context = inject<KottiRow.Context | null>(KT_ROW_CONTEXT, null)
+			setup(props: Kotti.Col.PropsInternal, { slots }) {
+				const context = inject<Kotti.Row.Context | null>(KT_ROW_CONTEXT, null)
 
 				const style = computed(() => {
 					if (context === null) return undefined
