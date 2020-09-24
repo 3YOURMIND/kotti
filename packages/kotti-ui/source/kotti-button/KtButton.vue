@@ -93,12 +93,14 @@ export default {
 		text-transform: none;
 	}
 
-	&--is-block {
+	// increase selector specificity by using .kt-button twice
+	&--is-block.kt-button {
 		display: flex;
 		width: 100%;
 	}
 
-	&--is-multiline {
+	// increase selector specificity by using .kt-button twice
+	&--is-multiline.kt-button {
 		height: auto;
 		padding-top: var(--unit-1);
 		padding-bottom: var(--unit-1);
