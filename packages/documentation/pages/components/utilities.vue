@@ -139,7 +139,7 @@
 export default { name: 'KtUtilitiesDoc' }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .element-example span {
 	padding: 8px;
 	margin-right: 8px;

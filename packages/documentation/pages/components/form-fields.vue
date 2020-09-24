@@ -748,8 +748,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-@import '@3yourmind/kotti-ui/source/kotti-style/_variables.scss';
+<style lang="scss" scoped>
+@import '@3yourmind/kotti-ui/dist/variables.scss';
 
 li {
 	list-style: none;
@@ -761,7 +761,7 @@ h3 {
 
 .wrapper {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	margin: 0;
 	margin-bottom: 1.5em;
 	background-color: var(--ui-01);
@@ -817,6 +817,16 @@ h3 {
 
 	@media (min-width: $size-lg) {
 		flex-direction: row;
+
+		&__code > pre {
+			max-width: 400px;
+		}
+
+		&__component {
+			> * {
+				margin-right: 20px;
+			}
+		}
 	}
 
 	> * {
@@ -834,14 +844,9 @@ h3 {
 				font-family: monospace;
 			}
 		}
-
-		> * {
-			margin-right: 20px;
-		}
 	}
 
 	&__code > pre {
-		max-width: 400px;
 		height: 150px;
 		margin: 0;
 		overflow: scroll;

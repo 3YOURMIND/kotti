@@ -260,7 +260,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@3yourmind/kotti-ui/source/kotti-style/_variables.scss';
 
 .address-controller {
@@ -335,7 +335,6 @@ h3 {
 
 .wrapper {
 	display: flex;
-	flex-direction: row;
 	margin: 0;
 	margin-bottom: 1.5em;
 	background-color: var(--ui-01);
@@ -348,8 +347,20 @@ h3 {
 		margin: 0 !important;
 	}
 
-	> *:not(:last-child) {
-		border-right: 1px solid var(--ui-02);
+	@media (max-width: #{$size-lg - 1px}) {
+		flex-direction: column;
+
+		> *:not(:first-child) {
+			border-top: 1px solid var(--ui-02);
+		}
+	}
+
+	@media (min-width: $size-lg) {
+		flex-direction: row;
+
+		> *:not(:last-child) {
+			border-right: 1px solid var(--ui-02);
+		}
 	}
 }
 </style>

@@ -44,6 +44,7 @@ export default {
 	max-width: 40rem;
 	margin: 0 auto;
 }
+
 .content img {
 	max-width: 100%;
 }

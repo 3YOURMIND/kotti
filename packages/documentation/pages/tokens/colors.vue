@@ -8,7 +8,7 @@ We encourage you to replace usage of kotti colors with kotti color tokens.
 ## List of tokens
 This list is automatically generated so you can consider it a source of truth.
 
-<KtTable :rows="tokenColorsFactory.array">
+<KtTable :rows="tokenColorsFactory.array" class="colorize">
   <KtTableColumn label="Name" :renderCell="renderColorVar" prop="name"/>
   <KtTableColumn label="Refers to" :renderCell="renderColorVar" prop="reference"/>
   <KtTableColumn label="Color" prop="" :renderCell="renderColor"/>
@@ -68,8 +68,8 @@ export default {
 }
 </script>
 
-<style>
-.color-box {
+<style lang="scss" scoped>
+.colorize ::v-deep .color-box {
 	width: 50px;
 	height: 50px;
 	margin: 8px;
