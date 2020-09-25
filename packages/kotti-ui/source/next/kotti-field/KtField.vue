@@ -21,11 +21,18 @@
 					class="kt-field__header__help-text"
 					:class="iconClasses(['interactive'])"
 				>
-					<div class="kt-field__header__help-text__icon">
+					<div
+						ref="helpTextIcon"
+						class="kt-field__header__help-text__icon"
+						@mouseenter="() => (isTooltipHovered = true)"
+						@mouseleave="() => (isTooltipHovered = false)"
+					>
 						<i class="yoco" v-text="Yoco.Icon.CIRCLE_QUESTION" />
 					</div>
 					<div
+						v-if="isTooltipHovered"
 						class="kt-field__header__help-text__tooltip"
+						:class="tooltipPosition"
 						v-text="field.helpText"
 					/>
 				</div>
@@ -101,6 +108,8 @@ import { useTranslationNamespace } from '../kotti-translation/hooks'
 
 import { KottiField } from './types'
 
+const ONE_HOUNDRED_UNITS = 100
+
 export default defineComponent({
 	name: 'KtField',
 	props: {
@@ -120,8 +129,9 @@ export default defineComponent({
 			isGroup: boolean
 			getEmptyValue: () => DATA_TYPE
 		},
-		{ emit }: SetupContext,
+		{ emit, refs }: SetupContext,
 	) {
+		const isTooltipHovered = ref(false)
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === null),
@@ -145,6 +155,7 @@ export default defineComponent({
 				),
 			]),
 			inputContainerRef: ref(null),
+			isTooltipHovered,
 			labelSuffix: computed(
 				() =>
 					`(${
@@ -154,6 +165,11 @@ export default defineComponent({
 					})`,
 			),
 			showValidation,
+			tooltipPosition: computed(() => {
+				if (!isTooltipHovered.value) return []
+				const iconPosition = refs.helpTextIcon.getBoundingClientRect().top
+				return iconPosition > ONE_HOUNDRED_UNITS ? ['above'] : ['below']
+			}),
 			validationText: computed(() =>
 				props.field.validation.type === null
 					? null
@@ -282,21 +298,24 @@ export default defineComponent({
 
 			&__tooltip {
 				position: absolute;
-				bottom: 20px;
-				display: none;
-				padding: 0.25em;
-				color: var(--support-info);
+				width: max-content;
+				max-width: 12rem;
+				max-height: 7em;
+				padding: 0.75em 1em;
+				overflow: scroll;
+				color: var(--gray-10);
 				cursor: none;
-				background-color: var(--ui-01);
+				background-color: var(--gray-80);
 				border: 1px solid var(--ui-02);
 				border-radius: var(--field-border-radius);
 				transform: translateX(calc(-50% + 5px));
 			}
+			.above {
+				bottom: 20px;
+			}
 
-			&:hover {
-				.kt-field__header__help-text__tooltip {
-					display: block;
-				}
+			.below {
+				top: 20px;
 			}
 		}
 
