@@ -298,6 +298,7 @@ export default defineComponent({
 
 			&__tooltip {
 				position: absolute;
+				z-index: 1; // fix weird layout issues with el-select
 				width: max-content;
 				max-width: 12rem;
 				max-height: 7em;
