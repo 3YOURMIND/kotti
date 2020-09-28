@@ -305,7 +305,7 @@ export default defineComponent({
 				overflow: scroll;
 				color: var(--gray-10);
 				cursor: none;
-				background-color: var(--gray-80);
+				background-color: var(--ui-04);
 				border: 1px solid var(--ui-02);
 				border-radius: var(--field-border-radius);
 				transform: translateX(calc(-50% + 5px));
