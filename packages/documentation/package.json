@@ -2,8 +2,14 @@
 	"dependencies": {
 		"@3yourmind/kotti-ui": "*",
 		"@3yourmind/yoco": "*",
+		"@octokit/rest": "^18.0.6",
+		"@octokit/types": "^5.5.0",
 		"core-js": "^3.6.5",
-		"lodash": "^4.17.19"
+		"dayjs": "^1.9.1",
+		"lodash": "^4.17.19",
+		"marked": "^1.2.0",
+		"natural-sort": "^1.0.0",
+		"vue-clipboard2": "^0.3.1"
 	},
 	"description": "Kotti-ui Doc Pages",
 	"devDependencies": {
@@ -17,11 +23,11 @@
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@nuxtjs/style-resources": "^1.0.0",
 		"@types/lodash": "^4.14.157",
+		"@types/marked": "^1.1.0",
+		"@types/natural-sort": "^0.0.20",
 		"case-sensitive-paths-webpack-plugin": "^2.3.0",
 		"css-vars-ponyfill": "^2.2.0",
-		"dayjs": "^1.8.20",
-		"nuxt": "^2.13.3",
-		"vue-clipboard2": "^0.3.1"
+		"nuxt": "^2.13.3"
 	},
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
