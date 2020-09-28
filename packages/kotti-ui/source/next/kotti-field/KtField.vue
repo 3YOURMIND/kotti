@@ -20,13 +20,10 @@
 					v-if="field.helpText"
 					class="kt-field__header__help-text"
 					:class="iconClasses(['interactive'])"
+					@mouseenter="() => (isTooltipHovered = true)"
+					@mouseleave="() => (isTooltipHovered = false)"
 				>
-					<div
-						ref="helpTextIcon"
-						class="kt-field__header__help-text__icon"
-						@mouseenter="() => (isTooltipHovered = true)"
-						@mouseleave="() => (isTooltipHovered = false)"
-					>
+					<div ref="helpTextIcon" class="kt-field__header__help-text__icon">
 						<i class="yoco" v-text="Yoco.Icon.CIRCLE_QUESTION" />
 					</div>
 					<div
@@ -168,7 +165,9 @@ export default defineComponent({
 			tooltipPosition: computed(() => {
 				if (!isTooltipHovered.value) return []
 				const iconPosition = refs.helpTextIcon.getBoundingClientRect().top
-				return iconPosition > ONE_HOUNDRED_UNITS ? ['above'] : ['below']
+				return `kt-field__header__help-text__tooltip--is-${
+					iconPosition > ONE_HOUNDRED_UNITS ? 'above' : 'below'
+				}`
 			}),
 			validationText: computed(() =>
 				props.field.validation.type === null
@@ -310,13 +309,16 @@ export default defineComponent({
 				border: 1px solid var(--ui-02);
 				border-radius: var(--field-border-radius);
 				transform: translateX(calc(-50% + 5px));
-			}
-			.above {
-				bottom: 20px;
-			}
 
-			.below {
-				top: 20px;
+				&--is-above {
+					// place exactly above so the user can hover the tooltip to scroll without leaving the element
+					bottom: 100%;
+				}
+
+				&--is-below {
+					// place exactly below so the user can hover the tooltip to scroll without leaving the element
+					top: 100%;
+				}
 			}
 		}
 
