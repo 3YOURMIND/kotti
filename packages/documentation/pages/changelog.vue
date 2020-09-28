@@ -187,8 +187,4 @@ h3 {
 		border-right: 1px solid var(--color);
 	}
 }
-
-> *:not(:first-child) {
-	margin-left: 10px;
-}
 </style>
