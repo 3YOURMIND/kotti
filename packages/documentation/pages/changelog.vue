@@ -129,6 +129,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+section ::v-deep img {
+	display: block;
+}
+
 section:not(:first-of-type) {
 	margin-top: 64px;
 }
