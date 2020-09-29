@@ -2,13 +2,13 @@
 	<div>
 		<h1>Changelog</h1>
 		<section v-for="release in sortedReleases" :key="release.tag_name">
-			<h3>
+			<h2>
 				<a
 					:href="`#${release.tag_name}`"
 					:name="release.tag_name"
 					v-text="release.name"
 				/>
-			</h3>
+			</h2>
 			<div class="tags">
 				<div
 					class="tag"
@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<!-- eslint-disable-next-line vue/no-v-html -->
-			<div v-html="renderMarkdown(release.body)" />
+			<div class="content" v-html="renderMarkdown(release.body)" />
 		</section>
 	</div>
 </template>
@@ -131,13 +131,16 @@ export default defineComponent({
 <style lang="scss" scoped>
 section ::v-deep img {
 	display: block;
+	overflow: hidden;
+	border: 1px solid var(--ui-02);
+	border-radius: 5px;
 }
 
 section:not(:first-of-type) {
 	margin-top: 64px;
 }
 
-h3 {
+h2 {
 	display: flex;
 	align-items: center;
 
@@ -190,5 +193,9 @@ h3 {
 		background-color: var(--background-color);
 		border-right: 1px solid var(--color);
 	}
+}
+
+.content {
+	margin-top: 16px;
 }
 </style>
