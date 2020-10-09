@@ -1,6 +1,12 @@
 <template>
 	<KtField v-bind="{ field }" :getEmptyValue="() => null">
-		<div class="kt-field-number">
+		<div
+			class="kt-field-number"
+			:class="{
+				'kt-field-number--is-hide-change-buttons': hideChangeButtons,
+				'kt-field-number--has-maximum': showMaximum && maximum !== null,
+			}"
+		>
 			<div
 				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
@@ -104,8 +110,6 @@ export default defineComponent({
 		const showMaximum = computed(
 			() => props.maximum !== null && !props.hideMaximum,
 		)
-
-		//methods
 
 		watch(
 			() => field.currentValue,
@@ -264,8 +268,13 @@ export default defineComponent({
 .kt-field-number {
 	display: flex;
 	align-items: center;
-
 	font-variant-numeric: tabular-nums;
+	
+  &--is-hide-change-buttons:not(&--has-maximum) {
+		.kt-field-number__middle__input {
+			text-align: left;
+		}
+	}
 
 	&__button {
 		display: flex;
