@@ -265,6 +265,8 @@ export default defineComponent({
 	display: flex;
 	align-items: center;
 
+	font-variant-numeric: tabular-nums;
+
 	&__button {
 		display: flex;
 		align-items: center;
