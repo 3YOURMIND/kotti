@@ -73,5 +73,5 @@
 	],
 	"style": "dist/styles.css",
 	"types": "dist/esm/index.d.ts",
-	"version": "2.5.1"
+	"version": "2.5.2"
 }
