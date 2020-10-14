@@ -167,7 +167,10 @@ export default defineComponent({
 			showValidation,
 			tooltipPositionClass: computed(() => {
 				if (!isTooltipHovered.value) return []
-				const iconPosition = helpTextIconRef.value?.getBoundingClientRect().top
+				const iconPosition =
+					helpTextIconRef.value?.getBoundingClientRect().top ?? null
+
+				if (iconPosition === null) return ''
 
 				return `kt-field__header__help-text__tooltip--is-${
 					iconPosition > ONE_HOUNDRED_UNITS ? 'above' : 'below'
