@@ -23,13 +23,13 @@
 					@mouseenter="() => (isTooltipHovered = true)"
 					@mouseleave="() => (isTooltipHovered = false)"
 				>
-					<div ref="helpTextIcon" class="kt-field__header__help-text__icon">
+					<div ref="helpTextIconRef" class="kt-field__header__help-text__icon">
 						<i class="yoco" v-text="Yoco.Icon.CIRCLE_QUESTION" />
 					</div>
 					<div
 						v-if="isTooltipHovered"
 						class="kt-field__header__help-text__tooltip"
-						:class="tooltipPosition"
+						:class="tooltipPositionClass"
 						v-text="field.helpText"
 					/>
 				</div>
@@ -126,9 +126,11 @@ export default defineComponent({
 			isGroup: boolean
 			getEmptyValue: () => DATA_TYPE
 		},
-		{ emit, refs }: SetupContext,
+		{ emit },
 	) {
+		const helpTextIconRef = ref<Element>(null)
 		const isTooltipHovered = ref(false)
+
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === null),
@@ -151,6 +153,7 @@ export default defineComponent({
 					(modification) => `kt-field__input-container__icon--${modification}`,
 				),
 			]),
+			helpTextIconRef,
 			inputContainerRef: ref(null),
 			isTooltipHovered,
 			labelSuffix: computed(
@@ -162,9 +165,10 @@ export default defineComponent({
 					})`,
 			),
 			showValidation,
-			tooltipPosition: computed(() => {
+			tooltipPositionClass: computed(() => {
 				if (!isTooltipHovered.value) return []
-				const iconPosition = refs.helpTextIcon.getBoundingClientRect().top
+				const iconPosition = helpTextIconRef.value?.getBoundingClientRect().top
+
 				return `kt-field__header__help-text__tooltip--is-${
 					iconPosition > ONE_HOUNDRED_UNITS ? 'above' : 'below'
 				}`
