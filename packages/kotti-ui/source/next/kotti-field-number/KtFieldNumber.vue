@@ -269,8 +269,8 @@ export default defineComponent({
 	display: flex;
 	align-items: center;
 	font-variant-numeric: tabular-nums;
-	
-  &--is-hide-change-buttons:not(&--has-maximum) {
+
+	&--is-hide-change-buttons:not(&--has-maximum) {
 		.kt-field-number__middle__input {
 			text-align: left;
 		}
