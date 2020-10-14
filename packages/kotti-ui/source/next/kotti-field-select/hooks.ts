@@ -131,6 +131,42 @@ const useSelectInputSizeFix = <DATA_TYPE extends Values>({
 	})
 }
 
+/**
+ * @summary HACK: Prevent Google Chrome from autocompleting the search field
+ *
+ * @description
+ * chrome 66+ shows suggestions for saved autofill data,
+ * through intelligent detection, recognizing "address" fields, for instance,
+ * and suggesting autofills.
+ *
+ * using `autocomplete="off" on `input` of `type="text"` would not work to disable autofill
+ *
+ * @see {@link https://gist.github.com/niksumeiko/360164708c3b326bd1c8#gistcomment-2032962} for suggested fixes
+ * @see {@link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill-expectation-mantle} for more information on the autocomplete attribute and accepted values
+ * @see {@link https://bugs.chromium.org/p/chromium/issues/detail?id=370363#c7} for more information on the autocomplete tokens for password fields
+ */
+const useSelectInputTypeFix = <DATA_TYPE extends Values>({
+	elSelectRef,
+	inputSelectors,
+	ktFieldRef,
+}: Pick<
+	HookParameters<DATA_TYPE>,
+	'elSelectRef' | 'inputSelectors' | 'ktFieldRef'
+>) => {
+	onMounted(() => {
+		const { ktFieldComponent } = getComponents({ elSelectRef, ktFieldRef })
+
+		const ktFieldContainerElement = ktFieldComponent.$refs
+			.inputContainerRef as Element
+
+		inputSelectors.forEach((query) =>
+			ktFieldContainerElement
+				.querySelector(query)
+				?.setAttribute('type', 'search'),
+		)
+	})
+}
+
 export const useSelectFixes = <DATA_TYPE extends Values>({
 	elSelectRef,
 	field,
@@ -141,4 +177,5 @@ export const useSelectFixes = <DATA_TYPE extends Values>({
 	usePopperPlacementFix({ elSelectRef, ktFieldRef })
 	usePopperWidthFix({ elSelectRef, field, ktFieldRef })
 	useSelectInputSizeFix({ elSelectRef, inputSelectors, ktFieldRef })
+	useSelectInputTypeFix({ elSelectRef, inputSelectors, ktFieldRef })
 }
