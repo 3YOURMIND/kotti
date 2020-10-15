@@ -94,12 +94,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import {
-	defineComponent,
-	computed,
-	ref,
-	SetupContext,
-} from '@vue/composition-api'
+import { defineComponent, computed, ref } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
