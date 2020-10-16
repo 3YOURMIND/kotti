@@ -108,6 +108,7 @@ or
 ```
 # having to build should hopefully be resolved in a future update
 yarn workspace @3yourmind/sass-node-modules-importer run build
+yarn workspace @3yourmind/yoco run build
 yarn workspace @3yourmind/kotti-ui run build
 # serve at http://localhost:3000
 yarn workspace @3yourmind/documentation run serve
