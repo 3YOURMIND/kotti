@@ -23,13 +23,13 @@
 					@mouseenter="() => (isTooltipHovered = true)"
 					@mouseleave="() => (isTooltipHovered = false)"
 				>
-					<div ref="helpTextIcon" class="kt-field__header__help-text__icon">
+					<div ref="helpTextIconRef" class="kt-field__header__help-text__icon">
 						<i class="yoco" v-text="Yoco.Icon.CIRCLE_QUESTION" />
 					</div>
 					<div
 						v-if="isTooltipHovered"
 						class="kt-field__header__help-text__tooltip"
-						:class="tooltipPosition"
+						:class="tooltipPositionClass"
 						v-text="field.helpText"
 					/>
 				</div>
@@ -94,12 +94,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import {
-	defineComponent,
-	computed,
-	ref,
-	SetupContext,
-} from '@vue/composition-api'
+import { defineComponent, computed, ref } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
@@ -126,9 +121,11 @@ export default defineComponent({
 			isGroup: boolean
 			getEmptyValue: () => DATA_TYPE
 		},
-		{ emit, refs }: SetupContext,
+		{ emit },
 	) {
+		const helpTextIconRef = ref<Element | null>(null)
 		const isTooltipHovered = ref(false)
+
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === null),
@@ -151,7 +148,8 @@ export default defineComponent({
 					(modification) => `kt-field__input-container__icon--${modification}`,
 				),
 			]),
-			inputContainerRef: ref(null),
+			helpTextIconRef,
+			inputContainerRef: ref<Element | null>(null),
 			isTooltipHovered,
 			labelSuffix: computed(
 				() =>
@@ -162,9 +160,13 @@ export default defineComponent({
 					})`,
 			),
 			showValidation,
-			tooltipPosition: computed(() => {
+			tooltipPositionClass: computed(() => {
 				if (!isTooltipHovered.value) return []
-				const iconPosition = refs.helpTextIcon.getBoundingClientRect().top
+				const iconPosition =
+					helpTextIconRef.value?.getBoundingClientRect().top ?? null
+
+				if (iconPosition === null) return ''
+
 				return `kt-field__header__help-text__tooltip--is-${
 					iconPosition > ONE_HOUNDRED_UNITS ? 'above' : 'below'
 				}`
