@@ -11,6 +11,7 @@ export enum Icon {
 	BURGER = 'burger',
 	CAD = 'cad',
 	CALENDAR = 'calendar',
+	CALENDAR_CLOCK = 'calendar_clock',
 	CAMERA = 'camera',
 	CAMERA_SWITCH = 'camera_switch',
 	CARD = 'card',
