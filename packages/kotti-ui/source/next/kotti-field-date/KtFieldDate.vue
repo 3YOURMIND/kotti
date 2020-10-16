@@ -47,8 +47,8 @@ export default defineComponent({
 			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
-		const elDateRef = ref<ElDateWithInternalAPI>(null)
-		const inputContainerRef = ref<Element>(null)
+		const elDateRef = ref<ElDateWithInternalAPI | null>(null)
+		const inputContainerRef = ref<Element | null>(null)
 
 		usePicker({
 			elDateRef,

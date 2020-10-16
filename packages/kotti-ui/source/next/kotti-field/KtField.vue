@@ -123,7 +123,7 @@ export default defineComponent({
 		},
 		{ emit },
 	) {
-		const helpTextIconRef = ref<Element>(null)
+		const helpTextIconRef = ref<Element | null>(null)
 		const isTooltipHovered = ref(false)
 
 		const validationType = computed(() => props.field.validation.type)
@@ -149,7 +149,7 @@ export default defineComponent({
 				),
 			]),
 			helpTextIconRef,
-			inputContainerRef: ref(null),
+			inputContainerRef: ref<Element | null>(null),
 			isTooltipHovered,
 			labelSuffix: computed(
 				() =>
