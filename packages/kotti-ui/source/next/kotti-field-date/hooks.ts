@@ -82,9 +82,8 @@ const useInputDecoration = <DATA_TYPE extends Values>({
 		// DO NOT misuse `append` in a hook that will retriger multiple times in the same lifecycle;
 		// make sure the node you're adding is not already there (see other usage here) OR use `innerHTML`
 		prefixIcon?.append(
-			// TODO: add the dateTime yoco Icon when it's added, instead of `CLOCK`
 			prefixIcon.classList.contains('el-icon-time')
-				? Yoco.Icon.CLOCK
+				? Yoco.Icon.CALENDAR_CLOCK
 				: Yoco.Icon.CALENDAR,
 		)
 	})
