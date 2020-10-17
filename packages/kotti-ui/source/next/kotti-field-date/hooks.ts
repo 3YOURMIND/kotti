@@ -176,11 +176,9 @@ const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 			)
 			innerInputsWrapper.forEach((input) =>
 				input.classList.add(
-					...[
-						'kt-field__wrapper',
-						'kt-field__wrapper--is-small',
-						'kt-field__wrapper--no-validation',
-					],
+					'kt-field__wrapper',
+					'kt-field__wrapper--is-small',
+					'kt-field__wrapper--is-validation-empty',
 				),
 			)
 

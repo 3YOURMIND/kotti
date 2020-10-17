@@ -106,7 +106,7 @@ export default defineComponent({
 .kt-field__wrapper {
 	@include validations using ($type) {
 		&:not(.kt-field__wrapper--disabled) {
-			@if $type != no-validation {
+			@if $type != empty {
 				/* stylelint-disable */
 				.kt-field-text-area__wrapper {
 					border-color: var(--support-#{$type}-light);
@@ -114,7 +114,8 @@ export default defineComponent({
 			}
 
 			&:focus-within {
-				--support-no-validation-light: var(--interactive-05);
+				--support-empty-light: var(--interactive-05);
+
 				.kt-field-text-area__wrapper {
 					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 					border-color: var(--support-#{$type}-light);

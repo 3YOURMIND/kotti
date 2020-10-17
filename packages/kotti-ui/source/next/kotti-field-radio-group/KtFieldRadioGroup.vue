@@ -183,7 +183,7 @@ export default defineComponent({
 
 .kt-field__wrapper {
 	@include validations using ($type) {
-		@if $type != no-validation {
+		@if $type != empty {
 			&:not(.kt-field__wrapper--disabled) {
 				.kt-field-radio-group__wrapper {
 					/* stylelint-disable */

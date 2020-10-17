@@ -109,7 +109,7 @@ export default defineComponent({
 
 .kt-field__wrapper {
 	@include validations using ($type) {
-		@if $type != no-validation {
+		@if $type != empty {
 			:not(.kt-field-toggle__inner--is-disabled) {
 				.kt-field-toggle-box {
 					/* stylelint-disable */
@@ -125,7 +125,7 @@ export default defineComponent({
 	}
 
 	&:focus-within {
-		&.kt-field__wrapper--no-validation {
+		&.kt-field__wrapper--is-validation-empty {
 			.kt-field-toggle-box {
 				@include toggle-colors(
 					var(--interactive-03),

@@ -95,7 +95,7 @@ describe('KtFormControllerList', () => {
 						testKey: (v: unknown) =>
 							v === 'testName1'
 								? { type: 'error', text: 'test1' }
-								: { type: null },
+								: { type: 'empty' },
 					},
 					value: {
 						parentKey: [{ testKey: 'testName1' }, { testKey: 'testName2' }],
@@ -112,7 +112,7 @@ describe('KtFormControllerList', () => {
 		const row2Field = getField(wrapper, 1)
 		expect(row2Field.currentValue).toBe('testName2')
 		expect(row2Field.hideValidation).toBe(true)
-		expect(row2Field.validation).toEqual({ type: null })
+		expect(row2Field.validation).toEqual({ type: 'empty' })
 	})
 
 	it('implements setValue properly', async () => {
@@ -205,7 +205,7 @@ describe('KtFormControllerObject', () => {
 				controllerProps: { formKey: 'parentKey' },
 				formProps: {
 					hideValidation: true,
-					validators: { testKey: () => ({ type: null }) },
+					validators: { testKey: () => ({ type: 'empty' }) },
 					value: { parentKey: { testKey: 'something' } },
 				},
 			},
@@ -215,7 +215,7 @@ describe('KtFormControllerObject', () => {
 
 		expect(field.currentValue).toBe('something')
 		expect(field.hideValidation).toBe(true)
-		expect(field.validation).toEqual({ type: null })
+		expect(field.validation).toEqual({ type: 'empty' })
 	})
 
 	it('implements setValue properly', async () => {
@@ -226,7 +226,7 @@ describe('KtFormControllerObject', () => {
 				formProps: {
 					hideValidation: true,
 					validators: {
-						testKey: () => ({ type: null }),
+						testKey: () => ({ type: 'empty' }),
 					},
 					value: { parentKey: { testKey: 'something' } },
 				},

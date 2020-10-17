@@ -190,7 +190,7 @@ describe('KtForm', () => {
 
 			const field = getField(wrapper)
 
-			expect(field.validation).toEqual({ type: null })
+			expect(field.validation).toEqual({ type: 'empty' })
 
 			wrapper.setProps({
 				validators: {

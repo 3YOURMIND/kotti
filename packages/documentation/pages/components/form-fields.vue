@@ -68,7 +68,7 @@
 					label="Validation State"
 					helpText="Passed as a validation function or via KtForm.validators & validatorKey"
 					:options="[
-						{ label: 'None (Default)', value: null },
+						{ label: 'Empty (Default)', value: 'empty' },
 						{ label: 'Success', value: 'success' },
 						{ label: 'Warning', value: 'warning' },
 						{ label: 'Error', value: 'error' },
@@ -408,8 +408,8 @@ type ComponentRepresenation = ComponentValue & {
 const createValidator = (
 	validation: Kotti.Field.Validation.Result['type'],
 ) => (): Kotti.Field.Validation.Result =>
-	validation === null
-		? { type: null }
+	validation === 'empty'
+		? { type: 'empty' }
 		: {
 				text: `Some Validation Text`,
 				type: validation,

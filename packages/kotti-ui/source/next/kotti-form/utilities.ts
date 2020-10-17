@@ -26,7 +26,7 @@ export const getValidationSummary = (
 						warnings: [...accumulator.warnings, validation],
 					}
 
-				case null:
+				case 'empty':
 					return accumulator
 			}
 		},

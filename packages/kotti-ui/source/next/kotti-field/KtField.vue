@@ -172,7 +172,7 @@ export default defineComponent({
 				}`
 			}),
 			validationText: computed(() =>
-				props.field.validation.type === null
+				props.field.validation.type === 'empty'
 					? null
 					: props.field.validation.text,
 			),
@@ -185,9 +185,9 @@ export default defineComponent({
 					classes.push(`kt-field__wrapper--is-${props.field.size}`)
 
 				classes.push(
-					showValidation.value
-						? `kt-field__wrapper--${validationType.value ?? 'no-validation'}`
-						: `kt-field__wrapper--no-validation`,
+					`kt-field__wrapper--is-validation-${
+						showValidation.value ? validationType.value : 'empty'
+					}`,
 				)
 
 				return classes
@@ -237,7 +237,7 @@ export default defineComponent({
 		@include validations using ($type) {
 			/* stylelint-disable */
 			&:not(.kt-field__wrapper--disabled) {
-				@if $type != no-validation {
+				@if $type != empty {
 					.kt-field__input-container {
 						border-color: var(--support-#{$type}-light);
 					}
@@ -248,7 +248,7 @@ export default defineComponent({
 				}
 
 				&:focus-within {
-					--support-no-validation-light: var(--interactive-05);
+					--support-empty-light: var(--interactive-05);
 
 					.kt-field__input-container {
 						box-shadow: 0 0 0 1px var(--support-#{$type}-light);

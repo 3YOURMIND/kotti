@@ -453,7 +453,7 @@ describe('useField', () => {
 			})
 
 			expect(testKey).not.toBeCalled()
-			expect(wrapper.vm.field.validation).toEqual({ type: null })
+			expect(wrapper.vm.field.validation).toEqual({ type: 'empty' })
 		})
 	})
 })
