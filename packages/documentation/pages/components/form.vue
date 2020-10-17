@@ -234,7 +234,7 @@ export default defineComponent({
 			validators: computed(
 				(): Record<string, Kotti.Field.Validation.Function> => ({
 					username: (value: string | null) => {
-						if (value === null) return { type: null }
+						if (value === null) return { type: 'empty' }
 
 						// eslint-disable-next-line no-magic-numbers
 						if (value.length < 3)

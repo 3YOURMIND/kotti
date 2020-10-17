@@ -184,7 +184,7 @@ export namespace KottiField {
 
 	export namespace Validation {
 		export type Empty = {
-			type: null
+			type: 'empty'
 		}
 
 		export type Error = {

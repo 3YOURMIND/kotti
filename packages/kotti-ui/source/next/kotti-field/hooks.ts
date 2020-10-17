@@ -227,7 +227,7 @@ const useValidation = <DATA_TYPE>({
 					 */
 					return props.validator
 						? props.validator(currentValue.value)
-						: { type: null }
+						: { type: 'empty' as const }
 				})()
 
 				return isMissingRequiredField.value
