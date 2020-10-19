@@ -128,7 +128,7 @@ export default defineComponent({
 
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
-			() => !(props.field.hideValidation || validationType.value === null),
+			() => !(props.field.hideValidation || validationType.value === 'empty'),
 		)
 
 		const translations = useTranslationNamespace('KtFields')
