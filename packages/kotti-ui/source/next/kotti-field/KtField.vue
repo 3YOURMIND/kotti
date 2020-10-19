@@ -81,8 +81,10 @@
 			<div
 				v-if="!field.isLoading && showValidation && validationText !== null"
 				class="kt-field__validation-text"
-				v-text="validationText"
-			/>
+			>
+				<i class="yoco" v-text="validationTextIcon" />
+				{{ validationText }}
+			</div>
 		</component>
 
 		<div v-if="field.isLoading" class="kt-field__wrapper">
@@ -176,7 +178,16 @@ export default defineComponent({
 					? null
 					: props.field.validation.text,
 			),
-			validationType,
+			validationTextIcon: computed(
+				() =>
+					({
+						empty: null,
+						error: Yoco.Icon.CIRCLE_CROSS,
+						success: Yoco.Icon.CIRCLE_CHECK,
+						warning: Yoco.Icon.CIRCLE_ATTENTION,
+					}[validationType.value]),
+			),
+
 			wrapperClasses: computed(() => {
 				const classes = ['kt-field__wrapper']
 
