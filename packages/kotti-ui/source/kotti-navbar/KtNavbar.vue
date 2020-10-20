@@ -112,7 +112,10 @@ export default {
 $mobile-navbar-height: 2.4rem;
 $narrow-navbar-width: 3.4rem;
 
-:root {
+// We declare it twice because IE11
+// It needs it in the :root for old and locally for modern
+:root,
+.kt-navbar {
 	--navbar-background: var(--primary-70);
 	--navbar-border: var(--primary-60);
 	--navbar-color: var(--primary-10);
