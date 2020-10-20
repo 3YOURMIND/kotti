@@ -14,7 +14,7 @@
 					class="kt-field__header__label"
 				>
 					<span class="kt-field__header__label__text" v-text="field.label" />
-					<span class="kt-field__header__label__suffix" v-text="labelSuffix" />
+					<span :class="labelSuffixClasses" v-text="labelSuffix" />
 				</component>
 				<div
 					v-if="field.helpText"
@@ -81,8 +81,10 @@
 			<div
 				v-if="!field.isLoading && showValidation && validationText !== null"
 				class="kt-field__validation-text"
-				v-text="validationText"
-			/>
+			>
+				<i class="yoco" v-text="validationTextIcon" />
+				{{ validationText }}
+			</div>
 		</component>
 
 		<div v-if="field.isLoading" class="kt-field__wrapper">
@@ -153,12 +155,21 @@ export default defineComponent({
 			isTooltipHovered,
 			labelSuffix: computed(
 				() =>
-					`(${
+					`${
 						props.field.isOptional
-							? translations.value.optionalLabel
-							: translations.value.requiredLabel
-					})`,
+							? '(' + translations.value.optionalLabel + ')'
+							: '*'
+					}`,
 			),
+			labelSuffixClasses: computed(() => {
+				return {
+					'kt-field__header__label__suffix': true,
+					'kt-field__header__label__suffix--error':
+						showValidation.value &&
+						!props.field.isOptional &&
+						props.field.isEmpty,
+				}
+			}),
 			showValidation,
 			tooltipPositionClass: computed(() => {
 				if (!isTooltipHovered.value) return []
@@ -176,7 +187,16 @@ export default defineComponent({
 					? null
 					: props.field.validation.text,
 			),
-			validationType,
+			validationTextIcon: computed(
+				() =>
+					({
+						empty: null,
+						error: Yoco.Icon.CIRCLE_CROSS,
+						success: Yoco.Icon.CIRCLE_CHECK,
+						warning: Yoco.Icon.CIRCLE_ATTENTION,
+					}[validationType.value]),
+			),
+
 			wrapperClasses: computed(() => {
 				const classes = ['kt-field__wrapper']
 
@@ -331,6 +351,10 @@ export default defineComponent({
 
 			&__suffix {
 				margin-left: 0.2rem;
+
+				&--error {
+					color: var(--support-error);
+				}
 			}
 
 			&__text {
