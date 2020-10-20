@@ -95,6 +95,8 @@ export default {
 	output: {
 		dir: path.dirname(MODULE === 'esm' ? packageJSON.module : packageJSON.main),
 		format: MODULE,
+		preserveModules: true,
+		preserveModulesRoot: './source',
 		sourcemap: true,
 	},
 	external,
