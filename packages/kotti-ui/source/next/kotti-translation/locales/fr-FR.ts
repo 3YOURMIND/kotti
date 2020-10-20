@@ -3,7 +3,6 @@ import { KottiTranslation } from '../types'
 export const frFR: KottiTranslation.Messages = {
 	KtFields: {
 		optionalLabel: 'Facultatif',
-		requiredLabel: 'Obligatoire',
 		requiredMessage: 'Ce champ est obligatoire',
 	},
 	KtFieldSelects: {
