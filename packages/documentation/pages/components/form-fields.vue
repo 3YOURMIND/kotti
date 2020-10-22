@@ -515,7 +515,7 @@ export default defineComponent({
 			rightIcon: null,
 			size: 'medium',
 			suffix: null,
-			validation: null,
+			validation: 'empty',
 		})
 
 		const componentDefinition = computed(() => {
