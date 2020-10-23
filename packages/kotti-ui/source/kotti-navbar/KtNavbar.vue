@@ -149,17 +149,35 @@ $narrow-navbar-width: 3.4rem;
 		--user-menu-color: var(--primary-80);
 	}
 
-	&--theme-grayscale {
+	&--theme-light {
 		--navbar-background: var(--white);
 		--navbar-border: var(--gray-20);
-		--navbar-color: var(--gray-80);
-		--navbar-color-light: var(--gray-60);
-		--navbar-color-active: var(--gray-100);
+		--navbar-color: var(--primary-90);
+		--navbar-color-light: var(--primary-50);
+		--navbar-color-active: var(--primary-80);
 
 		--user-menu-border: var(--gray-30);
-		--user-menu-background-active: var(--gray-30);
-		--user-menu-background: var(--gray-20);
-		--user-menu-color: var(--gray-80);
+		--user-menu-background-active: var(--gray-20);
+		--user-menu-background: var(--gray-10);
+		--user-menu-color: var(--primary-90);
+	}
+
+	&--theme-dark {
+		--navbar-background: var(--gray-90);
+		--navbar-border: var(--gray-70);
+		--navbar-color: var(--gray-20);
+		--navbar-color-light: var(--gray-10);
+		--navbar-color-active: var(--primary-10);
+
+		--user-menu-border: var(--gray-30);
+		--user-menu-background-active: var(--gray-80);
+		--user-menu-background: var(--gray-70);
+		--user-menu-color: var(--gray-10);
+	}
+
+	a:active,
+	a:focus {
+		color: var(--navbar-color-active);
 	}
 }
 
@@ -255,7 +273,6 @@ $narrow-navbar-width: 3.4rem;
 	.kt-navbar-quick-links {
 		padding: 0.8rem 0;
 		text-align: center;
-		background: var(--navbar-border);
 		&__link {
 			display: block;
 		}
