@@ -24,7 +24,6 @@
 			:menu="actionbarMenu"
 		/>
 		<div slot="workspace">
-			<div>Hello {{ theme }}</div>
 			<KtForm>
 				<KtFieldSingleSelect
 					v-model="theme"
