@@ -24,20 +24,17 @@
 			:menu="actionbarMenu"
 		/>
 		<div slot="workspace">
-			<KtForm>
-				<KtFieldSingleSelect
-					v-model="theme"
-					formKey="NONE"
-					isOptional
-					label="Navbar Theme"
-					:options="[
-						{ label: 'Reversed theme', value: 'reverse' },
-						{ label: 'Light theme', value: 'light' },
-						{ label: 'Dark theme', value: 'dark' },
-						{ label: 'None', value: null },
-					]"
-				/>
-			</KtForm>
+			<KtFieldSingleSelect
+				v-model="theme"
+				isOptional
+				label="Navbar Theme"
+				:options="[
+					{ label: 'Reversed theme', value: 'reverse' },
+					{ label: 'Light theme', value: 'light' },
+					{ label: 'Dark theme', value: 'dark' },
+					{ label: 'None', value: null },
+				]"
+			/>
 		</div>
 	</LayoutContainer>
 </template>
