@@ -99,6 +99,7 @@ const useValue = <DATA_TYPE>({
 			if (context === null && newFormKey !== null)
 				throw new KtFieldErrors.InvalidPropOutsideOfContext(props, 'formKey')
 		},
+		{ immediate: true },
 	)
 
 	// fetch value
@@ -174,6 +175,7 @@ const useValidation = <DATA_TYPE>({
 					'validatorKey',
 				)
 		},
+		{ immediate: true },
 	)
 
 	const isMissingRequiredField = computed(

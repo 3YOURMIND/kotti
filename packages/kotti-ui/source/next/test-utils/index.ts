@@ -23,6 +23,7 @@ export const getMockContext = (
 	onRemoveField: jest.Mock
 	setValue: jest.Mock
 } => ({
+	// @ts-expect-error this is an imperfect mock and not a real ref
 	fieldInheritableProps: {
 		value: {
 			hideClear: false,
@@ -35,6 +36,8 @@ export const getMockContext = (
 	onAddField: jest.fn(),
 	onRemoveField: jest.fn(),
 	setValue: jest.fn(),
+	// @ts-expect-error this is an imperfect mock and not a real ref
 	validators: { value: validators },
+	// @ts-expect-error this is an imperfect mock and not a real ref
 	values: { value: values },
 })

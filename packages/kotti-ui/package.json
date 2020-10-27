@@ -31,7 +31,6 @@
 		"@rollup/plugin-typescript": "^5.0.2",
 		"@types/jest": "^26.0.4",
 		"@types/lodash": "^4.14.157",
-		"@vue/composition-api": "0.5.x",
 		"@vue/test-utils": "^1.0.3",
 		"postcss-flexbugs-fixes": "^4.2.0",
 		"postcss-preset-env": "^6.7.0",
@@ -48,7 +47,7 @@
 	"module": "dist/esm/index.js",
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
-		"@vue/composition-api": "0.5.x",
+		"@vue/composition-api": "0.6.7",
 		"core-js": "*",
 		"vue": "^2.2.1"
 	},

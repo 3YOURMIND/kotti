@@ -68,6 +68,7 @@ const isPickerVisible = (dateComponent: ElDateWithInternalAPI) =>
 const useInputDecoration = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
+	// eslint-disable-next-line sonarjs/cognitive-complexity
 	onMounted(() => {
 		const dateComponent = getDateComponent({ elDateRef })
 
@@ -86,45 +87,45 @@ const useInputDecoration = <DATA_TYPE extends Values>({
 				? Yoco.Icon.CALENDAR_CLOCK
 				: Yoco.Icon.CALENDAR,
 		)
-	})
 
-	let suffixIcon: Element | null = null
+		let suffixIcon: Element | null = null
 
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef }) // don't refactor out of hooks
+		watchEffect(() => {
+			const dateComponent = getDateComponent({ elDateRef }) // don't refactor out of hooks
 
-		// if `haveTrigger` is false, the suffixIcon is not rendered; `v-if` condition on the suffixIcon of el-ui dates
-		if (dateComponent.haveTrigger) {
-			// these are the default classes added to suffixIcon
-			// there are more classes added when the clearIcon is hidden/shown
-			// selecting with default selectors guarantees we get a suffixIcon even if it's hidden as long
-			// as it's rendered. The other hook will handle the show/hide effect, while this should handle the existence of suffixIcon
-			suffixIcon = dateComponent.$el.querySelector(
-				'.el-input__icon.el-range__close-icon, .el-input__icon:not(.el-icon-date):not(.el-icon-time)',
-			)
-		}
-	})
-
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef })
-
-		/**
-		 * true onMouseEnter (when value is not Empty & field is clearable)
-		 * false onMouseLeave or when value is Empty or when the field is not clearable
-		 */
-		const showClear = dateComponent.showClose
-
-		if (suffixIcon) {
-			if (!suffixIcon.classList.contains('yoco'))
-				suffixIcon.classList.add('yoco')
-
-			if (showClear) {
-				if (!suffixIcon.hasChildNodes()) suffixIcon.append('close')
-			} else {
-				if (suffixIcon.hasChildNodes() && suffixIcon.lastChild)
-					suffixIcon.removeChild(suffixIcon.lastChild)
+			// if `haveTrigger` is false, the suffixIcon is not rendered; `v-if` condition on the suffixIcon of el-ui dates
+			if (dateComponent.haveTrigger) {
+				// these are the default classes added to suffixIcon
+				// there are more classes added when the clearIcon is hidden/shown
+				// selecting with default selectors guarantees we get a suffixIcon even if it's hidden as long
+				// as it's rendered. The other hook will handle the show/hide effect, while this should handle the existence of suffixIcon
+				suffixIcon = dateComponent.$el.querySelector(
+					'.el-input__icon.el-range__close-icon, .el-input__icon:not(.el-icon-date):not(.el-icon-time)',
+				)
 			}
-		}
+		})
+
+		watchEffect(() => {
+			const dateComponent = getDateComponent({ elDateRef })
+
+			/**
+			 * true onMouseEnter (when value is not Empty & field is clearable)
+			 * false onMouseLeave or when value is Empty or when the field is not clearable
+			 */
+			const showClear = dateComponent.showClose
+
+			if (suffixIcon) {
+				if (!suffixIcon.classList.contains('yoco'))
+					suffixIcon.classList.add('yoco')
+
+				if (showClear) {
+					if (!suffixIcon.hasChildNodes()) suffixIcon.append('close')
+				} else {
+					if (suffixIcon.hasChildNodes() && suffixIcon.lastChild)
+						suffixIcon.removeChild(suffixIcon.lastChild)
+				}
+			}
+		})
 	})
 }
 
@@ -153,44 +154,48 @@ const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 	HookParameters<DATA_TYPE>,
 	'elDateRef' | 'popperHeight' | 'popperWidth'
 >) => {
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef })
+	onMounted(() => {
+		watchEffect(() => {
+			const dateComponent = getDateComponent({ elDateRef })
 
-		if (isPickerVisible(dateComponent)) {
-			dateComponent.picker.$el.style.width = popperWidth
-			dateComponent.picker.$el.style.height = popperHeight
-		}
+			if (isPickerVisible(dateComponent)) {
+				dateComponent.picker.$el.style.width = popperWidth
+				dateComponent.picker.$el.style.height = popperHeight
+			}
+		})
 	})
 }
 
 const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef })
-		if (isPickerVisible(dateComponent)) {
-			const innerInputsWrapper: Array<Element> = Array.from(
-				dateComponent.picker.$el.querySelectorAll(
-					'.el-date-picker__editor-wrap, .el-date-range-picker__time-picker-wrap',
-				),
-			)
-			innerInputsWrapper.forEach((input) =>
-				input.classList.add(
-					'kt-field__wrapper',
-					'kt-field__wrapper--is-small',
-					'kt-field__wrapper--is-validation-empty',
-				),
-			)
+	onMounted(() => {
+		watchEffect(() => {
+			const dateComponent = getDateComponent({ elDateRef })
+			if (isPickerVisible(dateComponent)) {
+				const innerInputsWrapper: Array<Element> = Array.from(
+					dateComponent.picker.$el.querySelectorAll(
+						'.el-date-picker__editor-wrap, .el-date-range-picker__time-picker-wrap',
+					),
+				)
+				innerInputsWrapper.forEach((input) =>
+					input.classList.add(
+						'kt-field__wrapper',
+						'kt-field__wrapper--is-small',
+						'kt-field__wrapper--is-validation-empty',
+					),
+				)
 
-			const innerInputs: Array<Element> = Array.from(
-				dateComponent.picker.$el.querySelectorAll('.el-input__inner'),
-			)
+				const innerInputs: Array<Element> = Array.from(
+					dateComponent.picker.$el.querySelectorAll('.el-input__inner'),
+				)
 
-			innerInputs.forEach((input) => {
-				input.classList.add('kt-field__input-container')
-				input.setAttribute('size', '1')
-			})
-		}
+				innerInputs.forEach((input) => {
+					input.classList.add('kt-field__input-container')
+					input.setAttribute('size', '1')
+				})
+			}
+		})
 	})
 }
 
@@ -202,10 +207,12 @@ const usePickerMisplacementFix = <DATA_TYPE extends Values>({
 	elDateRef,
 	field,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef' | 'field'>) => {
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef })
+	onMounted(() => {
+		watchEffect(() => {
+			const dateComponent = getDateComponent({ elDateRef })
 
-		if (field.isLoading || field.isDisabled) return dateComponent.blur()
+			if (field.isLoading || field.isDisabled) return dateComponent.blur()
+		})
 	})
 }
 
@@ -215,27 +222,32 @@ const usePickerMisplacementFix = <DATA_TYPE extends Values>({
 const usePickerNavigationIcons = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef })
+	onMounted(() => {
+		watchEffect(() => {
+			const dateComponent = getDateComponent({ elDateRef })
 
-		if (isPickerVisible(dateComponent)) {
-			const insertYocoIcon = (icon: Yoco.Icon) => `<i class="yoco">${icon}</i>`
+			if (isPickerVisible(dateComponent)) {
+				const insertYocoIcon = (icon: Yoco.Icon) =>
+					`<i class="yoco">${icon}</i>`
 
-			const pickerHeaderIcons: Array<HTMLElement> = Array.from(
-				dateComponent.picker.$el.querySelectorAll('.el-picker-panel__icon-btn'),
-			)
+				const pickerHeaderIcons: Array<HTMLElement> = Array.from(
+					dateComponent.picker.$el.querySelectorAll(
+						'.el-picker-panel__icon-btn',
+					),
+				)
 
-			const headerYocoIcons = [
-				insertYocoIcon(Yoco.Icon.CHEVRON_LEFT_DOUBLE),
-				insertYocoIcon(Yoco.Icon.CHEVRON_LEFT),
-				insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT_DOUBLE),
-				insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT),
-			]
+				const headerYocoIcons = [
+					insertYocoIcon(Yoco.Icon.CHEVRON_LEFT_DOUBLE),
+					insertYocoIcon(Yoco.Icon.CHEVRON_LEFT),
+					insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT_DOUBLE),
+					insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT),
+				]
 
-			pickerHeaderIcons.forEach((icon, index) => {
-				icon.innerHTML = headerYocoIcons[index]
-			})
-		}
+				pickerHeaderIcons.forEach((icon, index) => {
+					icon.innerHTML = headerYocoIcons[index]
+				})
+			}
+		})
 	})
 }
 
@@ -263,31 +275,33 @@ const usePickerPlacementFix = <DATA_TYPE extends Values>({
 const useRangePickerHeaderFix = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
-	watchEffect(() => {
-		const dateComponent = getDateComponent({ elDateRef })
-		if (isPickerVisible(dateComponent)) {
-			// change when any of the navigation buttons in the range-pickers are clicked
-			const dates = [
-				dateComponent.picker.leftLabel?.split(/\s+/) ?? ['', ''],
-				dateComponent.picker.rightLabel?.split(/\s+/) ?? ['', ''],
-			]
+	onMounted(() => {
+		watchEffect(() => {
+			const dateComponent = getDateComponent({ elDateRef })
+			if (isPickerVisible(dateComponent)) {
+				// change when any of the navigation buttons in the range-pickers are clicked
+				const dates = [
+					dateComponent.picker.leftLabel?.split(/\s+/) ?? ['', ''],
+					dateComponent.picker.rightLabel?.split(/\s+/) ?? ['', ''],
+				]
 
-			const headers = dateComponent.picker.$el.querySelectorAll(
-				'.el-date-range-picker__header',
-			)
+				const headers = dateComponent.picker.$el.querySelectorAll(
+					'.el-date-range-picker__header',
+				)
 
-			headers.forEach((header, index) => {
-				const fullDate = header.querySelector('div')
-				if (fullDate) {
-					fullDate.innerHTML = dates[index][0] // leftMonth or rightMonth
-					if (header.lastChild?.nodeType === Node.TEXT_NODE) {
-						// we add a text node each call with the new year value, thus need to remove the old first
-						header.removeChild(header.lastChild)
+				headers.forEach((header, index) => {
+					const fullDate = header.querySelector('div')
+					if (fullDate) {
+						fullDate.innerHTML = dates[index][0] // leftMonth or rightMonth
+						if (header.lastChild?.nodeType === Node.TEXT_NODE) {
+							// we add a text node each call with the new year value, thus need to remove the old first
+							header.removeChild(header.lastChild)
+						}
+						header.append(dates[index][1])
 					}
-					header.append(dates[index][1])
-				}
-			})
-		}
+				})
+			}
+		})
 	})
 }
 

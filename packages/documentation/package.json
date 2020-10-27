@@ -4,6 +4,7 @@
 		"@3yourmind/yoco": "*",
 		"@octokit/rest": "^18.0.6",
 		"@octokit/types": "^5.5.0",
+		"@vue/composition-api": "0.6.7",
 		"core-js": "^3.6.5",
 		"dayjs": "^1.9.1",
 		"lodash": "^4.17.19",
