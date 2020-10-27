@@ -7,6 +7,7 @@
 			:notification="navbarNotification"
 			:quickLinks="quickLinksData"
 			:sections="navbarMenu"
+			:theme="theme"
 		>
 			<div slot="navbar-footer">
 				<KtUserMenu
@@ -22,7 +23,20 @@
 			headerTitle="LayoutContainer Example"
 			:menu="actionbarMenu"
 		/>
-		<div slot="workspace"></div>
+		<div slot="workspace">
+			<KtFieldSingleSelect
+				v-model="theme"
+				hideClear
+				isOptional
+				label="Navbar Theme"
+				:options="[
+					{ label: 'Reversed theme', value: 'reverse' },
+					{ label: 'Light theme', value: 'light' },
+					{ label: 'Dark theme', value: 'dark' },
+					{ label: 'None', value: null },
+				]"
+			/>
+		</div>
 	</LayoutContainer>
 </template>
 
@@ -37,6 +51,7 @@ export default {
 	},
 	data() {
 		return {
+			theme: null,
 			quickLinksData: {
 				links: [
 					{
