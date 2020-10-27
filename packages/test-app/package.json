@@ -10,7 +10,7 @@
 	"dependencies": {
 		"@3yourmind/kotti-ui": "*",
 		"@3yourmind/yoco": "*",
-		"@vue/composition-api": "0.6.1",
+		"@vue/composition-api": "0.6.7",
 		"core-js": "^3.6.5"
 	},
 	"devDependencies": {
