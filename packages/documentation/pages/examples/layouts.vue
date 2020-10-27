@@ -26,6 +26,7 @@
 		<div slot="workspace">
 			<KtFieldSingleSelect
 				v-model="theme"
+				hideClear
 				isOptional
 				label="Navbar Theme"
 				:options="[
