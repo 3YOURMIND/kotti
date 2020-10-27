@@ -20,18 +20,8 @@
 					v-if="field.helpText"
 					class="kt-field__header__help-text"
 					:class="iconClasses(['interactive'])"
-					@mouseenter="() => (isTooltipHovered = true)"
-					@mouseleave="() => (isTooltipHovered = false)"
 				>
-					<div ref="helpTextIconRef" class="kt-field__header__help-text__icon">
-						<i class="yoco" v-text="Yoco.Icon.CIRCLE_QUESTION" />
-					</div>
-					<div
-						v-if="isTooltipHovered"
-						class="kt-field__header__help-text__tooltip"
-						:class="tooltipPositionClass"
-						v-text="field.helpText"
-					/>
+					<FieldHelpText :helpText="field.helpText" />
 				</div>
 			</div>
 			<div
@@ -77,7 +67,6 @@
 					/>
 				</div>
 			</slot>
-
 			<div
 				v-if="!field.isLoading && showValidation && validationText !== null"
 				class="kt-field__validation-text"
@@ -86,7 +75,6 @@
 				{{ validationText }}
 			</div>
 		</component>
-
 		<div v-if="field.isLoading" class="kt-field__wrapper">
 			<div class="kt-field__loading__header skeleton rectangle" />
 			<div class="kt-field__loading__input-container skeleton rectangle" />
@@ -100,12 +88,12 @@ import { defineComponent, computed, ref } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
+import FieldHelpText from './components/FieldHelpText.vue'
 import { KottiField } from './types'
-
-const ONE_HOUNDRED_UNITS = 100
 
 export default defineComponent({
 	name: 'KtField',
+	components: { FieldHelpText },
 	props: {
 		field: { required: true, type: Object },
 		/**
@@ -125,9 +113,6 @@ export default defineComponent({
 		},
 		{ emit },
 	) {
-		const helpTextIconRef = ref<Element | null>(null)
-		const isTooltipHovered = ref(false)
-
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === 'empty'),
@@ -150,9 +135,7 @@ export default defineComponent({
 					(modification) => `kt-field__input-container__icon--${modification}`,
 				),
 			]),
-			helpTextIconRef,
 			inputContainerRef: ref<Element | null>(null),
-			isTooltipHovered,
 			labelSuffix: computed(
 				() =>
 					`${
@@ -171,17 +154,6 @@ export default defineComponent({
 				}
 			}),
 			showValidation,
-			tooltipPositionClass: computed(() => {
-				if (!isTooltipHovered.value) return []
-				const iconPosition =
-					helpTextIconRef.value?.getBoundingClientRect().top ?? null
-
-				if (iconPosition === null) return ''
-
-				return `kt-field__header__help-text__tooltip--is-${
-					iconPosition > ONE_HOUNDRED_UNITS ? 'above' : 'below'
-				}`
-			}),
 			validationText: computed(() =>
 				props.field.validation.type === 'empty'
 					? null
@@ -313,35 +285,8 @@ export default defineComponent({
 		}
 
 		&__help-text {
-			position: relative;
 			display: flex;
 			align-items: center;
-
-			&__tooltip {
-				position: absolute;
-				z-index: 1; // fix weird layout issues with el-select
-				width: max-content;
-				max-width: 12rem;
-				max-height: 7em;
-				padding: 0.75em 1em;
-				overflow: scroll;
-				color: var(--gray-10);
-				cursor: none;
-				background-color: var(--ui-04);
-				border: 1px solid var(--ui-02);
-				border-radius: var(--field-border-radius);
-				transform: translateX(calc(-50% + 5px));
-
-				&--is-above {
-					// place exactly above so the user can hover the tooltip to scroll without leaving the element
-					bottom: 100%;
-				}
-
-				&--is-below {
-					// place exactly below so the user can hover the tooltip to scroll without leaving the element
-					top: 100%;
-				}
-			}
 		}
 
 		&__label {

@@ -17,7 +17,8 @@
 		"lodash": "^4.17.19",
 		"normalize.css": "^8.0.1",
 		"ts-custom-error": "^3.1.1",
-		"vue-clickaway": "^2.2.2"
+		"vue-clickaway": "^2.2.2",
+		"vue-tippy": "^4.7.1"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
