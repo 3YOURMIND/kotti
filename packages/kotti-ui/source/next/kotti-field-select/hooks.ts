@@ -45,9 +45,11 @@ const usePopperMisplacementFix = <DATA_TYPE extends Values>({
 	field,
 	ktFieldRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elSelectRef' | 'field' | 'ktFieldRef'>) => {
-	watchEffect(() => {
-		const { elSelectComponent } = getComponents({ elSelectRef, ktFieldRef })
-		if (field.isLoading || field.isDisabled) return elSelectComponent.blur()
+	onMounted(() => {
+		watchEffect(() => {
+			const { elSelectComponent } = getComponents({ elSelectRef, ktFieldRef })
+			if (field.isLoading || field.isDisabled) return elSelectComponent.blur()
+		})
 	})
 }
 
@@ -88,23 +90,25 @@ const usePopperWidthFix = <DATA_TYPE extends Values>({
 	elSelectRef,
 	ktFieldRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef' | 'field'>) => {
-	watchEffect(() => {
-		const { elSelectComponent, ktFieldComponent } = getComponents({
-			elSelectRef,
-			ktFieldRef,
+	onMounted(() => {
+		watchEffect(() => {
+			const { elSelectComponent, ktFieldComponent } = getComponents({
+				elSelectRef,
+				ktFieldRef,
+			})
+
+			// just used to add this as a dependency
+			elSelectComponent.inputWidth
+
+			const ktFieldContainerElement = ktFieldComponent.$refs
+				.inputContainerRef as Element
+			const newWidth = ktFieldContainerElement.getBoundingClientRect().width
+			const popperComponent = elSelectComponent.$refs.popper as Vue
+			const popperElement = popperComponent.$el as HTMLElement
+
+			popperElement.style.width = `${newWidth}px`
+			elSelectComponent.inputWidth = newWidth
 		})
-
-		// just used to add this as a dependency
-		elSelectComponent.inputWidth
-
-		const ktFieldContainerElement = ktFieldComponent.$refs
-			.inputContainerRef as Element
-		const newWidth = ktFieldContainerElement.getBoundingClientRect().width
-		const popperComponent = elSelectComponent.$refs.popper as Vue
-		const popperElement = popperComponent.$el as HTMLElement
-
-		popperElement.style.width = `${newWidth}px`
-		elSelectComponent.inputWidth = newWidth
 	})
 }
 

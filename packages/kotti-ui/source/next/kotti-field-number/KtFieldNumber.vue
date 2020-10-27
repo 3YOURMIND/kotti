@@ -143,6 +143,7 @@ export default defineComponent({
 				const shouldUpdate = oldNumber !== truncatedNumber
 				if (shouldUpdate) internalStringValue.value = newString
 			},
+			{ immediate: true },
 		)
 
 		return {
