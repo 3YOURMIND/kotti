@@ -48,6 +48,23 @@
 				</div>
 			</section>
 		</article>
+		<section v-if="Object.keys(meta.slots).length >= 1" class="slots-block">
+			<div v-for="[name, details] in Object.entries(meta.slots)" :key="name">
+				<div class="slot-name" v-text="name" />
+				<div class="slot-details">
+					<div
+						v-if="details.description"
+						class="slot-description"
+						v-text="details.description"
+					/>
+					<i v-else class="slot-description" v-text="'No description'" />
+					<div
+						class="slot-scoped"
+						v-text="details.scoped === null ? '(Not Scoped)' : details.scoped"
+					/>
+				</div>
+			</div>
+		</section>
 	</div>
 </template>
 
@@ -189,6 +206,31 @@ $radius: 3px;
 }
 
 .danger-block {
+	color: var(--red-70);
+	background: var(--support-error-light);
+
+	border: 1px solid var(--support-error-dark);
+	border-radius: $radius;
+
+	a {
+		color: inherit;
+		text-decoration: underline;
+	}
+
+	code + code {
+		margin-left: 8px;
+	}
+
+	> section {
+		padding: 0.6rem;
+	}
+
+	> section:not(:first-child) {
+		border-top: 1px solid var(--support-error-dark);
+	}
+}
+
+.slots-block {
 	color: var(--red-70);
 	background: var(--support-error-light);
 
