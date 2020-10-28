@@ -4,8 +4,8 @@
 			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
 			v-show="!field.isLoading"
 			:class="wrapperClasses"
-			@click="emit('click', $event)"
-			@mousedown="emit('mousedown', $event)"
+			@click="$emit('click', $event)"
+			@mousedown="$emit('mousedown', $event)"
 		>
 			<div class="kt-field__header">
 				<component
@@ -91,7 +91,12 @@ import { useTranslationNamespace } from '../kotti-translation/hooks'
 import FieldHelpText from './components/FieldHelpText.vue'
 import { KottiField } from './types'
 
-export default defineComponent({
+export default defineComponent<{
+	field: KottiField.Hook.Returns<unknown>
+	isComponent: string | null
+	isGroup: boolean
+	getEmptyValue: () => unknown
+}>({
 	name: 'KtField',
 	components: { FieldHelpText },
 	props: {
@@ -104,15 +109,7 @@ export default defineComponent({
 		isComponent: { default: null, type: String },
 		isGroup: { default: false, type: Boolean },
 	},
-	setup<DATA_TYPE>(
-		props: {
-			field: KottiField.Hook.Returns<DATA_TYPE>
-			isComponent: string | null
-			isGroup: boolean
-			getEmptyValue: () => DATA_TYPE
-		},
-		{ emit },
-	) {
+	setup(props) {
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === 'empty'),
@@ -127,7 +124,6 @@ export default defineComponent({
 					(modification) => `kt-field__input-container__affix--${modification}`,
 				),
 			]),
-			emit,
 			handleClear: () => props.field.setValue(props.getEmptyValue()),
 			iconClasses: computed(() => (modifications: string[]) => [
 				'kt-field__input-container__icon',
@@ -136,13 +132,8 @@ export default defineComponent({
 				),
 			]),
 			inputContainerRef: ref<Element | null>(null),
-			labelSuffix: computed(
-				() =>
-					`${
-						props.field.isOptional
-							? '(' + translations.value.optionalLabel + ')'
-							: '*'
-					}`,
+			labelSuffix: computed(() =>
+				props.field.isOptional ? `(${translations.value.optionalLabel})` : '*',
 			),
 			labelSuffixClasses: computed(() => {
 				return {
@@ -168,7 +159,6 @@ export default defineComponent({
 						warning: Yoco.Icon.CIRCLE_ATTENTION,
 					}[validationType.value]),
 			),
-
 			wrapperClasses: computed(() => {
 				const classes = ['kt-field__wrapper']
 
