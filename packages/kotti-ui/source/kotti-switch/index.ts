@@ -12,5 +12,8 @@ export const KtSwitch = attachMeta(makeInstallable(KtSwitchVue), {
 		reason: 'Replaced by Kotti v2.0.0 Forms',
 		version: '3.0.0',
 	},
+	slots: {
+		default: { description: 'Shown next to switch', scope: null },
+	},
 	typeScript: null,
 })

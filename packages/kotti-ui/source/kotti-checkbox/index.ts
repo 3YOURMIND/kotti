@@ -12,5 +12,8 @@ export const KtCheckbox = attachMeta(makeInstallable(KtCheckboxVue), {
 		reason: 'Replaced by Kotti v2.0.0 Forms',
 		version: '3.0.0',
 	},
+	slots: {
+		default: { description: null, scope: null },
+	},
 	typeScript: null,
 })

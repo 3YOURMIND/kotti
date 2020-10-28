@@ -36,5 +36,18 @@ export type Meta = {
 		reason: string
 		version: string
 	} | null
+	slots: Record<
+		string,
+		{
+			description: string | null
+			scope: null | Record<
+				string,
+				{
+					description: string | null
+					type: 'function' | 'object' | 'integer'
+				}
+			>
+		}
+	>
 	typeScript: { namespace: string } | null
 }

@@ -12,5 +12,6 @@ export const KtSingleSelect = attachMeta(makeInstallable(KtSingleSelectVue), {
 		reason: 'Replaced by Kotti v2.0.0 Forms',
 		version: '3.0.0',
 	},
+	slots: {},
 	typeScript: null,
 })

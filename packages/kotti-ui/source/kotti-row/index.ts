@@ -58,6 +58,9 @@ export const KtRow = attachMeta(
 	{
 		addedVersion: '0.0.1',
 		deprecated: null,
+		slots: {
+			default: { description: 'Should contain KtCols', scope: null },
+		},
 		typeScript: {
 			namespace: 'Kotti.Row',
 		},

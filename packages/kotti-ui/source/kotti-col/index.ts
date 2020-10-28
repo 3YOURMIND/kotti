@@ -77,6 +77,9 @@ export const KtCol = attachMeta(
 	{
 		addedVersion: null,
 		deprecated: null,
+		slots: {
+			default: { description: null, scope: null },
+		},
 		typeScript: null,
 	},
 )

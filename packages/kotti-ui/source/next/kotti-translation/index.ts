@@ -7,6 +7,7 @@ export const KtTranslationContext = attachMeta(
 	{
 		addedVersion: '2.0.0',
 		deprecated: null,
+		slots: {},
 		typeScript: {
 			namespace: 'Kotti.Translation',
 		},
