@@ -287,7 +287,22 @@
 </template>
 
 <script lang="ts">
-import { Kotti } from '@3yourmind/kotti-ui'
+import {
+	Kotti,
+	KtFieldDate,
+	KtFieldDateRange,
+	KtFieldDateTime,
+	KtFieldDateTimeRange,
+	KtFieldMultiSelect,
+	KtFieldNumber,
+	KtFieldPassword,
+	KtFieldRadioGroup,
+	KtFieldSingleSelect,
+	KtFieldText,
+	KtFieldTextArea,
+	KtFieldToggle,
+	KtFieldToggleGroup,
+} from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
@@ -309,6 +324,21 @@ const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 		console.warn('could not save to localStorage')
 	}
 }
+
+type KtFieldNames =
+	| 'KtFieldDate'
+	| 'KtFieldDateRange'
+	| 'KtFieldDateTime'
+	| 'KtFieldDateTimeRange'
+	| 'KtFieldNumber'
+	| 'KtFieldMultiSelect'
+	| 'KtFieldPassword'
+	| 'KtFieldRadioGroup'
+	| 'KtFieldSingleSelect'
+	| 'KtFieldText'
+	| 'KtFieldTextArea'
+	| 'KtFieldToggle'
+	| 'KtFieldToggleGroup'
 
 const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate']
 
@@ -433,8 +463,8 @@ const INITIAL_VALUES: {
 }
 
 type ComponentValue = {
-	name: string
 	hasHelpTextSlot: boolean
+	name: KtFieldNames
 	props: object
 	validation: Kotti.Field.Validation.Result['type']
 }
@@ -474,7 +504,7 @@ const generateCode = (component: ComponentValue) =>
 				}
 			})
 			.map((prop) => `\t${prop}`),
-		...(component.validation === null
+		...(component.validation === 'empty'
 			? []
 			: [
 					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
@@ -513,7 +543,7 @@ export default defineComponent({
 				isLoading: Kotti.FieldToggle.Value
 				isOptional: Kotti.FieldToggle.Value
 			}
-			component: string
+			component: KtFieldNames
 			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
 			helpText: Kotti.FieldText.Value
@@ -734,14 +764,6 @@ export default defineComponent({
 			}),
 		)
 
-		const meta: Kotti.Meta = {
-			addedVersion: '2.0.0',
-			deprecated: null,
-			typeScript: {
-				namespace: 'Kotti.Field*',
-			},
-		}
-
 		return {
 			componentDefinition,
 			componentOptions: components.map((component) => ({
@@ -756,7 +778,24 @@ export default defineComponent({
 					validator: createValidator(componentValue.value.validation),
 				}),
 			),
-			meta,
+			meta: computed(
+				(): Kotti.Meta =>
+					({
+						KtFieldDate,
+						KtFieldDateRange,
+						KtFieldDateTime,
+						KtFieldDateTimeRange,
+						KtFieldNumber,
+						KtFieldMultiSelect,
+						KtFieldPassword,
+						KtFieldRadioGroup,
+						KtFieldSingleSelect,
+						KtFieldText,
+						KtFieldTextArea,
+						KtFieldToggle,
+						KtFieldToggleGroup,
+					}[componentValue.value.name].meta),
+			),
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},
