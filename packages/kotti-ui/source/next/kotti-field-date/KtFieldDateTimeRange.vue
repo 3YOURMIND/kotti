@@ -3,6 +3,7 @@
 		v-bind="{ field }"
 		class="kt-field-datetime-range"
 		:getEmptyValue="() => [null, null]"
+		:helpTextSlot="$slots.helpText"
 	>
 		<div
 			ref="inputContainerRef"

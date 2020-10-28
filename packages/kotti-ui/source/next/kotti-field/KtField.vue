@@ -17,11 +17,14 @@
 					<span :class="labelSuffixClasses" v-text="labelSuffix" />
 				</component>
 				<div
-					v-if="field.helpText"
+					v-if="hasHelpText"
 					class="kt-field__header__help-text"
 					:class="iconClasses(['interactive'])"
 				>
-					<FieldHelpText :helpText="field.helpText" />
+					<FieldHelpText
+						:helpText="field.helpText"
+						:helpTextSlot="helpTextSlot"
+					/>
 				</div>
 			</div>
 			<div
@@ -85,6 +88,7 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref } from '@vue/composition-api'
+import { VNode } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
@@ -93,6 +97,7 @@ import { KottiField } from './types'
 
 export default defineComponent<{
 	field: KottiField.Hook.Returns<unknown>
+	helpTextSlot: VNode[]
 	isComponent: string | null
 	isGroup: boolean
 	getEmptyValue: () => unknown
@@ -106,6 +111,7 @@ export default defineComponent<{
 		 * Used when clearing the field. Most likely either null or []
 		 */
 		getEmptyValue: { required: true, type: Function },
+		helpTextSlot: { default: () => [], type: Array },
 		isComponent: { default: null, type: String },
 		isGroup: { default: false, type: Boolean },
 	},
@@ -125,6 +131,9 @@ export default defineComponent<{
 				),
 			]),
 			handleClear: () => props.field.setValue(props.getEmptyValue()),
+			hasHelpText: computed(
+				() => props.helpTextSlot.length >= 1 || props.field.helpText !== null,
+			),
 			iconClasses: computed(() => (modifications: string[]) => [
 				'kt-field__input-container__icon',
 				...modifications.map(

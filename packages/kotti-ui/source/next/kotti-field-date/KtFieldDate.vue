@@ -1,5 +1,10 @@
 <template>
-	<KtField v-bind="{ field }" class="kt-field-date" :getEmptyValue="() => null">
+	<KtField
+		v-bind="{ field }"
+		class="kt-field-date"
+		:getEmptyValue="() => null"
+		:helpTextSlot="$slots.helpText"
+	>
 		<div
 			ref="inputContainerRef"
 			slot="container"

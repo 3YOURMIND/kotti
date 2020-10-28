@@ -1,5 +1,9 @@
 <template>
-	<KtField v-bind="{ field }" :getEmptyValue="() => null">
+	<KtField
+		v-bind="{ field }"
+		:getEmptyValue="() => null"
+		:helpTextSlot="$slots.helpText"
+	>
 		<div slot="container" class="kt-field-toggle__wrapper">
 			<ToggleInner
 				component="div"

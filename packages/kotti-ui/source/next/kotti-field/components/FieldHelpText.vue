@@ -1,34 +1,30 @@
-<template>
-	<div>
-		<i
-			ref="helpTextTriggerRef"
-			class="yoco"
-			v-text="Yoco.Icon.CIRCLE_QUESTION"
-		/>
-		<div ref="helpTextContentRef" v-text="helpText" />
-	</div>
-</template>
-
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
+import { VNode } from 'vue'
 import { useTippy } from 'vue-tippy/composition'
 
 const ARROW_HEIGHT = 7
 
-export default defineComponent({
+export default defineComponent<{
+	helpText: string | null
+	helpTextSlot: VNode[]
+}>({
 	name: 'FieldHelpText',
 	props: {
-		helpText: { required: true, type: String },
+		helpText: { default: null, type: String },
+		helpTextSlot: { default: () => [], type: Array },
 	},
 	setup() {
 		const helpTextContentRef = ref<Element | null>(null)
 		const helpTextTriggerRef = ref<Element | null>(null)
 
 		useTippy(helpTextTriggerRef, {
+			appendTo: () => document.body,
 			arrow: roundArrow,
 			content: helpTextContentRef,
+			interactive: true,
 			offset: [0, ARROW_HEIGHT],
 			theme: 'light-border',
 		})
@@ -36,13 +32,35 @@ export default defineComponent({
 		return {
 			helpTextContentRef,
 			helpTextTriggerRef,
-			Yoco,
 		}
+	},
+	render(h) {
+		return h('div', {}, [
+			h(
+				'i',
+				{
+					class: 'yoco',
+					ref: 'helpTextTriggerRef',
+				},
+				[Yoco.Icon.CIRCLE_QUESTION],
+			),
+			h(
+				'div',
+				{
+					ref: 'helpTextContentRef',
+				},
+				/**
+				 * Props in render functions are apparently only available via this
+				 * @see {@link https://vuejs.org/v2/guide/render-function.html}
+				 */
+				this.helpTextSlot.length >= 1 ? this.helpTextSlot : [this.helpText],
+			),
+		])
 	},
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'tippy.js/dist/tippy.css';
 @import 'tippy.js/dist/svg-arrow.css';
 @import 'tippy.js/themes/light-border.css';
