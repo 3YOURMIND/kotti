@@ -5,5 +5,6 @@ import KtAvatarGroupVue from './KtAvatarGroup.vue'
 export const KtAvatarGroup = attachMeta(makeInstallable(KtAvatarGroupVue), {
 	addedVersion: null,
 	deprecated: null,
+	slots: {},
 	typeScript: null,
 })

@@ -1,3 +1,4 @@
+import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtFieldDateVue from './KtFieldDate.vue'
@@ -8,6 +9,7 @@ import KtFieldDateTimeRangeVue from './KtFieldDateTimeRange.vue'
 export const KtFieldDate = attachMeta(makeInstallable(KtFieldDateVue), {
 	addedVersion: '2.0.0',
 	deprecated: null,
+	slots: FIELD_META_BASE_SLOTS,
 	typeScript: {
 		namespace: 'Kotti.FieldDate',
 	},
@@ -18,6 +20,7 @@ export const KtFieldDateRange = attachMeta(
 	{
 		addedVersion: '2.0.0',
 		deprecated: null,
+		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDateRange',
 		},
@@ -27,6 +30,7 @@ export const KtFieldDateRange = attachMeta(
 export const KtFieldDateTime = attachMeta(makeInstallable(KtFieldDateTimeVue), {
 	addedVersion: '2.0.0',
 	deprecated: null,
+	slots: FIELD_META_BASE_SLOTS,
 	typeScript: {
 		namespace: 'Kotti.FieldDateTime',
 	},
@@ -37,6 +41,7 @@ export const KtFieldDateTimeRange = attachMeta(
 	{
 		addedVersion: '2.0.0',
 		deprecated: null,
+		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDateTimeRange',
 		},

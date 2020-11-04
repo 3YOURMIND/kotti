@@ -12,5 +12,6 @@ export const KtInputNumber = attachMeta(makeInstallable(KtInputNumberVue), {
 		reason: 'Replaced by Kotti v2.0.0 Forms',
 		version: '3.0.0',
 	},
+	slots: {},
 	typeScript: null,
 })

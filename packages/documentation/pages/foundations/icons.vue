@@ -51,6 +51,7 @@ export default defineComponent({
 		const meta: Kotti.Meta = {
 			addedVersion: null,
 			deprecated: null,
+			slots: {},
 			typeScript: {
 				namespace: 'Yoco.Icon',
 			},

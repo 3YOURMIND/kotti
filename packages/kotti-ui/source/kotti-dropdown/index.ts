@@ -12,5 +12,9 @@ export const KtDropdown = attachMeta(makeInstallable(KtDropdownVue), {
 		reason: 'Replaced by KtPopover',
 		version: '3.0.0',
 	},
+	slots: {
+		content: { description: null, scope: null },
+		default: { description: null, scope: null },
+	},
 	typeScript: null,
 })

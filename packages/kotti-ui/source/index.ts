@@ -187,7 +187,8 @@ export default {
 			KtToaster,
 			KtTranslationContext,
 			KtUserMenu,
-		]) Vue.use(component)
+		])
+			Vue.use(component)
 
 		Vue.prototype.$KtNavbar = new Vue({
 			data: {

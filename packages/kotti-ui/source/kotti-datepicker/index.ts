@@ -6,7 +6,6 @@ import KtDatePickerVue from './KtDatePicker.vue'
 
 const META: Kotti.Meta = {
 	addedVersion: '0.0.4',
-	typeScript: null,
 	deprecated: {
 		alternatives: [
 			'KtFieldDate',
@@ -17,6 +16,8 @@ const META: Kotti.Meta = {
 		reason: 'Replaced by Kotti v2.0.0 Forms',
 		version: '3.0.0',
 	},
+	slots: {},
+	typeScript: null,
 }
 
 /**

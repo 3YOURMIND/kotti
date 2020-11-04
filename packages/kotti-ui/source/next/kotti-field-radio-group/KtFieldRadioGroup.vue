@@ -1,5 +1,10 @@
 <template>
-	<KtField v-bind="{ field }" :getEmptyValue="() => null" isGroup>
+	<KtField
+		v-bind="{ field }"
+		:getEmptyValue="() => null"
+		:helpTextSlot="$slots.helpText"
+		isGroup
+	>
 		<div
 			slot="container"
 			:class="wrapperClasses"

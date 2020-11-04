@@ -11,7 +11,16 @@
 					:validator="componentRepresenation.validator"
 					v-bind="componentRepresenation.props"
 				>
-					Default Slot
+					<div slot="helpText" v-if="componentRepresenation.hasHelpTextSlot">
+						<div>
+							Supports <abbr title="Hypertext Markup Language">HTML</abbr> via <code>&lt;template v-slot:helpText&gt;</code>
+						</div>
+					</div>
+					<div slot="default">
+						<div>
+							Default Slot
+						</div>
+					</div>
 				</component>
 			</KtForm>
 			<div class="overview__component__value">
@@ -66,7 +75,6 @@
 					formKey="validation"
 					isOptional
 					label="Validation State"
-					helpText="Passed as a validation function or via KtForm.validators & validatorKey"
 					:options="[
 						{ label: 'Empty (Default)', value: 'empty' },
 						{ label: 'Success', value: 'success' },
@@ -74,7 +82,16 @@
 						{ label: 'Error', value: 'error' },
 					]"
 					size="small"
-				/>
+				>
+					<div slot="helpText">
+						Passed as a validation function:
+						<code>() => ({ type: 'error', message: '' })</code>
+						or via
+						<code>KtForm.validators</code>
+						or via
+						<code>validatorKey</code>
+					</div>
+				</KtFieldSingleSelect>
 				<KtFieldToggleGroup
 					formKey="booleanFlags"
 					isOptional
@@ -185,7 +202,17 @@
 				<h4>Texts</h4>
 				<KtFieldText formKey="label" isOptional label="label" size="small" />
 				<KtFieldText formKey="helpDescription" isOptional label="helpDescription" size="small" />
-				<KtFieldText formKey="helpText" isOptional label="helpText" size="small" />
+				<div class="field-row">
+					<KtFieldText
+						formKey="helpText"
+						:helpText="settings.hasHelpTextSlot ? 'Not supported when using a #helpText slot' : null"
+						:isDisabled="settings.hasHelpTextSlot"
+						isOptional
+						label="helpText"
+						size="small"
+					/>
+					<KtFieldToggle type="switch" formKey="hasHelpTextSlot" isOptional label="Use #helpText Slot" size="small" />
+				</div>
 				<KtFieldText formKey="placeholder" isOptional label="placeholder" size="small" helpText="Support Varies" />
 				<h4>Decoration</h4>
 				<div class="field-row">
@@ -236,7 +263,18 @@
 						:is="savedField.name"
 						:validator="savedField.validator"
 						v-bind="savedField.props"
-					>Default Slot</component>
+					>
+						<div slot="helpText" v-if="savedField.hasHelpTextSlot">
+							<div>
+								Supports <abbr title="Hypertext Markup Language">HTML</abbr> via <code>&lt;template v-slot:helpText&gt;</code>
+							</div>
+						</div>
+						<div slot="default">
+							<div>
+								Default Slot
+							</div>
+						</div>
+					</component>
 					<button @click="savedFieldsRemove(index)" type="button">Remove</button>
 				</div>
 				<div class="overview__code">
@@ -249,7 +287,22 @@
 </template>
 
 <script lang="ts">
-import { Kotti } from '@3yourmind/kotti-ui'
+import {
+	Kotti,
+	KtFieldDate,
+	KtFieldDateRange,
+	KtFieldDateTime,
+	KtFieldDateTimeRange,
+	KtFieldMultiSelect,
+	KtFieldNumber,
+	KtFieldPassword,
+	KtFieldRadioGroup,
+	KtFieldSingleSelect,
+	KtFieldText,
+	KtFieldTextArea,
+	KtFieldToggle,
+	KtFieldToggleGroup,
+} from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
@@ -271,6 +324,21 @@ const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 		console.warn('could not save to localStorage')
 	}
 }
+
+type KtFieldNames =
+	| 'KtFieldDate'
+	| 'KtFieldDateRange'
+	| 'KtFieldDateTime'
+	| 'KtFieldDateTimeRange'
+	| 'KtFieldNumber'
+	| 'KtFieldMultiSelect'
+	| 'KtFieldPassword'
+	| 'KtFieldRadioGroup'
+	| 'KtFieldSingleSelect'
+	| 'KtFieldText'
+	| 'KtFieldTextArea'
+	| 'KtFieldToggle'
+	| 'KtFieldToggleGroup'
 
 const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate']
 
@@ -395,7 +463,8 @@ const INITIAL_VALUES: {
 }
 
 type ComponentValue = {
-	name: string
+	hasHelpTextSlot: boolean
+	name: KtFieldNames
 	props: object
 	validation: Kotti.Field.Validation.Result['type']
 }
@@ -423,6 +492,7 @@ const generateCode = (component: ComponentValue) =>
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			.filter(([_, value]) => value !== null && value !== false)
 			.filter(([key, value]) => !(key === 'size' && value === 'medium'))
+			.filter(([key]) => !(key === 'helpText' && component.hasHelpTextSlot))
 			.map(([key, value]) => {
 				switch (typeof value) {
 					case 'boolean':
@@ -434,12 +504,14 @@ const generateCode = (component: ComponentValue) =>
 				}
 			})
 			.map((prop) => `\t${prop}`),
-		...(component.validation === null
+		...(component.validation === 'empty'
 			? []
 			: [
 					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
 			  ]),
-		'/>',
+		component.hasHelpTextSlot
+			? `>\n\t<template #helpText>\n\t\t<div>\n\t\t\tSlot Content\n\t\t</div>\n\t</template>\n</${component.name}>`
+			: '/>',
 	].join('\n')
 
 export default defineComponent({
@@ -471,7 +543,8 @@ export default defineComponent({
 				isLoading: Kotti.FieldToggle.Value
 				isOptional: Kotti.FieldToggle.Value
 			}
-			component: string
+			component: KtFieldNames
+			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
 			helpText: Kotti.FieldText.Value
 			label: Kotti.FieldText.Value
@@ -505,6 +578,7 @@ export default defineComponent({
 				isOptional: true,
 			},
 			component: 'KtFieldText',
+			hasHelpTextSlot: false,
 			helpDescription: null,
 			helpText: null,
 			label: 'Label',
@@ -683,19 +757,12 @@ export default defineComponent({
 
 		const componentValue = computed(
 			(): ComponentValue => ({
+				hasHelpTextSlot: settings.value.hasHelpTextSlot,
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),
 				validation: settings.value.validation,
 			}),
 		)
-
-		const meta: Kotti.Meta = {
-			addedVersion: '2.0.0',
-			deprecated: null,
-			typeScript: {
-				namespace: 'Kotti.Field*',
-			},
-		}
 
 		return {
 			componentDefinition,
@@ -711,7 +778,24 @@ export default defineComponent({
 					validator: createValidator(componentValue.value.validation),
 				}),
 			),
-			meta,
+			meta: computed(
+				(): Kotti.Meta =>
+					({
+						KtFieldDate,
+						KtFieldDateRange,
+						KtFieldDateTime,
+						KtFieldDateTimeRange,
+						KtFieldNumber,
+						KtFieldMultiSelect,
+						KtFieldPassword,
+						KtFieldRadioGroup,
+						KtFieldSingleSelect,
+						KtFieldText,
+						KtFieldTextArea,
+						KtFieldToggle,
+						KtFieldToggleGroup,
+					}[componentValue.value.name].meta),
+			),
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},

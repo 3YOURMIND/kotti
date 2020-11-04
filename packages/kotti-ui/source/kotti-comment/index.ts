@@ -7,6 +7,7 @@ import KtCommentInputVue from './KtCommentInput.vue'
 const META: Kotti.Meta = {
 	addedVersion: null,
 	deprecated: null,
+	slots: {},
 	typeScript: null,
 }
 

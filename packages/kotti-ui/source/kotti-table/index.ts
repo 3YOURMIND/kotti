@@ -10,6 +10,34 @@ import { KtTableProvider as KtTableProviderVue } from './src/TableProvider'
 const META: Kotti.Meta = {
 	addedVersion: null,
 	deprecated: null,
+	slots: {
+		actions: { description: 'E.g. edit/delete row actions', scope: null },
+		default: {
+			description:
+				'Could contain columns. Can be used together with columns prop...',
+			scope: null,
+		},
+		empty: {
+			description:
+				'Alternative to emptyText prop. Shown when the Table is empty',
+			scope: null,
+		},
+		expand: {
+			description: 'Per column, allows showing more info on-demand',
+			scope: {
+				row: { description: null, type: 'object' },
+				rowIndex: { description: null, type: 'integer' },
+			},
+		},
+		header: {
+			description: 'Customizes column header',
+			scope: {}, // FIXME: This is missing
+		},
+		loading: {
+			description: 'Alternative to loadingText prop. Shown when loading',
+			scope: null,
+		},
+	},
 	typeScript: null,
 }
 

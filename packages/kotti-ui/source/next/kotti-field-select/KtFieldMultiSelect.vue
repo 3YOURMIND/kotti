@@ -5,6 +5,7 @@
 		v-bind="{ field }"
 		class="kt-field-select kt-field-select--multiple"
 		:getEmptyValue="() => []"
+		:helpTextSlot="$slots.helpText"
 		isComponent="div"
 		@click.stop="handleFieldClick"
 		@mousedown="handleFieldMouseDown"

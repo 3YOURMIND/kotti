@@ -1,5 +1,9 @@
 <template>
-	<KtField v-bind="{ field }" :getEmptyValue="() => null">
+	<KtField
+		v-bind="{ field }"
+		:getEmptyValue="() => null"
+		:helpTextSlot="$slots.helpText"
+	>
 		<textarea slot="container" v-bind="inputProps" @input="onInput" />
 	</KtField>
 </template>

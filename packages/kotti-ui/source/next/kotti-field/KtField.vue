@@ -4,8 +4,8 @@
 			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
 			v-show="!field.isLoading"
 			:class="wrapperClasses"
-			@click="emit('click', $event)"
-			@mousedown="emit('mousedown', $event)"
+			@click="$emit('click', $event)"
+			@mousedown="$emit('mousedown', $event)"
 		>
 			<div class="kt-field__header">
 				<component
@@ -17,20 +17,13 @@
 					<span :class="labelSuffixClasses" v-text="labelSuffix" />
 				</component>
 				<div
-					v-if="field.helpText"
+					v-if="hasHelpText"
 					class="kt-field__header__help-text"
 					:class="iconClasses(['interactive'])"
-					@mouseenter="() => (isTooltipHovered = true)"
-					@mouseleave="() => (isTooltipHovered = false)"
 				>
-					<div ref="helpTextIconRef" class="kt-field__header__help-text__icon">
-						<i class="yoco" v-text="Yoco.Icon.CIRCLE_QUESTION" />
-					</div>
-					<div
-						v-if="isTooltipHovered"
-						class="kt-field__header__help-text__tooltip"
-						:class="tooltipPositionClass"
-						v-text="field.helpText"
+					<FieldHelpText
+						:helpText="field.helpText"
+						:helpTextSlot="helpTextSlot"
 					/>
 				</div>
 			</div>
@@ -77,7 +70,6 @@
 					/>
 				</div>
 			</slot>
-
 			<div
 				v-if="!field.isLoading && showValidation && validationText !== null"
 				class="kt-field__validation-text"
@@ -86,7 +78,6 @@
 				{{ validationText }}
 			</div>
 		</component>
-
 		<div v-if="field.isLoading" class="kt-field__wrapper">
 			<div class="kt-field__loading__header skeleton rectangle" />
 			<div class="kt-field__loading__input-container skeleton rectangle" />
@@ -97,15 +88,22 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref } from '@vue/composition-api'
+import { VNode } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
+import FieldHelpText from './components/FieldHelpText.vue'
 import { KottiField } from './types'
 
-const ONE_HOUNDRED_UNITS = 100
-
-export default defineComponent({
+export default defineComponent<{
+	field: KottiField.Hook.Returns<unknown>
+	helpTextSlot: VNode[]
+	isComponent: string | null
+	isGroup: boolean
+	getEmptyValue: () => unknown
+}>({
 	name: 'KtField',
+	components: { FieldHelpText },
 	props: {
 		field: { required: true, type: Object },
 		/**
@@ -113,21 +111,11 @@ export default defineComponent({
 		 * Used when clearing the field. Most likely either null or []
 		 */
 		getEmptyValue: { required: true, type: Function },
+		helpTextSlot: { default: () => [], type: Array },
 		isComponent: { default: null, type: String },
 		isGroup: { default: false, type: Boolean },
 	},
-	setup<DATA_TYPE>(
-		props: {
-			field: KottiField.Hook.Returns<DATA_TYPE>
-			isComponent: string | null
-			isGroup: boolean
-			getEmptyValue: () => DATA_TYPE
-		},
-		{ emit },
-	) {
-		const helpTextIconRef = ref<Element | null>(null)
-		const isTooltipHovered = ref(false)
-
+	setup(props) {
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === 'empty'),
@@ -142,24 +130,19 @@ export default defineComponent({
 					(modification) => `kt-field__input-container__affix--${modification}`,
 				),
 			]),
-			emit,
 			handleClear: () => props.field.setValue(props.getEmptyValue()),
+			hasHelpText: computed(
+				() => props.helpTextSlot.length >= 1 || props.field.helpText !== null,
+			),
 			iconClasses: computed(() => (modifications: string[]) => [
 				'kt-field__input-container__icon',
 				...modifications.map(
 					(modification) => `kt-field__input-container__icon--${modification}`,
 				),
 			]),
-			helpTextIconRef,
 			inputContainerRef: ref<Element | null>(null),
-			isTooltipHovered,
-			labelSuffix: computed(
-				() =>
-					`${
-						props.field.isOptional
-							? '(' + translations.value.optionalLabel + ')'
-							: '*'
-					}`,
+			labelSuffix: computed(() =>
+				props.field.isOptional ? `(${translations.value.optionalLabel})` : '*',
 			),
 			labelSuffixClasses: computed(() => {
 				return {
@@ -171,17 +154,6 @@ export default defineComponent({
 				}
 			}),
 			showValidation,
-			tooltipPositionClass: computed(() => {
-				if (!isTooltipHovered.value) return []
-				const iconPosition =
-					helpTextIconRef.value?.getBoundingClientRect().top ?? null
-
-				if (iconPosition === null) return ''
-
-				return `kt-field__header__help-text__tooltip--is-${
-					iconPosition > ONE_HOUNDRED_UNITS ? 'above' : 'below'
-				}`
-			}),
 			validationText: computed(() =>
 				props.field.validation.type === 'empty'
 					? null
@@ -196,7 +168,6 @@ export default defineComponent({
 						warning: Yoco.Icon.CIRCLE_ATTENTION,
 					}[validationType.value]),
 			),
-
 			wrapperClasses: computed(() => {
 				const classes = ['kt-field__wrapper']
 
@@ -313,35 +284,8 @@ export default defineComponent({
 		}
 
 		&__help-text {
-			position: relative;
 			display: flex;
 			align-items: center;
-
-			&__tooltip {
-				position: absolute;
-				z-index: 1; // fix weird layout issues with el-select
-				width: max-content;
-				max-width: 12rem;
-				max-height: 7em;
-				padding: 0.75em 1em;
-				overflow: scroll;
-				color: var(--gray-10);
-				cursor: none;
-				background-color: var(--ui-04);
-				border: 1px solid var(--ui-02);
-				border-radius: var(--field-border-radius);
-				transform: translateX(calc(-50% + 5px));
-
-				&--is-above {
-					// place exactly above so the user can hover the tooltip to scroll without leaving the element
-					bottom: 100%;
-				}
-
-				&--is-below {
-					// place exactly below so the user can hover the tooltip to scroll without leaving the element
-					top: 100%;
-				}
-			}
 		}
 
 		&__label {

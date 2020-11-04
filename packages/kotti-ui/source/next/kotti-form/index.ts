@@ -10,6 +10,37 @@ export const KtFormControllerList = attachMeta(
 	{
 		addedVersion: '2.0.0',
 		deprecated: null,
+		slots: {
+			default: {
+				description: null,
+				scope: {
+					addAfter: {
+						description: null,
+						type: 'function',
+					},
+					addBefore: {
+						description: null,
+						type: 'function',
+					},
+					deleteSelf: {
+						description: null,
+						type: 'function',
+					},
+					index: {
+						description: null,
+						type: 'integer',
+					},
+					setValues: {
+						description: null,
+						type: 'function',
+					},
+					values: {
+						description: null,
+						type: 'object',
+					},
+				},
+			},
+		},
 		typeScript: {
 			namespace: 'Kotti.FormControllerList',
 		},
@@ -21,6 +52,12 @@ export const KtFormControllerObject = attachMeta(
 	{
 		addedVersion: '2.0.0',
 		deprecated: null,
+		slots: {
+			default: {
+				description: null,
+				scope: null,
+			},
+		},
 		typeScript: {
 			namespace: 'Kotti.FormControllerObject',
 		},
@@ -30,6 +67,7 @@ export const KtFormControllerObject = attachMeta(
 export const KtFormSubmit = attachMeta(makeInstallable(KtFormSubmitVue), {
 	addedVersion: '2.0.0',
 	deprecated: null,
+	slots: {},
 	typeScript: {
 		namespace: 'Kotti.FormSubmit',
 	},
@@ -38,6 +76,12 @@ export const KtFormSubmit = attachMeta(makeInstallable(KtFormSubmitVue), {
 export const KtForm = attachMeta(makeInstallable(KtFormVue), {
 	addedVersion: '2.0.0',
 	deprecated: null,
+	slots: {
+		default: {
+			description: null,
+			scope: null,
+		},
+	},
 	typeScript: {
 		namespace: 'Kotti.Form',
 	},
