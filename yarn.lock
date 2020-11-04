@@ -3832,10 +3832,10 @@
     sass "^1.18.0"
     stylus "^0.54.5"
 
-"@vue/composition-api@0.6.7":
-  version "0.6.7"
-  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-0.6.7.tgz#4481b547cea65dc936432f7efcf1a39f9c69420c"
-  integrity sha512-WAWEQK4urEsMNe3OyOp7VnMmegRZT2yRB3fDGLRXPMdfuo4+nM+uMEhUgDiUg9LFSXfLWhjwuFOJ2hnS2X7AUw==
+"@vue/composition-api@0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-0.6.1.tgz#0a32e7d18e4b69912e3547e11d0c85e770de6825"
+  integrity sha512-NfP6kiBDXkYWrzFwK9IBem5MQSXMujIl8QDBJuLx0Y/6pwK3PC+F7dFDhja+H03SE6WwLleZASM6+zY3BT3Bkw==
   dependencies:
     tslib "^2.0.0"
 
