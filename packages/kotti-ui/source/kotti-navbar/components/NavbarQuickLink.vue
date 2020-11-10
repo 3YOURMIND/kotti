@@ -33,7 +33,6 @@ export default {
 .kt-navbar-quick-links {
 	padding: 1.2rem 1rem;
 	margin: 0.4rem 0;
-	background: var(--navbar-border);
 }
 .kt-navbar-quick-links__title {
 	font-size: 0.6rem;
@@ -44,9 +43,8 @@ export default {
 .kt-navbar-quick-links__link {
 	display: flex;
 	align-items: center;
-	color: var(--navbar-color-light);
 	&:hover {
-		color: var(--navbar-color);
+		color: var(--navbar-color-light);
 	}
 	i {
 		font-size: 0.8rem;
