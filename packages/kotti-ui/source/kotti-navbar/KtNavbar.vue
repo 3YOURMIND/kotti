@@ -118,6 +118,11 @@ $narrow-navbar-width: 3.4rem;
 	--navbar-color: var(--primary-10);
 	--navbar-color-light: var(--primary-20);
 	--navbar-color-active: var(--white);
+
+	--user-menu-border: var(--primary-80);
+	--user-menu-background-active: var(--primary-70);
+	--user-menu-background: var(--primary-60);
+	--user-menu-color: var(--primary-10);
 }
 
 .kt-navbar {
