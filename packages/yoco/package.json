@@ -34,7 +34,7 @@
 	"name": "@3yourmind/yoco",
 	"repository": "git+https://github.com/3YOURMIND/kotti.git",
 	"scripts": {
-		"build": "tsc && node dist/generate"
+		"build": "tsc && node --unhandled-rejections=strict dist/generate"
 	},
 	"style": "style.css",
 	"version": "2.1.0"

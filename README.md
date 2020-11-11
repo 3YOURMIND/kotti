@@ -142,6 +142,10 @@ npm login
 
 # update the version in `package.json`
 # make sure to commit the version bump changes before publishing then run:
+
+node --version
+# make sure it’s 12.x
+
 yarn run lerna publish from-package
 
 # update release notes
