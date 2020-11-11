@@ -21,6 +21,8 @@ const external = [
 	...Object.keys(packageJSON.peerDependencies),
 	...Object.keys(packageJSON.dependencies),
 	/.*element-ui.*/,
+	/.*tippy\.js.*/,
+	/.*vue-tippy.*/,
 ]
 
 const plugins = (module) => [
