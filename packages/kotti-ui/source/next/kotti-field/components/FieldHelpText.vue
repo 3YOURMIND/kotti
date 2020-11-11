@@ -59,9 +59,3 @@ export default defineComponent<{
 	},
 })
 </script>
-
-<style lang="scss">
-@import 'tippy.js/dist/tippy.css';
-@import 'tippy.js/dist/svg-arrow.css';
-@import 'tippy.js/themes/light-border.css';
-</style>
