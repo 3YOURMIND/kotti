@@ -129,7 +129,7 @@
 		"postpublish:deploy": "yarn --cwd packages/documentation run deploy",
 		"prepublishOnly": "yarn run lint && lerna run --no-private build",
 		"watch:build-kotti-dependencies": "concurrently \"yarn workspace @3yourmind/sass-node-modules-importer run build\" \"yarn workspace @3yourmind/vue-use-tippy run build\" \"yarn workspace @3yourmind/yoco run build\"",
-		"watch": "yarn run watch:build-kotti-dependencies && nodemon --watch packages/kotti-ui/source --ignore packages/kotti-ui/source/kotti-style/tokens.css -e js,jsx,ts,tsx,vue,scss,css,json --exec \"yarn --cwd packages/kotti-ui run build && yarn --cwd packages/documentation run serve\""
+		"watch": "yarn run watch:build-kotti-dependencies && nodemon --watch packages/vue-use-tippy/source --watch packages/yoco/source --watch packages/sass-node-modules-importer/source --watch packages/kotti-ui/source --ignore packages/kotti-ui/source/kotti-style/tokens.css -e js,jsx,ts,tsx,vue,scss,css,json --exec \"yarn --cwd packages/kotti-ui run build && yarn --cwd packages/documentation run serve\""
 	},
 	"version": "1.0.0",
 	"workspaces": [
