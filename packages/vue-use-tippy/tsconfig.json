@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"declaration": true,
+		"declarationDir": "dist",
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"lib": ["ESNext", "ES2019"],
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"outDir": "dist",
+		"resolveJsonModule": true,
+		"rootDir": "source",
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "es5"
+	},
+	"exclude": ["node_modules", "dist"],
+	"include": ["source/*.ts", "source/**/*.ts"]
+}

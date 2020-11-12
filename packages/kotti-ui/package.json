@@ -8,6 +8,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
+		"@3yourmind/vue-use-tippy": "1.x",
 		"@3yourmind/yoco": "2.x",
 		"@popperjs/core": "2.0.6",
 		"color": "3.x",
@@ -16,9 +17,9 @@
 		"element-ui": "2.13.1",
 		"lodash": "^4.17.19",
 		"normalize.css": "^8.0.1",
+		"tippy.js": "6.x",
 		"ts-custom-error": "^3.1.1",
-		"vue-clickaway": "^2.2.2",
-		"vue-tippy": "^4.7.1"
+		"vue-clickaway": "^2.2.2"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
@@ -55,9 +56,6 @@
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/3YOURMIND/kotti.git"
-	},
-	"resolutions": {
-		"tippy.js": "6.2.7"
 	},
 	"scripts": {
 		"build": "rm -rf dist && yarn run build:tokens && yarn run build:kotti && yarn run build:scss-variables",

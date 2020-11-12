@@ -119,9 +119,6 @@
 	},
 	"private": true,
 	"repository": "git@github.com:3YOURMIND/kotti",
-	"resolutions": {
-		"tippy.js": "6.2.7"
-	},
 	"scripts": {
 		"check": "yarn run check:script && yarn run check:style",
 		"check:script": "eslint --ignore-path .gitignore '**/*.{js,ts,vue}'",
@@ -131,7 +128,7 @@
 		"postpublish": "yarn run postpublish:deploy",
 		"postpublish:deploy": "yarn --cwd packages/documentation run deploy",
 		"prepublishOnly": "yarn run lint && lerna run --no-private build",
-		"watch:build-kotti-dependencies": "concurrently \"yarn workspace @3yourmind/sass-node-modules-importer run build\" \"yarn workspace @3yourmind/yoco run build\"",
+		"watch:build-kotti-dependencies": "concurrently \"yarn workspace @3yourmind/sass-node-modules-importer run build\" \"yarn workspace @3yourmind/vue-use-tippy run build\" \"yarn workspace @3yourmind/yoco run build\"",
 		"watch": "yarn run watch:build-kotti-dependencies && nodemon --watch packages/kotti-ui/source --ignore packages/kotti-ui/source/kotti-style/tokens.css -e js,jsx,ts,tsx,vue,scss,css,json --exec \"yarn --cwd packages/kotti-ui run build && yarn --cwd packages/documentation run serve\""
 	},
 	"version": "1.0.0",
