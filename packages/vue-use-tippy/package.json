@@ -1,0 +1,33 @@
+{
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"description": "Vue hook for tippy.js",
+	"directories": {
+		"dist": "dist"
+	},
+	"homepage": "https://github.com/3YOURMIND/kotti/tree/master/packages/vue-use-tippy",
+	"keywords": [
+		"tippy.js",
+		"tippy",
+		"popover",
+		"tooltip",
+		"hooks",
+		"vue",
+		"composition-api"
+	],
+	"license": "MIT",
+	"main": "dist/index.js",
+	"name": "@3yourmind/vue-use-tippy",
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
+	"scripts": {
+		"build": "rm -rf dist && tsc"
+	},
+	"version": "1.0.0"
+}
