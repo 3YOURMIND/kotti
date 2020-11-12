@@ -38,13 +38,10 @@ export const useTippy = (
 		if (isRef(options.content)) {
 			watch(
 				options.content,
-				(newValue) => {
-					options.content = newValue // NOOP?
-
+				(newValue) =>
 					applyForEvery(instance, (tippyInstance) =>
 						tippyInstance.setContent(newValue),
-					)
-				},
+					),
 				{ immediate: true },
 			)
 		}
