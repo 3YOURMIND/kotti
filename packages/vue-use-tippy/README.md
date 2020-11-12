@@ -27,3 +27,7 @@ export default defineComponent({
 ```
 
 Right now, `@vue/composition-api@0.6.1` is recommended.
+
+## Options
+
+See <https://atomiks.github.io/tippyjs/v6/all-props/> for supported options

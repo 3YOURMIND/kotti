@@ -21,6 +21,9 @@ const applyForEvery = (
 			callback(tippyInstance)
 }
 
+/**
+ * @see {@link https://atomiks.github.io/tippyjs/v6/all-props} for options
+ */
 export const useTippy = (
 	targets: Targets,
 	options: Partial<Props> & {
