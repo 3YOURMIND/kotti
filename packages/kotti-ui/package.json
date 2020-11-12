@@ -8,6 +8,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
+		"@3yourmind/vue-use-tippy": "1.x",
 		"@3yourmind/yoco": "2.x",
 		"@popperjs/core": "2.0.6",
 		"color": "3.x",
@@ -17,8 +18,7 @@
 		"lodash": "^4.17.19",
 		"normalize.css": "^8.0.1",
 		"ts-custom-error": "^3.1.1",
-		"vue-clickaway": "^2.2.2",
-		"vue-tippy": "^4.7.1"
+		"vue-clickaway": "^2.2.2"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
