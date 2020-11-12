@@ -1,89 +1,89 @@
 import {
-	h,
 	isRef,
 	isReactive,
 	onMounted,
 	ref,
+	Ref,
 	onUnmounted,
 	watch,
-	toRefs,
-	onUpdated,
 } from '@vue/composition-api'
-import tippy from 'tippy.js'
+import castArray from 'lodash.castarray'
+import tippy, { Content, Props, Instance, Targets } from 'tippy.js'
 
-const array_wrap = (val) => (Array.isArray(val) ? val : [val])
+type Callback = (t: Instance<Props>[] | null) => void
 
-export function useTippy(el, opts = {}) {
-	const instance = ref(null)
+const applyForEvery = (
+	instance: Ref<Instance<Props>[] | null>,
+	callback: (tippyInstance: Instance<Props>) => void,
+) => {
+	if (instance.value)
+		for (const tippyInstance of castArray(instance.value))
+			callback(tippyInstance)
+}
 
-	const onMountCbs = []
-	const onUnmountCbs = []
+export const useTippy = (
+	targets: Targets,
+	options: Partial<Props> & {
+		content: Ref<Content> | Content
+	},
+	// eslint-disable-next-line sonarjs/cognitive-complexity
+) => {
+	const instance = ref<Instance<Props>[] | null>(null)
 
-	const onMount = (cb) => {
-		onMountCbs.push(cb)
-	}
-
-	const onUnmount = (cb) => {
-		onUnmountCbs.push(cb)
-	}
-
-	const init = (e, o) => {
-		instance.value = tippy(e, o)
-		onMountCbs.forEach((cb) => cb(instance.value))
-	}
-
+	const onMountCallbacks: Callback[] = []
 	onMounted(() => {
-		let element = el
-
-		if (isRef(el)) {
-			element = el.value
-		}
-
-		if (Array.isArray(el)) {
-			element = el.map((e) => (isRef(e) ? e.value : e))
-		}
-
-		if (isRef(opts.content)) {
+		if (isRef(options.content)) {
 			watch(
-				opts.content,
-				function (val) {
-					console.log(val)
+				options.content,
+				(newValue) => {
+					options.content = newValue // NOOP?
 
-					opts.content = val
-					if (instance.value) {
-						array_wrap(instance.value).forEach((t) => t.setContent(val))
-					}
+					applyForEvery(instance, (tippyInstance) =>
+						tippyInstance.setContent(newValue),
+					)
 				},
 				{ immediate: true },
 			)
 		}
-		init(element, opts)
+
+		const unwrappedTargets = (() => {
+			if (isRef(targets)) return targets.value
+
+			if (Array.isArray(targets))
+				return targets.map((target) => (isRef(target) ? target.value : target))
+
+			return targets
+		})()
+
+		instance.value = tippy(unwrappedTargets, options)
+		onMountCallbacks.forEach((callback) => callback(instance.value))
 	})
 
+	const onUnmountCallbacks: Callback[] = []
 	onUnmounted(() => {
-		if (instance.value) {
-			array_wrap(instance.value).forEach((t) => t.destroy())
-		}
-
-		onUnmountCbs.forEach((cb) => cb())
+		applyForEvery(instance, (tippyInstance) => tippyInstance.destroy())
+		onUnmountCallbacks.forEach((callback) => callback(instance.value))
 	})
 
-	if (isReactive(opts) || isRef(opts)) {
-		const watchSource = isReactive(opts) ? () => opts : opts
+	if (isReactive(options) || isRef(options)) {
+		const watchSource = isReactive(options) ? () => options : options
+
 		watch(
-			opts,
-			() => {
-				if (instance.value) {
-					array_wrap(instance.value).forEach((t) => t.set(opts))
-				}
+			watchSource,
+			() =>
+				applyForEvery(instance, (tippyInstance) =>
+					tippyInstance.setProps(options),
+				),
+			{
+				deep: true,
+				immediate: true,
 			},
-			{ immediate: true, deep: true },
 		)
 	}
 
 	return {
-		onMount,
-		onUnmount,
+		onMount: (callback: Callback) => onMountCallbacks.push(callback),
+		onUnmount: (callback: Callback) => onUnmountCallbacks.push(callback),
 		tippy: instance,
 	}
 }

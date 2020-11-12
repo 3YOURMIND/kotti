@@ -4,9 +4,13 @@
 	},
 	"dependencies": {
 		"@vue/composition-api": "0.6.1",
+		"lodash.castarray": "^4.4.0",
 		"tippy.js": "6.x"
 	},
 	"description": "Vue hook for tippy.js",
+	"devDependencies": {
+		"@types/lodash.castarray": "^4.4.6"
+	},
 	"directories": {
 		"dist": "dist"
 	},
