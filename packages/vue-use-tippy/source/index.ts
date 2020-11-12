@@ -1,6 +1,5 @@
 import {
 	isRef,
-	isReactive,
 	onMounted,
 	ref,
 	Ref,
@@ -8,15 +7,17 @@ import {
 	watch,
 } from '@vue/composition-api'
 import castArray from 'lodash.castarray'
-import tippy, { Content, Props, Instance, Targets } from 'tippy.js'
+import tippy, { Props, Instance } from 'tippy.js'
 
-type Callback = (t: Instance<Props>[] | null) => void
+type InstanceRefType = Instance<Props>[] | Instance<Props> | null
+type Callback = (t: InstanceRefType) => void
+type Target = Ref<Element | null> | string
 
 const applyForEvery = (
-	instance: Ref<Instance<Props>[] | null>,
+	instance: Ref<InstanceRefType>,
 	callback: (tippyInstance: Instance<Props>) => void,
 ) => {
-	if (instance.value)
+	if (instance.value !== null)
 		for (const tippyInstance of castArray(instance.value))
 			callback(tippyInstance)
 }
@@ -25,27 +26,13 @@ const applyForEvery = (
  * @see {@link https://atomiks.github.io/tippyjs/v6/all-props} for options
  */
 export const useTippy = (
-	targets: Targets,
-	options: Partial<Props> & {
-		content: Ref<Content> | Content
-	},
-	// eslint-disable-next-line sonarjs/cognitive-complexity
+	targets: Array<Target> | Target,
+	options: Ref<Partial<Props>>,
 ) => {
-	const instance = ref<Instance<Props>[] | null>(null)
+	const instance = ref<InstanceRefType>(null)
 
 	const onMountCallbacks: Callback[] = []
 	onMounted(() => {
-		if (isRef(options.content)) {
-			watch(
-				options.content,
-				(newValue) =>
-					applyForEvery(instance, (tippyInstance) =>
-						tippyInstance.setContent(newValue),
-					),
-				{ immediate: true },
-			)
-		}
-
 		const unwrappedTargets = (() => {
 			if (isRef(targets)) return targets.value
 
@@ -55,31 +42,26 @@ export const useTippy = (
 			return targets
 		})()
 
-		instance.value = tippy(unwrappedTargets, options)
+		instance.value = tippy(unwrappedTargets, options.value)
+
 		onMountCallbacks.forEach((callback) => callback(instance.value))
 	})
 
 	const onUnmountCallbacks: Callback[] = []
 	onUnmounted(() => {
 		applyForEvery(instance, (tippyInstance) => tippyInstance.destroy())
+
 		onUnmountCallbacks.forEach((callback) => callback(instance.value))
 	})
 
-	if (isReactive(options) || isRef(options)) {
-		const watchSource = isReactive(options) ? () => options : options
-
-		watch(
-			watchSource,
-			() =>
-				applyForEvery(instance, (tippyInstance) =>
-					tippyInstance.setProps(options),
-				),
-			{
-				deep: true,
-				immediate: true,
-			},
-		)
-	}
+	watch(
+		options,
+		() =>
+			applyForEvery(instance, (tippyInstance) =>
+				tippyInstance.setProps(options.value),
+			),
+		{ immediate: true },
+	)
 
 	return {
 		onMount: (callback: Callback) => onMountCallbacks.push(callback),

@@ -1,7 +1,7 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 import { VNode } from 'vue'
 
@@ -20,14 +20,17 @@ export default defineComponent<{
 		const helpTextContentRef = ref<Element | null>(null)
 		const helpTextTriggerRef = ref<Element | null>(null)
 
-		useTippy(helpTextTriggerRef, {
-			appendTo: () => document.body,
-			arrow: roundArrow,
-			content: helpTextContentRef,
-			interactive: true,
-			offset: [0, ARROW_HEIGHT],
-			theme: 'light-border',
-		})
+		useTippy(
+			helpTextTriggerRef,
+			computed(() => ({
+				appendTo: () => document.body,
+				arrow: roundArrow,
+				content: helpTextContentRef.value,
+				interactive: true,
+				offset: [0, ARROW_HEIGHT],
+				theme: 'light-border',
+			})),
+		)
 
 		return {
 			helpTextContentRef,
