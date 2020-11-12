@@ -2,6 +2,10 @@
 	"bugs": {
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
+	"dependencies": {
+		"@vue/composition-api": "0.6.1",
+		"tippy.js": "6.x"
+	},
 	"description": "Vue hook for tippy.js",
 	"directories": {
 		"dist": "dist"

@@ -56,9 +56,6 @@
 		"type": "git",
 		"url": "git+https://github.com/3YOURMIND/kotti.git"
 	},
-	"resolutions": {
-		"tippy.js": "6.2.7"
-	},
 	"scripts": {
 		"build": "rm -rf dist && yarn run build:tokens && yarn run build:kotti && yarn run build:scss-variables",
 		"build:kotti": "concurrently \"yarn run build:kotti:cjs\" \"yarn run build:kotti:esm\"",

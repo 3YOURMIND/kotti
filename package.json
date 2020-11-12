@@ -119,9 +119,6 @@
 	},
 	"private": true,
 	"repository": "git@github.com:3YOURMIND/kotti",
-	"resolutions": {
-		"tippy.js": "6.2.7"
-	},
 	"scripts": {
 		"check": "yarn run check:script && yarn run check:style",
 		"check:script": "eslint --ignore-path .gitignore '**/*.{js,ts,vue}'",
