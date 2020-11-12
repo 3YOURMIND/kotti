@@ -17,6 +17,7 @@
 		"element-ui": "2.13.1",
 		"lodash": "^4.17.19",
 		"normalize.css": "^8.0.1",
+		"tippy.js": "6.x",
 		"ts-custom-error": "^3.1.1",
 		"vue-clickaway": "^2.2.2"
 	},
