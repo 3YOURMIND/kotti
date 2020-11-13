@@ -1,16 +1,16 @@
 <template>
-	<transition mode="out-in" name="modal">
-		<div class="kt-modal-mask" @click.self="closeModal">
-			<slot name="kt-modal-container">
+	<transition mode="out-in" name="kt-modal">
+		<div class="kt-modal__mask" @click.self="closeModal">
+			<slot name="container">
 				<div :class="modalClass">
-					<div v-if="hasHeader" class="kt-modal-header">
-						<slot name="modal-header" />
+					<div v-if="hasHeader" class="kt-modal__header">
+						<slot name="header" />
 					</div>
-					<div v-if="hasBody" class="kt-modal-body">
-						<slot name="modal-body" />
+					<div v-if="hasBody" class="kt-modal__body">
+						<slot name="body" />
 					</div>
-					<div v-if="hasFooter" class="kt-modal-footer">
-						<slot name="modal-footer" />
+					<div v-if="hasFooter" class="kt-modal__footer">
+						<slot name="footer" />
 					</div>
 				</div>
 			</slot>
@@ -26,19 +26,19 @@ import { Kotti } from '../types'
 export default defineComponent<Kotti.Modal.PropsInternal>({
 	name: 'KtModal',
 	props: {
-		closeOutside: { default: true, type: Boolean },
+		preventCloseOutside: { default: false, type: Boolean },
 		size: { default: Kotti.Modal.Size.MEDIUM, type: String },
 	},
 	setup(props, { emit, slots }) {
 		return {
 			closeModal: () => {
-				if (props.closeOutside) emit('close')
+				if (!props.preventCloseOutside) emit('close')
 			},
-			hasBody: computed(() => Boolean(slots['modal-body'])),
-			hasFooter: computed(() => Boolean(slots['modal-footer'])),
-			hasHeader: computed(() => Boolean(slots['modal-header'])),
+			hasBody: computed(() => Boolean(slots.body)),
+			hasFooter: computed(() => Boolean(slots.footer)),
+			hasHeader: computed(() => Boolean(slots.header)),
 			modalClass: computed(() => [
-				'kt-modal-container',
+				'kt-modal__container',
 				`kt-modal--is-size-${props.size}`,
 			]),
 		}
@@ -50,7 +50,7 @@ export default defineComponent<Kotti.Modal.PropsInternal>({
 @import '../kotti-style/_variables.scss';
 
 .kt-modal {
-	&-mask {
+	&__mask {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -67,7 +67,7 @@ export default defineComponent<Kotti.Modal.PropsInternal>({
 		transition: opacity var(--transition-long) ease;
 	}
 
-	&-container {
+	&__container {
 		display: flex;
 		flex-direction: column;
 
@@ -104,16 +104,16 @@ export default defineComponent<Kotti.Modal.PropsInternal>({
 		}
 	}
 
-	&-header {
+	&__header {
 		flex: 0 0 auto;
 	}
 
-	&-body {
+	&__body {
 		flex: 1 1 auto;
 		overflow: auto;
 	}
 
-	&-footer {
+	&__footer {
 		flex: 0 0 auto;
 		text-align: right;
 	}
@@ -124,7 +124,7 @@ export default defineComponent<Kotti.Modal.PropsInternal>({
 	&-leave-active {
 		opacity: 0;
 
-		&-container {
+		.kt-modal__container {
 			transform: scale(1.1);
 		}
 	}

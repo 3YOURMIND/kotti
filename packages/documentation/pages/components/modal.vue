@@ -15,10 +15,10 @@
 				]"
 			/>
 			<KtFieldToggle
-				formKey="closeOutside"
-				helpText="Disables closing the modal by clicking outside when set to false. Defaults to true for compatibility reasons"
+				formKey="preventCloseOutside"
+				helpText="Disables closing the modal by clicking outside when set"
 				isOptional
-				label="closeOutside"
+				label="preventCloseOutside"
 				type="switch"
 			/>
 			<KtFieldToggleGroup
@@ -26,9 +26,9 @@
 				isOptional
 				label="Used Slots"
 				:options="[
-					{ label: 'modal-header', key: 'header' },
-					{ label: 'modal-body', key: 'body' },
-					{ label: 'modal-footer', key: 'footer' },
+					{ label: 'header', key: 'header' },
+					{ label: 'body', key: 'body' },
+					{ label: 'footer', key: 'footer' },
 				]"
 			/>
 		</KtForm>
@@ -37,14 +37,14 @@
 
 		<KtModal
 			v-if="showModal"
-			:closeOutside="settings.closeOutside"
+			:preventCloseOutside="settings.preventCloseOutside"
 			:size="settings.size"
 			@close="showModal = false"
 		>
-			<template v-if="settings.usedSlots.header" #modal-header>
+			<template v-if="settings.usedSlots.header" #header>
 				<h2 style="margin: 0;">This the modal title</h2>
 			</template>
-			<template v-if="settings.usedSlots.body" #modal-body>
+			<template v-if="settings.usedSlots.body" #body>
 				<p style="margin: 0;">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				</p>
@@ -52,7 +52,7 @@
 					Nunc a sollicitudin libero, consectetur interdum ligula.
 				</p>
 			</template>
-			<template v-if="settings.usedSlots.footer" #modal-footer>
+			<template v-if="settings.usedSlots.footer" #footer>
 				<KtButton label="Close" @click="showModal = false" />
 			</template>
 		</KtModal>
@@ -75,7 +75,7 @@ export default defineComponent({
 			meta: KtModal.meta,
 			showModal: ref(false),
 			settings: ref<{
-				closeOutside: boolean
+				preventCloseOutside: boolean
 				size: Kotti.Modal.Size
 				usedSlots: {
 					body: boolean
@@ -83,7 +83,7 @@ export default defineComponent({
 					header: boolean
 				}
 			}>({
-				closeOutside: true,
+				preventCloseOutside: false,
 				size: Kotti.Modal.Size.MEDIUM,
 				usedSlots: {
 					body: true,

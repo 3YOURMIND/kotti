@@ -7,7 +7,7 @@ export namespace KottiModal {
 	}
 
 	export type PropsInternal = {
-		closeOutside: boolean
+		preventCloseOutside: boolean
 		size: Size
 	}
 
