@@ -27,6 +27,7 @@ export {
 	KottiFormControllerObject as FormControllerObject,
 	KottiFormControllerList as FormControllerList,
 } from '../next/kotti-form/controllers/types'
+export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiRow as Row } from '../kotti-row/types'
 
 export type Meta = {

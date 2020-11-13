@@ -91,7 +91,7 @@ export const menu: Array<Section> = [
 					{ label: 'Inputs', path: 'inputs', tags: [Tag.DEPRECATED] },
 					{ label: 'InputNumber', path: 'inputnumber', tags: [Tag.DEPRECATED] },
 					{ label: 'Loadings', path: 'loadings', tags: [Tag.CSS] },
-					{ label: 'Modal', path: 'modal', tags: [] },
+					{ label: 'Modal', path: 'modal', tags: [Tag.TS] },
 					{ label: 'Paginations', path: 'paginations', tags: [] },
 					{ label: 'Popovers', path: 'popovers', tags: [] },
 					{ label: 'Radios', path: 'radios', tags: [Tag.DEPRECATED] },
