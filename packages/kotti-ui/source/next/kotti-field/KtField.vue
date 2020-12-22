@@ -7,7 +7,7 @@
 			@click="$emit('click', $event)"
 			@mousedown="$emit('mousedown', $event)"
 		>
-			<div class="kt-field__header" v-if="hasLabel || hasHelpText">
+			<div v-if="hasLabel || hasHelpText" class="kt-field__header">
 				<component
 					:is="isGroup ? 'legend' : 'div'"
 					v-if="hasLabel"
@@ -80,8 +80,8 @@
 		</component>
 		<div v-if="field.isLoading" class="kt-field__wrapper">
 			<div
-				class="kt-field__loading__header skeleton rectangle"
 				v-if="hasLabel || hasHelpText"
+				class="kt-field__loading__header skeleton rectangle"
 			/>
 			<div class="kt-field__loading__input-container skeleton rectangle" />
 		</div>
