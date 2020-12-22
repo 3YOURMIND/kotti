@@ -175,6 +175,8 @@ h2 {
 	display: flex;
 	align-items: stretch;
 
+	overflow: hidden;
+
 	border: 1px solid var(--color);
 	border-radius: 3px;
 
