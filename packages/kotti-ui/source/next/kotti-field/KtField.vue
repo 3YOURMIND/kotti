@@ -7,10 +7,10 @@
 			@click="$emit('click', $event)"
 			@mousedown="$emit('mousedown', $event)"
 		>
-			<div class="kt-field__header">
+			<div class="kt-field__header" v-if="hasLabel || hasHelpText">
 				<component
 					:is="isGroup ? 'legend' : 'div'"
-					v-if="field.label !== null"
+					v-if="hasLabel"
 					class="kt-field__header__label"
 				>
 					<span class="kt-field__header__label__text" v-text="field.label" />
@@ -79,7 +79,10 @@
 			</div>
 		</component>
 		<div v-if="field.isLoading" class="kt-field__wrapper">
-			<div class="kt-field__loading__header skeleton rectangle" />
+			<div
+				class="kt-field__loading__header skeleton rectangle"
+				v-if="hasLabel || hasHelpText"
+			/>
 			<div class="kt-field__loading__input-container skeleton rectangle" />
 		</div>
 	</div>
@@ -134,6 +137,7 @@ export default defineComponent<{
 			hasHelpText: computed(
 				() => props.helpTextSlot.length >= 1 || props.field.helpText !== null,
 			),
+			hasLabel: computed(() => props.field.label !== null),
 			iconClasses: computed(() => (modifications: string[]) => [
 				'kt-field__input-container__icon',
 				...modifications.map(
