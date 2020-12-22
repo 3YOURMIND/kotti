@@ -151,16 +151,18 @@ h2 {
 
 .tags {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
+	margin: -5px;
 
-	> *:not(:first-child) {
-		margin-left: 10px;
+	> * {
+		margin: 5px;
 	}
 }
 
 .tag {
 	display: flex;
-	align-items: center;
+	align-items: stretch;
 
 	border: 1px solid var(--color);
 	border-radius: 3px;
