@@ -11,6 +11,17 @@
 			</h2>
 			<div class="tags">
 				<div
+					v-if="release.prerelease"
+					class="tag"
+					style="
+						--color: var(--yellow-70);
+						--background-color: var(--yellow-20);
+					"
+				>
+					<div class="tag__left">⚠️</div>
+					<div class="tag__right" v-text="'Prerelease'" />
+				</div>
+				<div
 					class="tag"
 					style="--color: var(--green-70); --background-color: var(--green-20);"
 				>
