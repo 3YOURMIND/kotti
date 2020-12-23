@@ -166,5 +166,4 @@ yarn run lerna run build
 
 | Path        | Purpose                              |
 | :---------- | :----------------------------------- |
-| `/docs`     | Nuxt-managed documentation           |
-| `/packages` | Source-code for all Kotti Components |
+| `packages/documentation`     | Nuxt-managed documentation           |
