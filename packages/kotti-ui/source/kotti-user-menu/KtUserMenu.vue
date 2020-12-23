@@ -114,13 +114,6 @@ export default {
 <style lang="scss">
 @import '../kotti-style/_variables.scss';
 
-:root {
-	--user-menu-border: var(--primary-80);
-	--user-menu-background-active: var(--primary-70);
-	--user-menu-background: var(--primary-60);
-	--user-menu-color: var(--primary-10);
-}
-
 .user-info {
 	position: relative;
 	display: flex;
