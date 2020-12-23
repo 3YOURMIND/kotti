@@ -1,4 +1,5 @@
 import { Yoco } from '@3yourmind/yoco'
+import { Instance } from '@popperjs/core/lib'
 import { onMounted, Ref, watchEffect } from '@vue/composition-api'
 import { DatePicker as ElDate } from 'element-ui'
 
@@ -34,6 +35,7 @@ export type ElDateWithInternalAPI = ElDate & {
 		rightLabel: string
 		width: number
 	}
+	popperJS: Instance
 	pickerVisible: boolean
 	referenceElm: Element
 	showClose: boolean
@@ -161,6 +163,24 @@ const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 			if (isPickerVisible(dateComponent)) {
 				dateComponent.picker.$el.style.width = popperWidth
 				dateComponent.picker.$el.style.height = popperHeight
+				/**
+				 * HACK: to force re-compute the boundaries of the popper element (through the `update` prototype function),
+				 * thus properly position it.
+				 *
+				 * When we open the date-picker we trigger `showPicker`
+				 * https://github.com/ElemeFE/element/blob/649670c55a45c7343eb7148565e2d873bc3d52dd/packages/date-picker/src/picker.vue#L806
+				 * which calls `updatePopper` from the mixin vue-popper, which, in turn, either
+				 * creates a new PopperJs instance or updates the already-exisiting instance's props
+				 * https://github.com/ElemeFE/element/blob/649670c55a45c7343eb7148565e2d873bc3d52dd/src/utils/vue-popper.js#L120
+				 * In the latter case, it calls the prototype-defined function `update` from popper.js
+				 * https://github.com/ElemeFE/element/blob/3ceec7aa6a7ab46e61dbafa4c68b77ba09384b40/src/utils/popper.js#L224
+				 * to compute the boundaries of the popper, and thus its placement, among other things.
+				 *
+				 * On the first trigger of `showPopper`, a popperJs instance is created with the height and width defined by element-ui.
+				 * After creation, we mutate the popper width and height to fit our kotti styles and needs.
+				 * This mutation changes the boundaries of the popper without triggering a position adjustment. So, we force it.
+				 */
+				dateComponent.popperJS.update()
 			}
 		})
 	})
