@@ -75,7 +75,7 @@ export default defineComponent({
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_NUMBER_PROPS,
 	},
-	setup(props: KottiFieldNumber.Props, { emit }) {
+	setup(props: KottiFieldNumber.Props, { emit, root }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldNumber.Value =>
@@ -150,6 +150,23 @@ export default defineComponent({
 			{ immediate: true },
 		)
 
+		/**
+		 * reference to input element, in order to track cursor position
+		 * prior to feeding the value back to the input, which resets the position to the end.
+		 */
+		const input = ref<HTMLInputElement | null>(null)
+		const lastUserSetCursorPosition = ref<number | null>(null)
+
+		const setCursorPosition = (position: number | null) => {
+			if (position !== null) input.value?.setSelectionRange(position, position)
+		}
+
+		watch(internalStringValue, () => {
+			// in case the parent component accepts the @input event’s change, we need to restore the cursor position
+			setCursorPosition(lastUserSetCursorPosition.value)
+			lastUserSetCursorPosition.value = null
+		})
+
 		return {
 			decrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
@@ -180,6 +197,7 @@ export default defineComponent({
 				)
 			},
 			internalStringValue,
+			input,
 			inputProps: computed((): Partial<HTMLInputElement> & {
 				class: object
 				forceUpdateKey: number
@@ -197,6 +215,8 @@ export default defineComponent({
 				value: internalStringValue.value,
 			})),
 			onInput(value: string) {
+				lastUserSetCursorPosition.value = input.value?.selectionStart ?? null
+
 				const { maximum, minimum, step } = props
 
 				const valueWithoutLeadingZeroes = value.replace(
@@ -226,6 +246,23 @@ export default defineComponent({
 				}
 
 				forceUpdate()
+
+				/**
+				 * Calculates new cursor position, which might be 1 character different than the last cursor position
+				 * because we might reject the character the user just entered. Then, we’d need to -1 it to undo that change.
+				 *
+				 * FIXME: This may or may not move the cursor by 1 character if the parent component rejects the update.
+				 * We decided that that’s an okay trade-off for now. If this ever needs to be fixed, it’s likely possible to fix by
+				 * also looking at the shouldEmit to figure-out the new cursor position
+				 */
+				const newCursorPosition =
+					lastUserSetCursorPosition.value === null
+						? null
+						: lastUserSetCursorPosition.value - (isTypedNumberValid ? 0 : 1)
+
+				root.$nextTick(() => {
+					setCursorPosition(newCursorPosition)
+				})
 			},
 			showMaximum,
 			Yoco,
