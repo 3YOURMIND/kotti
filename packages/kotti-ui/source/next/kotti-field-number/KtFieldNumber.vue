@@ -150,6 +150,22 @@ export default defineComponent({
 			{ immediate: true },
 		)
 
+		/**
+		 * reference to input element, in order to track cursor position
+		 * prior to feeding the value back to the input, which resets the position to the end.
+		 */
+		const input = ref<HTMLInputElement | null>(null)
+		const lastUserSetCursorPosition = ref<number | null>(null)
+		watch(internalStringValue, () => {
+			// reset the cursor position to where it last where when the user was typing
+			if (lastUserSetCursorPosition !== null)
+				input.value?.setSelectionRange(
+					lastUserSetCursorPosition.value,
+					lastUserSetCursorPosition.value,
+				)
+			lastUserSetCursorPosition.value = null
+		})
+
 		return {
 			decrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
@@ -180,6 +196,7 @@ export default defineComponent({
 				)
 			},
 			internalStringValue,
+			input,
 			inputProps: computed((): Partial<HTMLInputElement> & {
 				class: object
 				forceUpdateKey: number
@@ -197,6 +214,8 @@ export default defineComponent({
 				value: internalStringValue.value,
 			})),
 			onInput(value: string) {
+				lastUserSetCursorPosition.value = input.value?.selectionStart ?? null
+
 				const { maximum, minimum, step } = props
 
 				const valueWithoutLeadingZeroes = value.replace(
