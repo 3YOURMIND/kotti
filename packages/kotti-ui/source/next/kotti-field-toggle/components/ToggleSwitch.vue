@@ -33,7 +33,6 @@ $track-width: $inner-size * 2.25;
 	width: #{$track-width + 2 * $inner-gap};
 	height: $outer-size;
 	padding: $inner-gap;
-	margin-right: 0.4rem;
 	background-color: var(--ui-02);
 	border-radius: #{$outer-size / 2};
 

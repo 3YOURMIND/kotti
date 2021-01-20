@@ -13,7 +13,7 @@ export namespace KottiFieldMultiSelect {
 
 export namespace Shared {
 	export type Entry = {
-		disabled?: boolean
+		isDisabled?: boolean
 		label: string
 		value: string | number | boolean | symbol | null
 	}

@@ -66,5 +66,9 @@ export default defineComponent({
 		color: var(--text-05);
 		cursor: not-allowed;
 	}
+
+	> *:not(:first-child) {
+		margin-left: 0.3rem;
+	}
 }
 </style>

@@ -10,9 +10,10 @@ export namespace KottiFieldToggle {
 
 export namespace KottiFieldToggleGroup {
 	export type Entry = {
-		disabled?: boolean
+		isDisabled?: boolean
 		key: keyof Value
 		label: string
+		tooltip?: string
 	}
 
 	export type Props = KottiField.Props<Value> & {

@@ -11,12 +11,13 @@
 				:key="option.key"
 				component="label"
 				:inputProps="inputProps"
-				:isDisabled="field.isDisabled || Boolean(option.disabled)"
+				:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
 				:type="type"
 				:value="option.value"
 				@input="onInput(option.key, $event)"
 			>
-				{{ option.label }}
+				<div v-text="option.label" />
+				<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
 			</ToggleInner>
 		</div>
 	</KtField>
@@ -26,6 +27,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
+import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
@@ -38,7 +40,11 @@ import { KottiFieldToggleGroup } from './types'
 
 export default defineComponent({
 	name: 'KtFieldToggleGroup',
-	components: { KtField, ToggleInner },
+	components: {
+		FieldHelpText,
+		KtField,
+		ToggleInner,
+	},
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_TOGGLE_GROUP_PROPS,
