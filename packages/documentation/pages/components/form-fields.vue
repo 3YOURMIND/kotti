@@ -98,7 +98,7 @@
 					label="Boolean Flags"
 					:options="[
 						{
-							disabled: !componentDefinition.supports.clear,
+							isDisabled: !componentDefinition.supports.clear,
 							key: 'hideClear',
 							label: 'hideClear',
 							tooltip: 'Support Varies'
@@ -713,6 +713,7 @@ export default defineComponent({
 						{ label: 'Key 1', value: 'value1' },
 						{ label: 'Key 2', value: 'value2' },
 						{ label: 'Key 3', value: 'value3' },
+						{ isDisabled: true, label: 'Key 4', value: 'value4' },
 					],
 				})
 
@@ -727,8 +728,8 @@ export default defineComponent({
 						},
 						{ key: 'initiallyTrue', label: 'Initially True' },
 						{
-							key: 'disabled',
 							isDisabled: true,
+							key: 'disabled',
 							tooltip: 'A tooltip!',
 							label: 'Disabled',
 						},

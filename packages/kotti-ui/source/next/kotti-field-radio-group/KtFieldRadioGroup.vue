@@ -16,13 +16,13 @@
 				class="kt-field-radio-group__wrapper__label"
 				:class="{
 					'kt-field-radio-group__wrapper__label--disabled':
-						field.isDisabled || Boolean(option.disabled),
+						field.isDisabled || Boolean(option.isDisabled),
 				}"
 			>
 				<input
 					v-bind="inputProps"
 					:checked="field.currentValue === option.value"
-					:disabled="field.isDisabled || Boolean(option.disabled)"
+					:disabled="field.isDisabled || Boolean(option.isDisabled)"
 					:value="option.value"
 					@change="onChange(option.value)"
 				/>
