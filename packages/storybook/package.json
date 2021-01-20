@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@3yourmind/kotti-ui": "3.0.0-alpha.11"
+		"@3yourmind/kotti-ui": "3.0.0-alpha.12"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.10.4",
