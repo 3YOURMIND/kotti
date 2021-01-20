@@ -38,27 +38,37 @@ export default defineComponent<{
 		}
 	},
 	render(h) {
-		return h('div', {}, [
-			h(
-				'i',
-				{
-					class: 'yoco',
-					ref: 'helpTextTriggerRef',
+		return h(
+			'div',
+			{
+				style: {
+					alignItems: 'center',
+					display: 'flex',
+					justifyContent: 'center',
 				},
-				[Yoco.Icon.CIRCLE_QUESTION],
-			),
-			h(
-				'div',
-				{
-					ref: 'helpTextContentRef',
-				},
-				/**
-				 * Props in render functions are apparently only available via this
-				 * @see {@link https://vuejs.org/v2/guide/render-function.html}
-				 */
-				this.helpTextSlot.length >= 1 ? this.helpTextSlot : [this.helpText],
-			),
-		])
+			},
+			[
+				h(
+					'i',
+					{
+						class: 'yoco',
+						ref: 'helpTextTriggerRef',
+					},
+					[Yoco.Icon.CIRCLE_QUESTION],
+				),
+				h(
+					'div',
+					{
+						ref: 'helpTextContentRef',
+					},
+					/**
+					 * Props in render functions are apparently only available via this
+					 * @see {@link https://vuejs.org/v2/guide/render-function.html}
+					 */
+					this.helpTextSlot.length >= 1 ? this.helpTextSlot : [this.helpText],
+				),
+			],
+		)
 	},
 })
 </script>
