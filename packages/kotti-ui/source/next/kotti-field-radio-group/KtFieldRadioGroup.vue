@@ -19,13 +19,6 @@
 						field.isDisabled || Boolean(option.isDisabled),
 				}"
 			>
-				<input
-					v-bind="inputProps"
-					:checked="field.currentValue === option.value"
-					:disabled="field.isDisabled || Boolean(option.isDisabled)"
-					:value="option.value"
-					@change="onChange(option.value)"
-				/>
 				<div
 					class="kt-field-radio-group__wrapper__radio"
 					:class="{
@@ -36,6 +29,14 @@
 					<div class="kt-field-radio-group__wrapper__radio__inside" />
 				</div>
 				<div v-text="option.label" />
+				<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
+				<input
+					v-bind="inputProps"
+					:checked="field.currentValue === option.value"
+					:disabled="field.isDisabled || Boolean(option.isDisabled)"
+					:value="option.value"
+					@change="onChange(option.value)"
+				/>
 			</label>
 		</div>
 	</KtField>
@@ -45,6 +46,7 @@
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
+import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 
@@ -55,7 +57,10 @@ let nameIndex = 0
 
 export default defineComponent({
 	name: 'KtFieldRadioGroup',
-	components: { KtField },
+	components: {
+		FieldHelpText,
+		KtField,
+	},
 	props: {
 		...KOTTI_FIELD_PROPS,
 		isInline: { default: false, type: Boolean },
@@ -152,6 +157,10 @@ export default defineComponent({
 				}
 			}
 		}
+
+		> *:not(:first-child) {
+			margin-left: 0.3rem;
+		}
 	}
 
 	&__input {
@@ -163,8 +172,6 @@ export default defineComponent({
 		place-items: center;
 		width: var(--radio-size);
 		height: var(--radio-size);
-		margin-right: 0.4rem;
-		margin-left: 0.1rem;
 		background-color: var(--ui-background);
 		border: 1px solid var(--ui-02);
 		border-radius: 50%;
