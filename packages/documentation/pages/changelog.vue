@@ -104,7 +104,7 @@ const convertPoundToIssueLink = (string: string) =>
 
 // disable ban-ts-ignore because vscode sees this as an error but nuxt doesn’t
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-expect-error layout is not added to the type definition of defineComponent
+// @ts-ignored layout is not added to the type definition of defineComponent
 export default defineComponent({
 	name: 'DocumentationPageChangelog',
 	layout: 'fullpage',
