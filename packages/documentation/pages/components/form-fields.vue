@@ -95,10 +95,14 @@
 				<KtFieldToggleGroup
 					formKey="booleanFlags"
 					isOptional
-					helpText="hideClear Support Varies"
 					label="Boolean Flags"
 					:options="[
-						{ disabled: !componentDefinition.supports.clear, key: 'hideClear', label: 'hideClear' },
+						{
+							disabled: !componentDefinition.supports.clear,
+							key: 'hideClear',
+							label: 'hideClear',
+							tooltip: 'Support Varies'
+						},
 						{ key: 'hideValidation', label: 'hideValidation' },
 						{ key: 'isDisabled', label: 'isDisabled' },
 						{ key: 'isLoading', label: 'isLoading' },
@@ -716,8 +720,18 @@ export default defineComponent({
 				Object.assign(additionalProps, {
 					options: [
 						{ key: 'initiallyFalse', label: 'Initially False' },
-						{ key: 'initiallyNull', label: 'Initially Null' },
+						{
+							key: 'initiallyNull',
+							label: 'Initially Null',
+							tooltip: 'null is for uninitialized data',
+						},
 						{ key: 'initiallyTrue', label: 'Initially True' },
+						{
+							key: 'disabled',
+							isDisabled: true,
+							tooltip: 'A tooltip!',
+							label: 'Disabled',
+						},
 					],
 				})
 

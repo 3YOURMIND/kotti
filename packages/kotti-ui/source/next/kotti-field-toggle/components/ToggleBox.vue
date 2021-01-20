@@ -47,7 +47,6 @@ export default defineComponent({
 	justify-content: center;
 	width: 0.8rem;
 	height: 0.8rem;
-	margin-right: 0.4rem;
 	background: var(--ui-background);
 	border: 1px solid var(--ui-02);
 	border-radius: var(--toggle-border-radius);
