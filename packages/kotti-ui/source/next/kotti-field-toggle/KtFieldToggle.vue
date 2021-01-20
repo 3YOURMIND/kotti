@@ -13,7 +13,9 @@
 				:value="field.currentValue"
 				@input="onInput"
 			>
-				<slot name="default" :value="field.currentValue" />
+				<div class="kt-field-toggle__wrapper__content">
+					<slot name="default" :value="field.currentValue" />
+				</div>
 			</ToggleInner>
 		</div>
 	</KtField>
@@ -72,5 +74,10 @@ export default defineComponent({
 .kt-field-toggle__wrapper {
 	display: flex;
 	align-items: center;
+
+	&__content {
+		display: flex;
+		align-items: center;
+	}
 }
 </style>

@@ -17,9 +17,7 @@
 						</div>
 					</div>
 					<div slot="default">
-						<div>
-							Default Slot
-						</div>
+						Default Slot
 					</div>
 				</component>
 			</KtForm>
