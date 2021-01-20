@@ -197,7 +197,7 @@ export default {
 			methods: {
 				toggle(value = null) {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-					// @ts-ignore
+					// @ts-expect-error
 					this.isNarrow = value === null ? !this.isNarrow : value
 				},
 			},

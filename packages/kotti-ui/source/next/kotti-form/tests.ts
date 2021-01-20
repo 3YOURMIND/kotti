@@ -3,15 +3,11 @@ import { mount, Wrapper } from '@vue/test-utils'
 
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 import KtField from '../kotti-field/KtField.vue'
 import { KottiField } from '../kotti-field/types'
 import { useTranslationProvide } from '../kotti-translation/hooks'
 import { localVue } from '../test-utils'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 import KtForm from './KtForm.vue'
 
 const TestField = defineComponent({

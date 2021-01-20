@@ -29,8 +29,6 @@ import cloneDeep from 'lodash/cloneDeep'
 import { KT_FORM_CONTEXT } from '../constants'
 import { KottiForm } from '../types'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
 import KtFormControllerListItem from './KtFormControllerListItem.vue'
 import { KottiFormControllerList } from './types'
 
