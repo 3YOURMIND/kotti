@@ -4,6 +4,7 @@ export namespace KottiFieldRadioGroup {
 	export type Entry = {
 		isDisabled?: boolean
 		label: string
+		tooltip?: string
 		value: Value
 	}
 

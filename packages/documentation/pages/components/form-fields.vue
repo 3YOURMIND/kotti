@@ -518,6 +518,41 @@ const generateCode = (component: ComponentValue) =>
 			: '/>',
 	].join('\n')
 
+const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
+	{ label: 'Key 1', value: 'value1' },
+	{ label: 'Key 2', value: 'value2', tooltip: 'Some tooltip' },
+	{ label: 'Key 3', value: 'value3' },
+	{
+		isDisabled: true,
+		label: 'Key 4',
+		tooltip: 'This option is disabled',
+		value: 'value4',
+	},
+]
+
+const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
+	{ label: 'Key 1', value: 'value1' },
+	{ label: 'Key 2', value: 'value2' },
+	{ label: 'Key 3', value: 'value3' },
+	{ isDisabled: true, label: 'Key 4', value: 'value4' },
+]
+
+const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
+	{ key: 'initiallyFalse', label: 'Initially False' },
+	{
+		key: 'initiallyNull',
+		label: 'Initially Null',
+		tooltip: 'null is for uninitialized data',
+	},
+	{ key: 'initiallyTrue', label: 'Initially True' },
+	{
+		isDisabled: true,
+		key: 'disabled',
+		tooltip: 'A tooltip!',
+		label: 'Disabled',
+	},
+]
+
 export default defineComponent({
 	name: 'KtFormFieldsDocumentation',
 	components: {
@@ -701,39 +736,19 @@ export default defineComponent({
 					hideChangeButtons: settings.value.additionalProps.hideChangeButtons,
 				})
 
-			if (
-				[
-					'KtFieldMultiSelect',
-					'KtFieldRadioGroup',
-					'KtFieldSingleSelect',
-				].includes(component)
-			)
+			if (['KtFieldMultiSelect', 'KtFieldSingleSelect'].includes(component))
 				Object.assign(additionalProps, {
-					options: [
-						{ label: 'Key 1', value: 'value1' },
-						{ label: 'Key 2', value: 'value2' },
-						{ label: 'Key 3', value: 'value3' },
-						{ isDisabled: true, label: 'Key 4', value: 'value4' },
-					],
+					options: singleOrMultiSelectOptions,
+				})
+
+			if (['KtFieldRadioGroup'].includes(component))
+				Object.assign(additionalProps, {
+					options: radioGroupOptions,
 				})
 
 			if (['KtFieldToggleGroup'].includes(component))
 				Object.assign(additionalProps, {
-					options: [
-						{ key: 'initiallyFalse', label: 'Initially False' },
-						{
-							key: 'initiallyNull',
-							label: 'Initially Null',
-							tooltip: 'null is for uninitialized data',
-						},
-						{ key: 'initiallyTrue', label: 'Initially True' },
-						{
-							isDisabled: true,
-							key: 'disabled',
-							tooltip: 'A tooltip!',
-							label: 'Disabled',
-						},
-					],
+					options: toggleGroupOptions,
 				})
 
 			if (
