@@ -13,7 +13,7 @@ const KOTTI_FIELD_SELECT_PROPS = {
 					typeof option === 'object' &&
 					option !== null &&
 					typeof option.label === 'string' &&
-					['boolean', 'undefined'].includes(typeof option.disabled) &&
+					['boolean', 'undefined'].includes(typeof option.isDisabled) &&
 					(option.value === null ||
 						['string', 'number', 'boolean', 'symbol'].includes(
 							typeof option.value,

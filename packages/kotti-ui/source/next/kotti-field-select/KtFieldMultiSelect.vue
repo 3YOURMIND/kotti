@@ -26,7 +26,7 @@
 					>
 						<div class="kt-tags__tag-text" v-text="option.label" />
 						<div
-							v-if="!(field.isDisabled || Boolean(option.disabled))"
+							v-if="!(field.isDisabled || Boolean(option.isDisabled))"
 							class="kt-tags__tag-icon"
 							@click.stop="removeTag(option.value)"
 						>
@@ -40,7 +40,7 @@
 				<ElOption
 					v-for="option in options"
 					:key="option.value"
-					:disabled="field.isDisabled || Boolean(option.disabled)"
+					:disabled="field.isDisabled || Boolean(option.isDisabled)"
 					:label="option.label"
 					:value="option.value"
 				/>
