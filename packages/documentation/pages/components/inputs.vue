@@ -129,7 +129,7 @@
 
 	For input field it accept types `Number`, `text` and `email`.
 	Using `step` to define the precision.
-	If you want to use `checkbox`, `radio` type, using `KtCheckbox` and `KtRadio`.
+	If you want to use `radio` type, using KtRadio`.
 
 	```html
 	<KtInput v-model="v4" type="number" label="Number" step="0.1"/>

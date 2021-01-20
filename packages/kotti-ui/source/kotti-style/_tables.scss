@@ -1,3 +1,9 @@
+@import '../kotti-style/_variables.scss';
+
+:root {
+	--kt-table-checkbox-color: var(--interactive-01);
+}
+
 table {
 	position: relative;
 	width: 100%;
@@ -94,10 +100,62 @@ table {
 		}
 	}
 
+	/**
+	 * @deprecated this was moved-over from the old KtCheckbox.vue so
+	 * that it can be removed without having to touch the table
+	 */
 	.form-checkbox {
 		padding: 0 0.4rem;
 		margin: 0;
 		line-height: 1.2rem;
+
+		.form-icon {
+			border-radius: $border-radius;
+		}
+
+		input {
+			&:focus + .form-icon {
+				border-color: var(--kt-table-checkbox-color);
+			}
+
+			&:checked + .form-icon {
+				background-color: var(--kt-table-checkbox-color);
+				border-color: var(--kt-table-checkbox-color);
+
+				&::before {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					width: 6px;
+					height: 10px;
+					margin-top: -6px;
+					margin-left: -3px;
+					content: '';
+					background-clip: padding-box;
+					border: $border-width-lg solid #fff;
+					border-top-width: 0;
+					border-left-width: 0;
+					transform: rotate(45deg);
+				}
+			}
+
+			&:indeterminate + .form-icon {
+				background: var(--kt-table-checkbox-color);
+				border-color: var(--kt-table-checkbox-color);
+
+				&::before {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					width: 10px;
+					height: 2px;
+					margin-top: -1px;
+					margin-left: -5px;
+					content: '';
+					background: $lightgray-400;
+				}
+			}
+		}
 	}
 
 	&.no-header {

@@ -20,8 +20,6 @@ import { KtButtonGroup } from './kotti-button-group'
 export * from './kotti-button-group'
 import { KtCard } from './kotti-card'
 export * from './kotti-card'
-import { KtCheckbox } from './kotti-checkbox'
-export * from './kotti-checkbox'
 import { KtCol } from './kotti-col'
 export * from './kotti-col'
 import { KtComment, KtCommentInput } from './kotti-comment'
@@ -133,7 +131,6 @@ export default {
 			KtButton,
 			KtButtonGroup,
 			KtCard,
-			KtCheckbox,
 			KtCol,
 			KtComment,
 			KtCommentInput,

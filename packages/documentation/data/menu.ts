@@ -79,7 +79,6 @@ export const menu: Array<Section> = [
 					{ label: 'Buttons', path: 'buttons', tags: [] },
 					{ label: 'Breadcrumbs', path: 'breadcrumbs', tags: [] },
 					{ label: 'Cards', path: 'cards', tags: [] },
-					{ label: 'Checkboxes', path: 'checkbox', tags: [Tag.DEPRECATED] },
 					{ label: 'Comments', path: 'comments', tags: [] },
 					{ label: 'DatePicker', path: 'datepicker', tags: [Tag.DEPRECATED] },
 					{ label: 'Drawers', path: 'drawer', tags: [] },
