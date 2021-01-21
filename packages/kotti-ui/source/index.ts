@@ -24,8 +24,6 @@ import { KtCol } from './kotti-col'
 export * from './kotti-col'
 import { KtComment, KtCommentInput } from './kotti-comment'
 export * from './kotti-comment'
-import { KtDatePicker, KtDateInput } from './kotti-datepicker'
-export * from './kotti-datepicker'
 import { KtDrawer } from './kotti-drawer'
 export * from './kotti-drawer'
 import { KtDropdown } from './kotti-dropdown'
@@ -134,8 +132,6 @@ export default {
 			KtCol,
 			KtComment,
 			KtCommentInput,
-			KtDateInput,
-			KtDatePicker,
 			KtDrawer,
 			KtDropdown,
 			KtDropdownButton,
