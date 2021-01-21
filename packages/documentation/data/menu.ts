@@ -80,7 +80,6 @@ export const menu: Array<Section> = [
 					{ label: 'Breadcrumbs', path: 'breadcrumbs', tags: [] },
 					{ label: 'Cards', path: 'cards', tags: [] },
 					{ label: 'Comments', path: 'comments', tags: [] },
-					{ label: 'DatePicker', path: 'datepicker', tags: [Tag.DEPRECATED] },
 					{ label: 'Drawers', path: 'drawer', tags: [] },
 					{ label: 'Dropdowns', path: 'dropdowns', tags: [Tag.DEPRECATED] },
 					{ label: 'Form', path: 'form', tags: [Tag.TS] },

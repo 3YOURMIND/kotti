@@ -20,16 +20,15 @@
 
 // Elements
 @import 'banners';
-@import 'forms';
-@import 'codes';
 @import 'cards';
+@import 'codes';
+@import 'comments';
+@import 'forms';
+@import 'line';
 @import 'loadings';
+@import 'tables';
 @import 'tooltip';
 @import 'typography';
-@import 'tables';
-@import 'comments';
-@import 'datepicker';
-@import 'line';
 
 // tippy.js
 @import '~tippy.js/dist/tippy';
