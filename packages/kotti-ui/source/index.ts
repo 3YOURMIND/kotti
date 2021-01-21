@@ -38,8 +38,6 @@ import { KtInlineEdit } from './kotti-inline-edit'
 export * from './kotti-inline-edit'
 import { KtInput } from './kotti-input'
 export * from './kotti-input'
-import { KtInputNumber } from './kotti-input-number'
-export * from './kotti-input-number'
 import { KtLine } from './kotti-line'
 export * from './kotti-line'
 import { KtModal } from './kotti-modal'
@@ -157,7 +155,6 @@ export default {
 			KtHeading,
 			KtInlineEdit,
 			KtInput,
-			KtInputNumber,
 			KtLine,
 			KtModal,
 			KtNavbar,

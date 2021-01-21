@@ -87,7 +87,6 @@ export const menu: Array<Section> = [
 					{ label: 'Headings', path: 'headings', tags: [] },
 					{ label: 'Horizontal Lines', path: 'lines', tags: [] },
 					{ label: 'Inputs', path: 'inputs', tags: [Tag.DEPRECATED] },
-					{ label: 'InputNumber', path: 'inputnumber', tags: [Tag.DEPRECATED] },
 					{ label: 'Loadings', path: 'loadings', tags: [Tag.CSS] },
 					{ label: 'Modal', path: 'modal', tags: [Tag.TS] },
 					{ label: 'Paginations', path: 'paginations', tags: [] },
