@@ -96,7 +96,6 @@ export const menu: Array<Section> = [
 					{ label: 'Toaster', path: 'toaster', tags: [] },
 					{ label: 'Selects', path: 'selects', tags: [Tag.DEPRECATED] },
 					{ label: 'Steps', path: 'steps', tags: [] },
-					{ label: 'Switches', path: 'switches', tags: [Tag.DEPRECATED] },
 					{ label: 'Utilities', tags: [Tag.CSS], path: 'utilities' },
 				],
 			},
