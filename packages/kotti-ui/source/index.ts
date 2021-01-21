@@ -62,8 +62,6 @@ import { KtStep } from './kotti-step'
 export * from './kotti-step'
 import { KtSteps } from './kotti-steps'
 export * from './kotti-steps'
-import { KtSwitch } from './kotti-switch'
-export * from './kotti-switch'
 import {
 	KtTable,
 	KtTableColumn,
@@ -170,7 +168,6 @@ export default {
 			KtSingleSelect,
 			KtStep,
 			KtSteps,
-			KtSwitch,
 			KtTable,
 			KtTableColumn,
 			KtTableProvider,
