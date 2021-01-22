@@ -85,7 +85,9 @@ export default {
 :root {
 	--accordion-color: var(--interactive-03);
 }
+
 @import '../kotti-style/_variables.scss';
+
 .accordion {
 	margin-bottom: var(--unit-4);
 	border-bottom: none;
