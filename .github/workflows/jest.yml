@@ -1,11 +1,18 @@
-name: Jest
+name: CI
 on: push
 jobs:
-  build:
+  jest:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+       node-version: '12'
     - name: Install modules
       run: yarn install --frozen-lockfile
+    - name: Build @3yourmind/yoco
+      run: yarn workspace @3yourmind/yoco run build
+    - name: Build @3yourmind/vue-use-tippy
+      run: yarn workspace @3yourmind/vue-use-tippy run build
     - name: Run tests
       run: yarn run test
