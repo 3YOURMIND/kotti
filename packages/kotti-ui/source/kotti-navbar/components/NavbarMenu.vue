@@ -10,7 +10,7 @@
 				v-for="(link, linkIndex) in item.links"
 				:key="linkIndex"
 				class="kt-navbar-menu__item"
-				:class="{ active: link.isActive }"
+				:class="{ active: link.isActive, narrow: isNarrow }"
 				:href="link.link ? link.link : null"
 				@click="$emit('menuLinkClick', link)"
 			>
@@ -65,6 +65,10 @@ export default {
 		&:hover {
 			color: var(--navbar-color-active);
 			cursor: pointer;
+		}
+
+		&.narrow {
+			justify-content: center;
 		}
 
 		&.active {

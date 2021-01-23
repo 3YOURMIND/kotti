@@ -1,16 +1,18 @@
 <template>
 	<div>
-		<div v-if="isNarrow" class="kt-navbar-logo" @click="$emit('logoClick')">
+		<div
+			v-if="isNarrow"
+			class="kt-navbar-logo--desktop"
+			@click="$emit('logoClick')"
+		>
 			<i
 				:class="iconClass"
 				@click.stop="$KtNavbar.toggle()"
 				v-text="iconText"
 			/>
 		</div>
-		<div v-else class="kt-navbar-logo" @click="$emit('logoClick')">
-			<div class="kt-navbar-logo__logo">
-				<slot />
-			</div>
+		<div v-else class="kt-navbar-logo--desktop" @click="$emit('logoClick')">
+			<img alt="logo" class="kt-navbar-logo__image" :src="logoUrl" />
 			<i
 				:class="iconClass"
 				@click.stop="$KtNavbar.toggle()"
@@ -18,22 +20,24 @@
 			/>
 		</div>
 		<div class="kt-navbar-logo--mobile">
-			<div class="kt-navbar-logo__logo">
-				<slot />
-			</div>
+			<img alt="logo" class="kt-navbar-logo__image" :src="logoUrl" />
 		</div>
 	</div>
 </template>
 
 <script>
+import { Yoco } from '@3yourmind/yoco'
 export default {
 	name: 'KtNavbarLogo',
+	props: {
+		logoUrl: { required: true, type: String },
+	},
 	computed: {
 		iconClass() {
 			return this.isNarrow ? 'yoco' : 'yoco expanded'
 		},
 		iconText() {
-			return this.isNarrow ? 'burger' : 'hide_menu'
+			return this.isNarrow ? Yoco.Icon.BURGER : Yoco.Icon.HIDE_MENU
 		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
@@ -42,26 +46,21 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import '../../kotti-style/_variables.scss';
+
 .kt-navbar-logo {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 0.8rem 1rem;
-	&__logo {
-		flex: 1;
-		background-repeat: no-repeat;
-		background-position: left;
-		background-size: contain;
-		.image {
-			max-width: 100%;
-			height: auto;
-		}
+	&--desktop {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.8rem 1rem;
 	}
 	&--mobile {
 		display: none;
-		height: 100%;
-		padding: 0.2rem;
+	}
+	&__image {
+		max-height: 1.2rem;
 	}
 	i {
 		opacity: 0.64;
@@ -70,6 +69,18 @@ export default {
 		}
 		&.expanded {
 			margin-left: 1.2rem;
+		}
+	}
+}
+
+@media (max-width: $size-md) {
+	.kt-navbar-logo {
+		&--desktop {
+			display: none;
+		}
+		&--mobile {
+			display: flex;
+			padding: 0.35rem;
 		}
 	}
 }
