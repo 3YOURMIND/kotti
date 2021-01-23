@@ -88,12 +88,6 @@ export default {
 		},
 	},
 	methods: {
-		objectClass(className) {
-			return {
-				[className]: true,
-				[`${className}--narrow`]: this.$KtNavbar.isNarrow,
-			}
-		},
 		clickawayMobileMenu() {
 			this.mobileMenuToggle = false
 		},

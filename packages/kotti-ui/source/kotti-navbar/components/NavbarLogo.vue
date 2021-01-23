@@ -39,20 +39,6 @@ export default {
 			return this.$KtNavbar.isNarrow
 		},
 	},
-	methods: {
-		handleToggleNarrowClicked() {
-			this.$emit('toggleNarrowBar')
-		},
-	},
-	inject: {
-		KtTheme: {
-			default: {
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				logoUrl: null,
-				logoHeight: '40px',
-			},
-		},
-	},
 }
 </script>
 
