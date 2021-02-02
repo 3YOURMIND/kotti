@@ -1,6 +1,7 @@
 <template>
 	<KtNavbar
 		v-bind="{ isNarrow, sections, quickLinks }"
+		:logoUrl="navLogo"
 		@linkClick="handleLinkClick"
 		@logoClick="$router.push('/')"
 	>
@@ -17,6 +18,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
 import { Route } from 'vue-router'
 
+import navLogo from '../assets/img/nav_logo.svg'
 import { menu } from '../data/menu'
 import { useRoute } from '../hooks/use-route'
 import { useRouter } from '../hooks/use-router'
@@ -34,6 +36,7 @@ export default defineComponent({
 			handleLinkClick(link: Route) {
 				router.value.push(link.path)
 			},
+			navLogo,
 			quickLinks: {
 				links: [
 					{
