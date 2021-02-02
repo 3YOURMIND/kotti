@@ -107,7 +107,7 @@ export const menu: Array<Section> = [
 					{ label: 'ActionBar', path: 'actionbar', tags: [] },
 					{ label: 'Forms', path: 'forms', tags: [Tag.DEPRECATED] },
 					{ label: 'NavBar', path: 'navbar', tags: [] },
-					{ label: 'Inline Edit', path: 'inline-edit', tags: [] },
+					{ label: 'Inline Edit', path: 'inline-edit', tags: [Tag.DEPRECATED] },
 					{ label: 'User Menu', path: 'user-menu', tags: [] },
 				],
 			},

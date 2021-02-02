@@ -41,7 +41,7 @@
 						:key="alternative"
 						v-text="alternative"
 					/>
-					<div
+					<span
 						v-if="meta.deprecated.alternatives.length === 0"
 						v-text="Dashes.EmDash"
 					/>

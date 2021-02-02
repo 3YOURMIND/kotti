@@ -1,5 +1,5 @@
 <template lang="md">
-# Inline Edit
+<ComponentInfo title="Inline Edit" :meta="meta" />
 
 ## Basic
 <div class="element-example white">
