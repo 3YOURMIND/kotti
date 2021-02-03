@@ -59,7 +59,6 @@ export default {
 		rows: { default: () => [], type: Array },
 		columns: { default: null, type: Array },
 		useColumnDragToOrder: { default: false, type: Boolean },
-		useColumnStateControl: { default: false, type: Boolean },
 		emptyText: { default: 'No Data', type: String },
 
 		isInteractive: { default: false, type: Boolean },
