@@ -81,8 +81,6 @@ export default {
 		thClasses: { default: () => [], type: [Array, String, Object] },
 		trClasses: { default: () => [], type: [Array, String, Object] },
 		headerClass: { default: () => [], type: [Array, String, Object] },
-		height: String,
-		maxHeight: String,
 
 		renderExpand: Function,
 		renderActions: Function,
