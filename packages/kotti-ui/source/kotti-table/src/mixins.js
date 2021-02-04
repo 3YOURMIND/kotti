@@ -43,9 +43,6 @@ export const TableColumnsStateMixin = {
 		KtTableSortedColumns() {
 			return this.KtTableStore.state.sortedColumns
 		},
-		KtTableFilteredColumns() {
-			return this.KtTableStore.state.filteredColumns
-		},
 	},
 	methods: {
 		KtTableHideColumn(column, toggle = true) {

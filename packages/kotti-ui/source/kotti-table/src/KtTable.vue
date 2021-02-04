@@ -47,7 +47,6 @@ export const INITIAL_TABLE_STORE_PROPS = [
 	'sortable',
 	'sortedColumns',
 	'hiddenColumns',
-	'filteredColumns',
 ]
 
 export default {
@@ -71,7 +70,6 @@ export default {
 		useQuickSortControl: { default: false, type: Boolean },
 
 		sortedColumns: { type: [Array, undefined] },
-		filteredColumns: { type: [Array, undefined] },
 		hiddenColumns: { type: [Array, undefined] },
 		orderedColumns: { type: [Array, undefined] },
 
@@ -240,14 +238,6 @@ export default {
 			handler(value, oldValue) {
 				if (value && !deepEql(value, oldValue)) {
 					this.store.commit('setHiddenColumns', value)
-				}
-			},
-		},
-		filteredColumns: {
-			immediate: true,
-			handler(value, oldValue) {
-				if (value && !deepEql(value, oldValue)) {
-					this.store.commit('setFilteredColumns', value)
 				}
 			},
 		},

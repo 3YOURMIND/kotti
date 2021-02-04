@@ -854,7 +854,7 @@ Sometimes you may need to access the table's store and control it from outside.
 While `ref` may work if your modifications are in the _same_ component, your controller component may be elsewhere.
 
 For that purpose, we introduce `KtTableProvider`/`KtTableConsumer`. The provider exposes the `store`, from which you can access many props from the store.
-It also directly exposes `columns`, `filteredColumns`, `sortedColumns`, `hiddenColumns`, for faster accesss, and methods: `hideColumn`, `showAllColumns`, `orderBeforeColumn`.
+It also directly exposes `columns`, `sortedColumns`, `hiddenColumns`, for faster accesss, and methods: `hideColumn`, `showAllColumns`, `orderBeforeColumn`.
 
 `<KtTableProvider />` takes the same props as `<KtTable/>`.
 
@@ -969,7 +969,6 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 | `disableRow`           | disable some rows if the function is true                           | `Function`                  | —                     | —       |
 | `emptyText`            | text to show when table is empty                                    | `String`                    | —                     | —       |
 | `expandMultiple`       | allow for expanding multiple rows at once                           | `Boolean`                   | —                     | `false` |
-| `filterdColumns`       | prop for changing filterd columns                                   | `Array`                     | [{ prop, filter }]    | `[]`    |
 | `hiddenColumns`        | prop for changing hidden columns                                    | `Array`                     | [{ prop, hidden }]    | `[]`    |
 | `id`                   | for when using nested providers                                     | `String`                    | —                     | null    |
 | `isInteractive`        | allow clicking/keyboard focusing table rows                         | `Boolean`                   | —                     | `false` |
@@ -1077,7 +1076,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 | Slot Name |                Description                |                                                      Scope                                                       |
 | :-------- | :---------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
-| `default` | provide a table's store and other methods | `{store, columns, hiddenColumns, sortedColumns, filteredColumns, hideColumn, showAllColumns, orderBeforeColumn}` |
+| `default` | provide a table's store and other methods | `{store, columns, hiddenColumns, sortedColumns, hideColumn, showAllColumns, orderBeforeColumn}` |
 
 </template>
 

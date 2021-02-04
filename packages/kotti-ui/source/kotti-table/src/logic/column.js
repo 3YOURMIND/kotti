@@ -3,7 +3,6 @@ import Vue from 'vue'
 
 import { SORT_NONE, PUBLIC_COLUMN_PROPS } from '../constants'
 
-import { setFilteredColumn } from './filter'
 import { setHiddenColumn, getResolvedHiddenColumns } from './hide'
 import { resolveColumnsOrder, getOrderedColumns } from './order'
 import { setSortedColumn } from './sort'
@@ -50,9 +49,6 @@ export function setColumn(state, { column, index, deleted }) {
 	}
 	if (newColumn.hidden === true) {
 		setHiddenColumn(state, newColumn)
-	}
-	if (newColumn.filter !== undefined) {
-		setFilteredColumn(state, newColumn)
 	}
 
 	return newColumn

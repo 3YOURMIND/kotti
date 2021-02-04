@@ -6,7 +6,6 @@ import pickBy from 'lodash/pickBy'
 import * as column from './column'
 import * as disable from './disable'
 import * as expand from './expand'
-import * as filter from './filter'
 import * as hide from './hide'
 import * as order from './order'
 import * as rows from './row'
@@ -26,7 +25,6 @@ export class TableStore {
 			...select.defaultState,
 			...hide.defaultState,
 			...sort.defaultState,
-			...filter.defaultState,
 		})
 		this.setInitialState(initialState)
 
@@ -39,7 +37,6 @@ export class TableStore {
 			...select.mutations,
 			...hide.mutations,
 			...sort.mutations,
-			...filter.mutations,
 		}
 
 		this.getters = {
@@ -51,7 +48,6 @@ export class TableStore {
 			...select.getters,
 			...hide.getters,
 			...sort.getters,
-			...filter.getters,
 		}
 	}
 	setTable(table) {
