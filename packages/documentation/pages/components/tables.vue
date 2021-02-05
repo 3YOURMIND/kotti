@@ -995,31 +995,31 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 ### Column Attributes
 
-|     Attribute      |                                   Description                                   |            Type             |              Accepted values               |              Default              |
-| :----------------- | :------------------------------------------------------------------------------ | :-------------------------- | :----------------------------------------- | :-------------------------------- |
-| `prop`  (required) | used to match the value in `rows` can be a dot path                             | `String` `String.String`    | —                                          | —                                 |
-| `align`            | alignment of column text                                                        | `String`                    | `"center"`, `"left"`, `"right"`            | `left`                            |
-| `key`              | deprecated. Is transalted to `prop`, instead                                    | `String`                    | —                                          | —                                 |
-| `label`            | table column header value                                                       | `String`                    | —                                          | —                                 |
-| `width`            | width of the column within table. When using %, must add up to `100%`           | `String`                    | `10%`, `100px`                             | `auto`                            |
-| `maxWidth`         | currently not used                                                              | String                      | `10%`, `100px`                             | -                                 |
-| `hidden`           | does not render this collumn if true                                            | Boolean                     | false                                      |                                   |
-| `sortable`         | whether this column is sortable or not                                          | [Boolean, undefined]        | true, false, undefined                     | -                                 |
-| `sortOrder`        | the current sort order of the column                                            | [Number, String]            | "ascending", "descending", null            | null                              |
-| `sortOrders`       | order to toggle sort                                                            | Array                       | -                                          | ["ascending", "descending", null] |
-| `sortMethod`       | custom sort method ignores sortBy                                               | Function                    | -                                          | -                                 |
-| `sortBy`           | compare function to sort by                                                     | String, Function, Array     | path string, function or array of previous | column.prop                       |
-| `disableRowClick`  | stop row click from bubbling up when clicking on cell                           | Boolean                     | -                                          |                                   |
-| `default`          | if cell value is undefined, use default. Does not work if you use custom render | String                      | -                                          | -                                 |
-| `formatter`        | formats value before passing it to cell                                         | Function                    | -                                          |                                   |
-| `renderHeader`     | render function to custom render header cell                                    | Function                    | -                                          |                                   |
-| `renderCell`       | render function to custom render table cell                                     | Function                    | -                                          |                                   |
-| `renderContext`    | object you can use to pass extra data to all render functions                   | Object                      | -                                          |                                   |
-| `order`            | number to sort columns from left to right by                                    | Number                      | -                                          |                                   |
-| `thClass`          | classes to this column's header to `<td />` elements                            | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
-| `tdClass`          | classes to this column's to `<td />` elements                                   | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
-| `headerCellClass`  | classes to this column's to `.kt-table__header-cell` elements                   | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
-| `cellClass`        | classes to this column's to `.kt-table__cell` elements                          | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+|     Attribute      |                                  Description                                   |            Type             |              Accepted values               |              Default              |
+| :----------------- | :----------------------------------------------------------------------------- | :-------------------------- | :----------------------------------------- | :-------------------------------- |
+| `prop`  (required) | used to match the value in `rows` can be a dot path                            | `String` `String.String`    | —                                          | —                                 |
+| `align`            | alignment of column text                                                       | `String`                    | `"center"`, `"left"`, `"right"`            | `left`                            |
+| `key`              | deprecated. Is transalted to `prop`, instead                                   | `String`                    | —                                          | —                                 |
+| `label`            | table column header value                                                      | `String`                    | —                                          | —                                 |
+| `responsive`       | control responsive display  (this doesn't seem to work )                       | `String`                    | —                                          | —                                 |
+| `width`            | width of the column within table. When using %, must add up to `100%`          | `String`                    | `10%`, `100px`                             | `auto`                            |
+| `maxWidth`         | currently not used                                                             | String                      | `10%`, `100px`                             | -                                 |
+| `hidden`           | does not render this collumn if true                                           | Boolean                     | false                                      |                                   |
+| `sortable`         | whether this column is sortable or not                                         | [Boolean, undefined]        | true, false, undefined                     | -                                 |
+| `sortOrder`        | the current sort order of the column                                           | [Number, String]            | "ascending", "descending", null            | null                              |
+| `sortOrders`       | order to toggle sort                                                           | Array                       | -                                          | ["ascending", "descending", null] |
+| `sortMethod`       | custom sort method ignores sortBy                                              | Function                    | -                                          | -                                 |
+| `sortBy`           | compare function to sort by                                                    | String, Function, Array     | path string, function or array of previous | column.prop                       |
+| `disableRowClick`  | stop row click from bubbling up when clicking on cell                          | Boolean                     | -                                          |                                   |
+| `default`          | if cell value is undefined, use default. Does not work if you use custom render| String                      | -                                          | -                                 |
+| `formatter`        | formats value before passing it to cell                                        | Function                    | -                                          |                                   |
+| `renderHeader`     | render function to custom render header cell                                   | Function                    | -                                          |                                   |
+| `renderCell`       | render function to custom render table cell                                    | Function                    | -                                          |                                   |
+| `order`            | number to sort columns from left to right by                                   | Number                      | -                                          |                                   |
+| `thClass`          | classes to this column's header to `<td />` elements                           | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `tdClass`          | classes to this column's to `<td />` elements                                  | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `headerCellClass`  | classes to this column's to `.kt-table__header-cell` elements                  | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `cellClass`        | classes to this column's to `.kt-table__cell` elements                         | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
 
 
 #### Consumer Attributes

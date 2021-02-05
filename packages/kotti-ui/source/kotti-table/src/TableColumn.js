@@ -55,7 +55,6 @@ export const KtTableColumn = {
 		formatter: Function,
 		renderHeader: Function,
 		renderCell: Function,
-		renderContext: Object,
 
 		/**
 		 * @private
