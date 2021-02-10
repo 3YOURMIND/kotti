@@ -3,7 +3,7 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 import KtNavbarVue from './KtNavbar.vue'
 
 export const KtNavbar = attachMeta(makeInstallable(KtNavbarVue), {
-	addedVersion: '0.0.3',
+	addedVersion: '0.0.1',
 	deprecated: null,
 	slots: {
 		'navbar-footer': { description: null, scope: null },

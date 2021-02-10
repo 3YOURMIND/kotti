@@ -6,7 +6,7 @@ import KtInputVue from './KtInput.vue'
  * @deprecated
  */
 export const KtInput = attachMeta(makeInstallable(KtInputVue), {
-	addedVersion: null,
+	addedVersion: '0.0.1',
 	deprecated: {
 		alternatives: [
 			'KtFieldText',

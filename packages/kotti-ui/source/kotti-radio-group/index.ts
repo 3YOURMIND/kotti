@@ -6,7 +6,7 @@ import KtRadioGroupVue from './KtRadioGroup.vue'
  * @deprecated
  */
 export const KtRadioGroup = attachMeta(makeInstallable(KtRadioGroupVue), {
-	addedVersion: 'unkown',
+	addedVersion: '0.0.1',
 	deprecated: {
 		alternatives: ['KtFieldRadioGroup'],
 		reason: 'Replaced by Kotti v2.0.0 Forms',

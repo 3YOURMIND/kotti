@@ -3,7 +3,7 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 import KtInlineEditVue from './KtInlineEdit.vue'
 
 export const KtInlineEdit = attachMeta(makeInstallable(KtInlineEditVue), {
-	addedVersion: null,
+	addedVersion: '0.0.1',
 	deprecated: {
 		alternatives: [],
 		reason:

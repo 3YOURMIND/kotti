@@ -6,7 +6,7 @@ import KtSingleSelectVue from './KtSingleSelect.vue'
  * @deprecated
  */
 export const KtSingleSelect = attachMeta(makeInstallable(KtSingleSelectVue), {
-	addedVersion: null,
+	addedVersion: '0.0.1',
 	deprecated: {
 		alternatives: ['KtFieldSingleSelect', 'KtFieldMultipleSelect'],
 		reason: 'Replaced by Kotti v2.0.0 Forms',

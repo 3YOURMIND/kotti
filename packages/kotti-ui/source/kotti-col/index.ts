@@ -75,7 +75,7 @@ export const KtCol = attachMeta(
 		}),
 	),
 	{
-		addedVersion: null,
+		addedVersion: '0.0.1',
 		deprecated: null,
 		slots: {
 			default: { description: null, scope: null },

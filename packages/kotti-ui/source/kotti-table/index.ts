@@ -8,7 +8,7 @@ import { KtTableConsumer as KtTableConsumerVue } from './src/TableConsumer'
 import { KtTableProvider as KtTableProviderVue } from './src/TableProvider'
 
 const META: Kotti.Meta = {
-	addedVersion: null,
+	addedVersion: '0.0.1',
 	deprecated: null,
 	slots: {
 		actions: { description: 'E.g. edit/delete row actions', scope: null },

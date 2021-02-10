@@ -3,7 +3,7 @@ import { attachMeta, makeInstallable } from '../next/utilities'
 import KtDrawerVue from './KtDrawer.vue'
 
 export const KtDrawer = attachMeta(makeInstallable(KtDrawerVue), {
-	addedVersion: null,
+	addedVersion: '0.0.1',
 	deprecated: null,
 	slots: {
 		'drawer-body': { description: null, scope: null },
