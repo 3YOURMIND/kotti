@@ -48,23 +48,26 @@
 				</div>
 			</section>
 		</article>
-		<section v-if="Object.keys(meta.slots).length >= 1" class="slots-block">
-			<div v-for="[name, details] in Object.entries(meta.slots)" :key="name">
-				<div class="slot-name" v-text="name" />
-				<div class="slot-details">
-					<div
-						v-if="details.description"
-						class="slot-description"
-						v-text="details.description"
-					/>
-					<i v-else class="slot-description" v-text="'No description'" />
-					<div
-						class="slot-scoped"
-						v-text="details.scoped === null ? '(Not Scoped)' : details.scoped"
-					/>
+		<article v-if="Object.keys(meta.slots).length >= 1">
+			<h4>Slots</h4>
+			<section class="slots-block">
+				<div v-for="[name, details] in Object.entries(meta.slots)" :key="name">
+					<div class="slots-block__name" v-text="name" />
+					<div class="slots-block__details">
+						<div
+							v-if="details.description"
+							class="slots-block__description"
+							v-text="details.description"
+						/>
+						<i v-else class="slot-description" v-text="'No description'" />
+						<div
+							class="slots-block__scoped"
+							v-text="details.scoped === null ? '(Not Scoped)' : details.scoped"
+						/>
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		</article>
 	</div>
 </template>
 
@@ -222,7 +225,7 @@ $radius: 3px;
 	}
 
 	> section {
-		padding: 0.6rem;
+		padding: 0.4rem 0.6rem;
 	}
 
 	> section:not(:first-child) {
@@ -231,27 +234,28 @@ $radius: 3px;
 }
 
 .slots-block {
-	color: var(--red-70);
-	background: var(--support-error-light);
+	color: var(--support-info-dark);
+	background: var(--support-info-light);
 
-	border: 1px solid var(--support-error-dark);
+	border: 1px solid var(--support-info-dark);
 	border-radius: $radius;
 
-	a {
-		color: inherit;
-		text-decoration: underline;
+	> div {
+		display: flex;
+		align-items: center;
+		padding: 0.4rem 0.6rem;
+
+		> *:not(:first-child) {
+			margin-left: 0.2rem;
+		}
 	}
 
-	code + code {
-		margin-left: 8px;
+	> div:not(:first-child) {
+		border-top: 1px solid var(--support-info-dark);
 	}
 
-	> section {
-		padding: 0.6rem;
-	}
-
-	> section:not(:first-child) {
-		border-top: 1px solid var(--support-error-dark);
+	&__name {
+		font-weight: bold;
 	}
 }
 </style>
