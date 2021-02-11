@@ -1,3 +1,5 @@
+import { SpecifyRequiredProps } from '../types/utilities'
+
 /* eslint-disable no-magic-numbers */
 type UpTo24 =
 	| 1
@@ -39,5 +41,5 @@ export namespace KottiCol {
 		tag: string
 	} & MediaQueryProps
 
-	export type Props = Partial<PropsInternal>
+	export type Props = SpecifyRequiredProps<PropsInternal, never>
 }
