@@ -29,6 +29,7 @@ export {
 } from '../kotti-form/controllers/types'
 export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiRow as Row } from '../kotti-row/types'
+export { KottiTable2 as Table2 } from '../kotti-table-2/types'
 
 export type Meta = {
 	addedVersion: string | null

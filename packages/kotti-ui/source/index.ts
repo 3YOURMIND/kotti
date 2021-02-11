@@ -98,6 +98,8 @@ import {
 	KtTableColumnsStateMixin,
 } from './kotti-table'
 export * from './kotti-table'
+import { KtTable2 } from './kotti-table-2'
+export * from './kotti-table-2'
 import { KtTheme } from './kotti-theme'
 export * from './kotti-theme'
 import { KtToaster } from './kotti-toaster'
@@ -162,6 +164,7 @@ export default {
 			KtStep,
 			KtSteps,
 			KtTable,
+			KtTable2,
 			KtTableColumn,
 			KtTableProvider,
 			KtTableConsumer,

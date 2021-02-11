@@ -9,7 +9,12 @@ import { KtTableProvider as KtTableProviderVue } from './src/TableProvider'
 
 const META: Kotti.Meta = {
 	addedVersion: '0.0.1',
-	deprecated: null,
+	deprecated: {
+		alternatives: ['KtTable2'],
+		reason:
+			'Replaced by new implementation. Old implementation will be removed after a brief transition period',
+		version: '4.0.0',
+	},
 	slots: {
 		actions: { description: 'E.g. edit/delete row actions', scope: null },
 		default: {

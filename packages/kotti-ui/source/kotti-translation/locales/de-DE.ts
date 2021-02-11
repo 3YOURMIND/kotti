@@ -16,4 +16,7 @@ export const deDE: KottiTranslation.Messages = {
 		title: 'Formularübermittlung nicht zulässig',
 		warningsSectionTitle: 'Warnungen',
 	},
+	KtTable2: {
+		emptyText: 'TODO:',
+	},
 }

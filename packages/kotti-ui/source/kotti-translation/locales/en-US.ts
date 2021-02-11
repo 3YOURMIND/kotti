@@ -16,4 +16,7 @@ export const enUS: KottiTranslation.Messages = {
 		title: 'Form Submission Not Allowed',
 		warningsSectionTitle: 'Warnings',
 	},
+	KtTable2: {
+		emptyText: 'TODO:',
+	},
 }

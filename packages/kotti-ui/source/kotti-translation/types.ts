@@ -1,8 +1,7 @@
 import { Ref } from '@vue/composition-api'
 
+import { Kotti } from '../../types'
 import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
-import { KottiField } from '../kotti-field/types'
-import { KottiFormSubmit } from '../kotti-form/types'
 
 export type DeepPartial<T> = T extends object
 	? { [K in keyof T]?: DeepPartial<T[K]> }
@@ -15,9 +14,10 @@ export namespace KottiTranslation {
 	}
 
 	export type Messages = {
-		KtFields: KottiField.Translations
+		KtFields: Kotti.Field.Translations
 		KtFieldSelects: KottiFieldSelectShared.Translations
-		KtFormSubmit: KottiFormSubmit.Translations
+		KtFormSubmit: Kotti.FormSubmit.Translations
+		KtTable2: Kotti.Table2.Translations
 	}
 
 	export type Props = {
