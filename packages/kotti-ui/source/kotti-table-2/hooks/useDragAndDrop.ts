@@ -19,6 +19,7 @@ export const useDragAndDrop = ({
 
 	return {
 		doDragAndDrop: (dropTarget: string) => {
+			console.log(`dragged ${dragSource.value} to ${dropTarget}`)
 			const columnKeys = columns.value.map((x) => x.key)
 
 			const source = dragSource.value

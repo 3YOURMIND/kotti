@@ -14,6 +14,7 @@
 		>
 			<i v-if="column.icon" class="yoco" v-text="column.icon" />
 			<div v-text="column.label" />
+			{{ renderFunction() }}
 		</div>
 		<div v-for="cell in cells" :key="cell.key" class="kt-table2__cell">
 			{{ cell.key }} {{ cell.content }}
@@ -21,7 +22,7 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
 import { computed, defineComponent } from '@vue/composition-api'
 import { get } from 'lodash'
 
@@ -71,6 +72,9 @@ export default defineComponent<Kotti.Table2.InternalProps>({
 		sort: { default: null, type: Object },
 	},
 	setup(props, { emit }) {
+		// const translations = useTranslationNamespace('KtTable2')
+		// if (props.renderEmpty === null) translations.value.emptyText
+
 		return {
 			...useDragAndDrop({
 				columns: computed(() => props.columns),
@@ -85,6 +89,7 @@ export default defineComponent<Kotti.Table2.InternalProps>({
 				),
 			),
 			style: computed(() => `--column-count: ${props.columns.length}`),
+			renderFunction: () => () => <div>SOME TSX</div>,
 		}
 	},
 })
@@ -116,6 +121,12 @@ export default defineComponent<Kotti.Table2.InternalProps>({
 
 	&__cell {
 		border: 1px solid blue;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.kt-table2 {
+		grid-template-columns: auto;
 	}
 }
 </style>

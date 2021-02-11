@@ -1,4 +1,4 @@
-import { computed, createElement, defineComponent } from '@vue/composition-api'
+import { computed, h, defineComponent } from '@vue/composition-api'
 
 import { useTranslationProvide } from './hooks'
 import { KottiTranslation } from './types'
@@ -15,7 +15,7 @@ const KtTranslationContext = defineComponent({
 			computed(() => props.messages),
 		)
 
-		return () => createElement('div', [slots.default()])
+		return () => h('div', [slots.default()])
 	},
 })
 

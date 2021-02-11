@@ -11,6 +11,7 @@
 		"@3yourmind/vue-use-tippy": "1.x",
 		"@3yourmind/yoco": "2.x",
 		"@popperjs/core": "2.0.6",
+		"@vue/composition-api": "1.0.0-beta.7",
 		"color": "3.x",
 		"deep-eql": "^4.0.0",
 		"deepmerge": "^4.2.2",
@@ -49,7 +50,7 @@
 	"module": "dist/esm/index.js",
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
-		"@vue/composition-api": "0.6.1",
+		"@vue/composition-api": "1.0.0-beta.7",
 		"core-js": "*",
 		"vue": "^2.2.1"
 	},

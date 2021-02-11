@@ -60,13 +60,18 @@ const plugins = (module) => [
 					allowNamespaces: true,
 				},
 			],
+			[
+				'@vue/babel-preset-jsx',
+				{
+					compositionAPI: true,
+				},
+			],
 		],
 		plugins: [
 			'@babel/plugin-transform-runtime',
 			'@babel/plugin-proposal-nullish-coalescing-operator',
 			'@babel/plugin-proposal-optional-chaining',
 			'@babel/plugin-syntax-dynamic-import',
-			'transform-vue-jsx',
 		],
 	}),
 	scss({

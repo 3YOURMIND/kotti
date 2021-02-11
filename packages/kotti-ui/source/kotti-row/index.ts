@@ -1,9 +1,4 @@
-import {
-	defineComponent,
-	computed,
-	createElement,
-	provide,
-} from '@vue/composition-api'
+import { defineComponent, computed, h, provide } from '@vue/composition-api'
 
 import { Kotti } from '../types'
 import { attachMeta, makeInstallable } from '../utilities'
@@ -38,7 +33,7 @@ export const KtRow = attachMeta(
 				})
 
 				return () =>
-					createElement(
+					h(
 						props.tag,
 						{
 							class: [
