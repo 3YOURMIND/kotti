@@ -863,6 +863,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '@3yourmind/kotti-ui/dist/variables.scss';
 
+pre {
+	tab-size: 2;
+}
+
 li {
 	list-style: none;
 }
