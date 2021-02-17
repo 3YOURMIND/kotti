@@ -27,7 +27,7 @@
 	"main": "dist/index.js",
 	"name": "@3yourmind/vue-use-tippy",
 	"peerDependencies": {
-		"@vue/composition-api": "1.0.0-beta.7"
+		"@vue/composition-api": "1.0.0-beta.8"
 	},
 	"publishConfig": {
 		"access": "public"

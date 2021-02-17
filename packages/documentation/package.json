@@ -4,7 +4,7 @@
 		"@3yourmind/yoco": "*",
 		"@octokit/rest": "^18.0.6",
 		"@octokit/types": "^5.5.0",
-		"@vue/composition-api": "1.0.0-beta.7",
+		"@vue/composition-api": "1.0.0-beta.8",
 		"core-js": "^3.6.5",
 		"dayjs": "^1.9.1",
 		"faker": "^5.3.1",

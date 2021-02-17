@@ -8,10 +8,11 @@ import {
 } from '@vue/composition-api'
 import castArray from 'lodash.castarray'
 import tippy, { Props, Instance } from 'tippy.js'
+import { VNode } from 'vue/types/umd'
 
 type InstanceRefType = Instance<Props>[] | Instance<Props> | null
 type Callback = (t: InstanceRefType) => void
-type Target = Ref<Element | null> | string
+type Target = Ref<VNode | null> | string
 
 const applyForEvery = (
 	instance: Ref<InstanceRefType>,

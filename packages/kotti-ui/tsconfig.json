@@ -10,7 +10,7 @@
 		"resolveJsonModule": true,
 		"sourceMap": true,
 		"strict": true,
-		"jsx": "react",
+		"jsx": "preserve",
 		"jsxFactory": "h",
 		// FIXME: remove skipLibCheck when [https://github.com/ElemeFE/element/issues/17329] is resolved
 		"skipLibCheck": true,

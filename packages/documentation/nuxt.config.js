@@ -26,6 +26,7 @@ const config = {
 	},
 	plugins: [
 		'~/plugins/composition-api',
+		'~/plugins/disable-error',
 		'~/plugins/vue-clipboard2',
 		'~/plugins/yoco',
 		{ src: '~/plugins/kotti-ui', ssr: false },

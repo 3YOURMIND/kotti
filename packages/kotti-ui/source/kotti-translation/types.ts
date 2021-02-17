@@ -1,7 +1,7 @@
 import { Ref } from '@vue/composition-api'
 
-import { Kotti } from '../../types'
 import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
+import { Kotti } from '../types'
 
 export type DeepPartial<T> = T extends object
 	? { [K in keyof T]?: DeepPartial<T[K]> }

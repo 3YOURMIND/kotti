@@ -1,27 +1,3 @@
-<template>
-	<div class="kt-table2" :style="style">
-		<div
-			v-for="column in columns"
-			:key="`${column.key}-header`"
-			class="kt-table2__header"
-			:class="getDragClass(column.key)"
-			draggable
-			@dragend="doDragCancel"
-			@dragenter="() => setDragHover(column.key)"
-			@dragover.prevent
-			@dragstart="() => setDragSource(column.key)"
-			@drop="() => doDragAndDrop(column.key)"
-		>
-			<i v-if="column.icon" class="yoco" v-text="column.icon" />
-			<div v-text="column.label" />
-			{{ renderFunction() }}
-		</div>
-		<div v-for="cell in cells" :key="cell.key" class="kt-table2__cell">
-			{{ cell.key }} {{ cell.content }}
-		</div>
-	</div>
-</template>
-
 <script lang="tsx">
 import { computed, defineComponent } from '@vue/composition-api'
 import { get } from 'lodash'
@@ -75,22 +51,57 @@ export default defineComponent<Kotti.Table2.InternalProps>({
 		// const translations = useTranslationNamespace('KtTable2')
 		// if (props.renderEmpty === null) translations.value.emptyText
 
-		return {
-			...useDragAndDrop({
-				columns: computed(() => props.columns),
-				emit,
-			}),
-			cells: computed((): Cell[] =>
-				props.rows.flatMap((row) =>
-					props.columns.map((column) => ({
-						content: get(row, column.key),
-						key: `${column.key}-${String(row.id)}`,
-					})),
-				),
+		const dad = useDragAndDrop({
+			columns: computed(() => props.columns),
+			emit,
+		})
+
+		const cells = computed((): Cell[] =>
+			props.rows.flatMap((row) =>
+				props.columns.map((column) => ({
+					content: get(row, column.key),
+					key: `${column.key}-${String(row.id)}`,
+				})),
 			),
-			style: computed(() => `--column-count: ${props.columns.length}`),
-			renderFunction: () => () => <div>SOME TSX</div>,
-		}
+		)
+
+		const renderFunction = () => <div>SOME TSX</div>
+
+		return () => (
+			<div
+				class="kt-table2"
+				style={{
+					gridTemplateColumns: Array(props.columns.length)
+						.fill('auto')
+						.join(' '),
+				}}
+			>
+				{props.columns.map((column) => (
+					<div
+						key={`${column.key}-header`}
+						class={`kt-table2__header ${dad.getDragClass(column.key)}`}
+						draggable
+						onDragend={dad.doDragCancel}
+						onDragenter={() => dad.setDragHover(column.key)}
+						onDragover={(event) => event.preventDefault()}
+						onDragstart={(event) => {
+							event.dataTransfer.effectAllowed = 'move'
+							dad.setDragSource(column.key)
+						}}
+						onDrop={() => dad.doDragAndDrop(column.key)}
+					>
+						{column.icon !== null && <i class="yoco">{column.icon}</i>}
+						<div>{column.label}</div>
+						{renderFunction()}
+					</div>
+				))}
+				{cells.value.map((cell) => (
+					<div key={cell.key} class="kt-table2__cell">
+						{cell.key} {cell.content}
+					</div>
+				))}
+			</div>
+		)
 	},
 })
 </script>
@@ -98,7 +109,6 @@ export default defineComponent<Kotti.Table2.InternalProps>({
 <style lang="scss" scoped>
 .kt-table2 {
 	display: grid;
-	grid-template-columns: repeat(var(--column-count), auto);
 
 	> div {
 		margin: -0.5px;

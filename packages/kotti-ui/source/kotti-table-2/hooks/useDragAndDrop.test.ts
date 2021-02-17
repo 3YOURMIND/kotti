@@ -3,7 +3,7 @@ require('jsdom-global')()
 import { computed, defineComponent } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
 
-import { localVue } from '../../next/test-utils'
+import { localVue } from '../../test-utils'
 import { Kotti } from '../../types'
 import { KtTable2Errors } from '../errors'
 
