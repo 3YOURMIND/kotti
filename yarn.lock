@@ -2235,6 +2235,11 @@
   resolved "https://registry.yarnpkg.com/@metatypes/typography/-/typography-0.4.0.tgz#858ceeae6bb3b3895c6da7995c279e081f0b9f44"
   integrity sha512-VzamJu/XOxQFEEZVzHS5a4cW7PBKcnmGevQTRg1RzVrupOxZfByqfh3R3e6BjCf0Jm9pEkluEyNVp+5Cuf5fgA==
 
+"@metatypes/typography@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@metatypes/typography/-/typography-0.5.0.tgz#44ca86036ae7f645d887899f52b0fd5ff5ad2c25"
+  integrity sha512-bXzduOV/1OXR1+hBq5SubfKoSJ4hlucq5NNAa3n5XUSM+t4N78w2fU6oGsWvZz98riueQd4k1yTRluTytSL4Hw==
+
 "@metatypes/units@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@metatypes/units/-/units-0.4.0.tgz#6135a5ce92f0f54412424dd01c5d00d6ec32d8a5"

@@ -1,4 +1,5 @@
 <script lang="tsx">
+import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent } from '@vue/composition-api'
 import { get } from 'lodash'
 
@@ -56,16 +57,25 @@ export default defineComponent<Kotti.Table2.InternalProps>({
 			emit,
 		})
 
+		const renderCell = (
+			renderCell: Kotti.Table2.Column['renderCell'],
+			content: unknown,
+		) => {
+			if (renderCell) return renderCell(content)
+
+			if ([null, undefined].includes(content)) return Dashes.EmDash
+
+			return String(content)
+		}
+
 		const cells = computed((): Cell[] =>
 			props.rows.flatMap((row) =>
 				props.columns.map((column) => ({
-					content: get(row, column.key),
+					content: renderCell(column.renderCell, get(row, column.key)),
 					key: `${column.key}-${String(row.id)}`,
 				})),
 			),
 		)
-
-		const renderFunction = () => <div>SOME TSX</div>
 
 		return () => (
 			<div
@@ -92,12 +102,11 @@ export default defineComponent<Kotti.Table2.InternalProps>({
 					>
 						{column.icon !== null && <i class="yoco">{column.icon}</i>}
 						<div>{column.label}</div>
-						{renderFunction()}
 					</div>
 				))}
 				{cells.value.map((cell) => (
 					<div key={cell.key} class="kt-table2__cell">
-						{cell.key} {cell.content}
+						{cell.content}
 					</div>
 				))}
 			</div>
