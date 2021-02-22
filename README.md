@@ -120,14 +120,14 @@ yarn workspace @3yourmind/documentation run serve
 
 ```bash
 # es-lint (with --fix)
-yarn run lint:script
+yarn run fix:eslint
 # es-lint (without --fix)
-yarn run check:script
+yarn run check:eslint
 
 # stylelint (with --fix)
-yarn run lint:style
+yarn run fix:stylelint
 # stylelint (without --fix)
-yarn run check:style
+yarn run check:stylelint
 ```
 
 ### Testing
@@ -164,6 +164,6 @@ yarn run lerna run build
 
 ### Important Folders
 
-| Path        | Purpose                              |
-| :---------- | :----------------------------------- |
-| `packages/documentation`     | Nuxt-managed documentation           |
+| Path                     | Purpose                    |
+| :----------------------- | :------------------------- |
+| `packages/documentation` | Nuxt-managed documentation |
