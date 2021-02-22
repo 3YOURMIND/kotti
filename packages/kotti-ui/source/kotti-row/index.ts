@@ -5,8 +5,8 @@ import {
 	provide,
 } from '@vue/composition-api'
 
-import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
+import { attachMeta, makeInstallable } from '../utilities'
 
 import { KT_ROW_CONTEXT } from './constants'
 

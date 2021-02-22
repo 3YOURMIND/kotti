@@ -1,5 +1,5 @@
-import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
+import { attachMeta, makeInstallable } from '../utilities'
 
 import KtCommentVue from './KtComment.vue'
 import KtCommentInputVue from './KtCommentInput.vue'

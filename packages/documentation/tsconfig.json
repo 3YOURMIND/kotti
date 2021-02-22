@@ -21,7 +21,7 @@
 	},
 	"exclude": ["node_modules"],
 	"include": [
-		"../kotti-ui/source/next/data.json",
+		"../kotti-ui/source/data.json",
 		"./**/*.ts",
 		"./**/*.tsx",
 		"./**/*.js",

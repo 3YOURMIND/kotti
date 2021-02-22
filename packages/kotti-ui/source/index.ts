@@ -32,6 +32,36 @@ import { KtDropdownButton } from './kotti-dropdown-button'
 export * from './kotti-dropdown-button'
 import { KtDropdownMenu } from './kotti-dropdown-menu'
 export * from './kotti-dropdown-menu'
+import { KtField } from './kotti-field'
+export * from './kotti-field'
+import {
+	KtFieldDate,
+	KtFieldDateRange,
+	KtFieldDateTime,
+	KtFieldDateTimeRange,
+} from './kotti-field-date'
+export * from './kotti-field-date'
+import { KtFieldNumber } from './kotti-field-number'
+export * from './kotti-field-number'
+import { KtFieldPassword } from './kotti-field-password'
+export * from './kotti-field-password'
+import { KtFieldRadioGroup } from './kotti-field-radio-group'
+export * from './kotti-field-radio-group'
+import { KtFieldSingleSelect, KtFieldMultiSelect } from './kotti-field-select'
+export * from './kotti-field-select'
+import { KtFieldText } from './kotti-field-text'
+export * from './kotti-field-text'
+import { KtFieldTextArea } from './kotti-field-text-area'
+export * from './kotti-field-text-area'
+import { KtFieldToggle, KtFieldToggleGroup } from './kotti-field-toggle'
+export * from './kotti-field-toggle'
+import {
+	KtForm,
+	KtFormControllerList,
+	KtFormControllerObject,
+	KtFormSubmit,
+} from './kotti-form'
+export * from './kotti-form'
 import { KtHeading } from './kotti-heading'
 export * from './kotti-heading'
 import { KtInlineEdit } from './kotti-inline-edit'
@@ -72,44 +102,10 @@ import { KtTheme } from './kotti-theme'
 export * from './kotti-theme'
 import { KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
+import { KtTranslationContext } from './kotti-translation'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
-import { KtField } from './next/kotti-field'
-export * from './next/kotti-field'
-import {
-	KtFieldDate,
-	KtFieldDateRange,
-	KtFieldDateTime,
-	KtFieldDateTimeRange,
-} from './next/kotti-field-date'
-export * from './next/kotti-field-date'
-import { KtFieldNumber } from './next/kotti-field-number'
-export * from './next/kotti-field-number'
-import { KtFieldPassword } from './next/kotti-field-password'
-export * from './next/kotti-field-password'
-import { KtFieldRadioGroup } from './next/kotti-field-radio-group'
-export * from './next/kotti-field-radio-group'
-import {
-	KtFieldSingleSelect,
-	KtFieldMultiSelect,
-} from './next/kotti-field-select'
-export * from './next/kotti-field-select'
-import { KtFieldText } from './next/kotti-field-text'
-export * from './next/kotti-field-text'
-import { KtFieldTextArea } from './next/kotti-field-text-area'
-export * from './next/kotti-field-text-area'
-import { KtFieldToggle, KtFieldToggleGroup } from './next/kotti-field-toggle'
-export * from './next/kotti-field-toggle'
-import {
-	KtForm,
-	KtFormControllerList,
-	KtFormControllerObject,
-	KtFormSubmit,
-} from './next/kotti-form'
-export * from './next/kotti-form'
-import { KtTranslationContext } from './next/kotti-translation'
-
-export * from './next/kotti-translation'
+export * from './kotti-translation'
 export * from './types'
 
 export default {

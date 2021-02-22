@@ -1,6 +1,6 @@
 import { VueConstructor } from 'vue'
 
-import { Kotti } from '../types'
+import { Kotti } from './types'
 
 /**
  * Takes a Vue Component and assigns a meta object which
