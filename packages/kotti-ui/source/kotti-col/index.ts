@@ -6,8 +6,8 @@ import {
 } from '@vue/composition-api'
 
 import { KT_ROW_CONTEXT } from '../kotti-row/constants'
-import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
+import { attachMeta, makeInstallable } from '../utilities'
 
 export const KtCol = attachMeta(
 	makeInstallable(

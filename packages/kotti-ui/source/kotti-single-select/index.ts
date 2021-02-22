@@ -1,4 +1,4 @@
-import { attachMeta, makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
 import KtSingleSelectVue from './KtSingleSelect.vue'
 

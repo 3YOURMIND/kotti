@@ -1,5 +1,5 @@
-import { attachMeta, makeInstallable } from '../next/utilities'
 import { Kotti } from '../types'
+import { attachMeta, makeInstallable } from '../utilities'
 
 import KtTableVue from './src/KtTable.vue'
 import { TableColumnsStateMixin } from './src/mixins'

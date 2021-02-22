@@ -1,4 +1,4 @@
-import { attachMeta, makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
 import KtDropdownButtonVue from './KtDropdownButton.vue'
 

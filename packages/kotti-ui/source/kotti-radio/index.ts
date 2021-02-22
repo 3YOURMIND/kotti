@@ -1,4 +1,4 @@
-import { attachMeta, makeInstallable } from '../next/utilities'
+import { attachMeta, makeInstallable } from '../utilities'
 
 import KtRadioVue from './KtRadio.vue'
 
