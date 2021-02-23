@@ -12,13 +12,17 @@ type Cell = {
 	key: string
 }
 
-export default defineComponent<Kotti.Table2.InternalProps>({
+export default defineComponent<
+	Kotti.Table2.InternalProps<Record<string, unknown>>
+>({
 	name: 'KtTable2',
 	props: {
 		columns: {
 			required: true,
 			type: Array,
-			validator: (columns: unknown): columns is Array<Kotti.Table2.Column> =>
+			validator: (
+				columns: unknown,
+			): columns is Array<Kotti.Table2.Column<Record<string, unknown>>> =>
 				Array.isArray(columns) &&
 				columns.every(
 					(column) =>
@@ -58,7 +62,7 @@ export default defineComponent<Kotti.Table2.InternalProps>({
 		})
 
 		const renderCell = (
-			renderCell: Kotti.Table2.Column['renderCell'],
+			renderCell: Kotti.Table2.Column<Record<string, unknown>>['renderCell'],
 			content: unknown,
 		) => {
 			if (renderCell) return renderCell(content)

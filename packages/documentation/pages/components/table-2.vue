@@ -5,7 +5,7 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
 import { Kotti, KtTable2 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
@@ -36,21 +36,24 @@ export default defineComponent({
 			motto: faker.hacker.phrase(),
 		})
 
-		const columns: Array<Kotti.Table2.Column> = [
+		type Row = ReturnType<typeof makeRow>
+
+		const columns: Array<Kotti.Table2.Column<Row>> = [
 			{
 				align: Kotti.Table2.Align.RIGHT,
 				icon: Yoco.Icon.PICTURE,
 				isSortable: true,
 				key: 'avatarUrl',
 				label: 'Avatar',
+				renderCell: (url) => <img src={url} />,
 			},
-			{
-				align: Kotti.Table2.Align.CENTER,
-				icon: Yoco.Icon.ADDRESS_BOOK,
-				isSortable: true,
-				key: 'address.city',
-				label: 'City',
-			},
+			// {
+			// 	align: Kotti.Table2.Align.CENTER,
+			// 	icon: Yoco.Icon.ADDRESS_BOOK,
+			// 	isSortable: true,
+			// 	key: 'address.city',
+			// 	label: 'City',
+			// },
 			{
 				align: Kotti.Table2.Align.LEFT,
 				icon: Yoco.Icon.ANNOUNCE,

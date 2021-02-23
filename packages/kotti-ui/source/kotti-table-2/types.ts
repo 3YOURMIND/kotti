@@ -10,32 +10,60 @@ export namespace KottiTable2 {
 		LEFT = 'LEFT',
 	}
 
-	export type Column = SpecifyRequiredProps<InternalColumn, 'key' | 'label'>
+	export type Column<ROW extends Record<string, unknown>> = {
+		[KEY in keyof ROW]: {
+			align?: Align
+			icon?: Yoco.Icon | null
+			isSortable?: boolean
+			key: KEY
+			label: string
+			renderCell?: (someContext: ROW[KEY]) => VNode | string
+		}
+	}[keyof ROW]
 
 	export namespace Events {
 		export type RowClick = Row
 
-		export type UpdateColumns = InternalProps['columns']
+		export type UpdateColumns<
+			ROW extends Record<string, unknown>
+		> = InternalProps<ROW>['columns']
 
-		export type UpdateSelectedRows = InternalProps['selectedRows']
+		export type UpdateSelectedRows<
+			ROW extends Record<string, unknown>
+		> = InternalProps<ROW>['selectedRows']
 
-		export type UpdateOrderedColumns = Array<InternalProps['columns'][0]['key']>
+		export type UpdateOrderedColumns<
+			ROW extends Record<string, unknown>
+		> = Array<InternalProps<ROW>['columns'][0]['key']>
 
-		export type UpdateSort = InternalProps['sort']
+		export type UpdateSort<ROW extends Record<string, unknown>> = InternalProps<
+			ROW
+		>['sort']
 	}
 
-	export type InternalColumn = {
-		align: Align
-		icon: Yoco.Icon | null
-		isSortable: boolean
-		key: keyof Row
-		label: string
-		renderCell: (someContext: unknown) => VNode | string
-	}
+	export type InternalColumn<ROW extends Record<string, unknown>> = {
+		[KEY in keyof ROW]: {
+			align: Align
+			icon: Yoco.Icon | null
+			isSortable: boolean
+			key: KEY
+			label: string
+			renderCell: (someContext: ROW[KEY]) => VNode | string
+		}
+	}[keyof ROW]
 
-	export type InternalProps = {
+	{
+		a: {
+			b: {
+				c: true
+			}
+		},
+		"a.b": { c: true},
+		"a.b.c": true,
+	}
+	export type InternalProps<ROW extends Record<string, unknown>> = {
 		// TODO: Consider extracting ordering from columns to aid localstorage persistence
-		columns: Column[]
+		columns: Column<ROW>[]
 		isLoading: boolean
 		isRowDisabled: (row: Row) => boolean
 		// TODO: incorporate default string in TranslationContext
@@ -47,7 +75,7 @@ export namespace KottiTable2 {
 		// TODO: proper name
 		// this is merely for the UI of chevrons when it comes to implementation
 		sort: {
-			key: Column['key'] // TODO: find name that doesn’t confuse SARS
+			key: Column<ROW>['key'] // TODO: find name that doesn’t confuse SARS
 			direction: SortDirection
 		}
 	}
@@ -56,7 +84,10 @@ export namespace KottiTable2 {
 		id: symbol | string | number
 	}
 
-	export type Props = SpecifyRequiredProps<InternalProps, 'columns' | 'rows'>
+	export type Props<ROW extends Record<string, unknown>> = SpecifyRequiredProps<
+		InternalProps<ROW>,
+		'columns' | 'rows'
+	>
 
 	export type QuickActionButton = {
 		icon: Yoco.Icon | null
@@ -69,6 +100,7 @@ export namespace KottiTable2 {
 		DESCENDING = 'DESCENDING',
 		NONE = 'NONE',
 	}
+
 	export type Translations = {
 		emptyText: string
 	}
@@ -131,3 +163,29 @@ export namespace KottiTable2 {
 	🔨 renderEmpty
 	🗑 slot="empty"
 */
+
+type Deep = {
+	a: {
+		b: {
+			c: true
+		}
+		b1: 'wowspin'
+	}
+	b2: 'kek'
+}
+
+type Id<X extends Record<string, unknown>> = { [K in keyof X]: X[K] }
+
+type Flatten<DEEP extends Record<string, any>, PREFIX extends string = ''> = {
+	[KEY in keyof DEEP]: KEY extends string ?
+		(DEEP[KEY] extends Record<string, any>
+		? ([`${PREFIX}${KEY}`, DEEP[KEY]] | Flatten<DEEP[KEY], `${PREFIX}${KEY}.`>)
+		: [`${PREFIX}${KEY}`, DEEP[KEY]])
+		: never
+}[keyof DEEP]
+
+
+type Objectify<T extends [string, any]> = { [INDEX in keyof T]: Record<T[INDEX][0], T[INDEX][1]> }[keyof T]
+
+type F = Flatten<Deep>
+type F3 = Objectify<F>

@@ -14,7 +14,10 @@ const TestComponent = defineComponent({
 	props: {
 		columns: { required: true, type: Array },
 	},
-	setup: (props: Pick<Kotti.Table2.InternalProps, 'columns'>, { emit }) =>
+	setup: (
+		props: Pick<Kotti.Table2.InternalProps<Record<string, unknown>>, 'columns'>,
+		{ emit },
+	) =>
 		useDragAndDrop({
 			columns: computed(() => props.columns),
 			emit,

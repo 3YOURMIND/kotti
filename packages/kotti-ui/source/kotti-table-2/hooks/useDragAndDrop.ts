@@ -2,11 +2,12 @@ import { ref, Ref, SetupContext } from '@vue/composition-api'
 
 import { Kotti } from '../../types'
 import { KtTable2Errors } from '../errors'
-export const useDragAndDrop = ({
+
+export const useDragAndDrop = <ROW extends Record<string, unknown>>({
 	columns,
 	emit,
 }: {
-	columns: Ref<Kotti.Table2.InternalProps['columns']>
+	columns: Ref<Kotti.Table2.InternalProps<ROW>['columns']>
 	emit: SetupContext['emit']
 }) => {
 	const dragHover = ref<string | null>(null)
@@ -18,14 +19,14 @@ export const useDragAndDrop = ({
 	}
 
 	return {
-		doDragAndDrop: (dropTarget: string) => {
+		doDragAndDrop: (dropTarget: Kotti.Table2.Column<ROW>['key']) => {
 			console.log(`dragged ${dragSource.value} to ${dropTarget}`)
 			const columnKeys = columns.value.map((x) => x.key)
 
 			const source = dragSource.value
 			if (source === null) throw new KtTable2Errors.UnexpectedDragSourceType()
 
-			const payload: Kotti.Table2.Events.UpdateOrderedColumns = columnKeys
+			const payload: Kotti.Table2.Events.UpdateOrderedColumns<ROW> = columnKeys
 				.filter((x) => x !== source)
 				.flatMap((x) => (x === dropTarget ? [dropTarget, source] : x))
 

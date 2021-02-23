@@ -39,6 +39,12 @@ const config = {
 			presets({ isServer }) {
 				return [
 					[
+						'@vue/babel-preset-jsx',
+						{
+							compositionAPI: true,
+						},
+					],
+					[
 						require.resolve('@nuxt/babel-preset-app'),
 						{
 							buildTarget: isServer ? 'server' : 'client',

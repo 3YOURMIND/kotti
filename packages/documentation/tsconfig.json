@@ -4,6 +4,8 @@
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
 		"esModuleInterop": true,
+		"jsx": "preserve",
+		"jsxFactory": "h",
 		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"module": "ESNext",
 		"moduleResolution": "Node",
