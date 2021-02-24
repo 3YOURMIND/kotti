@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Dropdowns" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Basic Usage
 
@@ -173,7 +173,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtDropdown.meta,
+			component: KtDropdown,
 		}
 	},
 })

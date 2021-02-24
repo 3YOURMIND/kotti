@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="User Menu" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 <nuxt-link to="/examples/layouts">
 	<button class="primary">Show Layout Example</button>
@@ -44,7 +44,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtUserMenu.meta,
+			component: KtUserMenu,
 		}
 	},
 })

@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Breadcrumbs" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 Indicate the current page’s location within a navigational hierarchy.
 
@@ -69,11 +69,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtBreadcrumb.meta,
-			textSeparator: {
-				style: 'text',
-				value: '/',
-			},
+			component: KtBreadcrumb,
 			links: [
 				{
 					title: 'Kotti',
@@ -91,6 +87,10 @@ export default defineComponent({
 					isCompleted: false,
 				},
 			],
+			textSeparator: {
+				style: 'text',
+				value: '/',
+			},
 		}
 	},
 })

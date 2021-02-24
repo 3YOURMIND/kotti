@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Paginations" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Basic Usage
 
@@ -108,7 +108,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtPagination.meta,
+			component: KtPagination,
 		}
 	},
 })

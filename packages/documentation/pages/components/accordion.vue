@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Accordion" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 An accordion for hiding content on click.
 It is animated but the animation doesn't work with IE11.
@@ -79,7 +79,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtAccordion.meta,
+			component: KtAccordion,
 		}
 	},
 })

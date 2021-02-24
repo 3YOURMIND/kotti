@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Forms" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Input Types
 
@@ -289,19 +289,22 @@ export default defineComponent({
 		ComponentInfo,
 	},
 	setup() {
-		const meta: Kotti.Meta = {
-			addedVersion: null,
-			deprecated: {
-				alternatives: ['KtForm', 'KtField*'],
-				reason: 'Replaced by Kotti v2.0.0 Forms',
-				version: '3.0.0',
+		const component: { meta: Kotti.Meta; name: string } = {
+			meta: {
+				addedVersion: null,
+				deprecated: {
+					alternatives: ['KtForm', 'KtField*'],
+					reason: 'Replaced by Kotti v2.0.0 Forms',
+					version: '3.0.0',
+				},
+				slots: {},
+				typeScript: null,
 			},
-			slots: {},
-			typeScript: null,
+			name: 'Forms',
 		}
 
 		return {
-			meta,
+			component,
 		}
 	},
 })

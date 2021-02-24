@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Inline Edit" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Basic
 <div class="element-example white">
@@ -67,7 +67,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtInlineEdit.meta,
+			component: KtInlineEdit,
 			showAlert: (message: string) => window.alert(message),
 			value1: ref(''),
 		}

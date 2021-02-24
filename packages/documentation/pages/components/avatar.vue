@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Avatars" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 Avatar is a round object to help identify the user information.
 
@@ -53,7 +53,7 @@ Set `small` to make the avatar smaller.
 ## Grouped
 
 <div class="element-example">
-	<kt-avatar-group
+	<KtAvatarGroup
 		:items="avatarData"
 		:showItems="3"
 		showTooltip
@@ -87,7 +87,7 @@ Avatar group can be stacked by setting `isStack`.
 You can control how many avatar items are displayed with `showItems`.
 
 ```html
-<kt-avatar-group
+<KtAvatarGroup
 	:items="avatarData"
 	:showItems="3"
 	hoverable
@@ -138,7 +138,7 @@ export default {
 				{ name: 'Simens', src: 'https://picsum.photos/140' },
 				{ name: 'Simens', src: 'https://picsum.photos/150' },
 			],
-			meta: KtAvatar.meta,
+			component: KtAvatar,
 		}
 	},
 }

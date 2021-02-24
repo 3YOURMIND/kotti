@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Table" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Elements
 
@@ -1093,7 +1093,7 @@ export default {
 	data() {
 		/* eslint-disable sonarjs/no-duplicate-string */
 		return {
-			meta: KtTable.meta,
+			component: KtTable,
 			select: [0, 1],
 			selected: [
 				{

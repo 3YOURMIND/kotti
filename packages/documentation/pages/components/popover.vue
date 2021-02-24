@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Popover" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 Use popovers to provide extra information or actions. Compared to `tooltip`, `popovers` can carry more information.
 It uses `popper.js` library for position and `placement` attribute can be anything supported by the library.
@@ -213,7 +213,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtPopover.meta,
+			component: KtPopover,
 		}
 	},
 })

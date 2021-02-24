@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Toaster" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 A toaster is a small message shown in the upper right corner of the screen, which disappears after few seconds.
 
@@ -81,7 +81,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtToaster.meta,
+			component: KtToaster,
 		}
 	},
 })

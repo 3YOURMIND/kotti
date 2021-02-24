@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Banners" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 Banners can be used as an alert at the top of the screen to display
 critical messages or expandable information. It should not include a
@@ -147,7 +147,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtBanner.meta,
+			component: KtBanner,
 		}
 	},
 })

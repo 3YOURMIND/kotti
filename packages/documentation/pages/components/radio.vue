@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Radio" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Basic
 
@@ -104,7 +104,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtRadioGroup.meta,
+			component: KtRadioGroup,
 			radio1: ref('morning'),
 			radio2: ref('option1'),
 			radio3: ref(null),

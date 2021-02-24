@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Headings" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 H3 heading supports customize actions, and also can work as section toggles.
 
@@ -102,7 +102,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtHeading.meta,
+			component: KtHeading,
 			toggle: ref(false),
 			showAlert() {
 				window.alert('H3 Action Clicked')

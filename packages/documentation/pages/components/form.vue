@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Form" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 <ClientOnly>
 	<KtTranslationContext :locale="settings.locale">
@@ -213,8 +213,8 @@ export default defineComponent({
 		})
 
 		return {
+			component: KtForm,
 			isDeleteDisabled: computed(() => values.value.addresses.length === 1),
-			meta: KtForm.meta,
 			onSubmit: (event: Kotti.Form.Events.Submit) => {
 				// eslint-disable-next-line no-console
 				console.debug('onSubmit', event)

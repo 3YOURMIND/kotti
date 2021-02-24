@@ -1,5 +1,5 @@
 <template lang="md">
-	<ComponentInfo title="Horizontal Lines" :meta="meta" />
+	<ComponentInfo v-bind="{ component }" />
 
 	You can use horizontal row to separte similar elements to create a better information structure.
 
@@ -35,7 +35,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtLine.meta,
+			component: KtLine,
 		}
 	},
 })
