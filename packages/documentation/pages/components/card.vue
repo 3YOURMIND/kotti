@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Cards" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Structure
 
@@ -144,7 +144,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtCard.meta,
+			component: KtCard,
 		}
 	},
 })

@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Drawer" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 Drawer is another layer of the interface. It adds more information or functionality to the current layout without messing up the elements.
 
@@ -158,8 +158,8 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			component: KtDrawer,
 			customizeWidthDrawer: false,
-			meta: KtDrawer.meta,
 			showDrawer: false,
 			showWideDrawer: false,
 		}

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<ComponentInfo :meta="meta" title="Modal" />
+		<ComponentInfo v-bind="{ component }" />
 
 		<KtForm v-model="settings">
 			<KtFieldSingleSelect
@@ -72,7 +72,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtModal.meta,
+			component: KtModal,
 			showModal: ref(false),
 			settings: ref<{
 				preventCloseOutside: boolean

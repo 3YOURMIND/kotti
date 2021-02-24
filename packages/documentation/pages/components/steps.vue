@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Steps" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Step Status
 
@@ -113,11 +113,11 @@ export default defineComponent({
 		const current = ref(1)
 
 		return {
+			component: KtSteps,
 			current,
 			labelText: computed(() =>
 				current.value > 2 ? 'Finished' : 'Next Status',
 			),
-			meta: KtSteps.meta,
 			status: ref('error'),
 		}
 	},

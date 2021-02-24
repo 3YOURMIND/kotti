@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Icons" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ![npm-version](https://badge.fury.io/js/%403yourmind%2Fyoco.svg)
 
@@ -48,18 +48,21 @@ export default defineComponent({
 		YocoPreview,
 	},
 	setup() {
-		const meta: Kotti.Meta = {
-			addedVersion: null,
-			deprecated: null,
-			slots: {},
-			typeScript: {
-				namespace: 'Yoco.Icon',
+		const component: { meta: Kotti.Meta; name: string } = {
+			name: 'Icons',
+			meta: {
+				addedVersion: null,
+				deprecated: null,
+				slots: {},
+				typeScript: {
+					namespace: 'Yoco.Icon',
+				},
 			},
 		}
 
 		return {
+			component,
 			copySuccess: ref(false),
-			meta,
 			Yoco,
 		}
 	},

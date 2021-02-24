@@ -84,8 +84,8 @@ import { KtRadioGroup } from './kotti-radio-group'
 export * from './kotti-radio-group'
 import { KtRow } from './kotti-row'
 export * from './kotti-row'
-import { KtSingleSelect } from './kotti-single-select'
-export * from './kotti-single-select'
+import { KtSelect } from './kotti-select'
+export * from './kotti-select'
 import { KtStep } from './kotti-step'
 export * from './kotti-step'
 import { KtSteps } from './kotti-steps'
@@ -158,7 +158,7 @@ export default {
 			KtRadio,
 			KtRadioGroup,
 			KtRow,
-			KtSingleSelect,
+			KtSelect,
 			KtStep,
 			KtSteps,
 			KtTable,

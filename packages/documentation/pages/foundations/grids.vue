@@ -1,5 +1,5 @@
 <template lang="md">
-	<ComponentInfo title="Grid System" :meta="meta" />
+	<ComponentInfo v-bind="{ component }" />
 
 	Kotti uses 24 columns `span` grid system. With `row` and `col` it can create dynamic layout.
 	Grid can be also easily customized.
@@ -204,7 +204,7 @@ export default defineComponent({
 	components: { ComponentInfo },
 	setup() {
 		return {
-			meta: KtRow.meta,
+			component: { meta: KtRow.meta, name: 'Grid System' },
 		}
 	},
 })

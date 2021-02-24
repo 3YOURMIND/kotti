@@ -1,5 +1,5 @@
 <template lang="md">
-	<ComponentInfo title="Loadings" :meta="meta" />
+	<ComponentInfo v-bind="{ component }" />
 
 	## Skeleton Screen
 
@@ -114,15 +114,18 @@ export default defineComponent({
 		ComponentInfo,
 	},
 	setup() {
-		const meta: Kotti.Meta = {
-			addedVersion: null,
-			deprecated: null,
-			slots: {},
-			typeScript: null,
+		const component: { meta: Kotti.Meta; name: string } = {
+			name: 'Loadings',
+			meta: {
+				addedVersion: null,
+				deprecated: null,
+				slots: {},
+				typeScript: null,
+			},
 		}
 
 		return {
-			meta,
+			component,
 		}
 	},
 })

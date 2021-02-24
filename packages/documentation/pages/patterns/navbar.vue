@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Navbar" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Structure
 
@@ -167,7 +167,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtNavbar.meta,
+			component: KtNavbar,
 		}
 	},
 })

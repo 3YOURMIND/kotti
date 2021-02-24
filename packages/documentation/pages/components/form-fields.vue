@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Form Fields" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 <KtTranslationContext :locale="settings.locale">
 	<div class="overview">
@@ -793,21 +793,8 @@ export default defineComponent({
 		)
 
 		return {
-			componentDefinition,
-			componentOptions: components.map((component) => ({
-				label: component.name,
-				value: component.name,
-			})),
-			componentProps,
-			componentRepresenation: computed(
-				(): ComponentRepresenation => ({
-					...componentValue.value,
-					code: generateCode(componentValue.value),
-					validator: createValidator(componentValue.value.validation),
-				}),
-			),
-			meta: computed(
-				(): Kotti.Meta =>
+			component: computed(
+				(): { meta: Kotti.Meta; name: string } =>
 					({
 						KtFieldDate,
 						KtFieldDateRange,
@@ -822,7 +809,20 @@ export default defineComponent({
 						KtFieldTextArea,
 						KtFieldToggle,
 						KtFieldToggleGroup,
-					}[componentValue.value.name].meta),
+					}[componentValue.value.name]),
+			),
+			componentDefinition,
+			componentOptions: components.map((component) => ({
+				label: component.name,
+				value: component.name,
+			})),
+			componentProps,
+			componentRepresenation: computed(
+				(): ComponentRepresenation => ({
+					...componentValue.value,
+					code: generateCode(componentValue.value),
+					validator: createValidator(componentValue.value.validation),
+				}),
 			),
 			reset: () => {
 				values.value = INITIAL_VALUES

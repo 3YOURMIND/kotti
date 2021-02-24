@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Action Bar" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 <nuxt-link to="/examples/layouts">
 	<button class="primary">Show Layout Example</button>
@@ -56,7 +56,7 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			meta: KtActionbar.meta,
+			component: KtActionbar,
 		}
 	},
 })

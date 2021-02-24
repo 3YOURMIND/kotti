@@ -1,3 +1,27 @@
+import {
+	Kotti,
+	KtAccordion,
+	KtAvatar,
+	KtBanner,
+	KtButton,
+	KtBreadcrumb,
+	KtCard,
+	KtComment,
+	KtDrawer,
+	KtDropdown,
+	KtForm,
+	KtHeading,
+	KtLine,
+	KtInput,
+	KtModal,
+	KtPagination,
+	KtPopover,
+	KtRadio,
+	KtTable,
+	KtToaster,
+	KtSelect,
+	KtSteps,
+} from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 
 export enum Tag {
@@ -24,6 +48,18 @@ export type Section = {
 	title: string
 	subsections: Array<Subsection>
 }
+
+const makeComponentMenuItem = (component: {
+	name: string
+	meta: Kotti.Meta
+}): SubsectionPage => ({
+	label: component.name.replace(/^Kt/, ''),
+	path: component.name.replace(/^Kt/, '').toLowerCase(),
+	tags: [
+		component.meta.deprecated === null ? null : Tag.DEPRECATED,
+		component.meta.typeScript === null ? null : Tag.TS,
+	].filter((x) => x !== null) as Tag[],
+})
 
 export const menu: Array<Section> = [
 	{
@@ -73,29 +109,29 @@ export const menu: Array<Section> = [
 				title: 'Components',
 				path: 'components',
 				pages: [
-					{ label: 'Accordion', path: 'accordion', tags: [] },
-					{ label: 'Avatars', path: 'avatars', tags: [] },
-					{ label: 'Banners', path: 'banners', tags: [] },
-					{ label: 'Buttons', path: 'buttons', tags: [] },
-					{ label: 'Breadcrumbs', path: 'breadcrumbs', tags: [] },
-					{ label: 'Cards', path: 'cards', tags: [] },
-					{ label: 'Comments', path: 'comments', tags: [] },
-					{ label: 'Drawers', path: 'drawer', tags: [] },
-					{ label: 'Dropdowns', path: 'dropdowns', tags: [Tag.DEPRECATED] },
-					{ label: 'Form', path: 'form', tags: [Tag.TS] },
+					makeComponentMenuItem(KtAccordion),
+					makeComponentMenuItem(KtAvatar),
+					makeComponentMenuItem(KtBanner),
+					makeComponentMenuItem(KtButton),
+					makeComponentMenuItem(KtBreadcrumb),
+					makeComponentMenuItem(KtCard),
+					makeComponentMenuItem(KtComment),
+					makeComponentMenuItem(KtDrawer),
+					makeComponentMenuItem(KtDropdown),
+					makeComponentMenuItem(KtForm),
 					{ label: 'Form Fields', path: 'form-fields', tags: [Tag.TS] },
-					{ label: 'Headings', path: 'headings', tags: [] },
-					{ label: 'Horizontal Lines', path: 'lines', tags: [] },
-					{ label: 'Inputs', path: 'inputs', tags: [Tag.DEPRECATED] },
+					makeComponentMenuItem(KtHeading),
+					makeComponentMenuItem(KtInput),
+					makeComponentMenuItem(KtLine),
 					{ label: 'Loadings', path: 'loadings', tags: [Tag.CSS] },
-					{ label: 'Modal', path: 'modal', tags: [Tag.TS] },
-					{ label: 'Paginations', path: 'paginations', tags: [] },
-					{ label: 'Popovers', path: 'popovers', tags: [] },
-					{ label: 'Radios', path: 'radios', tags: [Tag.DEPRECATED] },
-					{ label: 'Tables', path: 'tables', tags: [] },
-					{ label: 'Toaster', path: 'toaster', tags: [] },
-					{ label: 'Selects', path: 'selects', tags: [Tag.DEPRECATED] },
-					{ label: 'Steps', path: 'steps', tags: [] },
+					makeComponentMenuItem(KtModal),
+					makeComponentMenuItem(KtPagination),
+					makeComponentMenuItem(KtPopover),
+					makeComponentMenuItem(KtRadio),
+					makeComponentMenuItem(KtSelect),
+					makeComponentMenuItem(KtSteps),
+					makeComponentMenuItem(KtTable),
+					makeComponentMenuItem(KtToaster),
 					{ label: 'Utilities', tags: [Tag.CSS], path: 'utilities' },
 				],
 			},

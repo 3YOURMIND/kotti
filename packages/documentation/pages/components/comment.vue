@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Comments" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Example
 
@@ -244,7 +244,7 @@ export default {
 					],
 				},
 			],
-			meta: KtComment.meta,
+			component: KtComment,
 		}
 		/* eslint-enable sonarjs/no-duplicate-string */
 	},

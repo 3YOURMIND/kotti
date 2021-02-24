@@ -1,5 +1,5 @@
 <template lang="md">
-	<ComponentInfo title="Inputs" :meta="meta" />
+	<ComponentInfo v-bind="{ component }" />
 
 	## Label
 
@@ -234,13 +234,13 @@ export default defineComponent({
 	},
 	setup() {
 		return {
+			component: KtInput,
 			v1: ref('Jony One O'),
 			v2: ref(''),
 			v3: ref('Jony Three O'),
 			// eslint-disable-next-line no-magic-numbers
 			v4: ref(4),
 			v5: ref('email@example.com'),
-			meta: KtInput.meta,
 		}
 	},
 })

@@ -2,9 +2,11 @@
 	<div class="component-info-container">
 		<div
 			class="component-info"
-			:class="{ 'component-info--is-deprecated': meta.deprecated !== null }"
+			:class="{
+				'component-info--is-deprecated': component.meta.deprecated !== null,
+			}"
 		>
-			<h1 class="component-info__title" v-text="title" />
+			<h1 class="component-info__title" v-text="component.name" />
 			<div
 				v-for="(label, index) in labels"
 				:key="index"
@@ -21,37 +23,42 @@
 				<div v-else class="component-info__label__right" v-text="label.right" />
 			</div>
 		</div>
-		<article v-if="meta.deprecated !== null" class="danger-block">
+		<article v-if="component.meta.deprecated !== null" class="danger-block">
 			<section>
 				This component is deprecated and will be removed in Kotti
-				<strong v-text="`v${meta.deprecated.version}`" />
+				<strong v-text="`v${component.meta.deprecated.version}`" />
 			</section>
 			<section>
-				<div><strong>Reason</strong>: {{ meta.deprecated.reason }}</div>
+				<div>
+					<strong>Reason</strong>: {{ component.meta.deprecated.reason }}
+				</div>
 				<div>
 					<strong
 						v-text="
-							meta.deprecated.alternatives.length < 2
+							component.meta.deprecated.alternatives.length < 2
 								? 'Alternative'
 								: 'Alternatives'
 						"
 					/>:
 					<code
-						v-for="alternative in meta.deprecated.alternatives"
+						v-for="alternative in component.meta.deprecated.alternatives"
 						:key="alternative"
 						v-text="alternative"
 					/>
 					<span
-						v-if="meta.deprecated.alternatives.length === 0"
+						v-if="component.meta.deprecated.alternatives.length === 0"
 						v-text="Dashes.EmDash"
 					/>
 				</div>
 			</section>
 		</article>
-		<article v-if="Object.keys(meta.slots).length >= 1">
+		<article v-if="Object.keys(component.meta.slots).length >= 1">
 			<h4>Slots</h4>
 			<section class="slots-block">
-				<div v-for="[name, details] in Object.entries(meta.slots)" :key="name">
+				<div
+					v-for="[name, details] in Object.entries(component.meta.slots)"
+					:key="name"
+				>
 					<div class="slots-block__name" v-text="name" />
 					<div class="slots-block__details">
 						<div
@@ -76,18 +83,13 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent } from '@vue/composition-api'
 
-export default defineComponent({
+export default defineComponent<{
+	component: { meta: Kotti.Meta; name: string }
+}>({
 	props: {
-		meta: {
-			default: null,
-			type: Object,
-		},
-		title: {
-			required: true,
-			type: String,
-		},
+		component: { required: true, type: Object },
 	},
-	setup(props: { meta: Kotti.Meta; title: string }) {
+	setup(props) {
 		return {
 			Dashes,
 			labels: computed(() => {
@@ -99,37 +101,37 @@ export default defineComponent({
 					right: string
 				}> = []
 
-				if (props.meta) {
-					if (props.meta.deprecated !== null)
-						result.push({
-							backgroundColor: 'var(--red-20)',
-							color: 'var(--red-70)',
-							left: 'Deprecated for',
-							right: `v${props.meta.deprecated.version}`,
-						})
+				const { addedVersion, deprecated, typeScript } = props.component.meta
 
-					if (props.meta.typeScript)
-						result.push({
-							backgroundColor: 'var(--primary-20)',
-							color: 'var(--primary-70)',
-							left: 'TS',
-							right: props.meta.typeScript.namespace,
-						})
-
+				if (deprecated !== null)
 					result.push({
-						backgroundColor: 'var(--green-20)',
-						color: 'var(--green-70)',
-						left: 'Added',
-						...(props.meta.addedVersion === null
-							? {
-									right: 'unknown',
-							  }
-							: {
-									link: `https://github.com/3YOURMIND/kotti/releases/tag/v${props.meta.addedVersion}`,
-									right: `v${props.meta.addedVersion}`,
-							  }),
+						backgroundColor: 'var(--red-20)',
+						color: 'var(--red-70)',
+						left: 'Deprecated for',
+						right: `v${deprecated.version}`,
 					})
-				}
+
+				if (typeScript)
+					result.push({
+						backgroundColor: 'var(--primary-20)',
+						color: 'var(--primary-70)',
+						left: 'TS',
+						right: typeScript.namespace,
+					})
+
+				result.push({
+					backgroundColor: 'var(--green-20)',
+					color: 'var(--green-70)',
+					left: 'Added',
+					...(addedVersion === null
+						? {
+								right: 'unknown',
+						  }
+						: {
+								link: `https://github.com/3YOURMIND/kotti/releases/tag/v${addedVersion}`,
+								right: `v${addedVersion}`,
+						  }),
+				})
 
 				return result
 			}),

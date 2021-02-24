@@ -1,11 +1,11 @@
 import { attachMeta, makeInstallable } from '../utilities'
 
-import KtSingleSelectVue from './KtSingleSelect.vue'
+import KtSelectVue from './KtSelect.vue'
 
 /**
  * @deprecated
  */
-export const KtSingleSelect = attachMeta(makeInstallable(KtSingleSelectVue), {
+export const KtSelect = attachMeta(makeInstallable(KtSelectVue), {
 	addedVersion: '0.0.1',
 	deprecated: {
 		alternatives: ['KtFieldSingleSelect', 'KtFieldMultipleSelect'],

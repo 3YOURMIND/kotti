@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo title="Select" :meta="meta" />
+<ComponentInfo v-bind="{ component }" />
 
 ## Default
 
@@ -188,7 +188,7 @@ async asyncFind(query) {
 </template>
 
 <script>
-import { KtSingleSelect } from '@3yourmind/kotti-ui'
+import { KtSelect } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '../../components/ComponentInfo.vue'
 
@@ -199,7 +199,7 @@ export default {
 	},
 	data() {
 		return {
-			meta: KtSingleSelect.meta,
+			component: KtSelect,
 			value1: null,
 			value2: null,
 			value3: 'Avocados',
@@ -258,6 +258,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .element-example {
 	overflow: auto;

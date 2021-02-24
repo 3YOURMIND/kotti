@@ -1,5 +1,5 @@
 <template lang="md">
-	<ComponentInfo title="Buttons" :meta="meta" />
+	<ComponentInfo v-bind="{ component }" />
 
 	Use buttons to lead a call to action or guide a user to their next steps.
 
@@ -209,7 +209,7 @@ export default defineComponent({
 		return {
 			alert: (value: string) => window.alert(value),
 			ButtonUsage,
-			meta: KtButton.meta,
+			component: KtButton,
 		}
 	},
 })
