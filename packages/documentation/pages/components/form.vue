@@ -1,198 +1,261 @@
-<template lang="md">
-<ComponentInfo v-bind="{ component }" />
-
-<ClientOnly>
-	<KtTranslationContext :locale="settings.locale">
-		<KtForm v-model="settings">
-			<div class="wrapper">
-				<section>
-					<h3>Shared Form ↔ Field Settings</h3>
-					<KtFieldSingleSelect
-						formKey="size"
-						helpDescription="Can be overridden in individual fields"
-						isOptional
-						label="Size"
-						:options="[
-							{ label: 'small', value: 'small' },
-							{ label: 'medium (default)', value: 'medium' },
-							{ label: 'large', value: 'large' },
-						]"
+<template>
+	<div>
+		<ComponentInfo v-bind="{ component }" />
+		<ClientOnly>
+			<KtTranslationContext :locale="settings.locale">
+				<KtForm v-model="settings">
+					<div class="wrapper">
+						<section>
+							<h3>Shared Form ↔ Field Settings</h3>
+							<KtFieldSingleSelect
+								formKey="size"
+								helpDescription="Can be overridden in individual fields"
+								isOptional
+								label="Size"
+								:options="[
+									{ label: 'small', value: 'small' },
+									{ label: 'medium (default)', value: 'medium' },
+									{ label: 'large', value: 'large' },
+								]"
+							/>
+							<KtFieldToggleGroup
+								formKey="booleanFlags"
+								helpDescription="Can be overridden in individual fields"
+								isOptional
+								label="Boolean Flags"
+								:options="[
+									{ key: 'isDisabled', label: 'isDisabled' },
+									{ key: 'hideClear', label: 'hideClear' },
+									{ key: 'hideValidation', label: 'hideValidation' },
+									{ key: 'isLoading', label: 'isLoading' },
+								]"
+								type="switch"
+							/>
+						</section>
+						<div>
+							<h3>Form Settings</h3>
+							<KtFieldSingleSelect
+								formKey="preventSubmissionOn"
+								helpDescription="Which types of validation error prevent the form from submitting?"
+								isOptional
+								label="Prevent Submission"
+								:options="[
+									{ label: 'error (default)', value: 'error' },
+									{ label: 'warning', value: 'warning' },
+									{ label: 'NEVER', value: 'NEVER' },
+								]"
+							/>
+							<h3>Kotti Settings</h3>
+							<KtFieldSingleSelect
+								formKey="locale"
+								helpDescription="Can be set via KtTranslationContext"
+								hideClear
+								label="Language"
+								leftIcon="global"
+								:options="[
+									{ label: 'German (de-DE)', value: 'de-DE' },
+									{ label: 'English (en-US)', value: 'en-US' },
+									{ label: 'Spanish (es-ES)', value: 'es-ES' },
+									{ label: 'French (fr-FR)', value: 'fr-FR' },
+									{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+								]"
+							/>
+						</div>
+					</div>
+				</KtForm>
+				<KtForm
+					v-model="values"
+					v-bind="settings.booleanFlags"
+					:preventSubmissionOn="settings.preventSubmissionOn"
+					:size="settings.size"
+					:validators="validators"
+					@submit="onSubmit"
+				>
+					<KtFieldText
+						formKey="username"
+						label="Username"
+						rightIcon="user"
+						validatorKey="username"
 					/>
-					<KtFieldToggleGroup
-						formKey="booleanFlags"
-						helpDescription="Can be overridden in individual fields"
-						isOptional
-						label="Boolean Flags"
-						:options="[
-							{ key: 'isDisabled', label: 'isDisabled' },
-							{ key: 'hideClear', label: 'hideClear' },
-							{ key: 'hideValidation', label: 'hideValidation' },
-							{ key: 'isLoading', label: 'isLoading' },
-						]"
-						type="switch"
-					/>
-				</section>
-				<div>
-					<h3>Form Settings</h3>
-					<KtFieldSingleSelect
-						formKey="preventSubmissionOn"
-						helpDescription="Which types of validation error prevent the form from submitting?"
-						isOptional
-						label="Prevent Submission"
-						:options="[
-							{ label: 'error (default)', value: 'error' },
-							{ label: 'warning', value: 'warning' },
-							{ label: 'NEVER', value: 'NEVER' },
-						]"
-					/>
-					<h3>Kotti Settings</h3>
-					<KtFieldSingleSelect
-						formKey="locale"
-						helpDescription="Can be set via KtTranslationContext"
-						hideClear
-						label="Language"
-						leftIcon="global"
-						:options="[
-							{ label: 'German (de-DE)', value: 'de-DE' },
-							{ label: 'English (en-US)', value: 'en-US' },
-							{ label: 'Spanish (es-ES)', value: 'es-ES' },
-							{ label: 'French (fr-FR)', value: 'fr-FR' },
-							{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
-						]"
-					/>
-				</div>
-			</div>
-		</KtForm>
-		<KtForm
-			v-model="values"
-			:preventSubmissionOn="settings.preventSubmissionOn"
-			:size="settings.size"
-			:validators="validators"
-			v-bind="settings.booleanFlags"
-			@submit="onSubmit"
-		>
-			<KtFieldText
-				formKey="username"
-				label="Username"
-				rightIcon="user"
-				validatorKey="username"
-			/>
-			<br />
-			<h2>Personal Details (KtFormControllerObject)</h2>
-			<KtFormControllerObject formKey="personalDetails">
-				<KtFieldText
-					formKey="firstName"
-					helpText="help for lastName"
-					label="First Name"
-					placeholder="Klaus"
-				/>
-				<KtFieldText
-					formKey="lastName"
-					helpText="help for lastName"
-					label="Last Name"
-					placeholder="Dieter"
-				/>
-			</KtFormControllerObject>
-			<br />
-			<h2>Addresses (KtFormControllerList)</h2>
-			<ul>
-				<KtFormControllerList formKey="addresses" class="address-controller">
-					<template v-slot:default="{ addAfter, addBefore, deleteSelf, index, setValues, values }">
-						<li class="address">
-							<div class="address__content">
-								<div class="address__content__header">
-									<h3 v-text="`Address #${index + 1}`" />
-								</div>
-								<div class="address__content__fields">
-									<KtFieldText
-										formKey="streetName"
-										isOptional
-										label="Street Name"
-										leftIcon="address_book"
-									/>
-									<KtFieldText
-										formKey="houseNumber"
-										isOptional
-										label="House Number"
-										leftIcon="address_book"
-									/>
-									<KtFieldSingleSelect
-										formKey="country"
-										isOptional
-										label="Country"
-										leftIcon="global"
-										:options="[
-											{ label: 'Egypt', value: 'eg' },
-											{ label: 'France', value: 'fr' },
-											{ label: 'Germany', value: 'de' },
-											{ label: 'USA', value: 'us' },
-										]"
-									/>
-								</div>
-								<div class="address__content__footer">
+					<br />
+					<ComponentInfo :component="KtFormControllerObject" />
+					<h2>Personal Details</h2>
+					<KtFormControllerObject formKey="personalDetails">
+						<KtFieldText
+							formKey="firstName"
+							helpText="help for lastName"
+							label="First Name"
+							placeholder="Klaus"
+						/>
+						<KtFieldText
+							formKey="lastName"
+							helpText="help for lastName"
+							label="Last Name"
+							placeholder="Dieter"
+						/>
+					</KtFormControllerObject>
+					<br />
+					<ComponentInfo :component="KtFormControllerList" />
+					<h2>Addresses</h2>
+					<ul>
+						<KtFormControllerList
+							class="address-controller"
+							formKey="addresses"
+						>
+							<template #header="{ addBefore, setValues, values }">
+								<div>
 									<button
 										class="kt-button secondary"
 										type="button"
-										@click="setValues({
-											country: Math.random() > 0.5 ? 'eg' : 'de',
-											houseNumber: `${Math.ceil(Math.random() * 999)}${Math.random() > 0.5 ? 'a': ''}`,
-											streetName: `${Math.random() > 0.5 ? 'Bismarck' : 'Other'}${Math.random() > 0.5 ? 'street': 'straße'}`,
-										})"
-									>
-										setValues
-									</button>
+										@click="
+											addBefore({
+												country: null,
+												houseNumber: null,
+												streetName: null,
+											})
+										"
+										v-text="'Add New Address To The Start'"
+									/>
+									<button
+										class="kt-button secondary"
+										type="button"
+										@click="setValues([...values, ...values])"
+										v-text="'Duplicate List'"
+									/>
 								</div>
-							</div>
-							<div class="address__buttons">
-								<button
-									class="kt-button secondary"
-									title="Add Field Before"
-									type="button"
-									@click="addBefore({
-										country: null,
-										houseNumber: null,
-										streetName: null
-									})"
-								>
-									<i class="yoco">plus</i><i class="yoco">triangle_up</i>
-								</button>
-								<button
-									class="kt-button danger"
-									:disabled="isDeleteDisabled"
-									title="deleteSelf"
-									type="button"
-									@click="deleteSelf"
-								>
-									<i class="yoco">close</i>
-								</button>
-								<button
-									class="kt-button secondary"
-									title="Add Field After"
-									type="button"
-									@click="addAfter({
-										country: null,
-										houseNumber: null,
-										streetName: null
-									})"
-								>
-									<i class="yoco">plus</i><i class="yoco">triangle_down</i>
-								</button>
-							</div>
-						</li>
-					</template>
-				</KtFormControllerList>
-			</ul>
-			<KtFormSubmit />
-		</KtForm>
-		<br />
-		<h2>values</h2>
-		<pre v-text="JSON.stringify(values, null, '\t')" />
-	</KtTranslationContext>
-</ClientOnly>
+							</template>
+							<template
+								#default="{ addAfter, addBefore, deleteSelf, index, setValues }"
+							>
+								<li class="address">
+									<div class="address__content">
+										<div class="address__content__header">
+											<h3 v-text="`Address #${index + 1}`" />
+										</div>
+										<div class="address__content__fields">
+											<KtFieldText
+												formKey="streetName"
+												isOptional
+												label="Street Name"
+												leftIcon="address_book"
+											/>
+											<KtFieldText
+												formKey="houseNumber"
+												isOptional
+												label="House Number"
+												leftIcon="address_book"
+											/>
+											<KtFieldSingleSelect
+												formKey="country"
+												isOptional
+												label="Country"
+												leftIcon="global"
+												:options="[
+													{ label: 'Egypt', value: 'eg' },
+													{ label: 'France', value: 'fr' },
+													{ label: 'Germany', value: 'de' },
+													{ label: 'USA', value: 'us' },
+												]"
+											/>
+										</div>
+										<div class="address__content__footer">
+											<button
+												class="kt-button secondary"
+												type="button"
+												@click="setValues(createRandomRow())"
+											>
+												setValues
+											</button>
+										</div>
+									</div>
+									<div class="address__buttons">
+										<button
+											class="kt-button secondary"
+											title="Add Field Before"
+											type="button"
+											@click="
+												addBefore({
+													country: null,
+													houseNumber: null,
+													streetName: null,
+												})
+											"
+										>
+											<i class="yoco">plus</i><i class="yoco">triangle_up</i>
+										</button>
+										<button
+											class="kt-button danger"
+											:disabled="isDeleteDisabled"
+											title="deleteSelf"
+											type="button"
+											@click="deleteSelf"
+										>
+											<i class="yoco">close</i>
+										</button>
+										<button
+											class="kt-button secondary"
+											title="Add Field After"
+											type="button"
+											@click="
+												addAfter({
+													country: null,
+													houseNumber: null,
+													streetName: null,
+												})
+											"
+										>
+											<i class="yoco">plus</i><i class="yoco">triangle_down</i>
+										</button>
+									</div>
+								</li>
+							</template>
+							<template #footer="{ addAfter, setValues }">
+								<div>
+									<button
+										class="kt-button secondary"
+										type="button"
+										@click="
+											addAfter({
+												country: null,
+												houseNumber: null,
+												streetName: null,
+											})
+										"
+										v-text="'Add New Address To The End'"
+									/>
+									<button
+										class="kt-button secondary"
+										type="button"
+										@click="
+											setValues([
+												createRandomRow(),
+												createRandomRow(),
+												createRandomRow(),
+											])
+										"
+										v-text="'Replace List'"
+									/>
+								</div>
+							</template>
+						</KtFormControllerList>
+					</ul>
+					<KtFormSubmit />
+				</KtForm>
+				<br />
+				<h2>values</h2>
+				<pre v-text="JSON.stringify(values, null, '\t')" />
+			</KtTranslationContext>
+		</ClientOnly>
+	</div>
 </template>
 
 <script lang="ts">
-import { Kotti, KtForm } from '@3yourmind/kotti-ui'
+import {
+	Kotti,
+	KtForm,
+	KtFormControllerList,
+	KtFormControllerObject,
+} from '@3yourmind/kotti-ui'
 import { defineComponent, computed, ref } from '@vue/composition-api'
 
 import ComponentInfo from '../../components/ComponentInfo.vue'
@@ -214,7 +277,20 @@ export default defineComponent({
 
 		return {
 			component: KtForm,
+			createRandomRow: () => ({
+				/* eslint-disable no-magic-numbers */
+				country: Math.random() > 0.5 ? 'eg' : 'de',
+				houseNumber: `${Math.ceil(Math.random() * 999)}${
+					Math.random() > 0.5 ? 'a' : ''
+				}`,
+				streetName: `${Math.random() > 0.5 ? 'Bismarck' : 'Other'}${
+					Math.random() > 0.5 ? 'street' : 'straße'
+				}`,
+				/* eslint-enable no-magic-numbers */
+			}),
 			isDeleteDisabled: computed(() => values.value.addresses.length === 1),
+			KtFormControllerList,
+			KtFormControllerObject,
 			onSubmit: (event: Kotti.Form.Events.Submit) => {
 				// eslint-disable-next-line no-console
 				console.debug('onSubmit', event)
