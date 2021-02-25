@@ -1,5 +1,5 @@
 <template>
-	<div class="h3-heading">
+	<div>
 		<h3>
 			<label v-text="text" />
 			<span v-if="type === 'action'" @click="handleClick">
@@ -7,12 +7,10 @@
 			</span>
 			<span v-if="type === 'toggle'" @click="handleClick">
 				{{ toggleTextRep }}
-				<i v-if="!toggleStatus" class="yoco">
-					plus
-				</i>
-				<i v-else class="yoco">
-					minus
-				</i>
+				<i
+					class="yoco"
+					v-text="toggleStatus ? Yoco.Icon.MINUS : Yoco.Icon.PLUS"
+				/>
 			</span>
 		</h3>
 		<div v-if="toggleStatus && type === 'toggle'">
@@ -22,6 +20,8 @@
 </template>
 
 <script>
+import { Yoco } from '@3yourmind/yoco'
+
 export default {
 	name: 'KtHeading',
 	props: {
@@ -32,6 +32,11 @@ export default {
 		toggleStatus: { type: Boolean, default: false },
 		toggleText: { type: String, default: 'View' },
 		type: { type: String, default: 'default' },
+	},
+	data() {
+		return {
+			Yoco,
+		}
 	},
 	computed: {
 		toggleTextRep() {
@@ -50,3 +55,19 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss" scoped>
+h3 {
+	display: flex;
+	align-items: center;
+
+	label {
+		flex: 1;
+	}
+
+	span {
+		display: flex;
+		align-items: center;
+	}
+}
+</style>

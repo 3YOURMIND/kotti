@@ -19,12 +19,12 @@ It is animated but the animation doesn't work with IE11.
 We can use `yoco` icons as well:
 
 ``` html
-<KtAccordion icon="edit" title="Accordion mit icon">
+<KtAccordion icon="edit" title="Accordion with icon">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
 </KtAccordion>
 ```
 
-<KtAccordion icon="edit" title="Accordion mit icon">
+<KtAccordion icon="edit" title="Accordion with icon">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
 </KtAccordion>
 
@@ -33,12 +33,12 @@ We can use `yoco` icons as well:
 We might want to use the whole header as a toggling zone:
 
 ``` html
-<KtAccordion :isFullyClickable="true" icon="edit" title="Accordion mit icon">
+<KtAccordion :isFullyClickable="true" icon="edit" title="Accordion with icon">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
 </KtAccordion>
 ```
 
-<KtAccordion :isFullyClickable="true" icon="edit" title="Accordion mit icon">
+<KtAccordion :isFullyClickable="true" icon="edit" title="Accordion with icon">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus vel felis posuere, quis posuere enim consequat. Cras vel metus non nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et nisl.
 </KtAccordion>
 

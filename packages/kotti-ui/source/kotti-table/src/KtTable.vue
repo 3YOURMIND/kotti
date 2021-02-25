@@ -70,10 +70,10 @@ export default {
 		remoteSort: { default: false, type: Boolean },
 		useQuickSortControl: { default: false, type: Boolean },
 
-		sortedColumns: { type: [Array, undefined] },
-		filteredColumns: { type: [Array, undefined] },
-		hiddenColumns: { type: [Array, undefined] },
-		orderedColumns: { type: [Array, undefined] },
+		sortedColumns: { type: Array },
+		filteredColumns: { type: Array },
+		hiddenColumns: { type: Array },
+		orderedColumns: { type: Array },
 
 		loading: Boolean,
 
@@ -82,10 +82,10 @@ export default {
 		trClasses: { default: () => [], type: [Array, String, Object] },
 		headerClass: { default: () => [], type: [Array, String, Object] },
 
-		renderExpand: Function,
-		renderActions: Function,
-		renderLoading: Function,
-		renderEmpty: Function,
+		renderExpand: { type: Function },
+		renderActions: { type: Function },
+		renderLoading: { type: Function },
+		renderEmpty: { type: Function },
 
 		disableRow: { default: DEFAULT_DISABLE_ROW, type: Function },
 

@@ -32,21 +32,10 @@
 export default {
 	name: 'KtAccordion',
 	props: {
-		title: {
-			type: String,
-			required: true,
-		},
-		icon: {
-			type: String,
-		},
-		isClosed: {
-			type: Boolean,
-			default: false,
-		},
-		isFullyClickable: {
-			type: Boolean,
-			default: false,
-		},
+		icon: { default: null, type: String },
+		isClosed: { default: false, type: Boolean },
+		isFullyClickable: { default: false, type: Boolean },
+		title: { required: true, type: String },
 	},
 	data() {
 		return {

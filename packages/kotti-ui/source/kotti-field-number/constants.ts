@@ -13,6 +13,7 @@ export const KOTTI_FIELD_NUMBER_PROPS = {
 	minimum: { default: null, type: Number },
 	placeholder: { default: null, type: String },
 	step: { default: 1, type: Number },
+	value: { default: null, type: Number },
 }
 
 export const DECIMAL_PLACES = 3

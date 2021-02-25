@@ -29,6 +29,7 @@ export default defineComponent({
 			validator: (value) =>
 				['current-password', 'new-password'].includes(value),
 		},
+		value: { default: null, type: String },
 	},
 	setup(props: KottiFieldPassword.Props, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({

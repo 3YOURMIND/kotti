@@ -75,13 +75,80 @@
 				</div>
 			</section>
 		</article>
+		<KtHeading
+			v-if="component.props"
+			text="Properties (Beta)"
+			:toggleStatus="showProps"
+			toggleCloseText="Hide"
+			toggleText="Show"
+			type="toggle"
+			@toggle="showProps = !showProps"
+		>
+			<table>
+				<thead>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Default</th>
+					<th>Validator</th>
+				</thead>
+				<tbody>
+					<tr
+						v-for="[name, prop] in Object.entries(
+							component.props,
+						).sort(([a], [b]) => a.localeCompare(b))"
+						:key="name"
+					>
+						<td><code v-text="name" /></td>
+						<td>
+							<code v-text="stringifyType(prop.type)" />
+						</td>
+						<td>
+							<code
+								v-if="prop.required"
+								style="font-style: italic;"
+								v-text="'required'"
+							/>
+							<code
+								v-else-if="prop.default === undefined"
+								style="font-style: italic;"
+								v-text="'No default'"
+							/>
+							<code v-else v-text="stringifyDefault(prop.default)" />
+						</td>
+						<td>
+							<div style="display: flex; align-items: center;">
+								<i
+									class="yoco"
+									:style="{
+										color: prop.validator ? 'var(--green-50)' : 'var(--red-50)',
+									}"
+									:title="
+										prop.validator ? prop.validator.toString() : undefined
+									"
+									v-text="prop.validator ? Yoco.Icon.CHECK : Yoco.Icon.CLOSE"
+								/>
+								<div v-if="prop.validator" v-text="prop.validator.name" />
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</KtHeading>
 	</div>
 </template>
 
 <script lang="ts">
 import { Kotti } from '@3yourmind/kotti-ui'
+import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
+type VuePropType =
+	| ArrayConstructor
+	| BooleanConstructor
+	| FunctionConstructor
+	| NumberConstructor
+	| StringConstructor
 
 export default defineComponent<{
 	component: { meta: Kotti.Meta; name: string }
@@ -135,6 +202,16 @@ export default defineComponent<{
 
 				return result
 			}),
+			showProps: ref(false),
+			stringifyDefault: (defaultValue: Function | unknown) =>
+				typeof defaultValue === 'function'
+					? `${JSON.stringify(defaultValue())} *`
+					: JSON.stringify(defaultValue),
+			stringifyType: (type: Array<VuePropType> | VuePropType) =>
+				Array.isArray(type)
+					? type.map((t) => t.name.toLowerCase()).join(' | ')
+					: type.name.toLowerCase(),
+			Yoco,
 		}
 	},
 })

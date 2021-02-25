@@ -71,6 +71,7 @@ export default defineComponent({
 				[...new Set(options.map(({ value }) => value))].length ===
 				options.length,
 		},
+		value: { default: null, type: [Number, String, Boolean] },
 	},
 	setup(props: KottiFieldRadioGroup.Props, { emit }) {
 		const field = useField<KottiFieldRadioGroup.Value>({

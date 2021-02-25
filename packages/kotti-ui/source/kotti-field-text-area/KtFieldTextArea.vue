@@ -25,6 +25,7 @@ export default defineComponent({
 		...KOTTI_FIELD_PROPS,
 		placeholder: { default: null, type: String },
 		rows: { default: 5, type: Number },
+		value: { default: null, type: String },
 	},
 	setup(props: KottiFieldTextArea.Props, { emit }) {
 		const field = useField<KottiFieldTextArea.Value>({
