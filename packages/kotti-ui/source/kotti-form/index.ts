@@ -1,9 +1,29 @@
+import { Kotti } from '../types'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtFormControllerListVue from './controllers/KtFormControllerList.vue'
 import KtFormControllerObjectVue from './controllers/KtFormControllerObject.vue'
 import KtFormVue from './KtForm.vue'
 import KtFormSubmitVue from './KtFormSubmit.vue'
+
+const headerFooterScope: Kotti.Meta['slots'][string]['scope'] = {
+	addAfter: {
+		description: 'append an item to the list',
+		type: 'function',
+	},
+	addBefore: {
+		description: 'prepend an item to the list',
+		type: 'function',
+	},
+	setValues: {
+		description: 'replace the list',
+		type: 'function',
+	},
+	values: {
+		description: 'all items in the list',
+		type: 'object',
+	},
+}
 
 export const KtFormControllerList = attachMeta(
 	makeInstallable(KtFormControllerListVue),
@@ -39,6 +59,14 @@ export const KtFormControllerList = attachMeta(
 						type: 'object',
 					},
 				},
+			},
+			footer: {
+				description: 'inserted below the list, exposes list utilities',
+				scope: headerFooterScope,
+			},
+			header: {
+				description: 'inserted above the list, exposes list utilities',
+				scope: headerFooterScope,
 			},
 		},
 		typeScript: {

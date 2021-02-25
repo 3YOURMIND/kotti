@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<slot
+			v-bind="slotFunctions"
+			name="header"
+			:values="cloneDeep(valuesList)"
+		/>
 		<KtFormControllerListItem
 			v-for="(values, index) in valuesList"
 			:key="index"
@@ -15,10 +20,15 @@
 				:deleteSelf="() => deleteSelf(index)"
 				:index="index"
 				name="default"
-				:setValues="(newValue) => setValues(index, newValue)"
+				:setValues="(newValue) => setValuesIndex(index, newValue)"
 				:values="cloneDeep(values)"
 			/>
 		</KtFormControllerListItem>
+		<slot
+			v-bind="slotFunctions"
+			name="footer"
+			:values="cloneDeep(valuesList)"
+		/>
 	</div>
 </template>
 
@@ -107,13 +117,34 @@ export default defineComponent({
 			/**
 			 * Replaces an entire valuesListEntry with new data
 			 */
-			setValues: (index: number, newValue: object) =>
+			setValuesIndex: (index: number, newValue: object) =>
 				context.setValue(
 					props.formKey,
 					valuesList.value.map((oldValue, i) =>
 						i === index ? newValue : oldValue,
 					),
 				),
+			/**
+			 * Functions that are exposed to the footer and header slots
+			 * these should manipulate the entire array, instead of individual items
+			 */
+			slotFunctions: {
+				/**
+				 * Adds a new valuesList entry to the end of the entire list
+				 */
+				addAfter: (newRow: object) =>
+					context.setValue(props.formKey, [...valuesList.value, newRow]),
+				/**
+				 * Adds a new valuesList entry to the beginning of the entire list
+				 */
+				addBefore: (newRow: object) =>
+					context.setValue(props.formKey, [newRow, ...valuesList.value]),
+				/**
+				 * Replaces the entire valuesList with a new one
+				 */
+				setValues: (newValuesList: object[]) =>
+					context.setValue(props.formKey, newValuesList),
+			},
 			valuesList,
 		}
 	},
