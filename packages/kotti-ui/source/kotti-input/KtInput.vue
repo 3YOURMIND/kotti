@@ -43,15 +43,15 @@ export default {
 		icon: { default: '', type: String },
 		iconPosition: { default: 'left', type: String },
 		isCompact: { default: false, type: Boolean },
-		label: String,
-		placeholder: String,
+		label: { type: String },
+		placeholder: { type: String },
 		required: { default: false, type: Boolean },
 		step: { default: '1', type: String },
 		type: { default: 'text', type: String },
 		validate: { default: '', type: String },
 		validateText: { default: '', type: String },
 		labelFor: { default: null, type: String },
-		value: { default: null, type: [String, Number, null] },
+		value: { default: null, type: [String, Number] },
 	},
 	data() {
 		return {

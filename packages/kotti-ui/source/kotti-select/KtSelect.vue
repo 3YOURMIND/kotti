@@ -129,7 +129,7 @@ export default {
 		},
 		value: {
 			default: null,
-			type: [String, Number, Boolean, Object, null],
+			type: [String, Number, Boolean, Object],
 		},
 	},
 	data() {

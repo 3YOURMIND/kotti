@@ -48,6 +48,7 @@ export default defineComponent({
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_TOGGLE_GROUP_PROPS,
+		value: { default: null, type: Object },
 	},
 	setup(props: KottiFieldToggleGroup.Props, { emit }) {
 		const field = useField<KottiFieldToggleGroup.Value>({

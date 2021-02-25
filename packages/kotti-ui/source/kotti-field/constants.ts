@@ -36,7 +36,7 @@ export const KOTTI_FIELD_PROPS = {
 	tabIndex: { default: 0, type: Number },
 	validator: { default: null, type: Function },
 	validatorKey: { default: null, type: String },
-	value: { default: null },
+	value: { default: null }, // gets overwritten by implementations
 }
 
 /**

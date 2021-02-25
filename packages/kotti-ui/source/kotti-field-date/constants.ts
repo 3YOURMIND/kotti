@@ -68,6 +68,7 @@ export const KOTTI_FIELD_DATE_PROPS = {
 		validator: (value: unknown): value is KottiFieldDate.Props['shortcuts'] =>
 			Array.isArray(value) && value.every(dateShortcutValidator),
 	},
+	value: { default: null, type: String },
 }
 
 export const KOTTI_FIELD_DATE_RANGE_PROPS = {
@@ -85,6 +86,7 @@ export const KOTTI_FIELD_DATE_RANGE_PROPS = {
 		): value is KottiFieldDateRange.Props['shortcuts'] =>
 			Array.isArray(value) && value.every(dateRangeShortcutValidator),
 	},
+	value: { default: null, type: Array },
 }
 
 export const KOTTI_FIELD_DATE_TIME_PROPS = {
@@ -99,6 +101,7 @@ export const KOTTI_FIELD_DATE_TIME_PROPS = {
 		): value is KottiFieldDateTime.Props['shortcuts'] =>
 			Array.isArray(value) && value.every(dateTimeShortcutValidator),
 	},
+	value: { default: null, type: String },
 }
 
 export const KOTTI_FIELD_DATE_TIME_RANGE_PROPS = {
@@ -117,4 +120,5 @@ export const KOTTI_FIELD_DATE_TIME_RANGE_PROPS = {
 		): value is KottiFieldDateTimeRange.Props['shortcuts'] =>
 			Array.isArray(value) && value.every(dateTimeRangeShortcutValidator),
 	},
+	value: { default: null, type: Array },
 }
