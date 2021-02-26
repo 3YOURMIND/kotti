@@ -88,6 +88,10 @@ export const KtFormControllerObject = attachMeta(
 						description: 'sets a key on the controller object',
 						type: 'function',
 					},
+					setValues: {
+						description: 'sets value of the controller object',
+						type: 'function',
+					},
 					values: {
 						description: 'current value of the controller object',
 						type: 'object',
