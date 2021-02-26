@@ -156,12 +156,11 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 	<KtPopover placement="top" class="mt-4 ml-4">
 		<KtButton label="Test Popover with Dropdown"/>
 		<div slot="content">
-			<KtSelect
-					:allowEmpty='false'
-					placeholder="Test with dropdown"
-					:options="[{label: 'Click me', value: 'test_click'}]"
-					filterable
-				/>
+			<KtFieldSingleSelect
+				label="Test with dropdown"
+				:options="[{ label: 'Click me', value: 'test_click' }]"
+				:value="null"
+			/>
 		</div>
 	</KtPopover>
 </div>
@@ -170,12 +169,11 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 <KtPopover placement="top" class="mt-4 ml-4">
 	<KtButton label="Top Popover"/>
 	<div slot="content">
-		<KtSelect
-				:allowEmpty='false'
-				placeholder="Test with dropdown"
-				:options="[{label: 'Click me', value: 'test_click'}]"
-				filterable
-			/>
+		<KtFieldSingleSelect
+			label="Test with dropdown"
+			:options="[{ label: 'Click me', value: 'test_click' }]"
+			:value="null"
+		/>
 	</div>
 </KtPopover>
 ```

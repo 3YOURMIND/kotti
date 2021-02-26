@@ -71,8 +71,7 @@ textarea.form-input {
 		}
 	}
 
-	.form-input,
-	.form-select {
+	.form-input {
 		flex: 1 1 auto;
 		width: 1%;
 	}
@@ -82,7 +81,6 @@ textarea.form-input {
 	}
 
 	.form-input,
-	.form-select,
 	.input-group-addon,
 	.input-group-btn {
 		&:first-child:not(:last-child) {
@@ -104,10 +102,6 @@ textarea.form-input {
 		&:focus {
 			z-index: $zindex-0 + 1;
 		}
-	}
-
-	.form-select {
-		width: auto;
 	}
 
 	&.input-inline {

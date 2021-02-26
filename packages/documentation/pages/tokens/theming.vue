@@ -29,11 +29,11 @@ You can pass a key-value object to the component and the component will `setProp
 ## Demo
 Stylise the navbar with the select fields:
 
-<KtSelect :allowEmpty="true" label="Navbar Background" v-model="navbarBackground" :options="colors" />
-<KtSelect :allowEmpty="true" label="Navbar Color" v-model="navbarColor" :options="colors" />
-<KtSelect :allowEmpty="true" label="Navbar Light Color" v-model="navbarLightColor" :options="colors" />
-<KtSelect :allowEmpty="true" label="Navbar Border Color" v-model="navbarBorder" :options="colors" />
-<KtSelect :allowEmpty="true" label="Navbar Color Active" v-model="navbarColorActive" :options="colors" />
+<KtFieldSingleSelect isOptional label="Navbar Background" v-model="navbarBackground" :options="colors" />
+<KtFieldSingleSelect isOptional label="Navbar Color" v-model="navbarColor" :options="colors" />
+<KtFieldSingleSelect isOptional label="Navbar Light Color" v-model="navbarLightColor" :options="colors" />
+<KtFieldSingleSelect isOptional label="Navbar Border Color" v-model="navbarBorder" :options="colors" />
+<KtFieldSingleSelect isOptional label="Navbar Color Active" v-model="navbarColorActive" :options="colors" />
 
 <KtTheme :customProperties="{'navbar-background': navbarBackground, 'navbar-color': navbarColor, 'navbar-color-light': navbarLightColor, 'navbar-border': navbarBorder, 'navbar-color-active': navbarColorActive}"/>
 
