@@ -44,8 +44,16 @@ export default defineComponent({
 						link: 'https://github.com/3YOURMIND/kotti/issues/new/choose',
 					},
 					{
-						title: 'Yoco Icon',
-						link: 'https://3yourmind.github.io/yoco',
+						title: 'NPM',
+						link: 'https://www.npmjs.com/package/@3yourmind/kotti-ui',
+					},
+					{
+						title: 'Issues',
+						link: 'https://github.com/3YOURMIND/kotti/issues',
+					},
+					{
+						title: 'Readme',
+						link: 'https://github.com/3YOURMIND/kotti#readme',
 					},
 				],
 			},
