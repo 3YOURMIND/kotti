@@ -81,18 +81,45 @@
 					<ComponentInfo :component="KtFormControllerObject" />
 					<h2>Personal Details</h2>
 					<KtFormControllerObject formKey="personalDetails">
-						<KtFieldText
-							formKey="firstName"
-							helpText="help for lastName"
-							label="First Name"
-							placeholder="Klaus"
-						/>
-						<KtFieldText
-							formKey="lastName"
-							helpText="help for lastName"
-							label="Last Name"
-							placeholder="Dieter"
-						/>
+						<template #default="{ setValues, values }">
+							<KtFieldText
+								formKey="firstName"
+								helpText="help for firstName"
+								label="First Name"
+								placeholder="Klaus"
+							/>
+							<KtFieldText
+								formKey="lastName"
+								helpText="help for lastName"
+								label="Last Name"
+								placeholder="Dieter"
+							/>
+							<div>
+								<KtFieldText
+									formKey="NONE"
+									hideClear
+									label="Full Name"
+									:value="
+										(values.firstNameFirst
+											? [values.firstName, values.lastName]
+											: [values.lastName, values.firstName]
+										).join(',')
+									"
+								/>
+								<KtFieldToggle
+									formKey="NONE"
+									isOptional
+									label="Show First Name First"
+									:value="values.firstNameFirst"
+									@input="
+										setValues({
+											...values,
+											firstNameFirst: !values.firstNameFirst,
+										})
+									"
+								/>
+							</div>
+						</template>
 					</KtFormControllerObject>
 					<br />
 					<ComponentInfo :component="KtFormControllerList" />
@@ -270,6 +297,8 @@ export default defineComponent({
 			addresses: [{ country: null, houseNumber: null, streetName: null }],
 			personalDetails: {
 				firstName: 'John',
+				firstNameFirst: false,
+				fullName: 'Smith,John',
 				lastName: 'Smith',
 			},
 			username: null,

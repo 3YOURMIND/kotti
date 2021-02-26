@@ -83,7 +83,16 @@ export const KtFormControllerObject = attachMeta(
 		slots: {
 			default: {
 				description: null,
-				scope: null,
+				scope: {
+					setValue: {
+						description: 'sets a key on the controller object',
+						type: 'function',
+					},
+					values: {
+						description: 'current value of the controller object',
+						type: 'object',
+					},
+				},
 			},
 		},
 		typeScript: {
