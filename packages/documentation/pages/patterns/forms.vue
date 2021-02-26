@@ -21,7 +21,7 @@
 
 <div class="form-group">
 	<label class="form-label">options</label>
-	<select class="form-select">
+	<select>
 		<option>Default options</option>
 		<option>Second options</option>
 	</select>
@@ -30,7 +30,7 @@
 ```html
 <div class="form-group">
 	<label class="form-label">options</label>
-	<select class="form-select">
+	<select>
 		<option>Default options</option>
 		<option>Second options</option>
 	</select>
@@ -156,7 +156,7 @@ There are three types of validation: `is-error`, `is-success` and `is-warning`.
 
 <div class="form-group is-success">
 	<label class="form-label">Select options</label>
-	<select class="form-select">
+	<select>
 		<option>Default options</option>
 		<option>Second options</option>
 	</select>
@@ -204,7 +204,7 @@ You can add icon to `input` and `select` elements by adding `has-icon-left` or `
 	<div class="column col-6">
 		<div class="form-group">
 			<div class="has-icon-left">
-			<select class="form-select">
+			<select>
 				<option>Default options</option>
 				<option>Second options</option>
 			</select>
@@ -235,7 +235,7 @@ Add the `disabled` attribute to the element or `<fieldset />` for a disabled for
 	</div>
 	<div class="form-group">
 		<label class="form-label">options</label>
-		<select class="form-select disabled">
+		<select class="disabled">
 			<option>Default options</option>
 			<option>Second options</option>
 		</select>
@@ -268,7 +268,7 @@ Add the `disabled` attribute to the element or `<fieldset />` for a disabled for
 ```html
 <div class="form-group">
 	<label class="form-label">options</label>
-	<select class="form-select disabled">
+	<select class="disabled">
 		<option>Default options</option>
 		<option>Second options</option>
 	</select>

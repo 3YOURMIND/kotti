@@ -12,8 +12,7 @@
 }
 
 .has-icon-left {
-	.form-input,
-	.form-select {
+	.form-input {
 		padding-left: 1.6rem;
 	}
 
@@ -24,8 +23,7 @@
 }
 
 .has-icon-right {
-	.form-input,
-	.form-select {
+	.form-input {
 		padding-right: 1.6rem;
 	}
 
@@ -55,8 +53,7 @@
 }
 
 .form-group {
-	.form-input,
-	.form-select {
+	.form-input {
 		&:focus {
 			outline: none;
 			box-shadow: 0 0 0 0.1rem var(--form-shadow-color);
@@ -77,7 +74,6 @@
 
 // Disabled fields
 .form-input,
-.form-select,
 .form-checkbox,
 .form-switch,
 .form-radio {

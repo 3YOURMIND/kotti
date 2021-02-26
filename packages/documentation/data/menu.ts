@@ -19,7 +19,6 @@ import {
 	KtRadio,
 	KtTable,
 	KtToaster,
-	KtSelect,
 	KtSteps,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
@@ -128,7 +127,6 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtPagination),
 					makeComponentMenuItem(KtPopover),
 					makeComponentMenuItem(KtRadio),
-					makeComponentMenuItem(KtSelect),
 					makeComponentMenuItem(KtSteps),
 					makeComponentMenuItem(KtTable),
 					makeComponentMenuItem(KtToaster),
