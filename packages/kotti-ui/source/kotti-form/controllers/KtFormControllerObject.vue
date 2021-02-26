@@ -1,5 +1,11 @@
 <template>
-	<div><slot /></div>
+	<div>
+		<slot
+			:setValue="(key, newValue) => setValue(key, newValue)"
+			:setValues="setValues"
+			:values="values"
+		/>
+	</div>
 </template>
 
 <script lang="ts">
@@ -41,19 +47,33 @@ export default defineComponent({
 			},
 		)
 
+		/**
+		 * Updates a single key in a KtFormControllerObject values
+		 */
+		const setValue = (key, newValue) =>
+			context.setValue(props.formKey, {
+				...values.value,
+				[key]: newValue,
+			})
+
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			fieldInheritableProps: context.fieldInheritableProps,
 			formPath: computed(() => [...context.formPath.value, props.formKey]),
 			onAddField: context.onAddField,
 			onRemoveField: context.onRemoveField,
-			setValue: (key, newValue) =>
-				context.setValue(props.formKey, {
-					...values.value,
-					[key]: newValue,
-				}),
+			setValue,
 			validators: context.validators,
 			values,
 		})
+
+		return {
+			setValue,
+			/**
+			 * Updates KtFormControllerObject values
+			 */
+			setValues: (newValue) => context.setValue(props.formKey, newValue),
+			values,
+		}
 	},
 })
 </script>
