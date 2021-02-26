@@ -52,29 +52,7 @@
 				</div>
 			</section>
 		</article>
-		<article v-if="Object.keys(component.meta.slots).length >= 1">
-			<h4>Slots</h4>
-			<section class="slots-block">
-				<div
-					v-for="[name, details] in Object.entries(component.meta.slots)"
-					:key="name"
-				>
-					<div class="slots-block__name" v-text="name" />
-					<div class="slots-block__details">
-						<div
-							v-if="details.description"
-							class="slots-block__description"
-							v-text="details.description"
-						/>
-						<i v-else class="slot-description" v-text="'No description'" />
-						<div
-							class="slots-block__scoped"
-							v-text="details.scoped === null ? '(Not Scoped)' : details.scoped"
-						/>
-					</div>
-				</div>
-			</section>
-		</article>
+		<ComponentInfoSlots :slots="component.meta.slots" />
 		<KtHeading
 			v-if="component.props"
 			text="Properties (Beta)"
@@ -143,6 +121,8 @@ import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import ComponentInfoSlots from './component-info/Slots.vue'
+
 type VuePropType =
 	| ArrayConstructor
 	| BooleanConstructor
@@ -155,6 +135,9 @@ export default defineComponent<{
 }>({
 	props: {
 		component: { required: true, type: Object },
+	},
+	components: {
+		ComponentInfoSlots,
 	},
 	setup(props) {
 		return {
@@ -309,32 +292,6 @@ $radius: 3px;
 
 	> section:not(:first-child) {
 		border-top: 1px solid var(--support-error-dark);
-	}
-}
-
-.slots-block {
-	color: var(--support-info-dark);
-	background: var(--support-info-light);
-
-	border: 1px solid var(--support-info-dark);
-	border-radius: $radius;
-
-	> div {
-		display: flex;
-		align-items: center;
-		padding: 0.4rem 0.6rem;
-
-		> *:not(:first-child) {
-			margin-left: 0.2rem;
-		}
-	}
-
-	> div:not(:first-child) {
-		border-top: 1px solid var(--support-info-dark);
-	}
-
-	&__name {
-		font-weight: bold;
 	}
 }
 </style>
