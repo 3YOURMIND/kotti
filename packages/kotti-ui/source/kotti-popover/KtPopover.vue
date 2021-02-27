@@ -9,7 +9,14 @@
 		</div>
 		<div v-if="showPopper" ref="content" :class="popperClass">
 			<slot :close="handleClickaway" name="content">
-				{{ content }}
+				<KtPopoverIconTextItem
+					v-for="(option, index) in options"
+					:key="index"
+					:icon="option.icon"
+					:isDisabled="option.disabled"
+					:text="option.text"
+					@click="clickHandler(option)"
+				/>
 			</slot>
 		</div>
 	</div>
@@ -19,13 +26,24 @@
 import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
 
+const optionIsValid = (option) =>
+	(!option.disabled || typeof option.disabled === 'boolean') &&
+	option.onClick &&
+	typeof option.onClick === 'function' &&
+	option.text &&
+	typeof option.text === 'string'
+
 export default {
 	name: 'KtPopover',
 	mixins: [clickaway],
 	props: {
 		content: { default: '', type: String },
 		forceShowPopover: { default: null, type: Boolean },
-		options: { default: () => ({}), type: Object },
+		options: {
+			default: () => [],
+			type: Array,
+			validator: (options) => options.every(optionIsValid),
+		},
 		placement: { default: 'bottom', type: String },
 		size: { default: null, type: String },
 	},
@@ -75,6 +93,14 @@ export default {
 		this.destroyPopper()
 	},
 	methods: {
+		clickHandler(option) {
+			if (
+				!option.disabled &&
+				option.onClick &&
+				typeof option.onClick === 'function'
+			)
+				option.onClick()
+		},
 		handleClick() {
 			if (!this.forceShowPopoverIsNull) return
 			this.showPopper = !this.showPopper
