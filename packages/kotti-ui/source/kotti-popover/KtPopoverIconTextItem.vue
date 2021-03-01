@@ -1,14 +1,13 @@
 <template>
 	<div
-		v-bind="$attrs"
 		class="kt-popover-item"
 		:class="{
-			'kt-popover-item--disabled': isDisabled,
+			'kt-popover-item--is-disabled': isDisabled,
 		}"
 		v-on="$listeners"
 	>
 		<i v-show="icon" class="yoco" v-text="icon" />
-		<div>{{ text }}</div>
+		<div>{{ label }}</div>
 	</div>
 </template>
 
@@ -23,7 +22,7 @@ export default {
 		isDisabled: {
 			type: Boolean,
 		},
-		text: {
+		label: {
 			type: String,
 		},
 	},
@@ -47,7 +46,7 @@ export default {
 		padding-right: $unit-1;
 		font-size: 20px;
 	}
-	&--disabled {
+	&--is-disabled {
 		color: #ccc;
 		cursor: auto;
 	}

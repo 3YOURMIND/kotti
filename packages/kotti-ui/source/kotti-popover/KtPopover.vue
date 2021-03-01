@@ -13,8 +13,8 @@
 					v-for="(option, index) in options"
 					:key="index"
 					:icon="option.icon"
-					:isDisabled="option.disabled"
-					:text="option.text"
+					:isDisabled="option.isDisabled"
+					:label="option.label"
 					@click="clickHandler(option)"
 				/>
 			</slot>
@@ -27,11 +27,11 @@ import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
 
 const optionIsValid = (option) =>
-	(!option.disabled || typeof option.disabled === 'boolean') &&
+	(!option.isDisabled || typeof option.isDisabled === 'boolean') &&
 	option.onClick &&
 	typeof option.onClick === 'function' &&
-	option.text &&
-	typeof option.text === 'string'
+	option.label &&
+	typeof option.label === 'string'
 
 export default {
 	name: 'KtPopover',
@@ -95,7 +95,7 @@ export default {
 	methods: {
 		clickHandler(option) {
 			if (
-				!option.disabled &&
+				!option.isDisabled &&
 				option.onClick &&
 				typeof option.onClick === 'function'
 			)
