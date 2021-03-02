@@ -26,6 +26,8 @@
 import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
 
+import KtPopoverIconTextItem from './KtPopoverIconTextItem.vue'
+
 const optionIsValid = (option) =>
 	(!option.isDisabled || typeof option.isDisabled === 'boolean') &&
 	option.onClick &&
@@ -35,6 +37,7 @@ const optionIsValid = (option) =>
 
 export default {
 	name: 'KtPopover',
+	components: { KtPopoverIconTextItem },
 	mixins: [clickaway],
 	props: {
 		content: { default: '', type: String },

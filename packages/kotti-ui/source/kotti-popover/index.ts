@@ -26,7 +26,7 @@ export const KtPopoverItem = attachMeta(makeInstallable(KtPopoverItemVue), {
 export const KtPopoverIconTextItem = attachMeta(
 	makeInstallable(KtPopoverIconTextItemVue),
 	{
-		addedVersion: '2.8.0',
+		addedVersion: '3.0.0',
 		deprecated: null,
 		slots: {},
 		typeScript: null,
