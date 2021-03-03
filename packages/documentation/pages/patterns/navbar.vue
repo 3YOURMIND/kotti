@@ -130,15 +130,15 @@ You can get the value of narrow navbar via `$KtNavbar.isNarrow`
 
 ## Usage
 
-### Attribuites
+### Attributes
 
 | Attribute            | Description                            | Type      | Accepted values        | Default |
 |:---------------------|:---------------------------------------|:----------|:-----------------------|:--------|
 | `$KtNavbar.isNarrow` | define navbar is narrow                | `Boolean` | —                      | `false` |
 | `labelText`          | using text when logoUrl is not defined | `String`  | —                      | —       |
-| `notification`       | notification section of the navbar     | `Arrary`  | See above Notification | —       |
-| `quickLinks`         | quick link section of the navbar       | `Arrary`  | See above Quick Links  | —       |
-| `sections`           | menu section of the navbar             | `Arrary`  | See above Menu         | —       |
+| `notification`       | notification section of the navbar     | `Array`   | See above Notification | —       |
+| `quickLinks`         | quick link section of the navbar       | `Array`   | See above Quick Links  | —       |
+| `sections`           | menu section of the navbar             | `Array`   | See above Menu         | —       |
 
 ### Events
 

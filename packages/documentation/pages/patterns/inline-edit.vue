@@ -30,7 +30,7 @@
 
 ## Usage
 
-### Attribuites
+### Attributes
 
 | Attribute        | Description                      | Type      | Accepted values | Default           |
 |:-----------------|:---------------------------------|:----------|:----------------|:------------------|

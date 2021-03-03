@@ -113,7 +113,7 @@ If you don't specify the icon text, you need to use the `glyph` slot.
 
 ## Usage
 
-### Attribuites
+### Attributes
 
 | Attribute         | Description                                    | Type      | Accepted values     | Default      |
 |:------------------|:-----------------------------------------------|:----------|:--------------------|:-------------|
