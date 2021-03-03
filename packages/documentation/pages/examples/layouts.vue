@@ -51,15 +51,13 @@ export default {
 	data() {
 		return {
 			theme: null,
-			quickLinksData: {
-				links: [
-					{
-						title: 'Create New Issue',
-						link:
-							'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
-					},
-				],
-			},
+			quickLinksData: [
+				{
+					title: 'Create New Issue',
+					link:
+						'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
+				},
+			],
 			navbarMenu: [
 				{
 					links: [

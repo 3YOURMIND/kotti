@@ -37,26 +37,24 @@ export default defineComponent({
 				router.value.push(link.path)
 			},
 			navLogo,
-			quickLinks: {
-				links: [
-					{
-						title: 'Create New Issue',
-						link: 'https://github.com/3YOURMIND/kotti/issues/new/choose',
-					},
-					{
-						title: 'NPM',
-						link: 'https://www.npmjs.com/package/@3yourmind/kotti-ui',
-					},
-					{
-						title: 'Issues',
-						link: 'https://github.com/3YOURMIND/kotti/issues',
-					},
-					{
-						title: 'Readme',
-						link: 'https://github.com/3YOURMIND/kotti#readme',
-					},
-				],
-			},
+			quickLinks: [
+				{
+					title: 'Create New Issue',
+					link: 'https://github.com/3YOURMIND/kotti/issues/new/choose',
+				},
+				{
+					title: 'NPM',
+					link: 'https://www.npmjs.com/package/@3yourmind/kotti-ui',
+				},
+				{
+					title: 'Issues',
+					link: 'https://github.com/3YOURMIND/kotti/issues',
+				},
+				{
+					title: 'Readme',
+					link: 'https://github.com/3YOURMIND/kotti#readme',
+				},
+			],
 			sections: menu.map((section): {
 				title: string
 				links: Array<{

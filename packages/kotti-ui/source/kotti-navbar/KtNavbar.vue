@@ -22,11 +22,7 @@
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
-				<NavbarQuickLink
-					v-if="quickLinks"
-					:links="quickLinks.links"
-					:title="quickLinks.title"
-				/>
+				<NavbarQuickLink v-if="quickLinks.length" :links="quickLinks" />
 			</div>
 			<div class="kt-navbar__footer">
 				<slot name="navbar-footer" />
@@ -37,10 +33,9 @@
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
 				<NavbarQuickLink
-					v-if="quickLinks"
+					v-if="quickLinks.length"
 					v-on-clickaway="clickawayMobileMenu"
-					:links="quickLinks.links"
-					:title="quickLinks.title"
+					:links="quickLinks"
 				/>
 			</div>
 		</div>
@@ -49,6 +44,8 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
+
+import { Kotti } from '../types'
 
 import NavbarLogo from './components/NavbarLogo.vue'
 import NavbarMenu from './components/NavbarMenu.vue'
@@ -65,11 +62,15 @@ export default {
 	},
 	mixins: [clickaway],
 	props: {
-		logoUrl: { type: String },
-		notification: { type: Object, default: null },
-		quickLinks: { type: Object, default: null },
-		sections: { type: Array, required: true },
-		theme: { type: String },
+		logoUrl: { required: true, type: String },
+		notification: { default: null, type: Object },
+		quickLinks: { default: () => [], type: Array },
+		sections: { required: true, type: Array },
+		theme: {
+			default: null,
+			type: String,
+			validator: (theme) => theme === null || theme in Kotti.Navbar.Theme,
+		},
 	},
 	data() {
 		return {
@@ -79,12 +80,10 @@ export default {
 	computed: {
 		classes() {
 			const classes = []
-			if (this.$KtNavbar.isNarrow) {
-				classes.push('kt-navbar--narrow')
-			}
-			if (this.theme) {
-				classes.push(`kt-navbar--theme-${this.theme}`)
-			}
+
+			if (this.$KtNavbar.isNarrow) classes.push('kt-navbar--narrow')
+			if (this.theme) classes.push(`kt-navbar--theme-${this.theme}`)
+
 			return classes
 		},
 	},

@@ -16,4 +16,7 @@ export const enUS: KottiTranslation.Messages = {
 		title: 'Form Submission Not Allowed',
 		warningsSectionTitle: 'Warnings',
 	},
+	KtNavbar: {
+		quickLinksTitle: 'Quick Links',
+	},
 }

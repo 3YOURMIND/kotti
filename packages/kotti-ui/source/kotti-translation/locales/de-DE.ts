@@ -16,4 +16,7 @@ export const deDE: KottiTranslation.Messages = {
 		title: 'Formularübermittlung nicht zulässig',
 		warningsSectionTitle: 'Warnungen',
 	},
+	KtNavbar: {
+		quickLinksTitle: 'Quick Links',
+	},
 }

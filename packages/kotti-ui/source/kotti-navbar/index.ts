@@ -9,5 +9,7 @@ export const KtNavbar = attachMeta(makeInstallable(KtNavbarVue), {
 		'navbar-footer': { description: null, scope: null },
 		'navbar-logo': { description: null, scope: null },
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Navbar',
+	},
 })

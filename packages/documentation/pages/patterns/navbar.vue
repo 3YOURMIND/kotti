@@ -70,12 +70,10 @@ menuData: [
 ### Quick Links
 
 ```js
-quickLinksData: {
-	links: [{
-		title: 'Create New Issue',
-		link: 'https://github.com/3YOURMIND/kotti/issues/new',
-	}],
-},
+quickLinksData: [{
+	title: 'Create New Issue',
+	link: 'https://github.com/3YOURMIND/kotti/issues/new',
+}],
 ```
 
 ## Theme Configuration
