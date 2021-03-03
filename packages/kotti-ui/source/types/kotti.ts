@@ -28,6 +28,7 @@ export {
 	KottiFormControllerList as FormControllerList,
 } from '../kotti-form/controllers/types'
 export { KottiModal as Modal } from '../kotti-modal/types'
+export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiRow as Row } from '../kotti-row/types'
 
 export type Meta = {
