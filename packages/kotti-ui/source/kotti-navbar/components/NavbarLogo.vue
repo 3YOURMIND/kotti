@@ -28,9 +28,6 @@
 <script>
 export default {
 	name: 'KtNavbarLogo',
-	props: {
-		labelText: { type: String, default: null },
-	},
 	computed: {
 		iconClass() {
 			return this.isNarrow ? 'yoco' : 'yoco expanded'

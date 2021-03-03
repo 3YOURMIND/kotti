@@ -5,7 +5,7 @@
 				<i class="yoco" v-text="'burger'" />
 			</div>
 			<div class="kt-navbar__header">
-				<NavbarLogo :labelText="labelText" @logoClick="$emit('logoClick')">
+				<NavbarLogo @logoClick="$emit('logoClick')">
 					<slot name="navbar-logo">
 						<img alt="logo" class="image" :src="logoUrl" />
 					</slot>
@@ -65,7 +65,6 @@ export default {
 	},
 	mixins: [clickaway],
 	props: {
-		labelText: { type: String, default: null },
 		logoUrl: { type: String },
 		notification: { type: Object, default: null },
 		quickLinks: { type: Object, default: null },

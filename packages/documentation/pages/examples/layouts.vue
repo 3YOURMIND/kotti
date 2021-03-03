@@ -2,7 +2,6 @@
 	<LayoutContainer>
 		<KtNavbar
 			slot="navbar"
-			labelText="MultiText"
 			logoUrl="placehold.it/160x50"
 			:notification="navbarNotification"
 			:quickLinks="quickLinksData"
