@@ -1,5 +1,7 @@
 <template>
-	<div class="d-flex responsive"><nuxt /></div>
+	<KtTranslationContext locale="en-US">
+		<div class="d-flex responsive"><nuxt /></div>
+	</KtTranslationContext>
 </template>
 
 <script>

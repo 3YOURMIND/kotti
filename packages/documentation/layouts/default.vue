@@ -1,11 +1,13 @@
 <template>
-	<LayoutContainer :hasActionBar="showActionbar">
-		<NavBar slot="navbar" />
-		<ActionBar slot="actionbar" />
-		<div slot="workspace">
-			<nuxt class="content" />
-		</div>
-	</LayoutContainer>
+	<KtTranslationContext locale="en-US">
+		<LayoutContainer :hasActionBar="showActionbar">
+			<NavBar slot="navbar" />
+			<ActionBar slot="actionbar" />
+			<div slot="workspace">
+				<nuxt class="content" />
+			</div>
+		</LayoutContainer>
+	</KtTranslationContext>
 </template>
 
 <script>

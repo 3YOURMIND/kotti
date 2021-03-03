@@ -1,8 +1,10 @@
 <template>
-	<div class="d-flex responsive">
-		<NavBar />
-		<div class="workspace"><nuxt class="content" /></div>
-	</div>
+	<KtTranslationContext locale="en-US">
+		<div class="d-flex responsive">
+			<NavBar />
+			<div class="workspace"><nuxt class="content" /></div>
+		</div>
+	</KtTranslationContext>
 </template>
 
 <script>
