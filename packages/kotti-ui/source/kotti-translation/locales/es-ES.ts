@@ -17,6 +17,6 @@ export const esES: KottiTranslation.Messages = {
 		warningsSectionTitle: 'Avisos',
 	},
 	KtNavbar: {
-		quickLinksTitle: 'Quick Links',
+		quickLinksTitle: 'Enlaces rápidos',
 	},
 }
