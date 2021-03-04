@@ -6,7 +6,7 @@
 		}"
 		v-on="$listeners"
 	>
-		<i v-show="icon" class="yoco" v-text="icon" />
+		<i v-if="icon" class="yoco" v-text="icon" />
 		<div>{{ label }}</div>
 	</div>
 </template>
@@ -21,15 +21,17 @@ export default {
 		},
 		isDisabled: {
 			type: Boolean,
+			default: false,
 		},
 		label: {
 			type: String,
+			default: null,
 		},
 	},
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
 .kt-popover-item {
 	display: flex;
@@ -38,7 +40,7 @@ export default {
 	line-height: 20px;
 	&:hover {
 		cursor: pointer;
-		background: $lightgray-300;
+		background: var(--gray-10);
 		border-radius: $border-radius;
 	}
 	.yoco {
@@ -47,8 +49,10 @@ export default {
 		font-size: 20px;
 	}
 	&--is-disabled {
-		color: #ccc;
-		cursor: auto;
+		opacity: 0.46;
+		&:hover {
+			cursor: not-allowed;
+		}
 	}
 }
 </style>

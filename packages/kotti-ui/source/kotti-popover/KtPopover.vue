@@ -4,7 +4,7 @@
 		class="kt-popover"
 		:class="{ showPopper }"
 	>
-		<div ref="anchor" @click="handleClick">
+		<div ref="anchor" @click="handleAnchorClick">
 			<slot>Anchor</slot>
 		</div>
 		<div v-if="showPopper" ref="content" :class="popperClass">
@@ -15,7 +15,7 @@
 					:icon="option.icon"
 					:isDisabled="option.isDisabled"
 					:label="option.label"
-					@click="clickHandler(option)"
+					@click="handleItemClick(option)"
 				/>
 			</slot>
 		</div>
@@ -26,14 +26,17 @@
 import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
 
+import { isYocoIcon } from '../validators'
+
 import KtPopoverIconTextItem from './KtPopoverIconTextItem.vue'
 
 const optionIsValid = (option) =>
-	(!option.isDisabled || typeof option.isDisabled === 'boolean') &&
-	option.onClick &&
-	typeof option.onClick === 'function' &&
-	option.label &&
-	typeof option.label === 'string'
+	typeof option === 'object' &&
+	option !== null &&
+	(typeof option.icon === 'undefined' || isYocoIcon(option.icon)) &&
+	['undefined', 'boolean'].includes(typeof option.isDisabled) &&
+	['undefined', 'function'].includes(typeof option.onClick) &&
+	['undefined', 'string'].includes(typeof option.label)
 
 export default {
 	name: 'KtPopover',
@@ -96,15 +99,10 @@ export default {
 		this.destroyPopper()
 	},
 	methods: {
-		clickHandler(option) {
-			if (
-				!option.isDisabled &&
-				option.onClick &&
-				typeof option.onClick === 'function'
-			)
-				option.onClick()
+		handleItemClick(option) {
+			if (!option.isDisabled && option.onClick) option.onClick()
 		},
-		handleClick() {
+		handleAnchorClick() {
 			if (!this.forceShowPopoverIsNull) return
 			this.showPopper = !this.showPopper
 		},
@@ -169,7 +167,7 @@ export default {
 	z-index: $zindex-4;
 	width: auto;
 	padding: 0.8rem;
-	background: #fff;
+	background: var(--white);
 	border-radius: $border-radius;
 	box-shadow: $box-shadow;
 
