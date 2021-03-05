@@ -129,7 +129,7 @@ We can display disabled text icon items when we provide isDisabled properties in
 
 <div class="element-example">
 	<KtPopover :options="[
-			{ icon: 'download', isDisabled: false, label: 'Download'},
+			{ icon: 'download', isDisabled: false, label: 'Download', onClick: () => {}},
 			{ icon: 'edit', isDisabled: true, label: 'Edit'}
 	]">
 		<KtButton label="Popover with a disabled item"/>

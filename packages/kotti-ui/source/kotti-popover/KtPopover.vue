@@ -35,7 +35,7 @@ const optionIsValid = (option) =>
 	option !== null &&
 	(typeof option.icon === 'undefined' || isYocoIcon(option.icon)) &&
 	['undefined', 'boolean'].includes(typeof option.isDisabled) &&
-	['undefined', 'function'].includes(typeof option.onClick) &&
+	(option.isDisabled || typeof option.onClick === 'function') &&
 	['undefined', 'string'].includes(typeof option.label)
 
 export default {
