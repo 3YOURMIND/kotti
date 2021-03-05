@@ -125,7 +125,7 @@ It replaces the old `KtDropdownMenu`.
 
 ## Disabled Items
 
-We can display disabled items when we provide isDisabled properties in the `KtPopover` options.
+We can display disabled text icon items when we provide isDisabled properties in the `KtPopover` options.
 
 <div class="element-example">
 	<KtPopover :options="[
