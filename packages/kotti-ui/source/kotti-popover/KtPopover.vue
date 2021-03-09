@@ -4,12 +4,19 @@
 		class="kt-popover"
 		:class="{ showPopper }"
 	>
-		<div ref="anchor" @click="handleClick">
+		<div ref="anchor" @click="handleAnchorClick">
 			<slot>Anchor</slot>
 		</div>
 		<div v-if="showPopper" ref="content" :class="popperClass">
 			<slot :close="handleClickaway" name="content">
-				{{ content }}
+				<KtPopoverIconTextItem
+					v-for="(option, index) in options"
+					:key="index"
+					:icon="option.icon"
+					:isDisabled="option.isDisabled"
+					:label="option.label"
+					@click="handleItemClick(option)"
+				/>
 			</slot>
 		</div>
 	</div>
@@ -19,13 +26,30 @@
 import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
 
+import { isYocoIcon } from '../validators'
+
+import KtPopoverIconTextItem from './KtPopoverIconTextItem.vue'
+
+const optionIsValid = (option) =>
+	typeof option === 'object' &&
+	option !== null &&
+	(typeof option.icon === 'undefined' || isYocoIcon(option.icon)) &&
+	['undefined', 'boolean'].includes(typeof option.isDisabled) &&
+	(option.isDisabled || typeof option.onClick === 'function') &&
+	['undefined', 'string'].includes(typeof option.label)
+
 export default {
 	name: 'KtPopover',
+	components: { KtPopoverIconTextItem },
 	mixins: [clickaway],
 	props: {
 		content: { default: '', type: String },
 		forceShowPopover: { default: null, type: Boolean },
-		options: { default: () => ({}), type: Object },
+		options: {
+			default: () => [],
+			type: Array,
+			validator: (options) => options.every(optionIsValid),
+		},
 		placement: { default: 'bottom', type: String },
 		size: { default: null, type: String },
 	},
@@ -75,7 +99,10 @@ export default {
 		this.destroyPopper()
 	},
 	methods: {
-		handleClick() {
+		handleItemClick(option) {
+			if (!option.isDisabled && option.onClick) option.onClick()
+		},
+		handleAnchorClick() {
 			if (!this.forceShowPopoverIsNull) return
 			this.showPopper = !this.showPopper
 		},
@@ -140,7 +167,7 @@ export default {
 	z-index: $zindex-4;
 	width: auto;
 	padding: 0.8rem;
-	background: #fff;
+	background: var(--white);
 	border-radius: $border-radius;
 	box-shadow: $box-shadow;
 

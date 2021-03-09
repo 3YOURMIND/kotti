@@ -120,8 +120,31 @@ It replaces the old `KtDropdownMenu`.
 		<KtPopoverItem icon="global">Refresh</KtPopoverItem>
 		<KtPopoverItem icon="shipping">Profile</KtPopoverItem>
 	</div>
-</KtPopover>
+</KtPopover>	
 </div>
+
+## Disabled Items
+
+We can display disabled text icon items when we provide isDisabled properties in the `KtPopover` options.
+
+<div class="element-example">
+	<KtPopover :options="[
+			{ icon: 'download', isDisabled: false, label: 'Download', onClick: () => {}},
+			{ icon: 'edit', isDisabled: true, label: 'Edit'}
+	]">
+		<KtButton label="Popover with a disabled item"/>
+	</KtPopover>
+</div>
+
+
+```html
+	<KtPopover :options="[
+		{ icon: 'download', isDisabled: false, label: 'Download', onClick: () => {}}, 
+		{ icon: 'edit', isDisabled: true, label: 'Edit'}
+	]">
+		<KtButton label="Popover with a disabled item" />
+	</KtPopover>
+```
 
 ## Scoped Slot
 
