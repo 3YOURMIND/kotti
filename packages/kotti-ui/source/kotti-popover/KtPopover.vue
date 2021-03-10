@@ -9,7 +9,7 @@
 		</div>
 		<div v-if="showPopper" ref="content" :class="popperClass">
 			<slot :close="handleClickaway" name="content">
-				<KtPopoverIconTextItem
+				<IconTextItem
 					v-for="(option, index) in options"
 					:key="index"
 					:icon="option.icon"
@@ -28,7 +28,7 @@ import { mixin as clickaway } from 'vue-clickaway'
 
 import { isYocoIcon } from '../validators'
 
-import KtPopoverIconTextItem from './KtPopoverIconTextItem.vue'
+import IconTextItem from './components/IconTextItem.vue'
 
 const optionIsValid = (option) =>
 	typeof option === 'object' &&
@@ -40,7 +40,7 @@ const optionIsValid = (option) =>
 
 export default {
 	name: 'KtPopover',
-	components: { KtPopoverIconTextItem },
+	components: { IconTextItem },
 	mixins: [clickaway],
 	props: {
 		content: { default: '', type: String },
