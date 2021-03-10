@@ -1,7 +1,17 @@
 <template>
 	<div>
 		<h1>Changelog</h1>
-		<section v-for="release in sortedReleases" :key="release.tag_name">
+		<div v-if="isLoading">
+			<div class="skeleton rectangle md" />
+			<div class="skeleton rectangle lg" />
+			<br />
+			<div class="skeleton rectangle md" />
+			<div class="skeleton rectangle lg" />
+			<br />
+			<div class="skeleton rectangle md" />
+			<div class="skeleton rectangle lg" />
+		</div>
+		<section v-for="release in sortedReleases" v-else :key="release.tag_name">
 			<h2>
 				<a
 					:href="`#${release.tag_name}`"
@@ -109,6 +119,8 @@ export default defineComponent({
 	name: 'DocumentationPageChangelog',
 	layout: 'fullpage',
 	setup() {
+		const isLoading = ref(true)
+
 		const releases: Ref<
 			Endpoints['GET /repos/:owner/:repo/releases']['response']['data']
 		> = ref([])
@@ -122,10 +134,12 @@ export default defineComponent({
 					repo: 'kotti',
 				})
 			).data
+			isLoading.value = false
 		})
 
 		return {
 			dayjs,
+			isLoading,
 			renderMarkdown: (markdown: string) =>
 				marked(convertPoundToIssueLink(markdown)),
 			releases,
