@@ -7,20 +7,28 @@
 			}"
 		>
 			<h1 class="component-info__title" v-text="component.name" />
-			<div
-				v-for="(label, index) in labels"
-				:key="index"
-				class="component-info__label"
-				:style="`--background-color: ${label.backgroundColor}; --color: ${label.color}`"
-			>
-				<div class="component-info__label__left" v-text="label.left" />
-				<a
-					v-if="label.link"
-					class="component-info__label__right"
-					:href="label.link"
-					v-text="label.right"
-				/>
-				<div v-else class="component-info__label__right" v-text="label.right" />
+			<div>
+				<div class="component-info__labels">
+					<div
+						v-for="(label, index) in labels"
+						:key="index"
+						class="component-info__label"
+						:style="`--background-color: ${label.backgroundColor}; --color: ${label.color}`"
+					>
+						<div class="component-info__label__left" v-text="label.left" />
+						<a
+							v-if="label.link"
+							class="component-info__label__right"
+							:href="label.link"
+							v-text="label.right"
+						/>
+						<div
+							v-else
+							class="component-info__label__right"
+							v-text="label.right"
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 		<article v-if="component.meta.deprecated !== null" class="danger-block">
@@ -151,7 +159,12 @@ export default defineComponent<{
 					right: string
 				}> = []
 
-				const { addedVersion, deprecated, typeScript } = props.component.meta
+				const {
+					addedVersion,
+					deprecated,
+					designs,
+					typeScript,
+				} = props.component.meta
 
 				if (deprecated !== null)
 					result.push({
@@ -159,6 +172,37 @@ export default defineComponent<{
 						color: 'var(--red-70)',
 						left: 'Deprecated for',
 						right: `v${deprecated.version}`,
+					})
+
+				if (designs !== null) {
+					if (Array.isArray(designs))
+						result.push(
+							...designs.map((design) => ({
+								backgroundColor: 'var(--yellow-20)',
+								color: 'var(--yellow-70)',
+								left: `Design “${design.title}”`,
+								link: design.url,
+								right: {
+									[Kotti.MetaDesignType.FIGMA]: 'Figma',
+								}[design.type],
+							})),
+						)
+					else
+						result.push({
+							backgroundColor: 'var(--yellow-20)',
+							color: 'var(--yellow-70)',
+							left: 'Design',
+							link: designs.url,
+							right: {
+								[Kotti.MetaDesignType.FIGMA]: 'Figma',
+							}[designs.type],
+						})
+				} else
+					result.push({
+						backgroundColor: 'var(--orange-20)',
+						color: 'var(--orange-70)',
+						left: 'Design',
+						right: 'MISSING',
 					})
 
 				if (typeScript)
@@ -207,31 +251,30 @@ $radius: 3px;
 
 .component-info {
 	display: flex;
-
-	@media (max-width: #{$size-lg - 1px}) {
-		flex-direction: column;
-		align-items: flex-start;
-
-		> *:not(:first-child) {
-			margin-top: 5px;
-		}
-	}
+	flex-wrap: wrap;
+	margin: -5px -10px;
 
 	@media (min-width: $size-lg) {
 		flex-direction: row;
 		align-items: center;
-
-		> *:not(:first-child) {
-			margin-left: 20px;
-		}
 	}
 
 	> * {
 		display: flex;
-		margin: 0;
+		margin: 5px 10px;
+	}
+
+	&__labels {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		margin: -5px;
 	}
 
 	&__label {
+		display: flex;
+		margin: 5px;
+
 		overflow: hidden;
 		border: 1px solid var(--color);
 		border-radius: $radius;
