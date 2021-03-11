@@ -119,6 +119,11 @@ export default defineComponent({
 			meta: {
 				addedVersion: null,
 				deprecated: null,
+				designs: {
+					type: Kotti.MetaDesignType.FIGMA,
+					url:
+						'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=99%3A45',
+				},
 				slots: {},
 				typeScript: null,
 			},

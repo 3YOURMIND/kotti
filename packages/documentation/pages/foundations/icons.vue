@@ -53,6 +53,10 @@ export default defineComponent({
 			meta: {
 				addedVersion: null,
 				deprecated: null,
+				designs: {
+					type: Kotti.MetaDesignType.FIGMA,
+					url: 'https://www.figma.com/file/h37hGvsaYJBkjBldtc6Xcp/Yoco-icons',
+				},
 				slots: {},
 				typeScript: {
 					namespace: 'Yoco.Icon',

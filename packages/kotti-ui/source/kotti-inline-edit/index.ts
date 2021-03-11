@@ -10,6 +10,7 @@ export const KtInlineEdit = attachMeta(makeInstallable(KtInlineEditVue), {
 			'Part of the old legacy kotti form components. Needs to be re-designed or removed entirely.',
 		version: '3.0.0',
 	},
+	designs: null,
 	slots: {},
 	typeScript: null,
 })

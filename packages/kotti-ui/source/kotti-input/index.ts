@@ -17,6 +17,7 @@ export const KtInput = attachMeta(makeInstallable(KtInputVue), {
 		reason: 'Replaced by Kotti v2.0.0 Forms',
 		version: '3.0.0',
 	},
+	designs: null,
 	slots: {
 		dialog: { description: null, scope: null },
 	},
