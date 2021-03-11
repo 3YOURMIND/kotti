@@ -292,6 +292,7 @@ export default defineComponent({
 		const component: { meta: Kotti.Meta; name: string } = {
 			meta: {
 				addedVersion: null,
+				designs: null,
 				deprecated: {
 					alternatives: ['KtForm', 'KtField*'],
 					reason: 'Replaced by Kotti v2.0.0 Forms',

@@ -31,6 +31,10 @@ export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiRow as Row } from '../kotti-row/types'
 
+export enum MetaDesignType {
+	FIGMA = 'FIGMA',
+}
+
 export type Meta = {
 	addedVersion: string | null
 	deprecated: {
@@ -38,6 +42,17 @@ export type Meta = {
 		reason: string
 		version: string
 	} | null
+	designs:
+		| Array<{
+				title: string
+				type: MetaDesignType
+				url: string
+		  }>
+		| {
+				type: MetaDesignType
+				url: string
+		  }
+		| null
 	slots: Record<
 		string,
 		{

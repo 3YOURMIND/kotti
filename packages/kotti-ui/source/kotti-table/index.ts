@@ -1,4 +1,5 @@
 import { Kotti } from '../types'
+import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtTableVue from './src/KtTable.vue'
@@ -10,6 +11,11 @@ import { KtTableProvider as KtTableProviderVue } from './src/TableProvider'
 const META: Kotti.Meta = {
 	addedVersion: '0.0.1',
 	deprecated: null,
+	designs: {
+		type: MetaDesignType.FIGMA,
+		url:
+			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=128%3A0',
+	},
 	slots: {
 		actions: { description: 'E.g. edit/delete row actions', scope: null },
 		default: {

@@ -30,6 +30,7 @@ export const KtFormControllerList = attachMeta(
 	{
 		addedVersion: '2.0.0',
 		deprecated: null,
+		designs: null,
 		slots: {
 			default: {
 				description: null,
@@ -80,6 +81,7 @@ export const KtFormControllerObject = attachMeta(
 	{
 		addedVersion: '2.0.0',
 		deprecated: null,
+		designs: null,
 		slots: {
 			default: {
 				description: null,
@@ -108,6 +110,7 @@ export const KtFormControllerObject = attachMeta(
 export const KtFormSubmit = attachMeta(makeInstallable(KtFormSubmitVue), {
 	addedVersion: '2.0.0',
 	deprecated: null,
+	designs: null,
 	slots: {},
 	typeScript: {
 		namespace: 'Kotti.FormSubmit',
@@ -117,6 +120,7 @@ export const KtFormSubmit = attachMeta(makeInstallable(KtFormSubmitVue), {
 export const KtForm = attachMeta(makeInstallable(KtFormVue), {
 	addedVersion: '2.0.0',
 	deprecated: null,
+	designs: null,
 	slots: {
 		default: {
 			description: null,

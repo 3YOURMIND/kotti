@@ -7,6 +7,7 @@ export const KtDropdownButton = attachMeta(
 	{
 		addedVersion: null,
 		deprecated: null,
+		designs: null,
 		slots: {
 			content: { description: null, scope: null },
 			default: { description: null, scope: null },
