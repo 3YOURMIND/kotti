@@ -135,8 +135,6 @@
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "prettier --write .",
 		"fix:stylelint": "lerna run check:stylelint -- --fix",
-		"postpublish": "yarn run postpublish:deploy",
-		"postpublish:deploy": "yarn --cwd packages/documentation run deploy",
 		"prepublishOnly": "yarn run check && lerna run --no-private build",
 		"test": "jest",
 		"watch:build-kotti-dependencies": "concurrently \"yarn workspace @3yourmind/sass-node-modules-importer run build\" \"yarn workspace @3yourmind/vue-use-tippy run build\" \"yarn workspace @3yourmind/yoco run build\"",
