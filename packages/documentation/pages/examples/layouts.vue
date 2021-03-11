@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import LayoutContainer from '../../components/LayoutContainer.vue'
+import LayoutContainer from '~/components/LayoutContainer.vue'
 
 export default {
-	name: 'ExamplesLayouts',
+	name: 'DocumentationPageExamplesLayouts',
 	layout: 'empty',
 	components: {
 		LayoutContainer,

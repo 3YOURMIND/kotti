@@ -1,27 +1,32 @@
 import {
 	Kotti,
 	KtAccordion,
+	KtActionbar,
 	KtAvatar,
 	KtBanner,
-	KtButton,
 	KtBreadcrumb,
+	KtButton,
 	KtCard,
 	KtComment,
 	KtDrawer,
 	KtDropdown,
 	KtForm,
 	KtHeading,
-	KtLine,
+	KtInlineEdit,
 	KtInput,
+	KtLine,
 	KtModal,
+	KtNavbar,
 	KtPagination,
 	KtPopover,
 	KtRadio,
+	KtSteps,
 	KtTable,
 	KtToaster,
-	KtSteps,
+	KtUserMenu,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
+import { kebabCase, startCase } from 'lodash'
 
 export enum Tag {
 	CSS = 'css',
@@ -52,8 +57,8 @@ const makeComponentMenuItem = (component: {
 	name: string
 	meta: Kotti.Meta
 }): SubsectionPage => ({
-	label: component.name.replace(/^Kt/, ''),
-	path: component.name.replace(/^Kt/, '').toLowerCase(),
+	label: startCase(component.name.replace(/^Kt/, '')),
+	path: kebabCase(component.name.replace(/^Kt/, '')),
 	tags: [
 		component.meta.deprecated === null ? null : Tag.DEPRECATED,
 		component.meta.typeScript === null ? null : Tag.TS,
@@ -74,24 +79,45 @@ export const menu: Array<Section> = [
 		],
 	},
 	{
-		title: 'Usage',
+		title: 'Foundations',
 		subsections: [
 			{
-				icon: Yoco.Icon.LAYER,
-				title: 'Foundations',
-				path: 'foundations',
+				icon: Yoco.Icon.EDIT,
+				title: 'Text',
+				path: 'foundations/text',
 				pages: [
-					{ label: 'Layout', path: 'layout', tags: [Tag.GUIDE] },
-					{ label: 'Grids', path: 'grids', tags: [Tag.TS] },
-					{ label: 'Icons', path: 'icons', tags: [Tag.CSS, Tag.TS] },
 					{ label: 'Typography', path: 'typography', tags: [Tag.CSS] },
-					{ label: 'Writing Style ', path: 'writing', tags: [Tag.GUIDE] },
+					{ label: 'Writing Style ', path: 'writing-style', tags: [Tag.GUIDE] },
+				],
+			},
+			{
+				icon: Yoco.Icon.DIMENSION,
+				title: 'Units',
+				path: 'foundations/units',
+				pages: [],
+			},
+			{
+				icon: Yoco.Icon.MARKUP,
+				title: 'Icons',
+				path: 'foundations/icons',
+				pages: [
+					{ label: 'List', path: 'list', tags: [Tag.CSS, Tag.TS] },
+					{
+						label: 'TypeScript Usage',
+						path: 'typescript',
+						tags: [Tag.GUIDE],
+					},
+					{
+						label: 'Design Guidelines',
+						path: 'design-guidelines',
+						tags: [Tag.GUIDE],
+					},
 				],
 			},
 			{
 				icon: Yoco.Icon.JSON,
 				title: 'Tokens',
-				path: 'tokens',
+				path: 'foundations/tokens',
 				pages: [
 					{
 						label: 'Introduction to tokens',
@@ -103,10 +129,15 @@ export const menu: Array<Section> = [
 					{ label: 'Theming', path: 'theming', tags: [Tag.GUIDE] },
 				],
 			},
+		],
+	},
+	{
+		title: 'Usage',
+		subsections: [
 			{
 				icon: Yoco.Icon.DASHBOARD,
 				title: 'Components',
-				path: 'components',
+				path: 'usage/components',
 				pages: [
 					makeComponentMenuItem(KtAccordion),
 					makeComponentMenuItem(KtAvatar),
@@ -120,6 +151,7 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtForm),
 					{ label: 'Form Fields', path: 'form-fields', tags: [Tag.TS] },
 					makeComponentMenuItem(KtHeading),
+					makeComponentMenuItem(KtInlineEdit),
 					makeComponentMenuItem(KtInput),
 					makeComponentMenuItem(KtLine),
 					{ label: 'Loadings', path: 'loadings', tags: [Tag.CSS] },
@@ -130,20 +162,25 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtSteps),
 					makeComponentMenuItem(KtTable),
 					makeComponentMenuItem(KtToaster),
-					{ label: 'Utilities', tags: [Tag.CSS], path: 'utilities' },
 				],
 			},
 			{
-				icon: Yoco.Icon.SIDEBAR,
-				title: 'Patterns',
-				path: 'patterns',
+				icon: Yoco.Icon.LAYER,
+				title: 'Layouts',
+				path: 'usage/layouts',
 				pages: [
-					{ label: 'ActionBar', path: 'actionbar', tags: [] },
-					{ label: 'Forms', path: 'forms', tags: [Tag.DEPRECATED] },
-					{ label: 'NavBar', path: 'navbar', tags: [] },
-					{ label: 'Inline Edit', path: 'inline-edit', tags: [Tag.DEPRECATED] },
-					{ label: 'User Menu', path: 'user-menu', tags: [] },
+					{ label: 'Introduction', path: 'introduction', tags: [Tag.GUIDE] },
+					{ label: 'Grid System', path: 'grid-system', tags: [Tag.TS] },
+					makeComponentMenuItem(KtNavbar),
+					makeComponentMenuItem(KtActionbar),
+					makeComponentMenuItem(KtUserMenu),
 				],
+			},
+			{
+				icon: Yoco.Icon.MATERIAL,
+				title: 'Utilities',
+				path: 'usage/utilities',
+				pages: [],
 			},
 		],
 	},
