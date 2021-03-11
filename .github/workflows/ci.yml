@@ -1,0 +1,71 @@
+name: CI
+on: push
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn install --frozen-lockfile
+      - name: Run ESLint
+        run: yarn run check:eslint
+  jest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn install --frozen-lockfile
+      - name: Build @3yourmind/yoco
+        run: yarn workspace @3yourmind/yoco run build
+      - name: Build @3yourmind/vue-use-tippy
+        run: yarn workspace @3yourmind/vue-use-tippy run build
+      - name: Run tests
+        run: yarn run test
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn install --frozen-lockfile
+      - name: Run Prettier
+        run: yarn run check:prettier
+  stylelint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn install --frozen-lockfile
+      - name: Run Stylelint
+        run: yarn run check:stylelint

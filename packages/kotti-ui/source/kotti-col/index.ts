@@ -7,7 +7,6 @@ import {
 
 import { KT_ROW_CONTEXT } from '../kotti-row/constants'
 import { Kotti } from '../types'
-import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 export const KtCol = attachMeta(
