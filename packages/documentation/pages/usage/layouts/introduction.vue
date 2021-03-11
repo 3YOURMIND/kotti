@@ -5,11 +5,11 @@
 
 ![layout overiew](~/assets/img/layout_overview.png)
 
-### [Navbar](/layouts/navbar)
+### [Navbar](/usage/layouts/navbar)
 
 The Navbar is the top-level navigation for the user. The width is fixed: `280px` or `14rem`. The background is `Primary-600 (#2659AB)`.
 
-### [Actionbar](/layouts/actionbar)
+### [Actionbar](/usage/layouts/actionbar)
 
 The actionbar is always located between the Navbar and Workspace, which can be omitted if necessary.
 
