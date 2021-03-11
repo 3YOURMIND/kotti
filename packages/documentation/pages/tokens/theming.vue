@@ -4,7 +4,7 @@
 You can apply your own theme to the kotti design system.
 Since we are defining design tokens with CSS custom properties, you can override any of them easily, on the fly.
 
-> We are defining every custom props on `:root` because only root variables are supported by  [css-vars-ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill), the ponyfill we are using.
+> We are defining every custom props on `:root` because only root variables are supported by [css-vars-ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill), the ponyfill we are using.
 > If you don't care about IE11 support, you can overwrite custom props on any element.
 
 ## Method 1: CSS file

@@ -106,7 +106,7 @@ yarn run watch
 
 or
 
-```
+```bash
 # having to build should hopefully be resolved in a future update
 yarn workspace @3yourmind/sass-node-modules-importer run build
 yarn workspace @3yourmind/yoco run build

@@ -14,8 +14,8 @@
 		<h3>Naming convention</h3>
 		<div>
 			<p>
-				The colors in each palette have the same hue but diffrent saturation and
-				lightness. Palettes start with a primary color, then continue in the
+				The colors in each palette have the same hue but different saturation
+				and lightness. Palettes start with a primary color, then continue in the
 				spectrum to create a complete and usable set of colors. An example color
 				name is <code>ColorName-number</code>. <code>ColorName</code> represents
 				the hue, and <code>number</code> represents the lightness. A smaller

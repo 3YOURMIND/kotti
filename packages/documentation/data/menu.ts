@@ -145,12 +145,6 @@ export const menu: Array<Section> = [
 					{ label: 'User Menu', path: 'user-menu', tags: [] },
 				],
 			},
-			{
-				icon: Yoco.Icon.MARKUP,
-				title: 'DesignKit',
-				path: 'designkit',
-				pages: [],
-			},
 		],
 	},
 ]
