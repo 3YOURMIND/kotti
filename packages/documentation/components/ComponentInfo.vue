@@ -20,6 +20,8 @@
 							v-if="label.link"
 							class="component-info__label__right"
 							:href="label.link"
+							rel="noreferrer noopener"
+							target="_blank"
 							v-text="label.right"
 						/>
 						<div
