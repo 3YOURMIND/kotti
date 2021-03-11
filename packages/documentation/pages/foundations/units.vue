@@ -27,7 +27,9 @@ The following 3 types of margins or paddings are suggested:
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-// @ts-expect-error layout isn’t defined on defineComponent but needed by nuxt
+// disable ban-ts-ignore because vscode sees this as an error but nuxt doesn’t
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignored layout is not added to the type definition of defineComponent
 export default defineComponent({
 	name: 'DocumentationPageFoundationsUnits',
 	layout: 'fullpage',
