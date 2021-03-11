@@ -49,7 +49,7 @@ export type Subsection = {
 }
 
 export type Section = {
-	title: string
+	title: string | null
 	subsections: Array<Subsection>
 }
 
@@ -67,7 +67,7 @@ const makeComponentMenuItem = (component: {
 
 export const menu: Array<Section> = [
 	{
-		title: 'Guide',
+		title: null,
 		subsections: [
 			{ icon: Yoco.Icon.FILE, title: 'Overview', path: '', pages: [] },
 			{

@@ -56,7 +56,7 @@ export default defineComponent({
 				},
 			],
 			sections: menu.map((section): {
-				title: string
+				title: string | null
 				links: Array<{
 					icon: Yoco.Icon
 					title: string
