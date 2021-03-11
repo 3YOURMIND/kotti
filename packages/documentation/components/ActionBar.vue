@@ -42,17 +42,22 @@ export default defineComponent({
 	setup() {
 		const route = useRoute()
 
-		const path = computed(
-			() => route.value.path.split('/')[1]?.toLowerCase() ?? null,
-		)
+		const path = computed(() => route.value.path)
 
 		const subsection = computed(
 			(): Subsection => {
 				const match = menu
 					.flatMap((menuItem: Section) => menuItem.subsections)
-					.find((link) => link.path === path.value)
+					.find((link) =>
+						link.path === ''
+							? path.value === ''
+							: path.value.startsWith(`/${link.path}`),
+					)
 
-				if (!match) throw new Error('Actionbar.vue: Could not find Subsection')
+				if (!match)
+					throw new Error(
+						`Actionbar.vue: Could not find Subsection “${path.value}”`,
+					)
 
 				return match
 			},

@@ -1,6 +1,6 @@
 <template>
 	<KtTranslationContext locale="en-US">
-		<LayoutContainer :hasActionBar="showActionbar">
+		<LayoutContainer>
 			<NavBar slot="navbar" />
 			<ActionBar slot="actionbar" />
 			<div slot="workspace">
@@ -13,9 +13,9 @@
 <script>
 import cssVars from 'css-vars-ponyfill'
 
-import ActionBar from '../components/ActionBar.vue'
-import LayoutContainer from '../components/LayoutContainer.vue'
-import NavBar from '../components/NavBar.vue'
+import ActionBar from '~/components/ActionBar.vue'
+import LayoutContainer from '~/components/LayoutContainer.vue'
+import NavBar from '~/components/NavBar.vue'
 
 export default {
 	name: 'DefaultLayout',
@@ -23,12 +23,6 @@ export default {
 		ActionBar,
 		NavBar,
 		LayoutContainer,
-	},
-	computed: {
-		showActionbar() {
-			const exclusivePage = ['index', 'changelog']
-			return !exclusivePage.includes(this.$route.name)
-		},
 	},
 	mounted() {
 		// loading IE11 polyfill
