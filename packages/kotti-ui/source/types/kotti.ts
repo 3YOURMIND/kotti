@@ -1,6 +1,7 @@
 export { KottiCol as Col } from '../kotti-col/types'
 export { KottiField as Field } from '../kotti-field/types'
 export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'
+export { KottiFieldPassword as FieldPassword } from '../kotti-field-password/types'
 export { KottiFieldText as FieldText } from '../kotti-field-text/types'
 export { KottiFieldTextArea as FieldTextArea } from '../kotti-field-text-area/types'
 export {
