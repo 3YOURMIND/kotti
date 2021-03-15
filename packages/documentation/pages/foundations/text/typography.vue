@@ -23,9 +23,13 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 	<h1>H1 Page Header</h1>
 	<h2>H2 Subpage Header</h2>
 	<h3>H3 Section Header</h3>
-	<h3>H3 Section Header
-		<span>Actions<i class="yoco">plus</i></span>
-	</h3>
+	<KtHeading
+		actionText="Actions"
+		icon="plus"
+		text="H3 Section Header"
+		type="action"
+		@click="$router.push('/usage/components/heading')"
+	/>
 </div>
 
 
@@ -42,9 +46,13 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 <h1>H1 Page Header</h1>
 <h2>H2 Subpage Header</h2>
 <h3>H3 Section Header</h3>
-<h3>H3 Section Header
-	<span>Actions<i class="yoco">plus</i></span>
-</h3>
+<KtHeading
+	actionText="Actions"
+	icon="plus"
+	text="H3 Section Header"
+	type="action"
+	@click="$router.push('/usage/components/heading')"
+/>
 ```
 
 ## Label text

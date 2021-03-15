@@ -22,12 +22,7 @@
 				number means lighter, and a greater number means darker.
 			</p>
 		</div>
-		<h3>
-			Palettes
-			<span class="tooltip c-hand" data-tooltip="Click color to copy">
-				<i class="yoco">circle_question</i>
-			</span>
-		</h3>
+		<h3>Palettes</h3>
 		<div class="columns">
 			<ColorPalette
 				class="column col-md-12 col-4"
