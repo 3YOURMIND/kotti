@@ -84,7 +84,7 @@ export default defineComponent({
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_MULTI_SELECT_PROPS,
-		value: { default: null, type: [Number, String, Boolean] },
+		value: { default: null, type: Array },
 	},
 	setup(props: KottiFieldMultiSelect.Props, { emit }) {
 		const field = useField<KottiFieldMultiSelect.Value>({
