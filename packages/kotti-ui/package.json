@@ -74,5 +74,5 @@
 	],
 	"style": "dist/styles.css",
 	"types": "dist/esm/index.d.ts",
-	"version": "3.0.0-alpha.21"
+	"version": "3.0.0-alpha.22"
 }
