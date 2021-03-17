@@ -1,6 +1,7 @@
-dist
-gh-pages
-node_modules
 .nuxt/
-yarn-error.log
+dist/
+gh-pages/
+node_modules/
 packages/storybook/storybook-static
+packages/yoco/fonts/
+yarn-error.log
