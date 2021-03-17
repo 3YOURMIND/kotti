@@ -16,8 +16,8 @@ easily import the colors into figma as styles.
 This snippet will help you delete every color style (paint style, also include gradients
 and patterns) on a project.
 
-**It should not be used in a production file, it is just for cleaning up tests,
-if you use it on the library file, you will break every team projects!**
+<strong style="color: var(--red-70)">It should not be used in a production file, it is just for cleaning up tests,
+if you use it on the library file, you will break every team projects!</strong>
 
 <pre class="long">
 // remove all style from pages

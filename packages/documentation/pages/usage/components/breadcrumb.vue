@@ -27,7 +27,7 @@ links: [
 	},
 	{
 		title: 'Breadcrumbs',
-		to: '/components/breadcrumbs',
+		to: '/usage/components/breadcrumb',
 		isCompleted: false,
 	},
 ]
@@ -77,13 +77,18 @@ export default defineComponent({
 					isCompleted: true,
 				},
 				{
+					title: 'Usage',
+					to: '#',
+					isCompleted: true,
+				},
+				{
 					title: 'Components',
-					to: '/components/avatars',
+					to: '#',
 					isCompleted: true,
 				},
 				{
 					title: 'Breadcrumbs',
-					to: '/components/breadcrumbs',
+					to: '/usage/components/breadcrumb',
 					isCompleted: false,
 				},
 			],
