@@ -38,7 +38,7 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 		message="Using Header Component for H3"
 		icon="circle_attention"
 		actionText="View"
-		@click="$router.push('/components/headings')"
+		@click="$router.push('/usage/components/heading')"
 	/>
 </div>
 

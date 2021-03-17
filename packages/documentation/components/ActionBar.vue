@@ -104,6 +104,11 @@ export default defineComponent({
 		background: var(--yellow-20);
 	}
 
+	&--is-outdated {
+		color: var(--orange-70);
+		background: var(--orange-20);
+	}
+
 	&--is-ts {
 		color: var(--primary-70);
 		background: var(--primary-20);

@@ -32,6 +32,7 @@ export enum Tag {
 	CSS = 'css',
 	DEPRECATED = 'deprecated',
 	GUIDE = 'guide',
+	OUTDATED = 'outdated',
 	TS = 'ts',
 }
 
@@ -115,18 +116,27 @@ export const menu: Array<Section> = [
 				],
 			},
 			{
-				icon: Yoco.Icon.JSON,
-				title: 'Tokens',
-				path: 'foundations/tokens',
+				icon: Yoco.Icon.MATERIAL,
+				title: 'Colors & Tokens',
+				path: 'foundations/colors',
 				pages: [
 					{
-						label: 'Introduction to tokens',
+						label: 'Introduction to Design Tokens',
 						path: 'introduction',
 						tags: [Tag.GUIDE],
 					},
-					{ label: 'Colors', path: 'colors', tags: [Tag.CSS] },
-					{ label: 'Figma', path: 'figma', tags: [Tag.GUIDE] },
-					{ label: 'Theming', path: 'theming', tags: [Tag.GUIDE] },
+					{ label: 'List of Tokens', path: 'list-of-tokens', tags: [Tag.CSS] },
+					{
+						label: 'List of Colors',
+						path: 'list-of-colors',
+						tags: [Tag.CSS, Tag.OUTDATED],
+					},
+					{ label: 'Figma', path: 'figma', tags: [Tag.GUIDE, Tag.OUTDATED] },
+					{
+						label: 'Theming',
+						path: 'theming',
+						tags: [Tag.GUIDE, Tag.OUTDATED],
+					},
 				],
 			},
 		],
@@ -177,7 +187,7 @@ export const menu: Array<Section> = [
 				],
 			},
 			{
-				icon: Yoco.Icon.MATERIAL,
+				icon: Yoco.Icon.SCALE,
 				title: 'Utilities',
 				path: 'usage/utilities',
 				pages: [],
