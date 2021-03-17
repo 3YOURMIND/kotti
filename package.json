@@ -129,11 +129,11 @@
 	"scripts": {
 		"check": "yarn run check:stylelint && yarn run check:eslint && yarn run check:prettier",
 		"check:eslint": "eslint --max-warnings=0 --ignore-path .gitignore '**/*.{js,jsx,json,ts,tsx,vue}'",
-		"check:prettier": "prettier --check .",
+		"check:prettier": "prettier --check --ignore-path .gitignore .",
 		"check:stylelint": "stylelint packages/**/*.{css,scss,vue}",
 		"fix": "yarn run fix:eslint && yarn run fix:stylelint && yarn run fix:prettier",
 		"fix:eslint": "yarn run check:eslint --fix",
-		"fix:prettier": "prettier --write .",
+		"fix:prettier": "prettier --write --ignore-path .gitignore .",
 		"fix:stylelint": "lerna run check:stylelint -- --fix",
 		"prepublishOnly": "yarn run check && lerna run --no-private build",
 		"test": "jest",
