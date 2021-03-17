@@ -68,6 +68,17 @@ h3 {
 	span {
 		display: flex;
 		align-items: center;
+		float: right;
+		font-weight: 500;
+		color: var(--interactive-01);
+		&:hover {
+			color: var(--interactive-01);
+			cursor: pointer;
+		}
+	}
+
+	i.yoco {
+		font-size: 1rem;
 	}
 }
 </style>
