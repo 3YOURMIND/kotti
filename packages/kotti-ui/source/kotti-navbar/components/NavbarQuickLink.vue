@@ -27,18 +27,18 @@ import { useTranslationNamespace } from '../../kotti-translation/hooks'
 import { Kotti } from '../../types'
 
 export default defineComponent<{
+	isNarrow: boolean
 	links: Kotti.Navbar.QuickLink[]
 }>({
 	name: 'KtNavbarQuickLink',
 	props: {
+		isNarrow: { default: false, type: Boolean },
 		links: { required: true, type: Array },
 	},
-	setup(props, { root }) {
+	setup() {
 		const translations = useTranslationNamespace('KtNavbar')
 
 		return {
-			// @ts-expect-error legacy GlobalVue.$KtNavbar hack
-			isNarrow: computed(() => root.$KtNavbar.isNarrow),
 			title: computed(() => translations.value.quickLinksTitle),
 			Yoco,
 		}

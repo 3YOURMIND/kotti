@@ -29,12 +29,8 @@
 export default {
 	name: 'KtNavbarMenu',
 	props: {
+		isNarrow: { default: false, type: Boolean },
 		sections: { type: Array, default: null },
-	},
-	computed: {
-		isNarrow() {
-			return this.$KtNavbar.isNarrow
-		},
 	},
 }
 </script>
