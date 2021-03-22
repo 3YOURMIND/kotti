@@ -5,7 +5,11 @@
 				<i class="yoco" v-text="'burger'" />
 			</div>
 			<div class="kt-navbar__header">
-				<NavbarLogo :logoUrl="logoUrl" @logoClick="$emit('logoClick')" />
+				<NavbarLogo
+					:isNarrow="$KtNavbar.isNarrow"
+					:logoUrl="logoUrl"
+					@logoClick="$emit('logoClick')"
+				/>
 			</div>
 			<NavbarNotification
 				v-if="notification"
@@ -190,9 +194,17 @@ $narrow-navbar-width: 3.4rem;
 	justify-content: center;
 	width: 2.4rem;
 	height: $mobile-navbar-height;
-	color: #fff;
-	text-align: center;
+
+	color: var(--navbar-color-light);
 	cursor: pointer;
+
+	&:hover {
+		color: var(--navbar-color-active);
+	}
+
+	.yoco {
+		font-size: 1.2rem;
+	}
 }
 
 .kt-navbar__header {
@@ -290,6 +302,11 @@ $narrow-navbar-width: 3.4rem;
 	}
 
 	.kt-navbar__header {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		justify-content: center;
+
 		width: auto;
 		padding: 0.2rem 0;
 		border: 0;
