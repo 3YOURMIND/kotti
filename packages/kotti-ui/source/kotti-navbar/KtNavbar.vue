@@ -5,11 +5,7 @@
 				<i class="yoco" v-text="'burger'" />
 			</div>
 			<div class="kt-navbar__header">
-				<NavbarLogo @logoClick="$emit('logoClick')">
-					<slot name="navbar-logo">
-						<img alt="logo" class="image" :src="logoUrl" />
-					</slot>
-				</NavbarLogo>
+				<NavbarLogo :logoUrl="logoUrl" @logoClick="$emit('logoClick')" />
 			</div>
 			<NavbarNotification
 				v-if="notification"
@@ -24,9 +20,6 @@
 				/>
 				<NavbarQuickLink v-if="quickLinks.length" :links="quickLinks" />
 			</div>
-			<div class="kt-navbar__footer">
-				<slot name="navbar-footer" />
-			</div>
 			<div v-if="mobileMenuToggle" class="kt-navbar__dropdown">
 				<NavbarMenu
 					:sections="sections"
@@ -37,6 +30,9 @@
 					v-on-clickaway="clickawayMobileMenu"
 					:links="quickLinks"
 				/>
+			</div>
+			<div class="kt-navbar__footer">
+				<slot name="navbar-footer" />
 			</div>
 		</div>
 	</nav>
@@ -247,11 +243,6 @@ $narrow-navbar-width: 3.4rem;
 		justify-content: center;
 	}
 
-	.kt-navbar-logo__logo {
-		display: block;
-		padding: 0;
-	}
-
 	.kt-navbar-menu {
 		padding: 0.4rem 0;
 		margin: 0.8rem 0.2rem;
@@ -291,6 +282,7 @@ $narrow-navbar-width: 3.4rem;
 		position: relative;
 		flex: 0 0 $mobile-navbar-height;
 		flex-direction: row;
+		justify-content: space-between;
 		width: 100%;
 		height: $mobile-navbar-height;
 		padding: 0;
@@ -309,16 +301,6 @@ $narrow-navbar-width: 3.4rem;
 		align-items: center;
 		justify-content: center;
 		border: 0;
-	}
-
-	.kt-navbar-logo {
-		display: none;
-		&--mobile {
-			display: flex;
-		}
-		&__logo {
-			background-position: center;
-		}
 	}
 
 	.kt-navbar-notification {
