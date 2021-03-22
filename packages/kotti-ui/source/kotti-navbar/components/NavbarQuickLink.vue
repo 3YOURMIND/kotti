@@ -54,9 +54,10 @@ export default defineComponent<{
 	&__link {
 		display: flex;
 		align-items: center;
+		color: var(--navbar-color-light);
 
 		&:hover {
-			color: var(--navbar-color-light);
+			color: var(--navbar-color-active);
 		}
 
 		.yoco {
