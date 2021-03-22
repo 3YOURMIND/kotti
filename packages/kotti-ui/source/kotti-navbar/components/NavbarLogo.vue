@@ -4,10 +4,10 @@
 			v-if="isNarrow"
 			class="kt-navbar-logo kt-navbar-logo--is-desktop kt-navbar-logo--is-narrow"
 		>
-			<i
-				class="yoco"
+			<NavbarTooltip
+				:icon="Yoco.Icon.BURGER"
+				:label="translations.menuExpand"
 				@click.stop="$KtNavbar.toggle()"
-				v-text="Yoco.Icon.BURGER"
 			/>
 		</div>
 		<div
@@ -16,10 +16,10 @@
 			@click="$emit('logoClick')"
 		>
 			<img alt="logo" class="kt-navbar-logo__image" :src="logoUrl" />
-			<i
-				class="yoco expanded"
+			<NavbarTooltip
+				:icon="Yoco.Icon.HIDE_MENU"
+				:label="translations.menuCollapse"
 				@click.stop="$KtNavbar.toggle()"
-				v-text="Yoco.Icon.HIDE_MENU"
 			/>
 		</div>
 		<div
@@ -35,17 +35,27 @@
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
 
+import { useTranslationNamespace } from '../../kotti-translation/hooks'
+
+import NavbarTooltip from './NavbarTooltip.vue'
+
 export default defineComponent<{
 	isNarrow: boolean
 	logoUrl: string
 }>({
 	name: 'NavbarLogo',
+	components: {
+		NavbarTooltip,
+	},
 	props: {
 		isNarrow: { default: false, type: Boolean },
 		logoUrl: { required: true, type: String },
 	},
 	setup() {
+		const translations = useTranslationNamespace('KtNavbar')
+
 		return {
+			translations,
 			Yoco,
 		}
 	},
@@ -65,7 +75,7 @@ $margin: 0.8rem 1rem;
 }
 
 .kt-navbar-logo {
-	.yoco {
+	::v-deep .yoco {
 		padding: $margin;
 
 		font-size: 1.2rem;

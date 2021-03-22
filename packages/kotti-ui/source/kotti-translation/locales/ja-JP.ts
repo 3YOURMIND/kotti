@@ -17,6 +17,8 @@ export const jaJP: KottiTranslation.Messages = {
 		warningsSectionTitle: 'TODO',
 	},
 	KtNavbar: {
+		menuCollapse: 'TODO',
+		menuExpand: 'TODO',
 		quickLinksTitle: 'TODO',
 	},
 }

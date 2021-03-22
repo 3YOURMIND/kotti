@@ -14,7 +14,8 @@
 				:href="link.link ? link.link : null"
 				@click="$emit('menuLinkClick', link)"
 			>
-				<i class="yoco" v-text="link.icon" />
+				<NavbarTooltip v-if="isNarrow" :icon="link.icon" :label="link.title" />
+				<div v-else class="yoco" v-text="link.icon" />
 				<span
 					v-if="!isNarrow"
 					:data-test="`kt-navbar-section-item-${link.title.toLowerCase()}`"
@@ -25,14 +26,21 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+
+import NavbarTooltip from './NavbarTooltip.vue'
+
+export default defineComponent({
 	name: 'KtNavbarMenu',
+	components: {
+		NavbarTooltip,
+	},
 	props: {
 		isNarrow: { default: false, type: Boolean },
 		sections: { type: Array, default: null },
 	},
-}
+})
 </script>
 
 <style lang="scss">

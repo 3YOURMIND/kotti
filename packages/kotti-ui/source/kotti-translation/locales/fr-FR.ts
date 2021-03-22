@@ -17,6 +17,8 @@ export const frFR: KottiTranslation.Messages = {
 		warningsSectionTitle: 'Avertissements',
 	},
 	KtNavbar: {
+		menuCollapse: 'Réduire le menu',
+		menuExpand: 'Étendre le menu',
 		quickLinksTitle: 'Liens Rapides',
 	},
 }
