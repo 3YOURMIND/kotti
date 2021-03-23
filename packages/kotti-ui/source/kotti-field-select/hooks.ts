@@ -8,6 +8,7 @@ import { KottiFieldSingleSelect, KottiFieldMultiSelect } from './types'
 export type ElSelectWithInternalAPI = ElSelect & {
 	inputWidth: number
 	setSoftFocus(): void
+	visible: boolean
 }
 
 type HookParameters<DATA_TYPE extends Values> = {
@@ -48,6 +49,11 @@ const usePopperMisplacementFix = <DATA_TYPE extends Values>({
 	onMounted(() => {
 		watchEffect(() => {
 			const { elSelectComponent } = getComponents({ elSelectRef, ktFieldRef })
+			/**
+			 * [select.vue]{@link https://github.com/ElemeFE/element/blob/649670c55a45c7343eb7148565e2d873bc3d52dd/src/utils/vue-popper.js#L72 }
+			 * showPopper triggers on change of `visible`, which emits `updatePopper` which recomputes width/placement
+			 */
+			elSelectComponent.visible
 			if (field.isLoading || field.isDisabled) return elSelectComponent.blur()
 		})
 	})
@@ -97,16 +103,23 @@ const usePopperWidthFix = <DATA_TYPE extends Values>({
 				ktFieldRef,
 			})
 
-			// just used to add this as a dependency
+			// register dependencies
 			elSelectComponent.inputWidth
+			/**
+			 * [select.vue]{@link https://github.com/ElemeFE/element/blob/649670c55a45c7343eb7148565e2d873bc3d52dd/src/utils/vue-popper.js#L72 }
+			 * showPopper triggers on change of `visible`, which emits `updatePopper` which recomputes width/placement
+			 */
+			elSelectComponent.visible
 
 			const ktFieldContainerElement = ktFieldComponent.$refs
 				.inputContainerRef as Element
 			const newWidth = ktFieldContainerElement.getBoundingClientRect().width
+
 			const popperComponent = elSelectComponent.$refs.popper as Vue
 			const popperElement = popperComponent.$el as HTMLElement
 
 			popperElement.style.width = `${newWidth}px`
+
 			elSelectComponent.inputWidth = newWidth
 		})
 	})
