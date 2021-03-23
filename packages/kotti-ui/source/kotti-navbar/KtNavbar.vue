@@ -19,19 +19,26 @@
 			/>
 			<div class="kt-navbar__body">
 				<NavbarMenu
+					:isNarrow="$KtNavbar.isNarrow"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
-				<NavbarQuickLink v-if="quickLinks.length" :links="quickLinks" />
+				<NavbarQuickLink
+					v-if="quickLinks.length"
+					:isNarrow="$KtNavbar.isNarrow"
+					:links="quickLinks"
+				/>
 			</div>
 			<div v-if="mobileMenuToggle" class="kt-navbar__dropdown">
 				<NavbarMenu
+					:isNarrow="$KtNavbar.isNarrow"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
 				<NavbarQuickLink
 					v-if="quickLinks.length"
 					v-on-clickaway="clickawayMobileMenu"
+					:isNarrow="$KtNavbar.isNarrow"
 					:links="quickLinks"
 				/>
 			</div>

@@ -36,6 +36,8 @@ export namespace KottiNavbar {
 		Pick<PropsInternal, 'logoUrl' | 'sections'>
 
 	export type Translations = {
+		menuCollapse: string
+		menuExpand: string
 		quickLinksTitle: string
 	}
 }

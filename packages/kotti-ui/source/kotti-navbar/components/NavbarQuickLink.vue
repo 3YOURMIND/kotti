@@ -14,7 +14,13 @@
 			target="_blank"
 		>
 			<span v-if="!isNarrow" v-text="item.title" />
-			<i class="yoco" v-text="Yoco.Icon.LINK" />
+			<div v-if="!isNarrow" class="yoco" v-text="Yoco.Icon.LINK" />
+			<NavbarTooltip
+				v-else
+				class="kt-navbar__quick-links__tooltip"
+				:icon="Yoco.Icon.LINK"
+				:label="item.title"
+			/>
 		</a>
 	</div>
 </template>
@@ -26,19 +32,24 @@ import { computed, defineComponent } from '@vue/composition-api'
 import { useTranslationNamespace } from '../../kotti-translation/hooks'
 import { Kotti } from '../../types'
 
+import NavbarTooltip from './NavbarTooltip.vue'
+
 export default defineComponent<{
+	isNarrow: boolean
 	links: Kotti.Navbar.QuickLink[]
 }>({
 	name: 'KtNavbarQuickLink',
+	components: {
+		NavbarTooltip,
+	},
 	props: {
+		isNarrow: { default: false, type: Boolean },
 		links: { required: true, type: Array },
 	},
-	setup(props, { root }) {
+	setup() {
 		const translations = useTranslationNamespace('KtNavbar')
 
 		return {
-			// @ts-expect-error legacy GlobalVue.$KtNavbar hack
-			isNarrow: computed(() => root.$KtNavbar.isNarrow),
 			title: computed(() => translations.value.quickLinksTitle),
 			Yoco,
 		}
@@ -60,7 +71,7 @@ export default defineComponent<{
 			color: var(--navbar-color-active);
 		}
 
-		.yoco {
+		::v-deep .yoco {
 			font-size: 0.8rem;
 		}
 	}
@@ -70,6 +81,13 @@ export default defineComponent<{
 		font-weight: 700;
 		text-transform: uppercase;
 		opacity: 0.64;
+	}
+
+	&__tooltip {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
 	}
 }
 </style>
