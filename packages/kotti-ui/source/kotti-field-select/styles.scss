@@ -29,6 +29,25 @@
 		}
 	}
 
+	&__actions {
+		&:before {
+			display: block;
+			height: 1px;
+			margin: 0 0.6rem;
+			content: '';
+			background: var(--gray-20);
+		}
+
+		&__item {
+			color: var(--interactive-01);
+			cursor: pointer;
+
+			&:hover {
+				background-color: var(--ui-01);
+			}
+		}
+	}
+
 	&--multiple {
 		$vertical-tag-gap: 2px;
 		$horizontal-tag-gap: 4px;

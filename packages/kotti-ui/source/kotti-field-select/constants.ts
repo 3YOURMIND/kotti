@@ -21,6 +21,20 @@ const KOTTI_FIELD_SELECT_PROPS = {
 			),
 	},
 	placeholder: { default: null, type: String },
+	actions: {
+		default: () => [],
+		type: Array,
+		validator: (value: unknown): value is Shared.Props['actions'] =>
+			Array.isArray(value) &&
+			value.every(
+				// eslint-disable-next-line
+				(action: any): action is Shared.Action =>
+					typeof action === 'object' &&
+					action !== null &&
+					typeof action.label === 'string' &&
+					typeof action.onClick === 'function',
+			),
+	},
 }
 
 export const KOTTI_FIELD_SELECT_SUPPORTS: KottiField.Supports = {

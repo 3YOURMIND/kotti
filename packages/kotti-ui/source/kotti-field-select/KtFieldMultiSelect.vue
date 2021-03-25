@@ -44,6 +44,17 @@
 					:label="option.label"
 					:value="option.value"
 				/>
+				<div v-if="actions.length" class="kt-field-select__actions">
+					<div class="el-select-dropdown__item">
+						<div
+							v-for="(action, index) in actions"
+							:key="index"
+							class="kt-field-select__actions__item"
+							@click="action.onClick"
+							v-text="action.label"
+						/>
+					</div>
+				</div>
 			</ElSelect>
 		</div>
 		<template v-slot:actionIcon="{ classes, handleClear, showClear }">
