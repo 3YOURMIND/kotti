@@ -6,39 +6,41 @@
 			</div>
 			<div class="kt-navbar__header">
 				<NavbarLogo
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:logoUrl="logoUrl"
 					@logoClick="$emit('logoClick')"
+					@toggleNarrow="toggleNarrow"
 				/>
 			</div>
 			<NavbarNotification
 				v-if="notification"
 				:count="notification.count"
+				:isNarrow="isNarrow"
 				:link="notification.link"
 				:title="notification.title"
 			/>
 			<div class="kt-navbar__body">
 				<NavbarMenu
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
 				<NavbarQuickLink
 					v-if="quickLinks.length"
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:links="quickLinks"
 				/>
 			</div>
 			<div v-if="mobileMenuToggle" class="kt-navbar__dropdown">
 				<NavbarMenu
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
 				<NavbarQuickLink
 					v-if="quickLinks.length"
 					v-on-clickaway="clickawayMobileMenu"
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:links="quickLinks"
 				/>
 			</div>
@@ -81,6 +83,7 @@ export default {
 	},
 	data() {
 		return {
+			isNarrow: false,
 			mobileMenuToggle: false,
 		}
 	},
@@ -88,7 +91,7 @@ export default {
 		classes() {
 			const classes = []
 
-			if (this.$KtNavbar.isNarrow) classes.push('kt-navbar--narrow')
+			if (this.isNarrow) classes.push('kt-navbar--narrow')
 			if (this.theme) classes.push(`kt-navbar--theme-${this.theme}`)
 
 			return classes
@@ -100,6 +103,9 @@ export default {
 		},
 		toggleMobileMenu() {
 			this.mobileMenuToggle = !this.mobileMenuToggle
+		},
+		toggleNarrow() {
+			this.isNarrow = !this.isNarrow
 		},
 	},
 }
