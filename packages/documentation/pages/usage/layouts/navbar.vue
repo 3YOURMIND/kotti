@@ -76,32 +76,12 @@ quickLinksData: [{
 }],
 ```
 
-## Toggle Narrow Navbar
-
-<div class="element-example">
-	<KtButton @click="$KtNavbar.toggle(true)">Set to Narrow</KtButton>
-	<KtButton @click="$KtNavbar.toggle(false)">Set to Wide</KtButton>
-	<KtButton @click="$KtNavbar.toggle()">isNarrow: {{'$KtNavbar' in this && $KtNavbar.isNarrow}}</KtButton>
-</div>
-
-You can control `isNarrow` globally via `$KtNavbar.toggle(value)` function.
-
-You can get the value of narrow navbar via `$KtNavbar.isNarrow`
-
-```html
-<KtButton @click="$KtNavbar.toggle(true)">Set to Narrow</KtButton>
-<KtButton @click="$KtNavbar.toggle(false)">Set to Wide</KtButton>
-<KtButton @click="$KtNavbar.toggle()">Toggle</KtButton>
-<h2>Navbar is narrow: {{ '$KtNavbar' in this && $KtNavbar.isNarrow }}</h2>
-```
-
 ## Usage
 
 ### Attributes
 
 | Attribute            | Description                            | Type      | Accepted values        | Default |
 |:---------------------|:---------------------------------------|:----------|:-----------------------|:--------|
-| `$KtNavbar.isNarrow` | define navbar is narrow                | `Boolean` | —                      | `false` |
 | `notification`       | notification section of the navbar     | `Array`   | See above Notification | —       |
 | `quickLinks`         | quick link section of the navbar       | `Array`   | See above Quick Links  | —       |
 | `sections`           | menu section of the navbar             | `Array`   | See above Menu         | —       |
