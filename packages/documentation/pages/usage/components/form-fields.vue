@@ -186,6 +186,7 @@
 						formKey="collapseTagsAfter"
 						isOptional
 						label="collapseTagsAfter"
+						:minimum="0"
 						size="small"
 					/>
 					<KtFieldSingleSelect
@@ -721,7 +722,10 @@ export default defineComponent({
 				})
 
 			if (
-				componentDefinition.value.additionalProps.includes('collapseTagsAfter')
+				componentDefinition.value.additionalProps.includes(
+					'collapseTagsAfter',
+				) &&
+				settings.value.additionalProps.collapseTagsAfter !== null
 			)
 				Object.assign(additionalProps, {
 					collapseTagsAfter: settings.value.additionalProps.collapseTagsAfter,
