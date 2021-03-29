@@ -113,7 +113,12 @@ $margin: 0.8rem 1rem;
 	}
 
 	&__image {
-		max-height: 1.2rem;
+		// Calculates from:
+		//  12rem (menu width)
+		//  - 1 rem (image margin left)
+		//  - 0 rem (image margin right)
+		//  - 3.2rem (yoco icon container width)
+		max-width: 7.8rem;
 	}
 }
 
@@ -125,6 +130,10 @@ $margin: 0.8rem 1rem;
 
 		&--is-mobile {
 			display: flex;
+		}
+
+		&__image {
+			max-height: 2rem;
 		}
 	}
 }
