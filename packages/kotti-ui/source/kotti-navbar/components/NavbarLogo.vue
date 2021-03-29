@@ -133,7 +133,7 @@ $margin: 0.8rem 1rem;
 		}
 
 		&__image {
-			max-height: 1.2rem;
+			max-height: 2rem;
 		}
 	}
 }
