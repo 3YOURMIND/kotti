@@ -19,8 +19,14 @@ export namespace Shared {
 	}
 
 	export type Props = {
+		actions: Shared.Action[]
 		options: Shared.Entry[]
 		placeholder: string | null
+	}
+
+	export type Action = {
+		label: string
+		onClick: () => void
 	}
 
 	export type Translations = {

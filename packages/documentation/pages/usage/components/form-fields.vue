@@ -111,6 +111,14 @@
 				/>
 				<KtFormControllerObject formKey="additionalProps" v-if="componentDefinition.additionalProps.length > 0">
 					<h4>Additional Props</h4>
+					<KtFieldToggle
+						v-if="componentDefinition.additionalProps.includes('actions')"
+						formKey="actions"
+						isOptional
+						helpText="List of actions that can be triggered from the end of the dropdown"
+						label="actions"
+						type="switch"
+					/>
 					<KtFieldSingleSelect
 						v-if="componentDefinition.additionalProps.includes('toggleType')"
 						formKey="toggleType"
@@ -388,7 +396,7 @@ const components: Array<{
 		supports: { clear: false, decoration: true, tabIndex: true },
 	},
 	{
-		additionalProps: ['collapseTagsAfter'],
+		additionalProps: ['collapseTagsAfter', 'actions'],
 		formKey: 'multiSelectValue',
 		name: 'KtFieldMultiSelect',
 		supports: { clear: true, decoration: true, tabIndex: false },
@@ -406,7 +414,7 @@ const components: Array<{
 		supports: { clear: false, decoration: false, tabIndex: true },
 	},
 	{
-		additionalProps: [],
+		additionalProps: ['actions'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
 		supports: { clear: true, decoration: true, tabIndex: false },
@@ -520,20 +528,20 @@ const generateCode = (component: ComponentValue) =>
 const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 	{ label: 'Key 1', value: 'value1' },
 	{ label: 'Key 2', value: 'value2', tooltip: 'Some tooltip' },
-	{ label: 'Key 3', value: 'value3' },
 	{
 		isDisabled: true,
-		label: 'Key 4',
+		label: 'Key 3',
 		tooltip: 'This option is disabled',
-		value: 'value4',
+		value: 'value3',
 	},
+	{ label: 'Key 4', value: 'value4' },
 ]
 
 const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
 	{ label: 'Key 1', value: 'value1' },
 	{ label: 'Key 2', value: 'value2' },
-	{ label: 'Key 3', value: 'value3' },
-	{ isDisabled: true, label: 'Key 4', value: 'value4' },
+	{ isDisabled: true, label: 'Key 3', value: 'value3' },
+	{ label: 'Key 4', value: 'value4' },
 ]
 
 const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
@@ -562,6 +570,7 @@ export default defineComponent({
 
 		const settings = ref<{
 			additionalProps: {
+				actions: Kotti.FieldToggle.Value
 				autoComplete: 'current-password' | 'new-password'
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				hideChangeButtons: boolean
@@ -596,6 +605,7 @@ export default defineComponent({
 			validation: Kotti.Field.Validation.Result['type']
 		}>({
 			additionalProps: {
+				actions: false,
 				autoComplete: 'current-password',
 				collapseTagsAfter: null,
 				hideChangeButtons: false,
@@ -738,10 +748,21 @@ export default defineComponent({
 					hideChangeButtons: settings.value.additionalProps.hideChangeButtons,
 				})
 
-			if (['KtFieldMultiSelect', 'KtFieldSingleSelect'].includes(component))
+			if (['KtFieldMultiSelect', 'KtFieldSingleSelect'].includes(component)) {
 				Object.assign(additionalProps, {
 					options: singleOrMultiSelectOptions,
 				})
+
+				if (settings.value.additionalProps.actions)
+					Object.assign(additionalProps, {
+						actions: [
+							{
+								label: 'Create Item',
+								onClick: () => alert('actions[0].onClick called'),
+							},
+						],
+					})
+			}
 
 			if (['KtFieldRadioGroup'].includes(component))
 				Object.assign(additionalProps, {
@@ -795,7 +816,6 @@ export default defineComponent({
 				validation: settings.value.validation,
 			}),
 		)
-
 		return {
 			component: computed(
 				(): { meta: Kotti.Meta; name: string } =>
