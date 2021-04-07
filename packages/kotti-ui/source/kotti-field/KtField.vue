@@ -351,7 +351,7 @@ export default defineComponent<{
 
 			.yoco {
 				display: flex;
-				font-size: 1.1em;
+				font-size: 1.4em;
 			}
 
 			&--left {
