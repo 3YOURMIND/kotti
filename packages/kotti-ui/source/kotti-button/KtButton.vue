@@ -11,10 +11,14 @@
 	</component>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
+
+import { KottiButton } from './types'
+export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
 	props: {
+		// Why do we have this?
 		element: { type: String, default: 'button' },
 		icon: { default: '', type: String },
 		isBlock: { default: false, type: Boolean },
@@ -24,35 +28,23 @@ export default {
 		size: { default: null, type: String },
 		type: { default: null, type: String },
 	},
-	data() {
+	setup(props, { emit, slots }) {
+		const hasSlot = computed(() => Boolean(slots.default))
 		return {
-			isHover: false,
+			handleClick: (event) => emit(KottiButton.Event.CLICK, event),
+			hasSlot,
+			mainClasses: computed(() => ({
+				'kt-button': true,
+				[props.type]: true,
+				icon: props.icon,
+				'icon-only': props.icon && !hasSlot.value && !props.label,
+				'kt-button--is-block': props.isBlock,
+				'kt-button--is-multiline': props.isMultiline,
+				sm: props.size === 'small',
+			})),
 		}
 	},
-	computed: {
-		hasSlot() {
-			return Boolean(this.$slots.default)
-		},
-		mainClasses() {
-			const classes = ['kt-button', this.type, this.objectClass]
-			if (this.isBlock) classes.push('kt-button--is-block')
-			if (this.isMultiline) classes.push('kt-button--is-multiline')
-			if (this.size === 'small') classes.push('sm')
-			return classes
-		},
-		objectClass() {
-			return {
-				icon: this.icon,
-				'icon-only': this.icon && !this.$slots.default && !this.label,
-			}
-		},
-	},
-	methods: {
-		handleClick(event) {
-			this.$emit('click', event)
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss">
