@@ -12,7 +12,7 @@
 				<IconTextItem
 					v-for="(option, index) in options"
 					:key="index"
-					:data-test="option.dataTest"
+					:dataTest="option.dataTest"
 					:icon="option.icon"
 					:isDisabled="option.isDisabled"
 					:label="option.label"
