@@ -107,29 +107,13 @@ an increment of '4rem'.
 </KtPopover>
 </div>
 
-## Items
+## Options
 
-We also provide a nice way of displaying items inside popovers.
-It replaces the old `KtDropdownMenu`.
-
-
-<div class="element-example">
-<KtPopover placement="bottom-end">
-	<KtButton label="Popover with items" />
-	<div slot="content">
-		<KtPopoverItem icon="global">Refresh</KtPopoverItem>
-		<KtPopoverItem icon="shipping">Profile</KtPopoverItem>
-	</div>
-</KtPopover>
-</div>
-
-## Disabled Items
-
-We can display disabled text icon items when we provide isDisabled properties in the `KtPopover` options.
+We also provide a nice way of displaying items inside popovers. It replaces the old `KtDropdownMenu`. We can display disabled text icon items when we provide isDisabled properties in the `KtPopover` options.
 
 <div class="element-example">
 	<KtPopover :options="[
-			{ icon: 'download', isDisabled: false, label: 'Download', onClick: () => {}},
+			{ dataTest: 'example-button', icon: 'download', label: 'Download', onClick: () => {}},
 			{ icon: 'edit', isDisabled: true, label: 'Edit'}
 	]">
 		<KtButton label="Popover with a disabled item"/>
@@ -139,10 +123,10 @@ We can display disabled text icon items when we provide isDisabled properties in
 
 ```html
 	<KtPopover :options="[
-		{ icon: 'download', isDisabled: false, label: 'Download', onClick: () => {}},
-		{ icon: 'edit', isDisabled: true, label: 'Edit'}
+			{ dataTest: 'example-button', icon: 'download', label: 'Download', onClick: () => {}},
+			{ icon: 'edit', isDisabled: true, label: 'Edit'}
 	]">
-		<KtButton label="Popover with a disabled item" />
+		<KtButton label="Popover with a disabled item"/>
 	</KtPopover>
 ```
 

@@ -4,6 +4,7 @@
 		:class="{
 			'kt-popover-item--is-disabled': isDisabled,
 		}"
+		:data-test="dataTest"
 		v-on="$listeners"
 	>
 		<i v-if="icon" class="yoco" v-text="icon" />
@@ -15,12 +16,14 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent<{
+	dataTest: string | null
 	icon: string | null
 	isDisabled: boolean
 	label: string | null
 }>({
 	name: 'IconTextItem',
 	props: {
+		dataTest: { default: null, type: String },
 		icon: { default: null, type: String },
 		isDisabled: { default: false, type: Boolean },
 		label: { default: null, type: String },

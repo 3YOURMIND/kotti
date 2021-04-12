@@ -12,6 +12,7 @@
 				<IconTextItem
 					v-for="(option, index) in options"
 					:key="index"
+					:dataTest="option.dataTest"
 					:icon="option.icon"
 					:isDisabled="option.isDisabled"
 					:label="option.label"
@@ -36,7 +37,8 @@ const optionIsValid = (option) =>
 	(typeof option.icon === 'undefined' || isYocoIcon(option.icon)) &&
 	['undefined', 'boolean'].includes(typeof option.isDisabled) &&
 	(option.isDisabled || typeof option.onClick === 'function') &&
-	['undefined', 'string'].includes(typeof option.label)
+	['undefined', 'string'].includes(typeof option.label) &&
+	['undefined', 'string'].includes(typeof option.dataTest)
 
 export default {
 	name: 'KtPopover',
