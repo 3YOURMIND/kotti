@@ -1,5 +1,7 @@
 import { Ref } from '@vue/composition-api'
 
+import { SpecifyRequiredProps } from '../types/utilities'
+
 export namespace KottiRow {
 	export type Context = {
 		gap: Readonly<Ref<number>>
@@ -26,5 +28,5 @@ export namespace KottiRow {
 		tag: string
 	}
 
-	export type Props = Partial<PropsInternal>
+	export type Props = SpecifyRequiredProps<PropsInternal, never>
 }
