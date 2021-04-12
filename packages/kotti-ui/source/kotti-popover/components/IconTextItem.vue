@@ -1,8 +1,8 @@
 <template>
 	<div
-		class="kt-popover-item"
+		class="kt-popover-options-item"
 		:class="{
-			'kt-popover-item--is-disabled': isDisabled,
+			'kt-popover-options-item--is-disabled': isDisabled,
 		}"
 		:data-test="dataTest"
 		v-on="$listeners"
@@ -34,28 +34,30 @@ export default defineComponent<{
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
 
-.kt-popover-item {
+.kt-popover-options-item {
 	display: flex;
+	align-items: center;
 	padding: $unit-2;
-	margin: $unit-h;
-	line-height: 20px;
 	cursor: pointer;
-
-	&:hover {
-		background: var(--gray-10);
-		border-radius: $border-radius;
-	}
-
-	.yoco {
-		align-self: center;
-		padding-right: $unit-1;
-		font-size: 20px;
-	}
+	border-radius: $border-radius;
 
 	&--is-disabled {
 		cursor: not-allowed;
-
 		opacity: 0.46;
+	}
+
+	&:not(.kt-popover-options-item--is-disabled) {
+		&:hover {
+			background-color: var(--ui-01);
+		}
+	}
+
+	.yoco {
+		font-size: 1rem;
+	}
+
+	> *:not(:first-child) {
+		margin-left: $unit-1;
 	}
 }
 </style>
