@@ -53,7 +53,7 @@ export default {
 			validator: (options) => options.every(optionIsValid),
 		},
 		placement: { default: 'bottom', type: String },
-		size: { default: null, type: String },
+		size: { default: 'auto', type: String },
 	},
 	data() {
 		return {
@@ -63,7 +63,11 @@ export default {
 	},
 	computed: {
 		popperClass() {
-			return this.size ? `kt-popper kt-popper--${this.size}` : `kt-popper`
+			const classes = ['kt-popper', `kt-popper--size-${this.size}`]
+
+			if (this.options.length >= 1) classes.push(`kt-popper--has-options`)
+
+			return classes
 		},
 		forceShowPopoverIsNull() {
 			return this.forceShowPopover === null
@@ -167,34 +171,44 @@ export default {
 // poper.js css
 .kt-popper {
 	z-index: $zindex-4;
-	width: auto;
 	padding: 0.8rem;
 	background: var(--white);
 	border-radius: $border-radius;
 	box-shadow: $box-shadow;
 
-	&--sm {
-		width: 12rem;
+	&--has-options {
+		min-width: 200px;
+		padding: 0.4rem;
 	}
 
-	&--md {
-		width: 16rem;
-	}
+	&--size {
+		&-auto {
+			width: auto;
+		}
 
-	&--lg {
-		width: 20rem;
-	}
+		&-sm {
+			width: 12rem;
+		}
 
-	&--xl {
-		width: 24rem;
-	}
+		&-md {
+			width: 16rem;
+		}
 
-	&--xxl {
-		width: 28rem;
-	}
+		&-lg {
+			width: 20rem;
+		}
 
-	&--xxxl {
-		width: 32rem;
+		&-xl {
+			width: 24rem;
+		}
+
+		&-xxl {
+			width: 28rem;
+		}
+
+		&-xxxl {
+			width: 32rem;
+		}
 	}
 }
 </style>
