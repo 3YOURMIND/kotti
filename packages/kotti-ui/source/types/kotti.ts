@@ -1,3 +1,4 @@
+export { KottiButton as Button } from '../kotti-button/types'
 export { KottiCol as Col } from '../kotti-col/types'
 export { KottiField as Field } from '../kotti-field/types'
 export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'
@@ -31,7 +32,6 @@ export {
 export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiRow as Row } from '../kotti-row/types'
-export { KottiButton as Button } from '../kotti-button/types'
 
 export enum MetaDesignType {
 	FIGMA = 'FIGMA',

@@ -15,6 +15,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import { KottiButton } from './types'
+
 export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
 	props: {
@@ -30,17 +31,21 @@ export default defineComponent<KottiButton.PropsInternal>({
 	},
 	setup(props, { emit, slots }) {
 		const hasSlot = computed(() => Boolean(slots.default))
+
 		return {
-			handleClick: (event) => emit(KottiButton.Event.CLICK, event),
+			handleClick: (event) => emit('click', event),
 			hasSlot,
 			mainClasses: computed(() => ({
-				'kt-button': true,
-				[props.type]: true,
 				icon: props.icon,
-				'icon-only': props.icon && !hasSlot.value && !props.label,
+				'kt-button': true,
+				[`kt-button--type-${props.type}`]: true,
+				[`kt-button--size-${props.size}`]:
+					props.size === KottiButton.Size.LARGE ||
+					props.size === KottiButton.Size.SMALL,
+				'kt-button--contains-icon-only':
+					props.icon && !hasSlot.value && !props.label,
 				'kt-button--is-block': props.isBlock,
 				'kt-button--is-multiline': props.isMultiline,
-				sm: props.size === 'small',
 			})),
 		}
 	},
@@ -109,11 +114,11 @@ export default defineComponent<KottiButton.PropsInternal>({
 }
 
 // Size modifiers
-.kt-button.sm {
+.kt-button--size-small {
 	height: var(--small-button-height);
 }
 
-.kt-button.lg {
+.kt-button--size-large {
 	height: var(--large-button-height);
 }
 
@@ -135,7 +140,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 	}
 }
 
-.kt-button.primary {
+.kt-button--type-primary {
 	color: var(--text-04);
 	background-color: var(--button-main-color);
 	border-color: var(--button-main-color-dark);
@@ -150,7 +155,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 	}
 }
 
-.kt-button.secondary {
+.kt-button--type-secondary {
 	color: var(--button-main-color-dark);
 	background-color: var(--interactive-02);
 	border: 1px solid var(--button-main-color-dark);
@@ -160,7 +165,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 	}
 }
 
-.kt-button.text {
+.kt-button--type-text {
 	background: transparent;
 	border-color: transparent;
 
@@ -169,7 +174,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 	}
 }
 
-.kt-button.danger {
+.kt-button--type-danger {
 	color: var(--danger);
 
 	.kt-circle-loading {
@@ -194,7 +199,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 	font-size: 1rem;
 }
 
-.kt-button.icon-only {
+.kt-button--contains-icon-only {
 	padding: 0 0.3rem;
 	i {
 		margin-right: 0;
@@ -202,14 +207,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 }
 
 // Disabled button
-.kt-button.disabled,
 .kt-button:disabled {
 	pointer-events: none;
 	opacity: 0.46;
-}
-
-.kt-button.bottom {
-	min-width: 10rem;
-	margin-top: var(--unit-8);
 }
 </style>
