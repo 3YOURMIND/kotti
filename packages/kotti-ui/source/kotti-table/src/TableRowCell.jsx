@@ -28,6 +28,7 @@ export const TableRowCell = {
 				...(column.align ? { textAlign: column.align } : {}),
 				...(column.width ? { width: column.width } : {}),
 				...(column.maxWidth ? { maxWidth: column.maxWidth } : {}),
+				...(column.minWidth ? { minWidth: column.minWidth } : {}),
 			}
 		},
 	},
