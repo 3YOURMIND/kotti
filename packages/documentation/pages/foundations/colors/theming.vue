@@ -11,21 +11,24 @@ Since we are defining design tokens with CSS custom properties, you can override
 One easy way of theming kotti component is to overwrite custom props using CSS diretcly. You will need to load this file after loading kotti CSS tho.
 
 Example:
-``` css
-:root{
+
+```css
+:root {
   --navbar-background: red;
   --navbar-color: blue;
 }
 ```
 
-## Method 2: Using the `KtTheme` component
+## Method 2: Using the `KtTheme` component (deprecated)
+
 CSS custom props can be get and set using javascript. We take advantage of that in our `KtTheme` component.
 
-You can pass a key-value object to the component and the component will `setProperty` on `:root` fro you.
+You can pass a key-value object to the component and the component will `setProperty` on `:root` for you.
 
 ``` vue
 <KtTheme :customProperties="{'navbar-background': 'red', 'navbar-color': 'blue'}"/>
 ```
+
 ## Demo
 Stylise the navbar with the select fields:
 

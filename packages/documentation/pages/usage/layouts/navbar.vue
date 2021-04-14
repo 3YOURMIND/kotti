@@ -76,37 +76,6 @@ quickLinksData: [{
 }],
 ```
 
-## Theme Configuration
-
-`KtNavbar` injects the theme provided by the parent or globally.
-
-When `KtTheme` object is not provided, it will replace the default theme.
-
-Currently supports:
-
-- `navbarTextColor`: the default menu text color of the navbar, make sure the `textColor` has enough contrast with background
-- `navbarTextActiveColor`: the color when menu is slected, the active class by default has `font-weight: 600`
-- `navbarBackgroundColor`: the background color of the navbar
-- `logoUrl`: the url of the logo image
-- `logoHeight`: the height of the logo
-
-
-Default theme fallback:
-
-```js
-provide() {
-	return {
-		KtTheme: {
-			navbarBackgroundColor: '#122C56',
-			navbarTextColor: 'rgba(255,255,255,.54)',
-			navbarTextActiveColor: 'rgba(255,255,255, 1)',
-			logoUrl: LogoSvg,
-			logoHeight: '40px',
-		},
-	}
-},
-```
-
 ## Toggle Narrow Navbar
 
 <div class="element-example">

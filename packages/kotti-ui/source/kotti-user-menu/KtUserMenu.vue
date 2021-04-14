@@ -72,26 +72,12 @@ export default {
 		userName: { type: String, default: null },
 		userStatus: { type: String, required: true },
 	},
-	inject: {
-		KtTheme: {
-			default: {
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarBackgroundColor: '#122C56',
-			},
-		},
-	},
 	data() {
 		return {
 			isMenuShow: false,
 		}
 	},
 	computed: {
-		themeColor() {
-			return {
-				textColor: this.KtTheme.navbarTextColor,
-				backgroundColor: this.KtTheme.navbarBackgroundColor,
-			}
-		},
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
 		},
