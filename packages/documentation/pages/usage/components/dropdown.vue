@@ -151,13 +151,6 @@ The `placement` prop accepts same values as `KtPopover`. We suggest using the de
 | `KtDropdown.size`      | size of the dropdown      | `String` | Same as KtPopover | `auto`  |
 | `KtDropdown.placement` | placement of the dropdown | `String` | Same as KtPopover | `auto`  |
 | `KtDropdownMenu.icon`  | icon of the dropdown denu | `String` | Yoco icon text    | -       |
-
-### Slots
-
-| Slot Name         | Description           |
-|:------------------|:----------------------|
-| `KtDropdownMenus` | dropdown menu section |
-
 </template>
 
 <script lang="ts">

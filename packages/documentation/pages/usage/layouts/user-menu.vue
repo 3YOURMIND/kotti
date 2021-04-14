@@ -22,13 +22,6 @@
 | `userAvatarSrc` | user avatar image src | `String` | —               | —                |
 | `userName`      | user name text        | `String` | —               | —                |
 | `userStatus`    | status of user menu   | `String` | —               | —                |
-
-### Slots
-
-| Slot Name         | Description |
-|:------------------|:------------|
-| `user-menu-items` | menu list   |
-
 </template>
 
 <script lang="ts">

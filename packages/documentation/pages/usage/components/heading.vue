@@ -75,12 +75,6 @@ You can change the `toggleStatus` dynamically by binding value to it.
 | `toogleText`      | text for open toggle    | `String`  | —                           | —         |
 | `toogleCloseText` | text for close toggle   | `String`  | —                           | —         |
 
-### Slots
-
-| Slot Name | Description                  |
-|:----------|:-----------------------------|
-| `default` | slot for heading with toggle |
-
 ### Events
 
 | Event Name | Description                        | Parameters       |

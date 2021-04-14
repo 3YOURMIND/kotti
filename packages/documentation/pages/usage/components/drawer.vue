@@ -133,14 +133,6 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 | `defaultWidth` | width when drawer is closed                | `String`  | CSS width       | —       |
 | `expandWidth`  | width when drawer is expanded              | `String`  | CSS width       | —       |
 | `wide`         | wide drawer                                | `Boolean` | —               | `false` |
-
-### Slots
-
-| Slot Name       | Description    |
-|:----------------|:---------------|
-| `drawer-header` | header section |
-| `drawer-body`   | body section   |
-| `drawer-footer` | footer section |
 </template>
 
 <script lang="ts">

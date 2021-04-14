@@ -112,12 +112,6 @@ You can get the value of narrow navbar via `$KtNavbar.isNarrow`
 |:-------------|:--------|:---------|:-----------------------------|
 | `@linkClick` | `$emit` | `$event` | navbar menu link was clicked |
 | `@logoClick` | `$emit` | `$event` | navbar logo was clicked      |
-
-### Slots
-
-| Slot Name       | Description              |
-|:----------------|:-------------------------|
-| `navbar-footer` | footer section of navbar |
 </template>
 
 <script lang="ts">
