@@ -2,7 +2,7 @@
 	<LayoutContainer>
 		<KtNavbar
 			slot="navbar"
-			logoUrl="placehold.it/160x50"
+			logoUrl="https://via.placeholder.com/160x50"
 			:notification="navbarNotification"
 			:quickLinks="quickLinksData"
 			:sections="navbarMenu"
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { Yoco } from '@3yourmind/yoco'
+
 import LayoutContainer from '~/components/LayoutContainer.vue'
 
 export default {
@@ -64,7 +66,13 @@ export default {
 						{
 							link: '#',
 							title: 'Dashboard',
-							icon: 'dashboard',
+							icon: Yoco.Icon.DASHBOARD,
+							isActive: true,
+						},
+						{
+							link: '/usage/layouts/navbar',
+							title: 'Close Example',
+							icon: Yoco.Icon.CLOSE,
 							isActive: true,
 						},
 					],
@@ -75,13 +83,13 @@ export default {
 						{
 							link: '#',
 							title: 'Orders',
-							icon: 'invoice',
+							icon: Yoco.Icon.INVOICE,
 							isActive: false,
 						},
 						{
 							link: '#',
 							title: 'Quotes',
-							icon: 'request',
+							icon: Yoco.Icon.REQUEST,
 							isActive: false,
 						},
 					],
@@ -92,13 +100,13 @@ export default {
 						{
 							link: '#',
 							title: 'Parts',
-							icon: '3dbox',
+							icon: Yoco.Icon.BOX_3D,
 							isActive: false,
 						},
 						{
 							link: '#',
 							title: 'Schedule',
-							icon: 'calendar',
+							icon: Yoco.Icon.CALENDAR,
 							isActive: false,
 						},
 					],
@@ -134,17 +142,21 @@ export default {
 							link: '#',
 							title: '3YOURMIND Service',
 						},
+						{
+							link: '#',
+							title: '4YOURMIND Service',
+						},
 					],
 				},
 				{
 					links: [
 						{
-							link: 'https://google.com',
+							link: '#',
 							title: 'Settings',
 						},
 						{
-							link: '#',
-							title: 'Logout',
+							link: '/usage/layouts/navbar',
+							title: 'Logout (Close Example)',
 						},
 					],
 				},
@@ -153,20 +165,20 @@ export default {
 				{
 					label: 'First Link',
 					to: '/examples/layouts',
-					icon: 'user',
+					icon: Yoco.Icon.USER,
 					active: false,
 					disabled: false,
 				},
 				{
 					label: 'Second Link',
-					to: 'https://google.com',
-					icon: 'basket',
+					to: '#',
+					icon: Yoco.Icon.BASKET,
 					active: true,
 				},
 				{
 					label: 'Third Link',
 					to: '/',
-					icon: 'bell',
+					icon: Yoco.Icon.BELL,
 					disabled: true,
 				},
 			],
