@@ -1,22 +1,21 @@
 <template>
-	<div v-on-clickaway="clickawayMenu" class="user-menus">
-		<div v-if="isMenuShow" class="user-menu" @click="clickawayMenu">
-			<slot name="user-menu-items" />
-			<div class="user-menu-items">
+	<div v-on-clickaway="clickawayMenu" class="kt-user-menu-container">
+		<div v-if="isMenuShow" class="kt-user-menu" @click="clickawayMenu">
+			<div class="kt-user-menu__items">
 				<div
 					v-for="(section, index) in sections"
 					:key="index"
-					class="user-menu__section"
+					class="kt-user-menu__section"
 				>
 					<div
 						v-if="section.title"
-						class="user-menu__section__title"
+						class="kt-user-menu__section__title"
 						v-text="section.title"
 					/>
 					<a
 						v-for="(link, linkIndex) in section.links"
 						:key="linkIndex"
-						class="user-menu__section__item"
+						class="kt-user-menu__section__item"
 						:data-test="`navbar:footer:element:${link.title
 							.toLowerCase()
 							.split(' ')
@@ -29,14 +28,14 @@
 			</div>
 		</div>
 		<div :class="userInfoClass" @click="isMenuShow = !isMenuShow">
-			<div class="user-info-avatar">
+			<div class="kt-user-menu__info__avatar">
 				<KtAvatar small :src="userAvatar" />
 			</div>
-			<div v-if="!isNarrow || isMenuShow" class="user-info-text">
-				<div class="user-info-text__name" v-text="userName" />
-				<div class="user-info-text__status" v-text="userStatus" />
+			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu__info__text">
+				<div class="kt-user-menu__info__text__name" v-text="userName" />
+				<div class="kt-user-menu__info__text__status" v-text="userStatus" />
 			</div>
-			<div v-if="!isNarrow || isMenuShow" class="user-info-toggle">
+			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu__info__toggle">
 				<i v-if="isMenuShow" class="yoco">chevron_down</i>
 				<i v-else class="yoco">chevron_up</i>
 			</div>
@@ -83,9 +82,9 @@ export default {
 		},
 		userInfoClass() {
 			return {
-				'user-info': true,
-				'user-info--narrow': this.isNarrow,
-				'user-info--narrow-wide': this.isNarrow && this.isMenuShow,
+				'kt-user-menu__info': true,
+				'kt-user-menu__info--is-narrow': this.isNarrow,
+				'kt-user-menu__info--is-narrow-wide': this.isNarrow && this.isMenuShow,
 			}
 		},
 	},
@@ -97,59 +96,10 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
 
-.user-info {
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	padding: 0.4rem;
-	margin: -0.4rem;
-	line-height: 1;
-	&--narrow {
-		width: 2.4rem;
-	}
-	&--narrow-wide {
-		position: absolute;
-		bottom: 0.8rem;
-		left: 0.8rem;
-		width: 11.2rem;
-	}
-	&:hover {
-		cursor: pointer;
-		background: var(--user-menu-background);
-		border-radius: 0.2rem;
-	}
-}
-.user-info-avatar {
-	z-index: 2;
-	flex-grow: 0;
-}
-.user-info-text {
-	z-index: 2;
-	width: 100%;
-	margin-left: 0.4rem;
-	line-height: 0.8rem;
-	color: var(--user-menu-color);
-	&__name {
-		font-size: 0.7rem;
-		font-weight: 600;
-	}
-	&__status {
-		font-size: 0.6rem;
-		font-weight: 600;
-		opacity: 0.65;
-	}
-}
-.user-info-toggle {
-	z-index: 2;
-	flex-grow: 0;
-	align-self: center;
-	color: var(--user-menu-color);
-}
-.user-menu {
+.kt-user-menu {
 	position: absolute;
 	bottom: 0.4rem;
 	left: 0.4rem;
@@ -159,22 +109,78 @@ export default {
 	padding: 0.8rem;
 	padding-bottom: 2.6rem;
 	color: var(--user-menu-color);
-	/* stylelint-disable-next-line */
 	background: var(--user-menu-background);
-	// TODO: remove
-	border: none;
 	border-radius: 0.2rem;
-	// TODO: remove
-	box-shadow: none;
+
+	&__info {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 0.4rem;
+		margin: -0.4rem;
+		line-height: 1;
+
+		&--is-narrow {
+			width: 2.4rem;
+		}
+
+		&--is-narrow-wide {
+			position: absolute;
+			bottom: 0.8rem;
+			left: 0.8rem;
+			width: 11.2rem;
+		}
+
+		&:hover {
+			cursor: pointer;
+			background: var(--user-menu-background);
+			border-radius: 0.2rem;
+		}
+
+		&__avatar {
+			z-index: 2;
+			flex-grow: 0;
+		}
+
+		&__text {
+			z-index: 2;
+			width: 100%;
+			margin-left: 0.4rem;
+			line-height: 0.8rem;
+			color: var(--user-menu-color);
+
+			&__name {
+				font-size: 0.7rem;
+				font-weight: 600;
+			}
+
+			&__status {
+				font-size: 0.6rem;
+				font-weight: 600;
+				opacity: 0.65;
+			}
+		}
+
+		&__toggle {
+			z-index: 2;
+			flex-grow: 0;
+			align-self: center;
+			color: var(--user-menu-color);
+		}
+	}
+
 	&__section {
 		margin-bottom: 0.4rem;
 		opacity: 1;
+
 		&__title {
 			padding: 0.2rem 0.4rem;
 			font-size: 0.5rem;
 			font-weight: 600;
 			text-transform: uppercase;
 		}
+
 		&__item {
 			display: block;
 			padding: 0.2rem 0.4rem;
@@ -183,6 +189,7 @@ export default {
 			line-height: 1.2rem;
 			color: inherit;
 			border-radius: 0.2rem;
+
 			&:hover {
 				color: inherit;
 				cursor: pointer;
@@ -191,26 +198,32 @@ export default {
 		}
 	}
 }
+
 @media (max-width: $size-md) {
-	.user-info {
+	.kt-user-menu__info {
 		flex-basis: 48px;
-		&--narrow {
+
+		&--is-narrow {
 			position: relative;
 			top: 0;
 			left: 0;
 		}
-		&--narrow-wide {
+
+		&--is-narrow-wide {
 			width: auto;
 		}
+
+		&__text,
+		&__toggle {
+			display: none;
+		}
 	}
-	.user-info-text,
-	.user-info-toggle {
-		display: none;
-	}
-	.user-menus {
+
+	.kt-user-menu-container {
 		display: block;
 	}
-	.user-menu {
+
+	.kt-user-menu {
 		top: 2.4rem;
 		bottom: auto;
 		left: 0;
