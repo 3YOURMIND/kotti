@@ -33,14 +33,6 @@ export default {
 		link: { type: String, default: null },
 		title: { type: String, default: 'Notification' },
 	},
-	inject: {
-		KtTheme: {
-			default: {
-				navbarTextColor: 'rgba(255,255,255,.54)',
-				navbarBackgroundColor: '#122C56',
-			},
-		},
-	},
 	computed: {
 		isNarrow() {
 			return this.$KtNavbar.isNarrow
