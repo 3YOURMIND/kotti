@@ -194,15 +194,6 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 | `placement` | postion of popover content    | `String` | `auto`, `auto-start`, `auto-end`, `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `right`, `right-start`, `right-end`, `left`, `left-start`, `left-end` | `bottom` |
 | `size`      | size of popover content       | `String` | `sm`, `md`, `lg`                 | `sm`     |
 | `options`   | direct usage of popper.js API | `Object` | See [popper.js documentation](https://popper.js.org/docs/v2/constructors/) | `{}` |
-
-### Slots
-
-| Slot Name              | Description                   |
-|:-----------------------|:------------------------------|
-| `default`              | toggle element of the content |
-| `content`              | content section               |
-| `v-slot:content.close` | close popover                 |
-
 </template>
 
 <script lang="ts">

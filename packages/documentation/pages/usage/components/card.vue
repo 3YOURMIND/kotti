@@ -120,15 +120,6 @@ The `imgUrl` property defines the image’s `url`.
 |:--------------|:-----------------------------|:---------|:--------------------------------|:--------|
 | `imgPosition` | postion of image in the card | `String` | `"top"`, `"middle"`, `"bottom"` | `top`   |
 | `imgUrl`      | url of image                 | `String` | —                               | —       |
-
-### Slots
-
-| Slot Name     | Description    |
-|:--------------|:---------------|
-| `card-header` | header section |
-| `card-body`   | body section   |
-| `card-footer` | footer section |
-
 </template>
 
 <script lang="ts">
