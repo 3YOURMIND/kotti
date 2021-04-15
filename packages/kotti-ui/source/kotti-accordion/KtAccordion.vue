@@ -11,7 +11,7 @@
 					<div class="accordion__title__text" v-text="title" />
 				</slot>
 			</div>
-			<div class="accordion__toggle" @click="toggle">
+			<div class="accordion__toggle" @click.stop="toggle">
 				<i class="yoco" v-text="isOpen ? 'minus' : 'plus'" />
 			</div>
 		</div>
