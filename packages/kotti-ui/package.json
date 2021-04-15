@@ -37,7 +37,7 @@
 		"postcss-flexbugs-fixes": "^4.2.0",
 		"postcss-preset-env": "^6.7.0",
 		"rollup": "^2.28.1",
-		"rollup-plugin-scss": "^2.5.0",
+		"rollup-plugin-scss": "^3.0.0-rc1",
 		"rollup-plugin-vue": "^5.1.9"
 	},
 	"files": [
