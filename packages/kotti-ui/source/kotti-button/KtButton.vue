@@ -1,5 +1,10 @@
 <template>
-	<button :class="mainClasses" role="button" @click="handleClick">
+	<button
+		:class="mainClasses"
+		role="button"
+		:type="isSubmit ? 'submit' : 'button'"
+		@click="handleClick"
+	>
 		<i v-if="isLoading" class="kt-circle-loading" />
 		<i v-else-if="icon !== null" class="yoco" v-text="icon" />
 		<span v-if="hasSlot">
@@ -23,6 +28,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 		isBlock: { default: false, type: Boolean },
 		isLoading: { default: false, type: Boolean },
 		isMultiline: { default: false, type: Boolean },
+		isSubmit: { default: false, type: Boolean },
 		label: { default: null, type: String },
 		size: {
 			default: KottiButton.Size.MEDIUM,

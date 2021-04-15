@@ -145,6 +145,10 @@
 		<KtButton isLoading size="medium" class="mr-16px">Medium (Default)</KtButton>
 		<KtButton size="large" icon="edit">Large</KtButton>
 	```
+
+	## `isSubmit`
+
+	If you want the button to trigger the native `form` `submit` event, you need to opt-in via `<KtButton isSubmit/>`
 </template>
 
 <script lang="ts">

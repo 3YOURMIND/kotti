@@ -22,6 +22,7 @@ export namespace KottiButton {
 		isBlock: boolean
 		isLoading: boolean
 		isMultiline: boolean
+		isSubmit: boolean
 		label: string | null
 		size: KottiButton.Size
 		type: KottiButton.Type
