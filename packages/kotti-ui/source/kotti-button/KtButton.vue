@@ -1,33 +1,41 @@
 <template>
-	<component
-		:is="element"
-		:class="mainClasses"
-		role="button"
-		@click="handleClick"
-	>
+	<button :class="mainClasses" role="button" @click="handleClick">
 		<i v-if="loading" class="kt-circle-loading" />
-		<i v-else-if="icon" class="yoco" v-text="icon" />
-		<span v-if="hasSlot"> <slot /> </span> <span v-else v-text="label" />
-	</component>
+		<i v-else-if="icon !== null" class="yoco" v-text="icon" />
+		<span v-if="hasSlot">
+			<slot />
+		</span>
+		<span v-else-if="label !== null" v-text="label" />
+	</button>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
+
+import { isYocoIcon } from '../validators'
 
 import { KottiButton } from './types'
 
 export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
 	props: {
-		// Why do we have this?
-		element: { type: String, default: 'button' },
-		icon: { default: '', type: String },
+		icon: { default: null, type: String, validator: isYocoIcon },
 		isBlock: { default: false, type: Boolean },
 		isMultiline: { default: false, type: Boolean },
 		label: { default: null, type: String },
 		loading: { default: false, type: Boolean },
-		size: { default: null, type: String },
-		type: { default: null, type: String },
+		size: {
+			default: KottiButton.Size.MEDIUM,
+			type: String,
+			validator: (value: unknown): value is KottiButton.Size =>
+				Object.values(KottiButton.Size).includes(value as KottiButton.Size),
+		},
+		type: {
+			default: KottiButton.Type.DEFAULT,
+			type: String,
+			validator: (value: unknown): value is KottiButton.Type =>
+				Object.values(KottiButton.Type).includes(value as KottiButton.Type),
+		},
 	},
 	setup(props, { emit, slots }) {
 		const hasSlot = computed(() => Boolean(slots.default))
@@ -36,16 +44,13 @@ export default defineComponent<KottiButton.PropsInternal>({
 			handleClick: (event) => emit('click', event),
 			hasSlot,
 			mainClasses: computed(() => ({
-				icon: props.icon,
 				'kt-button': true,
-				[`kt-button--type-${props.type}`]: true,
-				[`kt-button--size-${props.size}`]:
-					props.size === KottiButton.Size.LARGE ||
-					props.size === KottiButton.Size.SMALL,
-				'kt-button--contains-icon-only':
-					props.icon && !hasSlot.value && !props.label,
+				'kt-button--has-content': props.label !== null || hasSlot.value,
+				'kt-button--has-icon': props.icon !== null,
 				'kt-button--is-block': props.isBlock,
 				'kt-button--is-multiline': props.isMultiline,
+				[`kt-button--size-${props.size}`]: true,
+				[`kt-button--type-${props.type}`]: true,
 			})),
 		}
 	},
@@ -65,29 +70,46 @@ export default defineComponent<KottiButton.PropsInternal>({
 	--button-main-color-light: var(--interactive-02-hover);
 }
 
-// Base style
 .kt-button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 
-	height: var(--default-button-height);
-	padding: 0 var(--unit-4);
-
 	font-weight: 600;
+
 	cursor: pointer;
 	user-select: none;
+
 	border: 1px solid transparent;
 	border-radius: $border-radius;
+
 	transition: 30ms opacity ease-in-out;
 
 	&:active {
 		opacity: 0.85;
 	}
 
-	&.tooltip::after {
-		font-size: $font-size-sm;
-		text-transform: none;
+	&:disabled {
+		pointer-events: none;
+		opacity: 0.46;
+	}
+
+	> *:not(:first-child) {
+		margin-left: 0.2rem;
+	}
+
+	&--has-content {
+		padding: 0 var(--unit-4);
+	}
+
+	&--has-icon {
+		.yoco {
+			font-size: 1rem;
+		}
+
+		&:not(.kt-button--has-content) {
+			padding: 0 var(--unit-2);
+		}
 	}
 
 	// increase selector specificity by using .kt-button twice
@@ -102,113 +124,116 @@ export default defineComponent<KottiButton.PropsInternal>({
 		padding-top: var(--unit-1);
 		padding-bottom: var(--unit-1);
 		line-height: var(--default-button-line-height);
-		&.icon {
+
+		&.kt-button--has-icon {
 			align-items: baseline;
 			text-align: left;
+
 			.yoco {
 				position: relative;
 				left: calc(var(--unit-1) * -1);
 			}
 		}
 	}
-}
 
-// Size modifiers
-.kt-button--size-small {
-	height: var(--small-button-height);
-}
+	&--size {
+		&-small {
+			height: var(--small-button-height);
+		}
 
-.kt-button--size-large {
-	height: var(--large-button-height);
-}
+		&-medium {
+			height: var(--default-button-height);
+		}
 
-// Color modifier
-/* stylelint-disable-next-line */
-.kt-button {
-	color: var(--button-main-color-dark);
-	background-color: var(--interactive-02);
-	border-color: var(--ui-02);
-
-	&:hover {
-		background-color: var(--button-main-color-light);
-		border-color: var(--button-main-color-light);
-	}
-
-	.kt-circle-loading {
-		border-bottom-color: var(--button-main-color-dark);
-		border-left-color: var(--button-main-color-dark);
-	}
-}
-
-.kt-button--type-primary {
-	color: var(--text-04);
-	background-color: var(--button-main-color);
-	border-color: var(--button-main-color-dark);
-
-	&:hover {
-		background-color: var(--button-main-color-dark);
-	}
-
-	.kt-circle-loading {
-		border-bottom-color: var(--text-04);
-		border-left-color: var(--text-04);
-	}
-}
-
-.kt-button--type-secondary {
-	color: var(--button-main-color-dark);
-	background-color: var(--interactive-02);
-	border: 1px solid var(--button-main-color-dark);
-
-	&:hover {
-		background-color: var(--button-main-color-light);
-	}
-}
-
-.kt-button--type-text {
-	background: transparent;
-	border-color: transparent;
-
-	&:hover {
-		background-color: var(--button-main-color-light);
-	}
-}
-
-.kt-button--type-danger {
-	color: var(--danger);
-
-	.kt-circle-loading {
-		border-bottom-color: var(--danger);
-		border-left-color: var(--danger);
-	}
-
-	&:hover {
-		color: var(--text-04);
-		background-color: var(--danger);
-		border-color: transparent;
-		.kt-circle-loading {
-			border-bottom-color: var(--text-04);
-			border-left-color: var(--text-04);
+		&-large {
+			height: var(--large-button-height);
 		}
 	}
-}
 
-// With icon
-.kt-button.icon i {
-	margin-right: 0.2rem;
-	font-size: 1rem;
-}
+	&--type {
+		&-danger {
+			color: var(--danger);
 
-.kt-button--contains-icon-only {
-	padding: 0 0.3rem;
-	i {
-		margin-right: 0;
+			.kt-circle-loading {
+				border-bottom-color: var(--danger);
+				border-left-color: var(--danger);
+			}
+
+			&:hover {
+				color: var(--text-04);
+				background-color: var(--danger);
+				border-color: transparent;
+
+				.kt-circle-loading {
+					border-bottom-color: var(--text-04);
+					border-left-color: var(--text-04);
+				}
+			}
+		}
+
+		&-default {
+			color: var(--button-main-color-dark);
+			background-color: var(--interactive-02);
+			border-color: var(--ui-02);
+
+			&:hover {
+				background-color: var(--button-main-color-light);
+				border-color: var(--button-main-color-light);
+			}
+
+			.kt-circle-loading {
+				border-bottom-color: var(--button-main-color-dark);
+				border-left-color: var(--button-main-color-dark);
+			}
+		}
+
+		&-primary {
+			color: var(--text-04);
+			background-color: var(--button-main-color);
+			border-color: var(--button-main-color-dark);
+
+			&:hover {
+				background-color: var(--button-main-color-dark);
+				border-color: var(--button-main-color-dark);
+			}
+
+			.kt-circle-loading {
+				border-bottom-color: var(--text-04);
+				border-left-color: var(--text-04);
+			}
+		}
+
+		&-secondary {
+			color: var(--button-main-color-dark);
+			background-color: var(--interactive-02);
+			border-color: var(--button-main-color-dark);
+
+			&:hover {
+				background-color: var(--button-main-color-light);
+				border-color: var(--button-main-color-dark);
+			}
+
+			.kt-circle-loading {
+				border-bottom-color: var(--button-main-color-dark);
+				border-left-color: var(--button-main-color-dark);
+			}
+		}
+
+		&-text {
+			color: var(--button-main-color-dark);
+			background-color: transparent;
+			border-color: transparent;
+
+			&:hover {
+				background-color: var(--button-main-color-light);
+				border-color: var(--button-main-color-light);
+			}
+
+			.kt-circle-loading {
+				border-bottom-color: var(--button-main-color-dark);
+				border-left-color: var(--button-main-color-dark);
+			}
+		}
 	}
-}
-
-// Disabled button
-.kt-button:disabled {
-	pointer-events: none;
-	opacity: 0.46;
 }
 </style>

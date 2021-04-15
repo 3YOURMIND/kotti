@@ -1,16 +1,20 @@
 import { Yoco } from '@3yourmind/yoco'
 
+import { SpecifyRequiredProps } from '../types/utilities'
+
 export namespace KottiButton {
 	export enum Type {
+		DANGER = 'danger',
+		DEFAULT = 'default',
 		PRIMARY = 'primary',
 		SECONDARY = 'secondary',
 		TEXT = 'text',
-		DANGER = 'danger',
 	}
 
 	export enum Size {
-		SMALL = 'small',
 		LARGE = 'large',
+		MEDIUM = 'medium',
+		SMALL = 'small',
 	}
 
 	export type PropsInternal = {
@@ -23,5 +27,5 @@ export namespace KottiButton {
 		type: KottiButton.Type
 	}
 
-	export type Props = Partial<PropsInternal>
+	export type Props = SpecifyRequiredProps<PropsInternal, never>
 }

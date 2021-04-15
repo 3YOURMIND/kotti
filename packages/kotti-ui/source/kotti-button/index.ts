@@ -17,5 +17,7 @@ export const KtButton = attachMeta(makeInstallable(KtButtonVue), {
 			scope: null,
 		},
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Button',
+	},
 })

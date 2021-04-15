@@ -116,7 +116,7 @@
 
 	## Button Group
 
-	<div class="element-example white">
+	<div class="element-example">
 		<KtButtonGroup>
 			<KtButton type="primary" icon="edit">Edit</KtButton>
 			<KtButton type="secondary" icon="trash">Delete</KtButton>
@@ -130,70 +130,25 @@
 	</KtButtonGroup>
 	```
 
-	## Dropdown button
-
-	A dropdown button is a current pattern nowadays.
-	It allows to have a subaction without changing page or opening a modal.
-
-	Note the `dropdownIcon` prop. It will default to `chevron_down`.
-	You can also use any attribute you would pass to `KtPopover` or `KtButton`. They will be passed.
-
-	<div class="element-example">
-		<KtDropdownButton size="sm" type="primary" label="Dropdown button" >
-			<div slot="content">
-				<KtPopoverItem>Request item</KtPopoverItem>
-				<KtPopoverItem>Download Item</KtPopoverItem>
-			</div>
-		</KtDropdownButton>
-	</div>
-
-	``` html
-	<div class="element-example">
-		<KtDropdownButton size="sm" type="primary" label="Dropdown button" >
-			<div slot="content">
-				<KtPopoverItem>Request item</KtPopoverItem>
-				<KtPopoverItem>Download Item</KtPopoverItem>
-			</div>
-		</KtDropdownButton>
-	</div>
-	```
-
 	## Size
 
 	<div class="element-example">
 		<KtButton type="primary" size="small" icon="edit" class="mr-16px">Small</KtButton>
-		<KtButton loading class="mr-16px">Default</KtButton>
+		<KtButton loading size="medium" class="mr-16px">Medium (Default)</KtButton>
 		<KtButton size="large" icon="edit">Large</KtButton>
 	</div>
 
-	`KtButton` has 3 size: `small`, `default` and `large`.
+	`KtButton` has 3 size: `small`, `medium` and `large`.
 
 	```html
-	<KtButton type="primary" size="small" icon="edit">Small</KtButton>
-	<KtButton size="large" icon="edit">Large</KtButton>
+		<KtButton type="primary" size="small" icon="edit" class="mr-16px">Small</KtButton>
+		<KtButton loading size="medium" class="mr-16px">Medium (Default)</KtButton>
+		<KtButton size="large" icon="edit">Large</KtButton>
 	```
-
-	## Using another html element
-
-	Ktbutton uses `button` element, but we can override this using the `element` prop.
-	Here's a `KtButton` using a div:
-
-	<div class="element-example white">
-		<KtButton type="primary" element="div">Primary Button</KtButton>
-	</div>
-
-	``` html
-	<KtButton type="primary" element="div">Primary Button</KtButton>
-	```
-
-	<div v-html="ButtonUsage" />
-
 </template>
 
 <script lang="ts">
 import { KtButton } from '@3yourmind/kotti-ui'
-// @ts-expect-error legacy markdown import
-import ButtonUsage from '@3yourmind/kotti-ui/source/kotti-button/README.md'
 import { defineComponent } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -208,7 +163,6 @@ export default defineComponent({
 	setup() {
 		return {
 			alert: (value: string) => window.alert(value),
-			ButtonUsage,
 			component: KtButton,
 		}
 	},
