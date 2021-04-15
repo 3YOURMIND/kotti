@@ -6,7 +6,11 @@ export const KtDropdownButton = attachMeta(
 	makeInstallable(KtDropdownButtonVue),
 	{
 		addedVersion: null,
-		deprecated: null,
+		deprecated: {
+			alternatives: ['KtPopover'],
+			reason: 'Replaced by KtPopover options',
+			version: '3.0.0',
+		},
 		designs: null,
 		slots: {
 			content: { description: null, scope: null },
