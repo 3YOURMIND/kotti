@@ -1,3 +1,4 @@
+export { KottiButton as Button } from '../kotti-button/types'
 export { KottiCol as Col } from '../kotti-col/types'
 export { KottiField as Field } from '../kotti-field/types'
 export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'
