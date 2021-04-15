@@ -8,7 +8,7 @@
 			<div class="accordion__title">
 				<slot name="title">
 					<i v-if="icon" class="yoco accordion__title__icon" v-text="icon" />
-					<div class="accordion__title__text">{{ title }}</div>
+					<div class="accordion__title__text" v-text="title" />
 				</slot>
 			</div>
 			<div class="accordion__toggle" @click="toggle">
@@ -79,7 +79,6 @@ export default {
 
 .accordion {
 	margin-bottom: var(--unit-4);
-	border-bottom: none;
 	border-radius: 2px;
 }
 
@@ -88,23 +87,31 @@ export default {
 	justify-content: space-between;
 	padding: var(--unit-2) var(--unit-8);
 	border: 1px solid var(--ui-02);
+
+	.yoco {
+		font-size: 1.2rem;
+	}
 }
 .accordion__header--clickable {
 	cursor: pointer;
 }
 
 .accordion__title {
+	display: flex;
 	flex-grow: 1;
+	align-items: center;
 	align-self: center;
 	font-size: 16px;
 	font-weight: 600;
 }
 
 .accordion__content {
+	margin-top: -1px; // prevent border overlap when closed
 	overflow: hidden;
 	border: 1px solid var(--ui-02);
 	border-top: none;
 	transition: height 200ms linear;
+
 	.inner {
 		padding: var(--unit-2) var(--unit-8);
 	}
@@ -123,11 +130,12 @@ export default {
 
 .accordion__title__icon {
 	margin-right: var(--unit-4);
-	font-size: 22px !important;
 	color: var(--accordion-color);
 }
 
 .accordion__toggle {
+	display: flex;
+	align-items: center;
 	align-self: center;
 	margin-left: var(--unit-4);
 	color: var(--accordion-color);
