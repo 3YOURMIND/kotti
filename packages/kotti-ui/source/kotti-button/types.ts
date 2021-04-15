@@ -20,9 +20,9 @@ export namespace KottiButton {
 	export type PropsInternal = {
 		icon: Yoco.Icon | null
 		isBlock: boolean
+		isLoading: boolean
 		isMultiline: boolean
 		label: string | null
-		loading: boolean
 		size: KottiButton.Size
 		type: KottiButton.Type
 	}

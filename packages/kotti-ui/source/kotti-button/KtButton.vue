@@ -1,6 +1,6 @@
 <template>
 	<button :class="mainClasses" role="button" @click="handleClick">
-		<i v-if="loading" class="kt-circle-loading" />
+		<i v-if="isLoading" class="kt-circle-loading" />
 		<i v-else-if="icon !== null" class="yoco" v-text="icon" />
 		<span v-if="hasSlot">
 			<slot />
@@ -21,9 +21,9 @@ export default defineComponent<KottiButton.PropsInternal>({
 	props: {
 		icon: { default: null, type: String, validator: isYocoIcon },
 		isBlock: { default: false, type: Boolean },
+		isLoading: { default: false, type: Boolean },
 		isMultiline: { default: false, type: Boolean },
 		label: { default: null, type: String },
-		loading: { default: false, type: Boolean },
 		size: {
 			default: KottiButton.Size.MEDIUM,
 			type: String,

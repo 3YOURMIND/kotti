@@ -101,17 +101,17 @@
 	## Loading
 
 	<div class="element-example">
-		<KtButton loading class="mr-16px">Loading button</KtButton>
-		<KtButton type="primary" class="mr-16px" loading>Loading button</KtButton>
-		<KtButton type="secondary" class="mr-16px" loading>Loading</KtButton>
-		<KtButton type="danger" class="mr-16px" loading>Loading</KtButton>
+		<KtButton isLoading class="mr-16px">Loading button</KtButton>
+		<KtButton type="primary" class="mr-16px" isLoading>Loading button</KtButton>
+		<KtButton type="secondary" class="mr-16px" isLoading>Loading</KtButton>
+		<KtButton type="danger" class="mr-16px" isLoading>Loading</KtButton>
 	</div>
 
 	```html
-	<KtButton loading>Loading button</KtButton>
-	<KtButton type="primary" loading>Loading button</KtButton>
-	<KtButton type="secondary" loading/>
-	<KtButton type="danger" loading/>
+	<KtButton isLoading>Loading button</KtButton>
+	<KtButton type="primary" isLoading>Loading button</KtButton>
+	<KtButton type="secondary" isLoading/>
+	<KtButton type="danger" isLoading/>
 	```
 
 	## Button Group
@@ -134,7 +134,7 @@
 
 	<div class="element-example">
 		<KtButton type="primary" size="small" icon="edit" class="mr-16px">Small</KtButton>
-		<KtButton loading size="medium" class="mr-16px">Medium (Default)</KtButton>
+		<KtButton isLoading size="medium" class="mr-16px">Medium (Default)</KtButton>
 		<KtButton size="large" icon="edit">Large</KtButton>
 	</div>
 
@@ -142,7 +142,7 @@
 
 	```html
 		<KtButton type="primary" size="small" icon="edit" class="mr-16px">Small</KtButton>
-		<KtButton loading size="medium" class="mr-16px">Medium (Default)</KtButton>
+		<KtButton isLoading size="medium" class="mr-16px">Medium (Default)</KtButton>
 		<KtButton size="large" icon="edit">Large</KtButton>
 	```
 </template>
