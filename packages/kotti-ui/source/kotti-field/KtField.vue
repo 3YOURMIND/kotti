@@ -19,7 +19,7 @@
 				<div
 					v-if="hasHelpText"
 					class="kt-field__header__help-text"
-					:class="iconClasses(['interactive'])"
+					:class="iconClasses('header__help-text', ['interactive'])"
 				>
 					<FieldHelpText
 						:helpText="field.helpText"
@@ -39,28 +39,34 @@
 						:class="affixClasses(['left'])"
 						v-text="field.prefix"
 					/>
-					<div v-if="field.leftIcon" :class="iconClasses(['left'])">
+					<div
+						v-if="field.leftIcon"
+						:class="iconClasses('input-container', ['left'])"
+					>
 						<i class="yoco" v-text="field.leftIcon" />
 					</div>
 					<div class="kt-field__input-container__slot">
 						<slot name="default" />
 					</div>
 					<slot
-						:classes="iconClasses(['interactive'])"
+						:classes="iconClasses('input-container', ['interactive'])"
 						:handleClear="handleClear"
 						name="actionIcon"
 						:showClear="!field.hideClear"
 					>
 						<div
 							v-if="!field.hideClear"
-							:class="iconClasses(['interactive'])"
+							:class="iconClasses('input-container', ['interactive'])"
 							role="button"
 							@click.stop="handleClear"
 						>
 							<i class="yoco" v-text="Yoco.Icon.CLOSE" />
 						</div>
 					</slot>
-					<div v-if="field.rightIcon" :class="iconClasses(['right'])">
+					<div
+						v-if="field.rightIcon"
+						:class="iconClasses('input-container', ['right'])"
+					>
 						<i class="yoco" v-text="field.rightIcon" />
 					</div>
 					<div
@@ -138,12 +144,14 @@ export default defineComponent<{
 				() => props.helpTextSlot.length >= 1 || props.field.helpText !== null,
 			),
 			hasLabel: computed(() => props.field.label !== null),
-			iconClasses: computed(() => (modifications: string[]) => [
-				'kt-field__input-container__icon',
-				...modifications.map(
-					(modification) => `kt-field__input-container__icon--${modification}`,
-				),
-			]),
+			iconClasses: computed(
+				() => (element: string, modifications: string[]) => [
+					`kt-field__${element}__icon`,
+					...modifications.map(
+						(modification) => `kt-field__${element}__icon--${modification}`,
+					),
+				],
+			),
 			inputContainerRef: ref<Element | null>(null),
 			labelSuffix: computed(() =>
 				props.field.isOptional ? `(${translations.value.optionalLabel})` : '*',
@@ -290,6 +298,12 @@ export default defineComponent<{
 		&__help-text {
 			display: flex;
 			align-items: center;
+
+			&__icon {
+				.yoco {
+					font-size: 1.4em;
+				}
+			}
 		}
 
 		&__label {
@@ -345,13 +359,20 @@ export default defineComponent<{
 			}
 		}
 
-		// Icons (left or right)
+		&__icon {
+			.yoco {
+				font-size: 1.1em;
+			}
+		}
+	}
+
+	&__header__help-text,
+	&__input-container {
 		&__icon {
 			color: var(--icon-02);
 
 			.yoco {
 				display: flex;
-				font-size: 1.1em;
 			}
 
 			&--left {
@@ -367,7 +388,6 @@ export default defineComponent<{
 			}
 		}
 	}
-
 	&__validation-text {
 		display: flex;
 		align-items: center;
