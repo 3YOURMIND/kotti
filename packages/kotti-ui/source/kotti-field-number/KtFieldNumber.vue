@@ -94,7 +94,7 @@ export default defineComponent({
 					maximum: null,
 					minimum: props.minimum,
 					offset: -props.step,
-					value: props.value,
+					value: field.currentValue,
 				}),
 		)
 
