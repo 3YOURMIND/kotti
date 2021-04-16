@@ -40,6 +40,7 @@ export const KtTableColumn = {
 		align: String,
 		width: String,
 		maxWidth: String,
+		minWidth: String,
 
 		hidden: { default: undefined, type: Boolean },
 
@@ -75,6 +76,7 @@ export const KtTableColumn = {
 		order: updateColumnsfor('order'),
 		width: updateColumnsfor('width'),
 		maxWidth: updateColumnsfor('maxWidth'),
+		minWidth: updateColumnsfor('minWidth'),
 		align: updateColumnsfor('align'),
 		default: updateColumnsfor('default'),
 	},
