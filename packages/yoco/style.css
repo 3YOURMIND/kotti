@@ -18,6 +18,7 @@
 	font-style: normal;
 	font-weight: normal;
 	font-variant: normal;
+	hyphens: none !important; /* prevent icons from getting hyphenated and break across multiple lines in small containers */
 	line-height: 1;
 	text-transform: none;
 
