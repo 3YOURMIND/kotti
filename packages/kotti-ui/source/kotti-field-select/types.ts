@@ -12,10 +12,17 @@ export namespace KottiFieldMultiSelect {
 }
 
 export namespace Shared {
-	export type Entry = {
+	export type Entry<
+		V extends string | number | boolean | symbol | null =
+			| string
+			| number
+			| boolean
+			| symbol
+			| null
+	> = {
 		isDisabled?: boolean
 		label: string
-		value: string | number | boolean | symbol | null
+		value: V
 	}
 
 	export type Props = {
