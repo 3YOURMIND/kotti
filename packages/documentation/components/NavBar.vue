@@ -24,12 +24,42 @@ import { menu } from '../data/menu'
 import { useRoute } from '../hooks/use-route'
 import { useRouter } from '../hooks/use-router'
 
+const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
+
+const saveSavedFieldsToLocalStorage = (isNarrow: boolean) => {
+	try {
+		if (typeof window !== 'undefined' && window.document)
+			window.localStorage.setItem(
+				LOCALSTORAGE_IS_NAVBAR_NARROW_KEY,
+				JSON.stringify(isNarrow),
+			)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.warn('could not save to localStorage')
+	}
+}
+
 export default defineComponent({
 	name: 'NavBar',
 	setup() {
 		const route = useRoute()
 		const router = useRouter()
-		const isNarrow = ref(false)
+		const isNarrow = ref<boolean>(
+			(() => {
+				try {
+					if (typeof window !== 'undefined' && window.document) {
+						const value = window.localStorage.getItem(
+							LOCALSTORAGE_IS_NAVBAR_NARROW_KEY,
+						)
+						if (value) return JSON.parse(value)
+					}
+				} catch (error) {
+					// eslint-disable-next-line no-console
+					console.warn('could not read localStorage')
+				}
+				return false
+			})(),
+		)
 
 		return {
 			handleLinkClick(link: Route) {
@@ -77,7 +107,10 @@ export default defineComponent({
 				})),
 				title: section.title,
 			})),
-			setIsNarrow: (value: boolean) => (isNarrow.value = value),
+			setIsNarrow: (value: boolean) => {
+				saveSavedFieldsToLocalStorage(value)
+				isNarrow.value = value
+			},
 		}
 	},
 })
@@ -88,11 +121,5 @@ export default defineComponent({
 	display: flex;
 	justify-content: center;
 	width: 100%;
-}
-
-li.nuxt-link-active {
-	font-weight: 600;
-	background: rgba(0, 0, 0, 0.2);
-	border-radius: 0.1rem;
 }
 </style>
