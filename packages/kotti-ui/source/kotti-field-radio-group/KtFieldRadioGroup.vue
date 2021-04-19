@@ -14,29 +14,36 @@
 				v-for="option in options"
 				:key="option.value"
 				class="kt-field-radio-group__wrapper__label"
-				:class="{
-					'kt-field-radio-group__wrapper__label--disabled':
-						field.isDisabled || Boolean(option.isDisabled),
-				}"
 			>
 				<div
-					class="kt-field-radio-group__wrapper__radio"
+					class="kt-field-radio-group__wrapper__header"
 					:class="{
-						'kt-field-radio-group__wrapper__radio--checked':
-							field.currentValue === option.value,
+						'kt-field-radio-group__wrapper__header--disabled':
+							field.isDisabled || Boolean(option.isDisabled),
 					}"
 				>
-					<div class="kt-field-radio-group__wrapper__radio__inside" />
+					<div
+						class="kt-field-radio-group__wrapper__radio"
+						:class="{
+							'kt-field-radio-group__wrapper__radio--checked':
+								field.currentValue === option.value,
+						}"
+					>
+						<div class="kt-field-radio-group__wrapper__radio__inside" />
+					</div>
+					<slot name="header" :option="options">
+						<div v-text="option.label" />
+					</slot>
+					<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
+					<input
+						v-bind="inputProps"
+						:checked="field.currentValue === option.value"
+						:disabled="field.isDisabled || Boolean(option.isDisabled)"
+						:value="option.value"
+						@change="onChange(option.value)"
+					/>
 				</div>
-				<div v-text="option.label" />
-				<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
-				<input
-					v-bind="inputProps"
-					:checked="field.currentValue === option.value"
-					:disabled="field.isDisabled || Boolean(option.isDisabled)"
-					:value="option.value"
-					@change="onChange(option.value)"
-				/>
+				<slot name="content" :option="option" />
 			</label>
 		</div>
 	</KtField>
@@ -125,10 +132,9 @@ export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 		}
 	}
 
-	&__label {
+	&__header {
 		display: flex;
 		align-items: center;
-
 		cursor: pointer;
 
 		&--disabled {
