@@ -2,11 +2,13 @@
 	<LayoutContainer>
 		<KtNavbar
 			slot="navbar"
+			:isNarrow="isNarrow"
 			logoUrl="https://via.placeholder.com/160x50"
 			:notification="navbarNotification"
 			:quickLinks="quickLinksData"
 			:sections="navbarMenu"
 			:theme="theme"
+			@setIsNarrow="setIsNarrow"
 		>
 			<div slot="navbar-footer">
 				<KtUserMenu
@@ -52,6 +54,7 @@ export default {
 	},
 	data() {
 		return {
+			isNarrow: false,
 			theme: null,
 			quickLinksData: [
 				{
@@ -187,6 +190,9 @@ export default {
 	methods: {
 		handleMenuClick() {
 			alert('Link Clicked')
+		},
+		setIsNarrow(isNarrow) {
+			this.isNarrow = isNarrow
 		},
 	},
 }

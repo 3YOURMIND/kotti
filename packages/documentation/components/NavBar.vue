@@ -4,6 +4,7 @@
 		:logoUrl="navLogo"
 		@linkClick="handleLinkClick"
 		@logoClick="$router.push('/')"
+		@setIsNarrow="setIsNarrow"
 	>
 		<div slot="navbar-footer">
 			<a class="github-link" href="https://github.com/3YOURMIND/kotti">
@@ -15,7 +16,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import { Route } from 'vue-router'
 
 import navLogo from '../assets/img/nav_logo.svg'
@@ -25,17 +26,16 @@ import { useRouter } from '../hooks/use-router'
 
 export default defineComponent({
 	name: 'NavBar',
-	props: {
-		isNarrow: { type: Boolean, default: false },
-	},
 	setup() {
 		const route = useRoute()
 		const router = useRouter()
+		const isNarrow = ref(false)
 
 		return {
 			handleLinkClick(link: Route) {
 				router.value.push(link.path)
 			},
+			isNarrow,
 			navLogo,
 			quickLinks: [
 				{
@@ -77,6 +77,7 @@ export default defineComponent({
 				})),
 				title: section.title,
 			})),
+			setIsNarrow: (value: boolean) => (isNarrow.value = value),
 		}
 	},
 })

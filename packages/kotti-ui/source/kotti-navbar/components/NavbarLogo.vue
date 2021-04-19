@@ -7,7 +7,7 @@
 			<NavbarTooltip
 				:icon="Yoco.Icon.BURGER"
 				:label="translations.menuExpand"
-				@click.stop="toggleNarrow"
+				@click.stop="() => $emit('setIsNarrow', false)"
 			/>
 		</div>
 		<div
@@ -19,7 +19,7 @@
 			<NavbarTooltip
 				:icon="Yoco.Icon.HIDE_MENU"
 				:label="translations.menuCollapse"
-				@click.stop="toggleNarrow"
+				@click.stop="() => $emit('setIsNarrow', true)"
 			/>
 		</div>
 		<div
@@ -51,11 +51,10 @@ export default defineComponent<{
 		isNarrow: { default: false, type: Boolean },
 		logoUrl: { required: true, type: String },
 	},
-	setup(_, { emit }) {
+	setup() {
 		const translations = useTranslationNamespace('KtNavbar')
 
 		return {
-			toggleNarrow: () => emit('toggleNarrow'),
 			translations,
 			Yoco,
 		}

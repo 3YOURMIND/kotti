@@ -78,14 +78,6 @@ quickLinksData: [{
 
 ## Usage
 
-### Attributes
-
-| Attribute            | Description                            | Type      | Accepted values        | Default |
-|:---------------------|:---------------------------------------|:----------|:-----------------------|:--------|
-| `notification`       | notification section of the navbar     | `Array`   | See above Notification | —       |
-| `quickLinks`         | quick link section of the navbar       | `Array`   | See above Quick Links  | —       |
-| `sections`           | menu section of the navbar             | `Array`   | See above Menu         | —       |
-
 ### Events
 
 | Event Name   | Type    | Payload  | Description                  |

@@ -43,19 +43,29 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+	computed,
+	ComputedRef,
+	defineComponent,
+	inject,
+	ref,
+} from '@vue/composition-api'
 import { mixin as clickaway } from 'vue-clickaway'
 
 import { KtAvatar } from '../kotti-avatar'
+import { IS_NAVBAR_NARROW } from '../kotti-navbar/constants'
 
-const linkIsValid = (link) => Boolean(link.title)
+import { KottiUserMenu } from './types'
 
-const sectionIsValid = (section) =>
+const linkIsValid = (link: KottiUserMenu.SectionLink) => Boolean(link.title)
+
+const sectionIsValid = (section: KottiUserMenu.Section) =>
 	Array.isArray(section.links) &&
 	Boolean(section.links.length) &&
 	section.links.every(linkIsValid)
 
-export default {
+export default defineComponent<KottiUserMenu.PropsInternal>({
 	name: 'KtUserMenu',
 	components: {
 		KtAvatar,
@@ -71,29 +81,26 @@ export default {
 		userName: { type: String, default: null },
 		userStatus: { type: String, required: true },
 	},
-	data() {
+	setup() {
+		const isMenuShow = ref(false)
+		const isNarrow = inject<ComputedRef<boolean>>(
+			IS_NAVBAR_NARROW,
+			computed(() => false),
+		)
+
 		return {
-			isMenuShow: false,
+			clickawayMenu: () => (isMenuShow.value = false),
+			isMenuShow,
+			isNarrow,
+			userInfoClass: computed(() => ({
+				'kt-user-menu__info': true,
+				'kt-user-menu__info--is-narrow': isNarrow.value,
+				'kt-user-menu__info--is-narrow-wide':
+					isNarrow.value && isMenuShow.value,
+			})),
 		}
 	},
-	computed: {
-		isNarrow() {
-			return this.$KtNavbar.isNarrow
-		},
-		userInfoClass() {
-			return {
-				'kt-user-menu__info': true,
-				'kt-user-menu__info--is-narrow': this.isNarrow,
-				'kt-user-menu__info--is-narrow-wide': this.isNarrow && this.isMenuShow,
-			}
-		},
-	},
-	methods: {
-		clickawayMenu() {
-			this.isMenuShow = false
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss" scoped>
