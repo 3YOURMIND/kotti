@@ -7,7 +7,7 @@
 			<NavbarTooltip
 				:icon="Yoco.Icon.BURGER"
 				:label="translations.menuExpand"
-				@click.stop="$KtNavbar.toggle()"
+				@click.stop="() => $emit('setIsNarrow', false)"
 			/>
 		</div>
 		<div
@@ -19,7 +19,7 @@
 			<NavbarTooltip
 				:icon="Yoco.Icon.HIDE_MENU"
 				:label="translations.menuCollapse"
-				@click.stop="$KtNavbar.toggle()"
+				@click.stop="() => $emit('setIsNarrow', true)"
 			/>
 		</div>
 		<div

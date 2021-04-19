@@ -6,39 +6,41 @@
 			</div>
 			<div class="kt-navbar__header">
 				<NavbarLogo
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:logoUrl="logoUrl"
 					@logoClick="$emit('logoClick')"
+					@setIsNarrow="setIsNarrow"
 				/>
 			</div>
 			<NavbarNotification
 				v-if="notification"
 				:count="notification.count"
+				:isNarrow="isNarrow"
 				:link="notification.link"
 				:title="notification.title"
 			/>
 			<div class="kt-navbar__body">
 				<NavbarMenu
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
 				<NavbarQuickLink
 					v-if="quickLinks.length"
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:links="quickLinks"
 				/>
 			</div>
 			<div v-if="mobileMenuToggle" class="kt-navbar__dropdown">
 				<NavbarMenu
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
 				<NavbarQuickLink
 					v-if="quickLinks.length"
 					v-on-clickaway="clickawayMobileMenu"
-					:isNarrow="$KtNavbar.isNarrow"
+					:isNarrow="isNarrow"
 					:links="quickLinks"
 				/>
 			</div>
@@ -49,7 +51,8 @@
 	</nav>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, provide, ref } from '@vue/composition-api'
 import { mixin as clickaway } from 'vue-clickaway'
 
 import { Kotti } from '../types'
@@ -58,8 +61,10 @@ import NavbarLogo from './components/NavbarLogo.vue'
 import NavbarMenu from './components/NavbarMenu.vue'
 import NavbarNotification from './components/NavbarNotification.vue'
 import NavbarQuickLink from './components/NavbarQuickLink.vue'
+import { IS_NAVBAR_NARROW } from './constants'
+import { KottiNavbar } from './types'
 
-export default {
+export default defineComponent<KottiNavbar.PropsInternal>({
 	name: 'KtNavbar',
 	components: {
 		NavbarLogo,
@@ -69,6 +74,7 @@ export default {
 	},
 	mixins: [clickaway],
 	props: {
+		isNarrow: { default: false, type: Boolean },
 		logoUrl: { required: true, type: String },
 		notification: { default: null, type: Object },
 		quickLinks: { default: () => [], type: Array },
@@ -79,30 +85,27 @@ export default {
 			validator: (theme) => theme === null || theme in Kotti.Navbar.Theme,
 		},
 	},
-	data() {
+	setup(props, { emit }) {
+		const mobileMenuToggle = ref(false)
+
+		provide(
+			IS_NAVBAR_NARROW,
+			computed(() => props.isNarrow),
+		)
 		return {
-			mobileMenuToggle: false,
+			classes: computed(() => ({
+				'kt-navbar--narrow': props.isNarrow,
+				[`kt-navbar--theme-${props.theme}`]: props.theme !== null,
+			})),
+			clickawayMobileMenu: () => (mobileMenuToggle.value = false),
+			mobileMenuToggle,
+			setIsNarrow: (isNarrow: boolean) => emit('setIsNarrow', isNarrow),
+			toggleMobileMenu() {
+				mobileMenuToggle.value = !mobileMenuToggle.value
+			},
 		}
 	},
-	computed: {
-		classes() {
-			const classes = []
-
-			if (this.$KtNavbar.isNarrow) classes.push('kt-navbar--narrow')
-			if (this.theme) classes.push(`kt-navbar--theme-${this.theme}`)
-
-			return classes
-		},
-	},
-	methods: {
-		clickawayMobileMenu() {
-			this.mobileMenuToggle = false
-		},
-		toggleMobileMenu() {
-			this.mobileMenuToggle = !this.mobileMenuToggle
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss">

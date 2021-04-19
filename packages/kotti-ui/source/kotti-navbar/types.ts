@@ -1,5 +1,7 @@
 import { Yoco } from '@3yourmind/yoco'
 
+import { SpecifyRequiredProps } from '../types/utilities'
+
 export namespace KottiNavbar {
 	export type QuickLink = {
 		link: string
@@ -25,6 +27,7 @@ export namespace KottiNavbar {
 	}
 
 	export type PropsInternal = {
+		isNarrow: boolean
 		logoUrl: string
 		notification: object | null
 		quickLinks: QuickLink[]
@@ -32,8 +35,10 @@ export namespace KottiNavbar {
 		theme: Theme | null
 	}
 
-	export type Props = Partial<Omit<PropsInternal, 'logoUrl' | 'sections'>> &
-		Pick<PropsInternal, 'logoUrl' | 'sections'>
+	export type Props = SpecifyRequiredProps<
+		PropsInternal,
+		'logoUrl' | 'sections'
+	>
 
 	export type Translations = {
 		menuCollapse: string

@@ -170,19 +170,6 @@ export default {
 		])
 			Vue.use(component)
 
-		Vue.prototype.$KtNavbar = new Vue({
-			data: {
-				isNarrow: false,
-			},
-			methods: {
-				toggle(value = null) {
-					// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-					// @ts-expect-error
-					this.isNarrow = value === null ? !this.isNarrow : value
-				},
-			},
-		})
-
 		const DEFAULT_YODIFY_DURATION = 3000
 
 		Vue.prototype.$yodifyBuffer = []

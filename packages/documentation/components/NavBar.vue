@@ -4,6 +4,7 @@
 		:logoUrl="navLogo"
 		@linkClick="handleLinkClick"
 		@logoClick="$router.push('/')"
+		@setIsNarrow="setIsNarrow"
 	>
 		<div slot="navbar-footer">
 			<a class="github-link" href="https://github.com/3YOURMIND/kotti">
@@ -15,7 +16,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import { Route } from 'vue-router'
 
 import navLogo from '../assets/img/nav_logo.svg'
@@ -23,19 +24,48 @@ import { menu } from '../data/menu'
 import { useRoute } from '../hooks/use-route'
 import { useRouter } from '../hooks/use-router'
 
+const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
+
+const saveSavedFieldsToLocalStorage = (isNarrow: boolean) => {
+	try {
+		if (typeof window !== 'undefined' && window.document)
+			window.localStorage.setItem(
+				LOCALSTORAGE_IS_NAVBAR_NARROW_KEY,
+				JSON.stringify(isNarrow),
+			)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.warn('could not save to localStorage')
+	}
+}
+
 export default defineComponent({
 	name: 'NavBar',
-	props: {
-		isNarrow: { type: Boolean, default: false },
-	},
 	setup() {
 		const route = useRoute()
 		const router = useRouter()
+		const isNarrow = ref<boolean>(
+			(() => {
+				try {
+					if (typeof window !== 'undefined' && window.document) {
+						const value = window.localStorage.getItem(
+							LOCALSTORAGE_IS_NAVBAR_NARROW_KEY,
+						)
+						if (value) return JSON.parse(value)
+					}
+				} catch (error) {
+					// eslint-disable-next-line no-console
+					console.warn('could not read localStorage')
+				}
+				return false
+			})(),
+		)
 
 		return {
 			handleLinkClick(link: Route) {
 				router.value.push(link.path)
 			},
+			isNarrow,
 			navLogo,
 			quickLinks: [
 				{
@@ -77,6 +107,10 @@ export default defineComponent({
 				})),
 				title: section.title,
 			})),
+			setIsNarrow: (value: boolean) => {
+				saveSavedFieldsToLocalStorage(value)
+				isNarrow.value = value
+			},
 		}
 	},
 })
@@ -87,11 +121,5 @@ export default defineComponent({
 	display: flex;
 	justify-content: center;
 	width: 100%;
-}
-
-li.nuxt-link-active {
-	font-weight: 600;
-	background: rgba(0, 0, 0, 0.2);
-	border-radius: 0.1rem;
 }
 </style>
