@@ -1,6 +1,7 @@
 import VueCompositionApi from '@vue/composition-api'
 import { createLocalVue } from '@vue/test-utils'
 
+import { KottiField } from '../kotti-field/types'
 import { KottiForm } from '../kotti-form/types'
 
 /**
@@ -30,7 +31,7 @@ export const getMockContext = (
 			hideValidation: false,
 			isDisabled: false,
 			isLoading: false,
-			size: 'medium',
+			size: KottiField.Size.MEDIUM,
 		},
 	},
 	onAddField: jest.fn(),

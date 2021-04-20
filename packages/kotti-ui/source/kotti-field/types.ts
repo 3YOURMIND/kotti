@@ -90,7 +90,7 @@ export namespace KottiField {
 		 * Defines the size of the field which influences child styles
 		 * to make fields e.g. appear more compact
 		 */
-		size: 'small' | 'medium' | 'large' | null
+		size: Size | null
 	}
 
 	/**
@@ -151,6 +151,12 @@ export namespace KottiField {
 		 * v-model value
 		 */
 		value: DATA_TYPE
+	}
+
+	export enum Size {
+		LARGE = 'large',
+		MEDIUM = 'medium',
+		SMALL = 'small',
 	}
 
 	/**
