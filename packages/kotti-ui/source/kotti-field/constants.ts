@@ -10,10 +10,9 @@ export const KOTTI_FIELD_INHERITABLE_PROPS = {
 	size: {
 		default: null,
 		type: String,
-		validator: (value: unknown): value is KottiField.Props<unknown>['size'] =>
+		validator: (value: unknown): value is KottiField.Size =>
 			value === null ||
-			(typeof value === 'string' &&
-				['small', 'medium', 'large'].includes(value)),
+			Object.values(KottiField.Size).includes(value as KottiField.Size),
 	},
 }
 

@@ -278,7 +278,7 @@ const useInheritableProperties = <DATA_TYPE>({
 		),
 		isDisabled: useShared('isDisabled', false),
 		isLoading,
-		size: useShared('size', 'medium'),
+		size: useShared('size', KottiField.Size.MEDIUM),
 	}
 }
 
