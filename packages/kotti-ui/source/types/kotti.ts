@@ -32,6 +32,7 @@ export {
 export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiRow as Row } from '../kotti-row/types'
+export { KottiFilter as Filter } from '../kotti-filter/types'
 
 export enum MetaDesignType {
 	FIGMA = 'FIGMA',
