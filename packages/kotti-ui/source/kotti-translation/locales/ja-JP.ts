@@ -44,6 +44,7 @@ export const jaJP: KottiTranslation.Messages = {
 		string: {
 			CONTAINS: '含まれています',
 		},
+		unsetLabel: '設定解除',
 		whereLabel: 'どこ',
 	},
 	KtFormSubmit: {

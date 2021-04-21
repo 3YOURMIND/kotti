@@ -86,12 +86,12 @@ export namespace KottiFilter {
 		| Operation.String
 
 	export type FilterValue =
-		| boolean
 		| Kotti.FieldDateRange.Value
 		| Kotti.FieldMultiSelect.Value
+		| Kotti.FieldNumber.Value
 		| Kotti.FieldSingleSelect.Value
-		| number
-		| string
+		| Kotti.FieldText.Value
+		| Kotti.FieldToggle.Value
 
 	export type InternalFilter = {
 		key: Column['key']
@@ -108,8 +108,8 @@ export namespace KottiFilter {
 
 	export type InternalProps = {
 		columns: Column[]
-		value: Value
 		isLoading: boolean
+		value: Value
 	}
 
 	export type Props = SpecifyRequiredProps<InternalProps, 'columns' | 'value'>
@@ -136,23 +136,7 @@ export namespace KottiFilter {
 		searchLabel: string
 		singleEnum: Record<Operation.SingleEnum, string>
 		string: Record<Operation.String, string>
+		unsetLabel: string
 		whereLabel: string
 	}
 }
-
-/*
-    ✅ Filters joined by AND (default behaviour)
-    ✅ Clear all filters at once
-    ✅ Filter types: search, string, number, boolean, date range, single enum, multi enum
-    ✅ String - contains operation
-    ✅ Number - eq, lt, lte, gt, gte operations
-    ✅ Boolean - equal operation
-    ✅ DateRange - is in range (inclusive) operation 
-    ✅ SingleEnum (single-choice) - equals operation
-    ✅ MultiEnum (multiple-choice) - one of operation
-    ⏳ String - case sensitive filtering. Future support?
-    ⏳ String - equal, start with, end with operations. Future support?
-    ⏳ Group options by section in select dropdown. Future support?
-	⏳ NOT operator. Future support?
-    ⏳ Combine logical operators (AND, OR). Future support?
-*/

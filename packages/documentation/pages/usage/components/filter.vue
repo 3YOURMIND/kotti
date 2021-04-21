@@ -38,14 +38,14 @@
 								{ label: 'French (fr-FR)', value: 'fr-FR' },
 								{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
 							]"
-							size="small"
+							:size="Kotti.Field.Size.SMALL"
 						/>
 						<KtFieldToggleGroup
 							formKey="booleanFlags"
 							isOptional
 							label="Boolean Flags"
 							:options="[{ key: 'isLoading', label: 'isLoading' }]"
-							size="small"
+							:size="Kotti.Field.Size.SMALL"
 							type="switch"
 						/>
 					</div>
@@ -55,7 +55,7 @@
 							formKey="searchPlaceholder"
 							isOptional
 							label="placeholder"
-							size="small"
+							:size="Kotti.Field.Size.SMALL"
 						/>
 					</div>
 				</div>
@@ -78,7 +78,10 @@ const generateCode = (props: object) =>
 			.sort(([a], [b]) => a.localeCompare(b))
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			.filter(([_, value]) => value !== null && value !== false)
-			.filter(([key, value]) => !(key === 'size' && value === 'medium'))
+			.filter(
+				([key, value]) =>
+					!(key === 'size' && value === Kotti.Field.Size.MEDIUM),
+			)
 			.map(([key, value]) => {
 				switch (typeof value) {
 					case 'boolean':
@@ -189,6 +192,7 @@ export default defineComponent({
 			componentCode,
 			componentProps,
 			filters,
+			Kotti,
 			reset,
 			settings,
 		}

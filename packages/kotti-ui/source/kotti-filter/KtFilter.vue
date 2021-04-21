@@ -50,7 +50,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 	},
 	props: {
 		columns: {
-			default: () => [],
+			required: true,
 			type: Array,
 		},
 		isLoading: {
@@ -58,7 +58,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 			type: Boolean,
 		},
 		value: {
-			default: () => [],
+			required: true,
 			type: Array,
 		},
 	},
@@ -174,7 +174,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 
 	&__search-field {
 		width: 12rem;
-		padding-right: 0.5rem;
+		margin-right: 0.5rem;
 	}
 }
 </style>

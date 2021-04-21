@@ -21,6 +21,7 @@ export {
 	KottiFieldSingleSelect as FieldSingleSelect,
 	KottiFieldMultiSelect as FieldMultiSelect,
 } from '../kotti-field-select/types'
+export { KottiFilter as Filter } from '../kotti-filter/types'
 export {
 	KottiForm as Form,
 	KottiFormSubmit as FormSubmit,
@@ -32,7 +33,6 @@ export {
 export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiRow as Row } from '../kotti-row/types'
-export { KottiFilter as Filter } from '../kotti-filter/types'
 
 export enum MetaDesignType {
 	FIGMA = 'FIGMA',

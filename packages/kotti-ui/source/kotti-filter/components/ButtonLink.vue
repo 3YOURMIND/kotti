@@ -14,22 +14,22 @@ import { Kotti } from '../../types'
 import { isYocoIcon } from '../../validators'
 
 export default defineComponent<{
-	disabled: boolean
 	icon: Yoco.Icon | null
+	isDisabled: boolean
 	isLoading: boolean
 	label: string | null
 	type: Kotti.Filter.ButtonLinkType
 }>({
 	name: 'ButtonLink',
 	props: {
-		disabled: {
-			default: false,
-			type: Boolean,
-		},
 		icon: {
 			default: null,
 			type: String,
 			validator: isYocoIcon,
+		},
+		isDisabled: {
+			default: false,
+			type: Boolean,
 		},
 		isLoading: {
 			default: false,
@@ -51,12 +51,12 @@ export default defineComponent<{
 	setup(props, { emit }) {
 		const mainClasses = computed(() => ({
 			'kt-button-link': true,
-			'kt-button-link--disabled': props.disabled,
-			[`kt-button-link--type-${props.type}`]: true,
+			'kt-button-link--is-disabled': props.isDisabled,
+			[`kt-button-link--type-${props.type}`]: !props.isDisabled,
 		}))
 
 		const handleClick = (event) => {
-			if (props.disabled || props.isLoading) return
+			if (props.isDisabled || props.isLoading) return
 			emit('click', event)
 		}
 
@@ -78,8 +78,7 @@ export default defineComponent<{
 
 	cursor: pointer;
 
-	// increase selector specificity by using .kt-button-link twice
-	&--disabled.kt-button-link {
+	&--is-disabled {
 		color: var(--text-05);
 		pointer-events: none;
 		cursor: default;

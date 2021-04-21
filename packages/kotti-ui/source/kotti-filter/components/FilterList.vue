@@ -31,13 +31,13 @@
 		</div>
 		<div class="kt-filter-list__footer">
 			<ButtonLink
-				:disabled="isAddingFilter || filters.length >= columns.length"
+				:isDisabled="isAddingFilter || filters.length >= columns.length"
 				:isLoading="isLoading"
 				:label="translations.addFilterLabel"
 				@click="isAddingFilter = true"
 			/>
 			<ButtonLink
-				:disabled="filters.length === 0"
+				:isDisabled="filters.length === 0"
 				:isLoading="isLoading"
 				:label="translations.clearAllLabel"
 				:type="Kotti.Filter.ButtonLinkType.DANGER"
@@ -70,11 +70,11 @@ export default defineComponent<{
 	},
 	props: {
 		columns: {
-			default: () => [],
+			required: true,
 			type: Array,
 		},
 		filters: {
-			default: () => [],
+			required: true,
 			type: Array,
 		},
 		isLoading: {

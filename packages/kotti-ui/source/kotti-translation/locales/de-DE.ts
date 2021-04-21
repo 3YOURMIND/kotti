@@ -44,6 +44,7 @@ export const deDE: KottiTranslation.Messages = {
 		string: {
 			CONTAINS: 'enthält',
 		},
+		unsetLabel: 'Nicht Eingestellt',
 		whereLabel: 'Wo',
 	},
 	KtFormSubmit: {

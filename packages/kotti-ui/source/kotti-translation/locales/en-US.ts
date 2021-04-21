@@ -43,6 +43,7 @@ export const enUS: KottiTranslation.Messages = {
 		string: {
 			CONTAINS: 'contains',
 		},
+		unsetLabel: 'Unset',
 		whereLabel: 'Where',
 	},
 	KtFormSubmit: {

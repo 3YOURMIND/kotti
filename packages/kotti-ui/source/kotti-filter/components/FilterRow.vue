@@ -84,7 +84,7 @@ export default defineComponent<{
 			type: Object,
 		},
 		columnOptions: {
-			default: () => [],
+			required: true,
 			type: Array,
 		},
 		isFirstItem: {
@@ -119,7 +119,7 @@ export default defineComponent<{
 			},
 		)
 		const valueComponent = computed(() => {
-			if (!props.column.type) return 'div'
+			if (!props.column.type) return null
 			return getValueComponent(props.column.type)
 		})
 		const valueOptions = computed(() => {
@@ -144,7 +144,7 @@ export default defineComponent<{
 		}))
 
 		const valueState = computed<string | null>(() => {
-			if (props.value.value === null) return null
+			if (props.value.value === null) return translations.value.unsetLabel
 			return props.value.value
 				? translations.value.enabledLabel
 				: translations.value.disabledLabel
