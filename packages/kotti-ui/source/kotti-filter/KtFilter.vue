@@ -155,10 +155,21 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 .kt-filter {
 	display: flex;
 	align-items: center;
-	width: fit-content;
 
 	&__filter-list {
-		width: 40vw; // TODO remove fixed width and make it responsive
+		width: 50vw;
+		@media (max-width: $size-xl) {
+			width: 60vw;
+		}
+		@media (max-width: $size-lg) {
+			width: 75vw;
+		}
+		@media (max-width: $size-md) {
+			width: 90vw;
+		}
+		@media (max-width: $size-sm) {
+			width: 95vw;
+		}
 	}
 
 	&__search-field {

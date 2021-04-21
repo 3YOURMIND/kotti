@@ -21,7 +21,7 @@
 			:isDisabled="isOperationSelectDisabled"
 			:options="operationOptions"
 		/>
-		<div :class="valueContainerClass">
+		<div :class="valueContainerClasses">
 			<component
 				:is="valueComponent"
 				:collapseTagsAfter="1"
@@ -32,6 +32,7 @@
 			<span v-if="showValueState" v-text="valueState" />
 		</div>
 		<ButtonLink
+			class="kt-filter-row__remove"
 			:icon="Yoco.Icon.CLOSE"
 			:isLoading="isLoading"
 			:type="Kotti.Filter.ButtonLinkType.DANGER"
@@ -137,11 +138,11 @@ export default defineComponent<{
 		const showValueState = computed<boolean>(
 			() => props.column.type === Kotti.Filter.FilterType.BOOLEAN,
 		)
-		const valueContainerClass = computed<string>(() => {
-			if (showValueState.value)
-				return 'kt-filter-row__value-field kt-filter-row__value-field--flex'
-			return 'kt-filter-row__value-field'
-		})
+		const valueContainerClasses = computed(() => ({
+			'kt-filter-row__value-field': true,
+			'kt-filter-row__value-field--flex': showValueState.value,
+		}))
+
 		const valueState = computed<string | null>(() => {
 			if (props.value.value === null) return null
 			return props.value.value
@@ -162,7 +163,7 @@ export default defineComponent<{
 			prefix,
 			showValueState,
 			valueComponent,
-			valueContainerClass,
+			valueContainerClasses,
 			valueOptions,
 			valueState,
 			Yoco,
@@ -175,31 +176,51 @@ export default defineComponent<{
 @import '../../kotti-style/_variables.scss';
 
 .kt-filter-row {
-	display: flex;
-	align-items: center;
+	display: grid;
+	grid-template-areas: 'prefix column operation value remove';
+	grid-template-columns: minmax(50px, auto) repeat(3, 1fr) 20px;
+	grid-gap: 0.2rem;
+
+	margin-bottom: $unit-2;
+
+	@media (max-width: $size-md) {
+		grid-template-areas:
+			'prefix .'
+			'column remove'
+			'operation remove'
+			'value remove';
+		grid-template-columns: 1fr;
+	}
 
 	&__prefix {
-		flex: 1 0 50px;
-		padding-right: $unit-2;
+		grid-area: prefix;
+
+		color: var(--text-02);
 	}
 
 	&__column-select {
-		flex: 1 1 180px;
-		padding-right: $unit-2;
+		grid-area: column;
 	}
 
 	&__operation-select {
-		flex: 1 1 200px;
-		padding-right: $unit-2;
+		grid-area: operation;
 	}
 
 	&__value-field {
-		flex: 1 1 200px;
-		padding-right: $unit-2;
+		grid-area: value;
 
 		&--flex {
 			display: flex;
+			align-items: center;
+
+			min-height: $unit-8;
 		}
+	}
+
+	&__remove {
+		grid-area: remove;
+
+		align-items: center;
 	}
 
 	.kt-field {
