@@ -1,39 +1,42 @@
 <template>
-	<KtForm class="kt-filter-row" :value="value" @input="handleSetValue">
+	<KtForm
+		class="kt-filter-row"
+		hideValidation
+		:isLoading="isLoading"
+		:size="Kotti.Field.Size.SMALL"
+		:value="value"
+		@input="handleSetValue"
+	>
 		<span class="kt-filter-row__prefix" v-text="prefix" />
 		<KtFieldSingleSelect
 			class="kt-filter-row__column-select"
 			formKey="key"
 			hideClear
-			hideValidation
-			:isLoading="isLoading"
 			:options="columnOptions"
-			size="small"
 		/>
 		<KtFieldSingleSelect
 			class="kt-filter-row__operation-select"
 			formKey="operation"
 			hideClear
-			hideValidation
 			:isDisabled="isOperationSelectDisabled"
-			:isLoading="isLoading"
 			:options="operationOptions"
-			size="small"
 		/>
 		<div :class="valueContainerClass">
 			<component
 				:is="valueComponent"
 				:collapseTagsAfter="1"
 				formKey="value"
-				hideValidation
-				:isLoading="isLoading"
 				:options="valueOptions"
-				size="small"
 				type="switch"
 			/>
 			<span v-if="showValueState" v-text="valueState" />
 		</div>
-		<ButtonLink :icon="Yoco.Icon.CLOSE" @click="handleRemove" />
+		<ButtonLink
+			:icon="Yoco.Icon.CLOSE"
+			:isLoading="isLoading"
+			:type="Kotti.Filter.ButtonLinkType.DANGER"
+			@click="handleRemove"
+		/>
 	</KtForm>
 </template>
 
@@ -154,6 +157,7 @@ export default defineComponent<{
 			handleRemove,
 			handleSetValue,
 			isOperationSelectDisabled,
+			Kotti,
 			operationOptions,
 			prefix,
 			showValueState,

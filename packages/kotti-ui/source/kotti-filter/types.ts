@@ -2,6 +2,11 @@ import { Kotti } from '../types'
 import { SpecifyRequiredProps } from '../types/utilities'
 
 export namespace KottiFilter {
+	export enum ButtonLinkType {
+		DANGER = 'danger',
+		PRIMARY = 'primary',
+	}
+
 	export enum FilterType {
 		BOOLEAN = 'BOOLEAN',
 		DATE_RANGE = 'DATE_RANGE',

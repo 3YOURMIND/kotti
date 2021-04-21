@@ -32,12 +32,15 @@
 		<div class="kt-filter-list__footer">
 			<ButtonLink
 				:disabled="isAddingFilter || filters.length >= columns.length"
+				:isLoading="isLoading"
 				:label="translations.addFilterLabel"
 				@click="isAddingFilter = true"
 			/>
 			<ButtonLink
 				:disabled="filters.length === 0"
+				:isLoading="isLoading"
 				:label="translations.clearAllLabel"
+				:type="Kotti.Filter.ButtonLinkType.DANGER"
 				@click="handleClearAll"
 			/>
 		</div>
@@ -147,6 +150,7 @@ export default defineComponent<{
 			handleRemoveFilter,
 			handleSetFilter,
 			isAddingFilter,
+			Kotti,
 			translations: useTranslationNamespace('KtFilter'),
 			Yoco,
 		}

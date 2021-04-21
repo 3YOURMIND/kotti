@@ -4,7 +4,7 @@
 		:isLoading="isLoading"
 		:leftIcon="Yoco.Icon.SEARCH"
 		:placeholder="placeholder"
-		size="small"
+		:size="Kotti.Field.Size.SMALL"
 		:value="searchValue"
 		@input="handleSetSearchValue"
 	/>
@@ -46,7 +46,9 @@ export default defineComponent<{
 		const translations = useTranslationNamespace('KtFilter')
 
 		const placeholder = computed<string>(
-			() => props.column?.placeholder ?? translations.value.searchLabel,
+			() =>
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				(props.column as any)?.placeholder ?? translations.value.searchLabel,
 		)
 		const searchValue = computed<Kotti.Filter.FilterValue>(
 			() => props.filter?.value,
@@ -60,6 +62,7 @@ export default defineComponent<{
 
 		return {
 			handleSetSearchValue,
+			Kotti,
 			placeholder,
 			searchValue,
 			Yoco,

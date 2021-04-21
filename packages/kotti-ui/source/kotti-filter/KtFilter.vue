@@ -9,7 +9,11 @@
 			/>
 		</div>
 		<div ref="filterListTriggerRef">
-			<ButtonLink :icon="Yoco.Icon.FILTER" :label="filterLabel" />
+			<ButtonLink
+				:icon="Yoco.Icon.FILTER"
+				:isLoading="isLoading"
+				:label="filterLabel"
+			/>
 		</div>
 		<div ref="filterListContentRef" class="kt-filter__filter-list">
 			<FilterList
