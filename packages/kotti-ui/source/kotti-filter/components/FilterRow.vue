@@ -209,7 +209,7 @@ export default defineComponent<{
 		align-self: center;
 	}
 
-	.kt-field {
+	::v-deep .kt-field {
 		margin-bottom: 0;
 	}
 }

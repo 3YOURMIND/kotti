@@ -66,8 +66,8 @@ export default defineComponent<{
 		},
 	},
 	setup(props, { emit }) {
-		const filtersKeys = computed<Kotti.Filter.InternalFilter['key'][]>(() =>
-			props.filters.map((filter) => filter.key),
+		const currentFiltersKeys = computed<Kotti.Filter.InternalFilter['key'][]>(
+			() => props.filters.map((filter) => filter.key),
 		)
 
 		const getColumn = (
@@ -86,7 +86,7 @@ export default defineComponent<{
 				.filter(
 					(column) =>
 						column.key === selectedColumnKey ||
-						!filtersKeys.value.includes(column.key),
+						!currentFiltersKeys.value.includes(column.key),
 				)
 				.map((column) => ({
 					label: column.label,
@@ -108,17 +108,16 @@ export default defineComponent<{
 			emit('input', updatedFilters)
 		}
 		const handleSetFilter = (
-			filterKey: Kotti.Filter.InternalFilter['key'],
-			filter: Kotti.Filter.InternalFilter,
+			oldFilterKey: Kotti.Filter.InternalFilter['key'],
+			newFilter: Kotti.Filter.InternalFilter,
 		) => {
-			const updatedFilters = props.filters.map((item) => {
-				if (item.key === filterKey) {
-					return filtersKeys.value.includes(filter.key)
-						? filter
-						: getFilterInitialState(filter.key, props.columns)
-				}
-				return item
-			})
+			const updatedFilter = currentFiltersKeys.value.includes(newFilter.key)
+				? newFilter
+				: getFilterInitialState(newFilter.key, props.columns)
+
+			const updatedFilters = props.filters.map((oldFilter) =>
+				oldFilter.key === oldFilterKey ? updatedFilter : oldFilter,
+			)
 			emit('input', updatedFilters)
 		}
 
