@@ -74,6 +74,7 @@ export default defineComponent<{
 
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
+
 .kt-filter__search {
 	flex: 1;
 	margin: 0 $unit-2 0 0;

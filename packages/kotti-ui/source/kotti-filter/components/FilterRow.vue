@@ -163,12 +163,12 @@ export default defineComponent<{
 			isOperationSelectDisabled,
 			Kotti,
 			label,
+			nullOrEmptyLabel,
 			operationOptions,
 			showNullOrEmptyLabel,
 			valueComponent,
 			valueContainerClasses,
 			valueOptions,
-			nullOrEmptyLabel,
 			Yoco,
 		}
 	},

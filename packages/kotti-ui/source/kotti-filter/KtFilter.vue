@@ -7,14 +7,15 @@
 			:isLoading="isLoading"
 			@input="setSearchFilter"
 		/>
-		<div ref="filterListTriggerRef">
+		<div ref="listTriggerRef">
 			<ButtonLink
 				:icon="Yoco.Icon.FILTER"
 				:isLoading="isLoading"
 				:label="filterLabel"
+				@click="toggleListVisibility"
 			/>
 		</div>
-		<div ref="filterListContentRef">
+		<div ref="listContentRef">
 			<FilterList
 				:columns="filterListColumns"
 				:filters="filterListValues"
@@ -29,6 +30,11 @@
 				@clearAll="clearAll"
 			/>
 		</div>
+		<div
+			v-if="isListVisible"
+			class="kt-filter__background"
+			@click="toggleListVisibility"
+		/>
 	</div>
 </template>
 
@@ -73,9 +79,11 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilter')
 
+		const listContentRef = ref<Element | null>(null)
+		const listTriggerRef = ref<Element | null>(null)
 		const isAddingFilter = ref<boolean>(false)
-		const filterListContentRef = ref<Element | null>(null)
-		const filterListTriggerRef = ref<Element | null>(null)
+		const isListVisible = ref<boolean>(false)
+		const tippyInstanceRef = ref(null)
 
 		const filterListColumns = computed<Kotti.Filter.Column[]>(() =>
 			props.columns.filter(
@@ -129,20 +137,28 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 				emit('input', [...filterListValues.value, searchFilter])
 			}
 		}
+		const toggleListVisibility = () => {
+			isListVisible.value = !isListVisible.value
+			if (isListVisible.value) tippyInstanceRef.value.show()
+			else tippyInstanceRef.value.hide()
+		}
 
 		useTippy(
-			filterListTriggerRef,
+			listTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
 				arrow: roundArrow,
-				content: filterListContentRef.value,
-				hideOnClick: true,
+				content: listContentRef.value,
+				hideOnClick: false,
 				interactive: true,
 				maxWidth: 'none',
 				offset: [0, ARROW_HEIGHT],
+				onCreate(instance) {
+					tippyInstanceRef.value = instance
+				},
 				placement: 'bottom',
 				theme: 'light-border',
-				trigger: 'click',
+				trigger: 'manual',
 				zIndex: 1000,
 			})),
 		)
@@ -153,14 +169,16 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 			filterListColumns,
 			filterLabel,
 			filterListValues,
-			filterListContentRef,
-			filterListTriggerRef,
 			hasSearchColumn,
 			isAddingFilter,
+			isListVisible,
+			listContentRef,
+			listTriggerRef,
 			searchColumn,
 			searchValue,
 			setFilters,
 			setSearchFilter,
+			toggleListVisibility,
 			Yoco,
 		}
 	},
@@ -173,5 +191,16 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 .kt-filter {
 	display: flex;
 	align-items: center;
+
+	&__background {
+		position: fixed;
+		top: 0;
+		left: 0;
+
+		z-index: 900;
+		width: 100vw;
+
+		height: 100vh;
+	}
 }
 </style>
