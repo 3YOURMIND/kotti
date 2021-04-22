@@ -318,6 +318,12 @@ import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
+import {
+	ComponentValue,
+	ComponentNames,
+	generateComponentCode,
+} from '../../utilities'
+
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
 const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
@@ -335,21 +341,6 @@ const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 		console.warn('could not save to localStorage')
 	}
 }
-
-type KtFieldNames =
-	| 'KtFieldDate'
-	| 'KtFieldDateRange'
-	| 'KtFieldDateTime'
-	| 'KtFieldDateTimeRange'
-	| 'KtFieldNumber'
-	| 'KtFieldMultiSelect'
-	| 'KtFieldPassword'
-	| 'KtFieldRadioGroup'
-	| 'KtFieldSingleSelect'
-	| 'KtFieldText'
-	| 'KtFieldTextArea'
-	| 'KtFieldToggle'
-	| 'KtFieldToggleGroup'
 
 const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate']
 
@@ -473,13 +464,6 @@ const INITIAL_VALUES: {
 	toggleValue: null,
 }
 
-type ComponentValue = {
-	hasHelpTextSlot: boolean
-	name: KtFieldNames
-	props: object
-	validation: Kotti.Field.Validation.Result['type']
-}
-
 type ComponentRepresenation = ComponentValue & {
 	code: string
 	validator: Kotti.Field.Validation.Function
@@ -494,36 +478,6 @@ const createValidator = (
 				text: `Some Validation Text`,
 				type: validation,
 		  }
-
-const generateCode = (component: ComponentValue) =>
-	[
-		`<${component.name}`,
-		...Object.entries(component.props)
-			.sort(([a], [b]) => a.localeCompare(b))
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			.filter(([_, value]) => value !== null && value !== false)
-			.filter(([key, value]) => !(key === 'size' && value === 'medium'))
-			.filter(([key]) => !(key === 'helpText' && component.hasHelpTextSlot))
-			.map(([key, value]) => {
-				switch (typeof value) {
-					case 'boolean':
-						return key
-					case 'string':
-						return `${key}="${value}"`
-					default:
-						return `:${key}="${JSON.stringify(value).replace(/"/g, "'")}"`
-				}
-			})
-			.map((prop) => `\t${prop}`),
-		...(component.validation === 'empty'
-			? []
-			: [
-					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
-			  ]),
-		component.hasHelpTextSlot
-			? `>\n\t<template #helpText>\n\t\t<div>\n\t\t\tSlot Content\n\t\t</div>\n\t</template>\n</${component.name}>`
-			: '/>',
-	].join('\n')
 
 const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 	{ label: 'Key 1', value: 'value1' },
@@ -590,7 +544,7 @@ export default defineComponent({
 				isLoading: Kotti.FieldToggle.Value
 				isOptional: Kotti.FieldToggle.Value
 			}
-			component: KtFieldNames
+			component: ComponentNames
 			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
 			helpText: Kotti.FieldText.Value
@@ -833,7 +787,7 @@ export default defineComponent({
 						KtFieldTextArea,
 						KtFieldToggle,
 						KtFieldToggleGroup,
-					}[componentValue.value.name]),
+					}[componentValue.value.name as Exclude<ComponentNames, 'KtFilter'>]),
 			),
 			componentDefinition,
 			componentOptions: components.map((component) => ({
@@ -844,7 +798,7 @@ export default defineComponent({
 			componentRepresenation: computed(
 				(): ComponentRepresenation => ({
 					...componentValue.value,
-					code: generateCode(componentValue.value),
+					code: generateComponentCode(componentValue.value),
 					validator: createValidator(componentValue.value.validation),
 				}),
 			),
@@ -855,7 +809,7 @@ export default defineComponent({
 				savedFields.value.map(
 					(component): ComponentRepresenation => ({
 						...component,
-						code: generateCode(component),
+						code: generateComponentCode(component),
 						validator: createValidator(component.validation),
 					}),
 				),

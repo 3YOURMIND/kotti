@@ -67,32 +67,9 @@ import { Kotti, KtFilter } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
-import ComponentInfo from '~/components/ComponentInfo.vue'
+import { ComponentValue, generateComponentCode } from '../../utilities'
 
-const generateCode = (props: object) =>
-	[
-		'<KtFilter',
-		...Object.entries(props)
-			.sort(([a], [b]) => a.localeCompare(b))
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			.filter(([_, value]) => value !== null && value !== false)
-			.filter(
-				([key, value]) =>
-					!(key === 'size' && value === Kotti.Field.Size.MEDIUM),
-			)
-			.map(([key, value]) => {
-				switch (typeof value) {
-					case 'boolean':
-						return key
-					case 'string':
-						return `${key}="${value}"`
-					default:
-						return `:${key}="${JSON.stringify(value).replace(/"/g, "'")}"`
-				}
-			})
-			.map((prop) => `\t${prop}`),
-		'/>',
-	].join('\n')
+import ComponentInfo from '~/components/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsFilter',
@@ -179,9 +156,15 @@ export default defineComponent({
 			isLoading: settings.value.booleanFlags.isLoading,
 		}))
 
-		const componentCode = computed((): string =>
-			generateCode(cloneDeep(componentProps.value)),
-		)
+		const componentCode = computed<string>(() => {
+			const component: ComponentValue = {
+				hasHelpTextSlot: false,
+				name: 'KtFilter',
+				props: cloneDeep(componentProps.value),
+				validation: 'empty',
+			}
+			return generateComponentCode(component)
+		})
 
 		const reset = () => (filters.value = [])
 
