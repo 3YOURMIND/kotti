@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-filter">
-		<div v-if="hasSearchColumn" class="kt-filter__search-field">
+		<div v-if="hasSearchColumn" class="kt-filter__search">
 			<Search
 				:column="searchColumn"
 				:filter="searchValue"
@@ -15,7 +15,7 @@
 				:label="filterLabel"
 			/>
 		</div>
-		<div ref="filterListContentRef" class="kt-filter__filter-list">
+		<div ref="filterListContentRef" class="kt-filter__list">
 			<FilterList
 				:columns="filterListColumns"
 				:filters="filterListValues"
@@ -88,7 +88,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 			props.value.filter((filter) => filter.key !== searchColumn.value?.key),
 		)
 		const filterLabel = computed<string>(() => {
-			const filtersCount = Object.keys(filterListValues.value).length
+			const filtersCount = filterListValues.value.length
 			const label =
 				filtersCount > 1
 					? translations.value.filtersLabel
@@ -96,7 +96,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 			if (filtersCount === 0) return label
 			return `${filtersCount} ${label}`
 		})
-		const hasSearchColumn = computed<boolean>(() => searchColumn.value !== null)
+		const hasSearchColumn = computed(() => searchColumn.value !== null)
 
 		const setFilters = (filters: Kotti.Filter.Value) => {
 			if (searchValue.value === null) {
@@ -107,7 +107,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		}
 		const setSearchFilter = (searchFilter: Kotti.Filter.InternalFilter) => {
 			if (hasSearchColumn.value) {
-				if (searchFilter?.value === null) {
+				if (searchFilter.value === null) {
 					emit('input', filterListValues.value)
 					return
 				}
@@ -156,8 +156,15 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 	display: flex;
 	align-items: center;
 
-	&__filter-list {
+	&__list {
+		display: flex;
+		flex-direction: column;
 		width: 50vw;
+
+		padding: $unit-3 $unit-3 0;
+
+		background-color: #fff;
+
 		@media (max-width: $size-xl) {
 			width: 60vw;
 		}
@@ -172,8 +179,8 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		}
 	}
 
-	&__search-field {
-		width: 12rem;
+	&__search {
+		flex: 1;
 		margin-right: 0.5rem;
 	}
 }

@@ -1,67 +1,65 @@
-<template>
-	<div>
-		<ComponentInfo v-bind="{ component }" />
+<template lang="md">
+	<ComponentInfo v-bind="{ component }" />
 
-		<KtTranslationContext :locale="settings.locale">
-			<div class="overview">
-				<div class="overview__component">
-					<h4>Component</h4>
-					<KtFilter
-						v-model="filters"
-						:columns="componentProps.columns"
-						:isLoading="componentProps.isLoading"
-					/>
-					<div class="overview__component__value">
-						<strong>Value</strong>: <span v-text="JSON.stringify(filters)" />
-						<a @click.prevent="reset">reset</a>
-					</div>
-				</div>
-				<div class="overview__code">
-					<h4>Code</h4>
-					<pre v-text="componentCode" />
+	<KtTranslationContext :locale="settings.locale">
+		<div class="overview">
+			<div class="overview__component">
+				<h4>Component</h4>
+				<KtFilter
+					v-model="filters"
+					:columns="componentProps.columns"
+					:isLoading="componentProps.isLoading"
+				/>
+				<div class="overview__component__value">
+					<strong>Value</strong>: <span v-text="JSON.stringify(filters)" />
+					<a @click.prevent="reset">reset</a>
 				</div>
 			</div>
-			<KtForm v-model="settings">
-				<div class="wrapper">
-					<div>
-						<h4>Settings</h4>
-						<KtFieldSingleSelect
-							formKey="locale"
-							helpText="Can be set via KtTranslationContext"
-							hideClear
-							label="Language"
-							leftIcon="global"
-							:options="[
-								{ label: 'German (de-DE)', value: 'de-DE' },
-								{ label: 'English (en-US)', value: 'en-US' },
-								{ label: 'Spanish (es-ES)', value: 'es-ES' },
-								{ label: 'French (fr-FR)', value: 'fr-FR' },
-								{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
-							]"
-							:size="Kotti.Field.Size.SMALL"
-						/>
-						<KtFieldToggleGroup
-							formKey="booleanFlags"
-							isOptional
-							label="Boolean Flags"
-							:options="[{ key: 'isLoading', label: 'isLoading' }]"
-							:size="Kotti.Field.Size.SMALL"
-							type="switch"
-						/>
-					</div>
-					<div>
-						<h4>Texts</h4>
-						<KtFieldText
-							formKey="searchPlaceholder"
-							isOptional
-							label="placeholder"
-							:size="Kotti.Field.Size.SMALL"
-						/>
-					</div>
+			<div class="overview__code">
+				<h4>Code</h4>
+				<pre v-text="componentCode" />
+			</div>
+		</div>
+		<KtForm v-model="settings">
+			<div class="wrapper">
+				<div>
+					<h4>Settings</h4>
+					<KtFieldSingleSelect
+						formKey="locale"
+						helpText="Can be set via KtTranslationContext"
+						hideClear
+						label="Language"
+						leftIcon="global"
+						:options="[
+							{ label: 'German (de-DE)', value: 'de-DE' },
+							{ label: 'English (en-US)', value: 'en-US' },
+							{ label: 'Spanish (es-ES)', value: 'es-ES' },
+							{ label: 'French (fr-FR)', value: 'fr-FR' },
+							{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+						]"
+						:size="Kotti.Field.Size.SMALL"
+					/>
+					<KtFieldToggleGroup
+						formKey="booleanFlags"
+						isOptional
+						label="Boolean Flags"
+						:options="[{ key: 'isLoading', label: 'isLoading' }]"
+						:size="Kotti.Field.Size.SMALL"
+						type="switch"
+					/>
 				</div>
-			</KtForm>
-		</KtTranslationContext>
-	</div>
+				<div>
+					<h4>Texts</h4>
+					<KtFieldText
+						formKey="searchPlaceholder"
+						isOptional
+						label="placeholder"
+						:size="Kotti.Field.Size.SMALL"
+					/>
+				</div>
+			</div>
+		</KtForm>
+	</KtTranslationContext>
 </template>
 
 <script lang="ts">

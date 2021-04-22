@@ -1,21 +1,21 @@
 <template>
 	<KtForm
-		class="kt-filter-row"
+		class="kt-filter__list__row"
 		hideValidation
 		:isLoading="isLoading"
 		:size="Kotti.Field.Size.SMALL"
 		:value="value"
 		@input="handleSetValue"
 	>
-		<span class="kt-filter-row__prefix" v-text="prefix" />
+		<span class="kt-filter__list__row__label" v-text="label" />
 		<KtFieldSingleSelect
-			class="kt-filter-row__column-select"
+			class="kt-filter__list__row__column-select"
 			formKey="key"
 			hideClear
 			:options="columnOptions"
 		/>
 		<KtFieldSingleSelect
-			class="kt-filter-row__operation-select"
+			class="kt-filter__list__row__operation-select"
 			formKey="operation"
 			hideClear
 			:isDisabled="isOperationSelectDisabled"
@@ -32,7 +32,7 @@
 			<span v-if="showValueState" v-text="valueState" />
 		</div>
 		<ButtonLink
-			class="kt-filter-row__remove"
+			class="kt-filter__list__row__remove"
 			:icon="Yoco.Icon.CLOSE"
 			:isLoading="isLoading"
 			:type="Kotti.Filter.ButtonLinkType.DANGER"
@@ -61,7 +61,7 @@ import { getOperationOptions, getValueComponent } from '../utils'
 import ButtonLink from './ButtonLink.vue'
 
 export default defineComponent<{
-	column: Kotti.Filter.Column
+	column: Kotti.Filter.Column | null
 	columnOptions: Kotti.FieldSingleSelect.Props['options']
 	isFirstItem: boolean
 	isLoading: boolean
@@ -80,7 +80,7 @@ export default defineComponent<{
 	},
 	props: {
 		column: {
-			default: () => ({}),
+			default: null,
 			type: Object,
 		},
 		columnOptions: {
@@ -107,23 +107,23 @@ export default defineComponent<{
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilter')
 
-		const prefix = computed<string>(() =>
+		const label = computed<string>(() =>
 			props.isFirstItem
 				? translations.value.whereLabel
 				: translations.value.andLabel,
 		)
 		const operationOptions = computed<Kotti.FieldSingleSelect.Props['options']>(
 			() => {
-				if (!props.column.type) return []
+				if (!props.column?.type) return []
 				return getOperationOptions(props.column.type)
 			},
 		)
 		const valueComponent = computed(() => {
-			if (!props.column.type) return null
+			if (!props.column?.type) return null
 			return getValueComponent(props.column.type)
 		})
 		const valueOptions = computed(() => {
-			if (!props.column.type) return []
+			if (!props.column?.type) return []
 			switch (props.column.type) {
 				case Kotti.Filter.FilterType.SINGLE_ENUM:
 				case Kotti.Filter.FilterType.MULTI_ENUM:
@@ -136,11 +136,11 @@ export default defineComponent<{
 			() => operationOptions.value.length <= 1,
 		)
 		const showValueState = computed<boolean>(
-			() => props.column.type === Kotti.Filter.FilterType.BOOLEAN,
+			() => props.column?.type === Kotti.Filter.FilterType.BOOLEAN,
 		)
 		const valueContainerClasses = computed(() => ({
-			'kt-filter-row__value-field': true,
-			'kt-filter-row__value-field--flex': showValueState.value,
+			'kt-filter__list__row__value-field': true,
+			'kt-filter__list__row__value-field--flex': showValueState.value,
 		}))
 
 		const valueState = computed<string | null>(() => {
@@ -159,8 +159,8 @@ export default defineComponent<{
 			handleSetValue,
 			isOperationSelectDisabled,
 			Kotti,
+			label,
 			operationOptions,
-			prefix,
 			showValueState,
 			valueComponent,
 			valueContainerClasses,
@@ -175,9 +175,9 @@ export default defineComponent<{
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
 
-.kt-filter-row {
+.kt-filter__list__row {
 	display: grid;
-	grid-template-areas: 'prefix column operation value remove';
+	grid-template-areas: 'label column operation value remove';
 	grid-template-columns: minmax(50px, auto) repeat(3, 1fr) 20px;
 	grid-gap: 0.2rem;
 
@@ -185,15 +185,15 @@ export default defineComponent<{
 
 	@media (max-width: $size-md) {
 		grid-template-areas:
-			'prefix .'
+			'label .'
 			'column remove'
 			'operation remove'
 			'value remove';
 		grid-template-columns: 1fr;
 	}
 
-	&__prefix {
-		grid-area: prefix;
+	&__label {
+		grid-area: label;
 
 		color: var(--text-02);
 	}
@@ -220,7 +220,7 @@ export default defineComponent<{
 	&__remove {
 		grid-area: remove;
 
-		align-items: center;
+		align-self: center;
 	}
 
 	.kt-field {

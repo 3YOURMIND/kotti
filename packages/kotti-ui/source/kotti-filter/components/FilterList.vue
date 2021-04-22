@@ -1,35 +1,33 @@
 <template>
-	<div class="kt-filter-list">
-		<div class="kt-filter-list__content">
-			<span
-				v-show="filters.length === 0 && !isAddingFilter"
-				v-text="translations.emptyListLabel"
+	<div style="display: contents;">
+		<span
+			v-show="filters.length === 0 && !isAddingFilter"
+			v-text="translations.emptyListLabel"
+		/>
+		<div
+			v-for="(filter, index) in filters"
+			:key="filter.key"
+			class="kt-filter__list__row"
+		>
+			<FilterRow
+				:column="getColumn(filter.key)"
+				:columnOptions="getColumnOptions(filter.key)"
+				:isFirstItem="index === 0"
+				:isLoading="isLoading"
+				:value="filter"
+				@input="handleSetFilter(filter.key, $event)"
+				@remove="handleRemoveFilter(filter.key)"
 			/>
-			<div
-				v-for="(filter, index) in filters"
-				:key="filter.key"
-				class="kt-filter-list__filter-row"
-			>
-				<FilterRow
-					:column="getColumn(filter.key)"
-					:columnOptions="getColumnOptions(filter.key)"
-					:isFirstItem="index === 0"
-					:isLoading="isLoading"
-					:value="filter"
-					@input="handleSetFilter(filter.key, $event)"
-					@remove="handleRemoveFilter(filter.key)"
-				/>
-			</div>
-			<div v-if="isAddingFilter" class="kt-filter-list__filter-row">
-				<FilterRow
-					:columnOptions="getColumnOptions()"
-					:isFirstItem="filters.length === 0"
-					@input="handleAddFilter"
-					@remove="isAddingFilter = false"
-				/>
-			</div>
 		</div>
-		<div class="kt-filter-list__footer">
+		<div v-if="isAddingFilter" class="kt-filter__list__row">
+			<FilterRow
+				:columnOptions="getColumnOptions()"
+				:isFirstItem="filters.length === 0"
+				@input="handleAddFilter"
+				@remove="isAddingFilter = false"
+			/>
+		</div>
+		<div class="kt-filter__list__actions">
 			<ButtonLink
 				:isDisabled="isAddingFilter || filters.length >= columns.length"
 				:isLoading="isLoading"
@@ -161,22 +159,12 @@ export default defineComponent<{
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
 
-.kt-filter-list {
-	width: 100%;
-	max-height: 100%;
-	background-color: #fff;
-
-	&__content {
-		display: flex;
-		flex-direction: column;
-		padding: $unit-3 $unit-3 0;
-	}
-
-	&__filter-row {
+.kt-filter__list {
+	&__row {
 		padding-bottom: $unit-1;
 	}
 
-	&__footer {
+	&__actions {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
