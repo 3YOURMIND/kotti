@@ -4,32 +4,35 @@
 		hideValidation
 		:isLoading="isLoading"
 		:size="Kotti.Field.Size.SMALL"
+		style="display: contents;"
 		:value="value"
 		@input="handleSetValue"
 	>
-		<span class="kt-filter__list__row__label" v-text="label" />
-		<KtFieldSingleSelect
-			class="kt-filter__list__row__column-select"
-			formKey="key"
-			hideClear
-			:options="columnOptions"
-		/>
-		<KtFieldSingleSelect
-			class="kt-filter__list__row__operation-select"
-			formKey="operation"
-			hideClear
-			:isDisabled="isOperationSelectDisabled"
-			:options="operationOptions"
-		/>
-		<div :class="valueContainerClasses">
-			<component
-				:is="valueComponent"
-				:collapseTagsAfter="1"
-				formKey="value"
-				:options="valueOptions"
-				type="switch"
+		<div class="kt-filter__list__row__wrapper">
+			<span class="kt-filter__list__row__label" v-text="label" />
+			<KtFieldSingleSelect
+				class="kt-filter__list__row__column-select"
+				formKey="key"
+				hideClear
+				:options="columnOptions"
 			/>
-			<span v-if="showNullOrEmptyLabel" v-text="nullOrEmptyLabel" />
+			<KtFieldSingleSelect
+				class="kt-filter__list__row__operation-select"
+				formKey="operation"
+				hideClear
+				:isDisabled="isOperationSelectDisabled"
+				:options="operationOptions"
+			/>
+			<div :class="valueContainerClasses">
+				<component
+					:is="valueComponent"
+					:collapseTagsAfter="1"
+					formKey="value"
+					:options="valueOptions"
+					type="switch"
+				/>
+				<span v-if="showNullOrEmptyLabel" v-text="nullOrEmptyLabel" />
+			</div>
 		</div>
 		<ButtonLink
 			class="kt-filter__list__row__remove"
@@ -176,39 +179,24 @@ export default defineComponent<{
 @import '../../kotti-style/_variables.scss';
 
 .kt-filter__list__row {
-	display: grid;
-	grid-template-areas: 'label column operation value remove';
-	grid-template-columns: minmax(50px, auto) repeat(3, 1fr) 20px;
-	grid-gap: 0.2rem;
+	&__wrapper {
+		display: contents;
 
-	margin-bottom: $unit-2;
-
-	@media (max-width: $size-md) {
-		grid-template-areas:
-			'label .'
-			'column remove'
-			'operation remove'
-			'value remove';
-		grid-template-columns: 1fr;
+		@media (max-width: $size-md) {
+			display: unset;
+			> * {
+				padding-bottom: $unit-1;
+			}
+		}
 	}
 
 	&__label {
-		grid-area: label;
-
+		display: flex;
+		align-items: center;
 		color: var(--text-02);
 	}
 
-	&__column-select {
-		grid-area: column;
-	}
-
-	&__operation-select {
-		grid-area: operation;
-	}
-
 	&__value-field {
-		grid-area: value;
-
 		&--has-label {
 			display: flex;
 			align-items: center;
@@ -218,8 +206,6 @@ export default defineComponent<{
 	}
 
 	&__remove {
-		grid-area: remove;
-
 		align-self: center;
 	}
 

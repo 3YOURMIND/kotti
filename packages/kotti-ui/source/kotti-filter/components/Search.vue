@@ -1,5 +1,6 @@
 <template>
 	<KtFieldText
+		class="kt-filter__search"
 		hideValidation
 		:isLoading="isLoading"
 		:leftIcon="Yoco.Icon.SEARCH"
@@ -70,3 +71,11 @@ export default defineComponent<{
 	},
 })
 </script>
+
+<style lang="scss" scoped>
+@import '../../kotti-style/_variables.scss';
+.kt-filter__search {
+	flex: 1;
+	margin: 0 $unit-2 0 0;
+}
+</style>

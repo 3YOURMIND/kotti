@@ -1,13 +1,12 @@
 <template>
 	<div class="kt-filter">
-		<div v-if="hasSearchColumn" class="kt-filter__search">
-			<Search
-				:column="searchColumn"
-				:filter="searchValue"
-				:isLoading="isLoading"
-				@input="setSearchFilter"
-			/>
-		</div>
+		<Search
+			v-if="hasSearchColumn"
+			:column="searchColumn"
+			:filter="searchValue"
+			:isLoading="isLoading"
+			@input="setSearchFilter"
+		/>
 		<div ref="filterListTriggerRef">
 			<ButtonLink
 				:icon="Yoco.Icon.FILTER"
@@ -15,12 +14,19 @@
 				:label="filterLabel"
 			/>
 		</div>
-		<div ref="filterListContentRef" class="kt-filter__list">
+		<div ref="filterListContentRef">
 			<FilterList
 				:columns="filterListColumns"
 				:filters="filterListValues"
+				:isAddingFilter="isAddingFilter"
 				:isLoading="isLoading"
+				@endAddingFilter="isAddingFilter = false"
 				@input="setFilters"
+			/>
+			<Actions
+				:isLoading="isLoading"
+				@addFilter="isAddingFilter = true"
+				@clearAll="clearAll"
 			/>
 		</div>
 	</div>
@@ -35,6 +41,7 @@ import { roundArrow } from 'tippy.js'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 import { Kotti } from '../types'
 
+import Actions from './components/Actions.vue'
 import ButtonLink from './components/ButtonLink.vue'
 import FilterList from './components/FilterList.vue'
 import Search from './components/Search.vue'
@@ -44,6 +51,7 @@ const ARROW_HEIGHT = 7
 export default defineComponent<Kotti.Filter.InternalProps>({
 	name: 'KtFilter',
 	components: {
+		Actions,
 		ButtonLink,
 		FilterList,
 		Search,
@@ -65,6 +73,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilter')
 
+		const isAddingFilter = ref<boolean>(false)
 		const filterListContentRef = ref<Element | null>(null)
 		const filterListTriggerRef = ref<Element | null>(null)
 
@@ -87,6 +96,11 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		const filterListValues = computed<Kotti.Filter.Value>(() =>
 			props.value.filter((filter) => filter.key !== searchColumn.value?.key),
 		)
+		const areActionsDisabled = computed(
+			() =>
+				isAddingFilter.value ||
+				filterListValues.value.length >= filterListColumns.value.length,
+		)
 		const filterLabel = computed<string>(() => {
 			const filtersCount = filterListValues.value.length
 			const label =
@@ -98,6 +112,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		})
 		const hasSearchColumn = computed(() => searchColumn.value !== null)
 
+		const clearAll = () => emit('input', [])
 		const setFilters = (filters: Kotti.Filter.Value) => {
 			if (searchValue.value === null) {
 				emit('input', filters)
@@ -133,12 +148,15 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		)
 
 		return {
+			areActionsDisabled,
+			clearAll,
 			filterListColumns,
 			filterLabel,
 			filterListValues,
 			filterListContentRef,
 			filterListTriggerRef,
 			hasSearchColumn,
+			isAddingFilter,
 			searchColumn,
 			searchValue,
 			setFilters,
@@ -155,33 +173,5 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 .kt-filter {
 	display: flex;
 	align-items: center;
-
-	&__list {
-		display: flex;
-		flex-direction: column;
-		width: 50vw;
-
-		padding: $unit-3 $unit-3 0;
-
-		background-color: #fff;
-
-		@media (max-width: $size-xl) {
-			width: 60vw;
-		}
-		@media (max-width: $size-lg) {
-			width: 75vw;
-		}
-		@media (max-width: $size-md) {
-			width: 90vw;
-		}
-		@media (max-width: $size-sm) {
-			width: 95vw;
-		}
-	}
-
-	&__search {
-		flex: 1;
-		margin-right: 0.5rem;
-	}
 }
 </style>

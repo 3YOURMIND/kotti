@@ -1,64 +1,45 @@
 <template>
-	<div style="display: contents;">
-		<span
+	<div class="kt-filter__list">
+		<i
 			v-show="filters.length === 0 && !isAddingFilter"
 			v-text="translations.emptyListLabel"
 		/>
-		<div
+		<FilterRow
 			v-for="(filter, index) in filters"
 			:key="filter.key"
-			class="kt-filter__list__row"
-		>
-			<FilterRow
-				:column="getColumn(filter.key)"
-				:columnOptions="getColumnOptions(filter.key)"
-				:isFirstItem="index === 0"
-				:isLoading="isLoading"
-				:value="filter"
-				@input="handleSetFilter(filter.key, $event)"
-				@remove="handleRemoveFilter(filter.key)"
-			/>
-		</div>
-		<div v-if="isAddingFilter" class="kt-filter__list__row">
-			<FilterRow
-				:columnOptions="getColumnOptions()"
-				:isFirstItem="filters.length === 0"
-				@input="handleAddFilter"
-				@remove="isAddingFilter = false"
-			/>
-		</div>
-		<div class="kt-filter__list__actions">
-			<ButtonLink
-				:isDisabled="isAddingFilter || filters.length >= columns.length"
-				:isLoading="isLoading"
-				:label="translations.addFilterLabel"
-				@click="isAddingFilter = true"
-			/>
-			<ButtonLink
-				:isDisabled="filters.length === 0"
-				:isLoading="isLoading"
-				:label="translations.clearAllLabel"
-				:type="Kotti.Filter.ButtonLinkType.DANGER"
-				@click="handleClearAll"
-			/>
-		</div>
+			:column="getColumn(filter.key)"
+			:columnOptions="getColumnOptions(filter.key)"
+			:isFirstItem="index === 0"
+			:isLoading="isLoading"
+			:value="filter"
+			@input="handleSetFilter(filter.key, $event)"
+			@remove="handleRemoveFilter(filter.key)"
+		/>
+		<FilterRow
+			v-if="isAddingFilter"
+			:columnOptions="getColumnOptions()"
+			:isFirstItem="filters.length === 0"
+			@input="handleAddFilter"
+			@remove="isAddingFilter = false"
+		/>
 	</div>
 </template>
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../../kotti-translation/hooks'
 import { Kotti } from '../../types'
+import { getFilterInitialState } from '../utils'
 
-import { getFilterInitialState } from './../utils'
 import ButtonLink from './ButtonLink.vue'
 import FilterRow from './FilterRow.vue'
 
 export default defineComponent<{
 	columns: Kotti.Filter.Column[]
 	filters: Kotti.Filter.InternalFilter[]
+	isAddingFilter: boolean
 	isLoading: boolean
 }>({
 	name: 'FilterList',
@@ -75,14 +56,16 @@ export default defineComponent<{
 			required: true,
 			type: Array,
 		},
+		isAddingFilter: {
+			default: false,
+			type: Boolean,
+		},
 		isLoading: {
 			default: false,
 			type: Boolean,
 		},
 	},
 	setup(props, { emit }) {
-		const isAddingFilter = ref<boolean>(false)
-
 		const filtersKeys = computed<Kotti.Filter.InternalFilter['key'][]>(() =>
 			props.filters.map((filter) => filter.key),
 		)
@@ -114,9 +97,8 @@ export default defineComponent<{
 			const newFilter = getFilterInitialState(filter.key, props.columns)
 			if (!newFilter) return
 			emit('input', [...props.filters, newFilter])
-			isAddingFilter.value = false
+			emit('endAddingFilter')
 		}
-		const handleClearAll = () => emit('input', [])
 		const handleRemoveFilter = (
 			filterKey: Kotti.Filter.InternalFilter['key'],
 		) => {
@@ -144,10 +126,8 @@ export default defineComponent<{
 			getColumn,
 			getColumnOptions,
 			handleAddFilter,
-			handleClearAll,
 			handleRemoveFilter,
 			handleSetFilter,
-			isAddingFilter,
 			Kotti,
 			translations: useTranslationNamespace('KtFilter'),
 			Yoco,
@@ -160,15 +140,28 @@ export default defineComponent<{
 @import '../../kotti-style/_variables.scss';
 
 .kt-filter__list {
-	&__row {
-		padding-bottom: $unit-1;
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: max-content repeat(3, 8fr) max-content;
+	grid-gap: $unit-1;
+
+	width: 50vw;
+
+	@media (max-width: $size-md) {
+		grid-template-columns: auto max-content;
 	}
 
-	&__actions {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: $unit-3;
+	@media (max-width: $size-xl) {
+		width: 60vw;
+	}
+	@media (max-width: $size-lg) {
+		width: 75vw;
+	}
+	@media (max-width: $size-md) {
+		width: 90vw;
+	}
+	@media (max-width: $size-sm) {
+		width: 95vw;
 	}
 }
 </style>
