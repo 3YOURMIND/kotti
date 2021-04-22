@@ -29,7 +29,7 @@
 				:options="valueOptions"
 				type="switch"
 			/>
-			<span v-if="showValueState" v-text="valueState" />
+			<span v-if="showNullOrEmptyLabel" v-text="nullOrEmptyLabel" />
 		</div>
 		<ButtonLink
 			class="kt-filter__list__row__remove"
@@ -123,8 +123,7 @@ export default defineComponent<{
 			return getValueComponent(props.column.type)
 		})
 		const valueOptions = computed(() => {
-			if (!props.column?.type) return []
-			switch (props.column.type) {
+			switch (props.column?.type) {
 				case Kotti.Filter.FilterType.SINGLE_ENUM:
 				case Kotti.Filter.FilterType.MULTI_ENUM:
 					return props.column.options
@@ -135,15 +134,16 @@ export default defineComponent<{
 		const isOperationSelectDisabled = computed<boolean>(
 			() => operationOptions.value.length <= 1,
 		)
-		const showValueState = computed<boolean>(
+		const showNullOrEmptyLabel = computed<boolean>(
 			() => props.column?.type === Kotti.Filter.FilterType.BOOLEAN,
 		)
 		const valueContainerClasses = computed(() => ({
 			'kt-filter__list__row__value-field': true,
-			'kt-filter__list__row__value-field--flex': showValueState.value,
+			'kt-filter__list__row__value-field--has-label':
+				showNullOrEmptyLabel.value,
 		}))
 
-		const valueState = computed<string | null>(() => {
+		const nullOrEmptyLabel = computed<string>(() => {
 			if (props.value.value === null) return translations.value.unsetLabel
 			return props.value.value
 				? translations.value.enabledLabel
@@ -161,11 +161,11 @@ export default defineComponent<{
 			Kotti,
 			label,
 			operationOptions,
-			showValueState,
+			showNullOrEmptyLabel,
 			valueComponent,
 			valueContainerClasses,
 			valueOptions,
-			valueState,
+			nullOrEmptyLabel,
 			Yoco,
 		}
 	},
@@ -209,7 +209,7 @@ export default defineComponent<{
 	&__value-field {
 		grid-area: value;
 
-		&--flex {
+		&--has-label {
 			display: flex;
 			align-items: center;
 

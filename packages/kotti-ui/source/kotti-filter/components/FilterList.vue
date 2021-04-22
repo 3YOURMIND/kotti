@@ -97,7 +97,7 @@ export default defineComponent<{
 			return column
 		}
 		const getColumnOptions = (
-			selectedColumnKey: Kotti.Filter.Column['key'],
+			selectedColumnKey: Kotti.Filter.Column['key'] | undefined,
 		): Kotti.FieldSingleSelect.Props['options'] =>
 			props.columns
 				.filter(
