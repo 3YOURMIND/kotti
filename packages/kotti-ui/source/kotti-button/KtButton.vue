@@ -100,6 +100,10 @@ export default defineComponent<KottiButton.PropsInternal>({
 		opacity: 0.46;
 	}
 
+	&:focus-visible {
+		outline: none;
+	}
+
 	> *:not(:first-child) {
 		margin-left: 0.2rem;
 	}
@@ -165,7 +169,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 				border-left-color: var(--danger);
 			}
 
-			&:hover {
+			&:hover,
+			&:focus-visible {
 				color: var(--text-04);
 				background-color: var(--danger);
 				border-color: transparent;
@@ -182,7 +187,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 			background-color: var(--interactive-02);
 			border-color: var(--ui-02);
 
-			&:hover {
+			&:hover,
+			&:focus-visible {
 				background-color: var(--button-main-color-light);
 				border-color: var(--button-main-color-light);
 			}
@@ -198,7 +204,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 			background-color: var(--button-main-color);
 			border-color: var(--button-main-color-dark);
 
-			&:hover {
+			&:hover,
+			&:focus-visible {
 				background-color: var(--button-main-color-dark);
 				border-color: var(--button-main-color-dark);
 			}
@@ -214,7 +221,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 			background-color: var(--interactive-02);
 			border-color: var(--button-main-color-dark);
 
-			&:hover {
+			&:hover,
+			&:focus-visible {
 				background-color: var(--button-main-color-light);
 				border-color: var(--button-main-color-dark);
 			}
@@ -230,7 +238,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 			background-color: transparent;
 			border-color: transparent;
 
-			&:hover {
+			&:hover,
+			&:focus-visible {
 				background-color: var(--button-main-color-light);
 				border-color: var(--button-main-color-light);
 			}
