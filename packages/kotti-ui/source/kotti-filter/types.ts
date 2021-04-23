@@ -18,32 +18,38 @@ export namespace KottiFilter {
 	}
 
 	export namespace Operation {
-		export enum String {
-			CONTAINS = 'CONTAINS',
+		export enum Boolean {
+			EQUAL = 'EQUAL',
+			IS_EMPTY = 'IS_EMPTY',
+		}
+
+		export enum DateRange {
+			IN_RANGE = 'IN_RANGE',
+			IS_EMPTY = 'IS_EMPTY',
+		}
+
+		export enum MultiEnum {
+			IS_EMPTY = 'IS_EMPTY',
+			ONE_OF = 'ONE_OF', // OR
 		}
 
 		export enum Number {
 			EQUAL = 'EQUAL',
 			GREATER_THAN = 'GREATER_THAN',
 			GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL',
+			IS_EMPTY = 'IS_EMPTY',
 			LESS_THAN = 'LESS_THAN',
 			LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
 		}
 
-		export enum Boolean {
-			EQUAL = 'EQUAL',
-		}
-
-		export enum DateRange {
-			IN = 'IN',
-		}
-
 		export enum SingleEnum {
 			EQUAL = 'EQUAL',
+			IS_EMPTY = 'IS_EMPTY',
 		}
 
-		export enum MultiEnum {
-			ONE_OF = 'ONE_OF', // OR
+		export enum String {
+			CONTAINS = 'CONTAINS',
+			IS_EMPTY = 'IS_EMPTY',
 		}
 	}
 

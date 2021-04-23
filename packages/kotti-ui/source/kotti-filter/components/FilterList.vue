@@ -9,9 +9,9 @@
 			:key="filter.key"
 			:column="getColumn(filter.key)"
 			:columnOptions="getColumnOptions(filter.key)"
+			:filter="filter"
 			:isFirstItem="index === 0"
 			:isLoading="isLoading"
-			:value="filter"
 			@input="handleSetFilter(filter.key, $event)"
 			@remove="handleRemoveFilter(filter.key)"
 		/>
@@ -141,7 +141,7 @@ export default defineComponent<{
 .kt-filter__list {
 	display: grid;
 	grid-template-rows: auto;
-	grid-template-columns: max-content repeat(3, 8fr) max-content;
+	grid-template-columns: max-content repeat(3, 1fr) max-content;
 	grid-gap: $unit-1;
 
 	width: 50vw;

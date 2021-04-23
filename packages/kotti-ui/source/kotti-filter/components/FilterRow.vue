@@ -5,8 +5,8 @@
 		:isLoading="isLoading"
 		:size="Kotti.Field.Size.SMALL"
 		style="display: contents;"
-		:value="value"
-		@input="handleSetValue"
+		:value="filter"
+		@input="handleSetFilter"
 	>
 		<div class="kt-filter__list__row__wrapper">
 			<span class="kt-filter__list__row__label" v-text="label" />
@@ -26,12 +26,16 @@
 			<div :class="valueContainerClasses">
 				<component
 					:is="valueComponent"
+					v-if="isValueFieldVisible"
 					:collapseTagsAfter="1"
 					formKey="value"
 					:options="valueOptions"
 					type="switch"
 				/>
-				<span v-if="showNullOrEmptyLabel" v-text="nullOrEmptyLabel" />
+				<span
+					v-if="isValueFieldVisible && showNullOrEmptyLabel"
+					v-text="nullOrEmptyLabel"
+				/>
 			</div>
 		</div>
 		<ButtonLink
@@ -59,16 +63,21 @@ import {
 } from '../../'
 import { useTranslationNamespace } from '../../kotti-translation/hooks'
 import { Kotti } from '../../types'
-import { getOperationOptions, getValueComponent } from '../utils'
+import {
+	getFilterEmptyValue,
+	getOperationOptions,
+	getValueComponent,
+	isFilterOperationEmpty,
+} from '../utils'
 
 import ButtonLink from './ButtonLink.vue'
 
 export default defineComponent<{
 	column: Kotti.Filter.Column | null
 	columnOptions: Kotti.FieldSingleSelect.Props['options']
+	filter: Kotti.Filter.Filter
 	isFirstItem: boolean
 	isLoading: boolean
-	value: Kotti.Filter.Filter
 }>({
 	name: 'FilterRow',
 	components: {
@@ -90,6 +99,14 @@ export default defineComponent<{
 			required: true,
 			type: Array,
 		},
+		filter: {
+			default: () => ({
+				key: null,
+				operation: null,
+				value: null,
+			}),
+			type: Object,
+		},
 		isFirstItem: {
 			default: false,
 			type: Boolean,
@@ -97,14 +114,6 @@ export default defineComponent<{
 		isLoading: {
 			default: false,
 			type: Boolean,
-		},
-		value: {
-			default: () => ({
-				key: null,
-				operation: null,
-				value: null,
-			}),
-			type: Object,
 		},
 	},
 	setup(props, { emit }) {
@@ -137,6 +146,9 @@ export default defineComponent<{
 		const isOperationSelectDisabled = computed<boolean>(
 			() => operationOptions.value.length <= 1,
 		)
+		const isValueFieldVisible = computed(
+			() => !isFilterOperationEmpty(props.filter.operation, props.column?.type),
+		)
 		const showNullOrEmptyLabel = computed<boolean>(
 			() => props.column?.type === Kotti.Filter.FilterType.BOOLEAN,
 		)
@@ -147,20 +159,29 @@ export default defineComponent<{
 		}))
 
 		const nullOrEmptyLabel = computed<string>(() => {
-			if (props.value.value === null) return translations.value.unsetLabel
-			return props.value.value
+			return props.filter.value === null
+				? translations.value.unsetLabel
+				: props.filter.value
 				? translations.value.enabledLabel
 				: translations.value.disabledLabel
 		})
 
 		const handleRemove = () => emit('remove')
-		const handleSetValue = (value: Kotti.Filter.InternalFilter) =>
-			emit('input', value)
-
+		const handleSetFilter = (newFilter: Kotti.Filter.InternalFilter) => {
+			if (isFilterOperationEmpty(newFilter.operation, props.column?.type)) {
+				emit('input', {
+					...newFilter,
+					value: getFilterEmptyValue(props.column.type),
+				})
+				return
+			}
+			emit('input', newFilter)
+		}
 		return {
 			handleRemove,
-			handleSetValue,
+			handleSetFilter,
 			isOperationSelectDisabled,
+			isValueFieldVisible,
 			Kotti,
 			label,
 			nullOrEmptyLabel,

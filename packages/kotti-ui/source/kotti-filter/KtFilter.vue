@@ -131,7 +131,13 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		})
 		const hasSearchColumn = computed(() => searchColumn.value !== null)
 
-		const clearAll = () => emit('input', [])
+		const clearAll = () => {
+			if (searchValue.value === null) {
+				emit('input', [])
+				return
+			}
+			emit('input', [searchValue.value])
+		}
 		const setFilters = (filters: Kotti.Filter.Value) => {
 			if (searchValue.value === null) {
 				emit('input', filters)
@@ -151,7 +157,10 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		const toggleListVisibility = () => {
 			isListVisible.value = !isListVisible.value
 			if (isListVisible.value) tippyInstanceRef.value.show()
-			else tippyInstanceRef.value.hide()
+			else {
+				tippyInstanceRef.value.hide()
+				isAddingFilter.value = false
+			}
 		}
 
 		useTippy(

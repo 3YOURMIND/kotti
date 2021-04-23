@@ -16,10 +16,12 @@ export const frFR: KottiTranslation.Messages = {
 		andLabel: 'Et',
 		boolean: {
 			EQUAL: 'est',
+			IS_EMPTY: 'est vide',
 		},
 		clearAllLabel: 'Tout Effacer',
 		dateRange: {
-			IN: 'est à portée',
+			IN_RANGE: 'est à portée',
+			IS_EMPTY: 'est vide',
 		},
 		disabledLabel: 'Désactivé',
 		emptyListLabel: 'Aucun Filtre Appliqué',
@@ -27,21 +29,25 @@ export const frFR: KottiTranslation.Messages = {
 		filterLabel: 'Filtre',
 		filtersLabel: 'Filtres',
 		multiEnum: {
+			IS_EMPTY: 'est vide',
 			ONE_OF: 'fait partie de',
 		},
 		number: {
 			EQUAL: 'est égal à',
 			GREATER_THAN: 'est supérieur à',
 			GREATER_THAN_OR_EQUAL: 'est supérieur ou égal à',
+			IS_EMPTY: 'est vide',
 			LESS_THAN: 'est inférieur à',
 			LESS_THAN_OR_EQUAL: 'est inférieur ou égal à',
 		},
 		searchLabel: 'Rechercher',
 		singleEnum: {
 			EQUAL: 'est',
+			IS_EMPTY: 'est vide',
 		},
 		string: {
 			CONTAINS: 'contient',
+			IS_EMPTY: 'est vide',
 		},
 		unsetLabel: 'Non défini',
 		whereLabel: 'Où',
