@@ -57,48 +57,54 @@ export const getFilterInitialState = (
 }
 
 export const getOperationOptions = (
-	filterType: Kotti.Filter.FilterType,
+	column: Kotti.Filter.Column,
 ): Kotti.FieldSingleSelect.Props['options'] => {
 	const translations = useTranslationNamespace('KtFilter')
-	switch (filterType) {
+	switch (column.type) {
 		case Kotti.Filter.FilterType.BOOLEAN:
-			return Object.values(Kotti.Filter.Operation.Boolean).map((operation) => ({
-				label: translations.value.boolean[operation],
-				value: operation,
-			}))
+			return (column.operations as Kotti.Filter.Operation.Boolean[]).map(
+				(operation) => ({
+					label: translations.value.boolean[operation],
+					value: operation,
+				}),
+			)
 		case Kotti.Filter.FilterType.DATE_RANGE:
-			return Object.values(Kotti.Filter.Operation.DateRange).map(
+			return (column.operations as Kotti.Filter.Operation.DateRange[]).map(
 				(operation) => ({
 					label: translations.value.dateRange[operation],
 					value: operation,
 				}),
 			)
 		case Kotti.Filter.FilterType.MULTI_ENUM:
-			return Object.values(Kotti.Filter.Operation.MultiEnum).map(
+			return (column.operations as Kotti.Filter.Operation.MultiEnum[]).map(
 				(operation) => ({
 					label: translations.value.multiEnum[operation],
 					value: operation,
 				}),
 			)
 		case Kotti.Filter.FilterType.NUMBER:
-			return Object.values(Kotti.Filter.Operation.Number).map((operation) => ({
-				label: translations.value.number[operation],
-				value: operation,
-			}))
+			return (column.operations as Kotti.Filter.Operation.Number[]).map(
+				(operation) => ({
+					label: translations.value.number[operation],
+					value: operation,
+				}),
+			)
 		case Kotti.Filter.FilterType.SINGLE_ENUM:
-			return Object.values(Kotti.Filter.Operation.SingleEnum).map(
+			return (column.operations as Kotti.Filter.Operation.SingleEnum[]).map(
 				(operation) => ({
 					label: translations.value.singleEnum[operation],
 					value: operation,
 				}),
 			)
 		case Kotti.Filter.FilterType.STRING:
-			return Object.values(Kotti.Filter.Operation.String).map((operation) => ({
-				label: translations.value.string[operation],
-				value: operation,
-			}))
+			return (column.operations as Kotti.Filter.Operation.String[]).map(
+				(operation) => ({
+					label: translations.value.string[operation],
+					value: operation,
+				}),
+			)
 		default:
-			throw new Error('Invalid Filter Type: filter operations not found')
+			throw new Error('Invalid Column Type: filter operations not found')
 	}
 }
 

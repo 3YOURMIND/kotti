@@ -117,8 +117,8 @@ export default defineComponent<{
 		)
 		const operationOptions = computed<Kotti.FieldSingleSelect.Props['options']>(
 			() => {
-				if (!props.column?.type) return []
-				return getOperationOptions(props.column.type)
+				if (!props.column) return []
+				return getOperationOptions(props.column)
 			},
 		)
 		const valueComponent = computed(() => {

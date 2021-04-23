@@ -44,7 +44,7 @@ export default defineComponent<{
 	},
 	setup(props, { emit }) {
 		const handleAdd = () => {
-			emit('addFilter')
+			emit('startAddingFilter')
 		}
 		const handleClearAll = () => {
 			emit('clearAll')

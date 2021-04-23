@@ -52,28 +52,35 @@ export namespace KottiFilter {
 		label: string
 	} & (
 		| {
-				type: FilterType.SEARCH
+				operations: Operation.String[]
 				placeholder?: string | null
+				type: FilterType.SEARCH
 		  }
 		| {
+				operations: Operation.String[]
 				type: FilterType.STRING
 		  }
 		| {
+				operations: Operation.Number[]
 				type: FilterType.NUMBER
 		  }
 		| {
+				operations: Operation.Boolean[]
 				type: FilterType.BOOLEAN
 		  }
 		| {
+				operations: Operation.DateRange[]
 				type: FilterType.DATE_RANGE
 		  }
 		| {
-				type: FilterType.SINGLE_ENUM
+				operations: Operation.SingleEnum[]
 				options: Kotti.FieldSingleSelect.Props['options']
+				type: FilterType.SINGLE_ENUM
 		  }
 		| {
-				type: FilterType.MULTI_ENUM
+				operations: Operation.MultiEnum[]
 				options: Kotti.FieldMultiSelect.Props['options']
+				type: FilterType.MULTI_ENUM
 		  }
 	)
 

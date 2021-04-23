@@ -25,9 +25,10 @@
 				@input="setFilters"
 			/>
 			<Actions
+				:isDisabled="areActionsDisabled"
 				:isLoading="isLoading"
-				@addFilter="isAddingFilter = true"
 				@clearAll="clearAll"
+				@startAddingFilter="isAddingFilter = true"
 			/>
 		</div>
 		<div
@@ -66,6 +67,16 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		columns: {
 			required: true,
 			type: Array,
+			validator: (value: Kotti.Filter.InternalProps['columns']) =>
+				value.every(
+					(column) =>
+						Array.isArray(column.operations) &&
+						column.operations.length > 0 &&
+						typeof column.key === 'string' &&
+						column.key.length > 0 &&
+						typeof column.label === 'string' &&
+						column.label.length > 0,
+				),
 		},
 		isLoading: {
 			default: false,
