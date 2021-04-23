@@ -16,12 +16,13 @@ export const enUS: KottiTranslation.Messages = {
 		andLabel: 'And',
 		boolean: {
 			EQUAL: 'is',
-			IS_EMPTY: 'is empty',
 		},
 		clearAllLabel: 'Clear All',
+		common: {
+			IS_EMPTY: 'is empty',
+		},
 		dateRange: {
 			IN_RANGE: 'is in range',
-			IS_EMPTY: 'is empty',
 		},
 		disabledLabel: 'Disabled',
 		emptyListLabel: 'No Filters Applied',
@@ -29,25 +30,21 @@ export const enUS: KottiTranslation.Messages = {
 		filterLabel: 'Filter',
 		filtersLabel: 'Filters',
 		multiEnum: {
-			IS_EMPTY: 'is empty',
 			ONE_OF: 'is one of',
 		},
 		number: {
 			EQUAL: 'is equal to',
 			GREATER_THAN: 'is greater than',
 			GREATER_THAN_OR_EQUAL: 'is greater than or equal to',
-			IS_EMPTY: 'is empty',
 			LESS_THAN: 'is less than',
 			LESS_THAN_OR_EQUAL: 'is less than or equal to',
 		},
 		searchLabel: 'Search',
 		singleEnum: {
 			EQUAL: 'is',
-			IS_EMPTY: 'is empty',
 		},
 		string: {
 			CONTAINS: 'contains',
-			IS_EMPTY: 'is empty',
 		},
 		unsetLabel: 'Unset',
 		whereLabel: 'Where',

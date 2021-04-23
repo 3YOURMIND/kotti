@@ -1,13 +1,13 @@
 <template>
 	<div class="kt-filter__actions">
 		<ButtonLink
-			:isDisabled="isDisabled"
+			:isDisabled="isAddDisabled"
 			:isLoading="isLoading"
 			:label="translations.addFilterLabel"
 			@click="handleAdd"
 		/>
 		<ButtonLink
-			:isDisabled="isDisabled"
+			:isDisabled="isClearAllDisabled"
 			:isLoading="isLoading"
 			:label="translations.clearAllLabel"
 			:type="Kotti.Filter.ButtonLinkType.DANGER"
@@ -25,7 +25,8 @@ import { Kotti } from '../../types'
 import ButtonLink from './ButtonLink.vue'
 
 export default defineComponent<{
-	isDisabled: boolean
+	isAddDisabled: boolean
+	isClearAllDisabled: boolean
 	isLoading: boolean
 }>({
 	name: 'Actions',
@@ -33,8 +34,12 @@ export default defineComponent<{
 		ButtonLink,
 	},
 	props: {
-		isDisabled: {
-			required: false,
+		isAddDisabled: {
+			default: false,
+			type: Boolean,
+		},
+		isClearAllDisabled: {
+			default: false,
 			type: Boolean,
 		},
 		isLoading: {

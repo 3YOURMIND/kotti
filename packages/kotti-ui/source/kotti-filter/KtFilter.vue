@@ -25,7 +25,8 @@
 				@input="setFilters"
 			/>
 			<Actions
-				:isDisabled="areActionsDisabled"
+				:isAddDisabled="isAddDisabled"
+				:isClearAllDisabled="isClearAllDisabled"
 				:isLoading="isLoading"
 				@clearAll="clearAll"
 				@startAddingFilter="isAddingFilter = true"
@@ -115,10 +116,13 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		const filterListValues = computed<Kotti.Filter.Value>(() =>
 			props.value.filter((filter) => filter.key !== searchColumn.value?.key),
 		)
-		const areActionsDisabled = computed(
+		const isAddDisabled = computed(
 			() =>
 				isAddingFilter.value ||
 				filterListValues.value.length >= filterListColumns.value.length,
+		)
+		const isClearAllDisabled = computed(
+			() => isAddingFilter.value || filterListValues.value.length === 0,
 		)
 		const filterLabel = computed<string>(() => {
 			const filtersCount = filterListValues.value.length
@@ -184,13 +188,14 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		)
 
 		return {
-			areActionsDisabled,
 			clearAll,
 			filterListColumns,
 			filterLabel,
 			filterListValues,
 			hasSearchColumn,
+			isAddDisabled,
 			isAddingFilter,
+			isClearAllDisabled,
 			isListVisible,
 			listContentRef,
 			listTriggerRef,
