@@ -163,11 +163,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 	&--type {
 		&-danger {
 			color: var(--danger);
-
-			.kt-circle-loading {
-				border-bottom-color: var(--danger);
-				border-left-color: var(--danger);
-			}
+			background-color: var(--ui-01);
+			border-color: var(--ui-02);
 
 			&:hover,
 			&:focus-visible {
@@ -179,6 +176,11 @@ export default defineComponent<KottiButton.PropsInternal>({
 					border-bottom-color: var(--text-04);
 					border-left-color: var(--text-04);
 				}
+			}
+
+			.kt-circle-loading {
+				border-bottom-color: var(--danger);
+				border-left-color: var(--danger);
 			}
 		}
 
