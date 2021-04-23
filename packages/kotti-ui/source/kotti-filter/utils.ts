@@ -150,26 +150,3 @@ export const getValueComponent = (
 			throw new Error('Invalid Filter Type: value component not found')
 	}
 }
-
-export const isFilterOperationEmpty = (
-	filterOperation: Kotti.Filter.InternalFilter['operation'],
-	filterType: Kotti.Filter.FilterType,
-) => {
-	return filterOperation === Kotti.Filter.Operation.Common.IS_EMPTY
-	// switch (filterType) {
-	// 	case Kotti.Filter.FilterType.BOOLEAN:
-	// 		return filterOperation === Kotti.Filter.Operation.Boolean.IS_EMPTY
-	// 	case Kotti.Filter.FilterType.DATE_RANGE:
-	// 		return filterOperation === Kotti.Filter.Operation.DateRange.IS_EMPTY
-	// 	case Kotti.Filter.FilterType.MULTI_ENUM:
-	// 		return filterOperation === Kotti.Filter.Operation.MultiEnum.IS_EMPTY
-	// 	case Kotti.Filter.FilterType.NUMBER:
-	// 		return filterOperation === Kotti.Filter.Operation.Number.IS_EMPTY
-	// 	case Kotti.Filter.FilterType.SINGLE_ENUM:
-	// 		return filterOperation === Kotti.Filter.Operation.SingleEnum.IS_EMPTY
-	// 	case Kotti.Filter.FilterType.STRING:
-	// 		return filterOperation === Kotti.Filter.Operation.String.IS_EMPTY
-	// 	default:
-	// 		return false
-	// }
-}

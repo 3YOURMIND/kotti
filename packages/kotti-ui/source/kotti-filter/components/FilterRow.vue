@@ -67,7 +67,6 @@ import {
 	getFilterEmptyValue,
 	getOperationOptions,
 	getValueComponent,
-	isFilterOperationEmpty,
 } from '../utils'
 
 import ButtonLink from './ButtonLink.vue'
@@ -147,7 +146,7 @@ export default defineComponent<{
 			() => operationOptions.value.length <= 1,
 		)
 		const isValueFieldVisible = computed(
-			() => !isFilterOperationEmpty(props.filter.operation, props.column?.type),
+			() => props.filter.operation !== Kotti.Filter.Operation.Common.IS_EMPTY,
 		)
 		const showNullOrEmptyLabel = computed<boolean>(
 			() => props.column?.type === Kotti.Filter.FilterType.BOOLEAN,
@@ -168,7 +167,7 @@ export default defineComponent<{
 
 		const handleRemove = () => emit('remove')
 		const handleSetFilter = (newFilter: Kotti.Filter.InternalFilter) => {
-			if (isFilterOperationEmpty(newFilter.operation, props.column?.type)) {
+			if (newFilter.operation === Kotti.Filter.Operation.Common.IS_EMPTY) {
 				emit('input', {
 					...newFilter,
 					value: getFilterEmptyValue(props.column.type),
