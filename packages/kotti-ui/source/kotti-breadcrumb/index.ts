@@ -12,5 +12,7 @@ export const KtBreadcrumb = attachMeta(makeInstallable(KtBreadcrumbVue), {
 			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A126',
 	},
 	slots: {},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Breadcrumb',
+	},
 })

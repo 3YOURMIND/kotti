@@ -1,3 +1,4 @@
+export { KottiBreadcrumb as Breadcrumb } from '../kotti-breadcrumb/types'
 export { KottiButton as Button } from '../kotti-button/types'
 export { KottiCol as Col } from '../kotti-col/types'
 export { KottiField as Field } from '../kotti-field/types'
