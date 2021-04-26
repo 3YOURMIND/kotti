@@ -99,7 +99,7 @@ export default defineComponent<{
 			type: Array,
 		},
 		filter: {
-			default: () => ({
+			default: (): Kotti.Filter.Filter => ({
 				key: null,
 				operation: null,
 				value: null,

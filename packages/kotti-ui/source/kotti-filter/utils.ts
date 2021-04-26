@@ -1,7 +1,9 @@
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 import { Kotti } from '../types'
 
-export const getFilterEmptyValue = (filterKey: Kotti.Filter.Column['type']) => {
+export const getFilterEmptyValue = (
+	filterKey: Kotti.Filter.Column['type'],
+): null | [null, null] | [] => {
 	switch (filterKey) {
 		case Kotti.Filter.FilterType.BOOLEAN:
 		case Kotti.Filter.FilterType.NUMBER:
@@ -124,7 +126,7 @@ export const getOperationOptions = (
 
 export const getSearchFilterInitialState = (
 	searchColumn: Kotti.Filter.Column,
-) => ({
+): Kotti.Filter.InternalFilter => ({
 	key: searchColumn.key,
 	operation: Kotti.Filter.Operation.String.CONTAINS,
 	value: null,

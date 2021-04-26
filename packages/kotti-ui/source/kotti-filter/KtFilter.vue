@@ -220,12 +220,10 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 	&__background {
 		position: fixed;
 		top: 0;
+		right: 0;
+		bottom: 0;
 		left: 0;
-
-		z-index: 900;
-		width: 100vw;
-
-		height: 100vh;
+		z-index: 999;
 	}
 }
 </style>
