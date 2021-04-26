@@ -53,6 +53,7 @@ import Actions from './components/Actions.vue'
 import ButtonLink from './components/ButtonLink.vue'
 import FilterList from './components/FilterList.vue'
 import Search from './components/Search.vue'
+import { isValidColumn } from './validators'
 
 const ARROW_HEIGHT = 7
 
@@ -69,15 +70,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 			required: true,
 			type: Array,
 			validator: (value: Kotti.Filter.InternalProps['columns']) =>
-				value.every(
-					(column) =>
-						Array.isArray(column.operations) &&
-						column.operations.length > 0 &&
-						typeof column.key === 'string' &&
-						column.key.length > 0 &&
-						typeof column.label === 'string' &&
-						column.label.length > 0,
-				),
+				value.every((column) => isValidColumn(column)),
 		},
 		isLoading: {
 			default: false,

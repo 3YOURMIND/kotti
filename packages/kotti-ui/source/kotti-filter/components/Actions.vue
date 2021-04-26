@@ -47,7 +47,7 @@ export default defineComponent<{
 			type: Boolean,
 		},
 	},
-	setup(props, { emit }) {
+	setup(_, { emit }) {
 		const handleAdd = () => {
 			emit('startAddingFilter')
 		}

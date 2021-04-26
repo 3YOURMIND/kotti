@@ -20,17 +20,16 @@ export namespace KottiFilter {
 	export namespace Operation {
 		export enum Boolean {
 			EQUAL = 'EQUAL',
-		}
-
-		export enum Common {
 			IS_EMPTY = 'IS_EMPTY',
 		}
 
 		export enum DateRange {
 			IN_RANGE = 'IN_RANGE',
+			IS_EMPTY = 'IS_EMPTY',
 		}
 
 		export enum MultiEnum {
+			IS_EMPTY = 'IS_EMPTY',
 			ONE_OF = 'ONE_OF', // OR
 		}
 
@@ -38,16 +37,23 @@ export namespace KottiFilter {
 			EQUAL = 'EQUAL',
 			GREATER_THAN = 'GREATER_THAN',
 			GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL',
+			IS_EMPTY = 'IS_EMPTY',
 			LESS_THAN = 'LESS_THAN',
 			LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
 		}
 
+		export enum Search {
+			CONTAINS = 'CONTAINS',
+		}
+
 		export enum SingleEnum {
 			EQUAL = 'EQUAL',
+			IS_EMPTY = 'IS_EMPTY',
 		}
 
 		export enum String {
 			CONTAINS = 'CONTAINS',
+			IS_EMPTY = 'IS_EMPTY',
 		}
 	}
 
@@ -56,41 +62,39 @@ export namespace KottiFilter {
 		label: string
 	} & (
 		| {
-				operations: (Operation.Boolean | Operation.Common)[]
+				operations: Operation.Boolean[]
 				type: FilterType.BOOLEAN
 		  }
 		| {
-				operations: (Operation.DateRange | Operation.Common)[]
+				operations: Operation.DateRange[]
 				type: FilterType.DATE_RANGE
 		  }
 		| {
-				operations: (Operation.MultiEnum | Operation.Common)[]
+				operations: Operation.MultiEnum[]
 				options: Kotti.FieldMultiSelect.Props['options']
 				type: FilterType.MULTI_ENUM
 		  }
 		| {
-				operations: (Operation.Number | Operation.Common)[]
+				operations: Operation.Number[]
 				type: FilterType.NUMBER
 		  }
 		| {
-				operations: Operation.String[]
 				placeholder?: string | null
 				type: FilterType.SEARCH
 		  }
 		| {
-				operations: (Operation.SingleEnum | Operation.Common)[]
+				operations: Operation.SingleEnum[]
 				options: Kotti.FieldSingleSelect.Props['options']
 				type: FilterType.SINGLE_ENUM
 		  }
 		| {
-				operations: (Operation.String | Operation.Common)[]
+				operations: Operation.String[]
 				type: FilterType.STRING
 		  }
 	)
 
 	export type FilterOperation =
 		| Operation.Boolean
-		| Operation.Common
 		| Operation.DateRange
 		| Operation.MultiEnum
 		| Operation.Number
@@ -137,7 +141,6 @@ export namespace KottiFilter {
 		andLabel: string
 		boolean: Record<Operation.Boolean, string>
 		clearAllLabel: string
-		common: Record<Operation.Common, string>
 		dateRange: Record<Operation.DateRange, string>
 		disabledLabel: string
 		emptyListLabel: string

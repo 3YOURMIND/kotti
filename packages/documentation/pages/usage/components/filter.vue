@@ -109,7 +109,6 @@ export default defineComponent({
 				{
 					key: 'global-search',
 					label: 'Search',
-					operations: [Kotti.Filter.Operation.String.CONTAINS],
 					placeholder: settings.value.searchPlaceholder,
 					type: Kotti.Filter.FilterType.SEARCH,
 				},
@@ -118,7 +117,7 @@ export default defineComponent({
 					label: 'String Column',
 					operations: [
 						Kotti.Filter.Operation.String.CONTAINS,
-						Kotti.Filter.Operation.Common.IS_EMPTY,
+						Kotti.Filter.Operation.String.IS_EMPTY,
 					],
 					type: Kotti.Filter.FilterType.STRING,
 				},
@@ -131,7 +130,7 @@ export default defineComponent({
 						Kotti.Filter.Operation.Number.GREATER_THAN_OR_EQUAL,
 						Kotti.Filter.Operation.Number.LESS_THAN,
 						Kotti.Filter.Operation.Number.LESS_THAN_OR_EQUAL,
-						Kotti.Filter.Operation.Common.IS_EMPTY,
+						Kotti.Filter.Operation.Number.IS_EMPTY,
 					],
 					type: Kotti.Filter.FilterType.NUMBER,
 				},
@@ -140,7 +139,7 @@ export default defineComponent({
 					label: 'Boolean Column',
 					operations: [
 						Kotti.Filter.Operation.Boolean.EQUAL,
-						Kotti.Filter.Operation.Common.IS_EMPTY,
+						Kotti.Filter.Operation.Boolean.IS_EMPTY,
 					],
 					type: Kotti.Filter.FilterType.BOOLEAN,
 				},
@@ -149,7 +148,7 @@ export default defineComponent({
 					label: 'Date Range Column',
 					operations: [
 						Kotti.Filter.Operation.DateRange.IN_RANGE,
-						Kotti.Filter.Operation.Common.IS_EMPTY,
+						Kotti.Filter.Operation.DateRange.IS_EMPTY,
 					],
 					type: Kotti.Filter.FilterType.DATE_RANGE,
 				},
@@ -158,7 +157,7 @@ export default defineComponent({
 					label: 'Single Enum Column',
 					operations: [
 						Kotti.Filter.Operation.SingleEnum.EQUAL,
-						Kotti.Filter.Operation.Common.IS_EMPTY,
+						Kotti.Filter.Operation.SingleEnum.IS_EMPTY,
 					],
 					options: [
 						{ label: 'Option 1', value: 'option-1' },
@@ -172,7 +171,7 @@ export default defineComponent({
 					label: 'Multi Enum Column',
 					operations: [
 						Kotti.Filter.Operation.MultiEnum.ONE_OF,
-						Kotti.Filter.Operation.Common.IS_EMPTY,
+						Kotti.Filter.Operation.MultiEnum.IS_EMPTY,
 					],
 					options: [
 						{ label: 'Option 1', value: 'option-1' },

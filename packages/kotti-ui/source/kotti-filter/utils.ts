@@ -19,6 +19,17 @@ export const getFilterEmptyValue = (
 	}
 }
 
+const getOperation = (
+	operations: Kotti.Filter.FilterOperation[],
+	defaultOperation: Kotti.Filter.FilterOperation,
+): Kotti.Filter.FilterOperation => {
+	if (!Array.isArray(operations) || operations.length === 0)
+		throw new Error('Invalid Filter Operations')
+	return operations.includes(defaultOperation)
+		? defaultOperation
+		: operations[0]
+}
+
 export const getFilterInitialState = (
 	columnKey: Kotti.Filter.Column['key'],
 	columns: Kotti.Filter.Column[],
@@ -28,37 +39,55 @@ export const getFilterInitialState = (
 		case Kotti.Filter.FilterType.BOOLEAN:
 			return {
 				key: columnKey,
-				operation: Kotti.Filter.Operation.Boolean.EQUAL,
+				operation: getOperation(
+					column.operations,
+					Kotti.Filter.Operation.Boolean.EQUAL,
+				),
 				value: null,
 			}
 		case Kotti.Filter.FilterType.DATE_RANGE:
 			return {
 				key: columnKey,
-				operation: Kotti.Filter.Operation.DateRange.IN_RANGE,
+				operation: getOperation(
+					column.operations,
+					Kotti.Filter.Operation.DateRange.IN_RANGE,
+				),
 				value: [null, null],
 			}
 		case Kotti.Filter.FilterType.MULTI_ENUM:
 			return {
 				key: columnKey,
-				operation: Kotti.Filter.Operation.MultiEnum.ONE_OF,
+				operation: getOperation(
+					column.operations,
+					Kotti.Filter.Operation.MultiEnum.ONE_OF,
+				),
 				value: [],
 			}
 		case Kotti.Filter.FilterType.NUMBER:
 			return {
 				key: columnKey,
-				operation: Kotti.Filter.Operation.Number.EQUAL,
+				operation: getOperation(
+					column.operations,
+					Kotti.Filter.Operation.Number.EQUAL,
+				),
 				value: null,
 			}
 		case Kotti.Filter.FilterType.SINGLE_ENUM:
 			return {
 				key: columnKey,
-				operation: Kotti.Filter.Operation.SingleEnum.EQUAL,
+				operation: getOperation(
+					column.operations,
+					Kotti.Filter.Operation.SingleEnum.EQUAL,
+				),
 				value: null,
 			}
 		case Kotti.Filter.FilterType.STRING:
 			return {
 				key: columnKey,
-				operation: Kotti.Filter.Operation.String.CONTAINS,
+				operation: getOperation(
+					column.operations,
+					Kotti.Filter.Operation.String.CONTAINS,
+				),
 				value: null,
 			}
 		default:
@@ -72,51 +101,33 @@ export const getOperationOptions = (
 	const translations = useTranslationNamespace('KtFilter')
 	switch (column.type) {
 		case Kotti.Filter.FilterType.BOOLEAN:
-			return (column.operations as (Kotti.Filter.Operation.Boolean &
-				Kotti.Filter.Operation.Common)[]).map((operation) => ({
-				label:
-					translations.value.boolean[operation] ??
-					translations.value.common[operation],
+			return column.operations.map((operation) => ({
+				label: translations.value.boolean[operation],
 				value: operation,
 			}))
 		case Kotti.Filter.FilterType.DATE_RANGE:
-			return (column.operations as (Kotti.Filter.Operation.DateRange &
-				Kotti.Filter.Operation.Common)[]).map((operation) => ({
-				label:
-					translations.value.dateRange[operation] ??
-					translations.value.common[operation],
+			return column.operations.map((operation) => ({
+				label: translations.value.dateRange[operation],
 				value: operation,
 			}))
 		case Kotti.Filter.FilterType.MULTI_ENUM:
-			return (column.operations as (Kotti.Filter.Operation.MultiEnum &
-				Kotti.Filter.Operation.Common)[]).map((operation) => ({
-				label:
-					translations.value.multiEnum[operation] ??
-					translations.value.common[operation],
+			return column.operations.map((operation) => ({
+				label: translations.value.multiEnum[operation],
 				value: operation,
 			}))
 		case Kotti.Filter.FilterType.NUMBER:
-			return (column.operations as (Kotti.Filter.Operation.Number &
-				Kotti.Filter.Operation.Common)[]).map((operation) => ({
-				label:
-					translations.value.number[operation] ??
-					translations.value.common[operation],
+			return column.operations.map((operation) => ({
+				label: translations.value.number[operation],
 				value: operation,
 			}))
 		case Kotti.Filter.FilterType.SINGLE_ENUM:
-			return (column.operations as (Kotti.Filter.Operation.SingleEnum &
-				Kotti.Filter.Operation.Common)[]).map((operation) => ({
-				label:
-					translations.value.singleEnum[operation] ??
-					translations.value.common[operation],
+			return column.operations.map((operation) => ({
+				label: translations.value.singleEnum[operation],
 				value: operation,
 			}))
 		case Kotti.Filter.FilterType.STRING:
-			return (column.operations as (Kotti.Filter.Operation.String &
-				Kotti.Filter.Operation.Common)[]).map((operation) => ({
-				label:
-					translations.value.string[operation] ??
-					translations.value.common[operation],
+			return column.operations.map((operation) => ({
+				label: translations.value.string[operation],
 				value: operation,
 			}))
 		default:
@@ -150,5 +161,27 @@ export const getValueComponent = (
 			return 'KtFieldText'
 		default:
 			throw new Error('Invalid Filter Type: value component not found')
+	}
+}
+
+export const isEmptyOperation = (
+	filterOperation: Kotti.Filter.InternalFilter['operation'],
+	filterType: Kotti.Filter.FilterType,
+): boolean => {
+	switch (filterType) {
+		case Kotti.Filter.FilterType.BOOLEAN:
+			return filterOperation === Kotti.Filter.Operation.Boolean.IS_EMPTY
+		case Kotti.Filter.FilterType.DATE_RANGE:
+			return filterOperation === Kotti.Filter.Operation.DateRange.IS_EMPTY
+		case Kotti.Filter.FilterType.MULTI_ENUM:
+			return filterOperation === Kotti.Filter.Operation.MultiEnum.IS_EMPTY
+		case Kotti.Filter.FilterType.NUMBER:
+			return filterOperation === Kotti.Filter.Operation.Number.IS_EMPTY
+		case Kotti.Filter.FilterType.SINGLE_ENUM:
+			return filterOperation === Kotti.Filter.Operation.SingleEnum.IS_EMPTY
+		case Kotti.Filter.FilterType.STRING:
+			return filterOperation === Kotti.Filter.Operation.String.IS_EMPTY
+		default:
+			return false
 	}
 }
