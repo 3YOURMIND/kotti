@@ -2,6 +2,7 @@
 dist/
 gh-pages/
 node_modules/
+packages/kotti-ui/report.*.html
 packages/storybook/storybook-static
 packages/yoco/fonts/
 yarn-error.log

@@ -17,6 +17,7 @@
 		"element-ui": "2.13.1",
 		"lodash": "^4.17.19",
 		"normalize.css": "^8.0.1",
+		"rollup-plugin-visualizer": "^5.3.6",
 		"tippy.js": "6.x",
 		"ts-custom-error": "^3.1.1",
 		"vue-clickaway": "^2.2.2"
@@ -61,7 +62,9 @@
 		"build": "rm -rf dist && yarn run build:tokens && yarn run build:kotti && yarn run build:scss-variables",
 		"build:kotti": "concurrently \"yarn run build:kotti:cjs\" \"yarn run build:kotti:esm\"",
 		"build:kotti:cjs": "rollup -c rollup.config.js --environment MODULE:cjs",
+		"build:kotti:cjs:visualizer": "rollup -c rollup.config.js --environment MODULE:cjs --environment ENABLE_VISUALIZER:true",
 		"build:kotti:esm": "rollup -c rollup.config.js --environment MODULE:esm",
+		"build:kotti:esm:visualizer": "rollup -c rollup.config.js --environment MODULE:esm --environment ENABLE_VISUALIZER:true",
 		"build:scss-variables": "cp source/kotti-style/_variables.scss dist/variables.scss",
 		"build:tokens": "node -r esm tokens/generate.js && prettier --write source/kotti-style/tokens.css",
 		"check:es5": "es-check es5 './dist/cjs/*.js'",

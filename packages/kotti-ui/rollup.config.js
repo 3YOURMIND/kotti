@@ -12,6 +12,7 @@ import postcss from 'postcss'
 import postcssPluginFlexbugs from 'postcss-flexbugs-fixes'
 import postcssPluginPresetEnv from 'postcss-preset-env'
 import scss from 'rollup-plugin-scss'
+import visualizer from 'rollup-plugin-visualizer'
 import vue from 'rollup-plugin-vue'
 import sass from 'sass'
 
@@ -24,7 +25,10 @@ const external = [
 	/.*tippy\.js.*/,
 ]
 
-const plugins = (module) => [
+const plugins = ({ enableVisualizer, module }) => [
+	...(enableVisualizer
+		? [visualizer({ filename: `report.${module}.html` })]
+		: []),
 	nodeResolve(),
 	vue({
 		css: false,
@@ -84,7 +88,7 @@ const plugins = (module) => [
 	}),
 ]
 
-const { MODULE } = process.env
+const { ENABLE_VISUALIZER, MODULE } = process.env
 
 if (!['cjs', 'esm'].includes(MODULE))
 	throw new Error(
@@ -101,5 +105,8 @@ export default {
 		sourcemap: true,
 	},
 	external,
-	plugins: plugins(MODULE),
+	plugins: plugins({
+		module: MODULE,
+		enableVisualizer: Boolean(ENABLE_VISUALIZER),
+	}),
 }
