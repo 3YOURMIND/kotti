@@ -73,7 +73,7 @@ import {
 import ButtonLink from './ButtonLink.vue'
 
 export default defineComponent<{
-	column: Kotti.Filter.Column | null
+	column: Kotti.Filter.Column.Any | null
 	columnOptions: Kotti.FieldSingleSelect.Props['options']
 	filter: Kotti.Filter.Filter
 	isFirstItem: boolean

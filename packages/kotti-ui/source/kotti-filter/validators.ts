@@ -3,12 +3,10 @@ import { Kotti } from '../types'
 const isNonEmptyString = (value: unknown): value is string =>
 	typeof value === 'string' && value.length > 0
 
-function isValueInEnum<T>(
+const isValueInEnum = <KEY extends string>(
 	value: string,
-	enumObject: { [key: string]: T },
-): boolean {
-	return Object.values(enumObject).includes((value as unknown) as T)
-}
+	enumObject: Record<KEY, string>,
+): boolean => Object.values(enumObject).includes(value)
 
 const areValidOperations = (
 	operations: Kotti.Filter.FilterOperation[],
@@ -63,8 +61,8 @@ const areValidOperations = (
 }
 
 export const isValidColumn = (
-	column: Kotti.Filter.Column,
-): column is Kotti.Filter.Column => {
+	column: Kotti.Filter.Column.Any,
+): column is Kotti.Filter.Column.Any => {
 	const isValidKey = isNonEmptyString(column.key)
 	const isValidLabel = isNonEmptyString(column.label)
 	if (column.type === Kotti.Filter.FilterType.SEARCH)

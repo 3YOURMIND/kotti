@@ -37,7 +37,7 @@ import ButtonLink from './ButtonLink.vue'
 import FilterRow from './FilterRow.vue'
 
 export default defineComponent<{
-	columns: Kotti.Filter.Column[]
+	columns: Kotti.Filter.Column.Any[]
 	filters: Kotti.Filter.InternalFilter[]
 	isAddingFilter: boolean
 	isLoading: boolean
@@ -71,8 +71,8 @@ export default defineComponent<{
 		)
 
 		const getColumn = (
-			columnKey: Kotti.Filter.Column['key'],
-		): Kotti.Filter.Column => {
+			columnKey: Kotti.Filter.Column.Any['key'],
+		): Kotti.Filter.Column.Any => {
 			const column =
 				props.columns.find((column) => column.key === columnKey) ?? null
 			if (column === null)
@@ -80,7 +80,7 @@ export default defineComponent<{
 			return column
 		}
 		const getColumnOptions = (
-			selectedColumnKey: Kotti.Filter.Column['key'] | undefined,
+			selectedColumnKey: Kotti.Filter.Column.Any['key'] | undefined,
 		): Kotti.FieldSingleSelect.Props['options'] =>
 			props.columns
 				.filter(

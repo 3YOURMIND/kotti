@@ -57,41 +57,70 @@ export namespace KottiFilter {
 		}
 	}
 
-	export type Column = {
-		key: string
-		label: string
-	} & (
-		| {
-				operations: Operation.Boolean[]
-				type: FilterType.BOOLEAN
-		  }
-		| {
-				operations: Operation.DateRange[]
-				type: FilterType.DATE_RANGE
-		  }
-		| {
-				operations: Operation.MultiEnum[]
-				options: Kotti.FieldMultiSelect.Props['options']
-				type: FilterType.MULTI_ENUM
-		  }
-		| {
-				operations: Operation.Number[]
-				type: FilterType.NUMBER
-		  }
-		| {
-				placeholder?: string | null
-				type: FilterType.SEARCH
-		  }
-		| {
-				operations: Operation.SingleEnum[]
-				options: Kotti.FieldSingleSelect.Props['options']
-				type: FilterType.SINGLE_ENUM
-		  }
-		| {
-				operations: Operation.String[]
-				type: FilterType.STRING
-		  }
-	)
+	export namespace Column {
+		export type Common = {
+			key: string
+			label: string
+		}
+
+		export type Boolean<
+			OPERATION extends Operation.Boolean = Operation.Boolean
+		> = Common & {
+			operations: OPERATION[]
+			type: FilterType.BOOLEAN
+		}
+
+		export type DateRange<
+			OPERATION extends Operation.DateRange = Operation.DateRange
+		> = Common & {
+			operations: OPERATION[]
+			type: FilterType.DATE_RANGE
+		}
+
+		export type MultiEnum<
+			OPERATION extends Operation.MultiEnum = Operation.MultiEnum
+		> = Common & {
+			operations: OPERATION[]
+			options: Kotti.FieldMultiSelect.Props['options']
+			type: FilterType.MULTI_ENUM
+		}
+
+		export type Number<
+			OPERATION extends Operation.Number = Operation.Number
+		> = Common & {
+			operations: OPERATION[]
+			type: FilterType.NUMBER
+		}
+
+		export type Search = Common & {
+			placeholder?: string | null
+			type: FilterType.SEARCH
+		}
+
+		export type SingleEnum<
+			OPERATION extends Operation.SingleEnum = Operation.SingleEnum
+		> = Common & {
+			operations: OPERATION[]
+			options: Kotti.FieldSingleSelect.Props['options']
+			type: FilterType.SINGLE_ENUM
+		}
+
+		export type String<
+			OPERATION extends Operation.String = Operation.String
+		> = Common & {
+			operations: OPERATION[]
+			type: FilterType.STRING
+		}
+
+		export type Any =
+			| Column.Boolean
+			| Column.DateRange
+			| Column.MultiEnum
+			| Column.Number
+			| Column.Search
+			| Column.SingleEnum
+			| Column.String
+	}
 
 	export type FilterOperation =
 		| Operation.Boolean
@@ -110,7 +139,7 @@ export namespace KottiFilter {
 		| Kotti.FieldToggle.Value
 
 	export type InternalFilter = {
-		key: Column['key']
+		key: Column.Any['key']
 		operation: FilterOperation
 		value: FilterValue
 	}
@@ -123,7 +152,7 @@ export namespace KottiFilter {
 	export type Value = Filter[]
 
 	export type InternalProps = {
-		columns: Column[]
+		columns: Column.Any[]
 		isLoading: boolean
 		value: Value
 	}

@@ -90,12 +90,12 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		const isListVisible = ref<boolean>(false)
 		const tippyInstanceRef = ref(null)
 
-		const filterListColumns = computed<Kotti.Filter.Column[]>(() =>
+		const filterListColumns = computed<Kotti.Filter.Column.Any[]>(() =>
 			props.columns.filter(
 				(column) => column.type !== Kotti.Filter.FilterType.SEARCH,
 			),
 		)
-		const searchColumn = computed<Kotti.Filter.Column | null>(
+		const searchColumn = computed<Kotti.Filter.Column.Any | null>(
 			() =>
 				props.columns.find(
 					(column) => column.type === Kotti.Filter.FilterType.SEARCH,
