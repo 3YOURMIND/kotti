@@ -42,7 +42,7 @@
 			class="kt-filter__list__row__remove"
 			:icon="Yoco.Icon.CLOSE"
 			:isLoading="isLoading"
-			:type="Kotti.Filter.ButtonLinkType.DANGER"
+			:type="Kotti.Filters.ButtonLinkType.DANGER"
 			@click="handleRemove"
 		/>
 	</KtForm>
@@ -73,9 +73,9 @@ import {
 import ButtonLink from './ButtonLink.vue'
 
 export default defineComponent<{
-	column: Kotti.Filter.Column.Any | null
+	column: Kotti.Filters.Column.Any | null
 	columnOptions: Kotti.FieldSingleSelect.Props['options']
-	filter: Kotti.Filter.Filter
+	filter: Kotti.Filters.Filter
 	isFirstItem: boolean
 	isLoading: boolean
 }>({
@@ -100,7 +100,7 @@ export default defineComponent<{
 			type: Array,
 		},
 		filter: {
-			default: (): Kotti.Filter.Filter => ({
+			default: (): Kotti.Filters.Filter => ({
 				key: null,
 				operation: null,
 				value: null,
@@ -117,7 +117,7 @@ export default defineComponent<{
 		},
 	},
 	setup(props, { emit }) {
-		const translations = useTranslationNamespace('KtFilter')
+		const translations = useTranslationNamespace('KtFilters')
 
 		const label = computed<string>(() =>
 			props.isFirstItem
@@ -136,8 +136,8 @@ export default defineComponent<{
 		})
 		const valueOptions = computed(() => {
 			switch (props.column?.type) {
-				case Kotti.Filter.FilterType.SINGLE_ENUM:
-				case Kotti.Filter.FilterType.MULTI_ENUM:
+				case Kotti.Filters.FilterType.SINGLE_ENUM:
+				case Kotti.Filters.FilterType.MULTI_ENUM:
 					return props.column.options
 				default:
 					return []
@@ -150,7 +150,7 @@ export default defineComponent<{
 			() => !isEmptyOperation(props.filter.operation, props.column?.type),
 		)
 		const showNullOrEmptyLabel = computed<boolean>(
-			() => props.column?.type === Kotti.Filter.FilterType.BOOLEAN,
+			() => props.column?.type === Kotti.Filters.FilterType.BOOLEAN,
 		)
 		const valueContainerClasses = computed(() => ({
 			'kt-filter__list__row__value-field': true,
@@ -167,7 +167,7 @@ export default defineComponent<{
 		})
 
 		const handleRemove = () => emit('remove')
-		const handleSetFilter = (newFilter: Kotti.Filter.InternalFilter) => {
+		const handleSetFilter = (newFilter: Kotti.Filters.InternalFilter) => {
 			if (isEmptyOperation(newFilter.operation, props.column?.type)) {
 				emit('input', {
 					...newFilter,

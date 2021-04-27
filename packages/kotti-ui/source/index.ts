@@ -55,7 +55,7 @@ import { KtFieldTextArea } from './kotti-field-text-area'
 export * from './kotti-field-text-area'
 import { KtFieldToggle, KtFieldToggleGroup } from './kotti-field-toggle'
 export * from './kotti-field-toggle'
-import { KtFilter } from './kotti-filter'
+import { KtFilters } from './kotti-filter'
 export * from './kotti-filter'
 import {
 	KtForm,
@@ -142,7 +142,7 @@ export default {
 			KtFieldTextArea,
 			KtFieldToggle,
 			KtFieldToggleGroup,
-			KtFilter,
+			KtFilters,
 			KtForm,
 			KtFormControllerList,
 			KtFormControllerObject,

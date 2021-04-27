@@ -9,50 +9,50 @@ const isValueInEnum = <KEY extends string>(
 ): boolean => Object.values(enumObject).includes(value)
 
 const areValidOperations = (
-	operations: Kotti.Filter.Operation.Any[],
-	filterType: Kotti.Filter.FilterType,
+	operations: Kotti.Filters.Operation.Any[],
+	filterType: Kotti.Filters.FilterType,
 ): boolean => {
 	switch (filterType) {
-		case Kotti.Filter.FilterType.BOOLEAN:
+		case Kotti.Filters.FilterType.BOOLEAN:
 			return operations.every((operation) =>
-				isValueInEnum<Kotti.Filter.Operation.Boolean>(
+				isValueInEnum<Kotti.Filters.Operation.Boolean>(
 					operation,
-					Kotti.Filter.Operation.Boolean,
+					Kotti.Filters.Operation.Boolean,
 				),
 			)
-		case Kotti.Filter.FilterType.DATE_RANGE:
+		case Kotti.Filters.FilterType.DATE_RANGE:
 			return operations.every((operation) =>
-				isValueInEnum<Kotti.Filter.Operation.DateRange>(
+				isValueInEnum<Kotti.Filters.Operation.DateRange>(
 					operation,
-					Kotti.Filter.Operation.DateRange,
+					Kotti.Filters.Operation.DateRange,
 				),
 			)
-		case Kotti.Filter.FilterType.MULTI_ENUM:
+		case Kotti.Filters.FilterType.MULTI_ENUM:
 			return operations.every((operation) =>
-				isValueInEnum<Kotti.Filter.Operation.MultiEnum>(
+				isValueInEnum<Kotti.Filters.Operation.MultiEnum>(
 					operation,
-					Kotti.Filter.Operation.MultiEnum,
+					Kotti.Filters.Operation.MultiEnum,
 				),
 			)
-		case Kotti.Filter.FilterType.NUMBER:
+		case Kotti.Filters.FilterType.NUMBER:
 			return operations.every((operation) =>
-				isValueInEnum<Kotti.Filter.Operation.Number>(
+				isValueInEnum<Kotti.Filters.Operation.Number>(
 					operation,
-					Kotti.Filter.Operation.Number,
+					Kotti.Filters.Operation.Number,
 				),
 			)
-		case Kotti.Filter.FilterType.SINGLE_ENUM:
+		case Kotti.Filters.FilterType.SINGLE_ENUM:
 			return operations.every((operation) =>
-				isValueInEnum<Kotti.Filter.Operation.SingleEnum>(
+				isValueInEnum<Kotti.Filters.Operation.SingleEnum>(
 					operation,
-					Kotti.Filter.Operation.SingleEnum,
+					Kotti.Filters.Operation.SingleEnum,
 				),
 			)
-		case Kotti.Filter.FilterType.STRING:
+		case Kotti.Filters.FilterType.STRING:
 			return operations.every((operation) =>
-				isValueInEnum<Kotti.Filter.Operation.String>(
+				isValueInEnum<Kotti.Filters.Operation.String>(
 					operation,
-					Kotti.Filter.Operation.String,
+					Kotti.Filters.Operation.String,
 				),
 			)
 		default:
@@ -61,11 +61,11 @@ const areValidOperations = (
 }
 
 export const isValidColumn = (
-	column: Kotti.Filter.Column.Any,
-): column is Kotti.Filter.Column.Any => {
+	column: Kotti.Filters.Column.Any,
+): column is Kotti.Filters.Column.Any => {
 	const isValidKey = isNonEmptyString(column.key)
 	const isValidLabel = isNonEmptyString(column.label)
-	if (column.type === Kotti.Filter.FilterType.SEARCH)
+	if (column.type === Kotti.Filters.FilterType.SEARCH)
 		return isValidKey && isValidLabel
 	return (
 		isValidKey &&

@@ -10,7 +10,7 @@
 			:isDisabled="isClearAllDisabled"
 			:isLoading="isLoading"
 			:label="translations.clearAllLabel"
-			:type="Kotti.Filter.ButtonLinkType.DANGER"
+			:type="Kotti.Filters.ButtonLinkType.DANGER"
 			@click="handleClearAll"
 		/>
 	</div>
@@ -58,7 +58,7 @@ export default defineComponent<{
 			handleAdd,
 			handleClearAll,
 			Kotti,
-			translations: useTranslationNamespace('KtFilter'),
+			translations: useTranslationNamespace('KtFilters'),
 		}
 	},
 })

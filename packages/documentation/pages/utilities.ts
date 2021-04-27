@@ -14,7 +14,7 @@ export type ComponentNames =
 	| 'KtFieldTextArea'
 	| 'KtFieldToggle'
 	| 'KtFieldToggleGroup'
-	| 'KtFilter'
+	| 'KtFilters'
 
 export type ComponentValue = {
 	hasHelpTextSlot: boolean

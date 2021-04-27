@@ -5,7 +5,7 @@
 		<div class="overview">
 			<div class="overview__component">
 				<h4>Component</h4>
-				<KtFilter
+				<KtFilters
 					v-model="filters"
 					:columns="componentProps.columns"
 					:isLoading="componentProps.isLoading"
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { Kotti, KtFilter } from '@3yourmind/kotti-ui'
+import { Kotti, KtFilters } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -72,20 +72,20 @@ import { ComponentValue, generateComponentCode } from '../../utilities'
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
 export default defineComponent({
-	name: 'DocumentationPageUsageComponentsFilter',
+	name: 'DocumentationPageUsageComponentsFilters',
 	components: {
 		ComponentInfo,
 	},
 	setup() {
-		const filters = ref<Kotti.Filter.Value>([
+		const filters = ref<Kotti.Filters.Value>([
 			{
 				key: 'string-column',
-				operation: Kotti.Filter.Operation.String.CONTAINS,
+				operation: Kotti.Filters.Operation.String.CONTAINS,
 				value: null,
 			},
 			{
 				key: 'number-column',
-				operation: Kotti.Filter.Operation.Number.EQUAL,
+				operation: Kotti.Filters.Operation.Number.EQUAL,
 				value: null,
 			},
 		])
@@ -105,81 +105,81 @@ export default defineComponent({
 		})
 
 		const componentProps = computed(
-			(): Omit<Kotti.Filter.Props, 'value'> => ({
+			(): Omit<Kotti.Filters.Props, 'value'> => ({
 				columns: [
 					{
 						key: 'global-search',
 						label: 'Search',
 						placeholder: settings.value.searchPlaceholder,
-						type: Kotti.Filter.FilterType.SEARCH,
+						type: Kotti.Filters.FilterType.SEARCH,
 					},
 					{
 						key: 'string-column',
 						label: 'String Column',
 						operations: [
-							Kotti.Filter.Operation.String.CONTAINS,
-							Kotti.Filter.Operation.String.IS_EMPTY,
+							Kotti.Filters.Operation.String.CONTAINS,
+							Kotti.Filters.Operation.String.IS_EMPTY,
 						],
-						type: Kotti.Filter.FilterType.STRING,
+						type: Kotti.Filters.FilterType.STRING,
 					},
 					{
 						key: 'number-column',
 						label: 'Number Column',
 						operations: [
-							Kotti.Filter.Operation.Number.EQUAL,
-							Kotti.Filter.Operation.Number.GREATER_THAN,
-							Kotti.Filter.Operation.Number.GREATER_THAN_OR_EQUAL,
-							Kotti.Filter.Operation.Number.LESS_THAN,
-							Kotti.Filter.Operation.Number.LESS_THAN_OR_EQUAL,
-							Kotti.Filter.Operation.Number.IS_EMPTY,
+							Kotti.Filters.Operation.Number.EQUAL,
+							Kotti.Filters.Operation.Number.GREATER_THAN,
+							Kotti.Filters.Operation.Number.GREATER_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Number.LESS_THAN,
+							Kotti.Filters.Operation.Number.LESS_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Number.IS_EMPTY,
 						],
-						type: Kotti.Filter.FilterType.NUMBER,
+						type: Kotti.Filters.FilterType.NUMBER,
 					},
 					{
 						key: 'boolean-column',
 						label: 'Boolean Column',
 						operations: [
-							Kotti.Filter.Operation.Boolean.EQUAL,
-							Kotti.Filter.Operation.Boolean.IS_EMPTY,
+							Kotti.Filters.Operation.Boolean.EQUAL,
+							Kotti.Filters.Operation.Boolean.IS_EMPTY,
 						],
-						type: Kotti.Filter.FilterType.BOOLEAN,
+						type: Kotti.Filters.FilterType.BOOLEAN,
 					},
 					{
 						key: 'date-range-column',
 						label: 'Date Range Column',
 						operations: [
-							Kotti.Filter.Operation.DateRange.IN_RANGE,
-							Kotti.Filter.Operation.DateRange.IS_EMPTY,
+							Kotti.Filters.Operation.DateRange.IN_RANGE,
+							Kotti.Filters.Operation.DateRange.IS_EMPTY,
 						],
-						type: Kotti.Filter.FilterType.DATE_RANGE,
+						type: Kotti.Filters.FilterType.DATE_RANGE,
 					},
 					{
 						key: 'single-enum-column',
 						label: 'Single Enum Column',
 						operations: [
-							Kotti.Filter.Operation.SingleEnum.EQUAL,
-							Kotti.Filter.Operation.SingleEnum.IS_EMPTY,
+							Kotti.Filters.Operation.SingleEnum.EQUAL,
+							Kotti.Filters.Operation.SingleEnum.IS_EMPTY,
 						],
 						options: [
 							{ label: 'Option 1', value: 'option-1' },
 							{ label: 'Option 2', value: 'option-2' },
 							{ label: 'Option 3', value: 'option-3' },
 						],
-						type: Kotti.Filter.FilterType.SINGLE_ENUM,
+						type: Kotti.Filters.FilterType.SINGLE_ENUM,
 					},
 					{
 						key: 'multi-enum-column',
 						label: 'Multi Enum Column',
 						operations: [
-							Kotti.Filter.Operation.MultiEnum.ONE_OF,
-							Kotti.Filter.Operation.MultiEnum.IS_EMPTY,
+							Kotti.Filters.Operation.MultiEnum.ONE_OF,
+							Kotti.Filters.Operation.MultiEnum.IS_EMPTY,
 						],
 						options: [
 							{ label: 'Option 1', value: 'option-1' },
 							{ label: 'Option 2', value: 'option-2' },
 							{ label: 'Option 3', value: 'option-3' },
 						],
-						type: Kotti.Filter.FilterType.MULTI_ENUM,
+						type: Kotti.Filters.FilterType.MULTI_ENUM,
 					},
 				],
 				isLoading: settings.value.booleanFlags.isLoading,
@@ -189,7 +189,7 @@ export default defineComponent({
 		const componentCode = computed<string>(() => {
 			const component: ComponentValue = {
 				hasHelpTextSlot: false,
-				name: 'KtFilter',
+				name: 'KtFilters',
 				props: cloneDeep(componentProps.value),
 				validation: 'empty',
 			}
@@ -199,7 +199,7 @@ export default defineComponent({
 		const reset = () => (filters.value = [])
 
 		return {
-			component: KtFilter,
+			component: KtFilters,
 			componentCode,
 			componentProps,
 			filters,

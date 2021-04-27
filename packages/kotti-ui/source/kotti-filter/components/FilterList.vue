@@ -37,8 +37,8 @@ import ButtonLink from './ButtonLink.vue'
 import FilterRow from './FilterRow.vue'
 
 export default defineComponent<{
-	columns: Kotti.Filter.Column.Any[]
-	filters: Kotti.Filter.InternalFilter[]
+	columns: Kotti.Filters.Column.Any[]
+	filters: Kotti.Filters.InternalFilter[]
 	isAddingFilter: boolean
 	isLoading: boolean
 }>({
@@ -66,13 +66,13 @@ export default defineComponent<{
 		},
 	},
 	setup(props, { emit }) {
-		const currentFiltersKeys = computed<Kotti.Filter.InternalFilter['key'][]>(
+		const currentFiltersKeys = computed<Kotti.Filters.InternalFilter['key'][]>(
 			() => props.filters.map((filter) => filter.key),
 		)
 
 		const getColumn = (
-			columnKey: Kotti.Filter.Column.Any['key'],
-		): Kotti.Filter.Column.Any => {
+			columnKey: Kotti.Filters.Column.Any['key'],
+		): Kotti.Filters.Column.Any => {
 			const column =
 				props.columns.find((column) => column.key === columnKey) ?? null
 			if (column === null)
@@ -80,7 +80,7 @@ export default defineComponent<{
 			return column
 		}
 		const getColumnOptions = (
-			selectedColumnKey: Kotti.Filter.Column.Any['key'] | undefined,
+			selectedColumnKey: Kotti.Filters.Column.Any['key'] | undefined,
 		): Kotti.FieldSingleSelect.Props['options'] =>
 			props.columns
 				.filter(
@@ -93,14 +93,14 @@ export default defineComponent<{
 					value: column.key,
 				}))
 
-		const handleAddFilter = (filter: Kotti.Filter.InternalFilter) => {
+		const handleAddFilter = (filter: Kotti.Filters.InternalFilter) => {
 			const newFilter = getFilterInitialState(filter.key, props.columns)
 			if (!newFilter) return
 			emit('input', [...props.filters, newFilter])
 			emit('endAddingFilter')
 		}
 		const handleRemoveFilter = (
-			filterKey: Kotti.Filter.InternalFilter['key'],
+			filterKey: Kotti.Filters.InternalFilter['key'],
 		) => {
 			const updatedFilters = props.filters.filter(
 				(filter) => filter.key !== filterKey,
@@ -108,8 +108,8 @@ export default defineComponent<{
 			emit('input', updatedFilters)
 		}
 		const handleSetFilter = (
-			oldFilterKey: Kotti.Filter.InternalFilter['key'],
-			newFilter: Kotti.Filter.InternalFilter,
+			oldFilterKey: Kotti.Filters.InternalFilter['key'],
+			newFilter: Kotti.Filters.InternalFilter,
 		) => {
 			const updatedFilter = currentFiltersKeys.value.includes(newFilter.key)
 				? newFilter
@@ -128,7 +128,7 @@ export default defineComponent<{
 			handleRemoveFilter,
 			handleSetFilter,
 			Kotti,
-			translations: useTranslationNamespace('KtFilter'),
+			translations: useTranslationNamespace('KtFilters'),
 			Yoco,
 		}
 	},

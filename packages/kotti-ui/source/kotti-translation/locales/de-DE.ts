@@ -11,8 +11,8 @@ export const deDE: KottiTranslation.Messages = {
 		noDataText: 'Keine Daten',
 		placeholder: 'Daten wählen',
 	},
-	// TODO check KtFilter translations
-	KtFilter: {
+	// TODO check KtFilters translations
+	KtFilters: {
 		addFilterLabel: 'Filter Hinzufügen',
 		andLabel: 'Und',
 		boolean: {

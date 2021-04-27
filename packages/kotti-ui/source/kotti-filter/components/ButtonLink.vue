@@ -18,7 +18,7 @@ export default defineComponent<{
 	isDisabled: boolean
 	isLoading: boolean
 	label: string | null
-	type: Kotti.Filter.ButtonLinkType
+	type: Kotti.Filters.ButtonLinkType
 }>({
 	name: 'ButtonLink',
 	props: {
@@ -40,11 +40,11 @@ export default defineComponent<{
 			type: String,
 		},
 		type: {
-			default: Kotti.Filter.ButtonLinkType.PRIMARY,
+			default: Kotti.Filters.ButtonLinkType.PRIMARY,
 			type: String,
-			validator: (value: unknown): value is Kotti.Filter.ButtonLinkType =>
-				Object.values(Kotti.Filter.ButtonLinkType).includes(
-					value as Kotti.Filter.ButtonLinkType,
+			validator: (value: unknown): value is Kotti.Filters.ButtonLinkType =>
+				Object.values(Kotti.Filters.ButtonLinkType).includes(
+					value as Kotti.Filters.ButtonLinkType,
 				),
 		},
 	},

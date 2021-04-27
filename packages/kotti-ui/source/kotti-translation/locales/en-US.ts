@@ -11,7 +11,7 @@ export const enUS: KottiTranslation.Messages = {
 		noDataText: 'No data',
 		placeholder: 'Select',
 	},
-	KtFilter: {
+	KtFilters: {
 		addFilterLabel: 'Add Filter',
 		andLabel: 'And',
 		boolean: {

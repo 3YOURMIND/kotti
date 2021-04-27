@@ -11,8 +11,8 @@ export const jaJP: KottiTranslation.Messages = {
 		noDataText: 'データなし',
 		placeholder: '選択してください',
 	},
-	// TODO check KtFilter translations
-	KtFilter: {
+	// TODO check KtFilters translations
+	KtFilters: {
 		addFilterLabel: 'フィルタを追加',
 		andLabel: 'そして',
 		boolean: {

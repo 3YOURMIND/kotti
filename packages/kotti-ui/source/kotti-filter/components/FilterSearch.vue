@@ -21,8 +21,8 @@ import { Kotti } from '../../types'
 import { getSearchFilterInitialState } from '../utils'
 
 export default defineComponent<{
-	column: Kotti.Filter.Column.Search
-	filter: Kotti.Filter.Filter | null
+	column: Kotti.Filters.Column.Search
+	filter: Kotti.Filters.Filter | null
 	isLoading: boolean
 }>({
 	name: 'FilterSearch',
@@ -44,12 +44,12 @@ export default defineComponent<{
 		},
 	},
 	setup(props, { emit }) {
-		const translations = useTranslationNamespace('KtFilter')
+		const translations = useTranslationNamespace('KtFilters')
 
 		const placeholder = computed<string>(
 			() => props.column.placeholder ?? translations.value.searchLabel,
 		)
-		const searchValue = computed<Kotti.Filter.FilterValue>(
+		const searchValue = computed<Kotti.Filters.FilterValue>(
 			() => props.filter?.value,
 		)
 

@@ -1,13 +1,13 @@
 import { attachMeta, makeInstallable } from '../utilities'
 
-import KtFilterVue from './KtFilter.vue'
+import KtFiltersVue from './KtFilters.vue'
 
-export const KtFilter = attachMeta(makeInstallable(KtFilterVue), {
+export const KtFilters = attachMeta(makeInstallable(KtFiltersVue), {
 	addedVersion: '3.0.0',
 	deprecated: null,
 	designs: null,
 	slots: {},
 	typeScript: {
-		namespace: 'Kotti.Filter',
+		namespace: 'Kotti.Filters',
 	},
 })

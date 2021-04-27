@@ -57,8 +57,8 @@ import { isValidColumn } from './validators'
 
 const ARROW_HEIGHT = 7
 
-export default defineComponent<Kotti.Filter.InternalProps>({
-	name: 'KtFilter',
+export default defineComponent<Kotti.Filters.InternalProps>({
+	name: 'KtFilters',
 	components: {
 		ButtonLink,
 		FilterActions,
@@ -69,7 +69,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		columns: {
 			required: true,
 			type: Array,
-			validator: (value: Kotti.Filter.InternalProps['columns']) =>
+			validator: (value: Kotti.Filters.InternalProps['columns']) =>
 				value.every((column) => isValidColumn(column)),
 		},
 		isLoading: {
@@ -82,7 +82,7 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		},
 	},
 	setup(props, { emit }) {
-		const translations = useTranslationNamespace('KtFilter')
+		const translations = useTranslationNamespace('KtFilters')
 
 		const listContentRef = ref<Element | null>(null)
 		const listTriggerRef = ref<Element | null>(null)
@@ -90,23 +90,23 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 		const isListVisible = ref<boolean>(false)
 		const tippyInstanceRef = ref(null)
 
-		const filterListColumns = computed<Kotti.Filter.Column.Any[]>(() =>
+		const filterListColumns = computed<Kotti.Filters.Column.Any[]>(() =>
 			props.columns.filter(
-				(column) => column.type !== Kotti.Filter.FilterType.SEARCH,
+				(column) => column.type !== Kotti.Filters.FilterType.SEARCH,
 			),
 		)
-		const searchColumn = computed<Kotti.Filter.Column.Any | null>(
+		const searchColumn = computed<Kotti.Filters.Column.Any | null>(
 			() =>
 				props.columns.find(
-					(column) => column.type === Kotti.Filter.FilterType.SEARCH,
+					(column) => column.type === Kotti.Filters.FilterType.SEARCH,
 				) ?? null,
 		)
-		const searchValue = computed<Kotti.Filter.InternalFilter | null>(
+		const searchValue = computed<Kotti.Filters.InternalFilter | null>(
 			() =>
 				props.value.find((filter) => filter.key === searchColumn.value?.key) ??
 				null,
 		)
-		const filterListValues = computed<Kotti.Filter.Value>(() =>
+		const filterListValues = computed<Kotti.Filters.Value>(() =>
 			props.value.filter((filter) => filter.key !== searchColumn.value?.key),
 		)
 		const isAddDisabled = computed(
@@ -135,14 +135,14 @@ export default defineComponent<Kotti.Filter.InternalProps>({
 			}
 			emit('input', [searchValue.value])
 		}
-		const setFilters = (filters: Kotti.Filter.Value) => {
+		const setFilters = (filters: Kotti.Filters.Value) => {
 			if (searchValue.value === null) {
 				emit('input', filters)
 				return
 			}
 			emit('input', [...filters, searchValue.value])
 		}
-		const setSearchFilter = (searchFilter: Kotti.Filter.InternalFilter) => {
+		const setSearchFilter = (searchFilter: Kotti.Filters.InternalFilter) => {
 			if (hasSearchColumn.value) {
 				if (searchFilter.value === null) {
 					emit('input', filterListValues.value)

@@ -1,7 +1,7 @@
 import { Kotti } from '../types'
 import { SpecifyRequiredProps } from '../types/utilities'
 
-export namespace KottiFilter {
+export namespace KottiFilters {
 	export enum ButtonLinkType {
 		DANGER = 'danger',
 		PRIMARY = 'primary',

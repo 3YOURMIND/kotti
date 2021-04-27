@@ -2,7 +2,7 @@ import { Ref } from '@vue/composition-api'
 
 import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
 import { KottiField } from '../kotti-field/types'
-import { KottiFilter } from '../kotti-filter/types'
+import { KottiFilters } from '../kotti-filter/types'
 import { KottiFormSubmit } from '../kotti-form/types'
 import { KottiNavbar } from '../kotti-navbar/types'
 
@@ -19,7 +19,7 @@ export namespace KottiTranslation {
 	export type Messages = {
 		KtFields: KottiField.Translations
 		KtFieldSelects: KottiFieldSelectShared.Translations
-		KtFilter: KottiFilter.Translations
+		KtFilters: KottiFilters.Translations
 		KtFormSubmit: KottiFormSubmit.Translations
 		KtNavbar: KottiNavbar.Translations
 	}
