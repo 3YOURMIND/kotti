@@ -60,8 +60,8 @@ const ARROW_HEIGHT = 7
 export default defineComponent<Kotti.Filter.InternalProps>({
 	name: 'KtFilter',
 	components: {
-		FilterActions,
 		ButtonLink,
+		FilterActions,
 		FilterList,
 		FilterSearch,
 	},

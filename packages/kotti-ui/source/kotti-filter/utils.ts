@@ -2,9 +2,9 @@ import { useTranslationNamespace } from '../kotti-translation/hooks'
 import { Kotti } from '../types'
 
 export const getFilterEmptyValue = (
-	filterKey: Kotti.Filter.Column.Any['type'],
+	type: Kotti.Filter.Column.Any['type'],
 ): null | [null, null] | [] => {
-	switch (filterKey) {
+	switch (type) {
 		case Kotti.Filter.FilterType.BOOLEAN:
 		case Kotti.Filter.FilterType.NUMBER:
 		case Kotti.Filter.FilterType.SINGLE_ENUM:
@@ -19,10 +19,10 @@ export const getFilterEmptyValue = (
 	}
 }
 
-const getOperation = (
-	operations: Kotti.Filter.FilterOperation[],
-	defaultOperation: Kotti.Filter.FilterOperation,
-): Kotti.Filter.FilterOperation => {
+const getFilterInitialOperation = (
+	operations: Kotti.Filter.Operation.Any[],
+	defaultOperation: Kotti.Filter.Operation.Any,
+): Kotti.Filter.Operation.Any => {
 	if (!Array.isArray(operations) || operations.length === 0)
 		throw new Error('Invalid Filter Operations')
 	return operations.includes(defaultOperation)
@@ -39,7 +39,7 @@ export const getFilterInitialState = (
 		case Kotti.Filter.FilterType.BOOLEAN:
 			return {
 				key: columnKey,
-				operation: getOperation(
+				operation: getFilterInitialOperation(
 					column.operations,
 					Kotti.Filter.Operation.Boolean.EQUAL,
 				),
@@ -48,7 +48,7 @@ export const getFilterInitialState = (
 		case Kotti.Filter.FilterType.DATE_RANGE:
 			return {
 				key: columnKey,
-				operation: getOperation(
+				operation: getFilterInitialOperation(
 					column.operations,
 					Kotti.Filter.Operation.DateRange.IN_RANGE,
 				),
@@ -57,7 +57,7 @@ export const getFilterInitialState = (
 		case Kotti.Filter.FilterType.MULTI_ENUM:
 			return {
 				key: columnKey,
-				operation: getOperation(
+				operation: getFilterInitialOperation(
 					column.operations,
 					Kotti.Filter.Operation.MultiEnum.ONE_OF,
 				),
@@ -66,7 +66,7 @@ export const getFilterInitialState = (
 		case Kotti.Filter.FilterType.NUMBER:
 			return {
 				key: columnKey,
-				operation: getOperation(
+				operation: getFilterInitialOperation(
 					column.operations,
 					Kotti.Filter.Operation.Number.EQUAL,
 				),
@@ -75,7 +75,7 @@ export const getFilterInitialState = (
 		case Kotti.Filter.FilterType.SINGLE_ENUM:
 			return {
 				key: columnKey,
-				operation: getOperation(
+				operation: getFilterInitialOperation(
 					column.operations,
 					Kotti.Filter.Operation.SingleEnum.EQUAL,
 				),
@@ -84,7 +84,7 @@ export const getFilterInitialState = (
 		case Kotti.Filter.FilterType.STRING:
 			return {
 				key: columnKey,
-				operation: getOperation(
+				operation: getFilterInitialOperation(
 					column.operations,
 					Kotti.Filter.Operation.String.CONTAINS,
 				),

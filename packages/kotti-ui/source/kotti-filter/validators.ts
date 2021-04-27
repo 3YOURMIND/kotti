@@ -9,7 +9,7 @@ const isValueInEnum = <KEY extends string>(
 ): boolean => Object.values(enumObject).includes(value)
 
 const areValidOperations = (
-	operations: Kotti.Filter.FilterOperation[],
+	operations: Kotti.Filter.Operation.Any[],
 	filterType: Kotti.Filter.FilterType,
 ): boolean => {
 	switch (filterType) {

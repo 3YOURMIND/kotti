@@ -55,6 +55,14 @@ export namespace KottiFilter {
 			CONTAINS = 'CONTAINS',
 			IS_EMPTY = 'IS_EMPTY',
 		}
+
+		export type Any =
+			| Operation.Boolean
+			| Operation.DateRange
+			| Operation.MultiEnum
+			| Operation.Number
+			| Operation.SingleEnum
+			| Operation.String
 	}
 
 	export namespace Column {
@@ -122,14 +130,6 @@ export namespace KottiFilter {
 			| Column.String
 	}
 
-	export type FilterOperation =
-		| Operation.Boolean
-		| Operation.DateRange
-		| Operation.MultiEnum
-		| Operation.Number
-		| Operation.SingleEnum
-		| Operation.String
-
 	export type FilterValue =
 		| Kotti.FieldDateRange.Value
 		| Kotti.FieldMultiSelect.Value
@@ -140,7 +140,7 @@ export namespace KottiFilter {
 
 	export type InternalFilter = {
 		key: Column.Any['key']
-		operation: FilterOperation
+		operation: Operation.Any
 		value: FilterValue
 	}
 
