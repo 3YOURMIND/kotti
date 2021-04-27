@@ -29,7 +29,7 @@ export default defineComponent<{
 	isClearAllDisabled: boolean
 	isLoading: boolean
 }>({
-	name: 'Actions',
+	name: 'FilterActions',
 	components: {
 		ButtonLink,
 	},

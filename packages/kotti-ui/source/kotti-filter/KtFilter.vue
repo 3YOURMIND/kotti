@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-filter">
-		<Search
+		<FilterSearch
 			v-if="hasSearchColumn"
 			:column="searchColumn"
 			:filter="searchValue"
@@ -24,7 +24,7 @@
 				@endAddingFilter="isAddingFilter = false"
 				@input="setFilters"
 			/>
-			<Actions
+			<FilterActions
 				:isAddDisabled="isAddDisabled"
 				:isClearAllDisabled="isClearAllDisabled"
 				:isLoading="isLoading"
@@ -49,10 +49,10 @@ import { roundArrow } from 'tippy.js'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 import { Kotti } from '../types'
 
-import Actions from './components/Actions.vue'
 import ButtonLink from './components/ButtonLink.vue'
+import FilterActions from './components/FilterActions.vue'
 import FilterList from './components/FilterList.vue'
-import Search from './components/Search.vue'
+import FilterSearch from './components/FilterSearch.vue'
 import { isValidColumn } from './validators'
 
 const ARROW_HEIGHT = 7
@@ -60,10 +60,10 @@ const ARROW_HEIGHT = 7
 export default defineComponent<Kotti.Filter.InternalProps>({
 	name: 'KtFilter',
 	components: {
-		Actions,
+		FilterActions,
 		ButtonLink,
 		FilterList,
-		Search,
+		FilterSearch,
 	},
 	props: {
 		columns: {

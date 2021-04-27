@@ -25,7 +25,7 @@ export default defineComponent<{
 	filter: Kotti.Filter.Filter | null
 	isLoading: boolean
 }>({
-	name: 'Search',
+	name: 'FilterSearch',
 	components: {
 		KtFieldText,
 	},
