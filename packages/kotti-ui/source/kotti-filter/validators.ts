@@ -3,10 +3,12 @@ import { Kotti } from '../types'
 const isNonEmptyString = (value: unknown): value is string =>
 	typeof value === 'string' && value.length > 0
 
-const isValueInEnum = <T>(
+function isValueInEnum<T>(
 	value: string,
 	enumObject: { [key: string]: T },
-): boolean => Object.values(enumObject).includes((value as unknown) as T)
+): boolean {
+	return Object.values(enumObject).includes((value as unknown) as T)
+}
 
 const areValidOperations = (
 	operations: Kotti.Filter.FilterOperation[],
