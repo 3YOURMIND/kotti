@@ -1,0 +1,110 @@
+@import '@3yourmind/kotti-ui/dist/variables.scss';
+
+pre {
+	tab-size: 2;
+}
+
+li {
+	list-style: none;
+}
+
+h3 {
+	border-bottom: 0;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	margin-bottom: 1.5em;
+	background-color: var(--ui-01);
+	border: 1px solid var(--ui-02);
+	border-radius: $border-radius;
+
+	@media (max-width: #{$size-lg - 1px}) {
+		flex-direction: column;
+
+		> *:not(:first-child) {
+			border-top: 1px solid var(--ui-02);
+		}
+	}
+
+	@media (min-width: $size-lg) {
+		flex-direction: row;
+
+		> * {
+			flex: 1;
+		}
+
+		> *:not(:last-child) {
+			border-right: 1px solid var(--ui-02);
+		}
+	}
+
+	> * {
+		padding: 1.5em;
+		margin: 0 !important;
+	}
+}
+
+.field-row {
+	display: flex;
+
+	> * {
+		flex: 1;
+	}
+
+	> *:not(:first-child) {
+		margin-left: 10px;
+	}
+}
+
+.overview {
+	display: flex;
+	margin-bottom: 20px;
+
+	@media (max-width: #{$size-lg - 1px}) {
+		flex-direction: column;
+
+		> *:not(:first-child) {
+			margin-top: 5px;
+		}
+	}
+
+	@media (min-width: $size-lg) {
+		flex-direction: row;
+
+		> * {
+			flex: 1;
+			flex-basis: 0;
+		}
+
+		&__code > pre {
+			max-width: 400px;
+		}
+
+		&__component {
+			> * {
+				margin-right: 20px;
+			}
+		}
+	}
+
+	&__component {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		&__value {
+			span {
+				font-family: monospace;
+			}
+		}
+	}
+
+	&__code > pre {
+		height: 150px;
+		margin: 0;
+		overflow: scroll;
+	}
+}

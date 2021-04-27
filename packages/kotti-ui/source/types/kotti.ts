@@ -21,6 +21,7 @@ export {
 	KottiFieldSingleSelect as FieldSingleSelect,
 	KottiFieldMultiSelect as FieldMultiSelect,
 } from '../kotti-field-select/types'
+export { KottiFilters as Filters } from '../kotti-filter/types'
 export {
 	KottiForm as Form,
 	KottiFormSubmit as FormSubmit,
