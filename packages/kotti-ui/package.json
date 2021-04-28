@@ -17,7 +17,6 @@
 		"element-ui": "2.13.1",
 		"lodash": "^4.17.19",
 		"normalize.css": "^8.0.1",
-		"rollup-plugin-visualizer": "^5.3.6",
 		"tippy.js": "6.x",
 		"ts-custom-error": "^3.1.1",
 		"vue-clickaway": "^2.2.2"
@@ -39,6 +38,7 @@
 		"postcss-preset-env": "^6.7.0",
 		"rollup": "^2.28.1",
 		"rollup-plugin-scss": "^3.0.0-rc1",
+		"rollup-plugin-visualizer": "^5.3.6",
 		"rollup-plugin-vue": "^5.1.9"
 	},
 	"files": [
