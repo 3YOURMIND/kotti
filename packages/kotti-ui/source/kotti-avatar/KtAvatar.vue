@@ -1,7 +1,7 @@
 <template>
 	<div
+		ref="triggerRef"
 		:class="avatarClasses"
-		:data-tooltip="name"
 		@click="($event) => $emit('click', $event)"
 	>
 		<slot>
@@ -16,21 +16,40 @@
 	</div>
 </template>
 <script lang="ts">
+import { useTippy } from '@3yourmind/vue-use-tippy'
 import { computed, defineComponent, ref } from '@vue/composition-api'
+import { roundArrow } from 'tippy.js'
 
 import { KottiAvatar } from './types'
+
+const ARROW_HEIGHT = 7
 export default defineComponent<KottiAvatar.PropsInternal>({
 	name: 'KtAvatar',
 	props: {
-		hoverable: { default: false, type: Boolean },
+		isHoverable: { default: false, type: Boolean },
+		isSelected: { default: false, type: Boolean },
+		isSmall: { default: false, type: Boolean },
 		name: { default: null, type: String },
-		selected: { default: false, type: Boolean },
 		showTooltip: { default: false, type: Boolean },
-		small: { default: false, type: Boolean },
 		src: { default: null, type: String },
 	},
 	setup(props) {
 		const avatarFallback = ref(true)
+		const triggerRef = ref<Element | null>(null)
+
+		useTippy(
+			triggerRef,
+			computed(() => ({
+				arrow: roundArrow,
+				content: props.name,
+				offset: [0, ARROW_HEIGHT],
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				onShow: (_) => (props.showTooltip ? null : false),
+				placement: 'bottom',
+				theme: 'kt-avatar-tooltip',
+			})),
+		)
+
 		return {
 			avatarAvailable: computed(
 				() => props.src !== null && avatarFallback.value,
@@ -40,8 +59,6 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 				'kt-avatar--is-hoverable': props.hoverable,
 				'kt-avatar--is-selected': props.selected,
 				'kt-avatar--is-small': props.small,
-				'kt-avatar--is-hover': props.hoverable,
-				'tooltip tooltip-bottom': props.showTooltip,
 			})),
 			avatarFallback,
 			avatarFallbackClasses: computed(() => ({
@@ -49,6 +66,7 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 				'kt-avatar__fallback--is-small': props.small,
 			})),
 			imgFallBack: () => (avatarFallback.value = false),
+			triggerRef,
 		}
 	},
 })
@@ -64,6 +82,13 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 	background: var(--gray-20);
 	border: 0.1rem solid var(--white);
 	border-radius: 100%;
+
+	.tippy-box[data-theme~='kt-navbar-tooltip'] {
+		color: var(--gray-10);
+		background-color: var(--gray-90);
+		border: 1px solid var(--gray-90);
+		box-shadow: 0 4px 14px -2px var(--gray-100);
+	}
 
 	&--is {
 		&-hoverable:hover {
