@@ -5,10 +5,10 @@ export namespace KottiAvatarGroup {
 	export type Avatar = KottiAvatar.PropsInternal
 
 	export type PropsInternal = {
-		hoverable: boolean
+		isHoverable: boolean
 		isStack: boolean
 		items: Array<Avatar>
-		showItems: number
+		numberOfShownItems: number
 		showTooltip: boolean
 	}
 	export type Props = SpecifyRequiredProps<PropsInternal, never>

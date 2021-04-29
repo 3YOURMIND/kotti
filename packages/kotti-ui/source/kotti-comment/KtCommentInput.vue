@@ -4,7 +4,7 @@
 			<KtAvatar
 				v-if="!isInline"
 				class="comment-input__avatar"
-				small
+				isSmall
 				:src="userAvatar"
 			/>
 			<textarea

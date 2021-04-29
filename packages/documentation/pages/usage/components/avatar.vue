@@ -7,22 +7,22 @@ Avatar is a round object to help identify the user information.
 
 <div class="element-example">
 	<KtAvatar
+		class="mr-16px"
+		isHoverable
 		name="Jony O'Five"
-		hoverable
-		src="https://picsum.photos/200/100"
 		showTooltip
-		class="mr-16px"
+		src="https://picsum.photos/200/100"
 	/>
 	<KtAvatar
-		name="Jony O'Five"
-		hoverable
-		:selected="true"
 		class="mr-16px"
+		isHoverable
+		isSelected
+		name="Jony O'Five"
 	/>
 	<KtAvatar
-		name="Jony O'Five"
-		small
 		class="mr-16px"
+		name="Jony O'Five"
+		isSmall
 	/>
 </div>
 
@@ -33,19 +33,19 @@ Set `small` to make the avatar smaller.
 
 ```html
 <KtAvatar
+	isHoverable
 	name="Jony O'Five"
-	hoverable
-	src="https://picsum.photos/200/100"
 	showTooltip
+	src="https://picsum.photos/200/100"
 />
 <KtAvatar
 	name="Jony O'Five"
+	isSelected
 	src="https://picsum.photos/200"
-	selected
 />
 <KtAvatar
 	name="Jony O'Five"
-	small
+	isSmall
 	src="https://picsum.photos/200"
 />
 ```
@@ -55,10 +55,10 @@ Set `small` to make the avatar smaller.
 <div class="element-example">
 	<KtAvatarGroup
 		:items="avatarData"
-		:showItems="3"
-		showTooltip
+		:numberOfShownItems="3"
+		isHoverable
 		isStack
-		hoverable
+		showTooltip
 	/>
 </div>
 
@@ -89,8 +89,8 @@ You can control how many avatar items are displayed with `showItems`.
 ```html
 <KtAvatarGroup
 	:items="avatarData"
-	:showItems="3"
-	hoverable
+	:numberOfShownItems="3"
+	isHoverable
 	isStack
 	showTooltip
 />
@@ -102,11 +102,11 @@ You can control how many avatar items are displayed with `showItems`.
 
 | Attribute     | Description                 | Type      | Accepted values | Default |
 |:--------------|:----------------------------|:----------|:----------------|:--------|
-| `hoverable`   | add hover effects to avatar | `Boolean` | —               | `false` |
+| `isHoverable` | add hover effects to avatar  | `Boolean` | —               | `false` |
+| `isSelected`  | avatar selecte status       | `Boolean` | —               | `false` |
+| `isSmall`     | set avatar to small size    | `Boolean` | —               | `false` |
 | `name`        | avatar name                 | `String`  | —               | —       |
-| `selected`    | avatar selecte status       | `Boolean` | —               | `false` |
 | `showTooltip` | show avatar name in tooltip | `Boolean` | —               | `false` |
-| `small`       | set avatar to small size    | `Boolean` | —               | `false` |
 | `src`         | avatar image                | `String`  | —               | —       |
 
 ### Avatar Group Attributes

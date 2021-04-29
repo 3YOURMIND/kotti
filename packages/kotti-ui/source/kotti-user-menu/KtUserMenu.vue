@@ -29,7 +29,7 @@
 		</div>
 		<div :class="userInfoClass" @click="isMenuShow = !isMenuShow">
 			<div class="kt-user-menu__info__avatar">
-				<KtAvatar small :src="userAvatar" />
+				<KtAvatar isSmall :src="userAvatar" />
 			</div>
 			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu__info__text">
 				<div class="kt-user-menu__info__text__name" v-text="userName" />

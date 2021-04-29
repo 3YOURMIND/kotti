@@ -1,6 +1,6 @@
 <template>
 	<div class="comment-reply">
-		<KtAvatar class="comment-reply__avatar" small :src="userAvatar" />
+		<KtAvatar class="comment-reply__avatar" isSmall :src="userAvatar" />
 		<div class="comment-reply__wrapper">
 			<div class="comment-reply__info">
 				<div class="comment-reply__name" v-text="userName" />

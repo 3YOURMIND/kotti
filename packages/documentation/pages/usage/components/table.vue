@@ -648,12 +648,12 @@ It is possible to customize parts (columns) of the table by passing your own ren
 		renderCell(h, { value, row, rowIndex, column, columnIndex }) {
 			return (
 				<KtAvatar
-					name={value}
-					hoverable
-					src="https://picsum.photos/200"
-					showTooltip
-					small
 					class="mr-16px"
+					isHoverable
+					isSmall
+					name={value}
+					showTooltip
+					src="https://picsum.photos/200"
 				/>
 			)
 		},
@@ -807,11 +807,11 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <template #default="{value, row, rowIndex, column, columnIndex}">
 	<KtAvatar
 		:name="value"
-		hoverable
-		src="https://picsum.photos/200"
-		showTooltip
-		small
 		class="mr-16px"
+		isHoverable
+		isSmall
+		showTooltip
+		src="https://picsum.photos/200"
 	/>
 </template>
 </KtTableColumn>
@@ -834,11 +834,11 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <template #default="{value, row, rowIndex, column, columnIndex}">
 	<KtAvatar
 		:name="value"
-		hoverable
-		src="https://picsum.photos/200"
-		showTooltip
-		small
 		class="mr-16px"
+		isHoverable
+		isSmall
+		showTooltip
+		src="https://picsum.photos/200"
 	/>
 </template>
 </KtTableColumn>
@@ -1227,12 +1227,12 @@ export default {
 		renderCell(h, { value }) {
 			return (
 				<KtAvatar
-					name={value}
-					hoverable
-					src="https://picsum.photos/200"
-					showTooltip
-					small
 					class="mr-16px"
+					isHoverable
+					isSmall
+					name={value}
+					showTooltip
+					src="https://picsum.photos/200"
 				/>
 			)
 		},

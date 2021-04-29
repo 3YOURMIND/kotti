@@ -56,14 +56,14 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 			),
 			avatarClasses: computed(() => ({
 				'kt-avatar': true,
-				'kt-avatar--is-hoverable': props.hoverable,
-				'kt-avatar--is-selected': props.selected,
-				'kt-avatar--is-small': props.small,
+				'kt-avatar--is-hoverable': props.isHoverable,
+				'kt-avatar--is-selected': props.isSelected,
+				'kt-avatar--is-small': props.isSmall,
 			})),
 			avatarFallback,
 			avatarFallbackClasses: computed(() => ({
 				'kt-avatar__fallback': true,
-				'kt-avatar__fallback--is-small': props.small,
+				'kt-avatar__fallback--is-small': props.isSmall,
 			})),
 			imgFallBack: () => (avatarFallback.value = false),
 			triggerRef,

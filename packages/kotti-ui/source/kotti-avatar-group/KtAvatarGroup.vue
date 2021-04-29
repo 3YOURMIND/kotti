@@ -6,11 +6,11 @@
 		<KtAvatar
 			v-for="(item, index) in visibleItems"
 			:key="index"
-			:hoverable="hoverable"
+			:isHoverable="isHoverable"
+			:isSelected="item.isSelected"
+			:isSmall="item.isSmall"
 			:name="item.name"
-			:selected="item.selected"
 			:showTooltip="showTooltip"
-			:small="item.small"
 			:src="item.src"
 		/>
 	</div>
@@ -29,10 +29,10 @@ export default defineComponent<KottiAvatarGroup.PropsInternal>({
 		KtAvatar,
 	},
 	props: {
-		hoverable: { type: Boolean, default: false },
+		isHoverable: { type: Boolean, default: false },
 		isStack: { type: Boolean, default: false },
 		items: { type: Array, default: () => [] },
-		showItems: { type: Number, default: 2 },
+		numberOfShownItems: { type: Number, default: 2 },
 		showTooltip: { type: Boolean, default: false },
 	},
 	setup(props) {
@@ -41,11 +41,13 @@ export default defineComponent<KottiAvatarGroup.PropsInternal>({
 				'kt-avatar-group': true,
 				'kt-avatar-group--is-stack': props.isStack,
 			})),
-			avatarRemainders: computed(() => props.items.length - props.showItems),
+			avatarRemainders: computed(
+				() => props.items.length - props.numberOfShownItems,
+			),
 			visibleItems: computed(() =>
 				[...props.items]
 					.reverse()
-					.filter((_, index) => index < props.showItems),
+					.filter((_, index) => index < props.numberOfShownItems),
 			),
 		}
 	},
