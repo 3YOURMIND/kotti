@@ -1,8 +1,8 @@
 <template>
 	<div :class="avatarGroupClasses">
-		<div v-if="avatarRemainders > 0" class="avatar avatar-number">
+		<KtAvatar v-if="avatarRemainders > 0" class="kt-avatar-number">
 			<span v-text="`+${avatarRemainders}`" />
-		</div>
+		</KtAvatar>
 		<KtAvatar
 			v-for="(item, index) in visibleItems"
 			:key="index"
@@ -16,49 +16,69 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
+
 import { KtAvatar } from '../kotti-avatar/'
 
-export default {
+import { KottiAvatarGroup } from './types'
+
+export default defineComponent<KottiAvatarGroup.PropsInternal>({
 	name: 'KtAvatarGroup',
 	components: {
 		KtAvatar,
 	},
 	props: {
-		items: {
-			type: Array,
-			default: () => [],
-		},
-		showItems: {
-			type: Number,
-			default: 2,
-		},
-		isStack: {
-			type: Boolean,
-			default: false,
-		},
-		showTooltip: {
-			type: Boolean,
-			default: false,
-		},
-		hoverable: Boolean,
+		hoverable: { type: Boolean, default: false },
+		isStack: { type: Boolean, default: false },
+		items: { type: Array, default: () => [] },
+		showItems: { type: Number, default: 2 },
+		showTooltip: { type: Boolean, default: false },
 	},
-	computed: {
-		avatarGroupClasses() {
-			return {
-				'avatar-group': true,
-				stack: this.isStack,
-			}
-		},
-		avatarRemainders() {
-			return this.items.length - this.showItems
-		},
-		reversedItems() {
-			return [...this.items].reverse()
-		},
-		visibleItems() {
-			return this.reversedItems.filter((item, index) => index < this.showItems)
-		},
+	setup(props) {
+		return {
+			avatarGroupClasses: computed(() => ({
+				'kt-avatar-group': true,
+				'kt-avatar-group--is-stack': props.isStack,
+			})),
+			avatarRemainders: computed(() => props.items.length - props.showItems),
+			visibleItems: computed(() =>
+				[...props.items]
+					.reverse()
+					.filter((_, index) => index < props.showItems),
+			),
+		}
 	},
-}
+})
 </script>
+
+<style lang="scss" scoped>
+.kt-avatar-group {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	justify-content: center;
+
+	.kt-avatar {
+		margin-right: 0.2rem;
+	}
+
+	&--is-stack .kt-avatar:not(:first-of-type) {
+		margin-left: -0.8rem;
+	}
+
+	.kt-avatar-number {
+		align-items: center;
+		margin-left: 0.2rem;
+		background: var(--gray-20);
+		span {
+			width: 100%;
+			text-align: center;
+		}
+	}
+
+	&--is-stack .kt-avatar-number {
+		margin-left: -0.8rem;
+	}
+}
+</style>

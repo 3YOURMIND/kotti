@@ -1,3 +1,5 @@
+export { KottiAvatar as Avatar } from '../kotti-avatar/types'
+export { KottiAvatarGroup as AvatarGroup } from '../kotti-avatar-group/types'
 export { KottiButton as Button } from '../kotti-button/types'
 export { KottiCol as Col } from '../kotti-col/types'
 export { KottiField as Field } from '../kotti-field/types'
