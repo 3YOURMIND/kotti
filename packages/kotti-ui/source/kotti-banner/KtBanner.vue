@@ -1,81 +1,109 @@
 <template>
 	<div :class="bannerClass">
-		<div class="collapse">
-			<div class="glyph">
-				<span v-if="icon">
+		<div class="kt-banner__collapse">
+			<div class="kt-banner__glyph">
+				<slot name="glyph">
 					<i class="yoco" v-text="icon" />
-				</span>
-				<span v-else>
-					<slot name="glyph">
-						<i class="yoco">announce</i>
-					</slot>
-				</span>
+				</slot>
 			</div>
-			<div class="message" v-text="message" />
-			<div v-if="!expandable" class="action" @click="handleClick">
-				<button
-					v-if="actionText.length"
-					class="kt-button text"
-					v-text="actionText"
-				/>
+			<div class="kt-banner__message" v-text="message" />
+			<div v-if="!expandable" @click="() => $emit('click')">
+				<KtButton v-if="actionText.length" :label="actionText" type="text" />
 			</div>
-			<div v-else class="action" @click="isExpand = !isExpand">
-				<button v-if="!isExpand" class="kt-button text" v-text="switchText" />
-				<button v-else class="kt-button text" v-text="switchCloseText" />
+			<div v-else @click="isExpand = !isExpand">
+				<KtButton v-if="!isExpand" :label="switchText" type="text" />
+				<KtButton v-else :label="switchCloseText" type="text" />
 			</div>
 		</div>
-		<div v-if="isExpand" class="expand">
+		<div v-if="isExpand" class="kt-banner__expand">
 			<slot name="expand" />
 		</div>
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
+import { KtButton } from '../kotti-button'
+import { isYocoIcon } from '../validators'
+
+import { KottiBanner } from './types'
+
+export default defineComponent<KottiBanner.PropsInternal>({
 	name: 'KtBanner',
+	components: { KtButton },
 	props: {
-		isGrey: {
-			type: Boolean,
-			default: false,
-		},
-		message: String,
+		actionText: { type: String, default: '' },
 		icon: {
 			type: String,
-			default: '',
+			default: Yoco.Icon.ANNOUNCE,
+			validator: isYocoIcon,
 		},
-		actionText: {
-			type: String,
-			default: '',
-		},
-		switchText: {
-			type: String,
-			default: 'View',
-		},
-		switchCloseText: {
-			type: String,
-			default: 'Close',
-		},
+		isGray: { type: Boolean, default: false },
+		message: { type: String, required: true },
+		switchCloseText: { type: String, default: 'Close' },
+		switchText: { type: String, default: 'View' },
 	},
-	data() {
+	setup(props, { slots }) {
 		return {
-			isExpand: false,
+			bannerClass: computed(() => ({
+				'kt-banner': true,
+				'kt-banner--is-gray': props.isGray,
+			})),
+			expandable: computed(() => Boolean(slots.expand)),
+			isExpand: ref(false),
+			Yoco,
 		}
 	},
-	computed: {
-		bannerClass() {
-			return {
-				banner: true,
-				'banner-grey': this.isGrey,
-			}
-		},
-		expandable() {
-			return Boolean(this.$slots.expand)
-		},
-	},
-	methods: {
-		handleClick(evt) {
-			this.$emit('click', evt)
-		},
-	},
-}
+})
 </script>
+
+<style lang="scss" scoped>
+.kt-banner {
+	display: flex;
+	flex-direction: column;
+	padding: var(--unit-2) var(--unit-4);
+	background: var(--white);
+	border: 1px solid var(--gray-20);
+	border-radius: var(--border-radius);
+
+	&--is-gray {
+		background: var(--gray-20);
+		border: 0;
+	}
+
+	&__collapse {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		width: 100%;
+	}
+
+	&__glyph {
+		width: 1.6rem;
+		line-height: 1;
+		text-align: center;
+
+		.yoco {
+			font-size: 1rem;
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&__message {
+		flex: 1 1 100%;
+		padding: 0 var(--unit-4);
+		font-weight: 600;
+		color: var(--gray-70);
+	}
+
+	&__expand {
+		margin-top: var(--unit-4);
+	}
+}
+</style>

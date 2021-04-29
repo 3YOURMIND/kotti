@@ -78,7 +78,7 @@ this style is useful when you want add contrast to the page.
 		message="You material is not available to users"
 		icon="announce"
 		actionText="Publish"
-		isGrey
+		isGray
 	/>
 </div>
 
@@ -87,7 +87,7 @@ this style is useful when you want add contrast to the page.
 	message="You material is not available to users"
 	icon="announce"
 	actionText="Publish"
-	isGrey
+	isGray
 />
 ```
 
@@ -96,7 +96,7 @@ this style is useful when you want add contrast to the page.
 If you don't specify the icon text, you need to use the `glyph` slot.
 
 <div class="element-example">
-	<KtBanner message="You material is not available to users" actionText="Publish">
+	<KtBanner message="Your material is not available to users" actionText="Publish">
 		<div slot="glyph">
 			<img src="https://picsum.photos/24/24"/>
 		</div>
@@ -104,7 +104,7 @@ If you don't specify the icon text, you need to use the `glyph` slot.
 </div>
 
 ```html
-<KtBanner message="You material is not available to users" actionText="Publish">
+<KtBanner message="Your material is not available to users" actionText="Publish">
 	<div slot="glyph">
 		<img src="https://picsum.photos/24/24"/>
 	</div>
@@ -118,18 +118,12 @@ If you don't specify the icon text, you need to use the `glyph` slot.
 | Attribute         | Description                                    | Type      | Accepted values     | Default      |
 |:------------------|:-----------------------------------------------|:----------|:--------------------|:-------------|
 | `message`         | message in banner                              | `String`  | —                   | —            |
-| `icon`            | button icons                                   | `String`  | icon name in `yoco` | `"announce"` |
-| `isGrey`          | decide the background                          | `Boolean` | —                   | `false`      |
+| `icon`            | icon name from `yoco`                          | `String`  | icon name in `yoco` | `"announce"` |
+| `isGray`          | gray background for high contrast              | `Boolean` | —                   | `false`      |
 | `actionText`      | text shows when banner is not expandable       | `String`  | —                   | —            |
 | `switchText`      | text shows when expandable banner is collapsed | `String`  | —                   | `View`       |
 | `switchCloseText` | text shows when expandable banner is expand    | `String`  | —                   | `Close`      |
 
-### Slot
-
-| Name     | Description  | Type     | Accepted values                  | Default |
-|:---------|:-------------|:---------|:---------------------------------|:--------|
-| `expand` | button types | `String` | primary / second / text / danger | —       |
-| `glyph`  | button icons | `String` | icon name in `yoco`              | —       |
 </template>
 
 <script lang="ts">
