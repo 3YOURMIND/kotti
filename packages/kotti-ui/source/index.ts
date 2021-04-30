@@ -95,7 +95,6 @@ import {
 	KtTableColumn,
 	KtTableProvider,
 	KtTableConsumer,
-	KtTableColumnsStateMixin,
 } from './kotti-table'
 export * from './kotti-table'
 import { KtTheme } from './kotti-theme'
@@ -165,7 +164,6 @@ export default {
 			KtTableColumn,
 			KtTableProvider,
 			KtTableConsumer,
-			KtTableColumnsStateMixin,
 			KtTheme,
 			KtToaster,
 			KtTranslationContext,

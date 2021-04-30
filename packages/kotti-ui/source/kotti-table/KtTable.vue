@@ -24,6 +24,8 @@
 import deepEql from 'deep-eql'
 import pick from 'lodash/pick'
 
+import { TableBody } from './components/TableBody'
+import TableHeader from './components/TableHeader.vue'
 import {
 	KT_TABLE,
 	KT_STORE,
@@ -31,11 +33,9 @@ import {
 	KT_TABLE_STATE_PROVIDER,
 	DEFAULT_DISABLE_ROW,
 } from './constants'
+import { KtTableColumn } from './KtTableColumn'
 import { TableStore } from './logic/store'
 import { TableLayout } from './table-layout'
-import { TableBody } from './TableBody'
-import { KtTableColumn } from './TableColumn'
-import TableHeader from './TableHeader.vue'
 
 let tableIdSeed = 1
 

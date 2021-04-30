@@ -2,11 +2,10 @@ import { Kotti } from '../types'
 import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
-import KtTableVue from './src/KtTable.vue'
-import { TableColumnsStateMixin } from './src/mixins'
-import { KtTableColumn as KtTableColumnVue } from './src/TableColumn'
-import { KtTableConsumer as KtTableConsumerVue } from './src/TableConsumer'
-import { KtTableProvider as KtTableProviderVue } from './src/TableProvider'
+import KtTableVue from './KtTable.vue'
+import { KtTableColumn as KtTableColumnVue } from './KtTableColumn'
+import { KtTableConsumer as KtTableConsumerVue } from './KtTableConsumer'
+import { KtTableProvider as KtTableProviderVue } from './KtTableProvider'
 
 const META: Kotti.Meta = {
 	addedVersion: '0.0.1',
@@ -57,5 +56,3 @@ export const KtTableConsumer = attachMeta(
 	makeInstallable(KtTableConsumerVue),
 	META,
 )
-
-export const KtTableColumnsStateMixin = TableColumnsStateMixin

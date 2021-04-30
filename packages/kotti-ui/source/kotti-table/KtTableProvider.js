@@ -3,6 +3,7 @@ import pick from 'lodash/pick'
 import { KT_TABLE_STATE_PROVIDER } from './constants'
 import KtTable, { INITIAL_TABLE_STORE_PROPS } from './KtTable.vue'
 import { TableStore } from './logic/store'
+
 let tableProviderIdSeed = 1
 
 export const KtTableProvider = {

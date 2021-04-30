@@ -1,6 +1,6 @@
 import property from 'lodash/property'
 
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
+import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
 
 export const TableRowCell = {
 	name: 'TableRowCell',
