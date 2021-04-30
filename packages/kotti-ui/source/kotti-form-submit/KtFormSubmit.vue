@@ -46,13 +46,14 @@
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, inject, computed } from '@vue/composition-api'
 
+import { KT_FORM_SUBMIT_CONTEXT } from '../kotti-form/constants'
+import { KottiForm } from '../kotti-form/types'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
-import { KT_FORM_SUBMIT_CONTEXT } from './constants'
-import { KtFormErrors } from './errors'
-import { KottiForm } from './types'
+import { KtFormSubmitErrors } from './errors'
+import { KottiFormSubmit } from './types'
 
-export default defineComponent({
+export default defineComponent<KottiFormSubmit.PropsInternal>({
 	name: 'KtFormSubmit',
 	props: {
 		label: { default: 'Submit', type: String },
@@ -63,7 +64,8 @@ export default defineComponent({
 			null,
 		)
 
-		if (context === null) throw new KtFormErrors.InvalidSubmitOutsideContext()
+		if (context === null)
+			throw new KtFormSubmitErrors.InvalidSubmitOutsideContext()
 
 		const { isLoading, isValid, validationSummary } = context
 		const errors = computed(() => validationSummary.value.errors)
@@ -85,6 +87,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+/* FIXME: why isn’t this scoped? */
+
 .kt-form-submit {
 	&__button {
 		display: flex;

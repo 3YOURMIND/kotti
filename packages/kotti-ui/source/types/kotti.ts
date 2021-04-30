@@ -22,14 +22,10 @@ export {
 	KottiFieldMultiSelect as FieldMultiSelect,
 } from '../kotti-field-select/types'
 export { KottiFilters as Filters } from '../kotti-filters/types'
-export {
-	KottiForm as Form,
-	KottiFormSubmit as FormSubmit,
-} from '../kotti-form/types'
-export {
-	KottiFormControllerObject as FormControllerObject,
-	KottiFormControllerList as FormControllerList,
-} from '../kotti-form/controllers/types'
+export { KottiForm as Form } from '../kotti-form/types'
+export { KottiFormControllerList as FormControllerList } from '../kotti-form-controller-list/types'
+export { KottiFormControllerObject as FormControllerObject } from '../kotti-form-controller-object/types'
+export { KottiFormSubmit as FormSubmit } from '../kotti-form-submit/types'
 export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiRow as Row } from '../kotti-row/types'

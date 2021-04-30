@@ -57,13 +57,14 @@ import { KtFieldToggle, KtFieldToggleGroup } from './kotti-field-toggle'
 export * from './kotti-field-toggle'
 import { KtFilters } from './kotti-filters'
 export * from './kotti-filters'
-import {
-	KtForm,
-	KtFormControllerList,
-	KtFormControllerObject,
-	KtFormSubmit,
-} from './kotti-form'
+import { KtForm } from './kotti-form'
 export * from './kotti-form'
+import { KtFormControllerList } from './kotti-form-controller-list'
+export * from './kotti-form-controller-list'
+import { KtFormControllerObject } from './kotti-form-controller-object'
+export * from './kotti-form-controller-object'
+import { KtFormSubmit } from './kotti-form-submit'
+export * from './kotti-form-submit'
 import { KtHeading } from './kotti-heading'
 export * from './kotti-heading'
 import { KtInlineEdit } from './kotti-inline-edit'

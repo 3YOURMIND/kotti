@@ -5,7 +5,7 @@
 			name="header"
 			:values="cloneDeep(valuesList)"
 		/>
-		<KtFormControllerListItem
+		<FormControllerListItem
 			v-for="(values, index) in valuesList"
 			:key="index"
 			:context="context"
@@ -23,7 +23,7 @@
 				:setValues="(newValue) => setValuesIndex(index, newValue)"
 				:values="cloneDeep(values)"
 			/>
-		</KtFormControllerListItem>
+		</FormControllerListItem>
 		<slot
 			v-bind="slotFunctions"
 			name="footer"
@@ -36,15 +36,15 @@
 import { defineComponent, inject, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { KT_FORM_CONTEXT } from '../constants'
-import { KottiForm } from '../types'
+import { KT_FORM_CONTEXT } from '../kotti-form/constants'
+import { KottiForm } from '../kotti-form/types'
 
-import KtFormControllerListItem from './KtFormControllerListItem.vue'
+import FormControllerListItem from './components/FormControllerListItem.vue'
 import { KottiFormControllerList } from './types'
 
 export default defineComponent({
 	name: 'KtFormControllerList',
-	components: { KtFormControllerListItem },
+	components: { FormControllerListItem },
 	props: {
 		formKey: { required: true, type: String },
 	},

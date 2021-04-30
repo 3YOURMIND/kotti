@@ -1,18 +1,11 @@
-import { KottiField } from '../../kotti-field/types'
-import { KottiForm } from '../types'
+import { KottiField } from '../kotti-field/types'
+import { KottiForm } from '../kotti-form/types'
 
 export namespace KottiFormControllerList {
 	export type Props = {
 		formKey: string
 	}
 }
-
-export namespace KottiFormControllerObject {
-	export type Props = {
-		formKey: string
-	}
-}
-
 export namespace KottiFormControllerListItem {
 	export type Props = {
 		context: KottiForm.Context
