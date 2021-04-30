@@ -12,5 +12,7 @@ export const KtAvatar = attachMeta(makeInstallable(KtAvatarVue), {
 			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A66',
 	},
 	slots: {},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Avatar',
+	},
 })

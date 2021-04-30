@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo v-bind="{ component }" />
+<ComponentInfo :component="KtAvatar" />
 
 Avatar is a round object to help identify the user information.
 
@@ -7,58 +7,59 @@ Avatar is a round object to help identify the user information.
 
 <div class="element-example">
 	<KtAvatar
+		class="mr-16px"
+		isHoverable
 		name="Jony O'Five"
-		hoverable
 		src="https://picsum.photos/200/100"
-		showTooltip
-		class="mr-16px"
 	/>
 	<KtAvatar
-		name="Jony O'Five"
-		hoverable
-		:selected="true"
 		class="mr-16px"
+		isHoverable
+		name="Jony O'Five"
 	/>
 	<KtAvatar
-		name="Jony O'Five"
-		small
 		class="mr-16px"
+		isHoverable
 	/>
 </div>
 
 Avatar has `name` and image `src`. If no image is given,
 or image error occurs avatar will use a placeholder avatar.
 
-Set `small` to make the avatar smaller.
+Set `:size="Kotti.Avatar.Size.SMALL"` to make the avatar smaller.
 
 ```html
 <KtAvatar
+	class="mr-16px"
+	isHoverable
 	name="Jony O'Five"
-	hoverable
 	src="https://picsum.photos/200/100"
-	showTooltip
 />
 <KtAvatar
+	class="mr-16px"
+	isHoverable
 	name="Jony O'Five"
-	src="https://picsum.photos/200"
-	selected
 />
 <KtAvatar
-	name="Jony O'Five"
-	small
-	src="https://picsum.photos/200"
+	class="mr-16px"
+	isHoverable
 />
 ```
 
-## Grouped
+<ComponentInfo :component="KtAvatarGroup" />
 
 <div class="element-example">
 	<KtAvatarGroup
+		:count="3"
+		isHoverable
 		:items="avatarData"
-		:showItems="3"
-		showTooltip
+	/>
+	<br/>
+	<KtAvatarGroup
+		:count="3"
+		isHoverable
 		isStack
-		hoverable
+		:items="avatarData"
 	/>
 </div>
 
@@ -84,43 +85,69 @@ const avatarData = [
 
 
 Avatar group can be stacked by setting `isStack`.
-You can control how many avatar items are displayed with `showItems`.
+You can control how many avatar items are displayed with `count`.
 
 ```html
 <KtAvatarGroup
-	:items="avatarData"
-	:showItems="3"
-	hoverable
+	:count="3"
+	isHoverable
 	isStack
-	showTooltip
+	:items="avatarData"
 />
 ```
 
-## Usage
+## `isStack`
 
-### Avatar Attributes
+<div class="element-example">
+	<KtAvatarGroup
+		:count="3"
+		isHoverable
+		isStack
+		:items="avatarData"
+	/>
+</div>
 
-| Attribute     | Description                 | Type      | Accepted values | Default |
-|:--------------|:----------------------------|:----------|:----------------|:--------|
-| `hoverable`   | add hover effects to avatar | `Boolean` | —               | `false` |
-| `name`        | avatar name                 | `String`  | —               | —       |
-| `selected`    | avatar selecte status       | `Boolean` | —               | `false` |
-| `showTooltip` | show avatar name in tooltip | `Boolean` | —               | `false` |
-| `small`       | set avatar to small size    | `Boolean` | —               | `false` |
-| `src`         | avatar image                | `String`  | —               | —       |
+## Size
 
-### Avatar Group Attributes
+### Small
 
-| Attribute     | Description                                       | Type      | Accepted values | Default |
-|:--------------|:--------------------------------------------------|:----------|:----------------|:--------|
-| `isStack`     | stack avatars                                     | `Boolean` | —               | `false` |
-| `items`       | avatar data array, each item has avatar attribute | `Array`   | —               | —       |
-| `showItems`   | number of items to show                           | `Number`  | —               | `2`     |
-| `showTooltip` | show avatar name in tooltip                       | `Boolean` | —               | `false` |
+<div class="element-example">
+	<KtAvatarGroup
+		:count="3"
+		isHoverable
+		isStack
+		:items="avatarData"
+		:size="Kotti.Avatar.Size.SMALL"
+	/>
+</div>
+
+### Medium
+
+<div class="element-example">
+	<KtAvatarGroup
+		:count="3"
+		isHoverable
+		isStack
+		:items="avatarData"
+		:size="Kotti.Avatar.Size.MEDIUM"
+	/>
+</div>
+
+### Large
+
+<div class="element-example">
+	<KtAvatarGroup
+		:count="3"
+		isHoverable
+		isStack
+		:items="avatarData"
+		:size="Kotti.Avatar.Size.LARGE"
+	/>
+</div>
 </template>
 
 <script lang="ts">
-import { KtAvatar } from '@3yourmind/kotti-ui'
+import { Kotti, KtAvatar, KtAvatarGroup } from '@3yourmind/kotti-ui'
 import { defineComponent } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -133,13 +160,15 @@ export default defineComponent({
 	setup() {
 		return {
 			avatarData: [
-				{ name: 'Beoncye', src: 'https://picsum.photos/200' },
+				{ name: 'Beyoncé', src: 'https://picsum.photos/200' },
 				{ name: 'Justin', src: 'https://picsum.photos/100' },
-				{ name: 'Simens', src: 'https://picsum.photos/130' },
-				{ name: 'Simens', src: 'https://picsum.photos/140' },
-				{ name: 'Simens', src: 'https://picsum.photos/150' },
+				{ name: 'Britney', src: 'https://picsum.photos/130' },
+				{ name: 'Shakira', src: 'https://picsum.photos/140' },
+				{ name: 'Rihanna', src: 'https://picsum.photos/150' },
 			],
-			component: KtAvatar,
+			Kotti,
+			KtAvatar,
+			KtAvatarGroup,
 		}
 	},
 })
