@@ -66,7 +66,6 @@ export default defineComponent<KottiBanner.PropsInternal>({
 
 	&--is-gray {
 		background: var(--gray-20);
-		border: 0;
 	}
 
 	&__collapse {
