@@ -2,10 +2,10 @@
 	"dependencies": {
 		"@3yourmind/kotti-ui": "3.0.0-beta.0",
 		"@3yourmind/yoco": "*",
-		"@octokit/rest": "^18.0.6",
-		"@octokit/types": "^5.5.0",
+		"@octokit/rest": "^18.5.3",
+		"@octokit/types": "^6.14.1",
 		"@vue/composition-api": "0.6.1",
-		"core-js": "^3.6.5",
+		"core-js": "^3.11.1",
 		"dayjs": "^1.9.1",
 		"lodash": "^4.17.19",
 		"marked": "^1.2.0",
@@ -26,7 +26,7 @@
 		"@types/lodash": "^4.14.157",
 		"@types/marked": "^1.1.0",
 		"@types/natural-sort": "^0.0.20",
-		"case-sensitive-paths-webpack-plugin": "^2.3.0",
+		"case-sensitive-paths-webpack-plugin": "^2.4.0",
 		"css-vars-ponyfill": "^2.2.0",
 		"nuxt": "^2.13.3"
 	},

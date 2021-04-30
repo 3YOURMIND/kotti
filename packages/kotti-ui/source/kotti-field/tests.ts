@@ -73,6 +73,7 @@ describe('useField', () => {
 			propsData: { isDisabled: true },
 		})
 
+		// @ts-expect-error field isn’t defined on wrapper.vm
 		expect(() => wrapper.vm.field.setValue(null)).toThrowError(
 			KtFieldErrors.DisabledSetValueCalled,
 		)
@@ -80,6 +81,7 @@ describe('useField', () => {
 		wrapper.setProps({ isDisabled: false })
 		await wrapper.vm.$nextTick()
 
+		// @ts-expect-error field isn’t defined on wrapper.vm
 		expect(() => wrapper.vm.field.setValue(null)).not.toThrowError()
 	})
 
@@ -94,7 +96,9 @@ describe('useField', () => {
 			},
 		})
 
+		// @ts-expect-error field isn’t defined on wrapper.vm
 		expect(wrapper.vm.field.currentValue).toEqual(VALUE_REFERENCE)
+		// @ts-expect-error field isn’t defined on wrapper.vm
 		expect(wrapper.vm.field.currentValue).not.toBe(VALUE_REFERENCE)
 	})
 
@@ -102,44 +106,52 @@ describe('useField', () => {
 		it('helpText is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.helpText).toBe(null)
 
 			wrapper.setProps({ helpText: 'something something' })
 			await wrapper.vm.$nextTick()
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.helpText).toBe('something something')
 		})
 
 		it('isDisabled is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.isDisabled).toBe(false)
 
 			wrapper.setProps({ isDisabled: true })
 			await wrapper.vm.$nextTick()
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.isDisabled).toBe(true)
 		})
 
 		it('isOptional is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.isOptional).toBe(false)
 
 			wrapper.setProps({ isOptional: true })
 			await wrapper.vm.$nextTick()
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.isOptional).toBe(true)
 		})
 
 		it('label is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.label).toBe(null)
 
 			wrapper.setProps({ label: 'something something' })
 			await wrapper.vm.$nextTick()
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.label).toBe('something something')
 		})
 	})
@@ -148,7 +160,9 @@ describe('useField', () => {
 		it('should emit change when calling setValue on a field outside of a context', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			wrapper.vm.field.setValue('something else')
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			wrapper.vm.field.setValue(null)
 
 			await wrapper.vm.$nextTick()
@@ -228,6 +242,7 @@ describe('useField', () => {
 				},
 			})
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.validation).toEqual({
 				type: 'success',
 				text: 'Testing',
@@ -239,6 +254,7 @@ describe('useField', () => {
 
 			await wrapper.vm.$nextTick()
 
+			// @ts-expect-error field isn’t defined on wrapper.vm
 			expect(wrapper.vm.field.validation).toEqual({
 				type: 'warning',
 				text: 'Testing',

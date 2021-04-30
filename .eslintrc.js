@@ -20,7 +20,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:prettier/recommended',
 		'@vue/typescript',
-		'prettier/vue',
+		'prettier',
 	],
 	rules: {
 		'no-magic-numbers': [
