@@ -13,7 +13,7 @@ export const KtBanner = attachMeta(makeInstallable(KtBannerVue), {
 	},
 	slots: {
 		expand: {
-			description: 'Content when Banner is expended',
+			description: 'Content when Banner is expanded',
 			scope: null,
 		},
 	},
