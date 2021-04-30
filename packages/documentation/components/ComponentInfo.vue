@@ -130,6 +130,7 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent, ref } from '@vue/composition-api'
+import { kebabCase } from 'lodash'
 
 import ComponentInfoSlots from './component-info/Slots.vue'
 
@@ -141,7 +142,11 @@ type VuePropType =
 	| StringConstructor
 
 export default defineComponent<{
-	component: { meta: Kotti.Meta; name: string }
+	component: {
+		meta: Kotti.Meta
+		name: string
+		props?: Record<string, unknown>
+	}
 }>({
 	props: {
 		component: { required: true, type: Object },
@@ -162,11 +167,15 @@ export default defineComponent<{
 				}> = []
 
 				const {
-					addedVersion,
-					deprecated,
-					designs,
-					typeScript,
-				} = props.component.meta
+					meta: { addedVersion, deprecated, designs, typeScript },
+					name,
+				} = props.component
+
+				const componentSourceFolder = props.component.props
+					? `https://github.com/3YOURMIND/kotti/blob/master/packages/kotti-ui/source/${kebabCase(
+							name.replace(/^Kt/, 'Kotti'),
+					  )}`
+					: null
 
 				if (deprecated !== null)
 					result.push({
@@ -212,6 +221,9 @@ export default defineComponent<{
 						backgroundColor: 'var(--primary-20)',
 						color: 'var(--primary-70)',
 						left: 'TS',
+						link: componentSourceFolder
+							? `${componentSourceFolder}/types.ts`
+							: undefined,
 						right: typeScript.namespace,
 					})
 
@@ -228,6 +240,15 @@ export default defineComponent<{
 								right: `v${addedVersion}`,
 						  }),
 				})
+
+				if (componentSourceFolder)
+					result.push({
+						backgroundColor: 'var(--purple-20)',
+						color: 'var(--purple-70)',
+						left: 'Source',
+						link: `${componentSourceFolder}/${name}.vue`,
+						right: `${name}.vue`,
+					})
 
 				return result
 			}),
