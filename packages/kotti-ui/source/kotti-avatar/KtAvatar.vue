@@ -10,7 +10,6 @@
 		<div v-else ref="tooltipTriggerRef" class="kt-avatar__fallback">
 			<i class="yoco" v-text="Yoco.Icon.USER_SOLID" />
 		</div>
-		<div ref="tooltipContentRef" v-text="name" />
 	</div>
 </template>
 
@@ -24,7 +23,6 @@ import { Kotti } from '../types'
 const ARROW_HEIGHT = 7
 
 const useTooltip = (name: Ref<string | null>) => {
-	const tooltipContentRef = ref<Element | null>(null)
 	const tooltipTriggerRef = ref<Element | null>(null)
 
 	useTippy(
@@ -32,7 +30,7 @@ const useTooltip = (name: Ref<string | null>) => {
 		computed(() => ({
 			appendTo: () => document.body,
 			arrow: roundArrow,
-			content: tooltipContentRef.value,
+			content: name.value,
 			offset: [0, ARROW_HEIGHT],
 			theme: 'light-border',
 			...(name.value === null ? { trigger: 'manual' } : {}),
@@ -40,7 +38,6 @@ const useTooltip = (name: Ref<string | null>) => {
 	)
 
 	return {
-		tooltipContentRef,
 		tooltipTriggerRef,
 	}
 }
