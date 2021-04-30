@@ -1,22 +1,22 @@
 <template>
-	<div class="breadcrumb">
+	<div class="kt-breadcrumb">
 		<ol>
 			<li
 				v-for="(breadcrumb, index) in breadcrumbs"
 				:key="index"
-				class="breadcrumb__text"
+				class="kt-breadcrumb__text"
 				:class="textClasses(breadcrumb)"
 			>
 				<span @click="handleClick(breadcrumb)" v-text="breadcrumb.title" />
 				<span v-if="showSeparator(index)">
 					<i
-						v-if="separator.style === 'icon'"
+						v-if="separator.style === KottiBreadcrumb.SeparatorType.ICON"
 						class="yoco"
 						v-text="separator.value"
 					/>
 					<span
-						v-if="separator.style === 'text'"
-						class="breadcrumb__text-separator"
+						v-if="separator.style === KottiBreadcrumb.SeparatorType.TEXT"
+						class="kt-breadcrumb__text-separator"
 						v-text="separator.value"
 					/>
 				</span>
@@ -25,46 +25,74 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
+import { defineComponent } from '@vue/composition-api'
+import { isBoolean, isFunction, isString } from 'lodash'
+
+import { isYocoIcon } from '../validators'
+
+import { KottiBreadcrumb } from './types'
+
+const breadcrumbValidator = (
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	value: any,
+): value is KottiBreadcrumb.Breadcrumb =>
+	value !== null &&
+	typeof value === 'object' &&
+	isBoolean(value.isCompleted) &&
+	isString(value.title) &&
+	isFunction(value.to)
+
+export default defineComponent<KottiBreadcrumb.PropsInternal>({
 	name: 'KtBreadcrumb',
 	props: {
-		breadcrumbs: { type: Array, required: true },
+		breadcrumbs: {
+			type: Array,
+			required: true,
+			validator: (value: unknown): value is Array<KottiBreadcrumb.Breadcrumb> =>
+				Array.isArray(value) && value.every(breadcrumbValidator),
+		},
 		separator: {
 			type: Object,
-			default() {
-				return {
-					style: 'icon',
-					value: 'chevron_right',
-				}
+			default: (): KottiBreadcrumb.Style => ({
+				style: KottiBreadcrumb.SeparatorType.ICON,
+				value: Yoco.Icon.CHEVRON_RIGHT,
+			}),
+			validator: (
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				value: any,
+			): value is KottiBreadcrumb.Props['separator'] =>
+				value !== null &&
+				typeof value === 'object' &&
+				((value.style === KottiBreadcrumb.SeparatorType.ICON &&
+					isYocoIcon(value.value)) ||
+					(value.style === KottiBreadcrumb.SeparatorType.TEXT &&
+						isString(value.value))),
+		},
+	},
+	setup(props, { root }) {
+		return {
+			handleClick: (item: KottiBreadcrumb.Breadcrumb) => {
+				if (!item.isCompleted) return
+				root.$router.push(item.to)
 			},
-		},
+			KottiBreadcrumb,
+			showSeparator: (index: number) => index < props.breadcrumbs.length - 1,
+			textClasses: (item: KottiBreadcrumb.Breadcrumb) => ({
+				'kt-breadcrumb__text--is-completed': item.isCompleted,
+			}),
+		}
 	},
-	methods: {
-		showSeparator(index) {
-			return index < this.breadcrumbs.length - 1
-		},
-		textClasses(item) {
-			return {
-				'breadcrumb__text--completed': item.isCompleted,
-			}
-		},
-		handleClick(item) {
-			if (!item.isCompleted || !item.to || !this.$router) return
-			this.$router.push(item.to)
-		},
-	},
-}
+})
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
 
-:root {
+.kt-breadcrumb {
 	--breadcrumb-color-active: var(--interactive-03);
-}
 
-.breadcrumb {
 	display: flex;
 	flex-wrap: wrap;
 	li {
@@ -75,7 +103,7 @@ export default {
 	&__text {
 		color: $darkgray-300;
 
-		&--completed {
+		&--is-completed {
 			font-weight: 600;
 			color: var(--breadcrumb-color-active);
 
