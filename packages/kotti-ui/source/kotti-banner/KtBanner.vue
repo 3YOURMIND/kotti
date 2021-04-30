@@ -4,7 +4,11 @@
 			<i class="yoco" v-text="icon" />
 			<div class="kt-banner__message" v-text="message" />
 			<div v-if="!expandable" @click="() => $emit('click')">
-				<KtButton v-if="actionText.length" :label="actionText" type="text" />
+				<KtButton
+					v-if="actionText && actionText.length"
+					:label="actionText"
+					type="text"
+				/>
 			</div>
 			<div v-else @click="isExpand = !isExpand">
 				<KtButton v-if="!isExpand" :label="switchOpenLabel" type="text" />
@@ -31,7 +35,7 @@ export default defineComponent<KottiBanner.PropsInternal>({
 	name: 'KtBanner',
 	components: { KtButton },
 	props: {
-		actionText: { type: String, default: '' },
+		actionText: { type: String, default: null },
 		icon: {
 			type: String,
 			default: Yoco.Icon.ANNOUNCE,
