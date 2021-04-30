@@ -27,10 +27,10 @@ export default defineComponent<Kotti.AvatarGroup.PropsInternal>({
 		KtAvatar,
 	},
 	props: {
+		count: { default: 2, type: Number },
 		isHoverable: { default: false, type: Boolean },
 		isStack: { default: false, type: Boolean },
 		items: { required: true, type: Array },
-		showItems: { default: 2, type: Number },
 		size: { default: Kotti.Avatar.Size.MEDIUM, type: String },
 	},
 	setup(props) {
@@ -45,11 +45,11 @@ export default defineComponent<Kotti.AvatarGroup.PropsInternal>({
 					props.size === Kotti.Avatar.Size.SMALL,
 				'kt-avatar-group--is-stack': props.isStack,
 			})),
-			avatarRemainders: computed(() => props.items.length - props.showItems),
+			avatarRemainders: computed(() => props.items.length - props.count),
 			visibleItems: computed(() => {
 				const reversedItems = [...props.items].reverse()
 
-				return reversedItems.filter((item, index) => index < props.showItems)
+				return reversedItems.filter((item, index) => index < props.count)
 			}),
 		}
 	},

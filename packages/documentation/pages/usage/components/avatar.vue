@@ -52,16 +52,16 @@ Set `:size="Kotti.Avatar.Size.SMALL"` to make the avatar smaller.
 
 <div class="element-example">
 	<KtAvatarGroup
+		:count="3"
 		isHoverable
 		:items="avatarData"
-		:showItems="3"
 	/>
 	<br/>
 	<KtAvatarGroup
+		:count="3"
 		isHoverable
 		isStack
 		:items="avatarData"
-		:showItems="3"
 	/>
 </div>
 
@@ -87,14 +87,14 @@ const avatarData = [
 
 
 Avatar group can be stacked by setting `isStack`.
-You can control how many avatar items are displayed with `showItems`.
+You can control how many avatar items are displayed with `count`.
 
 ```html
 <KtAvatarGroup
+	:count="3"
 	isHoverable
 	isStack
 	:items="avatarData"
-	:showItems="3"
 />
 ```
 
@@ -102,10 +102,10 @@ You can control how many avatar items are displayed with `showItems`.
 
 <div class="element-example">
 	<KtAvatarGroup
+		:count="3"
 		isHoverable
 		isStack
 		:items="avatarData"
-		:showItems="3"
 	/>
 </div>
 
@@ -115,10 +115,10 @@ You can control how many avatar items are displayed with `showItems`.
 
 <div class="element-example">
 	<KtAvatarGroup
+		:count="3"
 		isHoverable
 		isStack
 		:items="avatarData"
-		:showItems="3"
 		:size="Kotti.Avatar.Size.SMALL"
 	/>
 </div>
@@ -127,10 +127,10 @@ You can control how many avatar items are displayed with `showItems`.
 
 <div class="element-example">
 	<KtAvatarGroup
+		:count="3"
 		isHoverable
 		isStack
 		:items="avatarData"
-		:showItems="3"
 		:size="Kotti.Avatar.Size.MEDIUM"
 	/>
 </div>
@@ -139,10 +139,10 @@ You can control how many avatar items are displayed with `showItems`.
 
 <div class="element-example">
 	<KtAvatarGroup
+		:count="3"
 		isHoverable
 		isStack
 		:items="avatarData"
-		:showItems="3"
 		:size="Kotti.Avatar.Size.LARGE"
 	/>
 </div>

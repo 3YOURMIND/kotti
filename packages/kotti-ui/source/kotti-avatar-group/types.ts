@@ -6,9 +6,9 @@ export namespace KottiAvatarGroup {
 		Kotti.Avatar.PropsInternal,
 		'isHoverable' | 'size'
 	> & {
+		count: number
 		isStack: boolean
 		items: Pick<Kotti.Avatar.Props, 'isSelected' | 'name' | 'src'>[]
-		showItems: number
 	}
 
 	export type Props = SpecifyRequiredProps<PropsInternal, 'items'>
