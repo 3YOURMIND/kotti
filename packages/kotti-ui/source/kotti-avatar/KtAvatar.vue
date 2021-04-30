@@ -46,7 +46,6 @@ export default defineComponent<Kotti.Avatar.PropsInternal>({
 	name: 'KtAvatar',
 	props: {
 		isHoverable: { default: false, type: Boolean },
-		isSelected: { default: false, type: Boolean },
 		name: { default: null, type: String },
 		size: { default: Kotti.Avatar.Size.MEDIUM, type: String },
 		src: { default: null, type: String },
@@ -60,7 +59,6 @@ export default defineComponent<Kotti.Avatar.PropsInternal>({
 			avatarClasses: computed(() => ({
 				'kt-avatar': true,
 				'kt-avatar--is-hoverable': props.isHoverable,
-				'kt-avatar--is-selected': props.isSelected,
 				'kt-avatar--is-size-large': props.size === Kotti.Avatar.Size.LARGE,
 				'kt-avatar--is-size-medium': props.size === Kotti.Avatar.Size.MEDIUM,
 				'kt-avatar--is-size-small': props.size === Kotti.Avatar.Size.SMALL,
@@ -117,10 +115,6 @@ export default defineComponent<Kotti.Avatar.PropsInternal>({
 	&--is-hoverable:hover {
 		cursor: pointer;
 		border: 0.1rem solid var(--avatar-color);
-	}
-
-	&--is-selected {
-		background: var(--interactive-01);
 	}
 
 	&--is-size-small {

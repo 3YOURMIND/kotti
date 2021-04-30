@@ -15,13 +15,11 @@ Avatar is a round object to help identify the user information.
 	<KtAvatar
 		class="mr-16px"
 		isHoverable
-		isSelected
 		name="Jony O'Five"
 	/>
 	<KtAvatar
 		class="mr-16px"
 		isHoverable
-		isSelected
 	/>
 </div>
 
@@ -32,19 +30,19 @@ Set `:size="Kotti.Avatar.Size.SMALL"` to make the avatar smaller.
 
 ```html
 <KtAvatar
+	class="mr-16px"
 	isHoverable
 	name="Jony O'Five"
 	src="https://picsum.photos/200/100"
 />
 <KtAvatar
-	isSelected
+	class="mr-16px"
+	isHoverable
 	name="Jony O'Five"
-	src="https://picsum.photos/200"
 />
 <KtAvatar
-	name="Jony O'Five"
-	:size="Kotti.Avatar.Size.SMALL"
-	src="https://picsum.photos/200"
+	class="mr-16px"
+	isHoverable
 />
 ```
 

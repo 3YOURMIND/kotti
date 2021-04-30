@@ -9,7 +9,6 @@ export namespace KottiAvatar {
 
 	export type PropsInternal = {
 		isHoverable: boolean
-		isSelected: boolean
 		name: string | null
 		size: Size
 		src: string | null

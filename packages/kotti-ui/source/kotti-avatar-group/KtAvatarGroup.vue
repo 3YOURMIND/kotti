@@ -7,7 +7,6 @@
 			v-for="(item, index) in visibleItems"
 			:key="index"
 			:isHoverable="isHoverable"
-			:isSelected="item.isSelected"
 			:name="item.name"
 			:size="size"
 			:src="item.src"

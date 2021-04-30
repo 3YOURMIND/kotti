@@ -8,7 +8,7 @@ export namespace KottiAvatarGroup {
 	> & {
 		count: number
 		isStack: boolean
-		items: Pick<Kotti.Avatar.Props, 'isSelected' | 'name' | 'src'>[]
+		items: Pick<Kotti.Avatar.Props, 'name' | 'src'>[]
 	}
 
 	export type Props = SpecifyRequiredProps<PropsInternal, 'items'>
