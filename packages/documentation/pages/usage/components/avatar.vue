@@ -160,11 +160,11 @@ export default defineComponent({
 	setup() {
 		return {
 			avatarData: [
-				{ name: 'Beoncye', src: 'https://picsum.photos/200' },
+				{ name: 'Beyoncé', src: 'https://picsum.photos/200' },
 				{ name: 'Justin', src: 'https://picsum.photos/100' },
-				{ name: 'Simens', src: 'https://picsum.photos/130' },
-				{ name: 'Simens', src: 'https://picsum.photos/140' },
-				{ name: 'Simens', src: 'https://picsum.photos/150' },
+				{ name: 'Britney', src: 'https://picsum.photos/130' },
+				{ name: 'Shakira', src: 'https://picsum.photos/140' },
+				{ name: 'Rihanna', src: 'https://picsum.photos/150' },
 			],
 			Kotti,
 			KtAvatar,
