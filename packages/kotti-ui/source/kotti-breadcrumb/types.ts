@@ -10,8 +10,8 @@ export namespace KottiBreadcrumb {
 
 	export type Breadcrumb = {
 		isCompleted: boolean
+		onClick: () => void
 		title: string
-		to: string
 	}
 
 	export type Style =

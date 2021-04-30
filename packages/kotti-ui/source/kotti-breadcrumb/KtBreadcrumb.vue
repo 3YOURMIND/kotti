@@ -42,7 +42,7 @@ const breadcrumbValidator = (
 	typeof value === 'object' &&
 	isBoolean(value.isCompleted) &&
 	isString(value.title) &&
-	isFunction(value.to)
+	isFunction(value.onClick)
 
 export default defineComponent<KottiBreadcrumb.PropsInternal>({
 	name: 'KtBreadcrumb',
@@ -71,11 +71,11 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 						isString(value.value))),
 		},
 	},
-	setup(props, { root }) {
+	setup(props) {
 		return {
 			handleClick: (item: KottiBreadcrumb.Breadcrumb) => {
 				if (!item.isCompleted) return
-				root.$router.push(item.to)
+				item.onClick()
 			},
 			KottiBreadcrumb,
 			showSeparator: (index: number) => index < props.breadcrumbs.length - 1,
