@@ -13,14 +13,6 @@
 		font-size: $unit-4;
 		line-height: $unit-4;
 	}
-
-	&.tooltip::after {
-		width: inherit;
-		font-size: inherit;
-		line-height: 1.2em;
-		text-transform: initial;
-		white-space: normal;
-	}
 }
 
 .form-label--compact {

@@ -1,7 +1,7 @@
 <template lang="md">
 <ComponentInfo v-bind="{ component }" />
 
-Use popovers to provide extra information or actions. Compared to `tooltip`, `popovers` can carry more information.
+Use popovers to provide extra information or actions. Popovers can carry a lot of information.
 It uses `popper.js` library for position and `placement` attribute can be anything supported by the library.
 You can also directly use the `popper.js` constructor by passing an `options` props. refer to the [popper.js
 documentation](https://popper.js.org/docs/v2/constructors/) for more informations.
