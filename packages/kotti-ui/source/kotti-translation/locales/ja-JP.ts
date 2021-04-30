@@ -1,6 +1,10 @@
 import { KottiTranslation } from '../types'
 
 export const jaJP: KottiTranslation.Messages = {
+	KtBanner: {
+		expandLabel: '表示',
+		expandCloseLabel: '閉じる',
+	},
 	KtFields: {
 		optionalLabel: 'TODO',
 		requiredMessage: 'TODO',

@@ -7,8 +7,8 @@
 				<KtButton v-if="actionText.length" :label="actionText" type="text" />
 			</div>
 			<div v-else @click="isExpand = !isExpand">
-				<KtButton v-if="!isExpand" :label="switchText" type="text" />
-				<KtButton v-else :label="switchCloseText" type="text" />
+				<KtButton v-if="!isExpand" :label="switchOpenLabel" type="text" />
+				<KtButton v-else :label="switchCloseLabel" type="text" />
 			</div>
 		</div>
 		<div v-if="isExpand" class="kt-banner__expand">
@@ -22,6 +22,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtButton } from '../kotti-button'
+import { useTranslationNamespace } from '../kotti-translation/hooks'
 import { isYocoIcon } from '../validators'
 
 import { KottiBanner } from './types'
@@ -38,10 +39,12 @@ export default defineComponent<KottiBanner.PropsInternal>({
 		},
 		isGray: { type: Boolean, default: false },
 		message: { type: String, required: true },
-		switchCloseText: { type: String, default: 'Close' },
-		switchText: { type: String, default: 'View' },
+		expandCloseLabel: { type: String, default: null },
+		expandLabel: { type: String, default: null },
 	},
 	setup(props, { slots }) {
+		const translations = useTranslationNamespace('KtBanner')
+
 		return {
 			bannerClass: computed(() => ({
 				'kt-banner': true,
@@ -49,6 +52,12 @@ export default defineComponent<KottiBanner.PropsInternal>({
 			})),
 			expandable: computed(() => Boolean(slots.expand)),
 			isExpand: ref(false),
+			switchCloseLabel: computed(
+				() => props.expandCloseLabel ?? translations.value.expandCloseLabel,
+			),
+			switchOpenLabel: computed(
+				() => props.expandLabel ?? translations.value.expandLabel,
+			),
 			Yoco,
 		}
 	},

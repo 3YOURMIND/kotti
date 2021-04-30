@@ -37,10 +37,7 @@ interface.
 	<KtBanner
 		message="You material is not available to users"
 		icon="cloud"
-		actionText="Publish"
-		expandable="true"
-		switchText="Open"
-		switchCloseText="None">
+	>
 		<div slot="expand">
 		<h2>Order #100002</h2>
 		<h3>Order information</h3>
@@ -54,14 +51,12 @@ interface.
 <KtBanner
 	message="You material is not available to users"
 	icon="cloud"
-	actionText="Publish"
-	switchText="Open"
-	switchCloseText="None">
+>
 	<div slot="expand">
-	<h2>Order #100002</h2>
-	<h3>Order information</h3>
-	....
-	....
+		<h2>Order #100002</h2>
+		<h3>Order information</h3>
+		....
+		....
 	</div>
 </KtBanner>
 ```
@@ -101,8 +96,8 @@ this style is useful when you want add contrast to the page.
 | `icon`            | icon name from `yoco`                          | `String`  | icon name in `yoco` | `"announce"` |
 | `isGray`          | gray background for high contrast              | `Boolean` | —                   | `false`      |
 | `actionText`      | text shows when banner is not expandable       | `String`  | —                   | —            |
-| `switchText`      | text shows when expandable banner is collapsed | `String`  | —                   | `View`       |
-| `switchCloseText` | text shows when expandable banner is expand    | `String`  | —                   | `Close`      |
+| `expandLabel`      | text shows when expandable banner is collapsed | `String`  | —                   | `View`       |
+| `expandCloseLabel` | text shows when expandable banner is expand    | `String`  | —                   | `Close`      |
 
 </template>
 
