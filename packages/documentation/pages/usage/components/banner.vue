@@ -91,26 +91,6 @@ this style is useful when you want add contrast to the page.
 />
 ```
 
-### Glyph
-
-If you don't specify the icon text, you need to use the `glyph` slot.
-
-<div class="element-example">
-	<KtBanner message="Your material is not available to users" actionText="Publish">
-		<div slot="glyph">
-			<img src="https://picsum.photos/24/24"/>
-		</div>
-	</KtBanner>
-</div>
-
-```html
-<KtBanner message="Your material is not available to users" actionText="Publish">
-	<div slot="glyph">
-		<img src="https://picsum.photos/24/24"/>
-	</div>
-</KtBanner>
-```
-
 ## Usage
 
 ### Attributes

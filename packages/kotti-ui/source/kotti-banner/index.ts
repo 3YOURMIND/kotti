@@ -16,10 +16,6 @@ export const KtBanner = attachMeta(makeInstallable(KtBannerVue), {
 			description: 'Content when Banner is expended',
 			scope: null,
 		},
-		glyph: {
-			description: 'Use if you want to showw something else than a yoco icon',
-			scope: null,
-		},
 	},
 	typeScript: { namespace: 'Kotti.Banner' },
 })

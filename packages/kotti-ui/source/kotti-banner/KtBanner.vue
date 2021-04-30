@@ -1,11 +1,7 @@
 <template>
 	<div :class="bannerClass">
 		<div class="kt-banner__collapse">
-			<div class="kt-banner__glyph">
-				<slot name="glyph">
-					<i class="yoco" v-text="icon" />
-				</slot>
-			</div>
+			<i class="yoco" v-text="icon" />
 			<div class="kt-banner__message" v-text="message" />
 			<div v-if="!expandable" @click="() => $emit('click')">
 				<KtButton v-if="actionText.length" :label="actionText" type="text" />
@@ -80,19 +76,8 @@ export default defineComponent<KottiBanner.PropsInternal>({
 		width: 100%;
 	}
 
-	&__glyph {
-		width: 1.6rem;
-		line-height: 1;
-		text-align: center;
-
-		.yoco {
-			font-size: 1rem;
-		}
-
-		img {
-			width: 100%;
-			height: 100%;
-		}
+	.yoco {
+		font-size: 1.2rem;
 	}
 
 	&__message {
