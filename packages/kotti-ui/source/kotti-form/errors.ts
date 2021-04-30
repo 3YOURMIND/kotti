@@ -32,16 +32,7 @@ class ValidationError extends CustomError {
 	}
 }
 
-class InvalidSubmitOutsideContext extends CustomError {
-	public constructor() {
-		const messages = [
-			'Encountered a “<KtFormSubmit />” outside of a “<KtForm/>”',
-		]
-		super(`KtFormSubmit: ${messages.join('\n')}`)
-	}
-}
 export const KtFormErrors = {
-	InvalidSubmitOutsideContext,
 	UnexpectedValidationState,
 	ValidationError,
 }

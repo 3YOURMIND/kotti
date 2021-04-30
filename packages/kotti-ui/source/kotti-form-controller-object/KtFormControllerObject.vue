@@ -16,8 +16,8 @@ import {
 	provide,
 } from '@vue/composition-api'
 
-import { KT_FORM_CONTEXT } from '../constants'
-import { KottiForm } from '../types'
+import { KT_FORM_CONTEXT } from '../kotti-form/constants'
+import { KottiForm } from '../kotti-form/types'
 
 import { KottiFormControllerObject } from './types'
 

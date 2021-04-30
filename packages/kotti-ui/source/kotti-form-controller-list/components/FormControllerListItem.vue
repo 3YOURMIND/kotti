@@ -5,13 +5,12 @@
 <script lang="ts">
 import { defineComponent, provide, computed } from '@vue/composition-api'
 
-import { KT_FORM_CONTEXT } from '../constants'
-import { KottiForm } from '../types'
-
-import { KottiFormControllerListItem } from './types'
+import { KT_FORM_CONTEXT } from '../../kotti-form/constants'
+import { KottiForm } from '../../kotti-form/types'
+import { KottiFormControllerListItem } from '../types'
 
 export default defineComponent({
-	name: 'KtFormControllerListItem',
+	name: 'FormControllerListItem',
 	props: {
 		context: { required: true, type: Object },
 		formKey: { required: true, type: String },

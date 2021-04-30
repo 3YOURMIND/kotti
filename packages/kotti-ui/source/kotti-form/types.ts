@@ -70,11 +70,3 @@ export namespace KottiForm {
 		}
 	}
 }
-
-export namespace KottiFormSubmit {
-	export type Translations = {
-		errorsSectionTitle: string
-		title: string
-		warningsSectionTitle: string
-	}
-}

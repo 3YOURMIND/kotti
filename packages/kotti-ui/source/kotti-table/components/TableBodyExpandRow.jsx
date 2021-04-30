@@ -1,4 +1,4 @@
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
+import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
 
 export const TableBodyExpandRow = {
 	name: 'TableBodyExpandRow',

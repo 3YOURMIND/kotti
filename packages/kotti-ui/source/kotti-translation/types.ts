@@ -2,8 +2,8 @@ import { Ref } from '@vue/composition-api'
 
 import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
 import { KottiField } from '../kotti-field/types'
-import { KottiFilters } from '../kotti-filter/types'
-import { KottiFormSubmit } from '../kotti-form/types'
+import { KottiFilters } from '../kotti-filters/types'
+import { KottiFormSubmit } from '../kotti-form-submit/types'
 import { KottiNavbar } from '../kotti-navbar/types'
 
 export type DeepPartial<T> = T extends object

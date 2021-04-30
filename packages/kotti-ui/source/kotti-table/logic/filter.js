@@ -1,4 +1,5 @@
 import { setColumnsArray } from './column'
+
 function getFilteredColumnIndex(state, column) {
 	return state.filteredColumns.findIndex(({ prop }) => prop === column.prop)
 }

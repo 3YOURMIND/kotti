@@ -1,4 +1,5 @@
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from './constants'
+import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+
 import { TableRowCell } from './TableRowCell'
 
 export const TableRow = {
