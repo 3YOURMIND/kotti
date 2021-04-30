@@ -1,6 +1,10 @@
 <template>
 	<div class="comment-reply">
-		<KtAvatar class="comment-reply__avatar" small :src="userAvatar" />
+		<KtAvatar
+			class="comment-reply__avatar"
+			:size="Kotti.Avatar.Size.SMALL"
+			:src="userAvatar"
+		/>
 		<div class="comment-reply__wrapper">
 			<div class="comment-reply__info">
 				<div class="comment-reply__name" v-text="userName" />
@@ -45,6 +49,7 @@
 </template>
 
 <script>
+import { Kotti } from '@3yourmind/kotti-ui'
 import escape from 'lodash/escape'
 
 import { KtAvatar } from '../../kotti-avatar'
@@ -72,8 +77,9 @@ export default {
 	},
 	data() {
 		return {
-			isInlineEdit: false,
 			inlineMessageValue: '',
+			isInlineEdit: false,
+			Kotti,
 		}
 	},
 	computed: {

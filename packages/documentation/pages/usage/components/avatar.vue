@@ -1,5 +1,5 @@
 <template lang="md">
-<ComponentInfo v-bind="{ component }" />
+<ComponentInfo :component="KtAvatar" />
 
 Avatar is a round object to help identify the user information.
 
@@ -7,58 +7,61 @@ Avatar is a round object to help identify the user information.
 
 <div class="element-example">
 	<KtAvatar
+		class="mr-16px"
+		isHoverable
 		name="Jony O'Five"
-		hoverable
 		src="https://picsum.photos/200/100"
-		showTooltip
-		class="mr-16px"
 	/>
 	<KtAvatar
-		name="Jony O'Five"
-		hoverable
-		:selected="true"
 		class="mr-16px"
+		isHoverable
+		isSelected
+		name="Jony O'Five"
 	/>
 	<KtAvatar
-		name="Jony O'Five"
-		small
 		class="mr-16px"
+		isHoverable
+		isSelected
 	/>
 </div>
 
 Avatar has `name` and image `src`. If no image is given,
 or image error occurs avatar will use a placeholder avatar.
 
-Set `small` to make the avatar smaller.
+Set `:size="Kotti.Avatar.Size.SMALL"` to make the avatar smaller.
 
 ```html
 <KtAvatar
+	isHoverable
 	name="Jony O'Five"
-	hoverable
 	src="https://picsum.photos/200/100"
-	showTooltip
 />
 <KtAvatar
+	isSelected
 	name="Jony O'Five"
 	src="https://picsum.photos/200"
-	selected
 />
 <KtAvatar
 	name="Jony O'Five"
-	small
+	:size="Kotti.Avatar.Size.SMALL"
 	src="https://picsum.photos/200"
 />
 ```
 
-## Grouped
+<ComponentInfo :component="KtAvatarGroup" />
 
 <div class="element-example">
 	<KtAvatarGroup
+		isHoverable
 		:items="avatarData"
 		:showItems="3"
-		showTooltip
+	/>
+	<br/>
+	<KtAvatarGroup
+		isHoverable
 		isStack
-		hoverable
+		:items="avatarData"
+		:showItems="3"
 	/>
 </div>
 
@@ -88,39 +91,65 @@ You can control how many avatar items are displayed with `showItems`.
 
 ```html
 <KtAvatarGroup
+	isHoverable
+	isStack
 	:items="avatarData"
 	:showItems="3"
-	hoverable
-	isStack
-	showTooltip
 />
 ```
 
-## Usage
+## `isStack`
 
-### Avatar Attributes
+<div class="element-example">
+	<KtAvatarGroup
+		isHoverable
+		isStack
+		:items="avatarData"
+		:showItems="3"
+	/>
+</div>
 
-| Attribute     | Description                 | Type      | Accepted values | Default |
-|:--------------|:----------------------------|:----------|:----------------|:--------|
-| `hoverable`   | add hover effects to avatar | `Boolean` | —               | `false` |
-| `name`        | avatar name                 | `String`  | —               | —       |
-| `selected`    | avatar selecte status       | `Boolean` | —               | `false` |
-| `showTooltip` | show avatar name in tooltip | `Boolean` | —               | `false` |
-| `small`       | set avatar to small size    | `Boolean` | —               | `false` |
-| `src`         | avatar image                | `String`  | —               | —       |
+## Size
 
-### Avatar Group Attributes
+### Small
 
-| Attribute     | Description                                       | Type      | Accepted values | Default |
-|:--------------|:--------------------------------------------------|:----------|:----------------|:--------|
-| `isStack`     | stack avatars                                     | `Boolean` | —               | `false` |
-| `items`       | avatar data array, each item has avatar attribute | `Array`   | —               | —       |
-| `showItems`   | number of items to show                           | `Number`  | —               | `2`     |
-| `showTooltip` | show avatar name in tooltip                       | `Boolean` | —               | `false` |
+<div class="element-example">
+	<KtAvatarGroup
+		isHoverable
+		isStack
+		:items="avatarData"
+		:showItems="3"
+		:size="Kotti.Avatar.Size.SMALL"
+	/>
+</div>
+
+### Medium
+
+<div class="element-example">
+	<KtAvatarGroup
+		isHoverable
+		isStack
+		:items="avatarData"
+		:showItems="3"
+		:size="Kotti.Avatar.Size.MEDIUM"
+	/>
+</div>
+
+### Large
+
+<div class="element-example">
+	<KtAvatarGroup
+		isHoverable
+		isStack
+		:items="avatarData"
+		:showItems="3"
+		:size="Kotti.Avatar.Size.LARGE"
+	/>
+</div>
 </template>
 
 <script lang="ts">
-import { KtAvatar } from '@3yourmind/kotti-ui'
+import { Kotti, KtAvatar, KtAvatarGroup } from '@3yourmind/kotti-ui'
 import { defineComponent } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -139,7 +168,9 @@ export default defineComponent({
 				{ name: 'Simens', src: 'https://picsum.photos/140' },
 				{ name: 'Simens', src: 'https://picsum.photos/150' },
 			],
-			component: KtAvatar,
+			Kotti,
+			KtAvatar,
+			KtAvatarGroup,
 		}
 	},
 })

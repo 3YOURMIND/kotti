@@ -115,6 +115,7 @@ export enum Icon {
 	TRIANGLE_UP = 'triangle_up',
 	UPLOAD = 'upload',
 	USER = 'user',
+	USER_SOLID = 'user_solid',
 	USERGROUP = 'usergroup',
 	VERSION = 'version',
 	VIEW = 'view',

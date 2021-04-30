@@ -1,175 +1,147 @@
 <template>
-	<div
-		:class="avatarClasses"
-		:data-tooltip="name"
-		@click="onAvatarContainerClick"
-	>
-		<div v-if="avatarAvailable">
-			<img class="avatar-img" :src="src" @error="imgFallBack" />
+	<div :class="avatarClasses" @click="onAvatarContainerClick">
+		<img
+			v-if="avatarAvailable"
+			ref="tooltipTriggerRef"
+			class="kt-avatar__image"
+			:src="src"
+			@error="onImageFailedToLoad"
+		/>
+		<div v-else ref="tooltipTriggerRef" class="kt-avatar__fallback">
+			<i class="yoco" v-text="Yoco.Icon.USER_SOLID" />
 		</div>
-		<div v-else :class="avatarFallbackClasses">
-			<div class="avatar-fallback__head" />
-			<div class="avatar-fallback__body" />
-		</div>
+		<div ref="tooltipContentRef" v-text="name" />
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import { Yoco } from '@3yourmind/yoco'
+import { computed, defineComponent, Ref, ref } from '@vue/composition-api'
+import { roundArrow } from 'tippy.js'
+
+import { Kotti } from '../types'
+const ARROW_HEIGHT = 7
+
+const useTooltip = (name: Ref<string | null>) => {
+	const tooltipContentRef = ref<Element | null>(null)
+	const tooltipTriggerRef = ref<Element | null>(null)
+
+	useTippy(
+		tooltipTriggerRef,
+		computed(() => ({
+			appendTo: () => document.body,
+			arrow: roundArrow,
+			content: tooltipContentRef.value,
+			offset: [0, ARROW_HEIGHT],
+			theme: 'light-border',
+			...(name.value === null ? { trigger: 'manual' } : {}),
+		})),
+	)
+
+	return {
+		tooltipContentRef,
+		tooltipTriggerRef,
+	}
+}
+
+export default defineComponent<Kotti.Avatar.PropsInternal>({
 	name: 'KtAvatar',
 	props: {
-		hoverable: { default: false, type: Boolean },
+		isHoverable: { default: false, type: Boolean },
+		isSelected: { default: false, type: Boolean },
 		name: { default: null, type: String },
-		selected: { default: false, type: Boolean },
-		showTooltip: { default: false, type: Boolean },
-		small: { default: false, type: Boolean },
+		size: { default: Kotti.Avatar.Size.MEDIUM, type: String },
 		src: { default: null, type: String },
 	},
-	data() {
+	setup(props, { emit }) {
+		const avatarFallback = ref(true)
+
 		return {
-			avatarFallback: true,
+			...useTooltip(computed(() => props.name)),
+			avatarAvailable: computed(() => props.src && avatarFallback.value),
+			avatarClasses: computed(() => ({
+				'kt-avatar': true,
+				'kt-avatar--is-hoverable': props.isHoverable,
+				'kt-avatar--is-selected': props.isSelected,
+				'kt-avatar--is-size-large': props.size === Kotti.Avatar.Size.LARGE,
+				'kt-avatar--is-size-medium': props.size === Kotti.Avatar.Size.MEDIUM,
+				'kt-avatar--is-size-small': props.size === Kotti.Avatar.Size.SMALL,
+			})),
+			avatarFallback,
+			onImageFailedToLoad: () => {
+				avatarFallback.value = false
+			},
+			onAvatarContainerClick(event: MouseEvent) {
+				emit('click', event)
+			},
+			Yoco,
 		}
 	},
-	computed: {
-		avatarAvailable() {
-			return this.src && this.avatarFallback
-		},
-		avatarClasses() {
-			return {
-				avatar: true,
-				'avatar--selected': this.selected,
-				'avatar--sm': this.small,
-				'avatar--hover': this.hoverable,
-				'tooltip tooltip-bottom': this.showTooltip,
-			}
-		},
-		avatarFallbackClasses() {
-			return {
-				'avatar-fallback': true,
-				'avatar-fallback--small': this.small,
-			}
-		},
-	},
-	methods: {
-		imgFallBack() {
-			this.avatarFallback = false
-		},
-		onAvatarContainerClick($event) {
-			this.$emit('click', $event)
-		},
-	},
-}
+})
 </script>
 
-<style lang="scss">
-@import '../kotti-style/_variables.scss';
-
+<style lang="scss" scoped>
 :root {
 	--avatar-color: var(--interactive-01);
 }
 
-.avatar {
+.kt-avatar {
 	position: relative;
 	display: inline-flex;
-	width: 2.4rem;
-	height: 2.4rem;
-	background: $lightgray-400;
-	border: 0.1rem solid #fff;
+	color: var(--white);
+	background: var(--ui-02);
+	border: 0.1rem solid var(--white);
 	border-radius: 100%;
-}
 
-.avatar--hover:hover {
-	cursor: pointer;
-	border: 0.1rem solid var(--avatar-color);
-}
+	&__fallback,
+	&__image {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
 
-.avatar-img {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-
-	width: 100%;
-	height: 100%;
-
-	border-radius: 100%;
-	object-fit: cover;
-}
-
-.avatar-group {
-	display: flex;
-	flex-direction: row-reverse;
-	align-items: center;
-	justify-content: center;
-
-	.avatar {
-		margin-right: 0.2rem;
+		width: 100%;
+		height: 100%;
 	}
 
-	&.stack .avatar:not(:first-of-type) {
-		margin-left: -0.8rem;
-	}
-
-	.avatar.avatar-number {
+	&__fallback {
+		display: flex;
 		align-items: center;
-		margin-left: 0.2rem;
-		background: $lightgray-400;
-		span {
-			width: 100%;
-			text-align: center;
-		}
+		justify-content: center;
 	}
 
-	&.stack .avatar.avatar-number {
-		margin-left: -0.8rem;
-	}
-}
-
-.avatar--sm {
-	width: 1.6rem;
-	height: 1.6rem;
-}
-
-.avatar--selected {
-	background: #2c64cc;
-}
-
-.avatar-fallback {
-	&__head {
-		position: absolute;
-		top: 0.5rem;
-		left: 0.8rem;
-		width: 0.6rem;
-		height: 0.6rem;
-		background: #fff;
+	&__image {
 		border-radius: 100%;
+		object-fit: cover;
 	}
 
-	&__body {
-		position: absolute;
-		top: 1.3rem;
-		left: 0.5rem;
-		width: 1.2rem;
-		height: 0.4rem;
-		background: #fff;
-		border-radius: 50% 50% 0 0;
-	}
-}
-
-.avatar-fallback--small {
-	.avatar-fallback__head {
-		top: 0.3rem;
-		left: 0.5rem;
-		width: 0.4rem;
-		height: 0.4rem;
+	&--is-hoverable:hover {
+		cursor: pointer;
+		border: 0.1rem solid var(--avatar-color);
 	}
 
-	.avatar-fallback__body {
-		top: 0.8rem;
-		left: 0.3rem;
-		width: 0.8rem;
-		height: 0.3rem;
+	&--is-selected {
+		background: var(--interactive-01);
+	}
+
+	&--is-size-small {
+		width: 1.6rem;
+		height: 1.6rem;
+		font-size: 1.2rem;
+	}
+
+	&--is-size-medium {
+		width: 2.4rem;
+		height: 2.4rem;
+		font-size: 1.8rem;
+	}
+
+	&--is-size-large {
+		width: 3.2rem;
+		height: 3.2rem;
+		font-size: 2.4rem;
 	}
 }
 </style>

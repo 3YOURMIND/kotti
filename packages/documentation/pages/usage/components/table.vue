@@ -648,12 +648,11 @@ It is possible to customize parts (columns) of the table by passing your own ren
 		renderCell(h, { value, row, rowIndex, column, columnIndex }) {
 			return (
 				<KtAvatar
-					name={value}
-					hoverable
-					src="https://picsum.photos/200"
-					showTooltip
-					small
 					class="mr-16px"
+					isHoverable
+					name={value}
+					size={Kotti.Avatar.Size.SMALL}
+					src="https://picsum.photos/200"
 				/>
 			)
 		},
@@ -804,14 +803,13 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <template #header="{ value, columnIndex }">
 	<div v-text="columnIndex + '::' + value" ></div>
 </template>
-<template #default="{value, row, rowIndex, column, columnIndex}">
+<template #default="{ value, row, rowIndex, column, columnIndex }">
 	<KtAvatar
-		:name="value"
-		hoverable
-		src="https://picsum.photos/200"
-		showTooltip
-		small
 		class="mr-16px"
+		isHoverable
+		:name="value"
+		src="https://picsum.photos/200"
+		:size="Kotti.Avatar.Size.SMALL"
 	/>
 </template>
 </KtTableColumn>
@@ -833,12 +831,11 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <!-- if you use deprecated slot syntax, you don't need to define slot name for a default slot (this replaces renderCell) -->
 <template #default="{value, row, rowIndex, column, columnIndex}">
 	<KtAvatar
-		:name="value"
-		hoverable
-		src="https://picsum.photos/200"
-		showTooltip
-		small
 		class="mr-16px"
+		isHoverable
+		:name="value"
+		:size="Kotti.Avatar.Size.SMALL"
+		src="https://picsum.photos/200"
 	/>
 </template>
 </KtTableColumn>
@@ -1084,6 +1081,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 <script>
 import { KtAvatar, KtBanner, KtTable } from '@3yourmind/kotti-ui'
+import { Kotti } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 import ShowCase from '~/components/ShowCase.vue'
@@ -1095,6 +1093,7 @@ export default {
 		/* eslint-disable sonarjs/no-duplicate-string */
 		return {
 			component: KtTable,
+			Kotti,
 			select: [0, 1],
 			selected: [
 				{
@@ -1227,12 +1226,11 @@ export default {
 		renderCell(h, { value }) {
 			return (
 				<KtAvatar
-					name={value}
-					hoverable
-					src="https://picsum.photos/200"
-					showTooltip
-					small
 					class="mr-16px"
+					name={value}
+					isHoverable
+					size={Kotti.Avatar.Size.SMALL}
+					src="https://picsum.photos/200"
 				/>
 			)
 		},
