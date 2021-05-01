@@ -122,7 +122,7 @@ export default defineComponent({
 
 		watch(
 			() => field.currentValue,
-			(newNumber, oldNumber) => {
+			(newNumber) => {
 				const newString = toString(newNumber)
 				const truncatedNumber = toNumber(newString)
 
@@ -148,7 +148,8 @@ export default defineComponent({
 						`KtFieldNumber: encountered a value "${newNumber}" that doesn't fit ((minimum + k * step): where k is an integer)`,
 					)
 
-				const shouldUpdate = oldNumber !== truncatedNumber
+				const shouldUpdate =
+					toNumber(internalStringValue.value) !== truncatedNumber
 				if (shouldUpdate) internalStringValue.value = newString
 			},
 			{ immediate: true },
@@ -267,9 +268,9 @@ export default defineComponent({
 					})
 
 				if (isTypedNumberValid) {
+					internalStringValue.value = valueWithoutLeadingZeroes
 					const shouldEmit = nextNumber !== field.currentValue
 					if (shouldEmit) field.setValue(nextNumber)
-					else internalStringValue.value = valueWithoutLeadingZeroes
 				}
 
 				forceUpdate()
