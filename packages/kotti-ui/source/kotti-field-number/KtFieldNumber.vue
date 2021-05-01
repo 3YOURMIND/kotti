@@ -130,7 +130,7 @@ export default defineComponent({
 					})
 				)
 					throw new RangeError(
-						`KtFieldNumber: encounted an out-of-range number "${newNumber}"`,
+						`KtFieldNumber: encountered an out-of-range number "${newNumber}"`,
 					)
 
 				if (
@@ -141,7 +141,7 @@ export default defineComponent({
 					})
 				)
 					throw new Error(
-						`KtFieldNumber: encounted a value "${newNumber}" that doesn't fit ((minimum + k * step): where k is an integer)`,
+						`KtFieldNumber: encountered a value "${newNumber}" that doesn't fit ((minimum + k * step): where k is an integer)`,
 					)
 
 				const shouldUpdate = oldNumber !== truncatedNumber
