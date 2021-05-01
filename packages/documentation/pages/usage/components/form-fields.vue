@@ -401,6 +401,7 @@ import {
 	ComponentValue,
 	ComponentNames,
 	generateComponentCode,
+	omitNullValues,
 } from '../../utilities'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -902,7 +903,7 @@ export default defineComponent({
 			(): ComponentValue => ({
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
 				name: settings.value.component,
-				props: cloneDeep(componentProps.value),
+				props: omitNullValues(cloneDeep(componentProps.value)),
 				validation: settings.value.validation,
 			}),
 		)
