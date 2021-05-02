@@ -375,6 +375,12 @@ const components: Array<{
 		supports: { clear: true, decoration: false, tabIndex: false },
 	},
 	{
+		additionalProps: ['collapseTagsAfter', 'actions'],
+		formKey: 'multiSelectValue',
+		name: 'KtFieldMultiSelect',
+		supports: { clear: true, decoration: true, tabIndex: false },
+	},
+	{
 		additionalProps: [
 			'hideChangeButtons',
 			'numberHideMaximum',
@@ -385,12 +391,6 @@ const components: Array<{
 		formKey: 'numberValue',
 		name: 'KtFieldNumber',
 		supports: { clear: false, decoration: true, tabIndex: true },
-	},
-	{
-		additionalProps: ['collapseTagsAfter', 'actions'],
-		formKey: 'multiSelectValue',
-		name: 'KtFieldMultiSelect',
-		supports: { clear: true, decoration: true, tabIndex: false },
 	},
 	{
 		additionalProps: ['autoComplete'],
