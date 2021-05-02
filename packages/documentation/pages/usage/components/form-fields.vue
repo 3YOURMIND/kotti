@@ -924,7 +924,12 @@ export default defineComponent({
 						KtFieldTextArea,
 						KtFieldToggle,
 						KtFieldToggleGroup,
-					}[componentValue.value.name as Exclude<ComponentNames, 'KtFilters'>]),
+					}[
+						componentValue.value.name as Exclude<
+							ComponentNames,
+							'KtFilters' | 'KtLabelValue'
+						>
+					]),
 			),
 			componentDefinition,
 			componentOptions: components.map((component) => ({
