@@ -12,7 +12,7 @@ export const KtBanner = attachMeta(makeInstallable(KtBannerVue), {
 			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=1439%3A5',
 	},
 	slots: {
-		expand: {
+		default: {
 			description: 'Content when Banner is expanded',
 			scope: null,
 		},

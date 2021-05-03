@@ -38,11 +38,11 @@ interface.
 		message="You material is not available to users"
 		icon="cloud"
 	>
-		<div slot="expand">
-		<h2>Order #100002</h2>
-		<h3>Order information</h3>
-		....
-		....
+		<div>
+			<h2>Order #100002</h2>
+			<h3>Order information</h3>
+			....
+			....
 		</div>
 	</KtBanner>
 </div>
@@ -52,7 +52,7 @@ interface.
 	message="You material is not available to users"
 	icon="cloud"
 >
-	<div slot="expand">
+	<div>
 		<h2>Order #100002</h2>
 		<h3>Order information</h3>
 		....

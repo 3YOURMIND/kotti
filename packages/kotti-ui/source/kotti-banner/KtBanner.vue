@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		<div v-if="isExpand" class="kt-banner__expand">
-			<slot name="expand" />
+			<slot />
 		</div>
 	</div>
 </template>
