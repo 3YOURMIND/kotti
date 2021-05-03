@@ -20,11 +20,11 @@ dismiss icon, and should **only disappear** once the problem is **resolved**.
 Only use this type of banner when this issue will cause a significant error.
 
 <div class="element-example">
-	<KtBanner message="You material is not available to users" icon="announce" actionText="Publish" />
+	<KtBanner message="Your material is not published yet" icon="announce" actionText="Publish" />
 </div>
 
 ```html
-<KtBanner message="You material is not available to users" icon="announce" actionText="Publish" />
+<KtBanner message="Your material is not published yet" icon="announce" actionText="Publish" />
 ```
 
 ### Expand Banner
@@ -35,7 +35,7 @@ interface.
 
 <div class="element-example">
 	<KtBanner
-		message="You material is not available to users"
+		message="Your material is not published yet"
 		icon="cloud"
 	>
 		<div>
@@ -49,7 +49,7 @@ interface.
 
 ```html
 <KtBanner
-	message="You material is not available to users"
+	message="Your material is not published yet"
 	icon="cloud"
 >
 	<div>
@@ -70,7 +70,7 @@ this style is useful when you want add contrast to the page.
 
 <div class="element-example white">
 	<KtBanner
-		message="You material is not available to users"
+		message="Your material is not published yet"
 		icon="announce"
 		actionText="Publish"
 		isGray
@@ -79,7 +79,7 @@ this style is useful when you want add contrast to the page.
 
 ```html
 <KtBanner
-	message="You material is not available to users"
+	message="Your material is not published yet"
 	icon="announce"
 	actionText="Publish"
 	isGray

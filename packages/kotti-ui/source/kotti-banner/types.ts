@@ -8,14 +8,14 @@ export namespace KottiBanner {
 		icon: Yoco.Icon
 		isGray: boolean
 		message: string
-		expandCloseLabel: string
-		expandLabel: string
+		expandCloseLabel: string | null
+		expandLabel: string | null
 	}
 
 	export type Props = SpecifyRequiredProps<PropsInternal, 'message'>
 
 	export type Translations = {
-		expandLabel: string
 		expandCloseLabel: string
+		expandLabel: string
 	}
 }

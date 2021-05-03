@@ -10,12 +10,12 @@
 					type="text"
 				/>
 			</div>
-			<div v-else @click="isExpand = !isExpand">
-				<KtButton v-if="!isExpand" :label="switchOpenLabel" type="text" />
+			<div v-else @click="isExpanded = !isExpanded">
+				<KtButton v-if="!isExpanded" :label="switchOpenLabel" type="text" />
 				<KtButton v-else :label="switchCloseLabel" type="text" />
 			</div>
 		</div>
-		<div v-if="isExpand" class="kt-banner__expand">
+		<div v-if="isExpanded" class="kt-banner__expand">
 			<slot />
 		</div>
 	</div>
@@ -55,7 +55,7 @@ export default defineComponent<KottiBanner.PropsInternal>({
 				'kt-banner--is-gray': props.isGray,
 			})),
 			expandable: computed(() => Boolean(slots.expand)),
-			isExpand: ref(false),
+			isExpanded: ref(false),
 			switchCloseLabel: computed(
 				() => props.expandCloseLabel ?? translations.value.expandCloseLabel,
 			),
