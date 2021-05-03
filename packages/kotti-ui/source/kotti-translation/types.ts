@@ -1,5 +1,6 @@
 import { Ref } from '@vue/composition-api'
 
+import { KottiBanner } from '../kotti-banner/types'
 import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
 import { KottiField } from '../kotti-field/types'
 import { KottiFilters } from '../kotti-filters/types'
@@ -17,6 +18,7 @@ export namespace KottiTranslation {
 	}
 
 	export type Messages = {
+		KtBanner: KottiBanner.Translations
 		KtFields: KottiField.Translations
 		KtFieldSelects: KottiFieldSelectShared.Translations
 		KtFilters: KottiFilters.Translations

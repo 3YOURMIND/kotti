@@ -1,6 +1,10 @@
 import { KottiTranslation } from '../types'
 
 export const frFR: KottiTranslation.Messages = {
+	KtBanner: {
+		expandLabel: 'Voir',
+		expandCloseLabel: 'Fermer',
+	},
 	KtFields: {
 		optionalLabel: 'Facultatif',
 		requiredMessage: 'Ce champ est obligatoire',

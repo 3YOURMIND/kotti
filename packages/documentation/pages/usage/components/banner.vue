@@ -20,11 +20,11 @@ dismiss icon, and should **only disappear** once the problem is **resolved**.
 Only use this type of banner when this issue will cause a significant error.
 
 <div class="element-example">
-	<KtBanner message="You material is not available to users" icon="announce" actionText="Publish" />
+	<KtBanner message="Your material is not published yet" icon="announce" actionText="Publish" />
 </div>
 
 ```html
-<KtBanner message="You material is not available to users" icon="announce" actionText="Publish" />
+<KtBanner message="Your material is not published yet" icon="announce" actionText="Publish" />
 ```
 
 ### Expand Banner
@@ -35,33 +35,28 @@ interface.
 
 <div class="element-example">
 	<KtBanner
-		message="You material is not available to users"
+		message="Your material is not published yet"
 		icon="cloud"
-		actionText="Publish"
-		expandable="true"
-		switchText="Open"
-		switchCloseText="None">
-		<div slot="expand">
-		<h2>Order #100002</h2>
-		<h3>Order information</h3>
-		....
-		....
+	>
+		<div>
+			<h2>Order #100002</h2>
+			<h3>Order information</h3>
+			....
+			....
 		</div>
 	</KtBanner>
 </div>
 
 ```html
 <KtBanner
-	message="You material is not available to users"
+	message="Your material is not published yet"
 	icon="cloud"
-	actionText="Publish"
-	switchText="Open"
-	switchCloseText="None">
-	<div slot="expand">
-	<h2>Order #100002</h2>
-	<h3>Order information</h3>
-	....
-	....
+>
+	<div>
+		<h2>Order #100002</h2>
+		<h3>Order information</h3>
+		....
+		....
 	</div>
 </KtBanner>
 ```
@@ -75,40 +70,20 @@ this style is useful when you want add contrast to the page.
 
 <div class="element-example white">
 	<KtBanner
-		message="You material is not available to users"
+		message="Your material is not published yet"
 		icon="announce"
 		actionText="Publish"
-		isGrey
+		isGray
 	/>
 </div>
 
 ```html
 <KtBanner
-	message="You material is not available to users"
+	message="Your material is not published yet"
 	icon="announce"
 	actionText="Publish"
-	isGrey
+	isGray
 />
-```
-
-### Glyph
-
-If you don't specify the icon text, you need to use the `glyph` slot.
-
-<div class="element-example">
-	<KtBanner message="You material is not available to users" actionText="Publish">
-		<div slot="glyph">
-			<img src="https://picsum.photos/24/24"/>
-		</div>
-	</KtBanner>
-</div>
-
-```html
-<KtBanner message="You material is not available to users" actionText="Publish">
-	<div slot="glyph">
-		<img src="https://picsum.photos/24/24"/>
-	</div>
-</KtBanner>
 ```
 
 ## Usage
@@ -118,18 +93,12 @@ If you don't specify the icon text, you need to use the `glyph` slot.
 | Attribute         | Description                                    | Type      | Accepted values     | Default      |
 |:------------------|:-----------------------------------------------|:----------|:--------------------|:-------------|
 | `message`         | message in banner                              | `String`  | —                   | —            |
-| `icon`            | button icons                                   | `String`  | icon name in `yoco` | `"announce"` |
-| `isGrey`          | decide the background                          | `Boolean` | —                   | `false`      |
+| `icon`            | icon name from `yoco`                          | `String`  | icon name in `yoco` | `"announce"` |
+| `isGray`          | gray background for high contrast              | `Boolean` | —                   | `false`      |
 | `actionText`      | text shows when banner is not expandable       | `String`  | —                   | —            |
-| `switchText`      | text shows when expandable banner is collapsed | `String`  | —                   | `View`       |
-| `switchCloseText` | text shows when expandable banner is expand    | `String`  | —                   | `Close`      |
+| `expandLabel`      | text shows when expandable banner is collapsed | `String`  | —                   | `View`       |
+| `expandCloseLabel` | text shows when expandable banner is expand    | `String`  | —                   | `Close`      |
 
-### Slot
-
-| Name     | Description  | Type     | Accepted values                  | Default |
-|:---------|:-------------|:---------|:---------------------------------|:--------|
-| `expand` | button types | `String` | primary / second / text / danger | —       |
-| `glyph`  | button icons | `String` | icon name in `yoco`              | —       |
 </template>
 
 <script lang="ts">

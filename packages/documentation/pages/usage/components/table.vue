@@ -499,8 +499,8 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault" isExpandable>
 <template #expand="{ row, rowIndex }">
-	<KtBanner :message="row.name" icon="user" isGrey />
-	<KtBanner :message="row.address.line" icon="global" isGrey />
+	<KtBanner :message="row.name" icon="user" isGray />
+	<KtBanner :message="row.address.line" icon="global" isGray />
 </template>
 </KtTable>
 </div>
@@ -511,8 +511,8 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 ```html
 <KtTable :rows="rows" :columns="columns" isExpandable>
 <template #expand="{ row, rowIndex }">
-	<KtBanner :message="row.name" icon="user" isGrey />
-	<KtBanner :message="row.address.line" icon="global" isGrey />
+	<KtBanner :message="row.name" icon="user" isGray />
+	<KtBanner :message="row.address.line" icon="global" isGray />
 </template>
 </KtTable>
 ```
@@ -528,8 +528,8 @@ If you want to allow for the expansion of multiple rows at a time, set the `expa
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault" isExpandable expandMultiple>
 <template #expand="{ row, rowIndex }">
-	<KtBanner :message="row.name" icon="user" isGrey />
-	<KtBanner :message="row.address.line" icon="global" isGrey />
+	<KtBanner :message="row.name" icon="user" isGray />
+	<KtBanner :message="row.address.line" icon="global" isGray />
 </template>
 </KtTable>
 </div>
@@ -538,8 +538,8 @@ If you want to allow for the expansion of multiple rows at a time, set the `expa
 ```vue
 <KtTable :rows="rows" :columns="columns" isExpandable expandMultiple>
 <template #expand="{ row, rowIndex }">
-	<KtBanner :message="row.name" icon="user" isGrey />
-	<KtBanner :message="row.address.line" icon="global" isGrey />
+	<KtBanner :message="row.name" icon="user" isGray />
+	<KtBanner :message="row.address.line" icon="global" isGray />
 </template>
 </KtTable>
 ```
@@ -623,8 +623,8 @@ It is possible to customize parts (columns) of the table by passing your own ren
 		renderExpand(h, { row }) {
 			return (
 				<div>
-					<KtBanner message={row.name} icon="user" isGrey />
-					<KtBanner message={row.address.line} icon="global" isGrey />
+					<KtBanner message={row.name} icon="user" isGray />
+					<KtBanner message={row.address.line} icon="global" isGray />
 				</div>
 			)
 		},
@@ -1200,8 +1200,8 @@ export default {
 		renderExpand(h, { row }) {
 			return (
 				<div>
-					<KtBanner message={row.name} icon="user" isGrey />
-					<KtBanner message={row.address.line} icon="global" isGrey />
+					<KtBanner message={row.name} icon="user" isGray />
+					<KtBanner message={row.address.line} icon="global" isGray />
 				</div>
 			)
 		},
