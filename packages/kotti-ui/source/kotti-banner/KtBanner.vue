@@ -4,11 +4,7 @@
 			<i class="yoco" v-text="icon" />
 			<div class="kt-banner__message" v-text="message" />
 			<div v-if="!expandable" @click="() => $emit('click')">
-				<KtButton
-					v-if="actionText && actionText.length"
-					:label="actionText"
-					type="text"
-				/>
+				<KtButton v-if="actionText !== null" :label="actionText" type="text" />
 			</div>
 			<div v-else @click="isExpanded = !isExpanded">
 				<KtButton v-if="!isExpanded" :label="switchOpenLabel" type="text" />
@@ -33,18 +29,20 @@ import { KottiBanner } from './types'
 
 export default defineComponent<KottiBanner.PropsInternal>({
 	name: 'KtBanner',
-	components: { KtButton },
+	components: {
+		KtButton,
+	},
 	props: {
-		actionText: { type: String, default: null },
+		actionText: { default: null, type: String },
+		expandCloseLabel: { default: null, type: String },
+		expandLabel: { default: null, type: String },
 		icon: {
-			type: String,
 			default: Yoco.Icon.ANNOUNCE,
+			type: String,
 			validator: isYocoIcon,
 		},
-		isGray: { type: Boolean, default: false },
-		message: { type: String, required: true },
-		expandCloseLabel: { type: String, default: null },
-		expandLabel: { type: String, default: null },
+		isGray: { default: false, type: Boolean },
+		message: { required: true, type: String },
 	},
 	setup(props, { slots }) {
 		const translations = useTranslationNamespace('KtBanner')
@@ -54,7 +52,7 @@ export default defineComponent<KottiBanner.PropsInternal>({
 				'kt-banner': true,
 				'kt-banner--is-gray': props.isGray,
 			})),
-			expandable: computed(() => Boolean(slots.expand)),
+			expandable: computed(() => Boolean(slots.default)),
 			isExpanded: ref(false),
 			switchCloseLabel: computed(
 				() => props.expandCloseLabel ?? translations.value.expandCloseLabel,
@@ -88,8 +86,8 @@ export default defineComponent<KottiBanner.PropsInternal>({
 		width: 100%;
 	}
 
-	.yoco {
-		font-size: 1.2rem;
+	&__expand {
+		margin-top: var(--unit-4);
 	}
 
 	&__message {
@@ -99,8 +97,8 @@ export default defineComponent<KottiBanner.PropsInternal>({
 		color: var(--gray-70);
 	}
 
-	&__expand {
-		margin-top: var(--unit-4);
+	.yoco {
+		font-size: 1.2rem;
 	}
 }
 </style>

@@ -493,7 +493,7 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 
 ## Expandable
 
-`isExpandable` enables expandability of the row**s**, defined on `<KtTable/>`. You use the default slot to define the template that shows on expansion.
+`isExpandable` enables expandability of the row**s**, defined on `<KtTable/>`. You use the `slot="expand"` to define the template that shows on expansion.
 
 <ShowCase vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
