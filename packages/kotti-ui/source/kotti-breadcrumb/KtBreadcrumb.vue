@@ -8,7 +8,7 @@
 				:class="textClasses(breadcrumb)"
 			>
 				<span @click="handleClick(breadcrumb)" v-text="breadcrumb.title" />
-				<span v-if="showSeparator(index)">
+				<span v-if="showSeparator(index)" class="kt-breadcrumb__separator">
 					<i
 						v-if="separator.style === KottiBreadcrumb.SeparatorType.ICON"
 						class="yoco"
@@ -16,7 +16,6 @@
 					/>
 					<span
 						v-if="separator.style === KottiBreadcrumb.SeparatorType.TEXT"
-						class="kt-breadcrumb__text-separator"
 						v-text="separator.value"
 					/>
 				</span>
@@ -95,8 +94,11 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 
 	display: flex;
 	flex-wrap: wrap;
+	ol {
+		display: flex;
+	}
 	li {
-		display: inline-block;
+		display: flex;
 		line-height: 1.2rem;
 	}
 
@@ -111,10 +113,11 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 				cursor: pointer;
 			}
 		}
-
-		&-separator {
-			padding: 0 0.4rem;
-		}
+	}
+	&__separator {
+		display: flex;
+		align-items: center;
+		padding: 0 0.4rem;
 	}
 }
 </style>
