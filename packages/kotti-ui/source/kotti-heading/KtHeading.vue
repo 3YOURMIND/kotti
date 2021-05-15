@@ -19,41 +19,40 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
+import { computed, defineComponent } from '@vue/composition-api'
 
-export default {
+import { isYocoIcon } from '../validators'
+
+export default defineComponent({
 	name: 'KtHeading',
 	props: {
-		actionText: { type: String, default: '' },
-		icon: { type: String, default: '' },
-		text: { type: String, default: 'H3 Heading' },
+		actionText: { type: String, default: null },
+		icon: { type: String, default: null, validator: isYocoIcon },
+		text: { type: String, required: true },
 		toggleCloseText: { type: String, default: 'Close' },
 		toggleStatus: { type: Boolean, default: false },
 		toggleText: { type: String, default: 'View' },
-		type: { type: String, default: 'default' },
+		type: { type: String, default: null },
 	},
-	data() {
+	setup(props, { emit }) {
 		return {
+			handleClick: (event) => {
+				if (props.type === 'action') {
+					emit('click', event)
+				}
+				if (props.type === 'toggle') {
+					emit('toggle', event)
+				}
+			},
+			toggleTextRep: computed(() =>
+				props.toggleStatus ? props.toggleCloseText : props.toggleText,
+			),
 			Yoco,
 		}
 	},
-	computed: {
-		toggleTextRep() {
-			return this.toggleStatus ? this.toggleCloseText : this.toggleText
-		},
-	},
-	methods: {
-		handleClick(event) {
-			if (this.type === 'action') {
-				this.$emit('click', event)
-			}
-			if (this.type === 'toggle') {
-				this.$emit('toggle', event)
-			}
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss" scoped>
