@@ -94,12 +94,14 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 
 	display: flex;
 	flex-wrap: wrap;
+
 	ol {
 		display: flex;
 	}
+
 	li {
 		display: flex;
-		line-height: 1.2rem;
+		margin: 0.1rem 0;
 	}
 
 	&__text {
@@ -114,10 +116,15 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 			}
 		}
 	}
+
 	&__separator {
 		display: flex;
 		align-items: center;
-		padding: 0 0.4rem;
+		margin: 0 0.2rem;
+
+		.yoco {
+			font-size: 1rem;
+		}
 	}
 }
 </style>
