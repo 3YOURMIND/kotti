@@ -14,5 +14,7 @@ export const KtHeading = attachMeta(makeInstallable(KtHeadingVue), {
 	slots: {
 		default: { description: 'Used for type toggle', scope: null },
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Heading',
+	},
 })
