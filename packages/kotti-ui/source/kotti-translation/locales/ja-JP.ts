@@ -1,13 +1,14 @@
 import { KottiTranslation } from '../types'
 
+// TODO: needs proper translations for some strings
 export const jaJP: KottiTranslation.Messages = {
 	KtBanner: {
 		expandLabel: '表示',
 		expandCloseLabel: '閉じる',
 	},
 	KtFields: {
-		optionalLabel: 'TODO',
-		requiredMessage: 'TODO',
+		optionalLabel: 'Optional',
+		requiredMessage: 'Required',
 	},
 	KtFieldSelects: {
 		loadingText: 'ロード中',
@@ -58,13 +59,13 @@ export const jaJP: KottiTranslation.Messages = {
 		whereLabel: 'どこ',
 	},
 	KtFormSubmit: {
-		errorsSectionTitle: 'TODO',
-		title: 'TODO',
-		warningsSectionTitle: 'TODO',
+		errorsSectionTitle: 'Errors',
+		title: 'Form Submission Not Allowed',
+		warningsSectionTitle: 'Warnings',
 	},
 	KtNavbar: {
-		menuCollapse: 'TODO',
-		menuExpand: 'TODO',
-		quickLinksTitle: 'TODO',
+		menuCollapse: 'Collapse menu',
+		menuExpand: 'Expand menu',
+		quickLinksTitle: 'Quick Links',
 	},
 }
