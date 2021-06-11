@@ -83,6 +83,11 @@ export default defineComponent<KottiButton.PropsInternal>({
 
 	font-weight: 600;
 
+	// Since this is an inline element (display: inline-flex), we need to
+	// care about vertical-alignment. The default setting would cause
+	// different alignments between buttons with or without icon.
+	vertical-align: middle;
+
 	cursor: pointer;
 	user-select: none;
 
