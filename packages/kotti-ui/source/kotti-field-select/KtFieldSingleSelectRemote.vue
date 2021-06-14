@@ -1,12 +1,11 @@
 <template>
-	<div v-on-clickaway="closeDropdown">
+	<div>
 		<div ref="ktFieldRef">
 			<KtField
 				v-bind="{ field }"
 				class="kt-field-select kt-field-select-single-remote"
 				:getEmptyValue="() => null"
 				:helpTextSlot="$slots.helpText"
-				@click.stop="() => (isDropdownOpen = !isDropdownOpen)"
 			>
 				<SingleSelectInput
 					:label="selectedLabel"
@@ -15,6 +14,7 @@
 					@queryInputChanged="onQueryInput"
 				/>
 				<template v-slot:actionIcon="{ classes, handleClear, showClear }">
+					<!-- <div ref="ktFieldChevronRef" @click.prevent> -->
 					<ActionIconNext
 						v-bind="{
 							classes,
@@ -23,15 +23,12 @@
 							showClear,
 						}"
 					/>
+					<!-- </div> -->
 				</template>
 			</KtField>
 		</div>
 
-		<div
-			v-show="isDropdownOpen"
-			ref="popperContentRef"
-			class="kt-field-select-single-remote__popper"
-		>
+		<div ref="popperContentRef" class="kt-field-select-single-remote__popper">
 			<IconTextItem
 				v-for="(option, index) in modifiedOptions"
 				:key="index"
@@ -45,15 +42,9 @@
 </template>
 
 <script lang="ts">
-import { createPopper, Instance } from '@popperjs/core'
-import {
-	defineComponent,
-	computed,
-	onUnmounted,
-	ref,
-	watch,
-} from '@vue/composition-api'
-import { mixin as clickaway } from 'vue-clickaway'
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import { defineComponent, computed, ref } from '@vue/composition-api'
+import { roundArrow } from 'tippy.js'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
@@ -68,18 +59,18 @@ import {
 	KOTTI_FIELD_SELECT_SUPPORTS,
 } from './constants'
 import { KottiFieldSingleSelectRemote } from './types'
+const ARROW_HEIGHT = 7
 
 export default defineComponent({
 	name: 'KtFieldSingleSelectRemote',
 	components: { IconTextItem, KtField, ActionIconNext, SingleSelectInput },
-	mixins: [clickaway],
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_SINGLE_SELECT_PROPS,
 		queryValue: { default: null, type: String },
 		value: { default: null, type: [Number, String, Boolean] },
 	},
-	setup(props: KottiFieldSingleSelectRemote.Props, { emit, root }) {
+	setup(props: KottiFieldSingleSelectRemote.Props, { emit }) {
 		const field = useField<KottiFieldSingleSelectRemote.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldSingleSelectRemote.Value =>
@@ -92,69 +83,35 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtFieldSelects')
 
 		const isDropdownOpen = ref(false)
-		const ktFieldRef = ref(null)
-		const popperContentRef = ref(null)
-		const popper = ref<Instance | null>(null)
+		const ktFieldRef = ref<Element | null>(null)
+		const ktFieldChevronRef = ref<Element | null>(null)
+		const popperContentRef = ref<Element | null>(null)
 
-		const initPopper = () => {
-			popper.value = createPopper(ktFieldRef.value, popperContentRef.value, {
+		useTippy(
+			ktFieldRef,
+			computed(() => ({
+				appendTo: () => document.body,
+				arrow: roundArrow,
+				content: popperContentRef.value,
+				hideOnClick: true,
+				interactive: true,
+				offset: [0, ARROW_HEIGHT],
+				// onTrigger: () => console.log('I was triggered'),
+				// onUntrigger: () => console.log('I was untriggered'),
+				// onShow: () => console.log('Show me'),
+				// onHide: () => console.log('Hide me'),
 				placement: 'bottom',
-				modifiers: [
-					{
-						name: 'flip',
-						enabled: true,
-						options: {
-							padding: 8,
-						},
-					},
-					{
-						name: 'offset',
-						options: {
-							// eslint-disable-next-line no-magic-numbers
-							offset: [0, 8],
-						},
-					},
-					{
-						name: 'preventOverflow',
-						enabled: true,
-						options: {
-							padding: 8,
-						},
-					},
-					{
-						name: 'matchReferenceSize',
-						enabled: true,
-						fn: ({ state, instance }) => {
-							const popperSize = state.rects.popper['width']
-							const referenceSize = state.rects.reference['width']
-							if (popperSize >= referenceSize) return
-
-							state.styles.popper['width'] = `${referenceSize}px`
-							instance.update()
-						},
-						phase: 'beforeWrite',
-						requires: ['computeStyles'],
-					},
-				],
-			})
-		}
-
-		watch(
-			() => isDropdownOpen.value,
-			(newValue) => {
-				if (newValue) {
-					root.$nextTick(initPopper)
-				}
-			},
+				theme: 'light-border',
+				trigger: 'click',
+				// triggerTarget: [ktFieldRef.value, ktFieldChevronRef.value],
+			})),
 		)
 
-		onUnmounted(() => popper.value?.destroy())
-
 		return {
-			closeDropdown: () => (isDropdownOpen.value = false),
 			field,
 			isDropdownOpen,
 			ktFieldRef,
+			ktFieldChevronRef,
 			modifiedOptions: computed(() =>
 				props.options.length > 0
 					? props.options.map((option) => ({
@@ -208,9 +165,6 @@ export default defineComponent({
 		min-width: 200px;
 		max-height: 40vh;
 		overflow: auto;
-		background: var(--white);
-		border-radius: var(--border-radius);
-		box-shadow: var(--shadow-base);
 	}
 }
 </style>

@@ -6,6 +6,9 @@ import KtFieldMultiSelectVue from './KtFieldMultiSelect.vue'
 import KtFieldSingleSelectVue from './KtFieldSingleSelect.vue'
 import KtFieldSingleSelectRemoteVue from './KtFieldSingleSelectRemote.vue'
 
+const url =
+	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=428%3A3482'
+
 export const KtFieldSingleSelect = attachMeta(
 	makeInstallable(KtFieldSingleSelectVue),
 	{
@@ -13,8 +16,7 @@ export const KtFieldSingleSelect = attachMeta(
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
-			url:
-				'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=428%3A3482',
+			url,
 		},
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
@@ -30,8 +32,7 @@ export const KtFieldSingleSelectRemote = attachMeta(
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
-			url:
-				'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=428%3A3482',
+			url,
 		},
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
@@ -47,8 +48,7 @@ export const KtFieldMultiSelect = attachMeta(
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
-			url:
-				'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=428%3A3482',
+			url,
 		},
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
