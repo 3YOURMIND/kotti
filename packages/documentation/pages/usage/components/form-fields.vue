@@ -309,6 +309,7 @@ import {
 	KtFieldPassword,
 	KtFieldRadioGroup,
 	KtFieldSingleSelect,
+	KtFieldSingleSelectRemote,
 	KtFieldText,
 	KtFieldTextArea,
 	KtFieldToggle,
@@ -408,6 +409,12 @@ const components: Array<{
 		additionalProps: ['actions'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
+		supports: { clear: true, decoration: true, tabIndex: false },
+	},
+	{
+		additionalProps: ['queryValue'],
+		formKey: 'singleSelectValue',
+		name: 'KtFieldSingleSelectRemote',
 		supports: { clear: true, decoration: true, tabIndex: false },
 	},
 	{
@@ -534,6 +541,7 @@ export default defineComponent({
 				numberHideMaximum: boolean
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
+				queryValue: Kotti.FieldSingleSelectRemote.Props['queryValue']
 				step: Kotti.FieldNumber.Value
 				toggleType: 'checkbox' | 'switch'
 			}
@@ -569,6 +577,7 @@ export default defineComponent({
 				numberHideMaximum: false,
 				numberMaximum: null,
 				numberMinimum: null,
+				queryValue: null,
 				step: null,
 				toggleType: 'checkbox',
 			},
@@ -685,6 +694,11 @@ export default defineComponent({
 					minimumDate: settings.value.additionalProps.minimumDate,
 				})
 
+			if (componentDefinition.value.additionalProps.includes('queryValue'))
+				Object.assign(additionalProps, {
+					queryValue: settings.value.additionalProps.queryValue,
+				})
+
 			if (
 				componentDefinition.value.additionalProps.includes(
 					'collapseTagsAfter',
@@ -702,7 +716,13 @@ export default defineComponent({
 					hideChangeButtons: settings.value.additionalProps.hideChangeButtons,
 				})
 
-			if (['KtFieldMultiSelect', 'KtFieldSingleSelect'].includes(component)) {
+			if (
+				[
+					'KtFieldMultiSelect',
+					'KtFieldSingleSelect',
+					'KtFieldSingleSelectRemote',
+				].includes(component)
+			) {
 				Object.assign(additionalProps, {
 					options: singleOrMultiSelectOptions,
 				})
@@ -734,6 +754,7 @@ export default defineComponent({
 					'KtFieldDateTime',
 					'KtFieldMultiSelect',
 					'KtFieldSingleSelect',
+					'KtFieldSingleSelectRemote',
 					'KtFieldText',
 					'KtFieldTextArea',
 				].includes(component)
@@ -783,6 +804,7 @@ export default defineComponent({
 						KtFieldPassword,
 						KtFieldRadioGroup,
 						KtFieldSingleSelect,
+						KtFieldSingleSelectRemote,
 						KtFieldText,
 						KtFieldTextArea,
 						KtFieldToggle,

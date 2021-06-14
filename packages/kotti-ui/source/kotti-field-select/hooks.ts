@@ -1,9 +1,20 @@
-import { onMounted, Ref, watchEffect } from '@vue/composition-api'
+import {
+	computed,
+	ComputedRef,
+	onMounted,
+	ref,
+	Ref,
+	watchEffect,
+} from '@vue/composition-api'
 import { Select as ElSelect } from 'element-ui'
 
 import { KottiField } from '../kotti-field/types'
 
-import { KottiFieldSingleSelect, KottiFieldMultiSelect } from './types'
+import {
+	KottiFieldSingleSelect,
+	KottiFieldMultiSelect,
+	KottiFieldSingleSelectRemote,
+} from './types'
 
 export type ElSelectWithInternalAPI = ElSelect & {
 	inputWidth: number
