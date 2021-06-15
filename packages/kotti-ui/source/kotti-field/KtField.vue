@@ -6,6 +6,8 @@
 			:class="wrapperClasses"
 			@click="$emit('click', $event)"
 			@mousedown="$emit('mousedown', $event)"
+			@mouseenter="$emit('mouseenter', $event)"
+			@mouseleave="$emit('mouseleave', $event)"
 		>
 			<div v-if="hasLabel || hasHelpText" class="kt-field__header">
 				<component
