@@ -38,8 +38,6 @@ export default defineComponent({
 				if (props.showClear) {
 					$event.stopPropagation()
 					props.handleClear()
-				} else {
-					emit('click')
 				}
 			},
 			hoverOnClear,
