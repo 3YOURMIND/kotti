@@ -413,10 +413,10 @@ const components: Array<{
 		supports: { clear: true, decoration: true, tabIndex: false },
 	},
 	{
-		additionalProps: ['queryValue'],
+		additionalProps: ['query'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelectRemote',
-		supports: { clear: true, decoration: true, tabIndex: false },
+		supports: { clear: true, decoration: true, tabIndex: true },
 	},
 	{
 		additionalProps: [],
@@ -530,6 +530,10 @@ export default defineComponent({
 	setup() {
 		const values = ref<typeof INITIAL_VALUES>(INITIAL_VALUES)
 
+		const remoteSingleSelectQuery = ref<
+			Kotti.FieldSingleSelectRemote.Props['query']
+		>(null)
+
 		const settings = ref<{
 			additionalProps: {
 				actions: Kotti.FieldToggle.Value
@@ -542,7 +546,6 @@ export default defineComponent({
 				numberHideMaximum: boolean
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
-				queryValue: Kotti.FieldSingleSelectRemote.Props['queryValue']
 				step: Kotti.FieldNumber.Value
 				toggleType: 'checkbox' | 'switch'
 			}
@@ -578,7 +581,6 @@ export default defineComponent({
 				numberHideMaximum: false,
 				numberMaximum: null,
 				numberMinimum: null,
-				queryValue: null,
 				step: null,
 				toggleType: 'checkbox',
 			},
@@ -695,11 +697,6 @@ export default defineComponent({
 					minimumDate: settings.value.additionalProps.minimumDate,
 				})
 
-			if (componentDefinition.value.additionalProps.includes('queryValue'))
-				Object.assign(additionalProps, {
-					queryValue: settings.value.additionalProps.queryValue,
-				})
-
 			if (
 				componentDefinition.value.additionalProps.includes(
 					'collapseTagsAfter',
@@ -724,8 +721,19 @@ export default defineComponent({
 					'KtFieldSingleSelectRemote',
 				].includes(component)
 			) {
+				const options =
+					component === 'KtFieldSingleSelectRemote'
+						? singleOrMultiSelectOptions.filter((option) =>
+								option.label
+									.toLowerCase()
+									.includes(
+										(remoteSingleSelectQuery.value ?? '').toLowerCase(),
+									),
+						  )
+						: singleOrMultiSelectOptions
+
 				Object.assign(additionalProps, {
-					options: singleOrMultiSelectOptions,
+					options,
 				})
 
 				if (settings.value.additionalProps.actions)
@@ -737,6 +745,10 @@ export default defineComponent({
 							},
 						],
 					})
+			}
+
+			if (['KtFieldSingleSelectRemote'].includes(component)) {
+				Object.assign(additionalProps, { query: remoteSingleSelectQuery.value })
 			}
 
 			if (['KtFieldRadioGroup'].includes(component))
@@ -851,6 +863,11 @@ export default defineComponent({
 				saveSavedFieldsToLocalStorage(savedFields.value)
 			},
 			settings,
+			updateQuery: (
+				newQuery: Kotti.FieldSingleSelectRemote.Events.UpdateQuery,
+			) => {
+				remoteSingleSelectQuery.value = newQuery
+			},
 			values,
 			yocoIconOptions: Object.values(Yoco.Icon).map((icon) => ({
 				label: icon,
