@@ -68,6 +68,7 @@ import { KottiFieldSingleSelectRemote } from './types'
 import { sameWidth } from './utils/tippy-utils'
 
 const ARROW_HEIGHT = 7
+const NO_DATA = Symbol('NO_DATA')
 
 export default defineComponent({
 	name: 'KtFieldSingleSelectRemote',
@@ -169,7 +170,7 @@ export default defineComponent({
 								{
 									label: translations.value.noDataText,
 									isDisabled: true,
-									value: null,
+									value: NO_DATA,
 								},
 						  ],
 			),
