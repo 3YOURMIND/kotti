@@ -6,7 +6,7 @@ type PopperModifier = Exclude<
 >[number]
 
 /**
- * @see https://github.com/atomiks/tippyjs/issues/731#issuecomment-596460597
+ * @see {@link https://github.com/atomiks/tippyjs/issues/731#issuecomment-596460597}
  */
 export const sameWidth: PopperModifier = {
 	enabled: true,
