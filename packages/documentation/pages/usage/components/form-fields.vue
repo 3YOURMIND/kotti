@@ -10,6 +10,7 @@
 					:is="componentRepresenation.name"
 					:validator="componentRepresenation.validator"
 					v-bind="componentRepresenation.props"
+					@update:query="updateQuery"
 				>
 					<div slot="helpText" v-if="componentRepresenation.hasHelpTextSlot">
 						<div>

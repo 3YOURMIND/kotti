@@ -37,6 +37,12 @@ const KOTTI_FIELD_SELECT_PROPS = {
 	},
 }
 
+export const KOTTI_FIELD_SELECT_REMOTE_SUPPORTS: KottiField.Supports = {
+	clear: true,
+	decoration: true,
+	tabIndex: true, // TODO:verify that this will work
+}
+
 export const KOTTI_FIELD_SELECT_SUPPORTS: KottiField.Supports = {
 	clear: true,
 	decoration: true,
@@ -52,5 +58,15 @@ export const KOTTI_FIELD_MULTI_SELECT_PROPS = {
 	collapseTagsAfter: {
 		default: Number.MAX_SAFE_INTEGER,
 		type: Number,
+	},
+}
+
+export const KOTTI_FIELD_REMOTE_SINGLE_SELECT_PROPS = {
+	...KOTTI_FIELD_SELECT_PROPS,
+	// TODO: update docs to show this (add to additional props)
+	// also fake an api call and actually change this value
+	isLoadingOptions: {
+		default: false,
+		type: Boolean,
 	},
 }
