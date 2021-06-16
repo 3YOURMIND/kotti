@@ -52,7 +52,7 @@
 			</KtField>
 		</div>
 
-		<div ref="tippyContentRef" class="kt-field-select--single-remote__popper">
+		<div ref="tippyContentRef" class="kt-field-select--single-remote__tippy">
 			<div v-if="isLoadingOptions" class="TODO" />
 			<IconTextItem
 				v-for="(option, index) in modifiedOptions"
@@ -86,6 +86,7 @@ import {
 	KOTTI_FIELD_SELECT_REMOTE_SUPPORTS,
 } from './constants'
 import { KottiFieldSingleSelectRemote } from './types'
+import { sameWidth } from './utils/tippy-utils'
 
 const ARROW_HEIGHT = 7
 
@@ -122,11 +123,8 @@ export default defineComponent({
 				content: tippyContentRef.value,
 				hideOnClick: true,
 				interactive: true,
+				maxWidth: 'none',
 				offset: [0, ARROW_HEIGHT],
-				// onTrigger: () => console.log('I was triggered'),
-				// onUntrigger: () => console.log('I was untriggered'),
-				// onShow: () => console.log('Show me'),
-				// onHide: () => console.log('Hide me'),
 				onShow: () => {
 					isDropdownOpen.value = true
 				},
@@ -134,6 +132,9 @@ export default defineComponent({
 					isDropdownOpen.value = false
 				},
 				placement: 'bottom',
+				popperOptions: {
+					modifiers: [sameWidth],
+				},
 				theme: 'light-border',
 				trigger: 'click',
 			})),
@@ -210,7 +211,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../kotti-style/_variables.scss';
 .kt-field-select--single-remote {
 	&__wrapper {
 		display: flex;
@@ -221,11 +221,9 @@ export default defineComponent({
 		border: 0;
 	}
 
-	&__popper {
-		z-index: $zindex-4;
-		min-width: 200px;
+	&__tippy {
 		max-height: 40vh;
-		overflow: auto;
+		overflow-y: auto;
 	}
 }
 </style>
