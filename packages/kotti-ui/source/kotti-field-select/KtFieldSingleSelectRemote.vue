@@ -3,16 +3,17 @@
 		<div ref="ktFieldRef">
 			<KtField
 				v-bind="{ field }"
-				class="kt-field-select kt-field-select-single-remote"
+				class="kt-field-select kt-field-select--single-remote"
 				:getEmptyValue="() => null"
 				:helpTextSlot="$slots.helpText"
 			>
-				<SingleSelectInput
-					:label="selectedLabel"
-					:placeholder="placeholder"
-					:queryString="queryValue"
-					@queryInputChanged="onQueryInput"
+				<input
+					v-bind="inputProps"
+					@blur="handleBlur"
+					@focus="handleFocus"
+					@input="updateQuery"
 				/>
+
 				<template v-slot:actionIcon="{ classes, handleClear, showClear }">
 					<!-- <div ref="ktFieldChevronRef" @click.prevent> -->
 					<ActionIconNext
@@ -49,21 +50,22 @@ import { roundArrow } from 'tippy.js'
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
+import { useForceUpdate } from '../kotti-field/hooks'
 import IconTextItem from '../kotti-popover/components/IconTextItem.vue'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
 
 import ActionIconNext from './components/ActionIconNext.vue'
-import SingleSelectInput from './components/SingleSelectInput.vue'
 import {
 	KOTTI_FIELD_SINGLE_SELECT_PROPS,
 	KOTTI_FIELD_SELECT_SUPPORTS,
 } from './constants'
 import { KottiFieldSingleSelectRemote } from './types'
+
 const ARROW_HEIGHT = 7
 
 export default defineComponent({
 	name: 'KtFieldSingleSelectRemote',
-	components: { IconTextItem, KtField, ActionIconNext, SingleSelectInput },
+	components: { IconTextItem, KtField, ActionIconNext },
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_SINGLE_SELECT_PROPS,
@@ -107,8 +109,39 @@ export default defineComponent({
 			})),
 		)
 
+		const isInputFocused = ref(false)
+		const selectedLabel = computed((): string | null => {
+			if (field.currentValue === null) return null
+			return (
+				props.options.find((option) => option.value === field.currentValue)
+					?.label ?? null
+			)
+		})
+
+		const { forceUpdateKey, forceUpdate } = useForceUpdate()
+
 		return {
 			field,
+			handleBlur: () => {
+				isInputFocused.value = false
+				// eslint-disable-next-line sonarjs/no-duplicate-string
+				emit('update:query', null)
+			},
+			handleFocus: () => {
+				isInputFocused.value = true
+			},
+			inputProps: computed(() => ({
+				class: ['kt-field-select--single-remote__wrapper'],
+				forceUpdateKey: forceUpdateKey.value,
+				placeholder: props.placeholder ?? undefined,
+				size: 1,
+				type: 'text',
+				value: (() => {
+					if (isInputFocused.value) return props.query ?? undefined
+
+					return selectedLabel.value ?? undefined
+				})(),
+			})),
 			isDropdownOpen,
 			ktFieldRef,
 			ktFieldChevronRef,
@@ -150,7 +183,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
-.kt-field-select-single-remote {
+.kt-field-select--single-remote {
 	&__wrapper {
 		display: flex;
 		width: 100%;
