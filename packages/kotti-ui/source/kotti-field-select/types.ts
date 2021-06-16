@@ -55,6 +55,7 @@ export namespace KottiFieldSingleSelect {
 export namespace KottiFieldSingleSelectRemote {
 	export type Props = KottiField.Props<Value> &
 		Shared.Props & {
+			isLoadingOptions: boolean
 			query: string | null
 		}
 

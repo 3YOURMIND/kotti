@@ -28,16 +28,21 @@
 		</div>
 
 		<div ref="tippyContentRef" class="kt-field-select--single-remote__tippy">
-			<div v-if="isLoadingOptions" class="TODO" />
-			<IconTextItem
-				v-for="(option, index) in modifiedOptions"
-				v-else
-				:key="index"
-				:isDisabled="option.isDisabled"
-				:isSelected="option.isSelected"
-				:label="option.label"
-				@click.stop="() => selectOption(option.value)"
-			/>
+			<template v-for="(option, index) in modifiedOptions">
+				<IconTextItem
+					v-if="isLoadingOptions"
+					:key="index"
+					class="skeleton rectangle md"
+				/>
+				<IconTextItem
+					v-else
+					:key="index"
+					:isDisabled="option.isDisabled"
+					:isSelected="option.isSelected"
+					:label="option.label"
+					@click.stop="() => selectOption(option.value)"
+				/>
+			</template>
 		</div>
 	</div>
 </template>

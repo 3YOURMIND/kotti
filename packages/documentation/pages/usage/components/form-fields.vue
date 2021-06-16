@@ -176,6 +176,14 @@
 						size="small"
 						type="switch"
 					/>
+					<KtFieldToggle
+						v-if="componentDefinition.additionalProps.includes('isLoadingOptions')"
+						formKey="isLoadingOptions"
+						isOptional
+						label="isLoadingOptions"
+						size="small"
+						type="switch"
+					/>
 					<KtFieldDate
 						v-if="componentDefinition.additionalProps.includes('maximumDate')"
 						formKey="maximumDate"
@@ -413,7 +421,7 @@ const components: Array<{
 		supports: { clear: true, decoration: true, tabIndex: false },
 	},
 	{
-		additionalProps: ['query'],
+		additionalProps: ['isLoadingOptions', 'query'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelectRemote',
 		supports: { clear: true, decoration: true, tabIndex: true },
@@ -541,6 +549,7 @@ export default defineComponent({
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				hideChangeButtons: boolean
 				isInline: boolean
+				isLoadingOptions: boolean
 				maximumDate: Kotti.FieldDate.Value
 				minimumDate: Kotti.FieldDate.Value
 				numberHideMaximum: boolean
@@ -576,6 +585,7 @@ export default defineComponent({
 				collapseTagsAfter: null,
 				hideChangeButtons: false,
 				isInline: false,
+				isLoadingOptions: false,
 				maximumDate: null,
 				minimumDate: null,
 				numberHideMaximum: false,
@@ -685,6 +695,13 @@ export default defineComponent({
 			if (componentDefinition.value.additionalProps.includes('isInline'))
 				Object.assign(additionalProps, {
 					isInline: settings.value.additionalProps.isInline,
+				})
+
+			if (
+				componentDefinition.value.additionalProps.includes('isLoadingOptions')
+			)
+				Object.assign(additionalProps, {
+					isLoadingOptions: settings.value.additionalProps.isLoadingOptions,
 				})
 
 			if (componentDefinition.value.additionalProps.includes('maximumDate'))
