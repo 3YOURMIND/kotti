@@ -2,11 +2,10 @@
 	<div
 		:class="classes"
 		role="button"
-		@click="handleChevronClick"
-		@mouseenter="hoverOnClear = true"
-		@mouseleave="hoverOnClear = false"
+		@mouseenter="hoverOnClearIcon = true"
+		@mouseleave="hoverOnClearIcon = false"
 	>
-		<i class="yoco" v-text="icon" />
+		<i class="yoco" @click.stop="handleClear" v-text="icon" />
 	</div>
 </template>
 
@@ -14,7 +13,15 @@
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 
-export default defineComponent({
+/**
+ * eventually, when element-ui is no longer used (ActionIcon.vue is deleted) this should replace it.
+ */
+export default defineComponent<{
+	classes: string[]
+	handleClear(): void
+	isDropdownOpen: boolean
+	showClear: boolean
+}>({
 	name: 'ActionIconNext',
 	props: {
 		classes: { required: true, type: Array },
@@ -22,28 +29,14 @@ export default defineComponent({
 		isDropdownOpen: { required: true, type: Boolean },
 		showClear: { required: true, type: Boolean },
 	},
-	setup(
-		props: {
-			classes: string[]
-			handleClear(): void
-			isDropdownOpen: boolean
-			showClear: boolean
-		},
-		{ emit },
-	) {
-		const hoverOnClear = ref(false)
+	setup(props) {
+		const hoverOnClearIcon = ref(false)
 
 		return {
-			handleChevronClick: ($event: { stopPropagation(): void }) => {
-				if (props.showClear) {
-					$event.stopPropagation()
-					props.handleClear()
-				}
-			},
-			hoverOnClear,
+			hoverOnClearIcon,
 			icon: computed(
 				(): Yoco.Icon =>
-					hoverOnClear.value && props.showClear
+					props.showClear && hoverOnClearIcon.value
 						? Yoco.Icon.CLOSE
 						: props.isDropdownOpen
 						? Yoco.Icon.CHEVRON_UP

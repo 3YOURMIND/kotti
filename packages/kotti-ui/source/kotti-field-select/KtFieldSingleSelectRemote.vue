@@ -15,39 +15,14 @@
 				/>
 
 				<template v-slot:actionIcon="{ classes, handleClear, showClear }">
-					<!-- <ActionIconNext
+					<ActionIconNext
 						v-bind="{
 							classes,
 							handleClear,
 							isDropdownOpen,
 							showClear,
 						}"
-					/> -->
-					<div
-						:class="classes"
-						role="button"
-						@mouseenter="hoverOnClearIcon = true"
-						@mouseleave="hoverOnClearIcon = false"
-					>
-						<i
-							v-if="(showClear || Boolean(query)) && hoverOnClearIcon"
-							class="yoco"
-							@click.stop="handleClear"
-							v-text="Yoco.Icon.CLOSE"
-						/>
-						<i
-							v-else-if="isDropdownOpen"
-							class="yoco"
-							@click.stop
-							v-text="Yoco.Icon.CHEVRON_UP"
-						/>
-						<i
-							v-else
-							class="yoco"
-							@click.stop
-							v-text="Yoco.Icon.CHEVRON_DOWN"
-						/>
-					</div>
+					/>
 				</template>
 			</KtField>
 		</div>
@@ -69,7 +44,6 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
@@ -92,7 +66,11 @@ const ARROW_HEIGHT = 7
 
 export default defineComponent({
 	name: 'KtFieldSingleSelectRemote',
-	components: { IconTextItem, KtField, ActionIconNext },
+	components: {
+		ActionIconNext,
+		IconTextItem,
+		KtField,
+	},
 	props: {
 		...KOTTI_FIELD_PROPS,
 		...KOTTI_FIELD_REMOTE_SINGLE_SELECT_PROPS,
@@ -161,7 +139,6 @@ export default defineComponent({
 			handleFocus: () => {
 				isInputFocused.value = true
 			},
-			hoverOnClearIcon: ref(false),
 			inputProps: computed(() => ({
 				class: ['kt-field-select--single-remote__wrapper'],
 				forceUpdateKey: forceUpdateKey.value,
@@ -204,7 +181,6 @@ export default defineComponent({
 
 				forceUpdate()
 			},
-			Yoco,
 		}
 	},
 })
