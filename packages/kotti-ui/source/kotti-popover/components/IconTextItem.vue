@@ -36,7 +36,11 @@ export default defineComponent<{
 </script>
 
 <style lang="scss" scoped>
+@import '../../kotti-field/mixins';
+
 .kt-popover-options-item {
+	@include no-outline;
+
 	display: flex;
 	align-items: center;
 	padding: var(--unit-2);
@@ -54,11 +58,11 @@ export default defineComponent<{
 	}
 
 	&:not(.kt-popover-options-item--is-disabled) {
-		&:hover,
-		&:focus,
-		&::-moz-focus-inner {
+		&:hover {
 			background-color: var(--ui-01);
-			outline: none;
+			&.kt-popover-options-item--is-selected {
+				color: var(--interactive-01-hover);
+			}
 		}
 	}
 
