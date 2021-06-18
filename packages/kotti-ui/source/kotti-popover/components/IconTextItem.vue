@@ -10,7 +10,7 @@
 		v-on="$listeners"
 	>
 		<i v-if="icon" class="yoco" v-text="icon" />
-		<div v-text="label" />
+		<div v-if="label" v-text="label" />
 	</div>
 </template>
 
