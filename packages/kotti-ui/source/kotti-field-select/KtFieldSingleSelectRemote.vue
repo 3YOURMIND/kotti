@@ -9,8 +9,9 @@
 			>
 				<input
 					v-bind="inputProps"
-					@blur="handleBlur"
-					@focus="handleFocus"
+					@blur="handleInputBlur"
+					@click="handleInputClick"
+					@focus="handleInputFocus"
 					@input="updateQuery"
 				/>
 
@@ -28,28 +29,22 @@
 		</div>
 
 		<div ref="tippyContentRef" class="kt-field-select--single-remote__tippy">
-			<template v-for="(option, index) in modifiedOptions">
-				<IconTextItem
-					v-if="isLoadingOptions"
-					:key="index"
-					class="skeleton rectangle md"
-				/>
-				<IconTextItem
-					v-else
-					:key="index"
-					:isDisabled="option.isDisabled"
-					:isSelected="option.isSelected"
-					:label="option.label"
-					@click.stop="() => selectOption(option.value)"
-				/>
-			</template>
+			<IconTextItem
+				v-for="(option, index) in modifiedOptions"
+				:key="index"
+				:isDisabled="option.isDisabled"
+				:isSelected="option.isSelected"
+				:label="option.label"
+				@click.stop="() => selectOption(option)"
+			/>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { defineComponent, computed, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { castArray } from 'lodash'
 import { roundArrow } from 'tippy.js'
 
 import { KtField } from '../kotti-field'
@@ -69,6 +64,31 @@ import { sameWidth } from './utils/tippy-utils'
 
 const ARROW_HEIGHT = 7
 const NO_DATA = Symbol('NO_DATA')
+const UPDATE_QUERY = 'update:query'
+
+const isTippy = (element: Element, tippy: Element | null): boolean => {
+	if (tippy === null) return false
+
+	let currentElement = element
+
+	while (currentElement) {
+		if (currentElement.isSameNode(tippy)) return true
+		currentElement = currentElement?.parentElement
+	}
+
+	return false
+}
+
+const isEqualValue = (
+	currentValue: KottiFieldSingleSelectRemote.Value,
+	newValue: KottiFieldSingleSelectRemote.Value,
+) => currentValue === newValue
+
+type ModifiedOptions = Array<
+	KottiFieldSingleSelectRemote.Props['options'][number] & {
+		isSelected: boolean
+	}
+>
 
 export default defineComponent({
 	name: 'KtFieldSingleSelectRemote',
@@ -95,16 +115,19 @@ export default defineComponent({
 		})
 		const translations = useTranslationNamespace('KtFieldSelects')
 
-		const isDropdownOpen = ref(false)
 		const tippyTriggerRef = ref<Element | null>(null)
 		const tippyContentRef = ref<Element | null>(null)
 
-		useTippy(
+		// track in a ref because the tippy state doesn’t immediately update
+		const isDropdownOpen = ref(false)
+
+		const { tippy } = useTippy(
 			tippyTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
 				arrow: roundArrow,
 				content: tippyContentRef.value,
+				// hides the tippy if we click-away from the tippy
 				hideOnClick: true,
 				interactive: true,
 				maxWidth: 'none',
@@ -120,7 +143,7 @@ export default defineComponent({
 					modifiers: [sameWidth],
 				},
 				theme: 'light-border',
-				trigger: 'click',
+				trigger: 'manual',
 			})),
 		)
 
@@ -135,14 +158,42 @@ export default defineComponent({
 
 		const { forceUpdateKey, forceUpdate } = useForceUpdate()
 
+		const setIsDropdownOpen = (showTippy: boolean) => {
+			if (!tippy.value) return
+
+			const tippys = castArray(tippy.value)
+
+			for (const tippy of tippys) {
+				if (showTippy) tippy.show()
+				else tippy.hide()
+			}
+		}
+
+		const isUserInteracting = computed(
+			() => isInputFocused.value || isDropdownOpen.value,
+		)
+		watch(isUserInteracting, (newValue) => {
+			if (!newValue) emit(UPDATE_QUERY, null)
+		})
+
 		return {
 			field,
-			handleBlur: () => {
+			handleInputBlur: (event: { relatedTarget: HTMLElement }) => {
+				const blurToElement = event.relatedTarget
+				if (!isTippy(blurToElement, tippyContentRef.value)) {
+					setIsDropdownOpen(false)
+				}
+
 				isInputFocused.value = false
-				// eslint-disable-next-line sonarjs/no-duplicate-string
-				emit('update:query', null)
 			},
-			handleFocus: () => {
+			handleInputClick: () => {
+				// always show the dropdown if the input was clicked
+				setIsDropdownOpen(true)
+			},
+			handleInputFocus: () => {
+				// always show the dropdown if the input was focused
+				setIsDropdownOpen(true)
+
 				isInputFocused.value = true
 			},
 			inputProps: computed(() => ({
@@ -152,38 +203,52 @@ export default defineComponent({
 				size: 1,
 				type: 'text',
 				value: (() => {
-					if (isInputFocused.value) return props.query ?? undefined
+					if (isUserInteracting.value) return props.query ?? undefined
 
 					return selectedLabel.value ?? undefined
 				})(),
 			})),
 			isDropdownOpen,
-			modifiedOptions: computed<KottiFieldSingleSelectRemote.Props['options']>(
-				() =>
-					props.options.length > 0
-						? props.options.map((option) => ({
-								...option,
-								isDisabled: field.isDisabled ?? false,
-								isSelected: field.currentValue === option.value,
-						  }))
-						: [
-								{
-									label: translations.value.noDataText,
-									isDisabled: true,
-									value: NO_DATA,
-								},
-						  ],
+			modifiedOptions: computed<ModifiedOptions>(() =>
+				props.options.length > 0
+					? props.options.map((option) => ({
+							...option,
+							isDisabled: field.isDisabled ?? false,
+							isSelected: isEqualValue(field.currentValue, option.value),
+					  }))
+					: [
+							{
+								label: translations.value.noDataText,
+								isDisabled: true,
+								isSelected: false,
+								value: NO_DATA,
+							},
+					  ],
 			),
 			tippyTriggerRef,
 			tippyContentRef,
-			selectOption: (value: KottiFieldSingleSelectRemote.Value) => {
-				field.setValue(value)
-				// clear the query whenever an actual option is selected
-				emit('update:query', null)
+			selectOption: (
+				option: KottiFieldSingleSelectRemote.Props['options'][number],
+			) => {
+				// ignore disabled options
+				if (option.isDisabled) return
+
+				// optimization: no need to change the value if it’s already set
+				if (!isEqualValue(field.currentValue, option.value))
+					field.setValue(option.value)
+
+				// close the tippy instance whenever a selection is made
+				setIsDropdownOpen(false)
+
+				// when a selection is made, intentionally reset the query
+				// so that the api-call (for example) can already trigger
+				// and load the non-filtered options
+				emit(UPDATE_QUERY, null)
 			},
 			updateQuery: (event: { target: HTMLInputElement }) => {
 				const newValue = event.target.value
-				emit('update:query', newValue === '' ? null : newValue)
+
+				emit(UPDATE_QUERY, newValue === '' ? null : newValue)
 
 				forceUpdate()
 			},
@@ -205,6 +270,12 @@ export default defineComponent({
 
 	&__tippy {
 		max-height: 40vh;
+		/*
+		  undo padding from theme,
+		  alternatively fork theme and remove the left/right padding
+		*/
+		margin-right: -9px;
+		margin-left: -9px;
 		overflow-y: auto;
 	}
 }
