@@ -5,7 +5,7 @@
 		@mouseenter="hoverOnClearIcon = true"
 		@mouseleave="hoverOnClearIcon = false"
 	>
-		<i class="yoco" @click.stop="handleClear" v-text="icon" />
+		<i class="yoco" @click.stop="handleClearIfShown" v-text="icon" />
 	</div>
 </template>
 
@@ -32,11 +32,18 @@ export default defineComponent<{
 	setup(props) {
 		const hoverOnClearIcon = ref(false)
 
+		const canClear = computed<boolean>(
+			() => props.showClear && hoverOnClearIcon.value,
+		)
+
 		return {
+			handleClearIfShown: () => {
+				if (canClear.value) props.handleClear()
+			},
 			hoverOnClearIcon,
 			icon: computed(
 				(): Yoco.Icon =>
-					props.showClear && hoverOnClearIcon.value
+					canClear.value
 						? Yoco.Icon.CLOSE
 						: props.isDropdownOpen
 						? Yoco.Icon.CHEVRON_UP

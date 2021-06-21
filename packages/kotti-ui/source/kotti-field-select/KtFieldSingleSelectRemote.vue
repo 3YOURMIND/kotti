@@ -118,7 +118,7 @@ export default defineComponent({
 		const tippyTriggerRef = ref<Element | null>(null)
 		const tippyContentRef = ref<Element | null>(null)
 
-		// track in a ref because the tippy state doesn’t immediately update
+		// track in a ref because the `tippy.state.isShown` doesn’t immediately update
 		const isDropdownOpen = ref(false)
 
 		const { tippy } = useTippy(
