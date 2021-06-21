@@ -213,7 +213,7 @@ export default defineComponent({
 				props.options.length > 0
 					? props.options.map((option) => ({
 							...option,
-							isDisabled: field.isDisabled ?? false,
+							isDisabled: (field.isDisabled || option.isDisabled) ?? false,
 							isSelected: isEqualValue(field.currentValue, option.value),
 					  }))
 					: [
