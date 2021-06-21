@@ -51,3 +51,19 @@ export namespace KottiFieldSingleSelect {
 
 	export type Value = Shared.Entry['value']
 }
+
+export namespace KottiFieldSingleSelectRemote {
+	export type Props = KottiField.Props<Value> &
+		Shared.Props & {
+			isLoadingOptions: boolean
+			query: string | null
+		}
+
+	export type Translations = Shared.Translations
+
+	export type Value = Shared.Entry['value']
+
+	export namespace Events {
+		export type UpdateQuery = KottiFieldSingleSelectRemote.Props['query']
+	}
+}

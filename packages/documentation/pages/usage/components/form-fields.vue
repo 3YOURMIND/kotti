@@ -10,6 +10,7 @@
 					:is="componentRepresenation.name"
 					:validator="componentRepresenation.validator"
 					v-bind="componentRepresenation.props"
+					@update:query="updateQuery"
 				>
 					<div slot="helpText" v-if="componentRepresenation.hasHelpTextSlot">
 						<div>
@@ -175,6 +176,14 @@
 						size="small"
 						type="switch"
 					/>
+					<KtFieldToggle
+						v-if="componentDefinition.additionalProps.includes('isLoadingOptions')"
+						formKey="isLoadingOptions"
+						isOptional
+						label="isLoadingOptions"
+						size="small"
+						type="switch"
+					/>
 					<KtFieldDate
 						v-if="componentDefinition.additionalProps.includes('maximumDate')"
 						formKey="maximumDate"
@@ -309,6 +318,7 @@ import {
 	KtFieldPassword,
 	KtFieldRadioGroup,
 	KtFieldSingleSelect,
+	KtFieldSingleSelectRemote,
 	KtFieldText,
 	KtFieldTextArea,
 	KtFieldToggle,
@@ -409,6 +419,12 @@ const components: Array<{
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
 		supports: { clear: true, decoration: true, tabIndex: false },
+	},
+	{
+		additionalProps: ['isLoadingOptions', 'query'],
+		formKey: 'singleSelectValue',
+		name: 'KtFieldSingleSelectRemote',
+		supports: { clear: true, decoration: true, tabIndex: true },
 	},
 	{
 		additionalProps: [],
@@ -522,6 +538,10 @@ export default defineComponent({
 	setup() {
 		const values = ref<typeof INITIAL_VALUES>(INITIAL_VALUES)
 
+		const remoteSingleSelectQuery = ref<
+			Kotti.FieldSingleSelectRemote.Props['query']
+		>(null)
+
 		const settings = ref<{
 			additionalProps: {
 				actions: Kotti.FieldToggle.Value
@@ -529,6 +549,7 @@ export default defineComponent({
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				hideChangeButtons: boolean
 				isInline: boolean
+				isLoadingOptions: boolean
 				maximumDate: Kotti.FieldDate.Value
 				minimumDate: Kotti.FieldDate.Value
 				numberHideMaximum: boolean
@@ -564,6 +585,7 @@ export default defineComponent({
 				collapseTagsAfter: null,
 				hideChangeButtons: false,
 				isInline: false,
+				isLoadingOptions: false,
 				maximumDate: null,
 				minimumDate: null,
 				numberHideMaximum: false,
@@ -675,6 +697,13 @@ export default defineComponent({
 					isInline: settings.value.additionalProps.isInline,
 				})
 
+			if (
+				componentDefinition.value.additionalProps.includes('isLoadingOptions')
+			)
+				Object.assign(additionalProps, {
+					isLoadingOptions: settings.value.additionalProps.isLoadingOptions,
+				})
+
 			if (componentDefinition.value.additionalProps.includes('maximumDate'))
 				Object.assign(additionalProps, {
 					maximumDate: settings.value.additionalProps.maximumDate,
@@ -702,9 +731,26 @@ export default defineComponent({
 					hideChangeButtons: settings.value.additionalProps.hideChangeButtons,
 				})
 
-			if (['KtFieldMultiSelect', 'KtFieldSingleSelect'].includes(component)) {
+			if (
+				[
+					'KtFieldMultiSelect',
+					'KtFieldSingleSelect',
+					'KtFieldSingleSelectRemote',
+				].includes(component)
+			) {
+				const options =
+					component === 'KtFieldSingleSelectRemote'
+						? singleOrMultiSelectOptions.filter((option) =>
+								option.label
+									.toLowerCase()
+									.includes(
+										(remoteSingleSelectQuery.value ?? '').toLowerCase(),
+									),
+						  )
+						: singleOrMultiSelectOptions
+
 				Object.assign(additionalProps, {
-					options: singleOrMultiSelectOptions,
+					options,
 				})
 
 				if (settings.value.additionalProps.actions)
@@ -716,6 +762,10 @@ export default defineComponent({
 							},
 						],
 					})
+			}
+
+			if (['KtFieldSingleSelectRemote'].includes(component)) {
+				Object.assign(additionalProps, { query: remoteSingleSelectQuery.value })
 			}
 
 			if (['KtFieldRadioGroup'].includes(component))
@@ -734,6 +784,7 @@ export default defineComponent({
 					'KtFieldDateTime',
 					'KtFieldMultiSelect',
 					'KtFieldSingleSelect',
+					'KtFieldSingleSelectRemote',
 					'KtFieldText',
 					'KtFieldTextArea',
 				].includes(component)
@@ -783,6 +834,7 @@ export default defineComponent({
 						KtFieldPassword,
 						KtFieldRadioGroup,
 						KtFieldSingleSelect,
+						KtFieldSingleSelectRemote,
 						KtFieldText,
 						KtFieldTextArea,
 						KtFieldToggle,
@@ -828,6 +880,11 @@ export default defineComponent({
 				saveSavedFieldsToLocalStorage(savedFields.value)
 			},
 			settings,
+			updateQuery: (
+				newQuery: Kotti.FieldSingleSelectRemote.Events.UpdateQuery,
+			) => {
+				remoteSingleSelectQuery.value = newQuery
+			},
 			values,
 			yocoIconOptions: Object.values(Yoco.Icon).map((icon) => ({
 				label: icon,

@@ -104,7 +104,7 @@ export default defineComponent({
 				Array.isArray(values) &&
 				values.every(
 					(value) =>
-						['string', 'number', 'boolean'].includes(typeof value) ||
+						['boolean', 'number', 'string', 'symbol'].includes(typeof value) ||
 						value === null,
 				),
 			isEmpty: (value) => value.length === 0,

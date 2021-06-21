@@ -5,11 +5,12 @@ export type ComponentNames =
 	| 'KtFieldDateRange'
 	| 'KtFieldDateTime'
 	| 'KtFieldDateTimeRange'
-	| 'KtFieldNumber'
 	| 'KtFieldMultiSelect'
+	| 'KtFieldNumber'
 	| 'KtFieldPassword'
 	| 'KtFieldRadioGroup'
 	| 'KtFieldSingleSelect'
+	| 'KtFieldSingleSelectRemote'
 	| 'KtFieldText'
 	| 'KtFieldTextArea'
 	| 'KtFieldToggle'
@@ -29,7 +30,13 @@ export const generateComponentCode = (component: ComponentValue) =>
 		...Object.entries(component.props)
 			.sort(([a], [b]) => a.localeCompare(b))
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			.filter(([_, value]) => value !== null && value !== false)
+			.filter(([key, value]) => {
+				if (['query'].includes(key)) {
+					// display `query` prop to show even if the value is `null`
+					return true
+				}
+				return value !== null && value !== false
+			})
 			.filter(
 				([key, value]) =>
 					!(key === 'size' && value === Kotti.Field.Size.MEDIUM),
