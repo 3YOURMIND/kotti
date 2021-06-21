@@ -43,7 +43,7 @@ export default defineComponent<{
 
 	display: flex;
 	align-items: center;
-	padding: var(--unit-2);
+	padding: var(--unit-2) var(--unit-4);
 	cursor: pointer;
 	border-radius: var(--border-radius);
 

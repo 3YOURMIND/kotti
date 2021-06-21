@@ -66,7 +66,7 @@ const ARROW_HEIGHT = 7
 const NO_DATA = Symbol('NO_DATA')
 const UPDATE_QUERY = 'update:query'
 
-const isTippy = (element: Element, tippy: Element | null): boolean => {
+const isTippyOrInTippy = (element: Element, tippy: Element | null): boolean => {
 	if (tippy === null) return false
 
 	let currentElement = element
@@ -180,7 +180,7 @@ export default defineComponent({
 			field,
 			handleInputBlur: (event: { relatedTarget: HTMLElement }) => {
 				const blurToElement = event.relatedTarget
-				if (!isTippy(blurToElement, tippyContentRef.value)) {
+				if (!isTippyOrInTippy(blurToElement, tippyContentRef.value)) {
 					setIsDropdownOpen(false)
 				}
 
