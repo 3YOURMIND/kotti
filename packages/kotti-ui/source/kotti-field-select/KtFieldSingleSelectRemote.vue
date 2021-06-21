@@ -57,7 +57,7 @@ import { useTranslationNamespace } from '../kotti-translation/hooks'
 import ActionIconNext from './components/ActionIconNext.vue'
 import {
 	KOTTI_FIELD_REMOTE_SINGLE_SELECT_PROPS,
-	KOTTI_FIELD_SELECT_REMOTE_SUPPORTS,
+	KOTTI_FIELD_REMOTE_SELECT_SUPPORTS,
 } from './constants'
 import { KottiFieldSingleSelectRemote } from './types'
 import { sameWidth } from './utils/tippy-utils'
@@ -111,7 +111,7 @@ export default defineComponent({
 				value === null,
 			isEmpty: (value) => value === null,
 			props,
-			supports: KOTTI_FIELD_SELECT_REMOTE_SUPPORTS,
+			supports: KOTTI_FIELD_REMOTE_SELECT_SUPPORTS,
 		})
 		const translations = useTranslationNamespace('KtFieldSelects')
 

@@ -37,7 +37,7 @@ const KOTTI_FIELD_SELECT_PROPS = {
 	},
 }
 
-export const KOTTI_FIELD_SELECT_REMOTE_SUPPORTS: KottiField.Supports = {
+export const KOTTI_FIELD_REMOTE_SELECT_SUPPORTS: KottiField.Supports = {
 	clear: true,
 	decoration: true,
 	tabIndex: true, // TODO:verify that this will work
