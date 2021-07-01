@@ -1,6 +1,6 @@
 <template>
 	<div class="comment">
-		<KtAvatar class="comment__avatar" :src="userAvatar" />
+		<KtAvatar class="comment__avatar" :size="'sm'" :src="userAvatar" />
 		<div class="comment__wrapper">
 			<div class="comment__info">
 				<div class="info__name" v-text="userName" />
