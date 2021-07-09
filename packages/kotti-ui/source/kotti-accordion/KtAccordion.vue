@@ -12,10 +12,13 @@
 				</slot>
 			</div>
 			<div class="accordion__toggle" @click.stop="toggle">
-				<i class="yoco" v-text="isOpen ? 'minus' : 'plus'" />
+				<i class="yoco" v-text="isContentOpen ? 'minus' : 'plus'" />
 			</div>
 		</div>
-		<div class="accordion__content" :class="isOpen ? 'is-open' : 'is-close'">
+		<div
+			class="accordion__content"
+			:class="isContentOpen ? 'is-open' : 'is-close'"
+		>
 			<div ref="contentInner" class="inner">
 				<slot />
 			</div>
@@ -26,6 +29,7 @@
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 
+import { useSlideAnimaion } from './hooks'
 import { KottiAccordion } from './types'
 
 export default defineComponent<KottiAccordion.PropsInternal>({
@@ -37,16 +41,18 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 		title: { required: true, type: String },
 	},
 	setup(props) {
-		const isOpen = ref(!props.isClosed)
+		const contentInner = ref<HTMLElement | null>(null)
 
-		const toggle = () => {
-			isOpen.value = !isOpen.value
-		}
+		const { isContentOpen, toggle } = useSlideAnimaion(contentInner, {
+			duration: 300,
+			isInitiallyClosed: props.isClosed,
+		})
 		return {
+			contentInner,
 			headerToggle: () => {
 				if (props.isFullyClickable) toggle()
 			},
-			isOpen,
+			isContentOpen,
 			toggle,
 		}
 	},
