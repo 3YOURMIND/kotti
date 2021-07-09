@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-accordion">
-		<div :class="headerClasses" @click="headerToggle">
+		<div :class="headerClasses" @click="toggle">
 			<div class="kt-accordion__title">
 				<slot name="title">
 					<i v-if="icon" class="yoco kt-accordion__title__icon" v-text="icon" />
@@ -31,7 +31,6 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 	props: {
 		icon: { default: null, type: String },
 		isClosed: { default: false, type: Boolean },
-		isFullyClickable: { default: false, type: Boolean },
 		title: { required: true, type: String },
 	},
 	setup(props) {
@@ -52,9 +51,6 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 				'kt-accordion__header': true,
 				'kt-accordion__header--clickable': props.isFullyClickable,
 			})),
-			headerToggle: () => {
-				if (props.isFullyClickable) toggle()
-			},
 			toggle,
 			toggleIcon: computed(() =>
 				isContentOpen.value ? Yoco.Icon.MINUS : Yoco.Icon.PLUS,
