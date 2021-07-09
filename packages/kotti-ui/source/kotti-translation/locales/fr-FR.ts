@@ -40,17 +40,17 @@ export const frFR: KottiTranslation.Messages = {
 		enabledLabel: 'Activé',
 		filterLabel: 'Filtre',
 		filtersLabel: 'Filtres',
-		multiEnum: {
-			IS_EMPTY: 'est vide',
-			ONE_OF: 'fait partie de',
-		},
-		number: {
+		integer: {
 			EQUAL: 'est égal à',
 			GREATER_THAN: 'est supérieur à',
 			GREATER_THAN_OR_EQUAL: 'est supérieur ou égal à',
 			IS_EMPTY: 'est vide',
 			LESS_THAN: 'est inférieur à',
 			LESS_THAN_OR_EQUAL: 'est inférieur ou égal à',
+		},
+		multiEnum: {
+			IS_EMPTY: 'est vide',
+			ONE_OF: 'fait partie de',
 		},
 		searchLabel: 'Rechercher',
 		singleEnum: {

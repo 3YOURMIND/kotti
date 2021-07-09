@@ -34,18 +34,18 @@ const areValidOperations = (
 					Kotti.Filters.Operation.DateRange,
 				),
 			)
+		case Kotti.Filters.FilterType.INTEGER:
+			return operations.every((operation) =>
+				isValueInEnum<Kotti.Filters.Operation.Integer>(
+					operation,
+					Kotti.Filters.Operation.Integer,
+				),
+			)
 		case Kotti.Filters.FilterType.MULTI_ENUM:
 			return operations.every((operation) =>
 				isValueInEnum<Kotti.Filters.Operation.MultiEnum>(
 					operation,
 					Kotti.Filters.Operation.MultiEnum,
-				),
-			)
-		case Kotti.Filters.FilterType.NUMBER:
-			return operations.every((operation) =>
-				isValueInEnum<Kotti.Filters.Operation.Number>(
-					operation,
-					Kotti.Filters.Operation.Number,
 				),
 			)
 		case Kotti.Filters.FilterType.SINGLE_ENUM:

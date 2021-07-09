@@ -84,8 +84,8 @@ export default defineComponent({
 				value: null,
 			},
 			{
-				key: 'number-column',
-				operation: Kotti.Filters.Operation.Number.EQUAL,
+				key: 'integer-column',
+				operation: Kotti.Filters.Operation.Integer.EQUAL,
 				value: null,
 			},
 		])
@@ -124,17 +124,17 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.STRING,
 					},
 					{
-						key: 'number-column',
-						label: 'Number Column',
+						key: 'integer-column',
+						label: 'Integer Column',
 						operations: [
-							Kotti.Filters.Operation.Number.EQUAL,
-							Kotti.Filters.Operation.Number.GREATER_THAN,
-							Kotti.Filters.Operation.Number.GREATER_THAN_OR_EQUAL,
-							Kotti.Filters.Operation.Number.LESS_THAN,
-							Kotti.Filters.Operation.Number.LESS_THAN_OR_EQUAL,
-							Kotti.Filters.Operation.Number.IS_EMPTY,
+							Kotti.Filters.Operation.Integer.EQUAL,
+							Kotti.Filters.Operation.Integer.GREATER_THAN,
+							Kotti.Filters.Operation.Integer.GREATER_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Integer.LESS_THAN,
+							Kotti.Filters.Operation.Integer.LESS_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Integer.IS_EMPTY,
 						],
-						type: Kotti.Filters.FilterType.NUMBER,
+						type: Kotti.Filters.FilterType.INTEGER,
 					},
 					{
 						key: 'currency-column',

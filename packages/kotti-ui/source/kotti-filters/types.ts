@@ -11,8 +11,8 @@ export namespace KottiFilters {
 		BOOLEAN = 'BOOLEAN',
 		CURRENCY = 'CURRENCY',
 		DATE_RANGE = 'DATE_RANGE',
+		INTEGER = 'INTEGER',
 		MULTI_ENUM = 'MULTI_ENUM',
-		NUMBER = 'NUMBER',
 		SEARCH = 'SEARCH',
 		SINGLE_ENUM = 'SINGLE_ENUM',
 		STRING = 'STRING',
@@ -38,18 +38,18 @@ export namespace KottiFilters {
 			IS_EMPTY = 'IS_EMPTY',
 		}
 
-		export enum MultiEnum {
-			IS_EMPTY = 'IS_EMPTY',
-			ONE_OF = 'ONE_OF', // OR
-		}
-
-		export enum Number {
+		export enum Integer {
 			EQUAL = 'EQUAL',
 			GREATER_THAN = 'GREATER_THAN',
 			GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL',
 			IS_EMPTY = 'IS_EMPTY',
 			LESS_THAN = 'LESS_THAN',
 			LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
+		}
+
+		export enum MultiEnum {
+			IS_EMPTY = 'IS_EMPTY',
+			ONE_OF = 'ONE_OF', // OR
 		}
 
 		export enum Search {
@@ -71,8 +71,8 @@ export namespace KottiFilters {
 			| Operation.Boolean
 			| Operation.Currency
 			| Operation.DateRange
+			| Operation.Integer
 			| Operation.MultiEnum
-			| Operation.Number
 			| Operation.SingleEnum
 			| Operation.String
 	}
@@ -106,19 +106,19 @@ export namespace KottiFilters {
 			type: FilterType.DATE_RANGE
 		}
 
+		export type Integer<
+			OPERATION extends Operation.Integer = Operation.Integer
+		> = Common & {
+			operations: OPERATION[]
+			type: FilterType.INTEGER
+		}
+
 		export type MultiEnum<
 			OPERATION extends Operation.MultiEnum = Operation.MultiEnum
 		> = Common & {
 			operations: OPERATION[]
 			options: Kotti.FieldMultiSelect.Props['options']
 			type: FilterType.MULTI_ENUM
-		}
-
-		export type Number<
-			OPERATION extends Operation.Number = Operation.Number
-		> = Common & {
-			operations: OPERATION[]
-			type: FilterType.NUMBER
 		}
 
 		export type Search = Common & {
@@ -145,8 +145,8 @@ export namespace KottiFilters {
 			| Column.Boolean
 			| Column.Currency
 			| Column.DateRange
+			| Column.Integer
 			| Column.MultiEnum
-			| Column.Number
 			| Column.Search
 			| Column.SingleEnum
 			| Column.String
@@ -199,8 +199,8 @@ export namespace KottiFilters {
 		enabledLabel: string
 		filterLabel: string
 		filtersLabel: string
+		integer: Record<Operation.Integer, string>
 		multiEnum: Record<Operation.MultiEnum, string>
-		number: Record<Operation.Number, string>
 		searchLabel: string
 		singleEnum: Record<Operation.SingleEnum, string>
 		string: Record<Operation.String, string>

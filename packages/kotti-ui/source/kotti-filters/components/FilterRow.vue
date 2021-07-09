@@ -154,7 +154,7 @@ export default defineComponent<{
 			switch (props.column?.type) {
 				case Kotti.Filters.FilterType.CURRENCY:
 					return props.column.step
-				case Kotti.Filters.FilterType.NUMBER:
+				case Kotti.Filters.FilterType.INTEGER:
 					return 1
 				default:
 					return null
@@ -192,6 +192,18 @@ export default defineComponent<{
 				})
 				return
 			}
+
+			if (props.column?.type === Kotti.Filters.FilterType.INTEGER) {
+				emit('input', {
+					...newFilter,
+					value:
+						typeof newFilter.value === 'number'
+							? Math.trunc(newFilter.value)
+							: null,
+				})
+				return
+			}
+
 			emit('input', newFilter)
 		}
 		return {

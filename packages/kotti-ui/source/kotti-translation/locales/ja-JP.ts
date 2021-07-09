@@ -42,17 +42,17 @@ export const jaJP: KottiTranslation.Messages = {
 		enabledLabel: '有効',
 		filterLabel: 'フィルタ',
 		filtersLabel: 'フィルタ',
-		multiEnum: {
-			IS_EMPTY: '空です',
-			ONE_OF: 'の一つであります',
-		},
-		number: {
+		integer: {
 			EQUAL: 'に等しい',
 			GREATER_THAN: 'より大きい',
 			GREATER_THAN_OR_EQUAL: '以上',
 			IS_EMPTY: '空です',
 			LESS_THAN: 'よりも少ない',
 			LESS_THAN_OR_EQUAL: '以下である',
+		},
+		multiEnum: {
+			IS_EMPTY: '空です',
+			ONE_OF: 'の一つであります',
 		},
 		searchLabel: '探す',
 		singleEnum: {

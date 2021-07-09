@@ -7,7 +7,7 @@ export const getFilterEmptyValue = (
 	switch (type) {
 		case Kotti.Filters.FilterType.BOOLEAN:
 		case Kotti.Filters.FilterType.CURRENCY:
-		case Kotti.Filters.FilterType.NUMBER:
+		case Kotti.Filters.FilterType.INTEGER:
 		case Kotti.Filters.FilterType.SINGLE_ENUM:
 		case Kotti.Filters.FilterType.STRING:
 			return null
@@ -64,6 +64,15 @@ export const getFilterInitialState = (
 				),
 				value: [null, null],
 			}
+		case Kotti.Filters.FilterType.INTEGER:
+			return {
+				key: columnKey,
+				operation: getFilterInitialOperation(
+					column.operations,
+					Kotti.Filters.Operation.Integer.EQUAL,
+				),
+				value: null,
+			}
 		case Kotti.Filters.FilterType.MULTI_ENUM:
 			return {
 				key: columnKey,
@@ -72,15 +81,6 @@ export const getFilterInitialState = (
 					Kotti.Filters.Operation.MultiEnum.ONE_OF,
 				),
 				value: [],
-			}
-		case Kotti.Filters.FilterType.NUMBER:
-			return {
-				key: columnKey,
-				operation: getFilterInitialOperation(
-					column.operations,
-					Kotti.Filters.Operation.Number.EQUAL,
-				),
-				value: null,
 			}
 		case Kotti.Filters.FilterType.SINGLE_ENUM:
 			return {
@@ -125,14 +125,14 @@ export const getOperationOptions = (
 				label: translations.value.dateRange[operation],
 				value: operation,
 			}))
+		case Kotti.Filters.FilterType.INTEGER:
+			return column.operations.map((operation) => ({
+				label: translations.value.integer[operation],
+				value: operation,
+			}))
 		case Kotti.Filters.FilterType.MULTI_ENUM:
 			return column.operations.map((operation) => ({
 				label: translations.value.multiEnum[operation],
-				value: operation,
-			}))
-		case Kotti.Filters.FilterType.NUMBER:
-			return column.operations.map((operation) => ({
-				label: translations.value.number[operation],
 				value: operation,
 			}))
 		case Kotti.Filters.FilterType.SINGLE_ENUM:
@@ -165,7 +165,7 @@ export const getValueComponent = (
 		case Kotti.Filters.FilterType.BOOLEAN:
 			return 'KtFieldToggle'
 		case Kotti.Filters.FilterType.CURRENCY:
-		case Kotti.Filters.FilterType.NUMBER:
+		case Kotti.Filters.FilterType.INTEGER:
 			return 'KtFieldNumber'
 		case Kotti.Filters.FilterType.DATE_RANGE:
 			return 'KtFieldDateRange'
@@ -191,10 +191,10 @@ export const isEmptyOperation = (
 			return filterOperation === Kotti.Filters.Operation.Currency.IS_EMPTY
 		case Kotti.Filters.FilterType.DATE_RANGE:
 			return filterOperation === Kotti.Filters.Operation.DateRange.IS_EMPTY
+		case Kotti.Filters.FilterType.INTEGER:
+			return filterOperation === Kotti.Filters.Operation.Integer.IS_EMPTY
 		case Kotti.Filters.FilterType.MULTI_ENUM:
 			return filterOperation === Kotti.Filters.Operation.MultiEnum.IS_EMPTY
-		case Kotti.Filters.FilterType.NUMBER:
-			return filterOperation === Kotti.Filters.Operation.Number.IS_EMPTY
 		case Kotti.Filters.FilterType.SINGLE_ENUM:
 			return filterOperation === Kotti.Filters.Operation.SingleEnum.IS_EMPTY
 		case Kotti.Filters.FilterType.STRING:

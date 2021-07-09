@@ -41,17 +41,17 @@ export const deDE: KottiTranslation.Messages = {
 		enabledLabel: 'Aktiviert',
 		filterLabel: 'Filter',
 		filtersLabel: 'Filter',
-		multiEnum: {
-			IS_EMPTY: 'ist leer',
-			ONE_OF: 'ist einer von',
-		},
-		number: {
+		integer: {
 			EQUAL: 'gleich',
 			GREATER_THAN: 'ist größer als',
 			GREATER_THAN_OR_EQUAL: 'ist größer oder gleich',
 			IS_EMPTY: 'ist leer',
 			LESS_THAN: 'ist kleiner als',
 			LESS_THAN_OR_EQUAL: 'ist kleiner oder gleich',
+		},
+		multiEnum: {
+			IS_EMPTY: 'ist leer',
+			ONE_OF: 'ist einer von',
 		},
 		searchLabel: 'Suche',
 		singleEnum: {
