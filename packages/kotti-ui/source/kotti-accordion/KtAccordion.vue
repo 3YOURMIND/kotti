@@ -15,12 +15,7 @@
 				<i class="yoco" v-text="isOpen ? 'minus' : 'plus'" />
 			</div>
 		</div>
-		<div
-			class="accordion__content"
-			:class="isOpen ? 'is-open' : 'is-close'"
-			:style="`--height: ${contentHeight}px`"
-			@click="setHeight"
-		>
+		<div class="accordion__content" :class="isOpen ? 'is-open' : 'is-close'">
 			<div ref="contentInner" class="inner">
 				<slot />
 			</div>
@@ -28,8 +23,12 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref } from '@vue/composition-api'
+
+import { KottiAccordion } from './types'
+
+export default defineComponent<KottiAccordion.PropsInternal>({
 	name: 'KtAccordion',
 	props: {
 		icon: { default: null, type: String },
@@ -37,37 +36,21 @@ export default {
 		isFullyClickable: { default: false, type: Boolean },
 		title: { required: true, type: String },
 	},
-	data() {
+	setup(props) {
+		const isOpen = ref(!props.isClosed)
+
+		const toggle = () => {
+			isOpen.value = !isOpen.value
+		}
 		return {
-			isOpen: true,
-			contentHeight: null,
-			interval: null,
+			headerToggle: () => {
+				if (props.isFullyClickable) toggle()
+			},
+			isOpen,
+			toggle,
 		}
 	},
-	mounted() {
-		this.isOpen = !this.isClosed
-		// This is the best solution right now
-		// It will handle the case when the content change
-		const reloadingTime = 500
-		this.interval = setInterval(this.setHeight, reloadingTime)
-	},
-	beforeDestroy() {
-		clearInterval(this.interval)
-	},
-	methods: {
-		setHeight() {
-			const height = this.$refs.contentInner.clientHeight
-			this.contentHeight = height
-		},
-		headerToggle() {
-			if (this.isFullyClickable) this.toggle()
-		},
-		toggle() {
-			this.setHeight()
-			this.isOpen = !this.isOpen
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss">
