@@ -11,6 +11,7 @@ export namespace KottiFilters {
 		BOOLEAN = 'BOOLEAN',
 		CURRENCY = 'CURRENCY',
 		DATE_RANGE = 'DATE_RANGE',
+		FLOAT = 'FLOAT',
 		INTEGER = 'INTEGER',
 		MULTI_ENUM = 'MULTI_ENUM',
 		SEARCH = 'SEARCH',
@@ -36,6 +37,15 @@ export namespace KottiFilters {
 		export enum DateRange {
 			IN_RANGE = 'IN_RANGE',
 			IS_EMPTY = 'IS_EMPTY',
+		}
+
+		export enum Float {
+			EQUAL = 'EQUAL',
+			GREATER_THAN = 'GREATER_THAN',
+			GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL',
+			IS_EMPTY = 'IS_EMPTY',
+			LESS_THAN = 'LESS_THAN',
+			LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
 		}
 
 		export enum Integer {
@@ -71,6 +81,7 @@ export namespace KottiFilters {
 			| Operation.Boolean
 			| Operation.Currency
 			| Operation.DateRange
+			| Operation.Float
 			| Operation.Integer
 			| Operation.MultiEnum
 			| Operation.SingleEnum
@@ -104,6 +115,14 @@ export namespace KottiFilters {
 		> = Common & {
 			operations: OPERATION[]
 			type: FilterType.DATE_RANGE
+		}
+
+		export type Float<
+			OPERATION extends Operation.Float = Operation.Float
+		> = Common & {
+			operations: OPERATION[]
+			step: Kotti.FieldNumber.Props['step']
+			type: FilterType.FLOAT
 		}
 
 		export type Integer<
@@ -145,6 +164,7 @@ export namespace KottiFilters {
 			| Column.Boolean
 			| Column.Currency
 			| Column.DateRange
+			| Column.Float
 			| Column.Integer
 			| Column.MultiEnum
 			| Column.Search
@@ -199,6 +219,7 @@ export namespace KottiFilters {
 		enabledLabel: string
 		filterLabel: string
 		filtersLabel: string
+		float: Record<Operation.Float, string>
 		integer: Record<Operation.Integer, string>
 		multiEnum: Record<Operation.MultiEnum, string>
 		searchLabel: string

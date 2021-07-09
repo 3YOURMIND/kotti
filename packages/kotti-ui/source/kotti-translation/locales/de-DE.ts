@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { KottiTranslation } from '../types'
 
 export const deDE: KottiTranslation.Messages = {
@@ -41,6 +42,14 @@ export const deDE: KottiTranslation.Messages = {
 		enabledLabel: 'Aktiviert',
 		filterLabel: 'Filter',
 		filtersLabel: 'Filter',
+		float: {
+			EQUAL: 'gleich',
+			GREATER_THAN: 'ist größer als',
+			GREATER_THAN_OR_EQUAL: 'ist größer oder gleich',
+			IS_EMPTY: 'ist leer',
+			LESS_THAN: 'ist kleiner als',
+			LESS_THAN_OR_EQUAL: 'ist kleiner oder gleich',
+		},
 		integer: {
 			EQUAL: 'gleich',
 			GREATER_THAN: 'ist größer als',

@@ -153,6 +153,7 @@ export default defineComponent<{
 		const valueStep = computed<Kotti.FieldNumber.Props['step']>(() => {
 			switch (props.column?.type) {
 				case Kotti.Filters.FilterType.CURRENCY:
+				case Kotti.Filters.FilterType.FLOAT:
 					return props.column.step
 				case Kotti.Filters.FilterType.INTEGER:
 					return 1

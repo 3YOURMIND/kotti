@@ -41,6 +41,14 @@ export const esES: KottiTranslation.Messages = {
 		enabledLabel: 'Habilitado',
 		filterLabel: 'Filtro',
 		filtersLabel: 'Filtros',
+		float: {
+			EQUAL: 'es igual a',
+			GREATER_THAN: 'es mayor que',
+			GREATER_THAN_OR_EQUAL: 'es mayor o igual a',
+			IS_EMPTY: 'está vacío',
+			LESS_THAN: 'es menor que',
+			LESS_THAN_OR_EQUAL: 'es menor que o igual a',
+		},
 		integer: {
 			EQUAL: 'es igual a',
 			GREATER_THAN: 'es mayor que',

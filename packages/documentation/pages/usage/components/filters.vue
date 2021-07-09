@@ -137,6 +137,20 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.INTEGER,
 					},
 					{
+						key: 'float-column',
+						label: 'Float Column',
+						operations: [
+							Kotti.Filters.Operation.Float.EQUAL,
+							Kotti.Filters.Operation.Float.GREATER_THAN,
+							Kotti.Filters.Operation.Float.GREATER_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Float.LESS_THAN,
+							Kotti.Filters.Operation.Float.LESS_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Float.IS_EMPTY,
+						],
+						step: 0.1,
+						type: Kotti.Filters.FilterType.FLOAT,
+					},
+					{
 						key: 'currency-column',
 						label: 'Currency Column',
 						operations: [

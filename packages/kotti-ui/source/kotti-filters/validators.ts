@@ -34,6 +34,13 @@ const areValidOperations = (
 					Kotti.Filters.Operation.DateRange,
 				),
 			)
+		case Kotti.Filters.FilterType.FLOAT:
+			return operations.every((operation) =>
+				isValueInEnum<Kotti.Filters.Operation.Float>(
+					operation,
+					Kotti.Filters.Operation.Float,
+				),
+			)
 		case Kotti.Filters.FilterType.INTEGER:
 			return operations.every((operation) =>
 				isValueInEnum<Kotti.Filters.Operation.Integer>(
