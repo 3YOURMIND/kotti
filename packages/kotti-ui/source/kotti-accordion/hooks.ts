@@ -1,9 +1,11 @@
 import { ref, Ref } from '@vue/composition-api'
-type Options = KeyframeAnimationOptions & {
+export type Options = KeyframeAnimationOptions & {
 	isInitiallyClosed?: boolean
 }
 
 const getDefaultOptions = (): Options => ({
+	duration: 250,
+	easing: 'ease',
 	fill: 'forwards',
 	isInitiallyClosed: true,
 })

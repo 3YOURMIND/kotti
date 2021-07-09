@@ -1,5 +1,6 @@
 import { ZodSchema } from 'zod'
 
+export { KottiAccordion as Accordion } from '../kotti-accordion/types'
 export { KottiAvatar as Avatar } from '../kotti-avatar/types'
 export { KottiAvatarGroup as AvatarGroup } from '../kotti-avatar-group/types'
 export { KottiBanner as Banner } from '../kotti-banner/types'
