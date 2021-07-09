@@ -30,6 +30,8 @@
 					:collapseTagsAfter="1"
 					formKey="value"
 					:options="valueOptions"
+					:prefix="valuePrefix"
+					:step="valueStep"
 					type="switch"
 				/>
 				<span
@@ -143,6 +145,21 @@ export default defineComponent<{
 					return []
 			}
 		})
+		const valuePrefix = computed<Kotti.FieldNumber.Props['prefix']>(() =>
+			props.column?.type === Kotti.Filters.FilterType.CURRENCY
+				? props.column.prefix
+				: null,
+		)
+		const valueStep = computed<Kotti.FieldNumber.Props['step']>(() => {
+			switch (props.column?.type) {
+				case Kotti.Filters.FilterType.CURRENCY:
+					return props.column.step
+				case Kotti.Filters.FilterType.NUMBER:
+					return 1
+				default:
+					return null
+			}
+		})
 		const isOperationSelectDisabled = computed<boolean>(
 			() => operationOptions.value.length <= 1,
 		)
@@ -190,6 +207,8 @@ export default defineComponent<{
 			valueComponent,
 			valueContainerClasses,
 			valueOptions,
+			valuePrefix,
+			valueStep,
 			Yoco,
 		}
 	},

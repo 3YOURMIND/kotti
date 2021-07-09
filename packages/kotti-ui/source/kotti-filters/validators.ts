@@ -20,6 +20,13 @@ const areValidOperations = (
 					Kotti.Filters.Operation.Boolean,
 				),
 			)
+		case Kotti.Filters.FilterType.CURRENCY:
+			return operations.every((operation) =>
+				isValueInEnum<Kotti.Filters.Operation.Currency>(
+					operation,
+					Kotti.Filters.Operation.Currency,
+				),
+			)
 		case Kotti.Filters.FilterType.DATE_RANGE:
 			return operations.every((operation) =>
 				isValueInEnum<Kotti.Filters.Operation.DateRange>(

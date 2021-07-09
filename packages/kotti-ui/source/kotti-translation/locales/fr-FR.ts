@@ -23,6 +23,14 @@ export const frFR: KottiTranslation.Messages = {
 			IS_EMPTY: 'est vide',
 		},
 		clearAllLabel: 'Tout Effacer',
+		currency: {
+			EQUAL: 'est égal à',
+			GREATER_THAN: 'est supérieur à',
+			GREATER_THAN_OR_EQUAL: 'est supérieur ou égal à',
+			IS_EMPTY: 'est vide',
+			LESS_THAN: 'est inférieur à',
+			LESS_THAN_OR_EQUAL: 'est inférieur ou égal à',
+		},
 		dateRange: {
 			IN_RANGE: 'est à portée',
 			IS_EMPTY: 'est vide',

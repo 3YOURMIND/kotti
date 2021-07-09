@@ -24,6 +24,14 @@ export const esES: KottiTranslation.Messages = {
 			IS_EMPTY: 'está vacío',
 		},
 		clearAllLabel: 'Limpiar Todo',
+		currency: {
+			EQUAL: 'es igual a',
+			GREATER_THAN: 'es mayor que',
+			GREATER_THAN_OR_EQUAL: 'es mayor o igual a',
+			IS_EMPTY: 'está vacío',
+			LESS_THAN: 'es menor que',
+			LESS_THAN_OR_EQUAL: 'es menor que o igual a',
+		},
 		dateRange: {
 			IN_RANGE: 'está en el rango',
 			IS_EMPTY: 'está vacío',

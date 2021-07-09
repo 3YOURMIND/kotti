@@ -137,6 +137,21 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.NUMBER,
 					},
 					{
+						key: 'currency-column',
+						label: 'Currency Column',
+						operations: [
+							Kotti.Filters.Operation.Currency.EQUAL,
+							Kotti.Filters.Operation.Currency.GREATER_THAN,
+							Kotti.Filters.Operation.Currency.GREATER_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Currency.LESS_THAN,
+							Kotti.Filters.Operation.Currency.LESS_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Currency.IS_EMPTY,
+						],
+						prefix: 'EUR',
+						step: 0.01,
+						type: Kotti.Filters.FilterType.CURRENCY,
+					},
+					{
 						key: 'boolean-column',
 						label: 'Boolean Column',
 						operations: [

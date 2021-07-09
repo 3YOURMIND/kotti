@@ -24,6 +24,14 @@ export const deDE: KottiTranslation.Messages = {
 			IS_EMPTY: 'ist leer',
 		},
 		clearAllLabel: 'Alles Löschen',
+		currency: {
+			EQUAL: 'gleich',
+			GREATER_THAN: 'ist größer als',
+			GREATER_THAN_OR_EQUAL: 'ist größer oder gleich',
+			IS_EMPTY: 'ist leer',
+			LESS_THAN: 'ist kleiner als',
+			LESS_THAN_OR_EQUAL: 'ist kleiner oder gleich',
+		},
 		dateRange: {
 			IN_RANGE: 'ist in Reichweite',
 			IS_EMPTY: 'ist leer',

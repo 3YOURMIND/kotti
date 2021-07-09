@@ -23,6 +23,14 @@ export const enUS: KottiTranslation.Messages = {
 			IS_EMPTY: 'is empty',
 		},
 		clearAllLabel: 'Clear All',
+		currency: {
+			EQUAL: 'is equal to',
+			GREATER_THAN: 'is greater than',
+			GREATER_THAN_OR_EQUAL: 'is greater than or equal to',
+			IS_EMPTY: 'is empty',
+			LESS_THAN: 'is less than',
+			LESS_THAN_OR_EQUAL: 'is less than or equal to',
+		},
 		dateRange: {
 			IN_RANGE: 'is in range',
 			IS_EMPTY: 'is empty',

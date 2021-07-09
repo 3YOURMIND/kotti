@@ -25,6 +25,14 @@ export const jaJP: KottiTranslation.Messages = {
 			IS_EMPTY: '空です',
 		},
 		clearAllLabel: 'すべてクリア',
+		currency: {
+			EQUAL: 'に等しい',
+			GREATER_THAN: 'より大きい',
+			GREATER_THAN_OR_EQUAL: '以上',
+			IS_EMPTY: '空です',
+			LESS_THAN: 'よりも少ない',
+			LESS_THAN_OR_EQUAL: '以下である',
+		},
 		dateRange: {
 			IN_RANGE: '範囲内です',
 			IS_EMPTY: '空です',
