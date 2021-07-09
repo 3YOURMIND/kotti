@@ -53,6 +53,7 @@ export namespace KottiFilters {
 
 		export enum String {
 			CONTAINS = 'CONTAINS',
+			EQUAL = 'EQUAL',
 			IS_EMPTY = 'IS_EMPTY',
 		}
 

@@ -53,6 +53,7 @@ export const jaJP: KottiTranslation.Messages = {
 		},
 		string: {
 			CONTAINS: '含まれています',
+			EQUAL: 'です',
 			IS_EMPTY: '空です',
 		},
 		unsetLabel: '設定解除',

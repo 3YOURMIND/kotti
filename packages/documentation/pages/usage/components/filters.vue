@@ -118,6 +118,7 @@ export default defineComponent({
 						label: 'String Column',
 						operations: [
 							Kotti.Filters.Operation.String.CONTAINS,
+							Kotti.Filters.Operation.String.EQUAL,
 							Kotti.Filters.Operation.String.IS_EMPTY,
 						],
 						type: Kotti.Filters.FilterType.STRING,

@@ -52,6 +52,7 @@ export const esES: KottiTranslation.Messages = {
 		},
 		string: {
 			CONTAINS: 'contiene',
+			EQUAL: 'es',
 			IS_EMPTY: 'está vacío',
 		},
 		unsetLabel: 'No Establecido',

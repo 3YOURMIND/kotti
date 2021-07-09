@@ -52,6 +52,7 @@ export const deDE: KottiTranslation.Messages = {
 		},
 		string: {
 			CONTAINS: 'enthält',
+			EQUAL: 'ist',
 			IS_EMPTY: 'ist leer',
 		},
 		unsetLabel: 'Nicht Eingestellt',
