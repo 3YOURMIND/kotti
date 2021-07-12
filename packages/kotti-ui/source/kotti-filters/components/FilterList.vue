@@ -20,7 +20,7 @@
 			:columnOptions="getColumnOptions()"
 			:isFirstItem="filters.length === 0"
 			@input="handleAddFilter"
-			@remove="isAddingFilter = false"
+			@remove="handleCancelAddFilter"
 		/>
 	</div>
 </template>
@@ -99,6 +99,9 @@ export default defineComponent<{
 			emit('input', [...props.filters, newFilter])
 			emit('endAddingFilter')
 		}
+		const handleCancelAddFilter = () => {
+			emit('endAddingFilter')
+		}
 		const handleRemoveFilter = (
 			filterKey: Kotti.Filters.InternalFilter['key'],
 		) => {
@@ -125,6 +128,7 @@ export default defineComponent<{
 			getColumn,
 			getColumnOptions,
 			handleAddFilter,
+			handleCancelAddFilter,
 			handleRemoveFilter,
 			handleSetFilter,
 			Kotti,
