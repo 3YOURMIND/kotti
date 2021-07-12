@@ -1,5 +1,19 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import { KottiTranslation } from '../types'
+
+namespace Common {
+	export const is = 'ist'
+
+	export const isEmpty = 'ist leer'
+
+	export const number = {
+		EQUAL: 'gleich',
+		GREATER_THAN: 'ist größer als',
+		GREATER_THAN_OR_EQUAL: 'ist größer oder gleich',
+		IS_EMPTY: Common.isEmpty,
+		LESS_THAN: 'ist kleiner als',
+		LESS_THAN_OR_EQUAL: 'ist kleiner oder gleich',
+	}
+}
 
 export const deDE: KottiTranslation.Messages = {
 	KtBanner: {
@@ -21,56 +35,35 @@ export const deDE: KottiTranslation.Messages = {
 		addFilterLabel: 'Filter Hinzufügen',
 		andLabel: 'Und',
 		boolean: {
-			EQUAL: 'ist',
-			IS_EMPTY: 'ist leer',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		clearAllLabel: 'Alles Löschen',
-		currency: {
-			EQUAL: 'gleich',
-			GREATER_THAN: 'ist größer als',
-			GREATER_THAN_OR_EQUAL: 'ist größer oder gleich',
-			IS_EMPTY: 'ist leer',
-			LESS_THAN: 'ist kleiner als',
-			LESS_THAN_OR_EQUAL: 'ist kleiner oder gleich',
-		},
+		currency: Common.number,
 		dateRange: {
 			IN_RANGE: 'ist in Reichweite',
-			IS_EMPTY: 'ist leer',
+			IS_EMPTY: Common.isEmpty,
 		},
 		disabledLabel: 'Deaktiviert',
 		emptyListLabel: 'Keine Filter Angewendet',
 		enabledLabel: 'Aktiviert',
 		filterLabel: 'Filter',
 		filtersLabel: 'Filter',
-		float: {
-			EQUAL: 'gleich',
-			GREATER_THAN: 'ist größer als',
-			GREATER_THAN_OR_EQUAL: 'ist größer oder gleich',
-			IS_EMPTY: 'ist leer',
-			LESS_THAN: 'ist kleiner als',
-			LESS_THAN_OR_EQUAL: 'ist kleiner oder gleich',
-		},
-		integer: {
-			EQUAL: 'gleich',
-			GREATER_THAN: 'ist größer als',
-			GREATER_THAN_OR_EQUAL: 'ist größer oder gleich',
-			IS_EMPTY: 'ist leer',
-			LESS_THAN: 'ist kleiner als',
-			LESS_THAN_OR_EQUAL: 'ist kleiner oder gleich',
-		},
+		float: Common.number,
+		integer: Common.number,
 		multiEnum: {
-			IS_EMPTY: 'ist leer',
+			IS_EMPTY: Common.isEmpty,
 			ONE_OF: 'ist einer von',
 		},
 		searchLabel: 'Suche',
 		singleEnum: {
-			EQUAL: 'ist',
-			IS_EMPTY: 'ist leer',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		string: {
 			CONTAINS: 'enthält',
-			EQUAL: 'ist',
-			IS_EMPTY: 'ist leer',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		unsetLabel: 'Nicht Eingestellt',
 		whereLabel: 'Wo',
