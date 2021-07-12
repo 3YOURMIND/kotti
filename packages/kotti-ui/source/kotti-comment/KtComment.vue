@@ -1,6 +1,6 @@
 <template>
 	<div class="comment">
-		<KtAvatar class="comment__avatar" size="sm" :src="userAvatar" />
+		<KtAvatar size="sm" :src="userAvatar" />
 		<div class="comment__wrapper">
 			<div class="comment__info">
 				<div class="info__name" v-text="userName" />
@@ -157,3 +157,10 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss" scoped>
+.action__reply {
+	display: flex;
+	align-items: center;
+}
+</style>
