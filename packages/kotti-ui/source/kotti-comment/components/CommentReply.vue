@@ -111,3 +111,9 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.comment-reply__message {
+	display: flex;
+	align-items: center;
+}
+</style>
