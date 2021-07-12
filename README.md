@@ -41,7 +41,7 @@ or
 
 ## Documentation & Usage
 
-**Documentation**: [current release](https://3yourmind.github.io/kotti/) or [current master](https://kotti.netlify.com/)
+**Documentation**: <https://kotti.onrender.com> or <https://3yourmind.github.io/kotti/>
 
 ```typescript
 // in main.ts / entrypoint
