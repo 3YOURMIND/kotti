@@ -1,5 +1,20 @@
 import { KottiTranslation } from '../types'
 
+namespace Common {
+	export const is = 'est'
+
+	export const isEmpty = 'est vide'
+
+	export const number = {
+		EQUAL: 'est égal à',
+		GREATER_THAN: 'est supérieur à',
+		GREATER_THAN_OR_EQUAL: 'est supérieur ou égal à',
+		IS_EMPTY: Common.isEmpty,
+		LESS_THAN: 'est inférieur à',
+		LESS_THAN_OR_EQUAL: 'est inférieur ou égal à',
+	}
+}
+
 export const frFR: KottiTranslation.Messages = {
 	KtBanner: {
 		expandLabel: 'Voir',
@@ -19,39 +34,35 @@ export const frFR: KottiTranslation.Messages = {
 		addFilterLabel: 'Ajouter un Filtre',
 		andLabel: 'Et',
 		boolean: {
-			EQUAL: 'est',
-			IS_EMPTY: 'est vide',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		clearAllLabel: 'Tout Effacer',
+		currency: Common.number,
 		dateRange: {
 			IN_RANGE: 'est à portée',
-			IS_EMPTY: 'est vide',
+			IS_EMPTY: Common.isEmpty,
 		},
 		disabledLabel: 'Désactivé',
 		emptyListLabel: 'Aucun Filtre Appliqué',
 		enabledLabel: 'Activé',
 		filterLabel: 'Filtre',
 		filtersLabel: 'Filtres',
+		float: Common.number,
+		integer: Common.number,
 		multiEnum: {
-			IS_EMPTY: 'est vide',
+			IS_EMPTY: Common.isEmpty,
 			ONE_OF: 'fait partie de',
-		},
-		number: {
-			EQUAL: 'est égal à',
-			GREATER_THAN: 'est supérieur à',
-			GREATER_THAN_OR_EQUAL: 'est supérieur ou égal à',
-			IS_EMPTY: 'est vide',
-			LESS_THAN: 'est inférieur à',
-			LESS_THAN_OR_EQUAL: 'est inférieur ou égal à',
 		},
 		searchLabel: 'Rechercher',
 		singleEnum: {
-			EQUAL: 'est',
-			IS_EMPTY: 'est vide',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		string: {
 			CONTAINS: 'contient',
-			IS_EMPTY: 'est vide',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		unsetLabel: 'Non défini',
 		whereLabel: 'Où',

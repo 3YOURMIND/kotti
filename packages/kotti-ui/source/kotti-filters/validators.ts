@@ -20,6 +20,13 @@ const areValidOperations = (
 					Kotti.Filters.Operation.Boolean,
 				),
 			)
+		case Kotti.Filters.FilterType.CURRENCY:
+			return operations.every((operation) =>
+				isValueInEnum<Kotti.Filters.Operation.Currency>(
+					operation,
+					Kotti.Filters.Operation.Currency,
+				),
+			)
 		case Kotti.Filters.FilterType.DATE_RANGE:
 			return operations.every((operation) =>
 				isValueInEnum<Kotti.Filters.Operation.DateRange>(
@@ -27,18 +34,25 @@ const areValidOperations = (
 					Kotti.Filters.Operation.DateRange,
 				),
 			)
+		case Kotti.Filters.FilterType.FLOAT:
+			return operations.every((operation) =>
+				isValueInEnum<Kotti.Filters.Operation.Float>(
+					operation,
+					Kotti.Filters.Operation.Float,
+				),
+			)
+		case Kotti.Filters.FilterType.INTEGER:
+			return operations.every((operation) =>
+				isValueInEnum<Kotti.Filters.Operation.Integer>(
+					operation,
+					Kotti.Filters.Operation.Integer,
+				),
+			)
 		case Kotti.Filters.FilterType.MULTI_ENUM:
 			return operations.every((operation) =>
 				isValueInEnum<Kotti.Filters.Operation.MultiEnum>(
 					operation,
 					Kotti.Filters.Operation.MultiEnum,
-				),
-			)
-		case Kotti.Filters.FilterType.NUMBER:
-			return operations.every((operation) =>
-				isValueInEnum<Kotti.Filters.Operation.Number>(
-					operation,
-					Kotti.Filters.Operation.Number,
 				),
 			)
 		case Kotti.Filters.FilterType.SINGLE_ENUM:

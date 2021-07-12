@@ -29,7 +29,10 @@
 					v-if="isValueFieldVisible"
 					:collapseTagsAfter="1"
 					formKey="value"
+					:minimum="Number.MIN_SAFE_INTEGER"
 					:options="valueOptions"
+					:prefix="valuePrefix"
+					:step="valueStep"
 					type="switch"
 				/>
 				<span
@@ -143,6 +146,22 @@ export default defineComponent<{
 					return []
 			}
 		})
+		const valuePrefix = computed<Kotti.FieldNumber.Props['prefix']>(() =>
+			props.column?.type === Kotti.Filters.FilterType.CURRENCY
+				? props.column.prefix
+				: null,
+		)
+		const valueStep = computed<Kotti.FieldNumber.Props['step']>(() => {
+			switch (props.column?.type) {
+				case Kotti.Filters.FilterType.CURRENCY:
+				case Kotti.Filters.FilterType.FLOAT:
+					return props.column.step
+				case Kotti.Filters.FilterType.INTEGER:
+					return 1
+				default:
+					return null
+			}
+		})
 		const isOperationSelectDisabled = computed<boolean>(
 			() => operationOptions.value.length <= 1,
 		)
@@ -175,6 +194,19 @@ export default defineComponent<{
 				})
 				return
 			}
+
+			// FIXME: Remove after issue https://github.com/3YOURMIND/kotti/issues/461 is fixed
+			if (props.column?.type === Kotti.Filters.FilterType.INTEGER) {
+				emit('input', {
+					...newFilter,
+					value:
+						typeof newFilter.value === 'number'
+							? Math.trunc(newFilter.value)
+							: null,
+				})
+				return
+			}
+
 			emit('input', newFilter)
 		}
 		return {
@@ -190,6 +222,8 @@ export default defineComponent<{
 			valueComponent,
 			valueContainerClasses,
 			valueOptions,
+			valuePrefix,
+			valueStep,
 			Yoco,
 		}
 	},
