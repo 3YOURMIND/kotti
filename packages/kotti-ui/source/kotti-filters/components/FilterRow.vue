@@ -29,6 +29,7 @@
 					v-if="isValueFieldVisible"
 					:collapseTagsAfter="1"
 					formKey="value"
+					:minimum="Number.MIN_SAFE_INTEGER"
 					:options="valueOptions"
 					:prefix="valuePrefix"
 					:step="valueStep"
