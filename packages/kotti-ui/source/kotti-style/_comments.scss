@@ -64,7 +64,9 @@
 			}
 		}
 		&__reply {
+			display: flex;
 			flex: 0 0 auto;
+			align-items: center;
 			padding: 0 0.2rem;
 			border-radius: 0.2rem;
 			&:hover {
@@ -152,6 +154,8 @@
 		justify-content: space-between;
 	}
 	&__message {
+		display: flex;
+		align-items: center;
 		width: 100%;
 		font-size: 0.65rem;
 		line-height: 1rem;
