@@ -194,6 +194,7 @@ export default defineComponent<{
 				return
 			}
 
+			// FIXME: Remove after issue https://github.com/3YOURMIND/kotti/issues/461 is fixed
 			if (props.column?.type === Kotti.Filters.FilterType.INTEGER) {
 				emit('input', {
 					...newFilter,
