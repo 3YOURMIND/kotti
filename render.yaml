@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: kotti
+    env: static
+    buildCommand: yarn run build:render.com
+    staticPublishPath: ./packages/documentation/dist
+    pullRequestPreviewsEnabled: true
