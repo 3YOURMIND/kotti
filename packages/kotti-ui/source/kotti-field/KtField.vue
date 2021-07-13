@@ -33,7 +33,11 @@
 				v-text="field.helpDescription"
 			/>
 			<slot name="container">
-				<div ref="inputContainerRef" class="kt-field__input-container">
+				<div
+					ref="inputContainerRef"
+					class="kt-field__input-container"
+					:style="containerStyle"
+				>
 					<div
 						v-if="field.prefix"
 						:class="affixClasses(['left'])"
@@ -105,6 +109,7 @@ import FieldHelpText from './components/FieldHelpText.vue'
 import { KottiField } from './types'
 
 export default defineComponent<{
+	containerPadding: string | null
 	field: KottiField.Hook.Returns<unknown>
 	helpTextSlot: VNode[]
 	isComponent: string | null
@@ -114,6 +119,7 @@ export default defineComponent<{
 	name: 'KtField',
 	components: { FieldHelpText },
 	props: {
+		containerPadding: { default: null, type: String },
 		field: { required: true, type: Object },
 		/**
 		 * What’s the appropriate value for an empty field of this data type?
@@ -139,6 +145,9 @@ export default defineComponent<{
 					(modification) => `kt-field__input-container__affix--${modification}`,
 				),
 			]),
+			containerStyle: computed(() =>
+				props.containerPadding ? `padding: ${props.containerPadding}` : null,
+			),
 			handleClear: () => props.field.setValue(props.getEmptyValue()),
 			hasHelpText: computed(
 				() => props.helpTextSlot.length >= 1 || props.field.helpText !== null,
