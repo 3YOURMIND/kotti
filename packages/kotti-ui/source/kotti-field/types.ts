@@ -5,6 +5,65 @@ import { KottiForm } from '../kotti-form/types'
 
 import { FORM_KEY_NONE } from './constants'
 
+/**
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete}
+ */
+type AutoComplete =
+	| 'off'
+	| 'on'
+	| 'name'
+	| 'honorific-prefix'
+	| 'given-name'
+	| 'additional-name'
+	| 'family-name'
+	| 'honorific-suffix'
+	| 'nickname'
+	| 'email'
+	| 'username'
+	| 'new-password'
+	| 'current-password'
+	| 'one-time-code'
+	| 'organization-title'
+	| 'organization'
+	| 'street-address'
+	| 'address-line1'
+	| 'address-line2'
+	| 'address-line2'
+	| 'address-level4'
+	| 'address-level3'
+	| 'address-level2'
+	| 'address-level1'
+	| 'country'
+	| 'country-name'
+	| 'postal-code'
+	| 'cc-name'
+	| 'cc-given-name'
+	| 'cc-additional-name'
+	| 'cc-family-name'
+	| 'cc-number'
+	| 'cc-exp'
+	| 'cc-exp-month'
+	| 'cc-exp-year'
+	| 'cc-csc'
+	| 'cc-type'
+	| 'transation-currency'
+	| 'transaction-amount'
+	| 'language'
+	| 'bday'
+	| 'bday-day'
+	| 'bday-month'
+	| 'bday-year'
+	| 'sex'
+	| 'tel'
+	| 'tel-country-code'
+	| 'tel-national'
+	| 'tel-area-code'
+	| 'tel-local'
+	| 'tel-extension'
+	| 'impp'
+	| 'url'
+	| 'photo'
+
 export namespace KottiField {
 	export namespace Hook {
 		export interface Parameters<DATA_TYPE> {
@@ -31,6 +90,7 @@ export namespace KottiField {
 			hideClear: KottiField.Props<DATA_TYPE>['hideClear']
 			hideValidation: KottiField.Props<DATA_TYPE>['hideValidation']
 			inputProps: Readonly<{
+				autocomplete: AutoComplete
 				/**
 				 * Native HTML Props should have lowercase keys
 				 */
