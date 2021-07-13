@@ -62,3 +62,9 @@ export const generateComponentCode = (component: ComponentValue) =>
 			? `>\n\t<template #helpText>\n\t\t<div>\n\t\t\tSlot Content\n\t\t</div>\n\t</template>\n</${component.name}>`
 			: '/>',
 	].join('\n')
+
+export const omitNullValues = (object: Record<string, unknown>) =>
+	Object.fromEntries(
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		Object.entries(object).filter(([_, value]) => value !== null),
+	)
