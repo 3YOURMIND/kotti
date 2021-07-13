@@ -21,6 +21,7 @@ export type ComponentValue = {
 	hasHelpTextSlot: boolean
 	name: ComponentNames
 	props: object
+	slots?: Array<{ name: string; content: string | null }>
 	validation: Kotti.Field.Validation.Result['type']
 }
 
@@ -58,7 +59,23 @@ export const generateComponentCode = (component: ComponentValue) =>
 			: [
 					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
 			  ]),
-		component.hasHelpTextSlot
-			? `>\n\t<template #helpText>\n\t\t<div>\n\t\t\tSlot Content\n\t\t</div>\n\t</template>\n</${component.name}>`
+		component.hasHelpTextSlot || (component.slots?.length ?? 0) > 0
+			? [
+					'>',
+					...(component.hasHelpTextSlot
+						? [
+								'\t<template #helpText>',
+								'\t\t<div>',
+								'\t\t\tSlot Content',
+								'\t\t</div>',
+								'\t</template>',
+						  ]
+						: []),
+					...(component.slots?.map(
+						({ name, content }) =>
+							`\t<template #${name} v-text="${content}" />`,
+					) ?? []),
+					`</${component.name}>`,
+			  ].join('\n')
 			: '/>',
 	].join('\n')
