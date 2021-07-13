@@ -1,38 +1,38 @@
 <template>
-	<div class="comment">
+	<div class="kt-comment">
 		<KtAvatar size="sm" :src="userAvatar" />
-		<div class="comment__wrapper">
-			<div class="comment__info">
-				<div class="info__name" v-text="userName" />
-				<div class="info__time" v-text="createdTime" />
+		<div class="kt-comment__wrapper">
+			<div class="kt-comment__info">
+				<div class="kt-comment__info__name" v-text="userName" />
+				<div class="kt-comment__info__time" v-text="createdTime" />
 			</div>
 			<!-- eslint-disable vue/no-v-html -->
 			<div
 				v-if="!isInlineEdit"
-				class="comment__message"
+				class="kt-comment__message"
 				v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 			/>
 			<!-- eslint-enable vue/no-v-html -->
-			<div v-else class="comment-inline-edit form-group">
+			<div v-else class="kt-comment-inline-edit form-group">
 				<textarea
 					v-model="inlineMessageValue"
-					class="comment-inline-edit-input form-input"
+					class="kt-comment-inline-edit-input form-input"
 				></textarea>
-				<KtButtonGroup class="comment-inline-edit-buttons" shadow>
+				<KtButtonGroup class="kt-comment-inline-edit-buttons" shadow>
 					<KtButton icon="close" @click="cancelInlineEdit" />
 					<KtButton icon="check" @click="handleEditConfirm" />
 				</KtButtonGroup>
 			</div>
-			<div class="comment__action">
+			<div class="kt-comment__action">
 				<div
-					class="action__reply"
+					class="kt-comment__action__reply"
 					@click="handleInlineReplyClick({ userName, userId })"
 				>
 					<i class="yoco">comment</i> Reply
 				</div>
-				<div v-if="allowChange" class="action__more">
+				<div v-if="allowChange" class="kt-comment__action__more">
 					<i class="yoco">dots</i>
-					<div class="action__options">
+					<div class="kt-comment__action__options">
 						<a @click="startInlineEdit"> <li>Edit</li> </a>
 						<a @click="handleDelete(id)"> <li>Delete</li> </a>
 					</div>
@@ -157,10 +157,3 @@ export default {
 	},
 }
 </script>
-
-<style lang="scss" scoped>
-.action__reply {
-	display: flex;
-	align-items: center;
-}
-</style>

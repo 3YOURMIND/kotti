@@ -1,19 +1,19 @@
 <template>
-	<div class="comment-reply">
+	<div class="kt-comment-reply">
 		<KtAvatar
-			class="comment-reply__avatar"
+			class="kt-comment-reply__avatar"
 			:size="Kotti.Avatar.Size.SMALL"
 			:src="userAvatar"
 		/>
-		<div class="comment-reply__wrapper">
-			<div class="comment-reply__info">
-				<div class="comment-reply__name" v-text="userName" />
-				<div class="comment-reply__time" v-text="createdTime" />
+		<div class="kt-comment-reply__wrapper">
+			<div class="kt-comment-reply__info">
+				<div class="kt-comment-reply__name" v-text="userName" />
+				<div class="kt-comment-reply__time" v-text="createdTime" />
 			</div>
-			<div class="comment-reply__body">
+			<div class="kt-comment-reply__body">
 				<div
 					v-if="!isInlineEdit"
-					class="comment-reply__message"
+					class="kt-comment-reply__message"
 					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
 					<!-- eslint-disable vue/no-v-html -->
@@ -23,22 +23,22 @@
 					<!-- eslint-enable vue/no-v-html -->
 					<i class="yoco" v-text="'comment'" />
 				</div>
-				<div v-else class="comment-inline-edit form-group">
+				<div v-else class="kt-comment-inline-edit form-group">
 					<textarea
 						v-model="inlineMessageValue"
-						class="comment-inline-edit-input form-input"
+						class="kt-comment-inline-edit-input form-input"
 					></textarea>
-					<KtButtonGroup class="comment-inline-edit-buttons" shadow>
+					<KtButtonGroup class="kt-comment-inline-edit-buttons" shadow>
 						<KtButton icon="close" @click="cancelInlineEdit" />
 						<KtButton icon="check" @click="handleConfirm" />
 					</KtButtonGroup>
 				</div>
 				<div
 					v-if="!isInlineEdit & allowChange"
-					class="comment-reply__action action__more"
+					class="kt-comment-reply__action kt-comment__action__more"
 				>
 					<i class="yoco">dots</i>
-					<div class="action__options">
+					<div class="kt-comment__action__options">
 						<a @click="startInlineEdit"> <li>Edit</li> </a>
 						<a @click="$emit('_inlineDeleteClick', id)"> <li>Delete</li> </a>
 					</div>
@@ -111,9 +111,3 @@ export default {
 	},
 }
 </script>
-<style lang="scss" scoped>
-.comment-reply__message {
-	display: flex;
-	align-items: center;
-}
-</style>
