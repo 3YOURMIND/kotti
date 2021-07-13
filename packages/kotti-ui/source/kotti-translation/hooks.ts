@@ -11,6 +11,7 @@ import elementDe from 'element-ui/lib/locale/lang/de'
 import elementEn from 'element-ui/lib/locale/lang/en'
 import elementEs from 'element-ui/lib/locale/lang/es'
 import elementFr from 'element-ui/lib/locale/lang/fr'
+import elementId from 'element-ui/lib/locale/lang/id'
 import elementJa from 'element-ui/lib/locale/lang/ja'
 
 import { KT_TRANSLATION_CONTEXT } from './constants'
@@ -18,6 +19,7 @@ import { deDE } from './locales/de-DE'
 import { enUS } from './locales/en-US'
 import { esES } from './locales/es-ES'
 import { frFR } from './locales/fr-FR'
+import { idID } from './locales/id-ID'
 import { jaJP } from './locales/ja-JP'
 import { KottiTranslation } from './types'
 import { fixDeepMerge } from './utilities'
@@ -68,6 +70,7 @@ export const useTranslationProvide = (
 				'de-DE': deDE,
 				'es-ES': esES,
 				'fr-FR': frFR,
+				'id-ID': idID,
 				'ja-JP': jaJP,
 			}[locale.value]),
 	)
@@ -83,6 +86,7 @@ export const useTranslationProvide = (
 				'de-DE': elementDe,
 				'es-ES': elementEs,
 				'fr-FR': elementFr,
+				'id-ID': elementId,
 				'ja-JP': elementJa,
 			}[newValue]
 
