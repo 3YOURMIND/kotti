@@ -15,5 +15,7 @@ export const KtAccordion = attachMeta(makeInstallable(KtAccordionVue), {
 		default: { description: null, scope: null },
 		title: { description: null, scope: null },
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Accordion',
+	},
 })
