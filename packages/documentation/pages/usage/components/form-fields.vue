@@ -155,6 +155,7 @@
 						/>
 						<KtFieldNumber
 							formKey="step"
+							:minimum="0"
 							isOptional
 							label="step"
 							size="small"
@@ -687,7 +688,10 @@ export default defineComponent({
 					minimum: settings.value.additionalProps.numberMinimum,
 				})
 
-			if (componentDefinition.value.additionalProps.includes('step'))
+			if (
+				componentDefinition.value.additionalProps.includes('step') &&
+				settings.value.additionalProps.step !== null
+			)
 				Object.assign(additionalProps, {
 					step: settings.value.additionalProps.step,
 				})
