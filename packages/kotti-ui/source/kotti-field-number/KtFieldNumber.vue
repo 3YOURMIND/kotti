@@ -167,6 +167,25 @@ export default defineComponent({
 			lastUserSetCursorPosition.value = null
 		})
 
+		/**
+		 * In the scenario when the user clicks the +/- buttons when the value is null
+		 * we check if zero is in the range of accepted values, and fallback to it
+		 */
+		const canFallbackToZero = computed<boolean>(
+			() =>
+				isStepMultiple({
+					minimum: props.minimum,
+					step: props.step,
+					value: 0,
+				}) &&
+				isInRange({
+					maximum: props.maximum,
+					minimum: props.minimum,
+					offset: 0,
+					value: 0,
+				}),
+		)
+
 		return {
 			decrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
@@ -176,7 +195,9 @@ export default defineComponent({
 
 				field.setValue(
 					field.currentValue === null
-						? props.minimum ?? 0
+						? canFallbackToZero.value
+							? 0
+							: props.minimum ?? props.maximum ?? 0
 						: field.currentValue - props.step,
 				)
 			},
@@ -192,7 +213,9 @@ export default defineComponent({
 
 				field.setValue(
 					field.currentValue === null
-						? props.minimum ?? 0
+						? canFallbackToZero.value
+							? 0
+							: props.minimum ?? props.maximum ?? 0
 						: field.currentValue + props.step,
 				)
 			},
