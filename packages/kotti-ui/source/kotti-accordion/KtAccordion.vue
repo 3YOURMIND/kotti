@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-accordion">
-		<div :class="headerClasses" @click="toggle">
+		<div class="kt-accordion__header" @click="toggle">
 			<div class="kt-accordion__title">
 				<slot name="title">
 					<i v-if="icon" class="yoco kt-accordion__title__icon" v-text="icon" />
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div :class="contentClasses">
-			<div ref="contentInner" class="kt-accordion__content__inner">
+			<div ref="contentInnerRef" class="kt-accordion__content__inner">
 				<slot />
 			</div>
 		</div>
@@ -34,9 +34,9 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 		title: { required: true, type: String },
 	},
 	setup(props) {
-		const contentInner = ref<HTMLElement | null>(null)
+		const contentInnerRef = ref<HTMLElement | null>(null)
 
-		const { isContentOpen, toggle } = useSlideAnimaion(contentInner, {
+		const { isContentOpen, toggle } = useSlideAnimaion(contentInnerRef, {
 			duration: 300,
 			isInitiallyClosed: props.isClosed,
 		})
@@ -46,11 +46,7 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 				'kt-accordion__content--is-closed': !isContentOpen.value,
 				'kt-accordion__content--is-open': isContentOpen.value,
 			})),
-			contentInner,
-			headerClasses: computed(() => ({
-				'kt-accordion__header': true,
-				'kt-accordion__header--clickable': props.isFullyClickable,
-			})),
+			contentInnerRef,
 			toggle,
 			toggleIcon: computed(() =>
 				isContentOpen.value ? Yoco.Icon.MINUS : Yoco.Icon.PLUS,
@@ -73,14 +69,11 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 		display: flex;
 		justify-content: space-between;
 		padding: var(--unit-2) var(--unit-8);
+		cursor: pointer;
 		border: 1px solid var(--ui-02);
 
 		.yoco {
 			font-size: 1.2rem;
-		}
-
-		&--clickable {
-			cursor: pointer;
 		}
 	}
 
@@ -108,13 +101,12 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 		overflow: hidden;
 		border: 1px solid var(--ui-02);
 		border-top: none;
-		transition: height 200ms linear;
 
 		&__inner {
 			padding: var(--unit-2) var(--unit-8);
 		}
 		&--is-open {
-			height: var(--height);
+			height: auto;
 		}
 		&--is-closed {
 			height: 0px;
@@ -127,7 +119,6 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 		align-self: center;
 		margin-left: var(--unit-4);
 		color: var(--accordion-color);
-		cursor: pointer;
 		user-select: none;
 	}
 }
