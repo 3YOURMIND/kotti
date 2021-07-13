@@ -1,4 +1,5 @@
 import { ref, Ref } from '@vue/composition-api'
+
 export type Options = KeyframeAnimationOptions & {
 	isInitiallyClosed?: boolean
 }
@@ -18,16 +19,19 @@ export const useSlideAnimaion = (
 	const isContentOpen = ref(!isInitiallyClosed)
 
 	const finalOptions = { ...getDefaultOptions(), ...restOptions }
-	const getRawHeight = () => element.value?.clientHeight
+	const getRawHeight = (element: HTMLElement) => element.clientHeight
 
 	const triggerAnimation = async (
 		willOpen: boolean,
 	): Promise<Animation | void> => {
-		const frames = ['0px', `${getRawHeight()}px`].map((height) => {
-			return { height, overflow: 'hidden' }
-		})
-		const animation = element.value?.animate(frames, finalOptions) ?? null
-		if (animation === null) return
+		const animatedObject = element.value ?? null
+		if (animatedObject === null) return
+
+		const frames: Keyframe[] = [
+			'0px',
+			`${getRawHeight(animatedObject)}px`,
+		].map((height) => ({ height, overflow: 'hidden' }))
+		const animation = animatedObject.animate(frames, finalOptions)
 
 		animation.pause()
 		animation[willOpen ? 'play' : 'reverse']()
@@ -49,5 +53,5 @@ export const useSlideAnimaion = (
 		return isContentOpen.value ? up() : down()
 	}
 
-	return { up, down, toggle, isContentOpen }
+	return { toggle, isContentOpen }
 }
