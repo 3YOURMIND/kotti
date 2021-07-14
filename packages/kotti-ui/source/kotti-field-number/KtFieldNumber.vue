@@ -48,6 +48,7 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref, watch } from '@vue/composition-api'
+import Big from 'big.js'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
@@ -198,7 +199,7 @@ export default defineComponent({
 						? canFallbackToZero.value
 							? 0
 							: props.minimum ?? props.maximum ?? 0
-						: field.currentValue - props.step,
+						: Big(field.currentValue).minus(props.step).toNumber(),
 				)
 			},
 			field,
@@ -216,7 +217,7 @@ export default defineComponent({
 						? canFallbackToZero.value
 							? 0
 							: props.minimum ?? props.maximum ?? 0
-						: field.currentValue + props.step,
+						: Big(field.currentValue).add(props.step).toNumber(),
 				)
 			},
 			internalStringValue,

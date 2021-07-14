@@ -1,3 +1,5 @@
+import Big from 'big.js'
+
 import {
 	STRINGS_THAT_ARE_TREATED_AS_NULL,
 	DECIMAL_SEPARATOR,
@@ -26,8 +28,10 @@ export const isInRange = ({
 }) => {
 	if (value === null) return true
 
-	const fitsMinimum = minimum === null || value + offset >= minimum
-	const fitsMaximum = maximum === null || value + offset <= maximum
+	const nextValue = Big(value).add(offset).toNumber()
+
+	const fitsMinimum = minimum === null || nextValue >= minimum
+	const fitsMaximum = maximum === null || nextValue <= maximum
 
 	return fitsMinimum && fitsMaximum
 }
@@ -42,9 +46,12 @@ export const isStepMultiple = ({
 	value: number | null
 }) => {
 	if (minimum === null || value === null) return true
-	const k = (value - minimum) / step
-	const epsilon = 10e-10
-	return Math.abs(k - Math.round(k)) < epsilon
+
+	// (value - minimum) / step
+	const stepFactor = Big(value).minus(minimum).div(step)
+
+	// is integer?
+	return stepFactor.eq(stepFactor.round())
 }
 
 export const toNumber = (string: string) =>
