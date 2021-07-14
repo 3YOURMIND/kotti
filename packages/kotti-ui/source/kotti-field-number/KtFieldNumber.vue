@@ -48,6 +48,7 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref, watch } from '@vue/composition-api'
+import Big from 'big.js'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
@@ -91,10 +92,12 @@ export default defineComponent({
 			() =>
 				!field.isDisabled &&
 				isInRange({
-					maximum: null,
+					maximum: props.maximum,
 					minimum: props.minimum,
-					offset: -props.step,
-					value: field.currentValue,
+					value:
+						field.currentValue === null
+							? null
+							: Big(field.currentValue).minus(props.step).toNumber(),
 				}),
 		)
 
@@ -103,9 +106,11 @@ export default defineComponent({
 				!field.isDisabled &&
 				isInRange({
 					maximum: props.maximum,
-					minimum: null,
-					offset: props.step,
-					value: field.currentValue,
+					minimum: props.minimum,
+					value:
+						field.currentValue === null
+							? null
+							: Big(field.currentValue).add(props.step).toNumber(),
 				}),
 		)
 
@@ -125,7 +130,6 @@ export default defineComponent({
 					!isInRange({
 						maximum: props.maximum,
 						minimum: props.minimum,
-						offset: 0,
 						value: truncatedNumber,
 					})
 				)
@@ -181,7 +185,6 @@ export default defineComponent({
 				isInRange({
 					maximum: props.maximum,
 					minimum: props.minimum,
-					offset: 0,
 					value: 0,
 				}),
 		)
@@ -198,7 +201,7 @@ export default defineComponent({
 						? canFallbackToZero.value
 							? 0
 							: props.minimum ?? props.maximum ?? 0
-						: field.currentValue - props.step,
+						: Big(field.currentValue).minus(props.step).toNumber(),
 				)
 			},
 			field,
@@ -216,7 +219,7 @@ export default defineComponent({
 						? canFallbackToZero.value
 							? 0
 							: props.minimum ?? props.maximum ?? 0
-						: field.currentValue + props.step,
+						: Big(field.currentValue).add(props.step).toNumber(),
 				)
 			},
 			internalStringValue,
@@ -258,7 +261,6 @@ export default defineComponent({
 					isInRange({
 						maximum,
 						minimum,
-						offset: 0,
 						value: nextNumber,
 					})
 

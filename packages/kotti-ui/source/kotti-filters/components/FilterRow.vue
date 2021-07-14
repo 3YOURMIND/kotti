@@ -157,9 +157,9 @@ export default defineComponent<{
 				case Kotti.Filters.FilterType.FLOAT:
 					return props.column.step
 				case Kotti.Filters.FilterType.INTEGER:
-					return 1
+				// fall through
 				default:
-					return null
+					return 1
 			}
 		})
 		const isOperationSelectDisabled = computed<boolean>(
@@ -191,18 +191,6 @@ export default defineComponent<{
 				emit('input', {
 					...newFilter,
 					value: getFilterEmptyValue(props.column.type),
-				})
-				return
-			}
-
-			// FIXME: Remove after issue https://github.com/3YOURMIND/kotti/issues/461 is fixed
-			if (props.column?.type === Kotti.Filters.FilterType.INTEGER) {
-				emit('input', {
-					...newFilter,
-					value:
-						typeof newFilter.value === 'number'
-							? Math.trunc(newFilter.value)
-							: null,
 				})
 				return
 			}

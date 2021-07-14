@@ -11,6 +11,8 @@
 		"@3yourmind/vue-use-tippy": "1.x",
 		"@3yourmind/yoco": "^2.1.1",
 		"@popperjs/core": "2.0.6",
+		"@types/big.js": "^6.1.1",
+		"big.js": "^6.1.1",
 		"color": "3.x",
 		"deep-eql": "^4.0.0",
 		"deepmerge": "^4.2.2",

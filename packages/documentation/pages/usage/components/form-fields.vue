@@ -155,7 +155,6 @@
 						/>
 						<KtFieldNumber
 							formKey="step"
-							:minimum="0"
 							isOptional
 							label="step"
 							size="small"

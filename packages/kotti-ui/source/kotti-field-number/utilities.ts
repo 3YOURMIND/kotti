@@ -1,3 +1,7 @@
+import Big from 'big.js'
+
+import { Kotti } from '../types'
+
 import {
 	STRINGS_THAT_ARE_TREATED_AS_NULL,
 	DECIMAL_SEPARATOR,
@@ -16,18 +20,16 @@ export const isNumber = (value: unknown): boolean =>
 export const isInRange = ({
 	maximum,
 	minimum,
-	offset,
 	value,
 }: {
-	maximum: number | null
-	minimum: number | null
-	offset: number
-	value: number | null
+	maximum: Kotti.FieldNumber.Props['maximum']
+	minimum: Kotti.FieldNumber.Props['minimum']
+	value: Kotti.FieldNumber.Value
 }) => {
 	if (value === null) return true
 
-	const fitsMinimum = minimum === null || value + offset >= minimum
-	const fitsMaximum = maximum === null || value + offset <= maximum
+	const fitsMinimum = minimum === null || value >= minimum
+	const fitsMaximum = maximum === null || value <= maximum
 
 	return fitsMinimum && fitsMaximum
 }
@@ -42,9 +44,12 @@ export const isStepMultiple = ({
 	value: number | null
 }) => {
 	if (minimum === null || value === null) return true
-	const k = (value - minimum) / step
-	const epsilon = 10e-10
-	return Math.abs(k - Math.round(k)) < epsilon
+
+	// (value - minimum) / step
+	const stepFactor = Big(value).minus(minimum).div(step)
+
+	// is integer?
+	return stepFactor.eq(stepFactor.round())
 }
 
 export const toNumber = (string: string) =>
