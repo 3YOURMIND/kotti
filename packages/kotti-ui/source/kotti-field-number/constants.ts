@@ -1,5 +1,7 @@
 import { KottiField } from '../kotti-field/types'
 
+import { isNumber } from './utilities'
+
 export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {
 	clear: false,
 	decoration: true,
@@ -12,7 +14,12 @@ export const KOTTI_FIELD_NUMBER_PROPS = {
 	maximum: { default: null, type: Number },
 	minimum: { default: null, type: Number },
 	placeholder: { default: null, type: String },
-	step: { default: 1, type: Number },
+	step: {
+		default: 1,
+		type: Number,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		validator: (value: any): value is number => isNumber(value) && value > 0,
+	},
 	value: { default: null, type: Number },
 }
 
