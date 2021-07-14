@@ -56,11 +56,13 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 :root {
 	--accordion-color: var(--interactive-03);
 }
+</style>
 
+<style lang="scss" scoped>
 .kt-accordion {
 	margin-bottom: var(--unit-4);
 	border-radius: 2px;
