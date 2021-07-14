@@ -1,5 +1,7 @@
 import Big from 'big.js'
 
+import { Kotti } from '../types'
+
 import {
 	STRINGS_THAT_ARE_TREATED_AS_NULL,
 	DECIMAL_SEPARATOR,
@@ -18,20 +20,16 @@ export const isNumber = (value: unknown): boolean =>
 export const isInRange = ({
 	maximum,
 	minimum,
-	offset,
 	value,
 }: {
-	maximum: number | null
-	minimum: number | null
-	offset: number
-	value: number | null
+	maximum: Kotti.FieldNumber.Props['maximum']
+	minimum: Kotti.FieldNumber.Props['minimum']
+	value: Kotti.FieldNumber.Value
 }) => {
 	if (value === null) return true
 
-	const nextValue = Big(value).add(offset).toNumber()
-
-	const fitsMinimum = minimum === null || nextValue >= minimum
-	const fitsMaximum = maximum === null || nextValue <= maximum
+	const fitsMinimum = minimum === null || value >= minimum
+	const fitsMaximum = maximum === null || value <= maximum
 
 	return fitsMinimum && fitsMaximum
 }

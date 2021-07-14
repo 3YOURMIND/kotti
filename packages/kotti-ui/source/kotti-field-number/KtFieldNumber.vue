@@ -92,10 +92,12 @@ export default defineComponent({
 			() =>
 				!field.isDisabled &&
 				isInRange({
-					maximum: null,
+					maximum: props.maximum,
 					minimum: props.minimum,
-					offset: -props.step,
-					value: field.currentValue,
+					value:
+						field.currentValue === null
+							? null
+							: Big(field.currentValue).minus(props.step).toNumber(),
 				}),
 		)
 
@@ -104,9 +106,11 @@ export default defineComponent({
 				!field.isDisabled &&
 				isInRange({
 					maximum: props.maximum,
-					minimum: null,
-					offset: props.step,
-					value: field.currentValue,
+					minimum: props.minimum,
+					value:
+						field.currentValue === null
+							? null
+							: Big(field.currentValue).add(props.step).toNumber(),
 				}),
 		)
 
@@ -126,7 +130,6 @@ export default defineComponent({
 					!isInRange({
 						maximum: props.maximum,
 						minimum: props.minimum,
-						offset: 0,
 						value: truncatedNumber,
 					})
 				)
@@ -182,7 +185,6 @@ export default defineComponent({
 				isInRange({
 					maximum: props.maximum,
 					minimum: props.minimum,
-					offset: 0,
 					value: 0,
 				}),
 		)
@@ -259,7 +261,6 @@ export default defineComponent({
 					isInRange({
 						maximum,
 						minimum,
-						offset: 0,
 						value: nextNumber,
 					})
 
