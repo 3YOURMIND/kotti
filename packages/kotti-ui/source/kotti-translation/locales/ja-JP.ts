@@ -1,6 +1,5 @@
 import { KottiTranslation } from '../types'
 
-// TODO: needs proper translations for some strings
 namespace Common {
 	export const is = 'です'
 
@@ -22,8 +21,8 @@ export const jaJP: KottiTranslation.Messages = {
 		expandCloseLabel: '閉じる',
 	},
 	KtFields: {
-		optionalLabel: 'Optional',
-		requiredMessage: 'Required',
+		optionalLabel: 'オプション',
+		requiredMessage: 'このフィールドは必須です。',
 	},
 	KtFieldSelects: {
 		loadingText: 'ロード中',
@@ -70,13 +69,13 @@ export const jaJP: KottiTranslation.Messages = {
 		whereLabel: 'どこ',
 	},
 	KtFormSubmit: {
-		errorsSectionTitle: 'Errors',
-		title: 'Form Submission Not Allowed',
-		warningsSectionTitle: 'Warnings',
+		errorsSectionTitle: 'エラー',
+		title: 'フォーム送信ができない',
+		warningsSectionTitle: '注意事項',
 	},
 	KtNavbar: {
-		menuCollapse: 'Collapse menu',
-		menuExpand: 'Expand menu',
-		quickLinksTitle: 'Quick Links',
+		menuCollapse: 'メニューを閉じる',
+		menuExpand: '拡張メニュー',
+		quickLinksTitle: 'クイックリンク',
 	},
 }
