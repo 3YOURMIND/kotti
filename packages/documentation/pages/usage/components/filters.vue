@@ -147,7 +147,7 @@ export default defineComponent({
 							Kotti.Filters.Operation.Float.LESS_THAN_OR_EQUAL,
 							Kotti.Filters.Operation.Float.IS_EMPTY,
 						],
-						step: 0.1,
+						step: 0.001,
 						type: Kotti.Filters.FilterType.FLOAT,
 					},
 					{
