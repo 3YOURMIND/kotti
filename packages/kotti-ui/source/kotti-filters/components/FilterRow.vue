@@ -157,9 +157,9 @@ export default defineComponent<{
 				case Kotti.Filters.FilterType.FLOAT:
 					return props.column.step
 				case Kotti.Filters.FilterType.INTEGER:
-					return 1
+				// fall through
 				default:
-					return null
+					return 1
 			}
 		})
 		const isOperationSelectDisabled = computed<boolean>(
