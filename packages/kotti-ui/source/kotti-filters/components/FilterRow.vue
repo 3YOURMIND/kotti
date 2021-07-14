@@ -195,18 +195,6 @@ export default defineComponent<{
 				return
 			}
 
-			// FIXME: Remove after issue https://github.com/3YOURMIND/kotti/issues/461 is fixed
-			if (props.column?.type === Kotti.Filters.FilterType.INTEGER) {
-				emit('input', {
-					...newFilter,
-					value:
-						typeof newFilter.value === 'number'
-							? Math.trunc(newFilter.value)
-							: null,
-				})
-				return
-			}
-
 			emit('input', newFilter)
 		}
 		return {
