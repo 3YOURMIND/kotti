@@ -169,7 +169,7 @@ export const getSearchFilterInitialState = (
 	searchColumn: Kotti.Filters.Column.Search,
 ): Kotti.Filters.InternalFilter => ({
 	key: searchColumn.key,
-	operation: Kotti.Filters.Operation.String.CONTAINS,
+	operation: Kotti.Filters.Operation.Search.CONTAINS,
 	value: null,
 })
 
