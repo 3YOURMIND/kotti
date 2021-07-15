@@ -19,7 +19,7 @@ You can customize radio button template inside `KtRadio` component, or just give
 
 ```html
 <KtRadioGroup label="Good Time" name="group1" v-model="radio1">
-	<KtRadio value="morning" label="Good Morning"/>
+	<KtRadio value="morning" label="Good Morning" />
 	<KtRadio value="night">
 		Good Night <a href="https://en.wikipedia.org/wiki/Good_Night">Link</a>
 	</KtRadio>
@@ -57,7 +57,13 @@ Radio button support list style by setting `listStyle` to `true`;
 
 ```html
 <div class="element-example">
-	<KtRadioGroup label="Good Time" name="group1" v-model="radio3" required listStyle>
+	<KtRadioGroup
+		label="Good Time"
+		name="group1"
+		v-model="radio3"
+		required
+		listStyle
+	>
 		<KtRadio :value="options[0].value" :label="options[0].label" />
 		<KtRadio :value="options[1].value" :label="options[1].label" />
 	</KtRadioGroup>
@@ -73,7 +79,6 @@ Radio button support list style by setting `listStyle` to `true`;
 	<h4>Value: {{radio3}}</h4>
 </div>
 
-
 ```json
 options: [{
 	value: 'option1',
@@ -88,7 +93,6 @@ options: [{
 	label: 'Good Morning'
 }]
 ```
-
 </template>
 
 <script lang="ts">

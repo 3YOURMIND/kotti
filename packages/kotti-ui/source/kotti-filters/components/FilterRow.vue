@@ -4,7 +4,7 @@
 		hideValidation
 		:isLoading="isLoading"
 		:size="Kotti.Field.Size.SMALL"
-		style="display: contents;"
+		style="display: contents"
 		:value="filter"
 		@input="handleSetFilter"
 	>

@@ -46,7 +46,7 @@
 <KtCommentInput
 	class="mt-16px"
 	placeholder="Add comment"
-	userAvatar='https://picsum.photos/120'
+	userAvatar="https://picsum.photos/120"
 	@submit="handlePost($event)"
 />
 ```
@@ -95,7 +95,6 @@
 // Delete Payload
 {
 }
-
 ```
 
 ## Parsing HTML
@@ -103,7 +102,7 @@
 KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop
 
 > Remember to **escape malicious tags** to prevent [Cross-site-scripting](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks,
-you can use KtComment's default parser function with KtComment.defaultParser
+> you can use KtComment's default parser function with KtComment.defaultParser
 
 ```js
 methods: {
@@ -144,27 +143,26 @@ methods: {
 
 ### Props
 
-| Attribute            | Description                                 | Type                        | Accepted values                 | Default |
-|:---------------------|:--------------------------------------------|:----------------------------|:--------------------------------|:--------|
-| `createdTime`  | The Time that appears in the comment | string | "20-12-2008" | - |
-| `id`  | the id to track the comment | number, string | "1" | - |
-| `replies`  | array of comment props to be nested under the coment | [CommentProps] | [{id: "1", message: "hello"}] | - |
-| `userAvatar`  | url to image thumbnail | string | "https://someimage.com/image.png" | - |
-| `userId`  | id of user who made the comment to reply too | number, string | "2" | - |
-| `userName`  | name of user to display | string | "Jhone Doe" | - |
-| `message`  | the actual comment | string | "Hello" | - |
-| `dangerDefaultParserOverride`  | A function that processes and escapes the comment message before it is passed to the div that render it, as the name implies you're responsible for escaping if you use this | (string) => string | Function | lodash escape function |
-| `postEscapeParser`  | A function that processes the message after is has been escaped use this instead of `dangerDefaultParserOverride` | (string) => string | Function | (_) => _ |
-| `allowChange`  | wether this comment is editable | boolean | true,false | false |
+| Attribute                     | Description                                                                                                                                                                  | Type               | Accepted values                   | Default                |
+| :---------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------- | :-------------------------------- | :--------------------- |
+| `createdTime`                 | The Time that appears in the comment                                                                                                                                         | string             | "20-12-2008"                      | -                      |
+| `id`                          | the id to track the comment                                                                                                                                                  | number, string     | "1"                               | -                      |
+| `replies`                     | array of comment props to be nested under the coment                                                                                                                         | [CommentProps]     | [{id: "1", message: "hello"}]     | -                      |
+| `userAvatar`                  | url to image thumbnail                                                                                                                                                       | string             | "https://someimage.com/image.png" | -                      |
+| `userId`                      | id of user who made the comment to reply too                                                                                                                                 | number, string     | "2"                               | -                      |
+| `userName`                    | name of user to display                                                                                                                                                      | string             | "Jhone Doe"                       | -                      |
+| `message`                     | the actual comment                                                                                                                                                           | string             | "Hello"                           | -                      |
+| `dangerDefaultParserOverride` | A function that processes and escapes the comment message before it is passed to the div that render it, as the name implies you're responsible for escaping if you use this | (string) => string | Function                          | lodash escape function |
+| `postEscapeParser`            | A function that processes the message after is has been escaped use this instead of `dangerDefaultParserOverride`                                                            | (string) => string | Function                          | (_) => _               |
+| `allowChange`                 | wether this comment is editable                                                                                                                                              | boolean            | true,false                        | false                  |
 
 ### Event
 
 | Event Name | Component        | Payload   | Description     |
-|------------|------------------|-----------|-----------------|
+| ---------- | ---------------- | --------- | --------------- |
 | `@submit`  | `KtCommentInput` | See above | Add new comment |
 | `@delete`  | `KtComment`      | See above | Delete comment  |
 | `@edit`    | `KtComment`      | See above | Edit comment    |
-
 </template>
 
 <script>

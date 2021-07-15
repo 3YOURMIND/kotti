@@ -31,21 +31,18 @@ export default defineComponent({
 		if (context === null)
 			throw new Error('KtFormControllerObject: Could Not Find KtFormContext')
 
-		const values = computed(
-			(): KottiForm.ContextType => {
-				const result = context.values.value[props.formKey]
+		const values = computed((): KottiForm.ContextType => {
+			const result = context.values.value[props.formKey]
 
-				const errorText = (type: string) =>
-					`KtFormControllerObject: Unexpected Data Type ${type}. Expected Object`
+			const errorText = (type: string) =>
+				`KtFormControllerObject: Unexpected Data Type ${type}. Expected Object`
 
-				if (result === null) throw new Error(errorText('null'))
-				if (Array.isArray(result)) throw new Error(errorText('array'))
-				if (typeof result !== 'object')
-					throw new Error(errorText(typeof result))
+			if (result === null) throw new Error(errorText('null'))
+			if (Array.isArray(result)) throw new Error(errorText('array'))
+			if (typeof result !== 'object') throw new Error(errorText(typeof result))
 
-				return result as KottiForm.ContextType
-			},
-		)
+			return result as KottiForm.ContextType
+		})
 
 		/**
 		 * Updates a single key in a KtFormControllerObject values

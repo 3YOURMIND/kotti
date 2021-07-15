@@ -9,9 +9,9 @@ It is best to place secondary functionality or information in the drawer, and on
 
 ![Structure](~/assets/img/drawer_structure.png)
 
-* **Drawer:** The size of drawer depends on information density. There are three sizes: `Default`, `Wide` and `Full Open`.
-* **Handle:** By clicking the handles, the drawer can be `Full Open` to display more information.
-* **Background:** The background should be black `#000000` with 46% opacity.
+- **Drawer:** The size of drawer depends on information density. There are three sizes: `Default`, `Wide` and `Full Open`.
+- **Handle:** By clicking the handles, the drawer can be `Full Open` to display more information.
+- **Background:** The background should be black `#000000` with 46% opacity.
 
 ## Size
 
@@ -56,14 +56,10 @@ You can also customize the width of drawer by setting `defaultWidth` and `expand
 
 ```html
 <!-- Wide width drawer -->
-<KtDrawer wide>
-	...
-</KtDrawer>
+<KtDrawer wide> ... </KtDrawer>
 
 <!-- Customize width drawer -->
-<KtDrawer defaultWidth="400px"  expandWidth="600px">
-	...
-</KtDrawer>
+<KtDrawer defaultWidth="400px" expandWidth="600px"> ... </KtDrawer>
 ```
 
 ## Close from outside
@@ -98,9 +94,7 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 		<div class="drawer-header">
 			<h2>default header</h2>
 		</div>
-		<div class="drawer-body">
-				default body
-		</div>
+		<div class="drawer-body">default body</div>
 		<div class="drawer-footer">
 			<button class="w-100">Close</button>
 		</div>
@@ -119,6 +113,7 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 	</div>
 </div>
 ```
+
 </div>
 
 </ShowCase>
@@ -128,7 +123,7 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 ### Attributes
 
 | Attribute      | Description                                | Type      | Accepted values | Default |
-|:---------------|:-------------------------------------------|:----------|:----------------|:--------|
+| :------------- | :----------------------------------------- | :-------- | :-------------- | :------ |
 | `closeOutside` | closed drawer when click outside of drawer | `Boolean` | —               | `true`  |
 | `defaultWidth` | width when drawer is closed                | `String`  | CSS width       | —       |
 | `expandWidth`  | width when drawer is expanded              | `String`  | CSS width       | —       |

@@ -35,15 +35,8 @@ Set `:size="Kotti.Avatar.Size.SMALL"` to make the avatar smaller.
 	name="Jony O'Five"
 	src="https://picsum.photos/200/100"
 />
-<KtAvatar
-	class="mr-16px"
-	isHoverable
-	name="Jony O'Five"
-/>
-<KtAvatar
-	class="mr-16px"
-	isHoverable
-/>
+<KtAvatar class="mr-16px" isHoverable name="Jony O'Five" />
+<KtAvatar class="mr-16px" isHoverable />
 ```
 
 <ComponentInfo :component="KtAvatarGroup" />
@@ -70,30 +63,24 @@ The example of the avatar data is shown here, which has same properities as avat
 const avatarData = [
 	{
 		name: 'Justin',
-		src: 'https://picsum.photos/100'
+		src: 'https://picsum.photos/100',
 	},
 	{
 		name: 'Beoncye',
-		src: 'https://picsum.photos/200'
+		src: 'https://picsum.photos/200',
 	},
 	{
 		name: 'Simens',
-		src: 'https://picsum.photos/120'
-	}
-];
+		src: 'https://picsum.photos/120',
+	},
+]
 ```
-
 
 Avatar group can be stacked by setting `isStack`.
 You can control how many avatar items are displayed with `count`.
 
 ```html
-<KtAvatarGroup
-	:count="3"
-	isHoverable
-	isStack
-	:items="avatarData"
-/>
+<KtAvatarGroup :count="3" isHoverable isStack :items="avatarData" />
 ```
 
 ## `isStack`

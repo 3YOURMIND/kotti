@@ -485,15 +485,15 @@ type ComponentRepresenation = ComponentValue & {
 	validator: Kotti.Field.Validation.Function
 }
 
-const createValidator = (
-	validation: Kotti.Field.Validation.Result['type'],
-) => (): Kotti.Field.Validation.Result =>
-	validation === 'empty'
-		? { type: 'empty' }
-		: {
-				text: `Some Validation Text`,
-				type: validation,
-		  }
+const createValidator =
+	(validation: Kotti.Field.Validation.Result['type']) =>
+	(): Kotti.Field.Validation.Result =>
+		validation === 'empty'
+			? { type: 'empty' }
+			: {
+					text: `Some Validation Text`,
+					type: validation,
+			  }
 
 const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 	{ label: 'Key 1', value: 'value1' },
@@ -538,9 +538,8 @@ export default defineComponent({
 	setup() {
 		const values = ref<typeof INITIAL_VALUES>(INITIAL_VALUES)
 
-		const remoteSingleSelectQuery = ref<
-			Kotti.FieldSingleSelectRemote.Props['query']
-		>(null)
+		const remoteSingleSelectQuery =
+			ref<Kotti.FieldSingleSelectRemote.Props['query']>(null)
 
 		const settings = ref<{
 			additionalProps: {

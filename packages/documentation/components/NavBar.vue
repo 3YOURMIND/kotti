@@ -85,28 +85,32 @@ export default defineComponent({
 					link: 'https://github.com/3YOURMIND/kotti#readme',
 				},
 			],
-			sections: menu.map((section): {
-				title: string | null
-				links: Array<{
-					icon: Yoco.Icon
-					title: string
-					path: string
-					isActive: boolean
-				}>
-			} => ({
-				links: section.subsections.map((subsection) => ({
-					icon: subsection.icon,
-					title: subsection.title,
-					path: `/${subsection.path}${
-						subsection.pages.length >= 1 ? `/${subsection.pages[0].path}` : ''
-					}`,
-					isActive:
-						subsection.path === ''
-							? route.value.path === '/'
-							: route.value.path.startsWith(`/${subsection.path}`),
-				})),
-				title: section.title,
-			})),
+			sections: menu.map(
+				(
+					section,
+				): {
+					title: string | null
+					links: Array<{
+						icon: Yoco.Icon
+						title: string
+						path: string
+						isActive: boolean
+					}>
+				} => ({
+					links: section.subsections.map((subsection) => ({
+						icon: subsection.icon,
+						title: subsection.title,
+						path: `/${subsection.path}${
+							subsection.pages.length >= 1 ? `/${subsection.pages[0].path}` : ''
+						}`,
+						isActive:
+							subsection.path === ''
+								? route.value.path === '/'
+								: route.value.path.startsWith(`/${subsection.path}`),
+					})),
+					title: section.title,
+				}),
+			),
 			setIsNarrow: (value: boolean) => {
 				saveSavedFieldsToLocalStorage(value)
 				isNarrow.value = value

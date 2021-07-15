@@ -104,29 +104,27 @@ const useValue = <DATA_TYPE>({
 
 	// fetch value
 
-	const currentValue = computed(
-		(): DATA_TYPE => {
-			const value = (() => {
-				if (context === null) return cloneDeep(props.value)
+	const currentValue = computed((): DATA_TYPE => {
+		const value = (() => {
+			if (context === null) return cloneDeep(props.value)
 
-				switch (props.formKey) {
-					case FORM_KEY_NONE:
-						return cloneDeep(props.value)
+			switch (props.formKey) {
+				case FORM_KEY_NONE:
+					return cloneDeep(props.value)
 
-					case null:
-						throw new KtFieldErrors.ImplicitFormKeyNone(props)
+				case null:
+					throw new KtFieldErrors.ImplicitFormKeyNone(props)
 
-					default:
-						return context.values.value[props.formKey] as DATA_TYPE
-				}
-			})()
+				default:
+					return context.values.value[props.formKey] as DATA_TYPE
+			}
+		})()
 
-			if (!isCorrectDataType(value))
-				throw new KtFieldErrors.InvalidDataType(props, value)
+		if (!isCorrectDataType(value))
+			throw new KtFieldErrors.InvalidDataType(props, value)
 
-			return value
-		},
-	)
+		return value
+	})
 
 	return {
 		currentValue,
@@ -344,9 +342,7 @@ export const useField = <DATA_TYPE>({
 	isEmpty,
 	props,
 	supports,
-}: KottiField.Hook.Parameters<DATA_TYPE>): KottiField.Hook.Returns<
-	DATA_TYPE
-> => {
+}: KottiField.Hook.Parameters<DATA_TYPE>): KottiField.Hook.Returns<DATA_TYPE> => {
 	const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 
 	useSupports({ props, supports })

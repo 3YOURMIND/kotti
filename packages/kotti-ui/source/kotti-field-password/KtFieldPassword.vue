@@ -45,18 +45,20 @@ export default defineComponent({
 
 		return {
 			field,
-			inputProps: computed((): Partial<HTMLInputElement> & {
-				class: object
-				forceUpdateKey: number
-			} => ({
-				...field.inputProps,
-				autocomplete: props.autoComplete,
-				class: ['kt-field-password__wrapper'],
-				forceUpdateKey: forceUpdateKey.value,
-				type: 'password',
-				size: 1,
-				value: field.currentValue ?? '',
-			})),
+			inputProps: computed(
+				(): Partial<HTMLInputElement> & {
+					class: object
+					forceUpdateKey: number
+				} => ({
+					...field.inputProps,
+					autocomplete: props.autoComplete,
+					class: ['kt-field-password__wrapper'],
+					forceUpdateKey: forceUpdateKey.value,
+					type: 'password',
+					size: 1,
+					value: field.currentValue ?? '',
+				}),
+			),
 			onInput: (event: { target: HTMLInputElement }) => {
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)

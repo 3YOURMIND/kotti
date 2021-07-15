@@ -7,7 +7,8 @@ import KtFieldDateRangeVue from './KtFieldDateRange.vue'
 import KtFieldDateTimeVue from './KtFieldDateTime.vue'
 import KtFieldDateTimeRangeVue from './KtFieldDateTimeRange.vue'
 
-const DESIGN_URL = 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=773%3A6059' as const
+const DESIGN_URL =
+	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=773%3A6059' as const
 
 export const KtFieldDate = attachMeta(makeInstallable(KtFieldDateVue), {
 	addedVersion: '2.0.0',

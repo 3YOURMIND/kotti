@@ -21,13 +21,14 @@ H3 heading supports customize actions, and also can work as section toggles.
 When heading type is `action`, the heading has `click` event for that action.
 
 ```html
-<KtHeading text="Title with action"
+<KtHeading
+	text="Title with action"
 	type="action"
 	icon="announce"
 	actionText="Click Me"
-	@click="showAlert" />
+	@click="showAlert"
+/>
 ```
-
 
 ## Heading with Toggle
 
@@ -67,7 +68,7 @@ You can change the `toggleStatus` dynamically by binding value to it.
 ### Attributes
 
 | Attribute         | Description             | Type      | Accepted Values             | Default   |
-|:------------------|:------------------------|:----------|:----------------------------|:----------|
+| :---------------- | :---------------------- | :-------- | :-------------------------- | :-------- |
 | `type`            | heading types           | `String`  | `action`,`default`,`toggle` | `default` |
 | `icon`            | icon before action text | `String`  | string from `yoco`          | —         |
 | `actionText`      | text for action         | `String`  | —                           | —         |
@@ -78,7 +79,7 @@ You can change the `toggleStatus` dynamically by binding value to it.
 ### Events
 
 | Event Name | Description                        | Parameters       |
-|:-----------|:-----------------------------------|:-----------------|
+| :--------- | :--------------------------------- | :--------------- |
 | `toggle`   | trigger when toggle button clicked | `(event: Event)` |
 | `click`    | trigger when action button clicked | `(event: Event)` |
 </template>

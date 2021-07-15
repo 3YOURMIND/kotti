@@ -24,18 +24,17 @@ The Card component has slots for the `card-header`, `card-body`, and `card-foote
 
 ```html
 <KtCard>
-	<div slot="card-header" >
+	<div slot="card-header">
 		<h2>Lorem Ipsum</h2>
 		<b>consectetur adipiscing elit</b>
 	</div>
-	<div slot="card-body" >
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			Phasellus consequat nisl at nisl condimentum vehicula.
+	<div slot="card-body">
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+			consequat nisl at nisl condimentum vehicula.
 		</p>
 	</div>
-	<div slot="card-footer">
-		This is the end
-	</div>
+	<div slot="card-footer">This is the end</div>
 </KtCard>
 ```
 
@@ -97,18 +96,16 @@ The `imgUrl` property defines the image’s `url`.
 
 ```html
 <KtCard imgUrl="https://picsum.photos/900/300" imgPosition="middle">
-	<div slot="card-header" >
+	<div slot="card-header">
 		<h2>Lorem Ipsum</h2>
 	</div>
-	<div slot="card-body" >
+	<div slot="card-body">
 		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			Phasellus consequat nisl at nisl condimentum vehicula.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+			consequat nisl at nisl condimentum vehicula.
 		</p>
 	</div>
-	<div slot="card-footer">
-		This is the end
-	</div>
+	<div slot="card-footer">This is the end</div>
 </KtCard>
 ```
 
@@ -117,7 +114,7 @@ The `imgUrl` property defines the image’s `url`.
 ### Attributes
 
 | Attribute     | Description                  | Type     | Accepted Values                 | Default |
-|:--------------|:-----------------------------|:---------|:--------------------------------|:--------|
+| :------------ | :--------------------------- | :------- | :------------------------------ | :------ |
 | `imgPosition` | postion of image in the card | `String` | `"top"`, `"middle"`, `"bottom"` | `top`   |
 | `imgUrl`      | url of image                 | `String` | —                               | —       |
 </template>

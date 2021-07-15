@@ -204,20 +204,18 @@ export default defineComponent({
 			visibleSelectedOptions: computed(() => {
 				return field.currentValue
 					.filter((_, index) => index < props.collapseTagsAfter)
-					.map(
-						(value): Entry => {
-							const option = props.options.find(
-								(option) => option.value === value,
+					.map((value): Entry => {
+						const option = props.options.find(
+							(option) => option.value === value,
+						)
+
+						if (!option)
+							throw new Error(
+								`Couldn’t find option with value “${String(value)}”`,
 							)
 
-							if (!option)
-								throw new Error(
-									`Couldn’t find option with value “${String(value)}”`,
-								)
-
-							return option
-						},
-					)
+						return option
+					})
 			}),
 			Yoco,
 		}

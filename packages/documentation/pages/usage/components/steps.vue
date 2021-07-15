@@ -18,7 +18,11 @@
 4. Error: The step is finished with an error
 
 ```html
-<KtStep title="Process" description="Your items are Printing" status="process" />
+<KtStep
+	title="Process"
+	description="Your items are Printing"
+	status="process"
+/>
 ```
 
 ## Step Structure
@@ -59,14 +63,12 @@ Each `KtStep` has four elements:
 
 ```html
 <KtSteps :current="1" status="process">
-	<KtStep title="Pending" description="Your items have been ordered"/>
-	<KtStep title="Print" description="Your items are printing"/>
-	<KtStep title="Shipped" description="Your items has been shipped"/>
+	<KtStep title="Pending" description="Your items have been ordered" />
+	<KtStep title="Print" description="Your items are printing" />
+	<KtStep title="Shipped" description="Your items has been shipped" />
 </KtSteps>
 <!-- Show as icons -->
-<KtSteps :current="1" status="process" showIcon>
-	...
-</KtSteps>
+<KtSteps :current="1" status="process" showIcon> ... </KtSteps>
 ```
 
 `current` props controls which step is current step. `status` specifies the status of current step. By default `KtSteps` uses numberic indicator, if you want to use icons, set `showIcon` to `true`
@@ -76,7 +78,7 @@ Each `KtStep` has four elements:
 ### Steps Attributes
 
 | Attribute  | Description             | Type      | Accepted Values                           | Default   |
-|:-----------|:------------------------|:----------|:------------------------------------------|:----------|
+| :--------- | :---------------------- | :-------- | :---------------------------------------- | :-------- |
 | `current`  | index of current step   | `Number`  | —                                         | `0`       |
 | `showIcon` | show indicator as icons | `Boolean` | —                                         | `false`   |
 | `status`   | status of the step      | `String`  | `process`, `finished`, `error` and `wait` | `process` |
@@ -84,7 +86,7 @@ Each `KtStep` has four elements:
 ### Step Attributes
 
 | Attribute     | Description                      | Type      | Accepted Values                           | Default   |
-|:--------------|:---------------------------------|:----------|:------------------------------------------|:----------|
+| :------------ | :------------------------------- | :-------- | :---------------------------------------- | :-------- |
 | `description` | description text of the step     | `String`  | —                                         | `null`    |
 | `hideLine`    | should be used for the last step | `Boolean` | `true`, `false`                           | `false`   |
 | `icon`        | icon of the step                 | `String`  | yoco icon string                          | `check`   |
@@ -94,7 +96,7 @@ Each `KtStep` has four elements:
 ### Theme
 
 | Attribute    | Description                             |
-|:-------------|:----------------------------------------|
+| :----------- | :-------------------------------------- |
 | `brandColor` | Changes the color of indicator and line |
 </template>
 

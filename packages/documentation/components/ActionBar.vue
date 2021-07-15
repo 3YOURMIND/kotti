@@ -44,24 +44,22 @@ export default defineComponent({
 
 		const path = computed(() => route.value.path)
 
-		const subsection = computed(
-			(): Subsection => {
-				const match = menu
-					.flatMap((menuItem: Section) => menuItem.subsections)
-					.find((link) =>
-						link.path === ''
-							? path.value === ''
-							: path.value.startsWith(`/${link.path}`),
-					)
+		const subsection = computed((): Subsection => {
+			const match = menu
+				.flatMap((menuItem: Section) => menuItem.subsections)
+				.find((link) =>
+					link.path === ''
+						? path.value === ''
+						: path.value.startsWith(`/${link.path}`),
+				)
 
-				if (!match)
-					throw new Error(
-						`Actionbar.vue: Could not find Subsection “${path.value}”`,
-					)
+			if (!match)
+				throw new Error(
+					`Actionbar.vue: Could not find Subsection “${path.value}”`,
+				)
 
-				return match
-			},
-		)
+			return match
+		})
 
 		return {
 			subsection,

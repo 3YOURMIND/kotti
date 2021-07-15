@@ -66,9 +66,10 @@ export default defineComponent({
 				]
 			},
 			onRemoveField(toRemove) {
-				currentFieldsWrapper.currentFields = currentFieldsWrapper.currentFields.filter(
-					(field) => field !== toRemove,
-				)
+				currentFieldsWrapper.currentFields =
+					currentFieldsWrapper.currentFields.filter(
+						(field) => field !== toRemove,
+					)
 			},
 			setValue(key, newValue) {
 				emit('input', {

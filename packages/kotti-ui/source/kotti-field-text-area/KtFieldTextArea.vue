@@ -41,17 +41,19 @@ export default defineComponent({
 
 		return {
 			field,
-			inputProps: computed((): Partial<HTMLTextAreaElement> & {
-				class: string
-				forceUpdateKey: number
-			} => ({
-				...field.inputProps,
-				class: 'kt-field-text-area__wrapper',
-				forceUpdateKey: forceUpdateKey.value,
-				placeholder: props.placeholder ?? undefined,
-				rows: props.rows,
-				value: field.currentValue ?? '',
-			})),
+			inputProps: computed(
+				(): Partial<HTMLTextAreaElement> & {
+					class: string
+					forceUpdateKey: number
+				} => ({
+					...field.inputProps,
+					class: 'kt-field-text-area__wrapper',
+					forceUpdateKey: forceUpdateKey.value,
+					placeholder: props.placeholder ?? undefined,
+					rows: props.rows,
+					value: field.currentValue ?? '',
+				}),
+			),
 			onInput: (event: { target: HTMLTextAreaElement }) => {
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)

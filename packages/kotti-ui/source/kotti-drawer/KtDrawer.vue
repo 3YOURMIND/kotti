@@ -12,12 +12,8 @@
 					<slot name="drawer-footer" />
 				</div>
 				<div class="drawer-handle" @click="onDrawerHandleClick">
-					<i v-if="isExpanded" class="yoco">
-						chevron_right
-					</i>
-					<i v-else class="yoco">
-						chevron_left
-					</i>
+					<i v-if="isExpanded" class="yoco"> chevron_right </i>
+					<i v-else class="yoco"> chevron_left </i>
 				</div>
 			</div>
 		</div>

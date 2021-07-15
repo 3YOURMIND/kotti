@@ -5,7 +5,7 @@ import { KottiField } from '../kotti-field/types'
 export namespace KottiForm {
 	export interface Context<
 		CONTEXT_TYPE extends ContextType = ContextType,
-		T extends keyof CONTEXT_TYPE = keyof CONTEXT_TYPE
+		T extends keyof CONTEXT_TYPE = keyof CONTEXT_TYPE,
 	> {
 		formPath: Ref<ReadonlyArray<string | number>>
 

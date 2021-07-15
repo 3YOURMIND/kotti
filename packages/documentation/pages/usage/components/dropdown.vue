@@ -19,10 +19,9 @@ Default slot is the trigger element. `KtDropdownMenus` slot contains the dropdow
 
 In `KtDropdownMenus` slot, you can write your own stylied element. However, we suggest you use `KtDropdownMenu` components.
 
-
 ```html
 <KtDropdown>
-	<KtButton type="secondary" label="More Action"/>
+	<KtButton type="secondary" label="More Action" />
 	<div slot="KtDropdownMenus">
 		<KtDropdownMenu>Add New Item</KtDropdownMenu>
 		<KtDropdownMenu>Download Item</KtDropdownMenu>
@@ -60,24 +59,35 @@ You can also use any attribute you would pass to `KtPopover` or `KtButton`. They
 </div>
 
 ```html
-	<KtDropdownButton type="primary" label="Dropdown button">
-		<div slot="KtDropdownMenus">
-			<KtDropdownMenu>Request item</KtDropdownMenu>
-			<KtDropdownMenu>Download Item</KtDropdownMenu>
-		</div>
-	</KtDropdownButton>
-		<KtDropdownButton placement="top-end" dropdownIcon="chevron_up" size="sm" type="primary" label="Dropdown button" >
-		<div slot="KtDropdownMenus">
-			<KtDropdownMenu>Request item</KtDropdownMenu>
-			<KtDropdownMenu>Download Item</KtDropdownMenu>
-		</div>
-	</KtDropdownButton>
-	<KtDropdownButton :disabled="true" size="sm" type="primary" label="Dropdown button" >
-		<div slot="KtDropdownMenus">
-			<KtDropdownMenu>Request item</KtDropdownMenu>
-			<KtDropdownMenu>Download Item</KtDropdownMenu>
-		</div>
-	</KtDropdownButton>
+<KtDropdownButton type="primary" label="Dropdown button">
+	<div slot="KtDropdownMenus">
+		<KtDropdownMenu>Request item</KtDropdownMenu>
+		<KtDropdownMenu>Download Item</KtDropdownMenu>
+	</div>
+</KtDropdownButton>
+<KtDropdownButton
+	placement="top-end"
+	dropdownIcon="chevron_up"
+	size="sm"
+	type="primary"
+	label="Dropdown button"
+>
+	<div slot="KtDropdownMenus">
+		<KtDropdownMenu>Request item</KtDropdownMenu>
+		<KtDropdownMenu>Download Item</KtDropdownMenu>
+	</div>
+</KtDropdownButton>
+<KtDropdownButton
+	:disabled="true"
+	size="sm"
+	type="primary"
+	label="Dropdown button"
+>
+	<div slot="KtDropdownMenus">
+		<KtDropdownMenu>Request item</KtDropdownMenu>
+		<KtDropdownMenu>Download Item</KtDropdownMenu>
+	</div>
+</KtDropdownButton>
 ```
 
 ## Icons and Size
@@ -96,10 +106,9 @@ As `KtPopover`, `KtDropdown` accpets `size`, when `size` is not given, the width
 
 If you are using `KtDropdownMenu`, you can use `icon` props to define the icon in front of the text.
 
-
 ```html
 <KtDropdown size="sm">
-	<KtButton type="text" icon="dots"/>
+	<KtButton type="text" icon="dots" />
 	<div slot="KtDropdownMenus">
 		<KtDropdownMenu icon="plus">Add New Item</KtDropdownMenu>
 		<KtDropdownMenu icon="download">Download Item</KtDropdownMenu>
@@ -147,7 +156,7 @@ The `placement` prop accepts same values as `KtPopover`. We suggest using the de
 ### Attributes
 
 | Attribute              | Description               | Type     | Accepted values   | Default |
-|:-----------------------|:--------------------------|:---------|:------------------|:--------|
+| :--------------------- | :------------------------ | :------- | :---------------- | :------ |
 | `KtDropdown.size`      | size of the dropdown      | `String` | Same as KtPopover | `auto`  |
 | `KtDropdown.placement` | placement of the dropdown | `String` | Same as KtPopover | `auto`  |
 | `KtDropdownMenu.icon`  | icon of the dropdown denu | `String` | Yoco icon text    | -       |

@@ -10,7 +10,7 @@ Indicate the current page’s location within a navigational hierarchy.
 </div>
 
 ```html
-<KtBreadcrumb :breadcrumbs="links"/>
+<KtBreadcrumb :breadcrumbs="links" />
 ```
 
 ```js
@@ -40,7 +40,7 @@ links: [
 </div>
 
 ```html
-<KtBreadcrumb :breadcrumbs="links" :separator="textSeparator"/>
+<KtBreadcrumb :breadcrumbs="links" :separator="textSeparator" />
 ```
 
 ```js

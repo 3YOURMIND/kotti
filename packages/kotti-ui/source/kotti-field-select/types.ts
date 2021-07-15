@@ -18,7 +18,7 @@ export namespace Shared {
 			| number
 			| boolean
 			| symbol
-			| null
+			| null,
 	> = {
 		isDisabled?: boolean
 		label: string
