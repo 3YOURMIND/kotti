@@ -12,12 +12,11 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 ![Headers](~/assets/img/typography_header.png)
 
 | Header                                                                                  | Basic Properties                                                       | UI Properties                                                           |
-|:----------------------------------------------------------------------------------------|:-----------------------------------------------------------------------|:------------------------------------------------------------------------|
+| :-------------------------------------------------------------------------------------- | :--------------------------------------------------------------------- | :---------------------------------------------------------------------- |
 | **H1 Page header**<br/>Without actionbar, the page header can be used in the workspace. | font-size: `32px`;<br/>font-weight: `600`;<br/>color: `$darkgray-500`; | line-height: `48px`;                                                    |
 | **H2 Subpage Header**<br/>Used for second level header, or main title in action bar.    | font-size: `24px`;<br/>font-weight: `600`;<br/>color: `$darkgray-500`; | line-height: `32px`;<br/>margin-top: `16px`;                            |
 | **H3 Section Header**<br/>Used to divide each section.                                  | font-size: `16px`;<br/>font-weight: `600`;<br/>color: `$primary-500`;  | line-height: `24px`;<br/>margin-top: `16px`;<br/>padding-bottom: `8px`; |
 | **H3 Section Header with actions**<br/>Text button for actions.                         | —                                                                      | —                                                                       |
-
 
 <div class="element-example">
 	<h1>H1 Page Header</h1>
@@ -31,7 +30,6 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 		@click="$router.push('/usage/components/heading')"
 	/>
 </div>
-
 
 <div class="mb-8px">
 	<KtBanner
@@ -60,7 +58,7 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 ![Laber Text Element](~/assets/img/typography_label_text.png)
 
 | Element                                                                   | Basic Properties                                                       | UI Properties        |
-|:--------------------------------------------------------------------------|:-----------------------------------------------------------------------|:---------------------|
+| :------------------------------------------------------------------------ | :--------------------------------------------------------------------- | :------------------- |
 | **Label Text**<br/>Secondary text to explain the default text.            | font-size: `12px`;<br/>font-weight: `600`;<br/>color: `$darkgray-300`; | line-height: `16px`; |
 | **Default Text**<br/>Text style for default text.                         | font-size: `14px`;<br/>color: `$darkgray-500`;                         | line-height: `24px`; |
 | **Key Text**<br/>Conveys information which is important for users.        | font-size: `24px`;<br/>font-weight: `600`;<br/>color: `$darkgray-500`; | line-height: `32px`; |
@@ -116,7 +114,7 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 ![Paragraph Example](~/assets/img/typography_paragraph.png)
 
 | Element                                               | Basic Properties                               | UI Properties          |
-|:------------------------------------------------------|:-----------------------------------------------|:-----------------------|
+| :---------------------------------------------------- | :--------------------------------------------- | :--------------------- |
 | **Paragraph Text**<br/>Used for long form text.       | font-size: `14px`;<br/>color: `$darkgray-300`; | line-height: `21px`;   |
 | **Pargraph Margin**<br/>Margin between two paragraphs | —                                              | margin-bottom: `16px`; |
 
@@ -142,12 +140,11 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 ## Formatting
 
 | Style                                                                                                                     | Notes                                                       |
-|:--------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------|
-| *Italics text*                                                                                                            | Using `<em/>`                                               |
+| :------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------- |
+| _Italics text_                                                                                                            | Using `<em/>`                                               |
 | **This is bold text**                                                                                                     | Using `<strong/>`                                           |
 | <ol><li>This is an ordered list;</li><li>Second item of ordered list;</li><li>Third item of ordered list.</li></ol>       | `<li/>` element has margin `8px` with default `line-height` |
 | <ul><li>This is an unordered list;</li><li>Second item of unordered list;</li><li>Third item of unordered list.</li></ul> | same as ordered list                                        |
-
 </template>
 
 <script lang="ts">

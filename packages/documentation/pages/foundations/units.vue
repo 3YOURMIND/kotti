@@ -5,13 +5,13 @@
 
 Our metric is based on multiples of `4px`. We call this 1 _unit_.
 
-|     Unit | Scss Variable |      rem |      px |
-|---------:|--------------:|---------:|--------:|
-| 1 _unit_ |     `$unit-1` | `0.2rem` |   `4px` |
-| 2 _unit_ |     `$unit-2` | `0.4rem` |   `8px` |
-| 4 _unit_ |     `$unit-4` | `0.8rem` |  `16px` |
-| 6 _unit_ |     `$unit-6` | `1.2rem` |  `24px` |
-| 8 _unit_ |     `$unit-8` | `1.6rem` |  `32px` |
+|     Unit | Scss Variable |      rem |     px |
+| -------: | ------------: | -------: | -----: |
+| 1 _unit_ |     `$unit-1` | `0.2rem` |  `4px` |
+| 2 _unit_ |     `$unit-2` | `0.4rem` |  `8px` |
+| 4 _unit_ |     `$unit-4` | `0.8rem` | `16px` |
+| 6 _unit_ |     `$unit-6` | `1.2rem` | `24px` |
+| 8 _unit_ |     `$unit-8` | `1.6rem` | `32px` |
 
 ### Padding and Margin
 

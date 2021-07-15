@@ -8,14 +8,15 @@ Since we are defining design tokens with CSS custom properties, you can override
 > If you don't care about IE11 support, you can overwrite custom props on any element.
 
 ## Method 1: CSS file
+
 One easy way of theming kotti component is to overwrite custom props using CSS diretcly. You will need to load this file after loading kotti CSS tho.
 
 Example:
 
 ```css
 :root {
-  --navbar-background: red;
-  --navbar-color: blue;
+	--navbar-background: red;
+	--navbar-color: blue;
 }
 ```
 
@@ -25,11 +26,14 @@ CSS custom props can be get and set using javascript. We take advantage of that 
 
 You can pass a key-value object to the component and the component will `setProperty` on `:root` for you.
 
-``` vue
-<KtTheme :customProperties="{'navbar-background': 'red', 'navbar-color': 'blue'}"/>
+```vue
+<KtTheme
+	:customProperties="{ 'navbar-background': 'red', 'navbar-color': 'blue' }"
+/>
 ```
 
 ## Demo
+
 Stylise the navbar with the select fields:
 
 <KtFieldSingleSelect isOptional label="Navbar Background" v-model="navbarBackground" :options="colors" />
@@ -39,7 +43,6 @@ Stylise the navbar with the select fields:
 <KtFieldSingleSelect isOptional label="Navbar Color Active" v-model="navbarColorActive" :options="colors" />
 
 <KtTheme :customProperties="{'navbar-background': navbarBackground, 'navbar-color': navbarColor, 'navbar-color-light': navbarLightColor, 'navbar-border': navbarBorder, 'navbar-color-active': navbarColorActive}"/>
-
 </template>
 
 <script>

@@ -81,9 +81,9 @@
 				</thead>
 				<tbody>
 					<tr
-						v-for="[name, prop] in Object.entries(
-							component.props,
-						).sort(([a], [b]) => a.localeCompare(b))"
+						v-for="[name, prop] in Object.entries(component.props).sort(
+							([a], [b]) => a.localeCompare(b),
+						)"
 						:key="name"
 					>
 						<td><code v-text="name" /></td>
@@ -93,18 +93,18 @@
 						<td>
 							<code
 								v-if="prop.required"
-								style="font-style: italic;"
+								style="font-style: italic"
 								v-text="'required'"
 							/>
 							<code
 								v-else-if="prop.default === undefined"
-								style="font-style: italic;"
+								style="font-style: italic"
 								v-text="'No default'"
 							/>
 							<code v-else v-text="stringifyDefault(prop.default)" />
 						</td>
 						<td>
-							<div style="display: flex; align-items: center;">
+							<div style="display: flex; align-items: center">
 								<i
 									class="yoco"
 									:style="{

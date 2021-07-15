@@ -40,18 +40,20 @@ export default defineComponent({
 
 		return {
 			field,
-			inputProps: computed((): Partial<HTMLInputElement> & {
-				class: object
-				forceUpdateKey: number
-			} => ({
-				...field.inputProps,
-				class: ['kt-field-text__wrapper'],
-				forceUpdateKey: forceUpdateKey.value,
-				type: 'text',
-				size: 1,
-				value: field.currentValue ?? '',
-				placeholder: props.placeholder ?? undefined,
-			})),
+			inputProps: computed(
+				(): Partial<HTMLInputElement> & {
+					class: object
+					forceUpdateKey: number
+				} => ({
+					...field.inputProps,
+					class: ['kt-field-text__wrapper'],
+					forceUpdateKey: forceUpdateKey.value,
+					type: 'text',
+					size: 1,
+					value: field.currentValue ?? '',
+					placeholder: props.placeholder ?? undefined,
+				}),
+			),
 			onInput: (event: { target: HTMLInputElement }) => {
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)

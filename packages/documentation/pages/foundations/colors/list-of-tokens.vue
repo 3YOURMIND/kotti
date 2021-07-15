@@ -2,10 +2,12 @@
 # Color Tokens
 
 ## Migration
+
 Old scss variables will still be available but we will drop support in the next major release. <br>
 We encourage you to replace usage of kotti colors with kotti color tokens.
 
 ## List of tokens
+
 This list is automatically generated so you can consider it a source of truth.
 
 <KtTable :rows="tokenColorsFactory.array" class="colorize">
@@ -28,7 +30,6 @@ Again, these are automatically generated so it can be considered source of truth
 
 {{tokenColorsFactory.string}}
 </pre>
-
 </template>
 
 <script>

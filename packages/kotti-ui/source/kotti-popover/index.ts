@@ -11,14 +11,12 @@ export const KtPopover = attachMeta(makeInstallable(KtPopoverVue), {
 		{
 			title: 'Simple',
 			type: MetaDesignType.FIGMA,
-			url:
-				'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=118%3A35',
+			url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=118%3A35',
 		},
 		{
 			title: 'With Items',
 			type: MetaDesignType.FIGMA,
-			url:
-				'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A552',
+			url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A552',
 		},
 	],
 	slots: {

@@ -15,8 +15,7 @@ export const KtRadio = attachMeta(makeInstallable(KtRadioVue), {
 	},
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=125%3A1173',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=125%3A1173',
 	},
 	slots: {
 		default: { description: null, scope: null },

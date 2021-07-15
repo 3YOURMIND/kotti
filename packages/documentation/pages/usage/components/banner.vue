@@ -24,7 +24,11 @@ Only use this type of banner when this issue will cause a significant error.
 </div>
 
 ```html
-<KtBanner message="Your material is not published yet" icon="announce" actionText="Publish" />
+<KtBanner
+	message="Your material is not published yet"
+	icon="announce"
+	actionText="Publish"
+/>
 ```
 
 ### Expand Banner
@@ -48,15 +52,11 @@ interface.
 </div>
 
 ```html
-<KtBanner
-	message="Your material is not published yet"
-	icon="cloud"
->
+<KtBanner message="Your material is not published yet" icon="cloud">
 	<div>
 		<h2>Order #100002</h2>
 		<h3>Order information</h3>
-		....
-		....
+		.... ....
 	</div>
 </KtBanner>
 ```
@@ -90,15 +90,14 @@ this style is useful when you want add contrast to the page.
 
 ### Attributes
 
-| Attribute         | Description                                    | Type      | Accepted values     | Default      |
-|:------------------|:-----------------------------------------------|:----------|:--------------------|:-------------|
-| `message`         | message in banner                              | `String`  | —                   | —            |
-| `icon`            | icon name from `yoco`                          | `String`  | icon name in `yoco` | `"announce"` |
-| `isGray`          | gray background for high contrast              | `Boolean` | —                   | `false`      |
-| `actionText`      | text shows when banner is not expandable       | `String`  | —                   | —            |
+| Attribute          | Description                                    | Type      | Accepted values     | Default      |
+| :----------------- | :--------------------------------------------- | :-------- | :------------------ | :----------- |
+| `message`          | message in banner                              | `String`  | —                   | —            |
+| `icon`             | icon name from `yoco`                          | `String`  | icon name in `yoco` | `"announce"` |
+| `isGray`           | gray background for high contrast              | `Boolean` | —                   | `false`      |
+| `actionText`       | text shows when banner is not expandable       | `String`  | —                   | —            |
 | `expandLabel`      | text shows when expandable banner is collapsed | `String`  | —                   | `View`       |
 | `expandCloseLabel` | text shows when expandable banner is expand    | `String`  | —                   | `Close`      |
-
 </template>
 
 <script lang="ts">

@@ -12,8 +12,7 @@ const META: Kotti.Meta = {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=128%3A0',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=128%3A0',
 	},
 	slots: {
 		actions: { description: 'E.g. edit/delete row actions', scope: null },

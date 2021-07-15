@@ -95,14 +95,14 @@ export namespace KottiFilters {
 		}
 
 		export type Boolean<
-			OPERATION extends Operation.Boolean = Operation.Boolean
+			OPERATION extends Operation.Boolean = Operation.Boolean,
 		> = Common & {
 			operations: OPERATION[]
 			type: FilterType.BOOLEAN
 		}
 
 		export type Currency<
-			OPERATION extends Operation.Currency = Operation.Currency
+			OPERATION extends Operation.Currency = Operation.Currency,
 		> = Common & {
 			operations: OPERATION[]
 			prefix: Kotti.FieldNumber.Props['prefix']
@@ -111,29 +111,28 @@ export namespace KottiFilters {
 		}
 
 		export type DateRange<
-			OPERATION extends Operation.DateRange = Operation.DateRange
+			OPERATION extends Operation.DateRange = Operation.DateRange,
 		> = Common & {
 			operations: OPERATION[]
 			type: FilterType.DATE_RANGE
 		}
 
-		export type Float<
-			OPERATION extends Operation.Float = Operation.Float
-		> = Common & {
-			operations: OPERATION[]
-			step: Kotti.FieldNumber.Props['step']
-			type: FilterType.FLOAT
-		}
+		export type Float<OPERATION extends Operation.Float = Operation.Float> =
+			Common & {
+				operations: OPERATION[]
+				step: Kotti.FieldNumber.Props['step']
+				type: FilterType.FLOAT
+			}
 
 		export type Integer<
-			OPERATION extends Operation.Integer = Operation.Integer
+			OPERATION extends Operation.Integer = Operation.Integer,
 		> = Common & {
 			operations: OPERATION[]
 			type: FilterType.INTEGER
 		}
 
 		export type MultiEnum<
-			OPERATION extends Operation.MultiEnum = Operation.MultiEnum
+			OPERATION extends Operation.MultiEnum = Operation.MultiEnum,
 		> = Common & {
 			operations: OPERATION[]
 			options: Kotti.FieldMultiSelect.Props['options']
@@ -146,19 +145,18 @@ export namespace KottiFilters {
 		}
 
 		export type SingleEnum<
-			OPERATION extends Operation.SingleEnum = Operation.SingleEnum
+			OPERATION extends Operation.SingleEnum = Operation.SingleEnum,
 		> = Common & {
 			operations: OPERATION[]
 			options: Kotti.FieldSingleSelect.Props['options']
 			type: FilterType.SINGLE_ENUM
 		}
 
-		export type String<
-			OPERATION extends Operation.String = Operation.String
-		> = Common & {
-			operations: OPERATION[]
-			type: FilterType.STRING
-		}
+		export type String<OPERATION extends Operation.String = Operation.String> =
+			Common & {
+				operations: OPERATION[]
+				type: FilterType.STRING
+			}
 
 		export type Any =
 			| Column.Boolean

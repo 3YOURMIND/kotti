@@ -42,13 +42,13 @@
 			@close="showModal = false"
 		>
 			<template v-if="settings.usedSlots.header" #header>
-				<h2 style="margin: 0;">This the modal title</h2>
+				<h2 style="margin: 0">This the modal title</h2>
 			</template>
 			<template v-if="settings.usedSlots.body" #body>
-				<p style="margin: 0;">
+				<p style="margin: 0">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				</p>
-				<p style="margin: 0;">
+				<p style="margin: 0">
 					Nunc a sollicitudin libero, consectetur interdum ligula.
 				</p>
 			</template>

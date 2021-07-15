@@ -14,29 +14,28 @@ console.log(Yoco.Icon.ANNOUNCE)
 ### Vue Example
 
 ```html
-<template>
+<templateTag>
 	<i class="yoco" v-text="Yoco.Icon.ANNOUNCE" />
-</template>
+</templateTag>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
-import { defineComponent } from '@vue/composition-api'
+	import { Yoco } from '@3yourmind/yoco'
+	import { defineComponent } from '@vue/composition-api'
 
-export default defineComponent({
-	name: 'Example',
-	setup() {
-		return {
-			Yoco
-		}
-	}
-})
+	export default defineComponent({
+		name: 'Example',
+		setup() {
+			return {
+				Yoco,
+			}
+		},
+	})
 </script>
 ```
 
 ### Details
 
 `@3yourmind/yoco` exports an `enum` with all icons. The usage of the `enum` is preferable as it can be checked for correctness by TypeScript. In certain situations, it can also have autocompletion support.
-
 </template>
 
 <script lang="ts">

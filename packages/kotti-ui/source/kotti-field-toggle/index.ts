@@ -10,14 +10,12 @@ const designs: Kotti.Meta['designs'] = [
 	{
 		title: 'type=switch',
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=436%3A1847',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=436%3A1847',
 	},
 	{
 		title: 'type=checkbox',
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=435%3A3497',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=435%3A3497',
 	},
 ]
 

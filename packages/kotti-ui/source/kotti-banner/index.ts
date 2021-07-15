@@ -8,8 +8,7 @@ export const KtBanner = attachMeta(makeInstallable(KtBannerVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=1439%3A5',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=1439%3A5',
 	},
 	slots: {
 		default: {

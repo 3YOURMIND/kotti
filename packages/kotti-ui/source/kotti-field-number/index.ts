@@ -9,8 +9,7 @@ export const KtFieldNumber = attachMeta(makeInstallable(KtFieldNumberVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=850%3A468',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=850%3A468',
 	},
 	slots: FIELD_META_BASE_SLOTS,
 	typeScript: {

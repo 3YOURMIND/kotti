@@ -8,8 +8,7 @@ export const KtActionbar = attachMeta(makeInstallable(KtActionbarVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=133%3A2651',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=133%3A2651',
 	},
 	slots: {
 		'actionbar-body': { description: null, scope: null },

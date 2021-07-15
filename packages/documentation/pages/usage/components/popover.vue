@@ -41,16 +41,12 @@ You can append `-start` and `-end` to the placement as well.
 
 ```html
 <KtPopover placement="right">
-	<KtButton>
-		Popover Bottom
-	</KtButton>
+	<KtButton>Popover Bottom</KtButton>
 	<KtCard slot="content">
-		<div slot="card-header" >
+		<div slot="card-header">
 			<h2>Lorem Ipsum</h2>
 		</div>
-		<div slot="card-body">
-			This is the hover popover
-		</div>
+		<div slot="card-body">This is the hover popover</div>
 	</KtCard>
 </KtPopover>
 ```
@@ -120,14 +116,15 @@ We also provide a nice way of displaying items inside popovers. It replaces the 
 	</KtPopover>
 </div>
 
-
 ```html
-	<KtPopover :options="[
+<KtPopover
+	:options="[
 			{ dataTest: 'example-button', icon: 'download', label: 'Download', onClick: () => {}},
 			{ icon: 'edit', isDisabled: true, label: 'Edit'}
-	]">
-		<KtButton label="Popover with a disabled item"/>
-	</KtPopover>
+	]"
+>
+	<KtButton label="Popover with a disabled item" />
+</KtPopover>
 ```
 
 ## Scoped Slot
@@ -138,21 +135,21 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 <div class="element-example">
 	<KtPopover class="mt-4 ml-4">
 		<KtButton label="Close with Cancel Button" />
-		<template v-slot:content="slotProps">
+		<div slot="content" slot-scope="slotProps">
 			<p>Save your message</p>
 			<KtButton type="text" @click="slotProps.close">Cancel</KtButton>
 			<KtButton type="primary">Save</KtButton>
-		</template>
+		</div>
 	</KtPopover>
 </div>
 
 ```html
 <KtPopover>
 	<KtButton label="Close with Cancel Button" />
-	<div v-slot:content="slotProps">
+	<div slot="content" slot-scope="slotProps">
 		<p>Save your message</p>
-		<KtButton type="text" @click="slotProps.close" label="Cancel"/>
-		<KtButton type="primary" label="Save"/>
+		<KtButton type="text" @click="slotProps.close" label="Cancel" />
+		<KtButton type="primary" label="Save" />
 	</div>
 </KtPopover>
 ```
@@ -174,7 +171,7 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 
 ```html
 <KtPopover placement="top" class="mt-4 ml-4">
-	<KtButton label="Top Popover"/>
+	<KtButton label="Top Popover" />
 	<div slot="content">
 		<KtFieldSingleSelect
 			label="Test with dropdown"
@@ -185,15 +182,15 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 </KtPopover>
 ```
 
-
 ## Usage
 
 ### Attributes,
-| Attribute   | Description                   | Type     | Accepted Values                  | Default  |
-|:------------|:------------------------------|:---------|:---------------------------------|:---------|
+
+| Attribute   | Description                   | Type     | Accepted Values                                                                                                                                                                | Default  |
+| :---------- | :---------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | `placement` | postion of popover content    | `String` | `auto`, `auto-start`, `auto-end`, `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `right`, `right-start`, `right-end`, `left`, `left-start`, `left-end` | `bottom` |
-| `size`      | size of popover content       | `String` | `sm`, `md`, `lg`                 | `sm`     |
-| `options`   | direct usage of popper.js API | `Object` | See [popper.js documentation](https://popper.js.org/docs/v2/constructors/) | `{}` |
+| `size`      | size of popover content       | `String` | `sm`, `md`, `lg`                                                                                                                                                               | `sm`     |
+| `options`   | direct usage of popper.js API | `Object` | See [popper.js documentation](https://popper.js.org/docs/v2/constructors/)                                                                                                     | `{}`     |
 </template>
 
 <script lang="ts">

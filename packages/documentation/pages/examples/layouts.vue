@@ -59,8 +59,7 @@ export default {
 			quickLinksData: [
 				{
 					title: 'Create New Issue',
-					link:
-						'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
+					link: 'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
 				},
 			],
 			navbarMenu: [

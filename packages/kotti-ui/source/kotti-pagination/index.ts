@@ -8,8 +8,7 @@ export const KtPagination = attachMeta(makeInstallable(KtPaginationVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=101%3A1106',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=101%3A1106',
 	},
 	slots: {},
 	typeScript: null,

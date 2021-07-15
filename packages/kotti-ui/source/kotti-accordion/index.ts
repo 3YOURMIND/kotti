@@ -8,8 +8,7 @@ export const KtAccordion = attachMeta(makeInstallable(KtAccordionVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=173%3A2598',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=173%3A2598',
 	},
 	slots: {
 		default: { description: null, scope: null },

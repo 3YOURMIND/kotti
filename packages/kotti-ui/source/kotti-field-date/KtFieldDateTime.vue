@@ -68,10 +68,9 @@ export default defineComponent({
 			popperWidth: '400px',
 		})
 
-		const pickerOptions: Ref<Pick<
-			DatePickerOptions,
-			'disabledDate' | 'shortcuts'
-		>> = computed(() => ({
+		const pickerOptions: Ref<
+			Pick<DatePickerOptions, 'disabledDate' | 'shortcuts'>
+		> = computed(() => ({
 			disabledDate: (date: Date) => isInvalidDate(props, date),
 			shortcuts: props.shortcuts.map(
 				({

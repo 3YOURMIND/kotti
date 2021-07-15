@@ -8,8 +8,7 @@ export const KtAvatar = attachMeta(makeInstallable(KtAvatarVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A66',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A66',
 	},
 	slots: {},
 	typeScript: {

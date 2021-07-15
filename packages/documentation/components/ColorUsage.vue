@@ -15,13 +15,11 @@
 		<h3>Dark text on light background</h3>
 		<div class="example-wrapper">
 			<div class="example-content light">
-				<div style="color: #3d3d3d;">
-					Default text <code>Darkgrey-500</code>
-				</div>
-				<div style="color: #575757;">
+				<div style="color: #3d3d3d">Default text <code>Darkgrey-500</code></div>
+				<div style="color: #575757">
 					Secondary text <code>Darkgrey-400</code>
 				</div>
-				<div style="color: #8a8a8a;">
+				<div style="color: #8a8a8a">
 					Disabled / hint text <code>Darkgrey-300</code>
 				</div>
 			</div>
@@ -40,13 +38,13 @@
 		<h3>Light text on dark background</h3>
 		<div class="example-wrapper">
 			<div class="example-content dark">
-				<div style="color: #f8f8f8;">
+				<div style="color: #f8f8f8">
 					Default text <code>LightGrey-300</code>
 				</div>
-				<div style="color: #dbdbdb;">
+				<div style="color: #dbdbdb">
 					Secondary text <code>Lightgrey-400</code>
 				</div>
-				<div style="color: #a8a8a8;">
+				<div style="color: #a8a8a8">
 					Disabled / hint text <code>Lightgrey-500</code>
 				</div>
 			</div>
@@ -60,13 +58,13 @@
 		<h3>Light text on color background</h3>
 		<div class="example-wrapper">
 			<div class="example-content color">
-				<div style="color: #ffffff;">
+				<div style="color: #ffffff">
 					Default text <code>White, Opacity: 100%</code>
 				</div>
-				<div style="color: #ffffff; opacity: 0.68;">
+				<div style="color: #ffffff; opacity: 0.68">
 					Secondary text <code>White, Opacity: 68%</code>
 				</div>
-				<div style="color: #ffffff; opacity: 0.46;">
+				<div style="color: #ffffff; opacity: 0.46">
 					Disabled / hint text <code>White, Opacity: 46%</code>
 				</div>
 			</div>
@@ -88,14 +86,14 @@
 		<h3>Icon color</h3>
 		<div class="example-wrapper">
 			<div class="example-content icon">
-				<div style="background: #f8f8f8;">
-					<i class="yoco" style="color: #8a8a8a;">file</i>
+				<div style="background: #f8f8f8">
+					<i class="yoco" style="color: #8a8a8a">file</i>
 					<span> file_name.pdf</span>
 				</div>
-				<div style="color: #fff; background: #2c66c4;">
+				<div style="color: #fff; background: #2c66c4">
 					<i class="yoco">announce</i> <span> Announce new icons.</span>
 				</div>
-				<div style="color: #2c66c4;">
+				<div style="color: #2c66c4">
 					<i class="yoco">print</i> <span> Print invoice.</span>
 				</div>
 			</div>

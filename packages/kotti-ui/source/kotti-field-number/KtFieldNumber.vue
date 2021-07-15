@@ -224,22 +224,24 @@ export default defineComponent({
 			},
 			internalStringValue,
 			input,
-			inputProps: computed((): Partial<HTMLInputElement> & {
-				class: object
-				forceUpdateKey: number
-			} => ({
-				...field.inputProps,
-				class: {
-					'kt-field-number__middle__input': true,
-					'kt-field-number__middle__input--has-maximum': showMaximum.value,
-				},
-				disabled: field.isDisabled,
-				forceUpdateKey: forceUpdateKey.value,
-				placeholder: props.placeholder ?? undefined,
-				size: 1,
-				type: 'text', // NOT A MISTAKE
-				value: internalStringValue.value,
-			})),
+			inputProps: computed(
+				(): Partial<HTMLInputElement> & {
+					class: object
+					forceUpdateKey: number
+				} => ({
+					...field.inputProps,
+					class: {
+						'kt-field-number__middle__input': true,
+						'kt-field-number__middle__input--has-maximum': showMaximum.value,
+					},
+					disabled: field.isDisabled,
+					forceUpdateKey: forceUpdateKey.value,
+					placeholder: props.placeholder ?? undefined,
+					size: 1,
+					type: 'text', // NOT A MISTAKE
+					value: internalStringValue.value,
+				}),
+			),
 			onInput(value: string) {
 				lastUserSetCursorPosition.value = input.value?.selectionStart ?? null
 

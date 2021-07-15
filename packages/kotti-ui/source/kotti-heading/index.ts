@@ -8,8 +8,7 @@ export const KtHeading = attachMeta(makeInstallable(KtHeadingVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A765',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A765',
 	},
 	slots: {
 		default: { description: 'Used for type toggle', scope: null },

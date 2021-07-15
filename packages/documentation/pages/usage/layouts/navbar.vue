@@ -81,7 +81,7 @@ quickLinksData: [{
 ### Events
 
 | Event Name   | Type    | Payload  | Description                  |
-|:-------------|:--------|:---------|:-----------------------------|
+| :----------- | :------ | :------- | :--------------------------- |
 | `@linkClick` | `$emit` | `$event` | navbar menu link was clicked |
 | `@logoClick` | `$emit` | `$event` | navbar logo was clicked      |
 </template>
