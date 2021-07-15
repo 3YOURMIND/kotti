@@ -16,7 +16,7 @@
 	],
 	"description": "3YOURMIND Icon Font",
 	"devDependencies": {
-		"icon-font-buildr": "^1.3.4"
+		"icon-font-buildr": "^1.4.2"
 	},
 	"files": [
 		"fonts",
