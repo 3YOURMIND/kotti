@@ -84,6 +84,7 @@ export namespace KottiFilters {
 			| Operation.Float
 			| Operation.Integer
 			| Operation.MultiEnum
+			| Operation.Search
 			| Operation.SingleEnum
 			| Operation.String
 	}
