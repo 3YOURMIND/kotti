@@ -132,8 +132,8 @@
 
 					// clipping also affects the clickable area
 					@supports (clip-path: circle(#{$size / 2} at center)) {
-						border-radius: 0;
 						clip-path: circle(#{$size / 2} at center);
+						border-radius: 0;
 					}
 
 					&:hover {
