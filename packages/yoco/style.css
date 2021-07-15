@@ -17,20 +17,13 @@
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
+	font-feature-settings: 'liga'; /* Enable Ligatures */
 	font-variant: normal;
+	font-variant-ligatures: discretionary-ligatures; /* Enable Ligatures */
 	hyphens: none !important; /* prevent icons from getting hyphenated and break across multiple lines in small containers */
 	line-height: 1;
 	text-transform: none;
-
-	/* Enable Ligatures */
 	letter-spacing: 0;
-	-webkit-font-feature-settings: 'liga';
-	-moz-font-feature-settings: 'liga=1';
-	-moz-font-feature-settings: 'liga';
-	-ms-font-feature-settings: 'liga' 1;
-	font-feature-settings: 'liga';
-	-webkit-font-variant-ligatures: discretionary-ligatures;
-	font-variant-ligatures: discretionary-ligatures;
 
 	/* Better Font Rendering */
 	-webkit-font-smoothing: antialiased;

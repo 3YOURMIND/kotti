@@ -38,11 +38,11 @@
 					padding: 0.4rem 0;
 					font-size: 1em;
 					color: var(--link-02);
+					text-decoration-line: underline;
+					text-decoration-style: solid;
 					cursor: pointer;
 					background-color: transparent;
 					border: 0;
-					text-decoration-line: underline;
-					text-decoration-style: solid;
 
 					& + button {
 						margin-left: 0.8rem;
