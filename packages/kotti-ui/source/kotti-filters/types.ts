@@ -213,9 +213,7 @@ export namespace KottiFilters {
 		clearAllLabel: string
 		currency: Record<Operation.Currency, string>
 		dateRange: Record<Operation.DateRange, string>
-		disabledLabel: string
 		emptyListLabel: string
-		enabledLabel: string
 		filterLabel: string
 		filtersLabel: string
 		float: Record<Operation.Float, string>

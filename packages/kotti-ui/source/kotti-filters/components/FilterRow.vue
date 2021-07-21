@@ -10,14 +10,8 @@
 	>
 		<div class="kt-filter__list__row__wrapper">
 			<span class="kt-filter__list__row__label" v-text="label" />
+			<KtFieldSingleSelect formKey="key" hideClear :options="columnOptions" />
 			<KtFieldSingleSelect
-				class="kt-filter__list__row__column-select"
-				formKey="key"
-				hideClear
-				:options="columnOptions"
-			/>
-			<KtFieldSingleSelect
-				class="kt-filter__list__row__operation-select"
 				formKey="operation"
 				hideClear
 				:isDisabled="isOperationSelectDisabled"
@@ -33,11 +27,6 @@
 					:options="valueOptions"
 					:prefix="valuePrefix"
 					:step="valueStep"
-					type="switch"
-				/>
-				<span
-					v-if="isValueFieldVisible && showNullOrEmptyLabel"
-					v-text="nullOrEmptyLabel"
 				/>
 			</div>
 		</div>
@@ -168,22 +157,11 @@ export default defineComponent<{
 		const isValueFieldVisible = computed(
 			() => !isEmptyOperation(props.filter.operation, props.column?.type),
 		)
-		const showNullOrEmptyLabel = computed<boolean>(
-			() => props.column?.type === Kotti.Filters.FilterType.BOOLEAN,
-		)
 		const valueContainerClasses = computed(() => ({
 			'kt-filter__list__row__value-field': true,
-			'kt-filter__list__row__value-field--has-label':
-				showNullOrEmptyLabel.value,
+			'kt-filter__list__row__value-field--is-vertically-centered':
+				props.column?.type === Kotti.Filters.FilterType.BOOLEAN,
 		}))
-
-		const nullOrEmptyLabel = computed<string>(() => {
-			return props.filter.value === null
-				? translations.value.unsetLabel
-				: props.filter.value
-				? translations.value.enabledLabel
-				: translations.value.disabledLabel
-		})
 
 		const handleRemove = () => emit('remove')
 		const handleSetFilter = (newFilter: Kotti.Filters.InternalFilter) => {
@@ -204,9 +182,7 @@ export default defineComponent<{
 			isValueFieldVisible,
 			Kotti,
 			label,
-			nullOrEmptyLabel,
 			operationOptions,
-			showNullOrEmptyLabel,
 			valueComponent,
 			valueContainerClasses,
 			valueOptions,
@@ -240,7 +216,7 @@ export default defineComponent<{
 	}
 
 	&__value-field {
-		&--has-label {
+		&--is-vertically-centered {
 			display: flex;
 			align-items: center;
 
