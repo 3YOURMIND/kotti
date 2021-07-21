@@ -12,6 +12,8 @@
 				class="kt-navbar-menu__item"
 				:class="{ active: link.isActive, narrow: isNarrow }"
 				:href="link.link ? link.link : null"
+				rel="noopener noreferrer"
+				target="_blank"
 				@click="$emit('menuLinkClick', link)"
 			>
 				<NavbarTooltip v-if="isNarrow" :icon="link.icon" :label="link.title" />
