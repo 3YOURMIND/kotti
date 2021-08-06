@@ -1,0 +1,13 @@
+{
+	"entry": ["source/index.ts"],
+	"extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"],
+	"ignorePatterns": ["**/node_modules/**", "**/dist/**"],
+	"ignoreUnimported": [
+		"**/tests.ts",
+		"**/*.d.ts",
+		"**/tokens/**",
+		"rollup.config.js",
+		"source/test-utils/**"
+	],
+	"ignoreUnused": ["jest", "normalize.css"]
+}

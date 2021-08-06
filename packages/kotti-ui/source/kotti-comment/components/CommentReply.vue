@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import { Kotti } from '@3yourmind/kotti-ui'
 import escape from 'lodash/escape'
 
 import { KtAvatar } from '../../kotti-avatar'
 import { KtButton } from '../../kotti-button'
 import { KtButtonGroup } from '../../kotti-button-group'
+import { Kotti } from '../../types'
 
 export default {
 	name: 'CommentReply',

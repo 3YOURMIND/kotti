@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts">
-import { KtFieldText } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
 
+import { KtFieldText } from '../../kotti-field-text'
 import { useTranslationNamespace } from '../../kotti-translation/hooks'
 import { Kotti } from '../../types'
 import { getSearchFilterInitialState } from '../utils'
