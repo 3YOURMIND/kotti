@@ -2,6 +2,8 @@
 	--loading-color: var(--interactive-01);
 }
 
+// Skeleton Screen
+
 @keyframes skeleton-loading {
 	0% {
 		background-position: -50rem 0;
@@ -55,6 +57,8 @@
 	}
 }
 
+// Spin Loading
+
 @keyframes loading {
 	0% {
 		transform: rotate(0deg);
@@ -64,11 +68,12 @@
 		transform: rotate(360deg);
 	}
 }
+
 .kt-circle-loading {
 	display: inline-block;
 	width: $unit-4;
 	height: $unit-4;
-	margin-right: 0.2rem;
+	margin-right: $unit-1;
 	pointer-events: none;
 	border: $border-width-lg solid var(--loading-color);
 	border-top-color: transparent;
@@ -76,6 +81,7 @@
 	border-radius: 50%;
 	animation: loading 500ms infinite linear;
 }
+
 .loading {
 	position: relative;
 	min-height: $unit-4;
@@ -103,19 +109,13 @@
 	&.inline {
 		display: inline-block;
 		margin: 0 $unit-2;
+
 		&::after {
 			position: relative;
 			top: 2px;
 			left: 0;
 			display: inline-block;
 			margin: 0;
-		}
-	}
-
-	&.white {
-		&::after {
-			border-bottom-color: #ffffff;
-			border-left-color: #ffffff;
 		}
 	}
 
@@ -127,6 +127,20 @@
 			height: $unit-8;
 			margin-top: -$unit-4;
 			margin-left: -$unit-4;
+		}
+	}
+
+	&.gray {
+		&::after {
+			border-bottom-color: var(--gray-50);
+			border-left-color: var(--gray-50);
+		}
+	}
+
+	&.white {
+		&::after {
+			border-bottom-color: var(--white);
+			border-left-color: var(--white);
 		}
 	}
 }
