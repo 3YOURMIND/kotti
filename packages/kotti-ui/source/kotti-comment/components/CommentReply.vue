@@ -34,13 +34,18 @@
 					</KtButtonGroup>
 				</div>
 				<div
-					v-if="!isInlineEdit & allowChange"
+					v-if="!isInlineEdit & (actionOptions.length > 0)"
 					class="comment-reply__action action__more"
 				>
 					<i class="yoco">dots</i>
 					<div class="action__options">
-						<a @click="startInlineEdit"> <li>Edit</li> </a>
-						<a @click="$emit('_inlineDeleteClick', id)"> <li>Delete</li> </a>
+						<a
+							v-for="option in actionOptions"
+							:key="option.type"
+							@click="option.onClick"
+						>
+							<li>{{ option.label }}</li>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -64,16 +69,17 @@ export default {
 		KtButtonGroup,
 	},
 	props: {
-		dangerouslyOverrideParser: { default: escape, type: Function },
-		postEscapeParser: { default: (_) => _, type: Function },
-		parser: { default: escape, type: Function },
 		createdTime: String,
+		dangerouslyOverrideParser: { default: escape, type: Function },
+		isDeletable: { default: false, type: Boolean },
+		isEditable: { default: false, type: Boolean },
 		id: [Number, String],
 		message: String,
+		parser: { default: escape, type: Function },
+		postEscapeParser: { default: (_) => _, type: Function },
 		userAvatar: String,
 		userId: [Number, String],
 		userName: String,
-		allowChange: Boolean,
 	},
 	data() {
 		return {
@@ -86,15 +92,30 @@ export default {
 		inlineMessage() {
 			return this.inlineMessageValue || this.message
 		},
+		actionOptions() {
+			const options = []
+			if (this.isEditable)
+				options.push({
+					label: 'Edit',
+					onClick: () => {
+						this.inlineMessageValue = this.inlineMessage
+						this.isInlineEdit = true
+					},
+					type: 'EDIT',
+				})
+			if (this.isDeletable)
+				options.push({
+					label: 'Delete',
+					onClick: () => this.$emit('_inlineDeleteClick', this.id),
+					type: 'DELETE',
+				})
+			return options
+		},
 	},
 	methods: {
 		cancelInlineEdit() {
 			this.inlineMessageValue = ''
 			this.isInlineEdit = false
-		},
-		startInlineEdit() {
-			this.inlineMessageValue = this.inlineMessage
-			this.isInlineEdit = true
 		},
 		handleInlineInput(event) {
 			this.inlineMessageValue = event.target.value
