@@ -55,10 +55,8 @@ export const KOTTI_FIELD_SINGLE_SELECT_PROPS = {
 
 export const KOTTI_FIELD_MULTI_SELECT_PROPS = {
 	...KOTTI_FIELD_SELECT_PROPS,
-	collapseTagsAfter: {
-		default: Number.MAX_SAFE_INTEGER,
-		type: Number,
-	},
+	collapseTagsAfter: { default: Number.MAX_SAFE_INTEGER, type: Number },
+	maximumSelectable: { default: Number.MAX_SAFE_INTEGER, type: Number },
 }
 
 export const KOTTI_FIELD_REMOTE_SINGLE_SELECT_PROPS = {
