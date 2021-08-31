@@ -4,6 +4,7 @@ export namespace KottiFieldMultiSelect {
 	export type Props = KottiField.Props<Value> &
 		Shared.Props & {
 			collapseTagsAfter: number
+			maximumSelectable: number
 		}
 
 	export type Translations = Shared.Translations

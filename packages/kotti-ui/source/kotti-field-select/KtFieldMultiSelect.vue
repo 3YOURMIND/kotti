@@ -15,6 +15,7 @@
 			<ElSelect
 				ref="elSelectRef"
 				v-bind="elMultipleSelectProps"
+				:multipleLimit="maximumSelectable"
 				@input="onChange"
 				@visible-change="(showPopper) => (isDropdownOpen = showPopper)"
 			>

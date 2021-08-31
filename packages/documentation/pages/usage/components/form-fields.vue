@@ -1,309 +1,367 @@
-<template lang="md">
-<ComponentInfo v-bind="{ component }" />
+<template>
+	<div>
+		<ComponentInfo v-bind="{ component }" />
 
-<KtTranslationContext :locale="settings.locale">
-	<div class="overview">
-		<div class="overview__component">
-			<h4>Component</h4>
-			<KtForm v-model="values">
-				<component
-					:is="componentRepresenation.name"
-					:validator="componentRepresenation.validator"
-					v-bind="componentRepresenation.props"
-					@update:query="updateQuery"
-				>
-					<div slot="helpText" v-if="componentRepresenation.hasHelpTextSlot">
-						<div>
-							Supports <abbr title="Hypertext Markup Language">HTML</abbr> via <code>&lt;template v-slot:helpText&gt;</code>
-						</div>
-					</div>
-					<div slot="default">
-						Default Slot
-					</div>
-				</component>
-			</KtForm>
-			<div class="overview__component__value">
-				<strong>Value</strong>: <span v-text="JSON.stringify(values[componentProps.formKey])"/> <a @click.prevent="reset">reset</a>
-			</div>
-		</div>
-		<div class="overview__code">
-			<h4>Code</h4>
-			<pre v-text="componentRepresenation.code" />
-			<button @click="savedFieldsAdd" type="button">Save to LocalStorage</button>
-		</div>
-	</div>
-	<KtForm v-model="settings">
-		<div class="wrapper">
-			<div>
-				<h4>Settings</h4>
-				<KtFieldSingleSelect
-					formKey="component"
-					hideClear
-					label="Component"
-					:options="componentOptions"
-					size="small"
-				/>
-				<KtFieldSingleSelect
-					formKey="locale"
-					hideClear
-					helpText="Can be set via KtTranslationContext"
-					label="Language"
-					leftIcon="global"
-					:options="[
-						{ label: 'German (de-DE)', value: 'de-DE' },
-						{ label: 'English (en-US)', value: 'en-US' },
-						{ label: 'Spanish (es-ES)', value: 'es-ES' },
-						{ label: 'French (fr-FR)', value: 'fr-FR' },
-						{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
-					]"
-					size="small"
-				/>
-				<KtFieldSingleSelect
-					formKey="size"
-					hideClear
-					isOptional
-					label="Size"
-					:options="[
-						{ label: 'Small', value: 'small' },
-						{ label: 'Medium (Default)', value: 'medium' },
-						{ label: 'Large', value: 'large' }
-					]"
-					size="small"
-				/>
-				<KtFieldSingleSelect
-					formKey="validation"
-					isOptional
-					label="Validation State"
-					:options="[
-						{ label: 'Empty (Default)', value: 'empty' },
-						{ label: 'Success', value: 'success' },
-						{ label: 'Warning', value: 'warning' },
-						{ label: 'Error', value: 'error' },
-					]"
-					size="small"
-				>
-					<div slot="helpText">
-						Passed as a validation function:
-						<code>() => ({ type: 'error', message: '' })</code>
-						or via
-						<code>KtForm.validators</code>
-						or via
-						<code>validatorKey</code>
-					</div>
-				</KtFieldSingleSelect>
-				<KtFieldToggleGroup
-					formKey="booleanFlags"
-					isOptional
-					label="Boolean Flags"
-					:options="[
-						{
-							isDisabled: !componentDefinition.supports.clear,
-							key: 'hideClear',
-							label: 'hideClear',
-							tooltip: 'Support Varies'
-						},
-						{ key: 'hideValidation', label: 'hideValidation' },
-						{ key: 'isDisabled', label: 'isDisabled' },
-						{ key: 'isLoading', label: 'isLoading' },
-						{ key: 'isOptional', label: 'isOptional' },
-					]"
-					type="switch"
-					size="small"
-				/>
-				<KtFormControllerObject formKey="additionalProps" v-if="componentDefinition.additionalProps.length > 0">
-					<h4>Additional Props</h4>
-					<KtFieldToggle
-						v-if="componentDefinition.additionalProps.includes('actions')"
-						formKey="actions"
-						isOptional
-						helpText="List of actions that can be triggered from the end of the dropdown"
-						label="actions"
-						type="switch"
-					/>
-					<KtFieldSingleSelect
-						v-if="componentDefinition.additionalProps.includes('toggleType')"
-						formKey="toggleType"
-						isOptional
-						label="type"
-						:options="[
-							{ label: 'checkbox (Default)', value: 'checkbox' },
-							{ label: 'switch', value: 'switch' },
-						]"
-						size="small"
-					/>
-					<div class="field-row" v-if="componentDefinition.additionalProps.includes('numberMaximum')">
-						<KtFieldNumber
-							formKey="numberMaximum"
-							isOptional
-							label="maximum"
-							size="small"
-						/>
-						<KtFieldNumber
-							formKey="numberMinimum"
-							isOptional
-							label="minimum"
-							size="small"
-						/>
-					</div>
-					<div class="field-row" v-if="componentDefinition.additionalProps.includes('numberHideMaximum')">
-						<KtFieldToggle
-							formKey="numberHideMaximum"
-							isOptional
-							label="hideMaximum"
-							size="small"
-							type="switch"
-						/>
-						<KtFieldNumber
-							formKey="step"
-							isOptional
-							label="step"
-							size="small"
-						/>
-					</div>
-					<KtFieldToggle
-						v-if="componentDefinition.additionalProps.includes('hideChangeButtons')"
-						formKey="hideChangeButtons"
-						isOptional
-						label="hideChangeButtons"
-						size="small"
-						type="switch"
-					/>
-					<KtFieldToggle
-						v-if="componentDefinition.additionalProps.includes('isInline')"
-						formKey="isInline"
-						isOptional
-						label="isInline"
-						size="small"
-						type="switch"
-					/>
-					<KtFieldToggle
-						v-if="componentDefinition.additionalProps.includes('isLoadingOptions')"
-						formKey="isLoadingOptions"
-						isOptional
-						label="isLoadingOptions"
-						size="small"
-						type="switch"
-					/>
-					<KtFieldDate
-						v-if="componentDefinition.additionalProps.includes('maximumDate')"
-						formKey="maximumDate"
-						isOptional
-						label="maximumDate"
-						size="small"
-					/>
-					<KtFieldDate
-						v-if="componentDefinition.additionalProps.includes('minimumDate')"
-						formKey="minimumDate"
-						isOptional
-						label="minimumDate"
-						size="small"
-					/>
-					<KtFieldNumber
-						v-if="componentDefinition.additionalProps.includes('collapseTagsAfter')"
-						formKey="collapseTagsAfter"
-						isOptional
-						label="collapseTagsAfter"
-						:minimum="0"
-						size="small"
-					/>
-					<KtFieldSingleSelect
-						v-if="componentDefinition.additionalProps.includes('autoComplete')"
-						formKey="autoComplete"
-						label="autoComplete"
-						:options="[
-							{ label: 'current-password', value: 'current-password' },
-							{ label: 'new-password', value: 'new-password' }
-						]"
-						size="small"
-					/>
-				</KtFormControllerObject>
-			</div>
-			<div>
-				<h4>Texts</h4>
-				<KtFieldText formKey="label" isOptional label="label" size="small" />
-				<KtFieldText formKey="helpDescription" isOptional label="helpDescription" size="small" />
-				<div class="field-row">
-					<KtFieldText
-						formKey="helpText"
-						:helpText="settings.hasHelpTextSlot ? 'Not supported when using a #helpText slot' : null"
-						:isDisabled="settings.hasHelpTextSlot"
-						isOptional
-						label="helpText"
-						size="small"
-					/>
-					<KtFieldToggle type="switch" formKey="hasHelpTextSlot" isOptional label="Use #helpText Slot" size="small" />
-				</div>
-				<KtFieldText formKey="placeholder" isOptional label="placeholder" size="small" helpText="Support Varies" />
-				<h4>Decoration</h4>
-				<div class="field-row">
-					<KtFieldText
-						formKey="prefix"
-						:isDisabled="!componentDefinition.supports.decoration"
-						isOptional
-						label="prefix"
-						size="small"
-						helpText="Support Varies"
-					/>
-					<KtFieldText
-						formKey="suffix"
-						:isDisabled="!componentDefinition.supports.decoration"
-						isOptional
-						label="suffix"
-						size="small"
-						helpText="Support Varies"
-					/>
-				</div>
-				<div class="field-row">
-					<KtFieldSingleSelect
-						formKey="leftIcon"
-						:isDisabled="!componentDefinition.supports.decoration"
-						isOptional
-						label="leftIcon"
-						:options="yocoIconOptions"
-						size="small"
-						helpText="Support Varies"
-					/>
-					<KtFieldSingleSelect
-						formKey="rightIcon"
-						:isDisabled="!componentDefinition.supports.decoration"
-						isOptional
-						label="rightIcon"
-						:options="yocoIconOptions"
-						size="small"
-						helpText="Support Varies"
-					/>
-				</div>
-			</div>
-		</div>
-		<KtForm v-model="values" v-if="savedFieldsMap.length > 0">
-			<h3>Saved Fields</h3>
-			<div v-for="(savedField, index) in savedFieldsMap" class="overview" :key="index">
+		<KtTranslationContext :locale="settings.locale">
+			<div class="overview">
 				<div class="overview__component">
-					<component
-						:is="savedField.name"
-						:validator="savedField.validator"
-						v-bind="savedField.props"
-					>
-						<div slot="helpText" v-if="savedField.hasHelpTextSlot">
-							<div>
-								Supports <abbr title="Hypertext Markup Language">HTML</abbr> via <code>&lt;template v-slot:helpText&gt;</code>
+					<h4>Component</h4>
+					<KtForm v-model="values">
+						<component
+							:is="componentRepresenation.name"
+							v-bind="componentRepresenation.props"
+							:validator="componentRepresenation.validator"
+							@update:query="updateQuery"
+						>
+							<div
+								v-if="componentRepresenation.hasHelpTextSlot"
+								slot="helpText"
+							>
+								<div>
+									Supports
+									<abbr title="Hypertext Markup Language">HTML</abbr> via
+									<code>&lt;template v-slot:helpText&gt;</code>
+								</div>
 							</div>
-						</div>
-						<div slot="default">
-							<div>
-								Default Slot
-							</div>
-						</div>
-					</component>
-					<button @click="savedFieldsRemove(index)" type="button">Remove</button>
+							<div slot="default">Default Slot</div>
+						</component>
+					</KtForm>
+					<div class="overview__component__value">
+						<strong>Value</strong>:
+						<span v-text="JSON.stringify(values[componentProps.formKey])" />
+						<a @click.prevent="reset">reset</a>
+					</div>
 				</div>
 				<div class="overview__code">
-					<pre v-text="savedField.code" />
+					<h4>Code</h4>
+					<pre v-text="componentRepresenation.code" />
+					<KtButton
+						class="mt-4"
+						label="Save to LocalStorage"
+						type="primary"
+						@click="savedFieldsAdd"
+					/>
 				</div>
 			</div>
-		</KtForm>
-	</KtForm>
-</KtTranslationContext>
+			<KtForm v-model="settings" size="small">
+				<div class="wrapper">
+					<div>
+						<h4>Settings</h4>
+						<KtFieldSingleSelect
+							formKey="component"
+							hideClear
+							label="Component"
+							:options="componentOptions"
+						/>
+						<KtFieldSingleSelect
+							formKey="locale"
+							helpText="Can be set via KtTranslationContext"
+							hideClear
+							label="Language"
+							leftIcon="global"
+							:options="[
+								{ label: 'German (de-DE)', value: 'de-DE' },
+								{ label: 'English (en-US)', value: 'en-US' },
+								{ label: 'Spanish (es-ES)', value: 'es-ES' },
+								{ label: 'French (fr-FR)', value: 'fr-FR' },
+								{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+							]"
+						/>
+						<KtFieldSingleSelect
+							formKey="size"
+							hideClear
+							isOptional
+							label="Size"
+							:options="[
+								{ label: 'Small', value: 'small' },
+								{ label: 'Medium (Default)', value: 'medium' },
+								{ label: 'Large', value: 'large' },
+							]"
+						/>
+						<KtFieldSingleSelect
+							formKey="validation"
+							isOptional
+							label="Validation State"
+							:options="[
+								{ label: 'Empty (Default)', value: 'empty' },
+								{ label: 'Success', value: 'success' },
+								{ label: 'Warning', value: 'warning' },
+								{ label: 'Error', value: 'error' },
+							]"
+						>
+							<div slot="helpText">
+								Passed as a validation function:
+								<code>() => ({ type: 'error', message: '' })</code>
+								or via
+								<code>KtForm.validators</code>
+								or via
+								<code>validatorKey</code>
+							</div>
+						</KtFieldSingleSelect>
+						<KtFieldToggleGroup
+							formKey="booleanFlags"
+							isOptional
+							label="Boolean Flags"
+							:options="[
+								{
+									isDisabled: !componentDefinition.supports.clear,
+									key: 'hideClear',
+									label: 'hideClear',
+									tooltip: 'Support Varies',
+								},
+								{ key: 'hideValidation', label: 'hideValidation' },
+								{ key: 'isDisabled', label: 'isDisabled' },
+								{ key: 'isLoading', label: 'isLoading' },
+								{ key: 'isOptional', label: 'isOptional' },
+							]"
+							type="switch"
+						/>
+						<KtFormControllerObject
+							v-if="componentDefinition.additionalProps.length > 0"
+							formKey="additionalProps"
+						>
+							<h4>Additional Props</h4>
+							<KtFieldToggle
+								v-if="componentDefinition.additionalProps.includes('actions')"
+								formKey="actions"
+								helpText="List of actions that can be triggered from the end of the dropdown"
+								isOptional
+								label="actions"
+								type="switch"
+							/>
+							<KtFieldSingleSelect
+								v-if="
+									componentDefinition.additionalProps.includes('autoComplete')
+								"
+								formKey="autoComplete"
+								label="autoComplete"
+								:options="[
+									{ label: 'current-password', value: 'current-password' },
+									{ label: 'new-password', value: 'new-password' },
+								]"
+							/>
+							<KtFieldNumber
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'collapseTagsAfter',
+									)
+								"
+								formKey="collapseTagsAfter"
+								isOptional
+								label="collapseTagsAfter"
+								:minimum="0"
+							/>
+							<KtFieldSingleSelect
+								v-if="
+									componentDefinition.additionalProps.includes('toggleType')
+								"
+								formKey="toggleType"
+								isOptional
+								label="type"
+								:options="[
+									{ label: 'checkbox (Default)', value: 'checkbox' },
+									{ label: 'switch', value: 'switch' },
+								]"
+							/>
+							<div
+								v-if="
+									componentDefinition.additionalProps.includes('numberMaximum')
+								"
+								class="field-row"
+							>
+								<KtFieldNumber
+									formKey="numberMaximum"
+									isOptional
+									label="maximum"
+								/>
+								<KtFieldNumber
+									formKey="numberMinimum"
+									isOptional
+									label="minimum"
+								/>
+							</div>
+							<div
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'numberHideMaximum',
+									)
+								"
+								class="field-row"
+							>
+								<KtFieldToggle
+									formKey="numberHideMaximum"
+									isOptional
+									label="hideMaximum"
+									type="switch"
+								/>
+								<KtFieldNumber formKey="step" isOptional label="step" />
+							</div>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'hideChangeButtons',
+									)
+								"
+								formKey="hideChangeButtons"
+								isOptional
+								label="hideChangeButtons"
+								type="switch"
+							/>
+							<KtFieldToggle
+								v-if="componentDefinition.additionalProps.includes('isInline')"
+								formKey="isInline"
+								isOptional
+								label="isInline"
+								type="switch"
+							/>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'isLoadingOptions',
+									)
+								"
+								formKey="isLoadingOptions"
+								isOptional
+								label="isLoadingOptions"
+								type="switch"
+							/>
+							<KtFieldDate
+								v-if="
+									componentDefinition.additionalProps.includes('maximumDate')
+								"
+								formKey="maximumDate"
+								isOptional
+								label="maximumDate"
+							/>
+							<KtFieldNumber
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'maximumSelectable',
+									)
+								"
+								formKey="maximumSelectable"
+								helpText="Limits the amount of choices a user can select at the same time."
+								isOptional
+								label="maximumSelectable"
+							/>
+							<KtFieldDate
+								v-if="
+									componentDefinition.additionalProps.includes('minimumDate')
+								"
+								formKey="minimumDate"
+								isOptional
+								label="minimumDate"
+							/>
+						</KtFormControllerObject>
+					</div>
+					<div>
+						<h4>Texts</h4>
+						<KtFieldText formKey="label" isOptional label="label" />
+						<KtFieldText
+							formKey="helpDescription"
+							isOptional
+							label="helpDescription"
+						/>
+						<div class="field-row">
+							<KtFieldText
+								formKey="helpText"
+								:helpText="
+									settings.hasHelpTextSlot
+										? 'Not supported when using a #helpText slot'
+										: null
+								"
+								:isDisabled="settings.hasHelpTextSlot"
+								isOptional
+								label="helpText"
+							/>
+							<KtFieldToggle
+								formKey="hasHelpTextSlot"
+								isOptional
+								label="Use #helpText Slot"
+								type="switch"
+							/>
+						</div>
+						<KtFieldText
+							formKey="placeholder"
+							helpText="Support Varies"
+							isOptional
+							label="placeholder"
+						/>
+						<h4>Decoration</h4>
+						<div class="field-row">
+							<KtFieldText
+								formKey="prefix"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="prefix"
+							/>
+							<KtFieldText
+								formKey="suffix"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="suffix"
+							/>
+						</div>
+						<div class="field-row">
+							<KtFieldSingleSelect
+								formKey="leftIcon"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="leftIcon"
+								:options="yocoIconOptions"
+							/>
+							<KtFieldSingleSelect
+								formKey="rightIcon"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="rightIcon"
+								:options="yocoIconOptions"
+							/>
+						</div>
+					</div>
+				</div>
+			</KtForm>
+			<KtForm v-if="savedFieldsMap.length > 0" v-model="values">
+				<h3>Saved Fields</h3>
+				<div
+					v-for="(savedField, index) in savedFieldsMap"
+					:key="index"
+					class="overview"
+				>
+					<div class="overview__component">
+						<component
+							:is="savedField.name"
+							v-bind="savedField.props"
+							:validator="savedField.validator"
+						>
+							<div v-if="savedField.hasHelpTextSlot" slot="helpText">
+								<div>
+									Supports
+									<abbr title="Hypertext Markup Language">HTML</abbr> via
+									<code>&lt;template v-slot:helpText&gt;</code>
+								</div>
+							</div>
+							<div slot="default">
+								<div>Default Slot</div>
+							</div>
+						</component>
+						<KtButton
+							label="Remove"
+							type="danger"
+							@click="savedFieldsRemove(index)"
+						/>
+					</div>
+					<div class="overview__code">
+						<pre v-text="savedField.code" />
+					</div>
+				</div>
+			</KtForm>
+		</KtTranslationContext>
+	</div>
 </template>
 
 <script lang="ts">
@@ -385,7 +443,7 @@ const components: Array<{
 		supports: { clear: true, decoration: false, tabIndex: false },
 	},
 	{
-		additionalProps: ['collapseTagsAfter', 'actions'],
+		additionalProps: ['actions', 'collapseTagsAfter', 'maximumSelectable'],
 		formKey: 'multiSelectValue',
 		name: 'KtFieldMultiSelect',
 		supports: { clear: true, decoration: true, tabIndex: false },
@@ -550,6 +608,7 @@ export default defineComponent({
 				isInline: boolean
 				isLoadingOptions: boolean
 				maximumDate: Kotti.FieldDate.Value
+				maximumSelectable: Kotti.FieldNumber.Value
 				minimumDate: Kotti.FieldDate.Value
 				numberHideMaximum: boolean
 				numberMaximum: Kotti.FieldNumber.Value
@@ -586,6 +645,7 @@ export default defineComponent({
 				isInline: false,
 				isLoadingOptions: false,
 				maximumDate: null,
+				maximumSelectable: null,
 				minimumDate: null,
 				numberHideMaximum: false,
 				numberMaximum: null,
@@ -709,6 +769,13 @@ export default defineComponent({
 			if (componentDefinition.value.additionalProps.includes('maximumDate'))
 				Object.assign(additionalProps, {
 					maximumDate: settings.value.additionalProps.maximumDate,
+				})
+
+			if (
+				componentDefinition.value.additionalProps.includes('maximumSelectable')
+			)
+				Object.assign(additionalProps, {
+					maximumSelectable: settings.value.additionalProps.maximumSelectable,
 				})
 
 			if (componentDefinition.value.additionalProps.includes('minimumDate'))
