@@ -54,6 +54,7 @@ export default defineComponent({
 					autocomplete: props.autoComplete,
 					class: ['kt-field-password__wrapper'],
 					forceUpdateKey: forceUpdateKey.value,
+					placeholder: props.placeholder ?? undefined,
 					type: 'password',
 					size: 1,
 					value: field.currentValue ?? '',

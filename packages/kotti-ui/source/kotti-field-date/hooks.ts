@@ -20,7 +20,7 @@ type Values =
 
 type HookParameters<DATA_TYPE extends Values> = {
 	elDateRef: Ref<ElDateWithInternalAPI | null>
-	field: KottiField.Hook.Returns<DATA_TYPE>
+	field: KottiField.Hook.Returns<DATA_TYPE, string | null>
 	inputContainerRef: Ref<Element | null>
 	popperHeight: string
 	popperWidth: string

@@ -368,7 +368,6 @@
 		}
 
 		&::-webkit-input-placeholder, /* Edge */
-		&:-ms-input-placeholder, /* Internet Explorer */
 		&::placeholder {
 			color: $placeholder-color;
 		}

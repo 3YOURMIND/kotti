@@ -5,6 +5,7 @@ import { isNumber } from './utilities'
 export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {
 	clear: false,
 	decoration: true,
+	placeholder: true,
 	tabIndex: true,
 }
 
@@ -13,7 +14,6 @@ export const KOTTI_FIELD_NUMBER_PROPS = {
 	hideMaximum: { default: false, type: Boolean },
 	maximum: { default: null, type: Number },
 	minimum: { default: null, type: Number },
-	placeholder: { default: null, type: String },
 	step: {
 		default: 1,
 		type: Number,

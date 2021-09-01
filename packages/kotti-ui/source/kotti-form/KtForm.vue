@@ -43,8 +43,7 @@ export default defineComponent({
 	},
 	setup(props: KottiForm.Props, { emit }) {
 		const currentFieldsWrapper = reactive<{
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			currentFields: KottiField.Hook.Returns<any>[]
+			currentFields: KottiField.Hook.Returns<unknown, unknown>[]
 		}>({ currentFields: [] })
 
 		const values = computed(() => cloneDeep(props.value))

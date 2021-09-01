@@ -6,7 +6,6 @@ export namespace KottiFieldNumber {
 		hideMaximum: boolean
 		maximum: number | null
 		minimum: number | null
-		placeholder: string | null
 		step: number
 	}
 

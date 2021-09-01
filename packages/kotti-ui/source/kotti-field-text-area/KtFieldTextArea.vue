@@ -23,7 +23,6 @@ export default defineComponent({
 	components: { KtField },
 	props: {
 		...KOTTI_FIELD_PROPS,
-		placeholder: { default: null, type: String },
 		rows: { default: 5, type: Number },
 		value: { default: null, type: String },
 	},

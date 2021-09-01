@@ -3,12 +3,12 @@ import { CustomError } from 'ts-custom-error'
 import { KottiField } from './types'
 
 const createErrorMessage = (
-	props: KottiField.Props<unknown>,
+	props: KottiField.Props<unknown, unknown>,
 	messages: string[],
 ) => `useField(${props.formKey ?? props.label}): ${messages.join('\n')}`
 
 class ImplicitFormKeyNone extends CustomError {
-	public constructor(props: KottiField.Props<unknown>) {
+	public constructor(props: KottiField.Props<unknown, unknown>) {
 		super(
 			createErrorMessage(props, [
 				'Encountered a KtField without a “formKey” inside a KtForm.',
@@ -21,8 +21,8 @@ class ImplicitFormKeyNone extends CustomError {
 
 class InvalidPropOutsideOfContext extends CustomError {
 	public constructor(
-		props: KottiField.Props<unknown>,
-		propName: keyof KottiField.Props<unknown>,
+		props: KottiField.Props<unknown, unknown>,
+		propName: keyof KottiField.Props<unknown, unknown>,
 	) {
 		super(
 			createErrorMessage(props, [
@@ -34,7 +34,7 @@ class InvalidPropOutsideOfContext extends CustomError {
 }
 
 class DisabledSetValueCalled extends CustomError {
-	public constructor(props: KottiField.Props<unknown>) {
+	public constructor(props: KottiField.Props<unknown, unknown>) {
 		super(
 			createErrorMessage(props, [
 				'Attempted to setValue on a disabled field.',
@@ -45,7 +45,7 @@ class DisabledSetValueCalled extends CustomError {
 }
 
 class ValidatorNotFound extends CustomError {
-	public constructor(props: KottiField.Props<unknown>) {
+	public constructor(props: KottiField.Props<unknown, unknown>) {
 		super(
 			createErrorMessage(props, [
 				`validatorKey “${props.validatorKey}” couldn’t be found in the KtFormContext validators.`,
@@ -57,7 +57,7 @@ class ValidatorNotFound extends CustomError {
 }
 
 class NonDeterministicValidatorUsage extends CustomError {
-	public constructor(props: KottiField.Props<unknown>) {
+	public constructor(props: KottiField.Props<unknown, unknown>) {
 		super(
 			createErrorMessage(props, [
 				`You cannot define a "validatorKey" and a "validator" function at the same time.`,
@@ -69,7 +69,10 @@ class NonDeterministicValidatorUsage extends CustomError {
 }
 
 class InvalidDataType extends CustomError {
-	public constructor(props: KottiField.Props<unknown>, newValue: unknown) {
+	public constructor(
+		props: KottiField.Props<unknown, unknown>,
+		newValue: unknown,
+	) {
 		super(
 			createErrorMessage(props, [
 				`Encountered invalid data type, “${typeof newValue}” with value “${JSON.stringify(
@@ -82,7 +85,7 @@ class InvalidDataType extends CustomError {
 
 class UnsupportedProp extends CustomError {
 	public constructor(
-		props: KottiField.Props<unknown>,
+		props: KottiField.Props<unknown, unknown>,
 		{
 			supportsKey,
 			propKey,

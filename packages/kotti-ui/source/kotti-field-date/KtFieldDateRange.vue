@@ -47,7 +47,10 @@ export default defineComponent({
 		...KOTTI_FIELD_DATE_RANGE_PROPS,
 	},
 	setup(props: KottiFieldDateRange.Props, { emit }) {
-		const field = useField<KottiFieldDateRange.Value>({
+		const field = useField<
+			KottiFieldDateRange.Value,
+			[string | null, string | null]
+		>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldDateRange.Value =>
 				Array.isArray(value) &&
@@ -101,9 +104,9 @@ export default defineComponent({
 					...EL_DATE_RANGE_PROPS,
 					clearable: !field.hideClear,
 					disabled: field.isDisabled,
-					endPlaceholder: props.placeholder?.[1] ?? '',
+					endPlaceholder: props.placeholder[1] ?? '',
 					pickerOptions: pickerOptions.value,
-					startPlaceholder: props.placeholder?.[0] ?? '',
+					startPlaceholder: props.placeholder[0] ?? '',
 					type: 'daterange',
 					value: field.currentValue.map((date) => date ?? ''),
 				}),

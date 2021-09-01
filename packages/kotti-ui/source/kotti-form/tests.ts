@@ -29,6 +29,7 @@ const TestField = defineComponent({
 				supports: {
 					clear: true,
 					decoration: true,
+					placeholder: true,
 					tabIndex: true,
 				},
 			}),
@@ -56,6 +57,7 @@ const TestFieldObject = defineComponent({
 				supports: {
 					clear: true,
 					decoration: true,
+					placeholder: true,
 					tabIndex: true,
 				},
 			}),
@@ -77,7 +79,7 @@ const TestForm2 = {
 const getField = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
-): KottiField.Hook.Returns<string | object | null> =>
+): KottiField.Hook.Returns<string | object | null, string | null> =>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(wrapper.vm.$children[0].$children[0] as any).field
 
