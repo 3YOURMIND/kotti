@@ -6,8 +6,11 @@ import { Kotti } from './types'
  * Takes a Vue Component and assigns a meta object which
  * describes various properties of the component
  */
-export const attachMeta = (component: VueConstructor<Vue>, meta: Kotti.Meta) =>
-	Object.assign(component, { meta })
+export const attachMeta = <T>(
+	component: VueConstructor<Vue>,
+	meta: Kotti.Meta,
+	other?: T,
+) => Object.assign(component, { meta: Object.assign({}, meta, other) })
 
 /**
  * Takes a Vue Component and assigns an install function to it

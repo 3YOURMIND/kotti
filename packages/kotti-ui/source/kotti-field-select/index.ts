@@ -2,6 +2,7 @@ import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
 import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
+import { KOTTI_FIELD_SELECT_SUPPORTS } from './constants'
 import KtFieldMultiSelectVue from './KtFieldMultiSelect.vue'
 import KtFieldSingleSelectVue from './KtFieldSingleSelect.vue'
 import KtFieldSingleSelectRemoteVue from './KtFieldSingleSelectRemote.vue'
@@ -23,6 +24,7 @@ export const KtFieldSingleSelect = attachMeta(
 			namespace: 'Kotti.KtFieldSingleSelect',
 		},
 	},
+	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },
 )
 
 export const KtFieldSingleSelectRemote = attachMeta(
@@ -39,6 +41,7 @@ export const KtFieldSingleSelectRemote = attachMeta(
 			namespace: 'Kotti.KtFieldMultiSelectRemote',
 		},
 	},
+	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },
 )
 
 export const KtFieldMultiSelect = attachMeta(
@@ -55,6 +58,7 @@ export const KtFieldMultiSelect = attachMeta(
 			namespace: 'Kotti.KtFieldMultiSelect',
 		},
 	},
+	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },
 )
 
 export * from './constants'
