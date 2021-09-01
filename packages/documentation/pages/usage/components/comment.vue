@@ -7,15 +7,16 @@
 	<KtComment
 		v-for="comment in comments"
 		:key="comment.id"
-		:id="comment.id"
 		:createdTime="comment.createdTime"
-		:userName="comment.userName"
-		:userAvatar="comment.userAvatar"
-		:userId="comment.userId"
+		:id="comment.id"
+		:isDeletable="comment.isDeletable"
+		:isEditable="comment.isEditable"
 		:message="comment.message"
 		:replies="comment.replies"
-		:allowChange="comment.allowChange"
-		@delete="handelDelete($event)"
+		:userAvatar="comment.userAvatar"
+		:userId="comment.userId"
+		:userName="comment.userName"
+		@delete="handleDelete($event)"
 		@edit="handleEdit($event)"
 		@submit="handleSubmit($event)"
 	/>
@@ -31,15 +32,16 @@
 <KtComment
 	v-for="comment in comments"
 	:key="comment.id"
-	:id="comment.id"
 	:createdTime="comment.createdTime"
-	:userName="comment.userName"
-	:userAvatar="comment.userAvatar"
-	:userId="comment.userId"
+	:id="comment.id"
+	:isDeletable="comment.isDeletable"
+	:isEditable="comment.isEditable"
 	:message="comment.message"
 	:replies="comment.replies"
-	:allowChange="comment.allowChange"
-	@delete="handelDelete($event)"
+	:userAvatar="comment.userAvatar"
+	:userId="comment.userId"
+	:userName="comment.userName"
+	@delete="handleDelete($event)"
 	@edit="handleEdit($event)"
 	@submit="handlePost($event)"
 />
@@ -63,7 +65,8 @@
 	message: 'Marine Le Pen, a Fierce Campaigner',
 	userAvatar: 'https://picsum.photos/200',
 	createdTime: '2018-12-04T09:57:20+00:00',
-	allowChange: true,
+	isDeletable: true,
+	isEditable: true,
 	replies: [{
 		id: 2,
 		userId: 12,
@@ -71,7 +74,8 @@
 		message: 'Marine Le Pen, a Fierce Campaigner',
 		userAvatar: 'https://picsum.photos/200',
 		createdTime: '2018-12-04T09:57:20+00:00',
-		allowChange: false
+		isDeletable: false,
+		isEditable: false
 	}]
 }
 ```
@@ -117,19 +121,20 @@ methods: {
 
 <div class="element-example">
 	<KtComment
-		v-for="comment in badComments"
+		v-for="comment in comments"
 		:key="comment.id"
-	:dangerouslyOverrideParser="dangerouslyOverrideParser"
-		:postEscapeParser="postEscapeParser"
-		:id="comment.id"
 		:createdTime="comment.createdTime"
-		:userName="comment.userName"
+		:dangerouslyOverrideParser="dangerouslyOverrideParser"
+		:id="comment.id"
+		:isDeletable="comment.isDeletable"
+		:isEditable="comment.isEditable"
+		:message="comment.message"
+		:postEscapeParser="postEscapeParser"
+		:replies="comment.replies"
 		:userAvatar="comment.userAvatar"
 		:userId="comment.userId"
-		:message="comment.message"
-		:replies="comment.replies"
-		:allowChange="comment.allowChange"
-		@delete="handelDelete($event)"
+		:userName="comment.userName"
+		@delete="handleDelete($event)"
 		@edit="handleEdit($event)"
 		@submit="handleSubmit($event)"
 	/>
@@ -154,7 +159,8 @@ methods: {
 | `message`                     | the actual comment                                                                                                                                                           | string             | "Hello"                           | -                      |
 | `dangerDefaultParserOverride` | A function that processes and escapes the comment message before it is passed to the div that render it, as the name implies you're responsible for escaping if you use this | (string) => string | Function                          | lodash escape function |
 | `postEscapeParser`            | A function that processes the message after is has been escaped use this instead of `dangerDefaultParserOverride`                                                            | (string) => string | Function                          | (_) => _               |
-| `allowChange`                 | wether this comment is editable                                                                                                                                              | boolean            | true,false                        | false                  |
+| `isDeletable`                 | whether this comment is deletable                                                                                                                                            | boolean            | true,false                        | false                  |
+| `isEditable`                  | whether this comment is editable                                                                                                                                             | boolean            | true,false                        | false                  |
 
 ### Event
 
@@ -181,65 +187,53 @@ export default {
 		return {
 			currentUuid: '',
 			currentUser: {
-				userName: 'Junyu',
-				userId: 3,
 				userAvatar: 'https://picsum.photos/48',
+				userId: 3,
+				userName: 'Junyu',
 			},
-			badComments: [
-				{
-					id: 1,
-					userId: 12,
-					userName: 'Margaret Atwood',
-					message: `We miss you, David`,
-					userAvatar: 'https://picsum.photos/200',
-					createdTime: '2018-12-04T09:57:20+00:00',
-					allowChange: true,
-					replies: [
-						{
-							id: 2,
-							userId: 13,
-							userName: 'Benni',
-							createdTime: '2018-03-20',
-							message: `Join Bright Side Now!
-								Join Bright Side Now!
-								Join Bright Side Now!
-								Join Bright Side Now!`,
-							userAvatar: 'https://picsum.photos/100',
-							allowChange: false,
-						},
-					],
-				},
-			],
 			comments: [
 				{
-					id: 1,
-					userId: 12,
-					userName: 'Margaret Atwood',
-					message: `We miss you, David`,
-					userAvatar: 'https://picsum.photos/200',
 					createdTime: '2018-12-04T09:57:20+00:00',
-					allowChange: true,
+					id: 1,
+					isDeletable: true,
+					isEditable: true,
+					message: `We miss you, David`,
 					replies: [
 						{
-							id: 2,
-							userId: 13,
-							userName: 'Benni',
 							createdTime: '2018-03-20',
+							id: 2,
+							isDeletable: false,
+							isEditable: false,
 							message:
 								'Join Bright Side Now!<br/>Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
 							userAvatar: 'https://picsum.photos/100',
-							allowChange: false,
+							userId: 13,
+							userName: 'Benni',
 						},
 						{
+							createdTime: '2018-03-20',
 							id: 3,
+							isDeletable: false,
+							isEditable: true,
+							message: 'RE: Your trip to Montreal',
+							userAvatar: 'https://picsum.photos/120',
 							userId: 2,
 							userName: 'Cooky',
-							userAvatar: 'https://picsum.photos/120',
+						},
+						{
 							createdTime: '2018-03-20',
-							message: 'RE: Your trip to Montreal',
-							allowChange: true,
+							id: 4,
+							isDeletable: true,
+							isEditable: false,
+							message: 'PS: Bring a jacket!',
+							userAvatar: 'https://picsum.photos/120',
+							userId: 2,
+							userName: 'Cooky',
 						},
 					],
+					userAvatar: 'https://picsum.photos/200',
+					userId: 12,
+					userName: 'Margaret Atwood',
 				},
 			],
 			component: KtComment,
@@ -279,7 +273,7 @@ export default {
 			}
 			this.comments.push(_message)
 		},
-		handelDelete(payload) {
+		handleDelete(payload) {
 			if (payload.parentId) {
 				const parentComment = this.comments.find(
 					(comment) => comment.id === payload.parentId,
