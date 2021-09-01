@@ -3,6 +3,7 @@ import { Kotti } from '../types'
 import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
+import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import KtFieldToggleVue from './KtFieldToggle.vue'
 import KtFieldToggleGroupVue from './KtFieldToggleGroup.vue'
 
@@ -19,21 +20,25 @@ const designs: Kotti.Meta['designs'] = [
 	},
 ]
 
-export const KtFieldToggle = attachMeta(makeInstallable(KtFieldToggleVue), {
-	addedVersion: '2.0.0',
-	deprecated: null,
-	designs,
-	slots: {
-		...FIELD_META_BASE_SLOTS,
-		default: {
-			description: 'Shown next to toggle sausage',
-			scope: null,
+export const KtFieldToggle = attachMeta(
+	makeInstallable(KtFieldToggleVue),
+	{
+		addedVersion: '2.0.0',
+		deprecated: null,
+		designs,
+		slots: {
+			...FIELD_META_BASE_SLOTS,
+			default: {
+				description: 'Shown next to toggle sausage',
+				scope: null,
+			},
+		},
+		typeScript: {
+			namespace: 'Kotti.FieldToggle',
 		},
 	},
-	typeScript: {
-		namespace: 'Kotti.FieldToggle',
-	},
-})
+	{ supports: KOTTI_FIELD_TOGGLE_SUPPORTS },
+)
 
 export const KtFieldToggleGroup = attachMeta(
 	makeInstallable(KtFieldToggleGroupVue),
@@ -46,6 +51,7 @@ export const KtFieldToggleGroup = attachMeta(
 			namespace: 'Kotti.FieldToggleGroup',
 		},
 	},
+	{ supports: KOTTI_FIELD_TOGGLE_SUPPORTS },
 )
 
 export * from './constants'
