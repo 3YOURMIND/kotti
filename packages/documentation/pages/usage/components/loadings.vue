@@ -87,7 +87,7 @@
     </button>
     ```
 
-    Using `white` class can change the ring color.
+    Using `white` class can change the ring color to white.
 
     <button class="primary">
     		<div class="loading inline white"></div>
@@ -97,6 +97,20 @@
     ```html
     <button class="primary">
     	<div class="loading inline white"></div>
+    		Uploading
+    </button>
+    ```
+
+    Using `gray` class can change the ring color to gray.
+
+    <button class="primary">
+    		<div class="loading inline gray"></div>
+    		 Uploading
+    </button>
+
+    ```html
+    <button class="primary">
+    	<div class="loading inline gray"></div>
     		Uploading
     </button>
     ```
