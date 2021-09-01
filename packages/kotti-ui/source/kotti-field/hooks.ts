@@ -342,7 +342,7 @@ const useNotifyContext = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	})
 }
 
-export const useField = <DATA_TYPE, PLACEHOLDER_TYPE = string | null>({
+export const useField = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	emit,
 	isCorrectDataType,
 	isEmpty,

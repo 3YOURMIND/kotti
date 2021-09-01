@@ -9,7 +9,7 @@ export namespace KottiFormControllerList {
 export namespace KottiFormControllerListItem {
 	export type Props = {
 		context: KottiForm.Context
-		formKey: Exclude<KottiField.Props<object[]>['formKey'], null>
+		formKey: Exclude<KottiField.Props<object[], unknown>['formKey'], null>
 		index: number
 		values: Record<string, unknown>
 	}

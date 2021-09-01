@@ -1,7 +1,7 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldMultiSelect {
-	export type Props = KottiField.Props<Value> &
+	export type Props = KottiField.Props<Value, string | null> &
 		Shared.Props & {
 			collapseTagsAfter: number
 			maximumSelectable: number
@@ -45,7 +45,7 @@ export namespace Shared {
 }
 
 export namespace KottiFieldSingleSelect {
-	export type Props = KottiField.Props<Value> & Shared.Props
+	export type Props = KottiField.Props<Value, string | null> & Shared.Props
 
 	export type Translations = Shared.Translations
 
@@ -53,7 +53,7 @@ export namespace KottiFieldSingleSelect {
 }
 
 export namespace KottiFieldSingleSelectRemote {
-	export type Props = KottiField.Props<Value> &
+	export type Props = KottiField.Props<Value, string | null> &
 		Shared.Props & {
 			isLoadingOptions: boolean
 			query: string | null

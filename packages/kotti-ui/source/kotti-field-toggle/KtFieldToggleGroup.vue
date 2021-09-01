@@ -51,7 +51,7 @@ export default defineComponent({
 		value: { default: null, type: Object },
 	},
 	setup(props: KottiFieldToggleGroup.Props, { emit }) {
-		const field = useField<KottiFieldToggleGroup.Value>({
+		const field = useField<KottiFieldToggleGroup.Value, never>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldToggleGroup.Value =>
 				typeof value === 'object' &&

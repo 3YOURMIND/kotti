@@ -77,7 +77,7 @@ export default defineComponent({
 		...KOTTI_FIELD_NUMBER_PROPS,
 	},
 	setup(props: KottiFieldNumber.Props, { emit, root }) {
-		const field = useField<KottiFieldNumber.Value>({
+		const field = useField<KottiFieldNumber.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldNumber.Value =>
 				isNumber(value) || value === null,

@@ -105,7 +105,7 @@ export default defineComponent({
 		value: { default: null, type: Array },
 	},
 	setup(props: KottiFieldMultiSelect.Props, { emit }) {
-		const field = useField<KottiFieldMultiSelect.Value>({
+		const field = useField<KottiFieldMultiSelect.Value, string | null>({
 			emit,
 			isCorrectDataType: (values): values is KottiFieldMultiSelect.Value =>
 				Array.isArray(values) &&

@@ -17,7 +17,7 @@ const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null>, { emit }) => {
+	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
 		useTranslationProvide(ref('en-US'), ref({}))
 
 		return {

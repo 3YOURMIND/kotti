@@ -26,7 +26,7 @@ export default defineComponent({
 		value: { default: null, type: String },
 	},
 	setup(props: KottiFieldText.Props, { emit }) {
-		const field = useField<KottiFieldText.Value>({
+		const field = useField<KottiFieldText.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldText.Value =>
 				typeof value === 'string' || value === null,

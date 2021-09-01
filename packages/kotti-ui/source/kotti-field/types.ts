@@ -99,10 +99,7 @@ export namespace KottiField {
 	 * When adding a new prop, please make sure that no KtFormField
 	 * already uses a prop with the same name, to avoid conflicts
 	 */
-	export type Props<
-		DATA_TYPE,
-		PLACEHOLDER_TYPE = string | null,
-	> = InhertiableProps & {
+	export type Props<DATA_TYPE, PLACEHOLDER_TYPE> = InhertiableProps & {
 		/**
 		 * Specifies that the data KtFormContext[formKey]
 		 * If formKey is "NONE", it is treated as an explicit opt-out

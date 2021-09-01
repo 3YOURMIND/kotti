@@ -44,7 +44,7 @@ export default defineComponent({
 		value: { default: null, type: Boolean },
 	},
 	setup(props: KottiFieldToggle.Props, { emit }) {
-		const field = useField<KottiFieldToggle.Value>({
+		const field = useField<KottiFieldToggle.Value, never>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldToggle.Value =>
 				typeof value === 'boolean' || value === null,
