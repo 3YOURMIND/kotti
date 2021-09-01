@@ -27,10 +27,9 @@
 </template>
 
 <script>
-import { Kotti } from '@3yourmind/kotti-ui'
-
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
+import { Kotti } from '../types'
 
 export default {
 	name: 'KtCommentInput',

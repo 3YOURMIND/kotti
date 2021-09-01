@@ -94,6 +94,7 @@
 		"stylelint-scss": "^3.19.0",
 		"stylelint-selector-no-empty": "^1.0.8",
 		"ts-jest": "^26.4.4",
+		"unimported": "^1.19.0",
 		"vue": "^2.6.11",
 		"vue-jest": "^3.0.7",
 		"vue-template-compiler": "^2.6.11"
@@ -132,6 +133,7 @@
 		"check:eslint": "eslint --max-warnings=0 --ignore-path .gitignore '**/*.{js,jsx,json,ts,tsx,vue}'",
 		"check:prettier": "prettier --check --ignore-path .gitignore .",
 		"check:stylelint": "stylelint packages/**/*.{css,scss,vue}",
+		"check:unimported": "lerna run check:unimported",
 		"fix": "yarn run fix:eslint && yarn run fix:stylelint && yarn run fix:prettier",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "prettier --write --ignore-path .gitignore .",

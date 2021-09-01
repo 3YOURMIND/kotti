@@ -12,6 +12,10 @@ export const attachMeta = <T>(
 	other?: T,
 ) => Object.assign(component, { meta: Object.assign({}, meta, other) })
 
+export const isBrowser = Boolean(
+	typeof window !== 'undefined' && window.document,
+)
+
 /**
  * Takes a Vue Component and assigns an install function to it
  * this makes sure that it can be used with Vue.use(component)

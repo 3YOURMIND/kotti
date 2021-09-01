@@ -13,7 +13,6 @@
 		"strict": true,
 		"jsx": "react",
 		"jsxFactory": "h",
-		// FIXME: remove skipLibCheck when [https://github.com/ElemeFE/element/issues/17329] is resolved
 		"skipLibCheck": true,
 		"target": "esnext",
 		"rootDir": "source"
