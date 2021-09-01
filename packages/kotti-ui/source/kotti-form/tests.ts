@@ -16,7 +16,7 @@ const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null>, { emit }) => {
+	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
 		useTranslationProvide(ref('en-US'), ref({}))
 
 		return {
@@ -29,6 +29,7 @@ const TestField = defineComponent({
 				supports: {
 					clear: true,
 					decoration: true,
+					placeholder: true,
 					tabIndex: true,
 				},
 			}),
@@ -41,7 +42,10 @@ const TestFieldObject = defineComponent({
 	name: 'TestFieldObject',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<object | string | null>, { emit }) => {
+	setup: (
+		props: KottiField.Props<object | string | null, string | null>,
+		{ emit },
+	) => {
 		useTranslationProvide(ref('en-US'), ref({}))
 
 		return {
@@ -56,6 +60,7 @@ const TestFieldObject = defineComponent({
 				supports: {
 					clear: true,
 					decoration: true,
+					placeholder: true,
 					tabIndex: true,
 				},
 			}),
@@ -77,7 +82,7 @@ const TestForm2 = {
 const getField = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
-): KottiField.Hook.Returns<string | object | null> =>
+): KottiField.Hook.Returns<string | object | null, string | null> =>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(wrapper.vm.$children[0].$children[0] as any).field
 

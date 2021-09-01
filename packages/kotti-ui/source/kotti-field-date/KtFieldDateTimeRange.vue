@@ -47,7 +47,10 @@ export default defineComponent({
 		...KOTTI_FIELD_DATE_TIME_RANGE_PROPS,
 	},
 	setup(props: KottiFieldDateTimeRange.Props, { emit }) {
-		const field = useField<KottiFieldDateTimeRange.Value>({
+		const field = useField<
+			KottiFieldDateTimeRange.Value,
+			[string | null, string | null]
+		>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldDateTimeRange.Value =>
 				Array.isArray(value) &&

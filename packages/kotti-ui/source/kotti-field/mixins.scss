@@ -351,7 +351,7 @@
 @mixin input-colors(
 	$main-color: var(--text-01),
 	$disabled-color: var(--text-05),
-	$placeholder-color: var(--text-05)
+	$placeholder-color: var(--text-03)
 ) {
 	.kt-field__input-container__slot input,
 	.kt-field__input-container__slot textarea,
@@ -368,7 +368,6 @@
 		}
 
 		&::-webkit-input-placeholder, /* Edge */
-		&:-ms-input-placeholder, /* Internet Explorer */
 		&::placeholder {
 			color: $placeholder-color;
 		}

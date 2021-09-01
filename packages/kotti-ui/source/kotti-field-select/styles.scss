@@ -142,6 +142,11 @@
 				}
 			}
 		}
+
+		.kt-field-select__placeholder {
+			color: var(--text-03);
+			opacity: 0.54; // appears to be the default user-agent opacity from the browser, in this case Firefox Developer Edition
+		}
 	}
 }
 

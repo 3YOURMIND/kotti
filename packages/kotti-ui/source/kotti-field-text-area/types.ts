@@ -1,8 +1,7 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldTextArea {
-	export type Props = KottiField.Props<Value> & {
-		placeholder: string | null
+	export type Props = KottiField.Props<Value, string | null> & {
 		rows: HTMLTextAreaElement['rows']
 	}
 

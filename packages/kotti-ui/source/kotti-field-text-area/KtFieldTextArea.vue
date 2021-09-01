@@ -23,12 +23,11 @@ export default defineComponent({
 	components: { KtField },
 	props: {
 		...KOTTI_FIELD_PROPS,
-		placeholder: { default: null, type: String },
 		rows: { default: 5, type: Number },
 		value: { default: null, type: String },
 	},
 	setup(props: KottiFieldTextArea.Props, { emit }) {
-		const field = useField<KottiFieldTextArea.Value>({
+		const field = useField<KottiFieldTextArea.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldTextArea.Value =>
 				typeof value === 'string' || value === null,

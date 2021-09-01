@@ -7,13 +7,14 @@ import { KottiFieldSingleSelect, KottiFieldMultiSelect } from './types'
 
 export type ElSelectWithInternalAPI = ElSelect & {
 	inputWidth: number
+	query: string
 	setSoftFocus(): void
 	visible: boolean
 }
 
 type HookParameters<DATA_TYPE extends Values> = {
 	elSelectRef: Ref<ElSelectWithInternalAPI | null>
-	field: KottiField.Hook.Returns<DATA_TYPE>
+	field: KottiField.Hook.Returns<DATA_TYPE, string | null>
 	inputSelectors: string[]
 	ktFieldRef: Ref<Vue | null>
 }

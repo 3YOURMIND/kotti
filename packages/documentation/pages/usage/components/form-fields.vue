@@ -281,12 +281,23 @@
 								type="switch"
 							/>
 						</div>
-						<KtFieldText
-							formKey="placeholder"
-							helpText="Support Varies"
-							isOptional
-							label="placeholder"
-						/>
+						<div class="field-row">
+							<KtFieldText
+								formKey="placeholder"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.placeholder"
+								isOptional
+								label="placeholder"
+							/>
+							<KtFieldText
+								v-if="isRangeComponent"
+								formKey="placeholder2"
+								helpText="On range components, placeholder is an array of two strings"
+								:isDisabled="!componentDefinition.supports.placeholder"
+								isOptional
+								label="placeholder2"
+							/>
+						</div>
 						<h4>Decoration</h4>
 						<div class="field-row">
 							<KtFieldText
@@ -631,6 +642,7 @@ export default defineComponent({
 			leftIcon: Yoco.Icon | null
 			locale: Kotti.Translation.SupportedLanguages
 			placeholder: Kotti.FieldText.Value
+			placeholder2: Kotti.FieldText.Value
 			prefix: Kotti.FieldText.Value
 			rightIcon: Yoco.Icon | null
 			size: 'small' | 'medium' | 'large'
@@ -668,6 +680,7 @@ export default defineComponent({
 			leftIcon: null,
 			locale: 'en-US',
 			placeholder: null,
+			placeholder2: null,
 			prefix: null,
 			rightIcon: null,
 			size: 'medium',
@@ -684,6 +697,10 @@ export default defineComponent({
 
 			return result
 		})
+
+		const isRangeComponent = computed(() =>
+			settings.value.component.includes('Range'),
+		)
 
 		// eslint-disable-next-line sonarjs/cognitive-complexity
 		const componentProps = computed(() => {
@@ -715,6 +732,20 @@ export default defineComponent({
 					rightIcon: settings.value.rightIcon,
 					suffix: settings.value.suffix,
 				})
+
+			if (componentDefinition.value.supports.placeholder)
+				if (isRangeComponent.value)
+					Object.assign(additionalProps, {
+						placeholder:
+							settings.value.placeholder !== null ||
+							settings.value.placeholder2 !== null
+								? [settings.value.placeholder, settings.value.placeholder2]
+								: null, // not passed
+					})
+				else
+					Object.assign(additionalProps, {
+						placeholder: settings.value.placeholder,
+					})
 
 			if (
 				componentDefinition.value.additionalProps.includes('toggleType') &&
@@ -847,21 +878,6 @@ export default defineComponent({
 					options: toggleGroupOptions,
 				})
 
-			if (
-				[
-					'KtFieldDate',
-					'KtFieldDateTime',
-					'KtFieldMultiSelect',
-					'KtFieldSingleSelect',
-					'KtFieldSingleSelectRemote',
-					'KtFieldText',
-					'KtFieldTextArea',
-				].includes(component)
-			)
-				Object.assign(additionalProps, {
-					placeholder: settings.value.placeholder,
-				})
-
 			return { ...standardProps, ...additionalProps }
 		})
 
@@ -923,6 +939,7 @@ export default defineComponent({
 					validator: createValidator(componentValue.value.validation),
 				}),
 			),
+			isRangeComponent,
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},

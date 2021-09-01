@@ -19,7 +19,13 @@
 				@input="onChange"
 				@visible-change="(showPopper) => (isDropdownOpen = showPopper)"
 			>
-				<div slot="prefix" class="kt-tags">
+				<div
+					v-if="field.isEmpty && showPlaceholder"
+					slot="prefix"
+					class="kt-field-select__placeholder"
+					v-text="elMultipleSelectProps.placeholder"
+				/>
+				<div v-else-if="!field.isEmpty" slot="prefix" class="kt-tags">
 					<div
 						v-for="option in visibleSelectedOptions"
 						:key="option.value"
@@ -99,7 +105,7 @@ export default defineComponent({
 		value: { default: null, type: Array },
 	},
 	setup(props: KottiFieldMultiSelect.Props, { emit }) {
-		const field = useField<KottiFieldMultiSelect.Value>({
+		const field = useField<KottiFieldMultiSelect.Value, string | null>({
 			emit,
 			isCorrectDataType: (values): values is KottiFieldMultiSelect.Value =>
 				Array.isArray(values) &&
@@ -199,6 +205,10 @@ export default defineComponent({
 
 				field.setValue(sortedValues)
 			},
+			showPlaceholder: computed(() => {
+				const query = elSelectRef.value?.query
+				return query === ''
+			}),
 			removeTag: (value: Entry['value']) => {
 				field.setValue(field.currentValue.filter((v) => v !== value))
 			},

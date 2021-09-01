@@ -74,7 +74,7 @@ export default defineComponent({
 		value: { default: null, type: [Number, String, Boolean] },
 	},
 	setup(props: KottiFieldRadioGroup.Props, { emit }) {
-		const field = useField<KottiFieldRadioGroup.Value>({
+		const field = useField<KottiFieldRadioGroup.Value, never>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldRadioGroup.Value =>
 				['number', 'string', 'boolean'].includes(typeof value) ||

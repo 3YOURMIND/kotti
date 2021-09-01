@@ -8,7 +8,7 @@ export namespace KottiFieldRadioGroup {
 		value: Value
 	}
 
-	export type Props = KottiField.Props<Value> & {
+	export type Props = KottiField.Props<Value, never> & {
 		isInline: boolean
 		options: Entry[]
 	}
