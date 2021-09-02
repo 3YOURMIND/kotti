@@ -41,6 +41,8 @@ import {
 	KtFieldDateTimeRange,
 } from './kotti-field-date'
 export * from './kotti-field-date'
+import { KtFieldEmail } from './kotti-field-email'
+export * from './kotti-field-email'
 import { KtFieldNumber } from './kotti-field-number'
 export * from './kotti-field-number'
 import { KtFieldPassword } from './kotti-field-password'
@@ -137,6 +139,7 @@ export default {
 			KtFieldDateRange,
 			KtFieldDateTime,
 			KtFieldDateTimeRange,
+			KtFieldEmail,
 			KtFieldMultiSelect,
 			KtFieldNumber,
 			KtFieldPassword,

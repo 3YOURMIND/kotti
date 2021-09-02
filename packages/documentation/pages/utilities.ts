@@ -5,6 +5,7 @@ export type ComponentNames =
 	| 'KtFieldDateRange'
 	| 'KtFieldDateTime'
 	| 'KtFieldDateTimeRange'
+	| 'KtFieldEmail'
 	| 'KtFieldMultiSelect'
 	| 'KtFieldNumber'
 	| 'KtFieldPassword'

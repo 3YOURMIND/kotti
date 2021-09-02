@@ -382,6 +382,7 @@ import {
 	KtFieldDateRange,
 	KtFieldDateTime,
 	KtFieldDateTimeRange,
+	KtFieldEmail,
 	KtFieldMultiSelect,
 	KtFieldNumber,
 	KtFieldPassword,
@@ -426,7 +427,7 @@ const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate']
 const components: Array<{
 	additionalProps: Array<string>
 	formKey: string
-	name: string
+	name: Exclude<ComponentNames, 'KtFilters'>
 	supports: Kotti.Field.Supports
 }> = [
 	{
@@ -452,6 +453,12 @@ const components: Array<{
 		formKey: 'dateTimeRangeValue',
 		name: 'KtFieldDateTimeRange',
 		supports: KtFieldDateTimeRange.meta.supports,
+	},
+	{
+		additionalProps: [],
+		formKey: 'textValue',
+		name: 'KtFieldEmail',
+		supports: KtFieldEmail.meta.supports,
 	},
 	{
 		additionalProps: ['actions', 'collapseTagsAfter', 'maximumSelectable'],
@@ -634,7 +641,7 @@ export default defineComponent({
 				isLoading: Kotti.FieldToggle.Value
 				isOptional: Kotti.FieldToggle.Value
 			}
-			component: ComponentNames
+			component: Exclude<ComponentNames, 'KtFilters'>
 			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
 			helpText: Kotti.FieldText.Value
@@ -914,6 +921,7 @@ export default defineComponent({
 						KtFieldDateRange,
 						KtFieldDateTime,
 						KtFieldDateTimeRange,
+						KtFieldEmail,
 						KtFieldNumber,
 						KtFieldMultiSelect,
 						KtFieldPassword,
