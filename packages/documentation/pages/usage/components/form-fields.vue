@@ -48,10 +48,12 @@
 					<div>
 						<h4>Settings</h4>
 						<KtFieldSingleSelect
-							formKey="component"
+							formKey="NONE"
 							hideClear
 							label="Component"
 							:options="componentOptions"
+							:value="settings.component"
+							@input="setSettingsComponent"
 						/>
 						<KtFieldSingleSelect
 							formKey="locale"
@@ -135,10 +137,34 @@
 								"
 								formKey="autoComplete"
 								label="autoComplete"
-								:options="[
-									{ label: 'current-password', value: 'current-password' },
-									{ label: 'new-password', value: 'new-password' },
-								]"
+								:options="
+									[
+										{
+											isDisabled:
+												componentDefinition.name !== 'KtFieldPassword',
+											label: 'current-password',
+											value: 'current-password',
+										},
+										{
+											isDisabled: componentDefinition.name !== 'KtFieldEmail',
+											label: 'email',
+											value: 'email',
+										},
+										{
+											isDisabled:
+												componentDefinition.name !== 'KtFieldPassword',
+											label: 'new-password',
+											value: 'new-password',
+										},
+										{
+											isDisabled: componentDefinition.name !== 'KtFieldEmail',
+											label: 'username',
+											value: 'username',
+										},
+									].sort((a, b) =>
+										a.isDisabled ? -1 : b.isDisabled ? -1 : a.localeCompare(b),
+									)
+								"
 							/>
 							<KtFieldNumber
 								v-if="
@@ -455,7 +481,7 @@ const components: Array<{
 		supports: KtFieldDateTimeRange.meta.supports,
 	},
 	{
-		additionalProps: [],
+		additionalProps: ['autoComplete'],
 		formKey: 'textValue',
 		name: 'KtFieldEmail',
 		supports: KtFieldEmail.meta.supports,
@@ -620,7 +646,7 @@ export default defineComponent({
 		const settings = ref<{
 			additionalProps: {
 				actions: Kotti.FieldToggle.Value
-				autoComplete: 'current-password' | 'new-password'
+				autoComplete: 'current-password' | 'email' | 'new-password' | 'username'
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				hideChangeButtons: boolean
 				isInline: boolean
@@ -913,6 +939,7 @@ export default defineComponent({
 				validation: settings.value.validation,
 			}),
 		)
+
 		return {
 			component: computed(
 				(): { meta: Kotti.Meta; name: string } =>
@@ -972,6 +999,34 @@ export default defineComponent({
 					(_, index) => index !== toRemove,
 				)
 				saveSavedFieldsToLocalStorage(savedFields.value)
+			},
+			setSettingsComponent: (name: Exclude<ComponentNames, 'KtFilters'>) => {
+				switch (name) {
+					case 'KtFieldEmail':
+						settings.value = {
+							...settings.value,
+							additionalProps: {
+								...settings.value.additionalProps,
+								autoComplete: 'email',
+							},
+						}
+						break
+
+					case 'KtFieldPassword':
+						settings.value = {
+							...settings.value,
+							additionalProps: {
+								...settings.value.additionalProps,
+								autoComplete: 'new-password',
+							},
+						}
+						break
+				}
+
+				settings.value = {
+					...settings.value,
+					component: name,
+				}
 			},
 			settings,
 			updateQuery: (

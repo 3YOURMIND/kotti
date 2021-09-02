@@ -23,6 +23,11 @@ export default defineComponent({
 	components: { KtField },
 	props: {
 		...KOTTI_FIELD_PROPS,
+		autoComplete: {
+			required: true,
+			type: String,
+			validator: (value) => ['email', 'username'].includes(value),
+		},
 		value: { default: null, type: String },
 	},
 	setup(props: KottiFieldEmail.Props, { emit }) {
@@ -45,6 +50,7 @@ export default defineComponent({
 					forceUpdateKey: number
 				} => ({
 					...field.inputProps,
+					autocomplete: props.autoComplete,
 					class: ['kt-field-email__wrapper'],
 					forceUpdateKey: forceUpdateKey.value,
 					type: 'email',
