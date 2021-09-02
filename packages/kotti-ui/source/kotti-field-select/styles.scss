@@ -132,8 +132,8 @@
 
 					// clipping also affects the clickable area
 					@supports (clip-path: circle(#{$size / 2} at center)) {
-						border-radius: 0;
 						clip-path: circle(#{$size / 2} at center);
+						border-radius: 0;
 					}
 
 					&:hover {
@@ -141,6 +141,11 @@
 					}
 				}
 			}
+		}
+
+		.kt-field-select__placeholder {
+			color: var(--text-03);
+			opacity: 0.54; // appears to be the default user-agent opacity from the browser, in this case Firefox Developer Edition
 		}
 	}
 }

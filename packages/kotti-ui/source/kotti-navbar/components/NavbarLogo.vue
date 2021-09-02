@@ -2,7 +2,9 @@
 	<div class="kt-navbar-logo-container">
 		<div
 			v-if="isNarrow"
-			class="kt-navbar-logo kt-navbar-logo--is-desktop kt-navbar-logo--is-narrow"
+			class="
+				kt-navbar-logo kt-navbar-logo--is-desktop kt-navbar-logo--is-narrow
+			"
 		>
 			<NavbarTooltip
 				:icon="Yoco.Icon.BURGER"

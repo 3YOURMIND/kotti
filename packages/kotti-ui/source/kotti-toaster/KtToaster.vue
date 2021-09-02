@@ -22,6 +22,8 @@
 <script>
 import { TimeConversion } from '@metatypes/units'
 
+import { isBrowser } from '../utilities'
+
 import { generateId, notId } from './utilities.js'
 
 const DEFAULT_DURATION_IN_SECONDS = 3
@@ -51,7 +53,7 @@ export default {
 		}) {
 			this.queue.push({ id, text, type })
 
-			if (typeof window !== 'undefined' && window.document)
+			if (isBrowser)
 				window.setTimeout(() => this.deleteNotification(id), duration)
 		},
 		deleteNotification(id) {

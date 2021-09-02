@@ -1,9 +1,10 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldMultiSelect {
-	export type Props = KottiField.Props<Value> &
+	export type Props = KottiField.Props<Value, string | null> &
 		Shared.Props & {
 			collapseTagsAfter: number
+			maximumSelectable: number
 		}
 
 	export type Translations = Shared.Translations
@@ -18,7 +19,7 @@ export namespace Shared {
 			| number
 			| boolean
 			| symbol
-			| null
+			| null,
 	> = {
 		isDisabled?: boolean
 		label: string
@@ -28,7 +29,6 @@ export namespace Shared {
 	export type Props = {
 		actions: Shared.Action[]
 		options: Shared.Entry[]
-		placeholder: string | null
 	}
 
 	export type Action = {
@@ -45,9 +45,25 @@ export namespace Shared {
 }
 
 export namespace KottiFieldSingleSelect {
-	export type Props = KottiField.Props<Value> & Shared.Props
+	export type Props = KottiField.Props<Value, string | null> & Shared.Props
 
 	export type Translations = Shared.Translations
 
 	export type Value = Shared.Entry['value']
+}
+
+export namespace KottiFieldSingleSelectRemote {
+	export type Props = KottiField.Props<Value, string | null> &
+		Shared.Props & {
+			isLoadingOptions: boolean
+			query: string | null
+		}
+
+	export type Translations = Shared.Translations
+
+	export type Value = Shared.Entry['value']
+
+	export namespace Events {
+		export type UpdateQuery = KottiFieldSingleSelectRemote.Props['query']
+	}
 }

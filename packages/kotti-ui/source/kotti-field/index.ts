@@ -8,8 +8,7 @@ export const KtField = attachMeta(makeInstallable(KtFieldVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=415%3A1',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=415%3A1',
 	},
 	slots: {
 		container: {

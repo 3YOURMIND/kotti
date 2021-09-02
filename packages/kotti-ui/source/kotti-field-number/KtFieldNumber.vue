@@ -48,6 +48,7 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref, watch } from '@vue/composition-api'
+import Big from 'big.js'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
@@ -76,7 +77,7 @@ export default defineComponent({
 		...KOTTI_FIELD_NUMBER_PROPS,
 	},
 	setup(props: KottiFieldNumber.Props, { emit, root }) {
-		const field = useField<KottiFieldNumber.Value>({
+		const field = useField<KottiFieldNumber.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldNumber.Value =>
 				isNumber(value) || value === null,
@@ -91,10 +92,12 @@ export default defineComponent({
 			() =>
 				!field.isDisabled &&
 				isInRange({
-					maximum: null,
+					maximum: props.maximum,
 					minimum: props.minimum,
-					offset: -props.step,
-					value: field.currentValue,
+					value:
+						field.currentValue === null
+							? null
+							: Big(field.currentValue).minus(props.step).toNumber(),
 				}),
 		)
 
@@ -103,9 +106,11 @@ export default defineComponent({
 				!field.isDisabled &&
 				isInRange({
 					maximum: props.maximum,
-					minimum: null,
-					offset: props.step,
-					value: field.currentValue,
+					minimum: props.minimum,
+					value:
+						field.currentValue === null
+							? null
+							: Big(field.currentValue).add(props.step).toNumber(),
 				}),
 		)
 
@@ -125,7 +130,6 @@ export default defineComponent({
 					!isInRange({
 						maximum: props.maximum,
 						minimum: props.minimum,
-						offset: 0,
 						value: truncatedNumber,
 					})
 				)
@@ -167,6 +171,24 @@ export default defineComponent({
 			lastUserSetCursorPosition.value = null
 		})
 
+		/**
+		 * In the scenario when the user clicks the +/- buttons when the value is null
+		 * we check if zero is in the range of accepted values, and fallback to it
+		 */
+		const canFallbackToZero = computed<boolean>(
+			() =>
+				isStepMultiple({
+					minimum: props.minimum,
+					step: props.step,
+					value: 0,
+				}) &&
+				isInRange({
+					maximum: props.maximum,
+					minimum: props.minimum,
+					value: 0,
+				}),
+		)
+
 		return {
 			decrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
@@ -176,8 +198,10 @@ export default defineComponent({
 
 				field.setValue(
 					field.currentValue === null
-						? props.minimum ?? 0
-						: field.currentValue - props.step,
+						? canFallbackToZero.value
+							? 0
+							: props.minimum ?? props.maximum ?? 0
+						: Big(field.currentValue).minus(props.step).toNumber(),
 				)
 			},
 			field,
@@ -192,28 +216,32 @@ export default defineComponent({
 
 				field.setValue(
 					field.currentValue === null
-						? props.minimum ?? 0
-						: field.currentValue + props.step,
+						? canFallbackToZero.value
+							? 0
+							: props.minimum ?? props.maximum ?? 0
+						: Big(field.currentValue).add(props.step).toNumber(),
 				)
 			},
 			internalStringValue,
 			input,
-			inputProps: computed((): Partial<HTMLInputElement> & {
-				class: object
-				forceUpdateKey: number
-			} => ({
-				...field.inputProps,
-				class: {
-					'kt-field-number__middle__input': true,
-					'kt-field-number__middle__input--has-maximum': showMaximum.value,
-				},
-				disabled: field.isDisabled,
-				forceUpdateKey: forceUpdateKey.value,
-				placeholder: props.placeholder ?? undefined,
-				size: 1,
-				type: 'text', // NOT A MISTAKE
-				value: internalStringValue.value,
-			})),
+			inputProps: computed(
+				(): Partial<HTMLInputElement> & {
+					class: object
+					forceUpdateKey: number
+				} => ({
+					...field.inputProps,
+					class: {
+						'kt-field-number__middle__input': true,
+						'kt-field-number__middle__input--has-maximum': showMaximum.value,
+					},
+					disabled: field.isDisabled,
+					forceUpdateKey: forceUpdateKey.value,
+					placeholder: props.placeholder ?? undefined,
+					size: 1,
+					type: 'text', // NOT A MISTAKE
+					value: internalStringValue.value,
+				}),
+			),
 			onInput(value: string) {
 				lastUserSetCursorPosition.value = input.value?.selectionStart ?? null
 
@@ -235,7 +263,6 @@ export default defineComponent({
 					isInRange({
 						maximum,
 						minimum,
-						offset: 0,
 						value: nextNumber,
 					})
 

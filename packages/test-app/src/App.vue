@@ -1,6 +1,6 @@
 <template>
 	<KtTranslationContext locale="en-US">
-		<div style="padding: 50px;">
+		<div style="padding: 50px">
 			<KtAccordion title="Hello Tree Shaking">
 				<KtForm v-model="values">
 					<KtHeading text="Test App" />

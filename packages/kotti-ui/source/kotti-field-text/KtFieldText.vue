@@ -23,11 +23,10 @@ export default defineComponent({
 	components: { KtField },
 	props: {
 		...KOTTI_FIELD_PROPS,
-		placeholder: { default: null, type: String },
 		value: { default: null, type: String },
 	},
 	setup(props: KottiFieldText.Props, { emit }) {
-		const field = useField<KottiFieldText.Value>({
+		const field = useField<KottiFieldText.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldText.Value =>
 				typeof value === 'string' || value === null,
@@ -40,18 +39,20 @@ export default defineComponent({
 
 		return {
 			field,
-			inputProps: computed((): Partial<HTMLInputElement> & {
-				class: object
-				forceUpdateKey: number
-			} => ({
-				...field.inputProps,
-				class: ['kt-field-text__wrapper'],
-				forceUpdateKey: forceUpdateKey.value,
-				type: 'text',
-				size: 1,
-				value: field.currentValue ?? '',
-				placeholder: props.placeholder ?? undefined,
-			})),
+			inputProps: computed(
+				(): Partial<HTMLInputElement> & {
+					class: object
+					forceUpdateKey: number
+				} => ({
+					...field.inputProps,
+					class: ['kt-field-text__wrapper'],
+					forceUpdateKey: forceUpdateKey.value,
+					type: 'text',
+					size: 1,
+					value: field.currentValue ?? '',
+					placeholder: props.placeholder ?? undefined,
+				}),
+			),
 			onInput: (event: { target: HTMLInputElement }) => {
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)

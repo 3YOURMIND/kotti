@@ -33,7 +33,7 @@
 				</div>
 				<div
 					class="tag"
-					style="--color: var(--green-70); --background-color: var(--green-20);"
+					style="--color: var(--green-70); --background-color: var(--green-20)"
 				>
 					<div class="tag__left">Tag</div>
 					<a
@@ -57,7 +57,7 @@
 				</div>
 				<div
 					class="tag"
-					style="--color: var(--red-70); --background-color: var(--red-20);"
+					style="--color: var(--red-70); --background-color: var(--red-20)"
 				>
 					<div class="tag__left">NPM</div>
 					<a

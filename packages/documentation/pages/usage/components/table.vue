@@ -17,11 +17,11 @@ In order to use the table, you need give `rows` and `columns` data to `KtTable` 
 
 `columns` define the column of the table, `label` is the header text of table, `key` will be used to find the value from `rows`.
 
-*Update:* The use of `key` is deprecated use `prop` instead of `key` when defining columns
+_Update:_ The use of `key` is deprecated use `prop` instead of `key` when defining columns
 
 `rows` is an `Array` of `Object`s that represent a `row`.
 
-*For better performance in complex operations*, define a `rowKey` to index each row with.
+_For better performance in complex operations_, define a `rowKey` to index each row with.
 
 <ShowCase>
 
@@ -77,7 +77,6 @@ In order to use the table, you need give `rows` and `columns` data to `KtTable` 
 
 </ShowCase>
 
-
 ## Declarative form
 
 The `columns` property can be written as nested children of the table components using `<KtTableColumn />`.
@@ -92,9 +91,9 @@ All props that a column takes, the KtTableColumn component takes, as well, with 
 </KtTable>
 
 ```html
-<KtTable :rows="rows" >
-	<KtTableColumn label="Name" prop="name"/>
-	<KtTableColumn label="Address" prop="address.line"/>
+<KtTable :rows="rows">
+	<KtTableColumn label="Name" prop="name" />
+	<KtTableColumn label="Address" prop="address.line" />
 </KtTable>
 ```
 
@@ -142,7 +141,6 @@ Alignment would default to be `left`. It can be customized for common cases that
 }
 ```
 
-
 ## Horizontal Scrolling
 
 When content should not be hidden, using horizontal scrolling is a better alternative.
@@ -158,7 +156,8 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 `isSelectable` enables mutilple-select option of the rows.
 
-*Note:* The use of v-model is *REMOVED*. Instead, bind the Array of selected to the `selected` property, and subscribe to `@selectionChange`, which returns the currently selected rows whenever they change
+_Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to the `selected` property, and subscribe to `@selectionChange`, which returns the currently selected rows whenever they change
+
 > Note the difference between the Array model passed to the v-model (now, removed) and that passed to the selected property.
 > The former is an `Array` of selected indices, and the latter is an `Array` of _row_ `Object`s
 
@@ -171,7 +170,13 @@ When content should not be hidden, using horizontal scrolling is a better altern
 
 ```html
 <div>
-	<KtTable :rows="rows" :columns="columns" isSelectable :selected="selected" @selectionChange="((selection) => selected = selection)"/>
+	<KtTable
+		:rows="rows"
+		:columns="columns"
+		isSelectable
+		:selected="selected"
+		@selectionChange="((selection) => selected = selection)"
+	/>
 	<pre>Selected Rows: {{JSON.stringify(selected,undefined, 2)}} </pre>
 </div>
 ```
@@ -252,7 +257,7 @@ _Note:_ Neither events get triggered on a _disabled_ row.
 />
 
 ```html
-<KtInput v-model='disableName' />
+<KtInput v-model="disableName" />
 <KtTable
 	:rows="rows"
 	:columns="columns"
@@ -291,29 +296,19 @@ You can order Columns, by dragging, if you use the `useColumnDragToOrder` flag
 </KtTable>
 
 ```html
-<KtTable :rows="rows" useColumnDragToOrder >
-	<KtTableColumn
-		label="Avatar"
-		prop="name"
-		:renderCell="renderCell"
-	/>
-	<KtTableColumn
-		label="Date"
-		prop="date"
-		:formatter="formatDate"
-	/>
-	<KtTableColumn
-		label="Address"
-		prop="address.line"
-	/>
+<KtTable :rows="rows" useColumnDragToOrder>
+	<KtTableColumn label="Avatar" prop="name" :renderCell="renderCell" />
+	<KtTableColumn label="Date" prop="date" :formatter="formatDate" />
+	<KtTableColumn label="Address" prop="address.line" />
 </KtTable>
 ```
 
 ## Sorting
 
 To enable sorting, you must do BOTH the following:
-* enable a UI-sorting flag `useQuickSortControl`
-* add `sortable` to any column definition (the ones to enable sorting for).
+
+- enable a UI-sorting flag `useQuickSortControl`
+- add `sortable` to any column definition (the ones to enable sorting for).
 
 <KtTable :rows="rows" useQuickSortControl >
 	<KtTableColumn label="Name" prop="name" sortable />
@@ -322,10 +317,10 @@ To enable sorting, you must do BOTH the following:
 </KtTable>
 
 ```html
-<KtTable :rows="rows" useQuickSortControl >
+<KtTable :rows="rows" useQuickSortControl>
 	<KtTableColumn label="Name" prop="name" sortable />
-	<KtTableColumn label="Date" prop="date"/>
-	<KtTableColumn label="Address" prop="address.line"/>
+	<KtTableColumn label="Date" prop="date" />
+	<KtTableColumn label="Address" prop="address.line" />
 </KtTable>
 ```
 
@@ -339,9 +334,9 @@ If you want to allow sorting for all columns excluding one, you can set `sortabl
 
 ```html
 <KtTable :rows="rows" useQuickSortControl sortable="all">
-	<KtTableColumn label="Name" prop="name"/>
-	<KtTableColumn label="Date" prop="date"/>
-	<KtTableColumn label="Address" prop="address.line" :sortable="false"/>
+	<KtTableColumn label="Name" prop="name" />
+	<KtTableColumn label="Date" prop="date" />
+	<KtTableColumn label="Address" prop="address.line" :sortable="false" />
 </KtTable>
 ```
 
@@ -357,23 +352,36 @@ It's possible to customize your sorting experience by using the column's `sortMe
 
 ```html
 <KtTable :rows="rows" useQuickSortControl sortable="all">
-	<KtTableColumn label="Name" prop="name" :sortOrders="['descending', 'ascending', undefined]"/>  <!-- On click, change the next sort order -->
-	<KtTableColumn label="Date" prop="date" :sortMethod="sortDate" /> <!-- use custom compare function -->
-	<KtTableColumn label="Address" prop="address.line" :sortBy="['address.number', byAddressLine]"/> <!-- target different props on the row  -->
+	<KtTableColumn
+		label="Name"
+		prop="name"
+		:sortOrders="['descending', 'ascending', undefined]"
+	/>
+	<!-- On click, change the next sort order -->
+	<KtTableColumn label="Date" prop="date" :sortMethod="sortDate" />
+	<!-- use custom compare function -->
+	<KtTableColumn
+		label="Address"
+		prop="address.line"
+		:sortBy="['address.number', byAddressLine]"
+	/>
+	<!-- target different props on the row  -->
 </KtTable>
 ```
 
 `sortOrders` determines the order by which sorting criteria changes with each click on the sorting buttons on the column headers. It can have one of three values:
-* `'descending'` OR `-1`
-* `'ascending'` OR `1`
-* `undefined` OR `0` &rarr; which does not enforce any sorting, and thus, the rows are sorted according to their actual insertion in the bounded `rows` Object.
+
+- `'descending'` OR `-1`
+- `'ascending'` OR `1`
+- `undefined` OR `0` &rarr; which does not enforce any sorting, and thus, the rows are sorted according to their actual insertion in the bounded `rows` Object.
 
 <hr/>
 
 `sortBy` can take three types of arguments:
-* `String` &larr; path to any prop of the row
-* `Function` &larr; that accepts the "row" and "rowIndex" as arguments
-* `Array` of the above
+
+- `String` &larr; path to any prop of the row
+- `Function` &larr; that accepts the "row" and "rowIndex" as arguments
+- `Array` of the above
 
 ```js
 {
@@ -389,38 +397,44 @@ It's possible to customize your sorting experience by using the column's `sortMe
 }
 ```
 
-
 Sorting _resolution_ is handled the same way as sortBy for each column, i.e.: if the first prop used in comparison between two rows returns `0`, the next one is used until we resolve by actual array order
 
 You can pass to KtTable an array of `sortedColumns` of the form `[{ prop, sortOrder }]`
 
 You can also initialize the table to be already sorted, by setting the `sortOrder` prop for one of the columns: `<KtTableColumn :sortOrder="1" prop="name" />`
 
-
 ### Remote Sorting
 
 To sort remotly:
+
 1. Set the `sortRemote` flag on `<KtTable/>` which disables the local table sort function.
 
 2. You can then listen to the `@sortChange` which returns:
->
-> __sortedColumns__: an array of the sorted columns by priority. If `sortMultiple` is false, then it will allways contain one element.
->
-> __column__: the column that was just sorted.
->
-> __sortOrder__: the order the column is to be sorted to.
->
-> __prop__: the prop to be sorted on that column
->
-> __sortBy__: the value of sortBy on the column, which is useful in case you want to send the backend a different value than `column.prop`
+
+   > **sortedColumns**: an array of the sorted columns by priority. If `sortMultiple` is false, then it will allways contain one element.
+   >
+   > **column**: the column that was just sorted.
+   >
+   > **sortOrder**: the order the column is to be sorted to.
+   >
+   > **prop**: the prop to be sorted on that column
+   >
+   > **sortBy**: the value of sortBy on the column, which is useful in case you want to send the backend a different value than `column.prop`
 
 3. You can, then, set the `sortedColumns` prop on the `<KtTable/>` to update the table UI, when your backend request is resolved.
 
 ```html
-<KtTable :rows="rows" useQuickSortControl sortable="all" sortRemote @sortChange="sort">
-	<KtTableColumn label="Name" prop="name" /> <!-- sortBy in this case is "name" since it is the `prop` -->
+<KtTable
+	:rows="rows"
+	useQuickSortControl
+	sortable="all"
+	sortRemote
+	@sortChange="sort"
+>
+	<KtTableColumn label="Name" prop="name" />
+	<!-- sortBy in this case is "name" since it is the `prop` -->
 	<KtTableColumn label="Date" prop="date" sortBy="order_date" />
-	<KtTableColumn label="Address" prop="address.line" sortBy="address_line"/>
+	<KtTableColumn label="Address" prop="address.line" sortBy="address_line" />
 </KtTable>
 ```
 
@@ -438,26 +452,27 @@ To sort remotly:
 ## Actions
 
 `actions` adds _hover_ actions to the table. You use the `slot="actions"` to define the actions template.
+
 > You must use `slot-scope` prop for the `actions` slot for it to be detected.
 > Update: shorthand for v-slot is used now, instead.
 
 <ShowCase vueSlotLabel="Actions Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault">
-	<template slot="actions" slot-scope="{ row, rowIndex }">
+	<div slot="actions" slot-scope="{row, rowIndex}">
 		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
 		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
-	</template>
+	</div>
 </KtTable>
 </div>
 <div slot="style">
 
 ```vue
 <KtTable :rows="rows" :columns="columns">
-<template slot="actions" slot-scope="{ row }">
+<div slot="actions" slot-scope="{ row }">
 	<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
 	<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
-</template>
+</div>
 </KtTable>
 ```
 
@@ -471,9 +486,9 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 
 ```html
 <KtTable :rows="rows" :columns="columns">
-<template v-slot:actions="{ row }">
-	<!-- as before  -->
-</template>
+	<div slot="actions" slot-scope="{ row }">
+		<!-- as before  -->
+	</div>
 </KtTable>
 ```
 
@@ -482,9 +497,9 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 
 ```html
 <KtTable :rows="rows" :columns="columns">
-<template #actions="{ row }">
-	<!-- as before  -->
-</template>
+	<div slot="actions" slot-scope="{ row }">
+		<!-- as before  -->
+	</div>
 </KtTable>
 ```
 
@@ -498,22 +513,21 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 <ShowCase vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault" isExpandable>
-<template #expand="{ row, rowIndex }">
+<div slot="expand" slot-scope="{ row, rowIndex }">
 	<KtBanner :message="row.name" icon="user" isGray />
 	<KtBanner :message="row.address.line" icon="global" isGray />
-</template>
+</div>
 </KtTable>
 </div>
-
 
 <div slot="style">
 
 ```html
 <KtTable :rows="rows" :columns="columns" isExpandable>
-<template #expand="{ row, rowIndex }">
-	<KtBanner :message="row.name" icon="user" isGray />
-	<KtBanner :message="row.address.line" icon="global" isGray />
-</template>
+	<div slot="expand" slot-scope="{ row, rowIndex }">
+		<KtBanner :message="row.name" icon="user" isGray />
+		<KtBanner :message="row.address.line" icon="global" isGray />
+	</div>
 </KtTable>
 ```
 
@@ -527,20 +541,20 @@ If you want to allow for the expansion of multiple rows at a time, set the `expa
 <ShowCase vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault" isExpandable expandMultiple>
-<template #expand="{ row, rowIndex }">
+<div slot="expand" slot-scope="{ row, rowIndex }">
 	<KtBanner :message="row.name" icon="user" isGray />
 	<KtBanner :message="row.address.line" icon="global" isGray />
-</template>
+</div>
 </KtTable>
 </div>
 <div slot="style">
 
 ```vue
 <KtTable :rows="rows" :columns="columns" isExpandable expandMultiple>
-<template #expand="{ row, rowIndex }">
+<div slot="expand" slot-scope="{ row, rowIndex }">
 	<KtBanner :message="row.name" icon="user" isGray />
 	<KtBanner :message="row.address.line" icon="global" isGray />
-</template>
+</div>
 </KtTable>
 ```
 
@@ -552,18 +566,19 @@ If you want to allow for the expansion of multiple rows at a time, set the `expa
 It is possible to customize parts (columns) of the table by passing your own render-prop functions instead of using slots.
 
 `<KtTable />` supports the following render props:
-* `renderEmpty` &rarr; to define a custom rendered component when the table is empty, i.e., `:rows=[]`. `slot='empty'` can be used instead.
-* `renderLoading` &rarr; for when the `rows` are still loading (e.g., backend-api call has not resolved yet). `slot='loading'` can be used to render a template, instead.
-> Note there is a `loading` Boolean flag, and when set to true, will render whatever is passed to `renderLoading` inside the table body.
-> if no `renderLoading` function is passed, it defaults to a buffer, still.
-* `renderExpand` &rarr; alternative to the `expand` slot.
-* `renderActions` &rarr; alternative to the `actions` slot.
 
+- `renderEmpty` &rarr; to define a custom rendered component when the table is empty, i.e., `:rows=[]`. `slot='empty'` can be used instead.
+- `renderLoading` &rarr; for when the `rows` are still loading (e.g., backend-api call has not resolved yet). `slot='loading'` can be used to render a template, instead.
+  > Note there is a `loading` Boolean flag, and when set to true, will render whatever is passed to `renderLoading` inside the table body.
+  > if no `renderLoading` function is passed, it defaults to a buffer, still.
+- `renderExpand` &rarr; alternative to the `expand` slot.
+- `renderActions` &rarr; alternative to the `actions` slot.
 
 `<KtTableColumn />` supports the following render props:
-* `formatter` &rarr; which applies formatting to the cell (somewhat similar to what you would consider as a `computed`)
-* `renderHeader` &rarr; custom render fn, to render a custom element in the header of the column. Instead you can use, slot='header'
-* `renderCell` &rarr; custom render fn, to render a custom element in the cells of the column. Instead use a default slot.
+
+- `formatter` &rarr; which applies formatting to the cell (somewhat similar to what you would consider as a `computed`)
+- `renderHeader` &rarr; custom render fn, to render a custom element in the header of the column. Instead you can use, slot='header'
+- `renderCell` &rarr; custom render fn, to render a custom element in the cells of the column. Instead use a default slot.
 
 <ShowCase vueSlotLabel="Custom Render Table" styleSlotLabel="html">
 <div slot="vue" >
@@ -602,17 +617,12 @@ It is possible to customize parts (columns) of the table by passing your own ren
 		:renderHeader="renderHeader"
 		:renderCell="renderCell"
 	/>
-	<KtTableColumn
-		label="Date"
-		prop="date"
-		:formatter="formatDate"
-	/>
+	<KtTableColumn label="Date" prop="date" :formatter="formatDate" />
 </KtTable>
 ```
 
 </div>
 </ShowCase>
-
 
 ```jsx
 {
@@ -681,19 +691,9 @@ It is possible to customize parts (columns) of the table by passing your own ren
 <div slot="style">
 
 ```html
-<KtTable
-	:rows="rows"
-	:renderLoading="renderLoading"
-	:loading="true"
->
-	<KtTableColumn
-		label="Name"
-		prop="name"
-	/>
-	<KtTableColumn
-		label="Date"
-		prop="date"
-	/>
+<KtTable :rows="rows" :renderLoading="renderLoading" :loading="true">
+	<KtTableColumn label="Name" prop="name" />
+	<KtTableColumn label="Date" prop="date" />
 </KtTable>
 ```
 
@@ -720,18 +720,9 @@ It is possible to customize parts (columns) of the table by passing your own ren
 <div slot="style">
 
 ```html
-<KtTable
-	:rows="[]"
-	:renderEmpty="renderEmpty"
->
-	<KtTableColumn
-		label="Name"
-		prop="name"
-	/>
-	<KtTableColumn
-		label="Date"
-		prop="date"
-	/>
+<KtTable :rows="[]" :renderEmpty="renderEmpty">
+	<KtTableColumn label="Name" prop="name" />
+	<KtTableColumn label="Date" prop="date" />
 </KtTable>
 ```
 
@@ -762,9 +753,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 ```html
 <KtTable :rows="rows" :columns="columnsDefault" :loading="true">
-	<div slot="loading">
-		Loading while the loading prop on KtTable is true
-	</div>
+	<div slot="loading">Loading while the loading prop on KtTable is true</div>
 </KtTable>
 ```
 
@@ -784,9 +773,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 ```html
 <KtTable :rows="emptyRows" :columns="columns">
-	<div slot="empty">
-		Hello, Empty World!
-	</div>
+	<div slot="empty">Hello, Empty World!</div>
 </KtTable>
 ```
 
@@ -800,10 +787,10 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 	label="Name"
 	prop="name"
 >
-<template #header="{ value, columnIndex }">
+<div slot="header" slot-scope="{ value, columnIndex }">
 	<div v-text="columnIndex + '::' + value" ></div>
-</template>
-<template #default="{ value, row, rowIndex, column, columnIndex }">
+</div>
+<div slot-scope="{ value, row, rowIndex, column, columnIndex }">
 	<KtAvatar
 		class="mr-16px"
 		isHoverable
@@ -811,7 +798,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 		src="https://picsum.photos/200"
 		:size="Kotti.Avatar.Size.SMALL"
 	/>
-</template>
+</div>
 </KtTableColumn>
 </KtTable>
 
@@ -820,25 +807,21 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 ```html
 <KtTable :rows="rows">
-<KtTableColumn
-	label="Name"
-	prop="name"
->
-<template #header="{ value, columnIndex }">
-	<div v-text="columnIndex + '::' + value" >
-	</div>
-</template>
-<!-- if you use deprecated slot syntax, you don't need to define slot name for a default slot (this replaces renderCell) -->
-<template #default="{value, row, rowIndex, column, columnIndex}">
-	<KtAvatar
-		class="mr-16px"
-		isHoverable
-		:name="value"
-		:size="Kotti.Avatar.Size.SMALL"
-		src="https://picsum.photos/200"
-	/>
-</template>
-</KtTableColumn>
+	<KtTableColumn label="Name" prop="name">
+		<div slot="header" slot-scope="{ value, columnIndex }">
+			<div v-text="columnIndex + '::' + value"></div>
+		</div>
+		<!-- if you use deprecated slot syntax, you don't need to define slot name for a default slot (this replaces renderCell) -->
+		<div slot-scope="{value, row, rowIndex, column, columnIndex}">
+			<KtAvatar
+				class="mr-16px"
+				isHoverable
+				:name="value"
+				:size="Kotti.Avatar.Size.SMALL"
+				src="https://picsum.photos/200"
+			/>
+		</div>
+	</KtTableColumn>
 </KtTable>
 ```
 
@@ -859,9 +842,10 @@ It also directly exposes `columns`, `filteredColumns`, `sortedColumns`, `hiddenC
 Otherwise, all tables **under** the same provider will share the same store.
 
 _Notes_:
-* `hideColumn(column, toggleTo)` &rarr; takes the column to be hidden and the _negation_ of its _current_ `hidden` prop (i.e. If it's already hidden, toggle will be set hidden to `false` and vice-versa)
-* `showAllColumns()` &rarr; takes no arguments and sets `hidden` prop to false on all columns
-* `orderBeforeColumn(fromIndex, to Index)` &rarr; used when `useColumnDragToOrder` flag is true. Takes the column index we're dragging from, and the index of the column before the one we're dragging to.
+
+- `hideColumn(column, toggleTo)` &rarr; takes the column to be hidden and the _negation_ of its _current_ `hidden` prop (i.e. If it's already hidden, toggle will be set hidden to `false` and vice-versa)
+- `showAllColumns()` &rarr; takes no arguments and sets `hidden` prop to false on all columns
+- `orderBeforeColumn(fromIndex, to Index)` &rarr; used when `useColumnDragToOrder` flag is true. Takes the column index we're dragging from, and the index of the column before the one we're dragging to.
 
 > There’s also the _deprecated_ `KtTableColumnsStateMixin`.
 
@@ -904,27 +888,49 @@ _Notes_:
 		<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
 			<div class="parts-edit-columns-filter__container">
 				<KtButtonGroup>
-						<KtButton
-							v-for="column in columns"
-							:key="column.prop"
-							:label="`${column.hidden? 'Show ':'Hide '} ${column.label || column.prop}`"
-							:type="column.hidden ? 'text' : 'primary'"
-							@click="hideColumn(column, !column.hidden)"
-						/>
+					<KtButton
+						v-for="column in columns"
+						:key="column.prop"
+						:label="`${column.hidden? 'Show ':'Hide '} ${column.label || column.prop}`"
+						:type="column.hidden ? 'text' : 'primary'"
+						@click="hideColumn(column, !column.hidden)"
+					/>
 				</KtButtonGroup>
-				<KtButton :disabled="columns.filter(c=> c.hidden).length === 0" type="primary" label="Show All Columns" @click="showAllColumns"/>
+				<KtButton
+					:disabled="columns.filter(c=> c.hidden).length === 0"
+					type="primary"
+					label="Show All Columns"
+					@click="showAllColumns"
+				/>
 			</div>
 		</KtTableConsumer>
 		<KtTableConsumer #default="{ columns, orderBeforeColumn }">
 			<div>
-				<KtInput label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
-				<KtInput label="(+-)Steps: " type="number" :min="fromIndex===0?0:-fromIndex" :max="(columns.length -2 - fromIndex)" v-model="dragSteps" />
-				<KtButton type="primary" label="Reorder Columns" :disabled="parseInt(dragSteps,10)===0" @click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )" />
+				<KtInput
+					label="Drag From: "
+					type="number"
+					min="0"
+					:max="columns.length-1"
+					v-model="fromIndex"
+				/>
+				<KtInput
+					label="(+-)Steps: "
+					type="number"
+					:min="fromIndex===0?0:-fromIndex"
+					:max="(columns.length -2 - fromIndex)"
+					v-model="dragSteps"
+				/>
+				<KtButton
+					type="primary"
+					label="Reorder Columns"
+					:disabled="parseInt(dragSteps,10)===0"
+					@click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )"
+				/>
 			</div>
 		</KtTableConsumer>
 	</div>
 	<div>
-		<KtTable :rows="rows" :columns="columnsHidden" useColumnDragToOrder/>
+		<KtTable :rows="rows" :columns="columnsHidden" useColumnDragToOrder />
 	</div>
 </KtTableProvider>
 ```
@@ -960,7 +966,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 ### Table Attributes
 
-|       Attribute        |                             Description                             |            Type             |    Accepted values    | Default |
+| Attribute              | Description                                                         | Type                        | Accepted values       | Default |
 | :--------------------- | :------------------------------------------------------------------ | :-------------------------- | :-------------------- | :------ |
 | `columns`              | table column information                                            | `Array`                     | —                     | —       |
 | `disableRow`           | disable some rows if the function is true                           | `Function`                  | —                     | —       |
@@ -992,46 +998,44 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 ### Column Attributes
 
-|     Attribute      |                                  Description                                   |            Type             |              Accepted values               |              Default              |
-| :----------------- | :----------------------------------------------------------------------------- | :-------------------------- | :----------------------------------------- | :-------------------------------- |
-| `prop`  (required) | used to match the value in `rows` can be a dot path                            | `String` `String.String`    | —                                          | —                                 |
-| `align`            | alignment of column text                                                       | `String`                    | `"center"`, `"left"`, `"right"`            | `left`                            |
-| `key`              | deprecated. Is transalted to `prop`, instead                                   | `String`                    | —                                          | —                                 |
-| `label`            | table column header value                                                      | `String`                    | —                                          | —                                 |
-| `responsive`       | control responsive display  (this doesn't seem to work )                       | `String`                    | —                                          | —                                 |
-| `width`            | width of the column within table. When using %, must add up to `100%`          | `String`                    | `10%`, `100px`                             | `auto`                            |
-| `maxWidth`         | maximum width of the column within the table                                   | String                      | `10%`, `100px`                             | -                                 |
-| `minWidth`         | minimum width of the column within the table                                   | String                      | `10%`, `100px`                             | -                                 |
-| `hidden`           | does not render this collumn if true                                           | Boolean                     | false                                      |                                   |
-| `sortable`         | whether this column is sortable or not                                         | [Boolean, undefined]        | true, false, undefined                     | -                                 |
-| `sortOrder`        | the current sort order of the column                                           | [Number, String]            | "ascending", "descending", null            | null                              |
-| `sortOrders`       | order to toggle sort                                                           | Array                       | -                                          | ["ascending", "descending", null] |
-| `sortMethod`       | custom sort method ignores sortBy                                              | Function                    | -                                          | -                                 |
-| `sortBy`           | compare function to sort by                                                    | String, Function, Array     | path string, function or array of previous | column.prop                       |
-| `disableRowClick`  | stop row click from bubbling up when clicking on cell                          | Boolean                     | -                                          |                                   |
-| `default`          | if cell value is undefined, use default. Does not work if you use custom render| String                      | -                                          | -                                 |
-| `formatter`        | formats value before passing it to cell                                        | Function                    | -                                          |                                   |
-| `renderHeader`     | render function to custom render header cell                                   | Function                    | -                                          |                                   |
-| `renderCell`       | render function to custom render table cell                                    | Function                    | -                                          |                                   |
-| `order`            | number to sort columns from left to right by                                   | Number                      | -                                          |                                   |
-| `thClass`          | classes to this column's header to `<td />` elements                           | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
-| `tdClass`          | classes to this column's to `<td />` elements                                  | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
-| `headerCellClass`  | classes to this column's to `.kt-table__header-cell` elements                  | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
-| `cellClass`        | classes to this column's to `.kt-table__cell` elements                         | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
-
+| Attribute         | Description                                                                     | Type                        | Accepted values                            | Default                           |
+| :---------------- | :------------------------------------------------------------------------------ | :-------------------------- | :----------------------------------------- | :-------------------------------- |
+| `prop` (required) | used to match the value in `rows` can be a dot path                             | `String` `String.String`    | —                                          | —                                 |
+| `align`           | alignment of column text                                                        | `String`                    | `"center"`, `"left"`, `"right"`            | `left`                            |
+| `key`             | deprecated. Is transalted to `prop`, instead                                    | `String`                    | —                                          | —                                 |
+| `label`           | table column header value                                                       | `String`                    | —                                          | —                                 |
+| `responsive`      | control responsive display (this doesn't seem to work )                         | `String`                    | —                                          | —                                 |
+| `width`           | width of the column within table. When using %, must add up to `100%`           | `String`                    | `10%`, `100px`                             | `auto`                            |
+| `maxWidth`        | maximum width of the column within the table                                    | String                      | `10%`, `100px`                             | -                                 |
+| `minWidth`        | minimum width of the column within the table                                    | String                      | `10%`, `100px`                             | -                                 |
+| `hidden`          | does not render this collumn if true                                            | Boolean                     | false                                      |                                   |
+| `sortable`        | whether this column is sortable or not                                          | [Boolean, undefined]        | true, false, undefined                     | -                                 |
+| `sortOrder`       | the current sort order of the column                                            | [Number, String]            | "ascending", "descending", null            | null                              |
+| `sortOrders`      | order to toggle sort                                                            | Array                       | -                                          | ["ascending", "descending", null] |
+| `sortMethod`      | custom sort method ignores sortBy                                               | Function                    | -                                          | -                                 |
+| `sortBy`          | compare function to sort by                                                     | String, Function, Array     | path string, function or array of previous | column.prop                       |
+| `disableRowClick` | stop row click from bubbling up when clicking on cell                           | Boolean                     | -                                          |                                   |
+| `default`         | if cell value is undefined, use default. Does not work if you use custom render | String                      | -                                          | -                                 |
+| `formatter`       | formats value before passing it to cell                                         | Function                    | -                                          |                                   |
+| `renderHeader`    | render function to custom render header cell                                    | Function                    | -                                          |                                   |
+| `renderCell`      | render function to custom render table cell                                     | Function                    | -                                          |                                   |
+| `order`           | number to sort columns from left to right by                                    | Number                      | -                                          |                                   |
+| `thClass`         | classes to this column's header to `<td />` elements                            | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `tdClass`         | classes to this column's to `<td />` elements                                   | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `headerCellClass` | classes to this column's to `.kt-table__header-cell` elements                   | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
+| `cellClass`       | classes to this column's to `.kt-table__cell` elements                          | `Array`, `String`, `Object` | `"responsive"`                             | `[]`                              |
 
 #### Consumer Attributes
 
-| Attribute |           Description           |   Type   | Accepted values | Default |
+| Attribute | Description                     | Type     | Accepted values | Default |
 | :-------- | :------------------------------ | :------- | :-------------- | :------ |
 | `id`      | for when using nested providers | `String` | —               | null    |
-
 
 ### Events
 
 #### Column Events
 
-|     Event Name     |                       Arguments                       |                                Description                                |
+| Event Name         | Arguments                                             | Description                                                               |
 | :----------------- | :---------------------------------------------------- | :------------------------------------------------------------------------ |
 | `@activateRow`     | `(row, index)`                                        | Row was clicked or activated via keyboard.                                |
 | `@expand`          | `(row, isExpanded)`                                   | Row was expanded                                                          |
@@ -1047,17 +1051,17 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 #### Cell Events
 
-|  Event Name  |                     Arguments                     |    Description     |
+| Event Name   | Arguments                                         | Description        |
 | :----------- | :------------------------------------------------ | :----------------- |
 | `@cellClick` | `({ value, column, row, columnIndex, rowIndex })` | a cell was clicked |
-> It triggers @rowClick, unless bubbling up is disabled by setting `disableRowClick` to true
 
+> It triggers @rowClick, unless bubbling up is disabled by setting `disableRowClick` to true
 
 ### Slots
 
 #### Table Slots
 
-| Slot Name |             Description             |          Scope           |
+| Slot Name | Description                         | Scope                    |
 | :-------- | :---------------------------------- | :----------------------- |
 | `empty`   | what to render when no data         | --                       |
 | `loading` | what to render when loading is true | --                       |
@@ -1066,17 +1070,16 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 #### Column Slots
 
-| Slot Name |     Description      |                     Scope                     |
+| Slot Name | Description          | Scope                                         |
 | :-------- | :------------------- | :-------------------------------------------- |
 | `header`  | render in table row  | `{value, row, rowIndex }`                     |
 | `default` | render in table cell | `{value, row, rowIndex, column, columnIndex}` |
 
 #### Consumer Slots
 
-| Slot Name |                Description                |                                                      Scope                                                       |
+| Slot Name | Description                               | Scope                                                                                                            |
 | :-------- | :---------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
 | `default` | provide a table's store and other methods | `{store, columns, hiddenColumns, sortedColumns, filteredColumns, hideColumn, showAllColumns, orderBeforeColumn}` |
-
 </template>
 
 <script>
@@ -1086,20 +1089,21 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import ComponentInfo from '~/components/ComponentInfo.vue'
 import ShowCase from '~/components/ShowCase.vue'
 
+const ADDRESS_DOT_LINE = 'address.line'
+
 export default {
 	name: 'DocumentationPageUsageComponentsTable',
 	components: { ComponentInfo, KtBanner, ShowCase },
 	data() {
-		/* eslint-disable sonarjs/no-duplicate-string */
 		return {
 			component: KtTable,
 			Kotti,
 			select: [0, 1],
 			selected: [
 				{
-					date: '2016-05-03',
+					date: '2016-05-04',
 					name: 'Tom',
-					address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
+					address: { number: 119, line: 'No. 118, Grove St, Los Angeles' },
 				},
 			],
 			selectedRows: [],
@@ -1110,22 +1114,22 @@ export default {
 			columnsAlign: [
 				{ prop: 'name', label: 'Name', align: 'left' },
 				{ prop: 'date', label: 'Date', align: 'center' },
-				{ prop: 'address.line', label: 'Address', align: 'right' },
+				{ prop: ADDRESS_DOT_LINE, label: 'Address', align: 'right' },
 			],
 			columnsResponsive: [
 				{ prop: 'name', label: 'Name' },
 				{ prop: 'date', label: 'Date' },
-				{ prop: 'address.line', label: 'Address' },
+				{ prop: ADDRESS_DOT_LINE, label: 'Address' },
 			],
 			columnsHidden: [
 				{ prop: 'name', label: 'Name', hidden: true },
 				{ prop: 'date', label: 'Date' },
-				{ prop: 'address.line', label: 'Address' },
+				{ prop: ADDRESS_DOT_LINE, label: 'Address' },
 			],
 			columnsWidth: [
 				{ prop: 'name', label: 'Name', width: '30%' },
 				{ prop: 'date', label: 'Date', width: '20%' },
-				{ prop: 'address.line', label: 'Address', width: '50%' },
+				{ prop: ADDRESS_DOT_LINE, label: 'Address', width: '50%' },
 			],
 			rows2: [
 				{
@@ -1161,7 +1165,6 @@ export default {
 			fromIndex: 0,
 			dragSteps: 0,
 		}
-		/* eslint-enable sonarjs/no-duplicate-string */
 	},
 	computed: {
 		toIndex() {
@@ -1185,7 +1188,6 @@ export default {
 			return new Date(a) - new Date(b)
 		},
 		byAddressLine(row) {
-			// get prop to sort by
 			return row.address.line
 		},
 		formatDate(value) {

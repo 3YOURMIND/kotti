@@ -24,6 +24,7 @@ export { KottiTranslation as Translation } from '../kotti-translation/types'
 export {
 	KottiFieldSingleSelect as FieldSingleSelect,
 	KottiFieldMultiSelect as FieldMultiSelect,
+	KottiFieldSingleSelectRemote as FieldSingleSelectRemote,
 } from '../kotti-field-select/types'
 export { KottiFilters as Filters } from '../kotti-filters/types'
 export { KottiForm as Form } from '../kotti-form/types'

@@ -1,65 +1,65 @@
 <template lang="md">
-	<ComponentInfo v-bind="{ component }" />
+    <ComponentInfo v-bind="{ component }" />
 
-	<KtTranslationContext :locale="settings.locale">
-		<div class="overview">
-			<div class="overview__component">
-				<h4>Component</h4>
-				<KtFilters
-					v-model="filters"
-					:columns="componentProps.columns"
-					:isLoading="componentProps.isLoading"
-				/>
-				<div class="overview__component__value">
-					<strong>Value</strong>: <span v-text="JSON.stringify(filters)" />
-					<a @click.prevent="reset">reset</a>
-				</div>
-			</div>
-			<div class="overview__code">
-				<h4>Code</h4>
-				<pre v-text="componentCode" />
-			</div>
-		</div>
-		<KtForm v-model="settings">
-			<div class="wrapper">
-				<div>
-					<h4>Settings</h4>
-					<KtFieldSingleSelect
-						formKey="locale"
-						helpText="Can be set via KtTranslationContext"
-						hideClear
-						label="Language"
-						leftIcon="global"
-						:options="[
-							{ label: 'German (de-DE)', value: 'de-DE' },
-							{ label: 'English (en-US)', value: 'en-US' },
-							{ label: 'Spanish (es-ES)', value: 'es-ES' },
-							{ label: 'French (fr-FR)', value: 'fr-FR' },
-							{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
-						]"
-						:size="Kotti.Field.Size.SMALL"
-					/>
-					<KtFieldToggleGroup
-						formKey="booleanFlags"
-						isOptional
-						label="Boolean Flags"
-						:options="[{ key: 'isLoading', label: 'isLoading' }]"
-						:size="Kotti.Field.Size.SMALL"
-						type="switch"
-					/>
-				</div>
-				<div>
-					<h4>Texts</h4>
-					<KtFieldText
-						formKey="searchPlaceholder"
-						isOptional
-						label="placeholder"
-						:size="Kotti.Field.Size.SMALL"
-					/>
-				</div>
-			</div>
-		</KtForm>
-	</KtTranslationContext>
+    <KtTranslationContext :locale="settings.locale">
+    	<div class="overview">
+    		<div class="overview__component">
+    			<h4>Component</h4>
+    			<KtFilters
+    				v-model="filters"
+    				:columns="componentProps.columns"
+    				:isLoading="componentProps.isLoading"
+    			/>
+    			<div class="overview__component__value">
+    				<strong>Value</strong>: <span v-text="JSON.stringify(filters)" />
+    				<a @click.prevent="reset">reset</a>
+    			</div>
+    		</div>
+    		<div class="overview__code">
+    			<h4>Code</h4>
+    			<pre v-text="componentCode" />
+    		</div>
+    	</div>
+    	<KtForm v-model="settings">
+    		<div class="wrapper">
+    			<div>
+    				<h4>Settings</h4>
+    				<KtFieldSingleSelect
+    					formKey="locale"
+    					helpText="Can be set via KtTranslationContext"
+    					hideClear
+    					label="Language"
+    					leftIcon="global"
+    					:options="[
+    						{ label: 'German (de-DE)', value: 'de-DE' },
+    						{ label: 'English (en-US)', value: 'en-US' },
+    						{ label: 'Spanish (es-ES)', value: 'es-ES' },
+    						{ label: 'French (fr-FR)', value: 'fr-FR' },
+    						{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+    					]"
+    					:size="Kotti.Field.Size.SMALL"
+    				/>
+    				<KtFieldToggleGroup
+    					formKey="booleanFlags"
+    					isOptional
+    					label="Boolean Flags"
+    					:options="[{ key: 'isLoading', label: 'isLoading' }]"
+    					:size="Kotti.Field.Size.SMALL"
+    					type="switch"
+    				/>
+    			</div>
+    			<div>
+    				<h4>Texts</h4>
+    				<KtFieldText
+    					formKey="searchPlaceholder"
+    					isOptional
+    					label="placeholder"
+    					:size="Kotti.Field.Size.SMALL"
+    				/>
+    			</div>
+    		</div>
+    	</KtForm>
+    </KtTranslationContext>
 </template>
 
 <script lang="ts">
@@ -84,8 +84,8 @@ export default defineComponent({
 				value: null,
 			},
 			{
-				key: 'number-column',
-				operation: Kotti.Filters.Operation.Number.EQUAL,
+				key: 'integer-column',
+				operation: Kotti.Filters.Operation.Integer.EQUAL,
 				value: null,
 			},
 		])
@@ -118,22 +118,52 @@ export default defineComponent({
 						label: 'String Column',
 						operations: [
 							Kotti.Filters.Operation.String.CONTAINS,
+							Kotti.Filters.Operation.String.EQUAL,
 							Kotti.Filters.Operation.String.IS_EMPTY,
 						],
 						type: Kotti.Filters.FilterType.STRING,
 					},
 					{
-						key: 'number-column',
-						label: 'Number Column',
+						key: 'integer-column',
+						label: 'Integer Column',
 						operations: [
-							Kotti.Filters.Operation.Number.EQUAL,
-							Kotti.Filters.Operation.Number.GREATER_THAN,
-							Kotti.Filters.Operation.Number.GREATER_THAN_OR_EQUAL,
-							Kotti.Filters.Operation.Number.LESS_THAN,
-							Kotti.Filters.Operation.Number.LESS_THAN_OR_EQUAL,
-							Kotti.Filters.Operation.Number.IS_EMPTY,
+							Kotti.Filters.Operation.Integer.EQUAL,
+							Kotti.Filters.Operation.Integer.GREATER_THAN,
+							Kotti.Filters.Operation.Integer.GREATER_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Integer.LESS_THAN,
+							Kotti.Filters.Operation.Integer.LESS_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Integer.IS_EMPTY,
 						],
-						type: Kotti.Filters.FilterType.NUMBER,
+						type: Kotti.Filters.FilterType.INTEGER,
+					},
+					{
+						key: 'float-column',
+						label: 'Float Column',
+						operations: [
+							Kotti.Filters.Operation.Float.EQUAL,
+							Kotti.Filters.Operation.Float.GREATER_THAN,
+							Kotti.Filters.Operation.Float.GREATER_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Float.LESS_THAN,
+							Kotti.Filters.Operation.Float.LESS_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Float.IS_EMPTY,
+						],
+						step: 0.001,
+						type: Kotti.Filters.FilterType.FLOAT,
+					},
+					{
+						key: 'currency-column',
+						label: 'Currency Column',
+						operations: [
+							Kotti.Filters.Operation.Currency.EQUAL,
+							Kotti.Filters.Operation.Currency.GREATER_THAN,
+							Kotti.Filters.Operation.Currency.GREATER_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Currency.LESS_THAN,
+							Kotti.Filters.Operation.Currency.LESS_THAN_OR_EQUAL,
+							Kotti.Filters.Operation.Currency.IS_EMPTY,
+						],
+						prefix: 'EUR',
+						step: 0.01,
+						type: Kotti.Filters.FilterType.CURRENCY,
 					},
 					{
 						key: 'boolean-column',

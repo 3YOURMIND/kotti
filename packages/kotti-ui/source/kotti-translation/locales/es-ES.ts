@@ -1,5 +1,19 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import { KottiTranslation } from '../types'
+
+namespace Common {
+	export const is = 'es'
+
+	export const isEmpty = 'está vacío'
+
+	export const number = {
+		EQUAL: 'es igual a',
+		GREATER_THAN: 'es mayor que',
+		GREATER_THAN_OR_EQUAL: 'es mayor o igual a',
+		IS_EMPTY: Common.isEmpty,
+		LESS_THAN: 'es menor que',
+		LESS_THAN_OR_EQUAL: 'es menor que o igual a',
+	}
+}
 
 export const esES: KottiTranslation.Messages = {
 	KtBanner: {
@@ -21,38 +35,32 @@ export const esES: KottiTranslation.Messages = {
 		andLabel: 'Y',
 		boolean: {
 			EQUAL: 'está',
-			IS_EMPTY: 'está vacío',
+			IS_EMPTY: Common.isEmpty,
 		},
 		clearAllLabel: 'Limpiar Todo',
+		currency: Common.number,
 		dateRange: {
 			IN_RANGE: 'está en el rango',
-			IS_EMPTY: 'está vacío',
+			IS_EMPTY: Common.isEmpty,
 		},
-		disabledLabel: 'Deshabilitado',
 		emptyListLabel: 'No hay Filtros Aplicados',
-		enabledLabel: 'Habilitado',
 		filterLabel: 'Filtro',
 		filtersLabel: 'Filtros',
+		float: Common.number,
+		integer: Common.number,
 		multiEnum: {
-			IS_EMPTY: 'está vacío',
+			IS_EMPTY: Common.isEmpty,
 			ONE_OF: 'es uno de',
-		},
-		number: {
-			EQUAL: 'es igual a',
-			GREATER_THAN: 'es mayor que',
-			GREATER_THAN_OR_EQUAL: 'es mayor o igual a',
-			IS_EMPTY: 'está vacío',
-			LESS_THAN: 'es menor que',
-			LESS_THAN_OR_EQUAL: 'es menor que o igual a',
 		},
 		searchLabel: 'Buscar',
 		singleEnum: {
-			EQUAL: 'es',
-			IS_EMPTY: 'está vacío',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		string: {
 			CONTAINS: 'contiene',
-			IS_EMPTY: 'está vacío',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		unsetLabel: 'No Establecido',
 		whereLabel: 'Donde',

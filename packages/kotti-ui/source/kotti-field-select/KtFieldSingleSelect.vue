@@ -79,10 +79,10 @@ export default defineComponent({
 		value: { default: null, type: [Number, String, Boolean] },
 	},
 	setup(props: KottiFieldSingleSelect.Props, { emit }) {
-		const field = useField<KottiFieldSingleSelect.Value>({
+		const field = useField<KottiFieldSingleSelect.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldSingleSelect.Value =>
-				['string', 'number', 'boolean'].includes(typeof value) ||
+				['boolean', 'number', 'string', 'symbol'].includes(typeof value) ||
 				value === null,
 			isEmpty: (value) => value === null,
 			props,

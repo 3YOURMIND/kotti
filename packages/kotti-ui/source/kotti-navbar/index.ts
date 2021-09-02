@@ -8,8 +8,7 @@ export const KtNavbar = attachMeta(makeInstallable(KtNavbarVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=133%3A2569',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=133%3A2569',
 	},
 	slots: {
 		'navbar-footer': { description: null, scope: null },

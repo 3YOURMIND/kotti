@@ -42,7 +42,7 @@ export default defineComponent({
 		...KOTTI_FIELD_DATE_PROPS,
 	},
 	setup(props: KottiFieldDate.Props, { emit }) {
-		const field = useField<KottiFieldDate.Value>({
+		const field = useField<KottiFieldDate.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldDate.Value =>
 				(typeof value === 'string' && DATE_FORMAT_REGEX.test(value)) ||
@@ -63,10 +63,9 @@ export default defineComponent({
 			popperWidth: '400px',
 		})
 
-		const pickerOptions: Ref<Pick<
-			DatePickerOptions,
-			'disabledDate' | 'shortcuts'
-		>> = computed(() => ({
+		const pickerOptions: Ref<
+			Pick<DatePickerOptions, 'disabledDate' | 'shortcuts'>
+		> = computed(() => ({
 			disabledDate: (date: Date) => isInvalidDate(props, date),
 			shortcuts: props.shortcuts.map(
 				({ label, value, keepOpen }: KottiFieldDate.Props['shortcuts'][0]) => ({

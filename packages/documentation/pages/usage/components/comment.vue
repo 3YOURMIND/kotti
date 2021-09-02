@@ -7,15 +7,16 @@
 	<KtComment
 		v-for="comment in comments"
 		:key="comment.id"
-		:id="comment.id"
 		:createdTime="comment.createdTime"
-		:userName="comment.userName"
-		:userAvatar="comment.userAvatar"
-		:userId="comment.userId"
+		:id="comment.id"
+		:isDeletable="comment.isDeletable"
+		:isEditable="comment.isEditable"
 		:message="comment.message"
 		:replies="comment.replies"
-		:allowChange="comment.allowChange"
-		@delete="handelDelete($event)"
+		:userAvatar="comment.userAvatar"
+		:userId="comment.userId"
+		:userName="comment.userName"
+		@delete="handleDelete($event)"
 		@edit="handleEdit($event)"
 		@submit="handleSubmit($event)"
 	/>
@@ -31,22 +32,23 @@
 <KtComment
 	v-for="comment in comments"
 	:key="comment.id"
-	:id="comment.id"
 	:createdTime="comment.createdTime"
-	:userName="comment.userName"
-	:userAvatar="comment.userAvatar"
-	:userId="comment.userId"
+	:id="comment.id"
+	:isDeletable="comment.isDeletable"
+	:isEditable="comment.isEditable"
 	:message="comment.message"
 	:replies="comment.replies"
-	:allowChange="comment.allowChange"
-	@delete="handelDelete($event)"
+	:userAvatar="comment.userAvatar"
+	:userId="comment.userId"
+	:userName="comment.userName"
+	@delete="handleDelete($event)"
 	@edit="handleEdit($event)"
 	@submit="handlePost($event)"
 />
 <KtCommentInput
 	class="mt-16px"
 	placeholder="Add comment"
-	userAvatar='https://picsum.photos/120'
+	userAvatar="https://picsum.photos/120"
 	@submit="handlePost($event)"
 />
 ```
@@ -63,7 +65,8 @@
 	message: 'Marine Le Pen, a Fierce Campaigner',
 	userAvatar: 'https://picsum.photos/200',
 	createdTime: '2018-12-04T09:57:20+00:00',
-	allowChange: true,
+	isDeletable: true,
+	isEditable: true,
 	replies: [{
 		id: 2,
 		userId: 12,
@@ -71,7 +74,8 @@
 		message: 'Marine Le Pen, a Fierce Campaigner',
 		userAvatar: 'https://picsum.photos/200',
 		createdTime: '2018-12-04T09:57:20+00:00',
-		allowChange: false
+		isDeletable: false,
+		isEditable: false
 	}]
 }
 ```
@@ -95,7 +99,6 @@
 // Delete Payload
 {
 }
-
 ```
 
 ## Parsing HTML
@@ -103,7 +106,7 @@
 KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop
 
 > Remember to **escape malicious tags** to prevent [Cross-site-scripting](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks,
-you can use KtComment's default parser function with KtComment.defaultParser
+> you can use KtComment's default parser function with KtComment.defaultParser
 
 ```js
 methods: {
@@ -118,19 +121,20 @@ methods: {
 
 <div class="element-example">
 	<KtComment
-		v-for="comment in badComments"
+		v-for="comment in comments"
 		:key="comment.id"
-	:dangerouslyOverrideParser="dangerouslyOverrideParser"
-		:postEscapeParser="postEscapeParser"
-		:id="comment.id"
 		:createdTime="comment.createdTime"
-		:userName="comment.userName"
+		:dangerouslyOverrideParser="dangerouslyOverrideParser"
+		:id="comment.id"
+		:isDeletable="comment.isDeletable"
+		:isEditable="comment.isEditable"
+		:message="comment.message"
+		:postEscapeParser="postEscapeParser"
+		:replies="comment.replies"
 		:userAvatar="comment.userAvatar"
 		:userId="comment.userId"
-		:message="comment.message"
-		:replies="comment.replies"
-		:allowChange="comment.allowChange"
-		@delete="handelDelete($event)"
+		:userName="comment.userName"
+		@delete="handleDelete($event)"
 		@edit="handleEdit($event)"
 		@submit="handleSubmit($event)"
 	/>
@@ -144,27 +148,27 @@ methods: {
 
 ### Props
 
-| Attribute            | Description                                 | Type                        | Accepted values                 | Default |
-|:---------------------|:--------------------------------------------|:----------------------------|:--------------------------------|:--------|
-| `createdTime`  | The Time that appears in the comment | string | "20-12-2008" | - |
-| `id`  | the id to track the comment | number, string | "1" | - |
-| `replies`  | array of comment props to be nested under the coment | [CommentProps] | [{id: "1", message: "hello"}] | - |
-| `userAvatar`  | url to image thumbnail | string | "https://someimage.com/image.png" | - |
-| `userId`  | id of user who made the comment to reply too | number, string | "2" | - |
-| `userName`  | name of user to display | string | "Jhone Doe" | - |
-| `message`  | the actual comment | string | "Hello" | - |
-| `dangerDefaultParserOverride`  | A function that processes and escapes the comment message before it is passed to the div that render it, as the name implies you're responsible for escaping if you use this | (string) => string | Function | lodash escape function |
-| `postEscapeParser`  | A function that processes the message after is has been escaped use this instead of `dangerDefaultParserOverride` | (string) => string | Function | (_) => _ |
-| `allowChange`  | wether this comment is editable | boolean | true,false | false |
+| Attribute                     | Description                                                                                                                                                                  | Type               | Accepted values                   | Default                |
+| :---------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------- | :-------------------------------- | :--------------------- |
+| `createdTime`                 | The Time that appears in the comment                                                                                                                                         | string             | "20-12-2008"                      | -                      |
+| `id`                          | the id to track the comment                                                                                                                                                  | number, string     | "1"                               | -                      |
+| `replies`                     | array of comment props to be nested under the coment                                                                                                                         | [CommentProps]     | [{id: "1", message: "hello"}]     | -                      |
+| `userAvatar`                  | url to image thumbnail                                                                                                                                                       | string             | "https://someimage.com/image.png" | -                      |
+| `userId`                      | id of user who made the comment to reply too                                                                                                                                 | number, string     | "2"                               | -                      |
+| `userName`                    | name of user to display                                                                                                                                                      | string             | "Jhone Doe"                       | -                      |
+| `message`                     | the actual comment                                                                                                                                                           | string             | "Hello"                           | -                      |
+| `dangerDefaultParserOverride` | A function that processes and escapes the comment message before it is passed to the div that render it, as the name implies you're responsible for escaping if you use this | (string) => string | Function                          | lodash escape function |
+| `postEscapeParser`            | A function that processes the message after is has been escaped use this instead of `dangerDefaultParserOverride`                                                            | (string) => string | Function                          | (_) => _               |
+| `isDeletable`                 | whether this comment is deletable                                                                                                                                            | boolean            | true,false                        | false                  |
+| `isEditable`                  | whether this comment is editable                                                                                                                                             | boolean            | true,false                        | false                  |
 
 ### Event
 
 | Event Name | Component        | Payload   | Description     |
-|------------|------------------|-----------|-----------------|
+| ---------- | ---------------- | --------- | --------------- |
 | `@submit`  | `KtCommentInput` | See above | Add new comment |
 | `@delete`  | `KtComment`      | See above | Delete comment  |
 | `@edit`    | `KtComment`      | See above | Edit comment    |
-
 </template>
 
 <script>
@@ -183,65 +187,53 @@ export default {
 		return {
 			currentUuid: '',
 			currentUser: {
-				userName: 'Junyu',
-				userId: 3,
 				userAvatar: 'https://picsum.photos/48',
+				userId: 3,
+				userName: 'Junyu',
 			},
-			badComments: [
-				{
-					id: 1,
-					userId: 12,
-					userName: 'Margaret Atwood',
-					message: `We miss you, David`,
-					userAvatar: 'https://picsum.photos/200',
-					createdTime: '2018-12-04T09:57:20+00:00',
-					allowChange: true,
-					replies: [
-						{
-							id: 2,
-							userId: 13,
-							userName: 'Benni',
-							createdTime: '2018-03-20',
-							message: `Join Bright Side Now!
-								Join Bright Side Now!
-								Join Bright Side Now!
-								Join Bright Side Now!`,
-							userAvatar: 'https://picsum.photos/100',
-							allowChange: false,
-						},
-					],
-				},
-			],
 			comments: [
 				{
-					id: 1,
-					userId: 12,
-					userName: 'Margaret Atwood',
-					message: `We miss you, David`,
-					userAvatar: 'https://picsum.photos/200',
 					createdTime: '2018-12-04T09:57:20+00:00',
-					allowChange: true,
+					id: 1,
+					isDeletable: true,
+					isEditable: true,
+					message: `We miss you, David`,
 					replies: [
 						{
-							id: 2,
-							userId: 13,
-							userName: 'Benni',
 							createdTime: '2018-03-20',
+							id: 2,
+							isDeletable: false,
+							isEditable: false,
 							message:
 								'Join Bright Side Now!<br/>Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
 							userAvatar: 'https://picsum.photos/100',
-							allowChange: false,
+							userId: 13,
+							userName: 'Benni',
 						},
 						{
+							createdTime: '2018-03-20',
 							id: 3,
+							isDeletable: false,
+							isEditable: true,
+							message: 'RE: Your trip to Montreal',
+							userAvatar: 'https://picsum.photos/120',
 							userId: 2,
 							userName: 'Cooky',
-							userAvatar: 'https://picsum.photos/120',
+						},
+						{
 							createdTime: '2018-03-20',
-							message: 'RE: Your trip to Montreal',
-							allowChange: true,
+							id: 4,
+							isDeletable: true,
+							isEditable: false,
+							message: 'PS: Bring a jacket!',
+							userAvatar: 'https://picsum.photos/120',
+							userId: 2,
+							userName: 'Cooky',
 						},
 					],
+					userAvatar: 'https://picsum.photos/200',
+					userId: 12,
+					userName: 'Margaret Atwood',
 				},
 			],
 			component: KtComment,
@@ -281,7 +273,7 @@ export default {
 			}
 			this.comments.push(_message)
 		},
-		handelDelete(payload) {
+		handleDelete(payload) {
 			if (payload.parentId) {
 				const parentComment = this.comments.find(
 					(comment) => comment.id === payload.parentId,

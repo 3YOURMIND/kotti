@@ -20,9 +20,9 @@ import { KOTTI_FIELD_PROPS } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
-const useDecoration = <DATA_TYPE>({
+const useDecoration = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'>) => {
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>, 'props'>) => {
 	return {
 		leftIcon: computed(() => props.leftIcon),
 		prefix: computed(() => props.prefix),
@@ -31,11 +31,11 @@ const useDecoration = <DATA_TYPE>({
 	}
 }
 
-const useInputProps = <DATA_TYPE>({
+const useInputProps = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	context,
 	isDisabled,
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> & {
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>, 'props'> & {
 	context: KottiForm.Context | null
 	isDisabled: Ref<boolean>
 }) => {
@@ -68,7 +68,9 @@ const useInputProps = <DATA_TYPE>({
 	}
 }
 
-const useTexts = <DATA_TYPE>(props: KottiField.Props<DATA_TYPE>) => {
+const useTexts = <DATA_TYPE, PLACEHOLDER_TYPE>(
+	props: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>,
+) => {
 	return {
 		helpDescription: computed(() => props.helpDescription),
 		helpText: computed(() => props.helpText),
@@ -76,7 +78,7 @@ const useTexts = <DATA_TYPE>(props: KottiField.Props<DATA_TYPE>) => {
 	}
 }
 
-const useValue = <DATA_TYPE>({
+const useValue = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	context,
 	emit,
 	isCorrectDataType,
@@ -84,7 +86,7 @@ const useValue = <DATA_TYPE>({
 	isEmpty,
 	props,
 }: Pick<
-	KottiField.Hook.Parameters<DATA_TYPE>,
+	KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>,
 	'emit' | 'isCorrectDataType' | 'isEmpty' | 'props'
 > & {
 	context: KottiForm.Context | null
@@ -104,29 +106,27 @@ const useValue = <DATA_TYPE>({
 
 	// fetch value
 
-	const currentValue = computed(
-		(): DATA_TYPE => {
-			const value = (() => {
-				if (context === null) return cloneDeep(props.value)
+	const currentValue = computed((): DATA_TYPE => {
+		const value = (() => {
+			if (context === null) return cloneDeep(props.value)
 
-				switch (props.formKey) {
-					case FORM_KEY_NONE:
-						return cloneDeep(props.value)
+			switch (props.formKey) {
+				case FORM_KEY_NONE:
+					return cloneDeep(props.value)
 
-					case null:
-						throw new KtFieldErrors.ImplicitFormKeyNone(props)
+				case null:
+					throw new KtFieldErrors.ImplicitFormKeyNone(props)
 
-					default:
-						return context.values.value[props.formKey] as DATA_TYPE
-				}
-			})()
+				default:
+					return context.values.value[props.formKey] as DATA_TYPE
+			}
+		})()
 
-			if (!isCorrectDataType(value))
-				throw new KtFieldErrors.InvalidDataType(props, value)
+		if (!isCorrectDataType(value))
+			throw new KtFieldErrors.InvalidDataType(props, value)
 
-			return value
-		},
-	)
+		return value
+	})
 
 	return {
 		currentValue,
@@ -150,15 +150,15 @@ const useValue = <DATA_TYPE>({
 	}
 }
 
-const useValidation = <DATA_TYPE>({
+const useValidation = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	currentValue,
 	context,
 	isEmpty,
 	hideValidation,
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> &
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>, 'props'> &
 	Pick<
-		KottiField.Hook.ReturnsWithRefs<DATA_TYPE>,
+		KottiField.Hook.ReturnsWithRefs<DATA_TYPE, PLACEHOLDER_TYPE>,
 		'currentValue' | 'isEmpty'
 	> & {
 		context: KottiForm.Context | null
@@ -246,10 +246,10 @@ const useValidation = <DATA_TYPE>({
  * Implements KottiField.InhertiableProps
  * Prioritizes the field props, the context, and the passed default, respectively
  */
-const useInheritableProperties = <DATA_TYPE>({
+const useInheritableProperties = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	context,
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> & {
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>, 'props'> & {
 	context: KottiForm.Context | null
 }) => {
 	/**
@@ -288,18 +288,22 @@ const useInheritableProperties = <DATA_TYPE>({
  * consumed (i.e. not to be displayed). This prevents users
  * from accidentally passing unneeded or misleading props.
  */
-const useSupports = <DATA_TYPE>({
+const useSupports = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	props,
 	supports,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props' | 'supports'>) => {
+}: Pick<
+	KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>,
+	'props' | 'supports'
+>) => {
 	watchEffect(() => {
 		type Key = keyof KottiField.Supports
-		type Value = Array<keyof KottiField.Props<DATA_TYPE>>
+		type Value = Array<keyof KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>>
 
 		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
 			clear: ['hideClear'],
 			decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix'],
 			tabIndex: ['tabIndex'],
+			placeholder: ['placeholder'],
 		}
 
 		for (const [supportsKey, propsToCheck] of Object.entries(
@@ -322,12 +326,12 @@ const useSupports = <DATA_TYPE>({
 /**
  * hook into lifecycle events
  */
-const useNotifyContext = <DATA_TYPE>({
+const useNotifyContext = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	context,
 	field,
 }: {
 	context: KottiForm.Context | null
-	field: KottiField.Hook.Returns<DATA_TYPE>
+	field: KottiField.Hook.Returns<DATA_TYPE, PLACEHOLDER_TYPE>
 }) => {
 	onMounted(() => {
 		if (context) context.onAddField(field)
@@ -338,15 +342,16 @@ const useNotifyContext = <DATA_TYPE>({
 	})
 }
 
-export const useField = <DATA_TYPE>({
+export const useField = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	emit,
 	isCorrectDataType,
 	isEmpty,
 	props,
 	supports,
-}: KottiField.Hook.Parameters<DATA_TYPE>): KottiField.Hook.Returns<
-	DATA_TYPE
-> => {
+}: KottiField.Hook.Parameters<
+	DATA_TYPE,
+	PLACEHOLDER_TYPE
+>): KottiField.Hook.Returns<DATA_TYPE, PLACEHOLDER_TYPE> => {
 	const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 
 	useSupports({ props, supports })
@@ -363,7 +368,9 @@ export const useField = <DATA_TYPE>({
 
 	// export
 
-	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
+	const field = reactive<
+		KottiField.Hook.ReturnsWithRefs<DATA_TYPE, PLACEHOLDER_TYPE>
+	>({
 		...sharedProperties,
 		...useDecoration({ props }),
 		...useInputProps({
@@ -387,7 +394,7 @@ export const useField = <DATA_TYPE>({
 				(supports.clear ? sharedProperties.hideClear.value : true),
 		),
 		isOptional: computed(() => props.isOptional),
-	}) as KottiField.Hook.Returns<DATA_TYPE>
+	}) as KottiField.Hook.Returns<DATA_TYPE, PLACEHOLDER_TYPE>
 
 	useNotifyContext({ context, field })
 

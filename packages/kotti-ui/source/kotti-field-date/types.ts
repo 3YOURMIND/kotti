@@ -1,7 +1,8 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace Shared {
-	export interface Props<VALUE> extends KottiField.Props<VALUE> {
+	export interface Props<VALUE, PLACEHOLDER_TYPE = string | null>
+		extends KottiField.Props<VALUE, PLACEHOLDER_TYPE> {
 		maximumDate: string | null
 		minimumDate: string | null
 		shortcuts: ShortcutEntry<VALUE>[]
@@ -20,33 +21,25 @@ export namespace Shared {
 }
 
 export namespace KottiFieldDate {
-	export type Props = Shared.Props<Value> & {
-		placeholder: string | null
-	}
+	export type Props = Shared.Props<Value>
 
 	export type Value = Shared.Value
 }
 
 export namespace KottiFieldDateRange {
-	export type Props = Shared.Props<Value> & {
-		placeholder: [string, string] | null
-	}
+	export type Props = Shared.Props<Value, [string | null, string | null]>
 
 	export type Value = [Shared.Value, Shared.Value]
 }
 
 export namespace KottiFieldDateTime {
-	export type Props = Shared.Props<Value> & {
-		placeholder: string | null
-	}
+	export type Props = Shared.Props<Value>
 
 	export type Value = Shared.Value
 }
 
 export namespace KottiFieldDateTimeRange {
-	export type Props = Shared.Props<Value> & {
-		placeholder: [string, string] | null
-	}
+	export type Props = Shared.Props<Value, [string | null, string | null]>
 
 	export type Value = [Shared.Value, Shared.Value]
 }

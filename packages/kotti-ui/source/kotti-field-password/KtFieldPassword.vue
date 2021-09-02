@@ -32,7 +32,7 @@ export default defineComponent({
 		value: { default: null, type: String },
 	},
 	setup(props: KottiFieldPassword.Props, { emit }) {
-		const field = useField<KottiFieldPassword.Value>({
+		const field = useField<KottiFieldPassword.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldPassword.Value =>
 				typeof value === 'string' || value === null,
@@ -45,18 +45,21 @@ export default defineComponent({
 
 		return {
 			field,
-			inputProps: computed((): Partial<HTMLInputElement> & {
-				class: object
-				forceUpdateKey: number
-			} => ({
-				...field.inputProps,
-				autocomplete: props.autoComplete,
-				class: ['kt-field-password__wrapper'],
-				forceUpdateKey: forceUpdateKey.value,
-				type: 'password',
-				size: 1,
-				value: field.currentValue ?? '',
-			})),
+			inputProps: computed(
+				(): Partial<HTMLInputElement> & {
+					class: object
+					forceUpdateKey: number
+				} => ({
+					...field.inputProps,
+					autocomplete: props.autoComplete,
+					class: ['kt-field-password__wrapper'],
+					forceUpdateKey: forceUpdateKey.value,
+					placeholder: props.placeholder ?? undefined,
+					type: 'password',
+					size: 1,
+					value: field.currentValue ?? '',
+				}),
+			),
 			onInput: (event: { target: HTMLInputElement }) => {
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)

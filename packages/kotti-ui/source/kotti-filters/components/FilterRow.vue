@@ -4,20 +4,14 @@
 		hideValidation
 		:isLoading="isLoading"
 		:size="Kotti.Field.Size.SMALL"
-		style="display: contents;"
+		style="display: contents"
 		:value="filter"
 		@input="handleSetFilter"
 	>
 		<div class="kt-filter__list__row__wrapper">
 			<span class="kt-filter__list__row__label" v-text="label" />
+			<KtFieldSingleSelect formKey="key" hideClear :options="columnOptions" />
 			<KtFieldSingleSelect
-				class="kt-filter__list__row__column-select"
-				formKey="key"
-				hideClear
-				:options="columnOptions"
-			/>
-			<KtFieldSingleSelect
-				class="kt-filter__list__row__operation-select"
 				formKey="operation"
 				hideClear
 				:isDisabled="isOperationSelectDisabled"
@@ -29,12 +23,10 @@
 					v-if="isValueFieldVisible"
 					:collapseTagsAfter="1"
 					formKey="value"
+					:minimum="Number.MIN_SAFE_INTEGER"
 					:options="valueOptions"
-					type="switch"
-				/>
-				<span
-					v-if="isValueFieldVisible && showNullOrEmptyLabel"
-					v-text="nullOrEmptyLabel"
+					:prefix="valuePrefix"
+					:step="valueStep"
 				/>
 			</div>
 		</div>
@@ -143,28 +135,33 @@ export default defineComponent<{
 					return []
 			}
 		})
+		const valuePrefix = computed<Kotti.FieldNumber.Props['prefix']>(() =>
+			props.column?.type === Kotti.Filters.FilterType.CURRENCY
+				? props.column.prefix
+				: null,
+		)
+		const valueStep = computed<Kotti.FieldNumber.Props['step']>(() => {
+			switch (props.column?.type) {
+				case Kotti.Filters.FilterType.CURRENCY:
+				case Kotti.Filters.FilterType.FLOAT:
+					return props.column.step
+				case Kotti.Filters.FilterType.INTEGER:
+				// fall through
+				default:
+					return 1
+			}
+		})
 		const isOperationSelectDisabled = computed<boolean>(
 			() => operationOptions.value.length <= 1,
 		)
 		const isValueFieldVisible = computed(
 			() => !isEmptyOperation(props.filter.operation, props.column?.type),
 		)
-		const showNullOrEmptyLabel = computed<boolean>(
-			() => props.column?.type === Kotti.Filters.FilterType.BOOLEAN,
-		)
 		const valueContainerClasses = computed(() => ({
 			'kt-filter__list__row__value-field': true,
-			'kt-filter__list__row__value-field--has-label':
-				showNullOrEmptyLabel.value,
+			'kt-filter__list__row__value-field--is-vertically-centered':
+				props.column?.type === Kotti.Filters.FilterType.BOOLEAN,
 		}))
-
-		const nullOrEmptyLabel = computed<string>(() => {
-			return props.filter.value === null
-				? translations.value.unsetLabel
-				: props.filter.value
-				? translations.value.enabledLabel
-				: translations.value.disabledLabel
-		})
 
 		const handleRemove = () => emit('remove')
 		const handleSetFilter = (newFilter: Kotti.Filters.InternalFilter) => {
@@ -175,6 +172,7 @@ export default defineComponent<{
 				})
 				return
 			}
+
 			emit('input', newFilter)
 		}
 		return {
@@ -184,12 +182,12 @@ export default defineComponent<{
 			isValueFieldVisible,
 			Kotti,
 			label,
-			nullOrEmptyLabel,
 			operationOptions,
-			showNullOrEmptyLabel,
 			valueComponent,
 			valueContainerClasses,
 			valueOptions,
+			valuePrefix,
+			valueStep,
 			Yoco,
 		}
 	},
@@ -218,7 +216,7 @@ export default defineComponent<{
 	}
 
 	&__value-field {
-		&--has-label {
+		&--is-vertically-centered {
 			display: flex;
 			align-items: center;
 

@@ -105,7 +105,7 @@ import FieldHelpText from './components/FieldHelpText.vue'
 import { KottiField } from './types'
 
 export default defineComponent<{
-	field: KottiField.Hook.Returns<unknown>
+	field: KottiField.Hook.Returns<unknown, unknown>
 	helpTextSlot: VNode[]
 	isComponent: string | null
 	isGroup: boolean
@@ -145,12 +145,13 @@ export default defineComponent<{
 			),
 			hasLabel: computed(() => props.field.label !== null),
 			iconClasses: computed(
-				() => (element: string, modifications: string[]) => [
-					`kt-field__${element}__icon`,
-					...modifications.map(
-						(modification) => `kt-field__${element}__icon--${modification}`,
-					),
-				],
+				() => (element: string, modifications: string[]) =>
+					[
+						`kt-field__${element}__icon`,
+						...modifications.map(
+							(modification) => `kt-field__${element}__icon--${modification}`,
+						),
+					],
 			),
 			inputContainerRef: ref<Element | null>(null),
 			labelSuffix: computed(() =>

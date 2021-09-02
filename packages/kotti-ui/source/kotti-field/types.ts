@@ -1,13 +1,11 @@
 import { Yoco } from '@3yourmind/yoco'
 import { Ref, SetupContext } from '@vue/composition-api'
 
-import { KottiForm } from '../kotti-form/types'
-
 import { FORM_KEY_NONE } from './constants'
 
 export namespace KottiField {
 	export namespace Hook {
-		export interface Parameters<DATA_TYPE> {
+		export interface Parameters<DATA_TYPE, PLACEHOLDER_TYPE> {
 			emit: SetupContext['emit']
 
 			/**
@@ -20,40 +18,44 @@ export namespace KottiField {
 			 * Useful for checking validation on required fields
 			 */
 			isEmpty: (value: DATA_TYPE) => boolean
-			props: KottiField.Props<DATA_TYPE>
+			props: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>
 			supports: KottiField.Supports
 		}
 
-		export type Returns<DATA_TYPE> = {
-			currentValue: KottiField.Props<DATA_TYPE>['value']
-			helpDescription: KottiField.Props<DATA_TYPE>['helpDescription']
-			helpText: KottiField.Props<DATA_TYPE>['helpText']
-			hideClear: KottiField.Props<DATA_TYPE>['hideClear']
-			hideValidation: KottiField.Props<DATA_TYPE>['hideValidation']
+		export type Returns<DATA_TYPE, PLACEHOLDER_TYPE> = Pick<
+			KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>,
+			| 'helpDescription'
+			| 'helpText'
+			| 'hideClear'
+			| 'hideValidation'
+			| 'isDisabled'
+			| 'isLoading'
+			| 'isOptional'
+			| 'size'
+			| 'label'
+			| 'leftIcon'
+			| 'prefix'
+			| 'rightIcon'
+			| 'suffix'
+		> & {
+			currentValue: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>['value']
 			inputProps: Readonly<{
 				/**
 				 * Native HTML Props should have lowercase keys
 				 */
 				'data-test': string
 				disabled: boolean
-				tabindex: KottiField.Props<DATA_TYPE>['tabIndex']
+				tabindex: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>['tabIndex']
 			}>
-			isDisabled: KottiField.Props<DATA_TYPE>['isDisabled']
 			isEmpty: boolean
-			isLoading: KottiForm.Props['isLoading']
-			isOptional: KottiField.Props<DATA_TYPE>['isOptional']
-			size: KottiField.Props<DATA_TYPE>['size']
-			label: KottiField.Props<DATA_TYPE>['label']
-			leftIcon: KottiField.Props<DATA_TYPE>['leftIcon']
-			prefix: KottiField.Props<DATA_TYPE>['prefix']
-			rightIcon: KottiField.Props<DATA_TYPE>['rightIcon']
 			setValue: (newValue: DATA_TYPE) => void
-			suffix: KottiField.Props<DATA_TYPE>['suffix']
 			validation: Readonly<KottiField.Validation.Result>
 		}
 
-		export type ReturnsWithRefs<DATA_TYPE> = {
-			[KEY in keyof Returns<DATA_TYPE>]: Ref<Returns<DATA_TYPE>[KEY]>
+		export type ReturnsWithRefs<DATA_TYPE, PLACEHOLDER_TYPE> = {
+			[KEY in keyof Returns<DATA_TYPE, PLACEHOLDER_TYPE>]: Ref<
+				Returns<DATA_TYPE, PLACEHOLDER_TYPE>[KEY]
+			>
 		}
 	}
 
@@ -97,7 +99,7 @@ export namespace KottiField {
 	 * When adding a new prop, please make sure that no KtFormField
 	 * already uses a prop with the same name, to avoid conflicts
 	 */
-	export type Props<DATA_TYPE> = InhertiableProps & {
+	export type Props<DATA_TYPE, PLACEHOLDER_TYPE> = InhertiableProps & {
 		/**
 		 * Specifies that the data KtFormContext[formKey]
 		 * If formKey is "NONE", it is treated as an explicit opt-out
@@ -120,6 +122,13 @@ export namespace KottiField {
 		 * Shows a Yoco icon on the left side of the field
 		 */
 		leftIcon: Yoco.Icon | null
+
+		/**
+		 * Shown when no value was entered yet
+		 *
+		 * this is generic, as KtFieldDateRange needs two placeholders [string | null, string | null]
+		 */
+		placeholder: PLACEHOLDER_TYPE
 
 		/**
 		 * Shows a Yoco icon on the right side of the field
@@ -175,6 +184,11 @@ export namespace KottiField {
 		 * These aren’t supported on e.g. the KtFieldToggleGroup
 		 */
 		decoration: boolean
+
+		/**
+		 * Some components don’t have a well-defined place to put placeholders
+		 */
+		placeholder: boolean
 
 		/**
 		 * Some third-party components do not support passing a custom tabIndex

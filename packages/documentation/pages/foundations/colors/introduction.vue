@@ -13,7 +13,7 @@ We enforce CSS custom properties over SCSS variables.
 The `ie11-custom-properties` package ensure IE11 support.
 Here is how weuse CSS custom properties:
 
-``` css
+```css
   /* set a css custom property */
   --text-01: #000;
   --background-01: #f5f5f5;
@@ -22,8 +22,6 @@ Here is how weuse CSS custom properties:
   color: var(--text-01)
   background-color: var(--background-01)
 ```
-
-
 </template>
 
 <script>

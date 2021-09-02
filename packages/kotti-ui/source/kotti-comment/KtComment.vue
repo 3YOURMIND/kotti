@@ -1,6 +1,6 @@
 <template>
 	<div class="comment">
-		<KtAvatar class="comment__avatar" :src="userAvatar" />
+		<KtAvatar size="sm" :src="userAvatar" />
 		<div class="comment__wrapper">
 			<div class="comment__info">
 				<div class="info__name" v-text="userName" />
@@ -30,20 +30,26 @@
 				>
 					<i class="yoco">comment</i> Reply
 				</div>
-				<div v-if="allowChange" class="action__more">
+				<div v-if="actionOptions.length > 0" class="action__more">
 					<i class="yoco">dots</i>
 					<div class="action__options">
-						<a @click="startInlineEdit"> <li>Edit</li> </a>
-						<a @click="handleDelete(id)"> <li>Delete</li> </a>
+						<a
+							v-for="option in actionOptions"
+							:key="option.type"
+							@click="option.onClick"
+						>
+							<li>{{ option.label }}</li>
+						</a>
 					</div>
 				</div>
 			</div>
 			<div v-for="reply in replies" :key="reply.id">
 				<CommentReply
 					:id="reply.id"
-					:allowChange="reply.allowChange"
 					:createdTime="reply.createdTime"
 					:dangerouslyOverrideParser="dangerouslyOverrideParser"
+					:isDeletable="reply.isDeletable"
+					:isEditable="reply.isEditable"
 					:message="reply.message"
 					:postEscapeParser="postEscapeParser"
 					:userAvatar="reply.userAvatar"
@@ -89,16 +95,17 @@ export default {
 		KtCommentInput,
 	},
 	props: {
-		dangerouslyOverrideParser: { default: escape, type: Function },
-		postEscapeParser: { default: (_) => _, type: Function },
 		createdTime: String,
+		dangerouslyOverrideParser: { default: escape, type: Function },
 		id: [Number, String],
+		isDeletable: { default: false, type: Boolean },
+		isEditable: { default: false, type: Boolean },
 		message: String,
+		postEscapeParser: { default: (_) => _, type: Function },
 		replies: Array,
 		userAvatar: String,
 		userId: [Number, String],
 		userName: String,
-		allowChange: Boolean,
 	},
 	data() {
 		return {
@@ -119,15 +126,30 @@ export default {
 		inlineMessage() {
 			return this.inlineMessageValue || this.message
 		},
+		actionOptions() {
+			const options = []
+			if (this.isEditable)
+				options.push({
+					label: 'Edit',
+					onClick: () => {
+						this.inlineMessageValue = this.inlineMessage
+						this.isInlineEdit = true
+					},
+					type: 'EDIT',
+				})
+			if (this.isDeletable)
+				options.push({
+					label: 'Delete',
+					onClick: () => this.handleDelete(this.id),
+					type: 'DELETE',
+				})
+			return options
+		},
 	},
 	methods: {
 		cancelInlineEdit() {
 			this.inlineMessageValue = ''
 			this.isInlineEdit = false
-		},
-		startInlineEdit() {
-			this.inlineMessageValue = this.inlineMessage
-			this.isInlineEdit = true
 		},
 		handleInlineReplyClick(user) {
 			this.showInlineReply = true
@@ -157,3 +179,10 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss" scoped>
+.action__reply {
+	display: flex;
+	align-items: center;
+}
+</style>

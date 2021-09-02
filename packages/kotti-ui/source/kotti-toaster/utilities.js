@@ -22,4 +22,7 @@ export const generateId = (ID_BITS = 64) => {
  * @param {String} $0.id first id
  * @returns {Function} compares id1 to passed id
  */
-export const notId = ({ id: id1 }) => ({ id: id2 }) => id1 !== id2
+export const notId =
+	({ id: id1 }) =>
+	({ id: id2 }) =>
+		id1 !== id2

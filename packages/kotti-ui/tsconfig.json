@@ -7,12 +7,12 @@
 		"lib": ["ESNext", "DOM", "DOM.Iterable", "ES2019", "ES2020"],
 		"module": "ESNext",
 		"moduleResolution": "node",
+		"outDir": "dist",
 		"resolveJsonModule": true,
 		"sourceMap": true,
 		"strict": true,
 		"jsx": "react",
 		"jsxFactory": "h",
-		// FIXME: remove skipLibCheck when [https://github.com/ElemeFE/element/issues/17329] is resolved
 		"skipLibCheck": true,
 		"target": "esnext",
 		"rootDir": "source"

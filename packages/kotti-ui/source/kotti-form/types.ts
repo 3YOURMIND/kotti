@@ -5,15 +5,17 @@ import { KottiField } from '../kotti-field/types'
 export namespace KottiForm {
 	export interface Context<
 		CONTEXT_TYPE extends ContextType = ContextType,
-		T extends keyof CONTEXT_TYPE = keyof CONTEXT_TYPE
+		T extends keyof CONTEXT_TYPE = keyof CONTEXT_TYPE,
 	> {
 		formPath: Ref<ReadonlyArray<string | number>>
 
 		fieldInheritableProps: Ref<KottiField.InhertiableProps>
 
-		onAddField: <DATA_TYPE>(toAdd: KottiField.Hook.Returns<DATA_TYPE>) => void
+		onAddField: <DATA_TYPE>(
+			toAdd: KottiField.Hook.Returns<DATA_TYPE, unknown>,
+		) => void
 		onRemoveField: <DATA_TYPE>(
-			toRemove: KottiField.Hook.Returns<DATA_TYPE>,
+			toRemove: KottiField.Hook.Returns<DATA_TYPE, unknown>,
 		) => void
 
 		setValue: (formKey: T, newValue: CONTEXT_TYPE[T]) => void

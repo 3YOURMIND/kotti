@@ -1,5 +1,20 @@
 import { KottiTranslation } from '../types'
 
+namespace Common {
+	export const is = 'is'
+
+	export const isEmpty = 'is empty'
+
+	export const number = {
+		EQUAL: 'is equal to',
+		GREATER_THAN: 'is greater than',
+		GREATER_THAN_OR_EQUAL: 'is greater than or equal to',
+		IS_EMPTY: Common.isEmpty,
+		LESS_THAN: 'is less than',
+		LESS_THAN_OR_EQUAL: 'is less than or equal to',
+	}
+}
+
 export const enUS: KottiTranslation.Messages = {
 	KtBanner: {
 		expandLabel: 'View',
@@ -19,39 +34,33 @@ export const enUS: KottiTranslation.Messages = {
 		addFilterLabel: 'Add Filter',
 		andLabel: 'And',
 		boolean: {
-			EQUAL: 'is',
-			IS_EMPTY: 'is empty',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		clearAllLabel: 'Clear All',
+		currency: Common.number,
 		dateRange: {
 			IN_RANGE: 'is in range',
-			IS_EMPTY: 'is empty',
+			IS_EMPTY: Common.isEmpty,
 		},
-		disabledLabel: 'Disabled',
 		emptyListLabel: 'No Filters Applied',
-		enabledLabel: 'Enabled',
 		filterLabel: 'Filter',
 		filtersLabel: 'Filters',
+		float: Common.number,
+		integer: Common.number,
 		multiEnum: {
-			IS_EMPTY: 'is empty',
+			IS_EMPTY: Common.isEmpty,
 			ONE_OF: 'is one of',
-		},
-		number: {
-			EQUAL: 'is equal to',
-			GREATER_THAN: 'is greater than',
-			GREATER_THAN_OR_EQUAL: 'is greater than or equal to',
-			IS_EMPTY: 'is empty',
-			LESS_THAN: 'is less than',
-			LESS_THAN_OR_EQUAL: 'is less than or equal to',
 		},
 		searchLabel: 'Search',
 		singleEnum: {
-			EQUAL: 'is',
-			IS_EMPTY: 'is empty',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		string: {
 			CONTAINS: 'contains',
-			IS_EMPTY: 'is empty',
+			EQUAL: Common.is,
+			IS_EMPTY: Common.isEmpty,
 		},
 		unsetLabel: 'Unset',
 		whereLabel: 'Where',

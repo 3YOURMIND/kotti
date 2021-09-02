@@ -10,9 +10,10 @@ Toasters can deliver messages that the user needs to pay attention to without in
 ![Toaster Structure](~/assets/img/toaster_structure.png)
 
 1. Type Colour: Depends on the type of toaster. There are three colors:
-	* `Green-500`: for success information
-	*	`Orange-500`: for warning message
-	*	`Red-500`: for fail/alert message
+
+   - `Green-500`: for success information
+   - `Orange-500`: for warning message
+   - `Red-500`: for fail/alert message
 
 2. Message: Keep the message short and easy to understand, since the toaster disappears automatically after a few seconds.
 
@@ -42,27 +43,26 @@ You should include `KtToaster` as global component in your Vue application.
 
 ```html
 <!-- for example in app.vue -->
-<template>
-  <div id="app">
-    <KtToaster />
-    <router-view />
-  </div>
-</template>
+<div id="app">
+	<KtToaster />
+	<router-view />
+</div>
 ```
+
 After registering the component you can call it globally by using the Vue instance in the script part of a component.
 
 ```js
 this.$yodify({
-  text: 'This was successful :)',
-  type: 'success', // optional, default
-  duration: 3000, // optional, default
-});
+	text: 'This was successful :)',
+	type: 'success', // optional, default
+	duration: 3000, // optional, default
+})
 ```
 
 ### Attributes
 
 | Attribute  | Description                                 | Type     | Accepted values               | Default   |
-|:-----------|:--------------------------------------------|:---------|:------------------------------|:----------|
+| :--------- | :------------------------------------------ | :------- | :---------------------------- | :-------- |
 | `duration` | duration after which the toaster disappears | `Number` | —                             | `3000`    |
 | `text`     | text message in the toaster                 | `String` | —                             | —         |
 | `type`     | define the type of the toaster              | `String` | `success`, `error`, `warning` | `success` |

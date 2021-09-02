@@ -89,7 +89,6 @@ export const dateTimeRangeShortcutValidator = (
 export const rangePlaceholderValidator = (
 	value: unknown,
 ): value is KottiFieldDateRange.Props['placeholder'] =>
-	value === null ||
-	(Array.isArray(value) &&
-		value.length === 2 &&
-		value.every((fromOrTo) => typeof fromOrTo === 'string'))
+	Array.isArray(value) &&
+	value.length === 2 &&
+	value.every((fromOrTo) => fromOrTo === null || typeof fromOrTo === 'string')

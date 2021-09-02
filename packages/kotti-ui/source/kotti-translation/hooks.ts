@@ -47,7 +47,7 @@ export const useTranslationContext = () => {
 }
 
 export const useTranslationNamespace = <
-	NS extends keyof KottiTranslation.Messages
+	NS extends keyof KottiTranslation.Messages,
 >(
 	namespace: NS,
 ): Ref<Readonly<KottiTranslation.Messages[NS]>> => {

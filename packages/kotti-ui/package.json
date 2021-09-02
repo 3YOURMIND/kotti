@@ -11,6 +11,7 @@
 		"@3yourmind/vue-use-tippy": "1.x",
 		"@3yourmind/yoco": "^2.1.1",
 		"@popperjs/core": "2.0.6",
+		"big.js": "^6.1.1",
 		"color": "3.x",
 		"deep-eql": "^4.0.0",
 		"deepmerge": "^4.2.2",
@@ -31,6 +32,7 @@
 		"@rollup/plugin-json": "^4.1.0",
 		"@rollup/plugin-node-resolve": "^8.4.0",
 		"@rollup/plugin-typescript": "^5.0.2",
+		"@types/big.js": "^6.1.1",
 		"@types/jest": "^26.0.4",
 		"@types/lodash": "^4.14.157",
 		"@vue/test-utils": "^1.0.3",
@@ -69,6 +71,7 @@
 		"build:tokens": "node -r esm tokens/generate.js && prettier --write source/kotti-style/tokens.css",
 		"check:es5": "es-check es5 './dist/cjs/*.js'",
 		"check:stylelint": "stylelint ./source{/**,}/*.{css,scss,vue}",
+		"check:unimported": "unimported --no-cache",
 		"format": "prettier --write '**/*.{vue,js,json,jsx,ts,tsx,md}'",
 		"watch": "rollup -wc rollup.config.js"
 	},
@@ -77,5 +80,5 @@
 	],
 	"style": "dist/styles.css",
 	"types": "dist/esm/index.d.ts",
-	"version": "3.0.0-beta.0"
+	"version": "3.0.0-beta.10"
 }

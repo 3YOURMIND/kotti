@@ -47,7 +47,11 @@ import { KtFieldPassword } from './kotti-field-password'
 export * from './kotti-field-password'
 import { KtFieldRadioGroup } from './kotti-field-radio-group'
 export * from './kotti-field-radio-group'
-import { KtFieldSingleSelect, KtFieldMultiSelect } from './kotti-field-select'
+import {
+	KtFieldSingleSelect,
+	KtFieldMultiSelect,
+	KtFieldSingleSelectRemote,
+} from './kotti-field-select'
 export * from './kotti-field-select'
 import { KtFieldText } from './kotti-field-text'
 export * from './kotti-field-text'
@@ -138,6 +142,7 @@ export default {
 			KtFieldPassword,
 			KtFieldRadioGroup,
 			KtFieldSingleSelect,
+			KtFieldSingleSelectRemote,
 			KtFieldText,
 			KtFieldTextArea,
 			KtFieldToggle,

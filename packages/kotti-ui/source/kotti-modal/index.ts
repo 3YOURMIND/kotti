@@ -8,8 +8,7 @@ export const KtModal = attachMeta(makeInstallable(KtModalVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url:
-			'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=99%3A46',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=99%3A46',
 	},
 	slots: {
 		body: { description: null, scope: null },
