@@ -6,7 +6,6 @@ export namespace KottiAccordion {
 	export type PropsInternal = {
 		icon: Yoco.Icon
 		isClosed: boolean
-		isFullyClickable: boolean
 		title: string
 	}
 
