@@ -8,7 +8,7 @@
     <div class="element-example white">
     	<h4>Text Color</h4>
     	<div class="text-primary">Text Primary</div>
-    	<div class="text-grey ">Text Grey</div>
+    	<div class="text-gray ">Text Gray</div>
     	<div class="text-success">Text Succes</div>
     	<div class="text-error">Text Error</div>
     	<div class="text-warning">Text Warning</div>
@@ -16,7 +16,7 @@
 
     ```html
     <div class="text-primary">Text Primary</div>
-    <div class="text-grey ">Text Grey</div>
+    <div class="text-gray ">Text Gray</div>
     <div class="text-success">Text Succes</div>
     <div class="text-error">Text Error</div>
     <div class="text-warning">Text Warning</div>
