@@ -1,8 +1,7 @@
 <template lang="md">
 <ComponentInfo v-bind="{ component }" />
 
-An accordion for hiding content on click.
-It is animated but the animation doesn't work with IE11.
+An animated accordion for hiding content on click.
 
 ```html
 <KtAccordion title="Accordion">
