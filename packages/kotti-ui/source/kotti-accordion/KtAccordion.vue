@@ -23,7 +23,7 @@
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-import { useSlideAnimaion } from './hooks'
+import { useSlideAnimation } from './hooks'
 import { KottiAccordion } from './types'
 
 export default defineComponent<KottiAccordion.PropsInternal>({
@@ -36,7 +36,7 @@ export default defineComponent<KottiAccordion.PropsInternal>({
 	setup(props) {
 		const contentInnerRef = ref<HTMLElement | null>(null)
 
-		const { isContentOpen, toggle } = useSlideAnimaion(contentInnerRef, {
+		const { isContentOpen, toggle } = useSlideAnimation(contentInnerRef, {
 			duration: 300,
 			isInitiallyClosed: props.isClosed,
 		})

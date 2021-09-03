@@ -11,7 +11,7 @@ const getDefaultOptions = (): Options => ({
 	isInitiallyClosed: true,
 })
 
-export const useSlideAnimaion = (
+export const useSlideAnimation = (
 	element: Ref<HTMLElement | null>,
 	options: Options,
 ) => {
@@ -27,10 +27,9 @@ export const useSlideAnimaion = (
 		const animatedObject = element.value ?? null
 		if (animatedObject === null) return
 
-		const frames: Keyframe[] = [
-			'0px',
-			`${getRawHeight(animatedObject)}px`,
-		].map((height) => ({ height, overflow: 'hidden' }))
+		const frames: Keyframe[] = ['0px', `${getRawHeight(animatedObject)}px`].map(
+			(height) => ({ height, overflow: 'hidden' }),
+		)
 		const animation = animatedObject.animate(frames, finalOptions)
 
 		animation.pause()
