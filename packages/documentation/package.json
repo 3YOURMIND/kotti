@@ -27,7 +27,6 @@
 		"@types/marked": "^1.1.0",
 		"@types/natural-sort": "^0.0.20",
 		"case-sensitive-paths-webpack-plugin": "^2.3.0",
-		"css-vars-ponyfill": "^2.2.0",
 		"nuxt": "^2.13.3"
 	},
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",

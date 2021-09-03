@@ -8,10 +8,9 @@ It also open us to a lot of theming features.
 ## Usage
 
 We store the tokens in JSON files. We can then easily export these to SCSS, CSS custom properties
-and even figma styles for colors!
-We enforce CSS custom properties over SCSS variables.
-The `ie11-custom-properties` package ensure IE11 support.
-Here is how weuse CSS custom properties:
+and even figma styles for colors.
+We prefer CSS custom properties over SCSS variables.
+Here is how we use CSS custom properties:
 
 ```css
   /* set a css custom property */

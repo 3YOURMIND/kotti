@@ -1,8 +1,7 @@
 {
 	"author": "3YOURMIND GmbH",
 	"browserslist": [
-		"defaults",
-		"IE 11"
+		"defaults"
 	],
 	"bugs": {
 		"url": "https://github.com/3YOURMIND/kotti/issues"

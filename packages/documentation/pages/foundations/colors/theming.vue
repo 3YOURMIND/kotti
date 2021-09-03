@@ -4,14 +4,20 @@
 You can apply your own theme to the kotti design system.
 Since we are defining design tokens with CSS custom properties, you can override any of them easily, on the fly.
 
-> We are defining every custom props on `:root` because only root variables are supported by [css-vars-ponyfill](https://github.com/jhildenbiddle/css-vars-ponyfill), the ponyfill we are using.
-> If you don't care about IE11 support, you can overwrite custom props on any element.
-
 ## Method 1: CSS file
 
 One easy way of theming kotti component is to overwrite custom props using CSS diretcly. You will need to load this file after loading kotti CSS tho.
 
 Example:
+
+```css
+.kt-navbar {
+	--navbar-background: red;
+	--navbar-color: blue;
+}
+```
+
+or
 
 ```css
 :root {

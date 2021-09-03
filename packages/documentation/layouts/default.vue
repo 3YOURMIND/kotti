@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import cssVars from 'css-vars-ponyfill'
-
 import ActionBar from '~/components/ActionBar.vue'
 import LayoutContainer from '~/components/LayoutContainer.vue'
 import NavBar from '~/components/NavBar.vue'
@@ -23,13 +21,6 @@ export default {
 		ActionBar,
 		NavBar,
 		LayoutContainer,
-	},
-	mounted() {
-		// loading IE11 polyfill
-		const isIE = !!window.MSInputMethodContext && !!document.documentMode
-		if (isIE) {
-			cssVars({ watch: true, shadowDOM: true, onlyLegacy: true })
-		}
 	},
 }
 </script>
