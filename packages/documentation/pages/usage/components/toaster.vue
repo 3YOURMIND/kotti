@@ -9,7 +9,7 @@ Toasters can deliver messages that the user needs to pay attention to without in
 
 ![Toaster Structure](~/assets/img/toaster_structure.png)
 
-1. Type Colour: Depends on the type of toaster. There are three colors:
+1. Type Color: Depends on the type of toaster. There are three colors:
 
    - `Green-500`: for success information
    - `Orange-500`: for warning message

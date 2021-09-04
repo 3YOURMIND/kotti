@@ -32,7 +32,7 @@ Each `KtStep` has four elements:
 1. Indicator: The icon on the left, can be changed with the `icon` prop
 2. Line: The line under the icon, if the step is last in the group, you may want to use `hideLine` to disable the line
 3. Title: The bold text on the right side, given via `title` props.
-4. Description: The grey text under tilte, given via `description` props.
+4. Description: The gray text under title, given via `description` props.
 
 ## Steps
 

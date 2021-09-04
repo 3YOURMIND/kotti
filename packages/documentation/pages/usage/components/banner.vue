@@ -65,7 +65,7 @@ interface.
 
 ### Background
 
-You can use `banner-grey` to change the banner's background color,
+You can use `banner-gray` to change the banner's background color,
 this style is useful when you want add contrast to the page.
 
 <div class="element-example white">
