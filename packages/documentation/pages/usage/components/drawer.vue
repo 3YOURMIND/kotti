@@ -3,15 +3,15 @@
 
 Drawer is another layer of the interface. It adds more information or functionality to the current layout without messing up the elements.
 
-It is best to place secondary functionality or information in the drawer, and only present the most important elements or interaction in the workspace.
+It is best to place secondary functionality or information into the drawer, and only present the most important elements or interaction in the workspace.
 
 ## Structure
 
 ![Structure](~/assets/img/drawer_structure.png)
 
-- **Drawer:** The size of drawer depends on information density. There are three sizes: `Default`, `Wide` and `Full Open`.
-- **Handle:** By clicking the handles, the drawer can be `Full Open` to display more information.
-- **Background:** The background should be black `#000000` with 46% opacity.
+- **Drawer:** The size of drawer depends on information density.
+- **Handle:** By clicking the handles, the drawer can be `Expanded` to display more information.
+- **Background:** The background should be black `#000000` with `46%` opacity.
 
 ## Size
 
@@ -19,7 +19,7 @@ It is best to place secondary functionality or information in the drawer, and on
 	<button class="primary mr-16px" @click="showDrawer=true" >Show Default Size Drawer</button>
 	<button class="primary mr-16px" @click="showWideDrawer=true">Show Wide Size Drawer</button>
 	<button class="primary" @click="customizeWidthDrawer=true">Customize Size Drawer</button>
-	<KtDrawer v-if="showDrawer" @close="showDrawer=false" :closeOutside="false">
+	<KtDrawer v-if="showDrawer" @close="showDrawer=false" disallowCloseOutside>
 		<div slot="drawer-header">
 			<h2>Default Size Drawer</h2>
 		</div>
@@ -30,33 +30,41 @@ It is best to place secondary functionality or information in the drawer, and on
 			<button @click="showDrawer=false" class="w-100">Close Drawer</button>
 		</div>
 	</KtDrawer>
-	<KtDrawer v-if="showWideDrawer" wide @close="showWideDrawer=false">
+	<KtDrawer v-if="showWideDrawer" isWide @close="showWideDrawer=false">
 		<div slot="drawer-header">
 			<h2>Wide Size Drawer</h2>
 		</div>
 		<div slot="drawer-body">
 			<p>Close from outside allowed</p>
 		</div>
+		<div slot="drawer-footer">
+			<button @click="showWideDrawer=false" class="w-100">Close Drawer</button>
+		</div>
 	</KtDrawer>
 	<KtDrawer v-if="customizeWidthDrawer" defaultWidth="400px"  expandWidth="600px" @close="customizeWidthDrawer=false">
 		<div slot="drawer-header">
-			<h2>Wider Size Drawer</h2>
+			<h2>Custom Size Drawer</h2>
 		</div>
 		<div slot="drawer-body">
 			<p>Close from outside allowed</p>
 		</div>
+		<div slot="drawer-footer">
+			<button @click="customizeWidthDrawer=false" class="w-100">Close Drawer</button>
+		</div>
 	</KtDrawer>
 </div>
 
-There are two size of drawer: `default` and `wide`.
+There are different ways to customize the width of the drawer.
 
-Drawer will be half fo the window width when `wide` set to `true`.
+Each drawer has a default state and a wide state, the transition can be triggered by clicking on the arrow at the edge of the drawer.
 
-You can also customize the width of drawer by setting `defaultWidth` and `expandWidth`.
+When the `isWide` flag is set to `true` the default state will cover `50%` of the screen, the wide screen will cover `75%`.
+
+You can also customize the width of drawer by setting both `defaultWidth` and `expandWidth`. If only one values is set, this will not work
 
 ```html
 <!-- Wide width drawer -->
-<KtDrawer wide> ... </KtDrawer>
+<KtDrawer isWide> ... </KtDrawer>
 
 <!-- Customize width drawer -->
 <KtDrawer defaultWidth="400px" expandWidth="600px"> ... </KtDrawer>
@@ -64,14 +72,14 @@ You can also customize the width of drawer by setting `defaultWidth` and `expand
 
 ## Close from outside
 
-When `closeOutside` is `false`, it prevents user accidentally close the drawer by clicking outside.
+When the `disallowCloseOutside` flag is set, it prevents the user from accidentally closing the drawer by clicking outside of the drawer.
 
 <ShowCase>
 
 <div slot="vue">
 
 ```html
-<KtDrawer v-if="showDrawer" @close="showDrawer=false" :closeOutside="false">
+<KtDrawer v-if="showDrawer" @close="showDrawer=false" disallowCloseOutside>
 	<div slot="drawer-header">
 		<h2>Default Size Drawer</h2>
 	</div>
@@ -122,12 +130,12 @@ When `closeOutside` is `false`, it prevents user accidentally close the drawer b
 
 ### Attributes
 
-| Attribute      | Description                                | Type      | Accepted values | Default |
-| :------------- | :----------------------------------------- | :-------- | :-------------- | :------ |
-| `closeOutside` | closed drawer when click outside of drawer | `Boolean` | —               | `true`  |
-| `defaultWidth` | width when drawer is closed                | `String`  | CSS width       | —       |
-| `expandWidth`  | width when drawer is expanded              | `String`  | CSS width       | —       |
-| `wide`         | wide drawer                                | `Boolean` | —               | `false` |
+| Attribute              | Description                                | Type      | Accepted values | Default |
+| :--------------------- | :----------------------------------------- | :-------- | :-------------- | :------ |
+| `disallowCloseOutside` | closed drawer when click outside of drawer | `Boolean` | —               | `true`  |
+| `defaultWidth`         | width when drawer is closed                | `String`  | CSS width       | —       |
+| `expandWidth`          | width when drawer is expanded              | `String`  | CSS width       | —       |
+| `isWide`               | wide drawer                                | `Boolean` | —               | `false` |
 </template>
 
 <script lang="ts">
