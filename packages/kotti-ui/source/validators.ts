@@ -36,7 +36,8 @@ export const propValidator = <
 		/* eslint-disable no-console */
 		console.group(`propValidator found issues with prop “${key}”`)
 
-		console.error(result.error)
+		// HACK: 'error' in result is necessary as `ts-jest` doesn’t see that result.success was already properly checked to be falsy and that error now exists
+		if ('error' in result) console.error(result.error)
 
 		if (Array.isArray(value)) console.table(cloneDeep(value))
 		else console.log(cloneDeep(value))
