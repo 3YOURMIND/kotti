@@ -17,30 +17,52 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { isYocoIcon } from '../validators'
+import { propValidator } from '../validators'
 
 import { KottiButton } from './types'
 
 export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
 	props: {
-		icon: { default: null, type: String, validator: isYocoIcon },
-		isBlock: { default: false, type: Boolean },
-		isLoading: { default: false, type: Boolean },
-		isMultiline: { default: false, type: Boolean },
-		isSubmit: { default: false, type: Boolean },
-		label: { default: null, type: String },
+		icon: {
+			default: null,
+			type: String,
+			validator: propValidator(KottiButton.propsInternalSchema, 'icon'),
+		},
+		isBlock: {
+			default: false,
+			type: Boolean,
+			validator: propValidator(KottiButton.propsInternalSchema, 'isBlock'),
+		},
+		isLoading: {
+			default: false,
+			type: Boolean,
+			validator: propValidator(KottiButton.propsInternalSchema, 'isLoading'),
+		},
+		isMultiline: {
+			default: false,
+			type: Boolean,
+			validator: propValidator(KottiButton.propsInternalSchema, 'isMultiline'),
+		},
+		isSubmit: {
+			default: false,
+			type: Boolean,
+			validator: propValidator(KottiButton.propsInternalSchema, 'isSubmit'),
+		},
+		label: {
+			default: null,
+			type: String,
+			validator: propValidator(KottiButton.propsInternalSchema, 'label'),
+		},
 		size: {
 			default: KottiButton.Size.MEDIUM,
 			type: String,
-			validator: (value: unknown): value is KottiButton.Size =>
-				Object.values(KottiButton.Size).includes(value as KottiButton.Size),
+			validator: propValidator(KottiButton.propsInternalSchema, 'size'),
 		},
 		type: {
 			default: KottiButton.Type.DEFAULT,
 			type: String,
-			validator: (value: unknown): value is KottiButton.Type =>
-				Object.values(KottiButton.Type).includes(value as KottiButton.Type),
+			validator: propValidator(KottiButton.propsInternalSchema, 'type'),
 		},
 	},
 	setup(props, { emit, slots }) {
