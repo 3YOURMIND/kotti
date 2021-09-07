@@ -9,14 +9,17 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import { propValidator } from '../validators'
+
 import { KottiLine } from './types'
 
-export default defineComponent<KottiLine.InternalProps>({
+export default defineComponent<KottiLine.PropsInternal>({
 	name: 'KtLine',
 	props: {
 		text: {
-			type: String,
 			default: null,
+			type: String,
+			validator: propValidator(KottiLine.propsInternalSchema, 'text'),
 		},
 	},
 })
