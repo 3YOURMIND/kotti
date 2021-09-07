@@ -42,6 +42,8 @@ import { KottiForm } from '../kotti-form/types'
 import FormControllerListItem from './components/FormControllerListItem.vue'
 import { KottiFormControllerList } from './types'
 
+type Entry = Record<string, unknown>
+
 export default defineComponent({
 	name: 'KtFormControllerList',
 	components: { FormControllerListItem },
@@ -53,7 +55,7 @@ export default defineComponent({
 		if (context === null)
 			throw new Error('KtFormControllerList: Could Not Find KtFormContext')
 
-		const valuesList = computed<object[]>(() => {
+		const valuesList = computed<Entry[]>(() => {
 			const result = context.values.value[props.formKey]
 
 			if (!Array.isArray(result))
@@ -68,7 +70,7 @@ export default defineComponent({
 			/**
 			 * Adds a new valuesList entry after the given index
 			 */
-			addAfter: (index: number, newRow: object) =>
+			addAfter: (index: number, newRow: Entry) =>
 				context.setValue(props.formKey, [
 					...valuesList.value.slice(0, index + 1),
 					newRow,
@@ -77,7 +79,7 @@ export default defineComponent({
 			/**
 			 * Adds a new valuesList entry before the given index
 			 */
-			addBefore: (index: number, newRow: object) =>
+			addBefore: (index: number, newRow: Entry) =>
 				context.setValue(props.formKey, [
 					...valuesList.value.slice(0, index),
 					newRow,
@@ -117,7 +119,7 @@ export default defineComponent({
 			/**
 			 * Replaces an entire valuesListEntry with new data
 			 */
-			setValuesIndex: (index: number, newValue: object) =>
+			setValuesIndex: (index: number, newValue: Entry) =>
 				context.setValue(
 					props.formKey,
 					valuesList.value.map((oldValue, i) =>
@@ -132,17 +134,17 @@ export default defineComponent({
 				/**
 				 * Adds a new valuesList entry to the end of the entire list
 				 */
-				addAfter: (newRow: object) =>
+				addAfter: (newRow: Entry) =>
 					context.setValue(props.formKey, [...valuesList.value, newRow]),
 				/**
 				 * Adds a new valuesList entry to the beginning of the entire list
 				 */
-				addBefore: (newRow: object) =>
+				addBefore: (newRow: Entry) =>
 					context.setValue(props.formKey, [newRow, ...valuesList.value]),
 				/**
 				 * Replaces the entire valuesList with a new one
 				 */
-				setValues: (newValuesList: object[]) =>
+				setValues: (newValuesList: Entry[]) =>
 					context.setValue(props.formKey, newValuesList),
 			},
 			valuesList,

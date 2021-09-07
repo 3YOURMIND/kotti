@@ -82,6 +82,7 @@
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref } from '@vue/composition-api'
 import { Select as ElSelect, Option as ElOption } from 'element-ui'
+import type Vue from 'vue'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'

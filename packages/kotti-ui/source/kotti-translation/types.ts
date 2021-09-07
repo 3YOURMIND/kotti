@@ -7,7 +7,7 @@ import { KottiFilters } from '../kotti-filters/types'
 import { KottiFormSubmit } from '../kotti-form-submit/types'
 import { KottiNavbar } from '../kotti-navbar/types'
 
-export type DeepPartial<T> = T extends object
+export type DeepPartial<T> = T extends Record<string, unknown>
 	? { [K in keyof T]?: DeepPartial<T[K]> }
 	: T
 
