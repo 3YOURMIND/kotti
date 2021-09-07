@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
+import { Kotti } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from '@vue/composition-api'
 import { Route } from 'vue-router'
 
@@ -86,17 +86,7 @@ export default defineComponent({
 				},
 			],
 			sections: menu.map(
-				(
-					section,
-				): {
-					title: string | null
-					links: Array<{
-						icon: Yoco.Icon
-						title: string
-						path: string
-						isActive: boolean
-					}>
-				} => ({
+				(section): Kotti.Navbar.Section => ({
 					links: section.subsections.map((subsection) => ({
 						icon: subsection.icon,
 						title: subsection.title,

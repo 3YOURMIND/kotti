@@ -55,7 +55,7 @@
 import { computed, defineComponent, provide, ref } from '@vue/composition-api'
 import { mixin as clickaway } from 'vue-clickaway'
 
-import { Kotti } from '../types'
+import { propValidator } from '../validators'
 
 import NavbarLogo from './components/NavbarLogo.vue'
 import NavbarMenu from './components/NavbarMenu.vue'
@@ -74,15 +74,35 @@ export default defineComponent<KottiNavbar.PropsInternal>({
 	},
 	mixins: [clickaway],
 	props: {
-		isNarrow: { default: false, type: Boolean },
-		logoUrl: { required: true, type: String },
-		notification: { default: null, type: Object },
-		quickLinks: { default: () => [], type: Array },
-		sections: { required: true, type: Array },
+		isNarrow: {
+			default: false,
+			type: Boolean,
+			validator: propValidator(KottiNavbar.propsInternalSchema, 'isNarrow'),
+		},
+		logoUrl: {
+			required: true,
+			type: String,
+			validator: propValidator(KottiNavbar.propsInternalSchema, 'logoUrl'),
+		},
+		notification: {
+			default: null,
+			type: Object,
+			validator: propValidator(KottiNavbar.propsInternalSchema, 'notification'),
+		},
+		quickLinks: {
+			default: () => [],
+			type: Array,
+			validator: propValidator(KottiNavbar.propsInternalSchema, 'quickLinks'),
+		},
+		sections: {
+			required: true,
+			type: Array,
+			validator: propValidator(KottiNavbar.propsInternalSchema, 'sections'),
+		},
 		theme: {
 			default: null,
 			type: String,
-			validator: (theme) => theme === null || theme in Kotti.Navbar.Theme,
+			validator: propValidator(KottiNavbar.propsInternalSchema, 'theme'),
 		},
 	},
 	setup(props, { emit }) {
