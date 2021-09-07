@@ -43,7 +43,10 @@ const TestFieldObject = defineComponent({
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
 	setup: (
-		props: KottiField.Props<object | string | null, string | null>,
+		props: KottiField.Props<
+			Record<string, unknown> | string | null,
+			string | null
+		>,
 		{ emit },
 	) => {
 		useTranslationProvide(ref('en-US'), ref({}))
@@ -51,7 +54,7 @@ const TestFieldObject = defineComponent({
 		return {
 			field: useField({
 				emit,
-				isCorrectDataType: (value): value is object | null =>
+				isCorrectDataType: (value): value is Record<string, unknown> | null =>
 					typeof value === 'object' ||
 					typeof value === 'string' ||
 					value === null,
@@ -82,7 +85,10 @@ const TestForm2 = {
 const getField = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
-): KottiField.Hook.Returns<string | object | null, string | null> =>
+): KottiField.Hook.Returns<
+	string | Record<string, unknown> | null,
+	string | null
+> =>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(wrapper.vm.$children[0].$children[0] as any).field
 

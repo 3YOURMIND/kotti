@@ -253,7 +253,7 @@ export default defineComponent<{
 				return result
 			}),
 			showProps: ref(false),
-			stringifyDefault: (defaultValue: Function | unknown) =>
+			stringifyDefault: (defaultValue: (() => unknown) | unknown) =>
 				typeof defaultValue === 'function'
 					? `${JSON.stringify(defaultValue())} *`
 					: JSON.stringify(defaultValue),

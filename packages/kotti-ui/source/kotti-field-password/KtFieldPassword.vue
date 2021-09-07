@@ -47,7 +47,7 @@ export default defineComponent({
 			field,
 			inputProps: computed(
 				(): Partial<HTMLInputElement> & {
-					class: object
+					class: string[]
 					forceUpdateKey: number
 				} => ({
 					...field.inputProps,

@@ -20,7 +20,7 @@ export type ComponentNames =
 export type ComponentValue = {
 	hasHelpTextSlot: boolean
 	name: ComponentNames
-	props: object
+	props: Record<string, unknown>
 	validation: Kotti.Field.Validation.Result['type']
 }
 

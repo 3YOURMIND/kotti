@@ -7,7 +7,7 @@ import { DeepPartial } from './types'
  * although deepmerge supports the behavior
  * This helper function works-around that issue
  */
-export const fixDeepMerge = <T extends object>(
+export const fixDeepMerge = <T extends Record<string, unknown>>(
 	x: DeepPartial<T>,
 	y: DeepPartial<T>,
 ): T => deepmerge<T>(x, y)

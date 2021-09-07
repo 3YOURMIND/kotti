@@ -29,7 +29,7 @@ export namespace KottiNavbar {
 	export type PropsInternal = {
 		isNarrow: boolean
 		logoUrl: string
-		notification: object | null
+		notification: Record<string, unknown> | null
 		quickLinks: QuickLink[]
 		sections: Section[]
 		theme: Theme | null
