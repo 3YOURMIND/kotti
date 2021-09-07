@@ -1,16 +1,18 @@
-import { Yoco } from '@3yourmind/yoco'
+import { z } from 'zod'
 
 import { SpecifyRequiredProps } from '../types/utilities'
+import { yocoIconSchema } from '../validators'
 
 export namespace KottiBanner {
-	export type PropsInternal = {
-		actionText: string | null
-		icon: Yoco.Icon
-		isGray: boolean
-		message: string
-		expandCloseLabel: string | null
-		expandLabel: string | null
-	}
+	export const propsInternalSchema = z.object({
+		actionText: z.string().nullable(),
+		expandCloseLabel: z.string().nullable(),
+		expandLabel: z.string().nullable(),
+		icon: yocoIconSchema,
+		isGray: z.boolean(),
+		message: z.string(),
+	})
+	export type PropsInternal = z.infer<typeof propsInternalSchema>
 
 	export type Props = SpecifyRequiredProps<PropsInternal, 'message'>
 
