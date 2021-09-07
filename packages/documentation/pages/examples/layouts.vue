@@ -121,7 +121,6 @@ export default {
 			},
 			userMenuData: [
 				{
-					title: 'Switch To',
 					links: [
 						{
 							link: '#',
@@ -132,9 +131,9 @@ export default {
 							title: 'Service Panel',
 						},
 					],
+					title: 'Switch To',
 				},
 				{
-					title: 'Recent Service',
 					links: [
 						{
 							link: '#',
@@ -149,6 +148,7 @@ export default {
 							title: '4YOURMIND Service',
 						},
 					],
+					title: 'Recent Service',
 				},
 				{
 					links: [
@@ -161,6 +161,7 @@ export default {
 							title: 'Logout (Close Example)',
 						},
 					],
+					title: null,
 				},
 			],
 			actionbarMenu: [

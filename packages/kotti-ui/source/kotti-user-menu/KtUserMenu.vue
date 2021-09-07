@@ -56,15 +56,9 @@ import { mixin as clickaway } from 'vue-clickaway'
 import { KtAvatar } from '../kotti-avatar'
 import { IS_NAVBAR_NARROW } from '../kotti-navbar/constants'
 import { Kotti } from '../types'
+import { propValidator } from '../validators'
 
 import { KottiUserMenu } from './types'
-
-const linkIsValid = (link: KottiUserMenu.SectionLink) => Boolean(link.title)
-
-const sectionIsValid = (section: KottiUserMenu.Section) =>
-	Array.isArray(section.links) &&
-	Boolean(section.links.length) &&
-	section.links.every(linkIsValid)
 
 export default defineComponent<KottiUserMenu.PropsInternal>({
 	name: 'KtUserMenu',
@@ -73,14 +67,26 @@ export default defineComponent<KottiUserMenu.PropsInternal>({
 	},
 	mixins: [clickaway],
 	props: {
-		userAvatar: { type: String, default: null },
 		sections: {
-			type: Array,
 			required: true,
-			validator: (sections) => sections.every(sectionIsValid),
+			type: Array,
+			validator: propValidator(KottiUserMenu.propsInternalSchema, 'sections'),
 		},
-		userName: { type: String, default: null },
-		userStatus: { type: String, required: true },
+		userAvatar: {
+			default: null,
+			type: String,
+			validator: propValidator(KottiUserMenu.propsInternalSchema, 'userAvatar'),
+		},
+		userName: {
+			default: null,
+			type: String,
+			validator: propValidator(KottiUserMenu.propsInternalSchema, 'userName'),
+		},
+		userStatus: {
+			required: true,
+			type: String,
+			validator: propValidator(KottiUserMenu.propsInternalSchema, 'userStatus'),
+		},
 	},
 	setup() {
 		const isMenuShow = ref(false)
