@@ -18,7 +18,7 @@
 					v-model="inlineMessageValue"
 					class="comment-inline-edit-input form-input"
 				></textarea>
-				<KtButtonGroup class="comment-inline-edit-buttons" shadow>
+				<KtButtonGroup class="comment-inline-edit-buttons">
 					<KtButton icon="close" @click="cancelInlineEdit" />
 					<KtButton icon="check" @click="handleEditConfirm" />
 				</KtButtonGroup>

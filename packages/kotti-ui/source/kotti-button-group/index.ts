@@ -9,5 +9,7 @@ export const KtButtonGroup = attachMeta(makeInstallable(KtButtonGroupVue), {
 	slots: {
 		default: { description: 'Should contain KtButtons', scope: null },
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.ButtonGroup',
+	},
 })
