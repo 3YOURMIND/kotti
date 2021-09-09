@@ -74,7 +74,7 @@ export const KOTTI_FIELD_DATE_PROPS = {
 export const KOTTI_FIELD_DATE_RANGE_PROPS = {
 	...KOTTI_FIELD_DATE_SHARED_PROPS,
 	placeholder: {
-		default: [null, null],
+		default: () => [null, null],
 		type: Array,
 		validator: rangePlaceholderValidator,
 	},
@@ -106,7 +106,7 @@ export const KOTTI_FIELD_DATE_TIME_PROPS = {
 export const KOTTI_FIELD_DATE_TIME_RANGE_PROPS = {
 	...KOTTI_FIELD_DATE_SHARED_PROPS,
 	placeholder: {
-		default: [null, null],
+		default: () => [null, null],
 		type: Array,
 		validator: rangePlaceholderValidator,
 	},
