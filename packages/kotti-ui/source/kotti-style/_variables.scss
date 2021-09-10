@@ -62,7 +62,7 @@ $cjk-ko-font-family: $base-font-family, 'Malgun Gothic', $fallback-font-family !
 $body-font-family: $base-font-family, $fallback-font-family !default;
 
 // Unit sizes
-$unit-o: 0.05rem !default;
+$unit-q: 0.05rem !default;
 $unit-h: 0.1rem !default;
 $unit-1: 0.2rem !default;
 $unit-2: 0.4rem !default;
@@ -90,7 +90,7 @@ $layout-spacing: $unit-2 !default;
 $layout-spacing-sm: $unit-1 !default;
 $layout-spacing-lg: $unit-4 !default;
 $border-radius: $unit-1 !default;
-$border-width: $unit-o !default;
+$border-width: $unit-q !default;
 $border-width-lg: $unit-h !default;
 $control-size: $unit-8 !default;
 $control-size-sm: $unit-7 !default;
