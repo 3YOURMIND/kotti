@@ -33,7 +33,7 @@ h2,
 
 h3,
 .h3 {
-	padding-bottom: $unit-2;
+	padding-bottom: var(--unit-2);
 	font-size: 0.8rem;
 	border-bottom: 1px solid var(--ui-02);
 }
@@ -69,14 +69,14 @@ abbr[title] {
 ul,
 ol {
 	padding: 0;
-	margin: $unit-4 0 $unit-4 $unit-4;
+	margin: var(--unit-4) 0 var(--unit-4) var(--unit-4);
 	ul,
 	ol {
-		margin: $unit-4 0 $unit-4 $unit-4;
+		margin: var(--unit-4) 0 var(--unit-4) var(--unit-4);
 	}
 
 	li {
-		margin-top: $unit-2;
+		margin-top: var(--unit-2);
 	}
 }
 
@@ -86,7 +86,7 @@ dl {
 	}
 
 	dd {
-		margin: $unit-2 0 $unit-4 0;
+		margin: var(--unit-2) 0 var(--unit-4) 0;
 	}
 }
 

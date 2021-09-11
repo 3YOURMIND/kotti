@@ -146,7 +146,7 @@ export default defineComponent<{
 	display: grid;
 	grid-template-rows: auto;
 	grid-template-columns: max-content repeat(3, 1fr) max-content;
-	grid-gap: $unit-1;
+	grid-gap: var(--unit-1);
 
 	width: 50vw;
 

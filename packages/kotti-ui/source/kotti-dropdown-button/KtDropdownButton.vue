@@ -64,21 +64,20 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../kotti-style/_variables.scss';
 .kt-dropdown-button {
 	display: inline-block;
-	margin: 0 $unit-1;
+	margin: 0 var(--unit-1);
 	.button-group {
 		position: relative;
 		display: flex;
 		margin-right: 32px;
 	}
 	.kt-popper {
-		padding-top: $unit-1;
-		padding-right: $unit-1;
+		padding-top: var(--unit-1);
+		padding-right: var(--unit-1);
 		padding-right: 0;
-		padding-bottom: $unit-1;
-		padding-left: $unit-1;
+		padding-bottom: var(--unit-1);
+		padding-left: var(--unit-1);
 		padding-left: 0;
 	}
 }
@@ -89,15 +88,15 @@ export default {
 .kt-dropdown-button__icon {
 	position: absolute;
 	left: -1px;
-	padding: 0 $unit-2;
+	padding: 0 var(--unit-2);
 	margin-left: 100%;
 	pointer-events: none;
 	border-left: 0 !important;
 	border-radius: 0.2em !important;
 	.yoco {
-		padding-left: $unit-2;
+		padding-left: var(--unit-2);
 		margin: 0 !important;
-		margin-left: $unit-1;
+		margin-left: var(--unit-1);
 	}
 	span .yoco {
 		display: none;

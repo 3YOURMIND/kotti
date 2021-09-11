@@ -204,7 +204,7 @@ export default defineComponent<{
 		@media (max-width: $size-md) {
 			display: unset;
 			> * {
-				padding-bottom: $unit-1;
+				padding-bottom: var(--unit-1);
 			}
 		}
 	}
@@ -220,7 +220,7 @@ export default defineComponent<{
 			display: flex;
 			align-items: center;
 
-			min-height: $unit-8;
+			min-height: var(--unit-8);
 		}
 	}
 

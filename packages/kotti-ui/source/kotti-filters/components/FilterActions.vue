@@ -65,12 +65,10 @@ export default defineComponent<{
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-style/_variables.scss';
-
 .kt-filter__actions {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-top: $unit-1;
+	margin-top: var(--unit-1);
 }
 </style>

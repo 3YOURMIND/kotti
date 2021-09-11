@@ -25,11 +25,11 @@ export default defineComponent<KottiButtonGroup.PropsInternal>({
 		border-radius: 0;
 
 		&:first-of-type {
-			border-radius: $border-radius 0 0 $border-radius;
+			border-radius: var(--border-radius) 0 0 var(--border-radius);
 		}
 
 		&:last-of-type {
-			border-radius: 0 $border-radius $border-radius 0;
+			border-radius: 0 var(--border-radius) var(--border-radius) 0;
 		}
 	}
 }

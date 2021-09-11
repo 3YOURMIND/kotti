@@ -7,16 +7,16 @@
 
 $margins: (
 	0: 0,
-	1: $unit-1,
-	2: $unit-2,
-	3: $unit-3,
-	4: $unit-4,
-	5: $unit-5,
-	6: $unit-6,
-	'8px': $unit-2,
-	'16px': $unit-4,
-	element: $unit-4,
-	block: $unit-6,
+	1: var(--unit-1),
+	2: var(--unit-2),
+	3: var(--unit-3),
+	4: var(--unit-4),
+	5: var(--unit-5),
+	6: var(--unit-6),
+	'8px': var(--unit-2),
+	'16px': var(--unit-4),
+	element: var(--unit-4),
+	block: var(--unit-6),
 );
 
 @each $prop,
@@ -33,15 +33,15 @@ $margins: (
 
 $paddings: (
 	0: 0,
-	1: $unit-1,
-	2: $unit-2,
-	3: $unit-3,
-	4: $unit-4,
-	5: $unit-5,
-	6: $unit-6,
-	'8px': $unit-2,
-	'16px': $unit-4,
-	element: $unit-4,
+	1: var(--unit-1),
+	2: var(--unit-2),
+	3: var(--unit-3),
+	4: var(--unit-4),
+	5: var(--unit-5),
+	6: var(--unit-6),
+	'8px': var(--unit-2),
+	'16px': var(--unit-4),
+	element: var(--unit-4),
 );
 
 @each $prop,

@@ -57,7 +57,7 @@ export default {
 		flex-direction: column;
 		width: var(--action-bar-width);
 		height: 100%;
-		padding: $unit-6;
+		padding: var(--unit-6);
 		overflow-y: auto;
 	}
 
@@ -85,11 +85,11 @@ export default {
 	color: var(--action-bar-color-active);
 }
 .actionbar-nav {
-	margin: 0 -$unit-2;
+	margin: 0 calc(-1 * var(--unit-2));
 }
 .actionbar-nav__item {
-	padding: $unit-2;
-	margin: $unit-2 0;
+	padding: var(--unit-2);
+	margin: var(--unit-2) 0;
 	font-size: 0.75rem;
 	color: $darkgray-500;
 	list-style: none;
@@ -140,7 +140,7 @@ export default {
 	}
 
 	li {
-		padding: $unit-2 0;
+		padding: var(--unit-2) 0;
 		font-size: 0.75rem;
 		color: $darkgray-500;
 		list-style: none;

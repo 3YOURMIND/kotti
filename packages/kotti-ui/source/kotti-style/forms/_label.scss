@@ -6,19 +6,19 @@
 	padding: 0;
 	font-size: $font-size-sm;
 	font-weight: 700;
-	line-height: $unit-6;
+	line-height: var(--unit-6);
 	color: $lightgray-500;
 
 	i {
-		font-size: $unit-4;
-		line-height: $unit-4;
+		font-size: var(--unit-4);
+		line-height: var(--unit-4);
 	}
 }
 
 .form-label--compact {
 	position: absolute;
 	top: 0;
-	left: $unit-2;
+	left: var(--unit-2);
 	z-index: 1;
 	font-size: 0.7rem;
 	font-weight: 500;
