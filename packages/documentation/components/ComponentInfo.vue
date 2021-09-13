@@ -101,7 +101,7 @@
 								style="font-style: italic"
 								v-text="'No default'"
 							/>
-							<code v-else v-text="stringifyDefault(prop.default)" />
+							<code v-else v-text="stringifyDefault(prop.default, prop.type)" />
 						</td>
 						<td>
 							<div style="display: flex; align-items: center">
@@ -130,7 +130,7 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import { kebabCase } from 'lodash'
+import { castArray, kebabCase } from 'lodash'
 
 import ComponentInfoSlots from './component-info/Slots.vue'
 
@@ -253,14 +253,21 @@ export default defineComponent<{
 				return result
 			}),
 			showProps: ref(false),
-			stringifyDefault: (defaultValue: (() => unknown) | unknown) =>
-				typeof defaultValue === 'function'
-					? `${JSON.stringify(defaultValue())} *`
-					: JSON.stringify(defaultValue),
+			stringifyDefault: (
+				defaultValue: (() => unknown) | unknown,
+				type: Array<VuePropType> | VuePropType,
+			) => {
+				if (typeof defaultValue === 'function')
+					if (castArray(type).some((t) => t.name === 'Function'))
+						return `${defaultValue.toString()} *`
+					else return `${JSON.stringify(defaultValue())} *`
+
+				return JSON.stringify(defaultValue)
+			},
 			stringifyType: (type: Array<VuePropType> | VuePropType) =>
-				Array.isArray(type)
-					? type.map((t) => t.name.toLowerCase()).join(' | ')
-					: type.name.toLowerCase(),
+				castArray(type)
+					.map((t) => t.name.toLowerCase())
+					.join(' | '),
 			Yoco,
 		}
 	},
