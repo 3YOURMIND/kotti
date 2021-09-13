@@ -95,18 +95,33 @@ const zodToVueTypes = new Map<
 
 /* eslint-disable no-console */
 /**
- * Easily validate vue props, improve error messages drastically
+ * Easily define & validate vue props, improve error messages drastically
  *
  * This augments/replaces Vue’s props entirely, including the need to add prop.validator
  * by using zod and therefore actually prints errors to the console that can help developers
  * rather than just say "hey you failed the validator, good luck!" as vue would do by default.
  *
+ * This function also automatically types the return types via as PropType<>, which in theory
+ * should mean that annotating the prop types explicitly is no longer necessary.
+ *
+ * However, in @vue/composition-api (0.6.1 and 1.1.5), `PropType<>` appears to be bugged.
+ * For example KtBreadcrumb’s props get inferred to be any
+ * So, unfortunately, this may only help in the future, once the Vue team fixes this
+ *
  * @example
- * props: makeProps(KottiUserMenu.propsSchema)
+ * export default defineComponent<KottiUserMenu.PropsInternal>({
+ *   name: 'KtUserMenu',
+ *   props: makeProps(KottiUserMenu.propsSchema)
+ * })
  */
 export const makeProps = <SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 	schema: SCHEMA,
-) =>
+): {
+	[KEY in keyof SCHEMA['shape']]: Omit<PropOptions, 'required' | 'type'> & {
+		required: z.output<SCHEMA>[KEY] extends undefined ? false : true
+		type: PropType<z.output<SCHEMA>[KEY]>
+	}
+} =>
 	Object.fromEntries(
 		Object.entries(schema.shape).map(([key, shape]) => {
 			if (DEBUG_MAKE_PROPS) console.log(`makeProp: generating “${key}”`)
@@ -151,5 +166,10 @@ export const makeProps = <SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 
 			return [key, prop]
 		}),
-	)
+	) as {
+		[KEY in keyof SCHEMA['shape']]: Omit<PropOptions, 'required' | 'type'> & {
+			required: z.output<SCHEMA>[KEY] extends undefined ? false : true
+			type: PropType<z.output<SCHEMA>[KEY]>
+		}
+	}
 /* eslint-enable no-console */
