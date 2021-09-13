@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { SpecifyRequiredProps } from '../types/utilities'
 import { yocoIconSchema } from '../validators'
 
 export namespace KottiNavbar {
@@ -38,20 +37,17 @@ export namespace KottiNavbar {
 	}
 	export const themeSchema = z.nativeEnum(Theme)
 
-	export const propsInternalSchema = z.object({
-		isNarrow: z.boolean(),
+	export const propsSchema = z.object({
+		isNarrow: z.boolean().default(false),
 		logoUrl: z.string(),
-		notification: notificationSchema.nullable(),
-		quickLinks: z.array(quickLinkSchema),
+		notification: notificationSchema.nullable().default(null),
+		quickLinks: z.array(quickLinkSchema).default(() => []),
 		sections: z.array(sectionSchema),
-		theme: themeSchema.nullable(),
+		theme: themeSchema.nullable().default(null),
 	})
-	export type PropsInternal = z.infer<typeof propsInternalSchema>
 
-	export type Props = SpecifyRequiredProps<
-		PropsInternal,
-		'logoUrl' | 'sections'
-	>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 
 	export type Translations = {
 		menuCollapse: string

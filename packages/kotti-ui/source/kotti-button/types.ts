@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { SpecifyRequiredProps } from '../types/utilities'
 import { yocoIconSchema } from '../validators'
 
 export namespace KottiButton {
@@ -20,17 +19,17 @@ export namespace KottiButton {
 	}
 	export const sizeSchema = z.nativeEnum(Size)
 
-	export const propsInternalSchema = z.object({
-		icon: yocoIconSchema,
-		isBlock: z.boolean(),
-		isLoading: z.boolean(),
-		isMultiline: z.boolean(),
-		isSubmit: z.boolean(),
-		label: z.string().nullable(),
-		size: sizeSchema,
-		type: typeSchema,
+	export const propsSchema = z.object({
+		icon: yocoIconSchema.nullable().default(null),
+		isBlock: z.boolean().default(false),
+		isLoading: z.boolean().default(false),
+		isMultiline: z.boolean().default(false),
+		isSubmit: z.boolean().default(false),
+		label: z.string().nullable().default(null),
+		size: sizeSchema.default(Size.MEDIUM),
+		type: typeSchema.default(Type.DEFAULT),
 	})
-	export type PropsInternal = z.infer<typeof propsInternalSchema>
 
-	export type Props = SpecifyRequiredProps<PropsInternal, never>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }

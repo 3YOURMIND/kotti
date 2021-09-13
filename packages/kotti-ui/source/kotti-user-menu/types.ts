@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { SpecifyRequiredProps } from '../types/utilities'
-
 export namespace KottiUserMenu {
 	export const sectionLinkSchema = z.object({
 		title: z.string(),
@@ -15,16 +13,13 @@ export namespace KottiUserMenu {
 
 	export type Section = z.infer<typeof sectionSchema>
 
-	export const propsInternalSchema = z.object({
+	export const propsSchema = z.object({
 		sections: z.array(sectionSchema),
-		userAvatar: z.string().nullable(),
-		userName: z.string().nullable(),
+		userAvatar: z.string().nullable().default(null),
+		userName: z.string().nullable().default(null),
 		userStatus: z.string(),
 	})
-	export type PropsInternal = z.infer<typeof propsInternalSchema>
 
-	export type Props = SpecifyRequiredProps<
-		KottiUserMenu.PropsInternal,
-		'sections' | 'userStatus'
-	>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }
