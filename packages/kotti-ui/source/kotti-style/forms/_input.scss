@@ -44,7 +44,7 @@
 
 textarea.form-input {
 	height: auto;
-	padding: $unit-2;
+	padding: var(--unit-2);
 }
 
 // Form element: Input groups
@@ -58,7 +58,7 @@ textarea.form-input {
 		white-space: nowrap;
 		background: $lightgray-300;
 		border: $border-width solid #dbdbdb;
-		border-radius: $border-radius;
+		border-radius: var(--border-radius);
 
 		&.addon-sm {
 			padding: $control-padding-y-sm $control-padding-x-sm;

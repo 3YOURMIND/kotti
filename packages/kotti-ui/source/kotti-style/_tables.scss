@@ -13,7 +13,7 @@ table {
 	border-collapse: collapse;
 
 	th {
-		padding: $unit-2 $unit-1;
+		padding: var(--unit-2) var(--unit-1);
 		font-size: $font-size-sm;
 		line-height: 1em;
 		color: $lightgray-500;
@@ -44,7 +44,7 @@ table {
 
 	td {
 		position: relative;
-		padding: $unit-2 $unit-1;
+		padding: var(--unit-2) var(--unit-1);
 		line-height: 1.2rem;
 		border-bottom: 1px solid #dbdbdb;
 
@@ -77,11 +77,11 @@ table {
 		font-size: 0.8rem;
 		line-height: 0.8rem;
 		border: 0;
-		border-radius: $border-radius;
+		border-radius: var(--border-radius);
 		box-shadow: 0 0 1px #999;
 
 		i {
-			margin: 0 $unit-1;
+			margin: 0 var(--unit-1);
 			color: $lightgray-500;
 
 			&:hover {
@@ -110,7 +110,7 @@ table {
 		line-height: 1.2rem;
 
 		.form-icon {
-			border-radius: $border-radius;
+			border-radius: var(--border-radius);
 		}
 
 		input {

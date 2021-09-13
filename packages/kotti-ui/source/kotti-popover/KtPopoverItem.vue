@@ -21,17 +21,17 @@ export default {
 @import '../kotti-style/_variables.scss';
 .kt-popover-item {
 	display: flex;
-	padding: $unit-2;
-	margin: $unit-h;
+	padding: var(--unit-2);
+	margin: var(--unit-h);
 	line-height: 20px;
 	&:hover {
 		cursor: pointer;
 		background: $lightgray-300;
-		border-radius: $border-radius;
+		border-radius: var(--border-radius);
 	}
 	.yoco {
 		align-self: center;
-		padding-right: $unit-1;
+		padding-right: var(--unit-1);
 		font-size: 20px;
 	}
 }

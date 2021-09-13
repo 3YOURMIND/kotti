@@ -64,8 +64,6 @@ export default defineComponent<KottiButton.PropsInternal>({
 </script>
 
 <style lang="scss">
-@import '../kotti-style/_variables.scss';
-
 :root {
 	--default-button-height: var(--unit-8);
 	--default-button-line-height: var(--unit-6);
@@ -92,7 +90,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 	user-select: none;
 
 	border: 1px solid transparent;
-	border-radius: $border-radius;
+	border-radius: var(--border-radius);
 
 	transition: 30ms opacity ease-in-out;
 
@@ -146,7 +144,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 
 			.yoco {
 				position: relative;
-				left: calc(var(--unit-1) * -1);
+				left: calc(-1 * var(--unit-1));
 			}
 		}
 	}

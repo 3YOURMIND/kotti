@@ -12,5 +12,5 @@ fieldset {
 .form-textarea,
 textarea {
 	box-sizing: border-box;
-	padding: $unit-2;
+	padding: var(--unit-2);
 }

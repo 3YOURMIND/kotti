@@ -162,18 +162,19 @@ export default {
 @import '../kotti-style/_variables.scss';
 .kt-popover {
 	display: inline-block;
+
 	&-item {
-		padding: $unit-4;
-		margin: -$unit-1;
+		padding: var(--unit-4);
+		margin: calc(-1 * var(--unit-1));
 	}
 }
 
-// poper.js css
+// popper.js css
 .kt-popper {
 	z-index: $zindex-4;
 	padding: 0.8rem;
 	background: var(--white);
-	border-radius: $border-radius;
+	border-radius: var(--border-radius);
 	box-shadow: $box-shadow;
 
 	&--has-options {

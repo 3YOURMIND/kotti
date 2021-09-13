@@ -128,9 +128,9 @@ export default {
 	user-select: none;
 	.page-button {
 		display: inline-block;
-		padding: $unit-1;
+		padding: var(--unit-1);
 		background: $lightgray-300;
-		border-radius: $border-radius;
+		border-radius: var(--border-radius);
 		&:hover {
 			cursor: pointer;
 			background: $lightgray-400;
@@ -141,7 +141,7 @@ export default {
 	}
 	.page-item {
 		display: inline-block;
-		padding: $unit-2;
+		padding: var(--unit-2);
 		line-height: 24px;
 		text-align: center;
 		&--active {

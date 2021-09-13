@@ -2,7 +2,7 @@
 @mixin code-base() {
 	line-height: 1.5;
 	background: $lightgray-300;
-	border-radius: $border-radius;
+	border-radius: var(--border-radius);
 }
 
 pre {
@@ -18,16 +18,16 @@ pre {
 code {
 	@include code-base();
 	position: relative;
-	padding: $unit-h;
+	padding: var(--unit-h);
 	font-size: 85%;
 	color: $body-font-color;
 
 	background: $lightgray-300;
-	border-radius: $border-radius;
+	border-radius: var(--border-radius);
 
 	&::before {
 		position: absolute;
-		top: $unit-h;
+		top: var(--unit-h);
 		right: $layout-spacing;
 		font-size: $font-size-sm;
 		color: $lightgray-300;

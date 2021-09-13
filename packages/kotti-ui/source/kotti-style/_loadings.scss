@@ -71,9 +71,9 @@
 
 .kt-circle-loading {
 	display: inline-block;
-	width: $unit-4;
-	height: $unit-4;
-	margin-right: $unit-1;
+	width: var(--unit-4);
+	height: var(--unit-4);
+	margin-right: var(--unit-1);
 	pointer-events: none;
 	border: $border-width-lg solid var(--loading-color);
 	border-top-color: transparent;
@@ -84,7 +84,7 @@
 
 .loading {
 	position: relative;
-	min-height: $unit-4;
+	min-height: var(--unit-4);
 	color: transparent !important;
 	pointer-events: none;
 
@@ -94,10 +94,10 @@
 		left: 50%;
 		z-index: $zindex-0;
 		display: block;
-		width: $unit-4;
-		height: $unit-4;
-		margin-top: -$unit-2;
-		margin-left: -$unit-2;
+		width: var(--unit-4);
+		height: var(--unit-4);
+		margin-top: calc(-1 * var(--unit-2));
+		margin-left: calc(-1 * var(--unit-2));
 		content: '';
 		border: $border-width-lg solid var(--loading-color);
 		border-top-color: transparent;
@@ -108,7 +108,7 @@
 
 	&.inline {
 		display: inline-block;
-		margin: 0 $unit-2;
+		margin: 0 var(--unit-2);
 
 		&::after {
 			position: relative;
@@ -120,13 +120,13 @@
 	}
 
 	&.lg {
-		min-height: $unit-10;
+		min-height: var(--unit-10);
 
 		&::after {
-			width: $unit-8;
-			height: $unit-8;
-			margin-top: -$unit-4;
-			margin-left: -$unit-4;
+			width: var(--unit-8);
+			height: var(--unit-8);
+			margin-top: calc(-1 * var(--unit-4));
+			margin-left: calc(-1 * var(--unit-4));
 		}
 	}
 

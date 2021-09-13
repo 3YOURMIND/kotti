@@ -444,7 +444,7 @@ h3 {
 	margin-bottom: 1.5em;
 	background-color: var(--ui-01);
 	border: 1px solid var(--ui-02);
-	border-radius: $border-radius;
+	border-radius: var(--border-radius);
 
 	> * {
 		flex: 1;

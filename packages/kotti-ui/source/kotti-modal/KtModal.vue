@@ -74,10 +74,10 @@ export default defineComponent<Kotti.Modal.PropsInternal>({
 		width: 90%;
 		max-height: 90%;
 
-		padding: $unit-4;
+		padding: var(--unit-4);
 
 		background-color: #fff;
-		border-radius: $border-radius;
+		border-radius: var(--border-radius);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
 		transition: all 0.3s ease;
 

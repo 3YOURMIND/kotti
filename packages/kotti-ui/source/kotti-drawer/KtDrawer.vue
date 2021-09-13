@@ -98,7 +98,7 @@ $wide-drawer-width: 26.8rem;
 .drawer-handle {
 	position: absolute;
 	top: 50%;
-	left: $unit-1;
+	left: var(--unit-1);
 	display: block;
 	width: 1.5rem;
 	height: 1.5rem;
@@ -120,8 +120,8 @@ $wide-drawer-width: 26.8rem;
 	flex-direction: column;
 	width: $default-drawer-width;
 	height: 100%;
-	padding: $unit-6;
-	padding-left: $unit-8;
+	padding: var(--unit-6);
+	padding-left: var(--unit-8);
 	overflow-y: auto;
 	background-color: var(--ui-background);
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
@@ -178,8 +178,8 @@ $wide-drawer-width: 26.8rem;
 		bottom: 0;
 		width: 100%;
 		height: 80%;
-		padding: $unit-4;
-		padding-top: $unit-8;
+		padding: var(--unit-4);
+		padding-top: var(--unit-8);
 
 		&.drawer-expand {
 			width: 100%;

@@ -152,11 +152,11 @@ export default {
 	position: relative;
 	width: 100%;
 	height: $control-size;
-	padding: 0 $unit-2;
+	padding: 0 var(--unit-2);
 	line-height: $line-height;
 	color: var(--text-01);
 	border: 1px solid var(--ui-02);
-	border-radius: $border-radius;
+	border-radius: var(--border-radius);
 	outline: none;
 	-webkit-appearance: none;
 
