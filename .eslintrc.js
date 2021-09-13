@@ -71,8 +71,6 @@ module.exports = {
 			plugins: ['jest'],
 			extends: ['plugin:jest/recommended'],
 			rules: {
-				'sonarjs/no-duplicate-string': 'off',
-				'no-console': 'off',
 				'import/order': [
 					'warn',
 					{
@@ -83,6 +81,9 @@ module.exports = {
 						'newlines-between': 'always',
 					},
 				],
+				'no-console': 'off',
+				'sonarjs/no-duplicate-string': 'off',
+				'@typescript-eslint/ban-ts-comment': 'off',
 			},
 		},
 	],
