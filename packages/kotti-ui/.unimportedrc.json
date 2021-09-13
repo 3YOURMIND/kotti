@@ -3,6 +3,7 @@
 	"extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"],
 	"ignorePatterns": ["**/node_modules/**", "**/dist/**"],
 	"ignoreUnimported": [
+		"**/*.test.ts",
 		"**/tests.ts",
 		"**/*.d.ts",
 		"**/tokens/**",
