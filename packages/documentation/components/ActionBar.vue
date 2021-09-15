@@ -19,6 +19,7 @@
 									:key="index"
 									class="tag"
 									:class="`tag--is-${tag}`"
+									:title="tagTitles[tag]"
 									v-text="tag"
 								/>
 								<i class="yoco">chevron_right</i>
@@ -34,8 +35,16 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { Section, Subsection, menu } from '../data/menu'
+import { Section, Subsection, menu, Tag } from '../data/menu'
 import { useRoute } from '../hooks/use-route'
+
+const tagTitles: Record<Tag, string> = {
+	[Tag.CSS]: 'Not a component, just CSS',
+	[Tag.DEPRECATED]: 'Please don’t use this anymore',
+	[Tag.GUIDE]: 'Explains a concept in detail',
+	[Tag.OUTDATED]: 'Do not blindly trust the information here',
+	[Tag.TS]: 'Written in TypeScript and exposes type definitions',
+}
 
 export default defineComponent({
 	name: 'ActionBar',
@@ -63,6 +72,7 @@ export default defineComponent({
 
 		return {
 			subsection,
+			tagTitles,
 		}
 	},
 })
