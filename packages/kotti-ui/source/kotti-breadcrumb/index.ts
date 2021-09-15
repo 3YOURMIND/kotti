@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtBreadcrumbVue from './KtBreadcrumb.vue'
+import { KottiBreadcrumb } from './types'
 
 export const KtBreadcrumb = attachMeta(makeInstallable(KtBreadcrumbVue), {
 	addedVersion: '0.0.5',
@@ -13,5 +14,6 @@ export const KtBreadcrumb = attachMeta(makeInstallable(KtBreadcrumbVue), {
 	slots: {},
 	typeScript: {
 		namespace: 'Kotti.Breadcrumb',
+		schema: KottiBreadcrumb.propsSchema,
 	},
 })

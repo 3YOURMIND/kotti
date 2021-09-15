@@ -44,6 +44,7 @@ const tagTitles: Record<Tag, string> = {
 	[Tag.GUIDE]: 'Explains a concept in detail',
 	[Tag.OUTDATED]: 'Do not blindly trust the information here',
 	[Tag.TS]: 'Written in TypeScript and exposes type definitions',
+	[Tag.ZOD]: 'Uses zod for complete validation of all props',
 }
 
 export default defineComponent({
@@ -120,6 +121,11 @@ export default defineComponent({
 	&--is-ts {
 		color: var(--primary-70);
 		background: var(--primary-20);
+	}
+
+	&--is-zod {
+		color: var(--primary-90);
+		background: var(--primary-40);
 	}
 }
 </style>

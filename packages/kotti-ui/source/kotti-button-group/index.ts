@@ -11,5 +11,6 @@ export const KtButtonGroup = attachMeta(makeInstallable(KtButtonGroupVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.ButtonGroup',
+		schema: null,
 	},
 })

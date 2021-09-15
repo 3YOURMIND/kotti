@@ -13,5 +13,6 @@ export const KtAvatar = attachMeta(makeInstallable(KtAvatarVue), {
 	slots: {},
 	typeScript: {
 		namespace: 'Kotti.Avatar',
+		schema: null,
 	},
 })

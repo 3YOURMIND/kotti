@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtBannerVue from './KtBanner.vue'
+import { KottiBanner } from './types'
 
 export const KtBanner = attachMeta(makeInstallable(KtBannerVue), {
 	addedVersion: '0.0.1',
@@ -16,5 +17,8 @@ export const KtBanner = attachMeta(makeInstallable(KtBannerVue), {
 			scope: null,
 		},
 	},
-	typeScript: { namespace: 'Kotti.Banner' },
+	typeScript: {
+		namespace: 'Kotti.Banner',
+		schema: KottiBanner.propsSchema,
+	},
 })

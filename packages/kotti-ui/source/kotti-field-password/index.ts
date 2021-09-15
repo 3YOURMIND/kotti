@@ -13,6 +13,7 @@ export const KtFieldPassword = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldPassword',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_PASSWORD_SUPPORTS },

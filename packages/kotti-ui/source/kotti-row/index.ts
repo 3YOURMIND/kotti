@@ -64,6 +64,7 @@ export const KtRow = attachMeta(
 		},
 		typeScript: {
 			namespace: 'Kotti.Row',
+			schema: null,
 		},
 	},
 )

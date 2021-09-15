@@ -15,5 +15,6 @@ export const KtHeading = attachMeta(makeInstallable(KtHeadingVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Heading',
+		schema: null,
 	},
 })

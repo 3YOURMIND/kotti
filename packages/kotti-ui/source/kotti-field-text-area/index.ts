@@ -17,6 +17,7 @@ export const KtFieldTextArea = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldTextArea',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_TEXT_AREA_SUPPORTS },

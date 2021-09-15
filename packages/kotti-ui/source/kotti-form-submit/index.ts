@@ -9,5 +9,6 @@ export const KtFormSubmit = attachMeta(makeInstallable(KtFormSubmitVue), {
 	slots: {},
 	typeScript: {
 		namespace: 'Kotti.FormSubmit',
+		schema: null,
 	},
 })

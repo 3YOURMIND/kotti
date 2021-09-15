@@ -9,5 +9,6 @@ export const KtFilters = attachMeta(makeInstallable(KtFiltersVue), {
 	slots: {},
 	typeScript: {
 		namespace: 'Kotti.Filters',
+		schema: null,
 	},
 })

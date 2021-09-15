@@ -23,6 +23,7 @@ export const KtFieldDate = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDate',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
@@ -40,6 +41,7 @@ export const KtFieldDateRange = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDateRange',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
@@ -57,6 +59,7 @@ export const KtFieldDateTime = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDateTime',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
@@ -74,6 +77,7 @@ export const KtFieldDateTimeRange = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDateTimeRange',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },

@@ -22,6 +22,7 @@ export const KtFieldSingleSelect = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.KtFieldSingleSelect',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },
@@ -39,6 +40,7 @@ export const KtFieldSingleSelectRemote = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.KtFieldMultiSelectRemote',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },
@@ -56,6 +58,7 @@ export const KtFieldMultiSelect = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.KtFieldMultiSelect',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },

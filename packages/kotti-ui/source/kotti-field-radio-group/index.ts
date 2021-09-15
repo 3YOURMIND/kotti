@@ -17,6 +17,7 @@ export const KtFieldRadioGroup = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldRadioGroup',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_RADIO_GROUP_SUPPORTS },
