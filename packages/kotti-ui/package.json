@@ -32,7 +32,7 @@
 		"@rollup/plugin-node-resolve": "^8.4.0",
 		"@rollup/plugin-typescript": "^5.0.2",
 		"@types/big.js": "^6.1.1",
-		"@types/jest": "^26.0.4",
+		"@types/jest": "^27.0.1",
 		"@types/lodash": "^4.14.157",
 		"@vue/test-utils": "^1.0.3",
 		"esm": "^3.2.25",
