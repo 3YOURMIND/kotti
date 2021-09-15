@@ -1,6 +1,5 @@
+import { yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
-
-import { yocoIconSchema } from '../validators'
 
 export namespace KottiNavbar {
 	export const notificationSchema = z.object({

@@ -1,7 +1,5 @@
-import { Yoco } from '@3yourmind/yoco'
+import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
-
-import { yocoIconSchema } from '../validators'
 
 export namespace KottiBanner {
 	export const propsSchema = z.object({

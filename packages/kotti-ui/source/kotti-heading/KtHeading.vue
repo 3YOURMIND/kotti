@@ -20,10 +20,8 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
+import { isYocoIcon, Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
-
-import { isYocoIcon } from '../validators'
 
 export default defineComponent({
 	name: 'KtHeading',
