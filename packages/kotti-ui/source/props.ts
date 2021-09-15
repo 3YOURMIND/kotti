@@ -2,6 +2,8 @@ import { PropOptions, PropType } from '@vue/composition-api'
 import { cloneDeep } from 'lodash'
 import { z } from 'zod'
 
+import { MapValueType } from './types/utilities'
+
 const DEBUG_MAKE_PROPS = false as const // enable to print debug log
 const DEBUG_WALK_SHAPE = false as const // enable to print debug log
 
@@ -77,9 +79,14 @@ const walkShape = <SHAPE extends z.ZodTypeAny>(shape: SHAPE): Set<string> => {
 	/* eslint-enable no-console */
 }
 
-type MapValueType<T> = T extends Map<unknown, infer V> ? V : never
-
+/**
+ * These types do not influence the generation of Vue’s `propName.type` Arrays and are therefore discarded
+ */
 const ignoredZodTypes = new Set(['ZodDefault', 'ZodNullable', 'ZodOptional'])
+
+/**
+ * This maps the internal zod name of a type to the the constructor that Vue expects in `propName.type`
+ */
 const zodToVueTypes = new Map<
 	string,
 	Exclude<PropType<unknown>, Array<unknown>>
@@ -87,32 +94,47 @@ const zodToVueTypes = new Map<
 	['ZodArray', Array],
 	['ZodBoolean', Boolean],
 	['ZodFunction', Function],
-	['ZodNativeEnum', String], // educated guess
+	['ZodNativeEnum', String], // educated guess, can be fixed if the need for non-string enums arises
 	['ZodNumber', Number],
 	['ZodObject', Object],
 	['ZodString', String],
 ])
 
-/* eslint-disable no-console */
 /**
- * Easily define & validate vue props, improve error messages drastically
+ * @summary Easily define & validate vue props, improve error messages drastically
  *
+ * @description
  * This augments/replaces Vue’s props entirely, including the need to add prop.validator
  * by using zod and therefore actually prints errors to the console that can help developers
  * rather than just say "hey you failed the validator, good luck!" as vue would do by default.
  *
- * This function also automatically types the return types via as PropType<>, which in theory
- * should mean that annotating the prop types explicitly is no longer necessary.
+ * ## Known limitations:
  *
- * However, in @vue/composition-api (0.6.1 and 1.1.5), `PropType<>` appears to be bugged.
- * For example KtBreadcrumb’s props get inferred to be any
- * So, unfortunately, this may only help in the future, once the Vue team fixes this
+ * 1. Deeply defined defaults are only applied when manually `schema.safeParse`-ing the data (only top-level defaults are possible to transform to Vue)
+ * 2. While this function also automatically types the return types via as PropType<> (which in theory
+ *   should mean that annotating the prop types explicitly is no longer necessary) in `@vue/composition-api`
+ *   (`0.6.1` and `1.1.5`), `PropType<>` appears to be bugged.
+ *   For example KtBreadcrumb’s props get inferred to be any
+ *   So, unfortunately, this may only help in the future, once the Vue team fixes this
+ * 3. `z.function().default()` does not accept `undefined` while parsing the schema manually
+ *   without an explicit `.optional()` {@link https://github.com/colinhacks/zod/issues/647}
+ *   However, it can still be used to generate the Vue defaults, as Vue doesn’t call validators with `undefined`
  *
  * @example
+ * // KtUserMenu.vue
  * export default defineComponent<KottiUserMenu.PropsInternal>({
  *   name: 'KtUserMenu',
  *   props: makeProps(KottiUserMenu.propsSchema)
  * })
+ *
+ * // types.ts
+ * export namespace KottiUserMenu {
+ *   const propsSchema = z.object({
+ *     // ...
+ *   })
+ *   type Props = z.input<typeof propsSchema>
+ *   type PropsInternal = z.output<typeof propsSchema>
+ * }
  */
 export const makeProps = <SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 	schema: SCHEMA,
@@ -124,6 +146,7 @@ export const makeProps = <SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 } =>
 	Object.fromEntries(
 		Object.entries(schema.shape).map(([key, shape]) => {
+			/* eslint-disable no-console */
 			if (DEBUG_MAKE_PROPS) console.log(`makeProp: generating “${key}”`)
 
 			const zodTypeSet = walkShape(shape)
@@ -165,6 +188,7 @@ export const makeProps = <SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 			prop.type = propType.length === 1 ? propType[0] : propType
 
 			return [key, prop]
+			/* eslint-enable no-console */
 		}),
 	) as {
 		[KEY in keyof SCHEMA['shape']]: Omit<PropOptions, 'required' | 'type'> & {
@@ -172,4 +196,3 @@ export const makeProps = <SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 			type: PropType<z.output<SCHEMA>[KEY]>
 		}
 	}
-/* eslint-enable no-console */
