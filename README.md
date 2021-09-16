@@ -116,6 +116,17 @@ yarn workspace @3yourmind/kotti-ui run build
 yarn workspace @3yourmind/documentation run serve
 ```
 
+### Handling Rebases
+
+There are two workflows to help with rebasing pull requests:
+
+1. Rebase  
+   Commenting `/rebase` on any pull request will trigger a GitHub Action that rebases the PR.
+   This is best used when attempting to rebase a PR without auto-rebase before merging.
+2. Auto-Rebase  
+   Adding the `autorebase:opt-in` label to any pull request will automatically rebase the PR as soon as it’s out-of-date.
+   This should preferrably be used by the author, as it requires them to be aware of having to use `git pull --rebase`
+
 ### Linting
 
 ```bash
