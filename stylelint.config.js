@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { resolve } = require('path')
+const path = require('path')
 
 module.exports = {
-	configBaseDir: resolve(__dirname, 'node_modules'),
+	configBaseDir: path.resolve(__dirname, 'node_modules'),
 	plugins: ['stylelint-csstree-validator', 'stylelint-selector-no-empty'],
 	extends: [
 		'stylelint-config-recommended-scss',
