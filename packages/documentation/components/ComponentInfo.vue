@@ -104,7 +104,7 @@
 							<code v-else v-text="stringifyDefault(prop.default, prop.type)" />
 						</td>
 						<td>
-							<div style="display: flex; align-items: center">
+							<div style="display: flex; align-items: flex-end">
 								<i
 									class="yoco"
 									:style="{
