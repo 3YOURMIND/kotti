@@ -25,47 +25,34 @@
 </template>
 
 <script lang="ts">
-import { isYocoIcon, Yoco } from '@3yourmind/yoco'
+import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
-import { isBoolean, isFunction, isString } from 'lodash'
+
+import { propValidator } from '../props'
 
 import { KottiBreadcrumb } from './types'
-
-const breadcrumbValidator = (
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	value: any,
-): value is KottiBreadcrumb.Breadcrumb =>
-	value !== null &&
-	typeof value === 'object' &&
-	isBoolean(value.isCompleted) &&
-	isString(value.title) &&
-	isFunction(value.onClick)
 
 export default defineComponent<KottiBreadcrumb.PropsInternal>({
 	name: 'KtBreadcrumb',
 	props: {
 		breadcrumbs: {
-			type: Array,
 			required: true,
-			validator: (value: unknown): value is Array<KottiBreadcrumb.Breadcrumb> =>
-				Array.isArray(value) && value.every(breadcrumbValidator),
+			type: Array,
+			validator: propValidator(
+				KottiBreadcrumb.propsInternalSchema,
+				'breadcrumbs',
+			),
 		},
 		separator: {
-			type: Object,
-			default: (): KottiBreadcrumb.Style => ({
+			default: (): KottiBreadcrumb.Separator => ({
 				style: KottiBreadcrumb.SeparatorType.ICON,
 				value: Yoco.Icon.CHEVRON_RIGHT,
 			}),
-			validator: (
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				value: any,
-			): value is KottiBreadcrumb.Props['separator'] =>
-				value !== null &&
-				typeof value === 'object' &&
-				((value.style === KottiBreadcrumb.SeparatorType.ICON &&
-					isYocoIcon(value.value)) ||
-					(value.style === KottiBreadcrumb.SeparatorType.TEXT &&
-						isString(value.value))),
+			type: Object,
+			validator: propValidator(
+				KottiBreadcrumb.propsInternalSchema,
+				'separator',
+			),
 		},
 	},
 	setup(props) {
