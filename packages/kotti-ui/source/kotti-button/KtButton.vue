@@ -15,9 +15,8 @@
 </template>
 
 <script lang="ts">
+import { isYocoIcon } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
-
-import { isYocoIcon } from '../validators'
 
 import { KottiButton } from './types'
 

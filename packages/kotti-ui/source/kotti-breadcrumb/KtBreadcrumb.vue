@@ -25,11 +25,9 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
+import { isYocoIcon, Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
 import { isBoolean, isFunction, isString } from 'lodash'
-
-import { isYocoIcon } from '../validators'
 
 import { KottiBreadcrumb } from './types'
 
