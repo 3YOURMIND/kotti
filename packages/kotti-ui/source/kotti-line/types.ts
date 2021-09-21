@@ -1,12 +1,10 @@
 import { z } from 'zod'
 
-import { SpecifyRequiredProps } from '../types/utilities'
-
 export namespace KottiLine {
-	export const propsInternalSchema = z.object({
-		text: z.string(),
+	export const propsSchema = z.object({
+		text: z.string().nullable().default(null),
 	})
-	export type PropsInternal = z.infer<typeof propsInternalSchema>
 
-	export type Props = SpecifyRequiredProps<PropsInternal, never>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }

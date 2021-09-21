@@ -23,7 +23,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtButton } from '../kotti-button'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
-import { propValidator } from '../props'
+import { makeProps } from '../props'
 
 import { KottiBanner } from './types'
 
@@ -32,41 +32,7 @@ export default defineComponent<KottiBanner.PropsInternal>({
 	components: {
 		KtButton,
 	},
-	props: {
-		actionText: {
-			default: null,
-			type: String,
-			validator: propValidator(KottiBanner.propsInternalSchema, 'actionText'),
-		},
-		expandCloseLabel: {
-			default: null,
-			type: String,
-			validator: propValidator(
-				KottiBanner.propsInternalSchema,
-				'expandCloseLabel',
-			),
-		},
-		expandLabel: {
-			default: null,
-			type: String,
-			validator: propValidator(KottiBanner.propsInternalSchema, 'expandLabel'),
-		},
-		icon: {
-			default: Yoco.Icon.ANNOUNCE,
-			type: String,
-			validator: propValidator(KottiBanner.propsInternalSchema, 'icon'),
-		},
-		isGray: {
-			default: false,
-			type: Boolean,
-			validator: propValidator(KottiBanner.propsInternalSchema, 'isGray'),
-		},
-		message: {
-			required: true,
-			type: String,
-			validator: propValidator(KottiBanner.propsInternalSchema, 'message'),
-		},
-	},
+	props: makeProps(KottiBanner.propsSchema),
 	setup(props, { slots }) {
 		const translations = useTranslationNamespace('KtBanner')
 

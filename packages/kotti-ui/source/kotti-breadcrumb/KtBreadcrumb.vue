@@ -25,36 +25,15 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
 
-import { propValidator } from '../props'
+import { makeProps } from '../props'
 
 import { KottiBreadcrumb } from './types'
 
 export default defineComponent<KottiBreadcrumb.PropsInternal>({
 	name: 'KtBreadcrumb',
-	props: {
-		breadcrumbs: {
-			required: true,
-			type: Array,
-			validator: propValidator(
-				KottiBreadcrumb.propsInternalSchema,
-				'breadcrumbs',
-			),
-		},
-		separator: {
-			default: (): KottiBreadcrumb.Separator => ({
-				style: KottiBreadcrumb.SeparatorType.ICON,
-				value: Yoco.Icon.CHEVRON_RIGHT,
-			}),
-			type: Object,
-			validator: propValidator(
-				KottiBreadcrumb.propsInternalSchema,
-				'separator',
-			),
-		},
-	},
+	props: makeProps(KottiBreadcrumb.propsSchema),
 	setup(props) {
 		return {
 			handleClick: (item: KottiBreadcrumb.Breadcrumb) => {

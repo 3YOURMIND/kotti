@@ -17,54 +17,13 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { propValidator } from '../props'
+import { makeProps } from '../props'
 
 import { KottiButton } from './types'
 
 export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
-	props: {
-		icon: {
-			default: null,
-			type: String,
-			validator: propValidator(KottiButton.propsInternalSchema, 'icon'),
-		},
-		isBlock: {
-			default: false,
-			type: Boolean,
-			validator: propValidator(KottiButton.propsInternalSchema, 'isBlock'),
-		},
-		isLoading: {
-			default: false,
-			type: Boolean,
-			validator: propValidator(KottiButton.propsInternalSchema, 'isLoading'),
-		},
-		isMultiline: {
-			default: false,
-			type: Boolean,
-			validator: propValidator(KottiButton.propsInternalSchema, 'isMultiline'),
-		},
-		isSubmit: {
-			default: false,
-			type: Boolean,
-			validator: propValidator(KottiButton.propsInternalSchema, 'isSubmit'),
-		},
-		label: {
-			default: null,
-			type: String,
-			validator: propValidator(KottiButton.propsInternalSchema, 'label'),
-		},
-		size: {
-			default: KottiButton.Size.MEDIUM,
-			type: String,
-			validator: propValidator(KottiButton.propsInternalSchema, 'size'),
-		},
-		type: {
-			default: KottiButton.Type.DEFAULT,
-			type: String,
-			validator: propValidator(KottiButton.propsInternalSchema, 'type'),
-		},
-	},
+	props: makeProps(KottiButton.propsSchema),
 	setup(props, { emit, slots }) {
 		const hasSlot = computed(() => Boolean(slots.default))
 

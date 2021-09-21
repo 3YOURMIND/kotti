@@ -1,7 +1,5 @@
-import { yocoIconSchema } from '@3yourmind/yoco'
+import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
-
-import { SpecifyRequiredProps } from '../types/utilities'
 
 export namespace KottiBreadcrumb {
 	export enum SeparatorType {
@@ -29,14 +27,14 @@ export namespace KottiBreadcrumb {
 	])
 	export type Separator = z.infer<typeof separatorSchema>
 
-	export const propsInternalSchema = z.object({
+	export const propsSchema = z.object({
 		breadcrumbs: z.array(breadcrumbSchema),
-		separator: separatorSchema,
+		separator: separatorSchema.default(() => ({
+			style: SeparatorType.ICON as const,
+			value: Yoco.Icon.CHEVRON_RIGHT,
+		})),
 	})
-	export type PropsInternal = {
-		breadcrumbs: Array<Breadcrumb>
-		separator: Separator
-	}
 
-	export type Props = SpecifyRequiredProps<PropsInternal, 'breadcrumbs'>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }
