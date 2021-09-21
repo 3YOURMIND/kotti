@@ -66,52 +66,53 @@ export default {
 				{
 					links: [
 						{
-							link: '#',
-							title: 'Dashboard',
 							icon: Yoco.Icon.DASHBOARD,
 							isActive: true,
+							link: '#',
+							title: 'Dashboard',
 						},
 						{
-							link: '/usage/layouts/navbar',
-							title: 'Close Example',
 							icon: Yoco.Icon.CLOSE,
 							isActive: true,
+							link: '/usage/layouts/navbar',
+							title: 'Close Example',
 						},
 					],
+					title: null,
 				},
 				{
-					title: 'Order Management',
 					links: [
 						{
-							link: '#',
-							title: 'Orders',
 							icon: Yoco.Icon.INVOICE,
 							isActive: false,
+							link: '#',
+							title: 'Orders',
 						},
 						{
-							link: '#',
-							title: 'Quotes',
 							icon: Yoco.Icon.REQUEST,
 							isActive: false,
+							link: '#',
+							title: 'Quotes',
 						},
 					],
+					title: 'Order Management',
 				},
 				{
-					title: 'Agile MES',
 					links: [
 						{
-							link: '#',
-							title: 'Parts',
 							icon: Yoco.Icon.BOX_3D,
 							isActive: false,
+							link: '#',
+							title: 'Parts',
 						},
 						{
-							link: '#',
-							title: 'Schedule',
 							icon: Yoco.Icon.CALENDAR,
 							isActive: false,
+							link: '#',
+							title: 'Schedule',
 						},
 					],
+					title: 'Agile MES',
 				},
 			],
 			navbarNotification: {
