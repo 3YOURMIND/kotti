@@ -1,4 +1,4 @@
-import { isYocoIcon } from '../validators'
+import { isYocoIcon } from '@3yourmind/yoco'
 
 import { KottiField } from './types'
 

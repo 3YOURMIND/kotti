@@ -18,12 +18,11 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
+import { isYocoIcon, Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtButton } from '../kotti-button'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
-import { isYocoIcon } from '../validators'
 
 import { KottiBanner } from './types'
 

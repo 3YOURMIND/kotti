@@ -24,10 +24,9 @@
 </template>
 
 <script>
+import { isYocoIcon } from '@3yourmind/yoco'
 import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
-
-import { isYocoIcon } from '../validators'
 
 import IconTextItem from './components/IconTextItem.vue'
 
