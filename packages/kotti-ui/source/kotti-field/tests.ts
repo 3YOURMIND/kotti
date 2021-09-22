@@ -44,13 +44,16 @@ const TestComponent = defineComponent({
 const TestComponentObject = defineComponent({
 	name: 'TestComponentObject',
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<object | null, string | null>, { emit }) => {
+	setup: (
+		props: KottiField.Props<Record<string, unknown> | null, string | null>,
+		{ emit },
+	) => {
 		useTranslationProvide(ref('en-US'), ref({}))
 
 		return {
 			field: useField({
 				emit,
-				isCorrectDataType: (value): value is object | null =>
+				isCorrectDataType: (value): value is Record<string, unknown> | null =>
 					value === null || typeof value === 'object',
 				isEmpty: (value) => value === null,
 				props,

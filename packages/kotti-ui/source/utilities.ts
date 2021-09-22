@@ -23,4 +23,4 @@ export const isBrowser = Boolean(
 export const makeInstallable = (component: VueConstructor<Vue>) =>
 	Object.assign(component, {
 		install: (Vue) => Vue.component(component.name, component),
-	} as Vue.PluginObject<{}>)
+	} as Vue.PluginObject<Record<string, never>>)

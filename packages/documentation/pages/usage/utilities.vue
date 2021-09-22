@@ -137,9 +137,9 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-// disable ban-ts-ignore because vscode sees this as an error but nuxt doesn’t
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignored layout is not added to the type definition of defineComponent
+// disable ban-ts-comment because vscode sees this as an error but nuxt doesn’t
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore layout is not added to the type definition of defineComponent
 export default defineComponent({
 	name: 'DocumentationPageUsageUtilities',
 	layout: 'fullpage',

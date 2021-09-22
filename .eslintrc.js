@@ -23,22 +23,6 @@ module.exports = {
 		'prettier/vue',
 	],
 	rules: {
-		'no-magic-numbers': [
-			'warn',
-			{ ignoreArrayIndexes: true, ignore: [0, 1, 2, -1, 10] },
-		],
-		'no-param-reassign': 'warn',
-		'no-console': process.env.NODE_ENV === 'development' ? 'off' : 'error',
-		'no-debugger': process.env.NODE_ENV === 'development' ? 'off' : 'error',
-		'vue/attribute-hyphenation': ['error', 'never'],
-		'vue/require-default-prop': 'off',
-		'vue/require-component-is': 'warn',
-		'vue/html-indent': 'off',
-		'sonarjs/no-duplicate-string': 'warn',
-		'@typescript-eslint/member-delimiter-style': 'off',
-		'@typescript-eslint/explicit-function-return-type': 'off',
-		'@typescript-eslint/no-namespace': 'off',
-		'prettier/prettier': 'warn',
 		'import/order': [
 			'warn',
 			{
@@ -49,8 +33,25 @@ module.exports = {
 				'newlines-between': 'always',
 			},
 		],
+		'no-console': process.env.NODE_ENV === 'development' ? 'off' : 'error',
+		'no-debugger': process.env.NODE_ENV === 'development' ? 'off' : 'error',
+		'no-magic-numbers': [
+			'warn',
+			{ ignoreArrayIndexes: true, ignore: [0, 1, 2, -1, 10] },
+		],
+		'no-param-reassign': 'warn',
+		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/member-delimiter-style': 'off',
+		'@typescript-eslint/no-extra-semi': 'off', // conflicts with prettier
+		'@typescript-eslint/no-namespace': 'off',
+		'sonarjs/no-duplicate-string': 'warn',
+		'prettier/prettier': 'warn',
 		'vue/attribute-hyphenation': ['error', 'never'],
 		'vue/attributes-order': ['error', { alphabetical: true }],
+		'vue/html-indent': 'off',
+		'vue/require-component-is': 'warn',
+		'vue/require-default-prop': 'off',
 	},
 	overrides: [
 		{

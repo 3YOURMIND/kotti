@@ -112,9 +112,9 @@ const convertPoundToIssueLink = (string: string) =>
 		'[#$1](https://github.com/3YOURMIND/kotti/issues/$1)',
 	)
 
-// disable ban-ts-ignore because vscode sees this as an error but nuxt doesn’t
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignored layout is not added to the type definition of defineComponent
+// disable ban-ts-comment because vscode sees this as an error but nuxt doesn’t
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore layout is not added to the type definition of defineComponent
 export default defineComponent({
 	name: 'DocumentationPageChangelog',
 	layout: 'fullpage',
@@ -129,7 +129,6 @@ export default defineComponent({
 			releases.value = (
 				await octokit.repos.listReleases({
 					owner: '3yourmind',
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					per_page: 1000,
 					repo: 'kotti',
 				})

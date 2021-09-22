@@ -226,7 +226,7 @@ export default defineComponent({
 			input,
 			inputProps: computed(
 				(): Partial<HTMLInputElement> & {
-					class: object
+					class: Record<string, boolean>
 					forceUpdateKey: number
 				} => ({
 					...field.inputProps,
