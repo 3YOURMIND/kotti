@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash'
 import { z } from 'zod'
 
 const DEBUG_MAKE_PROPS = false as const // enable to print debug log
-const DEBUG_WALK_SHAPE = false as const // enable to print debug log
+const DEBUG_WALK_SCHEMA_TYPES = false as const // enable to print debug log
 
 /**
  * This type is not exported directly by @vue/composition-api
@@ -60,19 +60,20 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 	/* eslint-disable no-console */
 	const typeName = schema._def.typeName as z.ZodFirstPartyTypeKind
 
-	if (DEBUG_WALK_SHAPE)
+	if (DEBUG_WALK_SCHEMA_TYPES)
 		console.log(`walkSchemaTypes: found “ZodFirstPartyTypeKind.${typeName}”`)
 
 	switch (typeName) {
 		case z.ZodFirstPartyTypeKind.ZodUnion: {
 			const { options } = schema._def as z.ZodUnionDef
 
-			if (DEBUG_WALK_SHAPE) console.group('walkSchemaTypes: walking union')
+			if (DEBUG_WALK_SCHEMA_TYPES)
+				console.group('walkSchemaTypes: walking union')
 
 			// walk every option in the union and merge results
 			const result = setUnion(...options.map((x) => walkSchemaTypes(x)))
 
-			if (DEBUG_WALK_SHAPE) console.groupEnd()
+			if (DEBUG_WALK_SCHEMA_TYPES) console.groupEnd()
 
 			return result
 		}
@@ -85,7 +86,7 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 				| z.ZodNullableDef
 				| z.ZodOptionalDef
 
-			if (DEBUG_WALK_SHAPE)
+			if (DEBUG_WALK_SCHEMA_TYPES)
 				console.log(
 					`walkSchemaTypes: walking innerType of “ZodFirstPartyTypeKind.${typeName}”`,
 				)
@@ -103,7 +104,7 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 		case z.ZodFirstPartyTypeKind.ZodNumber:
 		case z.ZodFirstPartyTypeKind.ZodObject:
 		case z.ZodFirstPartyTypeKind.ZodString: {
-			if (DEBUG_WALK_SHAPE)
+			if (DEBUG_WALK_SCHEMA_TYPES)
 				console.log(
 					`walkSchemaTypes: adding “ZodFirstPartyTypeKind.${typeName}”`,
 				)
