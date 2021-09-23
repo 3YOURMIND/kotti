@@ -128,7 +128,7 @@ describe('array', () => {
 	const ARRAY_SUCCESS = [[], [0], [1], [13, 8, 5, 3, 2, 1]]
 	const ARRAY_FAILURE = [{}, true, false, 'string', [true], [{}], ['string']]
 
-	it('z.array(z.number())', () => {
+	it('generates vue prop for schema “z.array(z.number())”', () => {
 		const schema = z.object({
 			prop: z.array(z.number()),
 		})
@@ -140,7 +140,7 @@ describe('array', () => {
 		expect(prop).not.toValidate(...ARRAY_FAILURE, null, undefined)
 	})
 
-	it('z.array(z.number()).nullable()', () => {
+	it('generates vue prop for schema “z.array(z.number()).nullable()”', () => {
 		const schema = z.object({
 			prop: z.array(z.number()).nullable(),
 		})
@@ -152,7 +152,7 @@ describe('array', () => {
 		expect(prop).not.toValidate(...ARRAY_FAILURE, undefined)
 	})
 
-	it('z.array(z.number()).default()', () => {
+	it('generates vue prop for schema “z.array(z.number()).default()”', () => {
 		const schema = z.object({
 			prop: z.array(z.number()).default(() => []),
 		})
@@ -165,7 +165,7 @@ describe('array', () => {
 		expect(prop).not.toValidate(...ARRAY_FAILURE, null)
 	})
 
-	it('z.array(z.number()).nullable().default()', () => {
+	it('generates vue prop for schema “z.array(z.number()).nullable().default()”', () => {
 		const schema = z.object({
 			prop: z.array(z.number()).nullable().default(null),
 		})
@@ -184,7 +184,7 @@ describe('boolean', () => {
 	const BOOLEAN_SUCCESS = [true, false]
 	const BOOLEAN_FAILURE = ['true', 'false', 1, [], {}]
 
-	it('z.boolean()', () => {
+	it('generates vue prop for schema “z.boolean()”', () => {
 		const schema = z.object({
 			prop: z.boolean(),
 		})
@@ -196,7 +196,7 @@ describe('boolean', () => {
 		expect(prop).not.toValidate(...BOOLEAN_FAILURE, null, undefined)
 	})
 
-	it('z.boolean().nullable()', () => {
+	it('generates vue prop for schema “z.boolean().nullable()”', () => {
 		const schema = z.object({
 			prop: z.boolean().nullable(),
 		})
@@ -208,7 +208,7 @@ describe('boolean', () => {
 		expect(prop).not.toValidate(...BOOLEAN_FAILURE, undefined)
 	})
 
-	it('z.boolean().default()', () => {
+	it('generates vue prop for schema “z.boolean().default()”', () => {
 		const schema = z.object({
 			prop: z.boolean().default(true),
 		})
@@ -220,7 +220,7 @@ describe('boolean', () => {
 		expect(prop).not.toValidate(...BOOLEAN_FAILURE, null)
 	})
 
-	it('z.boolean().nullable().default()', () => {
+	it('generates vue prop for schema “z.boolean().nullable().default()”', () => {
 		const schema = z.object({
 			prop: z.boolean().nullable().default(null),
 		})
@@ -239,7 +239,7 @@ describe('function', () => {
 	const FUNCTION_SUCCESS = [() => null, () => undefined, () => 'test']
 	const FUNCTION_FAILURE = ['string', true]
 
-	it('z.function()', () => {
+	it('generates vue prop for schema “z.function()”', () => {
 		const schema = z.object({
 			prop: z.function(),
 		})
@@ -251,7 +251,7 @@ describe('function', () => {
 		expect(prop).not.toValidate(...FUNCTION_FAILURE, null, undefined)
 	})
 
-	it('z.function().nullable()', () => {
+	it('generates vue prop for schema “z.function().nullable()”', () => {
 		const schema = z.object({
 			prop: z.function().nullable(),
 		})
@@ -263,7 +263,7 @@ describe('function', () => {
 		expect(prop).not.toValidate(...FUNCTION_FAILURE, undefined)
 	})
 
-	it('z.function().default()', () => {
+	it('generates vue prop for schema “z.function().default()”', () => {
 		const schema = z.object({
 			prop: z.function().default(() => undefined),
 		})
@@ -286,7 +286,7 @@ describe('function', () => {
 		expect(prop).not.toValidate(undefined)
 	})
 
-	it('z.function().nullable().default()', () => {
+	it('generates vue prop for schema “z.function().nullable().default()”', () => {
 		const schema = z.object({
 			prop: z.function().nullable().default(null),
 		})
@@ -311,7 +311,7 @@ describe('nativeEnum', () => {
 	const ENUM_SUCCESS = [TestEnum.KEY_A, TestEnum.KEY_B, TestEnum.KEY_C]
 	const ENUM_FAILURE = ['VALUE_D', 'string', [], {}, false]
 
-	it('z.nativeEnum()', () => {
+	it('generates vue prop for schema “z.nativeEnum()”', () => {
 		const schema = z.object({
 			prop: z.nativeEnum(TestEnum),
 		})
@@ -323,7 +323,7 @@ describe('nativeEnum', () => {
 		expect(prop).not.toValidate(...ENUM_FAILURE, null, undefined)
 	})
 
-	it('z.nativeEnum().nullable()', () => {
+	it('generates vue prop for schema “z.nativeEnum().nullable()”', () => {
 		const schema = z.object({
 			prop: z.nativeEnum(TestEnum).nullable(),
 		})
@@ -335,7 +335,7 @@ describe('nativeEnum', () => {
 		expect(prop).not.toValidate(...ENUM_FAILURE, undefined)
 	})
 
-	it('z.nativeEnum().default()', () => {
+	it('generates vue prop for schema “z.nativeEnum().default()”', () => {
 		const schema = z.object({
 			prop: z.nativeEnum(TestEnum).default(() => TestEnum.KEY_A),
 		})
@@ -348,7 +348,7 @@ describe('nativeEnum', () => {
 		expect(prop).not.toValidate(...ENUM_FAILURE, null)
 	})
 
-	it('z.nativeEnum().nullable().default()', () => {
+	it('generates vue prop for schema “z.nativeEnum().nullable().default()”', () => {
 		const schema = z.object({
 			prop: z.nativeEnum(TestEnum).nullable().default(null),
 		})
@@ -381,7 +381,7 @@ describe('number', () => {
 
 	const NUMBER_FAILURE = [{}, [], 'string', false, Number.NaN]
 
-	it('z.number()', () => {
+	it('generates vue prop for schema “z.number()”', () => {
 		const schema = z.object({
 			prop: z.number(),
 		})
@@ -393,7 +393,7 @@ describe('number', () => {
 		expect(prop).not.toValidate(...NUMBER_FAILURE, null, undefined)
 	})
 
-	it('z.number().nullable()', () => {
+	it('generates vue prop for schema “z.number().nullable()”', () => {
 		const schema = z.object({
 			prop: z.number().nullable(),
 		})
@@ -405,7 +405,7 @@ describe('number', () => {
 		expect(prop).not.toValidate(...NUMBER_FAILURE, undefined)
 	})
 
-	it('z.number().default()', () => {
+	it('generates vue prop for schema “z.number().default()”', () => {
 		const schema = z.object({
 			prop: z.number().default(1),
 		})
@@ -417,7 +417,7 @@ describe('number', () => {
 		expect(prop).not.toValidate(...NUMBER_FAILURE, null)
 	})
 
-	it('z.number().nullable().default()', () => {
+	it('generates vue prop for schema “z.number().nullable().default()”', () => {
 		const schema = z.object({
 			prop: z.number().nullable().default(null),
 		})
@@ -441,7 +441,7 @@ describe('object', () => {
 
 	const OBJECT_FAILURE = [{ key: null }, {}, [], 'string']
 
-	it('z.object()', () => {
+	it('generates vue prop for schema “z.object()”', () => {
 		const schema = z.object({
 			prop: z.object({ key: z.boolean() }),
 		})
@@ -453,7 +453,7 @@ describe('object', () => {
 		expect(prop).not.toValidate(...OBJECT_FAILURE, null, undefined)
 	})
 
-	it('z.object().nullable()', () => {
+	it('generates vue prop for schema “z.object().nullable()”', () => {
 		const schema = z.object({
 			prop: z.object({ key: z.boolean() }).nullable(),
 		})
@@ -465,7 +465,7 @@ describe('object', () => {
 		expect(prop).not.toValidate(...OBJECT_FAILURE, undefined)
 	})
 
-	it('z.object().default()', () => {
+	it('generates vue prop for schema “z.object().default()”', () => {
 		const schema = z.object({
 			prop: z.object({ key: z.boolean() }).default(() => ({ key: true })),
 		})
@@ -478,7 +478,7 @@ describe('object', () => {
 		expect(prop).not.toValidate(...OBJECT_FAILURE, null)
 	})
 
-	it('z.object().nullable().default()', () => {
+	it('generates vue prop for schema “z.object().nullable().default()”', () => {
 		const schema = z.object({
 			prop: z.object({ key: z.boolean() }).nullable().default(null),
 		})
@@ -498,7 +498,7 @@ describe('string', () => {
 
 	const STRING_FAILURE = [[], {}, 0, 1]
 
-	it('z.string()', () => {
+	it('generates vue prop for schema “z.string()”', () => {
 		const schema = z.object({
 			prop: z.string(),
 		})
@@ -510,7 +510,7 @@ describe('string', () => {
 		expect(prop).not.toValidate(...STRING_FAILURE, null, undefined)
 	})
 
-	it('z.string().nullable()', () => {
+	it('generates vue prop for schema “z.string().nullable()”', () => {
 		const schema = z.object({
 			prop: z.string().nullable(),
 		})
@@ -522,7 +522,7 @@ describe('string', () => {
 		expect(prop).not.toValidate(...STRING_FAILURE, undefined)
 	})
 
-	it('z.string().default()', () => {
+	it('generates vue prop for schema “z.string().default()”', () => {
 		const schema = z.object({
 			prop: z.string().default('test'),
 		})
@@ -534,7 +534,7 @@ describe('string', () => {
 		expect(prop).not.toValidate(...STRING_FAILURE, null)
 	})
 
-	it('z.string().nullable().default()', () => {
+	it('generates vue prop for schema “z.string().nullable().default()”', () => {
 		const schema = z.object({
 			prop: z.string().nullable().default(null),
 		})
@@ -553,7 +553,7 @@ describe('union', () => {
 	const UNION_SUCCESS = [...NUMBER_SUCCESS, ...STRING_SUCCESS]
 	const UNION_FAILURE = [[], {}, true, false]
 
-	it('z.union()', () => {
+	it('generates vue prop for schema “z.union()”', () => {
 		const schema = z.object({
 			prop: z.union([z.number(), z.string()]),
 		})
@@ -565,7 +565,7 @@ describe('union', () => {
 		expect(prop).not.toValidate(...UNION_FAILURE, null, undefined)
 	})
 
-	it('z.union().nullable()', () => {
+	it('generates vue prop for schema “z.union().nullable()”', () => {
 		const schema = z.object({
 			prop: z.union([z.number(), z.string()]).nullable(),
 		})
@@ -577,7 +577,7 @@ describe('union', () => {
 		expect(prop).not.toValidate(...UNION_FAILURE, undefined)
 	})
 
-	it('z.union().default()', () => {
+	it('generates vue prop for schema “z.union().default()”', () => {
 		const schema = z.object({
 			prop: z.union([z.number(), z.string()]).default('test'),
 		})
@@ -589,7 +589,7 @@ describe('union', () => {
 		expect(prop).not.toValidate(...UNION_FAILURE, null)
 	})
 
-	it('z.union().nullable().default()', () => {
+	it('generates vue prop for schema “z.union().nullable().default()”', () => {
 		const schema = z.object({
 			prop: z.union([z.number(), z.string()]).nullable().default(null),
 		})
