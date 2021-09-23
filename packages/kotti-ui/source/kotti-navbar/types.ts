@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export namespace KottiNavbar {
 	export const notificationSchema = z.object({
-		count: z.number(),
+		count: z.number().int(),
 		link: z.string(),
 		title: z.string(),
 	})

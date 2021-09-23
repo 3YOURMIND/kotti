@@ -430,6 +430,78 @@ describe('number', () => {
 	})
 })
 
+describe('number.int', () => {
+	beforeAll(silenceConsole)
+
+	const NUMBER_INT_SUCCESS = [
+		-1,
+		0,
+		1,
+		42,
+		Number.MAX_SAFE_INTEGER,
+		Number.MIN_SAFE_INTEGER,
+	]
+	const NUMBER_INT_FAILURE = [
+		'string',
+		[],
+		{},
+		1.5,
+		false,
+		Number.EPSILON,
+		Number.NaN,
+		Number.NEGATIVE_INFINITY,
+		Number.POSITIVE_INFINITY,
+	]
+
+	it('generates vue prop for schema “z.number().int()”', () => {
+		const schema = z.object({
+			prop: z.number().int(),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(Number)
+		expect(prop).toValidate(...NUMBER_INT_SUCCESS)
+		expect(prop).not.toValidate(...NUMBER_INT_FAILURE, null, undefined)
+	})
+
+	it('generates vue prop for schema “z.number().int().nullable()”', () => {
+		const schema = z.object({
+			prop: z.number().int().nullable(),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(Number)
+		expect(prop).toValidate(...NUMBER_INT_SUCCESS, null)
+		expect(prop).not.toValidate(...NUMBER_INT_FAILURE, undefined)
+	})
+
+	it('generates vue prop for schema “z.number().int().default()”', () => {
+		const schema = z.object({
+			prop: z.number().int().default(1),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(1)
+		expect(prop).toBeType(Number)
+		expect(prop).toValidate(...NUMBER_INT_SUCCESS, undefined)
+		expect(prop).not.toValidate(...NUMBER_INT_FAILURE, null)
+	})
+
+	it('generates vue prop for schema “z.number().int().nullable().default()”', () => {
+		const schema = z.object({
+			prop: z.number().int().nullable().default(null),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(null)
+		expect(prop).toBeType(Number)
+		expect(prop).toValidate(...NUMBER_INT_SUCCESS, null, undefined)
+		expect(prop).not.toValidate(...NUMBER_INT_FAILURE)
+	})
+})
+
 describe('object', () => {
 	beforeAll(silenceConsole)
 
