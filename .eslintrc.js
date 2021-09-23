@@ -82,6 +82,7 @@ module.exports = {
 					},
 				],
 				'no-console': 'off',
+				'no-magic-numbers': 'off',
 				'sonarjs/no-duplicate-string': 'off',
 				'@typescript-eslint/ban-ts-comment': 'off',
 			},
