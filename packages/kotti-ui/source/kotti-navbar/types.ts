@@ -15,17 +15,19 @@ export namespace KottiNavbar {
 	})
 	export type QuickLink = z.infer<typeof quickLinkSchema>
 
-	export const sectionLinkSchema = z.object({
-		icon: yocoIconSchema,
-		isActive: z.boolean(),
-		title: z.string(),
-		to: z.unknown().optional(),
-	})
+	export const sectionLinkSchema = z
+		.object({
+			icon: yocoIconSchema,
+			isActive: z.boolean(),
+			link: z.string().optional(),
+			title: z.string(),
+		})
+		.passthrough()
 	export type SectionLink = z.infer<typeof sectionLinkSchema>
 
 	export const sectionSchema = z.object({
+		links: z.array(sectionLinkSchema).nonempty(),
 		title: z.string().nullable(),
-		links: z.array(sectionLinkSchema),
 	})
 	export type Section = z.infer<typeof sectionSchema>
 
@@ -41,7 +43,7 @@ export namespace KottiNavbar {
 		logoUrl: z.string(),
 		notification: notificationSchema.nullable().default(null),
 		quickLinks: z.array(quickLinkSchema).default(() => []),
-		sections: z.array(sectionSchema),
+		sections: z.array(sectionSchema).nonempty(),
 		theme: themeSchema.nullable().default(null),
 	})
 

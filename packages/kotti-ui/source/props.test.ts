@@ -44,7 +44,7 @@ describe('array', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Array)
+		expect(prop.type).toEqual(Array)
 		expectValidator(prop, [[], [1], [-1]], [1, null, 'test', undefined])
 	})
 
@@ -55,7 +55,7 @@ describe('array', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Array)
+		expect(prop.type).toEqual(Array)
 		expectValidator(
 			prop,
 			[[], [1], [-1], null],
@@ -71,7 +71,7 @@ describe('array', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, [])
-		expect(prop.type).toBe(Array)
+		expect(prop.type).toEqual(Array)
 		expectValidator(
 			prop,
 			[[], [1], [-1], undefined],
@@ -86,7 +86,7 @@ describe('array', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, null)
-		expect(prop.type).toBe(Array)
+		expect(prop.type).toEqual(Array)
 		expectValidator(
 			prop,
 			[[], [1], [-1], null, undefined],
@@ -105,7 +105,7 @@ describe('boolean', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Boolean)
+		expect(prop.type).toEqual(Boolean)
 		expectValidator(prop, [true, false], [null, undefined])
 	})
 
@@ -116,7 +116,7 @@ describe('boolean', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Boolean)
+		expect(prop.type).toEqual(Boolean)
 		expectValidator(prop, [true, false, null], ['true', undefined])
 	})
 
@@ -127,7 +127,7 @@ describe('boolean', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, true)
-		expect(prop.type).toBe(Boolean)
+		expect(prop.type).toEqual(Boolean)
 		expectValidator(prop, [true, false, undefined], [null])
 	})
 
@@ -138,7 +138,7 @@ describe('boolean', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, null)
-		expect(prop.type).toBe(Boolean)
+		expect(prop.type).toEqual(Boolean)
 		expectValidator(prop, [true, false, null, undefined], ['true'])
 	})
 })
@@ -153,7 +153,7 @@ describe('function', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Function)
+		expect(prop.type).toEqual(Function)
 		expectValidator(prop, [() => null, () => 'test'], [null, 'test'])
 	})
 
@@ -164,7 +164,7 @@ describe('function', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Function)
+		expect(prop.type).toEqual(Function)
 		expectValidator(prop, [() => null, null, () => 'test'], ['string', false])
 	})
 
@@ -176,7 +176,7 @@ describe('function', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, undefined)
-		expect(prop.type).toBe(Function)
+		expect(prop.type).toEqual(Function)
 		expectValidator(prop, [() => undefined], ['string', null])
 
 		/**
@@ -197,7 +197,7 @@ describe('function', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, null)
-		expect(prop.type).toBe(Function)
+		expect(prop.type).toEqual(Function)
 		expectValidator(prop, [() => undefined, null, undefined], ['string', true])
 	})
 })
@@ -218,7 +218,7 @@ describe('nativeEnum', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(String)
+		expect(prop.type).toEqual(String)
 		expectValidator(
 			prop,
 			[TestEnum.KEY_A, TestEnum.KEY_B, TestEnum.KEY_C],
@@ -233,7 +233,7 @@ describe('nativeEnum', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(String)
+		expect(prop.type).toEqual(String)
 		expectValidator(
 			prop,
 			[TestEnum.KEY_A, TestEnum.KEY_B, TestEnum.KEY_C, null],
@@ -249,7 +249,7 @@ describe('nativeEnum', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, TestEnum.KEY_A)
-		expect(prop.type).toBe(String)
+		expect(prop.type).toEqual(String)
 		expectValidator(
 			prop,
 			[TestEnum.KEY_A, TestEnum.KEY_B, TestEnum.KEY_C, undefined],
@@ -264,7 +264,7 @@ describe('nativeEnum', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, null)
-		expect(prop.type).toBe(String)
+		expect(prop.type).toEqual(String)
 		expectValidator(
 			prop,
 			[TestEnum.KEY_A, TestEnum.KEY_B, TestEnum.KEY_C, null, undefined],
@@ -283,7 +283,7 @@ describe('number', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Number)
+		expect(prop.type).toEqual(Number)
 		expectValidator(
 			prop,
 			[1, 0],
@@ -298,7 +298,7 @@ describe('number', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Number)
+		expect(prop.type).toEqual(Number)
 		expectValidator(
 			prop,
 			[1, 0, null],
@@ -313,7 +313,7 @@ describe('number', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, 1)
-		expect(prop.type).toBe(Number)
+		expect(prop.type).toEqual(Number)
 		expectValidator(
 			prop,
 			[1, 0, undefined],
@@ -328,7 +328,7 @@ describe('number', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, null)
-		expect(prop.type).toBe(Number)
+		expect(prop.type).toEqual(Number)
 		expectValidator(
 			prop,
 			[1, 0, null, undefined],
@@ -347,7 +347,7 @@ describe('object', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Object)
+		expect(prop.type).toEqual(Object)
 		expectValidator(
 			prop,
 			[{ key: true }, { key: false }],
@@ -362,7 +362,7 @@ describe('object', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(Object)
+		expect(prop.type).toEqual(Object)
 		expectValidator(
 			prop,
 			[{ key: true }, { key: false }, null],
@@ -378,7 +378,7 @@ describe('object', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, { key: true })
-		expect(prop.type).toBe(Object)
+		expect(prop.type).toEqual(Object)
 		expectValidator(
 			prop,
 			[{ key: true }, { key: false }, undefined],
@@ -393,11 +393,75 @@ describe('object', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, null)
-		expect(prop.type).toBe(Object)
+		expect(prop.type).toEqual(Object)
 		expectValidator(
 			prop,
 			[{ key: true }, { key: false }, undefined, null],
 			[{ key: null }, 'test'],
+		)
+	})
+})
+
+describe('union', () => {
+	beforeAll(silenceConsole)
+
+	it('z.union()', () => {
+		const schema = z.object({
+			prop: z.union([z.number(), z.string()]),
+		})
+		const { prop } = makeProps(schema)
+
+		expectRequired(prop)
+		expect(prop.type).toEqual([Number, String])
+		expectValidator(
+			prop,
+			['string', 1, '', 0, -1],
+			[false, [], null, undefined],
+		)
+	})
+
+	it('z.union().nullable()', () => {
+		const schema = z.object({
+			prop: z.union([z.number(), z.string()]).nullable(),
+		})
+		const { prop } = makeProps(schema)
+
+		expectRequired(prop)
+		expect(prop.type).toEqual([Number, String])
+		expectValidator(
+			prop,
+			['string', '', 1, 0, -1, null],
+			[false, [], undefined],
+		)
+	})
+
+	it('z.union().default()', () => {
+		const schema = z.object({
+			prop: z.union([z.number(), z.string()]).default('test'),
+		})
+		const { prop } = makeProps(schema)
+
+		expectDefault(prop, 'test')
+		expect(prop.type).toEqual([Number, String])
+		expectValidator(
+			prop,
+			['string', '', 1, 0, -1, undefined],
+			[false, [], null],
+		)
+	})
+
+	it('z.union().nullable().default()', () => {
+		const schema = z.object({
+			prop: z.union([z.number(), z.string()]).nullable().default(null),
+		})
+		const { prop } = makeProps(schema)
+
+		expectDefault(prop, null)
+		expect(prop.type).toEqual([Number, String])
+		expectValidator(
+			prop,
+			['string', '', 1, 0, -1, null, undefined],
+			[false, []],
 		)
 	})
 })
@@ -412,7 +476,7 @@ describe('string', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(String)
+		expect(prop.type).toEqual(String)
 		expectValidator(prop, ['string', ''], [false, [], 1, null, undefined])
 	})
 
@@ -423,7 +487,7 @@ describe('string', () => {
 		const { prop } = makeProps(schema)
 
 		expectRequired(prop)
-		expect(prop.type).toBe(String)
+		expect(prop.type).toEqual(String)
 		expectValidator(prop, ['string', '', null], [false, [], 1, undefined])
 	})
 
@@ -434,7 +498,7 @@ describe('string', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, 'test')
-		expect(prop.type).toBe(String)
+		expect(prop.type).toEqual(String)
 		expectValidator(prop, ['string', '', undefined], [false, [], 1, null])
 	})
 
@@ -445,7 +509,7 @@ describe('string', () => {
 		const { prop } = makeProps(schema)
 
 		expectDefault(prop, null)
-		expect(prop.type).toBe(String)
+		expect(prop.type).toEqual(String)
 		expectValidator(prop, ['string', '', null, undefined], [false, [], 1])
 	})
 })

@@ -29,10 +29,13 @@ export namespace KottiBreadcrumb {
 
 	export const propsSchema = z.object({
 		breadcrumbs: z.array(breadcrumbSchema),
-		separator: separatorSchema.default(() => ({
-			style: SeparatorType.ICON as const,
-			value: Yoco.Icon.CHEVRON_RIGHT,
-		})),
+		separator: separatorSchema.default(
+			() =>
+				({
+					style: SeparatorType.ICON,
+					value: Yoco.Icon.CHEVRON_RIGHT,
+				} as const),
+		),
 	})
 
 	export type PropsInternal = z.output<typeof propsSchema>

@@ -2,10 +2,19 @@ import { PropOptions, PropType } from '@vue/composition-api'
 import { cloneDeep } from 'lodash'
 import { z } from 'zod'
 
-import { MapValueType } from './types/utilities'
-
 const DEBUG_MAKE_PROPS = false as const // enable to print debug log
 const DEBUG_WALK_SHAPE = false as const // enable to print debug log
+
+/**
+ * This type is not exported directly by @vue/composition-api
+ */
+type VuePropConstructor = Exclude<PropType<unknown>, Array<unknown>>
+
+const setUnion = <T extends unknown>(...sets: Set<T>[]): Set<T> => {
+	const result = new Set<T>()
+	for (const set of sets) for (const item of set) result.add(item)
+	return result
+}
 
 const propValidator = <SCHEMA extends z.ZodTypeAny>(
 	schema: SCHEMA,
@@ -42,62 +51,95 @@ const propValidator = <SCHEMA extends z.ZodTypeAny>(
 	return validator
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-const walkShape = <SHAPE extends z.ZodTypeAny>(shape: SHAPE): Set<string> => {
+/**
+ * Collects all unique types used in the top level of a Zod schema
+ */
+const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
+	schema: SCHEMA,
+): Set<z.ZodFirstPartyTypeKind> => {
 	/* eslint-disable no-console */
-	const types = new Set<string>()
+	const typeName = schema._def.typeName as z.ZodFirstPartyTypeKind
 
-	let shapePointer = shape
+	if (DEBUG_WALK_SHAPE)
+		console.log(`walkSchemaTypes: found “ZodFirstPartyTypeKind.${typeName}”`)
 
-	while (shapePointer) {
-		const { typeName } = shapePointer._def
+	switch (typeName) {
+		case z.ZodFirstPartyTypeKind.ZodUnion: {
+			const { options } = schema._def as z.ZodUnionDef
 
-		if (DEBUG_WALK_SHAPE)
-			console.log(
-				`walkTypes: found typeName “${typeName}” (${typeof typeName})`,
-			)
+			if (DEBUG_WALK_SHAPE) console.group('walkSchemaTypes: walking union')
 
-		if (typeName === 'ZodUnion') {
-			if (DEBUG_WALK_SHAPE) console.group('walkTypes: walking union')
-
-			const options = shapePointer._def.options as Array<z.ZodTypeAny>
-
-			// walk every option in the enum and merge result sets into types
-			for (const typeSet of options.map((x) => walkShape(x)))
-				for (const type of typeSet) types.add(type)
+			// walk every option in the union and merge results
+			const result = setUnion(...options.map((x) => walkSchemaTypes(x)))
 
 			if (DEBUG_WALK_SHAPE) console.groupEnd()
-		} else {
-			if (DEBUG_WALK_SHAPE) console.log(`walkTypes: pushing “${typeName}”`)
-			types.add(typeName)
+
+			return result
 		}
 
-		shapePointer = shapePointer._def.innerType
-	}
+		case z.ZodFirstPartyTypeKind.ZodDefault:
+		case z.ZodFirstPartyTypeKind.ZodNullable:
+		case z.ZodFirstPartyTypeKind.ZodOptional: {
+			const { innerType } = schema._def as
+				| z.ZodDefaultDef
+				| z.ZodNullableDef
+				| z.ZodOptionalDef
 
-	return types
+			if (DEBUG_WALK_SHAPE)
+				console.log(
+					`walkSchemaTypes: walking innerType of “ZodFirstPartyTypeKind.${typeName}”`,
+				)
+
+			return setUnion(
+				new Set<z.ZodFirstPartyTypeKind>([typeName]),
+				walkSchemaTypes(innerType),
+			)
+		}
+
+		case z.ZodFirstPartyTypeKind.ZodArray:
+		case z.ZodFirstPartyTypeKind.ZodBoolean:
+		case z.ZodFirstPartyTypeKind.ZodFunction:
+		case z.ZodFirstPartyTypeKind.ZodNativeEnum:
+		case z.ZodFirstPartyTypeKind.ZodNumber:
+		case z.ZodFirstPartyTypeKind.ZodObject:
+		case z.ZodFirstPartyTypeKind.ZodString: {
+			if (DEBUG_WALK_SHAPE)
+				console.log(
+					`walkSchemaTypes: adding “ZodFirstPartyTypeKind.${typeName}”`,
+				)
+
+			return new Set([typeName])
+		}
+
+		default: {
+			throw new Error(
+				`walkSchemaTypes: encountered unknown “ZodFirstPartyTypeKind.${typeName}”`,
+			)
+		}
+	}
 	/* eslint-enable no-console */
 }
 
 /**
  * These types do not influence the generation of Vue’s `propName.type` Arrays and are therefore discarded
  */
-const ignoredZodTypes = new Set(['ZodDefault', 'ZodNullable', 'ZodOptional'])
+const ignoredZodTypes = new Set([
+	z.ZodFirstPartyTypeKind.ZodDefault,
+	z.ZodFirstPartyTypeKind.ZodNullable,
+	z.ZodFirstPartyTypeKind.ZodOptional,
+])
 
 /**
  * This maps the internal zod name of a type to the the constructor that Vue expects in `propName.type`
  */
-const zodToVueTypes = new Map<
-	string,
-	Exclude<PropType<unknown>, Array<unknown>>
->([
-	['ZodArray', Array],
-	['ZodBoolean', Boolean],
-	['ZodFunction', Function],
-	['ZodNativeEnum', String], // educated guess, can be fixed if the need for non-string enums arises
-	['ZodNumber', Number],
-	['ZodObject', Object],
-	['ZodString', String],
+const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
+	[z.ZodFirstPartyTypeKind.ZodArray, Array],
+	[z.ZodFirstPartyTypeKind.ZodBoolean, Boolean],
+	[z.ZodFirstPartyTypeKind.ZodFunction, Function],
+	[z.ZodFirstPartyTypeKind.ZodNativeEnum, String], // educated guess, can be fixed if the need for non-string enums arises
+	[z.ZodFirstPartyTypeKind.ZodNumber, Number],
+	[z.ZodFirstPartyTypeKind.ZodObject, Object],
+	[z.ZodFirstPartyTypeKind.ZodString, String],
 ])
 
 /**
@@ -106,19 +148,19 @@ const zodToVueTypes = new Map<
  * @description
  * This augments/replaces Vue’s props entirely, including the need to add prop.validator
  * by using zod and therefore actually prints errors to the console that can help developers
- * rather than just say "hey you failed the validator, good luck!" as vue would do by default.
+ * rather than the non-distinct vue-warn message about a validator failing for a component.
  *
  * ## Known limitations:
  *
  * 1. Deeply defined defaults are only applied when manually `schema.safeParse`-ing the data (only top-level defaults are possible to transform to Vue)
- * 2. While this function also automatically types the return types via as PropType<> (which in theory
- *   should mean that annotating the prop types explicitly is no longer necessary) in `@vue/composition-api`
- *   (`0.6.1` and `1.1.5`), `PropType<>` appears to be bugged.
- *   For example KtBreadcrumb’s props get inferred to be any
- *   So, unfortunately, this may only help in the future, once the Vue team fixes this
- * 3. `z.function().default()` does not accept `undefined` while parsing the schema manually
- *   without an explicit `.optional()` {@link https://github.com/colinhacks/zod/issues/647}
- *   However, it can still be used to generate the Vue defaults, as Vue doesn’t call validators with `undefined`
+ * 2. This function automatically types the return types of props using `as PropType<>`
+ *    (which, in turn, should make annotating of Vue props unnecessary). However, `PropType<>` appears
+ *    to be bugged, as tested in `@vue-composition/api@(0.6.1|1.1.5)`
+ *    For example, `KtBreadcrumb`’s props get inferred to be `any`.
+ *    So, unfortunately, this may only help in the future, once the Vue team fixes this
+ * 3. `z.safeParse()` fails for type: `z.function()` if we specify the default, without explicitly chaining
+ *    `optional()` on the function type. (See {@link https://github.com/colinhacks/zod/issues/647})
+ *    However, it is inconsequential for Vue prop validation, as Vue doesn’t execute the `validator` if the prop is not passed/undefined.
  *
  * @example
  * // KtUserMenu.vue
@@ -136,20 +178,27 @@ const zodToVueTypes = new Map<
  *   type PropsInternal = z.output<typeof propsSchema>
  * }
  */
-export const makeProps = <SCHEMA extends z.ZodObject<z.ZodRawShape>>(
-	schema: SCHEMA,
+export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
+	propsSchema: PROPS_SCHEMA,
 ): {
-	[KEY in keyof SCHEMA['shape']]: Omit<PropOptions, 'required' | 'type'> & {
-		required: z.output<SCHEMA>[KEY] extends undefined ? false : true
-		type: PropType<z.output<SCHEMA>[KEY]>
+	[PROP_NAME in keyof PROPS_SCHEMA['shape']]: Omit<
+		PropOptions,
+		'required' | 'type'
+	> & {
+		required: z.input<PROPS_SCHEMA>[PROP_NAME] extends undefined ? false : true
+		type: PropType<z.output<PROPS_SCHEMA>[PROP_NAME]>
 	}
 } =>
 	Object.fromEntries(
-		Object.entries(schema.shape).map(([key, shape]) => {
+		Object.entries(propsSchema.shape).map(([propName, propSchema]) => {
 			/* eslint-disable no-console */
-			if (DEBUG_MAKE_PROPS) console.log(`makeProp: generating “${key}”`)
+			if (DEBUG_MAKE_PROPS) console.log(`makeProp: generating “${propName}”`)
 
-			const zodTypeSet = walkShape(shape)
+			const propDefinition: PropOptions<unknown, boolean> = {
+				validator: propValidator(propSchema, propName),
+			}
+
+			const zodTypeSet = walkSchemaTypes(propSchema)
 
 			/**
 			 * WORKAROUND: Usually, one should probably call shape.isOptional()
@@ -160,39 +209,45 @@ export const makeProps = <SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 			 * unintended side-effects
 			 */
 			const isOptional =
-				zodTypeSet.has('ZodDefault') || zodTypeSet.has('ZodOptional')
+				zodTypeSet.has(z.ZodFirstPartyTypeKind.ZodDefault) ||
+				zodTypeSet.has(z.ZodFirstPartyTypeKind.ZodOptional)
 
-			const prop: PropOptions<unknown, boolean> = {
-				validator: propValidator(shape, key),
-			}
+			if (isOptional) propDefinition.default = propSchema._def.defaultValue
+			else propDefinition.required = true
 
-			if (isOptional) prop.default = shape._def.defaultValue
-			else prop.required = true
-
-			const propType = [...zodTypeSet]
+			const vuePropTypes = [...zodTypeSet]
 				.filter((x) => !ignoredZodTypes.has(x))
 				.map((zodTypeName) => {
 					if (DEBUG_MAKE_PROPS)
 						console.log(
-							`makeProps: found type ${zodTypeName} (${typeof zodTypeName})`,
+							`makeProps: found “ZodFirstPartyTypeKind.${zodTypeName}”`,
 						)
 
-					if (!zodToVueTypes.has(zodTypeName))
-						throw new Error(`makeProps: unknown zod type “${zodTypeName}”`)
+					if (!zodToVueType.has(zodTypeName))
+						throw new Error(
+							`makeProps: unknown “ZodFirstPartyTypeKind.${zodTypeName}”`,
+						)
 
-					return zodToVueTypes.get(zodTypeName) as MapValueType<
-						typeof zodToVueTypes
-					>
+					return zodToVueType.get(zodTypeName) as VuePropConstructor
 				})
 
-			prop.type = propType.length === 1 ? propType[0] : propType
+			if (vuePropTypes.length === 0)
+				throw new Error(
+					`makeProps: Could not determine vue prop.type for prop ${propName}`,
+				)
 
-			return [key, prop]
+			propDefinition.type =
+				vuePropTypes.length === 1 ? vuePropTypes[0] : vuePropTypes
+
+			return [propName, propDefinition]
 			/* eslint-enable no-console */
 		}),
 	) as {
-		[KEY in keyof SCHEMA['shape']]: Omit<PropOptions, 'required' | 'type'> & {
-			required: z.output<SCHEMA>[KEY] extends undefined ? false : true
-			type: PropType<z.output<SCHEMA>[KEY]>
+		[KEY in keyof PROPS_SCHEMA['shape']]: Omit<
+			PropOptions,
+			'required' | 'type'
+		> & {
+			required: z.input<PROPS_SCHEMA>[KEY] extends undefined ? false : true
+			type: PropType<z.output<PROPS_SCHEMA>[KEY]>
 		}
 	}

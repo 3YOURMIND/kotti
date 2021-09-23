@@ -1,9 +1,12 @@
 import { z } from 'zod'
 
 export namespace KottiUserMenu {
-	export const sectionLinkSchema = z.object({
-		title: z.string(),
-	})
+	export const sectionLinkSchema = z
+		.object({
+			link: z.string().optional(),
+			title: z.string(),
+		})
+		.passthrough()
 	export type SectionLink = z.infer<typeof sectionLinkSchema>
 
 	export const sectionSchema = z.object({
@@ -14,7 +17,7 @@ export namespace KottiUserMenu {
 	export type Section = z.infer<typeof sectionSchema>
 
 	export const propsSchema = z.object({
-		sections: z.array(sectionSchema),
+		sections: z.array(sectionSchema).nonempty(),
 		userAvatar: z.string().nullable().default(null),
 		userName: z.string().nullable().default(null),
 		userStatus: z.string(),
