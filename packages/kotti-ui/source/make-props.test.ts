@@ -1,7 +1,7 @@
 import { PropOptions } from '@vue/composition-api'
 import { z } from 'zod'
 
-import { makeProps } from './props'
+import { makeProps } from './make-props'
 import { silenceConsole } from './test-utils/silence-console'
 
 const expectDefault = (

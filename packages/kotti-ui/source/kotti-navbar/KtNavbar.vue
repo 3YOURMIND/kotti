@@ -55,7 +55,7 @@
 import { computed, defineComponent, provide, ref } from '@vue/composition-api'
 import { mixin as clickaway } from 'vue-clickaway'
 
-import { makeProps } from '../props'
+import { makeProps } from '../make-props'
 
 import NavbarLogo from './components/NavbarLogo.vue'
 import NavbarMenu from './components/NavbarMenu.vue'

@@ -17,7 +17,7 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { makeProps } from '../props'
+import { makeProps } from '../make-props'
 
 import { KottiButton } from './types'
 

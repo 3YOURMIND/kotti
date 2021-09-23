@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import { makeProps } from '../props'
+import { makeProps } from '../make-props'
 
 import { KottiLine } from './types'
 

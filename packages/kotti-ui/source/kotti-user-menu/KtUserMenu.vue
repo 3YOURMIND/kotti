@@ -55,7 +55,7 @@ import { mixin as clickaway } from 'vue-clickaway'
 
 import { KtAvatar } from '../kotti-avatar'
 import { IS_NAVBAR_NARROW } from '../kotti-navbar/constants'
-import { makeProps } from '../props'
+import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
 import { KottiUserMenu } from './types'
