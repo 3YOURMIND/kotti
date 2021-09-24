@@ -5,6 +5,7 @@ import { z } from 'zod'
 
 import { makeProps } from './make-props'
 import { silenceConsole } from './test-utils/silence-console'
+import { refinementNonEmpty } from './zod-refinements'
 
 declare global {
 	namespace jest {
@@ -175,6 +176,26 @@ describe('array', () => {
 		expect(prop).toBeType(Array)
 		expect(prop).toValidate(...ARRAY_SUCCESS, null, undefined)
 		expect(prop).not.toValidate(...ARRAY_FAILURE)
+	})
+
+	it('generates vue prop for schema “z.array(z.number()).nullable().default().refine(...refinementNonEmpty)”', () => {
+		const schema = z.object({
+			prop: z
+				.array(z.number())
+				.refine(...refinementNonEmpty)
+				.nullable()
+				.default(null),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(null)
+		expect(prop).toBeType(Array)
+		expect(prop).toValidate(
+			...ARRAY_SUCCESS.filter((x) => x.length !== 0),
+			null,
+			undefined,
+		)
+		expect(prop).not.toValidate(...ARRAY_FAILURE, [])
 	})
 })
 

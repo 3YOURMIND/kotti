@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { refinementNonEmpty } from '../zod-refinements'
+
 export namespace KottiUserMenu {
 	export const sectionLinkSchema = z
 		.object({
@@ -10,14 +12,14 @@ export namespace KottiUserMenu {
 	export type SectionLink = z.infer<typeof sectionLinkSchema>
 
 	export const sectionSchema = z.object({
-		links: z.array(sectionLinkSchema).nonempty(),
+		links: z.array(sectionLinkSchema).refine(...refinementNonEmpty),
 		title: z.string().nullable(),
 	})
 
 	export type Section = z.infer<typeof sectionSchema>
 
 	export const propsSchema = z.object({
-		sections: z.array(sectionSchema).nonempty(),
+		sections: z.array(sectionSchema).refine(...refinementNonEmpty),
 		userAvatar: z.string().nullable().default(null),
 		userName: z.string().nullable().default(null),
 		userStatus: z.string(),

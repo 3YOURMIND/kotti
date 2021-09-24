@@ -1,6 +1,8 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
+import { refinementNonEmpty } from '../zod-refinements'
+
 export namespace KottiNavbar {
 	export const notificationSchema = z.object({
 		count: z.number().int(),
@@ -26,7 +28,7 @@ export namespace KottiNavbar {
 	export type SectionLink = z.infer<typeof sectionLinkSchema>
 
 	export const sectionSchema = z.object({
-		links: z.array(sectionLinkSchema).nonempty(),
+		links: z.array(sectionLinkSchema).refine(...refinementNonEmpty),
 		title: z.string().nullable(),
 	})
 	export type Section = z.infer<typeof sectionSchema>
@@ -43,7 +45,7 @@ export namespace KottiNavbar {
 		logoUrl: z.string(),
 		notification: notificationSchema.nullable().default(null),
 		quickLinks: z.array(quickLinkSchema).default(() => []),
-		sections: z.array(sectionSchema).nonempty(),
+		sections: z.array(sectionSchema).refine(...refinementNonEmpty),
 		theme: themeSchema.nullable().default(null),
 	})
 

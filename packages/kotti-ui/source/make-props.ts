@@ -78,6 +78,18 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 			return result
 		}
 
+		// e.g. z.refine()
+		case z.ZodFirstPartyTypeKind.ZodEffects: {
+			const def = schema._def as z.ZodEffectsDef
+
+			if (DEBUG_WALK_SCHEMA_TYPES)
+				console.log(
+					`walkSchemaTypes: walking schema of “ZodFirstPartyTypeKind.ZodEffects”`,
+				)
+
+			return walkSchemaTypes(def.schema)
+		}
+
 		case z.ZodFirstPartyTypeKind.ZodDefault:
 		case z.ZodFirstPartyTypeKind.ZodNullable:
 		case z.ZodFirstPartyTypeKind.ZodOptional: {

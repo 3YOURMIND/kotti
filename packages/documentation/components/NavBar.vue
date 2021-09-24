@@ -101,7 +101,7 @@ export default defineComponent({
 									: ''
 							}`,
 						}),
-					) as unknown as Kotti.Navbar.Section['links'], // TS doesn’t understand the non-empty arrays without the cast due to the .map
+					),
 					title: section.title,
 				}),
 			),
