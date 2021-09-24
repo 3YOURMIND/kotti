@@ -1,6 +1,5 @@
-import { Yoco } from '@3yourmind/yoco'
-
-import { SpecifyRequiredProps } from '../types/utilities'
+import { yocoIconSchema } from '@3yourmind/yoco'
+import { z } from 'zod'
 
 export namespace KottiButton {
 	export enum Type {
@@ -10,23 +9,26 @@ export namespace KottiButton {
 		SECONDARY = 'secondary',
 		TEXT = 'text',
 	}
+	export const typeSchema = z.nativeEnum(Type)
 
 	export enum Size {
 		LARGE = 'large',
 		MEDIUM = 'medium',
 		SMALL = 'small',
 	}
+	export const sizeSchema = z.nativeEnum(Size)
 
-	export type PropsInternal = {
-		icon: Yoco.Icon | null
-		isBlock: boolean
-		isLoading: boolean
-		isMultiline: boolean
-		isSubmit: boolean
-		label: string | null
-		size: KottiButton.Size
-		type: KottiButton.Type
-	}
+	export const propsSchema = z.object({
+		icon: yocoIconSchema.nullable().default(null),
+		isBlock: z.boolean().default(false),
+		isLoading: z.boolean().default(false),
+		isMultiline: z.boolean().default(false),
+		isSubmit: z.boolean().default(false),
+		label: z.string().nullable().default(null),
+		size: sizeSchema.default(Size.MEDIUM),
+		type: typeSchema.default(Type.DEFAULT),
+	})
 
-	export type Props = SpecifyRequiredProps<PropsInternal, never>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }

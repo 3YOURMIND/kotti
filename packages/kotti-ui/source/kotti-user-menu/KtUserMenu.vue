@@ -55,16 +55,10 @@ import { mixin as clickaway } from 'vue-clickaway'
 
 import { KtAvatar } from '../kotti-avatar'
 import { IS_NAVBAR_NARROW } from '../kotti-navbar/constants'
+import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
 import { KottiUserMenu } from './types'
-
-const linkIsValid = (link: KottiUserMenu.SectionLink) => Boolean(link.title)
-
-const sectionIsValid = (section: KottiUserMenu.Section) =>
-	Array.isArray(section.links) &&
-	Boolean(section.links.length) &&
-	section.links.every(linkIsValid)
 
 export default defineComponent<KottiUserMenu.PropsInternal>({
 	name: 'KtUserMenu',
@@ -72,16 +66,7 @@ export default defineComponent<KottiUserMenu.PropsInternal>({
 		KtAvatar,
 	},
 	mixins: [clickaway],
-	props: {
-		userAvatar: { type: String, default: null },
-		sections: {
-			type: Array,
-			required: true,
-			validator: (sections) => sections.every(sectionIsValid),
-		},
-		userName: { type: String, default: null },
-		userStatus: { type: String, required: true },
-	},
+	props: makeProps(KottiUserMenu.propsSchema),
 	setup() {
 		const isMenuShow = ref(false)
 		const isNarrow = inject<ComputedRef<boolean>>(

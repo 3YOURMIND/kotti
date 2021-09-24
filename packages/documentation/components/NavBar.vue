@@ -15,9 +15,8 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
+import { Kotti } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from '@vue/composition-api'
-import { Route } from 'vue-router'
 
 import navLogo from '../assets/img/nav_logo.svg'
 import { menu } from '../data/menu'
@@ -44,6 +43,7 @@ export default defineComponent({
 	setup() {
 		const route = useRoute()
 		const router = useRouter()
+
 		const isNarrow = ref<boolean>(
 			(() => {
 				try {
@@ -62,8 +62,8 @@ export default defineComponent({
 		)
 
 		return {
-			handleLinkClick(link: Route) {
-				router.value.push(link.path)
+			handleLinkClick(link: Kotti.Navbar.SectionLink & { to: string }) {
+				router.value.push(link.to)
 			},
 			isNarrow,
 			navLogo,
@@ -86,28 +86,22 @@ export default defineComponent({
 				},
 			],
 			sections: menu.map(
-				(
-					section,
-				): {
-					title: string | null
-					links: Array<{
-						icon: Yoco.Icon
-						title: string
-						path: string
-						isActive: boolean
-					}>
-				} => ({
-					links: section.subsections.map((subsection) => ({
-						icon: subsection.icon,
-						title: subsection.title,
-						path: `/${subsection.path}${
-							subsection.pages.length >= 1 ? `/${subsection.pages[0].path}` : ''
-						}`,
-						isActive:
-							subsection.path === ''
-								? route.value.path === '/'
-								: route.value.path.startsWith(`/${subsection.path}`),
-					})),
+				(section): Kotti.Navbar.Section => ({
+					links: section.subsections.map(
+						(subsection): Kotti.Navbar.SectionLink & { to: string } => ({
+							icon: subsection.icon,
+							isActive:
+								subsection.path === ''
+									? route.value.path === '/'
+									: route.value.path.startsWith(`/${subsection.path}`),
+							title: subsection.title,
+							to: `/${subsection.path}${
+								subsection.pages.length >= 1
+									? `/${subsection.pages[0].path}`
+									: ''
+							}`,
+						}),
+					),
 					title: section.title,
 				}),
 			),

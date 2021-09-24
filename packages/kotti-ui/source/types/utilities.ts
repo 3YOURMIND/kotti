@@ -1,3 +1,6 @@
+/**
+ * @deprecated use `makeProps` and `z.input`/`z.output` if possible
+ */
 export type SpecifyRequiredProps<
 	PROPS extends Record<string, unknown>,
 	REQUIRED_PROPS extends keyof PROPS,

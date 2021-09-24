@@ -18,11 +18,12 @@
 </template>
 
 <script lang="ts">
-import { isYocoIcon, Yoco } from '@3yourmind/yoco'
+import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtButton } from '../kotti-button'
 import { useTranslationNamespace } from '../kotti-translation/hooks'
+import { makeProps } from '../make-props'
 
 import { KottiBanner } from './types'
 
@@ -31,18 +32,7 @@ export default defineComponent<KottiBanner.PropsInternal>({
 	components: {
 		KtButton,
 	},
-	props: {
-		actionText: { default: null, type: String },
-		expandCloseLabel: { default: null, type: String },
-		expandLabel: { default: null, type: String },
-		icon: {
-			default: Yoco.Icon.ANNOUNCE,
-			type: String,
-			validator: isYocoIcon,
-		},
-		isGray: { default: false, type: Boolean },
-		message: { required: true, type: String },
-	},
+	props: makeProps(KottiBanner.propsSchema),
 	setup(props, { slots }) {
 		const translations = useTranslationNamespace('KtBanner')
 

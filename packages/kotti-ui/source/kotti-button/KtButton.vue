@@ -15,33 +15,15 @@
 </template>
 
 <script lang="ts">
-import { isYocoIcon } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
+
+import { makeProps } from '../make-props'
 
 import { KottiButton } from './types'
 
 export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
-	props: {
-		icon: { default: null, type: String, validator: isYocoIcon },
-		isBlock: { default: false, type: Boolean },
-		isLoading: { default: false, type: Boolean },
-		isMultiline: { default: false, type: Boolean },
-		isSubmit: { default: false, type: Boolean },
-		label: { default: null, type: String },
-		size: {
-			default: KottiButton.Size.MEDIUM,
-			type: String,
-			validator: (value: unknown): value is KottiButton.Size =>
-				Object.values(KottiButton.Size).includes(value as KottiButton.Size),
-		},
-		type: {
-			default: KottiButton.Type.DEFAULT,
-			type: String,
-			validator: (value: unknown): value is KottiButton.Type =>
-				Object.values(KottiButton.Type).includes(value as KottiButton.Type),
-		},
-	},
+	props: makeProps(KottiButton.propsSchema),
 	setup(props, { emit, slots }) {
 		const hasSlot = computed(() => Boolean(slots.default))
 

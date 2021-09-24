@@ -1,33 +1,43 @@
-import { Yoco } from '@3yourmind/yoco'
-
-import { SpecifyRequiredProps } from '../types/utilities'
+import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
+import { z } from 'zod'
 
 export namespace KottiBreadcrumb {
 	export enum SeparatorType {
 		ICON = 'icon',
 		TEXT = 'text',
 	}
+	export const separatorTypeSchema = z.nativeEnum(SeparatorType)
 
-	export type Breadcrumb = {
-		isCompleted: boolean
-		onClick: () => void
-		title: string
-	}
+	export const breadcrumbSchema = z.object({
+		isCompleted: z.boolean(),
+		onClick: z.function(z.tuple([]), z.void()),
+		title: z.string(),
+	})
+	export type Breadcrumb = z.infer<typeof breadcrumbSchema>
 
-	export type Style =
-		| {
-				style: SeparatorType.ICON
-				value: Yoco.Icon
-		  }
-		| {
-				style: SeparatorType.TEXT
-				value: string
-		  }
+	export const separatorSchema = z.union([
+		z.object({
+			style: z.literal(SeparatorType.ICON),
+			value: yocoIconSchema,
+		}),
+		z.object({
+			style: z.literal(SeparatorType.TEXT),
+			value: z.string(),
+		}),
+	])
+	export type Separator = z.infer<typeof separatorSchema>
 
-	export type PropsInternal = {
-		breadcrumbs: Array<Breadcrumb>
-		separator: Style
-	}
+	export const propsSchema = z.object({
+		breadcrumbs: z.array(breadcrumbSchema),
+		separator: separatorSchema.default(
+			() =>
+				({
+					style: SeparatorType.ICON,
+					value: Yoco.Icon.CHEVRON_RIGHT,
+				} as const),
+		),
+	})
 
-	export type Props = SpecifyRequiredProps<PropsInternal, 'breadcrumbs'>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }

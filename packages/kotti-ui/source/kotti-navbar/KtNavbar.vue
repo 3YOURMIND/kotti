@@ -55,7 +55,7 @@
 import { computed, defineComponent, provide, ref } from '@vue/composition-api'
 import { mixin as clickaway } from 'vue-clickaway'
 
-import { Kotti } from '../types'
+import { makeProps } from '../make-props'
 
 import NavbarLogo from './components/NavbarLogo.vue'
 import NavbarMenu from './components/NavbarMenu.vue'
@@ -73,18 +73,7 @@ export default defineComponent<KottiNavbar.PropsInternal>({
 		NavbarQuickLink,
 	},
 	mixins: [clickaway],
-	props: {
-		isNarrow: { default: false, type: Boolean },
-		logoUrl: { required: true, type: String },
-		notification: { default: null, type: Object },
-		quickLinks: { default: () => [], type: Array },
-		sections: { required: true, type: Array },
-		theme: {
-			default: null,
-			type: String,
-			validator: (theme) => theme === null || theme in Kotti.Navbar.Theme,
-		},
-	},
+	props: makeProps(KottiNavbar.propsSchema),
 	setup(props, { emit }) {
 		const mobileMenuToggle = ref(false)
 
