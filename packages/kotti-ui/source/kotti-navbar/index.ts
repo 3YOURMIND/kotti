@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtNavbarVue from './KtNavbar.vue'
+import { KottiNavbar } from './types'
 
 export const KtNavbar = attachMeta(makeInstallable(KtNavbarVue), {
 	addedVersion: '0.0.1',
@@ -16,5 +17,6 @@ export const KtNavbar = attachMeta(makeInstallable(KtNavbarVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Navbar',
+		schema: KottiNavbar.propsSchema,
 	},
 })

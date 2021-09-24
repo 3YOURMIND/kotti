@@ -29,6 +29,7 @@ export const KtFormControllerObject = attachMeta(
 		},
 		typeScript: {
 			namespace: 'Kotti.FormControllerObject',
+			schema: null,
 		},
 	},
 )

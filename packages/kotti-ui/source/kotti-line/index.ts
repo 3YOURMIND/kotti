@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtLineVue from './KtLine.vue'
+import { KottiLine } from './types'
 
 export const KtLine = attachMeta(makeInstallable(KtLineVue), {
 	addedVersion: '1.0.1',
@@ -13,5 +14,6 @@ export const KtLine = attachMeta(makeInstallable(KtLineVue), {
 	slots: {},
 	typeScript: {
 		namespace: 'Kotti.Line',
+		schema: KottiLine.propsSchema,
 	},
 })

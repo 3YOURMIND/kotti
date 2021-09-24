@@ -17,6 +17,7 @@ export const KtFieldText = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldText',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_TEXT_SUPPORTS },

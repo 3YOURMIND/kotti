@@ -1,3 +1,5 @@
+import { ZodSchema } from 'zod'
+
 export { KottiAvatar as Avatar } from '../kotti-avatar/types'
 export { KottiAvatarGroup as AvatarGroup } from '../kotti-avatar-group/types'
 export { KottiBanner as Banner } from '../kotti-banner/types'
@@ -73,5 +75,8 @@ export type Meta = {
 			>
 		}
 	>
-	typeScript: { namespace: string } | null
+	typeScript: {
+		namespace: string
+		schema: ZodSchema<unknown> | null
+	} | null
 }

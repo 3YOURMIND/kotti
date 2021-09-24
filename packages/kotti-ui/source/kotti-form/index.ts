@@ -14,6 +14,7 @@ export const KtForm = attachMeta(makeInstallable(KtFormVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Form',
+		schema: null,
 	},
 })
 

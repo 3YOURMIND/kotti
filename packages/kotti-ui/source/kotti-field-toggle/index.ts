@@ -35,6 +35,7 @@ export const KtFieldToggle = attachMeta(
 		},
 		typeScript: {
 			namespace: 'Kotti.FieldToggle',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_TOGGLE_SUPPORTS },
@@ -49,6 +50,7 @@ export const KtFieldToggleGroup = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldToggleGroup',
+			schema: null,
 		},
 	},
 	{ supports: KOTTI_FIELD_TOGGLE_SUPPORTS },

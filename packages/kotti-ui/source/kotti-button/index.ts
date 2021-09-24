@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtButtonVue from './KtButton.vue'
+import { KottiButton } from './types'
 
 export const KtButton = attachMeta(makeInstallable(KtButtonVue), {
 	addedVersion: '0.0.1',
@@ -18,5 +19,6 @@ export const KtButton = attachMeta(makeInstallable(KtButtonVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Button',
+		schema: KottiButton.propsSchema,
 	},
 })

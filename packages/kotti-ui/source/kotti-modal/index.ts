@@ -21,5 +21,6 @@ export const KtModal = attachMeta(makeInstallable(KtModalVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Modal',
+		schema: null,
 	},
 })

@@ -18,6 +18,7 @@ export const KtField = attachMeta(makeInstallable(KtFieldVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Field',
+		schema: null,
 	},
 })
 

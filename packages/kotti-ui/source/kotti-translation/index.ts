@@ -11,6 +11,7 @@ export const KtTranslationContext = attachMeta(
 		slots: {},
 		typeScript: {
 			namespace: 'Kotti.Translation',
+			schema: null,
 		},
 	},
 )
