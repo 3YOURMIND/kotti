@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Kotti } from '@3yourmind/kotti-ui'
-import { Yoco, yocoIconschema } from '@3yourmind/yoco'
+import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { defineComponent, ref } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -44,7 +44,7 @@ export default defineComponent({
 				slots: {},
 				typeScript: {
 					namespace: 'Yoco.Icon',
-					schema: yocoIconschema,
+					schema: yocoIconSchema,
 				},
 			},
 		}
