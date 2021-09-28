@@ -11,5 +11,8 @@ export const KtDrawer = attachMeta(makeInstallable(KtDrawerVue), {
 		'drawer-footer': { description: null, scope: null },
 		'drawer-header': { description: null, scope: null },
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Drawer',
+		schema: null,
+	},
 })
