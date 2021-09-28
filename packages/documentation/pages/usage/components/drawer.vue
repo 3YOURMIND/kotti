@@ -58,7 +58,7 @@ There are different ways to customize the width of the drawer.
 
 Each drawer has a default state and a wide state, the transition can be triggered by clicking on the arrow at the edge of the drawer.
 
-When the `isWide` flag is set to `true` the default state will cover `50%` of the screen, the wide screen will cover `75%`.
+When the `isWide` flag is set to `true` the default state will be `26.8rem` wide, the expanded state will be `75%` of the screen width.
 
 You can also customize the width of drawer by setting both `defaultWidth` and `expandWidth`. If only one values is set, this will not work
 

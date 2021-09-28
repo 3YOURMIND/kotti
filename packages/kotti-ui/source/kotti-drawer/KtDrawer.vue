@@ -62,12 +62,13 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 
 <style lang="scss">
 :root {
-	--default-drawer-width: 18.8rem;
-	--wide-drawer-width: 26.8rem;
+	--kt-drawer-default-width: 18.8rem;
+	--kt-drawer-wide-width: 26.8rem;
 }
-@import '../kotti-style/_variables.scss';
+</style>
 
-// Drawer with Vue Transition
+<style lang="scss" scoped>
+@import '../kotti-style/_variables.scss';
 
 .kt-drawer {
 	&__mask {
@@ -88,7 +89,7 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 		right: 0;
 		display: flex;
 		flex-direction: column;
-		width: var(--default-drawer-width);
+		width: var(--kt-drawer-default-width);
 		height: 100%;
 		padding: var(--unit-6);
 		padding-left: var(--unit-8);
@@ -102,7 +103,7 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 		}
 
 		&--is-wide {
-			width: var(--wide-drawer-width);
+			width: var(--kt-drawer-wide-width);
 
 			&.kt-drawer__container--is-expanded {
 				width: 75%;
