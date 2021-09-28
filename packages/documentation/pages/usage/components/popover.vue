@@ -6,6 +6,33 @@ It uses `popper.js` library for position and `placement` attribute can be anythi
 You can also directly use the `popper.js` constructor by passing an `options` props. refer to the [popper.js
 documentation](https://popper.js.org/docs/v2/constructors/) for more informations.
 
+## Options
+
+We also provide a nice way of displaying items inside popovers. It replaces the old `KtDropdownMenu`.
+Items can be `isDisabled` or `isSelected`.
+
+<div class="element-example">
+	<KtPopover :options="[
+		{ dataTest: 'example-button', icon: Yoco.Icon.DOWNLOAD, label: 'Download', onClick: () => {} },
+		{ icon: Yoco.Icon.EDIT, isDisabled: true, label: 'Edit' },
+		{ icon: Yoco.Icon.STAR_SOLID, isSelected: true, label: 'Selected Item', onClick: () => {} },
+	]">
+		<KtButton label="Popover with options"/>
+	</KtPopover>
+</div>
+
+```html
+<KtPopover
+	:options="[
+		{ dataTest: 'example-button', icon: Yoco.Icon.DOWNLOAD, label: 'Download', onClick: () => {} },
+		{ icon: Yoco.Icon.EDIT, isDisabled: true, label: 'Edit' },
+		{ icon: Yoco.Icon.STAR_SOLID, isSelected: true, label: 'Selected Item', onClick: () => {} },
+	]"
+>
+	<KtButton label="Popover with options" />
+</KtPopover>
+```
+
 ## Placement
 
 <div class="element-example">
@@ -103,30 +130,6 @@ an increment of '4rem'.
 </KtPopover>
 </div>
 
-## Options
-
-We also provide a nice way of displaying items inside popovers. It replaces the old `KtDropdownMenu`. We can display disabled text icon items when we provide isDisabled properties in the `KtPopover` options.
-
-<div class="element-example">
-	<KtPopover :options="[
-			{ dataTest: 'example-button', icon: 'download', label: 'Download', onClick: () => {}},
-			{ icon: 'edit', isDisabled: true, label: 'Edit'}
-	]">
-		<KtButton label="Popover with a disabled item"/>
-	</KtPopover>
-</div>
-
-```html
-<KtPopover
-	:options="[
-			{ dataTest: 'example-button', icon: 'download', label: 'Download', onClick: () => {}},
-			{ icon: 'edit', isDisabled: true, label: 'Edit'}
-	]"
->
-	<KtButton label="Popover with a disabled item" />
-</KtPopover>
-```
-
 ## Scoped Slot
 
 Scoped slot allows your to get props or function provided by slot themselve.
@@ -195,6 +198,7 @@ In KtPopover, `close` function is provided to allow user click a button from slo
 
 <script lang="ts">
 import { KtPopover } from '@3yourmind/kotti-ui'
+import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -207,6 +211,7 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtPopover,
+			Yoco,
 		}
 	},
 })

@@ -15,6 +15,7 @@
 					:dataTest="option.dataTest"
 					:icon="option.icon"
 					:isDisabled="option.isDisabled"
+					:isSelected="option.isSelected"
 					:label="option.label"
 					@click="handleItemClick(option)"
 				/>
@@ -35,6 +36,7 @@ const optionIsValid = (option) =>
 	option !== null &&
 	(typeof option.icon === 'undefined' || isYocoIcon(option.icon)) &&
 	['undefined', 'boolean'].includes(typeof option.isDisabled) &&
+	['undefined', 'boolean'].includes(typeof option.isSelected) &&
 	(option.isDisabled || typeof option.onClick === 'function') &&
 	['undefined', 'string'].includes(typeof option.label) &&
 	['undefined', 'string'].includes(typeof option.dataTest)
