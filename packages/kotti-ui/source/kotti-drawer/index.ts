@@ -1,6 +1,7 @@
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtDrawerVue from './KtDrawer.vue'
+import { KottiDrawer } from './types'
 
 export const KtDrawer = attachMeta(makeInstallable(KtDrawerVue), {
 	addedVersion: '0.0.1',
@@ -11,5 +12,8 @@ export const KtDrawer = attachMeta(makeInstallable(KtDrawerVue), {
 		'drawer-footer': { description: null, scope: null },
 		'drawer-header': { description: null, scope: null },
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Drawer',
+		schema: KottiDrawer.propsSchema,
+	},
 })
