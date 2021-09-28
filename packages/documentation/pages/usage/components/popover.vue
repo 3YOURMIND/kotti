@@ -102,7 +102,7 @@ If the parent element has an `overflow` attribute, `popper.js` ~~will handle tha
 
 ## Size
 
-Popover size can be `sm`, `md`,`lg`, `xl`, `xxl` and `xxxl`.
+Popover size can be `sm`, `md`,`lg`, and `xl`.
 The small size equals to a width '12rem', then every larger size is
 an increment of '4rem'.
 
@@ -121,14 +121,6 @@ an increment of '4rem'.
 </KtPopover>
 <KtPopover size="xl" class="mt-4 ml-4">
 	<KtButton label="Extra Large Popover" />
-	<div slot="content">Message</div>
-</KtPopover>
-<KtPopover size="xxl" class="mt-4 ml-4">
-	<KtButton label="Huge Popover" />
-	<div slot="content">Message</div>
-</KtPopover>
-<KtPopover size="xxxl" class="mt-4 ml-4">
-	<KtButton label="Massive Popover" />
 	<div slot="content">Message</div>
 </KtPopover>
 </div>

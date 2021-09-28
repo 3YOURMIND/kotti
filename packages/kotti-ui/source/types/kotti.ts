@@ -39,6 +39,7 @@ export { KottiHeading as Heading } from '../kotti-heading/types'
 export { KottiLine as Line } from '../kotti-line/types'
 export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
+export { KottiPopover as Popover } from '../kotti-popover/types'
 export { KottiRow as Row } from '../kotti-row/types'
 
 export enum MetaDesignType {
