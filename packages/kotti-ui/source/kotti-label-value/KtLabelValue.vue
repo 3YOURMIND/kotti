@@ -12,20 +12,13 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
+import { makeProps } from '../make-props'
+
 import { KottiLabelValue } from './types'
 
 export default defineComponent<KottiLabelValue.PropsInternal>({
 	name: 'KtLabelValue',
-	props: {
-		emphasisSize: { default: KottiLabelValue.EmphasisSize.NONE, type: String },
-		emphasisStyle: {
-			default: KottiLabelValue.EmphasisStyle.VALUE,
-			type: String,
-		},
-		isHorizontal: { default: false, type: Boolean },
-		label: { required: true, type: String },
-		value: { default: null, type: [String, Number] },
-	},
+	props: makeProps(KottiLabelValue.propsSchema),
 	setup(props) {
 		return {
 			wrapperClasses: computed(() => ({

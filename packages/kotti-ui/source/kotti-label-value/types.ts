@@ -1,4 +1,4 @@
-import { SpecifyRequiredProps } from '../types/utilities'
+import { z } from 'zod'
 
 export namespace KottiLabelValue {
 	export enum EmphasisSize {
@@ -11,13 +11,14 @@ export namespace KottiLabelValue {
 		VALUE = 'value',
 	}
 
-	export type PropsInternal = {
-		emphasisSize: EmphasisSize
-		emphasisStyle: EmphasisStyle
-		isHorizontal: boolean
-		label: string
-		value: string | number | null
-	}
+	export const propsSchema = z.object({
+		emphasisSize: z.nativeEnum(EmphasisSize).default(EmphasisSize.NONE),
+		emphasisStyle: z.nativeEnum(EmphasisStyle).default(EmphasisStyle.VALUE),
+		isHorizontal: z.boolean().default(false),
+		label: z.string(),
+		value: z.union([z.string(), z.number(), z.null()]).default(null),
+	})
 
-	export type Props = SpecifyRequiredProps<PropsInternal, 'label'>
+	export type PropsInternal = z.input<typeof propsSchema>
+	export type Props = z.output<typeof propsSchema>
 }
