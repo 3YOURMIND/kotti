@@ -24,16 +24,13 @@
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import { makeProps } from '../make-props'
+
 import { KottiDrawer } from './types'
 
 export default defineComponent<KottiDrawer.PropsInternal>({
 	name: 'KtDrawer',
-	props: {
-		disallowCloseOutside: { type: Boolean, default: false },
-		isWide: { type: Boolean, default: false },
-		defaultWidth: { type: String, default: null },
-		expandWidth: { type: String, default: null },
-	},
+	props: makeProps(KottiDrawer.propsSchema),
 	setup(props, { emit }) {
 		const isExpanded = ref(false)
 
