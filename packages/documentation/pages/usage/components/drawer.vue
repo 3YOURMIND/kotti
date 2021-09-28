@@ -16,9 +16,9 @@ It is best to place secondary functionality or information into the drawer, and 
 ## Size
 
 <div class="element-example">
-	<button class="primary mr-16px" @click="showDrawer=true" >Show Default Size Drawer</button>
-	<button class="primary mr-16px" @click="showWideDrawer=true">Show Wide Size Drawer</button>
-	<button class="primary" @click="customizeWidthDrawer=true">Customize Size Drawer</button>
+	<KtButton type="primary" class="mr-16px" @click="showDrawer=true" label="Show Default Size Drawer" />
+	<KtButton type="primary" class="mr-16px" @click="showWideDrawer=true" label="Show Wide Size Drawer" />
+	<KtButton type="primary" @click="customizeWidthDrawer=true" label="Customize Size Drawer" />
 	<KtDrawer v-if="showDrawer" @close="showDrawer=false" disallowCloseOutside>
 		<div slot="drawer-header">
 			<h2>Default Size Drawer</h2>
@@ -27,7 +27,7 @@ It is best to place secondary functionality or information into the drawer, and 
 			<p>Close from outside disabled</p>
 		</div>
 		<div slot="drawer-footer">
-			<button @click="showDrawer=false" class="w-100">Close Drawer</button>
+			<KtButton @click="showDrawer=false" class="w-100" label="Close Drawer" />
 		</div>
 	</KtDrawer>
 	<KtDrawer v-if="showWideDrawer" isWide @close="showWideDrawer=false">
@@ -38,7 +38,7 @@ It is best to place secondary functionality or information into the drawer, and 
 			<p>Close from outside allowed</p>
 		</div>
 		<div slot="drawer-footer">
-			<button @click="showWideDrawer=false" class="w-100">Close Drawer</button>
+			<KtButton @click="showWideDrawer=false" class="w-100" label="Close Drawer" />
 		</div>
 	</KtDrawer>
 	<KtDrawer v-if="customizeWidthDrawer" defaultWidth="400px"  expandWidth="600px" @close="customizeWidthDrawer=false">
@@ -49,7 +49,7 @@ It is best to place secondary functionality or information into the drawer, and 
 			<p>Close from outside allowed</p>
 		</div>
 		<div slot="drawer-footer">
-			<button @click="customizeWidthDrawer=false" class="w-100">Close Drawer</button>
+			<KtButton @click="customizeWidthDrawer=false" class="w-100" label="Close Drawer" />
 		</div>
 	</KtDrawer>
 </div>
@@ -87,7 +87,7 @@ When the `disallowCloseOutside` flag is set, it prevents the user from accidenta
 		<p>Close from outside disabled</p>
 	</div>
 	<div slot="drawer-footer">
-		<button @click="showDrawer=false" class="w-100">Close Drawer</button>
+		<KtButton @click="showDrawer=false" class="w-100" label="Close Drawer" />
 	</div>
 </KtDrawer>
 ```
@@ -104,7 +104,7 @@ When the `disallowCloseOutside` flag is set, it prevents the user from accidenta
 		</div>
 		<div class="drawer-body">default body</div>
 		<div class="drawer-footer">
-			<button class="w-100">Close</button>
+			<KtButton class="w-100" label="Close" />
 		</div>
 		<div class="drawer-handle">
 			<i class="yoco" v-if="expand">chevron_right</i>
