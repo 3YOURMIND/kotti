@@ -56,7 +56,7 @@
 					:userId="reply.userId"
 					:userName="reply.userName"
 					@_inlineDeleteClick="handleDelete($event, 'INLINE')"
-					@_inlineEditSumbit="$emit('edit', $event)"
+					@_inlineEditSubmit="$emit('edit', $event)"
 					@_inlineReplyClick="handleInlineReplyClick"
 				/>
 			</div>

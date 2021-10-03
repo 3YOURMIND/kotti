@@ -123,7 +123,7 @@ export default {
 		handleConfirm() {
 			this.isInlineEdit = false
 			if (!this.inlineMessageValue) return
-			this.$emit('_inlineEditSumbit', {
+			this.$emit('_inlineEditSubmit', {
 				message: this.inlineMessageValue,
 				id: this.id,
 			})
