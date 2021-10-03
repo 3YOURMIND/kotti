@@ -254,6 +254,63 @@ describe('boolean', () => {
 	})
 })
 
+describe('date', () => {
+	beforeAll(silenceConsole)
+
+	const getRandomDate = () => new Date(1549312452000)
+
+	const DATE_SUCCESS = [new Date(), getRandomDate()]
+	const DATE_FAILURE = ['true', 'false', 1, [], {}, false]
+
+	it('generates vue prop for schema “z.date()”', () => {
+		const schema = z.object({
+			prop: z.date(),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(Date)
+		expect(prop).toValidate(...DATE_SUCCESS)
+		expect(prop).not.toValidate(...DATE_FAILURE, null, undefined)
+	})
+
+	it('generates vue prop for schema “z.date().nullable()”', () => {
+		const schema = z.object({
+			prop: z.date().nullable(),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(Date)
+		expect(prop).toValidate(...DATE_SUCCESS, null)
+		expect(prop).not.toValidate(...DATE_FAILURE, undefined)
+	})
+
+	it('generates vue prop for schema “z.date().default()”', () => {
+		const schema = z.object({
+			prop: z.date().default(getRandomDate()),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(getRandomDate())
+		expect(prop).toBeType(Date)
+		expect(prop).toValidate(...DATE_SUCCESS, undefined)
+		expect(prop).not.toValidate(...DATE_FAILURE, null)
+	})
+
+	it('generates vue prop for schema “z.date().nullable().default()”', () => {
+		const schema = z.object({
+			prop: z.date().nullable().default(null),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(null)
+		expect(prop).toBeType(Date)
+		expect(prop).toValidate(...DATE_SUCCESS, null, undefined)
+		expect(prop).not.toValidate(...DATE_FAILURE)
+	})
+})
+
 describe('function', () => {
 	beforeAll(silenceConsole)
 

@@ -111,6 +111,7 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 
 		case z.ZodFirstPartyTypeKind.ZodArray:
 		case z.ZodFirstPartyTypeKind.ZodBoolean:
+		case z.ZodFirstPartyTypeKind.ZodDate:
 		case z.ZodFirstPartyTypeKind.ZodFunction:
 		case z.ZodFirstPartyTypeKind.ZodNativeEnum:
 		case z.ZodFirstPartyTypeKind.ZodNumber:
@@ -148,6 +149,7 @@ const ignoredZodTypes = new Set([
 const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
 	[z.ZodFirstPartyTypeKind.ZodArray, Array],
 	[z.ZodFirstPartyTypeKind.ZodBoolean, Boolean],
+	[z.ZodFirstPartyTypeKind.ZodDate, Date],
 	[z.ZodFirstPartyTypeKind.ZodFunction, Function],
 	[z.ZodFirstPartyTypeKind.ZodNativeEnum, String], // educated guess, can be fixed if the need for non-string enums arises
 	[z.ZodFirstPartyTypeKind.ZodNumber, Number],
