@@ -41,5 +41,6 @@ export namespace KottiTranslation {
 		| 'de-DE'
 		| 'es-ES'
 		| 'fr-FR'
+		| 'id-ID'
 		| 'ja-JP'
 }
