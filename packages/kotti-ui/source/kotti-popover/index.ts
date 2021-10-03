@@ -23,7 +23,7 @@ export const KtPopover = attachMeta(makeInstallable(KtPopoverVue), {
 		content: { description: null, scope: null },
 		default: { description: null, scope: null },
 	},
-	typeScript: null,
+	typeScript: null, // TODO: Expose propsSchema once refactored to TS
 })
 
 export const KtPopoverItem = attachMeta(makeInstallable(KtPopoverItemVue), {

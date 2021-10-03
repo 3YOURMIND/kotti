@@ -25,37 +25,19 @@
 </template>
 
 <script>
-import { isYocoIcon } from '@3yourmind/yoco'
 import { createPopper } from '@popperjs/core'
 import { mixin as clickaway } from 'vue-clickaway'
 
-import IconTextItem from './components/IconTextItem.vue'
+import { makeProps } from '../make-props'
 
-const optionIsValid = (option) =>
-	typeof option === 'object' &&
-	option !== null &&
-	(typeof option.icon === 'undefined' || isYocoIcon(option.icon)) &&
-	['undefined', 'boolean'].includes(typeof option.isDisabled) &&
-	['undefined', 'boolean'].includes(typeof option.isSelected) &&
-	(option.isDisabled || typeof option.onClick === 'function') &&
-	['undefined', 'string'].includes(typeof option.label) &&
-	['undefined', 'string'].includes(typeof option.dataTest)
+import IconTextItem from './components/IconTextItem.vue'
+import { KottiPopover } from './types'
 
 export default {
 	name: 'KtPopover',
 	components: { IconTextItem },
 	mixins: [clickaway],
-	props: {
-		content: { default: '', type: String },
-		forceShowPopover: { default: null, type: Boolean },
-		options: {
-			default: () => [],
-			type: Array,
-			validator: (options) => options.every(optionIsValid),
-		},
-		placement: { default: 'bottom', type: String },
-		size: { default: 'auto', type: String },
-	},
+	props: makeProps(KottiPopover.propsSchema),
 	data() {
 		return {
 			showPopper: false,
@@ -202,14 +184,6 @@ export default {
 
 		&-xl {
 			width: 24rem;
-		}
-
-		&-xxl {
-			width: 28rem;
-		}
-
-		&-xxxl {
-			width: 32rem;
 		}
 	}
 }
