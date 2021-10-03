@@ -13,7 +13,7 @@ import cloneDeep from 'lodash/cloneDeep'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
-import { useTranslationNamespace } from '../kotti-translation/hooks'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import { FORM_KEY_NONE } from './constants'
 import { KOTTI_FIELD_PROPS } from './constants'

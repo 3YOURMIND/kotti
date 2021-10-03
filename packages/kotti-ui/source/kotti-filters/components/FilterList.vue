@@ -29,7 +29,7 @@
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { useTranslationNamespace } from '../../kotti-translation/hooks'
+import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { Kotti } from '../../types'
 import { getFilterInitialState } from '../utils'
 

@@ -11,7 +11,7 @@ export type DeepPartial<T> = T extends Record<string, unknown>
 	? { [K in keyof T]?: DeepPartial<T[K]> }
 	: T
 
-export namespace KottiTranslation {
+export namespace KottiI18n {
 	export type Context = {
 		locale: Ref<SupportedLanguages>
 		messages: Ref<Messages>

@@ -22,7 +22,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtButton } from '../kotti-button'
-import { useTranslationNamespace } from '../kotti-translation/hooks'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 
 import { KottiBanner } from './types'

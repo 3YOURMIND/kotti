@@ -1,16 +1,16 @@
 import { computed, createElement, defineComponent } from '@vue/composition-api'
 
-import { useTranslationProvide } from './hooks'
-import { KottiTranslation } from './types'
+import { useI18nProvide } from './hooks'
+import { KottiI18n } from './types'
 
-const KtTranslationContext = defineComponent({
-	name: 'KtTranslationContext',
+const KtI18nContext = defineComponent({
+	name: 'KtI18nContext',
 	props: {
 		locale: { required: true, type: String },
 		messages: { default: () => ({}), type: Object },
 	},
-	setup(props: KottiTranslation.Props, { slots }) {
-		useTranslationProvide(
+	setup(props: KottiI18n.Props, { slots }) {
+		useI18nProvide(
 			computed(() => props.locale),
 			computed(() => props.messages),
 		)
@@ -19,4 +19,4 @@ const KtTranslationContext = defineComponent({
 	},
 })
 
-export { KtTranslationContext }
+export { KtI18nContext }

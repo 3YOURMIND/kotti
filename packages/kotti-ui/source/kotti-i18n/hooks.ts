@@ -13,25 +13,22 @@ import elementEs from 'element-ui/lib/locale/lang/es'
 import elementFr from 'element-ui/lib/locale/lang/fr'
 import elementJa from 'element-ui/lib/locale/lang/ja'
 
-import { KT_TRANSLATION_CONTEXT } from './constants'
+import { KT_I18N_CONTEXT } from './constants'
 import { deDE } from './locales/de-DE'
 import { enUS } from './locales/en-US'
 import { esES } from './locales/es-ES'
 import { frFR } from './locales/fr-FR'
 import { jaJP } from './locales/ja-JP'
-import { KottiTranslation } from './types'
+import { KottiI18n } from './types'
 import { fixDeepMerge } from './utilities'
 
-export const useTranslationContext = () => {
-	const context = inject<KottiTranslation.Context | null>(
-		KT_TRANSLATION_CONTEXT,
-		null,
-	)
+export const useI18nContext = () => {
+	const context = inject<KottiI18n.Context | null>(KT_I18N_CONTEXT, null)
 
 	if (context === null)
 		// eslint-disable-next-line no-console
 		console.warn(
-			'useTranslationContext: Missing Translation Context, falling back to English',
+			'useI18nContext: Missing Translation Context, falling back to English',
 		)
 
 	const locale = computed(() =>
@@ -44,12 +41,10 @@ export const useTranslationContext = () => {
 	return reactive({ locale, messages })
 }
 
-export const useTranslationNamespace = <
-	NS extends keyof KottiTranslation.Messages,
->(
+export const useTranslationNamespace = <NS extends keyof KottiI18n.Messages>(
 	namespace: NS,
-): Ref<Readonly<KottiTranslation.Messages[NS]>> => {
-	const context = useTranslationContext()
+): Ref<Readonly<KottiI18n.Messages[NS]>> => {
+	const context = useI18nContext()
 
 	return computed(() => context.messages[namespace])
 }
@@ -57,12 +52,12 @@ export const useTranslationNamespace = <
 /**
  * Provides the translation context to child components
  */
-export const useTranslationProvide = (
-	locale: Ref<KottiTranslation.Props['locale']>,
-	messages: Ref<KottiTranslation.Props['messages']>,
+export const useI18nProvide = (
+	locale: Ref<KottiI18n.Props['locale']>,
+	messages: Ref<KottiI18n.Props['messages']>,
 ) => {
 	const defaultMessages = computed(
-		(): KottiTranslation.Messages =>
+		(): KottiI18n.Messages =>
 			({
 				'en-US': enUS,
 				'de-DE': deDE,
@@ -94,13 +89,10 @@ export const useTranslationProvide = (
 		{ immediate: true },
 	)
 
-	provide<KottiTranslation.Context>(KT_TRANSLATION_CONTEXT, {
+	provide<KottiI18n.Context>(KT_I18N_CONTEXT, {
 		locale,
 		messages: computed(() =>
-			fixDeepMerge<KottiTranslation.Messages>(
-				defaultMessages.value,
-				messages.value,
-			),
+			fixDeepMerge<KottiI18n.Messages>(defaultMessages.value, messages.value),
 		),
 	})
 }

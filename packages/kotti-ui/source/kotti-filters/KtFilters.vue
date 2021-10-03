@@ -46,7 +46,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
-import { useTranslationNamespace } from '../kotti-translation/hooks'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { Kotti } from '../types'
 
 import ButtonLink from './components/ButtonLink.vue'

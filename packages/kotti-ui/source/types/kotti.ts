@@ -24,7 +24,6 @@ export {
 	KottiFieldToggle as FieldToggle,
 	KottiFieldToggleGroup as FieldToggleGroup,
 } from '../kotti-field-toggle/types'
-export { KottiTranslation as Translation } from '../kotti-translation/types'
 export {
 	KottiFieldSingleSelect as FieldSingleSelect,
 	KottiFieldMultiSelect as FieldMultiSelect,
@@ -36,6 +35,7 @@ export { KottiFormControllerList as FormControllerList } from '../kotti-form-con
 export { KottiFormControllerObject as FormControllerObject } from '../kotti-form-controller-object/types'
 export { KottiFormSubmit as FormSubmit } from '../kotti-form-submit/types'
 export { KottiHeading as Heading } from '../kotti-heading/types'
+export { KottiI18n as I18n } from '../kotti-i18n/types'
 export { KottiLine as Line } from '../kotti-line/types'
 export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'

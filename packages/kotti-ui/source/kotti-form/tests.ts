@@ -7,7 +7,7 @@ import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import KtField from '../kotti-field/KtField.vue'
 import { KottiField } from '../kotti-field/types'
-import { useTranslationProvide } from '../kotti-translation/hooks'
+import { useI18nProvide } from '../kotti-i18n/hooks'
 import { localVue } from '../test-utils'
 
 import KtForm from './KtForm.vue'
@@ -17,7 +17,7 @@ const TestField = defineComponent({
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
 	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
-		useTranslationProvide(ref('en-US'), ref({}))
+		useI18nProvide(ref('en-US'), ref({}))
 
 		return {
 			field: useField({
@@ -49,7 +49,7 @@ const TestFieldObject = defineComponent({
 		>,
 		{ emit },
 	) => {
-		useTranslationProvide(ref('en-US'), ref({}))
+		useI18nProvide(ref('en-US'), ref({}))
 
 		return {
 			field: useField({

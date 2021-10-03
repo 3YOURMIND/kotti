@@ -1,5 +1,5 @@
 <template>
-	<KtTranslationContext locale="en-US">
+	<KtI18nContext locale="en-US">
 		<div style="padding: 50px">
 			<KtAccordion title="Hello Tree Shaking">
 				<KtForm v-model="values">
@@ -10,7 +10,7 @@
 				</KtForm>
 			</KtAccordion>
 		</div>
-	</KtTranslationContext>
+	</KtI18nContext>
 </template>
 
 <script lang="ts">
@@ -22,7 +22,7 @@ import {
 	KtFieldText,
 	KtHeading,
 	KtForm,
-	KtTranslationContext,
+	KtI18nContext,
 } from '@3yourmind/kotti-ui'
 import Vue from 'vue'
 
@@ -35,7 +35,7 @@ export default Vue.extend({
 		KtFieldText,
 		KtForm,
 		KtHeading,
-		KtTranslationContext,
+		KtI18nContext,
 	},
 	data() {
 		return {

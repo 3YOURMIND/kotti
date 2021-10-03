@@ -1,5 +1,5 @@
 <template>
-	<KtTranslationContext locale="en-US">
+	<KtI18nContext locale="en-US">
 		<LayoutContainer>
 			<NavBar slot="navbar" />
 			<ActionBar slot="actionbar" />
@@ -7,7 +7,7 @@
 				<nuxt class="content" />
 			</div>
 		</LayoutContainer>
-	</KtTranslationContext>
+	</KtI18nContext>
 </template>
 
 <script>

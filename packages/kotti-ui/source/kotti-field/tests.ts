@@ -4,7 +4,7 @@ import { defineComponent, ref } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
-import { useTranslationProvide } from '../kotti-translation/hooks'
+import { useI18nProvide } from '../kotti-i18n/hooks'
 import {
 	localVue,
 	forceVueToEvaluateComputedProperty,
@@ -20,7 +20,7 @@ const TestComponent = defineComponent({
 	name: 'TestComponent',
 	props: KOTTI_FIELD_PROPS,
 	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
-		useTranslationProvide(ref('en-US'), ref({}))
+		useI18nProvide(ref('en-US'), ref({}))
 
 		return {
 			field: useField({
@@ -48,7 +48,7 @@ const TestComponentObject = defineComponent({
 		props: KottiField.Props<Record<string, unknown> | null, string | null>,
 		{ emit },
 	) => {
-		useTranslationProvide(ref('en-US'), ref({}))
+		useI18nProvide(ref('en-US'), ref({}))
 
 		return {
 			field: useField({

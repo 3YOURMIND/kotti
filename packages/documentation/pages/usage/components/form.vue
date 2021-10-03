@@ -2,7 +2,7 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 		<ClientOnly>
-			<KtTranslationContext :locale="settings.locale">
+			<KtI18nContext :locale="settings.locale">
 				<KtForm v-model="settings">
 					<div class="wrapper">
 						<section>
@@ -48,7 +48,7 @@
 							<h3>Kotti Settings</h3>
 							<KtFieldSingleSelect
 								formKey="locale"
-								helpDescription="Can be set via KtTranslationContext"
+								helpDescription="Can be set via KtI18nContext"
 								hideClear
 								label="Language"
 								leftIcon="global"
@@ -271,7 +271,7 @@
 				<br />
 				<h2>values</h2>
 				<pre v-text="JSON.stringify(values, null, '\t')" />
-			</KtTranslationContext>
+			</KtI18nContext>
 		</ClientOnly>
 	</div>
 </template>
