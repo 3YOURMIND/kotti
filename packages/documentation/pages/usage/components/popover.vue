@@ -80,8 +80,11 @@ You can append `-start` and `-end` to the placement as well.
 
 ## Overflowing behavior
 
+⚠️ This is actually not working... the following example just exploits the surplus padding of the `.element-example` class and `<br>`.
+No CSS stacking context escape is attempted.
+
 Using `popper.js` allows us to handle overflow easily.
-If the parent element has an `overflow` attribute, `popper.js` will handle that nicely:
+If the parent element has an `overflow` attribute, `popper.js` ~~will handle that nicely~~:
 
 <div class="element-example" style="overflow: hidden;">
 	<KtPopover placement="left">
