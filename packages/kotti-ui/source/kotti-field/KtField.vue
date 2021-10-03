@@ -99,7 +99,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, computed, ref } from '@vue/composition-api'
 import { VNode } from 'vue'
 
-import { useTranslationNamespace } from '../kotti-translation/hooks'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import FieldHelpText from './components/FieldHelpText.vue'
 import { KottiField } from './types'

@@ -87,7 +87,7 @@ import type Vue from 'vue'
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
-import { useTranslationNamespace } from '../kotti-translation/hooks'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import ActionIcon from './components/ActionIcon.vue'
 import { KOTTI_FIELD_MULTI_SELECT_PROPS } from './constants'

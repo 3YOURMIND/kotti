@@ -2,7 +2,7 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
-		<KtTranslationContext :locale="settings.locale">
+		<KtI18nContext :locale="settings.locale">
 			<div class="overview">
 				<div class="overview__component">
 					<h4>Component</h4>
@@ -55,7 +55,7 @@
 						/>
 						<KtFieldSingleSelect
 							formKey="locale"
-							helpText="Can be set via KtTranslationContext"
+							helpText="Can be set via KtI18nContext"
 							hideClear
 							label="Language"
 							leftIcon="global"
@@ -371,7 +371,7 @@
 					</div>
 				</div>
 			</KtForm>
-		</KtTranslationContext>
+		</KtI18nContext>
 	</div>
 </template>
 
@@ -640,7 +640,7 @@ export default defineComponent({
 			helpText: Kotti.FieldText.Value
 			label: Kotti.FieldText.Value
 			leftIcon: Yoco.Icon | null
-			locale: Kotti.Translation.SupportedLanguages
+			locale: Kotti.I18n.SupportedLanguages
 			placeholder: Kotti.FieldText.Value
 			placeholder2: Kotti.FieldText.Value
 			prefix: Kotti.FieldText.Value

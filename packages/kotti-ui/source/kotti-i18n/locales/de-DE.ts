@@ -1,4 +1,4 @@
-import { KottiTranslation } from '../types'
+import { KottiI18n } from '../types'
 
 namespace Common {
 	export const is = 'ist'
@@ -15,7 +15,7 @@ namespace Common {
 	}
 }
 
-export const deDE: KottiTranslation.Messages = {
+export const deDE: KottiI18n.Messages = {
 	KtBanner: {
 		expandLabel: 'Öffnen',
 		expandCloseLabel: 'Schließen',

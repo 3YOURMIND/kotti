@@ -37,7 +37,7 @@
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from '@vue/composition-api'
 
-import { useTranslationNamespace } from '../../kotti-translation/hooks'
+import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 
 import NavbarTooltip from './NavbarTooltip.vue'
 

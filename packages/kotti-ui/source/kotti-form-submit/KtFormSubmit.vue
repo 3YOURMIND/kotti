@@ -52,7 +52,7 @@ import { defineComponent, inject, computed } from '@vue/composition-api'
 
 import { KT_FORM_SUBMIT_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
-import { useTranslationNamespace } from '../kotti-translation/hooks'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import { KtFormSubmitErrors } from './errors'
 import { KottiFormSubmit } from './types'

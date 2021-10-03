@@ -71,6 +71,8 @@ import { KtFormSubmit } from './kotti-form-submit'
 export * from './kotti-form-submit'
 import { KtHeading } from './kotti-heading'
 export * from './kotti-heading'
+import { KtI18nContext } from './kotti-i18n'
+export * from './kotti-i18n'
 import { KtInlineEdit } from './kotti-inline-edit'
 export * from './kotti-inline-edit'
 import { KtInput } from './kotti-input'
@@ -106,10 +108,8 @@ import { KtTheme } from './kotti-theme'
 export * from './kotti-theme'
 import { KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
-import { KtTranslationContext } from './kotti-translation'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
-export * from './kotti-translation'
 export * from './types'
 
 export default {
@@ -153,6 +153,7 @@ export default {
 			KtFormControllerObject,
 			KtFormSubmit,
 			KtHeading,
+			KtI18nContext,
 			KtInlineEdit,
 			KtInput,
 			KtLine,
@@ -168,11 +169,10 @@ export default {
 			KtSteps,
 			KtTable,
 			KtTableColumn,
-			KtTableProvider,
 			KtTableConsumer,
+			KtTableProvider,
 			KtTheme,
 			KtToaster,
-			KtTranslationContext,
 			KtUserMenu,
 		])
 			Vue.use(component)

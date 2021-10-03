@@ -1,7 +1,7 @@
 <template lang="md">
     <ComponentInfo v-bind="{ component }" />
 
-    <KtTranslationContext :locale="settings.locale">
+    <KtI18nContext :locale="settings.locale">
     	<div class="overview">
     		<div class="overview__component">
     			<h4>Component</h4>
@@ -26,7 +26,7 @@
     				<h4>Settings</h4>
     				<KtFieldSingleSelect
     					formKey="locale"
-    					helpText="Can be set via KtTranslationContext"
+    					helpText="Can be set via KtI18nContext"
     					hideClear
     					label="Language"
     					leftIcon="global"
@@ -59,7 +59,7 @@
     			</div>
     		</div>
     	</KtForm>
-    </KtTranslationContext>
+    </KtI18nContext>
 </template>
 
 <script lang="ts">
@@ -94,7 +94,7 @@ export default defineComponent({
 			booleanFlags: {
 				isLoading: boolean
 			}
-			locale: Kotti.Translation.SupportedLanguages
+			locale: Kotti.I18n.SupportedLanguages
 			searchPlaceholder: Kotti.FieldText.Value
 		}>({
 			booleanFlags: {

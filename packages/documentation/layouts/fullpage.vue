@@ -1,10 +1,10 @@
 <template>
-	<KtTranslationContext locale="en-US">
+	<KtI18nContext locale="en-US">
 		<div class="d-flex responsive">
 			<NavBar />
 			<div class="workspace"><nuxt class="content" /></div>
 		</div>
-	</KtTranslationContext>
+	</KtI18nContext>
 </template>
 
 <script>

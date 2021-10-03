@@ -1,5 +1,5 @@
 <template>
-	<KtTranslationContext locale="en-US">
+	<KtI18nContext locale="en-US">
 		<nuxt />
-	</KtTranslationContext>
+	</KtI18nContext>
 </template>
