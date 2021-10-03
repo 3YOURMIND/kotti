@@ -20,7 +20,7 @@
 				@input="handleInput"
 				v-text="currentValue"
 			/>
-			<KtButtonGroup class="inline-edit__edit-buttons" shadow>
+			<KtButtonGroup class="inline-edit__edit-buttons">
 				<KtButton icon="close" @click="handleDismiss" />
 				<KtButton icon="check" @click="handleConfirm" />
 			</KtButtonGroup>
