@@ -17,7 +17,7 @@
 				@input="updateHeight"
 			></textarea>
 			<KtButton
-				:style="{ opacity: text ? 1 : '0.24' }"
+				:disabled="!text"
 				type="text"
 				@click="handleSubmitClick"
 				v-text="replyButtonText"
