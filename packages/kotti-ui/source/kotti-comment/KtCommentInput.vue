@@ -1,6 +1,6 @@
 <template>
 	<div :class="divClass">
-		<div :class="warpperClass">
+		<div :class="wrapperClass">
 			<KtAvatar
 				v-if="!isInline"
 				class="comment-input__avatar"
@@ -61,7 +61,7 @@ export default {
 		replyButtonText() {
 			return this.isInline ? 'Reply' : 'Post'
 		},
-		warpperClass() {
+		wrapperClass() {
 			return {
 				'comment-input__wrapper': true,
 				'comment-input__wrapper--focus': this.textFocused,
