@@ -70,9 +70,6 @@ export default {
 			this.$refs.textarea.style.height = `${height}px`
 		},
 		handleSubmitClick() {
-			if (!this.text && this.text === '\n') {
-				return
-			}
 			this.$emit('submit', {
 				message: this.text,
 				replyToUserId: this.replyToUserId,
