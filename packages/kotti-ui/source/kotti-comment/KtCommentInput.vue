@@ -1,5 +1,5 @@
 <template>
-	<div :class="divClass('comment-input')">
+	<div :class="divClass">
 		<div :class="warpperClass">
 			<KtAvatar
 				v-if="!isInline"
@@ -52,6 +52,12 @@ export default {
 		}
 	},
 	computed: {
+		divClass() {
+			return {
+				'comment-input': true,
+				'comment-input--inline': this.isInline,
+			}
+		},
 		replyButtonText() {
 			return this.isInline ? 'Reply' : 'Post'
 		},
@@ -78,9 +84,6 @@ export default {
 			// Reset all the state
 			this.text = null
 			this.$refs.textarea.style.height = '1.2rem'
-		},
-		divClass(divName) {
-			return this.isInline ? `${divName} ${divName}--inline` : divName
 		},
 	},
 }
