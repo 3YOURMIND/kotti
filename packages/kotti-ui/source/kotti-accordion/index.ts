@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtAccordionVue from './KtAccordion.vue'
+import { KottiAccordion } from './types'
 
 export const KtAccordion = attachMeta(makeInstallable(KtAccordionVue), {
 	addedVersion: null,
@@ -16,5 +17,6 @@ export const KtAccordion = attachMeta(makeInstallable(KtAccordionVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Accordion',
+		schema: KottiAccordion.propsSchema,
 	},
 })

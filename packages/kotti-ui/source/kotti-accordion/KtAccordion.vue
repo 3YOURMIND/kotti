@@ -23,16 +23,14 @@
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import { makeProps } from '../make-props'
+
 import { useSlideAnimation } from './hooks'
 import { KottiAccordion } from './types'
 
 export default defineComponent<KottiAccordion.PropsInternal>({
 	name: 'KtAccordion',
-	props: {
-		icon: { default: null, type: String },
-		isClosed: { default: false, type: Boolean },
-		title: { required: true, type: String },
-	},
+	props: makeProps(KottiAccordion.propsSchema),
 	setup(props) {
 		const contentInnerRef = ref<HTMLElement | null>(null)
 
