@@ -40,11 +40,11 @@
 					<i class="yoco">dots</i>
 					<div class="action__options">
 						<a
-							v-for="option in actionOptions"
-							:key="option.type"
+							v-for="(option, index) in actionOptions"
+							:key="index"
 							@click="option.onClick"
 						>
-							<li>{{ option.label }}</li>
+							<li v-text="option.label" />
 						</a>
 					</div>
 				</div>
@@ -101,13 +101,11 @@ export default {
 						this.inlineMessageValue = this.inlineMessage
 						this.isInlineEdit = true
 					},
-					type: 'EDIT',
 				})
 			if (this.isDeletable)
 				options.push({
 					label: 'Delete',
 					onClick: () => this.$emit('_inlineDeleteClick', this.id),
-					type: 'DELETE',
 				})
 			return options
 		},
