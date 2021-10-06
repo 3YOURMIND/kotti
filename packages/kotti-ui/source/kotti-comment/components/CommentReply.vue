@@ -123,11 +123,10 @@ export default {
 		handleConfirm() {
 			this.isInlineEdit = false
 			if (!this.inlineMessageValue) return
-			const _payload = {
+			this.$emit('_inlineEditSubmit', {
 				message: this.inlineMessageValue,
 				id: this.id,
-			}
-			this.$emit('_inlineEditSumbit', _payload)
+			})
 		},
 	},
 }

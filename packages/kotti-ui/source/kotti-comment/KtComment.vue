@@ -56,7 +56,7 @@
 					:userId="reply.userId"
 					:userName="reply.userName"
 					@_inlineDeleteClick="handleDelete($event, 'INLINE')"
-					@_inlineEditSumbit="$emit('edit', $event)"
+					@_inlineEditSubmit="$emit('edit', $event)"
 					@_inlineReplyClick="handleInlineReplyClick"
 				/>
 			</div>
@@ -157,11 +157,10 @@ export default {
 			this.replyToText = `Reply to ${user.userName}`
 		},
 		handleDelete(event, type) {
-			const _payload = {
+			this.$emit('delete', {
 				id: event,
 				parentId: type ? this.id : null,
-			}
-			this.$emit('delete', _payload)
+			})
 		},
 		handleInlineSubmit(event) {
 			this.showInlineReply = false
@@ -170,11 +169,10 @@ export default {
 		handleEditConfirm() {
 			this.isInlineEdit = false
 			if (!this.inlineMessageValue) return
-			const _payload = {
+			this.$emit('edit', {
 				id: this.id,
 				message: this.inlineMessageValue,
-			}
-			this.$emit('edit', _payload)
+			})
 		},
 	},
 }

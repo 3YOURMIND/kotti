@@ -73,14 +73,12 @@ export default {
 			if (!this.text && this.text === '\n') {
 				return
 			}
-			let _payload = {
+			this.$emit('submit', {
 				message: this.text,
 				replyToUserId: this.replyToUserId,
 				parentId: this.parentId,
-			}
-			this.$emit('submit', _payload)
+			})
 			// Reset all the state
-			_payload = {}
 			this.text = null
 			this.$refs.textarea.style.height = '1.2rem'
 		},
