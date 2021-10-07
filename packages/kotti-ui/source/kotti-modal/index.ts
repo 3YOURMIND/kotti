@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtModalVue from './KtModal.vue'
+import { KottiModal } from './types'
 
 export const KtModal = attachMeta(makeInstallable(KtModalVue), {
 	addedVersion: '0.0.1',
@@ -21,6 +22,6 @@ export const KtModal = attachMeta(makeInstallable(KtModalVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Modal',
-		schema: null,
+		schema: KottiModal.propsSchema,
 	},
 })

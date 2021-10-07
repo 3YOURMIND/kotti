@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 export namespace KottiModal {
 	export enum Size {
 		EXTRA_LARGE = 'xl',
@@ -6,10 +8,11 @@ export namespace KottiModal {
 		SMALL = 'sm',
 	}
 
-	export type PropsInternal = {
-		preventCloseOutside: boolean
-		size: Size
-	}
+	export const propsSchema = z.object({
+		preventCloseOutside: z.boolean().default(false),
+		size: z.nativeEnum(Size).default(Size.MEDIUM),
+	})
 
-	export type Props = Partial<PropsInternal>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }

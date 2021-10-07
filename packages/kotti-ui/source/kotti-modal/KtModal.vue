@@ -21,14 +21,13 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
+import { makeProps } from '../make-props'
+
 import { KottiModal } from './types'
 
 export default defineComponent<KottiModal.PropsInternal>({
 	name: 'KtModal',
-	props: {
-		preventCloseOutside: { default: false, type: Boolean },
-		size: { default: KottiModal.Size.MEDIUM, type: String },
-	},
+	props: makeProps(KottiModal.propsSchema),
 	setup(props, { emit, slots }) {
 		return {
 			closeModal: () => {
