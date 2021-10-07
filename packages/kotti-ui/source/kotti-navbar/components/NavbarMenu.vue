@@ -11,7 +11,7 @@
 				:key="linkIndex"
 				class="kt-navbar-menu__item"
 				:class="{ active: link.isActive, narrow: isNarrow }"
-				:href="link.link ? link.link : null"
+				:href="link.link"
 				@click="$emit('menuLinkClick', link)"
 			>
 				<NavbarTooltip v-if="isNarrow" :icon="link.icon" :label="link.title" />
@@ -38,7 +38,7 @@ export default defineComponent({
 	},
 	props: {
 		isNarrow: { default: false, type: Boolean },
-		sections: { type: Array, default: null },
+		sections: { required: true, type: Array },
 	},
 })
 </script>
