@@ -5,7 +5,7 @@
 		:isLoading="isLoading"
 		:leftIcon="Yoco.Icon.SEARCH"
 		:placeholder="placeholder"
-		:size="Kotti.Field.Size.SMALL"
+		size="small"
 		:value="searchValue"
 		@input="handleSetSearchValue"
 	/>
@@ -17,12 +17,12 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import { KtFieldText } from '../../kotti-field-text'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { Kotti } from '../../types'
+import { KottiFilters } from '../types'
 import { getSearchFilterInitialState } from '../utils'
 
 export default defineComponent<{
-	column: Kotti.Filters.Column.Search
-	filter: Kotti.Filters.Filter | null
+	column: KottiFilters.Column.Search
+	filter: KottiFilters.Filter | null
 	isLoading: boolean
 }>({
 	name: 'FilterSearch',
@@ -49,7 +49,7 @@ export default defineComponent<{
 		const placeholder = computed<string>(
 			() => props.column.placeholder ?? translations.value.searchLabel,
 		)
-		const searchValue = computed<Kotti.Filters.FilterValue>(
+		const searchValue = computed<KottiFilters.FilterValue>(
 			() => props.filter?.value,
 		)
 
@@ -61,7 +61,6 @@ export default defineComponent<{
 
 		return {
 			handleSetSearchValue,
-			Kotti,
 			placeholder,
 			searchValue,
 			Yoco,

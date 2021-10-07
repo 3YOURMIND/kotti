@@ -47,17 +47,17 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
-import { Kotti } from '../types'
 
 import ButtonLink from './components/ButtonLink.vue'
 import FilterActions from './components/FilterActions.vue'
 import FilterList from './components/FilterList.vue'
 import FilterSearch from './components/FilterSearch.vue'
+import { KottiFilters } from './types'
 import { isValidColumn } from './validators'
 
 const ARROW_HEIGHT = 7
 
-export default defineComponent<Kotti.Filters.InternalProps>({
+export default defineComponent<KottiFilters.InternalProps>({
 	name: 'KtFilters',
 	components: {
 		ButtonLink,
@@ -69,7 +69,7 @@ export default defineComponent<Kotti.Filters.InternalProps>({
 		columns: {
 			required: true,
 			type: Array,
-			validator: (value: Kotti.Filters.InternalProps['columns']) =>
+			validator: (value: KottiFilters.InternalProps['columns']) =>
 				value.every((column) => isValidColumn(column)),
 		},
 		isLoading: {
@@ -90,23 +90,23 @@ export default defineComponent<Kotti.Filters.InternalProps>({
 		const isListVisible = ref<boolean>(false)
 		const tippyInstanceRef = ref(null)
 
-		const filterListColumns = computed<Kotti.Filters.Column.Any[]>(() =>
+		const filterListColumns = computed<KottiFilters.Column.Any[]>(() =>
 			props.columns.filter(
-				(column) => column.type !== Kotti.Filters.FilterType.SEARCH,
+				(column) => column.type !== KottiFilters.FilterType.SEARCH,
 			),
 		)
-		const searchColumn = computed<Kotti.Filters.Column.Any | null>(
+		const searchColumn = computed<KottiFilters.Column.Any | null>(
 			() =>
 				props.columns.find(
-					(column) => column.type === Kotti.Filters.FilterType.SEARCH,
+					(column) => column.type === KottiFilters.FilterType.SEARCH,
 				) ?? null,
 		)
-		const searchValue = computed<Kotti.Filters.InternalFilter | null>(
+		const searchValue = computed<KottiFilters.InternalFilter | null>(
 			() =>
 				props.value.find((filter) => filter.key === searchColumn.value?.key) ??
 				null,
 		)
-		const filterListValues = computed<Kotti.Filters.Value>(() =>
+		const filterListValues = computed<KottiFilters.Value>(() =>
 			props.value.filter((filter) => filter.key !== searchColumn.value?.key),
 		)
 		const isAddDisabled = computed(
@@ -135,14 +135,14 @@ export default defineComponent<Kotti.Filters.InternalProps>({
 			}
 			emit('input', [searchValue.value])
 		}
-		const setFilters = (filters: Kotti.Filters.Value) => {
+		const setFilters = (filters: KottiFilters.Value) => {
 			if (searchValue.value === null) {
 				emit('input', filters)
 				return
 			}
 			emit('input', [...filters, searchValue.value])
 		}
-		const setSearchFilter = (searchFilter: Kotti.Filters.InternalFilter) => {
+		const setSearchFilter = (searchFilter: KottiFilters.InternalFilter) => {
 			if (hasSearchColumn.value) {
 				if (searchFilter.value === null) {
 					emit('input', filterListValues.value)

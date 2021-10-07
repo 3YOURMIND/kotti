@@ -10,14 +10,14 @@
 import { isYocoIcon, Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { Kotti } from '../../types'
+import { KottiFilters } from '../types'
 
 export default defineComponent<{
 	icon: Yoco.Icon | null
 	isDisabled: boolean
 	isLoading: boolean
 	label: string | null
-	type: Kotti.Filters.ButtonLinkType
+	type: KottiFilters.ButtonLinkType
 }>({
 	name: 'ButtonLink',
 	props: {
@@ -39,11 +39,11 @@ export default defineComponent<{
 			type: String,
 		},
 		type: {
-			default: Kotti.Filters.ButtonLinkType.PRIMARY,
+			default: KottiFilters.ButtonLinkType.PRIMARY,
 			type: String,
-			validator: (value: unknown): value is Kotti.Filters.ButtonLinkType =>
-				Object.values(Kotti.Filters.ButtonLinkType).includes(
-					value as Kotti.Filters.ButtonLinkType,
+			validator: (value: unknown): value is KottiFilters.ButtonLinkType =>
+				Object.values(KottiFilters.ButtonLinkType).includes(
+					value as KottiFilters.ButtonLinkType,
 				),
 		},
 	},

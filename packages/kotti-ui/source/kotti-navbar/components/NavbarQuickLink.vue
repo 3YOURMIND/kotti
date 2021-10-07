@@ -30,13 +30,13 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { Kotti } from '../../types'
+import { KottiNavbar } from '../types'
 
 import NavbarTooltip from './NavbarTooltip.vue'
 
 export default defineComponent<{
 	isNarrow: boolean
-	links: Kotti.Navbar.QuickLink[]
+	links: KottiNavbar.QuickLink[]
 }>({
 	name: 'KtNavbarQuickLink',
 	components: {

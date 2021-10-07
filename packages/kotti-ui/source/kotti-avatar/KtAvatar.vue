@@ -19,7 +19,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, Ref, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
-import { Kotti } from '../types'
+import { KottiAvatar } from './types'
 const ARROW_HEIGHT = 7
 
 const useTooltip = (name: Ref<string | null>) => {
@@ -42,12 +42,12 @@ const useTooltip = (name: Ref<string | null>) => {
 	}
 }
 
-export default defineComponent<Kotti.Avatar.PropsInternal>({
+export default defineComponent<KottiAvatar.PropsInternal>({
 	name: 'KtAvatar',
 	props: {
 		isHoverable: { default: false, type: Boolean },
 		name: { default: null, type: String },
-		size: { default: Kotti.Avatar.Size.MEDIUM, type: String },
+		size: { default: KottiAvatar.Size.MEDIUM, type: String },
 		src: { default: null, type: String },
 	},
 	setup(props, { emit }) {
@@ -59,9 +59,9 @@ export default defineComponent<Kotti.Avatar.PropsInternal>({
 			avatarClasses: computed(() => ({
 				'kt-avatar': true,
 				'kt-avatar--is-hoverable': props.isHoverable,
-				'kt-avatar--is-size-large': props.size === Kotti.Avatar.Size.LARGE,
-				'kt-avatar--is-size-medium': props.size === Kotti.Avatar.Size.MEDIUM,
-				'kt-avatar--is-size-small': props.size === Kotti.Avatar.Size.SMALL,
+				'kt-avatar--is-size-large': props.size === KottiAvatar.Size.LARGE,
+				'kt-avatar--is-size-medium': props.size === KottiAvatar.Size.MEDIUM,
+				'kt-avatar--is-size-small': props.size === KottiAvatar.Size.SMALL,
 			})),
 			avatarFallback,
 			onImageFailedToLoad: () => {
