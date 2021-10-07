@@ -1,145 +1,125 @@
 <template>
-	<div class="accordion">
-		<div
-			class="accordion__header"
-			:class="{ 'accordion__header--clickable': isFullyClickable }"
-			@click="headerToggle"
-		>
-			<div class="accordion__title">
+	<div class="kt-accordion">
+		<div class="kt-accordion__header" @click="toggle">
+			<div class="kt-accordion__title">
 				<slot name="title">
-					<i v-if="icon" class="yoco accordion__title__icon" v-text="icon" />
-					<div class="accordion__title__text" v-text="title" />
+					<i v-if="icon" class="yoco kt-accordion__title__icon" v-text="icon" />
+					<div class="kt-accordion__title__text" v-text="title" />
 				</slot>
 			</div>
-			<div class="accordion__toggle" @click.stop="toggle">
-				<i class="yoco" v-text="isOpen ? 'minus' : 'plus'" />
+			<div class="kt-accordion__toggle" @click.stop="toggle">
+				<i class="yoco" v-text="toggleIcon" />
 			</div>
 		</div>
-		<div
-			class="accordion__content"
-			:class="isOpen ? 'is-open' : 'is-close'"
-			:style="`--height: ${contentHeight}px`"
-			@click="setHeight"
-		>
-			<div ref="contentInner" class="inner">
+		<div :class="contentClasses">
+			<div ref="contentInnerRef" class="kt-accordion__content__inner">
 				<slot />
 			</div>
 		</div>
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
+import { makeProps } from '../make-props'
+
+import { useSlideAnimation } from './hooks'
+import { KottiAccordion } from './types'
+
+export default defineComponent<KottiAccordion.PropsInternal>({
 	name: 'KtAccordion',
-	props: {
-		icon: { default: null, type: String },
-		isClosed: { default: false, type: Boolean },
-		isFullyClickable: { default: false, type: Boolean },
-		title: { required: true, type: String },
-	},
-	data() {
+	props: makeProps(KottiAccordion.propsSchema),
+	setup(props) {
+		const contentInnerRef = ref<HTMLElement | null>(null)
+
+		const { isContentOpen, toggle } = useSlideAnimation(contentInnerRef, {
+			duration: 300,
+			isInitiallyClosed: props.isClosed,
+		})
 		return {
-			isOpen: true,
-			contentHeight: null,
-			interval: null,
+			contentClasses: computed(() => ({
+				'kt-accordion__content': true,
+				'kt-accordion__content--is-closed': !isContentOpen.value,
+				'kt-accordion__content--is-open': isContentOpen.value,
+			})),
+			contentInnerRef,
+			toggle,
+			toggleIcon: computed(() =>
+				isContentOpen.value ? Yoco.Icon.MINUS : Yoco.Icon.PLUS,
+			),
 		}
 	},
-	mounted() {
-		this.isOpen = !this.isClosed
-		// This is the best solution right now
-		// It will handle the case when the content change
-		const reloadingTime = 500
-		this.interval = setInterval(this.setHeight, reloadingTime)
-	},
-	beforeDestroy() {
-		clearInterval(this.interval)
-	},
-	methods: {
-		setHeight() {
-			const height = this.$refs.contentInner.clientHeight
-			this.contentHeight = height
-		},
-		headerToggle() {
-			if (this.isFullyClickable) this.toggle()
-		},
-		toggle() {
-			this.setHeight()
-			this.isOpen = !this.isOpen
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss">
 :root {
 	--accordion-color: var(--interactive-03);
 }
+</style>
 
-@import '../kotti-style/_variables.scss';
-
-.accordion {
+<style lang="scss" scoped>
+.kt-accordion {
 	margin-bottom: var(--unit-4);
 	border-radius: 2px;
-}
 
-.accordion__header {
-	display: flex;
-	justify-content: space-between;
-	padding: var(--unit-2) var(--unit-8);
-	border: 1px solid var(--ui-02);
-
-	.yoco {
-		font-size: 1.2rem;
-	}
-}
-.accordion__header--clickable {
-	cursor: pointer;
-}
-
-.accordion__title {
-	display: flex;
-	flex-grow: 1;
-	align-items: center;
-	align-self: center;
-	font-size: 16px;
-	font-weight: 600;
-}
-
-.accordion__content {
-	margin-top: -1px; // prevent border overlap when closed
-	overflow: hidden;
-	border: 1px solid var(--ui-02);
-	border-top: none;
-	transition: height 200ms linear;
-
-	.inner {
+	&__header {
+		display: flex;
+		justify-content: space-between;
 		padding: var(--unit-2) var(--unit-8);
-	}
-	&.is-open {
-		height: var(--height);
-	}
-	&.is-close {
-		height: 0px;
-	}
-}
+		cursor: pointer;
+		border: 1px solid var(--ui-02);
 
-.accordion__title__icon,
-.accordion__title__text {
-	display: inline-block;
-}
+		.yoco {
+			font-size: 1.2rem;
+		}
+	}
 
-.accordion__title__icon {
-	margin-right: var(--unit-4);
-	color: var(--accordion-color);
-}
+	&__title {
+		display: flex;
+		flex-grow: 1;
+		align-items: center;
+		align-self: center;
+		font-size: 16px;
+		font-weight: 600;
 
-.accordion__toggle {
-	display: flex;
-	align-items: center;
-	align-self: center;
-	margin-left: var(--unit-4);
-	color: var(--accordion-color);
-	cursor: pointer;
-	user-select: none;
+		&__icon {
+			display: inline-block;
+			margin-right: var(--unit-4);
+			color: var(--accordion-color);
+		}
+
+		&__text {
+			display: inline-block;
+		}
+	}
+
+	&__content {
+		margin-top: -1px; // prevent border overlap when closed
+		overflow: hidden;
+		border: 1px solid var(--ui-02);
+		border-top: none;
+
+		&__inner {
+			padding: var(--unit-2) var(--unit-8);
+		}
+		&--is-open {
+			height: auto;
+		}
+		&--is-closed {
+			height: 0px;
+		}
+	}
+
+	&__toggle {
+		display: flex;
+		align-items: center;
+		align-self: center;
+		margin-left: var(--unit-4);
+		color: var(--accordion-color);
+		user-select: none;
+	}
 }
 </style>
