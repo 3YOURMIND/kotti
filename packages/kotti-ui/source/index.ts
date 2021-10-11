@@ -28,8 +28,6 @@ import { KtDrawer } from './kotti-drawer'
 export * from './kotti-drawer'
 import { KtDropdown } from './kotti-dropdown'
 export * from './kotti-dropdown'
-import { KtDropdownButton } from './kotti-dropdown-button'
-export * from './kotti-dropdown-button'
 import { KtDropdownMenu } from './kotti-dropdown-menu'
 export * from './kotti-dropdown-menu'
 import { KtField } from './kotti-field'
@@ -130,7 +128,6 @@ export default {
 			KtCommentInput,
 			KtDrawer,
 			KtDropdown,
-			KtDropdownButton,
 			KtDropdownMenu,
 			KtField,
 			KtFieldDate,
