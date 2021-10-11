@@ -29,67 +29,6 @@ In `KtDropdownMenus` slot, you can write your own stylied element. However, we s
 </KtDropdown>
 ```
 
-## Dropdown button
-
-A dropdown button is a current pattern nowadays.
-It allows to have a subaction without changing page or opening a modal.
-
-Note the `dropdownIcon` prop. It will default to `chevron_down`.
-You can also use any attribute you would pass to `KtPopover` or `KtButton`. They will be passed.
-
-<div class="element-example">
-	<KtDropdownButton type="primary" label="Dropdown button" >
-		<div slot="KtDropdownMenus">
-			<KtDropdownMenu>Request item</KtDropdownMenu>
-			<KtDropdownMenu>Download Item</KtDropdownMenu>
-		</div>
-	</KtDropdownButton>
-	<KtDropdownButton placement="top-end" dropdownIcon="chevron_up" size="sm" type="primary" label="Dropdown button" >
-		<div slot="KtDropdownMenus">
-			<KtDropdownMenu>Request item</KtDropdownMenu>
-			<KtDropdownMenu>Download Item</KtDropdownMenu>
-		</div>
-	</KtDropdownButton>
-	<KtDropdownButton :disabled="true" size="sm" type="primary" label="Dropdown button" >
-		<div slot="KtDropdownMenus">
-			<KtDropdownMenu>Request item</KtDropdownMenu>
-			<KtDropdownMenu>Download Item</KtDropdownMenu>
-		</div>
-	</KtDropdownButton>
-</div>
-
-```html
-<KtDropdownButton type="primary" label="Dropdown button">
-	<div slot="KtDropdownMenus">
-		<KtDropdownMenu>Request item</KtDropdownMenu>
-		<KtDropdownMenu>Download Item</KtDropdownMenu>
-	</div>
-</KtDropdownButton>
-<KtDropdownButton
-	placement="top-end"
-	dropdownIcon="chevron_up"
-	size="sm"
-	type="primary"
-	label="Dropdown button"
->
-	<div slot="KtDropdownMenus">
-		<KtDropdownMenu>Request item</KtDropdownMenu>
-		<KtDropdownMenu>Download Item</KtDropdownMenu>
-	</div>
-</KtDropdownButton>
-<KtDropdownButton
-	:disabled="true"
-	size="sm"
-	type="primary"
-	label="Dropdown button"
->
-	<div slot="KtDropdownMenus">
-		<KtDropdownMenu>Request item</KtDropdownMenu>
-		<KtDropdownMenu>Download Item</KtDropdownMenu>
-	</div>
-</KtDropdownButton>
-```
-
 ## Icons and Size
 
 <div class="element-example">
