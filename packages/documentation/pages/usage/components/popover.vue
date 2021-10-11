@@ -8,8 +8,7 @@ documentation](https://popper.js.org/docs/v2/constructors/) for more information
 
 ## Options
 
-We also provide a nice way of displaying items inside popovers. It replaces the old `KtDropdownMenu`.
-Items can be `isDisabled` or `isSelected`.
+We also provide a nice way of displaying items inside popovers. Items can be `isDisabled` or `isSelected`.
 
 <div class="element-example">
 	<KtPopover :options="[
