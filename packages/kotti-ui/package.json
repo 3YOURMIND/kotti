@@ -20,7 +20,7 @@
 		"tippy.js": "6.x",
 		"ts-custom-error": "^3.1.1",
 		"vue-clickaway": "^2.2.2",
-		"zod": "^3.8.2"
+		"zod": "^3.9.8"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
