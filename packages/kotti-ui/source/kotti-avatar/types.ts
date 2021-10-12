@@ -1,4 +1,4 @@
-import { SpecifyRequiredProps } from '../types/utilities'
+import { z } from 'zod'
 
 export namespace KottiAvatar {
 	export enum Size {
@@ -7,12 +7,13 @@ export namespace KottiAvatar {
 		SMALL = 'sm',
 	}
 
-	export type PropsInternal = {
-		isHoverable: boolean
-		name: string | null
-		size: Size
-		src: string | null
-	}
+	export const propsSchema = z.object({
+		isHoverable: z.boolean().default(false),
+		name: z.string().nullable().default(null),
+		size: z.nativeEnum(Size).default(Size.MEDIUM),
+		src: z.string().nullable().default(null),
+	})
 
-	export type Props = SpecifyRequiredProps<PropsInternal, never>
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }

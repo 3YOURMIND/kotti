@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtAvatarVue from './KtAvatar.vue'
+import { KottiAvatar } from './types'
 
 export const KtAvatar = attachMeta(makeInstallable(KtAvatarVue), {
 	addedVersion: '0.0.1',
@@ -13,6 +14,6 @@ export const KtAvatar = attachMeta(makeInstallable(KtAvatarVue), {
 	slots: {},
 	typeScript: {
 		namespace: 'Kotti.Avatar',
-		schema: null,
+		schema: KottiAvatar.propsSchema,
 	},
 })

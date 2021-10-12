@@ -19,6 +19,8 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, Ref, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
+import { makeProps } from '../make-props'
+
 import { KottiAvatar } from './types'
 const ARROW_HEIGHT = 7
 
@@ -44,12 +46,7 @@ const useTooltip = (name: Ref<string | null>) => {
 
 export default defineComponent<KottiAvatar.PropsInternal>({
 	name: 'KtAvatar',
-	props: {
-		isHoverable: { default: false, type: Boolean },
-		name: { default: null, type: String },
-		size: { default: KottiAvatar.Size.MEDIUM, type: String },
-		src: { default: null, type: String },
-	},
+	props: makeProps(KottiAvatar.propsSchema),
 	setup(props, { emit }) {
 		const avatarFallback = ref(true)
 
