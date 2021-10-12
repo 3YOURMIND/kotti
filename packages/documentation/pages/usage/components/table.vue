@@ -675,7 +675,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 	<KtTable
 		:rows="rows"
 		:renderLoading="renderLoading"
-		:loading="true"
+		loading
 		>
 		<KtTableColumn
 			label="Name"
@@ -691,7 +691,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 <div slot="style">
 
 ```html
-<KtTable :rows="rows" :renderLoading="renderLoading" :loading="true">
+<KtTable :rows="rows" :renderLoading="renderLoading" loading>
 	<KtTableColumn label="Name" prop="name" />
 	<KtTableColumn label="Date" prop="date" />
 </KtTable>
@@ -742,7 +742,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 <ShowCase vueSlotLabel="Loading Slot" styleSlotLabel="html">
 <div slot="vue">
-<KtTable :rows="rows" :columns="columnsDefault" :loading="true">
+<KtTable :rows="rows" :columns="columnsDefault" loading>
 	<div slot="loading">
 		Loading while the loading prop on KtTable is true
 	</div>
@@ -752,7 +752,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <div slot="style">
 
 ```html
-<KtTable :rows="rows" :columns="columnsDefault" :loading="true">
+<KtTable :rows="rows" :columns="columnsDefault" loading>
 	<div slot="loading">Loading while the loading prop on KtTable is true</div>
 </KtTable>
 ```
