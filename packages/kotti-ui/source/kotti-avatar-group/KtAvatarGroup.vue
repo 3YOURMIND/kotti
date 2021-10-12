@@ -18,9 +18,11 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import { KtAvatar } from '../kotti-avatar/'
-import { Kotti } from '../types'
+import { KottiAvatar } from '../kotti-avatar/types'
 
-export default defineComponent<Kotti.AvatarGroup.PropsInternal>({
+import { KottiAvatarGroup } from './types'
+
+export default defineComponent<KottiAvatarGroup.PropsInternal>({
 	name: 'KtAvatarGroup',
 	components: {
 		KtAvatar,
@@ -30,18 +32,16 @@ export default defineComponent<Kotti.AvatarGroup.PropsInternal>({
 		isHoverable: { default: false, type: Boolean },
 		isStack: { default: false, type: Boolean },
 		items: { required: true, type: Array },
-		size: { default: Kotti.Avatar.Size.MEDIUM, type: String },
+		size: { default: KottiAvatar.Size.MEDIUM, type: String },
 	},
 	setup(props) {
 		return {
 			avatarGroupClasses: computed(() => ({
 				'kt-avatar-group': true,
-				'kt-avatar-group--is-size-large':
-					props.size === Kotti.Avatar.Size.LARGE,
+				'kt-avatar-group--is-size-large': props.size === KottiAvatar.Size.LARGE,
 				'kt-avatar-group--is-size-medium':
-					props.size === Kotti.Avatar.Size.MEDIUM,
-				'kt-avatar-group--is-size-small':
-					props.size === Kotti.Avatar.Size.SMALL,
+					props.size === KottiAvatar.Size.MEDIUM,
+				'kt-avatar-group--is-size-small': props.size === KottiAvatar.Size.SMALL,
 				'kt-avatar-group--is-stack': props.isStack,
 			})),
 			avatarRemainders: computed(() => props.items.length - props.count),

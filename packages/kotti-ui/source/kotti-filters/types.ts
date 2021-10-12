@@ -1,4 +1,11 @@
-import { Kotti } from '../types'
+import { KottiFieldDateRange } from '../kotti-field-date/types'
+import { KottiFieldNumber } from '../kotti-field-number/types'
+import {
+	KottiFieldMultiSelect,
+	KottiFieldSingleSelect,
+} from '../kotti-field-select/types'
+import { KottiFieldText } from '../kotti-field-text/types'
+import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { SpecifyRequiredProps } from '../types/utilities'
 
 export namespace KottiFilters {
@@ -106,8 +113,8 @@ export namespace KottiFilters {
 			OPERATION extends Operation.Currency = Operation.Currency,
 		> = Common & {
 			operations: OPERATION[]
-			prefix: Kotti.FieldNumber.Props['prefix']
-			step: Kotti.FieldNumber.Props['step']
+			prefix: KottiFieldNumber.Props['prefix']
+			step: KottiFieldNumber.Props['step']
 			type: FilterType.CURRENCY
 		}
 
@@ -121,7 +128,7 @@ export namespace KottiFilters {
 		export type Float<OPERATION extends Operation.Float = Operation.Float> =
 			Common & {
 				operations: OPERATION[]
-				step: Kotti.FieldNumber.Props['step']
+				step: KottiFieldNumber.Props['step']
 				type: FilterType.FLOAT
 			}
 
@@ -136,7 +143,7 @@ export namespace KottiFilters {
 			OPERATION extends Operation.MultiEnum = Operation.MultiEnum,
 		> = Common & {
 			operations: OPERATION[]
-			options: Kotti.FieldMultiSelect.Props['options']
+			options: KottiFieldMultiSelect.Props['options']
 			type: FilterType.MULTI_ENUM
 		}
 
@@ -149,7 +156,7 @@ export namespace KottiFilters {
 			OPERATION extends Operation.SingleEnum = Operation.SingleEnum,
 		> = Common & {
 			operations: OPERATION[]
-			options: Kotti.FieldSingleSelect.Props['options']
+			options: KottiFieldSingleSelect.Props['options']
 			type: FilterType.SINGLE_ENUM
 		}
 
@@ -172,12 +179,12 @@ export namespace KottiFilters {
 	}
 
 	export type FilterValue =
-		| Kotti.FieldDateRange.Value
-		| Kotti.FieldMultiSelect.Value
-		| Kotti.FieldNumber.Value
-		| Kotti.FieldSingleSelect.Value
-		| Kotti.FieldText.Value
-		| Kotti.FieldToggle.Value
+		| KottiFieldDateRange.Value
+		| KottiFieldMultiSelect.Value
+		| KottiFieldNumber.Value
+		| KottiFieldSingleSelect.Value
+		| KottiFieldText.Value
+		| KottiFieldToggle.Value
 
 	export type InternalFilter = {
 		key: Column.Any['key']

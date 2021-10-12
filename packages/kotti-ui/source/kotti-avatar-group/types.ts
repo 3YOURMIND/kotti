@@ -1,14 +1,14 @@
-import { Kotti } from '../types'
+import { KottiAvatar } from '../kotti-avatar/types'
 import { SpecifyRequiredProps } from '../types/utilities'
 
 export namespace KottiAvatarGroup {
 	export type PropsInternal = Pick<
-		Kotti.Avatar.PropsInternal,
+		KottiAvatar.PropsInternal,
 		'isHoverable' | 'size'
 	> & {
 		count: number
 		isStack: boolean
-		items: Pick<Kotti.Avatar.Props, 'name' | 'src'>[]
+		items: Pick<KottiAvatar.Props, 'name' | 'src'>[]
 	}
 
 	export type Props = SpecifyRequiredProps<PropsInternal, 'items'>

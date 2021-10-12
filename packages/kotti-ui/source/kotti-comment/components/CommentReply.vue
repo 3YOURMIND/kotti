@@ -1,10 +1,6 @@
 <template>
 	<div class="comment-reply">
-		<KtAvatar
-			class="comment-reply__avatar"
-			:size="Kotti.Avatar.Size.SMALL"
-			:src="userAvatar"
-		/>
+		<KtAvatar class="comment-reply__avatar" :size="sm" :src="userAvatar" />
 		<div class="comment-reply__wrapper">
 			<div class="comment-reply__info">
 				<div class="comment-reply__name" v-text="userName" />
@@ -59,7 +55,6 @@ import escape from 'lodash/escape'
 import { KtAvatar } from '../../kotti-avatar'
 import { KtButton } from '../../kotti-button'
 import { KtButtonGroup } from '../../kotti-button-group'
-import { Kotti } from '../../types'
 
 export default {
 	name: 'CommentReply',
@@ -85,7 +80,6 @@ export default {
 		return {
 			inlineMessageValue: '',
 			isInlineEdit: false,
-			Kotti,
 		}
 	},
 	computed: {

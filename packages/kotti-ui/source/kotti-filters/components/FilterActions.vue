@@ -10,7 +10,7 @@
 			:isDisabled="isClearAllDisabled"
 			:isLoading="isLoading"
 			:label="translations.clearAllLabel"
-			:type="Kotti.Filters.ButtonLinkType.DANGER"
+			:type="KottiFilters.ButtonLinkType.DANGER"
 			@click="handleClearAll"
 		/>
 	</div>
@@ -20,7 +20,7 @@
 import { defineComponent } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { Kotti } from '../../types'
+import { KottiFilters } from '../types'
 
 import ButtonLink from './ButtonLink.vue'
 
@@ -57,7 +57,7 @@ export default defineComponent<{
 		return {
 			handleAdd,
 			handleClearAll,
-			Kotti,
+			KottiFilters,
 			translations: useTranslationNamespace('KtFilters'),
 		}
 	},

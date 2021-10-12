@@ -1,13 +1,12 @@
 import Big from 'big.js'
 
-import { Kotti } from '../types'
-
 import {
 	STRINGS_THAT_ARE_TREATED_AS_NULL,
 	DECIMAL_SEPARATOR,
 	DECIMAL_PLACES,
 	TRAILING_ZEROES_REGEX,
 } from './constants'
+import { KottiFieldNumber } from './types'
 
 /**
  * We don't need the full package, as we don’t consider strings to be valid numbers
@@ -22,9 +21,9 @@ export const isInRange = ({
 	minimum,
 	value,
 }: {
-	maximum: Kotti.FieldNumber.Props['maximum']
-	minimum: Kotti.FieldNumber.Props['minimum']
-	value: Kotti.FieldNumber.Value
+	maximum: KottiFieldNumber.Props['maximum']
+	minimum: KottiFieldNumber.Props['minimum']
+	value: KottiFieldNumber.Value
 }) => {
 	if (value === null) return true
 

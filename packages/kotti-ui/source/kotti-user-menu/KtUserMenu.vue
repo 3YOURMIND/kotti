@@ -29,7 +29,7 @@
 		</div>
 		<div :class="userInfoClass" @click="isMenuShow = !isMenuShow">
 			<div class="kt-user-menu__info__avatar">
-				<KtAvatar :size="Kotti.Avatar.Size.SMALL" :src="userAvatar" />
+				<KtAvatar size="sm" :src="userAvatar" />
 			</div>
 			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu__info__text">
 				<div class="kt-user-menu__info__text__name" v-text="userName" />
@@ -56,7 +56,6 @@ import { mixin as clickaway } from 'vue-clickaway'
 import { KtAvatar } from '../kotti-avatar'
 import { IS_NAVBAR_NARROW } from '../kotti-navbar/constants'
 import { makeProps } from '../make-props'
-import { Kotti } from '../types'
 
 import { KottiUserMenu } from './types'
 
@@ -78,7 +77,6 @@ export default defineComponent<KottiUserMenu.PropsInternal>({
 			clickawayMenu: () => (isMenuShow.value = false),
 			isMenuShow,
 			isNarrow,
-			Kotti,
 			userInfoClass: computed(() => ({
 				'kt-user-menu__info': true,
 				'kt-user-menu__info--is-narrow': isNarrow.value,

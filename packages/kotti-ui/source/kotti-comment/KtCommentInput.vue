@@ -4,7 +4,7 @@
 			<KtAvatar
 				v-if="!isInline"
 				class="comment-input__avatar"
-				:size="Kotti.Avatar.Size.SMALL"
+				size="sm"
 				:src="userAvatar"
 			/>
 			<textarea
@@ -29,7 +29,6 @@
 <script>
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
-import { Kotti } from '../types'
 
 export default {
 	name: 'KtCommentInput',
@@ -46,7 +45,6 @@ export default {
 	},
 	data() {
 		return {
-			Kotti,
 			textFocused: false,
 			text: null,
 		}
