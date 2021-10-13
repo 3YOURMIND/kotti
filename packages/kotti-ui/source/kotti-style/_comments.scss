@@ -1,8 +1,11 @@
 .comment {
 	display: flex;
 	flex-flow: row;
-	padding: 0.4rem 0;
-	border-bottom: 1px solid #dbdbdb;
+
+	+ .comment {
+		padding-top: var(--unit-1);
+		border-top: 1px solid var(--ui-02);
+	}
 }
 
 .comment__avatar {
