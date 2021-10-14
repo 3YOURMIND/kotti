@@ -64,16 +64,14 @@ export default defineComponent<{
 			return baseElementsWidth + BASE_OFFSET * 2 + adjacentPagesOffset
 		})
 
-		const neighborValueCenter = computed(() => {
-			if (props.currentPage - props.adjacentAmount < 1)
-				return props.adjacentAmount + 1
-			if (props.currentPage + props.adjacentAmount > props.maximumPage - 2)
-				return props.maximumPage - props.adjacentAmount - 1
-			return props.currentPage
-		})
-
 		const neighborValues = computed(() => {
-			const center = neighborValueCenter.value
+			const center = ((): number => {
+				if (props.currentPage - props.adjacentAmount < 1)
+					return props.adjacentAmount + 1
+				if (props.currentPage + props.adjacentAmount > props.maximumPage - 2)
+					return props.maximumPage - props.adjacentAmount - 1
+				return props.currentPage
+			})()
 			const start = Math.max(0, center - props.adjacentAmount)
 			const end = Math.min(props.maximumPage, center + props.adjacentAmount)
 			return range(start, end + 1)
