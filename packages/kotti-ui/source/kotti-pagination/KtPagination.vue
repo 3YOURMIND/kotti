@@ -2,26 +2,37 @@
 	<div>
 		<ul class="pagination">
 			<li :class="paginatorClasses(0, 'disabled')" @click="previousPage">
-				<i class="yoco page-button">chevron_left</i>
+				<i class="yoco page-button" v-text="Yoco.Icon.CHEVRON_LEFT" />
 			</li>
 			<component
-				:is="component"
-				v-bind="bound"
+				:is="paginationComponent"
+				v-bind="paginationProps"
 				@setPage="setCurrentPage($event)"
 			/>
 			<li :class="paginatorClasses(maximumPage, 'disabled')" @click="nextPage">
-				<i class="yoco page-button">chevron_right</i>
+				<i class="yoco page-button" v-text="Yoco.Icon.CHEVRON_RIGHT" />
 			</li>
 		</ul>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
 import PaginationExpanded from './components/PaginationExpanded.vue'
 import PaginationFlexible from './components/PaginationFlexible.vue'
 import PaginationFractionated from './components/PaginationFractionated.vue'
 
-export default {
+export default defineComponent<{
+	adjacentAmount: number
+	fixedWidth: boolean
+	fractionStyle: boolean
+	page: number
+	pageSize: number
+	pagingStyle: 'default' | 'flex' | 'fraction'
+	total: number
+}>({
 	name: 'KtPagination',
 	components: {
 		PaginationExpanded,
@@ -42,23 +53,69 @@ export default {
 		 */
 		fractionStyle: { type: Boolean, default: false },
 	},
-	data() {
+	setup(props, { emit }) {
+		const currentPage = ref(props.page - 1)
+		const pageAmount = computed(() => Math.ceil(props.total / props.pageSize))
+		const maximumPage = computed(() => pageAmount.value - 1)
+
 		return {
-			currentPage: this.page - 1,
+			paginationComponent: computed(() => {
+				const isFlexLogical = 2 * (props.adjacentAmount + 1) < pageAmount.value
+				if (!isFlexLogical || pageAmount.value < 2)
+					return PaginationExpanded.name
+
+				if (props.fractionStyle) {
+					// eslint-disable-next-line no-console
+					console.warn(
+						"<KtPagination>: fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
+					)
+					return PaginationFractionated.name
+				}
+
+				switch (props.pagingStyle) {
+					case 'flex':
+						return PaginationFlexible.name
+					case 'fraction':
+						return PaginationFractionated.name
+					default:
+						return PaginationExpanded.name
+				}
+			}),
+			currentPage,
+			maximumPage,
+			nextPage: () => {
+				if (currentPage.value === maximumPage.value) return
+				currentPage.value += 1
+				emit('nextPageClicked', currentPage.value + 1)
+			},
+			paginatorClasses: (page) => {
+				return {
+					'page-item': true,
+					disabled: currentPage.value === page,
+				}
+			},
+			paginationProps: computed(() => ({
+				adjacentAmount: props.adjacentAmount,
+				currentPage: currentPage.value,
+				fixedWidth: props.fixedWidth,
+				maximumPage: maximumPage.value,
+				pageSize: props.pageSize,
+				total: props.total,
+			})),
+			previousPage: () => {
+				if (currentPage.value === 0) return
+				currentPage.value -= 1
+				emit('previousPageClicked', currentPage.value + 1)
+			},
+			setCurrentPage: (page) => {
+				if (page === currentPage.value) return
+				currentPage.value = page
+				emit('currentPageChange', currentPage.value + 1)
+			},
+			Yoco,
 		}
 	},
 	computed: {
-		bound() {
-			return {
-				adjacentAmount: this.adjacentAmount,
-				currentPage: this.currentPage,
-				fixedWidth: this.fixedWidth,
-				maximumPage: this.maximumPage,
-				pageSize: this.pageSize,
-				total: this.total,
-				totalPages: this.totalPages,
-			}
-		},
 		component() {
 			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
 			if (!isFlexLogical || this.pageAmount < 2) return 'PaginationExpanded'
@@ -80,40 +137,8 @@ export default {
 					return PaginationExpanded.name
 			}
 		},
-		maximumPage() {
-			return Math.ceil(this.total / this.pageSize) - 1
-		},
-		pageAmount() {
-			return Math.ceil(this.total / this.pageSize)
-		},
 	},
-	methods: {
-		paginatorClasses(page, className) {
-			return {
-				'page-item': true,
-				[className]: this.currentPage === page,
-			}
-		},
-		setCurrentPage(page) {
-			if (page === this.currentPage) return
-			this.currentPage = page
-			this.eventEmitter('currentPageChange')
-		},
-		nextPage() {
-			if (this.currentPage === this.maximumPage) return
-			this.currentPage += 1
-			this.eventEmitter('nextPageClicked')
-		},
-		previousPage() {
-			if (this.currentPage === 0) return
-			this.currentPage -= 1
-			this.eventEmitter('previousPageClicked')
-		},
-		eventEmitter(eventName) {
-			this.$emit(eventName, this.currentPage + 1)
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss">
