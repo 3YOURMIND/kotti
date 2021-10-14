@@ -3,7 +3,7 @@
 		<li
 			v-for="(page, index) in totalPages"
 			:key="index"
-			:class="paginatorClasses(page, 'page-item--active')"
+			:class="paginatorClasses(page)"
 			@click="$emit('setPage', page - 1)"
 			v-text="humanReadablePageNumber(page)"
 		/>
@@ -30,8 +30,8 @@ export default defineComponent<{
 		return {
 			humanReadablePageNumber: (page: number) => page + 1,
 			paginatorClasses: (page: number) => ({
-				'page-item': true,
-				'page-item--active': props.currentPage + 1 === page,
+				'kt-pagination__page-item': true,
+				'kt-pagination__page-item--is-active': props.currentPage + 1 === page,
 			}),
 			totalPages: computed(() => range(pageAmount.value)),
 		}

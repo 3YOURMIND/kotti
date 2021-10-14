@@ -20,3 +20,9 @@ export default defineComponent<{ currentPage: number; maximumPage: number }>({
 	},
 })
 </script>
+
+<style lang="scss" scoped>
+.fraction {
+	display: inline-block;
+}
+</style>

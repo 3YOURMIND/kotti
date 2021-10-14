@@ -88,8 +88,8 @@ export default defineComponent<{
 			neighborValues,
 			paginatorClasses(page: number) {
 				return {
-					'page-item': true,
-					'page-item--active': props.currentPage === page,
+					'kt-pagination__page-item': true,
+					'kt-pagination__page-item--is-active': props.currentPage === page,
 				}
 			},
 			showFirstPage,

@@ -1,16 +1,22 @@
 <template>
 	<div>
-		<ul class="pagination">
-			<li :class="paginatorClasses(0, 'disabled')" @click="previousPage">
-				<i class="yoco page-button" v-text="Yoco.Icon.CHEVRON_LEFT" />
+		<ul class="kt-pagination">
+			<li :class="paginatorClasses(0)" @click="previousPage">
+				<i
+					class="yoco kt-pagination__page-button"
+					v-text="Yoco.Icon.CHEVRON_LEFT"
+				/>
 			</li>
 			<component
 				:is="paginationComponent"
 				v-bind="paginationProps"
 				@setPage="setCurrentPage($event)"
 			/>
-			<li :class="paginatorClasses(maximumPage, 'disabled')" @click="nextPage">
-				<i class="yoco page-button" v-text="Yoco.Icon.CHEVRON_RIGHT" />
+			<li :class="paginatorClasses(maximumPage)" @click="nextPage">
+				<i
+					class="yoco kt-pagination__page-button"
+					v-text="Yoco.Icon.CHEVRON_RIGHT"
+				/>
 			</li>
 		</ul>
 	</div>
@@ -82,8 +88,8 @@ export default defineComponent<
 			},
 			paginatorClasses: (page) => {
 				return {
-					'page-item': true,
-					disabled: currentPage.value === page,
+					'kt-pagination__page-item': true,
+					'kt-pagination__page-item--is-disabled': currentPage.value === page,
 				}
 			},
 			paginationProps: computed(() => ({
@@ -107,73 +113,42 @@ export default defineComponent<
 			Yoco,
 		}
 	},
-	computed: {
-		component() {
-			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
-			if (!isFlexLogical || this.pageAmount < 2) return 'PaginationExpanded'
-
-			if (this.fractionStyle) {
-				// eslint-disable-next-line no-console
-				console.warn(
-					"<KtPagination>: fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
-				)
-				return PaginationFractionated.name
-			}
-
-			switch (this.pagingStyle) {
-				case 'flex':
-					return PaginationFlexible.name
-				case 'fraction':
-					return PaginationFractionated.name
-				default:
-					return PaginationExpanded.name
-			}
-		},
-	},
 })
 </script>
 
-<style lang="scss">
-@import '../kotti-style/_variables.scss';
-
-:root {
-	--pagination-color-active: var(--interactive-03);
-}
-.pagination {
+<style lang="scss" scoped>
+.kt-pagination {
 	margin: 0;
 	list-style: none;
 	user-select: none;
-	.page-button {
+	&__page-button {
 		display: inline-block;
 		padding: var(--unit-1);
-		background: $lightgray-300;
+		background: var(--gray-10);
 		border-radius: var(--border-radius);
 		&:hover {
 			cursor: pointer;
-			background: $lightgray-400;
+			background: var(--gray-20);
 		}
 	}
-	.fraction {
-		display: inline-block;
-	}
-	.page-item {
+	::v-deep &__page-item {
+		--pagination-color-active: var(--interactive-03);
 		display: inline-block;
 		padding: var(--unit-2);
 		line-height: 24px;
 		text-align: center;
-		&--active {
+		&--is-active {
 			color: var(--pagination-color-active);
+		}
+		&--is-disabled {
+			cursor: not-allowed;
+
+			.kt-pagination__page-button {
+				opacity: 0.46;
+			}
 		}
 		&:hover {
 			cursor: pointer;
-		}
-	}
-
-	.disabled {
-		cursor: not-allowed;
-
-		.page-button {
-			opacity: 0.46;
 		}
 	}
 }
