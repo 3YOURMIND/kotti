@@ -20,19 +20,16 @@
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import { makeProps } from '../make-props'
+
 import PaginationExpanded from './components/PaginationExpanded.vue'
 import PaginationFlexible from './components/PaginationFlexible.vue'
 import PaginationFractionated from './components/PaginationFractionated.vue'
+import { KottiPagination } from './types'
 
-export default defineComponent<{
-	adjacentAmount: number
-	fixedWidth: boolean
-	fractionStyle: boolean
-	page: number
-	pageSize: number
-	pagingStyle: 'default' | 'flex' | 'fraction'
-	total: number
-}>({
+export default defineComponent<
+	KottiPagination.PropsInternal & { fractionStyle: boolean }
+>({
 	name: 'KtPagination',
 	components: {
 		PaginationExpanded,
@@ -40,12 +37,7 @@ export default defineComponent<{
 		PaginationFractionated,
 	},
 	props: {
-		adjacentAmount: { type: Number, default: 1 },
-		fixedWidth: { type: Boolean, default: false },
-		page: { type: Number, default: 1 },
-		pageSize: { type: Number, default: 10 },
-		pagingStyle: { type: String, default: 'expand' },
-		total: { type: Number, required: true },
+		...makeProps(KottiPagination.propsSchema),
 
 		/**
 		 * @deprecated
