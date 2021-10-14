@@ -95,6 +95,12 @@ export default defineComponent<KottiPagination.PropsInternal>({
 })
 </script>
 
+<style lang="scss">
+:root {
+	--kt-pagination-color-active: var(--interactive-03);
+}
+</style>
+
 <style lang="scss" scoped>
 .kt-pagination {
 	margin: 0;
@@ -111,13 +117,12 @@ export default defineComponent<KottiPagination.PropsInternal>({
 		}
 	}
 	::v-deep &__page-item {
-		--pagination-color-active: var(--interactive-03);
 		display: inline-block;
 		padding: var(--unit-2);
 		line-height: 24px;
 		text-align: center;
 		&--is-active {
-			color: var(--pagination-color-active);
+			color: var(--kt-pagination-color-active);
 		}
 		&--is-disabled {
 			cursor: not-allowed;
