@@ -1,5 +1,5 @@
 <template>
-	<div class="inline-container">
+	<div class="kt-pagination__inline-container">
 		<li
 			v-for="(page, index) in totalPages"
 			:key="index"
@@ -40,7 +40,7 @@ export default defineComponent<{
 </script>
 
 <style lang="scss" scoped>
-.inline-container {
+.kt-pagination__inline-container {
 	display: inline;
 }
 </style>

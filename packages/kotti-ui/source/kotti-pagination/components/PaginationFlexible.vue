@@ -1,12 +1,16 @@
 <template>
-	<div class="inline-container" :style="containerStyle">
+	<div class="kt-pagination__inline-container" :style="containerStyle">
 		<li
 			v-if="showFirstPage"
 			:class="paginatorClasses(0)"
 			@click="$emit('setPage', 0)"
 			v-text="humanReadablePageNumber(0)"
 		/>
-		<li v-if="showLeftDots" class="c-auto-important page-item" v-text="'...'" />
+		<li
+			v-if="showLeftDots"
+			class="c-auto-important kt-pagination__page-item"
+			v-text="'...'"
+		/>
 		<li
 			v-for="(page, index) in neighborValues"
 			:key="index"
@@ -16,7 +20,7 @@
 		/>
 		<li
 			v-if="showRightDots"
-			class="c-auto-important page-item"
+			class="c-auto-important kt-pagination__page-item"
 			v-text="'...'"
 		/>
 		<li
@@ -108,7 +112,7 @@ export default defineComponent<{
 </script>
 
 <style lang="scss" scoped>
-.inline-container {
+.kt-pagination__inline-container {
 	display: inline-flex;
 	justify-content: center;
 }

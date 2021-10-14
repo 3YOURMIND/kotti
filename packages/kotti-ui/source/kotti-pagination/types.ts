@@ -8,10 +8,10 @@ export namespace KottiPagination {
 	}
 
 	export const propsSchema = z.object({
-		adjacentAmount: z.number().nullable().default(1),
-		fixedWidth: z.boolean().nullable().default(false),
-		page: z.number().nullable().default(1),
-		pageSize: z.number().nullable().default(10),
+		adjacentAmount: z.number().default(1),
+		fixedWidth: z.boolean().default(false),
+		page: z.number().default(1),
+		pageSize: z.number().default(10),
 		pagingStyle: z.nativeEnum(PagingStyle).default(PagingStyle.EXPAND),
 		total: z.number(),
 	})

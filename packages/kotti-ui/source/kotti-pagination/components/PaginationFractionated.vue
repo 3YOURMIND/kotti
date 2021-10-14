@@ -1,5 +1,5 @@
 <template>
-	<li class="fraction" v-text="fractionRep" />
+	<li class="kt-pagination__fractionated" v-text="fractionRep" />
 </template>
 
 <script lang="ts">
@@ -22,7 +22,7 @@ export default defineComponent<{ currentPage: number; maximumPage: number }>({
 </script>
 
 <style lang="scss" scoped>
-.fraction {
+.kt-pagination__fractionated {
 	display: inline-block;
 }
 </style>
