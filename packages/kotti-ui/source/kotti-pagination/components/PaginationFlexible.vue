@@ -2,7 +2,7 @@
 	<div class="inline-container" :style="containerStyle">
 		<li
 			v-if="showFirstPage"
-			:class="paginatorClasses(0, 'page-item--active')"
+			:class="paginatorClasses(0)"
 			@click="$emit('setPage', 0)"
 			v-text="humanReadablePageNumber(0)"
 		/>
@@ -10,7 +10,7 @@
 		<li
 			v-for="(page, index) in neighborValues"
 			:key="index"
-			:class="paginatorClasses(page, 'page-item--active')"
+			:class="paginatorClasses(page)"
 			@click="$emit('setPage', page)"
 			v-text="humanReadablePageNumber(page)"
 		/>
@@ -21,21 +21,28 @@
 		/>
 		<li
 			v-if="showLastPage"
-			:class="paginatorClasses(maximumPage, 'page-item--active')"
+			:class="paginatorClasses(maximumPage)"
 			@click="$emit('setPage', maximumPage)"
 			v-text="humanReadablePageNumber(maximumPage)"
 		/>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
+import range from 'lodash/range'
 const ADJACENT_MULTIPLIER = 20
 const BASE_NUMBER_WIDTH = 24.5
 const BASE_OFFSET = 3
 const MAX_NUMBER_OF_ELEMENTS = 5
 const PIXEL_MULTIPLIER = 2.8
 
-export default {
+export default defineComponent<{
+	adjacentAmount: number
+	currentPage: number
+	fixedWidth: boolean
+	maximumPage: number
+}>({
 	name: 'PaginationFlexible',
 	props: {
 		adjacentAmount: { type: Number, required: true },
@@ -43,75 +50,61 @@ export default {
 		fixedWidth: { type: Boolean, required: true },
 		maximumPage: { type: Number, required: true },
 	},
-	computed: {
-		pixelMargin() {
-			const digitWidth = this.maximumPage.toString().length - 1
+	setup(props) {
+		const pixelMargin = computed(() => {
+			const digitWidth = props.maximumPage.toString().length - 1
 			const numberWidth = BASE_NUMBER_WIDTH + digitWidth * PIXEL_MULTIPLIER
 			const baseElementsWidth =
-				(2 * this.adjacentAmount + MAX_NUMBER_OF_ELEMENTS) * numberWidth
-			const adjacentPagesOffset = this.adjacentAmount * ADJACENT_MULTIPLIER
+				(2 * props.adjacentAmount + MAX_NUMBER_OF_ELEMENTS) * numberWidth
+			const adjacentPagesOffset = props.adjacentAmount * ADJACENT_MULTIPLIER
 			return baseElementsWidth + BASE_OFFSET * 2 + adjacentPagesOffset
-		},
-		containerStyle() {
-			return this.fixedWidth ? { width: `${this.pixelMargin}px` } : {}
-		},
-		showFirstPage() {
-			return !this.neighborValues.includes(0)
-		},
-		showLeftDots() {
-			return this.showFirstPage && !this.neighborValues.includes(1)
-		},
-		showRightDots() {
-			return (
-				this.showLastPage && !this.neighborValues.includes(this.maximumPage - 1)
-			)
-		},
-		showLastPage() {
-			return !this.neighborValues.includes(this.maximumPage)
-		},
-		neighborValues() {
-			let min = this.currentPage
-			let max = this.currentPage
+		})
 
-			for (let i = 0; i < this.adjacentAmount; i++) {
-				const canJumpLeft = min > 0
-				const canJumpRight = max < this.maximumPage
+		const neighborValueCenter = computed(() => {
+			if (props.currentPage - props.adjacentAmount < 1)
+				return props.adjacentAmount + 1
+			if (props.currentPage + props.adjacentAmount > props.maximumPage - 2)
+				return props.maximumPage - props.adjacentAmount - 1
+			return props.currentPage
+		})
 
-				if (canJumpLeft) min -= 1
-				else if (canJumpRight) max += 1
-				else break
+		const neighborValues = computed(() => {
+			const center = neighborValueCenter.value
+			const start = Math.max(0, center - props.adjacentAmount)
+			const end = Math.min(props.maximumPage, center + props.adjacentAmount)
+			return range(start, end + 1)
+		})
 
-				if (canJumpRight) max += 1
-				else if (canJumpLeft) min -= 1
-				else break
-			}
+		const showFirstPage = computed(() => !neighborValues.value.includes(0))
+		const showLastPage = computed(
+			() => !neighborValues.value.includes(props.maximumPage),
+		)
 
-			const values = []
-			for (let i = min; i <= max; i++) values.push(i)
-
-			/**
-			 * Snippet to reduce width variations around edges
-			 */
-			if (this.currentPage >= this.maximumPage - this.adjacentAmount)
-				values.unshift(this.maximumPage - 2 * this.adjacentAmount - 1)
-			if (this.currentPage <= this.adjacentAmount)
-				values.push(2 * this.adjacentAmount + 1)
-
-			return values
-		},
+		return {
+			containerStyle: computed(
+				() => props.fixedWidth && { width: `${pixelMargin.value}px` },
+			),
+			humanReadablePageNumber: (page: number) => page + 1,
+			neighborValues,
+			paginatorClasses(page: number) {
+				return {
+					'page-item': true,
+					'page-item--active': props.currentPage === page,
+				}
+			},
+			showFirstPage,
+			showLastPage,
+			showLeftDots: computed(
+				() => showFirstPage.value && !neighborValues.value.includes(1),
+			),
+			showRightDots: computed(
+				() =>
+					showLastPage.value &&
+					!neighborValues.value.includes(props.maximumPage - 1),
+			),
+		}
 	},
-	methods: {
-		paginatorClasses(page, className) {
-			return {
-				'page-item': true,
-				[className]: this.currentPage === page,
-			}
-		},
-		humanReadablePageNumber(page) {
-			return page + 1
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss" scoped>

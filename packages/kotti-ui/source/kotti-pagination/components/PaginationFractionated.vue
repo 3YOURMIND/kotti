@@ -2,19 +2,21 @@
 	<li class="fraction" v-text="fractionRep" />
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
+
+export default defineComponent<{ currentPage: number; maximumPage: number }>({
 	name: 'PaginationFractionated',
 	props: {
 		currentPage: { type: Number, required: true },
 		maximumPage: { type: Number, required: true },
 	},
-	computed: {
-		fractionRep() {
-			return [this.currentPage, this.maximumPage]
-				.map((page) => page + 1)
-				.join(' / ')
-		},
+	setup(props) {
+		return {
+			fractionRep: computed(
+				() => `${props.currentPage + 1} / ${props.maximumPage + 1}`,
+			),
+		}
 	},
-}
+})
 </script>
