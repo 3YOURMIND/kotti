@@ -49,12 +49,11 @@ export default defineComponent<KottiPagination.PropsInternal>({
 		return {
 			paginationComponent: computed(() => {
 				const isFlexLogical = 2 * (props.adjacentAmount + 1) < pageAmount.value
-				if (!isFlexLogical || pageAmount.value < 2)
-					return PaginationExpanded.name
-
 				switch (props.pagingStyle) {
 					case 'flex':
-						return PaginationFlexible.name
+						return !isFlexLogical || pageAmount.value < 2
+							? PaginationExpanded.name
+							: PaginationFlexible.name
 					case 'fraction':
 						return PaginationFractionated.name
 					default:
@@ -68,12 +67,10 @@ export default defineComponent<KottiPagination.PropsInternal>({
 				currentPage.value += 1
 				emit('nextPageClicked', currentPage.value + 1)
 			},
-			paginatorClasses: (page) => {
-				return {
-					'kt-pagination__page-item': true,
-					'kt-pagination__page-item--is-disabled': currentPage.value === page,
-				}
-			},
+			paginatorClasses: (page) => ({
+				'kt-pagination__page-item': true,
+				'kt-pagination__page-item--is-disabled': currentPage.value === page,
+			}),
 			paginationProps: computed(() => ({
 				adjacentAmount: props.adjacentAmount,
 				currentPage: currentPage.value,

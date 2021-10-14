@@ -90,12 +90,10 @@ export default defineComponent<{
 			),
 			humanReadablePageNumber: (page: number) => page + 1,
 			neighborValues,
-			paginatorClasses(page: number) {
-				return {
-					'kt-pagination__page-item': true,
-					'kt-pagination__page-item--is-active': props.currentPage === page,
-				}
-			},
+			paginatorClasses: (page: number) => ({
+				'kt-pagination__page-item': true,
+				'kt-pagination__page-item--is-active': props.currentPage === page,
+			}),
 			showFirstPage,
 			showLastPage,
 			showLeftDots: computed(

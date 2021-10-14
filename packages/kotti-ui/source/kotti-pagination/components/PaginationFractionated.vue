@@ -5,7 +5,10 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-export default defineComponent<{ currentPage: number; maximumPage: number }>({
+export default defineComponent<{
+	currentPage: number
+	maximumPage: number
+}>({
 	name: 'PaginationFractionated',
 	props: {
 		currentPage: { type: Number, required: true },
