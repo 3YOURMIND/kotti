@@ -33,24 +33,14 @@ import PaginationFlexible from './components/PaginationFlexible.vue'
 import PaginationFractionated from './components/PaginationFractionated.vue'
 import { KottiPagination } from './types'
 
-export default defineComponent<
-	KottiPagination.PropsInternal & { fractionStyle: boolean }
->({
+export default defineComponent<KottiPagination.PropsInternal>({
 	name: 'KtPagination',
 	components: {
 		PaginationExpanded,
 		PaginationFlexible,
 		PaginationFractionated,
 	},
-	props: {
-		...makeProps(KottiPagination.propsSchema),
-
-		/**
-		 * @deprecated
-		 * Use :pagingStyle='fraction' instead
-		 */
-		fractionStyle: { type: Boolean, default: false },
-	},
+	props: makeProps(KottiPagination.propsSchema),
 	setup(props, { emit }) {
 		const currentPage = ref(props.page - 1)
 		const pageAmount = computed(() => Math.ceil(props.total / props.pageSize))
@@ -61,14 +51,6 @@ export default defineComponent<
 				const isFlexLogical = 2 * (props.adjacentAmount + 1) < pageAmount.value
 				if (!isFlexLogical || pageAmount.value < 2)
 					return PaginationExpanded.name
-
-				if (props.fractionStyle) {
-					// eslint-disable-next-line no-console
-					console.warn(
-						"<KtPagination>: fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
-					)
-					return PaginationFractionated.name
-				}
 
 				switch (props.pagingStyle) {
 					case 'flex':
