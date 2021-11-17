@@ -1,49 +1,29 @@
+// DEPRECATED: Please use CSS Custom Properties instead
+
 // Color
-$primary-300: #afc5e8;
 $primary-500: #2c66c4;
 $primary-400: #3173de;
 $primary-600: #2659ab;
-$primary-700: darken($primary-500, 20);
 
 $darkgray-300: #8a8a8a;
 $darkgray-400: #575757;
 $darkgray-500: #3d3d3d;
-$darkgray-600: #242424;
 
 $lightgray-300: #f8f8f8;
 $lightgray-500: #8f8f8f;
 $lightgray-400: #dbdbdb;
-$lightgray-600: #5c5c5c;
 
-$green-300: #c4e0a5;
-$green-400: #71c716;
 $green-500: #64ad13;
-$green-600: #549410;
 
-$orange-300: #ffae66;
-$orange-400: #ff9333;
 $orange-500: #ff7800;
-$orange-600: #d37d30;
 
-$red-300: #f0a8a8;
 $red-400: #f21d1d;
 $red-500: #d91919;
-$red-600: #bf1717;
-
-$purple-300: #b995ca;
-$purple-400: #932dc2;
-$purple-500: #6c218f;
-$purple-600: #591b75;
-
-$warning-500: #ff7800;
 
 $body-font-color: $darkgray-500;
 $body-bg: $lightgray-300;
 
-$link-color: $primary-500;
-$link-color-dark: $primary-600;
 $border-color: $lightgray-400;
-$code-color: $primary-600;
 
 // Fonts
 // Credit: https://css-tricks.com/snippets/css/system-font-stack/
@@ -66,16 +46,10 @@ $unit-q: 0.05rem !default;
 $unit-h: 0.1rem !default;
 $unit-1: 0.2rem !default;
 $unit-2: 0.4rem !default;
-$unit-3: 0.6rem !default;
 $unit-4: 0.8rem !default;
-$unit-5: 1rem !default;
-$unit-6: 1.2rem !default;
 $unit-7: 1.4rem !default;
 $unit-8: 1.6rem !default;
-$unit-9: 1.8rem !default;
 $unit-10: 2rem !default;
-$unit-12: 2.4rem !default;
-$unit-16: 3.2rem !default;
 
 // Font sizes
 $html-font-size: 20px !default;
@@ -87,9 +61,7 @@ $line-height: 1rem !default;
 
 // Sizes
 $layout-spacing: $unit-2 !default;
-$layout-spacing-sm: $unit-1 !default;
 $layout-spacing-lg: $unit-4 !default;
-$border-radius: $unit-1 !default;
 $border-width: $unit-q !default;
 $border-width-lg: $unit-h !default;
 $control-size: $unit-8 !default;
@@ -98,19 +70,9 @@ $control-size-lg: $unit-10 !default;
 $control-padding-x: $unit-2 !default;
 $control-padding-x-sm: $unit-2 * 0.75 !default;
 $control-padding-x-lg: $unit-2 * 1.5 !default;
-$control-padding-y: ($control-size - $line-height) / 2 - $border-width !default;
 $control-padding-y-sm: ($control-size-sm - $line-height) / 2 - $border-width !default;
 $control-padding-y-lg: ($control-size-lg - $line-height) / 2 - $border-width !default;
 $control-icon-size: 0.8rem !default;
-
-$control-width-xs: 180px !default;
-$control-width-sm: 320px !default;
-$control-width-md: 640px !default;
-$control-width-lg: 960px !default;
-$control-width-xl: 1280px !default;
-
-$navbar-width: 12rem;
-$actionbar-width: 16rem;
 
 // Responsive breakpoints
 $size-xs: 480px !default;
@@ -126,7 +88,6 @@ $responsive-breakpoint: $size-xs !default;
 $zindex-0: 1 !default;
 $zindex-1: 100 !default;
 $zindex-2: 200 !default;
-$zindex-3: 300 !default;
 $zindex-4: 400 !default;
 
 // Shadow

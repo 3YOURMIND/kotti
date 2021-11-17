@@ -100,6 +100,7 @@ export default defineComponent<KottiNavbar.PropsInternal>({
 <style lang="scss">
 @import '../kotti-style/_variables.scss';
 
+$navbar-width: 12rem;
 $mobile-navbar-height: 2.4rem;
 $narrow-navbar-width: 3.4rem;
 
