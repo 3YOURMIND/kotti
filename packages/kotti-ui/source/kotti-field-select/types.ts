@@ -21,6 +21,7 @@ export namespace Shared {
 			| symbol
 			| null,
 	> = {
+		dataTest?: string
 		isDisabled?: boolean
 		label: string
 		value: V

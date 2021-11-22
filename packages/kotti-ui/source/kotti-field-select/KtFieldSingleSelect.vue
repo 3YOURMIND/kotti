@@ -21,6 +21,7 @@
 				<ElOption
 					v-for="option in options"
 					:key="option.value"
+					:data-test="option.dataTest"
 					:disabled="field.isDisabled || Boolean(option.isDisabled)"
 					:label="option.label"
 					:value="option.value"

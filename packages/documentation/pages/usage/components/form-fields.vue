@@ -6,7 +6,7 @@
 			<div class="overview">
 				<div class="overview__component">
 					<h4>Component</h4>
-					<KtForm v-model="values">
+					<KtForm v-model="values" :formId="settings.formId">
 						<component
 							:is="componentRepresenation.name"
 							v-bind="componentRepresenation.props"
@@ -78,6 +78,7 @@
 								{ label: 'Large', value: 'large' },
 							]"
 						/>
+						<KtFieldText formKey="formId" isOptional label="Form ID" />
 						<KtFieldSingleSelect
 							formKey="validation"
 							isOptional
@@ -635,6 +636,7 @@ export default defineComponent({
 				isOptional: Kotti.FieldToggle.Value
 			}
 			component: ComponentNames
+			formId: Kotti.FieldText.Value
 			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
 			helpText: Kotti.FieldText.Value
@@ -676,6 +678,7 @@ export default defineComponent({
 			hasHelpTextSlot: false,
 			helpDescription: null,
 			helpText: null,
+			formId: null,
 			label: 'Label',
 			leftIcon: null,
 			locale: 'en-US',
@@ -838,7 +841,7 @@ export default defineComponent({
 					'KtFieldSingleSelectRemote',
 				].includes(component)
 			) {
-				const options =
+				const options = (
 					component === 'KtFieldSingleSelectRemote'
 						? singleOrMultiSelectOptions.filter((option) =>
 								option.label
@@ -848,6 +851,10 @@ export default defineComponent({
 									),
 						  )
 						: singleOrMultiSelectOptions
+				).map((option) => ({
+					...option,
+					dataTest: `${String(option.value)}`,
+				}))
 
 				Object.assign(additionalProps, {
 					options,
