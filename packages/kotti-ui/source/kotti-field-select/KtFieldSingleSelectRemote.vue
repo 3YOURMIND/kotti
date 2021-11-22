@@ -32,6 +32,7 @@
 			<IconTextItem
 				v-for="(option, index) in modifiedOptions"
 				:key="index"
+				:dataTest="option.dataTest"
 				:isDisabled="option.isDisabled"
 				:isSelected="option.isSelected"
 				:label="option.label"
