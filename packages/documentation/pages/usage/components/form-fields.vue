@@ -838,21 +838,20 @@ export default defineComponent({
 					'KtFieldSingleSelectRemote',
 				].includes(component)
 			) {
-				const options =
+				const options = (
 					component === 'KtFieldSingleSelectRemote'
-						? singleOrMultiSelectOptions
-								.filter((option) =>
+						? singleOrMultiSelectOptions.filter((option) =>
 									option.label
 										.toLowerCase()
 										.includes(
 											(remoteSingleSelectQuery.value ?? '').toLowerCase(),
 										),
 								)
-								.map((option) => ({
-									...option,
-									dataTest: `dataTest ${String(option.value)}`,
-								}))
 						: singleOrMultiSelectOptions
+				).map((option) => ({
+									...option,
+					dataTest: `${String(option.value)}`,
+								}))
 
 				Object.assign(additionalProps, {
 					options,
