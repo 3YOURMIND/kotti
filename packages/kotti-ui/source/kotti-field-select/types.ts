@@ -21,6 +21,7 @@ export namespace Shared {
 			| symbol
 			| null,
 	> = {
+		dataTest: string | null
 		isDisabled?: boolean
 		label: string
 		value: V
@@ -55,7 +56,6 @@ export namespace KottiFieldSingleSelect {
 export namespace KottiFieldSingleSelectRemote {
 	export type Props = KottiField.Props<Value, string | null> &
 		Shared.Props & {
-			dataTest: string | null
 			isLoadingOptions: boolean
 			query: string | null
 		}

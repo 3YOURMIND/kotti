@@ -219,9 +219,10 @@ export default defineComponent({
 					  }))
 					: [
 							{
-								label: translations.value.noDataText,
+								dataTest: String(NO_DATA),
 								isDisabled: true,
 								isSelected: false,
+								label: translations.value.noDataText,
 								value: NO_DATA,
 							},
 					  ],
