@@ -71,9 +71,10 @@ menuData: [
 ]
 ```
 
-The links in KtNavbar are normal `a` elements. However if you want to use one of
-the popular vue router frameworks, you can exchange this for any individual link
-via `v-bind:is`. The data provided in `linkProps` will be bound to the component:
+By default the elements from the `links` prop on `KtNavbar` are bound to an anchor
+HTML element (`<a />`). Therefore, providing `href` attribute on each element suffices
+in most cases. In case of the need for a custom component, provide the `component`
+attribute and any corresponding prop that would need to be bound to it.
 
 ```js
 const links = [

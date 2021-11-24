@@ -18,8 +18,8 @@ export namespace KottiNavbar {
 	export type QuickLink = z.infer<typeof quickLinkSchema>
 
 	export const sectionLinkSchema = z.object({
-		icon: yocoIconSchema,
 		component: z.string().default('a'),
+		icon: yocoIconSchema,
 		isActive: z.boolean(),
 		linkProps: z.record(z.unknown()).optional(),
 		title: z.string(),
