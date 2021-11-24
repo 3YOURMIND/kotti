@@ -9,3 +9,6 @@ package:yoco:
 
 package:vue-use-tippy:
   - packages/vue-use-tippy/*
+
+scope:ci:
+  - .github/*
