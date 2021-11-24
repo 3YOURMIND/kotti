@@ -68,13 +68,18 @@ export default {
 						{
 							icon: Yoco.Icon.DASHBOARD,
 							isActive: true,
-							link: '#',
+							linkProps: {
+								href: '#',
+							},
 							title: 'Dashboard',
 						},
 						{
 							icon: Yoco.Icon.CLOSE,
 							isActive: true,
-							link: '/usage/layouts/navbar',
+							component: 'nuxt-link',
+							linkProps: {
+								to: '/usage/layouts/navbar',
+							},
 							title: 'Close Example',
 						},
 					],
@@ -85,13 +90,17 @@ export default {
 						{
 							icon: Yoco.Icon.INVOICE,
 							isActive: false,
-							link: '#',
+							linkProps: {
+								href: '#',
+							},
 							title: 'Orders',
 						},
 						{
 							icon: Yoco.Icon.REQUEST,
 							isActive: false,
-							link: '#',
+							linkProps: {
+								href: '#',
+							},
 							title: 'Quotes',
 						},
 					],
@@ -102,13 +111,17 @@ export default {
 						{
 							icon: Yoco.Icon.BOX_3D,
 							isActive: false,
-							link: '#',
+							linkProps: {
+								href: '#',
+							},
 							title: 'Parts',
 						},
 						{
 							icon: Yoco.Icon.CALENDAR,
 							isActive: false,
-							link: '#',
+							linkProps: {
+								href: '#',
+							},
 							title: 'Schedule',
 						},
 					],

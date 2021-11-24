@@ -43,7 +43,7 @@ notificationData: {
 
 ### Menu
 
-`KtNavbar` only supports this menu structure:
+This is how you display navigation links in `KtNavbar`:
 
 ```js
 menuData: [
@@ -51,20 +51,53 @@ menuData: [
 		title: 'Order Management',
 		links: [
 			{
-				link: '#',
-				title: 'Orders',
 				icon: 'invoice',
 				isActive: false,
+				linkProps: {
+					href: '#',
+				},
+				title: 'Orders',
 			},
 			{
-				link: '#',
-				title: 'Quotes',
 				icon: 'request',
 				isActive: false,
+				linkProps: {
+					href: '#',
+				},
+				title: 'Quotes',
 			},
 		],
 	},
 ]
+```
+
+The links in KtNavbar are normal `a` elements. However if you want to use one of
+the popular vue router frameworks, you can exchange this for any individual link
+via `v-bind:is`. The data provided in `linkProps` will be bound to the component:
+
+```js
+const links = [
+	// For Nuxt's router framework
+	{
+		component: 'nuxt-link',
+		icon: 'invoice',
+		isActive: false,
+		linkProps: {
+			to: '#',
+		},
+		title: 'Orders',
+	},
+	// For VueRouter
+	{
+		component: 'router-link',
+		icon: 'request',
+		isActive: false,
+		linkProps: {
+			to: '#',
+		},
+		title: 'Quotes',
+	},
+],
 ```
 
 ### Quick Links
