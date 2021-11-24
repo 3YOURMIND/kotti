@@ -7,7 +7,7 @@
 				v-text="isNarrow ? '' : item.title"
 			/>
 			<component
-				:is="link.component ? link.component : 'a'"
+				:is="link.component"
 				v-for="(link, linkIndex) in item.links"
 				:key="linkIndex"
 				v-bind="link.linkProps"
@@ -30,6 +30,16 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import { makeProps } from '../../make-props'
+import { KottiNavbar } from '../types'
+
+namespace KottiNavbarMenu {
+	export const propsSchema = KottiNavbar.propsSchema.pick({
+		isNarrow: true,
+		sections: true,
+	})
+}
+
 import NavbarTooltip from './NavbarTooltip.vue'
 
 export default defineComponent({
@@ -37,10 +47,7 @@ export default defineComponent({
 	components: {
 		NavbarTooltip,
 	},
-	props: {
-		isNarrow: { default: false, type: Boolean },
-		sections: { required: true, type: Array },
-	},
+	props: makeProps(KottiNavbarMenu.propsSchema),
 })
 </script>
 
