@@ -1,0 +1,14 @@
+package:kotti-ui:
+  - packages/kotti-ui/*
+
+package:sass-node-modules-importer:
+  - packages/sass-node-modules-importer/*
+
+package:yoco:
+  - packages/yoco/*
+
+package:vue-use-tippy:
+  - packages/vue-use-tippy/*
+
+scope:ci:
+  - .github/*
