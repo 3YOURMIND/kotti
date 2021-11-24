@@ -2,7 +2,6 @@
 	<KtNavbar
 		v-bind="{ isNarrow, sections, quickLinks }"
 		:logoUrl="navLogo"
-		@linkClick="handleLinkClick"
 		@logoClick="$router.push('/')"
 		@setIsNarrow="setIsNarrow"
 	>
@@ -21,7 +20,6 @@ import { defineComponent, ref } from '@vue/composition-api'
 import navLogo from '../assets/img/nav_logo.svg'
 import { menu } from '../data/menu'
 import { useRoute } from '../hooks/use-route'
-import { useRouter } from '../hooks/use-router'
 
 const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
 
@@ -42,7 +40,6 @@ export default defineComponent({
 	name: 'NavBar',
 	setup() {
 		const route = useRoute()
-		const router = useRouter()
 
 		const isNarrow = ref<boolean>(
 			(() => {
@@ -62,9 +59,6 @@ export default defineComponent({
 		)
 
 		return {
-			handleLinkClick(link: Kotti.Navbar.SectionLink & { to: string }) {
-				router.value.push(link.to)
-			},
 			isNarrow,
 			navLogo,
 			quickLinks: [
@@ -88,18 +82,21 @@ export default defineComponent({
 			sections: menu.map(
 				(section): Kotti.Navbar.Section => ({
 					links: section.subsections.map(
-						(subsection): Kotti.Navbar.SectionLink & { to: string } => ({
+						(subsection): Kotti.Navbar.SectionLink => ({
+							component: 'nuxt-link',
 							icon: subsection.icon,
 							isActive:
 								subsection.path === ''
 									? route.value.path === '/'
 									: route.value.path.startsWith(`/${subsection.path}`),
+							props: {
+								to: `/${subsection.path}${
+									subsection.pages.length >= 1
+										? `/${subsection.pages[0].path}`
+										: ''
+								}`,
+							},
 							title: subsection.title,
-							to: `/${subsection.path}${
-								subsection.pages.length >= 1
-									? `/${subsection.pages[0].path}`
-									: ''
-							}`,
 						}),
 					),
 					title: section.title,

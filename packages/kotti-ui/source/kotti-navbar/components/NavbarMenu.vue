@@ -1,17 +1,18 @@
 <template>
 	<div class="kt-navbar-menu">
-		<div v-for="(item, index) in sections" :key="index">
+		<div v-for="(item, index) in parsedSections" :key="index">
 			<div
 				v-if="item.title"
 				class="kt-navbar-menu__section"
 				v-text="isNarrow ? '' : item.title"
 			/>
-			<a
+			<component
+				:is="link.component"
 				v-for="(link, linkIndex) in item.links"
 				:key="linkIndex"
+				v-bind="link.props"
 				class="kt-navbar-menu__item"
 				:class="{ active: link.isActive, narrow: isNarrow }"
-				:href="link.link"
 				@click="$emit('menuLinkClick', link)"
 			>
 				<NavbarTooltip v-if="isNarrow" :icon="link.icon" :label="link.title" />
@@ -21,13 +22,23 @@
 					:data-test="`kt-navbar-section-item-${link.title.toLowerCase()}`"
 					v-text="link.title"
 				/>
-			</a>
+			</component>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
+
+import { makeProps } from '../../make-props'
+import { KottiNavbar } from '../types'
+
+namespace KottiNavbarMenu {
+	export const propsSchema = KottiNavbar.propsSchema.pick({
+		isNarrow: true,
+		sections: true,
+	})
+}
 
 import NavbarTooltip from './NavbarTooltip.vue'
 
@@ -36,9 +47,13 @@ export default defineComponent({
 	components: {
 		NavbarTooltip,
 	},
-	props: {
-		isNarrow: { default: false, type: Boolean },
-		sections: { required: true, type: Array },
+	props: makeProps(KottiNavbarMenu.propsSchema),
+	setup(props) {
+		return {
+			parsedSections: computed(() =>
+				KottiNavbarMenu.propsSchema.shape.sections.parse(props.sections),
+			),
+		}
 	},
 })
 </script>
