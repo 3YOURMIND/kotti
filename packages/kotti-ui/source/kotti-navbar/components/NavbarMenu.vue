@@ -6,12 +6,13 @@
 				class="kt-navbar-menu__section"
 				v-text="isNarrow ? '' : item.title"
 			/>
-			<a
+			<component
+				:is="link.component ? link.component : 'a'"
 				v-for="(link, linkIndex) in item.links"
 				:key="linkIndex"
+				v-bind="link.linkProps"
 				class="kt-navbar-menu__item"
 				:class="{ active: link.isActive, narrow: isNarrow }"
-				:href="link.link"
 				@click="$emit('menuLinkClick', link)"
 			>
 				<NavbarTooltip v-if="isNarrow" :icon="link.icon" :label="link.title" />
@@ -21,7 +22,7 @@
 					:data-test="`kt-navbar-section-item-${link.title.toLowerCase()}`"
 					v-text="link.title"
 				/>
-			</a>
+			</component>
 		</div>
 	</div>
 </template>
