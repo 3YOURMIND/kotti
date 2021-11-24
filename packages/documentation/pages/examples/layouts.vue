@@ -68,7 +68,7 @@ export default {
 						{
 							icon: Yoco.Icon.DASHBOARD,
 							isActive: true,
-							linkProps: {
+							props: {
 								href: '#',
 							},
 							title: 'Dashboard',
@@ -77,7 +77,7 @@ export default {
 							icon: Yoco.Icon.CLOSE,
 							isActive: true,
 							component: 'nuxt-link',
-							linkProps: {
+							props: {
 								to: '/usage/layouts/navbar',
 							},
 							title: 'Close Example',
@@ -90,7 +90,7 @@ export default {
 						{
 							icon: Yoco.Icon.INVOICE,
 							isActive: false,
-							linkProps: {
+							props: {
 								href: '#',
 							},
 							title: 'Orders',
@@ -98,7 +98,7 @@ export default {
 						{
 							icon: Yoco.Icon.REQUEST,
 							isActive: false,
-							linkProps: {
+							props: {
 								href: '#',
 							},
 							title: 'Quotes',
@@ -111,7 +111,7 @@ export default {
 						{
 							icon: Yoco.Icon.BOX_3D,
 							isActive: false,
-							linkProps: {
+							props: {
 								href: '#',
 							},
 							title: 'Parts',
@@ -119,7 +119,7 @@ export default {
 						{
 							icon: Yoco.Icon.CALENDAR,
 							isActive: false,
-							linkProps: {
+							props: {
 								href: '#',
 							},
 							title: 'Schedule',

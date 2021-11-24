@@ -21,7 +21,7 @@ export namespace KottiNavbar {
 		component: z.string().default('a'),
 		icon: yocoIconSchema,
 		isActive: z.boolean(),
-		linkProps: z.record(z.unknown()).optional(),
+		props: z.record(z.unknown()).optional(),
 		title: z.string(),
 	})
 	export type SectionLink = z.infer<typeof sectionLinkSchema>

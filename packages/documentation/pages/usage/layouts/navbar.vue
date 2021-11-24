@@ -53,7 +53,7 @@ menuData: [
 			{
 				icon: 'invoice',
 				isActive: false,
-				linkProps: {
+				props: {
 					href: '#',
 				},
 				title: 'Orders',
@@ -61,7 +61,7 @@ menuData: [
 			{
 				icon: 'request',
 				isActive: false,
-				linkProps: {
+				props: {
 					href: '#',
 				},
 				title: 'Quotes',
@@ -83,7 +83,7 @@ const links = [
 		component: 'nuxt-link',
 		icon: 'invoice',
 		isActive: false,
-		linkProps: {
+		props: {
 			to: '#',
 		},
 		title: 'Orders',
@@ -93,7 +93,7 @@ const links = [
 		component: 'router-link',
 		icon: 'request',
 		isActive: false,
-		linkProps: {
+		props: {
 			to: '#',
 		},
 		title: 'Quotes',

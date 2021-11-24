@@ -10,7 +10,7 @@
 				:is="link.component"
 				v-for="(link, linkIndex) in item.links"
 				:key="linkIndex"
-				v-bind="link.linkProps"
+				v-bind="link.props"
 				class="kt-navbar-menu__item"
 				:class="{ active: link.isActive, narrow: isNarrow }"
 				@click="$emit('menuLinkClick', link)"

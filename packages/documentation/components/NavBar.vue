@@ -89,7 +89,7 @@ export default defineComponent({
 								subsection.path === ''
 									? route.value.path === '/'
 									: route.value.path.startsWith(`/${subsection.path}`),
-							linkProps: {
+							props: {
 								to: `/${subsection.path}${
 									subsection.pages.length >= 1
 										? `/${subsection.pages[0].path}`
