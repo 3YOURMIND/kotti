@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import { makeProps } from '../../make-props'
 import { KottiNavbar } from '../types'
@@ -50,8 +50,8 @@ export default defineComponent({
 	props: makeProps(KottiNavbarMenu.propsSchema),
 	setup(props) {
 		return {
-			parsedSections: KottiNavbarMenu.propsSchema.shape.sections.parse(
-				props.sections,
+			parsedSections: computed(() =>
+				KottiNavbarMenu.propsSchema.shape.sections.parse(props.sections),
 			),
 		}
 	},
