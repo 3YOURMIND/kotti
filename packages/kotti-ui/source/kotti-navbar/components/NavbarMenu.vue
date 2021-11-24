@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-navbar-menu">
-		<div v-for="(item, index) in sections" :key="index">
+		<div v-for="(item, index) in parsedSections" :key="index">
 			<div
 				v-if="item.title"
 				class="kt-navbar-menu__section"
@@ -48,6 +48,13 @@ export default defineComponent({
 		NavbarTooltip,
 	},
 	props: makeProps(KottiNavbarMenu.propsSchema),
+	setup(props) {
+		return {
+			parsedSections: KottiNavbarMenu.propsSchema.shape.sections.parse(
+				props.sections,
+			),
+		}
+	},
 })
 </script>
 
