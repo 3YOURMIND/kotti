@@ -20,7 +20,6 @@ import { defineComponent, ref } from '@vue/composition-api'
 import navLogo from '../assets/img/nav_logo.svg'
 import { menu } from '../data/menu'
 import { useRoute } from '../hooks/use-route'
-import { useRouter } from '../hooks/use-router'
 
 const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
 
@@ -41,7 +40,6 @@ export default defineComponent({
 	name: 'NavBar',
 	setup() {
 		const route = useRoute()
-		const router = useRouter()
 
 		const isNarrow = ref<boolean>(
 			(() => {
