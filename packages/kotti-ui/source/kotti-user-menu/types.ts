@@ -3,12 +3,11 @@ import { z } from 'zod'
 import { refinementNonEmpty } from '../zod-refinements'
 
 export namespace KottiUserMenu {
-	export const sectionLinkSchema = z
-		.object({
-			link: z.string().optional(),
-			title: z.string(),
-		})
-		.passthrough()
+	export const sectionLinkSchema = z.object({
+		component: z.string().default('a'),
+		props: z.record(z.unknown()).optional(),
+		title: z.string(),
+	})
 	export type SectionLink = z.infer<typeof sectionLinkSchema>
 
 	export const sectionSchema = z.object({
