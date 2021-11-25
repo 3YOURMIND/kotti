@@ -82,7 +82,7 @@
 		"lint-staged": "^11.0.1",
 		"nodemon": "^2.0.12",
 		"postcss": "^8.2.10",
-		"prettier": "^2.3.2",
+		"prettier": "^2.5.0",
 		"sass": "^1.26.10",
 		"sass-loader": "^9.0.2",
 		"stylelint": "^13.13.1",
