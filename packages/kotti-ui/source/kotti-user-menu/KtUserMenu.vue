@@ -3,7 +3,7 @@
 		<div v-if="isMenuShow" class="kt-user-menu" @click="clickawayMenu">
 			<div class="kt-user-menu__items">
 				<div
-					v-for="(section, index) in sections"
+					v-for="(section, index) in parsedSections"
 					:key="index"
 					class="kt-user-menu__section"
 				>
@@ -12,15 +12,16 @@
 						class="kt-user-menu__section__title"
 						v-text="section.title"
 					/>
-					<a
+					<component
+						:is="link.component"
 						v-for="(link, linkIndex) in section.links"
 						:key="linkIndex"
+						v-bind="link.props"
 						class="kt-user-menu__section__item"
 						:data-test="`navbar:footer:element:${link.title
 							.toLowerCase()
 							.split(' ')
 							.join('-')}`"
-						:href="link.link"
 						@click="$emit('click', link)"
 						v-text="link.title"
 					/>
@@ -66,7 +67,7 @@ export default defineComponent<KottiUserMenu.PropsInternal>({
 	},
 	mixins: [clickaway],
 	props: makeProps(KottiUserMenu.propsSchema),
-	setup() {
+	setup(props) {
 		const isMenuShow = ref(false)
 		const isNarrow = inject<ComputedRef<boolean>>(
 			IS_NAVBAR_NARROW,
@@ -77,6 +78,11 @@ export default defineComponent<KottiUserMenu.PropsInternal>({
 			clickawayMenu: () => (isMenuShow.value = false),
 			isMenuShow,
 			isNarrow,
+			parsedSections: computed(() =>
+				props.sections
+					? KottiUserMenu.propsSchema.shape.sections.parse(props.sections)
+					: [],
+			),
 			userInfoClass: computed(() => ({
 				'kt-user-menu__info': true,
 				'kt-user-menu__info--is-narrow': isNarrow.value,

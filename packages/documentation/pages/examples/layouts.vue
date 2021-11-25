@@ -137,11 +137,15 @@ export default {
 				{
 					links: [
 						{
-							link: '#',
+							props: {
+								href: '#',
+							},
 							title: 'User Panel',
 						},
 						{
-							link: '#',
+							props: {
+								href: '#',
+							},
 							title: 'Service Panel',
 						},
 					],
@@ -150,15 +154,21 @@ export default {
 				{
 					links: [
 						{
-							link: '#',
+							props: {
+								href: '#',
+							},
 							title: '2YOURMIND Service',
 						},
 						{
-							link: '#',
+							props: {
+								href: '#',
+							},
 							title: '3YOURMIND Service',
 						},
 						{
-							link: '#',
+							props: {
+								href: '#',
+							},
 							title: '4YOURMIND Service',
 						},
 					],
@@ -167,11 +177,16 @@ export default {
 				{
 					links: [
 						{
-							link: '#',
+							props: {
+								href: '#',
+							},
 							title: 'Settings',
 						},
 						{
-							link: '/usage/layouts/navbar',
+							component: 'nuxt-link',
+							props: {
+								to: '/usage/layouts/navbar',
+							},
 							title: 'Logout (Close Example)',
 						},
 					],
