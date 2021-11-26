@@ -163,18 +163,20 @@ npm login
 
 # Make a release draft here:
 # https://github.com/3YOURMIND/kotti/releases/new
-# Tag format: 'v3.0.0-beta.3'
-# Title format: 3.0.0-beta.3: tldr of what's happening
+# Tag format: 'v1.2.3-beta.4'
+# Title format: 1.2.3-beta.4: tldr of what's happening
 
 # make a version commit:
 # Make extra sure you change the version everywhere it is mentioned in the source.
-# Commit message format: version(3.0.0-beta.3): tldr of what's happening
+# Commit message format: version(1.2.3-beta.4): tldr of what's happening
 
 yarn run lerna publish from-package
 # git push your commit to remote
 
 # publish release draft here:
 # https://github.com/3YOURMIND/kotti/releases
+
+# announce the new version in the #kotti slack channel
 ```
 
 ### Build
