@@ -150,19 +150,31 @@ yarn run test
 ### Publish
 
 ```bash
+git checkout master
+git pull --rebase
+yarn install
+
 # you may need login to npm with your credentials if you have publishing rights
+# make sure you have 2FA on your npmjs.com account enabled
 npm login
 
 # update the version in `package.json`
 # make sure to commit the version bump changes before publishing then run:
 
-node --version
-# make sure it’s 12.x
+# Make a release draft here:
+# https://github.com/3YOURMIND/kotti/releases/new
+# Tag format: 'v3.0.0-beta.3'
+# Title format: 3.0.0-beta.3: tldr of what's happening
+
+# make a version commit:
+# Make extra sure you change the version everywhere it is mentioned in the source.
+# Commit message format: version(3.0.0-beta.3): tldr of what's happening
 
 yarn run lerna publish from-package
+# git push your commit to remote
 
-# update release notes
-# https://github.com/3YOURMIND/kotti/releases/new
+# publish release draft here:
+# https://github.com/3YOURMIND/kotti/releases
 ```
 
 ### Build
