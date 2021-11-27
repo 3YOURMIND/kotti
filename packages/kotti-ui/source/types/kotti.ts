@@ -42,6 +42,7 @@ export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiPopover as Popover } from '../kotti-popover/types'
 export { KottiRow as Row } from '../kotti-row/types'
+export { KottiUserMenu as UserMenu } from '../kotti-user-menu/types'
 
 export enum MetaDesignType {
 	FIGMA = 'FIGMA',
