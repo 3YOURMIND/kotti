@@ -128,6 +128,8 @@ dl {
 		}
 	}
 
+	// TODO: remove when we remove KtInlineEdit
+	// verify that it's unused on yoda
 	.editable {
 		padding: 0.1rem 0;
 		&--empty {

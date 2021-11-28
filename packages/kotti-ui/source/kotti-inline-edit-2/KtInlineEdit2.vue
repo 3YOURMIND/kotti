@@ -1,104 +1,127 @@
 <template>
-	<div :class="objectClass">
-		<label class="form-label" v-text="label" />
-		<div v-if="isEditing">
-			<component
-				:is="inputComponent"
-				class="form-input"
-				:placeholder="placeholder"
-				type="text"
-				:value="currentValue"
-				@change="handleChange"
-				@input="handleInput"
-				v-text="currentValue"
-			/>
-			<KtButtonGroup class="inline-edit__edit-buttons">
-				<KtButton icon="close" @click="handleDismiss" />
-				<KtButton icon="check" @click="handleConfirm" />
-			</KtButtonGroup>
-		</div>
-		<div
-			v-else
-			:class="representedValueClass"
-			@click.stop="isEditing = true"
-			v-text="representedValue"
+	<div v-if="isEditing" v-on-clickaway="handleCancel" :class="wrapperClass">
+		<KtFieldTextArea
+			v-if="isMultiLine"
+			v-bind="{ ...ktFieldProps }"
+			:value="value"
+			@input="handleInput"
 		/>
+		<KtFieldText
+			v-else
+			v-bind="{ ...ktFieldProps }"
+			hideClear
+			:value="value"
+			@input="handleInput"
+		/>
+		<div class="yoco" @click.stop="handleConfirm" v-text="'check'" />
+	</div>
+
+	<div
+		v-else
+		class="kt-inline-edit__display"
+		@click.stop="toggleEdit(true, value)"
+	>
+		<label class="form-label" v-text="label" />
+		<div :class="displayedValueClass" v-text="displayedValue" />
 	</div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
+import { mixin as clickaway } from 'vue-clickaway'
 
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
+import { Kotti } from '../types'
 
-import { DEFAULT_POST_PARSER } from './types'
 import { KottiInlineEdit2 } from './types'
-
-export default defineComponent({
+// TODO: match displayedValue size with field size
+export default defineComponent<KottiInlineEdit2.PropsInternal>({
 	name: 'KtInlineEdit2',
+	mixins: [clickaway],
 	components: { KtButton, KtButtonGroup },
 	props: makeProps(KottiInlineEdit2.propsSchema),
 	setup(props, { emit }) {
+		const displayedValue = computed<string>(() =>
+			props.value
+				? props.stringToHtmlParser(props.value)
+				: placeholderWithDefault.value,
+		)
 		const isEditing = ref<boolean>(false)
-		const currentValue = ref<string>(props.value || '')
-		const preValue = ref<string>(props.value || '')
+		const placeholderWithDefault = computed<string>(
+			() => props.placeholder ?? translations.value.placeholder,
+		)
+		const toggleEdit = (editMode: boolean, preValue: string | null = null) => {
+			isEditing.value = editMode
+			valueBeforeEditing.value = preValue
+		}
 		const translations = useTranslationNamespace('KtInlineEdit2')
-		const newLineParser = (t) => t.replace(/\n/gm, '<br/>')
-		const postParser = computed(() => {
-			return props.isMultiLine && props.postEscapeParser === DEFAULT_POST_PARSER
-				? newLineParser
-				: props.postEscapeParser
-		})
+		const valueBeforeEditing = ref(null)
+
 		return {
-			currentValue,
-			handleChange: function (event) {
-				emit('change', event.target.value)
+			displayedValue,
+			displayedValueClass: computed(() => ({
+				'kt-inline-edit__display__value': true,
+				'kt-inline-edit__display__value--empty': !displayedValue.value,
+			})),
+			handleCancel: () => {
+				emit('input', valueBeforeEditing.value)
+				toggleEdit(false)
+				emit('cancel')
 			},
-			handleConfirm: function () {
-				isEditing.value = false
-				preValue.value = currentValue.value
-				emit('confirm', currentValue.value)
+			handleConfirm: () => {
+				emit('input', props.value)
+				toggleEdit(false)
+				emit('confirm')
 			},
-			handleDismiss: function (event) {
-				isEditing.value = false
-				currentValue.value = preValue.value
-				emit('dismiss', event)
-			},
-			handleInput: function (event) {
-				const value = event.target.value
-				currentValue.value = value
-				emit('input', value)
+			handleInput: (
+				newValue: Kotti.FieldText.Value | Kotti.FieldTextArea.Value,
+			) => {
+				emit('input', newValue)
 			},
 			isEditing,
-			inputComponent: computed(() =>
-				props.isMultiLine ? 'textarea' : 'input',
-			),
-			objectClass: computed(() => {
+			ktFieldProps: {
+				label: props.label,
+				placeholder: placeholderWithDefault.value,
+				size: props.size,
+			},
+			toggleEdit,
+			wrapperClass: computed(() => {
 				return {
 					'inline-edit': true,
 					'label-value': !isEditing.value,
-				}
-			}),
-			placeholder: computed(
-				() => props.placeholder ?? translations.value.placeholder,
-			),
-			representedValue: computed(() =>
-				postParser.value(
-					props.dangerouslyOverrideParser(
-						currentValue.value ? currentValue.value : props.placeholder,
-					),
-				),
-			),
-			representedValueClass: computed(() => {
-				return {
-					'default editable': true,
-					'editable--empty': !currentValue.value,
 				}
 			}),
 		}
 	},
 })
 </script>
+
+<style lang="scss" scoped>
+.kt-inline-edit {
+	.yoco {
+		color: var(--icon-01);
+		&:hover {
+			color: var(--interactive-01-hover);
+		}
+	}
+
+	&__display {
+		&:hover {
+			cursor: pointer;
+			.kt-inline-edit__display__value {
+				background-color: var(--ui-02);
+			}
+		}
+
+		&__value {
+			&--empty {
+				// TODO: not working
+				color: var(--text-03);
+			}
+		}
+	}
+}
+</style>

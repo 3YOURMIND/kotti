@@ -4,20 +4,14 @@
 ## Basic
 
 <div class="element-example white">
-	<KtInlineEdit2
-		label="Instructions"
-		placeholder="Click to edit"
-		value="my instructions"
-	/>
-</div>
-
-```html
-<KtInlineEdit2
+ <KtInlineEdit2
 	label="Instructions"
-	placeholder="Click to edit"
-	value="my instructions"
+	:value="value1"
+	@input="(e)=> value1=e"
+	@confirm="handleConfirmValue1"
+	@cancel="handleCancelValue1"
 />
-```
+</div>
 
 ## Multiline
 
@@ -26,47 +20,35 @@
 		isMultiLine
 		label="Instructions"
 		placeholder="Edit instructions"
-		value="my instructions"
+		:value="value2"
+		@input="(e)=> value2=e"
 	/>
 </div>
-
-```html
-<KtInlineEdit2
-	isMultiLine
-	label="Instructions"
-	placeholder="Edit instructions"
-	value="my instructions"
-/>
-```
 
 ## Usage
 
 ### Attributes
 
-| Attribute     | Description                  | Type      | Accepted values | Default           |
-| :------------ | :--------------------------- | :-------- | :-------------- | :---------------- |
-| `isMultiLine` | allow input enter multilines | `Boolean` | —               | `false`           |
-| `label`       | label text                   | `String`  | —               | `null`            |
-| `placeholder` | value to display             | `String`  | —               | `"Click to edit"` |
+| Attribute       | Description                  |        Type        | Default                   |
+| :-------------- | :--------------------------- | :----------------: | ------------------------- | --- |
+| `editableValue` | value while editing          |  `[String, null]`  | `null`                    |     |
+| `isMultiLine`   | allow input enter multilines |     `Boolean`      | `false`                   |
+| `label`         | label text                   |      `String`      | `null`                    |
+| `placeholder`   | value to display             |      `String`      | depends on locale         |
+| `size`          | value to display             | `Kotti.Field.Size` | `Kotti.Field.Size.MEDIUM` |
 
 ### Input Events
 
-| Event Name | Description                       | Parameters       |
-| :--------- | :-------------------------------- | :--------------- |
-| `change`   | triggers when click outside input | `(event: Event)` |
-| `input`    | triggers when input value changes | `(event: Event)` |
-
-### Button Events
-
-| Event Name | Description                          | Parameters       |
-| :--------- | :----------------------------------- | :--------------- |
-| `confirm`  | triggers when confirm button clicked | --               |
-| `dismiss`  | triggers when dismiss button clicked | `(event: Event)` |
+| Event Name             | Description                         | Parameters                                     |
+| :--------------------- | :---------------------------------- | :--------------------------------------------- |
+| `cancel`               | triggers when you click-away        | -                                              |
+| `confirm`              | triggers when click on check button | -                                              |
+| `update:editableValue` | triggers while user is editing      | `Kotti.InlineEdit2.Events.UpdateEditableValue` |
 </template>
 
 <script lang="ts">
 import { KtInlineEdit2 } from '@3yourmind/kotti-ui'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -76,7 +58,19 @@ export default defineComponent({
 		ComponentInfo,
 	},
 	setup() {
+		const value1 = ref('value1')
+
 		return {
+			handleConfirmValue1: () => {
+				// eslint-disable-next-line no-console
+				console.log('confirm', value1.value)
+			},
+			handleCancelValue1: () => {
+				// eslint-disable-next-line no-console
+				console.log('cancel', value1.value)
+			},
+			value1,
+			value2: ref('value2'),
 			component: KtInlineEdit2,
 		}
 	},
