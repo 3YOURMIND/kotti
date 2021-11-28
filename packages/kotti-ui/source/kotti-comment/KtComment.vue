@@ -74,8 +74,6 @@
 </template>
 
 <script>
-import escape from 'lodash/escape'
-
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
