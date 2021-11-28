@@ -4,6 +4,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import KtCommentVue from './KtComment.vue'
 import KtCommentInputVue from './KtCommentInput.vue'
+import { KottiComment } from './types'
 
 const META: Kotti.Meta = {
 	addedVersion: '0.0.1',
@@ -16,7 +17,13 @@ const META: Kotti.Meta = {
 	typeScript: null,
 }
 
-export const KtComment = attachMeta(makeInstallable(KtCommentVue), META)
+export const KtComment = attachMeta(makeInstallable(KtCommentVue), {
+	...META,
+	typeScript: {
+		namespace: 'Kotti.Comment',
+		schema: KottiComment.propsSchema,
+	},
+})
 export const KtCommentInput = attachMeta(
 	makeInstallable(KtCommentInputVue),
 	META,
