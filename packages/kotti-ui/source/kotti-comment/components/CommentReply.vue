@@ -49,12 +49,14 @@
 	</div>
 </template>
 
-<script>
-import escape from 'lodash/escape'
-
+<script lang="ts">
 import { KtAvatar } from '../../kotti-avatar'
 import { KtButton } from '../../kotti-button'
 import { KtButtonGroup } from '../../kotti-button-group'
+import { makeProps } from '../../make-props'
+import { KottiComment } from '../types'
+
+const propsSchema = KottiComment.propsSchema.omit({ replies: true })
 
 export default {
 	name: 'CommentReply',
@@ -63,19 +65,7 @@ export default {
 		KtButton,
 		KtButtonGroup,
 	},
-	props: {
-		createdTime: String,
-		dangerouslyOverrideParser: { default: escape, type: Function },
-		isDeletable: { default: false, type: Boolean },
-		isEditable: { default: false, type: Boolean },
-		id: [Number, String],
-		message: String,
-		parser: { default: escape, type: Function },
-		postEscapeParser: { default: (_) => _, type: Function },
-		userAvatar: String,
-		userId: [Number, String],
-		userName: String,
-	},
+	props: makeProps(propsSchema),
 	data() {
 		return {
 			inlineMessageValue: '',
