@@ -1,5 +1,5 @@
 <template>
-	<div :class="divClass">
+	<div :class="containerClass">
 		<div :class="wrapperClass">
 			<KtAvatar
 				v-if="!isInline"
@@ -26,60 +26,57 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
 import { makeProps } from '../make-props'
 
 import { KottiCommentInput } from './types'
 
-export default {
+export default defineComponent<KottiCommentInput.PropsInternal>({
 	name: 'KtCommentInput',
 	components: {
 		KtAvatar,
 		KtButton,
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
-	data() {
+	setup(props, { emit }) {
+		const text = ref<string | null>(null)
+		const textarea = ref<HTMLElement | null>(null)
+		const textFocused = ref(false)
 		return {
-			textFocused: false,
-			text: null,
+			containerClass: computed(() => ({
+				'comment-input': true,
+				'comment-input--inline': props.isInline,
+			})),
+			handleSubmitClick: () => {
+				if (text.value === null) return
+				emit('submit', {
+					message: text.value,
+					replyToUserId: props.replyToUserId,
+					parentId: props.parentId,
+				})
+				text.value = null
+				textarea.value.style.height = '1.2rem'
+			},
+			replyButtonText: computed(() => (props.isInline ? 'Reply' : 'Post')),
+			text,
+			textarea,
+			textFocused,
+			updateHeight: () => {
+				if (textarea.value === null) return '1.2rem'
+				const height = textarea.value.scrollHeight
+				textarea.value.style.height = `${height}px`
+			},
+
+			wrapperClass: computed(() => ({
+				'comment-input__wrapper': true,
+				'comment-input__wrapper--focus': textFocused.value,
+				'comment-input__wrapper--inline': props.isInline,
+			})),
 		}
 	},
-	computed: {
-		divClass() {
-			return {
-				'comment-input': true,
-				'comment-input--inline': this.isInline,
-			}
-		},
-		replyButtonText() {
-			return this.isInline ? 'Reply' : 'Post'
-		},
-		wrapperClass() {
-			return {
-				'comment-input__wrapper': true,
-				'comment-input__wrapper--focus': this.textFocused,
-				'comment-input__wrapper--inline': this.isInline,
-			}
-		},
-	},
-	methods: {
-		updateHeight() {
-			this.$refs.textarea.style.height = '1.2rem'
-			const height = this.$refs.textarea.scrollHeight
-			this.$refs.textarea.style.height = `${height}px`
-		},
-		handleSubmitClick() {
-			this.$emit('submit', {
-				message: this.text,
-				replyToUserId: this.replyToUserId,
-				parentId: this.parentId,
-			})
-			// Reset all the state
-			this.text = null
-			this.$refs.textarea.style.height = '1.2rem'
-		},
-	},
-}
+})
 </script>
