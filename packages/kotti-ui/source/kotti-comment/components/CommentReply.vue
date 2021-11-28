@@ -8,7 +8,7 @@
 			</div>
 			<div class="comment-reply__body">
 				<div
-					v-if="!isInlineEdit"
+					v-if="!isEditing"
 					class="comment-reply__message"
 					@click="$emit('_inlineReplyClick', { userName, userId })"
 				>
@@ -30,7 +30,7 @@
 					</KtButtonGroup>
 				</div>
 				<div
-					v-if="!isInlineEdit & (actionOptions.length > 0)"
+					v-if="!isEditing & (actionOptions.length > 0)"
 					class="comment-reply__action action__more"
 				>
 					<i class="yoco">dots</i>
@@ -50,68 +50,74 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from '@vue/composition-api'
+import compact from 'lodash/compact'
+import { z } from 'zod'
+
 import { KtAvatar } from '../../kotti-avatar'
 import { KtButton } from '../../kotti-button'
 import { KtButtonGroup } from '../../kotti-button-group'
 import { makeProps } from '../../make-props'
 import { KottiComment } from '../types'
 
-const propsSchema = KottiComment.propsSchema.omit({ replies: true })
+namespace CommentReply {
+	export const propsSchema = KottiComment.propsSchema.omit({ replies: true })
+	export type PropsInternal = z.output<typeof propsSchema>
+}
 
-export default {
+export default defineComponent<CommentReply.PropsInternal>({
 	name: 'CommentReply',
 	components: {
 		KtAvatar,
 		KtButton,
 		KtButtonGroup,
 	},
-	props: makeProps(propsSchema),
-	data() {
+	props: makeProps(CommentReply.propsSchema),
+	setup(props, { emit }) {
+		const inlineMessageValue = ref<string | null>(null)
+		const isEditing = ref(false)
+
+		const inlineMessage = computed(
+			() => inlineMessageValue.value ?? props.message,
+		)
 		return {
-			inlineMessageValue: '',
-			isInlineEdit: false,
+			actionOptions: computed(() =>
+				compact([
+					props.isEditable
+						? {
+								label: 'Edit',
+								onClick: () => {
+									inlineMessageValue.value = inlineMessage.value
+									isEditing.value = true
+								},
+						  }
+						: null,
+					props.isDeletable
+						? {
+								label: 'Delete',
+								onClick: () => emit('_inlineDeleteClick', props.id),
+						  }
+						: null,
+				]),
+			),
+			cancelInlineEdit: () => {
+				inlineMessageValue.value = null
+				isEditing.value = false
+			},
+			handleConfirm: () => {
+				isEditing.value = false
+				if (inlineMessageValue.value === null) return
+				emit('_inlineEditSubmit', {
+					id: props.id,
+					message: inlineMessageValue.value,
+				})
+			},
+			inlineMessage,
+			inlineMessageValue,
+			isEditing,
 		}
 	},
-	computed: {
-		inlineMessage() {
-			return this.inlineMessageValue || this.message
-		},
-		actionOptions() {
-			const options = []
-			if (this.isEditable)
-				options.push({
-					label: 'Edit',
-					onClick: () => {
-						this.inlineMessageValue = this.inlineMessage
-						this.isInlineEdit = true
-					},
-				})
-			if (this.isDeletable)
-				options.push({
-					label: 'Delete',
-					onClick: () => this.$emit('_inlineDeleteClick', this.id),
-				})
-			return options
-		},
-	},
-	methods: {
-		cancelInlineEdit() {
-			this.inlineMessageValue = ''
-			this.isInlineEdit = false
-		},
-		handleInlineInput(event) {
-			this.inlineMessageValue = event.target.value
-		},
-		handleConfirm() {
-			this.isInlineEdit = false
-			if (!this.inlineMessageValue) return
-			this.$emit('_inlineEditSubmit', {
-				message: this.inlineMessageValue,
-				id: this.id,
-			})
-		},
-	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .comment-reply__message {
