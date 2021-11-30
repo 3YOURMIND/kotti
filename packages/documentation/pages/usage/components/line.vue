@@ -1,24 +1,63 @@
 <template lang="md">
     <ComponentInfo v-bind="{ component }" />
 
-    You can use horizontal row to separte similar elements to create a better information structure.
+    Use a horizontal line as a separator between rows, to create a better information structure.
 
     You can add `text` to `KtLine` to display the text in the middle.
 
     <div class="element-example white">
-    	<h4>Login Options</h4>
-    	<p>Login with you account</p>
-    	<KtButton type="primary">Login</KtButton>
-    	<KtLine text="Or Login with Google"/>
-    	<KtButton type="secondary">Connect Google</KtButton>
-    	<KtLine text="Or"/>
-    	<p>Register a new account</p>
-    	<KtLine/>
-    	<p>Text below</p>
+    	<div v-text="'Full Line'" class="line-description" />
+    	<KtLine />
+    	<div v-text="'Title in center position'" class="line-description" />
+    	<KtLine text="Title Center" />
+    	<div v-text="'Title in left position'" class="line-description" />
+    	<KtLine position="left" text="Title Left" />
+    	<div v-text="'Title in right position'" class="line-description" />
+    	<KtLine position="right" text="Title Right" />
+    	<div v-text="'Interactive title in center position'" class="line-description" />
+    	<KtLine
+    		isInteractive
+    		text="Action Center"
+    		@click="handleClick('clicked center title')"
+    	/>
+    	<div v-text="'Interactive title in left position'" class="line-description" />
+    	<KtLine
+    		isInteractive
+    		position="left"
+    		text="Action Left"
+    		@click="handleClick('clicked left title')"
+    	/>
+    	<div v-text="'Interactive title in right position'" class="line-description" />
+    	<KtLine
+    		isInteractive
+    		position="right"
+    		text="Action Right"
+    		@click="handleClick('clicked right title')"
+    	/>
     </div>
 
     ```html
-    <KtLine text="Or Login with Google"/>
+    	<KtLine/>
+    	<KtLine text="Title Center" />
+    	<KtLine position="left" text="Title Left" />
+    	<KtLine position="right" text="Title Right" />
+    	<KtLine
+    		isInteractive
+    		text="Action Center"
+    		@click="alert('clicked center title')"
+    	/>
+    	<KtLine
+    		isInteractive
+    		position="left"
+    		text="Action Left"
+    		@click="alert('clicked left title')"
+    	/>
+    	<KtLine
+    		isInteractive
+    		position="right"
+    		text="Action Right"
+    		@click="alert('clicked right title')"
+    	/>
     ```
 </template>
 
@@ -36,7 +75,16 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtLine,
+			handleClick: (text: string) => {
+				alert(text)
+			},
 		}
 	},
 })
 </script>
+
+<style scoped>
+.line-description {
+	margin: 1.5rem 0 0.5rem;
+}
+</style>
