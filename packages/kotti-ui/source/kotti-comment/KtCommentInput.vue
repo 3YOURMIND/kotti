@@ -29,6 +29,9 @@
 <script>
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
+import { makeProps } from '../make-props'
+
+import { KottiCommentInput } from './types'
 
 export default {
 	name: 'KtCommentInput',
@@ -36,13 +39,7 @@ export default {
 		KtAvatar,
 		KtButton,
 	},
-	props: {
-		isInline: { type: Boolean, default: false },
-		parentId: [Number, String],
-		placeholder: String,
-		replyToUserId: [Number, String],
-		userAvatar: String,
-	},
+	props: makeProps(KottiCommentInput.propsSchema),
 	data() {
 		return {
 			textFocused: false,

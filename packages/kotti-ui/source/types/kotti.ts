@@ -8,6 +8,10 @@ export { KottiBreadcrumb as Breadcrumb } from '../kotti-breadcrumb/types'
 export { KottiButton as Button } from '../kotti-button/types'
 export { KottiButtonGroup as ButtonGroup } from '../kotti-button-group/types'
 export { KottiCol as Col } from '../kotti-col/types'
+export {
+	KottiComment as Comment,
+	KottiCommentInput as CommentInput,
+} from '../kotti-comment/types'
 export { KottiDrawer as Drawer } from '../kotti-drawer/types'
 export { KottiField as Field } from '../kotti-field/types'
 export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'

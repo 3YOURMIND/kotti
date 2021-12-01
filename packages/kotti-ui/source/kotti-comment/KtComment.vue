@@ -74,14 +74,14 @@
 </template>
 
 <script>
-import escape from 'lodash/escape'
-
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
+import { makeProps } from '../make-props'
 
 import CommentReply from './components/CommentReply.vue'
 import KtCommentInput from './KtCommentInput.vue'
+import { KottiComment } from './types'
 import { defaultParser } from './utilities'
 
 export default {
@@ -94,19 +94,7 @@ export default {
 		CommentReply,
 		KtCommentInput,
 	},
-	props: {
-		createdTime: String,
-		dangerouslyOverrideParser: { default: escape, type: Function },
-		id: [Number, String],
-		isDeletable: { default: false, type: Boolean },
-		isEditable: { default: false, type: Boolean },
-		message: String,
-		postEscapeParser: { default: (_) => _, type: Function },
-		replies: Array,
-		userAvatar: String,
-		userId: [Number, String],
-		userName: String,
-	},
+	props: makeProps(KottiComment.propsSchema),
 	data() {
 		return {
 			showInlineReply: false,
