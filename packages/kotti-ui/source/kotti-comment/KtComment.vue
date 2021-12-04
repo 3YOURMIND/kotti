@@ -55,17 +55,17 @@
 					:userAvatar="reply.userAvatar"
 					:userId="reply.userId"
 					:userName="reply.userName"
-					@_inlineDeleteClick="(commentId) => handleDelete(commentId, false)"
+					@_inlineDeleteClick="(commentId) => handleDelete(commentId, true)"
 					@_inlineEditSubmit="$emit('edit', $event)"
 					@_inlineReplyClick="handleInlineReplyClick"
 				/>
 			</div>
 			<KtCommentInput
-				v-if="showInlineReply"
+				v-if="userBeingRepliedTo"
 				isInline
 				:parentId="id"
 				:placeholder="replyToText"
-				:replyToUserId="replyToUserId"
+				:replyToUserId="userBeingRepliedTo.userId"
 				:userAvatar="userAvatar"
 				@submit="handleInlineSubmit($event)"
 			/>
@@ -88,11 +88,6 @@ import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
 
 type UserData = Pick<KottiComment.PropsInternal, 'userName' | 'userId'>
-type SubmitEvent = {
-	message: string
-	replyToUserId: number
-	parentId: string | number
-}
 
 export default defineComponent<KottiComment.PropsInternal>({
 	name: 'KtComment',
@@ -106,7 +101,6 @@ export default defineComponent<KottiComment.PropsInternal>({
 	props: makeProps(KottiComment.propsSchema),
 	setup(props, { emit }) {
 		const isInlineEdit = ref(false)
-		const showInlineReply = ref(false)
 		const inlineMessageValue = ref<string | null>(null)
 		const userBeingRepliedTo = ref<UserData | null>(null)
 
@@ -153,11 +147,10 @@ export default defineComponent<KottiComment.PropsInternal>({
 				})
 			},
 			handleInlineReplyClick: ({ userId, userName }: UserData) => {
-				showInlineReply.value = true
 				userBeingRepliedTo.value = { userId, userName }
 			},
-			handleInlineSubmit: (commentData: SubmitEvent) => {
-				showInlineReply.value = false
+			handleInlineSubmit: (commentData: KottiComment.Events.Submit) => {
+				userBeingRepliedTo.value = null
 				emit('submit', commentData)
 			},
 			inlineMessage: computed(() => inlineMessageValue.value ?? props.message),
@@ -168,7 +161,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 					? null
 					: `Reply to ${userBeingRepliedTo.value.userName}`,
 			),
-			showInlineReply,
+			userBeingRepliedTo,
 		}
 	},
 })
