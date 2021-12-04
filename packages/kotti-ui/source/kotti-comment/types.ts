@@ -27,6 +27,16 @@ export namespace KottiComment {
 	export type Props = z.input<typeof propsSchema>
 
 	export namespace Events {
+		export type Delete = {
+			id: string | number
+			parentId: string | number | null
+		}
+
+		export type Edit = {
+			id: string | number
+			message: string
+		}
+
 		export type Submit = {
 			message: string
 			replyToUserId: number

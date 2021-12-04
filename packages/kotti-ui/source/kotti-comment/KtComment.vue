@@ -105,10 +105,11 @@ export default defineComponent<KottiComment.PropsInternal>({
 		const userBeingRepliedTo = ref<UserData | null>(null)
 
 		const handleDelete = (commentId: number | string, isInline?: boolean) => {
-			emit('delete', {
+			const payload: KottiComment.Events.Delete = {
 				id: commentId,
 				parentId: isInline ? props.id : null,
-			})
+			}
+			emit('delete', payload)
 		}
 		return {
 			actionOptions: computed<Array<KottiButton.Props>>(() =>
@@ -141,10 +142,11 @@ export default defineComponent<KottiComment.PropsInternal>({
 			handleEditConfirm: () => {
 				isInlineEdit.value = false
 				if (!inlineMessageValue.value) return
-				emit('edit', {
+				const payload: KottiComment.Events.Edit = {
 					id: props.id,
 					message: inlineMessageValue.value,
-				})
+				}
+				emit('edit', payload)
 			},
 			handleInlineReplyClick: ({ userId, userName }: UserData) => {
 				userBeingRepliedTo.value = { userId, userName }
