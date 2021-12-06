@@ -1,20 +1,13 @@
-import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
-import { MetaDesignType } from '../types/kotti'
+// import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
+// import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
-import KtFieldTextVue from './KtFieldText.vue'
+import KtInlineEdit2Vue from './KtInlineEdit2.vue'
 
-export const KtFieldText = attachMeta(
-	makeInstallable(KtFieldTextVue),
-	{
-		addedVersion: '2.8.1',
-		deprecated: null,
-		designs: null,
-		slots: {},
-		typeScript: {
-			namespace: 'Kotti.FieldText',
-			schema: null,
-		},
-	},
-)
-
+export const KtInlineEdit2 = attachMeta(makeInstallable(KtInlineEdit2Vue), {
+	addedVersion: '2.8.1',
+	deprecated: null,
+	designs: null,
+	slots: {},
+	typeScript: null,
+})
