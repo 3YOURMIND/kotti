@@ -4,6 +4,7 @@
 		<div v-if="isEditing">
 			<component
 				:is="inputComponent"
+				v-bind="$attrs"
 				class="form-input"
 				type="text"
 				:value="currentValue"
@@ -16,10 +17,12 @@
 				<KtButton icon="check" @click="handleConfirm" />
 			</KtButtonGroup>
 		</div>
-
-		<div v-else>
-			<div @click="isEditing = true" v-html="value" />
-		</div>
+		<div
+			v-else
+			:class="representedValueClass"
+			@click="isEditing = true"
+			v-html="representedValue"
+		/>
 	</div>
 </template>
 
@@ -40,45 +43,48 @@ export default defineComponent({
 		const isEditing = ref<boolean>(false)
 		const currentValue = ref<string>(props.value || '')
 		const preValue = ref<string>(props.value || '')
-		const inputComponent = computed(() =>
-			props.isMultiLine ? 'textarea' : 'input',
-		)
-
-		const handleDismiss = function (event) {
-			isEditing.value = false
-			currentValue.value = preValue.value
-			this.$emit('input', preValue.value)
-			// Not sure it helps to send event with dismiss
-			this.$emit('dismiss', event)
-		}
 
 		return {
 			currentValue,
-			isEditing,
 			handleChange: function (event) {
 				console.log('handleChange')
 				this.$emit('change', event.target.value)
 			},
-			handleConfirm: function (event) {
-				console.log('currentvalue', currentValue.value)
+			handleConfirm: function () {
+				console.log('handleConfirm', currentValue.value)
 				isEditing.value = false
 				preValue.value = currentValue.value
-				this.$emit('confirm', event)
+				this.$emit('confirm', currentValue.value)
 			},
-			handleDismiss,
+			handleDismiss: function () {
+				isEditing.value = false
+				currentValue.value = preValue.value
+				this.$emit('input', preValue.value)
+				this.$emit('dismiss', event)
+			},
 			handleInput: function (event) {
-				console.log('handleInput')
 				const value = event.target.value
-				preValue.value = currentValue.value
 				currentValue.value = value
 				this.$emit('input', value)
 			},
-			inputComponent,
+			isEditing,
+			inputComponent: computed(() =>
+				props.isMultiLine ? 'textarea' : 'input',
+			),
 			objectClass: computed(() => {
 				return {
 					'inline-edit': true,
-					'form-group': isEditing,
-					'label-value': isEditing,
+					'form-group': isEditing.value,
+					'label-value': !isEditing.value,
+				}
+			}),
+			representedValue: computed(() =>
+				currentValue.value ? currentValue.value : props.invalidMessage,
+			),
+			representedValueClass: computed(() => {
+				return {
+					'default editable': true,
+					'editable--empty': !currentValue.value,
 				}
 			}),
 		}

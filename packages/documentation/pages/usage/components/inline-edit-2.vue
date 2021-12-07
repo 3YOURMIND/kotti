@@ -7,8 +7,8 @@
 	<KtInlineEdit2
 		label="Instructions"
 		placeholder="Click to edit"
-		invalidMessage="Click to change the title"
-		value="value1"
+		invalidMessage="Click to change instructions"
+		value="be careful, it's fragile"
 	/>
 </div>
 
