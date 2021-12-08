@@ -31,12 +31,8 @@ export const useI18nContext = () => {
 			'useI18nContext: Missing Translation Context, falling back to English',
 		)
 
-	const locale = computed(() =>
-		context === null ? 'en-US' : context.locale.value,
-	)
-	const messages = computed(() =>
-		context === null ? enUS : context.messages.value,
-	)
+	const locale = computed(() => context?.locale.value ?? 'en-US')
+	const messages = computed(() => context?.messages.value ?? enUS)
 
 	return reactive({ locale, messages })
 }

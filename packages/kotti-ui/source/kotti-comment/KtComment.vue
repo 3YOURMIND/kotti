@@ -75,7 +75,6 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import compact from 'lodash/compact'
 
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
@@ -112,28 +111,26 @@ export default defineComponent<KottiComment.PropsInternal>({
 			emit('delete', payload)
 		}
 		return {
-			actionOptions: computed<Array<KottiButton.Props>>(() =>
-				compact([
-					props.isEditable
-						? {
-								label: 'Edit',
-								onClick: () => {
-									if (inlineMessageValue.value === null)
-										inlineMessageValue.value = props.message
-									isInlineEdit.value = true
-								},
-								type: KottiButton.Type.PRIMARY,
-						  }
-						: null,
-					props.isDeletable
-						? {
-								label: 'Delete',
-								onClick: () => handleDelete(props.id),
-								type: KottiButton.Type.DANGER,
-						  }
-						: null,
-				]),
-			),
+			actionOptions: computed<Array<KottiButton.Props>>(() => {
+				const options = []
+				if (isInlineEdit.value) return options
+				if (props.isEditable)
+					options.push({
+						label: 'Edit',
+						onClick: () => {
+							inlineMessageValue.value = props.message
+							isInlineEdit.value = true
+						},
+						type: KottiButton.Type.PRIMARY,
+					})
+				if (props.isDeletable)
+					options.push({
+						label: 'Delete',
+						onClick: () => handleDelete(props.id),
+						type: KottiButton.Type.DANGER,
+					})
+				return options
+			}),
 			cancelInlineEdit: () => {
 				inlineMessageValue.value = null
 				isInlineEdit.value = false
@@ -141,15 +138,15 @@ export default defineComponent<KottiComment.PropsInternal>({
 			handleDelete,
 			handleEditConfirm: () => {
 				isInlineEdit.value = false
-				if (!inlineMessageValue.value) return
+				if (inlineMessageValue.value === null) return
 				const payload: KottiComment.Events.Edit = {
 					id: props.id,
 					message: inlineMessageValue.value,
 				}
 				emit('edit', payload)
 			},
-			handleInlineReplyClick: ({ userId, userName }: UserData) => {
-				userBeingRepliedTo.value = { userId, userName }
+			handleInlineReplyClick: (replyUserData: UserData) => {
+				userBeingRepliedTo.value = replyUserData
 			},
 			handleInlineSubmit: (commentData: KottiComment.Events.Submit) => {
 				userBeingRepliedTo.value = null
