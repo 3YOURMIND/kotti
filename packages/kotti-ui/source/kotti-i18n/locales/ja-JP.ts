@@ -21,7 +21,7 @@ export const jaJP: KottiI18n.Messages = {
 		expandCloseLabel: '閉じる',
 	},
 	KtFields: {
-		optionalLabel: 'オプション',
+		optionalLabel: '任意',
 		requiredMessage: 'このフィールドは必須です。',
 	},
 	KtFieldSelects: {
