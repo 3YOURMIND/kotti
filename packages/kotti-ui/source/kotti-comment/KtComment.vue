@@ -28,7 +28,7 @@
 					class="action__reply"
 					@click="handleInlineReplyClick({ userName, userId })"
 				>
-					<i class="yoco">comment</i> Reply
+					<i class="yoco" v-text="'comment'" /> {{ replyButton }}
 				</div>
 				<div v-if="actionOptions.length > 0" class="action__more">
 					<i class="yoco">dots</i>
@@ -64,7 +64,7 @@
 				v-if="userBeingRepliedTo"
 				isInline
 				:parentId="id"
-				:placeholder="replyToText"
+				:placeholder="placeholder"
 				:replyToUserId="userBeingRepliedTo.userId"
 				:userAvatar="userAvatar"
 				@submit="handleInlineSubmit($event)"
@@ -80,6 +80,7 @@ import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
 import { KottiButton } from '../kotti-button/types'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 
 import CommentReply from './components/CommentReply.vue'
@@ -102,6 +103,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 		const isInlineEdit = ref(false)
 		const inlineMessageValue = ref<string | null>(null)
 		const userBeingRepliedTo = ref<UserData | null>(null)
+		const translations = useTranslationNamespace('KtComment')
 
 		const handleDelete = (commentId: number | string, isInline?: boolean) => {
 			const payload: KottiComment.Events.Delete = {
@@ -155,11 +157,15 @@ export default defineComponent<KottiComment.PropsInternal>({
 			inlineMessage: computed(() => inlineMessageValue.value ?? props.message),
 			inlineMessageValue,
 			isInlineEdit,
-			replyToText: computed(() =>
+			placeholder: computed(() =>
 				userBeingRepliedTo.value === null
 					? null
-					: `Reply to ${userBeingRepliedTo.value.userName}`,
+					: [
+							translations.value.replyPlaceholder,
+							userBeingRepliedTo.value.userName,
+					  ].join(' '),
 			),
+			replyButton: computed(() => translations.value.replyButton),
 			userBeingRepliedTo,
 		}
 	},

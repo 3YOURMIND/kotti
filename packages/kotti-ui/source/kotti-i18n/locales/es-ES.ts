@@ -20,6 +20,11 @@ export const esES: KottiI18n.Messages = {
 		expandLabel: 'Ver',
 		expandCloseLabel: 'Cerrar',
 	},
+	KtComment: {
+		postButton: 'Publicar',
+		replyButton: 'Responder',
+		replyPlaceholder: 'Responder a',
+	},
 	KtFields: {
 		optionalLabel: 'Opcional',
 		requiredMessage: 'Este campo es requerido',

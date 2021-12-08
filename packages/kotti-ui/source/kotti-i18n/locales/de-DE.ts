@@ -20,6 +20,11 @@ export const deDE: KottiI18n.Messages = {
 		expandLabel: 'Öffnen',
 		expandCloseLabel: 'Schließen',
 	},
+	KtComment: {
+		postButton: 'Beitragen',
+		replyButton: 'Antworten',
+		replyPlaceholder: 'Antwort an',
+	},
 	KtFields: {
 		optionalLabel: 'Optional',
 		requiredMessage: 'Dieses Feld wird benötigt',

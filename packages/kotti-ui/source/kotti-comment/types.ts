@@ -43,6 +43,12 @@ export namespace KottiComment {
 			parentId: string | number
 		}
 	}
+
+	export type Translations = {
+		postButton: string
+		replyButton: string
+		replyPlaceholder: string
+	}
 }
 
 export namespace KottiCommentInput {
