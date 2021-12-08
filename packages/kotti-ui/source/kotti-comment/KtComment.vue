@@ -55,17 +55,17 @@
 					:userAvatar="reply.userAvatar"
 					:userId="reply.userId"
 					:userName="reply.userName"
-					@_inlineDeleteClick="handleDelete($event, 'INLINE')"
+					@_inlineDeleteClick="(commentId) => handleDelete(commentId, true)"
 					@_inlineEditSubmit="$emit('edit', $event)"
 					@_inlineReplyClick="handleInlineReplyClick"
 				/>
 			</div>
 			<KtCommentInput
-				v-if="showInlineReply"
+				v-if="userBeingRepliedTo"
 				isInline
 				:parentId="id"
 				:placeholder="replyToText"
-				:replyToUserId="replyToUserId"
+				:replyToUserId="userBeingRepliedTo.userId"
 				:userAvatar="userAvatar"
 				@submit="handleInlineSubmit($event)"
 			/>
@@ -73,19 +73,22 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
+import { KottiButton } from '../kotti-button/types'
 import { makeProps } from '../make-props'
 
 import CommentReply from './components/CommentReply.vue'
 import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
-import { defaultParser } from './utilities'
 
-export default {
-	defaultParser,
+type UserData = Pick<KottiComment.PropsInternal, 'userName' | 'userId'>
+
+export default defineComponent<KottiComment.PropsInternal>({
 	name: 'KtComment',
 	components: {
 		KtAvatar,
@@ -95,75 +98,72 @@ export default {
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
-	data() {
+	setup(props, { emit }) {
+		const isInlineEdit = ref(false)
+		const inlineMessageValue = ref<string | null>(null)
+		const userBeingRepliedTo = ref<UserData | null>(null)
+
+		const handleDelete = (commentId: number | string, isInline?: boolean) => {
+			const payload: KottiComment.Events.Delete = {
+				id: commentId,
+				parentId: isInline ? props.id : null,
+			}
+			emit('delete', payload)
+		}
 		return {
-			showInlineReply: false,
-			replyToText: null,
-			replyToUserId: Number,
-			isInlineEdit: false,
-			inlineMessageValue: '',
+			actionOptions: computed<Array<KottiButton.Props>>(() => {
+				const options = []
+				if (isInlineEdit.value) return options
+				if (props.isEditable)
+					options.push({
+						label: 'Edit',
+						onClick: () => {
+							inlineMessageValue.value = props.message
+							isInlineEdit.value = true
+						},
+						type: KottiButton.Type.PRIMARY,
+					})
+				if (props.isDeletable)
+					options.push({
+						label: 'Delete',
+						onClick: () => handleDelete(props.id),
+						type: KottiButton.Type.DANGER,
+					})
+				return options
+			}),
+			cancelInlineEdit: () => {
+				inlineMessageValue.value = null
+				isInlineEdit.value = false
+			},
+			handleDelete,
+			handleEditConfirm: () => {
+				isInlineEdit.value = false
+				if (inlineMessageValue.value === null) return
+				const payload: KottiComment.Events.Edit = {
+					id: props.id,
+					message: inlineMessageValue.value,
+				}
+				emit('edit', payload)
+			},
+			handleInlineReplyClick: (replyUserData: UserData) => {
+				userBeingRepliedTo.value = replyUserData
+			},
+			handleInlineSubmit: (commentData: KottiComment.Events.Submit) => {
+				userBeingRepliedTo.value = null
+				emit('submit', commentData)
+			},
+			inlineMessage: computed(() => inlineMessageValue.value ?? props.message),
+			inlineMessageValue,
+			isInlineEdit,
+			replyToText: computed(() =>
+				userBeingRepliedTo.value === null
+					? null
+					: `Reply to ${userBeingRepliedTo.value.userName}`,
+			),
+			userBeingRepliedTo,
 		}
 	},
-	computed: {
-		styleObject() {
-			return {
-				avatar: true,
-				'avatar-selected': this.selected,
-			}
-		},
-		inlineMessage() {
-			return this.inlineMessageValue || this.message
-		},
-		actionOptions() {
-			const options = []
-			if (this.isEditable)
-				options.push({
-					label: 'Edit',
-					onClick: () => {
-						this.inlineMessageValue = this.inlineMessage
-						this.isInlineEdit = true
-					},
-					type: 'EDIT',
-				})
-			if (this.isDeletable)
-				options.push({
-					label: 'Delete',
-					onClick: () => this.handleDelete(this.id),
-					type: 'DELETE',
-				})
-			return options
-		},
-	},
-	methods: {
-		cancelInlineEdit() {
-			this.inlineMessageValue = ''
-			this.isInlineEdit = false
-		},
-		handleInlineReplyClick(user) {
-			this.showInlineReply = true
-			this.replyToUserId = user.userId
-			this.replyToText = `Reply to ${user.userName}`
-		},
-		handleDelete(event, type) {
-			this.$emit('delete', {
-				id: event,
-				parentId: type ? this.id : null,
-			})
-		},
-		handleInlineSubmit(event) {
-			this.showInlineReply = false
-			this.$emit('submit', event)
-		},
-		handleEditConfirm() {
-			this.isInlineEdit = false
-			if (!this.inlineMessageValue) return
-			this.$emit('edit', {
-				id: this.id,
-				message: this.inlineMessageValue,
-			})
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss" scoped>
