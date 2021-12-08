@@ -31,6 +31,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 
 import { KottiCommentInput } from './types'
@@ -43,6 +44,8 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
 	setup(props, { emit }) {
+		const translations = useTranslationNamespace('KtComment')
+
 		const text = ref<string | null>(null)
 		const textarea = ref<HTMLElement | null>(null)
 		const textFocused = ref(false)
@@ -61,7 +64,11 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 				text.value = null
 				textarea.value.style.height = '1.2rem'
 			},
-			replyButtonText: computed(() => (props.isInline ? 'Reply' : 'Post')),
+			replyButtonText: computed(() =>
+				props.isInline
+					? translations.value.replyButton
+					: translations.value.postButton,
+			),
 			text,
 			textarea,
 			textFocused,

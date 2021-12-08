@@ -20,6 +20,11 @@ export const jaJP: KottiI18n.Messages = {
 		expandLabel: '表示',
 		expandCloseLabel: '閉じる',
 	},
+	KtComment: {
+		postButton: '送信',
+		replyButton: '返信',
+		replyPlaceholder: '返信',
+	},
 	KtFields: {
 		optionalLabel: '任意',
 		requiredMessage: 'このフィールドは必須です。',
