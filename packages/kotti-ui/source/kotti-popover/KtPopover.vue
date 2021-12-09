@@ -17,7 +17,7 @@
 					:isDisabled="option.isDisabled"
 					:isSelected="option.isSelected"
 					:label="option.label"
-					@click="handleItemClick(option)"
+					@click.stop="handleItemClick(option)"
 				/>
 			</slot>
 		</div>
@@ -89,7 +89,11 @@ export default {
 	},
 	methods: {
 		handleItemClick(option) {
-			if (!option.isDisabled && option.onClick) option.onClick()
+			if (option.isDisabled) return
+
+			if (option.onClick) option.onClick()
+
+			if (!this.forceShowPopover) this.showPopper = false
 		},
 		handleAnchorClick() {
 			if (!this.forceShowPopoverIsNull) return
