@@ -41,7 +41,7 @@ export default defineComponent({
 	name: 'KtInlineEdit2',
 	components: { KtButton, KtButtonGroup },
 	props: makeProps(KottiInlineEdit2.propsSchema),
-	setup(props) {
+	setup(props, { emit }) {
 		const isEditing = ref<boolean>(false)
 		const currentValue = ref<string>(props.value || '')
 		const preValue = ref<string>(props.value || '')
@@ -55,22 +55,22 @@ export default defineComponent({
 		return {
 			currentValue,
 			handleChange: function (event) {
-				this.$emit('change', event.target.value)
+				emit('change', event.target.value)
 			},
 			handleConfirm: function () {
 				isEditing.value = false
 				preValue.value = currentValue.value
-				this.$emit('confirm', currentValue.value)
+				emit('confirm', currentValue.value)
 			},
 			handleDismiss: function (event) {
 				isEditing.value = false
 				currentValue.value = preValue.value
-				this.$emit('dismiss', event)
+				emit('dismiss', event)
 			},
 			handleInput: function (event) {
 				const value = event.target.value
 				currentValue.value = value
-				this.$emit('input', value)
+				emit('input', value)
 			},
 			isEditing,
 			inputComponent: computed(() =>

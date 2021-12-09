@@ -1,5 +1,3 @@
-// import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
-// import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtInlineEdit2Vue from './KtInlineEdit2.vue'
