@@ -33,6 +33,7 @@ import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
 import { makeProps } from '../make-props'
 
+import { DEFAULT_POST_PARSER } from './types'
 import { KottiInlineEdit2 } from './types'
 
 export default defineComponent({
@@ -43,15 +44,18 @@ export default defineComponent({
 		const isEditing = ref<boolean>(false)
 		const currentValue = ref<string>(props.value || '')
 		const preValue = ref<string>(props.value || '')
-
+		const newLineParser = (t) => t.replace(/\n/gm, '<br/>')
+		const postParser = computed(() => {
+			return props.isMultiLine && props.postEscapeParser === DEFAULT_POST_PARSER
+				? newLineParser
+				: props.postEscapeParser
+		})
 		return {
 			currentValue,
 			handleChange: function (event) {
-				console.log('handleChange')
 				this.$emit('change', event.target.value)
 			},
 			handleConfirm: function () {
-				console.log('handleConfirm', currentValue.value)
 				isEditing.value = false
 				preValue.value = currentValue.value
 				this.$emit('confirm', currentValue.value)
@@ -79,7 +83,11 @@ export default defineComponent({
 				}
 			}),
 			representedValue: computed(() =>
-				currentValue.value ? currentValue.value : props.invalidMessage,
+				postParser.value(
+					props.dangerouslyOverrideParser(
+						currentValue.value ? currentValue.value : props.invalidMessage,
+					),
+				),
 			),
 			representedValueClass: computed(() => {
 				return {
