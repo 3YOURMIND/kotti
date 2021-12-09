@@ -43,24 +43,24 @@
 
 ### Attributes
 
-| Attribute        | Description                  | Type      | Accepted values | Default           |
-| :--------------- | :--------------------------- | :-------- | :-------------- | :---------------- |
-| `invalidMessage` | message                      | `String`  | —               | `"Click to edit"` |
-| `label`          | label text                   | `String`  | —               | —                 |
-| `placeholder`    | value to display             | `String`  | —               | —                 |
-| `isMultiLine`    | allow input enter multilines | `Boolean` | —               | `false`           |
+| Attribute     | Description                  | Type      | Accepted values | Default           |
+| :------------ | :--------------------------- | :-------- | :-------------- | :---------------- |
+| `isMultiLine` | allow input enter multilines | `Boolean` | —               | `false`           |
+| `label`       | label text                   | `String`  | —               | —                 |
+| `placeholder` | value to display             | `String`  | —               | `"Click to edit"` |
 
 ### Input Events
 
 | Event Name | Description                       | Parameters       |
 | :--------- | :-------------------------------- | :--------------- |
+| `change`   | triggers when click outside input | `(event: Event)` |
 | `input`    | triggers when input value changes | `(event: Event)` |
 
 ### Button Events
 
 | Event Name | Description                          | Parameters       |
 | :--------- | :----------------------------------- | :--------------- |
-| `confirm`  | triggers when confirm button clicked | `(event: Event)` |
+| `confirm`  | triggers when confirm button clicked | --               |
 | `dismiss`  | triggers when dismiss button clicked | `(event: Event)` |
 </template>
 
@@ -78,8 +78,6 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtInlineEdit2,
-			// showAlert: (message: string) => window.alert(message),
-			value1: ref(''),
 		}
 	},
 })
