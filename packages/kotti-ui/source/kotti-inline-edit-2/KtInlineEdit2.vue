@@ -78,14 +78,13 @@ export default defineComponent({
 			objectClass: computed(() => {
 				return {
 					'inline-edit': true,
-					'form-group': isEditing.value,
 					'label-value': !isEditing.value,
 				}
 			}),
 			representedValue: computed(() =>
 				postParser.value(
 					props.dangerouslyOverrideParser(
-						currentValue.value ? currentValue.value : props.invalidMessage,
+						currentValue.value ? currentValue.value : props.placeholder,
 					),
 				),
 			),
