@@ -75,6 +75,9 @@ export const esES: KottiI18n.Messages = {
 		title: 'Envío de formulario no permitido',
 		warningsSectionTitle: 'Avisos',
 	},
+	KtInlineEdit: {
+		placeholder: 'Haga click para editar',
+	},
 	KtNavbar: {
 		menuCollapse: 'Colapsar menú',
 		menuExpand: 'Expandir el menú',

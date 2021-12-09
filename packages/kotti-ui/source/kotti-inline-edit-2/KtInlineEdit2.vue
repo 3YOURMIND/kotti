@@ -5,6 +5,7 @@
 			<component
 				:is="inputComponent"
 				class="form-input"
+				:placeholder="placeholder"
 				type="text"
 				:value="currentValue"
 				@change="handleChange"
@@ -30,6 +31,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 
 import { DEFAULT_POST_PARSER } from './types'
@@ -43,6 +45,7 @@ export default defineComponent({
 		const isEditing = ref<boolean>(false)
 		const currentValue = ref<string>(props.value || '')
 		const preValue = ref<string>(props.value || '')
+		const translations = useTranslationNamespace('KtInlineEdit2')
 		const newLineParser = (t) => t.replace(/\n/gm, '<br/>')
 		const postParser = computed(() => {
 			return props.isMultiLine && props.postEscapeParser === DEFAULT_POST_PARSER
@@ -79,6 +82,9 @@ export default defineComponent({
 					'label-value': !isEditing.value,
 				}
 			}),
+			placeholder: computed(
+				() => props.placeholder ?? translations.value.placeholder,
+			),
 			representedValue: computed(() =>
 				postParser.value(
 					props.dangerouslyOverrideParser(

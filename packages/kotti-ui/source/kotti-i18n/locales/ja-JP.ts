@@ -76,6 +76,9 @@ export const jaJP: KottiI18n.Messages = {
 		title: 'フォーム送信ができない',
 		warningsSectionTitle: '注意事項',
 	},
+	KtInlineEdit: {
+		placeholder: '編集画面へ',
+	},
 	KtNavbar: {
 		menuCollapse: 'メニューを閉じる',
 		menuExpand: '拡張メニュー',

@@ -76,6 +76,9 @@ export const deDE: KottiI18n.Messages = {
 		title: 'Formularübermittlung nicht zulässig',
 		warningsSectionTitle: 'Warnungen',
 	},
+	KtInlineEdit: {
+		placeholder: 'Zum Bearbeiten klicken',
+	},
 	KtNavbar: {
 		menuCollapse: 'Menü ausblenden',
 		menuExpand: 'Menü einblenden',

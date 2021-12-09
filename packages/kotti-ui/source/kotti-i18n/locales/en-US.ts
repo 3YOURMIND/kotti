@@ -75,6 +75,9 @@ export const enUS: KottiI18n.Messages = {
 		title: 'Form Submission Not Allowed',
 		warningsSectionTitle: 'Warnings',
 	},
+	KtInlineEdit: {
+		placeholder: 'Click to edit',
+	},
 	KtNavbar: {
 		menuCollapse: 'Collapse menu',
 		menuExpand: 'Expand menu',

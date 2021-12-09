@@ -75,6 +75,9 @@ export const frFR: KottiI18n.Messages = {
 		title: 'Soumission de formulaire non autorisée',
 		warningsSectionTitle: 'Avertissements',
 	},
+	KtInlineEdit: {
+		placeholder: 'Cliquer pour éditer',
+	},
 	KtNavbar: {
 		menuCollapse: 'Réduire le menu',
 		menuExpand: 'Étendre le menu',

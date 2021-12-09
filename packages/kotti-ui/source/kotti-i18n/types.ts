@@ -6,6 +6,7 @@ import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
 import { KottiField } from '../kotti-field/types'
 import { KottiFilters } from '../kotti-filters/types'
 import { KottiFormSubmit } from '../kotti-form-submit/types'
+import { KottiInlineEdit2 } from '../kotti-inline-edit-2/types'
 import { KottiNavbar } from '../kotti-navbar/types'
 import { DecimalSeparator } from '../types/kotti'
 
@@ -31,6 +32,7 @@ export namespace KottiI18n {
 		KtFieldSelects: KottiFieldSelectShared.Translations
 		KtFilters: KottiFilters.Translations
 		KtFormSubmit: KottiFormSubmit.Translations
+		KtInlineEdit2: KottiInlineEdit2.Translations
 		KtNavbar: KottiNavbar.Translations
 	}
 
