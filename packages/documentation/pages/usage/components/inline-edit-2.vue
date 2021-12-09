@@ -23,7 +23,7 @@
 
 <div class="element-example white">
 	<KtInlineEdit2
-		:isMultiLine="true"
+		isMultiLine
 		label="Instructions"
 		placeholder="Edit instructions"
 		value="my instructions"
@@ -32,7 +32,7 @@
 
 ```html
 <KtInlineEdit2
-	:isMultiLine="true"
+	isMultiLine
 	label="Instructions"
 	placeholder="Edit instructions"
 	value="my instructions"
@@ -46,7 +46,7 @@
 | Attribute     | Description                  | Type      | Accepted values | Default           |
 | :------------ | :--------------------------- | :-------- | :-------------- | :---------------- |
 | `isMultiLine` | allow input enter multilines | `Boolean` | —               | `false`           |
-| `label`       | label text                   | `String`  | —               | —                 |
+| `label`       | label text                   | `String`  | —               | `null`            |
 | `placeholder` | value to display             | `String`  | —               | `"Click to edit"` |
 
 ### Input Events
@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import { KtInlineEdit2 } from '@3yourmind/kotti-ui'
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

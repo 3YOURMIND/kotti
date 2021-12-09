@@ -4,7 +4,6 @@
 		<div v-if="isEditing">
 			<component
 				:is="inputComponent"
-				v-bind="$attrs"
 				class="form-input"
 				type="text"
 				:value="currentValue"
@@ -20,8 +19,8 @@
 		<div
 			v-else
 			:class="representedValueClass"
-			@click="isEditing = true"
-			v-html="representedValue"
+			@click.stop="isEditing = true"
+			v-text="representedValue"
 		/>
 	</div>
 </template>
