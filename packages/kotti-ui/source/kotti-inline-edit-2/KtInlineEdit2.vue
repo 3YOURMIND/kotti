@@ -60,10 +60,9 @@ export default defineComponent({
 				preValue.value = currentValue.value
 				this.$emit('confirm', currentValue.value)
 			},
-			handleDismiss: function () {
+			handleDismiss: function (event) {
 				isEditing.value = false
 				currentValue.value = preValue.value
-				this.$emit('input', preValue.value)
 				this.$emit('dismiss', event)
 			},
 			handleInput: function (event) {
