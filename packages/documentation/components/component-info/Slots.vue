@@ -45,10 +45,7 @@
 						<div class="slots-block__scope__item__name" v-text="variableName" />
 						<div
 							v-if="description === null"
-							class="
-								slots-block__scope__item__description
-								slots-block__scope__item__description--is-empty
-							"
+							class="slots-block__scope__item__description slots-block__scope__item__description--is-empty"
 							v-text="'No Description'"
 						/>
 						<div

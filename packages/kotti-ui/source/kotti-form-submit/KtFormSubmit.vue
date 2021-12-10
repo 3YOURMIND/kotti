@@ -6,9 +6,7 @@
 
 			<div
 				v-if="errors.length"
-				class="
-					kt-form-submit__popup__section kt-form-submit__popup__section--error
-				"
+				class="kt-form-submit__popup__section kt-form-submit__popup__section--error"
 			>
 				<h5 v-text="translations.errorsSectionTitle" />
 				<ul>
@@ -21,9 +19,7 @@
 
 			<div
 				v-if="warnings.length"
-				class="
-					kt-form-submit__popup__section kt-form-submit__popup__section--warning
-				"
+				class="kt-form-submit__popup__section kt-form-submit__popup__section--warning"
 			>
 				<h5 v-text="translations.warningsSectionTitle" />
 				<ul>
