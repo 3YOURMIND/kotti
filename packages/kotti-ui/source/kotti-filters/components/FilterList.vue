@@ -9,6 +9,7 @@
 			:key="filter.key"
 			:column="getColumn(filter.key)"
 			:columnOptions="getColumnOptions(filter.key)"
+			:dataTest="dataTest ? `${dataTest}-filter-${filter.key}` : null"
 			:filter="filter"
 			:isFirstItem="index === 0"
 			:isLoading="isLoading"
@@ -18,6 +19,7 @@
 		<FilterRow
 			v-if="isAddingFilter"
 			:columnOptions="getColumnOptions()"
+			:dataTest="dataTest ? `${dataTest}-adding-filter` : null"
 			:isFirstItem="filters.length === 0"
 			@input="handleAddFilter"
 			@remove="handleCancelAddFilter"
@@ -39,6 +41,7 @@ import FilterRow from './FilterRow.vue'
 
 export default defineComponent<{
 	columns: KottiFilters.Column.Any[]
+	dataTest: string | null
 	filters: KottiFilters.InternalFilter[]
 	isAddingFilter: boolean
 	isLoading: boolean
@@ -52,6 +55,10 @@ export default defineComponent<{
 		columns: {
 			required: true,
 			type: Array,
+		},
+		dataTest: {
+			default: null,
+			type: String,
 		},
 		filters: {
 			required: true,

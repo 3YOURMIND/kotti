@@ -32,6 +32,7 @@
 		</div>
 		<ButtonLink
 			class="kt-filter__list__row__remove"
+			:data-test="dataTest ? `${dataTest}-remove` : undefined"
 			:icon="Yoco.Icon.CLOSE"
 			:isLoading="isLoading"
 			:type="KottiFilters.ButtonLinkType.DANGER"
@@ -70,6 +71,7 @@ import ButtonLink from './ButtonLink.vue'
 export default defineComponent<{
 	column: KottiFilters.Column.Any | null
 	columnOptions: KottiFieldSingleSelect.Props['options']
+	dataTest: string | null
 	filter: KottiFilters.Filter
 	isFirstItem: boolean
 	isLoading: boolean
@@ -93,6 +95,10 @@ export default defineComponent<{
 		columnOptions: {
 			required: true,
 			type: Array,
+		},
+		dataTest: {
+			default: null,
+			type: String,
 		},
 		filter: {
 			default: (): KottiFilters.Filter => ({

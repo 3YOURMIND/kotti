@@ -201,6 +201,7 @@ export namespace KottiFilters {
 
 	export type InternalProps = {
 		columns: Column.Any[]
+		dataTest: string | null
 		isLoading: boolean
 		value: Value
 	}
