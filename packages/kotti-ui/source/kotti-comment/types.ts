@@ -28,12 +28,12 @@ export namespace KottiComment {
 
 	export namespace Events {
 		export type Delete = {
-			id: string | number
+			id: string | number | null
 			parentId: string | number | null
 		}
 
 		export type Edit = {
-			id: string | number
+			id: string | number | null
 			message: string
 		}
 

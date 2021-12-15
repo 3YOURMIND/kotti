@@ -35,7 +35,7 @@
 					<div class="action__options">
 						<a
 							v-for="option in actionOptions"
-							:key="option.type"
+							:key="option.label"
 							@click="option.onClick"
 						>
 							<li>{{ option.label }}</li>
@@ -79,7 +79,6 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
-import { KottiButton } from '../kotti-button/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 
@@ -88,6 +87,10 @@ import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
 
 type UserData = Pick<KottiComment.PropsInternal, 'userName' | 'userId'>
+type CommentAction = {
+	label: string
+	onClick: () => void
+}
 
 export default defineComponent<KottiComment.PropsInternal>({
 	name: 'KtComment',
@@ -105,16 +108,19 @@ export default defineComponent<KottiComment.PropsInternal>({
 		const userBeingRepliedTo = ref<UserData | null>(null)
 		const translations = useTranslationNamespace('KtComment')
 
-		const handleDelete = (commentId: number | string, isInline?: boolean) => {
+		const handleDelete = (
+			commentId: number | string | null,
+			isInline?: boolean,
+		) => {
 			const payload: KottiComment.Events.Delete = {
 				id: commentId,
-				parentId: isInline ? props.id : null,
+				parentId: isInline ? props.id ?? null : null,
 			}
 			emit('delete', payload)
 		}
 		return {
-			actionOptions: computed<Array<KottiButton.Props>>(() => {
-				const options = []
+			actionOptions: computed<Array<CommentAction>>(() => {
+				const options: Array<CommentAction> = []
 				if (isInlineEdit.value) return options
 				if (props.isEditable)
 					options.push({
@@ -123,13 +129,11 @@ export default defineComponent<KottiComment.PropsInternal>({
 							inlineMessageValue.value = props.message
 							isInlineEdit.value = true
 						},
-						type: KottiButton.Type.PRIMARY,
 					})
 				if (props.isDeletable)
 					options.push({
 						label: 'Delete',
-						onClick: () => handleDelete(props.id),
-						type: KottiButton.Type.DANGER,
+						onClick: () => handleDelete(props.id ?? null),
 					})
 				return options
 			}),
@@ -142,7 +146,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 				isInlineEdit.value = false
 				if (inlineMessageValue.value === null) return
 				const payload: KottiComment.Events.Edit = {
-					id: props.id,
+					id: props.id ?? null,
 					message: inlineMessageValue.value,
 				}
 				emit('edit', payload)

@@ -25,7 +25,7 @@ import { getValidationSummary } from './utilities'
 
 let id = 0
 
-export default defineComponent({
+export default defineComponent<KottiForm.Props>({
 	name: 'KtForm',
 	props: {
 		...KOTTI_FIELD_INHERITABLE_PROPS,
@@ -41,7 +41,7 @@ export default defineComponent({
 		validators: { default: () => ({}), type: Object },
 		value: { required: true, type: Object },
 	},
-	setup(props: KottiForm.Props, { emit }) {
+	setup(props, { emit }) {
 		const currentFieldsWrapper = reactive<{
 			currentFields: KottiField.Hook.Returns<unknown, unknown>[]
 		}>({ currentFields: [] })

@@ -18,7 +18,7 @@ import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { KOTTI_FIELD_PASSWORD_SUPPORTS } from './constants'
 import { KottiFieldPassword } from './types'
 
-export default defineComponent({
+export default defineComponent<KottiFieldPassword.Props>({
 	name: 'KtFieldPassword',
 	components: { KtField },
 	props: {
@@ -31,7 +31,7 @@ export default defineComponent({
 		},
 		value: { default: null, type: String },
 	},
-	setup(props: KottiFieldPassword.Props, { emit }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldPassword.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldPassword.Value =>

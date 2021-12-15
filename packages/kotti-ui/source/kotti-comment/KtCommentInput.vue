@@ -59,10 +59,10 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 				emit('submit', {
 					message: text.value,
 					replyToUserId: props.replyToUserId,
-					parentId: props.parentId,
+					parentId: props.parentId ?? null,
 				})
 				text.value = null
-				textarea.value.style.height = '1.2rem'
+				if (textarea.value !== null) textarea.value.style.height = '1.2rem'
 			},
 			replyButtonText: computed(() =>
 				props.isInline

@@ -46,7 +46,7 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { castArray } from 'lodash'
-import { roundArrow } from 'tippy.js'
+import { Props as TippyProps, roundArrow } from 'tippy.js'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
@@ -70,11 +70,11 @@ const UPDATE_QUERY = 'update:query'
 const isTippyOrInTippy = (element: Element, tippy: Element | null): boolean => {
 	if (tippy === null) return false
 
-	let currentElement = element
+	let currentElement: Element | null = element
 
 	while (currentElement) {
 		if (currentElement.isSameNode(tippy)) return true
-		currentElement = currentElement?.parentElement
+		currentElement = currentElement?.parentElement ?? null
 	}
 
 	return false
@@ -91,7 +91,7 @@ type ModifiedOptions = Array<
 	}
 >
 
-export default defineComponent({
+export default defineComponent<KottiFieldSingleSelectRemote.Props>({
 	name: 'KtFieldSingleSelectRemote',
 	components: {
 		ActionIconNext,
@@ -104,7 +104,7 @@ export default defineComponent({
 		query: { default: null, type: String },
 		value: { default: null, type: [Number, String, Boolean] },
 	},
-	setup(props: KottiFieldSingleSelectRemote.Props, { emit }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldSingleSelectRemote.Value, string | null>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldSingleSelectRemote.Value =>
@@ -124,10 +124,9 @@ export default defineComponent({
 
 		const { tippy } = useTippy(
 			tippyTriggerRef,
-			computed(() => ({
+			computed<Partial<TippyProps>>(() => ({
 				appendTo: () => document.body,
 				arrow: roundArrow,
-				content: tippyContentRef.value,
 				// hides the tippy if we click-away from the tippy
 				hideOnClick: true,
 				interactive: true,
@@ -145,6 +144,9 @@ export default defineComponent({
 				},
 				theme: 'light-border',
 				trigger: 'manual',
+				...(tippyContentRef.value !== null
+					? { content: tippyContentRef.value }
+					: {}),
 			})),
 		)
 

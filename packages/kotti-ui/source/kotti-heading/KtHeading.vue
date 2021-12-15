@@ -36,7 +36,7 @@ export default defineComponent({
 	},
 	setup(props, { emit }) {
 		return {
-			handleClick: (event) => {
+			handleClick: (event: Event) => {
 				if (props.type === 'action') {
 					emit('click', event)
 				}

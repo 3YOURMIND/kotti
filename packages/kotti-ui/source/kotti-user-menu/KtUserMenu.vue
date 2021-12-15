@@ -65,9 +65,11 @@ export default defineComponent<KottiUserMenu.PropsInternal>({
 	components: {
 		KtAvatar,
 	},
+	// @ts-expect-error: official declarations of @types/vue-clickaway do
+	// not satisfy the typechecker apparently
 	mixins: [clickaway],
 	props: makeProps(KottiUserMenu.propsSchema),
-	setup(props) {
+	setup(props: KottiUserMenu.PropsInternal) {
 		const isMenuShow = ref(false)
 		const isNarrow = inject<ComputedRef<boolean>>(
 			IS_NAVBAR_NARROW,

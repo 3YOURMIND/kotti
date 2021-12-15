@@ -28,7 +28,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 		const hasSlot = computed(() => Boolean(slots.default))
 
 		return {
-			handleClick: (event) => emit('click', event),
+			handleClick: (event: Event) => emit('click', event),
 			hasSlot,
 			mainClasses: computed(() => ({
 				'kt-button': true,

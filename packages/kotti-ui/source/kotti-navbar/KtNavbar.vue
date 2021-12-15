@@ -72,9 +72,11 @@ export default defineComponent<KottiNavbar.PropsInternal>({
 		NavbarNotification,
 		NavbarQuickLink,
 	},
+	// @ts-expect-error: official declarations of @types/vue-clickaway do
+	// not satisfy the typechecker apparently
 	mixins: [clickaway],
 	props: makeProps(KottiNavbar.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiNavbar.PropsInternal, { emit }) {
 		const mobileMenuToggle = ref(false)
 
 		provide(

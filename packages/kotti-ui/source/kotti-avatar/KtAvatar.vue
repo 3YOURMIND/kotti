@@ -17,7 +17,7 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, Ref, ref } from '@vue/composition-api'
-import { roundArrow } from 'tippy.js'
+import { Props as TippyProps, roundArrow } from 'tippy.js'
 
 import { makeProps } from '../make-props'
 
@@ -29,13 +29,14 @@ const useTooltip = (name: Ref<string | null>) => {
 
 	useTippy(
 		tooltipTriggerRef,
-		computed(() => ({
+		computed<Partial<TippyProps>>(() => ({
 			appendTo: () => document.body,
 			arrow: roundArrow,
-			content: name.value,
 			offset: [0, ARROW_HEIGHT],
 			theme: 'light-border',
-			...(name.value === null ? { trigger: 'manual' } : {}),
+			...(name.value === null
+				? { trigger: 'manual' }
+				: { content: name.value }),
 		})),
 	)
 
