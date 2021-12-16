@@ -47,13 +47,20 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, computed, ref, watch } from '@vue/composition-api'
+import {
+	defineComponent,
+	computed,
+	ref,
+	watch,
+	UnwrapRef,
+} from '@vue/composition-api'
 import Big from 'big.js'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
+import { KottiI18n } from '../kotti-i18n/types'
 
 import {
 	DECIMAL_SEPARATORS_CHARACTER_SET,
@@ -125,8 +132,11 @@ export default defineComponent({
 		)
 
 		watch(
-			() => field.currentValue,
-			(newNumber) => {
+			(): [
+				KottiFieldNumber.Value,
+				UnwrapRef<KottiI18n.Context['numberFormat']>['decimalSeparator'],
+			] => [field.currentValue, i18nContext.numberFormat.decimalSeparator],
+			([newNumber]) => {
 				const newString = toString(
 					newNumber,
 					props.decimalPlaces,
