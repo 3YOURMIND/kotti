@@ -5,7 +5,6 @@ import { DecimalSeparator } from '../types/kotti'
 import {
 	STRINGS_THAT_ARE_TREATED_AS_NULL,
 	DECIMAL_SEPARATORS_CHARACTER_SET,
-	DECIMAL_PLACES,
 	TRAILING_ZEROES_REGEX,
 } from './constants'
 import { KottiFieldNumber } from './types'
@@ -62,11 +61,12 @@ export const toNumber = (string: string) =>
 
 export const toString = (
 	number: number | null,
+	decimalPlaces: number,
 	decimalSeparator: DecimalSeparator,
 ) =>
 	number === null
 		? ''
 		: number
-				.toFixed(DECIMAL_PLACES)
+				.toFixed(decimalPlaces)
 				.replace('.', decimalSeparator)
 				.replace(TRAILING_ZEROES_REGEX, '$1')

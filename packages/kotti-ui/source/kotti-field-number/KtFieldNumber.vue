@@ -129,6 +129,7 @@ export default defineComponent({
 			(newNumber, oldNumber) => {
 				const newString = toString(
 					newNumber,
+					props.decimalPlaces,
 					i18nContext.numberFormat.decimalSeparator,
 				)
 				const truncatedNumber = toNumber(newString)
@@ -215,6 +216,7 @@ export default defineComponent({
 			handleBlur() {
 				internalStringValue.value = toString(
 					field.currentValue,
+					props.decimalPlaces,
 					i18nContext.numberFormat.decimalSeparator,
 				)
 			},
@@ -264,7 +266,7 @@ export default defineComponent({
 				const nextNumber = toNumber(valueWithoutLeadingZeroes)
 
 				const isTypedNumberValid =
-					VALID_REGEX.test(valueWithoutLeadingZeroes) &&
+					VALID_REGEX(props.decimalPlaces).test(valueWithoutLeadingZeroes) &&
 					isStepMultiple({
 						minimum,
 						step,

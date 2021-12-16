@@ -11,6 +11,7 @@ export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {
 }
 
 export const KOTTI_FIELD_NUMBER_PROPS = {
+	decimalPlaces: { default: 3, type: Number },
 	hideChangeButtons: { default: false, type: Boolean },
 	hideMaximum: { default: false, type: Boolean },
 	maximum: { default: null, type: Number },
@@ -23,8 +24,6 @@ export const KOTTI_FIELD_NUMBER_PROPS = {
 	},
 	value: { default: null, type: Number },
 }
-
-export const DECIMAL_PLACES = 3
 
 /**
  * RegExp character set for use within other regular expressions
@@ -47,6 +46,7 @@ export const LEADING_ZEROES_REGEX = new RegExp(
 export const TRAILING_ZEROES_REGEX = new RegExp(
 	`${DECIMAL_SEPARATORS_CHARACTER_SET}0*$|(${DECIMAL_SEPARATORS_CHARACTER_SET}[0-9]*[1-9])0+$`,
 )
-export const VALID_REGEX = new RegExp(
-	`^[+-]?(0?|([1-9][0-9]*))?(${DECIMAL_SEPARATORS_CHARACTER_SET}[0-9]{0,${DECIMAL_PLACES}})?$`,
-)
+export const VALID_REGEX = (decimalPlaces: number) =>
+	new RegExp(
+		`^[+-]?(0?|([1-9][0-9]*))?(${DECIMAL_SEPARATORS_CHARACTER_SET}[0-9]{0,${decimalPlaces}})?$`,
+	)
