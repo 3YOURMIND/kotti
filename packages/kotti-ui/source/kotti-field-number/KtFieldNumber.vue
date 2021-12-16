@@ -53,8 +53,10 @@ import Big from 'big.js'
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { useI18nContext } from '../kotti-i18n/hooks'
 
 import {
+	DECIMAL_SEPARATORS_CHARACTER_SET,
 	KOTTI_FIELD_NUMBER_PROPS,
 	KOTTI_FIELD_NUMBER_SUPPORTS,
 	LEADING_ZEROES_REGEX,
@@ -87,6 +89,8 @@ export default defineComponent({
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
+
+		const i18nContext = useI18nContext()
 
 		const isDecrementEnabled = computed(
 			() =>
@@ -123,7 +127,10 @@ export default defineComponent({
 		watch(
 			() => field.currentValue,
 			(newNumber, oldNumber) => {
-				const newString = toString(newNumber)
+				const newString = toString(
+					newNumber,
+					i18nContext.numberFormat.decimalSeparator,
+				)
 				const truncatedNumber = toNumber(newString)
 
 				if (
@@ -206,7 +213,10 @@ export default defineComponent({
 			},
 			field,
 			handleBlur() {
-				internalStringValue.value = toString(field.currentValue)
+				internalStringValue.value = toString(
+					field.currentValue,
+					i18nContext.numberFormat.decimalSeparator,
+				)
 			},
 			incrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isIncrementEnabled.value,
@@ -268,8 +278,17 @@ export default defineComponent({
 
 				if (isTypedNumberValid) {
 					const shouldEmit = nextNumber !== field.currentValue
+
 					if (shouldEmit) field.setValue(nextNumber)
-					else internalStringValue.value = valueWithoutLeadingZeroes
+					else {
+						// we parse all possible decimal places into the one supported by the translation context
+						const valueWithNumericalDecimalPlace =
+							valueWithoutLeadingZeroes.replace(
+								new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET),
+								i18nContext.numberFormat.decimalSeparator,
+							)
+						internalStringValue.value = valueWithNumericalDecimalPlace
+					}
 				}
 
 				forceUpdate()

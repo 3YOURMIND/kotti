@@ -4,6 +4,7 @@ import {
 	provide,
 	reactive,
 	Ref,
+	UnwrapRef,
 	watch,
 } from '@vue/composition-api'
 import elementLocale from 'element-ui/lib/locale'
@@ -12,6 +13,8 @@ import elementEn from 'element-ui/lib/locale/lang/en'
 import elementEs from 'element-ui/lib/locale/lang/es'
 import elementFr from 'element-ui/lib/locale/lang/fr'
 import elementJa from 'element-ui/lib/locale/lang/ja'
+
+import { DecimalSeparator } from '../types/kotti'
 
 import { KT_I18N_CONTEXT } from './constants'
 import { deDE } from './locales/de-DE'
@@ -31,10 +34,20 @@ export const useI18nContext = () => {
 			'useI18nContext: Missing Translation Context, falling back to English',
 		)
 
-	const locale = computed(() => context?.locale.value ?? 'en-US')
-	const messages = computed(() => context?.messages.value ?? enUS)
-
-	return reactive({ locale, messages })
+	return reactive({
+		locale: computed<UnwrapRef<KottiI18n.Context['locale']>>(
+			() => context?.locale.value ?? 'en-US',
+		),
+		messages: computed<UnwrapRef<KottiI18n.Context['messages']>>(
+			() => context?.messages.value ?? enUS,
+		),
+		numberFormat: computed<UnwrapRef<KottiI18n.Context['numberFormat']>>(
+			() =>
+				context?.numberFormat.value ?? {
+					decimalSeparator: DecimalSeparator.DOT,
+				},
+		),
+	})
 }
 
 export const useTranslationNamespace = <NS extends keyof KottiI18n.Messages>(
@@ -51,6 +64,7 @@ export const useTranslationNamespace = <NS extends keyof KottiI18n.Messages>(
 export const useI18nProvide = (
 	locale: Ref<KottiI18n.Props['locale']>,
 	messages: Ref<KottiI18n.Props['messages']>,
+	numberFormat: Ref<KottiI18n.Props['numberFormat']>,
 ) => {
 	const defaultMessages = computed(
 		(): KottiI18n.Messages =>
@@ -90,5 +104,6 @@ export const useI18nProvide = (
 		messages: computed(() =>
 			fixDeepMerge<KottiI18n.Messages>(defaultMessages.value, messages.value),
 		),
+		numberFormat,
 	})
 }

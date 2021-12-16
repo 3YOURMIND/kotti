@@ -10,6 +10,7 @@ import {
 	forceVueToEvaluateComputedProperty,
 	getMockContext,
 } from '../test-utils'
+import { DecimalSeparator } from '../types/kotti'
 
 import { KOTTI_FIELD_PROPS, FORM_KEY_NONE } from './constants'
 import { KtFieldErrors } from './errors'
@@ -20,7 +21,11 @@ const TestComponent = defineComponent({
 	name: 'TestComponent',
 	props: KOTTI_FIELD_PROPS,
 	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
-		useI18nProvide(ref('en-US'), ref({}))
+		useI18nProvide(
+			ref('en-US'),
+			ref({}),
+			ref({ decimalSeparator: DecimalSeparator.DOT }),
+		)
 
 		return {
 			field: useField({
@@ -48,7 +53,11 @@ const TestComponentObject = defineComponent({
 		props: KottiField.Props<Record<string, unknown> | null, string | null>,
 		{ emit },
 	) => {
-		useI18nProvide(ref('en-US'), ref({}))
+		useI18nProvide(
+			ref('en-US'),
+			ref({}),
+			ref({ decimalSeparator: DecimalSeparator.DOT }),
+		)
 
 		return {
 			field: useField({

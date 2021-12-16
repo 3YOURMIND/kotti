@@ -10,6 +10,7 @@ import { KottiField } from '../kotti-field/types'
 import KtForm from '../kotti-form/KtForm.vue'
 import { useI18nProvide } from '../kotti-i18n/hooks'
 import { localVue } from '../test-utils/index'
+import { DecimalSeparator } from '../types/kotti'
 
 import KtFormControllerList from './KtFormControllerList.vue'
 
@@ -18,7 +19,11 @@ const TestField = defineComponent({
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
 	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
-		useI18nProvide(ref('en-US'), ref({}))
+		useI18nProvide(
+			ref('en-US'),
+			ref({}),
+			ref({ decimalSeparator: DecimalSeparator.DOT }),
+		)
 
 		return {
 			field: useField({

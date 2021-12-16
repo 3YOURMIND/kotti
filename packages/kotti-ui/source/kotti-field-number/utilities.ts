@@ -1,8 +1,10 @@
 import Big from 'big.js'
 
+import { DecimalSeparator } from '../types/kotti'
+
 import {
 	STRINGS_THAT_ARE_TREATED_AS_NULL,
-	DECIMAL_SEPARATOR,
+	DECIMAL_SEPARATORS_CHARACTER_SET,
 	DECIMAL_PLACES,
 	TRAILING_ZEROES_REGEX,
 } from './constants'
@@ -54,12 +56,17 @@ export const isStepMultiple = ({
 export const toNumber = (string: string) =>
 	STRINGS_THAT_ARE_TREATED_AS_NULL.includes(string)
 		? null
-		: parseFloat(string.replace(DECIMAL_SEPARATOR, '.'))
+		: parseFloat(
+				string.replace(new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET), '.'),
+		  )
 
-export const toString = (number: number | null) =>
+export const toString = (
+	number: number | null,
+	decimalSeparator: DecimalSeparator,
+) =>
 	number === null
 		? ''
 		: number
 				.toFixed(DECIMAL_PLACES)
-				.replace('.', DECIMAL_SEPARATOR)
+				.replace('.', decimalSeparator)
 				.replace(TRAILING_ZEROES_REGEX, '$1')

@@ -7,6 +7,7 @@ import { KottiField } from '../kotti-field/types'
 import { KottiFilters } from '../kotti-filters/types'
 import { KottiFormSubmit } from '../kotti-form-submit/types'
 import { KottiNavbar } from '../kotti-navbar/types'
+import { DecimalSeparator } from '../types/kotti'
 
 export type DeepPartial<T> = T extends Record<string, unknown>
 	? { [K in keyof T]?: DeepPartial<T[K]> }
@@ -16,6 +17,11 @@ export namespace KottiI18n {
 	export type Context = {
 		locale: Ref<SupportedLanguages>
 		messages: Ref<Messages>
+		numberFormat: Ref<NumberFormat>
+	}
+
+	export type NumberFormat = {
+		decimalSeparator: DecimalSeparator
 	}
 
 	export type Messages = {
@@ -31,6 +37,7 @@ export namespace KottiI18n {
 	export type Props = {
 		locale: SupportedLanguages
 		messages: DeepPartial<Messages>
+		numberFormat: NumberFormat
 	}
 
 	/**
