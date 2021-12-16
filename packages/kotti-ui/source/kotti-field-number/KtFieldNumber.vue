@@ -126,7 +126,7 @@ export default defineComponent({
 
 		watch(
 			() => field.currentValue,
-			(newNumber, oldNumber) => {
+			(newNumber) => {
 				const newString = toString(
 					newNumber,
 					props.decimalPlaces,
@@ -156,8 +156,7 @@ export default defineComponent({
 						`KtFieldNumber: encountered a value "${newNumber}" that doesn't fit ((minimum + k * step): where k is an integer)`,
 					)
 
-				const shouldUpdate = oldNumber !== truncatedNumber
-				if (shouldUpdate) internalStringValue.value = newString
+				internalStringValue.value = newString
 			},
 			{ immediate: true },
 		)
