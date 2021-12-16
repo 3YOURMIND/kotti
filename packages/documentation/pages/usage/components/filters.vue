@@ -8,6 +8,7 @@
     			<KtFilters
     				v-model="filters"
     				:columns="componentProps.columns"
+    				dataTest="kt-filters"
     				:isLoading="componentProps.isLoading"
     			/>
     			<div class="overview__component__value">

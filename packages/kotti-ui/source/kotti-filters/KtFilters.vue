@@ -3,12 +3,14 @@
 		<FilterSearch
 			v-if="hasSearchColumn"
 			:column="searchColumn"
+			:dataTest="dataTest"
 			:filter="searchValue"
 			:isLoading="isLoading"
 			@input="setSearchFilter"
 		/>
 		<div ref="listTriggerRef">
 			<ButtonLink
+				:data-test="dataTest ? `${dataTest}-show-filters` : undefined"
 				:icon="Yoco.Icon.FILTER"
 				:isLoading="isLoading"
 				:label="filterLabel"
@@ -18,6 +20,7 @@
 		<div ref="listContentRef">
 			<FilterList
 				:columns="filterListColumns"
+				:dataTest="dataTest"
 				:filters="filterListValues"
 				:isAddingFilter="isAddingFilter"
 				:isLoading="isLoading"
@@ -25,6 +28,7 @@
 				@input="setFilters"
 			/>
 			<FilterActions
+				:dataTest="dataTest"
 				:isAddDisabled="isAddDisabled"
 				:isClearAllDisabled="isClearAllDisabled"
 				:isLoading="isLoading"
@@ -71,6 +75,10 @@ export default defineComponent<KottiFilters.InternalProps>({
 			type: Array,
 			validator: (value: KottiFilters.InternalProps['columns']) =>
 				value.every((column) => isValidColumn(column)),
+		},
+		dataTest: {
+			default: null,
+			type: String,
 		},
 		isLoading: {
 			default: false,

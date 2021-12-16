@@ -1,12 +1,14 @@
 <template>
 	<div class="kt-filter__actions">
 		<ButtonLink
+			:data-test="dataTest ? `${dataTest}-add-filter` : undefined"
 			:isDisabled="isAddDisabled"
 			:isLoading="isLoading"
 			:label="translations.addFilterLabel"
 			@click="handleAdd"
 		/>
 		<ButtonLink
+			:data-test="dataTest ? `${dataTest}-clear-all` : undefined"
 			:isDisabled="isClearAllDisabled"
 			:isLoading="isLoading"
 			:label="translations.clearAllLabel"
@@ -25,6 +27,7 @@ import { KottiFilters } from '../types'
 import ButtonLink from './ButtonLink.vue'
 
 export default defineComponent<{
+	dataTest: string | null
 	isAddDisabled: boolean
 	isClearAllDisabled: boolean
 	isLoading: boolean
@@ -34,6 +37,10 @@ export default defineComponent<{
 		ButtonLink,
 	},
 	props: {
+		dataTest: {
+			default: null,
+			type: String,
+		},
 		isAddDisabled: {
 			default: false,
 			type: Boolean,

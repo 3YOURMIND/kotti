@@ -1,6 +1,7 @@
 <template>
 	<KtFieldText
 		class="kt-filter__search"
+		:data-test="dataTest ? `${dataTest}-search-input` : undefined"
 		hideValidation
 		:isLoading="isLoading"
 		:leftIcon="Yoco.Icon.SEARCH"
@@ -22,6 +23,7 @@ import { getSearchFilterInitialState } from '../utils'
 
 export default defineComponent<{
 	column: KottiFilters.Column.Search
+	dataTest: string | null
 	filter: KottiFilters.Filter | null
 	isLoading: boolean
 }>({
@@ -33,6 +35,10 @@ export default defineComponent<{
 		column: {
 			required: true,
 			type: Object,
+		},
+		dataTest: {
+			default: null,
+			type: String,
 		},
 		filter: {
 			default: null,
