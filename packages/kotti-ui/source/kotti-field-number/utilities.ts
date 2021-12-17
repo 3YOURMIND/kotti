@@ -1,9 +1,10 @@
 import Big from 'big.js'
 
+import { DecimalSeparator } from '../types/kotti'
+
 import {
 	STRINGS_THAT_ARE_TREATED_AS_NULL,
-	DECIMAL_SEPARATOR,
-	DECIMAL_PLACES,
+	DECIMAL_SEPARATORS_CHARACTER_SET,
 	TRAILING_ZEROES_REGEX,
 } from './constants'
 import { KottiFieldNumber } from './types'
@@ -54,12 +55,19 @@ export const isStepMultiple = ({
 export const toNumber = (string: string) =>
 	STRINGS_THAT_ARE_TREATED_AS_NULL.includes(string)
 		? null
-		: parseFloat(string.replace(DECIMAL_SEPARATOR, '.'))
+		: Number.parseFloat(
+				// `.` is the only accepted decimal place by parseFloat
+				string.replace(new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET), '.'),
+		  )
 
-export const toString = (number: number | null) =>
+export const toString = (
+	number: number | null,
+	decimalPlaces: number,
+	decimalSeparator: DecimalSeparator,
+) =>
 	number === null
 		? ''
 		: number
-				.toFixed(DECIMAL_PLACES)
-				.replace('.', DECIMAL_SEPARATOR)
+				.toFixed(decimalPlaces)
+				.replace('.', decimalSeparator)
 				.replace(TRAILING_ZEROES_REGEX, '$1')

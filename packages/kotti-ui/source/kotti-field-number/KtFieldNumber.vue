@@ -47,14 +47,23 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, computed, ref, watch } from '@vue/composition-api'
+import {
+	defineComponent,
+	computed,
+	ref,
+	watch,
+	UnwrapRef,
+} from '@vue/composition-api'
 import Big from 'big.js'
 
 import { KtField } from '../kotti-field'
 import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { useI18nContext } from '../kotti-i18n/hooks'
+import { KottiI18n } from '../kotti-i18n/types'
 
 import {
+	DECIMAL_SEPARATORS_CHARACTER_SET,
 	KOTTI_FIELD_NUMBER_PROPS,
 	KOTTI_FIELD_NUMBER_SUPPORTS,
 	LEADING_ZEROES_REGEX,
@@ -87,6 +96,8 @@ export default defineComponent({
 		})
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
+
+		const i18nContext = useI18nContext()
 
 		const isDecrementEnabled = computed(
 			() =>
@@ -121,9 +132,16 @@ export default defineComponent({
 		)
 
 		watch(
-			() => field.currentValue,
-			(newNumber, oldNumber) => {
-				const newString = toString(newNumber)
+			(): [
+				KottiFieldNumber.Value,
+				UnwrapRef<KottiI18n.Context['numberFormat']>['decimalSeparator'],
+			] => [field.currentValue, i18nContext.numberFormat.decimalSeparator],
+			([newNumber]) => {
+				const newString = toString(
+					newNumber,
+					props.decimalPlaces,
+					i18nContext.numberFormat.decimalSeparator,
+				)
 				const truncatedNumber = toNumber(newString)
 
 				if (
@@ -148,8 +166,7 @@ export default defineComponent({
 						`KtFieldNumber: encountered a value "${newNumber}" that doesn't fit ((minimum + k * step): where k is an integer)`,
 					)
 
-				const shouldUpdate = oldNumber !== truncatedNumber
-				if (shouldUpdate) internalStringValue.value = newString
+				internalStringValue.value = newString
 			},
 			{ immediate: true },
 		)
@@ -206,7 +223,11 @@ export default defineComponent({
 			},
 			field,
 			handleBlur() {
-				internalStringValue.value = toString(field.currentValue)
+				internalStringValue.value = toString(
+					field.currentValue,
+					props.decimalPlaces,
+					i18nContext.numberFormat.decimalSeparator,
+				)
 			},
 			incrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isIncrementEnabled.value,
@@ -254,7 +275,7 @@ export default defineComponent({
 				const nextNumber = toNumber(valueWithoutLeadingZeroes)
 
 				const isTypedNumberValid =
-					VALID_REGEX.test(valueWithoutLeadingZeroes) &&
+					VALID_REGEX(props.decimalPlaces).test(valueWithoutLeadingZeroes) &&
 					isStepMultiple({
 						minimum,
 						step,
@@ -268,8 +289,17 @@ export default defineComponent({
 
 				if (isTypedNumberValid) {
 					const shouldEmit = nextNumber !== field.currentValue
+
 					if (shouldEmit) field.setValue(nextNumber)
-					else internalStringValue.value = valueWithoutLeadingZeroes
+					else {
+						// we parse all possible decimal places into the one supported by the translation context
+						const valueWithSupportedDecimalPlace =
+							valueWithoutLeadingZeroes.replace(
+								new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET),
+								i18nContext.numberFormat.decimalSeparator,
+							)
+						internalStringValue.value = valueWithSupportedDecimalPlace
+					}
 				}
 
 				forceUpdate()

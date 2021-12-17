@@ -2,7 +2,10 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
-		<KtI18nContext :locale="settings.locale">
+		<KtI18nContext
+			:locale="settings.locale"
+			:numberFormat="{ decimalSeparator: settings.decimalSeparator }"
+		>
 			<div class="overview">
 				<div class="overview__component">
 					<h4>Component</h4>
@@ -52,6 +55,14 @@
 							hideClear
 							label="Component"
 							:options="componentOptions"
+						/>
+						<KtFieldSingleSelect
+							formKey="decimalSeparator"
+							helpText="Can be set via KtI18nContext"
+							hideClear
+							label="Decimal Separator"
+							leftIcon="csv"
+							:options="decimalSeparatorOptions"
 						/>
 						<KtFieldSingleSelect
 							formKey="locale"
@@ -195,19 +206,29 @@
 									label="hideMaximum"
 									type="switch"
 								/>
-								<KtFieldNumber formKey="step" isOptional label="step" />
+								<KtFieldNumber formKey="numberStep" isOptional label="step" />
 							</div>
-							<KtFieldToggle
+							<div
 								v-if="
 									componentDefinition.additionalProps.includes(
-										'hideChangeButtons',
+										'numberHideChangeButtons',
 									)
 								"
-								formKey="hideChangeButtons"
-								isOptional
-								label="hideChangeButtons"
-								type="switch"
-							/>
+								class="field-row"
+							>
+								<KtFieldToggle
+									formKey="numberHideChangeButtons"
+									isOptional
+									label="hideChangeButtons"
+									type="switch"
+								/>
+								<KtFieldNumber
+									formKey="numberDecimalPlaces"
+									isOptional
+									label="decimalPlaces"
+									:minimum="0"
+								/>
+							</div>
 							<KtFieldToggle
 								v-if="componentDefinition.additionalProps.includes('isInline')"
 								formKey="isInline"
@@ -462,11 +483,12 @@ const components: Array<{
 	},
 	{
 		additionalProps: [
-			'hideChangeButtons',
+			'numberDecimalPlaces',
+			'numberHideChangeButtons',
 			'numberHideMaximum',
 			'numberMaximum',
 			'numberMinimum',
-			'step',
+			'numberStep',
 		],
 		formKey: 'numberValue',
 		name: 'KtFieldNumber',
@@ -616,16 +638,17 @@ export default defineComponent({
 				actions: Kotti.FieldToggle.Value
 				autoComplete: 'current-password' | 'new-password'
 				collapseTagsAfter: Kotti.FieldNumber.Value
-				hideChangeButtons: boolean
 				isInline: boolean
 				isLoadingOptions: boolean
 				maximumDate: Kotti.FieldDate.Value
 				maximumSelectable: Kotti.FieldNumber.Value
 				minimumDate: Kotti.FieldDate.Value
+				numberDecimalPlaces: Kotti.FieldNumber.Value
+				numberHideChangeButtons: boolean
 				numberHideMaximum: boolean
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
-				step: Kotti.FieldNumber.Value
+				numberStep: Kotti.FieldNumber.Value
 				toggleType: 'checkbox' | 'switch'
 			}
 			booleanFlags: {
@@ -636,6 +659,7 @@ export default defineComponent({
 				isOptional: Kotti.FieldToggle.Value
 			}
 			component: ComponentNames
+			decimalSeparator: Kotti.DecimalSeparator
 			formId: Kotti.FieldText.Value
 			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
@@ -655,16 +679,17 @@ export default defineComponent({
 				actions: false,
 				autoComplete: 'current-password',
 				collapseTagsAfter: null,
-				hideChangeButtons: false,
 				isInline: false,
 				isLoadingOptions: false,
 				maximumDate: null,
 				maximumSelectable: null,
 				minimumDate: null,
+				numberDecimalPlaces: null,
+				numberHideChangeButtons: false,
 				numberHideMaximum: false,
 				numberMaximum: null,
 				numberMinimum: null,
-				step: null,
+				numberStep: null,
 				toggleType: 'checkbox',
 			},
 			booleanFlags: {
@@ -675,6 +700,7 @@ export default defineComponent({
 				isOptional: true,
 			},
 			component: 'KtFieldText',
+			decimalSeparator: Kotti.DecimalSeparator.DOT,
 			hasHelpTextSlot: false,
 			helpDescription: null,
 			helpText: null,
@@ -764,6 +790,26 @@ export default defineComponent({
 				})
 
 			if (
+				componentDefinition.value.additionalProps.includes(
+					'numberDecimalPlaces',
+				) &&
+				settings.value.additionalProps.numberDecimalPlaces !== null
+			)
+				Object.assign(additionalProps, {
+					decimalPlaces: settings.value.additionalProps.numberDecimalPlaces,
+				})
+
+			if (
+				componentDefinition.value.additionalProps.includes(
+					'numberHideChangeButtons',
+				)
+			)
+				Object.assign(additionalProps, {
+					hideChangeButtons:
+						settings.value.additionalProps.numberHideChangeButtons,
+				})
+
+			if (
 				componentDefinition.value.additionalProps.includes('numberHideMaximum')
 			)
 				Object.assign(additionalProps, {
@@ -781,11 +827,11 @@ export default defineComponent({
 				})
 
 			if (
-				componentDefinition.value.additionalProps.includes('step') &&
-				settings.value.additionalProps.step !== null
+				componentDefinition.value.additionalProps.includes('numberStep') &&
+				settings.value.additionalProps.numberStep !== null
 			)
 				Object.assign(additionalProps, {
-					step: settings.value.additionalProps.step,
+					step: settings.value.additionalProps.numberStep,
 				})
 
 			if (componentDefinition.value.additionalProps.includes('isInline'))
@@ -825,13 +871,6 @@ export default defineComponent({
 			)
 				Object.assign(additionalProps, {
 					collapseTagsAfter: settings.value.additionalProps.collapseTagsAfter,
-				})
-
-			if (
-				componentDefinition.value.additionalProps.includes('hideChangeButtons')
-			)
-				Object.assign(additionalProps, {
-					hideChangeButtons: settings.value.additionalProps.hideChangeButtons,
 				})
 
 			if (
@@ -944,6 +983,12 @@ export default defineComponent({
 					...componentValue.value,
 					code: generateComponentCode(componentValue.value),
 					validator: createValidator(componentValue.value.validation),
+				}),
+			),
+			decimalSeparatorOptions: Object.entries(Kotti.DecimalSeparator).map(
+				([key, value]) => ({
+					label: `Kotti.DecimalSeparator.${key}`,
+					value,
 				}),
 			),
 			isRangeComponent,

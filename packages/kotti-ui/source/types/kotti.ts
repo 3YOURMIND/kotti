@@ -48,6 +48,15 @@ export { KottiPopover as Popover } from '../kotti-popover/types'
 export { KottiRow as Row } from '../kotti-row/types'
 export { KottiUserMenu as UserMenu } from '../kotti-user-menu/types'
 
+/**
+ * @see {@link https://en.wikipedia.org/wiki/Decimal_separator#/media/File:DecimalSeparator.svg}
+ */
+export enum DecimalSeparator {
+	ARABIC_COMMA = '٫',
+	COMMA = ',',
+	DOT = '.',
+}
+
 export enum MetaDesignType {
 	FIGMA = 'FIGMA',
 }
