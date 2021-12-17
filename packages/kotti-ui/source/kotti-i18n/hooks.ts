@@ -104,6 +104,13 @@ export const useI18nProvide = (
 		messages: computed(() =>
 			fixDeepMerge<KottiI18n.Messages>(defaultMessages.value, messages.value),
 		),
-		numberFormat,
+		numberFormat: computed(() =>
+			fixDeepMerge<KottiI18n.NumberFormat>(
+				{
+					decimalSeparator: DecimalSeparator.DOT,
+				},
+				numberFormat.value,
+			),
+		),
 	})
 }

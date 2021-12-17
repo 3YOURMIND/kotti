@@ -37,7 +37,7 @@ export namespace KottiI18n {
 	export type Props = {
 		locale: SupportedLanguages
 		messages: DeepPartial<Messages>
-		numberFormat: NumberFormat
+		numberFormat: DeepPartial<NumberFormat>
 	}
 
 	/**
