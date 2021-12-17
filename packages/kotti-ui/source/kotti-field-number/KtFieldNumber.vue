@@ -293,12 +293,12 @@ export default defineComponent({
 					if (shouldEmit) field.setValue(nextNumber)
 					else {
 						// we parse all possible decimal places into the one supported by the translation context
-						const valueWithNumericalDecimalPlace =
+						const valueWithSupportedDecimalPlace =
 							valueWithoutLeadingZeroes.replace(
 								new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET),
 								i18nContext.numberFormat.decimalSeparator,
 							)
-						internalStringValue.value = valueWithNumericalDecimalPlace
+						internalStringValue.value = valueWithSupportedDecimalPlace
 					}
 				}
 

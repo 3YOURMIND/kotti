@@ -55,7 +55,8 @@ export const isStepMultiple = ({
 export const toNumber = (string: string) =>
 	STRINGS_THAT_ARE_TREATED_AS_NULL.includes(string)
 		? null
-		: parseFloat(
+		: Number.parseFloat(
+				// `.` is the only accepted decimal place by parseFloat
 				string.replace(new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET), '.'),
 		  )
 
