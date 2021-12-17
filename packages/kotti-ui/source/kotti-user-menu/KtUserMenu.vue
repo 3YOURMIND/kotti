@@ -79,7 +79,7 @@ export default defineComponent<KottiUserMenu.PropsInternal>({
 			isMenuShow,
 			isNarrow,
 			parsedSections: computed(() =>
-				KottiUserMenu.propsSchema.shape.sections.parse(props.sections),
+				KottiUserMenu.propsSchema.shape.sections.safeParse(props.sections),
 			),
 			userInfoClass: computed(() => ({
 				'kt-user-menu__info': true,

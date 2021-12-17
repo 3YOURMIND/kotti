@@ -100,7 +100,7 @@ import {
 	Ref,
 } from '@vue/composition-api'
 import dayjs from 'dayjs'
-import { cloneDeep } from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 import marked from 'marked'
 import naturalSort from 'natural-sort'
 

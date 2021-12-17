@@ -45,7 +45,7 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { computed, defineComponent, ref, watch } from '@vue/composition-api'
-import { castArray } from 'lodash'
+import castArray from 'lodash/castArray'
 import { roundArrow } from 'tippy.js'
 
 import { KtField } from '../kotti-field'

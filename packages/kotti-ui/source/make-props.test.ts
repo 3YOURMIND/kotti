@@ -1,5 +1,6 @@
 import { PropOptions } from '@vue/composition-api'
-import { castArray, isEqual } from 'lodash'
+import castArray from 'lodash/castArray'
+import isEqual from 'lodash/isEqual'
 import { PropType } from 'vue'
 import { z } from 'zod'
 

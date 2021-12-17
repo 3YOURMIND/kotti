@@ -1,5 +1,5 @@
 import { PropOptions, PropType } from '@vue/composition-api'
-import { cloneDeep } from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 import { z } from 'zod'
 
 const DEBUG_MAKE_PROPS = false as const // enable to print debug log
