@@ -126,6 +126,15 @@ export default defineComponent({
 		)
 
 		const internalStringValue = ref('')
+		const lastValidTypedStringValue = ref('')
+		const forceUpdateDisplayedValue = (newNumber: number | null) => {
+			internalStringValue.value = toString(
+				newNumber,
+				props.decimalPlaces,
+				i18nContext.numberFormat.decimalSeparator,
+			)
+			lastValidTypedStringValue.value = ''
+		}
 
 		const showMaximum = computed(
 			() => props.maximum !== null && !props.hideMaximum,
@@ -137,18 +146,11 @@ export default defineComponent({
 				UnwrapRef<KottiI18n.Context['numberFormat']>['decimalSeparator'],
 			] => [field.currentValue, i18nContext.numberFormat.decimalSeparator],
 			([newNumber]) => {
-				const newString = toString(
-					newNumber,
-					props.decimalPlaces,
-					i18nContext.numberFormat.decimalSeparator,
-				)
-				const truncatedNumber = toNumber(newString)
-
 				if (
 					!isInRange({
 						maximum: props.maximum,
 						minimum: props.minimum,
-						value: truncatedNumber,
+						value: newNumber,
 					})
 				)
 					throw new RangeError(
@@ -159,14 +161,18 @@ export default defineComponent({
 					!isStepMultiple({
 						minimum: props.minimum,
 						step: props.step,
-						value: truncatedNumber,
+						value: newNumber,
 					})
 				)
 					throw new Error(
 						`KtFieldNumber: encountered a value "${newNumber}" that doesn't fit ((minimum + k * step): where k is an integer)`,
 					)
 
-				internalStringValue.value = newString
+				if (toNumber(lastValidTypedStringValue.value) === newNumber) {
+					internalStringValue.value = lastValidTypedStringValue.value
+				} else {
+					forceUpdateDisplayedValue(newNumber)
+				}
 			},
 			{ immediate: true },
 		)
@@ -210,7 +216,7 @@ export default defineComponent({
 			decrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
 			})),
-			decrementValue() {
+			decrementValue: () => {
 				if (!isDecrementEnabled.value) return
 
 				field.setValue(
@@ -222,17 +228,11 @@ export default defineComponent({
 				)
 			},
 			field,
-			handleBlur() {
-				internalStringValue.value = toString(
-					field.currentValue,
-					props.decimalPlaces,
-					i18nContext.numberFormat.decimalSeparator,
-				)
-			},
+			handleBlur: () => forceUpdateDisplayedValue(field.currentValue),
 			incrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isIncrementEnabled.value,
 			})),
-			incrementValue() {
+			incrementValue: () => {
 				if (!isIncrementEnabled.value) return
 
 				field.setValue(
@@ -263,7 +263,7 @@ export default defineComponent({
 					value: internalStringValue.value,
 				}),
 			),
-			onInput(value: string) {
+			onInput: (value: string) => {
 				lastUserSetCursorPosition.value = input.value?.selectionStart ?? null
 
 				const { maximum, minimum, step } = props
@@ -288,18 +288,25 @@ export default defineComponent({
 					})
 
 				if (isTypedNumberValid) {
+					/**
+					 * Replace all decimal places with the one provided by KtI18nContext
+					 **/
+					const valueWithSupportedDecimalPlace =
+						valueWithoutLeadingZeroes.replace(
+							new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET),
+							i18nContext.numberFormat.decimalSeparator,
+						)
+
+					/**
+					 * Preserve exact user input in case it’s possible to apply later
+					 * E.g. when changing `1.01` to `1.0`, so that it doesn’t change to `1`
+					 */
+					lastValidTypedStringValue.value = valueWithSupportedDecimalPlace
+
 					const shouldEmit = nextNumber !== field.currentValue
 
 					if (shouldEmit) field.setValue(nextNumber)
-					else {
-						// we parse all possible decimal places into the one supported by the translation context
-						const valueWithSupportedDecimalPlace =
-							valueWithoutLeadingZeroes.replace(
-								new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET),
-								i18nContext.numberFormat.decimalSeparator,
-							)
-						internalStringValue.value = valueWithSupportedDecimalPlace
-					}
+					else internalStringValue.value = valueWithSupportedDecimalPlace
 				}
 
 				forceUpdate()
