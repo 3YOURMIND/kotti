@@ -2,7 +2,7 @@ import { KottiField } from '../kotti-field/types'
 
 export namespace Shared {
 	export interface Props<VALUE, PLACEHOLDER_TYPE = string | null>
-		extends KottiField.Props<VALUE, PLACEHOLDER_TYPE> {
+		extends KottiField.Props {
 		maximumDate: string | null
 		minimumDate: string | null
 		shortcuts: ShortcutEntry<VALUE>[]

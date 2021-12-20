@@ -19,7 +19,7 @@ import { KottiField } from './types'
 const TestComponent = defineComponent({
 	name: 'TestComponent',
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
+	setup: (props: KottiField.Props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
@@ -44,10 +44,7 @@ const TestComponent = defineComponent({
 const TestComponentObject = defineComponent({
 	name: 'TestComponentObject',
 	props: KOTTI_FIELD_PROPS,
-	setup: (
-		props: KottiField.Props<Record<string, unknown> | null, string | null>,
-		{ emit },
-	) => {
+	setup: (props: KottiField.Props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {

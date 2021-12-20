@@ -17,7 +17,7 @@ const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
+	setup: (props: KottiField.Props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {

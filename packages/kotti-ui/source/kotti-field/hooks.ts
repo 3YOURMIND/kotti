@@ -68,9 +68,7 @@ const useInputProps = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	}
 }
 
-const useTexts = <DATA_TYPE, PLACEHOLDER_TYPE>(
-	props: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>,
-) => {
+const useTexts = <DATA_TYPE, PLACEHOLDER_TYPE>(props: KottiField.Props) => {
 	return {
 		helpDescription: computed(() => props.helpDescription),
 		helpText: computed(() => props.helpText),
@@ -297,7 +295,7 @@ const useSupports = <DATA_TYPE, PLACEHOLDER_TYPE>({
 >) => {
 	watchEffect(() => {
 		type Key = keyof KottiField.Supports
-		type Value = Array<keyof KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>>
+		type Value = Array<keyof KottiField.Props>
 
 		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
 			clear: ['hideClear'],

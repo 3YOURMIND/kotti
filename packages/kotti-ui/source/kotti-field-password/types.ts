@@ -1,7 +1,7 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldPassword {
-	export type Props = KottiField.Props<Value, string | null> & {
+	export type Props = KottiField.Props & {
 		autoComplete: 'current-password' | 'new-password'
 	}
 

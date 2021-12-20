@@ -1,7 +1,7 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldNumber {
-	export type Props = KottiField.Props<Value, string | null> & {
+	export type Props = KottiField.Props & {
 		decimalPlaces: number
 		hideChangeButtons: boolean
 		hideMaximum: boolean

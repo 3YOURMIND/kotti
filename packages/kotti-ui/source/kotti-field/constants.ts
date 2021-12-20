@@ -42,4 +42,4 @@ export const KOTTI_FIELD_PROPS = {
 /**
  * Explicitly opt-out of using formKey within a KtFormContext
  */
-export const FORM_KEY_NONE = 'NONE'
+export const FORM_KEY_NONE = 'NONE' as const

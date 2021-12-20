@@ -1,7 +1,7 @@
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldToggle {
-	export type Props = KottiField.Props<Value, never> & {
+	export type Props = KottiField.Props & {
 		type: 'checkbox' | 'switch'
 	}
 
@@ -16,7 +16,7 @@ export namespace KottiFieldToggleGroup {
 		tooltip?: string
 	}
 
-	export type Props = KottiField.Props<Value, never> & {
+	export type Props = KottiField.Props & {
 		isInline: boolean
 		options: Entry[]
 		type: 'checkbox' | 'switch'

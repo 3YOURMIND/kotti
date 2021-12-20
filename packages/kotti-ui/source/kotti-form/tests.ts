@@ -16,7 +16,7 @@ const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
+	setup: (props: KottiField.Props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
@@ -42,13 +42,7 @@ const TestFieldObject = defineComponent({
 	name: 'TestFieldObject',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (
-		props: KottiField.Props<
-			Record<string, unknown> | string | null,
-			string | null
-		>,
-		{ emit },
-	) => {
+	setup: (props: KottiField.Props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
