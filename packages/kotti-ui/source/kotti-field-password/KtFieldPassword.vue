@@ -32,7 +32,7 @@ export default defineComponent({
 		value: { default: null, type: String },
 	},
 	setup(props: KottiFieldPassword.Props, { emit }) {
-		const field = useField<KottiFieldPassword.Value, string | null>({
+		const field = useField<KottiFieldPassword.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldPassword.Value =>
 				typeof value === 'string' || value === null,

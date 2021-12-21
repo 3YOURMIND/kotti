@@ -43,7 +43,7 @@ export default defineComponent({
 	},
 	setup(props: KottiForm.Props, { emit }) {
 		const currentFieldsWrapper = reactive<{
-			currentFields: KottiField.Hook.Returns<unknown, unknown>[]
+			currentFields: KottiField.Hook.Returns<unknown>[]
 		}>({ currentFields: [] })
 
 		const values = computed(() => cloneDeep(props.value))

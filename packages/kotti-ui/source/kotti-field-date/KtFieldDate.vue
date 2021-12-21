@@ -42,7 +42,7 @@ export default defineComponent({
 		...KOTTI_FIELD_DATE_PROPS,
 	},
 	setup(props: KottiFieldDate.Props, { emit }) {
-		const field = useField<KottiFieldDate.Value, string | null>({
+		const field = useField<KottiFieldDate.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldDate.Value =>
 				(typeof value === 'string' && DATE_FORMAT_REGEX.test(value)) ||

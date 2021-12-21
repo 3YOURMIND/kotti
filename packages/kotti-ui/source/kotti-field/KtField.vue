@@ -105,7 +105,7 @@ import FieldHelpText from './components/FieldHelpText.vue'
 import { KottiField } from './types'
 
 export default defineComponent<{
-	field: KottiField.Hook.Returns<unknown, unknown>
+	field: KottiField.Hook.Returns<unknown>
 	helpTextSlot: VNode[]
 	isComponent: string | null
 	isGroup: boolean

@@ -25,7 +25,7 @@ export default defineComponent<KottiFieldText.PropsInternal>({
 	},
 	props: makeProps(KottiFieldText.propsSchema),
 	setup(props, { emit }) {
-		const field = useField<KottiFieldText.Value, string | null>({
+		const field = useField<KottiFieldText.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldText.Value =>
 				typeof value === 'string' || value === null,

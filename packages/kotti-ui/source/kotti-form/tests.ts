@@ -79,10 +79,7 @@ const TestForm2 = {
 const getField = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
-): KottiField.Hook.Returns<
-	string | Record<string, unknown> | null,
-	string | null
-> =>
+): KottiField.Hook.Returns<string | Record<string, unknown> | null> =>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(wrapper.vm.$children[0].$children[0] as any).field
 

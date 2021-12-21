@@ -48,7 +48,7 @@ export namespace KottiField {
 	}
 
 	export namespace Hook {
-		export interface Parameters<DATA_TYPE, PLACEHOLDER_TYPE> {
+		export interface Parameters<DATA_TYPE> {
 			emit: SetupContext['emit']
 
 			/**
@@ -65,7 +65,7 @@ export namespace KottiField {
 			supports: KottiField.Supports
 		}
 
-		export type Returns<DATA_TYPE, PLACEHOLDER_TYPE> = Pick<
+		export type Returns<DATA_TYPE> = Pick<
 			KottiField.Props,
 			| 'helpDescription'
 			| 'helpText'
@@ -95,10 +95,8 @@ export namespace KottiField {
 			validation: Readonly<KottiField.Validation.Result>
 		}
 
-		export type ReturnsWithRefs<DATA_TYPE, PLACEHOLDER_TYPE> = {
-			[KEY in keyof Returns<DATA_TYPE, PLACEHOLDER_TYPE>]: Ref<
-				Returns<DATA_TYPE, PLACEHOLDER_TYPE>[KEY]
-			>
+		export type ReturnsWithRefs<DATA_TYPE> = {
+			[KEY in keyof Returns<DATA_TYPE>]: Ref<Returns<DATA_TYPE>[KEY]>
 		}
 	}
 

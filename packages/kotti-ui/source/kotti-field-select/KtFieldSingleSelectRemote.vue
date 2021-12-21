@@ -105,7 +105,7 @@ export default defineComponent({
 		value: { default: null, type: [Number, String, Boolean] },
 	},
 	setup(props: KottiFieldSingleSelectRemote.Props, { emit }) {
-		const field = useField<KottiFieldSingleSelectRemote.Value, string | null>({
+		const field = useField<KottiFieldSingleSelectRemote.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldSingleSelectRemote.Value =>
 				['boolean', 'number', 'string', 'symbol'].includes(typeof value) ||

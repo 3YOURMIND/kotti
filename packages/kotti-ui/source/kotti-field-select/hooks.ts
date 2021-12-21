@@ -14,7 +14,7 @@ export type ElSelectWithInternalAPI = ElSelect & {
 
 type HookParameters<DATA_TYPE extends Values> = {
 	elSelectRef: Ref<ElSelectWithInternalAPI | null>
-	field: KottiField.Hook.Returns<DATA_TYPE, string | null>
+	field: KottiField.Hook.Returns<DATA_TYPE>
 	inputSelectors: string[]
 	ktFieldRef: Ref<Vue | null>
 }
