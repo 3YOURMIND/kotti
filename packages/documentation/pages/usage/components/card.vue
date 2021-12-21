@@ -53,6 +53,9 @@ The Card component has slots for the `card-header`, `card-body`, and `card-foote
 						Phasellus consequat nisl at nisl condimentum vehicula.
 					</p>
 				</div>
+				<div slot="card-footer">
+					This is the end
+				</div>
 			</KtCard>
 		</KtCol>
 		<KtCol :span="8">
@@ -108,15 +111,6 @@ The `imgUrl` property defines the image’s `url`.
 	<div slot="card-footer">This is the end</div>
 </KtCard>
 ```
-
-## Usage
-
-### Attributes
-
-| Attribute     | Description                  | Type     | Accepted Values                 | Default |
-| :------------ | :--------------------------- | :------- | :------------------------------ | :------ |
-| `imgPosition` | postion of image in the card | `String` | `"top"`, `"middle"`, `"bottom"` | `top`   |
-| `imgUrl`      | url of image                 | `String` | —                               | —       |
 </template>
 
 <script lang="ts">
