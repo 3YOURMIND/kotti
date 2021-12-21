@@ -12,26 +12,17 @@
 import { defineComponent, computed } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { makeProps } from '../make-props'
 
 import { KOTTI_FIELD_PASSWORD_SUPPORTS } from './constants'
 import { KottiFieldPassword } from './types'
 
-export default defineComponent({
+export default defineComponent<KottiFieldPassword.Props>({
 	name: 'KtFieldPassword',
 	components: { KtField },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		autoComplete: {
-			required: true,
-			type: String,
-			validator: (value) =>
-				['current-password', 'new-password'].includes(value),
-		},
-		value: { default: null, type: String },
-	},
-	setup(props: KottiFieldPassword.Props, { emit }) {
+	props: makeProps(KottiFieldPassword.propsSchema),
+	setup(props, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldPassword.Value =>

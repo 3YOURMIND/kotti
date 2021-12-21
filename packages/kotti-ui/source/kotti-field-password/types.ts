@@ -1,9 +1,20 @@
+import { z } from 'zod'
+
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldPassword {
-	export type Props = KottiField.Props & {
-		autoComplete: 'current-password' | 'new-password'
-	}
+	export const valueSchema = z.string().nullable().default(null)
+	export type Value = z.input<typeof valueSchema>
 
-	export type Value = string | null
+	export const propsSchema = KottiField.propsSchema.extend({
+		placeholder: z.string().nullable().default(null),
+		autoComplete: z.union([
+			z.literal('current-password'),
+			z.literal('new-password'),
+		]),
+		value: valueSchema,
+	})
+
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }
