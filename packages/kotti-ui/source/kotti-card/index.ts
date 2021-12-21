@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtCardVue from './KtCard.vue'
+import { KottiCard } from './types'
 
 export const KtCard = attachMeta(makeInstallable(KtCardVue), {
 	addedVersion: '0.0.1',
@@ -15,5 +16,8 @@ export const KtCard = attachMeta(makeInstallable(KtCardVue), {
 		'card-footer': { description: null, scope: null },
 		'card-header': { description: null, scope: null },
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Card',
+		schema: KottiCard.propsSchema,
+	},
 })
