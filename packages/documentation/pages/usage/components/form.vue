@@ -71,12 +71,8 @@
 					:validators="validators"
 					@submit="onSubmit"
 				>
-					<KtFieldText
-						formKey="username"
-						label="Username"
-						rightIcon="user"
-						validatorKey="username"
-					/>
+					<!-- `validators` prop on KtForm relies on formKey of this field (`username`) -->
+					<KtFieldText formKey="username" label="Username" rightIcon="user" />
 					<br />
 					<ComponentInfo :component="KtFormControllerObject" />
 					<h2>Personal Details</h2>

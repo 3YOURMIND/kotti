@@ -164,18 +164,6 @@ const useValidation = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	}) => {
 	const translations = useTranslationNamespace('KtFields')
 
-	watch(
-		() => props.validatorKey,
-		(newValidatorKey) => {
-			if (context === null && newValidatorKey !== null)
-				throw new KtFieldErrors.InvalidPropOutsideOfContext(
-					props,
-					'validatorKey',
-				)
-		},
-		{ immediate: true },
-	)
-
 	const isMissingRequiredField = computed(
 		(): boolean => !props.isOptional && isEmpty.value,
 	)
@@ -187,20 +175,7 @@ const useValidation = <DATA_TYPE, PLACEHOLDER_TYPE>({
 			// eslint-disable-next-line sonarjs/cognitive-complexity
 			(): KottiField.Validation.Result => {
 				const customValidation = (() => {
-					if (props.validatorKey && props.validator)
-						throw new KtFieldErrors.NonDeterministicValidatorUsage(props)
-
 					if (context) {
-						if (props.validatorKey) {
-							if (!(props.validatorKey in context.validators.value))
-								throw new KtFieldErrors.ValidatorNotFound(props)
-
-							return context.validators.value[props.validatorKey](
-								currentValue.value,
-							)
-						}
-
-						// if no validatorKey is defined, we should try to fall-back to using the formKey
 						if (
 							props.formKey !== null &&
 							props.formKey !== FORM_KEY_NONE &&
@@ -208,12 +183,6 @@ const useValidation = <DATA_TYPE, PLACEHOLDER_TYPE>({
 						)
 							return context.validators.value[props.formKey](currentValue.value)
 					} else {
-						if (props.validatorKey)
-							throw new KtFieldErrors.InvalidPropOutsideOfContext(
-								props,
-								'validatorKey',
-							)
-
 						if (props.formKey)
 							throw new KtFieldErrors.InvalidPropOutsideOfContext(
 								props,
@@ -221,13 +190,7 @@ const useValidation = <DATA_TYPE, PLACEHOLDER_TYPE>({
 							)
 					}
 
-					/**
-					 * Return default validator result here because without a validator, everything will always
-					 * default to being valid
-					 */
-					return props.validator
-						? props.validator(currentValue.value)
-						: { type: 'empty' as const }
+					return props.validator(currentValue.value)
 				})()
 
 				return isMissingRequiredField.value

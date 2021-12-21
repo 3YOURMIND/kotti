@@ -194,13 +194,12 @@ export namespace KottiField {
 
 		tabIndex: z.number().default(0),
 
-		validator: KottiField.Validation.functionSchema.nullable().default(null),
-
 		/**
-		 * @default props.formKey
-		 * Explicitly overwrite the used validator in case it differs from the formKey
+		 * Without a validator, everything will always default to being valid
 		 */
-		validatorKey: z.string().nullable().default(null),
+		validator: KottiField.Validation.functionSchema.default(() => ({
+			type: 'empty',
+		})),
 
 		// TODO: make sure to extend it on all fields
 		/**

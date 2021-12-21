@@ -42,30 +42,6 @@ class DisabledSetValueCalled extends CustomError {
 	}
 }
 
-class ValidatorNotFound extends CustomError {
-	public constructor(props: KottiField.Props) {
-		super(
-			createErrorMessage(props, [
-				`validatorKey “${props.validatorKey}” couldn’t be found in the KtFormContext validators.`,
-				'This is most likely a mistake.',
-				'Please either remove the validatorKey or implement it in the KtForm’s validators.',
-			]),
-		)
-	}
-}
-
-class NonDeterministicValidatorUsage extends CustomError {
-	public constructor(props: KottiField.Props) {
-		super(
-			createErrorMessage(props, [
-				`You cannot define a "validatorKey" and a "validator" function at the same time.`,
-				'This would yield multiple possible validation states and is not supported.',
-				'Consider implementing a custom validator that checks multiple conditions instead.',
-			]),
-		)
-	}
-}
-
 class InvalidDataType extends CustomError {
 	public constructor(props: KottiField.Props, newValue: unknown) {
 		super(
@@ -105,7 +81,5 @@ export const KtFieldErrors = {
 	ImplicitFormKeyNone,
 	InvalidDataType,
 	InvalidPropOutsideOfContext,
-	NonDeterministicValidatorUsage,
 	UnsupportedProp,
-	ValidatorNotFound,
 }

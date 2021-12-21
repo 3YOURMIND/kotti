@@ -106,8 +106,6 @@
 								<code>() => ({ type: 'error', message: '' })</code>
 								or via
 								<code>KtForm.validators</code>
-								or via
-								<code>validatorKey</code>
 							</div>
 						</KtFieldSingleSelect>
 						<KtFieldToggleGroup
