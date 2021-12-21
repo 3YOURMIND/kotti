@@ -8,6 +8,7 @@ export { KottiBanner as Banner } from '../kotti-banner/types'
 export { KottiBreadcrumb as Breadcrumb } from '../kotti-breadcrumb/types'
 export { KottiButton as Button } from '../kotti-button/types'
 export { KottiButtonGroup as ButtonGroup } from '../kotti-button-group/types'
+export { KottiCard as Card } from '../kotti-card/types'
 export { KottiCol as Col } from '../kotti-col/types'
 export {
 	KottiComment as Comment,
