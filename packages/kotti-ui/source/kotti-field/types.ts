@@ -81,7 +81,7 @@ export namespace KottiField {
 			| 'rightIcon'
 			| 'suffix'
 		> & {
-			currentValue: KottiField.Props['value']
+			currentValue: DATA_TYPE
 			inputProps: Readonly<{
 				/**
 				 * Native HTML Props should have lowercase keys
