@@ -1,9 +1,17 @@
+import { z } from 'zod'
+
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldTextArea {
-	export type Props = KottiField.Props & {
-		rows: HTMLTextAreaElement['rows']
-	}
+	export const valueSchema = z.string().nullable().default(null)
+	export type Value = z.output<typeof valueSchema>
 
-	export type Value = string | null
+	export const propsSchema = KottiField.propsSchema.extend({
+		placeholder: z.string().nullable().default(null),
+		// eslint-disable-next-line no-magic-numbers
+		rows: z.number().default(5),
+		value: valueSchema,
+	})
+	export type PropsInternal = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
 }
