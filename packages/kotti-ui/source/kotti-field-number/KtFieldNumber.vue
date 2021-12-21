@@ -57,14 +57,13 @@ import {
 import Big from 'big.js'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import { KottiI18n } from '../kotti-i18n/types'
+import { makeProps } from '../make-props'
 
 import {
 	DECIMAL_SEPARATORS_CHARACTER_SET,
-	KOTTI_FIELD_NUMBER_PROPS,
 	KOTTI_FIELD_NUMBER_SUPPORTS,
 	LEADING_ZEROES_REGEX,
 	VALID_REGEX,
@@ -78,14 +77,11 @@ import {
 	toString,
 } from './utilities'
 
-export default defineComponent({
+export default defineComponent<KottiFieldNumber.Props>({
 	name: 'KtFieldNumber',
 	components: { KtField },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_NUMBER_PROPS,
-	},
-	setup(props: KottiFieldNumber.Props, { emit, root }) {
+	props: makeProps(KottiFieldNumber.propsSchema),
+	setup(props, { emit, root }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldNumber.Value =>
