@@ -34,7 +34,12 @@ export const KOTTI_FIELD_PROPS = {
 	rightIcon: { default: null, type: String, validator: isYocoIcon },
 	suffix: { default: null, type: String },
 	tabIndex: { default: 0, type: Number },
-	validator: { default: null, type: Function },
+	validator: {
+		default: () => ({
+			type: 'empty',
+		}),
+		type: Function,
+	},
 	value: { default: null }, // gets overwritten by implementations
 }
 
