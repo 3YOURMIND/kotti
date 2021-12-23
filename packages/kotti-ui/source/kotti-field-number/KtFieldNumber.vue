@@ -77,7 +77,7 @@ import {
 	toString,
 } from './utilities'
 
-export default defineComponent<KottiFieldNumber.Props>({
+export default defineComponent<KottiFieldNumber.PropsInternal>({
 	name: 'KtFieldNumber',
 	components: { KtField },
 	props: makeProps(KottiFieldNumber.propsSchema),

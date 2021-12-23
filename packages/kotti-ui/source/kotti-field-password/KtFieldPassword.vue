@@ -18,7 +18,7 @@ import { makeProps } from '../make-props'
 import { KOTTI_FIELD_PASSWORD_SUPPORTS } from './constants'
 import { KottiFieldPassword } from './types'
 
-export default defineComponent<KottiFieldPassword.Props>({
+export default defineComponent<KottiFieldPassword.PropsInternal>({
 	name: 'KtFieldPassword',
 	components: { KtField },
 	props: makeProps(KottiFieldPassword.propsSchema),
