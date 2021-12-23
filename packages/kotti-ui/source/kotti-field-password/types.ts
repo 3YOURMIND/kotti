@@ -4,7 +4,7 @@ import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldPassword {
 	export const valueSchema = z.string().nullable().default(null)
-	export type Value = z.input<typeof valueSchema>
+	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = KottiField.propsSchema.extend({
 		placeholder: z.string().nullable().default(null),

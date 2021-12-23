@@ -24,7 +24,7 @@ export const isInRange = ({
 }: {
 	maximum: KottiFieldNumber.PropsInternal['maximum']
 	minimum: KottiFieldNumber.PropsInternal['minimum']
-	value: KottiFieldNumber.ValueInternal
+	value: KottiFieldNumber.Value
 }) => {
 	if (value === null) return true
 

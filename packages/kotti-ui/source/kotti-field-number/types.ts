@@ -4,8 +4,7 @@ import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldNumber {
 	export const valueSchema = z.number().nullable().default(null)
-	export type Value = z.input<typeof valueSchema>
-	export type ValueInternal = z.output<typeof valueSchema>
+	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = KottiField.propsSchema.extend({
 		decimalPlaces: z.number().default(3),
