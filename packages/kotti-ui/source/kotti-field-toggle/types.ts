@@ -1,11 +1,25 @@
+import { z } from 'zod'
+
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldToggle {
-	export type Props = KottiField.Props & {
-		type: 'checkbox' | 'switch'
+	export enum Type {
+		SWITCH = 'switch',
+		CHECKBOX = 'checkbox',
 	}
 
-	export type Value = boolean | null
+	export const valueSchema = z.boolean().nullable().default(null)
+	export type Value = z.output<typeof valueSchema>
+
+	export const propsSchema = KottiField.propsSchema.extend({
+		type: z
+			.union([z.literal(Type.SWITCH), z.literal(Type.CHECKBOX)])
+			.default(z.literal(Type.CHECKBOX).value),
+		value: valueSchema,
+	})
+	export type Props = z.input<typeof propsSchema>
+
+	export type PropsInternal = z.output<typeof propsSchema>
 }
 
 export namespace KottiFieldToggleGroup {
