@@ -23,18 +23,26 @@ export namespace KottiFieldToggle {
 }
 
 export namespace KottiFieldToggleGroup {
-	export type Entry = {
-		isDisabled?: boolean
-		key: keyof Value
-		label: string
-		tooltip?: string
-	}
+	export const valueSchema = z
+		.record(z.boolean().nullable())
+		.nullable()
+		.default(null)
+	export type Value = z.output<typeof valueSchema>
 
-	export type Props = KottiField.Props & {
-		isInline: boolean
-		options: Entry[]
-		type: 'checkbox' | 'switch'
-	}
+	export const entrySchema = z.object({
+		isDisabled: z.boolean().optional(),
+		// equivalent to NonNullable<valueSchema>.keySchema
+		key: valueSchema.removeDefault().unwrap().keySchema,
+		label: z.string(),
+		tooltip: z.string().optional(),
+	})
+	export type Entry = z.output<typeof entrySchema>
 
-	export type Value = Record<string, boolean | null>
+	export const propsSchema = KottiFieldToggle.propsSchema.extend({
+		isInline: z.boolean().default(false),
+		options: z.array(entrySchema),
+		value: valueSchema,
+	})
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }
