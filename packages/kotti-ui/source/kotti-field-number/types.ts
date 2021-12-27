@@ -7,6 +7,7 @@ export namespace KottiFieldNumber {
 	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = KottiField.propsSchema.extend({
+		// eslint-disable-next-line no-magic-numbers
 		decimalPlaces: z.number().default(3),
 		hideChangeButtons: z.boolean().default(false),
 		hideMaximum: z.boolean().default(false),
