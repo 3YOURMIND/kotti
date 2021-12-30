@@ -117,6 +117,7 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 		case z.ZodFirstPartyTypeKind.ZodNativeEnum:
 		case z.ZodFirstPartyTypeKind.ZodNumber:
 		case z.ZodFirstPartyTypeKind.ZodObject:
+		case z.ZodFirstPartyTypeKind.ZodRecord:
 		case z.ZodFirstPartyTypeKind.ZodString: {
 			if (DEBUG_WALK_SCHEMA_TYPES)
 				console.log(
@@ -156,6 +157,7 @@ const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
 	[z.ZodFirstPartyTypeKind.ZodNativeEnum, String], // educated guess, can be fixed if the need for non-string enums arises
 	[z.ZodFirstPartyTypeKind.ZodNumber, Number],
 	[z.ZodFirstPartyTypeKind.ZodObject, Object],
+	[z.ZodFirstPartyTypeKind.ZodRecord, Object],
 	[z.ZodFirstPartyTypeKind.ZodString, String],
 ])
 
