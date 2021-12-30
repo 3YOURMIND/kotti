@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
+import { refinementNonEmpty } from '../zod-refinements'
 
 export namespace KottiFieldRadioGroup {
 	export const valueSchema = z
@@ -21,6 +22,7 @@ export namespace KottiFieldRadioGroup {
 		isInline: z.boolean().default(false),
 		options: z
 			.array(entrySchema)
+			.refine(...refinementNonEmpty)
 			.refine(
 				(options) =>
 					new Set(options.map(({ value }) => value)).size === options.length,

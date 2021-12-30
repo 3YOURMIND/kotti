@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
+import { refinementNonEmpty } from '../zod-refinements'
 
 export namespace KottiFieldToggle {
 	export enum Type {
@@ -40,7 +41,14 @@ export namespace KottiFieldToggleGroup {
 
 	export const propsSchema = KottiFieldToggle.propsSchema.extend({
 		isInline: z.boolean().default(false),
-		options: z.array(entrySchema),
+		options: z
+			.array(entrySchema)
+			.refine(...refinementNonEmpty)
+			.refine(
+				(options) =>
+					new Set(options.map(({ key }) => key)).size === options.length,
+				{ message: 'options need to be unique by `key`' },
+			),
 		value: valueSchema,
 	})
 	export type Props = z.input<typeof propsSchema>
