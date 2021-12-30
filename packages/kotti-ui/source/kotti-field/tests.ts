@@ -32,7 +32,6 @@ const TestComponent = defineComponent({
 				supports: {
 					clear: true,
 					decoration: true,
-					placeholder: true,
 					tabIndex: true,
 				},
 			}),
@@ -57,7 +56,6 @@ const TestComponentObject = defineComponent({
 				supports: {
 					clear: true,
 					decoration: true,
-					placeholder: true,
 					tabIndex: true,
 				},
 			}),

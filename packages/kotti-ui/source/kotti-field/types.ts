@@ -163,15 +163,6 @@ export namespace KottiField {
 		 */
 		leftIcon: yocoIconSchema.nullable().default(null),
 
-		// TODO: Make sure to extend it in on all fields,
-		/**
-		 * Shown when no value was entered yet
-		 *
-		 * This is unknown, and specified by each component's schema,
-		 * as KtFieldDateRange needs two placeholders [string | null, string | null]
-		 */
-		placeholder: z.unknown(),
-
 		/**
 		 * Shows a Yoco icon on the right side of the field
 		 */
@@ -223,11 +214,6 @@ export namespace KottiField {
 		 * These aren’t supported on e.g. the KtFieldToggleGroup
 		 */
 		decoration: z.boolean(),
-
-		/**
-		 * Some components don’t have a well-defined place to put placeholders
-		 */
-		placeholder: z.boolean(),
 
 		/**
 		 * Some third-party components do not support passing a custom tabIndex

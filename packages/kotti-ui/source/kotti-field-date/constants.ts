@@ -56,7 +56,6 @@ const KOTTI_FIELD_DATE_SHARED_PROPS = {
 export const KOTTI_FIELD_DATE_SUPPORTS: KottiField.Supports = {
 	clear: true,
 	decoration: false,
-	placeholder: true,
 	tabIndex: false,
 }
 

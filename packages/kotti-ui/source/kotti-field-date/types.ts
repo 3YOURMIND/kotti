@@ -6,6 +6,7 @@ export namespace Shared {
 		maximumDate: string | null
 		minimumDate: string | null
 		shortcuts: ShortcutEntry<VALUE>[]
+		placeholder: PLACEHOLDER_TYPE
 	}
 
 	export type ShortcutEntry<VALUE> = {
