@@ -1,16 +1,10 @@
 import dayjs from 'dayjs'
 
 import { DATE_FORMAT_REGEX, DATE_TIME_FORMAT_REGEX } from './constants'
-import {
-	KottiFieldDate,
-	KottiFieldDateRange,
-	KottiFieldDateTime,
-	KottiFieldDateTimeRange,
-	Shared,
-} from './types'
+import { KottiFieldDateRange, KottiFieldDateTimeRange, Shared } from './types'
 
 export const isInvalidDate = (
-	props: Pick<Shared.Props<unknown>, 'maximumDate' | 'minimumDate'>,
+	props: Pick<Shared.PropsInternal, 'maximumDate' | 'minimumDate'>,
 	date: Date,
 ) => {
 	const { maximumDate, minimumDate } = props
@@ -27,15 +21,15 @@ export const isInvalidDate = (
 export const dateLimitValidator = (
 	value: unknown,
 ): value is
-	| Shared.Props<unknown>['maximumDate']
-	| Shared.Props<unknown>['minimumDate'] =>
+	| Shared.PropsInternal['maximumDate']
+	| Shared.PropsInternal['minimumDate'] =>
 	value === null ||
 	(typeof value === 'string' && dayjs(value).format('YYYY-MM-DD') === value)
 
 export const dateRangeShortcutValidator = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	option: any,
-): option is Shared.Props<KottiFieldDateRange.Value>['shortcuts'][0] =>
+): option is Shared.Range.PropsInternal['shortcuts'][0] =>
 	typeof option === 'object' &&
 	option !== null &&
 	typeof option.label === 'string' &&
@@ -51,7 +45,7 @@ export const dateRangeShortcutValidator = (
 export const dateShortcutValidator = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	option: any,
-): option is Shared.Props<KottiFieldDate.Value>['shortcuts'][0] =>
+): option is Shared.PropsInternal['shortcuts'][0] =>
 	typeof option === 'object' &&
 	option !== null &&
 	typeof option.label === 'string' &&
@@ -62,7 +56,7 @@ export const dateShortcutValidator = (
 export const dateTimeShortcutValidator = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	option: any,
-): option is Shared.Props<KottiFieldDateTime.Value>['shortcuts'][0] =>
+): option is Shared.PropsInternal['shortcuts'][0] =>
 	typeof option === 'object' &&
 	option !== null &&
 	typeof option.label === 'string' &&
@@ -73,7 +67,7 @@ export const dateTimeShortcutValidator = (
 export const dateTimeRangeShortcutValidator = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	option: any,
-): option is Shared.Props<KottiFieldDateTimeRange.Value>['shortcuts'][0] =>
+): option is Shared.Range.PropsInternal['shortcuts'][0] =>
 	typeof option === 'object' &&
 	option !== null &&
 	typeof option.label === 'string' &&

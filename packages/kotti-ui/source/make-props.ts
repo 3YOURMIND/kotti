@@ -118,7 +118,8 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 		case z.ZodFirstPartyTypeKind.ZodNumber:
 		case z.ZodFirstPartyTypeKind.ZodObject:
 		case z.ZodFirstPartyTypeKind.ZodRecord:
-		case z.ZodFirstPartyTypeKind.ZodString: {
+		case z.ZodFirstPartyTypeKind.ZodString:
+		case z.ZodFirstPartyTypeKind.ZodTuple: {
 			if (DEBUG_WALK_SCHEMA_TYPES)
 				console.log(
 					`walkSchemaTypes: adding “ZodFirstPartyTypeKind.${typeName}”`,
@@ -159,6 +160,7 @@ const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
 	[z.ZodFirstPartyTypeKind.ZodObject, Object],
 	[z.ZodFirstPartyTypeKind.ZodRecord, Object],
 	[z.ZodFirstPartyTypeKind.ZodString, String],
+	[z.ZodFirstPartyTypeKind.ZodTuple, Array],
 ])
 
 /**
