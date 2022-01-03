@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 import { DATE_FORMAT_REGEX, DATE_TIME_FORMAT_REGEX } from './constants'
-import { KottiFieldDateRange, KottiFieldDateTimeRange, Shared } from './types'
+import { KottiFieldDateRange, Shared } from './types'
 
 export const isInvalidDate = (
 	props: Pick<Shared.PropsInternal, 'maximumDate' | 'minimumDate'>,
@@ -25,22 +25,6 @@ export const dateLimitValidator = (
 	| Shared.PropsInternal['minimumDate'] =>
 	value === null ||
 	(typeof value === 'string' && dayjs(value).format('YYYY-MM-DD') === value)
-
-export const dateTimeRangeShortcutValidator = (
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	option: any,
-): option is Shared.Range.PropsInternal['shortcuts'][0] =>
-	typeof option === 'object' &&
-	option !== null &&
-	typeof option.label === 'string' &&
-	Array.isArray(option.value) &&
-	option.value.length === 2 &&
-	option.value.every(
-		(datetime: KottiFieldDateTimeRange.Value) =>
-			datetime === null ||
-			(typeof datetime === 'string' && DATE_TIME_FORMAT_REGEX.test(datetime)),
-	) &&
-	['boolean', 'undefined'].includes(typeof option.keepOpen)
 
 export const rangePlaceholderValidator = (
 	value: unknown,
