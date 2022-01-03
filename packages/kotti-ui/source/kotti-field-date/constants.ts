@@ -2,8 +2,6 @@ import { Dashes } from '@metatypes/typography'
 
 import { KottiField } from '../kotti-field/types'
 
-import { dateLimitValidator, rangePlaceholderValidator } from './utilities'
-
 const EL_SHARED_INTERNAL_PROPS = {
 	editable: true,
 }
@@ -26,19 +24,6 @@ export const EL_DATE_TIME_PROPS = {
 
 export const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/
 export const DATE_TIME_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/
-
-const KOTTI_FIELD_DATE_SHARED_PROPS = {
-	maximumDate: {
-		default: null,
-		type: String,
-		validator: dateLimitValidator,
-	},
-	minimumDate: {
-		default: null,
-		type: String,
-		validator: dateLimitValidator,
-	},
-}
 
 export const KOTTI_FIELD_DATE_SUPPORTS: KottiField.Supports = {
 	clear: true,
