@@ -2,10 +2,9 @@ import { Dashes } from '@metatypes/typography'
 
 import { KottiField } from '../kotti-field/types'
 
-import { KottiFieldDateRange, KottiFieldDateTimeRange } from './types'
+import { KottiFieldDateTimeRange } from './types'
 import {
 	dateLimitValidator,
-	dateRangeShortcutValidator,
 	dateTimeRangeShortcutValidator,
 	rangePlaceholderValidator,
 } from './utilities'
@@ -50,24 +49,6 @@ export const KOTTI_FIELD_DATE_SUPPORTS: KottiField.Supports = {
 	clear: true,
 	decoration: false,
 	tabIndex: false,
-}
-
-export const KOTTI_FIELD_DATE_RANGE_PROPS = {
-	...KOTTI_FIELD_DATE_SHARED_PROPS,
-	placeholder: {
-		default: () => [null, null],
-		type: Array,
-		validator: rangePlaceholderValidator,
-	},
-	shortcuts: {
-		default: () => [],
-		type: Array,
-		validator: (
-			value: unknown,
-		): value is KottiFieldDateRange.Props['shortcuts'] =>
-			Array.isArray(value) && value.every(dateRangeShortcutValidator),
-	},
-	value: { default: null, type: Array },
 }
 
 export const KOTTI_FIELD_DATE_TIME_RANGE_PROPS = {

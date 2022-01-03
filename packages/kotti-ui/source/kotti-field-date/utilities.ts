@@ -26,22 +26,6 @@ export const dateLimitValidator = (
 	value === null ||
 	(typeof value === 'string' && dayjs(value).format('YYYY-MM-DD') === value)
 
-export const dateRangeShortcutValidator = (
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	option: any,
-): option is Shared.Range.PropsInternal['shortcuts'][0] =>
-	typeof option === 'object' &&
-	option !== null &&
-	typeof option.label === 'string' &&
-	Array.isArray(option.value) &&
-	option.value.length === 2 &&
-	option.value.every(
-		(date: KottiFieldDateRange.Value) =>
-			date === null ||
-			(typeof date === 'string' && DATE_FORMAT_REGEX.test(date)),
-	) &&
-	['boolean', 'undefined'].includes(typeof option.keepOpen)
-
 export const dateTimeRangeShortcutValidator = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	option: any,

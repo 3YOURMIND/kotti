@@ -25,12 +25,11 @@ import { DatePicker as ElDate } from 'element-ui'
 import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
+import { makeProps } from '../make-props'
 
 import {
 	DATE_FORMAT_REGEX,
-	KOTTI_FIELD_DATE_RANGE_PROPS,
 	EL_DATE_PROPS,
 	EL_DATE_RANGE_PROPS,
 	KOTTI_FIELD_DATE_SUPPORTS,
@@ -39,14 +38,12 @@ import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDateRange } from './types'
 import { isInvalidDate } from './utilities'
 
-export default defineComponent({
+export default defineComponent<KottiFieldDateRange.PropsInternal>({
 	name: 'KtFieldDateRange',
 	components: { ElDate, KtField },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_DATE_RANGE_PROPS,
-	},
-	setup(props: KottiFieldDateRange.Props, { emit }) {
+	props: makeProps(KottiFieldDateRange.propsSchema),
+
+	setup(props, { emit }) {
 		const field = useField<KottiFieldDateRange.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldDateRange.Value =>
@@ -79,19 +76,13 @@ export default defineComponent({
 			Pick<DatePickerOptions, 'shortcuts' | 'disabledDate'>
 		> = computed(() => ({
 			disabledDate: (date: Date) => isInvalidDate(props, date),
-			shortcuts: props.shortcuts.map(
-				({
-					label,
-					value,
-					keepOpen,
-				}: KottiFieldDateRange.Props['shortcuts'][0]) => ({
-					text: label,
-					onClick(_picker: ElDatePicker) {
-						if (keepOpen !== true) _picker.$emit('pick', value)
-						field.setValue(value)
-					},
-				}),
-			),
+			shortcuts: props.shortcuts.map(({ label, value, keepOpen }) => ({
+				text: label,
+				onClick(_picker: ElDatePicker) {
+					if (keepOpen !== true) _picker.$emit('pick', value)
+					field.setValue(value)
+				},
+			})),
 		}))
 
 		return {
@@ -105,6 +96,7 @@ export default defineComponent({
 					pickerOptions: pickerOptions.value,
 					startPlaceholder: props.placeholder[0] ?? '',
 					type: 'daterange',
+					// @ts-expect-error Vetur parses the `tuple` as [string, string, ...unknown[]]
 					value: field.currentValue.map((date) => date ?? ''),
 				}),
 			),
