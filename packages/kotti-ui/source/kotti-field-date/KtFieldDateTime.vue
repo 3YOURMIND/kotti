@@ -25,12 +25,11 @@ import { DatePicker as ElDate } from 'element-ui'
 import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
+import { makeProps } from '../make-props'
 
 import {
 	DATE_TIME_FORMAT_REGEX,
-	KOTTI_FIELD_DATE_TIME_PROPS,
 	EL_DATE_TIME_PROPS,
 	KOTTI_FIELD_DATE_SUPPORTS,
 } from './constants'
@@ -38,14 +37,11 @@ import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDateTime } from './types'
 import { isInvalidDate } from './utilities'
 
-export default defineComponent({
+export default defineComponent<KottiFieldDateTime.PropsInternal>({
 	name: 'KtFieldDateTime',
 	components: { ElDate, KtField },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_DATE_TIME_PROPS,
-	},
-	setup(props: KottiFieldDateTime.Props, { emit }) {
+	props: makeProps(KottiFieldDateTime.propsSchema),
+	setup(props, { emit }) {
 		const field = useField<KottiFieldDateTime.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldDateTime.Value =>
@@ -72,23 +68,17 @@ export default defineComponent({
 			Pick<DatePickerOptions, 'disabledDate' | 'shortcuts'>
 		> = computed(() => ({
 			disabledDate: (date: Date) => isInvalidDate(props, date),
-			shortcuts: props.shortcuts.map(
-				({
-					label,
-					value,
-					keepOpen,
-				}: KottiFieldDateTime.Props['shortcuts'][0]) => ({
-					text: label,
-					onClick(picker: ElDatePicker) {
-						/**
-						 * close the picker if it shouldn’t stay open
-						 */
-						if (keepOpen !== true) picker.$emit('pick', value)
+			shortcuts: props.shortcuts.map(({ label, value, keepOpen }) => ({
+				text: label,
+				onClick(picker: ElDatePicker) {
+					/**
+					 * close the picker if it shouldn’t stay open
+					 */
+					if (keepOpen !== true) picker.$emit('pick', value)
 
-						field.setValue(value)
-					},
-				}),
-			),
+					field.setValue(value)
+				},
+			})),
 		}))
 
 		return {

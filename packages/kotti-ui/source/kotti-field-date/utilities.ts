@@ -42,17 +42,6 @@ export const dateRangeShortcutValidator = (
 	) &&
 	['boolean', 'undefined'].includes(typeof option.keepOpen)
 
-export const dateTimeShortcutValidator = (
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	option: any,
-): option is Shared.PropsInternal['shortcuts'][0] =>
-	typeof option === 'object' &&
-	option !== null &&
-	typeof option.label === 'string' &&
-	typeof option.value === 'string' &&
-	DATE_TIME_FORMAT_REGEX.test(option.value) &&
-	['boolean', 'undefined'].includes(typeof option.keepOpen)
-
 export const dateTimeRangeShortcutValidator = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	option: any,
