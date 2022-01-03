@@ -32,7 +32,7 @@ export namespace Shared {
 			.refine((value) => dayjs(value).format('YYYY-MM-DD') === value)
 			.nullable()
 			.default(null),
-		shortcuts: z.array(dateShortcutSchema).default([]),
+		shortcuts: z.array(dateShortcutSchema).default(() => []),
 		placeholder: z.string().nullable().default(null),
 		value: valueSchema,
 	})
@@ -66,7 +66,7 @@ export namespace Shared {
 			placeholder: z
 				.tuple([z.string().nullable(), z.string().nullable()])
 				.default([null, null]),
-			shortcuts: z.array(Range.dateShortcutSchema).default([]),
+			shortcuts: z.array(Range.dateShortcutSchema).default(() => []),
 			value: Range.valueSchema,
 		})
 		export type Props = z.input<typeof Range.propsSchema>
@@ -94,7 +94,7 @@ export namespace KottiFieldDateTime {
 	export type Value = Shared.Value
 
 	export const propsSchema = Shared.propsSchema.extend({
-		shortcuts: z.array(Shared.dateTimeShortcutSchema).default([]),
+		shortcuts: z.array(Shared.dateTimeShortcutSchema).default(() => []),
 	})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
@@ -104,7 +104,7 @@ export namespace KottiFieldDateTimeRange {
 	export type Value = Shared.Range.Value
 
 	export const propsSchema = Shared.Range.propsSchema.extend({
-		shortcuts: z.array(Shared.Range.dateTimeShortcutSchema).default([]),
+		shortcuts: z.array(Shared.Range.dateTimeShortcutSchema).default(() => []),
 	})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
