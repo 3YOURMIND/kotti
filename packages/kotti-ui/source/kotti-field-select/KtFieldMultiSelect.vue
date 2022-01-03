@@ -86,27 +86,22 @@ import { Select as ElSelect, Option as ElOption } from 'element-ui'
 import type Vue from 'vue'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
+import { makeProps } from '../make-props'
 
 import ActionIcon from './components/ActionIcon.vue'
-import { KOTTI_FIELD_MULTI_SELECT_PROPS } from './constants'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from './constants'
 import { useSelectFixes, ElSelectWithInternalAPI } from './hooks'
 import { KottiFieldMultiSelect } from './types'
 
 type Entry = KottiFieldMultiSelect.Props['options'][0]
 
-export default defineComponent({
+export default defineComponent<KottiFieldMultiSelect.PropsInternal>({
 	name: 'KtFieldMultiSelect',
 	components: { ElOption, ElSelect, KtField, ActionIcon },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_MULTI_SELECT_PROPS,
-		value: { default: null, type: Array },
-	},
-	setup(props: KottiFieldMultiSelect.Props, { emit }) {
+	props: makeProps(KottiFieldMultiSelect.propsSchema),
+	setup(props, { emit }) {
 		const field = useField<KottiFieldMultiSelect.Value>({
 			emit,
 			isCorrectDataType: (values): values is KottiFieldMultiSelect.Value =>

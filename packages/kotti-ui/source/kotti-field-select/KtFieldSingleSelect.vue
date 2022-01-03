@@ -60,27 +60,20 @@ import { Select as ElSelect, Option as ElOption } from 'element-ui'
 import type Vue from 'vue'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
+import { makeProps } from '../make-props'
 
 import ActionIcon from './components/ActionIcon.vue'
-import {
-	KOTTI_FIELD_SINGLE_SELECT_PROPS,
-	KOTTI_FIELD_SELECT_SUPPORTS,
-} from './constants'
+import { KOTTI_FIELD_SELECT_SUPPORTS } from './constants'
 import { useSelectFixes, ElSelectWithInternalAPI } from './hooks'
 import { KottiFieldSingleSelect } from './types'
 
-export default defineComponent({
+export default defineComponent<KottiFieldSingleSelect.PropsInternal>({
 	name: 'KtFieldSingleSelect',
 	components: { ElOption, ElSelect, KtField, ActionIcon },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_SINGLE_SELECT_PROPS,
-		value: { default: null, type: [Number, String, Boolean] },
-	},
-	setup(props: KottiFieldSingleSelect.Props, { emit }) {
+	props: makeProps(KottiFieldSingleSelect.propsSchema),
+	setup(props, { emit }) {
 		const field = useField<KottiFieldSingleSelect.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldSingleSelect.Value =>
