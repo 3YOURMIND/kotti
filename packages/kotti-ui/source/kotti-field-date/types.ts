@@ -15,7 +15,7 @@ export namespace Shared {
 		value: z.string().regex(DATE_TIME_FORMAT_REGEX),
 	})
 
-	export const valueSchema = z.string().nullable().default(null)
+	export const valueSchema = z.string().nullable()
 	/**
 	 * ISO8601
 	 */
@@ -34,7 +34,7 @@ export namespace Shared {
 			.default(null),
 		shortcuts: z.array(dateShortcutSchema).default(() => []),
 		placeholder: z.string().nullable().default(null),
-		value: valueSchema,
+		value: valueSchema.default(null),
 	})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
@@ -53,10 +53,11 @@ export namespace Shared {
 			]),
 		})
 
-		export const valueSchema = z
-			.tuple([z.string().nullable(), z.string().nullable()])
-			// TODO: investigate why was default `null` on previous implementation
-			.default([null, null])
+		export const valueSchema = z.tuple([
+			z.string().nullable(),
+			z.string().nullable(),
+		])
+
 		/**
 		 * [ ISO8601, ISO8601 ]
 		 */
@@ -67,7 +68,7 @@ export namespace Shared {
 				.tuple([z.string().nullable(), z.string().nullable()])
 				.default([null, null]),
 			shortcuts: z.array(Range.dateShortcutSchema).default(() => []),
-			value: Range.valueSchema,
+			value: Range.valueSchema.default([null, null]),
 		})
 		export type Props = z.input<typeof Range.propsSchema>
 		export type PropsInternal = z.output<typeof Range.propsSchema>

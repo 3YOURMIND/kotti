@@ -95,8 +95,10 @@ export default defineComponent<KottiFieldDateTimeRange.PropsInternal>({
 					pickerOptions: pickerOptions.value,
 					startPlaceholder: props.placeholder?.[0] ?? '',
 					type: 'datetimerange',
-					// @ts-expect-error Vetur parses the `tuple` as [string, string, ...unknown[]]
-					value: field.currentValue.map((date) => date ?? ''),
+					value: field.currentValue.map((date) => date ?? '') as [
+						string,
+						string,
+					],
 				}),
 			),
 			elDateRef,
