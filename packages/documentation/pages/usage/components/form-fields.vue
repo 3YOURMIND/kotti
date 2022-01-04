@@ -447,52 +447,37 @@ const components: Array<{
 	additionalProps: Array<string>
 	formKey: string
 	name: string
-	supports: Kotti.Field.Supports & { placeholder: boolean }
+	supports: Kotti.Field.Supports
 }> = [
 	{
 		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateValue',
 		name: 'KtFieldDate',
-		supports: {
-			...KtFieldDate.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldDate.meta.supports,
 	},
 	{
 		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateRangeValue',
 		name: 'KtFieldDateRange',
-		supports: {
-			...KtFieldDateRange.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldDateRange.meta.supports,
 	},
 	{
 		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateTimeValue',
 		name: 'KtFieldDateTime',
-		supports: {
-			...KtFieldDateTime.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldDateTime.meta.supports,
 	},
 	{
 		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateTimeRangeValue',
 		name: 'KtFieldDateTimeRange',
-		supports: {
-			...KtFieldDateTimeRange.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldDateTimeRange.meta.supports,
 	},
 	{
 		additionalProps: ['actions', 'collapseTagsAfter', 'maximumSelectable'],
 		formKey: 'multiSelectValue',
 		name: 'KtFieldMultiSelect',
-		supports: {
-			...KtFieldMultiSelect.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldMultiSelect.meta.supports,
 	},
 	{
 		additionalProps: [
@@ -505,82 +490,55 @@ const components: Array<{
 		],
 		formKey: 'numberValue',
 		name: 'KtFieldNumber',
-		supports: {
-			...KtFieldNumber.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldNumber.meta.supports,
 	},
 	{
 		additionalProps: ['autoComplete'],
 		formKey: 'textValue',
 		name: 'KtFieldPassword',
-		supports: {
-			...KtFieldPassword.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldPassword.meta.supports,
 	},
 	{
 		additionalProps: ['isInline'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldRadioGroup',
-		supports: {
-			...KtFieldRadioGroup.meta.supports,
-			placeholder: false,
-		},
+		supports: KtFieldRadioGroup.meta.supports,
 	},
 	{
 		additionalProps: ['actions'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
-		supports: {
-			...KtFieldSingleSelect.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldSingleSelect.meta.supports,
 	},
 	{
 		additionalProps: ['isLoadingOptions', 'query'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelectRemote',
-		supports: {
-			...KtFieldSingleSelectRemote.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldSingleSelectRemote.meta.supports,
 	},
 	{
 		additionalProps: [],
 		formKey: 'textValue',
 		name: 'KtFieldText',
-		supports: {
-			...KtFieldText.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldText.meta.supports,
 	},
 	{
 		additionalProps: [],
 		formKey: 'textValue',
 		name: 'KtFieldTextArea',
-		supports: {
-			...KtFieldTextArea.meta.supports,
-			placeholder: true,
-		},
+		supports: KtFieldTextArea.meta.supports,
 	},
 	{
 		additionalProps: ['toggleType'],
 		formKey: 'toggleValue',
 		name: 'KtFieldToggle',
-		supports: {
-			...KtFieldToggle.meta.supports,
-			placeholder: false,
-		},
+		supports: KtFieldToggle.meta.supports,
 	},
 	{
 		additionalProps: ['isInline', 'toggleType'],
 		formKey: 'toggleGroupValue',
 		name: 'KtFieldToggleGroup',
-		supports: {
-			...KtFieldToggleGroup.meta.supports,
-			placeholder: false,
-		},
+		supports: KtFieldToggleGroup.meta.supports,
 	},
 ]
 

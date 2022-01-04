@@ -28,6 +28,7 @@ const TestComponent = defineComponent<KottiField.PropsInternal>({
 				supports: {
 					clear: true,
 					decoration: true,
+					placeholder: true,
 					tabIndex: true,
 				},
 			}),
@@ -52,6 +53,7 @@ const TestComponentObject = defineComponent<KottiField.PropsInternal>({
 				supports: {
 					clear: true,
 					decoration: true,
+					placeholder: true,
 					tabIndex: true,
 				},
 			}),

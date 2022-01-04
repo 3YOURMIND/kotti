@@ -261,6 +261,7 @@ const useSupports = <DATA_TYPE>({
 			clear: ['hideClear'],
 			decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix'],
 			tabIndex: ['tabIndex'],
+			placeholder: ['placeholder'],
 		}
 
 		for (const [supportsKey, propsToCheck] of Object.entries(
