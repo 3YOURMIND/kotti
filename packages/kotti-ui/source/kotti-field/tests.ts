@@ -5,11 +5,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { useI18nProvide } from '../kotti-i18n/hooks'
-import {
-	localVue,
-	forceVueToEvaluateComputedProperty,
-	getMockContext,
-} from '../test-utils'
+import { localVue, getMockContext } from '../test-utils'
 
 import { KOTTI_FIELD_PROPS, FORM_KEY_NONE } from './constants'
 import { KtFieldErrors } from './errors'
