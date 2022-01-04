@@ -61,12 +61,12 @@ export namespace KottiField {
 			 * Useful for checking validation on required fields
 			 */
 			isEmpty: (value: DATA_TYPE) => boolean
-			props: KottiField.Props
+			props: KottiField.PropsInternal
 			supports: KottiField.Supports
 		}
 
 		export type Returns<DATA_TYPE> = Pick<
-			KottiField.Props,
+			KottiField.PropsInternal,
 			| 'helpDescription'
 			| 'helpText'
 			| 'hideClear'
@@ -88,7 +88,7 @@ export namespace KottiField {
 				 */
 				'data-test': string
 				disabled: boolean
-				tabindex: KottiField.Props['tabIndex']
+				tabindex: KottiField.PropsInternal['tabIndex']
 			}>
 			isEmpty: boolean
 			setValue: (newValue: DATA_TYPE) => void
@@ -135,7 +135,8 @@ export namespace KottiField {
 		 */
 		size: z.nativeEnum(Size).nullable().default(null),
 	})
-	export type InhertiableProps = z.output<typeof inheritablePropsSchema>
+	export type InhertiableProps = z.input<typeof inheritablePropsSchema>
+	export type InhertiablePropsInternal = z.output<typeof inheritablePropsSchema>
 
 	export const propsSchema = inheritablePropsSchema.extend({
 		/**
@@ -196,7 +197,8 @@ export namespace KottiField {
 		 */
 		value: z.unknown(),
 	})
-	export type Props = z.output<typeof propsSchema>
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 
 	/**
 	 * Object that explicitly specifies which of the KtField.Props are

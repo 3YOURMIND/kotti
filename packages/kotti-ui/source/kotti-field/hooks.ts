@@ -68,7 +68,7 @@ const useInputProps = <DATA_TYPE>({
 	}
 }
 
-const useTexts = (props: KottiField.Props) => {
+const useTexts = (props: KottiField.PropsInternal) => {
 	return {
 		helpDescription: computed(() => props.helpDescription),
 		helpText: computed(() => props.helpText),
@@ -160,7 +160,7 @@ const useValidation = <DATA_TYPE>({
 		'currentValue' | 'isEmpty'
 	> & {
 		context: KottiForm.Context | null
-		hideValidation: Ref<KottiField.InhertiableProps['hideValidation']>
+		hideValidation: Ref<KottiField.InhertiablePropsInternal['hideValidation']>
 	}) => {
 	const translations = useTranslationNamespace('KtFields')
 
@@ -204,7 +204,7 @@ const useValidation = <DATA_TYPE>({
 }
 
 /**
- * Implements KottiField.InhertiableProps
+ * Implements KottiField.InhertiablePropsInternal
  * Prioritizes the field props, the context, and the passed default, respectively
  */
 const useInheritableProperties = <DATA_TYPE>({
@@ -217,11 +217,11 @@ const useInheritableProperties = <DATA_TYPE>({
 	 * Get a single property from either the KtFieldComponents or the KtFormContext
 	 * Gives priority to the KtFieldComponents and implements default fallbacks
 	 */
-	const useShared = <KEY extends keyof KottiField.InhertiableProps>(
+	const useShared = <KEY extends keyof KottiField.InhertiablePropsInternal>(
 		key: KEY,
-		defaultValue: KottiField.InhertiableProps[KEY],
+		defaultValue: KottiField.InhertiablePropsInternal[KEY],
 	) =>
-		computed((): KottiField.InhertiableProps[KEY] => {
+		computed((): KottiField.InhertiablePropsInternal[KEY] => {
 			if (props[key]) return props[key]
 
 			if (context !== null && context.fieldInheritableProps.value[key])
@@ -255,7 +255,7 @@ const useSupports = <DATA_TYPE>({
 }: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props' | 'supports'>) => {
 	watchEffect(() => {
 		type Key = keyof KottiField.Supports
-		type Value = Array<keyof KottiField.Props>
+		type Value = Array<keyof KottiField.PropsInternal>
 
 		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
 			clear: ['hideClear'],

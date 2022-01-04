@@ -13,11 +13,11 @@ import { localVue } from '../test-utils/index'
 
 import KtFormControllerObject from './KtFormControllerObject.vue'
 
-const TestField = defineComponent({
+const TestField = defineComponent<KottiField.PropsInternal>({
 	name: 'TestField',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props, { emit }) => {
+	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {

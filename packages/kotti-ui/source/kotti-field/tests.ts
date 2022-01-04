@@ -16,10 +16,10 @@ import { KtFieldErrors } from './errors'
 import { useField } from './hooks'
 import { KottiField } from './types'
 
-const TestComponent = defineComponent({
+const TestComponent = defineComponent<KottiField.PropsInternal>({
 	name: 'TestComponent',
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props, { emit }) => {
+	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
@@ -40,10 +40,10 @@ const TestComponent = defineComponent({
 	template: `<div></div>`,
 })
 
-const TestComponentObject = defineComponent({
+const TestComponentObject = defineComponent<KottiField.PropsInternal>({
 	name: 'TestComponentObject',
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props, { emit }) => {
+	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {

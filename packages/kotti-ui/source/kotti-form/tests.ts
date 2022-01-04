@@ -12,11 +12,11 @@ import { localVue } from '../test-utils'
 
 import KtForm from './KtForm.vue'
 
-const TestField = defineComponent({
+const TestField = defineComponent<KottiField.PropsInternal>({
 	name: 'TestField',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props, { emit }) => {
+	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
@@ -37,11 +37,11 @@ const TestField = defineComponent({
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
-const TestFieldObject = defineComponent({
+const TestFieldObject = defineComponent<KottiField.PropsInternal>({
 	name: 'TestFieldObject',
 	components: { KtField },
 	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props, { emit }) => {
+	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {

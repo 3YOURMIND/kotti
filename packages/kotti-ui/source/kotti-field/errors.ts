@@ -2,11 +2,13 @@ import { CustomError } from 'ts-custom-error'
 
 import { KottiField } from './types'
 
-const createErrorMessage = (props: KottiField.Props, messages: string[]) =>
-	`useField(${props.formKey ?? props.label}): ${messages.join('\n')}`
+const createErrorMessage = (
+	props: KottiField.PropsInternal,
+	messages: string[],
+) => `useField(${props.formKey ?? props.label}): ${messages.join('\n')}`
 
 class ImplicitFormKeyNone extends CustomError {
-	public constructor(props: KottiField.Props) {
+	public constructor(props: KottiField.PropsInternal) {
 		super(
 			createErrorMessage(props, [
 				'Encountered a KtField without a “formKey” inside a KtForm.',
@@ -19,8 +21,8 @@ class ImplicitFormKeyNone extends CustomError {
 
 class InvalidPropOutsideOfContext extends CustomError {
 	public constructor(
-		props: KottiField.Props,
-		propName: keyof KottiField.Props,
+		props: KottiField.PropsInternal,
+		propName: keyof KottiField.PropsInternal,
 	) {
 		super(
 			createErrorMessage(props, [
@@ -32,7 +34,7 @@ class InvalidPropOutsideOfContext extends CustomError {
 }
 
 class DisabledSetValueCalled extends CustomError {
-	public constructor(props: KottiField.Props) {
+	public constructor(props: KottiField.PropsInternal) {
 		super(
 			createErrorMessage(props, [
 				'Attempted to setValue on a disabled field.',
@@ -43,7 +45,7 @@ class DisabledSetValueCalled extends CustomError {
 }
 
 class InvalidDataType extends CustomError {
-	public constructor(props: KottiField.Props, newValue: unknown) {
+	public constructor(props: KottiField.PropsInternal, newValue: unknown) {
 		super(
 			createErrorMessage(props, [
 				`Encountered invalid data type, “${typeof newValue}” with value “${JSON.stringify(
@@ -56,7 +58,7 @@ class InvalidDataType extends CustomError {
 
 class UnsupportedProp extends CustomError {
 	public constructor(
-		props: KottiField.Props,
+		props: KottiField.PropsInternal,
 		{
 			supportsKey,
 			propKey,
