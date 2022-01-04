@@ -439,6 +439,43 @@ describe('nativeEnum', () => {
 	})
 })
 
+describe('never', () => {
+	beforeAll(silenceConsole)
+
+	it('generates vue prop for schema “z.never()”', () => {
+		const schema = z.object({
+			prop: z.never(),
+		})
+		const { prop } = makeProps(schema)
+
+		// Without specifying `default`, under the hood,
+		// a default Symbol('NEVER') is generated
+		expect(prop).not.toBeRequired()
+		expect(prop).toBeType(Symbol)
+		expect(prop).toValidate(prop.default)
+		expect(prop).not.toValidate(
+			Symbol('NEVER'),
+			'NEVER',
+			'true',
+			'false',
+			1,
+			[],
+			{},
+			null,
+			undefined,
+		)
+		expect(prop.default.description).toBe('NEVER')
+	})
+
+	it('can’t specify “z.never().nullable()”', () => {
+		const schema = z.object({
+			prop: z.never().nullable(),
+		})
+
+		expect(() => makeProps(schema)).toThrow()
+	})
+})
+
 const NUMBER_SUCCESS = [
 	-1,
 	0,

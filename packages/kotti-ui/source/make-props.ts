@@ -5,6 +5,8 @@ import { z } from 'zod'
 const DEBUG_MAKE_PROPS = false as const // enable to print debug log
 const DEBUG_WALK_SCHEMA_TYPES = false as const // enable to print debug log
 
+const NEVER = Symbol('NEVER')
+
 /**
  * This type is not exported directly by @vue/composition-api
  */
@@ -16,17 +18,24 @@ const setUnion = <T extends unknown>(...sets: Set<T>[]): Set<T> => {
 	return result
 }
 
-const propValidator = <SCHEMA extends z.ZodTypeAny>(
-	schema: SCHEMA,
-	key: string,
-) => {
+const propValidator = <SCHEMA extends z.ZodTypeAny>({
+	isNever,
+	propName,
+	propSchema,
+}: {
+	isNever: boolean
+	propName: string
+	propSchema: SCHEMA
+}) => {
 	const validator = (value: unknown) => {
-		const result = schema.safeParse(value)
+		if (isNever && value === NEVER) return true
+
+		const result = propSchema.safeParse(value)
 
 		if (result.success) return true
 
 		/* eslint-disable no-console */
-		console.group(`propValidator found issues with prop “${key}”`)
+		console.group(`propValidator found issues with prop “${propName}”`)
 
 		// HACK: 'error' in result is necessary as `ts-jest` doesn’t see that result.success was already properly checked to be falsy and that error now exists
 		if ('error' in result) console.error(result.error)
@@ -44,7 +53,7 @@ const propValidator = <SCHEMA extends z.ZodTypeAny>(
 
 	// assign name for better debugging and to improve props rendering in the documentation
 	Object.defineProperty(validator, 'name', {
-		value: `propValidator('${key}')`,
+		value: `propValidator('${propName}')`,
 		writable: false,
 	})
 
@@ -115,6 +124,7 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 		case z.ZodFirstPartyTypeKind.ZodFunction:
 		case z.ZodFirstPartyTypeKind.ZodLiteral:
 		case z.ZodFirstPartyTypeKind.ZodNativeEnum:
+		case z.ZodFirstPartyTypeKind.ZodNever: // special case for abstract props
 		case z.ZodFirstPartyTypeKind.ZodNumber:
 		case z.ZodFirstPartyTypeKind.ZodObject:
 		case z.ZodFirstPartyTypeKind.ZodRecord:
@@ -211,54 +221,69 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 	}
 } =>
 	Object.fromEntries(
+		// eslint-disable-next-line sonarjs/cognitive-complexity
 		Object.entries(propsSchema.shape).map(([propName, propSchema]) => {
 			/* eslint-disable no-console */
-			if (DEBUG_MAKE_PROPS) console.log(`makeProp: generating “${propName}”`)
-
-			const propDefinition: PropOptions<unknown, boolean> = {
-				validator: propValidator(propSchema, propName),
-			}
+			if (DEBUG_MAKE_PROPS) console.log(`makeProps: generating “${propName}”`)
 
 			const zodTypeSet = walkSchemaTypes(propSchema)
 
-			/**
-			 * WORKAROUND: Usually, one should probably call shape.isOptional()
-			 *
-			 * However, this currently doesn’t seem to work with z.function().default()
-			 * and this also internally just calls safeParse on the object — evaluating
-			 * the default function, which wastes performance AND could cause
-			 * unintended side-effects
-			 */
-			const isOptional =
-				zodTypeSet.has(z.ZodFirstPartyTypeKind.ZodDefault) ||
-				zodTypeSet.has(z.ZodFirstPartyTypeKind.ZodOptional)
+			const isNever = zodTypeSet.has(z.ZodFirstPartyTypeKind.ZodNever)
 
-			if (isOptional) propDefinition.default = propSchema._def.defaultValue
-			else propDefinition.required = true
+			if (isNever && zodTypeSet.size > 1)
+				throw new Error('makeProps: Unexpected Mixed Usage of Never')
 
-			const vuePropTypes = [...zodTypeSet]
-				.filter((x) => !ignoredZodTypes.has(x))
-				.map((zodTypeName) => {
-					if (DEBUG_MAKE_PROPS)
-						console.log(
-							`makeProps: found “ZodFirstPartyTypeKind.${zodTypeName}”`,
-						)
+			const propDefinition: PropOptions<unknown, boolean> = {
+				validator: propValidator({
+					isNever,
+					propName,
+					propSchema,
+				}),
+			}
 
-					if (!zodToVueType.has(zodTypeName))
-						throw new Error(
-							`makeProps: unknown “ZodFirstPartyTypeKind.${zodTypeName}”`,
-						)
+			if (!isNever) {
+				const vuePropTypes = [...zodTypeSet]
+					.filter((x) => !ignoredZodTypes.has(x))
+					.map((zodTypeName) => {
+						if (DEBUG_MAKE_PROPS)
+							console.log(
+								`makeProps: found “ZodFirstPartyTypeKind.${zodTypeName}”`,
+							)
 
-					return zodToVueType.get(zodTypeName) as VuePropConstructor
-				})
+						if (!zodToVueType.has(zodTypeName))
+							throw new Error(
+								`makeProps: unknown “ZodFirstPartyTypeKind.${zodTypeName}”`,
+							)
 
-			if (vuePropTypes.length === 0)
-				throw new Error(
-					`makeProps: Could not determine vue prop.type for prop ${propName}`,
-				)
+						return zodToVueType.get(zodTypeName) as VuePropConstructor
+					})
 
-			propDefinition.type =
-				vuePropTypes.length === 1 ? vuePropTypes[0] : vuePropTypes
+				if (vuePropTypes.length === 0)
+					throw new Error(
+						`makeProps: Could not determine vue prop.type for prop ${propName}`,
+					)
+
+				propDefinition.type =
+					vuePropTypes.length === 1 ? vuePropTypes[0] : vuePropTypes
+
+				/**
+				 * WORKAROUND: Usually, one should probably call shape.isOptional()
+				 *
+				 * However, this currently doesn’t seem to work with z.function().default()
+				 * and this also internally just calls safeParse on the object — evaluating
+				 * the default function, which wastes performance AND could cause
+				 * unintended side-effects
+				 */
+				const isOptional =
+					zodTypeSet.has(z.ZodFirstPartyTypeKind.ZodDefault) ||
+					zodTypeSet.has(z.ZodFirstPartyTypeKind.ZodOptional)
+
+				if (isOptional) propDefinition.default = propSchema._def.defaultValue
+				else propDefinition.required = true
+			} else {
+				propDefinition.default = NEVER
+				propDefinition.type = Symbol
+			}
 
 			return [propName, propDefinition]
 			/* eslint-enable no-console */
