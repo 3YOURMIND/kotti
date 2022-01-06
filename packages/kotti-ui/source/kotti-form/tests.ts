@@ -3,11 +3,11 @@ require('jsdom-global')()
 import { defineComponent, ref } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
 
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import KtField from '../kotti-field/KtField.vue'
 import { KottiField } from '../kotti-field/types'
 import { useI18nProvide } from '../kotti-i18n/hooks'
+import { makeProps } from '../make-props'
 import { localVue } from '../test-utils'
 
 import KtForm from './KtForm.vue'
@@ -15,7 +15,7 @@ import KtForm from './KtForm.vue'
 const TestField = defineComponent<KottiField.PropsInternal>({
 	name: 'TestField',
 	components: { KtField },
-	props: KOTTI_FIELD_PROPS,
+	props: makeProps(KottiField.propsSchema),
 	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
@@ -41,7 +41,7 @@ const TestField = defineComponent<KottiField.PropsInternal>({
 const TestFieldObject = defineComponent<KottiField.PropsInternal>({
 	name: 'TestFieldObject',
 	components: { KtField },
-	props: KOTTI_FIELD_PROPS,
+	props: makeProps(KottiField.propsSchema),
 	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
