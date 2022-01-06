@@ -6,7 +6,6 @@ import {
 	reactive,
 	ref,
 	watch,
-	watchEffect,
 	Ref,
 } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
@@ -16,7 +15,6 @@ import { KottiForm } from '../kotti-form/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import { FORM_KEY_NONE } from './constants'
-import { KOTTI_FIELD_PROPS } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
@@ -244,44 +242,6 @@ const useInheritableProperties = <DATA_TYPE>({
 }
 
 /**
- * Some fields do not support a subset of the KtField.Props.
- * We explicitly throw errors for props that are not effectively
- * consumed (i.e. not to be displayed). This prevents users
- * from accidentally passing unneeded or misleading props.
- */
-const useSupports = <DATA_TYPE>({
-	props,
-	supports,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props' | 'supports'>) => {
-	watchEffect(() => {
-		type Key = keyof KottiField.Supports
-		type Value = Array<keyof KottiField.PropsInternal>
-
-		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
-			clear: ['hideClear'],
-			decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix'],
-			tabIndex: ['tabIndex'],
-			placeholder: ['placeholder'],
-		}
-
-		for (const [supportsKey, propsToCheck] of Object.entries(
-			PROPS_TO_CHECK_FOR_SUPPORTS,
-		) as Array<[Key, Value]>)
-			if (!supports[supportsKey])
-				for (const propKey of propsToCheck) {
-					const propValue = props[propKey]
-
-					if (propValue !== KOTTI_FIELD_PROPS[propKey].default)
-						throw new KtFieldErrors.UnsupportedProp(props, {
-							supportsKey,
-							propKey,
-							value: propValue,
-						})
-				}
-	})
-}
-
-/**
  * hook into lifecycle events
  */
 const useNotifyContext = <DATA_TYPE>({
@@ -308,8 +268,6 @@ export const useField = <DATA_TYPE>({
 	supports,
 }: KottiField.Hook.Parameters<DATA_TYPE>): KottiField.Hook.Returns<DATA_TYPE> => {
 	const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
-
-	useSupports({ props, supports })
 
 	const sharedProperties = useInheritableProperties({ context, props })
 	const values = useValue({
