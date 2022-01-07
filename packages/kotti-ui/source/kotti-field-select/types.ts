@@ -22,11 +22,25 @@ export namespace Shared {
 	})
 	export type Action = z.output<typeof actionSchema>
 
-	export const propsSchema = z.object({
-		actions: z.array(actionSchema).default(() => []),
-		options: z.array(entrySchema),
-		placeholder: z.string().nullable().default(null),
-	})
+	export const propsSchema = z
+		.object({
+			actions: z.array(actionSchema).default(() => []),
+			options: z.array(entrySchema),
+			placeholder: z.string().nullable().default(null),
+		})
+		/**
+		 * tabIndex is not supported due to element-ui limitation
+		 * TODO: support with new select components
+		 **/
+		.merge(
+			KottiField.potentiallySupportedPropsSchema.pick({
+				hideClear: true,
+				leftIcon: true,
+				prefix: true,
+				rightIcon: true,
+				suffix: true,
+			}),
+		)
 	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
 
@@ -76,10 +90,14 @@ export namespace KottiFieldSingleSelectRemote {
 	export const valueSchema = KottiFieldSingleSelect.valueSchema
 	export type Value = z.output<typeof valueSchema>
 
-	export const propsSchema = KottiFieldSingleSelect.propsSchema.extend({
-		isLoadingOptions: z.boolean().default(false),
-		query: z.string().nullable().default(null),
-	})
+	export const propsSchema = KottiFieldSingleSelect.propsSchema
+		// TODO: no need for this merge when element-ui is not used under the hood anymore
+		// since we rely on the KottiFieldSingleSelect merge which would include tabIndex
+		.merge(KottiField.potentiallySupportedPropsSchema.pick({ tabIndex: true }))
+		.extend({
+			isLoadingOptions: z.boolean().default(false),
+			query: z.string().nullable().default(null),
+		})
 
 	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>

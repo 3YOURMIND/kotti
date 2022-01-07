@@ -10,14 +10,16 @@ export namespace KottiFieldPassword {
 		CURRENT = 'current-password',
 		NEW = 'new-passowrd',
 	}
-	export const propsSchema = KottiField.propsSchema.extend({
-		placeholder: z.string().nullable().default(null),
-		autoComplete: z.union([
-			z.literal(AutoComplete.CURRENT),
-			z.literal(AutoComplete.NEW),
-		]),
-		value: valueSchema.default(null),
-	})
+	export const propsSchema = KottiField.propsSchema
+		.merge(KottiField.potentiallySupportedPropsSchema)
+		.extend({
+			placeholder: z.string().nullable().default(null),
+			autoComplete: z.union([
+				z.literal(AutoComplete.CURRENT),
+				z.literal(AutoComplete.NEW),
+			]),
+			value: valueSchema.default(null),
+		})
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>

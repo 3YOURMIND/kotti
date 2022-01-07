@@ -17,18 +17,20 @@ export namespace KottiFieldRadioGroup {
 	})
 	export type Entry = z.output<typeof entrySchema>
 
-	export const propsSchema = KottiField.propsSchema.extend({
-		isInline: z.boolean().default(false),
-		options: z
-			.array(entrySchema)
-			.refine(...refinementNonEmpty)
-			.refine(
-				(options) =>
-					new Set(options.map(({ value }) => value)).size === options.length,
-				{ message: 'options need to be unique by `value`' },
-			),
-		value: valueSchema.default(null),
-	})
+	export const propsSchema = KottiField.propsSchema
+		.merge(KottiField.potentiallySupportedPropsSchema.pick({ tabIndex: true }))
+		.extend({
+			isInline: z.boolean().default(false),
+			options: z
+				.array(entrySchema)
+				.refine(...refinementNonEmpty)
+				.refine(
+					(options) =>
+						new Set(options.map(({ value }) => value)).size === options.length,
+					{ message: 'options need to be unique by `value`' },
+				),
+			value: valueSchema.default(null),
+		})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 }

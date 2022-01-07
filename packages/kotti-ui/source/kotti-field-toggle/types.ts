@@ -9,11 +9,15 @@ export namespace KottiFieldToggle {
 			SWITCH = 'switch',
 			CHECKBOX = 'checkbox',
 		}
-		export const propsSchema = z.object({
-			type: z
-				.union([z.literal(Type.SWITCH), z.literal(Type.CHECKBOX)])
-				.default(z.literal(Type.CHECKBOX).value),
-		})
+		export const propsSchema = z
+			.object({
+				type: z
+					.union([z.literal(Type.SWITCH), z.literal(Type.CHECKBOX)])
+					.default(z.literal(Type.CHECKBOX).value),
+			})
+			.merge(
+				KottiField.potentiallySupportedPropsSchema.pick({ tabIndex: true }),
+			)
 	}
 
 	export const valueSchema = z.boolean().nullable()

@@ -21,21 +21,27 @@ export namespace Shared {
 	 */
 	export type Value = z.output<typeof valueSchema>
 
-	export const propsSchema = KottiField.propsSchema.extend({
-		maximumDate: z
-			.string()
-			.refine((value) => dayjs(value).format('YYYY-MM-DD') === value)
-			.nullable()
-			.default(null),
-		minimumDate: z
-			.string()
-			.refine((value) => dayjs(value).format('YYYY-MM-DD') === value)
-			.nullable()
-			.default(null),
-		shortcuts: z.array(dateShortcutSchema).default(() => []),
-		placeholder: z.string().nullable().default(null),
-		value: valueSchema.default(null),
-	})
+	export const propsSchema = KottiField.propsSchema
+		.merge(
+			KottiField.potentiallySupportedPropsSchema.pick({
+				hideClear: true,
+			}),
+		)
+		.extend({
+			maximumDate: z
+				.string()
+				.refine((value) => dayjs(value).format('YYYY-MM-DD') === value)
+				.nullable()
+				.default(null),
+			minimumDate: z
+				.string()
+				.refine((value) => dayjs(value).format('YYYY-MM-DD') === value)
+				.nullable()
+				.default(null),
+			shortcuts: z.array(dateShortcutSchema).default(() => []),
+			placeholder: z.string().nullable().default(null),
+			value: valueSchema.default(null),
+		})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 

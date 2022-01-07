@@ -101,6 +101,32 @@ export namespace KottiField {
 	}
 
 	/**
+	 * Each attribute on KottiField.Supports maps to one or more
+	 * KtField prop, as follows:
+	 * {
+	 * 	clear: ['hideClear']
+	 * 	decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix']
+	 * 	tabIndex: ['tabIndex']
+	 * 	placeholder: ['placeholder']
+	 * }
+	 *
+	 * The schema is only concerned with props that would have the same type,
+	 * if extended (e.g. decoration props).
+	 * Therefore, doesn't include `placeholder` since it is extended
+	 * differently per field.
+	 *
+	 */
+
+	export const potentiallySupportedPropsSchema = z.object({
+		hideClear: z.boolean().default(false),
+		leftIcon: yocoIconSchema.nullable().default(null),
+		prefix: z.string().nullable().default(null),
+		rightIcon: yocoIconSchema.nullable().default(null),
+		suffix: z.string().nullable().default(null),
+		tabIndex: z.number().default(0),
+	})
+
+	/**
 	 * Includes, but is not limited to, properties that are not consumed by the KtForm itself,
 	 * but rather just passed-down to all fields inside the form to make common
 	 * tasks like disabling the entire form or hiding validation easier.
@@ -122,7 +148,7 @@ export namespace KottiField {
 		/**
 		 * Should the user have the option to clear the field
 		 */
-		hideClear: z.boolean().default(false),
+		hideClear: z.never(),
 
 		/**
 		 * Prevents the validation (e.g. color, text) from being shown
@@ -162,20 +188,20 @@ export namespace KottiField {
 		/**
 		 * Shows a Yoco icon on the left side of the field
 		 */
-		leftIcon: yocoIconSchema.nullable().default(null),
+		leftIcon: z.never(),
 
 		/**
 		 * Shown when no value was entered yet
 		 *
-		 * This is never, and specified by each component's schema,
-		 * as KtFieldDateRange needs two placeholders [string | null, string | null]
+		 * This is never, and specified by each component's schema, since they differ.
+		 * e.g. KtFieldDateRange needs two placeholders `[string | null, string | null]`
 		 */
 		placeholder: z.never(),
 
 		/**
 		 * Shows a Yoco icon on the right side of the field
 		 */
-		rightIcon: yocoIconSchema.nullable().default(null),
+		rightIcon: z.never(),
 
 		isOptional: z.boolean().default(false),
 		label: z.string().nullable().default(null),
@@ -183,14 +209,14 @@ export namespace KottiField {
 		/**
 		 * Show some string before the field
 		 */
-		prefix: z.string().nullable().default(null),
+		prefix: z.never(),
 
 		/**
 		 * Show some string after the field
 		 */
-		suffix: z.string().nullable().default(null),
+		suffix: z.never(),
 
-		tabIndex: z.number().default(0),
+		tabIndex: z.never(),
 
 		/**
 		 * Without a validator, everything will always default to being valid
