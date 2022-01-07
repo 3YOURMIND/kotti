@@ -6,7 +6,7 @@ export namespace Shared {
 	export const valueSchema = z
 		.union([z.boolean(), z.number(), z.string()])
 		.nullable()
-	export type Value = z.infer<typeof valueSchema>
+	export type Value = z.output<typeof valueSchema>
 
 	export const entrySchema = z.object({
 		dataTest: z.string().optional(),
