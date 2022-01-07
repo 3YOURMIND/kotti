@@ -2,7 +2,7 @@ import { KottiField } from '../kotti-field/types'
 import { DecimalSeparator } from '../types/kotti'
 
 export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {
-	clear: false,
+	clear: true,
 	decoration: true,
 	placeholder: true,
 	tabIndex: true,
