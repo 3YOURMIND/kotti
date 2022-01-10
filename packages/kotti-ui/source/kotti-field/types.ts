@@ -2,6 +2,8 @@ import { yocoIconSchema } from '@3yourmind/yoco'
 import { Ref, SetupContext } from '@vue/composition-api'
 import { z } from 'zod'
 
+import { ReplaceRecordType } from '../types/utilities'
+
 import { FORM_KEY_NONE } from './constants'
 
 export namespace KottiField {
@@ -162,7 +164,12 @@ export namespace KottiField {
 		size: z.nativeEnum(Size).default(Size.MEDIUM),
 	})
 	export type InhertiableProps = z.input<typeof inheritablePropsSchema>
-	export type InhertiablePropsInternal = z.output<typeof inheritablePropsSchema>
+	/**
+	 * Warning: All keys of type `never` are replaced with `any`
+	 */
+	export type InhertiablePropsInternal = ReplaceRecordType<
+		z.output<typeof inheritablePropsSchema>
+	>
 
 	export const propsSchema = inheritablePropsSchema.extend({
 		/**
@@ -232,7 +239,10 @@ export namespace KottiField {
 		value: z.never(),
 	})
 	export type Props = z.input<typeof propsSchema>
-	export type PropsInternal = z.output<typeof propsSchema>
+	/**
+	 * Warning: All keys of type `never` are replaced with `any`
+	 */
+	export type PropsInternal = ReplaceRecordType<z.output<typeof propsSchema>>
 
 	/**
 	 * Object that explicitly specifies which of the KtField.Props are
