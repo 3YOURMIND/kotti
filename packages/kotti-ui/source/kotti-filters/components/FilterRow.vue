@@ -27,6 +27,7 @@
 					:options="valueOptions"
 					:prefix="valuePrefix"
 					:step="valueStep"
+					:suffix="valueSuffix"
 				/>
 			</div>
 		</div>
@@ -160,6 +161,11 @@ export default defineComponent<{
 					return 1
 			}
 		})
+		const valueSuffix = computed<KottiFieldNumber.Props['suffix']>(() =>
+			props.column?.type === KottiFilters.FilterType.FLOAT
+				? props.column.suffix
+				: null,
+		)
 		const isOperationSelectDisabled = computed<boolean>(
 			() => operationOptions.value.length <= 1,
 		)
@@ -198,6 +204,7 @@ export default defineComponent<{
 			valueOptions,
 			valuePrefix,
 			valueStep,
+			valueSuffix,
 			Yoco,
 		}
 	},

@@ -129,6 +129,7 @@ export namespace KottiFilters {
 			Common & {
 				operations: OPERATION[]
 				step: KottiFieldNumber.Props['step']
+				suffix: KottiFieldNumber.Props['suffix']
 				type: FilterType.FLOAT
 			}
 
