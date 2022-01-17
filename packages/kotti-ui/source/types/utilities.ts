@@ -8,7 +8,7 @@ export type SpecifyRequiredProps<
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
- * Replaces any key of a Record that has `OLD_TYPE` with `NEW_TYPE`
+ * Replaces any value of a Record that has `OLD_TYPE` with `NEW_TYPE`
  */
 export type ReplaceRecordType<
 	OBJECT extends Record<string, any>,

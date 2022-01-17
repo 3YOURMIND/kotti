@@ -165,7 +165,7 @@ export namespace KottiField {
 	})
 	export type InhertiableProps = z.input<typeof inheritablePropsSchema>
 	/**
-	 * Warning: All keys of type `never` are replaced with `any`
+	 * Warning: All values of type `never` are replaced with `any`
 	 */
 	export type InhertiablePropsInternal = ReplaceRecordType<
 		z.output<typeof inheritablePropsSchema>
@@ -249,33 +249,31 @@ export namespace KottiField {
 	 * supported, since it may not always make sense to have some of
 	 * the props on certain fields.
 	 */
-	export const supportsSchema = z.object({
+	export type Supports = {
 		/**
 		 * In some fields, having a clear button would be nonsensical (e.g. KtFieldToggle)
 		 */
-		clear: z.boolean(),
+		clear: boolean
 
 		/**
 		 * Affects all decoration properties like icons and affixes.
 		 * These aren’t supported on e.g. the KtFieldToggleGroup
 		 */
-		decoration: z.boolean(),
+		decoration: boolean
 
 		/**
 		 * Some components don’t have a well-defined place to put placeholders
 		 */
-		placeholder: z.boolean(),
+		placeholder: boolean
 
 		/**
 		 * Some third-party components do not support passing a custom tabIndex
 		 */
-		tabIndex: z.boolean(),
-	})
-	export type Supports = z.output<typeof supportsSchema>
+		tabIndex: boolean
+	}
 
-	export const translationsSchema = z.object({
-		optionalLabel: z.string(),
-		requiredMessage: z.string(),
-	})
-	export type Translations = z.output<typeof translationsSchema>
+	export type Translations = {
+		optionalLabel: string
+		requiredMessage: string
+	}
 }

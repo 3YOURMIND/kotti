@@ -6,7 +6,7 @@ export namespace KottiFieldPassword {
 	export const valueSchema = z.string().nullable()
 	export type Value = z.output<typeof valueSchema>
 
-	enum AutoComplete {
+	export enum AutoComplete {
 		CURRENT = 'current-password',
 		NEW = 'new-passowrd',
 	}
@@ -14,10 +14,7 @@ export namespace KottiFieldPassword {
 		.merge(KottiField.potentiallySupportedPropsSchema)
 		.extend({
 			placeholder: z.string().nullable().default(null),
-			autoComplete: z.union([
-				z.literal(AutoComplete.CURRENT),
-				z.literal(AutoComplete.NEW),
-			]),
+			autoComplete: z.nativeEnum(AutoComplete),
 			value: valueSchema.default(null),
 		})
 

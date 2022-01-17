@@ -11,9 +11,7 @@ export namespace KottiFieldToggle {
 		}
 		export const propsSchema = z
 			.object({
-				type: z
-					.union([z.literal(Type.SWITCH), z.literal(Type.CHECKBOX)])
-					.default(z.literal(Type.CHECKBOX).value),
+				type: z.nativeEnum(Type).default(Type.CHECKBOX),
 			})
 			.merge(
 				KottiField.potentiallySupportedPropsSchema.pick({ tabIndex: true }),
@@ -38,8 +36,7 @@ export namespace KottiFieldToggleGroup {
 
 	export const entrySchema = z.object({
 		isDisabled: z.boolean().optional(),
-		// equivalent to NonNullable<valueSchema>.keySchema
-		key: valueSchema.unwrap().keySchema,
+		key: z.string(),
 		label: z.string(),
 		tooltip: z.string().optional(),
 	})

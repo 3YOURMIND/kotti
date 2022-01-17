@@ -72,9 +72,9 @@ export namespace Shared {
 		export const propsSchema = Shared.propsSchema.extend({
 			placeholder: z
 				.tuple([z.string().nullable(), z.string().nullable()])
-				.default([null, null]),
+				.default((): [null, null] => [null, null]),
 			shortcuts: z.array(Range.dateShortcutSchema).default(() => []),
-			value: Range.valueSchema.default([null, null]),
+			value: Range.valueSchema.default((): [null, null] => [null, null]),
 		})
 		export type Props = z.input<typeof Range.propsSchema>
 		export type PropsInternal = z.output<typeof Range.propsSchema>
