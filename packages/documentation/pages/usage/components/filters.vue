@@ -111,7 +111,7 @@ export default defineComponent({
 				isLoading: boolean
 			}
 			locale: Kotti.I18n.SupportedLanguages
-			prefix: Kotti.FieldNumber.Props['suffix']
+			prefix: Kotti.FieldNumber.Props['prefix']
 			searchPlaceholder: Kotti.FieldText.Value
 			suffix: Kotti.FieldNumber.Props['suffix']
 		}>({
