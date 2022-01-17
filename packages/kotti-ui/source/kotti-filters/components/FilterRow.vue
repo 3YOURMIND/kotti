@@ -146,7 +146,8 @@ export default defineComponent<{
 			}
 		})
 		const valuePrefix = computed<KottiFieldNumber.Props['prefix']>(() =>
-			props.column?.type === KottiFilters.FilterType.CURRENCY
+			props.column?.type === KottiFilters.FilterType.CURRENCY ||
+			props.column?.type === KottiFilters.FilterType.FLOAT
 				? props.column.prefix
 				: null,
 		)
@@ -162,6 +163,7 @@ export default defineComponent<{
 			}
 		})
 		const valueSuffix = computed<KottiFieldNumber.Props['suffix']>(() =>
+			props.column?.type === KottiFilters.FilterType.CURRENCY ||
 			props.column?.type === KottiFilters.FilterType.FLOAT
 				? props.column.suffix
 				: null,

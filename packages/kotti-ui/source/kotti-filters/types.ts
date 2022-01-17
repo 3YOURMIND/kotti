@@ -115,6 +115,7 @@ export namespace KottiFilters {
 			operations: OPERATION[]
 			prefix: KottiFieldNumber.Props['prefix']
 			step: KottiFieldNumber.Props['step']
+			suffix: KottiFieldNumber.Props['suffix']
 			type: FilterType.CURRENCY
 		}
 
@@ -128,6 +129,7 @@ export namespace KottiFilters {
 		export type Float<OPERATION extends Operation.Float = Operation.Float> =
 			Common & {
 				operations: OPERATION[]
+				prefix: KottiFieldNumber.Props['prefix']
 				step: KottiFieldNumber.Props['step']
 				suffix: KottiFieldNumber.Props['suffix']
 				type: FilterType.FLOAT

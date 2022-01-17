@@ -61,13 +61,13 @@
     				<div class="field-row">
     					<KtFieldText
     						formKey="prefix"
-    						helpText="Support on CURRENCY column type only"
+    						helpText="Support on CURRENCY and FLOAT column types only"
     						isOptional
     						label="prefix"
     					/>
     					<KtFieldText
     						formKey="suffix"
-    						helpText="Support on FLOAT column type only"
+    						helpText="Support on CURRENCY and FLOAT column types only"
     						isOptional
     						label="suffix"
     					/>
@@ -119,9 +119,9 @@ export default defineComponent({
 				isLoading: false,
 			},
 			locale: 'en-US',
-			prefix: 'EUR',
+			prefix: null,
 			searchPlaceholder: null,
-			suffix: '%',
+			suffix: null,
 		})
 
 		const componentProps = computed(
@@ -167,6 +167,7 @@ export default defineComponent({
 							Kotti.Filters.Operation.Float.LESS_THAN_OR_EQUAL,
 							Kotti.Filters.Operation.Float.IS_EMPTY,
 						],
+						prefix: settings.value.prefix,
 						step: 0.001,
 						suffix: settings.value.suffix,
 						type: Kotti.Filters.FilterType.FLOAT,
@@ -184,6 +185,7 @@ export default defineComponent({
 						],
 						prefix: settings.value.prefix,
 						step: 0.01,
+						suffix: settings.value.suffix,
 						type: Kotti.Filters.FilterType.CURRENCY,
 					},
 					{
