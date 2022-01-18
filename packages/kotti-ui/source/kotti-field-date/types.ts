@@ -19,13 +19,17 @@ export namespace Shared {
 		)
 		.extend({
 			maximumDate: z
-				.string()
-				.refine((value) => dayjs(value).format('YYYY-MM-DD') === value)
+				.union([
+					z.string().regex(DATE_FORMAT_REGEX),
+					z.string().regex(DATE_TIME_FORMAT_REGEX),
+				])
 				.nullable()
 				.default(null),
 			minimumDate: z
-				.string()
-				.refine((value) => dayjs(value).format('YYYY-MM-DD') === value)
+				.union([
+					z.string().regex(DATE_FORMAT_REGEX),
+					z.string().regex(DATE_TIME_FORMAT_REGEX),
+				])
 				.nullable()
 				.default(null),
 		})
