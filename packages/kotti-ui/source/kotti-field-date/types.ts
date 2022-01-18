@@ -1,45 +1,135 @@
+import { z } from 'zod'
+
 import { KottiField } from '../kotti-field/types'
 
+import { DATE_FORMAT_REGEX, DATE_TIME_FORMAT_REGEX } from './constants'
+
 export namespace Shared {
-	export interface Props<VALUE, PLACEHOLDER_TYPE = string | null>
-		extends KottiField.Props<VALUE, PLACEHOLDER_TYPE> {
-		maximumDate: string | null
-		minimumDate: string | null
-		shortcuts: ShortcutEntry<VALUE>[]
-	}
+	export const dateShortcutSchema = z.object({
+		keepOpen: z.boolean().optional(),
+		label: z.string(),
+		value: z.never(), // overridden per date*-field
+	})
 
-	export type ShortcutEntry<VALUE> = {
-		keepOpen?: boolean
-		label: string
-		value: VALUE
-	}
+	export const propsSchema = KottiField.propsSchema
+		.merge(
+			KottiField.potentiallySupportedPropsSchema.pick({
+				hideClear: true,
+			}),
+		)
+		.extend({
+			maximumDate: z
+				.union([
+					z.string().regex(DATE_FORMAT_REGEX),
+					z.string().regex(DATE_TIME_FORMAT_REGEX),
+				])
+				.nullable()
+				.default(null),
+			minimumDate: z
+				.union([
+					z.string().regex(DATE_FORMAT_REGEX),
+					z.string().regex(DATE_TIME_FORMAT_REGEX),
+				])
+				.nullable()
+				.default(null),
+		})
 
-	/**
-	 * ISO8601
-	 */
-	export type Value = string | null
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }
 
 export namespace KottiFieldDate {
-	export type Props = Shared.Props<Value>
+	export const valueSchema = z.string().regex(DATE_FORMAT_REGEX).nullable()
+	export type Value = z.output<typeof valueSchema>
 
-	export type Value = Shared.Value
+	export const propsSchema = Shared.propsSchema.extend({
+		placeholder: z.string().nullable().default(null),
+		shortcuts: z
+			.array(
+				Shared.dateShortcutSchema.extend({
+					value: z.string().regex(DATE_FORMAT_REGEX),
+				}),
+			)
+			.default(() => []),
+		value: valueSchema.default(null),
+	})
+
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }
 
 export namespace KottiFieldDateRange {
-	export type Props = Shared.Props<Value, [string | null, string | null]>
+	export const valueSchema = z.tuple([
+		z.string().regex(DATE_FORMAT_REGEX).nullable(),
+		z.string().regex(DATE_FORMAT_REGEX).nullable(),
+	])
+	export type Value = z.output<typeof valueSchema>
 
-	export type Value = [Shared.Value, Shared.Value]
+	export const propsSchema = Shared.propsSchema.extend({
+		placeholder: z
+			.tuple([z.string().nullable(), z.string().nullable()])
+			.default((): [null, null] => [null, null]),
+		shortcuts: z
+			.array(
+				Shared.dateShortcutSchema.extend({
+					value: z.tuple([
+						z.string().regex(DATE_FORMAT_REGEX),
+						z.string().regex(DATE_FORMAT_REGEX),
+					]),
+				}),
+			)
+			.default(() => []),
+		value: valueSchema.default((): [null, null] => [null, null]),
+	})
+
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }
 
 export namespace KottiFieldDateTime {
-	export type Props = Shared.Props<Value>
+	export const valueSchema = z.string().regex(DATE_TIME_FORMAT_REGEX).nullable()
+	export type Value = z.output<typeof valueSchema>
 
-	export type Value = Shared.Value
+	export const propsSchema = Shared.propsSchema.extend({
+		placeholder: z.string().nullable().default(null),
+		shortcuts: z
+			.array(
+				Shared.dateShortcutSchema.extend({
+					value: z.string().regex(DATE_TIME_FORMAT_REGEX),
+				}),
+			)
+			.default(() => []),
+		value: valueSchema.default(null),
+	})
+
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }
 
 export namespace KottiFieldDateTimeRange {
-	export type Props = Shared.Props<Value, [string | null, string | null]>
+	export const valueSchema = z.tuple([
+		z.string().regex(DATE_TIME_FORMAT_REGEX).nullable(),
+		z.string().regex(DATE_TIME_FORMAT_REGEX).nullable(),
+	])
+	export type Value = z.output<typeof valueSchema>
 
-	export type Value = [Shared.Value, Shared.Value]
+	export const propsSchema = Shared.propsSchema.extend({
+		placeholder: z
+			.tuple([z.string().nullable(), z.string().nullable()])
+			.default((): [null, null] => [null, null]),
+		shortcuts: z
+			.array(
+				Shared.dateShortcutSchema.extend({
+					value: z.tuple([
+						z.string().regex(DATE_TIME_FORMAT_REGEX),
+						z.string().regex(DATE_TIME_FORMAT_REGEX),
+					]),
+				}),
+			)
+			.default(() => []),
+		value: valueSchema.default((): [null, null] => [null, null]),
+	})
+
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }

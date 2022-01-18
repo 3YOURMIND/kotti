@@ -9,13 +9,11 @@ export namespace KottiForm {
 	> {
 		formPath: Ref<ReadonlyArray<string | number>>
 
-		fieldInheritableProps: Ref<KottiField.InhertiableProps>
+		fieldInheritableProps: Ref<KottiField.InheritablePropsInternal>
 
-		onAddField: <DATA_TYPE>(
-			toAdd: KottiField.Hook.Returns<DATA_TYPE, unknown>,
-		) => void
+		onAddField: <DATA_TYPE>(toAdd: KottiField.Hook.Returns<DATA_TYPE>) => void
 		onRemoveField: <DATA_TYPE>(
-			toRemove: KottiField.Hook.Returns<DATA_TYPE, unknown>,
+			toRemove: KottiField.Hook.Returns<DATA_TYPE>,
 		) => void
 
 		setValue: (formKey: T, newValue: CONTEXT_TYPE[T]) => void
@@ -31,7 +29,7 @@ export namespace KottiForm {
 
 	export type ContextType = Record<string, unknown>
 
-	export type Props = KottiField.InhertiableProps & {
+	export type Props = KottiField.InheritablePropsInternal & {
 		/**
 		 * Form Identifier
 		 * defaults to sequential identifier

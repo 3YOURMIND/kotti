@@ -2,22 +2,27 @@
 require('jsdom-global')()
 import { defineComponent, ref } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
+import { z } from 'zod'
 
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import KtField from '../kotti-field/KtField.vue'
 import { KottiField } from '../kotti-field/types'
 import KtForm from '../kotti-form/KtForm.vue'
 import { useI18nProvide } from '../kotti-i18n/hooks'
+import { makeProps } from '../make-props'
 import { localVue } from '../test-utils/index'
 
 import KtFormControllerObject from './KtFormControllerObject.vue'
 
-const TestField = defineComponent({
+const TestField = defineComponent<KottiField.PropsInternal>({
 	name: 'TestField',
 	components: { KtField },
-	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.string().nullable(),
+		}),
+	),
+	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
@@ -57,7 +62,7 @@ const getField = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
 	index: number,
-): KottiField.Hook.Returns<string | null, string | null> =>
+): KottiField.Hook.Returns<string | null> =>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(wrapper.findAllComponents({ name: 'KtField' }).at(index).vm as any).field
 

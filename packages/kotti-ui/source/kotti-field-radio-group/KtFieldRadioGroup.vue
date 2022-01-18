@@ -47,34 +47,23 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { makeProps } from '../make-props'
 
 import { KOTTI_FIELD_RADIO_GROUP_SUPPORTS } from './constants'
 import { KottiFieldRadioGroup } from './types'
 
 let nameIndex = 0
 
-export default defineComponent({
+export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 	name: 'KtFieldRadioGroup',
 	components: {
 		FieldHelpText,
 		KtField,
 	},
-	props: {
-		...KOTTI_FIELD_PROPS,
-		isInline: { default: false, type: Boolean },
-		options: {
-			required: true,
-			type: Array,
-			validator: (options: KottiFieldRadioGroup.Props['options']) =>
-				[...new Set(options.map(({ value }) => value))].length ===
-				options.length,
-		},
-		value: { default: null, type: [Number, String, Boolean] },
-	},
-	setup(props: KottiFieldRadioGroup.Props, { emit }) {
-		const field = useField<KottiFieldRadioGroup.Value, never>({
+	props: makeProps(KottiFieldRadioGroup.propsSchema),
+	setup(props, { emit }) {
+		const field = useField<KottiFieldRadioGroup.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldRadioGroup.Value =>
 				['number', 'string', 'boolean'].includes(typeof value) ||

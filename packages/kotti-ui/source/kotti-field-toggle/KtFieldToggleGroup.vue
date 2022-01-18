@@ -28,30 +28,23 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { makeProps } from '../make-props'
 
 import ToggleInner from './components/ToggleInner.vue'
-import {
-	KOTTI_FIELD_TOGGLE_GROUP_PROPS,
-	KOTTI_FIELD_TOGGLE_SUPPORTS,
-} from './constants'
+import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import { KottiFieldToggleGroup } from './types'
 
-export default defineComponent({
+export default defineComponent<KottiFieldToggleGroup.PropsInternal>({
 	name: 'KtFieldToggleGroup',
 	components: {
 		FieldHelpText,
 		KtField,
 		ToggleInner,
 	},
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_TOGGLE_GROUP_PROPS,
-		value: { default: null, type: Object },
-	},
+	props: makeProps(KottiFieldToggleGroup.propsSchema),
 	setup(props: KottiFieldToggleGroup.Props, { emit }) {
-		const field = useField<KottiFieldToggleGroup.Value, never>({
+		const field = useField<KottiFieldToggleGroup.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldToggleGroup.Value =>
 				typeof value === 'object' &&

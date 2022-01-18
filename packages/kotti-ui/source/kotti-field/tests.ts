@@ -2,24 +2,26 @@
 require('jsdom-global')()
 import { defineComponent, ref } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
+import { z } from 'zod'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { useI18nProvide } from '../kotti-i18n/hooks'
-import {
-	localVue,
-	forceVueToEvaluateComputedProperty,
-	getMockContext,
-} from '../test-utils'
+import { makeProps } from '../make-props'
+import { localVue, getMockContext } from '../test-utils'
 
-import { KOTTI_FIELD_PROPS, FORM_KEY_NONE } from './constants'
+import { FORM_KEY_NONE } from './constants'
 import { KtFieldErrors } from './errors'
 import { useField } from './hooks'
 import { KottiField } from './types'
 
 const TestComponent = defineComponent({
 	name: 'TestComponent',
-	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.string().nullable(),
+		}),
+	),
+	setup: (props: KottiField.PropsInternal, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
@@ -43,11 +45,12 @@ const TestComponent = defineComponent({
 
 const TestComponentObject = defineComponent({
 	name: 'TestComponentObject',
-	props: KOTTI_FIELD_PROPS,
-	setup: (
-		props: KottiField.Props<Record<string, unknown> | null, string | null>,
-		{ emit },
-	) => {
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.record(z.unknown()).nullable(),
+		}),
+	),
+	setup: (props: KottiField.PropsInternal, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
@@ -78,14 +81,16 @@ describe('useField', () => {
 			propsData: { isDisabled: true },
 		})
 
-		expect(() => wrapper.vm.field.setValue(null)).toThrowError(
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect(() => (wrapper.vm as any).field.setValue(null)).toThrowError(
 			KtFieldErrors.DisabledSetValueCalled,
 		)
 
 		wrapper.setProps({ isDisabled: false })
 		await wrapper.vm.$nextTick()
 
-		expect(() => wrapper.vm.field.setValue(null)).not.toThrowError()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect(() => (wrapper.vm as any).field.setValue(null)).not.toThrowError()
 	})
 
 	it('props.value gets deepCloned', async () => {
@@ -99,53 +104,63 @@ describe('useField', () => {
 			},
 		})
 
-		expect(wrapper.vm.field.currentValue).toEqual(VALUE_REFERENCE)
-		expect(wrapper.vm.field.currentValue).not.toBe(VALUE_REFERENCE)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((wrapper.vm as any).field.currentValue).toEqual(VALUE_REFERENCE)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((wrapper.vm as any).field.currentValue).not.toBe(VALUE_REFERENCE)
 	})
 
 	describe('props reactivity', () => {
 		it('helpText is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			expect(wrapper.vm.field.helpText).toBe(null)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.helpText).toBe(null)
 
 			wrapper.setProps({ helpText: 'something something' })
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.vm.field.helpText).toBe('something something')
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.helpText).toBe('something something')
 		})
 
 		it('isDisabled is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			expect(wrapper.vm.field.isDisabled).toBe(false)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.isDisabled).toBe(false)
 
 			wrapper.setProps({ isDisabled: true })
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.vm.field.isDisabled).toBe(true)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.isDisabled).toBe(true)
 		})
 
 		it('isOptional is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			expect(wrapper.vm.field.isOptional).toBe(false)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.isOptional).toBe(false)
 
 			wrapper.setProps({ isOptional: true })
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.vm.field.isOptional).toBe(true)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.isOptional).toBe(true)
 		})
 
 		it('label is reactive', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			expect(wrapper.vm.field.label).toBe(null)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.label).toBe(null)
 
 			wrapper.setProps({ label: 'something something' })
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.vm.field.label).toBe('something something')
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.label).toBe('something something')
 		})
 	})
 
@@ -153,8 +168,10 @@ describe('useField', () => {
 		it('should emit change when calling setValue on a field outside of a context', async () => {
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			wrapper.vm.field.setValue('something else')
-			wrapper.vm.field.setValue(null)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			;(wrapper.vm as any).field.setValue('something else')
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			;(wrapper.vm as any).field.setValue(null)
 
 			await wrapper.vm.$nextTick()
 
@@ -232,8 +249,8 @@ describe('useField', () => {
 					validator: () => ({ type: 'success', text: 'Testing' }),
 				},
 			})
-
-			expect(wrapper.vm.field.validation).toEqual({
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.validation).toEqual({
 				type: 'success',
 				text: 'Testing',
 			})
@@ -243,71 +260,11 @@ describe('useField', () => {
 			})
 
 			await wrapper.vm.$nextTick()
-
-			expect(wrapper.vm.field.validation).toEqual({
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.validation).toEqual({
 				type: 'warning',
 				text: 'Testing',
 			})
-		})
-
-		it('works with only validatorKey in a context', async () => {
-			const wrapper = shallowMount(TestComponent, {
-				localVue,
-				propsData: {
-					formKey: FORM_KEY_NONE,
-					isOptional: true,
-					validatorKey: 'testKey1',
-				},
-				provide: {
-					[KT_FORM_CONTEXT]: getMockContext({
-						validators: {
-							testKey1: () => ({ type: 'warning', text: 'This is testKey1' }),
-							testKey2: () => ({ type: 'error', text: 'This is testKey2' }),
-						},
-					}),
-				},
-			})
-
-			expect(wrapper.vm.field.validation).toEqual({
-				type: 'warning',
-				text: 'This is testKey1',
-			})
-
-			wrapper.setProps({ validatorKey: 'testKey2' })
-
-			await wrapper.vm.$nextTick()
-
-			expect(wrapper.vm.field.validation).toEqual({
-				type: 'error',
-				text: 'This is testKey2',
-			})
-		})
-
-		it('throws for validatorKey outside of a context', async () => {
-			expect(() =>
-				shallowMount(TestComponent, {
-					localVue,
-					propsData: {
-						validatorKey: 'testKey',
-						value: 'field is not optional',
-					},
-				}),
-			).toThrowError(KtFieldErrors.InvalidPropOutsideOfContext)
-
-			const wrapper = shallowMount(TestComponent, { localVue })
-
-			console.error = jest.fn()
-
-			wrapper.setProps({ validatorKey: 'thisWillCrash' })
-			await wrapper.vm.$nextTick()
-
-			/**
-			 * Check console.error since Vue decides to just swallow errors
-			 * that get thrown in watchers (except for the first call, of course!)
-			 *
-			 * @see {@link https://github.com/vuejs/vue/issues/576}
-			 */
-			expect(console.error).toHaveBeenCalled()
 		})
 
 		it('works with only formKey in a context', async () => {
@@ -344,105 +301,6 @@ describe('useField', () => {
 				type: 'warning',
 				text: 'This is testKey2',
 			})
-		})
-
-		it('throws when providing a validatorKey and a validator', async () => {
-			const validator = jest.fn()
-
-			expect(() => {
-				const wrapper = shallowMount(TestComponent, {
-					localVue,
-					propsData: {
-						formKey: 'testKey',
-						validator,
-						validatorKey: 'testKey',
-					},
-					provide: {
-						[KT_FORM_CONTEXT]: getMockContext({
-							validators: {
-								testKey: () => ({
-									type: 'warning',
-									text: 'This is a warning',
-								}),
-							},
-							values: { testKey: 'something' },
-						}),
-					},
-				})
-
-				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation)
-			}).toThrowError(KtFieldErrors.NonDeterministicValidatorUsage)
-			expect(validator).not.toBeCalled()
-
-			const wrapper = shallowMount(TestComponent, {
-				localVue,
-				propsData: { formKey: 'testKey', validatorKey: 'testKey' },
-				provide: {
-					[KT_FORM_CONTEXT]: getMockContext({
-						validators: {
-							testKey: () => ({ type: 'warning', text: 'This is a warning' }),
-						},
-						values: { testKey: 'something' },
-					}),
-				},
-			})
-
-			expect(wrapper.vm.field.validation).toEqual({
-				type: 'warning',
-				text: 'This is a warning',
-			})
-
-			wrapper.setProps({ validator })
-			await wrapper.vm.$nextTick()
-
-			expect(() =>
-				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation),
-			).toThrowError(KtFieldErrors.NonDeterministicValidatorUsage)
-
-			expect(validator).not.toBeCalled()
-		})
-
-		it('throws when validatorKey cannot be found in validators', async () => {
-			const testKey = jest.fn()
-
-			expect(() => {
-				const wrapper = shallowMount(TestComponent, {
-					localVue,
-					propsData: { formKey: 'testKey', validatorKey: 'wrongKey' },
-					provide: {
-						[KT_FORM_CONTEXT]: getMockContext({
-							validators: { testKey },
-							values: { testKey: 'something' },
-						}),
-					},
-				})
-
-				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation)
-			}).toThrowError(KtFieldErrors.ValidatorNotFound)
-			expect(testKey).not.toBeCalled()
-
-			const wrapper = shallowMount(TestComponent, {
-				localVue,
-				propsData: { formKey: 'testKey', validatorKey: 'testKey' },
-				provide: {
-					[KT_FORM_CONTEXT]: getMockContext({
-						validators: { testKey },
-						values: { testKey: 'something' },
-					}),
-				},
-			})
-
-			forceVueToEvaluateComputedProperty(wrapper.vm.field.validation)
-
-			expect(testKey).toBeCalled()
-
-			wrapper.setProps({ validatorKey: 'wrongKey' })
-
-			await wrapper.vm.$nextTick()
-
-			expect(() =>
-				forceVueToEvaluateComputedProperty(wrapper.vm.field.validation),
-			).toThrowError(KtFieldErrors.ValidatorNotFound)
 		})
 
 		it('does not validate if formKey is not in validators', () => {

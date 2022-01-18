@@ -57,11 +57,11 @@ export namespace KottiPopover {
 
 	export const propsSchema = z.object({
 		forceShowPopover: z.boolean().nullable().default(null),
-		options: z.array(optionSchema).default([]),
+		options: z.array(optionSchema).default(() => []),
 		placement: z.nativeEnum(Placement).default(Placement.BOTTOM),
 		size: z.nativeEnum(Size).default(Size.AUTO),
 	})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }

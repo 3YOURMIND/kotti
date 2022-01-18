@@ -1,11 +1,56 @@
-import { Yoco } from '@3yourmind/yoco'
+import { yocoIconSchema } from '@3yourmind/yoco'
 import { Ref, SetupContext } from '@vue/composition-api'
+import { z } from 'zod'
+
+import { ReplaceRecordType } from '../types/utilities'
 
 import { FORM_KEY_NONE } from './constants'
 
 export namespace KottiField {
+	export enum Size {
+		LARGE = 'large',
+		MEDIUM = 'medium',
+		SMALL = 'small',
+	}
+
+	export namespace Validation {
+		export const emptySchema = z.object({
+			type: z.literal('empty'),
+		})
+		export type Empty = z.output<typeof emptySchema>
+
+		export const errorSchema = z.object({
+			type: z.literal('error'),
+			text: z.string().nullable(),
+		})
+		export type Error = z.output<typeof errorSchema>
+
+		export const successSchema = z.object({
+			type: z.literal('success'),
+			text: z.string().nullable(),
+		})
+		export type Success = z.output<typeof successSchema>
+
+		export const warningSchema = z.object({
+			type: z.literal('warning'),
+			text: z.string().nullable(),
+		})
+		export type Warning = z.output<typeof warningSchema>
+
+		export const resultSchema = z.union([
+			emptySchema,
+			errorSchema,
+			successSchema,
+			warningSchema,
+		])
+		export type Result = z.output<typeof resultSchema>
+
+		export const functionSchema = z.function(z.tuple([z.any()]), resultSchema)
+		export type Function = z.output<typeof functionSchema>
+	}
+
 	export namespace Hook {
-		export interface Parameters<DATA_TYPE, PLACEHOLDER_TYPE> {
+		export interface Parameters<DATA_TYPE> {
 			emit: SetupContext['emit']
 
 			/**
@@ -18,12 +63,12 @@ export namespace KottiField {
 			 * Useful for checking validation on required fields
 			 */
 			isEmpty: (value: DATA_TYPE) => boolean
-			props: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>
+			props: KottiField.PropsInternal
 			supports: KottiField.Supports
 		}
 
-		export type Returns<DATA_TYPE, PLACEHOLDER_TYPE> = Pick<
-			KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>,
+		export type Returns<DATA_TYPE> = Pick<
+			KottiField.PropsInternal,
 			| 'helpDescription'
 			| 'helpText'
 			| 'hideClear'
@@ -38,26 +83,48 @@ export namespace KottiField {
 			| 'rightIcon'
 			| 'suffix'
 		> & {
-			currentValue: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>['value']
+			currentValue: DATA_TYPE
 			inputProps: Readonly<{
 				/**
 				 * Native HTML Props should have lowercase keys
 				 */
 				'data-test': string
 				disabled: boolean
-				tabindex: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>['tabIndex']
+				tabindex: KottiField.PropsInternal['tabIndex']
 			}>
 			isEmpty: boolean
 			setValue: (newValue: DATA_TYPE) => void
 			validation: Readonly<KottiField.Validation.Result>
 		}
 
-		export type ReturnsWithRefs<DATA_TYPE, PLACEHOLDER_TYPE> = {
-			[KEY in keyof Returns<DATA_TYPE, PLACEHOLDER_TYPE>]: Ref<
-				Returns<DATA_TYPE, PLACEHOLDER_TYPE>[KEY]
-			>
+		export type ReturnsWithRefs<DATA_TYPE> = {
+			[KEY in keyof Returns<DATA_TYPE>]: Ref<Returns<DATA_TYPE>[KEY]>
 		}
 	}
+
+	/**
+	 * Each attribute on KottiField.Supports maps to one or more
+	 * KtField prop, as follows:
+	 * {
+	 * 	clear: ['hideClear']
+	 * 	decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix']
+	 * 	tabIndex: ['tabIndex']
+	 * 	placeholder: ['placeholder']
+	 * }
+	 *
+	 * The schema is only concerned with props that would have the same type,
+	 * if extended (e.g. decoration props).
+	 * Therefore, doesn't include `placeholder` since it is extended
+	 * differently per field.
+	 */
+	export const potentiallySupportedPropsSchema = z.object({
+		hideClear: z.boolean().default(false),
+		leftIcon: yocoIconSchema.nullable().default(null),
+		prefix: z.string().nullable().default(null),
+		rightIcon: yocoIconSchema.nullable().default(null),
+		suffix: z.string().nullable().default(null),
+		tabIndex: z.number().default(0),
+	})
 
 	/**
 	 * Includes, but is not limited to, properties that are not consumed by the KtForm itself,
@@ -66,107 +133,131 @@ export namespace KottiField {
 	 *
 	 * These values can be explicitly overriden in the field usage
 	 */
-	export type InhertiableProps = {
+	export const inheritablePropsSchema = z.object({
 		/**
 		 * Is the field disabled?
 		 * This will e.g. prevent changing the value
 		 */
-		isDisabled: boolean
+		isDisabled: z.boolean().default(false),
 
 		/**
 		 * Show a skeleton in place of the field
 		 */
-		isLoading: boolean
+		isLoading: z.boolean().default(false),
 
 		/**
 		 * Should the user have the option to clear the field
+		 *
+		 * This is never by default and specified by component schemas that need it
 		 */
-		hideClear: boolean
+		hideClear: z.never(),
 
 		/**
 		 * Prevents the validation (e.g. color, text) from being shown
 		 */
-		hideValidation: boolean
+		hideValidation: z.boolean().default(false),
 
 		/**
 		 * Defines the size of the field which influences child styles
 		 * to make fields e.g. appear more compact
 		 */
-		size: Size | null
-	}
+		size: z.nativeEnum(Size).nullable().default(null),
+	})
 
+	export type InheritableProps = z.input<typeof inheritablePropsSchema>
 	/**
-	 * When adding a new prop, please make sure that no KtFormField
-	 * already uses a prop with the same name, to avoid conflicts
+	 * Warning: All values of type `never` are replaced with `any`
 	 */
-	export type Props<DATA_TYPE, PLACEHOLDER_TYPE> = InhertiableProps & {
+	export type InheritablePropsInternal = ReplaceRecordType<
+		z.output<typeof inheritablePropsSchema>
+	>
+
+	export const propsSchema = inheritablePropsSchema.extend({
 		/**
 		 * Specifies that the data KtFormContext[formKey]
 		 * If formKey is "NONE", it is treated as an explicit opt-out
 		 * of the context-based behavior
 		 */
-		formKey: typeof FORM_KEY_NONE | string | null
+		formKey: z
+			.union([z.string(), z.literal(FORM_KEY_NONE)])
+			.nullable()
+			.default(null),
 
 		/**
 		 * Adds a small questionmark popover to the label to explain
 		 * more complicated forms to the user on-demand
 		 */
-		helpDescription: string | null
-
+		helpDescription: z.string().nullable().default(null),
 		/**
 		 * Adds a description below the label
 		 */
-		helpText: string | null
+		helpText: z.string().nullable().default(null),
 
 		/**
 		 * Shows a Yoco icon on the left side of the field
+		 *
+		 * This is never by default and specified by component schemas that need it.
 		 */
-		leftIcon: Yoco.Icon | null
+		leftIcon: z.never(),
 
 		/**
 		 * Shown when no value was entered yet
 		 *
-		 * this is generic, as KtFieldDateRange needs two placeholders [string | null, string | null]
+		 * This is never by default and specified by component schemas that need it
+		 *
+		 * The overridden type may differ
+		 * e.g. KtFieldDateRange needs two placeholders `[string | null, string | null]`
 		 */
-		placeholder: PLACEHOLDER_TYPE
+		placeholder: z.never(),
 
 		/**
 		 * Shows a Yoco icon on the right side of the field
+		 *
+		 * This is never by default and specified by component schemas that need it
 		 */
-		rightIcon: Yoco.Icon | null
+		rightIcon: z.never(),
 
-		isOptional: boolean
-		label: string | null
+		isOptional: z.boolean().default(false),
+
+		label: z.string().nullable().default(null),
 
 		/**
 		 * Show some string before the field
+		 *
+		 * This is never by default and specified by component schemas that need it
 		 */
-		prefix: string | null
+		prefix: z.never(),
 
 		/**
 		 * Show some string after the field
+		 *
+		 * This is never by default and specified by component schemas that need it
 		 */
-		suffix: string | null
-		tabIndex: number
-		validator: KottiField.Validation.Function | null
+		suffix: z.never(),
 
 		/**
-		 * @default props.formKey
-		 * Explicitly overwrite the used validator in case it differs from the formKey
+		 * This is never by default and specified by component schemas that need it
 		 */
-		validatorKey: string | null
+		tabIndex: z.never(),
 
 		/**
+		 * Without a validator, everything will always default to being valid
+		 */
+		validator: KottiField.Validation.functionSchema.default(() => ({
+			type: 'empty',
+		})),
+
+		/**
+		 * This is never, and specified by each component's schema
 		 * v-model value
 		 */
-		value: DATA_TYPE
-	}
-
-	export enum Size {
-		LARGE = 'large',
-		MEDIUM = 'medium',
-		SMALL = 'small',
-	}
+		value: z.never(),
+	})
+	export type Props = z.input<typeof propsSchema>
+	/**
+	 * Warning: All keys of type `never` are replaced with `any`
+	 */
+	export type PropsInternal = ReplaceRecordType<z.output<typeof propsSchema>>
 
 	/**
 	 * Object that explicitly specifies which of the KtField.Props are
@@ -199,35 +290,5 @@ export namespace KottiField {
 	export type Translations = {
 		optionalLabel: string
 		requiredMessage: string
-	}
-
-	export namespace Validation {
-		export type Empty = {
-			type: 'empty'
-		}
-
-		export type Error = {
-			type: 'error'
-			text: string | null
-		}
-
-		export type Success = {
-			type: 'success'
-			text: string | null
-		}
-
-		export type Warning = {
-			type: 'warning'
-			text: string | null
-		}
-
-		export type Result =
-			| KottiField.Validation.Empty
-			| KottiField.Validation.Error
-			| KottiField.Validation.Success
-			| KottiField.Validation.Warning
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		export type Function = (value: any) => KottiField.Validation.Result
 	}
 }

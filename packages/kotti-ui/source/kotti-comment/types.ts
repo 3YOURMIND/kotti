@@ -23,8 +23,8 @@ export namespace KottiComment {
 		replies: z.array(commentSchema).optional(),
 	})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 
 	export namespace Events {
 		export type Delete = {
@@ -60,6 +60,6 @@ export namespace KottiCommentInput {
 		userAvatar: z.string().optional(),
 	})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }

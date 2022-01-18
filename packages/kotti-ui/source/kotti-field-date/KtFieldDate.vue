@@ -21,12 +21,11 @@ import { DatePicker as ElDate } from 'element-ui'
 import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
+import { makeProps } from '../make-props'
 
 import {
 	DATE_FORMAT_REGEX,
-	KOTTI_FIELD_DATE_PROPS,
 	EL_DATE_PROPS,
 	KOTTI_FIELD_DATE_SUPPORTS,
 } from './constants'
@@ -34,15 +33,12 @@ import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDate } from './types'
 import { isInvalidDate } from './utilities'
 
-export default defineComponent({
+export default defineComponent<KottiFieldDate.PropsInternal>({
 	name: 'KtFieldDate',
 	components: { ElDate, KtField },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_DATE_PROPS,
-	},
-	setup(props: KottiFieldDate.Props, { emit }) {
-		const field = useField<KottiFieldDate.Value, string | null>({
+	props: makeProps(KottiFieldDate.propsSchema),
+	setup(props, { emit }) {
+		const field = useField<KottiFieldDate.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldDate.Value =>
 				(typeof value === 'string' && DATE_FORMAT_REGEX.test(value)) ||
@@ -67,19 +63,17 @@ export default defineComponent({
 			Pick<DatePickerOptions, 'disabledDate' | 'shortcuts'>
 		> = computed(() => ({
 			disabledDate: (date: Date) => isInvalidDate(props, date),
-			shortcuts: props.shortcuts.map(
-				({ label, value, keepOpen }: KottiFieldDate.Props['shortcuts'][0]) => ({
-					text: label,
-					onClick(picker: ElDatePicker) {
-						/**
-						 * close the picker if it shouldn’t stay open
-						 */
-						if (keepOpen !== true) picker.$emit('pick', value)
+			shortcuts: props.shortcuts.map(({ label, value, keepOpen }) => ({
+				text: label,
+				onClick(picker: ElDatePicker) {
+					/**
+					 * close the picker if it shouldn’t stay open
+					 */
+					if (keepOpen !== true) picker.$emit('pick', value)
 
-						field.setValue(value)
-					},
-				}),
-			),
+					field.setValue(value)
+				},
+			})),
 		}))
 
 		return {

@@ -6,7 +6,6 @@ import {
 	reactive,
 	ref,
 	watch,
-	watchEffect,
 	Ref,
 } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
@@ -16,13 +15,12 @@ import { KottiForm } from '../kotti-form/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import { FORM_KEY_NONE } from './constants'
-import { KOTTI_FIELD_PROPS } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
-const useDecoration = <DATA_TYPE, PLACEHOLDER_TYPE>({
+const useDecoration = <DATA_TYPE>({
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>, 'props'>) => {
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'>) => {
 	return {
 		leftIcon: computed(() => props.leftIcon),
 		prefix: computed(() => props.prefix),
@@ -31,11 +29,11 @@ const useDecoration = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	}
 }
 
-const useInputProps = <DATA_TYPE, PLACEHOLDER_TYPE>({
+const useInputProps = <DATA_TYPE>({
 	context,
 	isDisabled,
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>, 'props'> & {
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> & {
 	context: KottiForm.Context | null
 	isDisabled: Ref<boolean>
 }) => {
@@ -68,9 +66,7 @@ const useInputProps = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	}
 }
 
-const useTexts = <DATA_TYPE, PLACEHOLDER_TYPE>(
-	props: KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>,
-) => {
+const useTexts = (props: KottiField.PropsInternal) => {
 	return {
 		helpDescription: computed(() => props.helpDescription),
 		helpText: computed(() => props.helpText),
@@ -78,7 +74,7 @@ const useTexts = <DATA_TYPE, PLACEHOLDER_TYPE>(
 	}
 }
 
-const useValue = <DATA_TYPE, PLACEHOLDER_TYPE>({
+const useValue = <DATA_TYPE>({
 	context,
 	emit,
 	isCorrectDataType,
@@ -86,7 +82,7 @@ const useValue = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	isEmpty,
 	props,
 }: Pick<
-	KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>,
+	KottiField.Hook.Parameters<DATA_TYPE>,
 	'emit' | 'isCorrectDataType' | 'isEmpty' | 'props'
 > & {
 	context: KottiForm.Context | null
@@ -150,33 +146,21 @@ const useValue = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	}
 }
 
-const useValidation = <DATA_TYPE, PLACEHOLDER_TYPE>({
+const useValidation = <DATA_TYPE>({
 	currentValue,
 	context,
 	isEmpty,
 	hideValidation,
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>, 'props'> &
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> &
 	Pick<
-		KottiField.Hook.ReturnsWithRefs<DATA_TYPE, PLACEHOLDER_TYPE>,
+		KottiField.Hook.ReturnsWithRefs<DATA_TYPE>,
 		'currentValue' | 'isEmpty'
 	> & {
 		context: KottiForm.Context | null
-		hideValidation: Ref<KottiField.InhertiableProps['hideValidation']>
+		hideValidation: Ref<KottiField.InheritablePropsInternal['hideValidation']>
 	}) => {
 	const translations = useTranslationNamespace('KtFields')
-
-	watch(
-		() => props.validatorKey,
-		(newValidatorKey) => {
-			if (context === null && newValidatorKey !== null)
-				throw new KtFieldErrors.InvalidPropOutsideOfContext(
-					props,
-					'validatorKey',
-				)
-		},
-		{ immediate: true },
-	)
 
 	const isMissingRequiredField = computed(
 		(): boolean => !props.isOptional && isEmpty.value,
@@ -189,47 +173,21 @@ const useValidation = <DATA_TYPE, PLACEHOLDER_TYPE>({
 			// eslint-disable-next-line sonarjs/cognitive-complexity
 			(): KottiField.Validation.Result => {
 				const customValidation = (() => {
-					if (props.validatorKey && props.validator)
-						throw new KtFieldErrors.NonDeterministicValidatorUsage(props)
-
-					if (context) {
-						if (props.validatorKey) {
-							if (!(props.validatorKey in context.validators.value))
-								throw new KtFieldErrors.ValidatorNotFound(props)
-
-							return context.validators.value[props.validatorKey](
-								currentValue.value,
-							)
-						}
-
-						// if no validatorKey is defined, we should try to fall-back to using the formKey
-						if (
-							props.formKey !== null &&
-							props.formKey !== FORM_KEY_NONE &&
-							props.formKey in context.validators.value
+					if (!context && props.formKey)
+						throw new KtFieldErrors.InvalidPropOutsideOfContext(
+							props,
+							'formKey',
 						)
-							return context.validators.value[props.formKey](currentValue.value)
-					} else {
-						if (props.validatorKey)
-							throw new KtFieldErrors.InvalidPropOutsideOfContext(
-								props,
-								'validatorKey',
-							)
 
-						if (props.formKey)
-							throw new KtFieldErrors.InvalidPropOutsideOfContext(
-								props,
-								'formKey',
-							)
-					}
+					if (
+						context &&
+						props.formKey !== null &&
+						props.formKey !== FORM_KEY_NONE &&
+						props.formKey in context.validators.value
+					)
+						return context.validators.value[props.formKey](currentValue.value)
 
-					/**
-					 * Return default validator result here because without a validator, everything will always
-					 * default to being valid
-					 */
-					return props.validator
-						? props.validator(currentValue.value)
-						: { type: 'empty' as const }
+					return props.validator(currentValue.value)
 				})()
 
 				return isMissingRequiredField.value
@@ -243,24 +201,24 @@ const useValidation = <DATA_TYPE, PLACEHOLDER_TYPE>({
 }
 
 /**
- * Implements KottiField.InhertiableProps
+ * Implements KottiField.InheritablePropsInternal
  * Prioritizes the field props, the context, and the passed default, respectively
  */
-const useInheritableProperties = <DATA_TYPE, PLACEHOLDER_TYPE>({
+const useInheritableProperties = <DATA_TYPE>({
 	context,
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>, 'props'> & {
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> & {
 	context: KottiForm.Context | null
 }) => {
 	/**
 	 * Get a single property from either the KtFieldComponents or the KtFormContext
 	 * Gives priority to the KtFieldComponents and implements default fallbacks
 	 */
-	const useShared = <KEY extends keyof KottiField.InhertiableProps>(
+	const useShared = <KEY extends keyof KottiField.InheritablePropsInternal>(
 		key: KEY,
-		defaultValue: KottiField.InhertiableProps[KEY],
+		defaultValue: KottiField.InheritablePropsInternal[KEY],
 	) =>
-		computed((): KottiField.InhertiableProps[KEY] => {
+		computed((): KottiField.InheritablePropsInternal[KEY] => {
 			if (props[key]) return props[key]
 
 			if (context !== null && context.fieldInheritableProps.value[key])
@@ -283,55 +241,14 @@ const useInheritableProperties = <DATA_TYPE, PLACEHOLDER_TYPE>({
 }
 
 /**
- * Some fields do not support a subset of the KtField.Props.
- * We explicitly throw errors for props that are not effectively
- * consumed (i.e. not to be displayed). This prevents users
- * from accidentally passing unneeded or misleading props.
- */
-const useSupports = <DATA_TYPE, PLACEHOLDER_TYPE>({
-	props,
-	supports,
-}: Pick<
-	KottiField.Hook.Parameters<DATA_TYPE, PLACEHOLDER_TYPE>,
-	'props' | 'supports'
->) => {
-	watchEffect(() => {
-		type Key = keyof KottiField.Supports
-		type Value = Array<keyof KottiField.Props<DATA_TYPE, PLACEHOLDER_TYPE>>
-
-		const PROPS_TO_CHECK_FOR_SUPPORTS: Record<Key, Value> = {
-			clear: ['hideClear'],
-			decoration: ['leftIcon', 'rightIcon', 'prefix', 'suffix'],
-			tabIndex: ['tabIndex'],
-			placeholder: ['placeholder'],
-		}
-
-		for (const [supportsKey, propsToCheck] of Object.entries(
-			PROPS_TO_CHECK_FOR_SUPPORTS,
-		) as Array<[Key, Value]>)
-			if (!supports[supportsKey])
-				for (const propKey of propsToCheck) {
-					const propValue = props[propKey]
-
-					if (propValue !== KOTTI_FIELD_PROPS[propKey].default)
-						throw new KtFieldErrors.UnsupportedProp(props, {
-							supportsKey,
-							propKey,
-							value: propValue,
-						})
-				}
-	})
-}
-
-/**
  * hook into lifecycle events
  */
-const useNotifyContext = <DATA_TYPE, PLACEHOLDER_TYPE>({
+const useNotifyContext = <DATA_TYPE>({
 	context,
 	field,
 }: {
 	context: KottiForm.Context | null
-	field: KottiField.Hook.Returns<DATA_TYPE, PLACEHOLDER_TYPE>
+	field: KottiField.Hook.Returns<DATA_TYPE>
 }) => {
 	onMounted(() => {
 		if (context) context.onAddField(field)
@@ -342,19 +259,14 @@ const useNotifyContext = <DATA_TYPE, PLACEHOLDER_TYPE>({
 	})
 }
 
-export const useField = <DATA_TYPE, PLACEHOLDER_TYPE>({
+export const useField = <DATA_TYPE>({
 	emit,
 	isCorrectDataType,
 	isEmpty,
 	props,
 	supports,
-}: KottiField.Hook.Parameters<
-	DATA_TYPE,
-	PLACEHOLDER_TYPE
->): KottiField.Hook.Returns<DATA_TYPE, PLACEHOLDER_TYPE> => {
+}: KottiField.Hook.Parameters<DATA_TYPE>): KottiField.Hook.Returns<DATA_TYPE> => {
 	const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
-
-	useSupports({ props, supports })
 
 	const sharedProperties = useInheritableProperties({ context, props })
 	const values = useValue({
@@ -368,9 +280,7 @@ export const useField = <DATA_TYPE, PLACEHOLDER_TYPE>({
 
 	// export
 
-	const field = reactive<
-		KottiField.Hook.ReturnsWithRefs<DATA_TYPE, PLACEHOLDER_TYPE>
-	>({
+	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
 		...sharedProperties,
 		...useDecoration({ props }),
 		...useInputProps({
@@ -394,7 +304,7 @@ export const useField = <DATA_TYPE, PLACEHOLDER_TYPE>({
 				(supports.clear ? sharedProperties.hideClear.value : true),
 		),
 		isOptional: computed(() => props.isOptional),
-	}) as KottiField.Hook.Returns<DATA_TYPE, PLACEHOLDER_TYPE>
+	}) as KottiField.Hook.Returns<DATA_TYPE>
 
 	useNotifyContext({ context, field })
 

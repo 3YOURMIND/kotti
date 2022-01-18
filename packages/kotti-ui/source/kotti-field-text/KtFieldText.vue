@@ -12,21 +12,20 @@
 import { defineComponent, computed } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { makeProps } from '../make-props'
 
 import { KOTTI_FIELD_TEXT_SUPPORTS } from './constants'
 import { KottiFieldText } from './types'
 
-export default defineComponent({
+export default defineComponent<KottiFieldText.PropsInternal>({
 	name: 'KtFieldText',
-	components: { KtField },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		value: { default: null, type: String },
+	components: {
+		KtField,
 	},
-	setup(props: KottiFieldText.Props, { emit }) {
-		const field = useField<KottiFieldText.Value, string | null>({
+	props: makeProps(KottiFieldText.propsSchema),
+	setup(props, { emit }) {
+		const field = useField<KottiFieldText.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldText.Value =>
 				typeof value === 'string' || value === null,

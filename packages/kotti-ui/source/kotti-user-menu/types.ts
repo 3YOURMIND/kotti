@@ -24,6 +24,6 @@ export namespace KottiUserMenu {
 		userStatus: z.string(),
 	})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }

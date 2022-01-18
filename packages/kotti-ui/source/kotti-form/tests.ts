@@ -2,21 +2,26 @@
 require('jsdom-global')()
 import { defineComponent, ref } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
+import { z } from 'zod'
 
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import KtField from '../kotti-field/KtField.vue'
 import { KottiField } from '../kotti-field/types'
 import { useI18nProvide } from '../kotti-i18n/hooks'
+import { makeProps } from '../make-props'
 import { localVue } from '../test-utils'
 
 import KtForm from './KtForm.vue'
 
-const TestField = defineComponent({
+const TestField = defineComponent<KottiField.PropsInternal>({
 	name: 'TestField',
 	components: { KtField },
-	props: KOTTI_FIELD_PROPS,
-	setup: (props: KottiField.Props<string | null, string | null>, { emit }) => {
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.string().nullable(),
+		}),
+	),
+	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
@@ -38,26 +43,22 @@ const TestField = defineComponent({
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
-const TestFieldObject = defineComponent({
+const TestFieldObject = defineComponent<KottiField.PropsInternal>({
 	name: 'TestFieldObject',
 	components: { KtField },
-	props: KOTTI_FIELD_PROPS,
-	setup: (
-		props: KottiField.Props<
-			Record<string, unknown> | string | null,
-			string | null
-		>,
-		{ emit },
-	) => {
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.record(z.unknown()).nullable(),
+		}),
+	),
+	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
 		return {
 			field: useField({
 				emit,
 				isCorrectDataType: (value): value is Record<string, unknown> | null =>
-					typeof value === 'object' ||
-					typeof value === 'string' ||
-					value === null,
+					value === null || typeof value === 'object',
 				isEmpty: (value) => value === null,
 				props,
 				supports: {
@@ -85,10 +86,7 @@ const TestForm2 = {
 const getField = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
-): KottiField.Hook.Returns<
-	string | Record<string, unknown> | null,
-	string | null
-> =>
+): KottiField.Hook.Returns<string | Record<string, unknown> | null> =>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(wrapper.vm.$children[0].$children[0] as any).field
 

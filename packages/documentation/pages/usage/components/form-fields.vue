@@ -11,13 +11,13 @@
 					<h4>Component</h4>
 					<KtForm v-model="values" :formId="settings.formId">
 						<component
-							:is="componentRepresenation.name"
-							v-bind="componentRepresenation.props"
-							:validator="componentRepresenation.validator"
+							:is="componentRepresentation.name"
+							v-bind="componentRepresentation.props"
+							:validator="componentRepresentation.validator"
 							@update:query="updateQuery"
 						>
 							<div
-								v-if="componentRepresenation.hasHelpTextSlot"
+								v-if="componentRepresentation.hasHelpTextSlot"
 								slot="helpText"
 							>
 								<div>
@@ -37,7 +37,7 @@
 				</div>
 				<div class="overview__code">
 					<h4>Code</h4>
-					<pre v-text="componentRepresenation.code" />
+					<pre v-text="componentRepresentation.code" />
 					<KtButton
 						class="mt-4"
 						label="Save to LocalStorage"
@@ -106,8 +106,6 @@
 								<code>() => ({ type: 'error', message: '' })</code>
 								or via
 								<code>KtForm.validators</code>
-								or via
-								<code>validatorKey</code>
 							</div>
 						</KtFieldSingleSelect>
 						<KtFieldToggleGroup
@@ -572,7 +570,7 @@ const INITIAL_VALUES: {
 	toggleValue: null,
 }
 
-type ComponentRepresenation = ComponentValue & {
+type componentRepresentation = ComponentValue & {
 	code: string
 	validator: Kotti.Field.Validation.Function
 }
@@ -763,15 +761,18 @@ export default defineComponent({
 				})
 
 			if (componentDefinition.value.supports.placeholder)
-				if (isRangeComponent.value)
-					Object.assign(additionalProps, {
-						placeholder:
-							settings.value.placeholder !== null ||
-							settings.value.placeholder2 !== null
-								? [settings.value.placeholder, settings.value.placeholder2]
-								: null, // not passed
-					})
-				else
+				if (isRangeComponent.value) {
+					if (
+						settings.value.placeholder !== null ||
+						settings.value.placeholder2 !== null
+					)
+						Object.assign(additionalProps, {
+							placeholder: [
+								settings.value.placeholder,
+								settings.value.placeholder2,
+							],
+						})
+				} else
 					Object.assign(additionalProps, {
 						placeholder: settings.value.placeholder,
 					})
@@ -978,8 +979,8 @@ export default defineComponent({
 				value: component.name,
 			})),
 			componentProps,
-			componentRepresenation: computed(
-				(): ComponentRepresenation => ({
+			componentRepresentation: computed(
+				(): componentRepresentation => ({
 					...componentValue.value,
 					code: generateComponentCode(componentValue.value),
 					validator: createValidator(componentValue.value.validation),
@@ -997,7 +998,7 @@ export default defineComponent({
 			},
 			savedFieldsMap: computed(() =>
 				savedFields.value.map(
-					(component): ComponentRepresenation => ({
+					(component): componentRepresentation => ({
 						...component,
 						code: generateComponentCode(component),
 						validator: createValidator(component.validation),

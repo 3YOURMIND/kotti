@@ -2,21 +2,6 @@ import { Dashes } from '@metatypes/typography'
 
 import { KottiField } from '../kotti-field/types'
 
-import {
-	KottiFieldDate,
-	KottiFieldDateRange,
-	KottiFieldDateTime,
-	KottiFieldDateTimeRange,
-} from './types'
-import {
-	dateLimitValidator,
-	dateRangeShortcutValidator,
-	dateShortcutValidator,
-	dateTimeShortcutValidator,
-	dateTimeRangeShortcutValidator,
-	rangePlaceholderValidator,
-} from './utilities'
-
 const EL_SHARED_INTERNAL_PROPS = {
 	editable: true,
 }
@@ -37,87 +22,18 @@ export const EL_DATE_TIME_PROPS = {
 	valueFormat: 'yyyy-MM-dd HH:mm:ss',
 }
 
+/**
+ * ISO8601
+ */
 export const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/
+/**
+ * ISO8601 time without `T`
+ */
 export const DATE_TIME_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/
-
-const KOTTI_FIELD_DATE_SHARED_PROPS = {
-	maximumDate: {
-		default: null,
-		type: String,
-		validator: dateLimitValidator,
-	},
-	minimumDate: {
-		default: null,
-		type: String,
-		validator: dateLimitValidator,
-	},
-}
 
 export const KOTTI_FIELD_DATE_SUPPORTS: KottiField.Supports = {
 	clear: true,
 	decoration: false,
 	placeholder: true,
 	tabIndex: false,
-}
-
-export const KOTTI_FIELD_DATE_PROPS = {
-	...KOTTI_FIELD_DATE_SHARED_PROPS,
-	shortcuts: {
-		default: () => [],
-		type: Array,
-		validator: (value: unknown): value is KottiFieldDate.Props['shortcuts'] =>
-			Array.isArray(value) && value.every(dateShortcutValidator),
-	},
-	value: { default: null, type: String },
-}
-
-export const KOTTI_FIELD_DATE_RANGE_PROPS = {
-	...KOTTI_FIELD_DATE_SHARED_PROPS,
-	placeholder: {
-		default: () => [null, null],
-		type: Array,
-		validator: rangePlaceholderValidator,
-	},
-	shortcuts: {
-		default: () => [],
-		type: Array,
-		validator: (
-			value: unknown,
-		): value is KottiFieldDateRange.Props['shortcuts'] =>
-			Array.isArray(value) && value.every(dateRangeShortcutValidator),
-	},
-	value: { default: null, type: Array },
-}
-
-export const KOTTI_FIELD_DATE_TIME_PROPS = {
-	...KOTTI_FIELD_DATE_SHARED_PROPS,
-	//TODO should / will need more limits for the time
-	shortcuts: {
-		default: () => [],
-		type: Array,
-		validator: (
-			value: unknown,
-		): value is KottiFieldDateTime.Props['shortcuts'] =>
-			Array.isArray(value) && value.every(dateTimeShortcutValidator),
-	},
-	value: { default: null, type: String },
-}
-
-export const KOTTI_FIELD_DATE_TIME_RANGE_PROPS = {
-	...KOTTI_FIELD_DATE_SHARED_PROPS,
-	placeholder: {
-		default: () => [null, null],
-		type: Array,
-		validator: rangePlaceholderValidator,
-	},
-	//TODO should / will need more limits for the time
-	shortcuts: {
-		default: () => [],
-		type: Array,
-		validator: (
-			value: unknown,
-		): value is KottiFieldDateTimeRange.Props['shortcuts'] =>
-			Array.isArray(value) && value.every(dateTimeRangeShortcutValidator),
-	},
-	value: { default: null, type: Array },
 }

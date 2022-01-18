@@ -25,26 +25,22 @@
 import { defineComponent, computed } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { makeProps } from '../make-props'
 
 import ToggleInner from './components/ToggleInner.vue'
-import {
-	KOTTI_FIELD_TOGGLE_SUPPORTS,
-	KOTTI_FIELD_TOGGLE_PROPS,
-} from './constants'
+import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import { KottiFieldToggle } from './types'
 
-export default defineComponent({
+export default defineComponent<KottiFieldToggle.PropsInternal>({
 	name: 'KtFieldToggle',
-	components: { KtField, ToggleInner },
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_TOGGLE_PROPS,
-		value: { default: null, type: Boolean },
+	components: {
+		KtField,
+		ToggleInner,
 	},
-	setup(props: KottiFieldToggle.Props, { emit }) {
-		const field = useField<KottiFieldToggle.Value, never>({
+	props: makeProps(KottiFieldToggle.propsSchema),
+	setup(props, { emit }) {
+		const field = useField<KottiFieldToggle.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldToggle.Value =>
 				typeof value === 'boolean' || value === null,

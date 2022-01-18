@@ -49,18 +49,15 @@ import { castArray } from 'lodash'
 import { roundArrow } from 'tippy.js'
 
 import { KtField } from '../kotti-field'
-import { KOTTI_FIELD_PROPS } from '../kotti-field/constants'
 import { useField } from '../kotti-field/hooks'
 import { useForceUpdate } from '../kotti-field/hooks'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import IconTextItem from '../kotti-popover/components/IconTextItem.vue'
+import { makeProps } from '../make-props'
 
 import ActionIconNext from './components/ActionIconNext.vue'
-import {
-	KOTTI_FIELD_REMOTE_SINGLE_SELECT_PROPS,
-	KOTTI_FIELD_REMOTE_SELECT_SUPPORTS,
-} from './constants'
-import { KottiFieldSingleSelectRemote } from './types'
+import { KOTTI_FIELD_REMOTE_SELECT_SUPPORTS } from './constants'
+import { KottiFieldSingleSelectRemote, Shared } from './types'
 import { sameWidth } from './utils/tippy-utils'
 
 const ARROW_HEIGHT = 7
@@ -86,26 +83,22 @@ const isEqualValue = (
 ) => currentValue === newValue
 
 type ModifiedOptions = Array<
-	KottiFieldSingleSelectRemote.Props['options'][number] & {
+	Omit<Shared.Entry, 'value'> & {
 		isSelected: boolean
+		value: KottiFieldSingleSelectRemote.Value | symbol
 	}
 >
 
-export default defineComponent({
+export default defineComponent<KottiFieldSingleSelectRemote.PropsInternal>({
 	name: 'KtFieldSingleSelectRemote',
 	components: {
 		ActionIconNext,
 		IconTextItem,
 		KtField,
 	},
-	props: {
-		...KOTTI_FIELD_PROPS,
-		...KOTTI_FIELD_REMOTE_SINGLE_SELECT_PROPS,
-		query: { default: null, type: String },
-		value: { default: null, type: [Number, String, Boolean] },
-	},
-	setup(props: KottiFieldSingleSelectRemote.Props, { emit }) {
-		const field = useField<KottiFieldSingleSelectRemote.Value, string | null>({
+	props: makeProps(KottiFieldSingleSelectRemote.propsSchema),
+	setup(props, { emit }) {
+		const field = useField<KottiFieldSingleSelectRemote.Value>({
 			emit,
 			isCorrectDataType: (value): value is KottiFieldSingleSelectRemote.Value =>
 				['boolean', 'number', 'string', 'symbol'].includes(typeof value) ||
@@ -213,7 +206,9 @@ export default defineComponent({
 			modifiedOptions: computed<ModifiedOptions>(() =>
 				props.options.length > 0
 					? props.options.map((option) => ({
-							...option,
+							// Vetur parses Shared.Entry['value'] as optional
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							...(option as any),
 							isDisabled: (field.isDisabled || option.isDisabled) ?? false,
 							isSelected: isEqualValue(field.currentValue, option.value),
 					  }))
