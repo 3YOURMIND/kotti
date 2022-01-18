@@ -162,11 +162,11 @@ export namespace KottiField {
 		size: z.nativeEnum(Size).default(Size.MEDIUM),
 	})
 
-	export type InhertiableProps = z.input<typeof inheritablePropsSchema>
+	export type InheritableProps = z.input<typeof inheritablePropsSchema>
 	/**
 	 * Warning: All values of type `never` are replaced with `any`
 	 */
-	export type InhertiablePropsInternal = ReplaceRecordType<
+	export type InheritablePropsInternal = ReplaceRecordType<
 		z.output<typeof inheritablePropsSchema>
 	>
 
