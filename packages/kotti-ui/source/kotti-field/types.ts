@@ -159,7 +159,7 @@ export namespace KottiField {
 		 * Defines the size of the field which influences child styles
 		 * to make fields e.g. appear more compact
 		 */
-		size: z.nativeEnum(Size).default(Size.MEDIUM),
+		size: z.nativeEnum(Size).nullable().default(null),
 	})
 
 	export type InheritableProps = z.input<typeof inheritablePropsSchema>
