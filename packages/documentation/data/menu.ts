@@ -161,7 +161,11 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtDrawer),
 					makeComponentMenuItem(KtFilters),
 					makeComponentMenuItem(KtForm),
-					{ label: 'Form Fields', path: 'form-fields', tags: [Tag.TS] },
+					{
+						label: 'Form Fields',
+						path: 'form-fields',
+						tags: [Tag.TS, Tag.ZOD],
+					},
 					makeComponentMenuItem(KtHeading),
 					makeComponentMenuItem(KtInlineEdit),
 					makeComponentMenuItem(KtInput),
