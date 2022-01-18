@@ -2,6 +2,7 @@
 require('jsdom-global')()
 import { defineComponent, ref } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
+import { z } from 'zod'
 
 import { useField } from '../kotti-field/hooks'
 import KtField from '../kotti-field/KtField.vue'
@@ -16,7 +17,11 @@ import KtFormControllerObject from './KtFormControllerObject.vue'
 const TestField = defineComponent<KottiField.PropsInternal>({
 	name: 'TestField',
 	components: { KtField },
-	props: makeProps(KottiField.propsSchema),
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.string().nullable(),
+		}),
+	),
 	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 

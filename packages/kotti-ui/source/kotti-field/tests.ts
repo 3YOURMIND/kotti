@@ -2,6 +2,7 @@
 require('jsdom-global')()
 import { defineComponent, ref } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
+import { z } from 'zod'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { useI18nProvide } from '../kotti-i18n/hooks'
@@ -15,7 +16,11 @@ import { KottiField } from './types'
 
 const TestComponent = defineComponent({
 	name: 'TestComponent',
-	props: makeProps(KottiField.propsSchema),
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.string().nullable(),
+		}),
+	),
 	setup: (props: KottiField.PropsInternal, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
@@ -40,7 +45,11 @@ const TestComponent = defineComponent({
 
 const TestComponentObject = defineComponent({
 	name: 'TestComponentObject',
-	props: makeProps(KottiField.propsSchema),
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.record(z.unknown()).nullable(),
+		}),
+	),
 	setup: (props: KottiField.PropsInternal, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 

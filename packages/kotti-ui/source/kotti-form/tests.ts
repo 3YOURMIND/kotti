@@ -2,6 +2,7 @@
 require('jsdom-global')()
 import { defineComponent, ref } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
+import { z } from 'zod'
 
 import { useField } from '../kotti-field/hooks'
 import KtField from '../kotti-field/KtField.vue'
@@ -15,7 +16,11 @@ import KtForm from './KtForm.vue'
 const TestField = defineComponent<KottiField.PropsInternal>({
 	name: 'TestField',
 	components: { KtField },
-	props: makeProps(KottiField.propsSchema),
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.string().nullable(),
+		}),
+	),
 	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
@@ -41,7 +46,11 @@ const TestField = defineComponent<KottiField.PropsInternal>({
 const TestFieldObject = defineComponent<KottiField.PropsInternal>({
 	name: 'TestFieldObject',
 	components: { KtField },
-	props: makeProps(KottiField.propsSchema),
+	props: makeProps(
+		KottiField.propsSchema.extend({
+			value: z.record(z.unknown()).nullable(),
+		}),
+	),
 	setup: (props, { emit }) => {
 		useI18nProvide(ref('en-US'), ref({}), ref({}))
 
@@ -49,9 +58,7 @@ const TestFieldObject = defineComponent<KottiField.PropsInternal>({
 			field: useField({
 				emit,
 				isCorrectDataType: (value): value is Record<string, unknown> | null =>
-					typeof value === 'object' ||
-					typeof value === 'string' ||
-					value === null,
+					value === null || typeof value === 'object',
 				isEmpty: (value) => value === null,
 				props,
 				supports: {
