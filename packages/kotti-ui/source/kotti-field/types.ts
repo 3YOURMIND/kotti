@@ -116,9 +116,7 @@ export namespace KottiField {
 	 * if extended (e.g. decoration props).
 	 * Therefore, doesn't include `placeholder` since it is extended
 	 * differently per field.
-	 *
 	 */
-
 	export const potentiallySupportedPropsSchema = z.object({
 		hideClear: z.boolean().default(false),
 		leftIcon: yocoIconSchema.nullable().default(null),
@@ -163,6 +161,7 @@ export namespace KottiField {
 		 */
 		size: z.nativeEnum(Size).default(Size.MEDIUM),
 	})
+
 	export type InhertiableProps = z.input<typeof inheritablePropsSchema>
 	/**
 	 * Warning: All values of type `never` are replaced with `any`
@@ -211,6 +210,7 @@ export namespace KottiField {
 		rightIcon: z.never(),
 
 		isOptional: z.boolean().default(false),
+
 		label: z.string().nullable().default(null),
 
 		/**
