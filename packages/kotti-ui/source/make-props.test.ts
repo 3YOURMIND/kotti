@@ -377,6 +377,61 @@ describe('function', () => {
 	})
 })
 
+describe('literal', () => {
+	beforeAll(silenceConsole)
+
+	const LITERAL_FAILURE = ['string', [], {}, 0, 1]
+	const LITERAL_SUCCESS = ['LITERAL']
+
+	it('generates vue prop for schema “z.literal()”', () => {
+		const schema = z.object({
+			prop: z.literal('LITERAL'),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(String)
+		expect(prop).toValidate(...LITERAL_SUCCESS)
+		expect(prop).not.toValidate(...LITERAL_FAILURE, null, undefined)
+	})
+
+	it('generates vue prop for schema “z.literal().nullable()”', () => {
+		const schema = z.object({
+			prop: z.literal('LITERAL').nullable(),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(String)
+		expect(prop).toValidate(...LITERAL_SUCCESS, null)
+		expect(prop).not.toValidate(...LITERAL_FAILURE, undefined)
+	})
+
+	it('generates vue prop for schema “z.literal().default()”', () => {
+		const schema = z.object({
+			prop: z.literal('LITERAL').default('LITERAL'),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo('LITERAL')
+		expect(prop).toBeType(String)
+		expect(prop).toValidate(...LITERAL_SUCCESS, undefined)
+		expect(prop).not.toValidate(...LITERAL_FAILURE, null)
+	})
+
+	it('generates vue prop for schema “z.literal().nullable().default()”', () => {
+		const schema = z.object({
+			prop: z.literal('LITERAL').nullable().default(null),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(null)
+		expect(prop).toBeType(String)
+		expect(prop).toValidate(...LITERAL_SUCCESS, null, undefined)
+		expect(prop).not.toValidate(...LITERAL_FAILURE)
+	})
+})
+
 describe('nativeEnum', () => {
 	beforeAll(silenceConsole)
 
@@ -678,6 +733,72 @@ describe('object', () => {
 	})
 })
 
+describe('record', () => {
+	beforeAll(silenceConsole)
+
+	const RECORD_SUCCESS = [
+		{ key: true },
+		{ key: false },
+		{ key: true, otherKey: false },
+	]
+
+	const RECORD_FAILURE = [
+		{ key: null },
+		{ key: true, otherKey: 'string' },
+		[],
+		'string',
+	]
+
+	it('generates vue prop for schema “z.record()”', () => {
+		const schema = z.object({
+			prop: z.record(z.boolean()),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(Object)
+		expect(prop).toValidate(...RECORD_SUCCESS)
+		expect(prop).not.toValidate(...RECORD_FAILURE, null, undefined)
+	})
+
+	it('generates vue prop for schema “z.record().nullable()”', () => {
+		const schema = z.object({
+			prop: z.record(z.boolean()).nullable(),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(Object)
+		expect(prop).toValidate(...RECORD_SUCCESS, null)
+		expect(prop).not.toValidate(...RECORD_FAILURE, undefined)
+	})
+
+	it('generates vue prop for schema “z.record().default()”', () => {
+		const schema = z.object({
+			prop: z.record(z.boolean()).default(() => ({ key: true })),
+		})
+
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo({ key: true })
+		expect(prop).toBeType(Object)
+		expect(prop).toValidate(...RECORD_SUCCESS, undefined)
+		expect(prop).not.toValidate(...RECORD_FAILURE, null)
+	})
+
+	it('generates vue prop for schema “z.record().nullable().default()”', () => {
+		const schema = z.object({
+			prop: z.record(z.boolean()).nullable().default(null),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(null)
+		expect(prop).toBeType(Object)
+		expect(prop).toValidate(...RECORD_SUCCESS, null, undefined)
+		expect(prop).not.toValidate(...RECORD_FAILURE)
+	})
+})
+
 const STRING_SUCCESS = ['string', '']
 
 describe('string', () => {
@@ -731,6 +852,78 @@ describe('string', () => {
 		expect(prop).toBeType(String)
 		expect(prop).toValidate(...STRING_SUCCESS, null, undefined)
 		expect(prop).not.toValidate(...STRING_FAILURE)
+	})
+})
+
+describe('tuple', () => {
+	beforeAll(silenceConsole)
+
+	const TUPLE_SUCCESS = [
+		['a', 'b'],
+		['string', 'other string'],
+	]
+	const TUPLE_FAILURE = [
+		'string',
+		[],
+		['a'],
+		[{}],
+		[1],
+		[true],
+		['a', 8],
+		['a', 'b', 'c'],
+		{},
+		false,
+	]
+
+	it('generates vue prop for schema “z.tuple()”', () => {
+		const schema = z.object({
+			prop: z.tuple([z.string(), z.string()]),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(Array)
+		expect(prop).toValidate(...TUPLE_SUCCESS)
+		expect(prop).not.toValidate(...TUPLE_FAILURE, null, undefined)
+	})
+
+	it('generates vue prop for schema “z.tuple().nullable()”', () => {
+		const schema = z.object({
+			prop: z.tuple([z.string(), z.string()]).nullable(),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(Array)
+		expect(prop).toValidate(...TUPLE_SUCCESS, null)
+		expect(prop).not.toValidate(...TUPLE_FAILURE, undefined)
+	})
+
+	it('generates vue prop for schema “z.tuple().default()”', () => {
+		const schema = z.object({
+			prop: z
+				.tuple([z.string(), z.string()])
+				.default((): [string, string] => ['a', 'b']),
+		})
+
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(['a', 'b'])
+		expect(prop).toBeType(Array)
+		expect(prop).toValidate(...TUPLE_SUCCESS, undefined)
+		expect(prop).not.toValidate(...TUPLE_FAILURE, null)
+	})
+
+	it('generates vue prop for schema “z.tuple().nullable().default()”', () => {
+		const schema = z.object({
+			prop: z.tuple([z.string(), z.string()]).nullable().default(null),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(null)
+		expect(prop).toBeType(Array)
+		expect(prop).toValidate(...TUPLE_SUCCESS, null, undefined)
+		expect(prop).not.toValidate(...TUPLE_FAILURE)
 	})
 })
 
