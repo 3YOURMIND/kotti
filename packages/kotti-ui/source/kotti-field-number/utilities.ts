@@ -7,7 +7,6 @@ import {
 	DECIMAL_SEPARATORS_CHARACTER_SET,
 	TRAILING_ZEROES_REGEX,
 } from './constants'
-import { KottiFieldNumber } from './types'
 
 /**
  * We don't need the full package, as we don’t consider strings to be valid numbers
@@ -22,9 +21,9 @@ export const isInRange = ({
 	minimum,
 	value,
 }: {
-	maximum: KottiFieldNumber.PropsInternal['maximum']
-	minimum: KottiFieldNumber.PropsInternal['minimum']
-	value: KottiFieldNumber.Value
+	maximum: number | null
+	minimum: number | null
+	value: number | null
 }) => {
 	if (value === null) return true
 
