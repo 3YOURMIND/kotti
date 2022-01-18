@@ -173,20 +173,19 @@ const useValidation = <DATA_TYPE>({
 			// eslint-disable-next-line sonarjs/cognitive-complexity
 			(): KottiField.Validation.Result => {
 				const customValidation = (() => {
-					if (context) {
-						if (
-							props.formKey !== null &&
-							props.formKey !== FORM_KEY_NONE &&
-							props.formKey in context.validators.value
+					if (!context && props.formKey)
+						throw new KtFieldErrors.InvalidPropOutsideOfContext(
+							props,
+							'formKey',
 						)
-							return context.validators.value[props.formKey](currentValue.value)
-					} else {
-						if (props.formKey)
-							throw new KtFieldErrors.InvalidPropOutsideOfContext(
-								props,
-								'formKey',
-							)
-					}
+
+					if (
+						context &&
+						props.formKey !== null &&
+						props.formKey !== FORM_KEY_NONE &&
+						props.formKey in context.validators.value
+					)
+						return context.validators.value[props.formKey](currentValue.value)
 
 					return props.validator(currentValue.value)
 				})()
