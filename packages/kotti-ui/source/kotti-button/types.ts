@@ -29,6 +29,6 @@ export namespace KottiButton {
 		type: typeSchema.default(Type.DEFAULT),
 	})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }

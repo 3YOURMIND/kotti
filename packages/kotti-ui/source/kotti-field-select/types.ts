@@ -41,8 +41,8 @@ export namespace Shared {
 				suffix: true,
 			}),
 		)
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 
 	export type Translations = {
 		loadingText: string
@@ -64,8 +64,8 @@ export namespace KottiFieldMultiSelect {
 			value: valueSchema.default(() => []),
 		})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 
 	export type Translations = Shared.Translations
 }
@@ -80,8 +80,8 @@ export namespace KottiFieldSingleSelect {
 			value: valueSchema.default(null),
 		})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 
 	export type Translations = Shared.Translations
 }
@@ -99,8 +99,8 @@ export namespace KottiFieldSingleSelectRemote {
 			query: z.string().nullable().default(null),
 		})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 
 	export type Translations = Shared.Translations
 

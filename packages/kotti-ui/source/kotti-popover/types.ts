@@ -62,6 +62,6 @@ export namespace KottiPopover {
 		size: z.nativeEnum(Size).default(Size.AUTO),
 	})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }

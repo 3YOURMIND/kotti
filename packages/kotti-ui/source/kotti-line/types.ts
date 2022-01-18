@@ -13,6 +13,6 @@ export namespace KottiLine {
 		text: z.string().nullable().default(null),
 	})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }
