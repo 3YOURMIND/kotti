@@ -147,6 +147,8 @@ export namespace KottiField {
 
 		/**
 		 * Should the user have the option to clear the field
+		 *
+		 * This is never by default and specified by component schemas that need it
 		 */
 		hideClear: z.never(),
 
@@ -193,19 +195,25 @@ export namespace KottiField {
 
 		/**
 		 * Shows a Yoco icon on the left side of the field
+		 *
+		 * This is never by default and specified by component schemas that need it.
 		 */
 		leftIcon: z.never(),
 
 		/**
 		 * Shown when no value was entered yet
 		 *
-		 * This is never, and specified by each component's schema, since they differ.
+		 * This is never by default and specified by component schemas that need it
+		 *
+		 * The overridden type may differ
 		 * e.g. KtFieldDateRange needs two placeholders `[string | null, string | null]`
 		 */
 		placeholder: z.never(),
 
 		/**
 		 * Shows a Yoco icon on the right side of the field
+		 *
+		 * This is never by default and specified by component schemas that need it
 		 */
 		rightIcon: z.never(),
 
@@ -215,14 +223,21 @@ export namespace KottiField {
 
 		/**
 		 * Show some string before the field
+		 *
+		 * This is never by default and specified by component schemas that need it
 		 */
 		prefix: z.never(),
 
 		/**
 		 * Show some string after the field
+		 *
+		 * This is never by default and specified by component schemas that need it
 		 */
 		suffix: z.never(),
 
+		/**
+		 * This is never by default and specified by component schemas that need it
+		 */
 		tabIndex: z.never(),
 
 		/**
