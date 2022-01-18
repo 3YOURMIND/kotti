@@ -761,15 +761,18 @@ export default defineComponent({
 				})
 
 			if (componentDefinition.value.supports.placeholder)
-				if (isRangeComponent.value)
-					Object.assign(additionalProps, {
-						placeholder:
-							settings.value.placeholder !== null ||
-							settings.value.placeholder2 !== null
-								? [settings.value.placeholder, settings.value.placeholder2]
-								: null, // not passed
-					})
-				else
+				if (isRangeComponent.value) {
+					if (
+						settings.value.placeholder !== null ||
+						settings.value.placeholder2 !== null
+					)
+						Object.assign(additionalProps, {
+							placeholder: [
+								settings.value.placeholder,
+								settings.value.placeholder2,
+							],
+						})
+				} else
 					Object.assign(additionalProps, {
 						placeholder: settings.value.placeholder,
 					})
