@@ -19,9 +19,9 @@
 			>
 				<i class="yoco" v-text="Yoco.Icon.MINUS" />
 			</div>
-			<div class="kt-field-number__middle" @click="$refs.input.focus()">
+			<div class="kt-field-number__middle" @click="onClickMiddle">
 				<input
-					ref="input"
+					ref="inputRef"
 					v-bind="inputProps"
 					@blur="handleBlur"
 					@input="onInput($event.target.value)"
@@ -177,11 +177,12 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 		 * reference to input element, in order to track cursor position
 		 * prior to feeding the value back to the input, which resets the position to the end.
 		 */
-		const input = ref<HTMLInputElement | null>(null)
+		const inputRef = ref<HTMLInputElement | null>(null)
 		const lastUserSetCursorPosition = ref<number | null>(null)
 
 		const setCursorPosition = (position: number | null) => {
-			if (position !== null) input.value?.setSelectionRange(position, position)
+			if (position !== null)
+				inputRef.value?.setSelectionRange(position, position)
 		}
 
 		watch(internalStringValue, () => {
@@ -240,7 +241,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 				)
 			},
 			internalStringValue,
-			input,
+			inputRef,
 			inputProps: computed(
 				(): Partial<HTMLInputElement> & {
 					class: Record<string, boolean>
@@ -259,8 +260,9 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 					value: internalStringValue.value,
 				}),
 			),
+			onClickMiddle: () => inputRef.value?.focus(),
 			onInput: (value: string) => {
-				lastUserSetCursorPosition.value = input.value?.selectionStart ?? null
+				lastUserSetCursorPosition.value = inputRef.value?.selectionStart ?? null
 
 				const { maximum, minimum, step } = props
 
