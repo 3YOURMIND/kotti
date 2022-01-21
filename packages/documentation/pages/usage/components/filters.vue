@@ -57,6 +57,21 @@
     					label="placeholder"
     					:size="Kotti.Field.Size.SMALL"
     				/>
+    				<h4>Decoration</h4>
+    				<div class="field-row">
+    					<KtFieldText
+    						formKey="prefix"
+    						helpText="Support on CURRENCY and FLOAT column types only"
+    						isOptional
+    						label="prefix"
+    					/>
+    					<KtFieldText
+    						formKey="suffix"
+    						helpText="Support on CURRENCY and FLOAT column types only"
+    						isOptional
+    						label="suffix"
+    					/>
+    				</div>
     			</div>
     		</div>
     	</KtForm>
@@ -96,13 +111,17 @@ export default defineComponent({
 				isLoading: boolean
 			}
 			locale: Kotti.I18n.SupportedLanguages
+			prefix: Kotti.FieldNumber.Props['prefix']
 			searchPlaceholder: Kotti.FieldText.Value
+			suffix: Kotti.FieldNumber.Props['suffix']
 		}>({
 			booleanFlags: {
 				isLoading: false,
 			},
 			locale: 'en-US',
+			prefix: null,
 			searchPlaceholder: null,
+			suffix: null,
 		})
 
 		const componentProps = computed(
@@ -148,7 +167,9 @@ export default defineComponent({
 							Kotti.Filters.Operation.Float.LESS_THAN_OR_EQUAL,
 							Kotti.Filters.Operation.Float.IS_EMPTY,
 						],
+						prefix: settings.value.prefix,
 						step: 0.001,
+						suffix: settings.value.suffix,
 						type: Kotti.Filters.FilterType.FLOAT,
 					},
 					{
@@ -162,8 +183,9 @@ export default defineComponent({
 							Kotti.Filters.Operation.Currency.LESS_THAN_OR_EQUAL,
 							Kotti.Filters.Operation.Currency.IS_EMPTY,
 						],
-						prefix: 'EUR',
+						prefix: settings.value.prefix,
 						step: 0.01,
+						suffix: settings.value.suffix,
 						type: Kotti.Filters.FilterType.CURRENCY,
 					},
 					{
