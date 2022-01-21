@@ -335,7 +335,6 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 
 <style lang="scss">
 @use 'sass:map';
-@import '../kotti-field/mixins';
 
 .kt-field__wrapper {
 	$sizes: (
@@ -417,12 +416,6 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 			width: 100%;
 			text-align: center;
 			border: none;
-
-			&::-webkit-outer-spin-button,
-			&::-webkit-inner-spin-button {
-				margin: 0;
-				-webkit-appearance: none;
-			}
 
 			&--has-maximum {
 				text-align: right;
