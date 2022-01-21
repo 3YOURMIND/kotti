@@ -7,7 +7,15 @@ export namespace KottiFieldNumber {
 	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = KottiField.propsSchema
-		.merge(KottiField.potentiallySupportedPropsSchema)
+		.merge(
+			KottiField.potentiallySupportedPropsSchema.pick({
+				leftIcon: true,
+				prefix: true,
+				rightIcon: true,
+				suffix: true,
+				tabIndex: true,
+			}),
+		)
 		.extend({
 			// eslint-disable-next-line no-magic-numbers
 			decimalPlaces: z.number().default(3),
