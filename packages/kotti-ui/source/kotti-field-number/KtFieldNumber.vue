@@ -61,6 +61,7 @@ import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
+import { isNumberInRange } from '../utilities'
 
 import {
 	DECIMAL_SEPARATORS_CHARACTER_SET,
@@ -69,13 +70,7 @@ import {
 	VALID_REGEX,
 } from './constants'
 import { KottiFieldNumber } from './types'
-import {
-	isInRange,
-	isNumber,
-	isStepMultiple,
-	toNumber,
-	toString,
-} from './utilities'
+import { isNumber, isStepMultiple, toNumber, toString } from './utilities'
 
 export default defineComponent<KottiFieldNumber.PropsInternal>({
 	name: 'KtFieldNumber',
@@ -98,7 +93,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 		const isDecrementEnabled = computed(
 			() =>
 				!field.isDisabled &&
-				isInRange({
+				isNumberInRange({
 					maximum: props.maximum,
 					minimum: props.minimum,
 					value:
@@ -111,7 +106,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 		const isIncrementEnabled = computed(
 			() =>
 				!field.isDisabled &&
-				isInRange({
+				isNumberInRange({
 					maximum: props.maximum,
 					minimum: props.minimum,
 					value:
@@ -143,7 +138,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 			] => [field.currentValue, i18nContext.numberFormat.decimalSeparator],
 			([newNumber]) => {
 				if (
-					!isInRange({
+					!isNumberInRange({
 						maximum: props.maximum,
 						minimum: props.minimum,
 						value: newNumber,
@@ -202,7 +197,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 					step: props.step,
 					value: 0,
 				}) &&
-				isInRange({
+				isNumberInRange({
 					maximum: props.maximum,
 					minimum: props.minimum,
 					value: 0,
@@ -279,7 +274,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 						step,
 						value: nextNumber,
 					}) &&
-					isInRange({
+					isNumberInRange({
 						maximum,
 						minimum,
 						value: nextNumber,
@@ -289,7 +284,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 					/**
 					 * Replace all decimal places with the one provided by KtI18nContext
 					 **/
-					const valueWithSupportedDecimalPlace =
+					const valueWithSupportedDecimalSeparator =
 						valueWithoutLeadingZeroes.replace(
 							new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET),
 							i18nContext.numberFormat.decimalSeparator,
@@ -299,12 +294,12 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 					 * Preserve exact user input in case it’s possible to apply later
 					 * E.g. when changing `1.01` to `1.0`, so that it doesn’t change to `1`
 					 */
-					lastValidTypedStringValue.value = valueWithSupportedDecimalPlace
+					lastValidTypedStringValue.value = valueWithSupportedDecimalSeparator
 
 					const shouldEmit = nextNumber !== field.currentValue
 
 					if (shouldEmit) field.setValue(nextNumber)
-					else internalStringValue.value = valueWithSupportedDecimalPlace
+					else internalStringValue.value = valueWithSupportedDecimalSeparator
 				}
 
 				forceUpdate()

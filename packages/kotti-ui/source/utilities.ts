@@ -24,3 +24,20 @@ export const makeInstallable = (component: VueConstructor<Vue>) =>
 	Object.assign(component, {
 		install: (Vue) => Vue.component(component.name, component),
 	} as Vue.PluginObject<Record<string, never>>)
+
+export const isNumberInRange = ({
+	maximum,
+	minimum,
+	value,
+}: {
+	maximum: number | null
+	minimum: number | null
+	value: number | null
+}) => {
+	if (value === null) return true
+
+	const fitsMinimum = minimum === null || value >= minimum
+	const fitsMaximum = maximum === null || value <= maximum
+
+	return fitsMinimum && fitsMaximum
+}

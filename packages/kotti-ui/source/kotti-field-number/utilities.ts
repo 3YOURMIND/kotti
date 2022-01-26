@@ -16,23 +16,6 @@ export const isNumber = (value: unknown): boolean =>
 	// eslint-disable-next-line sonarjs/no-identical-expressions
 	typeof value === 'number' ? value - value === 0 : false
 
-export const isInRange = ({
-	maximum,
-	minimum,
-	value,
-}: {
-	maximum: number | null
-	minimum: number | null
-	value: number | null
-}) => {
-	if (value === null) return true
-
-	const fitsMinimum = minimum === null || value >= minimum
-	const fitsMaximum = maximum === null || value <= maximum
-
-	return fitsMinimum && fitsMaximum
-}
-
 export const isStepMultiple = ({
 	minimum,
 	step,
