@@ -20,7 +20,6 @@ export const DECIMAL_SEPARATORS_CHARACTER_SET = [
 export const STRINGS_THAT_ARE_TREATED_AS_NULL = [
 	...Object.values(DecimalSeparator),
 	'-',
-	'+',
 	'',
 ]
 
@@ -34,5 +33,5 @@ export const TRAILING_ZEROES_REGEX = new RegExp(
 
 export const VALID_REGEX = (decimalPlaces: number) =>
 	new RegExp(
-		`^[+-]?(0?|([1-9][0-9]*))?(${DECIMAL_SEPARATORS_CHARACTER_SET}[0-9]{0,${decimalPlaces}})?$`,
+		`^[-]?(0?|([1-9][0-9]*))?(${DECIMAL_SEPARATORS_CHARACTER_SET}[0-9]{0,${decimalPlaces}})?$`,
 	)
