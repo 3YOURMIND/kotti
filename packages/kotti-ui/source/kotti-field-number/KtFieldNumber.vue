@@ -23,7 +23,7 @@
 				<input
 					ref="inputRef"
 					v-bind="inputProps"
-					@blur="handleBlur"
+					@blur="onBlur"
 					@input="onInput($event.target.value)"
 				/>
 				<div v-if="showMaximum" v-text="'/'" />
@@ -220,7 +220,6 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 				)
 			},
 			field,
-			handleBlur: () => forceUpdateDisplayedValue(field.currentValue),
 			incrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isIncrementEnabled.value,
 			})),
@@ -235,7 +234,6 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 						: Big(field.currentValue).add(props.step).toNumber(),
 				)
 			},
-			internalStringValue,
 			inputRef,
 			inputProps: computed(
 				(): Partial<HTMLInputElement> & {
@@ -255,6 +253,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 					value: internalStringValue.value,
 				}),
 			),
+			onBlur: () => forceUpdateDisplayedValue(field.currentValue),
 			onClickMiddle: () => inputRef.value?.focus(),
 			onInput: (value: string) => {
 				lastUserSetCursorPosition.value = inputRef.value?.selectionStart ?? null
