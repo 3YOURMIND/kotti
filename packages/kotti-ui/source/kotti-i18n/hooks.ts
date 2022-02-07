@@ -35,6 +35,9 @@ export const useI18nContext = () => {
 		)
 
 	return reactive({
+		currencyMap: computed<UnwrapRef<KottiI18n.Context['currencyMap']>>(
+			() => context?.currencyMap.value ?? {},
+		),
 		locale: computed<UnwrapRef<KottiI18n.Context['locale']>>(
 			() => context?.locale.value ?? 'en-US',
 		),
@@ -61,11 +64,17 @@ export const useTranslationNamespace = <NS extends keyof KottiI18n.Messages>(
 /**
  * Provides the translation context to child components
  */
-export const useI18nProvide = (
-	locale: Ref<KottiI18n.Props['locale']>,
-	messages: Ref<KottiI18n.Props['messages']>,
-	numberFormat: Ref<KottiI18n.Props['numberFormat']>,
-) => {
+export const useI18nProvide = ({
+	currencyMap,
+	locale,
+	messages,
+	numberFormat,
+}: {
+	currencyMap: Ref<KottiI18n.Props['currencyMap']>
+	locale: Ref<KottiI18n.Props['locale']>
+	messages: Ref<KottiI18n.Props['messages']>
+	numberFormat: Ref<KottiI18n.Props['numberFormat']>
+}) => {
 	const defaultMessages = computed(
 		(): KottiI18n.Messages =>
 			({
@@ -100,6 +109,7 @@ export const useI18nProvide = (
 	)
 
 	provide<KottiI18n.Context>(KT_I18N_CONTEXT, {
+		currencyMap,
 		locale,
 		messages: computed(() =>
 			fixDeepMerge<KottiI18n.Messages>(defaultMessages.value, messages.value),

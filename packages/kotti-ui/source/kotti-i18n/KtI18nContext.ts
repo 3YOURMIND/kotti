@@ -6,6 +6,10 @@ import { KottiI18n } from './types'
 const KtI18nContext = defineComponent({
 	name: 'KtI18nContext',
 	props: {
+		currencyMap: {
+			default: (): KottiI18n.Props['currencyMap'] => ({}),
+			type: Object,
+		},
 		locale: { required: true, type: String },
 		messages: {
 			/**
@@ -25,11 +29,12 @@ const KtI18nContext = defineComponent({
 		},
 	},
 	setup(props: KottiI18n.Props, { slots }) {
-		useI18nProvide(
-			computed(() => props.locale),
-			computed(() => props.messages),
-			computed(() => props.numberFormat),
-		)
+		useI18nProvide({
+			currencyMap: computed(() => props.currencyMap),
+			locale: computed(() => props.locale),
+			messages: computed(() => props.messages),
+			numberFormat: computed(() => props.numberFormat),
+		})
 
 		return () => createElement('div', [slots.default()])
 	},
