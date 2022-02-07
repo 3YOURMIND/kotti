@@ -1,6 +1,7 @@
 import { VueConstructor } from 'vue'
 
 import { Kotti } from './types'
+import { DecimalSeparator } from './types/kotti'
 
 /**
  * Takes a Vue Component and assigns a meta object which
@@ -41,3 +42,14 @@ export const isNumberInRange = ({
 
 	return fitsMinimum && fitsMaximum
 }
+
+export const DECIMAL_SEPARATORS = Object.values(DecimalSeparator)
+
+/**
+ * RegExp character set for use within other regular expressions
+ */
+export const DECIMAL_SEPARATORS_CHARACTER_SET = [
+	'[',
+	...DECIMAL_SEPARATORS,
+	']',
+].join('')

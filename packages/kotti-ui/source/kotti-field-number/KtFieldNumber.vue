@@ -61,10 +61,9 @@ import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
-import { isNumberInRange } from '../utilities'
+import { DECIMAL_SEPARATORS_CHARACTER_SET, isNumberInRange } from '../utilities'
 
 import {
-	DECIMAL_SEPARATORS_CHARACTER_SET,
 	KOTTI_FIELD_NUMBER_SUPPORTS,
 	LEADING_ZEROES_REGEX,
 	VALID_REGEX,
