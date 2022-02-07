@@ -14,6 +14,7 @@ export {
 } from '../kotti-comment/types'
 export { KottiDrawer as Drawer } from '../kotti-drawer/types'
 export { KottiField as Field } from '../kotti-field/types'
+export { KottiFieldCurrency as FieldCurrency } from '../kotti-field-currency/types'
 export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'
 export { KottiFieldPassword as FieldPassword } from '../kotti-field-password/types'
 export { KottiFieldText as FieldText } from '../kotti-field-text/types'
