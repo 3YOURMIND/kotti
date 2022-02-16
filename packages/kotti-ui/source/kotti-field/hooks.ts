@@ -20,12 +20,13 @@ import { KottiField } from './types'
 
 const useDecoration = <DATA_TYPE>({
 	props,
-}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'>) => {
+	supports,
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props' | 'supports'>) => {
 	return {
-		leftIcon: computed(() => props.leftIcon),
-		prefix: computed(() => props.prefix),
-		rightIcon: computed(() => props.rightIcon),
-		suffix: computed(() => props.suffix),
+		leftIcon: computed(() => (supports.decoration ? props.leftIcon : null)),
+		prefix: computed(() => (supports.decoration ? props.prefix : null)),
+		rightIcon: computed(() => (supports.decoration ? props.rightIcon : null)),
+		suffix: computed(() => (supports.decoration ? props.suffix : null)),
 	}
 }
 
@@ -282,7 +283,7 @@ export const useField = <DATA_TYPE>({
 
 	const field = reactive<KottiField.Hook.ReturnsWithRefs<DATA_TYPE>>({
 		...sharedProperties,
-		...useDecoration({ props }),
+		...useDecoration({ props, supports }),
 		...useInputProps({
 			context,
 			isDisabled: sharedProperties.isDisabled,
