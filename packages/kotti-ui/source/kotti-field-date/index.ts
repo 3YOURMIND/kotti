@@ -7,6 +7,12 @@ import KtFieldDateVue from './KtFieldDate.vue'
 import KtFieldDateRangeVue from './KtFieldDateRange.vue'
 import KtFieldDateTimeVue from './KtFieldDateTime.vue'
 import KtFieldDateTimeRangeVue from './KtFieldDateTimeRange.vue'
+import {
+	KottiFieldDate,
+	KottiFieldDateRange,
+	KottiFieldDateTime,
+	KottiFieldDateTimeRange,
+} from './types'
 
 const DESIGN_URL =
 	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=773%3A6059' as const
@@ -23,7 +29,7 @@ export const KtFieldDate = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDate',
-			schema: null,
+			schema: KottiFieldDate.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
@@ -41,7 +47,7 @@ export const KtFieldDateRange = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDateRange',
-			schema: null,
+			schema: KottiFieldDateRange.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
@@ -59,7 +65,7 @@ export const KtFieldDateTime = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDateTime',
-			schema: null,
+			schema: KottiFieldDateTime.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
@@ -77,7 +83,7 @@ export const KtFieldDateTimeRange = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldDateTimeRange',
-			schema: null,
+			schema: KottiFieldDateTimeRange.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },

@@ -6,6 +6,11 @@ import { KOTTI_FIELD_SELECT_SUPPORTS } from './constants'
 import KtFieldMultiSelectVue from './KtFieldMultiSelect.vue'
 import KtFieldSingleSelectVue from './KtFieldSingleSelect.vue'
 import KtFieldSingleSelectRemoteVue from './KtFieldSingleSelectRemote.vue'
+import {
+	KottiFieldMultiSelect,
+	KottiFieldSingleSelect,
+	KottiFieldSingleSelectRemote,
+} from './types'
 
 const url =
 	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=428%3A3482'
@@ -21,8 +26,8 @@ export const KtFieldSingleSelect = attachMeta(
 		},
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
-			namespace: 'Kotti.KtFieldSingleSelect',
-			schema: null,
+			namespace: 'Kotti.FieldSingleSelect',
+			schema: KottiFieldSingleSelect.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },
@@ -39,8 +44,8 @@ export const KtFieldSingleSelectRemote = attachMeta(
 		},
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
-			namespace: 'Kotti.KtFieldMultiSelectRemote',
-			schema: null,
+			namespace: 'Kotti.FieldSingleSelectRemote',
+			schema: KottiFieldSingleSelectRemote.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },
@@ -57,8 +62,8 @@ export const KtFieldMultiSelect = attachMeta(
 		},
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
-			namespace: 'Kotti.KtFieldMultiSelect',
-			schema: null,
+			namespace: 'Kotti.FieldMultiSelect',
+			schema: KottiFieldMultiSelect.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_SELECT_SUPPORTS },

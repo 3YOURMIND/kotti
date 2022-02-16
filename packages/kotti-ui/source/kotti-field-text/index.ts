@@ -4,6 +4,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import { KOTTI_FIELD_TEXT_SUPPORTS } from './constants'
 import KtFieldTextVue from './KtFieldText.vue'
+import { KottiFieldText } from './types'
 
 export const KtFieldText = attachMeta(
 	makeInstallable(KtFieldTextVue),
@@ -17,7 +18,7 @@ export const KtFieldText = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldText',
-			schema: null,
+			schema: KottiFieldText.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_TEXT_SUPPORTS },
