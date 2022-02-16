@@ -1,9 +1,10 @@
+import { DecimalSeparator } from '../types/decimal-separator'
+
 import { VALID_REGEX } from './constants'
 import { toFixedPrecisionString } from './utilities'
 
+const DECIMAL_SEPARATORS = Object.values(DecimalSeparator)
 const DECIMAL_PRECISION = 3
-
-const DECIMAL_SEPARATORS = ['٫', ',', '.']
 
 describe('toFixedPrecisionString', () => {
 	it('returns null for empty strings', () => {

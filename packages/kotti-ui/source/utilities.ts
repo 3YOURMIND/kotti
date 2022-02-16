@@ -43,13 +43,11 @@ export const isNumberInRange = ({
 	return fitsMinimum && fitsMaximum
 }
 
-export const DECIMAL_SEPARATORS = Object.values(DecimalSeparator)
-
 /**
  * RegExp character set for use within other regular expressions
  */
 export const DECIMAL_SEPARATORS_CHARACTER_SET = [
 	'[',
-	...DECIMAL_SEPARATORS,
+	...Object.values(DecimalSeparator),
 	']',
 ].join('')

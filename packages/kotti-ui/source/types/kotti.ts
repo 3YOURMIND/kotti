@@ -1,5 +1,6 @@
 import { ZodSchema } from 'zod'
 
+export * from './decimal-separator'
 export { KottiAccordion as Accordion } from '../kotti-accordion/types'
 export { KottiAvatar as Avatar } from '../kotti-avatar/types'
 export { KottiAvatarGroup as AvatarGroup } from '../kotti-avatar-group/types'
@@ -48,15 +49,6 @@ export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiPopover as Popover } from '../kotti-popover/types'
 export { KottiRow as Row } from '../kotti-row/types'
 export { KottiUserMenu as UserMenu } from '../kotti-user-menu/types'
-
-/**
- * @see {@link https://en.wikipedia.org/wiki/Decimal_separator#/media/File:DecimalSeparator.svg}
- */
-export enum DecimalSeparator {
-	ARABIC_COMMA = '٫',
-	COMMA = ',',
-	DOT = '.',
-}
 
 export enum MetaDesignType {
 	FIGMA = 'FIGMA',
