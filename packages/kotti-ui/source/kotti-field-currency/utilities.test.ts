@@ -26,7 +26,7 @@ describe('toFixedPrecisionString', () => {
 			expect(toFixedPrecisionString(testCase, DECIMAL_PRECISION)).toBe(null)
 	})
 
-	it('returns the a DOT_DECIMAL_SEPARATOR for all potential decimal separators', () => {
+	it('returns a `.` for all potential decimal separators', () => {
 		for (const testCase of ['5.0', '5,0', '5٫0'])
 			expect(toFixedPrecisionString(testCase, DECIMAL_PRECISION)).toBe(
 				(5).toFixed(DECIMAL_PRECISION),

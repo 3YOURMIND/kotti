@@ -1,21 +1,11 @@
-import { parseCurrencyUserInput } from './input-parser'
+import { formatCurrencyUserInput } from './input-formatter'
 
-describe('parseCurrencyUserInput', () => {
-	it('', () => {
-		const UNINTENTIONAL_CASES: Array<
-			[
-				Parameters<typeof parseCurrencyUserInput>[0],
-				ReturnType<typeof parseCurrencyUserInput>,
-			]
-		> = [
-			[{ value: 'a', decimalPlaces: 2 }, ''],
-			[{ value: '5a', decimalPlaces: 2 }, ''],
-		]
-
+describe('formatCurrencyUserInput', () => {
+	it('correctly formats user input into a string that has the accepted number of decimal places', () => {
 		const TEST_CASES: Array<
 			[
-				Parameters<typeof parseCurrencyUserInput>[0],
-				ReturnType<typeof parseCurrencyUserInput>,
+				Parameters<typeof formatCurrencyUserInput>[0],
+				ReturnType<typeof formatCurrencyUserInput>,
 			]
 		> = [
 			[{ value: '.', decimalPlaces: 2 }, '0.00'],
@@ -41,9 +31,16 @@ describe('parseCurrencyUserInput', () => {
 		]
 
 		for (const [input, output] of TEST_CASES)
-			expect(parseCurrencyUserInput(input)).toEqual(output)
+			expect(formatCurrencyUserInput(input)).toEqual(output)
+	})
 
-		for (const [input, output] of UNINTENTIONAL_CASES)
-			expect(parseCurrencyUserInput(input)).not.toEqual(output)
+	it('throws for invalid values', () => {
+		const TEST_CASES: Array<Parameters<typeof formatCurrencyUserInput>[0]> = [
+			{ value: 'a', decimalPlaces: 2 },
+			{ value: '5a', decimalPlaces: 2 },
+		]
+
+		for (const input of TEST_CASES)
+			expect(() => formatCurrencyUserInput(input)).toThrow()
 	})
 })

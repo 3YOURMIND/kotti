@@ -1,3 +1,4 @@
+import { VALID_REGEX } from './constants'
 import { toFixedPrecisionString } from './utilities'
 
 /**
@@ -10,22 +11,27 @@ import { toFixedPrecisionString } from './utilities'
  * as a side-effect of using `toFixedPrecisionString`,
  * but this is undefined behavior.
  */
-export const parseCurrencyUserInput = ({
+export const formatCurrencyUserInput = ({
 	decimalPlaces,
 	value,
 }: {
 	decimalPlaces: number
 	value: string
 }): string => {
+	if (!VALID_REGEX.test(value))
+		throw new Error(
+			`KtFieldCurrency: formatCurrencyUserInput recieved invalid value "${value}".`,
+		)
+
 	const isNegativeValue = value.startsWith('-')
 	const strippedSign = value.replace(/-/, '')
 	// enforces at least as many digits as (decimal places + 1) (aka `0.00`)
-	const paddedString = `${'0'.repeat(decimalPlaces + 1)}${strippedSign}` //? 000a
+	const paddedString = `${'0'.repeat(decimalPlaces + 1)}${strippedSign}`
 
 	const withoutDecimalPoint = paddedString.replace('.', '')
 
 	const relocatedDecimalPoint = [
-		...(isNegativeValue ? ['-'] : []), // ...[]
+		...(isNegativeValue ? ['-'] : []),
 		withoutDecimalPoint.slice(0, -decimalPlaces),
 		'.',
 		withoutDecimalPoint.slice(-decimalPlaces),

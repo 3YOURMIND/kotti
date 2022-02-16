@@ -31,7 +31,7 @@ import { DecimalSeparator } from '../types/kotti'
 import { isNumberInRange } from '../utilities'
 
 import { KOTTI_FIELD_CURRENCY_SUPPORTS, VALID_REGEX } from './constants'
-import { parseCurrencyUserInput } from './input-parser'
+import { formatCurrencyUserInput } from './input-formatter'
 import { KottiFieldCurrency } from './types'
 import {
 	toFixedPrecisionString,
