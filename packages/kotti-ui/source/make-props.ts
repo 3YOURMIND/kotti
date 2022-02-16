@@ -1,5 +1,5 @@
 import { PropOptions, PropType } from '@vue/composition-api'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, uniq } from 'lodash'
 import { z } from 'zod'
 
 const DEBUG_MAKE_PROPS = false as const // enable to print debug log
@@ -242,21 +242,23 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 			}
 
 			if (!isNever) {
-				const vuePropTypes = [...zodTypeSet]
-					.filter((x) => !ignoredZodTypes.has(x))
-					.map((zodTypeName) => {
-						if (DEBUG_MAKE_PROPS)
-							console.log(
-								`makeProps: found “ZodFirstPartyTypeKind.${zodTypeName}”`,
-							)
+				const vuePropTypes = uniq(
+					[...zodTypeSet]
+						.filter((x) => !ignoredZodTypes.has(x))
+						.map((zodTypeName) => {
+							if (DEBUG_MAKE_PROPS)
+								console.log(
+									`makeProps: found “ZodFirstPartyTypeKind.${zodTypeName}”`,
+								)
 
-						if (!zodToVueType.has(zodTypeName))
-							throw new Error(
-								`makeProps: unknown “ZodFirstPartyTypeKind.${zodTypeName}”`,
-							)
+							if (!zodToVueType.has(zodTypeName))
+								throw new Error(
+									`makeProps: unknown “ZodFirstPartyTypeKind.${zodTypeName}”`,
+								)
 
-						return zodToVueType.get(zodTypeName) as VuePropConstructor
-					})
+							return zodToVueType.get(zodTypeName) as VuePropConstructor
+						}),
+				)
 
 				if (vuePropTypes.length === 0)
 					throw new Error(
