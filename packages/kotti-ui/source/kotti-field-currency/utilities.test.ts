@@ -1,4 +1,4 @@
-import { DecimalSeparator } from '../types/decimal-separator'
+import { DecimalSeparator } from '../types/kotti'
 
 import { VALID_REGEX } from './constants'
 import { toFixedPrecisionString } from './utilities'
