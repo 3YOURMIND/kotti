@@ -1,10 +1,10 @@
 import Big from 'big.js'
 
 import { DecimalSeparator } from '../types/kotti'
+import { DECIMAL_SEPARATORS_CHARACTER_SET } from '../utilities'
 
 import {
 	STRINGS_THAT_ARE_TREATED_AS_NULL,
-	DECIMAL_SEPARATORS_CHARACTER_SET,
 	TRAILING_ZEROES_REGEX,
 } from './constants'
 

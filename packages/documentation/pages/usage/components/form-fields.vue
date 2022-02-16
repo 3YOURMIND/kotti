@@ -3,6 +3,16 @@
 		<ComponentInfo v-bind="{ component }" />
 
 		<KtI18nContext
+			:currencyMap="{
+				USD: {
+					symbol: '$',
+					decimalPlaces: 2,
+				},
+				EUR: {
+					symbol: '€',
+					decimalPlaces: 2,
+				},
+			}"
 			:locale="settings.locale"
 			:numberFormat="{ decimalSeparator: settings.decimalSeparator }"
 		>
@@ -227,6 +237,20 @@
 									:minimum="0"
 								/>
 							</div>
+							<KtFieldSingleSelect
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'currencyCurrency',
+									)
+								"
+								formKey="currencyCurrency"
+								helpText='Available Currencies can be defined via <KtI18nContext :currencyMap="..."/>'
+								label="currency"
+								:options="[
+									{ label: 'EUR', value: 'EUR' },
+									{ label: 'USD', value: 'USD' },
+								]"
+							/>
 							<KtFieldToggle
 								v-if="componentDefinition.additionalProps.includes('isInline')"
 								formKey="isInline"
@@ -398,6 +422,7 @@
 <script lang="ts">
 import {
 	Kotti,
+	KtFieldCurrency,
 	KtFieldDate,
 	KtFieldDateRange,
 	KtFieldDateTime,
@@ -449,6 +474,12 @@ const components: Array<{
 	name: string
 	supports: Kotti.Field.Supports
 }> = [
+	{
+		additionalProps: ['currencyCurrency', 'numberMaximum', 'numberMinimum'],
+		formKey: 'currencyValue',
+		name: 'KtFieldCurrency',
+		supports: KtFieldCurrency.meta.supports,
+	},
 	{
 		additionalProps: DATE_ADDITIONAL_PROPS,
 		formKey: 'dateValue',
@@ -543,6 +574,7 @@ const components: Array<{
 ]
 
 const INITIAL_VALUES: {
+	currencyValue: Kotti.FieldCurrency.Value
 	dateRangeValue: Kotti.FieldDateRange.Value
 	dateTimeRangeValue: Kotti.FieldDateRange.Value
 	dateTimeValue: Kotti.FieldDateTime.Value
@@ -554,6 +586,7 @@ const INITIAL_VALUES: {
 	toggleGroupValue: Kotti.FieldToggleGroup.Value
 	toggleValue: Kotti.FieldToggle.Value
 } = {
+	currencyValue: null,
 	dateRangeValue: [null, null],
 	dateTimeRangeValue: [null, null],
 	dateTimeValue: null,
@@ -636,6 +669,7 @@ export default defineComponent({
 				actions: Kotti.FieldToggle.Value
 				autoComplete: 'current-password' | 'new-password'
 				collapseTagsAfter: Kotti.FieldNumber.Value
+				currencyCurrency: string
 				isInline: boolean
 				isLoadingOptions: boolean
 				maximumDate: Kotti.FieldDate.Value
@@ -677,6 +711,7 @@ export default defineComponent({
 				actions: false,
 				autoComplete: 'current-password',
 				collapseTagsAfter: null,
+				currencyCurrency: 'USD',
 				isInline: false,
 				isLoadingOptions: false,
 				maximumDate: null,
@@ -798,6 +833,13 @@ export default defineComponent({
 			)
 				Object.assign(additionalProps, {
 					decimalPlaces: settings.value.additionalProps.numberDecimalPlaces,
+				})
+
+			if (
+				componentDefinition.value.additionalProps.includes('currencyCurrency')
+			)
+				Object.assign(additionalProps, {
+					currency: settings.value.additionalProps.currencyCurrency,
 				})
 
 			if (
@@ -957,6 +999,7 @@ export default defineComponent({
 			component: computed(
 				(): { meta: Kotti.Meta; name: string } =>
 					({
+						KtFieldCurrency,
 						KtFieldDate,
 						KtFieldDateRange,
 						KtFieldDateTime,

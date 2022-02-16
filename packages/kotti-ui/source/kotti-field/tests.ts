@@ -22,7 +22,12 @@ const TestComponent = defineComponent({
 		}),
 	),
 	setup: (props: KottiField.PropsInternal, { emit }) => {
-		useI18nProvide(ref('en-US'), ref({}), ref({}))
+		useI18nProvide({
+			currencyMap: ref({}),
+			locale: ref('en-US'),
+			messages: ref({}),
+			numberFormat: ref({}),
+		})
 
 		return {
 			field: useField({
@@ -51,7 +56,12 @@ const TestComponentObject = defineComponent({
 		}),
 	),
 	setup: (props: KottiField.PropsInternal, { emit }) => {
-		useI18nProvide(ref('en-US'), ref({}), ref({}))
+		useI18nProvide({
+			currencyMap: ref({}),
+			locale: ref('en-US'),
+			messages: ref({}),
+			numberFormat: ref({}),
+		})
 
 		return {
 			field: useField({

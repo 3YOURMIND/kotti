@@ -23,7 +23,12 @@ const TestField = defineComponent<KottiField.PropsInternal>({
 		}),
 	),
 	setup: (props, { emit }) => {
-		useI18nProvide(ref('en-US'), ref({}), ref({}))
+		useI18nProvide({
+			currencyMap: ref({}),
+			locale: ref('en-US'),
+			messages: ref({}),
+			numberFormat: ref({}),
+		})
 
 		return {
 			field: useField({

@@ -28,6 +28,8 @@ import { KtDrawer } from './kotti-drawer'
 export * from './kotti-drawer'
 import { KtField } from './kotti-field'
 export * from './kotti-field'
+import { KtFieldCurrency } from './kotti-field-currency'
+export * from './kotti-field-currency'
 import {
 	KtFieldDate,
 	KtFieldDateRange,
@@ -124,6 +126,7 @@ export default {
 			KtCommentInput,
 			KtDrawer,
 			KtField,
+			KtFieldCurrency,
 			KtFieldDate,
 			KtFieldDateRange,
 			KtFieldDateTime,

@@ -15,10 +15,16 @@ export type DeepPartial<T> = T extends Record<string, unknown>
 
 export namespace KottiI18n {
 	export type Context = {
+		currencyMap: Ref<CurrencyMap>
 		locale: Ref<SupportedLanguages>
 		messages: Ref<Messages>
 		numberFormat: Ref<NumberFormat>
 	}
+
+	export type CurrencyMap = Record<
+		string,
+		{ decimalPlaces: number; symbol: string }
+	>
 
 	export type NumberFormat = {
 		decimalSeparator: DecimalSeparator
@@ -35,6 +41,7 @@ export namespace KottiI18n {
 	}
 
 	export type Props = {
+		currencyMap: CurrencyMap
 		locale: SupportedLanguages
 		messages: DeepPartial<Messages>
 		numberFormat: DeepPartial<NumberFormat>

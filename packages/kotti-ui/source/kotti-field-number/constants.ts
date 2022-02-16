@@ -1,5 +1,6 @@
 import { KottiField } from '../kotti-field/types'
 import { DecimalSeparator } from '../types/kotti'
+import { DECIMAL_SEPARATORS_CHARACTER_SET } from '../utilities'
 
 export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {
 	clear: false,
@@ -7,15 +8,6 @@ export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {
 	placeholder: true,
 	tabIndex: true,
 }
-
-/**
- * RegExp character set for use within other regular expressions
- */
-export const DECIMAL_SEPARATORS_CHARACTER_SET = [
-	'[',
-	...Object.values(DecimalSeparator),
-	']',
-].join('')
 
 export const STRINGS_THAT_ARE_TREATED_AS_NULL = [
 	...Object.values(DecimalSeparator),
