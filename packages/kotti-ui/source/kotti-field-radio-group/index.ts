@@ -4,6 +4,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import { KOTTI_FIELD_RADIO_GROUP_SUPPORTS } from './constants'
 import KtFieldRadioGroupVue from './KtFieldRadioGroup.vue'
+import { KottiFieldRadioGroup } from './types'
 
 export const KtFieldRadioGroup = attachMeta(
 	makeInstallable(KtFieldRadioGroupVue),
@@ -17,7 +18,7 @@ export const KtFieldRadioGroup = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldRadioGroup',
-			schema: null,
+			schema: KottiFieldRadioGroup.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_RADIO_GROUP_SUPPORTS },

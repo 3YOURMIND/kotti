@@ -6,6 +6,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import KtFieldToggleVue from './KtFieldToggle.vue'
 import KtFieldToggleGroupVue from './KtFieldToggleGroup.vue'
+import { KottiFieldToggle, KottiFieldToggleGroup } from './types'
 
 const designs: Kotti.Meta['designs'] = [
 	{
@@ -35,7 +36,7 @@ export const KtFieldToggle = attachMeta(
 		},
 		typeScript: {
 			namespace: 'Kotti.FieldToggle',
-			schema: null,
+			schema: KottiFieldToggle.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_TOGGLE_SUPPORTS },
@@ -50,7 +51,7 @@ export const KtFieldToggleGroup = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldToggleGroup',
-			schema: null,
+			schema: KottiFieldToggleGroup.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_TOGGLE_SUPPORTS },

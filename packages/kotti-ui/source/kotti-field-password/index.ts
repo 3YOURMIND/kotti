@@ -3,6 +3,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import { KOTTI_FIELD_PASSWORD_SUPPORTS } from './constants'
 import KtFieldPasswordVue from './KtFieldPassword.vue'
+import { KottiFieldPassword } from './types'
 
 export const KtFieldPassword = attachMeta(
 	makeInstallable(KtFieldPasswordVue),
@@ -13,7 +14,7 @@ export const KtFieldPassword = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldPassword',
-			schema: null,
+			schema: KottiFieldPassword.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_PASSWORD_SUPPORTS },

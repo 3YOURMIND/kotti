@@ -2,6 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtFieldVue from './KtField.vue'
+import { KottiField } from './types'
 
 export const KtField = attachMeta(makeInstallable(KtFieldVue), {
 	addedVersion: '2.0.0',
@@ -18,7 +19,7 @@ export const KtField = attachMeta(makeInstallable(KtFieldVue), {
 	},
 	typeScript: {
 		namespace: 'Kotti.Field',
-		schema: null,
+		schema: KottiField.propsSchema,
 	},
 })
 

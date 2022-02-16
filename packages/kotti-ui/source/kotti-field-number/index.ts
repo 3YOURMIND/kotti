@@ -4,6 +4,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import { KOTTI_FIELD_NUMBER_SUPPORTS } from './constants'
 import KtFieldNumberVue from './KtFieldNumber.vue'
+import { KottiFieldNumber } from './types'
 
 export const KtFieldNumber = attachMeta(
 	makeInstallable(KtFieldNumberVue),
@@ -17,7 +18,7 @@ export const KtFieldNumber = attachMeta(
 		slots: FIELD_META_BASE_SLOTS,
 		typeScript: {
 			namespace: 'Kotti.FieldNumber',
-			schema: null,
+			schema: KottiFieldNumber.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_NUMBER_SUPPORTS },

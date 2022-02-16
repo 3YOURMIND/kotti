@@ -83,6 +83,9 @@ export const KtCol = attachMeta(
 		slots: {
 			default: { description: null, scope: null },
 		},
-		typeScript: null,
+		typeScript: {
+			namespace: 'Kotti.Col',
+			schema: null,
+		},
 	},
 )
