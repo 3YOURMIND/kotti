@@ -47,6 +47,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
 
 import {
+	KtFieldCurrency,
 	KtFieldDateRange,
 	KtFieldMultiSelect,
 	KtFieldNumber,
@@ -80,6 +81,7 @@ export default defineComponent<{
 	name: 'FilterRow',
 	components: {
 		ButtonLink,
+		KtFieldCurrency,
 		KtFieldDateRange,
 		KtFieldMultiSelect,
 		KtFieldNumber,
@@ -146,14 +148,14 @@ export default defineComponent<{
 			}
 		})
 		const valuePrefix = computed<KottiFieldNumber.Props['prefix']>(() =>
-			props.column?.type === KottiFilters.FilterType.CURRENCY ||
+			// props.column?.type === KottiFilters.FilterType.CURRENCY ||
 			props.column?.type === KottiFilters.FilterType.FLOAT
 				? props.column.prefix
 				: null,
 		)
 		const valueStep = computed<KottiFieldNumber.Props['step']>(() => {
 			switch (props.column?.type) {
-				case KottiFilters.FilterType.CURRENCY:
+				// case KottiFilters.FilterType.CURRENCY:
 				case KottiFilters.FilterType.FLOAT:
 					return props.column.step
 				case KottiFilters.FilterType.INTEGER:
@@ -163,7 +165,7 @@ export default defineComponent<{
 			}
 		})
 		const valueSuffix = computed<KottiFieldNumber.Props['suffix']>(() =>
-			props.column?.type === KottiFilters.FilterType.CURRENCY ||
+			// props.column?.type === KottiFilters.FilterType.CURRENCY ||
 			props.column?.type === KottiFilters.FilterType.FLOAT
 				? props.column.suffix
 				: null,

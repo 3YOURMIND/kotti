@@ -182,6 +182,7 @@ export const getValueComponent = (
 		case KottiFilters.FilterType.BOOLEAN:
 			return 'KtFieldToggle'
 		case KottiFilters.FilterType.CURRENCY:
+			return 'KtFieldCurrency'
 		case KottiFilters.FilterType.FLOAT:
 		case KottiFilters.FilterType.INTEGER:
 			return 'KtFieldNumber'

@@ -1,3 +1,4 @@
+import { KottiFieldCurrency } from '../kotti-field-currency/types'
 import { KottiFieldDateRange } from '../kotti-field-date/types'
 import { KottiFieldNumber } from '../kotti-field-number/types'
 import {
@@ -113,9 +114,9 @@ export namespace KottiFilters {
 			OPERATION extends Operation.Currency = Operation.Currency,
 		> = Common & {
 			operations: OPERATION[]
-			prefix: KottiFieldNumber.Props['prefix']
-			step: KottiFieldNumber.Props['step']
-			suffix: KottiFieldNumber.Props['suffix']
+			currency: KottiFieldCurrency.Props['currency']
+			// prefix: KottiFieldCurrency.Props['prefix'] // KtI18nContext.numberFormat.symbol
+			// suffix: KottiFieldCurrency.Props['suffix'] //
 			type: FilterType.CURRENCY
 		}
 
@@ -182,6 +183,7 @@ export namespace KottiFilters {
 	}
 
 	export type FilterValue =
+		| KottiFieldCurrency.Value
 		| KottiFieldDateRange.Value
 		| KottiFieldMultiSelect.Value
 		| KottiFieldNumber.Value
