@@ -82,7 +82,7 @@ export default defineComponent<KottiFieldToggleGroup.PropsInternal>({
 			optionsWithChecked: computed(() =>
 				props.options.map((option) => ({
 					...option,
-					value: field.currentValue[option.key],
+					value: field.currentValue ? field.currentValue[option.key] : null,
 				})),
 			),
 			wrapperClasses: computed(() => ({
