@@ -76,9 +76,6 @@ export default defineComponent<KottiFieldSingleSelect.PropsInternal>({
 	setup(props, { emit }) {
 		const field = useField<KottiFieldSingleSelect.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldSingleSelect.Value =>
-				['boolean', 'number', 'string', 'symbol'].includes(typeof value) ||
-				value === null,
 			isEmpty: (value) => value === null,
 			props,
 			supports: KOTTI_FIELD_SELECT_SUPPORTS,

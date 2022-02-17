@@ -69,7 +69,7 @@ import {
 	VALID_REGEX,
 } from './constants'
 import { KottiFieldNumber } from './types'
-import { isNumber, isStepMultiple, toNumber, toString } from './utilities'
+import { isStepMultiple, toNumber, toString } from './utilities'
 
 export default defineComponent<KottiFieldNumber.PropsInternal>({
 	name: 'KtFieldNumber',
@@ -78,8 +78,6 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 	setup(props, { emit, root }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldNumber.Value =>
-				isNumber(value) || value === null,
 			isEmpty: (value) => value === null,
 			props,
 			supports: KOTTI_FIELD_NUMBER_SUPPORTS,
