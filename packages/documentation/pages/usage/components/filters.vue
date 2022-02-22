@@ -1,7 +1,7 @@
 <template lang="md">
     <ComponentInfo v-bind="{ component }" />
 
-    <KtI18nContext :locale="settings.locale">
+    <KtI18nContext :currencyMap="{ EUR: { symbol: '€', decimalPlaces: 2 }, USD: { symbol: '$', decimalPlaces: 2 } }" :locale="settings.locale">
     	<div class="overview">
     		<div class="overview__component">
     			<h4>Component</h4>
@@ -48,6 +48,16 @@
     					:size="Kotti.Field.Size.SMALL"
     					type="switch"
     				/>
+    				<h4>Additional Props</h4>
+    				<KtFieldSingleSelect
+    					formKey="currency"
+    					helpText='Available Currencies can be defined via <KtI18nContext :currencyMap="..."/>'
+    					label="currency"
+    					:options="[
+    						{ label: 'EUR', value: 'EUR' },
+    						{ label: 'USD', value: 'USD' },
+    					]"
+    				/>
     			</div>
     			<div>
     				<h4>Texts</h4>
@@ -61,13 +71,13 @@
     				<div class="field-row">
     					<KtFieldText
     						formKey="prefix"
-    						helpText="Support on CURRENCY and FLOAT column types only"
+    						helpText="Support on FLOAT column type only"
     						isOptional
     						label="prefix"
     					/>
     					<KtFieldText
     						formKey="suffix"
-    						helpText="Support on CURRENCY and FLOAT column types only"
+    						helpText="Support on FLOAT column type only"
     						isOptional
     						label="suffix"
     					/>
@@ -110,6 +120,7 @@ export default defineComponent({
 			booleanFlags: {
 				isLoading: boolean
 			}
+			currency: string
 			locale: Kotti.I18n.SupportedLanguages
 			prefix: Kotti.FieldNumber.Props['prefix']
 			searchPlaceholder: Kotti.FieldText.Value
@@ -118,6 +129,7 @@ export default defineComponent({
 			booleanFlags: {
 				isLoading: false,
 			},
+			currency: 'USD',
 			locale: 'en-US',
 			prefix: null,
 			searchPlaceholder: null,
@@ -173,6 +185,7 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.FLOAT,
 					},
 					{
+						currency: settings.value.currency,
 						key: 'currency-column',
 						label: 'Currency Column',
 						operations: [
@@ -183,9 +196,6 @@ export default defineComponent({
 							Kotti.Filters.Operation.Currency.LESS_THAN_OR_EQUAL,
 							Kotti.Filters.Operation.Currency.IS_EMPTY,
 						],
-						prefix: settings.value.prefix,
-						step: 0.01,
-						suffix: settings.value.suffix,
 						type: Kotti.Filters.FilterType.CURRENCY,
 					},
 					{

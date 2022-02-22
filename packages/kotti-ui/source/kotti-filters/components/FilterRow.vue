@@ -17,11 +17,12 @@
 				:isDisabled="isOperationSelectDisabled"
 				:options="operationOptions"
 			/>
-			<div :class="valueContainerClasses">
+			<div class="kt-filter__list__row__value-field">
 				<component
 					:is="valueComponent"
 					v-if="isValueFieldVisible"
 					:collapseTagsAfter="1"
+					:currency="valueCurrency"
 					formKey="value"
 					:minimum="Number.MIN_SAFE_INTEGER"
 					:options="valueOptions"
@@ -123,21 +124,27 @@ export default defineComponent<{
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
-		const label = computed<string>(() =>
+		const isOperationSelectDisabled = computed(
+			() => operationOptions.value.length <= 1,
+		)
+		const isValueFieldVisible = computed(
+			() => !isEmptyOperation(props.filter.operation, props.column?.type),
+		)
+		const label = computed(() =>
 			props.isFirstItem
 				? translations.value.whereLabel
 				: translations.value.andLabel,
 		)
-		const operationOptions = computed<KottiFieldSingleSelect.Props['options']>(
-			() => {
-				if (!props.column) return []
-				return getOperationOptions(props.column)
-			},
-		)
+		const operationOptions = computed(() => getOperationOptions(props.column))
 		const valueComponent = computed(() => {
 			if (!props.column?.type) return null
 			return getValueComponent(props.column.type)
 		})
+		const valueCurrency = computed(() =>
+			props.column?.type === KottiFilters.FilterType.CURRENCY
+				? props.column.currency
+				: null,
+		)
 		const valueOptions = computed(() => {
 			switch (props.column?.type) {
 				case KottiFilters.FilterType.SINGLE_ENUM:
@@ -148,39 +155,25 @@ export default defineComponent<{
 			}
 		})
 		const valuePrefix = computed<KottiFieldNumber.Props['prefix']>(() =>
-			// props.column?.type === KottiFilters.FilterType.CURRENCY ||
 			props.column?.type === KottiFilters.FilterType.FLOAT
 				? props.column.prefix
 				: null,
 		)
 		const valueStep = computed<KottiFieldNumber.Props['step']>(() => {
 			switch (props.column?.type) {
-				// case KottiFilters.FilterType.CURRENCY:
 				case KottiFilters.FilterType.FLOAT:
 					return props.column.step
 				case KottiFilters.FilterType.INTEGER:
-				// fall through
-				default:
 					return 1
+				default:
+					return null
 			}
 		})
 		const valueSuffix = computed<KottiFieldNumber.Props['suffix']>(() =>
-			// props.column?.type === KottiFilters.FilterType.CURRENCY ||
 			props.column?.type === KottiFilters.FilterType.FLOAT
 				? props.column.suffix
 				: null,
 		)
-		const isOperationSelectDisabled = computed<boolean>(
-			() => operationOptions.value.length <= 1,
-		)
-		const isValueFieldVisible = computed(
-			() => !isEmptyOperation(props.filter.operation, props.column?.type),
-		)
-		const valueContainerClasses = computed(() => ({
-			'kt-filter__list__row__value-field': true,
-			'kt-filter__list__row__value-field--is-vertically-centered':
-				props.column?.type === KottiFilters.FilterType.BOOLEAN,
-		}))
 
 		const handleRemove = () => emit('remove')
 		const handleSetFilter = (newFilter: KottiFilters.InternalFilter) => {
@@ -194,6 +187,7 @@ export default defineComponent<{
 
 			emit('input', newFilter)
 		}
+
 		return {
 			handleRemove,
 			handleSetFilter,
@@ -204,7 +198,7 @@ export default defineComponent<{
 			label,
 			operationOptions,
 			valueComponent,
-			valueContainerClasses,
+			valueCurrency,
 			valueOptions,
 			valuePrefix,
 			valueStep,
@@ -237,12 +231,7 @@ export default defineComponent<{
 	}
 
 	&__value-field {
-		&--is-vertically-centered {
-			display: flex;
-			align-items: center;
-
-			min-height: var(--unit-8);
-		}
+		margin: auto 0;
 	}
 
 	&__remove {

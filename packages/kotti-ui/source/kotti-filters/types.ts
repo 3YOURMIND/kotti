@@ -113,10 +113,8 @@ export namespace KottiFilters {
 		export type Currency<
 			OPERATION extends Operation.Currency = Operation.Currency,
 		> = Common & {
-			operations: OPERATION[]
 			currency: KottiFieldCurrency.Props['currency']
-			// prefix: KottiFieldCurrency.Props['prefix'] // KtI18nContext.numberFormat.symbol
-			// suffix: KottiFieldCurrency.Props['suffix'] //
+			operations: OPERATION[]
 			type: FilterType.CURRENCY
 		}
 
