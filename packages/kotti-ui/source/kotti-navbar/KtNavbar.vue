@@ -211,6 +211,11 @@ $narrow-navbar-width: 3.4rem;
 .kt-navbar__body {
 	flex: 1 1 100%;
 	overflow-y: auto;
+
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 .kt-navbar__footer {
