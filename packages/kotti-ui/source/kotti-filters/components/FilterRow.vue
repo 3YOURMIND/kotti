@@ -23,8 +23,8 @@
 					v-if="isValueFieldVisible"
 					:collapseTagsAfter="1"
 					:currency="valueCurrency"
+					:decimalPlaces="valueDecimalPlaces"
 					formKey="value"
-					:minimum="Number.MIN_SAFE_INTEGER"
 					:options="valueOptions"
 					:prefix="valuePrefix"
 					:step="valueStep"
@@ -57,7 +57,6 @@ import {
 	KtFieldToggle,
 	KtForm,
 } from '../../'
-import { KottiFieldNumber } from '../../kotti-field-number/types'
 import { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { KottiField } from '../../kotti-field/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
@@ -143,36 +142,37 @@ export default defineComponent<{
 		const valueCurrency = computed(() =>
 			props.column?.type === KottiFilters.FilterType.CURRENCY
 				? props.column.currency
-				: null,
+				: undefined,
 		)
-		const valueOptions = computed(() => {
-			switch (props.column?.type) {
-				case KottiFilters.FilterType.SINGLE_ENUM:
-				case KottiFilters.FilterType.MULTI_ENUM:
-					return props.column.options
-				default:
-					return []
-			}
-		})
-		const valuePrefix = computed<KottiFieldNumber.Props['prefix']>(() =>
+		const valueOptions = computed(() =>
+			props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||
+			props.column?.type === KottiFilters.FilterType.SINGLE_ENUM
+				? props.column.options
+				: undefined,
+		)
+		const valueDecimalPlaces = computed(() =>
+			props.column?.type === KottiFilters.FilterType.FLOAT
+				? props.column.decimalPlaces
+				: props.column?.type === KottiFilters.FilterType.INTEGER
+				? 0
+				: undefined,
+		)
+		const valuePrefix = computed(() =>
 			props.column?.type === KottiFilters.FilterType.FLOAT
 				? props.column.prefix
-				: null,
+				: undefined,
 		)
-		const valueStep = computed<KottiFieldNumber.Props['step']>(() => {
-			switch (props.column?.type) {
-				case KottiFilters.FilterType.FLOAT:
-					return props.column.step
-				case KottiFilters.FilterType.INTEGER:
-					return 1
-				default:
-					return null
-			}
-		})
-		const valueSuffix = computed<KottiFieldNumber.Props['suffix']>(() =>
+		const valueStep = computed(() =>
+			props.column?.type === KottiFilters.FilterType.FLOAT
+				? props.column.step
+				: props.column?.type === KottiFilters.FilterType.INTEGER
+				? 1
+				: undefined,
+		)
+		const valueSuffix = computed(() =>
 			props.column?.type === KottiFilters.FilterType.FLOAT
 				? props.column.suffix
-				: null,
+				: undefined,
 		)
 
 		const handleRemove = () => emit('remove')
@@ -199,6 +199,7 @@ export default defineComponent<{
 			operationOptions,
 			valueComponent,
 			valueCurrency,
+			valueDecimalPlaces,
 			valueOptions,
 			valuePrefix,
 			valueStep,
