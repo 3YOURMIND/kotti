@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('jsdom-global')()
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref, SetupContext } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
 import { z } from 'zod'
 
@@ -13,6 +13,32 @@ import { localVue } from '../test-utils'
 
 import KtForm from './KtForm.vue'
 
+const testFieldSetup = (
+	props: KottiField.PropsInternal,
+	{ emit }: SetupContext,
+) => {
+	useI18nProvide({
+		currencyMap: ref({}),
+		locale: ref('en-US'),
+		messages: ref({}),
+		numberFormat: ref({}),
+	})
+
+	return {
+		field: useField({
+			emit,
+			isEmpty: (value) => value === null,
+			props,
+			supports: {
+				clear: true,
+				decoration: true,
+				placeholder: true,
+				tabIndex: true,
+			},
+		}),
+	}
+}
+
 const TestField = defineComponent<KottiField.PropsInternal>({
 	name: 'TestField',
 	components: { KtField },
@@ -21,30 +47,7 @@ const TestField = defineComponent<KottiField.PropsInternal>({
 			value: z.string().nullable(),
 		}),
 	),
-	setup: (props, { emit }) => {
-		useI18nProvide({
-			currencyMap: ref({}),
-			locale: ref('en-US'),
-			messages: ref({}),
-			numberFormat: ref({}),
-		})
-
-		return {
-			field: useField({
-				emit,
-				isCorrectDataType: (value): value is string | null =>
-					typeof value === 'string' || value === null,
-				isEmpty: (value) => value === null,
-				props,
-				supports: {
-					clear: true,
-					decoration: true,
-					placeholder: true,
-					tabIndex: true,
-				},
-			}),
-		}
-	},
+	setup: testFieldSetup,
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
@@ -56,30 +59,7 @@ const TestFieldObject = defineComponent<KottiField.PropsInternal>({
 			value: z.record(z.unknown()).nullable(),
 		}),
 	),
-	setup: (props, { emit }) => {
-		useI18nProvide({
-			currencyMap: ref({}),
-			locale: ref('en-US'),
-			messages: ref({}),
-			numberFormat: ref({}),
-		})
-
-		return {
-			field: useField({
-				emit,
-				isCorrectDataType: (value): value is Record<string, unknown> | null =>
-					value === null || typeof value === 'object',
-				isEmpty: (value) => value === null,
-				props,
-				supports: {
-					clear: true,
-					decoration: true,
-					placeholder: true,
-					tabIndex: true,
-				},
-			}),
-		}
-	},
+	setup: testFieldSetup,
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 

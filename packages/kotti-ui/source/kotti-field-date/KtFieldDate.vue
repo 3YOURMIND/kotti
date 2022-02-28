@@ -24,11 +24,7 @@ import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
 import { makeProps } from '../make-props'
 
-import {
-	DATE_FORMAT_REGEX,
-	EL_DATE_PROPS,
-	KOTTI_FIELD_DATE_SUPPORTS,
-} from './constants'
+import { EL_DATE_PROPS, KOTTI_FIELD_DATE_SUPPORTS } from './constants'
 import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDate } from './types'
 import { isInvalidDate } from './utilities'
@@ -40,9 +36,6 @@ export default defineComponent<KottiFieldDate.PropsInternal>({
 	setup(props, { emit }) {
 		const field = useField<KottiFieldDate.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldDate.Value =>
-				(typeof value === 'string' && DATE_FORMAT_REGEX.test(value)) ||
-				value === null,
 			isEmpty: (value) => value === null,
 			props,
 			supports: KOTTI_FIELD_DATE_SUPPORTS,

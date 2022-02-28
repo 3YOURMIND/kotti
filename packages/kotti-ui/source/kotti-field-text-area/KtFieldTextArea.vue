@@ -27,8 +27,6 @@ export default defineComponent<KottiFieldTextArea.PropsInternal>({
 	setup(props, { emit }) {
 		const field = useField<KottiFieldTextArea.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldTextArea.Value =>
-				typeof value === 'string' || value === null,
 			isEmpty: (value) => value === null,
 			props,
 			supports: KOTTI_FIELD_TEXT_AREA_SUPPORTS,

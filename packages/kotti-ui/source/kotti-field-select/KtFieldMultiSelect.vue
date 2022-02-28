@@ -104,13 +104,6 @@ export default defineComponent<KottiFieldMultiSelect.PropsInternal>({
 	setup(props, { emit }) {
 		const field = useField<KottiFieldMultiSelect.Value>({
 			emit,
-			isCorrectDataType: (values): values is KottiFieldMultiSelect.Value =>
-				Array.isArray(values) &&
-				values.every(
-					(value) =>
-						['boolean', 'number', 'string', 'symbol'].includes(typeof value) ||
-						value === null,
-				),
 			isEmpty: (value) => value.length === 0,
 			props,
 			supports: KOTTI_FIELD_SELECT_SUPPORTS,

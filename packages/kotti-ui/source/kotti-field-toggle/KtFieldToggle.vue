@@ -42,8 +42,6 @@ export default defineComponent<KottiFieldToggle.PropsInternal>({
 	setup(props, { emit }) {
 		const field = useField<KottiFieldToggle.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldToggle.Value =>
-				typeof value === 'boolean' || value === null,
 			isEmpty: (value) => value !== true,
 			props,
 			supports: KOTTI_FIELD_TOGGLE_SUPPORTS,

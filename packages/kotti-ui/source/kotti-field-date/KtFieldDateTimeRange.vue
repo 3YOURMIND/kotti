@@ -29,7 +29,6 @@ import { useField } from '../kotti-field/hooks'
 import { makeProps } from '../make-props'
 
 import {
-	DATE_TIME_FORMAT_REGEX,
 	EL_DATE_RANGE_PROPS,
 	EL_DATE_TIME_PROPS,
 	KOTTI_FIELD_DATE_SUPPORTS,
@@ -45,14 +44,6 @@ export default defineComponent<KottiFieldDateTimeRange.PropsInternal>({
 	setup(props, { emit }) {
 		const field = useField<KottiFieldDateTimeRange.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldDateTimeRange.Value =>
-				Array.isArray(value) &&
-				value.length === 2 &&
-				value.every(
-					(value) =>
-						value === null ||
-						(typeof value === 'string' && DATE_TIME_FORMAT_REGEX.test(value)),
-				),
 			isEmpty: (dateTimeRangeValue) =>
 				dateTimeRangeValue.every((dateTime) => dateTime === null),
 			props,

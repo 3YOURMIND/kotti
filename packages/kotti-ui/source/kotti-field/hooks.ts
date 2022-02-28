@@ -78,14 +78,10 @@ const useTexts = (props: KottiField.PropsInternal) => {
 const useValue = <DATA_TYPE>({
 	context,
 	emit,
-	isCorrectDataType,
 	isDisabled,
 	isEmpty,
 	props,
-}: Pick<
-	KottiField.Hook.Parameters<DATA_TYPE>,
-	'emit' | 'isCorrectDataType' | 'isEmpty' | 'props'
-> & {
+}: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'emit' | 'isEmpty' | 'props'> & {
 	context: KottiForm.Context | null
 	isDisabled: Ref<boolean>
 }) => {
@@ -104,34 +100,24 @@ const useValue = <DATA_TYPE>({
 	// fetch value
 
 	const currentValue = computed((): DATA_TYPE => {
-		const value = (() => {
-			if (context === null) return cloneDeep(props.value)
+		if (context === null) return cloneDeep(props.value)
 
-			switch (props.formKey) {
-				case FORM_KEY_NONE:
-					return cloneDeep(props.value)
+		switch (props.formKey) {
+			case FORM_KEY_NONE:
+				return cloneDeep(props.value)
 
-				case null:
-					throw new KtFieldErrors.ImplicitFormKeyNone(props)
+			case null:
+				throw new KtFieldErrors.ImplicitFormKeyNone(props)
 
-				default:
-					return context.values.value[props.formKey] as DATA_TYPE
-			}
-		})()
-
-		if (!isCorrectDataType(value))
-			throw new KtFieldErrors.InvalidDataType(props, value)
-
-		return value
+			default:
+				return context.values.value[props.formKey] as DATA_TYPE
+		}
 	})
 
 	return {
 		currentValue,
 		isEmpty: computed(() => isEmpty(currentValue.value)),
 		setValue: ref((newValue: unknown) => {
-			if (!isCorrectDataType(newValue))
-				throw new KtFieldErrors.InvalidDataType(props, newValue)
-
 			if (isDisabled.value)
 				throw new KtFieldErrors.DisabledSetValueCalled(props)
 
@@ -262,7 +248,6 @@ const useNotifyContext = <DATA_TYPE>({
 
 export const useField = <DATA_TYPE>({
 	emit,
-	isCorrectDataType,
 	isEmpty,
 	props,
 	supports,
@@ -275,7 +260,6 @@ export const useField = <DATA_TYPE>({
 		emit,
 		isEmpty,
 		isDisabled: sharedProperties.isDisabled,
-		isCorrectDataType,
 		props,
 	})
 

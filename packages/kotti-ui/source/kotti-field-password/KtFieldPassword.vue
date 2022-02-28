@@ -25,8 +25,6 @@ export default defineComponent<KottiFieldPassword.PropsInternal>({
 	setup(props, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldPassword.Value =>
-				typeof value === 'string' || value === null,
 			isEmpty: (value) => value === null,
 			props,
 			supports: KOTTI_FIELD_PASSWORD_SUPPORTS,

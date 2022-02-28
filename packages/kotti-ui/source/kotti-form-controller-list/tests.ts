@@ -33,8 +33,6 @@ const TestField = defineComponent<KottiField.PropsInternal>({
 		return {
 			field: useField({
 				emit,
-				isCorrectDataType: (value): value is string | null =>
-					typeof value === 'string' || value === null,
 				isEmpty: (value) => value === null,
 				props,
 				supports: {

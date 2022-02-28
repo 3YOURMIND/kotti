@@ -60,8 +60,6 @@ export default defineComponent<KottiFieldCurrency.PropsInternal>({
 	setup(props, { emit, root }) {
 		const field = useField<KottiFieldCurrency.Value>({
 			emit,
-			isCorrectDataType: (value): value is KottiFieldCurrency.Value =>
-				typeof value === 'string' || value === null,
 			isEmpty: (value) => value === null,
 			props,
 			supports: KOTTI_FIELD_CURRENCY_SUPPORTS,

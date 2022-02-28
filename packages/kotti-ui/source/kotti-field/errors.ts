@@ -44,21 +44,8 @@ class DisabledSetValueCalled extends CustomError {
 	}
 }
 
-class InvalidDataType extends CustomError {
-	public constructor(props: KottiField.PropsInternal, newValue: unknown) {
-		super(
-			createErrorMessage(props, [
-				`Encountered invalid data type, “${typeof newValue}” with value “${JSON.stringify(
-					newValue,
-				)}”.`,
-			]),
-		)
-	}
-}
-
 export const KtFieldErrors = {
 	DisabledSetValueCalled,
 	ImplicitFormKeyNone,
-	InvalidDataType,
 	InvalidPropOutsideOfContext,
 }

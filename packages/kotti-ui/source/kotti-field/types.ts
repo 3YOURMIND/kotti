@@ -54,12 +54,6 @@ export namespace KottiField {
 			emit: SetupContext['emit']
 
 			/**
-			 * This is a function that will be called when the value of
-			 * the field changes to ensure that the data type is correct
-			 */
-			isCorrectDataType: (value: unknown) => value is DATA_TYPE
-
-			/**
 			 * Useful for checking validation on required fields
 			 */
 			isEmpty: (value: DATA_TYPE) => boolean
