@@ -97,7 +97,7 @@ export default defineComponent<KottiNavbar.PropsInternal>({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
 
 $navbar-width: 12rem;
@@ -171,110 +171,114 @@ $narrow-navbar-width: 3.4rem;
 	a:focus {
 		color: var(--navbar-color-active);
 	}
-}
 
-.kt-navbar-wrapper {
-	position: fixed;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	width: $navbar-width;
-	height: 100%;
-}
-
-.kt-navbar-toggle {
-	display: none;
-	flex: 0 0 2.4rem;
-	align-items: center;
-	justify-content: center;
-	width: 2.4rem;
-	height: $mobile-navbar-height;
-
-	color: var(--navbar-color-light);
-	cursor: pointer;
-
-	&:hover {
-		color: var(--navbar-color-active);
-	}
-
-	.yoco {
-		font-size: 1.2rem;
-	}
-}
-
-.kt-navbar__header {
-	flex: 0 0 auto;
-	cursor: pointer;
-	border-bottom: 1px solid var(--navbar-border);
-}
-
-.kt-navbar__body {
-	flex: 1 1 100%;
-	overflow-y: auto;
-}
-
-.kt-navbar__footer {
-	flex: 0 0 auto;
-	padding: 0.8rem;
-	border-top: 1px solid var(--navbar-border);
-}
-
-.kt-navbar__dropdown {
-	position: absolute;
-	top: $mobile-navbar-height;
-	display: none;
-	width: 100%;
-	background-color: var(--navbar-background);
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
-}
-
-// Narrowed navbar
-.kt-navbar--narrow {
-	flex: 0 0 $narrow-navbar-width;
-
-	.kt-navbar-wrapper {
-		flex: 0 0 $narrow-navbar-width;
-		width: $narrow-navbar-width;
-	}
-
-	.kt-navbar__header {
-		text-align: center;
-	}
-
-	.kt-navbar__body {
-		padding: 0;
-	}
-
-	.kt-navbar__footer {
+	&-wrapper {
+		position: fixed;
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		width: $navbar-width;
+		height: 100%;
 	}
 
-	.kt-navbar-menu {
-		padding: 0.4rem 0;
-		margin: 0.8rem 0.2rem;
-		text-align: center;
-	}
-
-	.kt-navbar-notification {
+	&-toggle {
+		display: none;
+		flex: 0 0 2.4rem;
+		align-items: center;
 		justify-content: center;
-		padding: 0.8rem 0;
-		&__number {
-			position: absolute;
-			right: 0.4rem;
+		width: 2.4rem;
+		height: $mobile-navbar-height;
+
+		color: var(--navbar-color-light);
+		cursor: pointer;
+
+		&:hover {
+			color: var(--navbar-color-active);
+		}
+
+		.yoco {
+			font-size: 1.2rem;
 		}
 	}
 
-	.kt-navbar-quick-links {
-		padding: 0.8rem 0;
-		text-align: center;
-		&__link {
-			display: block;
+	&__header {
+		flex: 0 0 auto;
+		cursor: pointer;
+		border-bottom: 1px solid var(--navbar-border);
+	}
+
+	&__body {
+		flex: 1 1 100%;
+		overflow-y: auto;
+
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	&__footer {
+		flex: 0 0 auto;
+		padding: 0.8rem;
+		border-top: 1px solid var(--navbar-border);
+	}
+
+	&__dropdown {
+		position: absolute;
+		top: $mobile-navbar-height;
+		display: none;
+		width: 100%;
+		background-color: var(--navbar-background);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+	}
+
+	&--narrow {
+		flex: 0 0 $narrow-navbar-width;
+
+		.kt-navbar-wrapper {
+			flex: 0 0 $narrow-navbar-width;
+			width: $narrow-navbar-width;
+		}
+
+		.kt-navbar__header {
+			text-align: center;
+		}
+
+		.kt-navbar__body {
+			padding: 0;
+		}
+
+		.kt-navbar__footer {
+			display: flex;
+			justify-content: center;
+		}
+
+		.kt-navbar-menu {
+			padding: 0.4rem 0;
+			margin: 0.8rem 0.2rem;
+			text-align: center;
+		}
+
+		.kt-navbar-notification {
+			justify-content: center;
+			padding: 0.8rem 0;
+			&__number {
+				position: absolute;
+				right: 0.4rem;
+			}
+		}
+
+		.kt-navbar-quick-links {
+			padding: 0.8rem 0;
+			text-align: center;
+			&__link {
+				display: block;
+			}
 		}
 	}
 }
 
-// Mobile version
 @media (max-width: $size-md) {
 	.kt-navbar {
 		z-index: $zindex-4;
@@ -283,68 +287,64 @@ $narrow-navbar-width: 3.4rem;
 		height: 2.4rem;
 		min-height: auto;
 		border: 0;
-	}
 
-	.kt-navbar-wrapper {
-		position: relative;
-		flex: 0 0 $mobile-navbar-height;
-		flex-direction: row;
-		justify-content: space-between;
-		width: 100%;
-		height: $mobile-navbar-height;
-		padding: 0;
-		border-bottom: 1px solid var(--navbar-border);
-	}
+		&-wrapper {
+			position: relative;
+			flex: 0 0 $mobile-navbar-height;
+			flex-direction: row;
+			justify-content: space-between;
+			width: 100%;
+			height: $mobile-navbar-height;
+			padding: 0;
+			border-bottom: 1px solid var(--navbar-border);
+		}
 
-	.kt-navbar__header {
-		display: flex;
-		flex: 1;
-		align-items: center;
-		justify-content: center;
+		&-toggle {
+			display: flex;
+		}
 
-		width: auto;
-		padding: 0.2rem 0;
-		border: 0;
-	}
+		&__header {
+			display: flex;
+			flex: 1;
+			align-items: center;
+			justify-content: center;
 
-	.kt-navbar__footer {
-		display: flex;
-		flex: 0 0 2.4rem;
-		align-items: center;
-		justify-content: center;
-		border: 0;
-	}
-
-	.kt-navbar-notification {
-		display: none;
-		&--mobile {
-			display: block;
-			width: 1.2rem;
-			height: 1.2rem;
-			margin: 0.6rem 0;
-			text-align: center;
+			width: auto;
+			padding: 0.2rem 0;
 			border: 0;
-			border-radius: 1.2rem;
-			.yoco {
-				font-size: 1rem;
+		}
+
+		&__footer {
+			display: flex;
+			flex: 0 0 2.4rem;
+			align-items: center;
+			justify-content: center;
+			border: 0;
+		}
+
+		&-notification {
+			display: none;
+			&--mobile {
+				display: block;
+				width: 1.2rem;
+				height: 1.2rem;
+				margin: 0.6rem 0;
+				text-align: center;
+				border: 0;
+				border-radius: 1.2rem;
+				.yoco {
+					font-size: 1rem;
+				}
 			}
 		}
-	}
 
-	.kt-navbar__body {
-		display: none;
-	}
+		&__body {
+			display: none;
+		}
 
-	.kt-navbar__dropdown {
-		display: block;
-	}
-
-	.kt-navbar--narrow .kt-navbar-wrapper {
-		padding: 0;
-	}
-
-	.kt-navbar-toggle {
-		display: flex;
+		&__dropdown {
+			display: block;
+		}
 	}
 }
 </style>
