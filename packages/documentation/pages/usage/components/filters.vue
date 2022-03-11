@@ -1,7 +1,7 @@
 <template lang="md">
     <ComponentInfo v-bind="{ component }" />
 
-    <KtI18nContext :locale="settings.locale">
+    <KtI18nContext :currencyMap="{ EUR: { symbol: '€', decimalPlaces: 2 }, USD: { symbol: '$', decimalPlaces: 2 } }" :locale="settings.locale">
     	<div class="overview">
     		<div class="overview__component">
     			<h4>Component</h4>
@@ -48,6 +48,31 @@
     					:size="Kotti.Field.Size.SMALL"
     					type="switch"
     				/>
+    				<h4>Additional Props</h4>
+    				<div class="field-row">
+    					<KtFieldNumber
+    						formKey="numberDecimalPlaces"
+    						helpText="Support on FLOAT column type only"
+    						isOptional
+    						label="decimalPlaces"
+    						:minimum="0"
+    					/>
+    					<KtFieldNumber
+    						formKey="numberStep"
+    						helpText="Support on FLOAT column type only"
+    						isOptional
+    						label="step"
+    					/>
+    				</div>
+    				<KtFieldSingleSelect
+    					formKey="currencyCurrency"
+    					helpText='Available Currencies can be defined via <KtI18nContext :currencyMap="..."/>'
+    					label="currency"
+    					:options="[
+    						{ label: 'EUR', value: 'EUR' },
+    						{ label: 'USD', value: 'USD' },
+    					]"
+    				/>
     			</div>
     			<div>
     				<h4>Texts</h4>
@@ -60,14 +85,14 @@
     				<h4>Decoration</h4>
     				<div class="field-row">
     					<KtFieldText
-    						formKey="prefix"
-    						helpText="Support on CURRENCY and FLOAT column types only"
+    						formKey="numberPrefix"
+    						helpText="Support on FLOAT column type only"
     						isOptional
     						label="prefix"
     					/>
     					<KtFieldText
-    						formKey="suffix"
-    						helpText="Support on CURRENCY and FLOAT column types only"
+    						formKey="numberSuffix"
+    						helpText="Support on FLOAT column type only"
     						isOptional
     						label="suffix"
     					/>
@@ -110,18 +135,24 @@ export default defineComponent({
 			booleanFlags: {
 				isLoading: boolean
 			}
+			currencyCurrency: string
 			locale: Kotti.I18n.SupportedLanguages
-			prefix: Kotti.FieldNumber.Props['prefix']
+			numberDecimalPlaces: Kotti.FieldNumber.Props['decimalPlaces'] | null
+			numberPrefix: Kotti.FieldNumber.Props['prefix']
+			numberStep: Kotti.FieldNumber.Props['step'] | null
+			numberSuffix: Kotti.FieldNumber.Props['suffix']
 			searchPlaceholder: Kotti.FieldText.Value
-			suffix: Kotti.FieldNumber.Props['suffix']
 		}>({
 			booleanFlags: {
 				isLoading: false,
 			},
+			currencyCurrency: 'USD',
 			locale: 'en-US',
-			prefix: null,
+			numberDecimalPlaces: null,
+			numberPrefix: null,
+			numberStep: null,
+			numberSuffix: null,
 			searchPlaceholder: null,
-			suffix: null,
 		})
 
 		const componentProps = computed(
@@ -130,7 +161,7 @@ export default defineComponent({
 					{
 						key: 'global-search',
 						label: 'Search',
-						placeholder: settings.value.searchPlaceholder,
+						placeholder: settings.value.searchPlaceholder ?? undefined,
 						type: Kotti.Filters.FilterType.SEARCH,
 					},
 					{
@@ -157,6 +188,7 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.INTEGER,
 					},
 					{
+						decimalPlaces: settings.value.numberDecimalPlaces ?? undefined,
 						key: 'float-column',
 						label: 'Float Column',
 						operations: [
@@ -167,12 +199,13 @@ export default defineComponent({
 							Kotti.Filters.Operation.Float.LESS_THAN_OR_EQUAL,
 							Kotti.Filters.Operation.Float.IS_EMPTY,
 						],
-						prefix: settings.value.prefix,
-						step: 0.001,
-						suffix: settings.value.suffix,
+						prefix: settings.value.numberPrefix,
+						step: settings.value.numberStep ?? undefined,
+						suffix: settings.value.numberSuffix,
 						type: Kotti.Filters.FilterType.FLOAT,
 					},
 					{
+						currency: settings.value.currencyCurrency,
 						key: 'currency-column',
 						label: 'Currency Column',
 						operations: [
@@ -183,9 +216,6 @@ export default defineComponent({
 							Kotti.Filters.Operation.Currency.LESS_THAN_OR_EQUAL,
 							Kotti.Filters.Operation.Currency.IS_EMPTY,
 						],
-						prefix: settings.value.prefix,
-						step: 0.01,
-						suffix: settings.value.suffix,
 						type: Kotti.Filters.FilterType.CURRENCY,
 					},
 					{

@@ -120,7 +120,10 @@ export const getFilterInitialState = (
 export const getOperationOptions = (
 	column: KottiFilters.Column.Any,
 ): KottiFieldSingleSelect.Props['options'] => {
+	if (!column) return []
+
 	const translations = useTranslationNamespace('KtFilters')
+
 	switch (column.type) {
 		case KottiFilters.FilterType.BOOLEAN:
 			return column.operations.map((operation) => ({
@@ -182,6 +185,7 @@ export const getValueComponent = (
 		case KottiFilters.FilterType.BOOLEAN:
 			return 'KtFieldToggle'
 		case KottiFilters.FilterType.CURRENCY:
+			return 'KtFieldCurrency'
 		case KottiFilters.FilterType.FLOAT:
 		case KottiFilters.FilterType.INTEGER:
 			return 'KtFieldNumber'
