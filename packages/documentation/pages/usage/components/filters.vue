@@ -271,6 +271,7 @@ export default defineComponent({
 
 		const componentCode = computed<string>(() => {
 			const component: ComponentValue = {
+				hasActions: false,
 				hasHelpTextSlot: false,
 				name: 'KtFilters',
 				props: cloneDeep(componentProps.value),
