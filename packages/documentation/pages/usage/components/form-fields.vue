@@ -19,7 +19,11 @@
 			<div class="overview">
 				<div class="overview__component">
 					<h4>Component</h4>
-					<KtForm v-model="values" :formId="settings.formId">
+					<KtForm
+						v-model="values"
+						:formId="settings.formId || undefined"
+						@submit="onSubmit"
+					>
 						<component
 							:is="componentRepresentation.name"
 							v-bind="componentRepresentation.props"
@@ -27,16 +31,28 @@
 							:validator="componentRepresentation.validator"
 							@update:query="updateQuery"
 						>
-							<div
+							<template
 								v-if="componentRepresentation.hasHelpTextSlot"
-								slot="helpText"
+								#helpText
 							>
 								<div>
 									Supports
 									<abbr title="Hypertext Markup Language">HTML</abbr> via
-									<code>&lt;template v-slot:helpText&gt;</code>
+									<code>&lt;template #helpText&gt;</code>
 								</div>
-							</div>
+							</template>
+							<template
+								v-if="componentRepresentation.hasOptionSlot"
+								#option="{ option }"
+							>
+								<div style="display: flex; gap: 10px; align-items: center">
+									<KtAvatar
+										size="sm"
+										:src="`https://picsum.photos/seed/${option.label}/100/100`"
+									/>
+									{{ option.label }}
+								</div>
+							</template>
 							<div slot="default">Default Slot</div>
 						</component>
 					</KtForm>
@@ -137,6 +153,93 @@
 							]"
 							type="switch"
 						/>
+						<KtFieldNumber
+							v-if="componentDefinition.supports.tabIndex"
+							formKey="tabIndex"
+							helpText="Support varies"
+							isOptional
+							label="tabIndex"
+						/>
+					</div>
+					<div>
+						<h4>Texts</h4>
+						<KtFieldText formKey="label" isOptional label="label" />
+						<KtFieldText
+							formKey="helpDescription"
+							isOptional
+							label="helpDescription"
+						/>
+						<div class="field-row">
+							<KtFieldText
+								formKey="helpText"
+								:helpText="
+									settings.hasHelpTextSlot
+										? 'Not supported when using a #helpText slot'
+										: null
+								"
+								:isDisabled="settings.hasHelpTextSlot"
+								isOptional
+								label="helpText"
+							/>
+							<KtFieldToggle
+								formKey="hasHelpTextSlot"
+								isOptional
+								label="Use #helpText Slot"
+								type="switch"
+							/>
+						</div>
+						<div class="field-row">
+							<KtFieldText
+								formKey="placeholder"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.placeholder"
+								isOptional
+								label="placeholder"
+							/>
+							<KtFieldText
+								v-if="isRangeComponent"
+								formKey="placeholder2"
+								helpText="On range components, placeholder is an array of two strings"
+								:isDisabled="!componentDefinition.supports.placeholder"
+								isOptional
+								label="placeholder2"
+							/>
+						</div>
+						<h4>Decoration</h4>
+						<div class="field-row">
+							<KtFieldText
+								formKey="prefix"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="prefix"
+							/>
+							<KtFieldText
+								formKey="suffix"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="suffix"
+							/>
+						</div>
+						<div class="field-row">
+							<KtFieldSingleSelect
+								formKey="leftIcon"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="leftIcon"
+								:options="yocoIconOptions"
+							/>
+							<KtFieldSingleSelect
+								formKey="rightIcon"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="rightIcon"
+								:options="yocoIconOptions"
+							/>
+						</div>
 						<KtFormControllerObject
 							v-if="componentDefinition.additionalProps.length > 0"
 							formKey="additionalProps"
@@ -297,87 +400,16 @@
 								isOptional
 								label="minimumDate"
 							/>
-						</KtFormControllerObject>
-					</div>
-					<div>
-						<h4>Texts</h4>
-						<KtFieldText formKey="label" isOptional label="label" />
-						<KtFieldText
-							formKey="helpDescription"
-							isOptional
-							label="helpDescription"
-						/>
-						<div class="field-row">
-							<KtFieldText
-								formKey="helpText"
-								:helpText="
-									settings.hasHelpTextSlot
-										? 'Not supported when using a #helpText slot'
-										: null
-								"
-								:isDisabled="settings.hasHelpTextSlot"
-								isOptional
-								label="helpText"
-							/>
 							<KtFieldToggle
-								formKey="hasHelpTextSlot"
+								v-if="
+									componentDefinition.additionalProps.includes('hasOptionSlot')
+								"
+								formKey="hasOptionSlot"
 								isOptional
-								label="Use #helpText Slot"
+								label="option slot"
 								type="switch"
 							/>
-						</div>
-						<div class="field-row">
-							<KtFieldText
-								formKey="placeholder"
-								helpText="Support Varies"
-								:isDisabled="!componentDefinition.supports.placeholder"
-								isOptional
-								label="placeholder"
-							/>
-							<KtFieldText
-								v-if="isRangeComponent"
-								formKey="placeholder2"
-								helpText="On range components, placeholder is an array of two strings"
-								:isDisabled="!componentDefinition.supports.placeholder"
-								isOptional
-								label="placeholder2"
-							/>
-						</div>
-						<h4>Decoration</h4>
-						<div class="field-row">
-							<KtFieldText
-								formKey="prefix"
-								helpText="Support Varies"
-								:isDisabled="!componentDefinition.supports.decoration"
-								isOptional
-								label="prefix"
-							/>
-							<KtFieldText
-								formKey="suffix"
-								helpText="Support Varies"
-								:isDisabled="!componentDefinition.supports.decoration"
-								isOptional
-								label="suffix"
-							/>
-						</div>
-						<div class="field-row">
-							<KtFieldSingleSelect
-								formKey="leftIcon"
-								helpText="Support Varies"
-								:isDisabled="!componentDefinition.supports.decoration"
-								isOptional
-								label="leftIcon"
-								:options="yocoIconOptions"
-							/>
-							<KtFieldSingleSelect
-								formKey="rightIcon"
-								helpText="Support Varies"
-								:isDisabled="!componentDefinition.supports.decoration"
-								isOptional
-								label="rightIcon"
-								:options="yocoIconOptions"
-							/>
-						</div>
+						</KtFormControllerObject>
 					</div>
 				</div>
 			</KtForm>
@@ -430,6 +462,7 @@ import {
 	KtFieldDateTime,
 	KtFieldDateTimeRange,
 	KtFieldMultiSelect,
+	KtFieldMultiSelectRemote,
 	KtFieldNumber,
 	KtFieldPassword,
 	KtFieldRadioGroup,
@@ -441,6 +474,7 @@ import {
 	KtFieldToggleGroup,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
+import { TimeConversion } from '@metatypes/units'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -508,10 +542,28 @@ const components: Array<{
 		supports: KtFieldDateTimeRange.meta.supports,
 	},
 	{
-		additionalProps: ['actions', 'collapseTagsAfter', 'maximumSelectable'],
+		additionalProps: [
+			'actions',
+			'collapseTagsAfter',
+			'maximumSelectable',
+			'hasOptionSlot',
+		],
 		formKey: 'multiSelectValue',
 		name: 'KtFieldMultiSelect',
 		supports: KtFieldMultiSelect.meta.supports,
+	},
+	{
+		additionalProps: [
+			'actions',
+			'collapseTagsAfter',
+			'isLoadingOptions',
+			'maximumSelectable',
+			'hasOptionSlot',
+			'query',
+		],
+		formKey: 'multiSelectValue',
+		name: 'KtFieldMultiSelectRemote',
+		supports: KtFieldMultiSelectRemote.meta.supports,
 	},
 	{
 		additionalProps: [
@@ -539,13 +591,13 @@ const components: Array<{
 		supports: KtFieldRadioGroup.meta.supports,
 	},
 	{
-		additionalProps: ['actions'],
+		additionalProps: ['actions', 'hasOptionSlot'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
 		supports: KtFieldSingleSelect.meta.supports,
 	},
 	{
-		additionalProps: ['actions', 'isLoadingOptions', 'query'],
+		additionalProps: ['actions', 'isLoadingOptions', 'hasOptionSlot', 'query'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelectRemote',
 		supports: KtFieldSingleSelectRemote.meta.supports,
@@ -639,6 +691,11 @@ const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
 	{ label: 'Key 2', value: 'value2' },
 	{ isDisabled: true, label: 'Key 3', value: 'value3' },
 	{ label: 'Key 4', value: 'value4' },
+	{ label: 'Key 5', value: 'value5' },
+	{ label: 'Key 6', value: 'value6' },
+	{ label: 'Key 7', value: 'value7' },
+	{ label: 'Key 8', value: 'value8' },
+	{ label: 'Key 9', value: 'value9' },
 ]
 
 const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
@@ -674,6 +731,7 @@ export default defineComponent({
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				currencyCurrency: string
 				hasActions: boolean
+				hasOptionSlot: boolean
 				hideChangeButtons: boolean
 				isInline: boolean
 				isLoadingOptions: boolean
@@ -710,6 +768,7 @@ export default defineComponent({
 			rightIcon: Yoco.Icon | null
 			size: 'small' | 'medium' | 'large'
 			suffix: Kotti.FieldText.Value
+			tabIndex: Kotti.FieldNumber.Value
 			validation: Kotti.Field.Validation.Result['type']
 		}>({
 			additionalProps: {
@@ -717,6 +776,7 @@ export default defineComponent({
 				collapseTagsAfter: null,
 				currencyCurrency: 'USD',
 				hasActions: false,
+				hasOptionSlot: false,
 				hideChangeButtons: false,
 				isInline: false,
 				isLoadingOptions: false,
@@ -753,6 +813,7 @@ export default defineComponent({
 			rightIcon: null,
 			size: 'medium',
 			suffix: null,
+			tabIndex: null,
 			validation: 'empty',
 		})
 
@@ -817,6 +878,11 @@ export default defineComponent({
 					Object.assign(additionalProps, {
 						placeholder: settings.value.placeholder,
 					})
+
+			if (componentDefinition.value.supports.tabIndex)
+				Object.assign(additionalProps, {
+					tabIndex: settings.value.tabIndex,
+				})
 
 			if (
 				componentDefinition.value.additionalProps.includes('toggleType') &&
@@ -925,12 +991,15 @@ export default defineComponent({
 			if (
 				[
 					'KtFieldMultiSelect',
+					'KtFieldMultiSelectRemote',
 					'KtFieldSingleSelect',
 					'KtFieldSingleSelectRemote',
 				].includes(component)
 			) {
 				const options = (
-					component === 'KtFieldSingleSelectRemote'
+					['KtFieldMultiSelectRemote', 'KtFieldSingleSelectRemote'].includes(
+						component,
+					)
 						? singleOrMultiSelectOptions.filter((option) =>
 								option.label
 									.toLowerCase()
@@ -939,9 +1008,9 @@ export default defineComponent({
 									),
 						  )
 						: singleOrMultiSelectOptions
-				).map((option) => ({
+				).map((option, index) => ({
 					...option,
-					dataTest: `${String(option.value)}`,
+					dataTest: index % 2 === 0 ? `${String(option.value)}` : undefined,
 				}))
 
 				Object.assign(additionalProps, {
@@ -949,7 +1018,11 @@ export default defineComponent({
 				})
 			}
 
-			if (['KtFieldSingleSelectRemote'].includes(component)) {
+			if (
+				['KtFieldMultiSelectRemote', 'KtFieldSingleSelectRemote'].includes(
+					component,
+				)
+			) {
 				Object.assign(additionalProps, { query: remoteSingleSelectQuery.value })
 			}
 
@@ -987,6 +1060,7 @@ export default defineComponent({
 			(): ComponentValue => ({
 				hasActions: settings.value.additionalProps.hasActions,
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
+				hasOptionSlot: settings.value.additionalProps.hasOptionSlot,
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),
 				validation: settings.value.validation,
@@ -1003,6 +1077,7 @@ export default defineComponent({
 						KtFieldDateTimeRange,
 						KtFieldNumber,
 						KtFieldMultiSelect,
+						KtFieldMultiSelectRemote,
 						KtFieldPassword,
 						KtFieldRadioGroup,
 						KtFieldSingleSelect,
@@ -1034,6 +1109,8 @@ export default defineComponent({
 				}),
 			),
 			isRangeComponent,
+			onSubmit: (values: Record<string, unknown>) =>
+				window.alert(`@submit: ${JSON.stringify(values, null, '\t')}`),
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},
@@ -1065,6 +1142,16 @@ export default defineComponent({
 				newQuery: Kotti.FieldSingleSelectRemote.Events.UpdateQuery,
 			) => {
 				remoteSingleSelectQuery.value = newQuery
+				settings.value.additionalProps = {
+					...settings.value.additionalProps,
+					isLoadingOptions: true,
+				}
+				setTimeout(() => {
+					settings.value.additionalProps = {
+						...settings.value.additionalProps,
+						isLoadingOptions: false,
+					}
+				}, TimeConversion.MILLISECONDS_PER_SECOND)
 			},
 			values,
 			yocoIconOptions: Object.values(Yoco.Icon).map((icon) => ({

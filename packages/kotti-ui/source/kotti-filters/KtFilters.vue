@@ -61,7 +61,7 @@ import { isValidColumn } from './validators'
 
 const ARROW_HEIGHT = 7
 
-export default defineComponent<KottiFilters.InternalProps>({
+export default defineComponent<KottiFilters.PropsInternal>({
 	name: 'KtFilters',
 	components: {
 		ButtonLink,
@@ -73,7 +73,7 @@ export default defineComponent<KottiFilters.InternalProps>({
 		columns: {
 			required: true,
 			type: Array,
-			validator: (value: KottiFilters.InternalProps['columns']) =>
+			validator: (value: KottiFilters.PropsInternal['columns']) =>
 				value.every((column) => isValidColumn(column)),
 		},
 		dataTest: {

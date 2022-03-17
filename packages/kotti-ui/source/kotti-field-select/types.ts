@@ -8,39 +8,43 @@ export namespace Shared {
 		.nullable()
 	export type Value = z.output<typeof valueSchema>
 
-	export const entrySchema = z.object({
+	export const optionSchema = z.object({
 		dataTest: z.string().optional(),
 		isDisabled: z.boolean().optional(),
 		label: z.string(),
 		value: valueSchema,
 	})
-	export type Entry = z.output<typeof entrySchema>
+	export type Option = z.output<typeof optionSchema>
 
-	const actionSchema = z.object({
+	export const actionSchema = z.object({
 		label: z.string(),
 		onClick: z.function(z.tuple([]), z.void()),
 	})
 	export type Action = z.output<typeof actionSchema>
 
-	export const propsSchema = z
-		.object({
+	export const propsSchema = KottiField.propsSchema
+		.merge(KottiField.potentiallySupportedPropsSchema)
+		.extend({
 			actions: z.array(actionSchema).default(() => []),
-			options: z.array(entrySchema),
+			isUnsorted: z.boolean().default(false),
+			options: z.array(optionSchema),
 			placeholder: z.string().nullable().default(null),
 		})
-		/**
-		 * tabIndex is not supported due to element-ui limitation
-		 * TODO: support with new select components
-		 **/
-		.merge(
-			KottiField.potentiallySupportedPropsSchema.pick({
-				hideClear: true,
-				leftIcon: true,
-				prefix: true,
-				rightIcon: true,
-				suffix: true,
-			}),
-		)
+
+	export const isMultipleSchema = z.object({
+		collapseTagsAfter: z.number().default(Number.MAX_SAFE_INTEGER),
+		maximumSelectable: z.number().default(Number.MAX_SAFE_INTEGER),
+		value: z.array(Shared.valueSchema).default(() => []),
+	})
+
+	export const isRemoteSchema = z.object({
+		isLoadingOptions: z.boolean().default(false),
+		query: z.string().nullable().default(null),
+	})
+
+	export const isSingleSchema = z.object({
+		value: Shared.valueSchema.default(null),
+	})
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
@@ -54,16 +58,10 @@ export namespace Shared {
 }
 
 export namespace KottiFieldMultiSelect {
-	export const valueSchema = z.array(Shared.valueSchema)
+	export const valueSchema = Shared.isMultipleSchema.shape.value._def.innerType
 	export type Value = z.output<typeof valueSchema>
 
-	export const propsSchema = KottiField.propsSchema
-		.merge(Shared.propsSchema)
-		.extend({
-			collapseTagsAfter: z.number().default(Number.MAX_SAFE_INTEGER),
-			maximumSelectable: z.number().default(Number.MAX_SAFE_INTEGER),
-			value: valueSchema.default(() => []),
-		})
+	export const propsSchema = Shared.propsSchema.merge(Shared.isMultipleSchema)
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
@@ -71,15 +69,29 @@ export namespace KottiFieldMultiSelect {
 	export type Translations = Shared.Translations
 }
 
+export namespace KottiFieldMultiSelectRemote {
+	export const valueSchema = Shared.isMultipleSchema.shape.value._def.innerType
+	export type Value = z.output<typeof valueSchema>
+
+	export const propsSchema = Shared.propsSchema
+		.merge(Shared.isMultipleSchema)
+		.merge(Shared.isRemoteSchema)
+
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
+
+	export type Translations = Shared.Translations
+
+	export namespace Events {
+		export type UpdateQuery = KottiFieldMultiSelectRemote.Props['query']
+	}
+}
+
 export namespace KottiFieldSingleSelect {
 	export const valueSchema = Shared.valueSchema
 	export type Value = z.output<typeof valueSchema>
 
-	export const propsSchema = KottiField.propsSchema
-		.merge(Shared.propsSchema)
-		.extend({
-			value: valueSchema.default(null),
-		})
+	export const propsSchema = Shared.propsSchema.merge(Shared.isSingleSchema)
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
@@ -88,17 +100,12 @@ export namespace KottiFieldSingleSelect {
 }
 
 export namespace KottiFieldSingleSelectRemote {
-	export const valueSchema = KottiFieldSingleSelect.valueSchema
+	export const valueSchema = Shared.valueSchema
 	export type Value = z.output<typeof valueSchema>
 
-	export const propsSchema = KottiFieldSingleSelect.propsSchema
-		// TODO: no need for this merge when element-ui is not used under the hood anymore
-		// since we rely on the KottiFieldSingleSelect merge which would include tabIndex
-		.merge(KottiField.potentiallySupportedPropsSchema.pick({ tabIndex: true }))
-		.extend({
-			isLoadingOptions: z.boolean().default(false),
-			query: z.string().nullable().default(null),
-		})
+	export const propsSchema = Shared.propsSchema
+		.merge(Shared.isSingleSchema)
+		.merge(Shared.isRemoteSchema)
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>

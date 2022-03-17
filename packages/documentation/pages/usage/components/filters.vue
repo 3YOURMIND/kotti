@@ -273,6 +273,7 @@ export default defineComponent({
 			const component: ComponentValue = {
 				hasActions: false,
 				hasHelpTextSlot: false,
+				hasOptionSlot: false,
 				name: 'KtFilters',
 				props: cloneDeep(componentProps.value),
 				validation: 'empty',
