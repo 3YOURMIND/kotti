@@ -311,6 +311,64 @@ describe('date', () => {
 	})
 })
 
+describe('enum', () => {
+	beforeAll(silenceConsole)
+
+	const enumSchema = z.enum(['VALUE_A', 'VALUE_B', 'VALUE_C'])
+
+	const ENUM_SUCCESS = ['VALUE_A', 'VALUE_B', 'VALUE_C']
+	const ENUM_FAILURE = ['VALUE_D', 'string', [], {}, false]
+
+	it('generates vue prop for schema “z.enum()”', () => {
+		const schema = z.object({
+			prop: enumSchema,
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(String)
+		expect(prop).toValidate(...ENUM_SUCCESS)
+		expect(prop).not.toValidate(...ENUM_FAILURE, null, undefined)
+	})
+
+	it('generates vue prop for schema “z.enum().nullable()”', () => {
+		const schema = z.object({
+			prop: enumSchema.nullable(),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toBeRequired()
+		expect(prop).toBeType(String)
+		expect(prop).toValidate(...ENUM_SUCCESS, null)
+		expect(prop).not.toValidate(...ENUM_FAILURE, undefined)
+	})
+
+	it('generates vue prop for schema “z.enum().default()”', () => {
+		const schema = z.object({
+			prop: enumSchema.default(() => 'VALUE_A' as const),
+		})
+
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo('VALUE_A')
+		expect(prop).toBeType(String)
+		expect(prop).toValidate(...ENUM_SUCCESS, undefined)
+		expect(prop).not.toValidate(...ENUM_FAILURE, null)
+	})
+
+	it('generates vue prop for schema “z.enum().nullable().default()”', () => {
+		const schema = z.object({
+			prop: enumSchema.nullable().default(null),
+		})
+		const { prop } = makeProps(schema)
+
+		expect(prop).toDefaultTo(null)
+		expect(prop).toBeType(String)
+		expect(prop).toValidate(...ENUM_SUCCESS, null, undefined)
+		expect(prop).not.toValidate(...ENUM_FAILURE)
+	})
+})
+
 describe('function', () => {
 	beforeAll(silenceConsole)
 
