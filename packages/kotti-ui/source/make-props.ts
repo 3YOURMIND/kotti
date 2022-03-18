@@ -30,25 +30,47 @@ const propValidator = <SCHEMA extends z.ZodTypeAny>({
 	const validator = (value: unknown) => {
 		if (isNever && value === NEVER) return true
 
-		const result = propSchema.safeParse(value)
+		try {
+			const result = propSchema.safeParse(value)
 
-		if (result.success) return true
+			if (result.success) return true
 
-		/* eslint-disable no-console */
-		console.group(`propValidator found issues with prop “${propName}”`)
+			/* eslint-disable no-console */
+			console.group(`propValidator found issues with prop “${propName}”`)
 
-		// HACK: 'error' in result is necessary as `ts-jest` doesn’t see that result.success was already properly checked to be falsy and that error now exists
-		if ('error' in result) console.error(result.error)
+			// HACK: 'error' in result is necessary as `ts-jest` doesn’t see that result.success was already properly checked to be falsy and that error now exists
+			if ('error' in result) console.error(result.error)
 
-		if (Array.isArray(value)) console.table(cloneDeep(value))
-		else console.log(cloneDeep(value))
+			if (Array.isArray(value)) console.table(cloneDeep(value))
+			else console.log(cloneDeep(value))
 
-		console.trace()
+			console.trace()
 
-		console.groupEnd()
-		/* eslint-enable no-console */
+			console.groupEnd()
+			/* eslint-enable no-console */
 
-		return false
+			return false
+		} catch (error) {
+			/* eslint-disable no-console */
+			console.group(`propValidator crashed while parsing prop “${propName}”`)
+
+			console.error(error)
+
+			if (Array.isArray(value)) console.table(cloneDeep(value))
+			else console.log(cloneDeep(value))
+
+			console.trace()
+
+			console.info('used zod schema (window.lastZodSchema)', propSchema)
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			;(window as any).lastZodSchema = propSchema
+
+			console.groupEnd()
+			/* eslint-enable no-console */
+
+			return false
+		}
 	}
 
 	// assign name for better debugging and to improve props rendering in the documentation
