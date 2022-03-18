@@ -18,11 +18,28 @@ export type ComponentNames =
 	| 'KtFilters'
 
 export type ComponentValue = {
+	hasActions: boolean
 	hasHelpTextSlot: boolean
 	name: ComponentNames
 	props: Record<string, unknown>
 	validation: Kotti.Field.Validation.Result['type']
 }
+
+export const createActions = (
+	hasActions: boolean,
+): Array<Record<string, unknown>> | undefined =>
+	hasActions
+		? [
+				{
+					label: 'Create Item',
+					onClick: () => alert('actions[0].onClick called'),
+				},
+				{
+					label: 'Edit Item',
+					onClick: () => alert('actions[1].onClick called'),
+				},
+		  ]
+		: undefined
 
 export const generateComponentCode = (component: ComponentValue) =>
 	[
@@ -53,6 +70,15 @@ export const generateComponentCode = (component: ComponentValue) =>
 				}
 			})
 			.map((prop) => `\t${prop}`),
+		...(component.hasActions
+			? [
+					`\t:actions="${JSON.stringify(
+						createActions(true)?.map(
+							(a) => `{ label: '${a.label}', onClick: () => {} }`,
+						) ?? [],
+					).replaceAll('"', '')}"`,
+			  ]
+			: []),
 		...(component.validation === 'empty'
 			? []
 			: [

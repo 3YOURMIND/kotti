@@ -23,6 +23,7 @@
 						<component
 							:is="componentRepresentation.name"
 							v-bind="componentRepresentation.props"
+							:actions="componentRepresentation.actions"
 							:validator="componentRepresentation.validator"
 							@update:query="updateQuery"
 						>
@@ -143,7 +144,7 @@
 							<h4>Additional Props</h4>
 							<KtFieldToggle
 								v-if="componentDefinition.additionalProps.includes('actions')"
-								formKey="actions"
+								formKey="hasActions"
 								helpText="List of actions that can be triggered from the end of the dropdown"
 								isOptional
 								label="actions"
@@ -391,6 +392,7 @@
 						<component
 							:is="savedField.name"
 							v-bind="savedField.props"
+							:actions="savedField.actions"
 							:validator="savedField.validator"
 						>
 							<div v-if="savedField.hasHelpTextSlot" slot="helpText">
@@ -443,6 +445,7 @@ import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
 import {
+	createActions,
 	ComponentValue,
 	ComponentNames,
 	generateComponentCode,
@@ -542,7 +545,7 @@ const components: Array<{
 		supports: KtFieldSingleSelect.meta.supports,
 	},
 	{
-		additionalProps: ['isLoadingOptions', 'query'],
+		additionalProps: ['actions', 'isLoadingOptions', 'query'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelectRemote',
 		supports: KtFieldSingleSelectRemote.meta.supports,
@@ -604,6 +607,7 @@ const INITIAL_VALUES: {
 }
 
 type componentRepresentation = ComponentValue & {
+	actions?: Array<Record<string, unknown>>
 	code: string
 	validator: Kotti.Field.Validation.Function
 }
@@ -666,10 +670,11 @@ export default defineComponent({
 
 		const settings = ref<{
 			additionalProps: {
-				actions: Kotti.FieldToggle.Value
 				autoComplete: 'current-password' | 'new-password'
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				currencyCurrency: string
+				hasActions: boolean
+				hideChangeButtons: boolean
 				isInline: boolean
 				isLoadingOptions: boolean
 				maximumDate: Kotti.FieldDate.Value
@@ -708,10 +713,11 @@ export default defineComponent({
 			validation: Kotti.Field.Validation.Result['type']
 		}>({
 			additionalProps: {
-				actions: false,
 				autoComplete: 'current-password',
 				collapseTagsAfter: null,
 				currencyCurrency: 'USD',
+				hasActions: false,
+				hideChangeButtons: false,
 				isInline: false,
 				isLoadingOptions: false,
 				maximumDate: null,
@@ -941,16 +947,6 @@ export default defineComponent({
 				Object.assign(additionalProps, {
 					options,
 				})
-
-				if (settings.value.additionalProps.actions)
-					Object.assign(additionalProps, {
-						actions: [
-							{
-								label: 'Create Item',
-								onClick: () => alert('actions[0].onClick called'),
-							},
-						],
-					})
 			}
 
 			if (['KtFieldSingleSelectRemote'].includes(component)) {
@@ -989,6 +985,7 @@ export default defineComponent({
 
 		const componentValue = computed(
 			(): ComponentValue => ({
+				hasActions: settings.value.additionalProps.hasActions,
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),
@@ -1025,6 +1022,7 @@ export default defineComponent({
 			componentRepresentation: computed(
 				(): componentRepresentation => ({
 					...componentValue.value,
+					actions: createActions(componentValue.value.hasActions),
 					code: generateComponentCode(componentValue.value),
 					validator: createValidator(componentValue.value.validation),
 				}),
@@ -1043,6 +1041,7 @@ export default defineComponent({
 				savedFields.value.map(
 					(component): componentRepresentation => ({
 						...component,
+						actions: createActions(component.hasActions),
 						code: generateComponentCode(component),
 						validator: createValidator(component.validation),
 					}),
