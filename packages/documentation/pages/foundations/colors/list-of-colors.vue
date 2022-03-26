@@ -44,16 +44,6 @@
 				colorName="Orange"
 				:colors="orangeColor"
 			/>
-			<ColorPalette
-				class="column col-md-12 col-4"
-				colorName="Yellow"
-				:colors="yellowColor"
-			/>
-			<ColorPalette
-				class="column col-md-12 col-4"
-				colorName="Purple"
-				:colors="purpleColor"
-			/>
 		</div>
 		<div class="columns">
 			<ColorPalette
@@ -65,11 +55,6 @@
 				class="column col-md-12 col-4"
 				colorName="Light Gray"
 				:colors="lightGray"
-			/>
-			<ColorPalette
-				class="column col-md-12 col-4"
-				colorName="Neutrals"
-				:colors="neutrals"
 			/>
 		</div>
 		<ColorUsage />
