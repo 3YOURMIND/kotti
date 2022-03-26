@@ -101,7 +101,7 @@ import {
 } from '@vue/composition-api'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash'
-import marked from 'marked'
+import { marked } from 'marked'
 import naturalSort from 'natural-sort'
 
 const octokit = new Octokit()
@@ -122,7 +122,7 @@ export default defineComponent({
 		const isLoading = ref(true)
 
 		const releases: Ref<
-			Endpoints['GET /repos/:owner/:repo/releases']['response']['data']
+			Endpoints['GET /repos/{owner}/{repo}/releases']['response']['data']
 		> = ref([])
 
 		onBeforeMount(async () => {
@@ -140,7 +140,7 @@ export default defineComponent({
 			dayjs,
 			isLoading,
 			renderMarkdown: (markdown: string) =>
-				marked(convertPoundToIssueLink(markdown)),
+				marked.parse(convertPoundToIssueLink(markdown)),
 			releases,
 			sortedReleases: computed(() =>
 				cloneDeep(releases.value).sort((a, b) =>
