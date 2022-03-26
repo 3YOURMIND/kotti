@@ -144,7 +144,7 @@ yarn run check:stylelint
 ### Testing
 
 ```bash
-yarn run test
+yarn run check:jest
 ```
 
 ### Publish

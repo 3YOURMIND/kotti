@@ -10,7 +10,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 export default defineComponent({
 	setup() {
-		const contentRef = ref(null)
+		const contentRef = ref<Element | null>(null)
 
 		useTippy(
 			helpTextTriggerRef,

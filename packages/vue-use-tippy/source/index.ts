@@ -28,7 +28,11 @@ const applyForEvery = (
 export const useTippy = (
 	targets: Array<Target> | Target,
 	options: Ref<Partial<Props>>,
-) => {
+): {
+	onMount(callback: Callback): void
+	onUnmount(callback: Callback): void
+	tippy: Ref<InstanceRefType>
+} => {
 	const instance = ref<InstanceRefType>(null)
 
 	const onMountCallbacks: Callback[] = []
@@ -42,6 +46,7 @@ export const useTippy = (
 			return targets
 		})()
 
+		// @ts-expect-error TODO: Fix this type at some point
 		instance.value = tippy(unwrappedTargets, options.value)
 
 		onMountCallbacks.forEach((callback) => callback(instance.value))

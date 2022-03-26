@@ -41,7 +41,7 @@ jobs:
       - name: Build @3yourmind/vue-use-tippy
         run: yarn workspace @3yourmind/vue-use-tippy run build
       - name: Run tests
-        run: yarn run test
+        run: yarn run check:jest
   prettier:
     runs-on: ubuntu-latest
     steps:
