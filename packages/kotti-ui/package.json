@@ -17,7 +17,7 @@
 		"lodash": "^4.17.21",
 		"normalize.css": "^8.0.1",
 		"tippy.js": "6.x",
-		"ts-custom-error": "^3.1.1",
+		"ts-custom-error": "^3.2.0",
 		"vue-clickaway": "^2.2.2",
 		"zod": "^3.9.8"
 	},
