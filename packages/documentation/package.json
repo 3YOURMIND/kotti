@@ -2,6 +2,8 @@
 	"dependencies": {
 		"@3yourmind/kotti-ui": "3.0.0-beta.18",
 		"@3yourmind/yoco": "*",
+		"@metatypes/typography": "^0.5.0",
+		"@metatypes/units": "^0.5.0",
 		"@octokit/rest": "^18.0.6",
 		"@octokit/types": "^5.5.0",
 		"@vue/composition-api": "0.6.1",
@@ -14,8 +16,6 @@
 	},
 	"description": "Kotti-ui Doc Pages",
 	"devDependencies": {
-		"@metatypes/typography": "^0.4.0",
-		"@metatypes/units": "^0.4.0",
 		"@nuxt/types": "^2.13.2",
 		"@nuxt/typescript-build": "^1.0.3",
 		"@nuxt/typescript-runtime": "^0.4.10",
