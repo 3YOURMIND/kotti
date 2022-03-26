@@ -9,7 +9,7 @@
 		"@vue/composition-api": "0.6.1",
 		"core-js": "^3.17.2",
 		"dayjs": "^1.9.1",
-		"lodash": "^4.17.19",
+		"lodash": "^4.17.21",
 		"marked": "^2.0.0",
 		"natural-sort": "^1.0.0",
 		"vue-clipboard2": "^0.3.1"
@@ -23,7 +23,7 @@
 		"@nuxtjs/markdownit": "^1.2.7",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
 		"@nuxtjs/style-resources": "^1.0.0",
-		"@types/lodash": "^4.14.157",
+		"@types/lodash": "^4.14.180",
 		"@types/marked": "^1.1.0",
 		"@types/natural-sort": "^0.0.20",
 		"case-sensitive-paths-webpack-plugin": "^2.3.0",

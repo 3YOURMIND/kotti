@@ -1,4 +1,4 @@
-import deepEql from 'deep-eql'
+import { isEqual } from 'lodash'
 
 export const defaultState = {
 	expandMultiple: false,
@@ -7,7 +7,7 @@ export const defaultState = {
 
 function toggleRowExpansion(state, row) {
 	const expanded = state.expanded
-	const index = expanded.findIndex((elem) => deepEql(elem, row))
+	const index = expanded.findIndex((elem) => isEqual(elem, row))
 	const shouldExpand = index === -1 //if the row is not already included in state.expanded
 
 	if (state.expandMultiple) {
@@ -30,6 +30,6 @@ export const mutations = {
 
 export const getters = {
 	isExpanded(state, row) {
-		return state.expanded.some((e) => deepEql(e, row))
+		return state.expanded.some((e) => isEqual(e, row))
 	},
 }
