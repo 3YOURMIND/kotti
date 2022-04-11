@@ -22,8 +22,8 @@ export default defineComponent({
 			fieldInheritableProps: props.context.fieldInheritableProps,
 			formPath: computed(() => [
 				...props.context.formPath.value,
-				props.index,
 				props.formKey,
+				props.index,
 			]),
 			onAddField: props.context.onAddField,
 			onRemoveField: props.context.onRemoveField,
