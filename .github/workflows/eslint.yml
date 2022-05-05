@@ -1,0 +1,30 @@
+name: ESLint Annotate
+on: [pull_request]
+jobs:
+  node_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 12
+      - uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn install --frozen-lockfile
+      - name: Save Code Linting Report JSON
+        run: yarn run check:eslint:report
+        continue-on-error: true
+      - name: Annotate Code Linting Results
+        uses: ataylorme/eslint-annotate-action@1.2.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          report-json: "eslint-report.json"
+      - name: Upload ESLint report
+        uses: actions/upload-artifact@v2
+        with:
+          name: eslint-report.json
+          path: eslint-report.json

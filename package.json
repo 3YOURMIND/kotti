@@ -131,6 +131,7 @@
 		"build:render.com": "yarn run watch:build-kotti-dependencies && yarn workspace @3yourmind/kotti-ui run build && yarn workspace @3yourmind/documentation run nuxt generate",
 		"check": "yarn run check:stylelint && yarn run check:eslint && yarn run check:prettier",
 		"check:eslint": "eslint --max-warnings=0 --ignore-path .gitignore '**/*.{js,jsx,json,ts,tsx,vue}'",
+		"check:eslint:report": "eslint --max-warnings=0 --ignore-path .gitignore --output-file eslint-report.json --format json '**/*.{js,jsx,json,ts,tsx,vue}'",
 		"check:prettier": "prettier --check --ignore-path .gitignore .",
 		"check:stylelint": "stylelint packages/**/*.{css,scss,vue}",
 		"check:unimported": "lerna run check:unimported",

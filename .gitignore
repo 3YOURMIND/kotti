@@ -1,5 +1,6 @@
 .nuxt/
 dist/
+/eslint-report.json
 gh-pages/
 node_modules/
 packages/kotti-ui/report.*.html
