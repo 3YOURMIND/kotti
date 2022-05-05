@@ -657,6 +657,8 @@ const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
 	},
 ]
 
+const x: any = true
+
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsFormFields',
 	components: {

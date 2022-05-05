@@ -1,5 +1,5 @@
-import { computed, getCurrentInstance } from '@vue/composition-api'
 import { Route } from 'vue-router'
+import { computed, getCurrentInstance } from '@vue/composition-api'
 
 /**
  * @see {@link https://github.com/nuxt-community/composition-api/blob/9df413e403e77043dc471826a3de10a528efdb83/src/context.ts#L46}

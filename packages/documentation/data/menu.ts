@@ -64,7 +64,7 @@ const makeComponentMenuItem = (component: {
 	tags: [
 		component.meta.deprecated === null ? null : Tag.DEPRECATED,
 		component.meta.typeScript === null ? null : Tag.TS,
-		component.meta.typeScript?.schema ? Tag.ZOD : null,
+				component.meta.typeScript?.schema ? Tag.ZOD : null,
 	].filter((x) => x !== null) as Tag[],
 })
 
