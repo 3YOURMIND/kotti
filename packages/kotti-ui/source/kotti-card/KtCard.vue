@@ -1,16 +1,16 @@
 <template>
-	<div class="card">
+	<div class="kt-card">
 		<div v-if="imgUrl" :class="imageContainerClass">
-			<img class="card__image-row__image" :src="imgUrl" />
+			<img class="kt-card__image-row__image" :src="imgUrl" />
 		</div>
-		<div class="card__header">
+		<div class="kt-card__header">
 			<slot name="card-header" />
 		</div>
-		<div class="card__body">
+		<div class="kt-card__body">
 			<slot name="card-body" />
 		</div>
 		<div v-if="$slots['card-footer']" :class="footerClass">
-			<slot name="card-footer" />
+			<slot name="kt-card-footer" />
 		</div>
 	</div>
 </template>
@@ -28,17 +28,17 @@ export default defineComponent<KottiCard.PropsInternal>({
 	setup(props) {
 		return {
 			imageContainerClass: computed(() => ({
-				'card__image-row': true,
-				'card__image-row--is-bottom':
+				'kt-card__image-row': true,
+				'kt-card__image-row--is-bottom':
 					props.imgPosition === KottiCard.ImagePosition.BOTTOM,
-				'card__image-row--is-middle':
+				'kt-card__image-row--is-middle':
 					props.imgPosition === KottiCard.ImagePosition.MIDDLE,
-				'card__image-row--is-top':
+				'kt-card__image-row--is-top':
 					props.imgPosition === KottiCard.ImagePosition.TOP,
 			})),
 			footerClass: computed(() => ({
-				card__footer: true,
-				'card__footer--is-last':
+				'kt-card__footer': true,
+				'kt-card__footer--is-last':
 					props.imgUrl && props.imgPosition !== KottiCard.ImagePosition.BOTTOM,
 			})),
 			KottiCard,
@@ -48,12 +48,12 @@ export default defineComponent<KottiCard.PropsInternal>({
 </script>
 
 <style lang="scss" scoped>
-// Cards
-.card {
+.kt-card {
 	display: flex;
 	flex-direction: column;
-	background: var(--white);
-	border: var(--unit-q) solid var(--gray-20);
+	word-break: break-all;
+	background: var(--ui-background);
+	border: var(--unit-q) solid var(--ui-02);
 	border-radius: var(--border-radius);
 
 	&__header {
@@ -103,7 +103,7 @@ export default defineComponent<KottiCard.PropsInternal>({
 			order: 1;
 			padding-top: 0;
 
-			.card__image-row__image {
+			.kt-card__image-row__image {
 				border-top-left-radius: var(--border-radius);
 				border-top-right-radius: var(--border-radius);
 			}
@@ -116,7 +116,7 @@ export default defineComponent<KottiCard.PropsInternal>({
 		&--is-bottom {
 			order: 6;
 
-			.card__image-row__image {
+			.kt-card__image-row__image {
 				border-bottom-right-radius: var(--border-radius);
 				border-bottom-left-radius: var(--border-radius);
 			}

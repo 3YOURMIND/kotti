@@ -6,13 +6,12 @@ export namespace KottiCard {
 		MIDDLE = 'middle',
 		TOP = 'top',
 	}
-	export const imagePositionSchema = z.nativeEnum(ImagePosition)
 
 	export const propsSchema = z.object({
-		imgPosition: imagePositionSchema.default(ImagePosition.TOP),
-		imgUrl: z.string().default(''),
+		imgPosition: z.nativeEnum(ImagePosition).default(ImagePosition.TOP),
+		imgUrl: z.string().nullable().default(null),
 	})
 
-	export type PropsInternal = z.output<typeof propsSchema>
 	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 }
