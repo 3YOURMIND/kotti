@@ -11,7 +11,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
-const ARROW_HEIGHT = 7
+import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 
 export default defineComponent<{
 	label: string
@@ -32,7 +32,7 @@ export default defineComponent<{
 				appendTo: () => document.body,
 				arrow: roundArrow,
 				content: contentRef.value,
-				offset: [0, ARROW_HEIGHT],
+				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 				placement: 'right',
 				theme: 'kt-navbar-tooltip',
 			})),

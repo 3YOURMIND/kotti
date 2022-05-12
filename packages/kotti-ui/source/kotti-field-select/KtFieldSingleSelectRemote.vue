@@ -33,6 +33,7 @@
 				v-for="(option, index) in modifiedOptions"
 				:key="index"
 				:dataTest="option.dataTest"
+				:isClickable="option.isClickable"
 				:isDisabled="option.isDisabled"
 				:isSelected="option.isSelected"
 				:label="option.label"
@@ -84,6 +85,7 @@ const isEqualValue = (
 
 type ModifiedOptions = Array<
 	Omit<Shared.Entry, 'value'> & {
+		isClickable: boolean
 		isSelected: boolean
 		value: KottiFieldSingleSelectRemote.Value | symbol
 	}
@@ -208,11 +210,13 @@ export default defineComponent<KottiFieldSingleSelectRemote.PropsInternal>({
 							...(option as any),
 							isDisabled: (field.isDisabled || option.isDisabled) ?? false,
 							isSelected: isEqualValue(field.currentValue, option.value),
+							isClickable: true,
 					  }))
 					: [
 							{
 								dataTest: String(NO_DATA),
 								isDisabled: true,
+								isClickable: false,
 								isSelected: false,
 								label: translations.value.noDataText,
 								value: NO_DATA,

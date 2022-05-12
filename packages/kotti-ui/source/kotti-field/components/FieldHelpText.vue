@@ -5,7 +5,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 import { VNode } from 'vue'
 
-const ARROW_HEIGHT = 7
+import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 
 export default defineComponent<{
 	helpText: string | null
@@ -27,7 +27,7 @@ export default defineComponent<{
 				arrow: roundArrow,
 				content: helpTextContentRef.value,
 				interactive: true,
-				offset: [0, ARROW_HEIGHT],
+				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 				theme: 'light-border',
 			})),
 		)

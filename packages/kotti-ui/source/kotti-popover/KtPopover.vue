@@ -1,19 +1,16 @@
 <template>
-	<div
-		v-on-clickaway="handleClickaway"
-		class="kt-popover"
-		:class="{ showPopper }"
-	>
-		<div ref="anchorRef" @click="handleAnchorClick">
-			<slot>Anchor</slot>
+	<div class="kt-popover">
+		<div ref="triggerRef">
+			<slot />
 		</div>
-		<div v-if="showPopper" ref="contentRef" :class="popperClass">
-			<slot :close="handleClickaway" name="content">
+		<div ref="contentRef" :class="contentClass">
+			<slot :close="close" name="content">
 				<IconTextItem
 					v-for="(option, index) in options"
 					:key="index"
 					:dataTest="option.dataTest"
 					:icon="option.icon"
+					:isClickable="option.onClick !== undefined"
 					:isDisabled="option.isDisabled"
 					:isSelected="option.isSelected"
 					:label="option.label"
@@ -25,138 +22,93 @@
 </template>
 
 <script lang="ts">
-import { createPopper } from '@popperjs/core'
-import {
-	computed,
-	defineComponent,
-	onMounted,
-	onUnmounted,
-	ref,
-	watch,
-} from '@vue/composition-api'
-import { mixin as clickaway } from 'vue-clickaway'
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import { computed, defineComponent, Ref, ref } from '@vue/composition-api'
+import { Instance, roundArrow, Props as TippyProps } from 'tippy.js'
 
+import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { makeProps } from '../make-props'
 
 import IconTextItem from './components/IconTextItem.vue'
 import { KottiPopover } from './types'
 
-const optionIsValid = (option) =>
-	typeof option === 'object' &&
-	option !== null &&
-	(typeof option.icon === 'undefined' || isYocoIcon(option.icon)) &&
-	['undefined', 'boolean'].includes(typeof option.isDisabled) &&
-	(option.isDisabled || typeof option.onClick === 'function') &&
-	['undefined', 'string'].includes(typeof option.label) &&
-	['undefined', 'string'].includes(typeof option.dataTest)
+const TRIGGER_MAP: Record<KottiPopover.Trigger, TippyProps['trigger']> = {
+	[KottiPopover.Trigger.CLICK]: 'click',
+	[KottiPopover.Trigger.HOVER]: 'mouseenter focusin',
+	[KottiPopover.Trigger.MANUAL]: 'manual',
+}
 
-export default defineComponent({
+export default defineComponent<KottiPopover.PropsInternal>({
 	name: 'KtPopover',
-	components: { IconTextItem },
-	mixins: [clickaway],
-	props: {
-		content: { default: '', type: String },
-		forceShowPopover: { default: null, type: Boolean },
-		options: {
-			default: () => [],
-			type: Array,
-			validator: (options) => options.every(optionIsValid),
-		},
-		placement: { default: 'bottom', type: String },
-		size: { default: 'auto', type: String },
+	components: {
+		IconTextItem,
 	},
+	props: makeProps(KottiPopover.propsSchema),
 	setup(props) {
-		const showPopper = ref(false)
-		const popper = ref(null)
-
-		const anchorRef = ref<HTMLElement | null>(null)
+		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)
 
-		const forceShowPopoverIsNull = computed(
-			() => props.forceShowPopover === null,
-		)
+		const hideOnClick = computed((): TippyProps['hideOnClick'] => {
+			switch (props.clickBehavior) {
+				/** default behavior */
+				case null:
+					return props.trigger === KottiPopover.Trigger.HOVER
+						? false
+						: props.trigger === KottiPopover.Trigger.CLICK
+						? 'toggle'
+						: true
+				case KottiPopover.ClickBehavior.HIDE_ON_CLICK_AWAY:
+					return true
+				case KottiPopover.ClickBehavior.HIDE_ON_TOGGLE:
+					return 'toggle'
+				case KottiPopover.ClickBehavior.IGNORE:
+					return false
+			}
+		})
 
-		const initPopper = () => {
-			const propsOptions = {
+		const tippy = useTippy(
+			triggerRef,
+			computed(() => ({
+				appendTo: () => document.body,
+				arrow: roundArrow,
+				content: contentRef.value,
+				interactive: true,
+				maxWidth: 'none',
+				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 				placement: props.placement,
-				modifiers: [
-					{
-						name: 'flip',
-						enabled: true,
-						options: {
-							padding: 8,
-						},
-					},
-					{
-						name: 'offset',
-						options: {
-							// eslint-disable-next-line no-magic-numbers
-							offset: [0, 8],
-						},
-					},
-					{
-						name: 'preventOverflow',
-						enabled: true,
-						options: {
-							padding: 8,
-						},
-					},
-				],
-			}
+				theme: 'light-border',
+				trigger: TRIGGER_MAP[props.trigger],
+				/**
+				 * @see {@link https://atomiks.github.io/tippyjs/v6/all-props/#hideonclick}
+				 */
+				hideOnClick: hideOnClick.value,
+			})),
+		).tippy as Ref<Instance>
 
-			popper.value = createPopper(anchorRef.value, contentRef.value, {
-				...propsOptions,
-			})
-		}
-
-		watch(showPopper, (value) => {
-			if (value) initPopper()
-		})
-
-		watch(
-			() => props.forceShowPopover,
-			(value) => {
-				if (value !== null) {
-					showPopper.value = value
-				}
-			},
-		)
-
-		onMounted(() => {
-			if (!forceShowPopoverIsNull.value) {
-				showPopper.value = props.forceShowPopover
-			}
-		})
-
-		onUnmounted(() => {
-			if (forceShowPopoverIsNull.value && popper.value) {
-				popper.value.destroy()
-				popper.value = null
-			}
-		})
+		const close = () => tippy.value.hide()
 
 		return {
-			anchorRef,
+			close,
 			contentRef,
-			handleAnchorClick: () => {
-				if (!forceShowPopoverIsNull.value) return
-				showPopper.value = !showPopper.value
+			handleItemClick: (option: KottiPopover.PropsInternal['options'][0]) => {
+				if (!option.isDisabled && option.onClick) {
+					option.onClick()
+					close()
+				}
 			},
-			handleClickaway: () => {
-				if (!forceShowPopoverIsNull.value) return
-				showPopper.value = false
-			},
-			handleItemClick: (option) => {
-				if (!option.isDisabled && option.onClick) option.onClick()
-			},
-			popperClass: computed(() => {
-				const classes = ['kt-popper', `kt-popper--size-${props.size}`]
+			open: () => tippy.value.show(),
+			contentClass: computed(() => {
+				const classes = [
+					'kt-popover__content',
+					`kt-popover__content--size-${props.size}`,
+				]
 
-				if (props.options.length >= 1) classes.push(`kt-popper--has-options`)
+				if (props.options.length >= 1)
+					classes.push(`kt-popover__content--has-options`)
 
 				return classes
 			}),
-			showPopper,
+			triggerRef,
 		}
 	},
 })
@@ -168,44 +120,33 @@ export default defineComponent({
 .kt-popover {
 	display: inline-block;
 
-	&-item {
-		padding: var(--unit-4);
-		margin: calc(-1 * var(--unit-1));
-	}
-}
+	&__content {
+		margin: 3px -1px; // tippy theme applies 5px 9px padding, therefore this equals 8px 8px
 
-// popper.js css
-.kt-popper {
-	z-index: $zindex-4;
-	padding: 0.8rem;
-	background: var(--white);
-	border-radius: var(--border-radius);
-	box-shadow: $box-shadow;
-
-	&--has-options {
-		min-width: 200px;
-		padding: 0.4rem;
-	}
-
-	&--size {
-		&-auto {
-			width: auto;
+		&--has-options {
+			min-width: 200px;
 		}
 
-		&-sm {
-			width: 12rem;
-		}
+		&--size {
+			&-auto {
+				width: auto;
+			}
 
-		&-md {
-			width: 16rem;
-		}
+			&-sm {
+				width: 12rem;
+			}
 
-		&-lg {
-			width: 20rem;
-		}
+			&-md {
+				width: 16rem;
+			}
 
-		&-xl {
-			width: 24rem;
+			&-lg {
+				width: 20rem;
+			}
+
+			&-xl {
+				width: 24rem;
+			}
 		}
 	}
 }

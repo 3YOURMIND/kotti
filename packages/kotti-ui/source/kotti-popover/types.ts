@@ -1,5 +1,16 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
+import { Instance as TippyInstance } from 'tippy.js'
 import { z } from 'zod'
+
+const baseOptionSchema = z.object({
+	dataTest: z.string().optional(),
+	icon: yocoIconSchema.optional(),
+	isClickable: z.boolean().default(false),
+	isDisabled: z.boolean().default(false),
+	isSelected: z.boolean().optional(),
+	label: z.string(),
+	onClick: z.function(z.tuple([]), z.void()).optional(),
+})
 
 export namespace KottiPopover {
 	/**
@@ -31,35 +42,81 @@ export namespace KottiPopover {
 		EXTRA_LARGE = 'xl',
 	}
 
-	const baseOptionSchema = z.object({
-		dataTest: z.string().optional(),
-		icon: yocoIconSchema.optional(),
-		isActive: z.boolean().optional(),
-		isSelected: z.boolean().optional(),
-		label: z.string(),
+	export enum Trigger {
+		/**
+		 * Trigger By:
+		 * - mouse click
+		 * - tab + enter
+		 *
+		 * Untrigger By:
+		 * - second mouse-click
+		 * - second enter
+		 */
+		CLICK = 'click',
+		/**
+		 * Trigger By:
+		 * - hover
+		 * - tab
+		 *
+		 * Untrigger By:
+		 * - hover away
+		 * - clickaway
+		 * - tab away
+		 */
+		HOVER = 'hover',
+		MANUAL = 'manual',
+	}
+
+	export enum ClickBehavior {
+		/**
+		 * hide popper when any element other than the trigger is clicked
+		 */
+		HIDE_ON_CLICK_AWAY = 'hide-on-click-away',
+		/**
+		 * hide the tippy only if trigger is clicked
+		 */
+		HIDE_ON_TOGGLE = 'hide-on-toggle',
+		/**
+		 * never hide the popper on clicks outside trigger/tippy
+		 */
+		IGNORE = 'ignore',
+	}
+
+	export type Ref = {
+		open: TippyInstance['show']
+		close: TippyInstance['hide']
+	}
+
+	export const optionSchema = baseOptionSchema.pick({
+		dataTest: true,
+		icon: true,
+		isDisabled: true,
+		isSelected: true,
+		label: true,
+		onClick: true,
 	})
 
-	// onClick is optional for disabled items
-	export const optionSchema = z.union([
-		baseOptionSchema.merge(
-			z.object({
-				isDisabled: z.literal(true),
-				onClick: z.function(z.tuple([]), z.void()).optional(),
-			}),
-		),
-		baseOptionSchema.merge(
-			z.object({
-				isDisabled: z.literal(false).optional(),
-				onClick: z.function(z.tuple([]), z.void()),
-			}),
-		),
-	])
-
 	export const propsSchema = z.object({
-		forceShowPopover: z.boolean().nullable().default(null),
 		options: z.array(optionSchema).default(() => []),
-		placement: z.nativeEnum(Placement).default(Placement.BOTTOM),
+		placement: z.nativeEnum(Placement).default(Placement.AUTO),
 		size: z.nativeEnum(Size).default(Size.AUTO),
+		trigger: z.nativeEnum(Trigger).default(Trigger.CLICK),
+		/** what happens if the user clicks outside of the tippy/trigger element */
+		clickBehavior: z.nativeEnum(ClickBehavior).nullable().default(null),
+	})
+
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
+}
+
+export namespace IconTextItem {
+	export const propsSchema = baseOptionSchema.pick({
+		dataTest: true,
+		icon: true,
+		isClickable: true,
+		isDisabled: true,
+		isSelected: true,
+		label: true,
 	})
 
 	export type Props = z.input<typeof propsSchema>

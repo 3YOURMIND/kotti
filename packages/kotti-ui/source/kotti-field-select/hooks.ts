@@ -39,6 +39,27 @@ const getComponents = <DATA_TYPE extends Values>({
 }
 
 /**
+ * Fixes the dropdown from appearing behind `KtPopover`
+ */
+const useNestedPopperZIndexFix = <DATA_TYPE extends Values>({
+	elSelectRef,
+	ktFieldRef,
+}: Pick<HookParameters<DATA_TYPE>, 'elSelectRef' | 'ktFieldRef'>) => {
+	onMounted(() => {
+		watchEffect(() => {
+			const { elSelectComponent } = getComponents({ elSelectRef, ktFieldRef })
+
+			if (elSelectComponent.visible) {
+				const TIPPY_Z_INDEX = 9999
+				const popperComponent = elSelectComponent.$refs.popper as Vue
+				const popperElement = popperComponent.$el as HTMLElement
+				popperElement.style.zIndex = String(TIPPY_Z_INDEX + 1)
+			}
+		})
+	})
+}
+
+/**
  * If the field is loading, we want to unfocus in case the popper is open
  * so that when isLoading changes, the popper isn't misplaced
  */
@@ -61,7 +82,7 @@ const usePopperMisplacementFix = <DATA_TYPE extends Values>({
 }
 
 /**
- * ^ `popperComponent` is an internal `element-ui` component that computes the placement
+ * `popperComponent` is an internal `element-ui` component that computes the placement
  * of the dropdown based on the input element of `el-select`.
  *
  * [select.vue]{@link ./node_modules/element-ui/packages/select/src/select.vue} adds `ref="reference"`
@@ -191,6 +212,7 @@ export const useSelectFixes = <DATA_TYPE extends Values>({
 	inputSelectors,
 	ktFieldRef,
 }: HookParameters<DATA_TYPE>) => {
+	useNestedPopperZIndexFix({ elSelectRef, ktFieldRef })
 	usePopperMisplacementFix({ elSelectRef, field, ktFieldRef })
 	usePopperPlacementFix({ elSelectRef, ktFieldRef })
 	usePopperWidthFix({ elSelectRef, field, ktFieldRef })

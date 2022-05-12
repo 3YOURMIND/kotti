@@ -1,199 +1,159 @@
-<template lang="md">
-<ComponentInfo v-bind="{ component }" />
+<template>
+	<div>
+		<ComponentInfo v-bind="{ component }" />
 
-Use popovers to provide extra information or actions. Popovers can carry a lot of information.
-It uses `popper.js` library for position and `placement` attribute can be anything supported by the library.
-You can also directly use the `popper.js` constructor by passing an `options` props. refer to the [popper.js
-documentation](https://popper.js.org/docs/v2/constructors/) for more informations.
+		<p>
+			Use popovers to provide extra information or actions. Compared to
+			<code>tooltip</code>, <code>popovers</code> can carry more information.
+			<code>KtPopover</code> <strong>supports</strong> escaping the
+			<a
+				href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context"
+			>
+				CSS Stacking Context
+			</a>
+		</p>
 
-## Options
+		<h2>Interactive Example</h2>
 
-We also provide a nice way of displaying items inside popovers. Items can be `isDisabled` or `isSelected`.
-
-<div class="element-example">
-	<KtPopover :options="[
-		{ dataTest: 'example-button', icon: Yoco.Icon.DOWNLOAD, label: 'Download', onClick: () => {} },
-		{ icon: Yoco.Icon.EDIT, isDisabled: true, label: 'Edit' },
-		{ icon: Yoco.Icon.STAR_SOLID, isSelected: true, label: 'Selected Item', onClick: () => {} },
-	]">
-		<KtButton label="Popover with options"/>
-	</KtPopover>
-</div>
-
-```html
-<KtPopover
-	:options="[
-		{ dataTest: 'example-button', icon: Yoco.Icon.DOWNLOAD, label: 'Download', onClick: () => {} },
-		{ icon: Yoco.Icon.EDIT, isDisabled: true, label: 'Edit' },
-		{ icon: Yoco.Icon.STAR_SOLID, isSelected: true, label: 'Selected Item', onClick: () => {} },
-	]"
->
-	<KtButton label="Popover with options" />
-</KtPopover>
-```
-
-## Placement
-
-<div class="element-example">
-<KtPopover placement="top" class="mt-4 ml-4">
-	<KtButton label="Top Popover"/>
-	<div slot="content">
-		<h2>Top Popover</h2>
-		<p>Top Popovers</p>
-	</div>
-</KtPopover>
-<KtPopover placement="bottom" class="mt-4 ml-4">
-	<KtButton label="Bottom Popover"/>
-	<div slot="content">Hello</div>
-</KtPopover>
-<KtPopover placement="right" class="mt-4 ml-4">
-	<KtButton label="Right Popover" />
-	<div slot="content">New Message</div>
-</KtPopover>
-<KtPopover placement="top-start" class="mt-4 ml-4">
-	<KtButton>
-		Popover Top Start
-	</KtButton>
-	<div slot="content">
-		This is the hover popover
-	</div>
-</KtPopover>
-</div>
-
-There are 4 different positions for popovers. `right`, `left`, `top`, and `bottom`.
-You can append `-start` and `-end` to the placement as well.
-
-**Attention:** The popover may change its placement position when parent has an `overflow` set.
-
-```html
-<KtPopover placement="right">
-	<KtButton>Popover Bottom</KtButton>
-	<KtCard slot="content">
-		<div slot="card-header">
-			<h2>Lorem Ipsum</h2>
-		</div>
-		<div slot="card-body">This is the hover popover</div>
-	</KtCard>
-</KtPopover>
-```
-
-## Overflowing behavior
-
-⚠️ This is actually not working... the following example just exploits the surplus padding of the `.element-example` class and `<br>`.
-No CSS stacking context escape is attempted.
-
-Using `popper.js` allows us to handle overflow easily.
-If the parent element has an `overflow` attribute, `popper.js` ~~will handle that nicely~~:
-
-<div class="element-example" style="overflow: hidden;">
-	<KtPopover placement="left">
-		<KtButton v-text="'Left placement popover'"/>
-		<div slot="content" v-text="'The popver is placed right because of flip:true'"/>
-	</KtPopover>
-	<br/>
-	<br/>
-	<br/>
-	<KtPopover placement="bottom">
-		<KtButton v-text="'Bottom placement popover'"/>
-		<div slot="content" v-text="'The popver is placed top because of preventOverflow: true'"/>
-	</KtPopover>
-</div>
-
-## Size
-
-Popover size can be `sm`, `md`,`lg`, and `xl`.
-The small size equals to a width '12rem', then every larger size is
-an increment of '4rem'.
-
-<div class="element-example">
-<KtPopover size="sm" class="mt-4 ml-4">
-	<KtButton label="Small Popover" />
-	<div slot="content">Message</div>
-</KtPopover>
-<KtPopover size="md" class="mt-4 ml-4">
-	<KtButton label="Medium Popover" />
-	<div slot="content">Message</div>
-</KtPopover>
-<KtPopover size="lg" class="mt-4 ml-4">
-	<KtButton label="Large Popover" />
-	<div slot="content">Message</div>
-</KtPopover>
-<KtPopover size="xl" class="mt-4 ml-4">
-	<KtButton label="Extra Large Popover" />
-	<div slot="content">Message</div>
-</KtPopover>
-</div>
-
-## Scoped Slot
-
-Scoped slot allows your to get props or function provided by slot themselve.
-In KtPopover, `close` function is provided to allow user click a button from slot content and close the popover.
-
-<div class="element-example">
-	<KtPopover class="mt-4 ml-4">
-		<KtButton label="Close with Cancel Button" />
-		<div slot="content" slot-scope="slotProps">
-			<p>Save your message</p>
-			<KtButton type="text" @click="slotProps.close">Cancel</KtButton>
-			<KtButton type="primary">Save</KtButton>
-		</div>
-	</KtPopover>
-</div>
-
-```html
-<KtPopover>
-	<KtButton label="Close with Cancel Button" />
-	<div slot="content" slot-scope="slotProps">
-		<p>Save your message</p>
-		<KtButton type="text" @click="slotProps.close" label="Cancel" />
-		<KtButton type="primary" label="Save" />
-	</div>
-</KtPopover>
-```
-
-## Nested Select
-
-<div class="element-example">
-	<KtPopover placement="top" class="mt-4 ml-4">
-		<KtButton label="Test Popover with Dropdown"/>
-		<div slot="content">
+		<KtForm v-model="values">
+			<KtFieldToggle
+				formKey="useOptions"
+				isOptional
+				label="use options"
+				type="switch"
+			>
+				<template #helpText>
+					Passing <code>options</code> turns <code>KtPopover</code> into a
+					pre-made dropdown button menu.
+					<dl>
+						<dt>TypeScript</dt>
+						<dd><code>Kotti.Popover.Props['options']</code></dd>
+					</dl>
+					<pre
+						v-text="JSON.stringify(exampleOptions, replacer, ' '.repeat(3))"
+					/>
+				</template>
+			</KtFieldToggle>
 			<KtFieldSingleSelect
-				label="Test with dropdown"
-				:options="[{ label: 'Click me', value: 'test_click' }]"
-				:value="null"
+				formKey="size"
+				hideClear
+				isOptional
+				label="size"
+				:options="sizeOptions"
 			/>
+			<KtFieldSingleSelect
+				formKey="placement"
+				hideClear
+				isOptional
+				label="placement"
+				:options="placementOptions"
+			>
+				<template #helpText>
+					There are 4 different positions for popovers:
+					<code>right</code>, <code>left</code>, <code>top</code>, and
+					<code>bottom</code>, or <code>auto</code>. All of which can be
+					appended with <code>-start</code> and <code>-end</code> to define
+					placement.
+					<br />
+					<a href="https://atomiks.github.io/tippyjs/v6/all-props/#placement">
+						See Placement Options here
+					</a>
+					<br />
+					By default, it flips if there's more space in the mirror placement.
+				</template>
+			</KtFieldSingleSelect>
+			<KtFieldSingleSelect
+				formKey="clickBehavior"
+				hideClear
+				isOptional
+				label="click behavior"
+				:options="clickBehaviorOptions"
+			/>
+			<KtFieldSingleSelect
+				formKey="trigger"
+				hideClear
+				label="trigger"
+				:options="triggerOptions"
+			>
+				<template #helpText>
+					Assigning a <code>ref</code> exposes <code>open()</code> and
+					<code>close()</code> (Typed via <code>Kotti.Popover.Ref</code>)
+				</template>
+			</KtFieldSingleSelect>
+			<KtPopover
+				ref="interactiveExampleRef"
+				:clickBehavior="values.clickBehavior"
+				:options="values.useOptions ? exampleOptions : []"
+				:placement="values.placement"
+				:size="values.size"
+				:trigger="values.trigger"
+			>
+				<KtButton label="KtPopover Button" />
+				<template v-if="!values.useOptions" #content>
+					<div style="max-width: 500px">
+						<code v-text="'<template #content>Slot</template>'" />
+						<br />
+						<strong>We also support sub-dropdowns</strong> like
+						<code>KtFieldSingleSelect</code>, however it’s recommended to use
+						<code>trigger="click"</code> when utilizing this.
+						<br />
+						<KtFieldDateTimeRange
+							formKey="valueDateTimeRange"
+							isOptional
+							label="Label"
+						/>
+						<KtFieldSingleSelect
+							formKey="valueSingleSelect"
+							helpText="Some helpText"
+							isOptional
+							label="Test with dropdown"
+							:options="[{ label: 'Click me', value: 'test_click' }]"
+						/>
+					</div>
+				</template>
+			</KtPopover>
+			<br /><br />
+
+			<h3 v-text="'Methods'" />
+			<KtButton
+				label="interactiveExampleRef.open()"
+				@click="() => interactiveExampleRef.open()"
+			/>
+			<KtButton
+				label="interactiveExampleRef.close()"
+				@click="() => interactiveExampleRef.close()"
+			/>
+			<br /><br />
+		</KtForm>
+
+		<h2 v-text="'Scoped Slot'" />
+		<span>
+			Besides the default slot, KtPopover exposes <code>content</code> slot,
+			which exposes a <code>close</code> function on the slot-scope, which, when
+			called, closes the popper.
+		</span>
+		<div class="element-example">
+			<KtPopover class="mt-4 ml-4" trigger="hover">
+				<KtButton label="Close with Cancel Button" />
+				<template v-slot:content="slotProps">
+					<p>Save your message</p>
+					<KtButton type="text" @click="slotProps.close">Cancel</KtButton>
+					<KtButton type="primary">Save</KtButton>
+				</template>
+			</KtPopover>
 		</div>
-	</KtPopover>
-</div>
-
-```html
-<KtPopover placement="top" class="mt-4 ml-4">
-	<KtButton label="Top Popover" />
-	<div slot="content">
-		<KtFieldSingleSelect
-			label="Test with dropdown"
-			:options="[{ label: 'Click me', value: 'test_click' }]"
-			:value="null"
-		/>
+		<!-- eslint-disable-next-line vue/no-v-html -->
+		<div v-html="PopoverExample" />
 	</div>
-</KtPopover>
-```
-
-## Usage
-
-### Attributes,
-
-| Attribute   | Description                   | Type     | Accepted Values                                                                                                                                                                | Default  |
-| :---------- | :---------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| `placement` | postion of popover content    | `String` | `auto`, `auto-start`, `auto-end`, `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `right`, `right-start`, `right-end`, `left`, `left-start`, `left-end` | `bottom` |
-| `size`      | size of popover content       | `String` | `sm`, `md`, `lg`                                                                                                                                                               | `sm`     |
-| `options`   | direct usage of popper.js API | `Object` | See [popper.js documentation](https://popper.js.org/docs/v2/constructors/)                                                                                                     | `{}`     |
 </template>
 
 <script lang="ts">
-import { KtPopover } from '@3yourmind/kotti-ui'
+import { KtPopover, Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
+// @ts-expect-error no type declaration file for markdown
+import PopoverExample from './popover-example.md'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -203,9 +163,91 @@ export default defineComponent({
 		ComponentInfo,
 	},
 	setup() {
+		const interactiveExampleRef = ref(null)
+
+		const exampleOptions: Kotti.Popover.Props['options'] = [
+			{
+				isDisabled: false,
+				onClick: () => undefined,
+				dataTest: 'data-test',
+				label: 'User',
+				icon: Yoco.Icon.USER,
+			},
+			/**
+			 * `onClick` is not defined, therefore, the UI will make it not look clickable
+			 * - even if it's not disabled.
+			 * */
+			{
+				isDisabled: false,
+				label: 'Attachment',
+				icon: Yoco.Icon.ATTACHMENT,
+			},
+			{
+				isDisabled: true,
+				label: 'Shipping',
+				icon: Yoco.Icon.SHIPPING,
+			},
+		]
+
 		return {
 			component: KtPopover,
-			Yoco,
+			clickBehaviorOptions: computed(
+				(): Kotti.FieldSingleSelect.PropsInternal['options'] => [
+					...Object.entries(Kotti.Popover.ClickBehavior).map(
+						([key, value]) => ({
+							label: `Kotti.Popover.ClickBehavior.${key} ('${value}')`,
+							value,
+						}),
+					),
+					{
+						label: 'Default Behavior (null)',
+						value: null,
+					},
+				],
+			),
+			exampleOptions,
+			interactiveExampleRef,
+			placementOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
+				Object.entries(Kotti.Popover.Placement).map(([key, value]) => ({
+					label: `Kotti.Popover.Placement.${key} ('${value}')`,
+					value,
+				})),
+			),
+			PopoverExample,
+			replacer: (_key: string, value: unknown) => {
+				if (typeof value === 'function') return value ? '() => {}' : undefined
+				return value
+			},
+			sizeOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
+				Object.entries(Kotti.Popover.Size).map(([key, value]) => ({
+					label: `Kotti.Popover.Size.${key} (${value})`,
+					value,
+				})),
+			),
+			triggerOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
+				Object.entries(Kotti.Popover.Trigger).map(([key, value]) => ({
+					label: `Kotti.Popover.Trigger.${key} (${value})`,
+					value,
+				})),
+			),
+			values: ref<
+				{
+					useOptions: Kotti.FieldToggle.Value
+					valueDateTimeRange: Kotti.FieldDateTimeRange.Value
+					valueSingleSelect: Kotti.FieldSingleSelect.Value
+				} & Pick<
+					Kotti.Popover.PropsInternal,
+					'size' | 'trigger' | 'placement' | 'clickBehavior'
+				>
+			>({
+				clickBehavior: null,
+				placement: Kotti.Popover.Placement.AUTO,
+				size: Kotti.Popover.Size.AUTO,
+				trigger: Kotti.Popover.Trigger.HOVER,
+				useOptions: true,
+				valueDateTimeRange: [null, null],
+				valueSingleSelect: null,
+			}),
 		}
 	},
 })
