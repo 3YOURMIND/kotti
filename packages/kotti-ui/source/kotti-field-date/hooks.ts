@@ -1,7 +1,7 @@
 import { Yoco } from '@3yourmind/yoco'
-import { Instance } from '@popperjs/core/lib'
 import { onMounted, Ref, watchEffect } from '@vue/composition-api'
 import { DatePicker as ElDate } from 'element-ui'
+import { Instance } from 'tippy.js'
 
 import { KottiField } from '../kotti-field/types'
 
@@ -35,7 +35,7 @@ export type ElDateWithInternalAPI = ElDate & {
 		rightLabel: string
 		width: number
 	}
-	popperJS: Instance
+	popperJS: Exclude<Instance['popperInstance'], null>
 	pickerVisible: boolean
 	referenceElm: Element
 	showClose: boolean
@@ -145,6 +145,24 @@ const useInputSizeFix = <DATA_TYPE extends Values>({
 			'.el-input__inner, .el-range-input',
 		)
 		Array.from(elInputs).forEach((element) => element.setAttribute('size', '1'))
+	})
+}
+
+/**
+ * Fixes the dropdown from appearing behind `KtPopover`
+ */
+const useNestedPopperZIndexFix = <DATA_TYPE extends Values>({
+	elDateRef,
+}: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
+	onMounted(() => {
+		watchEffect(() => {
+			const dateComponent = getDateComponent({ elDateRef })
+
+			if (isPickerVisible(dateComponent)) {
+				const TIPPY_Z_INDEX = 9999
+				dateComponent.picker.$el.style.zIndex = String(TIPPY_Z_INDEX + 1)
+			}
+		})
 	})
 }
 
@@ -334,6 +352,7 @@ export const usePicker = <DATA_TYPE extends Values>({
 }: HookParameters<DATA_TYPE>) => {
 	useInputDecoration({ elDateRef })
 	useInputSizeFix({ elDateRef })
+	useNestedPopperZIndexFix({ elDateRef })
 	usePickerDimensionsFix({
 		elDateRef,
 		popperHeight,

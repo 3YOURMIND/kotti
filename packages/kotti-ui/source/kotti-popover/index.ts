@@ -2,7 +2,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtPopoverVue from './KtPopover.vue'
-import KtPopoverItemVue from './KtPopoverItem.vue'
+import { KottiPopover } from './types'
 
 export const KtPopover = attachMeta(makeInstallable(KtPopoverVue), {
 	addedVersion: '0.0.8',
@@ -20,18 +20,22 @@ export const KtPopover = attachMeta(makeInstallable(KtPopoverVue), {
 		},
 	],
 	slots: {
-		content: { description: null, scope: null },
-		default: { description: null, scope: null },
+		content: {
+			description: 'Slot for the content of the popper.',
+			scope: {
+				close: {
+					description: 'closes the popover',
+					type: 'function',
+				},
+			},
+		},
+		default: {
+			description: 'Slot for the trigger element',
+			scope: null,
+		},
 	},
-	typeScript: null, // TODO: Expose propsSchema once refactored to TS
-})
-
-export const KtPopoverItem = attachMeta(makeInstallable(KtPopoverItemVue), {
-	addedVersion: '0.0.8',
-	deprecated: null,
-	designs: null,
-	slots: {
-		default: { description: null, scope: null },
+	typeScript: {
+		namespace: 'Kotti.Popover',
+		schema: KottiPopover.propsSchema,
 	},
-	typeScript: null,
 })
