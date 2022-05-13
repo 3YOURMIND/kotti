@@ -79,73 +79,7 @@
 	}
 }
 
-.action {
-	&__reply {
-		flex: 0 0 auto;
-		padding: 0 0.2rem;
-		border-radius: 0.2rem;
-		&:hover {
-			color: $darkgray-400;
-			cursor: pointer;
-			background: $lightgray-400;
-		}
-	}
-}
 
-// CommentReply
-.comment-reply {
-	display: flex;
-	flex-direction: row;
-	padding: 0.2rem 0;
-	&__wrapper {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		margin-left: 0.4rem;
-	}
-	&__avatar {
-		flex: 0 0 1.6rem;
-	}
-	&__info {
-		display: flex;
-		flex-direction: row;
-		margin-bottom: 0.1rem;
-		font-size: 0.7rem;
-		line-height: 0.7rem;
-	}
-	&__name {
-		flex: 1 1;
-		font-weight: 600;
-	}
-	&__time {
-		flex: 1 1 auto;
-		color: $lightgray-500;
-		text-align: right;
-	}
-	&__body {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-	&__message {
-		width: 100%;
-		font-size: 0.65rem;
-		line-height: 1rem;
-		word-break: break-word;
-		.yoco {
-			display: none;
-			font-size: 0.8rem;
-			color: #a8a8a8;
-		}
-		&:hover {
-			cursor: pointer;
-			.yoco {
-				display: inline;
-				color: $darkgray-400;
-			}
-		}
-	}
-}
 
 // KtCommentInput
 .comment-input {
