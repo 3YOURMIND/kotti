@@ -1,33 +1,29 @@
 <template>
 	<div class="comment-reply">
 		<KtAvatar class="comment-reply__avatar" size="sm" :src="userAvatar" />
-		<div class="comment-reply__wrapper">
-			<div class="comment-reply__info">
-				<div class="comment-reply__name" v-text="userName" />
-				<div class="comment-reply__time" v-text="createdTime" />
+		<div class="comment-reply__content">
+			<div class="comment-reply__content__info">
+				<div class="info__name" v-text="userName" />
+				<div class="info__time" v-text="createdTime" />
 			</div>
-			<div class="comment-reply__body">
-				<div
-					v-if="!isInlineEdit"
-					class="comment-reply__message"
-					@click="$emit('_inlineReplyClick', { userName, userId })"
-				>
-					<!-- eslint-disable vue/no-v-html -->
-					<span
-						v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
-					/>
-					<!-- eslint-enable vue/no-v-html -->
-				</div>
-				<div v-else class="comment-inline-edit form-group">
-					<textarea
-						v-model="inlineMessageValue"
-						class="comment-inline-edit-input form-input"
-					></textarea>
-					<KtButtonGroup class="comment-inline-edit-buttons">
-						<KtButton icon="close" @click="cancelInlineEdit" />
-						<KtButton icon="check" @click="handleConfirm" />
-					</KtButtonGroup>
-				</div>
+
+			<div v-if="!isInlineEdit" class="comment-reply__content__message">
+				<!-- eslint-disable vue/no-v-html -->
+				<span
+					v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
+				/>
+				<!-- eslint-enable vue/no-v-html -->
+			</div>
+			<div v-else class="comment-inline-edit form-group">
+				<textarea
+					v-model="inlineMessageValue"
+					class="comment-inline-edit-input form-input"
+				></textarea>
+				<KtButtonGroup class="comment-inline-edit-buttons">
+					<KtButton icon="close" @click="cancelInlineEdit" />
+					<KtButton icon="check" @click="handleConfirm" />
+				</KtButtonGroup>
+			</div>
 
 			<CommentActions
 				:options="actionOptions"
@@ -109,8 +105,33 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.comment-reply__message {
+.comment-reply {
 	display: flex;
-	align-items: center;
+	padding: 0.2rem 0;
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin-left: 0.4rem;
+
+		&__info {
+			display: flex;
+			flex-direction: row;
+			margin-bottom: 0.1rem;
+			font-size: 0.7rem;
+			line-height: 0.7rem;
+		}
+
+		&__message {
+			display: flex;
+			align-items: center;
+
+			width: 100%;
+			font-size: 0.65rem;
+			line-height: 1rem;
+			word-break: break-word;
+		}
+	}
 }
 </style>
