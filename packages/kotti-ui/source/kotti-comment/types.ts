@@ -45,6 +45,8 @@ export namespace KottiComment {
 	}
 
 	export type Translations = {
+		deleteButton: string
+		editButton: string
 		postButton: string
 		replyButton: string
 		replyPlaceholder: string
