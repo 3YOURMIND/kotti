@@ -51,6 +51,8 @@ export namespace KottiComment {
 		replyButton: string
 		replyPlaceholder: string
 	}
+
+	export type UserData = Pick<PropsInternal, 'userName' | 'userId'>
 }
 
 export namespace KottiCommentInput {
