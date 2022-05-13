@@ -65,14 +65,11 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-import { KtAvatar } from '../kotti-avatar'
-import { KtButton } from '../kotti-button'
-import { KtButtonGroup } from '../kotti-button-group'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
-import CommentOptions from './components/CommentOptions.vue'
+import CommentActionsOptions from './components/CommentActionsOptions.vue'
 import CommentReply from './components/CommentReply.vue'
 import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
@@ -82,11 +79,8 @@ type UserData = Pick<KottiComment.PropsInternal, 'userName' | 'userId'>
 export default defineComponent<KottiComment.PropsInternal>({
 	name: 'KtComment',
 	components: {
-		KtAvatar,
-		KtButton,
-		KtButtonGroup,
 		CommentReply,
-		CommentOptions,
+		CommentActionsOptions,
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
