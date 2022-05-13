@@ -23,15 +23,13 @@
 					<KtButton icon="check" @click="handleEditConfirm" />
 				</KtButtonGroup>
 			</div>
-			<div class="comment__action">
-				<div
-					class="action__reply"
-					@click="handleInlineReplyClick({ userName, userId })"
-				>
-					<i class="yoco" v-text="'comment'" /> {{ replyButton }}
-				</div>
-				<CommentOptions :options="actionOptions" />
-			</div>
+
+			<CommentActions
+				:options="actionOptions"
+				:userData="{ userId, userName }"
+				@replyClick="handleReplyClick"
+			/>
+
 			<div v-for="reply in replies" :key="reply.id">
 				<CommentReply
 					:id="reply.id"
@@ -69,25 +67,23 @@ import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
-import CommentActionsOptions from './components/CommentActionsOptions.vue'
+import CommentActions from './components/CommentActions.vue'
 import CommentReply from './components/CommentReply.vue'
 import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
 
-type UserData = Pick<KottiComment.PropsInternal, 'userName' | 'userId'>
-
 export default defineComponent<KottiComment.PropsInternal>({
 	name: 'KtComment',
 	components: {
+		CommentActions,
 		CommentReply,
-		CommentActionsOptions,
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
 	setup(props, { emit }) {
 		const isInlineEdit = ref(false)
 		const inlineMessageValue = ref<string | null>(null)
-		const userBeingRepliedTo = ref<UserData | null>(null)
+		const userBeingRepliedTo = ref<Kotti.Comment.UserData | null>(null)
 		const translations = useTranslationNamespace('KtComment')
 
 		const handleDelete = (commentId: number | string, isInline?: boolean) => {
@@ -130,7 +126,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 				}
 				emit('edit', payload)
 			},
-			handleInlineReplyClick: (replyUserData: UserData) => {
+			handleReplyClick: (replyUserData: Kotti.Comment.UserData) => {
 				userBeingRepliedTo.value = replyUserData
 			},
 			handleInlineSubmit: (commentData: KottiComment.Events.Submit) => {
@@ -149,7 +145,6 @@ export default defineComponent<KottiComment.PropsInternal>({
 							userBeingRepliedTo.value.userName,
 					  ].join(' '),
 			),
-			replyButton: computed(() => translations.value.replyButton),
 			userBeingRepliedTo,
 		}
 	},
