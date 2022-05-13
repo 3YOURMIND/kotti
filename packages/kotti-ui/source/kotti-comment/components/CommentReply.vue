@@ -38,19 +38,14 @@
 <script>
 import escape from 'lodash/escape'
 
-import { KtAvatar } from '../../kotti-avatar'
-import { KtButton } from '../../kotti-button'
-import { KtButtonGroup } from '../../kotti-button-group'
+import CommentActions from './CommentActions.vue'
+import CommentOptions from './CommentActionsOptions.vue'
 
-import CommentOptions from './CommentOptions.vue'
 
 export default {
 	name: 'CommentReply',
 	components: {
 		CommentOptions,
-		KtAvatar,
-		KtButton,
-		KtButtonGroup,
 	},
 	props: {
 		createdTime: String,
