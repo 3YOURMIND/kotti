@@ -1,43 +1,3 @@
-.comment {
-	display: flex;
-	flex-flow: row;
-
-	+ .comment {
-		padding-top: var(--unit-1);
-		border-top: 1px solid var(--ui-02);
-	}
-
-	&__avatar {
-		flex: 0 0 2.4rem;
-		height: 2.4rem;
-	}
-
-	&__wrapper {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		margin-left: 0.4rem;
-	}
-
-
-
-	&__info {
-		display: flex;
-		flex-direction: row;
-		width: 100%;
-		font-size: 0.7rem;
-		line-height: 1.2rem;
-	}
-
-	&__message {
-		font-size: 0.75rem;
-		line-height: 1.2rem;
-		word-break: break-word;
-	}
-}
-
-
-
 .info{
 	&__name {
 	flex: 1 1;
@@ -51,23 +11,6 @@
 	}
 }
 
-
-
-.comment__action,
-.comment-reply__action {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin: 0.2rem 0;
-	font-size: 0.7rem;
-	font-weight: 600;
-	line-height: 1.2rem;
-	color: var(--text-02);
-
-	.yoco {
-		font-size: 0.9rem;
-	}
-}
 
 .comment-inline-edit {
 	position: relative;

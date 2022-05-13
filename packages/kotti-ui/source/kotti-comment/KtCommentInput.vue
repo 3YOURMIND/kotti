@@ -87,7 +87,7 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 	display: flex;
 
 	&--inline {
-		margin: 0 0 0 var(--unit-1);
+		margin: 0 0 var(--unit-1) 0;
 	}
 
 	&__wrapper {
