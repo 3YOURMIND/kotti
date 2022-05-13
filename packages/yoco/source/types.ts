@@ -15,6 +15,7 @@ export enum Icon {
 	CAMERA = 'camera',
 	CAMERA_SWITCH = 'camera_switch',
 	CARD = 'card',
+	CATALOG = 'catalog',
 	CHARTS = 'charts',
 	CHECK = 'check',
 	CHEVRON_DOWN = 'chevron_down',
