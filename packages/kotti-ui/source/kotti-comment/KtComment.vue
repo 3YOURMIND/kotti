@@ -31,7 +31,7 @@
 				@replyClick="handleReplyClick"
 			/>
 
-			<div v-for="reply in replies" :key="reply.id">
+			<div v-for="(reply, index) in replies" :key="reply.id">
 				<CommentReply
 					:id="reply.id"
 					:createdTime="reply.createdTime"
@@ -43,9 +43,9 @@
 					:userAvatar="reply.userAvatar"
 					:userId="reply.userId"
 					:userName="reply.userName"
-					@_inlineDeleteClick="(commentId) => handleDelete(commentId, true)"
-					@_inlineEditSubmit="$emit('edit', $event)"
-					@replyClick="handleReplyClick"
+					@click="handleReplyClick"
+					@delete="(commentId) => handleDelete(commentId, true)"
+					@edit="($event) => handleReplyEdit($event, index)"
 				/>
 			</div>
 
@@ -130,6 +130,25 @@ export default defineComponent<KottiComment.PropsInternal>({
 			},
 			handleReplyClick: (replyUserData: Kotti.Comment.UserData) => {
 				userBeingRepliedTo.value = replyUserData
+			},
+			handleReplyEdit: (
+				{ id, message }: Kotti.Comment.Events.Edit,
+				index: number,
+			) => {
+				if (props.replies.length === 0)
+					throw new Error(
+						`Attempting to edit a reply of id: ${id} while props.replies: ${JSON.stringify(
+							props.replies,
+						)} is empty.`,
+					)
+
+				const newReplies: Kotti.Comment.Events.EditReplies = [
+					...props.replies.slice(0, index),
+					{ ...props.replies[index], message },
+					...props.replies.slice(index + 1),
+				]
+
+				emit('editReplies', newReplies)
 			},
 			handleInlineSubmit: (commentData: KottiComment.Events.Submit) => {
 				userBeingRepliedTo.value = null
