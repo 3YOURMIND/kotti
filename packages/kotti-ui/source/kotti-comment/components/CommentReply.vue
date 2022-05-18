@@ -13,7 +13,7 @@
 				:isEditing="isEditing"
 				:message="message"
 				:postEscapeParser="postEscapeParser"
-				@confirm="($event) => $emit('edit', $event)"
+				@edit="($event) => $emit('edit', $event)"
 				@update:isEditing="($event) => (isEditing = $event)"
 			/>
 
