@@ -56,7 +56,7 @@ export default defineComponent<{
 					id: props.id,
 					message: inlineValue.value,
 				}
-				emit('confirm', payload)
+				emit('edit', payload)
 			},
 			handleCancel: () => {
 				emit('update:isEditing', false)
