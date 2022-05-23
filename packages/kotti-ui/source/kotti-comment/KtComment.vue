@@ -13,7 +13,7 @@
 				:isEditing="isEditing"
 				:message="message"
 				:postEscapeParser="postEscapeParser"
-				@edit="handleEditComment($event)"
+				@edit="handleEdit($event)"
 				@update:isEditing="($event) => (isEditing = $event)"
 			/>
 
@@ -23,14 +23,14 @@
 				@replyClick="handleReplyClick"
 			/>
 
-			<div v-for="(reply, index) in replies" :key="reply.id">
+			<div v-for="reply in replies" :key="reply.id">
 				<CommentReply
 					v-bind="reply"
 					:dangerouslyOverrideParser="dangerouslyOverrideParser"
 					:postEscapeParser="postEscapeParser"
 					@click="handleReplyClick"
 					@delete="(commentId) => handleDelete(commentId, true)"
-					@edit="($event) => handleEditReply($event, index)"
+					@edit="(editPayload) => handleEdit(editPayload, true)"
 				/>
 			</div>
 
@@ -74,13 +74,26 @@ export default defineComponent<KottiComment.PropsInternal>({
 		const userBeingRepliedTo = ref<Kotti.Comment.UserData | null>(null)
 		const translations = useTranslationNamespace('KtComment')
 
-		const handleDelete = (commentId: number | string, isInline?: boolean) => {
+		const handleDelete = (commentId: number | string, isReply = false) => {
 			const payload: KottiComment.Events.Delete = {
 				id: commentId,
-				parentId: isInline ? props.id : null,
+				parentId: isReply ? props.id : null,
 			}
 			emit('delete', payload)
 		}
+
+		const handleEdit = (
+			{ id, message }: KottiComment.Events.InternalEdit,
+			isReply = false,
+		) => {
+			const payload: KottiComment.Events.Edit = {
+				id,
+				message,
+				parentId: isReply ? props.id : null,
+			}
+			emit('edit', payload)
+		}
+
 		return {
 			actionOptions: computed<Kotti.Popover.Props['options']>(() => {
 				const options = []
@@ -101,30 +114,9 @@ export default defineComponent<KottiComment.PropsInternal>({
 				return options
 			}),
 			handleDelete,
-			handleEditComment: (payload: Kotti.Comment.Events.Edit) => {
-				emit('edit', payload)
-			},
+			handleEdit,
 			handleReplyClick: (replyUserData: Kotti.Comment.UserData) => {
 				userBeingRepliedTo.value = replyUserData
-			},
-			handleEditReply: (
-				{ id, message }: Kotti.Comment.Events.Edit,
-				index: number,
-			) => {
-				if (props.replies.length === 0)
-					throw new Error(
-						`Attempting to edit a reply of id: ${id} while props.replies: ${JSON.stringify(
-							props.replies,
-						)} is empty.`,
-					)
-
-				const newReplies: Kotti.Comment.Events.EditReplies = [
-					...props.replies.slice(0, index),
-					{ ...props.replies[index], message },
-					...props.replies.slice(index + 1),
-				]
-
-				emit('editReplies', newReplies)
 			},
 			handleInlineSubmit: (commentData: KottiComment.Events.Submit) => {
 				userBeingRepliedTo.value = null
