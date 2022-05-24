@@ -74,31 +74,7 @@ export default defineComponent<KottiFieldTextArea.PropsInternal>({
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
 
-		&::-webkit-scrollbar {
-			opacity: 0;
-		}
-
-		scrollbar-width: thin;
-		scrollbar-color: var(--ui-background) var(--ui-background);
-
-		&:active,
-		&:hover {
-			scrollbar-color: var(--ui-03) var(--ui-background);
-			transition: scrollbar-color var(--transition-medium) ease-out;
-
-			&::-webkit-scrollbar {
-				width: 5px;
-				opacity: 1;
-				transition: opacity var(--transition-medium) ease-out;
-			}
-
-			&::-webkit-scrollbar-thumb {
-				cursor: all-scroll;
-
-				background-color: var(--ui-03);
-				border-radius: var(--field-border-radius);
-			}
-		}
+		@include prettify-scrollbar;
 	}
 }
 
