@@ -30,6 +30,7 @@
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import escape from 'lodash/escape'
 
+import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { Kotti } from '../../types'
 
 import CommentActions from './CommentActions.vue'
@@ -56,20 +57,19 @@ export default defineComponent<Kotti.Comment.Reply.PropsInternal>({
 	},
 	setup(props, { emit }) {
 		const isEditing = ref<boolean>(false)
+		const translations = useTranslationNamespace('KtComment')
 
 		return {
 			actionOptions: computed(() => {
 				const options = []
 				if (props.isEditable)
 					options.push({
-						label: 'Edit',
-						onClick: () => {
-							isEditing.value = true
-						},
+						label: translations.value.editButton,
+						onClick: () => (isEditing.value = true),
 					})
 				if (props.isDeletable)
 					options.push({
-						label: 'Delete',
+						label: translations.value.deleteButton,
 						onClick: () => emit('delete', props.id),
 					})
 				return options
@@ -83,20 +83,20 @@ export default defineComponent<Kotti.Comment.Reply.PropsInternal>({
 <style lang="scss" scoped>
 .comment-reply {
 	display: flex;
-	padding: 0.2rem 0;
+	padding: var(--unit-1) 0;
 
 	&__content {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
-		margin-left: 0.4rem;
+		margin-left: var(--unit-2);
 
 		&__info {
 			display: flex;
 			flex-direction: row;
-			margin-bottom: 0.1rem;
-			font-size: 0.7rem;
-			line-height: 0.7rem;
+			margin-bottom: var(--unit-h);
+			font-size: calc(var(--unit-3) + var(--unit-h));
+			line-height: calc(var(--unit-3) + var(--unit-h));
 		}
 	}
 }
