@@ -6,7 +6,7 @@
 	</div>
 	<div v-else class="kt-comment-inline-edit">
 		<textarea v-model="inlineValue" class="form-input" />
-		<KtButtonGroup class="kt-comment-inline-edit-buttons">
+		<KtButtonGroup class="kt-comment-inline-edit__buttons">
 			<KtButton icon="close" @click="handleCancel" />
 			<KtButton icon="check" @click="handleConfirm" />
 		</KtButtonGroup>
@@ -69,11 +69,19 @@ export default defineComponent<{
 </script>
 
 <style lang="scss" scoped>
+@import '../../kotti-field/mixins';
+
 .kt-comment-inline-edit {
 	position: relative;
 	width: 100%;
 
-	&-buttons {
+	textarea {
+		resize: vertical;
+
+		@include prettify-scrollbar;
+	}
+
+	&__buttons {
 		position: absolute;
 		right: 0;
 		z-index: 9999; // use tippy
