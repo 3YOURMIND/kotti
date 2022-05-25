@@ -1,16 +1,15 @@
 <template>
-	<div class="kt-comment">
+	<div class="comment">
 		<KtAvatar size="sm" :src="userAvatar" />
-		<div class="kt-comment__content">
-			<div class="kt-comment__content__info">
+		<div class="comment__wrapper">
+			<div class="comment__info">
 				<div class="info__name" v-text="userName" />
 				<div class="info__time" v-text="createdTime" />
 			</div>
-
 			<!-- eslint-disable vue/no-v-html -->
 			<div
 				v-if="!isInlineEdit"
-				class="kt-comment__content__message"
+				class="comment__message"
 				v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 			/>
 			<!-- eslint-enable vue/no-v-html -->
@@ -45,10 +44,9 @@
 					:userName="reply.userName"
 					@_inlineDeleteClick="(commentId) => handleDelete(commentId, true)"
 					@_inlineEditSubmit="$emit('edit', $event)"
-					@replyClick="handleReplyClick"
+					@_inlineReplyClick="handleInlineReplyClick"
 				/>
 			</div>
-
 			<KtCommentInput
 				v-if="userBeingRepliedTo"
 				isInline
@@ -154,33 +152,8 @@ export default defineComponent<KottiComment.PropsInternal>({
 </script>
 
 <style lang="scss" scoped>
-.kt-comment {
+.action__reply {
 	display: flex;
-	flex-flow: row;
-
-	+ .kt-comment {
-		padding-top: var(--unit-1);
-		border-top: 1px solid var(--ui-02);
-	}
-
-	&__content {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		margin-left: var(--unit-2);
-
-		&__info {
-			display: flex;
-			width: 100%;
-			font-size: 0.7rem;
-			line-height: 1.2rem;
-		}
-
-		&__message {
-			font-size: 0.75rem;
-			line-height: 1.2rem;
-			word-break: break-word;
-		}
-	}
+	align-items: center;
 }
 </style>
