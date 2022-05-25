@@ -29,7 +29,21 @@
 						<KtButton icon="check" @click="handleConfirm" />
 					</KtButtonGroup>
 				</div>
-				<CommentOptions v-if="!isInlineEdit" :options="actionOptions" />
+				<div
+					v-if="!isInlineEdit & (actionOptions.length > 0)"
+					class="comment-reply__action action__more"
+				>
+					<i class="yoco">dots</i>
+					<div class="action__options">
+						<a
+							v-for="(option, index) in actionOptions"
+							:key="index"
+							@click="option.onClick"
+						>
+							<li v-text="option.label" />
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -42,12 +56,9 @@ import { KtAvatar } from '../../kotti-avatar'
 import { KtButton } from '../../kotti-button'
 import { KtButtonGroup } from '../../kotti-button-group'
 
-import CommentOptions from './CommentOptions.vue'
-
 export default {
 	name: 'CommentReply',
 	components: {
-		CommentOptions,
 		KtAvatar,
 		KtButton,
 		KtButtonGroup,
