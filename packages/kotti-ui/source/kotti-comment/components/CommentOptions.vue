@@ -1,8 +1,7 @@
 <template>
 	<KtPopover
 		v-if="options.length > 0"
-		class="kt-comment__actions__more-options"
-		:clickBehavior="clickBehavior"
+		:clickBehavior="Kotti.Popover.HIDE_ON_CLICK_AWAY"
 		:options="options"
 		placement="bottom"
 		trigger="click"
@@ -19,13 +18,13 @@ import { Kotti } from '../../types'
 export default defineComponent<{
 	options: Array<Kotti.Popover.Props['options']>
 }>({
-	name: 'CommentActionsOptions',
+	name: 'CommentOptions',
 	props: {
 		options: { type: Array, required: true },
 	},
 	setup() {
 		return {
-			clickBehavior: Kotti.Popover.ClickBehavior.HIDE_ON_CLICK_AWAY,
+			Kotti,
 		}
 	},
 })
