@@ -391,6 +391,7 @@
 	}
 }
 
+
 @mixin prettify-scrollbar {
 	&::-webkit-scrollbar {
 		opacity: 0;
@@ -416,8 +417,10 @@
 			background-color: var(--ui-03);
 			border-radius: var(--field-border-radius);
 		}
+
 	}
 }
+
 
 @mixin sizes {
 	$fontSizes: (

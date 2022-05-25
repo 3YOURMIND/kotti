@@ -26,8 +26,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .kt-comment__actions__reply {
 	display: flex;
-	flex: 0 0 auto;
 	align-items: center;
+	flex: 0 0 auto;
 	padding: 0 var(--unit-01);
 
 	> *:not(:last-child) {
