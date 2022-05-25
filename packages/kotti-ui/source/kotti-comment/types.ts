@@ -18,17 +18,9 @@ export namespace KottiComment {
 		userName: z.string().optional(),
 	})
 
-	const sharedSchema = commentSchema.extend({
+	export const propsSchema = commentSchema.extend({
 		dangerouslyOverrideParser: parseFunctionSchema.default(defaultParser),
 		postEscapeParser: parseFunctionSchema.default(defaultPostEscapeParser),
-	})
-
-	export namespace Reply {
-		export type Props = z.input<typeof sharedSchema>
-		export type PropsInternal = z.output<typeof sharedSchema>
-	}
-
-	export const propsSchema = sharedSchema.extend({
 		replies: z.array(commentSchema).optional(),
 	})
 
