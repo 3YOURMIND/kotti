@@ -17,6 +17,7 @@
 						v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 					/>
 					<!-- eslint-enable vue/no-v-html -->
+					<i class="yoco" v-text="'comment'" />
 				</div>
 				<div v-else class="comment-inline-edit form-group">
 					<textarea
@@ -28,12 +29,8 @@
 						<KtButton icon="check" @click="handleConfirm" />
 					</KtButtonGroup>
 				</div>
-
-			<CommentActions
-				:options="actionOptions"
-				:userData="{ userId, userName }"
-				@replyClick="($event) => $emit('replyClick', $event)"
-			/>
+				<CommentOptions v-if="!isInlineEdit" :options="actionOptions" />
+			</div>
 		</div>
 	</div>
 </template>
@@ -42,11 +39,13 @@
 import escape from 'lodash/escape'
 
 import CommentActions from './CommentActions.vue'
+import CommentOptions from './CommentActionsOptions.vue'
+
 
 export default {
 	name: 'CommentReply',
 	components: {
-		CommentActions,
+		CommentOptions,
 	},
 	props: {
 		createdTime: String,
