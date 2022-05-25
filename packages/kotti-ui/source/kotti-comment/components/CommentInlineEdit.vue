@@ -82,6 +82,10 @@ export default defineComponent<{
 	&__message {
 		display: flex;
 		align-items: center;
+
+		width: 100%;
+		font-size: 0.65rem;
+		line-height: 1rem;
 		word-break: break-word;
 	}
 }
