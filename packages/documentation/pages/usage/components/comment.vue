@@ -18,6 +18,7 @@
 		:userName="comment.userName"
 		@delete="handleDelete($event)"
 		@edit="handleEdit($event)"
+		@editReplies="handleEditReplies(comment.id, $event)"
 		@submit="handleSubmit($event)"
 	/>
 	<KtCommentInput
@@ -235,33 +236,24 @@ export default {
 	methods: {
 		dangerouslyOverrideParser: (msg) => escape(msg),
 		postEscapeParser: (msg) => msg.replace(/\n/g, '</br>'),
-		handleEdit({ id, message, parentId }) {
-			if (parentId === null) {
-				const commentIndex = this.comments.findIndex(
-					(comment) => comment.id === id,
-				)
+		handleEdit({ id, message }) {
+			const comments = this.comments
+			const indexToEdit = comments.findIndex((comment) => comment.id === id)
 
-				return (this.comments = [
-					...this.comments.slice(0, commentIndex),
-					{ ...this.comments[commentIndex], message },
-					...this.comments.slice(commentIndex + 1),
-				])
-			}
-
-			const parentCommentIndex = this.comments.findIndex(
-				(comment) => comment.id === parentId,
-			)
-			const oldReplies = this.comments[parentCommentIndex].replies
-			const replyIndex = oldReplies.findIndex((reply) => reply.id === id)
-			const newReplies = [
-				...oldReplies.slice(0, replyIndex),
-				{ ...oldReplies[replyIndex], message },
-				...oldReplies.slice(replyIndex + 1),
+			this.comments = [
+				...comments.slice(0, indexToEdit),
+				{ ...comments[indexToEdit], message },
+				...comments.slice(indexToEdit + 1),
 			]
+		},
+		handleEditReplies(id, replies) {
+			const parentCommentIndex = this.comments.findIndex(
+				(comment) => comment.id === id,
+			)
 
 			this.comments = [
 				...this.comments.slice(0, parentCommentIndex),
-				{ ...this.comments[parentCommentIndex], replies: newReplies },
+				{ ...this.comments[parentCommentIndex], replies },
 				...this.comments.slice(parentCommentIndex + 1),
 			]
 		},

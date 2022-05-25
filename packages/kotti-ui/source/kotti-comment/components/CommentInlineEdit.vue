@@ -52,7 +52,7 @@ export default defineComponent<{
 
 				if (inlineValue.value === null) return
 
-				const payload: Kotti.Comment.Events.InternalEdit = {
+				const payload: Kotti.Comment.Events.Edit = {
 					id: props.id,
 					message: inlineValue.value,
 				}
