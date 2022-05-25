@@ -3,19 +3,19 @@
 		<div :class="wrapperClass">
 			<KtAvatar
 				v-if="!isInline"
-				class="kt-comment-input__avatar"
+				class="comment-input__avatar"
 				size="sm"
 				:src="userAvatar"
 			/>
 			<textarea
 				ref="textarea"
 				v-model="text"
-				class="kt-comment-input__textarea"
+				class="comment-input__textarea"
 				:placeholder="placeholder"
 				@blur="textFocused = false"
 				@focus="textFocused = true"
 				@input="updateHeight"
-			/>
+			></textarea>
 			<KtButton
 				:disabled="!text"
 				type="text"
@@ -29,6 +29,8 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import { KtAvatar } from '../kotti-avatar'
+import { KtButton } from '../kotti-button'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 
@@ -36,6 +38,10 @@ import { KottiCommentInput } from './types'
 
 export default defineComponent<KottiCommentInput.PropsInternal>({
 	name: 'KtCommentInput',
+	components: {
+		KtAvatar,
+		KtButton,
+	},
 	props: makeProps(KottiCommentInput.propsSchema),
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
@@ -45,8 +51,8 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 		const textFocused = ref(false)
 		return {
 			containerClass: computed(() => ({
-				'kt-comment-input': true,
-				'kt-comment-input--inline': props.isInline,
+				'comment-input': true,
+				'comment-input--inline': props.isInline,
 			})),
 			handleSubmitClick: () => {
 				if (text.value === null) return
@@ -71,64 +77,13 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 				const height = textarea.value.scrollHeight
 				textarea.value.style.height = `${height}px`
 			},
+
 			wrapperClass: computed(() => ({
-				'kt-comment-input__wrapper': true,
-				'kt-comment-input__wrapper--focus': textFocused.value,
-				'kt-comment-input__wrapper--inline': props.isInline,
+				'comment-input__wrapper': true,
+				'comment-input__wrapper--focus': textFocused.value,
+				'comment-input__wrapper--inline': props.isInline,
 			})),
 		}
 	},
 })
 </script>
-
-<style lang="scss" scoped>
-.kt-comment-input {
-	box-sizing: border-box;
-	display: flex;
-
-	&--inline {
-		margin: 0 0 0 var(--unit-1);
-	}
-
-	&__wrapper {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		width: 100%;
-		padding: var(--unit-2);
-		background-color: var(--white);
-		border: 1px solid #dbdbdb;
-		border-radius: var(--border-radius);
-
-		&--focus {
-			border: 1px solid #bbb;
-		}
-
-		&--inline {
-			padding: var(--unit-1);
-		}
-	}
-
-	&__avatar {
-		margin-right: var(--unit-1);
-	}
-
-	&__textarea {
-		flex: 1 1;
-		width: 100%;
-		height: 1.2rem;
-		padding: 0;
-		margin: 0 0.2rem;
-		resize: none;
-		border: 0;
-
-		&:focus {
-			outline: none;
-		}
-	}
-
-	.kt-button {
-		cursor: pointer;
-	}
-}
-</style>
