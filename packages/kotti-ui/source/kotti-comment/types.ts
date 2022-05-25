@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { Kotti } from '../types'
-
 import { defaultParser, defaultPostEscapeParser } from './utilities'
 
 const commentIdSchema = z.union([z.number(), z.string()])
@@ -25,6 +23,11 @@ export namespace KottiComment {
 		postEscapeParser: parseFunctionSchema.default(defaultPostEscapeParser),
 	})
 
+	export namespace Reply {
+		export type Props = z.input<typeof sharedSchema>
+		export type PropsInternal = z.output<typeof sharedSchema>
+	}
+
 	export const propsSchema = sharedSchema.extend({
 		replies: z.array(commentSchema).optional(),
 	})
@@ -32,29 +35,29 @@ export namespace KottiComment {
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 
-	export namespace Reply {
-		export type Props = z.input<typeof sharedSchema>
-		export type PropsInternal = z.output<typeof sharedSchema>
-	}
-
 	export namespace Events {
-		type CommonPayload = {
-			id: NonNullable<KottiComment.PropsInternal['id']>
-			parentId: KottiComment.PropsInternal['id']
+		export type Delete = {
+			id: string | number
+			parentId: string | number | null
 		}
 
-		export type Delete = CommonPayload
-
-		export type Edit = CommonPayload & {
-			message: Kotti.Comment.PropsInternal['message']
+		/**
+		 * Internal: editing one comment or one reply
+		 */
+		export type Edit = {
+			id: string | number
+			message: string
 		}
 
-		export type InternalEdit = Pick<Kotti.Comment.Events.Edit, 'message' | 'id'>
+		/**
+		 * External: editing replies array
+		 */
+		export type EditReplies = PropsInternal['replies']
 
 		export type Submit = {
-			message: KottiComment.PropsInternal['message']
-			parentId: CommonPayload['parentId']
-			replyToUserId: KottiComment.PropsInternal['userId']
+			message: string
+			replyToUserId: number
+			parentId: string | number
 		}
 	}
 
