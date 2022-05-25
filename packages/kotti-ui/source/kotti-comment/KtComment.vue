@@ -25,9 +25,16 @@
 
 			<div v-for="(reply, index) in replies" :key="reply.id">
 				<CommentReply
-					v-bind="reply"
+					:id="reply.id"
+					:createdTime="reply.createdTime"
 					:dangerouslyOverrideParser="dangerouslyOverrideParser"
+					:isDeletable="reply.isDeletable"
+					:isEditable="reply.isEditable"
+					:message="reply.message"
 					:postEscapeParser="postEscapeParser"
+					:userAvatar="reply.userAvatar"
+					:userId="reply.userId"
+					:userName="reply.userName"
 					@click="handleReplyClick"
 					@delete="(commentId) => handleDelete(commentId, true)"
 					@edit="($event) => handleEditReply($event, index)"

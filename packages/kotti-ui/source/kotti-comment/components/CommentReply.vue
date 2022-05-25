@@ -35,7 +35,7 @@ import { Kotti } from '../../types'
 import CommentActions from './CommentActions.vue'
 import CommentInlineEdit from './CommentInlineEdit.vue'
 
-export default defineComponent<Kotti.Comment.Reply.PropsInternal>({
+export default defineComponent<Kotti.Comment.PropsInternal>({
 	name: 'CommentReply',
 	components: {
 		CommentActions,
