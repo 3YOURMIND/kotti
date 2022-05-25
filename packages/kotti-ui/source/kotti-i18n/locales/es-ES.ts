@@ -21,8 +21,6 @@ export const esES: KottiI18n.Messages = {
 		expandCloseLabel: 'Cerrar',
 	},
 	KtComment: {
-		deleteButton: 'Borrar',
-		editButton: 'Editar',
 		postButton: 'Publicar',
 		replyButton: 'Responder',
 		replyPlaceholder: 'Responder a',
