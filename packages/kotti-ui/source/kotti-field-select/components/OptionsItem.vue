@@ -1,5 +1,6 @@
 <template>
 	<div
+		ref="optionRef"
 		:class="classes"
 		:data-test="dataTest"
 		@click.stop="(e) => $emit('click', e)"
@@ -11,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { z } from 'zod'
 
 import { makeProps } from '../../make-props'
@@ -28,7 +29,23 @@ const propsSchema = z.object({
 export default defineComponent<z.output<typeof propsSchema>>({
 	name: 'FieldSelectOptionsItem',
 	props: makeProps(propsSchema),
-	setup(props) {
+	setup(props, { emit }) {
+		const optionRef = ref<HTMLDivElement | null>(null)
+
+		watch(
+			() => props.isHovered,
+			(isHovered, wasHovered) => {
+				if (optionRef.value === null)
+					throw new Error('Unexpected Unbound option ref: null')
+
+				if (isHovered && !wasHovered) {
+					const distanceFromParentTop = optionRef.value.offsetTop
+
+					emit('scrollTo', distanceFromParentTop)
+				}
+			},
+		)
+
 		return {
 			classes: computed(() => ({
 				'kt-field-select-options-item': true,
@@ -37,6 +54,7 @@ export default defineComponent<z.output<typeof propsSchema>>({
 				'kt-field-select-options-item--is-selected': props.isSelected,
 				[`kt-field-select-options-item--is-type-${props.type}`]: true,
 			})),
+			optionRef,
 		}
 	},
 })

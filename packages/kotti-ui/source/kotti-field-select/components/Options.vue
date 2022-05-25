@@ -1,5 +1,5 @@
 <template>
-	<div class="kt-field-select__options">
+	<div ref="optionsRef" class="kt-field-select__options">
 		<div v-if="isLoading" class="kt-field-select__options__loading">
 			<div class="loading" />
 		</div>
@@ -9,6 +9,7 @@
 			isDisabled
 			:label="translations.noDataText"
 			type="option"
+			@scrollTo="scrollTo"
 		/>
 		<FieldSelectOptionsItem
 			v-for="(option, index) in modifiedOptions"
@@ -20,16 +21,14 @@
 			:label="option.label"
 			type="option"
 			@click="() => selectOption(option)"
+			@scrollTo="scrollTo"
 		>
 			<slot
 				v-bind="{ index, option, select: () => selectOption(option) }"
 				name="option"
 			/>
 		</FieldSelectOptionsItem>
-		<div
-			v-if="modifiedOptions.length && actions.length"
-			class="kt-field-select__options__separator"
-		/>
+		<div v-if="actions.length" class="kt-field-select__options__separator" />
 		<FieldSelectOptionsItem
 			v-for="(action, index) in actions"
 			:key="`action-${index}`"
@@ -37,6 +36,7 @@
 			:label="action.label"
 			type="action"
 			@click="() => onAction(action)"
+			@scrollTo="scrollTo"
 		/>
 	</div>
 </template>
@@ -87,6 +87,8 @@ export default defineComponent<z.output<typeof propsSchema>>({
 	props: makeProps(propsSchema),
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldSelects')
+
+		const optionsRef = ref<HTMLDivElement | null>(null)
 
 		const modifiedOptions = computed(() => {
 			const modifiedOptions: ModifiedOption[] = props.options.map((option) => ({
@@ -191,6 +193,13 @@ export default defineComponent<z.output<typeof propsSchema>>({
 			},
 			modifiedOptions,
 			onAction,
+			optionsRef,
+			scrollTo: (optionDistanceToOptionsTop: number) => {
+				if (optionsRef.value === null)
+					throw new Error('Unexpected Unbound optionsRef: null')
+
+				optionsRef.value.scrollTo({ top: optionDistanceToOptionsTop })
+			},
 			selectOption,
 			translations,
 		}
@@ -199,8 +208,12 @@ export default defineComponent<z.output<typeof propsSchema>>({
 </script>
 
 <style lang="scss" scoped>
+@import '../../kotti-field/mixins.scss';
+
 .kt-field-select__options {
 	position: relative;
+
+	@include prettify-scrollbar;
 
 	max-height: 40vh;
 	/*
