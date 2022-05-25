@@ -6,52 +6,44 @@
 		padding-top: var(--unit-1);
 		border-top: 1px solid var(--ui-02);
 	}
-
-	&__avatar {
-		flex: 0 0 2.4rem;
-		height: 2.4rem;
-	}
-
-	&__wrapper {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		margin-left: 0.4rem;
-	}
-
-
-
-	&__info {
-		display: flex;
-		flex-direction: row;
-		width: 100%;
-		font-size: 0.7rem;
-		line-height: 1.2rem;
-	}
-
-	&__message {
-		font-size: 0.75rem;
-		line-height: 1.2rem;
-		word-break: break-word;
-	}
 }
 
+.comment__avatar {
+	flex: 0 0 2.4rem;
+	height: 2.4rem;
+}
 
+.comment__wrapper {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	margin-left: 0.4rem;
+}
 
-.info{
-	&__name {
+.comment__info {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	font-size: 0.7rem;
+	line-height: 1.2rem;
+}
+
+.info__name {
 	flex: 1 1;
 	font-weight: 600;
-	}
-
-	&__time {
-		flex: 1 1;
-		color: $lightgray-500;
-		text-align: right;
-	}
 }
 
+.info__time {
+	flex: 1 1;
+	color: $lightgray-500;
+	text-align: right;
+}
 
+.comment__message {
+	font-size: 0.75rem;
+	line-height: 1.2rem;
+	word-break: break-word;
+}
 
 .comment__action,
 .comment-reply__action {
@@ -62,8 +54,7 @@
 	font-size: 0.7rem;
 	font-weight: 600;
 	line-height: 1.2rem;
-	color: var(--text-02);
-
+	color: $lightgray-500;
 	.yoco {
 		font-size: 0.9rem;
 	}
@@ -72,67 +63,64 @@
 .comment-inline-edit {
 	position: relative;
 	width: 100%;
-	&-buttons {
-		position: absolute;
-		right: 0;
-		z-index: $zindex-4;
+}
+.comment-inline-edit-buttons {
+	position: absolute;
+	right: 0;
+	z-index: $zindex-4;
+}
+
+.action__options {
+	position: absolute;
+	top: 1.2rem;
+	right: 0;
+	z-index: $zindex-4;
+	display: none;
+	height: auto;
+	padding: 0.4rem 0;
+	line-height: 1.4rem;
+	text-align: left;
+	background: #ffffff;
+	border-radius: var(--border-radius);
+	box-shadow: $box-shadow;
+	li {
+		padding: 0.2rem 1rem;
+		list-style: none;
+	}
+	li:hover {
+		background: $lightgray-300;
 	}
 }
 
-.action {
-	&__options {
-		position: absolute;
-		top: 1.2rem;
-		right: 0;
-		z-index: $zindex-4;
-		display: none;
-		height: auto;
-		padding: 0.4rem 0;
-		line-height: 1.4rem;
-		text-align: left;
-		background: #ffffff;
-		border-radius: var(--border-radius);
-		box-shadow: $box-shadow;
-
-		li {
-			padding: 0.2rem 1rem;
-			list-style: none;
-		}
-		li:hover {
-			background: $lightgray-300;
-		}
+.action__reply {
+	flex: 0 0 auto;
+	padding: 0 0.2rem;
+	border-radius: 0.2rem;
+	&:hover {
+		color: $darkgray-400;
+		cursor: pointer;
+		background: $lightgray-400;
 	}
-
-	&__reply {
-		flex: 0 0 auto;
-		padding: 0 0.2rem;
-		border-radius: 0.2rem;
-		&:hover {
-			color: $darkgray-400;
-			cursor: pointer;
-			background: $lightgray-400;
-		}
-	}
-
-	&__more {
-		position: relative;
-		display: inline-block;
-		flex: 0 0 2rem;
-		padding: 0 0.2rem;
-		text-align: center;
-		border-radius: 0.2rem;
-		&:hover {
-			color: $darkgray-400;
-			cursor: pointer;
-			background: $lightgray-400;
-			.action__options {
-				display: block;
-			}
+}
+.action__more {
+	position: relative;
+	display: inline-block;
+	flex: 0 0 2rem;
+	padding: 0 0.2rem;
+	text-align: center;
+	border-radius: 0.2rem;
+	&:hover {
+		color: $darkgray-400;
+		cursor: pointer;
+		background: $lightgray-400;
+		.action__options {
+			display: block;
 		}
 	}
 }
 
-// CommentReply
+// Comment Reply => KtCommentReply
+
 .comment-reply {
 	display: flex;
 	flex-direction: row;
@@ -188,6 +176,7 @@
 }
 
 // KtCommentInput
+
 .comment-input {
 	box-sizing: border-box;
 	display: flex;
