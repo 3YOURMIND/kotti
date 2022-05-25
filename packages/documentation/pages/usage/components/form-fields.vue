@@ -230,7 +230,16 @@
 								isOptional
 								label="leftIcon"
 								:options="yocoIconOptions"
-							/>
+							>
+								<template #option="{ option }">
+									<i
+										class="yoco"
+										style="font-size: 24px; margin-right: 10px"
+										v-text="option.value"
+									/>
+									<span v-text="option.label" />
+								</template>
+							</KtFieldSingleSelect>
 							<KtFieldSingleSelect
 								formKey="rightIcon"
 								helpText="Support Varies"
@@ -238,7 +247,16 @@
 								isOptional
 								label="rightIcon"
 								:options="yocoIconOptions"
-							/>
+							>
+								<template #option="{ option }">
+									<i
+										class="yoco"
+										style="font-size: 24px; margin-right: 10px"
+										v-text="option.value"
+									/>
+									<span v-text="option.label" />
+								</template>
+							</KtFieldSingleSelect>
 						</div>
 						<KtFormControllerObject
 							v-if="componentDefinition.additionalProps.length > 0"
