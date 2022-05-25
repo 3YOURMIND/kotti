@@ -146,22 +146,6 @@ methods: {
 	/>
 </div>
 
-### Props
-
-| Attribute                     | Description                                                                                                                                                                  | Type               | Accepted values                   | Default                |
-| :---------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------- | :-------------------------------- | :--------------------- |
-| `createdTime`                 | The Time that appears in the comment                                                                                                                                         | string             | "20-12-2008"                      | -                      |
-| `id`                          | the id to track the comment                                                                                                                                                  | number, string     | "1"                               | -                      |
-| `replies`                     | array of comment props to be nested under the coment                                                                                                                         | [CommentProps]     | [{id: "1", message: "hello"}]     | -                      |
-| `userAvatar`                  | url to image thumbnail                                                                                                                                                       | string             | "https://someimage.com/image.png" | -                      |
-| `userId`                      | id of user who made the comment to reply too                                                                                                                                 | number, string     | "2"                               | -                      |
-| `userName`                    | name of user to display                                                                                                                                                      | string             | "Jhone Doe"                       | -                      |
-| `message`                     | the actual comment                                                                                                                                                           | string             | "Hello"                           | -                      |
-| `dangerDefaultParserOverride` | A function that processes and escapes the comment message before it is passed to the div that render it, as the name implies you're responsible for escaping if you use this | (string) => string | Function                          | lodash escape function |
-| `postEscapeParser`            | A function that processes the message after is has been escaped use this instead of `dangerDefaultParserOverride`                                                            | (string) => string | Function                          | (_) => _               |
-| `isDeletable`                 | whether this comment is deletable                                                                                                                                            | boolean            | true,false                        | false                  |
-| `isEditable`                  | whether this comment is editable                                                                                                                                             | boolean            | true,false                        | false                  |
-
 ### Event
 
 | Event Name | Component        | Payload   | Description     |
@@ -251,9 +235,35 @@ export default {
 	methods: {
 		dangerouslyOverrideParser: (msg) => escape(msg),
 		postEscapeParser: (msg) => msg.replace(/\n/g, '</br>'),
-		handleEdit(payload) {
-			// eslint-disable-next-line
-			console.log(payload)
+		handleEdit({ id, message, parentId }) {
+			if (parentId === null) {
+				const commentIndex = this.comments.findIndex(
+					(comment) => comment.id === id,
+				)
+
+				return (this.comments = [
+					...this.comments.slice(0, commentIndex),
+					{ ...this.comments[commentIndex], message },
+					...this.comments.slice(commentIndex + 1),
+				])
+			}
+
+			const parentCommentIndex = this.comments.findIndex(
+				(comment) => comment.id === parentId,
+			)
+			const oldReplies = this.comments[parentCommentIndex].replies
+			const replyIndex = oldReplies.findIndex((reply) => reply.id === id)
+			const newReplies = [
+				...oldReplies.slice(0, replyIndex),
+				{ ...oldReplies[replyIndex], message },
+				...oldReplies.slice(replyIndex + 1),
+			]
+
+			this.comments = [
+				...this.comments.slice(0, parentCommentIndex),
+				{ ...this.comments[parentCommentIndex], replies: newReplies },
+				...this.comments.slice(parentCommentIndex + 1),
+			]
 		},
 		handleSubmit(payload) {
 			const _message = {

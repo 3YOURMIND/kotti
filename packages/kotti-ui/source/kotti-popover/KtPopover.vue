@@ -123,10 +123,6 @@ export default defineComponent<KottiPopover.PropsInternal>({
 	&__content {
 		margin: 3px -1px; // tippy theme applies 5px 9px padding, therefore this equals 8px 8px
 
-		&--has-options {
-			min-width: 200px;
-		}
-
 		&--size {
 			&-auto {
 				width: auto;

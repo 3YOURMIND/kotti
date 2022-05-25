@@ -1,54 +1,72 @@
 import { z } from 'zod'
 
+import { Kotti } from '../types'
+
 import { defaultParser, defaultPostEscapeParser } from './utilities'
 
 const commentIdSchema = z.union([z.number(), z.string()])
+
 export namespace KottiComment {
 	const parseFunctionSchema = z.function().args(z.string()).returns(z.string())
 
 	export const commentSchema = z.object({
-		createdTime: z.string().optional(),
-		id: commentIdSchema.optional(),
+		createdTime: z.string().nullable().default(null),
+		id: commentIdSchema.nullable().default(null),
 		isDeletable: z.boolean().default(false),
 		isEditable: z.boolean().default(false),
 		message: z.string(),
-		userAvatar: z.string().optional(),
-		userId: z.number().optional(),
+		userAvatar: z.string().nullable().default(null),
+		userId: z.number().nullable().default(null),
 		userName: z.string().optional(),
 	})
 
-	export const propsSchema = commentSchema.extend({
+	const sharedSchema = commentSchema.extend({
 		dangerouslyOverrideParser: parseFunctionSchema.default(defaultParser),
 		postEscapeParser: parseFunctionSchema.default(defaultPostEscapeParser),
+	})
+
+	export const propsSchema = sharedSchema.extend({
 		replies: z.array(commentSchema).optional(),
 	})
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 
+	export namespace Reply {
+		export type Props = z.input<typeof sharedSchema>
+		export type PropsInternal = z.output<typeof sharedSchema>
+	}
+
 	export namespace Events {
-		export type Delete = {
-			id: string | number
-			parentId: string | number | null
+		type CommonPayload = {
+			id: NonNullable<KottiComment.PropsInternal['id']>
+			parentId: KottiComment.PropsInternal['id']
 		}
 
-		export type Edit = {
-			id: string | number
-			message: string
+		export type Delete = CommonPayload
+
+		export type Edit = CommonPayload & {
+			message: Kotti.Comment.PropsInternal['message']
 		}
+
+		export type InternalEdit = Pick<Kotti.Comment.Events.Edit, 'message' | 'id'>
 
 		export type Submit = {
-			message: string
-			replyToUserId: number
-			parentId: string | number
+			message: KottiComment.PropsInternal['message']
+			parentId: CommonPayload['parentId']
+			replyToUserId: KottiComment.PropsInternal['userId']
 		}
 	}
 
 	export type Translations = {
+		deleteButton: string
+		editButton: string
 		postButton: string
 		replyButton: string
 		replyPlaceholder: string
 	}
+
+	export type UserData = Pick<PropsInternal, 'userName' | 'userId'>
 }
 
 export namespace KottiCommentInput {

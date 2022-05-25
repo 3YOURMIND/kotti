@@ -1,131 +1,103 @@
 <template>
 	<div class="comment-reply">
 		<KtAvatar class="comment-reply__avatar" size="sm" :src="userAvatar" />
-		<div class="comment-reply__wrapper">
-			<div class="comment-reply__info">
-				<div class="comment-reply__name" v-text="userName" />
-				<div class="comment-reply__time" v-text="createdTime" />
+		<div class="comment-reply__content">
+			<div class="comment-reply__content__info">
+				<div class="info__name" v-text="userName" />
+				<div class="info__time" v-text="createdTime" />
 			</div>
-			<div class="comment-reply__body">
-				<div
-					v-if="!isInlineEdit"
-					class="comment-reply__message"
-					@click="$emit('_inlineReplyClick', { userName, userId })"
-				>
-					<!-- eslint-disable vue/no-v-html -->
-					<span
-						v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
-					/>
-					<!-- eslint-enable vue/no-v-html -->
-					<i class="yoco" v-text="'comment'" />
-				</div>
-				<div v-else class="comment-inline-edit form-group">
-					<textarea
-						v-model="inlineMessageValue"
-						class="comment-inline-edit-input form-input"
-					></textarea>
-					<KtButtonGroup class="comment-inline-edit-buttons">
-						<KtButton icon="close" @click="cancelInlineEdit" />
-						<KtButton icon="check" @click="handleConfirm" />
-					</KtButtonGroup>
-				</div>
-				<div
-					v-if="!isInlineEdit & (actionOptions.length > 0)"
-					class="comment-reply__action action__more"
-				>
-					<i class="yoco">dots</i>
-					<div class="action__options">
-						<a
-							v-for="(option, index) in actionOptions"
-							:key="index"
-							@click="option.onClick"
-						>
-							<li v-text="option.label" />
-						</a>
-					</div>
-				</div>
-			</div>
+
+			<CommentInlineEdit
+				:id="id"
+				:dangerouslyOverrideParser="dangerouslyOverrideParser"
+				:isEditing="isEditing"
+				:message="message"
+				:postEscapeParser="postEscapeParser"
+				@edit="($event) => $emit('edit', $event)"
+				@update:isEditing="($event) => (isEditing = $event)"
+			/>
+
+			<CommentActions
+				:options="actionOptions"
+				:userData="{ userId, userName }"
+				@replyClick="($event) => $emit('click', $event)"
+			/>
 		</div>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, ref } from '@vue/composition-api'
 import escape from 'lodash/escape'
 
-import { KtAvatar } from '../../kotti-avatar'
-import { KtButton } from '../../kotti-button'
-import { KtButtonGroup } from '../../kotti-button-group'
+import { useTranslationNamespace } from '../../kotti-i18n/hooks'
+import { Kotti } from '../../types'
 
-export default {
+import CommentActions from './CommentActions.vue'
+import CommentInlineEdit from './CommentInlineEdit.vue'
+
+export default defineComponent<Kotti.Comment.Reply.PropsInternal>({
 	name: 'CommentReply',
 	components: {
-		KtAvatar,
-		KtButton,
-		KtButtonGroup,
+		CommentActions,
+		CommentInlineEdit,
 	},
 	props: {
-		createdTime: String,
+		createdTime: { default: () => null, type: String },
 		dangerouslyOverrideParser: { default: escape, type: Function },
 		isDeletable: { default: false, type: Boolean },
 		isEditable: { default: false, type: Boolean },
-		id: [Number, String],
-		message: String,
+		id: { default: () => null, type: [Number, String] },
+		message: { type: String, required: true },
 		parser: { default: escape, type: Function },
 		postEscapeParser: { default: (_) => _, type: Function },
-		userAvatar: String,
-		userId: [Number, String],
-		userName: String,
+		userAvatar: { default: () => null, type: String },
+		userId: { default: () => null, type: Number },
+		userName: { default: () => null, type: String },
 	},
-	data() {
+	setup(props, { emit }) {
+		const isEditing = ref<boolean>(false)
+		const translations = useTranslationNamespace('KtComment')
+
 		return {
-			inlineMessageValue: '',
-			isInlineEdit: false,
+			actionOptions: computed(() => {
+				const options = []
+				if (props.isEditable)
+					options.push({
+						label: translations.value.editButton,
+						onClick: () => (isEditing.value = true),
+					})
+				if (props.isDeletable)
+					options.push({
+						label: translations.value.deleteButton,
+						onClick: () => emit('delete', props.id),
+					})
+				return options
+			}),
+			isEditing,
 		}
 	},
-	computed: {
-		inlineMessage() {
-			return this.inlineMessageValue || this.message
-		},
-		actionOptions() {
-			const options = []
-			if (this.isEditable)
-				options.push({
-					label: 'Edit',
-					onClick: () => {
-						this.inlineMessageValue = this.inlineMessage
-						this.isInlineEdit = true
-					},
-				})
-			if (this.isDeletable)
-				options.push({
-					label: 'Delete',
-					onClick: () => this.$emit('_inlineDeleteClick', this.id),
-				})
-			return options
-		},
-	},
-	methods: {
-		cancelInlineEdit() {
-			this.inlineMessageValue = ''
-			this.isInlineEdit = false
-		},
-		handleInlineInput(event) {
-			this.inlineMessageValue = event.target.value
-		},
-		handleConfirm() {
-			this.isInlineEdit = false
-			if (!this.inlineMessageValue) return
-			this.$emit('_inlineEditSubmit', {
-				message: this.inlineMessageValue,
-				id: this.id,
-			})
-		},
-	},
-}
+})
 </script>
+
 <style lang="scss" scoped>
-.comment-reply__message {
+.comment-reply {
 	display: flex;
-	align-items: center;
+	padding: var(--unit-1) 0;
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin-left: var(--unit-2);
+
+		&__info {
+			display: flex;
+			flex-direction: row;
+			margin-bottom: var(--unit-h);
+			font-size: calc(var(--unit-3) + var(--unit-h));
+			line-height: calc(var(--unit-3) + var(--unit-h));
+		}
+	}
 }
 </style>
