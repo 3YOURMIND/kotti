@@ -118,7 +118,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 				if (isInlineEdit.value) return options
 				if (props.isEditable)
 					options.push({
-						label: translations.value.editButton,
+						label: 'Edit',
 						onClick: () => {
 							inlineMessageValue.value = props.message
 							isInlineEdit.value = true
@@ -127,7 +127,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 					})
 				if (props.isDeletable)
 					options.push({
-						label: translations.value.deleteButton,
+						label: 'Delete',
 						onClick: () => handleDelete(props.id),
 						type: KottiButton.Type.DANGER,
 					})
