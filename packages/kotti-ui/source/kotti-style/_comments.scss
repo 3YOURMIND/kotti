@@ -80,6 +80,29 @@
 }
 
 .action {
+	&__options {
+		position: absolute;
+		top: 1.2rem;
+		right: 0;
+		z-index: $zindex-4;
+		display: none;
+		height: auto;
+		padding: 0.4rem 0;
+		line-height: 1.4rem;
+		text-align: left;
+		background: #ffffff;
+		border-radius: var(--border-radius);
+		box-shadow: $box-shadow;
+
+		li {
+			padding: 0.2rem 1rem;
+			list-style: none;
+		}
+		li:hover {
+			background: $lightgray-300;
+		}
+	}
+
 	&__reply {
 		flex: 0 0 auto;
 		padding: 0 0.2rem;
@@ -88,6 +111,23 @@
 			color: $darkgray-400;
 			cursor: pointer;
 			background: $lightgray-400;
+		}
+	}
+
+	&__more {
+		position: relative;
+		display: inline-block;
+		flex: 0 0 2rem;
+		padding: 0 0.2rem;
+		text-align: center;
+		border-radius: 0.2rem;
+		&:hover {
+			color: $darkgray-400;
+			cursor: pointer;
+			background: $lightgray-400;
+			.action__options {
+				display: block;
+			}
 		}
 	}
 }

@@ -30,7 +30,18 @@
 				>
 					<i class="yoco" v-text="'comment'" /> {{ replyButton }}
 				</div>
-				<CommentOptions :options="actionOptions" />
+				<div v-if="actionOptions.length > 0" class="action__more">
+					<i class="yoco">dots</i>
+					<div class="action__options">
+						<a
+							v-for="option in actionOptions"
+							:key="option.type"
+							@click="option.onClick"
+						>
+							<li>{{ option.label }}</li>
+						</a>
+					</div>
+				</div>
 			</div>
 			<div v-for="reply in replies" :key="reply.id">
 				<CommentReply
@@ -68,11 +79,10 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import { KtAvatar } from '../kotti-avatar'
 import { KtButton } from '../kotti-button'
 import { KtButtonGroup } from '../kotti-button-group'
+import { KottiButton } from '../kotti-button/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
-import { Kotti } from '../types'
 
-import CommentOptions from './components/CommentOptions.vue'
 import CommentReply from './components/CommentReply.vue'
 import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
@@ -86,7 +96,6 @@ export default defineComponent<KottiComment.PropsInternal>({
 		KtButton,
 		KtButtonGroup,
 		CommentReply,
-		CommentOptions,
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
@@ -104,7 +113,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 			emit('delete', payload)
 		}
 		return {
-			actionOptions: computed<Kotti.Popover.Props['options']>(() => {
+			actionOptions: computed<Array<KottiButton.Props>>(() => {
 				const options = []
 				if (isInlineEdit.value) return options
 				if (props.isEditable)
@@ -114,11 +123,13 @@ export default defineComponent<KottiComment.PropsInternal>({
 							inlineMessageValue.value = props.message
 							isInlineEdit.value = true
 						},
+						type: KottiButton.Type.PRIMARY,
 					})
 				if (props.isDeletable)
 					options.push({
 						label: translations.value.deleteButton,
 						onClick: () => handleDelete(props.id),
+						type: KottiButton.Type.DANGER,
 					})
 				return options
 			}),
@@ -146,7 +157,6 @@ export default defineComponent<KottiComment.PropsInternal>({
 			inlineMessage: computed(() => inlineMessageValue.value ?? props.message),
 			inlineMessageValue,
 			isInlineEdit,
-			Kotti,
 			placeholder: computed(() =>
 				userBeingRepliedTo.value === null
 					? null
