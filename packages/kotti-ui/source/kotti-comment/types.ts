@@ -3,18 +3,17 @@ import { z } from 'zod'
 import { defaultParser, defaultPostEscapeParser } from './utilities'
 
 const commentIdSchema = z.union([z.number(), z.string()])
-
 export namespace KottiComment {
 	const parseFunctionSchema = z.function().args(z.string()).returns(z.string())
 
 	export const commentSchema = z.object({
-		createdTime: z.string().nullable().default(null),
-		id: commentIdSchema.nullable().default(null),
+		createdTime: z.string().optional(),
+		id: commentIdSchema.optional(),
 		isDeletable: z.boolean().default(false),
 		isEditable: z.boolean().default(false),
 		message: z.string(),
-		userAvatar: z.string().nullable().default(null),
-		userId: z.number().nullable().default(null),
+		userAvatar: z.string().optional(),
+		userId: z.number().optional(),
 		userName: z.string().optional(),
 	})
 
@@ -33,18 +32,10 @@ export namespace KottiComment {
 			parentId: string | number | null
 		}
 
-		/**
-		 * Internal: editing one comment or one reply
-		 */
 		export type Edit = {
 			id: string | number
 			message: string
 		}
-
-		/**
-		 * External: editing replies array
-		 */
-		export type EditReplies = PropsInternal['replies']
 
 		export type Submit = {
 			message: string

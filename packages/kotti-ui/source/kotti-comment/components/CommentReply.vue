@@ -7,79 +7,103 @@
 				<div class="info__time" v-text="createdTime" />
 			</div>
 
-			<CommentInlineEdit
-				:id="id"
-				:dangerouslyOverrideParser="dangerouslyOverrideParser"
-				:isEditing="isEditing"
-				:message="message"
-				:postEscapeParser="postEscapeParser"
-				@confirm="($event) => $emit('edit', $event)"
-				@update:isEditing="($event) => (isEditing = $event)"
-			/>
+			<div v-if="!isInlineEdit" class="comment-reply__content__message">
+				<!-- eslint-disable vue/no-v-html -->
+				<span
+					v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
+				/>
+				<!-- eslint-enable vue/no-v-html -->
+			</div>
+			<div v-else class="comment-inline-edit form-group">
+				<textarea
+					v-model="inlineMessageValue"
+					class="comment-inline-edit-input form-input"
+				></textarea>
+				<KtButtonGroup class="comment-inline-edit-buttons">
+					<KtButton icon="close" @click="cancelInlineEdit" />
+					<KtButton icon="check" @click="handleConfirm" />
+				</KtButtonGroup>
+			</div>
 
 			<CommentActions
 				:options="actionOptions"
 				:userData="{ userId, userName }"
-				@replyClick="($event) => $emit('click', $event)"
+				@replyClick="($event) => $emit('replyClick', $event)"
 			/>
 		</div>
 	</div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
+<script>
 import escape from 'lodash/escape'
 
-import { Kotti } from '../../types'
-
 import CommentActions from './CommentActions.vue'
-import CommentInlineEdit from './CommentInlineEdit.vue'
 
-export default defineComponent<Kotti.Comment.PropsInternal>({
+export default {
 	name: 'CommentReply',
 	components: {
 		CommentActions,
-		CommentInlineEdit,
 	},
 	props: {
-		createdTime: { default: () => null, type: String },
+		createdTime: String,
 		dangerouslyOverrideParser: { default: escape, type: Function },
 		isDeletable: { default: false, type: Boolean },
 		isEditable: { default: false, type: Boolean },
-		id: { default: () => null, type: [Number, String] },
-		message: { type: String, required: true },
+		id: [Number, String],
+		message: String,
 		parser: { default: escape, type: Function },
 		postEscapeParser: { default: (_) => _, type: Function },
-		userAvatar: { default: () => null, type: String },
-		userId: { default: () => null, type: Number },
-		userName: { default: () => null, type: String },
+		userAvatar: String,
+		userId: [Number, String],
+		userName: String,
 	},
-	setup(props, { emit }) {
-		const isEditing = ref<boolean>(false)
-
+	data() {
 		return {
-			actionOptions: computed(() => {
-				const options = []
-				if (props.isEditable)
-					options.push({
-						label: 'Edit',
-						onClick: () => {
-							isEditing.value = true
-						},
-					})
-				if (props.isDeletable)
-					options.push({
-						label: 'Delete',
-						onClick: () => emit('delete', props.id),
-					})
-				return options
-			}),
-			isEditing,
+			inlineMessageValue: '',
+			isInlineEdit: false,
 		}
 	},
-})
+	computed: {
+		inlineMessage() {
+			return this.inlineMessageValue || this.message
+		},
+		actionOptions() {
+			const options = []
+			if (this.isEditable)
+				options.push({
+					label: 'Edit',
+					onClick: () => {
+						this.inlineMessageValue = this.inlineMessage
+						this.isInlineEdit = true
+					},
+				})
+			if (this.isDeletable)
+				options.push({
+					label: 'Delete',
+					onClick: () => this.$emit('_inlineDeleteClick', this.id),
+				})
+			return options
+		},
+	},
+	methods: {
+		cancelInlineEdit() {
+			this.inlineMessageValue = ''
+			this.isInlineEdit = false
+		},
+		handleInlineInput(event) {
+			this.inlineMessageValue = event.target.value
+		},
+		handleConfirm() {
+			this.isInlineEdit = false
+			if (!this.inlineMessageValue) return
+			this.$emit('_inlineEditSubmit', {
+				message: this.inlineMessageValue,
+				id: this.id,
+			})
+		},
+	},
+}
 </script>
-
 <style lang="scss" scoped>
 .comment-reply {
 	display: flex;
@@ -97,6 +121,16 @@ export default defineComponent<Kotti.Comment.PropsInternal>({
 			margin-bottom: 0.1rem;
 			font-size: 0.7rem;
 			line-height: 0.7rem;
+		}
+
+		&__message {
+			display: flex;
+			align-items: center;
+
+			width: 100%;
+			font-size: 0.65rem;
+			line-height: 1rem;
+			word-break: break-word;
 		}
 	}
 }
