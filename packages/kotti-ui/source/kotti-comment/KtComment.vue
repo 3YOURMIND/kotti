@@ -7,15 +7,23 @@
 				<div class="info__time" v-text="createdTime" />
 			</div>
 
-			<CommentInlineEdit
-				:id="id"
-				:dangerouslyOverrideParser="dangerouslyOverrideParser"
-				:isEditing="isEditing"
-				:message="message"
-				:postEscapeParser="postEscapeParser"
-				@edit="handleEditComment($event)"
-				@update:isEditing="($event) => (isEditing = $event)"
+			<!-- eslint-disable vue/no-v-html -->
+			<div
+				v-if="!isInlineEdit"
+				class="kt-comment__content__message"
+				v-html="postEscapeParser(dangerouslyOverrideParser(inlineMessage))"
 			/>
+			<!-- eslint-enable vue/no-v-html -->
+			<div v-else class="comment-inline-edit form-group">
+				<textarea
+					v-model="inlineMessageValue"
+					class="comment-inline-edit-input form-input"
+				></textarea>
+				<KtButtonGroup class="comment-inline-edit-buttons">
+					<KtButton icon="close" @click="cancelInlineEdit" />
+					<KtButton icon="check" @click="handleEditConfirm" />
+				</KtButtonGroup>
+			</div>
 
 			<CommentActions
 				:options="actionOptions"
@@ -37,7 +45,7 @@
 					:userName="reply.userName"
 					@click="handleReplyClick"
 					@delete="(commentId) => handleDelete(commentId, true)"
-					@edit="($event) => handleEditReply($event, index)"
+					@edit="($event) => handleReplyEdit($event, index)"
 				/>
 			</div>
 
@@ -62,7 +70,6 @@ import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
 import CommentActions from './components/CommentActions.vue'
-import CommentInlineEdit from './components/CommentInlineEdit.vue'
 import CommentReply from './components/CommentReply.vue'
 import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
@@ -72,12 +79,12 @@ export default defineComponent<KottiComment.PropsInternal>({
 	components: {
 		CommentActions,
 		CommentReply,
-		CommentInlineEdit,
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
 	setup(props, { emit }) {
-		const isEditing = ref(false)
+		const isInlineEdit = ref(false)
+		const inlineMessageValue = ref<string | null>(null)
 		const userBeingRepliedTo = ref<Kotti.Comment.UserData | null>(null)
 		const translations = useTranslationNamespace('KtComment')
 
@@ -91,13 +98,13 @@ export default defineComponent<KottiComment.PropsInternal>({
 		return {
 			actionOptions: computed<Kotti.Popover.Props['options']>(() => {
 				const options = []
-				if (isEditing.value) return options
-
+				if (isInlineEdit.value) return options
 				if (props.isEditable)
 					options.push({
 						label: translations.value.editButton,
 						onClick: () => {
-							isEditing.value = true
+							inlineMessageValue.value = props.message
+							isInlineEdit.value = true
 						},
 					})
 				if (props.isDeletable)
@@ -107,14 +114,24 @@ export default defineComponent<KottiComment.PropsInternal>({
 					})
 				return options
 			}),
+			cancelInlineEdit: () => {
+				inlineMessageValue.value = null
+				isInlineEdit.value = false
+			},
 			handleDelete,
-			handleEditComment: (payload: Kotti.Comment.Events.Edit) => {
+			handleEditConfirm: () => {
+				isInlineEdit.value = false
+				if (inlineMessageValue.value === null) return
+				const payload: KottiComment.Events.Edit = {
+					id: props.id,
+					message: inlineMessageValue.value,
+				}
 				emit('edit', payload)
 			},
 			handleReplyClick: (replyUserData: Kotti.Comment.UserData) => {
 				userBeingRepliedTo.value = replyUserData
 			},
-			handleEditReply: (
+			handleReplyEdit: (
 				{ id, message }: Kotti.Comment.Events.Edit,
 				index: number,
 			) => {
@@ -137,7 +154,9 @@ export default defineComponent<KottiComment.PropsInternal>({
 				userBeingRepliedTo.value = null
 				emit('submit', commentData)
 			},
-			isEditing,
+			inlineMessage: computed(() => inlineMessageValue.value ?? props.message),
+			inlineMessageValue,
+			isInlineEdit,
 			Kotti,
 			placeholder: computed(() =>
 				userBeingRepliedTo.value === null
@@ -174,6 +193,12 @@ export default defineComponent<KottiComment.PropsInternal>({
 			width: 100%;
 			font-size: 0.7rem;
 			line-height: 1.2rem;
+		}
+
+		&__message {
+			font-size: 0.75rem;
+			line-height: 1.2rem;
+			word-break: break-word;
 		}
 	}
 }
