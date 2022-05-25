@@ -157,7 +157,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 		&__info {
 			display: flex;
 			width: 100%;
-			font-size: var(--font-size);
+			font-size: 0.7rem;
 			line-height: 1.2rem;
 		}
 	}
