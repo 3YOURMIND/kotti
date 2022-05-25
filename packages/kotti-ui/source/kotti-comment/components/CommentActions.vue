@@ -46,8 +46,8 @@ export default defineComponent<{
 
 	> * {
 		&:hover {
-			color: var(--link-03);
 			cursor: pointer;
+			color: var(--link-03);
 		}
 	}
 
