@@ -1,5 +1,5 @@
 <template>
-	<div class="kt-field-select">
+	<div :class="fieldSelectClasses">
 		<div ref="tippyTriggerRef">
 			<KtField
 				v-bind="{ field }"
@@ -28,7 +28,6 @@
 						/>
 					</div>
 					<input
-						v-if="isInputVisible"
 						ref="inputRef"
 						v-bind="inputProps"
 						@input="updateQuery"
@@ -53,12 +52,13 @@
 		<div ref="tippyContentRef">
 			<FieldSelectOptions
 				:actions="actions"
-				:dataTestPrefix="field.inputProps['data-test']"
+				:dataTestPrefix="inputProps['data-test']"
 				:isDisabled="field.isDisabled"
 				:isDropdownOpen="isDropdownOpen"
 				:isLoading="isLoadingOptions"
 				:isMultiple="isMultiple"
 				:isUnsorted="isUnsorted"
+				:maximumSelectable="maximumSelectable"
 				:options="filteredOptions"
 				:value="optionsValue"
 				@close="setIsDropdownOpen(false)"
@@ -119,9 +119,7 @@ type MultiValue =
 	| KottiFieldMultiSelect.Value
 	| KottiFieldMultiSelectRemote.Value
 
-export default defineComponent<
-	KottiFieldSingleSelectRemote.PropsInternal & z.output<typeof propsSchema>
->({
+export default defineComponent({
 	name: 'GenericSelectField',
 	components: {
 		ActionIcon,
@@ -129,7 +127,7 @@ export default defineComponent<
 		KtField,
 	},
 	props: makeProps(propsSchema),
-	setup(props, { emit: rawEmit }) {
+	setup(props: z.output<typeof propsSchema>, { emit: rawEmit }) {
 		const emit = (event: string, payload: unknown) =>
 			rawEmit('emit', { event, payload })
 
@@ -147,18 +145,10 @@ export default defineComponent<
 
 		const localQuery = ref<string | null>(null)
 
+		const { forceUpdateKey, forceUpdate } = useForceUpdate()
+
 		const { isDropdownOpen, isDropdownMounted, ...selectTippy } =
 			useSelectTippy()
-
-		const selectedLabel = computed((): string | null => {
-			if (field.currentValue === null) return null
-			return (
-				props.options.find((option) => option.value === field.currentValue)
-					?.label ?? null
-			)
-		})
-
-		const { forceUpdateKey, forceUpdate } = useForceUpdate()
 
 		watch(isDropdownMounted, (isMounted) => {
 			if (isMounted) return
@@ -182,20 +172,29 @@ export default defineComponent<
 		 * keeps reference of already seen option labels so that
 		 * the tags can be rendered properly when filtering remotely
 		 */
-		const seenValueLabelMap = ref<Map<Shared.Value, string>>(new Map())
+		const seenValueLabelMap = ref<Map<Shared.Value, Shared.Option['label']>>(
+			new Map(),
+		)
 
 		watch(
 			() => props.options,
 			() => {
 				seenValueLabelMap.value = new Map([
 					...seenValueLabelMap.value,
-					...props.options.map((option): [Shared.Value, string] => [
-						option.value,
-						option.label,
-					]),
+					...props.options.map(
+						(option): [Shared.Value, Shared.Option['label']] => [
+							option.value,
+							option.label,
+						],
+					),
 				])
 			},
 			{ immediate: true },
+		)
+
+		const isInputVisible = computed(
+			// save some space in multi select when tags are shown
+			() => !props.isMultiple || isDropdownOpen.value || field.isEmpty,
 		)
 
 		return {
@@ -205,6 +204,10 @@ export default defineComponent<
 					: 0,
 			),
 			field,
+			fieldSelectClasses: computed(() => ({
+				'kt-field-select': true,
+				'kt-field-select--is-input-visible': !isInputVisible.value,
+			})),
 			filteredOptions: computed(() =>
 				props.isRemote
 					? props.options
@@ -224,15 +227,16 @@ export default defineComponent<
 				value: (() => {
 					if (isDropdownOpen.value) return queryValue.value ?? undefined
 
-					return selectedLabel.value ?? undefined
+					// can't bind multiple values to input (therefore, we just bind `undefined`)
+					if (field.currentValue === null || props.isMultiple) return undefined
+
+					return props.options.find(
+						(option) => option.value === field.currentValue,
+					)?.label
 				})(),
 			})),
 			inputRef,
 			isDropdownOpen,
-			isInputVisible: computed(
-				// save some space in multi select when tags are shown
-				() => !props.isMultiple || isDropdownOpen.value || field.isEmpty,
-			),
 			tippyContentRef: selectTippy.tippyContentRef,
 			tippyTriggerRef: selectTippy.tippyTriggerRef,
 			onOptionsInput: (value: MultiValue) => {
@@ -269,11 +273,15 @@ export default defineComponent<
 			},
 			setIsDropdownOpen: selectTippy.setIsDropdownOpen,
 			updateQuery: ({ target: { value } }: { target: HTMLInputElement }) => {
-				const newValue = value === '' ? null : value
+				if (!isDropdownOpen.value) {
+					selectTippy.setIsDropdownOpen(true)
+				} else {
+					const newValue = value === '' ? null : value
 
-				if (props.isRemote && props.query !== newValue)
-					emit(UPDATE_QUERY, newValue)
-				else localQuery.value = newValue
+					if (props.isRemote && props.query !== newValue)
+						emit(UPDATE_QUERY, newValue)
+					else localQuery.value = newValue
+				}
 
 				forceUpdate()
 			},
@@ -300,6 +308,17 @@ export default defineComponent<
 .kt-field-select {
 	&:not(:last-child) {
 		margin-bottom: 0.8rem;
+	}
+
+	// can't rely on v-if because the field wouldn't be focusable
+	&.kt-field-select--is-input-visible {
+		position: relative;
+
+		.kt-field-select__wrapper {
+			position: absolute;
+			left: -10000px;
+			pointer-events: none;
+		}
 	}
 
 	&__query {
@@ -369,7 +388,7 @@ export default defineComponent<
 	&__wrapper {
 		display: flex;
 		flex: 1;
-		min-width: 30%; /* TODO: necessary? */
+		min-width: 30%;
 		padding: 0;
 		margin: 0;
 		line-height: 1.6;

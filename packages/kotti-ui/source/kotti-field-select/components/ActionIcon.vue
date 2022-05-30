@@ -13,12 +13,7 @@
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 
-export default defineComponent<{
-	classes: string[]
-	handleClear(): void
-	isDropdownOpen: boolean
-	showClear: boolean
-}>({
+export default defineComponent({
 	name: 'ActionIcon',
 	props: {
 		classes: { required: true, type: Array },
@@ -26,7 +21,12 @@ export default defineComponent<{
 		isDropdownOpen: { required: true, type: Boolean },
 		showClear: { required: true, type: Boolean },
 	},
-	setup(props) {
+	setup(props: {
+		classes: string[]
+		handleClear(): void
+		isDropdownOpen: boolean
+		showClear: boolean
+	}) {
 		const hoverOnClearIcon = ref(false)
 
 		const canClear = computed<boolean>(

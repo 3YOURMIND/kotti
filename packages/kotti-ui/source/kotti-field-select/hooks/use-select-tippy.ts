@@ -3,9 +3,8 @@ import { computed, ref } from '@vue/composition-api'
 import castArray from 'lodash.castarray'
 import { roundArrow } from 'tippy.js'
 
+import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 import { sameWidth } from '../utils/tippy-utils'
-
-const ARROW_HEIGHT = 7
 
 export const useSelectTippy = () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,7 +26,7 @@ export const useSelectTippy = () => {
 			hideOnClick: false,
 			interactive: true,
 			maxWidth: 'none',
-			offset: [0, ARROW_HEIGHT],
+			offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 			onClickOutside: () => {
 				setIsDropdownOpen(false)
 			},

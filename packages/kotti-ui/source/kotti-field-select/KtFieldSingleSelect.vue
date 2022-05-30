@@ -18,13 +18,13 @@ import { makeProps } from '../make-props'
 import GenericSelectField from './components/GenericSelectField.vue'
 import { KottiFieldSingleSelect } from './types'
 
-export default defineComponent<KottiFieldSingleSelect.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldSingleSelect',
 	components: {
 		GenericSelectField,
 	},
 	props: makeProps(KottiFieldSingleSelect.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiFieldSingleSelect.PropsInternal, { emit }) {
 		return {
 			onEmit: ({ event, payload }: { event: string; payload: unknown }) => {
 				emit(event, payload)

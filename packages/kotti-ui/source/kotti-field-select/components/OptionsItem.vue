@@ -26,10 +26,10 @@ const propsSchema = z.object({
 	type: z.enum(['action', 'option']),
 })
 
-export default defineComponent<z.output<typeof propsSchema>>({
+export default defineComponent({
 	name: 'FieldSelectOptionsItem',
 	props: makeProps(propsSchema),
-	setup(props, { emit }) {
+	setup(props: z.output<typeof propsSchema>, { emit }) {
 		const optionRef = ref<HTMLDivElement | null>(null)
 
 		watch(
@@ -79,7 +79,6 @@ export default defineComponent<z.output<typeof propsSchema>>({
 
 	&--is-type-action {
 		color: var(--interactive-01);
-		cursor: pointer;
 
 		&:hover {
 			background-color: var(--ui-01);

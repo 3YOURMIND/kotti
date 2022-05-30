@@ -62,10 +62,11 @@ const propsSchema = z.object({
 	actions: z.array(Shared.actionSchema),
 	dataTestPrefix: z.string(),
 	isDisabled: z.boolean().default(false),
-	isDropdownOpen: z.boolean(),
+	isDropdownOpen: z.boolean().default(false),
 	isLoading: z.boolean().default(false),
 	isMultiple: z.boolean().default(false),
 	isUnsorted: z.boolean().default(false),
+	maximumSelectable: z.number().int().min(0),
 	options: z.array(Shared.optionSchema),
 	value: z.array(Shared.valueSchema),
 })
@@ -79,24 +80,35 @@ type ModifiedOption = z.output<
 const mod = (number: number, divisor: number) =>
 	((number % divisor) + divisor) % divisor
 
-export default defineComponent<z.output<typeof propsSchema>>({
+export default defineComponent({
 	name: 'FieldSelectOptions',
 	components: {
 		FieldSelectOptionsItem,
 	},
 	props: makeProps(propsSchema),
-	setup(props, { emit }) {
+	setup(props: z.output<typeof propsSchema>, { emit }) {
 		const translations = useTranslationNamespace('KtFieldSelects')
 
 		const optionsRef = ref<HTMLDivElement | null>(null)
 
 		const modifiedOptions = computed(() => {
-			const modifiedOptions: ModifiedOption[] = props.options.map((option) => ({
-				...option,
-				dataTest: option.dataTest ?? `${props.dataTestPrefix}.${option.value}`,
-				isDisabled: (props.isDisabled || option.isDisabled) ?? false,
-				isSelected: props.value.includes(option.value),
-			}))
+			const isLimitReached =
+				props.isMultiple && props.value.length >= props.maximumSelectable
+
+			const modifiedOptions: ModifiedOption[] = props.options.map((option) => {
+				const isSelected = props.value.includes(option.value)
+
+				return {
+					...option,
+					dataTest:
+						option.dataTest ?? `${props.dataTestPrefix}.${option.value}`,
+					isDisabled:
+						props.isDisabled ||
+						option.isDisabled ||
+						(isLimitReached && !isSelected),
+					isSelected,
+				}
+			})
 
 			if (props.isUnsorted) return modifiedOptions
 
@@ -104,11 +116,12 @@ export default defineComponent<z.output<typeof propsSchema>>({
 		})
 
 		const hoveredIndex = ref(-1)
+		const resetHoveredIndex = () => (hoveredIndex.value = -1)
 
 		watch(
 			() => props.isDropdownOpen,
 			(isOpen) => {
-				if (!isOpen) hoveredIndex.value = -1
+				if (!isOpen) resetHoveredIndex()
 			},
 		)
 
@@ -117,7 +130,7 @@ export default defineComponent<z.output<typeof propsSchema>>({
 		)
 
 		watch(itemCount, (newValue, oldValue) => {
-			if (newValue !== oldValue) hoveredIndex.value = -1
+			if (newValue !== oldValue) resetHoveredIndex()
 		})
 
 		const selectOption = (option: ModifiedOption) => {
@@ -156,14 +169,14 @@ export default defineComponent<z.output<typeof propsSchema>>({
 
 				case 'Enter': {
 					const index = hoveredIndex.value
-					const optionLength = modifiedOptions.value.length
+					const optionsLength = modifiedOptions.value.length
 
 					if (index < 0) return
 
-					if (index < optionLength)
+					if (index < optionsLength)
 						return selectOption(modifiedOptions.value[index])
 
-					return onAction(props.actions[index - optionLength])
+					return onAction(props.actions[index - optionsLength])
 				}
 			}
 		}
@@ -222,7 +235,7 @@ export default defineComponent<z.output<typeof propsSchema>>({
 	*/
 	margin-right: -9px;
 	margin-left: -9px;
-	overflow-y: auto;
+	overflow: auto;
 
 	&__loading {
 		position: absolute;

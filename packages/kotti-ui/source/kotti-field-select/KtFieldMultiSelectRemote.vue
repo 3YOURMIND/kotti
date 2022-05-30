@@ -20,13 +20,13 @@ import { makeProps } from '../make-props'
 import GenericSelectField from './components/GenericSelectField.vue'
 import { KottiFieldMultiSelectRemote } from './types'
 
-export default defineComponent<KottiFieldMultiSelectRemote.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldMultiSelectRemote',
 	components: {
 		GenericSelectField,
 	},
 	props: makeProps(KottiFieldMultiSelectRemote.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiFieldMultiSelectRemote.PropsInternal, { emit }) {
 		return {
 			onEmit: ({ event, payload }: { event: string; payload: unknown }) => {
 				emit(event, payload)

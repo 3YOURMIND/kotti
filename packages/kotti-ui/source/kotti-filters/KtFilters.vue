@@ -50,6 +50,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
+import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import ButtonLink from './components/ButtonLink.vue'
@@ -58,8 +59,6 @@ import FilterList from './components/FilterList.vue'
 import FilterSearch from './components/FilterSearch.vue'
 import { KottiFilters } from './types'
 import { isValidColumn } from './validators'
-
-const ARROW_HEIGHT = 7
 
 export default defineComponent<KottiFilters.PropsInternal>({
 	name: 'KtFilters',
@@ -177,7 +176,7 @@ export default defineComponent<KottiFilters.PropsInternal>({
 				hideOnClick: false,
 				interactive: true,
 				maxWidth: 'none',
-				offset: [0, ARROW_HEIGHT],
+				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 				onCreate(instance) {
 					tippyInstanceRef.value = instance
 				},

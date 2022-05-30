@@ -234,7 +234,7 @@
 								<template #option="{ option }">
 									<i
 										class="yoco"
-										style="font-size: 24px; margin-right: 10px"
+										style="margin-right: 10px; font-size: 24px"
 										v-text="option.value"
 									/>
 									<span v-text="option.label" />
@@ -251,7 +251,7 @@
 								<template #option="{ option }">
 									<i
 										class="yoco"
-										style="font-size: 24px; margin-right: 10px"
+										style="margin-right: 10px; font-size: 24px"
 										v-text="option.value"
 									/>
 									<span v-text="option.label" />
@@ -389,6 +389,15 @@
 								formKey="isLoadingOptions"
 								isOptional
 								label="isLoadingOptions"
+								type="switch"
+							/>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes('isUnsorted')
+								"
+								formKey="isUnsorted"
+								isOptional
+								label="isUnsorted"
 								type="switch"
 							/>
 							<KtFieldDate
@@ -563,8 +572,9 @@ const components: Array<{
 		additionalProps: [
 			'actions',
 			'collapseTagsAfter',
-			'maximumSelectable',
 			'hasOptionSlot',
+			'isUnsorted',
+			'maximumSelectable',
 		],
 		formKey: 'multiSelectValue',
 		name: 'KtFieldMultiSelect',
@@ -574,9 +584,10 @@ const components: Array<{
 		additionalProps: [
 			'actions',
 			'collapseTagsAfter',
-			'isLoadingOptions',
-			'maximumSelectable',
 			'hasOptionSlot',
+			'isLoadingOptions',
+			'isUnsorted',
+			'maximumSelectable',
 			'query',
 		],
 		formKey: 'multiSelectValue',
@@ -609,13 +620,19 @@ const components: Array<{
 		supports: KtFieldRadioGroup.meta.supports,
 	},
 	{
-		additionalProps: ['actions', 'hasOptionSlot'],
+		additionalProps: ['actions', 'hasOptionSlot', 'isUnsorted'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
 		supports: KtFieldSingleSelect.meta.supports,
 	},
 	{
-		additionalProps: ['actions', 'isLoadingOptions', 'hasOptionSlot', 'query'],
+		additionalProps: [
+			'actions',
+			'hasOptionSlot',
+			'isLoadingOptions',
+			'isUnsorted',
+			'query',
+		],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelectRemote',
 		supports: KtFieldSingleSelectRemote.meta.supports,
@@ -705,15 +722,15 @@ const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 ]
 
 const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
-	{ label: 'Key 1', value: 'value1' },
 	{ label: 'Key 2', value: 'value2' },
+	{ label: 'Key 1', value: 'value1' },
 	{ isDisabled: true, label: 'Key 3', value: 'value3' },
-	{ label: 'Key 4', value: 'value4' },
-	{ label: 'Key 5', value: 'value5' },
-	{ label: 'Key 6', value: 'value6' },
 	{ label: 'Key 7', value: 'value7' },
-	{ label: 'Key 8', value: 'value8' },
+	{ label: 'Key 4', value: 'value4' },
 	{ label: 'Key 9', value: 'value9' },
+	{ label: 'Key 6', value: 'value6' },
+	{ label: 'Key 8', value: 'value8' },
+	{ label: 'Key 5', value: 'value5' },
 ]
 
 const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
@@ -753,6 +770,7 @@ export default defineComponent({
 				hideChangeButtons: boolean
 				isInline: boolean
 				isLoadingOptions: boolean
+				isUnsorted: boolean
 				maximumDate: Kotti.FieldDate.Value
 				maximumSelectable: Kotti.FieldNumber.Value
 				minimumDate: Kotti.FieldDate.Value
@@ -784,7 +802,7 @@ export default defineComponent({
 			placeholder2: Kotti.FieldText.Value
 			prefix: Kotti.FieldText.Value
 			rightIcon: Yoco.Icon | null
-			size: 'small' | 'medium' | 'large'
+			size: Kotti.Field.Size
 			suffix: Kotti.FieldText.Value
 			tabIndex: Kotti.FieldNumber.Value
 			validation: Kotti.Field.Validation.Result['type']
@@ -798,6 +816,7 @@ export default defineComponent({
 				hideChangeButtons: false,
 				isInline: false,
 				isLoadingOptions: false,
+				isUnsorted: false,
 				maximumDate: null,
 				maximumSelectable: null,
 				minimumDate: null,
@@ -829,7 +848,7 @@ export default defineComponent({
 			placeholder2: null,
 			prefix: null,
 			rightIcon: null,
-			size: 'medium',
+			size: Kotti.Field.Size.MEDIUM,
 			suffix: null,
 			tabIndex: null,
 			validation: 'empty',
@@ -979,13 +998,21 @@ export default defineComponent({
 					isLoadingOptions: settings.value.additionalProps.isLoadingOptions,
 				})
 
+			if (componentDefinition.value.additionalProps.includes('isUnsorted'))
+				Object.assign(additionalProps, {
+					isUnsorted: settings.value.additionalProps.isUnsorted,
+				})
+
 			if (componentDefinition.value.additionalProps.includes('maximumDate'))
 				Object.assign(additionalProps, {
 					maximumDate: settings.value.additionalProps.maximumDate,
 				})
 
 			if (
-				componentDefinition.value.additionalProps.includes('maximumSelectable')
+				componentDefinition.value.additionalProps.includes(
+					'maximumSelectable',
+				) &&
+				settings.value.additionalProps.maximumSelectable !== null
 			)
 				Object.assign(additionalProps, {
 					maximumSelectable: settings.value.additionalProps.maximumSelectable,
