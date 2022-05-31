@@ -6,6 +6,7 @@ export type ComponentNames =
 	| 'KtFieldDateTime'
 	| 'KtFieldDateTimeRange'
 	| 'KtFieldMultiSelect'
+	| 'KtFieldMultiSelectRemote'
 	| 'KtFieldNumber'
 	| 'KtFieldPassword'
 	| 'KtFieldRadioGroup'
@@ -20,6 +21,7 @@ export type ComponentNames =
 export type ComponentValue = {
 	hasActions: boolean
 	hasHelpTextSlot: boolean
+	hasOptionSlot: boolean
 	name: ComponentNames
 	props: Record<string, unknown>
 	validation: Kotti.Field.Validation.Result['type']

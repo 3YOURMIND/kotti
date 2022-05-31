@@ -203,19 +203,19 @@ export namespace KottiFilters {
 
 	export type Value = Filter[]
 
-	export type InternalProps = {
+	export type PropsInternal = {
 		columns: Column.Any[]
 		dataTest: string | null
 		isLoading: boolean
 		value: Value
 	}
 
-	export type Props = SpecifyRequiredProps<InternalProps, 'columns' | 'value'>
+	export type Props = SpecifyRequiredProps<PropsInternal, 'columns' | 'value'>
 
 	export namespace Events {
-		export type UpdateColumns = InternalProps['columns']
+		export type UpdateColumns = PropsInternal['columns']
 
-		export type UpdateValue = InternalProps['value']
+		export type UpdateValue = PropsInternal['value']
 	}
 
 	export type Translations = {

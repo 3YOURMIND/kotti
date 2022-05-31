@@ -32,8 +32,9 @@ export {
 	KottiFieldToggleGroup as FieldToggleGroup,
 } from '../kotti-field-toggle/types'
 export {
-	KottiFieldSingleSelect as FieldSingleSelect,
 	KottiFieldMultiSelect as FieldMultiSelect,
+	KottiFieldMultiSelectRemote as FieldMultiSelectRemote,
+	KottiFieldSingleSelect as FieldSingleSelect,
 	KottiFieldSingleSelectRemote as FieldSingleSelectRemote,
 } from '../kotti-field-select/types'
 export { KottiFilters as Filters } from '../kotti-filters/types'

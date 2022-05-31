@@ -2,66 +2,45 @@
 	<div
 		:class="classes"
 		role="button"
-		@click="handleChevronClick"
-		@mouseenter="hoverOnClear = true"
-		@mouseleave="hoverOnClear = false"
+		@mouseenter="hoverOnClearIcon = true"
+		@mouseleave="hoverOnClearIcon = false"
 	>
-		<i class="yoco" v-text="icon" />
+		<i class="yoco" @click.stop="handleClearIfShown" v-text="icon" />
 	</div>
 </template>
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref, computed } from '@vue/composition-api'
-import { Select as ElSelect } from 'element-ui'
 
 export default defineComponent({
 	name: 'ActionIcon',
 	props: {
 		classes: { required: true, type: Array },
-		elSelectRef: {
-			type: Object,
-			/**
-			 * Vue doesn’t appear to allow type: [Object, null]. Therefore, we need to work around
-			 * this by not using required and instead having a validator that can distinguish
-			 * between not passing a prop (undefined) and explicitly passing a value (null)
-			 */
-			validator: (value) => value !== undefined,
-		},
 		handleClear: { required: true, type: Function },
 		isDropdownOpen: { required: true, type: Boolean },
 		showClear: { required: true, type: Boolean },
 	},
 	setup(props: {
 		classes: string[]
-		elSelectRef:
-			| (ElSelect & {
-					inputWidth: number
-					setSoftFocus(): void
-			  })
-			| null
 		handleClear(): void
 		isDropdownOpen: boolean
 		showClear: boolean
 	}) {
-		const hoverOnClear = ref(false)
+		const hoverOnClearIcon = ref(false)
+
+		const canClear = computed<boolean>(
+			() => props.showClear && hoverOnClearIcon.value,
+		)
 
 		return {
-			handleChevronClick: ($event: { stopPropagation(): void }) => {
-				if (props.elSelectRef === null)
-					throw new Error('ElSelect is not ready yet')
-
-				if (props.showClear) {
-					$event.stopPropagation()
-					props.handleClear()
-
-					props.elSelectRef.setSoftFocus()
-				}
+			handleClearIfShown: () => {
+				if (canClear.value) props.handleClear()
 			},
-			hoverOnClear,
+			hoverOnClearIcon,
 			icon: computed(
 				(): Yoco.Icon =>
-					hoverOnClear.value && props.showClear
+					canClear.value
 						? Yoco.Icon.CLOSE
 						: props.isDropdownOpen
 						? Yoco.Icon.CHEVRON_UP

@@ -19,10 +19,10 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, Ref, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
+import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { makeProps } from '../make-props'
 
 import { KottiAvatar } from './types'
-const ARROW_HEIGHT = 7
 
 const useTooltip = (name: Ref<string | null>) => {
 	const tooltipTriggerRef = ref<Element | null>(null)
@@ -33,7 +33,7 @@ const useTooltip = (name: Ref<string | null>) => {
 			appendTo: () => document.body,
 			arrow: roundArrow,
 			content: name.value,
-			offset: [0, ARROW_HEIGHT],
+			offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 			theme: 'light-border',
 			...(name.value === null ? { trigger: 'manual' } : {}),
 		})),
