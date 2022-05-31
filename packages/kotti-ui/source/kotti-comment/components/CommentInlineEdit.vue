@@ -16,6 +16,8 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from '@vue/composition-api'
 
+import { KtButton } from '../../kotti-button'
+import { KtButtonGroup } from '../../kotti-button-group'
 import { Kotti } from '../../types'
 
 export default defineComponent<{
@@ -32,6 +34,10 @@ export default defineComponent<{
 		isEditing: { type: Boolean, required: true },
 		postEscapeParser: { type: Function, required: true },
 		message: { type: String, required: true },
+	},
+	components: {
+		KtButton,
+		KtButtonGroup,
 	},
 	setup(props, { emit }) {
 		const inlineValue = ref<string | null>(null)

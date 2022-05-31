@@ -29,6 +29,8 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import { KtAvatar } from '../kotti-avatar'
+import { KtButton } from '../kotti-button'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 
@@ -37,6 +39,10 @@ import { KottiCommentInput } from './types'
 export default defineComponent<KottiCommentInput.PropsInternal>({
 	name: 'KtCommentInput',
 	props: makeProps(KottiCommentInput.propsSchema),
+	components: {
+		KtAvatar,
+		KtButton,
+	},
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 

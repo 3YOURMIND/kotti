@@ -30,6 +30,7 @@
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import escape from 'lodash/escape'
 
+import { KtAvatar } from '../../kotti-avatar'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { Kotti } from '../../types'
 
@@ -41,6 +42,7 @@ export default defineComponent<Kotti.Comment.Reply.PropsInternal>({
 	components: {
 		CommentActions,
 		CommentInlineEdit,
+		KtAvatar,
 	},
 	props: {
 		createdTime: { default: () => null, type: String },
