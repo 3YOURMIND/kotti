@@ -24,7 +24,9 @@ export default defineComponent<{
 	props: {
 		options: { type: Array, required: true },
 	},
-	components: { KtPopover },
+	components: {
+		KtPopover,
+	},
 	setup() {
 		return {
 			clickBehavior: Kotti.Popover.ClickBehavior.HIDE_ON_CLICK_AWAY,
