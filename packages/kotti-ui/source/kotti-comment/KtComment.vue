@@ -50,6 +50,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import { KtAvatar } from '../kotti-avatar'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Kotti } from '../types'
@@ -66,6 +67,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 		CommentActions,
 		CommentReply,
 		CommentInlineEdit,
+		KtAvatar,
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),

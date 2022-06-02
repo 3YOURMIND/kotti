@@ -52,7 +52,11 @@ export const INITIAL_TABLE_STORE_PROPS = [
 
 export default {
 	name: 'KtTable',
-	components: { TableBody, TableHeader, KtTableColumn },
+	components: {
+		KtTableColumn,
+		TableBody,
+		TableHeader,
+	},
 	props: {
 		id: { default: null, type: String },
 		rowKey: { type: String },

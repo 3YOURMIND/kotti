@@ -14,6 +14,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import { KtPopover } from '../../kotti-popover'
 import { Kotti } from '../../types'
 
 export default defineComponent<{
@@ -22,6 +23,9 @@ export default defineComponent<{
 	name: 'CommentActionsOptions',
 	props: {
 		options: { type: Array, required: true },
+	},
+	components: {
+		KtPopover,
 	},
 	setup() {
 		return {
