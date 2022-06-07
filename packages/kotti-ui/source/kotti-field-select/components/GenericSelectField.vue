@@ -240,7 +240,12 @@ export default defineComponent({
 			tippyContentRef: selectTippy.tippyContentRef,
 			tippyTriggerRef: selectTippy.tippyTriggerRef,
 			onOptionsInput: (value: MultiValue) => {
-				field.setValue(props.isMultiple ? value : value?.[0] ?? null)
+				if (props.isMultiple) field.setValue(value)
+				else {
+					const newValue = value[0] ?? null
+					// performance optimization
+					if (field.currentValue !== newValue) field.setValue(newValue)
+				}
 
 				inputRef.value?.focus()
 				// single select: close the tippy instance whenever a selection is made.

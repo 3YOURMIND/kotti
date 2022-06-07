@@ -143,8 +143,7 @@ export default defineComponent({
 						? props.value.filter((v) => v !== option.value)
 						: [...props.value, option.value],
 				)
-			else
-				emit('input', props.value.includes(option.value) ? [] : [option.value])
+			else emit('input', [option.value])
 		}
 
 		const onAction = (action: z.output<typeof Shared.actionSchema>) => {
