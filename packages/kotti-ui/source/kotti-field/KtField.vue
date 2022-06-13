@@ -251,13 +251,11 @@ export default defineComponent<{
 					}
 				}
 
-				&:focus-within {
+				.kt-field__input-container:focus-within {
 					--support-empty-light: var(--interactive-05);
 
-					.kt-field__input-container {
-						box-shadow: 0 0 0 1px var(--support-#{$type}-light);
-						border-color: var(--support-#{$type}-light);
-					}
+					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
+					border-color: var(--support-#{$type}-light);
 				}
 			}
 			/* stylelint-enable */

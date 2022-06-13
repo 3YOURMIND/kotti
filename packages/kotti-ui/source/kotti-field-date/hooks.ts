@@ -148,24 +148,6 @@ const useInputSizeFix = <DATA_TYPE extends Values>({
 	})
 }
 
-/**
- * Fixes the dropdown from appearing behind `KtPopover`
- */
-const useNestedPopperZIndexFix = <DATA_TYPE extends Values>({
-	elDateRef,
-}: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
-	onMounted(() => {
-		watchEffect(() => {
-			const dateComponent = getDateComponent({ elDateRef })
-
-			if (isPickerVisible(dateComponent)) {
-				const TIPPY_Z_INDEX = 9999
-				dateComponent.picker.$el.style.zIndex = String(TIPPY_Z_INDEX + 1)
-			}
-		})
-	})
-}
-
 const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 	elDateRef,
 	popperWidth,
@@ -211,12 +193,17 @@ const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 		watchEffect(() => {
 			const dateComponent = getDateComponent({ elDateRef })
 			if (isPickerVisible(dateComponent)) {
-				const innerInputsWrapper: Array<Element> = Array.from(
+				const dateTimePickerInputWrapper =
+					'.el-date-picker__editor-wrap  > .el-input--small'
+				const dateTimeRangeInputWrapper =
+					'.el-date-range-picker__time-picker-wrap > .el-input--small'
+				const pickerInputWrappers: Array<Element> = Array.from(
 					dateComponent.picker.$el.querySelectorAll(
-						'.el-date-picker__editor-wrap, .el-date-range-picker__time-picker-wrap',
+						[dateTimePickerInputWrapper, dateTimeRangeInputWrapper].join(', '),
 					),
 				)
-				innerInputsWrapper.forEach((input) =>
+				// divs around input fields inside the picker of KtFieldDateTime, KtFieldDateTimeRange
+				pickerInputWrappers.forEach((input) =>
 					input.classList.add(
 						'kt-field__wrapper',
 						'kt-field__wrapper--is-small',
@@ -352,7 +339,6 @@ export const usePicker = <DATA_TYPE extends Values>({
 }: HookParameters<DATA_TYPE>) => {
 	useInputDecoration({ elDateRef })
 	useInputSizeFix({ elDateRef })
-	useNestedPopperZIndexFix({ elDateRef })
 	usePickerDimensionsFix({
 		elDateRef,
 		popperHeight,

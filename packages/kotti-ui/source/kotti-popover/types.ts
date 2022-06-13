@@ -67,21 +67,6 @@ export namespace KottiPopover {
 		MANUAL = 'manual',
 	}
 
-	export enum ClickBehavior {
-		/**
-		 * hide popper when any element other than the trigger is clicked
-		 */
-		HIDE_ON_CLICK_AWAY = 'hide-on-click-away',
-		/**
-		 * hide the tippy only if trigger is clicked
-		 */
-		HIDE_ON_TOGGLE = 'hide-on-toggle',
-		/**
-		 * never hide the popper on clicks outside trigger/tippy
-		 */
-		IGNORE = 'ignore',
-	}
-
 	export type Ref = {
 		open: TippyInstance['show']
 		close: TippyInstance['hide']
@@ -101,8 +86,6 @@ export namespace KottiPopover {
 		placement: z.nativeEnum(Placement).default(Placement.AUTO),
 		size: z.nativeEnum(Size).default(Size.AUTO),
 		trigger: z.nativeEnum(Trigger).default(Trigger.CLICK),
-		/** what happens if the user clicks outside of the tippy/trigger element */
-		clickBehavior: z.nativeEnum(ClickBehavior).nullable().default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>

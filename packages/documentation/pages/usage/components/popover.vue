@@ -63,13 +63,6 @@
 				</template>
 			</KtFieldSingleSelect>
 			<KtFieldSingleSelect
-				formKey="clickBehavior"
-				hideClear
-				isOptional
-				label="click behavior"
-				:options="clickBehaviorOptions"
-			/>
-			<KtFieldSingleSelect
 				formKey="trigger"
 				hideClear
 				label="trigger"
@@ -82,7 +75,6 @@
 			</KtFieldSingleSelect>
 			<KtPopover
 				ref="interactiveExampleRef"
-				:clickBehavior="values.clickBehavior"
 				:options="values.useOptions ? exampleOptions : []"
 				:placement="values.placement"
 				:size="values.size"
@@ -97,6 +89,7 @@
 						<code>KtFieldSingleSelect</code>, however it’s recommended to use
 						<code>trigger="click"</code> when utilizing this.
 						<br />
+						<KtFieldDateTime formKey="valueDateTime" isOptional label="Label" />
 						<KtFieldDateTimeRange
 							formKey="valueDateTimeRange"
 							isOptional
@@ -163,7 +156,7 @@ export default defineComponent({
 		ComponentInfo,
 	},
 	setup() {
-		const interactiveExampleRef = ref(null)
+		const interactiveExampleRef = ref<HTMLElement | null>(null)
 
 		const exampleOptions: Kotti.Popover.Props['options'] = [
 			{
@@ -191,20 +184,6 @@ export default defineComponent({
 
 		return {
 			component: KtPopover,
-			clickBehaviorOptions: computed(
-				(): Kotti.FieldSingleSelect.PropsInternal['options'] => [
-					...Object.entries(Kotti.Popover.ClickBehavior).map(
-						([key, value]) => ({
-							label: `Kotti.Popover.ClickBehavior.${key} ('${value}')`,
-							value,
-						}),
-					),
-					{
-						label: 'Default Behavior (null)',
-						value: null,
-					},
-				],
-			),
 			exampleOptions,
 			interactiveExampleRef,
 			placementOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
@@ -233,18 +212,16 @@ export default defineComponent({
 			values: ref<
 				{
 					useOptions: Kotti.FieldToggle.Value
+					valueDateTime: Kotti.FieldDateTime.Value
 					valueDateTimeRange: Kotti.FieldDateTimeRange.Value
 					valueSingleSelect: Kotti.FieldSingleSelect.Value
-				} & Pick<
-					Kotti.Popover.PropsInternal,
-					'size' | 'trigger' | 'placement' | 'clickBehavior'
-				>
+				} & Pick<Kotti.Popover.PropsInternal, 'size' | 'trigger' | 'placement'>
 			>({
-				clickBehavior: null,
 				placement: Kotti.Popover.Placement.AUTO,
 				size: Kotti.Popover.Size.AUTO,
-				trigger: Kotti.Popover.Trigger.HOVER,
-				useOptions: true,
+				trigger: Kotti.Popover.Trigger.CLICK,
+				useOptions: false,
+				valueDateTime: null,
 				valueDateTimeRange: [null, null],
 				valueSingleSelect: null,
 			}),

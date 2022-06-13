@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-popover">
-		<div ref="triggerRef">
+		<div ref="triggerRef" tabindex="0">
 			<slot />
 		</div>
 		<div ref="contentRef" :class="contentClass">
@@ -23,17 +23,26 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { computed, defineComponent, Ref, ref } from '@vue/composition-api'
-import { Instance, roundArrow, Props as TippyProps } from 'tippy.js'
+import {
+	computed,
+	defineComponent,
+	onMounted,
+	ref,
+	provide,
+	watch,
+} from '@vue/composition-api'
+import { castArray } from 'lodash'
+import { roundArrow, Props as TippyProps } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { makeProps } from '../make-props'
 
 import IconTextItem from './components/IconTextItem.vue'
+import { KT_IS_IN_POPOVER } from './constants'
 import { KottiPopover } from './types'
 
 const TRIGGER_MAP: Record<KottiPopover.Trigger, TippyProps['trigger']> = {
-	[KottiPopover.Trigger.CLICK]: 'click',
+	[KottiPopover.Trigger.CLICK]: 'click focusin',
 	[KottiPopover.Trigger.HOVER]: 'mouseenter focusin',
 	[KottiPopover.Trigger.MANUAL]: 'manual',
 }
@@ -48,44 +57,68 @@ export default defineComponent<KottiPopover.PropsInternal>({
 		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)
 
-		const hideOnClick = computed((): TippyProps['hideOnClick'] => {
-			switch (props.clickBehavior) {
-				/** default behavior */
-				case null:
-					return props.trigger === KottiPopover.Trigger.HOVER
-						? false
-						: props.trigger === KottiPopover.Trigger.CLICK
-						? 'toggle'
-						: true
-				case KottiPopover.ClickBehavior.HIDE_ON_CLICK_AWAY:
-					return true
-				case KottiPopover.ClickBehavior.HIDE_ON_TOGGLE:
-					return 'toggle'
-				case KottiPopover.ClickBehavior.IGNORE:
-					return false
+		onMounted(() => {
+			if (contentRef.value === null)
+				throw new Error('KtPopover: Unbound `contentRef` for tippy: null')
+		})
+
+		watch(triggerRef, (newRef) => {
+			if (newRef) {
+				newRef.addEventListener('focus', () => {
+					const childrenArray = Array.from(newRef.children)
+
+					if (childrenArray.length) {
+						const focusableChildIndex = childrenArray.findIndex((child) => {
+							if (child instanceof HTMLElement) child.focus()
+
+							return document.activeElement === child
+						})
+
+						if (focusableChildIndex !== -1) {
+							newRef.setAttribute('tabIndex', '-1')
+						}
+					}
+				})
 			}
 		})
 
-		const tippy = useTippy(
+		/**
+		 * expose to children that they are inside a popover
+		 */
+		provide(KT_IS_IN_POPOVER, true)
+
+		const setIsShown = (showTippy: boolean) => {
+			const tippys = castArray(tippy.value)
+
+			for (const tippy of tippys) {
+				if (showTippy) tippy?.show()
+				else tippy?.hide()
+			}
+		}
+
+		const close = () => setIsShown(false)
+		const open = () => setIsShown(true)
+
+		const { tippy } = useTippy(
 			triggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
 				arrow: roundArrow,
-				content: contentRef.value,
-				interactive: true,
-				maxWidth: 'none',
-				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
-				placement: props.placement,
-				theme: 'light-border',
-				trigger: TRIGGER_MAP[props.trigger],
+				content: contentRef.value as NonNullable<typeof contentRef.value>,
 				/**
 				 * @see {@link https://atomiks.github.io/tippyjs/v6/all-props/#hideonclick}
 				 */
-				hideOnClick: hideOnClick.value,
+				hideOnClick: false,
+				interactive: true,
+				maxWidth: 'none',
+				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				onClickOutside: () => close(),
+				onUntrigger: () => close(),
+				placement: props.placement,
+				theme: 'light-border',
+				trigger: TRIGGER_MAP[props.trigger],
 			})),
-		).tippy as Ref<Instance>
-
-		const close = () => tippy.value.hide()
+		)
 
 		return {
 			close,
@@ -96,7 +129,7 @@ export default defineComponent<KottiPopover.PropsInternal>({
 					close()
 				}
 			},
-			open: () => tippy.value.show(),
+			open,
 			contentClass: computed(() => {
 				const classes = [
 					'kt-popover__content',
@@ -116,9 +149,14 @@ export default defineComponent<KottiPopover.PropsInternal>({
 
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
+@import '../kotti-field/mixins';
 
 .kt-popover {
 	display: inline-block;
+
+	> div {
+		@include no-outline;
+	}
 
 	&__content {
 		margin: 3px -1px; // tippy theme applies 5px 9px padding, therefore this equals 8px 8px
