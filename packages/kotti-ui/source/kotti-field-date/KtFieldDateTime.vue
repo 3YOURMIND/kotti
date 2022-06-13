@@ -20,12 +20,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref, computed } from '@vue/composition-api'
+import {
+	defineComponent,
+	ref,
+	Ref,
+	computed,
+	inject,
+} from '@vue/composition-api'
 import { DatePicker as ElDate } from 'element-ui'
 import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
+import { KT_IS_IN_POPOVER } from '../kotti-popover/constants'
 import { makeProps } from '../make-props'
 
 import { EL_DATE_TIME_PROPS, KOTTI_FIELD_DATE_SUPPORTS } from './constants'
@@ -74,10 +81,17 @@ export default defineComponent<KottiFieldDateTime.PropsInternal>({
 			})),
 		}))
 
+		const isInPopover = inject(KT_IS_IN_POPOVER, false)
+
 		return {
 			elDateTimePickerProps: computed(
 				(): Partial<ElDate> => ({
 					...EL_DATE_TIME_PROPS,
+					/**
+					 * @see {@link https://github.com/ElemeFE/element/blob/v2.13.1/packages/date-picker/src/picker.vue#L334)}
+					 * */
+					// @ts-expect-error (exposed through mixin on picker.vue on element-ui's implementation)
+					appendToBody: !isInPopover,
 					clearable: !field.hideClear,
 					disabled: field.isDisabled,
 					pickerOptions: pickerOptions.value,

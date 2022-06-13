@@ -6,7 +6,7 @@
 .kt-field-date-range,
 .kt-field-datetime,
 .kt-field-datetime-range {
-	input,
+	.el-date-editor > input,
 	button {
 		border: none;
 	}
@@ -34,14 +34,6 @@
 					order: 2;
 				}
 
-				.el-input__inner,
-				.el-range-input {
-					flex: 1;
-					padding: 0;
-					margin: 0;
-					line-height: 1.6;
-				}
-
 				.el-input__prefix i,
 				.el-input__suffix i,
 				&.el-input__inner .el-range-separator,
@@ -61,6 +53,17 @@
 				.el-input__suffix {
 					order: 3;
 				}
+			}
+
+			// exclude input fields inside range pickers by using direct selector `>`
+			&--daterange > .el-range-input,
+			&--datetimerange > .el-range-input,
+			&--date > .el-input__inner,
+			&--datetime > .el-input__inner {
+				flex: 1;
+				padding: 0;
+				margin: 0;
+				line-height: 1.6;
 			}
 		}
 	}

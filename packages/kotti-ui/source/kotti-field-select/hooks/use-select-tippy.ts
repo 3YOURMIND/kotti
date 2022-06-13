@@ -1,9 +1,10 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { computed, ref } from '@vue/composition-api'
+import { computed, inject, ref } from '@vue/composition-api'
 import castArray from 'lodash.castarray'
 import { roundArrow } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
+import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
 import { sameWidth } from '../utils/tippy-utils'
 
 export const useSelectTippy = () => {
@@ -15,11 +16,16 @@ export const useSelectTippy = () => {
 	// track in a ref because the `tippy.state.isShown` doesn’t immediately update
 	const isDropdownOpen = ref(false)
 	const isDropdownMounted = ref(true)
+	const isInPopover = inject(KT_IS_IN_POPOVER, false)
 
 	const { tippy } = useTippy(
 		tippyTriggerRef,
 		computed(() => ({
-			appendTo: () => document.body,
+			/**
+			 * if inside a popover, we want to stay inside the same CSS stacking context
+			 * @see {@link https://atomiks.github.io/tippyjs/v6/all-props/#appendto}
+			 */
+			appendTo: isInPopover ? 'parent' : () => document.body,
 			arrow: roundArrow,
 			content: tippyContentRef.value,
 			// hides the tippy if we click-away from the tippy
