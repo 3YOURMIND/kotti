@@ -12,7 +12,7 @@
 					<slot name="drawer-footer" />
 				</div>
 				<div class="kt-drawer__handle" @click="onDrawerHandleClick">
-					<i v-if="isExpanded" class="yoco" v-text="Yoco.Icon.CHEVRON_RIGHT" />
+					<i v-if="_isExpanded" class="yoco" v-text="Yoco.Icon.CHEVRON_RIGHT" />
 					<i v-else class="yoco" v-text="Yoco.Icon.CHEVRON_LEFT" />
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 
 import { makeProps } from '../make-props'
 
@@ -32,22 +32,31 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 	name: 'KtDrawer',
 	props: makeProps(KottiDrawer.propsSchema),
 	setup(props, { emit }) {
-		const isExpanded = ref(false)
+		const _isExpanded = ref(false)
+		watch(
+			() => props.isExpanded,
+			(shouldExpand) => {
+				_isExpanded.value = shouldExpand
+			},
+			{ immediate: true },
+		)
 
 		return {
+			_isExpanded,
 			drawerClass: computed(() => ({
 				'kt-drawer__container': true,
-				'kt-drawer__container--is-expanded': isExpanded.value,
+				'kt-drawer__container--is-expanded': _isExpanded.value,
 				'kt-drawer__container--is-wide': props.isWide,
 			})),
 			drawerWidth: computed(() => {
 				return props.defaultWidth === null || props.expandWidth === null
 					? {}
-					: { width: isExpanded.value ? props.expandWidth : props.defaultWidth }
+					: {
+							width: _isExpanded.value ? props.expandWidth : props.defaultWidth,
+					  }
 			}),
-			isExpanded,
 			onDrawerHandleClick: () => {
-				isExpanded.value = !isExpanded.value
+				_isExpanded.value = !_isExpanded.value
 			},
 			onOutsideDrawerClick: () => {
 				if (!props.disallowCloseOutside) {
