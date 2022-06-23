@@ -78,6 +78,7 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
+@import '../kotti-style/_mixins.scss';
 
 .kt-drawer {
 	&__mask {
@@ -89,7 +90,7 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.5);
-		transition: opacity 0.5s ease;
+		transition: opacity var(--transition-long) ease;
 	}
 
 	&__container {
@@ -101,11 +102,9 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 		width: var(--kt-drawer-default-width);
 		height: 100%;
 		padding: var(--unit-6);
-		padding-left: var(--unit-8);
-		overflow-y: auto;
 		background-color: var(--ui-background);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-		transition: all 0.3s ease;
+		transition: all var(--transition-long) ease;
 
 		&--is-expanded {
 			width: 50%;
@@ -142,9 +141,9 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 	}
 
 	&__body {
+		@include prettify-scrollbar;
 		flex: 1 1 auto;
-		padding: 0 0.8rem;
-		margin: 0 -0.8rem 0.8rem -0.8rem;
+		padding-bottom: var(--unit-4);
 		overflow-y: auto;
 	}
 
@@ -158,7 +157,7 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 
 	&-enter {
 		opacity: 0;
-		transition: opacity 0.5s;
+		transition: opacity var(--transition-long);
 	}
 
 	&-leave-active {
