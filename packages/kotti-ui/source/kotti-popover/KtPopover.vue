@@ -112,7 +112,9 @@ export default defineComponent<KottiPopover.PropsInternal>({
 				interactive: true,
 				maxWidth: 'none',
 				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
-				onClickOutside: () => close(),
+				onClickOutside: () => {
+					if (props.trigger !== KottiPopover.Trigger.MANUAL) close()
+				},
 				onUntrigger: () => close(),
 				placement: props.placement,
 				theme: 'light-border',
