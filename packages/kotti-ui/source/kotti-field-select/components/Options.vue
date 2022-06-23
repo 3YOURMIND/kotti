@@ -220,7 +220,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-field/mixins.scss';
+@import '../../kotti-style/_mixins.scss';
 
 .kt-field-select__options {
 	position: relative;

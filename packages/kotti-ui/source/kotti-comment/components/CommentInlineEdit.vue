@@ -75,7 +75,7 @@ export default defineComponent<{
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-field/mixins';
+@import '../../kotti-style/_mixins.scss';
 
 .kt-comment-inline-edit {
 	position: relative;
