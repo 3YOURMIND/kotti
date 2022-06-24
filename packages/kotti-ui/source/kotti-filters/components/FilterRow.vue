@@ -239,7 +239,7 @@ export default defineComponent<{
 		align-self: center;
 	}
 
-	::v-deep .kt-field {
+	::v-deep .kt-field-select {
 		margin-bottom: 0;
 	}
 }
