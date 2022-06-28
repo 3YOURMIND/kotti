@@ -36,7 +36,7 @@
 		<KtButton label="Open Modal" @click="showModal = true" />
 
 		<KtModal
-			v-if="showModal"
+			:isOpen="showModal"
 			:preventCloseOutside="settings.preventCloseOutside"
 			:size="settings.size"
 			@close="showModal = false"

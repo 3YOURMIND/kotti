@@ -9,6 +9,7 @@ export namespace KottiModal {
 	}
 
 	export const propsSchema = z.object({
+		isOpen: z.boolean().default(false),
 		preventCloseOutside: z.boolean().default(false),
 		size: z.nativeEnum(Size).default(Size.MEDIUM),
 	})

@@ -1,6 +1,7 @@
 <template>
-	<transition mode="out-in" name="kt-modal">
-		<div class="kt-modal__mask" @click.self="closeModal">
+	<div>
+		<div ref="targetRef" />
+		<div ref="contentRef" class="kt-modal__mask" @click.self="closeModal">
 			<slot name="container">
 				<div :class="modalClass">
 					<div v-if="hasHeader" class="kt-modal__header">
@@ -15,11 +16,13 @@
 				</div>
 			</slot>
 		</div>
-	</transition>
+	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { Instance } from 'tippy.js'
 
 import { makeProps } from '../make-props'
 
@@ -29,10 +32,61 @@ export default defineComponent<KottiModal.PropsInternal>({
 	name: 'KtModal',
 	props: makeProps(KottiModal.propsSchema),
 	setup(props, { emit, slots }) {
+		const contentRef = ref<HTMLElement | null>(null)
+		const targetRef = ref<HTMLElement | null>(null)
+		const tippyInstanceRef = ref<Instance | null>(null)
+
+		useTippy(
+			targetRef,
+			computed(() => ({
+				appendTo: () => document.body,
+				hideOnClick: false,
+				interactive: true,
+				onCreate(instance) {
+					tippyInstanceRef.value = instance
+				},
+				offset: [0, 0],
+				popperOptions: {
+					modifiers: [
+						{
+							name: 'computeStyles',
+							options: {
+								adaptive: false,
+								gpuAcceleration: false,
+							},
+						},
+					],
+				},
+				render() {
+					const popper = document.createElement('div')
+
+					if (contentRef.value === null)
+						throw new Error('KtModal: Unbound contentRef')
+
+					popper.appendChild(contentRef.value)
+
+					return { popper }
+				},
+				trigger: 'manual',
+			})),
+		)
+
+		watch(
+			() => props.isOpen,
+			(value) => {
+				if (tippyInstanceRef.value === null)
+					throw new Error('KtModal: Unbound tippyInstanceRef')
+
+				if (value) tippyInstanceRef.value.show()
+				else tippyInstanceRef.value.unmount()
+			},
+		)
+
 		return {
 			closeModal: () => {
 				if (!props.preventCloseOutside) emit('close')
 			},
+			contentRef,
 			hasBody: computed(() => Boolean(slots.body)),
 			hasFooter: computed(() => Boolean(slots.footer)),
 			hasHeader: computed(() => Boolean(slots.header)),
@@ -40,6 +94,7 @@ export default defineComponent<KottiModal.PropsInternal>({
 				'kt-modal__container',
 				`kt-modal--is-size-${props.size}`,
 			]),
+			targetRef,
 		}
 	},
 })
@@ -115,17 +170,6 @@ export default defineComponent<KottiModal.PropsInternal>({
 	&__footer {
 		flex: 0 0 auto;
 		text-align: right;
-	}
-
-	// transitions
-
-	&-enter,
-	&-leave-active {
-		opacity: 0;
-
-		.kt-modal__container {
-			transform: scale(1.1);
-		}
 	}
 }
 </style>
