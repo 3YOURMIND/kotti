@@ -21,9 +21,7 @@ export const useSlideAnimation = (
 	const finalOptions = { ...getDefaultOptions(), ...restOptions }
 	const getRawHeight = (element: HTMLElement) => element.clientHeight
 
-	const triggerAnimation = async (
-		willOpen: boolean,
-	): Promise<Animation | void> => {
+	const executeAnimation = async (willOpen: boolean): Promise<void> => {
 		const animatedObject = element.value ?? null
 		if (animatedObject === null) return
 
@@ -35,17 +33,20 @@ export const useSlideAnimation = (
 		animation.pause()
 		animation[willOpen ? 'play' : 'reverse']()
 
-		return animation.finished
+		await animation.finished
+
+		// Clear animation keyframeEffects to allow animatedObject to resize
+		animation.cancel()
 	}
 
 	const up = async (): Promise<void> => {
-		await triggerAnimation(false)
+		await executeAnimation(false)
 		isContentOpen.value = false
 	}
 
 	const down = async (): Promise<void> => {
 		isContentOpen.value = true
-		await triggerAnimation(true)
+		await executeAnimation(true)
 	}
 
 	const toggle = (): Promise<void> => {
