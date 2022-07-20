@@ -19,9 +19,11 @@ export type ComponentNames =
 	| 'KtFilters'
 
 export type ComponentValue = {
+	contentSlot: string | null
 	hasActions: boolean
 	hasHelpTextSlot: boolean
 	hasOptionSlot: boolean
+	headerSlot: string | null
 	name: ComponentNames
 	props: Record<string, unknown>
 	validation: Kotti.Field.Validation.Result['type']
@@ -42,6 +44,40 @@ export const createActions = (
 				},
 		  ]
 		: undefined
+
+const appendAdditionalSlots = (component: ComponentValue) => {
+	return component.hasHelpTextSlot ||
+		component.headerSlot !== null ||
+		component.contentSlot !== null
+		? [
+				'>',
+				...(component.hasHelpTextSlot
+					? [
+							'\t<template #helpText>',
+							'\t\t<div>',
+							'\t\t\tSlot Content',
+							'\t\t</div>',
+							// eslint-disable-next-line sonarjs/no-duplicate-string
+							'\t</template>',
+					  ]
+					: []),
+				...(component.contentSlot !== null
+					? [
+							'\t<template #content :option="option">',
+							`\t\t${component.contentSlot}`,
+							'\t</template>',
+					  ]
+					: []),
+				...(component.headerSlot !== null
+					? [
+							'\t<template #header :option="option">',
+							`\t\t${component.headerSlot}`,
+							'\t</template>',
+					  ]
+					: []),
+		  ].join('\n')
+		: '/>'
+}
 
 export const generateComponentCode = (component: ComponentValue) =>
 	[
@@ -86,7 +122,5 @@ export const generateComponentCode = (component: ComponentValue) =>
 			: [
 					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
 			  ]),
-		component.hasHelpTextSlot
-			? `>\n\t<template #helpText>\n\t\t<div>\n\t\t\tSlot Content\n\t\t</div>\n\t</template>\n</${component.name}>`
-			: '/>',
+		appendAdditionalSlots(component),
 	].join('\n')

@@ -262,6 +262,14 @@
 							</template>
 						</KtFormControllerList>
 					</ul>
+					<KtFieldRadioGroup
+						formKey="gender"
+						label="Gender"
+						:options="genderOptions"
+					>
+						<template #header="{ option }">~{{ option.label }}~</template>
+						<template #content="{ option }">*{{ option.value }}*</template>
+					</KtFieldRadioGroup>
 					<KtFormSubmit />
 				</KtForm>
 				<br />
@@ -298,6 +306,7 @@ export default defineComponent({
 				lastName: 'Smith',
 			},
 			username: null,
+			gender: 'other',
 		})
 
 		return {
@@ -313,6 +322,11 @@ export default defineComponent({
 				}`,
 				/* eslint-enable no-magic-numbers */
 			}),
+			genderOptions: computed((): Kotti.FieldRadioGroup.Props['options'] => [
+				{ label: 'MALE', value: 'male' },
+				{ label: 'FEMALE', value: 'female' },
+				{ label: 'OTHER', value: 'other' },
+			]),
 			isDeleteDisabled: computed(() => values.value.addresses.length === 1),
 			KtFormControllerList,
 			KtFormControllerObject,

@@ -31,7 +31,7 @@
 					>
 						<div class="kt-field-radio-group__wrapper__radio__inside" />
 					</div>
-					<slot name="header" :option="options">
+					<slot name="header" :option="option">
 						<div v-text="option.label" />
 					</slot>
 					<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />

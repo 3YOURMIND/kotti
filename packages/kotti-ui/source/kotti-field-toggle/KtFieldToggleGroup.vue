@@ -15,7 +15,7 @@
 					:value="option.value"
 					@input="onInput(option.key, $event)"
 				>
-					<slot name="header" :option="options">
+					<slot name="header" :option="option">
 						<div v-text="option.label" />
 					</slot>
 					<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
