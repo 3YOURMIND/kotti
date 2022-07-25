@@ -31,23 +31,25 @@ import { KottiAccordion } from './types'
 export default defineComponent<KottiAccordion.PropsInternal>({
 	name: 'KtAccordion',
 	props: makeProps(KottiAccordion.propsSchema),
-	setup(props) {
+	setup(props, { emit }) {
 		const contentInnerRef = ref<HTMLElement | null>(null)
+		const duration = 300
 
-		const { isContentOpen, toggle } = useSlideAnimation(contentInnerRef, {
-			duration: 300,
-			isInitiallyClosed: props.isClosed,
-		})
+		useSlideAnimation(
+			contentInnerRef,
+			computed(() => !props.isClosed),
+			{ duration },
+		)
 		return {
 			contentClasses: computed(() => ({
 				'kt-accordion__content': true,
-				'kt-accordion__content--is-closed': !isContentOpen.value,
-				'kt-accordion__content--is-open': isContentOpen.value,
+				'kt-accordion__content--is-closed': props.isClosed,
+				'kt-accordion__content--is-open': !props.isClosed,
 			})),
 			contentInnerRef,
-			toggle,
+			toggle: () => emit('update:isClosed', !props.isClosed),
 			toggleIcon: computed(() =>
-				isContentOpen.value ? Yoco.Icon.MINUS : Yoco.Icon.PLUS,
+				props.isClosed ? Yoco.Icon.PLUS : Yoco.Icon.MINUS,
 			),
 		}
 	},
