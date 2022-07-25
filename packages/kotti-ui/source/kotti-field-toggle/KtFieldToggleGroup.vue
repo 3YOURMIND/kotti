@@ -6,19 +6,22 @@
 		isGroup
 	>
 		<div slot="container" :class="wrapperClasses">
-			<ToggleInner
-				v-for="option of optionsWithChecked"
-				:key="option.key"
-				component="label"
-				:inputProps="inputProps"
-				:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
-				:type="type"
-				:value="option.value"
-				@input="onInput(option.key, $event)"
-			>
-				<div v-text="option.label" />
-				<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
-			</ToggleInner>
+			<div v-for="option of optionsWithChecked" :key="option.key">
+				<ToggleInner
+					component="label"
+					:inputProps="inputProps"
+					:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
+					:type="type"
+					:value="option.value"
+					@input="onInput(option.key, $event)"
+				>
+					<slot name="header" :option="option">
+						<div v-text="option.label" />
+					</slot>
+					<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
+				</ToggleInner>
+				<slot name="content" :option="option" />
+			</div>
 		</div>
 	</KtField>
 </template>

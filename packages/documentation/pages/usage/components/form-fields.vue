@@ -53,6 +53,18 @@
 									{{ option.label }}
 								</div>
 							</template>
+							<template
+								v-if="componentRepresentation.headerSlot !== null"
+								slot="header"
+							>
+								<div v-text="settings.additionalProps.headerSlot" />
+							</template>
+							<template
+								v-if="componentRepresentation.contentSlot !== null"
+								slot="content"
+							>
+								<div v-text="settings.additionalProps.contentSlot" />
+							</template>
 							<div slot="default">Default Slot</div>
 						</component>
 					</KtForm>
@@ -436,6 +448,27 @@
 								label="option slot"
 								type="switch"
 							/>
+							<h4>Additional Slots</h4>
+							<KtFieldText
+								v-if="
+									componentDefinition.additionalProps.includes('contentSlot')
+								"
+								formKey="contentSlot"
+								isOptional
+								label="slot for the sub-text of a radio/toggle group option"
+								size="small"
+								type="switch"
+							/>
+							<KtFieldText
+								v-if="
+									componentDefinition.additionalProps.includes('headerSlot')
+								"
+								formKey="headerSlot"
+								isOptional
+								label="slot for the header of a radio/toggle group option"
+								size="small"
+								type="switch"
+							/>
 						</KtFormControllerObject>
 					</div>
 				</div>
@@ -454,6 +487,11 @@
 							:actions="savedField.actions"
 							:validator="savedField.validator"
 						>
+							<div
+								v-if="savedField.headerSlot !== null"
+								slot="header"
+								v-text="savedField.headerSlot"
+							/>
 							<div v-if="savedField.hasHelpTextSlot" slot="helpText">
 								<div>
 									Supports
@@ -461,6 +499,11 @@
 									<code>&lt;template v-slot:helpText&gt;</code>
 								</div>
 							</div>
+							<div
+								v-if="savedField.contentSlot !== null"
+								slot="content"
+								v-text="savedField.contentSlot"
+							/>
 							<div slot="default">
 								<div>Default Slot</div>
 							</div>
@@ -614,7 +657,7 @@ const components: Array<{
 		supports: KtFieldPassword.meta.supports,
 	},
 	{
-		additionalProps: ['isInline'],
+		additionalProps: ['contentSlot', 'headerSlot', 'isInline'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldRadioGroup',
 		supports: KtFieldRadioGroup.meta.supports,
@@ -656,7 +699,7 @@ const components: Array<{
 		supports: KtFieldToggle.meta.supports,
 	},
 	{
-		additionalProps: ['isInline', 'toggleType'],
+		additionalProps: ['contentSlot', 'headerSlot', 'isInline', 'toggleType'],
 		formKey: 'toggleGroupValue',
 		name: 'KtFieldToggleGroup',
 		supports: KtFieldToggleGroup.meta.supports,
@@ -764,9 +807,11 @@ export default defineComponent({
 			additionalProps: {
 				autoComplete: 'current-password' | 'new-password'
 				collapseTagsAfter: Kotti.FieldNumber.Value
+				contentSlot: ComponentValue['contentSlot']
 				currencyCurrency: string
 				hasActions: boolean
 				hasOptionSlot: boolean
+				headerSlot: ComponentValue['headerSlot']
 				hideChangeButtons: boolean
 				isInline: boolean
 				isLoadingOptions: boolean
@@ -810,9 +855,11 @@ export default defineComponent({
 			additionalProps: {
 				autoComplete: 'current-password',
 				collapseTagsAfter: null,
+				contentSlot: null,
 				currencyCurrency: 'USD',
 				hasActions: false,
 				hasOptionSlot: false,
+				headerSlot: null,
 				hideChangeButtons: false,
 				isInline: false,
 				isLoadingOptions: false,
@@ -1071,14 +1118,19 @@ export default defineComponent({
 				Object.assign(additionalProps, { query: remoteSingleSelectQuery.value })
 			}
 
-			if (['KtFieldRadioGroup'].includes(component))
+			if (['KtFieldRadioGroup'].includes(component)) {
 				Object.assign(additionalProps, {
 					options: radioGroupOptions,
+					headerSlot: null,
+					contentSlot: null,
 				})
+			}
 
 			if (['KtFieldToggleGroup'].includes(component))
 				Object.assign(additionalProps, {
 					options: toggleGroupOptions,
+					headerSlot: null,
+					contentSlot: null,
 				})
 
 			return { ...standardProps, ...additionalProps }
@@ -1103,9 +1155,11 @@ export default defineComponent({
 
 		const componentValue = computed(
 			(): ComponentValue => ({
+				contentSlot: settings.value.additionalProps.contentSlot,
 				hasActions: settings.value.additionalProps.hasActions,
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
 				hasOptionSlot: settings.value.additionalProps.hasOptionSlot,
+				headerSlot: settings.value.additionalProps.headerSlot,
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),
 				validation: settings.value.validation,
