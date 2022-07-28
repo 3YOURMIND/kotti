@@ -1,7 +1,8 @@
 import pick from 'lodash/pick'
 import Vue from 'vue'
 
-import { SORT_NONE, PUBLIC_COLUMN_PROPS } from '../constants'
+import { PUBLIC_COLUMN_PROPS } from '../constants'
+import { KottiTable } from '../types'
 
 import { setFilteredColumn } from './filter'
 import { setHiddenColumn, getResolvedHiddenColumns } from './hide'
@@ -45,7 +46,7 @@ export function setColumn(state, { column, index, deleted }) {
 		Vue.set(_columns, newColumn.prop, newColumn)
 	}
 
-	if (newColumn.sortOrder !== SORT_NONE) {
+	if (newColumn.sortOrder !== KottiTable.Column.SortOrders.NONE) {
 		setSortedColumn(state, newColumn)
 	}
 	if (newColumn.hidden === true) {

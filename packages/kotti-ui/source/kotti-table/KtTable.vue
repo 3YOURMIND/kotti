@@ -70,38 +70,38 @@ export default {
 		}
 	},
 	props: {
-		id: { default: null, type: String },
-		rowKey: { type: String },
-		rows: { default: () => [], type: Array },
 		columns: { default: null, type: Array },
-		useColumnDragToOrder: { default: false, type: Boolean },
 		emptyText: { default: 'No Data', type: String },
+		id: { default: null, type: String },
+		rowKey: { required: false, type: [String, Function] },
+		rows: { default: () => [], type: Array },
+		useColumnDragToOrder: { default: false, type: Boolean },
 
 		isInteractive: { default: false, type: Boolean },
 		isScrollable: { default: false, type: Boolean },
 		isSelectable: { default: false, type: Boolean },
 
-		sortable: { default: false, type: [Boolean, String] },
-		sortMultiple: { default: false, type: Boolean },
 		remoteSort: { default: false, type: Boolean },
+		sortMultiple: { default: false, type: Boolean },
+		sortable: { default: false, type: [Boolean, String] },
 		useQuickSortControl: { default: false, type: Boolean },
 
-		sortedColumns: { type: Array },
-		filteredColumns: { type: Array },
-		hiddenColumns: { type: Array },
-		orderedColumns: { type: Array },
+		filteredColumns: { default: () => [], type: Array },
+		hiddenColumns: { default: () => [], type: Array },
+		orderedColumns: { default: () => [], type: Array },
+		sortedColumns: { default: () => [], type: Array },
 
-		loading: Boolean,
+		loading: { default: false, type: Boolean },
 
-		tdClasses: { default: () => [], type: [Array, String, Object] },
-		thClasses: { default: () => [], type: [Array, String, Object] },
-		trClasses: { default: () => [], type: [Array, String, Object] },
-		headerClass: { default: () => [], type: [Array, String, Object] },
+		headerClass: { required: false, type: [String, Array, Object] },
+		tdClasses: { required: false, type: [String, Array, Object] },
+		thClasses: { required: false, type: [String, Array, Object] },
+		trClasses: { required: false, type: [String, Array, Object] },
 
-		renderExpand: { type: Function },
-		renderActions: { type: Function },
-		renderLoading: { type: Function },
-		renderEmpty: { type: Function },
+		renderActions: { required: false, type: Function },
+		renderEmpty: { required: false, type: Function },
+		renderExpand: { required: false, type: Function },
+		renderLoading: { required: false, type: Function },
 
 		disableRow: { default: DEFAULT_DISABLE_ROW, type: Function },
 

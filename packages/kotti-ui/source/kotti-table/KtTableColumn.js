@@ -1,9 +1,6 @@
 import pick from 'lodash/pick'
 
 import {
-	SORT_ASC,
-	SORT_DSC,
-	SORT_NONE,
 	COLUMN_TYPE,
 	DEFAULT_RENDER_CELL,
 	KT_TABLE,
@@ -11,6 +8,7 @@ import {
 	KT_LAYOUT,
 	DEFAULT_RENDER_HEADER,
 } from './constants'
+import { KottiTable } from './types'
 
 let columnIdSeed = 1
 
@@ -27,35 +25,41 @@ export const KtTableColumn = {
 	name: 'KtTableColumn',
 	inheritAttrs: false,
 	props: {
+		index: { required: false, type: Number },
+		label: { required: false, type: String },
+		order: { required: false, type: Number },
 		prop: { required: true, type: String },
-		index: Number,
-		order: Number,
-		label: String,
 
-		tdClass: String,
-		thClass: String,
-		headerCellClass: String,
-		cellClass: String,
+		cellClass: { required: false, type: [String, Array, Object] },
+		headerCellClass: { required: false, type: [String, Array, Object] },
+		tdClass: { required: false, type: [String, Array, Object] },
+		thClass: { required: false, type: [String, Array, Object] },
 
-		align: String,
-		width: String,
-		maxWidth: String,
-		minWidth: String,
+		align: { default: KottiTable.Column.Align.LEFT, type: String },
+		maxWidth: { required: false, type: String },
+		minWidth: { required: false, type: String },
+		width: { default: 'auto', type: String },
 
-		hidden: { default: undefined, type: Boolean },
+		hidden: { default: false, type: Boolean },
 
+		sortBy: { required: false, type: [String, Function, Array] },
+		sortMethod: { default: null, type: Function },
+		sortOrder: {
+			default: KottiTable.Column.SortOrders.NONE,
+			type: [String, Number],
+		},
+		sortOrders: {
+			default: () => Object.values(KottiTable.Column.SortOrders),
+			type: Array,
+		},
 		// whether this column is sortable, string means sortOrder is remote
 		sortable: { default: undefined, type: [Boolean, String, undefined] },
-		sortOrder: { default: SORT_NONE, type: [Number, String] },
-		sortOrders: { type: Array, default: () => [SORT_ASC, SORT_DSC, SORT_NONE] },
-		sortMethod: Function,
-		sortBy: [String, Array],
 
-		disableRowClick: { default: undefined, type: [Boolean, undefined] },
-		default: [Function, String],
-		formatter: Function,
-		renderHeader: Function,
-		renderCell: Function,
+		default: { required: false, type: String },
+		disableRowClick: { default: false, type: Boolean },
+		formatter: { required: false, type: Function },
+		renderCell: { required: false, type: Function },
+		renderHeader: { required: false, type: Function },
 
 		/**
 		 * @private
@@ -115,8 +119,9 @@ function createColumn(column = {}) {
 	// eslint-disable-next-line no-param-reassign
 	column = pick(column, [...Object.keys(KtTableColumn.props), '$attrs'])
 
-	column.sortOrder = column.sortOrder || SORT_NONE
-	column.sortOrders = column.sortOrders || [SORT_ASC, SORT_DSC, SORT_NONE]
+	column.sortOrder = column.sortOrder || KottiTable.Column.SortOrders.NONE
+	column.sortOrders =
+		column.sortOrders || Object.values(KottiTable.Column.SortOrders)
 	column.formatter = column.formatter || ((value) => value)
 
 	column.id = columnId

@@ -24,7 +24,8 @@ export const mutations = {
 export const getters = {
 	isAllRowsDisabled(state) {
 		return (
-			state.rows.length === getDisabledRows(state.rows, this.table.disableRow)
+			state.rows.length ===
+			getDisabledRows(state.rows, this.table.disableRow).length
 		)
 	},
 }

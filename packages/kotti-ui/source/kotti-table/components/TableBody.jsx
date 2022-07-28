@@ -35,21 +35,25 @@ export const TableBody = {
 			<tbody>
 				{showEmptyText && <TableBodyEmptyRow />}
 				{!loading &&
-					rows.map((row, rowIndex) => [
-						<TableRow
-							key={getRowKey(row) || rowIndex}
-							row={row}
-							rowIndex={rowIndex}
-							data-test={`table:element:${row.number}:${row.title}`}
-						/>,
-						isExpandable && (
-							<TableBodyExpandRow
-								key={`${getRowKey(row) || rowIndex}-expansion`}
+					rows.map((row, rowIndex) => {
+						const key = getRowKey(row) || rowIndex
+
+						return [
+							<TableRow
+								key={key}
 								row={row}
 								rowIndex={rowIndex}
-							/>
-						),
-					])}
+								data-test={`table:element:${row.number}:${row.title}`}
+							/>,
+							isExpandable && (
+								<TableBodyExpandRow
+									key={`${key}-expansion`}
+									row={row}
+									rowIndex={rowIndex}
+								/>
+							),
+						]
+					})}
 				{loading && <TableBodyLoadingRow />}
 			</tbody>
 		)
