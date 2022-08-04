@@ -1,24 +1,17 @@
-import { ref, Ref } from '@vue/composition-api'
+import { Ref, watch } from '@vue/composition-api'
 
-export type Options = KeyframeAnimationOptions & {
-	isInitiallyClosed?: boolean
-}
-
-const getDefaultOptions = (): Options => ({
+const getDefaultOptions = (): KeyframeAnimationOptions => ({
 	duration: 250,
 	easing: 'ease',
 	fill: 'forwards',
-	isInitiallyClosed: true,
 })
 
 export const useSlideAnimation = (
 	element: Ref<HTMLElement | null>,
-	options: Options,
+	isContentOpen: Readonly<Ref<boolean>>,
+	options: KeyframeAnimationOptions,
 ) => {
-	const { isInitiallyClosed, ...restOptions } = options
-	const isContentOpen = ref(!isInitiallyClosed)
-
-	const finalOptions = { ...getDefaultOptions(), ...restOptions }
+	const finalOptions = { ...getDefaultOptions(), ...options }
 	const getRawHeight = (element: HTMLElement) => element.clientHeight
 
 	const executeAnimation = async (willOpen: boolean): Promise<void> => {
@@ -31,7 +24,7 @@ export const useSlideAnimation = (
 		const animation = animatedObject.animate(frames, finalOptions)
 
 		animation.pause()
-		animation[willOpen ? 'play' : 'reverse']()
+		willOpen ? animation.play() : animation.reverse()
 
 		await animation.finished
 
@@ -39,19 +32,13 @@ export const useSlideAnimation = (
 		animation.cancel()
 	}
 
-	const up = async (): Promise<void> => {
-		await executeAnimation(false)
-		isContentOpen.value = false
-	}
+	watch(
+		() => isContentOpen.value,
+		(shouldBeShown, wasShown) => {
+			if (shouldBeShown === wasShown) return
 
-	const down = async (): Promise<void> => {
-		isContentOpen.value = true
-		await executeAnimation(true)
-	}
-
-	const toggle = (): Promise<void> => {
-		return isContentOpen.value ? up() : down()
-	}
-
-	return { toggle, isContentOpen }
+			executeAnimation(shouldBeShown)
+		},
+		{ immediate: true },
+	)
 }
