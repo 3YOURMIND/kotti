@@ -21,6 +21,7 @@
 						'kt-field-radio-group__wrapper__header--disabled':
 							field.isDisabled || Boolean(option.isDisabled),
 					}"
+					:data-test="optionDataTest(option)"
 				>
 					<div
 						class="kt-field-radio-group__wrapper__radio"
@@ -51,6 +52,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
+import { omit } from 'lodash'
 
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
@@ -85,7 +87,7 @@ export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 			forceUpdateKey: forceUpdateKey.value,
 			inputProps: computed(
 				(): Partial<HTMLInputElement & { class: string }> => ({
-					...field.inputProps,
+					...omit(field.inputProps, ['data-test']),
 					class: 'kt-field-radio-group__wrapper__input',
 					name: name.value,
 					type: 'radio',
@@ -95,6 +97,13 @@ export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 				field.setValue(value)
 
 				forceUpdate()
+			},
+			optionDataTest: (option: KottiFieldRadioGroup.Entry) => {
+				if (option.dataTest) return option.dataTest
+
+				if (Object.keys(field.inputProps).includes('data-test')) {
+					return [field.inputProps['data-test'], option.value].join('.')
+				}
 			},
 			wrapperClasses: computed(() => ({
 				'kt-field-radio-group__wrapper': true,

@@ -263,6 +263,7 @@
 						</KtFormControllerList>
 					</ul>
 					<KtFieldRadioGroup
+						dataTest="unique-radio-group"
 						formKey="gender"
 						label="Gender"
 						:options="genderOptions"
@@ -323,9 +324,9 @@ export default defineComponent({
 				/* eslint-enable no-magic-numbers */
 			}),
 			genderOptions: computed((): Kotti.FieldRadioGroup.Props['options'] => [
-				{ label: 'MALE', value: 'male' },
+				{ label: 'MALE', value: 'male', dataTest: 'unique-male-data-test' },
 				{ label: 'FEMALE', value: 'female' },
-				{ label: 'OTHER', value: 'other' },
+				{ label: 'OTHER', value: 'other', dataTest: 'unique-other-data-test' },
 			]),
 			isDeleteDisabled: computed(() => values.value.addresses.length === 1),
 			KtFormControllerList,
