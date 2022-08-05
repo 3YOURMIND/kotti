@@ -10,6 +10,7 @@ export namespace KottiFieldRadioGroup {
 	export type Value = z.output<typeof valueSchema>
 
 	export const entrySchema = z.object({
+		dataTest: z.string().optional(),
 		isDisabled: z.boolean().optional(),
 		label: z.string(),
 		tooltip: z.string().optional(),
