@@ -4,7 +4,12 @@
 		:getEmptyValue="() => null"
 		:helpTextSlot="$slots.helpText"
 	>
-		<input v-bind="inputProps" @input="onInput" />
+		<input
+			v-bind="inputProps"
+			@blur="$emit('blur')"
+			@focus="$emit('focus')"
+			@input="onInput"
+		/>
 	</KtField>
 </template>
 

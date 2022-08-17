@@ -26,6 +26,7 @@ export {
 	KottiFieldDateTime as FieldDateTime,
 	KottiFieldDateTimeRange as FieldDateTimeRange,
 } from '../kotti-field-date/types'
+export { KottiFieldInlineEdit as FieldInlineEdit } from '../kotti-field-inline-edit/types'
 export { KottiFieldRadioGroup as FieldRadioGroup } from '../kotti-field-radio-group/types'
 export {
 	KottiFieldToggle as FieldToggle,

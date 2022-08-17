@@ -37,6 +37,8 @@ import {
 	KtFieldDateTimeRange,
 } from './kotti-field-date'
 export * from './kotti-field-date'
+import { KtFieldInlineEdit } from './kotti-field-inline-edit'
+export * from './kotti-field-inline-edit'
 import { KtFieldNumber } from './kotti-field-number'
 export * from './kotti-field-number'
 import { KtFieldPassword } from './kotti-field-password'
@@ -132,6 +134,7 @@ export default {
 			KtFieldDateRange,
 			KtFieldDateTime,
 			KtFieldDateTimeRange,
+			KtFieldInlineEdit,
 			KtFieldMultiSelect,
 			KtFieldMultiSelectRemote,
 			KtFieldNumber,
