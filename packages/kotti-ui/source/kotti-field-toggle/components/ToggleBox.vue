@@ -43,6 +43,7 @@ export default defineComponent({
 
 .kt-field-toggle-box {
 	display: flex;
+	flex-shrink: 0;
 	align-items: center;
 	justify-content: center;
 	width: 0.8rem;
