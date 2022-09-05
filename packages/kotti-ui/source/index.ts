@@ -84,10 +84,6 @@ import { KtPagination } from './kotti-pagination'
 export * from './kotti-pagination'
 import { KtPopover } from './kotti-popover'
 export * from './kotti-popover'
-import { KtRadio } from './kotti-radio'
-export * from './kotti-radio'
-import { KtRadioGroup } from './kotti-radio-group'
-export * from './kotti-radio-group'
 import { KtRow } from './kotti-row'
 export * from './kotti-row'
 import { KtStep } from './kotti-step'
@@ -157,8 +153,6 @@ export default {
 			KtNavbar,
 			KtPagination,
 			KtPopover,
-			KtRadio,
-			KtRadioGroup,
 			KtRow,
 			KtStep,
 			KtSteps,
