@@ -85,6 +85,10 @@ export namespace KottiFieldInlineEdit {
 		export type Value = z.output<typeof valueSchema>
 	}
 
+	export type Translations = {
+		placeholder: string
+	}
+
 	export type PropsInternal<M extends Shared.Mode> =
 		M extends Shared.Mode.HEADER
 			? Header.PropsInternal

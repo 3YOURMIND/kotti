@@ -26,6 +26,7 @@
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
 
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
@@ -65,10 +66,12 @@ export default defineComponent<
 			isDisabled: props.isDisabled,
 			isLoading: props.isLoading,
 			isOptional: props.isOptional,
-			placeholder: props.placeholder ?? undefined,
+			placeholder: props.placeholder ?? translations.value.placeholder,
 			tabIndex: props.tabIndex ?? undefined,
 			value: props.value,
 		}))
+
+		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
 		return {
 			handleBlur: () => handleSetIsEditing(false),

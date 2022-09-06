@@ -27,6 +27,9 @@ export const jaJP: KottiI18n.Messages = {
 		replyButton: '返信',
 		replyPlaceholder: '返信',
 	},
+	KtFieldInlineEdit: {
+		placeholder: 'クリックで編集',
+	},
 	KtFields: {
 		optionalLabel: '任意',
 		requiredMessage: 'このフィールドは必須です。',

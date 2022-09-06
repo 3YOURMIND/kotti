@@ -2,6 +2,7 @@ import { Ref } from '@vue/composition-api'
 
 import { KottiBanner } from '../kotti-banner/types'
 import { KottiComment } from '../kotti-comment/types'
+import { KottiFieldInlineEdit } from '../kotti-field-inline-edit/types'
 import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
 import { KottiField } from '../kotti-field/types'
 import { KottiFilters } from '../kotti-filters/types'
@@ -33,6 +34,7 @@ export namespace KottiI18n {
 	export type Messages = {
 		KtBanner: KottiBanner.Translations
 		KtComment: KottiComment.Translations
+		KtFieldInlineEdit: KottiFieldInlineEdit.Translations
 		KtFields: KottiField.Translations
 		KtFieldSelects: KottiFieldSelectShared.Translations
 		KtFilters: KottiFilters.Translations

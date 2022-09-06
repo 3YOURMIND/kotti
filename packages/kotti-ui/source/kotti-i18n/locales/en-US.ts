@@ -27,6 +27,9 @@ export const enUS: KottiI18n.Messages = {
 		replyButton: 'Reply',
 		replyPlaceholder: 'Reply to',
 	},
+	KtFieldInlineEdit: {
+		placeholder: 'Click to Edit',
+	},
 	KtFields: {
 		optionalLabel: 'Optional',
 		requiredMessage: 'This field is required',
