@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Kotti } from '@3yourmind/kotti-ui'
-import { defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import navLogo from '../assets/img/nav_logo.svg'
 import { menu } from '../data/menu'
@@ -79,28 +79,30 @@ export default defineComponent({
 					link: 'https://github.com/3YOURMIND/kotti#readme',
 				},
 			],
-			sections: menu.map(
-				(section): Kotti.Navbar.Section => ({
-					links: section.subsections.map(
-						(subsection): Kotti.Navbar.SectionLink => ({
-							component: 'nuxt-link',
-							icon: subsection.icon,
-							isActive:
-								subsection.path === ''
-									? route.value.path === '/'
-									: route.value.path.startsWith(`/${subsection.path}`),
-							props: {
-								to: `/${subsection.path}${
-									subsection.pages.length >= 1
-										? `/${subsection.pages[0].path}`
-										: ''
-								}`,
-							},
-							title: subsection.title,
-						}),
-					),
-					title: section.title,
-				}),
+			sections: computed(() =>
+				menu.map(
+					(section): Kotti.Navbar.Section => ({
+						links: section.subsections.map(
+							(subsection): Kotti.Navbar.SectionLink => ({
+								component: 'nuxt-link',
+								icon: subsection.icon,
+								isActive:
+									subsection.path === ''
+										? route.value.path === '/'
+										: route.value.path.startsWith(`/${subsection.path}`),
+								props: {
+									to: `/${subsection.path}${
+										subsection.pages.length >= 1
+											? `/${subsection.pages[0].path}`
+											: ''
+									}`,
+								},
+								title: subsection.title,
+							}),
+						),
+						title: section.title,
+					}),
+				),
 			),
 			setIsNarrow: (value: boolean) => {
 				saveSavedFieldsToLocalStorage(value)
