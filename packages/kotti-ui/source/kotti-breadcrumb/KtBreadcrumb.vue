@@ -7,7 +7,13 @@
 				class="kt-breadcrumb__text"
 				:class="textClasses(breadcrumb)"
 			>
-				<span @click="handleClick(breadcrumb)" v-text="breadcrumb.title" />
+				<span
+					:class="{
+						'kt-breadcrumb__text__title--is-active': index === activeItemIndex,
+					}"
+					@click="handleClick(breadcrumb, index)"
+					v-text="breadcrumb.title"
+				/>
 				<span v-if="showSeparator(index)" class="kt-breadcrumb__separator">
 					<i
 						v-if="separator.style === KottiBreadcrumb.SeparatorType.ICON"
@@ -25,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 
 import { makeProps } from '../make-props'
 
@@ -35,9 +41,12 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 	name: 'KtBreadcrumb',
 	props: makeProps(KottiBreadcrumb.propsSchema),
 	setup(props) {
+		const activeItemIndex = ref<number>(0)
 		return {
-			handleClick: (item: KottiBreadcrumb.Breadcrumb) => {
+			activeItemIndex,
+			handleClick: (item: KottiBreadcrumb.Breadcrumb, index: number) => {
 				if (!item.isCompleted) return
+				activeItemIndex.value = index
 				item.onClick()
 			},
 			KottiBreadcrumb,
@@ -78,6 +87,10 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 			&:hover {
 				cursor: pointer;
 			}
+		}
+		&__title--is-active {
+			text-decoration: underline;
+			text-underline-offset: var(--unit-2);
 		}
 	}
 
