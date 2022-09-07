@@ -35,6 +35,18 @@ export default defineComponent<KottiModal.PropsInternal>({
 		const contentRef = ref<HTMLElement | null>(null)
 		const targetRef = ref<HTMLElement | null>(null)
 		const tippyInstanceRef = ref<Instance | null>(null)
+		/**
+		 * The `onCreate` function of `tippyjs` gets executed after the `KtModal`
+		 * component renders.
+		 *
+		 * This boolean that keeps track of the initial value of `props.isOpen`,
+		 * and passes it once tippy is created.
+		 *
+		 * It can be passed as a prop to tippy.
+		 * @see {@link https://atomiks.github.io/tippyjs/v6/all-props/#showoncreate}
+		 * However, for readability purposes, we manually show inside the `onCreate` function.
+		 */
+		const showOnCreate = ref(false)
 
 		useTippy(
 			targetRef,
@@ -44,6 +56,10 @@ export default defineComponent<KottiModal.PropsInternal>({
 				interactive: true,
 				onCreate(instance) {
 					tippyInstanceRef.value = instance
+
+					if (showOnCreate.value) tippyInstanceRef.value.show()
+					// reset
+					showOnCreate.value = false
 				},
 				offset: [0, 0],
 				popperOptions: {
@@ -73,13 +89,20 @@ export default defineComponent<KottiModal.PropsInternal>({
 
 		watch(
 			() => props.isOpen,
-			(value) => {
+			(shouldOpen, wasOpen) => {
+				if (wasOpen === undefined) {
+					showOnCreate.value = shouldOpen
+					// theoretically, always true
+					if (tippyInstanceRef.value === null) return
+				}
+
 				if (tippyInstanceRef.value === null)
 					throw new Error('KtModal: Unbound tippyInstanceRef')
 
-				if (value) tippyInstanceRef.value.show()
+				if (shouldOpen) tippyInstanceRef.value.show()
 				else tippyInstanceRef.value.unmount()
 			},
+			{ immediate: true },
 		)
 
 		return {
