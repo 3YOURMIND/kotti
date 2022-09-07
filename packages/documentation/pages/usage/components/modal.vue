@@ -33,6 +33,11 @@
 			/>
 		</KtForm>
 
+		<KtModal :isOpen="showAnnouncement" @close="showAnnouncement = false">
+			<span slot="body"> I am an announcement. I open by default </span>
+			<KtButton slot="footer" label="close" @click="showAnnouncement = false" />
+		</KtModal>
+
 		<KtButton label="Open Modal" @click="showModal = true" />
 
 		<KtModal
@@ -73,6 +78,7 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtModal,
+			showAnnouncement: ref(true),
 			showModal: ref(false),
 			settings: ref<{
 				preventCloseOutside: boolean
