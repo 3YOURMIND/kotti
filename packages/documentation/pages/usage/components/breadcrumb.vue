@@ -26,6 +26,15 @@ links: [
 		isCompleted: true,
 	},
 	{
+		title:
+			'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt',
+		onClick: () =>
+			this.$router.push(
+				'/lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit-sed-do-eiusmod-tempor-incididunt',
+			),
+		isCompleted: true,
+	},
+	{
 		title: 'Breadcrumbs',
 		onClick: () => this.$router.push('/usage/components/breadcrumb'),
 		isCompleted: false,
@@ -86,6 +95,12 @@ export default defineComponent({
 				},
 				{
 					title: 'Components',
+					onClick: () => router.value.push('#'),
+					isCompleted: true,
+				},
+				{
+					title:
+						'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt',
 					onClick: () => router.value.push('#'),
 					isCompleted: true,
 				},

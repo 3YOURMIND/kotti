@@ -74,6 +74,7 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 
 	li {
 		display: flex;
+		align-items: center;
 		margin: 0.1rem 0;
 	}
 
@@ -89,8 +90,7 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 			}
 		}
 		&__title--is-active {
-			text-decoration: underline;
-			text-underline-offset: var(--unit-2);
+			border-bottom: 1px solid var(--breadcrumb-color-active);
 		}
 	}
 
