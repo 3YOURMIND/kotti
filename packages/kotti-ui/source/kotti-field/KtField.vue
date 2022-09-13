@@ -32,50 +32,61 @@
 				class="kt-field__help-description"
 				v-text="field.helpDescription"
 			/>
-			<slot name="container">
-				<div ref="inputContainerRef" class="kt-field__input-container">
-					<div
-						v-if="field.prefix"
-						:class="affixClasses(['left'])"
-						v-text="field.prefix"
-					/>
-					<div
-						v-if="field.leftIcon"
-						:class="iconClasses('input-container', ['left'])"
-					>
-						<i class="yoco" v-text="field.leftIcon" />
-					</div>
-					<div class="kt-field__input-container__slot">
-						<slot name="default" />
-					</div>
-					<slot
-						:classes="iconClasses('input-container', ['interactive'])"
-						:handleClear="handleClear"
-						name="actionIcon"
-						:showClear="!field.hideClear"
-					>
+			<div class="kt-field__input-container-wrapper">
+				<slot classes="kt-field__input-container__prefix" name="container-left">
+					<div class="kt-field__input-container__prefix" />
+				</slot>
+				<slot name="container">
+					<div ref="inputContainerRef" class="kt-field__input-container">
 						<div
-							v-if="!field.hideClear"
-							:class="iconClasses('input-container', ['interactive'])"
-							role="button"
-							@click.stop="handleClear"
+							v-if="field.prefix"
+							:class="affixClasses(['left'])"
+							v-text="field.prefix"
+						/>
+						<div
+							v-if="field.leftIcon"
+							:class="iconClasses('input-container', ['left'])"
 						>
-							<i class="yoco" v-text="Yoco.Icon.CLOSE" />
+							<i class="yoco" v-text="field.leftIcon" />
 						</div>
-					</slot>
-					<div
-						v-if="field.rightIcon"
-						:class="iconClasses('input-container', ['right'])"
-					>
-						<i class="yoco" v-text="field.rightIcon" />
+						<div class="kt-field__input-container__slot">
+							<slot name="default" />
+						</div>
+						<slot
+							:classes="iconClasses('input-container', ['interactive'])"
+							:handleClear="handleClear"
+							name="actionIcon"
+							:showClear="!field.hideClear"
+						>
+							<div
+								v-if="!field.hideClear"
+								:class="iconClasses('input-container', ['interactive'])"
+								role="button"
+								@click.stop="handleClear"
+							>
+								<i class="yoco" v-text="Yoco.Icon.CLOSE" />
+							</div>
+						</slot>
+						<div
+							v-if="field.rightIcon"
+							:class="iconClasses('input-container', ['right'])"
+						>
+							<i class="yoco" v-text="field.rightIcon" />
+						</div>
+						<div
+							v-if="field.suffix"
+							:class="affixClasses(['right'])"
+							v-text="field.suffix"
+						/>
 					</div>
-					<div
-						v-if="field.suffix"
-						:class="affixClasses(['right'])"
-						v-text="field.suffix"
-					/>
-				</div>
-			</slot>
+				</slot>
+				<slot
+					classes="kt-field__input-container__suffix"
+					name="container-right"
+				>
+					<div class="kt-field__input-container__suffix" />
+				</slot>
+			</div>
 			<div
 				v-if="!field.isLoading && showValidation && validationText !== null"
 				class="kt-field__validation-text"
@@ -328,8 +339,20 @@ export default defineComponent<{
 		color: var(--text-03);
 	}
 
+	&__input-container-wrapper {
+		display: flex;
+		align-items: center;
+	}
+
+	// placeholders for slots
+	&__input-container__prefix,
+	&__input-container__suffix {
+		display: contents;
+	}
+
 	&__input-container {
 		display: flex;
+		flex-grow: 1;
 		align-items: center;
 		padding: 0 0.8rem;
 

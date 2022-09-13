@@ -1,24 +1,37 @@
 <template>
 	<div class="kt-field-inline-edit">
-		<div class="kt-field-inline-edit__input">
-			<KtFieldTextArea
-				v-if="isMultiLine"
-				v-bind="fieldTextAreaProps"
-				:disabled="!isEditing"
-				@blur="handleBlur"
-				@focus="handleFocus"
-				@input="handleInput"
-			/>
-			<KtFieldText
-				v-else
-				v-bind="fieldTextProps"
-				:disabled="!isEditing"
-				@blur="handleBlur"
-				@focus="handleFocus"
-				@input="handleInput"
-			/>
-		</div>
-		<div v-if="isEditing" class="icon yoco" v-text="Yoco.Icon.CHECK" />
+		<KtFieldTextArea
+			v-if="isMultiLine"
+			v-bind="fieldTextAreaProps"
+			:disabled="!isEditing"
+			@blur="handleBlur"
+			@focus="handleFocus"
+			@input="handleInput"
+		>
+			<template v-slot:container-right="{ classes }">
+				<ConfirmButton
+					v-bind="{ isEditing }"
+					:class="classes"
+					@confirm="handleConfirm"
+				/>
+			</template>
+		</KtFieldTextArea>
+		<KtFieldText
+			v-else
+			v-bind="fieldTextProps"
+			:disabled="!isEditing"
+			@blur="handleBlur"
+			@focus="handleFocus"
+			@input="handleInput"
+		>
+			<template v-slot:container-right="{ classes }">
+				<ConfirmButton
+					v-bind="{ isEditing }"
+					:class="classes"
+					@confirm="handleConfirm"
+				/>
+			</template>
+		</KtFieldText>
 	</div>
 </template>
 <!-- TODO: formKey  -->
@@ -30,12 +43,16 @@ import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
+import ConfirmButton from './components/ConfirmButton.vue'
 import { KottiFieldInlineEdit } from './types'
 
 export default defineComponent<
 	KottiFieldInlineEdit.PropsInternal<KottiFieldInlineEdit.Shared.Mode>
 >({
 	name: 'KtFieldInlineEdit',
+	components: {
+		ConfirmButton,
+	},
 	props: makeProps(KottiFieldInlineEdit.Regular.propsSchema),
 	setup(props, { emit }) {
 		const size = computed(() => {
@@ -112,24 +129,7 @@ export default defineComponent<
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	&__input {
-		width: 95%;
-	}
-	&--is-header {
-		.icon {
-			padding-top: 0.8rem;
-		}
-	}
-	&--is-regular {
-		.icon {
-			padding-top: 2rem;
-		}
-	}
-	&--is-textline {
-		.icon {
-			padding-top: 0.5rem;
-		}
-	}
+
 	&--is-editing {
 		::v-deep .kt-field__input-container:hover {
 			background-color: var(--ui-background) !important;
@@ -138,6 +138,7 @@ export default defineComponent<
 			background-color: var(--ui-background) !important;
 		}
 	}
+
 	::v-deep .kt-field__input-container:hover {
 		background-color: var(--ui-05);
 	}

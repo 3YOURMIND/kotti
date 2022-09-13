@@ -10,6 +10,9 @@
 			@focus="$emit('focus')"
 			@input="onInput"
 		/>
+		<template v-slot:container-right="{ classes }">
+			<slot :classes="classes" name="container-right" />
+		</template>
 	</KtField>
 </template>
 
