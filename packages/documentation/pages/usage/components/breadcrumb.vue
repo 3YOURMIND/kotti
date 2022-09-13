@@ -21,17 +21,13 @@ links: [
 		isCompleted: true,
 	},
 	{
-		title: 'Components',
-		onClick: () => this.$router.push('/components'),
+		title: 'Usage',
+		onClick: () => router.value.push('#'),
 		isCompleted: true,
 	},
 	{
-		title:
-			'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt',
-		onClick: () =>
-			this.$router.push(
-				'/lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit-sed-do-eiusmod-tempor-incididunt',
-			),
+		title: 'Components',
+		onClick: () => this.$router.push('/components'),
 		isCompleted: true,
 	},
 	{
@@ -95,12 +91,6 @@ export default defineComponent({
 				},
 				{
 					title: 'Components',
-					onClick: () => router.value.push('#'),
-					isCompleted: true,
-				},
-				{
-					title:
-						'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt',
 					onClick: () => router.value.push('#'),
 					isCompleted: true,
 				},
