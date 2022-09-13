@@ -63,8 +63,8 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 @import '../kotti-style/_variables.scss';
 
 .kt-breadcrumb {
-	--breadcrumb-color-active: var(--interactive-03);
-
+	--breadcrumb-color-completed: var(--interactive-03);
+	--breadcrumb-color-active: var(--text-01);
 	display: flex;
 	flex-wrap: wrap;
 
@@ -83,14 +83,14 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 
 		&--is-completed {
 			font-weight: 600;
-			color: var(--breadcrumb-color-active);
+			color: var(--breadcrumb-color-completed);
 
 			&:hover {
 				cursor: pointer;
 			}
 		}
 		&__title--is-active {
-			border-bottom: 1px solid var(--breadcrumb-color-active);
+			color: var(--breadcrumb-color-active);
 		}
 	}
 
