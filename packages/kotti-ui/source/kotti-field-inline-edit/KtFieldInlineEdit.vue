@@ -45,6 +45,7 @@ import { Kotti } from '../types'
 
 import ConfirmButton from './components/ConfirmButton.vue'
 import { KottiFieldInlineEdit } from './types'
+import { useSize } from './utils'
 
 export default defineComponent<
 	KottiFieldInlineEdit.PropsInternal<KottiFieldInlineEdit.Shared.Mode>
@@ -55,17 +56,18 @@ export default defineComponent<
 	},
 	props: makeProps(KottiFieldInlineEdit.Regular.propsSchema),
 	setup(props, { emit }) {
-		const size = computed(() => {
-			switch (props.mode) {
-				case KottiFieldInlineEdit.Shared.Mode.HEADER:
-					return Kotti.Field.Size.LARGE
-				case KottiFieldInlineEdit.Shared.Mode.TEXT_LINE:
-					return Kotti.Field.Size.SMALL
-				default:
-					return Kotti.Field.Size.MEDIUM
-			}
-		})
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		const handleSetIsEditing = (value: boolean) => {
 			if (props.isDisabled) return
 			emit('setIsEditing', value)
@@ -115,7 +117,7 @@ export default defineComponent<
 					...regularModeProps,
 					hideClear: true,
 					rightIcon: props.isEditing ? undefined : Yoco.Icon.EDIT,
-					size: size.value,
+					size: useSize(props.mode),
 				}
 			}),
 			Yoco,
