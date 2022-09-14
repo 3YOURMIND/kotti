@@ -76,6 +76,7 @@ export default defineComponent<KottiFieldTextArea.PropsInternal>({
 	$vertical-padding: 0.6em;
 	&__wrapper {
 		display: flex;
+		flex: 1;
 		min-height: calc(#{$vertical-padding} * 2 + 1rem);
 		padding: $vertical-padding 0.8em;
 		margin: 0;
