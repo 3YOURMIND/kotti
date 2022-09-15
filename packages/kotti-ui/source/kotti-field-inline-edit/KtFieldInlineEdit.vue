@@ -1,43 +1,42 @@
 <template>
-	<div class="kt-field-inline-edit">
-		<KtFieldTextArea
-			v-if="isMultiLine"
-			v-bind="fieldTextAreaProps"
-			:disabled="!isEditing"
-			@blur="handleBlur"
-			@focus="handleFocus"
-			@input="handleInput"
-		>
-			<template v-slot:container-right="{ classes }">
-				<ConfirmButton
-					v-bind="{ isEditing }"
-					:class="classes"
-					@confirm="handleConfirm"
-				/>
-			</template>
-		</KtFieldTextArea>
-		<KtFieldText
-			v-else
-			v-bind="fieldTextProps"
-			:disabled="!isEditing"
-			@blur="handleBlur"
-			@focus="handleFocus"
-			@input="handleInput"
-		>
-			<template v-slot:container-right="{ classes }">
-				<ConfirmButton
-					v-bind="{ isEditing }"
-					:class="classes"
-					@confirm="handleConfirm"
-				/>
-			</template>
-		</KtFieldText>
-	</div>
+	<KtFieldTextArea
+		v-if="isMultiLine"
+		v-bind="fieldTextAreaProps"
+		:disabled="!isEditing"
+		@blur="handleBlur"
+		@focus="handleFocus"
+		@input="handleInput"
+	>
+		<template v-slot:container-right="{ classes }">
+			<ConfirmButton
+				v-bind="{ isEditing }"
+				:class="classes"
+				@confirm="handleConfirm"
+			/>
+		</template>
+	</KtFieldTextArea>
+	<KtFieldText
+		v-else
+		v-bind="fieldTextProps"
+		:disabled="!isEditing"
+		@blur="handleBlur"
+		@focus="handleFocus"
+		@input="handleInput"
+	>
+		<template v-slot:container-right="{ classes }">
+			<ConfirmButton
+				v-bind="{ isEditing }"
+				:class="classes"
+				@click="handleClick"
+				@confirm="handleConfirm"
+			/>
+		</template>
+	</KtFieldText>
 </template>
 <!-- TODO: formKey  -->
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
@@ -73,22 +72,23 @@ export default defineComponent<
 			emit('setIsEditing', value)
 		}
 
-		const sharedProps = computed(() => ({
-			class: {
-				'kt-field-inline-edit--is-editing':
-					props.isEditing && !props.isDisabled,
-				[`kt-field-inline-edit--is-${
-					// @ts-expect-error props.mode type matches the enum accessor expected type. TSC doesn't complain. Vetur does.
-					KottiFieldInlineEdit.Shared.Mode[props.mode]
-				}`]: true,
-			},
-			isDisabled: props.isDisabled,
-			isLoading: props.isLoading,
-			isOptional: props.isOptional,
-			placeholder: props.placeholder ?? translations.value.placeholder,
-			tabIndex: props.tabIndex ?? undefined,
-			value: props.value,
-		}))
+		const sharedProps = computed(() => {
+			return {
+				class: {
+					'kt-field-inline-edit': true,
+					'kt-field-inline-edit--is-editing':
+						props.isEditing && !props.isDisabled,
+					[`kt-field-inline-edit--is-${props.mode}`]: true,
+				},
+				hideValidation: props.hideValidation,
+				isDisabled: props.isDisabled, // || !props.isEditing,
+				isLoading: props.isLoading,
+				isOptional: props.isOptional,
+				placeholder: props.placeholder ?? translations.value.placeholder,
+				tabindex: props.tabIndex,
+				value: props.value,
+			}
+		})
 
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
@@ -99,7 +99,7 @@ export default defineComponent<
 			isMultiLine: computed(
 				() => props.mode === KottiFieldInlineEdit.Shared.Mode.MULTI_LINE,
 			),
-			fieldTextAreaProps: sharedProps.value,
+			fieldTextAreaProps: sharedProps,
 			fieldTextProps: computed(() => {
 				let regularModeProps = {}
 				if (props.mode === KottiFieldInlineEdit.Shared.Mode.REGULAR) {
@@ -128,28 +128,14 @@ export default defineComponent<
 
 <style lang="scss" scoped>
 .kt-field-inline-edit {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-
-	&--is-editing {
-		::v-deep .kt-field__input-container:hover {
-			background-color: var(--ui-background) !important;
-		}
-		::v-deep .kt-field-text-area__wrapper:hover {
-			background-color: var(--ui-background) !important;
+	&:not(.kt-field-inline-edit--is-editing) {
+		::v-deep .kt-field__input-container-wrapper:hover {
+			background-color: var(--ui-05);
+			cursor: pointer;
 		}
 	}
 
-	::v-deep .kt-field__input-container:hover {
-		background-color: var(--ui-05);
-	}
-	::v-deep .kt-field__input-container {
-		border: none;
-	}
-	::v-deep .kt-field-text-area__wrapper:hover {
-		background-color: var(--ui-05);
-	}
+	::v-deep .kt-field__input-container,
 	::v-deep .kt-field-text-area__wrapper {
 		border: none;
 	}

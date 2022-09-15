@@ -28,7 +28,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .kt-field-inline-edit__confirm-icon {
+	font-weight: bold;
 	cursor: pointer;
+	color: var(--text-01);
+	padding-left: 0.8rem;
 
 	&:hover {
 		color: var(--interactive-01-hover);
