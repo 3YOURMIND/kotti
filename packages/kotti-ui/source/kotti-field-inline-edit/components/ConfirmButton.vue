@@ -28,6 +28,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .kt-field-inline-edit__confirm-icon {
+	display: flex;
+	align-items: center;
+
 	font-weight: bold;
 	cursor: pointer;
 	color: var(--text-01);

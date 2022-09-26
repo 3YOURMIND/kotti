@@ -341,13 +341,14 @@ export default defineComponent<{
 
 	&__input-container-wrapper {
 		display: flex;
-		align-items: center;
+		align-items: stretch;
 	}
 
 	// placeholders for slots
 	&__input-container__prefix,
 	&__input-container__suffix {
-		display: contents;
+		display: flex;
+		align-items: center;
 	}
 
 	&__input-container {
