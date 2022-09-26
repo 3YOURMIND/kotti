@@ -28,6 +28,7 @@ export namespace KottiFieldInlineEdit {
 				mode: z.nativeEnum(Mode).default(Mode.REGULAR),
 			})
 	}
+
 	export namespace Header {
 		export const propsSchema = Shared.propsSchema.merge(
 			KottiFieldText.propsSchema.pick({ value: true, placeholder: true }),
@@ -35,9 +36,6 @@ export namespace KottiFieldInlineEdit {
 
 		export type Props = z.input<typeof propsSchema>
 		export type PropsInternal = z.output<typeof propsSchema>
-
-		export const valueSchema = KottiFieldText.propsSchema.pick({ value: true })
-		export type Value = z.output<typeof valueSchema>
 	}
 
 	export namespace MultiLine {
@@ -46,9 +44,6 @@ export namespace KottiFieldInlineEdit {
 		)
 		export type Props = z.input<typeof propsSchema>
 		export type PropsInternal = z.output<typeof propsSchema>
-
-		export const valueSchema = KottiFieldText.propsSchema.pick({ value: true })
-		export type Value = z.output<typeof valueSchema>
 	}
 
 	export namespace Regular {
@@ -68,9 +63,6 @@ export namespace KottiFieldInlineEdit {
 			)
 		export type Props = z.input<typeof propsSchema>
 		export type PropsInternal = z.output<typeof propsSchema>
-
-		export const valueSchema = KottiFieldText.propsSchema.pick({ value: true })
-		export type Value = z.output<typeof valueSchema>
 	}
 
 	export namespace TextLine {
@@ -80,10 +72,10 @@ export namespace KottiFieldInlineEdit {
 
 		export type Props = z.input<typeof propsSchema>
 		export type PropsInternal = z.output<typeof propsSchema>
-
-		export const valueSchema = KottiFieldText.propsSchema.pick({ value: true })
-		export type Value = z.output<typeof valueSchema>
 	}
+
+	export const valueSchema = KottiFieldText.propsSchema.pick({ value: true })
+	export type Value = z.output<typeof valueSchema>
 
 	export type Translations = {
 		placeholder: string

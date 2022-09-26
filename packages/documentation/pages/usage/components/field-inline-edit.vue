@@ -4,13 +4,25 @@
 
 		<div class="element-example white">
 			<KtFieldInlineEdit
-				v-bind="settings"
+				v-bind="{
+					helpDescription,
+					helpText,
+					hideValidation,
+					isDisabled,
+					isEditing,
+					isLoading,
+					isOptional,
+					label,
+					mode,
+					placeholder,
+					tabindex,
+					validator,
+				}"
 				class="mb-16px"
-				:isEditing="isEditing"
-				:mode="settings.mode"
 				:value="fieldValue"
+				@confirm="handleConfirm"
 				@input="setValue"
-				@setIsEditing="setIsEditing"
+				@update:isEditing="($event) => (isEditing = $event)"
 			/>
 			<KtForm v-model="settings" size="small">
 				<div class="wrapper">
@@ -80,8 +92,7 @@ import {
 	KtForm,
 	KtFieldSingleSelect,
 } from '@3yourmind/kotti-ui'
-import { Yoco } from '@3yourmind/yoco'
-import { Ref, defineComponent, ref } from '@vue/composition-api'
+import { Ref, defineComponent, ref, computed } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -94,8 +105,8 @@ export default defineComponent({
 		KtFieldSingleSelect,
 	},
 	setup() {
+		const isEditing = ref(false)
 		const fieldValue: Ref<string | null> = ref(null)
-		const isEditing: Ref<boolean> = ref(false)
 		const settings = ref<{
 			booleanFlags: {
 				hideValidation: Kotti.FieldToggle.Value
@@ -103,13 +114,11 @@ export default defineComponent({
 				isLoading: Kotti.FieldToggle.Value
 				isOptional: Kotti.FieldToggle.Value
 			}
-			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
 			helpText: Kotti.FieldText.Value
 			label: Kotti.FieldText.Value
 			mode: Kotti.FieldInlineEdit.Shared.Mode
 			placeholder: Kotti.FieldText.Value
-			rightIcon: Yoco.Icon | null
 			tabIndex: Kotti.FieldNumber.Value
 			validation: Kotti.Field.Validation.Result['type']
 		}>({
@@ -119,32 +128,65 @@ export default defineComponent({
 				isLoading: false,
 				isOptional: true,
 			},
-			hasHelpTextSlot: false,
 			helpDescription: null,
 			helpText: null,
 			label: 'Label',
 			mode: Kotti.FieldInlineEdit.Shared.Mode.REGULAR,
 			placeholder: null,
-			rightIcon: null,
 			tabIndex: null,
 			validation: 'empty',
 		})
 
+		const isRegularMode = (mode: Kotti.FieldInlineEdit.Shared.Mode) =>
+			mode === Kotti.FieldInlineEdit.Shared.Mode.REGULAR
+
 		return {
 			component: KtFieldInlineEdit,
 			fieldValue,
+			handleConfirm: (newValue: Kotti.FieldInlineEdit.Value) =>
+				window.alert(`confirming value: ${newValue}`),
+			helpDescription: computed(() =>
+				isRegularMode(settings.value.mode)
+					? settings.value.helpDescription
+					: null,
+			),
+			helpText: computed(() =>
+				isRegularMode(settings.value.mode) ? settings.value.helpText : null,
+			),
+			hideValidation: computed(
+				() => settings.value.booleanFlags.hideValidation,
+			),
+			isDisabled: computed(() => settings.value.booleanFlags.isDisabled),
 			isEditing,
+			isLoading: computed(() => settings.value.booleanFlags.isLoading),
+			isOptional: computed(() => settings.value.booleanFlags.isOptional),
+			label: computed(() => settings.value.label),
+			mode: computed(() => settings.value.mode),
 			modeOptions: ref([
-				{ label: 'Regular (Default)', value: 'regular' },
-				{ label: 'Text line', value: 'text-line' },
-				{ label: 'Header', value: 'header' },
-				{ label: 'Multi line', value: 'multi-line' },
+				{
+					label: 'Regular (Default)',
+					value: Kotti.FieldInlineEdit.Shared.Mode.REGULAR,
+				},
+				{
+					label: 'TextLine',
+					value: Kotti.FieldInlineEdit.Shared.Mode.TEXT_LINE,
+				},
+				{ label: 'Header', value: Kotti.FieldInlineEdit.Shared.Mode.HEADER },
+				{
+					label: 'MultiLine',
+					value: Kotti.FieldInlineEdit.Shared.Mode.MULTI_LINE,
+				},
 			]),
-			setIsEditing: (value: boolean) => (isEditing.value = value),
 			settings,
 			setValue: (newValue: string | null) => {
 				fieldValue.value = newValue
 			},
+			placeholder: computed(() => settings.value.placeholder),
+			tabindex: computed(() => settings.value.tabIndex),
+			validator: computed(() => () => ({
+				type: settings.value.validation,
+				text: null,
+			})),
 		}
 	},
 })

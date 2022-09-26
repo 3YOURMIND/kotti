@@ -1,10 +1,8 @@
 <template>
 	<KtFieldTextArea
 		v-if="isMultiLine"
+		ref="fieldRef"
 		v-bind="fieldTextAreaProps"
-		:disabled="!isEditing"
-		@blur="handleBlur"
-		@focus="handleFocus"
 		@input="handleInput"
 	>
 		<template v-slot:container-right="{ classes }">
@@ -17,26 +15,30 @@
 	</KtFieldTextArea>
 	<KtFieldText
 		v-else
+		ref="fieldRef"
 		v-bind="fieldTextProps"
-		:disabled="!isEditing"
-		@blur="handleBlur"
-		@focus="handleFocus"
 		@input="handleInput"
 	>
 		<template v-slot:container-right="{ classes }">
 			<ConfirmButton
 				v-bind="{ isEditing }"
 				:class="classes"
-				@click="handleClick"
 				@confirm="handleConfirm"
 			/>
 		</template>
 	</KtFieldText>
 </template>
-<!-- TODO: formKey  -->
+
+<!-- TODO: test formKey  -->
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import {
+	computed,
+	defineComponent,
+	onBeforeMount,
+	onUnmounted,
+	ref,
+} from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
@@ -55,22 +57,55 @@ export default defineComponent<
 	},
 	props: makeProps(KottiFieldInlineEdit.Regular.propsSchema),
 	setup(props, { emit }) {
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		const handleSetIsEditing = (value: boolean) => {
+		const updateIsEditing = (value: boolean) => {
 			if (props.isDisabled) return
-			emit('setIsEditing', value)
+			emit('update:isEditing', value)
 		}
+
+		const fieldRef = ref<{ $el: HTMLElement } | null>(null)
+		const isConfirmButtonClicked = ref(false)
+		const lastConfirmed = ref<
+			Kotti.FieldText.Value | Kotti.FieldTextArea.Value
+		>(null)
+
+		const handleClick = (event: MouseEvent | KeyboardEvent) => {
+			if (event.target === null) return
+
+			const isClickOutside =
+				fieldRef.value?.$el !== event.target &&
+				!fieldRef.value?.$el.contains(event.target as HTMLElement)
+
+			if (!isClickOutside && !isConfirmButtonClicked.value) {
+				// focus on field
+				updateIsEditing(true)
+				return
+			}
+
+			if (isClickOutside && lastConfirmed.value !== props.value) {
+				// dismiss changes
+				emit('input', lastConfirmed.value)
+			}
+
+			if (isConfirmButtonClicked.value) {
+				isConfirmButtonClicked.value = false
+				// debugger
+				// fieldRef.value?.$el.blur()
+			}
+
+			updateIsEditing(false)
+		}
+		const handleKeyup = (event: KeyboardEvent) => {
+			if (event.key === 'Tab') handleClick(event)
+		}
+
+		onBeforeMount(() => {
+			window.addEventListener('click', handleClick)
+			window.addEventListener('keyup', handleKeyup)
+		})
+		onUnmounted(() => {
+			window.removeEventListener('click', handleClick)
+			window.addEventListener('keyup', handleKeyup)
+		})
 
 		const sharedProps = computed(() => {
 			return {
@@ -81,7 +116,7 @@ export default defineComponent<
 					[`kt-field-inline-edit--is-${props.mode}`]: true,
 				},
 				hideValidation: props.hideValidation,
-				isDisabled: props.isDisabled, // || !props.isEditing,
+				isDisabled: props.isDisabled,
 				isLoading: props.isLoading,
 				isOptional: props.isOptional,
 				placeholder: props.placeholder ?? translations.value.placeholder,
@@ -93,12 +128,7 @@ export default defineComponent<
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
 		return {
-			handleBlur: () => handleSetIsEditing(false),
-			handleFocus: () => handleSetIsEditing(true),
-			handleInput: (value: Kotti.FieldText.Value) => emit('input', value),
-			isMultiLine: computed(
-				() => props.mode === KottiFieldInlineEdit.Shared.Mode.MULTI_LINE,
-			),
+			fieldRef,
 			fieldTextAreaProps: sharedProps,
 			fieldTextProps: computed(() => {
 				let regularModeProps = {}
@@ -120,6 +150,18 @@ export default defineComponent<
 					size: useSize(props.mode),
 				}
 			}),
+			handleConfirm: () => {
+				isConfirmButtonClicked.value = true
+				lastConfirmed.value = props.value
+				emit('input', lastConfirmed.value)
+				emit('confirm', lastConfirmed.value)
+			},
+			handleInput: (newVal: Kotti.FieldText.Value) => {
+				emit('input', newVal)
+			},
+			isMultiLine: computed(
+				() => props.mode === KottiFieldInlineEdit.Shared.Mode.MULTI_LINE,
+			),
 			Yoco,
 		}
 	},
@@ -127,6 +169,8 @@ export default defineComponent<
 </script>
 
 <style lang="scss" scoped>
+@import '../kotti-style/_variables.scss';
+
 .kt-field-inline-edit {
 	&:not(.kt-field-inline-edit--is-editing) {
 		::v-deep .kt-field__input-container-wrapper:hover {

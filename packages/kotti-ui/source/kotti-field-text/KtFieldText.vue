@@ -4,12 +4,7 @@
 		:getEmptyValue="() => null"
 		:helpTextSlot="$slots.helpText"
 	>
-		<input
-			v-bind="inputProps"
-			@blur="$emit('blur')"
-			@focus="$emit('focus')"
-			@input="onInput"
-		/>
+		<input v-bind="inputProps" @input="onInput" />
 		<template v-slot:container-right="{ classes }">
 			<slot :classes="classes" name="container-right" />
 		</template>
