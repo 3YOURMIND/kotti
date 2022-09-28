@@ -1,7 +1,7 @@
 <template>
 	<KtFieldTextArea
-		v-if="isMultiLine"
 		ref="fieldRef"
+		v-if="isMultiLine"
 		v-bind="fieldTextAreaProps"
 		@input="handleInput"
 	>
@@ -15,9 +15,9 @@
 	</KtFieldTextArea>
 	<KtFieldText
 		v-else
-		ref="fieldRef"
 		v-bind="fieldTextProps"
 		@input="handleInput"
+		ref="fieldRef"
 	>
 		<template v-slot:container-right="{ classes }">
 			<ConfirmButton
@@ -121,6 +121,7 @@ export default defineComponent<
 				isOptional: props.isOptional,
 				placeholder: props.placeholder ?? translations.value.placeholder,
 				tabindex: props.tabIndex,
+				validator: props.validator,
 				value: props.value,
 			}
 		})

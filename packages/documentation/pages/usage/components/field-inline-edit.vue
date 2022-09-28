@@ -38,20 +38,15 @@
 							formKey="validation"
 							isOptional
 							label="Validation State"
-							:options="[
-								{ label: 'Empty (Default)', value: 'empty' },
-								{ label: 'Success', value: 'success' },
-								{ label: 'Warning', value: 'warning' },
-								{ label: 'Error', value: 'error' },
-							]"
-						>
-							<div slot="helpText">
+							:options="validationOptions"
+						/>
+						<!-- <div slot="helpText">
 								Passed as a validation function:
 								<code>() => ({ type: 'error', message: '' })</code>
 								or via
 								<code>KtForm.validators</code>
 							</div>
-						</KtFieldSingleSelect>
+						</KtFieldSingleSelect> -->
 						<KtFieldToggleGroup
 							formKey="booleanFlags"
 							isOptional
@@ -183,9 +178,15 @@ export default defineComponent({
 			},
 			placeholder: computed(() => settings.value.placeholder),
 			tabindex: computed(() => settings.value.tabIndex),
+			validationOptions: ref([
+				{ label: 'Empty (Default)', value: 'empty' },
+				{ label: 'Success', value: 'success' },
+				{ label: 'Warning', value: 'warning' },
+				{ label: 'Error', value: 'error' },
+			]),
 			validator: computed(() => () => ({
 				type: settings.value.validation,
-				text: null,
+				text: 'Some validation text',
 			})),
 		}
 	},
