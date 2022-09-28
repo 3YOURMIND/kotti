@@ -76,20 +76,22 @@ export default defineComponent<
 				!fieldRef.value?.$el.contains(event.target as HTMLElement)
 
 			if (!isClickOutside && !isConfirmButtonClicked.value) {
-				// focus on field
 				updateIsEditing(true)
 				return
 			}
 
 			if (isClickOutside && lastConfirmed.value !== props.value) {
-				// dismiss changes
 				emit('input', lastConfirmed.value)
 			}
 
 			if (isConfirmButtonClicked.value) {
 				isConfirmButtonClicked.value = false
-				// debugger
-				// fieldRef.value?.$el.blur()
+				if (
+					document.activeElement instanceof HTMLElement &&
+					(document.activeElement === fieldRef.value?.$el ||
+						fieldRef.value?.$el.contains(document.activeElement))
+				)
+					document.activeElement.blur()
 			}
 
 			updateIsEditing(false)
