@@ -5,12 +5,9 @@
 				v-for="(breadcrumb, index) in breadcrumbs"
 				:key="index"
 				class="kt-breadcrumb__text"
-				:class="textClasses(breadcrumb)"
+				:class="textClasses(breadcrumb, index)"
 			>
 				<span
-					:class="{
-						'kt-breadcrumb__text__title--is-active': index === activeItemIndex,
-					}"
 					@click="handleClick(breadcrumb, index)"
 					v-text="breadcrumb.title"
 				/>
@@ -31,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import { makeProps } from '../make-props'
 
@@ -41,18 +38,16 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 	name: 'KtBreadcrumb',
 	props: makeProps(KottiBreadcrumb.propsSchema),
 	setup(props) {
-		const activeItemIndex = ref<number>(0)
 		return {
-			activeItemIndex,
-			handleClick: (item: KottiBreadcrumb.Breadcrumb, index: number) => {
+			handleClick: (item: KottiBreadcrumb.Breadcrumb) => {
 				if (!item.isCompleted) return
-				activeItemIndex.value = index
 				item.onClick()
 			},
 			KottiBreadcrumb,
 			showSeparator: (index: number) => index < props.breadcrumbs.length - 1,
-			textClasses: (item: KottiBreadcrumb.Breadcrumb) => ({
+			textClasses: (item: KottiBreadcrumb.Breadcrumb, index: number) => ({
 				'kt-breadcrumb__text--is-completed': item.isCompleted,
+				'kt-breadcrumb__text--is-active': index === props.activeIndex,
 			}),
 		}
 	},
@@ -89,7 +84,8 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 				cursor: pointer;
 			}
 		}
-		&__title--is-active {
+		&--is-active {
+			font-weight: 600;
 			color: var(--breadcrumb-color-active);
 		}
 	}

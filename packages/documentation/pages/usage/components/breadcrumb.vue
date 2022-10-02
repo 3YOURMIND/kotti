@@ -6,7 +6,7 @@ Indicate the current page’s location within a navigational hierarchy.
 ## Basic
 
 <div class="element-example white">
-	<KtBreadcrumb :breadcrumbs="links"/>
+	<KtBreadcrumb :activeIndex="activeIndex" :breadcrumbs="links"/>
 </div>
 
 ```html
@@ -63,7 +63,7 @@ textSeparator: {
 
 <script lang="ts">
 import { KtBreadcrumb } from '@3yourmind/kotti-ui'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 
 import { useRouter } from '../../../hooks/use-router'
 
@@ -76,27 +76,38 @@ export default defineComponent({
 	},
 	setup() {
 		const router = useRouter()
+		const activeIndex = ref<number | null>(2)
 		return {
+			activeIndex,
 			component: KtBreadcrumb,
 			links: [
 				{
 					title: 'Kotti',
-					onClick: () => router.value.push('/'),
+					onClick: () => {
+						;(activeIndex.value = 0), router.value.push('/')
+					},
 					isCompleted: true,
 				},
 				{
 					title: 'Usage',
-					onClick: () => router.value.push('#'),
+					onClick: () => {
+						;(activeIndex.value = 1), router.value.push('#')
+					},
 					isCompleted: true,
 				},
 				{
 					title: 'Components',
-					onClick: () => router.value.push('#'),
+					onClick: () => {
+						;(activeIndex.value = 2), router.value.push('#')
+					},
 					isCompleted: true,
 				},
 				{
 					title: 'Breadcrumbs',
-					onClick: () => router.value.push('/usage/components/breadcrumb'),
+					onClick: () => {
+						;(activeIndex.value = 3),
+							router.value.push('/usage/components/breadcrumb')
+					},
 					isCompleted: false,
 				},
 			],
