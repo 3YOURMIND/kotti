@@ -55,8 +55,6 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 </script>
 
 <style lang="scss" scoped>
-@import '../kotti-style/_variables.scss';
-
 .kt-breadcrumb {
 	--breadcrumb-color-completed: var(--interactive-03);
 	--breadcrumb-color-active: var(--text-01);
@@ -74,8 +72,6 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 	}
 
 	&__text {
-		color: $darkgray-300;
-
 		&--is-completed {
 			font-weight: 600;
 			color: var(--breadcrumb-color-completed);
