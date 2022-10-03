@@ -5,9 +5,12 @@
 				v-for="(breadcrumb, index) in breadcrumbs"
 				:key="index"
 				class="kt-breadcrumb__text"
-				:class="textClasses(breadcrumb)"
+				:class="textClasses(breadcrumb, index)"
 			>
-				<span @click="handleClick(breadcrumb)" v-text="breadcrumb.title" />
+				<span
+					@click="handleClick(breadcrumb, index)"
+					v-text="breadcrumb.title"
+				/>
 				<span v-if="showSeparator(index)" class="kt-breadcrumb__separator">
 					<i
 						v-if="separator.style === KottiBreadcrumb.SeparatorType.ICON"
@@ -42,8 +45,9 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 			},
 			KottiBreadcrumb,
 			showSeparator: (index: number) => index < props.breadcrumbs.length - 1,
-			textClasses: (item: KottiBreadcrumb.Breadcrumb) => ({
+			textClasses: (item: KottiBreadcrumb.Breadcrumb, index: number) => ({
 				'kt-breadcrumb__text--is-completed': item.isCompleted,
+				'kt-breadcrumb__text--is-active': index === props.activeIndex,
 			}),
 		}
 	},
@@ -51,11 +55,9 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 </script>
 
 <style lang="scss" scoped>
-@import '../kotti-style/_variables.scss';
-
 .kt-breadcrumb {
-	--breadcrumb-color-active: var(--interactive-03);
-
+	--breadcrumb-color-completed: var(--interactive-03);
+	--breadcrumb-color-active: var(--text-01);
 	display: flex;
 	flex-wrap: wrap;
 
@@ -65,19 +67,22 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 
 	li {
 		display: flex;
+		align-items: center;
 		margin: 0.1rem 0;
 	}
 
 	&__text {
-		color: $darkgray-300;
-
 		&--is-completed {
 			font-weight: 600;
-			color: var(--breadcrumb-color-active);
+			color: var(--breadcrumb-color-completed);
 
 			&:hover {
 				cursor: pointer;
 			}
+		}
+		&--is-active {
+			font-weight: 600;
+			color: var(--breadcrumb-color-active);
 		}
 	}
 

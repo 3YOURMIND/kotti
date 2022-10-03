@@ -28,6 +28,7 @@ export namespace KottiBreadcrumb {
 	export type Separator = z.infer<typeof separatorSchema>
 
 	export const propsSchema = z.object({
+		activeIndex: z.number().int().nullable().default(null),
 		breadcrumbs: z.array(breadcrumbSchema),
 		separator: separatorSchema.default(
 			() =>
