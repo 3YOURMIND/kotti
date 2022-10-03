@@ -17,22 +17,34 @@ Indicate the current page’s location within a navigational hierarchy.
 links: [
 	{
 		title: 'Kotti',
-		onClick: () => this.$router.push('/'),
+		onClick: () => {
+			activeIndex.value = 0,
+			this.$router.push('/'),
+		}
 		isCompleted: true,
 	},
 	{
 		title: 'Usage',
-		onClick: () => router.value.push('#'),
+		onClick: () => {
+			activeIndex.value = 1,
+			router.value.push('#'),
+		}
 		isCompleted: true,
 	},
 	{
 		title: 'Components',
-		onClick: () => this.$router.push('/components'),
+		onClick: () => {
+			activeIndex.value = 2,
+			this.$router.push('/components'),
+		}
 		isCompleted: true,
 	},
 	{
 		title: 'Breadcrumbs',
-		onClick: () => this.$router.push('/usage/components/breadcrumb'),
+		onClick: () => {
+			activeIndex.value = 3,
+			this.$router.push('/usage/components/breadcrumb'),
+		}
 		isCompleted: false,
 	},
 ]
@@ -84,29 +96,32 @@ export default defineComponent({
 				{
 					title: 'Kotti',
 					onClick: () => {
-						;(activeIndex.value = 0), router.value.push('/')
+						activeIndex.value = 0
+						router.value.push('/')
 					},
 					isCompleted: true,
 				},
 				{
 					title: 'Usage',
 					onClick: () => {
-						;(activeIndex.value = 1), router.value.push('#')
+						activeIndex.value = 1
+						router.value.push('#')
 					},
 					isCompleted: true,
 				},
 				{
 					title: 'Components',
 					onClick: () => {
-						;(activeIndex.value = 2), router.value.push('#')
+						activeIndex.value = 2
+						router.value.push('#')
 					},
 					isCompleted: true,
 				},
 				{
 					title: 'Breadcrumbs',
 					onClick: () => {
-						;(activeIndex.value = 3),
-							router.value.push('/usage/components/breadcrumb')
+						activeIndex.value = 3
+						router.value.push('/usage/components/breadcrumb')
 					},
 					isCompleted: false,
 				},
