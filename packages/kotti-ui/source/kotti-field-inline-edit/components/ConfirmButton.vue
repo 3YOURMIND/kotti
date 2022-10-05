@@ -32,10 +32,9 @@ export default defineComponent({
 	align-items: center;
 
 	font-weight: bold;
-	cursor: pointer;
-	color: var(--text-01);
 	padding-left: 0.8rem;
-
+	color: var(--text-01);
+	cursor: pointer;
 	&:hover {
 		color: var(--interactive-01-hover);
 	}

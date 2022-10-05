@@ -1,7 +1,7 @@
 <template>
 	<KtFieldTextArea
-		ref="fieldRef"
 		v-if="isMultiLine"
+		ref="fieldRef"
 		v-bind="fieldTextAreaProps"
 		@input="handleInput"
 	>
@@ -16,8 +16,8 @@
 	<KtFieldText
 		v-else
 		v-bind="fieldTextProps"
-		@input="handleInput"
 		ref="fieldRef"
+		@input="handleInput"
 	>
 		<template v-slot:container-right="{ classes }">
 			<ConfirmButton
@@ -177,8 +177,8 @@ export default defineComponent<
 .kt-field-inline-edit {
 	&:not(.kt-field-inline-edit--is-editing) {
 		::v-deep .kt-field__input-container-wrapper:hover {
-			background-color: var(--ui-05);
 			cursor: pointer;
+			background-color: var(--ui-05);
 		}
 	}
 

@@ -138,8 +138,7 @@ export default defineComponent({
 		return {
 			component: KtFieldInlineEdit,
 			fieldValue,
-			handleConfirm: (newValue: Kotti.FieldInlineEdit.Value) =>
-				console.log('HELLO'),
+			handleConfirm: (newValue: Kotti.FieldInlineEdit.Value) => newValue,
 			helpDescription: computed(() =>
 				isRegularMode(settings.value.mode)
 					? settings.value.helpDescription
