@@ -2,6 +2,7 @@
 	<div
 		v-if="isEditing"
 		class="kt-field-inline-edit__confirm-icon yoco"
+		:tabindex="tabIndex"
 		@click.stop="handleConfirm"
 		v-text="Yoco.Icon.CHECK"
 	/>
@@ -14,6 +15,7 @@ import { defineComponent } from '@vue/composition-api'
 export default defineComponent({
 	props: {
 		isEditing: { type: Boolean, required: true },
+		tabIndex: { type: Number, default: 0 },
 	},
 	setup(_, { emit }) {
 		return {
@@ -35,7 +37,8 @@ export default defineComponent({
 	padding-left: 0.8rem;
 	color: var(--text-01);
 	cursor: pointer;
-	&:hover {
+	&:hover,
+	&:focus-within {
 		color: var(--interactive-01-hover);
 	}
 	&:active {

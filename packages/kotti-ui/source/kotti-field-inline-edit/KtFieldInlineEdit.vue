@@ -7,22 +7,26 @@
 	>
 		<template v-slot:container-right="{ classes }">
 			<ConfirmButton
+				ref="confirmButtonRef"
 				v-bind="{ isEditing }"
 				:class="classes"
+				:tabIndex="tabIndex"
 				@confirm="handleConfirm"
 			/>
 		</template>
 	</KtFieldTextArea>
 	<KtFieldText
 		v-else
-		v-bind="fieldTextProps"
 		ref="fieldRef"
+		v-bind="fieldTextProps"
 		@input="handleInput"
 	>
 		<template v-slot:container-right="{ classes }">
 			<ConfirmButton
+				ref="confirmButtonRef"
 				v-bind="{ isEditing }"
 				:class="classes"
+				:tabIndex="tabIndex"
 				@confirm="handleConfirm"
 			/>
 		</template>
@@ -62,18 +66,36 @@ export default defineComponent<
 			emit('update:isEditing', value)
 		}
 
+		const confirmButtonRef = ref<{ $el: HTMLElement } | null>(null)
 		const fieldRef = ref<{ $el: HTMLElement } | null>(null)
 		const isConfirmButtonClicked = ref(false)
 		const lastConfirmed = ref<
 			Kotti.FieldText.Value | Kotti.FieldTextArea.Value
 		>(null)
 
-		const handleClick = (event: MouseEvent | KeyboardEvent) => {
+		const isMultiLine = computed(
+			() => props.mode === KottiFieldInlineEdit.Shared.Mode.MULTI_LINE,
+		)
+
+		const handleEnter = (event: KeyboardEvent) => {
+			const isTriggeredByButton = confirmButtonRef.value?.$el === event.target
+
+			const isTriggeredByField =
+				fieldRef.value?.$el === event.target ||
+				(event.target instanceof HTMLElement &&
+					fieldRef.value?.$el.contains(event.target))
+			// ignore enter within KtFieldTextArea itself
+			if (isTriggeredByButton || (!isMultiLine.value && isTriggeredByField))
+				confirmButtonRef.value?.$el.click()
+		}
+
+		const handleClickOrTab = (event: MouseEvent | KeyboardEvent) => {
 			if (event.target === null) return
 
 			const isClickOutside =
 				fieldRef.value?.$el !== event.target &&
-				!fieldRef.value?.$el.contains(event.target as HTMLElement)
+				event.target instanceof HTMLElement &&
+				!fieldRef.value?.$el.contains(event.target)
 
 			if (!isClickOutside && !isConfirmButtonClicked.value) {
 				updateIsEditing(true)
@@ -96,16 +118,22 @@ export default defineComponent<
 
 			updateIsEditing(false)
 		}
+
 		const handleKeyup = (event: KeyboardEvent) => {
-			if (event.key === 'Tab') handleClick(event)
+			switch (event.key) {
+				case 'Tab':
+					return handleClickOrTab(event)
+				case 'Enter':
+					return handleEnter(event)
+			}
 		}
 
 		onBeforeMount(() => {
-			window.addEventListener('click', handleClick)
+			window.addEventListener('click', handleClickOrTab)
 			window.addEventListener('keyup', handleKeyup)
 		})
 		onUnmounted(() => {
-			window.removeEventListener('click', handleClick)
+			window.removeEventListener('click', handleClickOrTab)
 			window.addEventListener('keyup', handleKeyup)
 		})
 
@@ -131,6 +159,7 @@ export default defineComponent<
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
 		return {
+			confirmButtonRef,
 			fieldRef,
 			fieldTextAreaProps: sharedProps,
 			fieldTextProps: computed(() => {
@@ -162,9 +191,7 @@ export default defineComponent<
 			handleInput: (newVal: Kotti.FieldText.Value) => {
 				emit('input', newVal)
 			},
-			isMultiLine: computed(
-				() => props.mode === KottiFieldInlineEdit.Shared.Mode.MULTI_LINE,
-			),
+			isMultiLine,
 			Yoco,
 		}
 	},
