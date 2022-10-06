@@ -3,7 +3,7 @@
 		v-if="isMultiLine"
 		ref="fieldRef"
 		v-bind="fieldTextAreaProps"
-		@input="handleInput"
+		@input="onEdit"
 	>
 		<template v-slot:container-right="{ classes }">
 			<ConfirmButton
@@ -11,23 +11,18 @@
 				v-bind="{ isEditing }"
 				:class="classes"
 				:tabIndex="tabIndex"
-				@confirm="handleConfirm"
+				@confirm="onButtonClick"
 			/>
 		</template>
 	</KtFieldTextArea>
-	<KtFieldText
-		v-else
-		ref="fieldRef"
-		v-bind="fieldTextProps"
-		@input="handleInput"
-	>
+	<KtFieldText v-else ref="fieldRef" v-bind="fieldTextProps" @input="onEdit">
 		<template v-slot:container-right="{ classes }">
 			<ConfirmButton
 				ref="confirmButtonRef"
 				v-bind="{ isEditing }"
 				:class="classes"
 				:tabIndex="tabIndex"
-				@confirm="handleConfirm"
+				@confirm="onButtonClick"
 			/>
 		</template>
 	</KtFieldText>
@@ -42,6 +37,7 @@ import {
 	onBeforeMount,
 	onUnmounted,
 	ref,
+	watch,
 } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -66,30 +62,38 @@ export default defineComponent<
 			emit('update:isEditing', value)
 		}
 
+		const currentValue = ref<KottiFieldInlineEdit.Value>(props.value)
+		watch(
+			() => props.isEditing,
+			(willEdit) => {
+				if (willEdit) currentValue.value = props.value
+			},
+			{ immediate: true },
+		)
+
 		const confirmButtonRef = ref<{ $el: HTMLElement } | null>(null)
 		const fieldRef = ref<{ $el: HTMLElement } | null>(null)
+
 		const isConfirmButtonClicked = ref(false)
-		const lastConfirmed = ref<
-			Kotti.FieldText.Value | Kotti.FieldTextArea.Value
-		>(null)
 
 		const isMultiLine = computed(
 			() => props.mode === KottiFieldInlineEdit.Shared.Mode.MULTI_LINE,
 		)
 
-		const handleEnter = (event: KeyboardEvent) => {
+		const onEnter = (event: KeyboardEvent) => {
 			const isTriggeredByButton = confirmButtonRef.value?.$el === event.target
 
 			const isTriggeredByField =
 				fieldRef.value?.$el === event.target ||
 				(event.target instanceof HTMLElement &&
 					fieldRef.value?.$el.contains(event.target))
-			// ignore enter within KtFieldTextArea itself
+
+			// ignore enter within KtFieldTextArea (for new lines)
 			if (isTriggeredByButton || (!isMultiLine.value && isTriggeredByField))
 				confirmButtonRef.value?.$el.click()
 		}
 
-		const handleClickOrTab = (event: MouseEvent | KeyboardEvent) => {
+		const onClickOrTab = (event: MouseEvent | KeyboardEvent) => {
 			if (event.target === null) return
 
 			const isClickOutside =
@@ -102,9 +106,7 @@ export default defineComponent<
 				return
 			}
 
-			if (isClickOutside && lastConfirmed.value !== props.value) {
-				emit('input', lastConfirmed.value)
-			}
+			if (isClickOutside) currentValue.value = props.value
 
 			if (isConfirmButtonClicked.value) {
 				isConfirmButtonClicked.value = false
@@ -119,22 +121,22 @@ export default defineComponent<
 			updateIsEditing(false)
 		}
 
-		const handleKeyup = (event: KeyboardEvent) => {
+		const onKeyup = (event: KeyboardEvent) => {
 			switch (event.key) {
 				case 'Tab':
-					return handleClickOrTab(event)
+					return onClickOrTab(event)
 				case 'Enter':
-					return handleEnter(event)
+					return onEnter(event)
 			}
 		}
 
 		onBeforeMount(() => {
-			window.addEventListener('click', handleClickOrTab)
-			window.addEventListener('keyup', handleKeyup)
+			window.addEventListener('click', onClickOrTab)
+			window.addEventListener('keyup', onKeyup)
 		})
 		onUnmounted(() => {
-			window.removeEventListener('click', handleClickOrTab)
-			window.addEventListener('keyup', handleKeyup)
+			window.removeEventListener('click', onClickOrTab)
+			window.addEventListener('keyup', onKeyup)
 		})
 
 		const sharedProps = computed(() => {
@@ -152,7 +154,7 @@ export default defineComponent<
 				placeholder: props.placeholder ?? translations.value.placeholder,
 				tabindex: props.tabIndex,
 				validator: props.validator,
-				value: props.value,
+				value: currentValue.value,
 			}
 		})
 
@@ -182,16 +184,14 @@ export default defineComponent<
 					size: useSize(props.mode),
 				}
 			}),
-			handleConfirm: () => {
-				isConfirmButtonClicked.value = true
-				lastConfirmed.value = props.value
-				emit('input', lastConfirmed.value)
-				emit('confirm', lastConfirmed.value)
-			},
-			handleInput: (newVal: Kotti.FieldText.Value) => {
-				emit('input', newVal)
-			},
 			isMultiLine,
+			onButtonClick: () => {
+				isConfirmButtonClicked.value = true
+				emit('input', currentValue.value)
+			},
+			onEdit: (newVal: Kotti.FieldText.Value) => {
+				if (props.isEditing) currentValue.value = newVal
+			},
 			Yoco,
 		}
 	},

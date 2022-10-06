@@ -74,7 +74,7 @@ export namespace KottiFieldInlineEdit {
 		export type PropsInternal = z.output<typeof propsSchema>
 	}
 
-	export type Value = KottiFieldText.Value
+	export type Value = KottiFieldText.Value | KottiFieldTextArea.Value
 
 	export type Translations = {
 		placeholder: string

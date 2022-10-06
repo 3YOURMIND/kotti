@@ -20,7 +20,6 @@
 				}"
 				class="mb-16px"
 				:value="fieldValue"
-				@confirm="handleConfirm"
 				@input="setValue"
 				@update:isEditing="($event) => (isEditing = $event)"
 			/>
@@ -101,7 +100,7 @@ export default defineComponent({
 	},
 	setup() {
 		const isEditing = ref(false)
-		const fieldValue: Ref<string | null> = ref(null)
+		const fieldValue: Ref<Kotti.FieldInlineEdit.Value> = ref(null)
 		const settings = ref<{
 			booleanFlags: {
 				hideValidation: Kotti.FieldToggle.Value
@@ -138,8 +137,6 @@ export default defineComponent({
 		return {
 			component: KtFieldInlineEdit,
 			fieldValue,
-			handleConfirm: (newValue: Kotti.FieldInlineEdit.Value) =>
-				window.alert('confirmed:' + newValue),
 			helpDescription: computed(() =>
 				isRegularMode(settings.value.mode)
 					? settings.value.helpDescription
@@ -173,7 +170,7 @@ export default defineComponent({
 				},
 			]),
 			settings,
-			setValue: (newValue: string | null) => {
+			setValue: (newValue: Kotti.FieldInlineEdit.Value) => {
 				fieldValue.value = newValue
 			},
 			placeholder: computed(() => settings.value.placeholder),
