@@ -138,7 +138,8 @@ export default defineComponent({
 		return {
 			component: KtFieldInlineEdit,
 			fieldValue,
-			handleConfirm: (newValue: Kotti.FieldInlineEdit.Value) => newValue,
+			handleConfirm: (newValue: Kotti.FieldInlineEdit.Value) =>
+				window.alert('confirmed:' + newValue),
 			helpDescription: computed(() =>
 				isRegularMode(settings.value.mode)
 					? settings.value.helpDescription
