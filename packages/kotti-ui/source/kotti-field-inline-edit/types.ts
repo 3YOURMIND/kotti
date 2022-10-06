@@ -74,8 +74,7 @@ export namespace KottiFieldInlineEdit {
 		export type PropsInternal = z.output<typeof propsSchema>
 	}
 
-	export const valueSchema = KottiFieldText.propsSchema.pick({ value: true })
-	export type Value = z.output<typeof valueSchema>
+	export type Value = KottiFieldText.Value
 
 	export type Translations = {
 		placeholder: string
