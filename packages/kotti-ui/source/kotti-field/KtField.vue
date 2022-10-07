@@ -33,9 +33,9 @@
 				v-text="field.helpDescription"
 			/>
 			<div class="kt-field__input-container-wrapper">
-				<slot classes="kt-field__input-container__prefix" name="container-left">
-					<div class="kt-field__input-container__prefix" />
-				</slot>
+				<div class="kt-field__input-container__prefix">
+					<slot name="container-left" />
+				</div>
 				<slot name="container">
 					<div ref="inputContainerRef" class="kt-field__input-container">
 						<div
@@ -80,12 +80,9 @@
 						/>
 					</div>
 				</slot>
-				<slot
-					classes="kt-field__input-container__suffix"
-					name="container-right"
-				>
-					<div class="kt-field__input-container__suffix" />
-				</slot>
+				<div class="kt-field__input-container__suffix">
+					<slot name="container-right" />
+				</div>
 			</div>
 			<div
 				v-if="!field.isLoading && showValidation && validationText !== null"

@@ -5,8 +5,8 @@
 		:helpTextSlot="$slots.helpText"
 	>
 		<textarea slot="container" v-bind="inputProps" @input="onInput" />
-		<template v-slot:container-right="{ classes }">
-			<slot :classes="classes" name="container-right" />
+		<template #container-right>
+			<slot name="container-right" />
 		</template>
 	</KtField>
 </template>

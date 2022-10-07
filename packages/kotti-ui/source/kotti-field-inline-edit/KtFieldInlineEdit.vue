@@ -5,22 +5,20 @@
 		v-bind="fieldTextAreaProps"
 		@input="onEdit"
 	>
-		<template v-slot:container-right="{ classes }">
+		<template #container-right>
 			<ConfirmButton
 				ref="confirmButtonRef"
 				v-bind="{ isEditing }"
-				:class="classes"
 				:tabIndex="tabIndex"
 				@confirm="onButtonClick"
 			/>
 		</template>
 	</KtFieldTextArea>
 	<KtFieldText v-else ref="fieldRef" v-bind="fieldTextProps" @input="onEdit">
-		<template v-slot:container-right="{ classes }">
+		<template #container-right>
 			<ConfirmButton
 				ref="confirmButtonRef"
 				v-bind="{ isEditing }"
-				:class="classes"
 				:tabIndex="tabIndex"
 				@confirm="onButtonClick"
 			/>
