@@ -32,6 +32,7 @@ export namespace Shared {
 		})
 
 	export const isMultipleSchema = z.object({
+		clearOnSelect: z.boolean().default(false),
 		collapseTagsAfter: z.number().int().min(0).default(Number.MAX_SAFE_INTEGER),
 		maximumSelectable: z.number().int().min(0).default(Number.MAX_SAFE_INTEGER),
 		value: z.array(Shared.valueSchema).default(() => []),

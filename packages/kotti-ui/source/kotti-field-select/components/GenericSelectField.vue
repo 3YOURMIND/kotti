@@ -150,12 +150,15 @@ export default defineComponent({
 		const { isDropdownOpen, isDropdownMounted, ...selectTippy } =
 			useSelectTippy()
 
-		watch(isDropdownMounted, (isMounted) => {
-			if (isMounted) return
-
+		const deleteQuery = () => {
 			if (props.isRemote) {
 				if (props.query !== null) emit(UPDATE_QUERY, null)
 			} else localQuery.value = null
+		}
+
+		watch(isDropdownMounted, (isMounted) => {
+			if (isMounted) return
+			deleteQuery()
 		})
 
 		watch(isDropdownOpen, (isOpen) => {
@@ -240,8 +243,10 @@ export default defineComponent({
 			tippyContentRef: selectTippy.tippyContentRef,
 			tippyTriggerRef: selectTippy.tippyTriggerRef,
 			onOptionsInput: (value: MultiValue) => {
-				if (props.isMultiple) field.setValue(value)
-				else {
+				if (props.isMultiple) {
+					field.setValue(value)
+					if (props.clearOnSelect) deleteQuery()
+				} else {
 					const newValue = value[0] ?? null
 					// performance optimization
 					if (field.currentValue !== newValue) field.setValue(newValue)

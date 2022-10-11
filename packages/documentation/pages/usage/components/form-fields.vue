@@ -448,6 +448,15 @@
 								label="option slot"
 								type="switch"
 							/>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes('clearOnSelect')
+								"
+								formKey="clearOnSelect"
+								isOptional
+								label="clearOnSelect"
+								type="switch"
+							/>
 							<h4>Additional Slots</h4>
 							<KtFieldText
 								v-if="
@@ -614,6 +623,7 @@ const components: Array<{
 	{
 		additionalProps: [
 			'actions',
+			'clearOnSelect',
 			'collapseTagsAfter',
 			'hasOptionSlot',
 			'isUnsorted',
@@ -626,6 +636,7 @@ const components: Array<{
 	{
 		additionalProps: [
 			'actions',
+			'clearOnSelect',
 			'collapseTagsAfter',
 			'hasOptionSlot',
 			'isLoadingOptions',
@@ -806,6 +817,7 @@ export default defineComponent({
 		const settings = ref<{
 			additionalProps: {
 				autoComplete: 'current-password' | 'new-password'
+				clearOnSelect: Kotti.FieldToggle.Value
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				contentSlot: ComponentValue['contentSlot']
 				currencyCurrency: string
@@ -854,6 +866,7 @@ export default defineComponent({
 		}>({
 			additionalProps: {
 				autoComplete: 'current-password',
+				clearOnSelect: false,
 				collapseTagsAfter: null,
 				contentSlot: null,
 				currencyCurrency: 'USD',
@@ -1078,6 +1091,10 @@ export default defineComponent({
 			)
 				Object.assign(additionalProps, {
 					collapseTagsAfter: settings.value.additionalProps.collapseTagsAfter,
+				})
+			if (componentDefinition.value.additionalProps.includes('clearOnSelect'))
+				Object.assign(additionalProps, {
+					clearOnSelect: settings.value.additionalProps.clearOnSelect,
 				})
 
 			if (
