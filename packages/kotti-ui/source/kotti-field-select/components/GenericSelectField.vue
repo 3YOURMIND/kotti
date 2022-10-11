@@ -240,7 +240,6 @@ export default defineComponent({
 			})),
 			inputRef,
 			isDropdownOpen,
-			localQuery,
 			tippyContentRef: selectTippy.tippyContentRef,
 			tippyTriggerRef: selectTippy.tippyTriggerRef,
 			onOptionsInput: (value: MultiValue) => {
