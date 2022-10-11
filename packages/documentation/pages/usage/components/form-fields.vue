@@ -454,7 +454,7 @@
 								"
 								formKey="clearOnSelect"
 								isOptional
-								label="clear on select"
+								label="clearOnSelect"
 								type="switch"
 							/>
 							<h4>Additional Slots</h4>
