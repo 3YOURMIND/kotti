@@ -115,8 +115,8 @@ export default defineComponent({
 			return modifiedOptions.sort((a, b) => a.label.localeCompare(b.label))
 		})
 
-		const hoveredIndex = ref(-1)
-		const resetHoveredIndex = () => (hoveredIndex.value = -1)
+		const hoveredIndex = ref(0)
+		const resetHoveredIndex = () => (hoveredIndex.value = 0)
 
 		watch(
 			() => props.isDropdownOpen,
