@@ -8,7 +8,7 @@ export namespace KottiFieldPassword {
 
 	export enum AutoComplete {
 		CURRENT = 'current-password',
-		NEW = 'new-passowrd',
+		NEW = 'new-password',
 	}
 	export const propsSchema = KottiField.propsSchema
 		.merge(KottiField.potentiallySupportedPropsSchema)
