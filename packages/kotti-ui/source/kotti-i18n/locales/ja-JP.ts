@@ -34,7 +34,7 @@ export const jaJP: KottiI18n.Messages = {
 	KtFieldSelects: {
 		loadingText: 'ロード中',
 		noMatchText: 'データなし',
-		noDataText: 'データなし',
+		noDataText: '結果がありません',
 		placeholder: '選択してください',
 	},
 	// TODO check KtFilters translations
