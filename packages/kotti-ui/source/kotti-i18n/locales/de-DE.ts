@@ -34,7 +34,7 @@ export const deDE: KottiI18n.Messages = {
 	KtFieldSelects: {
 		loadingText: 'Lädt',
 		noMatchText: 'Nichts gefunden',
-		noDataText: 'Keine Daten',
+		noDataText: 'Keine Ergebnisse',
 		placeholder: 'Daten wählen',
 	},
 	// TODO check KtFilters translations

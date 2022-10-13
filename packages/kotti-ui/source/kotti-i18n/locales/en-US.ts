@@ -34,7 +34,7 @@ export const enUS: KottiI18n.Messages = {
 	KtFieldSelects: {
 		loadingText: 'Loading',
 		noMatchText: 'No matching data',
-		noDataText: 'No data',
+		noDataText: 'No results',
 		placeholder: 'Select',
 	},
 	KtFilters: {

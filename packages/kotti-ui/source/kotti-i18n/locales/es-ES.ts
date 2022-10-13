@@ -34,7 +34,7 @@ export const esES: KottiI18n.Messages = {
 	KtFieldSelects: {
 		loadingText: 'Cargando',
 		noMatchText: 'No hay datos que coincidan',
-		noDataText: 'Sin datos',
+		noDataText: 'Sin resultados',
 		placeholder: 'Seleccionar',
 	},
 	KtFilters: {
