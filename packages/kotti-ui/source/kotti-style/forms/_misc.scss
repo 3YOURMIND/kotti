@@ -73,7 +73,8 @@
 }
 
 // Disabled fields
-.form-input {
+.form-input
+.form-radio {
 	&:disabled,
 	&.disabled {
 		--form-input-interactive-color: var(--ui-03);
