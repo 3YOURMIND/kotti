@@ -162,6 +162,7 @@ npm login
 # make sure to commit the version bump changes before publishing then run:
 
 # Make a release draft here:
+# Follow guidelines of previous releases
 # https://github.com/3YOURMIND/kotti/releases/new
 # Tag format: 'v1.2.3-beta.4'
 # Title format: 1.2.3-beta.4: tldr of what's happening
