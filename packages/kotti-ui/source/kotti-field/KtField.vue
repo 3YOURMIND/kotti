@@ -5,6 +5,7 @@
 			v-show="!field.isLoading"
 			:class="wrapperClasses"
 			@click="$emit('click', $event)"
+			@enter="$emit('enter', $event)"
 			@mousedown="$emit('mousedown', $event)"
 		>
 			<div v-if="hasLabel || hasHelpText" class="kt-field__header">

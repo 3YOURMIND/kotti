@@ -1,8 +1,11 @@
 <template>
-	<KtFieldTextArea
-		v-if="isMultiLine"
+	<component
+		:is="isMultiLine ? 'KtFieldTextArea' : 'KtFieldText'"
 		ref="fieldRef"
-		v-bind="fieldTextAreaProps"
+		v-bind="isMultiLine ? fieldTextAreaProps : fieldTextProps"
+		@blur="updateIsEditing(false)"
+		@enter="onEnter"
+		@focus="updateIsEditing(true)"
 		@input="onEdit"
 	>
 		<template #container-right>
@@ -10,20 +13,10 @@
 				ref="confirmButtonRef"
 				v-bind="{ isEditing }"
 				:tabIndex="tabIndex"
-				@confirm="onButtonClick"
+				@confirm="onConfirm(true)"
 			/>
 		</template>
-	</KtFieldTextArea>
-	<KtFieldText v-else ref="fieldRef" v-bind="fieldTextProps" @input="onEdit">
-		<template #container-right>
-			<ConfirmButton
-				ref="confirmButtonRef"
-				v-bind="{ isEditing }"
-				:tabIndex="tabIndex"
-				@confirm="onButtonClick"
-			/>
-		</template>
-	</KtFieldText>
+	</component>
 </template>
 
 <!-- TODO: test formKey  -->
@@ -46,6 +39,13 @@ import ConfirmButton from './components/ConfirmButton.vue'
 import { KottiFieldInlineEdit } from './types'
 import { useSize } from './utils'
 
+const isFieldOrButtonInFocus = (
+	fieldRef: { $el: HTMLElement } | null,
+	eventTarget: EventTarget | null,
+) =>
+	fieldRef?.$el === eventTarget ||
+	(eventTarget instanceof HTMLElement && fieldRef?.$el.contains(eventTarget))
+
 export default defineComponent<
 	KottiFieldInlineEdit.PropsInternal<KottiFieldInlineEdit.Shared.Mode>
 >({
@@ -55,16 +55,28 @@ export default defineComponent<
 	},
 	props: makeProps(KottiFieldInlineEdit.Regular.propsSchema),
 	setup(props, { emit }) {
-		const updateIsEditing = (value: boolean) => {
-			if (props.isDisabled) return
-			emit('update:isEditing', value)
+		onBeforeMount(() => {
+			window.addEventListener('click', onClick)
+			window.addEventListener('focus', onFocusChange, true)
+		})
+		onUnmounted(() => {
+			window.removeEventListener('click', onClick)
+			window.addEventListener('focus', onFocusChange)
+		})
+
+		const updateIsEditing = (shouldEdit: boolean) => {
+			if (shouldEdit && props.isEditing) return
+
+			internalValue.value = props.value
+
+			emit('update:isEditing', shouldEdit)
 		}
 
-		const currentValue = ref<KottiFieldInlineEdit.Value>(props.value)
+		const internalValue = ref<KottiFieldInlineEdit.Value>(props.value)
 		watch(
-			() => props.isEditing,
-			(willEdit) => {
-				if (willEdit) currentValue.value = props.value
+			() => props.value,
+			(newValue) => {
+				internalValue.value = newValue
 			},
 			{ immediate: true },
 		)
@@ -72,71 +84,80 @@ export default defineComponent<
 		const confirmButtonRef = ref<{ $el: HTMLElement } | null>(null)
 		const fieldRef = ref<{ $el: HTMLElement } | null>(null)
 
-		const isConfirmButtonClicked = ref(false)
-
 		const isMultiLine = computed(
 			() => props.mode === KottiFieldInlineEdit.Shared.Mode.MULTI_LINE,
 		)
 
-		const onEnter = (event: KeyboardEvent) => {
-			const isTriggeredByButton = confirmButtonRef.value?.$el === event.target
+		const blurInput = () => {
+			const isInputInFocus =
+				document.activeElement instanceof HTMLElement &&
+				(document.activeElement === fieldRef.value?.$el ||
+					fieldRef.value?.$el.contains(document.activeElement))
 
-			const isTriggeredByField =
-				fieldRef.value?.$el === event.target ||
-				(event.target instanceof HTMLElement &&
-					fieldRef.value?.$el.contains(event.target))
-
-			// ignore enter within KtFieldTextArea (for new lines)
-			if (isTriggeredByButton || (!isMultiLine.value && isTriggeredByField))
-				confirmButtonRef.value?.$el.click()
+			if (document.activeElement instanceof HTMLElement && isInputInFocus)
+				document.activeElement.blur()
 		}
 
-		const onClickOrTab = (event: MouseEvent | KeyboardEvent) => {
-			if (event.target === null) return
+		const triggeredByButton = ref(false)
+
+		const onConfirm = (emittedByButton: boolean | undefined = false) => {
+			triggeredByButton.value = emittedByButton
+			emit('input', internalValue.value)
+			updateIsEditing(false)
+			blurInput()
+		}
+
+		const onEnter = () => {
+			if (
+				triggeredByButton.value ||
+				/**
+				 *  ignore enter within KtFieldTextArea to allow for new lines
+				 */
+				!isMultiLine.value
+			)
+				onConfirm()
+		}
+
+		const onClick = (event: MouseEvent | KeyboardEvent) => {
+			if (event.target === null || props.isDisabled) return
 
 			const isClickOutside =
-				fieldRef.value?.$el !== event.target &&
+				event.target !== fieldRef.value?.$el &&
 				event.target instanceof HTMLElement &&
 				!fieldRef.value?.$el.contains(event.target)
 
-			if (!isClickOutside && !isConfirmButtonClicked.value) {
-				updateIsEditing(true)
-				return
-			}
+			if (!isClickOutside && !triggeredByButton.value)
+				return updateIsEditing(true)
 
-			if (isClickOutside) currentValue.value = props.value
-
-			if (isConfirmButtonClicked.value) {
-				isConfirmButtonClicked.value = false
-				if (
-					document.activeElement instanceof HTMLElement &&
-					(document.activeElement === fieldRef.value?.$el ||
-						fieldRef.value?.$el.contains(document.activeElement))
-				)
-					document.activeElement.blur()
-			}
-
+			triggeredByButton.value = false
 			updateIsEditing(false)
+			blurInput()
 		}
 
-		const onKeyup = (event: KeyboardEvent) => {
-			switch (event.key) {
-				case 'Tab':
-					return onClickOrTab(event)
-				case 'Enter':
-					return onEnter(event)
-			}
+		const lastFocusTarget = ref<EventTarget | null>(null)
+
+		/**
+		 * `tab` key presses don't trigger on mobile,
+		 * and @blur events are tricky to implement given the implementation of
+		 * `KtField`. Therefore, a listener is attached to DOM `focus` events.
+		 *
+		 * The target element is continuously maintained in a variable to compare
+		 * changes and distinguish between ignore and confirm cases.
+		 */
+		const onFocusChange = (event: Event) => {
+			const wereInFocus = isFieldOrButtonInFocus(
+				fieldRef.value,
+				lastFocusTarget.value,
+			)
+			const areInFocus = isFieldOrButtonInFocus(fieldRef.value, event.target)
+
+			// case of blurring out of field without confirming
+			if (wereInFocus && !areInFocus) updateIsEditing(false)
+
+			lastFocusTarget.value = event.target
 		}
 
-		onBeforeMount(() => {
-			window.addEventListener('click', onClickOrTab)
-			window.addEventListener('keyup', onKeyup)
-		})
-		onUnmounted(() => {
-			window.removeEventListener('click', onClickOrTab)
-			window.addEventListener('keyup', onKeyup)
-		})
-
+		const translations = useTranslationNamespace('KtFieldInlineEdit')
 		const sharedProps = computed(() => {
 			return {
 				class: {
@@ -152,11 +173,9 @@ export default defineComponent<
 				placeholder: props.placeholder ?? translations.value.placeholder,
 				tabindex: props.tabIndex,
 				validator: props.validator,
-				value: currentValue.value,
+				value: internalValue.value,
 			}
 		})
-
-		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
 		return {
 			confirmButtonRef,
@@ -183,13 +202,12 @@ export default defineComponent<
 				}
 			}),
 			isMultiLine,
-			onButtonClick: () => {
-				isConfirmButtonClicked.value = true
-				emit('input', currentValue.value)
-			},
+			onConfirm,
 			onEdit: (newVal: Kotti.FieldText.Value) => {
-				if (props.isEditing) currentValue.value = newVal
+				if (props.isEditing) internalValue.value = newVal
 			},
+			onEnter,
+			updateIsEditing,
 			Yoco,
 		}
 	},
@@ -200,16 +218,16 @@ export default defineComponent<
 @import '../kotti-style/_variables.scss';
 
 .kt-field-inline-edit {
+	::v-deep .kt-field__input-container,
+	::v-deep .kt-field-text-area__wrapper {
+		border: none;
+	}
+
 	&:not(.kt-field-inline-edit--is-editing) {
 		::v-deep .kt-field__input-container-wrapper:hover {
 			cursor: pointer;
 			background-color: var(--ui-05);
 		}
-	}
-
-	::v-deep .kt-field__input-container,
-	::v-deep .kt-field-text-area__wrapper {
-		border: none;
 	}
 }
 </style>

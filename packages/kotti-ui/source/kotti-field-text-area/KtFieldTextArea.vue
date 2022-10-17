@@ -4,7 +4,13 @@
 		:getEmptyValue="() => null"
 		:helpTextSlot="$slots.helpText"
 	>
-		<textarea slot="container" v-bind="inputProps" @input="onInput" />
+		<textarea
+			slot="container"
+			v-bind="inputProps"
+			@focus="$emit('focus')"
+			@input="onInput"
+			@keyup.enter="$emit('enter', $event)"
+		/>
 		<template #container-right>
 			<slot name="container-right" />
 		</template>

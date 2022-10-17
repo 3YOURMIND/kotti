@@ -1,9 +1,10 @@
 <template>
-	<div
+	<button
 		v-if="isEditing"
 		class="kt-field-inline-edit__confirm-icon yoco"
 		:tabindex="tabIndex"
 		@click.stop="handleConfirm"
+		@keyup.enter.stop
 		v-text="Yoco.Icon.CHECK"
 	/>
 </template>
@@ -19,9 +20,7 @@ export default defineComponent({
 	},
 	setup(_, { emit }) {
 		return {
-			handleConfirm: () => {
-				emit('confirm')
-			},
+			handleConfirm: () => emit('confirm'),
 			Yoco,
 		}
 	},
@@ -32,14 +31,22 @@ export default defineComponent({
 .kt-field-inline-edit__confirm-icon {
 	display: flex;
 	align-items: center;
+	align-self: center;
+	justify-content: center;
 
-	font-weight: bold;
-	padding-left: 0.8rem;
+	border: none;
+	border-radius: var(--field-border-radius);
+	background: none;
+	padding: var(--unit-2);
+	margin-left: var(--unit-2);
 	color: var(--text-01);
 	cursor: pointer;
+	font-weight: bold;
+
 	&:hover,
 	&:focus-within {
 		color: var(--interactive-01-hover);
+		background-color: var(--ui-05);
 	}
 	&:active {
 		color: var(--interactive-03);
