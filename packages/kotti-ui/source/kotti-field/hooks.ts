@@ -116,8 +116,12 @@ const useValue = <DATA_TYPE>({
 				context === null ||
 				props.formKey === null ||
 				props.formKey === FORM_KEY_NONE
-			)
-				return emit('input', newValue)
+			) {
+				emit('input', newValue)
+				// if (newValue !== null) console.log('emit input: ', newValue)
+
+				return
+			}
 
 			return context.setValue(props.formKey, newValue)
 		}),

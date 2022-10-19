@@ -2,12 +2,15 @@
 	<component
 		:is="isMultiLine ? 'KtFieldTextArea' : 'KtFieldText'"
 		ref="fieldRef"
-		v-bind="isMultiLine ? fieldTextAreaProps : fieldTextProps"
+		v-bind="fieldProps"
 		@blur="updateIsEditing(false)"
 		@enter="onEnter"
 		@focus="updateIsEditing(true)"
 		@input="onEdit"
 	>
+		<template v-if="mode === 'regular' && $slots.helpText" #helpText>
+			{{ $slots.helpText }}
+		</template>
 		<template #container-right>
 			<ConfirmButton
 				ref="confirmButtonRef"
@@ -19,7 +22,6 @@
 	</component>
 </template>
 
-<!-- TODO: test formKey  -->
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import {
@@ -27,15 +29,18 @@ import {
 	defineComponent,
 	onBeforeMount,
 	onUnmounted,
+	reactive,
 	ref,
 	watch,
 } from '@vue/composition-api'
 
+import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
 import ConfirmButton from './components/ConfirmButton.vue'
+import { KOTTI_FIELD_INLINE_EDIT_SUPPORTS } from './constants'
 import { KottiFieldInlineEdit } from './types'
 import { useSize } from './utils'
 
@@ -45,6 +50,18 @@ const isFieldOrButtonInFocus = (
 ) =>
 	fieldRef?.$el === eventTarget ||
 	(eventTarget instanceof HTMLElement && fieldRef?.$el.contains(eventTarget))
+
+const blurInput = (inputRef: { $el: HTMLElement } | null) => {
+	const isInputInFocus =
+		document.activeElement instanceof HTMLElement &&
+		(document.activeElement === inputRef?.$el ||
+			inputRef?.$el.contains(document.activeElement))
+
+	console.log('blurInput, isInputInFocus', isInputInFocus)
+
+	if (document.activeElement instanceof HTMLElement && isInputInFocus)
+		document.activeElement.blur()
+}
 
 export default defineComponent<
 	KottiFieldInlineEdit.PropsInternal<KottiFieldInlineEdit.Shared.Mode>
@@ -64,22 +81,66 @@ export default defineComponent<
 			window.addEventListener('focus', onFocusChange)
 		})
 
-		const updateIsEditing = (shouldEdit: boolean) => {
-			if (shouldEdit && props.isEditing) return
+		const regularModeProps = computed(() => {
+			if (props.mode === KottiFieldInlineEdit.Shared.Mode.REGULAR) {
+				const { helpDescription, helpText, label } =
+					props as KottiFieldInlineEdit.PropsInternal<KottiFieldInlineEdit.Shared.Mode.REGULAR>
 
-			internalValue.value = props.value
+				return {
+					helpDescription,
+					helpText,
+					label,
+				}
+			}
 
-			emit('update:isEditing', shouldEdit)
-		}
+			return {
+				helpDescription: null,
+				helpText: null,
+				label: null,
+			}
+		})
 
-		const internalValue = ref<KottiFieldInlineEdit.Value>(props.value)
+		const field = useField<KottiFieldInlineEdit.Value>({
+			emit,
+			isEmpty: (value) => value === null,
+			props: reactive({
+				...props,
+				...regularModeProps.value,
+				...(props.mode !== KottiFieldInlineEdit.Shared.Mode.MULTI_LINE && {
+					hideClear: true,
+					rightIcon: props.isEditing ? undefined : Yoco.Icon.EDIT,
+				}),
+				leftIcon: null,
+				prefix: null,
+				size: useSize(props.mode),
+				suffix: null,
+			}),
+			supports: KOTTI_FIELD_INLINE_EDIT_SUPPORTS,
+		})
+		const { forceUpdate, forceUpdateKey } = useForceUpdate()
+
+		/**
+		 * value maintained during editing and not emitted to user-app
+		 * it gets initialised with the passed-down app value before editing starts
+		 * and after it ends.
+		 */
+		const internalValue = ref<KottiFieldInlineEdit.Value>(field.currentValue)
 		watch(
-			() => props.value,
+			() => field.currentValue,
 			(newValue) => {
+				console.log('in watcher on field.currentValue, newValue: ', newValue)
 				internalValue.value = newValue
 			},
 			{ immediate: true },
 		)
+
+		const updateIsEditing = (shouldEdit: boolean) => {
+			if (shouldEdit === props.isEditing) return
+
+			internalValue.value = field.currentValue
+
+			emit('update:isEditing', shouldEdit)
+		}
 
 		const confirmButtonRef = ref<{ $el: HTMLElement } | null>(null)
 		const fieldRef = ref<{ $el: HTMLElement } | null>(null)
@@ -88,26 +149,32 @@ export default defineComponent<
 			() => props.mode === KottiFieldInlineEdit.Shared.Mode.MULTI_LINE,
 		)
 
-		const blurInput = () => {
-			const isInputInFocus =
-				document.activeElement instanceof HTMLElement &&
-				(document.activeElement === fieldRef.value?.$el ||
-					fieldRef.value?.$el.contains(document.activeElement))
-
-			if (document.activeElement instanceof HTMLElement && isInputInFocus)
-				document.activeElement.blur()
-		}
-
 		const triggeredByButton = ref(false)
 
 		const onConfirm = (emittedByButton: boolean | undefined = false) => {
+			// console.log('onConfirm, internalValue:', internalValue.value)
 			triggeredByButton.value = emittedByButton
-			emit('input', internalValue.value)
+
+			// console.log(
+			// 	'onConfirm, currentValue before forceUpdate:',
+			// 	field.currentValue,
+			// )
+
+			// will be emitted through @input
+			field.setValue(internalValue.value)
+			forceUpdate()
+
+			// console.log(
+			// 	'onConfirm, currentValue after forceUpdate:',
+			// 	field.currentValue,
+			// )
+
 			updateIsEditing(false)
-			blurInput()
+			blurInput(fieldRef.value)
 		}
 
 		const onEnter = () => {
+			console.log('onEnter', triggeredByButton.value)
 			if (
 				triggeredByButton.value ||
 				/**
@@ -131,7 +198,7 @@ export default defineComponent<
 
 			triggeredByButton.value = false
 			updateIsEditing(false)
-			blurInput()
+			blurInput(fieldRef.value)
 		}
 
 		const lastFocusTarget = ref<EventTarget | null>(null)
@@ -158,52 +225,30 @@ export default defineComponent<
 		}
 
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
-		const sharedProps = computed(() => {
-			return {
-				class: {
-					'kt-field-inline-edit': true,
-					'kt-field-inline-edit--is-editing':
-						props.isEditing && !props.isDisabled,
-					[`kt-field-inline-edit--is-${props.mode}`]: true,
-				},
-				hideValidation: props.hideValidation,
-				isDisabled: props.isDisabled,
-				isLoading: props.isLoading,
-				isOptional: props.isOptional,
-				placeholder: props.placeholder ?? translations.value.placeholder,
-				tabindex: props.tabIndex,
-				validator: props.validator,
-				value: internalValue.value,
-			}
-		})
+
+		const fieldProps = computed(() => ({
+			...field,
+			class: {
+				'kt-field-inline-edit': true,
+				'kt-field-inline-edit--is-editing':
+					props.isEditing && !props.isDisabled,
+				[`kt-field-inline-edit--is-${props.mode}`]: true,
+			},
+			formKey: props.formKey,
+			forceUpdateKey: forceUpdateKey.value,
+			placeholder: props.placeholder ?? translations.value.placeholder,
+			value: props.isEditing ? internalValue.value : field.currentValue,
+		}))
 
 		return {
 			confirmButtonRef,
+			field,
+			fieldProps,
 			fieldRef,
-			fieldTextAreaProps: sharedProps,
-			fieldTextProps: computed(() => {
-				let regularModeProps = {}
-				if (props.mode === KottiFieldInlineEdit.Shared.Mode.REGULAR) {
-					const { helpDescription, helpText, label } =
-						props as KottiFieldInlineEdit.PropsInternal<KottiFieldInlineEdit.Shared.Mode.REGULAR>
-					regularModeProps = {
-						helpDescription,
-						helpText,
-						label,
-					}
-				}
-
-				return {
-					...sharedProps.value,
-					...regularModeProps,
-					hideClear: true,
-					rightIcon: props.isEditing ? undefined : Yoco.Icon.EDIT,
-					size: useSize(props.mode),
-				}
-			}),
 			isMultiLine,
 			onConfirm,
 			onEdit: (newVal: Kotti.FieldText.Value) => {
+				console.log('onEdit')
 				if (props.isEditing) internalValue.value = newVal
 			},
 			onEnter,

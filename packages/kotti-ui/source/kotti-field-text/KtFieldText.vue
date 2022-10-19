@@ -48,15 +48,24 @@ export default defineComponent<KottiFieldText.PropsInternal>({
 				(): Partial<HTMLInputElement> & {
 					class: string[]
 					forceUpdateKey: number
-				} => ({
-					...field.inputProps,
-					class: ['kt-field-text__wrapper'],
-					forceUpdateKey: forceUpdateKey.value,
-					type: 'text',
-					size: 1,
-					value: field.currentValue ?? '',
-					placeholder: props.placeholder ?? undefined,
-				}),
+				} => {
+					console.log(
+						'ktFieldText: inputProps: field.currentValue: ',
+						field.currentValue,
+						' props.value',
+						props.value,
+					)
+
+					return {
+						...field.inputProps,
+						class: ['kt-field-text__wrapper'],
+						forceUpdateKey: forceUpdateKey.value,
+						type: 'text',
+						size: 1,
+						value: field.currentValue ?? '',
+						placeholder: props.placeholder ?? undefined,
+					}
+				},
 			),
 			onInput: (event: { target: HTMLInputElement }) => {
 				const newValue = event.target.value

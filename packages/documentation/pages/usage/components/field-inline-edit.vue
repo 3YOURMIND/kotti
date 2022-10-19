@@ -3,6 +3,7 @@
 		<ComponentInfo v-bind="{ component }" />
 
 		<div class="element-example white">
+			<!-- <KtForm v-model="values"> -->
 			<KtFieldInlineEdit
 				v-bind="{
 					helpDescription,
@@ -15,7 +16,7 @@
 					label,
 					mode,
 					placeholder,
-					tabindex,
+					tabIndex,
 					validator,
 				}"
 				class="mb-16px"
@@ -23,6 +24,8 @@
 				@input="setValue"
 				@update:isEditing="($event) => (isEditing = $event)"
 			/>
+			<!-- formKey="fieldValue" -->
+			<!-- </KtForm> -->
 			<KtForm v-model="settings" size="small">
 				<div class="wrapper">
 					<div>
@@ -86,7 +89,7 @@ import {
 	KtForm,
 	KtFieldSingleSelect,
 } from '@3yourmind/kotti-ui'
-import { Ref, defineComponent, ref, computed } from '@vue/composition-api'
+import { defineComponent, ref, computed, Ref } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -101,6 +104,9 @@ export default defineComponent({
 	setup() {
 		const isEditing = ref(false)
 		const fieldValue: Ref<Kotti.FieldInlineEdit.Value> = ref(null)
+		// const values = ref<{ fieldValue: Kotti.FieldInlineEdit.Value }>({
+		// 	fieldValue: null,
+		// })
 		const settings = ref<{
 			booleanFlags: {
 				hideValidation: Kotti.FieldToggle.Value
@@ -174,7 +180,7 @@ export default defineComponent({
 				fieldValue.value = newValue
 			},
 			placeholder: computed(() => settings.value.placeholder),
-			tabindex: computed(() => settings.value.tabIndex),
+			tabIndex: computed(() => settings.value.tabIndex),
 			validationOptions: ref([
 				{ label: 'Empty (Default)', value: 'empty' },
 				{ label: 'Success', value: 'success' },
@@ -185,6 +191,7 @@ export default defineComponent({
 				type: settings.value.validation,
 				text: 'Some validation text',
 			})),
+			// values,
 		}
 	},
 })
