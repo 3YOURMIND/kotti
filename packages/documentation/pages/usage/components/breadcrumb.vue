@@ -10,7 +10,7 @@ Indicate the current page’s location within a navigational hierarchy.
 </div>
 
 ```html
-<KtBreadcrumb :breadcrumbs="links" />
+<KtBreadcrumb :activeIndex="activeIndex" :breadcrumbs="links" />
 ```
 
 ```js
@@ -19,7 +19,7 @@ links: [
 		title: 'Kotti',
 		onClick: () => {
 			activeIndex.value = 0,
-			this.$router.push('/'),
+			router.value.push('#')
 		}
 		isCompleted: true,
 	},
@@ -35,18 +35,26 @@ links: [
 		title: 'Components',
 		onClick: () => {
 			activeIndex.value = 2,
-			this.$router.push('/components'),
+			router.value.push('#')
 		}
 		isCompleted: true,
 	},
 	{
-		title: 'Breadcrumbs',
+		title: 'Links',
 		onClick: () => {
-			activeIndex.value = 3,
-			this.$router.push('/usage/components/breadcrumb'),
-		}
+			activeIndex.value = 3
+			router.value.push('#')
+		},
 		isCompleted: false,
 	},
+	{
+		title: 'Breadcrumbs',
+		onClick: () => {
+			activeIndex.value = 4,
+			router.value.push('#')
+		}
+		isDisabled: true,
+	}
 ]
 ```
 
@@ -97,7 +105,7 @@ export default defineComponent({
 					title: 'Kotti',
 					onClick: () => {
 						activeIndex.value = 0
-						router.value.push('/')
+						router.value.push('#')
 					},
 					isCompleted: true,
 				},
@@ -118,12 +126,20 @@ export default defineComponent({
 					isCompleted: true,
 				},
 				{
-					title: 'Breadcrumbs',
+					title: 'Links',
 					onClick: () => {
 						activeIndex.value = 3
-						router.value.push('/usage/components/breadcrumb')
+						router.value.push('#')
 					},
 					isCompleted: false,
+				},
+				{
+					title: 'Breadcrumbs',
+					onClick: () => {
+						activeIndex.value = 4
+						router.value.push('#')
+					},
+					isDisabled: true,
 				},
 			],
 			textSeparator: {
