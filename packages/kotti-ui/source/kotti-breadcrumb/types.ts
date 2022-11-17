@@ -9,7 +9,9 @@ export namespace KottiBreadcrumb {
 	export const separatorTypeSchema = z.nativeEnum(SeparatorType)
 
 	export const breadcrumbSchema = z.object({
-		isCompleted: z.boolean(),
+		dataTest: z.string().nullable().default(null),
+		isCompleted: z.boolean().default(false),
+		isDisabled: z.boolean().default(false),
 		onClick: z.function(z.tuple([]), z.void()),
 		title: z.string(),
 	})
