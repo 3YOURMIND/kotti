@@ -1,6 +1,10 @@
 <template>
 	<div :class="fieldSelectClasses">
-		<div ref="tippyTriggerRef">
+		<div
+			ref="tippyTriggerRef"
+			@mouseenter="isFieldHovered = true"
+			@mouseleave="isFieldHovered = false"
+		>
 			<KtField
 				v-bind="{ field }"
 				:getEmptyValue="() => (isMultiple ? [] : null)"
@@ -30,6 +34,8 @@
 					<input
 						ref="inputRef"
 						v-bind="inputProps"
+						@blur="isFieldFocused = false"
+						@focus="isFieldFocused = true"
 						@input="updateQuery"
 						@keydown.delete="onPressDelete"
 						@keydown.down.prevent
@@ -43,8 +49,9 @@
 							classes,
 							handleClear,
 							isDropdownOpen,
-							showClear,
+							showClear: showClearIcon(showClear),
 						}"
+						@update:isDropdownOpen="setIsDropdownOpen"
 					/>
 				</template>
 			</KtField>
@@ -142,7 +149,8 @@ export default defineComponent({
 		})
 
 		const inputRef = ref<HTMLInputElement | null>(null)
-
+		const isFieldFocused = ref(false)
+		const isFieldHovered = ref(false)
 		const localQuery = ref<string | null>(null)
 
 		const { forceUpdateKey, forceUpdate } = useForceUpdate()
@@ -163,7 +171,6 @@ export default defineComponent({
 
 		watch(isDropdownOpen, (isOpen) => {
 			if (!isOpen) return
-
 			inputRef.value?.focus()
 		})
 
@@ -240,8 +247,8 @@ export default defineComponent({
 			})),
 			inputRef,
 			isDropdownOpen,
-			tippyContentRef: selectTippy.tippyContentRef,
-			tippyTriggerRef: selectTippy.tippyTriggerRef,
+			isFieldFocused,
+			isFieldHovered,
 			onOptionsInput: (value: MultiValue) => {
 				if (props.isMultiple) {
 					field.setValue(value)
@@ -251,7 +258,6 @@ export default defineComponent({
 					// performance optimization
 					if (field.currentValue !== newValue) field.setValue(newValue)
 				}
-
 				inputRef.value?.focus()
 				// single select: close the tippy instance whenever a selection is made.
 				// This (watcher on isDropdownMounted) also intentionally resets the query
@@ -282,6 +288,12 @@ export default defineComponent({
 				)
 			},
 			setIsDropdownOpen: selectTippy.setIsDropdownOpen,
+			showClearIcon: computed(
+				() => (showClear: boolean) =>
+					showClear && (isFieldHovered.value || isFieldFocused.value),
+			),
+			tippyContentRef: selectTippy.tippyContentRef,
+			tippyTriggerRef: selectTippy.tippyTriggerRef,
 			updateQuery: ({ target: { value } }: { target: HTMLInputElement }) => {
 				if (!isDropdownOpen.value) {
 					selectTippy.setIsDropdownOpen(true)
