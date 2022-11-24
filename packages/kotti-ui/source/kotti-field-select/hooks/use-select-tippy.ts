@@ -36,17 +36,17 @@ export const useSelectTippy = () => {
 			onClickOutside: () => {
 				setIsDropdownOpen(false)
 			},
+			onHidden: () => {
+				isDropdownMounted.value = false
+			},
+			onHide: () => {
+				isDropdownOpen.value = false
+			},
 			onShow: () => {
 				// More correct here, don't move to `onShown()`
 				isDropdownMounted.value = true
 
 				isDropdownOpen.value = true
-			},
-			onHide: () => {
-				isDropdownOpen.value = false
-			},
-			onHidden: () => {
-				isDropdownMounted.value = false
 			},
 			placement: 'bottom',
 			popperOptions: {
