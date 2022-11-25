@@ -127,6 +127,9 @@
 	},
 	"private": true,
 	"repository": "git@github.com:3YOURMIND/kotti",
+	"resolutions": {
+		"webpack": "^4.46.0"
+	},
 	"scripts": {
 		"build:render.com": "yarn run watch:build-kotti-dependencies && yarn workspace @3yourmind/kotti-ui run build && yarn workspace @3yourmind/documentation run nuxt generate",
 		"check": "yarn run check:stylelint && yarn run check:eslint && yarn run check:prettier",
