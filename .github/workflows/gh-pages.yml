@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - update-ci-to-latest-node-2
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
