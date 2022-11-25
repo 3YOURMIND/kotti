@@ -147,6 +147,16 @@ yarn run check:stylelint
 yarn run test
 ```
 
+### Documentation Deployment & CI
+
+CI jobs config scripts can be found under .github/workflows
+
+Docs from `master` branch are hosted on [gh-pages](https://pages.github.com/), and via [Render](https://render.com/) on each open PR.
+
+node-version: Currently we specifically target LTS v18.12.x as the used node-version
+
+> `.nvmrc` is essential to override the node-version used by Render
+
 ### Publish
 
 ```bash
