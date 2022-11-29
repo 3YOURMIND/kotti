@@ -44,13 +44,6 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 	props: makeProps(KottiBreadcrumb.propsSchema),
 	setup(props) {
 		return {
-			handleClick: (item: KottiBreadcrumb.Breadcrumb) => {
-				if (item.isDisabled) return
-				item.onClick()
-			},
-			KottiBreadcrumb,
-			showSeparator: (index: number) =>
-				index > 0 && index < props.breadcrumbs.length,
 			breadCrumbClasses: (item: KottiBreadcrumb.Breadcrumb, index: number) => {
 				return {
 					'kt-breadcrumb__list-item': true,
@@ -61,6 +54,13 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 						!item.isDisabled && index === props.activeIndex,
 				}
 			},
+			handleClick: (item: KottiBreadcrumb.Breadcrumb) => {
+				if (item.isDisabled) return
+				item.onClick()
+			},
+			KottiBreadcrumb,
+			showSeparator: (index: number) =>
+				index > 0 && index < props.breadcrumbs.length,
 		}
 	},
 })
@@ -96,13 +96,15 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 		&--is-disabled {
 			color: var(--text-05);
 			cursor: not-allowed;
+			.kt-breadcrumb__list-item__text:hover {
+				cursor: not-allowed;
+				color: var(--text-05);
+			}
 		}
 
-		&:hover:not(.kt-breadcrumb__list-item--is-disabled) {
-			.kt-breadcrumb__list-item__text {
-				color: var(--interactive-01-hover);
-				cursor: pointer;
-			}
+		&__text:hover {
+			color: var(--interactive-01-hover);
+			cursor: pointer;
 		}
 
 		&__separator {
