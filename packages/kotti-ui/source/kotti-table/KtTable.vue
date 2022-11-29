@@ -317,7 +317,8 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+@import '../kotti-style/_variables.scss';
 .kt-table >>> .kt-table__no-row {
 	color: #8f8f8f;
 	text-align: center;
@@ -344,5 +345,63 @@ export default {
 
 .hidden-columns {
 	display: none;
+}
+
+.kt-table ::v-deep .form-checkbox {
+	position: relative;
+	display: inline-block;
+	min-height: 1.2rem;
+	padding: (($control-size-sm - $line-height) / 2) $control-padding-x
+		(($control-size-sm - $line-height) / 2)
+		($control-icon-size + $control-padding-x);
+	margin: ($control-size - $control-size-sm) / 2 0;
+	line-height: $line-height;
+
+	input {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+
+		&:focus + .form-icon {
+			border-color: var(--interactive-01);
+		}
+
+		&:checked + .form-icon {
+			background: var(--interactive-01);
+			border-color: var(--interactive-01);
+		}
+		&:invalid + .form-icon {
+			border: 1px solid var(--support-error);
+		}
+		&:active + .form-icon {
+			background: var(--ui-04);
+		}
+	}
+
+	.form-icon {
+		position: absolute;
+		top: ($control-size-sm - $control-icon-size) / 2;
+		left: 0;
+		display: inline-block;
+		width: $control-icon-size;
+		height: $control-icon-size;
+		cursor: pointer;
+		background: var(--ui-background);
+		border: $border-width solid var(--ui-02);
+	}
+
+	// Input checkbox sizes
+	&.input-sm {
+		margin: 0;
+		font-size: $font-size-sm;
+	}
+
+	&.input-lg {
+		margin: ($control-size-lg - $control-size-sm) / 2 0;
+		font-size: $font-size-lg;
+	}
 }
 </style>
