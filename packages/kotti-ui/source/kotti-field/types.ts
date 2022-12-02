@@ -168,6 +168,12 @@ export namespace KottiField {
 
 	export const propsSchema = inheritablePropsSchema.extend({
 		/**
+		 * Is used as the 'data-test' property
+		 * on the input level
+		 */
+		dataTest: z.string().nullable().default(null),
+
+		/**
 		 * Specifies that the data KtFormContext[formKey]
 		 * If formKey is "NONE", it is treated as an explicit opt-out
 		 * of the context-based behavior
