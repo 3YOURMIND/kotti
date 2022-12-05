@@ -1,14 +1,14 @@
 <template>
 	<div class="kt-filter__actions">
 		<ButtonLink
-			:data-test="dataTest ? `${dataTest}-add-filter` : undefined"
+			:dataTest="dataTest ? `${dataTest}.addFilter` : undefined"
 			:isDisabled="isAddDisabled"
 			:isLoading="isLoading"
 			:label="translations.addFilterLabel"
 			@click="handleAdd"
 		/>
 		<ButtonLink
-			:data-test="dataTest ? `${dataTest}-clear-all` : undefined"
+			:dataTest="dataTest ? `${dataTest}.clearAll` : undefined"
 			:isDisabled="isClearAllDisabled"
 			:isLoading="isLoading"
 			:label="translations.clearAllLabel"

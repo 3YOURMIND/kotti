@@ -1,7 +1,7 @@
 <template>
 	<KtFieldText
 		class="kt-filter__search"
-		:data-test="dataTest ? `${dataTest}-search-input` : undefined"
+		:dataTest="dataTest ? `${dataTest}.searchInput` : undefined"
 		hideValidation
 		:isLoading="isLoading"
 		:leftIcon="Yoco.Icon.SEARCH"

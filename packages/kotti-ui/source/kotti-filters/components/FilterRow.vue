@@ -1,6 +1,7 @@
 <template>
 	<KtForm
 		class="kt-filter__list__row"
+		:formId="dataTest"
 		hideValidation
 		:isLoading="isLoading"
 		:size="KottiField.Size.SMALL"
@@ -34,7 +35,7 @@
 		</div>
 		<ButtonLink
 			class="kt-filter__list__row__remove"
-			:data-test="dataTest ? `${dataTest}-remove` : undefined"
+			:dataTest="dataTest ? `${dataTest}.remove` : undefined"
 			:icon="Yoco.Icon.CLOSE"
 			:isLoading="isLoading"
 			:type="KottiFilters.ButtonLinkType.DANGER"

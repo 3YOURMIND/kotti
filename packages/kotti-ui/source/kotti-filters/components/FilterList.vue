@@ -9,7 +9,7 @@
 			:key="filter.key"
 			:column="getColumn(filter.key)"
 			:columnOptions="getColumnOptions(filter.key)"
-			:dataTest="dataTest ? `${dataTest}-filter-${filter.key}` : null"
+			:dataTest="dataTest ? `${dataTest}.filter.${filter.key}` : null"
 			:filter="filter"
 			:isFirstItem="index === 0"
 			:isLoading="isLoading"
@@ -19,7 +19,7 @@
 		<FilterRow
 			v-if="isAddingFilter"
 			:columnOptions="getColumnOptions()"
-			:dataTest="dataTest ? `${dataTest}-adding-filter` : null"
+			:dataTest="dataTest ? `${dataTest}.addingFilter` : null"
 			:isFirstItem="filters.length === 0"
 			@input="handleAddFilter"
 			@remove="handleCancelAddFilter"
