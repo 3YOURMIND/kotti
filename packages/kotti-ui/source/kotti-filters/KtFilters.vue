@@ -10,7 +10,7 @@
 		/>
 		<div ref="listTriggerRef">
 			<ButtonLink
-				:data-test="dataTest ? `${dataTest}-show-filters` : undefined"
+				:dataTest="dataTest ? `${dataTest}.showFilters` : undefined"
 				:icon="Yoco.Icon.FILTER"
 				:isLoading="isLoading"
 				:label="filterLabel"

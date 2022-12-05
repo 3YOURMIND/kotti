@@ -8,7 +8,7 @@
     			<KtFilters
     				v-model="filters"
     				:columns="componentProps.columns"
-    				dataTest="kt-filters"
+    				dataTest="ktFilters"
     				:isLoading="componentProps.isLoading"
     			/>
     			<div class="overview__component__value">
@@ -120,12 +120,12 @@ export default defineComponent({
 	setup() {
 		const filters = ref<Kotti.Filters.Value>([
 			{
-				key: 'string-column',
+				key: 'stringColumn',
 				operation: Kotti.Filters.Operation.String.CONTAINS,
 				value: null,
 			},
 			{
-				key: 'integer-column',
+				key: 'integerColumn',
 				operation: Kotti.Filters.Operation.Integer.EQUAL,
 				value: null,
 			},
@@ -159,13 +159,13 @@ export default defineComponent({
 			(): Omit<Kotti.Filters.Props, 'value'> => ({
 				columns: [
 					{
-						key: 'global-search',
+						key: 'globalSearch',
 						label: 'Search',
 						placeholder: settings.value.searchPlaceholder ?? undefined,
 						type: Kotti.Filters.FilterType.SEARCH,
 					},
 					{
-						key: 'string-column',
+						key: 'stringColumn',
 						label: 'String Column',
 						operations: [
 							Kotti.Filters.Operation.String.CONTAINS,
@@ -175,7 +175,7 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.STRING,
 					},
 					{
-						key: 'integer-column',
+						key: 'integerColumn',
 						label: 'Integer Column',
 						operations: [
 							Kotti.Filters.Operation.Integer.EQUAL,
@@ -189,7 +189,7 @@ export default defineComponent({
 					},
 					{
 						decimalPlaces: settings.value.numberDecimalPlaces ?? undefined,
-						key: 'float-column',
+						key: 'floatColumn',
 						label: 'Float Column',
 						operations: [
 							Kotti.Filters.Operation.Float.EQUAL,
@@ -206,7 +206,7 @@ export default defineComponent({
 					},
 					{
 						currency: settings.value.currencyCurrency,
-						key: 'currency-column',
+						key: 'currencyColumn',
 						label: 'Currency Column',
 						operations: [
 							Kotti.Filters.Operation.Currency.EQUAL,
@@ -219,7 +219,7 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.CURRENCY,
 					},
 					{
-						key: 'boolean-column',
+						key: 'booleanColumn',
 						label: 'Boolean Column',
 						operations: [
 							Kotti.Filters.Operation.Boolean.EQUAL,
@@ -228,7 +228,7 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.BOOLEAN,
 					},
 					{
-						key: 'date-range-column',
+						key: 'dateRangeColumn',
 						label: 'Date Range Column',
 						operations: [
 							Kotti.Filters.Operation.DateRange.IN_RANGE,
@@ -237,7 +237,7 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.DATE_RANGE,
 					},
 					{
-						key: 'single-enum-column',
+						key: 'singleEnumColumn',
 						label: 'Single Enum Column',
 						operations: [
 							Kotti.Filters.Operation.SingleEnum.EQUAL,
@@ -251,7 +251,7 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.SINGLE_ENUM,
 					},
 					{
-						key: 'multi-enum-column',
+						key: 'multiEnumColumn',
 						label: 'Multi Enum Column',
 						operations: [
 							Kotti.Filters.Operation.MultiEnum.ONE_OF,

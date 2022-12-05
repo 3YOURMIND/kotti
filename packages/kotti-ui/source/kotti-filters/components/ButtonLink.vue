@@ -1,5 +1,5 @@
 <template>
-	<div :class="mainClasses" @click="handleClick">
+	<div :class="mainClasses" :data-test="dataTest" @click="handleClick">
 		<i v-if="isLoading" class="kt-circle-loading" />
 		<i v-else-if="icon !== null" class="yoco" v-text="icon" />
 		<span v-if="label !== null" v-text="label" />
@@ -13,6 +13,7 @@ import { computed, defineComponent } from '@vue/composition-api'
 import { KottiFilters } from '../types'
 
 export default defineComponent<{
+	dataTest: string | null
 	icon: Yoco.Icon | null
 	isDisabled: boolean
 	isLoading: boolean
@@ -21,6 +22,10 @@ export default defineComponent<{
 }>({
 	name: 'ButtonLink',
 	props: {
+		dataTest: {
+			default: null,
+			type: String,
+		},
 		icon: {
 			default: null,
 			type: String,
