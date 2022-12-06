@@ -12,26 +12,28 @@
 		<div class="kt-filter__list__row__wrapper">
 			<span class="kt-filter__list__row__label" v-text="label" />
 			<KtFieldSingleSelect formKey="key" hideClear :options="columnOptions" />
-			<KtFieldSingleSelect
-				formKey="operation"
-				hideClear
-				:isDisabled="isOperationSelectDisabled"
-				:options="operationOptions"
-			/>
-			<div class="kt-filter__list__row__value-field">
-				<component
-					:is="valueComponent"
-					v-if="isValueFieldVisible"
-					:collapseTagsAfter="1"
-					:currency="valueCurrency"
-					:decimalPlaces="valueDecimalPlaces"
-					formKey="value"
-					:options="valueOptions"
-					:prefix="valuePrefix"
-					:step="valueStep"
-					:suffix="valueSuffix"
+			<template v-if="filter.operation">
+				<KtFieldSingleSelect
+					formKey="operation"
+					hideClear
+					:isDisabled="isOperationSelectDisabled"
+					:options="operationOptions"
 				/>
-			</div>
+				<div class="kt-filter__list__row__value-field">
+					<component
+						:is="valueComponent"
+						v-if="isValueFieldVisible"
+						:collapseTagsAfter="1"
+						:currency="valueCurrency"
+						:decimalPlaces="valueDecimalPlaces"
+						formKey="value"
+						:options="valueOptions"
+						:prefix="valuePrefix"
+						:step="valueStep"
+						:suffix="valueSuffix"
+					/>
+				</div>
+			</template>
 		</div>
 		<ButtonLink
 			class="kt-filter__list__row__remove"
@@ -105,10 +107,8 @@ export default defineComponent<{
 			type: String,
 		},
 		filter: {
-			default: (): KottiFilters.Filter => ({
+			default: () => ({
 				key: null,
-				operation: null,
-				value: null,
 			}),
 			type: Object,
 		},
@@ -128,14 +128,20 @@ export default defineComponent<{
 			() => operationOptions.value.length <= 1,
 		)
 		const isValueFieldVisible = computed(
-			() => !isEmptyOperation(props.filter.operation, props.column?.type),
+			() =>
+				props.filter &&
+				props.column &&
+				!isEmptyOperation(props.filter.operation, props.column.type),
 		)
+
 		const label = computed(() =>
 			props.isFirstItem
 				? translations.value.whereLabel
 				: translations.value.andLabel,
 		)
-		const operationOptions = computed(() => getOperationOptions(props.column))
+		const operationOptions = computed(() =>
+			props.column ? getOperationOptions(props.column) : [],
+		)
 		const valueComponent = computed(() => {
 			if (!props.column?.type) return null
 			return getValueComponent(props.column.type)
@@ -178,6 +184,11 @@ export default defineComponent<{
 
 		const handleRemove = () => emit('remove')
 		const handleSetFilter = (newFilter: KottiFilters.InternalFilter) => {
+			if (!props.column) {
+				emit('input', newFilter)
+				return
+			}
+
 			if (isEmptyOperation(newFilter.operation, props.column?.type)) {
 				emit('input', {
 					...newFilter,
@@ -237,7 +248,12 @@ export default defineComponent<{
 	}
 
 	&__remove {
+		grid-column: 5;
 		align-self: center;
+
+		@media (max-width: $size-md) {
+			grid-column: 2;
+		}
 	}
 
 	::v-deep .kt-field-select {

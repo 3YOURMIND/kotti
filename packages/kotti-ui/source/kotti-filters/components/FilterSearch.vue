@@ -56,7 +56,7 @@ export default defineComponent<{
 			() => props.column.placeholder ?? translations.value.searchLabel,
 		)
 		const searchValue = computed<KottiFilters.FilterValue>(
-			() => props.filter?.value,
+			() => props.filter?.value ?? null,
 		)
 
 		const handleSetSearchValue = (value: string) =>
