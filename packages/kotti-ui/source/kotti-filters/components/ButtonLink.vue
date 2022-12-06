@@ -59,7 +59,7 @@ export default defineComponent<{
 			[`kt-button-link--type-${props.type}`]: !props.isDisabled,
 		}))
 
-		const handleClick = (event) => {
+		const handleClick = (event: Event) => {
 			if (props.isDisabled || props.isLoading) return
 			emit('click', event)
 		}
