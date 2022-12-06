@@ -97,8 +97,8 @@ export default defineComponent<KottiBreadcrumb.PropsInternal>({
 			color: var(--text-05);
 			cursor: not-allowed;
 			.kt-breadcrumb__list-item__text:hover {
-				cursor: not-allowed;
 				color: var(--text-05);
+				cursor: not-allowed;
 			}
 		}
 
