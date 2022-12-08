@@ -51,7 +51,7 @@ const useInputProps = <DATA_TYPE>({
 
 	return {
 		inputProps: computed(() => ({
-			'data-test': formPath.value.join('.'),
+			'data-test': props.dataTest ?? formPath.value.join('.'),
 			disabled: isDisabled.value,
 			tabindex: props.tabIndex,
 		})),
