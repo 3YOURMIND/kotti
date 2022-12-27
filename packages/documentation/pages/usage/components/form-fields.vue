@@ -181,6 +181,7 @@
 							isOptional
 							label="helpDescription"
 						/>
+						<KtFieldText formKey="dataTest" isOptional label="dataTest" />
 						<div class="field-row">
 							<KtFieldText
 								formKey="helpText"
@@ -847,6 +848,7 @@ export default defineComponent({
 				isOptional: Kotti.FieldToggle.Value
 			}
 			component: ComponentNames
+			dataTest: Kotti.FieldText.Value
 			decimalSeparator: Kotti.DecimalSeparator
 			formId: Kotti.FieldText.Value
 			hasHelpTextSlot: boolean
@@ -896,6 +898,7 @@ export default defineComponent({
 				isOptional: true,
 			},
 			component: 'KtFieldText',
+			dataTest: null,
 			decimalSeparator: Kotti.DecimalSeparator.DOT,
 			hasHelpTextSlot: false,
 			helpDescription: null,
@@ -933,6 +936,7 @@ export default defineComponent({
 			const { component } = settings.value
 
 			const standardProps = {
+				dataTest: settings.value.dataTest,
 				formKey: componentDefinition.value.formKey,
 				helpDescription: settings.value.helpDescription,
 				helpText: settings.value.helpText,
