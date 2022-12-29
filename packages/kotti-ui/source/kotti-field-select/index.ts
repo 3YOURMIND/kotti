@@ -14,6 +14,7 @@ import {
 	KottiFieldSingleSelectRemote,
 } from './types'
 
+const componentFolder = 'kotti-field-select'
 const url =
 	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=428%3A3482'
 
@@ -42,6 +43,7 @@ export const KtFieldSingleSelect = attachMeta(
 	makeInstallable(KtFieldSingleSelectVue),
 	{
 		addedVersion: '2.0.0',
+		componentFolder,
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
@@ -60,6 +62,7 @@ export const KtFieldSingleSelectRemote = attachMeta(
 	makeInstallable(KtFieldSingleSelectRemoteVue),
 	{
 		addedVersion: '3.0.0',
+		componentFolder,
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
@@ -78,6 +81,7 @@ export const KtFieldMultiSelect = attachMeta(
 	makeInstallable(KtFieldMultiSelectVue),
 	{
 		addedVersion: '2.0.0',
+		componentFolder,
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
@@ -96,6 +100,7 @@ export const KtFieldMultiSelectRemote = attachMeta(
 	makeInstallable(KtFieldMultiSelectRemoteVue),
 	{
 		addedVersion: '3.0.0',
+		componentFolder,
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,

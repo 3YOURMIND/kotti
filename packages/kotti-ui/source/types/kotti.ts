@@ -57,6 +57,7 @@ export enum MetaDesignType {
 
 export type Meta = {
 	addedVersion: string | null
+	componentFolder?: string
 	deprecated: {
 		alternatives: string[]
 		reason: string
