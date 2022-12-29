@@ -11,20 +11,13 @@
 				:helpTextSlot="helpTextSlot"
 			>
 				<div class="kt-field-select__input-and-tags">
-					<div
+					<KtTag
 						v-for="option in visibleSelectedTags"
 						:key="option.value"
-						class="kt-field-select__tag"
-					>
-						<div class="kt-field-select__tag-text" v-text="option.label" />
-						<div
-							v-if="!(field.isDisabled || Boolean(option.isDisabled))"
-							class="kt-field-select__tag-icon"
-							@click.stop.prevent="removeTag(option.value)"
-						>
-							<i class="yoco" v-text="Yoco.Icon.CLOSE" />
-						</div>
-					</div>
+						isClosable
+						:text="option.label"
+						@close="removeTag(option.value)"
+					/>
 					<div v-if="collapsedTagCount > 0" class="kt-field-select__tag">
 						<div
 							class="kt-field-select__tag-text"
@@ -87,6 +80,7 @@ import { z } from 'zod'
 import { KtField } from '../../kotti-field'
 import { useField } from '../../kotti-field/hooks'
 import { useForceUpdate } from '../../kotti-field/hooks'
+import { KtTag } from '../../kotti-tag'
 import { makeProps } from '../../make-props'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from '../constants'
 import { useSelectTippy } from '../hooks/use-select-tippy'
@@ -132,6 +126,7 @@ export default defineComponent({
 		ActionIcon,
 		FieldSelectOptions,
 		KtField,
+		KtTag,
 	},
 	props: makeProps(propsSchema),
 	setup(props: z.output<typeof propsSchema>, { emit: rawEmit }) {
