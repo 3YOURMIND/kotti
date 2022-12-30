@@ -21,6 +21,7 @@ import {
 	KtPopover,
 	KtSteps,
 	KtTable,
+	KtTag,
 	KtToaster,
 	KtUserMenu,
 } from '@3yourmind/kotti-ui'
@@ -175,6 +176,7 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtPopover),
 					makeComponentMenuItem(KtSteps),
 					makeComponentMenuItem(KtTable),
+					makeComponentMenuItem(KtTag),
 					makeComponentMenuItem(KtToaster),
 				],
 			},
