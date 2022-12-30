@@ -14,6 +14,7 @@ import {
 	KottiFieldDateTimeRange,
 } from './types'
 
+const componentFolder = 'kotti-field-date'
 const DESIGN_URL =
 	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=773%3A6059' as const
 
@@ -21,6 +22,7 @@ export const KtFieldDate = attachMeta(
 	makeInstallable(KtFieldDateVue),
 	{
 		addedVersion: '2.0.0',
+		componentFolder,
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
@@ -39,6 +41,7 @@ export const KtFieldDateRange = attachMeta(
 	makeInstallable(KtFieldDateRangeVue),
 	{
 		addedVersion: '2.0.0',
+		componentFolder,
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
@@ -57,6 +60,7 @@ export const KtFieldDateTime = attachMeta(
 	makeInstallable(KtFieldDateTimeVue),
 	{
 		addedVersion: '2.0.0',
+		componentFolder,
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,
@@ -75,6 +79,7 @@ export const KtFieldDateTimeRange = attachMeta(
 	makeInstallable(KtFieldDateTimeRangeVue),
 	{
 		addedVersion: '2.0.0',
+		componentFolder,
 		deprecated: null,
 		designs: {
 			type: MetaDesignType.FIGMA,

@@ -8,6 +8,8 @@ import KtFieldToggleVue from './KtFieldToggle.vue'
 import KtFieldToggleGroupVue from './KtFieldToggleGroup.vue'
 import { KottiFieldToggle, KottiFieldToggleGroup } from './types'
 
+const componentFolder = 'kotti-field-toggle'
+
 const designs: Kotti.Meta['designs'] = [
 	{
 		title: 'type=switch',
@@ -25,6 +27,7 @@ export const KtFieldToggle = attachMeta(
 	makeInstallable(KtFieldToggleVue),
 	{
 		addedVersion: '2.0.0',
+		componentFolder,
 		deprecated: null,
 		designs,
 		slots: {
@@ -46,6 +49,7 @@ export const KtFieldToggleGroup = attachMeta(
 	makeInstallable(KtFieldToggleGroupVue),
 	{
 		addedVersion: '2.0.0',
+		componentFolder,
 		deprecated: null,
 		designs,
 		slots: FIELD_META_BASE_SLOTS,

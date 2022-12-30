@@ -148,6 +148,7 @@ export default defineComponent<{
 		props?: Record<string, unknown>
 	}
 }>({
+	name: 'ComponentInfo',
 	props: {
 		component: { required: true, type: Object },
 	},
@@ -167,14 +168,21 @@ export default defineComponent<{
 				}> = []
 
 				const {
-					meta: { addedVersion, deprecated, designs, typeScript },
+					meta: {
+						addedVersion,
+						componentFolder,
+						deprecated,
+						designs,
+						typeScript,
+					},
 					name,
 				} = props.component
 
+				const folderName =
+					componentFolder ?? kebabCase(name.replace(/^Kt/, 'Kotti'))
+
 				const componentSourceFolder = props.component.props
-					? `https://github.com/3YOURMIND/kotti/blob/master/packages/kotti-ui/source/${kebabCase(
-							name.replace(/^Kt/, 'Kotti'),
-					  )}`
+					? `https://github.com/3YOURMIND/kotti/blob/master/packages/kotti-ui/source/${folderName}`
 					: null
 
 				if (deprecated !== null)
