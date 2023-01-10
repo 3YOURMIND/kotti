@@ -1,7 +1,11 @@
 <template>
 	<div class="kt-tag">
 		<div class="kt-tag__text" v-text="text" />
-		<div v-if="!isDisabled" class="kt-tag__icon" @click="$emit('close')">
+		<div
+			v-if="!isDisabled"
+			class="kt-tag__icon"
+			@click.prevent.stop="$emit('close')"
+		>
 			<i class="yoco" v-text="Yoco.Icon.CLOSE" />
 		</div>
 	</div>
@@ -59,7 +63,7 @@ export default defineComponent({
 		justify-content: center;
 		width: $size;
 		height: $size;
-		margin-left: var(--unit-02);
+		margin-left: var(--unit-1);
 		cursor: pointer;
 
 		background-color: var(--ui-02);
