@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export namespace KottiTag {
 	export const propsSchema = z.object({
-		isClosable: z.boolean().default(false),
+		isDisabled: z.boolean().default(false),
 		text: z.string(),
 	})
 

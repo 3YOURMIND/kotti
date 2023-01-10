@@ -4,11 +4,11 @@
     Tags should either visualize active user input or invite for a user action.
 
     ```html
-    	<KtTag text="I display Information"/>
-    	<KtTag v-if="showTag" text="You can remove me if you want" isClosable @close="showTag = false" />
+    	<KtTag text="I display Information" isDisabled/>
+    	<KtTag v-if="showTag" text="You can remove me if you want" @close="showTag = false" />
     ```
-    <KtTag text="I display Information"/>
-    <KtTag v-if="showTag" text="You can remove me if you want" isClosable @close="showTag = false" />
+    <KtTag text="I display Information" isDisabled/>
+    <KtTag v-if="showTag" text="You can remove me if you want" @close="showTag = false" />
 </template>
 
 <script lang="ts">

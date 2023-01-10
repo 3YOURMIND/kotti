@@ -1,7 +1,7 @@
 <template>
 	<div class="kt-tag">
 		<div class="kt-tag__text" v-text="text" />
-		<div v-if="isClosable" class="kt-tag__icon" @click="$emit('close')">
+		<div v-if="!isDisabled" class="kt-tag__icon" @click="$emit('close')">
 			<i class="yoco" v-text="Yoco.Icon.CLOSE" />
 		</div>
 	</div>
@@ -26,17 +26,21 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-$vertical-tag-gap: 2px;
-$horizontal-tag-gap: 4px;
-$tag-padding: 0.4em;
-$tag-border: 1px;
+<style lang="scss">
+:root {
+	--kt-tag-vertical-gap: var(--unit-h);
+	--kt-tag-horizontal-gap: var(--unit-1);
+	--kt-tag-border: var(--unit-q);
+	--kt-tag-padding: var(--unit-1);
+}
+</style>
 
+<style lang="scss" scoped>
 .kt-tag {
 	display: inline-flex;
 	align-items: center;
-	padding: $tag-padding;
-	margin: $vertical-tag-gap $horizontal-tag-gap;
+	padding: var(--kt-tag-padding);
+	margin: var(--kt-tag-vertical-gap) var(--kt-tag-horizontal-gap);
 
 	font-size: 0.875em;
 
@@ -44,7 +48,7 @@ $tag-border: 1px;
 	text-transform: capitalize;
 	white-space: nowrap;
 	background-color: var(--interactive-02);
-	border: $tag-border solid var(--ui-02);
+	border: var(--kt-tag-border) solid var(--ui-02);
 	border-radius: var(--field-border-radius);
 
 	&__icon {
@@ -55,7 +59,7 @@ $tag-border: 1px;
 		justify-content: center;
 		width: $size;
 		height: $size;
-		margin-left: 4px;
+		margin-left: var(--unit-02);
 		cursor: pointer;
 
 		background-color: var(--ui-02);
