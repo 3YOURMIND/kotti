@@ -1,3 +1,4 @@
+import { VNode } from 'vue'
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
@@ -26,6 +27,13 @@ export namespace KottiFieldToggle {
 	})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
+
+	export type InnerSuffix = Pick<
+		KottiField.Hook.Returns<Value>,
+		'helpText' | 'hideValidation' | 'isEmpty' | 'isOptional' | 'validation'
+	> & {
+		helpTextSlot: VNode[]
+	}
 }
 
 export namespace KottiFieldToggleGroup {
