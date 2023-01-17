@@ -1,20 +1,29 @@
 <template>
 	<KtField
-		v-bind="{ field }"
+		v-bind="{ field: fieldProps }"
 		:getEmptyValue="() => null"
-		:helpTextSlot="$slots.helpText"
+		:helpTextSlot="showInnerSuffix ? undefined : $slots.helpText"
 	>
 		<div slot="container" class="kt-field-toggle__wrapper">
 			<ToggleInner
 				component="div"
 				:inputProps="inputProps"
-				:isDisabled="field.isDisabled"
+				:isDisabled="fieldProps.isDisabled"
 				:type="type"
-				:value="field.currentValue"
+				:value="fieldProps.currentValue"
 				@input="onInput"
 			>
 				<div class="kt-field-toggle__wrapper__content">
-					<slot name="default" :value="field.currentValue" />
+					<slot name="default" :value="fieldProps.currentValue" />
+					<ToggleInnerSuffix
+						v-if="showInnerSuffix"
+						:helpText="suffixHelpText"
+						:helpTextSlot="$slots.helpText"
+						:hideValidation="fieldProps.hideValidation"
+						:isEmpty="fieldProps.isEmpty"
+						:isOptional="fieldProps.isOptional"
+						:validation="fieldProps.validation"
+					/>
 				</div>
 			</ToggleInner>
 		</div>
@@ -29,6 +38,7 @@ import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { makeProps } from '../make-props'
 
 import ToggleInner from './components/ToggleInner.vue'
+import ToggleInnerSuffix from './components/ToggleInnerSuffix.vue'
 import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import { KottiFieldToggle } from './types'
 
@@ -37,20 +47,27 @@ export default defineComponent<KottiFieldToggle.PropsInternal>({
 	components: {
 		KtField,
 		ToggleInner,
+		ToggleInnerSuffix,
 	},
 	props: makeProps(KottiFieldToggle.propsSchema),
-	setup(props, { emit }) {
+	setup(props, { emit, slots }) {
 		const field = useField<KottiFieldToggle.Value>({
 			emit,
 			isEmpty: (value) => value !== true,
 			props,
 			supports: KOTTI_FIELD_TOGGLE_SUPPORTS,
 		})
+		const showInnerSuffix = computed(
+			() => Boolean(slots.default) && props.label === null,
+		)
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 
 		return {
-			field,
+			fieldProps: computed(() => ({
+				...field,
+				helpText: showInnerSuffix.value ? null : field.helpText,
+			})),
 			inputProps: computed(() => ({
 				...field.inputProps,
 				forceUpdateKey: forceUpdateKey.value,
@@ -60,6 +77,8 @@ export default defineComponent<KottiFieldToggle.PropsInternal>({
 
 				forceUpdate()
 			},
+			showInnerSuffix,
+			suffixHelpText: computed(() => field.helpText),
 		}
 	},
 })
