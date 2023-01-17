@@ -47,7 +47,7 @@ export const getFilterInitialState = (
 					column.operations,
 					KottiFilters.Operation.Boolean.EQUAL,
 				),
-				value: null,
+				value: true,
 			}
 		case KottiFilters.FilterType.CURRENCY:
 			return {
