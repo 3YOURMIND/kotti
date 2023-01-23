@@ -2,12 +2,16 @@ import { yocoIconSchema } from '@3yourmind/yoco'
 import { Instance as TippyInstance } from 'tippy.js'
 import { z } from 'zod'
 
+import { Kotti } from '../types'
+
 const baseOptionSchema = z.object({
 	dataTest: z.string().optional(),
 	icon: yocoIconSchema.optional(),
+	isActive: z.boolean().default(false),
 	isClickable: z.boolean().default(false),
+	isSelected: z.boolean().default(false),
 	isDisabled: z.boolean().default(false),
-	isSelected: z.boolean().optional(),
+	isOptional: z.boolean().default(false),
 	label: z.string(),
 	onClick: z.function(z.tuple([]), z.void()).optional(),
 })
@@ -72,16 +76,24 @@ export namespace KottiPopover {
 		close: TippyInstance['hide']
 	}
 
+	/**
+	 * some attributes are internally inferred and therefore not picked
+	 * to be exposed on the external API.
+	 * @example `isClickable`
+	 */
 	export const optionSchema = baseOptionSchema.pick({
 		dataTest: true,
 		icon: true,
+		isActive: true,
 		isDisabled: true,
+		isOptional: true,
 		isSelected: true,
 		label: true,
 		onClick: true,
 	})
 
 	export const propsSchema = z.object({
+		areOptionsSelectable: z.boolean().default(false),
 		options: z.array(optionSchema).default(() => []),
 		placement: z.nativeEnum(Placement).default(Placement.AUTO),
 		size: z.nativeEnum(Size).default(Size.AUTO),
@@ -90,15 +102,23 @@ export namespace KottiPopover {
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
+
+	export namespace Events {
+		export type UpdateIsSelected = {
+			value: Kotti.FieldToggle.Value
+			index: number
+			option: KottiPopover.PropsInternal['options'][0]
+		}
+	}
 }
 
 export namespace IconTextItem {
 	export const propsSchema = baseOptionSchema.pick({
 		dataTest: true,
 		icon: true,
+		isActive: true,
 		isClickable: true,
 		isDisabled: true,
-		isSelected: true,
 		label: true,
 	})
 

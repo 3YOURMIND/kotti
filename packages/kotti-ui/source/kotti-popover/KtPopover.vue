@@ -10,12 +10,25 @@
 					:key="index"
 					:dataTest="option.dataTest"
 					:icon="option.icon"
+					:isActive="option.isActive"
 					:isClickable="option.onClick !== undefined"
 					:isDisabled="option.isDisabled"
-					:isSelected="option.isSelected"
 					:label="option.label"
 					@click.stop="handleItemClick(option)"
-				/>
+				>
+					<template v-if="areOptionsSelectable" slot="option" :option="option">
+						<KtFieldToggle
+							:dataTest="option.dataTest"
+							formKey="NONE"
+							:isDiabled="option.isDiabled"
+							:isOptional="option.isOptional"
+							:value="option.isSelected"
+							@input="(e) => handleItemSelection({ index, option, value: e })"
+						>
+							<span v-text="option.label" />
+						</KtFieldToggle>
+					</template>
+				</IconTextItem>
 			</slot>
 		</div>
 	</div>
@@ -53,7 +66,7 @@ export default defineComponent<KottiPopover.PropsInternal>({
 		IconTextItem,
 	},
 	props: makeProps(KottiPopover.propsSchema),
-	setup(props) {
+	setup(props, { emit }) {
 		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)
 
@@ -130,6 +143,18 @@ export default defineComponent<KottiPopover.PropsInternal>({
 					option.onClick()
 					close()
 				}
+			},
+			handleItemSelection: ({
+				index,
+				option,
+				value,
+			}: KottiPopover.Events.UpdateIsSelected) => {
+				console.log('update:isSelected', { value, index, option })
+				emit('update:isSelected', {
+					value,
+					index,
+					option,
+				})
 			},
 			open,
 			contentClass: computed(() => {

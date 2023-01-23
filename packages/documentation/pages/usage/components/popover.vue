@@ -75,10 +75,12 @@
 			</KtFieldSingleSelect>
 			<KtPopover
 				ref="interactiveExampleRef"
+				areOptionsSelectable
 				:options="values.useOptions ? exampleOptions : []"
 				:placement="values.placement"
 				:size="values.size"
 				:trigger="values.trigger"
+				@update:isSelected="handleUpdateIsSelected"
 			>
 				<KtButton label="KtPopover Button" />
 				<template v-if="!values.useOptions" #content>
@@ -158,12 +160,13 @@ export default defineComponent({
 	setup() {
 		const interactiveExampleRef = ref<HTMLElement | null>(null)
 
-		const exampleOptions: Kotti.Popover.Props['options'] = [
+		const exampleOptions = ref<Kotti.Popover.Props['options']>([
 			{
 				isDisabled: false,
-				onClick: () => undefined,
+				isOptional: true,
 				dataTest: 'data-test',
 				label: 'User',
+				isSelected: false,
 				icon: Yoco.Icon.USER,
 			},
 			/**
@@ -172,19 +175,24 @@ export default defineComponent({
 			 * */
 			{
 				isDisabled: false,
+				isOptional: true,
 				label: 'Attachment',
 				icon: Yoco.Icon.ATTACHMENT,
 			},
 			{
 				isDisabled: true,
+				isOptional: true,
 				label: 'Shipping',
 				icon: Yoco.Icon.SHIPPING,
 			},
-		]
+		])
 
 		return {
 			component: KtPopover,
 			exampleOptions,
+			handleUpdateIsSelected: () => {
+				// debugger
+			},
 			interactiveExampleRef,
 			placementOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
 				Object.entries(Kotti.Popover.Placement).map(([key, value]) => ({
