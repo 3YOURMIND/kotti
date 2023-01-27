@@ -97,6 +97,8 @@ import {
 	KtTableConsumer,
 } from './kotti-table'
 export * from './kotti-table'
+import { KtTag } from './kotti-tag'
+export * from './kotti-tag'
 import { KtTheme } from './kotti-theme'
 export * from './kotti-theme'
 import { KtToaster } from './kotti-toaster'
@@ -160,6 +162,7 @@ export default {
 			KtTableColumn,
 			KtTableConsumer,
 			KtTableProvider,
+			KtTag,
 			KtTheme,
 			KtToaster,
 			KtUserMenu,

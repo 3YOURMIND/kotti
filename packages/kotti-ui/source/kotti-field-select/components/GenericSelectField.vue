@@ -11,26 +11,18 @@
 				:helpTextSlot="helpTextSlot"
 			>
 				<div class="kt-field-select__input-and-tags">
-					<div
+					<KtTag
 						v-for="option in visibleSelectedTags"
 						:key="option.value"
-						class="kt-field-select__tag"
-					>
-						<div class="kt-field-select__tag-text" v-text="option.label" />
-						<div
-							v-if="!(field.isDisabled || Boolean(option.isDisabled))"
-							class="kt-field-select__tag-icon"
-							@click.stop.prevent="removeTag(option.value)"
-						>
-							<i class="yoco" v-text="Yoco.Icon.CLOSE" />
-						</div>
-					</div>
-					<div v-if="collapsedTagCount > 0" class="kt-field-select__tag">
-						<div
-							class="kt-field-select__tag-text"
-							v-text="`+${collapsedTagCount}`"
-						/>
-					</div>
+						:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
+						:text="option.label"
+						@close="removeTag(option.value)"
+					/>
+					<KtTag
+						v-if="collapsedTagCount > 0"
+						isDisabled
+						:text="`+${collapsedTagCount}`"
+					/>
 					<input
 						ref="inputRef"
 						v-bind="inputProps"
@@ -87,6 +79,7 @@ import { z } from 'zod'
 import { KtField } from '../../kotti-field'
 import { useField } from '../../kotti-field/hooks'
 import { useForceUpdate } from '../../kotti-field/hooks'
+import { KtTag } from '../../kotti-tag'
 import { makeProps } from '../../make-props'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from '../constants'
 import { useSelectTippy } from '../hooks/use-select-tippy'
@@ -132,6 +125,7 @@ export default defineComponent({
 		ActionIcon,
 		FieldSelectOptions,
 		KtField,
+		KtTag,
 	},
 	props: makeProps(propsSchema),
 	setup(props: z.output<typeof propsSchema>, { emit: rawEmit }) {
@@ -355,8 +349,6 @@ export default defineComponent({
 
 	$vertical-tag-gap: 2px;
 	$horizontal-tag-gap: 4px;
-	$tag-padding: 0.4em;
-	$tag-border: 1px;
 
 	&__input-and-tags {
 		display: flex;
@@ -364,47 +356,6 @@ export default defineComponent({
 
 		// HACK: use negative margins to align multi-line grids of tags
 		margin: #{-$vertical-tag-gap + 4px} #{-$horizontal-tag-gap};
-	}
-
-	&__tag {
-		display: flex;
-		align-items: center;
-		padding: $tag-padding;
-		margin: $vertical-tag-gap $horizontal-tag-gap;
-
-		font-size: 0.875em;
-
-		color: var(--text-02);
-		text-transform: capitalize;
-		white-space: nowrap;
-		background-color: var(--interactive-02);
-		border: $tag-border solid var(--ui-02);
-		border-radius: var(--field-border-radius);
-
-		&-icon {
-			$size: 1.25em;
-
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: $size;
-			height: $size;
-			margin-left: 4px;
-			cursor: pointer;
-
-			background-color: var(--ui-02);
-			border-radius: 50%;
-
-			// clipping also affects the clickable area
-			@supports (clip-path: circle(#{$size / 2} at center)) {
-				clip-path: circle(#{$size / 2} at center);
-				border-radius: 0;
-			}
-
-			&:hover {
-				background-color: var(--interactive-02-hover);
-			}
-		}
 	}
 
 	&__wrapper {
