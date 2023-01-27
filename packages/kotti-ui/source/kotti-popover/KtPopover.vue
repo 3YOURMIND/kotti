@@ -16,6 +16,7 @@
 					:label="option.label"
 					@click.stop="handleItemClick(option)"
 				>
+					<!-- eslint-disable-next-line -->
 					<template v-if="areOptionsSelectable" slot="option" :option="option">
 						<KtFieldToggle
 							:dataTest="option.dataTest"

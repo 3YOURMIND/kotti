@@ -133,10 +133,10 @@
 		<div class="element-example">
 			<KtPopover class="mt-4 ml-4" trigger="hover">
 				<KtButton label="Close with Cancel Button" />
-				<template v-slot:content="slotProps">
+				<template #content="slotProps">
 					<p>Save your message</p>
-					<KtButton type="text" @click="slotProps.close">Cancel</KtButton>
-					<KtButton type="primary">Save</KtButton>
+					<KtButton type="text" @click="slotProps.close"> Cancel </KtButton>
+					<KtButton type="primary"> Save </KtButton>
 				</template>
 			</KtPopover>
 		</div>

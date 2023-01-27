@@ -8,11 +8,8 @@ export const isInvalidDate = (
 ) => {
 	const { maximumDate, minimumDate } = props
 
-	if (maximumDate !== null && dayjs(date).isAfter(maximumDate, 'day'))
-		return true
-
-	if (minimumDate !== null && dayjs(date).isBefore(minimumDate, 'day'))
-		return true
-
-	return false
+	return (
+		(maximumDate !== null && dayjs(date).isAfter(maximumDate, 'day')) ||
+		(minimumDate !== null && dayjs(date).isBefore(minimumDate, 'day'))
+	)
 }

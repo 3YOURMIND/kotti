@@ -81,7 +81,7 @@ import ColorPalette from '~/components/ColorPalette.vue'
 import ColorUsage from '~/components/ColorUsage.vue'
 
 export default {
-	name: 'Color',
+	name: 'DocumenationPageFoundationsColorsList',
 	components: {
 		ColorPalette,
 		ColorUsage,

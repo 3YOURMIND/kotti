@@ -36,7 +36,6 @@ import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiFilters } from '../types'
 import { getFilterInitialState } from '../utils'
 
-import ButtonLink from './ButtonLink.vue'
 import FilterRow from './FilterRow.vue'
 
 export default defineComponent<{
@@ -48,7 +47,6 @@ export default defineComponent<{
 }>({
 	name: 'FilterList',
 	components: {
-		ButtonLink,
 		FilterRow,
 	},
 	props: {

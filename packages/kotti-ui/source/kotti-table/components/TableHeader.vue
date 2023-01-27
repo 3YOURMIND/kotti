@@ -9,7 +9,7 @@
 						<i
 							class="form-icon"
 							:style="isAllRowsDisabled ? { cursor: 'not-allowed' } : {}"
-						></i>
+						/>
 					</label>
 					<div
 						class="kt-table-checkbox-col__click-area"

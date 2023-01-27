@@ -1,5 +1,7 @@
 <template>
-	<div class="kt-steps"><slot /></div>
+	<div class="kt-steps">
+		<slot />
+	</div>
 </template>
 
 <script>

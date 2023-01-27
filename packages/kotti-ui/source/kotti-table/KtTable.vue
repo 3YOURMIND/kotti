@@ -3,7 +3,7 @@
 		<div class="hidden-columns">
 			<!-- NOTE: The order is very important here as columns that are inserted-->
 			<!-- last take precedence over columns that are inserted before them. -->
-			<slot></slot>
+			<slot />
 			<!-- NOTE: As the column prop should be the source of truth in case of conflict -->
 			<!-- the prop columns need to be added after the columns from the slot. -->
 			<KtTableColumn
@@ -57,6 +57,18 @@ export default {
 		TableBody,
 		TableHeader,
 	},
+	inject: {
+		[KT_TABLE_STATE_PROVIDER]: {
+			default: false,
+		},
+	},
+	provide() {
+		return {
+			[KT_TABLE]: this,
+			[KT_STORE]: this.store,
+			[KT_LAYOUT]: this.layout,
+		}
+	},
 	props: {
 		id: { default: null, type: String },
 		rowKey: { type: String },
@@ -95,11 +107,6 @@ export default {
 
 		expandMultiple: { default: false, type: Boolean },
 		selected: { default: () => [], type: Array },
-	},
-	inject: {
-		[KT_TABLE_STATE_PROVIDER]: {
-			default: false,
-		},
 	},
 	data() {
 		let localStore
@@ -306,13 +313,6 @@ export default {
 		toggleSelectAll() {
 			this.store.commit('toggleAllSelection')
 		},
-	},
-	provide() {
-		return {
-			[KT_TABLE]: this,
-			[KT_STORE]: this.store,
-			[KT_LAYOUT]: this.layout,
-		}
 	},
 }
 </script>

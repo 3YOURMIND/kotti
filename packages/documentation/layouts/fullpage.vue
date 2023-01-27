@@ -2,7 +2,9 @@
 	<KtI18nContext locale="en-US">
 		<div class="d-flex responsive">
 			<NavBar />
-			<div class="workspace"><nuxt class="content" /></div>
+			<div class="workspace">
+				<nuxt class="content" />
+			</div>
 		</div>
 	</KtI18nContext>
 </template>

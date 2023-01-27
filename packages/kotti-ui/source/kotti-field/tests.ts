@@ -72,7 +72,7 @@ describe('useField', () => {
 		})
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect(() => (wrapper.vm as any).field.setValue(null)).toThrowError(
+		expect(() => (wrapper.vm as any).field.setValue(null)).toThrow(
 			KtFieldErrors.DisabledSetValueCalled,
 		)
 
@@ -80,7 +80,7 @@ describe('useField', () => {
 		await wrapper.vm.$nextTick()
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect(() => (wrapper.vm as any).field.setValue(null)).not.toThrowError()
+		expect(() => (wrapper.vm as any).field.setValue(null)).not.toThrow()
 	})
 
 	it('props.value gets deepCloned', async () => {
@@ -199,7 +199,7 @@ describe('useField', () => {
 				localVue,
 				propsData: { formKey: 'test' },
 			}),
-		).toThrowError(KtFieldErrors.InvalidPropOutsideOfContext)
+		).toThrow(KtFieldErrors.InvalidPropOutsideOfContext)
 
 		const wrapper = shallowMount(TestComponent, { localVue })
 
@@ -226,7 +226,7 @@ describe('useField', () => {
 				},
 				propsData: { formKey: FORM_KEY_NONE },
 			}),
-		).not.toThrowError()
+		).not.toThrow()
 	})
 
 	describe('validation', () => {
@@ -307,7 +307,7 @@ describe('useField', () => {
 				},
 			})
 
-			expect(testKey).not.toBeCalled()
+			expect(testKey).not.toHaveBeenCalled()
 			expect(wrapper.vm.field.validation).toEqual({ type: 'empty' })
 		})
 	})

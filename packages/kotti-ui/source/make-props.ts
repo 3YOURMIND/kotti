@@ -12,7 +12,7 @@ const NEVER = Symbol('NEVER')
  */
 type VuePropConstructor = Exclude<PropType<unknown>, Array<unknown>>
 
-const setUnion = <T extends unknown>(...sets: Set<T>[]): Set<T> => {
+const setUnion = <T>(...sets: Set<T>[]): Set<T> => {
 	const result = new Set<T>()
 	for (const set of sets) for (const item of set) result.add(item)
 	return result

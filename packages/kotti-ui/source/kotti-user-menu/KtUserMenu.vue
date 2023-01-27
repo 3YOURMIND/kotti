@@ -12,6 +12,7 @@
 						class="kt-user-menu__section__title"
 						v-text="section.title"
 					/>
+					<!-- eslint-disable vue/no-v-text-v-html-on-component -->
 					<component
 						:is="link.component"
 						v-for="(link, linkIndex) in section.links"
@@ -25,6 +26,7 @@
 						@click="$emit('click', link)"
 						v-text="link.title"
 					/>
+					<!-- eslint-enable vue/no-v-text-v-html-on-component -->
 				</div>
 			</div>
 		</div>

@@ -35,7 +35,7 @@
 						@keydown.up.prevent
 					/>
 				</div>
-				<template v-slot:actionIcon="{ classes, handleClear, showClear }">
+				<template #actionIcon="{ classes, handleClear, showClear }">
 					<ActionIcon
 						v-bind="{
 							classes,

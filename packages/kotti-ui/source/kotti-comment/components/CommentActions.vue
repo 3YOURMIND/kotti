@@ -18,13 +18,13 @@ export default defineComponent<{
 	userData: Kotti.Comment.UserData
 }>({
 	name: 'CommentActions',
-	props: {
-		options: { type: Array, required: true },
-		userData: { type: Object, required: true },
-	},
 	components: {
 		CommentActionsOptions,
 		CommentActionsReply,
+	},
+	props: {
+		options: { type: Array, required: true },
+		userData: { type: Object, required: true },
 	},
 	setup(props, { emit }) {
 		return {

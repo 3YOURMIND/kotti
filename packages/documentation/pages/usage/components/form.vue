@@ -77,7 +77,7 @@
 					<ComponentInfo :component="KtFormControllerObject" />
 					<h2>Personal Details</h2>
 					<KtFormControllerObject formKey="personalDetails">
-						<template #default="{ setValues, values }">
+						<template #default="{ setValues, values: formObjectValues }">
 							<KtFieldText
 								formKey="firstName"
 								helpText="help for firstName"
@@ -96,9 +96,9 @@
 									hideClear
 									label="Full Name"
 									:value="
-										(values.firstNameFirst
-											? [values.firstName, values.lastName]
-											: [values.lastName, values.firstName]
+										(formObjectValues.firstNameFirst
+											? [formObjectValues.firstName, formObjectValues.lastName]
+											: [formObjectValues.lastName, formObjectValues.firstName]
 										).join(',')
 									"
 								/>
@@ -106,11 +106,11 @@
 									formKey="NONE"
 									isOptional
 									label="Show First Name First"
-									:value="values.firstNameFirst"
+									:value="formObjectValues.firstNameFirst"
 									@input="
 										setValues({
-											...values,
-											firstNameFirst: !values.firstNameFirst,
+											...formObjectValues,
+											firstNameFirst: !formObjectValues.firstNameFirst,
 										})
 									"
 								/>
@@ -125,7 +125,9 @@
 							class="address-controller"
 							formKey="addresses"
 						>
-							<template #header="{ addBefore, setValues, values }">
+							<template
+								#header="{ addBefore, setValues, values: formListValues }"
+							>
 								<div>
 									<button
 										class="kt-button secondary"
@@ -142,7 +144,7 @@
 									<button
 										class="kt-button secondary"
 										type="button"
-										@click="setValues([...values, ...values])"
+										@click="setValues([...formListValues, ...formListValues])"
 										v-text="'Duplicate List'"
 									/>
 								</div>
@@ -268,8 +270,8 @@
 						label="Gender"
 						:options="genderOptions"
 					>
-						<template #header="{ option }">~{{ option.label }}~</template>
-						<template #content="{ option }">*{{ option.value }}*</template>
+						<template #header="{ option }"> ~{{ option.label }}~ </template>
+						<template #content="{ option }"> *{{ option.value }}* </template>
 					</KtFieldRadioGroup>
 					<KtFormSubmit />
 				</KtForm>
