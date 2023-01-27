@@ -19,7 +19,7 @@
 					<template v-if="areOptionsSelectable" slot="option" :option="option">
 						<KtFieldToggle
 							:dataTest="option.dataTest"
-							formKey="NONE"
+							:formKey="formKey"
 							:isDiabled="option.isDiabled"
 							:isOptional="option.isOptional"
 							:value="option.isSelected"
@@ -43,11 +43,14 @@ import {
 	ref,
 	provide,
 	watch,
+	inject,
 } from '@vue/composition-api'
 import { castArray } from 'lodash'
 import { roundArrow, Props as TippyProps } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
+import { KT_FORM_CONTEXT } from '../kotti-form'
+import { KottiForm } from '../kotti-form/types'
 import { makeProps } from '../make-props'
 
 import IconTextItem from './components/IconTextItem.vue'
@@ -69,6 +72,8 @@ export default defineComponent<KottiPopover.PropsInternal>({
 	setup(props, { emit }) {
 		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)
+
+		const formContext = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 
 		onMounted(() => {
 			if (contentRef.value === null)
@@ -138,6 +143,7 @@ export default defineComponent<KottiPopover.PropsInternal>({
 		return {
 			close,
 			contentRef,
+			formKey: computed(() => (formContext === null ? null : 'NONE')),
 			handleItemClick: (option: KottiPopover.PropsInternal['options'][0]) => {
 				if (!option.isDisabled && option.onClick) {
 					option.onClick()
