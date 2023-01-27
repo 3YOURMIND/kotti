@@ -41,6 +41,7 @@ export namespace KottiFieldToggleGroup {
 	export type Value = z.output<typeof valueSchema>
 
 	export const entrySchema = z.object({
+		dataTest: z.string().optional(),
 		isDisabled: z.boolean().optional(),
 		key: z.string(),
 		label: z.string(),
