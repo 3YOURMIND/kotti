@@ -88,6 +88,7 @@ export default defineComponent<KottiFieldDate.PropsInternal>({
 					// @ts-expect-error (exposed through mixin on picker.vue on element-ui's implementation)
 					appendToBody: !isInPopover,
 					clearable: !field.hideClear,
+					'data-test': field.inputProps['data-test'],
 					disabled: field.isDisabled,
 					pickerOptions: pickerOptions.value,
 					placeholder: props.placeholder ?? '',
