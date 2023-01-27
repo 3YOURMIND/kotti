@@ -160,7 +160,9 @@ export default defineComponent({
 	setup() {
 		const interactiveExampleRef = ref<HTMLElement | null>(null)
 
-		const exampleOptions = ref<Kotti.Popover.Props['options']>([
+		const exampleOptions = ref<
+			Exclude<Kotti.Popover.Props['options'], undefined>
+		>([
 			{
 				isDisabled: false,
 				isOptional: true,
@@ -190,8 +192,12 @@ export default defineComponent({
 		return {
 			component: KtPopover,
 			exampleOptions,
-			handleUpdateIsSelected: () => {
-				// debugger
+			handleUpdateIsSelected: (val: Kotti.Popover.Events.UpdateIsSelected) => {
+				exampleOptions.value = exampleOptions.value.map((option, index) =>
+					index === val.index
+						? { ...option, isSelected: val.value ?? undefined }
+						: option,
+				)
 			},
 			interactiveExampleRef,
 			placementOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>

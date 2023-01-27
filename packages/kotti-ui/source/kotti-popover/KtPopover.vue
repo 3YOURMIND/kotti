@@ -149,7 +149,6 @@ export default defineComponent<KottiPopover.PropsInternal>({
 				option,
 				value,
 			}: KottiPopover.Events.UpdateIsSelected) => {
-				console.log('update:isSelected', { value, index, option })
 				emit('update:isSelected', {
 					value,
 					index,
