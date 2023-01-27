@@ -15,6 +15,7 @@
 				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
 				:class="decrementButtonClasses"
+				:data-test="`${inputProps['data-test']}-decrement`"
 				@click="decrementValue"
 			>
 				<i class="yoco" v-text="Yoco.Icon.MINUS" />
@@ -37,6 +38,7 @@
 				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
 				:class="incrementButtonClasses"
+				:data-test="`${inputProps['data-test']}-increment`"
 				@click="incrementValue"
 			>
 				<i class="yoco" v-text="Yoco.Icon.PLUS" />
