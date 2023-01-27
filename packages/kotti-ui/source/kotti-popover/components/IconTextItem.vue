@@ -2,16 +2,18 @@
 	<div
 		class="kt-popover-options-item"
 		:class="{
+			'kt-popover-options-item--is-active': isActive,
 			'kt-popover-options-item--is-clickable': isClickable,
 			'kt-popover-options-item--is-disabled': isDisabled,
-			'kt-popover-options-item--is-selected': isSelected,
 		}"
 		:data-test="dataTest"
 		:tabindex="isDisabled || !isClickable ? -1 : 0"
 		v-on="$listeners"
 	>
-		<i v-if="icon" class="yoco" v-text="icon" />
-		<div v-if="label" v-text="label" />
+		<slot name="option">
+			<i v-if="icon" class="yoco" v-text="icon" />
+			<div v-if="label" v-text="label" />
+		</slot>
 	</div>
 </template>
 
@@ -39,6 +41,11 @@ export default defineComponent<IconTextItem.PropsInternal>({
 	user-select: none;
 	border-radius: var(--border-radius);
 
+	&--is-active {
+		font-weight: 700;
+		color: var(--interactive-03);
+	}
+
 	&--is-disabled {
 		cursor: not-allowed;
 		opacity: 0.46;
@@ -50,16 +57,11 @@ export default defineComponent<IconTextItem.PropsInternal>({
 
 			&:hover {
 				background-color: var(--ui-01);
-				&.kt-popover-options-item--is-selected {
+				&.kt-popover-options-item--is-active {
 					color: var(--interactive-01-hover);
 				}
 			}
 		}
-	}
-
-	&--is-selected {
-		font-weight: 700;
-		color: var(--interactive-03);
 	}
 
 	.yoco {

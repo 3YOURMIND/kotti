@@ -16,11 +16,12 @@
 		<h2>Interactive Example</h2>
 
 		<KtForm v-model="values">
-			<KtFieldToggle
-				formKey="useOptions"
+			<KtFieldSingleSelect
+				formKey="usageMode"
+				hideClear
 				isOptional
-				label="use options"
-				type="switch"
+				label="usage"
+				:options="usageOptions"
 			>
 				<template #helpText>
 					Passing <code>options</code> turns <code>KtPopover</code> into a
@@ -33,7 +34,7 @@
 						v-text="JSON.stringify(exampleOptions, replacer, ' '.repeat(3))"
 					/>
 				</template>
-			</KtFieldToggle>
+			</KtFieldSingleSelect>
 			<KtFieldSingleSelect
 				formKey="size"
 				hideClear
@@ -75,13 +76,17 @@
 			</KtFieldSingleSelect>
 			<KtPopover
 				ref="interactiveExampleRef"
-				:options="values.useOptions ? exampleOptions : []"
+				:areOptionsSelectable="
+					values.usageMode === UsageMode.SELECTABLE_OPTIONS
+				"
+				:options="exampleOptions"
 				:placement="values.placement"
 				:size="values.size"
 				:trigger="values.trigger"
+				@update:isSelected="handleUpdateIsSelected"
 			>
 				<KtButton label="KtPopover Button" />
-				<template v-if="!values.useOptions" #content>
+				<template v-if="values.usageMode === UsageMode.SLOT" #content>
 					<div style="max-width: 500px">
 						<code v-text="'<template #content>Slot</template>'" />
 						<br />
@@ -150,6 +155,12 @@ import PopoverExample from './popover-example.md'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
+enum UsageMode {
+	OPTIONS = 'OPTIONS',
+	SELECTABLE_OPTIONS = 'SELECTABLE_OPTIONS',
+	SLOT = 'SLOT',
+}
+
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsPopever',
 	components: {
@@ -158,12 +169,15 @@ export default defineComponent({
 	setup() {
 		const interactiveExampleRef = ref<HTMLElement | null>(null)
 
-		const exampleOptions: Kotti.Popover.Props['options'] = [
+		const exampleOptions = ref<
+			Exclude<Kotti.Popover.Props['options'], undefined>
+		>([
 			{
 				isDisabled: false,
-				onClick: () => undefined,
+				isOptional: true,
 				dataTest: 'data-test',
 				label: 'User',
+				isSelected: false,
 				icon: Yoco.Icon.USER,
 			},
 			/**
@@ -172,19 +186,28 @@ export default defineComponent({
 			 * */
 			{
 				isDisabled: false,
+				isOptional: true,
 				label: 'Attachment',
 				icon: Yoco.Icon.ATTACHMENT,
 			},
 			{
 				isDisabled: true,
+				isOptional: true,
 				label: 'Shipping',
 				icon: Yoco.Icon.SHIPPING,
 			},
-		]
+		])
 
 		return {
 			component: KtPopover,
 			exampleOptions,
+			handleUpdateIsSelected: (val: Kotti.Popover.Events.UpdateIsSelected) => {
+				exampleOptions.value = exampleOptions.value.map((option, index) =>
+					index === val.index
+						? { ...option, isSelected: val.value ?? undefined }
+						: option,
+				)
+			},
 			interactiveExampleRef,
 			placementOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
 				Object.entries(Kotti.Popover.Placement).map(([key, value]) => ({
@@ -209,9 +232,18 @@ export default defineComponent({
 					value,
 				})),
 			),
+			usageOptions: computed<Kotti.FieldSingleSelect.Props['options']>(() => [
+				{ label: 'Use Slot', value: UsageMode.SLOT },
+				{ label: 'Use Options', value: UsageMode.OPTIONS },
+				{
+					label: 'Use Selectable Options',
+					value: UsageMode.SELECTABLE_OPTIONS,
+				},
+			]),
+			UsageMode,
 			values: ref<
 				{
-					useOptions: Kotti.FieldToggle.Value
+					usageMode: UsageMode
 					valueDateTime: Kotti.FieldDateTime.Value
 					valueDateTimeRange: Kotti.FieldDateTimeRange.Value
 					valueSingleSelect: Kotti.FieldSingleSelect.Value
@@ -220,7 +252,7 @@ export default defineComponent({
 				placement: Kotti.Popover.Placement.AUTO,
 				size: Kotti.Popover.Size.AUTO,
 				trigger: Kotti.Popover.Trigger.CLICK,
-				useOptions: false,
+				usageMode: UsageMode.SLOT,
 				valueDateTime: null,
 				valueDateTimeRange: [null, null],
 				valueSingleSelect: null,
