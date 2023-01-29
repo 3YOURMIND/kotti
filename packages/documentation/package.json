@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@3yourmind/kotti-ui": "3.0.0-beta.35",
+		"@3yourmind/kotti-ui": "3.0.0-beta.36",
 		"@3yourmind/yoco": "*",
 		"@octokit/rest": "^18.0.6",
 		"@octokit/types": "^5.5.0",
