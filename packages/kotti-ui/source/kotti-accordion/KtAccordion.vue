@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-accordion">
-		<div class="kt-accordion__header" @click="toggle">
+		<div class="kt-accordion__header" :data-test="dataTest" @click="toggle">
 			<div class="kt-accordion__title">
 				<slot name="title">
 					<i v-if="icon" class="yoco kt-accordion__title__icon" v-text="icon" />

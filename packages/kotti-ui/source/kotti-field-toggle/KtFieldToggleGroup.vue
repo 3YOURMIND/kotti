@@ -9,7 +9,7 @@
 			<div v-for="option of optionsWithChecked" :key="option.key">
 				<ToggleInner
 					component="label"
-					:inputProps="inputProps"
+					:inputProps="getInputProps(option)"
 					:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
 					:type="type"
 					:value="option.value"
@@ -61,11 +61,17 @@ export default defineComponent<KottiFieldToggleGroup.PropsInternal>({
 
 		return {
 			field,
-			inputProps: computed(() => ({
-				...field.inputProps,
-				forceUpdateKey: forceUpdateKey.value,
-				'kt-field-radio-group__wrapper--inline': props.isInline,
-			})),
+			getInputProps: (option: KottiFieldToggleGroup.Entry) => {
+				const fieldDataTest = field.inputProps['data-test']
+				return {
+					...field.inputProps,
+					'data-test':
+						option.dataTest ?? fieldDataTest
+							? `${fieldDataTest}.${option.key}`
+							: undefined,
+					forceUpdateKey: forceUpdateKey.value,
+				}
+			},
 			onInput: (
 				key: KottiFieldToggleGroup.Entry['key'],
 				newValue: boolean | undefined,

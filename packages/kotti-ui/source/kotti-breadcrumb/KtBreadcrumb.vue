@@ -5,7 +5,7 @@
 				v-for="(breadcrumb, index) in breadcrumbs"
 				:key="index"
 				:class="breadCrumbClasses(breadcrumb, index)"
-				:dataTest="breadcrumb.dataTest ? breadcrumb.dataTest : undefined"
+				:data-test="breadcrumb.dataTest ? breadcrumb.dataTest : undefined"
 			>
 				<span
 					v-if="showSeparator(index)"
