@@ -53,7 +53,7 @@ Stylise the navbar with the select fields:
 
 <script>
 export default {
-	name: 'Theming',
+	name: 'DocumenationPageFoundationsColorsTheming',
 	data() {
 		return {
 			navbarBackground: null,

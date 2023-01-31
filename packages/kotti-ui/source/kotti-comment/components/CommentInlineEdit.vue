@@ -28,16 +28,16 @@ export default defineComponent<{
 	message: string
 }>({
 	name: 'CommentInlineEdit',
+	components: {
+		KtButton,
+		KtButtonGroup,
+	},
 	props: {
 		dangerouslyOverrideParser: { type: Function, required: true },
 		id: { type: Number, required: true },
 		isEditing: { type: Boolean, required: true },
 		postEscapeParser: { type: Function, required: true },
 		message: { type: String, required: true },
-	},
-	components: {
-		KtButton,
-		KtButtonGroup,
 	},
 	setup(props, { emit }) {
 		const inlineValue = ref<string | null>(null)

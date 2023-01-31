@@ -48,10 +48,10 @@ import LayoutContainer from '~/components/LayoutContainer.vue'
 
 export default {
 	name: 'DocumentationPageExamplesLayouts',
-	layout: 'empty',
 	components: {
 		LayoutContainer,
 	},
+	layout: 'empty',
 	data() {
 		return {
 			isNarrow: false,

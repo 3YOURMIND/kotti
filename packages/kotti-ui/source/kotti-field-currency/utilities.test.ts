@@ -40,7 +40,7 @@ describe('toFixedPrecisionString', () => {
 			)
 	})
 
-	it('removes leading zeroes ', () => {
+	it('removes leading zeroes', () => {
 		for (const [testCase, expectedResult] of [
 			['0.0', '0.000'],
 			['00.0', '0.000'],

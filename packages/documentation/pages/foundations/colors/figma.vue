@@ -83,7 +83,7 @@ import {
 import figmaImportScript from '@3yourmind/kotti-ui/tokens/figma-import-script'
 
 export default {
-	name: 'NewColors',
+	name: 'DocumenationPageFoundationsColorsFigma',
 	data() {
 		return {
 			baseColorsFactory,

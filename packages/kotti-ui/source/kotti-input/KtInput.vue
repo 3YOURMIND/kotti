@@ -25,7 +25,9 @@
 				v-text="icon"
 			/>
 			<div v-show="showDialog && hasDialog" :class="dialogClass">
-				<slot name="dialog">{{ dialog }}</slot>
+				<slot name="dialog">
+					{{ dialog }}
+				</slot>
 			</div>
 		</div>
 		<div v-if="validateText" class="form-validation-text">

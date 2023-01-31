@@ -23,7 +23,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:prettier/recommended',
 		'@vue/typescript',
-		'prettier/vue',
+		'prettier',
 	],
 	rules: {
 		'import/order': [
@@ -87,6 +87,7 @@ module.exports = {
 				'no-console': 'off',
 				'no-magic-numbers': 'off',
 				'sonarjs/no-duplicate-string': 'off',
+				'vue/one-component-per-file': 'off',
 				'@typescript-eslint/ban-ts-comment': 'off',
 			},
 		},

@@ -25,6 +25,6 @@ Here is how we use CSS custom properties:
 
 <script>
 export default {
-	name: 'Index',
+	name: 'DocumenationPageFoundationsColorsIntroduction',
 }
 </script>

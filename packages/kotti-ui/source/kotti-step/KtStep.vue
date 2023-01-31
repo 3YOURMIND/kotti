@@ -26,6 +26,13 @@ import color from 'color'
 
 export default {
 	name: 'KtStep',
+	inject: {
+		KtTheme: {
+			default: {
+				brandColor: '#2C64CC',
+			},
+		},
+	},
 	props: {
 		icon: { type: String, default: null },
 		title: { type: String, default: 'Title' },
@@ -38,13 +45,6 @@ export default {
 				['error', 'finished', 'process', 'wait'].includes(value),
 		},
 		indexNumber: { type: Number, default: null },
-	},
-	inject: {
-		KtTheme: {
-			default: {
-				brandColor: '#2C64CC',
-			},
-		},
 	},
 	data() {
 		return {

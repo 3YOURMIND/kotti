@@ -149,11 +149,11 @@ export default defineComponent<{
 	}
 }>({
 	name: 'ComponentInfo',
-	props: {
-		component: { required: true, type: Object },
-	},
 	components: {
 		ComponentInfoSlots,
+	},
+	props: {
+		component: { required: true, type: Object },
 	},
 	setup(props) {
 		return {

@@ -32,9 +32,13 @@ import { TimeConversion } from '@metatypes/units'
 export default {
 	name: 'YocoPreview',
 	props: {
-		copySuccess: { default: false, type: Boolean },
 		enum: { required: true, type: String },
 		icon: { required: true, type: String },
+	},
+	data() {
+		return {
+			copySuccess: false,
+		}
 	},
 	computed: {
 		copyIconSuccessMessage() {

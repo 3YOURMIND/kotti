@@ -39,7 +39,7 @@ import {
 } from '@3yourmind/kotti-ui/tokens'
 
 export default {
-	name: 'NewColors',
+	name: 'DocumenationPageFoundationsColorsTokens',
 	data() {
 		return {
 			baseColorsFactory,

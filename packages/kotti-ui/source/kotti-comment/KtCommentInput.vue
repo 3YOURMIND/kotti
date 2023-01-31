@@ -18,9 +18,9 @@
 			/>
 			<KtButton
 				:disabled="!text"
+				:label="replyButtonText"
 				type="text"
 				@click="handleSubmitClick"
-				v-text="replyButtonText"
 			/>
 		</div>
 	</div>
@@ -38,11 +38,11 @@ import { KottiCommentInput } from './types'
 
 export default defineComponent<KottiCommentInput.PropsInternal>({
 	name: 'KtCommentInput',
-	props: makeProps(KottiCommentInput.propsSchema),
 	components: {
 		KtAvatar,
 		KtButton,
 	},
+	props: makeProps(KottiCommentInput.propsSchema),
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
@@ -62,7 +62,7 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 					parentId: props.parentId,
 				})
 				text.value = null
-				textarea.value.style.height = '1.2rem'
+				if (textarea.value) textarea.value.style.height = '1.2rem'
 			},
 			replyButtonText: computed(() =>
 				props.isInline

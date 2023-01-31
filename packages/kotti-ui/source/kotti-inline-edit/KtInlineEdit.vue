@@ -10,6 +10,7 @@
 		/>
 		<!-- eslint-enable vue/no-v-html -->
 		<div v-else>
+			<!-- eslint-disable vue/no-v-text-v-html-on-component -->
 			<component
 				:is="inputComponent"
 				v-bind="$attrs"
@@ -20,6 +21,7 @@
 				@input="handleInput"
 				v-text="currentValue"
 			/>
+			<!-- eslint-enable vue/no-v-text-v-html-on-component -->
 			<KtButtonGroup class="inline-edit__edit-buttons">
 				<KtButton icon="close" @click="handleDismiss" />
 				<KtButton icon="check" @click="handleConfirm" />

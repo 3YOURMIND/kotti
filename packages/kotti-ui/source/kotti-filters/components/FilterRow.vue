@@ -60,8 +60,8 @@ import {
 	KtFieldToggle,
 	KtForm,
 } from '../../'
-import { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { KottiField } from '../../kotti-field/types'
+import { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiFilters } from '../types'
 import {
