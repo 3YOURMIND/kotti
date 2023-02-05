@@ -27,6 +27,48 @@ export const enUS: KottiI18n.Messages = {
 		replyButton: 'Reply',
 		replyPlaceholder: 'Reply to',
 	},
+	KtFieldFileUpload: {
+		button: {
+			acceptPhoto: 'Use Photo',
+			cancel: 'Cancel',
+			nextCamera: 'Next Camera',
+			rejectPhoto: 'Retake Photo',
+			retry: 'Retry',
+			takePhoto: 'Take Photo',
+		},
+		error: {
+			multipleNotAllowed: 'Multiple files upload not allowed',
+			notAllowed: 'Permission denied to use the camera',
+			notFound: 'No available camera found',
+			notSupported: 'No compatible camera found',
+		},
+		label: {
+			capture: 'Take Photo',
+			error: 'Error',
+			review: 'Review',
+			unknown: 'Unknown',
+		},
+		statusMsg: {
+			CANCELED: 'Canceled',
+			ERROR: 'Upload failed, please try again',
+			INVALID: 'Invalid',
+			NOT_STARTED: 'Not started',
+			UPLOADED: 'Uploaded',
+			UPLOADED_WITH_ERROR: 'Uploaded with error',
+			UPLOADING: 'Uploading...',
+			READY_TO_UPLOAD: 'Ready to upload on submittal',
+		},
+		text: {
+			clickToUpload: 'Click to upload',
+			dragAndDrop: 'or drag and drop',
+			learnMore: 'Learn more',
+			max: 'max.',
+		},
+		validationMsg: {
+			INVALID_EXTENSION: 'File format not supported',
+			MAX_SIZE_EXCEEDED: 'Maximum file size allowed exceeded',
+		},
+	},
 	KtFields: {
 		optionalLabel: 'Optional',
 		requiredMessage: 'This field is required',

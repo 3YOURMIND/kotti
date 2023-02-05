@@ -28,6 +28,7 @@
 							:is="componentRepresentation.name"
 							v-bind="componentRepresentation.props"
 							:actions="componentRepresentation.actions"
+							:remoteUpload="componentRepresentation.remoteUpload"
 							:validator="componentRepresentation.validator"
 							@update:query="updateQuery"
 						>
@@ -468,6 +469,111 @@
 								label="clearOnSelect"
 								type="switch"
 							/>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes('allowMultiple')
+								"
+								formKey="allowMultiple"
+								helpText="Allows selecting more than one file"
+								isOptional
+								label="allowMultiple"
+								type="switch"
+							/>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes('allowPhotos')
+								"
+								formKey="allowPhotos"
+								helpText="Allows taking photos with the device's camera. Photos are saved with .png extension."
+								isOptional
+								label="allowPhotos"
+								type="switch"
+							/>
+							<KtFieldNumber
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'collapseExtensionsAfter',
+									)
+								"
+								formKey="collapseExtensionsAfter"
+								helpText="The maximum number of extensions to display in the Drop Area text"
+								isOptional
+								label="collapseExtensionsAfter"
+								:minimum="0"
+								size="small"
+								:step="1"
+							/>
+							<KtFieldMultiSelect
+								v-if="
+									componentDefinition.additionalProps.includes('extensions')
+								"
+								formKey="extensions"
+								helpText="List of allowed file extensions. Takes an array of case-insensitive strings."
+								isOptional
+								label="extensions"
+								:options="[
+									{ label: 'DOC', value: 'DOC' },
+									{ label: 'GIF', value: 'GIF' },
+									{ label: 'JP2', value: 'JP2' },
+									{ label: 'JPEG', value: 'JPEG' },
+									{ label: 'JPG', value: 'JPG' },
+									{ label: 'OBJ', value: 'OBJ' },
+									{ label: 'PDF', value: 'PDF' },
+									{ label: 'PNG', value: 'PNG' },
+									{ label: 'STL', value: 'STL' },
+									{ label: 'TXT', value: 'TXT' },
+								]"
+							/>
+							<KtFieldText
+								v-if="
+									componentDefinition.additionalProps.includes('externalUrl')
+								"
+								formKey="externalUrl"
+								helpText="URL for external documentation"
+								isOptional
+								label="externalUrl"
+								size="small"
+							/>
+							<KtFieldSingleSelect
+								v-if="componentDefinition.additionalProps.includes('icon')"
+								formKey="icon"
+								helpText="The icon that appears inside the Drop Area"
+								isOptional
+								label="icon"
+								:options="yocoIconOptions"
+							>
+								<template #option="{ option }">
+									<i
+										class="yoco"
+										style="margin-right: 10px; font-size: 24px"
+										v-text="option.value"
+									/>
+									<span v-text="option.label" />
+								</template>
+							</KtFieldSingleSelect>
+							<KtFieldNumber
+								v-if="
+									componentDefinition.additionalProps.includes('maxFileSize')
+								"
+								:decimalPlaces="0"
+								formKey="maxFileSize"
+								helpText="The maximum file size allowed in bytes (in decimal base)"
+								isOptional
+								label="maxFileSize"
+								:minimum="1"
+								:step="1"
+							/>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes('remoteUpload')
+								"
+								formKey="hasRemoteUpload"
+								helpText="Defines if the field should trigger a remote upload on file selection. You must provide callback `actions` (onCancel, onDelete, onRetry, onUpload) and `payload` (progress, status)."
+								isOptional
+								label="remoteUpload"
+								type="switch"
+							/>
+
 							<h4>Additional Slots</h4>
 							<KtFieldText
 								v-if="
@@ -583,6 +689,7 @@ import {
 	KtFieldDateRange,
 	KtFieldDateTime,
 	KtFieldDateTimeRange,
+	KtFieldFileUpload,
 	KtFieldMultiSelect,
 	KtFieldMultiSelectRemote,
 	KtFieldNumber,
@@ -597,12 +704,13 @@ import {
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { TimeConversion } from '@metatypes/units'
-import { defineComponent, ref, computed } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
 import { useRouter } from '../../..//hooks/use-router'
 import {
 	createActions,
+	createRemoteUpload,
 	ComponentValue,
 	ComponentNames,
 	generateComponentCode,
@@ -664,6 +772,21 @@ const components: Array<{
 		formKey: 'dateTimeRangeValue',
 		name: 'KtFieldDateTimeRange',
 		supports: KtFieldDateTimeRange.meta.supports,
+	},
+	{
+		additionalProps: [
+			'allowMultiple',
+			'allowPhotos',
+			'collapseExtensionsAfter',
+			'extensions',
+			'externalUrl',
+			'icon',
+			'maxFileSize',
+			'remoteUpload',
+		],
+		formKey: 'fileUploadValue',
+		name: 'KtFieldFileUpload',
+		supports: KtFieldFileUpload.meta.supports,
 	},
 	{
 		additionalProps: [
@@ -779,6 +902,7 @@ const INITIAL_VALUES: {
 	dateTimeRangeValue: Kotti.FieldDateRange.Value
 	dateTimeValue: Kotti.FieldDateTime.Value
 	dateValue: Kotti.FieldDate.Value
+	fileUploadValue: Kotti.FieldFileUpload.Value
 	multiSelectValue: Kotti.FieldMultiSelect.Value
 	numberValue: Kotti.FieldNumber.Value
 	singleSelectValue: Kotti.FieldSingleSelect.Value
@@ -791,6 +915,7 @@ const INITIAL_VALUES: {
 	dateTimeRangeValue: [null, null],
 	dateTimeValue: null,
 	dateValue: null,
+	fileUploadValue: [],
 	multiSelectValue: [],
 	numberValue: null,
 	singleSelectValue: null,
@@ -805,6 +930,7 @@ const INITIAL_VALUES: {
 
 type componentRepresentation = ComponentValue & {
 	actions?: Array<Record<string, unknown>>
+	remoteUpload?: Record<string, unknown>
 	code: string
 	validator: Kotti.Field.Validation.Function
 }
@@ -900,19 +1026,27 @@ export default defineComponent({
 
 		const settings = ref<{
 			additionalProps: {
+				allowMultiple: Kotti.FieldToggle.Value
+				allowPhotos: Kotti.FieldToggle.Value
 				autoComplete: 'current-password' | 'new-password'
 				clearOnSelect: Kotti.FieldToggle.Value
+				collapseExtensionsAfter: Kotti.FieldNumber.Value
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				contentSlot: ComponentValue['contentSlot']
 				currencyCurrency: string
 				defaultSlot: ComponentValue['defaultSlot']
+				extensions: Kotti.FieldMultiSelect.Value
+				externalUrl: Kotti.FieldText.Value
 				hasActions: boolean
 				hasOptionSlot: boolean
+				hasRemoteUpload: boolean
 				headerSlot: ComponentValue['headerSlot']
 				hideChangeButtons: boolean
+				icon: Yoco.Icon | null
 				isInline: boolean
 				isLoadingOptions: boolean
 				isUnsorted: boolean
+				maxFileSize: Kotti.FieldNumber.Value
 				maximumDate: Kotti.FieldDate.Value
 				maximumSelectable: Kotti.FieldNumber.Value
 				minimumDate: Kotti.FieldDate.Value
@@ -922,6 +1056,7 @@ export default defineComponent({
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
 				numberStep: Kotti.FieldNumber.Value
+				remoteUploadActions: Kotti.FieldToggleGroup.Value
 				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
 				toggleType: 'checkbox' | 'switch'
 			}
@@ -952,19 +1087,27 @@ export default defineComponent({
 			validation: Kotti.Field.Validation.Result['type']
 		}>({
 			additionalProps: {
+				allowMultiple: false,
+				allowPhotos: false,
 				autoComplete: 'current-password',
 				clearOnSelect: false,
+				collapseExtensionsAfter: null,
 				collapseTagsAfter: null,
 				contentSlot: null,
 				currencyCurrency: 'USD',
 				defaultSlot: 'Default Slot',
+				extensions: [],
+				externalUrl: null,
 				hasActions: false,
 				hasOptionSlot: false,
+				hasRemoteUpload: false,
 				headerSlot: null,
 				hideChangeButtons: false,
+				icon: null,
 				isInline: false,
 				isLoadingOptions: false,
 				isUnsorted: false,
+				maxFileSize: null,
 				maximumDate: null,
 				maximumSelectable: null,
 				minimumDate: null,
@@ -974,6 +1117,12 @@ export default defineComponent({
 				numberMaximum: null,
 				numberMinimum: null,
 				numberStep: null,
+				remoteUploadActions: {
+					onCancel: false,
+					onDelete: false,
+					onRetry: false,
+					onUpload: true,
+				},
 				showHeaderSideSlot: false,
 				toggleType: 'checkbox',
 			},
@@ -1188,6 +1337,47 @@ export default defineComponent({
 					clearOnSelect: settings.value.additionalProps.clearOnSelect,
 				})
 
+			if (componentDefinition.value.additionalProps.includes('allowMultiple'))
+				Object.assign(additionalProps, {
+					allowMultiple: settings.value.additionalProps.allowMultiple,
+				})
+			if (componentDefinition.value.additionalProps.includes('allowPhotos'))
+				Object.assign(additionalProps, {
+					allowPhotos: settings.value.additionalProps.allowPhotos,
+				})
+			if (
+				componentDefinition.value.additionalProps.includes(
+					'collapseExtensionsAfter',
+				) &&
+				settings.value.additionalProps.collapseExtensionsAfter !== null
+			)
+				Object.assign(additionalProps, {
+					collapseExtensionsAfter:
+						settings.value.additionalProps.collapseExtensionsAfter,
+				})
+			if (componentDefinition.value.additionalProps.includes('extensions'))
+				Object.assign(additionalProps, {
+					extensions: settings.value.additionalProps.extensions,
+				})
+			if (componentDefinition.value.additionalProps.includes('externalUrl'))
+				Object.assign(additionalProps, {
+					externalUrl: settings.value.additionalProps.externalUrl,
+				})
+			if (
+				componentDefinition.value.additionalProps.includes('icon') &&
+				settings.value.additionalProps.icon !== null
+			)
+				Object.assign(additionalProps, {
+					icon: settings.value.additionalProps.icon,
+				})
+			if (
+				componentDefinition.value.additionalProps.includes('maxFileSize') &&
+				settings.value.additionalProps.maxFileSize !== null
+			)
+				Object.assign(additionalProps, {
+					maxFileSize: settings.value.additionalProps.maxFileSize,
+				})
+
 			if (
 				[
 					'KtFieldMultiSelect',
@@ -1273,6 +1463,9 @@ export default defineComponent({
 				defaultSlot: settings.value.additionalProps.defaultSlot,
 				hasActions: settings.value.additionalProps.hasActions,
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
+				hasRemoteUpload:
+					settings.value.additionalProps.hasRemoteUpload &&
+					componentDefinition.value.additionalProps.includes('remoteUpload'),
 				hasOptionSlot: settings.value.additionalProps.hasOptionSlot,
 				headerSlot: settings.value.additionalProps.headerSlot,
 				name: settings.value.component,
@@ -1281,6 +1474,16 @@ export default defineComponent({
 				validation: settings.value.validation,
 			}),
 		)
+		const componentRepresentation = computed(
+			(): componentRepresentation => ({
+				...componentValue.value,
+				actions: createActions(componentValue.value.hasActions),
+				code: generateComponentCode(componentValue.value),
+				remoteUpload: createRemoteUpload(componentValue.value.hasRemoteUpload),
+				validator: createValidator(componentValue.value.validation),
+			}),
+		)
+
 		return {
 			component: computed(
 				(): { meta: Kotti.Meta; name: string } =>
@@ -1290,6 +1493,7 @@ export default defineComponent({
 						KtFieldDateRange,
 						KtFieldDateTime,
 						KtFieldDateTimeRange,
+						KtFieldFileUpload,
 						KtFieldNumber,
 						KtFieldMultiSelect,
 						KtFieldMultiSelectRemote,
@@ -1309,14 +1513,7 @@ export default defineComponent({
 				value: component.name,
 			})),
 			componentProps,
-			componentRepresentation: computed(
-				(): componentRepresentation => ({
-					...componentValue.value,
-					actions: createActions(componentValue.value.hasActions),
-					code: generateComponentCode(componentValue.value),
-					validator: createValidator(componentValue.value.validation),
-				}),
-			),
+			componentRepresentation,
 			decimalSeparatorOptions: Object.entries(Kotti.DecimalSeparator).map(
 				([key, value]) => ({
 					label: `Kotti.DecimalSeparator.${key}`,
