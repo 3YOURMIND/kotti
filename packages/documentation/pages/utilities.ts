@@ -5,6 +5,7 @@ export type ComponentNames =
 	| 'KtFieldDateRange'
 	| 'KtFieldDateTime'
 	| 'KtFieldDateTimeRange'
+	| 'KtFieldFileUpload'
 	| 'KtFieldMultiSelect'
 	| 'KtFieldMultiSelectRemote'
 	| 'KtFieldNumber'
@@ -23,6 +24,7 @@ const COMPONENT_NAMES: ComponentNames[] = [
 	'KtFieldDateRange',
 	'KtFieldDateTime',
 	'KtFieldDateTimeRange',
+	'KtFieldFileUpload',
 	'KtFieldMultiSelect',
 	'KtFieldMultiSelectRemote',
 	'KtFieldNumber',
@@ -42,6 +44,7 @@ export type ComponentValue = {
 	defaultSlot: string | null
 	hasActions: boolean
 	hasHelpTextSlot: boolean
+	hasRemoteUpload: boolean
 	hasOptionSlot: boolean
 	headerSlot: string | null
 	showHeaderSideSlot: boolean
@@ -68,6 +71,49 @@ export const createActions = (
 				},
 		  ]
 		: undefined
+
+export const createRemoteUpload = (
+	hasRemoteUpload: boolean,
+): Record<string, unknown> | undefined =>
+	hasRemoteUpload
+		? {
+				actions: {
+					/* eslint-disable no-console */
+					onCancel: (id: string) => console.log(`onUpload: ${id}`),
+					onDelete: (id: string) => console.log(`onDelete: ${id}`),
+					onRetry: (id: string) => console.log(`onRetry: ${id}`),
+					onUpload: (id: string) => console.log(`onUpload: ${id}`),
+					/* eslint-enable no-console */
+				},
+				payload: {},
+		  }
+		: undefined
+
+const createRemoteUploadCode = (component: ComponentValue): string | null => {
+	const remoteUpload = createRemoteUpload(component.hasRemoteUpload)
+
+	return remoteUpload
+		? `\t:remoteUpload="${[
+				'{',
+				...Object.entries(remoteUpload)
+					.map(([key, value]) => {
+						if (key === 'actions')
+							return [
+								`\t\t${key}: {`,
+								...Object.keys(value as Record<string, unknown>).map(
+									(k) => `\t\t\t${k}: (id: string) => {},`,
+								),
+								'\t\t},',
+							].join('\n')
+
+						if (key === 'payload')
+							return `\t\t${key}: ${JSON.stringify(value).replace(/"/g, "'")},`
+					})
+					.filter((value) => value),
+				'\t}',
+		  ].join('\n')}"`
+		: null
+}
 
 const appendAdditionalSlots = (component: ComponentValue) => {
 	return component.hasHelpTextSlot ||
@@ -99,6 +145,7 @@ const appendAdditionalSlots = (component: ComponentValue) => {
 							'\t</template>',
 					  ]
 					: []),
+				`</${component.name}>`,
 		  ].join('\n')
 		: '/>'
 }
@@ -118,9 +165,15 @@ export const generateComponentCode = (component: ComponentValue) =>
 			})
 			.filter(
 				([key, value]) =>
-					!(key === 'size' && value === Kotti.Field.Size.MEDIUM),
+					!(key === 'size' && value === Kotti.Field.Size.MEDIUM) &&
+					!(key === 'helpText' && component.hasHelpTextSlot) &&
+					!(
+						key === 'extensions' &&
+						Array.isArray(value) &&
+						value.length === 0
+					) &&
+					key !== 'remoteUpload',
 			)
-			.filter(([key]) => !(key === 'helpText' && component.hasHelpTextSlot))
 			.map(([key, value]) => {
 				switch (typeof value) {
 					case 'boolean':
@@ -146,5 +199,8 @@ export const generateComponentCode = (component: ComponentValue) =>
 			: [
 					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
 			  ]),
+		createRemoteUploadCode(component),
 		appendAdditionalSlots(component),
-	].join('\n')
+	]
+		.filter((value) => value)
+		.join('\n')

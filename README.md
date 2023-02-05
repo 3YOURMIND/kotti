@@ -77,6 +77,12 @@ const CustomVueComponent = {
 |                           [`@3yourmind/vue-use-tippy`](/packages/vue-use-tippy) | [![](https://img.shields.io/npm/v/@3yourmind/vue-use-tippy)](https://npmjs.com/package/@3yourmind/vue-use-tippy)                           | ![](https://img.shields.io/npm/dm/@3yourmind/vue-use-tippy.svg)              | ![](https://img.shields.io/npm/dt/@3yourmind/vue-use-tippy.svg)              | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/vue-use-tippy.svg)              |
 | [`@3yourmind/sass-node-modules-importer`](/packages/sass-node-modules-importer) | [![](https://img.shields.io/npm/v/@3yourmind/sass-node-modules-importer)](https://npmjs.com/package/@3yourmind/sass-node-modules-importer) | ![](https://img.shields.io/npm/dm/@3yourmind/sass-node-modules-importer.svg) | ![](https://img.shields.io/npm/dt/@3yourmind/sass-node-modules-importer.svg) | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/sass-node-modules-importer.svg) |
 
+## Dependencies
+
+Some features of `KtFieldFileUpload` rely on [`WebRTC`](https://webrtc.org/). This technology should be available on all modern browsers as well as on native clients for all major platforms.
+
+If you have issues accessing the device's camera, include the [`webrtc-adapter`](https://www.npmjs.com/package/webrtc-adapter) package.
+
 ## Development Workflow
 
 ### Initial Setup

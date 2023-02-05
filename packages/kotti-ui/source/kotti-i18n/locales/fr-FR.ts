@@ -27,6 +27,48 @@ export const frFR: KottiI18n.Messages = {
 		replyButton: 'Répondre',
 		replyPlaceholder: 'Répondre à',
 	},
+	KtFieldFileUpload: {
+		button: {
+			acceptPhoto: 'Utiliser la Photo',
+			cancel: 'Annuler',
+			nextCamera: 'Caméra Suivante',
+			rejectPhoto: 'Reprendre la Photo',
+			retry: 'Recommencer',
+			takePhoto: 'Prendre une Photo',
+		},
+		error: {
+			multipleNotAllowed: 'Téléchargement de plusieurs fichiers non autorisé',
+			notAllowed: "Autorisation refusée d'utiliser la caméra",
+			notFound: 'Aucune caméra disponible trouvée',
+			notSupported: 'Aucune caméra compatible trouvée',
+		},
+		label: {
+			capture: 'Prendre une Photo',
+			error: 'Erreur',
+			review: 'Examen',
+			unknown: 'Inconnue',
+		},
+		statusMsg: {
+			CANCELED: 'Annulé',
+			ERROR: 'Le téléchargement a échoué, veuillez réessayer',
+			INVALID: 'Invalide',
+			NOT_STARTED: 'Pas commencé',
+			UPLOADED: 'Téléchargé',
+			UPLOADED_WITH_ERROR: 'Téléchargé avec erreur',
+			UPLOADING: 'Téléchargement...',
+			READY_TO_UPLOAD: 'Prêt à être téléchargé',
+		},
+		text: {
+			clickToUpload: 'Cliquer pour télécharger',
+			dragAndDrop: 'ou glisser-déposer',
+			learnMore: 'En savoir plus',
+			max: 'max.',
+		},
+		validationMsg: {
+			INVALID_EXTENSION: 'Format de fichier non pris en charge',
+			MAX_SIZE_EXCEEDED: 'Taille de fichier maximale autorisée dépassée',
+		},
+	},
 	KtFields: {
 		optionalLabel: 'Facultatif',
 		requiredMessage: 'Ce champ est obligatoire',

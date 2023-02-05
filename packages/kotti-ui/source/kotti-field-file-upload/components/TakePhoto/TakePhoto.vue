@@ -1,0 +1,121 @@
+<template>
+	<div>
+		<KtButton
+			:data-test="_dataTest"
+			:disabled="isDisabled"
+			:label="translations.button.takePhoto"
+			@click.stop="state = State.CAPTURE"
+		/>
+		<CapturePhoto
+			v-if="state === State.CAPTURE"
+			:dataTest="_dataTest"
+			@capture="onCapturePhoto"
+			@close="onClose"
+			@error="onError"
+		/>
+		<ReviewPhoto
+			v-else-if="state === State.REVIEW"
+			:dataTest="_dataTest"
+			:photoUrl="photoUrl"
+			@accept="onAcceptPhoto"
+			@close="onClose"
+			@reject="onRejectPhoto"
+		/>
+		<Error
+			v-else-if="state === State.ERROR"
+			:dataTest="_dataTest"
+			:error="error"
+			@close="onClose"
+			@retry="onErrorRetry"
+		/>
+	</div>
+</template>
+
+<script lang="ts">
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
+import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import { makeProps } from '../../../make-props'
+import { KottiFieldFileUpload } from '../../types'
+import { buildFileItem } from '../../utils'
+
+import CapturePhoto from './Capture.vue'
+import Error from './Error.vue'
+import ReviewPhoto from './Review.vue'
+
+enum State {
+	CAPTURE = 'capture',
+	CLOSED = 'closed',
+	ERROR = 'error',
+	REVIEW = 'review',
+}
+
+export default defineComponent({
+	name: 'TakePhoto',
+	components: {
+		CapturePhoto,
+		Error,
+		ReviewPhoto,
+	},
+	props: makeProps(KottiFieldFileUpload.TakePhoto.schema),
+	setup(props: KottiFieldFileUpload.TakePhoto.Props, { emit }) {
+		const translations = useTranslationNamespace('KtFieldFileUpload')
+
+		const error = ref<string | null>(null)
+		const file = ref<File | null>(null)
+		const photoUrl = ref<string | null>(null)
+		const state = ref<State>(State.CLOSED)
+
+		const reset = () => {
+			error.value = null
+			file.value = null
+			photoUrl.value = null
+		}
+
+		return {
+			_dataTest: computed(() =>
+				props.dataTest ? `${props.dataTest}.takePhoto` : null,
+			),
+			error,
+			onAcceptPhoto: async () => {
+				if (!file.value) return
+				const payload: KottiFieldFileUpload.Events.AddFiles = [
+					buildFileItem(file.value),
+				]
+				emit('addFiles', payload)
+				reset()
+				state.value = State.CLOSED
+			},
+			onCapturePhoto: (
+				payload: KottiFieldFileUpload.TakePhoto.Events.Capture,
+			) => {
+				reset()
+				file.value = payload.file
+				photoUrl.value = payload.photoUrl
+				state.value = State.REVIEW
+			},
+			onClose: () => {
+				reset()
+				state.value = State.CLOSED
+			},
+			onError: (err: KottiFieldFileUpload.TakePhoto.Events.Error) => {
+				reset()
+				error.value = err
+				state.value = State.ERROR
+			},
+			onErrorRetry: () => {
+				reset()
+				state.value = State.CAPTURE
+			},
+			onRejectPhoto: () => {
+				reset()
+				state.value = State.CAPTURE
+			},
+			photoUrl,
+			state,
+			State,
+			translations,
+		}
+	},
+})
+</script>

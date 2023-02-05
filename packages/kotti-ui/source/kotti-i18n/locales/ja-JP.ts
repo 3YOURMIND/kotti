@@ -27,6 +27,48 @@ export const jaJP: KottiI18n.Messages = {
 		replyButton: '返信',
 		replyPlaceholder: '返信',
 	},
+	KtFieldFileUpload: {
+		button: {
+			acceptPhoto: '写真を使用',
+			cancel: 'キャンセル',
+			nextCamera: '次のカメラ',
+			rejectPhoto: '写真を撮り直す',
+			retry: 'リトライ',
+			takePhoto: '写真を撮る',
+		},
+		error: {
+			multipleNotAllowed: '複数のファイルのアップロードは許可されていません',
+			notAllowed: 'カメラの使用が拒否されました',
+			notFound: '利用可能なカメラが見つかりません',
+			notSupported: '互換性のあるカメラが見つかりません',
+		},
+		label: {
+			capture: '写真を撮る',
+			error: 'エラー',
+			review: 'レビュー',
+			unknown: '知らない',
+		},
+		statusMsg: {
+			CANCELED: 'キャンセル',
+			ERROR: 'アップロードに失敗しました。もう一度お試しください',
+			INVALID: '無効',
+			NOT_STARTED: '始まっていない',
+			UPLOADED: 'アップロード済み',
+			UPLOADED_WITH_ERROR: 'エラーでアップロードされました',
+			UPLOADING: 'アップロード中...',
+			READY_TO_UPLOAD: '提出時にアップロードする準備ができました',
+		},
+		text: {
+			clickToUpload: 'クリックしてアップロード',
+			dragAndDrop: 'またはドラッグ＆ドロップ',
+			learnMore: 'もっと詳しく知る',
+			max: '最大',
+		},
+		validationMsg: {
+			INVALID_EXTENSION: 'サポートされていないファイル形式',
+			MAX_SIZE_EXCEEDED: '許容される最大ファイル サイズを超えました',
+		},
+	},
 	KtFields: {
 		optionalLabel: '任意',
 		requiredMessage: 'このフィールドは必須です。',

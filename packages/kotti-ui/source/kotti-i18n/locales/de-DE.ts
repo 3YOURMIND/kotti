@@ -27,6 +27,48 @@ export const deDE: KottiI18n.Messages = {
 		replyButton: 'Antworten',
 		replyPlaceholder: 'Antwort an',
 	},
+	KtFieldFileUpload: {
+		button: {
+			acceptPhoto: 'Foto verwenden',
+			cancel: 'Absagen',
+			nextCamera: 'Nächste Kamera',
+			rejectPhoto: 'Foto wiederholen',
+			retry: 'Wiederholen',
+			takePhoto: 'Foto machen',
+		},
+		error: {
+			multipleNotAllowed: 'Das Hochladen mehrerer Dateien ist nicht zulässig',
+			notAllowed: 'Die Erlaubnis zur Verwendung der Kamera wurde verweigert',
+			notFound: 'Keine verfügbare Kamera gefunden',
+			notSupported: 'Keine kompatible Kamera verfügbar',
+		},
+		label: {
+			capture: 'Foto machen',
+			error: 'Error',
+			review: 'Überprüfen',
+			unknown: 'Unbekannt',
+		},
+		statusMsg: {
+			CANCELED: 'Abgebrochen',
+			ERROR: 'Hochladen fehlgeschlagen, bitte versuchen Sie es erneut',
+			INVALID: 'Ungültig',
+			NOT_STARTED: 'Nicht angefangen',
+			UPLOADED: 'Hochgeladen',
+			UPLOADED_WITH_ERROR: 'Hochgeladen mit Fehler',
+			UPLOADING: 'Hochladen...',
+			READY_TO_UPLOAD: 'Bereit zum Hochladen bei Einreichung',
+		},
+		text: {
+			clickToUpload: 'Zum Hochladen klicken',
+			dragAndDrop: 'oder ziehen und ablegen',
+			learnMore: 'Mehr erfahren',
+			max: 'max.',
+		},
+		validationMsg: {
+			INVALID_EXTENSION: 'Dateiformat nicht unterstützt',
+			MAX_SIZE_EXCEEDED: 'Maximal zulässige Dateigröße überschritten',
+		},
+	},
 	KtFields: {
 		optionalLabel: 'Optional',
 		requiredMessage: 'Dieses Feld wird benötigt',

@@ -27,6 +27,48 @@ export const esES: KottiI18n.Messages = {
 		replyButton: 'Responder',
 		replyPlaceholder: 'Responder a',
 	},
+	KtFieldFileUpload: {
+		button: {
+			acceptPhoto: 'Usar Foto',
+			cancel: 'Cancelar',
+			nextCamera: 'Siguiente Cámara',
+			rejectPhoto: 'Retomar Foto',
+			retry: 'Reintentar',
+			takePhoto: 'Tomar Foto',
+		},
+		error: {
+			multipleNotAllowed: 'Carga de múltiples archivos no permitida',
+			notAllowed: 'Permiso denegado para usar la cámara',
+			notFound: 'No se encontró ninguna cámara disponible',
+			notSupported: 'No se encontró ninguna cámara compatible',
+		},
+		label: {
+			capture: 'Tomar Foto',
+			error: 'Error',
+			review: 'Revisar',
+			unknown: 'Desconocido',
+		},
+		statusMsg: {
+			CANCELED: 'Cancelado',
+			ERROR: 'La carga falló, por favor intente nuevamente',
+			INVALID: 'Inválido',
+			NOT_STARTED: 'No iniciado',
+			UPLOADED: 'Cargado',
+			UPLOADED_WITH_ERROR: 'Cargado con error',
+			UPLOADING: 'Cargando...',
+			READY_TO_UPLOAD: 'Listo para cargar en el envío',
+		},
+		text: {
+			clickToUpload: 'Haga clic para cargar',
+			dragAndDrop: 'o arrastre y suelte',
+			learnMore: 'Aprender más',
+			max: 'máx.',
+		},
+		validationMsg: {
+			INVALID_EXTENSION: 'Formato de archivo no soportado',
+			MAX_SIZE_EXCEEDED: 'Tamaño máximo de archivo permitido excedido',
+		},
+	},
 	KtFields: {
 		optionalLabel: 'Opcional',
 		requiredMessage: 'Este campo es requerido',
