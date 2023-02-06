@@ -16,7 +16,7 @@
 				class="kt-field-number__button"
 				:class="decrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-decrement`"
-				@click="decrementValue"
+				@click.stop="decrementValue"
 			>
 				<i class="yoco" v-text="Yoco.Icon.MINUS" />
 			</div>
@@ -39,7 +39,7 @@
 				class="kt-field-number__button"
 				:class="incrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-increment`"
-				@click="incrementValue"
+				@click.stop="incrementValue"
 			>
 				<i class="yoco" v-text="Yoco.Icon.PLUS" />
 			</div>
