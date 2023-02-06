@@ -132,7 +132,13 @@
 		</span>
 		<div class="element-example">
 			<KtPopover class="mt-4 ml-4" trigger="hover">
-				<KtButton label="Close with Cancel Button" />
+				<template #default="{ showPopover }">
+					<KtButton
+						:label="
+							showPopover ? 'Close with Cancel Button' : 'Hover to open Popover'
+						"
+					/>
+				</template>
 				<template #content="slotProps">
 					<p>Save your message</p>
 					<KtButton type="text" @click="slotProps.close"> Cancel </KtButton>
