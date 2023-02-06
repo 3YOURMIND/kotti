@@ -1,7 +1,7 @@
 <template>
 	<div class="kt-popover">
 		<div ref="triggerRef" tabindex="0">
-			<slot />
+			<slot :showPopover="showPopover" />
 		</div>
 		<div ref="contentRef" :class="contentClass">
 			<slot :close="close" name="content">
@@ -74,6 +74,8 @@ export default defineComponent<KottiPopover.PropsInternal>({
 		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)
 
+		const showPopover = ref(false)
+
 		const formContext = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 
 		onMounted(() => {
@@ -134,6 +136,12 @@ export default defineComponent<KottiPopover.PropsInternal>({
 				onClickOutside: () => {
 					if (props.trigger !== KottiPopover.Trigger.MANUAL) close()
 				},
+				onHide: () => {
+					showPopover.value = false
+				},
+				onShow: () => {
+					showPopover.value = true
+				},
 				onUntrigger: () => close(),
 				placement: props.placement,
 				theme: 'light-border',
@@ -174,6 +182,7 @@ export default defineComponent<KottiPopover.PropsInternal>({
 
 				return classes
 			}),
+			showPopover,
 			triggerRef,
 		}
 	},
