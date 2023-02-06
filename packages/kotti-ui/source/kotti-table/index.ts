@@ -42,7 +42,10 @@ const META: Kotti.Meta = {
 			scope: null,
 		},
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Table',
+		schema: null,
+	},
 }
 
 export const KtTable = attachMeta(makeInstallable(KtTableVue), META)

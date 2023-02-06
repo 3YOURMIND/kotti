@@ -1,8 +1,5 @@
-export const SORT_ASC = 'ascending'
 export const IS_ASC = /ascending|^1/
-export const SORT_DSC = 'descending'
 export const IS_DSC = /descending|^-1/
-export const SORT_NONE = null
 
 export const KT_TABLE = 'KT_TABLE'
 export const KT_STORE = 'KT_STORE'

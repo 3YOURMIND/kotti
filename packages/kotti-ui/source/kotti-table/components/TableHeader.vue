@@ -61,6 +61,7 @@
 
 <script>
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+import { KottiTable } from '../types'
 
 import { TableHeaderCell } from './TableHeaderCell'
 
@@ -130,7 +131,7 @@ export default {
 		},
 		getThStyle(column) {
 			return {
-				textAlign: column.align || 'left',
+				textAlign: column.align || KottiTable.Column.Align.LEFT,
 				width: column.width || 'auto',
 			}
 		},
