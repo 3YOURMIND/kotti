@@ -2,75 +2,80 @@
 # Theming
 
 You can apply your own theme to the kotti design system.
-Since we are defining design tokens with CSS custom properties, you can override any of them easily, on the fly.
+Since we are defining the theme tokens with CSS custom properties, they can easily be overwriten.
 
-## Method 1: CSS file
+However, if done on a dedicated stylesheet, it would have to be imported after importing Kotti
 
-One easy way of theming kotti component is to overwrite custom props using CSS diretcly. You will need to load this file after loading kotti CSS tho.
+> priority by precedence of loading stylesheets
 
 Example:
 
 ```css
 .kt-navbar {
-	--navbar-background: red;
-	--navbar-color: blue;
+	--primary-70: red;
 }
 ```
 
-or
+A simpler approach is to overwrite the root element style:
 
 ```css
 :root {
-	--navbar-background: red;
-	--navbar-color: blue;
+	--primary-70: red;
 }
-```
-
-## Method 2: Using the `KtTheme` component (deprecated)
-
-CSS custom props can be get and set using javascript. We take advantage of that in our `KtTheme` component.
-
-You can pass a key-value object to the component and the component will `setProperty` on `:root` for you.
-
-```vue
-<KtTheme
-	:customProperties="{ 'navbar-background': 'red', 'navbar-color': 'blue' }"
-/>
 ```
 
 ## Demo
 
-Stylise the navbar with the select fields:
+Overwrite the Primary Color:
 
-<KtFieldSingleSelect isOptional label="Navbar Background" v-model="navbarBackground" :options="colors" />
-<KtFieldSingleSelect isOptional label="Navbar Color" v-model="navbarColor" :options="colors" />
-<KtFieldSingleSelect isOptional label="Navbar Light Color" v-model="navbarLightColor" :options="colors" />
-<KtFieldSingleSelect isOptional label="Navbar Border Color" v-model="navbarBorder" :options="colors" />
-<KtFieldSingleSelect isOptional label="Navbar Color Active" v-model="navbarColorActive" :options="colors" />
+> E.g. Used for buttons and Navbar background
 
-<KtTheme :customProperties="{'navbar-background': navbarBackground, 'navbar-color': navbarColor, 'navbar-color-light': navbarLightColor, 'navbar-border': navbarBorder, 'navbar-color-active': navbarColorActive}"/>
+<KtFieldSingleSelect isOptional label="Primary Brand Color" v-model="primaryColor" :options="colors" />
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {
+	defineComponent,
+	onMounted,
+	ref,
+	watchEffect,
+} from '@vue/composition-api'
+
+export default defineComponent({
 	name: 'DocumenationPageFoundationsColorsTheming',
-	data() {
+	setup() {
+		const primaryColor = ref<string | null>(null)
+
+		type ElementWithStyle = Element & {
+			style: { setProperty: (key: string, value?: string) => void }
+		}
+
+		const rootElement = ref<ElementWithStyle | null>(null)
+		onMounted(() => {
+			rootElement.value = document.querySelector(':root')
+		})
+
+		watchEffect(() => {
+			if (rootElement.value !== null) {
+				rootElement.value.style.setProperty(
+					'--primary-70',
+					primaryColor.value ?? '#2659ab',
+				)
+			}
+		})
+
 		return {
-			navbarBackground: null,
-			navbarColor: null,
-			navbarLightColor: null,
-			navbarBorder: null,
-			navbarColorActive: null,
 			colors: [
-				{ label: 'Default', value: null },
-				{ label: 'Blue', value: '#001f3f' },
+				{ label: 'Default Blue', value: '#2659ab' },
+				{ label: 'Navy', value: '#001f3f' },
 				{ label: 'Red', value: '#FF4136' },
 				{ label: 'Green', value: '#2ECC40' },
 				{ label: 'Teal', value: '#39CCCC' },
 				{ label: 'White', value: 'white' },
 				{ label: 'Black', value: '#111111' },
 			],
+			primaryColor,
 		}
 	},
-}
+})
 </script>
