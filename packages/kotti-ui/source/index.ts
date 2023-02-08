@@ -86,10 +86,6 @@ import { KtPopover } from './kotti-popover'
 export * from './kotti-popover'
 import { KtRow } from './kotti-row'
 export * from './kotti-row'
-import { KtStep } from './kotti-step'
-export * from './kotti-step'
-import { KtSteps } from './kotti-steps'
-export * from './kotti-steps'
 import {
 	KtTable,
 	KtTableColumn,
@@ -156,8 +152,6 @@ export default {
 			KtPagination,
 			KtPopover,
 			KtRow,
-			KtStep,
-			KtSteps,
 			KtTable,
 			KtTableColumn,
 			KtTableConsumer,
