@@ -66,6 +66,11 @@ this.$yodify({
 | `duration` | duration after which the toaster disappears | `Number` | —                             | `3000`    |
 | `text`     | text message in the toaster                 | `String` | —                             | —         |
 | `type`     | define the type of the toaster              | `String` | `success`, `error`, `warning` | `success` |
+
+## Durations used on our platform
+
+- `2.5 sec`: for toasters of type success and info
+- `5 sec`: for toasters of type warning and errors
 </template>
 
 <script lang="ts">
