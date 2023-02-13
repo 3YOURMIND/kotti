@@ -1,5 +1,6 @@
 <template>
 	<div :class="avatarClasses" @click="onAvatarContainerClick">
+		change on kotti
 		<img
 			v-if="avatarAvailable"
 			ref="tooltipTriggerRef"
