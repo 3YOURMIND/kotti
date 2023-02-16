@@ -89,6 +89,7 @@ export enum Icon {
 	PRINTER = 'printer',
 	QR_CODE = 'qr_code',
 	QUOTE = 'quote',
+	RELOAD = 'reload',
 	REQUEST = 'request',
 	SAVE = 'save',
 	SCALE = 'scale',

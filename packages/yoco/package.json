@@ -40,5 +40,5 @@
 		"build": "tsc && node --unhandled-rejections=strict dist/generate"
 	},
 	"style": "style.css",
-	"version": "2.4.1"
+	"version": "2.4.2"
 }
