@@ -1,10 +1,13 @@
 /* eslint-disable no-magic-numbers */
+
+import { KottiToaster } from './types'
+
 /**
  * @description generates a random id
- * @param {Number} ID_BITS id entropy in bits, defaults to 64 (4 words)
- * @returns {String} random id
+ * @param ID_BITS id entropy in bits, defaults to 64 (4 words)
+ * @returns random id
  */
-export const generateId = (ID_BITS = 64) => {
+export const generateId = (ID_BITS = 64): string => {
 	const randomWord = () =>
 		Math.floor((1 + Math.random()) * 0x10000)
 			.toString(16)
@@ -22,7 +25,9 @@ export const generateId = (ID_BITS = 64) => {
  * @param {String} $0.id first id
  * @returns {Function} compares id1 to passed id
  */
-export const notId =
-	({ id: id1 }) =>
-	({ id: id2 }) =>
+
+export const notId: (
+	id1: KottiToaster.NotificationInternal['id'],
+) => (id2: KottiToaster.NotificationInternal['id']) => boolean =
+	(id1) => (id2) =>
 		id1 !== id2

@@ -97,6 +97,7 @@ import { KtTag } from './kotti-tag'
 export * from './kotti-tag'
 import { KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
+import { KottiToaster } from './kotti-toaster/types'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
 export * from './types'
@@ -166,13 +167,14 @@ export default {
 		Vue.prototype.$yodify = function ({
 			duration = DEFAULT_YODIFY_DURATION,
 			text,
-			type = 'success',
-		}: {
-			duration: number
-			text: string
-			type: 'success' | 'error'
-		}) {
+			type = KottiToaster.Type.SUCCESS,
+		}: KottiToaster.Notification) {
 			const notification = { duration, text, type }
+
+			console.log('inside yodify function assignment')
+			console.log('root', this.$root)
+			console.log('root.$yodifyBuffer', this.$root.$yodifyBuffer)
+			console.log('root.$yodify', this.$root.$yodify)
 
 			// buffer notifications if vue isn't ready
 			if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)

@@ -49,8 +49,9 @@ export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiPopover as Popover } from '../kotti-popover/types'
 export { KottiRow as Row } from '../kotti-row/types'
-export { KottiTag as Tag } from '../kotti-tag/types'
 export { KottiTable as Table } from '../kotti-table/types'
+export { KottiTag as Tag } from '../kotti-tag/types'
+export { KottiToaster as Toaster } from '../kotti-toaster/types'
 export { KottiUserMenu as UserMenu } from '../kotti-user-menu/types'
 
 export enum MetaDesignType {

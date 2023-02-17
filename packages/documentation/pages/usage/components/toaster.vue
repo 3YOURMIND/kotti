@@ -9,11 +9,12 @@ Toasters can deliver messages that the user needs to pay attention to without in
 
 ![Toaster Structure](~/assets/img/toaster_structure.png)
 
-1. Type Color: Depends on the type of toaster. There are three colors:
+1. Type Color: Depends on the type of toaster. It uses the Kotti Color Tokens for success, error, warning:
 
-   - `Green-500`: for success information
-   - `Orange-500`: for warning message
-   - `Red-500`: for fail/alert message
+   - `var(--support-error)`: for type `error`
+   - `var(--support-info)`: for type `info`
+   - `var(--support-success)`: for type `success`
+   - `var(--support-warning)`: for type `warning`
 
 2. Message: Keep the message short and easy to understand, since the toaster disappears automatically after a few seconds.
 
@@ -26,15 +27,19 @@ Since `Kotti-UI 1.0.0`, [vue-yodify](https://github.com/3YOURMIND/vue-yodify) is
 <div class="element-example">
 	<KtToaster/>
 	<KtButton
-		@click="$yodify({ text: 'Wow very looooooooooooong text, and it breaks the line!', type: 'success' })"
+		@click="notify('Info message', Type.INFO)"
+		v-text="'Info Message'"
+	/>
+	<KtButton
+		@click="notify('Wow very looooooooooooong text, and it breaks the line!', Type.SUCCESS)"
 		v-text="'Success Long Message'"
 	/>
 	<KtButton
-		@click="$yodify({ text: 'Error message', type: 'error' })"
+		@click="notify('Error message', Type.ERROR)"
 		v-text="'Error Message'"
 	/>
 	<KtButton
-		@click="$yodify({ text: 'Warning message', type: 'warning' })"
+		@click="notify('Warning message', Type.WARNING)"
 		v-text="'Warning Message'"
 	/>
 </div>
@@ -59,17 +64,28 @@ this.$yodify({
 })
 ```
 
+Or within Vue's setup hook
+
+```js
+const root = getCurrentInstance()
+root.$yodify({
+	text: 'This was successful :)',
+	type: 'success', // optional, default
+	duration: 3000,
+})
+```
+
 ### Attributes
 
-| Attribute  | Description                                 | Type     | Accepted values               | Default   |
-| :--------- | :------------------------------------------ | :------- | :---------------------------- | :-------- |
-| `duration` | duration after which the toaster disappears | `Number` | —                             | `3000`    |
-| `text`     | text message in the toaster                 | `String` | —                             | —         |
-| `type`     | define the type of the toaster              | `String` | `success`, `error`, `warning` | `success` |
+| Attribute  | Description                                 | Type     | Accepted values                       | Default   |
+| :--------- | :------------------------------------------ | :------- | :------------------------------------ | :-------- |
+| `duration` | duration after which the toaster disappears | `Number` | —                                     | `3000`    |
+| `text`     | text message in the toaster                 | `String` | —                                     | —         |
+| `type`     | define the type of the toaster              | `String` | `error`, `info`, `success`, `warning` | `success` |
 </template>
 
 <script lang="ts">
-import { KtToaster } from '@3yourmind/kotti-ui'
+import { Kotti, KtToaster } from '@3yourmind/kotti-ui'
 import { defineComponent } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -79,9 +95,18 @@ export default defineComponent({
 	components: {
 		ComponentInfo,
 	},
-	setup() {
+	setup(_, setupContext) {
+		const root = setupContext.root
+
 		return {
+			Type: Kotti.Toaster.Type,
 			component: KtToaster,
+			notify: (
+				text: Kotti.Toaster.Notification['text'],
+				type: Kotti.Toaster.Type,
+			) => {
+				root?.$yodify({ text, type })
+			},
 		}
 	},
 })
