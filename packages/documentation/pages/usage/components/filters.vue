@@ -119,8 +119,8 @@
 
 <script lang="ts">
 import { Kotti, KtFilters } from '@3yourmind/kotti-ui'
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
+import { computed, defineComponent, ref } from 'vue'
 
 import { ComponentValue, generateComponentCode } from '../../utilities'
 

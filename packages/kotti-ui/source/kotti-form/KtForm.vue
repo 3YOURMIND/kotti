@@ -7,13 +7,8 @@
 </template>
 
 <script lang="ts">
-import {
-	computed,
-	defineComponent,
-	provide,
-	reactive,
-} from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
+import { computed, defineComponent, provide, reactive } from 'vue'
 
 import { KottiField } from '../kotti-field/types'
 import { makeProps } from '../make-props'

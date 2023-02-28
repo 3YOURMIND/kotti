@@ -92,17 +92,11 @@
 <script lang="ts">
 import { Octokit } from '@octokit/rest'
 import { Endpoints } from '@octokit/types'
-import {
-	computed,
-	onBeforeMount,
-	defineComponent,
-	ref,
-	Ref,
-} from '@vue/composition-api'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash'
 import { marked } from 'marked'
 import naturalSort from 'natural-sort'
+import { computed, onBeforeMount, defineComponent, ref, Ref } from 'vue'
 
 const octokit = new Octokit()
 

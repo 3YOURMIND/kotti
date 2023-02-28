@@ -2,6 +2,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import { KtI18nContext as KtI18nContextVue } from './KtI18nContext'
 
+// @ts-expect-error .....................................
 export const KtI18nContext = attachMeta(makeInstallable(KtI18nContextVue), {
 	addedVersion: '2.0.0',
 	deprecated: null,

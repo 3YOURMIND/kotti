@@ -45,14 +45,8 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import {
-	defineComponent,
-	computed,
-	ref,
-	watch,
-	UnwrapRef,
-} from '@vue/composition-api'
 import Big from 'big.js'
+import { defineComponent, computed, ref, watch, UnwrapRef } from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'

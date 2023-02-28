@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { isYocoIcon, Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'KtHeading',

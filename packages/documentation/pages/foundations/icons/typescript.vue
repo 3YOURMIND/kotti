@@ -20,7 +20,7 @@ console.log(Yoco.Icon.ANNOUNCE)
 
 <script lang="ts">
 	import { Yoco } from '@3yourmind/yoco'
-	import { defineComponent } from '@vue/composition-api'
+	import { defineComponent } from 'vue'
 
 	export default defineComponent({
 		name: 'Example',
@@ -39,7 +39,7 @@ console.log(Yoco.Icon.ANNOUNCE)
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'DocumentationPageIconsTypeScript',

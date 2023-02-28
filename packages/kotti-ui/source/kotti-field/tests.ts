@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('jsdom-global')()
-import { defineComponent, ref, SetupContext } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
+import { defineComponent, ref, SetupContext } from 'vue'
 import { z } from 'zod'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'

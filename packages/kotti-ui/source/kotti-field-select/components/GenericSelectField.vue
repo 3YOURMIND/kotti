@@ -73,7 +73,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { z } from 'zod'
 
 import { KtField } from '../../kotti-field'

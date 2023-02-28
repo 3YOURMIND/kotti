@@ -16,15 +16,9 @@
 </template>
 
 <script lang="ts">
-import {
-	defineComponent,
-	ref,
-	Ref,
-	computed,
-	inject,
-} from '@vue/composition-api'
 import { DatePicker as ElDate } from 'element-ui'
 import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
+import { defineComponent, ref, Ref, computed, inject } from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'

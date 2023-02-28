@@ -34,12 +34,7 @@ Overwrite the Primary Color:
 </template>
 
 <script lang="ts">
-import {
-	defineComponent,
-	onMounted,
-	ref,
-	watchEffect,
-} from '@vue/composition-api'
+import { defineComponent, onMounted, ref, watchEffect } from 'vue'
 
 export default defineComponent({
 	name: 'DocumenationPageFoundationsColorsTheming',

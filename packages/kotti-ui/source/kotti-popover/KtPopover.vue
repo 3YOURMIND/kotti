@@ -37,6 +37,8 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
+import { castArray } from 'lodash'
+import { roundArrow, Props as TippyProps } from 'tippy.js'
 import {
 	computed,
 	defineComponent,
@@ -45,9 +47,7 @@ import {
 	provide,
 	watch,
 	inject,
-} from '@vue/composition-api'
-import { castArray } from 'lodash'
-import { roundArrow, Props as TippyProps } from 'tippy.js'
+} from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { KT_FORM_CONTEXT } from '../kotti-form'

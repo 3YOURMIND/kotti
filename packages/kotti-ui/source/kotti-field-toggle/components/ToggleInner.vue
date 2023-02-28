@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed } from 'vue'
 
 import { KottiFieldToggle } from '../types'
 

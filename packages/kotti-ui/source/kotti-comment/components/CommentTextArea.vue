@@ -49,13 +49,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import {
-	computed,
-	defineComponent,
-	onMounted,
-	onUnmounted,
-	ref,
-} from '@vue/composition-api'
+import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 
 import { KottiButton } from '../../kotti-button/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'

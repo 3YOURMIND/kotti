@@ -55,12 +55,7 @@
 </template>
 
 <script lang="ts">
-import {
-	computed,
-	defineComponent,
-	onBeforeMount,
-	watch,
-} from '@vue/composition-api'
+import { computed, defineComponent, onBeforeMount, watch } from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'

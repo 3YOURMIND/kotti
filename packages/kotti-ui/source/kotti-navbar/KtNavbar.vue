@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, ref } from '@vue/composition-api'
+import { computed, defineComponent, provide, ref } from 'vue'
 import { mixin as clickaway } from 'vue-clickaway'
 
 import { makeProps } from '../make-props'

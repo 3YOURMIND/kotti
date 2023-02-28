@@ -170,7 +170,7 @@
 <script lang="ts">
 import { KtButton } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 import ShowCase from '~/components/ShowCase.vue'

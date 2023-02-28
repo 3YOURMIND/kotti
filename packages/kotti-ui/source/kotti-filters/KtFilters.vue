@@ -47,8 +47,8 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import { Instance, roundArrow } from 'tippy.js'
+import { computed, defineComponent, ref } from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -178,7 +178,7 @@ export default defineComponent<KottiFilters.PropsInternal>({
 				interactive: true,
 				maxWidth: 'none',
 				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
-				onCreate(instance) {
+				onCreate(instance: Instance) {
 					tippyInstanceRef.value = instance
 				},
 				placement: 'bottom',

@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { KtFieldText } from '../../kotti-field-text'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'

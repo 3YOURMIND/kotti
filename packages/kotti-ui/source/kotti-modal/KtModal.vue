@@ -21,8 +21,8 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { Instance } from 'tippy.js'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 import { makeProps } from '../make-props'
 

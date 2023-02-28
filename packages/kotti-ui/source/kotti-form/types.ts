@@ -1,4 +1,4 @@
-import { Ref } from '@vue/composition-api'
+import { Ref } from 'vue'
 
 import { KottiField } from '../kotti-field/types'
 

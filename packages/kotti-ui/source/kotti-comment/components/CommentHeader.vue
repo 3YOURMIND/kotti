@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'

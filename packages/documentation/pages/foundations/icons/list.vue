@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 import YocoPreview from '~/components/YocoPreview.vue'

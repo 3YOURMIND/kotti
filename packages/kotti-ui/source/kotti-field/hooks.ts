@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep'
 import {
 	computed,
 	inject,
@@ -7,8 +8,7 @@ import {
 	ref,
 	watch,
 	Ref,
-} from '@vue/composition-api'
-import cloneDeep from 'lodash/cloneDeep'
+} from 'vue'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'

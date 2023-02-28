@@ -34,7 +34,7 @@ The only color should be pure black (`#000000`) on a pure white (`#FFFFFF`) back
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'DocumentationPageFoundationsIconsDesignGuidelines',

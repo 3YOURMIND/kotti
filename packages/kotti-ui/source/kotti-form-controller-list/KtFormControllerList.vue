@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
+import { defineComponent, inject, computed } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'

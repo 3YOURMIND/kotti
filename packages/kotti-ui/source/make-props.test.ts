@@ -1,5 +1,5 @@
-import { PropOptions } from '@vue/composition-api'
 import { castArray, isEqual } from 'lodash'
+import { PropOptions } from 'vue'
 import { PropType } from 'vue'
 import { z } from 'zod'
 
@@ -19,7 +19,7 @@ declare global {
 }
 
 expect.extend({
-	toBeRequired(prop: PropOptions<unknown, boolean>) {
+	toBeRequired(prop: PropOptions<unknown>) {
 		const passNoDefault = prop.default === undefined
 		const passRequired = prop.required === true
 
@@ -34,7 +34,7 @@ expect.extend({
 			pass: passNoDefault && passRequired,
 		}
 	},
-	toBeType(prop: PropOptions<unknown, boolean>, expected: PropType<unknown>) {
+	toBeType(prop: PropOptions<unknown>, expected: PropType<unknown>) {
 		const actualPropTypes = new Set(castArray(prop.type as PropType<unknown>))
 		const expectedPropTypes = new Set(castArray(expected))
 
@@ -54,7 +54,7 @@ expect.extend({
 			pass,
 		}
 	},
-	toDefaultTo(prop: PropOptions<unknown, boolean>, expectedDefault: unknown) {
+	toDefaultTo(prop: PropOptions<unknown>, expectedDefault: unknown) {
 		if (typeof prop.default !== 'function')
 			return {
 				message: () => 'Expected “prop.default” to be a function',
@@ -90,7 +90,7 @@ expect.extend({
 			pass: passDefault && passNoRequired,
 		}
 	},
-	toValidate(prop: PropOptions<unknown, boolean>, ...cases: unknown[]) {
+	toValidate(prop: PropOptions<unknown>, ...cases: unknown[]) {
 		const { validator } = prop
 
 		if (validator === undefined)

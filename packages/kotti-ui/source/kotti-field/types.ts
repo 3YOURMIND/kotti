@@ -1,5 +1,5 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
-import { Ref, SetupContext } from '@vue/composition-api'
+import { Ref, SetupContext } from 'vue'
 import { z } from 'zod'
 
 import { ReplaceRecordType } from '../types/utilities'

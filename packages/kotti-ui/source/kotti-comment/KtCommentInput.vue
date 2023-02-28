@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 import { makeProps } from '../make-props'
 

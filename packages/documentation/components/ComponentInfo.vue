@@ -129,8 +129,8 @@
 import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import { castArray, kebabCase } from 'lodash'
+import { computed, defineComponent, ref } from 'vue'
 
 import ComponentInfoSlots from './component-info/Slots.vue'
 

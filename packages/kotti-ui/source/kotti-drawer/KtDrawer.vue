@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 
 import { makeProps } from '../make-props'
 

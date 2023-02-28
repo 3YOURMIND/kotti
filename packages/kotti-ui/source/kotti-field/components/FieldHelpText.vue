@@ -1,8 +1,8 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
+import { computed, defineComponent, ref } from 'vue'
 import { VNode } from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'

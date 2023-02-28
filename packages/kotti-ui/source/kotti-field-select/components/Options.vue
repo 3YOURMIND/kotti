@@ -49,7 +49,7 @@ import {
 	onUnmounted,
 	ref,
 	watch,
-} from '@vue/composition-api'
+} from 'vue'
 import { z } from 'zod'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'

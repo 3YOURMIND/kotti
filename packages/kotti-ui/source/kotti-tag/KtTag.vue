@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import { makeProps } from '../make-props'
 

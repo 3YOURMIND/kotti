@@ -1,4 +1,4 @@
-import { Ref } from '@vue/composition-api'
+import { Ref } from 'vue'
 
 import { KottiBanner } from '../kotti-banner/types'
 import { KottiComment } from '../kotti-comment/types'

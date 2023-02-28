@@ -1,0 +1,1 @@
+export const KOTTI_TABLE_STORE = Symbol('KOTTI_TABLE_STORE')

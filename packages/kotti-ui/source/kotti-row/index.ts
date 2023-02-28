@@ -1,9 +1,4 @@
-import {
-	defineComponent,
-	computed,
-	createElement,
-	provide,
-} from '@vue/composition-api'
+import { defineComponent, computed, h, provide } from 'vue'
 
 import { attachMeta, makeInstallable } from '../utilities'
 
@@ -12,6 +7,7 @@ import { KottiRow } from './types'
 
 export const KtRow = attachMeta(
 	makeInstallable(
+		// @ts-expect-error: .......................................
 		defineComponent({
 			name: 'KtRow',
 			props: {
@@ -22,7 +18,7 @@ export const KtRow = attachMeta(
 				tag: { default: 'div', type: String },
 				type: String,
 			},
-			setup(props: KottiRow.PropsInternal, { slots }) {
+			setup(props, { slots }) {
 				const style = computed(() =>
 					props.gutter
 						? {
@@ -38,7 +34,7 @@ export const KtRow = attachMeta(
 				})
 
 				return () =>
-					createElement(
+					h(
 						props.tag,
 						{
 							class: [

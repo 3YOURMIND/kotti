@@ -47,13 +47,7 @@
 </template>
 
 <script lang="ts">
-import {
-	computed,
-	ComputedRef,
-	defineComponent,
-	inject,
-	ref,
-} from '@vue/composition-api'
+import { computed, ComputedRef, defineComponent, inject, ref } from 'vue'
 import { mixin as clickaway } from 'vue-clickaway'
 
 import { KtAvatar } from '../kotti-avatar'

@@ -39,8 +39,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import { omit } from 'lodash'
+import { computed, defineComponent, ref } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'

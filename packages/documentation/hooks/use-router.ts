@@ -1,4 +1,4 @@
-import { computed, getCurrentInstance } from '@vue/composition-api'
+import { computed, getCurrentInstance } from 'vue'
 import Router from 'vue-router'
 
 export const useRouter = () => {
@@ -6,5 +6,5 @@ export const useRouter = () => {
 
 	if (!vm) throw new Error('This must be called within a setup function.')
 
-	return computed((): Router => vm.$router)
+	return computed((): Router => vm.proxy.$router)
 }

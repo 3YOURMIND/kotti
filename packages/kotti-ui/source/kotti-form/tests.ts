@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('jsdom-global')()
-import { defineComponent, ref, SetupContext } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
+import { defineComponent, ref, SetupContext } from 'vue'
 import { z } from 'zod'
 
 import { useField } from '../kotti-field/hooks'

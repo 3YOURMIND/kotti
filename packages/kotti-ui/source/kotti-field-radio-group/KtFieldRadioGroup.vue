@@ -55,8 +55,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import { omit } from 'lodash'
+import { computed, defineComponent, ref } from 'vue'
 
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'

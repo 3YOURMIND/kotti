@@ -4,7 +4,6 @@
 		"@3yourmind/yoco": "*",
 		"@octokit/rest": "^18.0.6",
 		"@octokit/types": "^5.5.0",
-		"@vue/composition-api": "0.6.1",
 		"core-js": "^3.17.2",
 		"dayjs": "^1.9.1",
 		"lodash": "^4.17.19",
@@ -16,9 +15,9 @@
 	"devDependencies": {
 		"@metatypes/typography": "^0.4.0",
 		"@metatypes/units": "^0.4.0",
-		"@nuxt/types": "^2.13.2",
-		"@nuxt/typescript-build": "^1.0.3",
-		"@nuxt/typescript-runtime": "^0.4.10",
+		"@nuxt/types": "^2.15.8",
+		"@nuxt/typescript-build": "^2.1.0",
+		"@nuxt/typescript-runtime": "^2.1.0",
 		"@nuxtjs/axios": "^5.11.0",
 		"@nuxtjs/markdownit": "^1.2.7",
 		"@nuxtjs/markdownit-loader": "^1.1.1",
@@ -27,7 +26,8 @@
 		"@types/marked": "^4.0.3",
 		"@types/natural-sort": "^0.0.20",
 		"case-sensitive-paths-webpack-plugin": "^2.3.0",
-		"nuxt": "^2.13.3"
+		"css-loader": "^4.3.0",
+		"nuxt": "^2.15.8"
 	},
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
