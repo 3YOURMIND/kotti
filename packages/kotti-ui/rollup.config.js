@@ -99,6 +99,7 @@ export default {
 	input: 'source/index.ts',
 	output: {
 		dir: path.dirname(MODULE === 'esm' ? packageJSON.module : packageJSON.main),
+		exports: 'named',
 		format: MODULE,
 		preserveModules: true,
 		preserveModulesRoot: './source',

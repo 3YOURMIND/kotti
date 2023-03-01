@@ -17,7 +17,7 @@ export default defineComponent({
 
 $outer-size: 20px;
 $inner-size: 16px;
-$inner-gap: ($outer-size - $inner-size) / 2;
+$inner-gap: ($outer-size - $inner-size) * 0.5;
 $track-width: $inner-size * 2.25;
 
 @mixin switch-colors($outer-color, $inner-color) {
@@ -34,12 +34,12 @@ $track-width: $inner-size * 2.25;
 	height: $outer-size;
 	padding: $inner-gap;
 	background-color: var(--ui-02);
-	border-radius: #{$outer-size / 2};
+	border-radius: #{$outer-size * 0.5};
 
 	&__inner {
 		width: $inner-size;
 		height: $inner-size;
-		border-radius: $inner-size / 2;
+		border-radius: $inner-size * 0.5;
 		transition: all 0.2s ease-in-out;
 	}
 }

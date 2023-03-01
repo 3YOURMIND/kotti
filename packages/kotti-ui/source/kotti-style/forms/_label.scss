@@ -29,7 +29,7 @@
 	&--focus {
 		font-size: 0.5rem;
 		font-weight: 700;
-		line-height: $control-size-lg / 2;
+		line-height: $control-size-lg * 0.5;
 		transition: all 0.1s ease-in-out;
 	}
 }
