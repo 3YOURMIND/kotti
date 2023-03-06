@@ -18,6 +18,25 @@ export type ComponentNames =
 	| 'KtFieldToggleGroup'
 	| 'KtFilters'
 
+const COMPONENT_NAMES: ComponentNames[] = [
+	'KtFieldDate',
+	'KtFieldDateRange',
+	'KtFieldDateTime',
+	'KtFieldDateTimeRange',
+	'KtFieldMultiSelect',
+	'KtFieldMultiSelectRemote',
+	'KtFieldNumber',
+	'KtFieldPassword',
+	'KtFieldRadioGroup',
+	'KtFieldSingleSelect',
+	'KtFieldSingleSelectRemote',
+	'KtFieldText',
+	'KtFieldTextArea',
+	'KtFieldToggle',
+	'KtFieldToggleGroup',
+	'KtFilters',
+]
+
 export type ComponentValue = {
 	contentSlot: string | null
 	defaultSlot: string | null
@@ -30,6 +49,9 @@ export type ComponentValue = {
 	props: Record<string, unknown>
 	validation: Kotti.Field.Validation.Result['type']
 }
+
+export const isComponentName = (name: unknown): name is ComponentNames =>
+	COMPONENT_NAMES.includes(name as ComponentNames)
 
 export const createActions = (
 	hasActions: boolean,
