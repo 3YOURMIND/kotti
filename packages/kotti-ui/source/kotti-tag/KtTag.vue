@@ -70,8 +70,8 @@ export default defineComponent({
 		border-radius: 50%;
 
 		// clipping also affects the clickable area
-		@supports (clip-path: circle(#{$size / 2} at center)) {
-			clip-path: circle(#{$size / 2} at center);
+		@supports (clip-path: circle(#{$size * 0.5} at center)) {
+			clip-path: circle(#{$size * 0.5} at center);
 			border-radius: 0;
 		}
 

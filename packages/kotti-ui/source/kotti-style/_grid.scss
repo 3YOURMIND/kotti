@@ -2,22 +2,22 @@
 	@for $i from 1 through 24 {
 		.kt-col#{$media-size}-#{$i} {
 			flex: none;
-			width: (1/24 * $i * 100) * 1%;
+			width: (calc(1 / 24) * $i * 100) * 1%;
 		}
 	}
 }
 
 @for $i from 1 through 24 {
 	.kt-col-offset-#{$i} {
-		margin-left: (1 / 24 * $i * 100) * 1%;
+		margin-left: (calc(1 / 24) * $i * 100) * 1%;
 	}
 	.kt-col-pull-#{$i} {
 		position: relative;
-		right: (1 / 24 * $i * 100) * 1%;
+		right: (calc(1 / 24) * $i * 100) * 1%;
 	}
 	.kt-col-push-#{$i} {
 		position: relative;
-		left: (1 / 24 * $i * 100) * 1%;
+		left: (calc(1 / 24) * $i * 100) * 1%;
 	}
 }
 

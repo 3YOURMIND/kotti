@@ -319,21 +319,21 @@ export default {
 
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
-.kt-table >>> .kt-table__no-row {
+::v-deep .kt-table .kt-table__no-row {
 	color: #8f8f8f;
 	text-align: center;
 }
 
-.kt-table >>> .kt-table__loader {
+::v-deep .kt-table .kt-table__loader {
 	text-align: center;
 }
 
-.kt-table >>> .loading {
+::v-deep .kt-table .loading {
 	margin: 1.6rem 0;
 	text-align: center;
 }
 
-.kt-table >>> tr.disabled {
+::v-deep .kt-table tr.disabled {
 	cursor: not-allowed;
 	background-color: #f8f8f8;
 	opacity: 0.6;
@@ -351,10 +351,10 @@ export default {
 	position: relative;
 	display: inline-block;
 	min-height: 1.2rem;
-	padding: (($control-size-sm - $line-height) / 2) $control-padding-x
-		(($control-size-sm - $line-height) / 2)
+	padding: (($control-size-sm - $line-height) * 0.5) $control-padding-x
+		(($control-size-sm - $line-height) * 0.5)
 		($control-icon-size + $control-padding-x);
-	margin: ($control-size - $control-size-sm) / 2 0;
+	margin: ($control-size - $control-size-sm) * 0.5 0;
 	line-height: $line-height;
 
 	input {
@@ -383,7 +383,7 @@ export default {
 
 	.form-icon {
 		position: absolute;
-		top: ($control-size-sm - $control-icon-size) / 2;
+		top: ($control-size-sm - $control-icon-size) * 0.5;
 		left: 0;
 		display: inline-block;
 		width: $control-icon-size;
@@ -400,7 +400,7 @@ export default {
 	}
 
 	&.input-lg {
-		margin: ($control-size-lg - $control-size-sm) / 2 0;
+		margin: ($control-size-lg - $control-size-sm) * 0.5 0;
 		font-size: $font-size-lg;
 	}
 }
