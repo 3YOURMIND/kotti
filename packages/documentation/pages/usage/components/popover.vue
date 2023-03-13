@@ -148,6 +148,31 @@
 		</div>
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div v-html="PopoverExample" />
+
+		<h2 v-text="'Disabling'" />
+		<span>
+			If passing <code> isDisabled </code> as <code> true </code> clicking the
+			trigger element will not have any effect
+		</span>
+		<div class="element-example element-example--flex">
+			<KtPopover
+				class="mt-4 ml-4"
+				:isDisabled="isPopoverDisabled"
+				trigger="hover"
+			>
+				<a v-text="'Hover Me'" />
+				<template #content>
+					<p>Switch the toggle to disable this popover</p>
+				</template>
+			</KtPopover>
+
+			<br />
+			<br />
+
+			<KtFieldToggle v-model="isPopoverDisabled" isOptional>
+				Is Popover disabled
+			</KtFieldToggle>
+		</div>
 	</div>
 </template>
 
@@ -215,6 +240,7 @@ export default defineComponent({
 				)
 			},
 			interactiveExampleRef,
+			isPopoverDisabled: ref(false),
 			placementOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
 				Object.entries(Kotti.Popover.Placement).map(([key, value]) => ({
 					label: `Kotti.Popover.Placement.${key} ('${value}')`,
