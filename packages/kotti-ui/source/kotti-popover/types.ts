@@ -94,6 +94,7 @@ export namespace KottiPopover {
 
 	export const propsSchema = z.object({
 		areOptionsSelectable: z.boolean().default(false),
+		isDisabled: z.boolean().default(false),
 		options: z.array(optionSchema).default(() => []),
 		placement: z.nativeEnum(Placement).default(Placement.AUTO),
 		size: z.nativeEnum(Size).default(Size.AUTO),

@@ -140,7 +140,8 @@ export default defineComponent<KottiPopover.PropsInternal>({
 					showPopover.value = false
 				},
 				onShow: () => {
-					showPopover.value = true
+					if (!props.isDisabled) showPopover.value = true
+					else return false
 				},
 				onUntrigger: () => close(),
 				placement: props.placement,
