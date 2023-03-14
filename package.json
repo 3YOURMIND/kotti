@@ -78,7 +78,7 @@
 		"husky": "^7.0.1",
 		"jest": "^27.1.0",
 		"jsdom-global": "^3.0.2",
-		"lerna": "^4.0.0",
+		"lerna": "^6.5.1",
 		"lint-staged": "^11.0.1",
 		"nodemon": "^2.0.12",
 		"postcss": "^8.2.10",
