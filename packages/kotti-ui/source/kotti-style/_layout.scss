@@ -23,28 +23,6 @@
 	margin-right: auto;
 	margin-left: auto;
 	clear: both;
-
-	$grid-spacing: $layout-spacing * $html-font-size;
-
-	&.grid-xl {
-		max-width: $grid-spacing * 2 + $size-xl;
-	}
-
-	&.grid-lg {
-		max-width: $grid-spacing * 2 + $size-lg;
-	}
-
-	&.grid-md {
-		max-width: $grid-spacing * 2 + $size-md;
-	}
-
-	&.grid-sm {
-		max-width: $grid-spacing * 2 + $size-sm;
-	}
-
-	&.grid-xs {
-		max-width: $grid-spacing * 2 + $size-xs;
-	}
 }
 
 // Responsive breakpoint system
