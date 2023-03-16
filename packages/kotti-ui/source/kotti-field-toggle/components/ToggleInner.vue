@@ -4,8 +4,7 @@
 		class="kt-field-toggle__inner"
 		:class="toggleClasses"
 	>
-		<ToggleBox v-if="type === 'checkbox'" />
-		<ToggleSwitch v-else />
+		<component :is="svgComponent.is" :class="svgComponent.class" />
 		<slot name="default" />
 		<input
 			v-bind="inputProps"
@@ -18,6 +17,8 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
+
+import { KottiFieldToggle } from '../types'
 
 import ToggleBox from './ToggleBox.vue'
 import ToggleSwitch from './ToggleSwitch.vue'
@@ -37,6 +38,17 @@ export default defineComponent({
 			onInput: (newValue: boolean) => {
 				if (!props.isDisabled) emit('input', newValue)
 			},
+			svgComponent: computed(() => {
+				const isBox = props.type === KottiFieldToggle.Shared.Type.CHECKBOX
+				return {
+					is: isBox ? ToggleBox.name : ToggleSwitch.name,
+					class: {
+						'kt-field-toggle__inner__svg': true,
+						'kt-field-toggle__inner__svg--is-box': isBox,
+						'kt-field-toggle__inner__svg--is-switch': !isBox,
+					},
+				}
+			}),
 			toggleClasses: computed(() => ({
 				'kt-field-toggle__inner--is-disabled': props.isDisabled === true,
 				'kt-field-toggle__inner--is-indeterminate': props.value === null,
@@ -55,11 +67,33 @@ export default defineComponent({
 
 .kt-field-toggle__inner {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	cursor: pointer;
 
 	input {
 		display: none;
+	}
+
+	&__svg {
+		flex-shrink: 0;
+
+		&--is-box {
+			// align checkbox with the center of the first line of the label
+			// (assumption: font-size comes from common parent element)
+			//  > starting point is upper end of the container (flex-start)
+			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+			//  > (-8px) Put it up half the height of the checkbox height (16px)
+			transform: translateY(calc(0.75em - 8px));
+		}
+
+		&--is-switch {
+			// align switch with the center of the first line of the label
+			// (assumption: font-size comes from common parent element)
+			//  > starting point is upper end of the container (flex-start)
+			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+			//  > (-10px) Put it up half the height of the switch height (20px)
+			transform: translateY(calc(0.75em - 10px));
+		}
 	}
 
 	&--is-disabled {

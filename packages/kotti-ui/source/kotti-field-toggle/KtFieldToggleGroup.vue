@@ -7,20 +7,30 @@
 	>
 		<div slot="container" :class="wrapperClasses">
 			<div v-for="option of optionsWithChecked" :key="option.key">
-				<ToggleInner
-					component="label"
-					:inputProps="getInputProps(option)"
-					:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
-					:type="type"
-					:value="option.value"
-					@input="onInput(option.key, $event)"
-				>
-					<slot name="header" :option="option">
-						<div v-text="option.label" />
-					</slot>
-					<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
-				</ToggleInner>
-				<slot name="content" :option="option" />
+				<div class="kt-field-toggle-group__wrapper__header">
+					<ToggleInner
+						component="label"
+						:data-test="getOptionDataTest(option)"
+						:inputProps="inputProps"
+						:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
+						:type="type"
+						:value="option.value"
+						@input="onInput(option.key, $event)"
+					>
+						<slot name="header" :option="option">
+							<div v-text="option.label" />
+						</slot>
+					</ToggleInner>
+					<FieldHelpText
+						v-if="option.tooltip"
+						class="kt-field-toggle-group__wrapper__header__tooltip"
+						:helpText="option.tooltip"
+					/>
+					<slot name="headerSide" :option="option" />
+				</div>
+				<div class="kt-field-toggle-group__wrapper__content">
+					<slot name="content" :option="option" />
+				</div>
 			</div>
 		</div>
 	</KtField>
@@ -61,17 +71,19 @@ export default defineComponent<KottiFieldToggleGroup.PropsInternal>({
 
 		return {
 			field,
-			getInputProps: (option: KottiFieldToggleGroup.Entry) => {
-				const fieldDataTest = field.inputProps['data-test']
-				return {
-					...field.inputProps,
-					'data-test':
-						option.dataTest ?? fieldDataTest
-							? `${fieldDataTest}.${option.key}`
-							: undefined,
-					forceUpdateKey: forceUpdateKey.value,
+			getOptionDataTest: (option: KottiFieldToggleGroup.Entry) => {
+				if (option.dataTest) return option.dataTest
+
+				if (Object.keys(field.inputProps).includes('data-test')) {
+					return [field.inputProps['data-test'], option.key].join('.')
 				}
 			},
+			inputProps: computed(() => {
+				return {
+					...field.inputProps,
+					forceUpdateKey: forceUpdateKey.value,
+				}
+			}),
 			onInput: (
 				key: KottiFieldToggleGroup.Entry['key'],
 				newValue: boolean | undefined,
@@ -115,6 +127,28 @@ export default defineComponent<KottiFieldToggleGroup.PropsInternal>({
 		> *:not(:first-child) {
 			margin-top: 0.4rem;
 		}
+	}
+
+	&__header {
+		display: flex;
+		align-items: flex-start;
+
+		> *:not(:last-child) {
+			margin-right: 0.3rem;
+		}
+
+		&__tooltip {
+			// align tooltip icon with the center of the first line of the label
+			// (assumption: font-size comes from common parent element)
+			//  > starting point is upper end of the container (flex-start)
+			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+			//  > (-6px) Put it up half the height of the roolrip height (12px)
+			transform: translateY(calc(0.75em - 6px));
+		}
+	}
+
+	&__content {
+		font-size: var(--font-size-small);
 	}
 }
 </style>
