@@ -10,42 +10,51 @@
 			:class="wrapperClasses"
 			:forceUpdateKey="forceUpdateKey"
 		>
-			<label
+			<div
 				v-for="option in options"
 				:key="option.value"
-				class="kt-field-radio-group__wrapper__label"
+				class="kt-field-radio-group__wrapper__container"
 			>
-				<div
-					class="kt-field-radio-group__wrapper__header"
-					:class="{
-						'kt-field-radio-group__wrapper__header--disabled':
-							field.isDisabled || Boolean(option.isDisabled),
-					}"
-					:data-test="optionDataTest(option)"
-				>
-					<div
-						class="kt-field-radio-group__wrapper__radio"
+				<div class="kt-field-radio-group__wrapper__header">
+					<label
+						class="kt-field-radio-group__wrapper__header__label"
 						:class="{
-							'kt-field-radio-group__wrapper__radio--checked':
-								field.currentValue === option.value,
+							'kt-field-radio-group__wrapper__header__label--disabled':
+								field.isDisabled || Boolean(option.isDisabled),
 						}"
+						:data-test="optionDataTest(option)"
 					>
-						<div class="kt-field-radio-group__wrapper__radio__inside" />
-					</div>
-					<slot name="header" :option="option">
-						<div v-text="option.label" />
-					</slot>
-					<FieldHelpText v-if="option.tooltip" :helpText="option.tooltip" />
-					<input
-						v-bind="inputProps"
-						:checked="field.currentValue === option.value"
-						:disabled="field.isDisabled || Boolean(option.isDisabled)"
-						:value="option.value"
-						@change="onChange(option.value)"
+						<div
+							class="kt-field-radio-group__wrapper__radio"
+							:class="{
+								'kt-field-radio-group__wrapper__radio--checked':
+									field.currentValue === option.value,
+							}"
+						>
+							<div class="kt-field-radio-group__wrapper__radio__inside" />
+						</div>
+						<slot name="header" :option="option">
+							<div v-text="option.label" />
+						</slot>
+						<input
+							v-bind="inputProps"
+							:checked="field.currentValue === option.value"
+							:disabled="field.isDisabled || Boolean(option.isDisabled)"
+							:value="option.value"
+							@change="onChange(option.value)"
+						/>
+					</label>
+					<FieldHelpText
+						v-if="option.tooltip"
+						class="kt-field-radio-group__wrapper__header__tooltip"
+						:helpText="option.tooltip"
 					/>
+					<slot name="headerSide" :option="option" />
 				</div>
-				<slot name="content" :option="option" />
-			</label>
+				<div class="kt-field-radio-group__wrapper__content">
+					<slot name="content" :option="option" />
+				</div>
+			</div>
 		</div>
 	</KtField>
 </template>
@@ -128,7 +137,7 @@ export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 	&--inline {
 		flex-direction: row;
 
-		.kt-field-radio-group__wrapper__label:not(:first-child) {
+		.kt-field-radio-group__wrapper__container:not(:first-child) {
 			margin-left: 1rem;
 		}
 	}
@@ -136,32 +145,50 @@ export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 	&:not(&--inline) {
 		flex-direction: column;
 
-		.kt-field-radio-group__wrapper__label:not(:first-child) {
+		.kt-field-radio-group__wrapper__container:not(:first-child) {
 			margin-top: 0.4rem;
 		}
 	}
 
 	&__header {
 		display: flex;
-		align-items: center;
-		cursor: pointer;
+		align-items: flex-start;
 
-		&--disabled {
-			color: var(--text-05);
-			cursor: not-allowed;
+		> *:not(:last-child) {
+			margin-right: 0.3rem;
+		}
 
-			.kt-field-radio-group__wrapper__radio {
-				border-color: var(--ui-02);
+		&__label {
+			display: flex;
+			align-items: flex-start;
+			cursor: pointer;
 
-				&--checked {
-					background-color: var(--ui-02);
-					box-shadow: var(--shadow-base);
+			> *:not(:last-child) {
+				margin-right: 0.3rem;
+			}
+
+			&--disabled {
+				color: var(--text-05);
+				cursor: not-allowed;
+
+				.kt-field-radio-group__wrapper__radio {
+					border-color: var(--ui-02);
+
+					&--checked {
+						background-color: var(--ui-02);
+						box-shadow: var(--shadow-base);
+					}
 				}
 			}
 		}
 
-		> *:not(:first-child) {
-			margin-left: 0.3rem;
+		&__tooltip {
+			// align tooltip icon with the center of the first line of the label
+			// (assumption: font-size comes from common parent element)
+			//  > starting point is upper end of the container (flex-start)
+			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+			//  > (-6px) Put it up half the height of the tooltip height (12px)
+			transform: translateY(calc(0.75em - 6px));
 		}
 	}
 
@@ -171,6 +198,7 @@ export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 
 	&__radio {
 		display: grid;
+		flex-shrink: 0;
 		place-items: center;
 		width: var(--radio-size);
 		height: var(--radio-size);
@@ -178,6 +206,12 @@ export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 		border: 1px solid var(--ui-02);
 		border-radius: 50%;
 		transition: all ease-in-out var(--transition-short);
+		// align radio with the center of the first line of the label
+		// (assumption: font-size comes from common parent element)
+		//  > starting point is upper end of the container (flex-start)
+		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+		//  > (-var(--radio-size) * 0.5) Put it up half the height of the radio height
+		transform: translateY(calc(0.75em - var(--radio-size) * 0.5));
 
 		&__inside {
 			display: block;
@@ -192,6 +226,10 @@ export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
 			border-color: var(--interactive-01);
 			box-shadow: var(--shadow-base);
 		}
+	}
+
+	&__content {
+		font-size: var(--font-size-small);
 	}
 }
 
