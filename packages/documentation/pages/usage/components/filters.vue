@@ -272,12 +272,14 @@ export default defineComponent({
 		const componentCode = computed<string>(() => {
 			const component: ComponentValue = {
 				contentSlot: null,
+				defaultSlot: null,
 				hasActions: false,
 				hasHelpTextSlot: false,
 				hasOptionSlot: false,
 				headerSlot: null,
 				name: 'KtFilters',
 				props: cloneDeep(componentProps.value),
+				showHeaderSideSlot: false,
 				validation: 'empty',
 			}
 			return generateComponentCode(component)

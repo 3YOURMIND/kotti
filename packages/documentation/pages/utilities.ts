@@ -20,10 +20,12 @@ export type ComponentNames =
 
 export type ComponentValue = {
 	contentSlot: string | null
+	defaultSlot: string | null
 	hasActions: boolean
 	hasHelpTextSlot: boolean
 	hasOptionSlot: boolean
 	headerSlot: string | null
+	showHeaderSideSlot: boolean
 	name: ComponentNames
 	props: Record<string, unknown>
 	validation: Kotti.Field.Validation.Result['type']

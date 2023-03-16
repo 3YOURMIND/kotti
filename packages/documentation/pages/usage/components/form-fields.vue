@@ -65,7 +65,15 @@
 							>
 								<div v-text="settings.additionalProps.contentSlot" />
 							</template>
-							<div slot="default">Default Slot</div>
+							<a
+								v-if="componentRepresentation.showHeaderSideSlot"
+								slot="headerSide"
+								href="#"
+								v-text="'Interactive'"
+							/>
+							<template v-if="componentRepresentation.defaultSlot">
+								<div v-text="componentRepresentation.defaultSlot" />
+							</template>
 						</component>
 					</KtForm>
 					<div class="overview__component__value">
@@ -461,13 +469,21 @@
 							<h4>Additional Slots</h4>
 							<KtFieldText
 								v-if="
+									componentDefinition.additionalProps.includes('defaultSlot')
+								"
+								formKey="defaultSlot"
+								isOptional
+								label="Slot for the label in a toggle"
+								size="small"
+							/>
+							<KtFieldText
+								v-if="
 									componentDefinition.additionalProps.includes('contentSlot')
 								"
 								formKey="contentSlot"
 								isOptional
-								label="slot for the sub-text of a radio/toggle group option"
+								label="Slot for the sub-text of a radio/toggle group option"
 								size="small"
-								type="switch"
 							/>
 							<KtFieldText
 								v-if="
@@ -475,10 +491,34 @@
 								"
 								formKey="headerSlot"
 								isOptional
-								label="slot for the header of a radio/toggle group option"
+								label="Slot for the header of a radio/toggle group option"
 								size="small"
+							>
+								<template #helpText>
+									The content in here will be put into the radio/toggle option's
+									<code>label</code> block.
+								</template>
+							</KtFieldText>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'showHeaderSideSlot',
+									)
+								"
+								formKey="showHeaderSideSlot"
+								isOptional
 								type="switch"
-							/>
+							>
+								<template #default>
+									Show header-side slot of a radio/toggle group option
+								</template>
+								<template #helpText>
+									The content in here will be put outside the radio/toggle
+									option's
+									<code>label</code> block. and can therefore contain
+									interactive elements like buttons or links
+								</template>
+							</KtFieldToggle>
 						</KtFormControllerObject>
 					</div>
 				</div>
@@ -669,7 +709,12 @@ const components: Array<{
 		supports: KtFieldPassword.meta.supports,
 	},
 	{
-		additionalProps: ['contentSlot', 'headerSlot', 'isInline'],
+		additionalProps: [
+			'contentSlot',
+			'headerSlot',
+			'isInline',
+			'showHeaderSideSlot',
+		],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldRadioGroup',
 		supports: KtFieldRadioGroup.meta.supports,
@@ -705,13 +750,19 @@ const components: Array<{
 		supports: KtFieldTextArea.meta.supports,
 	},
 	{
-		additionalProps: ['toggleType'],
+		additionalProps: ['defaultSlot', 'toggleType'],
 		formKey: 'toggleValue',
 		name: 'KtFieldToggle',
 		supports: KtFieldToggle.meta.supports,
 	},
 	{
-		additionalProps: ['contentSlot', 'headerSlot', 'isInline', 'toggleType'],
+		additionalProps: [
+			'contentSlot',
+			'headerSlot',
+			'isInline',
+			'showHeaderSideSlot',
+			'toggleType',
+		],
 		formKey: 'toggleGroupValue',
 		name: 'KtFieldToggleGroup',
 		supports: KtFieldToggleGroup.meta.supports,
@@ -765,15 +816,25 @@ const createValidator =
 			  }
 
 const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
-	{ label: 'Key 1', value: 'value1' },
-	{ label: 'Key 2', value: 'value2', tooltip: 'Some tooltip' },
+	{ dataTest: 'data-test-key-1', label: 'Key 1', value: 'value1' },
+	{
+		dataTest: 'data-test-key-2',
+		label: 'Key 2',
+		value: 'value2',
+		tooltip: 'Some tooltip',
+	},
 	{
 		isDisabled: true,
 		label: 'Key 3',
 		tooltip: 'This option is disabled',
 		value: 'value3',
 	},
-	{ label: 'Key 4', value: 'value4' },
+	{
+		label:
+			'Key 4 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+		value: 'value4',
+		tooltip: 'This option has a long label',
+	},
 ]
 
 const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
@@ -789,8 +850,13 @@ const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
 ]
 
 const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
-	{ key: 'initiallyFalse', label: 'Initially False' },
 	{
+		dataTest: 'data-test-initially-false',
+		key: 'initiallyFalse',
+		label: 'Initially False',
+	},
+	{
+		dataTest: 'data-test-initially-null',
 		key: 'initiallyNull',
 		label: 'Initially Null',
 		tooltip: 'null is for uninitialized data',
@@ -801,6 +867,13 @@ const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
 		key: 'disabled',
 		tooltip: 'A tooltip!',
 		label: 'Disabled',
+	},
+
+	{
+		key: 'hasLongLabel',
+		tooltip: 'A tooltip!',
+		label:
+			'Long Label: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
 	},
 ]
 
@@ -822,6 +895,7 @@ export default defineComponent({
 				collapseTagsAfter: Kotti.FieldNumber.Value
 				contentSlot: ComponentValue['contentSlot']
 				currencyCurrency: string
+				defaultSlot: ComponentValue['defaultSlot']
 				hasActions: boolean
 				hasOptionSlot: boolean
 				headerSlot: ComponentValue['headerSlot']
@@ -838,6 +912,7 @@ export default defineComponent({
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
 				numberStep: Kotti.FieldNumber.Value
+				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
 				toggleType: 'checkbox' | 'switch'
 			}
 			booleanFlags: {
@@ -872,6 +947,7 @@ export default defineComponent({
 				collapseTagsAfter: null,
 				contentSlot: null,
 				currencyCurrency: 'USD',
+				defaultSlot: 'Default Slot',
 				hasActions: false,
 				hasOptionSlot: false,
 				headerSlot: null,
@@ -888,6 +964,7 @@ export default defineComponent({
 				numberMaximum: null,
 				numberMinimum: null,
 				numberStep: null,
+				showHeaderSideSlot: false,
 				toggleType: 'checkbox',
 			},
 			booleanFlags: {
@@ -1141,17 +1218,23 @@ export default defineComponent({
 
 			if (['KtFieldRadioGroup'].includes(component)) {
 				Object.assign(additionalProps, {
-					options: radioGroupOptions,
-					headerSlot: null,
 					contentSlot: null,
+					headerSlot: null,
+					options: radioGroupOptions,
+					showHeaderSideSlot: false,
 				})
 			}
 
+			if (['KtFieldToggle'].includes(component))
+				Object.assign(additionalProps, {
+					defaultSlot: 'Default Slot',
+				})
+
 			if (['KtFieldToggleGroup'].includes(component))
 				Object.assign(additionalProps, {
-					options: toggleGroupOptions,
-					headerSlot: null,
 					contentSlot: null,
+					headerSlot: null,
+					options: toggleGroupOptions,
 				})
 
 			return { ...standardProps, ...additionalProps }
@@ -1177,12 +1260,14 @@ export default defineComponent({
 		const componentValue = computed(
 			(): ComponentValue => ({
 				contentSlot: settings.value.additionalProps.contentSlot,
+				defaultSlot: settings.value.additionalProps.defaultSlot,
 				hasActions: settings.value.additionalProps.hasActions,
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
 				hasOptionSlot: settings.value.additionalProps.hasOptionSlot,
 				headerSlot: settings.value.additionalProps.headerSlot,
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),
+				showHeaderSideSlot: settings.value.additionalProps.showHeaderSideSlot,
 				validation: settings.value.validation,
 			}),
 		)
