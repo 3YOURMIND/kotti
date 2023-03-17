@@ -98,10 +98,12 @@
 					<div>
 						<h4>Settings</h4>
 						<KtFieldSingleSelect
-							formKey="component"
+							formKey="NONE"
 							hideClear
 							label="Component"
 							:options="componentOptions"
+							:value="settings.component"
+							@input="updateComponent"
 						/>
 						<KtFieldSingleSelect
 							formKey="decimalSeparator"
@@ -598,11 +600,13 @@ import { TimeConversion } from '@metatypes/units'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
+import { useRouter } from '../../..//hooks/use-router'
 import {
 	createActions,
 	ComponentValue,
 	ComponentNames,
 	generateComponentCode,
+	isComponentName,
 } from '../../utilities'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -884,6 +888,12 @@ export default defineComponent({
 	},
 	setup() {
 		const values = ref<typeof INITIAL_VALUES>(INITIAL_VALUES)
+		const router = useRouter()
+
+		const initialComponentName = (() => {
+			const { component } = router.value.currentRoute.query
+			return isComponentName(component) ? component : null
+		})()
 
 		const remoteSingleSelectQuery =
 			ref<Kotti.FieldSingleSelectRemote.Props['query']>(null)
@@ -974,7 +984,7 @@ export default defineComponent({
 				isLoading: false,
 				isOptional: true,
 			},
-			component: 'KtFieldText',
+			component: initialComponentName ?? 'KtFieldText',
 			dataTest: null,
 			decimalSeparator: Kotti.DecimalSeparator.DOT,
 			hasHelpTextSlot: false,
@@ -1343,6 +1353,13 @@ export default defineComponent({
 				saveSavedFieldsToLocalStorage(savedFields.value)
 			},
 			settings,
+			updateComponent: (component: ComponentNames) => {
+				router.value.replace({ query: { component } })
+				settings.value = {
+					...settings.value,
+					component: component,
+				}
+			},
 			updateQuery: (
 				newQuery: Kotti.FieldSingleSelectRemote.Events.UpdateQuery,
 			) => {
