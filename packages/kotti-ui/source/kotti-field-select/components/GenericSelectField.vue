@@ -150,7 +150,7 @@ export default defineComponent({
 		const { forceUpdateKey, forceUpdate } = useForceUpdate()
 
 		const { isDropdownOpen, isDropdownMounted, ...selectTippy } =
-			useSelectTippy()
+			useSelectTippy(field)
 
 		const deleteQuery = () => {
 			if (props.isRemote) {
