@@ -294,6 +294,16 @@ export default defineComponent<{
 			margin-left: 0.2rem;
 		}
 
+		&--is-suffix {
+			/*
+			For suffix case, align the suffix with the first line of the toggle's label.
+			to roughly calculate this, note that the fontsize of the suffix is 90% of the
+			label's fontsize (0.9em). So we push it 10% down to make them even (enough)
+			*/
+			align-self: flex-start;
+			transform: translateY(10%);
+		}
+
 		&__help-text {
 			display: flex;
 			align-items: center;
