@@ -79,6 +79,7 @@ export enum Icon {
 	MOBILE = 'mobile',
 	NOT_ALLOW = 'not_allow',
 	NOTES = 'notes',
+	OFFICE = 'office',
 	ORDER = 'order',
 	OUTLINK = 'outlink',
 	PDF = 'pdf',
