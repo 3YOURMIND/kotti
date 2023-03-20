@@ -1,5 +1,5 @@
 <template>
-	<div class="kt-field__header">
+	<div class="kt-field__header kt-field__header--is-suffix">
 		<div class="kt-field__header__label">
 			<span :class="labelSuffixClasses" v-text="labelSuffix" />
 		</div>
