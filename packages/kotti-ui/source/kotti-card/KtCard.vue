@@ -10,7 +10,7 @@
 			<slot name="card-body" />
 		</div>
 		<div v-if="$slots['card-footer']" :class="footerClass">
-			<slot name="kt-card-footer" />
+			<slot name="card-footer" />
 		</div>
 	</div>
 </template>
