@@ -3,10 +3,10 @@
 		<div v-if="imgUrl" :class="imageContainerClass">
 			<img class="kt-card__image-row__image" :src="imgUrl" />
 		</div>
-		<div class="kt-card__header">
+		<div v-if="$slots['card-header']" class="kt-card__header">
 			<slot name="card-header" />
 		</div>
-		<div class="kt-card__body">
+		<div v-if="$slots['card-body']" class="kt-card__body">
 			<slot name="card-body" />
 		</div>
 		<div v-if="$slots['card-footer']" :class="footerClass">
