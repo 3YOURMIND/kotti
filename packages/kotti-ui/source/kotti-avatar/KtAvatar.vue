@@ -2,13 +2,18 @@
 	<div :class="avatarClasses" @click="onAvatarContainerClick">
 		<img
 			v-if="avatarAvailable"
-			ref="tooltipTriggerRef"
+			ref="triggerRef"
 			class="kt-avatar__image"
 			:src="src"
 			@error="onImageFailedToLoad"
 		/>
-		<div v-else ref="tooltipTriggerRef" class="kt-avatar__fallback">
+		<div v-else ref="triggerRef" class="kt-avatar__fallback">
 			<i class="yoco" v-text="Yoco.Icon.USER_SOLID" />
+		</div>
+		<div ref="contentRef">
+			<slot name="content">
+				<span v-text="name" />
+			</slot>
 		</div>
 	</div>
 </template>
@@ -16,7 +21,7 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, Ref, ref } from '@vue/composition-api'
+import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
@@ -24,34 +29,36 @@ import { makeProps } from '../make-props'
 
 import { KottiAvatar } from './types'
 
-const useTooltip = (name: Ref<string | null>) => {
-	const tooltipTriggerRef = ref<Element | null>(null)
-
-	useTippy(
-		tooltipTriggerRef,
-		computed(() => ({
-			appendTo: () => document.body,
-			arrow: roundArrow,
-			content: name.value,
-			offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
-			theme: 'light-border',
-			...(name.value === null ? { trigger: 'manual' } : {}),
-		})),
-	)
-
-	return {
-		tooltipTriggerRef,
-	}
-}
-
 export default defineComponent<KottiAvatar.PropsInternal>({
 	name: 'KtAvatar',
 	props: makeProps(KottiAvatar.propsSchema),
-	setup(props, { emit }) {
+	setup(props, { emit, slots }) {
 		const avatarFallback = ref(true)
+		const triggerRef = ref<HTMLElement | null>(null)
+		const contentRef = ref<HTMLElement | null>(null)
+		const hasNoContent = computed(
+			() => !props.isHoverable || (!slots.content?.() && props.name === null),
+		)
+
+		useTippy(
+			triggerRef,
+			computed(() => ({
+				appendTo: () => document.body,
+				arrow: roundArrow,
+				content: contentRef.value as NonNullable<typeof contentRef.value>,
+				interactive: true,
+				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				theme: 'light-border',
+				...(hasNoContent.value ? { trigger: 'manual' } : {}),
+			})),
+		)
+
+		onMounted(() => {
+			if (contentRef.value === null)
+				throw new Error('KtAvatar: Unbound `contentRef` for tippy: null')
+		})
 
 		return {
-			...useTooltip(computed(() => props.name)),
 			avatarAvailable: computed(() => props.src && avatarFallback.value),
 			avatarClasses: computed(() => ({
 				'kt-avatar': true,
@@ -61,12 +68,14 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 				'kt-avatar--is-size-small': props.size === KottiAvatar.Size.SMALL,
 			})),
 			avatarFallback,
+			contentRef,
 			onImageFailedToLoad: () => {
 				avatarFallback.value = false
 			},
 			onAvatarContainerClick(event: MouseEvent) {
 				emit('click', event)
 			},
+			triggerRef,
 			Yoco,
 		}
 	},
