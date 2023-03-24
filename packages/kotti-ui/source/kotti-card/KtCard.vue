@@ -33,7 +33,7 @@ export default defineComponent<KottiCard.PropsInternal>({
 			})),
 			imageRowClass: computed(() => ({
 				'kt-card__image-row': true,
-				[`kt-card__image-row--is-${props.imgPosition}`]: true,
+				[`kt-card__image-row--is-${props.imgPosition}`]: props.imgUrl,
 			})),
 			KottiCard,
 		}
@@ -45,11 +45,11 @@ export default defineComponent<KottiCard.PropsInternal>({
 .kt-card {
 	display: flex;
 	flex-direction: column;
+	padding: var(--unit-4);
 	word-break: break-word;
 	background: var(--ui-background);
 	border: 1px solid var(--ui-02);
 	border-radius: var(--border-radius);
-	padding: var(--unit-4);
 
 	&--has-top-image {
 		padding-top: 0;
