@@ -1,136 +1,66 @@
-<template lang="md">
-<ComponentInfo :component="KtAvatar" />
+<template>
+	<div>
+		<ComponentInfo :component="KtAvatar" />
 
-Avatar is a round object to help identify the user information.
+		<div class="element-example">
+			<KtAvatar
+				class="mr-16px"
+				isHoverable
+				name="Jony O'Five"
+				src="https://picsum.photos/200/100"
+			>
+				<template #content>
+					<h2 v-text="'This is some custom content'" />
+				</template>
+			</KtAvatar>
+			<KtAvatar class="mr-16px" isHoverable name="Jony O'Five" />
+			<KtAvatar class="mr-16px" isHoverable />
+		</div>
 
-## Item
+		<ComponentInfo :component="KtAvatarGroup" />
 
-<div class="element-example">
-	<KtAvatar
-		class="mr-16px"
-		isHoverable
-		name="Jony O'Five"
-		src="https://picsum.photos/200/100"
-	/>
-	<KtAvatar
-		class="mr-16px"
-		isHoverable
-		name="Jony O'Five"
-	/>
-	<KtAvatar
-		class="mr-16px"
-		isHoverable
-	/>
-</div>
+		<div class="element-example">
+			<KtAvatarGroup :count="3" isHoverable :items="avatarData" />
+			<br />
+			<KtAvatarGroup :count="3" isHoverable isStack :items="avatarData" />
+		</div>
 
-Avatar has `name` and image `src`. If no image is given,
-or image error occurs avatar will use a placeholder avatar.
+		<KtAvatarGroup :count="3" isHoverable isStack :items="avatarData" />
 
-Set `:size="Kotti.Avatar.Size.SMALL"` to make the avatar smaller.
+		<div class="element-example">
+			<KtAvatarGroup :count="3" isHoverable isStack :items="avatarData" />
+		</div>
 
-```html
-<KtAvatar
-	class="mr-16px"
-	isHoverable
-	name="Jony O'Five"
-	src="https://picsum.photos/200/100"
-/>
-<KtAvatar class="mr-16px" isHoverable name="Jony O'Five" />
-<KtAvatar class="mr-16px" isHoverable />
-```
+		<div class="element-example">
+			<KtAvatarGroup
+				:count="3"
+				isHoverable
+				isStack
+				:items="avatarData"
+				:size="Kotti.Avatar.Size.SMALL"
+			/>
+		</div>
 
-<ComponentInfo :component="KtAvatarGroup" />
+		<div class="element-example">
+			<KtAvatarGroup
+				:count="3"
+				isHoverable
+				isStack
+				:items="avatarData"
+				:size="Kotti.Avatar.Size.MEDIUM"
+			/>
+		</div>
 
-<div class="element-example">
-	<KtAvatarGroup
-		:count="3"
-		isHoverable
-		:items="avatarData"
-	/>
-	<br/>
-	<KtAvatarGroup
-		:count="3"
-		isHoverable
-		isStack
-		:items="avatarData"
-	/>
-</div>
-
-Avatars can be grouped to avatar groups. Using `items` props to pass the `avatarData`.
-The example of the avatar data is shown here, which has same properities as avatar item:
-
-```js
-const avatarData = [
-	{
-		name: 'Justin',
-		src: 'https://picsum.photos/100',
-	},
-	{
-		name: 'Beoncye',
-		src: 'https://picsum.photos/200',
-	},
-	{
-		name: 'Simens',
-		src: 'https://picsum.photos/120',
-	},
-]
-```
-
-Avatar group can be stacked by setting `isStack`.
-You can control how many avatar items are displayed with `count`.
-
-```html
-<KtAvatarGroup :count="3" isHoverable isStack :items="avatarData" />
-```
-
-## `isStack`
-
-<div class="element-example">
-	<KtAvatarGroup
-		:count="3"
-		isHoverable
-		isStack
-		:items="avatarData"
-	/>
-</div>
-
-## Size
-
-### Small
-
-<div class="element-example">
-	<KtAvatarGroup
-		:count="3"
-		isHoverable
-		isStack
-		:items="avatarData"
-		:size="Kotti.Avatar.Size.SMALL"
-	/>
-</div>
-
-### Medium
-
-<div class="element-example">
-	<KtAvatarGroup
-		:count="3"
-		isHoverable
-		isStack
-		:items="avatarData"
-		:size="Kotti.Avatar.Size.MEDIUM"
-	/>
-</div>
-
-### Large
-
-<div class="element-example">
-	<KtAvatarGroup
-		:count="3"
-		isHoverable
-		isStack
-		:items="avatarData"
-		:size="Kotti.Avatar.Size.LARGE"
-	/>
-</div>
+		<div class="element-example">
+			<KtAvatarGroup
+				:count="3"
+				isHoverable
+				isStack
+				:items="avatarData"
+				:size="Kotti.Avatar.Size.LARGE"
+			/>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
