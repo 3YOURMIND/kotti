@@ -1,121 +1,51 @@
-<template lang="md">
-<ComponentInfo v-bind="{ component }" />
+<template>
+	<div>
+		<ComponentInfo v-bind="{ component }" />
 
-## Structure
-
-<div class="element-example">
-	<KtCard>
-		<div slot="card-header" >
-			<h2>Lorem Ipsum</h2>
-			<b>consectetur adipiscing elit</b>
-		</div>
-		<div slot="card-body" >
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Phasellus consequat nisl at nisl condimentum vehicula.
-			</p>
-		</div>
-		<div slot="card-footer">
-			<KtButton label="Button" />
-		</div>
-	</KtCard>
-</div>
-
-The Card component has slots for the `card-header`, `card-body`, and `card-footer`:
-
-```html
-<KtCard>
-	<div slot="card-header">
-		<h2>Lorem Ipsum</h2>
-		<b>consectetur adipiscing elit</b>
-	</div>
-	<div slot="card-body">
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-			consequat nisl at nisl condimentum vehicula.
-		</p>
-	</div>
-	<div slot="card-footer">This is the end</div>
-</KtCard>
-```
-
-## Images and Position
-
-<div class="element-example">
-	<KtRow :gap="16">
-		<KtCol :span="8">
-			<KtCard imgUrl="https://picsum.photos/900/300">
-				<div slot="card-header" >
+		<div class="element-example">
+			<KtCard>
+				<div slot="card-header">
 					<h2>Lorem Ipsum</h2>
+					<b>consectetur adipiscing elit</b>
 				</div>
-				<div slot="card-body" >
+				<div slot="card-body">
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						Phasellus consequat nisl at nisl condimentum vehicula.
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+						consequat nisl at nisl condimentum vehicula.
 					</p>
 				</div>
 				<div slot="card-footer">
-					This is the end
+					<KtButton label="Button" />
 				</div>
 			</KtCard>
-		</KtCol>
-		<KtCol :span="8">
-			<KtCard imgUrl="https://picsum.photos/900/300" imgPosition="middle">
-				<div slot="card-header" >
-					<h2>Lorem Ipsum</h2>
-				</div>
-				<div slot="card-body" >
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						Phasellus consequat nisl at nisl condimentum vehicula.
+		</div>
+
+		<KtRow :gap="8">
+			<KtCol :span="12">
+				<KtFieldSingleSelect
+					v-model="imgPosition"
+					hideClear
+					label="Image Position"
+					:options="imgPositionOptions"
+				/>
+			</KtCol>
+			<KtCol :span="12">
+				<KtCard v-bind="{ imgPosition }" imgUrl="https://picsum.photos/900/300">
+					<h2 slot="card-header">Lorem Ipsum</h2>
+					<p slot="card-body">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+						consequat nisl at nisl condimentum vehicula.
 					</p>
-				</div>
-				<div slot="card-footer">
-					This is the end
-				</div>
-			</KtCard>
-		</KtCol>
-		<KtCol :span="8">
-			<KtCard imgUrl="https://picsum.photos/900/300" imgPosition="bottom">
-				<div slot="card-header" >
-					<h2>Lorem Ipsum</h2>
-				</div>
-				<div slot="card-body" >
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						Phasellus consequat nisl at nisl condimentum vehicula.
-					</p>
-				</div>
-				<div slot="card-footer">
-					This is the end
-				</div>
-			</KtCard>
-		</KtCol>
-	</KtRow>
-</div>
-
-The `imgUrl` property defines the image’s `url`.
-
-`imgPosition` sets the image position. Valid values are `top`, `middle` and `bottom`.
-
-```html
-<KtCard imgUrl="https://picsum.photos/900/300" imgPosition="middle">
-	<div slot="card-header">
-		<h2>Lorem Ipsum</h2>
+					<p slot="card-footer">This is the end</p>
+				</KtCard>
+			</KtCol>
+		</KtRow>
 	</div>
-	<div slot="card-body">
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-			consequat nisl at nisl condimentum vehicula.
-		</p>
-	</div>
-	<div slot="card-footer">This is the end</div>
-</KtCard>
-```
 </template>
 
 <script lang="ts">
-import { KtCard } from '@3yourmind/kotti-ui'
-import { defineComponent } from '@vue/composition-api'
+import { Kotti, KtCard } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -127,6 +57,13 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtCard,
+			imgPosition: ref<Kotti.Card.ImagePosition>(Kotti.Card.ImagePosition.TOP),
+			imgPositionOptions: Object.entries(Kotti.Card.ImagePosition).map(
+				([label, value]) => ({
+					label,
+					value,
+				}),
+			),
 		}
 	},
 })
