@@ -1,6 +1,6 @@
 <template>
-	<div class="kt-card">
-		<div v-if="imgUrl" :class="imageContainerClass">
+	<div :class="cardClass">
+		<div v-if="imgUrl" :class="imageRowClass">
 			<img class="kt-card__image-row__image" :src="imgUrl" />
 		</div>
 		<div v-if="$slots['card-header']" class="kt-card__header">
@@ -9,7 +9,7 @@
 		<div v-if="$slots['card-body']" class="kt-card__body">
 			<slot name="card-body" />
 		</div>
-		<div v-if="$slots['card-footer']" :class="footerClass">
+		<div v-if="$slots['card-footer']" class="kt-card__footer">
 			<slot name="card-footer" />
 		</div>
 	</div>
@@ -27,19 +27,13 @@ export default defineComponent<KottiCard.PropsInternal>({
 	props: makeProps(KottiCard.propsSchema),
 	setup(props) {
 		return {
-			imageContainerClass: computed(() => ({
-				'kt-card__image-row': true,
-				'kt-card__image-row--is-bottom':
-					props.imgPosition === KottiCard.ImagePosition.BOTTOM,
-				'kt-card__image-row--is-middle':
-					props.imgPosition === KottiCard.ImagePosition.MIDDLE,
-				'kt-card__image-row--is-top':
-					props.imgPosition === KottiCard.ImagePosition.TOP,
+			cardClass: computed(() => ({
+				'kt-card': true,
+				[`kt-card--has-${props.imgPosition}-image`]: props.imgUrl,
 			})),
-			footerClass: computed(() => ({
-				'kt-card__footer': true,
-				'kt-card__footer--is-last':
-					props.imgUrl && props.imgPosition !== KottiCard.ImagePosition.BOTTOM,
+			imageRowClass: computed(() => ({
+				'kt-card__image-row': true,
+				[`kt-card__image-row--is-${props.imgPosition}`]: true,
 			})),
 			KottiCard,
 		}
@@ -51,23 +45,21 @@ export default defineComponent<KottiCard.PropsInternal>({
 .kt-card {
 	display: flex;
 	flex-direction: column;
-	word-break: break-all;
+	word-break: break-word;
 	background: var(--ui-background);
-	border: var(--unit-q) solid var(--ui-02);
+	border: 1px solid var(--ui-02);
 	border-radius: var(--border-radius);
+	padding: var(--unit-4);
+
+	&--has-top-image {
+		padding-top: 0;
+	}
+	&--has-bottom-image {
+		padding-bottom: 0;
+	}
 
 	&__header {
 		order: 2;
-
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			margin-top: 0;
-			margin-bottom: 0;
-		}
 	}
 
 	&__body {
@@ -79,29 +71,17 @@ export default defineComponent<KottiCard.PropsInternal>({
 		text-align: right;
 	}
 
-	&__header,
-	&__body,
-	&__footer {
-		padding: var(--unit-4);
-		padding-bottom: 0;
-
-		&--is-last {
-			padding-bottom: var(--unit-4);
-		}
-	}
-
 	&__image-row {
-		padding-top: var(--unit-4);
-
 		&__image {
 			display: block;
 			max-width: 100%;
-			height: auto;
 		}
+
+		margin: var(--unit-4) calc(-1 * var(--unit-4));
 
 		&--is-top {
 			order: 1;
-			padding-top: 0;
+			margin-top: 0;
 
 			.kt-card__image-row__image {
 				border-top-left-radius: var(--border-radius);
@@ -115,6 +95,7 @@ export default defineComponent<KottiCard.PropsInternal>({
 
 		&--is-bottom {
 			order: 6;
+			margin-bottom: 0;
 
 			.kt-card__image-row__image {
 				border-bottom-right-radius: var(--border-radius);
