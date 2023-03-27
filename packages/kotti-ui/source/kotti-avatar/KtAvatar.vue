@@ -34,9 +34,11 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 	props: makeProps(KottiAvatar.propsSchema),
 	setup(props, { emit, slots }) {
 		const avatarFallback = ref(true)
-		const triggerRef = ref<HTMLElement | null>(null)
+
 		const contentRef = ref<HTMLElement | null>(null)
-		const hasNoContent = computed(
+		const triggerRef = ref<HTMLElement | null>(null)
+
+		const hideTippy = computed(
 			() => !props.isHoverable || (!slots.content?.() && props.name === null),
 		)
 
@@ -49,7 +51,9 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 				interactive: true,
 				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 				theme: 'light-border',
-				...(hasNoContent.value ? { trigger: 'manual' } : {}),
+				...(hideTippy.value
+					? { trigger: 'manual' }
+					: { trigger: 'mouseenter focusin' }),
 			})),
 		)
 
