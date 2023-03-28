@@ -23,6 +23,7 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import { KtAvatar } from '../kotti-avatar/'
 import { KottiAvatar } from '../kotti-avatar/types'
+import { makeProps } from '../make-props'
 
 import { KottiAvatarGroup } from './types'
 
@@ -31,13 +32,7 @@ export default defineComponent<KottiAvatarGroup.PropsInternal>({
 	components: {
 		KtAvatar,
 	},
-	props: {
-		count: { default: 2, type: Number },
-		isHoverable: { default: false, type: Boolean },
-		isStack: { default: false, type: Boolean },
-		items: { required: true, type: Array },
-		size: { default: KottiAvatar.Size.MEDIUM, type: String },
-	},
+	props: makeProps(KottiAvatarGroup.propsSchema),
 	setup(props) {
 		return {
 			avatarGroupClasses: computed(() => ({
@@ -52,7 +47,7 @@ export default defineComponent<KottiAvatarGroup.PropsInternal>({
 			visibleItems: computed(() => {
 				const reversedItems = [...props.items].reverse()
 
-				return reversedItems.filter((item, index) => index < props.count)
+				return reversedItems.filter((_item, index) => index < props.count)
 			}),
 		}
 	},
