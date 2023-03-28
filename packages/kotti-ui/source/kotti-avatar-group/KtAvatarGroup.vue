@@ -10,7 +10,11 @@
 			:name="item.name"
 			:size="size"
 			:src="item.src"
-		/>
+		>
+			<template #content>
+				<slot :item="item" name="content" />
+			</template>
+		</KtAvatar>
 	</div>
 </template>
 
