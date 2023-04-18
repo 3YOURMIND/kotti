@@ -98,6 +98,7 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 	background: var(--ui-02);
 	border: 0.1rem solid var(--white);
 	border-radius: 100%;
+	aspect-ratio: 1/1;
 
 	&__fallback,
 	&__image {
@@ -106,9 +107,8 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 		right: 0;
 		bottom: 0;
 		left: 0;
-
 		width: 100%;
-		height: 100%;
+		aspect-ratio: 1/1;
 	}
 
 	&__fallback {
@@ -130,18 +130,21 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 	&--is-size-small {
 		width: 1.6rem;
 		height: 1.6rem;
+		max-height: 1.6rem;
 		font-size: 1.2rem;
 	}
 
 	&--is-size-medium {
 		width: 2.4rem;
 		height: 2.4rem;
+		max-height: 2.4rem;
 		font-size: 1.8rem;
 	}
 
 	&--is-size-large {
 		width: 3.2rem;
 		height: 3.2rem;
+		max-height: 3.2rem;
 		font-size: 2.4rem;
 	}
 }
