@@ -38,7 +38,7 @@ class DisabledSetValueCalled extends CustomError {
 		super(
 			createErrorMessage(props, [
 				'Attempted to setValue on a disabled field.',
-				'Diasbled fields should never call setValue as it causes unexpected behavior.',
+				'Disabled fields should never call setValue as it causes unexpected behavior.',
 			]),
 		)
 	}
