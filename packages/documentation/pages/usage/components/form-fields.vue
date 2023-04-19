@@ -27,8 +27,6 @@
 						<component
 							:is="componentRepresentation.name"
 							v-bind="componentRepresentation.props"
-							:actions="componentRepresentation.actions"
-							:remoteUpload="componentRepresentation.remoteUpload"
 							:validator="componentRepresentation.validator"
 							@update:query="updateQuery"
 						>
@@ -288,7 +286,7 @@
 						>
 							<h4>Additional Props</h4>
 							<KtFieldToggle
-								v-if="componentDefinition.additionalProps.includes('actions')"
+								v-if="componentHasActionsToggle"
 								formKey="hasActions"
 								helpText="List of actions that can be triggered from the end of the dropdown"
 								isOptional
@@ -563,16 +561,6 @@
 								:minimum="1"
 								:step="1"
 							/>
-							<KtFieldToggle
-								v-if="
-									componentDefinition.additionalProps.includes('remoteUpload')
-								"
-								formKey="hasRemoteUpload"
-								helpText="Defines if the field should trigger a remote upload on file selection. You must provide callback `actions` (onCancel, onDelete, onRetry, onUpload) and `payload` (progress, status)."
-								isOptional
-								label="remoteUpload"
-								type="switch"
-							/>
 
 							<h4>Additional Slots</h4>
 							<KtFieldText
@@ -690,6 +678,7 @@ import {
 	KtFieldDateTime,
 	KtFieldDateTimeRange,
 	KtFieldFileUpload,
+	KtFieldFileUploadRemote,
 	KtFieldMultiSelect,
 	KtFieldMultiSelectRemote,
 	KtFieldNumber,
@@ -736,6 +725,15 @@ const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 }
 
 const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate']
+const FILE_UPLOAD_SHARED_PROPS = [
+	'allowMultiple',
+	'allowPhotos',
+	'collapseExtensionsAfter',
+	'extensions',
+	'externalUrl',
+	'icon',
+	'maxFileSize',
+]
 
 const components: Array<{
 	additionalProps: Array<string>
@@ -774,19 +772,16 @@ const components: Array<{
 		supports: KtFieldDateTimeRange.meta.supports,
 	},
 	{
-		additionalProps: [
-			'allowMultiple',
-			'allowPhotos',
-			'collapseExtensionsAfter',
-			'extensions',
-			'externalUrl',
-			'icon',
-			'maxFileSize',
-			'remoteUpload',
-		],
+		additionalProps: [...FILE_UPLOAD_SHARED_PROPS],
 		formKey: 'fileUploadValue',
 		name: 'KtFieldFileUpload',
 		supports: KtFieldFileUpload.meta.supports,
+	},
+	{
+		additionalProps: [...FILE_UPLOAD_SHARED_PROPS, 'actions', 'payload'],
+		formKey: 'fileUploadRemoteValue',
+		name: 'KtFieldFileUploadRemote',
+		supports: KtFieldFileUploadRemote.meta.supports,
 	},
 	{
 		additionalProps: [
@@ -903,6 +898,7 @@ const INITIAL_VALUES: {
 	dateTimeValue: Kotti.FieldDateTime.Value
 	dateValue: Kotti.FieldDate.Value
 	fileUploadValue: Kotti.FieldFileUpload.Value
+	fileUploadRemoteValue: Kotti.FieldFileUploadRemote.Value
 	multiSelectValue: Kotti.FieldMultiSelect.Value
 	numberValue: Kotti.FieldNumber.Value
 	singleSelectValue: Kotti.FieldSingleSelect.Value
@@ -916,6 +912,7 @@ const INITIAL_VALUES: {
 	dateTimeValue: null,
 	dateValue: null,
 	fileUploadValue: [],
+	fileUploadRemoteValue: [],
 	multiSelectValue: [],
 	numberValue: null,
 	singleSelectValue: null,
@@ -929,8 +926,6 @@ const INITIAL_VALUES: {
 }
 
 type componentRepresentation = ComponentValue & {
-	actions?: Array<Record<string, unknown>>
-	remoteUpload?: Record<string, unknown>
 	code: string
 	validator: Kotti.Field.Validation.Function
 }
@@ -1039,7 +1034,6 @@ export default defineComponent({
 				externalUrl: Kotti.FieldText.Value
 				hasActions: boolean
 				hasOptionSlot: boolean
-				hasRemoteUpload: boolean
 				headerSlot: ComponentValue['headerSlot']
 				hideChangeButtons: boolean
 				icon: Yoco.Icon | null
@@ -1056,7 +1050,6 @@ export default defineComponent({
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
 				numberStep: Kotti.FieldNumber.Value
-				remoteUploadActions: Kotti.FieldToggleGroup.Value
 				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
 				toggleType: 'checkbox' | 'switch'
 			}
@@ -1100,7 +1093,6 @@ export default defineComponent({
 				externalUrl: null,
 				hasActions: false,
 				hasOptionSlot: false,
-				hasRemoteUpload: false,
 				headerSlot: null,
 				hideChangeButtons: false,
 				icon: null,
@@ -1117,12 +1109,6 @@ export default defineComponent({
 				numberMaximum: null,
 				numberMinimum: null,
 				numberStep: null,
-				remoteUploadActions: {
-					onCancel: false,
-					onDelete: false,
-					onRetry: false,
-					onUpload: true,
-				},
 				showHeaderSideSlot: false,
 				toggleType: 'checkbox',
 			},
@@ -1378,6 +1364,9 @@ export default defineComponent({
 					maxFileSize: settings.value.additionalProps.maxFileSize,
 				})
 
+			if (['KtFieldFileUploadRemote'].includes(component))
+				Object.assign(additionalProps, createRemoteUpload(true))
+
 			if (
 				[
 					'KtFieldMultiSelect',
@@ -1407,6 +1396,9 @@ export default defineComponent({
 					options,
 				})
 			}
+
+			if (hasActions.value)
+				Object.assign(additionalProps, { actions: createActions(true) })
 
 			if (
 				['KtFieldMultiSelectRemote', 'KtFieldSingleSelectRemote'].includes(
@@ -1457,15 +1449,27 @@ export default defineComponent({
 			})(),
 		)
 
+		const componentHasActionsToggle = computed(() =>
+			[
+				'KtFieldMultiSelect',
+				'KtFieldMultiSelectRemote',
+				'KtFieldSingleSelect',
+				'KtFieldSingleSelectRemote',
+			].includes(settings.value.component),
+		)
+		const hasActions = computed(
+			() =>
+				componentHasActionsToggle.value &&
+				settings.value.additionalProps.hasActions,
+		)
+
 		const componentValue = computed(
 			(): ComponentValue => ({
 				contentSlot: settings.value.additionalProps.contentSlot,
 				defaultSlot: settings.value.additionalProps.defaultSlot,
-				hasActions: settings.value.additionalProps.hasActions,
+				hasActions: hasActions.value,
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
-				hasRemoteUpload:
-					settings.value.additionalProps.hasRemoteUpload &&
-					componentDefinition.value.additionalProps.includes('remoteUpload'),
+				hasRemoteUpload: settings.value.component === 'KtFieldFileUploadRemote',
 				hasOptionSlot: settings.value.additionalProps.hasOptionSlot,
 				headerSlot: settings.value.additionalProps.headerSlot,
 				name: settings.value.component,
@@ -1477,9 +1481,7 @@ export default defineComponent({
 		const componentRepresentation = computed(
 			(): componentRepresentation => ({
 				...componentValue.value,
-				actions: createActions(componentValue.value.hasActions),
 				code: generateComponentCode(componentValue.value),
-				remoteUpload: createRemoteUpload(componentValue.value.hasRemoteUpload),
 				validator: createValidator(componentValue.value.validation),
 			}),
 		)
@@ -1494,6 +1496,7 @@ export default defineComponent({
 						KtFieldDateTime,
 						KtFieldDateTimeRange,
 						KtFieldFileUpload,
+						KtFieldFileUploadRemote,
 						KtFieldNumber,
 						KtFieldMultiSelect,
 						KtFieldMultiSelectRemote,
@@ -1508,6 +1511,7 @@ export default defineComponent({
 					}[componentValue.value.name as Exclude<ComponentNames, 'KtFilters'>]),
 			),
 			componentDefinition,
+			componentHasActionsToggle,
 			componentOptions: components.map((component) => ({
 				label: component.name,
 				value: component.name,
@@ -1530,7 +1534,6 @@ export default defineComponent({
 				savedFields.value.map(
 					(component): componentRepresentation => ({
 						...component,
-						actions: createActions(component.hasActions),
 						code: generateComponentCode(component),
 						validator: createValidator(component.validation),
 					}),

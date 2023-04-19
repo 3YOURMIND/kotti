@@ -6,6 +6,7 @@ export type ComponentNames =
 	| 'KtFieldDateTime'
 	| 'KtFieldDateTimeRange'
 	| 'KtFieldFileUpload'
+	| 'KtFieldFileUploadRemote'
 	| 'KtFieldMultiSelect'
 	| 'KtFieldMultiSelectRemote'
 	| 'KtFieldNumber'
@@ -25,6 +26,7 @@ const COMPONENT_NAMES: ComponentNames[] = [
 	'KtFieldDateTime',
 	'KtFieldDateTimeRange',
 	'KtFieldFileUpload',
+	'KtFieldFileUploadRemote',
 	'KtFieldMultiSelect',
 	'KtFieldMultiSelectRemote',
 	'KtFieldNumber',
@@ -79,10 +81,10 @@ export const createRemoteUpload = (
 		? {
 				actions: {
 					/* eslint-disable no-console */
-					onCancel: (id: string) => console.log(`onUpload: ${id}`),
-					onDelete: (id: string) => console.log(`onDelete: ${id}`),
-					onRetry: (id: string) => console.log(`onRetry: ${id}`),
-					onUpload: (id: string) => console.log(`onUpload: ${id}`),
+					onCancel: (id: number | string) => console.log(`onCancel: ${id}`),
+					onDelete: (id: number | string) => console.log(`onDelete: ${id}`),
+					onRetry: (id: number | string) => console.log(`onRetry: ${id}`),
+					onUpload: (id: number | string) => console.log(`onUpload: ${id}`),
 					/* eslint-enable no-console */
 				},
 				payload: {},
@@ -93,25 +95,23 @@ const createRemoteUploadCode = (component: ComponentValue): string | null => {
 	const remoteUpload = createRemoteUpload(component.hasRemoteUpload)
 
 	return remoteUpload
-		? `\t:remoteUpload="${[
-				'{',
+		? `${[
 				...Object.entries(remoteUpload)
 					.map(([key, value]) => {
 						if (key === 'actions')
 							return [
-								`\t\t${key}: {`,
+								`\t:${key}: {`,
 								...Object.keys(value as Record<string, unknown>).map(
-									(k) => `\t\t\t${k}: (id: string) => {},`,
+									(k) => `\t\t${k}: (id: number | string) => {},`,
 								),
-								'\t\t},',
+								'\t},',
 							].join('\n')
 
 						if (key === 'payload')
-							return `\t\t${key}: ${JSON.stringify(value).replace(/"/g, "'")},`
+							return `\t:${key}: ${JSON.stringify(value).replace(/"/g, "'")},`
 					})
 					.filter((value) => value),
-				'\t}',
-		  ].join('\n')}"`
+		  ].join('\n')}`
 		: null
 }
 
@@ -172,7 +172,8 @@ export const generateComponentCode = (component: ComponentValue) =>
 						Array.isArray(value) &&
 						value.length === 0
 					) &&
-					key !== 'remoteUpload',
+					key !== 'actions' &&
+					key !== 'payload',
 			)
 			.map(([key, value]) => {
 				switch (typeof value) {

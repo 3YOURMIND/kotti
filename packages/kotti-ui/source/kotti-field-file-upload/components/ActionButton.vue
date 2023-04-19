@@ -8,12 +8,12 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import { makeProps } from '../../make-props'
-import { KottiFieldFileUpload } from '../types'
+import { Shared } from '../types'
 
 export default defineComponent({
 	name: 'ActionButton',
-	props: makeProps(KottiFieldFileUpload.ActionButton.schema),
-	setup(props: KottiFieldFileUpload.ActionButton.Props) {
+	props: makeProps(Shared.ActionButton.schema),
+	setup(props: Shared.ActionButton.Props) {
 		return {
 			classes: computed(() => ({
 				'action-button': true,

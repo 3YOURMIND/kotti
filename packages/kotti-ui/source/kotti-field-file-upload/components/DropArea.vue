@@ -65,14 +65,14 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
 import { formatExtensions, formatFileSize } from '../formatters'
-import { KottiFieldFileUpload } from '../types'
-import { buildAcceptString, buildFileItem } from '../utils'
+import { Shared } from '../types'
+import { buildAcceptString } from '../utils'
 import { isSelectingMultipleFilesWhenNotAllowed } from '../validators'
 
 export default defineComponent({
 	name: 'DropArea',
-	props: makeProps(KottiFieldFileUpload.DropArea.schema),
-	setup(props: KottiFieldFileUpload.DropArea.Props, { emit }) {
+	props: makeProps(Shared.DropArea.schema),
+	setup(props: Shared.DropArea.Props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const isDragging = ref<boolean>(false)
@@ -104,8 +104,7 @@ export default defineComponent({
 			)
 				return
 
-			const payload: KottiFieldFileUpload.Events.AddFiles =
-				Array.from(files).map(buildFileItem)
+			const payload: Shared.Events.AddFiles = Array.from(files)
 			emit('addFiles', payload)
 		}
 
@@ -201,9 +200,9 @@ $support-error-light: #f0a8a8;
 		text-align: center;
 
 		i {
+			margin-right: var(--unit-1);
 			font-size: var(--unit-6);
 			color: var(--icon-02);
-			margin-right: var(--unit-1);
 			vertical-align: bottom;
 		}
 

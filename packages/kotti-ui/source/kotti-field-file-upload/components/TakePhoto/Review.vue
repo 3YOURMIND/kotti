@@ -37,11 +37,11 @@ import { defineComponent } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
-import { KottiFieldFileUpload } from '../../types'
+import { Shared } from '../../types'
 
 export default defineComponent({
 	name: 'ReviewPhoto',
-	props: makeProps(KottiFieldFileUpload.TakePhoto.reviewSchema),
+	props: makeProps(Shared.TakePhoto.reviewSchema),
 	setup() {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 

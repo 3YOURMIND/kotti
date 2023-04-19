@@ -3,7 +3,7 @@ import { Ref } from '@vue/composition-api'
 import { KottiBanner } from '../kotti-banner/types'
 import { KottiComment } from '../kotti-comment/types'
 import { KottiField } from '../kotti-field/types'
-import { KottiFieldFileUpload } from '../kotti-field-file-upload/types'
+import { Shared as KottiFieldFileUploadShared } from '../kotti-field-file-upload/types'
 import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
 import { KottiFilters } from '../kotti-filters/types'
 import { KottiFormSubmit } from '../kotti-form-submit/types'
@@ -34,7 +34,7 @@ export namespace KottiI18n {
 	export type Messages = {
 		KtBanner: KottiBanner.Translations
 		KtComment: KottiComment.Translations
-		KtFieldFileUpload: KottiFieldFileUpload.Translations
+		KtFieldFileUpload: KottiFieldFileUploadShared.Translations
 		KtFields: KottiField.Translations
 		KtFieldSelects: KottiFieldSelectShared.Translations
 		KtFilters: KottiFilters.Translations

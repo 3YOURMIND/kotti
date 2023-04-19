@@ -27,7 +27,10 @@ export {
 	KottiFieldDateTime as FieldDateTime,
 	KottiFieldDateTimeRange as FieldDateTimeRange,
 } from '../kotti-field-date/types'
-export { KottiFieldFileUpload as FieldFileUpload } from '../kotti-field-file-upload/types'
+export {
+	KottiFieldFileUpload as FieldFileUpload,
+	KottiFieldFileUploadRemote as FieldFileUploadRemote,
+} from '../kotti-field-file-upload/types'
 export { KottiFieldRadioGroup as FieldRadioGroup } from '../kotti-field-radio-group/types'
 export {
 	KottiFieldToggle as FieldToggle,

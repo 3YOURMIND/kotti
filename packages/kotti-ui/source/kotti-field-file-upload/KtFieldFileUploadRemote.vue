@@ -25,14 +25,14 @@
 				</template>
 			</DropArea>
 			<div v-if="filesList.length" :style="filesListStyle" @click.stop.prevent>
-				<FileItem
+				<FileItemRemote
 					v-for="fileInfo in filesList"
 					v-bind="{
 						...sharedProps,
+						actions,
 						fileInfo,
 					}"
 					:key="fileInfo.id"
-					@remove="onRemoveFile"
 				/>
 			</div>
 			<div
@@ -55,55 +55,70 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeMount } from '@vue/composition-api'
+import {
+	computed,
+	defineComponent,
+	onBeforeMount,
+	watch,
+} from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
 import { makeProps } from '../make-props'
 
 import DropArea from './components/DropArea.vue'
-import FileItem from './components/FileItem.vue'
+import FileItemRemote from './components/FileItemRemote.vue'
 import PreUploadedFileItem from './components/PreUploadedFileItem.vue'
 import TakePhoto from './components/TakePhoto/TakePhoto.vue'
 import { KOTTI_FIELD_FILE_UPLOAD_SUPPORTS } from './constants'
-import { KottiFieldFileUpload, Shared } from './types'
-import { buildFileInfo, buildFileItem } from './utils/non-remote'
+import { KottiFieldFileUploadRemote, Shared } from './types'
+import {
+	buildFileInfo,
+	buildFileItem,
+	buildPreUploadedFileInfo,
+} from './utils/remote'
 import { isValidValue } from './validators'
 
-export default defineComponent<KottiFieldFileUpload.PropsInternal>({
-	name: 'KtFieldFileUpload',
+export default defineComponent<KottiFieldFileUploadRemote.PropsInternal>({
+	name: 'KtFieldFileUploadRemote',
 	components: {
 		DropArea,
-		FileItem,
+		FileItemRemote,
 		KtField,
 		PreUploadedFileItem,
 		TakePhoto,
 	},
-	props: makeProps(KottiFieldFileUpload.propsSchema),
+	props: makeProps(KottiFieldFileUploadRemote.propsSchema),
 	setup(props, { emit }) {
-		const field = useField<KottiFieldFileUpload.ValueInternal>({
+		const field = useField<KottiFieldFileUploadRemote.ValueInternal>({
 			emit,
 			/**
 			 * We consider this field empty if:
 			 * a. No files are selected, or
 			 * b. Value is invalid
 			 */
-			isEmpty: (value) =>
-				value.length === 0 || !isValidValue(value, 'NonRemote'),
+			isEmpty: (value) => value.length === 0 || !isValidValue(value, 'Remote'),
 			props,
 			supports: KOTTI_FIELD_FILE_UPLOAD_SUPPORTS,
 		})
 
-		const preUploadedFilesIds = new Set<KottiFieldFileUpload.FileInfo['id']>()
+		const newUploadedFiles = new Set<
+			KottiFieldFileUploadRemote.FileInfo['id']
+		>()
+		const preUploadedFiles = new Set<
+			KottiFieldFileUploadRemote.FileInfo['id']
+		>()
 
-		const filesList = computed<KottiFieldFileUpload.FileInfo[]>(() =>
+		const filesList = computed<KottiFieldFileUploadRemote.FileInfo[]>(() =>
 			field.currentValue
-				.filter((fileItem) => !preUploadedFilesIds.has(fileItem.id))
+				.filter((fileItem) => !preUploadedFiles.has(fileItem.id))
 				.map((fileItem) => {
 					const fileInfo = buildFileInfo({
 						extensions: props.extensions,
 						fileItem,
+						isUploaded: newUploadedFiles.has(fileItem.id),
 						maxFileSize: props.maxFileSize,
+						progress: props.payload[fileItem.id]?.progress ?? 0,
 					})
 
 					if (fileItem.status !== fileInfo.status)
@@ -116,7 +131,9 @@ export default defineComponent<KottiFieldFileUpload.PropsInternal>({
 			() => props.allowMultiple || field.currentValue.length === 0,
 		)
 
-		const setStatus = (payload: KottiFieldFileUpload.Events.SetStatus) => {
+		const setStatus = (
+			payload: KottiFieldFileUploadRemote.Events.SetStatus,
+		) => {
 			field.setValue(
 				field.currentValue.map((fileItem) =>
 					fileItem.id === payload.id
@@ -125,6 +142,9 @@ export default defineComponent<KottiFieldFileUpload.PropsInternal>({
 				),
 				{ forceUpdate: true },
 			)
+
+			if (payload.status === KottiFieldFileUploadRemote.Status.UPLOADED)
+				newUploadedFiles.add(payload.id)
 		}
 
 		onBeforeMount(() => {
@@ -132,17 +152,43 @@ export default defineComponent<KottiFieldFileUpload.PropsInternal>({
 				if (
 					![
 						undefined,
-						KottiFieldFileUpload.Status.UPLOADED,
-						KottiFieldFileUpload.Status.UPLOADED_WITH_ERROR,
+						KottiFieldFileUploadRemote.Status.UPLOADED,
+						KottiFieldFileUploadRemote.Status.UPLOADED_WITH_ERROR,
 					].includes(fileItem.status)
 				)
 					throw new Error(
 						`KtFieldFileUpload: invalid status for file item ${fileItem.id}: ${fileItem.status}`,
 					)
 
-				preUploadedFilesIds.add(fileItem.id)
+				preUploadedFiles.add(fileItem.id)
 			})
 		})
+
+		watch(
+			() => props.payload,
+			(newPayload, oldPayload) => {
+				Object.entries(newPayload).forEach(([id, { status }]) => {
+					const oldStatus = oldPayload[id]?.status
+
+					if (oldStatus && status === oldStatus) return
+
+					const fileItemStatus =
+						field.currentValue.find((fileItem) => fileItem.id === id)?.status ??
+						null
+
+					if (
+						fileItemStatus !== null &&
+						![
+							KottiFieldFileUploadRemote.Status.INVALID,
+							KottiFieldFileUploadRemote.Status.NOT_STARTED,
+							KottiFieldFileUploadRemote.Status.UPLOADED,
+							KottiFieldFileUploadRemote.Status.UPLOADED_WITH_ERROR,
+						].includes(fileItemStatus)
+					)
+						setStatus({ id, status })
+				})
+			},
+		)
 
 		return {
 			field,
@@ -159,25 +205,23 @@ export default defineComponent<KottiFieldFileUpload.PropsInternal>({
 				else field.setValue([buildFileItem(value[0])])
 			},
 			onRemoveFile: (id: Shared.Events.RemoveFile) =>
-				field.setValue(
-					field.currentValue.filter((fileItem) => fileItem.id !== id),
-				),
-			preUploadedFilesList: computed<KottiFieldFileUpload.FileInfo[]>(() =>
-				field.currentValue
-					.filter((fileItem) => preUploadedFilesIds.has(fileItem.id))
-					.map((fileItem) => {
-						const fileInfo = buildFileInfo({
-							extensions: props.extensions,
-							fileItem,
-							isPreUploaded: true,
-							maxFileSize: props.maxFileSize,
-						})
+				props.actions.onDelete(id),
+			preUploadedFilesList: computed<KottiFieldFileUploadRemote.FileInfo[]>(
+				() =>
+					field.currentValue
+						.filter((fileItem) => preUploadedFiles.has(fileItem.id))
+						.map((fileItem) => {
+							const fileInfo = buildPreUploadedFileInfo({
+								extensions: props.extensions,
+								fileItem,
+								maxFileSize: props.maxFileSize,
+							})
 
-						if (fileItem.status !== fileInfo.status)
-							setStatus({ id: fileItem.id, status: fileInfo.status })
+							if (fileItem.status !== fileInfo.status)
+								setStatus({ id: fileItem.id, status: fileInfo.status })
 
-						return fileInfo
-					}),
+							return fileInfo
+						}),
 			),
 			preUploadedFilesListStyle: computed(() =>
 				showDropArea.value
