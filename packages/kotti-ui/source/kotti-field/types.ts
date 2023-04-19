@@ -87,7 +87,10 @@ export namespace KottiField {
 				tabindex: KottiField.PropsInternal['tabIndex']
 			}>
 			isEmpty: boolean
-			setValue: (newValue: DATA_TYPE) => void
+			setValue: (
+				newValue: DATA_TYPE,
+				options?: { forceUpdate: boolean },
+			) => void
 			validation: Readonly<KottiField.Validation.Result>
 		}
 

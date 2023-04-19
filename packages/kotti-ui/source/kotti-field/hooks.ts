@@ -108,8 +108,13 @@ const useValue = <DATA_TYPE>({
 	return {
 		currentValue,
 		isEmpty: computed(() => isEmpty(currentValue.value)),
-		setValue: ref((newValue: unknown) => {
-			if (isDisabled.value)
+		/**
+		 * setValue
+		 * @param newValue the value to set
+		 * @param options defines forceUpdate to set value even when the field is disabled
+		 */
+		setValue: ref((newValue: unknown, options?: { forceUpdate: boolean }) => {
+			if (isDisabled.value && !options?.forceUpdate)
 				throw new KtFieldErrors.DisabledSetValueCalled(props)
 
 			if (
