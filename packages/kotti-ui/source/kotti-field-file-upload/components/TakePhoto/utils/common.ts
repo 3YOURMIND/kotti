@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-const ISO8601 = 'YYYY-MM-DD HH:mm:ss' as const
+import { ISO8601_SECONDS } from '../../../../constants'
 
 /**
  * Creates a File from a Blob.
@@ -9,7 +9,7 @@ const ISO8601 = 'YYYY-MM-DD HH:mm:ss' as const
  * @returns File object
  */
 const blobToFile = (blob: Blob): File =>
-	new File([blob], `${dayjs().format(ISO8601)}.png`, {
+	new File([blob], `${dayjs().format(ISO8601_SECONDS)}.png`, {
 		lastModified: new Date().getTime(),
 		type: blob.type,
 	})

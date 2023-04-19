@@ -10,16 +10,14 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
+import { ONE_HUNDRED_PERCENT } from '../../constants'
 import { makeProps } from '../../make-props'
-import { KottiFieldFileUpload } from '../types'
-
-// eslint-disable-next-line no-magic-numbers
-const ONE_HUNDRED_PERCENT = 100 as const
+import { KottiFieldFileUploadRemote } from '../types'
 
 export default defineComponent({
 	name: 'ProgressBar',
-	props: makeProps(KottiFieldFileUpload.ProgressBar.schema),
-	setup(props: KottiFieldFileUpload.ProgressBar.Props) {
+	props: makeProps(KottiFieldFileUploadRemote.ProgressBar.schema),
+	setup(props: KottiFieldFileUploadRemote.ProgressBar.Props) {
 		return {
 			fillClasses: computed(() => ({
 				'progress-bar__bar__fill': true,
@@ -60,7 +58,7 @@ export default defineComponent({
 	}
 
 	&__label {
-		min-width: fit-content;
+		flex: 1 0 auto;
 		font-size: 16px;
 		line-height: 20px;
 		color: var(--text-01);

@@ -17,31 +17,12 @@
 				@click="onClickViewOrDownload"
 			/>
 			<ActionButton
-				v-if="showRetryAction"
 				:data-test="
-					dataTest ? `${dataTest}.${fileInfo.id}.retryButton` : undefined
+					dataTest ? `${dataTest}.${fileInfo.id}.deleteButton` : undefined
 				"
-				:icon="Yoco.Icon.RELOAD"
+				:icon="deleteActionIcon"
 				:isDisabled="isDisabled"
-				@click="onClickRetry"
-			/>
-			<ActionButton
-				:data-test="
-					dataTest
-						? `${dataTest}.${fileInfo.id}.cancelOrDeleteButton`
-						: undefined
-				"
-				:icon="cancelOrDeleteActionIcon"
-				:isDisabled="isDisabled"
-				@click="onClickCancelOrDelete"
-			/>
-		</template>
-		<template #footer>
-			<ProgressBar
-				v-if="showProgressBar"
-				:key="progressBarForceRenderKey"
-				:isError="isError"
-				:progress="progress"
+				@click="onClickDelete"
 			/>
 		</template>
 	</ItemLayout>
@@ -49,56 +30,39 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
 import { formatFileSize } from '../formatters'
-import { KottiFieldFileUpload } from '../types'
+import { KottiFieldFileUpload, Shared } from '../types'
 
 import ActionButton from './ActionButton.vue'
 import ItemLayout from './ItemLayout.vue'
-import ProgressBar from './ProgressBar.vue'
 
 export default defineComponent({
 	name: 'FileItem',
 	components: {
 		ActionButton,
 		ItemLayout,
-		ProgressBar,
 	},
 	props: makeProps(KottiFieldFileUpload.FileItem.schema),
 	setup(props: KottiFieldFileUpload.FileItem.Props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
-		const progressBarForceRenderKey = ref<number>(0)
-		const shouldTriggerRemoteUpload = ref<boolean>(true)
-
 		const status = computed(() => props.fileInfo.status)
 		const statusText = computed(() =>
-			props.fileInfo.validation === KottiFieldFileUpload.Validation.SUCCESS
+			props.fileInfo.validation === Shared.Validation.SUCCESS
 				? translations.value.statusMsg[status.value]
 				: translations.value.validationMsg[props.fileInfo.validation],
 		)
 
-		watch(
-			status,
-			(newStatus) => {
-				if (
-					newStatus === KottiFieldFileUpload.Status.Remote.UPLOADING &&
-					shouldTriggerRemoteUpload.value
-				) {
-					props.remoteActions?.onUpload(props.fileInfo.id)
-					shouldTriggerRemoteUpload.value = false
-				}
-			},
-			{ immediate: true },
-		)
-
 		return {
-			cancelOrDeleteActionIcon: computed<Yoco.Icon>(() =>
-				status.value === KottiFieldFileUpload.Status.Common.UPLOADED ||
-				status.value === KottiFieldFileUpload.Status.NonRemote.READY_TO_UPLOAD
+			deleteActionIcon: computed<Yoco.Icon>(() =>
+				[
+					KottiFieldFileUpload.Status.UPLOADED,
+					KottiFieldFileUpload.Status.READY_TO_UPLOAD,
+				].includes(status.value)
 					? Yoco.Icon.TRASH
 					: Yoco.Icon.CLOSE,
 			),
@@ -106,30 +70,13 @@ export default defineComponent({
 				[formatFileSize(props.fileInfo.size), statusText.value].join(' - '),
 			),
 			isError: computed(
-				() =>
-					status.value === KottiFieldFileUpload.Status.Common.INVALID ||
-					status.value === KottiFieldFileUpload.Status.Remote.ERROR,
+				() => status.value === KottiFieldFileUpload.Status.INVALID,
 			),
-			onClickCancelOrDelete: () => {
+			onClickDelete: () => {
 				if (props.isDisabled) return
 
-				if (status.value === KottiFieldFileUpload.Status.Remote.UPLOADING) {
-					props.remoteActions?.onCancel?.(props.fileInfo.id)
-					return
-				}
-
-				if (props.remoteActions) props.remoteActions.onDelete(props.fileInfo.id)
-				else {
-					const payload: KottiFieldFileUpload.Events.RemoveFile =
-						props.fileInfo.id
-					emit('remove', payload)
-				}
-			},
-			onClickRetry: () => {
-				if (props.isDisabled) return
-
-				progressBarForceRenderKey.value++
-				props.remoteActions?.onRetry?.(props.fileInfo.id)
+				const payload: Shared.Events.RemoveFile = props.fileInfo.id
+				emit('remove', payload)
 			},
 			onClickViewOrDownload: () => {
 				if (props.isDisabled) return
@@ -139,22 +86,9 @@ export default defineComponent({
 					'_blank',
 				)
 			},
-			progress: computed(() => props.fileInfo.progress ?? 0),
-			progressBarForceRenderKey,
-			showProgressBar: computed(
-				() =>
-					status.value === KottiFieldFileUpload.Status.Remote.ERROR ||
-					status.value === KottiFieldFileUpload.Status.Remote.UPLOADING,
-			),
-			showRetryAction: computed(
-				() =>
-					(status.value === KottiFieldFileUpload.Status.Remote.CANCELED ||
-						status.value === KottiFieldFileUpload.Status.Remote.ERROR) &&
-					props.remoteActions?.onRetry,
-			),
 			showViewOrDownloadAction: computed(
 				() =>
-					status.value === KottiFieldFileUpload.Status.Common.UPLOADED &&
+					status.value === KottiFieldFileUpload.Status.UPLOADED &&
 					(Boolean(props.fileInfo.viewUrl) ||
 						Boolean(props.fileInfo.downloadUrl)),
 			),

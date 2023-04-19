@@ -1,4 +1,8 @@
-import { KottiFieldFileUpload } from './types'
+import {
+	KottiFieldFileUpload,
+	KottiFieldFileUploadRemote,
+	Shared,
+} from './types'
 
 export const isSelectingMultipleFilesWhenNotAllowed = (
 	allowMultiple: boolean,
@@ -6,7 +10,7 @@ export const isSelectingMultipleFilesWhenNotAllowed = (
 ): boolean => !allowMultiple && selectionSize > 1
 
 const isValidFileSize = (fileSize: number, maxFileSize: number): boolean =>
-	fileSize < maxFileSize
+	fileSize <= maxFileSize
 
 const isValidFileExtension = (
 	fileName: string,
@@ -14,21 +18,28 @@ const isValidFileExtension = (
 ): boolean => {
 	if (validFileExtensions.length === 0) return true
 
-	const fileExtension = (fileName.split('.').pop() ?? '').trim().toUpperCase()
+	const fileExtension = fileName.split('.').pop() ?? null
 
-	if (!fileExtension) return false
+	if (fileExtension === null) return false
 
-	return validFileExtensions
-		.map((extension) => extension.trim().toUpperCase())
-		.includes(fileExtension)
+	return validFileExtensions.some(
+		(extension) =>
+			extension.localeCompare(fileExtension.trim(), undefined, {
+				sensitivity: 'accent',
+			}) === 0,
+	)
 }
 
-export const isValidUploadedFileStatus = (
-	valueItem: KottiFieldFileUpload.ValueInternal[0],
-) =>
-	valueItem.status === KottiFieldFileUpload.Status.Common.INVALID ||
-	valueItem.status === KottiFieldFileUpload.Status.Common.UPLOADED
-
+/**
+ * Validates a File Item
+ * @param param0.extensions Allowed file extensions
+ * @param param0.fileName The name of the file (muss include file extension)
+ * @param param0.fileSize The size of the file in bytes
+ * @param param0.maxFileSize The maximum file size allowed in bytes
+ * @returns Validation.SUCCESS if the file is valid, else either
+ * Validation.INVALID_EXTENSION or Validation.MAX_SIZE_EXCEEDED.
+ * Validation.INVALID_EXTENSION has higher priority.
+ */
 export const validateFile = ({
 	extensions,
 	fileName,
@@ -39,12 +50,53 @@ export const validateFile = ({
 	fileName: string
 	fileSize: number
 	maxFileSize: KottiFieldFileUpload.PropsInternal['maxFileSize']
-}): KottiFieldFileUpload.Validation => {
+}): Shared.Validation => {
 	if (!isValidFileExtension(fileName, extensions))
-		return KottiFieldFileUpload.Validation.INVALID_EXTENSION
+		return Shared.Validation.INVALID_EXTENSION
 
 	if (!isValidFileSize(fileSize, maxFileSize))
-		return KottiFieldFileUpload.Validation.MAX_SIZE_EXCEEDED
+		return Shared.Validation.MAX_SIZE_EXCEEDED
 
-	return KottiFieldFileUpload.Validation.SUCCESS
+	return Shared.Validation.SUCCESS
 }
+
+/**
+ * Checks whether Value is valid
+ * @param value The value to evaluate
+ * @returns true if at least one selected file is valid, else false
+ */
+export const isValidValue = <
+	T extends
+		| KottiFieldFileUpload.ValueInternal
+		| KottiFieldFileUploadRemote.ValueInternal,
+>(
+	value: T,
+	type: T extends KottiFieldFileUpload.ValueInternal ? 'NonRemote' : 'Remote',
+): boolean =>
+	type === 'NonRemote'
+		? isValidValueNonRemote(value as KottiFieldFileUpload.ValueInternal)
+		: isValidValueRemote(value as KottiFieldFileUploadRemote.ValueInternal)
+
+const isValidValueNonRemote = (
+	value: KottiFieldFileUpload.ValueInternal,
+): boolean =>
+	value.some(
+		(fileItem) =>
+			fileItem.status &&
+			[
+				KottiFieldFileUpload.Status.READY_TO_UPLOAD,
+				KottiFieldFileUpload.Status.UPLOADED,
+			].includes(fileItem.status),
+	)
+
+const isValidValueRemote = (
+	value: KottiFieldFileUploadRemote.ValueInternal,
+): boolean =>
+	value.some(
+		(fileItem) =>
+			fileItem.status &&
+			[
+				KottiFieldFileUploadRemote.Status.UPLOADED,
+				KottiFieldFileUploadRemote.Status.UPLOADING,
+			].includes(fileItem.status),
+	)

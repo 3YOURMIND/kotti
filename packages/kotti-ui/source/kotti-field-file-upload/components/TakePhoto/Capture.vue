@@ -50,7 +50,7 @@ import { isError } from 'lodash'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
 import { ErrorCodes } from '../../constants'
-import { KottiFieldFileUpload } from '../../types'
+import { Shared } from '../../types'
 
 import {
 	generateImageFileAndUrl,
@@ -69,8 +69,8 @@ enum State {
 
 export default defineComponent({
 	name: 'CapturePhoto',
-	props: makeProps(KottiFieldFileUpload.TakePhoto.captureSchema),
-	setup(_: KottiFieldFileUpload.TakePhoto.CaptureProps, { emit }) {
+	props: makeProps(Shared.TakePhoto.captureSchema),
+	setup(_: Shared.TakePhoto.CaptureProps, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const cameraIndex = ref<number>(0)
@@ -139,7 +139,7 @@ export default defineComponent({
 					if (!videoRef.value)
 						throw new Error('KtFieldFileUpload: unbound HTML video element')
 
-					const payload: KottiFieldFileUpload.TakePhoto.Events.Capture =
+					const payload: Shared.TakePhoto.Events.Capture =
 						await generateImageFileAndUrl(canvas, context, videoRef.value)
 
 					emit('capture', payload)

@@ -23,9 +23,6 @@ export default defineComponent({
 	props: {
 		name: { required: true, type: String },
 	},
-	setup() {
-		return {}
-	},
 })
 </script>
 

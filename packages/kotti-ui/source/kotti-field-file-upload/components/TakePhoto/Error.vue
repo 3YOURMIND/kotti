@@ -29,12 +29,12 @@ import { computed, defineComponent } from '@vue/composition-api'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
 import { ErrorCodes } from '../../constants'
-import { KottiFieldFileUpload } from '../../types'
+import { Shared } from '../../types'
 
 export default defineComponent({
 	name: 'ErrorViewer',
-	props: makeProps(KottiFieldFileUpload.TakePhoto.errorSchema),
-	setup(props: KottiFieldFileUpload.TakePhoto.ErrorProps) {
+	props: makeProps(Shared.TakePhoto.errorSchema),
+	setup(props: Shared.TakePhoto.ErrorProps) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const errors = computed<Record<string, string>>(() => ({

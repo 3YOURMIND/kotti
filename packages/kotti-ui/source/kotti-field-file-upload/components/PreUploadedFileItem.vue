@@ -35,7 +35,7 @@ import { computed, defineComponent } from '@vue/composition-api'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
 import { formatFileSize } from '../formatters'
-import { KottiFieldFileUpload } from '../types'
+import { KottiFieldFileUpload, Shared } from '../types'
 
 import ActionButton from './ActionButton.vue'
 import ItemLayout from './ItemLayout.vue'
@@ -51,7 +51,7 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const errorMessage = computed(() =>
-			props.fileInfo.validation !== KottiFieldFileUpload.Validation.SUCCESS
+			props.fileInfo.validation !== Shared.Validation.SUCCESS
 				? translations.value.validationMsg[props.fileInfo.validation]
 				: null,
 		)
@@ -63,18 +63,13 @@ export default defineComponent({
 					.join(' - '),
 			),
 			isInvalid: computed(
-				() =>
-					props.fileInfo.validation !== KottiFieldFileUpload.Validation.SUCCESS,
+				() => props.fileInfo.validation !== Shared.Validation.SUCCESS,
 			),
 			onClickDelete: () => {
 				if (props.isDisabled) return
 
-				if (props.remoteActions) props.remoteActions.onDelete(props.fileInfo.id)
-				else {
-					const payload: KottiFieldFileUpload.Events.RemoveFile =
-						props.fileInfo.id
-					emit('remove', payload)
-				}
+				const payload: Shared.Events.RemoveFile = props.fileInfo.id
+				emit('remove', payload)
 			},
 			onClickViewOrDownload: () => {
 				if (props.isDisabled) return

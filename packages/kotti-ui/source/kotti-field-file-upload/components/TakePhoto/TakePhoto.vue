@@ -4,6 +4,7 @@
 			:data-test="_dataTest"
 			:disabled="isDisabled"
 			:label="translations.button.takePhoto"
+			:tabindex="tabIndex"
 			@click.stop="state = State.CAPTURE"
 		/>
 		<CapturePhoto
@@ -36,8 +37,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
-import { KottiFieldFileUpload } from '../../types'
-import { buildFileItem } from '../../utils'
+import { Shared } from '../../types'
 
 import CapturePhoto from './Capture.vue'
 import Error from './Error.vue'
@@ -57,8 +57,8 @@ export default defineComponent({
 		Error,
 		ReviewPhoto,
 	},
-	props: makeProps(KottiFieldFileUpload.TakePhoto.schema),
-	setup(props: KottiFieldFileUpload.TakePhoto.Props, { emit }) {
+	props: makeProps(Shared.TakePhoto.schema),
+	setup(props: Shared.TakePhoto.Props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const error = ref<string | null>(null)
@@ -79,16 +79,12 @@ export default defineComponent({
 			error,
 			onAcceptPhoto: async () => {
 				if (!file.value) return
-				const payload: KottiFieldFileUpload.Events.AddFiles = [
-					buildFileItem(file.value),
-				]
+				const payload: Shared.Events.AddFiles = [file.value]
 				emit('addFiles', payload)
 				reset()
 				state.value = State.CLOSED
 			},
-			onCapturePhoto: (
-				payload: KottiFieldFileUpload.TakePhoto.Events.Capture,
-			) => {
+			onCapturePhoto: (payload: Shared.TakePhoto.Events.Capture) => {
 				reset()
 				file.value = payload.file
 				photoUrl.value = payload.photoUrl
@@ -98,7 +94,7 @@ export default defineComponent({
 				reset()
 				state.value = State.CLOSED
 			},
-			onError: (err: KottiFieldFileUpload.TakePhoto.Events.Error) => {
+			onError: (err: Shared.TakePhoto.Events.Error) => {
 				reset()
 				error.value = err
 				state.value = State.ERROR
