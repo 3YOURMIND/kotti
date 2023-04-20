@@ -119,7 +119,7 @@ export default defineComponent<{
 		 * What’s the appropriate value for an empty field of this data type?
 		 * Used when clearing the field. Most likely either null or []
 		 */
-		getEmptyValue: { required: true, type: Function },
+		getEmptyValue: { default: null, type: Function },
 		helpTextSlot: { default: () => [], type: Array },
 		isComponent: { default: null, type: String },
 		isGroup: { default: false, type: Boolean },
@@ -139,7 +139,17 @@ export default defineComponent<{
 					(modification) => `kt-field__input-container__affix--${modification}`,
 				),
 			]),
-			handleClear: () => props.field.setValue(props.getEmptyValue()),
+			handleClear: () => {
+				/**
+				 * useSupports hook returns null if hideClear is not supported on ktField component
+				 */
+				if (props.field.hideClear === null)
+					throw new Error(
+						'KtField: hideClear is unsupported and yet handleClear was called',
+					)
+
+				props.field.setValue(props.getEmptyValue())
+			},
 			hasHelpText: computed(
 				() => props.helpTextSlot.length >= 1 || props.field.helpText !== null,
 			),

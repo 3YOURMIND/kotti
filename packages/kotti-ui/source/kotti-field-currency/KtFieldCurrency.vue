@@ -1,9 +1,5 @@
 <template>
-	<KtField
-		:field="modifiedField"
-		:getEmptyValue="() => null"
-		:helpTextSlot="$slots.helpText"
-	>
+	<KtField :field="modifiedField" :helpTextSlot="$slots.helpText">
 		<input
 			ref="inputRef"
 			v-bind="inputProps"
