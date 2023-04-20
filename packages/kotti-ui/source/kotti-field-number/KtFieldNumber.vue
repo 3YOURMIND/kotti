@@ -1,9 +1,5 @@
 <template>
-	<KtField
-		v-bind="{ field }"
-		:getEmptyValue="() => null"
-		:helpTextSlot="$slots.helpText"
-	>
+	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText">
 		<div
 			class="kt-field-number"
 			:class="{

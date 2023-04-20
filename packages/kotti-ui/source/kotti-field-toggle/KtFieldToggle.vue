@@ -1,7 +1,6 @@
 <template>
 	<KtField
 		v-bind="{ field: fieldProps }"
-		:getEmptyValue="() => null"
 		:helpTextSlot="showInnerSuffix ? undefined : $slots.helpText"
 	>
 		<div slot="container" class="kt-field-toggle__wrapper">

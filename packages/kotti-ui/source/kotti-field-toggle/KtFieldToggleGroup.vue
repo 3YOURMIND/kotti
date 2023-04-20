@@ -1,10 +1,5 @@
 <template>
-	<KtField
-		v-bind="{ field }"
-		:getEmptyValue="() => null"
-		:helpTextSlot="$slots.helpText"
-		isGroup
-	>
+	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" isGroup>
 		<div slot="container" :class="wrapperClasses">
 			<div v-for="option of optionsWithChecked" :key="option.key">
 				<div class="kt-field-toggle-group__wrapper__header">
