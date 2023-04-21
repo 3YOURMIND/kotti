@@ -28,7 +28,7 @@
 	);
 	background-size: $bg-x $bg-y;
 	border-radius: 2px;
-	animation: 2s ease-out infinite 'skeleton-loading';
+	animation: 2s ease-out infinite skeleton-loading;
 }
 
 .skeleton {
