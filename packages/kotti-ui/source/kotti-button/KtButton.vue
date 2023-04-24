@@ -1,22 +1,29 @@
 <template>
-	<button
-		:class="mainClasses"
-		role="button"
-		:type="isSubmit ? 'submit' : 'button'"
-		@click="handleClick"
-	>
-		<i v-if="isLoading" class="kt-circle-loading" />
-		<i v-else-if="icon !== null" class="yoco" v-text="icon" />
-		<span v-if="hasSlot">
-			<slot />
-		</span>
-		<span v-else-if="label !== null" v-text="label" />
-	</button>
+	<div>
+		<button
+			ref="triggerRef"
+			:class="mainClasses"
+			role="button"
+			:type="isSubmit ? 'submit' : 'button'"
+			@click="handleClick"
+		>
+			<i v-if="isLoading" class="kt-circle-loading" />
+			<i v-else-if="icon !== null" class="yoco" v-text="icon" />
+			<span v-if="hasSlot">
+				<slot />
+			</span>
+			<span v-else-if="label !== null" v-text="label" />
+		</button>
+		<div v-if="showHelpText" ref="contentRef" v-text="helpText" />
+	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
+import { roundArrow } from 'tippy.js'
 
+import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { makeProps } from '../make-props'
 
 import { KottiButton } from './types'
@@ -25,9 +32,46 @@ export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
 	props: makeProps(KottiButton.propsSchema),
 	setup(props, { emit, slots }) {
+		const contentRef = ref<Element | null>(null)
+		const triggerRef = ref<Element | null>(null)
+
 		const hasSlot = computed(() => Boolean(slots.default))
 
+		const isIconButton = computed(
+			() => props.icon !== null && props.label === null,
+		)
+
+		const showHelpText = computed(
+			() => isIconButton.value && props.helpText !== null,
+		)
+
+		useTippy(
+			triggerRef,
+			computed(() => ({
+				appendTo: () => document.body,
+				arrow: roundArrow,
+				content: props.helpText
+					? (contentRef.value as NonNullable<typeof contentRef.value>)
+					: undefined,
+				interactive: true,
+				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				theme: 'light-border',
+				...(showHelpText.value
+					? { trigger: 'mouseenter focusin' }
+					: { trigger: 'manual' }),
+			})),
+		)
+
+		onMounted(() => {
+			if (props.label !== null && props.helpText !== null) {
+				throw new Error(
+					'KtButton: Guideline Uncompliance: attempted to use helpText with a button that already has a label.',
+				)
+			}
+		})
+
 		return {
+			contentRef,
 			handleClick: (event) => emit('click', event),
 			hasSlot,
 			mainClasses: computed(() => ({
@@ -39,6 +83,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 				[`kt-button--size-${props.size}`]: true,
 				[`kt-button--type-${props.type}`]: true,
 			})),
+			showHelpText,
+			triggerRef,
 		}
 	},
 })
