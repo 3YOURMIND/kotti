@@ -18,19 +18,16 @@ export namespace KottiButton {
 	}
 	export const sizeSchema = z.nativeEnum(Size)
 
-	export const sharedSchema = z.object({
+	export const propsSchema = z.object({
+		helpText: z.string().nullable().default(null),
+		icon: yocoIconSchema.nullable().default(null),
 		isBlock: z.boolean().default(false),
 		isLoading: z.boolean().default(false),
 		isMultiline: z.boolean().default(false),
 		isSubmit: z.boolean().default(false),
+		label: z.string().nullable().default(null),
 		size: sizeSchema.default(Size.MEDIUM),
 		type: typeSchema.default(Type.DEFAULT),
-	})
-
-	export const propsSchema = sharedSchema.extend({
-		icon: yocoIconSchema.nullable().default(null),
-		label: z.string().nullable().default(null),
-		helpText: z.string().nullable().default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>
