@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="display: contents">
 		<button
 			ref="triggerRef"
 			:class="mainClasses"
