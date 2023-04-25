@@ -179,7 +179,7 @@ export namespace KottiFieldFileUpload {
 		// New selected files
 		.object({
 			file: z.custom<File>(),
-			id: z.string().uuid(),
+			id: z.string(),
 			status: statusSchema,
 		})
 		// Pre-uploaded files
