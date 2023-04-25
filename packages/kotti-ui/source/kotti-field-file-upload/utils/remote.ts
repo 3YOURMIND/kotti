@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
+import shortid from 'shortid'
 
 import { KottiFieldFileUploadRemote, Shared } from '../types'
 import { validateFile } from '../validators'
@@ -13,7 +13,7 @@ export const buildFileItem = (
 	file: File,
 ): KottiFieldFileUploadRemote.ValueInternal[0] => ({
 	file,
-	id: uuidv4(),
+	id: shortid(),
 	status: KottiFieldFileUploadRemote.Status.NOT_STARTED,
 })
 
