@@ -82,6 +82,5 @@
 	],
 	"style": "dist/styles.css",
 	"types": "dist/esm/index.d.ts",
-	"version": "3.0.0-beta.43",
-	"gitHead": "26328dca9c8960e0e4ba98a72bae2d4066d0297c"
+	"version": "3.0.0-beta.44"
 }
