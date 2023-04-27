@@ -18,9 +18,16 @@ export namespace KottiButton {
 	}
 	export const sizeSchema = z.nativeEnum(Size)
 
+	export enum IconPosition {
+		LEFT = 'left',
+		RIGHT = 'right',
+	}
+	export const iconPosition = z.nativeEnum(IconPosition)
+
 	export const propsSchema = z.object({
 		helpText: z.string().nullable().default(null),
 		icon: yocoIconSchema.nullable().default(null),
+		iconPosition: iconPosition.default(IconPosition.LEFT),
 		isBlock: z.boolean().default(false),
 		isLoading: z.boolean().default(false),
 		isMultiline: z.boolean().default(false),

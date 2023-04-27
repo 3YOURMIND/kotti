@@ -65,18 +65,21 @@
     <div class="element-example">
     	<KtButton type="primary" class="mr-4">Edit button</KtButton>
     	<KtButton type="primary" icon="edit" label="Edit Button" class="mr-4" />
+    	<KtButton type="primary" icon="edit" label="Right Icon Button" iconPosition="right"/>
     	<KtButton type="primary" icon="edit" helpText="This is an icon button"/>
     </div>
 
     * **Label only:** Used in most cases.
     * **Icon and label:** Use when you need to catch the user's attention.
     * **Icon only:** Use when you have limited space, such as when the page needs to fit on a mobile device, and a single icon is enough to convey the meaning,
+    * **iconPosition** prop can be used to place icon to the right of the label. Is left by defaul.
     * **helpText** prop can be passed to **Icon only** buttons that is displayed on button hover.
 
     ```html
     <KtButton type="primary">Edit button</KtButton>
     <KtButton type="primary" icon="edit" label="Edit Button" />
     <KtButton type="primary" icon="edit" helpText="This is an icon button"/>
+    <KtButton type="primary" icon="edit" label="Right Icon Button" iconPosition="right"/>
     ```
     ## `isMultiline`/`isBlock`
 
