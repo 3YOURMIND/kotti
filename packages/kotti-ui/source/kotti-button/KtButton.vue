@@ -8,12 +8,12 @@
 			@click="handleClick"
 		>
 			<i v-if="isLoading" class="kt-circle-loading" />
-			<i v-else-if="hasIconLeft" class="yoco" v-text="icon" />
+			<i v-if="hasIconLeft" class="yoco" v-text="icon" />
 			<span v-if="hasSlot">
 				<slot />
 			</span>
 			<span v-else-if="label !== null" v-text="label" />
-			<i v-if="hasIconRight && !isLoading" class="yoco" v-text="icon" />
+			<i v-if="hasIconRight" class="yoco" v-text="icon" />
 		</button>
 		<div v-if="showHelpText" ref="contentRef" v-text="helpText" />
 	</div>

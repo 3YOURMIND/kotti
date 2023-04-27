@@ -105,8 +105,8 @@
     ## Loading
 
     <div class="element-example">
-    	<KtButton isLoading class="mr-16px">Loading button</KtButton>
-    	<KtButton type="primary" class="mr-16px" isLoading>Loading button</KtButton>
+    	<KtButton isLoading class="mr-16px" icon="edit">Loading button</KtButton>
+    	<KtButton type="primary" class="mr-16px" isLoading icon="edit" iconPosition="right">Loading button</KtButton>
     	<KtButton type="secondary" class="mr-16px" isLoading>Loading</KtButton>
     	<KtButton type="danger" class="mr-16px" isLoading>Loading</KtButton>
     </div>
