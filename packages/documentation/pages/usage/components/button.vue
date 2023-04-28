@@ -72,7 +72,7 @@
     * **Label only:** Used in most cases.
     * **Icon and label:** Use when you need to catch the user's attention.
     * **Icon only:** Use when you have limited space, such as when the page needs to fit on a mobile device, and a single icon is enough to convey the meaning,
-    * **iconPosition** prop can be used to place icon to the right of the label. Is left by defaul.
+    * **iconPosition** prop can be used to place icon to the right of the label. Is left by default.
     * **helpText** prop can be passed to **Icon only** buttons that is displayed on button hover.
 
     ```html
