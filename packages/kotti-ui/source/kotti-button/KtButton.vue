@@ -1,5 +1,5 @@
 <template>
-	<div style="display: contents">
+	<div class="kt-button-wrapper" style="display: contents">
 		<button
 			ref="triggerRef"
 			:class="mainClasses"
