@@ -77,8 +77,6 @@ import { KtI18nContext } from './kotti-i18n'
 export * from './kotti-i18n'
 import { KtInlineEdit } from './kotti-inline-edit'
 export * from './kotti-inline-edit'
-import { KtInput } from './kotti-input'
-export * from './kotti-input'
 import { KtLine } from './kotti-line'
 export * from './kotti-line'
 import { KtModal } from './kotti-modal'
@@ -150,7 +148,6 @@ export default {
 			KtHeading,
 			KtI18nContext,
 			KtInlineEdit,
-			KtInput,
 			KtLine,
 			KtModal,
 			KtNavbar,

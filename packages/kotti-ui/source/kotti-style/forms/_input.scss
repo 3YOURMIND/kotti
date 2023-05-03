@@ -30,15 +30,31 @@
 	}
 }
 
-.form-input--compact {
-	height: $control-size-lg;
-	padding-top: 0.6rem;
-	line-height: 0.8rem;
-	&::placeholder {
-		color: transparent;
-	}
-	&--focus::placeholder {
-		color: $lightgray-500;
+.form-input {
+	position: relative;
+	width: 100%;
+	height: $control-size;
+	padding: 0 var(--unit-2);
+	line-height: $line-height;
+	color: var(--text-01);
+	border: 1px solid var(--ui-02);
+	border-radius: var(--border-radius);
+	outline: none;
+	-webkit-appearance: none;
+	appearance: none;
+
+	&--compact {
+		height: $control-size-lg;
+		padding-top: 0.6rem;
+		line-height: 0.8rem;
+
+		&::placeholder {
+			color: transparent;
+		}
+
+		&--focus::placeholder {
+			color: var(--text-03);
+		}
 	}
 }
 
