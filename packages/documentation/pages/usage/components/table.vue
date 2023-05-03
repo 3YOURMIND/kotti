@@ -201,7 +201,7 @@ _Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to 
 
 `disableRow` function can be passed to `KtTable` to reactively disable rows, based on your view and specific row data.
 
-<KtInput v-model="disableName" />
+<KtFieldText v-model="disableName" />
 <KtTable
 	:rows="rows"
 	:columns="columnsResponsive"
@@ -210,7 +210,7 @@ _Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to 
 />
 
 ```html
-<KtInput v-model="disableName" />
+<KtFieldText v-model="disableName" />
 <KtTable
 	:rows="rows"
 	:columns="columns"
@@ -248,7 +248,7 @@ Payload from `@activateRow` is (row, rowIndex)
 
 _Note:_ Neither events get triggered on a _disabled_ row.
 
-<KtInput v-model='disableName' />
+<KtFieldText v-model='disableName' />
 <KtTable
 	:rows="rows"
 	:columns="columnsResponsive"
@@ -257,7 +257,7 @@ _Note:_ Neither events get triggered on a _disabled_ row.
 />
 
 ```html
-<KtInput v-model="disableName" />
+<KtFieldText v-model="disableName" />
 <KtTable
 	:rows="rows"
 	:columns="columns"
@@ -869,8 +869,8 @@ _Notes_:
 		</KtTableConsumer>
 		<KtTableConsumer #default="{ columns, orderBeforeColumn }">
 			<div>
-				<KtInput label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
-				<KtInput label="(+-)Steps: " type="number" :min="fromIndex===0?0:-fromIndex" :max="(columns.length -2 - fromIndex)" v-model="dragSteps" />
+				<input label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
+				<input label="(+-)Steps: " type="number" :min="fromIndex===0?0:-fromIndex" :max="(columns.length -2 - fromIndex)" v-model="dragSteps" />
 				<KtButton type="primary" label="Reorder Columns" :disabled="parseInt(dragSteps,10)===0" @click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )" />
 			</div>
 		</KtTableConsumer>
@@ -906,14 +906,14 @@ _Notes_:
 		</KtTableConsumer>
 		<KtTableConsumer #default="{ columns, orderBeforeColumn }">
 			<div>
-				<KtInput
+				<input
 					label="Drag From: "
 					type="number"
 					min="0"
 					:max="columns.length-1"
 					v-model="fromIndex"
 				/>
-				<KtInput
+				<input
 					label="(+-)Steps: "
 					type="number"
 					:min="fromIndex===0?0:-fromIndex"
