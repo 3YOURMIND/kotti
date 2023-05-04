@@ -23,6 +23,8 @@ export const frFR: KottiI18n.Messages = {
 	KtComment: {
 		deleteButton: 'Effacer',
 		editButton: 'Modifier',
+		editedLabel: 'Édité',
+		internalThreadLabel: 'Filetage intérieur',
 		postButton: 'Commenter',
 		replyButton: 'Répondre',
 		replyPlaceholder: 'Répondre à',

@@ -23,6 +23,8 @@ export const jaJP: KottiI18n.Messages = {
 	KtComment: {
 		deleteButton: '消す',
 		editButton: 'エディット',
+		editedLabel: '編集済み',
+		internalThreadLabel: 'めねじ',
 		postButton: '送信',
 		replyButton: '返信',
 		replyPlaceholder: '返信',

@@ -2,10 +2,7 @@
 	<div class="kt-comment">
 		<KtAvatar size="sm" :src="userAvatar" />
 		<div class="kt-comment__content">
-			<div class="kt-comment__content__info">
-				<div class="info__name" v-text="userName" />
-				<div class="info__time" v-text="createdTime" />
-			</div>
+			<CommentHeader v-bind="{ createdTime, userName }" />
 
 			<CommentInlineEdit
 				:id="id"
@@ -56,6 +53,7 @@ import { makeProps } from '../make-props'
 import { Kotti } from '../types'
 
 import CommentActions from './components/CommentActions.vue'
+import CommentHeader from './components/CommentHeader.vue'
 import CommentInlineEdit from './components/CommentInlineEdit.vue'
 import CommentReply from './components/CommentReply.vue'
 import KtCommentInput from './KtCommentInput.vue'
@@ -65,6 +63,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 	name: 'KtComment',
 	components: {
 		CommentActions,
+		CommentHeader,
 		CommentReply,
 		CommentInlineEdit,
 		KtAvatar,
