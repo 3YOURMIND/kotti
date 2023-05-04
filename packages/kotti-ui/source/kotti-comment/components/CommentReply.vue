@@ -10,25 +10,24 @@
 				:isEditing="isEditing"
 				:message="message"
 				:postEscapeParser="postEscapeParser"
-				@edit="($event) => $emit('edit', $event)"
-				@update:isEditing="($event) => (isEditing = $event)"
+				@edit="$emit('edit', $event)"
+				@update:isEditing="isEditing = $event"
 			/>
 
 			<CommentActions
-				:options="actionOptions"
-				:userData="{ userId, userName }"
-				@replyClick="($event) => $emit('click', $event)"
+				v-bind="{ isEditable, isDeletable, isEditing }"
+				@delete="$emit('delete', id)"
+				@update:isEditing="isEditing = $event"
 			/>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import escape from 'lodash/escape'
 
 import { KtAvatar } from '../../kotti-avatar'
-import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { Kotti } from '../../types'
 import { defaultParser, defaultPostEscapeParser } from '../utilities'
 
@@ -57,26 +56,9 @@ export default defineComponent<Kotti.Comment.Reply.PropsInternal>({
 		userId: { default: () => null, type: Number },
 		userName: { default: () => null, type: String },
 	},
-	setup(props, { emit }) {
-		const isEditing = ref<boolean>(false)
-		const translations = useTranslationNamespace('KtComment')
-
+	setup() {
 		return {
-			actionOptions: computed(() => {
-				const options = []
-				if (props.isEditable)
-					options.push({
-						label: translations.value.editButton,
-						onClick: () => (isEditing.value = true),
-					})
-				if (props.isDeletable)
-					options.push({
-						label: translations.value.deleteButton,
-						onClick: () => emit('delete', props.id),
-					})
-				return options
-			}),
-			isEditing,
+			isEditing: ref<boolean>(false),
 		}
 	},
 })
