@@ -30,6 +30,7 @@ import escape from 'lodash/escape'
 import { KtAvatar } from '../../kotti-avatar'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { Kotti } from '../../types'
+import { defaultParser, defaultPostEscapeParser } from '../utilities'
 
 import CommentActions from './CommentActions.vue'
 import CommentHeader from './CommentHeader.vue'
@@ -50,8 +51,8 @@ export default defineComponent<Kotti.Comment.Reply.PropsInternal>({
 		isEditable: { default: false, type: Boolean },
 		id: { default: () => null, type: [Number, String] },
 		message: { type: String, required: true },
-		parser: { default: escape, type: Function },
-		postEscapeParser: { default: (_) => _, type: Function },
+		parser: { default: defaultParser, type: Function },
+		postEscapeParser: { default: defaultPostEscapeParser, type: Function },
 		userAvatar: { default: () => null, type: String },
 		userId: { default: () => null, type: Number },
 		userName: { default: () => null, type: String },
