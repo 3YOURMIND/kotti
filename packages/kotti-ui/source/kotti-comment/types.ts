@@ -14,6 +14,8 @@ export namespace KottiComment {
 		id: commentIdSchema.nullable().default(null),
 		isDeletable: z.boolean().default(false),
 		isEditable: z.boolean().default(false),
+		isInternalThread: z.boolean().default(false),
+		isModified: z.boolean().default(false),
 		message: z.string(),
 		userAvatar: z.string().nullable().default(null),
 		userId: z.number().nullable().default(null),
@@ -31,6 +33,18 @@ export namespace KottiComment {
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
+
+	export type UserData = Pick<PropsInternal, 'userName' | 'userId'>
+
+	export namespace CommentHeader {
+		export const schema = commentSchema.pick({
+			createdTime: true,
+			isInternalThread: true,
+			isModified: true,
+			userName: true,
+		})
+		export type Props = z.output<typeof schema>
+	}
 
 	export namespace Reply {
 		export type Props = z.input<typeof sharedSchema>
@@ -61,12 +75,12 @@ export namespace KottiComment {
 	export type Translations = {
 		deleteButton: string
 		editButton: string
+		editedLabel: string
+		internalThreadLabel: string
 		postButton: string
 		replyButton: string
 		replyPlaceholder: string
 	}
-
-	export type UserData = Pick<PropsInternal, 'userName' | 'userId'>
 }
 
 export namespace KottiCommentInput {

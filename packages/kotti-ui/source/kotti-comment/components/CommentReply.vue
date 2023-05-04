@@ -2,10 +2,7 @@
 	<div class="comment-reply">
 		<KtAvatar class="comment-reply__avatar" size="sm" :src="userAvatar" />
 		<div class="comment-reply__content">
-			<div class="comment-reply__content__info">
-				<div class="info__name" v-text="userName" />
-				<div class="info__time" v-text="createdTime" />
-			</div>
+			<CommentHeader v-bind="{ createdTime, userName }" />
 
 			<CommentInlineEdit
 				:id="id"
@@ -35,12 +32,14 @@ import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { Kotti } from '../../types'
 
 import CommentActions from './CommentActions.vue'
+import CommentHeader from './CommentHeader.vue'
 import CommentInlineEdit from './CommentInlineEdit.vue'
 
 export default defineComponent<Kotti.Comment.Reply.PropsInternal>({
 	name: 'CommentReply',
 	components: {
 		CommentActions,
+		CommentHeader,
 		CommentInlineEdit,
 		KtAvatar,
 	},
