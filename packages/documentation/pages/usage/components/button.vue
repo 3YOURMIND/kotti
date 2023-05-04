@@ -81,6 +81,18 @@
     <KtButton type="primary" icon="edit" helpText="This is an icon button"/>
     <KtButton type="primary" icon="edit" label="Right Icon Button" iconPosition="right"/>
     ```
+
+    ## `toggleStatus`
+
+    *  For buttons that are **toggleable**, and can have two different status: "ON" or "OFF"
+    *  This prop is only valid for buttons of type **"default"** or type **"text"**.
+
+     <div class="element-example white">
+    	<KtButton type="default" :icon="toggleDefaultIcon" :toggleStatus="toggleDefaultStatus" @update:toggleStatus="(event) => onToggleDefaultClick(event)" class="mr-4">{{toggleDefaultLabel}}</KtButton>
+    	<KtButton type="text" :icon="toggleTextIcon" :toggleStatus="toggleTextStatus" @update:toggleStatus="(event) => onToggleTextClick(event)" :label="toggleTextLabel" class="mr-4" />
+    </div>
+    </div>
+
     ## `isMultiline`/`isBlock`
 
     For handling long text, we can use the `isMultiline` and `isBlock` properties.
@@ -157,7 +169,8 @@
 
 <script lang="ts">
 import { KtButton } from '@3yourmind/kotti-ui'
-import { defineComponent } from '@vue/composition-api'
+import { Kotti } from '@3yourmind/kotti-ui'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 import ShowCase from '~/components/ShowCase.vue'
@@ -169,9 +182,44 @@ export default defineComponent({
 		ShowCase,
 	},
 	setup() {
+		const toggleDefaultStatus = ref<Kotti.Button.ToggleStatus>(
+			Kotti.Button.ToggleStatus.OFF,
+		)
+		const toggleTextStatus = ref<Kotti.Button.ToggleStatus>(
+			Kotti.Button.ToggleStatus.OFF,
+		)
+
 		return {
 			alert: (value: string) => window.alert(value),
 			component: KtButton,
+			onToggleDefaultClick: (status: Kotti.Button.ToggleStatus) => {
+				toggleDefaultStatus.value = status
+			},
+			onToggleTextClick: (status: Kotti.Button.ToggleStatus) => {
+				toggleTextStatus.value = status
+			},
+			toggleDefaultIcon: computed(() =>
+				toggleDefaultStatus.value === Kotti.Button.ToggleStatus.ON
+					? 'check'
+					: 'close',
+			),
+			toggleDefaultLabel: computed(() =>
+				toggleDefaultStatus.value === Kotti.Button.ToggleStatus.ON
+					? 'DEFAULT ON'
+					: 'DEFAULT OFF',
+			),
+			toggleDefaultStatus,
+			toggleTextIcon: computed(() =>
+				toggleTextStatus.value === Kotti.Button.ToggleStatus.ON
+					? 'check'
+					: 'close',
+			),
+			toggleTextLabel: computed(() =>
+				toggleTextStatus.value === Kotti.Button.ToggleStatus.ON
+					? 'TEXT ON'
+					: 'TEXT OFF',
+			),
+			toggleTextStatus,
 		}
 	},
 })

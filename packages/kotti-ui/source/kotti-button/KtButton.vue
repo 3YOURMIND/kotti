@@ -48,6 +48,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 			() => isIconButton.value && props.helpText !== null,
 		)
 
+		const isToggle = computed(() => props.toggleStatus !== null)
+
 		useTippy(
 			triggerRef,
 			computed(() => ({
@@ -71,11 +73,29 @@ export default defineComponent<KottiButton.PropsInternal>({
 					'KtButton: Guideline Uncompliance: attempted to use helpText with a button that already has a label.',
 				)
 			}
+
+			if (
+				isToggle.value &&
+				![KottiButton.Type.DEFAULT, KottiButton.Type.TEXT].includes(props.type)
+			) {
+				throw new Error(
+					'KtButton: Guideline Uncompliance: attempted to use toggleStatus with a button of type different than "DEFAULT" or "TEXT"',
+				)
+			}
 		})
 
 		return {
 			contentRef,
-			handleClick: (event: Event) => emit('click', event),
+			handleClick: (event: Event) => {
+				if (isToggle.value)
+					emit(
+						'update:toggleStatus',
+						props.toggleStatus === KottiButton.ToggleStatus.OFF
+							? KottiButton.ToggleStatus.ON
+							: KottiButton.ToggleStatus.OFF,
+					)
+				emit('click', event)
+			},
 			hasIconLeft: computed(
 				() =>
 					props.icon !== null &&
@@ -93,6 +113,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 				'kt-button--has-icon': props.icon !== null,
 				'kt-button--is-block': props.isBlock,
 				'kt-button--is-multiline': props.isMultiline,
+				[`kt-button--is-toggle-${props.toggleStatus}`]: isToggle.value,
 				[`kt-button--size-${props.size}`]: true,
 				[`kt-button--type-${props.type}`]: true,
 			})),
@@ -242,6 +263,22 @@ export default defineComponent<KottiButton.PropsInternal>({
 				border-bottom-color: var(--button-main-color-dark);
 				border-left-color: var(--button-main-color-dark);
 			}
+			&.kt-button--is-toggle-on {
+				color: var(--text-04);
+				background-color: var(--button-main-color);
+				border-color: var(--button-main-color-dark);
+
+				&:hover,
+				&:focus-visible {
+					background-color: var(--button-main-color-dark);
+					border-color: var(--button-main-color-dark);
+				}
+
+				.kt-circle-loading {
+					border-bottom-color: var(--text-04);
+					border-left-color: var(--text-04);
+				}
+			}
 		}
 
 		&-primary {
@@ -292,6 +329,17 @@ export default defineComponent<KottiButton.PropsInternal>({
 			.kt-circle-loading {
 				border-bottom-color: var(--button-main-color-dark);
 				border-left-color: var(--button-main-color-dark);
+			}
+
+			&.kt-button--is-toggle-on {
+				color: var(--button-main-color-dark);
+				background-color: var(--interactive-04);
+
+				&:hover,
+				&:focus-visible {
+					background-color: var(--button-main-color-light);
+					border-color: var(--button-main-color-light);
+				}
 			}
 		}
 	}

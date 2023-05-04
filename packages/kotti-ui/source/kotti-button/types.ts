@@ -24,6 +24,13 @@ export namespace KottiButton {
 	}
 	export const iconPosition = z.nativeEnum(IconPosition)
 
+	export enum ToggleStatus {
+		ON = 'on',
+		OFF = 'off',
+	}
+
+	export const toggleStatusSchema = z.nativeEnum(ToggleStatus)
+
 	export const propsSchema = z.object({
 		helpText: z.string().nullable().default(null),
 		icon: yocoIconSchema.nullable().default(null),
@@ -34,6 +41,7 @@ export namespace KottiButton {
 		isSubmit: z.boolean().default(false),
 		label: z.string().nullable().default(null),
 		size: sizeSchema.default(Size.MEDIUM),
+		toggleStatus: toggleStatusSchema.nullable().default(null),
 		type: typeSchema.default(Type.DEFAULT),
 	})
 
