@@ -1,25 +1,19 @@
 <template>
-	<div class="kt-comment__comment-header">
-		<div class="kt-comment__comment-header__left-wrapper">
-			<span class="kt-comment__comment-header__name" v-text="userName" />
-			<span
-				v-if="isInternalThread"
-				class="kt-comment__comment-header__internal-thread"
-			>
+	<div class="kt-comment__header">
+		<div class="kt-comment__header__left-wrapper">
+			<span class="kt-comment__header__user-name" v-text="userName" />
+			<span v-if="isInternalThread" class="kt-comment__header__internal-thread">
 				<i class="yoco" v-text="Yoco.Icon.PERMISSION" />
 				{{ translations.internalThreadLabel }}
 			</span>
 		</div>
-		<div class="kt-comment__comment-header__right-wrapper">
+		<div class="kt-comment__header__right-wrapper">
 			<span
 				v-if="isModified"
-				class="kt-comment__comment-header__modified"
+				class="kt-comment__header__modified"
 				v-text="translations.editedLabel"
 			/>
-			<span
-				class="kt-comment__comment-header__creation-date"
-				v-text="createdTime"
-			/>
+			<span class="kt-comment__header__creation-date" v-text="createdTime" />
 		</div>
 	</div>
 </template>
@@ -47,7 +41,7 @@ export default defineComponent<KottiComment.Header.PropsInternal>({
 </script>
 
 <style lang="scss" scoped>
-.kt-comment__comment-header {
+.kt-comment__header {
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
@@ -85,7 +79,7 @@ export default defineComponent<KottiComment.Header.PropsInternal>({
 		}
 	}
 
-	&__name {
+	&__user-name {
 		color: var(--text-01);
 	}
 }
