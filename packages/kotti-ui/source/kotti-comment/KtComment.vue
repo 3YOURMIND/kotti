@@ -1,46 +1,32 @@
 <template>
-	<div class="kt-comment">
-		<KtAvatar size="sm" :src="userAvatar" />
-		<div class="kt-comment__content">
-			<CommentHeader v-bind="{ createdTime, userName }" />
-
-			<CommentInlineEdit
-				:id="id"
+	<div :class="classes">
+		<CommentEntry
+			v-bind="commentProps"
+			:type="EntryType.POST"
+			@delete="onDelete"
+			@edit="onEdit"
+			@reply="onReply"
+		/>
+		<div class="kt-comment__thread">
+			<CommentEntry
+				v-for="reply in replies"
+				:key="reply.id"
+				v-bind="reply"
 				:dangerouslyOverrideParser="dangerouslyOverrideParser"
-				:isEditing="isEditing"
-				:message="message"
+				:parentId="id"
 				:postEscapeParser="postEscapeParser"
-				@edit="onEdit($event)"
-				@update:isEditing="($event) => (isEditing = $event)"
+				:type="EntryType.REPLY"
+				@delete="onDelete"
+				@edit="onEdit"
 			/>
-
-			<CommentActions
-				:userData="{ userId, userName }"
-				v-bind="{ isEditable, isDeletable, isEditing }"
-				@delete="onDelete(id)"
-				@reply="onReply"
-				@update:isEditing="isEditing = $event"
-			/>
-
-			<div v-for="reply in replies" :key="reply.id">
-				<CommentReply
-					v-bind="reply"
-					:dangerouslyOverrideParser="dangerouslyOverrideParser"
-					:postEscapeParser="postEscapeParser"
-					@click="onReply"
-					@delete="(commentId) => onDelete(commentId, true)"
-					@edit="(editPayload) => onEdit(editPayload, true)"
-				/>
-			</div>
-
 			<KtCommentInput
-				v-if="userBeingRepliedTo"
+				v-if="userToReply"
 				isInline
 				:parentId="id"
 				:placeholder="placeholder"
-				:replyToUserId="userBeingRepliedTo.userId"
-				:userAvatar="userAvatar"
-				@submit="onSubmit($event)"
+				:replyToUserId="userToReply.id"
+				:userAvatar="user.avatar"
+				@add="onAdd"
 			/>
 		</div>
 	</div>
@@ -48,76 +34,48 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
+import { omit } from 'lodash'
 
-import { KtAvatar } from '../kotti-avatar'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
-import { Kotti } from '../types'
 
-import CommentActions from './components/CommentActions.vue'
-import CommentHeader from './components/CommentHeader.vue'
-import CommentInlineEdit from './components/CommentInlineEdit.vue'
-import CommentReply from './components/CommentReply.vue'
+import CommentEntry from './components/CommentEntry.vue'
 import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
 
 export default defineComponent<KottiComment.PropsInternal>({
 	name: 'KtComment',
 	components: {
-		CommentActions,
-		CommentHeader,
-		CommentReply,
-		CommentInlineEdit,
-		KtAvatar,
+		CommentEntry,
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
 	setup(props, { emit }) {
-		const isEditing = ref(false)
-		const userBeingRepliedTo = ref<Kotti.Comment.UserData | null>(null)
 		const translations = useTranslationNamespace('KtComment')
 
-		const onDelete = (commentId: number | string, isReply = false) => {
-			const payload: KottiComment.Events.Delete = {
-				id: commentId,
-				parentId: isReply ? props.id : null,
-			}
-			emit('delete', payload)
-		}
-
-		const onEdit = (
-			{ id, message }: KottiComment.Events.InternalEdit,
-			isReply = false,
-		) => {
-			const payload: KottiComment.Events.Edit = {
-				id,
-				message,
-				parentId: isReply ? props.id : null,
-			}
-			emit('edit', payload)
-		}
+		const userToReply = ref<KottiComment.User | null>(null)
 
 		return {
-			isEditing,
-			Kotti,
-			onDelete,
-			onEdit,
-			onReply: (replyUserData: Kotti.Comment.UserData) => {
-				userBeingRepliedTo.value = replyUserData
+			classes: computed(() => ({
+				'kt-comment': true,
+				'kt-comment--is-internal-thread': props.isInternalThread,
+			})),
+			commentProps: computed(() => omit(props, 'replies')),
+			EntryType: KottiComment.EntryType,
+			onAdd: (payload: KottiComment.Events.Add) => {
+				userToReply.value = null
+				emit('add', payload)
 			},
-			onSubmit: (commentData: KottiComment.Events.Submit) => {
-				userBeingRepliedTo.value = null
-				emit('submit', commentData)
-			},
+			onDelete: (payload: KottiComment.Events.Delete) =>
+				emit('delete', payload),
+			onEdit: (payload: KottiComment.Events.Edit) => emit('edit', payload),
+			onReply: (user: KottiComment.User) => (userToReply.value = user),
 			placeholder: computed(() =>
-				userBeingRepliedTo.value === null
-					? null
-					: [
-							translations.value.replyPlaceholder,
-							userBeingRepliedTo.value.userName,
-					  ].join(' '),
+				userToReply.value
+					? [translations.value.replyToLabel, userToReply.value.name].join(' ')
+					: undefined,
 			),
-			userBeingRepliedTo,
+			userToReply,
 		}
 	},
 })
@@ -125,26 +83,17 @@ export default defineComponent<KottiComment.PropsInternal>({
 
 <style lang="scss" scoped>
 .kt-comment {
-	display: flex;
-	flex-flow: row;
+	padding: var(--unit-4);
 
-	+ .kt-comment {
-		padding-top: var(--unit-1);
-		border-top: 1px solid var(--ui-02);
+	&--is-internal-thread {
+		background-color: var(--ui-01);
 	}
 
-	&__content {
+	&__thread {
 		display: flex;
-		flex: 1;
 		flex-direction: column;
-		margin-left: var(--unit-2);
-
-		&__info {
-			display: flex;
-			width: 100%;
-			font-size: var(--font-size);
-			line-height: 1.2rem;
-		}
+		row-gap: var(--unit-4);
+		padding: var(--unit-4) 0 0 var(--unit-10);
 	}
 }
 </style>

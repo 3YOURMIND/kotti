@@ -27,7 +27,7 @@ export const jaJP: KottiI18n.Messages = {
 		internalThreadLabel: 'めねじ',
 		postButton: '送信',
 		replyButton: '返信',
-		replyPlaceholder: '返信',
+		replyToLabel: '返信',
 	},
 	KtFieldFileUpload: {
 		button: {

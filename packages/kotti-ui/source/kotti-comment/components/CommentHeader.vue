@@ -1,7 +1,7 @@
 <template>
 	<div class="kt-comment__header">
 		<div class="kt-comment__header__left-wrapper">
-			<span class="kt-comment__header__user-name" v-text="userName" />
+			<span class="kt-comment__header__user-name" v-text="user.name" />
 			<span v-if="isInternalThread" class="kt-comment__header__internal-thread">
 				<i class="yoco" v-text="Yoco.Icon.PERMISSION" />
 				{{ translations.internalThreadLabel }}
@@ -13,7 +13,7 @@
 				class="kt-comment__header__modified"
 				v-text="translations.editedLabel"
 			/>
-			<span class="kt-comment__header__creation-date" v-text="createdTime" />
+			<span class="kt-comment__header__created-at" v-text="createdAt" />
 		</div>
 	</div>
 </template>
@@ -64,7 +64,7 @@ export default defineComponent<KottiComment.Header.PropsInternal>({
 		justify-content: flex-end;
 	}
 
-	&__creation-date,
+	&__created-at,
 	&__modified {
 		color: var(--text-03);
 	}

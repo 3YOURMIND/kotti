@@ -27,7 +27,7 @@ export const esES: KottiI18n.Messages = {
 		internalThreadLabel: 'Conversación interna',
 		postButton: 'Publicar',
 		replyButton: 'Responder',
-		replyPlaceholder: 'Responder a',
+		replyToLabel: 'Responder a',
 	},
 	KtFieldFileUpload: {
 		button: {
