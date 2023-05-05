@@ -10,14 +10,16 @@
 				:isEditing="isEditing"
 				:message="message"
 				:postEscapeParser="postEscapeParser"
-				@edit="handleEdit($event)"
+				@edit="onEdit($event)"
 				@update:isEditing="($event) => (isEditing = $event)"
 			/>
 
 			<CommentActions
-				:options="actionOptions"
 				:userData="{ userId, userName }"
-				@replyClick="handleReplyClick"
+				v-bind="{ isEditable, isDeletable, isEditing }"
+				@delete="onDelete(id)"
+				@reply="onReply"
+				@update:isEditing="isEditing = $event"
 			/>
 
 			<div v-for="reply in replies" :key="reply.id">
@@ -25,9 +27,9 @@
 					v-bind="reply"
 					:dangerouslyOverrideParser="dangerouslyOverrideParser"
 					:postEscapeParser="postEscapeParser"
-					@click="handleReplyClick"
-					@delete="(commentId) => handleDelete(commentId, true)"
-					@edit="(editPayload) => handleEdit(editPayload, true)"
+					@click="onReply"
+					@delete="(commentId) => onDelete(commentId, true)"
+					@edit="(editPayload) => onEdit(editPayload, true)"
 				/>
 			</div>
 
@@ -38,7 +40,7 @@
 				:placeholder="placeholder"
 				:replyToUserId="userBeingRepliedTo.userId"
 				:userAvatar="userAvatar"
-				@submit="handleInlineSubmit($event)"
+				@submit="onSubmit($event)"
 			/>
 		</div>
 	</div>
@@ -75,7 +77,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 		const userBeingRepliedTo = ref<Kotti.Comment.UserData | null>(null)
 		const translations = useTranslationNamespace('KtComment')
 
-		const handleDelete = (commentId: number | string, isReply = false) => {
+		const onDelete = (commentId: number | string, isReply = false) => {
 			const payload: KottiComment.Events.Delete = {
 				id: commentId,
 				parentId: isReply ? props.id : null,
@@ -83,7 +85,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 			emit('delete', payload)
 		}
 
-		const handleEdit = (
+		const onEdit = (
 			{ id, message }: KottiComment.Events.InternalEdit,
 			isReply = false,
 		) => {
@@ -96,35 +98,17 @@ export default defineComponent<KottiComment.PropsInternal>({
 		}
 
 		return {
-			actionOptions: computed<Kotti.Popover.Props['options']>(() => {
-				const options = []
-				if (isEditing.value) return options
-
-				if (props.isEditable)
-					options.push({
-						label: translations.value.editButton,
-						onClick: () => {
-							isEditing.value = true
-						},
-					})
-				if (props.isDeletable)
-					options.push({
-						label: translations.value.deleteButton,
-						onClick: () => handleDelete(props.id),
-					})
-				return options
-			}),
-			handleDelete,
-			handleEdit,
-			handleReplyClick: (replyUserData: Kotti.Comment.UserData) => {
+			isEditing,
+			Kotti,
+			onDelete,
+			onEdit,
+			onReply: (replyUserData: Kotti.Comment.UserData) => {
 				userBeingRepliedTo.value = replyUserData
 			},
-			handleInlineSubmit: (commentData: KottiComment.Events.Submit) => {
+			onSubmit: (commentData: KottiComment.Events.Submit) => {
 				userBeingRepliedTo.value = null
 				emit('submit', commentData)
 			},
-			isEditing,
-			Kotti,
 			placeholder: computed(() =>
 				userBeingRepliedTo.value === null
 					? null

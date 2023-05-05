@@ -32,9 +32,9 @@ import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
 import { KottiComment } from '../types'
 
-export default defineComponent({
+export default defineComponent<KottiComment.Header.PropsInternal>({
 	name: 'CommentHeader',
-	props: makeProps(KottiComment.CommentHeader.schema),
+	props: makeProps(KottiComment.Header.schema),
 	setup() {
 		const translations = useTranslationNamespace('KtComment')
 

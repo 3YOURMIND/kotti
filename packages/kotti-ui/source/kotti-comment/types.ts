@@ -36,14 +36,30 @@ export namespace KottiComment {
 
 	export type UserData = Pick<PropsInternal, 'userName' | 'userId'>
 
-	export namespace CommentHeader {
+	export namespace Header {
 		export const schema = commentSchema.pick({
 			createdTime: true,
 			isInternalThread: true,
 			isModified: true,
 			userName: true,
 		})
-		export type Props = z.output<typeof schema>
+		export type PropsInternal = z.output<typeof schema>
+	}
+
+	export namespace Actions {
+		export const schema = commentSchema
+			.pick({
+				isDeletable: true,
+				isEditable: true,
+			})
+			.extend({
+				isEditing: z.boolean().default(false),
+				userData: commentSchema
+					.pick({ userName: true, userId: true })
+					.nullable()
+					.default(null),
+			})
+		export type PropsInternal = z.output<typeof schema>
 	}
 
 	export namespace Reply {
