@@ -1,9 +1,10 @@
 <template>
 	<div class="kt-comment__actions">
 		<KtButton
-			v-if="showReply"
+			v-if="!isReply"
 			class="kt-comment__actions__reply-button"
 			:label="translations.replyButton"
+			:tabIndex="tabIndex"
 			type="text"
 			@click.stop="onReply"
 		/>
@@ -11,6 +12,7 @@
 			v-if="isEditable"
 			class="kt-comment__actions__edit-button"
 			:label="translations.editButton"
+			:tabIndex="tabIndex"
 			type="text"
 			@click.stop="onEdit"
 		/>
@@ -18,6 +20,7 @@
 			v-if="isDeletable"
 			class="kt-comment__actions__delete-button"
 			:label="translations.deleteButton"
+			:tabIndex="tabIndex"
 			type="text"
 			@click.stop="onDelete"
 		/>

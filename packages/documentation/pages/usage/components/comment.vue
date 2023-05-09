@@ -1,144 +1,186 @@
-<template lang="md">
-    <ComponentInfo v-bind="{ component }" />
+<template>
+	<div>
+		<ComponentInfo v-bind="{ component }" />
 
-    ## Example
+		<p>
+			Use <code>KtComment</code> to display a comment thread, a comment post and
+			comment replies. It allows adding new replies by clicking on the
+			<strong>Reply</strong>
+			button.
+		</p>
+		<p>Use <code>KtCommentInput</code> to input new comment posts.</p>
 
-    <div class="element-example no-background">
-    	<KtComment
-    		v-for="comment in comments"
-    		:key="comment.id"
-    		v-bind="comment"
-    		@add="handleAdd($event)"
-    		@delete="handleDelete($event)"
-    		@edit="handleEdit($event)"
-    	/>
-    	<KtCommentInput
-    		class="mt-16px"
-    		placeholder="Add a comment"
-    		userAvatar='https://picsum.photos/120'
-    		@add="handleAdd($event)"
-    	/>
-    </div>
+		<h2>Example</h2>
+		<div class="element-example no-background">
+			<KtComment
+				v-for="comment in comments"
+				:key="comment.id"
+				v-bind="comment"
+				allowInternal
+				class="mb-block"
+				:tabIndex="1"
+				:userAvatar="currentUser.avatar"
+				@add="handleAdd($event)"
+				@delete="handleDelete($event)"
+				@edit="handleEdit($event)"
+			/>
+			<KtCommentInput
+				allowInternal
+				placeholder="Add a comment"
+				:tabIndex="1"
+				:userAvatar="currentUser.avatar"
+				@add="handleAdd($event)"
+			/>
+		</div>
 
-    ```html
-    <KtComment
-    	v-for="comment in comments"
-    	:key="comment.id"
-    	v-bind="comment"
-    	@add="handleAdd($event)"
-    	@delete="handleDelete($event)"
-    	@edit="handleEdit($event)"
-    />
-    <KtCommentInput
-    	class="mt-16px"
-    	placeholder="Add a comment"
-    	userAvatar="https://picsum.photos/120"
-    	@add="handleAdd($event)"
-    />
-    ```
+		<pre><code>&lt;KtComment
+	v-for=&quot;comment in comments&quot;
+	:key=&quot;comment.id&quot;
+	v-bind=&quot;comment&quot;
+	allowInternal
+	:tabIndex="1"
+	:userAvatar=&quot;currentUser.avatar&quot;
+	@add=&quot;handleAdd($event)&quot;
+	@delete=&quot;handleDelete($event)&quot;
+	@edit=&quot;handleEdit($event)&quot;
+/&gt;
+&lt;KtCommentInput
+	placeholder=&quot;Add a comment&quot;
+	allowInternal
+	:tabIndex="1"
+	:userAvatar=&quot;currentUser.avatar&quot;
+	@add=&quot;handleAdd($event)&quot;
+/&gt;
+</code></pre>
 
-    ## Usage
+		<h2>Usage</h2>
 
-    ### Comment Object
+		<h3>Comment Object</h3>
+		<pre><code>{
+	createdAt: '2018-12-04 09:57',
+	id: 1,
+	isDeletable: true,
+	isEditable: true,
+	isInternal: true,
+	isModified: true,
+	message: 'Comment message',
+	replies: [
+		{
+			createdAt: '2018-12-04 09:57',
+			id: 2,
+			isDeletable: false,
+			isEditable: false,
+			isInternal: true,
+			isModified: true,
+			message: 'Reply message',
+			user: {
+				avatar: 'https://picsum.photos/200',
+				id: 102,
+				name: 'User name',
+			},
+		},
+	],
+	user: {
+		avatar: 'https://picsum.photos/230',
+		id: 101,
+		name: 'User name',
+	},
+}</code></pre>
 
-    ```js
-    {
-    	createdAt: '2018-12-04 09:57',
-    	id: 1,
-    	isDeletable: true,
-    	isEditable: true,
-    	isInternalThread: true,
-    	isModified: true,
-    	message: 'Comment message',
-    	replies: [{
-    		createdAt: '2018-12-04 09:57',
-    		id: 2,
-    		isDeletable: false,
-    		isEditable: false
-    		isModified: true,
-    		message: 'Reply message',
-    		user: {
-    			avatar: 'https://picsum.photos/200',
-    			id: 102,
-    			name: 'User name',
-    		},
-    	}],
-    	user: {
-    		avatar: 'https://picsum.photos/230',
-    		id: 101,
-    		name: 'User name',
-    	},
-    }
-    ```
+		<h3>Events</h3>
+		<table>
+			<tr>
+				<th>Event Name</th>
+				<th>Component</th>
+				<th>Payload</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><code>@add</code></td>
+				<td><code>KtComment</code>, <code>KtCommentInput</code></td>
+				<td>
+					<pre><code>{
+	isInternal?: boolean,
+	message: string,
+	parentId?: number | string,
+	replyToUserId?: number | string,
+}</code></pre>
+				</td>
+				<td>Add new comment</td>
+			</tr>
+			<tr>
+				<td><code>@delete</code></td>
+				<td><code>KtComment</code></td>
+				<td>
+					<pre><code>{
+	id: number | string,
+	parentId?: number | string,
+}</code></pre>
+				</td>
+				<td>Delete comment</td>
+			</tr>
+			<tr>
+				<td><code>@edit</code></td>
+				<td><code>KtComment</code></td>
+				<td>
+					<pre><code>{
+	id: number | string,
+	isInternal?: boolean,
+	message: string,
+	parentId?: number | string,
+}</code></pre>
+				</td>
+				<td>Edit comment</td>
+			</tr>
+		</table>
 
-    ### Payload Object
+		<h2>Parsing HTML</h2>
+		<p>
+			KtComment will escape all tags by default but you can opt out and pass
+			your own parser by using the parser prop.
+		</p>
+		<blockquote cite="https://en.wikipedia.org/wiki/Cross-site_scripting">
+			Remember to <b>escape malicious tags</b> to prevent
+			<a href="https://en.wikipedia.org/wiki/Cross-site_scripting"
+				>Cross-site-scripting</a
+			>
+			attacks, you can use KtComment's default parser function with
+			KtComment.defaultParser.
+		</blockquote>
 
-    ```js
-    // Add Payload
-    {
-    	message: String
-    	parentId?: Number | String
-    	replyToUserId: Number | String
-    }
+		<pre><code>methods: {
+	dangerouslyOverrideParser: msg => escape(msg).replace(/\n/g, '&lt;br /&gt;'),
+	// alternativly you could
+	dangerouslyOverrideParser: msg => escape(msg),
+	postEscapeParser: msg => msg.replace(/\n/g, '&lt;br /&gt;'),
+	// or just
+	postEscapeParser: msg => msg.replace(/\n/g, '&lt;br /&gt;'),
+}</code></pre>
 
-    // Delete Payload
-    {
-    	id: Number | String
-    	parentId?: Number | String
-    }
-
-    // Edit Payload
-    {
-    	id: Number | String
-    	message: String
-    	parentId?: Number | String
-    }
-    ```
-
-    ## Parsing HTML
-
-    KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop
-
-    > Remember to **escape malicious tags** to prevent [Cross-site-scripting](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks,
-    > you can use KtComment's default parser function with KtComment.defaultParser
-
-    ```js
-    methods: {
-    	dangerouslyOverrideParser: msg => escape(msg).replace(/\n/g, '<br>'),
-    	// alternativly you could
-    	dangerouslyOverrideParser: msg => escape(msg),
-    	postEscapeParser: msg => msg.replace(/\n/g, '<br/>'),
-    	// or just
-    	postEscapeParser: msg => msg.replace(/\n/g, '<br/>'),
-    }
-    ```
-
-    <div class="element-example no-background">
-    	<KtComment
-    		v-for="comment in comments"
-    		:key="comment.id"
-    		v-bind="comment"
-    		:dangerouslyOverrideParser="dangerouslyOverrideParser"
-    		:postEscapeParser="postEscapeParser"
-    		@add="handleAdd($event)"
-    		@delete="handleDelete($event)"
-    		@edit="handleEdit($event)"
-    	/>
-    	<KtCommentInput
-    		class="mt-16px"
-    		placeholder="Add a comment"
-    		userAvatar='https://picsum.photos/120'
-    		@add="handleAdd($event)"
-    	/>
-    </div>
-
-    ### Events
-
-    | Event Name | Component                     | Payload   | Description     |
-    | ---------- | ----------------------------- | --------- | --------------- |
-    | `@add`     | `KtComment`, `KtCommentInput` | See above | Add new comment |
-    | `@delete`  | `KtComment`                   | See above | Delete comment  |
-    | `@edit`    | `KtComment`                   | See above | Edit comment    |
+		<div class="element-example no-background">
+			<KtComment
+				v-for="comment in comments"
+				:key="comment.id"
+				v-bind="comment"
+				allowInternal
+				class="mb-block"
+				:dangerouslyOverrideParser="dangerouslyOverrideParser"
+				:postEscapeParser="postEscapeParser"
+				:tabIndex="1"
+				:userAvatar="currentUser.avatar"
+				@add="handleAdd($event)"
+				@delete="handleDelete($event)"
+				@edit="handleEdit($event)"
+			/>
+			<KtCommentInput
+				allowInternal
+				placeholder="Add a comment"
+				:tabIndex="1"
+				:userAvatar="currentUser.avatar"
+				@add="handleAdd($event)"
+			/>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
@@ -160,7 +202,7 @@ export default defineComponent({
 				id: 1,
 				isDeletable: true,
 				isEditable: true,
-				isInternalThread: true,
+				isInternal: true,
 				message: `We miss you, David`,
 				replies: [
 					{
@@ -168,6 +210,7 @@ export default defineComponent({
 						id: 2,
 						isDeletable: false,
 						isEditable: false,
+						isInternal: true,
 						message: 'Join Bright Side Now!<br/>Join Bright Side Now!',
 						user: {
 							avatar: 'https://picsum.photos/100',
@@ -180,6 +223,7 @@ export default defineComponent({
 						id: 3,
 						isDeletable: false,
 						isEditable: true,
+						isInternal: true,
 						isModified: true,
 						message: 'RE: Your trip to Montreal',
 						user: {
@@ -193,6 +237,7 @@ export default defineComponent({
 						id: 4,
 						isDeletable: true,
 						isEditable: false,
+						isInternal: true,
 						message: 'PS: Bring a jacket!',
 						user: {
 							avatar: 'https://picsum.photos/120',
@@ -240,14 +285,19 @@ export default defineComponent({
 			name: 'James',
 		})
 
-		const buildNewComment = (
-			message: Kotti.Comment.Props['message'],
-		): Kotti.Comment.Props => ({
+		const buildNewComment = ({
+			isInternal,
+			message,
+		}: {
+			isInternal: Kotti.Comment.Props['isInternal']
+			message: Kotti.Comment.Props['message']
+		}): Kotti.Comment.Props => ({
 			createdAt: new Date().toDateString(),
 			// eslint-disable-next-line no-magic-numbers
 			id: Math.floor(Math.random() * 101),
 			isDeletable: true,
 			isEditable: true,
+			isInternal,
 			message,
 			replies: [],
 			user: currentUser.value,
@@ -261,6 +311,7 @@ export default defineComponent({
 					? {
 							...comment,
 							isModified: true,
+							isInternal: payload.isInternal,
 							message: payload.message,
 					  }
 					: comment
@@ -268,10 +319,16 @@ export default defineComponent({
 		return {
 			comments,
 			component: KtComment,
+			currentUser,
 			dangerouslyOverrideParser: (msg: string) => escape(msg),
 			handleAdd(payload: Kotti.Comment.Events.Add) {
 				if (!payload.parentId) {
-					comments.value.push(buildNewComment(payload.message))
+					comments.value.push(
+						buildNewComment({
+							isInternal: payload.isInternal,
+							message: payload.message,
+						}),
+					)
 					return
 				}
 
@@ -282,7 +339,12 @@ export default defineComponent({
 				if (!parentComment)
 					throw new Error(`Comment not found, comment id: ${payload.parentId}`)
 
-				parentComment.replies.push(buildNewComment(payload.message))
+				parentComment.replies.push(
+					buildNewComment({
+						isInternal: payload.isInternal,
+						message: payload.message,
+					}),
+				)
 			},
 			handleEdit(payload: Kotti.Comment.Events.Edit) {
 				if (!payload.parentId) {
