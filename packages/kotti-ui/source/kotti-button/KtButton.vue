@@ -2,6 +2,7 @@
 	<div class="kt-button-wrapper" style="display: contents">
 		<button
 			ref="triggerRef"
+			v-bind="$attrs"
 			:class="mainClasses"
 			role="button"
 			:type="isSubmit ? 'submit' : 'button'"
@@ -31,6 +32,7 @@ import { KottiButton } from './types'
 
 export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
+	inheritAttrs: false,
 	props: makeProps(KottiButton.propsSchema),
 	setup(props, { emit, slots }) {
 		const contentRef = ref<Element | null>(null)
@@ -73,7 +75,7 @@ export default defineComponent<KottiButton.PropsInternal>({
 
 		return {
 			contentRef,
-			handleClick: (event) => emit('click', event),
+			handleClick: (event: Event) => emit('click', event),
 			hasIconLeft: computed(
 				() =>
 					props.icon !== null &&
