@@ -21,10 +21,11 @@ export const frFR: KottiI18n.Messages = {
 		expandCloseLabel: 'Fermer',
 	},
 	KtComment: {
+		cancelMessage: 'Appuyez sur la touche Esc pour annuler',
 		deleteButton: 'Effacer',
 		editButton: 'Modifier',
 		editedLabel: 'Édité',
-		internalThreadLabel: 'Filetage intérieur',
+		internalLabel: 'Filetage intérieur',
 		postButton: 'Commenter',
 		replyButton: 'Répondre',
 		replyToLabel: 'Répondre à',

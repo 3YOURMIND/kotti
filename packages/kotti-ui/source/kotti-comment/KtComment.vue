@@ -2,31 +2,32 @@
 	<div :class="classes">
 		<CommentEntry
 			v-bind="commentProps"
-			:type="EntryType.POST"
 			@delete="onDelete"
 			@edit="onEdit"
 			@reply="onReply"
 		/>
-		<div class="kt-comment__thread">
+		<div v-if="showCommentThread" class="kt-comment__thread">
 			<CommentEntry
 				v-for="reply in replies"
 				:key="reply.id"
 				v-bind="reply"
 				:dangerouslyOverrideParser="dangerouslyOverrideParser"
+				isReply
 				:parentId="id"
 				:postEscapeParser="postEscapeParser"
-				:type="EntryType.REPLY"
+				:tabIndex="tabIndex"
 				@delete="onDelete"
 				@edit="onEdit"
 			/>
 			<KtCommentInput
 				v-if="userToReply"
-				isInline
+				v-bind="{ isInternal, placeholder, tabIndex, userAvatar }"
+				autofocus
+				isReply
 				:parentId="id"
-				:placeholder="placeholder"
 				:replyToUserId="userToReply.id"
-				:userAvatar="user.avatar"
 				@add="onAdd"
+				@cancel="onCancel"
 			/>
 		</div>
 	</div>
@@ -58,14 +59,17 @@ export default defineComponent<KottiComment.PropsInternal>({
 		return {
 			classes: computed(() => ({
 				'kt-comment': true,
-				'kt-comment--is-internal-thread': props.isInternalThread,
+				'kt-comment--is-internal': props.isInternal,
 			})),
-			commentProps: computed(() => omit(props, 'replies')),
-			EntryType: KottiComment.EntryType,
+			commentProps: computed<KottiComment.Entry.PropsInternal>(() => ({
+				...omit(props, 'replies'),
+				isReply: false,
+			})),
 			onAdd: (payload: KottiComment.Events.Add) => {
 				userToReply.value = null
 				emit('add', payload)
 			},
+			onCancel: () => (userToReply.value = null),
 			onDelete: (payload: KottiComment.Events.Delete) =>
 				emit('delete', payload),
 			onEdit: (payload: KottiComment.Events.Edit) => emit('edit', payload),
@@ -74,6 +78,9 @@ export default defineComponent<KottiComment.PropsInternal>({
 				userToReply.value
 					? [translations.value.replyToLabel, userToReply.value.name].join(' ')
 					: undefined,
+			),
+			showCommentThread: computed(
+				() => props.replies.length > 0 || userToReply.value !== null,
 			),
 			userToReply,
 		}
@@ -85,7 +92,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 .kt-comment {
 	padding: var(--unit-4);
 
-	&--is-internal-thread {
+	&--is-internal {
 		background-color: var(--ui-01);
 	}
 

@@ -3,23 +3,27 @@
 		<KtAvatar size="sm" :src="user.avatar" />
 		<div class="kt-comment__entry__wrapper">
 			<CommentHeader
-				v-bind="{ createdAt, isInternalThread, isModified, user }"
+				v-bind="{ createdAt, isInternal, isModified, isReply, user }"
 			/>
 			<CommentInlineEdit
 				v-bind="{
+					allowInternal,
 					dangerouslyOverrideParser,
 					id,
 					isEditing,
+					isInternal,
+					isReply,
 					message,
 					parentId,
 					postEscapeParser,
+					tabIndex,
 				}"
 				@edit="onEdit"
 				@update:isEditing="isEditing = $event"
 			/>
 			<CommentActions
 				v-if="!isEditing"
-				v-bind="{ isDeletable, isEditable, showReply }"
+				v-bind="{ isDeletable, isEditable, isReply, tabIndex }"
 				@delete="onDelete"
 				@reply="onReply"
 				@update:isEditing="isEditing = $event"
@@ -29,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import { pick } from 'lodash'
 
 import { makeProps } from '../../make-props'
@@ -50,8 +54,6 @@ export default defineComponent<KottiComment.Entry.PropsInternal>({
 	setup(props, { emit }) {
 		const isEditing = ref(false)
 
-		const isReply = computed(() => props.type === KottiComment.EntryType.REPLY)
-
 		return {
 			isEditing,
 			onDelete: () => {
@@ -63,7 +65,6 @@ export default defineComponent<KottiComment.Entry.PropsInternal>({
 			},
 			onEdit: (payload: KottiComment.Events.Edit) => emit('edit', payload),
 			onReply: () => emit('reply', props.user),
-			showReply: computed(() => !isReply.value),
 		}
 	},
 })

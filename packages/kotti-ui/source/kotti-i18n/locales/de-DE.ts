@@ -21,10 +21,11 @@ export const deDE: KottiI18n.Messages = {
 		expandCloseLabel: 'Schließen',
 	},
 	KtComment: {
+		cancelMessage: 'Drücken Sie die Esc-Taste, um abzubrechen',
 		deleteButton: 'Löschen',
 		editButton: 'Bearbeiten',
 		editedLabel: 'Bearbeitet',
-		internalThreadLabel: 'Interner Beitrag',
+		internalLabel: 'Interner Beitrag',
 		postButton: 'Beitragen',
 		replyButton: 'Antworten',
 		replyToLabel: 'Antwort an',

@@ -2,9 +2,9 @@
 	<div class="kt-comment__header">
 		<div class="kt-comment__header__left-wrapper">
 			<span class="kt-comment__header__user-name" v-text="user.name" />
-			<span v-if="isInternalThread" class="kt-comment__header__internal-thread">
+			<span v-if="isInternal && !isReply" class="kt-comment__header__internal">
 				<i class="yoco" v-text="Yoco.Icon.PERMISSION" />
-				{{ translations.internalThreadLabel }}
+				{{ translations.internalLabel }}
 			</span>
 		</div>
 		<div class="kt-comment__header__right-wrapper">
@@ -69,7 +69,7 @@ export default defineComponent<KottiComment.Header.PropsInternal>({
 		color: var(--text-03);
 	}
 
-	&__internal-thread {
+	&__internal {
 		display: flex;
 		gap: var(--unit-1);
 		color: var(--text-02);
