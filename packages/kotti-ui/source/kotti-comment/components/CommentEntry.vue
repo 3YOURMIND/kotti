@@ -2,7 +2,9 @@
 	<div class="kt-comment__entry">
 		<KtAvatar size="sm" :src="user.avatar" />
 		<div class="kt-comment__entry__wrapper">
-			<CommentHeader v-bind="headerProps" />
+			<CommentHeader
+				v-bind="{ createdAt, isInternalThread, isModified, user }"
+			/>
 			<CommentInlineEdit
 				v-bind="{
 					dangerouslyOverrideParser,
@@ -51,10 +53,6 @@ export default defineComponent<KottiComment.Entry.PropsInternal>({
 		const isReply = computed(() => props.type === KottiComment.EntryType.REPLY)
 
 		return {
-			headerProps: computed(() => ({
-				...pick(props, ['createdAt', 'isModified', 'user']),
-				isInternalThread: !isReply.value ? props.isInternalThread : false,
-			})),
 			isEditing,
 			onDelete: () => {
 				const payload: KottiComment.Events.Delete = pick(props, [
