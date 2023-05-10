@@ -1,50 +1,52 @@
 import { z } from 'zod'
 
-import { Kotti } from '../types'
-
 import { defaultParser, defaultPostEscapeParser } from './utilities'
 
-const commentIdSchema = z.union([z.number(), z.string()])
+const idSchema = z.union([z.number(), z.string()])
 
 export namespace KottiComment {
-	const parseFunctionSchema = z.function().args(z.string()).returns(z.string())
+	export enum EntryType {
+		POST = 'POST',
+		REPLY = 'REPLY',
+	}
+	export const entryTypeSchema = z.nativeEnum(EntryType)
+
+	export const userSchema = z.object({
+		avatar: z.string().optional(),
+		id: idSchema,
+		name: z.string(),
+	})
+	export type User = z.output<typeof userSchema>
 
 	export const commentSchema = z.object({
-		createdTime: z.string().nullable().default(null),
-		id: commentIdSchema.nullable().default(null),
+		createdAt: z.string().nullable().default(null),
+		id: idSchema,
 		isDeletable: z.boolean().default(false),
 		isEditable: z.boolean().default(false),
 		isInternalThread: z.boolean().default(false),
 		isModified: z.boolean().default(false),
 		message: z.string(),
-		userAvatar: z.string().nullable().default(null),
-		userId: z.number().nullable().default(null),
-		userName: z.string().optional(),
+		user: userSchema,
 	})
+
+	const parseFunctionSchema = z.function().args(z.string()).returns(z.string())
 
 	const sharedSchema = commentSchema.extend({
 		dangerouslyOverrideParser: parseFunctionSchema.default(defaultParser),
 		postEscapeParser: parseFunctionSchema.default(defaultPostEscapeParser),
 	})
 
-	export const propsSchema = sharedSchema.extend({
-		replies: z.array(commentSchema).optional(),
-	})
-
-	export type Props = z.input<typeof propsSchema>
-	export type PropsInternal = z.output<typeof propsSchema>
-
-	export type UserData = Pick<PropsInternal, 'userName' | 'userId'>
-
-	export namespace Header {
-		export const schema = commentSchema.pick({
-			createdTime: true,
-			isInternalThread: true,
-			isModified: true,
-			userName: true,
-		})
+	export namespace Reply {
+		export const schema = commentSchema.omit({ isInternalThread: true })
+		export type Props = z.input<typeof schema>
 		export type PropsInternal = z.output<typeof schema>
 	}
+
+	export const propsSchema = sharedSchema.extend({
+		replies: z.array(Reply.schema),
+	})
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
 
 	export namespace Actions {
 		export const schema = commentSchema
@@ -53,38 +55,45 @@ export namespace KottiComment {
 				isEditable: true,
 			})
 			.extend({
-				isEditing: z.boolean().default(false),
-				userData: commentSchema
-					.pick({ userName: true, userId: true })
-					.nullable()
-					.default(null),
+				showReply: z.boolean().default(false),
 			})
 		export type PropsInternal = z.output<typeof schema>
 	}
 
-	export namespace Reply {
-		export type Props = z.input<typeof sharedSchema>
-		export type PropsInternal = z.output<typeof sharedSchema>
+	export namespace Entry {
+		export const schema = sharedSchema.extend({
+			type: entryTypeSchema,
+			parentId: idSchema.optional(),
+		})
+		export type PropsInternal = z.output<typeof schema>
+	}
+
+	export namespace Header {
+		export const schema = commentSchema.pick({
+			createdAt: true,
+			isInternalThread: true,
+			isModified: true,
+			user: true,
+		})
+		export type PropsInternal = z.output<typeof schema>
 	}
 
 	export namespace Events {
-		type CommonPayload = {
-			id: NonNullable<KottiComment.PropsInternal['id']>
-			parentId: KottiComment.PropsInternal['id']
+		export type Add = {
+			message: PropsInternal['message']
+			parentId?: PropsInternal['id']
+			replyToUserId: PropsInternal['user']['id']
 		}
 
-		export type Delete = CommonPayload
-
-		export type Edit = CommonPayload & {
-			message: Kotti.Comment.PropsInternal['message']
+		export type Delete = {
+			id: PropsInternal['id']
+			parentId?: PropsInternal['id']
 		}
 
-		export type InternalEdit = Pick<Kotti.Comment.Events.Edit, 'message' | 'id'>
-
-		export type Submit = {
-			message: KottiComment.PropsInternal['message']
-			parentId: CommonPayload['parentId']
-			replyToUserId: KottiComment.PropsInternal['userId']
+		export type Edit = {
+			id: PropsInternal['id']
+			message: PropsInternal['message']
+			parentId?: PropsInternal['id']
 		}
 	}
 
@@ -95,14 +104,14 @@ export namespace KottiComment {
 		internalThreadLabel: string
 		postButton: string
 		replyButton: string
-		replyPlaceholder: string
+		replyToLabel: string
 	}
 }
 
 export namespace KottiCommentInput {
 	export const propsSchema = z.object({
 		isInline: z.boolean().default(false),
-		parentId: commentIdSchema.optional(),
+		parentId: idSchema.optional(),
 		placeholder: z.string().optional(),
 		replyToUserId: z.number().optional(),
 		userAvatar: z.string().optional(),

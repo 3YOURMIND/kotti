@@ -56,7 +56,7 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 			})),
 			handleSubmitClick: () => {
 				if (text.value === null) return
-				emit('submit', {
+				emit('add', {
 					message: text.value,
 					replyToUserId: props.replyToUserId,
 					parentId: props.parentId,

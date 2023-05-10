@@ -1,7 +1,7 @@
 <template>
-	<div v-if="!isEditing" class="kt-comment__actions">
+	<div class="kt-comment__actions">
 		<KtButton
-			v-if="userData !== null"
+			v-if="showReply"
 			class="kt-comment__actions__reply-button"
 			:label="translations.replyButton"
 			type="text"
@@ -34,13 +34,13 @@ import { KottiComment } from '../types'
 export default defineComponent<KottiComment.Actions.PropsInternal>({
 	name: 'CommentActions',
 	props: makeProps(KottiComment.Actions.schema),
-	setup(props, { emit }) {
+	setup(_, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
 		return {
 			onDelete: () => emit('delete'),
 			onEdit: () => emit('update:isEditing', true),
-			onReply: () => emit('reply', props.userData),
+			onReply: () => emit('reply'),
 			translations,
 		}
 	},
@@ -50,6 +50,5 @@ export default defineComponent<KottiComment.Actions.PropsInternal>({
 <style lang="scss" scoped>
 .kt-comment__actions {
 	display: flex;
-	margin: 0.2rem 0;
 }
 </style>

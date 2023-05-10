@@ -1,301 +1,343 @@
 <template lang="md">
-<ComponentInfo v-bind="{ component }" />
+    <ComponentInfo v-bind="{ component }" />
 
-## Example
+    ## Example
 
-<div class="element-example">
-	<KtComment
-		v-for="comment in comments"
-		:key="comment.id"
-		:createdTime="comment.createdTime"
-		:id="comment.id"
-		:isDeletable="comment.isDeletable"
-		:isEditable="comment.isEditable"
-		:message="comment.message"
-		:replies="comment.replies"
-		:userAvatar="comment.userAvatar"
-		:userId="comment.userId"
-		:userName="comment.userName"
-		@delete="handleDelete($event)"
-		@edit="handleEdit($event)"
-		@submit="handleSubmit($event)"
-	/>
-	<KtCommentInput
-		class="mt-16px"
-		placeholder="Add comment"
-		userAvatar='https://picsum.photos/120'
-		@submit="handleSubmit($event)"
-	/>
-</div>
+    <div class="element-example no-background">
+    	<KtComment
+    		v-for="comment in comments"
+    		:key="comment.id"
+    		v-bind="comment"
+    		@add="handleAdd($event)"
+    		@delete="handleDelete($event)"
+    		@edit="handleEdit($event)"
+    	/>
+    	<KtCommentInput
+    		class="mt-16px"
+    		placeholder="Add a comment"
+    		userAvatar='https://picsum.photos/120'
+    		@add="handleAdd($event)"
+    	/>
+    </div>
 
-```html
-<KtComment
-	v-for="comment in comments"
-	:key="comment.id"
-	:createdTime="comment.createdTime"
-	:id="comment.id"
-	:isDeletable="comment.isDeletable"
-	:isEditable="comment.isEditable"
-	:message="comment.message"
-	:replies="comment.replies"
-	:userAvatar="comment.userAvatar"
-	:userId="comment.userId"
-	:userName="comment.userName"
-	@delete="handleDelete($event)"
-	@edit="handleEdit($event)"
-	@submit="handlePost($event)"
-/>
-<KtCommentInput
-	class="mt-16px"
-	placeholder="Add comment"
-	userAvatar="https://picsum.photos/120"
-	@submit="handlePost($event)"
-/>
-```
+    ```html
+    <KtComment
+    	v-for="comment in comments"
+    	:key="comment.id"
+    	v-bind="comment"
+    	@add="handleAdd($event)"
+    	@delete="handleDelete($event)"
+    	@edit="handleEdit($event)"
+    />
+    <KtCommentInput
+    	class="mt-16px"
+    	placeholder="Add a comment"
+    	userAvatar="https://picsum.photos/120"
+    	@add="handleAdd($event)"
+    />
+    ```
 
-## Usage
+    ## Usage
 
-### Comment Object
+    ### Comment Object
 
-```js
-{
-	id: 1, // Comment ID
-	userId: 12,
-	userName: 'Margaret Atwood',
-	message: 'Marine Le Pen, a Fierce Campaigner',
-	userAvatar: 'https://picsum.photos/200',
-	createdTime: '2018-12-04T09:57:20+00:00',
-	isDeletable: true,
-	isEditable: true,
-	replies: [{
-		id: 2,
-		userId: 12,
-		userName: 'Margaret Atwood',
-		message: 'Marine Le Pen, a Fierce Campaigner',
-		userAvatar: 'https://picsum.photos/200',
-		createdTime: '2018-12-04T09:57:20+00:00',
-		isDeletable: false,
-		isEditable: false
-	}]
-}
-```
+    ```js
+    {
+    	createdAt: '2018-12-04 09:57',
+    	id: 1,
+    	isDeletable: true,
+    	isEditable: true,
+    	isInternalThread: true,
+    	isModified: true,
+    	message: 'Comment message',
+    	replies: [{
+    		createdAt: '2018-12-04 09:57',
+    		id: 2,
+    		isDeletable: false,
+    		isEditable: false
+    		isModified: true,
+    		message: 'Reply message',
+    		user: {
+    			avatar: 'https://picsum.photos/200',
+    			id: 102,
+    			name: 'User name',
+    		},
+    	}],
+    	user: {
+    		avatar: 'https://picsum.photos/230',
+    		id: 101,
+    		name: 'User name',
+    	},
+    }
+    ```
 
-### Payload Object
+    ### Payload Object
 
-```js
-// Submit Payload
-{
-	parentId: Number // If null => parent comment
-	replyToUserId: Number // Reserved variable for @ function
-	message: String
-}
+    ```js
+    // Add Payload
+    {
+    	message: String
+    	parentId?: Number | String
+    	replyToUserId: Number | String
+    }
 
-// Edit Payload
-{
-	id: Number
-	message: String
-}
+    // Delete Payload
+    {
+    	id: Number | String
+    	parentId?: Number | String
+    }
 
-// Delete Payload
-{
-}
-```
+    // Edit Payload
+    {
+    	id: Number | String
+    	message: String
+    	parentId?: Number | String
+    }
+    ```
 
-## Parsing HTML
+    ## Parsing HTML
 
-KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop
+    KtComment will escape all tags by default but you can opt out and pass your own parser by using the parser prop
 
-> Remember to **escape malicious tags** to prevent [Cross-site-scripting](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks,
-> you can use KtComment's default parser function with KtComment.defaultParser
+    > Remember to **escape malicious tags** to prevent [Cross-site-scripting](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks,
+    > you can use KtComment's default parser function with KtComment.defaultParser
 
-```js
-methods: {
-	dangerouslyOverrideParser: msg => escape(msg).replace(/\n/g, '<br>'),
-	// alternativly you could
-	dangerouslyOverrideParser: msg => escape(msg),
-	postEscapeParser: msg => msg.replace(/\n/g, '<br/>'),
-	// or just
-	postEscapeParser: msg => msg.replace(/\n/g, '<br/>'),
-}
-```
+    ```js
+    methods: {
+    	dangerouslyOverrideParser: msg => escape(msg).replace(/\n/g, '<br>'),
+    	// alternativly you could
+    	dangerouslyOverrideParser: msg => escape(msg),
+    	postEscapeParser: msg => msg.replace(/\n/g, '<br/>'),
+    	// or just
+    	postEscapeParser: msg => msg.replace(/\n/g, '<br/>'),
+    }
+    ```
 
-<div class="element-example">
-	<KtComment
-		v-for="comment in comments"
-		:key="comment.id"
-		:createdTime="comment.createdTime"
-		:dangerouslyOverrideParser="dangerouslyOverrideParser"
-		:id="comment.id"
-		:isDeletable="comment.isDeletable"
-		:isEditable="comment.isEditable"
-		:message="comment.message"
-		:postEscapeParser="postEscapeParser"
-		:replies="comment.replies"
-		:userAvatar="comment.userAvatar"
-		:userId="comment.userId"
-		:userName="comment.userName"
-		@delete="handleDelete($event)"
-		@edit="handleEdit($event)"
-		@submit="handleSubmit($event)"
-	/>
-	<KtCommentInput
-		class="mt-16px"
-		placeholder="Add comment"
-		userAvatar='https://picsum.photos/120'
-		@submit="handleSubmit($event)"
-	/>
-</div>
+    <div class="element-example no-background">
+    	<KtComment
+    		v-for="comment in comments"
+    		:key="comment.id"
+    		v-bind="comment"
+    		:dangerouslyOverrideParser="dangerouslyOverrideParser"
+    		:postEscapeParser="postEscapeParser"
+    		@add="handleAdd($event)"
+    		@delete="handleDelete($event)"
+    		@edit="handleEdit($event)"
+    	/>
+    	<KtCommentInput
+    		class="mt-16px"
+    		placeholder="Add a comment"
+    		userAvatar='https://picsum.photos/120'
+    		@add="handleAdd($event)"
+    	/>
+    </div>
 
-### Event
+    ### Events
 
-| Event Name | Component        | Payload   | Description     |
-| ---------- | ---------------- | --------- | --------------- |
-| `@submit`  | `KtCommentInput` | See above | Add new comment |
-| `@delete`  | `KtComment`      | See above | Delete comment  |
-| `@edit`    | `KtComment`      | See above | Edit comment    |
+    | Event Name | Component                     | Payload   | Description     |
+    | ---------- | ----------------------------- | --------- | --------------- |
+    | `@add`     | `KtComment`, `KtCommentInput` | See above | Add new comment |
+    | `@delete`  | `KtComment`                   | See above | Delete comment  |
+    | `@edit`    | `KtComment`                   | See above | Edit comment    |
 </template>
 
-<script>
-import { KtComment } from '@3yourmind/kotti-ui'
+<script lang="ts">
+import { KtComment, Kotti } from '@3yourmind/kotti-ui'
+import { defineComponent, ref } from '@vue/composition-api'
 import escape from 'lodash/escape'
 
-import ComponentInfo from '~/components/ComponentInfo'
+import ComponentInfo from '~/components/ComponentInfo.vue'
 
-export default {
+export default defineComponent({
 	name: 'DocumentationPageUsageComponentsComment',
 	components: {
 		ComponentInfo,
 	},
-	data() {
-		/* eslint-disable sonarjs/no-duplicate-string */
-		return {
-			currentUuid: '',
-			currentUser: {
-				userAvatar: 'https://picsum.photos/48',
-				userId: 3,
-				userName: 'Junyu',
-			},
-			comments: [
-				{
-					createdTime: '2018-12-04T09:57:20+00:00',
-					id: 1,
-					isDeletable: true,
-					isEditable: true,
-					message: `We miss you, David`,
-					replies: [
-						{
-							createdTime: '2018-03-20',
+	setup() {
+		const comments = ref<Array<Kotti.Comment.Props>>([
+			{
+				createdAt: '2018-03-21 09:49',
+				id: 1,
+				isDeletable: true,
+				isEditable: true,
+				isInternalThread: true,
+				message: `We miss you, David`,
+				replies: [
+					{
+						createdAt: '2018-03-21 09:57',
+						id: 2,
+						isDeletable: false,
+						isEditable: false,
+						message: 'Join Bright Side Now!<br/>Join Bright Side Now!',
+						user: {
+							avatar: 'https://picsum.photos/100',
+							id: 13,
+							name: 'Benni',
+						},
+					},
+					{
+						createdAt: '2018-03-21 10:05',
+						id: 3,
+						isDeletable: false,
+						isEditable: true,
+						isModified: true,
+						message: 'RE: Your trip to Montreal',
+						user: {
+							avatar: 'https://picsum.photos/120',
 							id: 2,
-							isDeletable: false,
-							isEditable: false,
-							message:
-								'Join Bright Side Now!<br/>Join Bright Side Now! Join Bright Side Now! Join Bright Side Now!',
-							userAvatar: 'https://picsum.photos/100',
-							userId: 13,
-							userName: 'Benni',
+							name: 'Cooky',
 						},
-						{
-							createdTime: '2018-03-20',
-							id: 3,
-							isDeletable: false,
-							isEditable: true,
-							message: 'RE: Your trip to Montreal',
-							userAvatar: 'https://picsum.photos/120',
-							userId: 2,
-							userName: 'Cooky',
+					},
+					{
+						createdAt: '2018-03-21 10:06',
+						id: 4,
+						isDeletable: true,
+						isEditable: false,
+						message: 'PS: Bring a jacket!',
+						user: {
+							avatar: 'https://picsum.photos/120',
+							id: 2,
+							name: 'Cooky',
 						},
-						{
-							createdTime: '2018-03-20',
-							id: 4,
-							isDeletable: true,
-							isEditable: false,
-							message: 'PS: Bring a jacket!',
-							userAvatar: 'https://picsum.photos/120',
-							userId: 2,
-							userName: 'Cooky',
-						},
-					],
-					userAvatar: 'https://picsum.photos/200',
-					userId: 12,
-					userName: 'Margaret Atwood',
+					},
+				],
+				user: {
+					avatar: 'https://picsum.photos/200',
+					id: 12,
+					name: 'Margaret',
 				},
-			],
+			},
+			{
+				createdAt: '2018-03-23 11:20',
+				id: 5,
+				isDeletable: true,
+				isEditable: true,
+				message: `BBQ tonite?`,
+				replies: [
+					{
+						createdAt: '2018-03-23 11:43',
+						id: 6,
+						isDeletable: true,
+						isEditable: true,
+						message: `I'm in!`,
+						user: {
+							avatar: 'https://picsum.photos/210',
+							id: 9,
+							name: 'Janis',
+						},
+					},
+				],
+				user: {
+					avatar: 'https://picsum.photos/230',
+					id: 6,
+					name: 'Lemmy',
+				},
+			},
+		])
+		const currentUser = ref<Kotti.Comment.User>({
+			avatar: 'https://picsum.photos/10',
+			id: 3,
+			name: 'James',
+		})
+
+		const buildNewComment = (
+			message: Kotti.Comment.Props['message'],
+		): Kotti.Comment.Props => ({
+			createdAt: new Date().toDateString(),
+			// eslint-disable-next-line no-magic-numbers
+			id: Math.floor(Math.random() * 101),
+			isDeletable: true,
+			isEditable: true,
+			message,
+			replies: [],
+			user: currentUser.value,
+		})
+		const editComment =
+			(payload: Kotti.Comment.Events.Edit) =>
+			<T extends Kotti.Comment.Props | Kotti.Comment.Reply.Props>(
+				comment: T,
+			): T =>
+				comment.id === payload.id
+					? {
+							...comment,
+							isModified: true,
+							message: payload.message,
+					  }
+					: comment
+
+		return {
+			comments,
 			component: KtComment,
-		}
-		/* eslint-enable sonarjs/no-duplicate-string */
-	},
-	computed: {
-		replyName() {
-			const _comment = this.comments.find(
-				(comment) => comment.uuid === this.currentUuid,
-			)
-			return _comment ? _comment.name : null
-		},
-	},
-	methods: {
-		dangerouslyOverrideParser: (msg) => escape(msg),
-		postEscapeParser: (msg) => msg.replace(/\n/g, '</br>'),
-		handleEdit({ id, message, parentId }) {
-			if (parentId === null) {
-				const commentIndex = this.comments.findIndex(
-					(comment) => comment.id === id,
-				)
+			dangerouslyOverrideParser: (msg: string) => escape(msg),
+			handleAdd(payload: Kotti.Comment.Events.Add) {
+				if (!payload.parentId) {
+					comments.value.push(buildNewComment(payload.message))
+					return
+				}
 
-				return (this.comments = [
-					...this.comments.slice(0, commentIndex),
-					{ ...this.comments[commentIndex], message },
-					...this.comments.slice(commentIndex + 1),
-				])
-			}
-
-			const parentCommentIndex = this.comments.findIndex(
-				(comment) => comment.id === parentId,
-			)
-			const oldReplies = this.comments[parentCommentIndex].replies
-			const replyIndex = oldReplies.findIndex((reply) => reply.id === id)
-			const newReplies = [
-				...oldReplies.slice(0, replyIndex),
-				{ ...oldReplies[replyIndex], message },
-				...oldReplies.slice(replyIndex + 1),
-			]
-
-			this.comments = [
-				...this.comments.slice(0, parentCommentIndex),
-				{ ...this.comments[parentCommentIndex], replies: newReplies },
-				...this.comments.slice(parentCommentIndex + 1),
-			]
-		},
-		handleSubmit(payload) {
-			const _message = {
-				...this.currentUser,
-				// eslint-disable-next-line no-magic-numbers
-				id: Math.floor(Math.random() * 101),
-				message: payload.message,
-				createdTime: new Date().toDateString(),
-				replies: [],
-			}
-			const parentComment = this.comments.find(
-				(comment) => comment.id === payload.parentId,
-			)
-			if (parentComment) {
-				parentComment.replies.push(_message)
-				return
-			}
-			this.comments.push(_message)
-		},
-		handleDelete(payload) {
-			if (payload.parentId) {
-				const parentComment = this.comments.find(
+				const parentComment = comments.value.find(
 					(comment) => comment.id === payload.parentId,
 				)
+
+				if (!parentComment)
+					throw new Error(`Comment not found, comment id: ${payload.parentId}`)
+
+				parentComment.replies.push(buildNewComment(payload.message))
+			},
+			handleEdit(payload: Kotti.Comment.Events.Edit) {
+				if (!payload.parentId) {
+					if (!comments.value.find((comment) => comment.id === payload.id))
+						throw new Error(`Comment not found, comment id: ${payload.id}`)
+
+					comments.value = comments.value.map(editComment(payload))
+					return
+				}
+
+				const parentComment = comments.value.find(
+					(comment) => comment.id === payload.parentId,
+				)
+
+				if (!parentComment)
+					throw new Error(`Comment not found, comment id: ${payload.parentId}`)
+
+				if (!parentComment.replies.find((reply) => reply.id === payload.id))
+					throw new Error(`Comment not found, comment id: ${payload.id}`)
+
+				parentComment.replies = parentComment.replies.map(editComment(payload))
+			},
+			handleDelete(payload: Kotti.Comment.Events.Delete) {
+				if (!payload.parentId) {
+					if (!comments.value.find((comment) => comment.id === payload.id))
+						throw new Error(`Comment not found, comment id: ${payload.id}`)
+
+					comments.value = comments.value.filter(
+						(comment) => comment.id !== payload.id,
+					)
+					return
+				}
+
+				const parentComment = comments.value.find(
+					(comment) => comment.id === payload.parentId,
+				)
+
+				if (!parentComment)
+					throw new Error(`Comment not found, comment id: ${payload.parentId}`)
+
+				if (!parentComment.replies.find((reply) => reply.id === payload.id))
+					throw new Error(`Comment not found, comment id: ${payload.id}`)
+
 				parentComment.replies = parentComment.replies.filter(
 					(reply) => reply.id !== payload.id,
 				)
-			}
-			this.comments = this.comments.filter(
-				(comment) => comment.id !== payload.id,
-			)
-		},
+			},
+			postEscapeParser: (msg: string) => msg.replace(/\n/g, '</br>'),
+		}
 	},
-}
+})
 </script>
+
+<style lang="scss" scoped>
+.no-background {
+	background: unset;
+}
+</style>

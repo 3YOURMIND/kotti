@@ -18,14 +18,15 @@ import { defineComponent, ref, watch } from '@vue/composition-api'
 
 import { KtButton } from '../../kotti-button'
 import { KtButtonGroup } from '../../kotti-button-group'
-import { Kotti } from '../../types'
+import { KottiComment } from '../types'
 
 export default defineComponent<{
 	dangerouslyOverrideParser: () => void
-	id: Kotti.Comment.PropsInternal['id']
+	id: KottiComment.PropsInternal['id']
 	isEditing: boolean
-	postEscapeParser: () => void
 	message: string
+	parentId?: KottiComment.PropsInternal['id']
+	postEscapeParser: () => void
 }>({
 	name: 'CommentInlineEdit',
 	components: {
@@ -33,11 +34,12 @@ export default defineComponent<{
 		KtButtonGroup,
 	},
 	props: {
-		dangerouslyOverrideParser: { type: Function, required: true },
-		id: { type: Number, required: true },
-		isEditing: { type: Boolean, required: true },
-		postEscapeParser: { type: Function, required: true },
-		message: { type: String, required: true },
+		dangerouslyOverrideParser: { required: true, type: Function },
+		id: { required: true, type: [Number, String] },
+		isEditing: { default: false, type: Boolean },
+		message: { required: true, type: String },
+		parentId: { required: false, type: [Number, String] },
+		postEscapeParser: { required: true, type: Function },
 	},
 	setup(props, { emit }) {
 		const inlineValue = ref<string | null>(null)
@@ -58,10 +60,12 @@ export default defineComponent<{
 
 				if (inlineValue.value === null) return
 
-				const payload: Kotti.Comment.Events.InternalEdit = {
+				const payload: KottiComment.Events.Edit = {
 					id: props.id,
 					message: inlineValue.value,
+					parentId: props.parentId,
 				}
+
 				emit('edit', payload)
 			},
 			handleCancel: () => {
