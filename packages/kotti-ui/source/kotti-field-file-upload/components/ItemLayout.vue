@@ -1,7 +1,7 @@
 <template>
 	<div class="kt-field-file-upload__file-item">
 		<div class="kt-field-file-upload__file-item__wrapper">
-			<div>
+			<div class="kt-field-file-upload__file-item__wrapper__text">
 				<div class="kt-field-file-upload__file-item__name" v-text="name" />
 				<div class="kt-field-file-upload__file-item__description">
 					<slot name="description" />
@@ -35,6 +35,7 @@ export default defineComponent({
 
 	&__actions {
 		display: flex;
+		flex: 0 0 auto;
 		align-items: center;
 	}
 
@@ -64,6 +65,10 @@ export default defineComponent({
 		gap: var(--unit-2);
 		align-items: center;
 		justify-content: space-between;
+
+		&__text {
+			word-break: break-word;
+		}
 	}
 }
 </style>
