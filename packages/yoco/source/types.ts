@@ -95,6 +95,7 @@ export enum Icon {
 	SAVE = 'save',
 	SCALE = 'scale',
 	SEARCH = 'search',
+	SEND = 'send',
 	SETTING = 'setting',
 	SHARE = 'share',
 	SHIPPING = 'shipping',
