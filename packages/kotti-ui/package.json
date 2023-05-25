@@ -8,7 +8,7 @@
 	},
 	"dependencies": {
 		"@3yourmind/vue-use-tippy": "1.x",
-		"@3yourmind/yoco": "^2.4.3",
+		"@3yourmind/yoco": "^2.4.4",
 		"big.js": "^6.1.1",
 		"deep-eql": "^4.0.0",
 		"deepmerge": "^4.2.2",
