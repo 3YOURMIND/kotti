@@ -19,22 +19,17 @@ export default defineComponent<KottiButtonGroup.PropsInternal>({
 
 .kt-button-group {
 	font-size: 0; /* Fix for inline element space https://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
+
 	.kt-button {
 		font-size: $font-size;
 		border-radius: 0;
 
-		&-wrapper {
-			&:first-of-type {
-				.kt-button {
-					border-radius: var(--border-radius) 0 0 var(--border-radius);
-				}
-			}
+		&:first-of-type {
+			border-radius: var(--border-radius) 0 0 var(--border-radius);
+		}
 
-			&:last-of-type {
-				.kt-button {
-					border-radius: 0 var(--border-radius) var(--border-radius) 0;
-				}
-			}
+		&:last-of-type {
+			border-radius: 0 var(--border-radius) var(--border-radius) 0;
 		}
 	}
 }

@@ -1,23 +1,20 @@
 <template>
-	<div class="kt-button-wrapper" style="display: contents">
-		<button
-			ref="triggerRef"
-			v-bind="$attrs"
-			:class="mainClasses"
-			role="button"
-			:type="isSubmit ? 'submit' : 'button'"
-			@click="handleClick"
-		>
-			<i v-if="isLoading" class="kt-circle-loading" />
-			<i v-if="hasIconLeft" class="yoco" v-text="icon" />
-			<span v-if="hasSlot">
-				<slot />
-			</span>
-			<span v-else-if="label !== null" v-text="label" />
-			<i v-if="hasIconRight" class="yoco" v-text="icon" />
-		</button>
-		<div v-if="showHelpText" ref="contentRef" v-text="helpText" />
-	</div>
+	<button
+		ref="helpTextTriggerRef"
+		:class="mainClasses"
+		role="button"
+		:type="isSubmit ? 'submit' : 'button'"
+		@click="handleClick"
+	>
+		<i v-if="isLoading" class="kt-circle-loading" />
+		<i v-if="hasIconLeft" class="yoco" v-text="icon" />
+		<span v-if="hasSlot">
+			<slot />
+		</span>
+		<span v-else-if="label !== null" v-text="label" />
+		<i v-if="hasIconRight" class="yoco" v-text="icon" />
+		<div v-if="showHelpText" ref="helpTextContentRef" v-text="helpText" />
+	</button>
 </template>
 
 <script lang="ts">
@@ -32,11 +29,10 @@ import { KottiButton } from './types'
 
 export default defineComponent<KottiButton.PropsInternal>({
 	name: 'KtButton',
-	inheritAttrs: false,
 	props: makeProps(KottiButton.propsSchema),
 	setup(props, { emit, slots }) {
-		const contentRef = ref<Element | null>(null)
-		const triggerRef = ref<Element | null>(null)
+		const helpTextContentRef = ref<Element | null>(null)
+		const helpTextTriggerRef = ref<Element | null>(null)
 
 		const hasSlot = computed(() => Boolean(slots.default))
 
@@ -51,12 +47,14 @@ export default defineComponent<KottiButton.PropsInternal>({
 		const isToggle = computed(() => props.toggleStatus !== null)
 
 		useTippy(
-			triggerRef,
+			helpTextTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
 				arrow: roundArrow,
 				content: props.helpText
-					? (contentRef.value as NonNullable<typeof contentRef.value>)
+					? (helpTextContentRef.value as NonNullable<
+							typeof helpTextContentRef.value
+					  >)
 					: undefined,
 				interactive: true,
 				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
@@ -85,7 +83,6 @@ export default defineComponent<KottiButton.PropsInternal>({
 		})
 
 		return {
-			contentRef,
 			handleClick: (event: Event) => {
 				if (isToggle.value)
 					emit(
@@ -107,6 +104,8 @@ export default defineComponent<KottiButton.PropsInternal>({
 					props.iconPosition === KottiButton.IconPosition.RIGHT,
 			),
 			hasSlot,
+			helpTextContentRef,
+			helpTextTriggerRef,
 			mainClasses: computed(() => ({
 				'kt-button': true,
 				'kt-button--has-content': props.label !== null || hasSlot.value,
@@ -118,7 +117,6 @@ export default defineComponent<KottiButton.PropsInternal>({
 				[`kt-button--type-${props.type}`]: true,
 			})),
 			showHelpText,
-			triggerRef,
 		}
 	},
 })
