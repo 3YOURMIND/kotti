@@ -23,14 +23,8 @@
 					<component
 						:is="valueComponent"
 						v-if="isValueFieldVisible"
-						:collapseTagsAfter="1"
-						:currency="valueCurrency"
-						:decimalPlaces="valueDecimalPlaces"
+						v-bind="valueComponentProps"
 						formKey="value"
-						:options="valueOptions"
-						:prefix="valuePrefix"
-						:step="valueStep"
-						:suffix="valueSuffix"
 					/>
 				</div>
 			</template>
@@ -124,62 +118,8 @@ export default defineComponent<{
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
-		const isOperationSelectDisabled = computed(
-			() => operationOptions.value.length <= 1,
-		)
-		const isValueFieldVisible = computed(
-			() =>
-				props.filter &&
-				props.column &&
-				!isEmptyOperation(props.filter.operation, props.column.type),
-		)
-
-		const label = computed(() =>
-			props.isFirstItem
-				? translations.value.whereLabel
-				: translations.value.andLabel,
-		)
 		const operationOptions = computed(() =>
 			props.column ? getOperationOptions(props.column) : [],
-		)
-		const valueComponent = computed(() => {
-			if (!props.column?.type) return null
-			return getValueComponent(props.column.type)
-		})
-		const valueCurrency = computed(() =>
-			props.column?.type === KottiFilters.FilterType.CURRENCY
-				? props.column.currency
-				: undefined,
-		)
-		const valueOptions = computed(() =>
-			props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||
-			props.column?.type === KottiFilters.FilterType.SINGLE_ENUM
-				? props.column.options
-				: undefined,
-		)
-		const valueDecimalPlaces = computed(() =>
-			props.column?.type === KottiFilters.FilterType.FLOAT
-				? props.column.decimalPlaces
-				: props.column?.type === KottiFilters.FilterType.INTEGER
-				? 0
-				: undefined,
-		)
-		const valuePrefix = computed(() =>
-			props.column?.type === KottiFilters.FilterType.FLOAT
-				? props.column.prefix
-				: undefined,
-		)
-		const valueStep = computed(() =>
-			props.column?.type === KottiFilters.FilterType.FLOAT
-				? props.column.step
-				: props.column?.type === KottiFilters.FilterType.INTEGER
-				? 1
-				: undefined,
-		)
-		const valueSuffix = computed(() =>
-			props.column?.type === KottiFilters.FilterType.FLOAT
-				? props.column.suffix
-				: undefined,
 		)
 
 		const handleRemove = () => emit('remove')
@@ -203,19 +143,69 @@ export default defineComponent<{
 		return {
 			handleRemove,
 			handleSetFilter,
-			isOperationSelectDisabled,
-			isValueFieldVisible,
+			isOperationSelectDisabled: computed(
+				() => operationOptions.value.length <= 1,
+			),
+			isValueFieldVisible: computed(
+				() =>
+					props.filter &&
+					props.column &&
+					!isEmptyOperation(props.filter.operation, props.column.type),
+			),
 			KottiField,
 			KottiFilters,
-			label,
+			label: computed(() =>
+				props.isFirstItem
+					? translations.value.whereLabel
+					: translations.value.andLabel,
+			),
 			operationOptions,
-			valueComponent,
-			valueCurrency,
-			valueDecimalPlaces,
-			valueOptions,
-			valuePrefix,
-			valueStep,
-			valueSuffix,
+			valueComponent: computed(() => {
+				if (!props.column?.type) return null
+				return getValueComponent(props.column.type)
+			}),
+			valueComponentProps: computed(() => ({
+				collapseTagsAfter:
+					props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||
+					props.column?.type === KottiFilters.FilterType.SINGLE_ENUM
+						? 1
+						: undefined,
+				currency:
+					props.column?.type === KottiFilters.FilterType.CURRENCY
+						? props.column.currency
+						: undefined,
+				decimalPlaces:
+					props.column?.type === KottiFilters.FilterType.FLOAT
+						? props.column.decimalPlaces
+						: props.column?.type === KottiFilters.FilterType.INTEGER
+						? 0
+						: undefined,
+				maximum:
+					props.column?.type === KottiFilters.FilterType.FLOAT
+						? props.column.maximum
+						: undefined,
+				minimum:
+					props.column?.type === KottiFilters.FilterType.FLOAT
+						? props.column.minimum
+						: undefined,
+				options:
+					props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||
+					props.column?.type === KottiFilters.FilterType.SINGLE_ENUM
+						? props.column.options
+						: undefined,
+				prefix:
+					props.column?.type === KottiFilters.FilterType.FLOAT
+						? props.column.prefix
+						: undefined,
+				step:
+					props.column?.type === KottiFilters.FilterType.FLOAT
+						? props.column.step
+						: undefined,
+				suffix:
+					props.column?.type === KottiFilters.FilterType.FLOAT
+						? props.column.suffix
+						: undefined,
+			})),
 			Yoco,
 		}
 	},

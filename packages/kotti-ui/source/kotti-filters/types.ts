@@ -127,13 +127,12 @@ export namespace KottiFilters {
 
 		export type Float<OPERATION extends Operation.Float = Operation.Float> =
 			Common & {
-				decimalPlaces?: KottiFieldNumber.Props['decimalPlaces']
 				operations: OPERATION[]
-				prefix?: KottiFieldNumber.Props['prefix']
-				step?: KottiFieldNumber.Props['step']
-				suffix?: KottiFieldNumber.Props['suffix']
 				type: FilterType.FLOAT
-			}
+			} & Pick<
+					KottiFieldNumber.Props,
+					'decimalPlaces' | 'maximum' | 'minimum' | 'prefix' | 'step' | 'suffix'
+				>
 
 		export type Integer<
 			OPERATION extends Operation.Integer = Operation.Integer,
