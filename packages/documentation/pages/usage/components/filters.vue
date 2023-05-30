@@ -64,6 +64,18 @@
     						label="step"
     					/>
     				</div>
+    				<div class="field-row">
+    					<KtFieldNumber
+    						formKey="numberMaximum"
+    						isOptional
+    						label="maximum"
+    					/>
+    					<KtFieldNumber
+    						formKey="numberMinimum"
+    						isOptional
+    						label="minimum"
+    					/>
+    				</div>
     				<KtFieldSingleSelect
     					formKey="currencyCurrency"
     					helpText='Available Currencies can be defined via <KtI18nContext :currencyMap="..."/>'
@@ -138,6 +150,8 @@ export default defineComponent({
 			currencyCurrency: string
 			locale: Kotti.I18n.SupportedLanguages
 			numberDecimalPlaces: Kotti.FieldNumber.Props['decimalPlaces'] | null
+			numberMaximum: Kotti.FieldNumber.Props['maximum'] | null
+			numberMinimum: Kotti.FieldNumber.Props['minimum'] | null
 			numberPrefix: Kotti.FieldNumber.Props['prefix']
 			numberStep: Kotti.FieldNumber.Props['step'] | null
 			numberSuffix: Kotti.FieldNumber.Props['suffix']
@@ -149,6 +163,8 @@ export default defineComponent({
 			currencyCurrency: 'USD',
 			locale: 'en-US',
 			numberDecimalPlaces: null,
+			numberMaximum: null,
+			numberMinimum: null,
 			numberPrefix: null,
 			numberStep: null,
 			numberSuffix: null,
@@ -191,6 +207,8 @@ export default defineComponent({
 						decimalPlaces: settings.value.numberDecimalPlaces ?? undefined,
 						key: 'floatColumn',
 						label: 'Float Column',
+						maximum: settings.value.numberMaximum ?? undefined,
+						minimum: settings.value.numberMinimum ?? undefined,
 						operations: [
 							Kotti.Filters.Operation.Float.EQUAL,
 							Kotti.Filters.Operation.Float.GREATER_THAN,
