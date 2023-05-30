@@ -12,6 +12,7 @@
 				:key="reply.id"
 				v-bind="reply"
 				:dangerouslyOverrideParser="dangerouslyOverrideParser"
+				:dataTest="`${rootDataTest}.reply.${reply.id}`"
 				isReply
 				:parentId="id"
 				:postEscapeParser="postEscapeParser"
@@ -23,6 +24,7 @@
 				v-if="userToReply"
 				v-bind="{ isInternal, placeholder, tabIndex, userAvatar }"
 				autofocus
+				:dataTest="rootDataTest"
 				isReply
 				:parentId="id"
 				:replyToUserId="userToReply.id"
@@ -56,6 +58,12 @@ export default defineComponent<KottiComment.PropsInternal>({
 
 		const userToReply = ref<KottiComment.User | null>(null)
 
+		const rootDataTest = computed(() =>
+			props.dataTest
+				? `${props.dataTest}.comment.${props.id}`
+				: `comment.${props.id}`,
+		)
+
 		return {
 			classes: computed(() => ({
 				'kt-comment': true,
@@ -63,6 +71,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 			})),
 			commentProps: computed<KottiComment.Entry.PropsInternal>(() => ({
 				...omit(props, 'replies'),
+				dataTest: rootDataTest.value,
 				isReply: false,
 			})),
 			onAdd: (payload: KottiComment.Events.Add) => {
@@ -79,6 +88,7 @@ export default defineComponent<KottiComment.PropsInternal>({
 					? [translations.value.replyToLabel, userToReply.value.name].join(' ')
 					: undefined,
 			),
+			rootDataTest,
 			showCommentThread: computed(
 				() => props.replies.length > 0 || userToReply.value !== null,
 			),

@@ -9,6 +9,7 @@
 				v-bind="{
 					allowInternal,
 					dangerouslyOverrideParser,
+					dataTest,
 					id,
 					isEditing,
 					isInternal,
@@ -23,7 +24,7 @@
 			/>
 			<CommentActions
 				v-if="!isEditing"
-				v-bind="{ isDeletable, isEditable, isReply, tabIndex }"
+				v-bind="{ dataTest, isDeletable, isEditable, isReply, tabIndex }"
 				@delete="onDelete"
 				@reply="onReply"
 				@update:isEditing="isEditing = $event"

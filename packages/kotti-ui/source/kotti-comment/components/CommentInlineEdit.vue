@@ -3,16 +3,23 @@
 		<CommentTextArea
 			v-if="isEditing"
 			v-model="_message"
-			:allowInternal="allowInternal"
+			v-bind="{
+				allowInternal,
+				dataTest,
+				isInternal,
+				isReply,
+				tabIndex,
+			}"
 			autofocus
-			:isInternal="isInternal"
-			:isReply="isReply"
-			:tabIndex="tabIndex"
 			@cancel="onCancel"
 			@confirm="onConfirm"
 			@toggleInternal="onToggleInternal"
 		/>
-		<div v-else class="kt-comment__inline-edit__message">
+		<div
+			v-else
+			class="kt-comment__inline-edit__message"
+			:data-test="`${dataTest}.message`"
+		>
 			<!-- eslint-disable vue/no-v-html -->
 			<span v-html="postEscapeParser(dangerouslyOverrideParser(message))" />
 			<!-- eslint-enable vue/no-v-html -->

@@ -4,6 +4,7 @@
 		<CommentTextArea
 			v-model="_message"
 			v-bind="{ allowInternal, autofocus, isReply, placeholder, tabIndex }"
+			:dataTest="_dataTest"
 			:isInternal="_isInternal"
 			@cancel="onCancel"
 			@confirm="onConfirm"
@@ -13,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 
 import { makeProps } from '../make-props'
 
@@ -38,6 +39,10 @@ export default defineComponent<KottiCommentInput.PropsInternal>({
 		)
 
 		return {
+			_dataTest: computed(() => {
+				const commentType = `new-${props.isReply ? 'reply' : 'comment'}`
+				return props.dataTest ? `${props.dataTest}.${commentType}` : commentType
+			}),
 			_isInternal,
 			_message,
 			onCancel: () => {

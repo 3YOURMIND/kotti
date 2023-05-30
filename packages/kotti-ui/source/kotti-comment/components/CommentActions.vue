@@ -3,6 +3,7 @@
 		<KtButton
 			v-if="!isReply"
 			class="kt-comment__actions__reply-button"
+			:data-test="`${dataTest}.reply-button`"
 			:label="translations.replyButton"
 			:tabIndex="tabIndex"
 			type="text"
@@ -11,6 +12,7 @@
 		<KtButton
 			v-if="isEditable"
 			class="kt-comment__actions__edit-button"
+			:data-test="`${dataTest}.edit-button`"
 			:label="translations.editButton"
 			:tabIndex="tabIndex"
 			type="text"
@@ -19,6 +21,7 @@
 		<KtButton
 			v-if="isDeletable"
 			class="kt-comment__actions__delete-button"
+			:data-test="`${dataTest}.delete-button`"
 			:label="translations.deleteButton"
 			:tabIndex="tabIndex"
 			type="text"

@@ -3,6 +3,7 @@
 		<div
 			ref="containerRef"
 			class="kt-comment__text-area__container"
+			:data-test="`${dataTest}.input-container`"
 			@focusin="hasFocus = true"
 			@focusout="hasFocus = false"
 			@keydown.esc.stop.prevent="onCancel"
@@ -19,6 +20,7 @@
 			<div class="kt-comment__text-area__actions">
 				<template v-if="allowInternal && !isReply">
 					<KtButton
+						:data-test="`${dataTest}.toggle-internal-button`"
 						:icon="Yoco.Icon.PERMISSION"
 						:tabIndex="hasFocus ? tabIndex : -1"
 						:toggleStatus="internalToggleStatus"
@@ -28,6 +30,7 @@
 					<div class="kt-comment__text-area__actions__divider" />
 				</template>
 				<KtButton
+					:data-test="`${dataTest}.confirm-button`"
 					:disabled="isEmpty"
 					:icon="Yoco.Icon.SEND"
 					:tabIndex="hasFocus ? tabIndex : -1"
