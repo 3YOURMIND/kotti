@@ -18,6 +18,7 @@
 				v-bind="comment"
 				allowInternal
 				class="mb-block"
+				dataTest="comments"
 				:tabIndex="1"
 				:userAvatar="currentUser.avatar"
 				@add="handleAdd($event)"
@@ -26,6 +27,7 @@
 			/>
 			<KtCommentInput
 				allowInternal
+				dataTest="comments"
 				placeholder="Add a comment"
 				:tabIndex="1"
 				:userAvatar="currentUser.avatar"
@@ -38,16 +40,18 @@
 	:key=&quot;comment.id&quot;
 	v-bind=&quot;comment&quot;
 	allowInternal
-	:tabIndex="1"
+	dataTest=&quot;comments&quot;
+	:tabIndex=&quot;1&quot;
 	:userAvatar=&quot;currentUser.avatar&quot;
 	@add=&quot;handleAdd($event)&quot;
 	@delete=&quot;handleDelete($event)&quot;
 	@edit=&quot;handleEdit($event)&quot;
 /&gt;
 &lt;KtCommentInput
-	placeholder=&quot;Add a comment&quot;
 	allowInternal
-	:tabIndex="1"
+	dataTest=&quot;comments&quot;
+	placeholder=&quot;Add a comment&quot;
+	:tabIndex=&quot;1&quot;
 	:userAvatar=&quot;currentUser.avatar&quot;
 	@add=&quot;handleAdd($event)&quot;
 /&gt;

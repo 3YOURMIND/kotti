@@ -27,6 +27,7 @@ export namespace KottiComment {
 
 	const sharedSchema = commentSchema.extend({
 		allowInternal: z.boolean().default(false),
+		dataTest: z.string().optional(),
 		dangerouslyOverrideParser: parseFunctionSchema.default(defaultParser),
 		postEscapeParser: parseFunctionSchema.default(defaultPostEscapeParser),
 		tabIndex: z.number().default(0),
@@ -47,6 +48,7 @@ export namespace KottiComment {
 
 	export namespace Entry {
 		export const schema = sharedSchema.omit({ userAvatar: true }).extend({
+			dataTest: z.string(), // Override dataTest and make it required
 			isReply: z.boolean().default(false),
 			parentId: idSchema.optional(),
 		})
@@ -62,6 +64,7 @@ export namespace KottiComment {
 			})
 			.merge(
 				Entry.schema.pick({
+					dataTest: true,
 					isReply: true,
 				}),
 			)
@@ -97,6 +100,7 @@ export namespace KottiComment {
 			})
 			.merge(
 				Entry.schema.pick({
+					dataTest: true,
 					isReply: true,
 					parentId: true,
 				}),
@@ -111,6 +115,7 @@ export namespace KottiComment {
 		export const schema = InlineEdit.schema
 			.pick({
 				allowInternal: true,
+				dataTest: true,
 				isInternal: true,
 				isReply: true,
 				tabIndex: true,
@@ -160,6 +165,7 @@ export namespace KottiCommentInput {
 	export const propsSchema = KottiComment.propsSchema
 		.pick({
 			allowInternal: true,
+			dataTest: true,
 			isInternal: true,
 			tabIndex: true,
 		})
