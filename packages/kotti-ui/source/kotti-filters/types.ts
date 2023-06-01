@@ -139,7 +139,10 @@ export namespace KottiFilters {
 		> = Common & {
 			operations: OPERATION[]
 			type: FilterType.INTEGER
-		}
+		} & Pick<
+				KottiFieldNumber.Props,
+				'maximum' | 'minimum' | 'prefix' | 'suffix'
+			>
 
 		export type MultiEnum<
 			OPERATION extends Operation.MultiEnum = Operation.MultiEnum,

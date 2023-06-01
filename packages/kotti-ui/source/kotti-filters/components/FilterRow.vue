@@ -164,6 +164,7 @@ export default defineComponent<{
 				if (!props.column?.type) return null
 				return getValueComponent(props.column.type)
 			}),
+			// eslint-disable-next-line sonarjs/cognitive-complexity
 			valueComponentProps: computed(() => ({
 				collapseTagsAfter:
 					props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||
@@ -181,11 +182,13 @@ export default defineComponent<{
 						? 0
 						: undefined,
 				maximum:
-					props.column?.type === KottiFilters.FilterType.FLOAT
+					props.column?.type === KottiFilters.FilterType.FLOAT ||
+					props.column?.type === KottiFilters.FilterType.INTEGER
 						? props.column.maximum
 						: undefined,
 				minimum:
-					props.column?.type === KottiFilters.FilterType.FLOAT
+					props.column?.type === KottiFilters.FilterType.FLOAT ||
+					props.column?.type === KottiFilters.FilterType.INTEGER
 						? props.column.minimum
 						: undefined,
 				options:
@@ -194,7 +197,8 @@ export default defineComponent<{
 						? props.column.options
 						: undefined,
 				prefix:
-					props.column?.type === KottiFilters.FilterType.FLOAT
+					props.column?.type === KottiFilters.FilterType.FLOAT ||
+					props.column?.type === KottiFilters.FilterType.INTEGER
 						? props.column.prefix
 						: undefined,
 				step:
@@ -202,7 +206,8 @@ export default defineComponent<{
 						? props.column.step
 						: undefined,
 				suffix:
-					props.column?.type === KottiFilters.FilterType.FLOAT
+					props.column?.type === KottiFilters.FilterType.FLOAT ||
+					props.column?.type === KottiFilters.FilterType.INTEGER
 						? props.column.suffix
 						: undefined,
 			})),

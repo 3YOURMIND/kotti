@@ -66,14 +66,16 @@
     				</div>
     				<div class="field-row">
     					<KtFieldNumber
-    						formKey="numberMaximum"
-    						isOptional
-    						label="maximum"
-    					/>
-    					<KtFieldNumber
     						formKey="numberMinimum"
+    						helpText="Support on FLOAT & INTEGER column types"
     						isOptional
     						label="minimum"
+    					/>
+    					<KtFieldNumber
+    						formKey="numberMaximum"
+    						helpText="Support on FLOAT & INTEGER column types"
+    						isOptional
+    						label="maximum"
     					/>
     				</div>
     				<KtFieldSingleSelect
@@ -98,13 +100,13 @@
     				<div class="field-row">
     					<KtFieldText
     						formKey="numberPrefix"
-    						helpText="Support on FLOAT column type only"
+    						helpText="Support on FLOAT & INTEGER column types"
     						isOptional
     						label="prefix"
     					/>
     					<KtFieldText
     						formKey="numberSuffix"
-    						helpText="Support on FLOAT column type only"
+    						helpText="Support on FLOAT & INTEGER column types"
     						isOptional
     						label="suffix"
     					/>
@@ -193,6 +195,8 @@ export default defineComponent({
 					{
 						key: 'integerColumn',
 						label: 'Integer Column',
+						maximum: settings.value.numberMaximum ?? undefined,
+						minimum: settings.value.numberMinimum ?? undefined,
 						operations: [
 							Kotti.Filters.Operation.Integer.EQUAL,
 							Kotti.Filters.Operation.Integer.GREATER_THAN,
@@ -201,6 +205,8 @@ export default defineComponent({
 							Kotti.Filters.Operation.Integer.LESS_THAN_OR_EQUAL,
 							Kotti.Filters.Operation.Integer.IS_EMPTY,
 						],
+						prefix: settings.value.numberPrefix,
+						suffix: settings.value.numberSuffix,
 						type: Kotti.Filters.FilterType.INTEGER,
 					},
 					{
