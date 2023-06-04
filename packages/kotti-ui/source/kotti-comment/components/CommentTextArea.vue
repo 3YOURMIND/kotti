@@ -21,7 +21,7 @@
 				<template v-if="allowInternal && !isReply">
 					<KtButton
 						:data-test="`${dataTest}.toggle-internal-button`"
-						:icon="Yoco.Icon.PERMISSION"
+						:icon="Yoco.Icon.PERMISSION_LOCKED"
 						:tabIndex="hasFocus ? tabIndex : -1"
 						:toggleStatus="internalToggleStatus"
 						type="text"
