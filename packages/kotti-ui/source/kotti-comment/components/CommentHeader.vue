@@ -3,7 +3,7 @@
 		<div class="kt-comment__header__left-wrapper">
 			<span class="kt-comment__header__user-name" v-text="user.name" />
 			<span v-if="isInternal && !isReply" class="kt-comment__header__internal">
-				<i class="yoco" v-text="Yoco.Icon.PERMISSION" />
+				<i class="yoco" v-text="Yoco.Icon.PERMISSION_LOCKED" />
 				{{ translations.internalLabel }}
 			</span>
 		</div>
