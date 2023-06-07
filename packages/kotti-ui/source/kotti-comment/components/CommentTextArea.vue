@@ -160,7 +160,7 @@ export default defineComponent<KottiComment.TextArea.PropsInternal>({
 		flex-direction: column;
 		row-gap: var(--unit-4);
 		align-items: flex-end;
-		padding: var(--unit-4) var(--unit-3) 0 var(--unit-3);
+		padding: var(--unit-3) var(--unit-4) 0 var(--unit-4);
 		background: var(--ui-background);
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
