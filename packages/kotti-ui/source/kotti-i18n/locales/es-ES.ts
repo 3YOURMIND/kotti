@@ -25,10 +25,12 @@ export const esES: KottiI18n.Messages = {
 		deleteButton: 'Borrar',
 		editButton: 'Editar',
 		editedLabel: 'Editado',
-		internalLabel: 'Conversación interna',
+		internalLabel: 'Acceso restringido',
+		lockedHelpText: 'Acceso restringido',
 		postButton: 'Publicar',
 		replyButton: 'Responder',
 		replyToLabel: 'Responder a',
+		unlockedHelpText: 'Visible para todos los usuarios',
 	},
 	KtFieldFileUpload: {
 		button: {
