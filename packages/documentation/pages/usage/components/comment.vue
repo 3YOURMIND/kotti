@@ -11,31 +11,67 @@
 		<p>Use <code>KtCommentInput</code> to input new comment posts.</p>
 
 		<h2>Example</h2>
-		<div class="element-example no-background">
-			<KtComment
-				v-for="comment in comments"
-				:key="comment.id"
-				v-bind="comment"
-				allowInternal
-				class="mb-block"
-				dataTest="comments"
-				:tabIndex="1"
-				:userAvatar="currentUser.avatar"
-				@add="handleAdd($event)"
-				@delete="handleDelete($event)"
-				@edit="handleEdit($event)"
-			/>
-			<KtCommentInput
-				allowInternal
-				dataTest="comments"
-				placeholder="Add a comment"
-				:tabIndex="1"
-				:userAvatar="currentUser.avatar"
-				@add="handleAdd($event)"
-			/>
-		</div>
+		<KtI18nContext :locale="settings.locale">
+			<div class="element-example no-background">
+				<KtComment
+					v-for="comment in comments"
+					:key="comment.id"
+					v-bind="comment"
+					:allowInternal="settings.allowInternal"
+					class="mb-block"
+					:dataTest="settings.dataTest"
+					:tabIndex="settings.tabIndex"
+					:userAvatar="currentUser.avatar"
+					@add="handleAdd($event)"
+					@delete="handleDelete($event)"
+					@edit="handleEdit($event)"
+				/>
+				<KtCommentInput
+					:allowInternal="settings.allowInternal"
+					:dataTest="settings.dataTest"
+					:placeholder="settings.placeholder"
+					:tabIndex="settings.tabIndex"
+					:userAvatar="currentUser.avatar"
+					@add="handleAdd($event)"
+				/>
+			</div>
 
-		<pre><code>&lt;KtComment
+			<KtForm v-model="settings" size="small">
+				<div class="wrapper">
+					<div>
+						<h4>Settings</h4>
+						<KtFieldSingleSelect
+							formKey="locale"
+							helpText="Can be set via KtI18nContext"
+							hideClear
+							label="Language"
+							leftIcon="global"
+							:options="[
+								{ label: 'German (de-DE)', value: 'de-DE' },
+								{ label: 'English (en-US)', value: 'en-US' },
+								{ label: 'Spanish (es-ES)', value: 'es-ES' },
+								{ label: 'French (fr-FR)', value: 'fr-FR' },
+								{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+							]"
+						/>
+						<KtFieldNumber formKey="tabIndex" isOptional label="tabIndex" />
+						<KtFieldToggle
+							formKey="allowInternal"
+							helpText="Allows Internal Comments i.e. Restricted access"
+							isOptional
+							label="allowInternal"
+							type="switch"
+						/>
+					</div>
+					<div>
+						<h4>Texts</h4>
+						<KtFieldText formKey="dataTest" isOptional label="dataTest" />
+						<KtFieldText formKey="placeholder" isOptional label="placeholder" />
+					</div>
+				</div>
+			</KtForm>
+
+			<pre><code>&lt;KtComment
 	v-for=&quot;comment in comments&quot;
 	:key=&quot;comment.id&quot;
 	v-bind=&quot;comment&quot;
@@ -57,10 +93,10 @@
 /&gt;
 </code></pre>
 
-		<h2>Usage</h2>
+			<h2>Usage</h2>
 
-		<h3>Comment Object</h3>
-		<pre><code>{
+			<h3>Comment Object</h3>
+			<pre><code>{
 	createdAt: '2018-12-04 09:57',
 	id: 1,
 	isDeletable: true,
@@ -91,68 +127,68 @@
 	},
 }</code></pre>
 
-		<h3>Events</h3>
-		<table>
-			<tr>
-				<th>Event Name</th>
-				<th>Component</th>
-				<th>Payload</th>
-				<th>Description</th>
-			</tr>
-			<tr>
-				<td><code>@add</code></td>
-				<td><code>KtComment</code>, <code>KtCommentInput</code></td>
-				<td>
-					<pre><code>{
+			<h3>Events</h3>
+			<table>
+				<tr>
+					<th>Event Name</th>
+					<th>Component</th>
+					<th>Payload</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td><code>@add</code></td>
+					<td><code>KtComment</code>, <code>KtCommentInput</code></td>
+					<td>
+						<pre><code>{
 	isInternal?: boolean,
 	message: string,
 	parentId?: number | string,
 	replyToUserId?: number | string,
 }</code></pre>
-				</td>
-				<td>Add new comment</td>
-			</tr>
-			<tr>
-				<td><code>@delete</code></td>
-				<td><code>KtComment</code></td>
-				<td>
-					<pre><code>{
+					</td>
+					<td>Add new comment</td>
+				</tr>
+				<tr>
+					<td><code>@delete</code></td>
+					<td><code>KtComment</code></td>
+					<td>
+						<pre><code>{
 	id: number | string,
 	parentId?: number | string,
 }</code></pre>
-				</td>
-				<td>Delete comment</td>
-			</tr>
-			<tr>
-				<td><code>@edit</code></td>
-				<td><code>KtComment</code></td>
-				<td>
-					<pre><code>{
+					</td>
+					<td>Delete comment</td>
+				</tr>
+				<tr>
+					<td><code>@edit</code></td>
+					<td><code>KtComment</code></td>
+					<td>
+						<pre><code>{
 	id: number | string,
 	isInternal?: boolean,
 	message: string,
 	parentId?: number | string,
 }</code></pre>
-				</td>
-				<td>Edit comment</td>
-			</tr>
-		</table>
+					</td>
+					<td>Edit comment</td>
+				</tr>
+			</table>
 
-		<h2>Parsing HTML</h2>
-		<p>
-			KtComment will escape all tags by default but you can opt out and pass
-			your own parser by using the parser prop.
-		</p>
-		<blockquote cite="https://en.wikipedia.org/wiki/Cross-site_scripting">
-			Remember to <b>escape malicious tags</b> to prevent
-			<a href="https://en.wikipedia.org/wiki/Cross-site_scripting"
-				>Cross-site-scripting</a
-			>
-			attacks, you can use KtComment's default parser function with
-			KtComment.defaultParser.
-		</blockquote>
+			<h2>Parsing HTML</h2>
+			<p>
+				KtComment will escape all tags by default but you can opt out and pass
+				your own parser by using the parser prop.
+			</p>
+			<blockquote cite="https://en.wikipedia.org/wiki/Cross-site_scripting">
+				Remember to <b>escape malicious tags</b> to prevent
+				<a href="https://en.wikipedia.org/wiki/Cross-site_scripting"
+					>Cross-site-scripting</a
+				>
+				attacks, you can use KtComment's default parser function with
+				KtComment.defaultParser.
+			</blockquote>
 
-		<pre><code>methods: {
+			<pre><code>methods: {
 	dangerouslyOverrideParser: msg => escape(msg).replace(/\n/g, '&lt;br /&gt;'),
 	// alternativly you could
 	dangerouslyOverrideParser: msg => escape(msg),
@@ -161,29 +197,32 @@
 	postEscapeParser: msg => msg.replace(/\n/g, '&lt;br /&gt;'),
 }</code></pre>
 
-		<div class="element-example no-background">
-			<KtComment
-				v-for="comment in comments"
-				:key="comment.id"
-				v-bind="comment"
-				allowInternal
-				class="mb-block"
-				:dangerouslyOverrideParser="dangerouslyOverrideParser"
-				:postEscapeParser="postEscapeParser"
-				:tabIndex="1"
-				:userAvatar="currentUser.avatar"
-				@add="handleAdd($event)"
-				@delete="handleDelete($event)"
-				@edit="handleEdit($event)"
-			/>
-			<KtCommentInput
-				allowInternal
-				placeholder="Add a comment"
-				:tabIndex="1"
-				:userAvatar="currentUser.avatar"
-				@add="handleAdd($event)"
-			/>
-		</div>
+			<div class="element-example no-background">
+				<KtComment
+					v-for="comment in comments"
+					:key="comment.id"
+					v-bind="comment"
+					:allowInternal="settings.allowInternal"
+					class="mb-block"
+					:dangerouslyOverrideParser="dangerouslyOverrideParser"
+					:dataTest="settings.dataTest"
+					:postEscapeParser="postEscapeParser"
+					:tabIndex="settings.tabIndex"
+					:userAvatar="currentUser.avatar"
+					@add="handleAdd($event)"
+					@delete="handleDelete($event)"
+					@edit="handleEdit($event)"
+				/>
+				<KtCommentInput
+					:allowInternal="settings.allowInternal"
+					:dataTest="settings.dataTest"
+					:placeholder="settings.placeholder"
+					:tabIndex="settings.tabIndex"
+					:userAvatar="currentUser.avatar"
+					@add="handleAdd($event)"
+				/>
+			</div>
+		</KtI18nContext>
 	</div>
 </template>
 
@@ -287,6 +326,19 @@ export default defineComponent({
 			avatar: 'https://picsum.photos/10',
 			id: 3,
 			name: 'James',
+		})
+		const settings = ref<{
+			allowInternal: Kotti.FieldToggle.Value
+			dataTest: Kotti.FieldText.Value
+			locale: Kotti.I18n.SupportedLanguages
+			placeholder: Kotti.FieldText.Value
+			tabIndex: Kotti.FieldNumber.Value
+		}>({
+			allowInternal: true,
+			dataTest: null,
+			locale: 'en-US',
+			placeholder: 'Add a comment',
+			tabIndex: null,
 		})
 
 		const buildNewComment = ({
@@ -397,6 +449,7 @@ export default defineComponent({
 				)
 			},
 			postEscapeParser: (msg: string) => msg.replace(/\n/g, '</br>'),
+			settings,
 		}
 	},
 })

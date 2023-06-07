@@ -155,9 +155,11 @@ export namespace KottiComment {
 		editButton: string
 		editedLabel: string
 		internalLabel: string
+		lockedHelpText: string
 		postButton: string
 		replyButton: string
 		replyToLabel: string
+		unlockedHelpText: string
 	}
 }
 

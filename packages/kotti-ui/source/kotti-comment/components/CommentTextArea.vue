@@ -21,9 +21,8 @@
 				<template v-if="allowInternal && !isReply">
 					<KtButton
 						:data-test="`${dataTest}.toggle-internal-button`"
-						:icon="Yoco.Icon.PERMISSION_LOCKED"
 						:tabIndex="hasFocus ? tabIndex : -1"
-						:toggleStatus="internalToggleStatus"
+						v-bind="toggleInternalButtonProps"
 						type="text"
 						@click="onToggleInternal"
 					/>
@@ -118,11 +117,6 @@ export default defineComponent<KottiComment.TextArea.PropsInternal>({
 		return {
 			containerRef,
 			hasFocus,
-			internalToggleStatus: computed(() =>
-				props.isInternal
-					? KottiButton.ToggleStatus.ON
-					: KottiButton.ToggleStatus.OFF,
-			),
 			isEmpty: computed(() => props.value.trim() === ''),
 			onCancel,
 			onConfirm: () => {
@@ -133,6 +127,23 @@ export default defineComponent<KottiComment.TextArea.PropsInternal>({
 				emit('input', event.target.value),
 			onToggleInternal: () => emit('toggleInternal'),
 			textareaRef,
+			toggleInternalButtonProps: computed(
+				(): Pick<
+					KottiButton.PropsInternal,
+					'helpText' | 'icon' | 'toggleStatus'
+				> =>
+					props.isInternal
+						? {
+								helpText: translations.value.lockedHelpText,
+								icon: Yoco.Icon.PERMISSION_LOCKED,
+								toggleStatus: KottiButton.ToggleStatus.ON,
+						  }
+						: {
+								helpText: translations.value.unlockedHelpText,
+								icon: Yoco.Icon.PERMISSION_UNLOCKED,
+								toggleStatus: KottiButton.ToggleStatus.OFF,
+						  },
+			),
 			translations,
 			Yoco,
 		}

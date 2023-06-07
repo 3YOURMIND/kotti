@@ -25,10 +25,12 @@ export const jaJP: KottiI18n.Messages = {
 		deleteButton: '消す',
 		editButton: 'エディット',
 		editedLabel: '編集済み',
-		internalLabel: 'めねじ',
+		internalLabel: '制限付きアクセス',
+		lockedHelpText: '制限付きアクセス',
 		postButton: '送信',
 		replyButton: '返信',
 		replyToLabel: '返信',
+		unlockedHelpText: 'すべてのユーザーに表示されます',
 	},
 	KtFieldFileUpload: {
 		button: {
