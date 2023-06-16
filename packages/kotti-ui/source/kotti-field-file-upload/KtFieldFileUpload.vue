@@ -130,17 +130,13 @@ export default defineComponent<KottiFieldFileUpload.PropsInternal>({
 		onBeforeMount(() => {
 			field.currentValue.forEach((fileItem) => {
 				if (
-					![
+					[
 						undefined,
 						KottiFieldFileUpload.Status.UPLOADED,
 						KottiFieldFileUpload.Status.UPLOADED_WITH_ERROR,
 					].includes(fileItem.status)
 				)
-					throw new Error(
-						`KtFieldFileUpload: invalid status for file item ${fileItem.id}: ${fileItem.status}`,
-					)
-
-				preUploadedFilesIds.add(fileItem.id)
+					preUploadedFilesIds.add(fileItem.id)
 			})
 		})
 
