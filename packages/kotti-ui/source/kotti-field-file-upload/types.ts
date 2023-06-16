@@ -23,6 +23,21 @@ export namespace Shared {
 	})
 	export type FileInfo = z.output<typeof fileInfoSchema>
 
+	// New selected files
+	export const selectedFileSchema = z.object({
+		file: z.custom<File>(),
+		id: z.string(),
+	})
+
+	// Pre-uploaded files
+	export const preUploadedFileSchema = z.object({
+		downloadUrl: z.string().optional(),
+		id: idSchema,
+		name: z.string(),
+		size: z.number().int().min(0),
+		viewUrl: z.string().optional(),
+	})
+
 	export const propsSchema = KottiField.propsSchema
 		.merge(
 			KottiField.potentiallySupportedPropsSchema.pick({
@@ -175,24 +190,17 @@ export namespace KottiFieldFileUpload {
 	}
 	export const statusSchema = z.nativeEnum(Status)
 
-	export const valueSchema = z
-		// New selected files
-		.object({
-			file: z.custom<File>(),
-			id: z.string(),
-			status: statusSchema,
-		})
-		// Pre-uploaded files
-		.or(
-			z.object({
-				downloadUrl: z.string().optional(),
-				id: Shared.idSchema,
-				name: z.string(),
-				size: z.number().int().min(0),
-				status: statusSchema.optional(),
-				viewUrl: z.string().optional(),
-			}),
-		)
+	export const selectedFileSchema = Shared.selectedFileSchema.extend({
+		status: statusSchema,
+	})
+	export type SelectedFile = z.input<typeof selectedFileSchema>
+
+	export const preUploadedFileSchema = Shared.preUploadedFileSchema.extend({
+		status: statusSchema.optional(),
+	})
+	export type PreUploadedFile = z.input<typeof preUploadedFileSchema>
+
+	export const valueSchema = selectedFileSchema.or(preUploadedFileSchema)
 	export const valuesSchema = valueSchema.array()
 	export type Value = z.input<typeof valuesSchema>
 	export type ValueInternal = z.output<typeof valuesSchema>
@@ -236,24 +244,17 @@ export namespace KottiFieldFileUploadRemote {
 	}
 	export const statusSchema = z.nativeEnum(Status)
 
-	export const valueSchema = z
-		// New selected files
-		.object({
-			file: z.custom<File>(),
-			id: Shared.idSchema,
-			status: statusSchema,
-		})
-		// Pre-uploaded files
-		.or(
-			z.object({
-				downloadUrl: z.string().optional(),
-				id: Shared.idSchema,
-				name: z.string(),
-				size: z.number().int().min(0),
-				status: statusSchema.optional(),
-				viewUrl: z.string().optional(),
-			}),
-		)
+	export const selectedFileSchema = Shared.selectedFileSchema.extend({
+		status: statusSchema,
+	})
+	export type SelectedFile = z.input<typeof selectedFileSchema>
+
+	export const preUploadedFileSchema = Shared.preUploadedFileSchema.extend({
+		status: statusSchema.optional(),
+	})
+	export type PreUploadedFile = z.input<typeof preUploadedFileSchema>
+
+	export const valueSchema = selectedFileSchema.or(preUploadedFileSchema)
 	export const valuesSchema = valueSchema.array()
 	export type Value = z.input<typeof valuesSchema>
 	export type ValueInternal = z.output<typeof valuesSchema>
@@ -278,7 +279,6 @@ export namespace KottiFieldFileUploadRemote {
 		status: z
 			.enum([Status.UPLOADED, Status.CANCELED, Status.ERROR, Status.UPLOADING])
 			.default(Status.UPLOADING),
-		// statusSchema.default(Status.UPLOADING),
 	})
 	// Record Key is the File Item ID
 	export const payloadSchema = z.record(payloadEntrySchema)
