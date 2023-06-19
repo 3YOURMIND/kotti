@@ -28,6 +28,7 @@ export namespace KottiComment {
 	const sharedSchema = commentSchema.extend({
 		allowInternal: z.boolean().default(false),
 		dangerouslyOverrideParser: parseFunctionSchema.default(defaultParser),
+		isReadOnly: z.boolean().default(false),
 		postEscapeParser: parseFunctionSchema.default(defaultPostEscapeParser),
 		tabIndex: z.number().default(0),
 		userAvatar: userSchema.shape.avatar,
