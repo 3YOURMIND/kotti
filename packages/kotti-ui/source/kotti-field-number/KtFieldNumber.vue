@@ -1,6 +1,7 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText">
 		<div
+			ref="inputWrapperRef"
 			class="kt-field-number"
 			:class="{
 				'kt-field-number--is-hide-change-buttons': hideChangeButtons,
@@ -12,7 +13,7 @@
 				class="kt-field-number__button"
 				:class="decrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-decrement`"
-				@click.stop="decrementValue"
+				@click="decrementValue"
 			>
 				<i class="yoco" v-text="Yoco.Icon.MINUS" />
 			</div>
@@ -35,7 +36,7 @@
 				class="kt-field-number__button"
 				:class="incrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-increment`"
-				@click.stop="incrementValue"
+				@click="incrementValue"
 			>
 				<i class="yoco" v-text="Yoco.Icon.PLUS" />
 			</div>
@@ -51,6 +52,8 @@ import {
 	ref,
 	watch,
 	UnwrapRef,
+	onUnmounted,
+	onBeforeMount,
 } from '@vue/composition-api'
 import Big from 'big.js'
 
@@ -68,6 +71,22 @@ import {
 } from './constants'
 import { KottiFieldNumber } from './types'
 import { isStepMultiple, toNumber, toString } from './utilities'
+
+const isInFocus = (component: HTMLElement | null) => {
+	console.log('document.activeElement', document.activeElement)
+	console.log('component', component)
+
+	const condition1 = document.activeElement instanceof HTMLElement
+	// console.log('instance of htmlelement', condition1)
+
+	const condition2 = document.activeElement === component
+	// console.log('document.activeElement === component', condition2)
+
+	const condition3 = component?.contains(document.activeElement)
+	// console.log('component?.contains(document.activeElement)', condition3)
+
+	return condition1 && (condition2 || condition3)
+}
 
 export default defineComponent<KottiFieldNumber.PropsInternal>({
 	name: 'KtFieldNumber',
@@ -163,6 +182,27 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 			{ immediate: true },
 		)
 
+		const inputWrapperRef = ref<HTMLDivElement | null>(null)
+
+		const onFocusChange = (event: Event) => {
+			// console.log('onFocusChange handler')
+			if (event.target === null || props.isDisabled) return
+
+			const isFieldInFocus = isInFocus(inputWrapperRef.value)
+			// console.log(event.target)
+			console.log(isFieldInFocus)
+
+			event.stopPropagation()
+			event.preventDefault()
+		}
+
+		onBeforeMount(() => {
+			window.addEventListener('focus', onFocusChange, true)
+		})
+		onUnmounted(() => {
+			window.removeEventListener('focus', onFocusChange)
+		})
+
 		/**
 		 * reference to input element, in order to track cursor position
 		 * prior to feeding the value back to the input, which resets the position to the end.
@@ -215,6 +255,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 				)
 			},
 			field,
+			inputWrapperRef,
 			incrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isIncrementEnabled.value,
 			})),
@@ -249,7 +290,9 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 				}),
 			),
 			onBlur: () => forceUpdateDisplayedValue(field.currentValue),
-			onClickMiddle: () => inputRef.value?.focus(),
+			onClickMiddle: () => {
+				if (!isInFocus(inputRef.value)) inputRef.value?.focus()
+			},
 			onInput: (value: string) => {
 				lastUserSetCursorPosition.value = inputRef.value?.selectionStart ?? null
 
