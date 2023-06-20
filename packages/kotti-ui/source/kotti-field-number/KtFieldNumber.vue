@@ -451,6 +451,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 
 		&--is-disabled {
 			color: var(--text-05);
+			cursor: not-allowed;
 		}
 	}
 
