@@ -8,7 +8,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
-		"@3yourmind/kotti-ui": "4.0.4",
+		"@3yourmind/kotti-ui": "4.0.5",
 		"@3yourmind/yoco": "*",
 		"@vue/composition-api": "0.6.1",
 		"core-js": "^3.17.2"
