@@ -10,13 +10,16 @@
 			<CommentEntry
 				v-for="reply in replies"
 				:key="reply.id"
-				v-bind="reply"
-				:dangerouslyOverrideParser="dangerouslyOverrideParser"
+				v-bind="{
+					...reply,
+					dangerouslyOverrideParser,
+					isReadOnly,
+					postEscapeParser,
+					tabIndex,
+				}"
 				:dataTest="`${rootDataTest}.reply.${reply.id}`"
 				isReply
 				:parentId="id"
-				:postEscapeParser="postEscapeParser"
-				:tabIndex="tabIndex"
 				@delete="onDelete"
 				@edit="onEdit"
 			/>

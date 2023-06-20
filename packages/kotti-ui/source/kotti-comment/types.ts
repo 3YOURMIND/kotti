@@ -27,8 +27,8 @@ export namespace KottiComment {
 
 	const sharedSchema = commentSchema.extend({
 		allowInternal: z.boolean().default(false),
-		dataTest: z.string().optional(),
 		dangerouslyOverrideParser: parseFunctionSchema.default(defaultParser),
+		isReadOnly: z.boolean().default(false),
 		postEscapeParser: parseFunctionSchema.default(defaultPostEscapeParser),
 		tabIndex: z.number().default(0),
 		userAvatar: userSchema.shape.avatar,
@@ -41,6 +41,7 @@ export namespace KottiComment {
 	}
 
 	export const propsSchema = sharedSchema.extend({
+		dataTest: z.string().optional(),
 		replies: z.array(Reply.schema),
 	})
 	export type Props = z.input<typeof propsSchema>
@@ -48,7 +49,7 @@ export namespace KottiComment {
 
 	export namespace Entry {
 		export const schema = sharedSchema.omit({ userAvatar: true }).extend({
-			dataTest: z.string(), // Override dataTest and make it required
+			dataTest: z.string(),
 			isReply: z.boolean().default(false),
 			parentId: idSchema.optional(),
 		})

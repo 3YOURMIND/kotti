@@ -20,6 +20,7 @@
 					:allowInternal="settings.allowInternal"
 					class="mb-block"
 					:dataTest="settings.dataTest"
+					:isReadOnly="settings.isReadOnly"
 					:tabIndex="settings.tabIndex"
 					:userAvatar="currentUser.avatar"
 					@add="handleAdd($event)"
@@ -62,6 +63,13 @@
 							label="allowInternal"
 							type="switch"
 						/>
+						<KtFieldToggle
+							formKey="isReadOnly"
+							helpText="Hides KtComment action buttons"
+							isOptional
+							label="isReadOnly"
+							type="switch"
+						/>
 					</div>
 					<div>
 						<h4>Texts</h4>
@@ -77,6 +85,7 @@
 	v-bind=&quot;comment&quot;
 	allowInternal
 	dataTest=&quot;comments&quot;
+	:isReadOnly=&quot;false&quot;
 	:tabIndex=&quot;1&quot;
 	:userAvatar=&quot;currentUser.avatar&quot;
 	@add=&quot;handleAdd($event)&quot;
@@ -206,6 +215,7 @@
 					class="mb-block"
 					:dangerouslyOverrideParser="dangerouslyOverrideParser"
 					:dataTest="settings.dataTest"
+					:isReadOnly="settings.isReadOnly"
 					:postEscapeParser="postEscapeParser"
 					:tabIndex="settings.tabIndex"
 					:userAvatar="currentUser.avatar"
@@ -330,12 +340,14 @@ export default defineComponent({
 		const settings = ref<{
 			allowInternal: Kotti.FieldToggle.Value
 			dataTest: Kotti.FieldText.Value
+			isReadOnly: Kotti.FieldToggle.Value
 			locale: Kotti.I18n.SupportedLanguages
 			placeholder: Kotti.FieldText.Value
 			tabIndex: Kotti.FieldNumber.Value
 		}>({
 			allowInternal: true,
 			dataTest: null,
+			isReadOnly: false,
 			locale: 'en-US',
 			placeholder: 'Add a comment',
 			tabIndex: null,

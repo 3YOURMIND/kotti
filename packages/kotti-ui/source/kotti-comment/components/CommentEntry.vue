@@ -23,7 +23,7 @@
 				@update:isEditing="isEditing = $event"
 			/>
 			<CommentActions
-				v-if="!isEditing"
+				v-if="!isReadOnly && !isEditing"
 				v-bind="{ dataTest, isDeletable, isEditable, isReply, tabIndex }"
 				@delete="onDelete"
 				@reply="onReply"
