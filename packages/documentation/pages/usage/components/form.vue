@@ -78,6 +78,12 @@
 					<h2>Personal Details</h2>
 					<KtFormControllerObject formKey="personalDetails">
 						<template #default="{ setValues, values: formObjectValues }">
+							<KtFieldNumber
+								formKey="age"
+								helpText="help for age"
+								label="age"
+								placeholder="how old are you?"
+							/>
 							<KtFieldText
 								formKey="firstName"
 								helpText="help for firstName"
@@ -303,6 +309,7 @@ export default defineComponent({
 		const values = ref({
 			addresses: [{ country: null, houseNumber: null, streetName: null }],
 			personalDetails: {
+				age: 1,
 				firstName: 'John',
 				firstNameFirst: false,
 				fullName: 'Smith,John',

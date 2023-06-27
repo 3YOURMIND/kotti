@@ -28,6 +28,7 @@
 							:is="componentRepresentation.name"
 							v-bind="componentRepresentation.props"
 							:validator="componentRepresentation.validator"
+							@blur="onBlur"
 							@update:query="updateQuery"
 						>
 							<template
@@ -181,7 +182,20 @@
 							isOptional
 							label="tabIndex"
 						/>
+						<div
+							v-if="componentDefinition.additionalProps.includes('emitEvents')"
+						>
+							<h4>Actions</h4>
+							<KtFieldToggle
+								formKey="emitBlur"
+								helpText="Only works with KtFieldNumber for now"
+								isOptional
+								label="Blur"
+								type="switch"
+							/>
+						</div>
 					</div>
+
 					<div>
 						<h4>Texts</h4>
 						<KtFieldText formKey="label" isOptional label="label" />
@@ -819,6 +833,7 @@ const components: Array<{
 			'numberMaximum',
 			'numberMinimum',
 			'numberStep',
+			'emitEvents',
 		],
 		formKey: 'numberValue',
 		name: 'KtFieldNumber',
@@ -1030,6 +1045,7 @@ export default defineComponent({
 				contentSlot: ComponentValue['contentSlot']
 				currencyCurrency: string
 				defaultSlot: ComponentValue['defaultSlot']
+				emitEvents: boolean
 				extensions: Kotti.FieldMultiSelect.Value
 				externalUrl: Kotti.FieldText.Value
 				hasActions: boolean
@@ -1063,6 +1079,7 @@ export default defineComponent({
 			component: ComponentNames
 			dataTest: Kotti.FieldText.Value
 			decimalSeparator: Kotti.DecimalSeparator
+			emitBlur: boolean
 			formId: Kotti.FieldText.Value
 			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
@@ -1089,6 +1106,7 @@ export default defineComponent({
 				contentSlot: null,
 				currencyCurrency: 'USD',
 				defaultSlot: 'Default Slot',
+				emitEvents: false,
 				extensions: [],
 				externalUrl: null,
 				hasActions: false,
@@ -1122,6 +1140,7 @@ export default defineComponent({
 			component: initialComponentName ?? 'KtFieldText',
 			dataTest: null,
 			decimalSeparator: Kotti.DecimalSeparator.DOT,
+			emitBlur: false,
 			hasHelpTextSlot: false,
 			helpDescription: null,
 			helpText: null,
@@ -1525,6 +1544,9 @@ export default defineComponent({
 				}),
 			),
 			isRangeComponent,
+			onBlur: (value: number) => {
+				if (settings.value.emitBlur) window.alert(`@blur: ${value}`)
+			},
 			onSubmit: (values: Record<string, unknown>) =>
 				window.alert(`@submit: ${JSON.stringify(values, null, '\t')}`),
 			reset: () => {

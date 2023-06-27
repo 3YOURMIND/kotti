@@ -1,17 +1,21 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText">
 		<div
+			ref="wrapperRef"
 			class="kt-field-number"
 			:class="{
 				'kt-field-number--is-hide-change-buttons': hideChangeButtons,
 				'kt-field-number--has-maximum': showMaximum && maximum !== null,
 			}"
+			:tabIndex="-1"
 		>
 			<div
 				v-if="!hideChangeButtons"
+				ref="decrementButtonRef"
 				class="kt-field-number__button"
 				:class="decrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-decrement`"
+				:tabIndex="-1"
 				@click.stop="decrementValue"
 			>
 				<i class="yoco" v-text="Yoco.Icon.MINUS" />
@@ -32,9 +36,11 @@
 			</div>
 			<div
 				v-if="!hideChangeButtons"
+				ref="incrementButtonRef"
 				class="kt-field-number__button"
 				:class="incrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-increment`"
+				:tabIndex="-1"
 				@click.stop="incrementValue"
 			>
 				<i class="yoco" v-text="Yoco.Icon.PLUS" />
@@ -51,6 +57,8 @@ import {
 	ref,
 	watch,
 	UnwrapRef,
+	onBeforeMount,
+	onUnmounted,
 } from '@vue/composition-api'
 import Big from 'big.js'
 
@@ -68,6 +76,14 @@ import {
 } from './constants'
 import { KottiFieldNumber } from './types'
 import { isStepMultiple, toNumber, toString } from './utilities'
+
+export const isEventTarget = (
+	component: HTMLElement | null,
+	eventTarget: EventTarget | null,
+) =>
+	(component === eventTarget ||
+		(eventTarget instanceof HTMLElement && component?.contains(eventTarget))) ??
+	false
 
 export default defineComponent<KottiFieldNumber.PropsInternal>({
 	name: 'KtFieldNumber',
@@ -199,36 +215,86 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 				}),
 		)
 
+		const decrementValue = () => {
+			if (!isDecrementEnabled.value) return
+
+			field.setValue(
+				field.currentValue === null
+					? canFallbackToZero.value
+						? 0
+						: props.minimum ?? props.maximum ?? 0
+					: Big(field.currentValue).minus(props.step).toNumber(),
+			)
+		}
+
+		const incrementValue = () => {
+			if (!isIncrementEnabled.value) return
+
+			field.setValue(
+				field.currentValue === null
+					? canFallbackToZero.value
+						? 0
+						: props.minimum ?? props.maximum ?? 0
+					: Big(field.currentValue).add(props.step).toNumber(),
+			)
+		}
+
+		const wrapperRef = ref<HTMLDivElement | null>(null)
+		const incrementButtonRef = ref<HTMLDivElement | null>(null)
+		const decrementButtonRef = ref<HTMLDivElement | null>(null)
+
+		/**
+		 * last element to capture the click or focus event
+		 */
+		const lastEventTarget = ref<EventTarget | null>(null)
+		const isFieldTargeted = (target: Event['target'] | null): boolean =>
+			isEventTarget(inputRef.value, target) ||
+			isEventTarget(decrementButtonRef.value, target) ||
+			isEventTarget(incrementButtonRef.value, target)
+
+		const onClickOrFocusChange = (event: Event) => {
+			if (event.target === null || props.isDisabled) return
+
+			const wasFieldTargetedBefore = isFieldTargeted(lastEventTarget.value)
+			const isFieldTargetedNow = isFieldTargeted(event.target)
+
+			if (!isFieldTargetedNow && wasFieldTargetedBefore)
+				emit('blur', field.currentValue)
+
+			lastEventTarget.value = event.target
+		}
+
+		const onKeyup = (event: KeyboardEvent) => {
+			if (!isFieldTargeted(event.target)) return
+
+			if (event.code === 'ArrowUp') incrementValue()
+			if (event.code === 'ArrowDown') decrementValue()
+		}
+
+		onBeforeMount(() => {
+			window.addEventListener('click', onClickOrFocusChange, true)
+			window.addEventListener('focus', onClickOrFocusChange, true)
+			window.addEventListener('keyup', onKeyup, true)
+		})
+
+		onUnmounted(() => {
+			window.removeEventListener('click', onClickOrFocusChange)
+			window.removeEventListener('focus', onClickOrFocusChange)
+			window.removeEventListener('keyup', onKeyup)
+		})
+
 		return {
 			decrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
 			})),
-			decrementValue: () => {
-				if (!isDecrementEnabled.value) return
-
-				field.setValue(
-					field.currentValue === null
-						? canFallbackToZero.value
-							? 0
-							: props.minimum ?? props.maximum ?? 0
-						: Big(field.currentValue).minus(props.step).toNumber(),
-				)
-			},
+			decrementButtonRef,
+			decrementValue,
 			field,
 			incrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isIncrementEnabled.value,
 			})),
-			incrementValue: () => {
-				if (!isIncrementEnabled.value) return
-
-				field.setValue(
-					field.currentValue === null
-						? canFallbackToZero.value
-							? 0
-							: props.minimum ?? props.maximum ?? 0
-						: Big(field.currentValue).add(props.step).toNumber(),
-				)
-			},
+			incrementButtonRef,
+			incrementValue,
 			inputRef,
 			inputProps: computed(
 				(): Partial<HTMLInputElement> & {
@@ -316,6 +382,7 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 				})
 			},
 			showMaximum,
+			wrapperRef,
 			Yoco,
 		}
 	},
