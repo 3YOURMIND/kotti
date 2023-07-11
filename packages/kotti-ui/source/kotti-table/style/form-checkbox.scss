@@ -1,0 +1,99 @@
+@import '../../kotti-style/_variables.scss';
+
+/**
+ * @deprecated this was moved-over from the old KtCheckbox.vue so
+ * that it can be removed without having to touch the table
+ */
+table.kt-table ::v-deep .form-checkbox {
+	position: relative;
+	display: inline-block;
+	min-height: 1.2rem;
+	padding: (($control-size-sm - $line-height) * 0.5) $control-padding-x
+		(($control-size-sm - $line-height) * 0.5)
+		($control-icon-size + $control-padding-x);
+	margin: ($control-size - $control-size-sm) * 0.5 0;
+	line-height: $line-height;
+
+	.form-icon {
+		position: absolute;
+		top: ($control-size-sm - $control-icon-size) * 0.5;
+		left: 0;
+		display: inline-block;
+		width: $control-icon-size;
+		height: $control-icon-size;
+		cursor: pointer;
+		background: var(--ui-background);
+		border: $border-width solid var(--ui-02);
+		border-radius: var(--border-radius);
+	}
+
+	input {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+
+		&:focus + .form-icon {
+			border-color: var(--interactive-01);
+		}
+
+		&:checked + .form-icon {
+			background: var(--interactive-01);
+			border-color: var(--interactive-01);
+
+			&::before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 6px;
+				height: 10px;
+				margin-top: -6px;
+				margin-left: -3px;
+				content: '';
+				background-clip: padding-box;
+				border: $border-width-lg solid #fff;
+				border-top-width: 0;
+				border-left-width: 0;
+				transform: rotate(45deg);
+			}
+		}
+
+		&:indeterminate + .form-icon {
+			background: var(--interactive-01);
+			border-color: var(--interactive-01);
+
+			&::before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 10px;
+				height: 2px;
+				margin-top: -1px;
+				margin-left: -5px;
+				content: '';
+				background: $lightgray-400;
+			}
+		}
+
+		&:invalid + .form-icon {
+			border: 1px solid var(--support-error);
+		}
+
+		&:active + .form-icon {
+			background: var(--ui-04);
+		}
+	}
+
+	// Input checkbox sizes
+	&.input-sm {
+		margin: 0;
+		font-size: $font-size-sm;
+	}
+
+	&.input-lg {
+		margin: ($control-size-lg - $control-size-sm) * 0.5 0;
+		font-size: $font-size-lg;
+	}
+}
