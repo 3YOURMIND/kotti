@@ -476,10 +476,6 @@ export default defineComponent<KottiFieldNumber.PropsInternal>({
 			&--has-maximum {
 				text-align: right;
 			}
-
-			&--is-disabled {
-				color: var(--text-05);
-			}
 		}
 	}
 }
