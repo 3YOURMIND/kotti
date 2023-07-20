@@ -391,35 +391,6 @@
 	}
 }
 
-@mixin prettify-scrollbar {
-	&::-webkit-scrollbar {
-		opacity: 0;
-	}
-
-	scrollbar-width: thin;
-	scrollbar-color: var(--ui-background) var(--ui-background);
-
-	&:active,
-	&:hover {
-		scrollbar-color: var(--ui-03) var(--ui-background);
-		transition: scrollbar-color var(--transition-medium) ease-out;
-
-		&::-webkit-scrollbar {
-			width: 5px;
-			height: 5px;
-			opacity: 1;
-			transition: opacity var(--transition-medium) ease-out;
-		}
-
-		&::-webkit-scrollbar-thumb {
-			cursor: all-scroll;
-
-			background-color: var(--ui-03);
-			border-radius: var(--field-border-radius);
-		}
-	}
-}
-
 @mixin sizes {
 	$fontSizes: (
 		'small': var(--font-size-small),

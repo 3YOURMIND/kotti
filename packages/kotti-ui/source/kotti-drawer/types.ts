@@ -5,6 +5,7 @@ export namespace KottiDrawer {
 		defaultWidth: z.string().nullable().default(null),
 		disallowCloseOutside: z.boolean().default(false),
 		expandWidth: z.string().nullable().default(null),
+		isExpanded: z.boolean().default(false),
 		isWide: z.boolean().default(false),
 	})
 

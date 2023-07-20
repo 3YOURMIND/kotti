@@ -9,10 +9,6 @@ It is best to place secondary functionality or information into the drawer, and 
 
 ![Structure](~/assets/img/drawer_structure.png)
 
-- **Drawer:** The size of drawer depends on information density.
-- **Handle:** By clicking the handles, the drawer can be `Expanded` to display more information.
-- **Background:** The background should be black `#000000` with `46%` opacity.
-
 ## Size
 
 <div class="element-example">
@@ -52,6 +48,24 @@ It is best to place secondary functionality or information into the drawer, and 
 			<KtButton @click="customizeWidthDrawer=false" class="w-100" label="Close Drawer" />
 		</div>
 	</KtDrawer>
+</div>
+
+## Expansion
+
+<div class="element-example" >
+	<KtButton type="primary" class="mr-16px" @click="showDefaultExpanded=true" label="Show Expanded-by-default Drawer" />
+	<KtDrawer v-if="showDefaultExpanded" isExpanded @close="showDefaultExpanded=false">
+		<div slot="drawer-header">
+			<h2>Default Size Drawer</h2>
+		</div>
+		<div slot="drawer-body">
+			<p>This drawer is expanded by default.</p>
+		</div>
+		<div slot="drawer-footer">
+			<KtButton @click="showDefaultExpanded=false" class="w-100" label="Close Drawer" />
+		</div>
+	</KtDrawer>
+
 </div>
 
 There are different ways to customize the width of the drawer.
@@ -125,17 +139,6 @@ When the `disallowCloseOutside` flag is set, it prevents the user from accidenta
 </div>
 
 </ShowCase>
-
-## Usage
-
-### Attributes
-
-| Attribute              | Description                                | Type      | Accepted values | Default |
-| :--------------------- | :----------------------------------------- | :-------- | :-------------- | :------ |
-| `disallowCloseOutside` | closed drawer when click outside of drawer | `Boolean` | —               | `true`  |
-| `defaultWidth`         | width when drawer is closed                | `String`  | CSS width       | —       |
-| `expandWidth`          | width when drawer is expanded              | `String`  | CSS width       | —       |
-| `isWide`               | wide drawer                                | `Boolean` | —               | `false` |
 </template>
 
 <script lang="ts">
@@ -155,6 +158,7 @@ export default defineComponent({
 		return {
 			component: KtDrawer,
 			customizeWidthDrawer: false,
+			showDefaultExpanded: false,
 			showDrawer: false,
 			showWideDrawer: false,
 		}

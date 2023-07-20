@@ -56,8 +56,9 @@ export default defineComponent<KottiFieldTextArea.PropsInternal>({
 })
 </script>
 
-<style lang="scss">
-@import '../kotti-field/mixins';
+<style lang="scss" scoped>
+@import '../kotti-style/_mixins.scss';
+@import '../kotti-field/mixins.scss';
 
 .kt-field-text-area {
 	$vertical-padding: 0.6em;

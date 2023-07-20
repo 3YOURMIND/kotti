@@ -90,7 +90,7 @@ export default defineComponent<KottiComment.InlineEdit.PropsInternal>({
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-field/mixins';
+@import '../../kotti-style/_mixins.scss';
 
 .kt-comment__inline-edit {
 	&__message {

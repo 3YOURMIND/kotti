@@ -12,7 +12,7 @@
 					<slot name="drawer-footer" />
 				</div>
 				<div class="kt-drawer__handle" @click="onDrawerHandleClick">
-					<i v-if="isExpanded" class="yoco" v-text="Yoco.Icon.CHEVRON_RIGHT" />
+					<i v-if="_isExpanded" class="yoco" v-text="Yoco.Icon.CHEVRON_RIGHT" />
 					<i v-else class="yoco" v-text="Yoco.Icon.CHEVRON_LEFT" />
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 
 import { makeProps } from '../make-props'
 
@@ -32,22 +32,31 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 	name: 'KtDrawer',
 	props: makeProps(KottiDrawer.propsSchema),
 	setup(props, { emit }) {
-		const isExpanded = ref(false)
+		const _isExpanded = ref(false)
+		watch(
+			() => props.isExpanded,
+			(shouldExpand) => {
+				_isExpanded.value = shouldExpand
+			},
+			{ immediate: true },
+		)
 
 		return {
+			_isExpanded,
 			drawerClass: computed(() => ({
 				'kt-drawer__container': true,
-				'kt-drawer__container--is-expanded': isExpanded.value,
+				'kt-drawer__container--is-expanded': _isExpanded.value,
 				'kt-drawer__container--is-wide': props.isWide,
 			})),
 			drawerWidth: computed(() => {
 				return props.defaultWidth === null || props.expandWidth === null
 					? {}
-					: { width: isExpanded.value ? props.expandWidth : props.defaultWidth }
+					: {
+							width: _isExpanded.value ? props.expandWidth : props.defaultWidth,
+					  }
 			}),
-			isExpanded,
 			onDrawerHandleClick: () => {
-				isExpanded.value = !isExpanded.value
+				_isExpanded.value = !_isExpanded.value
 			},
 			onOutsideDrawerClick: () => {
 				if (!props.disallowCloseOutside) {
@@ -69,6 +78,7 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
+@import '../kotti-style/_mixins.scss';
 
 .kt-drawer {
 	&__mask {
@@ -80,7 +90,7 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.5);
-		transition: opacity 0.5s ease;
+		transition: opacity var(--transition-long) ease;
 	}
 
 	&__container {
@@ -92,11 +102,9 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 		width: var(--kt-drawer-default-width);
 		height: 100%;
 		padding: var(--unit-6);
-		padding-left: var(--unit-8);
-		overflow-y: auto;
 		background-color: var(--ui-background);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-		transition: all 0.3s ease;
+		transition: all var(--transition-long) ease;
 
 		&--is-expanded {
 			width: 50%;
@@ -133,9 +141,9 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 	}
 
 	&__body {
+		@include prettify-scrollbar;
 		flex: 1 1 auto;
-		padding: 0 0.8rem;
-		margin: 0 -0.8rem 0.8rem -0.8rem;
+		padding-bottom: var(--unit-4);
 		overflow-y: auto;
 	}
 
@@ -149,7 +157,7 @@ export default defineComponent<KottiDrawer.PropsInternal>({
 
 	&-enter {
 		opacity: 0;
-		transition: opacity 0.5s;
+		transition: opacity var(--transition-long);
 	}
 
 	&-leave-active {
