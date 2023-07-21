@@ -322,8 +322,114 @@ export default {
 
 @import '../kotti-style/_variables.scss';
 
+table.kt-table {
+	position: relative;
+	width: 100%;
+	hyphens: auto;
+	table-layout: auto;
+	border-collapse: collapse;
+}
+
+::v-deep table.kt-table th {
+	padding: var(--unit-2) var(--unit-1);
+	font-size: $font-size-sm;
+	line-height: 1em;
+	color: $lightgray-500;
+	text-align: inherit;
+	text-transform: uppercase;
+}
+
+::v-deep table.kt-table tr {
+	position: relative;
+	margin: 0;
+
+	&:hover .table-actions {
+		display: inline-flex;
+		justify-content: center;
+		background: var(--white);
+	}
+
+	&.disabled {
+		cursor: not-allowed;
+		background-color: var(--ui-01);
+		opacity: 0.6;
+	}
+
+	&.selected,
+	&:focus {
+		background: var(--ui-01);
+	}
+
+	&:focus {
+		outline: none;
+	}
+}
+
+::v-deep table.kt-table td {
+	position: relative;
+	padding: var(--unit-2) var(--unit-1);
+	line-height: 1.2rem;
+	border-bottom: 1px solid $lightgray-400;
+
+	&.empty {
+		color: $lightgray-500;
+		text-align: center;
+	}
+}
+
+::v-deep table.kt-table .expand-toggle i {
+	margin: 0 0.2rem;
+	font-size: 1rem !important;
+	color: $darkgray-300;
+
+	&.disabled {
+		color: $lightgray-500;
+	}
+}
+
+::v-deep table.kt-table .table-actions {
+	position: absolute;
+	top: 50%;
+	right: 0.8rem;
+	z-index: $zindex-4;
+	display: none;
+	float: right;
+	width: auto;
+	padding: 0.25rem;
+	margin-top: -0.8rem;
+	font-size: 0.8rem;
+	line-height: 0.8rem;
+	border: 0;
+	border-radius: var(--border-radius);
+	box-shadow: 0 0 1px #999;
+
+	> div {
+		display: flex;
+		flex-direction: row;
+	}
+
+	i {
+		margin: 0 var(--unit-1);
+		color: $lightgray-500;
+
+		&:hover {
+			color: $darkgray-500;
+			cursor: pointer;
+		}
+	}
+}
+
+::v-deep table.kt-table .form-group {
+	width: 32px;
+	line-height: 0;
+
+	.form-icon {
+		top: 0.2rem;
+	}
+}
+
 ::v-deep .kt-table .kt-table__no-row {
-	color: #8f8f8f;
+	color: $lightgray-500;
 	text-align: center;
 }
 
@@ -336,14 +442,12 @@ export default {
 	text-align: center;
 }
 
-::v-deep .kt-table tr.disabled {
-	cursor: not-allowed;
-	background-color: #f8f8f8;
-	opacity: 0.6;
-}
-
 .x-scroll {
-	height: auto;
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow-x: auto;
+	white-space: nowrap;
 }
 
 .hidden-columns {

@@ -731,10 +731,10 @@ It is possible to customize parts (columns) of the table by passing your own ren
 
 ```js
 renderLoading() {
-	return <div>Loading while the loading prop on KtTable is true</div>
+	return <div>Custom loading render</div>
 },
 renderEmpty() {
-	return <div>Hello</div>
+	return <div>Custom empty render</div>
 },
 ```
 
@@ -744,7 +744,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault" loading>
 	<div slot="loading">
-		Loading while the loading prop on KtTable is true
+		Custom loading via slot
 	</div>
 </KtTable>
 </div>
@@ -753,7 +753,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 ```html
 <KtTable :rows="rows" :columns="columnsDefault" loading>
-	<div slot="loading">Loading while the loading prop on KtTable is true</div>
+	<div slot="loading">Custom loading via slot</div>
 </KtTable>
 ```
 
@@ -764,7 +764,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <div slot="vue">
 <KtTable :rows="emptyRows" :columns="columnsDefault">
 	<div slot="empty">
-		Hello, Empty World!
+		Custom empty via slot
 	</div>
 </KtTable>
 </div>
@@ -773,7 +773,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 ```html
 <KtTable :rows="emptyRows" :columns="columns">
-	<div slot="empty">Hello, Empty World!</div>
+	<div slot="empty">Custom empty via slot</div>
 </KtTable>
 ```
 
@@ -1197,10 +1197,10 @@ export default {
 			return new Date(value).toUTCString()
 		},
 		renderEmpty() {
-			return <div>Hello</div>
+			return <div>Custom empty render</div>
 		},
 		renderLoading() {
-			return <div>Loading while the loading prop on KtTable is true</div>
+			return <div>Custom loading render</div>
 		},
 		renderExpand(h, { row }) {
 			return (

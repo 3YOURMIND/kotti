@@ -147,7 +147,7 @@ export const TableRow = {
 						class="c-hand"
 						onClick={($event) => handleExpand($event, row, rowIndex)}
 					>
-						<div class="toggle">
+						<div class="expand-toggle">
 							<i class="yoco">{expandToggleIcon}</i>
 						</div>
 					</td>
