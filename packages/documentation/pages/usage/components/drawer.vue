@@ -74,7 +74,7 @@ You can also customize the width of drawer by setting both `defaultWidth` and `e
 
 When the `disallowCloseOutside` flag is set, it prevents the user from accidentally closing the drawer by clicking outside of the drawer.
 
-<ShowCase>
+<CodePreview>
 
 <div slot="vue">
 
@@ -124,7 +124,7 @@ When the `disallowCloseOutside` flag is set, it prevents the user from accidenta
 
 </div>
 
-</ShowCase>
+</CodePreview>
 
 ## Usage
 
@@ -142,14 +142,14 @@ When the `disallowCloseOutside` flag is set, it prevents the user from accidenta
 import { KtDrawer } from '@3yourmind/kotti-ui'
 import { defineComponent } from '@vue/composition-api'
 
+import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/ComponentInfo.vue'
-import ShowCase from '~/components/ShowCase.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsDrawer',
 	components: {
 		ComponentInfo,
-		ShowCase,
+		CodePreview,
 	},
 	data() {
 		return {

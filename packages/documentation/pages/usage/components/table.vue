@@ -23,7 +23,7 @@ _Update:_ The use of `key` is deprecated use `prop` instead of `key` when defini
 
 _For better performance in complex operations_, define a `rowKey` to index each row with.
 
-<ShowCase>
+<CodePreview>
 
 <div slot="vue">
 
@@ -75,7 +75,7 @@ _For better performance in complex operations_, define a `rowKey` to index each 
 
 </div>
 
-</ShowCase>
+</CodePreview>
 
 ## Declarative form
 
@@ -456,7 +456,7 @@ To sort remotly:
 > You must use `slot-scope` prop for the `actions` slot for it to be detected.
 > Update: shorthand for v-slot is used now, instead.
 
-<ShowCase vueSlotLabel="Actions Table" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Actions Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault">
 	<div slot="actions" slot-scope="{row, rowIndex}">
@@ -477,11 +477,11 @@ To sort remotly:
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
 _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](https://vuejs.org/v2/guide/components-slots.html)
 
-<ShowCase vueSlotLabel="v-slot syntax" styleSlotLabel="shorthand">
+<CodePreview vueSlotLabel="v-slot syntax" styleSlotLabel="shorthand">
 <div slot="vue">
 
 ```html
@@ -504,13 +504,13 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
 ## Expandable
 
 `isExpandable` enables expandability of the row**s**, defined on `<KtTable/>`. You use the `slot="expand"` to define the template that shows on expansion.
 
-<ShowCase vueSlotLabel="Expandable Table" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault" isExpandable>
 <div slot="expand" slot-scope="{ row, rowIndex }">
@@ -532,13 +532,13 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
 The default behavior only allows you to expand one row at a time; expanding one row would trigger any currently-expanded rows to shrink back.
 
 If you want to allow for the expansion of multiple rows at a time, set the `expandMultiple` flag on `<KtTable />`, as well.
 
-<ShowCase vueSlotLabel="Expandable Table" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault" isExpandable expandMultiple>
 <div slot="expand" slot-scope="{ row, rowIndex }">
@@ -559,7 +559,7 @@ If you want to allow for the expansion of multiple rows at a time, set the `expa
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
 ## Custom Render
 
@@ -580,7 +580,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 - `renderHeader` &rarr; custom render fn, to render a custom element in the header of the column. Instead you can use, slot='header'
 - `renderCell` &rarr; custom render fn, to render a custom element in the cells of the column. Instead use a default slot.
 
-<ShowCase vueSlotLabel="Custom Render Table" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Custom Render Table" styleSlotLabel="html">
 <div slot="vue" >
 	<KtTable
 		:rows="rows"
@@ -622,7 +622,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
 ```jsx
 {
@@ -670,7 +670,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 }
 ```
 
-<ShowCase vueSlotLabel="Custom Loading" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Custom Loading" styleSlotLabel="html">
 <div slot="vue">
 	<KtTable
 		:rows="rows"
@@ -698,9 +698,9 @@ It is possible to customize parts (columns) of the table by passing your own ren
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
-<ShowCase vueSlotLabel="Empty Table" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Empty Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTable
 	:rows="[]"
@@ -727,7 +727,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
 ```js
 renderLoading() {
@@ -740,7 +740,7 @@ renderEmpty() {
 
 You can also use slots instead of render props. [`slot="loading"`, `slot="empty"`, `slot="header"`, `slot="default"`].
 
-<ShowCase vueSlotLabel="Loading Slot" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Loading Slot" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="rows" :columns="columnsDefault" loading>
 	<div slot="loading">
@@ -758,9 +758,9 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
-<ShowCase vueSlotLabel="Empty Slot" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Empty Slot" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="emptyRows" :columns="columnsDefault">
 	<div slot="empty">
@@ -778,9 +778,9 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
-<ShowCase vueSlotLabel="header/default slots" styleSlotLabel="html">
+<CodePreview vueSlotLabel="header/default slots" styleSlotLabel="html">
 <div slot="vue">
 <KtTable :rows="rows">
 <KtTableColumn
@@ -826,7 +826,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
 ### Provider/Consumer and Mixin
 
@@ -849,7 +849,7 @@ _Notes_:
 
 > There’s also the _deprecated_ `KtTableColumnsStateMixin`.
 
-<ShowCase vueSlotLabel="Consumer/Provider Table" styleSlotLabel="html">
+<CodePreview vueSlotLabel="Consumer/Provider Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTableProvider>
 	<div>
@@ -936,7 +936,7 @@ _Notes_:
 ```
 
 </div>
-</ShowCase>
+</CodePreview>
 
 ```js
 {
@@ -1089,14 +1089,14 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 import { KtAvatar, KtBanner, KtTable } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
 
+import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/ComponentInfo.vue'
-import ShowCase from '~/components/ShowCase.vue'
 
 const ADDRESS_DOT_LINE = 'address.line'
 
 export default {
 	name: 'DocumentationPageUsageComponentsTable',
-	components: { ComponentInfo, KtBanner, ShowCase },
+	components: { ComponentInfo, KtBanner, CodePreview },
 	data() {
 		return {
 			component: KtTable,
