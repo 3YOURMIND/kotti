@@ -173,13 +173,11 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
-import ShowCase from '~/components/ShowCase.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsButton',
 	components: {
 		ComponentInfo,
-		ShowCase,
 	},
 	setup() {
 		const toggleDefaultStatus = ref<Kotti.Button.ToggleStatus>(

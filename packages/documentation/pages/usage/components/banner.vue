@@ -105,13 +105,11 @@ import { KtBanner } from '@3yourmind/kotti-ui'
 import { defineComponent } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
-import ShowCase from '~/components/ShowCase.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsBanner',
 	components: {
 		ComponentInfo,
-		ShowCase,
 	},
 	setup() {
 		return {
