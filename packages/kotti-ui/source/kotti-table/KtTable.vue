@@ -377,13 +377,18 @@ table.kt-table {
 	}
 }
 
-::v-deep table.kt-table .expand-toggle i {
-	margin: 0 0.2rem;
-	font-size: 1rem !important;
-	color: $darkgray-300;
+::v-deep table.kt-table {
+	.expand-toggle,
+	.kt-table__quick-sort-control {
+		i {
+			margin: 0 0.2rem;
+			font-size: 1rem !important;
+			color: $darkgray-300;
 
-	&.disabled {
-		color: $lightgray-500;
+			&.disabled {
+				color: $lightgray-500;
+			}
+		}
 	}
 }
 
