@@ -62,14 +62,14 @@ import { makeProps } from '../make-props'
 
 import { KottiUserMenu } from './types'
 
-export default defineComponent<KottiUserMenu.PropsInternal>({
+export default defineComponent({
 	name: 'KtUserMenu',
 	components: {
 		KtAvatar,
 	},
 	mixins: [clickaway],
 	props: makeProps(KottiUserMenu.propsSchema),
-	setup(props) {
+	setup(props: KottiUserMenu.PropsInternal) {
 		const isMenuShow = ref(false)
 		const isNarrow = inject<ComputedRef<boolean>>(
 			IS_NAVBAR_NARROW,

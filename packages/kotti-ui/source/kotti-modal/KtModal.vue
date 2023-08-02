@@ -28,10 +28,10 @@ import { makeProps } from '../make-props'
 
 import { KottiModal } from './types'
 
-export default defineComponent<KottiModal.PropsInternal>({
+export default defineComponent({
 	name: 'KtModal',
 	props: makeProps(KottiModal.propsSchema),
-	setup(props, { emit, slots }) {
+	setup(props: KottiModal.PropsInternal, { emit, slots }) {
 		const contentRef = ref<HTMLElement | null>(null)
 		const targetRef = ref<HTMLElement | null>(null)
 		const tippyInstanceRef = ref<Instance | null>(null)

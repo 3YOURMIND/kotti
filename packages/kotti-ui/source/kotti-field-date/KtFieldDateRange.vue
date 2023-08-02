@@ -44,11 +44,11 @@ import { usePicker, ElDateWithInternalAPI } from './hooks'
 import { KottiFieldDateRange } from './types'
 import { isInvalidDate } from './utilities'
 
-export default defineComponent<KottiFieldDateRange.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldDateRange',
 	components: { ElDate, KtField },
 	props: makeProps(KottiFieldDateRange.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiFieldDateRange.PropsInternal, { emit }) {
 		const field = useField<KottiFieldDateRange.Value>({
 			emit,
 			isEmpty: (dateRangeValue) =>

@@ -29,10 +29,10 @@ import { makeProps } from '../make-props'
 
 import { KottiAvatar } from './types'
 
-export default defineComponent<KottiAvatar.PropsInternal>({
+export default defineComponent({
 	name: 'KtAvatar',
 	props: makeProps(KottiAvatar.propsSchema),
-	setup(props, { emit, slots }) {
+	setup(props: KottiAvatar.PropsInternal, { emit, slots }) {
 		const avatarFallback = ref(true)
 
 		const contentRef = ref<HTMLElement | null>(null)

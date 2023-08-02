@@ -18,13 +18,13 @@ import { makeProps } from '../make-props'
 import { KOTTI_FIELD_TEXT_SUPPORTS } from './constants'
 import { KottiFieldText } from './types'
 
-export default defineComponent<KottiFieldText.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldText',
 	components: {
 		KtField,
 	},
 	props: makeProps(KottiFieldText.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiFieldText.PropsInternal, { emit }) {
 		const field = useField<KottiFieldText.Value>({
 			emit,
 			isEmpty: (value) => value === null,

@@ -21,13 +21,13 @@ import { makeProps } from '../make-props'
 import CommentTextArea from './components/CommentTextArea.vue'
 import { KottiComment, KottiCommentInput } from './types'
 
-export default defineComponent<KottiCommentInput.PropsInternal>({
+export default defineComponent({
 	name: 'KtCommentInput',
 	components: {
 		CommentTextArea,
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiCommentInput.PropsInternal, { emit }) {
 		const _isInternal = ref<KottiComment.PropsInternal['isInternal']>(
 			props.isInternal,
 		)

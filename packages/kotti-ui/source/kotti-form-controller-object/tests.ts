@@ -14,7 +14,7 @@ import { localVue } from '../test-utils/index'
 
 import KtFormControllerObject from './KtFormControllerObject.vue'
 
-const TestField = defineComponent<KottiField.PropsInternal>({
+const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
 	props: makeProps(
@@ -22,7 +22,7 @@ const TestField = defineComponent<KottiField.PropsInternal>({
 			value: z.string().nullable(),
 		}),
 	),
-	setup: (props, { emit }) => {
+	setup: (props: KottiField.PropsInternal, { emit }) => {
 		useI18nProvide({
 			currencyMap: ref({}),
 			locale: ref('en-US'),

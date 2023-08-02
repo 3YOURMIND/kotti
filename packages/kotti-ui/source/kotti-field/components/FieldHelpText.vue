@@ -1,22 +1,19 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 import { VNode } from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 
-export default defineComponent<{
-	helpText: string | null
-	helpTextSlot: VNode[]
-}>({
+export default defineComponent({
 	name: 'FieldHelpText',
 	props: {
 		helpText: { default: null, type: String },
 		helpTextSlot: { default: () => [], type: Array },
 	},
-	setup() {
+	setup(_: { helpText: string | null; helpTextSlot: VNode[] }) {
 		const helpTextContentRef = ref<Element | null>(null)
 		const helpTextTriggerRef = ref<Element | null>(null)
 

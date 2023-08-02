@@ -67,14 +67,7 @@ import {
 
 import ButtonLink from './ButtonLink.vue'
 
-export default defineComponent<{
-	column: KottiFilters.Column.Any | null
-	columnOptions: KottiFieldSingleSelect.Props['options']
-	dataTest: string | null
-	filter: KottiFilters.Filter
-	isFirstItem: boolean
-	isLoading: boolean
-}>({
+export default defineComponent({
 	name: 'FilterRow',
 	components: {
 		ButtonLink,
@@ -115,7 +108,17 @@ export default defineComponent<{
 			type: Boolean,
 		},
 	},
-	setup(props, { emit }) {
+	setup(
+		props: {
+			column: KottiFilters.Column.Any | null
+			columnOptions: KottiFieldSingleSelect.Props['options']
+			dataTest: string | null
+			filter: KottiFilters.Filter
+			isFirstItem: boolean
+			isLoading: boolean
+		},
+		{ emit },
+	) {
 		const translations = useTranslationNamespace('KtFilters')
 
 		const operationOptions = computed(() =>

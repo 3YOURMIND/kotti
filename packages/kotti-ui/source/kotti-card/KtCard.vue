@@ -39,11 +39,11 @@ import { makeProps } from '../make-props'
 
 import { KottiCard } from './types'
 
-export default defineComponent<KottiCard.PropsInternal>({
+export default defineComponent({
 	name: 'KtCard',
 	components: { KtButton },
 	props: makeProps(KottiCard.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiCard.PropsInternal, { emit }) {
 		const hasActions = computed(
 			() =>
 				props.primaryActionLabel != null && props.secondaryActionLabel != null,

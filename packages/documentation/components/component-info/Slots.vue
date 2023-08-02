@@ -64,14 +64,12 @@
 import { Kotti } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from '@vue/composition-api'
 
-export default defineComponent<{
-	slots: Kotti.Meta['slots']
-}>({
+export default defineComponent({
 	name: 'ComponentInfoSlots',
 	props: {
 		slots: { required: true, type: Object },
 	},
-	setup() {
+	setup(_: { slots: Kotti.Meta['slots'] }) {
 		return {
 			showSlots: ref(false),
 		}

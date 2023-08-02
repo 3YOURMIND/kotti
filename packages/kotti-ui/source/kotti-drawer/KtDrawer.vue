@@ -28,10 +28,10 @@ import { makeProps } from '../make-props'
 
 import { KottiDrawer } from './types'
 
-export default defineComponent<KottiDrawer.PropsInternal>({
+export default defineComponent({
 	name: 'KtDrawer',
 	props: makeProps(KottiDrawer.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiDrawer.PropsInternal, { emit }) {
 		const isExpanded = ref(false)
 
 		return {

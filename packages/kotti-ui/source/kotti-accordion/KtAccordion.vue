@@ -31,10 +31,10 @@ import { KottiAccordion } from './types'
 //** How much time should be spent on open/close animation in milliseconds */
 const ANIMATION_DURATION = 300
 
-export default defineComponent<KottiAccordion.PropsInternal>({
+export default defineComponent({
 	name: 'KtAccordion',
 	props: makeProps(KottiAccordion.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiAccordion.PropsInternal, { emit }) {
 		const contentInnerRef = ref<HTMLElement | null>(null)
 
 		useSlideAnimation(

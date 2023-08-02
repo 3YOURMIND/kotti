@@ -39,10 +39,10 @@ import { makeProps } from '../make-props'
 
 import { KottiBreadcrumb } from './types'
 
-export default defineComponent<KottiBreadcrumb.PropsInternal>({
+export default defineComponent({
 	name: 'KtBreadcrumb',
 	props: makeProps(KottiBreadcrumb.propsSchema),
-	setup(props) {
+	setup(props: KottiBreadcrumb.PropsInternal) {
 		return {
 			breadCrumbClasses: (item: KottiBreadcrumb.Breadcrumb, index: number) => {
 				return {

@@ -35,13 +35,13 @@ import { KottiComment } from '../types'
 
 import CommentTextArea from './CommentTextArea.vue'
 
-export default defineComponent<KottiComment.InlineEdit.PropsInternal>({
+export default defineComponent({
 	name: 'CommentInlineEdit',
 	components: {
 		CommentTextArea,
 	},
 	props: makeProps(KottiComment.InlineEdit.schema),
-	setup(props, { emit }) {
+	setup(props: KottiComment.InlineEdit.PropsInternal, { emit }) {
 		const _message = ref<KottiComment.InlineEdit.PropsInternal['message']>('')
 
 		watch(

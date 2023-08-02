@@ -26,10 +26,10 @@ import { makeProps } from '../make-props'
 
 import { KottiButton } from './types'
 
-export default defineComponent<KottiButton.PropsInternal>({
+export default defineComponent({
 	name: 'KtButton',
 	props: makeProps(KottiButton.propsSchema),
-	setup(props, { emit, slots }) {
+	setup(props: KottiButton.PropsInternal, { emit, slots }) {
 		const helpTextContentRef = ref<Element | null>(null)
 		const helpTextTriggerRef = ref<Element | null>(null)
 

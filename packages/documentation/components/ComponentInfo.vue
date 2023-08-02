@@ -141,13 +141,7 @@ type VuePropType =
 	| NumberConstructor
 	| StringConstructor
 
-export default defineComponent<{
-	component: {
-		meta: Kotti.Meta
-		name: string
-		props?: Record<string, unknown>
-	}
-}>({
+export default defineComponent({
 	name: 'ComponentInfo',
 	components: {
 		ComponentInfoSlots,
@@ -155,7 +149,13 @@ export default defineComponent<{
 	props: {
 		component: { required: true, type: Object },
 	},
-	setup(props) {
+	setup(props: {
+		component: {
+			meta: Kotti.Meta
+			name: string
+			props?: Record<string, unknown>
+		}
+	}) {
 		return {
 			Dashes,
 			labels: computed(() => {

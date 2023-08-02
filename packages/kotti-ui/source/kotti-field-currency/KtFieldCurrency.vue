@@ -49,11 +49,11 @@ const shouldClear = (newValue: string, oldValue: string | null) => {
 	return isOldValueZeroOrNull && isNewValueZero && isDeleting
 }
 
-export default defineComponent<KottiFieldCurrency.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldCurrency',
 	components: { KtField },
 	props: makeProps(KottiFieldCurrency.propsSchema),
-	setup(props, { emit, root }) {
+	setup(props: KottiFieldCurrency.PropsInternal, { emit, root }) {
 		const field = useField<KottiFieldCurrency.Value>({
 			emit,
 			isEmpty: (value) => value === null,

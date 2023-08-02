@@ -41,7 +41,7 @@ import ToggleInnerSuffix from './components/ToggleInnerSuffix.vue'
 import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import { KottiFieldToggle } from './types'
 
-export default defineComponent<KottiFieldToggle.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldToggle',
 	components: {
 		KtField,
@@ -49,7 +49,7 @@ export default defineComponent<KottiFieldToggle.PropsInternal>({
 		ToggleInnerSuffix,
 	},
 	props: makeProps(KottiFieldToggle.propsSchema),
-	setup(props, { emit, slots }) {
+	setup(props: KottiFieldToggle.PropsInternal, { emit, slots }) {
 		const field = useField<KottiFieldToggle.Value>({
 			emit,
 			isEmpty: (value) => value !== true,

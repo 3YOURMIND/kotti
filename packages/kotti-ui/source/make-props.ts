@@ -219,9 +219,10 @@ const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
  *
  * @example
  * // KtUserMenu.vue
- * export default defineComponent<KottiUserMenu.PropsInternal>({
+ * export default defineComponent({
  *   name: 'KtUserMenu',
  *   props: makeProps(KottiUserMenu.propsSchema)
+ *   setup(props: KottiUserMenu.PropsInternal)
  * })
  *
  * // types.ts

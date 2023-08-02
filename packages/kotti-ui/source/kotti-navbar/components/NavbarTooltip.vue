@@ -13,16 +13,13 @@ import { roundArrow } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 
-export default defineComponent<{
-	label: string
-	icon: Yoco.Icon
-}>({
+export default defineComponent({
 	name: 'NavbarTooltip',
 	props: {
 		icon: { required: true, type: String },
 		label: { required: true, type: String },
 	},
-	setup() {
+	setup(_: { label: string; icon: Yoco.Icon }) {
 		const contentRef = ref<Element | null>(null)
 		const triggerRef = ref<Element | null>(null)
 

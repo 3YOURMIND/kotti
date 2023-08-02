@@ -85,11 +85,11 @@ export const isEventTarget = (
 		(eventTarget instanceof HTMLElement && component?.contains(eventTarget))) ??
 	false
 
-export default defineComponent<KottiFieldNumber.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldNumber',
 	components: { KtField },
 	props: makeProps(KottiFieldNumber.propsSchema),
-	setup(props, { emit, root }) {
+	setup(props: KottiFieldNumber.PropsInternal, { emit, root }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
 			isEmpty: (value) => value === null,

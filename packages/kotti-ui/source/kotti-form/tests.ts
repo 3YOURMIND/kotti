@@ -39,7 +39,7 @@ const testFieldSetup = (
 	}
 }
 
-const TestField = defineComponent<KottiField.PropsInternal>({
+const TestField = defineComponent({
 	name: 'TestField',
 	components: { KtField },
 	props: makeProps(
@@ -51,7 +51,7 @@ const TestField = defineComponent<KottiField.PropsInternal>({
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
-const TestFieldObject = defineComponent<KottiField.PropsInternal>({
+const TestFieldObject = defineComponent({
 	name: 'TestFieldObject',
 	components: { KtField },
 	props: makeProps(
