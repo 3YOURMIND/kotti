@@ -54,7 +54,7 @@
 	"module": "dist/esm/index.js",
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
-		"@vue/composition-api": "0.6.1",
+		"@vue/composition-api": "0.6.7",
 		"core-js": "*",
 		"vue": "^2.2.1"
 	},

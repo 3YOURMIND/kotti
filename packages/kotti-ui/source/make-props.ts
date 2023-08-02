@@ -257,7 +257,7 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 			if (isNever && zodTypeSet.size > 1)
 				throw new Error('makeProps: Unexpected Mixed Usage of Never')
 
-			const propDefinition: PropOptions<unknown, boolean> = {
+			const propDefinition: PropOptions<unknown> = {
 				validator: propValidator({
 					isNever,
 					propName,
