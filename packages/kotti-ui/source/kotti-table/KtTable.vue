@@ -415,6 +415,7 @@ table.kt-table {
 
 	i {
 		margin: 0 var(--unit-1);
+		font-size: 1rem;
 		color: $lightgray-500;
 
 		&:hover {
