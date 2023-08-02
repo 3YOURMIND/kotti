@@ -27,13 +27,13 @@ import { makeProps } from '../make-props'
 
 import { KottiAvatarGroup } from './types'
 
-export default defineComponent<KottiAvatarGroup.PropsInternal>({
+export default defineComponent({
 	name: 'KtAvatarGroup',
 	components: {
 		KtAvatar,
 	},
 	props: makeProps(KottiAvatarGroup.propsSchema),
-	setup(props) {
+	setup(props: KottiAvatarGroup.PropsInternal) {
 		return {
 			avatarGroupClasses: computed(() => ({
 				'kt-avatar-group': true,

@@ -64,10 +64,10 @@ import { useResizeTextarea } from '../hooks'
 import { KottiComment } from '../types'
 import { blurElement, isEventTarget, isInFocus } from '../utilities'
 
-export default defineComponent<KottiComment.TextArea.PropsInternal>({
+export default defineComponent({
 	name: 'CommentTextArea',
 	props: makeProps(KottiComment.TextArea.schema),
-	setup(props, { emit }) {
+	setup(props: KottiComment.TextArea.PropsInternal, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
 		const containerRef = ref<HTMLDivElement | null>(null)

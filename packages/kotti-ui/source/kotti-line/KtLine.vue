@@ -13,10 +13,10 @@ import { makeProps } from '../make-props'
 
 import { KottiLine } from './types'
 
-export default defineComponent<KottiLine.PropsInternal>({
+export default defineComponent({
 	name: 'KtLine',
 	props: makeProps(KottiLine.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiLine.PropsInternal, { emit }) {
 		return {
 			handleClick: () => {
 				if (props.isInteractive) emit('click')

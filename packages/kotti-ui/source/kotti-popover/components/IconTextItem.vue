@@ -23,9 +23,12 @@ import { defineComponent } from '@vue/composition-api'
 import { makeProps } from '../../make-props'
 import { IconTextItem } from '../types'
 
-export default defineComponent<IconTextItem.PropsInternal>({
+export default defineComponent({
 	name: 'IconTextItem',
 	props: makeProps(IconTextItem.propsSchema),
+	setup(_: IconTextItem.PropsInternal) {
+		return {}
+	},
 })
 </script>
 

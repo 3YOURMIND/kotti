@@ -21,12 +21,7 @@ import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiFilters } from '../types'
 import { getSearchFilterInitialState } from '../utils'
 
-export default defineComponent<{
-	column: KottiFilters.Column.Search
-	dataTest: string | null
-	filter: KottiFilters.Filter | null
-	isLoading: boolean
-}>({
+export default defineComponent({
 	name: 'FilterSearch',
 	components: {
 		KtFieldText,
@@ -49,7 +44,15 @@ export default defineComponent<{
 			type: Boolean,
 		},
 	},
-	setup(props, { emit }) {
+	setup(
+		props: {
+			column: KottiFilters.Column.Search
+			dataTest: string | null
+			filter: KottiFilters.Filter | null
+			isLoading: boolean
+		},
+		{ emit },
+	) {
 		const translations = useTranslationNamespace('KtFilters')
 
 		const placeholder = computed<string>(

@@ -64,13 +64,13 @@ const TRIGGER_MAP: Record<KottiPopover.Trigger, TippyProps['trigger']> = {
 	[KottiPopover.Trigger.MANUAL]: 'manual',
 }
 
-export default defineComponent<KottiPopover.PropsInternal>({
+export default defineComponent({
 	name: 'KtPopover',
 	components: {
 		IconTextItem,
 	},
 	props: makeProps(KottiPopover.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiPopover.PropsInternal, { emit }) {
 		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)
 

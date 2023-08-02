@@ -68,14 +68,14 @@ import { KottiFieldRadioGroup } from './types'
 
 let nameIndex = 0
 
-export default defineComponent<KottiFieldRadioGroup.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldRadioGroup',
 	components: {
 		FieldHelpText,
 		KtField,
 	},
 	props: makeProps(KottiFieldRadioGroup.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiFieldRadioGroup.PropsInternal, { emit }) {
 		const field = useField<KottiFieldRadioGroup.Value>({
 			emit,
 			isEmpty: (value) => value === null,

@@ -79,7 +79,7 @@ import {
 } from './utils/remote'
 import { isValidValue } from './validators'
 
-export default defineComponent<KottiFieldFileUploadRemote.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldFileUploadRemote',
 	components: {
 		DropArea,
@@ -89,7 +89,7 @@ export default defineComponent<KottiFieldFileUploadRemote.PropsInternal>({
 		TakePhoto,
 	},
 	props: makeProps(KottiFieldFileUploadRemote.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiFieldFileUploadRemote.PropsInternal, { emit }) {
 		const field = useField<KottiFieldFileUploadRemote.ValueInternal>({
 			emit,
 			/**

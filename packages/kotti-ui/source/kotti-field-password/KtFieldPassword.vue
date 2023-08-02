@@ -18,11 +18,11 @@ import { makeProps } from '../make-props'
 import { KOTTI_FIELD_PASSWORD_SUPPORTS } from './constants'
 import { KottiFieldPassword } from './types'
 
-export default defineComponent<KottiFieldPassword.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldPassword',
 	components: { KtField },
 	props: makeProps(KottiFieldPassword.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiFieldPassword.PropsInternal, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({
 			emit,
 			isEmpty: (value) => value === null,

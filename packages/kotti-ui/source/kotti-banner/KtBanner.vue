@@ -27,13 +27,13 @@ import { makeProps } from '../make-props'
 
 import { KottiBanner } from './types'
 
-export default defineComponent<KottiBanner.PropsInternal>({
+export default defineComponent({
 	name: 'KtBanner',
 	components: {
 		KtButton,
 	},
 	props: makeProps(KottiBanner.propsSchema),
-	setup(props, { slots }) {
+	setup(props: KottiBanner.PropsInternal, { slots }) {
 		const translations = useTranslationNamespace('KtBanner')
 
 		return {

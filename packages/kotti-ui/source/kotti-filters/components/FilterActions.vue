@@ -26,12 +26,7 @@ import { KottiFilters } from '../types'
 
 import ButtonLink from './ButtonLink.vue'
 
-export default defineComponent<{
-	dataTest: string | null
-	isAddDisabled: boolean
-	isClearAllDisabled: boolean
-	isLoading: boolean
-}>({
+export default defineComponent({
 	name: 'FilterActions',
 	components: {
 		ButtonLink,
@@ -54,7 +49,15 @@ export default defineComponent<{
 			type: Boolean,
 		},
 	},
-	setup(_, { emit }) {
+	setup(
+		_: {
+			dataTest: string | null
+			isAddDisabled: boolean
+			isClearAllDisabled: boolean
+			isLoading: boolean
+		},
+		{ emit },
+	) {
 		const handleAdd = () => {
 			emit('startAddingFilter')
 		}

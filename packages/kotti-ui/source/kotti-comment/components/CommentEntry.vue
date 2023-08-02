@@ -44,7 +44,7 @@ import CommentActions from './CommentActions.vue'
 import CommentHeader from './CommentHeader.vue'
 import CommentInlineEdit from './CommentInlineEdit.vue'
 
-export default defineComponent<KottiComment.Entry.PropsInternal>({
+export default defineComponent({
 	name: 'CommentEntry',
 	components: {
 		CommentActions,
@@ -52,7 +52,7 @@ export default defineComponent<KottiComment.Entry.PropsInternal>({
 		CommentInlineEdit,
 	},
 	props: makeProps(KottiComment.Entry.schema),
-	setup(props, { emit }) {
+	setup(props: KottiComment.Entry.PropsInternal, { emit }) {
 		const isEditing = ref(false)
 
 		return {

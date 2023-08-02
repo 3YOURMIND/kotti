@@ -49,14 +49,14 @@ import CommentEntry from './components/CommentEntry.vue'
 import KtCommentInput from './KtCommentInput.vue'
 import { KottiComment } from './types'
 
-export default defineComponent<KottiComment.PropsInternal>({
+export default defineComponent({
 	name: 'KtComment',
 	components: {
 		CommentEntry,
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiComment.PropsInternal, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
 		const userToReply = ref<KottiComment.User | null>(null)

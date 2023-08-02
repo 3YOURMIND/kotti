@@ -39,10 +39,7 @@ import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 
 import NavbarTooltip from './NavbarTooltip.vue'
 
-export default defineComponent<{
-	isNarrow: boolean
-	logoUrl: string
-}>({
+export default defineComponent({
 	name: 'NavbarLogo',
 	components: {
 		NavbarTooltip,
@@ -51,7 +48,7 @@ export default defineComponent<{
 		isNarrow: { default: false, type: Boolean },
 		logoUrl: { required: true, type: String },
 	},
-	setup() {
+	setup(_: { isNarrow: boolean; logoUrl: string }) {
 		const translations = useTranslationNamespace('KtNavbar')
 
 		return {

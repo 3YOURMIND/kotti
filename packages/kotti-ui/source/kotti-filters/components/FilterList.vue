@@ -38,13 +38,7 @@ import { getFilterInitialState } from '../utils'
 
 import FilterRow from './FilterRow.vue'
 
-export default defineComponent<{
-	columns: KottiFilters.Column.Any[]
-	dataTest: string | null
-	filters: KottiFilters.InternalFilter[]
-	isAddingFilter: boolean
-	isLoading: boolean
-}>({
+export default defineComponent({
 	name: 'FilterList',
 	components: {
 		FilterRow,
@@ -71,7 +65,16 @@ export default defineComponent<{
 			type: Boolean,
 		},
 	},
-	setup(props, { emit }) {
+	setup(
+		props: {
+			columns: KottiFilters.Column.Any[]
+			dataTest: string | null
+			filters: KottiFilters.InternalFilter[]
+			isAddingFilter: boolean
+			isLoading: boolean
+		},
+		{ emit },
+	) {
 		const currentFiltersKeys = computed<KottiFilters.InternalFilter['key'][]>(
 			() => props.filters.map((filter) => filter.key),
 		)

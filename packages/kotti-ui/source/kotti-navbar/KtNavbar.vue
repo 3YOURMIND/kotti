@@ -64,7 +64,7 @@ import NavbarQuickLink from './components/NavbarQuickLink.vue'
 import { IS_NAVBAR_NARROW } from './constants'
 import { KottiNavbar } from './types'
 
-export default defineComponent<KottiNavbar.PropsInternal>({
+export default defineComponent({
 	name: 'KtNavbar',
 	components: {
 		NavbarLogo,
@@ -74,7 +74,7 @@ export default defineComponent<KottiNavbar.PropsInternal>({
 	},
 	mixins: [clickaway],
 	props: makeProps(KottiNavbar.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiNavbar.PropsInternal, { emit }) {
 		const mobileMenuToggle = ref(false)
 
 		provide(

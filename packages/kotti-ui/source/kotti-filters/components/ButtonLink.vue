@@ -12,14 +12,7 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import { KottiFilters } from '../types'
 
-export default defineComponent<{
-	dataTest: string | null
-	icon: Yoco.Icon | null
-	isDisabled: boolean
-	isLoading: boolean
-	label: string | null
-	type: KottiFilters.ButtonLinkType
-}>({
+export default defineComponent({
 	name: 'ButtonLink',
 	props: {
 		dataTest: {
@@ -52,7 +45,17 @@ export default defineComponent<{
 				),
 		},
 	},
-	setup(props, { emit }) {
+	setup(
+		props: {
+			dataTest: string | null
+			icon: Yoco.Icon | null
+			isDisabled: boolean
+			isLoading: boolean
+			label: string | null
+			type: KottiFilters.ButtonLinkType
+		},
+		{ emit },
+	) {
 		const mainClasses = computed(() => ({
 			'kt-button-link': true,
 			'kt-button-link--is-disabled': props.isDisabled,

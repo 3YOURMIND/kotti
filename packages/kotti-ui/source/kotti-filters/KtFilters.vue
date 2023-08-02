@@ -60,7 +60,7 @@ import FilterSearch from './components/FilterSearch.vue'
 import { KottiFilters } from './types'
 import { isValidColumn } from './validators'
 
-export default defineComponent<KottiFilters.PropsInternal>({
+export default defineComponent({
 	name: 'KtFilters',
 	components: {
 		ButtonLink,
@@ -88,7 +88,7 @@ export default defineComponent<KottiFilters.PropsInternal>({
 			type: Array,
 		},
 	},
-	setup(props, { emit }) {
+	setup(props: KottiFilters.PropsInternal, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
 		const listContentRef = ref<Element | null>(null)

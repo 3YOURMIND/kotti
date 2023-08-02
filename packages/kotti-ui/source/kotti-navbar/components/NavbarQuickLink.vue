@@ -34,10 +34,7 @@ import { KottiNavbar } from '../types'
 
 import NavbarTooltip from './NavbarTooltip.vue'
 
-export default defineComponent<{
-	isNarrow: boolean
-	links: KottiNavbar.QuickLink[]
-}>({
+export default defineComponent({
 	name: 'KtNavbarQuickLink',
 	components: {
 		NavbarTooltip,
@@ -46,7 +43,7 @@ export default defineComponent<{
 		isNarrow: { default: false, type: Boolean },
 		links: { required: true, type: Array },
 	},
-	setup() {
+	setup(_: { isNarrow: boolean; links: KottiNavbar.QuickLink[] }) {
 		const translations = useTranslationNamespace('KtNavbar')
 
 		return {

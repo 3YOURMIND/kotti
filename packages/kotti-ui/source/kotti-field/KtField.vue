@@ -104,13 +104,7 @@ import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import FieldHelpText from './components/FieldHelpText.vue'
 import { KottiField } from './types'
 
-export default defineComponent<{
-	field: KottiField.Hook.Returns<unknown>
-	helpTextSlot: VNode[]
-	isComponent: string | null
-	isGroup: boolean
-	getEmptyValue: () => unknown
-}>({
+export default defineComponent({
 	name: 'KtField',
 	components: { FieldHelpText },
 	props: {
@@ -124,7 +118,13 @@ export default defineComponent<{
 		isComponent: { default: null, type: String },
 		isGroup: { default: false, type: Boolean },
 	},
-	setup(props) {
+	setup(props: {
+		field: KottiField.Hook.Returns<unknown>
+		helpTextSlot: VNode[]
+		isComponent: string | null
+		isGroup: boolean
+		getEmptyValue: () => unknown
+	}) {
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === 'empty'),

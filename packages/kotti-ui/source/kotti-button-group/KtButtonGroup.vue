@@ -9,8 +9,11 @@ import { defineComponent } from '@vue/composition-api'
 
 import { KottiButtonGroup } from './types'
 
-export default defineComponent<KottiButtonGroup.PropsInternal>({
+export default defineComponent({
 	name: 'KtButtonGroup',
+	setup(_: KottiButtonGroup.PropsInternal) {
+		return {}
+	},
 })
 </script>
 

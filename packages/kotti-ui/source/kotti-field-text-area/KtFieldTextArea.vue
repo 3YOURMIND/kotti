@@ -14,13 +14,13 @@ import { makeProps } from '../make-props'
 import { KOTTI_FIELD_TEXT_AREA_SUPPORTS } from './constants'
 import { KottiFieldTextArea } from './types'
 
-export default defineComponent<KottiFieldTextArea.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldTextArea',
 	components: {
 		KtField,
 	},
 	props: makeProps(KottiFieldTextArea.propsSchema),
-	setup(props, { emit }) {
+	setup(props: KottiFieldTextArea.PropsInternal, { emit }) {
 		const field = useField<KottiFieldTextArea.Value>({
 			emit,
 			isEmpty: (value) => value === null,

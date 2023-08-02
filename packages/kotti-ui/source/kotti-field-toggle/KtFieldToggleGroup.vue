@@ -43,7 +43,7 @@ import ToggleInner from './components/ToggleInner.vue'
 import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import { KottiFieldToggleGroup } from './types'
 
-export default defineComponent<KottiFieldToggleGroup.PropsInternal>({
+export default defineComponent({
 	name: 'KtFieldToggleGroup',
 	components: {
 		FieldHelpText,
