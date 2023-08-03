@@ -47,6 +47,10 @@
 		@include skeleton-style(1800px, 1200px);
 		height: 0.4rem;
 
+		&.sm {
+			height: 0.4rem;
+		}
+
 		&.md {
 			height: 0.8rem;
 		}

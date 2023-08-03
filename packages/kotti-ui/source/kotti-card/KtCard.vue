@@ -1,16 +1,32 @@
 <template>
-	<div :class="cardClass">
+	<div :class="cardClass" tabindex="0" @click.prevent="handleClick">
 		<div v-if="imgUrl" :class="imageRowClass">
-			<img class="kt-card__image-row__image" :src="imgUrl" />
+			<div v-if="isImgLoading" class="skeleton square md" />
+			<img v-else class="kt-card__image-row__image" :src="imgUrl" />
 		</div>
 		<div v-if="$slots['card-header']" class="kt-card__header">
-			<slot name="card-header" />
+			<div v-if="isTextLoading" class="skeleton rectangle md" />
+			<slot v-else name="card-header" />
 		</div>
 		<div v-if="$slots['card-body']" class="kt-card__body">
-			<slot name="card-body" />
+			<div v-if="isTextLoading" class="skeleton rectangle sm" />
+			<slot v-else name="card-body" />
 		</div>
-		<div v-if="$slots['card-footer']" class="kt-card__footer">
-			<slot name="card-footer" />
+		<div v-if="hasActions" class="kt-card__footer">
+			<div v-if="hasActions && !isTextLoading">
+				<KtButton
+					:data-test="secondaryActionDataTest"
+					:label="secondaryActionLabel"
+					type="text"
+					@click.prevent="$emit('clickOnSecondaryButton')"
+				/>
+				<KtButton
+					:data-test="primaryActionDataTest"
+					:label="primaryActionLabel"
+					type="primary"
+					@click.prevent="$emit('clickOnPrimaryButton')"
+				/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -18,19 +34,31 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
+import { KtButton } from '../kotti-button'
 import { makeProps } from '../make-props'
 
 import { KottiCard } from './types'
 
 export default defineComponent<KottiCard.PropsInternal>({
 	name: 'KtCard',
+	components: { KtButton },
 	props: makeProps(KottiCard.propsSchema),
-	setup(props) {
+	setup(props, { emit }) {
+		const hasActions = computed(
+			() =>
+				props.primaryActionLabel != null && props.secondaryActionLabel != null,
+		)
+
 		return {
 			cardClass: computed(() => ({
 				'kt-card': true,
+				'kt-card--is-clickable': !hasActions.value,
 				[`kt-card--has-${props.imgPosition}-image`]: props.imgUrl,
 			})),
+			handleClick: () => {
+				if (!hasActions.value) emit('click')
+			},
+			hasActions,
 			imageRowClass: computed(() => ({
 				'kt-card__image-row': true,
 				[`kt-card__image-row--is-${props.imgPosition}`]: props.imgUrl,
@@ -48,18 +76,30 @@ export default defineComponent<KottiCard.PropsInternal>({
 	padding: var(--unit-4);
 	word-break: break-word;
 	background: var(--ui-background);
-	border: 1px solid var(--ui-02);
 	border-radius: var(--border-radius);
-
 	&--has-top-image {
 		padding-top: 0;
 	}
 	&--has-bottom-image {
 		padding-bottom: 0;
 	}
-
+	&--is-clickable {
+		&:hover {
+			cursor: pointer;
+			border: 1px solid var(--interactive-01-hover);
+		}
+		&:active {
+			border-color: var(--primary-90);
+		}
+	}
+	.skeleton {
+		margin: 0;
+	}
 	&__header {
 		order: 2;
+		.skeleton {
+			margin: 0 0 var(--unit-2) 0;
+		}
 	}
 
 	&__body {
@@ -74,7 +114,7 @@ export default defineComponent<KottiCard.PropsInternal>({
 	&__image-row {
 		&__image {
 			display: block;
-			max-width: 100%;
+			width: 100%;
 		}
 
 		margin: var(--unit-4) calc(-1 * var(--unit-4));
