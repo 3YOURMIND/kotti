@@ -100,6 +100,7 @@
 					flex: 1;
 
 					table {
+						width: 100%;
 						margin: 0;
 						text-align: center;
 						border: 0;
@@ -111,6 +112,11 @@
 								td,
 								th {
 									flex: 1;
+								}
+
+								th {
+									font-size: 0.6rem;
+									line-height: 1em;
 								}
 							}
 						}
