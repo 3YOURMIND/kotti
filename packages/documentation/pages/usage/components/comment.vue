@@ -468,6 +468,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import '../../../styles/tables.scss';
+
 .no-background {
 	background: unset;
 }
