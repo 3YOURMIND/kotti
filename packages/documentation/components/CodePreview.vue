@@ -40,12 +40,12 @@ export default defineComponent({
 	padding-top: var(--unit-2);
 
 	&__switcher {
+		width: fit-content;
 		padding: var(--unit-1) var(--unit-2);
+		margin-bottom: var(--unit-3);
 		font-size: 12px;
 		color: var(--white);
 		background: rgba(0, 0, 0, 0.4);
-		width: fit-content;
-		margin-bottom: var(--unit-3);
 
 		&:hover {
 			cursor: pointer;

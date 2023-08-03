@@ -1,7 +1,49 @@
 <template>
 	<div>
 		<ComponentInfo v-bind="{ component }" />
+		<div class="card-view-example">
+			<KtCard
+				v-bind="{ imgPosition }"
+				imgUrl="https://picsum.photos/900/300"
+				primaryActionLabel="Confirm"
+				secondaryActionLabel="Cancel"
+			>
+				<h2 slot="card-header">Lorem Ipsum</h2>
+				<p slot="card-body">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+					consequat nisl at nisl condimentum vehicula.
+				</p>
+			</KtCard>
+		</div>
+		<br />
 
+		<div class="card-view-example-2">
+			<KtCard v-bind="{ imgPosition }" imgUrl="https://picsum.photos/900/300">
+				<h2 slot="card-header">Lorem Ipsum</h2>
+				<p slot="card-body">
+					Moebius ring by pmaegermanis licensed under CC BY 3.0 (Creative
+					Commons https://www.thingiverse.com/thing:1649028
+				</p>
+			</KtCard>
+		</div>
+		<br />
+		<div class="card-view-example-skeleton">
+			<KtCard
+				v-bind="{ imgPosition }"
+				imgUrl="https://picsum.photos/900/300"
+				:isImgLoading="true"
+				:isTextLoading="true"
+				primaryActionLabel="Confirm"
+				secondaryActionLabel="Cancel"
+			>
+				<h2 slot="card-header">Lorem Ipsum</h2>
+				<p slot="card-body">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+					consequat nisl at nisl condimentum vehicula.
+				</p>
+			</KtCard>
+		</div>
+		<br />
 		<div class="element-example">
 			<KtCard>
 				<div slot="card-header">

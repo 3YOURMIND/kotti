@@ -9,7 +9,7 @@ export const KtCard = attachMeta(makeInstallable(KtCardVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A127',
+		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?type=design&node-id=5144-11435&mode=design&t=lct468cSPHUMxSuu-0',
 	},
 	slots: {
 		'card-body': { description: null, scope: null },
