@@ -154,3 +154,7 @@ export default defineComponent({
 	name: 'DocumentationPageFoundationsTextTypography',
 })
 </script>
+
+<style lang="scss" scoped>
+@import '../../../styles/tables.scss';
+</style>

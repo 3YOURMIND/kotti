@@ -284,6 +284,7 @@ export default defineComponent<{
 
 <style lang="scss" scoped>
 @import '@3yourmind/kotti-ui/dist/variables.scss';
+@import '../styles/tables.scss';
 
 $radius: 3px;
 
