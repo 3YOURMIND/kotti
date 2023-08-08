@@ -155,7 +155,7 @@ export namespace KottiTable {
 		filteredColumns: Column.Filtered[] // Unused
 		hiddenColumns: Column.Hidden[]
 		orderedColumns: Column.Ordered[]
-		sortedColumns: Column.Sorted[]
+		sortedColumns: Omit<Column.Sorted, 'sortBy'>[]
 
 		loading: boolean
 

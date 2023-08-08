@@ -407,7 +407,7 @@ You can also initialize the table to be already sorted, by setting the `sortOrde
 
 To sort remotly:
 
-1. Set the `sortRemote` flag on `<KtTable/>` which disables the local table sort function.
+1. Set the `remoteSort` flag on `<KtTable/>` which disables the local table sort function.
 
 2. You can then listen to the `@sortChange` which returns:
 
@@ -428,7 +428,7 @@ To sort remotly:
 	:rows="rows"
 	useQuickSortControl
 	sortable="all"
-	sortRemote
+	remoteSort
 	@sortChange="sort"
 >
 	<KtTableColumn label="Name" prop="name" />
@@ -441,8 +441,8 @@ To sort remotly:
 ```js
 {
 	methods: {
-		async sort(sortedColumns) {
-			const { sortBy, sortOrder } = sortedColumns;
+		async sort(sortChangeEvent) {
+			const { sortBy, sortOrder } = sortChangeEvent;
 			this.rows = await api.get(url, { params: { [sortBy]: sortOrder } })
 		}
 	}
