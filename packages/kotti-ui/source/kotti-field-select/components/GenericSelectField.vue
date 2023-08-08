@@ -158,15 +158,23 @@ export default defineComponent({
 			} else localQuery.value = null
 		}
 
-		watch(isDropdownMounted, (isMounted) => {
-			if (isMounted) return
-			deleteQuery()
-		})
+		watch(
+			isDropdownMounted,
+			(isMounted) => {
+				if (isMounted) return
+				deleteQuery()
+			},
+			{ flush: 'post' },
+		)
 
-		watch(isDropdownOpen, (isOpen) => {
-			if (!isOpen) return
-			inputRef.value?.focus()
-		})
+		watch(
+			isDropdownOpen,
+			(isOpen) => {
+				if (!isOpen) return
+				inputRef.value?.focus()
+			},
+			{ flush: 'post' },
+		)
 
 		const queryValue = computed(() =>
 			props.isRemote ? props.query : localQuery.value,
@@ -193,7 +201,7 @@ export default defineComponent({
 					),
 				])
 			},
-			{ immediate: true },
+			{ immediate: true, flush: 'post' },
 		)
 
 		const isInputVisible = computed(

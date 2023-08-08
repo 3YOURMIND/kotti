@@ -1,11 +1,11 @@
-import VueCompositionApi from '@vue/composition-api'
+import VueCompositionAPI from '@vue/composition-api'
 import { createLocalVue } from '@vue/test-utils'
 
 import { KottiField } from '../kotti-field/types'
 import { KottiForm } from '../kotti-form/types'
 
 export const localVue = createLocalVue()
-localVue.use(VueCompositionApi)
+localVue.use(VueCompositionAPI)
 
 export const getMockContext = (
 	{ validators = {}, values = {} } = { validators: {}, values: {} },

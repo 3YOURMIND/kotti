@@ -28,7 +28,7 @@ export default defineComponent({
 			computed(() => ({
 				appendTo: () => document.body,
 				arrow: roundArrow,
-				content: contentRef.value,
+				content: contentRef.value ?? undefined,
 				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 				placement: 'right',
 				theme: 'kt-navbar-tooltip',

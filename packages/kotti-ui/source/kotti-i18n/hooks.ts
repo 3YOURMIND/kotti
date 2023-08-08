@@ -105,7 +105,7 @@ export const useI18nProvide = ({
 
 			elementLocale.use(elementUiTranslations)
 		},
-		{ immediate: true },
+		{ immediate: true, flush: 'post' },
 	)
 
 	provide<KottiI18n.Context>(KT_I18N_CONTEXT, {

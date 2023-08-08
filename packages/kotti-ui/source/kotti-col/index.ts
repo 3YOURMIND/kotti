@@ -1,9 +1,4 @@
-import {
-	createElement,
-	computed,
-	defineComponent,
-	inject,
-} from '@vue/composition-api'
+import { h, computed, defineComponent, inject } from '@vue/composition-api'
 
 import { KT_ROW_CONTEXT } from '../kotti-row/constants'
 import { KottiRow } from '../kotti-row/types'
@@ -65,7 +60,7 @@ export const KtCol = attachMeta(
 				])
 
 				return () =>
-					createElement(
+					h(
 						props.tag,
 						{
 							class: classes.value,

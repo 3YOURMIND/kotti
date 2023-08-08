@@ -39,6 +39,6 @@ export const useSlideAnimation = (
 
 			executeAnimation(shouldBeShown)
 		},
-		{ immediate: true },
+		{ immediate: true, flush: 'post' },
 	)
 }

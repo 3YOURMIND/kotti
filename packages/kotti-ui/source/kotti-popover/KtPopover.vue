@@ -83,25 +83,29 @@ export default defineComponent({
 				throw new Error('KtPopover: Unbound `contentRef` for tippy: null')
 		})
 
-		watch(triggerRef, (newRef) => {
-			if (newRef) {
-				newRef.addEventListener('focus', () => {
-					const childrenArray = Array.from(newRef.children)
+		watch(
+			triggerRef,
+			(newRef) => {
+				if (newRef) {
+					newRef.addEventListener('focus', () => {
+						const childrenArray = Array.from(newRef.children)
 
-					if (childrenArray.length) {
-						const focusableChildIndex = childrenArray.findIndex((child) => {
-							if (child instanceof HTMLElement) child.focus()
+						if (childrenArray.length) {
+							const focusableChildIndex = childrenArray.findIndex((child) => {
+								if (child instanceof HTMLElement) child.focus()
 
-							return document.activeElement === child
-						})
+								return document.activeElement === child
+							})
 
-						if (focusableChildIndex !== -1) {
-							newRef.setAttribute('tabIndex', '-1')
+							if (focusableChildIndex !== -1) {
+								newRef.setAttribute('tabIndex', '-1')
+							}
 						}
-					}
-				})
-			}
-		})
+					})
+				}
+			},
+			{ flush: 'post' },
+		)
 
 		/**
 		 * expose to children that they are inside a popover

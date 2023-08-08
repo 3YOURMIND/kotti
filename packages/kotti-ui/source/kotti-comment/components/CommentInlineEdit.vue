@@ -51,7 +51,7 @@ export default defineComponent({
 
 				_message.value = isEditing ? props.message : ''
 			},
-			{ immediate: true },
+			{ immediate: true, flush: 'post' },
 		)
 
 		return {
