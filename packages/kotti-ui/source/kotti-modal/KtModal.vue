@@ -95,7 +95,7 @@ export default defineComponent({
 				if (shouldOpen) tippyInstanceRef.value.show()
 				else tippyInstanceRef.value.unmount()
 			},
-			{ immediate: true },
+			{ immediate: true, flush: 'post' },
 		)
 
 		return {

@@ -36,6 +36,7 @@ export default defineComponent({
 		watch(
 			() => props.isInternal,
 			(isInternal) => (_isInternal.value = isInternal),
+			{ flush: 'post' },
 		)
 
 		return {

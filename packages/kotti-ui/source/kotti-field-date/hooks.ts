@@ -92,42 +92,48 @@ const useInputDecoration = <DATA_TYPE extends Values>({
 
 		let suffixIcon: Element | null = null
 
-		watchEffect(() => {
-			const dateComponent = getDateComponent({ elDateRef }) // don't refactor out of hooks
+		watchEffect(
+			() => {
+				const dateComponent = getDateComponent({ elDateRef }) // don't refactor out of hooks
 
-			// if `haveTrigger` is false, the suffixIcon is not rendered; `v-if` condition on the suffixIcon of el-ui dates
-			if (dateComponent.haveTrigger) {
-				// these are the default classes added to suffixIcon
-				// there are more classes added when the clearIcon is hidden/shown
-				// selecting with default selectors guarantees we get a suffixIcon even if it's hidden as long
-				// as it's rendered. The other hook will handle the show/hide effect, while this should handle the existence of suffixIcon
-				suffixIcon = dateComponent.$el.querySelector(
-					'.el-input__icon.el-range__close-icon, .el-input__icon:not(.el-icon-date):not(.el-icon-time)',
-				)
-			}
-		})
-
-		watchEffect(() => {
-			const dateComponent = getDateComponent({ elDateRef })
-
-			/**
-			 * true onMouseEnter (when value is not Empty & field is clearable)
-			 * false onMouseLeave or when value is Empty or when the field is not clearable
-			 */
-			const showClear = dateComponent.showClose
-
-			if (suffixIcon) {
-				if (!suffixIcon.classList.contains('yoco'))
-					suffixIcon.classList.add('yoco')
-
-				if (showClear) {
-					if (!suffixIcon.hasChildNodes()) suffixIcon.append('close')
-				} else {
-					if (suffixIcon.hasChildNodes() && suffixIcon.lastChild)
-						suffixIcon.removeChild(suffixIcon.lastChild)
+				// if `haveTrigger` is false, the suffixIcon is not rendered; `v-if` condition on the suffixIcon of el-ui dates
+				if (dateComponent.haveTrigger) {
+					// these are the default classes added to suffixIcon
+					// there are more classes added when the clearIcon is hidden/shown
+					// selecting with default selectors guarantees we get a suffixIcon even if it's hidden as long
+					// as it's rendered. The other hook will handle the show/hide effect, while this should handle the existence of suffixIcon
+					suffixIcon = dateComponent.$el.querySelector(
+						'.el-input__icon.el-range__close-icon, .el-input__icon:not(.el-icon-date):not(.el-icon-time)',
+					)
 				}
-			}
-		})
+			},
+			{ flush: 'post' },
+		)
+
+		watchEffect(
+			() => {
+				const dateComponent = getDateComponent({ elDateRef })
+
+				/**
+				 * true onMouseEnter (when value is not Empty & field is clearable)
+				 * false onMouseLeave or when value is Empty or when the field is not clearable
+				 */
+				const showClear = dateComponent.showClose
+
+				if (suffixIcon) {
+					if (!suffixIcon.classList.contains('yoco'))
+						suffixIcon.classList.add('yoco')
+
+					if (showClear) {
+						if (!suffixIcon.hasChildNodes()) suffixIcon.append('close')
+					} else {
+						if (suffixIcon.hasChildNodes() && suffixIcon.lastChild)
+							suffixIcon.removeChild(suffixIcon.lastChild)
+					}
+				}
+			},
+			{ flush: 'post' },
+		)
 	})
 }
 
@@ -157,32 +163,35 @@ const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 	'elDateRef' | 'popperHeight' | 'popperWidth'
 >) => {
 	onMounted(() => {
-		watchEffect(() => {
-			const dateComponent = getDateComponent({ elDateRef })
+		watchEffect(
+			() => {
+				const dateComponent = getDateComponent({ elDateRef })
 
-			if (isPickerVisible(dateComponent)) {
-				dateComponent.picker.$el.style.width = popperWidth
-				dateComponent.picker.$el.style.height = popperHeight
-				/**
-				 * HACK: to force re-compute the boundaries of the popper element (through the `update` prototype function),
-				 * thus properly position it.
-				 *
-				 * When we open the date-picker we trigger `showPicker`
-				 * https://github.com/ElemeFE/element/blob/649670c55a45c7343eb7148565e2d873bc3d52dd/packages/date-picker/src/picker.vue#L806
-				 * which calls `updatePopper` from the mixin vue-popper, which, in turn, either
-				 * creates a new PopperJs instance or updates the already-exisiting instance's props
-				 * https://github.com/ElemeFE/element/blob/649670c55a45c7343eb7148565e2d873bc3d52dd/src/utils/vue-popper.js#L120
-				 * In the latter case, it calls the prototype-defined function `update` from popper.js
-				 * https://github.com/ElemeFE/element/blob/3ceec7aa6a7ab46e61dbafa4c68b77ba09384b40/src/utils/popper.js#L224
-				 * to compute the boundaries of the popper, and thus its placement, among other things.
-				 *
-				 * On the first trigger of `showPopper`, a popperJs instance is created with the height and width defined by element-ui.
-				 * After creation, we mutate the popper width and height to fit our kotti styles and needs.
-				 * This mutation changes the boundaries of the popper without triggering a position adjustment. So, we force it.
-				 */
-				dateComponent.popperJS.update()
-			}
-		})
+				if (isPickerVisible(dateComponent)) {
+					dateComponent.picker.$el.style.width = popperWidth
+					dateComponent.picker.$el.style.height = popperHeight
+					/**
+					 * HACK: to force re-compute the boundaries of the popper element (through the `update` prototype function),
+					 * thus properly position it.
+					 *
+					 * When we open the date-picker we trigger `showPicker`
+					 * https://github.com/ElemeFE/element/blob/649670c55a45c7343eb7148565e2d873bc3d52dd/packages/date-picker/src/picker.vue#L806
+					 * which calls `updatePopper` from the mixin vue-popper, which, in turn, either
+					 * creates a new PopperJs instance or updates the already-exisiting instance's props
+					 * https://github.com/ElemeFE/element/blob/649670c55a45c7343eb7148565e2d873bc3d52dd/src/utils/vue-popper.js#L120
+					 * In the latter case, it calls the prototype-defined function `update` from popper.js
+					 * https://github.com/ElemeFE/element/blob/3ceec7aa6a7ab46e61dbafa4c68b77ba09384b40/src/utils/popper.js#L224
+					 * to compute the boundaries of the popper, and thus its placement, among other things.
+					 *
+					 * On the first trigger of `showPopper`, a popperJs instance is created with the height and width defined by element-ui.
+					 * After creation, we mutate the popper width and height to fit our kotti styles and needs.
+					 * This mutation changes the boundaries of the popper without triggering a position adjustment. So, we force it.
+					 */
+					dateComponent.popperJS.update()
+				}
+			},
+			{ flush: 'post' },
+		)
 	})
 }
 
@@ -190,37 +199,42 @@ const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
 	onMounted(() => {
-		watchEffect(() => {
-			const dateComponent = getDateComponent({ elDateRef })
-			if (isPickerVisible(dateComponent)) {
-				const dateTimePickerInputWrapper =
-					'.el-date-picker__editor-wrap  > .el-input--small'
-				const dateTimeRangeInputWrapper =
-					'.el-date-range-picker__time-picker-wrap > .el-input--small'
-				const pickerInputWrappers: Array<Element> = Array.from(
-					dateComponent.picker.$el.querySelectorAll(
-						[dateTimePickerInputWrapper, dateTimeRangeInputWrapper].join(', '),
-					),
-				)
-				// divs around input fields inside the picker of KtFieldDateTime, KtFieldDateTimeRange
-				pickerInputWrappers.forEach((input) =>
-					input.classList.add(
-						'kt-field__wrapper',
-						'kt-field__wrapper--is-small',
-						'kt-field__wrapper--is-validation-empty',
-					),
-				)
+		watchEffect(
+			() => {
+				const dateComponent = getDateComponent({ elDateRef })
+				if (isPickerVisible(dateComponent)) {
+					const dateTimePickerInputWrapper =
+						'.el-date-picker__editor-wrap  > .el-input--small'
+					const dateTimeRangeInputWrapper =
+						'.el-date-range-picker__time-picker-wrap > .el-input--small'
+					const pickerInputWrappers: Array<Element> = Array.from(
+						dateComponent.picker.$el.querySelectorAll(
+							[dateTimePickerInputWrapper, dateTimeRangeInputWrapper].join(
+								', ',
+							),
+						),
+					)
+					// divs around input fields inside the picker of KtFieldDateTime, KtFieldDateTimeRange
+					pickerInputWrappers.forEach((input) =>
+						input.classList.add(
+							'kt-field__wrapper',
+							'kt-field__wrapper--is-small',
+							'kt-field__wrapper--is-validation-empty',
+						),
+					)
 
-				const innerInputs: Array<Element> = Array.from(
-					dateComponent.picker.$el.querySelectorAll('.el-input__inner'),
-				)
+					const innerInputs: Array<Element> = Array.from(
+						dateComponent.picker.$el.querySelectorAll('.el-input__inner'),
+					)
 
-				innerInputs.forEach((input) => {
-					input.classList.add('kt-field__input-container')
-					input.setAttribute('size', '1')
-				})
-			}
-		})
+					innerInputs.forEach((input) => {
+						input.classList.add('kt-field__input-container')
+						input.setAttribute('size', '1')
+					})
+				}
+			},
+			{ flush: 'post' },
+		)
 	})
 }
 
@@ -233,11 +247,14 @@ const usePickerMisplacementFix = <DATA_TYPE extends Values>({
 	field,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef' | 'field'>) => {
 	onMounted(() => {
-		watchEffect(() => {
-			const dateComponent = getDateComponent({ elDateRef })
+		watchEffect(
+			() => {
+				const dateComponent = getDateComponent({ elDateRef })
 
-			if (field.isLoading || field.isDisabled) return dateComponent.blur()
-		})
+				if (field.isLoading || field.isDisabled) return dateComponent.blur()
+			},
+			{ flush: 'post' },
+		)
 	})
 }
 
@@ -248,31 +265,34 @@ const usePickerNavigationIcons = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
 	onMounted(() => {
-		watchEffect(() => {
-			const dateComponent = getDateComponent({ elDateRef })
+		watchEffect(
+			() => {
+				const dateComponent = getDateComponent({ elDateRef })
 
-			if (isPickerVisible(dateComponent)) {
-				const insertYocoIcon = (icon: Yoco.Icon) =>
-					`<i class="yoco">${icon}</i>`
+				if (isPickerVisible(dateComponent)) {
+					const insertYocoIcon = (icon: Yoco.Icon) =>
+						`<i class="yoco">${icon}</i>`
 
-				const pickerHeaderIcons: Array<HTMLElement> = Array.from(
-					dateComponent.picker.$el.querySelectorAll(
-						'.el-picker-panel__icon-btn',
-					),
-				)
+					const pickerHeaderIcons: Array<HTMLElement> = Array.from(
+						dateComponent.picker.$el.querySelectorAll(
+							'.el-picker-panel__icon-btn',
+						),
+					)
 
-				const headerYocoIcons = [
-					insertYocoIcon(Yoco.Icon.CHEVRON_LEFT_DOUBLE),
-					insertYocoIcon(Yoco.Icon.CHEVRON_LEFT),
-					insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT_DOUBLE),
-					insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT),
-				]
+					const headerYocoIcons = [
+						insertYocoIcon(Yoco.Icon.CHEVRON_LEFT_DOUBLE),
+						insertYocoIcon(Yoco.Icon.CHEVRON_LEFT),
+						insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT_DOUBLE),
+						insertYocoIcon(Yoco.Icon.CHEVRON_RIGHT),
+					]
 
-				pickerHeaderIcons.forEach((icon, index) => {
-					icon.innerHTML = headerYocoIcons[index]
-				})
-			}
-		})
+					pickerHeaderIcons.forEach((icon, index) => {
+						icon.innerHTML = headerYocoIcons[index]
+					})
+				}
+			},
+			{ flush: 'post' },
+		)
 	})
 }
 
@@ -301,32 +321,35 @@ const useRangePickerHeaderFix = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
 	onMounted(() => {
-		watchEffect(() => {
-			const dateComponent = getDateComponent({ elDateRef })
-			if (isPickerVisible(dateComponent)) {
-				// change when any of the navigation buttons in the range-pickers are clicked
-				const dates = [
-					dateComponent.picker.leftLabel?.split(/\s+/) ?? ['', ''],
-					dateComponent.picker.rightLabel?.split(/\s+/) ?? ['', ''],
-				]
+		watchEffect(
+			() => {
+				const dateComponent = getDateComponent({ elDateRef })
+				if (isPickerVisible(dateComponent)) {
+					// change when any of the navigation buttons in the range-pickers are clicked
+					const dates = [
+						dateComponent.picker.leftLabel?.split(/\s+/) ?? ['', ''],
+						dateComponent.picker.rightLabel?.split(/\s+/) ?? ['', ''],
+					]
 
-				const headers = dateComponent.picker.$el.querySelectorAll(
-					'.el-date-range-picker__header',
-				)
+					const headers = dateComponent.picker.$el.querySelectorAll(
+						'.el-date-range-picker__header',
+					)
 
-				headers.forEach((header, index) => {
-					const fullDate = header.querySelector('div')
-					if (fullDate) {
-						fullDate.innerHTML = dates[index][0] // leftMonth or rightMonth
-						if (header.lastChild?.nodeType === Node.TEXT_NODE) {
-							// we add a text node each call with the new year value, thus need to remove the old first
-							header.removeChild(header.lastChild)
+					headers.forEach((header, index) => {
+						const fullDate = header.querySelector('div')
+						if (fullDate) {
+							fullDate.innerHTML = dates[index][0] // leftMonth or rightMonth
+							if (header.lastChild?.nodeType === Node.TEXT_NODE) {
+								// we add a text node each call with the new year value, thus need to remove the old first
+								header.removeChild(header.lastChild)
+							}
+							header.append(dates[index][1])
 						}
-						header.append(dates[index][1])
-					}
-				})
-			}
-		})
+					})
+				}
+			},
+			{ flush: 'post' },
+		)
 	})
 }
 

@@ -176,7 +176,7 @@ export default defineComponent({
 					forceUpdateDisplayedValue(newNumber)
 				}
 			},
-			{ immediate: true },
+			{ immediate: true, flush: 'post' },
 		)
 
 		/**
@@ -191,11 +191,15 @@ export default defineComponent({
 				inputRef.value?.setSelectionRange(position, position)
 		}
 
-		watch(internalStringValue, () => {
-			// in case the parent component accepts the @input event’s change, we need to restore the cursor position
-			setCursorPosition(lastUserSetCursorPosition.value)
-			lastUserSetCursorPosition.value = null
-		})
+		watch(
+			internalStringValue,
+			() => {
+				// in case the parent component accepts the @input event’s change, we need to restore the cursor position
+				setCursorPosition(lastUserSetCursorPosition.value)
+				lastUserSetCursorPosition.value = null
+			},
+			{ flush: 'post' },
+		)
 
 		/**
 		 * In the scenario when the user clicks the +/- buttons when the value is null

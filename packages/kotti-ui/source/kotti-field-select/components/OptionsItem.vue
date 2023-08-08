@@ -44,6 +44,7 @@ export default defineComponent({
 					emit('scrollTo', distanceFromParentTop)
 				}
 			},
+			{ flush: 'post' },
 		)
 
 		return {

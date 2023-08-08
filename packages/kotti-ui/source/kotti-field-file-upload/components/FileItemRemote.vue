@@ -92,7 +92,7 @@ export default defineComponent({
 					shouldTriggerRemoteUpload.value = false
 				}
 			},
-			{ immediate: true },
+			{ immediate: true, flush: 'post' },
 		)
 
 		return {

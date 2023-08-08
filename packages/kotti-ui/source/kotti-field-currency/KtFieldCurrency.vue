@@ -115,7 +115,7 @@ export default defineComponent({
 						].join(' '),
 					)
 			},
-			{ immediate: true },
+			{ immediate: true, flush: 'post' },
 		)
 
 		watch(
@@ -156,7 +156,7 @@ export default defineComponent({
 					userCursorPositionFromRight.value = null
 				}
 			},
-			{ immediate: true },
+			{ immediate: true, flush: 'post' },
 		)
 
 		return {

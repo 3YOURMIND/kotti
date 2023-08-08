@@ -55,14 +55,17 @@ export default defineComponent({
 			rootElement.value = document.querySelector(':root')
 		})
 
-		watchEffect(() => {
-			if (rootElement.value !== null) {
-				rootElement.value.style.setProperty(
-					'--primary-70',
-					primaryColor.value ?? '#2659ab',
-				)
-			}
-		})
+		watchEffect(
+			() => {
+				if (rootElement.value !== null) {
+					rootElement.value.style.setProperty(
+						'--primary-70',
+						primaryColor.value ?? '#2659ab',
+					)
+				}
+			},
+			{ flush: 'post' },
+		)
 
 		return {
 			colors: [

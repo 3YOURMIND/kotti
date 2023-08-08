@@ -1,4 +1,4 @@
-import { computed, createElement, defineComponent } from '@vue/composition-api'
+import { computed, h, defineComponent } from '@vue/composition-api'
 
 import { useI18nProvide } from './hooks'
 import { KottiI18n } from './types'
@@ -36,7 +36,7 @@ const KtI18nContext = defineComponent({
 			numberFormat: computed(() => props.numberFormat),
 		})
 
-		return () => createElement('div', [slots.default()])
+		return () => h('div', [slots.default?.() ?? null])
 	},
 })
 

@@ -123,15 +123,20 @@ export default defineComponent({
 			(isOpen) => {
 				if (!isOpen) resetHoveredIndex()
 			},
+			{ flush: 'post' },
 		)
 
 		const itemCount = computed(
 			() => modifiedOptions.value.length + props.actions.length,
 		)
 
-		watch(itemCount, (newValue, oldValue) => {
-			if (newValue !== oldValue) resetHoveredIndex()
-		})
+		watch(
+			itemCount,
+			(newValue, oldValue) => {
+				if (newValue !== oldValue) resetHoveredIndex()
+			},
+			{ flush: 'post' },
+		)
 
 		const selectOption = (option: ModifiedOption) => {
 			if (option.isDisabled) return

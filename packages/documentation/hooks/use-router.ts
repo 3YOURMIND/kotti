@@ -6,5 +6,5 @@ export const useRouter = () => {
 
 	if (!vm) throw new Error('This must be called within a setup function.')
 
-	return computed((): Router => vm.$router)
+	return computed((): Router => vm.proxy.$root.$router)
 }

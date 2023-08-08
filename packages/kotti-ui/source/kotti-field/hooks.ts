@@ -85,7 +85,7 @@ const useValue = <DATA_TYPE>({
 			if (context === null && newFormKey !== null)
 				throw new KtFieldErrors.InvalidPropOutsideOfContext(props, 'formKey')
 		},
-		{ immediate: true },
+		{ immediate: true, flush: 'post' },
 	)
 
 	// fetch value

@@ -9,5 +9,6 @@ export const useResizeTextarea = (
 ) => {
 	watch([textareaRef, value], () => resizeTextarea(textareaRef.value), {
 		immediate: true,
+		flush: 'post',
 	})
 }

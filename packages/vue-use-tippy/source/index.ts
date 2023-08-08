@@ -60,7 +60,7 @@ export const useTippy = (
 			applyForEvery(instance, (tippyInstance) =>
 				tippyInstance.setProps(options.value),
 			),
-		{ immediate: true },
+		{ immediate: true, flush: 'post' },
 	)
 
 	return {

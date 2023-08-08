@@ -184,6 +184,7 @@ export default defineComponent({
 						setStatus({ id, status })
 				})
 			},
+			{ flush: 'post' },
 		)
 
 		return {
