@@ -39,7 +39,7 @@ export default defineComponent<KottiAvatar.PropsInternal>({
 		const triggerRef = ref<HTMLElement | null>(null)
 
 		const hideTippy = computed(
-			() => !props.isHoverable || (!slots.content?.() && props.name === null),
+			() => !props.isHoverable || (!slots.content && props.name === null),
 		)
 
 		useTippy(
