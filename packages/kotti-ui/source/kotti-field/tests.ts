@@ -179,15 +179,18 @@ describe('useField', () => {
 				},
 			})
 
-			wrapper.vm.field.setValue('something else')
-			wrapper.vm.field.setValue(null)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			;(wrapper.vm as any).field.setValue('something else')
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			;(wrapper.vm as any).field.setValue(null)
 
 			expect(context.setValue.mock.calls).toEqual([
 				['testKey', 'something else'],
 				['testKey', null],
 			])
 
-			expect(wrapper.vm.field.currentValue).toBe('something')
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.currentValue).toBe('something')
 		})
 	})
 
@@ -278,7 +281,8 @@ describe('useField', () => {
 				},
 			})
 
-			expect(wrapper.vm.field.validation).toEqual({
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.validation).toEqual({
 				type: 'warning',
 				text: 'This is testKey1',
 			})
@@ -287,7 +291,8 @@ describe('useField', () => {
 
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.vm.field.validation).toEqual({
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.validation).toEqual({
 				type: 'warning',
 				text: 'This is testKey2',
 			})
@@ -308,7 +313,8 @@ describe('useField', () => {
 			})
 
 			expect(testKey).not.toHaveBeenCalled()
-			expect(wrapper.vm.field.validation).toEqual({ type: 'empty' })
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).field.validation).toEqual({ type: 'empty' })
 		})
 	})
 })
