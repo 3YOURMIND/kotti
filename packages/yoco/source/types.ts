@@ -112,6 +112,7 @@ export enum Icon {
 	TECH = 'tech',
 	THUMB_DOWN = 'thumb_down',
 	THUMB_UP = 'thumb_up',
+	TILE_LAYOUT = 'tile_layout',
 	TRASH = 'trash',
 	TRIANGLE_DOWN = 'triangle_down',
 	TRIANGLE_LEFT = 'triangle_left',
