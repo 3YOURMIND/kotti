@@ -47,6 +47,7 @@ export default defineComponent({
 		color: var(--text-03);
 
 		.yoco {
+			flex: 0 0 auto;
 			margin-right: var(--unit-1);
 			font-size: calc(var(--unit-4) + var(--unit-h));
 			color: var(--support-error);
