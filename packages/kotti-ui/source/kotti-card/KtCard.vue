@@ -84,7 +84,7 @@ export default defineComponent({
 		padding-bottom: 0;
 	}
 	&--is-clickable {
-		border: 1px solid var(--ui-01);
+		border: 1px solid var(--ui-background);
 		&:hover {
 			cursor: pointer;
 			border: 1px solid var(--interactive-01-hover);
