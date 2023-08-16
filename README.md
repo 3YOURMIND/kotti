@@ -153,38 +153,103 @@ yarn run check:stylelint
 yarn run test
 ```
 
-### Publish
+### Publishing
+
+#### Kotti
+
+1. Prepare a new release draft [here](https://github.com/3YOURMIND/kotti/releases/new)
+
+   a. Tag format: `v1.2.3` (select `Create new tag: v1.2.3 on publish`)
+
+   b. Title format: `1.2.3: tldr of what's happening`
+
+   c. Release notes: Follow guidelines of previous releases
+
+   d. Click on `Save draft`
+
+2. Checkout the master branch in the Kotti repository and pull latest changes
 
 ```bash
 git checkout master
 git pull --rebase
-yarn install
-
-# you may need login to npm with your credentials if you have publishing rights
-# make sure you have 2FA on your npmjs.com account enabled
-npm login
-
-# update the version in `package.json`
-# make sure to commit the version bump changes before publishing then run:
-
-# Make a release draft here:
-# Follow guidelines of previous releases
-# https://github.com/3YOURMIND/kotti/releases/new
-# Tag format: 'v1.2.3-beta.4'
-# Title format: 1.2.3-beta.4: tldr of what's happening
-
-# make a version commit:
-# Make extra sure you change the version everywhere it is mentioned in the source.
-# Commit message format: version(1.2.3-beta.4): tldr of what's happening
-
-yarn run lerna publish from-package
-# git push your commit to remote
-
-# publish release draft here:
-# https://github.com/3YOURMIND/kotti/releases
-
-# announce the new version in the #kotti slack channel
 ```
+
+3. Install/update dependencies
+
+```bash
+yarn install
+```
+
+4. Build Kotti. Make sure it builds successfully and functionally test the changes made.
+
+```bash
+yarn run watch
+```
+
+5. Login into NPM with your credentials. Make sure you have publishing rights and 2FA on your npmjs.com account enabled.
+
+```bash
+npm login
+```
+
+6. Update the version in `package.json` in `packages/kotti-ui` and all `@3yourmind/kotti-ui` dependencies in:
+
+   a. `packages/documentation`
+
+   b. `packages/storybook`
+
+   c. `packages/test-app`
+
+7. Make a version commit, **DO NOT PUSH** yet.
+
+   a. Commit message format: `version(1.2.3): tldr of what's happening`
+
+8. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
+
+```bash
+yarn run lerna publish from-package
+```
+
+9. Push the version commit to remote
+
+```bash
+git push
+```
+
+10. Find the release draft from `step 1` [here](https://github.com/3YOURMIND/kotti/releases), edit it and click on `Publish release`
+
+11. Announce the new version in the `#kotti` slack channel
+
+#### Yoco
+
+1. Create a version bump branch out of master
+
+2. Update the version in `packages/yoco`
+
+3. Commit and push
+
+4. Create a PR and get it merged
+
+5. Checkout the master branch in the Kotti repository and pull latest changes
+
+```bash
+git checkout master
+git pull --rebase
+```
+
+6. Login into NPM with your credentials. Make sure you have publishing rights and 2FA on your npmjs.com account enabled.
+
+```bash
+npm login
+```
+
+7. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
+
+```bash
+yarn run lerna publish from-package
+```
+
+8. If any new icon is needed in Kotti, create a PR updating the `@3yourmind/yoco` version in `package.json` in `kotti-ui`
 
 ### Build
 
