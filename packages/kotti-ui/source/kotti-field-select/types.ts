@@ -17,6 +17,7 @@ export namespace Shared {
 	export type Option = z.output<typeof optionSchema>
 
 	export const actionSchema = z.object({
+		dataTest: z.string().optional(),
 		label: z.string(),
 		onClick: z.function(z.tuple([]), z.void()),
 	})

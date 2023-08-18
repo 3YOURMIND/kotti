@@ -28,10 +28,14 @@
 				name="option"
 			/>
 		</FieldSelectOptionsItem>
-		<div v-if="actions.length" class="kt-field-select__options__separator" />
+		<div
+			v-if="modifiedActions.length"
+			class="kt-field-select__options__separator"
+		/>
 		<FieldSelectOptionsItem
-			v-for="(action, index) in actions"
+			v-for="(action, index) in modifiedActions"
 			:key="`action-${index}`"
+			:dataTest="action.dataTest"
 			:isHovered="isHovered('action', index)"
 			:label="action.label"
 			type="action"
@@ -50,6 +54,7 @@ import {
 	ref,
 	watch,
 } from '@vue/composition-api'
+import { camelCase } from 'lodash'
 import { z } from 'zod'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
@@ -91,6 +96,15 @@ export default defineComponent({
 
 		const optionsRef = ref<HTMLDivElement | null>(null)
 
+		const modifiedActions = computed(() =>
+			props.actions.map((action) => ({
+				...action,
+				dataTest:
+					action.dataTest ??
+					`${props.dataTestPrefix}.${camelCase(action.label)}`,
+			})),
+		)
+
 		const modifiedOptions = computed(() => {
 			const isLimitReached =
 				props.isMultiple && props.value.length >= props.maximumSelectable
@@ -127,7 +141,7 @@ export default defineComponent({
 		)
 
 		const itemCount = computed(
-			() => modifiedOptions.value.length + props.actions.length,
+			() => modifiedOptions.value.length + modifiedActions.value.length,
 		)
 
 		watch(
@@ -180,7 +194,7 @@ export default defineComponent({
 					if (index < optionsLength)
 						return selectOption(modifiedOptions.value[index])
 
-					return onAction(props.actions[index - optionsLength])
+					return onAction(modifiedActions.value[index - optionsLength])
 				}
 			}
 		}
@@ -208,6 +222,7 @@ export default defineComponent({
 						throw new Error(`Options.vue: unrecognized type “${type}”`)
 				}
 			},
+			modifiedActions,
 			modifiedOptions,
 			onAction,
 			optionsRef,
