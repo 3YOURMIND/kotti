@@ -3,7 +3,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
-		"@vue/composition-api": "^1.7.1",
+		"@vue/composition-api": "1.7.1",
 		"lodash.castarray": "^4.4.0",
 		"tippy.js": "6.x"
 	},
