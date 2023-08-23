@@ -7,7 +7,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
-		"@3yourmind/vue-use-tippy": "1.x",
+		"@3yourmind/vue-use-tippy": "2.x",
 		"@3yourmind/yoco": "^2.4.6",
 		"big.js": "^6.1.1",
 		"deep-eql": "^4.0.0",
