@@ -191,6 +191,12 @@ export default {
 
 th {
 	box-sizing: border-box;
+	padding: var(--unit-2) var(--unit-1);
+	font-size: $font-size-sm;
+	line-height: 1em;
+	color: $lightgray-500;
+	text-align: inherit;
+	text-transform: uppercase;
 	border-width: 0;
 	border-left-color: var(--ui-03);
 	transition: border 0.2s ease-in-out;

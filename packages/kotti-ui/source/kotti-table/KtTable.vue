@@ -330,15 +330,6 @@ table.kt-table {
 	border-collapse: collapse;
 }
 
-::v-deep table.kt-table th {
-	padding: var(--unit-2) var(--unit-1);
-	font-size: $font-size-sm;
-	line-height: 1em;
-	color: $lightgray-500;
-	text-align: inherit;
-	text-transform: uppercase;
-}
-
 ::v-deep table.kt-table tr {
 	position: relative;
 	margin: 0;
