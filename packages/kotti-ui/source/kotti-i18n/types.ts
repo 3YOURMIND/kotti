@@ -9,6 +9,7 @@ import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
 import { KottiFilters } from '../kotti-filters/types'
 import { KottiFormSubmit } from '../kotti-form-submit/types'
 import { KottiNavbar } from '../kotti-navbar/types'
+import { KottiValueLabel } from '../kotti-value-label/types'
 import { DecimalSeparator } from '../types/kotti'
 
 export type DeepPartial<T> = T extends Record<string, unknown>
@@ -42,6 +43,7 @@ export namespace KottiI18n {
 		KtFilters: KottiFilters.Translations
 		KtFormSubmit: KottiFormSubmit.Translations
 		KtNavbar: KottiNavbar.Translations
+		KtValueLabel: KottiValueLabel.Translations
 	}
 
 	export type Props = {
