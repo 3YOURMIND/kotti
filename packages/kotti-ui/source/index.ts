@@ -42,6 +42,8 @@ import {
 	KtFieldFileUploadRemote,
 } from './kotti-field-file-upload'
 export * from './kotti-field-file-upload'
+import { KtFieldInlineEdit } from './kotti-field-inline-edit'
+export * from './kotti-field-inline-edit'
 import { KtFieldNumber } from './kotti-field-number'
 export * from './kotti-field-number'
 import { KtFieldPassword } from './kotti-field-password'
@@ -75,8 +77,6 @@ import { KtHeading } from './kotti-heading'
 export * from './kotti-heading'
 import { KtI18nContext } from './kotti-i18n'
 export * from './kotti-i18n'
-import { KtInlineEdit } from './kotti-inline-edit'
-export * from './kotti-inline-edit'
 import { KtLine } from './kotti-line'
 export * from './kotti-line'
 import { KtModal } from './kotti-modal'
@@ -129,6 +129,7 @@ export default {
 			KtFieldDateTimeRange,
 			KtFieldFileUpload,
 			KtFieldFileUploadRemote,
+			KtFieldInlineEdit,
 			KtFieldMultiSelect,
 			KtFieldMultiSelectRemote,
 			KtFieldNumber,
@@ -147,7 +148,6 @@ export default {
 			KtFormSubmit,
 			KtHeading,
 			KtI18nContext,
-			KtInlineEdit,
 			KtLine,
 			KtModal,
 			KtNavbar,

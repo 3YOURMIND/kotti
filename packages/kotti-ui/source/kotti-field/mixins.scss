@@ -438,7 +438,7 @@
 			/* stylelint-disable */
 			font-size: map.get($fontSizes, $type);
 
-			> .kt-field__input-container {
+			> .kt-field__input-container-wrapper > .kt-field__input-container {
 				min-height: map.get($heights, $type);
 			}
 			/* stylelint-enable */

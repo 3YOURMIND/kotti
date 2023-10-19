@@ -74,6 +74,9 @@ export const esES: KottiI18n.Messages = {
 			MAX_SIZE_EXCEEDED: 'Tamaño máximo de archivo permitido excedido',
 		},
 	},
+	KtFieldInlineEdit: {
+		placeholder: 'Haga clic para editar',
+	},
 	KtFields: {
 		optionalLabel: 'Opcional',
 		requiredMessage: 'Este campo es requerido',

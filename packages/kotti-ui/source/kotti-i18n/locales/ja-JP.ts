@@ -74,6 +74,9 @@ export const jaJP: KottiI18n.Messages = {
 			MAX_SIZE_EXCEEDED: '許容される最大ファイル サイズを超えました',
 		},
 	},
+	KtFieldInlineEdit: {
+		placeholder: 'クリックで編集',
+	},
 	KtFields: {
 		optionalLabel: '任意',
 		requiredMessage: 'このフィールドは必須です。',

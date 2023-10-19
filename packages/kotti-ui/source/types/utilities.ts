@@ -18,3 +18,5 @@ export type ReplaceRecordType<
 	[KEY in keyof OBJECT]: OBJECT[KEY] extends OLD_TYPE ? NEW_TYPE : OBJECT[KEY]
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
+
+export type Nullable<T> = T | null

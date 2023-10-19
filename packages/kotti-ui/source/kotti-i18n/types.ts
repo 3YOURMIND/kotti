@@ -4,6 +4,7 @@ import { KottiBanner } from '../kotti-banner/types'
 import { KottiComment } from '../kotti-comment/types'
 import { KottiField } from '../kotti-field/types'
 import { Shared as KottiFieldFileUploadShared } from '../kotti-field-file-upload/types'
+import { KottiFieldInlineEdit } from '../kotti-field-inline-edit/types'
 import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
 import { KottiFilters } from '../kotti-filters/types'
 import { KottiFormSubmit } from '../kotti-form-submit/types'
@@ -35,6 +36,7 @@ export namespace KottiI18n {
 		KtBanner: KottiBanner.Translations
 		KtComment: KottiComment.Translations
 		KtFieldFileUpload: KottiFieldFileUploadShared.Translations
+		KtFieldInlineEdit: KottiFieldInlineEdit.Translations
 		KtFields: KottiField.Translations
 		KtFieldSelects: KottiFieldSelectShared.Translations
 		KtFilters: KottiFilters.Translations
