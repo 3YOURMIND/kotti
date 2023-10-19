@@ -31,6 +31,7 @@ export {
 	KottiFieldFileUpload as FieldFileUpload,
 	KottiFieldFileUploadRemote as FieldFileUploadRemote,
 } from '../kotti-field-file-upload/types'
+export { KottiFieldInlineEdit as FieldInlineEdit } from '../kotti-field-inline-edit/types'
 export { KottiFieldRadioGroup as FieldRadioGroup } from '../kotti-field-radio-group/types'
 export {
 	KottiFieldToggle as FieldToggle,
