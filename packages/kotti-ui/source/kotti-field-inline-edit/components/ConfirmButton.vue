@@ -1,9 +1,7 @@
 <template>
 	<KtButton
+		v-bind="buttonProps"
 		class="kt-field-inline-edit__confirm-button"
-		:dataTest="confirmDataTest"
-		:icon="Yoco.Icon.CHECK"
-		:tabindex="tabIndex"
 		@click.stop.prevent="handleConfirm"
 		@keyup.enter.stop.prevent="handleConfirm"
 	/>
@@ -21,7 +19,11 @@ export default defineComponent({
 	},
 	setup(props, { emit }) {
 		return {
-			confirmDataTest: computed(() => `${props.dataTest}.confirm`),
+			buttonProps: computed(() => ({
+				['data-test']: props.dataTest ? `${props.dataTest}.confirm` : undefined,
+				icon: Yoco.Icon.CHECK,
+				tabindex: props.tabIndex,
+			})),
 			handleConfirm: () => emit('confirm'),
 			Yoco,
 		}
