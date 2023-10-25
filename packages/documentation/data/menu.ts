@@ -22,6 +22,7 @@ import {
 	KtTag,
 	KtToaster,
 	KtUserMenu,
+	KtValueLabel,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { kebabCase, startCase } from 'lodash'
@@ -174,6 +175,7 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtTable),
 					makeComponentMenuItem(KtTag),
 					makeComponentMenuItem(KtToaster),
+					makeComponentMenuItem(KtValueLabel),
 				],
 			},
 			{

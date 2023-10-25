@@ -450,7 +450,8 @@
 	$types: 'error', 'warning', 'success', 'empty';
 
 	@each $type in $types {
-		&.kt-field__wrapper--is-validation-#{$type} {
+		&.kt-field__wrapper--is-validation-#{$type},
+		&.kt-value-label--is-validation-#{$type} {
 			@content ($type);
 		}
 	}

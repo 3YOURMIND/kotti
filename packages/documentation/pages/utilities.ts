@@ -19,6 +19,7 @@ export type ComponentNames =
 	| 'KtFieldToggle'
 	| 'KtFieldToggleGroup'
 	| 'KtFilters'
+	| 'KtValueLabel'
 
 const COMPONENT_NAMES: ComponentNames[] = [
 	'KtFieldDate',
@@ -39,6 +40,7 @@ const COMPONENT_NAMES: ComponentNames[] = [
 	'KtFieldToggle',
 	'KtFieldToggleGroup',
 	'KtFilters',
+	'KtValueLabel',
 ]
 
 export type ComponentValue = {
@@ -116,25 +118,29 @@ const createRemoteUploadCode = (component: ComponentValue): string | null => {
 }
 
 const appendAdditionalSlots = (component: ComponentValue) => {
-	return component.hasHelpTextSlot ||
-		component.headerSlot !== null ||
-		component.contentSlot !== null
+	return component.contentSlot !== null ||
+		component.defaultSlot !== null ||
+		component.hasHelpTextSlot ||
+		component.headerSlot !== null
 		? [
 				'>',
+				...(component.contentSlot !== null
+					? [
+							'\t<template #content :option="option">',
+							`\t\t${component.contentSlot}`,
+							// eslint-disable-next-line sonarjs/no-duplicate-string
+							'\t</template>',
+					  ]
+					: []),
+				...(component.defaultSlot !== null
+					? [`\t${component.defaultSlot}`]
+					: []),
 				...(component.hasHelpTextSlot
 					? [
 							'\t<template #helpText>',
 							'\t\t<div>',
 							'\t\t\tSlot Content',
 							'\t\t</div>',
-							// eslint-disable-next-line sonarjs/no-duplicate-string
-							'\t</template>',
-					  ]
-					: []),
-				...(component.contentSlot !== null
-					? [
-							'\t<template #content :option="option">',
-							`\t\t${component.contentSlot}`,
 							'\t</template>',
 					  ]
 					: []),

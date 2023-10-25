@@ -133,4 +133,7 @@ export const jaJP: KottiI18n.Messages = {
 		menuExpand: '拡張メニュー',
 		quickLinksTitle: 'クイックリンク',
 	},
+	KtValueLabel: {
+		notSet: '未設定',
+	},
 }
