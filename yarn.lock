@@ -22208,10 +22208,10 @@ yorkie@^2.0.0:
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
 
-zod@3.14.1:
-  version "3.14.1"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.14.1.tgz#c31b3ce1d64707e7972e63d7508d4053947da4bb"
-  integrity sha512-eKN/fIHKSGnHFjKBj4pnHDX69uJ2XxU01rilItLtLNt4mQoINo3aipnBLrbIqH9IHHwGnN+v0Zcc9vRKku/2fQ==
+zod@3.x:
+  version "3.22.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
+  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
 
 zwitch@^1.0.0:
   version "1.0.5"
