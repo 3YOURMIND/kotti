@@ -1,17 +1,10 @@
-import {
-	isRef,
-	onMounted,
-	ref,
-	Ref,
-	onUnmounted,
-	watch,
-} from '@vue/composition-api'
+import { onMounted, ref, Ref, onUnmounted, watch } from '@vue/composition-api'
 import castArray from 'lodash.castarray'
 import tippy, { Props, Instance } from 'tippy.js'
 
 type InstanceRefType = Instance<Props>[] | Instance<Props> | null
 type Callback = (t: InstanceRefType) => void
-type Target = Ref<Element | null> | string
+type Target = Ref<Element | null>
 
 const applyForEvery = (
 	instance: Ref<InstanceRefType>,
@@ -22,27 +15,33 @@ const applyForEvery = (
 			callback(tippyInstance)
 }
 
+const unwrapAndThrowOnNull = (target: Target) => {
+	if (target.value === null) throw new Error('useTippy: Unexpected null target')
+
+	return target.value
+}
+
 /**
  * @see {@link https://atomiks.github.io/tippyjs/v6/all-props} for options
  */
 export const useTippy = (
-	targets: Array<Target> | Target,
+	targets: Array<Target> | Target | string,
 	options: Ref<Partial<Props>>,
 ) => {
 	const instance = ref<InstanceRefType>(null)
 
 	const onMountCallbacks: Callback[] = []
 	onMounted(() => {
-		const unwrappedTargets = (() => {
-			if (isRef(targets)) return targets.value
-
-			if (Array.isArray(targets))
-				return targets.map((target) => (isRef(target) ? target.value : target))
-
-			return targets
-		})()
-
-		instance.value = tippy(unwrappedTargets, options.value)
+		if (typeof targets === 'string') {
+			instance.value = tippy(targets, options.value)
+		} else if (Array.isArray(targets)) {
+			const unwrappedTargets = targets.map((target) =>
+				unwrapAndThrowOnNull(target),
+			)
+			instance.value = tippy(unwrappedTargets, options.value)
+		} else {
+			instance.value = tippy(unwrapAndThrowOnNull(targets), options.value)
+		}
 
 		onMountCallbacks.forEach((callback) => callback(instance.value))
 	})

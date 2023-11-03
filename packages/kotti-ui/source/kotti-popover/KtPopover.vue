@@ -129,7 +129,7 @@ export default defineComponent({
 			computed(() => ({
 				appendTo: () => document.body,
 				arrow: roundArrow,
-				content: contentRef.value as NonNullable<typeof contentRef.value>,
+				content: contentRef.value ?? undefined,
 				/**
 				 * @see {@link https://atomiks.github.io/tippyjs/v6/all-props/#hideonclick}
 				 */

@@ -10,13 +10,13 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 export default defineComponent({
 	setup() {
-		const contentRef = ref(null)
+		const contentRef = ref<Element | null>(null)
 
 		useTippy(
 			helpTextTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				content: contentRef,
+				content: contentRef ?? undefined,
 				interactive: true,
 				theme: 'light-border',
 			})),

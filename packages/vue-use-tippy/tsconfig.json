@@ -6,7 +6,7 @@
 		"declarationDir": "dist",
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
-		"lib": ["ESNext", "ES2019"],
+		"lib": ["ESNext", "ES2019", "DOM"],
 		"module": "CommonJS",
 		"moduleResolution": "node",
 		"noImplicitAny": true,
