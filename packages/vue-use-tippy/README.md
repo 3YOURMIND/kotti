@@ -16,7 +16,7 @@ export default defineComponent({
 			helpTextTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				content: contentRef ?? undefined,
+				content: contentRef.value ?? undefined,
 				interactive: true,
 				theme: 'light-border',
 			})),
