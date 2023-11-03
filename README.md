@@ -196,9 +196,7 @@ npm login
 
    a. `packages/documentation`
 
-   b. `packages/storybook`
-
-   c. `packages/test-app`
+   b. `packages/test-app`
 
 7. Make a version commit, **DO NOT PUSH** yet.
 

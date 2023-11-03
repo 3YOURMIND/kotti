@@ -47,7 +47,7 @@ export default defineComponent({
 			computed(() => ({
 				appendTo: () => document.body,
 				arrow: roundArrow,
-				content: contentRef.value as NonNullable<typeof contentRef.value>,
+				content: contentRef.value ?? undefined,
 				interactive: true,
 				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
 				theme: 'light-border',

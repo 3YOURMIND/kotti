@@ -51,9 +51,7 @@ export default defineComponent({
 				appendTo: () => document.body,
 				arrow: roundArrow,
 				content: props.helpText
-					? (helpTextContentRef.value as NonNullable<
-							typeof helpTextContentRef.value
-					  >)
+					? helpTextContentRef.value ?? undefined
 					: undefined,
 				interactive: true,
 				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
@@ -260,6 +258,7 @@ export default defineComponent({
 				border-bottom-color: var(--button-main-color-dark);
 				border-left-color: var(--button-main-color-dark);
 			}
+
 			&.kt-button--is-toggle-on {
 				color: var(--text-04);
 				background-color: var(--button-main-color);
