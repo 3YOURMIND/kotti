@@ -123,7 +123,10 @@ export namespace KottiFilters {
 		> = Common & {
 			operations: OPERATION[]
 			type: FilterType.DATE_RANGE
-		}
+		} & Pick<
+				KottiFieldDateRange.Props,
+				'maximumDate' | 'minimumDate' | 'shortcuts'
+			>
 
 		export type Float<OPERATION extends Operation.Float = Operation.Float> =
 			Common & {

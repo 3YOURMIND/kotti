@@ -78,6 +78,29 @@
     						label="maximum"
     					/>
     				</div>
+    				<div class="field-row">
+    					<KtFieldDate
+    						formKey="dateRangeMaximumDate"
+    						helpText="Support on DATE_RANGE column type only"
+    						isOptional
+    						label="maximumDate"
+    					/>
+    					<KtFieldDate
+    						formKey="dateRangeMinimumDate"
+    						helpText="Support on DATE_RANGE column type only"
+    						isOptional
+    						label="minimumDate"
+    					/>
+    				</div>
+    				<KtFieldToggleGroup
+    					formKey="NONE"
+    					helpText="Support on DATE_RANGE column type only"
+    					isOptional
+    					label="shortcuts"
+    					:options="shortcutsOptions"
+    					:value="selectedShortcuts"
+    					@input="onSelectedShortcutsChange"
+    				/>
     				<KtFieldSingleSelect
     					formKey="currencyCurrency"
     					helpText='Available Currencies can be defined via <KtI18nContext :currencyMap="..."/>'
@@ -120,11 +143,39 @@
 <script lang="ts">
 import { Kotti, KtFilters } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from '@vue/composition-api'
+import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
 
+import { ISO8601 } from '../../../../kotti-ui/source/constants'
 import { ComponentValue, generateComponentCode } from '../../utilities'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
+
+const today = (): string => dayjs().format(ISO8601)
+const getLast = (unit: 'day' | 'month' | 'week' | 'year') =>
+	dayjs().subtract(1, unit).format(ISO8601)
+
+const shortcuts: Record<
+	string,
+	NonNullable<Kotti.FieldDateRange.Props['shortcuts']>[0]
+> = {
+	today: {
+		label: 'Today',
+		value: [today(), today()],
+	},
+	lastWeek: {
+		label: 'Last Week',
+		value: [getLast('week'), today()],
+	},
+	lastMonth: {
+		label: 'Last Month',
+		value: [getLast('month'), today()],
+	},
+	lastYear: {
+		label: 'Last Year',
+		value: [getLast('year'), today()],
+	},
+}
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsFilters',
@@ -150,6 +201,9 @@ export default defineComponent({
 				isLoading: boolean
 			}
 			currencyCurrency: string
+			dateRangeMaximumDate: Kotti.FieldDateRange.Props['maximumDate']
+			dateRangeMinimumDate: Kotti.FieldDateRange.Props['minimumDate']
+			dateRangeShortcuts: Kotti.FieldDateRange.Props['shortcuts']
 			locale: Kotti.I18n.SupportedLanguages
 			numberDecimalPlaces: Kotti.FieldNumber.Props['decimalPlaces'] | null
 			numberMaximum: Kotti.FieldNumber.Props['maximum'] | null
@@ -163,6 +217,9 @@ export default defineComponent({
 				isLoading: false,
 			},
 			currencyCurrency: 'USD',
+			dateRangeMaximumDate: null,
+			dateRangeMinimumDate: null,
+			dateRangeShortcuts: [],
 			locale: 'en-US',
 			numberDecimalPlaces: null,
 			numberMaximum: null,
@@ -172,6 +229,12 @@ export default defineComponent({
 			numberSuffix: null,
 			searchPlaceholder: null,
 		})
+
+		const selectedShortcuts = ref<Kotti.FieldToggleGroup.Value>(
+			Object.fromEntries(
+				Object.entries(shortcuts).map(([key]) => [key, false]),
+			),
+		)
 
 		const componentProps = computed(
 			(): Omit<Kotti.Filters.Props, 'value'> => ({
@@ -259,6 +322,9 @@ export default defineComponent({
 							Kotti.Filters.Operation.DateRange.IS_EMPTY,
 						],
 						type: Kotti.Filters.FilterType.DATE_RANGE,
+						maximumDate: settings.value.dateRangeMaximumDate,
+						minimumDate: settings.value.dateRangeMinimumDate,
+						shortcuts: settings.value.dateRangeShortcuts,
 					},
 					{
 						key: 'singleEnumColumn',
@@ -293,33 +359,46 @@ export default defineComponent({
 			}),
 		)
 
-		const componentCode = computed<string>(() => {
-			const component: ComponentValue = {
-				contentSlot: null,
-				defaultSlot: null,
-				hasActions: false,
-				hasHelpTextSlot: false,
-				hasOptionSlot: false,
-				hasRemoteUpload: false,
-				headerSlot: null,
-				name: 'KtFilters',
-				props: cloneDeep(componentProps.value),
-				showHeaderSideSlot: false,
-				validation: 'empty',
-			}
-			return generateComponentCode(component)
-		})
-
-		const reset = () => (filters.value = [])
-
 		return {
 			component: KtFilters,
-			componentCode,
+			componentCode: computed<string>(() => {
+				const component: ComponentValue = {
+					contentSlot: null,
+					defaultSlot: null,
+					hasActions: false,
+					hasHelpTextSlot: false,
+					hasOptionSlot: false,
+					hasRemoteUpload: false,
+					headerSlot: null,
+					name: 'KtFilters',
+					props: cloneDeep(componentProps.value),
+					showHeaderSideSlot: false,
+					validation: 'empty',
+				}
+				return generateComponentCode(component)
+			}),
 			componentProps,
 			filters,
 			Kotti,
-			reset,
+			onSelectedShortcutsChange: (value: Kotti.FieldToggleGroup.Value) => {
+				selectedShortcuts.value = value
+				settings.value = {
+					...settings.value,
+					dateRangeShortcuts: Object.entries(selectedShortcuts.value ?? {})
+						.filter(([_, value]) => value)
+						.map(([key]) => {
+							const { label, value } = shortcuts[key as keyof typeof shortcuts]
+							return { label, value }
+						}),
+				}
+			},
+			reset: () => (filters.value = []),
+			selectedShortcuts,
 			settings,
+			shortcutsOptions: Object.entries(shortcuts).map(([key, value]) => ({
+				key,
+				label: value.label,
+			})),
 		}
 	},
 })

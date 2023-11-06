@@ -189,10 +189,18 @@ export default defineComponent({
 					props.column?.type === KottiFilters.FilterType.INTEGER
 						? props.column.maximum
 						: undefined,
+				maximumDate:
+					props.column?.type === KottiFilters.FilterType.DATE_RANGE
+						? props.column.maximumDate
+						: undefined,
 				minimum:
 					props.column?.type === KottiFilters.FilterType.FLOAT ||
 					props.column?.type === KottiFilters.FilterType.INTEGER
 						? props.column.minimum
+						: undefined,
+				minimumDate:
+					props.column?.type === KottiFilters.FilterType.DATE_RANGE
+						? props.column.minimumDate
 						: undefined,
 				options:
 					props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||
@@ -203,6 +211,10 @@ export default defineComponent({
 					props.column?.type === KottiFilters.FilterType.FLOAT ||
 					props.column?.type === KottiFilters.FilterType.INTEGER
 						? props.column.prefix
+						: undefined,
+				shortcuts:
+					props.column?.type === KottiFilters.FilterType.DATE_RANGE
+						? props.column.shortcuts
 						: undefined,
 				step:
 					props.column?.type === KottiFilters.FilterType.FLOAT
