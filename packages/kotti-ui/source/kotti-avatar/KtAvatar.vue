@@ -94,19 +94,16 @@ export default defineComponent({
 .kt-avatar {
 	position: relative;
 	display: inline-flex;
+	aspect-ratio: 1/1;
 	color: var(--white);
 	background: var(--ui-02);
 	border: 0.1rem solid var(--white);
 	border-radius: 100%;
-	aspect-ratio: 1/1;
 
 	&__fallback,
 	&__image {
 		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
+		inset: 0;
 		width: 100%;
 		aspect-ratio: 1/1;
 	}

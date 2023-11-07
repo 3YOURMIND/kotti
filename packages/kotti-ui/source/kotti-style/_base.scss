@@ -22,8 +22,8 @@ body {
 	font-family: $body-font-family;
 	font-size: $font-size;
 	font-weight: 400;
-	color: $body-font-color;
-	background: $body-bg;
+	color: $darkgray-500;
+	background: $lightgray-300;
 	text-rendering: optimizeLegibility;
 }
 
@@ -39,4 +39,10 @@ a {
 		color: var(--link-color-active);
 		text-decoration: none;
 	}
+}
+
+/* undo opacity override by firefox
+https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder#opaque_text */
+input::placeholder {
+	opacity: 1;
 }

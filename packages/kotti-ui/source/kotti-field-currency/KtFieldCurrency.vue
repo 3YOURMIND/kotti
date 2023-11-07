@@ -221,15 +221,12 @@ export default defineComponent({
 <style lang="scss">
 .kt-field-currency__input {
 	display: flex;
-
 	width: 100%;
 	padding: 0;
 	margin: 0;
-
 	font-variant-numeric: tabular-nums;
 	line-height: 1.6;
 	text-align: right;
-
 	border: 0;
 }
 </style>

@@ -134,20 +134,16 @@ export default defineComponent({
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-
 	font-weight: 600;
 
 	// Since this is an inline element (display: inline-flex), we need to
 	// care about vertical-alignment. The default setting would cause
 	// different alignments between buttons with or without icon.
 	vertical-align: middle;
-
 	cursor: pointer;
 	user-select: none;
-
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
-
 	transition: 30ms opacity ease-in-out;
 
 	&:active {

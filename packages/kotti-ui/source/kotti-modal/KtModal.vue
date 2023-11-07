@@ -125,30 +125,24 @@ export default defineComponent({
 		top: 0;
 		left: 0;
 		z-index: $zindex-4;
-
 		display: flex;
 		align-items: center;
 		justify-content: center;
-
 		width: 100%;
 		height: 100%;
-
-		background-color: rgba(0, 0, 0, 0.46);
+		background-color: rgb(0 0 0 / 46%);
 		transition: opacity var(--transition-long) ease;
 	}
 
 	&__container {
 		display: flex;
 		flex-direction: column;
-
 		width: 90%;
 		max-height: 90%;
-
 		padding: var(--unit-4);
-
 		background-color: #fff;
 		border-radius: var(--border-radius);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+		box-shadow: 0 2px 8px rgb(0 0 0 / 33%);
 		transition: all 0.3s ease;
 
 		> *:not(:first-child) {

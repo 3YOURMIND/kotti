@@ -14,22 +14,3 @@
 		line-height: var(--unit-4);
 	}
 }
-
-.form-label--compact {
-	position: absolute;
-	top: 0;
-	left: var(--unit-2);
-	z-index: 1;
-	font-size: 0.7rem;
-	font-weight: 500;
-	line-height: $control-size-lg;
-	text-transform: none;
-	pointer-events: none;
-	transition: all 0.1s ease-in;
-	&--focus {
-		font-size: 0.5rem;
-		font-weight: 700;
-		line-height: $control-size-lg * 0.5;
-		transition: all 0.1s ease-in-out;
-	}
-}

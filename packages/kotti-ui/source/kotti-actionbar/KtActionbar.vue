@@ -1,17 +1,17 @@
 <template>
-	<div class="actionbar">
-		<div class="actionbar-wrapper">
-			<div class="actionbar-header">
+	<div class="kt-actionbar">
+		<div class="kt-actionbar-wrapper">
+			<div class="kt-actionbar-header">
 				<slot name="actionbar-header">
 					<h1 v-text="headerTitle" />
 				</slot>
 			</div>
-			<div class="actionbar-body">
+			<div class="kt-actionbar-body">
 				<slot name="actionbar-body">
 					<ActionbarMenu v-if="menu" :menu="menu" :menuStyle="menuStyle" />
 				</slot>
 			</div>
-			<div class="actionbar-footer">
+			<div class="kt-actionbar-footer">
 				<slot name="actionbar-footer">
 					<footer>Footer</footer>
 				</slot>
@@ -43,8 +43,9 @@ export default {
 	--action-bar-color-active: var(--interactive-03);
 	--action-bar-width: 16rem;
 }
-// Action bar eletment
-.actionbar {
+
+// Action bar element
+.kt-actionbar {
 	position: relative;
 	box-sizing: border-box;
 	display: flex;
@@ -55,7 +56,7 @@ export default {
 	background: #fcfcfc;
 	border-right: 1px solid #ddd;
 
-	.actionbar-wrapper {
+	.kt-actionbar-wrapper {
 		position: fixed;
 		display: flex;
 		flex-direction: column;
@@ -65,21 +66,21 @@ export default {
 		overflow-y: auto;
 	}
 
-	.actionbar-header {
+	.kt-actionbar-header {
 		flex: 0 0 auto;
 	}
 
-	.actionbar-body {
+	.kt-actionbar-body {
 		flex: 1 1 100%;
 	}
 
-	.actionbar-footer {
+	.kt-actionbar-footer {
 		flex: 1 1 auto;
 		padding-top: 1.2rem;
 	}
 }
 
-.actionbar-back {
+.kt-actionbar-back {
 	margin-top: 0;
 	margin-bottom: 0.8rem;
 	margin-left: -0.8rem;
@@ -88,20 +89,46 @@ export default {
 	line-height: 1.2rem;
 	color: var(--action-bar-color-active);
 }
-.actionbar-nav {
+
+.kt-actionbar-nav {
 	margin: 0 calc(-1 * var(--unit-2));
-}
-.actionbar-nav__item {
-	padding: var(--unit-2);
-	margin: var(--unit-2) 0;
-	font-size: 0.75rem;
-	color: $darkgray-500;
-	list-style: none;
-	border-radius: 0.2rem;
-	&:hover {
-		cursor: pointer;
-		background: $lightgray-400;
+
+	&__item {
+		padding: var(--unit-2);
+		margin: var(--unit-2) 0;
+		font-size: 0.75rem;
+		color: $darkgray-500;
+		list-style: none;
+		border-radius: 0.2rem;
+
+		&:hover {
+			cursor: pointer;
+			background: $lightgray-400;
+		}
+
+		&--active {
+			.kt-actionbar-nav__icon {
+				color: var(--action-bar-color-active);
+			}
+
+			.kt-actionbar-nav__label {
+				font-weight: 600;
+				color: var(--action-bar-color-active);
+			}
+		}
+
+		&--disabled {
+			&:hover {
+				cursor: not-allowed;
+			}
+
+			.kt-actionbar-nav__label,
+			.kt-actionbar-nav__icon {
+				color: $lightgray-500;
+			}
+		}
 	}
+
 	&__icon {
 		padding-right: 0.4rem;
 		color: $darkgray-500;
@@ -116,28 +143,9 @@ export default {
 	&__label {
 		color: $darkgray-500;
 	}
-
-	&--active {
-		.actionbar-nav__item__icon {
-			color: var(--action-bar-color-active);
-		}
-		.actionbar-nav__item__label {
-			font-weight: 600;
-			color: var(--action-bar-color-active);
-		}
-	}
-	&--disabled {
-		&:hover {
-			cursor: not-allowed;
-		}
-		.actionbar-nav__item__label,
-		.actionbar-nav__item__icon {
-			color: $lightgray-500;
-		}
-	}
 }
 
-.actionbar-menu {
+.kt-actionbar-menu {
 	ul {
 		position: relative;
 		margin: 0;
@@ -175,7 +183,7 @@ export default {
 }
 
 @media (max-width: $size-md) {
-	.actionbar {
+	.kt-actionbar {
 		z-index: $zindex-1;
 		flex: 1 1 auto;
 		width: 100%;
@@ -183,7 +191,7 @@ export default {
 		border-right: 0;
 		border-bottom: 1px solid #ddd;
 
-		.actionbar-wrapper {
+		.kt-actionbar-wrapper {
 			position: relative;
 			width: 100%;
 		}

@@ -61,6 +61,7 @@ export default defineComponent({
 
 .kt-field-text-area {
 	$vertical-padding: 0.6em;
+
 	&__wrapper {
 		display: flex;
 		flex: 1;
@@ -79,7 +80,6 @@ export default defineComponent({
 	@include validations using ($type) {
 		&:not(.kt-field__wrapper--disabled) {
 			@if $type != empty {
-				/* stylelint-disable */
 				.kt-field-text-area__wrapper {
 					border-color: var(--support-#{$type}-light);
 				}
@@ -89,10 +89,9 @@ export default defineComponent({
 				--support-empty-light: var(--interactive-05);
 
 				.kt-field-text-area__wrapper {
-					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 					border-color: var(--support-#{$type}-light);
+					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 				}
-				/* stylelint-enable */
 			}
 		}
 	}

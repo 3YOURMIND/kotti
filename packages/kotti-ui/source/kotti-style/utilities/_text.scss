@@ -5,6 +5,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+
 	.show-all {
 		overflow: auto;
 	}
@@ -17,7 +18,6 @@ $text-colors: (
 	text-error: $red-500,
 	text-warning: $orange-500,
 );
-
 $text-aligns: (
 	text-right: right,
 	text-left: left,
@@ -25,7 +25,6 @@ $text-aligns: (
 	text-justify: justify,
 );
 
-/* stylelint-disable */
 @each $element, $color in $text-colors {
 	.#{$element} {
 		color: $color;
@@ -37,4 +36,3 @@ $text-aligns: (
 		text-align: $align;
 	}
 }
-/* stylelint-enable */

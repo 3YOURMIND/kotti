@@ -122,31 +122,38 @@ export default {
 :root {
 	--pagination-color-active: var(--interactive-03);
 }
+
 .pagination {
 	margin: 0;
 	list-style: none;
 	user-select: none;
+
 	.page-button {
 		display: inline-block;
 		padding: var(--unit-1);
 		background: $lightgray-300;
 		border-radius: var(--border-radius);
+
 		&:hover {
 			cursor: pointer;
 			background: $lightgray-400;
 		}
 	}
+
 	.fraction {
 		display: inline-block;
 	}
+
 	.page-item {
 		display: inline-block;
 		padding: var(--unit-2);
 		line-height: 24px;
 		text-align: center;
+
 		&--active {
 			color: var(--pagination-color-active);
 		}
+
 		&:hover {
 			cursor: pointer;
 		}

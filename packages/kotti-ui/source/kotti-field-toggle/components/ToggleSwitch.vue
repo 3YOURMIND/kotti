@@ -69,12 +69,10 @@ $track-width: $inner-size * 2.25;
 	@include validations using ($type) {
 		@if $type != empty {
 			:not(.kt-field-toggle__inner--is-disabled) .kt-field-toggle-switch {
-				/* stylelint-disable */
 				@include switch-colors(
 					var(--support-#{$type}),
 					var(--support-#{$type}-dark)
 				);
-				/* stylelint-enable */
 			}
 		}
 	}

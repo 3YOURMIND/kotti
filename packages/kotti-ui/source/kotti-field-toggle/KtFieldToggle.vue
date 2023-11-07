@@ -3,7 +3,7 @@
 		v-bind="{ field: fieldProps }"
 		:helpTextSlot="showInnerSuffix ? undefined : $slots.helpText"
 	>
-		<div slot="container" class="kt-field-toggle__wrapper">
+		<div slot="container" class="kt-field-toggle">
 			<ToggleInner
 				component="div"
 				:inputProps="inputProps"
@@ -12,7 +12,7 @@
 				:value="fieldProps.currentValue"
 				@input="onInput"
 			>
-				<div class="kt-field-toggle__wrapper__content">
+				<div class="kt-field-toggle__content">
 					<slot name="default" :value="fieldProps.currentValue" />
 					<ToggleInnerSuffix
 						v-if="showInnerSuffix"
@@ -84,7 +84,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.kt-field-toggle__wrapper {
+.kt-field-toggle {
 	display: flex;
 	align-items: center;
 

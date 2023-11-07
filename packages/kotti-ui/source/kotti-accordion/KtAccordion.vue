@@ -3,8 +3,8 @@
 		<div class="kt-accordion__header" :data-test="dataTest" @click="toggle">
 			<div class="kt-accordion__title">
 				<slot name="title">
-					<i v-if="icon" class="yoco kt-accordion__title__icon" v-text="icon" />
-					<div class="kt-accordion__title__text" v-text="title" />
+					<i v-if="icon" class="yoco kt-accordion__icon" v-text="icon" />
+					<div class="kt-accordion__text" v-text="title" />
 				</slot>
 			</div>
 			<div class="kt-accordion__toggle" @click.stop="toggle">
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div :class="contentClasses">
-			<div ref="contentInnerRef" class="kt-accordion__content__inner">
+			<div ref="contentInnerRef" class="kt-accordion__inner">
 				<slot />
 			</div>
 		</div>
@@ -88,16 +88,16 @@ export default defineComponent({
 		align-self: center;
 		font-size: 16px;
 		font-weight: 600;
+	}
 
-		&__icon {
-			display: inline-block;
-			margin-right: var(--unit-4);
-			color: var(--accordion-color);
-		}
+	&__icon {
+		display: inline-block;
+		margin-right: var(--unit-4);
+		color: var(--accordion-color);
+	}
 
-		&__text {
-			display: inline-block;
-		}
+	&__text {
+		display: inline-block;
 	}
 
 	&__content {
@@ -106,15 +106,17 @@ export default defineComponent({
 		border: 1px solid var(--ui-02);
 		border-top: none;
 
-		&__inner {
-			padding: var(--unit-2) var(--unit-8);
-		}
 		&--is-open {
 			height: auto;
 		}
+
 		&--is-closed {
-			height: 0px;
+			height: 0;
 		}
+	}
+
+	&__inner {
+		padding: var(--unit-2) var(--unit-8);
 	}
 
 	&__toggle {

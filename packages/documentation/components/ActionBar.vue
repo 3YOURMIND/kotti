@@ -1,11 +1,11 @@
 <template>
-	<div class="actionbar">
-		<div class="actionbar-wrapper">
-			<div class="actionbar-header">
+	<div class="kt-actionbar">
+		<div class="kt-actionbar-wrapper">
+			<div class="kt-actionbar-header">
 				<h1 v-text="subsection.title" />
 			</div>
-			<div class="actionbar-body">
-				<div class="actionbar-menu has-icon-right">
+			<div class="kt-actionbar-body">
+				<div class="kt-actionbar-menu has-icon-right">
 					<ul>
 						<nuxt-link
 							v-for="page in subsection.pages"

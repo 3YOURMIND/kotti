@@ -1,6 +1,7 @@
 .float-left {
 	float: left;
 }
+
 .float-right {
 	float: right;
 }
@@ -24,7 +25,6 @@ $margins: (
 		in (margin-top: mt, margin-bottom: mb, margin-right: mr, margin-left: ml)
 {
 	@each $size, $length in $margins {
-		/* stylelint-disable-next-line */
 		.#{$abbrev}-#{$size} {
 			#{$prop}: $length;
 		}
@@ -54,7 +54,6 @@ $paddings: (
 		)
 {
 	@each $size, $length in $margins {
-		/* stylelint-disable-next-line */
 		.#{$abbrev}-#{$size} {
 			#{$prop}: $length;
 		}

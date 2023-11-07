@@ -76,7 +76,7 @@
 							</template>
 						</component>
 					</KtForm>
-					<div class="overview__component__value">
+					<div class="overview__component-value">
 						<strong>Value</strong>:
 						<span v-text="JSON.stringify(values[componentProps.formKey])" />
 						<a @click.prevent="reset">reset</a>

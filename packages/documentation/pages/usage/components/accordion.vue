@@ -6,7 +6,7 @@ An animated accordion for hiding content on click. The accordion is fully contro
 ```html
 <KtAccordion
 	:isClosed="isFirstAccordionClosed"
-	@update:isClosed="(newVal) => isFirstAccordionClosed = newVal"
+	@update:isClosed="(newVal) => (isFirstAccordionClosed = newVal)"
 	title="Accordion"
 >
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus
@@ -33,7 +33,7 @@ We can use `yoco` icons as well:
 <KtAccordion
 	icon="edit"
 	:isClosed="isSecondAccordionClosed"
-	@update:isClosed="(newVal) => isSecondAccordionClosed = newVal"
+	@update:isClosed="(newVal) => (isSecondAccordionClosed = newVal)"
 	title="Accordion with icon"
 >
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus
@@ -57,7 +57,7 @@ We can use `yoco` icons as well:
 ```html
 <KtButton
 	label="Toggle Accordion"
-	@click="() => isThirdAccordionClosed = !isThirdAccordionClosed"
+	@click="() => (isThirdAccordionClosed = !isThirdAccordionClosed)"
 />
 <KtAccordion :isClosed="isThirdAccordionClosed" title="Openable block :)">
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique purus

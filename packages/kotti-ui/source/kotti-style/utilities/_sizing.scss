@@ -14,7 +14,6 @@ $sizes: map-merge(
 
 @each $prop, $abbrev in (width: w, height: h) {
 	@each $size, $length in $sizes {
-		/* stylelint-disable-next-line */
 		.#{$abbrev}-#{$size} {
 			#{$prop}: $length !important;
 		}
@@ -24,6 +23,7 @@ $sizes: map-merge(
 .mw-100 {
 	max-width: 100% !important;
 }
+
 .mh-100 {
 	max-height: 100% !important;
 }

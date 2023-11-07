@@ -11,81 +11,89 @@
 			<div class="skeleton rectangle md" />
 			<div class="skeleton rectangle lg" />
 		</div>
-		<section v-for="release in sortedReleases" v-else :key="release.tag_name">
-			<h2>
-				<a
-					:href="`#${release.tag_name}`"
-					:name="release.tag_name"
-					v-text="release.name"
-				/>
-			</h2>
-			<div class="tags">
-				<div
-					v-if="release.prerelease"
-					class="tag"
-					style="
-						--color: var(--yellow-70);
-						--background-color: var(--yellow-20);
-					"
-				>
-					<div class="tag__left">⚠️</div>
-					<div class="tag__right" v-text="'Prerelease'" />
-				</div>
-				<div
-					class="tag"
-					style="--color: var(--green-70); --background-color: var(--green-20)"
-				>
-					<div class="tag__left">Tag</div>
+		<template v-else>
+			<section v-for="release in sortedReleases" :key="release.tag_name">
+				<h2>
 					<a
-						class="tag__right"
-						:href="release.html_url"
-						v-text="release.tag_name"
+						:href="`#${release.tag_name}`"
+						:name="release.tag_name"
+						v-text="release.name"
 					/>
-				</div>
-				<div
-					class="tag"
-					style="
-						--color: var(--primary-70);
-						--background-color: var(--primary-20);
-					"
-				>
-					<div class="tag__left">Date</div>
+				</h2>
+				<div class="tags">
 					<div
-						class="tag__right"
-						v-text="dayjs(release.created_at).format('YYYY-MM-DD')"
-					/>
+						v-if="release.prerelease"
+						class="tag"
+						:style="{
+							'--color': 'var(--yellow-70)',
+							'--background-color': 'var(--yellow-20)',
+						}"
+					>
+						<div class="tag__left">⚠️</div>
+						<div class="tag__right" v-text="'Prerelease'" />
+					</div>
+					<div
+						class="tag"
+						:style="{
+							'--color': 'var(--green-70)',
+							'--background-color': 'var(--green-20)',
+						}"
+					>
+						<div class="tag__left">Tag</div>
+						<a
+							class="tag__right"
+							:href="release.html_url"
+							v-text="release.tag_name"
+						/>
+					</div>
+					<div
+						class="tag"
+						:style="{
+							'--color': 'var(--primary-70)',
+							'--background-color': 'var(--primary-20)',
+						}"
+					>
+						<div class="tag__left">Date</div>
+						<div
+							class="tag__right"
+							v-text="dayjs(release.created_at).format('YYYY-MM-DD')"
+						/>
+					</div>
+					<div
+						class="tag"
+						:style="{
+							'--color': 'var(--red-70)',
+							'--background-color': 'var(--red-20)',
+						}"
+					>
+						<div class="tag__left">NPM</div>
+						<a
+							class="tag__right"
+							:href="`https://npmjs.com/package/@3yourmind/kotti-ui/v/${release.tag_name.replace(
+								/^v/,
+								'',
+							)}`"
+							v-text="release.tag_name"
+						/>
+					</div>
+					<div
+						class="tag"
+						:style="{
+							'--color': 'var(--orange-70)',
+							'--background-color': 'var(--orange-20)',
+						}"
+					>
+						<div class="tag__left">Released By</div>
+						<a class="tag__right" :href="release.author.html_url">
+							<img :src="release.author.avatar_url" />
+							<div v-text="release.author.login" />
+						</a>
+					</div>
 				</div>
-				<div
-					class="tag"
-					style="--color: var(--red-70); --background-color: var(--red-20)"
-				>
-					<div class="tag__left">NPM</div>
-					<a
-						class="tag__right"
-						:href="`https://npmjs.com/package/@3yourmind/kotti-ui/v/${release.tag_name.replace(
-							/^v/,
-							'',
-						)}`"
-						v-text="release.tag_name"
-					/>
-				</div>
-				<div
-					class="tag"
-					style="
-						--color: var(--orange-70);
-						--background-color: var(--orange-20);
-					"
-				>
-					<div class="tag__left">Released By</div>
-					<a class="tag__right" :href="release.author.html_url">
-						<img :src="release.author.avatar_url" />
-						<div v-text="release.author.login" />
-					</a>
-				</div>
-			</div>
-			<!-- eslint-disable-next-line vue/no-v-html -->
-			<div class="content" v-html="renderMarkdown(release.body)" />
-		</section>
+				<!-- eslint-disable-next-line vue/no-v-html -->
+				<div class="content" v-html="renderMarkdown(release.body)" />
+			</section>
+		</template>
 	</div>
 </template>
 
@@ -187,9 +195,7 @@ h2 {
 .tag {
 	display: flex;
 	align-items: stretch;
-
 	overflow: hidden;
-
 	border: 1px solid var(--color);
 	border-radius: 3px;
 

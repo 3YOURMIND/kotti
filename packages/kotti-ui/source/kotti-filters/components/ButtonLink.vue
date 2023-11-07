@@ -80,9 +80,7 @@ export default defineComponent({
 
 .kt-button-link {
 	display: flex;
-
 	font-weight: 500;
-
 	cursor: pointer;
 
 	&--is-disabled {

@@ -1,19 +1,19 @@
 <template>
-	<div class="kt-comment__header">
-		<div class="kt-comment__header__left-wrapper">
-			<span class="kt-comment__header__user-name" v-text="user.name" />
-			<span v-if="isInternal && !isReply" class="kt-comment__header__internal">
+	<div class="kt-comment-header">
+		<div class="kt-comment-header__left-wrapper">
+			<span class="kt-comment-header__user-name" v-text="user.name" />
+			<span v-if="isInternal && !isReply" class="kt-comment-header__internal">
 				<i class="yoco" v-text="Yoco.Icon.PERMISSION_LOCKED" />
 				{{ translations.internalLabel }}
 			</span>
 		</div>
-		<div class="kt-comment__header__right-wrapper">
+		<div class="kt-comment-header__right-wrapper">
 			<span
 				v-if="isModified"
-				class="kt-comment__header__modified"
+				class="kt-comment-header__modified"
 				v-text="translations.editedLabel"
 			/>
-			<span class="kt-comment__header__created-at" v-text="createdAt" />
+			<span class="kt-comment-header__created-at" v-text="createdAt" />
 		</div>
 	</div>
 </template>
@@ -41,7 +41,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.kt-comment__header {
+.kt-comment-header {
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;

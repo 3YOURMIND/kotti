@@ -94,12 +94,12 @@ h3 {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+	}
 
-		&__value {
-			span {
-				font-family: monospace;
-				word-break: break-word;
-			}
+	&__component-value {
+		span {
+			font-family: monospace;
+			word-break: break-word;
 		}
 	}
 

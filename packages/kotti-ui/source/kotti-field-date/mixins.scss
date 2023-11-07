@@ -18,6 +18,7 @@
 		flex-direction: column-reverse;
 		justify-content: space-between;
 		width: 100%;
+
 		@include no-outline;
 
 		.el-picker-panel {
@@ -29,8 +30,8 @@
 				justify-content: flex-start;
 
 				&:empty {
-					flex: 0; //display: none won't allow for negative margin effect
-					//undo margin-bottom between children of el-picker-panel__body
+					flex: 0; // display: none won't allow for negative margin effect
+					// undo margin-bottom between children of el-picker-panel__body
 					margin-top: -0.4rem;
 				}
 
@@ -123,7 +124,6 @@
 
 						td {
 							padding: 0;
-
 							cursor: pointer;
 							border: 0;
 
@@ -299,13 +299,13 @@
 										270deg,
 										var(--interactive-04) 0%,
 										var(--interactive-04) 50%,
-										rgba(0, 0, 0, 0) 50%
+										rgb(0 0 0 / 0%) 50%
 									);
 									--end-background: linear-gradient(
 										90deg,
 										var(--interactive-04) 0%,
 										var(--interactive-04) 50%,
-										rgba(0, 0, 0, 0) 50%
+										rgb(0 0 0 / 0%) 50%
 									);
 
 									&.start-date.end-date,

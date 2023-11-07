@@ -34,17 +34,20 @@
 .skeleton {
 	&.circle {
 		@include skeleton-style(1000px, 1000px);
+
 		padding-top: 100%;
 		border-radius: 100%;
 	}
 
 	&.square {
 		@include skeleton-style(1000px, 1000px);
+
 		padding-top: 100%;
 	}
 
 	&.rectangle {
 		@include skeleton-style(1800px, 1200px);
+
 		height: 0.4rem;
 
 		&.sm {

@@ -226,6 +226,8 @@ export default defineComponent({
 })
 </script>
 
+<!-- FIXME: https://github.com/3YOURMIND/kotti/issues/829 should this be implemented,
+we would be able to extend on demand instead of unscoping all field classes -->
 <style lang="scss">
 @import './mixins';
 
@@ -233,6 +235,7 @@ export default defineComponent({
 	--field-border-radius: 2px;
 }
 
+/* stylelint-disable selector-class-pattern */
 .kt-field {
 	&:not(:last-child) {
 		margin-bottom: 0.8rem;
@@ -260,10 +263,9 @@ export default defineComponent({
 
 		@include no-outline;
 		@include sizes;
-		@include input-colors();
+		@include input-colors;
 
 		@include validations using ($type) {
-			/* stylelint-disable */
 			&:not(.kt-field__wrapper--disabled) {
 				@if $type != empty {
 					.kt-field__input-container {
@@ -278,11 +280,10 @@ export default defineComponent({
 				.kt-field__input-container:focus-within {
 					--support-empty-light: var(--interactive-05);
 
-					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 					border-color: var(--support-#{$type}-light);
+					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 				}
 			}
-			/* stylelint-enable */
 		}
 
 		&--disabled {
@@ -380,7 +381,6 @@ export default defineComponent({
 		flex: 1;
 		align-items: center;
 		padding: 0 0.8rem;
-
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
 
@@ -435,6 +435,7 @@ export default defineComponent({
 			}
 		}
 	}
+
 	&__validation-text {
 		display: flex;
 		align-items: center;
@@ -445,4 +446,5 @@ export default defineComponent({
 		}
 	}
 }
+/* stylelint-enable selector-class-pattern */
 </style>

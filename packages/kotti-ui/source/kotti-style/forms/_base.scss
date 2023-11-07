@@ -5,10 +5,12 @@ fieldset {
 
 .form-group {
 	position: relative;
+
 	&:not(:last-child) {
 		margin-bottom: $layout-spacing;
 	}
 }
+
 .form-textarea,
 textarea {
 	box-sizing: border-box;

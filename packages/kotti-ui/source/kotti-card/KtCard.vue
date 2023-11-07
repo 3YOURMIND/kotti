@@ -2,7 +2,7 @@
 	<div :class="cardClass" tabindex="0" @click.prevent="handleClick">
 		<div v-if="imgUrl" :class="imageRowClass">
 			<div v-if="isImgLoading" class="skeleton square md" />
-			<img v-else class="kt-card__image-row__image" :src="imgUrl" />
+			<img v-else class="kt-card__image" :src="imgUrl" />
 		</div>
 		<div v-if="$slots['card-header']" class="kt-card__header">
 			<div v-if="isTextLoading" class="skeleton rectangle md" />
@@ -77,27 +77,35 @@ export default defineComponent({
 	word-break: break-word;
 	background: var(--ui-background);
 	border-radius: var(--border-radius);
+
 	&--has-top-image {
 		padding-top: 0;
 	}
+
 	&--has-bottom-image {
 		padding-bottom: 0;
 	}
+
 	&--is-clickable {
 		border: 1px solid var(--ui-01);
+
 		&:hover {
 			cursor: pointer;
 			border: 1px solid var(--interactive-01-hover);
 		}
+
 		&:active {
 			border-color: var(--primary-90);
 		}
 	}
+
 	.skeleton {
 		margin: 0;
 	}
+
 	&__header {
 		order: 2;
+
 		.skeleton {
 			margin: 0 0 var(--unit-2) 0;
 		}
@@ -113,18 +121,13 @@ export default defineComponent({
 	}
 
 	&__image-row {
-		&__image {
-			display: block;
-			width: 100%;
-		}
-
 		margin: var(--unit-4) calc(-1 * var(--unit-4));
 
 		&--is-top {
 			order: 1;
 			margin-top: 0;
 
-			.kt-card__image-row__image {
+			.kt-card__image {
 				border-top-left-radius: var(--border-radius);
 				border-top-right-radius: var(--border-radius);
 			}
@@ -138,11 +141,16 @@ export default defineComponent({
 			order: 6;
 			margin-bottom: 0;
 
-			.kt-card__image-row__image {
+			.kt-card__image {
 				border-bottom-right-radius: var(--border-radius);
 				border-bottom-left-radius: var(--border-radius);
 			}
 		}
+	}
+
+	&__image {
+		display: block;
+		width: 100%;
 	}
 }
 </style>

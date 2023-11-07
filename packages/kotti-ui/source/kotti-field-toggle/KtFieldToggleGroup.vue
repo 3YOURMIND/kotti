@@ -2,7 +2,7 @@
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" isGroup>
 		<div slot="container" :class="wrapperClasses">
 			<div v-for="option of optionsWithChecked" :key="option.key">
-				<div class="kt-field-toggle-group__wrapper__header">
+				<div class="kt-field-toggle-group__header">
 					<ToggleInner
 						component="label"
 						:data-test="getOptionDataTest(option)"
@@ -18,12 +18,12 @@
 					</ToggleInner>
 					<FieldHelpText
 						v-if="option.tooltip"
-						class="kt-field-toggle-group__wrapper__header__tooltip"
+						class="kt-field-toggle-group__header-tooltip"
 						:helpText="option.tooltip"
 					/>
 					<slot name="headerSide" :option="option" />
 				</div>
-				<div class="kt-field-toggle-group__wrapper__content">
+				<div class="kt-field-toggle-group__content">
 					<slot name="content" :option="option" />
 				</div>
 			</div>
@@ -96,8 +96,8 @@ export default defineComponent({
 				})),
 			),
 			wrapperClasses: computed(() => ({
-				'kt-field-toggle-group__wrapper': true,
-				'kt-field-toggle-group__wrapper--inline': props.isInline,
+				'kt-field-toggle-group': true,
+				'kt-field-toggle-group--inline': props.isInline,
 			})),
 		}
 	},
@@ -105,7 +105,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.kt-field-toggle-group__wrapper {
+.kt-field-toggle-group {
 	display: flex;
 
 	&--inline {
@@ -131,15 +131,15 @@ export default defineComponent({
 		> *:not(:last-child) {
 			margin-right: 0.3rem;
 		}
+	}
 
-		&__tooltip {
-			// align tooltip icon with the center of the first line of the label
-			// (assumption: font-size comes from common parent element)
-			//  > starting point is upper end of the container (flex-start)
-			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
-			//  > (-6px) Put it up half the height of the roolrip height (12px)
-			transform: translateY(calc(0.75em - 6px));
-		}
+	&__header-tooltip {
+		// align tooltip icon with the center of the first line of the label
+		// (assumption: font-size comes from common parent element)
+		//  > starting point is upper end of the container (flex-start)
+		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+		//  > (-6px) Put it up half the height of the roolrip height (12px)
+		transform: translateY(calc(0.75em - 6px));
 	}
 
 	&__content {

@@ -66,7 +66,6 @@ $margin: 0.8rem 1rem;
 
 .kt-navbar-logo-container {
 	display: flex;
-
 	width: 100%;
 	height: 100%;
 }
@@ -74,7 +73,6 @@ $margin: 0.8rem 1rem;
 .kt-navbar-logo {
 	::v-deep .yoco {
 		padding: $margin;
-
 		font-size: 1.2rem;
 		color: var(--navbar-color-light);
 

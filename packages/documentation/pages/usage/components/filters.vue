@@ -11,7 +11,7 @@
     				dataTest="ktFilters"
     				:isLoading="componentProps.isLoading"
     			/>
-    			<div class="overview__component__value">
+    			<div class="overview__component-value">
     				<strong>Value</strong>: <span v-text="JSON.stringify(filters)" />
     				<a @click.prevent="reset">reset</a>
     			</div>

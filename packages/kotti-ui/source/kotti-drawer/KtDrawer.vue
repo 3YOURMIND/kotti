@@ -79,7 +79,7 @@ export default defineComponent({
 		display: flex;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
+		background-color: rgb(0 0 0 / 50%);
 		transition: opacity 0.5s ease;
 	}
 
@@ -95,7 +95,7 @@ export default defineComponent({
 		padding-left: var(--unit-8);
 		overflow-y: auto;
 		background-color: var(--ui-background);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+		box-shadow: 0 2px 8px rgb(0 0 0 / 33%);
 		transition: all 0.3s ease;
 
 		&--is-expanded {
@@ -135,7 +135,7 @@ export default defineComponent({
 	&__body {
 		flex: 1 1 auto;
 		padding: 0 0.8rem;
-		margin: 0 -0.8rem 0.8rem -0.8rem;
+		margin: 0 -0.8rem 0.8rem -0.8rem; /* stylelint-disable-line */
 		overflow-y: auto;
 	}
 

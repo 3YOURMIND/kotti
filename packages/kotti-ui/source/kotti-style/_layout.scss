@@ -3,6 +3,7 @@
 
 .kt-container {
 	display: flex;
+
 	@media (max-width: $size-md) {
 		display: flex;
 		flex-direction: column;
@@ -16,6 +17,7 @@
 		flex-direction: column;
 	}
 }
+
 .container {
 	width: 100%;
 	padding-right: $layout-spacing;
@@ -55,54 +57,70 @@
 		flex: none;
 	}
 }
+
 .col-12 {
 	width: 100%;
 }
+
 .col-11 {
-	width: 91.66666667%;
+	width: 91.6667%;
 }
+
 .col-10 {
-	width: 83.33333333%;
+	width: 83.3333%;
 }
+
 .col-9 {
 	width: 75%;
 }
+
 .col-8 {
-	width: 66.66666667%;
+	width: 66.6667%;
 }
+
 .col-7 {
-	width: 58.33333333%;
+	width: 58.3333%;
 }
+
 .col-6 {
 	width: 50%;
 }
+
 .col-5 {
-	width: 41.66666667%;
+	width: 41.6667%;
 }
+
 .col-4 {
-	width: 33.33333333%;
+	width: 33.3333%;
 }
+
 .col-3 {
 	width: 25%;
 }
+
 .col-2 {
-	width: 16.66666667%;
+	width: 16.6667%;
 }
+
 .col-1 {
-	width: 8.33333333%;
+	width: 8.3333%;
 }
+
 .col-auto {
 	flex: 0 0 auto;
 	width: auto;
 	max-width: none;
 }
+
 .col-mx-auto {
 	margin-right: auto;
 	margin-left: auto;
 }
+
 .col-ml-auto {
 	margin-left: auto;
 }
+
 .col-mr-auto {
 	margin-right: auto;
 }
@@ -122,6 +140,7 @@
 			padding-left: 0;
 		}
 	}
+
 	&.col-gutter-sm {
 		margin-right: -$layout-spacing * 0.5;
 		margin-left: -$layout-spacing * 0.5;
@@ -169,11 +188,11 @@
 	}
 
 	.col-xl-11 {
-		width: 91.66666667%;
+		width: 91.6667%;
 	}
 
 	.col-xl-10 {
-		width: 83.33333333%;
+		width: 83.3333%;
 	}
 
 	.col-xl-9 {
@@ -181,11 +200,11 @@
 	}
 
 	.col-xl-8 {
-		width: 66.66666667%;
+		width: 66.6667%;
 	}
 
 	.col-xl-7 {
-		width: 58.33333333%;
+		width: 58.3333%;
 	}
 
 	.col-xl-6 {
@@ -193,11 +212,11 @@
 	}
 
 	.col-xl-5 {
-		width: 41.66666667%;
+		width: 41.6667%;
 	}
 
 	.col-xl-4 {
-		width: 33.33333333%;
+		width: 33.3333%;
 	}
 
 	.col-xl-3 {
@@ -205,11 +224,11 @@
 	}
 
 	.col-xl-2 {
-		width: 16.66666667%;
+		width: 16.6667%;
 	}
 
 	.col-xl-1 {
-		width: 8.33333333%;
+		width: 8.3333%;
 	}
 
 	.hide-xl {
@@ -242,11 +261,11 @@
 	}
 
 	.col-lg-11 {
-		width: 91.66666667%;
+		width: 91.6667%;
 	}
 
 	.col-lg-10 {
-		width: 83.33333333%;
+		width: 83.3333%;
 	}
 
 	.col-lg-9 {
@@ -254,11 +273,11 @@
 	}
 
 	.col-lg-8 {
-		width: 66.66666667%;
+		width: 66.6667%;
 	}
 
 	.col-lg-7 {
-		width: 58.33333333%;
+		width: 58.3333%;
 	}
 
 	.col-lg-6 {
@@ -266,11 +285,11 @@
 	}
 
 	.col-lg-5 {
-		width: 41.66666667%;
+		width: 41.6667%;
 	}
 
 	.col-lg-4 {
-		width: 33.33333333%;
+		width: 33.3333%;
 	}
 
 	.col-lg-3 {
@@ -278,11 +297,11 @@
 	}
 
 	.col-lg-2 {
-		width: 16.66666667%;
+		width: 16.6667%;
 	}
 
 	.col-lg-1 {
-		width: 8.33333333%;
+		width: 8.3333%;
 	}
 
 	.hide-lg {
@@ -315,11 +334,11 @@
 	}
 
 	.col-md-11 {
-		width: 91.66666667%;
+		width: 91.6667%;
 	}
 
 	.col-md-10 {
-		width: 83.33333333%;
+		width: 83.3333%;
 	}
 
 	.col-md-9 {
@@ -327,11 +346,11 @@
 	}
 
 	.col-md-8 {
-		width: 66.66666667%;
+		width: 66.6667%;
 	}
 
 	.col-md-7 {
-		width: 58.33333333%;
+		width: 58.3333%;
 	}
 
 	.col-md-6 {
@@ -339,11 +358,11 @@
 	}
 
 	.col-md-5 {
-		width: 41.66666667%;
+		width: 41.6667%;
 	}
 
 	.col-md-4 {
-		width: 33.33333333%;
+		width: 33.3333%;
 	}
 
 	.col-md-3 {
@@ -351,11 +370,11 @@
 	}
 
 	.col-md-2 {
-		width: 16.66666667%;
+		width: 16.6667%;
 	}
 
 	.col-md-1 {
-		width: 8.33333333%;
+		width: 8.3333%;
 	}
 
 	.hide-md {
@@ -388,11 +407,11 @@
 	}
 
 	.col-sm-11 {
-		width: 91.66666667%;
+		width: 91.6667%;
 	}
 
 	.col-sm-10 {
-		width: 83.33333333%;
+		width: 83.3333%;
 	}
 
 	.col-sm-9 {
@@ -400,11 +419,11 @@
 	}
 
 	.col-sm-8 {
-		width: 66.66666667%;
+		width: 66.6667%;
 	}
 
 	.col-sm-7 {
-		width: 58.33333333%;
+		width: 58.3333%;
 	}
 
 	.col-sm-6 {
@@ -412,11 +431,11 @@
 	}
 
 	.col-sm-5 {
-		width: 41.66666667%;
+		width: 41.6667%;
 	}
 
 	.col-sm-4 {
-		width: 33.33333333%;
+		width: 33.3333%;
 	}
 
 	.col-sm-3 {
@@ -424,11 +443,11 @@
 	}
 
 	.col-sm-2 {
-		width: 16.66666667%;
+		width: 16.6667%;
 	}
 
 	.col-sm-1 {
-		width: 8.33333333%;
+		width: 8.3333%;
 	}
 
 	.hide-sm {
@@ -461,11 +480,11 @@
 	}
 
 	.col-xs-11 {
-		width: 91.66666667%;
+		width: 91.6667%;
 	}
 
 	.col-xs-10 {
-		width: 83.33333333%;
+		width: 83.3333%;
 	}
 
 	.col-xs-9 {
@@ -473,11 +492,11 @@
 	}
 
 	.col-xs-8 {
-		width: 66.66666667%;
+		width: 66.6667%;
 	}
 
 	.col-xs-7 {
-		width: 58.33333333%;
+		width: 58.3333%;
 	}
 
 	.col-xs-6 {
@@ -485,11 +504,11 @@
 	}
 
 	.col-xs-5 {
-		width: 41.66666667%;
+		width: 41.6667%;
 	}
 
 	.col-xs-4 {
-		width: 33.33333333%;
+		width: 33.3333%;
 	}
 
 	.col-xs-3 {
@@ -497,11 +516,11 @@
 	}
 
 	.col-xs-2 {
-		width: 16.66666667%;
+		width: 16.6667%;
 	}
 
 	.col-xs-1 {
-		width: 8.33333333%;
+		width: 8.3333%;
 	}
 
 	.hide-xs {

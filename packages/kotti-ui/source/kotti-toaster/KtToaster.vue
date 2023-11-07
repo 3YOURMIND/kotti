@@ -87,7 +87,7 @@ export default {
 	overflow: hidden;
 	background-color: white;
 	border-radius: 0.2rem;
-	box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.24);
+	box-shadow: 0 0.1rem 0.4rem rgb(0 0 0 / 24%);
 }
 
 .vue-yodify__icon,
@@ -98,21 +98,26 @@ export default {
 	justify-content: center;
 	min-height: 2rem;
 }
+
 .vue-yodify__icon {
 	&--success {
 		background: #64ad13;
 	}
+
 	&--error {
 		background: #d91919;
 	}
+
 	&--warning {
 		background: #ff7800;
 	}
+
 	.yoco {
 		font-size: 1rem;
-		color: #ffffff;
+		color: #fff;
 	}
 }
+
 .vue-yodify__content {
 	display: flex;
 	flex: 1;
@@ -121,14 +126,16 @@ export default {
 	min-height: 1.2rem;
 	padding: 0.4rem;
 }
+
 .vue-yodify__close {
 	.yoco {
 		font-size: 1rem;
 		color: #8a8a8a;
 	}
+
 	&:hover {
 		cursor: pointer;
-		background-color: rgba(0, 0, 0, 0.1);
+		background-color: rgb(0 0 0 / 10%);
 	}
 }
 
@@ -140,11 +147,12 @@ export default {
 }
 
 // support for mobile device
-@media (max-width: 460px) {
+@media (width <= 460px) {
 	.vue-yodify__notification {
 		width: 96%;
 		margin: 2%;
 	}
+
 	.vue-yodify {
 		right: 0;
 		width: 100%;

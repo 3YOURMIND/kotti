@@ -5,11 +5,11 @@
 				<div
 					v-for="(section, index) in parsedSections"
 					:key="index"
-					class="kt-user-menu__section"
+					class="kt-user-menu-item-wrapper"
 				>
 					<div
 						v-if="section.title"
-						class="kt-user-menu__section__title"
+						class="kt-user-menu-item-wrapper__title"
 						v-text="section.title"
 					/>
 					<!-- eslint-disable vue/no-v-text-v-html-on-component -->
@@ -18,7 +18,7 @@
 						v-for="(link, linkIndex) in section.links"
 						:key="linkIndex"
 						v-bind="link.props"
-						class="kt-user-menu__section__item"
+						class="kt-user-menu-item-wrapper__item"
 						:data-test="`navbar:footer:element:${link.title
 							.toLowerCase()
 							.split(' ')
@@ -31,14 +31,14 @@
 			</div>
 		</div>
 		<div :class="userInfoClass" @click="isMenuShow = !isMenuShow">
-			<div class="kt-user-menu__info__avatar">
+			<div class="kt-user-menu-info__avatar">
 				<KtAvatar size="sm" :src="userAvatar" />
 			</div>
-			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu__info__text">
-				<div class="kt-user-menu__info__text__name" v-text="userName" />
-				<div class="kt-user-menu__info__text__status" v-text="userStatus" />
+			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu-info__text">
+				<div class="kt-user-menu-info__name" v-text="userName" />
+				<div class="kt-user-menu-info__status" v-text="userStatus" />
 			</div>
-			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu__info__toggle">
+			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu-info__chevron">
 				<i v-if="isMenuShow" class="yoco">chevron_down</i>
 				<i v-else class="yoco">chevron_up</i>
 			</div>
@@ -84,10 +84,9 @@ export default defineComponent({
 				KottiUserMenu.propsSchema.shape.sections.parse(props.sections),
 			),
 			userInfoClass: computed(() => ({
-				'kt-user-menu__info': true,
-				'kt-user-menu__info--is-narrow': isNarrow.value,
-				'kt-user-menu__info--is-narrow-wide':
-					isNarrow.value && isMenuShow.value,
+				'kt-user-menu-info': true,
+				'kt-user-menu-info--is-narrow': isNarrow.value,
+				'kt-user-menu-info--is-narrow-wide': isNarrow.value && isMenuShow.value,
 			})),
 		}
 	},
@@ -110,7 +109,7 @@ export default defineComponent({
 	background: var(--user-menu-background);
 	border-radius: 0.2rem;
 
-	&__info {
+	&-info {
 		position: relative;
 		display: flex;
 		flex-direction: row;
@@ -147,20 +146,20 @@ export default defineComponent({
 			margin-left: 0.4rem;
 			line-height: 0.8rem;
 			color: var(--user-menu-color);
-
-			&__name {
-				font-size: 0.7rem;
-				font-weight: 600;
-			}
-
-			&__status {
-				font-size: 0.6rem;
-				font-weight: 600;
-				opacity: 0.65;
-			}
 		}
 
-		&__toggle {
+		&__name {
+			font-size: 0.7rem;
+			font-weight: 600;
+		}
+
+		&__status {
+			font-size: 0.6rem;
+			font-weight: 600;
+			opacity: 0.65;
+		}
+
+		&__chevron {
 			z-index: 2;
 			flex-grow: 0;
 			align-self: center;
@@ -168,7 +167,7 @@ export default defineComponent({
 		}
 	}
 
-	&__section {
+	&-item-wrapper {
 		margin-bottom: 0.4rem;
 		opacity: 1;
 
@@ -198,7 +197,7 @@ export default defineComponent({
 }
 
 @media (max-width: $size-md) {
-	.kt-user-menu__info {
+	.kt-user-menu-info {
 		flex-basis: 48px;
 
 		&--is-narrow {
@@ -212,7 +211,7 @@ export default defineComponent({
 		}
 
 		&__text,
-		&__toggle {
+		&__chevron {
 			display: none;
 		}
 	}

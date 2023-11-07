@@ -1,8 +1,8 @@
 <template>
-	<div class="kt-comment__text-area">
+	<div class="kt-comment-text-area">
 		<div
 			ref="containerRef"
-			class="kt-comment__text-area__container"
+			class="kt-comment-text-area__container"
 			:data-test="`${dataTest}.input-container`"
 			@focusin="hasFocus = true"
 			@focusout="hasFocus = false"
@@ -17,7 +17,7 @@
 				:value="value"
 				@input="onInput"
 			/>
-			<div class="kt-comment__text-area__actions">
+			<div class="kt-comment-text-area__actions">
 				<template v-if="allowInternal && !isReply">
 					<KtButton
 						:data-test="`${dataTest}.toggle-internal-button`"
@@ -26,7 +26,7 @@
 						type="text"
 						@click="onToggleInternal"
 					/>
-					<div class="kt-comment__text-area__actions__divider" />
+					<div class="kt-comment-text-area__actions-divider" />
 				</template>
 				<KtButton
 					:data-test="`${dataTest}.confirm-button`"
@@ -40,7 +40,7 @@
 		</div>
 		<span
 			v-if="hasFocus"
-			class="kt-comment__text-area__footer"
+			class="kt-comment-text-area__footer"
 			@mousedown="onCancel()"
 			v-text="translations.cancelMessage"
 		/>
@@ -152,18 +152,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.kt-comment__text-area {
+.kt-comment-text-area {
 	width: 100%;
 
 	&__actions {
 		display: flex;
 		column-gap: var(--unit-1);
 		margin-bottom: var(--unit-1);
+	}
 
-		&__divider {
-			width: var(--unit-q);
-			background: var(--ui-02);
-		}
+	&__actions-divider {
+		width: var(--unit-q);
+		background: var(--ui-02);
 	}
 
 	&__container {

@@ -47,21 +47,25 @@ export default {
 	font-size: 0.75rem;
 	line-height: 1.2rem;
 	border-bottom: 1px solid var(--navbar-border);
+
 	span {
 		margin-left: 0.8rem;
 	}
+
 	.yoco {
 		font-size: 1rem;
 	}
+
 	&__number {
 		width: 1.2rem;
 		height: 1.2rem;
 		font-size: 0.6rem;
 		line-height: 1.2rem;
 		text-align: center;
-		background: rgba(255, 255, 255, 0.26);
+		background: rgb(255 255 255 / 26%);
 		border-radius: 0.6rem;
 	}
+
 	&--mobile {
 		display: none;
 	}

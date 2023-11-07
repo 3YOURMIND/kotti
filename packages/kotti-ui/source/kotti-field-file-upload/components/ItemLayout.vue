@@ -1,13 +1,13 @@
 <template>
-	<div class="kt-field-file-upload__file-item">
-		<div class="kt-field-file-upload__file-item__wrapper">
-			<div class="kt-field-file-upload__file-item__wrapper__text">
-				<div class="kt-field-file-upload__file-item__name" v-text="name" />
-				<div class="kt-field-file-upload__file-item__description">
+	<div class="kt-field-file-upload-item">
+		<div class="kt-field-file-upload-item__wrapper">
+			<div>
+				<div class="kt-field-file-upload-item__name" v-text="name" />
+				<div class="kt-field-file-upload-item__description">
 					<slot name="description" />
 				</div>
 			</div>
-			<div class="kt-field-file-upload__file-item__actions">
+			<div class="kt-field-file-upload-item__actions">
 				<slot name="actions" />
 			</div>
 		</div>
@@ -27,7 +27,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.kt-field-file-upload__file-item {
+.kt-field-file-upload-item {
 	display: flex;
 	flex-direction: column;
 	padding: var(--unit-2);
@@ -66,10 +66,7 @@ export default defineComponent({
 		gap: var(--unit-2);
 		align-items: center;
 		justify-content: space-between;
-
-		&__text {
-			word-break: break-word;
-		}
+		word-break: break-word;
 	}
 }
 </style>

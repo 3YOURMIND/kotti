@@ -1,7 +1,7 @@
 <template>
-	<div class="kt-comment__entry">
+	<div class="kt-comment-entry">
 		<KtAvatar size="sm" :src="user.avatar" />
-		<div class="kt-comment__entry__wrapper">
+		<div class="kt-comment-entry__wrapper">
 			<CommentHeader
 				v-bind="{ createdAt, isInternal, isModified, isReply, user }"
 			/>
@@ -72,7 +72,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.kt-comment__entry {
+.kt-comment-entry {
 	display: flex;
 	column-gap: var(--unit-2);
 

@@ -1,5 +1,5 @@
 <template>
-	<div class="kt-comment__inline-edit">
+	<div class="kt-comment-inline-edit">
 		<CommentTextArea
 			v-if="isEditing"
 			v-model="_message"
@@ -17,7 +17,7 @@
 		/>
 		<div
 			v-else
-			class="kt-comment__inline-edit__message"
+			class="kt-comment-inline-edit__message"
 			:data-test="`${dataTest}.message`"
 		>
 			<!-- eslint-disable vue/no-v-html -->
@@ -92,7 +92,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../../kotti-field/mixins';
 
-.kt-comment__inline-edit {
+.kt-comment-inline-edit {
 	&__message {
 		display: flex;
 		align-items: center;

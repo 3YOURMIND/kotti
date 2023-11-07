@@ -138,7 +138,3 @@ export default defineComponent({
 	},
 })
 </script>
-
-<style lang="scss" scoped>
-@import '../../../styles/tables.scss';
-</style>
