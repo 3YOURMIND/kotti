@@ -41,7 +41,7 @@ or
 
 ## Documentation & Usage
 
-**Documentation**: <https://kotti.onrender.com> or <https://3yourmind.github.io/kotti/>
+**Documentation**: <https://3yourmind.github.io/kotti/>
 
 ```typescript
 // in main.ts / entrypoint
