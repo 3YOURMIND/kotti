@@ -11,7 +11,7 @@
 			<div class="vue-yodify__content" v-text="notification.text" />
 			<div
 				class="vue-yodify__close"
-				@click="deleteNotification(notification.id)"
+				@click="deleteNotificationById(notification.id)"
 			>
 				<i class="yoco" v-text="'close'" />
 			</div>
@@ -19,124 +19,172 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
 import { TimeConversion } from '@metatypes/units'
+import {
+	getCurrentInstance,
+	defineComponent,
+	onUnmounted,
+	ref,
+	onMounted,
+	onBeforeMount,
+} from '@vue/composition-api'
 
 import { isBrowser } from '../utilities'
 
+import { DEFAULT_YODIFY_NOTIFICATION_DURATION_IN_SECONDS } from './constants'
+import { KottiToaster } from './types'
 import { generateId, notId } from './utilities.js'
 
-const DEFAULT_DURATION_IN_SECONDS = 3
-
-export default {
+export default defineComponent({
 	name: 'KtToaster',
-	data() {
-		return { queue: [] }
-	},
-	created() {
-		let notification
-		while ((notification = this.$yodifyBuffer.pop()))
-			this.addNotification(notification)
+	setup() {
+		const root = getCurrentInstance()
 
-		this.$root.$on('vue-yodify', this.addNotification)
-	},
-	beforeDestroy() {
-		this.$root.$off('vue-yodify', this.addNotification)
-	},
-	methods: {
-		addNotification({
+		const yodifyBuffer =
+			// @ts-expect-error see usage of `Vue.prototype.$yodifyBuffer = []` on root index file
+			(root?.$yodifyBuffer as Array<KottiToaster.NotificationInternal>) ?? []
+
+		const queue = ref<Array<KottiToaster.NotificationInternal>>([])
+
+		const addNotification = ({
 			id = generateId(),
 			text,
 			type,
-			duration = DEFAULT_DURATION_IN_SECONDS *
+			duration = DEFAULT_YODIFY_NOTIFICATION_DURATION_IN_SECONDS *
 				TimeConversion.MILLISECONDS_PER_SECOND,
-		}) {
-			this.queue.push({ id, text, type })
+		}: KottiToaster.NotificationInternal) => {
+			debugger
+			queue.value.push({ id, text, type })
 
 			if (isBrowser)
-				window.setTimeout(() => this.deleteNotification(id), duration)
-		},
-		deleteNotification(id) {
-			this.queue = this.queue.filter(notId({ id }))
-		},
-		iconClass(notificationStatus) {
-			return `vue-yodify__icon vue-yodify__icon--${notificationStatus}`
-		},
-		iconText(type) {
-			if (type === 'error') return 'circle_cross'
-			if (type === 'warning') return 'circle_attention'
-			return 'circle_check'
-		},
+				window.setTimeout(() => deleteNotificationById(id), duration)
+		}
+
+		const deleteNotificationById = (
+			id: NonNullable<KottiToaster.NotificationInternal['id']>,
+		) => {
+			queue.value = queue.value.filter((notification) =>
+				notId(id)(notification?.id),
+			)
+		}
+
+		onBeforeMount(() => {
+			if (!root) throw new Error('Root is undefined')
+
+			root.$on('vue-yodify', addNotification)
+		})
+
+		onMounted(() => {
+			let notification
+			while ((notification = yodifyBuffer.pop())) {
+				addNotification(notification)
+			}
+		})
+
+		onUnmounted(() => {
+			if (root) root.$off('vue-yodify', addNotification)
+		})
+
+		return {
+			addNotification,
+			deleteNotificationById,
+			iconClass: (type: KottiToaster.Type) =>
+				`vue-yodify__icon vue-yodify__icon--${type}`,
+			iconText: (type: KottiToaster.Type) => {
+				switch (type) {
+					case KottiToaster.Type.ERROR:
+						return Yoco.Icon.CIRCLE_CROSS
+					case KottiToaster.Type.WARNING:
+						return Yoco.Icon.CIRCLE_ATTENTION
+					case KottiToaster.Type.SUCCESS:
+					default:
+						return Yoco.Icon.CIRCLE_CHECK
+				}
+			},
+			queue,
+			yodifyBuffer,
+		}
 	},
-}
+})
 </script>
 
 <style lang="scss" scoped>
-.vue-yodify {
-	position: fixed;
-	top: 0;
-	right: 0.8rem;
-	z-index: 9999;
-}
-
-.vue-yodify__notification {
-	display: flex;
-	justify-content: space-between;
-	width: 448px;
-	margin: 1.2rem 0;
-	overflow: hidden;
-	background-color: white;
-	border-radius: 0.2rem;
-	box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.24);
-}
-
-.vue-yodify__icon,
-.vue-yodify__close {
-	display: flex;
-	flex: 0 0 2rem;
-	align-items: center;
-	justify-content: center;
-	min-height: 2rem;
-}
-.vue-yodify__icon {
-	&--success {
-		background: #64ad13;
-	}
-	&--error {
-		background: #d91919;
-	}
-	&--warning {
-		background: #ff7800;
-	}
-	.yoco {
-		font-size: 1rem;
-		color: #ffffff;
-	}
-}
-.vue-yodify__content {
-	display: flex;
-	flex: 1;
-	align-items: center;
-	height: 100%;
-	min-height: 1.2rem;
-	padding: 0.4rem;
-}
-.vue-yodify__close {
-	.yoco {
-		font-size: 1rem;
-		color: #8a8a8a;
-	}
-	&:hover {
-		cursor: pointer;
-		background-color: rgba(0, 0, 0, 0.1);
-	}
-}
-
 // reset some commonly overwritten styles
 .vue-yodify,
 .vue-yodify * {
 	box-sizing: initial;
 	line-height: initial;
+}
+
+.vue-yodify {
+	position: fixed;
+	top: 0;
+	right: 0.8rem;
+	z-index: 9999;
+
+	&__notification {
+		display: flex;
+		justify-content: space-between;
+		width: 448px;
+		margin: 1.2rem 0;
+		overflow: hidden;
+		background-color: var(--white);
+		border-radius: 0.2rem;
+		box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.24);
+	}
+
+	&__icon,
+	&__close {
+		display: flex;
+		flex: 0 0 2rem;
+		align-items: center;
+		justify-content: center;
+		min-height: 2rem;
+	}
+
+	&__icon {
+		.yoco {
+			font-size: 1rem;
+			color: var(--white);
+		}
+
+		&--info {
+			background: var(--support-info);
+		}
+
+		&--error {
+			background: var(--support-error);
+		}
+		&--success {
+			background: var(--support-success);
+		}
+
+		&--warning {
+			background: var(--support-warning);
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		height: 100%;
+		min-height: 1.2rem;
+		padding: 0.4rem;
+	}
+
+	&__close {
+		.yoco {
+			font-size: 1rem;
+			color: #8a8a8a;
+		}
+		&:hover {
+			cursor: pointer;
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+	}
 }
 
 // support for mobile device
