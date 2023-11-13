@@ -14,12 +14,14 @@
 					<KtTag
 						v-for="option in visibleSelectedTags"
 						:key="option.value"
+						class="kt-field-select__tag"
 						:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
 						:text="option.label"
 						@close="removeTag(option.value)"
 					/>
 					<KtTag
 						v-if="collapsedTagCount > 0"
+						class="kt-field-select__tag"
 						isDisabled
 						:text="`+${collapsedTagCount}`"
 					/>
@@ -364,6 +366,10 @@ export default defineComponent({
 
 		// HACK: use negative margins to align multi-line grids of tags
 		margin: #{-$vertical-tag-gap + 4px} #{-$horizontal-tag-gap};
+	}
+
+	&__tag {
+		text-transform: capitalize;
 	}
 
 	&__wrapper {
