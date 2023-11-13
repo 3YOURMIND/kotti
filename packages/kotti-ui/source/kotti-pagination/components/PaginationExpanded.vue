@@ -1,47 +1,46 @@
 <template>
-	<div class="inline-container">
+	<div class="kt-pagination__inline-container">
 		<li
 			v-for="(page, index) in totalPages"
 			:key="index"
-			:class="paginatorClasses(page, 'page-item--active')"
+			:class="paginatorClasses(page)"
 			@click="$emit('setPage', page)"
 			v-text="humanReadablePageNumber(page)"
 		/>
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
+import range from 'lodash/range'
+
+export default defineComponent<{
+	currentPage: number
+	pageSize: number
+	total: number
+}>({
 	name: 'PaginationExpanded',
 	props: {
 		currentPage: { type: Number, required: true },
 		pageSize: { type: Number, required: true },
 		total: { type: Number, required: true },
 	},
-	computed: {
-		pageAmount() {
-			return Math.ceil(this.total / this.pageSize)
-		},
-		totalPages() {
-			return [...Array(this.pageAmount).keys()]
-		},
+	setup(props) {
+		const pageAmount = computed(() => Math.ceil(props.total / props.pageSize))
+		return {
+			humanReadablePageNumber: (page: number) => page + 1,
+			paginatorClasses: (page: number) => ({
+				'kt-pagination__page-item': true,
+				'kt-pagination__page-item--is-active': props.currentPage === page,
+			}),
+			totalPages: computed(() => range(pageAmount.value)),
+		}
 	},
-	methods: {
-		humanReadablePageNumber(page) {
-			return page + 1
-		},
-		paginatorClasses(page, className) {
-			return {
-				'page-item': true,
-				[className]: this.currentPage === page,
-			}
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss" scoped>
-.inline-container {
+.kt-pagination__inline-container {
 	display: inline;
 }
 </style>

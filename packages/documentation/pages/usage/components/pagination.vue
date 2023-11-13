@@ -93,17 +93,6 @@
 
 ## Usage
 
-### Props
-
-| Attribute        | Description                                  | Type      | Accepted Values              | Default    |
-| :--------------- | :------------------------------------------- | :-------- | :--------------------------- | :--------- |
-| `adjacentAmount` | number of pairs of adjacent pages to display | `Number`  | --                           | `1`        |
-| `fixedWidth`     | set width based on max number of elements    | `Boolean` | `True`, `False`              | `False`    |
-| `page`           | the default page to show                     | `Number`  | --                           | --         |
-| `pageSize`       | amount of items each page                    | `Number`  | --                           | `10`       |
-| `pagingStyle`    | style of the pagination                      | `String`  | `expand`, `flex`, `fraction` | `expand`   |
-| `total`          | total amount of items                        | `Number`  | --                           | `Required` |
-
 ### Events
 
 | Event Name            | Description                               | Parameters                             |

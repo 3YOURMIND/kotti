@@ -1,162 +1,138 @@
 <template>
 	<div>
-		<ul class="pagination">
-			<li :class="paginatorClasses(0, 'disabled')" @click="previousPage">
-				<i class="yoco page-button">chevron_left</i>
+		<ul class="kt-pagination">
+			<li :class="paginatorClasses(0)" @click="previousPage">
+				<i
+					class="yoco kt-pagination__page-button"
+					v-text="Yoco.Icon.CHEVRON_LEFT"
+				/>
 			</li>
 			<component
-				:is="component"
-				v-bind="bound"
+				:is="paginationComponent"
+				v-bind="paginationProps"
 				@setPage="setCurrentPage($event)"
 			/>
-			<li :class="paginatorClasses(maximumPage, 'disabled')" @click="nextPage">
-				<i class="yoco page-button">chevron_right</i>
+			<li :class="paginatorClasses(maximumPage)" @click="nextPage">
+				<i
+					class="yoco kt-pagination__page-button"
+					v-text="Yoco.Icon.CHEVRON_RIGHT"
+				/>
 			</li>
 		</ul>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { Yoco } from '@3yourmind/yoco'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+
+import { makeProps } from '../make-props'
+
 import PaginationExpanded from './components/PaginationExpanded.vue'
 import PaginationFlexible from './components/PaginationFlexible.vue'
 import PaginationFractionated from './components/PaginationFractionated.vue'
+import { KottiPagination } from './types'
 
-export default {
+export default defineComponent<KottiPagination.PropsInternal>({
 	name: 'KtPagination',
 	components: {
 		PaginationExpanded,
 		PaginationFlexible,
 		PaginationFractionated,
 	},
-	props: {
-		adjacentAmount: { type: Number, default: 1 },
-		fixedWidth: { type: Boolean, default: false },
-		page: { type: Number, default: 1 },
-		pageSize: { type: Number, default: 10 },
-		pagingStyle: { type: String, default: 'expand' },
-		total: { type: Number, required: true },
+	props: makeProps(KottiPagination.propsSchema),
+	setup(props, { emit }) {
+		const currentPage = ref(props.page - 1)
+		const pageAmount = computed(() => Math.ceil(props.total / props.pageSize))
+		const maximumPage = computed(() => pageAmount.value - 1)
 
-		/**
-		 * @deprecated
-		 * Use :pagingStyle='fraction' instead
-		 */
-		fractionStyle: { type: Boolean, default: false },
-	},
-	data() {
 		return {
-			currentPage: this.page - 1,
+			paginationComponent: computed(() => {
+				const isFlexLogical = 2 * (props.adjacentAmount + 1) < pageAmount.value
+				switch (props.pagingStyle) {
+					case 'flex':
+						return !isFlexLogical || pageAmount.value < 2
+							? PaginationExpanded.name
+							: PaginationFlexible.name
+					case 'fraction':
+						return PaginationFractionated.name
+					default:
+						return PaginationExpanded.name
+				}
+			}),
+			currentPage,
+			maximumPage,
+			nextPage: () => {
+				if (currentPage.value === maximumPage.value) return
+				currentPage.value += 1
+				emit('nextPageClicked', currentPage.value + 1)
+			},
+			paginatorClasses: (page) => ({
+				'kt-pagination__page-item': true,
+				'kt-pagination__page-item--is-disabled': currentPage.value === page,
+			}),
+			paginationProps: computed(() => ({
+				adjacentAmount: props.adjacentAmount,
+				currentPage: currentPage.value,
+				fixedWidth: props.fixedWidth,
+				maximumPage: maximumPage.value,
+				pageSize: props.pageSize,
+				total: props.total,
+			})),
+			previousPage: () => {
+				if (currentPage.value === 0) return
+				currentPage.value -= 1
+				emit('previousPageClicked', currentPage.value + 1)
+			},
+			setCurrentPage: (page) => {
+				if (page === currentPage.value) return
+				currentPage.value = page
+				emit('currentPageChange', currentPage.value + 1)
+			},
+			Yoco,
 		}
 	},
-	computed: {
-		bound() {
-			return {
-				adjacentAmount: this.adjacentAmount,
-				currentPage: this.currentPage,
-				fixedWidth: this.fixedWidth,
-				maximumPage: this.maximumPage,
-				pageSize: this.pageSize,
-				total: this.total,
-				totalPages: this.totalPages,
-			}
-		},
-		component() {
-			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
-			if (!isFlexLogical || this.pageAmount < 2) return 'PaginationExpanded'
-
-			if (this.fractionStyle) {
-				// eslint-disable-next-line no-console
-				console.warn(
-					"<KtPagination>: fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
-				)
-				return PaginationFractionated.name
-			}
-
-			switch (this.pagingStyle) {
-				case 'flex':
-					return PaginationFlexible.name
-				case 'fraction':
-					return PaginationFractionated.name
-				default:
-					return PaginationExpanded.name
-			}
-		},
-		maximumPage() {
-			return Math.ceil(this.total / this.pageSize) - 1
-		},
-		pageAmount() {
-			return Math.ceil(this.total / this.pageSize)
-		},
-	},
-	methods: {
-		paginatorClasses(page, className) {
-			return {
-				'page-item': true,
-				[className]: this.currentPage === page,
-			}
-		},
-		setCurrentPage(page) {
-			if (page === this.currentPage) return
-			this.currentPage = page
-			this.eventEmitter('currentPageChange')
-		},
-		nextPage() {
-			if (this.currentPage === this.maximumPage) return
-			this.currentPage += 1
-			this.eventEmitter('nextPageClicked')
-		},
-		previousPage() {
-			if (this.currentPage === 0) return
-			this.currentPage -= 1
-			this.eventEmitter('previousPageClicked')
-		},
-		eventEmitter(eventName) {
-			this.$emit(eventName, this.currentPage + 1)
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss">
-@import '../kotti-style/_variables.scss';
-
 :root {
-	--pagination-color-active: var(--interactive-03);
+	--kt-pagination-color-active: var(--interactive-03);
 }
-.pagination {
+</style>
+
+<style lang="scss" scoped>
+.kt-pagination {
 	margin: 0;
 	list-style: none;
 	user-select: none;
-	.page-button {
+	&__page-button {
 		display: inline-block;
 		padding: var(--unit-1);
-		background: $lightgray-300;
+		background: var(--gray-10);
 		border-radius: var(--border-radius);
 		&:hover {
 			cursor: pointer;
-			background: $lightgray-400;
+			background: var(--gray-20);
 		}
 	}
-	.fraction {
-		display: inline-block;
-	}
-	.page-item {
+	::v-deep &__page-item {
 		display: inline-block;
 		padding: var(--unit-2);
 		line-height: 24px;
 		text-align: center;
-		&--active {
-			color: var(--pagination-color-active);
+		&--is-active {
+			color: var(--kt-pagination-color-active);
+		}
+		&--is-disabled {
+			cursor: not-allowed;
+
+			.kt-pagination__page-button {
+				opacity: 0.46;
+			}
 		}
 		&:hover {
 			cursor: pointer;
-		}
-	}
-
-	.disabled {
-		cursor: not-allowed;
-
-		.page-button {
-			opacity: 0.46;
 		}
 	}
 }
