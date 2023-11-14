@@ -29,7 +29,6 @@
 	},
 	"scripts": {
 		"build": "vue-cli-service build",
-		"check:stylelint": "stylelint ./src{/**,}/*.{css,scss,vue}",
 		"serve": "vue-cli-service serve"
 	},
 	"version": "2.0.0"

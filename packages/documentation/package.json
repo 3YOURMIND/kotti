@@ -34,7 +34,6 @@
 	"private": true,
 	"scripts": {
 		"build": "DEPLOY_ENV=GH_PAGES nuxt generate",
-		"check:stylelint": "stylelint ./{assets,components,layouts,pages}{/**,}/*.{css,scss,vue}",
 		"format": "prettier --write **/*.{vue,js,json,jsx,ts,tsx,md}",
 		"serve": "nuxt"
 	},

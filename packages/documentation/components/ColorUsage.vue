@@ -58,13 +58,13 @@
 		<h3>Light text on color background</h3>
 		<div class="example-wrapper">
 			<div class="example-content color">
-				<div style="color: #ffffff">
+				<div style="color: #fff">
 					Default text <code>White, Opacity: 100%</code>
 				</div>
-				<div style="color: #ffffff; opacity: 0.68">
+				<div style="color: #fff; opacity: 0.68">
 					Secondary text <code>White, Opacity: 68%</code>
 				</div>
-				<div style="color: #ffffff; opacity: 0.46">
+				<div style="color: #fff; opacity: 0.46">
 					Disabled / hint text <code>White, Opacity: 46%</code>
 				</div>
 			</div>

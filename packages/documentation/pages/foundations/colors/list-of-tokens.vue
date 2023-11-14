@@ -57,7 +57,7 @@ export default {
 			const color = baseColorsFactory.object[row.reference]
 			if (!color) return 'No color'
 			return (
-				<div class="color-box" style={`--localColor: ${color};`}>
+				<div class="color-box" style={`--local-color: ${color};`}>
 					&nbsp;
 				</div>
 			)
@@ -74,7 +74,7 @@ export default {
 	width: 50px;
 	height: 50px;
 	margin: 8px;
-	background: var(--localColor);
+	background: var(--local-color);
 	border: 4px solid #fff;
 	border-radius: 50%;
 	box-shadow: 2px 2px 5px #ccc;

@@ -79,7 +79,7 @@
 				</div>
 			</KtForm>
 
-			<pre><code>&lt;KtComment
+			<pre><code data-lang="vue">&lt;KtComment
 	v-for=&quot;comment in comments&quot;
 	:key=&quot;comment.id&quot;
 	v-bind=&quot;comment&quot;
@@ -105,7 +105,7 @@
 			<h2>Usage</h2>
 
 			<h3>Comment Object</h3>
-			<pre><code>{
+			<pre><code data-lang="js">{
 	createdAt: '2018-12-04 09:57',
 	id: 1,
 	isDeletable: true,
@@ -148,7 +148,7 @@
 					<td><code>@add</code></td>
 					<td><code>KtComment</code>, <code>KtCommentInput</code></td>
 					<td>
-						<pre><code>{
+						<pre><code data-lang="ts">{
 	isInternal?: boolean,
 	message: string,
 	parentId?: number | string,
@@ -161,7 +161,7 @@
 					<td><code>@delete</code></td>
 					<td><code>KtComment</code></td>
 					<td>
-						<pre><code>{
+						<pre><code data-lang="ts">{
 	id: number | string,
 	parentId?: number | string,
 }</code></pre>
@@ -172,7 +172,7 @@
 					<td><code>@edit</code></td>
 					<td><code>KtComment</code></td>
 					<td>
-						<pre><code>{
+						<pre><code data-lang="ts">{
 	id: number | string,
 	isInternal?: boolean,
 	message: string,
@@ -197,7 +197,7 @@
 				KtComment.defaultParser.
 			</blockquote>
 
-			<pre><code>methods: {
+			<pre><code data-lang="js">methods: {
 	dangerouslyOverrideParser: msg => escape(msg).replace(/\n/g, '&lt;br /&gt;'),
 	// alternativly you could
 	dangerouslyOverrideParser: msg => escape(msg),
@@ -468,8 +468,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../../../styles/tables.scss';
-
 .no-background {
 	background: unset;
 }

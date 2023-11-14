@@ -1,32 +1,28 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" isGroup>
-		<div
-			slot="container"
-			:class="wrapperClasses"
-			:forceUpdateKey="forceUpdateKey"
-		>
+		<div slot="container" :class="rootClasses" :forceUpdateKey="forceUpdateKey">
 			<div
 				v-for="option in options"
 				:key="option.value"
-				class="kt-field-radio-group__wrapper__container"
+				class="kt-field-radio-group__container"
 			>
-				<div class="kt-field-radio-group__wrapper__header">
+				<div class="kt-field-radio-group__header">
 					<label
-						class="kt-field-radio-group__wrapper__header__label"
+						class="kt-field-radio-group__label"
 						:class="{
-							'kt-field-radio-group__wrapper__header__label--disabled':
+							'kt-field-radio-group__label--disabled':
 								field.isDisabled || Boolean(option.isDisabled),
 						}"
 						:data-test="optionDataTest(option)"
 					>
 						<div
-							class="kt-field-radio-group__wrapper__radio"
+							class="kt-field-radio-group__radio"
 							:class="{
-								'kt-field-radio-group__wrapper__radio--checked':
+								'kt-field-radio-group__radio--checked':
 									field.currentValue === option.value,
 							}"
 						>
-							<div class="kt-field-radio-group__wrapper__radio__inside" />
+							<div class="kt-field-radio-group__radio-inside" />
 						</div>
 						<slot name="header" :option="option">
 							<div v-text="option.label" />
@@ -41,12 +37,12 @@
 					</label>
 					<FieldHelpText
 						v-if="option.tooltip"
-						class="kt-field-radio-group__wrapper__header__tooltip"
+						class="kt-field-radio-group__tooltip"
 						:helpText="option.tooltip"
 					/>
 					<slot name="headerSide" :option="option" />
 				</div>
-				<div class="kt-field-radio-group__wrapper__content">
+				<div class="kt-field-radio-group__content">
 					<slot name="content" :option="option" />
 				</div>
 			</div>
@@ -92,7 +88,7 @@ export default defineComponent({
 			inputProps: computed(
 				(): Partial<HTMLInputElement & { class: string }> => ({
 					...omit(field.inputProps, ['data-test']),
-					class: 'kt-field-radio-group__wrapper__input',
+					class: 'kt-field-radio-group__input',
 					name: name.value,
 					type: 'radio',
 				}),
@@ -109,9 +105,9 @@ export default defineComponent({
 					return [field.inputProps['data-test'], option.value].join('.')
 				}
 			},
-			wrapperClasses: computed(() => ({
-				'kt-field-radio-group__wrapper': true,
-				'kt-field-radio-group__wrapper--inline': props.isInline,
+			rootClasses: computed(() => ({
+				'kt-field-radio-group': true,
+				'kt-field-radio-group--inline': props.isInline,
 			})),
 		}
 	},
@@ -126,13 +122,13 @@ export default defineComponent({
 	--radio-inside-side: 0.2rem;
 }
 
-.kt-field-radio-group__wrapper {
+.kt-field-radio-group {
 	display: flex;
 
 	&--inline {
 		flex-direction: row;
 
-		.kt-field-radio-group__wrapper__container:not(:first-child) {
+		.kt-field-radio-group__container:not(:first-child) {
 			margin-left: 1rem;
 		}
 	}
@@ -140,7 +136,7 @@ export default defineComponent({
 	&:not(&--inline) {
 		flex-direction: column;
 
-		.kt-field-radio-group__wrapper__container:not(:first-child) {
+		.kt-field-radio-group__container:not(:first-child) {
 			margin-top: 0.4rem;
 		}
 	}
@@ -152,39 +148,39 @@ export default defineComponent({
 		> *:not(:last-child) {
 			margin-right: 0.3rem;
 		}
+	}
 
-		&__label {
-			display: flex;
-			align-items: flex-start;
-			cursor: pointer;
+	&__label {
+		display: flex;
+		align-items: flex-start;
+		cursor: pointer;
 
-			> *:not(:last-child) {
-				margin-right: 0.3rem;
-			}
+		> *:not(:last-child) {
+			margin-right: 0.3rem;
+		}
 
-			&--disabled {
-				color: var(--text-05);
-				cursor: not-allowed;
+		&--disabled {
+			color: var(--text-05);
+			cursor: not-allowed;
 
-				.kt-field-radio-group__wrapper__radio {
-					border-color: var(--ui-02);
+			.kt-field-radio-group__radio {
+				border-color: var(--ui-02);
 
-					&--checked {
-						background-color: var(--ui-02);
-						box-shadow: var(--shadow-base);
-					}
+				&--checked {
+					background-color: var(--ui-02);
+					box-shadow: var(--shadow-base);
 				}
 			}
 		}
+	}
 
-		&__tooltip {
-			// align tooltip icon with the center of the first line of the label
-			// (assumption: font-size comes from common parent element)
-			//  > starting point is upper end of the container (flex-start)
-			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
-			//  > (-6px) Put it up half the height of the tooltip height (12px)
-			transform: translateY(calc(0.75em - 6px));
-		}
+	&__tooltip {
+		// align tooltip icon with the center of the first line of the label
+		// (assumption: font-size comes from common parent element)
+		//  > starting point is upper end of the container (flex-start)
+		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+		//  > (-6px) Put it up half the height of the tooltip height (12px)
+		transform: translateY(calc(0.75em - 6px));
 	}
 
 	&__input {
@@ -201,6 +197,7 @@ export default defineComponent({
 		border: 1px solid var(--ui-02);
 		border-radius: 50%;
 		transition: all ease-in-out var(--transition-short);
+
 		// align radio with the center of the first line of the label
 		// (assumption: font-size comes from common parent element)
 		//  > starting point is upper end of the container (flex-start)
@@ -208,19 +205,19 @@ export default defineComponent({
 		//  > (-var(--radio-size) * 0.5) Put it up half the height of the radio height
 		transform: translateY(calc(0.75em - var(--radio-size) * 0.5));
 
-		&__inside {
-			display: block;
-			width: var(--radio-inside-side);
-			height: var(--radio-inside-side);
-			background-color: var(--ui-background);
-			border-radius: 50%;
-		}
-
 		&--checked {
 			background-color: var(--interactive-01);
 			border-color: var(--interactive-01);
 			box-shadow: var(--shadow-base);
 		}
+	}
+
+	&__radio-inside {
+		display: block;
+		width: var(--radio-inside-side);
+		height: var(--radio-inside-side);
+		background-color: var(--ui-background);
+		border-radius: 50%;
 	}
 
 	&__content {
@@ -232,8 +229,7 @@ export default defineComponent({
 	@include validations using ($type) {
 		@if $type != empty {
 			&:not(.kt-field__wrapper--disabled) {
-				.kt-field-radio-group__wrapper {
-					/* stylelint-disable */
+				.kt-field-radio-group {
 					&__radio {
 						border-color: var(--support-#{$type});
 
@@ -242,7 +238,6 @@ export default defineComponent({
 							box-shadow: var(--shadow-base);
 						}
 					}
-					/* stylelint-enable */
 				}
 			}
 		}

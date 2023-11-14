@@ -5,8 +5,8 @@
 // The tokens are defined with these base colors
 
 export const baseColors = {
-	white: '#FFFFFF',
-	black: '#000000',
+	white: '#FFF',
+	black: '#000',
 	'gray-10': '#F8F8F8',
 	'gray-20': '#E0E0E0',
 	'gray-30': '#C6C6C6',

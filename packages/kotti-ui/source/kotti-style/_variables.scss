@@ -4,39 +4,29 @@
 $primary-500: #2c66c4;
 $primary-400: #3173de;
 $primary-600: #2659ab;
-
 $darkgray-300: #8a8a8a;
 $darkgray-400: #575757;
 $darkgray-500: #3d3d3d;
-
 $lightgray-300: #f8f8f8;
 $lightgray-500: #8f8f8f;
 $lightgray-400: #dbdbdb;
-
 $green-500: #64ad13;
-
 $orange-500: #ff7800;
-
 $red-400: #f21d1d;
 $red-500: #d91919;
-
-$body-font-color: $darkgray-500;
-$body-bg: $lightgray-300;
-
-$border-color: $lightgray-400;
 
 // Fonts
 // Credit: https://css-tricks.com/snippets/css/system-font-stack/
 
-$base-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-	Helvetica, Arial, sans-serif !default;
-$mono-font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Courier,
-	monospace !default;
-$fallback-font-family: 'Helvetica Neue', sans-serif !default;
+$base-font-family: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
+	'Helvetica', 'Arial', 'sans-serif' !default;
+$mono-font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', 'Menlo', 'Courier',
+	'monospace' !default;
+$fallback-font-family: 'Helvetica Neue', 'sans-serif' !default;
 $cjk-zh-font-family: $base-font-family, 'PingFang SC', 'Hiragino Sans GB',
 	'Microsoft YaHei', $fallback-font-family !default;
 $cjk-jp-font-family: $base-font-family, 'Hiragino Sans',
-	'Hiragino Kaku Gothic Pro', 'Yu Gothic', YuGothic, Meiryo,
+	'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'YuGothic, Meiryo',
 	$fallback-font-family !default;
 $cjk-ko-font-family: $base-font-family, 'Malgun Gothic', $fallback-font-family !default;
 $body-font-family: $base-font-family, $fallback-font-family !default;
@@ -83,8 +73,6 @@ $size-xl: 1280px !default;
 $size-2x: 1440px !default;
 $size-3x: 1920px !default;
 
-$responsive-breakpoint: $size-xs !default;
-
 // Z-index
 $zindex-0: 1 !default;
 $zindex-1: 100 !default;
@@ -93,4 +81,4 @@ $zindex-4: 400 !default;
 
 // Shadow
 
-$box-shadow: 0 0 1px #dbdbdb, 0 0.1rem 5px rgba(0, 0, 0, 0.26);
+$box-shadow: 0 0 1px #dbdbdb, 0 0.1rem 5px rgb(0 0 0 / 26%);

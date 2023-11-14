@@ -1,6 +1,6 @@
 <template>
 	<div class="progress-bar">
-		<div class="progress-bar__bar">
+		<div class="progress-bar__background">
 			<div :class="fillClasses" :style="{ width: progressPercent }" />
 		</div>
 		<span class="progress-bar__label" v-text="progressPercent" />
@@ -20,8 +20,8 @@ export default defineComponent({
 	setup(props: KottiFieldFileUploadRemote.ProgressBar.Props) {
 		return {
 			fillClasses: computed(() => ({
-				'progress-bar__bar__fill': true,
-				'progress-bar__bar__fill--is-error': props.isError,
+				'progress-bar__fill': true,
+				'progress-bar__fill--is-error': props.isError,
 			})),
 			progressPercent: computed(
 				() => `${Math.floor(props.progress * ONE_HUNDRED_PERCENT)}%`,
@@ -38,22 +38,22 @@ export default defineComponent({
 	align-items: center;
 	height: var(--unit-5);
 
-	&__bar {
+	&__background {
 		width: 100%;
 		height: var(--unit-2);
 		background-color: var(--ui-02);
 		border-radius: var(--unit-1);
+	}
 
-		&__fill {
-			display: block;
-			height: 100%;
-			background-color: var(--interactive-03);
-			border-radius: var(--unit-1);
-			transition: width 500ms ease-in-out;
+	&__fill {
+		display: block;
+		height: 100%;
+		background-color: var(--interactive-03);
+		border-radius: var(--unit-1);
+		transition: width 500ms ease-in-out;
 
-			&--is-error {
-				background-color: var(--support-error);
-			}
+		&--is-error {
+			background-color: var(--support-error);
 		}
 	}
 

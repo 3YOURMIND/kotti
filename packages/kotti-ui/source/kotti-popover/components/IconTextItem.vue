@@ -60,6 +60,7 @@ export default defineComponent({
 
 			&:hover {
 				background-color: var(--ui-01);
+
 				&.kt-popover-options-item--is-active {
 					color: var(--interactive-01-hover);
 				}

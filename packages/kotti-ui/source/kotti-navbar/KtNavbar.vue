@@ -110,7 +110,6 @@ $narrow-navbar-width: 3.4rem;
 	--navbar-color: var(--primary-10);
 	--navbar-color-light: var(--primary-20);
 	--navbar-color-active: var(--white);
-
 	--user-menu-border: var(--primary-80);
 	--user-menu-background-active: var(--primary-70);
 	--user-menu-background: var(--primary-60);
@@ -134,7 +133,6 @@ $narrow-navbar-width: 3.4rem;
 		--navbar-color: var(--primary-80);
 		--navbar-color-light: var(--primary-60);
 		--navbar-color-active: var(--primary-100);
-
 		--user-menu-border: var(--primary-30);
 		--user-menu-background-active: var(--primary-30);
 		--user-menu-background: var(--primary-20);
@@ -147,7 +145,6 @@ $narrow-navbar-width: 3.4rem;
 		--navbar-color: var(--primary-90);
 		--navbar-color-light: var(--primary-50);
 		--navbar-color-active: var(--primary-80);
-
 		--user-menu-border: var(--gray-30);
 		--user-menu-background-active: var(--gray-20);
 		--user-menu-background: var(--gray-10);
@@ -160,7 +157,6 @@ $narrow-navbar-width: 3.4rem;
 		--navbar-color: var(--gray-20);
 		--navbar-color-light: var(--gray-10);
 		--navbar-color-active: var(--primary-10);
-
 		--user-menu-border: var(--gray-30);
 		--user-menu-background-active: var(--gray-80);
 		--user-menu-background: var(--gray-70);
@@ -175,8 +171,7 @@ $narrow-navbar-width: 3.4rem;
 	&-wrapper {
 		position: fixed;
 		display: flex;
-		flex-direction: column;
-		flex-wrap: nowrap;
+		flex-flow: column nowrap;
 		width: $navbar-width;
 		height: 100%;
 	}
@@ -188,7 +183,6 @@ $narrow-navbar-width: 3.4rem;
 		justify-content: center;
 		width: 2.4rem;
 		height: $mobile-navbar-height;
-
 		color: var(--navbar-color-light);
 		cursor: pointer;
 
@@ -210,7 +204,6 @@ $narrow-navbar-width: 3.4rem;
 	&__body {
 		flex: 1 1 100%;
 		overflow-y: auto;
-
 		scrollbar-width: none;
 
 		&::-webkit-scrollbar {
@@ -230,7 +223,7 @@ $narrow-navbar-width: 3.4rem;
 		display: none;
 		width: 100%;
 		background-color: var(--navbar-background);
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+		box-shadow: 0 2px 4px rgb(0 0 0 / 26%);
 	}
 
 	&--narrow {
@@ -263,6 +256,7 @@ $narrow-navbar-width: 3.4rem;
 		.kt-navbar-notification {
 			justify-content: center;
 			padding: 0.8rem 0;
+
 			&__number {
 				position: absolute;
 				right: 0.4rem;
@@ -272,6 +266,7 @@ $narrow-navbar-width: 3.4rem;
 		.kt-navbar-quick-links {
 			padding: 0.8rem 0;
 			text-align: center;
+
 			&__link {
 				display: block;
 			}
@@ -308,7 +303,6 @@ $narrow-navbar-width: 3.4rem;
 			flex: 1;
 			align-items: center;
 			justify-content: center;
-
 			width: auto;
 			padding: 0.2rem 0;
 			border: 0;
@@ -324,6 +318,7 @@ $narrow-navbar-width: 3.4rem;
 
 		&-notification {
 			display: none;
+
 			&--mobile {
 				display: block;
 				width: 1.2rem;
@@ -332,6 +327,7 @@ $narrow-navbar-width: 3.4rem;
 				text-align: center;
 				border: 0;
 				border-radius: 1.2rem;
+
 				.yoco {
 					font-size: 1rem;
 				}

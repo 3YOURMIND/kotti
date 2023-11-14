@@ -1,14 +1,10 @@
 <template>
-	<div class="kt-navbar__quick-links">
-		<div
-			v-if="!isNarrow"
-			class="kt-navbar__quick-links__title"
-			v-text="title"
-		/>
+	<div class="kt-navbar-quick-links">
+		<div v-if="!isNarrow" class="kt-navbar-quick-links__title" v-text="title" />
 		<a
 			v-for="(item, index) in links"
 			:key="index"
-			class="kt-navbar__quick-links__link"
+			class="kt-navbar-quick-link"
 			:href="item.link"
 			rel="noopener noreferrer"
 			target="_blank"
@@ -17,7 +13,7 @@
 			<div v-if="!isNarrow" class="yoco" v-text="Yoco.Icon.LINK" />
 			<NavbarTooltip
 				v-else
-				class="kt-navbar__quick-links__tooltip"
+				class="kt-navbar-quick-link__tooltip"
 				:icon="Yoco.Icon.LINK"
 				:label="item.title"
 			/>
@@ -55,29 +51,29 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.kt-navbar__quick-links {
+.kt-navbar-quick-links {
 	padding: 1.2rem 1rem;
 	margin: 0.4rem 0;
-
-	&__link {
-		display: flex;
-		align-items: center;
-		color: var(--navbar-color-light);
-
-		&:hover {
-			color: var(--navbar-color-active);
-		}
-
-		::v-deep .yoco {
-			font-size: 0.8rem;
-		}
-	}
 
 	&__title {
 		font-size: 0.6rem;
 		font-weight: 700;
 		text-transform: uppercase;
 		opacity: 0.64;
+	}
+}
+
+.kt-navbar-quick-link {
+	display: flex;
+	align-items: center;
+	color: var(--navbar-color-light);
+
+	&:hover {
+		color: var(--navbar-color-active);
+	}
+
+	::v-deep .yoco {
+		font-size: 0.8rem;
 	}
 
 	&__tooltip {

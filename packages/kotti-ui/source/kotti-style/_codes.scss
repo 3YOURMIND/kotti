@@ -1,36 +1,56 @@
 // Codes
-@mixin code-base() {
+%code-base {
 	line-height: 1.5;
-	background: $lightgray-300;
+	background: var(--ui-01);
 	border-radius: var(--border-radius);
 }
 
 pre {
-	@include code-base();
-	display: block;
-	width: 100%;
-	padding: 1rem;
-	overflow-x: auto;
+	@extend %code-base;
 
+	display: flex;
+	padding: var(--unit-2) var(--unit-8);
+	overflow: hidden;
+	overflow-x: auto;
 	color: inherit;
+
+	code {
+		flex: 1;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: unset;
+		overflow: unset;
+
+		&[data-lang]::after {
+			align-self: flex-start;
+			margin: calc(-1 * var(--unit-2)) calc(-1 * var(--unit-8)) 0 0;
+		}
+	}
 }
 
 code {
-	@include code-base();
-	position: relative;
-	padding: var(--unit-h);
-	font-size: 85%;
-	color: $body-font-color;
+	@extend %code-base;
 
-	background: $lightgray-300;
+	position: relative;
+	display: inline-flex;
+	gap: var(--unit-1);
+	padding: var(--unit-h);
+	overflow: hidden;
+	font-size: 85%;
+	color: var(--text-01);
+	background: var(--ui-02);
 	border-radius: var(--border-radius);
 
-	&::before {
-		position: absolute;
-		top: var(--unit-h);
-		right: $layout-spacing;
-		font-size: $font-size-sm;
-		color: $lightgray-300;
+	&[data-lang]::after {
+		display: flex;
+		align-items: center;
+		align-self: stretch;
+		padding-inline: var(--unit-1);
+		margin: calc(-1 * var(--unit-h)) calc(-1 * var(--unit-h))
+			calc(-1 * var(--unit-h)) 0;
+		font-size: 0.8em;
+		color: var(--text-04);
 		content: attr(data-lang);
+		background-color: var(--ui-04);
 	}
 }

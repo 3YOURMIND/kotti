@@ -11,14 +11,14 @@
 		@mouseenter.stop.prevent="isHovering = true"
 		@mouseleave.stop.prevent="isHovering = false"
 	>
-		<div class="kt-field-file-upload__drop-area__description">
+		<div class="kt-field-file-upload-drop-area__description">
 			<i v-if="icon" class="yoco" v-text="icon" />
 			<a v-text="translations.text.clickToUpload" />
 			{{ translations.text.dragAndDrop }}
 		</div>
 		<div
 			v-if="showInformation"
-			class="kt-field-file-upload__drop-area__information"
+			class="kt-field-file-upload-drop-area__information"
 		>
 			{{ informationText }}
 			<a
@@ -42,7 +42,7 @@
 		/>
 		<div
 			v-if="$slots.footer"
-			class="kt-field-file-upload__drop-area__footer-slot"
+			class="kt-field-file-upload-drop-area__footer-slot"
 			@keydown.enter.stop
 			@keydown.space.stop
 			@mouseenter.prevent.stop="isHovering = false"
@@ -53,7 +53,7 @@
 		<span
 			v-if="!allowMultiple"
 			v-show="isError"
-			class="kt-field-file-upload__drop-area__error"
+			class="kt-field-file-upload-drop-area__error"
 			v-text="translations.error.multipleNotAllowed"
 		/>
 	</div>
@@ -112,11 +112,11 @@ export default defineComponent({
 			_tabIndex: computed(() => (props.isDisabled ? -1 : props.tabIndex ?? 0)),
 			accept: computed(() => buildAcceptString(props.extensions)),
 			classes: computed(() => ({
-				'kt-field-file-upload__drop-area': true,
-				'kt-field-file-upload__drop-area--is-disabled': props.isDisabled,
-				'kt-field-file-upload__drop-area--is-error':
+				'kt-field-file-upload-drop-area': true,
+				'kt-field-file-upload-drop-area--is-disabled': props.isDisabled,
+				'kt-field-file-upload-drop-area--is-error':
 					!props.isDisabled && isError.value,
-				'kt-field-file-upload__drop-area--is-hover':
+				'kt-field-file-upload-drop-area--is-hover':
 					!props.isDisabled &&
 					!isError.value &&
 					(isDragging.value || isHovering.value),
@@ -158,7 +158,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 $support-error-light: #f0a8a8;
 
-.kt-field-file-upload__drop-area {
+.kt-field-file-upload-drop-area {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -178,7 +178,7 @@ $support-error-light: #f0a8a8;
 		pointer-events: none;
 		background-color: var(--ui-background);
 
-		.kt-field-file-upload__drop-area__description a {
+		.kt-field-file-upload-drop-area__description a {
 			color: var(--text-05);
 		}
 	}

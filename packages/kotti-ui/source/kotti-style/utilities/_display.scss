@@ -1,8 +1,7 @@
 .d-flex {
 	position: relative;
 	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
+	flex-flow: row nowrap;
 	width: 100%;
 }
 

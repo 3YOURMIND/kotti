@@ -3,20 +3,16 @@
 		<template v-if="isLoading">
 			<div
 				v-if="showHeader || $slots.helpText"
-				class="kt-value-label__loading__header skeleton rectangle"
+				class="kt-value-label-loading__header skeleton rectangle"
 			/>
-			<div class="kt-value-label__loading__value skeleton rectangle" />
+			<div class="kt-value-label-loading__value skeleton rectangle" />
 		</template>
 		<template v-else>
 			<div v-if="showHeader || $slots.helpText" class="kt-value-label__header">
-				<label
-					v-if="hasLabel"
-					class="kt-value-label__header__label"
-					v-text="label"
-				/>
+				<label v-if="hasLabel" class="kt-value-label__label" v-text="label" />
 				<div
 					v-if="hasHelpText || $slots.helpText"
-					class="kt-value-label__header__help-text"
+					class="kt-value-label__help-text"
 				>
 					<FieldHelpText :helpText="helpText" :helpTextSlot="$slots.helpText" />
 				</div>
@@ -119,34 +115,23 @@ export default defineComponent<KottiValueLabel.PropsInternal>({
 		> :not(:first-child) {
 			margin-left: 0.2rem;
 		}
+	}
 
-		&__help-text {
-			display: flex;
-			align-items: center;
-			font-size: 1.4em;
-			color: var(--icon-02);
-			cursor: pointer;
-		}
+	&__help-text {
+		display: flex;
+		align-items: center;
+		font-size: 1.4em;
+		color: var(--icon-02);
+		cursor: pointer;
+	}
 
-		&__label {
-			font-weight: 500;
-			color: var(--text-02);
-		}
+	&__label {
+		font-weight: 500;
+		color: var(--text-02);
 	}
 
 	&__help-description {
 		color: var(--text-03);
-	}
-
-	&__loading {
-		&__header {
-			max-width: 200px;
-			height: var(--unit-5);
-		}
-
-		&__value {
-			height: var(--unit-10);
-		}
 	}
 
 	&__validation-text {
@@ -169,6 +154,17 @@ export default defineComponent<KottiValueLabel.PropsInternal>({
 		span {
 			display: inline-block;
 		}
+	}
+}
+
+.kt-value-label-loading {
+	&__header {
+		max-width: 200px;
+		height: var(--unit-5);
+	}
+
+	&__value {
+		height: var(--unit-10);
 	}
 }
 

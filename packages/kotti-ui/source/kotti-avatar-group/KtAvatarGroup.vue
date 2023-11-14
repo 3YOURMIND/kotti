@@ -66,9 +66,7 @@ export default defineComponent({
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-
 		margin-left: 0.2rem;
-
 		color: var(--text-03);
 		background: var(--ui-02);
 		border: 0.1rem solid var(--white);

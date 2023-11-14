@@ -3,15 +3,15 @@
 		<ComponentInfo :component="KtAvatar" />
 		<KtAvatar v-bind="{ ...avatarSettings }">
 			<template v-if="avatarSettings.showContentSlot" #content>
-				<div class="user-container__content">
+				<div class="user-container">
 					<KtAvatar size="lg" :src="avatarSettings.src" />
-					<div class="user-container__content__info">
+					<div class="user-container__info">
 						<h3 v-text="avatarSettings.name" />
-						<div class="user-container__content__info__item">
+						<div>
 							<span class="yoco" v-text="Yoco.Icon.USER" />
 							<span> email@example.com </span>
 						</div>
-						<div class="user-container__content__info__item">
+						<div>
 							<span class="yoco" v-text="Yoco.Icon.OFFICE" />
 							<span>3yourmind GmbH</span>
 						</div>
@@ -145,22 +145,22 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../styles/form-fields.scss';
+
 .user-container {
-	&__content {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding: var(--unit-4);
+
+	&__info {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		align-items: flex-start;
-		justify-content: space-between;
-		padding: var(--unit-4);
-		&__info {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			margin-left: var(--unit-2);
-			word-wrap: break-word;
-		}
+		margin-left: var(--unit-2);
+		word-wrap: break-word;
 	}
 }
 </style>

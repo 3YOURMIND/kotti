@@ -32,7 +32,7 @@ export default defineComponent({
 
 @mixin toggle-colors($border-color, $shadow-main, $background-color) {
 	border-color: $border-color;
-	box-shadow: var(--shadow-base), 0px 0px 0px 1px $shadow-main inset;
+	box-shadow: var(--shadow-base), 0 0 0 1px $shadow-main inset;
 
 	.kt-field-toggle-box__check {
 		path {
@@ -143,7 +143,6 @@ export default defineComponent({
 			.kt-field-toggle__inner {
 				&--is-indeterminate:not(.kt-field-toggle__inner--is-disabled) {
 					.kt-field-toggle-box {
-						/* stylelint-disable */
 						@include toggle-colors(
 							var(--support-#{$type}),
 							var(--support-#{$type}-light),
@@ -157,13 +156,11 @@ export default defineComponent({
 								var(--support-#{$type}-dark)
 							);
 						}
-						/* stylelint-enable */
 					}
 				}
 
 				&--is-off:not(.kt-field-toggle__inner--is-disabled) {
 					.kt-field-toggle-box {
-						/* stylelint-disable */
 						@include toggle-colors(
 							var(--support-#{$type}),
 							var(--support-#{$type}-light),
@@ -177,7 +174,6 @@ export default defineComponent({
 								transparent
 							);
 						}
-						/* stylelint-enable */
 					}
 				}
 
@@ -208,21 +204,15 @@ export default defineComponent({
 .kt-field-toggle__inner--is-disabled {
 	&.kt-field-toggle__inner {
 		&--is-indeterminate .kt-field-toggle-box {
-			/* stylelint-disable */
 			@include toggle-colors(var(--ui-01), var(--ui-02), var(--ui-02));
-			/* stylelint-enable */
 		}
 
 		&--is-off .kt-field-toggle-box {
-			/* stylelint-disable */
 			@include toggle-colors(var(--ui-02), var(--ui-01), transparent);
-			/* stylelint-enable */
 		}
 
 		&--is-on .kt-field-toggle-box {
-			/* stylelint-disable */
 			@include toggle-colors(var(--ui-02), var(--ui-01), var(--ui-02));
-			/* stylelint-enable */
 		}
 	}
 }

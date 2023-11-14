@@ -45,9 +45,7 @@ export default defineComponent({
 	align-items: center;
 	padding: var(--kt-tag-padding);
 	margin: var(--kt-tag-vertical-gap) var(--kt-tag-horizontal-gap);
-
 	font-size: 0.875em;
-
 	color: var(--text-02);
 	text-transform: capitalize;
 	white-space: nowrap;
@@ -65,7 +63,6 @@ export default defineComponent({
 		height: $size;
 		margin-left: var(--unit-1);
 		cursor: pointer;
-
 		background-color: var(--ui-02);
 		border-radius: 50%;
 

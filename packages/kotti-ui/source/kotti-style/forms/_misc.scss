@@ -39,14 +39,17 @@
 	--form-shadow-color: var(--support-info-light);
 	--form-border-color: var(--ui-02);
 }
+
 .is-success {
 	--form-shadow-color: var(--support-success-light);
 	--form-border-color: var(--support-success);
 }
+
 .is-error {
 	--form-shadow-color: var(--support-error-light);
 	--form-border-color: var(--support-error);
 }
+
 .is-warning {
 	--form-shadow-color: var(--support-warning-light);
 	--form-border-color: var(--support-warning);
@@ -54,16 +57,18 @@
 
 .form-group {
 	.form-input {
+		border: 1px solid var(--form-border-color);
+
 		&:focus {
 			outline: none;
 			box-shadow: 0 0 0 0.1rem var(--form-shadow-color);
 		}
-		border: 1px solid var(--form-border-color);
 	}
 
 	.form-icon {
 		color: var(--form-border-color);
 	}
+
 	.form-validation-text {
 		padding: 0.2rem;
 		font-size: $font-size-sm;
@@ -77,6 +82,7 @@
 	&:disabled,
 	&.disabled {
 		--form-input-interactive-color: var(--ui-03);
+
 		cursor: not-allowed;
 		background: $lightgray-300;
 		opacity: 0.46;

@@ -70,6 +70,7 @@ ul,
 ol {
 	padding: 0;
 	margin: var(--unit-4) 0 var(--unit-4) var(--unit-4);
+
 	ul,
 	ol {
 		margin: var(--unit-4) 0 var(--unit-4) var(--unit-4);
@@ -130,9 +131,11 @@ dl {
 
 	.editable {
 		padding: 0.1rem 0;
+
 		&--empty {
 			font-style: italic;
 		}
+
 		&:hover {
 			cursor: pointer;
 			background: var(--text-03);

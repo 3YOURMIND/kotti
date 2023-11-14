@@ -155,7 +155,6 @@ export default defineComponent({
 	grid-template-rows: auto;
 	grid-template-columns: max-content repeat(3, 1fr) max-content;
 	grid-gap: var(--unit-1);
-
 	width: 50vw;
 
 	@media (max-width: $size-md) {
@@ -165,12 +164,15 @@ export default defineComponent({
 	@media (max-width: $size-xl) {
 		width: 60vw;
 	}
+
 	@media (max-width: $size-lg) {
 		width: 75vw;
 	}
+
 	@media (max-width: $size-md) {
 		width: 90vw;
 	}
+
 	@media (max-width: $size-sm) {
 		width: 95vw;
 	}

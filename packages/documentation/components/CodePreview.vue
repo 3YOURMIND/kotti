@@ -45,11 +45,11 @@ export default defineComponent({
 		margin-bottom: var(--unit-3);
 		font-size: 12px;
 		color: var(--white);
-		background: rgba(0, 0, 0, 0.4);
+		background: rgb(0 0 0 / 40%);
 
 		&:hover {
 			cursor: pointer;
-			background: rgba(44, 100, 204, 0.6);
+			background: rgb(44 100 204 / 60%);
 		}
 	}
 }

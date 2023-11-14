@@ -1,12 +1,12 @@
 <template>
 	<div>
 		<!-- TODO: implement popover -->
-		<div v-if="showPopup" class="kt-form-submit__popup">
-			<h4 class="kt-form-submit__popup__title" v-text="translations.title" />
+		<div v-if="showPopup" class="kt-form-submit-popup">
+			<h4 class="kt-form-submit-popup__title" v-text="translations.title" />
 
 			<div
 				v-if="errors.length"
-				class="kt-form-submit__popup__section kt-form-submit__popup__section--error"
+				class="kt-form-submit-popup__section kt-form-submit-popup__section--error"
 			>
 				<h5 v-text="translations.errorsSectionTitle" />
 				<ul>
@@ -19,7 +19,7 @@
 
 			<div
 				v-if="warnings.length"
-				class="kt-form-submit__popup__section kt-form-submit__popup__section--warning"
+				class="kt-form-submit-popup__section kt-form-submit-popup__section--warning"
 			>
 				<h5 v-text="translations.warningsSectionTitle" />
 				<ul>
@@ -32,7 +32,7 @@
 		</div>
 
 		<button
-			class="kt-button primary kt-form-submit__button"
+			class="kt-button primary kt-form-submit-button"
 			:disabled="isDisabled"
 			type="submit"
 		>
@@ -89,56 +89,54 @@ export default defineComponent({
 <style lang="scss">
 /* FIXME: why isn’t this scoped? */
 
-.kt-form-submit {
-	&__button {
-		display: flex;
+.kt-form-submit-button {
+	display: flex;
+}
+
+.kt-form-submit-popup {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 1em;
+	background-color: var(--ui-01);
+
+	> *:not(:last-child) {
+		margin-bottom: 1em;
 	}
 
-	&__popup {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		justify-content: space-between;
-		padding: 1em;
-		background-color: var(--ui-01);
+	&__section {
+		ul {
+			display: flex;
+			flex-direction: column;
+			margin: 0;
+			list-style: none;
 
-		> *:not(:last-child) {
-			margin-bottom: 1em;
-		}
-
-		&__section {
-			ul {
+			li {
 				display: flex;
-				flex-direction: column;
-				margin: 0;
-				list-style: none;
+				align-items: center;
+				margin: 0.2rem 0;
+				line-height: 1;
 
-				li {
+				i.yoco {
 					display: flex;
 					align-items: center;
-					margin: 0.2rem 0;
-					line-height: 1;
-
-					i.yoco {
-						display: flex;
-						align-items: center;
-						margin: 0 0.5em 0 0;
-					}
-				}
-			}
-
-			@each $type in 'warning', 'error' {
-				&--#{$type} ul {
-					color: var(--support-#{$type}); /* stylelint-disable-line */
+					margin: 0 0.5em 0 0;
 				}
 			}
 		}
 
-		&__title,
-		h5 {
-			font-weight: bold;
-			color: var(--text-01);
+		@each $type in 'warning', 'error' {
+			&--#{$type} ul {
+				color: var(--support-#{$type});
+			}
 		}
+	}
+
+	&__title,
+	h5 {
+		font-weight: bold;
+		color: var(--text-01);
 	}
 }
 </style>

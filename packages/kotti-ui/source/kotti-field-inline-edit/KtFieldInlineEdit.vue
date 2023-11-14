@@ -306,6 +306,8 @@ export default defineComponent({
 
 .kt-field-inline-edit {
 	// slot that wraps <input /> & <EditIcon/>
+
+	/* stylelint-disable-next-line selector-class-pattern */
 	::v-deep .kt-field__input-container__slot {
 		display: flex;
 		align-items: center;

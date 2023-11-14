@@ -7,10 +7,7 @@
 				:class="breadCrumbClasses(breadcrumb, index)"
 				:data-test="breadcrumb.dataTest ? breadcrumb.dataTest : undefined"
 			>
-				<span
-					v-if="showSeparator(index)"
-					class="kt-breadcrumb__list-item__separator"
-				>
+				<span v-if="showSeparator(index)" class="kt-breadcrumb__separator">
 					<i
 						v-if="separator.style === KottiBreadcrumb.SeparatorType.ICON"
 						class="yoco"
@@ -22,7 +19,7 @@
 					/>
 				</span>
 				<span
-					class="kt-breadcrumb__list-item__text"
+					class="kt-breadcrumb__text"
 					role="button"
 					@click="handleClick(breadcrumb, index)"
 					v-text="breadcrumb.title"
@@ -69,6 +66,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .kt-breadcrumb {
 	--breadcrumb-color-completed: var(--interactive-03);
+
 	display: flex;
 	flex-wrap: wrap;
 
@@ -81,7 +79,6 @@ export default defineComponent({
 		display: flex;
 		align-items: center;
 		margin: 0.1rem 0;
-
 		color: var(--text-01);
 
 		&--is-active,
@@ -96,25 +93,26 @@ export default defineComponent({
 		&--is-disabled {
 			color: var(--text-05);
 			cursor: not-allowed;
-			.kt-breadcrumb__list-item__text:hover {
+
+			.kt-breadcrumb__text:hover {
 				color: var(--text-05);
 				cursor: not-allowed;
 			}
 		}
+	}
 
-		&__text:hover {
-			color: var(--interactive-01-hover);
-			cursor: pointer;
-		}
+	&__text:hover {
+		color: var(--interactive-01-hover);
+		cursor: pointer;
+	}
 
-		&__separator {
-			display: flex;
-			align-items: center;
-			margin: 0 0.2rem;
+	&__separator {
+		display: flex;
+		align-items: center;
+		margin: 0 0.2rem;
 
-			.yoco {
-				font-size: 1rem;
-			}
+		.yoco {
+			font-size: 1rem;
 		}
 	}
 }

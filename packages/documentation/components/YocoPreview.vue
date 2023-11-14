@@ -73,7 +73,6 @@ export default {
 	align-items: center;
 	justify-content: center;
 	height: 45px;
-
 	font-size: 0.875em;
 	line-height: 2em;
 }

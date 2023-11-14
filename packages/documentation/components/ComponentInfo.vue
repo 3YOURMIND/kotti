@@ -12,13 +12,13 @@
 					<div
 						v-for="(label, index) in labels"
 						:key="index"
-						class="component-info__label"
+						class="component-info-label"
 						:style="`--background-color: ${label.backgroundColor}; --color: ${label.color}`"
 					>
-						<div class="component-info__label__left" v-text="label.left" />
+						<div class="component-info-label__left" v-text="label.left" />
 						<a
 							v-if="label.link"
-							class="component-info__label__right"
+							class="component-info-label__right"
 							:href="label.link"
 							rel="noreferrer noopener"
 							target="_blank"
@@ -26,7 +26,7 @@
 						/>
 						<div
 							v-else
-							class="component-info__label__right"
+							class="component-info-label__right"
 							v-text="label.right"
 						/>
 					</div>
@@ -284,7 +284,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '@3yourmind/kotti-ui/dist/variables.scss';
-@import '../styles/tables.scss';
 
 $radius: 3px;
 
@@ -310,37 +309,36 @@ $radius: 3px;
 		margin: -5px;
 	}
 
-	&__label {
-		display: flex;
-		margin: 5px;
-
-		overflow: hidden;
-		border: 1px solid var(--color);
-		border-radius: $radius;
-
-		&__left,
-		&__right {
-			padding: 2px 8px;
-		}
-
-		a.component-info__label__right {
-			&:hover {
-				text-decoration: underline;
-			}
-		}
-
-		&__left {
-			font-weight: bold;
-			color: var(--color);
-			background-color: var(--background-color);
-			border-right: 1px solid var(--color);
-		}
-	}
-
 	&--is-deprecated {
 		.component-info__title {
 			text-decoration: underline wavy var(--red-50);
 		}
+	}
+}
+
+.component-info-label {
+	display: flex;
+	margin: 5px;
+	overflow: hidden;
+	border: 1px solid var(--color);
+	border-radius: $radius;
+
+	&__left,
+	&__right {
+		padding: 2px 8px;
+	}
+
+	a.component-info-label__right {
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&__left {
+		font-weight: bold;
+		color: var(--color);
+		background-color: var(--background-color);
+		border-right: 1px solid var(--color);
 	}
 }
 
@@ -355,7 +353,6 @@ $radius: 3px;
 .danger-block {
 	color: var(--red-70);
 	background: var(--support-error-light);
-
 	border: 1px solid var(--support-error-dark);
 	border-radius: $radius;
 

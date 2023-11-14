@@ -68,6 +68,7 @@ h3 {
 		float: right;
 		font-weight: 500;
 		color: var(--interactive-01);
+
 		&:hover {
 			color: var(--interactive-01);
 			cursor: pointer;

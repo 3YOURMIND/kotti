@@ -1,6 +1,6 @@
 <template>
-	<div ref="optionsRef" class="kt-field-select__options">
-		<div v-if="isLoading" class="kt-field-select__options__loading">
+	<div ref="optionsRef" class="kt-field-select-options">
+		<div v-if="isLoading" class="kt-field-select-options__loading">
 			<div class="loading" />
 		</div>
 		<FieldSelectOptionsItem
@@ -30,7 +30,7 @@
 		</FieldSelectOptionsItem>
 		<div
 			v-if="modifiedActions.length"
-			class="kt-field-select__options__separator"
+			class="kt-field-select-options__separator"
 		/>
 		<FieldSelectOptionsItem
 			v-for="(action, index) in modifiedActions"
@@ -242,12 +242,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../../kotti-field/mixins.scss';
 
-.kt-field-select__options {
+.kt-field-select-options {
 	position: relative;
 
 	@include prettify-scrollbar;
 
 	max-height: 40vh;
+
 	/*
 	  undo padding from theme,
 	  alternatively fork theme and remove the left/right padding

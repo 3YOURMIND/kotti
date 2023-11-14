@@ -1,7 +1,7 @@
 <template>
 	<component
 		:is="component"
-		class="kt-field-toggle__inner"
+		class="kt-field-toggle-inner"
 		:class="toggleClasses"
 	>
 		<component :is="svgComponent.is" :class="svgComponent.class" />
@@ -43,17 +43,17 @@ export default defineComponent({
 				return {
 					is: isBox ? ToggleBox.name : ToggleSwitch.name,
 					class: {
-						'kt-field-toggle__inner__svg': true,
-						'kt-field-toggle__inner__svg--is-box': isBox,
-						'kt-field-toggle__inner__svg--is-switch': !isBox,
+						'kt-field-toggle-inner__svg': true,
+						'kt-field-toggle-inner__svg--is-box': isBox,
+						'kt-field-toggle-inner__svg--is-switch': !isBox,
 					},
 				}
 			}),
 			toggleClasses: computed(() => ({
-				'kt-field-toggle__inner--is-disabled': props.isDisabled === true,
-				'kt-field-toggle__inner--is-indeterminate': props.value === null,
-				'kt-field-toggle__inner--is-off': props.value === false,
-				'kt-field-toggle__inner--is-on': props.value === true,
+				'kt-field-toggle-inner--is-disabled': props.isDisabled === true,
+				'kt-field-toggle-inner--is-indeterminate': props.value === null,
+				'kt-field-toggle-inner--is-off': props.value === false,
+				'kt-field-toggle-inner--is-on': props.value === true,
 			})),
 		}
 	},
@@ -65,7 +65,7 @@ export default defineComponent({
 	--toggle-border-radius: 0.1rem;
 }
 
-.kt-field-toggle__inner {
+.kt-field-toggle-inner {
 	display: flex;
 	align-items: flex-start;
 	cursor: pointer;

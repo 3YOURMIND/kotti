@@ -44,7 +44,3 @@ export default defineComponent({
 	layout: 'fullpage',
 })
 </script>
-
-<style lang="scss" scoped>
-@import '../../styles/tables.scss';
-</style>

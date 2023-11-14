@@ -319,7 +319,6 @@ export default {
 
 <style lang="scss" scoped>
 @import './style/form-checkbox.scss';
-
 @import '../kotti-style/_variables.scss';
 
 table.kt-table {

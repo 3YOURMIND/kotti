@@ -159,11 +159,11 @@
 								#default="{ addAfter, addBefore, deleteSelf, index, setValues }"
 							>
 								<li class="address">
-									<div class="address__content">
-										<div class="address__content__header">
+									<div class="address-content">
+										<div class="address-content__header">
 											<h3 v-text="`Address #${index + 1}`" />
 										</div>
-										<div class="address__content__fields">
+										<div class="address-content__fields">
 											<KtFieldText
 												formKey="streetName"
 												isOptional
@@ -189,7 +189,7 @@
 												]"
 											/>
 										</div>
-										<div class="address__content__footer">
+										<div class="address-content__footer">
 											<button
 												class="kt-button secondary"
 												type="button"
@@ -408,37 +408,6 @@ export default defineComponent({
 		margin-left: 20px;
 	}
 
-	&__content {
-		flex: 1;
-
-		&__fields {
-			display: flex;
-			align-items: center;
-
-			> * {
-				flex: 1;
-				margin-bottom: 0 !important;
-
-				&:not(:first-child) {
-					margin-left: 20px;
-				}
-			}
-		}
-
-		&__footer {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			margin-top: 10px;
-		}
-
-		&__header {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
-	}
-
 	&__buttons {
 		display: flex;
 		flex-direction: column;
@@ -446,6 +415,37 @@ export default defineComponent({
 		> *:not(:first-child) {
 			margin-top: 5px;
 		}
+	}
+}
+
+.address-content {
+	flex: 1;
+
+	&__fields {
+		display: flex;
+		align-items: center;
+
+		> * {
+			flex: 1;
+			margin-bottom: 0 !important;
+
+			&:not(:first-child) {
+				margin-left: 20px;
+			}
+		}
+	}
+
+	&__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 10px;
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 	}
 }
 

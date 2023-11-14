@@ -19,7 +19,7 @@ const config = {
 		],
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
 	},
-	css: ['./assets/css/main.scss'],
+	css: ['./styles/main.scss'],
 	modules: ['@nuxtjs/markdownit', '@nuxtjs/style-resources'],
 	loading: {
 		color: '#2C64CC',

@@ -14,20 +14,3 @@ export default {
 	},
 }
 </script>
-
-<style lang="scss" scoped>
-@import '../styles/tables';
-
-::v-deep table {
-	@extend .table-style;
-}
-::v-deep table th {
-	@extend .th-style;
-}
-::v-deep table tr {
-	@extend .tr-style;
-}
-::v-deep table td {
-	@extend .td-style;
-}
-</style>

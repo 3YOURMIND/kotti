@@ -1,4 +1,5 @@
 @use 'sass:map';
+
 // mixins prefixed with el- are specific to element-ui components
 @mixin el-popper {
 	&.el-popper {
@@ -91,7 +92,7 @@
 		}
 
 		.popper__arrow {
-			filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03));
+			filter: drop-shadow(0 2px 12px rgb(0 0 0 / 3%));
 			border-width: 6px;
 
 			&,
@@ -169,17 +170,18 @@
 
 			.el-scrollbar__thumb {
 				--rgb-ui-04: 107, 107, 107;
+
 				position: relative;
 				display: block;
 				width: 0;
 				height: 0;
 				cursor: pointer;
-				background-color: rgba(var(--rgb-ui-04), 0.3);
+				background-color: rgb(var(--rgb-ui-04) 0.3);
 				border-radius: inherit;
 				transition: background-color var(--transition-medium);
 
 				&:hover {
-					background-color: rgba(var(--rgb-ui-04), 0.5);
+					background-color: rgb(var(--rgb-ui-04) 0.5);
 				}
 			}
 		}
@@ -187,8 +189,8 @@
 		&__wrap {
 			height: 100%;
 			overflow: scroll;
-
 			scrollbar-width: none;
+
 			&::-webkit-scrollbar {
 				width: 0;
 				height: 0;
@@ -220,8 +222,8 @@
 			overflow: hidden;
 			font-size: 0;
 
-			&:after,
-			&:before {
+			&::after,
+			&::before {
 				position: absolute;
 				top: 50%;
 				right: 0;
@@ -237,13 +239,13 @@
 				border-bottom: 1px solid var(--ui-02);
 			}
 
-			&:after {
+			&::after {
 				left: 50%;
 				margin-right: 12%;
 				margin-left: 12%;
 			}
 
-			&:before {
+			&::before {
 				padding-left: 50%;
 				margin-right: 12%;
 				margin-left: 12%;
@@ -268,8 +270,8 @@
 						text-align: center;
 						list-style: none;
 
-						&:after,
-						&:before {
+						&::after,
+						&::before {
 							display: block;
 							width: 100%;
 							height: 80px;
@@ -283,8 +285,9 @@
 							line-height: 32px;
 							color: var(--text-01);
 
-							&:hover:not(.disabled):not(.active) {
+							&:hover:not(.disabled, .active) {
 								cursor: pointer;
+
 								// TODO: maybe make it same as calendar content colors
 								// background: #f5f7fa;
 							}
@@ -353,13 +356,16 @@
 	$disabled-color: var(--text-05),
 	$placeholder-color: var(--text-03)
 ) {
+	/* stylelint-disable selector-class-pattern */
 	.kt-field__input-container__slot input,
 	.kt-field__input-container__slot textarea,
+	/* stylelint-enable selector-class-pattern */
 	input,
 	> * input,
 	textarea,
 	> * textarea {
 		color: $main-color;
+
 		// overwrites native behavior when disabled
 		background-color: transparent;
 
@@ -367,7 +373,6 @@
 			color: $disabled-color;
 		}
 
-		&::-webkit-input-placeholder, /* Edge */
 		&::placeholder {
 			color: $placeholder-color;
 		}
@@ -377,6 +382,7 @@
 @mixin no-outline {
 	// overwrite native outline behavior
 	outline: none;
+
 	&:focus,
 	&::-moz-focus-inner {
 		outline: none;
@@ -384,6 +390,7 @@
 
 	* {
 		outline: none;
+
 		&:focus,
 		&::-moz-focus-inner {
 			outline: none;
@@ -413,7 +420,6 @@
 
 		&::-webkit-scrollbar-thumb {
 			cursor: all-scroll;
-
 			background-color: var(--ui-03);
 			border-radius: var(--field-border-radius);
 		}
@@ -421,12 +427,11 @@
 }
 
 @mixin sizes {
-	$fontSizes: (
+	$font-sizes: (
 		'small': var(--font-size-small),
 		'medium': var(--font-size-medium),
 		'large': var(--font-size-large),
 	);
-
 	$heights: (
 		'small': 1.6rem,
 		'medium': 2rem,
@@ -435,13 +440,11 @@
 
 	@each $type in 'small', 'medium', 'large' {
 		&--is-#{$type} {
-			/* stylelint-disable */
-			font-size: map.get($fontSizes, $type);
+			font-size: map.get($font-sizes, $type);
 
 			> .kt-field__input-container-wrapper > .kt-field__input-container {
 				min-height: map.get($heights, $type);
 			}
-			/* stylelint-enable */
 		}
 	}
 }

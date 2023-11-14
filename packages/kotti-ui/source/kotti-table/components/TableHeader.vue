@@ -119,7 +119,7 @@ export default {
 		getThClasses(column) {
 			return [
 				{
-					dragOver: this.isDraggedOver(column),
+					['drag-over']: this.isDraggedOver(column),
 					sortable: this.canSort(column),
 					dragging: this.isDraggable,
 					sorted: this.isSorted(column),
@@ -177,9 +177,11 @@ export default {
 .table-header-row {
 	background-color: var(--ui-01);
 }
+
 .kt-table__checkbox-col .form-group {
 	position: relative;
 }
+
 .kt-table-checkbox-col__click-area {
 	position: absolute;
 	top: 0;
@@ -201,16 +203,20 @@ th {
 	border-left-color: var(--ui-03);
 	transition: border 0.2s ease-in-out;
 }
-th.dragOver {
+
+th.drag-over {
 	border-left: 0.3rem solid;
 }
+
 th.sortable {
 	position: relative;
 	padding-right: 1rem;
 }
+
 th.dragging {
 	cursor: move;
 }
+
 th.sortable .kt-table__controls {
 	position: absolute;
 	top: 0;
@@ -234,11 +240,13 @@ th.sorted .kt-table__quick-sort-control {
 	align-items: center;
 	width: 0.5rem;
 }
+
 .kt-table__quick-sort-control .yoco {
 	height: 0.5rem;
 	line-height: 0.5;
 	color: var(--text-03);
 }
+
 .kt-table__quick-sort-control .yoco.active {
 	color: var(--interactive-01);
 }

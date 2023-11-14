@@ -30,7 +30,7 @@
 				<div v-if="showMaximum" v-text="'/'" />
 				<div
 					v-if="showMaximum"
-					class="kt-field-number__middle__maximum"
+					class="kt-field-number__maximum"
 					v-text="maximum"
 				/>
 			</div>
@@ -307,8 +307,8 @@ export default defineComponent({
 				} => ({
 					...field.inputProps,
 					class: {
-						'kt-field-number__middle__input': true,
-						'kt-field-number__middle__input--has-maximum': showMaximum.value,
+						'kt-field-number__input': true,
+						'kt-field-number__input--has-maximum': showMaximum.value,
 					},
 					disabled: field.isDisabled,
 					forceUpdateKey: forceUpdateKey.value,
@@ -415,15 +415,14 @@ export default defineComponent({
 
 	@each $type in 'small', 'medium', 'large' {
 		&--is-#{$type} {
-			/* stylelint-disable */
 			.kt-field-number__button {
-				height: map.get($sizes, $type);
 				width: map.get($sizes, $type);
+				height: map.get($sizes, $type);
 			}
+
 			.kt-field-number__middle {
 				height: map.get($sizes, $type);
 			}
-			/* stylelint-enable */
 		}
 	}
 }
@@ -434,7 +433,7 @@ export default defineComponent({
 	font-variant-numeric: tabular-nums;
 
 	&--is-hide-change-buttons:not(&--has-maximum) {
-		.kt-field-number__middle__input {
+		.kt-field-number__input {
 			text-align: left;
 		}
 	}
@@ -463,24 +462,24 @@ export default defineComponent({
 		display: flex;
 		flex: 1;
 		align-items: center;
+	}
 
-		&__input,
-		&__maximum {
-			display: flex;
-			flex: 1;
-			align-items: center;
-			min-width: 0px;
-			padding: 0;
-		}
+	&__input,
+	&__maximum {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		min-width: 0;
+		padding: 0;
+	}
 
-		&__input {
-			width: 100%;
-			text-align: center;
-			border: none;
+	&__input {
+		width: 100%;
+		text-align: center;
+		border: none;
 
-			&--has-maximum {
-				text-align: right;
-			}
+		&--has-maximum {
+			text-align: right;
 		}
 	}
 }

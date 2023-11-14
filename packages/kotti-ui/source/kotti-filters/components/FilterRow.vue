@@ -1,6 +1,6 @@
 <template>
 	<KtForm
-		class="kt-filter__list__row"
+		class="kt-filter-row"
 		:formId="dataTest"
 		hideValidation
 		:isLoading="isLoading"
@@ -9,8 +9,8 @@
 		:value="filter"
 		@input="handleSetFilter"
 	>
-		<div class="kt-filter__list__row__wrapper">
-			<span class="kt-filter__list__row__label" v-text="label" />
+		<div class="kt-filter-row__wrapper">
+			<span class="kt-filter-row__label" v-text="label" />
 			<KtFieldSingleSelect formKey="key" hideClear :options="columnOptions" />
 			<template v-if="filter.operation">
 				<KtFieldSingleSelect
@@ -19,7 +19,7 @@
 					:isDisabled="isOperationSelectDisabled"
 					:options="operationOptions"
 				/>
-				<div class="kt-filter__list__row__value-field">
+				<div class="kt-filter-row__value-field">
 					<component
 						:is="valueComponent"
 						v-if="isValueFieldVisible"
@@ -30,7 +30,7 @@
 			</template>
 		</div>
 		<ButtonLink
-			class="kt-filter__list__row__remove"
+			class="kt-filter-row__remove"
 			:dataTest="dataTest ? `${dataTest}.remove` : undefined"
 			:icon="Yoco.Icon.CLOSE"
 			:isLoading="isLoading"
@@ -235,12 +235,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables.scss';
 
-.kt-filter__list__row {
+.kt-filter-row {
 	&__wrapper {
 		display: contents;
 
 		@media (max-width: $size-md) {
 			display: unset;
+
 			> * {
 				padding-bottom: var(--unit-1);
 			}

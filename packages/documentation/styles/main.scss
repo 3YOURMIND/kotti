@@ -1,0 +1,59 @@
+@import '@3yourmind/kotti-ui/source/kotti-style/_variables.scss';
+@import './tables.scss';
+@import './code.scss';
+
+body {
+	margin: 0;
+	font-family: $body-font-family;
+}
+
+h3 ~ p {
+	margin-top: 1em;
+}
+
+h3 ~ table {
+	margin-top: 0;
+}
+
+pre.long {
+	max-height: 500px;
+	overflow-y: auto;
+	user-select: all;
+}
+
+.success-message {
+	position: fixed;
+	right: 1rem;
+	bottom: 1rem;
+	padding: 0.8rem 1.2rem;
+	color: #fff;
+	background: #2c66c4;
+	border-radius: 0.1rem;
+}
+
+.element-example {
+	position: relative;
+	display: block;
+	padding: 2rem 1.2rem;
+	margin: 1rem 0;
+	background: #f8f8f8;
+
+	&::before {
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 99;
+		display: block;
+		padding: 0.2rem 0.4rem;
+		font-size: 0.875em;
+		color: #fff;
+		content: 'Example';
+		background: #555;
+		opacity: 0.46;
+	}
+
+	&.white {
+		background: #fff;
+		border: 1px solid #dbdbdb;
+	}
+}
