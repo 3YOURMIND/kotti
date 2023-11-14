@@ -47,7 +47,6 @@ export default defineComponent({
 	margin: var(--kt-tag-vertical-gap) var(--kt-tag-horizontal-gap);
 	font-size: 0.875em;
 	color: var(--text-02);
-	text-transform: capitalize;
 	white-space: nowrap;
 	background-color: var(--interactive-02);
 	border: var(--kt-tag-border) solid var(--ui-02);
