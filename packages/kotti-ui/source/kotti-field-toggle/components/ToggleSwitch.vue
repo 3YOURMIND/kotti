@@ -44,8 +44,8 @@ $track-width: $inner-size * 2.25;
 	}
 }
 
-.kt-field-toggle__inner {
-	&--is-disabled.kt-field-toggle__inner .kt-field-toggle-switch__inner {
+.kt-field-toggle-inner {
+	&--is-disabled.kt-field-toggle-inner .kt-field-toggle-switch__inner {
 		background-color: var(--ui-01);
 	}
 
@@ -68,7 +68,7 @@ $track-width: $inner-size * 2.25;
 .kt-field__wrapper {
 	@include validations using ($type) {
 		@if $type != empty {
-			:not(.kt-field-toggle__inner--is-disabled) .kt-field-toggle-switch {
+			:not(.kt-field-toggle-inner--is-disabled) .kt-field-toggle-switch {
 				@include switch-colors(
 					var(--support-#{$type}),
 					var(--support-#{$type}-dark)
