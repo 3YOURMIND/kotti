@@ -72,7 +72,7 @@ export default defineComponent({
 	}
 }
 
-.kt-field-toggle__inner {
+.kt-field-toggle-inner {
 	&--is-indeterminate {
 		.kt-field-toggle-box {
 			@include toggle-colors(
@@ -140,8 +140,8 @@ export default defineComponent({
 .kt-field__wrapper {
 	@include validations using ($type) {
 		@if $type != empty {
-			.kt-field-toggle__inner {
-				&--is-indeterminate:not(.kt-field-toggle__inner--is-disabled) {
+			.kt-field-toggle-inner {
+				&--is-indeterminate:not(.kt-field-toggle-inner--is-disabled) {
 					.kt-field-toggle-box {
 						@include toggle-colors(
 							var(--support-#{$type}),
@@ -159,7 +159,7 @@ export default defineComponent({
 					}
 				}
 
-				&--is-off:not(.kt-field-toggle__inner--is-disabled) {
+				&--is-off:not(.kt-field-toggle-inner--is-disabled) {
 					.kt-field-toggle-box {
 						@include toggle-colors(
 							var(--support-#{$type}),
@@ -177,7 +177,7 @@ export default defineComponent({
 					}
 				}
 
-				&--is-on:not(.kt-field-toggle__inner--is-disabled) {
+				&--is-on:not(.kt-field-toggle-inner--is-disabled) {
 					.kt-field-toggle-box {
 						/* stylelint-disable */
 						@include toggle-colors(
@@ -201,8 +201,8 @@ export default defineComponent({
 	}
 }
 
-.kt-field-toggle__inner--is-disabled {
-	&.kt-field-toggle__inner {
+.kt-field-toggle-inner--is-disabled {
+	&.kt-field-toggle-inner {
 		&--is-indeterminate .kt-field-toggle-box {
 			@include toggle-colors(var(--ui-01), var(--ui-02), var(--ui-02));
 		}
