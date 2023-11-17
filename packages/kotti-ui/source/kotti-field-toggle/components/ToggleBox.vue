@@ -32,7 +32,9 @@ export default defineComponent({
 
 @mixin toggle-colors($border-color, $shadow-main, $background-color) {
 	border-color: $border-color;
-	box-shadow: var(--shadow-base), 0 0 0 1px $shadow-main inset;
+	box-shadow:
+		var(--shadow-base),
+		0 0 0 1px $shadow-main inset;
 
 	.kt-field-toggle-box__check {
 		path {

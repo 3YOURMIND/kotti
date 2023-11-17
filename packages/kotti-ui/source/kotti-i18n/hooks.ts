@@ -83,7 +83,7 @@ export const useI18nProvide = ({
 				'es-ES': esES,
 				'fr-FR': frFR,
 				'ja-JP': jaJP,
-			}[locale.value]),
+			})[locale.value],
 	)
 
 	/**

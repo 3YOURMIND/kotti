@@ -37,7 +37,7 @@ export module KottiBreadcrumb {
 				({
 					style: SeparatorType.ICON,
 					value: Yoco.Icon.CHEVRON_RIGHT,
-				} as const),
+				}) as const,
 		),
 	})
 

@@ -180,8 +180,8 @@ export default defineComponent({
 					props.column?.type === KottiFilters.FilterType.FLOAT
 						? props.column.decimalPlaces
 						: props.column?.type === KottiFilters.FilterType.INTEGER
-						? 0
-						: undefined,
+						  ? 0
+						  : undefined,
 				maximum:
 					props.column?.type === KottiFilters.FilterType.FLOAT ||
 					props.column?.type === KottiFilters.FilterType.INTEGER
