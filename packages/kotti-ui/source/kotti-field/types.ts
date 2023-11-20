@@ -2,9 +2,19 @@ import { yocoIconSchema } from '@3yourmind/yoco'
 import { Ref, SetupContext } from '@vue/composition-api'
 import { z } from 'zod'
 
+import { Values as DateFieldValues } from '../kotti-field-date/hooks'
 import { ReplaceRecordType } from '../types/utilities'
 
 import { FORM_KEY_NONE } from './constants'
+
+export type FieldValue =
+	| string
+	| number
+	| boolean
+	| null
+	| boolean[]
+	| string[]
+	| DateFieldValues
 
 export namespace KottiField {
 	export enum Size {
@@ -61,7 +71,7 @@ export namespace KottiField {
 			supports: KottiField.Supports
 		}
 
-		export type Returns<DATA_TYPE> = Pick<
+		export type Returns<DATA_TYPE extends FieldValue> = Pick<
 			KottiField.PropsInternal,
 			| 'helpDescription'
 			| 'helpText'
@@ -94,7 +104,7 @@ export namespace KottiField {
 			validation: Readonly<KottiField.Validation.Result>
 		}
 
-		export type ReturnsWithRefs<DATA_TYPE> = {
+		export type ReturnsWithRefs<DATA_TYPE extends FieldValue> = {
 			[KEY in keyof Returns<DATA_TYPE>]: Ref<Returns<DATA_TYPE>[KEY]>
 		}
 	}

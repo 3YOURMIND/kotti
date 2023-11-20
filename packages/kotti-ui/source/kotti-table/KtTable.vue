@@ -24,7 +24,7 @@
 import deepEql from 'deep-eql'
 import pick from 'lodash/pick'
 
-import { TableBody } from './components/TableBody'
+import { TableBody } from './components/TableBody.jsx'
 import TableHeader from './components/TableHeader.vue'
 import {
 	KT_TABLE,

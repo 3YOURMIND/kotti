@@ -1,6 +1,6 @@
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
 
-import { TableRowCell } from './TableRowCell'
+import { TableRowCell } from './TableRowCell.jsx'
 
 export const TableRow = {
 	name: 'TableRow',

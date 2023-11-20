@@ -12,7 +12,7 @@ import postcss from 'postcss'
 import postcssPluginFlexbugs from 'postcss-flexbugs-fixes'
 import postcssPluginPresetEnv from 'postcss-preset-env'
 import scss from 'rollup-plugin-scss'
-import visualizer from 'rollup-plugin-visualizer'
+import { visualizer } from 'rollup-plugin-visualizer'
 import vue from 'rollup-plugin-vue'
 import sass from 'sass'
 
@@ -33,6 +33,19 @@ const plugins = ({ enableVisualizer, module }) => [
 	vue({
 		css: false,
 		needMap: false,
+	}),
+	scss({
+		importer: sassNodeModulesImporter.default(),
+		output: packageJSON.style,
+		processor: (css) =>
+			postcss([
+				postcssPluginAutoprefixer,
+				postcssPluginFlexbugs,
+				postcssPluginPresetEnv,
+			])
+				.process(css)
+				.then((result) => result.css),
+		sass,
 	}),
 	typescript({
 		declarationDir: `dist/${module}`,
@@ -72,19 +85,6 @@ const plugins = ({ enableVisualizer, module }) => [
 			'@babel/plugin-syntax-dynamic-import',
 			'transform-vue-jsx',
 		],
-	}),
-	scss({
-		importer: sassNodeModulesImporter(),
-		output: packageJSON.style,
-		processor: (css) =>
-			postcss([
-				postcssPluginAutoprefixer,
-				postcssPluginFlexbugs,
-				postcssPluginPresetEnv,
-			])
-				.process(css)
-				.then((result) => result.css),
-		sass,
 	}),
 ]
 

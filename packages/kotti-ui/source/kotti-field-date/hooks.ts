@@ -12,7 +12,7 @@ import {
 	KottiFieldDateTimeRange,
 } from './types'
 
-type Values =
+export type Values =
 	| KottiFieldDate.Value
 	| KottiFieldDateRange.Value
 	| KottiFieldDateTime.Value

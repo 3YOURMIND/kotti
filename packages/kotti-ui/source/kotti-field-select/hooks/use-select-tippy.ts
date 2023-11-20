@@ -4,11 +4,13 @@ import castArray from 'lodash.castarray'
 import { roundArrow } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
-import { KottiField } from '../../kotti-field/types'
+import { FieldValue, KottiField } from '../../kotti-field/types'
 import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
 import { sameWidth } from '../utils/tippy-utils'
 
-export const useSelectTippy = <T>(field: KottiField.Hook.Returns<T>) => {
+export const useSelectTippy = <T extends FieldValue>(
+	field: KottiField.Hook.Returns<T>,
+) => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const tippyTriggerRef = ref<any | null>(null)
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

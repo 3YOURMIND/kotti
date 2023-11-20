@@ -44,7 +44,7 @@ import {
 const shouldClear = (newValue: string, oldValue: string | null) => {
 	const isOldValueZeroOrNull = !toNumber(oldValue)
 	const isNewValueZero = !toNumber(newValue)
-	const isDeleting = newValue.length < oldValue?.length
+	const isDeleting = oldValue && newValue.length < oldValue.length
 
 	return isOldValueZeroOrNull && isNewValueZero && isDeleting
 }
@@ -144,13 +144,14 @@ export default defineComponent({
 					toNumber(newValue) !== toNumber(internalStringValue.value)
 
 				if (isLogicallyDifferent) {
-					internalStringValue.value = replaceDecimalSeparator(
-						toFixedPrecisionString(
-							newValue,
-							newCurrencyFormat.value.decimalPlaces,
-						),
-						newDecimalSeparator,
-					)
+					internalStringValue.value =
+						replaceDecimalSeparator(
+							toFixedPrecisionString(
+								newValue,
+								newCurrencyFormat.value.decimalPlaces,
+							),
+							newDecimalSeparator,
+						) ?? ''
 
 					setCursorPosition(userCursorPositionFromRight.value)
 					userCursorPositionFromRight.value = null
@@ -184,7 +185,7 @@ export default defineComponent({
 			),
 			onInput: (value: string) => {
 				userCursorPositionFromRight.value =
-					value.length - inputRef.value?.selectionStart ?? null
+					value.length - (inputRef.value?.selectionStart ?? 0)
 
 				const { maximum, minimum } = props
 

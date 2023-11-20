@@ -1,6 +1,6 @@
 import { Ref } from '@vue/composition-api'
 
-import { KottiField } from '../kotti-field/types'
+import { FieldValue, KottiField } from '../kotti-field/types'
 
 export namespace KottiForm {
 	export interface Context<
@@ -11,8 +11,10 @@ export namespace KottiForm {
 
 		fieldInheritableProps: Ref<KottiField.InheritablePropsInternal>
 
-		onAddField: <DATA_TYPE>(toAdd: KottiField.Hook.Returns<DATA_TYPE>) => void
-		onRemoveField: <DATA_TYPE>(
+		onAddField: <DATA_TYPE extends FieldValue>(
+			toAdd: KottiField.Hook.Returns<DATA_TYPE>,
+		) => void
+		onRemoveField: <DATA_TYPE extends FieldValue>(
 			toRemove: KottiField.Hook.Returns<DATA_TYPE>,
 		) => void
 

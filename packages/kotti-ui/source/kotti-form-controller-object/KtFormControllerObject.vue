@@ -47,7 +47,7 @@ export default defineComponent({
 		/**
 		 * Updates a single key in a KtFormControllerObject values
 		 */
-		const setValue = (key, newValue) =>
+		const setValue = (key: string, newValue: unknown) =>
 			context.setValue(props.formKey, {
 				...values.value,
 				[key]: newValue,
@@ -68,7 +68,8 @@ export default defineComponent({
 			/**
 			 * Updates KtFormControllerObject values
 			 */
-			setValues: (newValue) => context.setValue(props.formKey, newValue),
+			setValues: (newValue: unknown) =>
+				context.setValue(props.formKey, newValue),
 			values,
 		}
 	},

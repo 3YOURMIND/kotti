@@ -16,7 +16,7 @@ import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import { FORM_KEY_NONE } from './constants'
 import { KtFieldErrors } from './errors'
-import { KottiField } from './types'
+import { FieldValue, KottiField } from './types'
 
 const useDecoration = <DATA_TYPE>({
 	props,
@@ -129,7 +129,7 @@ const useValue = <DATA_TYPE>({
 	}
 }
 
-const useValidation = <DATA_TYPE>({
+const useValidation = <DATA_TYPE extends FieldValue>({
 	currentValue,
 	context,
 	isEmpty,
@@ -226,7 +226,7 @@ const useInheritableProperties = <DATA_TYPE>({
 /**
  * hook into lifecycle events
  */
-const useNotifyContext = <DATA_TYPE>({
+const useNotifyContext = <DATA_TYPE extends FieldValue>({
 	context,
 	field,
 }: {
@@ -242,7 +242,7 @@ const useNotifyContext = <DATA_TYPE>({
 	})
 }
 
-export const useField = <DATA_TYPE>({
+export const useField = <DATA_TYPE extends FieldValue>({
 	emit,
 	isEmpty,
 	props,

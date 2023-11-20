@@ -1,9 +1,9 @@
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
 
-import { TableBodyEmptyRow } from './TableBodyEmptyRow'
-import { TableBodyExpandRow } from './TableBodyExpandRow'
-import { TableBodyLoadingRow } from './TableBodyLoadingRow'
-import { TableRow } from './TableRow'
+import { TableBodyEmptyRow } from './TableBodyEmptyRow.jsx'
+import { TableBodyExpandRow } from './TableBodyExpandRow.jsx'
+import { TableBodyLoadingRow } from './TableBodyLoadingRow.jsx'
+import { TableRow } from './TableRow.jsx'
 
 export const TableBody = {
 	name: 'TableBody',
