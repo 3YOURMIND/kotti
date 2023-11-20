@@ -107,6 +107,7 @@ export default defineComponent({
 <style lang="scss">
 .kt-field-toggle-group {
 	display: flex;
+	flex: 1;
 
 	&--inline {
 		flex-direction: row;
