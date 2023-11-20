@@ -124,6 +124,7 @@ export default defineComponent({
 
 .kt-field-radio-group {
 	display: flex;
+	flex: 1;
 
 	&--inline {
 		flex-direction: row;
