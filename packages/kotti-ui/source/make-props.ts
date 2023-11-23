@@ -241,7 +241,7 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 		PropOptions,
 		'required' | 'type'
 	> & {
-		required: z.input<PROPS_SCHEMA>[PROP_NAME] extends undefined ? false : true
+		required: undefined extends z.input<PROPS_SCHEMA>[PROP_NAME] ? false : true
 		type: PropType<z.output<PROPS_SCHEMA>[PROP_NAME]>
 	}
 } =>
@@ -320,7 +320,7 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 			PropOptions,
 			'required' | 'type'
 		> & {
-			required: z.input<PROPS_SCHEMA>[KEY] extends undefined ? false : true
+			required: undefined extends z.input<PROPS_SCHEMA>[KEY] ? false : true
 			type: PropType<z.output<PROPS_SCHEMA>[KEY]>
 		}
 	}
