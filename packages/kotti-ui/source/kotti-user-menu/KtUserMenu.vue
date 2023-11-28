@@ -174,7 +174,7 @@ export default defineComponent({
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
 }
 
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	.tippy-box[data-theme~='kt-usermenu-default'],
 	.tippy-box[data-theme~='kt-usermenu-dark'],
 	.tippy-box[data-theme~='kt-usermenu-light'],
@@ -279,7 +279,7 @@ export default defineComponent({
 	}
 }
 
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	.kt-user-menu-info {
 		flex-basis: 48px;
 		padding: 0.3rem;

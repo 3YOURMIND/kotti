@@ -182,7 +182,7 @@ export default {
 	}
 }
 
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	.kt-actionbar {
 		z-index: $zindex-1;
 		flex: 1 1 auto;

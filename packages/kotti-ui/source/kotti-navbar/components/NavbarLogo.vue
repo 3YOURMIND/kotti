@@ -117,7 +117,7 @@ $margin: 0.8rem 1rem;
 	}
 }
 
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	.kt-navbar-logo {
 		&--is-desktop {
 			display: none;

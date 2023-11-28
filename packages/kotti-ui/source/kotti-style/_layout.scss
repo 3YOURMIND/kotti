@@ -4,14 +4,14 @@
 .kt-container {
 	display: flex;
 
-	@media (max-width: $size-md) {
+	@media (width <= $size-md) {
 		display: flex;
 		flex-direction: column;
 	}
 }
 
 // deprecate
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	.responsive {
 		display: flex;
 		flex-direction: column;
@@ -167,7 +167,7 @@
 	}
 }
 
-@media (max-width: $size-xl) {
+@media (width <= $size-xl) {
 	.col-xl-12,
 	.col-xl-11,
 	.col-xl-10,
@@ -240,7 +240,7 @@
 	}
 }
 
-@media (max-width: $size-lg) {
+@media (width <= $size-lg) {
 	.col-lg-12,
 	.col-lg-11,
 	.col-lg-10,
@@ -313,7 +313,7 @@
 	}
 }
 
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	.col-md-12,
 	.col-md-11,
 	.col-md-10,
@@ -386,7 +386,7 @@
 	}
 }
 
-@media (max-width: $size-sm) {
+@media (width <= $size-sm) {
 	.col-sm-12,
 	.col-sm-11,
 	.col-sm-10,
@@ -459,7 +459,7 @@
 	}
 }
 
-@media (max-width: $size-xs) {
+@media (width <= $size-xs) {
 	.col-xs-12,
 	.col-xs-11,
 	.col-xs-10,
