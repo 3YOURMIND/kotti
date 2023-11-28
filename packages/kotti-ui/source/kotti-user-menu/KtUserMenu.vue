@@ -33,17 +33,17 @@
 		<div ref="triggerRef" :class="userInfoClass">
 			<KtAvatar class="kt-user-menu-info__avatar" size="sm" :src="userAvatar" />
 			<div
-				v-if="!context.isNarrow || isMenuShow"
+				v-if="!context.isNarrow || isMenuOpen"
 				class="kt-user-menu-info__text"
 			>
 				<div class="kt-user-menu-info__name" v-text="userName" />
 				<div class="kt-user-menu-info__status" v-text="userStatus" />
 			</div>
 			<div
-				v-if="!context.isNarrow || isMenuShow"
+				v-if="!context.isNarrow || isMenuOpen"
 				class="kt-user-menu-info__chevron"
 			>
-				<i v-if="isMenuShow" class="yoco">chevron_down</i>
+				<i v-if="isMenuOpen" class="yoco">chevron_down</i>
 				<i v-else class="yoco">chevron_up</i>
 			</div>
 		</div>
@@ -56,6 +56,7 @@ import { computed, defineComponent, inject, ref } from '@vue/composition-api'
 
 import { KtAvatar } from '../kotti-avatar'
 import { KT_NAVBAR_CONTEXT } from '../kotti-navbar/constants'
+import { KottiNavbar } from '../kotti-navbar/types'
 import { makeProps } from '../make-props'
 
 import { KottiUserMenu } from './types'
@@ -67,32 +68,32 @@ export default defineComponent({
 	},
 	props: makeProps(KottiUserMenu.propsSchema),
 	setup(props: KottiUserMenu.PropsInternal) {
-		const triggerRef = ref<HTMLElement | null>(null)
-		const userMenuRef = ref<HTMLElement | null>(null)
+		const triggerRef = ref<HTMLDivElement | null>(null)
+		const userMenuRef = ref<HTMLDivElement | null>(null)
 
-		const isMenuShow = ref(false)
+		const isMenuOpen = ref(false)
 		const context = inject(
 			KT_NAVBAR_CONTEXT,
-			computed(() => ({ isNarrow: false, theme: null })),
+			computed(() => ({ isNarrow: false, theme: KottiNavbar.Theme.DEFAULT })),
 		)
 
 		useTippy(
 			triggerRef,
 			computed(() => ({
-				animation: false,
-				appendTo: () => document.body,
+				appendTo: () =>
+					triggerRef.value as NonNullable<typeof triggerRef.value>,
 				arrow: false,
 				content: userMenuRef.value ?? undefined,
 				interactive: true,
 				maxWidth: 'none',
 				offset: [0, 0],
 				onHide: () => {
-					isMenuShow.value = false
+					isMenuOpen.value = false
 				},
 				onShow: () => {
-					isMenuShow.value = true
+					isMenuOpen.value = true
 				},
-				theme: `kt-usermenu-${context.value.theme ?? 'default'}`,
+				theme: `kt-usermenu-${context.value.theme}`,
 				trigger: 'click focusin',
 				zIndex: 1000,
 			})),
@@ -100,7 +101,7 @@ export default defineComponent({
 
 		return {
 			context,
-			isMenuShow,
+			isMenuOpen,
 			parsedSections: computed(() =>
 				KottiUserMenu.propsSchema.shape.sections.parse(props.sections),
 			),
@@ -109,7 +110,7 @@ export default defineComponent({
 				'kt-user-menu-info': true,
 				'kt-user-menu-info--is-narrow': context.value.isNarrow,
 				'kt-user-menu-info--is-narrow-wide':
-					context.value.isNarrow && isMenuShow.value,
+					context.value.isNarrow && isMenuOpen.value,
 			})),
 			userMenuRef,
 		}
@@ -120,67 +121,22 @@ export default defineComponent({
 <style lang="scss">
 @import '../kotti-style/_variables.scss';
 
-.tippy-box[data-theme~='kt-usermenu-default'],
-.tippy-box[data-theme~='kt-usermenu-dark'],
-.tippy-box[data-theme~='kt-usermenu-light'],
-.tippy-box[data-theme~='kt-usermenu-reverse'] {
-	--user-menu-background-active: var(--primary-70);
-	--user-menu-background: var(--primary-60);
-	--user-menu-color: var(--primary-10);
-
+.tippy-box[data-theme^='kt-usermenu'] {
 	width: 11.2rem;
 	color: var(--user-menu-color);
 	background-color: var(--user-menu-background);
 	border-radius: 0.2rem 0.2rem 0 0;
 
 	.tippy-content {
-		padding: 0.8rem 0.8rem 0.2rem 0.8rem;
+		padding: 0.8rem 0.8rem 0.2rem;
 	}
-
-	.kt-user-menu {
-		&__info {
-			&:hover {
-				background: var(--user-menu-background);
-			}
-		}
-
-		&__section__item {
-			&:hover {
-				background: var(--user-menu-background-active);
-			}
-		}
-	}
-}
-
-.tippy-box[data-theme~='kt-usermenu-dark'] {
-	--user-menu-background-active: var(--gray-80);
-	--user-menu-background: var(--gray-70);
-	--user-menu-color: var(--gray-10);
-}
-
-.tippy-box[data-theme~='kt-usermenu-light'] {
-	--user-menu-background-active: var(--gray-20);
-	--user-menu-background: var(--gray-10);
-	--user-menu-color: var(--primary-90);
-}
-
-.tippy-box[data-theme~='kt-usermenu-reverse'] {
-	--user-menu-background-active: var(--primary-30);
-	--user-menu-background: var(--primary-20);
-	--user-menu-color: var(--primary-80);
-}
-
-.tippy-box[data-theme~='kt-usermenu-shadow'] {
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
 }
 
 @media (width <= $size-md) {
-	.tippy-box[data-theme~='kt-usermenu-default'],
-	.tippy-box[data-theme~='kt-usermenu-dark'],
-	.tippy-box[data-theme~='kt-usermenu-light'],
-	.tippy-box[data-theme~='kt-usermenu-reverse'] {
+	.tippy-box[data-theme^='kt-usermenu'] {
 		width: 100vw;
 		border-radius: 0 0 0.2rem 0.2rem;
+
 		// HACK: tippy box has a 5px offset that I can not get rid of using its props
 		transform: translateX(-5px);
 	}
@@ -190,105 +146,96 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
 
-.kt-user-menu {
-	box-sizing: border-box;
-	border-radius: 0.2rem;
+.kt-user-menu-item-wrapper {
+	margin-bottom: 0.4rem;
+	opacity: 1;
 
-	&-info {
-		position: relative;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		padding: 0.4rem;
-		margin: -0.4rem;
-		line-height: 1;
-		background-color: var(--navbar-background);
-
-		&--is-narrow {
-			width: 2.4rem;
-		}
-
-		&--is-narrow-wide {
-			position: absolute;
-			bottom: 0.8rem;
-			left: 0.8rem;
-			width: 11.2rem;
-		}
-
-		&:hover {
-			cursor: pointer;
-			background-color: var(--user-menu-background);
-		}
-
-		&__avatar {
-			z-index: 2;
-			flex-grow: 0;
-		}
-
-		&__text {
-			z-index: 2;
-			width: 100%;
-			margin-left: 0.4rem;
-			line-height: 0.8rem;
-			color: var(--user-menu-color);
-		}
-
-		&__name {
-			font-size: 0.7rem;
-			font-weight: 600;
-		}
-
-		&__status {
-			font-size: 0.6rem;
-			font-weight: 600;
-			opacity: 0.65;
-		}
-
-		&__chevron {
-			z-index: 2;
-			flex-grow: 0;
-			align-self: center;
-		}
+	&__title {
+		padding: 0.2rem 0.4rem;
+		font-size: 0.5rem;
+		font-weight: 600;
+		text-transform: uppercase;
 	}
 
-	&-item-wrapper {
-		margin-bottom: 0.4rem;
-		opacity: 1;
+	&__item {
+		display: block;
+		padding: 0.2rem 0.4rem;
+		margin: 0.1rem 0;
+		font-size: 0.68rem;
+		line-height: 1.2rem;
+		color: inherit;
+		border-radius: 0.2rem;
 
-		&__title {
-			padding: 0.2rem 0.4rem;
-			font-size: 0.5rem;
-			font-weight: 600;
-			text-transform: uppercase;
-		}
-
-		&__item {
-			display: block;
-			padding: 0.2rem 0.4rem;
-			margin: 0.1rem 0;
-			font-size: 0.68rem;
-			line-height: 1.2rem;
+		&:hover {
 			color: inherit;
-			border-radius: 0.2rem;
-
-			&:hover {
-				color: inherit;
-				cursor: pointer;
-			}
+			cursor: pointer;
+			background: var(--user-menu-background-active);
 		}
 	}
 }
 
+.kt-user-menu-info {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0.4rem;
+	margin: -0.4rem;
+	line-height: 1;
+	cursor: pointer;
+	border-radius: 0 0 0.2rem 0.2rem;
+
+	&--is-narrow {
+		width: 2.4rem;
+	}
+
+	&--is-narrow-wide {
+		position: absolute;
+		bottom: 0.8rem;
+		left: 0.8rem;
+		width: 11.2rem;
+	}
+
+	&[aria-expanded='true'],
+	&:hover {
+		background-color: var(--user-menu-background);
+	}
+
+	&__avatar,
+	&__chevron {
+		flex-grow: 0;
+	}
+
+	&__chevron {
+		align-self: center;
+	}
+
+	&__text {
+		width: 100%;
+		margin-left: 0.4rem;
+		line-height: 0.8rem;
+		color: var(--user-menu-color);
+	}
+
+	&__name {
+		font-size: 0.7rem;
+		font-weight: 600;
+	}
+
+	&__status {
+		font-size: 0.6rem;
+		font-weight: 600;
+		opacity: 0.65;
+	}
+}
+
 @media (width <= $size-md) {
+	.kt-user-menu-container {
+		display: block;
+	}
+
 	.kt-user-menu-info {
 		flex-basis: 48px;
 		padding: 0.3rem;
-
-		&--is-narrow {
-			position: relative;
-			top: 0;
-			left: 0;
-		}
 
 		&--is-narrow-wide {
 			width: auto;
@@ -298,19 +245,6 @@ export default defineComponent({
 		&__chevron {
 			display: none;
 		}
-	}
-
-	.kt-user-menu-container {
-		display: block;
-	}
-
-	.kt-user-menu {
-		top: 2.4rem;
-		bottom: auto;
-		left: 0;
-		width: 100%;
-		padding-bottom: 0.8rem;
-		border-radius: 0 0 0.2rem 0.2rem;
 	}
 }
 </style>

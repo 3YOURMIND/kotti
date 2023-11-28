@@ -4,6 +4,11 @@ import { z } from 'zod'
 import { refinementNonEmpty } from '../zod-refinements'
 
 export namespace KottiNavbar {
+	export type Context = {
+		isNarrow: boolean
+		theme: KottiNavbar.Theme
+	}
+
 	export const notificationSchema = z.object({
 		count: z.number().int(),
 		link: z.string(),
@@ -34,10 +39,10 @@ export namespace KottiNavbar {
 
 	export enum Theme {
 		DARK = 'dark',
+		DEFAULT = 'default',
 		LIGHT = 'light',
 		REVERSE = 'reverse',
 	}
-	export const themeSchema = z.nativeEnum(Theme)
 
 	export const propsSchema = z.object({
 		isNarrow: z.boolean().default(false),
@@ -45,7 +50,7 @@ export namespace KottiNavbar {
 		notification: notificationSchema.nullable().default(null),
 		quickLinks: z.array(quickLinkSchema).default(() => []),
 		sections: z.array(sectionSchema).refine(...refinementNonEmpty),
-		theme: themeSchema.nullable().default(null),
+		theme: z.nativeEnum(Theme).default(Theme.DEFAULT),
 	})
 
 	export type Props = z.input<typeof propsSchema>

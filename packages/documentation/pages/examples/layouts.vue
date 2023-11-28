@@ -31,10 +31,10 @@
 				isOptional
 				label="Navbar Theme"
 				:options="[
-					{ label: 'Reversed theme', value: 'reverse' },
-					{ label: 'Light theme', value: 'light' },
-					{ label: 'Dark theme', value: 'dark' },
-					{ label: 'None', value: null },
+					{ label: 'Reversed theme', value: Kotti.Navbar.Theme.REVERSE },
+					{ label: 'Light theme', value: Kotti.Navbar.Theme.LIGHT },
+					{ label: 'Dark theme', value: Kotti.Navbar.Theme.DARK },
+					{ label: 'Default', value: Kotti.Navbar.Theme.DEFAULT },
 				]"
 			/>
 		</div>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 
 import LayoutContainer from '~/components/LayoutContainer.vue'
@@ -55,7 +56,8 @@ export default {
 	data() {
 		return {
 			isNarrow: false,
-			theme: null,
+			theme: Kotti.Navbar.Theme.DEFAULT,
+			Kotti,
 			quickLinksData: [
 				{
 					title: 'Create New Issue',
