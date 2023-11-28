@@ -5,7 +5,7 @@
 		:class="rootClasses"
 		:helpTextSlot="$slots.helpText"
 	>
-		<EditIcon v-if="!isReadonly && !isEditing" />
+		<EditIcon v-if="!isReadonly && !isEditing" :isDisabled="isDisabled" />
 		<textarea
 			v-if="isMultiline"
 			ref="inputRef"

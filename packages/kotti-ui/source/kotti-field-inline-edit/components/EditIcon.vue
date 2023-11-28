@@ -1,19 +1,23 @@
 <template>
-	<span
-		class="kt-field-inline-edit__edit-icon yoco"
-		:tabindex="-1"
-		v-text="Yoco.Icon.EDIT"
-	/>
+	<span :class="rootClasses" :tabindex="-1" v-text="Yoco.Icon.EDIT" />
 </template>
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
 	name: 'EditIcon',
-	setup() {
+	props: {
+		isDisabled: { type: Boolean, default: false },
+	},
+	setup(props) {
 		return {
+			rootClasses: computed(() => ({
+				yoco: true,
+				'kt-field-inline-edit__edit-icon': true,
+				'kt-field-inline-edit__edit-icon--disabled': props.isDisabled,
+			})),
 			Yoco,
 		}
 	},
@@ -24,5 +28,9 @@ export default defineComponent({
 .kt-field-inline-edit__edit-icon {
 	display: flex;
 	padding-right: var(--unit-2);
+
+	&--disabled {
+		color: var(--text-05);
+	}
 }
 </style>
