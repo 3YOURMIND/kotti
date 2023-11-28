@@ -1,6 +1,6 @@
 <template>
-	<div v-on-clickaway="clickawayMenu" class="kt-user-menu-container">
-		<div v-if="isMenuShow" class="kt-user-menu" @click="clickawayMenu">
+	<div class="kt-user-menu-container">
+		<div ref="userMenuRef" class="kt-user-menu">
 			<div class="kt-user-menu__items">
 				<div
 					v-for="(section, index) in parsedSections"
@@ -30,15 +30,19 @@
 				</div>
 			</div>
 		</div>
-		<div :class="userInfoClass" @click="isMenuShow = !isMenuShow">
-			<div class="kt-user-menu-info__avatar">
-				<KtAvatar size="sm" :src="userAvatar" />
-			</div>
-			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu-info__text">
+		<div ref="triggerRef" :class="userInfoClass">
+			<KtAvatar class="kt-user-menu-info__avatar" size="sm" :src="userAvatar" />
+			<div
+				v-if="!context.isNarrow || isMenuShow"
+				class="kt-user-menu-info__text"
+			>
 				<div class="kt-user-menu-info__name" v-text="userName" />
 				<div class="kt-user-menu-info__status" v-text="userStatus" />
 			</div>
-			<div v-if="!isNarrow || isMenuShow" class="kt-user-menu-info__chevron">
+			<div
+				v-if="!context.isNarrow || isMenuShow"
+				class="kt-user-menu-info__chevron"
+			>
 				<i v-if="isMenuShow" class="yoco">chevron_down</i>
 				<i v-else class="yoco">chevron_up</i>
 			</div>
@@ -47,17 +51,11 @@
 </template>
 
 <script lang="ts">
-import {
-	computed,
-	ComputedRef,
-	defineComponent,
-	inject,
-	ref,
-} from '@vue/composition-api'
-import { mixin as clickaway } from 'vue-clickaway'
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import { computed, defineComponent, inject, ref } from '@vue/composition-api'
 
 import { KtAvatar } from '../kotti-avatar'
-import { IS_NAVBAR_NARROW } from '../kotti-navbar/constants'
+import { KT_NAVBAR_CONTEXT } from '../kotti-navbar/constants'
 import { makeProps } from '../make-props'
 
 import { KottiUserMenu } from './types'
@@ -67,46 +65,133 @@ export default defineComponent({
 	components: {
 		KtAvatar,
 	},
-	mixins: [clickaway],
 	props: makeProps(KottiUserMenu.propsSchema),
 	setup(props: KottiUserMenu.PropsInternal) {
+		const triggerRef = ref<HTMLElement | null>(null)
+		const userMenuRef = ref<HTMLElement | null>(null)
+
 		const isMenuShow = ref(false)
-		const isNarrow = inject<ComputedRef<boolean>>(
-			IS_NAVBAR_NARROW,
-			computed(() => false),
+		const context = inject(
+			KT_NAVBAR_CONTEXT,
+			computed(() => ({ isNarrow: false, theme: null })),
+		)
+
+		useTippy(
+			triggerRef,
+			computed(() => ({
+				animation: false,
+				appendTo: () => document.body,
+				arrow: false,
+				content: userMenuRef.value ?? undefined,
+				interactive: true,
+				maxWidth: 'none',
+				offset: [0, 0],
+				onHide: () => {
+					isMenuShow.value = false
+				},
+				onShow: () => {
+					isMenuShow.value = true
+				},
+				theme: `kt-usermenu-${context.value.theme ?? 'default'}`,
+				trigger: 'click focusin',
+				zIndex: 1000,
+			})),
 		)
 
 		return {
-			clickawayMenu: () => (isMenuShow.value = false),
+			context,
 			isMenuShow,
-			isNarrow,
 			parsedSections: computed(() =>
 				KottiUserMenu.propsSchema.shape.sections.parse(props.sections),
 			),
+			triggerRef,
 			userInfoClass: computed(() => ({
 				'kt-user-menu-info': true,
-				'kt-user-menu-info--is-narrow': isNarrow.value,
-				'kt-user-menu-info--is-narrow-wide': isNarrow.value && isMenuShow.value,
+				'kt-user-menu-info--is-narrow': context.value.isNarrow,
+				'kt-user-menu-info--is-narrow-wide':
+					context.value.isNarrow && isMenuShow.value,
 			})),
+			userMenuRef,
 		}
 	},
 })
 </script>
 
+<style lang="scss">
+@import '../kotti-style/_variables.scss';
+
+.tippy-box[data-theme~='kt-usermenu-default'],
+.tippy-box[data-theme~='kt-usermenu-dark'],
+.tippy-box[data-theme~='kt-usermenu-light'],
+.tippy-box[data-theme~='kt-usermenu-reverse'] {
+	--user-menu-background-active: var(--primary-70);
+	--user-menu-background: var(--primary-60);
+	--user-menu-color: var(--primary-10);
+
+	width: 11.2rem;
+	color: var(--user-menu-color);
+	background-color: var(--user-menu-background);
+	border-radius: 0.2rem 0.2rem 0 0;
+
+	.tippy-content {
+		padding: 0.8rem 0.8rem 0.2rem 0.8rem;
+	}
+
+	.kt-user-menu {
+		&__info {
+			&:hover {
+				background: var(--user-menu-background);
+			}
+		}
+
+		&__section__item {
+			&:hover {
+				background: var(--user-menu-background-active);
+			}
+		}
+	}
+}
+
+.tippy-box[data-theme~='kt-usermenu-dark'] {
+	--user-menu-background-active: var(--gray-80);
+	--user-menu-background: var(--gray-70);
+	--user-menu-color: var(--gray-10);
+}
+
+.tippy-box[data-theme~='kt-usermenu-light'] {
+	--user-menu-background-active: var(--gray-20);
+	--user-menu-background: var(--gray-10);
+	--user-menu-color: var(--primary-90);
+}
+
+.tippy-box[data-theme~='kt-usermenu-reverse'] {
+	--user-menu-background-active: var(--primary-30);
+	--user-menu-background: var(--primary-20);
+	--user-menu-color: var(--primary-80);
+}
+
+.tippy-box[data-theme~='kt-usermenu-shadow'] {
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+}
+
+@media (max-width: $size-md) {
+	.tippy-box[data-theme~='kt-usermenu-default'],
+	.tippy-box[data-theme~='kt-usermenu-dark'],
+	.tippy-box[data-theme~='kt-usermenu-light'],
+	.tippy-box[data-theme~='kt-usermenu-reverse'] {
+		width: 100vw;
+		border-radius: 0 0 0.2rem 0.2rem;
+		// HACK: tippy box has a 5px offset that I can not get rid of using its props
+		transform: translateX(-5px);
+	}
+}
+</style>
+
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
 
 .kt-user-menu {
-	position: absolute;
-	bottom: 0.4rem;
-	left: 0.4rem;
 	box-sizing: border-box;
-	flex: none;
-	width: 11.2rem;
-	padding: 0.8rem;
-	padding-bottom: 2.6rem;
-	color: var(--user-menu-color);
-	background: var(--user-menu-background);
 	border-radius: 0.2rem;
 
 	&-info {
@@ -117,6 +202,7 @@ export default defineComponent({
 		padding: 0.4rem;
 		margin: -0.4rem;
 		line-height: 1;
+		background-color: var(--navbar-background);
 
 		&--is-narrow {
 			width: 2.4rem;
@@ -131,8 +217,7 @@ export default defineComponent({
 
 		&:hover {
 			cursor: pointer;
-			background: var(--user-menu-background);
-			border-radius: 0.2rem;
+			background-color: var(--user-menu-background);
 		}
 
 		&__avatar {
@@ -163,7 +248,6 @@ export default defineComponent({
 			z-index: 2;
 			flex-grow: 0;
 			align-self: center;
-			color: var(--user-menu-color);
 		}
 	}
 
@@ -190,7 +274,6 @@ export default defineComponent({
 			&:hover {
 				color: inherit;
 				cursor: pointer;
-				background: var(--user-menu-background-active);
 			}
 		}
 	}
@@ -199,6 +282,7 @@ export default defineComponent({
 @media (max-width: $size-md) {
 	.kt-user-menu-info {
 		flex-basis: 48px;
+		padding: 0.3rem;
 
 		&--is-narrow {
 			position: relative;

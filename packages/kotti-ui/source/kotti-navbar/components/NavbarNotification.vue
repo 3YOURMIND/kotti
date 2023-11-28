@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .kt-navbar-notification {
 	display: flex;
 	align-items: center;

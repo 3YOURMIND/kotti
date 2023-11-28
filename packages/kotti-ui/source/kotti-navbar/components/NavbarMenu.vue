@@ -58,7 +58,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .kt-navbar-menu {
 	box-sizing: border-box;
 	padding: 0.4rem 1rem;
