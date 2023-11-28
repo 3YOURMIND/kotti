@@ -1,5 +1,5 @@
 <template>
-	<ItemLayout :name="fileInfo.name">
+	<ItemLayout :isInternal="fileInfo.isInternal" :name="fileInfo.name">
 		<template #description>
 			<i v-if="isError" class="yoco" v-text="Yoco.Icon.CIRCLE_ATTENTION" />
 			{{ description }}

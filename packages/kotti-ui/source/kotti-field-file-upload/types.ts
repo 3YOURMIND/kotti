@@ -16,6 +16,7 @@ export namespace Shared {
 
 	export const fileInfoSchema = z.object({
 		downloadUrl: z.string().optional(),
+		isInternal: z.boolean().optional(),
 		name: z.string(),
 		size: z.number().int().min(0),
 		validation: validationSchema,
@@ -33,6 +34,7 @@ export namespace Shared {
 	export const preUploadedFileSchema = z.object({
 		downloadUrl: z.string().optional(),
 		id: idSchema,
+		isInternal: z.boolean().optional(),
 		name: z.string(),
 		size: z.number().int().min(0),
 		viewUrl: z.string().optional(),
@@ -154,12 +156,14 @@ export namespace Shared {
 		label: {
 			capture: string
 			error: string
+			internal: string
 			review: string
 			unknown: string
 		}
 		statusMsg: {
 			CANCELED: string
 			ERROR: string
+			HIDDEN: string
 			INVALID: string
 			NOT_STARTED: string
 			UPLOADED: string
@@ -236,6 +240,7 @@ export namespace KottiFieldFileUploadRemote {
 	export enum Status {
 		CANCELED = 'CANCELED',
 		ERROR = 'ERROR',
+		HIDDEN = 'HIDDEN',
 		INVALID = 'INVALID',
 		NOT_STARTED = 'NOT_STARTED',
 		UPLOADED = 'UPLOADED',
@@ -277,7 +282,13 @@ export namespace KottiFieldFileUploadRemote {
 	export const payloadEntrySchema = z.object({
 		progress: z.number().min(0).max(1).default(0),
 		status: z
-			.enum([Status.UPLOADED, Status.CANCELED, Status.ERROR, Status.UPLOADING])
+			.enum([
+				Status.CANCELED,
+				Status.ERROR,
+				Status.HIDDEN,
+				Status.UPLOADED,
+				Status.UPLOADING,
+			])
 			.default(Status.UPLOADING),
 	})
 	// Record Key is the File Item ID

@@ -59,6 +59,7 @@ export const buildFileInfo = ({
 	return {
 		downloadUrl: 'downloadUrl' in fileItem ? fileItem.downloadUrl : undefined,
 		id: fileItem.id,
+		isInternal: 'isInternal' in fileItem ? fileItem.isInternal : undefined,
 		name: fileName,
 		size: fileSize,
 		status,

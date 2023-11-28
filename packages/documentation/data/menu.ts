@@ -197,6 +197,12 @@ export const menu: Array<Section> = [
 				path: 'usage/utilities',
 				pages: [],
 			},
+			{
+				icon: Yoco.Icon.UPLOAD,
+				title: 'File Upload Remote',
+				path: 'usage/file-upload-remote',
+				pages: [],
+			},
 		],
 	},
 ]

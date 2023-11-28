@@ -13,6 +13,8 @@ namespace Common {
 		LESS_THAN: 'よりも少ない',
 		LESS_THAN_OR_EQUAL: '以下である',
 	}
+
+	export const restrictedAccess = '制限付きアクセス'
 }
 
 export const jaJP: KottiI18n.Messages = {
@@ -25,8 +27,8 @@ export const jaJP: KottiI18n.Messages = {
 		deleteButton: '消す',
 		editButton: 'エディット',
 		editedLabel: '編集済み',
-		internalLabel: '制限付きアクセス',
-		lockedHelpText: '制限付きアクセス',
+		internalLabel: Common.restrictedAccess,
+		lockedHelpText: Common.restrictedAccess,
 		postButton: '送信',
 		replyButton: '返信',
 		replyToLabel: '返信',
@@ -50,12 +52,14 @@ export const jaJP: KottiI18n.Messages = {
 		label: {
 			capture: '写真を撮る',
 			error: 'エラー',
+			internal: Common.restrictedAccess,
 			review: 'レビュー',
 			unknown: '知らない',
 		},
 		statusMsg: {
 			CANCELED: 'キャンセル',
 			ERROR: 'アップロードに失敗しました。もう一度お試しください',
+			HIDDEN: '',
 			INVALID: '無効',
 			NOT_STARTED: '始まっていない',
 			UPLOADED: 'アップロード済み',
