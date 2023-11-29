@@ -157,23 +157,23 @@ export default defineComponent({
 	grid-gap: var(--unit-1);
 	width: 50vw;
 
-	@media (max-width: $size-md) {
+	@media (width <= $size-md) {
 		grid-template-columns: auto max-content;
 	}
 
-	@media (max-width: $size-xl) {
+	@media (width <= $size-xl) {
 		width: 60vw;
 	}
 
-	@media (max-width: $size-lg) {
+	@media (width <= $size-lg) {
 		width: 75vw;
 	}
 
-	@media (max-width: $size-md) {
+	@media (width <= $size-md) {
 		width: 90vw;
 	}
 
-	@media (max-width: $size-sm) {
+	@media (width <= $size-sm) {
 		width: 95vw;
 	}
 }

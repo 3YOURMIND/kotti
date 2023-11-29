@@ -292,7 +292,7 @@ $radius: 3px;
 	flex-wrap: wrap;
 	margin: -5px -10px;
 
-	@media (min-width: $size-lg) {
+	@media (width >= $size-lg) {
 		flex-direction: row;
 		align-items: center;
 	}

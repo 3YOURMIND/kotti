@@ -21,7 +21,7 @@ h3 {
 	border: 1px solid var(--ui-02);
 	border-radius: var(--border-radius);
 
-	@media (max-width: #{$size-lg - 1px}) {
+	@media (width < $size-lg) {
 		flex-direction: column;
 
 		> *:not(:first-child) {
@@ -29,7 +29,7 @@ h3 {
 		}
 	}
 
-	@media (min-width: $size-lg) {
+	@media (width >= $size-lg) {
 		flex-direction: row;
 
 		> * {
@@ -63,7 +63,7 @@ h3 {
 	display: flex;
 	margin-bottom: 20px;
 
-	@media (max-width: #{$size-lg - 1px}) {
+	@media (width < $size-lg) {
 		flex-direction: column;
 
 		> *:not(:first-child) {
@@ -71,7 +71,7 @@ h3 {
 		}
 	}
 
-	@media (min-width: $size-lg) {
+	@media (width >= $size-lg) {
 		flex-direction: row;
 
 		> * {

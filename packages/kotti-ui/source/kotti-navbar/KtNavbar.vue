@@ -1,8 +1,8 @@
 <template>
-	<nav class="kt-navbar" :class="classes">
+	<nav ref="navbarRef" class="kt-navbar" :class="classes">
 		<div class="kt-navbar-wrapper">
-			<div class="kt-navbar-toggle" @click="toggleMobileMenu">
-				<i class="yoco" v-text="'burger'" />
+			<div ref="tippyTriggerRef" class="kt-navbar-toggle">
+				<i class="yoco" v-text="Yoco.Icon.BURGER" />
 			</div>
 			<div class="kt-navbar__header">
 				<NavbarLogo
@@ -31,15 +31,19 @@
 					:links="quickLinks"
 				/>
 			</div>
-			<div v-if="mobileMenuToggle" class="kt-navbar__dropdown">
+			<div
+				ref="mobileMenuRef"
+				class="kt-navbar__dropdown"
+				@click="hideMobileMenu"
+			>
 				<NavbarMenu
 					:isNarrow="isNarrow"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
+
 				<NavbarQuickLink
 					v-if="quickLinks.length"
-					v-on-clickaway="clickawayMobileMenu"
 					:isNarrow="isNarrow"
 					:links="quickLinks"
 				/>
@@ -52,8 +56,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, ref } from '@vue/composition-api'
-import { mixin as clickaway } from 'vue-clickaway'
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import { Yoco } from '@3yourmind/yoco'
+import {
+	computed,
+	defineComponent,
+	provide,
+	ref,
+	watch,
+} from '@vue/composition-api'
+import { castArray } from 'lodash'
 
 import { makeProps } from '../make-props'
 
@@ -61,7 +73,8 @@ import NavbarLogo from './components/NavbarLogo.vue'
 import NavbarMenu from './components/NavbarMenu.vue'
 import NavbarNotification from './components/NavbarNotification.vue'
 import NavbarQuickLink from './components/NavbarQuickLink.vue'
-import { IS_NAVBAR_NARROW } from './constants'
+import { NAVBAR_THEME } from './constants'
+import { KT_NAVBAR_CONTEXT } from './constants'
 import { KottiNavbar } from './types'
 
 export default defineComponent({
@@ -72,30 +85,111 @@ export default defineComponent({
 		NavbarNotification,
 		NavbarQuickLink,
 	},
-	mixins: [clickaway],
 	props: makeProps(KottiNavbar.propsSchema),
 	setup(props: KottiNavbar.PropsInternal, { emit }) {
-		const mobileMenuToggle = ref(false)
+		const mobileMenuRef = ref<HTMLElement | null>(null)
+		const navbarRef = ref<HTMLElement | null>(null)
+		const tippyTriggerRef = ref<HTMLElement | null>(null)
 
 		provide(
-			IS_NAVBAR_NARROW,
-			computed(() => props.isNarrow),
+			KT_NAVBAR_CONTEXT,
+			computed(() => ({ isNarrow: props.isNarrow, theme: props.theme })),
 		)
+
+		watch(
+			() => props.theme,
+			(newTheme) => {
+				const rootElement = document.querySelector(':root') as HTMLElement
+
+				rootElement.style.setProperty(
+					'--kt-navbar-background',
+					NAVBAR_THEME[newTheme].background,
+				)
+				rootElement.style.setProperty(
+					'--kt-navbar-border',
+					NAVBAR_THEME[newTheme].border,
+				)
+				rootElement.style.setProperty(
+					'--kt-navbar-color',
+					NAVBAR_THEME[newTheme].color,
+				)
+				rootElement.style.setProperty(
+					'--kt-navbar-color-active',
+					NAVBAR_THEME[newTheme].colorActive,
+				)
+				rootElement.style.setProperty(
+					'--kt-navbar-color-light',
+					NAVBAR_THEME[newTheme].colorLight,
+				)
+				rootElement.style.setProperty(
+					'--user-menu-background-active',
+					NAVBAR_THEME[newTheme].userMenuBackgroundActive,
+				)
+				rootElement.style.setProperty(
+					'--user-menu-background',
+					NAVBAR_THEME[newTheme].userMenuBackground,
+				)
+				rootElement.style.setProperty(
+					'--user-menu-color',
+					NAVBAR_THEME[newTheme].userMenuColor,
+				)
+			},
+			{ immediate: true },
+		)
+
+		const { tippy } = useTippy(
+			navbarRef,
+			computed(() => ({
+				arrow: false,
+				appendTo: () => document.body,
+				content: mobileMenuRef.value ?? undefined,
+				interactive: true,
+				maxWidth: 'none',
+				offset: [0, 0],
+				placement: 'bottom-start',
+				theme: `kt-navbar-${props.theme}`,
+				trigger: 'click',
+				triggerTarget: tippyTriggerRef.value,
+			})),
+		)
+
 		return {
 			classes: computed(() => ({
 				'kt-navbar--narrow': props.isNarrow,
-				[`kt-navbar--theme-${props.theme}`]: props.theme !== null,
+				[`kt-navbar--theme-${props.theme}`]: true,
 			})),
-			clickawayMobileMenu: () => (mobileMenuToggle.value = false),
-			mobileMenuToggle,
-			setIsNarrow: (isNarrow: boolean) => emit('setIsNarrow', isNarrow),
-			toggleMobileMenu() {
-				mobileMenuToggle.value = !mobileMenuToggle.value
+			hideMobileMenu: () => {
+				if (tippy.value === null) return
+				const tippys = castArray(tippy.value)
+
+				for (const tippy of tippys) {
+					tippy.hide()
+				}
 			},
+			mobileMenuRef,
+			navbarRef,
+			setIsNarrow: (isNarrow: boolean) => emit('setIsNarrow', isNarrow),
+			tippyTriggerRef,
+			Yoco,
 		}
 	},
 })
 </script>
+
+<style lang="scss">
+@import '../kotti-style/_variables.scss';
+
+.tippy-box[data-theme^='kt-navbar'] {
+	width: 100vw;
+	color: var(--kt-navbar-color);
+	background-color: var(--kt-navbar-background);
+	border-radius: 0 0 0.2rem 0.2rem;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 26%);
+
+	// HACK: tippy box has a 5px offset that I can not get rid of using its props
+	transform: translateX(-5px);
+}
+</style>
 
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
@@ -105,67 +199,16 @@ $mobile-navbar-height: 2.4rem;
 $narrow-navbar-width: 3.4rem;
 
 .kt-navbar {
-	--navbar-background: var(--primary-70);
-	--navbar-border: var(--primary-60);
-	--navbar-color: var(--primary-10);
-	--navbar-color-light: var(--primary-20);
-	--navbar-color-active: var(--white);
-	--user-menu-border: var(--primary-80);
-	--user-menu-background-active: var(--primary-70);
-	--user-menu-background: var(--primary-60);
-	--user-menu-color: var(--primary-10);
-
-	position: relative;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	z-index: $zindex-1;
 	flex: 0 0 $navbar-width;
 	width: $navbar-width;
 	min-height: 100vh;
-	color: var(--navbar-color);
-	background: var(--navbar-background);
-	border-right: 1px solid var(--navbar-border);
-
-	&--theme-reverse {
-		--navbar-background: var(--primary-10);
-		--navbar-border: var(--primary-20);
-		--navbar-color: var(--primary-80);
-		--navbar-color-light: var(--primary-60);
-		--navbar-color-active: var(--primary-100);
-		--user-menu-border: var(--primary-30);
-		--user-menu-background-active: var(--primary-30);
-		--user-menu-background: var(--primary-20);
-		--user-menu-color: var(--primary-80);
-	}
-
-	&--theme-light {
-		--navbar-background: var(--white);
-		--navbar-border: var(--gray-20);
-		--navbar-color: var(--primary-90);
-		--navbar-color-light: var(--primary-50);
-		--navbar-color-active: var(--primary-80);
-		--user-menu-border: var(--gray-30);
-		--user-menu-background-active: var(--gray-20);
-		--user-menu-background: var(--gray-10);
-		--user-menu-color: var(--primary-90);
-	}
-
-	&--theme-dark {
-		--navbar-background: var(--gray-90);
-		--navbar-border: var(--gray-70);
-		--navbar-color: var(--gray-20);
-		--navbar-color-light: var(--gray-10);
-		--navbar-color-active: var(--primary-10);
-		--user-menu-border: var(--gray-30);
-		--user-menu-background-active: var(--gray-80);
-		--user-menu-background: var(--gray-70);
-		--user-menu-color: var(--gray-10);
-	}
+	color: var(--kt-navbar-color);
+	background: var(--kt-navbar-background);
+	border-right: 1px solid var(--kt-navbar-border);
 
 	a:active,
 	a:focus {
-		color: var(--navbar-color-active);
+		color: var(--kt-navbar-color-active);
 	}
 
 	&-wrapper {
@@ -183,11 +226,11 @@ $narrow-navbar-width: 3.4rem;
 		justify-content: center;
 		width: 2.4rem;
 		height: $mobile-navbar-height;
-		color: var(--navbar-color-light);
+		color: var(--kt-navbar-color-light);
 		cursor: pointer;
 
 		&:hover {
-			color: var(--navbar-color-active);
+			color: var(--kt-navbar-color-active);
 		}
 
 		.yoco {
@@ -198,7 +241,7 @@ $narrow-navbar-width: 3.4rem;
 	&__header {
 		flex: 0 0 auto;
 		cursor: pointer;
-		border-bottom: 1px solid var(--navbar-border);
+		border-bottom: 1px solid var(--kt-navbar-border);
 	}
 
 	&__body {
@@ -214,16 +257,11 @@ $narrow-navbar-width: 3.4rem;
 	&__footer {
 		flex: 0 0 auto;
 		padding: 0.8rem;
-		border-top: 1px solid var(--navbar-border);
+		border-top: 1px solid var(--kt-navbar-border);
 	}
 
 	&__dropdown {
-		position: absolute;
-		top: $mobile-navbar-height;
 		display: none;
-		width: 100%;
-		background-color: var(--navbar-background);
-		box-shadow: 0 2px 4px rgb(0 0 0 / 26%);
 	}
 
 	&--narrow {
@@ -247,13 +285,13 @@ $narrow-navbar-width: 3.4rem;
 			justify-content: center;
 		}
 
-		.kt-navbar-menu {
+		::v-deep .kt-navbar-menu {
 			padding: 0.4rem 0;
 			margin: 0.8rem 0.2rem;
 			text-align: center;
 		}
 
-		.kt-navbar-notification {
+		::v-deep .kt-navbar-notification {
 			justify-content: center;
 			padding: 0.8rem 0;
 
@@ -263,20 +301,19 @@ $narrow-navbar-width: 3.4rem;
 			}
 		}
 
-		.kt-navbar-quick-links {
+		::v-deep .kt-navbar-quick-links {
 			padding: 0.8rem 0;
 			text-align: center;
+		}
 
-			&__link {
-				display: block;
-			}
+		::v-deep .kt-navbar-quick-link {
+			display: block;
 		}
 	}
 }
 
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	.kt-navbar {
-		z-index: $zindex-4;
 		flex: 0 0 $mobile-navbar-height;
 		width: auto;
 		height: 2.4rem;
@@ -291,7 +328,7 @@ $narrow-navbar-width: 3.4rem;
 			width: 100%;
 			height: $mobile-navbar-height;
 			padding: 0;
-			border-bottom: 1px solid var(--navbar-border);
+			border-bottom: 1px solid var(--kt-navbar-border);
 		}
 
 		&-toggle {
@@ -316,30 +353,30 @@ $narrow-navbar-width: 3.4rem;
 			border: 0;
 		}
 
-		&-notification {
-			display: none;
-
-			&--mobile {
-				display: block;
-				width: 1.2rem;
-				height: 1.2rem;
-				margin: 0.6rem 0;
-				text-align: center;
-				border: 0;
-				border-radius: 1.2rem;
-
-				.yoco {
-					font-size: 1rem;
-				}
-			}
-		}
-
 		&__body {
 			display: none;
 		}
 
 		&__dropdown {
 			display: block;
+		}
+	}
+
+	::v-deep .kt-navbar-notification {
+		display: none;
+
+		&--mobile {
+			display: block;
+			width: 1.2rem;
+			height: 1.2rem;
+			margin: 0.6rem 0;
+			text-align: center;
+			border: 0;
+			border-radius: 1.2rem;
+
+			.yoco {
+				font-size: 1rem;
+			}
 		}
 	}
 }

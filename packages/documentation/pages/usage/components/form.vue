@@ -472,7 +472,7 @@ h3 {
 		margin: 0 !important;
 	}
 
-	@media (max-width: #{$size-lg - 1px}) {
+	@media (width < $size-lg) {
 		flex-direction: column;
 
 		> *:not(:first-child) {
@@ -480,7 +480,7 @@ h3 {
 		}
 	}
 
-	@media (min-width: $size-lg) {
+	@media (width >= $size-lg) {
 		flex-direction: row;
 
 		> *:not(:last-child) {

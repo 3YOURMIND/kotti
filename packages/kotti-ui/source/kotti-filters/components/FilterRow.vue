@@ -239,7 +239,7 @@ export default defineComponent({
 	&__wrapper {
 		display: contents;
 
-		@media (max-width: $size-md) {
+		@media (width <= $size-md) {
 			display: unset;
 
 			> * {
@@ -262,7 +262,7 @@ export default defineComponent({
 		grid-column: 5;
 		align-self: center;
 
-		@media (max-width: $size-md) {
+		@media (width <= $size-md) {
 			grid-column: 2;
 		}
 	}

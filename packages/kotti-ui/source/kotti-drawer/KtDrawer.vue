@@ -162,7 +162,7 @@ export default defineComponent({
 	}
 }
 
-@media (max-width: $size-sm) {
+@media (width <= $size-sm) {
 	.kt-drawer {
 		&__container,
 		&__container--is-wide {

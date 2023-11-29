@@ -28,23 +28,23 @@
 
 @include col-width('');
 
-@media (max-width: $size-xl) {
+@media (width <= $size-xl) {
 	@include col-width('-xl');
 }
 
-@media (max-width: $size-lg) {
+@media (width <= $size-lg) {
 	@include col-width('-lg');
 }
 
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	@include col-width('-md');
 }
 
-@media (max-width: $size-sm) {
+@media (width <= $size-sm) {
 	@include col-width('-sm');
 }
 
-@media (max-width: $size-xs) {
+@media (width <= $size-xs) {
 	@include col-width('-xs');
 }
 

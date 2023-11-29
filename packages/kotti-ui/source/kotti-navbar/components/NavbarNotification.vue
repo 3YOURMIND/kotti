@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .kt-navbar-notification {
 	display: flex;
 	align-items: center;
@@ -46,7 +46,7 @@ export default {
 	margin-bottom: 0.4rem;
 	font-size: 0.75rem;
 	line-height: 1.2rem;
-	border-bottom: 1px solid var(--navbar-border);
+	border-bottom: 1px solid var(--kt-navbar-border);
 
 	span {
 		margin-left: 0.8rem;

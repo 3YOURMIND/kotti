@@ -66,10 +66,10 @@ export default defineComponent({
 .kt-navbar-quick-link {
 	display: flex;
 	align-items: center;
-	color: var(--navbar-color-light);
+	color: var(--kt-navbar-color-light);
 
 	&:hover {
-		color: var(--navbar-color-active);
+		color: var(--kt-navbar-color-active);
 	}
 
 	::v-deep .yoco {

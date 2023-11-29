@@ -74,10 +74,10 @@ $margin: 0.8rem 1rem;
 	::v-deep .yoco {
 		padding: $margin;
 		font-size: 1.2rem;
-		color: var(--navbar-color-light);
+		color: var(--kt-navbar-color-light);
 
 		&:hover {
-			color: var(--navbar-color-active);
+			color: var(--kt-navbar-color-active);
 		}
 	}
 
@@ -117,7 +117,7 @@ $margin: 0.8rem 1rem;
 	}
 }
 
-@media (max-width: $size-md) {
+@media (width <= $size-md) {
 	.kt-navbar-logo {
 		&--is-desktop {
 			display: none;

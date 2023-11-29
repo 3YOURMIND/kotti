@@ -58,7 +58,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .kt-navbar-menu {
 	box-sizing: border-box;
 	padding: 0.4rem 1rem;
@@ -70,7 +70,7 @@ export default defineComponent({
 		margin-top: 0.4rem;
 		font-size: 0.85em;
 		font-weight: 700;
-		color: var(--navbar-color-light);
+		color: var(--kt-navbar-color-light);
 		text-transform: uppercase;
 	}
 
@@ -82,7 +82,7 @@ export default defineComponent({
 		color: inherit;
 
 		&:hover {
-			color: var(--navbar-color-active);
+			color: var(--kt-navbar-color-active);
 			cursor: pointer;
 		}
 
@@ -92,7 +92,7 @@ export default defineComponent({
 
 		&.active {
 			font-weight: 600;
-			color: var(--navbar-color-active);
+			color: var(--kt-navbar-color-active);
 		}
 	}
 
