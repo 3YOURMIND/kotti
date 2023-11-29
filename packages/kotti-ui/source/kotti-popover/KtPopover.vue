@@ -113,11 +113,13 @@ export default defineComponent({
 		provide(KT_IS_IN_POPOVER, true)
 
 		const setIsShown = (showTippy: boolean) => {
+			if (tippy.value === null) return
+
 			const tippys = castArray(tippy.value)
 
 			for (const tippy of tippys) {
 				if (showTippy) tippy?.show()
-				else tippy?.hide()
+				else tippy.hide()
 			}
 		}
 

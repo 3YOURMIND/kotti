@@ -69,6 +69,7 @@ import NavbarNotification from './components/NavbarNotification.vue'
 import NavbarQuickLink from './components/NavbarQuickLink.vue'
 import { KT_NAVBAR_CONTEXT } from './constants'
 import { KottiNavbar } from './types'
+import { castArray } from 'lodash'
 
 export default defineComponent({
 	name: 'KtNavbar',
@@ -83,14 +84,13 @@ export default defineComponent({
 		const mobileMenuRef = ref<HTMLElement | null>(null)
 		const navbarRef = ref<HTMLElement | null>(null)
 		const tippyTriggerRef = ref<HTMLElement | null>(null)
-		const tippyInstanceRef = ref<Instance | null>(null)
 
 		provide(
 			KT_NAVBAR_CONTEXT,
 			computed(() => ({ isNarrow: props.isNarrow, theme: props.theme })),
 		)
 
-		useTippy(
+		const { tippy } = useTippy(
 			navbarRef,
 			computed(() => ({
 				arrow: false,
@@ -99,9 +99,6 @@ export default defineComponent({
 				interactive: true,
 				maxWidth: 'none',
 				offset: [0, 0],
-				onCreate(instance) {
-					tippyInstanceRef.value = instance
-				},
 				placement: 'bottom-start',
 				theme: `kt-navbar-${props.theme ?? 'default'}`,
 				trigger: 'click',
@@ -115,7 +112,12 @@ export default defineComponent({
 				[`kt-navbar--theme-${props.theme}`]: props.theme !== null,
 			})),
 			hideMobileMenu: () => {
-				tippyInstanceRef.value?.hide()
+				if (tippy.value === null) return
+				const tippys = castArray(tippy.value)
+
+				for (const tippy of tippys) {
+					tippy.hide()
+				}
 			},
 			mobileMenuRef,
 			navbarRef,

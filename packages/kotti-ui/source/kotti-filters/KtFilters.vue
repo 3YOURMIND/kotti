@@ -48,7 +48,8 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import { Instance, roundArrow } from 'tippy.js'
+import { castArray } from 'lodash'
+import { roundArrow } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -95,7 +96,6 @@ export default defineComponent({
 		const listTriggerRef = ref<Element | null>(null)
 		const isAddingFilter = ref<boolean>(false)
 		const isListVisible = ref<boolean>(false)
-		const tippyInstanceRef = ref<Instance | null>(null)
 
 		const filterListColumns = computed<KottiFilters.Column.Any[]>(() =>
 			props.columns.filter(
@@ -159,16 +159,21 @@ export default defineComponent({
 			}
 		}
 		const toggleListVisibility = () => {
-			if (tippyInstanceRef.value === null) return
+			if (tippy.value === null) return
+
+			const tippys = castArray(tippy.value)
+
 			isListVisible.value = !isListVisible.value
-			if (isListVisible.value) tippyInstanceRef.value.show()
-			else {
-				tippyInstanceRef.value.hide()
-				isAddingFilter.value = false
+
+			if (!isListVisible.value) isAddingFilter.value
+
+			for (const tippy of tippys) {
+				if (isListVisible.value) tippy.show()
+				else tippy.hide()
 			}
 		}
 
-		useTippy(
+		const { tippy } = useTippy(
 			listTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
@@ -178,9 +183,6 @@ export default defineComponent({
 				interactive: true,
 				maxWidth: 'none',
 				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
-				onCreate(instance) {
-					tippyInstanceRef.value = instance
-				},
 				placement: 'bottom',
 				theme: 'light-border',
 				trigger: 'manual',
