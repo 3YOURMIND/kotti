@@ -143,17 +143,12 @@
 <script lang="ts">
 import { Kotti, KtFilters } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { ISO8601 } from '../../../../kotti-ui/source/constants'
 import { ComponentValue, generateComponentCode } from '../../utilities'
+import { getLast, today } from '../../utils/date'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
-
-const today = (): string => dayjs().format(ISO8601)
-const getLast = (unit: 'day' | 'month' | 'week' | 'year') =>
-	dayjs().subtract(1, unit).format(ISO8601)
 
 const shortcuts: Record<
 	string,

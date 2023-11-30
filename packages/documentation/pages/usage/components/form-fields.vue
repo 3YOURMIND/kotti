@@ -463,6 +463,14 @@
 								isOptional
 								label="minimumDate"
 							/>
+							<KtFieldToggleGroup
+								v-if="componentDefinition.additionalProps.includes('shortcuts')"
+								formKey="shortcuts"
+								helpText="Add keepOpen to keep pop-up open on selection (see code sample for details)"
+								isOptional
+								label="shortcuts"
+								:options="getShortcutsOptions(settings.component)"
+							/>
 							<KtFieldToggle
 								v-if="
 									componentDefinition.additionalProps.includes('hasOptionSlot')
@@ -711,6 +719,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
 import { useRouter } from '../../..//hooks/use-router'
+import { ISO8601, ISO8601_SECONDS } from '../../../../kotti-ui/source/constants'
 import {
 	createActions,
 	createRemoteUpload,
@@ -719,6 +728,7 @@ import {
 	generateComponentCode,
 	isComponentName,
 } from '../../utilities'
+import { getLast, today } from '../../utils/date'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -738,7 +748,7 @@ const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 	}
 }
 
-const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate']
+const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate', 'shortcuts']
 const FILE_UPLOAD_SHARED_PROPS = [
 	'allowMultiple',
 	'allowPhotos',
@@ -1017,6 +1027,61 @@ const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
 	},
 ]
 
+const getShortcuts = (
+	component: ComponentNames,
+): Record<
+	string,
+	{
+		keepOpen?: boolean
+		label: string
+		value: string | [string, string]
+	}
+> => {
+	if (
+		![
+			'KtFieldDate',
+			'KtFieldDateRange',
+			'KtFieldDateTime',
+			'KtFieldDateTimeRange',
+		].includes(component)
+	)
+		throw new Error(`getShortcuts: invalid component "${component}"`)
+
+	const isRange = ['KtFieldDateRange', 'KtFieldDateTimeRange'].includes(
+		component,
+	)
+	const templateFormat = ['KtFieldDate', 'KtFieldDateRange'].includes(component)
+		? ISO8601
+		: ISO8601_SECONDS
+	const todayDate = today(templateFormat)
+
+	return {
+		today: {
+			keepOpen: true,
+			label: 'Today',
+			value: isRange ? [todayDate, todayDate] : todayDate,
+		},
+		lastWeek: {
+			label: 'Last Week',
+			value: isRange
+				? [getLast('week', templateFormat), todayDate]
+				: getLast('week', templateFormat),
+		},
+		lastMonth: {
+			label: 'Last Month',
+			value: isRange
+				? [getLast('month', templateFormat), todayDate]
+				: getLast('month', templateFormat),
+		},
+		lastYear: {
+			label: 'Last Year',
+			value: isRange
+				? [getLast('year', templateFormat), todayDate]
+				: getLast('year', templateFormat),
+		},
+	}
+}
+
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsFormFields',
 	components: {
@@ -1066,6 +1131,7 @@ export default defineComponent({
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
 				numberStep: Kotti.FieldNumber.Value
+				shortcuts: Kotti.FieldToggleGroup.Value
 				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
 				toggleType: 'checkbox' | 'switch'
 			}
@@ -1127,6 +1193,7 @@ export default defineComponent({
 				numberMaximum: null,
 				numberMinimum: null,
 				numberStep: null,
+				shortcuts: null,
 				showHeaderSideSlot: false,
 				toggleType: 'checkbox',
 			},
@@ -1326,6 +1393,20 @@ export default defineComponent({
 			if (componentDefinition.value.additionalProps.includes('minimumDate'))
 				Object.assign(additionalProps, {
 					minimumDate: settings.value.additionalProps.minimumDate,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('shortcuts'))
+				Object.assign(additionalProps, {
+					shortcuts: Object.entries(
+						settings.value.additionalProps.shortcuts ?? {},
+					)
+						.filter(([_, value]) => value)
+						.map(([key]) => {
+							const shortcuts = getShortcuts(component)
+							const { keepOpen, label, value } =
+								shortcuts[key as keyof typeof shortcuts]
+							return { keepOpen, label, value }
+						}),
 				})
 
 			if (
@@ -1548,6 +1629,13 @@ export default defineComponent({
 					value,
 				}),
 			),
+			getShortcutsOptions: (
+				component: ComponentNames,
+			): Kotti.FieldToggleGroup.Props['options'] =>
+				Object.entries(getShortcuts(component)).map(([key, value]) => ({
+					key,
+					label: value.label,
+				})),
 			isRangeComponent,
 			onBlur: (value: number) => {
 				if (settings.value.emitBlur) window.alert(`@blur: ${value}`)
