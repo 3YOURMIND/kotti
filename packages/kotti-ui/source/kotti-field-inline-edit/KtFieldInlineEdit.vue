@@ -281,6 +281,7 @@ export default defineComponent({
 				'kt-field-inline-edit--is-editable': !props.isReadonly,
 				'kt-field-inline-edit--is-editing':
 					isEditing.value && !props.isDisabled,
+				'kt-field-inline-edit--is-readonly': props.isReadonly,
 			})),
 			textareaProps: computed(
 				(): Partial<HTMLTextAreaElement> & {
@@ -321,6 +322,12 @@ export default defineComponent({
 
 	::v-deep .kt-field__input-container {
 		background-color: transparent;
+	}
+
+	&--is-readonly {
+		::v-deep .kt-field__input-container {
+			box-shadow: none !important;
+		}
 	}
 
 	&__input {
