@@ -95,6 +95,7 @@ export default defineComponent({
 					// @ts-expect-error (exposed through mixin on picker.vue on element-ui's implementation)
 					appendToBody: !isInPopover,
 					clearable: !field.hideClear,
+					'data-test': field.inputProps['data-test'],
 					disabled: field.isDisabled,
 					endPlaceholder: props.placeholder?.[1] ?? '',
 					pickerOptions: pickerOptions.value,
