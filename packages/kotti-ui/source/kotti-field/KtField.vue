@@ -1,16 +1,17 @@
 <template>
 	<div class="kt-field">
 		<component
-			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
+			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'div'"
 			:class="wrapperClasses"
 			@click="$emit('click', $event)"
 			@mousedown="$emit('mousedown', $event)"
 		>
 			<div v-if="hasLabel || hasHelpText" class="kt-field__header">
 				<component
-					:is="isGroup ? 'legend' : 'div'"
+					:is="isGroup ? 'legend' : 'label'"
 					v-if="hasLabel"
 					class="kt-field__header__label"
+					:for="inputId"
 				>
 					<span class="kt-field__header__label__text" v-text="field.label" />
 					<span :class="labelSuffixClasses" v-text="labelSuffix" />
@@ -43,7 +44,11 @@
 					<slot name="container-left" />
 				</div>
 				<slot name="container">
-					<div ref="inputContainerRef" class="kt-field__input-container">
+					<div
+						ref="inputContainerRef"
+						class="kt-field__input-container"
+						@click="focusInput"
+					>
 						<div
 							v-if="field.prefix"
 							:class="affixClasses(['left'])"
@@ -106,40 +111,40 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, computed, ref } from '@vue/composition-api'
+import { PropType, computed, defineComponent, ref } from '@vue/composition-api'
 import { VNode } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import FieldHelpText from './components/FieldHelpText.vue'
+import { useFocusInput } from './hooks'
 import { KottiField } from './types'
 
 export default defineComponent({
 	name: 'KtField',
 	components: { FieldHelpText },
 	props: {
-		field: { required: true, type: Object },
+		field: {
+			required: true,
+			type: Object as PropType<KottiField.Hook.Returns<unknown>>,
+		},
 		/**
 		 * What’s the appropriate value for an empty field of this data type?
 		 * Used when clearing the field. Most likely either null or []
 		 */
-		getEmptyValue: { default: null, type: Function },
-		helpTextSlot: { default: () => [], type: Array },
-		isComponent: { default: null, type: String },
+		getEmptyValue: { default: null, type: Function as PropType<() => unknown> },
+		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
+		isComponent: { default: null, type: String as PropType<string | null> },
 		isGroup: { default: false, type: Boolean },
+		isRange: { default: false, type: Boolean },
 	},
-	setup(props: {
-		field: KottiField.Hook.Returns<unknown>
-		helpTextSlot: VNode[]
-		isComponent: string | null
-		isGroup: boolean
-		getEmptyValue: () => unknown
-	}) {
+	setup(props) {
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === 'empty'),
 		)
 
+		const { focusInput } = useFocusInput(props.field.inputProps.id)
 		const translations = useTranslationNamespace('KtFields')
 
 		return {
@@ -149,6 +154,7 @@ export default defineComponent({
 					(modification) => `kt-field__input-container__affix--${modification}`,
 				),
 			]),
+			focusInput,
 			handleClear: () => {
 				/**
 				 * useSupports hook returns null if hideClear is not supported on ktField component
@@ -159,6 +165,7 @@ export default defineComponent({
 					)
 
 				props.field.setValue(props.getEmptyValue())
+				focusInput()
 			},
 			hasHelpText: computed(
 				() => props.helpTextSlot.length >= 1 || props.field.helpText !== null,
@@ -173,6 +180,16 @@ export default defineComponent({
 						),
 					],
 			),
+			inputId: computed(() =>
+				props.isGroup
+					? undefined
+					: props.isRange
+					? `${props.field.inputProps.id}-start`
+					: props.field.inputProps.id,
+			),
+			/**
+			 * HACK: This template ref is used by child components, refactor with caution if needed
+			 */
 			inputContainerRef: ref<Element | null>(null),
 			labelSuffix: computed(() =>
 				props.field.isOptional ? `(${translations.value.optionalLabel})` : '*',
@@ -382,6 +399,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		// Prefix and Suffix
 		&__affix {
 			color: var(--text-02);
+			cursor: default;
 
 			&--left {
 				padding-right: 0.8rem;
@@ -410,6 +428,11 @@ we would be able to extend on demand instead of unscoping all field classes -->
 
 			.yoco {
 				display: flex;
+			}
+
+			&--left,
+			&--right {
+				cursor: default;
 			}
 
 			&--left {

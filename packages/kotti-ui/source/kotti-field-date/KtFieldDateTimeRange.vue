@@ -4,6 +4,7 @@
 		class="kt-field-datetime-range"
 		:getEmptyValue="() => [null, null]"
 		:helpTextSlot="$slots.helpText"
+		isRange
 	>
 		<div
 			ref="inputContainerRef"
@@ -98,6 +99,7 @@ export default defineComponent({
 					'data-test': field.inputProps['data-test'],
 					disabled: field.isDisabled || field.isLoading,
 					endPlaceholder: props.placeholder?.[1] ?? '',
+					id: [`${field.inputProps.id}-start`, `${field.inputProps.id}-end`],
 					pickerOptions: pickerOptions.value,
 					startPlaceholder: props.placeholder?.[0] ?? '',
 					type: 'datetimerange',

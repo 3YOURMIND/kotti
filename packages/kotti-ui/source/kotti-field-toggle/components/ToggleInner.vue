@@ -4,7 +4,9 @@
 		class="kt-field-toggle-inner"
 		:class="toggleClasses"
 	>
-		<component :is="svgComponent.is" :class="svgComponent.class" />
+		<div @click="$emit('click')">
+			<component :is="svgComponent.is" :class="svgComponent.class" />
+		</div>
 		<slot name="default" />
 		<input
 			v-bind="inputProps"

@@ -18,6 +18,8 @@ import { FORM_KEY_NONE } from './constants'
 import { KtFieldErrors } from './errors'
 import { KottiField } from './types'
 
+let ktFieldId = 1
+
 const useDecoration = <DATA_TYPE>({
 	props,
 	supports,
@@ -53,6 +55,7 @@ const useInputProps = <DATA_TYPE>({
 		inputProps: computed(() => ({
 			'data-test': props.dataTest ?? formPath.value.join('.'),
 			disabled: isDisabled.value,
+			id: String(++ktFieldId),
 			tabindex: props.tabIndex,
 		})),
 	}
@@ -293,6 +296,15 @@ export const useField = <DATA_TYPE>({
 	useNotifyContext({ context, field })
 
 	return field
+}
+
+export const useFocusInput = (fieldId: string) => {
+	return {
+		focusInput: () => {
+			const inputEl = document.getElementById(fieldId)
+			inputEl?.focus()
+		},
+	}
 }
 
 /**

@@ -84,6 +84,7 @@ export namespace KottiField {
 				 */
 				'data-test': string
 				disabled: boolean
+				id: string
 				tabindex: KottiField.PropsInternal['tabIndex']
 			}>
 			isEmpty: boolean

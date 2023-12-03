@@ -90,6 +90,7 @@ export default defineComponent({
 					clearable: !field.hideClear,
 					'data-test': field.inputProps['data-test'],
 					disabled: field.isDisabled || field.isLoading,
+					id: field.inputProps.id,
 					pickerOptions: pickerOptions.value,
 					placeholder: props.placeholder ?? '',
 					type: 'date',

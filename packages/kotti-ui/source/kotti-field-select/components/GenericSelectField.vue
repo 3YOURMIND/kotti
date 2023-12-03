@@ -1,12 +1,13 @@
 <template>
 	<div :class="fieldSelectClasses">
 		<div
-			ref="tippyTriggerRef"
+			ref="tippyRef"
 			@mouseenter="isFieldHovered = true"
 			@mouseleave="isFieldHovered = false"
 		>
 			<KtField
 				v-bind="{ field }"
+				ref="ktFieldRef"
 				:getEmptyValue="() => (isMultiple ? [] : null)"
 				:helpTextSlot="helpTextSlot"
 			>
@@ -75,7 +76,13 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import {
+	Ref,
+	computed,
+	defineComponent,
+	ref,
+	watch,
+} from '@vue/composition-api'
 import { z } from 'zod'
 
 import { KtField } from '../../kotti-field'
@@ -151,8 +158,18 @@ export default defineComponent({
 
 		const { forceUpdateKey, forceUpdate } = useForceUpdate()
 
+		/**
+		 * fieldLabelRef is a template ref on KtField.vue
+		 */
+		const ktFieldRef = ref<{ inputContainerRef: Ref<HTMLDivElement> } | null>(
+			null,
+		)
+		const triggerTargets = computed(() =>
+			ktFieldRef.value ? [ktFieldRef.value.inputContainerRef] : [],
+		)
+
 		const { isDropdownOpen, isDropdownMounted, ...selectTippy } =
-			useSelectTippy(field)
+			useSelectTippy(field, triggerTargets)
 
 		const deleteQuery = () => {
 			if (props.isRemote) {
@@ -253,6 +270,7 @@ export default defineComponent({
 			isDropdownOpen,
 			isFieldFocused,
 			isFieldHovered,
+			ktFieldRef,
 			onOptionsInput: (value: MultiValue) => {
 				if (props.isMultiple) {
 					field.setValue(value)
@@ -297,7 +315,7 @@ export default defineComponent({
 					showClear && (isFieldHovered.value || isFieldFocused.value),
 			),
 			tippyContentRef: selectTippy.tippyContentRef,
-			tippyTriggerRef: selectTippy.tippyTriggerRef,
+			tippyRef: selectTippy.tippyRef,
 			updateQuery: ({ target: { value } }: { target: HTMLInputElement }) => {
 				if (!isDropdownOpen.value) {
 					selectTippy.setIsDropdownOpen(true)

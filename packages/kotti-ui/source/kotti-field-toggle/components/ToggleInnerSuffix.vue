@@ -8,7 +8,9 @@
 			class="kt-field__header__help-text"
 			:class="iconClasses('header__help-text', ['interactive'])"
 		>
-			<FieldHelpText :helpText="helpText" :helpTextSlot="helpTextSlot" />
+			<div @click.stop.prevent>
+				<FieldHelpText :helpText="helpText" :helpTextSlot="helpTextSlot" />
+			</div>
 		</div>
 	</div>
 </template>
