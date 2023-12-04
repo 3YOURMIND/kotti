@@ -88,11 +88,9 @@
 				<KtButton label="KtPopover Button" />
 				<template v-if="values.usageMode === UsageMode.SLOT" #content>
 					<div style="max-width: 500px">
-						<code
-							data-lang="vue"
-							v-text="'<template #content>Slot</template>'"
-						/>
-						<br />
+						<pre>
+							<code v-text="'<template #content>Slot</template>'" />
+						</pre>
 						<strong>We also support sub-dropdowns</strong> like
 						<code>KtFieldSingleSelect</code>, however it’s recommended to use
 						<code>trigger="click"</code> when utilizing this.
