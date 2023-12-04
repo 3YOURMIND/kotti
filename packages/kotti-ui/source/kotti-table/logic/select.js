@@ -1,10 +1,10 @@
-import deepEql from 'deep-eql'
 import debounce from 'lodash/debounce'
+import isEqual from 'lodash/isEqual'
 
 export function toggleRowSelection(state, row, selected) {
 	let changed = false
 	const selection = state.selection
-	const index = selection.findIndex((selectedRow) => deepEql(selectedRow, row))
+	const index = selection.findIndex((selectedRow) => isEqual(selectedRow, row))
 	if (typeof selected === 'undefined') {
 		if (index === -1) {
 			selection.push(row)
@@ -52,7 +52,7 @@ export function cleanSelection(store) {
 		state.selection = state.selection.filter((s) => rowsSet.has(s[rowKey]))
 	} else {
 		state.selection = state.selection.filter((s) =>
-			state.rows.some((r) => deepEql(r, s)),
+			state.rows.some((r) => isEqual(r, s)),
 		)
 	}
 
@@ -132,6 +132,6 @@ export const getters = {
 			: row[state.rowKey]
 	},
 	isSelected(state, row) {
-		return state.selection.some((e) => deepEql(e, row))
+		return state.selection.some((e) => isEqual(e, row))
 	},
 }

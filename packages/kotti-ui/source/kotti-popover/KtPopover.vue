@@ -46,7 +46,7 @@ import {
 	watch,
 	inject,
 } from '@vue/composition-api'
-import { castArray } from 'lodash'
+import castArray from 'lodash/castArray'
 import { roundArrow, Props as TippyProps } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'

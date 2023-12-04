@@ -17,7 +17,7 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ES2018",
-		"types": ["webpack-env", "node", "@nuxt/types"]
+		"types": ["node", "@nuxt/types"]
 	},
 	"exclude": ["node_modules"],
 	"include": [

@@ -19,7 +19,7 @@ const TestField = defineComponent({
 	components: { KtField },
 	props: makeProps(
 		KottiField.propsSchema.extend({
-			value: z.string().nullable(),
+			value: z.string().nullable().default(null),
 		}),
 	),
 	setup: (props: KottiField.PropsInternal, { emit }) => {

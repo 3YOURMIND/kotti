@@ -1,6 +1,6 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { computed, inject, ref } from '@vue/composition-api'
-import castArray from 'lodash.castarray'
+import castArray from 'lodash/castArray'
 import { roundArrow } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'

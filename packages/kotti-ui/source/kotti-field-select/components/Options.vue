@@ -54,7 +54,7 @@ import {
 	ref,
 	watch,
 } from '@vue/composition-api'
-import { camelCase } from 'lodash'
+import camelCase from 'lodash/camelCase'
 import { z } from 'zod'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'

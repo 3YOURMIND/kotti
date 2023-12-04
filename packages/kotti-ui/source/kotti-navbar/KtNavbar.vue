@@ -65,7 +65,7 @@ import {
 	ref,
 	watch,
 } from '@vue/composition-api'
-import { castArray } from 'lodash'
+import castArray from 'lodash/castArray'
 
 import { makeProps } from '../make-props'
 

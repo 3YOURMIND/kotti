@@ -21,7 +21,7 @@
 </template>
 
 <script lang="jsx">
-import deepEql from 'deep-eql'
+import isEqual from 'lodash/isEqual'
 import pick from 'lodash/pick'
 
 import { TableBody } from './components/TableBody'
@@ -225,7 +225,7 @@ export default {
 		selected: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (!deepEql(value, oldValue)) {
+				if (!isEqual(value, oldValue)) {
 					this.localStore.commit('setSelected', value)
 				}
 			},
@@ -233,7 +233,7 @@ export default {
 		columns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && !deepEql(value, oldValue)) {
+				if (value && !isEqual(value, oldValue)) {
 					this.store.commit('setColumns', value)
 				}
 			},
@@ -241,7 +241,7 @@ export default {
 		sortedColumns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && !deepEql(value, oldValue)) {
+				if (value && !isEqual(value, oldValue)) {
 					this.store.commit('setSortedColumns', value)
 				}
 			},
@@ -249,7 +249,7 @@ export default {
 		hiddenColumns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && !deepEql(value, oldValue)) {
+				if (value && !isEqual(value, oldValue)) {
 					this.store.commit('setHiddenColumns', value)
 				}
 			},
@@ -257,7 +257,7 @@ export default {
 		filteredColumns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && !deepEql(value, oldValue)) {
+				if (value && !isEqual(value, oldValue)) {
 					this.store.commit('setFilteredColumns', value)
 				}
 			},
@@ -265,7 +265,7 @@ export default {
 		orderedColumns: {
 			immediate: true,
 			handler(value, oldValue) {
-				if (value && !deepEql(value, oldValue)) {
+				if (value && !isEqual(value, oldValue)) {
 					this.store.commit('setOrderedColumns', value)
 				}
 			},
