@@ -45,7 +45,7 @@ import {
 	onBeforeUnmount,
 	ref,
 } from '@vue/composition-api'
-import { isError } from 'lodash'
+import isError from 'lodash/isError'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'

@@ -1,3 +1,12 @@
+const noExtraneousDependenciesOverride = (package) => ({
+	'import/no-extraneous-dependencies': [
+		'error',
+		{
+			packageDir: ['.', `./packages/${package}`],
+		},
+	],
+})
+
 /**
  * @type {import('eslint').Linter.Config}
  */
@@ -42,6 +51,14 @@ module.exports = {
 			'warn',
 			{ ignoreArrayIndexes: true, ignore: [0, 1, 2, -1, 10] },
 		],
+		'@typescript-eslint/no-restricted-imports': [
+			'error',
+			{
+				message:
+					"Avoid direct imports from lodash; e.g. import foo from 'lodash/foo' instead of import { foo } from 'lodash'",
+				name: 'lodash',
+			},
+		],
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'@typescript-eslint/member-delimiter-style': 'off',
@@ -58,6 +75,30 @@ module.exports = {
 		'vue/require-default-prop': 'off',
 	},
 	overrides: [
+		{
+			files: ['packages/kotti-ui/**/*.{ts,js,vue}'],
+			rules: {
+				...noExtraneousDependenciesOverride('kotti-ui'),
+			},
+		},
+		{
+			files: ['packages/documentation/**/*.{ts,js,vue}'],
+			rules: {
+				...noExtraneousDependenciesOverride('documentation'),
+			},
+		},
+		{
+			files: ['packages/vue-use-tippy/**/*.{ts,vue}'],
+			rules: {
+				...noExtraneousDependenciesOverride('vue-use-tippy'),
+			},
+		},
+		{
+			files: ['packages/yoco/**/*.ts'],
+			rules: {
+				...noExtraneousDependenciesOverride('yoco'),
+			},
+		},
 		{
 			files: ['**/*.vue', '**/*.js'],
 			rules: {},

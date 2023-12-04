@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import { pick } from 'lodash'
+import pick from 'lodash/pick'
 
 import { makeProps } from '../../make-props'
 import { KottiComment } from '../types'
