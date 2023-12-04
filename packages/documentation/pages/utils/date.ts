@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import type { OpUnitType } from 'dayjs'
+import type { ManipulateType } from 'dayjs'
 
 import { ISO8601 } from '../../../kotti-ui/source/constants'
 
@@ -17,5 +17,7 @@ export const today = (templateFormat: string = ISO8601): string =>
  * @param templateFormat dayjs compatible datetime format string
  * @returns formatted date
  */
-export const getLast = (unit: OpUnitType, templateFormat: string = ISO8601) =>
-	dayjs().subtract(1, unit).format(templateFormat)
+export const getLast = (
+	unit: ManipulateType,
+	templateFormat: string = ISO8601,
+) => dayjs().subtract(1, unit).format(templateFormat)
