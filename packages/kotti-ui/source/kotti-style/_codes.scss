@@ -15,11 +15,15 @@ pre {
 	color: inherit;
 
 	code {
-		flex: 1;
-		flex-direction: column;
-		justify-content: space-between;
 		padding: unset;
 		overflow: unset;
+
+		&[data-lang] {
+			display: flex;
+			flex: 1;
+			flex-direction: row;
+			justify-content: space-between;
+		}
 
 		&[data-lang]::after {
 			align-self: flex-start;
@@ -32,8 +36,6 @@ code {
 	@extend %code-base;
 
 	position: relative;
-	display: inline-flex;
-	gap: var(--unit-1);
 	padding: var(--unit-h);
 	overflow: hidden;
 	font-size: 85%;
