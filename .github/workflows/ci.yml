@@ -10,9 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Setup NODE
+        uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
+      - if: matrix.node-version >= '17'
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - uses: actions/cache@v2
         with:
           path: |
@@ -26,9 +29,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Setup NODE
+        uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
+      - if: matrix.node-version >= '17'
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - uses: actions/cache@v2
         with:
           path: |
@@ -46,9 +52,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Setup NODE
+        uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
+      - if: matrix.node-version >= '17'
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - uses: actions/cache@v2
         with:
           path: |
@@ -62,9 +71,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Setup NODE
+        uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
+      - if: matrix.node-version >= '17'
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - uses: actions/cache@v2
         with:
           path: |
@@ -78,9 +90,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Setup NODE
+        uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
+      - if: matrix.node-version >= '17'
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - uses: actions/cache@v2
         with:
           path: |

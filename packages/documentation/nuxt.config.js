@@ -48,6 +48,7 @@ const config = {
 			},
 		},
 		extend(config) {
+			config.output.hashFunction = 'sha256'
 			config.plugins.push(new CaseSensitivePathsPlugin())
 		},
 	},

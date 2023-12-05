@@ -153,6 +153,16 @@ yarn run check:stylelint
 yarn run test
 ```
 
+### Documentation Deployment & CI
+
+CI jobs config scripts can be found under .github/workflows
+
+Every PR is hosted on [Render](https://render.com) with a link on the pull request conversation. Docs from `master` are additionally hosted on [GitHub Pages](https://pages.github.com/).
+
+node-version: Currently we specifically target LTS v18 as the used node-version
+
+> `.nvmrc` is essential to override the node-version used by Render
+
 ### Publishing
 
 #### Kotti
