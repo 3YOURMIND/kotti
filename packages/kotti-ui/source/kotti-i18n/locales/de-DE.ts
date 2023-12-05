@@ -13,6 +13,8 @@ namespace Common {
 		LESS_THAN: 'ist kleiner als',
 		LESS_THAN_OR_EQUAL: 'ist kleiner oder gleich',
 	}
+
+	export const restrictedAccess = 'Eingeschränkter Zugang'
 }
 
 export const deDE: KottiI18n.Messages = {
@@ -25,8 +27,8 @@ export const deDE: KottiI18n.Messages = {
 		deleteButton: 'Löschen',
 		editButton: 'Bearbeiten',
 		editedLabel: 'Bearbeitet',
-		internalLabel: 'Eingeschränkter Zugang',
-		lockedHelpText: 'Eingeschränkter Zugang',
+		internalLabel: Common.restrictedAccess,
+		lockedHelpText: Common.restrictedAccess,
 		postButton: 'Beitragen',
 		replyButton: 'Antworten',
 		replyToLabel: 'Antwort an',
@@ -50,12 +52,14 @@ export const deDE: KottiI18n.Messages = {
 		label: {
 			capture: 'Foto machen',
 			error: 'Error',
+			internal: Common.restrictedAccess,
 			review: 'Überprüfen',
 			unknown: 'Unbekannt',
 		},
 		statusMsg: {
 			CANCELED: 'Abgebrochen',
 			ERROR: 'Hochladen fehlgeschlagen, bitte versuchen Sie es erneut',
+			HIDDEN: '',
 			INVALID: 'Ungültig',
 			NOT_STARTED: 'Nicht angefangen',
 			UPLOADED: 'Hochgeladen',

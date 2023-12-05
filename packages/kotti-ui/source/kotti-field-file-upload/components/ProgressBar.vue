@@ -50,7 +50,7 @@ export default defineComponent({
 		height: 100%;
 		background-color: var(--interactive-03);
 		border-radius: var(--unit-1);
-		transition: width 500ms ease-in-out;
+		transition: width 50ms ease-in-out;
 
 		&--is-error {
 			background-color: var(--support-error);

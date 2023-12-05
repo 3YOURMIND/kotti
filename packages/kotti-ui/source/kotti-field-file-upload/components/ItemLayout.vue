@@ -1,8 +1,17 @@
 <template>
-	<div class="kt-field-file-upload-item">
+	<div :class="wrapperClasses">
 		<div class="kt-field-file-upload-item__wrapper">
 			<div>
-				<div class="kt-field-file-upload-item__name" v-text="name" />
+				<div class="kt-field-file-upload-item__name">
+					<span v-text="name" />
+					<span
+						v-if="isInternal"
+						class="kt-field-file-upload-item__is-internal-tag"
+					>
+						<i class="yoco" v-text="Yoco.Icon.PERMISSION_LOCKED" />
+						<span v-text="translations.label.internal" />
+					</span>
+				</div>
 				<div class="kt-field-file-upload-item__description">
 					<slot name="description" />
 				</div>
@@ -16,12 +25,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { Yoco } from '@3yourmind/yoco'
+import { defineComponent, computed } from '@vue/composition-api'
+
+import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 
 export default defineComponent({
 	name: 'ItemLayout',
 	props: {
+		isInternal: { default: false, type: Boolean },
 		name: { required: true, type: String },
+	},
+	setup(props) {
+		return {
+			translations: useTranslationNamespace('KtFieldFileUpload'),
+			wrapperClasses: computed(() => ({
+				'kt-field-file-upload-item': true,
+				'kt-field-file-upload-item--is-internal': props.isInternal,
+			})),
+			Yoco,
+		}
 	},
 })
 </script>
@@ -51,6 +74,25 @@ export default defineComponent({
 			margin-right: var(--unit-1);
 			font-size: calc(var(--unit-4) + var(--unit-h));
 			color: var(--support-error);
+		}
+	}
+
+	&--is-internal {
+		background-color: var(--ui-01);
+	}
+
+	&__is-internal-tag {
+		display: inline-flex;
+		align-items: baseline;
+		padding: 0;
+		margin-left: 0;
+		font-size: calc(var(--unit-3) + var(--unit-h));
+		color: var(--text-02);
+
+		.yoco {
+			align-self: center;
+			margin-right: var(--unit-1);
+			font-size: var(--unit-4);
 		}
 	}
 

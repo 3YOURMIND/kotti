@@ -1,5 +1,9 @@
 <template>
-	<ItemLayout class="pre-uploaded-item" :name="fileInfo.name">
+	<ItemLayout
+		class="pre-uploaded-item"
+		:isInternal="fileInfo.isInternal"
+		:name="fileInfo.name"
+	>
 		<template #description>
 			<i v-if="isInvalid" class="yoco" v-text="Yoco.Icon.CIRCLE_ATTENTION" />
 			{{ description }}

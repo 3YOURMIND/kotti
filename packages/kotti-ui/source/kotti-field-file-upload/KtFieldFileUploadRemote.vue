@@ -112,6 +112,10 @@ export default defineComponent({
 		const filesList = computed<KottiFieldFileUploadRemote.FileInfo[]>(() =>
 			field.currentValue
 				.filter((fileItem) => !preUploadedFiles.has(fileItem.id))
+				.filter(
+					(fileItem) =>
+						fileItem.status !== KottiFieldFileUploadRemote.Status.HIDDEN,
+				)
 				.map((fileItem) => {
 					const fileInfo = buildFileInfo({
 						extensions: props.extensions,
@@ -147,6 +151,23 @@ export default defineComponent({
 				newUploadedFiles.add(payload.id)
 		}
 
+		const setStatuses = (
+			payload: Map<string, KottiFieldFileUploadRemote.Status>,
+		) => {
+			field.setValue(
+				field.currentValue.map((fileItem) => {
+					const status = payload.get(fileItem.id)
+					return status ? { ...fileItem, status } : fileItem
+				}),
+				{ forceUpdate: true },
+			)
+
+			Object.entries(payload).forEach(([id, status]) => {
+				if (status === KottiFieldFileUploadRemote.Status.UPLOADED)
+					newUploadedFiles.add(id)
+			})
+		}
+
 		onBeforeMount(() => {
 			field.currentValue.forEach((fileItem) => {
 				if (
@@ -163,26 +184,27 @@ export default defineComponent({
 		watch(
 			() => props.payload,
 			(newPayload, oldPayload) => {
-				Object.entries(newPayload).forEach(([id, { status }]) => {
-					const oldStatus = oldPayload[id]?.status
+				const newStatuses = new Map(
+					Object.entries(newPayload)
+						.filter(([id, { status }]) => oldPayload[id]?.status !== status)
+						.filter(([id, _]) => {
+							const fileItemStatus =
+								field.currentValue.find((fileItem) => fileItem.id === id)
+									?.status ?? null
 
-					if (oldStatus && status === oldStatus) return
-
-					const fileItemStatus =
-						field.currentValue.find((fileItem) => fileItem.id === id)?.status ??
-						null
-
-					if (
-						fileItemStatus !== null &&
-						![
-							KottiFieldFileUploadRemote.Status.INVALID,
-							KottiFieldFileUploadRemote.Status.NOT_STARTED,
-							KottiFieldFileUploadRemote.Status.UPLOADED,
-							KottiFieldFileUploadRemote.Status.UPLOADED_WITH_ERROR,
-						].includes(fileItemStatus)
-					)
-						setStatus({ id, status })
-				})
+							return (
+								fileItemStatus !== null &&
+								![
+									KottiFieldFileUploadRemote.Status.INVALID,
+									KottiFieldFileUploadRemote.Status.NOT_STARTED,
+									KottiFieldFileUploadRemote.Status.UPLOADED,
+									KottiFieldFileUploadRemote.Status.UPLOADED_WITH_ERROR,
+								].includes(fileItemStatus)
+							)
+						})
+						.map(([id, { status }]) => [id, status]),
+				)
+				setStatuses(newStatuses)
 			},
 			{ flush: 'post' },
 		)
