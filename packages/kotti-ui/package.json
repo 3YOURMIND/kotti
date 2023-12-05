@@ -83,5 +83,5 @@
 	],
 	"style": "dist/styles.css",
 	"types": "dist/esm/index.d.ts",
-	"version": "5.3.3"
+	"version": "5.4.0"
 }
