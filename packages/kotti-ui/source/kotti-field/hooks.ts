@@ -70,11 +70,13 @@ const useValue = <DATA_TYPE>({
 	context,
 	emit,
 	isDisabled,
+	isLoading,
 	isEmpty,
 	props,
 }: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'emit' | 'isEmpty' | 'props'> & {
 	context: KottiForm.Context | null
 	isDisabled: Ref<boolean>
+	isLoading: Ref<boolean>
 }) => {
 	watch(
 		() => props.formKey,
@@ -114,7 +116,7 @@ const useValue = <DATA_TYPE>({
 		 * @param options defines forceUpdate to set value even when the field is disabled
 		 */
 		setValue: ref((newValue: unknown, options?: { forceUpdate: boolean }) => {
-			if (isDisabled.value && !options?.forceUpdate)
+			if ((isDisabled.value || isLoading.value) && !options?.forceUpdate)
 				throw new KtFieldErrors.DisabledSetValueCalled(props)
 
 			if (
@@ -256,6 +258,7 @@ export const useField = <DATA_TYPE>({
 		emit,
 		isEmpty,
 		isDisabled: sharedProperties.isDisabled,
+		isLoading: sharedProperties.isLoading,
 		props,
 	})
 

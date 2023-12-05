@@ -72,7 +72,8 @@ export default defineComponent({
 				forceUpdateKey: forceUpdateKey.value,
 			})),
 			onInput: (newValue: boolean | undefined) => {
-				field.setValue(newValue ?? null)
+				if (!field.isDisabled && !field.isLoading)
+					field.setValue(newValue ?? null)
 
 				forceUpdate()
 			},

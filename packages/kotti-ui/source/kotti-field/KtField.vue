@@ -356,6 +356,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 
 	&__input-container-wrapper-loading {
 		height: 40px !important;
+		margin-bottom: 0 !important;
 	}
 
 	// placeholders for slots

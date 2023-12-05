@@ -188,6 +188,7 @@ export default defineComponent({
 				dataTest: field.inputProps['data-test'],
 				extensions: props.extensions,
 				isDisabled: field.isDisabled,
+				isLoading: field.isLoading,
 				maxFileSize: props.maxFileSize,
 			})),
 			showDropArea,

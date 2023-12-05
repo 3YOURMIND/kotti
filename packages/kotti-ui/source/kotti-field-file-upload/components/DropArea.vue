@@ -35,7 +35,7 @@
 			ref="uploadInputRef"
 			:accept="accept"
 			:data-test="dataTest ? `${dataTest}.input` : undefined"
-			:disabled="isDisabled"
+			:disabled="isDisabled || isLoading"
 			:multiple="allowMultiple"
 			type="file"
 			@change="onSelect"
