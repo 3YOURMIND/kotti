@@ -2,7 +2,6 @@
 	<div class="kt-field">
 		<component
 			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
-			v-show="!field.isLoading"
 			:class="wrapperClasses"
 			@click="$emit('click', $event)"
 			@mousedown="$emit('mousedown', $event)"
@@ -32,7 +31,11 @@
 				class="kt-field__help-description"
 				v-text="field.helpDescription"
 			/>
-			<div class="kt-field__input-container-wrapper">
+			<div
+				v-if="field.isLoading"
+				class="kt-field__input-container-wrapper-loading skeleton rectangle"
+			/>
+			<div v-show="!field.isLoading" class="kt-field__input-container-wrapper">
 				<div
 					v-if="$slots['container-left']"
 					class="kt-field__input-container__prefix"
@@ -98,13 +101,6 @@
 				{{ validationText }}
 			</div>
 		</component>
-		<div v-if="field.isLoading" class="kt-field__wrapper">
-			<div
-				v-if="hasLabel || hasHelpText"
-				class="kt-field__loading__header skeleton rectangle"
-			/>
-			<div class="kt-field__loading__input-container skeleton rectangle" />
-		</div>
 	</div>
 </template>
 
@@ -241,17 +237,6 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		margin-bottom: 0.8rem;
 	}
 
-	&__loading {
-		&__header {
-			max-width: 200px;
-			height: 20px !important;
-		}
-
-		&__input-container {
-			height: 40px !important;
-		}
-	}
-
 	&__wrapper {
 		display: flex;
 		flex-direction: column;
@@ -367,6 +352,10 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		display: flex;
 		gap: var(--unit-2);
 		align-items: stretch;
+	}
+
+	&__input-container-wrapper-loading {
+		height: 40px !important;
 	}
 
 	// placeholders for slots
