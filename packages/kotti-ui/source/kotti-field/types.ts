@@ -138,7 +138,7 @@ export namespace KottiField {
 		isDisabled: z.boolean().default(false),
 
 		/**
-		 * Show a skeleton in place of the field
+		 * Show a skeleton in place of the input area of the field
 		 */
 		isLoading: z.boolean().default(false),
 
