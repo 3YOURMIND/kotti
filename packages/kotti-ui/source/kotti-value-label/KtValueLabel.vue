@@ -3,9 +3,9 @@
 		<template v-if="isLoading">
 			<div
 				v-if="showHeader || $slots.helpText"
-				class="kt-value-label-loading__header skeleton rectangle"
+				class="kt-value-label-loading__header skeleton rectangle md"
 			/>
-			<div class="kt-value-label-loading__value skeleton rectangle" />
+			<div class="kt-value-label-loading__value skeleton rectangle lg" />
 		</template>
 		<template v-else>
 			<div v-if="showHeader || $slots.helpText" class="kt-value-label__header">
@@ -105,7 +105,7 @@ export default defineComponent<KottiValueLabel.PropsInternal>({
 	}
 
 	> *:not(:last-child) {
-		margin-bottom: var(--unit-2);
+		margin-bottom: var(--unit-1);
 	}
 
 	&__header {
