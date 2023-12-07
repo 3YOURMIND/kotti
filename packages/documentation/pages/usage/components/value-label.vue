@@ -108,6 +108,17 @@
 				</div>
 			</KtForm>
 		</KtI18nContext>
+		<h2>Usage</h2>
+		<p>
+			- When stacking labels on top of each other, create a layout that ensure a
+			min margin of <code>16px</code> (<code>unit-4</code>) between the various
+			value labels.
+		</p>
+		<p>
+			- The last row of the layout where value labels are stacked should not
+			contain any extra margin → ensure a good margin is handled on the
+			different sections of the more general layout.
+		</p>
 	</div>
 </template>
 
