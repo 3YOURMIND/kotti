@@ -1,11 +1,6 @@
 import { CompnentRef, FieldInlineEditElement } from './types'
 
-export const isEventTarget = (
-	component: CompnentRef,
-	eventTarget: EventTarget | null,
-) =>
-	component?.$el === eventTarget ||
-	(eventTarget instanceof HTMLElement && component?.$el.contains(eventTarget))
+
 
 export const isInFocus = (component: HTMLElement | null) =>
 	document.activeElement instanceof HTMLElement &&

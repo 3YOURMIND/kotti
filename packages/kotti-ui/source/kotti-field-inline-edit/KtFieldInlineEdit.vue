@@ -50,6 +50,7 @@ import { KottiField } from '../kotti-field/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Nullable } from '../types/utilities'
+import { isOrContainsEventTarget } from '../utilities'
 
 import ConfirmButton from './components/ConfirmButton.vue'
 import EditIcon from './components/EditIcon.vue'
@@ -60,7 +61,7 @@ import {
 	KottiFieldInlineEdit,
 	CompnentRef,
 } from './types'
-import { blurField, isEventTarget, isInFocus } from './utils'
+import { blurField, isInFocus } from './utils'
 
 export default defineComponent({
 	name: 'KtFieldInlineEdit',
@@ -174,7 +175,10 @@ export default defineComponent({
 		const onClick = (event: MouseEvent | KeyboardEvent) => {
 			if (event.target === null || props.isDisabled) return
 
-			const isClickOutside = !isEventTarget(fieldRef.value, event.target)
+			const isClickOutside = !isOrContainsEventTarget(
+				fieldRef.value,
+				event.target,
+			)
 
 			lastEventTarget.value = event.target
 
@@ -185,11 +189,14 @@ export default defineComponent({
 		const onFocusChange = (event: Event) => {
 			if (event.target === null || props.isDisabled) return
 
-			const wasFieldTriggered = isEventTarget(
+			const wasFieldTriggered = isOrContainsEventTarget(
 				fieldRef.value,
 				lastEventTarget.value,
 			)
-			const isFieldTriggered = isEventTarget(fieldRef.value, event.target)
+			const isFieldTriggered = isOrContainsEventTarget(
+				fieldRef.value,
+				event.target,
+			)
 
 			lastEventTarget.value = event.target
 
@@ -213,7 +220,7 @@ export default defineComponent({
 
 		onBeforeMount(() => {
 			window.addEventListener('click', onClick)
-			window.addEventListener('focus', onFocusChange, true)
+			window.addEventListener('focus', onFocusChange, { capture: true })
 		})
 
 		onUnmounted(() => {

@@ -18,6 +18,27 @@ export const isBrowser = Boolean(
 )
 
 /**
+ * Checks if the given HTML element or Vue component is/contains the specified event target
+ * @param component The HTML element or Vue component
+ * @param eventTarget The target of the event being checked
+ *
+ * This function doesn't work if the event target is (inside) an SVG Element
+ * {@link https://web.archive.org/web/20231208174614/https://gomakethings.com/detecting-click-events-on-svgs-with-vanilla-js-event-delegation/}
+ */
+export const isOrContainsEventTarget = (
+	component: { $el: HTMLElement } | HTMLElement | null,
+	eventTarget: EventTarget | null,
+): boolean => {
+	if (component === null) return false
+	const element = '$el' in component ? component.$el : component
+
+	return (
+		element === eventTarget ||
+		(eventTarget instanceof HTMLElement && element.contains(eventTarget))
+	)
+}
+
+/**
  * Takes a Vue Component and assigns an install function to it
  * this makes sure that it can be used with Vue.use(component)
  */

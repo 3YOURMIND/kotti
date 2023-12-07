@@ -67,7 +67,11 @@ import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
-import { DECIMAL_SEPARATORS_CHARACTER_SET, isNumberInRange } from '../utilities'
+import {
+	DECIMAL_SEPARATORS_CHARACTER_SET,
+	isOrContainsEventTarget,
+	isNumberInRange,
+} from '../utilities'
 
 import {
 	KOTTI_FIELD_NUMBER_SUPPORTS,
@@ -76,14 +80,6 @@ import {
 } from './constants'
 import { KottiFieldNumber } from './types'
 import { isStepMultiple, toNumber, toString } from './utilities'
-
-export const isEventTarget = (
-	component: HTMLElement | null,
-	eventTarget: EventTarget | null,
-) =>
-	(component === eventTarget ||
-		(eventTarget instanceof HTMLElement && component?.contains(eventTarget))) ??
-	false
 
 export default defineComponent({
 	name: 'KtFieldNumber',
@@ -252,9 +248,9 @@ export default defineComponent({
 		 */
 		const lastEventTarget = ref<EventTarget | null>(null)
 		const isFieldTargeted = (target: Event['target'] | null): boolean =>
-			isEventTarget(inputRef.value, target) ||
-			isEventTarget(decrementButtonRef.value, target) ||
-			isEventTarget(incrementButtonRef.value, target)
+			isOrContainsEventTarget(inputRef.value, target) ||
+			isOrContainsEventTarget(decrementButtonRef.value, target) ||
+			isOrContainsEventTarget(incrementButtonRef.value, target)
 
 		const onClickOrFocusChange = (event: Event) => {
 			if (event.target === null || props.isDisabled) return

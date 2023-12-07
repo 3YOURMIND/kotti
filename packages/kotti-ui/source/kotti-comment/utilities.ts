@@ -11,17 +11,6 @@ export const defaultPostEscapeParser = (message: string) =>
 	message.replace(/\n/g, '</br>')
 
 /**
- * Checks whether `element` or any of its children is the event target
- */
-export const isEventTarget = (
-	element: HTMLElement | null,
-	eventTarget: EventTarget | null,
-): boolean =>
-	element === eventTarget ||
-	(eventTarget instanceof HTMLElement &&
-		(element?.contains(eventTarget) ?? false))
-
-/**
  * Checks whether `element` or any of its children is in focus
  */
 export const isInFocus = (element: HTMLElement | null): boolean =>
