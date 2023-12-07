@@ -60,9 +60,10 @@ import {
 import { KottiButton } from '../../kotti-button/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
+import { isOrContainsEventTarget } from '../../utilities'
 import { useResizeTextarea } from '../hooks'
 import { KottiComment } from '../types'
-import { blurElement, isEventTarget, isInFocus } from '../utilities'
+import { blurElement, isInFocus } from '../utilities'
 
 export default defineComponent({
 	name: 'CommentTextArea',
@@ -90,7 +91,10 @@ export default defineComponent({
 		const onClick = (event: MouseEvent | KeyboardEvent) => {
 			if (event.target === null) return
 
-			const isClickOutside = !isEventTarget(containerRef.value, event.target)
+			const isClickOutside = !isOrContainsEventTarget(
+				containerRef.value,
+				event.target,
+			)
 
 			if (isClickOutside) onCancel()
 			else focusTextarea()
