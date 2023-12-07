@@ -59,7 +59,7 @@ import { useAdjustHeight, usePreventConfirm } from './hooks'
 import {
 	FieldInlineEditElement,
 	KottiFieldInlineEdit,
-	CompnentRef,
+	ComponentRef,
 } from './types'
 import { blurField, isInFocus } from './utils'
 
@@ -75,7 +75,7 @@ export default defineComponent({
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
-		const fieldRef = ref<CompnentRef>(null)
+		const fieldRef = ref<ComponentRef>(null)
 		const inputRef = ref<Nullable<FieldInlineEditElement>>(null)
 
 		const isEditing = ref(false)
