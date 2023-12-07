@@ -1,13 +1,11 @@
-import { CompnentRef, FieldInlineEditElement } from './types'
-
-
+import { ComponentRef, FieldInlineEditElement } from './types'
 
 export const isInFocus = (component: HTMLElement | null) =>
 	document.activeElement instanceof HTMLElement &&
 	(document.activeElement === component ||
 		component?.contains(document.activeElement))
 
-export const blurField = (fieldRef: CompnentRef) => {
+export const blurField = (fieldRef: ComponentRef) => {
 	if (
 		document.activeElement instanceof HTMLElement &&
 		isInFocus(fieldRef?.$el ?? null)
