@@ -1,5 +1,6 @@
 <template>
 	<KtField
+		clickableContainerSelector=".kt-field-toggle"
 		v-bind="{ field: fieldProps }"
 		:helpTextSlot="showInnerSuffix ? undefined : $slots.helpText"
 	>

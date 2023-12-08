@@ -3,13 +3,14 @@
 		<component
 			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'label'"
 			:class="wrapperClasses"
-			@click="$emit('click', $event)"
+			@click="onClick"
 			@mousedown="$emit('mousedown', $event)"
 		>
 			<div v-if="hasLabel || hasHelpText" class="kt-field__header">
 				<component
 					:is="isGroup ? 'legend' : 'div'"
 					v-if="hasLabel"
+					ref="fieldLabelRef"
 					class="kt-field__header__label"
 				>
 					<span class="kt-field__header__label__text" v-text="field.label" />
@@ -29,11 +30,13 @@
 			<div
 				v-if="field.helpDescription"
 				class="kt-field__help-description"
+				@click.prevent
 				v-text="field.helpDescription"
 			/>
 			<div
 				v-if="field.isLoading"
 				class="kt-field__input-container-wrapper-loading skeleton rectangle"
+				@click.prevent
 			/>
 			<div v-show="!field.isLoading" class="kt-field__input-container-wrapper">
 				<div
@@ -96,6 +99,7 @@
 			<div
 				v-if="!field.isLoading && showValidation && validationText !== null"
 				class="kt-field__validation-text"
+				@click.prevent
 			>
 				<i class="yoco" v-text="validationTextIcon" />
 				{{ validationText }}
@@ -106,7 +110,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, computed, ref } from '@vue/composition-api'
+import { defineComponent, computed, ref, PropType } from '@vue/composition-api'
 import { VNode } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -118,29 +122,35 @@ export default defineComponent({
 	name: 'KtField',
 	components: { FieldHelpText },
 	props: {
-		field: { required: true, type: Object },
+		clickableContainerSelector: {
+			default: '.kt-field__input-container-wrapper',
+			type: String,
+		},
+		field: {
+			required: true,
+			type: Object as PropType<KottiField.Hook.Returns<unknown>>,
+		},
 		/**
 		 * What’s the appropriate value for an empty field of this data type?
 		 * Used when clearing the field. Most likely either null or []
 		 */
-		getEmptyValue: { default: null, type: Function },
-		helpTextSlot: { default: () => [], type: Array },
-		isComponent: { default: null, type: String },
+		getEmptyValue: { default: null, type: Function as PropType<() => unknown> },
+		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
+		isComponent: { default: null, type: String as PropType<string | null> },
 		isGroup: { default: false, type: Boolean },
 	},
-	setup(props: {
-		field: KottiField.Hook.Returns<unknown>
-		helpTextSlot: VNode[]
-		isComponent: string | null
-		isGroup: boolean
-		getEmptyValue: () => unknown
-	}) {
+	setup(props, { emit }) {
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === 'empty'),
 		)
 
 		const translations = useTranslationNamespace('KtFields')
+
+		/**
+		 * HACK: This template ref is used by child components, refactor with caution if needed
+		 */
+		const fieldLabelRef = ref<HTMLDivElement | HTMLLegendElement | null>(null)
 
 		return {
 			affixClasses: computed(() => (modifications: string[]) => [
@@ -149,6 +159,7 @@ export default defineComponent({
 					(modification) => `kt-field__input-container__affix--${modification}`,
 				),
 			]),
+			fieldLabelRef,
 			handleClear: () => {
 				/**
 				 * useSupports hook returns null if hideClear is not supported on ktField component
@@ -186,6 +197,23 @@ export default defineComponent({
 						props.field.isEmpty,
 				}
 			}),
+			onClick: (event: Event) => {
+				/**
+				 * clicks on whitespace, helpDescription/Text, valdiation, etc are disregarded.
+				 * Only clicks on `<input />` or label are allowed.
+				 */
+				const isInClickableArea = (event.target as HTMLElement).closest(
+					`${[props.clickableContainerSelector, '.kt-field__header__label']
+						.filter(Boolean)
+						.join(', ')}`,
+				)
+
+				if (!isInClickableArea) {
+					event.preventDefault()
+				}
+
+				emit('click', event)
+			},
 			showValidation,
 			validationText: computed(() =>
 				props.field.validation.type === 'empty'
@@ -329,6 +357,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 			display: flex;
 			align-items: center;
 			color: var(--text-02);
+			cursor: pointer;
 
 			&__suffix {
 				margin-left: 0.2rem;
