@@ -1,16 +1,20 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { computed, inject, ref } from '@vue/composition-api'
+import { Ref, computed, inject, ref } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
 import { roundArrow } from 'tippy.js'
+import { Props as TippyProps } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 import { KottiField } from '../../kotti-field/types'
 import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
 import { sameWidth } from '../utils/tippy-utils'
 
-export const useSelectTippy = <T>(field: KottiField.Hook.Returns<T>) => {
+export const useSelectTippy = <T>(
+	field: KottiField.Hook.Returns<T>,
+	triggerTargets: Ref<TippyProps['triggerTarget']>,
+) => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const tippyTriggerRef = ref<any | null>(null)
+	const tippyRef = ref<any | null>(null)
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const tippyContentRef = ref<any | null>(null)
 
@@ -20,7 +24,7 @@ export const useSelectTippy = <T>(field: KottiField.Hook.Returns<T>) => {
 	const isInPopover = inject(KT_IS_IN_POPOVER, false)
 
 	const { tippy } = useTippy(
-		tippyTriggerRef,
+		tippyRef,
 		computed(() => ({
 			/**
 			 * if inside a popover, we want to stay inside the same CSS stacking context
@@ -57,6 +61,7 @@ export const useSelectTippy = <T>(field: KottiField.Hook.Returns<T>) => {
 			},
 			theme: 'light-border',
 			trigger: 'click focusin',
+			triggerTarget: triggerTargets.value,
 		})),
 	)
 
@@ -76,6 +81,6 @@ export const useSelectTippy = <T>(field: KottiField.Hook.Returns<T>) => {
 		isDropdownOpen,
 		setIsDropdownOpen,
 		tippyContentRef,
-		tippyTriggerRef,
+		tippyRef,
 	}
 }

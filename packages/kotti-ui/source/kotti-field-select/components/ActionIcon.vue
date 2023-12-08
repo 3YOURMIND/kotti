@@ -4,7 +4,7 @@
 			v-if="showClear"
 			class="yoco"
 			role="button"
-			@click.stop="handleClear()"
+			@click.stop="handleClear"
 			v-text="Yoco.Icon.CLOSE"
 		/>
 		<i
