@@ -10,11 +10,7 @@
 			slot="container"
 			class="kt-field__input-container"
 		>
-			<ElDate
-				ref="elDateRef"
-				v-bind="elDateTimePickerProps"
-				@input="onChange"
-			/>
+			<ElDate ref="elDateRef" v-bind="elDateTimePickerProps" @input="onInput" />
 		</div>
 	</KtField>
 </template>
@@ -94,7 +90,7 @@ export default defineComponent({
 					appendToBody: !isInPopover,
 					clearable: !field.hideClear,
 					'data-test': field.inputProps['data-test'],
-					disabled: field.isDisabled,
+					disabled: field.isDisabled || field.isLoading,
 					pickerOptions: pickerOptions.value,
 					placeholder: props.placeholder ?? '',
 					type: 'datetime',
@@ -104,7 +100,9 @@ export default defineComponent({
 			elDateRef,
 			field,
 			inputContainerRef,
-			onChange: (value: KottiFieldDateTime.Value) => field.setValue(value),
+			onInput: (value: KottiFieldDateTime.Value) => {
+				if (!field.isDisabled && !field.isLoading) field.setValue(value)
+			},
 		}
 	},
 })

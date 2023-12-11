@@ -13,7 +13,7 @@
 			<ElDate
 				ref="elDateRef"
 				v-bind="elDateTimeRangePickerProps"
-				@input="onChange"
+				@input="onInput"
 			/>
 		</div>
 	</KtField>
@@ -96,7 +96,7 @@ export default defineComponent({
 					appendToBody: !isInPopover,
 					clearable: !field.hideClear,
 					'data-test': field.inputProps['data-test'],
-					disabled: field.isDisabled,
+					disabled: field.isDisabled || field.isLoading,
 					endPlaceholder: props.placeholder?.[1] ?? '',
 					pickerOptions: pickerOptions.value,
 					startPlaceholder: props.placeholder?.[0] ?? '',
@@ -113,8 +113,10 @@ export default defineComponent({
 			/**
 			 * element-ui emits `null` on clear
 			 */
-			onChange: (value: KottiFieldDateTimeRange.Value | null) =>
-				field.setValue(value === null ? [null, null] : value),
+			onInput: (value: KottiFieldDateTimeRange.Value | null) => {
+				if (!field.isDisabled && !field.isLoading)
+					field.setValue(value === null ? [null, null] : value)
+			},
 		}
 	},
 })

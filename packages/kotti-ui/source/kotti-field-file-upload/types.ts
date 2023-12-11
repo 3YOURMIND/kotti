@@ -90,6 +90,7 @@ export namespace Shared {
 			externalUrl: true,
 			icon: true,
 			isDisabled: true,
+			isLoading: true,
 			maxFileSize: true,
 			tabIndex: true,
 		})

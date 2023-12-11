@@ -44,7 +44,7 @@ export const useSelectTippy = <T>(field: KottiField.Hook.Returns<T>) => {
 				isDropdownOpen.value = false
 			},
 			onShow: () => {
-				if (field.isDisabled) return false
+				if (field.isDisabled || field.isLoading) return false
 
 				// More correct here, don't move to `onShown()`
 				isDropdownMounted.value = true

@@ -14,11 +14,10 @@
 	}
 }
 
-@mixin skeleton-style($bg-x, $bg-y) {
+%skeleton-style {
 	box-sizing: border-box;
 	display: block;
 	width: 100%;
-	margin: 0.4rem 0;
 	line-height: 1px;
 	background: linear-gradient(
 		to left,
@@ -26,29 +25,31 @@
 		$lightgray-400 50%,
 		$lightgray-300 100%
 	);
-	background-size: $bg-x $bg-y;
 	border-radius: 2px;
 	animation: 2s ease-out infinite skeleton-loading;
 }
 
 .skeleton {
 	&.circle {
-		@include skeleton-style(1000px, 1000px);
+		@extend %skeleton-style;
 
 		padding-top: 100%;
+		background-size: 1000px 1000px;
 		border-radius: 100%;
 	}
 
 	&.square {
-		@include skeleton-style(1000px, 1000px);
+		@extend %skeleton-style;
 
 		padding-top: 100%;
+		background-size: 1000px 1000px;
 	}
 
 	&.rectangle {
-		@include skeleton-style(1800px, 1200px);
+		@extend %skeleton-style;
 
 		height: 0.4rem;
+		background-size: 1800px 1200px;
 
 		&.sm {
 			height: 0.4rem;
