@@ -37,7 +37,6 @@
 				@click="hideMobileMenu"
 			>
 				<NavbarMenu
-					:isNarrow="isNarrow"
 					:sections="sections"
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
@@ -265,6 +264,8 @@ $narrow-navbar-width: 3.4rem;
 	}
 
 	&--narrow {
+		// Needed to make the expanded user menu fully visible
+		z-index: 5;
 		flex: 0 0 $narrow-navbar-width;
 
 		.kt-navbar-wrapper {
