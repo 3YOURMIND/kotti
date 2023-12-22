@@ -152,6 +152,7 @@ export namespace KottiComment {
 
 	export type Translations = {
 		cancelMessage: string
+		clickToCancelLabel: string
 		deleteButton: string
 		editButton: string
 		editedLabel: string

@@ -23,7 +23,8 @@ export const deDE: KottiI18n.Messages = {
 		expandCloseLabel: 'Schließen',
 	},
 	KtComment: {
-		cancelMessage: 'Drücken Sie die Esc-Taste, um abzubrechen',
+		cancelMessage: 'Drücken Sie die Esc-Taste oder',
+		clickToCancelLabel: 'klicken Sie zum Abbrechen',
 		deleteButton: 'Löschen',
 		editButton: 'Bearbeiten',
 		editedLabel: 'Bearbeitet',

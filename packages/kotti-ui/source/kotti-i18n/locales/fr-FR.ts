@@ -23,7 +23,8 @@ export const frFR: KottiI18n.Messages = {
 		expandCloseLabel: 'Fermer',
 	},
 	KtComment: {
-		cancelMessage: 'Appuyez sur la touche Esc pour annuler',
+		cancelMessage: 'Appuyez sur la touche Esc ou',
+		clickToCancelLabel: 'cliquez pour annuler',
 		deleteButton: 'Effacer',
 		editButton: 'Modifier',
 		editedLabel: 'Édité',
