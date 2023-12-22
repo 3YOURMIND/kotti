@@ -9,6 +9,7 @@
 					collapseExtensionsAfter,
 					externalUrl,
 					icon,
+					inputId,
 					tabIndex,
 				}"
 				@addFiles="onAddFiles"
@@ -24,7 +25,7 @@
 					/>
 				</template>
 			</DropArea>
-			<div v-if="filesList.length" :style="filesListStyle" @click.stop.prevent>
+			<div v-if="filesList.length" :style="filesListStyle">
 				<FileItem
 					v-for="fileInfo in filesList"
 					v-bind="{
@@ -38,7 +39,6 @@
 			<div
 				v-if="preUploadedFilesList.length"
 				:style="preUploadedFilesListStyle"
-				@click.stop.prevent
 			>
 				<PreUploadedFileItem
 					v-for="fileInfo in preUploadedFilesList"
@@ -146,6 +146,7 @@ export default defineComponent({
 			filesListStyle: computed(() =>
 				showDropArea.value ? { 'padding-top': 'var(--unit-4)' } : undefined,
 			),
+			inputId: computed(() => field.inputProps.id),
 			onAddFiles: (value: Shared.Events.AddFiles) => {
 				if (props.allowMultiple)
 					field.setValue([

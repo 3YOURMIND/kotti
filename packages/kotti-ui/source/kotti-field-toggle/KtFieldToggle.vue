@@ -10,9 +10,10 @@
 				:isDisabled="fieldProps.isDisabled"
 				:type="type"
 				:value="fieldProps.currentValue"
+				@click="onClick"
 				@input="onInput"
 			>
-				<div class="kt-field-toggle__content">
+				<div class="kt-field-toggle__content" @click="onClick">
 					<slot name="default" :value="fieldProps.currentValue" />
 					<ToggleInnerSuffix
 						v-if="showInnerSuffix"
@@ -71,6 +72,10 @@ export default defineComponent({
 				...field.inputProps,
 				forceUpdateKey: forceUpdateKey.value,
 			})),
+			onClick: () => {
+				const inputEl = document.getElementById(field.inputProps.id)
+				inputEl?.click()
+			},
 			onInput: (newValue: boolean | undefined) => {
 				if (!field.isDisabled && !field.isLoading)
 					field.setValue(newValue ?? null)

@@ -63,7 +63,7 @@ import {
 import Big from 'big.js'
 
 import { KtField } from '../kotti-field'
-import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { useFocusInput, useField, useForceUpdate } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
@@ -93,6 +93,7 @@ export default defineComponent({
 			supports: KOTTI_FIELD_NUMBER_SUPPORTS,
 		})
 
+		const { focusInput } = useFocusInput(field.inputProps.id)
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 
 		const i18nContext = useI18nContext()
@@ -225,6 +226,7 @@ export default defineComponent({
 						: props.minimum ?? props.maximum ?? 0
 					: Big(field.currentValue).minus(props.step).toNumber(),
 			)
+			focusInput()
 		}
 
 		const incrementValue = () => {
@@ -237,6 +239,7 @@ export default defineComponent({
 						: props.minimum ?? props.maximum ?? 0
 					: Big(field.currentValue).add(props.step).toNumber(),
 			)
+			focusInput()
 		}
 
 		const wrapperRef = ref<HTMLDivElement | null>(null)

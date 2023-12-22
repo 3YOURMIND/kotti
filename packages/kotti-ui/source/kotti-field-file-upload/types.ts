@@ -82,18 +82,22 @@ export namespace Shared {
 	}
 
 	export namespace DropArea {
-		export const schema = propsSchema.pick({
-			allowMultiple: true,
-			collapseExtensionsAfter: true,
-			dataTest: true,
-			extensions: true,
-			externalUrl: true,
-			icon: true,
-			isDisabled: true,
-			isLoading: true,
-			maxFileSize: true,
-			tabIndex: true,
-		})
+		export const schema = propsSchema
+			.pick({
+				allowMultiple: true,
+				collapseExtensionsAfter: true,
+				dataTest: true,
+				extensions: true,
+				externalUrl: true,
+				icon: true,
+				isDisabled: true,
+				isLoading: true,
+				maxFileSize: true,
+				tabIndex: true,
+			})
+			.extend({
+				inputId: z.string(),
+			})
 		export type Props = z.output<typeof schema>
 	}
 

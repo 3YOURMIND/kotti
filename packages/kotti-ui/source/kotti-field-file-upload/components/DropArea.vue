@@ -3,11 +3,12 @@
 		:class="classes"
 		:data-test="dataTest ? `${dataTest}.dropArea` : undefined"
 		:tabIndex="_tabIndex"
+		@click.stop="onTriggerInput"
 		@dragleave.stop.prevent="onDragLeave"
 		@dragover.stop.prevent="onDragOver"
 		@drop.stop.prevent="onDrop"
-		@keydown.enter.stop.prevent="uploadInputRef.click()"
-		@keydown.space.stop.prevent="uploadInputRef.click()"
+		@keydown.enter.stop.prevent="onTriggerInput"
+		@keydown.space.stop.prevent="onTriggerInput"
 		@mouseenter.stop.prevent="isHovering = true"
 		@mouseleave.stop.prevent="isHovering = false"
 	>
@@ -33,11 +34,7 @@
 		<input
 			v-show="false"
 			ref="uploadInputRef"
-			:accept="accept"
-			:data-test="dataTest ? `${dataTest}.input` : undefined"
-			:disabled="isDisabled || isLoading"
-			:multiple="allowMultiple"
-			type="file"
+			v-bind="inputProps"
 			@change="onSelect"
 		/>
 		<div
@@ -110,7 +107,6 @@ export default defineComponent({
 
 		return {
 			_tabIndex: computed(() => (props.isDisabled ? -1 : props.tabIndex ?? 0)),
-			accept: computed(() => buildAcceptString(props.extensions)),
 			classes: computed(() => ({
 				'kt-field-file-upload-drop-area': true,
 				'kt-field-file-upload-drop-area--is-disabled': props.isDisabled,
@@ -122,6 +118,14 @@ export default defineComponent({
 					(isDragging.value || isHovering.value),
 			})),
 			informationText,
+			inputProps: computed(() => ({
+				accept: buildAcceptString(props.extensions),
+				'data-test': props.dataTest ? `${props.dataTest}.input` : undefined,
+				disabled: props.isDisabled || props.isLoading,
+				id: props.inputId,
+				multiple: props.allowMultiple,
+				type: 'file',
+			})),
 			isError,
 			isHovering,
 			onDragLeave: () => {
@@ -145,6 +149,7 @@ export default defineComponent({
 				const target = event.target as HTMLInputElement
 				emitFiles(target.files)
 			},
+			onTriggerInput: () => uploadInputRef.value?.click(),
 			showInformation: computed(
 				() => informationText.value || props.externalUrl,
 			),
