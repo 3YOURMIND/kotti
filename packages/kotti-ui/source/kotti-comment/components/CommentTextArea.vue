@@ -38,12 +38,17 @@
 				/>
 			</div>
 		</div>
-		<span
-			v-if="hasFocus"
-			class="kt-comment-text-area__footer"
-			@mousedown="onCancel()"
-			v-text="translations.cancelMessage"
-		/>
+		<div v-if="showCancelMessage" class="kt-comment-text-area__footer">
+			<span v-text="translations.cancelMessage" />
+			<a
+				:tabIndex="cancelMessageTabindex"
+				@click.stop.prevent="onCancel"
+				@keydown.enter.stop.prevent="onCancel"
+				@keydown.esc.stop.prevent="onCancel"
+				@keydown.space.stop.prevent="onCancel"
+				v-text="translations.clickToCancelLabel"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -56,12 +61,12 @@ import {
 	onUnmounted,
 	ref,
 } from '@vue/composition-api'
+import isNil from 'lodash/isNil'
 
 import { KottiButton } from '../../kotti-button/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
 import { isOrContainsEventTarget } from '../../utilities'
-import { isInFocus } from '../../utilities'
 import { useResizeTextarea } from '../hooks'
 import { KottiComment } from '../types'
 import { blurElement } from '../utilities'
@@ -92,34 +97,27 @@ export default defineComponent({
 		const onClick = (event: MouseEvent | KeyboardEvent) => {
 			if (event.target === null) return
 
-			const isClickOutside = !isOrContainsEventTarget(
+			const isClickInside = isOrContainsEventTarget(
 				containerRef.value,
 				event.target,
 			)
 
-			if (isClickOutside) onCancel()
-			else focusTextarea()
-		}
-
-		const onFocusChange = (event: FocusEvent) => {
-			if (event.target === null) return
-
-			if (!isInFocus(containerRef.value)) onCancel()
+			if (isClickInside) focusTextarea()
 		}
 
 		onMounted(() => {
 			if (props.autofocus) focusTextarea()
-
 			window.addEventListener('click', onClick)
-			window.addEventListener('focus', onFocusChange, true)
 		})
 
 		onUnmounted(() => {
 			window.removeEventListener('click', onClick)
-			window.removeEventListener('focus', onFocusChange)
 		})
 
 		return {
+			cancelMessageTabindex: computed(() =>
+				isNil(props.tabIndex) ? 0 : props.tabIndex,
+			),
 			containerRef,
 			hasFocus,
 			isEmpty: computed(() => props.value.trim() === ''),
@@ -131,6 +129,7 @@ export default defineComponent({
 			onInput: (event: { target: HTMLTextAreaElement }) =>
 				emit('input', event.target.value),
 			onToggleInternal: () => emit('toggleInternal'),
+			showCancelMessage: computed(() => hasFocus.value || props.value !== ''),
 			textareaRef,
 			toggleInternalButtonProps: computed(
 				(): Pick<
@@ -196,7 +195,14 @@ export default defineComponent({
 	&__footer {
 		font-size: 12px;
 		line-height: 20px;
-		color: var(--text-03);
+
+		span {
+			color: var(--text-03);
+		}
+
+		a {
+			cursor: pointer;
+		}
 	}
 }
 </style>

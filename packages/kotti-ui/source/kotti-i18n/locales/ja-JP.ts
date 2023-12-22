@@ -23,7 +23,8 @@ export const jaJP: KottiI18n.Messages = {
 		expandCloseLabel: '閉じる',
 	},
 	KtComment: {
-		cancelMessage: 'キャンセルするには Esc キーを押します',
+		cancelMessage: 'Escキーを押すか',
+		clickToCancelLabel: 'クリックしてキャンセルします',
 		deleteButton: '消す',
 		editButton: 'エディット',
 		editedLabel: '編集済み',
