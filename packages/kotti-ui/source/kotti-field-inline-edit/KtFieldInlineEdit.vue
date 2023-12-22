@@ -50,7 +50,7 @@ import { KottiField } from '../kotti-field/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Nullable } from '../types/utilities'
-import { isOrContainsEventTarget } from '../utilities'
+import { isInFocus, isOrContainsEventTarget } from '../utilities'
 
 import ConfirmButton from './components/ConfirmButton.vue'
 import EditIcon from './components/EditIcon.vue'
@@ -61,7 +61,7 @@ import {
 	KottiFieldInlineEdit,
 	ComponentRef,
 } from './types'
-import { blurField, isInFocus } from './utils'
+import { blurField } from './utils'
 
 export default defineComponent({
 	name: 'KtFieldInlineEdit',

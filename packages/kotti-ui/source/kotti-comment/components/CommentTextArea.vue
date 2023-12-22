@@ -61,9 +61,10 @@ import { KottiButton } from '../../kotti-button/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
 import { isOrContainsEventTarget } from '../../utilities'
+import { isInFocus } from '../../utilities'
 import { useResizeTextarea } from '../hooks'
 import { KottiComment } from '../types'
-import { blurElement, isInFocus } from '../utilities'
+import { blurElement } from '../utilities'
 
 export default defineComponent({
 	name: 'CommentTextArea',
