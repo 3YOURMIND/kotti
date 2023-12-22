@@ -18,6 +18,15 @@ export const isBrowser = Boolean(
 )
 
 /**
+ * Checks if the given HTML element, or any of its children, is in focus
+ * @param element The HTML element
+ */
+export const isInFocus = (element: HTMLElement | null): boolean =>
+	document.activeElement instanceof HTMLElement &&
+	(document.activeElement === element ||
+		(element?.contains(document.activeElement) ?? false))
+
+/**
  * Checks if the given HTML element or Vue component is/contains the specified event target
  * @param component The HTML element or Vue component
  * @param eventTarget The target of the event being checked
