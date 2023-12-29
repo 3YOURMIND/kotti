@@ -13,6 +13,8 @@ export namespace KottiFieldTextArea {
 			}),
 		)
 		.extend({
+			autoSize: z.boolean().default(false),
+			maxHeight: z.number().nullable().default(null),
 			placeholder: z.string().nullable().default(null),
 			// eslint-disable-next-line no-magic-numbers
 			rows: z.number().default(5),
