@@ -1,11 +1,16 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText">
-		<textarea slot="container" v-bind="inputProps" @input="onInput" />
+		<textarea
+			ref="textareaRef"
+			slot="container"
+			v-bind="inputProps"
+			@input="onInput"
+		/>
 	</KtField>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed, ref } from '@vue/composition-api'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -13,6 +18,30 @@ import { makeProps } from '../make-props'
 
 import { KOTTI_FIELD_TEXT_AREA_SUPPORTS } from './constants'
 import { KottiFieldTextArea } from './types'
+
+const HEIGHT_OFFSET = 3
+
+const resizeTextarea = ({
+	autoSize,
+	maxHeight,
+	textarea,
+}: {
+	autoSize: boolean
+	maxHeight: number | null
+	textarea: HTMLTextAreaElement | null
+}) => {
+	if (
+		textarea &&
+		autoSize &&
+		(!maxHeight || textarea.scrollHeight <= maxHeight)
+	) {
+		textarea.setAttribute('style', 'height: auto')
+		textarea.setAttribute(
+			'style',
+			`height: ${textarea.scrollHeight + HEIGHT_OFFSET}px`,
+		)
+	}
+}
 
 export default defineComponent({
 	name: 'KtFieldTextArea',
@@ -27,6 +56,7 @@ export default defineComponent({
 			props,
 			supports: KOTTI_FIELD_TEXT_AREA_SUPPORTS,
 		})
+		const textareaRef = ref<HTMLTextAreaElement | null>(null)
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 
@@ -48,9 +78,14 @@ export default defineComponent({
 			onInput: (event: { target: HTMLTextAreaElement }) => {
 				const newValue = event.target.value
 				field.setValue(newValue === '' ? null : newValue)
-
+				resizeTextarea({
+					autoSize: props.autoSize,
+					maxHeight: props.maxHeight,
+					textarea: event.target,
+				})
 				forceUpdate()
 			},
+			textareaRef,
 		}
 	},
 })

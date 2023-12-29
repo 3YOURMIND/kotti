@@ -329,6 +329,33 @@
 								label="collapseTagsAfter"
 								:minimum="0"
 							/>
+							<KtFieldNumber
+								v-if="componentDefinition.additionalProps.includes('rows')"
+								formKey="rows"
+								isOptional
+								label="rows"
+							/>
+							<div
+								v-if="
+									componentDefinition.additionalProps.includes('autoSize') ||
+									componentDefinition.additionalProps.includes('maxHeight')
+								"
+								class="field-row"
+							>
+								<KtFieldToggle
+									formKey="autoSize"
+									isOptional
+									label="autoSize"
+									type="switch"
+								/>
+								<KtFieldNumber
+									formKey="maxHeight"
+									helpText="Maximum height in pixels when autoSize is enabled. It has no effect if autoSize is disabled."
+									:isDisabled="!settings.additionalProps.autoSize"
+									isOptional
+									label="maxHeight"
+								/>
+							</div>
 							<KtFieldSingleSelect
 								v-if="
 									componentDefinition.additionalProps.includes('toggleType')
@@ -891,7 +918,7 @@ const components: Array<{
 		supports: KtFieldText.meta.supports,
 	},
 	{
-		additionalProps: [],
+		additionalProps: ['autoSize', 'maxHeight', 'rows'],
 		formKey: 'textValue',
 		name: 'KtFieldTextArea',
 		supports: KtFieldTextArea.meta.supports,
@@ -1104,6 +1131,7 @@ export default defineComponent({
 				allowMultiple: Kotti.FieldToggle.Value
 				allowPhotos: Kotti.FieldToggle.Value
 				autoComplete: 'current-password' | 'new-password'
+				autoSize: Kotti.FieldToggle.Value
 				clearOnSelect: Kotti.FieldToggle.Value
 				collapseExtensionsAfter: Kotti.FieldNumber.Value
 				collapseTagsAfter: Kotti.FieldNumber.Value
@@ -1122,6 +1150,7 @@ export default defineComponent({
 				isLoadingOptions: boolean
 				isUnsorted: boolean
 				maxFileSize: Kotti.FieldNumber.Value
+				maxHeight: Kotti.FieldNumber.Value
 				maximumDate: Kotti.FieldDate.Value
 				maximumSelectable: Kotti.FieldNumber.Value
 				minimumDate: Kotti.FieldDate.Value
@@ -1131,6 +1160,7 @@ export default defineComponent({
 				numberMaximum: Kotti.FieldNumber.Value
 				numberMinimum: Kotti.FieldNumber.Value
 				numberStep: Kotti.FieldNumber.Value
+				rows: Kotti.FieldNumber.Value
 				shortcuts: Kotti.FieldToggleGroup.Value
 				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
 				toggleType: 'checkbox' | 'switch'
@@ -1166,6 +1196,7 @@ export default defineComponent({
 				allowMultiple: false,
 				allowPhotos: false,
 				autoComplete: 'current-password',
+				autoSize: false,
 				clearOnSelect: false,
 				collapseExtensionsAfter: null,
 				collapseTagsAfter: null,
@@ -1184,6 +1215,7 @@ export default defineComponent({
 				isLoadingOptions: false,
 				isUnsorted: false,
 				maxFileSize: null,
+				maxHeight: null,
 				maximumDate: null,
 				maximumSelectable: null,
 				minimumDate: null,
@@ -1193,6 +1225,7 @@ export default defineComponent({
 				numberMaximum: null,
 				numberMinimum: null,
 				numberStep: null,
+				rows: null,
 				shortcuts: null,
 				showHeaderSideSlot: false,
 				toggleType: 'checkbox',
@@ -1300,12 +1333,25 @@ export default defineComponent({
 				Object.assign(additionalProps, {
 					type: settings.value.additionalProps.toggleType,
 				})
+			if (componentDefinition.value.additionalProps.includes('autoSize')) {
+				Object.assign(additionalProps, {
+					autoSize: settings.value.additionalProps.autoSize,
+				})
+			}
+
+			if (componentDefinition.value.additionalProps.includes('rows'))
+				Object.assign(additionalProps, {
+					rows: settings.value.additionalProps.rows,
+				})
+			if (componentDefinition.value.additionalProps.includes('maxHeight'))
+				Object.assign(additionalProps, {
+					maxHeight: settings.value.additionalProps.maxHeight,
+				})
 
 			if (componentDefinition.value.additionalProps.includes('autoComplete'))
 				Object.assign(additionalProps, {
 					autoComplete: settings.value.additionalProps.autoComplete,
 				})
-
 			if (
 				componentDefinition.value.additionalProps.includes(
 					'numberDecimalPlaces',
@@ -1516,7 +1562,6 @@ export default defineComponent({
 					showHeaderSideSlot: false,
 				})
 			}
-
 			if (['KtFieldToggle'].includes(component))
 				Object.assign(additionalProps, {
 					defaultSlot: 'Default Slot',
