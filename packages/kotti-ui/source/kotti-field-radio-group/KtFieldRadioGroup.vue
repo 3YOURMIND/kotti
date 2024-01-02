@@ -1,5 +1,5 @@
 <template>
-	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" isGroup>
+	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" useFieldset>
 		<div slot="container" :class="rootClasses" :forceUpdateKey="forceUpdateKey">
 			<div
 				v-for="option in options"

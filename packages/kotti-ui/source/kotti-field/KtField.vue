@@ -1,14 +1,14 @@
 <template>
 	<div class="kt-field">
 		<component
-			:is="isGroup ? 'fieldset' : isComponent ? isComponent : 'div'"
+			:is="useFieldset ? 'fieldset' : isComponent ? isComponent : 'div'"
 			:class="wrapperClasses"
 			@click="$emit('click', $event)"
 			@mousedown="$emit('mousedown', $event)"
 		>
 			<div v-if="hasLabel || hasHelpText" class="kt-field__header">
 				<component
-					:is="isGroup ? 'legend' : 'label'"
+					:is="useFieldset ? 'legend' : 'label'"
 					v-if="hasLabel"
 					class="kt-field__header__label"
 					:for="inputId"
@@ -135,8 +135,8 @@ export default defineComponent({
 		getEmptyValue: { default: null, type: Function as PropType<() => unknown> },
 		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
 		isComponent: { default: null, type: String as PropType<string | null> },
-		isGroup: { default: false, type: Boolean },
 		isRange: { default: false, type: Boolean },
+		useFieldset: { default: false, type: Boolean },
 	},
 	setup(props) {
 		const validationType = computed(() => props.field.validation.type)
@@ -181,7 +181,7 @@ export default defineComponent({
 					],
 			),
 			inputId: computed(() =>
-				props.isGroup
+				props.useFieldset
 					? undefined
 					: props.isRange
 					? `${props.field.inputProps.id}-start`
