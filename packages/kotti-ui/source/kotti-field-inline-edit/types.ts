@@ -42,6 +42,4 @@ export namespace KottiFieldInlineEdit {
 	}
 }
 
-export type ComponentRef = { $el: HTMLElement } | null
-
 export type FieldInlineEditElement = HTMLInputElement | HTMLTextAreaElement

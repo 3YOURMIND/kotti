@@ -1,12 +1,5 @@
 import escape from 'lodash/escape'
 
-import { isInFocus } from '../utilities'
-
-export const blurElement = (element: HTMLElement | null) => {
-	if (document.activeElement instanceof HTMLElement && isInFocus(element))
-		document.activeElement.blur()
-}
-
 export const defaultParser = (message: string) => escape(message)
 
 export const defaultPostEscapeParser = (message: string) =>

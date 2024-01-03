@@ -1,7 +1,7 @@
 <template>
 	<KtField
 		v-bind="{ field: modifiedField }"
-		ref="fieldRef"
+		ref="ktFieldRef"
 		:class="rootClasses"
 		:helpTextSlot="$slots.helpText"
 	>
@@ -35,6 +35,7 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import {
+	Ref,
 	computed,
 	defineComponent,
 	onBeforeMount,
@@ -50,18 +51,13 @@ import { KottiField } from '../kotti-field/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import { Nullable } from '../types/utilities'
-import { isInFocus, isOrContainsEventTarget } from '../utilities'
+import { blurElement, isInFocus, isOrContainsEventTarget } from '../utilities'
 
 import ConfirmButton from './components/ConfirmButton.vue'
 import EditIcon from './components/EditIcon.vue'
 import { KOTTI_FIELD_INLINE_EDIT_SUPPORTS } from './constants'
 import { useAdjustHeight, usePreventConfirm } from './hooks'
-import {
-	FieldInlineEditElement,
-	KottiFieldInlineEdit,
-	ComponentRef,
-} from './types'
-import { blurField } from './utils'
+import { FieldInlineEditElement, KottiFieldInlineEdit } from './types'
 
 export default defineComponent({
 	name: 'KtFieldInlineEdit',
@@ -75,13 +71,16 @@ export default defineComponent({
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
-		const fieldRef = ref<ComponentRef>(null)
+		const ktFieldRef = ref<{
+			inputContainerWrapperRef: Ref<HTMLDivElement>
+		} | null>(null)
+		const inputContainerWrapperRef = ref<HTMLDivElement | null>(null)
 		const inputRef = ref<Nullable<FieldInlineEditElement>>(null)
 
 		const isEditing = ref(false)
 		const updateIsEditing = (shouldEdit: typeof isEditing.value) => {
 			if (shouldEdit && props.isReadonly) {
-				blurField(fieldRef.value)
+				blurElement(inputContainerWrapperRef.value)
 				return
 			}
 
@@ -151,7 +150,7 @@ export default defineComponent({
 			preEditingValue.value = modifiedField.currentValue
 
 			updateIsEditing(false)
-			blurField(fieldRef.value)
+			blurElement(inputContainerWrapperRef.value)
 
 			emit('confirm', modifiedField.currentValue)
 		}
@@ -161,7 +160,7 @@ export default defineComponent({
 
 			updateIsEditing(false)
 
-			blurField(fieldRef.value)
+			blurElement(inputContainerWrapperRef.value)
 		}
 
 		/**
@@ -173,10 +172,16 @@ export default defineComponent({
 		const lastEventTarget = ref<EventTarget | null>(null)
 
 		const onClick = (event: MouseEvent | KeyboardEvent) => {
-			if (event.target === null || props.isDisabled) return
+			if (
+				event.target === null ||
+				props.isDisabled ||
+				props.isLoading ||
+				props.isReadonly
+			)
+				return
 
 			const isClickOutside = !isOrContainsEventTarget(
-				fieldRef.value,
+				inputContainerWrapperRef.value,
 				event.target,
 			)
 
@@ -190,11 +195,11 @@ export default defineComponent({
 			if (event.target === null || props.isDisabled) return
 
 			const wasFieldTriggered = isOrContainsEventTarget(
-				fieldRef.value,
+				inputContainerWrapperRef.value,
 				lastEventTarget.value,
 			)
 			const isFieldTriggered = isOrContainsEventTarget(
-				fieldRef.value,
+				inputContainerWrapperRef.value,
 				event.target,
 			)
 
@@ -205,6 +210,12 @@ export default defineComponent({
 			if (!isFieldTriggered) onCancel()
 			else updateIsEditing(true)
 		}
+
+		watch(ktFieldRef, () => {
+			if (ktFieldRef.value?.inputContainerWrapperRef)
+				inputContainerWrapperRef.value =
+					ktFieldRef.value.inputContainerWrapperRef
+		})
 
 		watch(
 			() => props.textStyle,
@@ -246,7 +257,7 @@ export default defineComponent({
 		)
 
 		return {
-			fieldRef,
+			inputContainerWrapperRef,
 			inputProps: computed(
 				(): Partial<HTMLInputElement> & {
 					class: Record<string, boolean>
@@ -262,6 +273,7 @@ export default defineComponent({
 			),
 			inputRef,
 			isEditing,
+			ktFieldRef,
 			modifiedField,
 			onCancel,
 			onConfirm,
@@ -361,14 +373,14 @@ export default defineComponent({
 
 	&.kt-field-inline-edit--is-editable:hover:not(.kt-field-inline-edit--is-editing) {
 		::v-deep .kt-field__wrapper:not(.kt-field__wrapper--disabled) {
-			cursor: pointer;
-
-			.kt-field__input-container {
-				background-color: var(--ui-05);
-			}
-
-			.kt-field__input-container input {
+			.kt-field__input-container:hover {
 				cursor: pointer;
+				background-color: var(--ui-05);
+
+				input,
+				textarea {
+					cursor: pointer;
+				}
 			}
 		}
 	}
