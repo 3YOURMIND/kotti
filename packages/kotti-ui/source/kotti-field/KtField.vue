@@ -12,6 +12,7 @@
 					v-if="hasLabel"
 					class="kt-field__header__label"
 					:for="inputId"
+					@click="onClickLabel"
 				>
 					<span class="kt-field__header__label__text" v-text="field.label" />
 					<span :class="labelSuffixClasses" v-text="labelSuffix" />
@@ -36,7 +37,11 @@
 				v-if="field.isLoading"
 				class="kt-field__input-container-wrapper-loading skeleton rectangle"
 			/>
-			<div v-show="!field.isLoading" class="kt-field__input-container-wrapper">
+			<div
+				v-show="!field.isLoading"
+				ref="inputContainerWrapperRef"
+				class="kt-field__input-container-wrapper"
+			>
 				<div
 					v-if="$slots['container-left']"
 					class="kt-field__input-container__prefix"
@@ -191,6 +196,10 @@ export default defineComponent({
 			 * HACK: This template ref is used by child components, refactor with caution if needed
 			 */
 			inputContainerRef: ref<Element | null>(null),
+			/**
+			 * HACK: This template ref is used by child components, refactor with caution if needed
+			 */
+			inputContainerWrapperRef: ref<HTMLDivElement | null>(null),
 			labelSuffix: computed(() =>
 				props.field.isOptional ? `(${translations.value.optionalLabel})` : '*',
 			),
@@ -203,6 +212,9 @@ export default defineComponent({
 						props.field.isEmpty,
 				}
 			}),
+			onClickLabel: (event: MouseEvent) => {
+				if (event.detail > 1) event.preventDefault()
+			},
 			showValidation,
 			validationText: computed(() =>
 				props.field.validation.type === 'empty'

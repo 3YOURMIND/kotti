@@ -66,10 +66,9 @@ import isNil from 'lodash/isNil'
 import { KottiButton } from '../../kotti-button/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
-import { isOrContainsEventTarget } from '../../utilities'
+import { blurElement, isOrContainsEventTarget } from '../../utilities'
 import { useResizeTextarea } from '../hooks'
 import { KottiComment } from '../types'
-import { blurElement } from '../utilities'
 
 export default defineComponent({
 	name: 'CommentTextArea',

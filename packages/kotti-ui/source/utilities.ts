@@ -18,6 +18,15 @@ export const isBrowser = Boolean(
 )
 
 /**
+ * Triggers blur() on the given HTML element if it, or any of its children, is in focus
+ * @param element The HTML element
+ */
+export const blurElement = (element: HTMLElement | null) => {
+	if (document.activeElement instanceof HTMLElement && isInFocus(element))
+		document.activeElement.blur()
+}
+
+/**
  * Checks if the given HTML element, or any of its children, is in focus
  * @param element The HTML element
  */

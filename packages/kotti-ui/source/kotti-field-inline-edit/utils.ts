@@ -1,14 +1,4 @@
-import { isInFocus } from '../utilities'
-
-import { ComponentRef, FieldInlineEditElement } from './types'
-
-export const blurField = (fieldRef: ComponentRef) => {
-	if (
-		document.activeElement instanceof HTMLElement &&
-		isInFocus(fieldRef?.$el ?? null)
-	)
-		document.activeElement.blur()
-}
+import { FieldInlineEditElement } from './types'
 
 export const resizeField = ({
 	inputRef,
