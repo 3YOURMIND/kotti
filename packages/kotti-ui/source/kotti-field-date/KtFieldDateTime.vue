@@ -2,6 +2,7 @@
 	<KtField
 		v-bind="{ field }"
 		class="kt-field-datetime"
+		debounceLabelClick
 		:getEmptyValue="() => null"
 		:helpTextSlot="$slots.helpText"
 	>
