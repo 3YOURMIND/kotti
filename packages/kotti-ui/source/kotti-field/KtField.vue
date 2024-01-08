@@ -11,7 +11,7 @@
 					:is="useFieldset ? 'legend' : 'label'"
 					v-if="hasLabel"
 					class="kt-field__header__label"
-					:for="inputId"
+					:for="useFieldset ? undefined : inputId"
 					@click="onClickLabel"
 				>
 					<span class="kt-field__header__label__text" v-text="field.label" />
@@ -117,18 +117,22 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { PropType, computed, defineComponent, ref } from '@vue/composition-api'
+import debounce from 'lodash/debounce'
 import { VNode } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import FieldHelpText from './components/FieldHelpText.vue'
-import { useFocusInput } from './hooks'
+import { useInput } from './hooks'
 import { KottiField } from './types'
+
+const LABEL_CLICK_DEBOUNCE = 200
 
 export default defineComponent({
 	name: 'KtField',
 	components: { FieldHelpText },
 	props: {
+		debounceLabelClick: { default: false, type: Boolean },
 		field: {
 			required: true,
 			type: Object as PropType<KottiField.Hook.Returns<unknown>>,
@@ -144,13 +148,25 @@ export default defineComponent({
 		useFieldset: { default: false, type: Boolean },
 	},
 	setup(props) {
+		const inputId = computed(() =>
+			props.isRange
+				? `${props.field.inputProps.id}-start`
+				: props.field.inputProps.id,
+		)
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === 'empty'),
 		)
 
-		const { focusInput } = useFocusInput(props.field.inputProps.id)
+		const { clickInput, focusInput } = useInput(inputId.value)
 		const translations = useTranslationNamespace('KtFields')
+
+		const debouncedLabelClick = debounce((event: MouseEvent) => {
+			if (event.detail === 1) {
+				focusInput()
+				clickInput()
+			}
+		}, LABEL_CLICK_DEBOUNCE)
 
 		return {
 			affixClasses: computed(() => (modifications: string[]) => [
@@ -185,13 +201,7 @@ export default defineComponent({
 						),
 					],
 			),
-			inputId: computed(() =>
-				props.useFieldset
-					? undefined
-					: props.isRange
-					? `${props.field.inputProps.id}-start`
-					: props.field.inputProps.id,
-			),
+			inputId,
 			/**
 			 * HACK: This template ref is used by child components, refactor with caution if needed
 			 */
@@ -213,7 +223,10 @@ export default defineComponent({
 				}
 			}),
 			onClickLabel: (event: MouseEvent) => {
-				if (event.detail > 1) event.preventDefault()
+				if (props.debounceLabelClick) {
+					event.preventDefault()
+					debouncedLabelClick(event)
+				} else if (event.detail > 1) event.preventDefault()
 			},
 			showValidation,
 			validationText: computed(() =>

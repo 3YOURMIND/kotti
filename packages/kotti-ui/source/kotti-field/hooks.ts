@@ -298,8 +298,12 @@ export const useField = <DATA_TYPE>({
 	return field
 }
 
-export const useFocusInput = (fieldId: string) => {
+export const useInput = (fieldId: string) => {
 	return {
+		clickInput: () => {
+			const inputEl = document.getElementById(fieldId)
+			inputEl?.click()
+		},
 		focusInput: () => {
 			const inputEl = document.getElementById(fieldId)
 			inputEl?.focus()

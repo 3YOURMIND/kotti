@@ -63,7 +63,7 @@ import {
 import Big from 'big.js'
 
 import { KtField } from '../kotti-field'
-import { useFocusInput, useField, useForceUpdate } from '../kotti-field/hooks'
+import { useField, useForceUpdate, useInput } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
@@ -93,7 +93,7 @@ export default defineComponent({
 			supports: KOTTI_FIELD_NUMBER_SUPPORTS,
 		})
 
-		const { focusInput } = useFocusInput(field.inputProps.id)
+		const { focusInput } = useInput(field.inputProps.id)
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 
 		const i18nContext = useI18nContext()

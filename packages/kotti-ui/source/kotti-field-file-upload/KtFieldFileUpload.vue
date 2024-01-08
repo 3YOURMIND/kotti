@@ -1,5 +1,9 @@
 <template>
-	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText">
+	<KtField
+		v-bind="{ field }"
+		debounceLabelClick
+		:helpTextSlot="$slots.helpText"
+	>
 		<div slot="container" class="kt-field-file-upload">
 			<DropArea
 				v-if="showDropArea"
