@@ -171,7 +171,7 @@ export default defineComponent({
 		 */
 		const lastEventTarget = ref<EventTarget | null>(null)
 
-		const onClick = (event: MouseEvent | KeyboardEvent) => {
+		const onMouseDown = (event: MouseEvent | KeyboardEvent) => {
 			if (
 				event.target === null ||
 				props.isDisabled ||
@@ -230,12 +230,12 @@ export default defineComponent({
 		)
 
 		onBeforeMount(() => {
-			window.addEventListener('click', onClick)
+			window.addEventListener('mousedown', onMouseDown)
 			window.addEventListener('focus', onFocusChange, { capture: true })
 		})
 
 		onUnmounted(() => {
-			window.removeEventListener('click', onClick)
+			window.removeEventListener('mousedown', onMouseDown)
 			window.removeEventListener('focus', onFocusChange)
 		})
 
