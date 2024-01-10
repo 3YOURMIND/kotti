@@ -356,6 +356,19 @@
 									label="maxHeight"
 								/>
 							</div>
+							<div
+								v-if="
+									componentDefinition.additionalProps.includes('hideDropArea')
+								"
+								class="field-row"
+							>
+								<KtFieldToggle
+									formKey="hideDropArea"
+									isOptional
+									label="hideDropArea"
+									type="switch"
+								/>
+							</div>
 							<KtFieldSingleSelect
 								v-if="
 									componentDefinition.additionalProps.includes('toggleType')
@@ -782,6 +795,7 @@ const FILE_UPLOAD_SHARED_PROPS = [
 	'collapseExtensionsAfter',
 	'extensions',
 	'externalUrl',
+	'hideDropArea',
 	'icon',
 	'maxFileSize',
 ]
@@ -1145,6 +1159,7 @@ export default defineComponent({
 				hasOptionSlot: boolean
 				headerSlot: ComponentValue['headerSlot']
 				hideChangeButtons: boolean
+				hideDropArea: boolean
 				icon: Yoco.Icon | null
 				isInline: boolean
 				isLoadingOptions: boolean
@@ -1210,6 +1225,7 @@ export default defineComponent({
 				hasOptionSlot: false,
 				headerSlot: null,
 				hideChangeButtons: false,
+				hideDropArea: false,
 				icon: null,
 				isInline: false,
 				isLoadingOptions: false,
@@ -1512,7 +1528,10 @@ export default defineComponent({
 
 			if (['KtFieldFileUploadRemote'].includes(component))
 				Object.assign(additionalProps, createRemoteUpload(true))
-
+			if (componentDefinition.value.additionalProps.includes('hideDropArea'))
+				Object.assign(additionalProps, {
+					hideDropArea: settings.value.additionalProps.hideDropArea,
+				})
 			if (
 				[
 					'KtFieldMultiSelect',
