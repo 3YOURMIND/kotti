@@ -77,7 +77,8 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtComment')
 
 		const containerRef = ref<HTMLDivElement | null>(null)
-		const hasFocus = ref<boolean>(false)
+		const hasFocus = ref(false)
+		const showCancelMessage = ref(false)
 		const textareaRef = ref<HTMLTextAreaElement | null>(null)
 
 		useResizeTextarea(
@@ -86,11 +87,15 @@ export default defineComponent({
 		)
 
 		const blurTextarea = () => blurElement(containerRef.value)
-		const focusTextarea = () => textareaRef.value?.focus()
+		const focusTextarea = () => {
+			textareaRef.value?.focus()
+			showCancelMessage.value = true
+		}
 
 		const onCancel = () => {
 			emit('cancel')
 			blurTextarea()
+			showCancelMessage.value = false
 		}
 
 		const onClick = (event: MouseEvent | KeyboardEvent) => {
@@ -128,7 +133,7 @@ export default defineComponent({
 			onInput: (event: { target: HTMLTextAreaElement }) =>
 				emit('input', event.target.value),
 			onToggleInternal: () => emit('toggleInternal'),
-			showCancelMessage: computed(() => hasFocus.value || props.value !== ''),
+			showCancelMessage,
 			textareaRef,
 			toggleInternalButtonProps: computed(
 				(): Pick<
