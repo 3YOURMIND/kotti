@@ -117,7 +117,9 @@ export default defineComponent({
 				}),
 		)
 		const showDropArea = computed(
-			() => props.allowMultiple || field.currentValue.length === 0,
+			() =>
+				(props.allowMultiple || field.currentValue.length === 0) &&
+				!props.hideDropArea,
 		)
 
 		const setStatus = (payload: KottiFieldFileUpload.Events.SetStatus) => {

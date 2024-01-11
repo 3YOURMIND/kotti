@@ -135,8 +135,11 @@ export default defineComponent({
 					return fileInfo
 				}),
 		)
+
 		const showDropArea = computed(
-			() => props.allowMultiple || field.currentValue.length === 0,
+			() =>
+				(props.allowMultiple || field.currentValue.length === 0) &&
+				!props.hideDropArea,
 		)
 
 		const setStatus = (

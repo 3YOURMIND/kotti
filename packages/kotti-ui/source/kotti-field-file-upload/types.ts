@@ -60,6 +60,7 @@ export namespace Shared {
 				.array()
 				.default(() => []),
 			externalUrl: z.string().nullable().default(null),
+			hideDropArea: z.boolean().default(false),
 			icon: yocoIconSchema.default(Yoco.Icon.CLOUD_UPLOAD),
 			maxFileSize: z.number().int().min(0).default(Number.MAX_SAFE_INTEGER),
 		})
@@ -92,6 +93,7 @@ export namespace Shared {
 				icon: true,
 				isDisabled: true,
 				isLoading: true,
+				hideDropArea: true,
 				maxFileSize: true,
 				tabIndex: true,
 			})
