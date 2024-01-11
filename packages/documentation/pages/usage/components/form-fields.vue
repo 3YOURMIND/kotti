@@ -356,19 +356,15 @@
 									label="maxHeight"
 								/>
 							</div>
-							<div
+							<KtFieldToggle
 								v-if="
 									componentDefinition.additionalProps.includes('hideDropArea')
 								"
-								class="field-row"
-							>
-								<KtFieldToggle
-									formKey="hideDropArea"
-									isOptional
-									label="hideDropArea"
-									type="switch"
-								/>
-							</div>
+								formKey="hideDropArea"
+								isOptional
+								label="hideDropArea"
+								type="switch"
+							/>
 							<KtFieldSingleSelect
 								v-if="
 									componentDefinition.additionalProps.includes('toggleType')
