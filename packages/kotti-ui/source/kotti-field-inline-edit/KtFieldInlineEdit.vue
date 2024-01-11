@@ -387,7 +387,7 @@ export default defineComponent({
 
 	&:not(.kt-field-inline-edit--is-editing) {
 		.kt-field-inline-edit__input--is-multiline {
-			word-break: break-all;
+			word-break: break-word;
 		}
 
 		::v-deep .kt-field__input-container {
