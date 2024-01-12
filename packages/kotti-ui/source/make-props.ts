@@ -42,8 +42,9 @@ const propValidator = <SCHEMA extends z.ZodTypeAny>({
 			// HACK: 'error' in result is necessary as `ts-jest` doesn’t see that result.success was already properly checked to be falsy and that error now exists
 			if ('error' in result) console.error(result.error)
 
-			if (Array.isArray(value)) console.table(cloneDeep(value))
-			else console.log(cloneDeep(value))
+			const clonedValue = cloneDeep(value)
+			if (Array.isArray(value)) console.table(clonedValue)
+			else console.log(clonedValue)
 
 			console.trace()
 
@@ -57,8 +58,9 @@ const propValidator = <SCHEMA extends z.ZodTypeAny>({
 
 			console.error(error)
 
-			if (Array.isArray(value)) console.table(cloneDeep(value))
-			else console.log(cloneDeep(value))
+			const clonedValue = cloneDeep(value)
+			if (Array.isArray(value)) console.table(clonedValue)
+			else console.log(clonedValue)
 
 			console.trace()
 
@@ -240,8 +242,11 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 ): {
 	[PROP_NAME in keyof PROPS_SCHEMA['shape']]: Omit<
 		PropOptions,
-		'required' | 'type'
+		'default' | 'required' | 'type'
 	> & {
+		default: undefined extends z.input<PROPS_SCHEMA>[PROP_NAME]
+			? () => z.output<PROPS_SCHEMA>[PROP_NAME]
+			: undefined
 		required: undefined extends z.input<PROPS_SCHEMA>[PROP_NAME] ? false : true
 		type: PropType<z.output<PROPS_SCHEMA>[PROP_NAME]>
 	}
@@ -267,7 +272,11 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 				}),
 			}
 
-			if (!isNever) {
+			if (isNever) {
+				// HACK: for the KtFields because we are constrained by VueTypes
+				propDefinition.default = NEVER
+				propDefinition.type = Symbol
+			} else {
 				const vuePropTypes = uniq(
 					[...zodTypeSet]
 						.filter((x) => !ignoredZodTypes.has(x))
@@ -308,9 +317,6 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 
 				if (isOptional) propDefinition.default = propSchema._def.defaultValue
 				else propDefinition.required = true
-			} else {
-				propDefinition.default = NEVER
-				propDefinition.type = Symbol
 			}
 
 			return [propName, propDefinition]
@@ -319,8 +325,11 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 	) as {
 		[KEY in keyof PROPS_SCHEMA['shape']]: Omit<
 			PropOptions,
-			'required' | 'type'
+			'default' | 'required' | 'type'
 		> & {
+			default: undefined extends z.input<PROPS_SCHEMA>[KEY]
+				? () => z.output<PROPS_SCHEMA>[KEY]
+				: undefined
 			required: undefined extends z.input<PROPS_SCHEMA>[KEY] ? false : true
 			type: PropType<z.output<PROPS_SCHEMA>[KEY]>
 		}
