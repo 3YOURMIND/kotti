@@ -2,6 +2,7 @@ import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import { KOTTI_FIELD_CURRENCY_SUPPORTS } from './constants'
+import * as KottiFieldCurrencyConstants from './constants'
 import KtFieldCurrencyVue from './KtFieldCurrency.vue'
 import { KottiFieldCurrency } from './types'
 
@@ -20,4 +21,4 @@ export const KtFieldCurrency = attachMeta(
 	{ supports: KOTTI_FIELD_CURRENCY_SUPPORTS },
 )
 
-export * as KottiFieldCurrencyConstants from './constants'
+export { KottiFieldCurrencyConstants }
