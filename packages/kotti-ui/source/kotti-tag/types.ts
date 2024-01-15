@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export namespace KottiTag {
+export module KottiTag {
 	export const propsSchema = z.object({
 		isDisabled: z.boolean().default(false),
 		text: z.string(),

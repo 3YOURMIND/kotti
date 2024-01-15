@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
 
-export namespace KottiFieldTextArea {
+export module KottiFieldTextArea {
 	export const valueSchema = z.string().nullable()
 	export type Value = z.output<typeof valueSchema>
 

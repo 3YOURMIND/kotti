@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
 
-export namespace Shared {
+export module Shared {
 	export enum Validation {
 		INVALID_EXTENSION = 'INVALID_EXTENSION',
 		MAX_SIZE_EXCEEDED = 'MAX_SIZE_EXCEEDED',
@@ -65,13 +65,13 @@ export namespace Shared {
 			maxFileSize: z.number().int().min(0).default(Number.MAX_SAFE_INTEGER),
 		})
 
-	export namespace Events {
+	export module Events {
 		export type AddFiles = Array<File>
 
 		export type RemoveFile = z.infer<typeof idSchema>
 	}
 
-	export namespace ActionButton {
+	export module ActionButton {
 		export const schema = propsSchema
 			.pick({
 				isDisabled: true,
@@ -82,7 +82,7 @@ export namespace Shared {
 		export type Props = z.output<typeof schema>
 	}
 
-	export namespace DropArea {
+	export module DropArea {
 		export const schema = propsSchema
 			.pick({
 				allowMultiple: true,
@@ -103,7 +103,7 @@ export namespace Shared {
 		export type Props = z.output<typeof schema>
 	}
 
-	export namespace FileItem {
+	export module FileItem {
 		export const schema = propsSchema.pick({
 			dataTest: true,
 			extensions: true,
@@ -112,7 +112,7 @@ export namespace Shared {
 		})
 	}
 
-	export namespace TakePhoto {
+	export module TakePhoto {
 		export const schema = propsSchema.pick({
 			dataTest: true,
 			isDisabled: true,
@@ -135,7 +135,7 @@ export namespace Shared {
 		})
 		export type ErrorProps = z.output<typeof errorSchema>
 
-		export namespace Events {
+		export module Events {
 			export type Capture = {
 				file: File
 				photoUrl: string
@@ -191,7 +191,7 @@ export namespace Shared {
 	}
 }
 
-export namespace KottiFieldFileUpload {
+export module KottiFieldFileUpload {
 	export enum Status {
 		INVALID = 'INVALID',
 		NOT_STARTED = 'NOT_STARTED',
@@ -228,14 +228,14 @@ export namespace KottiFieldFileUpload {
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 
-	export namespace Events {
+	export module Events {
 		export type SetStatus = {
 			id: z.infer<typeof Shared.idSchema>
 			status: Status
 		}
 	}
 
-	export namespace FileItem {
+	export module FileItem {
 		export const schema = Shared.propsSchema.extend({
 			fileInfo: fileInfoSchema,
 		})
@@ -243,7 +243,7 @@ export namespace KottiFieldFileUpload {
 	}
 }
 
-export namespace KottiFieldFileUploadRemote {
+export module KottiFieldFileUploadRemote {
 	export enum Status {
 		CANCELED = 'CANCELED',
 		ERROR = 'ERROR',
@@ -310,14 +310,14 @@ export namespace KottiFieldFileUploadRemote {
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 
-	export namespace Events {
+	export module Events {
 		export type SetStatus = {
 			id: z.infer<typeof Shared.idSchema>
 			status: Status
 		}
 	}
 
-	export namespace FileItem {
+	export module FileItem {
 		export const schema = Shared.propsSchema.extend({
 			actions: actionsSchema,
 			fileInfo: fileInfoSchema,
@@ -325,7 +325,7 @@ export namespace KottiFieldFileUploadRemote {
 		export type Props = z.output<typeof schema>
 	}
 
-	export namespace ProgressBar {
+	export module ProgressBar {
 		export const schema = payloadEntrySchema
 			.pick({
 				progress: true,

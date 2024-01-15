@@ -1,7 +1,7 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
-export namespace KottiButton {
+export module KottiButton {
 	export enum Type {
 		DANGER = 'danger',
 		DEFAULT = 'default',

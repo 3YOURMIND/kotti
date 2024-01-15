@@ -4,7 +4,7 @@ import { defaultParser, defaultPostEscapeParser } from './utilities'
 
 const idSchema = z.union([z.number(), z.string()])
 
-export namespace KottiComment {
+export module KottiComment {
 	export const userSchema = z.object({
 		avatar: z.string().optional(),
 		id: idSchema,
@@ -34,7 +34,7 @@ export namespace KottiComment {
 		userAvatar: userSchema.shape.avatar,
 	})
 
-	export namespace Reply {
+	export module Reply {
 		export const schema = commentSchema
 		export type Props = z.input<typeof schema>
 		export type PropsInternal = z.output<typeof schema>
@@ -47,7 +47,7 @@ export namespace KottiComment {
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 
-	export namespace Entry {
+	export module Entry {
 		export const schema = sharedSchema.omit({ userAvatar: true }).extend({
 			dataTest: z.string(),
 			isReply: z.boolean().default(false),
@@ -56,7 +56,7 @@ export namespace KottiComment {
 		export type PropsInternal = z.output<typeof schema>
 	}
 
-	export namespace Actions {
+	export module Actions {
 		export const schema = sharedSchema
 			.pick({
 				isDeletable: true,
@@ -72,7 +72,7 @@ export namespace KottiComment {
 		export type PropsInternal = z.output<typeof schema>
 	}
 
-	export namespace Header {
+	export module Header {
 		export const schema = commentSchema
 			.pick({
 				createdAt: true,
@@ -88,7 +88,7 @@ export namespace KottiComment {
 		export type PropsInternal = z.output<typeof schema>
 	}
 
-	export namespace InlineEdit {
+	export module InlineEdit {
 		export const schema = sharedSchema
 			.pick({
 				allowInternal: true,
@@ -112,7 +112,7 @@ export namespace KottiComment {
 		export type PropsInternal = z.output<typeof schema>
 	}
 
-	export namespace TextArea {
+	export module TextArea {
 		export const schema = InlineEdit.schema
 			.pick({
 				allowInternal: true,
@@ -129,7 +129,7 @@ export namespace KottiComment {
 		export type PropsInternal = z.output<typeof schema>
 	}
 
-	export namespace Events {
+	export module Events {
 		export type Add = {
 			isInternal?: PropsInternal['isInternal']
 			message: PropsInternal['message']
@@ -165,7 +165,7 @@ export namespace KottiComment {
 	}
 }
 
-export namespace KottiCommentInput {
+export module KottiCommentInput {
 	export const propsSchema = KottiComment.propsSchema
 		.pick({
 			allowInternal: true,

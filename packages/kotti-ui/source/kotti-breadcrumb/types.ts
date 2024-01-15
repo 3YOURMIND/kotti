@@ -1,7 +1,7 @@
 import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
-export namespace KottiBreadcrumb {
+export module KottiBreadcrumb {
 	export enum SeparatorType {
 		ICON = 'icon',
 		TEXT = 'text',

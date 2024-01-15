@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export namespace KottiAvatar {
+export module KottiAvatar {
 	export enum Size {
 		LARGE = 'lg',
 		MEDIUM = 'md',

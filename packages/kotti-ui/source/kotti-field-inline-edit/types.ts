@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
 
-export namespace KottiFieldInlineEdit {
+export module KottiFieldInlineEdit {
 	export const valueSchema = z.string().nullable()
 	export type Value = z.output<typeof valueSchema>
 
@@ -33,7 +33,7 @@ export namespace KottiFieldInlineEdit {
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 
-	export namespace Events {
+	export module Events {
 		export type Confirm = KottiFieldInlineEdit.Value
 	}
 

@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { KottiAvatar } from '../kotti-avatar/types'
 import { refinementNonEmpty } from '../zod-refinements'
 
-export namespace KottiAvatarGroup {
+export module KottiAvatarGroup {
 	/**
 	 * same type of name and src but they are required keys on the item object schema;
 	 * removeDefault: removes the default value &

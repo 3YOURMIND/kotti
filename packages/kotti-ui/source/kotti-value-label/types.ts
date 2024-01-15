@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
 
-export namespace KottiValueLabel {
+export module KottiValueLabel {
 	export const validationSchema = z.union([
 		KottiField.Validation.errorSchema,
 		KottiField.Validation.successSchema,

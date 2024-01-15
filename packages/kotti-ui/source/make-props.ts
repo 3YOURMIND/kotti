@@ -229,7 +229,7 @@ const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
  * })
  *
  * // types.ts
- * export namespace KottiUserMenu {
+ * export module KottiUserMenu {
  *   export const propsSchema = z.object({
  *     // ...
  *   })

@@ -6,14 +6,14 @@ import { ReplaceRecordType } from '../types/utilities'
 
 import { FORM_KEY_NONE } from './constants'
 
-export namespace KottiField {
+export module KottiField {
 	export enum Size {
 		LARGE = 'large',
 		MEDIUM = 'medium',
 		SMALL = 'small',
 	}
 
-	export namespace Validation {
+	export module Validation {
 		export const emptySchema = z.object({
 			type: z.literal('empty'),
 		})
@@ -52,7 +52,7 @@ export namespace KottiField {
 		export type Function = z.output<typeof functionSchema>
 	}
 
-	export namespace Hook {
+	export module Hook {
 		export interface Parameters<DATA_TYPE> {
 			emit: SetupContext['emit']
 
