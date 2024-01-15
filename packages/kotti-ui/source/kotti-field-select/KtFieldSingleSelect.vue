@@ -1,6 +1,6 @@
 <template>
 	<GenericSelectField
-		v-bind="props"
+		v-bind="$props"
 		:helpTextSlot="$slots.helpText"
 		@emit="onEmit"
 	>
@@ -24,12 +24,11 @@ export default defineComponent({
 		GenericSelectField,
 	},
 	props: makeProps(KottiFieldSingleSelect.propsSchema),
-	setup(props: KottiFieldSingleSelect.PropsInternal, { emit }) {
+	setup(_, { emit }) {
 		return {
 			onEmit: ({ event, payload }: { event: string; payload: unknown }) => {
 				emit(event, payload)
 			},
-			props,
 		}
 	},
 })
