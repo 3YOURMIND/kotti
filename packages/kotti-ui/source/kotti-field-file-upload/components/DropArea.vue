@@ -2,7 +2,7 @@
 	<div
 		:class="classes"
 		:data-test="dataTest ? `${dataTest}.dropArea` : undefined"
-		:tabIndex="_tabIndex"
+		:tabIndex="localTabIndex"
 		@click.stop="onTriggerInput"
 		@dragleave.stop.prevent="onDragLeave"
 		@dragover.stop.prevent="onDragOver"
@@ -106,7 +106,6 @@ export default defineComponent({
 		}
 
 		return {
-			_tabIndex: computed(() => (props.isDisabled ? -1 : props.tabIndex ?? 0)),
 			classes: computed(() => ({
 				'kt-field-file-upload-drop-area': true,
 				'kt-field-file-upload-drop-area--is-disabled': props.isDisabled,
@@ -128,6 +127,9 @@ export default defineComponent({
 			})),
 			isError,
 			isHovering,
+			localTabIndex: computed(() =>
+				props.isDisabled ? -1 : props.tabIndex ?? 0,
+			),
 			onDragLeave: () => {
 				isDragging.value = false
 				isError.value = false

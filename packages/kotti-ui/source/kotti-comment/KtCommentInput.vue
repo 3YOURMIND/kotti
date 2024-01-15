@@ -2,10 +2,10 @@
 	<div class="kt-comment-input">
 		<KtAvatar size="sm" :src="userAvatar" />
 		<CommentTextArea
-			v-model="_message"
+			v-model="localMessage"
 			v-bind="{ allowInternal, autofocus, isReply, placeholder, tabIndex }"
-			:dataTest="_dataTest"
-			:isInternal="_isInternal"
+			:dataTest="localDataTest"
+			:isInternal="localIsInternal"
 			@cancel="onCancel"
 			@confirm="onConfirm"
 			@toggleInternal="onToggleInternal"
@@ -28,45 +28,45 @@ export default defineComponent({
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
 	setup(props: KottiCommentInput.PropsInternal, { emit }) {
-		const _isInternal = ref<KottiComment.PropsInternal['isInternal']>(
+		const localIsInternal = ref<KottiComment.PropsInternal['isInternal']>(
 			props.isInternal,
 		)
-		const _message = ref<KottiComment.PropsInternal['message']>('')
+		const localMessage = ref<KottiComment.PropsInternal['message']>('')
 
 		watch(
 			() => props.isInternal,
-			(isInternal) => (_isInternal.value = isInternal),
+			(isInternal) => (localIsInternal.value = isInternal),
 			{ flush: 'post' },
 		)
 
 		return {
-			_dataTest: computed(() => {
+			localDataTest: computed(() => {
 				const commentType = `new-${props.isReply ? 'reply' : 'comment'}`
 				return props.dataTest ? `${props.dataTest}.${commentType}` : commentType
 			}),
-			_isInternal,
-			_message,
+			localIsInternal,
+			localMessage,
 			onCancel: () => {
-				_isInternal.value = props.isInternal
-				_message.value = ''
+				localIsInternal.value = props.isInternal
+				localMessage.value = ''
 				emit('cancel')
 			},
 			onConfirm: () => {
-				if (_message.value === '') return
+				if (localMessage.value === '') return
 
 				const payload: KottiComment.Events.Add = {
-					isInternal: _isInternal.value,
-					message: _message.value,
+					isInternal: localIsInternal.value,
+					message: localMessage.value,
 					replyToUserId: props.replyToUserId,
 					parentId: props.parentId,
 				}
 
 				emit('add', payload)
 
-				_isInternal.value = props.isInternal
-				_message.value = ''
+				localIsInternal.value = props.isInternal
+				localMessage.value = ''
 			},
-			onToggleInternal: () => (_isInternal.value = !_isInternal.value),
+			onToggleInternal: () => (localIsInternal.value = !localIsInternal.value),
 		}
 	},
 })

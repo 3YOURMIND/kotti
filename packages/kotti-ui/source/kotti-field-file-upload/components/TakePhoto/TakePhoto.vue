@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<KtButton
-			:data-test="_dataTest"
+			:data-test="localDataTest"
 			:disabled="isDisabled"
 			:label="translations.button.takePhoto"
 			:tabindex="tabIndex"
@@ -9,14 +9,14 @@
 		/>
 		<CapturePhoto
 			v-if="state === State.CAPTURE"
-			:dataTest="_dataTest"
+			:dataTest="localDataTest"
 			@capture="onCapturePhoto"
 			@close="onClose"
 			@error="onError"
 		/>
 		<ReviewPhoto
 			v-else-if="state === State.REVIEW"
-			:dataTest="_dataTest"
+			:dataTest="localDataTest"
 			:photoUrl="photoUrl"
 			@accept="onAcceptPhoto"
 			@close="onClose"
@@ -24,7 +24,7 @@
 		/>
 		<Error
 			v-else-if="state === State.ERROR"
-			:dataTest="_dataTest"
+			:dataTest="localDataTest"
 			:error="error"
 			@close="onClose"
 			@retry="onErrorRetry"
@@ -73,10 +73,10 @@ export default defineComponent({
 		}
 
 		return {
-			_dataTest: computed(() =>
+			error,
+			localDataTest: computed(() =>
 				props.dataTest ? `${props.dataTest}.takePhoto` : null,
 			),
-			error,
 			onAcceptPhoto: async () => {
 				if (!file.value) return
 				const payload: Shared.Events.AddFiles = [file.value]

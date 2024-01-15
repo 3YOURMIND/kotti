@@ -2,7 +2,7 @@
 	<div class="kt-comment-inline-edit">
 		<CommentTextArea
 			v-if="isEditing"
-			v-model="_message"
+			v-model="localMessage"
 			v-bind="{
 				allowInternal,
 				dataTest,
@@ -42,33 +42,34 @@ export default defineComponent({
 	},
 	props: makeProps(KottiComment.InlineEdit.schema),
 	setup(props: KottiComment.InlineEdit.PropsInternal, { emit }) {
-		const _message = ref<KottiComment.InlineEdit.PropsInternal['message']>('')
+		const localMessage =
+			ref<KottiComment.InlineEdit.PropsInternal['message']>('')
 
 		watch(
 			() => props.isEditing,
 			(isEditing, wasEditing) => {
 				if (isEditing === wasEditing) return
 
-				_message.value = isEditing ? props.message : ''
+				localMessage.value = isEditing ? props.message : ''
 			},
 			{ immediate: true, flush: 'post' },
 		)
 
 		return {
-			_message,
+			localMessage,
 			onCancel: () => {
 				emit('update:isEditing', false)
-				_message.value = ''
+				localMessage.value = ''
 			},
 			onConfirm: () => {
 				emit('update:isEditing', false)
 
-				if (_message.value === '') return
+				if (localMessage.value === '') return
 
 				const payload: KottiComment.Events.Edit = {
 					id: props.id,
 					isInternal: props.isInternal,
-					message: _message.value,
+					message: localMessage.value,
 					parentId: props.parentId,
 				}
 
