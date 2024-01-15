@@ -10,4 +10,6 @@ import { DeepPartial } from './types'
 export const fixDeepMerge = <T extends Record<string, unknown>>(
 	x: DeepPartial<T>,
 	y: DeepPartial<T>,
+	// @ts-expect-error deepmerge's parameters are typed with Partial<T>,
+	// which is not compatible with DeepPartial<T>
 ): T => deepmerge<T>(x, y)

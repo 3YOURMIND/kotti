@@ -45,7 +45,10 @@ export namespace KottiField {
 		])
 		export type Result = z.output<typeof resultSchema>
 
-		export const functionSchema = z.function(z.tuple([z.any()]), resultSchema)
+		export const functionSchema = z
+			.function()
+			.args(z.any())
+			.returns(resultSchema)
 		export type Function = z.output<typeof functionSchema>
 	}
 

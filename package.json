@@ -46,9 +46,6 @@
 			"url": "https://github.com/carsoli"
 		}
 	],
-	"dependencies": {
-		"typescript": "4.3"
-	},
 	"devDependencies": {
 		"@babel/core": "7.15.5",
 		"@babel/plugin-proposal-nullish-coalescing-operator": "^7.14.5",
@@ -57,9 +54,9 @@
 		"@babel/preset-env": "^7.15.4",
 		"@babel/preset-typescript": "^7.15.0",
 		"@types/jest": "^27.0.1",
-		"@typescript-eslint/eslint-plugin": "^5.49.0",
-		"@typescript-eslint/parser": "^5.49.0",
-		"@vue/eslint-config-typescript": "^11.0.2",
+		"@typescript-eslint/eslint-plugin": "^6.12.0",
+		"@typescript-eslint/parser": "^6.12.0",
+		"@vue/eslint-config-typescript": "^12.0.0",
 		"@vue/test-utils": "^1.1.2",
 		"autoprefixer": "^9.8.5",
 		"babel-core": "^6.26.3",
@@ -93,6 +90,7 @@
 		"stylelint-csstree-validator": "^3.0.0",
 		"stylelint-prettier": "^3.0.0",
 		"ts-jest": "^27.0.5",
+		"typescript": "^5.3",
 		"unimported": "^1.19.0",
 		"vue": "^2.6.11",
 		"vue-jest": "^3.0.7",
