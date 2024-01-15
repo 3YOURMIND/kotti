@@ -4,4 +4,4 @@ gh-pages/
 node_modules/
 packages/kotti-ui/report.*.html
 packages/yoco/fonts/
-yarn-error.log
+*.log
