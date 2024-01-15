@@ -578,7 +578,8 @@ describe('never', () => {
 			null,
 			undefined,
 		)
-		expect(prop.default.description).toBe('NEVER')
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((prop.default as any)?.description).toBe('NEVER')
 	})
 
 	it('can’t specify “z.never().nullable()”', () => {
