@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export namespace KottiModal {
+export module KottiModal {
 	export enum Size {
 		EXTRA_LARGE = 'xl',
 		LARGE = 'lg',

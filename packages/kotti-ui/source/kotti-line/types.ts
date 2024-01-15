@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export namespace KottiLine {
+export module KottiLine {
 	export enum Position {
 		LEFT = 'left',
 		CENTER = 'center',

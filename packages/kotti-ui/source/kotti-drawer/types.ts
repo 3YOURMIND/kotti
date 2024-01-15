@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export namespace KottiDrawer {
+export module KottiDrawer {
 	export const propsSchema = z.object({
 		defaultWidth: z.string().nullable().default(null),
 		disallowCloseOutside: z.boolean().default(false),

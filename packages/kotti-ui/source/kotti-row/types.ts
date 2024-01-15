@@ -2,7 +2,7 @@ import { Ref } from '@vue/composition-api'
 
 import { SpecifyRequiredProps } from '../types/utilities'
 
-export namespace KottiRow {
+export module KottiRow {
 	export type Context = {
 		gap: Readonly<Ref<number>>
 		gutter: Readonly<Ref<number>>

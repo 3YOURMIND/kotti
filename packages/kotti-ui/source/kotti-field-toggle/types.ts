@@ -4,8 +4,8 @@ import { z } from 'zod'
 import { KottiField } from '../kotti-field/types'
 import { refinementNonEmpty } from '../zod-refinements'
 
-export namespace KottiFieldToggle {
-	export namespace Shared {
+export module KottiFieldToggle {
+	export module Shared {
 		export enum Type {
 			SWITCH = 'switch',
 			CHECKBOX = 'checkbox',
@@ -36,7 +36,7 @@ export namespace KottiFieldToggle {
 	}
 }
 
-export namespace KottiFieldToggleGroup {
+export module KottiFieldToggleGroup {
 	export const valueSchema = z.record(z.boolean().nullable()).nullable()
 	export type Value = z.output<typeof valueSchema>
 

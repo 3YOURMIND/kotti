@@ -1,7 +1,7 @@
 import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
-export namespace KottiBanner {
+export module KottiBanner {
 	export const propsSchema = z.object({
 		actionText: z.string().nullable().default(null),
 		expandCloseLabel: z.string().nullable().default(null),

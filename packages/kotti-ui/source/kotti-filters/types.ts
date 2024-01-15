@@ -9,7 +9,7 @@ import { KottiFieldText } from '../kotti-field-text/types'
 import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { SpecifyRequiredProps } from '../types/utilities'
 
-export namespace KottiFilters {
+export module KottiFilters {
 	export enum ButtonLinkType {
 		DANGER = 'danger',
 		PRIMARY = 'primary',
@@ -27,7 +27,7 @@ export namespace KottiFilters {
 		STRING = 'STRING',
 	}
 
-	export namespace Operation {
+	export module Operation {
 		export enum Boolean {
 			EQUAL = 'EQUAL',
 			IS_EMPTY = 'IS_EMPTY',
@@ -97,7 +97,7 @@ export namespace KottiFilters {
 			| Operation.String
 	}
 
-	export namespace Column {
+	export module Column {
 		export type Common = {
 			key: string
 			label: string
@@ -217,7 +217,7 @@ export namespace KottiFilters {
 
 	export type Props = SpecifyRequiredProps<PropsInternal, 'columns' | 'value'>
 
-	export namespace Events {
+	export module Events {
 		export type UpdateColumns = PropsInternal['columns']
 
 		export type UpdateValue = PropsInternal['value']

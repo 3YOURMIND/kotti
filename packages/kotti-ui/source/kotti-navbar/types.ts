@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { refinementNonEmpty } from '../zod-refinements'
 
-export namespace KottiNavbar {
+export module KottiNavbar {
 	export type Context = {
 		isNarrow: boolean
 		theme: KottiNavbar.Theme

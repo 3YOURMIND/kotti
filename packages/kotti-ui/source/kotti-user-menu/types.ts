@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { refinementNonEmpty } from '../zod-refinements'
 
-export namespace KottiUserMenu {
+export module KottiUserMenu {
 	export const sectionLinkSchema = z.object({
 		component: z.string().default('a'),
 		props: z.record(z.unknown()).optional(),

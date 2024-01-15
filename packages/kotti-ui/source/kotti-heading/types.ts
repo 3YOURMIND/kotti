@@ -2,7 +2,7 @@ import { Yoco } from '@3yourmind/yoco'
 
 import { SpecifyRequiredProps } from '../types/utilities'
 
-export namespace KottiHeading {
+export module KottiHeading {
 	export type InteralProps = {
 		actionText: string | null
 		icon: Yoco.Icon | null

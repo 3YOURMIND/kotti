@@ -1,7 +1,7 @@
 import { CreateElement, VNode } from 'vue'
 
-export namespace KottiTable {
-	export namespace Column {
+export module KottiTable {
+	export module Column {
 		export enum Align {
 			CENTER = 'center',
 			LEFT = 'left',
@@ -96,19 +96,19 @@ export namespace KottiTable {
 			) => VNode
 		}
 
-		export namespace Slots {
+		export module Slots {
 			export type Default = Context
 
 			export type Header = Pick<Context, 'row' | 'rowIndex' | 'value'>
 		}
 	}
 
-	export namespace Consumer {
+	export module Consumer {
 		export type Props = {
 			id: string | null
 		}
 
-		export namespace Slots {
+		export module Slots {
 			export type Default = {
 				columns: Column.Props[]
 				filteredColumns: Column.Props[]
@@ -125,11 +125,11 @@ export namespace KottiTable {
 		}
 	}
 
-	export namespace Provider {
+	export module Provider {
 		export type Props = KottiTable.Props
 	}
 
-	export namespace Row {
+	export module Row {
 		export type Props = {
 			[key: string]: unknown
 		}
@@ -181,7 +181,7 @@ export namespace KottiTable {
 		selected: Row.Props[]
 	}
 
-	export namespace Events {
+	export module Events {
 		export type ActivateRow = {
 			row: Row.Props
 			index: number
@@ -236,7 +236,7 @@ export namespace KottiTable {
 		}
 	}
 
-	export namespace Slots {
+	export module Slots {
 		export type Actions = Pick<Column.Context, 'row' | 'rowIndex' | 'value'>
 
 		export type Empty = void

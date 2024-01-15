@@ -1,6 +1,6 @@
 import { SpecifyRequiredProps } from '../types/utilities'
 
-export namespace KottiButtonGroup {
+export module KottiButtonGroup {
 	export type PropsInternal = Record<string, never>
 
 	export type Props = SpecifyRequiredProps<PropsInternal, never>

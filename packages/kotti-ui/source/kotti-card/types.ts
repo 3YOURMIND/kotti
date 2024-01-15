@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export namespace KottiCard {
+export module KottiCard {
 	export enum ImagePosition {
 		BOTTOM = 'bottom',
 		MIDDLE = 'middle',
