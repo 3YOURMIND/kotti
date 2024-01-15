@@ -16,6 +16,6 @@
 	"vetur.validation.script": true,
 	"vetur.format.enable": false,
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": "always"
 	}
 }
