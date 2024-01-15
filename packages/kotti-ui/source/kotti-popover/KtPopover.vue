@@ -21,7 +21,7 @@
 						<KtFieldToggle
 							:dataTest="option.dataTest"
 							:formKey="formKey"
-							:isDiabled="option.isDiabled"
+							:isDisabled="option.isDisabled"
 							:isOptional="option.isOptional"
 							:value="option.isSelected"
 							@input="(e) => handleItemSelection({ index, option, value: e })"

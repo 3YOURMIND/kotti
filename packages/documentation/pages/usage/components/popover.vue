@@ -225,7 +225,7 @@ export default defineComponent({
 			{
 				isDisabled: true,
 				isOptional: true,
-				label: 'Shipping',
+				label: 'Disabled Option',
 				icon: Yoco.Icon.SHIPPING,
 			},
 		])
