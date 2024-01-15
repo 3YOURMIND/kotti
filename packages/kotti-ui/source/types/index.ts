@@ -1,2 +1,2 @@
-// namespace into Kotti
-export * as Kotti from './kotti'
+import * as Kotti from './kotti'
+export { Kotti }
