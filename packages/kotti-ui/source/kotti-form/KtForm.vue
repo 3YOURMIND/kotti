@@ -92,16 +92,12 @@ export default defineComponent({
 		)
 
 		const valueIsValid = ({ type }: KottiField.Validation.Result) => {
-			switch (props.preventSubmissionOn) {
-				case 'warning':
-					if (type === 'warning') return false
-				// fall through
-				case 'error':
-					if (type === 'error') return false
-				// fall through
-				default:
-					return true
-			}
+			if (props.preventSubmissionOn === 'warning')
+				return type !== 'warning' && type !== 'error'
+
+			if (props.preventSubmissionOn === 'error') return type !== 'error'
+
+			return true
 		}
 
 		const validationSummary = computed(() =>
