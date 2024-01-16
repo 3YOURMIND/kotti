@@ -147,8 +147,17 @@
 				</template>
 			</KtPopover>
 		</div>
-		<!-- eslint-disable-next-line vue/no-v-html -->
-		<div v-html="PopoverExample" />
+		<!-- prettier-ignore -->
+		<pre>
+			&lt;KtPopover trigger="hover"&gt;
+				&lt;KtButton label="Close with Cancel Button" /&gt;
+				&lt;template #content="{ close }"&gt;
+					&lt;p&gt;Save your message&lt;/p&gt;
+					&lt;KtButton label="Cancel" type="text" @click="close" /&gt;
+					&lt;KtButton label="Save" type="primary" /&gt;
+				&lt;/template&gt;
+			&lt;/KtPopover&gt;
+		</pre>
 
 		<h2 v-text="'Disabling'" />
 		<span>
@@ -181,9 +190,6 @@
 import { KtPopover, Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from '@vue/composition-api'
-
-// @ts-expect-error no type declaration file for markdown
-import PopoverExample from './popover-example.md'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -248,7 +254,6 @@ export default defineComponent({
 					value,
 				})),
 			),
-			PopoverExample,
 			replacer: (_key: string, value: unknown) => {
 				if (typeof value === 'function') return value ? '() => {}' : undefined
 				return value

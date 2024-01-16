@@ -146,7 +146,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/form-fields.scss';
+@import '../../../styles/form-fields.scss';
 
 .user-container {
 	display: flex;

@@ -145,8 +145,8 @@ import { Kotti, KtFilters } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { ComponentValue, generateComponentCode } from '../../utilities'
-import { getLast, today } from '../../utils/date'
+import { getLast, today } from '../../../utilities/date'
+import { ComponentValue, generateComponentCode } from '../../../utilities/pages'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -399,4 +399,4 @@ export default defineComponent({
 })
 </script>
 
-<style src="../styles/form-fields.scss" lang="scss" scoped />
+<style src="../../../styles/form-fields.scss" lang="scss" scoped />

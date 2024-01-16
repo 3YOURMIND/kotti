@@ -27,7 +27,8 @@
 		"@types/marked": "^4.0.3",
 		"@types/natural-sort": "^0.0.20",
 		"case-sensitive-paths-webpack-plugin": "^2.3.0",
-		"nuxt": "^2.13.3"
+		"nuxt": "^2.13.3",
+		"ts-loader": "8.x"
 	},
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
