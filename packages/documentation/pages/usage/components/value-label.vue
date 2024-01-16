@@ -127,7 +127,7 @@ import { Kotti, KtValueLabel } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { generateComponentCode } from '../../utilities'
+import { generateComponentCode } from '../../../utilities/pages'
 
 const DEFAULT_SLOT_CONTENT = 'Default slot content'
 
@@ -198,4 +198,4 @@ export default defineComponent({
 })
 </script>
 
-<style src="../styles/form-fields.scss" lang="scss" scoped />
+<style src="../../../styles/form-fields.scss" lang="scss" scoped />

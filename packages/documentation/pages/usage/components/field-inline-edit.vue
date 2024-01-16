@@ -209,4 +209,4 @@ export default defineComponent({
 })
 </script>
 
-<style src="../styles/form-fields.scss" lang="scss" scoped />
+<style src="../../../styles/form-fields.scss" lang="scss" scoped />

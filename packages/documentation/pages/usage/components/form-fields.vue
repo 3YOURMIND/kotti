@@ -754,8 +754,13 @@ import { TimeConversion } from '@metatypes/units'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { useRouter } from '../../..//hooks/use-router'
-import { ISO8601, ISO8601_SECONDS } from '../../../../kotti-ui/source/constants'
+import { useRouter } from '../../../hooks/use-router'
+import {
+	getLast,
+	today,
+	ISO8601,
+	ISO8601_SECONDS,
+} from '../../../utilities/date'
 import {
 	createActions,
 	createRemoteUpload,
@@ -763,8 +768,7 @@ import {
 	ComponentNames,
 	generateComponentCode,
 	isComponentName,
-} from '../../utilities'
-import { getLast, today } from '../../utils/date'
+} from '../../../utilities/pages'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -1732,7 +1736,7 @@ export default defineComponent({
 				router.value.replace({ query: { component } })
 				settings.value = {
 					...settings.value,
-					component: component,
+					component,
 				}
 			},
 			updateQuery: (
@@ -1760,4 +1764,4 @@ export default defineComponent({
 })
 </script>
 
-<style src="../styles/form-fields.scss" lang="scss" scoped />
+<style src="../../../styles/form-fields.scss" lang="scss" scoped />
