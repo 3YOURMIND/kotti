@@ -44,18 +44,16 @@
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
 
-import {
-	KtFieldCurrency,
-	KtFieldDateRange,
-	KtFieldMultiSelect,
-	KtFieldNumber,
-	KtFieldSingleSelect,
-	KtFieldText,
-	KtFieldToggle,
-	KtForm,
-} from '../../'
 import { KottiField } from '../../kotti-field/types'
+import { KtFieldCurrency } from '../../kotti-field-currency'
+import { KtFieldDateRange } from '../../kotti-field-date'
+import { KtFieldNumber } from '../../kotti-field-number'
+import { KtFieldMultiSelect } from '../../kotti-field-select'
+import { KtFieldSingleSelect } from '../../kotti-field-select'
 import { KottiFieldSingleSelect } from '../../kotti-field-select/types'
+import { KtFieldText } from '../../kotti-field-text'
+import { KtFieldToggle } from '../../kotti-field-toggle'
+import { KtForm } from '../../kotti-form'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiFilters } from '../types'
 import {
