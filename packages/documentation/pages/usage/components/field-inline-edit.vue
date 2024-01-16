@@ -87,7 +87,6 @@ import {
 	KtFieldSingleSelect,
 	KtForm,
 } from '@3yourmind/kotti-ui'
-import { KottiFieldInlineEdit } from '@3yourmind/kotti-ui/dist/esm/kotti-field-inline-edit/types'
 import { defineComponent, ref, computed } from '@vue/composition-api'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -135,13 +134,13 @@ export default defineComponent({
 			helpText: null,
 			label: 'Label',
 			placeholder: null,
-			preventConfirmationOn: KottiFieldInlineEdit.ConfirmationValidation.ERROR,
+			preventConfirmationOn: Kotti.FieldInlineEdit.ConfirmationValidation.ERROR,
 			tabIndex: null,
 			textStyle: null,
 			validation: 'empty',
 		})
 
-		const formValue = ref<{ fieldValue: KottiFieldInlineEdit.Value }>(
+		const formValue = ref<{ fieldValue: Kotti.FieldInlineEdit.Value }>(
 			getInitialValue(),
 		)
 
@@ -194,7 +193,7 @@ export default defineComponent({
 			settings,
 			textStyleOptions: ref([
 				{ label: 'No Styling (DEFAULT)', value: null },
-				...Object.entries(KottiFieldInlineEdit.TextStyle).map(
+				...Object.entries(Kotti.FieldInlineEdit.TextStyle).map(
 					([label, value]) => ({ label, value: value }),
 				),
 			]),

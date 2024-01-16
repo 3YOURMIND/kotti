@@ -5,7 +5,7 @@
 		"@octokit/rest": "^18.0.6",
 		"@octokit/types": "^5.5.0",
 		"@vue/composition-api": "1.7.1",
-		"core-js": "^3.17.2",
+		"core-js": "3.6.5",
 		"dayjs": "^1.9.1",
 		"lodash": "^4.17.19",
 		"marked": "^4.0.15",
@@ -33,6 +33,9 @@
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
 	"name": "@3yourmind/documentation",
+	"peerDependencies": {
+		"color": "4.x"
+	},
 	"private": true,
 	"scripts": {
 		"build": "DEPLOY_ENV=GH_PAGES nuxt generate",
