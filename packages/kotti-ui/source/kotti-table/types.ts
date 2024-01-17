@@ -13,7 +13,7 @@ export module KottiTable {
 			DESCENDING: 'descending',
 			NONE: null,
 		} as const
-		export type SortOrders = typeof SortOrders[keyof typeof SortOrders]
+		export type SortOrders = (typeof SortOrders)[keyof typeof SortOrders]
 
 		export type SortBy =
 			| string
@@ -21,7 +21,7 @@ export module KottiTable {
 			| (string | ((row: Row.Props, rowIndex: number) => string | number))[]
 
 		export type SortOrder =
-			| typeof SortOrders[keyof typeof SortOrders]
+			| (typeof SortOrders)[keyof typeof SortOrders]
 			| 1
 			| -1
 			| 0

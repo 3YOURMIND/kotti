@@ -4,7 +4,8 @@
 	font-style: normal;
 	font-weight: normal;
 	src: url('fonts/yoco.eot');
-	src: url('fonts/yoco.eot#iefix') format('embedded-opentype'),
+	src:
+		url('fonts/yoco.eot#iefix') format('embedded-opentype'),
 		url('fonts/yoco.ttf') format('truetype'),
 		url('fonts/yoco.woff') format('woff'),
 		url('fonts/yoco.woff2') format('woff2');

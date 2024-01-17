@@ -90,13 +90,12 @@ export default defineComponent({
 				() => Boolean(slots.helpText) || helpText.value !== null,
 			),
 			iconClasses: computed(
-				() => (element: string, modifications: string[]) =>
-					[
-						`kt-field__${element}__icon`,
-						...modifications.map(
-							(modification) => `kt-field__${element}__icon--${modification}`,
-						),
-					],
+				() => (element: string, modifications: string[]) => [
+					`kt-field__${element}__icon`,
+					...modifications.map(
+						(modification) => `kt-field__${element}__icon--${modification}`,
+					),
+				],
 			),
 			inputProps: computed(() => ({
 				...field.inputProps,

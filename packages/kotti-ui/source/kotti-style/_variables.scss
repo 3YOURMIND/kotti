@@ -81,4 +81,7 @@ $zindex-4: 400 !default;
 
 // Shadow
 
-$box-shadow: 0 0 1px #dbdbdb, 0 0.1rem 5px rgb(0 0 0 / 26%);
+// stylelint-disable
+$box-shadow:
+	0 0 1px #dbdbdb,
+	0 0.1rem 5px rgb(0 0 0 / 26%);

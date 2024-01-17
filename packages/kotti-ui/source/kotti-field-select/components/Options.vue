@@ -77,7 +77,7 @@ const propsSchema = z.object({
 })
 
 type ModifiedOption = z.output<
-	typeof propsSchema['shape']['options']
+	(typeof propsSchema)['shape']['options']
 >[number] & {
 	isSelected: boolean
 }

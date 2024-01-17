@@ -193,13 +193,12 @@ export default defineComponent({
 			),
 			hasLabel: computed(() => props.field.label !== null),
 			iconClasses: computed(
-				() => (element: string, modifications: string[]) =>
-					[
-						`kt-field__${element}__icon`,
-						...modifications.map(
-							(modification) => `kt-field__${element}__icon--${modification}`,
-						),
-					],
+				() => (element: string, modifications: string[]) => [
+					`kt-field__${element}__icon`,
+					...modifications.map(
+						(modification) => `kt-field__${element}__icon--${modification}`,
+					),
+				],
 			),
 			inputId,
 			/**
@@ -241,7 +240,7 @@ export default defineComponent({
 						error: Yoco.Icon.CIRCLE_CROSS,
 						success: Yoco.Icon.CIRCLE_CHECK,
 						warning: Yoco.Icon.CIRCLE_ATTENTION,
-					}[validationType.value]),
+					})[validationType.value],
 			),
 			wrapperClasses: computed(() => {
 				const classes = ['kt-field__wrapper']

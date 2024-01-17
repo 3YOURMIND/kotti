@@ -1672,12 +1672,12 @@ export default defineComponent({
 						KtFieldTextArea,
 						KtFieldToggle,
 						KtFieldToggleGroup,
-					}[
+					})[
 						componentValue.value.name as Exclude<
 							ComponentNames,
 							'KtFilters' | 'KtValueLabel'
 						>
-					]),
+					],
 			),
 			componentDefinition,
 			componentHasActionsToggle,

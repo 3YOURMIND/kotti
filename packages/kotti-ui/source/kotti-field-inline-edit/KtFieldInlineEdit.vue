@@ -371,7 +371,9 @@ export default defineComponent({
 		}
 	}
 
-	&.kt-field-inline-edit--is-editable:hover:not(.kt-field-inline-edit--is-editing) {
+	&.kt-field-inline-edit--is-editable:hover:not(
+			.kt-field-inline-edit--is-editing
+		) {
 		::v-deep .kt-field__wrapper:not(.kt-field__wrapper--disabled) {
 			.kt-field__input-container:hover {
 				cursor: pointer;
