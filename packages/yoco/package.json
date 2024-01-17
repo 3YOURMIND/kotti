@@ -21,6 +21,12 @@
 	"devDependencies": {
 		"icon-font-buildr": "^1.4.2"
 	},
+	"exports": {
+		"import": null,
+		"require": "./dist/index.js",
+		"style": "./styles.css",
+		"types": "./dist/index.d.ts"
+	},
 	"files": [
 		"fonts",
 		"dist",
@@ -33,12 +39,13 @@
 		"font"
 	],
 	"license": "MIT",
-	"main": "dist/index.js",
+	"main": "./dist/index.js",
 	"name": "@3yourmind/yoco",
 	"repository": "git+https://github.com/3YOURMIND/kotti.git",
 	"scripts": {
-		"build": "tsc && node --unhandled-rejections=strict dist/generate"
+		"build": "tsc --build --verbose && node --unhandled-rejections=strict dist/generate.js"
 	},
-	"style": "style.css",
+	"style": "./style.css",
+	"types": "./dist/index.d.ts",
 	"version": "2.4.6"
 }

@@ -48,13 +48,19 @@
 		"rollup-plugin-visualizer": "^5.3.6",
 		"rollup-plugin-vue": "^5.1.9"
 	},
+	"exports": {
+		"import": "./dist/esm/index.js",
+		"require": "./dist/cjs/index.js",
+		"style": "./dist/styles.css",
+		"types": "./dist/esm/index.d.ts"
+	},
 	"files": [
 		"dist"
 	],
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
-	"main": "dist/cjs/index.js",
-	"module": "dist/esm/index.js",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
 		"@vue/composition-api": "1.7.1",
@@ -79,9 +85,9 @@
 		"watch": "rollup -wc rollup.config.js"
 	},
 	"sideEffects": [
-		"dist/styles.css"
+		"./dist/styles.css"
 	],
-	"style": "dist/styles.css",
-	"types": "dist/esm/index.d.ts",
+	"style": "./dist/styles.css",
+	"types": "./dist/esm/index.d.ts",
 	"version": "5.5.0"
 }

@@ -132,5 +132,11 @@ module.exports = {
 				'@typescript-eslint/ban-ts-comment': 'off',
 			},
 		},
+		{
+			files: ['**/*.json'],
+			rules: {
+				'sonarjs/no-duplicate-string': 'off',
+			},
+		},
 	],
 }
