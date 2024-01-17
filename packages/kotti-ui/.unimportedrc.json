@@ -10,5 +10,5 @@
 		"rollup.config.js",
 		"source/test-utils/**"
 	],
-	"ignoreUnused": ["jest", "normalize.css"]
+	"ignoreUnused": ["core-js", "jest", "normalize.css"]
 }
