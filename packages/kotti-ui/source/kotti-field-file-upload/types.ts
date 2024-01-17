@@ -79,7 +79,9 @@ export module Shared {
 			.extend({
 				icon: yocoIconSchema,
 			})
-		export type Props = z.output<typeof schema>
+
+		export type Props = z.input<typeof schema>
+		export type PropsInternal = z.output<typeof schema>
 	}
 
 	export module DropArea {
@@ -100,7 +102,9 @@ export module Shared {
 			.extend({
 				inputId: z.string(),
 			})
-		export type Props = z.output<typeof schema>
+
+		export type Props = z.input<typeof schema>
+		export type PropsInternal = z.output<typeof schema>
 	}
 
 	export module FileItem {
@@ -118,7 +122,9 @@ export module Shared {
 			isDisabled: true,
 			tabIndex: true,
 		})
-		export type Props = z.output<typeof schema>
+
+		export type Props = z.input<typeof schema>
+		export type PropsInternal = z.output<typeof schema>
 
 		export const captureSchema = schema.pick({
 			dataTest: true,
@@ -239,7 +245,8 @@ export module KottiFieldFileUpload {
 		export const schema = Shared.propsSchema.extend({
 			fileInfo: fileInfoSchema,
 		})
-		export type Props = z.output<typeof schema>
+		export type Props = z.input<typeof schema>
+		export type PropsInternal = z.output<typeof schema>
 	}
 }
 
@@ -322,7 +329,9 @@ export module KottiFieldFileUploadRemote {
 			actions: actionsSchema,
 			fileInfo: fileInfoSchema,
 		})
-		export type Props = z.output<typeof schema>
+
+		export type Props = z.input<typeof schema>
+		export type PropsInternal = z.output<typeof schema>
 	}
 
 	export module ProgressBar {
@@ -333,6 +342,8 @@ export module KottiFieldFileUploadRemote {
 			.extend({
 				isError: z.boolean().default(false),
 			})
-		export type Props = z.output<typeof schema>
+
+		export type Props = z.input<typeof schema>
+		export type PropsInternal = z.output<typeof schema>
 	}
 }
