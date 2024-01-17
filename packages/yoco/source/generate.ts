@@ -2,12 +2,12 @@ import * as path from 'path'
 
 import IconFontBuildr from 'icon-font-buildr'
 
-import { Icon } from './types'
+import { Yoco } from './index.js'
 
 async function build() {
 	const builder = new IconFontBuildr({
 		sources: [path.join(__dirname, '..', 'svg', '[icon].svg')],
-		icons: Object.values(Icon),
+		icons: Object.values(Yoco.Icon),
 		output: {
 			fonts: path.join(__dirname, '..', 'fonts'),
 			fontName: 'yoco',
