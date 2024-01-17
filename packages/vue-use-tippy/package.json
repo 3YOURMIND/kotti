@@ -14,6 +14,11 @@
 	"directories": {
 		"dist": "dist"
 	},
+	"exports": {
+		"import": null,
+		"require": "./dist/index.js",
+		"types": "./dist/index.d.ts"
+	},
 	"homepage": "https://github.com/3YOURMIND/kotti/tree/master/packages/vue-use-tippy",
 	"keywords": [
 		"tippy.js",
@@ -25,7 +30,7 @@
 		"composition-api"
 	],
 	"license": "MIT",
-	"main": "dist/index.js",
+	"main": "./dist/index.js",
 	"name": "@3yourmind/vue-use-tippy",
 	"publishConfig": {
 		"access": "public"
@@ -37,5 +42,6 @@
 	"scripts": {
 		"build": "rm -rf dist && tsc"
 	},
+	"types": "./dist/index.d.ts",
 	"version": "2.0.0"
 }
