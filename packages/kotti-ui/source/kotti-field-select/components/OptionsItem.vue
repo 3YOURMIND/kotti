@@ -29,7 +29,7 @@ const propsSchema = z.object({
 export default defineComponent({
 	name: 'FieldSelectOptionsItem',
 	props: makeProps(propsSchema),
-	setup(props: z.output<typeof propsSchema>, { emit }) {
+	setup(props, { emit }) {
 		const optionRef = ref<HTMLDivElement | null>(null)
 
 		watch(

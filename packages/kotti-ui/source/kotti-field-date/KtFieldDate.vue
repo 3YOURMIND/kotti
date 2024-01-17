@@ -41,7 +41,7 @@ export default defineComponent({
 	name: 'KtFieldDate',
 	components: { ElDate, KtField },
 	props: makeProps(KottiFieldDate.propsSchema),
-	setup(props: KottiFieldDate.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldDate.Value>({
 			emit,
 			isEmpty: (value) => value === null,

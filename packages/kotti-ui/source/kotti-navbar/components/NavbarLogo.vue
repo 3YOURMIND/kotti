@@ -48,7 +48,7 @@ export default defineComponent({
 		isNarrow: { default: false, type: Boolean },
 		logoUrl: { required: true, type: String },
 	},
-	setup(_: { isNarrow: boolean; logoUrl: string }) {
+	setup() {
 		const translations = useTranslationNamespace('KtNavbar')
 
 		return {

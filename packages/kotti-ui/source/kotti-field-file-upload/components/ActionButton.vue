@@ -13,7 +13,7 @@ import { Shared } from '../types'
 export default defineComponent({
 	name: 'ActionButton',
 	props: makeProps(Shared.ActionButton.schema),
-	setup(props: Shared.ActionButton.Props) {
+	setup(props) {
 		return {
 			classes: computed(() => ({
 				'action-button': true,

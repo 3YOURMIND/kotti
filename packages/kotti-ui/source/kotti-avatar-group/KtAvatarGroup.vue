@@ -33,7 +33,7 @@ export default defineComponent({
 		KtAvatar,
 	},
 	props: makeProps(KottiAvatarGroup.propsSchema),
-	setup(props: KottiAvatarGroup.PropsInternal) {
+	setup(props) {
 		return {
 			avatarGroupClasses: computed(() => ({
 				'kt-avatar-group': true,

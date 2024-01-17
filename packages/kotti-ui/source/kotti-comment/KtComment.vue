@@ -56,7 +56,7 @@ export default defineComponent({
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
-	setup(props: KottiComment.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
 		const userToReply = ref<KottiComment.User | null>(null)

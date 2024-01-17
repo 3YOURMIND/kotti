@@ -24,7 +24,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldText.propsSchema),
-	setup(props: KottiFieldText.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldText.Value>({
 			emit,
 			isEmpty: (value) => value === null,
@@ -50,8 +50,8 @@ export default defineComponent({
 					placeholder: props.placeholder ?? undefined,
 				}),
 			),
-			onInput: (event: { target: HTMLInputElement }) => {
-				const newValue = event.target.value
+			onInput: (event: Event) => {
+				const newValue = (event.target as HTMLInputElement).value
 				field.setValue(newValue === '' ? null : newValue)
 
 				forceUpdate()

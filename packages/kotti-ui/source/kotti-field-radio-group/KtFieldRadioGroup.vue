@@ -2,8 +2,8 @@
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" useFieldset>
 		<div slot="container" :class="rootClasses" :forceUpdateKey="forceUpdateKey">
 			<div
-				v-for="option in options"
-				:key="option.value"
+				v-for="(option, index) in options"
+				:key="index"
 				class="kt-field-radio-group__container"
 			>
 				<div class="kt-field-radio-group__header">
@@ -71,7 +71,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldRadioGroup.propsSchema),
-	setup(props: KottiFieldRadioGroup.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldRadioGroup.Value>({
 			emit,
 			isEmpty: (value) => value === null,

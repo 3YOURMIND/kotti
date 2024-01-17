@@ -34,7 +34,7 @@ import { Shared } from '../../types'
 export default defineComponent({
 	name: 'ErrorViewer',
 	props: makeProps(Shared.TakePhoto.errorSchema),
-	setup(props: Shared.TakePhoto.ErrorProps) {
+	setup(props) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const errors = computed<Record<string, string>>(() => ({

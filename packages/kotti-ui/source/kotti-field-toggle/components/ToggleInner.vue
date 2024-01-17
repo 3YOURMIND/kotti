@@ -16,8 +16,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed, PropType } from '@vue/composition-api'
 
+import { KottiField } from '../../kotti-field/types'
 import { KottiFieldToggle } from '../types'
 
 import ToggleBox from './ToggleBox.vue'
@@ -28,10 +29,15 @@ export default defineComponent({
 	components: { ToggleBox, ToggleSwitch },
 	props: {
 		component: { required: true, type: String },
-		inputProps: { required: true, type: Object },
+		inputProps: {
+			required: true,
+			type: Object as PropType<
+				KottiField.Hook.Returns<KottiFieldToggle.Value>['inputProps']
+			>,
+		},
 		isDisabled: { required: true, type: Boolean },
 		type: { default: 'checkbox', type: String },
-		value: { default: null, type: Boolean },
+		value: { default: null, type: Boolean as PropType<boolean | null> },
 	},
 	setup(props, { emit }) {
 		return {

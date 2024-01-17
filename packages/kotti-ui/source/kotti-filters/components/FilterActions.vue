@@ -49,15 +49,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	setup(
-		_: {
-			dataTest: string | null
-			isAddDisabled: boolean
-			isClearAllDisabled: boolean
-			isLoading: boolean
-		},
-		{ emit },
-	) {
+	setup(_, { emit }) {
 		const handleAdd = () => {
 			emit('startAddingFilter')
 		}

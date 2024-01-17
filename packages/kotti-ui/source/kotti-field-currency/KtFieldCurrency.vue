@@ -53,7 +53,7 @@ export default defineComponent({
 	name: 'KtFieldCurrency',
 	components: { KtField },
 	props: makeProps(KottiFieldCurrency.propsSchema),
-	setup(props: KottiFieldCurrency.PropsInternal, { emit, root }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldCurrency.Value>({
 			emit,
 			isEmpty: (value) => value === null,

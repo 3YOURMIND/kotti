@@ -1,10 +1,6 @@
 <template>
 	<div>
-		<slot
-			:setValue="(key, newValue) => setValue(key, newValue)"
-			:setValues="setValues"
-			:values="values"
-		/>
+		<slot :setValue="setValue" :setValues="setValues" :values="values" />
 	</div>
 </template>
 
@@ -19,14 +15,12 @@ import {
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
 
-import { KottiFormControllerObject } from './types'
-
 export default defineComponent({
 	name: 'KtFormControllerObject',
 	props: {
 		formKey: { required: true, type: String },
 	},
-	setup(props: KottiFormControllerObject.Props) {
+	setup(props) {
 		const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 		if (context === null)
 			throw new Error('KtFormControllerObject: Could Not Find KtFormContext')
@@ -47,7 +41,10 @@ export default defineComponent({
 		/**
 		 * Updates a single key in a KtFormControllerObject values
 		 */
-		const setValue = (key, newValue) =>
+		const setValue = (
+			key: keyof KottiForm.ContextType,
+			newValue: KottiForm.ContextType[keyof KottiForm.ContextType],
+		) =>
 			context.setValue(props.formKey, {
 				...values.value,
 				[key]: newValue,
@@ -68,7 +65,8 @@ export default defineComponent({
 			/**
 			 * Updates KtFormControllerObject values
 			 */
-			setValues: (newValue) => context.setValue(props.formKey, newValue),
+			setValues: (newFormValues: KottiForm.ContextType) =>
+				context.setValue(props.formKey, newFormValues),
 			values,
 		}
 	},

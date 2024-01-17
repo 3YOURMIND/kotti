@@ -129,7 +129,7 @@
 import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, PropType } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
 import kebabCase from 'lodash/kebabCase'
 
@@ -148,15 +148,16 @@ export default defineComponent({
 		ComponentInfoSlots,
 	},
 	props: {
-		component: { required: true, type: Object },
-	},
-	setup(props: {
 		component: {
-			meta: Kotti.Meta
-			name: string
-			props?: Record<string, unknown>
-		}
-	}) {
+			required: true,
+			type: Object as PropType<{
+				meta: Kotti.Meta
+				name: string
+				props?: Record<string, unknown>
+			}>,
+		},
+	},
+	setup(props) {
 		return {
 			Dashes,
 			labels: computed(() => {

@@ -16,10 +16,10 @@ import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 export default defineComponent({
 	name: 'FieldHelpText',
 	props: {
-		helpText: { default: null, type: String },
+		helpText: { default: null, type: String as PropType<string | null> },
 		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
 	},
-	setup(_: { helpText: string | null; helpTextSlot: VNode[] }) {
+	setup(_props) {
 		const helpTextContentRef = ref<Element | null>(null)
 		const helpTextTriggerRef = ref<Element | null>(null)
 

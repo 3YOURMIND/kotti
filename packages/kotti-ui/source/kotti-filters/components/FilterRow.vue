@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import { KottiField } from '../../kotti-field/types'
 import { KtFieldCurrency } from '../../kotti-field-currency'
@@ -81,21 +81,21 @@ export default defineComponent({
 	props: {
 		column: {
 			default: null,
-			type: Object,
+			type: Object as PropType<KottiFilters.Column.Any | null>,
 		},
 		columnOptions: {
 			required: true,
-			type: Array,
+			type: Array as PropType<KottiFieldSingleSelect.Props['options']>,
 		},
 		dataTest: {
 			default: null,
-			type: String,
+			type: String as PropType<string | null>,
 		},
 		filter: {
 			default: () => ({
 				key: null,
 			}),
-			type: Object,
+			type: Object as PropType<KottiFilters.Filter>,
 		},
 		isFirstItem: {
 			default: false,
@@ -106,17 +106,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	setup(
-		props: {
-			column: KottiFilters.Column.Any | null
-			columnOptions: KottiFieldSingleSelect.Props['options']
-			dataTest: string | null
-			filter: KottiFilters.Filter
-			isFirstItem: boolean
-			isLoading: boolean
-		},
-		{ emit },
-	) {
+	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
 		const operationOptions = computed(() =>

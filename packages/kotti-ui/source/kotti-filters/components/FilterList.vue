@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
@@ -46,7 +46,7 @@ export default defineComponent({
 	props: {
 		columns: {
 			required: true,
-			type: Array,
+			type: Array as PropType<KottiFilters.Column.Any[]>,
 		},
 		dataTest: {
 			default: null,
@@ -54,7 +54,7 @@ export default defineComponent({
 		},
 		filters: {
 			required: true,
-			type: Array,
+			type: Array as PropType<KottiFilters.InternalFilter[]>,
 		},
 		isAddingFilter: {
 			default: false,
@@ -65,16 +65,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	setup(
-		props: {
-			columns: KottiFilters.Column.Any[]
-			dataTest: string | null
-			filters: KottiFilters.InternalFilter[]
-			isAddingFilter: boolean
-			isLoading: boolean
-		},
-		{ emit },
-	) {
+	setup(props, { emit }) {
 		const currentFiltersKeys = computed<KottiFilters.InternalFilter['key'][]>(
 			() => props.filters.map((filter) => filter.key),
 		)
@@ -89,7 +80,7 @@ export default defineComponent({
 			return column
 		}
 		const getColumnOptions = (
-			selectedColumnKey: KottiFilters.Column.Any['key'] | undefined,
+			selectedColumnKey?: KottiFilters.Column.Any['key'],
 		): KottiFieldSingleSelect.Props['options'] =>
 			props.columns
 				.filter(

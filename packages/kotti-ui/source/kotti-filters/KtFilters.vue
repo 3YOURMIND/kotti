@@ -1,7 +1,7 @@
 <template>
 	<div class="kt-filter">
 		<FilterSearch
-			v-if="hasSearchColumn"
+			v-if="searchColumn !== null"
 			:column="searchColumn"
 			:dataTest="dataTest"
 			:filter="searchValue"
@@ -47,7 +47,7 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, PropType } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
 import { roundArrow } from 'tippy.js'
 
@@ -72,9 +72,15 @@ export default defineComponent({
 	props: {
 		columns: {
 			required: true,
-			type: Array,
-			validator: (value: KottiFilters.PropsInternal['columns']) =>
-				value.every((column) => isValidColumn(column)),
+			type: Array as PropType<KottiFilters.PropsInternal['columns']>,
+			validator(
+				this: void,
+				value: unknown,
+			): value is KottiFilters.PropsInternal['columns'] {
+				return (
+					Array.isArray(value) && value.every((column) => isValidColumn(column))
+				)
+			},
 		},
 		dataTest: {
 			default: null,
@@ -86,10 +92,10 @@ export default defineComponent({
 		},
 		value: {
 			required: true,
-			type: Array,
+			type: Array as PropType<KottiFilters.PropsInternal['value']>,
 		},
 	},
-	setup(props: KottiFilters.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
 		const listContentRef = ref<Element | null>(null)
@@ -102,12 +108,14 @@ export default defineComponent({
 				(column) => column.type !== KottiFilters.FilterType.SEARCH,
 			),
 		)
-		const searchColumn = computed<KottiFilters.Column.Any | null>(
+
+		const searchColumn = computed(
 			() =>
-				props.columns.find(
+				(props.columns.find(
 					(column) => column.type === KottiFilters.FilterType.SEARCH,
-				) ?? null,
+				) ?? null) as KottiFilters.Column.Search | null,
 		)
+
 		const searchValue = computed<KottiFilters.InternalFilter | null>(
 			() =>
 				props.value.find((filter) => filter.key === searchColumn.value?.key) ??
@@ -133,7 +141,6 @@ export default defineComponent({
 			if (filtersCount === 0) return label
 			return `${filtersCount} ${label}`
 		})
-		const hasSearchColumn = computed(() => searchColumn.value !== null)
 
 		const clearAll = () => {
 			if (searchValue.value === null) {
@@ -150,7 +157,7 @@ export default defineComponent({
 			emit('input', [...filters, searchValue.value])
 		}
 		const setSearchFilter = (searchFilter: KottiFilters.InternalFilter) => {
-			if (hasSearchColumn.value) {
+			if (searchColumn.value !== null) {
 				if (searchFilter.value === null) {
 					emit('input', filterListValues.value)
 					return
@@ -195,7 +202,6 @@ export default defineComponent({
 			filterListColumns,
 			filterLabel,
 			filterListValues,
-			hasSearchColumn,
 			isAddDisabled,
 			isAddingFilter,
 			isClearAllDisabled,

@@ -8,7 +8,7 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, PropType } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
@@ -16,10 +16,10 @@ import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 export default defineComponent({
 	name: 'NavbarTooltip',
 	props: {
-		icon: { required: true, type: String },
+		icon: { required: true, type: String as PropType<Yoco.Icon> },
 		label: { required: true, type: String },
 	},
-	setup(_: { label: string; icon: Yoco.Icon }) {
+	setup() {
 		const contentRef = ref<Element | null>(null)
 		const triggerRef = ref<Element | null>(null)
 

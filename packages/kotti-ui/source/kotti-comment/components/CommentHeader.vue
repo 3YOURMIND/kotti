@@ -29,7 +29,7 @@ import { KottiComment } from '../types'
 export default defineComponent({
 	name: 'CommentHeader',
 	props: makeProps(KottiComment.Header.schema),
-	setup(_: KottiComment.Header.PropsInternal) {
+	setup() {
 		const translations = useTranslationNamespace('KtComment')
 
 		return {

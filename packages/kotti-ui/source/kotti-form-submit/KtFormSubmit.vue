@@ -51,14 +51,13 @@ import { KottiForm } from '../kotti-form/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import { KtFormSubmitErrors } from './errors'
-import { KottiFormSubmit } from './types'
 
 export default defineComponent({
 	name: 'KtFormSubmit',
 	props: {
 		label: { default: 'Submit', type: String },
 	},
-	setup(_: KottiFormSubmit.PropsInternal) {
+	setup() {
 		const context = inject<KottiForm.SubmitContext | null>(
 			KT_FORM_SUBMIT_CONTEXT,
 			null,

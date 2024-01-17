@@ -70,7 +70,7 @@ enum State {
 export default defineComponent({
 	name: 'CapturePhoto',
 	props: makeProps(Shared.TakePhoto.captureSchema),
-	setup(_: Shared.TakePhoto.CaptureProps, { emit }) {
+	setup(_, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const cameraIndex = ref<number>(0)

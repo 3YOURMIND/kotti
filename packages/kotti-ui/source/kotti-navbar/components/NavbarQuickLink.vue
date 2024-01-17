@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiNavbar } from '../types'
@@ -37,9 +37,12 @@ export default defineComponent({
 	},
 	props: {
 		isNarrow: { default: false, type: Boolean },
-		links: { required: true, type: Array },
+		links: {
+			required: true,
+			type: Array as PropType<Array<KottiNavbar.QuickLink>>,
+		},
 	},
-	setup(_: { isNarrow: boolean; links: KottiNavbar.QuickLink[] }) {
+	setup() {
 		const translations = useTranslationNamespace('KtNavbar')
 
 		return {

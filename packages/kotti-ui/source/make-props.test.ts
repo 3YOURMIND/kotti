@@ -1,7 +1,6 @@
-import { PropOptions } from '@vue/composition-api'
+import { PropOptions, PropType } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
 import isEqual from 'lodash/isEqual'
-import { PropType } from 'vue'
 import { z } from 'zod'
 
 import { makeProps } from './make-props'

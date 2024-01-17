@@ -21,7 +21,7 @@
 				<span
 					class="kt-breadcrumb__text"
 					role="button"
-					@click="handleClick(breadcrumb, index)"
+					@click="handleClick(breadcrumb)"
 					v-text="breadcrumb.title"
 				/>
 			</li>
@@ -39,7 +39,7 @@ import { KottiBreadcrumb } from './types'
 export default defineComponent({
 	name: 'KtBreadcrumb',
 	props: makeProps(KottiBreadcrumb.propsSchema),
-	setup(props: KottiBreadcrumb.PropsInternal) {
+	setup(props) {
 		return {
 			breadCrumbClasses: (item: KottiBreadcrumb.Breadcrumb, index: number) => {
 				return {

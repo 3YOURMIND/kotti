@@ -1,4 +1,4 @@
-import { computed, h, defineComponent } from '@vue/composition-api'
+import { computed, h, defineComponent, PropType } from '@vue/composition-api'
 
 import { useI18nProvide } from './hooks'
 import { KottiI18n } from './types'
@@ -8,16 +8,19 @@ const KtI18nContext = defineComponent({
 	props: {
 		currencyMap: {
 			default: (): KottiI18n.Props['currencyMap'] => ({}),
-			type: Object,
+			type: Object as PropType<KottiI18n.Props['currencyMap']>,
 		},
-		locale: { required: true, type: String },
+		locale: {
+			required: true,
+			type: String as PropType<KottiI18n.Props['locale']>,
+		},
 		messages: {
 			/**
 			 * default to a Partial object, because the provision hook handles
 			 * the default values.
 			 */
 			default: (): KottiI18n.Props['messages'] => ({}),
-			type: Object,
+			type: Object as PropType<KottiI18n.Props['messages']>,
 		},
 		numberFormat: {
 			/**
@@ -25,10 +28,10 @@ const KtI18nContext = defineComponent({
 			 * the default values.
 			 */
 			default: (): KottiI18n.Props['numberFormat'] => ({}),
-			type: Object,
+			type: Object as PropType<KottiI18n.Props['numberFormat']>,
 		},
 	},
-	setup(props: KottiI18n.Props, { slots }) {
+	setup(props, { slots }) {
 		useI18nProvide({
 			currencyMap: computed(() => props.currencyMap),
 			locale: computed(() => props.locale),

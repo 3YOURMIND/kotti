@@ -49,11 +49,11 @@ import { makeProps } from '../make-props'
 
 import { KottiValueLabel } from './types'
 
-export default defineComponent<KottiValueLabel.PropsInternal>({
+export default defineComponent({
 	name: 'KtValueLabel',
 	components: { FieldHelpText },
 	props: makeProps(KottiValueLabel.propsSchema),
-	setup(props: KottiValueLabel.PropsInternal) {
+	setup(props) {
 		const translations = useTranslationNamespace('KtValueLabel')
 
 		const hasHelpText = computed(() => props.helpText !== null)

@@ -34,7 +34,7 @@ const ANIMATION_DURATION = 300
 export default defineComponent({
 	name: 'KtAccordion',
 	props: makeProps(KottiAccordion.propsSchema),
-	setup(props: KottiAccordion.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const contentInnerRef = ref<HTMLElement | null>(null)
 
 		useSlideAnimation(

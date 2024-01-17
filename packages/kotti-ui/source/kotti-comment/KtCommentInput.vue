@@ -27,7 +27,7 @@ export default defineComponent({
 		CommentTextArea,
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
-	setup(props: KottiCommentInput.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const localIsInternal = ref<KottiComment.PropsInternal['isInternal']>(
 			props.isInternal,
 		)

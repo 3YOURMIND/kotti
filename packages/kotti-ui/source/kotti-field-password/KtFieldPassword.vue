@@ -22,7 +22,7 @@ export default defineComponent({
 	name: 'KtFieldPassword',
 	components: { KtField },
 	props: makeProps(KottiFieldPassword.propsSchema),
-	setup(props: KottiFieldPassword.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({
 			emit,
 			isEmpty: (value) => value === null,
@@ -49,8 +49,8 @@ export default defineComponent({
 					value: field.currentValue ?? '',
 				}),
 			),
-			onInput: (event: { target: HTMLInputElement }) => {
-				const newValue = event.target.value
+			onInput: (event: Event) => {
+				const newValue = (event.target as HTMLInputElement).value
 				field.setValue(newValue === '' ? null : newValue)
 
 				forceUpdate()
