@@ -64,7 +64,8 @@ export default defineComponent({
 		const inputContainerRef = ref<Element | null>(null)
 
 		usePicker({
-			elDateRef,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			elDateRef: elDateRef as any,
 			field,
 			inputContainerRef,
 			popperHeight: '470px',
@@ -110,7 +111,8 @@ export default defineComponent({
 					],
 				}),
 			),
-			elDateRef,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			elDateRef: elDateRef as any,
 			field,
 			inputContainerRef,
 			/**
