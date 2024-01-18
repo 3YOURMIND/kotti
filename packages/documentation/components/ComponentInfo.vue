@@ -65,7 +65,7 @@
 		<ComponentInfoSlots :slots="component.meta.slots" />
 		<KtHeading
 			v-if="component.props"
-			text="Properties (Beta)"
+			text="Properties"
 			:toggleStatus="showProps"
 			toggleCloseText="Hide"
 			toggleText="Show"

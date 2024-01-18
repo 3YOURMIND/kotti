@@ -2,10 +2,10 @@
 	<div>
 		<h3>
 			<label v-text="text" />
-			<span v-if="type === 'action'" @click="handleClick">
+			<span v-if="type === KottiHeading.Type.ACTION" @click="handleClick">
 				{{ actionText }} <i class="yoco" v-text="icon" />
 			</span>
-			<span v-if="type === 'toggle'" @click="handleClick">
+			<span v-if="type === KottiHeading.Type.TOGGLE" @click="handleClick">
 				{{ toggleTextRep }}
 				<i
 					class="yoco"
@@ -13,37 +13,34 @@
 				/>
 			</span>
 		</h3>
-		<div v-if="toggleStatus && type === 'toggle'">
+		<div v-if="toggleStatus && type === KottiHeading.Type.TOGGLE">
 			<slot />
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { isYocoIcon, Yoco } from '@3yourmind/yoco'
+import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from '@vue/composition-api'
+
+import { makeProps } from '../make-props'
+
+import { KottiHeading } from './types'
 
 export default defineComponent({
 	name: 'KtHeading',
-	props: {
-		actionText: { type: String, default: null },
-		icon: { type: String, default: null, validator: isYocoIcon },
-		text: { type: String, required: true },
-		toggleCloseText: { type: String, default: 'Close' },
-		toggleStatus: { type: Boolean, default: false },
-		toggleText: { type: String, default: 'View' },
-		type: { type: String, default: null },
-	},
+	props: makeProps(KottiHeading.propsSchema),
 	setup(props, { emit }) {
 		return {
-			handleClick: (event) => {
-				if (props.type === 'action') {
+			handleClick: (event: Event) => {
+				if (props.type === KottiHeading.Type.ACTION) {
 					emit('click', event)
 				}
-				if (props.type === 'toggle') {
+				if (props.type === KottiHeading.Type.TOGGLE) {
 					emit('toggle', event)
 				}
 			},
+			KottiHeading,
 			toggleTextRep: computed(() =>
 				props.toggleStatus ? props.toggleCloseText : props.toggleText,
 			),
