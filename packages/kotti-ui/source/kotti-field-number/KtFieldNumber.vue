@@ -25,7 +25,7 @@
 					ref="inputRef"
 					v-bind="inputProps"
 					@blur="onBlur"
-					@input="onInput($event.target.value)"
+					@input="onInput"
 				/>
 				<div v-if="showMaximum" v-text="'/'" />
 				<div
@@ -83,9 +83,11 @@ import { isStepMultiple, toNumber, toString } from './utilities'
 
 export default defineComponent({
 	name: 'KtFieldNumber',
-	components: { KtField },
+	components: {
+		KtField,
+	},
 	props: makeProps(KottiFieldNumber.propsSchema),
-	setup(props: KottiFieldNumber.PropsInternal, { emit, root }) {
+	setup(props, { emit, root }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
 			isEmpty: (value) => value === null,
@@ -319,7 +321,9 @@ export default defineComponent({
 			),
 			onBlur: () => forceUpdateDisplayedValue(field.currentValue),
 			onClickMiddle: () => inputRef.value?.focus(),
-			onInput: (value: string) => {
+			onInput: (event: Event) => {
+				const value = (event.target as HTMLInputElement).value
+
 				lastUserSetCursorPosition.value = inputRef.value?.selectionStart ?? null
 
 				const { maximum, minimum, step } = props

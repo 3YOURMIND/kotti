@@ -49,7 +49,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldTextArea.propsSchema),
-	setup(props: KottiFieldTextArea.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldTextArea.Value>({
 			emit,
 			isEmpty: (value) => value === null,
@@ -75,8 +75,8 @@ export default defineComponent({
 					value: field.currentValue ?? '',
 				}),
 			),
-			onInput: (event: { target: HTMLTextAreaElement }) => {
-				const newValue = event.target.value
+			onInput: (event: Event) => {
+				const newValue = (event.target as HTMLTextAreaElement).value
 				field.setValue(newValue === '' ? null : newValue)
 				resizeTextarea({
 					autoSize: props.autoSize,

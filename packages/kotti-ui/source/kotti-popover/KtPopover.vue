@@ -16,15 +16,14 @@
 					:label="option.label"
 					@click.stop="handleItemClick(option)"
 				>
-					<!-- eslint-disable-next-line -->
-					<template v-if="areOptionsSelectable" slot="option" :option="option">
+					<template v-if="areOptionsSelectable" #option>
 						<KtFieldToggle
 							:dataTest="option.dataTest"
 							:formKey="formKey"
 							:isDisabled="option.isDisabled"
 							:isOptional="option.isOptional"
 							:value="option.isSelected"
-							@input="(e) => handleItemSelection({ index, option, value: e })"
+							@input="handleItemSelection({ index, option })"
 						>
 							<span v-text="option.label" />
 						</KtFieldToggle>
@@ -50,6 +49,7 @@ import castArray from 'lodash/castArray'
 import { roundArrow, Props as TippyProps } from 'tippy.js'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
+import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { KT_FORM_CONTEXT } from '../kotti-form'
 import { KottiForm } from '../kotti-form/types'
 import { makeProps } from '../make-props'
@@ -70,7 +70,7 @@ export default defineComponent({
 		IconTextItem,
 	},
 	props: makeProps(KottiPopover.propsSchema),
-	setup(props: KottiPopover.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)
 
@@ -158,26 +158,6 @@ export default defineComponent({
 
 		return {
 			close,
-			contentRef,
-			formKey: computed(() => (formContext === null ? null : 'NONE')),
-			handleItemClick: (option: KottiPopover.PropsInternal['options'][0]) => {
-				if (!option.isDisabled && option.onClick) {
-					option.onClick()
-					close()
-				}
-			},
-			handleItemSelection: ({
-				index,
-				option,
-				value,
-			}: KottiPopover.Events.UpdateIsSelected) => {
-				emit('update:isSelected', {
-					value,
-					index,
-					option,
-				})
-			},
-			open,
 			contentClass: computed(() => {
 				const classes = [
 					'kt-popover__content',
@@ -189,6 +169,28 @@ export default defineComponent({
 
 				return classes
 			}),
+			contentRef,
+			formKey: computed(() => (formContext === null ? null : 'NONE')),
+			handleItemClick: (option: KottiPopover.PropsInternal['options'][0]) => {
+				if (!option.isDisabled && option.onClick) {
+					option.onClick()
+					close()
+				}
+			},
+			handleItemSelection:
+				({
+					index,
+					option,
+				}: Pick<KottiPopover.Events.UpdateIsSelected, 'index' | 'option'>) =>
+				(value: KottiPopover.Events.UpdateIsSelected['value']) => {
+					emit('update:isSelected', {
+						value,
+						index,
+						option,
+					})
+				},
+			KottiFieldToggle,
+			open,
 			showPopover,
 			triggerRef,
 		}

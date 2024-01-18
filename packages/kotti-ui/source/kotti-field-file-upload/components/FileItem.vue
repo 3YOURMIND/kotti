@@ -47,7 +47,7 @@ export default defineComponent({
 		ItemLayout,
 	},
 	props: makeProps(KottiFieldFileUpload.FileItem.schema),
-	setup(props: KottiFieldFileUpload.FileItem.Props, { emit }) {
+	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const status = computed(() => props.fileInfo.status)

@@ -137,7 +137,7 @@ export default defineComponent({
 		KtTag,
 	},
 	props: makeProps(propsSchema),
-	setup(props: z.output<typeof propsSchema>, { emit: rawEmit }) {
+	setup(props, { emit: rawEmit }) {
 		const emit = (event: string, payload: unknown) =>
 			rawEmit('emit', { event, payload })
 

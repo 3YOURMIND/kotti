@@ -4,7 +4,7 @@
 			v-if="avatarAvailable"
 			ref="triggerRef"
 			class="kt-avatar__image"
-			:src="src"
+			:src="src || undefined"
 			@error="onImageFailedToLoad"
 		/>
 		<div v-else ref="triggerRef" class="kt-avatar__fallback">
@@ -32,7 +32,7 @@ import { KottiAvatar } from './types'
 export default defineComponent({
 	name: 'KtAvatar',
 	props: makeProps(KottiAvatar.propsSchema),
-	setup(props: KottiAvatar.PropsInternal, { emit, slots }) {
+	setup(props, { emit, slots }) {
 		const avatarFallback = ref(true)
 
 		const contentRef = ref<HTMLElement | null>(null)

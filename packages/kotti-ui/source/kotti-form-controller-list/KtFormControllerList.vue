@@ -15,12 +15,12 @@
 			@setValue="setValue({ ...$event, index })"
 		>
 			<slot
-				:addAfter="(newRow) => addAfter(index, newRow)"
-				:addBefore="(newRow) => addBefore(index, newRow)"
+				:addAfter="addAfter(index)"
+				:addBefore="addBefore(index)"
 				:deleteSelf="() => deleteSelf(index)"
 				:index="index"
 				name="default"
-				:setValues="(newValue) => setValuesIndex(index, newValue)"
+				:setValues="setValuesIndex(index)"
 				:values="cloneDeep(values)"
 			/>
 		</FormControllerListItem>
@@ -40,7 +40,7 @@ import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'
 
 import FormControllerListItem from './components/FormControllerListItem.vue'
-import { KottiFormControllerList, KottiFormControllerListItem } from './types'
+import { KottiFormControllerListItem } from './types'
 
 type Entry = KottiFormControllerListItem.Props['values']
 
@@ -50,7 +50,7 @@ export default defineComponent({
 	props: {
 		formKey: { required: true, type: String },
 	},
-	setup(props: KottiFormControllerList.Props) {
+	setup(props) {
 		const context = inject<KottiForm.Context | null>(KT_FORM_CONTEXT, null)
 		if (context === null)
 			throw new Error('KtFormControllerList: Could Not Find KtFormContext')
@@ -70,7 +70,7 @@ export default defineComponent({
 			/**
 			 * Adds a new valuesList entry after the given index
 			 */
-			addAfter: (index: number, newRow: Entry) =>
+			addAfter: (index: number) => (newRow: Entry) =>
 				context.setValue(props.formKey, [
 					...valuesList.value.slice(0, index + 1),
 					newRow,
@@ -79,7 +79,7 @@ export default defineComponent({
 			/**
 			 * Adds a new valuesList entry before the given index
 			 */
-			addBefore: (index: number, newRow: Entry) =>
+			addBefore: (index: number) => (newRow: Entry) =>
 				context.setValue(props.formKey, [
 					...valuesList.value.slice(0, index),
 					newRow,
@@ -119,7 +119,7 @@ export default defineComponent({
 			/**
 			 * Replaces an entire valuesListEntry with new data
 			 */
-			setValuesIndex: (index: number, newValue: Entry) =>
+			setValuesIndex: (index: number) => (newValue: Entry) =>
 				context.setValue(
 					props.formKey,
 					valuesList.value.map((oldValue, i) =>

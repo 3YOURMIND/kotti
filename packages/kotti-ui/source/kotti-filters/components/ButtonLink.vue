@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { isYocoIcon, Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import { KottiFilters } from '../types'
 
@@ -21,7 +21,7 @@ export default defineComponent({
 		},
 		icon: {
 			default: null,
-			type: String,
+			type: String as PropType<Yoco.Icon>,
 			validator: isYocoIcon,
 		},
 		isDisabled: {
@@ -38,24 +38,18 @@ export default defineComponent({
 		},
 		type: {
 			default: KottiFilters.ButtonLinkType.PRIMARY,
-			type: String,
-			validator: (value: unknown): value is KottiFilters.ButtonLinkType =>
-				Object.values(KottiFilters.ButtonLinkType).includes(
+			type: String as PropType<KottiFilters.ButtonLinkType>,
+			validator(
+				this: void,
+				value: unknown,
+			): value is KottiFilters.ButtonLinkType {
+				return Object.values(KottiFilters.ButtonLinkType).includes(
 					value as KottiFilters.ButtonLinkType,
-				),
+				)
+			},
 		},
 	},
-	setup(
-		props: {
-			dataTest: string | null
-			icon: Yoco.Icon | null
-			isDisabled: boolean
-			isLoading: boolean
-			label: string | null
-			type: KottiFilters.ButtonLinkType
-		},
-		{ emit },
-	) {
+	setup(props, { emit }) {
 		const mainClasses = computed(() => ({
 			'kt-button-link': true,
 			'kt-button-link--is-disabled': props.isDisabled,

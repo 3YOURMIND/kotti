@@ -51,7 +51,7 @@ export default defineComponent({
 		ToggleInner,
 	},
 	props: makeProps(KottiFieldToggleGroup.propsSchema),
-	setup(props: KottiFieldToggleGroup.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldToggleGroup.Value>({
 			emit,
 			isEmpty: (value) =>

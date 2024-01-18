@@ -43,7 +43,7 @@ export default defineComponent({
 	name: 'KtCard',
 	components: { KtButton },
 	props: makeProps(KottiCard.propsSchema),
-	setup(props: KottiCard.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const hasActions = computed(
 			() =>
 				props.primaryActionLabel != null && props.secondaryActionLabel != null,

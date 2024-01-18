@@ -41,7 +41,7 @@ export default defineComponent({
 		CommentTextArea,
 	},
 	props: makeProps(KottiComment.InlineEdit.schema),
-	setup(props: KottiComment.InlineEdit.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const localMessage =
 			ref<KottiComment.InlineEdit.PropsInternal['message']>('')
 

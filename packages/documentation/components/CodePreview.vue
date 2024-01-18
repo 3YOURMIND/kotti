@@ -19,7 +19,7 @@ export default defineComponent({
 		vueSlotLabel: { default: 'Kotti-UI', type: String },
 		styleSlotLabel: { default: 'Kotti-Style', type: String },
 	},
-	setup(props: { styleSlotLabel: string; vueSlotLabel: string }) {
+	setup(props) {
 		const showCode = ref(true)
 
 		return {

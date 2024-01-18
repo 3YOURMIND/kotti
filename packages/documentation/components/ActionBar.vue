@@ -8,15 +8,15 @@
 				<div class="kt-actionbar-menu has-icon-right">
 					<ul>
 						<nuxt-link
-							v-for="page in subsection.pages"
-							:key="page.to"
+							v-for="(page, index) in subsection.pages"
+							:key="index"
 							:to="`/${subsection.path}/${page.path}`"
 						>
 							<li>
 								<span v-text="page.label" />
 								<span
-									v-for="(tag, index) in page.tags"
-									:key="index"
+									v-for="(tag, tagIndex) in page.tags"
+									:key="tagIndex"
 									class="tag"
 									:class="`tag--is-${tag}`"
 									:title="tagTitles[tag]"

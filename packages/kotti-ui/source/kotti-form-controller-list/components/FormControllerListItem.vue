@@ -3,7 +3,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, provide, computed } from '@vue/composition-api'
+import {
+	defineComponent,
+	provide,
+	computed,
+	PropType,
+} from '@vue/composition-api'
 
 import { KT_FORM_CONTEXT } from '../../kotti-form/constants'
 import { KottiForm } from '../../kotti-form/types'
@@ -12,12 +17,18 @@ import { KottiFormControllerListItem } from '../types'
 export default defineComponent({
 	name: 'FormControllerListItem',
 	props: {
-		context: { required: true, type: Object },
+		context: {
+			required: true,
+			type: Object as PropType<KottiFormControllerListItem.Props['context']>,
+		},
 		formKey: { required: true, type: String },
 		index: { required: true, type: Number },
-		values: { required: true, type: Object },
+		values: {
+			required: true,
+			type: Object as PropType<KottiFormControllerListItem.Props['values']>,
+		},
 	},
-	setup(props: KottiFormControllerListItem.Props, { emit }) {
+	setup(props, { emit }) {
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			fieldInheritableProps: props.context.fieldInheritableProps,
 			formPath: computed(() => [

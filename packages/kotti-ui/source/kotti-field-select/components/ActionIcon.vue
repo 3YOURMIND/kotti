@@ -19,25 +19,17 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 export default defineComponent({
 	name: 'ActionIcon',
 	props: {
-		classes: { required: true, type: Array },
-		handleClear: { required: true, type: Function },
+		classes: { required: true, type: Array as PropType<Array<string>> },
+		handleClear: { required: true, type: Function as PropType<() => void> },
 		isDropdownOpen: { required: true, type: Boolean },
 		showClear: { required: true, type: Boolean },
 	},
-	setup(
-		props: {
-			classes: string[]
-			handleClear(): void
-			isDropdownOpen: boolean
-			showClear: boolean
-		},
-		{ emit },
-	) {
+	setup(props, { emit }) {
 		return {
 			containerClasses: computed(() => [
 				...props.classes,

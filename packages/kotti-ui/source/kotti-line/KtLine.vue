@@ -16,7 +16,7 @@ import { KottiLine } from './types'
 export default defineComponent({
 	name: 'KtLine',
 	props: makeProps(KottiLine.propsSchema),
-	setup(props: KottiLine.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		return {
 			handleClick: () => {
 				if (props.isInteractive) emit('click')

@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import { KtFieldText } from '../../kotti-field-text'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
@@ -29,7 +29,7 @@ export default defineComponent({
 	props: {
 		column: {
 			required: true,
-			type: Object,
+			type: Object as PropType<KottiFilters.Column.Search>,
 		},
 		dataTest: {
 			default: null,
@@ -37,22 +37,14 @@ export default defineComponent({
 		},
 		filter: {
 			default: null,
-			type: Object,
+			type: Object as PropType<KottiFilters.Filter | null>,
 		},
 		isLoading: {
 			default: false,
 			type: Boolean,
 		},
 	},
-	setup(
-		props: {
-			column: KottiFilters.Column.Search
-			dataTest: string | null
-			filter: KottiFilters.Filter | null
-			isLoading: boolean
-		},
-		{ emit },
-	) {
+	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
 		const placeholder = computed<string>(

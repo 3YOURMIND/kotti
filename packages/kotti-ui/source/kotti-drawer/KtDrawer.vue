@@ -31,7 +31,7 @@ import { KottiDrawer } from './types'
 export default defineComponent({
 	name: 'KtDrawer',
 	props: makeProps(KottiDrawer.propsSchema),
-	setup(props: KottiDrawer.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const isExpanded = ref(false)
 
 		return {

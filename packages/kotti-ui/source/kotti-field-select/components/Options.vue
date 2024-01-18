@@ -91,7 +91,7 @@ export default defineComponent({
 		FieldSelectOptionsItem,
 	},
 	props: makeProps(propsSchema),
-	setup(props: z.output<typeof propsSchema>, { emit }) {
+	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldSelects')
 
 		const optionsRef = ref<HTMLDivElement | null>(null)

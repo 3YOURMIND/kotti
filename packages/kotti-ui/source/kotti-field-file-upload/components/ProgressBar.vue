@@ -17,7 +17,7 @@ import { KottiFieldFileUploadRemote } from '../types'
 export default defineComponent({
 	name: 'ProgressBar',
 	props: makeProps(KottiFieldFileUploadRemote.ProgressBar.schema),
-	setup(props: KottiFieldFileUploadRemote.ProgressBar.Props) {
+	setup(props) {
 		return {
 			fillClasses: computed(() => ({
 				'progress-bar__fill': true,

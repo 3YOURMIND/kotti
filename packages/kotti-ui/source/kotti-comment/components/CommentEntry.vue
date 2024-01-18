@@ -52,7 +52,7 @@ export default defineComponent({
 		CommentInlineEdit,
 	},
 	props: makeProps(KottiComment.Entry.schema),
-	setup(props: KottiComment.Entry.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const isEditing = ref(false)
 
 		return {

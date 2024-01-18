@@ -29,7 +29,7 @@ import { KottiButton } from './types'
 export default defineComponent({
 	name: 'KtButton',
 	props: makeProps(KottiButton.propsSchema),
-	setup(props: KottiButton.PropsInternal, { emit, slots }) {
+	setup(props, { emit, slots }) {
 		const helpTextContentRef = ref<Element | null>(null)
 		const helpTextTriggerRef = ref<Element | null>(null)
 

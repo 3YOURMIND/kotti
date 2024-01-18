@@ -40,7 +40,7 @@ import { KottiComment } from '../types'
 export default defineComponent({
 	name: 'CommentActions',
 	props: makeProps(KottiComment.Actions.schema),
-	setup(_: KottiComment.Actions.PropsInternal, { emit }) {
+	setup(_, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
 		return {

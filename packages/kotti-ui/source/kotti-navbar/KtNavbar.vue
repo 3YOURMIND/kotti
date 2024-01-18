@@ -85,7 +85,7 @@ export default defineComponent({
 		NavbarQuickLink,
 	},
 	props: makeProps(KottiNavbar.propsSchema),
-	setup(props: KottiNavbar.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const mobileMenuRef = ref<HTMLElement | null>(null)
 		const navbarRef = ref<HTMLElement | null>(null)
 		const tippyTriggerRef = ref<HTMLElement | null>(null)

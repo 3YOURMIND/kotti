@@ -68,7 +68,7 @@ export default defineComponent({
 		ProgressBar,
 	},
 	props: makeProps(KottiFieldFileUploadRemote.FileItem.schema),
-	setup(props: KottiFieldFileUploadRemote.FileItem.Props) {
+	setup(props) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const progressBarForceRenderKey = ref<number>(0)

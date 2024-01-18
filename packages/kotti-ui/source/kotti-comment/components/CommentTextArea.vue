@@ -73,7 +73,7 @@ import { KottiComment } from '../types'
 export default defineComponent({
 	name: 'CommentTextArea',
 	props: makeProps(KottiComment.TextArea.schema),
-	setup(props: KottiComment.TextArea.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
 		const containerRef = ref<HTMLDivElement | null>(null)

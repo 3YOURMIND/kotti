@@ -67,7 +67,7 @@ export default defineComponent({
 	},
 	props: makeProps(KottiFieldInlineEdit.propsSchema),
 	// eslint-disable-next-line sonarjs/cognitive-complexity
-	setup(props: KottiFieldInlineEdit.PropsInternal, { emit }) {
+	setup(props, { emit }) {
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
