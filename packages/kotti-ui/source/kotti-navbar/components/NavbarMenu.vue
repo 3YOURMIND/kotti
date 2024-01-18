@@ -33,12 +33,10 @@ import { computed, defineComponent } from '@vue/composition-api'
 import { makeProps } from '../../make-props'
 import { KottiNavbar } from '../types'
 
-namespace KottiNavbarMenu {
-	export const propsSchema = KottiNavbar.propsSchema.pick({
-		isNarrow: true,
-		sections: true,
-	})
-}
+export const propsSchema = KottiNavbar.propsSchema.pick({
+	isNarrow: true,
+	sections: true,
+})
 
 import NavbarTooltip from './NavbarTooltip.vue'
 
@@ -47,11 +45,11 @@ export default defineComponent({
 	components: {
 		NavbarTooltip,
 	},
-	props: makeProps(KottiNavbarMenu.propsSchema),
+	props: makeProps(propsSchema),
 	setup(props) {
 		return {
 			parsedSections: computed(() =>
-				KottiNavbarMenu.propsSchema.shape.sections.parse(props.sections),
+				propsSchema.shape.sections.parse(props.sections),
 			),
 		}
 	},

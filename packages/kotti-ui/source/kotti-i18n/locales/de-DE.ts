@@ -1,6 +1,6 @@
 import { KottiI18n } from '../types'
 
-namespace Common {
+module Common {
 	export const is = 'ist'
 
 	export const isEmpty = 'ist leer'
