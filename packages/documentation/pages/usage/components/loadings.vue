@@ -20,7 +20,7 @@
     		<div class="column col-2">
     			<div class="skeleton square" />
     		</div>
-    		<div class="column col-8">
+    		<div class="column col-8 col-with-row-gap">
     			<div class="skeleton rectangle md" />
     			<div class="skeleton rectangle md" />
     			<div class="skeleton rectangle md" />
@@ -38,7 +38,7 @@
 
     Rectangle skeleton with different height.
 
-    <div class="element-example">
+    <div class="element-example col-with-row-gap">
     	<div class="skeleton rectangle"/>
     	<div class="skeleton rectangle md"/>
     	<div class="skeleton rectangle md"/>
@@ -46,10 +46,12 @@
     </div>
 
     ```html
-    <div class="skeleton rectangle"/>
-    <div class="skeleton rectangle md"/>
-    <div class="skeleton rectangle md"/>
-    <div class="skeleton rectangle lg"/>
+    <div class="col-with-row-gap">
+    	<div class="skeleton rectangle"/>
+    	<div class="skeleton rectangle md"/>
+    	<div class="skeleton rectangle md"/>
+    	<div class="skeleton rectangle lg"/>
+    </div>
     ```
 
     ## Spin Loading
@@ -59,7 +61,7 @@
     <div class="element-example">
     	<div class="columns">
     		<div class="column col-6">
-    		<div class="loading"/>
+    			<div class="loading"/>
     		</div>
     		<div class="column col-6">
     			<div class="loading lg"/>
@@ -148,3 +150,11 @@ export default defineComponent({
 	},
 })
 </script>
+
+<style scoped>
+.col-with-row-gap {
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.4rem;
+}
+</style>
