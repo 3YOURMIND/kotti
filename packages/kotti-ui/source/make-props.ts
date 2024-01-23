@@ -143,6 +143,7 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 			)
 		}
 
+		case z.ZodFirstPartyTypeKind.ZodAny: // special case for "no type check" props
 		case z.ZodFirstPartyTypeKind.ZodArray:
 		case z.ZodFirstPartyTypeKind.ZodBoolean:
 		case z.ZodFirstPartyTypeKind.ZodDate:
@@ -185,7 +186,11 @@ const ignoredZodTypes = new Set([
 /**
  * This maps the internal zod name of a type to the the constructor that Vue expects in `propName.type`
  */
-const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
+const zodToVueType = new Map<
+	z.ZodFirstPartyTypeKind,
+	VuePropConstructor | undefined
+>([
+	[z.ZodFirstPartyTypeKind.ZodAny, undefined],
 	[z.ZodFirstPartyTypeKind.ZodArray, Array],
 	[z.ZodFirstPartyTypeKind.ZodBoolean, Boolean],
 	[z.ZodFirstPartyTypeKind.ZodDate, Date],
@@ -291,7 +296,7 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 									`makeProps: unknown “ZodFirstPartyTypeKind.${zodTypeName}”`,
 								)
 
-							return zodToVueType.get(zodTypeName) as VuePropConstructor
+							return zodToVueType.get(zodTypeName)
 						}),
 				)
 
@@ -300,8 +305,17 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 						`makeProps: Could not determine vue prop.type for prop ${propName}`,
 					)
 
-				propDefinition.type =
-					vuePropTypes.length === 1 ? vuePropTypes[0] : vuePropTypes
+				if (vuePropTypes.length === 1) {
+					if (vuePropTypes[0] !== undefined)
+						propDefinition.type = vuePropTypes[0]
+				} else {
+					if (vuePropTypes.includes(undefined))
+						throw new Error(
+							'makeProps: z.any() is not supported with other types',
+						)
+
+					propDefinition.type = vuePropTypes as VuePropConstructor[]
+				}
 
 				/**
 				 * WORKAROUND: Usually, one should probably call shape.isOptional()
