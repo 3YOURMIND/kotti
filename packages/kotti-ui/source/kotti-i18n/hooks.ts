@@ -1,18 +1,10 @@
-import {
-	computed,
-	inject,
-	provide,
-	reactive,
-	Ref,
-	UnwrapRef,
-	watch,
-} from '@vue/composition-api'
 import elementLocale from 'element-ui/lib/locale'
 import elementDe from 'element-ui/lib/locale/lang/de'
 import elementEn from 'element-ui/lib/locale/lang/en'
 import elementEs from 'element-ui/lib/locale/lang/es'
 import elementFr from 'element-ui/lib/locale/lang/fr'
 import elementJa from 'element-ui/lib/locale/lang/ja'
+import { computed, inject, provide, reactive, Ref, UnwrapRef, watch } from 'vue'
 
 import { DecimalSeparator } from '../types/kotti'
 

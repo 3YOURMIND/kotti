@@ -5,13 +5,16 @@ export const TableBodyEmptyRow = {
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 	render(h) {
 		const { colSpan, render } = this
-		return (
-			<tr>
-				<td class="kt-table__no-row" colspan={colSpan}>
-					<span class="kt-table__empty-text">{render(h)}</span>
-				</td>
-			</tr>
-		)
+		return h('tr', {}, [
+			h(
+				'td',
+				{
+					domProps: { colSpan },
+					class: 'kt-table__no-row',
+				},
+				[h('span', { class: 'kt-table__empty-text' }, [render(h)])],
+			),
+		])
 	},
 	computed: {
 		colSpan() {

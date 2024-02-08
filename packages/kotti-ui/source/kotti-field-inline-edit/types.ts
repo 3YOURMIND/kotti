@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 export module KottiFieldInlineEdit {
 	export const valueSchema = z.string().nullable()
@@ -23,11 +24,11 @@ export module KottiFieldInlineEdit {
 		.extend({
 			isReadonly: z.boolean().default(false),
 			isMultiline: z.boolean().default(false),
-			preventConfirmationOn: z
-				.nativeEnum(ConfirmationValidation)
-				.default(ConfirmationValidation.NEVER),
+			preventConfirmationOn: createLooseZodEnumSchema(
+				ConfirmationValidation,
+			).default(ConfirmationValidation.NEVER),
 			placeholder: z.string().nullable().default(null),
-			textStyle: z.nativeEnum(TextStyle).nullable().default(null),
+			textStyle: createLooseZodEnumSchema(TextStyle).nullable().default(null),
 			value: valueSchema.default(null),
 		})
 	export type Props = z.input<typeof propsSchema>

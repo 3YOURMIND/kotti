@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('jsdom-global')()
-import { defineComponent, ref } from '@vue/composition-api'
 import { mount, Wrapper } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
+import { defineComponent, ref } from 'vue'
 import { z } from 'zod'
 
 import { useField } from '../kotti-field/hooks'
@@ -22,7 +21,7 @@ const TestField = defineComponent({
 			value: z.string().nullable().default(null),
 		}),
 	),
-	setup: (props: KottiField.PropsInternal, { emit }) => {
+	setup: (props, { emit }) => {
 		useI18nProvide({
 			currencyMap: ref({}),
 			locale: ref('en-US'),

@@ -22,14 +22,15 @@
 		"icon-font-buildr": "^1.4.2"
 	},
 	"exports": {
+		"default": "./dist/index.js",
 		"import": null,
 		"require": "./dist/index.js",
-		"style": "./styles.css",
+		"style": "./style.css",
 		"types": "./dist/index.d.ts"
 	},
 	"files": [
 		"fonts",
-		"dist",
+		"dist/**/!(*.tsbuildinfo)",
 		"svg",
 		"style.css"
 	],
@@ -40,6 +41,7 @@
 	],
 	"license": "MIT",
 	"main": "./dist/index.js",
+	"module": "./dist/index.js",
 	"name": "@3yourmind/yoco",
 	"repository": "git+https://github.com/3YOURMIND/kotti.git",
 	"scripts": {

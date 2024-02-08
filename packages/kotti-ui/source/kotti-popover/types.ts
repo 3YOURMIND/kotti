@@ -3,6 +3,7 @@ import { Instance as TippyInstance } from 'tippy.js'
 import { z } from 'zod'
 
 import { Kotti } from '../types'
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 const baseOptionSchema = z.object({
 	dataTest: z.string().optional(),
@@ -96,9 +97,9 @@ export module KottiPopover {
 		areOptionsSelectable: z.boolean().default(false),
 		isDisabled: z.boolean().default(false),
 		options: z.array(optionSchema).default(() => []),
-		placement: z.nativeEnum(Placement).default(Placement.AUTO),
-		size: z.nativeEnum(Size).default(Size.AUTO),
-		trigger: z.nativeEnum(Trigger).default(Trigger.CLICK),
+		placement: createLooseZodEnumSchema(Placement).default(Placement.AUTO),
+		size: createLooseZodEnumSchema(Size).default(Size.AUTO),
+		trigger: createLooseZodEnumSchema(Trigger).default(Trigger.CLICK),
 	})
 
 	export type Props = z.input<typeof propsSchema>

@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+
 export module KottiLine {
 	export enum Position {
 		LEFT = 'left',
@@ -9,7 +11,7 @@ export module KottiLine {
 
 	export const propsSchema = z.object({
 		isInteractive: z.boolean().default(false),
-		position: z.nativeEnum(Position).default(Position.CENTER),
+		position: createLooseZodEnumSchema(Position).default(Position.CENTER),
 		text: z.string().nullable().default(null),
 	})
 

@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import { Kotti } from '@3yourmind/kotti-ui'
-import { defineComponent, ref, PropType } from '@vue/composition-api'
+import { PropType, defineComponent, ref } from 'vue'
 
 export default defineComponent({
 	name: 'ComponentInfoSlots',

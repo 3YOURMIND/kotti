@@ -140,7 +140,7 @@ When the `disallowCloseOutside` flag is set, it prevents the user from accidenta
 
 <script lang="ts">
 import { KtDrawer } from '@3yourmind/kotti-ui'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/ComponentInfo.vue'

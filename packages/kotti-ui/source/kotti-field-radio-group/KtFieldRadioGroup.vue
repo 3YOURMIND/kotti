@@ -28,10 +28,7 @@
 							<div v-text="option.label" />
 						</slot>
 						<input
-							v-bind="inputProps"
-							:checked="field.currentValue === option.value"
-							:disabled="field.isDisabled || Boolean(option.isDisabled)"
-							:value="option.value"
+							v-bind="inputProps(option)"
 							@change="onChange(option.value)"
 						/>
 					</label>
@@ -51,8 +48,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import omit from 'lodash/omit'
+import { computed, defineComponent, ref } from 'vue'
+import { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
@@ -86,12 +84,18 @@ export default defineComponent({
 			field,
 			forceUpdateKey: forceUpdateKey.value,
 			inputProps: computed(
-				(): Partial<HTMLInputElement & { class: string }> => ({
-					...omit(field.inputProps, ['data-test']),
-					class: 'kt-field-radio-group__input',
-					name: name.value,
-					type: 'radio',
-				}),
+				() =>
+					(
+						option: KottiFieldRadioGroup.PropsInternal['options'][0],
+					): InputHTMLAttributes & { class: string } => ({
+						...omit(field.inputProps, ['data-test']),
+						checked: field.currentValue === option.value,
+						class: 'kt-field-radio-group__input',
+						disabled: field.isDisabled || Boolean(option.isDisabled),
+						name: name.value,
+						type: 'radio',
+						value: option.value,
+					}),
 			),
 			onChange: (value: KottiFieldRadioGroup.Entry['value']) => {
 				field.setValue(value)

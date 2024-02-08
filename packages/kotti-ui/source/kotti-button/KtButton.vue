@@ -18,8 +18,8 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { makeProps } from '../make-props'
@@ -71,7 +71,8 @@ export default defineComponent({
 
 			if (
 				isToggle.value &&
-				![KottiButton.Type.DEFAULT, KottiButton.Type.TEXT].includes(props.type)
+				props.type !== KottiButton.Type.DEFAULT &&
+				props.type !== KottiButton.Type.TEXT
 			) {
 				throw new Error(
 					'KtButton: Guideline Uncompliance: attempted to use toggleStatus with a button of type different than "DEFAULT" or "TEXT"',

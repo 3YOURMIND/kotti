@@ -6,8 +6,8 @@ function byOrder(a, b) {
 	return a.order < b.order
 		? -1
 		: a.order > b.order
-		  ? 1
-		  : a.orderAdvantage + a.index - (b.orderAdvantage + b.index)
+			? 1
+			: a.orderAdvantage + a.index - (b.orderAdvantage + b.index)
 }
 
 export function getOrderedColumns(state) {

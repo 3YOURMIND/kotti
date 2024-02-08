@@ -1,11 +1,11 @@
 import Color from 'color'
 
-import { tokens, baseColors } from './colors'
+import { tokens, baseColors } from './colors.js'
 import {
 	objectToArray,
 	arrayToCustomProperties,
 	arrayToObject,
-} from './utilities'
+} from './utilities.js'
 
 export const baseColorsFactory = {
 	object: baseColors,

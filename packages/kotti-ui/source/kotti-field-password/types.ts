@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 export module KottiFieldPassword {
 	export const valueSchema = z.string().nullable()
@@ -14,7 +15,7 @@ export module KottiFieldPassword {
 		.merge(KottiField.potentiallySupportedPropsSchema)
 		.extend({
 			placeholder: z.string().nullable().default(null),
-			autoComplete: z.nativeEnum(AutoComplete),
+			autoComplete: createLooseZodEnumSchema(AutoComplete),
 			value: valueSchema.default(null),
 		})
 

@@ -124,8 +124,8 @@
 
 <script lang="ts">
 import { Kotti, KtValueLabel } from '@3yourmind/kotti-ui'
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
+import { computed, defineComponent, ref } from 'vue'
 
 import { generateComponentCode } from '../../../utilities/pages'
 
@@ -138,7 +138,7 @@ const createValidation = (
 		? {
 				text: `Some Validation Text`,
 				type: validation,
-		  }
+			}
 		: null
 
 import ComponentInfo from '~/components/ComponentInfo.vue'

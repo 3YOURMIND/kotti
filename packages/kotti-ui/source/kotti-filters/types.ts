@@ -201,6 +201,12 @@ export module KottiFilters {
 		value: FilterValue
 	}
 
+	export type InternalFilterSearch = {
+		key: Column.Search['key']
+		operation: Operation.Search
+		value: KottiFieldText.Value
+	}
+
 	export type Filter = SpecifyRequiredProps<
 		InternalFilter,
 		'key' | 'operation' | 'value'

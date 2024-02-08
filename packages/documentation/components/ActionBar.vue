@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { Section, Subsection, menu, Tag } from '../data/menu'
 import { useRoute } from '../hooks/use-route'

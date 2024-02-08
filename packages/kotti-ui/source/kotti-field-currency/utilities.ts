@@ -11,7 +11,7 @@ export const toNumber = <T extends string | null>(
 		: Number.parseFloat(
 				// `.` is the only accepted decimal place by parseFloat
 				value.replace(new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET), '.'),
-		  )) as T extends null ? null : number
+			)) as T extends null ? null : number
 
 export const truncate = (value: number, decimalPlaces: number) =>
 	Big(value).round(decimalPlaces, Big.roundDown)

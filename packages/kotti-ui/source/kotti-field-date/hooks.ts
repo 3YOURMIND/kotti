@@ -1,7 +1,7 @@
 import { Yoco } from '@3yourmind/yoco'
-import { onMounted, Ref, watchEffect } from '@vue/composition-api'
 import { DatePicker as ElDate } from 'element-ui'
 import { Instance } from 'tippy.js'
+import { onMounted, Ref, watchEffect, type default as Vue } from 'vue'
 
 import { KottiField } from '../kotti-field/types'
 

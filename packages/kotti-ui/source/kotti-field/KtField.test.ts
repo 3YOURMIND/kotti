@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('jsdom-global')()
-import { defineComponent, ref, SetupContext } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
+import { expect, describe, it, vi } from 'vitest'
+import { defineComponent, ref, SetupContext } from 'vue'
 import { z } from 'zod'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
@@ -14,9 +13,9 @@ import { KtFieldErrors } from './errors'
 import { useField } from './hooks'
 import { KottiField } from './types'
 
-const testFieldSetup = (
+const useTestHook = (
 	props: KottiField.PropsInternal,
-	{ emit }: SetupContext,
+	emit: SetupContext['emit'],
 ) => {
 	useI18nProvide({
 		currencyMap: ref({}),
@@ -47,7 +46,9 @@ const TestComponent = defineComponent({
 			value: z.string().nullable().default(null),
 		}),
 	),
-	setup: testFieldSetup,
+	setup: (props, { emit }) => {
+		return useTestHook(props, emit)
+	},
 	template: `<div></div>`,
 })
 
@@ -58,14 +59,17 @@ const TestComponentObject = defineComponent({
 			value: z.record(z.unknown()).nullable().default(null),
 		}),
 	),
-	setup: testFieldSetup,
+	setup: (props, { emit }) => {
+		return useTestHook(props, emit)
+	},
 	template: `<div></div>`,
 })
 
 describe('useField', () => {
 	it('should throw if setValue is called on a disabled field', async () => {
-		console.error = jest.fn()
+		console.error = vi.fn()
 
+		// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 		const wrapper = shallowMount(TestComponent, {
 			localVue,
 			propsData: { isDisabled: true },
@@ -86,6 +90,7 @@ describe('useField', () => {
 	it('props.value gets deepCloned', async () => {
 		const VALUE_REFERENCE = { something: 'something' }
 
+		// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 		const wrapper = shallowMount(TestComponentObject, {
 			localVue,
 			propsData: {
@@ -102,6 +107,7 @@ describe('useField', () => {
 
 	describe('props reactivity', () => {
 		it('helpText is reactive', async () => {
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -115,6 +121,7 @@ describe('useField', () => {
 		})
 
 		it('isDisabled is reactive', async () => {
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -128,6 +135,7 @@ describe('useField', () => {
 		})
 
 		it('isOptional is reactive', async () => {
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -141,6 +149,7 @@ describe('useField', () => {
 		})
 
 		it('label is reactive', async () => {
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -156,6 +165,7 @@ describe('useField', () => {
 
 	describe('setValue', () => {
 		it('should emit change when calling setValue on a field outside of a context', async () => {
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -171,6 +181,7 @@ describe('useField', () => {
 		it('context should emit when when calling setValue inside a context', () => {
 			const context = getMockContext({ values: { testKey: 'something' } })
 
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
 				propsData: { formKey: 'testKey' },
@@ -195,18 +206,20 @@ describe('useField', () => {
 	})
 
 	it('throws when formKey is provided and context is missing', async () => {
-		console.error = jest.fn()
+		console.error = vi.fn()
 
 		expect(() =>
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			shallowMount(TestComponent, {
 				localVue,
 				propsData: { formKey: 'test' },
 			}),
 		).toThrow(KtFieldErrors.InvalidPropOutsideOfContext)
 
+		// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 		const wrapper = shallowMount(TestComponent, { localVue })
 
-		console.error = jest.fn()
+		console.error = vi.fn()
 
 		wrapper.setProps({ formKey: 'thisWillCrash' })
 		await wrapper.vm.$nextTick()
@@ -222,6 +235,7 @@ describe('useField', () => {
 
 	it('doesn’t throw when formKey is NONE and context is provided', () => {
 		expect(() =>
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			shallowMount(TestComponent, {
 				localVue,
 				provide: {
@@ -234,6 +248,7 @@ describe('useField', () => {
 
 	describe('validation', () => {
 		it('works with only props.validator', async () => {
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
 				propsData: {
@@ -261,6 +276,8 @@ describe('useField', () => {
 		})
 
 		it('works with only formKey in a context', async () => {
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
+
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
 				propsData: { formKey: 'testKey1' },
@@ -299,8 +316,9 @@ describe('useField', () => {
 		})
 
 		it('does not validate if formKey is not in validators', () => {
-			const testKey = jest.fn()
+			const testKey = vi.fn()
 
+			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
 				propsData: { formKey: 'wrongKey' },

@@ -9,7 +9,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed } from 'vue'
+import { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -35,7 +36,7 @@ export default defineComponent({
 		return {
 			field,
 			inputProps: computed(
-				(): Partial<HTMLInputElement> & {
+				(): InputHTMLAttributes & {
 					class: string[]
 					forceUpdateKey: number
 				} => ({

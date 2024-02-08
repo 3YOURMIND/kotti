@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 
-import { InjectionKey, Ref } from '@vue/composition-api'
+import { InjectionKey, Ref } from 'vue'
 
 import { KottiNavbar } from './types'
 

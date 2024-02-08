@@ -1,21 +1,24 @@
-import { PropOptions, PropType } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
 import isEqual from 'lodash/isEqual'
+import { expect, describe, it, beforeAll } from 'vitest'
+import { PropOptions, PropType } from 'vue'
 import { z } from 'zod'
 
 import { makeProps } from './make-props'
 import { silenceConsole } from './test-utils/silence-console'
-import { refinementNonEmpty } from './zod-refinements'
+import { refinementNonEmpty } from './zod-utilities/refinements'
 
-declare global {
-	namespace jest {
-		interface Matchers<R> {
-			toBeRequired(): R
-			toBeType(expectedPropType: PropType<unknown>): R
-			toDefaultTo(defaultValue: unknown): R
-			toValidate(...cases: unknown[]): R
-		}
-	}
+interface CustomMatchers<R = unknown> {
+	toBeRequired(): R
+	toBeType(expectedPropType: PropType<unknown>): R
+	toDefaultTo(defaultValue: unknown): R
+	toValidate(...cases: unknown[]): R
+}
+
+declare module 'vitest' {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	interface Assertion<T = any> extends CustomMatchers<T> {}
+	interface AsymmetricMatchersContaining extends CustomMatchers {}
 }
 
 expect.extend({
@@ -44,13 +47,11 @@ expect.extend({
 			message: () =>
 				pass
 					? 'valid'
-					: this.utils.printDiffOrStringify(
-							expectedPropTypes,
-							actualPropTypes,
-							'Expected prop.type',
-							'Received prop.type',
-							this.expand,
-					  ),
+					: (this.utils.diff(expectedPropTypes, actualPropTypes, {
+							aAnnotation: 'Expected prop.type',
+							bAnnotation: 'Received prop.type',
+							expand: this.expand,
+						}) as string),
 			pass,
 		}
 	},
@@ -68,22 +69,18 @@ expect.extend({
 		return {
 			message: () => {
 				if (!passDefault)
-					return this.utils.printDiffOrStringify(
-						expectedDefault,
-						actualDefault,
-						'Expected prop.default',
-						'Received prop.default',
-						this.expand,
-					)
+					return this.utils.diff(expectedDefault, actualDefault, {
+						aAnnotation: 'Expected prop.default',
+						bAnnotation: 'Received prop.default',
+						expand: this.expand,
+					}) as string
 
 				if (!passNoRequired)
-					return this.utils.printDiffOrStringify(
-						undefined,
-						prop.required,
-						'Expected prop.required',
-						'Received prop.required',
-						this.expand,
-					)
+					return this.utils.diff(undefined, prop.required, {
+						aAnnotation: 'Expected prop.required',
+						bAnnotation: 'Received prop.required',
+						expand: this.expand,
+					}) as string
 
 				return 'valid'
 			},

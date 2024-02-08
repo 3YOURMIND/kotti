@@ -1,4 +1,5 @@
-import { h, computed, defineComponent, inject } from '@vue/composition-api'
+import { h, computed, defineComponent, inject } from 'vue'
+import type { PropType } from 'vue'
 
 import { KT_ROW_CONTEXT } from '../kotti-row/constants'
 import { KottiRow } from '../kotti-row/types'
@@ -11,18 +12,48 @@ export const KtCol = attachMeta(
 		defineComponent({
 			name: 'KtCol',
 			props: {
-				lg: { default: null, type: Number },
-				md: { default: null, type: Number },
-				offset: { default: null, type: Number },
-				pull: { default: null, type: Number },
-				push: { default: null, type: Number },
-				sm: { default: null, type: Number },
-				span: { default: 24, type: Number },
-				tag: { default: 'div', type: String },
-				xl: { default: null, type: Number },
-				xs: { default: null, type: Number },
+				lg: {
+					default: null,
+					type: Number as PropType<KottiCol.PropsInternal['lg']>,
+				},
+				md: {
+					default: null,
+					type: Number as PropType<KottiCol.PropsInternal['md']>,
+				},
+				offset: {
+					default: null,
+					type: Number as PropType<KottiCol.PropsInternal['offset']>,
+				},
+				pull: {
+					default: null,
+					type: Number as PropType<KottiCol.PropsInternal['pull']>,
+				},
+				push: {
+					default: null,
+					type: Number as PropType<KottiCol.PropsInternal['push']>,
+				},
+				sm: {
+					default: null,
+					type: Number as PropType<KottiCol.PropsInternal['sm']>,
+				},
+				span: {
+					default: 24,
+					type: Number as PropType<KottiCol.PropsInternal['span']>,
+				},
+				tag: {
+					default: 'div',
+					type: String as PropType<KottiCol.PropsInternal['tag']>,
+				},
+				xl: {
+					default: null,
+					type: Number as PropType<KottiCol.PropsInternal['xl']>,
+				},
+				xs: {
+					default: null,
+					type: Number as PropType<KottiCol.PropsInternal['xs']>,
+				},
 			},
-			setup(props: KottiCol.PropsInternal, { slots }) {
+			setup(props, { slots }) {
 				const context = inject<KottiRow.Context | null>(KT_ROW_CONTEXT, null)
 
 				const style = computed(() => {

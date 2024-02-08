@@ -33,7 +33,7 @@ Kotti uses the same responsive classes as Spectre. You can [find them here](http
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageLayoutsIntroduction',

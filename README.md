@@ -49,10 +49,6 @@ import Vue from 'vue'
 import KottiUI from '@3yourmind/kotti-ui'
 import '@3yourmind/kotti-ui/dist/styles.css'
 
-// also make sure to set-up @vue/composition-api as it’s required for newer Kotti features
-import VueCompositionAPI from '@vue/composition-api' // right now, 0.6.1 is recommended
-Vue.use(VueCompositionAPI) // should be added before KottiUi
-
 // (optional) register all KtComponents globally
 Vue.use(KottiUI)
 
@@ -70,12 +66,11 @@ const CustomVueComponent = {
 
 ## Packages
 
-|                                                                            Name | NPM                                                                                                                                        | Downloads (Month)                                                            | Downloads (Total)                                                            | Size                                                                                      |
-| ------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------- | :--------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
-|                                     [`@3yourmind/kotti-ui`](/packages/kotti-ui) | [![](https://img.shields.io/npm/v/@3yourmind/kotti-ui)](https://npmjs.com/package/@3yourmind/kotti-ui)                                     | ![](https://img.shields.io/npm/dm/@3yourmind/kotti-ui.svg)                   | ![](https://img.shields.io/npm/dt/@3yourmind/kotti-ui.svg)                   | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/kotti-ui.svg)                   |
-|                                             [`@3yourmind/yoco`](/packages/yoco) | [![](https://img.shields.io/npm/v/@3yourmind/yoco)](https://npmjs.com/package/@3yourmind/yoco)                                             | ![](https://img.shields.io/npm/dm/@3yourmind/yoco.svg)                       | ![](https://img.shields.io/npm/dt/@3yourmind/yoco.svg)                       | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/yoco.svg)                       |
-|                           [`@3yourmind/vue-use-tippy`](/packages/vue-use-tippy) | [![](https://img.shields.io/npm/v/@3yourmind/vue-use-tippy)](https://npmjs.com/package/@3yourmind/vue-use-tippy)                           | ![](https://img.shields.io/npm/dm/@3yourmind/vue-use-tippy.svg)              | ![](https://img.shields.io/npm/dt/@3yourmind/vue-use-tippy.svg)              | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/vue-use-tippy.svg)              |
-| [`@3yourmind/sass-node-modules-importer`](/packages/sass-node-modules-importer) | [![](https://img.shields.io/npm/v/@3yourmind/sass-node-modules-importer)](https://npmjs.com/package/@3yourmind/sass-node-modules-importer) | ![](https://img.shields.io/npm/dm/@3yourmind/sass-node-modules-importer.svg) | ![](https://img.shields.io/npm/dt/@3yourmind/sass-node-modules-importer.svg) | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/sass-node-modules-importer.svg) |
+|                                                  Name | NPM                                                                                                              | Downloads (Month)                                               | Downloads (Total)                                               | Size                                                                         |
+| ----------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------- | :-------------------------------------------------------------- | :--------------------------------------------------------------------------- |
+|           [`@3yourmind/kotti-ui`](/packages/kotti-ui) | [![](https://img.shields.io/npm/v/@3yourmind/kotti-ui)](https://npmjs.com/package/@3yourmind/kotti-ui)           | ![](https://img.shields.io/npm/dm/@3yourmind/kotti-ui.svg)      | ![](https://img.shields.io/npm/dt/@3yourmind/kotti-ui.svg)      | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/kotti-ui.svg)      |
+|                   [`@3yourmind/yoco`](/packages/yoco) | [![](https://img.shields.io/npm/v/@3yourmind/yoco)](https://npmjs.com/package/@3yourmind/yoco)                   | ![](https://img.shields.io/npm/dm/@3yourmind/yoco.svg)          | ![](https://img.shields.io/npm/dt/@3yourmind/yoco.svg)          | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/yoco.svg)          |
+| [`@3yourmind/vue-use-tippy`](/packages/vue-use-tippy) | [![](https://img.shields.io/npm/v/@3yourmind/vue-use-tippy)](https://npmjs.com/package/@3yourmind/vue-use-tippy) | ![](https://img.shields.io/npm/dm/@3yourmind/vue-use-tippy.svg) | ![](https://img.shields.io/npm/dt/@3yourmind/vue-use-tippy.svg) | ![](https://img.shields.io/bundlephobia/minzip/@3yourmind/vue-use-tippy.svg) |
 
 ## Dependencies
 
@@ -180,43 +175,49 @@ git pull --rebase
 yarn install
 ```
 
-4. Build Kotti. Make sure it builds successfully and functionally test the changes made.
+4. Build Kotti. Make sure it builds successfully.
+
+```bash
+yarn run build:kotti
+```
+
+5. Optional: If you haven't already, make sure to functionally test:
 
 ```bash
 yarn run watch
 ```
 
-5. Login into NPM with your credentials. Make sure you have publishing rights and 2FA on your npmjs.com account enabled.
+6. Login into NPM with your credentials. Make sure you have publishing rights and 2FA on your npmjs.com account enabled.
 
 ```bash
 npm login
 ```
 
-6. Update the version in `package.json` in `packages/kotti-ui` and all `@3yourmind/kotti-ui` dependencies in:
+7. Update the version in `package.json` in `packages/kotti-ui` and all `@3yourmind/kotti-ui` dependencies in:
 
    a. `packages/documentation`
 
    b. `packages/test-app`
 
-7. Make a version commit, **DO NOT PUSH** yet.
+8. Make a version commit, **DO NOT PUSH** yet.
 
    a. Commit message format: `version(1.2.3): tldr of what's happening`
 
-8. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
+9. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
 
 ```bash
 yarn run lerna publish from-package
 ```
 
-9. Push the version commit to remote
+10. Push the version commit to remote
 
 ```bash
 git push
 ```
 
-10. Find the release draft from `step 1` [here](https://github.com/3YOURMIND/kotti/releases), edit it and click on `Publish release`
+11. Find the release draft from `step 1` [here](https://github.com/3YOURMIND/kotti/releases), edit it and click on `Publish release`
 
-11. Announce the new version in the `#kotti` slack channel
+12. Announce the new version in the `#kotti` slack channel
 
 #### Yoco
 
@@ -241,13 +242,19 @@ git pull --rebase
 npm login
 ```
 
-7. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
+7. Build yoco
+
+```bash
+yarn --cwd packages/yoco run build
+```
+
+8. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
 
 ```bash
 yarn run lerna publish from-package
 ```
 
-8. If any new icon is needed in Kotti, create a PR updating the `@3yourmind/yoco` version in `package.json` in `kotti-ui`
+9. If any new icon is needed in Kotti, create a PR updating the `@3yourmind/yoco` version in `package.json` in `kotti-ui`
 
 ### Build
 

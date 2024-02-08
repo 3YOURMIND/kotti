@@ -1,8 +1,8 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { Ref, computed, inject, ref } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
 import { roundArrow } from 'tippy.js'
 import { Props as TippyProps } from 'tippy.js'
+import { computed, inject, ref, Ref } from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
 import { KottiField } from '../../kotti-field/types'
@@ -61,7 +61,7 @@ export const useSelectTippy = <T>(
 			},
 			theme: 'light-border',
 			trigger: 'click focusin',
-			triggerTarget: triggerTargets ? triggerTargets.value : undefined,
+			triggerTarget: triggerTargets?.value ?? undefined,
 		})),
 	)
 

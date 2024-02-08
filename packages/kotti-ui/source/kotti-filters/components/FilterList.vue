@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { PropType, computed, defineComponent } from 'vue'
 
 import { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'

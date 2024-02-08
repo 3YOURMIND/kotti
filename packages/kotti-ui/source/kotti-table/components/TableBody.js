@@ -28,34 +28,36 @@ export const TableBody = {
 			return this[KT_STORE].get('getRowKey', row)
 		},
 	},
-	render() {
+	render(h) {
 		const { showEmptyText, loading, rows, isExpandable, getRowKey } = this
-
-		return (
-			<tbody>
-				{showEmptyText && <TableBodyEmptyRow />}
-				{!loading &&
-					rows.map((row, rowIndex) => {
+		return h('tbody', {}, [
+			showEmptyText && h(TableBodyEmptyRow),
+			...(loading
+				? [h(TableBodyLoadingRow)]
+				: rows.flatMap((row, rowIndex) => {
 						const key = getRowKey(row) || rowIndex
 
 						return [
-							<TableRow
-								key={key}
-								row={row}
-								rowIndex={rowIndex}
-								data-test={`table:element:${row.number}:${row.title}`}
-							/>,
-							isExpandable && (
-								<TableBodyExpandRow
-									key={`${key}-expansion`}
-									row={row}
-									rowIndex={rowIndex}
-								/>
-							),
+							h(TableRow, {
+								domProps: {
+									'data-test': `table:element:${row.number}:${row.title}`,
+								},
+								key,
+								props: {
+									row,
+									rowIndex,
+								},
+							}),
+							isExpandable &&
+								h(TableBodyExpandRow, {
+									key: `${key}-expansion`,
+									props: {
+										row,
+										rowIndex,
+									},
+								}),
 						]
-					})}
-				{loading && <TableBodyLoadingRow />}
-			</tbody>
-		)
+					})),
+		])
 	},
 }

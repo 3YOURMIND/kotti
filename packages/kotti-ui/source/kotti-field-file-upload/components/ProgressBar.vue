@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { ONE_HUNDRED_PERCENT } from '../../constants'
 import { makeProps } from '../../make-props'

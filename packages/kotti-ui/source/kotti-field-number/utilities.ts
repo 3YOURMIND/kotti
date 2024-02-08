@@ -32,7 +32,7 @@ export const toNumber = (string: string) =>
 		: Number.parseFloat(
 				// `.` is the only accepted decimal place by parseFloat
 				string.replace(new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET), '.'),
-		  )
+			)
 
 export const toString = (
 	number: number | null,

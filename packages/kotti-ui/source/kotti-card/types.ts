@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+
 export module KottiCard {
 	export enum ImagePosition {
 		BOTTOM = 'bottom',
@@ -8,7 +10,9 @@ export module KottiCard {
 	}
 
 	export const propsSchema = z.object({
-		imgPosition: z.nativeEnum(ImagePosition).default(ImagePosition.TOP),
+		imgPosition: createLooseZodEnumSchema(ImagePosition).default(
+			ImagePosition.TOP,
+		),
 		imgUrl: z.string().nullable().default(null),
 		isImgLoading: z.boolean().default(false),
 		isTextLoading: z.boolean().default(false),

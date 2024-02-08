@@ -1,7 +1,7 @@
 <template>
 	<KtForm
 		class="kt-filter-row"
-		:formId="dataTest"
+		:formId="dataTest ?? undefined"
 		hideValidation
 		:isLoading="isLoading"
 		:size="KottiField.Size.SMALL"
@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { PropType, computed, defineComponent } from 'vue'
 
 import { KottiField } from '../../kotti-field/types'
 import { KtFieldCurrency } from '../../kotti-field-currency'
@@ -170,8 +170,8 @@ export default defineComponent({
 					props.column?.type === KottiFilters.FilterType.FLOAT
 						? props.column.decimalPlaces
 						: props.column?.type === KottiFilters.FilterType.INTEGER
-						  ? 0
-						  : undefined,
+							? 0
+							: undefined,
 				maximum:
 					props.column?.type === KottiFilters.FilterType.FLOAT ||
 					props.column?.type === KottiFilters.FilterType.INTEGER

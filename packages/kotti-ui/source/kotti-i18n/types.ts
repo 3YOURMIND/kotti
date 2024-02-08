@@ -1,4 +1,4 @@
-import { Ref } from '@vue/composition-api'
+import { Ref } from 'vue'
 
 import { KottiBanner } from '../kotti-banner/types'
 import { KottiComment } from '../kotti-comment/types'
@@ -12,9 +12,8 @@ import { KottiNavbar } from '../kotti-navbar/types'
 import { KottiValueLabel } from '../kotti-value-label/types'
 import { DecimalSeparator } from '../types/kotti'
 
-export type DeepPartial<T> = T extends Record<string, unknown>
-	? { [K in keyof T]?: DeepPartial<T[K]> }
-	: T
+export type DeepPartial<T> =
+	T extends Record<string, unknown> ? { [K in keyof T]?: DeepPartial<T[K]> } : T
 
 export module KottiI18n {
 	export type Context = {

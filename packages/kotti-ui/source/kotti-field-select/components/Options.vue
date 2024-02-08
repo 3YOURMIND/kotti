@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import camelCase from 'lodash/camelCase'
 import {
 	computed,
 	defineComponent,
@@ -53,8 +54,7 @@ import {
 	onUnmounted,
 	ref,
 	watch,
-} from '@vue/composition-api'
-import camelCase from 'lodash/camelCase'
+} from 'vue'
 import { z } from 'zod'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'

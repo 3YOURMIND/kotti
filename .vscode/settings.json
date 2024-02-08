@@ -1,8 +1,10 @@
 {
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "always"
+	},
 	"editor.formatOnSave": true,
-	"eslint.alwaysShowStatus": true,
 	"eslint.options": {
-		"extensions": [".js", ".vue", ".jsx", ".ts", ".tsx"]
+		"extensions": [".js", ".vue", ".ts"]
 	},
 	"eslint.validate": [
 		"javascript",
@@ -11,11 +13,5 @@
 		"typescriptreact",
 		"vue"
 	],
-	"javascript.validate.enable": false,
-	"vetur.validation.template": true,
-	"vetur.validation.script": true,
-	"vetur.format.enable": false,
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "always"
-	}
+	"javascript.validate.enable": false
 }

@@ -21,8 +21,8 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
-import { Instance } from 'tippy.js'
+import { Instance, Props as TippyProps } from 'tippy.js'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 import { makeProps } from '../make-props'
 
@@ -38,7 +38,7 @@ export default defineComponent({
 
 		useTippy(
 			targetRef,
-			computed(() => ({
+			computed<Partial<TippyProps>>(() => ({
 				appendTo: () => document.body,
 				hideOnClick: false,
 				interactive: true,

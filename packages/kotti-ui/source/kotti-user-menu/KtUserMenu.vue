@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { computed, defineComponent, inject, ref } from '@vue/composition-api'
+import { computed, defineComponent, inject, ref } from 'vue'
 
 import { KtAvatar } from '../kotti-avatar'
 import { KT_NAVBAR_CONTEXT } from '../kotti-navbar/constants'

@@ -76,13 +76,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import {
-	Ref,
-	computed,
-	defineComponent,
-	ref,
-	watch,
-} from '@vue/composition-api'
+import { Ref, computed, defineComponent, ref, watch } from 'vue'
 import { z } from 'zod'
 
 import { KtField } from '../../kotti-field'
@@ -246,7 +240,7 @@ export default defineComponent({
 							(o) =>
 								localQuery.value === null ||
 								o.label.toLowerCase().includes(localQuery.value.toLowerCase()),
-					  ),
+						),
 			),
 			inputProps: computed(() => ({
 				...field.inputProps,

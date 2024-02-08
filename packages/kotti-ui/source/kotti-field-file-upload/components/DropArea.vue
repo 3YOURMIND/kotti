@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
@@ -83,7 +83,7 @@ export default defineComponent({
 				props.maxFileSize !== Number.MAX_SAFE_INTEGER
 					? `(${translations.value.text.max} ${formatFileSize(
 							props.maxFileSize,
-					  )})`
+						)})`
 					: null,
 			]
 				.filter((str) => str)

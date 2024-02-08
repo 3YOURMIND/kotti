@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import { makeProps } from '../../make-props'
 import { IconTextItem } from '../types'
@@ -26,9 +26,6 @@ import { IconTextItem } from '../types'
 export default defineComponent({
 	name: 'IconTextItem',
 	props: makeProps(IconTextItem.propsSchema),
-	setup(_: IconTextItem.PropsInternal) {
-		return {}
-	},
 })
 </script>
 

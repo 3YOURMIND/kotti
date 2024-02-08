@@ -10,7 +10,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from '@vue/composition-api'
+import { defineComponent, computed, ref } from 'vue'
+import { TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -63,8 +64,7 @@ export default defineComponent({
 		return {
 			field,
 			inputProps: computed(
-				(): Partial<HTMLTextAreaElement> & {
-					class: string
+				(): TextareaHTMLAttributes & {
 					forceUpdateKey: number
 				} => ({
 					...field.inputProps,
@@ -76,13 +76,15 @@ export default defineComponent({
 				}),
 			),
 			onInput: (event: Event) => {
-				const newValue = (event.target as HTMLTextAreaElement).value
-				field.setValue(newValue === '' ? null : newValue)
+				const target = event.target as HTMLTextAreaElement
+				field.setValue(target.value === '' ? null : target.value)
+
 				resizeTextarea({
 					autoSize: props.autoSize,
 					maxHeight: props.maxHeight,
-					textarea: event.target,
+					textarea: target,
 				})
+
 				forceUpdate()
 			},
 			textareaRef,

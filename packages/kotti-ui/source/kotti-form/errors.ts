@@ -8,8 +8,7 @@ const createOnSubmitErrorMessage = (messages: string[]) =>
 	`KottiForm(onSubmit): ${messages.join('\n')}`
 
 class UnexpectedValidationState extends CustomError {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public constructor(props: KottiForm.Props) {
+	public constructor(_props: KottiForm.Props) {
 		super(
 			createOnSubmitErrorMessage(['Encountered Unexpected Validation State']),
 		)

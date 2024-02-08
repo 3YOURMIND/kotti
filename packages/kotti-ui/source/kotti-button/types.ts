@@ -1,6 +1,8 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+
 export module KottiButton {
 	export enum Type {
 		DANGER = 'danger',
@@ -9,27 +11,26 @@ export module KottiButton {
 		SECONDARY = 'secondary',
 		TEXT = 'text',
 	}
-	export const typeSchema = z.nativeEnum(Type)
+	export const typeSchema = createLooseZodEnumSchema(Type)
 
 	export enum Size {
 		LARGE = 'large',
 		MEDIUM = 'medium',
 		SMALL = 'small',
 	}
-	export const sizeSchema = z.nativeEnum(Size)
+	export const sizeSchema = createLooseZodEnumSchema(Size)
 
 	export enum IconPosition {
 		LEFT = 'left',
 		RIGHT = 'right',
 	}
-	export const iconPosition = z.nativeEnum(IconPosition)
+	export const iconPosition = createLooseZodEnumSchema(IconPosition)
 
 	export enum ToggleStatus {
 		ON = 'on',
 		OFF = 'off',
 	}
-
-	export const toggleStatusSchema = z.nativeEnum(ToggleStatus)
+	export const toggleStatusSchema = createLooseZodEnumSchema(ToggleStatus)
 
 	export const propsSchema = z.object({
 		helpText: z.string().nullable().default(null),

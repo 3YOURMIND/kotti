@@ -1,8 +1,11 @@
-import { yocoIconSchema } from '@3yourmind/yoco'
-import { Yoco } from '@3yourmind/yoco'
+import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
+import {
+	EnumToPrimitiveUnion,
+	createLooseZodEnumSchema,
+} from '../zod-utilities/enums'
 
 export module Shared {
 	export enum Validation {
@@ -19,7 +22,7 @@ export module Shared {
 		isInternal: z.boolean().optional(),
 		name: z.string(),
 		size: z.number().int().min(0),
-		validation: validationSchema,
+		validation: createLooseZodEnumSchema(Validation),
 		viewUrl: z.string().optional(),
 	})
 	export type FileInfo = z.output<typeof fileInfoSchema>
@@ -205,7 +208,7 @@ export module KottiFieldFileUpload {
 		UPLOADED = 'UPLOADED',
 		UPLOADED_WITH_ERROR = 'UPLOADED_WITH_ERROR',
 	}
-	export const statusSchema = z.nativeEnum(Status)
+	export const statusSchema = createLooseZodEnumSchema(Status)
 
 	export const selectedFileSchema = Shared.selectedFileSchema.extend({
 		status: statusSchema,
@@ -237,13 +240,15 @@ export module KottiFieldFileUpload {
 	export module Events {
 		export type SetStatus = {
 			id: z.infer<typeof Shared.idSchema>
-			status: Status
+			status: EnumToPrimitiveUnion<typeof Status> | Status
 		}
 	}
 
 	export module FileItem {
-		export const schema = Shared.propsSchema.extend({
+		export const schema = z.object({
+			dataTest: Shared.propsSchema.shape.dataTest,
 			fileInfo: fileInfoSchema,
+			isDisabled: Shared.propsSchema.shape.isDisabled,
 		})
 		export type Props = z.input<typeof schema>
 		export type PropsInternal = z.output<typeof schema>
@@ -261,7 +266,7 @@ export module KottiFieldFileUploadRemote {
 		UPLOADED_WITH_ERROR = 'UPLOADED_WITH_ERROR',
 		UPLOADING = 'UPLOADING',
 	}
-	export const statusSchema = z.nativeEnum(Status)
+	export const statusSchema = createLooseZodEnumSchema(Status)
 
 	export const selectedFileSchema = Shared.selectedFileSchema.extend({
 		status: statusSchema,
@@ -275,6 +280,7 @@ export module KottiFieldFileUploadRemote {
 
 	export const valueSchema = selectedFileSchema.or(preUploadedFileSchema)
 	export const valuesSchema = valueSchema.array()
+
 	export type Value = z.input<typeof valuesSchema>
 	export type ValueInternal = z.output<typeof valuesSchema>
 
@@ -320,7 +326,7 @@ export module KottiFieldFileUploadRemote {
 	export module Events {
 		export type SetStatus = {
 			id: z.infer<typeof Shared.idSchema>
-			status: Status
+			status: EnumToPrimitiveUnion<typeof Status> | Status
 		}
 	}
 

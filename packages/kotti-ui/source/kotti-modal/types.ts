@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+
 export module KottiModal {
 	export enum Size {
 		EXTRA_LARGE = 'xl',
@@ -11,7 +13,7 @@ export module KottiModal {
 	export const propsSchema = z.object({
 		isOpen: z.boolean().default(false),
 		preventCloseOutside: z.boolean().default(false),
-		size: z.nativeEnum(Size).default(Size.MEDIUM),
+		size: createLooseZodEnumSchema(Size).default(Size.MEDIUM),
 	})
 
 	export type Props = z.input<typeof propsSchema>

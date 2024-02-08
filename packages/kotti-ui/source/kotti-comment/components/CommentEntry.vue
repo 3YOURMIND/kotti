@@ -34,8 +34,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
 import pick from 'lodash/pick'
+import { defineComponent, ref } from 'vue'
 
 import { makeProps } from '../../make-props'
 import { KottiComment } from '../types'

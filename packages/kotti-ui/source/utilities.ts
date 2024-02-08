@@ -1,4 +1,5 @@
-import { VueConstructor } from 'vue'
+import { ComponentPublicInstanceConstructor } from 'vue/types/v3-component-public-instance'
+import { Vue as _Vue } from 'vue/types/vue'
 
 import { Kotti } from './types'
 import { DecimalSeparator } from './types/kotti'
@@ -7,8 +8,8 @@ import { DecimalSeparator } from './types/kotti'
  * Takes a Vue Component and assigns a meta object which
  * describes various properties of the component
  */
-export const attachMeta = <T>(
-	component: VueConstructor<Vue>,
+export const attachMeta = <C extends ComponentPublicInstanceConstructor, T>(
+	component: C,
 	meta: Kotti.Meta,
 	other?: T,
 ) => Object.assign(component, { meta: Object.assign({}, meta, other) })
@@ -60,10 +61,12 @@ export const isOrContainsEventTarget = (
  * Takes a Vue Component and assigns an install function to it
  * this makes sure that it can be used with Vue.use(component)
  */
-export const makeInstallable = (component: VueConstructor<Vue>) =>
+export const makeInstallable = <C extends ComponentPublicInstanceConstructor>(
+	component: C,
+) =>
 	Object.assign(component, {
-		install: (Vue) => Vue.component(component.name, component),
-	} as Vue.PluginObject<Record<string, never>>)
+		install: (Vue: typeof _Vue) => Vue.component(component.name, component),
+	}) as C & { install: Vue.PluginFunction<Record<string, never>> }
 
 export const isNumberInRange = ({
 	maximum,

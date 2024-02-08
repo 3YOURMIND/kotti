@@ -82,11 +82,8 @@ const isValidValueNonRemote = (
 ): boolean =>
 	value.some(
 		(fileItem) =>
-			fileItem.status &&
-			[
-				KottiFieldFileUpload.Status.READY_TO_UPLOAD,
-				KottiFieldFileUpload.Status.UPLOADED,
-			].includes(fileItem.status),
+			fileItem.status === KottiFieldFileUpload.Status.READY_TO_UPLOAD ||
+			fileItem.status === KottiFieldFileUpload.Status.UPLOADED,
 	)
 
 const isValidValueRemote = (
@@ -94,9 +91,6 @@ const isValidValueRemote = (
 ): boolean =>
 	value.some(
 		(fileItem) =>
-			fileItem.status &&
-			[
-				KottiFieldFileUploadRemote.Status.UPLOADED,
-				KottiFieldFileUploadRemote.Status.UPLOADING,
-			].includes(fileItem.status),
+			fileItem.status === KottiFieldFileUploadRemote.Status.UPLOADED ||
+			fileItem.status === KottiFieldFileUploadRemote.Status.UPLOADING,
 	)

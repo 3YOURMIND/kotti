@@ -1,4 +1,4 @@
-import { Ref, computed, onMounted, watch } from '@vue/composition-api'
+import { Ref, computed, onMounted, watch } from 'vue'
 
 import { KottiField } from '../kotti-field/types'
 import { Nullable } from '../types/utilities'

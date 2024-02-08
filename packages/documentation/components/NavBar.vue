@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Kotti } from '@3yourmind/kotti-ui'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 
 import navLogo from '../assets/img/nav_logo.svg'
 import { menu } from '../data/menu'

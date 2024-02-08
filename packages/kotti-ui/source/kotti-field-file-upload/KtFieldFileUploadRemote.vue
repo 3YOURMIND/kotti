@@ -59,12 +59,7 @@
 </template>
 
 <script lang="ts">
-import {
-	computed,
-	defineComponent,
-	onBeforeMount,
-	watch,
-} from '@vue/composition-api'
+import { computed, defineComponent, onBeforeMount, watch } from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
@@ -75,7 +70,11 @@ import FileItemRemote from './components/FileItemRemote.vue'
 import PreUploadedFileItem from './components/PreUploadedFileItem.vue'
 import TakePhoto from './components/TakePhoto/TakePhoto.vue'
 import { KOTTI_FIELD_FILE_UPLOAD_SUPPORTS } from './constants'
-import { KottiFieldFileUploadRemote, Shared } from './types'
+import {
+	KottiFieldFileUpload,
+	KottiFieldFileUploadRemote,
+	Shared,
+} from './types'
 import {
 	buildFileInfo,
 	buildFileItem,
@@ -159,7 +158,10 @@ export default defineComponent({
 		}
 
 		const setStatuses = (
-			payload: Map<string, KottiFieldFileUploadRemote.Status>,
+			payload: Map<
+				KottiFieldFileUploadRemote.ValueInternal[number]['id'],
+				KottiFieldFileUploadRemote.Status
+			>,
 		) => {
 			field.setValue(
 				field.currentValue.map((fileItem) => {
@@ -182,7 +184,9 @@ export default defineComponent({
 						undefined,
 						KottiFieldFileUploadRemote.Status.UPLOADED,
 						KottiFieldFileUploadRemote.Status.UPLOADED_WITH_ERROR,
-					].includes(fileItem.status)
+					].includes(
+						fileItem.status as undefined | KottiFieldFileUploadRemote.Status,
+					)
 				)
 					preUploadedFiles.add(fileItem.id)
 			})
@@ -206,7 +210,7 @@ export default defineComponent({
 									KottiFieldFileUploadRemote.Status.NOT_STARTED,
 									KottiFieldFileUploadRemote.Status.UPLOADED,
 									KottiFieldFileUploadRemote.Status.UPLOADED_WITH_ERROR,
-								].includes(fileItemStatus)
+								].includes(fileItemStatus as KottiFieldFileUploadRemote.Status)
 							)
 						})
 						.map(([id, { status }]) => [id, status]),
@@ -233,22 +237,24 @@ export default defineComponent({
 			},
 			onRemoveFile: (id: Shared.Events.RemoveFile) =>
 				props.actions.onDelete(id),
-			preUploadedFilesList: computed<KottiFieldFileUploadRemote.FileInfo[]>(
-				() =>
-					field.currentValue
-						.filter((fileItem) => preUploadedFiles.has(fileItem.id))
-						.map((fileItem) => {
-							const fileInfo = buildPreUploadedFileInfo({
-								extensions: props.extensions,
-								fileItem,
-								maxFileSize: props.maxFileSize,
-							})
+			preUploadedFilesList: computed<
+				KottiFieldFileUpload.FileItem.Props['fileInfo'][]
+			>(() =>
+				field.currentValue
+					.filter((fileItem) => preUploadedFiles.has(fileItem.id))
+					.map((fileItem) => {
+						const fileInfo = buildPreUploadedFileInfo({
+							extensions: props.extensions,
+							fileItem,
+							maxFileSize: props.maxFileSize,
+						})
 
-							if (fileItem.status !== fileInfo.status)
-								setStatus({ id: fileItem.id, status: fileInfo.status })
+						if (fileItem.status !== fileInfo.status)
+							setStatus({ id: fileItem.id, status: fileInfo.status })
 
-							return fileInfo
-						}),
+						// FIXME: status seems to be incompatible between remote and non-remote
+						return fileInfo as unknown as KottiFieldFileUpload.FileItem.Props['fileInfo']
+					}),
 			),
 			preUploadedFilesListStyle: computed(() =>
 				showDropArea.value
@@ -256,7 +262,7 @@ export default defineComponent({
 							'padding-top': `var(${
 								filesList.value.length ? '--unit-8' : '--unit-4'
 							})`,
-					  }
+						}
 					: undefined,
 			),
 			sharedProps: computed(() => ({

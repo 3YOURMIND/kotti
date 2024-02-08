@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { formatCurrencyUserInput } from './input-formatter'
 
 describe('formatCurrencyUserInput', () => {

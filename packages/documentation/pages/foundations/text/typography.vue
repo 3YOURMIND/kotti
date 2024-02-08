@@ -148,7 +148,7 @@ For macOS, we use Apple system font San Francisco, you can download from [Fonts 
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'DocumentationPageFoundationsTextTypography',

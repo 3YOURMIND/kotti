@@ -129,9 +129,9 @@
 import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
-import { computed, defineComponent, ref, PropType } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
 import kebabCase from 'lodash/kebabCase'
+import { computed, defineComponent, ref, PropType } from 'vue'
 
 import ComponentInfoSlots from './component-info/Slots.vue'
 
@@ -244,11 +244,11 @@ export default defineComponent({
 					...(addedVersion === null
 						? {
 								right: 'unknown',
-						  }
+							}
 						: {
 								link: `https://github.com/3YOURMIND/kotti/releases/tag/v${addedVersion}`,
 								right: `v${addedVersion}`,
-						  }),
+							}),
 				})
 
 				if (componentSourceFolder)

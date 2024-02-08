@@ -73,7 +73,7 @@ export const createActions = (
 					label: 'Edit Item',
 					onClick: () => alert('actions[1].onClick called'),
 				},
-		  ]
+			]
 		: undefined
 
 export const createRemoteUpload = (
@@ -90,7 +90,7 @@ export const createRemoteUpload = (
 					/* eslint-enable no-console */
 				},
 				payload: {},
-		  }
+			}
 		: undefined
 
 const createRemoteUploadCode = (component: ComponentValue): string | null => {
@@ -113,7 +113,7 @@ const createRemoteUploadCode = (component: ComponentValue): string | null => {
 							return `\t:${key}: ${JSON.stringify(value).replace(/"/g, "'")},`
 					})
 					.filter((value) => value),
-		  ].join('\n')}`
+			].join('\n')}`
 		: null
 }
 
@@ -130,7 +130,7 @@ const appendAdditionalSlots = (component: ComponentValue) => {
 							`\t\t${component.contentSlot}`,
 							// eslint-disable-next-line sonarjs/no-duplicate-string
 							'\t</template>',
-					  ]
+						]
 					: []),
 				...(component.defaultSlot !== null
 					? [`\t${component.defaultSlot}`]
@@ -142,17 +142,17 @@ const appendAdditionalSlots = (component: ComponentValue) => {
 							'\t\t\tSlot Content',
 							'\t\t</div>',
 							'\t</template>',
-					  ]
+						]
 					: []),
 				...(component.headerSlot !== null
 					? [
 							'\t<template #header :option="option">',
 							`\t\t${component.headerSlot}`,
 							'\t</template>',
-					  ]
+						]
 					: []),
 				`</${component.name}>`,
-		  ].join('\n')
+			].join('\n')
 		: '/>'
 }
 
@@ -199,13 +199,13 @@ export const generateComponentCode = (component: ComponentValue) =>
 							(a) => `{ label: '${a.label}', onClick: () => {} }`,
 						) ?? [],
 					).replaceAll('"', '')}"`,
-			  ]
+				]
 			: []),
 		...(component.validation === 'empty'
 			? []
 			: [
 					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
-			  ]),
+				]),
 		createRemoteUploadCode(component),
 		appendAdditionalSlots(component),
 	]

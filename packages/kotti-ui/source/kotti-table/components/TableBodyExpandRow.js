@@ -10,13 +10,19 @@ export const TableBodyExpandRow = {
 	render(h) {
 		const { isExpanded, row, rowIndex, colSpan, renderExpand } = this
 		return (
-			isExpanded && (
-				<tr>
-					<td colspan={colSpan} class="kt-table__expanded-cell">
-						{renderExpand && renderExpand(h, { row, data: row, rowIndex })}
-					</td>
-				</tr>
-			)
+			isExpanded &&
+			h('tr', {}, [
+				h(
+					'td',
+					{
+						domProps: {
+							colSpan,
+						},
+						class: 'kt-table__expanded-cell',
+					},
+					[renderExpand && renderExpand(h, { row, data: row, rowIndex })],
+				),
+			])
 		)
 	},
 	computed: {

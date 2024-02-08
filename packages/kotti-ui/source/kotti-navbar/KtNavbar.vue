@@ -57,14 +57,8 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import {
-	computed,
-	defineComponent,
-	provide,
-	ref,
-	watch,
-} from '@vue/composition-api'
 import castArray from 'lodash/castArray'
+import { computed, defineComponent, provide, ref, watch } from 'vue'
 
 import { makeProps } from '../make-props'
 

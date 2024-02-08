@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed } from 'vue'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 

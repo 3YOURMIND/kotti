@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { PropType, computed, defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'ActionIcon',

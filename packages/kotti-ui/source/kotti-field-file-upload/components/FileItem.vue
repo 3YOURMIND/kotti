@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
@@ -62,7 +62,7 @@ export default defineComponent({
 				[
 					KottiFieldFileUpload.Status.UPLOADED,
 					KottiFieldFileUpload.Status.READY_TO_UPLOAD,
-				].includes(status.value)
+				].includes(status.value as KottiFieldFileUpload.Status)
 					? Yoco.Icon.TRASH
 					: Yoco.Icon.CLOSE,
 			),

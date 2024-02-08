@@ -1,3 +1,10 @@
+/**
+ * _WARNING_ avoid using `export type` as it does not support enums
+ * (which most kotti types files use)
+ *
+ * vite build errors if a file doesn't have enums so you'd use it
+ * but does not warn about the opposite scenario
+ */
 import { ZodSchema } from 'zod'
 
 export * from './decimal-separator'
@@ -7,9 +14,9 @@ export { KottiAvatarGroup as AvatarGroup } from '../kotti-avatar-group/types'
 export { KottiBanner as Banner } from '../kotti-banner/types'
 export { KottiBreadcrumb as Breadcrumb } from '../kotti-breadcrumb/types'
 export { KottiButton as Button } from '../kotti-button/types'
-export { KottiButtonGroup as ButtonGroup } from '../kotti-button-group/types'
+export type { KottiButtonGroup as ButtonGroup } from '../kotti-button-group/types'
 export { KottiCard as Card } from '../kotti-card/types'
-export { KottiCol as Col } from '../kotti-col/types'
+export type { KottiCol as Col } from '../kotti-col/types'
 export {
 	KottiComment as Comment,
 	KottiCommentInput as CommentInput,
@@ -44,12 +51,12 @@ export {
 	KottiFieldSingleSelectRemote as FieldSingleSelectRemote,
 } from '../kotti-field-select/types'
 export { KottiFilters as Filters } from '../kotti-filters/types'
-export { KottiForm as Form } from '../kotti-form/types'
-export { KottiFormControllerList as FormControllerList } from '../kotti-form-controller-list/types'
-export { KottiFormControllerObject as FormControllerObject } from '../kotti-form-controller-object/types'
-export { KottiFormSubmit as FormSubmit } from '../kotti-form-submit/types'
+export type { KottiForm as Form } from '../kotti-form/types'
+export type { KottiFormControllerList as FormControllerList } from '../kotti-form-controller-list/types'
+export type { KottiFormControllerObject as FormControllerObject } from '../kotti-form-controller-object/types'
+export type { KottiFormSubmit as FormSubmit } from '../kotti-form-submit/types'
 export { KottiHeading as Heading } from '../kotti-heading/types'
-export { KottiI18n as I18n } from '../kotti-i18n/types'
+export type { KottiI18n as I18n } from '../kotti-i18n/types'
 export { KottiLine as Line } from '../kotti-line/types'
 export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'

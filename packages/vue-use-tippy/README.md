@@ -6,7 +6,7 @@
 
 ```typescript
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
 	setup() {
@@ -28,8 +28,6 @@ export default defineComponent({
 	},
 })
 ```
-
-Right now, `@vue/composition-api@0.6.1` is recommended.
 
 ## Options
 

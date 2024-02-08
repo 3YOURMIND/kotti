@@ -132,64 +132,103 @@ export const TableRow = {
 			renderActions,
 			isDisabled,
 		} = this
-		return (
-			<tr
-				class={_trClasses}
-				role={isInteractive && !isDisabled ? 'button' : false}
-				tabindex={isInteractive && !isDisabled ? 0 : false}
-				onClick={($event) => handleClick($event, row, rowIndex)}
-				onFocus={($event) => handleFocus($event, row, rowIndex)}
-				onBlur={($event) => handleBlur($event, row, rowIndex)}
-				onKeyup={($event) => handleKey($event, row, rowIndex)}
-			>
-				{isExpandable && (
-					<td
-						class="c-hand"
-						onClick={($event) => handleExpand($event, row, rowIndex)}
-					>
-						<div class="expand-toggle">
-							<i class="yoco">{expandToggleIcon}</i>
-						</div>
-					</td>
-				)}
-				{isSelectable && (
-					<td
-						class="td-selectable kt-table__checkbox-col"
-						onClick={($event) => $event.stopPropagation()}
-					>
-						<div class="form-group">
-							<label class="form-checkbox">
-								<input
-									disabled={isDisabled}
-									type="checkbox"
-									checked={isSelected}
-									onChange={($event) => handleSelect($event, row)}
-								/>
-								<i
-									style={isDisabled ? { cursor: 'not-allowed' } : {}}
-									class="form-icon"
-								/>
-							</label>
-						</div>
-					</td>
-				)}
-				{tableColumns.map((column, columnIndex) => (
-					<TableRowCell
-						key={column.prop || columnIndex}
-						column={column}
-						row={row}
-						rowIndex={rowIndex}
-						columnIndex={columnIndex}
-					/>
-				))}
-				{hasActions && (
-					<td onClick={handleActionsClick}>
-						<div class="table-actions">
-							{renderActions(h, { row, data: row, rowIndex })}
-						</div>
-					</td>
-				)}
-			</tr>
+		return h(
+			'tr',
+			{
+				class: _trClasses,
+				domProps: {
+					role: isInteractive && !isDisabled ? 'button' : false,
+					tabIndex: isInteractive && !isDisabled ? 0 : false,
+				},
+				on: {
+					click: ($event) => handleClick($event, row, rowIndex),
+					focus: ($event) => handleFocus($event, row, rowIndex),
+					blur: ($event) => handleBlur($event, row, rowIndex),
+					keyup: ($event) => handleKey($event, row, rowIndex),
+				},
+			},
+			[
+				isExpandable &&
+					h(
+						'td',
+						{
+							class: 'c-hand',
+							on: {
+								click: ($event) => handleExpand($event, row, rowIndex),
+							},
+						},
+						[
+							h('div', { class: 'expand-toggle' }, [
+								h('i', { class: 'yoco' }, [expandToggleIcon]),
+							]),
+						],
+					),
+				isSelectable &&
+					h(
+						'td',
+						{
+							class: 'td-selectable kt-table__checkbox-col',
+							on: {
+								click: ($event) => $event.stopPropagation(),
+							},
+						},
+						[
+							h(
+								'div',
+								{
+									class: 'form-group',
+								},
+								[
+									h('label', { class: 'form-checkbox' }, [
+										h('input', {
+											domProps: {
+												checked: isSelected,
+												disabled: isDisabled,
+												type: 'checkbox',
+											},
+											on: {
+												change: ($event) => handleSelect($event, row),
+											},
+										}),
+										h('i', {
+											class: 'form-icon',
+											style: isDisabled ? { cursor: 'not-allowed' } : undefined,
+										}),
+									]),
+								],
+							),
+						],
+					),
+				...tableColumns.map((column, columnIndex) =>
+					h(TableRowCell, {
+						key: column.prop || columnIndex,
+						props: {
+							column,
+							columnIndex,
+							row,
+							rowIndex,
+						},
+					}),
+				),
+				hasActions &&
+					h(
+						'td',
+						{
+							on: {
+								click: handleActionsClick,
+							},
+						},
+						[
+							h(
+								'div',
+								{
+									class: 'table-actions',
+								},
+								[renderActions(h, { row, data: row, rowIndex })],
+							),
+						],
+					),
+			],
 		)
 	},
 }

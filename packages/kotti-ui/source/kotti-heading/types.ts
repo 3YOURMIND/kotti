@@ -1,6 +1,8 @@
 import { Yoco } from '@3yourmind/yoco'
 import { z } from 'zod'
 
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+
 export module KottiHeading {
 	export enum Type {
 		ACTION = 'action',
@@ -9,12 +11,12 @@ export module KottiHeading {
 
 	export const propsSchema = z.object({
 		actionText: z.string().nullable().default(null),
-		icon: z.nativeEnum(Yoco.Icon).nullable().default(null),
+		icon: createLooseZodEnumSchema(Yoco.Icon).nullable().default(null),
 		text: z.string(),
 		toggleCloseText: z.string().default('Close'),
 		toggleStatus: z.boolean().default(false),
 		toggleText: z.string().default('View'),
-		type: z.nativeEnum(Type).nullable().default(null),
+		type: createLooseZodEnumSchema(Type).nullable().default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>

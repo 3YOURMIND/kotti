@@ -44,7 +44,8 @@ import {
 	ref,
 	toRefs,
 	watch,
-} from '@vue/composition-api'
+} from 'vue'
+import { InputHTMLAttributes, TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { KottiField } from '../kotti-field/types'
@@ -259,7 +260,7 @@ export default defineComponent({
 		return {
 			inputContainerWrapperRef,
 			inputProps: computed(
-				(): Partial<HTMLInputElement> & {
+				(): (TextareaHTMLAttributes | InputHTMLAttributes) & {
 					class: Record<string, boolean>
 					forceUpdateKey: number
 				} => ({
@@ -277,18 +278,14 @@ export default defineComponent({
 			modifiedField,
 			onCancel,
 			onConfirm,
-			onEdit: (event: { target: FieldInlineEditElement }) => {
+			onEdit: (event: Event) => {
 				if (props.isReadonly || !isEditing.value) return
 
-				const newValue = event.target.value
+				const newValue = (event.target as FieldInlineEditElement).value
 
 				setFieldValue(newValue)
 			},
-			onEnter: (
-				event: KeyboardEvent & {
-					target: FieldInlineEditElement
-				},
-			) => {
+			onEnter: (event: KeyboardEvent) => {
 				if (!props.isMultiline || !event.shiftKey) {
 					event.preventDefault()
 					onConfirm()
@@ -303,7 +300,7 @@ export default defineComponent({
 				'kt-field-inline-edit--is-readonly': props.isReadonly,
 			})),
 			textareaProps: computed(
-				(): Partial<HTMLTextAreaElement> & {
+				(): TextareaHTMLAttributes & {
 					class: Record<string, boolean>
 					forceUpdateKey: number
 				} => ({

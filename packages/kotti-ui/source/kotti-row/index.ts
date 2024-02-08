@@ -1,4 +1,4 @@
-import { defineComponent, computed, h, provide } from '@vue/composition-api'
+import { defineComponent, computed, h, provide, PropType } from 'vue'
 
 import { attachMeta, makeInstallable } from '../utilities'
 
@@ -10,20 +10,25 @@ export const KtRow = attachMeta(
 		defineComponent({
 			name: 'KtRow',
 			props: {
-				align: { default: KottiRow.Align.TOP, type: String },
+				align: {
+					default: KottiRow.Align.TOP,
+					type: String as PropType<KottiRow.Align>,
+				},
 				gap: { default: 0, type: Number },
 				gutter: { default: 16, type: Number },
-				justify: { default: KottiRow.Justify.START, type: String },
+				justify: {
+					default: KottiRow.Justify.START,
+					type: String as PropType<KottiRow.Justify>,
+				},
 				tag: { default: 'div', type: String },
-				type: String,
 			},
-			setup(props: KottiRow.PropsInternal, { slots }) {
+			setup(props, { slots }) {
 				const style = computed(() =>
 					props.gutter
 						? {
 								marginLeft: `-${props.gutter / 2}px`,
 								marginRight: `-${props.gutter / 2}px`,
-						  }
+							}
 						: {},
 				)
 

@@ -8,15 +8,21 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref, PropType } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
+import { PropType, computed, defineComponent, ref } from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
+import { EnumToPrimitiveUnion } from '../../zod-utilities/enums'
 
 export default defineComponent({
 	name: 'NavbarTooltip',
 	props: {
-		icon: { required: true, type: String as PropType<Yoco.Icon> },
+		icon: {
+			required: true,
+			type: String as PropType<
+				EnumToPrimitiveUnion<typeof Yoco.Icon> | Yoco.Icon
+			>,
+		},
 		label: { required: true, type: String },
 	},
 	setup() {
