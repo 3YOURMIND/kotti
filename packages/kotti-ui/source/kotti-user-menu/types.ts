@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { refinementNonEmpty } from '../zod-refinements'
+import { refinementNonEmpty } from '../zod-utilities/refinements'
 
 export module KottiUserMenu {
 	export const sectionLinkSchema = z.object({

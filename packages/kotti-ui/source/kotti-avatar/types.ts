@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+
 export module KottiAvatar {
 	export enum Size {
 		LARGE = 'lg',
@@ -10,7 +12,7 @@ export module KottiAvatar {
 	export const propsSchema = z.object({
 		isHoverable: z.boolean().default(false),
 		name: z.string().nullable().default(null),
-		size: z.nativeEnum(Size).default(Size.MEDIUM),
+		size: createLooseZodEnumSchema(Size).default(Size.MEDIUM),
 		src: z.string().nullable().default(null),
 	})
 

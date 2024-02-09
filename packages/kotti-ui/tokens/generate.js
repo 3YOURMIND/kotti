@@ -1,14 +1,14 @@
 import fs from 'fs'
 
-import { tokens, baseColors } from './colors'
-import { arrayToCustomProperties, objectToArray } from './utilities'
+import { tokens, baseColors } from './colors.js'
+import { arrayToCustomProperties, objectToArray } from './utilities.js'
 
 // get CSS
 const output = `
 /*
-	This file is auto generated
+	This file is auto-generated
 	PLEASE DO NOT EDIT
-	Run \`yarn tokens\` to generate again
+	Run \`yarn workspace @3yourmind/kotti-ui run build:tokens\` to regenerate it
 */
 
 :root{

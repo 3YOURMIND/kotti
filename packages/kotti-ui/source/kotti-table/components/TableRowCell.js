@@ -52,24 +52,36 @@ export const TableRowCell = {
 			_tdStyles,
 			value,
 		} = this
-		return (
-			<td
-				class={_tdClasses}
-				style={_tdStyles}
-				onClick={($event) =>
-					cellClick($event, { value, column, row, columnIndex, rowIndex })
-				}
-			>
-				<div class={_cellClass} data-prop={column.prop}>
-					{column.renderCell(h, {
-						column,
-						row,
-						value,
-						columnIndex,
-						rowIndex,
-					})}
-				</div>
-			</td>
+		return h(
+			'td',
+			{
+				class: _tdClasses,
+				on: {
+					click: ($event) =>
+						cellClick($event, { value, column, row, columnIndex, rowIndex }),
+				},
+				style: _tdStyles,
+			},
+			[
+				h(
+					'div',
+					{
+						class: _cellClass,
+						domProps: {
+							'data-prop': column.prop,
+						},
+					},
+					[
+						column.renderCell(h, {
+							column,
+							row,
+							value,
+							columnIndex,
+							rowIndex,
+						}),
+					],
+				),
+			],
 		)
 	},
 }

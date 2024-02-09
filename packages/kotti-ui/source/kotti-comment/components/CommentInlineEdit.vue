@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from '@vue/composition-api'
+import { defineComponent, ref, watch } from 'vue'
 
 import { makeProps } from '../../make-props'
 import { KottiComment } from '../types'

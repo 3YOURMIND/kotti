@@ -10,13 +10,14 @@
 			v-bind="inputProps"
 			:checked="value === true"
 			type="checkbox"
-			@change="(e) => onInput(e.target.checked)"
+			@change="onInput"
 		/>
 	</component>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { defineComponent, computed, PropType } from 'vue'
+import { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KottiField } from '../../kotti-field/types'
 import { KottiFieldToggle } from '../types'
@@ -41,7 +42,9 @@ export default defineComponent({
 	},
 	setup(props, { emit }) {
 		return {
-			onInput: (newValue: boolean) => {
+			onInput: (event: Event) => {
+				const newValue = (event.target as InputHTMLAttributes).checked
+
 				if (!props.isDisabled) emit('input', newValue)
 			},
 			svgComponent: computed(() => {

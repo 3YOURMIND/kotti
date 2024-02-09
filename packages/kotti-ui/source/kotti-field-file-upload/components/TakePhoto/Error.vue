@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'

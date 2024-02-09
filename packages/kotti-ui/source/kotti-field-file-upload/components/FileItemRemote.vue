@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
@@ -109,7 +109,7 @@ export default defineComponent({
 					KottiFieldFileUploadRemote.Status.ERROR,
 					KottiFieldFileUploadRemote.Status.INVALID,
 					KottiFieldFileUploadRemote.Status.UPLOADED_WITH_ERROR,
-				].includes(status.value),
+				].includes(status.value as KottiFieldFileUploadRemote.Status),
 			),
 			onClickCancelOrDelete: () => {
 				if (props.isDisabled) return
@@ -141,18 +141,14 @@ export default defineComponent({
 			showProgressBar: computed(
 				() =>
 					props.fileInfo.validation === Shared.Validation.SUCCESS &&
-					[
-						KottiFieldFileUploadRemote.Status.ERROR,
-						KottiFieldFileUploadRemote.Status.UPLOADING,
-					].includes(status.value),
+					(status.value === KottiFieldFileUploadRemote.Status.ERROR ||
+						status.value === KottiFieldFileUploadRemote.Status.UPLOADING),
 			),
 			showRetryAction: computed(
 				() =>
 					props.fileInfo.validation === Shared.Validation.SUCCESS &&
-					[
-						KottiFieldFileUploadRemote.Status.CANCELED,
-						KottiFieldFileUploadRemote.Status.ERROR,
-					].includes(status.value),
+					(status.value === KottiFieldFileUploadRemote.Status.CANCELED ||
+						status.value === KottiFieldFileUploadRemote.Status.ERROR),
 			),
 			showViewOrDownloadAction: computed(
 				() =>

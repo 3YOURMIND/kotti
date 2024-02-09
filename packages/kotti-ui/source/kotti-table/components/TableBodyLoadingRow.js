@@ -13,12 +13,11 @@ export const TableBodyLoadingRow = {
 	},
 	render(h) {
 		const { colSpan, render } = this
-		return (
-			<tr>
-				<td colspan={colSpan} class="kt-table__loader">
-					{render(h)}
-				</td>
-			</tr>
-		)
+
+		return h('tr', {}, [
+			h('td', { domProps: { colSpan }, class: 'kt-table__loader' }, [
+				render(h),
+			]),
+		])
 	},
 }

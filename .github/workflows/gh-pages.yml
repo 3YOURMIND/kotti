@@ -7,11 +7,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - uses: actions/cache@v2
+          node-version: '18'
+      - uses: actions/cache@v4
         with:
           path: |
             **/node_modules
@@ -23,7 +23,7 @@ jobs:
       - name: Build @3yourmind/documentation
         run: yarn workspace @3yourmind/documentation run build
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.0
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
           branch: gh-pages
           folder: packages/documentation/gh-pages

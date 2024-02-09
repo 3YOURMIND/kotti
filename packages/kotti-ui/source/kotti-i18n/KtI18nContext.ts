@@ -1,4 +1,4 @@
-import { computed, h, defineComponent, PropType } from '@vue/composition-api'
+import { computed, h, defineComponent, PropType } from 'vue'
 
 import { useI18nProvide } from './hooks'
 import { KottiI18n } from './types'

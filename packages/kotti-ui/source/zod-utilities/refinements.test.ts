@@ -1,6 +1,7 @@
+import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
 
-import { refinementNonEmpty } from './zod-refinements'
+import { refinementNonEmpty } from './refinements'
 
 describe('refinementNonEmpty', () => {
 	const schema = z.array(z.number()).refine(...refinementNonEmpty)

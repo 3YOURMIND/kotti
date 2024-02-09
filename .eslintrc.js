@@ -104,16 +104,12 @@ module.exports = {
 			rules: {},
 		},
 		{
+			extends: ['plugin:vitest/recommended'],
 			files: [
-				'packages/**/tests.ts',
 				'packages/**/*.test.ts',
 				'packages/kotti-ui/source/test-utils/**/*.ts',
 			],
-			env: {
-				jest: true,
-			},
-			plugins: ['jest'],
-			extends: ['plugin:jest/recommended'],
+			plugins: ['vitest'],
 			rules: {
 				'import/order': [
 					'warn',

@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiFilters } from '../types'

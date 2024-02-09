@@ -1,22 +1,13 @@
 <template>
 	<KtField :field="modifiedField" :helpTextSlot="$slots.helpText">
-		<input
-			ref="inputRef"
-			v-bind="inputProps"
-			@input="onInput($event.target.value)"
-		/>
+		<input ref="inputRef" v-bind="inputProps" @input="onInput" />
 	</KtField>
 </template>
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import {
-	defineComponent,
-	computed,
-	ref,
-	watch,
-	UnwrapRef,
-} from '@vue/composition-api'
+import { defineComponent, computed, ref, watch, UnwrapRef, nextTick } from 'vue'
+import { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -44,7 +35,8 @@ import {
 const shouldClear = (newValue: string, oldValue: string | null) => {
 	const isOldValueZeroOrNull = !toNumber(oldValue)
 	const isNewValueZero = !toNumber(newValue)
-	const isDeleting = newValue.length < oldValue?.length
+	const isDeleting =
+		newValue.length < (oldValue?.length ?? Number.MIN_SAFE_INTEGER)
 
 	return isOldValueZeroOrNull && isNewValueZero && isDeleting
 }
@@ -80,7 +72,7 @@ export default defineComponent({
 		const userCursorPositionFromRight = ref<number | null>(null)
 
 		const setCursorPosition = (position: number | null) => {
-			root.$nextTick(() => {
+			nextTick(() => {
 				if (position === null || inputRef.value === null) return
 
 				const newPosition = inputRef.value.value.length - position
@@ -144,13 +136,14 @@ export default defineComponent({
 					toNumber(newValue) !== toNumber(internalStringValue.value)
 
 				if (isLogicallyDifferent) {
-					internalStringValue.value = replaceDecimalSeparator(
-						toFixedPrecisionString(
-							newValue,
-							newCurrencyFormat.value.decimalPlaces,
-						),
-						newDecimalSeparator,
-					)
+					internalStringValue.value =
+						replaceDecimalSeparator(
+							toFixedPrecisionString(
+								newValue,
+								newCurrencyFormat.value.decimalPlaces,
+							),
+							newDecimalSeparator,
+						) ?? ''
 
 					setCursorPosition(userCursorPositionFromRight.value)
 					userCursorPositionFromRight.value = null
@@ -166,7 +159,7 @@ export default defineComponent({
 			})),
 			inputRef,
 			inputProps: computed(
-				(): Partial<HTMLInputElement> & {
+				(): InputHTMLAttributes & {
 					class: Record<string, boolean>
 					forceUpdateKey: number
 				} => ({
@@ -182,9 +175,11 @@ export default defineComponent({
 					value: internalStringValue.value,
 				}),
 			),
-			onInput: (value: string) => {
-				userCursorPositionFromRight.value =
-					value.length - inputRef.value?.selectionStart ?? null
+			onInput: (event: Event) => {
+				const value = (event.target as HTMLInputElement).value
+
+				const startPosition = inputRef.value?.selectionStart ?? 0
+				userCursorPositionFromRight.value = value.length - startPosition
 
 				const { maximum, minimum } = props
 
@@ -194,7 +189,7 @@ export default defineComponent({
 					? formatCurrencyUserInput({
 							value: replaceDecimalSeparator(value, DecimalSeparator.DOT),
 							decimalPlaces: currencyFormat.value.decimalPlaces,
-					  })
+						})
 					: ''
 
 				const isTypedNumberValid =

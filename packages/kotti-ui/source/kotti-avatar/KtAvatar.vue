@@ -4,7 +4,7 @@
 			v-if="avatarAvailable"
 			ref="triggerRef"
 			class="kt-avatar__image"
-			:src="src || undefined"
+			:src="src ?? undefined"
 			@error="onImageFailedToLoad"
 		/>
 		<div v-else ref="triggerRef" class="kt-avatar__fallback">
@@ -21,8 +21,8 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
 import { roundArrow } from 'tippy.js'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { makeProps } from '../make-props'

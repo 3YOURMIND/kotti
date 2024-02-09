@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
-import { refinementNonEmpty } from '../zod-refinements'
+import { refinementNonEmpty } from '../zod-utilities/refinements'
 
 export module KottiFieldRadioGroup {
 	export const valueSchema = z

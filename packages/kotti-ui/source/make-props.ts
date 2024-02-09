@@ -1,17 +1,13 @@
-import { PropOptions, PropType } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 import uniq from 'lodash/uniq'
+import type { PropOptions, PropType } from 'vue'
+import type { Prop } from 'vue/types/options'
 import { z } from 'zod'
 
 const DEBUG_MAKE_PROPS = false as const // enable to print debug log
 const DEBUG_WALK_SCHEMA_TYPES = false as const // enable to print debug log
 
 const NEVER = Symbol('NEVER')
-
-/**
- * This type is not exported directly by @vue/composition-api
- */
-type VuePropConstructor = Exclude<PropType<unknown>, Array<unknown>>
 
 const setUnion = <T>(...sets: Set<T>[]): Set<T> => {
 	const result = new Set<T>()
@@ -39,8 +35,7 @@ const propValidator = <SCHEMA extends z.ZodTypeAny>({
 			/* eslint-disable no-console */
 			console.group(`propValidator found issues with prop “${propName}”`)
 
-			// HACK: 'error' in result is necessary as `ts-jest` doesn’t see that result.success was already properly checked to be falsy and that error now exists
-			if ('error' in result) console.error(result.error)
+			console.error(result.error)
 
 			const clonedValue = cloneDeep(value)
 			if (Array.isArray(value)) console.table(clonedValue)
@@ -185,7 +180,7 @@ const ignoredZodTypes = new Set([
 /**
  * This maps the internal zod name of a type to the the constructor that Vue expects in `propName.type`
  */
-const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
+const zodToVueType = new Map<z.ZodFirstPartyTypeKind, Prop<unknown>>([
 	[z.ZodFirstPartyTypeKind.ZodArray, Array],
 	[z.ZodFirstPartyTypeKind.ZodBoolean, Boolean],
 	[z.ZodFirstPartyTypeKind.ZodDate, Date],
@@ -211,12 +206,7 @@ const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
  * ## Known limitations:
  *
  * 1. Deeply defined defaults are only applied when manually `schema.safeParse`-ing the data (only top-level defaults are possible to transform to Vue)
- * 2. This function automatically types the return types of props using `as PropType<>`
- *    (which, in turn, should make annotating of Vue props unnecessary). However, `PropType<>` appears
- *    to be bugged, as tested in `@vue-composition/api@(0.6.1|1.1.5)`
- *    For example, `KtBreadcrumb`’s props get inferred to be `any`.
- *    So, unfortunately, this may only help in the future, once the Vue team fixes this
- * 3. `z.safeParse()` fails for type: `z.function()` if we specify the default, without explicitly chaining
+ * 2. `z.safeParse()` fails for type: `z.function()` if we specify the default, without explicitly chaining
  *    `optional()` on the function type. (See {@link https://github.com/colinhacks/zod/issues/647})
  *    However, it is inconsequential for Vue prop validation, as Vue doesn’t execute the `validator` if the prop is not passed/undefined.
  *
@@ -225,7 +215,7 @@ const zodToVueType = new Map<z.ZodFirstPartyTypeKind, VuePropConstructor>([
  * export default defineComponent({
  *   name: 'KtUserMenu',
  *   props: makeProps(KottiUserMenu.propsSchema)
- *   setup(props: KottiUserMenu.PropsInternal)
+ *   setup(props)
  * })
  *
  * // types.ts
@@ -291,7 +281,7 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 									`makeProps: unknown “ZodFirstPartyTypeKind.${zodTypeName}”`,
 								)
 
-							return zodToVueType.get(zodTypeName) as VuePropConstructor
+							return zodToVueType.get(zodTypeName) as Prop<unknown>
 						}),
 				)
 

@@ -23,7 +23,7 @@ npm install --save @3yourmind/yoco
 **With module bundler**
 
 ```scss
-@import '~@3yourmind/yoco'; // might need a sass importer like @3yourmind/sass-node-modules-importer
+@import '@3yourmind/yoco'; // might need a sass importer
 ```
 
 ```typescript

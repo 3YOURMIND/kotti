@@ -1,12 +1,14 @@
 import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+
 export module KottiBreadcrumb {
 	export enum SeparatorType {
 		ICON = 'icon',
 		TEXT = 'text',
 	}
-	export const separatorTypeSchema = z.nativeEnum(SeparatorType)
+	export const separatorTypeSchema = createLooseZodEnumSchema(SeparatorType)
 
 	export const breadcrumbSchema = z.object({
 		dataTest: z.string().nullable().default(null),

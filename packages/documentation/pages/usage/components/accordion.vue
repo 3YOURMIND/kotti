@@ -80,7 +80,7 @@ We can use `yoco` icons as well:
 
 <script lang="ts">
 import { KtAccordion } from '@3yourmind/kotti-ui'
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

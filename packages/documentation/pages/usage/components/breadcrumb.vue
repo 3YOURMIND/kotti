@@ -83,7 +83,7 @@ textSeparator: {
 
 <script lang="ts">
 import { KtBreadcrumb } from '@3yourmind/kotti-ui'
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import { useRouter } from '../../../hooks/use-router'
 

@@ -3,12 +3,7 @@
 </template>
 
 <script lang="ts">
-import {
-	defineComponent,
-	provide,
-	computed,
-	PropType,
-} from '@vue/composition-api'
+import { defineComponent, provide, computed, PropType } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../../kotti-form/constants'
 import { KottiForm } from '../../kotti-form/types'

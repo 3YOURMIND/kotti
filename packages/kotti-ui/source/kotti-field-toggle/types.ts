@@ -2,7 +2,8 @@ import { VNode } from 'vue'
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
-import { refinementNonEmpty } from '../zod-refinements'
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+import { refinementNonEmpty } from '../zod-utilities/refinements'
 
 export module KottiFieldToggle {
 	export module Shared {
@@ -15,7 +16,7 @@ export module KottiFieldToggle {
 				KottiField.potentiallySupportedPropsSchema.pick({ tabIndex: true }),
 			)
 			.extend({
-				type: z.nativeEnum(Type).default(Type.CHECKBOX),
+				type: createLooseZodEnumSchema(Type).default(Type.CHECKBOX),
 			})
 	}
 

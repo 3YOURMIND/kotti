@@ -20,12 +20,5 @@
 		"types": ["node", "@nuxt/types"]
 	},
 	"exclude": ["node_modules"],
-	"include": [
-		"../kotti-ui/source/data.json",
-		"./**/*.ts",
-		"./**/*.tsx",
-		"./**/*.js",
-		"./**/*.jsx",
-		"./**/*.vue"
-	]
+	"include": ["./**/*.ts", "./**/*.js", "./**/*.vue"]
 }

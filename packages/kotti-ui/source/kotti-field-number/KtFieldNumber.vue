@@ -51,6 +51,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
+import Big from 'big.js'
 import {
 	defineComponent,
 	computed,
@@ -59,11 +60,13 @@ import {
 	UnwrapRef,
 	onBeforeMount,
 	onUnmounted,
-} from '@vue/composition-api'
-import Big from 'big.js'
+	nextTick,
+} from 'vue'
+import { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate, useInput } from '../kotti-field/hooks'
+import { KottiField } from '../kotti-field/types'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
@@ -87,7 +90,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldNumber.propsSchema),
-	setup(props, { emit, root }) {
+	setup(props, { emit }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
 			isEmpty: (value) => value === null,
@@ -302,10 +305,11 @@ export default defineComponent({
 			incrementValue,
 			inputRef,
 			inputProps: computed(
-				(): Partial<HTMLInputElement> & {
-					class: Record<string, boolean>
-					forceUpdateKey: number
-				} => ({
+				(): KottiField.Hook.Returns<KottiFieldNumber.Value>['inputProps'] &
+					InputHTMLAttributes & {
+						class: Record<string, boolean>
+						forceUpdateKey: number
+					} => ({
 					...field.inputProps,
 					class: {
 						'kt-field-number__input': true,
@@ -384,7 +388,7 @@ export default defineComponent({
 						? null
 						: lastUserSetCursorPosition.value - (isTypedNumberValid ? 0 : 1)
 
-				root.$nextTick(() => {
+				nextTick(() => {
 					setCursorPosition(newCursorPosition)
 				})
 			},

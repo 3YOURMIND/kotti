@@ -1,7 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('jsdom-global')()
-import { defineComponent, ref, SetupContext } from '@vue/composition-api'
+/* eslint-disable vue/one-component-per-file */
 import { mount, Wrapper } from '@vue/test-utils'
+import { expect, it, describe } from 'vitest'
+import { defineComponent, ref, SetupContext } from 'vue'
 import { z } from 'zod'
 
 import { useField } from '../kotti-field/hooks'
@@ -13,9 +13,9 @@ import { localVue } from '../test-utils'
 
 import KtForm from './KtForm.vue'
 
-const testFieldSetup = (
+const useTestHook = (
 	props: KottiField.PropsInternal,
-	{ emit }: SetupContext,
+	emit: SetupContext['emit'],
 ) => {
 	useI18nProvide({
 		currencyMap: ref({}),
@@ -47,7 +47,9 @@ const TestField = defineComponent({
 			value: z.string().nullable().default(null),
 		}),
 	),
-	setup: testFieldSetup,
+	setup: (props, { emit }) => {
+		return useTestHook(props, emit)
+	},
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 
@@ -59,7 +61,9 @@ const TestFieldObject = defineComponent({
 			value: z.record(z.unknown()).nullable().default(null),
 		}),
 	),
-	setup: testFieldSetup,
+	setup: (props, { emit }) => {
+		return useTestHook(props, emit)
+	},
 	template: `<KtField :field="field" :getEmptyValue="() => null">FIELD</KtField>`,
 })
 

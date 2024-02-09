@@ -751,8 +751,8 @@ import {
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { TimeConversion } from '@metatypes/units'
-import { computed, defineComponent, ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
+import { computed, defineComponent, ref } from 'vue'
 
 import { useRouter } from '../../../hooks/use-router'
 import {
@@ -1004,7 +1004,7 @@ const createValidator =
 			: {
 					text: `Some Validation Text`,
 					type: validation,
-			  }
+				}
 
 const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 	{ dataTest: 'data-test-key-1', label: 'Key 1', value: 'value1' },
@@ -1550,7 +1550,7 @@ export default defineComponent({
 									.includes(
 										(remoteSingleSelectQuery.value ?? '').toLowerCase(),
 									),
-						  )
+							)
 						: singleOrMultiSelectOptions
 				).map((option, index) => ({
 					...option,

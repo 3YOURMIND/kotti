@@ -1,8 +1,9 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
-import { Ref, SetupContext } from '@vue/composition-api'
+import { Ref, SetupContext } from 'vue'
 import { z } from 'zod'
 
 import { ReplaceRecordType } from '../types/utilities'
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 import { FORM_KEY_NONE } from './constants'
 
@@ -91,10 +92,7 @@ export module KottiField {
 				tabindex: KottiField.PropsInternal['tabIndex']
 			}>
 			isEmpty: boolean
-			setValue: (
-				newValue: DATA_TYPE,
-				options?: { forceUpdate: boolean },
-			) => void
+			setValue(newValue: DATA_TYPE, options?: { forceUpdate: boolean }): void
 			validation: Readonly<KottiField.Validation.Result>
 		}
 
@@ -162,7 +160,7 @@ export module KottiField {
 		 * Defines the size of the field which influences child styles
 		 * to make fields e.g. appear more compact
 		 */
-		size: z.nativeEnum(Size).nullable().default(null),
+		size: createLooseZodEnumSchema(Size).nullable().default(null),
 	})
 
 	export type InheritableProps = z.input<typeof inheritablePropsSchema>

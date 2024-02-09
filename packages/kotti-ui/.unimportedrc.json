@@ -1,14 +1,13 @@
 {
 	"entry": ["source/index.ts"],
-	"extensions": [".js", ".jsx", ".ts", ".tsx", ".vue"],
+	"extensions": [".js", ".ts", ".vue", ".d.ts"],
 	"ignorePatterns": ["**/node_modules/**", "**/dist/**"],
 	"ignoreUnimported": [
+		"source/**/*.d.ts",
 		"**/*.test.ts",
-		"**/tests.ts",
-		"**/*.d.ts",
 		"**/tokens/**",
-		"rollup.config.js",
-		"source/test-utils/**"
+		"source/test-utils/**",
+		"vite.config.ts"
 	],
-	"ignoreUnused": ["core-js", "jest", "normalize.css"]
+	"ignoreUnused": ["core-js", "normalize.css"]
 }

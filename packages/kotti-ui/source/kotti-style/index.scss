@@ -1,4 +1,4 @@
-@import '~normalize.css/';
+@import 'normalize.css/';
 @import 'variables';
 @import 'fonts';
 @import 'shadows';
@@ -25,6 +25,6 @@
 @import 'typography';
 
 // tippy.js
-@import '~tippy.js/dist/tippy';
-@import '~tippy.js/dist/svg-arrow';
-@import '~tippy.js/themes/light-border';
+@import 'tippy.js/dist/tippy';
+@import 'tippy.js/dist/svg-arrow';
+@import 'tippy.js/themes/light-border';

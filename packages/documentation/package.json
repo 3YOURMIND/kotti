@@ -2,13 +2,12 @@
 	"dependencies": {
 		"@3yourmind/kotti-ui": "5.6.0",
 		"@3yourmind/yoco": "*",
-		"@octokit/rest": "^18.0.6",
-		"@octokit/types": "^5.5.0",
-		"@vue/composition-api": "1.7.1",
-		"core-js": "3.6.5",
+		"@octokit/rest": "^20.0.2",
+		"@octokit/types": "^12.3.0",
+		"core-js": "^3.35.1",
 		"dayjs": "^1.9.1",
-		"lodash": "^4.17.19",
-		"marked": "^4.0.15",
+		"lodash": "4.x",
+		"marked": "^12.0.0",
 		"natural-sort": "^1.0.0",
 		"vue-clipboard2": "^0.3.1",
 		"vue-router": "3.x"
@@ -17,18 +16,23 @@
 	"devDependencies": {
 		"@metatypes/typography": "^0.5.0",
 		"@metatypes/units": "^0.5.0",
-		"@nuxt/types": "^2.13.2",
+		"@nuxt/types": "2.x",
 		"@nuxt/typescript-build": "2.x",
-		"@nuxt/typescript-runtime": "2.x",
 		"@nuxtjs/markdownit": "2.x",
 		"@nuxtjs/markdownit-loader": "1.x",
 		"@nuxtjs/style-resources": "1.x",
-		"@types/lodash": "^4.14.157",
-		"@types/marked": "^4.0.3",
-		"@types/natural-sort": "^0.0.20",
+		"@types/case-sensitive-paths-webpack-plugin": "^2.1.9",
+		"@types/lodash": "4.x",
+		"@types/marked": "^6.0.0",
+		"@types/natural-sort": "^0.0.24",
 		"case-sensitive-paths-webpack-plugin": "^2.3.0",
-		"nuxt": "^2.13.3",
-		"ts-loader": "8.x"
+		"levenary": "^1.1.1",
+		"nuxt": "2.x",
+		"sass-loader": "10.x",
+		"ts-loader": "8.x",
+		"vue": "^2.7",
+		"vue-server-renderer": "^2.7",
+		"vue-template-compiler": "^2.7"
 	},
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
@@ -39,7 +43,7 @@
 	"private": true,
 	"scripts": {
 		"build": "DEPLOY_ENV=GH_PAGES nuxt generate",
-		"format": "prettier --write **/*.{vue,js,json,jsx,ts,tsx,md}",
+		"format": "prettier --write **/*.{vue,js,json,ts,md}",
 		"serve": "nuxt"
 	},
 	"version": "2.0.0"

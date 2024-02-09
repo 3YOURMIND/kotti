@@ -1,11 +1,10 @@
-import VueCompositionAPI from '@vue/composition-api'
 import { createLocalVue } from '@vue/test-utils'
+import { type Mock, vi } from 'vitest'
 
 import { KottiField } from '../kotti-field/types'
 import { KottiForm } from '../kotti-form/types'
 
 export const localVue = createLocalVue()
-localVue.use(VueCompositionAPI)
 
 export const getMockContext = (
 	{ validators = {}, values = {} } = { validators: {}, values: {} },
@@ -13,9 +12,9 @@ export const getMockContext = (
 	KottiForm.Context,
 	'fieldInheritableProps' | 'validators' | 'values'
 > & {
-	onAddField: jest.Mock
-	onRemoveField: jest.Mock
-	setValue: jest.Mock
+	onAddField: Mock
+	onRemoveField: Mock
+	setValue: Mock
 } => ({
 	// @ts-expect-error this is an imperfect mock and not a real ref
 	fieldInheritableProps: {
@@ -27,9 +26,9 @@ export const getMockContext = (
 			size: KottiField.Size.MEDIUM,
 		},
 	},
-	onAddField: jest.fn(),
-	onRemoveField: jest.fn(),
-	setValue: jest.fn(),
+	onAddField: vi.fn(),
+	onRemoveField: vi.fn(),
+	setValue: vi.fn(),
 	// @ts-expect-error this is an imperfect mock and not a real ref
 	validators: { value: validators },
 	// @ts-expect-error this is an imperfect mock and not a real ref

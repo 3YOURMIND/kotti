@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, inject, computed } from '@vue/composition-api'
+import { defineComponent, inject, computed } from 'vue'
 
 import { KT_FORM_SUBMIT_CONTEXT } from '../kotti-form/constants'
 import { KottiForm } from '../kotti-form/types'

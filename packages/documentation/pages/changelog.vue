@@ -90,8 +90,10 @@
 						</a>
 					</div>
 				</div>
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div class="content" v-html="renderMarkdown(release.body)" />
+				<template v-if="release.body">
+					<!-- eslint-disable-next-line vue/no-v-html -->
+					<div class="content" v-html="renderMarkdown(release.body)" />
+				</template>
 			</section>
 		</template>
 	</div>
@@ -100,17 +102,11 @@
 <script lang="ts">
 import { Octokit } from '@octokit/rest'
 import { Endpoints } from '@octokit/types'
-import {
-	computed,
-	onBeforeMount,
-	defineComponent,
-	ref,
-	Ref,
-} from '@vue/composition-api'
 import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
 import { marked } from 'marked'
 import naturalSort from 'natural-sort'
+import { computed, onBeforeMount, defineComponent, ref, Ref } from 'vue'
 
 const octokit = new Octokit()
 
@@ -120,9 +116,6 @@ const convertPoundToIssueLink = (string: string) =>
 		'[#$1](https://github.com/3YOURMIND/kotti/issues/$1)',
 	)
 
-// disable ban-ts-comment because vscode sees this as an error but nuxt doesn’t
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore layout is not added to the type definition of defineComponent
 export default defineComponent({
 	name: 'DocumentationPageChangelog',
 	layout: 'fullpage',
@@ -130,7 +123,7 @@ export default defineComponent({
 		const isLoading = ref(true)
 
 		const releases: Ref<
-			Endpoints['GET /repos/:owner/:repo/releases']['response']['data']
+			Endpoints['GET /repos/{owner}/{repo}/releases']['response']['data']
 		> = ref([])
 
 		onBeforeMount(async () => {

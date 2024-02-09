@@ -7,14 +7,8 @@
 </template>
 
 <script lang="ts">
-import {
-	computed,
-	defineComponent,
-	provide,
-	reactive,
-	PropType,
-} from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
+import { PropType, computed, defineComponent, provide, reactive } from 'vue'
 
 import { KottiField } from '../kotti-field/types'
 import { makeProps } from '../make-props'
@@ -41,10 +35,9 @@ export default defineComponent({
 		preventSubmissionOn: {
 			default: 'error',
 			type: String as PropType<KottiForm.Props['preventSubmissionOn']>,
-			validator(
-				this: void,
+			validator: (
 				value: unknown,
-			): value is KottiForm.Props['preventSubmissionOn'] {
+			): value is KottiForm.Props['preventSubmissionOn'] => {
 				return (
 					typeof value === 'string' &&
 					['error', 'warning', 'NEVER'].includes(value)

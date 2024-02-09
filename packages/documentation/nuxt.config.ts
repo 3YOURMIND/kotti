@@ -1,7 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+import { NuxtConfig } from '@nuxt/types'
+import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 
-const config = {
+const config: NuxtConfig = {
 	srcDir: './',
 	/*
 	 ** Headers of the page
@@ -25,7 +26,6 @@ const config = {
 		color: '#2C64CC',
 	},
 	plugins: [
-		'~/plugins/composition-api',
 		'~/plugins/vue-clipboard2',
 		'~/plugins/yoco',
 		{ src: '~/plugins/kotti-ui', ssr: false },
@@ -34,22 +34,15 @@ const config = {
 	 ** Build configuration
 	 */
 	build: {
-		babel: {
-			presets({ isServer }) {
-				return [
-					[
-						require.resolve('@nuxt/babel-preset-app'),
-						{
-							buildTarget: isServer ? 'server' : 'client',
-							corejs: { version: 3 },
-						},
-					],
-				]
-			},
-		},
 		extend(config) {
-			config.plugins.push(new CaseSensitivePathsPlugin())
+			config.plugins!.push(new CaseSensitivePathsPlugin())
 		},
+		transpile: [
+			'@octokit/core',
+			'@octokit/request',
+			'@octokit/endpoint',
+			'marked',
+		],
 	},
 	buildModules: ['@nuxt/typescript-build'],
 }

@@ -38,14 +38,14 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
+import isError from 'lodash/isError'
 import {
 	computed,
 	defineComponent,
 	onBeforeMount,
 	onBeforeUnmount,
 	ref,
-} from '@vue/composition-api'
-import isError from 'lodash/isError'
+} from 'vue'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'

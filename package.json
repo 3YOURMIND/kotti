@@ -47,54 +47,36 @@
 		}
 	],
 	"devDependencies": {
-		"@babel/core": "7.15.5",
-		"@babel/plugin-proposal-nullish-coalescing-operator": "^7.14.5",
-		"@babel/plugin-proposal-optional-chaining": "^7.14.5",
-		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
-		"@babel/preset-env": "^7.15.4",
-		"@babel/preset-typescript": "^7.15.0",
-		"@types/jest": "^27.0.1",
-		"@typescript-eslint/eslint-plugin": "^6.12.0",
-		"@typescript-eslint/parser": "^6.12.0",
+		"@types/node": "20.11.16",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
 		"@vue/eslint-config-typescript": "^12.0.0",
-		"@vue/test-utils": "^1.1.2",
-		"autoprefixer": "^9.8.5",
-		"babel-core": "^6.26.3",
-		"babel-helper-vue-jsx-merge-props": "^2.0.3",
-		"babel-plugin-syntax-jsx": "^6.18.0",
-		"babel-plugin-transform-vue-jsx": "^3.7.0",
-		"concurrently": "^6.2.0",
-		"es-check": "^6.0.0",
+		"concurrently": "^8.2.2",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-import": "^2.29.1",
-		"eslint-plugin-jest": "^27.6.3",
 		"eslint-plugin-prettier": "^5.0.1",
 		"eslint-plugin-sonarjs": "^0.23.0",
+		"eslint-plugin-vitest": "^0.3.22",
 		"eslint-plugin-vue": "^9.20.1",
 		"husky": "^7.0.1",
-		"jest": "^27.1.0",
-		"jsdom-global": "^3.0.2",
-		"lerna": "^6.5.1",
+		"lerna": "^7.4.2",
 		"lint-staged": "^11.0.1",
-		"nodemon": "^2.0.12",
-		"postcss": "^8.2.10",
-		"postcss-html": "^1.5.0",
-		"prettier": "^3.1.0",
-		"sass": "^1.58.3",
-		"sass-loader": "^10.4.1",
+		"nodemon": "^3.0.3",
+		"postcss": "^8.4.34",
+		"postcss-html": "^1.6.0",
+		"prettier": "^3.2.5",
 		"stylelint": "^15.11.0",
 		"stylelint-config-recess-order": "^4.3.0",
 		"stylelint-config-recommended-vue": "^1.5.0",
 		"stylelint-config-standard-scss": "^10.0.0",
 		"stylelint-csstree-validator": "^3.0.0",
 		"stylelint-prettier": "^4.0.2",
-		"ts-jest": "^27.0.5",
 		"typescript": "^5.3",
-		"unimported": "^1.19.0",
-		"vue": "^2.6.11",
-		"vue-jest": "^3.0.7",
-		"vue-template-compiler": "^2.6.11"
+		"unimported": "1.31.1"
+	},
+	"engines": {
+		"node": ">=18"
 	},
 	"husky": {
 		"hooks": {
@@ -106,7 +88,7 @@
 		"*.{css,scss,vue}": [
 			"stylelint --fix"
 		],
-		"*.{js,jsx,vue,ts,tsx}": [
+		"*.{js,vue,ts}": [
 			"eslint --fix"
 		],
 		"*.{json,md}": [
@@ -125,9 +107,9 @@
 	"private": true,
 	"repository": "git@github.com:3YOURMIND/kotti",
 	"scripts": {
-		"build:render.com": "yarn run watch:build-kotti-dependencies && yarn workspace @3yourmind/kotti-ui run build && yarn workspace @3yourmind/documentation run nuxt generate",
+		"build:kotti": "./scripts/build-kotti.sh",
 		"check": "yarn run check:stylelint && yarn run check:eslint && yarn run check:prettier",
-		"check:eslint": "eslint --max-warnings=0 --ignore-path .gitignore '**/*.{js,jsx,json,ts,tsx,vue}'",
+		"check:eslint": "eslint --max-warnings=0 --ignore-path .gitignore '**/*.{js,json,ts,vue}'",
 		"check:prettier": "prettier --check --ignore-path .gitignore .",
 		"check:stylelint": "stylelint 'packages/**/*.{css,scss,vue}'",
 		"check:unimported": "lerna run check:unimported",
@@ -135,10 +117,10 @@
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "prettier --write --ignore-path .gitignore .",
 		"fix:stylelint": "yarn run check:stylelint --fix",
+		"prepare": "husky install",
 		"prepublishOnly": "yarn run check && lerna run --no-private build",
-		"test": "jest",
-		"watch:build-kotti-dependencies": "concurrently \"yarn workspace @3yourmind/sass-node-modules-importer run build\" \"yarn workspace @3yourmind/vue-use-tippy run build\" \"yarn workspace @3yourmind/yoco run build\"",
-		"watch": "yarn run watch:build-kotti-dependencies && nodemon --legacy-watch --watch packages/vue-use-tippy/source --watch packages/yoco/source --watch packages/sass-node-modules-importer/source --watch packages/kotti-ui/source --ignore packages/kotti-ui/source/kotti-style/tokens.css -e js,jsx,ts,tsx,vue,scss,css,json --exec \"yarn --cwd packages/kotti-ui run build && yarn --cwd packages/documentation run serve\""
+		"test": "yarn --cwd packages/kotti-ui run vitest --typecheck",
+		"watch": "./scripts/watch.sh"
 	},
 	"version": "1.0.0",
 	"workspaces": [

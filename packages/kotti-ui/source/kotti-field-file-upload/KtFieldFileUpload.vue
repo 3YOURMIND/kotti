@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeMount } from '@vue/composition-api'
+import { computed, defineComponent, onBeforeMount } from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
@@ -140,7 +140,7 @@ export default defineComponent({
 						undefined,
 						KottiFieldFileUpload.Status.UPLOADED,
 						KottiFieldFileUpload.Status.UPLOADED_WITH_ERROR,
-					].includes(fileItem.status)
+					].includes(fileItem.status as undefined | KottiFieldFileUpload.Status)
 				)
 					preUploadedFilesIds.add(fileItem.id)
 			})
@@ -188,7 +188,7 @@ export default defineComponent({
 							'padding-top': `var(${
 								filesList.value.length ? '--unit-8' : '--unit-4'
 							})`,
-					  }
+						}
 					: undefined,
 			),
 			sharedProps: computed(() => ({

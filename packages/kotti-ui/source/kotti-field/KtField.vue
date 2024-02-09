@@ -116,8 +116,8 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { PropType, computed, defineComponent, ref } from '@vue/composition-api'
 import debounce from 'lodash/debounce'
+import { PropType, computed, defineComponent, ref } from 'vue'
 import { VNode } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'

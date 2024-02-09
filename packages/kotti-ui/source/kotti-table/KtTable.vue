@@ -20,7 +20,7 @@
 	</div>
 </template>
 
-<script lang="jsx">
+<script>
 import isEqual from 'lodash/isEqual'
 import pick from 'lodash/pick'
 
@@ -150,7 +150,7 @@ export default {
 						}
 
 						return column
-				  })
+					})
 				: []
 		},
 		colSpan() {
@@ -193,7 +193,7 @@ export default {
 			return (h) => {
 				if (table.renderLoading) return table.renderLoading(h)
 
-				return table.$slots.loading || <div class="loading lg" />
+				return table.$slots.loading || h('div', { class: 'loading lg' })
 			}
 		},
 		_renderEmpty() {

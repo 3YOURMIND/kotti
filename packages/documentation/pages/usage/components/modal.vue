@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import { KtModal, Kotti } from '@3yourmind/kotti-ui'
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

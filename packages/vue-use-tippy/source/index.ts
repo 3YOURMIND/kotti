@@ -1,6 +1,6 @@
-import { onMounted, ref, Ref, onUnmounted, watch } from '@vue/composition-api'
 import castArray from 'lodash.castarray'
 import tippy, { Props, Instance } from 'tippy.js'
+import { onMounted, ref, Ref, onUnmounted, watch } from 'vue'
 
 type InstanceRefType = Instance<Props>[] | Instance<Props> | null
 type Callback = (t: InstanceRefType) => void

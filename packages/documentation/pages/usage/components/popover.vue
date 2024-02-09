@@ -189,7 +189,7 @@
 <script lang="ts">
 import { KtPopover, Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

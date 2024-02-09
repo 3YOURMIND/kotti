@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { KottiAvatar } from '../kotti-avatar/types'
-import { refinementNonEmpty } from '../zod-refinements'
+import { refinementNonEmpty } from '../zod-utilities/refinements'
 
 export module KottiAvatarGroup {
 	/**

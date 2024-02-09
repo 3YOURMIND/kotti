@@ -47,9 +47,9 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref, PropType } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
 import { roundArrow } from 'tippy.js'
+import { PropType, computed, defineComponent, ref } from 'vue'
 
 import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -73,10 +73,9 @@ export default defineComponent({
 		columns: {
 			required: true,
 			type: Array as PropType<KottiFilters.PropsInternal['columns']>,
-			validator(
-				this: void,
+			validator: (
 				value: unknown,
-			): value is KottiFilters.PropsInternal['columns'] {
+			): value is KottiFilters.PropsInternal['columns'] => {
 				return (
 					Array.isArray(value) && value.every((column) => isValidColumn(column))
 				)
@@ -116,11 +115,12 @@ export default defineComponent({
 				) ?? null) as KottiFilters.Column.Search | null,
 		)
 
-		const searchValue = computed<KottiFilters.InternalFilter | null>(
+		const searchValue = computed<KottiFilters.InternalFilterSearch | null>(
 			() =>
-				props.value.find((filter) => filter.key === searchColumn.value?.key) ??
-				null,
+				(props.value.find((filter) => filter.key === searchColumn.value?.key) ??
+					null) as KottiFilters.InternalFilterSearch | null,
 		)
+
 		const filterListValues = computed<KottiFilters.Value>(() =>
 			props.value.filter((filter) => filter.key !== searchColumn.value?.key),
 		)

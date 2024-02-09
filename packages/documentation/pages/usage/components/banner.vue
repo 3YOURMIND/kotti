@@ -102,7 +102,7 @@ this style is useful when you want add contrast to the page.
 
 <script lang="ts">
 import { KtBanner } from '@3yourmind/kotti-ui'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

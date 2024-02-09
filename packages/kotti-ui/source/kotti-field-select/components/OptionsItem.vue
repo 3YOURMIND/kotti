@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { z } from 'zod'
 
 import { makeProps } from '../../make-props'

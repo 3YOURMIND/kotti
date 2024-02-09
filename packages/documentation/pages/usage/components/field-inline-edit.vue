@@ -87,7 +87,7 @@ import {
 	KtFieldSingleSelect,
 	KtForm,
 } from '@3yourmind/kotti-ui'
-import { defineComponent, ref, computed } from '@vue/composition-api'
+import { defineComponent, ref, computed } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

@@ -1,4 +1,4 @@
-import clone from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep'
 import isUndefined from 'lodash/isUndefined'
 import negate from 'lodash/negate'
 import pickBy from 'lodash/pickBy'
@@ -17,7 +17,7 @@ export class TableStore {
 	constructor(table, initialState = {}) {
 		this.setTable(table)
 		// we deep clone initial state in order to not refer to the same objects
-		this.state = clone({
+		this.state = cloneDeep({
 			...column.defaultState,
 			...rows.defaultState,
 			...expand.defaultState,
@@ -59,7 +59,7 @@ export class TableStore {
 		this.id = table.tableId + '_store'
 	}
 	setInitialState(initialState) {
-		this.state = clone({
+		this.state = cloneDeep({
 			...this.state,
 			...pickBy(initialState, negate(isUndefined)),
 		})

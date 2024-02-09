@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { DecimalSeparator } from '../types/kotti'
 
 import { VALID_REGEX } from './constants'

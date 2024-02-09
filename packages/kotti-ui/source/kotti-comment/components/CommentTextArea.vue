@@ -40,6 +40,7 @@
 		</div>
 		<div v-if="showCancelMessage" class="kt-comment-text-area__footer">
 			<span v-text="translations.cancelMessage" />
+			{{ ' ' }}
 			<a
 				:tabIndex="cancelMessageTabindex"
 				@click.stop.prevent="onCancel"
@@ -54,14 +55,8 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import {
-	computed,
-	defineComponent,
-	onMounted,
-	onUnmounted,
-	ref,
-} from '@vue/composition-api'
 import isNil from 'lodash/isNil'
+import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 
 import { KottiButton } from '../../kotti-button/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
@@ -145,12 +140,12 @@ export default defineComponent({
 								helpText: translations.value.lockedHelpText,
 								icon: Yoco.Icon.PERMISSION_LOCKED,
 								toggleStatus: KottiButton.ToggleStatus.ON,
-						  }
+							}
 						: {
 								helpText: translations.value.unlockedHelpText,
 								icon: Yoco.Icon.PERMISSION_UNLOCKED,
 								toggleStatus: KottiButton.ToggleStatus.OFF,
-						  },
+							},
 			),
 			translations,
 			Yoco,

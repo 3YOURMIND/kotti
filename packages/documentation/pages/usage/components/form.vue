@@ -296,7 +296,7 @@ import {
 	KtFormControllerList,
 	KtFormControllerObject,
 } from '@3yourmind/kotti-ui'
-import { defineComponent, computed, ref } from '@vue/composition-api'
+import { defineComponent, computed, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

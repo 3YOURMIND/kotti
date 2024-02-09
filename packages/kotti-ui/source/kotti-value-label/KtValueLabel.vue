@@ -41,7 +41,7 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -80,7 +80,7 @@ export default defineComponent({
 							error: Yoco.Icon.CIRCLE_CROSS,
 							success: Yoco.Icon.CIRCLE_CHECK,
 							warning: Yoco.Icon.CIRCLE_ATTENTION,
-					  }[validationType.value],
+						}[validationType.value],
 			),
 			valueToRender: computed(() =>
 				props.value !== null ? props.value : Dashes.EmDash,

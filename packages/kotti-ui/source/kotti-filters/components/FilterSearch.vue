@@ -14,9 +14,10 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { PropType, computed, defineComponent } from 'vue'
 
 import { KtFieldText } from '../../kotti-field-text'
+import { KottiFieldText } from '../../kotti-field-text/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiFilters } from '../types'
 import { getSearchFilterInitialState } from '../utils'
@@ -37,7 +38,7 @@ export default defineComponent({
 		},
 		filter: {
 			default: null,
-			type: Object as PropType<KottiFilters.Filter | null>,
+			type: Object as PropType<KottiFilters.InternalFilterSearch | null>,
 		},
 		isLoading: {
 			default: false,
@@ -47,13 +48,6 @@ export default defineComponent({
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
-		const placeholder = computed<string>(
-			() => props.column.placeholder ?? translations.value.searchLabel,
-		)
-		const searchValue = computed<KottiFilters.FilterValue>(
-			() => props.filter?.value ?? null,
-		)
-
 		const handleSetSearchValue = (value: string) =>
 			emit('input', {
 				...(props.filter ?? getSearchFilterInitialState(props.column)),
@@ -62,8 +56,12 @@ export default defineComponent({
 
 		return {
 			handleSetSearchValue,
-			placeholder,
-			searchValue,
+			placeholder: computed<string>(
+				() => props.column.placeholder ?? translations.value.searchLabel,
+			),
+			searchValue: computed<KottiFieldText.Value>(
+				() => props.filter?.value ?? null,
+			),
 			Yoco,
 		}
 	},

@@ -1,4 +1,4 @@
-import { Ref, watch } from '@vue/composition-api'
+import { Ref, watch } from 'vue'
 
 const getDefaultOptions = (): KeyframeAnimationOptions => ({
 	duration: 250,

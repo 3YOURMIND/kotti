@@ -1,4 +1,4 @@
-import filesize from 'filesize'
+import { filesize } from 'filesize'
 
 /**
  * Formats an array of strings to a comma-separated string in uppercase

@@ -9,11 +9,11 @@ jobs:
   eslint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - uses: actions/cache@v2
+          node-version: '18'
+      - uses: actions/cache@v4
         with:
           path: |
             **/node_modules
@@ -22,14 +22,14 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Run ESLint
         run: yarn run check:eslint
-  jest:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - uses: actions/cache@v2
+          node-version: '18'
+      - uses: actions/cache@v4
         with:
           path: |
             **/node_modules
@@ -42,14 +42,14 @@ jobs:
         run: yarn workspace @3yourmind/vue-use-tippy run build
       - name: Run tests
         run: yarn run test
-  prettier:
+  check-prettier:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - uses: actions/cache@v2
+          node-version: '18'
+      - uses: actions/cache@v4
         with:
           path: |
             **/node_modules
@@ -58,14 +58,14 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Run Prettier
         run: yarn run check:prettier
-  stylelint:
+  check-stylelint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - uses: actions/cache@v2
+          node-version: '18'
+      - uses: actions/cache@v4
         with:
           path: |
             **/node_modules
@@ -74,14 +74,14 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Run Stylelint
         run: yarn run check:stylelint
-  unimported:
+  check-unimported:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - uses: actions/cache@v2
+          node-version: '18'
+      - uses: actions/cache@v4
         with:
           path: |
             **/node_modules

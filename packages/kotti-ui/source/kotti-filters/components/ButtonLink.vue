@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { isYocoIcon, Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 
 import { KottiFilters } from '../types'
 
@@ -39,10 +39,7 @@ export default defineComponent({
 		type: {
 			default: KottiFilters.ButtonLinkType.PRIMARY,
 			type: String as PropType<KottiFilters.ButtonLinkType>,
-			validator(
-				this: void,
-				value: unknown,
-			): value is KottiFilters.ButtonLinkType {
+			validator: (value: unknown): value is KottiFilters.ButtonLinkType => {
 				return Object.values(KottiFilters.ButtonLinkType).includes(
 					value as KottiFilters.ButtonLinkType,
 				)

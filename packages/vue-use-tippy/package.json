@@ -3,7 +3,6 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
-		"@vue/composition-api": "1.7.1",
 		"lodash.castarray": "4.x",
 		"tippy.js": "6.x"
 	},
@@ -11,14 +10,15 @@
 	"devDependencies": {
 		"@types/lodash.castarray": "4.x"
 	},
-	"directories": {
-		"dist": "dist"
-	},
 	"exports": {
+		"default": "./dist/index.js",
 		"import": null,
 		"require": "./dist/index.js",
 		"types": "./dist/index.d.ts"
 	},
+	"files": [
+		"dist/**/!(*.tsbuildinfo)"
+	],
 	"homepage": "https://github.com/3YOURMIND/kotti/tree/master/packages/vue-use-tippy",
 	"keywords": [
 		"tippy.js",
@@ -27,11 +27,15 @@
 		"tooltip",
 		"hooks",
 		"vue",
-		"composition-api"
+		"vue-composition-api"
 	],
 	"license": "MIT",
 	"main": "./dist/index.js",
+	"module": "./dist/index.js",
 	"name": "@3yourmind/vue-use-tippy",
+	"peerDependencies": {
+		"vue": "^2.7"
+	},
 	"publishConfig": {
 		"access": "public"
 	},

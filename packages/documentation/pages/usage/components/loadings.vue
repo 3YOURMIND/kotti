@@ -120,7 +120,7 @@
 
 <script lang="ts">
 import { Kotti } from '@3yourmind/kotti-ui'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

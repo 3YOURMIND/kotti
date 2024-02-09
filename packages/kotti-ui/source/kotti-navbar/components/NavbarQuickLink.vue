@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { PropType, computed, defineComponent } from 'vue'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiNavbar } from '../types'
