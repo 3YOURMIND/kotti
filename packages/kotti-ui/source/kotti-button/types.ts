@@ -1,7 +1,44 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
+export module Shared {
+	export enum IconPosition {
+		LEFT = 'left',
+		RIGHT = 'right',
+	}
+	export const iconPositionSchema = z.nativeEnum(IconPosition)
+
+	export enum Size {
+		LARGE = 'large',
+		MEDIUM = 'medium',
+		SMALL = 'small',
+	}
+	export const sizeSchema = z.nativeEnum(Size)
+
+	export const propsSchema = z.object({
+		icon: yocoIconSchema.nullable().default(null),
+		iconPosition: iconPositionSchema.default(IconPosition.LEFT),
+		isLoading: z.boolean().default(false),
+		isSubmit: z.boolean().default(false),
+		size: sizeSchema.default(Size.MEDIUM),
+	})
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
+}
+
 export module KottiButton {
+	export import IconPosition = Shared.IconPosition
+	export import iconPositionSchema = Shared.iconPositionSchema
+
+	export import Size = Shared.Size
+	export import sizeSchema = Shared.sizeSchema
+
+	export enum ToggleStatus {
+		ON = 'on',
+		OFF = 'off',
+	}
+	export const toggleStatusSchema = z.nativeEnum(ToggleStatus)
+
 	export enum Type {
 		DANGER = 'danger',
 		DEFAULT = 'default',
@@ -11,40 +48,47 @@ export module KottiButton {
 	}
 	export const typeSchema = z.nativeEnum(Type)
 
-	export enum Size {
-		LARGE = 'large',
-		MEDIUM = 'medium',
-		SMALL = 'small',
-	}
-	export const sizeSchema = z.nativeEnum(Size)
-
-	export enum IconPosition {
-		LEFT = 'left',
-		RIGHT = 'right',
-	}
-	export const iconPosition = z.nativeEnum(IconPosition)
-
-	export enum ToggleStatus {
-		ON = 'on',
-		OFF = 'off',
-	}
-
-	export const toggleStatusSchema = z.nativeEnum(ToggleStatus)
-
-	export const propsSchema = z.object({
+	export const propsSchema = Shared.propsSchema.extend({
 		helpText: z.string().nullable().default(null),
-		icon: yocoIconSchema.nullable().default(null),
-		iconPosition: iconPosition.default(IconPosition.LEFT),
 		isBlock: z.boolean().default(false),
-		isLoading: z.boolean().default(false),
 		isMultiline: z.boolean().default(false),
-		isSubmit: z.boolean().default(false),
 		label: z.string().nullable().default(null),
-		size: sizeSchema.default(Size.MEDIUM),
 		toggleStatus: toggleStatusSchema.nullable().default(null),
 		type: typeSchema.default(Type.DEFAULT),
 	})
+	export type Props = z.input<typeof propsSchema>
+	export type PropsInternal = z.output<typeof propsSchema>
+}
 
+export module KottiSplitButton {
+	export import IconPosition = Shared.IconPosition
+	export import iconPositionSchema = Shared.iconPositionSchema
+
+	export import Size = Shared.Size
+	export import sizeSchema = Shared.sizeSchema
+
+	export enum Type {
+		DEFAULT = 'default',
+		PRIMARY = 'primary',
+	}
+	export const typeSchema = z.nativeEnum(Type)
+
+	export const actionSchema = z.object({
+		dataTest: z.string().optional(),
+		icon: yocoIconSchema.nullable().default(null),
+		isDisabled: z.boolean().default(false),
+		label: z.string(),
+		onClick: z.function(z.tuple([]), z.void()),
+	})
+	export type Action = z.output<typeof actionSchema>
+
+	export const propsSchema = Shared.propsSchema.extend({
+		actions: z.array(actionSchema).default(() => []),
+		dataTest: z.string().optional(),
+		isDisabled: z.boolean().default(false),
+		label: z.string(),
+		type: typeSchema.default(Type.DEFAULT),
+	})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 }
