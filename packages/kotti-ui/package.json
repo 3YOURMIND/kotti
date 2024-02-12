@@ -65,8 +65,8 @@
 		"url": "git+https://github.com/3YOURMIND/kotti.git"
 	},
 	"scripts": {
-		"build": "rm -rf dist && yarn run build:tokens && yarn run build:kotti",
-		"build:kotti": "vite build",
+		"build": "rm -rf dist && yarn run build:tokens && yarn run build:vite",
+		"build:vite": "vite build",
 		"build:vue-tsc": "vue-tsc --declaration --emitDeclarationOnly",
 		"build:tokens": "node tokens/generate.js && prettier --write source/kotti-style/tokens.css",
 		"check:unimported": "unimported --no-cache",

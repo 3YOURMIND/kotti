@@ -15,6 +15,6 @@ nodemon \
 			\"yarn --cwd packages/yoco run build\" \\
 		&& concurrently \\
 			\"yarn --cwd packages/documentation run serve\" \\
-			\"yarn --cwd packages/kotti-ui run build:kotti --watch\" \\
+			\"yarn --cwd packages/kotti-ui run build:vite --watch\" \\
 			\"yarn --cwd packages/kotti-ui run build:vue-tsc\" \\
 	"

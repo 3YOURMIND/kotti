@@ -7,5 +7,5 @@ concurrently \
 	"yarn --cwd packages/yoco run build"
 
 concurrently \
-	"yarn --cwd packages/kotti-ui run build:kotti --mode production" \
+	"yarn --cwd packages/kotti-ui run build:vite --mode production" \
 	"yarn --cwd packages/kotti-ui run build:vue-tsc"
