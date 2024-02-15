@@ -73,9 +73,9 @@
 		"format": "prettier --write '**/*.{vue,js,json,ts,md}'"
 	},
 	"sideEffects": [
-		"./dist/styles.css"
+		"./dist/style.css"
 	],
-	"style": "./dist/styles.css",
+	"style": "./dist/style.css",
 	"type": "module",
 	"types": "./dist/index.d.ts",
 	"version": "5.6.0"
