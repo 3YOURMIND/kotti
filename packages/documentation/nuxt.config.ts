@@ -28,7 +28,6 @@ const config: NuxtConfig = {
 	plugins: [
 		'~/plugins/vue-clipboard2',
 		'~/plugins/yoco',
-		{ src: '~/plugins/kotti-ui-style', ssr: false },
 		{ src: '~/plugins/kotti-ui', ssr: false },
 	],
 	/*
