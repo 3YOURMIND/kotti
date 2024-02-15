@@ -17,12 +17,7 @@ enum Mode {
 	PRODUCTION = 'production',
 }
 
-const getPlugins = ({
-	enableVisualizer,
-}: {
-	enableVisualizer: boolean
-	isProduction: boolean
-}) => [
+const getPlugins = ({ enableVisualizer }: { enableVisualizer: boolean }) => [
 	commonjs({
 		include: [/\/node_modules\//],
 	}),
@@ -97,7 +92,7 @@ export default defineConfig(({ mode }) => {
 				plugins: [PresetEnv()],
 			},
 		},
-		plugins: getPlugins({ enableVisualizer, isProduction }),
+		plugins: getPlugins({ enableVisualizer }),
 		test: {
 			environment: 'jsdom',
 			globals: true,

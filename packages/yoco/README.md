@@ -37,7 +37,7 @@ console.log(Yoco.Icon.ANNOUNCE)
 **With HTML**
 
 ```html
-<link rel="stylesheet" href="./path/to/yoco/styles.css" />
+<link rel="stylesheet" href="./path/to/yoco/style.css" />
 ```
 
 ## Using yoco icons
