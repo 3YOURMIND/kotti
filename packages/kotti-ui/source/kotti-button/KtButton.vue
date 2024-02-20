@@ -124,7 +124,7 @@ export default defineComponent({
 	--default-button-height: var(--unit-8);
 	--default-button-line-height: var(--unit-6);
 	--large-button-height: var(--unit-9);
-	--small-button-height: var(--unit-6);
+	--small-button-height: var(--unit-7);
 	--button-main-color: var(--interactive-01);
 	--button-main-color-dark: var(--interactive-01-hover);
 	--button-main-color-light: var(--interactive-02-hover);
