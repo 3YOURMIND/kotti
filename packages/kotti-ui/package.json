@@ -42,11 +42,22 @@
 		"vue-tsc": "^1.8.22"
 	},
 	"exports": {
-		"default": "./dist/kotti-ui.js",
-		"import": "./dist/kotti-ui.js",
-		"require": "./dist/kotti-ui.cjs",
-		"style": "./dist/style.css",
-		"types": "./dist/index.d.ts"
+		".": {
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/kotti-ui.js"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/kotti-ui.cjs"
+			}
+		},
+		"./dist/style.css": {
+			"style": "./dist/style.css"
+		},
+		"./dist/variables.scss": {
+			"style": "./dist/variables.scss"
+		}
 	},
 	"files": [
 		"dist"
@@ -66,10 +77,11 @@
 	},
 	"scripts": {
 		"build": "rm -rf dist && yarn run build:tokens && yarn run build:vite",
+		"build:tokens": "node tokens/generate.js && prettier --write source/kotti-style/tokens.css",
 		"build:vite": "vite build",
 		"build:vue-tsc": "vue-tsc --declaration --emitDeclarationOnly",
-		"build:tokens": "node tokens/generate.js && prettier --write source/kotti-style/tokens.css",
 		"check:unimported": "unimported --no-cache",
+		"check:publint": "publint",
 		"format": "prettier --write '**/*.{vue,js,json,ts,md}'"
 	},
 	"sideEffects": [

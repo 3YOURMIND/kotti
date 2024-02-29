@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"outDir": "dist/mjs",
+		"target": "ESNext",
+		"tsBuildInfoFile": "dist/mjs/tsconfig.tsbuildinfo"
+	}
+}
