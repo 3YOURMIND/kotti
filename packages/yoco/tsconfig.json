@@ -4,7 +4,7 @@
 		"composite": true,
 		"declaration": true,
 		"esModuleInterop": true,
-		"lib": ["ESNext", "ES2019"],
+		"lib": ["ES2022"],
 		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"outDir": "dist",

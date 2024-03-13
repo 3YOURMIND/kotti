@@ -4,12 +4,14 @@ import IconFontBuildr from 'icon-font-buildr'
 
 import { Yoco } from './index.js'
 
+const cwd = process.cwd()
+
 async function build() {
 	const builder = new IconFontBuildr({
-		sources: [path.join(__dirname, '..', 'svg', '[icon].svg')],
+		sources: [path.join(cwd, 'svg', '[icon].svg')],
 		icons: Object.values(Yoco.Icon),
 		output: {
-			fonts: path.join(__dirname, '..', 'fonts'),
+			fonts: path.join(cwd, 'fonts'),
 			fontName: 'yoco',
 			formats: ['eot', 'ttf', 'woff', 'woff2'],
 		},
