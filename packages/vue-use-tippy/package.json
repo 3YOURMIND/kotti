@@ -13,12 +13,12 @@
 	"exports": {
 		".": {
 			"import": {
-				"types": "./dist/mjs/index.d.mts",
-				"default": "./dist/mjs/index.mjs"
+				"types": "./dist/mjs/index.d.ts",
+				"default": "./dist/mjs/index.js"
 			},
 			"require": {
-				"types": "./dist/cjs/index.d.ts",
-				"default": "./dist/cjs/index.js"
+				"types": "./dist/cjs/index.d.cts",
+				"default": "./dist/cjs/index.cjs"
 			}
 		}
 	},
@@ -36,8 +36,8 @@
 		"vue-composition-api"
 	],
 	"license": "MIT",
-	"main": "./dist/cjs/index.js",
-	"module": "./dist/mjs/index.mjs",
+	"main": "./dist/cjs/index.cjs",
+	"module": "./dist/mjs/index.js",
 	"name": "@3yourmind/vue-use-tippy",
 	"peerDependencies": {
 		"vue": "^2.7"
@@ -53,7 +53,7 @@
 		"build": "./scripts/build.sh",
 		"check:publint": "publint"
 	},
-	"type": "commonjs",
-	"types": "./dist/cjs/index.d.ts",
+	"type": "module",
+	"types": "./dist/mjs/index.d.ts",
 	"version": "2.0.0"
 }

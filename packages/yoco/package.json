@@ -24,12 +24,12 @@
 	"exports": {
 		".": {
 			"import": {
-				"types": "./dist/mjs/index.d.mts",
-				"default": "./dist/mjs/index.mjs"
+				"types": "./dist/mjs/index.d.ts",
+				"default": "./dist/mjs/index.js"
 			},
 			"require": {
-				"types": "./dist/cjs/index.d.ts",
-				"default": "./dist/cjs/index.js"
+				"types": "./dist/cjs/index.d.cts",
+				"default": "./dist/cjs/index.cjs"
 			}
 		},
 		"./style.css": {
@@ -48,8 +48,8 @@
 		"font"
 	],
 	"license": "MIT",
-	"main": "./dist/cjs/index.js",
-	"module": "./dist/mjs/index.mjs",
+	"main": "./dist/cjs/index.cjs",
+	"module": "./dist/mjs/index.js",
 	"name": "@3yourmind/yoco",
 	"repository": "git+https://github.com/3YOURMIND/kotti.git",
 	"scripts": {
@@ -57,7 +57,7 @@
 		"check:publint": "publint"
 	},
 	"style": "./style.css",
-	"type": "commonjs",
-	"types": "./dist/mjs/index.d.mts",
+	"type": "module",
+	"types": "./dist/mjs/index.d.ts",
 	"version": "2.4.6"
 }
