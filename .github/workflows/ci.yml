@@ -107,3 +107,21 @@ jobs:
       - run: ./scripts/build-kotti.sh
       - name: Run Publint
         run: yarn run check:publint
+  gh-pages-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: ${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn install --frozen-lockfile
+      - name: Build Kotti & its dependencies
+        run: ./scripts/build-kotti.sh
+      - name: Build @3yourmind/documentation
+        run: yarn workspace @3yourmind/documentation run build
