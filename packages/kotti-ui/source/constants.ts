@@ -5,5 +5,3 @@ export const ISO8601_SECONDS = 'YYYY-MM-DD HH:mm:ss' as const
 export const ONE_HUNDRED_PERCENT = 100 as const
 
 export const TIPPY_LIGHT_BORDER_ARROW_HEIGHT = 7
-
-export const TIPPY_VERTICAL_OFFSET = 4
