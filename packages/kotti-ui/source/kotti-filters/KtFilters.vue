@@ -48,10 +48,9 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
 import castArray from 'lodash/castArray'
-import { roundArrow } from 'tippy.js'
 import { PropType, computed, defineComponent, ref } from 'vue'
 
-import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import ButtonLink from './components/ButtonLink.vue'
@@ -184,12 +183,12 @@ export default defineComponent({
 			listTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				arrow: roundArrow,
+				arrow: false,
 				content: listContentRef.value ?? undefined,
 				hideOnClick: false,
 				interactive: true,
 				maxWidth: 'none',
-				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				offset: [0, TIPPY_DISTANCE_OFFSET],
 				placement: 'bottom',
 				theme: 'light-border',
 				trigger: 'manual',

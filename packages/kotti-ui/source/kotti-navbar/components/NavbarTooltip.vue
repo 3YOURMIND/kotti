@@ -8,10 +8,9 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { roundArrow } from 'tippy.js'
 import { PropType, computed, defineComponent, ref } from 'vue'
 
-import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 import { EnumToPrimitiveUnion } from '../../zod-utilities/enums'
 
 export default defineComponent({
@@ -33,9 +32,9 @@ export default defineComponent({
 			triggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				arrow: roundArrow,
+				arrow: false,
 				content: contentRef.value ?? undefined,
-				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				offset: [0, TIPPY_DISTANCE_OFFSET],
 				placement: 'right',
 				theme: 'kt-tooltip-navbar',
 			})),

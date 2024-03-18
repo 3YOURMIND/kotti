@@ -1,11 +1,10 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { roundArrow } from 'tippy.js'
 import { computed, defineComponent, ref, PropType, h } from 'vue'
 import { VNode } from 'vue'
 
-import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 
 export default defineComponent({
 	name: 'FieldHelpText',
@@ -21,10 +20,10 @@ export default defineComponent({
 			helpTextTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				arrow: roundArrow,
+				arrow: false,
 				content: helpTextContentRef.value ?? undefined,
 				interactive: true,
-				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				offset: [0, TIPPY_DISTANCE_OFFSET],
 				theme: 'light-border',
 			})),
 		)
