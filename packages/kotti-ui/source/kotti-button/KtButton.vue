@@ -18,10 +18,9 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { roundArrow } from 'tippy.js'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
-import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { makeProps } from '../make-props'
 
 import { KottiButton } from './types'
@@ -49,12 +48,12 @@ export default defineComponent({
 			helpTextTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				arrow: roundArrow,
+				arrow: false,
 				content: props.helpText
 					? helpTextContentRef.value ?? undefined
 					: undefined,
 				interactive: true,
-				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				offset: [0, TIPPY_DISTANCE_OFFSET],
 				theme: 'light-border',
 				...(showHelpText.value
 					? { trigger: 'mouseenter focusin' }

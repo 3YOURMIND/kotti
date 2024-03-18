@@ -2,7 +2,7 @@ import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Instance } from 'tippy.js'
 import { Ref, computed, ref, watch } from 'vue'
 
-import { TIPPY_VERTICAL_OFFSET } from '../../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 
 export const useActionsTippy = ({
 	isDisabled,
@@ -24,7 +24,7 @@ export const useActionsTippy = ({
 			content: tippyContentRef.value ?? undefined,
 			hideOnClick: false,
 			interactive: true,
-			offset: [0, TIPPY_VERTICAL_OFFSET],
+			offset: [0, TIPPY_DISTANCE_OFFSET],
 			onClickOutside: () => {
 				setIsTippyOpen(false)
 			},

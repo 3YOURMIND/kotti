@@ -21,10 +21,9 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { roundArrow } from 'tippy.js'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
-import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { makeProps } from '../make-props'
 
 import { KottiAvatar } from './types'
@@ -46,10 +45,10 @@ export default defineComponent({
 			triggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				arrow: roundArrow,
+				arrow: false,
 				content: contentRef.value ?? undefined,
 				interactive: true,
-				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				offset: [0, TIPPY_DISTANCE_OFFSET],
 				theme: 'light-border',
 				...(hideTippy.value
 					? { trigger: 'manual' }
