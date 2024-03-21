@@ -151,7 +151,12 @@ export default defineComponent({
 				const target = event.target as HTMLInputElement
 				emitFiles(target.files)
 			},
-			onTriggerInput: () => uploadInputRef.value?.click(),
+			onTriggerInput: () => {
+				if (uploadInputRef.value === null)
+					throw new Error('uploadInputRef is null')
+
+				uploadInputRef.value.click()
+			},
 			showInformation: computed(
 				() => informationText.value || props.externalUrl,
 			),
