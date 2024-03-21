@@ -1,11 +1,19 @@
 <template>
 	<div>
 		<h3>
-			<label v-text="text" />
-			<span v-if="type === KottiHeading.Type.ACTION" @click="handleClick">
+			<span class="kt-heading__title" v-text="text" />
+			<span
+				v-if="type === KottiHeading.Type.ACTION"
+				class="kt-heading__button"
+				@click="handleClick"
+			>
 				{{ actionText }} <i class="yoco" v-text="icon" />
 			</span>
-			<span v-if="type === KottiHeading.Type.TOGGLE" @click="handleClick">
+			<span
+				v-if="type === KottiHeading.Type.TOGGLE"
+				class="kt-heading__button"
+				@click="handleClick"
+			>
 				{{ toggleTextRep }}
 				<i
 					class="yoco"
@@ -51,26 +59,26 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.kt-heading__button {
+	display: flex;
+	align-items: center;
+	float: right;
+	font-weight: 500;
+	color: var(--interactive-01);
+
+	&:hover {
+		color: var(--interactive-01);
+		cursor: pointer;
+	}
+}
+
+.kt-heading__title {
+	flex: 1;
+}
+
 h3 {
 	display: flex;
 	align-items: center;
-
-	label {
-		flex: 1;
-	}
-
-	span {
-		display: flex;
-		align-items: center;
-		float: right;
-		font-weight: 500;
-		color: var(--interactive-01);
-
-		&:hover {
-			color: var(--interactive-01);
-			cursor: pointer;
-		}
-	}
 
 	i.yoco {
 		font-size: 1rem;
