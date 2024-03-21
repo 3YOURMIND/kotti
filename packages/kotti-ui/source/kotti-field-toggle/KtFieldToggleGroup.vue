@@ -1,12 +1,12 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" useFieldset>
 		<div slot="container" :class="wrapperClasses">
-			<div v-for="option of optionsWithChecked" :key="option.key">
+			<div v-for="(option, index) of optionsWithChecked" :key="option.key">
 				<div class="kt-field-toggle-group__header">
 					<ToggleInner
 						component="label"
 						:data-test="getOptionDataTest(option)"
-						:inputProps="inputProps"
+						:inputProps="inputProps(index)"
 						:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
 						:type="type"
 						:value="option.value"
@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import omit from 'lodash/omit'
 import { computed, defineComponent } from 'vue'
 
 import { KtField } from '../kotti-field'
@@ -73,10 +74,11 @@ export default defineComponent({
 					return [field.inputProps['data-test'], option.key].join('.')
 				}
 			},
-			inputProps: computed(() => {
+			inputProps: computed(() => (index: number) => {
 				return {
-					...field.inputProps,
+					...omit(field.inputProps, 'id'),
 					forceUpdateKey: forceUpdateKey.value,
+					id: `${field.inputProps.id}-${index}`,
 				}
 			}),
 			onInput: (
