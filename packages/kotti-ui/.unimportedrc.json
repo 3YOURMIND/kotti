@@ -9,5 +9,6 @@
 		"source/test-utils/**",
 		"vite.config.ts"
 	],
+	"ignoreUnresolved": [],
 	"ignoreUnused": ["core-js", "normalize.css"]
 }

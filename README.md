@@ -178,7 +178,7 @@ yarn install
 4. Build Kotti. Make sure it builds successfully.
 
 ```bash
-yarn run build:kotti
+yarn run turbo run --filter=@3yourmind/kotti-ui build
 ```
 
 5. Optional: If you haven't already, make sure to functionally test:
@@ -245,7 +245,7 @@ npm login
 7. Build yoco
 
 ```bash
-yarn --cwd packages/yoco run build
+yarn run turbo run --filter=@3yourmind/yoco build
 ```
 
 8. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
@@ -259,7 +259,7 @@ yarn run lerna publish from-package
 ### Build
 
 ```bash
-yarn run lerna run build
+yarn run build
 ```
 
 ## Internals

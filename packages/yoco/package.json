@@ -54,7 +54,13 @@
 	"repository": "git+https://github.com/3YOURMIND/kotti.git",
 	"scripts": {
 		"build": "./scripts/build.sh",
-		"check:publint": "publint"
+		"check:eslint": "yarn --cwd ../.. run eslint --max-warnings=0 --ignore-path=.gitignore ./packages/yoco",
+		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/yoco",
+		"check:publint": "publint",
+		"check:stylelint": "stylelint style.css",
+		"check:unimported": "unimported --no-cache",
+		"fix:eslint": "yarn run check:eslint --fix",
+		"fix:prettier": "yarn run check:prettier --write"
 	},
 	"style": "./style.css",
 	"type": "module",

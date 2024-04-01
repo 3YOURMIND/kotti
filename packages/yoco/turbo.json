@@ -1,0 +1,11 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"pipeline": {
+		"build": {
+			"inputs": ["./scripts/**", "./source/**", "./svg/**", "tsconfig.*"],
+			"outputMode": "new-only",
+			"outputs": ["./dist/**", "./fonts/**"]
+		}
+	}
+}

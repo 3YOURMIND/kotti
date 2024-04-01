@@ -45,15 +45,12 @@ const config: NuxtConfig = {
 		],
 	},
 	buildModules: ['@nuxt/typescript-build'],
-}
-
-if (process.env.DEPLOY_ENV === 'GH_PAGES') {
-	config.generate = {
-		dir: 'gh-pages',
-	}
-	config.router = {
+	generate: {
+		dir: 'dist',
+	},
+	router: {
 		base: '/kotti/',
-	}
+	},
 }
 
 module.exports = config

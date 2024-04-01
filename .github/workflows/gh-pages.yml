@@ -18,10 +18,8 @@ jobs:
           key: ${{ hashFiles('**/yarn.lock') }}
       - name: Install modules
         run: yarn install --frozen-lockfile
-      - name: Build Kotti & its dependencies
-        run: yarn run build:kotti
       - name: Build @3yourmind/documentation
-        run: yarn workspace @3yourmind/documentation run build
+        run: yarn run turbo run --filter=@3yourmind/documentation build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:

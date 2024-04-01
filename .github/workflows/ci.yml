@@ -104,7 +104,6 @@ jobs:
           key: ${{ hashFiles('**/yarn.lock') }}
       - name: Install modules
         run: yarn install --frozen-lockfile
-      - run: ./scripts/build-kotti.sh
       - name: Run Publint
         run: yarn run check:publint
   gh-pages-dry-run:
@@ -121,7 +120,5 @@ jobs:
           key: ${{ hashFiles('**/yarn.lock') }}
       - name: Install modules
         run: yarn install --frozen-lockfile
-      - name: Build Kotti & its dependencies
-        run: ./scripts/build-kotti.sh
       - name: Build @3yourmind/documentation
-        run: yarn workspace @3yourmind/documentation run build
+        run: yarn run turbo run --filter=@3yourmind/documentation build

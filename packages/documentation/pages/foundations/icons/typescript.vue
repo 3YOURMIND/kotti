@@ -14,23 +14,21 @@ console.log(Yoco.Icon.ANNOUNCE)
 ### Vue Example
 
 ```html
-<templateTag>
-	<i class="yoco" v-text="Yoco.Icon.ANNOUNCE" />
-</templateTag>
+<i class="yoco" v-text="Yoco.Icon.ANNOUNCE" />
+```
 
-<script lang="ts">
-	import { Yoco } from '@3yourmind/yoco'
-	import { defineComponent } from 'vue'
+```ts
+import { Yoco } from '@3yourmind/yoco'
+import { defineComponent } from 'vue'
 
-	export default defineComponent({
-		name: 'Example',
-		setup() {
-			return {
-				Yoco,
-			}
-		},
-	})
-</script>
+export default defineComponent({
+	name: 'Example',
+	setup() {
+		return {
+			Yoco,
+		}
+	},
+})
 ```
 
 ### Details
