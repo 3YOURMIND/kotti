@@ -1,22 +1,4 @@
 /*!
- * Vue.js v2.7.16
- * (c) 2014-2023 Evan You
- * Released under the MIT License.
- */
-
-
-/*!
- * natural-sort.js
- * ===============
- * Sorting with support for numbers, dates, unicode and more.
- *
- * http://github.com/studio-b12/natural-sort
- * MIT License, © Studio B12 GmbH 2014
- *
- */
-
-
-/*!
  * clipboard.js v2.0.11
  * https://clipboardjs.com/
  *
@@ -58,4 +40,22 @@
  * @copyright 2023 Jason Mulligan <jason.mulligan@avoidwork.com>
  * @license BSD-3-Clause
  * @version 10.1.0
+ */
+
+
+/*!
+ * Vue.js v2.7.16
+ * (c) 2014-2023 Evan You
+ * Released under the MIT License.
+ */
+
+
+/*!
+ * natural-sort.js
+ * ===============
+ * Sorting with support for numbers, dates, unicode and more.
+ *
+ * http://github.com/studio-b12/natural-sort
+ * MIT License, © Studio B12 GmbH 2014
+ *
  */
