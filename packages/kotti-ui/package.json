@@ -76,13 +76,20 @@
 		"url": "git+https://github.com/3YOURMIND/kotti.git"
 	},
 	"scripts": {
-		"build": "rm -rf dist && yarn run build:tokens && yarn run build:vite",
 		"build:tokens": "node tokens/generate.js && prettier --write source/kotti-style/tokens.css",
 		"build:vite": "vite build",
-		"build:vue-tsc": "vue-tsc --declaration --emitDeclarationOnly",
-		"check:unimported": "unimported --no-cache",
+		"build:vue-tsc": "./scripts/build-vue-tsc.sh",
+		"check:eslint": "yarn --cwd ../.. run eslint --max-warnings=0 --ignore-path=.gitignore ./packages/kotti-ui",
+		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/kotti-ui",
 		"check:publint": "publint",
-		"format": "prettier --write '**/*.{vue,js,json,ts,md}'"
+		"check:stylelint": "stylelint 'source/**/*.{css,scss,vue}'",
+		"check:unimported": "unimported --no-cache",
+		"fix:eslint": "yarn run check:eslint --fix",
+		"fix:prettier": "yarn run check:prettier --write",
+		"fix:stylelint": "yarn run check:stylelint --fix",
+		"format": "prettier --write '**/*.{vue,js,json,ts,md}'",
+		"test": "vitest --run --typecheck",
+		"watch": "vite build --watch"
 	},
 	"sideEffects": [
 		"./dist/style.css"

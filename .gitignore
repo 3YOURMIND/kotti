@@ -1,7 +1,11 @@
 .nuxt/
+.turbo/
 dist/
 gh-pages/
 node_modules/
 packages/kotti-ui/report.*.html
 packages/yoco/fonts/
 *.log
+
+# vite config gets transpiled in-place for a short moment
+vite.config.ts.timestamp*

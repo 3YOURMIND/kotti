@@ -51,7 +51,12 @@
 	},
 	"scripts": {
 		"build": "./scripts/build.sh",
-		"check:publint": "publint"
+		"check:eslint": "yarn --cwd ../.. run eslint --max-warnings=0 --ignore-path=.gitignore ./packages/vue-use-tippy",
+		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/vue-use-tippy",
+		"check:publint": "publint",
+		"check:unimported": "unimported --no-cache",
+		"fix:eslint": "yarn run check:eslint --fix",
+		"fix:prettier": "yarn run check:prettier --write"
 	},
 	"type": "module",
 	"types": "./dist/mjs/index.d.ts",

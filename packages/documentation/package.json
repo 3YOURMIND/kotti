@@ -42,9 +42,16 @@
 	},
 	"private": true,
 	"scripts": {
-		"build": "DEPLOY_ENV=GH_PAGES nuxt generate",
+		"build": "nuxt generate",
+		"check:eslint": "yarn --cwd ../.. run eslint --max-warnings=0 --ignore-path=.gitignore ./packages/documentation",
+		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/documentation",
+		"check:stylelint": "stylelint './**/*.{css,scss,vue}'",
+		"check:unimported": "unimported --no-cache",
+		"fix:eslint": "yarn run check:eslint --fix",
+		"fix:prettier": "yarn run check:prettier --write",
+		"fix:stylelint": "yarn run check:stylelint --fix",
 		"format": "prettier --write **/*.{vue,js,json,ts,md}",
-		"serve": "nuxt"
+		"watch": "nuxt"
 	},
 	"version": "2.0.0"
 }

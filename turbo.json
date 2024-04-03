@@ -1,0 +1,59 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["tsconfig.json", "yarn.lock"],
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputMode": "new-only"
+		},
+		"check": {
+			"dependsOn": [
+				"check:eslint",
+				"check:prettier",
+				"check:publint",
+				"check:stylelint",
+				"check:unimported"
+			]
+		},
+		"check:eslint": {
+			"inputs": ["**/*.{js,json,ts,vue}"],
+			"outputMode": "new-only"
+		},
+		"check:prettier": {
+			"inputs": ["**/*.{css,js,json,md,scss,ts,vue}"],
+			"outputMode": "new-only"
+		},
+		"check:publint": {
+			"dependsOn": ["build"],
+			"inputs": ["dist/**", "package.json"],
+			"outputMode": "new-only"
+		},
+		"check:stylelint": {
+			"inputs": ["**/*.{css,scss,vue}"],
+			"outputMode": "new-only"
+		},
+		"check:unimported": {
+			"inputs": ["**/*.{js,ts,vue}", "package.json", ".unimportedrc.json"],
+			"outputMode": "new-only"
+		},
+		"fix": {
+			"dependsOn": ["fix:eslint", "fix:prettier", "fix:stylelint"]
+		},
+		"fix:eslint": {
+			"inputs": ["**/*.{js,json,ts,vue}"],
+			"outputMode": "new-only"
+		},
+		"fix:prettier": {
+			"inputs": ["**/*.{css,js,json,md,scss,ts,vue}"],
+			"outputMode": "new-only"
+		},
+		"fix:stylelint": {
+			"inputs": ["**/*.{css,scss,vue}"],
+			"outputMode": "new-only"
+		},
+		"watch": {
+			"cache": false,
+			"persistent": true
+		}
+	}
+}

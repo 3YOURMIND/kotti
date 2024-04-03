@@ -76,7 +76,7 @@ module.exports = {
 	},
 	overrides: [
 		{
-			files: ['packages/kotti-ui/**/*.{ts,js,vue}'],
+			files: ['packages/kotti-ui/**/*.{ts,js,json,vue}'],
 			rules: {
 				...noExtraneousDependenciesOverride('kotti-ui'),
 			},
