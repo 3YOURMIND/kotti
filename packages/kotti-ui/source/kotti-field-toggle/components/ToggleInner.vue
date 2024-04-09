@@ -16,10 +16,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from 'vue'
-import { InputHTMLAttributes } from 'vue/types/jsx'
+import type { PropType } from 'vue'
+import { defineComponent, computed } from 'vue'
+import type { InputHTMLAttributes } from 'vue/types/jsx'
 
-import { KottiField } from '../../kotti-field/types'
+import type { KottiField } from '../../kotti-field/types'
 import { KottiFieldToggle } from '../types'
 
 import ToggleBox from './ToggleBox.vue'
@@ -59,7 +60,7 @@ export default defineComponent({
 				}
 			}),
 			toggleClasses: computed(() => ({
-				'kt-field-toggle-inner--is-disabled': props.isDisabled === true,
+				'kt-field-toggle-inner--is-disabled': props.isDisabled,
 				'kt-field-toggle-inner--is-indeterminate': props.value === null,
 				'kt-field-toggle-inner--is-off': props.value === false,
 				'kt-field-toggle-inner--is-on': props.value === true,

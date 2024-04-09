@@ -8,17 +8,22 @@
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"noEmit": true,
+		"noUncheckedIndexedAccess": true,
 		"paths": {
 			"@/*": ["./*"],
 			"~/*": ["./*"]
 		},
 		"resolveJsonModule": true,
-		"sourceMap": true,
 		"skipLibCheck": true,
+		"sourceMap": true,
 		"strict": true,
 		"target": "ES2018",
 		"types": ["node", "@nuxt/types"]
 	},
 	"exclude": ["node_modules"],
-	"include": ["./**/*.ts", "./**/*.js", "./**/*.vue"]
+	"include": ["./**/*.ts", "./**/*.js", "./**/*.vue"],
+	"vueCompilerOptions": {
+		"strictTemplates": true,
+		"target": 2.7
+	}
 }

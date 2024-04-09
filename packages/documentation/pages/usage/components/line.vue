@@ -76,7 +76,8 @@ export default defineComponent({
 		return {
 			component: KtLine,
 			handleClick: (text: string) => {
-				alert(text)
+				// eslint-disable-next-line no-alert
+				window.alert(text)
 			},
 		}
 	},

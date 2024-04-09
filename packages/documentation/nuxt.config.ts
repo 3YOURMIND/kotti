@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-import { NuxtConfig } from '@nuxt/types'
+import type { NuxtConfig } from '@nuxt/types'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
 
 const config: NuxtConfig = {
@@ -25,16 +24,13 @@ const config: NuxtConfig = {
 	loading: {
 		color: '#2C64CC',
 	},
-	plugins: [
-		'~/plugins/vue-clipboard2',
-		'~/plugins/yoco',
-		{ src: '~/plugins/kotti-ui', ssr: false },
-	],
+	plugins: ['~/plugins/yoco', { src: '~/plugins/kotti-ui', ssr: false }],
 	/*
 	 ** Build configuration
 	 */
 	build: {
 		extend(config) {
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			config.plugins!.push(new CaseSensitivePathsPlugin())
 		},
 		transpile: [

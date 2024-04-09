@@ -10,7 +10,7 @@ import { ISO8601_SECONDS } from '../../../../constants'
  */
 const blobToFile = (blob: Blob): File =>
 	new File([blob], `${dayjs().format(ISO8601_SECONDS)}.png`, {
-		lastModified: new Date().getTime(),
+		lastModified: Date.now(),
 		type: blob.type,
 	})
 
@@ -25,15 +25,18 @@ export const generateImageFileAndUrl = async (
 	canvasEl: HTMLCanvasElement,
 	context: CanvasRenderingContext2D,
 	videoEl: HTMLVideoElement,
-) => {
+): Promise<{
+	file: File
+	photoUrl: string
+}> => {
 	const { videoHeight, videoWidth } = videoEl
 	canvasEl.height = videoHeight
 	canvasEl.width = videoWidth
 	context.drawImage(videoEl, 0, 0, videoWidth, videoHeight)
 
-	const blob = await new Promise<Blob | null>((resolve) =>
-		canvasEl.toBlob(resolve),
-	)
+	const blob = await new Promise<Blob | null>((resolve) => {
+		canvasEl.toBlob(resolve)
+	})
 
 	if (!blob) throw new Error('KtFieldFileUpload: error generating image blob')
 

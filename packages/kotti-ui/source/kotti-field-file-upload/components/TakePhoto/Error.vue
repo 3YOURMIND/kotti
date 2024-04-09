@@ -38,10 +38,10 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const errors = computed<Record<string, string>>(() => ({
-			[ErrorCodes.NotAllowedError]: translations.value.error.notAllowed,
-			[ErrorCodes.NotFoundError]: translations.value.error.notFound,
-			[ErrorCodes.NotSupportedError]: translations.value.error.notSupported,
-			default: `${translations.value.label.unknown}: ${props.error}`,
+			[ErrorCodes.NOT_ALLOWED_ERROR]: translations.value.error.notAllowed,
+			[ErrorCodes.NOT_FOUND_ERROR]: translations.value.error.notFound,
+			[ErrorCodes.NOT_SUPPORTED_ERROR]: translations.value.error.notSupported,
+			default: `${translations.value.label.unknown}: ${String(props.error)}`,
 		}))
 
 		return {

@@ -1,8 +1,8 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
-import { Ref, SetupContext } from 'vue'
+import type { Ref, SetupContext } from 'vue'
 import { z } from 'zod'
 
-import { ReplaceRecordType } from '../types/utilities'
+import type { ReplaceRecordType } from '../types/utilities'
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 import { FORM_KEY_NONE } from './constants'

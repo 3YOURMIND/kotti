@@ -77,7 +77,7 @@ export default defineComponent({
 			localDataTest: computed(() =>
 				props.dataTest ? `${props.dataTest}.takePhoto` : null,
 			),
-			onAcceptPhoto: async () => {
+			onAcceptPhoto: () => {
 				if (!file.value) return
 				const payload: Shared.Events.AddFiles = [file.value]
 				emit('addFiles', payload)

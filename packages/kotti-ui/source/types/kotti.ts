@@ -5,10 +5,11 @@
  * vite build errors if a file doesn't have enums so you'd use it
  * but does not warn about the opposite scenario
  */
-import { ZodSchema } from 'zod'
+import type { ZodSchema } from 'zod'
 
 export * from './decimal-separator'
 export { KottiAccordion as Accordion } from '../kotti-accordion/types'
+export { KottiActionbar as Actionbar } from '../kotti-actionbar/types'
 export { KottiAvatar as Avatar } from '../kotti-avatar/types'
 export { KottiAvatarGroup as AvatarGroup } from '../kotti-avatar-group/types'
 export { KottiBanner as Banner } from '../kotti-banner/types'

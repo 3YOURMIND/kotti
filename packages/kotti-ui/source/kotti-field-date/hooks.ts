@@ -1,11 +1,12 @@
 import { Yoco } from '@3yourmind/yoco'
-import { DatePicker as ElDate } from 'element-ui'
-import { Instance } from 'tippy.js'
-import { onMounted, Ref, watchEffect, type default as Vue } from 'vue'
+import type { DatePicker as ElDate } from 'element-ui'
+import type { Instance } from 'tippy.js'
+import type { Ref } from 'vue'
+import { onMounted, watchEffect, type default as Vue } from 'vue'
 
-import { KottiField } from '../kotti-field/types'
+import type { KottiField } from '../kotti-field/types'
 
-import {
+import type {
 	KottiFieldDate,
 	KottiFieldDateRange,
 	KottiFieldDateTime,
@@ -70,7 +71,6 @@ const isPickerVisible = (dateComponent: ElDateWithInternalAPI) =>
 const useInputDecoration = <DATA_TYPE extends Values>({
 	elDateRef,
 }: Pick<HookParameters<DATA_TYPE>, 'elDateRef'>) => {
-	// eslint-disable-next-line sonarjs/cognitive-complexity
 	onMounted(() => {
 		const dateComponent = getDateComponent({ elDateRef })
 
@@ -126,10 +126,8 @@ const useInputDecoration = <DATA_TYPE extends Values>({
 
 					if (showClear) {
 						if (!suffixIcon.hasChildNodes()) suffixIcon.append('close')
-					} else {
-						if (suffixIcon.hasChildNodes() && suffixIcon.lastChild)
-							suffixIcon.removeChild(suffixIcon.lastChild)
-					}
+					} else if (suffixIcon.hasChildNodes() && suffixIcon.lastChild)
+						suffixIcon.lastChild.remove()
 				}
 			},
 			{ flush: 'post' },
@@ -150,7 +148,9 @@ const useInputSizeFix = <DATA_TYPE extends Values>({
 		const elInputs = dateComponent.$el.querySelectorAll(
 			'.el-input__inner, .el-range-input',
 		)
-		Array.from(elInputs).forEach((element) => element.setAttribute('size', '1'))
+		Array.from(elInputs).forEach((element) => {
+			element.setAttribute('size', '1')
+		})
 	})
 }
 
@@ -187,7 +187,7 @@ const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 					 * After creation, we mutate the popper width and height to fit our kotti styles and needs.
 					 * This mutation changes the boundaries of the popper without triggering a position adjustment. So, we force it.
 					 */
-					dateComponent.popperJS.update()
+					void dateComponent.popperJS.update()
 				}
 			},
 			{ flush: 'post' },
@@ -215,13 +215,13 @@ const usePickerInnerInputsFix = <DATA_TYPE extends Values>({
 						),
 					)
 					// divs around input fields inside the picker of KtFieldDateTime, KtFieldDateTimeRange
-					pickerInputWrappers.forEach((input) =>
+					pickerInputWrappers.forEach((input) => {
 						input.classList.add(
 							'kt-field__wrapper',
 							'kt-field__wrapper--is-small',
 							'kt-field__wrapper--is-validation-empty',
-						),
-					)
+						)
+					})
 
 					const innerInputs: Array<Element> = Array.from(
 						dateComponent.picker.$el.querySelectorAll('.el-input__inner'),
@@ -251,7 +251,10 @@ const usePickerMisplacementFix = <DATA_TYPE extends Values>({
 			() => {
 				const dateComponent = getDateComponent({ elDateRef })
 
-				if (field.isLoading || field.isDisabled) return dateComponent.blur()
+				if (field.isLoading || field.isDisabled) {
+					dateComponent.blur()
+					return
+				}
 			},
 			{ flush: 'post' },
 		)
@@ -287,7 +290,7 @@ const usePickerNavigationIcons = <DATA_TYPE extends Values>({
 					]
 
 					pickerHeaderIcons.forEach((icon, index) => {
-						icon.innerHTML = headerYocoIcons[index]
+						icon.innerHTML = headerYocoIcons[index] as string
 					})
 				}
 			},
@@ -326,9 +329,16 @@ const useRangePickerHeaderFix = <DATA_TYPE extends Values>({
 				const dateComponent = getDateComponent({ elDateRef })
 				if (isPickerVisible(dateComponent)) {
 					// change when any of the navigation buttons in the range-pickers are clicked
+					/**
+					 * @example
+					 * [
+					 * 	['2024', 'May'],
+					 * 	['2024', 'June'],
+					 * ]
+					 */
 					const dates = [
-						dateComponent.picker.leftLabel?.split(/\s+/) ?? ['', ''],
-						dateComponent.picker.rightLabel?.split(/\s+/) ?? ['', ''],
+						dateComponent.picker.leftLabel.split(/\s+/),
+						dateComponent.picker.rightLabel.split(/\s+/),
 					]
 
 					const headers = dateComponent.picker.$el.querySelectorAll(
@@ -338,12 +348,12 @@ const useRangePickerHeaderFix = <DATA_TYPE extends Values>({
 					headers.forEach((header, index) => {
 						const fullDate = header.querySelector('div')
 						if (fullDate) {
-							fullDate.innerHTML = dates[index][0] // leftMonth or rightMonth
-							if (header.lastChild?.nodeType === Node.TEXT_NODE) {
+							fullDate.innerHTML = dates[index]?.[0] as string // leftMonth or rightMonth
+							if (header.lastChild?.nodeType === window.Node.TEXT_NODE) {
 								// we add a text node each call with the new year value, thus need to remove the old first
-								header.removeChild(header.lastChild)
+								header.lastChild.remove()
 							}
-							header.append(dates[index][1])
+							header.append(dates[index]?.[1] as string)
 						}
 					})
 				}
@@ -359,7 +369,7 @@ export const usePicker = <DATA_TYPE extends Values>({
 	inputContainerRef,
 	popperHeight,
 	popperWidth,
-}: HookParameters<DATA_TYPE>) => {
+}: HookParameters<DATA_TYPE>): void => {
 	useInputDecoration({ elDateRef })
 	useInputSizeFix({ elDateRef })
 	usePickerDimensionsFix({

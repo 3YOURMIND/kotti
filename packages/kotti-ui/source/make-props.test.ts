@@ -1,7 +1,7 @@
 import castArray from 'lodash/castArray'
 import isEqual from 'lodash/isEqual'
 import { expect, describe, it, beforeAll } from 'vitest'
-import { PropOptions, PropType } from 'vue'
+import type { PropOptions, PropType } from 'vue'
 import { z } from 'zod'
 
 import { makeProps } from './make-props'
@@ -16,7 +16,6 @@ interface CustomMatchers<R = unknown> {
 }
 
 declare module 'vitest' {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	interface Assertion<T = any> extends CustomMatchers<T> {}
 	interface AsymmetricMatchersContaining extends CustomMatchers {}
 }
@@ -29,9 +28,10 @@ expect.extend({
 		return {
 			message: () => {
 				if (!passNoDefault)
+					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					return `Expected “prop.default” to be “undefined”. Was “${prop.default}”`
 				if (!passRequired)
-					return `Expected “prop.required” to be “true”. Was “${prop.required}”`
+					return `Expected “prop.required” to be “true”. Was “${String(prop.required)}”`
 				return 'valid'
 			},
 			pass: passNoDefault && passRequired,
@@ -88,6 +88,7 @@ expect.extend({
 		}
 	},
 	toValidate(prop: PropOptions<unknown>, ...cases: unknown[]) {
+		// eslint-disable-next-line @typescript-eslint/unbound-method
 		const { validator } = prop
 
 		if (validator === undefined)
@@ -188,7 +189,7 @@ describe('array', () => {
 		expect(prop).toDefaultTo(null)
 		expect(prop).toBeType(Array)
 		expect(prop).toValidate(
-			...ARRAY_SUCCESS.filter((x) => x.length !== 0),
+			...ARRAY_SUCCESS.filter((x) => x.length > 0),
 			null,
 			undefined,
 		)
@@ -574,7 +575,6 @@ describe('never', () => {
 			null,
 			undefined,
 		)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		expect((prop.default as any)?.description).toBe('NEVER')
 	})
 

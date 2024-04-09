@@ -16,7 +16,7 @@ import {
 
 const componentFolder = 'kotti-field-date'
 const DESIGN_URL =
-	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=773%3A6059' as const
+	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=773%3A6059'
 
 export const KtFieldDate = attachMeta(
 	makeInstallable(KtFieldDateVue),

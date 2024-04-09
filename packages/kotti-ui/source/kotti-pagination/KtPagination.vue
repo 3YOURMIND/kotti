@@ -17,6 +17,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import PaginationExpanded from './components/PaginationExpanded.vue'
 import PaginationFlexible from './components/PaginationFlexible.vue'
 import PaginationFractionated from './components/PaginationFractionated.vue'
@@ -53,6 +54,7 @@ export default {
 				adjacentAmount: this.adjacentAmount,
 				currentPage: this.currentPage,
 				fixedWidth: this.fixedWidth,
+				// eslint-disable-next-line @typescript-eslint/unbound-method
 				maximumPage: this.maximumPage,
 				pageSize: this.pageSize,
 				total: this.total,
@@ -60,7 +62,9 @@ export default {
 			}
 		},
 		component() {
+			// eslint-disable-next-line @typescript-eslint/unbound-method, @typescript-eslint/restrict-plus-operands
 			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
+			// eslint-disable-next-line @typescript-eslint/unbound-method
 			if (!isFlexLogical || this.pageAmount < 2) return 'PaginationExpanded'
 
 			if (this.fractionStyle) {
@@ -101,6 +105,7 @@ export default {
 		},
 		nextPage() {
 			if (this.currentPage === this.maximumPage) return
+			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 			this.currentPage += 1
 			this.eventEmitter('nextPageClicked')
 		},
@@ -110,6 +115,7 @@ export default {
 			this.eventEmitter('previousPageClicked')
 		},
 		eventEmitter(eventName) {
+			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 			this.$emit(eventName, this.currentPage + 1)
 		},
 	},

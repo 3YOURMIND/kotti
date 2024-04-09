@@ -50,7 +50,7 @@
 <script lang="ts">
 import omit from 'lodash/omit'
 import { computed, defineComponent } from 'vue'
-import { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
@@ -90,7 +90,7 @@ export default defineComponent({
 						checked: field.currentValue === option.value,
 						class: 'kt-field-radio-group__input',
 						disabled: field.isDisabled || Boolean(option.isDisabled),
-						id: `${field.inputProps.id}-${index}`,
+						id: `${field.inputProps.id}-${String(index)}`,
 						name: field.inputProps.id,
 						type: 'radio',
 						value: option.value,

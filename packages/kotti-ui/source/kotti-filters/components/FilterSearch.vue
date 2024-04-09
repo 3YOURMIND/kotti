@@ -14,12 +14,13 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { PropType, computed, defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { KtFieldText } from '../../kotti-field-text'
-import { KottiFieldText } from '../../kotti-field-text/types'
+import type { KottiFieldText } from '../../kotti-field-text/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { KottiFilters } from '../types'
+import type { KottiFilters } from '../types'
 import { getSearchFilterInitialState } from '../utils'
 
 export default defineComponent({
@@ -48,11 +49,12 @@ export default defineComponent({
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
-		const handleSetSearchValue = (value: string) =>
+		const handleSetSearchValue = (value: string) => {
 			emit('input', {
 				...(props.filter ?? getSearchFilterInitialState(props.column)),
 				value,
 			})
+		}
 
 		return {
 			handleSetSearchValue,

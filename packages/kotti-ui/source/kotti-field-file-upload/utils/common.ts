@@ -6,9 +6,9 @@
 export const buildAcceptString = (
 	extensions: Array<string>,
 ): HTMLInputElement['accept'] | undefined =>
-	extensions.length
+	extensions.length > 0
 		? extensions
-				.map((extension) => `.${extension.replace(/\./g, '').trim()}`)
+				.map((extension) => `.${extension.replaceAll('.', '').trim()}`)
 				.join(',')
 				.toLowerCase()
 		: undefined

@@ -237,7 +237,8 @@
 </template>
 
 <script lang="ts">
-import { KtComment, Kotti } from '@3yourmind/kotti-ui'
+import type { Kotti } from '@3yourmind/kotti-ui'
+import { KtComment } from '@3yourmind/kotti-ui'
 import escape from 'lodash/escape'
 import { defineComponent, ref } from 'vue'
 
@@ -405,7 +406,9 @@ export default defineComponent({
 				)
 
 				if (!parentComment)
-					throw new Error(`Comment not found, comment id: ${payload.parentId}`)
+					throw new Error(
+						`Comment not found, comment id: ${String(payload.parentId)}`,
+					)
 
 				parentComment.replies.push(
 					buildNewComment({
@@ -416,7 +419,7 @@ export default defineComponent({
 			},
 			handleEdit(payload: Kotti.Comment.Events.Edit) {
 				if (!payload.parentId) {
-					if (!comments.value.find((comment) => comment.id === payload.id))
+					if (!comments.value.some((comment) => comment.id === payload.id))
 						throw new Error(`Comment not found, comment id: ${payload.id}`)
 
 					comments.value = comments.value.map(editComment(payload))
@@ -428,17 +431,23 @@ export default defineComponent({
 				)
 
 				if (!parentComment)
-					throw new Error(`Comment not found, comment id: ${payload.parentId}`)
+					throw new Error(
+						`Comment not found, comment id: ${String(payload.parentId)}`,
+					)
 
-				if (!parentComment.replies.find((reply) => reply.id === payload.id))
-					throw new Error(`Comment not found, comment id: ${payload.id}`)
+				if (!parentComment.replies.some((reply) => reply.id === payload.id))
+					throw new Error(
+						`Comment not found, comment id: ${String(payload.id)}`,
+					)
 
 				parentComment.replies = parentComment.replies.map(editComment(payload))
 			},
 			handleDelete(payload: Kotti.Comment.Events.Delete) {
 				if (!payload.parentId) {
-					if (!comments.value.find((comment) => comment.id === payload.id))
-						throw new Error(`Comment not found, comment id: ${payload.id}`)
+					if (!comments.value.some((comment) => comment.id === payload.id))
+						throw new Error(
+							`Comment not found, comment id: ${String(payload.id)}`,
+						)
 
 					comments.value = comments.value.filter(
 						(comment) => comment.id !== payload.id,
@@ -451,16 +460,20 @@ export default defineComponent({
 				)
 
 				if (!parentComment)
-					throw new Error(`Comment not found, comment id: ${payload.parentId}`)
+					throw new Error(
+						`Comment not found, comment id: ${String(payload.parentId)}`,
+					)
 
-				if (!parentComment.replies.find((reply) => reply.id === payload.id))
-					throw new Error(`Comment not found, comment id: ${payload.id}`)
+				if (!parentComment.replies.some((reply) => reply.id === payload.id))
+					throw new Error(
+						`Comment not found, comment id: ${String(payload.id)}`,
+					)
 
 				parentComment.replies = parentComment.replies.filter(
 					(reply) => reply.id !== payload.id,
 				)
 			},
-			postEscapeParser: (msg: string) => msg.replace(/\n/g, '</br>'),
+			postEscapeParser: (msg: string) => msg.replaceAll('\n', '</br>'),
 			settings,
 		}
 	},

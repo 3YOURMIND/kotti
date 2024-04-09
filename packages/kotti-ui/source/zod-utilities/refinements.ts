@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import type { z } from 'zod'
 
 /**
  * Similar to z.array().nonempty(), but doesn’t alter type definitions
@@ -10,9 +10,7 @@ import { z } from 'zod'
  *
  * z.array(z.number()).refine(...refinementNonEmpty)
  */
-export const refinementNonEmpty: Parameters<
-	z.ZodArray<z.ZodAny, 'many'>['refine']
-> = [
-	(array: unknown[]) => array.length > 0,
+export const refinementNonEmpty: Parameters<z.ZodArray<z.ZodAny>['refine']> = [
+	(array: unknown[]): boolean => array.length > 0,
 	{ message: 'array may not be empty' },
 ]

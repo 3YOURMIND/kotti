@@ -103,14 +103,15 @@ export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
 import { KtValueLabel } from './kotti-value-label'
+import type { VueConstructor } from 'vue'
 export * from './kotti-value-label'
 
 export * from './types'
 
 export default {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	install(Vue: any) {
-		for (const component of [
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	install(Vue: VueConstructor): void {
+		const components = [
 			KtAccordion,
 			KtActionbar,
 			KtAvatar,
@@ -166,8 +167,10 @@ export default {
 			KtToaster,
 			KtUserMenu,
 			KtValueLabel,
-		])
+		]
+		for (const component of components) {
 			Vue.use(component)
+		}
 
 		const DEFAULT_YODIFY_DURATION = 3000
 

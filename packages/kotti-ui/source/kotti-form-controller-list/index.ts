@@ -1,4 +1,4 @@
-import { Kotti } from '../types'
+import type { Kotti } from '../types'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtFormControllerListVue from './KtFormControllerList.vue'

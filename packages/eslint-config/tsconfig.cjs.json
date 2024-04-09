@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"outDir": "dist/cjs",
+		"tsBuildInfoFile": "dist/cjs/tsconfig.tsbuildinfo"
+	},
+	"extends": "./tsconfig.json"
+}

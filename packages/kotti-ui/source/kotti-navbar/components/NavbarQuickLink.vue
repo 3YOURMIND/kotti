@@ -23,10 +23,11 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { PropType, computed, defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { KottiNavbar } from '../types'
+import type { KottiNavbar } from '../types'
 
 import NavbarTooltip from './NavbarTooltip.vue'
 

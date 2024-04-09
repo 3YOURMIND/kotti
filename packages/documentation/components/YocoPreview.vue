@@ -2,13 +2,13 @@
 	<div class="icon-container" @click="copyLiga(icon)">
 		<div class="yoco-flex">
 			<div class="yoco-container">
-				<i ref="liga" class="yoco size-1" v-text="icon" />
+				<i class="yoco size-1" v-text="icon" />
 			</div>
 			<div class="yoco-container">
-				<i ref="liga" class="yoco size-2" v-text="icon" />
+				<i class="yoco size-2" v-text="icon" />
 			</div>
 			<div class="yoco-container">
-				<i ref="liga" class="yoco size-3" v-text="icon" />
+				<i class="yoco size-3" v-text="icon" />
 			</div>
 		</div>
 		<div class="copy copy-nohover">
@@ -26,45 +26,43 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import copy from 'copy-to-clipboard'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { TimeConversion } from '@metatypes/units'
+import type { Yoco } from '@3yourmind/yoco'
 
-export default {
+export default defineComponent({
 	name: 'YocoPreview',
 	props: {
 		enum: { required: true, type: String },
-		icon: { required: true, type: String },
+		icon: { required: true, type: String as PropType<Yoco.Icon> },
 	},
-	data() {
+	setup(props) {
+		const copySuccess = ref(false)
+
 		return {
-			copySuccess: false,
+			copyIconSuccessMessage: computed(() => `Copied icon "${props.icon}"`),
+			copyLiga: (yocoName: string) => {
+				const codeString = `<i class="yoco">${yocoName}</i>`
+				const wasSuccessful = copy(codeString)
+
+				if (wasSuccessful) {
+					copySuccess.value = true
+					window.setTimeout(() => {
+						copySuccess.value = false
+					}, 2 * TimeConversion.MILLISECONDS_PER_SECOND)
+				} else {
+					// eslint-disable-next-line no-alert
+					window.alert('failed')
+				}
+			},
+			copySuccess,
+			enumRepresentation: computed(() => `Yoco.Icon.${props.enum}`),
 		}
 	},
-	computed: {
-		copyIconSuccessMessage() {
-			return `Copied icon "${this.icon}"`
-		},
-		enumRepresentation() {
-			return `Yoco.Icon.${this.enum}`
-		},
-	},
-	methods: {
-		copyLiga(string) {
-			const codeString = `<i class="yoco">${string}</i>`
-			this.$copyText(codeString).then(
-				() => {
-					this.copySuccess = true
-					setTimeout(() => {
-						this.copySuccess = false
-					}, 2 * TimeConversion.MILLISECONDS_PER_SECOND)
-				},
-				() => {
-					alert('failed')
-				},
-			)
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss" scoped>

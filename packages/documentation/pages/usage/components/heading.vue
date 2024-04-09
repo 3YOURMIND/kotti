@@ -100,6 +100,7 @@ export default defineComponent({
 			component: KtHeading,
 			toggle: ref(false),
 			showAlert() {
+				// eslint-disable-next-line no-alert
 				window.alert('H3 Action Clicked')
 			},
 		}

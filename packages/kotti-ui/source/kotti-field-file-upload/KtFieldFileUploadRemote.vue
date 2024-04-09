@@ -29,7 +29,7 @@
 					/>
 				</template>
 			</DropArea>
-			<div v-if="filesList.length" :style="filesListStyle">
+			<div v-if="filesList.length > 0" :style="filesListStyle">
 				<FileItemRemote
 					v-for="fileInfo in filesList"
 					v-bind="{
@@ -41,7 +41,7 @@
 				/>
 			</div>
 			<div
-				v-if="preUploadedFilesList.length"
+				v-if="preUploadedFilesList.length > 0"
 				:style="preUploadedFilesListStyle"
 			>
 				<PreUploadedFileItem
@@ -70,11 +70,8 @@ import FileItemRemote from './components/FileItemRemote.vue'
 import PreUploadedFileItem from './components/PreUploadedFileItem.vue'
 import TakePhoto from './components/TakePhoto/TakePhoto.vue'
 import { KOTTI_FIELD_FILE_UPLOAD_SUPPORTS } from './constants'
-import {
-	KottiFieldFileUpload,
-	KottiFieldFileUploadRemote,
-	Shared,
-} from './types'
+import type { KottiFieldFileUpload, Shared } from './types'
+import { KottiFieldFileUploadRemote } from './types'
 import {
 	buildFileInfo,
 	buildFileItem,
@@ -112,6 +109,22 @@ export default defineComponent({
 			KottiFieldFileUploadRemote.FileInfo['id']
 		>()
 
+		const setStatus = (
+			payload: KottiFieldFileUploadRemote.Events.SetStatus,
+		) => {
+			field.setValue(
+				field.currentValue.map((fileItem) =>
+					fileItem.id === payload.id
+						? { ...fileItem, status: payload.status }
+						: fileItem,
+				),
+				{ forceUpdate: true },
+			)
+
+			if (payload.status === KottiFieldFileUploadRemote.Status.UPLOADED)
+				newUploadedFiles.add(payload.id)
+		}
+
 		const filesList = computed<KottiFieldFileUploadRemote.FileInfo[]>(() =>
 			field.currentValue
 				.filter((fileItem) => !preUploadedFiles.has(fileItem.id))
@@ -140,22 +153,6 @@ export default defineComponent({
 				(props.allowMultiple || field.currentValue.length === 0) &&
 				!props.hideDropArea,
 		)
-
-		const setStatus = (
-			payload: KottiFieldFileUploadRemote.Events.SetStatus,
-		) => {
-			field.setValue(
-				field.currentValue.map((fileItem) =>
-					fileItem.id === payload.id
-						? { ...fileItem, status: payload.status }
-						: fileItem,
-				),
-				{ forceUpdate: true },
-			)
-
-			if (payload.status === KottiFieldFileUploadRemote.Status.UPLOADED)
-				newUploadedFiles.add(payload.id)
-		}
 
 		const setStatuses = (
 			payload: Map<
@@ -233,10 +230,11 @@ export default defineComponent({
 						...field.currentValue,
 						...value.map((file) => buildFileItem(file)),
 					])
-				else field.setValue([buildFileItem(value[0])])
+				else field.setValue([buildFileItem(value[0] as File)])
 			},
-			onRemoveFile: (id: Shared.Events.RemoveFile) =>
-				props.actions.onDelete(id),
+			onRemoveFile: (id: Shared.Events.RemoveFile) => {
+				props.actions.onDelete(id)
+			},
 			preUploadedFilesList: computed<
 				KottiFieldFileUpload.FileItem.Props['fileInfo'][]
 			>(() =>
@@ -260,7 +258,7 @@ export default defineComponent({
 				showDropArea.value
 					? {
 							'padding-top': `var(${
-								filesList.value.length ? '--unit-8' : '--unit-4'
+								filesList.value.length > 0 ? '--unit-8' : '--unit-4'
 							})`,
 						}
 					: undefined,

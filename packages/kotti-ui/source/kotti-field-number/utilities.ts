@@ -1,6 +1,6 @@
 import Big from 'big.js'
 
-import { DecimalSeparator } from '../types/kotti'
+import type { DecimalSeparator } from '../types/kotti'
 import { DECIMAL_SEPARATORS_CHARACTER_SET } from '../utilities'
 
 import {
@@ -16,7 +16,7 @@ export const isStepMultiple = ({
 	minimum: number | null
 	step: number
 	value: number | null
-}) => {
+}): boolean => {
 	if (minimum === null || value === null) return true
 
 	// (value - minimum) / step
@@ -26,7 +26,7 @@ export const isStepMultiple = ({
 	return stepFactor.eq(stepFactor.round())
 }
 
-export const toNumber = (string: string) =>
+export const toNumber = (string: string): number | null =>
 	STRINGS_THAT_ARE_TREATED_AS_NULL.includes(string)
 		? null
 		: Number.parseFloat(
@@ -38,7 +38,7 @@ export const toString = (
 	number: number | null,
 	decimalPlaces: number,
 	decimalSeparator: DecimalSeparator,
-) =>
+): string =>
 	number === null
 		? ''
 		: number

@@ -105,7 +105,7 @@ export default defineComponent({
 					title: 'Kotti',
 					onClick: () => {
 						activeIndex.value = 0
-						router.value.push('#')
+						void router.value.push('#')
 					},
 					isCompleted: true,
 				},
@@ -113,7 +113,7 @@ export default defineComponent({
 					title: 'Usage',
 					onClick: () => {
 						activeIndex.value = 1
-						router.value.push('#')
+						void router.value.push('#')
 					},
 					isCompleted: true,
 				},
@@ -121,7 +121,7 @@ export default defineComponent({
 					title: 'Components',
 					onClick: () => {
 						activeIndex.value = 2
-						router.value.push('#')
+						void router.value.push('#')
 					},
 					isCompleted: true,
 				},
@@ -129,7 +129,7 @@ export default defineComponent({
 					title: 'Links',
 					onClick: () => {
 						activeIndex.value = 3
-						router.value.push('#')
+						void router.value.push('#')
 					},
 					isCompleted: false,
 				},
@@ -137,7 +137,7 @@ export default defineComponent({
 					title: 'Breadcrumbs',
 					onClick: () => {
 						activeIndex.value = 4
-						router.value.push('#')
+						void router.value.push('#')
 					},
 					isDisabled: true,
 				},

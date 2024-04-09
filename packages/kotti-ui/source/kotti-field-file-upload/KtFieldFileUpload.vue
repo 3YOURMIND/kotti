@@ -29,7 +29,7 @@
 					/>
 				</template>
 			</DropArea>
-			<div v-if="filesList.length" :style="filesListStyle">
+			<div v-if="filesList.length > 0" :style="filesListStyle">
 				<FileItem
 					v-for="fileInfo in filesList"
 					v-bind="{
@@ -41,7 +41,7 @@
 				/>
 			</div>
 			<div
-				v-if="preUploadedFilesList.length"
+				v-if="preUploadedFilesList.length > 0"
 				:style="preUploadedFilesListStyle"
 			>
 				<PreUploadedFileItem
@@ -70,7 +70,8 @@ import FileItem from './components/FileItem.vue'
 import PreUploadedFileItem from './components/PreUploadedFileItem.vue'
 import TakePhoto from './components/TakePhoto/TakePhoto.vue'
 import { KOTTI_FIELD_FILE_UPLOAD_SUPPORTS } from './constants'
-import { KottiFieldFileUpload, Shared } from './types'
+import type { Shared } from './types'
+import { KottiFieldFileUpload } from './types'
 import { buildFileInfo, buildFileItem } from './utils/non-remote'
 import { isValidValue } from './validators'
 
@@ -100,6 +101,17 @@ export default defineComponent({
 
 		const preUploadedFilesIds = new Set<KottiFieldFileUpload.FileInfo['id']>()
 
+		const setStatus = (payload: KottiFieldFileUpload.Events.SetStatus) => {
+			field.setValue(
+				field.currentValue.map((fileItem) =>
+					fileItem.id === payload.id
+						? { ...fileItem, status: payload.status }
+						: fileItem,
+				),
+				{ forceUpdate: true },
+			)
+		}
+
 		const filesList = computed<KottiFieldFileUpload.FileInfo[]>(() =>
 			field.currentValue
 				.filter((fileItem) => !preUploadedFilesIds.has(fileItem.id))
@@ -121,17 +133,6 @@ export default defineComponent({
 				(props.allowMultiple || field.currentValue.length === 0) &&
 				!props.hideDropArea,
 		)
-
-		const setStatus = (payload: KottiFieldFileUpload.Events.SetStatus) => {
-			field.setValue(
-				field.currentValue.map((fileItem) =>
-					fileItem.id === payload.id
-						? { ...fileItem, status: payload.status }
-						: fileItem,
-				),
-				{ forceUpdate: true },
-			)
-		}
 
 		onBeforeMount(() => {
 			field.currentValue.forEach((fileItem) => {
@@ -159,12 +160,13 @@ export default defineComponent({
 						...field.currentValue,
 						...value.map((file) => buildFileItem(file)),
 					])
-				else field.setValue([buildFileItem(value[0])])
+				else field.setValue([buildFileItem(value[0] as File)])
 			},
-			onRemoveFile: (id: Shared.Events.RemoveFile) =>
+			onRemoveFile: (id: Shared.Events.RemoveFile) => {
 				field.setValue(
 					field.currentValue.filter((fileItem) => fileItem.id !== id),
-				),
+				)
+			},
 			preUploadedFilesList: computed<KottiFieldFileUpload.FileInfo[]>(() =>
 				field.currentValue
 					.filter((fileItem) => preUploadedFilesIds.has(fileItem.id))
@@ -186,7 +188,7 @@ export default defineComponent({
 				showDropArea.value
 					? {
 							'padding-top': `var(${
-								filesList.value.length ? '--unit-8' : '--unit-4'
+								filesList.value.length > 0 ? '--unit-8' : '--unit-4'
 							})`,
 						}
 					: undefined,

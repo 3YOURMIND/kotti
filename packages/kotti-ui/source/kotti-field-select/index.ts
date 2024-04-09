@@ -1,5 +1,6 @@
 import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
-import { Meta, MetaDesignType } from '../types/kotti'
+import type { Meta } from '../types/kotti'
+import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import { KOTTI_FIELD_SELECT_SUPPORTS } from './constants'

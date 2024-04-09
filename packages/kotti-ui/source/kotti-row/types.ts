@@ -1,6 +1,6 @@
-import { Ref } from 'vue'
+import type { Ref } from 'vue'
 
-import { SpecifyRequiredProps } from '../types/utilities'
+import type { SpecifyRequiredProps } from '../types/utilities'
 
 export module KottiRow {
 	export type Context = {

@@ -78,7 +78,7 @@ export default defineComponent({
 				return {
 					...omit(field.inputProps, 'id'),
 					forceUpdateKey: forceUpdateKey.value,
-					id: `${field.inputProps.id}-${index}`,
+					id: `${field.inputProps.id}-${String(index)}`,
 				}
 			}),
 			onInput: (

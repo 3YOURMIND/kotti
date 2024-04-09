@@ -62,6 +62,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import ColorPalette from '~/components/ColorPalette.vue'
 import ColorUsage from '~/components/ColorUsage.vue'
 

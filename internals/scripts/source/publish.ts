@@ -2,7 +2,7 @@
 import { $, semver } from 'bun'
 import { z } from 'zod'
 
-const packagesToConsider = [] as string[]
+const packagesToConsider = ['packages/eslint-config']
 
 const packageJsonSchema = z.object({ name: z.string(), version: z.string() })
 

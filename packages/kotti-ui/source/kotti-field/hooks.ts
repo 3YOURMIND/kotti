@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep'
+import type { Ref } from 'vue'
 import {
 	computed,
 	inject,
@@ -7,15 +8,14 @@ import {
 	reactive,
 	ref,
 	watch,
-	Ref,
 } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
-import { KottiForm } from '../kotti-form/types'
+import type { KottiForm } from '../kotti-form/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import { FORM_KEY_NONE } from './constants'
-import { KtFieldErrors } from './errors'
+import { ktFieldErrors } from './errors'
 import { KottiField } from './types'
 
 let ktFieldId = 1
@@ -44,7 +44,7 @@ const useInputProps = <DATA_TYPE>({
 		if (context === null) return []
 
 		if (props.formKey === null)
-			throw new KtFieldErrors.ImplicitFormKeyNone(props)
+			throw new ktFieldErrors.ImplicitFormKeyNoneError(props)
 
 		return props.formKey === FORM_KEY_NONE
 			? [...context.formPath.value]
@@ -56,6 +56,7 @@ const useInputProps = <DATA_TYPE>({
 			'data-test': props.dataTest ?? formPath.value.join('.'),
 			disabled: isDisabled.value,
 			id: String(++ktFieldId),
+
 			tabindex: props.tabIndex,
 		})),
 	}
@@ -85,10 +86,13 @@ const useValue = <DATA_TYPE>({
 		() => props.formKey,
 		(newFormKey) => {
 			if (context !== null && newFormKey === null)
-				throw new KtFieldErrors.ImplicitFormKeyNone(props)
+				throw new ktFieldErrors.ImplicitFormKeyNoneError(props)
 
 			if (context === null && newFormKey !== null)
-				throw new KtFieldErrors.InvalidPropOutsideOfContext(props, 'formKey')
+				throw new ktFieldErrors.InvalidPropOutsideOfContextError(
+					props,
+					'formKey',
+				)
 		},
 		{ immediate: true, flush: 'post' },
 	)
@@ -103,7 +107,7 @@ const useValue = <DATA_TYPE>({
 				return cloneDeep(props.value)
 
 			case null:
-				throw new KtFieldErrors.ImplicitFormKeyNone(props)
+				throw new ktFieldErrors.ImplicitFormKeyNoneError(props)
 
 			default:
 				return context.values.value[props.formKey] as DATA_TYPE
@@ -120,16 +124,18 @@ const useValue = <DATA_TYPE>({
 		 */
 		setValue: ref((newValue: unknown, options?: { forceUpdate: boolean }) => {
 			if ((isDisabled.value || isLoading.value) && !options?.forceUpdate)
-				throw new KtFieldErrors.DisabledSetValueCalled(props)
+				throw new ktFieldErrors.DisabledSetValueCalledError(props)
 
 			if (
 				context === null ||
 				props.formKey === null ||
 				props.formKey === FORM_KEY_NONE
-			)
-				return emit('input', newValue)
+			) {
+				emit('input', newValue)
+				return
+			}
 
-			return context.setValue(props.formKey, newValue)
+			context.setValue(props.formKey, newValue)
 		}),
 	}
 }
@@ -157,34 +163,32 @@ const useValidation = <DATA_TYPE>({
 	return {
 		hideValidation,
 		// TODO: Write unit test to figure out if props.isDisabled affects this function or if a computed() is necessary
-		validation: computed(
-			// eslint-disable-next-line sonarjs/cognitive-complexity
-			(): KottiField.Validation.Result => {
-				const customValidation = (() => {
-					if (!context && props.formKey)
-						throw new KtFieldErrors.InvalidPropOutsideOfContext(
-							props,
-							'formKey',
-						)
-
-					if (
-						context &&
-						props.formKey !== null &&
-						props.formKey !== FORM_KEY_NONE &&
-						props.formKey in context.validators.value
+		validation: computed((): KottiField.Validation.Result => {
+			const customValidation = (() => {
+				if (!context && props.formKey)
+					throw new ktFieldErrors.InvalidPropOutsideOfContextError(
+						props,
+						'formKey',
 					)
-						return context.validators.value[props.formKey](currentValue.value)
 
-					return props.validator(currentValue.value)
-				})()
+				if (
+					context &&
+					props.formKey !== null &&
+					props.formKey !== FORM_KEY_NONE &&
+					props.formKey in context.validators.value
+				)
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+					return context.validators.value[props.formKey]!(currentValue.value)
 
-				return isMissingRequiredField.value
-					? customValidation.type === 'error'
-						? customValidation
-						: { type: 'error', text: translations.value.requiredMessage }
-					: customValidation
-			},
-		),
+				return props.validator(currentValue.value)
+			})()
+
+			return isMissingRequiredField.value
+				? customValidation.type === 'error'
+					? customValidation
+					: { type: 'error', text: translations.value.requiredMessage }
+				: customValidation
+		}),
 	}
 }
 
@@ -298,13 +302,20 @@ export const useField = <DATA_TYPE>({
 	return field
 }
 
-export const useInput = (fieldId: string) => {
+export const useInput = (
+	fieldId: string,
+): {
+	clickInput: () => void
+	focusInput: () => void
+} => {
 	return {
 		clickInput: () => {
+			// eslint-disable-next-line unicorn/prefer-query-selector
 			const inputEl = document.getElementById(fieldId)
 			inputEl?.click()
 		},
 		focusInput: () => {
+			// eslint-disable-next-line unicorn/prefer-query-selector
 			const inputEl = document.getElementById(fieldId)
 			inputEl?.focus()
 		},
@@ -319,7 +330,10 @@ export const useInput = (fieldId: string) => {
  * We need to force the component to re-render with the value that we actually last wanted to bind to `:value`
  * The emitted value doesn't immediately have to be the actually bound value; making the input `controlled`
  */
-export const useForceUpdate = () => {
+export const useForceUpdate = (): {
+	forceUpdateKey: Ref<number>
+	forceUpdate: () => void
+} => {
 	const forceUpdateKey = ref(0)
 
 	return {

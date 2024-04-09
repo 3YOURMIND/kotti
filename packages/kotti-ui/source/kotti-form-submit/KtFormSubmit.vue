@@ -5,7 +5,7 @@
 			<h4 class="kt-form-submit-popup__title" v-text="translations.title" />
 
 			<div
-				v-if="errors.length"
+				v-if="errors.length > 0"
 				class="kt-form-submit-popup__section kt-form-submit-popup__section--error"
 			>
 				<h5 v-text="translations.errorsSectionTitle" />
@@ -18,7 +18,7 @@
 			</div>
 
 			<div
-				v-if="warnings.length"
+				v-if="warnings.length > 0"
 				class="kt-form-submit-popup__section kt-form-submit-popup__section--warning"
 			>
 				<h5 v-text="translations.warningsSectionTitle" />
@@ -47,10 +47,10 @@ import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, inject, computed } from 'vue'
 
 import { KT_FORM_SUBMIT_CONTEXT } from '../kotti-form/constants'
-import { KottiForm } from '../kotti-form/types'
+import type { KottiForm } from '../kotti-form/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
-import { KtFormSubmitErrors } from './errors'
+import { ktFormSubmitErrors } from './errors'
 
 export default defineComponent({
 	name: 'KtFormSubmit',
@@ -64,7 +64,7 @@ export default defineComponent({
 		)
 
 		if (context === null)
-			throw new KtFormSubmitErrors.InvalidSubmitOutsideContext()
+			throw new ktFormSubmitErrors.InvalidSubmitOutsideContextError()
 
 		const { isLoading, isValid, validationSummary } = context
 		const errors = computed(() => validationSummary.value.errors)

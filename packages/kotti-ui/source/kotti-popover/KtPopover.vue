@@ -37,7 +37,7 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import castArray from 'lodash/castArray'
-import { Props as TippyProps } from 'tippy.js'
+import type { Props as TippyProps } from 'tippy.js'
 import {
 	computed,
 	defineComponent,
@@ -51,7 +51,7 @@ import {
 import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { KT_FORM_CONTEXT } from '../kotti-form'
-import { KottiForm } from '../kotti-form/types'
+import type { KottiForm } from '../kotti-form/types'
 import { makeProps } from '../make-props'
 
 import IconTextItem from './components/IconTextItem.vue'
@@ -90,7 +90,7 @@ export default defineComponent({
 					newRef.addEventListener('focus', () => {
 						const childrenArray = Array.from(newRef.children)
 
-						if (childrenArray.length) {
+						if (childrenArray.length > 0) {
 							const focusableChildIndex = childrenArray.findIndex((child) => {
 								if (child instanceof HTMLElement) child.focus()
 
@@ -112,20 +112,6 @@ export default defineComponent({
 		 */
 		provide(KT_IS_IN_POPOVER, true)
 
-		const setIsShown = (showTippy: boolean) => {
-			if (tippy.value === null) return
-
-			const tippys = castArray(tippy.value)
-
-			for (const tippy of tippys) {
-				if (showTippy) tippy?.show()
-				else tippy.hide()
-			}
-		}
-
-		const close = () => setIsShown(false)
-		const open = () => setIsShown(true)
-
 		const { tippy } = useTippy(
 			triggerRef,
 			computed(() => ({
@@ -140,6 +126,7 @@ export default defineComponent({
 				maxWidth: 'none',
 				offset: [0, TIPPY_DISTANCE_OFFSET],
 				onClickOutside: () => {
+					// eslint-disable-next-line @typescript-eslint/no-use-before-define
 					if (props.trigger !== KottiPopover.Trigger.MANUAL) close()
 				},
 				onHide: () => {
@@ -149,12 +136,33 @@ export default defineComponent({
 					if (!props.isDisabled) showPopover.value = true
 					else return false
 				},
-				onUntrigger: () => close(),
+				onUntrigger: () => {
+					// eslint-disable-next-line @typescript-eslint/no-use-before-define
+					close()
+				},
 				placement: props.placement,
 				theme: 'light-border',
 				trigger: TRIGGER_MAP[props.trigger],
 			})),
 		)
+
+		const setIsShown = (showTippy: boolean) => {
+			if (tippy.value === null) return
+
+			const tippys = castArray(tippy.value)
+
+			for (const tippy of tippys) {
+				if (showTippy) tippy.show()
+				else tippy.hide()
+			}
+		}
+
+		const close = () => {
+			setIsShown(false)
+		}
+		const open = () => {
+			setIsShown(true)
+		}
 
 		return {
 			close,
@@ -164,7 +172,7 @@ export default defineComponent({
 					`kt-popover__content--size-${props.size}`,
 				]
 
-				if (props.options.length >= 1)
+				if (props.options.length > 0)
 					classes.push(`kt-popover__content--has-options`)
 
 				return classes

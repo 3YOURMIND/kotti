@@ -255,7 +255,7 @@ export default defineComponent({
 				})),
 			),
 			replacer: (_key: string, value: unknown) => {
-				if (typeof value === 'function') return value ? '() => {}' : undefined
+				if (typeof value === 'function') return '() => {}'
 				return value
 			},
 			sizeOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>

@@ -290,8 +290,8 @@
 </template>
 
 <script lang="ts">
+import type { Kotti } from '@3yourmind/kotti-ui'
 import {
-	Kotti,
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
@@ -324,7 +324,7 @@ export default defineComponent({
 			createRandomRow: () => ({
 				/* eslint-disable no-magic-numbers */
 				country: Math.random() > 0.5 ? 'eg' : 'de',
-				houseNumber: `${Math.ceil(Math.random() * 999)}${
+				houseNumber: `${String(Math.ceil(Math.random() * 999))}${
 					Math.random() > 0.5 ? 'a' : ''
 				}`,
 				streetName: `${Math.random() > 0.5 ? 'Bismarck' : 'Other'}${
@@ -343,7 +343,8 @@ export default defineComponent({
 			onSubmit: (event: Kotti.Form.Events.Submit) => {
 				// eslint-disable-next-line no-console
 				console.debug('onSubmit', event)
-				alert('onSubmit: See Console for Event Details')
+				// eslint-disable-next-line no-alert
+				window.alert('onSubmit: See Console for Event Details')
 			},
 			settings: ref({
 				booleanFlags: {

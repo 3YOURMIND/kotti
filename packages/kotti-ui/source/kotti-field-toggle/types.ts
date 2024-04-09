@@ -1,4 +1,4 @@
-import { VNode } from 'vue'
+import type { VNode } from 'vue'
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'

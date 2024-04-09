@@ -21,7 +21,7 @@ export type ComponentNames =
 	| 'KtFilters'
 	| 'KtValueLabel'
 
-const COMPONENT_NAMES: ComponentNames[] = [
+const COMPONENT_NAMES = new Set<ComponentNames>([
 	'KtFieldDate',
 	'KtFieldDateRange',
 	'KtFieldDateTime',
@@ -41,9 +41,10 @@ const COMPONENT_NAMES: ComponentNames[] = [
 	'KtFieldToggleGroup',
 	'KtFilters',
 	'KtValueLabel',
-]
+])
 
 export type ComponentValue = {
+	actions?: [] // FIXME: Is this supposed to be here?
 	contentSlot: string | null
 	defaultSlot: string | null
 	hasActions: boolean
@@ -58,20 +59,26 @@ export type ComponentValue = {
 }
 
 export const isComponentName = (name: unknown): name is ComponentNames =>
-	COMPONENT_NAMES.includes(name as ComponentNames)
+	COMPONENT_NAMES.has(name as ComponentNames)
 
 export const createActions = (
 	hasActions: boolean,
-): Array<Record<string, unknown>> | undefined =>
+): Array<{ label: string; onClick: () => void }> | undefined =>
 	hasActions
 		? [
 				{
 					label: 'Create Item',
-					onClick: () => alert('actions[0].onClick called'),
+					onClick: () => {
+						// eslint-disable-next-line no-alert
+						window.alert('actions[0].onClick called')
+					},
 				},
 				{
 					label: 'Edit Item',
-					onClick: () => alert('actions[1].onClick called'),
+					onClick: () => {
+						// eslint-disable-next-line no-alert
+						window.alert('actions[1].onClick called')
+					},
 				},
 			]
 		: undefined
@@ -83,10 +90,18 @@ export const createRemoteUpload = (
 		? {
 				actions: {
 					/* eslint-disable no-console */
-					onCancel: (id: number | string) => console.log(`onCancel: ${id}`),
-					onDelete: (id: number | string) => console.log(`onDelete: ${id}`),
-					onRetry: (id: number | string) => console.log(`onRetry: ${id}`),
-					onUpload: (id: number | string) => console.log(`onUpload: ${id}`),
+					onCancel: (id: number | string) => {
+						console.log(`onCancel: ${id.toString()}`)
+					},
+					onDelete: (id: number | string) => {
+						console.log(`onDelete: ${id.toString()}`)
+					},
+					onRetry: (id: number | string) => {
+						console.log(`onRetry: ${id.toString()}`)
+					},
+					onUpload: (id: number | string) => {
+						console.log(`onUpload: ${id.toString()}`)
+					},
 					/* eslint-enable no-console */
 				},
 				payload: {},
@@ -95,26 +110,24 @@ export const createRemoteUpload = (
 
 const createRemoteUploadCode = (component: ComponentValue): string | null => {
 	const remoteUpload = createRemoteUpload(component.hasRemoteUpload)
+	if (!remoteUpload) return null
 
-	return remoteUpload
-		? `${[
-				...Object.entries(remoteUpload)
-					.map(([key, value]) => {
-						if (key === 'actions')
-							return [
-								`\t:${key}: {`,
-								...Object.keys(value as Record<string, unknown>).map(
-									(k) => `\t\t${k}: (id: number | string) => {},`,
-								),
-								'\t},',
-							].join('\n')
+	return Object.entries(remoteUpload)
+		.map(([key, value]) => {
+			if (key === 'actions')
+				return [
+					`\t:${key}: {`,
+					...Object.keys(value as Record<string, unknown>).map(
+						(k) => `\t\t${k}: (id: number | string) => {},`,
+					),
+					'\t},',
+				].join('\n')
 
-						if (key === 'payload')
-							return `\t:${key}: ${JSON.stringify(value).replace(/"/g, "'")},`
-					})
-					.filter((value) => value),
-			].join('\n')}`
-		: null
+			if (key === 'payload')
+				return `\t:${key}: ${JSON.stringify(value).replaceAll('"', "'")},`
+		})
+		.filter((value) => value)
+		.join('\n')
 }
 
 const appendAdditionalSlots = (component: ComponentValue) => {
@@ -128,7 +141,6 @@ const appendAdditionalSlots = (component: ComponentValue) => {
 					? [
 							'\t<template #content :option="option">',
 							`\t\t${component.contentSlot}`,
-							// eslint-disable-next-line sonarjs/no-duplicate-string
 							'\t</template>',
 						]
 					: []),
@@ -156,12 +168,11 @@ const appendAdditionalSlots = (component: ComponentValue) => {
 		: '/>'
 }
 
-export const generateComponentCode = (component: ComponentValue) =>
+export const generateComponentCode = (component: ComponentValue): string =>
 	[
 		`<${component.name}`,
 		...Object.entries(component.props)
 			.sort(([a], [b]) => a.localeCompare(b))
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			.filter(([key, value]) => {
 				if (['query'].includes(key)) {
 					// display `query` prop to show even if the value is `null`
@@ -188,7 +199,7 @@ export const generateComponentCode = (component: ComponentValue) =>
 					case 'string':
 						return `${key}="${value}"`
 					default:
-						return `:${key}="${JSON.stringify(value).replace(/"/g, "'")}"`
+						return `:${key}="${JSON.stringify(value).replaceAll('"', "'")}"`
 				}
 			})
 			.map((prop) => `\t${prop}`),
@@ -204,7 +215,7 @@ export const generateComponentCode = (component: ComponentValue) =>
 		...(component.validation === 'empty'
 			? []
 			: [
-					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
+					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${String(component.validation)}" })"`,
 				]),
 		createRemoteUploadCode(component),
 		appendAdditionalSlots(component),

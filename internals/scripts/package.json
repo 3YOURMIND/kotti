@@ -8,7 +8,7 @@
 	"name": "@3yourmind/scripts",
 	"private": true,
 	"scripts": {
-		"check:eslint": "yarn --cwd ../.. run eslint --max-warnings=0 --ignore-path=.gitignore ./internals/scripts",
+		"check:eslint": "eslint --max-warnings=0 .",
 		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./internals/scripts",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write"

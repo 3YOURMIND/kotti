@@ -35,7 +35,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-import { Section, Subsection, menu, Tag } from '../data/menu'
+import type { Section, Subsection } from '../data/menu'
+import { menu, Tag } from '../data/menu'
 import { useRoute } from '../hooks/use-route'
 
 const tagTitles: Record<Tag, string> = {

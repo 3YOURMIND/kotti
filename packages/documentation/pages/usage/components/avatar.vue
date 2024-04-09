@@ -46,7 +46,7 @@
 		<KtAvatarGroup v-bind="{ ...avatarGroupSettings }">
 			<template v-if="avatarGroupSettings.showContentSlot" #content="{ item }">
 				<KtRow>
-					<KtAvatar :src="item.src"></KtAvatar>
+					<KtAvatar :src="item.src" />
 					<h4 v-text="item.name" />
 				</KtRow>
 				<KtRow>

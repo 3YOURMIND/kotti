@@ -133,10 +133,6 @@ export module Yoco {
 	}
 }
 
-export const isYocoIcon = (value: unknown): value is Yoco.Icon => {
-	return yocoIconSchema.safeParse(value).success
-}
-
 /**
  * returns enum and the union of enum members
  * https://stackoverflow.com/a/77528920
@@ -149,10 +145,18 @@ type EnumToPrimitiveUnion<
 
 type OneOrMore<T> = [T, ...T[]]
 
-const IconEnumMembers = Object.values(Yoco.Icon) as OneOrMore<
+const iconEnumMembers = Object.values(Yoco.Icon) as OneOrMore<
 	EnumToPrimitiveUnion<typeof Yoco.Icon>
 >
+
+/**
+ * `yocoIconSchema` supports both the members of the Yoco.Icon and the equivalent string union
+ */
 export const yocoIconSchema = z.union([
-	z.enum(IconEnumMembers),
+	z.enum(iconEnumMembers),
 	z.nativeEnum(Yoco.Icon),
 ])
+
+export const isYocoIcon = (value: unknown): value is Yoco.Icon => {
+	return yocoIconSchema.safeParse(value).success
+}

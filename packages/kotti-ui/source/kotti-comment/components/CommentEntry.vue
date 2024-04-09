@@ -64,8 +64,12 @@ export default defineComponent({
 				])
 				emit('delete', payload)
 			},
-			onEdit: (payload: KottiComment.Events.Edit) => emit('edit', payload),
-			onReply: () => emit('reply', props.user),
+			onEdit: (payload: KottiComment.Events.Edit) => {
+				emit('edit', payload)
+			},
+			onReply: () => {
+				emit('reply', props.user)
+			},
 		}
 	},
 })

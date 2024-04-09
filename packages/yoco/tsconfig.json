@@ -7,6 +7,7 @@
 		"lib": ["ES2022"],
 		"module": "CommonJS",
 		"moduleResolution": "Node",
+		"noUncheckedIndexedAccess": true,
 		"outDir": "dist",
 		"resolveJsonModule": true,
 		"rootDir": "source",

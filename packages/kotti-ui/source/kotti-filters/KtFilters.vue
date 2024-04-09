@@ -48,7 +48,8 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
 import castArray from 'lodash/castArray'
-import { PropType, computed, defineComponent, ref } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -138,7 +139,7 @@ export default defineComponent({
 					? translations.value.filtersLabel
 					: translations.value.filterLabel
 			if (filtersCount === 0) return label
-			return `${filtersCount} ${label}`
+			return `${String(filtersCount)} ${label}`
 		})
 
 		const clearAll = () => {
@@ -164,20 +165,6 @@ export default defineComponent({
 				emit('input', [...filterListValues.value, searchFilter])
 			}
 		}
-		const toggleListVisibility = () => {
-			if (tippy.value === null) return
-
-			const tippys = castArray(tippy.value)
-
-			isListVisible.value = !isListVisible.value
-
-			if (!isListVisible.value) isAddingFilter.value
-
-			for (const tippy of tippys) {
-				if (isListVisible.value) tippy.show()
-				else tippy.hide()
-			}
-		}
 
 		const { tippy } = useTippy(
 			listTriggerRef,
@@ -195,6 +182,21 @@ export default defineComponent({
 				zIndex: 1000,
 			})),
 		)
+
+		const toggleListVisibility = () => {
+			if (tippy.value === null) return
+
+			const tippys = castArray(tippy.value)
+
+			isListVisible.value = !isListVisible.value
+
+			if (!isListVisible.value) isAddingFilter.value
+
+			for (const tippy of tippys) {
+				if (isListVisible.value) tippy.show()
+				else tippy.hide()
+			}
+		}
 
 		return {
 			clearAll,

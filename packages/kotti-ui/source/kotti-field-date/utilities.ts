@@ -1,11 +1,11 @@
 import dayjs from 'dayjs'
 
-import { Shared } from './types'
+import type { Shared } from './types'
 
 export const isInvalidDate = (
 	props: Pick<Shared.PropsInternal, 'maximumDate' | 'minimumDate'>,
 	date: Date,
-) => {
+): boolean => {
 	const { maximumDate, minimumDate } = props
 
 	return (

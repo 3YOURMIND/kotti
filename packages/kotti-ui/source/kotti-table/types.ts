@@ -1,4 +1,4 @@
-import { CreateElement, VNode } from 'vue'
+import type { CreateElement, VNode } from 'vue'
 
 export module KottiTable {
 	export module Column {
@@ -8,6 +8,7 @@ export module KottiTable {
 			RIGHT = 'right',
 		}
 
+		// eslint-disable-next-line @typescript-eslint/naming-convention
 		export const SortOrders = {
 			ASCENDING: 'ascending',
 			DESCENDING: 'descending',
@@ -239,10 +240,10 @@ export module KottiTable {
 	export module Slots {
 		export type Actions = Pick<Column.Context, 'row' | 'rowIndex' | 'value'>
 
-		export type Empty = void
+		export type Empty = undefined
 
 		export type Expand = Pick<Column.Context, 'row' | 'rowIndex' | 'value'>
 
-		export type Loading = void
+		export type Loading = undefined
 	}
 }

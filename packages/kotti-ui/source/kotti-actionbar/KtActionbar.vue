@@ -20,20 +20,19 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import ActionbarMenu from './components/ActionbarMenu.vue'
+import { KottiActionbar } from './types'
+import { makeProps } from '../make-props'
 
-export default {
+export default defineComponent({
 	name: 'KtActionbar',
 	components: {
 		ActionbarMenu,
 	},
-	props: {
-		headerTitle: { default: 'Actionbar Header', type: String },
-		menu: { default: () => [], type: Array },
-		menuStyle: { default: () => ({}), type: Object },
-	},
-}
+	props: makeProps(KottiActionbar.propsSchema),
+})
 </script>
 
 <style lang="scss">

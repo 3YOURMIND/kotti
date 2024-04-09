@@ -3,13 +3,15 @@
 		"allowImportingTsExtensions": true,
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
+		"composite": true,
 		"declaration": true,
 		"emitDeclarationOnly": true,
 		"esModuleInterop": true,
 		"isolatedModules": true,
-		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"lib": ["ES2022", "DOM", "DOM.Iterable"],
 		"module": "ESNext",
 		"moduleResolution": "bundler",
+		"noUncheckedIndexedAccess": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"outDir": "dist",
@@ -29,7 +31,8 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"target": "ESNext"
+		"target": "ESNext",
+		"tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": [

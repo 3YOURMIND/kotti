@@ -1,7 +1,8 @@
-/* eslint-disable vue/one-component-per-file */
-import { mount, Wrapper } from '@vue/test-utils'
+import type { Wrapper } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { expect, it, describe } from 'vitest'
-import { defineComponent, ref, SetupContext } from 'vue'
+import type { SetupContext } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { z } from 'zod'
 
 import { useField } from '../kotti-field/hooks'
@@ -78,11 +79,9 @@ const TestForm2 = {
 }
 
 const getField = (
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
 ): KottiField.Hook.Returns<string | Record<string, unknown> | null> =>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(wrapper.vm.$children[0].$children[0] as any).field
+	wrapper.vm.$children[0].$children[0].field
 
 describe('KtForm', () => {
 	it('provides a context', () => {
@@ -173,9 +172,7 @@ describe('KtForm', () => {
 
 			expect(field.hideValidation).toEqual(false)
 
-			wrapper.setProps({ hideValidation: true })
-
-			await wrapper.vm.$nextTick()
+			await wrapper.setProps({ hideValidation: true })
 
 			expect(field.hideValidation).toEqual(true)
 		})
@@ -193,13 +190,11 @@ describe('KtForm', () => {
 
 			expect(field.validation).toEqual({ type: 'empty' })
 
-			wrapper.setProps({
+			await wrapper.setProps({
 				validators: {
 					testKey: () => ({ type: 'success', text: 'Testing' }),
 				},
 			})
-
-			await wrapper.vm.$nextTick()
 
 			expect(field.validation).toEqual({
 				type: 'success',
@@ -219,9 +214,7 @@ describe('KtForm', () => {
 
 			expect(field.currentValue).toEqual('testing')
 
-			wrapper.setProps({ value: { testKey: null } })
-
-			await wrapper.vm.$nextTick()
+			await wrapper.setProps({ value: { testKey: null } })
 
 			expect(field.currentValue).toEqual(null)
 		})

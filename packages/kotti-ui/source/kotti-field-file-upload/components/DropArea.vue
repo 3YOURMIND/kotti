@@ -127,9 +127,7 @@ export default defineComponent({
 			})),
 			isError,
 			isHovering,
-			localTabIndex: computed(() =>
-				props.isDisabled ? -1 : props.tabIndex ?? 0,
-			),
+			localTabIndex: computed(() => (props.isDisabled ? -1 : props.tabIndex)),
 			onDragLeave: () => {
 				isDragging.value = false
 				isError.value = false

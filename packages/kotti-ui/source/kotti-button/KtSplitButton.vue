@@ -92,7 +92,7 @@ export default defineComponent({
 
 				if (!action)
 					throw new Error(
-						`KtSplitButton: action item not found for index: ${nextIndex}`,
+						`KtSplitButton: action item not found for index: ${String(nextIndex)}`,
 					)
 
 				if (!action.isDisabled) return nextIndex
@@ -150,12 +150,16 @@ export default defineComponent({
 			currentActionIndexInFocus,
 			isActionInFocus: (actionIndex: number) =>
 				actionIndex === currentActionIndexInFocus.value,
-			onClickAction: () => setIsTippyOpen(false),
+			onClickAction: () => {
+				setIsTippyOpen(false)
+			},
 			onClickPrimaryAction: () => {
 				if (props.isDisabled || props.isLoading) return
 				emit('click')
 			},
-			onClickSecondaryActions: () => setIsTippyOpen(!isTippyOpen.value),
+			onClickSecondaryActions: () => {
+				setIsTippyOpen(!isTippyOpen.value)
+			},
 			onUpdateIndexInFocus: (index: number) => {
 				if (isTippyOpen.value) currentActionIndexInFocus.value = index
 			},

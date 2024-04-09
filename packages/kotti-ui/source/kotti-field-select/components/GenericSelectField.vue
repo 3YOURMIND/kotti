@@ -76,7 +76,8 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { Ref, computed, defineComponent, ref, watch } from 'vue'
+import type { Ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { z } from 'zod'
 
 import { KtField } from '../../kotti-field'
@@ -86,13 +87,13 @@ import { KtTag } from '../../kotti-tag'
 import { makeProps } from '../../make-props'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from '../constants'
 import { useSelectTippy } from '../hooks/use-select-tippy'
-import {
+import type {
 	KottiFieldSingleSelectRemote,
 	KottiFieldSingleSelect,
 	KottiFieldMultiSelect,
 	KottiFieldMultiSelectRemote,
-	Shared,
 } from '../types'
+import { Shared } from '../types'
 
 import ActionIcon from './ActionIcon.vue'
 import FieldSelectOptions from './Options.vue'
@@ -105,7 +106,7 @@ const propsSchema = Shared.propsSchema
 	.merge(Shared.isSingleSchema)
 	.omit({ value: true })
 	.extend({
-		helpTextSlot: z.array(z.unknown()).default(() => []),
+		helpTextSlot: z.array(z.any()).default(() => []),
 		isMultiple: z.boolean().default(false),
 		isRemote: z.boolean().default(false),
 		value: z.union([
@@ -132,8 +133,9 @@ export default defineComponent({
 	},
 	props: makeProps(propsSchema),
 	setup(props, { emit: rawEmit }) {
-		const emit = (event: string, payload: unknown) =>
+		const emit = (event: string, payload: unknown) => {
 			rawEmit('emit', { event, payload })
+		}
 
 		const field = useField<SingleValue | MultiValue>({
 			emit,
@@ -281,6 +283,7 @@ export default defineComponent({
 				if (!props.isMultiple) selectTippy.setIsDropdownOpen(false)
 			},
 			onPressDelete: () => {
+				// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- Not sure if '??' is the right choice to handle empty strings
 				if (queryValue.value || !props.isMultiple) return // only delete value if query is already empty
 
 				const value = field.currentValue as MultiValue
@@ -310,10 +313,11 @@ export default defineComponent({
 			),
 			tippyContentRef: selectTippy.tippyContentRef,
 			tippyRef: selectTippy.tippyRef,
-			updateQuery: ({ target: { value } }: { target: HTMLInputElement }) => {
+			updateQuery: (event: Event) => {
 				if (!isDropdownOpen.value) {
 					selectTippy.setIsDropdownOpen(true)
 				} else {
+					const value = (event.target as HTMLInputElement).value
 					const newValue = value === '' ? null : value
 
 					if (props.isRemote && props.query !== newValue)

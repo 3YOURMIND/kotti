@@ -1,6 +1,6 @@
 import { Dashes } from '@metatypes/typography'
 
-import { KottiField } from '../kotti-field/types'
+import type { KottiField } from '../kotti-field/types'
 
 const EL_SHARED_INTERNAL_PROPS = {
 	editable: true,

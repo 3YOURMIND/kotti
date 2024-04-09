@@ -1,0 +1,61 @@
+{
+	"author": "3YOURMIND GmbH",
+	"bugs": {
+		"url": "https://github.com/3YOURMIND/kotti/issues"
+	},
+	"dependencies": {
+		"@eslint/js": "^9.0.0",
+		"@typescript-eslint/utils": "^7.8.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-jsonc": "^2.15.1",
+		"eslint-plugin-prettier": "^5.1.3",
+		"eslint-plugin-sonarjs": "^1.0.3",
+		"eslint-plugin-unicorn": "^52.0.0",
+		"eslint-plugin-vitest": "^0.5.4",
+		"eslint-plugin-vue": "^9.25.0",
+		"globals": "^15.1.0",
+		"jsonc-eslint-parser": "^2.4.0",
+		"typescript-eslint": "^7.8.0",
+		"vue-eslint-parser": "^9.4.2"
+	},
+	"description": "ESLint config for 3YOURMIND",
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/mjs/index.d.ts",
+				"default": "./dist/mjs/index.js"
+			},
+			"require": {
+				"types": "./dist/cjs/index.d.cts",
+				"default": "./dist/cjs/index.cjs"
+			}
+		}
+	},
+	"files": [
+		"dist/**/!(*.tsbuildinfo)"
+	],
+	"homepage": "https://github.com/3YOURMIND/kotti/tree/master/packages/eslint-config",
+	"keywords": [
+		"eslint",
+		"eslint-config"
+	],
+	"license": "MIT",
+	"main": "./dist/cjs/index.cjs",
+	"module": "./dist/mjs/index.js",
+	"name": "@3yourmind/eslint-config",
+	"peerDependencies": {
+		"eslint": ">= 9"
+	},
+	"repository": "git+https://github.com/3YOURMIND/kotti.git",
+	"scripts": {
+		"build": "./scripts/build.sh",
+		"check:eslint": "eslint --max-warnings=0 .",
+		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/vue-use-tippy",
+		"check:publint": "publint",
+		"fix:eslint": "yarn run check:eslint --fix",
+		"fix:prettier": "yarn run check:prettier --write"
+	},
+	"type": "module",
+	"types": "./dist/mjs/index.d.ts",
+	"version": "0.0.1"
+}

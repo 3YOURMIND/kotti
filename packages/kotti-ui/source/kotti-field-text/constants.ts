@@ -1,4 +1,4 @@
-import { KottiField } from '../kotti-field/types'
+import type { KottiField } from '../kotti-field/types'
 
 export const KOTTI_FIELD_TEXT_SUPPORTS: KottiField.Supports = {
 	clear: true,

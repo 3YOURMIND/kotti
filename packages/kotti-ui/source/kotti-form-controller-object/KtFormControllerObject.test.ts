@@ -1,4 +1,5 @@
-import { mount, Wrapper } from '@vue/test-utils'
+import type { Wrapper } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { defineComponent, ref } from 'vue'
 import { z } from 'zod'
@@ -61,11 +62,9 @@ const TestControllerObjectForm = {
 }
 
 const getField = (
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wrapper: Wrapper<any>,
 	index: number,
 ): KottiField.Hook.Returns<string | null> =>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(wrapper.findAllComponents({ name: 'KtField' }).at(index).vm as any).field
 
 describe('KtFormControllerObject', () => {
@@ -135,9 +134,9 @@ describe('KtFormControllerObject', () => {
 
 			expect(field.hideValidation).toBe(false)
 
-			wrapper.setProps({ formProps: { ...FORM_PROPS, hideValidation: true } })
-
-			await wrapper.vm.$nextTick()
+			await wrapper.setProps({
+				formProps: { ...FORM_PROPS, hideValidation: true },
+			})
 
 			expect(field.hideValidation).toBe(true)
 		})

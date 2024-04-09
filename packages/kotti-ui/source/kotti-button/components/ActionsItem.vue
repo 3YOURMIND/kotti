@@ -68,7 +68,7 @@ export default defineComponent({
 				},
 				'data-test': [
 					props.rootDataTest,
-					`action-${props.index}`,
+					`action-${String(props.index)}`,
 					props.dataTest,
 				]
 					.filter(Boolean)

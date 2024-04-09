@@ -13,7 +13,7 @@ export const formatExtensions = (
 	[
 		...extensions
 			.slice(0, collapseExtensionsAfter)
-			.map((extension: string) => extension.replace(/\./g, '').trim()),
+			.map((extension: string) => extension.replaceAll('.', '').trim()),
 		...(extensions.length > collapseExtensionsAfter ? ['...'] : []),
 	]
 		.join(', ')

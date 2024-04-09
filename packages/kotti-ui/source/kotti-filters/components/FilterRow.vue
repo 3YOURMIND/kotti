@@ -42,7 +42,8 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { PropType, computed, defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { KottiField } from '../../kotti-field/types'
 import { KtFieldCurrency } from '../../kotti-field-currency'
@@ -50,7 +51,7 @@ import { KtFieldDateRange } from '../../kotti-field-date'
 import { KtFieldNumber } from '../../kotti-field-number'
 import { KtFieldMultiSelect } from '../../kotti-field-select'
 import { KtFieldSingleSelect } from '../../kotti-field-select'
-import { KottiFieldSingleSelect } from '../../kotti-field-select/types'
+import type { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { KtFieldText } from '../../kotti-field-text'
 import { KtFieldToggle } from '../../kotti-field-toggle'
 import { KtForm } from '../../kotti-form'
@@ -113,14 +114,16 @@ export default defineComponent({
 			props.column ? getOperationOptions(props.column) : [],
 		)
 
-		const handleRemove = () => emit('remove')
+		const handleRemove = () => {
+			emit('remove')
+		}
 		const handleSetFilter = (newFilter: KottiFilters.InternalFilter) => {
 			if (!props.column) {
 				emit('input', newFilter)
 				return
 			}
 
-			if (isEmptyOperation(newFilter.operation, props.column?.type)) {
+			if (isEmptyOperation(newFilter.operation, props.column.type)) {
 				emit('input', {
 					...newFilter,
 					value: getFilterEmptyValue(props.column.type),
@@ -139,7 +142,6 @@ export default defineComponent({
 			),
 			isValueFieldVisible: computed(
 				() =>
-					props.filter &&
 					props.column &&
 					!isEmptyOperation(props.filter.operation, props.column.type),
 			),
@@ -155,7 +157,6 @@ export default defineComponent({
 				if (!props.column?.type) return null
 				return getValueComponent(props.column.type)
 			}),
-			// eslint-disable-next-line sonarjs/cognitive-complexity
 			valueComponentProps: computed(() => ({
 				collapseTagsAfter:
 					props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||

@@ -761,11 +761,10 @@ import {
 	ISO8601,
 	ISO8601_SECONDS,
 } from '../../../utilities/date'
+import type { ComponentValue, ComponentNames } from '../../../utilities/pages'
 import {
 	createActions,
 	createRemoteUpload,
-	ComponentValue,
-	ComponentNames,
 	generateComponentCode,
 	isComponentName,
 } from '../../../utilities/pages'
@@ -777,7 +776,7 @@ const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
 
 const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 	try {
-		if (typeof window !== 'undefined' && window.document)
+		if (typeof window !== 'undefined')
 			window.localStorage.setItem(
 				LOCALSTORAGE_SAVED_COMPONENTS_KEY,
 				JSON.stringify(savedFields),
@@ -991,7 +990,7 @@ const INITIAL_VALUES: {
 	toggleValue: null,
 }
 
-type componentRepresentation = ComponentValue & {
+type ComponentRepresentation = ComponentValue & {
 	code: string
 	validator: Kotti.Field.Validation.Function
 }
@@ -1288,10 +1287,7 @@ export default defineComponent({
 			settings.value.component.includes('Range'),
 		)
 
-		// eslint-disable-next-line sonarjs/cognitive-complexity
 		const componentProps = computed(() => {
-			const { component } = settings.value
-
 			const standardProps = {
 				dataTest: settings.value.dataTest,
 				formKey: componentDefinition.value.formKey,
@@ -1464,10 +1460,10 @@ export default defineComponent({
 					)
 						.filter(([_, value]) => value)
 						.map(([key]) => {
-							const shortcuts = getShortcuts(component)
-							const { keepOpen, label, value } =
-								shortcuts[key as keyof typeof shortcuts]
-							return { keepOpen, label, value }
+							const shortcut = getShortcuts(settings.value.component)[key]
+							if (!shortcut) throw new Error('Could not find shortcut')
+
+							return shortcut
 						}),
 				})
 
@@ -1526,7 +1522,7 @@ export default defineComponent({
 					maxFileSize: settings.value.additionalProps.maxFileSize,
 				})
 
-			if (['KtFieldFileUploadRemote'].includes(component))
+			if (['KtFieldFileUploadRemote'].includes(settings.value.component))
 				Object.assign(additionalProps, createRemoteUpload(true))
 			if (componentDefinition.value.additionalProps.includes('hideDropArea'))
 				Object.assign(additionalProps, {
@@ -1538,11 +1534,11 @@ export default defineComponent({
 					'KtFieldMultiSelectRemote',
 					'KtFieldSingleSelect',
 					'KtFieldSingleSelectRemote',
-				].includes(component)
+				].includes(settings.value.component)
 			) {
 				const options = (
 					['KtFieldMultiSelectRemote', 'KtFieldSingleSelectRemote'].includes(
-						component,
+						settings.value.component,
 					)
 						? singleOrMultiSelectOptions.filter((option) =>
 								option.label
@@ -1554,7 +1550,7 @@ export default defineComponent({
 						: singleOrMultiSelectOptions
 				).map((option, index) => ({
 					...option,
-					dataTest: index % 2 === 0 ? `${String(option.value)}` : undefined,
+					dataTest: index % 2 === 0 ? String(option.value) : undefined,
 				}))
 
 				Object.assign(additionalProps, {
@@ -1562,18 +1558,19 @@ export default defineComponent({
 				})
 			}
 
+			// eslint-disable-next-line @typescript-eslint/no-use-before-define
 			if (hasActions.value)
 				Object.assign(additionalProps, { actions: createActions(true) })
 
 			if (
 				['KtFieldMultiSelectRemote', 'KtFieldSingleSelectRemote'].includes(
-					component,
+					settings.value.component,
 				)
 			) {
 				Object.assign(additionalProps, { query: remoteSingleSelectQuery.value })
 			}
 
-			if (['KtFieldRadioGroup'].includes(component)) {
+			if (['KtFieldRadioGroup'].includes(settings.value.component)) {
 				Object.assign(additionalProps, {
 					contentSlot: null,
 					headerSlot: null,
@@ -1581,12 +1578,12 @@ export default defineComponent({
 					showHeaderSideSlot: false,
 				})
 			}
-			if (['KtFieldToggle'].includes(component))
+			if (['KtFieldToggle'].includes(settings.value.component))
 				Object.assign(additionalProps, {
 					defaultSlot: 'Default Slot',
 				})
 
-			if (['KtFieldToggleGroup'].includes(component))
+			if (['KtFieldToggleGroup'].includes(settings.value.component))
 				Object.assign(additionalProps, {
 					contentSlot: null,
 					headerSlot: null,
@@ -1599,7 +1596,7 @@ export default defineComponent({
 		const savedFields = ref<ComponentValue[]>(
 			(() => {
 				try {
-					if (typeof window !== 'undefined' && window.document) {
+					if (typeof window !== 'undefined') {
 						const value = window.localStorage.getItem(
 							LOCALSTORAGE_SAVED_COMPONENTS_KEY,
 						)
@@ -1643,7 +1640,7 @@ export default defineComponent({
 			}),
 		)
 		const componentRepresentation = computed(
-			(): componentRepresentation => ({
+			(): ComponentRepresentation => ({
 				...componentValue.value,
 				code: generateComponentCode(componentValue.value),
 				validator: createValidator(componentValue.value.validation),
@@ -1653,31 +1650,33 @@ export default defineComponent({
 		return {
 			component: computed(
 				(): { meta: Kotti.Meta; name: string } =>
-					({
-						KtFieldCurrency,
-						KtFieldDate,
-						KtFieldDateRange,
-						KtFieldDateTime,
-						KtFieldDateTimeRange,
-						KtFieldFileUpload,
-						KtFieldFileUploadRemote,
-						KtFieldNumber,
-						KtFieldMultiSelect,
-						KtFieldMultiSelectRemote,
-						KtFieldPassword,
-						KtFieldRadioGroup,
-						KtFieldSingleSelect,
-						KtFieldSingleSelectRemote,
-						KtFieldText,
-						KtFieldTextArea,
-						KtFieldToggle,
-						KtFieldToggleGroup,
-					})[
+					(
+						({
+							KtFieldCurrency,
+							KtFieldDate,
+							KtFieldDateRange,
+							KtFieldDateTime,
+							KtFieldDateTimeRange,
+							KtFieldFileUpload,
+							KtFieldFileUploadRemote,
+							KtFieldNumber,
+							KtFieldMultiSelect,
+							KtFieldMultiSelectRemote,
+							KtFieldPassword,
+							KtFieldRadioGroup,
+							KtFieldSingleSelect,
+							KtFieldSingleSelectRemote,
+							KtFieldText,
+							KtFieldTextArea,
+							KtFieldToggle,
+							KtFieldToggleGroup,
+						}) as Record<string, { meta: Kotti.Meta; name: string }>
+					)[
 						componentValue.value.name as Exclude<
 							ComponentNames,
 							'KtFilters' | 'KtValueLabel'
 						>
-					],
+					] as { meta: Kotti.Meta; name: string },
 			),
 			componentDefinition,
 			componentHasActionsToggle,
@@ -1702,16 +1701,19 @@ export default defineComponent({
 				})),
 			isRangeComponent,
 			onBlur: (value: number) => {
-				if (settings.value.emitBlur) window.alert(`@blur: ${value}`)
+				// eslint-disable-next-line no-alert
+				if (settings.value.emitBlur) window.alert(`@blur: ${String(value)}`)
 			},
-			onSubmit: (values: Record<string, unknown>) =>
-				window.alert(`@submit: ${JSON.stringify(values, null, '\t')}`),
+			onSubmit: (values: Record<string, unknown>) => {
+				// eslint-disable-next-line no-alert
+				window.alert(`@submit: ${JSON.stringify(values, null, '\t')}`)
+			},
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},
 			savedFieldsMap: computed(() =>
 				savedFields.value.map(
-					(component): componentRepresentation => ({
+					(component): ComponentRepresentation => ({
 						...component,
 						code: generateComponentCode(component),
 						validator: createValidator(component.validation),
@@ -1733,7 +1735,7 @@ export default defineComponent({
 			},
 			settings,
 			updateComponent: (component: ComponentNames) => {
-				router.value.replace({ query: { component } })
+				void router.value.replace({ query: { component } })
 				settings.value = {
 					...settings.value,
 					component,
@@ -1747,7 +1749,7 @@ export default defineComponent({
 					...settings.value.additionalProps,
 					isLoadingOptions: true,
 				}
-				setTimeout(() => {
+				window.setTimeout(() => {
 					settings.value.additionalProps = {
 						...settings.value.additionalProps,
 						isLoadingOptions: false,

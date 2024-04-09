@@ -7,11 +7,12 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { Yoco } from '@3yourmind/yoco'
-import { PropType, computed, defineComponent, ref } from 'vue'
+import type { Yoco } from '@3yourmind/yoco'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 import { TIPPY_DISTANCE_OFFSET } from '../../constants'
-import { EnumToPrimitiveUnion } from '../../zod-utilities/enums'
+import type { EnumToPrimitiveUnion } from '../../zod-utilities/enums'
 
 export default defineComponent({
 	name: 'NavbarTooltip',

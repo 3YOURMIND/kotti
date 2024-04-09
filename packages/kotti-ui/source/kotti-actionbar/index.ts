@@ -1,5 +1,6 @@
 import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
+import { KottiActionbar } from './types'
 
 import KtActionbarVue from './KtActionbar.vue'
 
@@ -15,5 +16,8 @@ export const KtActionbar = attachMeta(makeInstallable(KtActionbarVue), {
 		'actionbar-footer': { description: null, scope: null },
 		'actionbar-header': { description: null, scope: null },
 	},
-	typeScript: null,
+	typeScript: {
+		namespace: 'Kotti.Actionbar',
+		schema: KottiActionbar.propsSchema,
+	},
 })

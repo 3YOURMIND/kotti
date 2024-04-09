@@ -269,3 +269,21 @@ yarn run build
 | Path                     | Purpose                    |
 | :----------------------- | :------------------------- |
 | `packages/documentation` | Nuxt-managed documentation |
+
+### Turborepo Tooling
+
+#### Debugging
+
+The best starting point for debugging turbo is:
+
+1. Figure out what turbo command gets run (e.g. by checking `package.json`)
+2. Check the relevant tasks in `turbo.json` and `packages/*/turbo.json`
+
+The [Turborepo Documentation](https://turbo.build/repo/docs) is an excellent resource, also make sure you have the `@recommended` `Vercel.turbo-vsc` extension installed as it provides autocomplete and linting for `turbo.json`.
+
+It is also possible to [visualize the graph used by `turbo run`](https://turbo.build/repo/docs/reference/command-line-reference/run#--graph)
+
+```sh
+# generate a graph of turbo run build (needs graphviz)
+yarn run debug:turbo
+```

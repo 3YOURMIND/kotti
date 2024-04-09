@@ -16,7 +16,6 @@
 
 ```js
 menuStyle: {
-	defaultItemInMobile: 5,
 	iconPosition: 'left',
 },
 menu: [

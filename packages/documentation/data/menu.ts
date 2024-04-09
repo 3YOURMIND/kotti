@@ -1,5 +1,5 @@
+import type { Kotti } from '@3yourmind/kotti-ui'
 import {
-	Kotti,
 	KtAccordion,
 	KtActionbar,
 	KtAvatar,

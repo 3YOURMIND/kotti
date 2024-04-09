@@ -1,7 +1,7 @@
 {
 	"$schema": "https://unpkg.com/knip@5/schema.json",
 	"ignore": ["**/dist/**"],
-	"ignoreBinaries": [],
+	"ignoreBinaries": ["dot", "open"],
 	"ignoreDependencies": ["lerna", "lint-staged"],
 	"workspaces": {
 		"packages/*": {

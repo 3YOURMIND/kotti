@@ -15,7 +15,7 @@
 		}
 	],
 	"dependencies": {
-		"zod": "3.x"
+		"zod": "3.23.5"
 	},
 	"description": "3YOURMIND Icon Font",
 	"devDependencies": {
@@ -54,7 +54,7 @@
 	"repository": "git+https://github.com/3YOURMIND/kotti.git",
 	"scripts": {
 		"build": "./scripts/build.sh",
-		"check:eslint": "yarn --cwd ../.. run eslint --max-warnings=0 --ignore-path=.gitignore ./packages/yoco",
+		"check:eslint": "eslint --max-warnings=0 .",
 		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/yoco",
 		"check:publint": "publint",
 		"check:stylelint": "stylelint style.css",

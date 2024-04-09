@@ -17,48 +17,52 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import copy from 'copy-to-clipboard'
+import type { PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { TimeConversion } from '@metatypes/units'
 
-export default {
+export default defineComponent({
 	name: 'ColorPalette',
 	props: {
-		colorName: String,
-		colors: Array,
+		colorName: { required: true, type: String },
+		colors: {
+			required: true,
+			type: Array as PropType<Array<{ code: string; name: string }>>,
+		},
 	},
-	data() {
+	setup() {
+		const copySuccess = ref(false)
+
 		return {
-			copySuccess: false,
+			copyColor: (codeString: string) => {
+				const wasSuccessful = copy(codeString)
+				if (wasSuccessful) {
+					copySuccess.value = true
+					window.setTimeout(() => {
+						copySuccess.value = false
+					}, TimeConversion.MILLISECONDS_PER_SECOND)
+				} else {
+					// eslint-disable-next-line no-alert
+					window.alert('failed')
+				}
+			},
+			copySuccess,
+			textColor: (colorName: string) => {
+				if (
+					colorName === 'Lightgray-300' ||
+					colorName === 'Lightgray-400' ||
+					colorName === 'White-000' ||
+					colorName === 'Yellow-300' ||
+					colorName === 'Yellow-400'
+				) {
+					return '#3d3d3d'
+				}
+			},
 		}
 	},
-	methods: {
-		copyColor(string) {
-			const codeString = `${string}`
-			this.$copyText(codeString).then(
-				() => {
-					this.copySuccess = true
-					setTimeout(() => {
-						this.copySuccess = false
-					}, TimeConversion.MILLISECONDS_PER_SECOND)
-				},
-				() => {
-					alert('failed')
-				},
-			)
-		},
-		textColor(colorName) {
-			if (
-				colorName === 'Lightgray-300' ||
-				colorName === 'Lightgray-400' ||
-				colorName === 'White-000' ||
-				colorName === 'Yellow-300' ||
-				colorName === 'Yellow-400'
-			) {
-				return '#3d3d3d'
-			}
-		},
-	},
-}
+})
 </script>
 
 <style lang="scss" scoped>

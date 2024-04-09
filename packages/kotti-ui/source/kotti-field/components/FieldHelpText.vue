@@ -1,8 +1,9 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref, PropType, h } from 'vue'
-import { VNode } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref, h } from 'vue'
+import type { VNode } from 'vue'
 
 import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 

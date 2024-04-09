@@ -2,10 +2,8 @@ import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
-import {
-	EnumToPrimitiveUnion,
-	createLooseZodEnumSchema,
-} from '../zod-utilities/enums'
+import type { EnumToPrimitiveUnion } from '../zod-utilities/enums'
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 export module Shared {
 	export enum Validation {

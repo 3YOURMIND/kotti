@@ -18,8 +18,12 @@
 
 <script lang="ts">
 import { DatePicker as ElDate } from 'element-ui'
-import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
-import { defineComponent, ref, Ref, computed, inject } from 'vue'
+import type {
+	DatePickerOptions,
+	ElDatePicker,
+} from 'element-ui/types/date-picker'
+import type { Ref } from 'vue'
+import { defineComponent, ref, computed, inject } from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
@@ -27,7 +31,8 @@ import { KT_IS_IN_POPOVER } from '../kotti-popover/constants'
 import { makeProps } from '../make-props'
 
 import { EL_DATE_PROPS, KOTTI_FIELD_DATE_SUPPORTS } from './constants'
-import { usePicker, ElDateWithInternalAPI } from './hooks'
+import type { ElDateWithInternalAPI } from './hooks'
+import { usePicker } from './hooks'
 import { KottiFieldDate } from './types'
 import { isInvalidDate } from './utilities'
 

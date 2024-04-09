@@ -1,22 +1,21 @@
-import { CustomError } from 'ts-custom-error'
+import type { KottiField } from '../kotti-field/types'
 
-import { KottiField } from '../kotti-field/types'
-
-import { KottiForm } from './types'
+import type { KottiForm } from './types'
 
 const createOnSubmitErrorMessage = (messages: string[]) =>
 	`KottiForm(onSubmit): ${messages.join('\n')}`
 
-class UnexpectedValidationState extends CustomError {
-	public constructor(_props: KottiForm.Props) {
+class UnexpectedValidationStateError extends Error {
+	constructor(_props: KottiForm.Props) {
 		super(
 			createOnSubmitErrorMessage(['Encountered Unexpected Validation State']),
 		)
+		this.name = 'UnexpectedValidationStateError'
 	}
 }
 
-class ValidationError extends CustomError {
-	public constructor(
+class ValidationError extends Error {
+	constructor(
 		props: KottiForm.Props,
 		type: Extract<KottiForm.Props['preventSubmissionOn'], 'error' | 'warning'>,
 		validations: KottiField.Validation.Result[],
@@ -28,10 +27,11 @@ class ValidationError extends CustomError {
 				`Preventing submission according to preventSubmissionOn="${props.preventSubmissionOn}".`,
 			]),
 		)
+		this.name = 'ValidationError'
 	}
 }
 
-export const KtFormErrors = {
-	UnexpectedValidationState,
+export const ktFormErrors = {
+	UnexpectedValidationStateError,
 	ValidationError,
 }

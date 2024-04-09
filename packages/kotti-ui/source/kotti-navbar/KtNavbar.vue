@@ -26,7 +26,7 @@
 					@menuLinkClick="$emit('linkClick', $event)"
 				/>
 				<NavbarQuickLink
-					v-if="quickLinks.length"
+					v-if="quickLinks.length > 0"
 					:isNarrow="isNarrow"
 					:links="quickLinks"
 				/>
@@ -42,7 +42,7 @@
 				/>
 
 				<NavbarQuickLink
-					v-if="quickLinks.length"
+					v-if="quickLinks.length > 0"
 					:isNarrow="isNarrow"
 					:links="quickLinks"
 				/>
@@ -161,7 +161,9 @@ export default defineComponent({
 			},
 			mobileMenuRef,
 			navbarRef,
-			setIsNarrow: (isNarrow: boolean) => emit('setIsNarrow', isNarrow),
+			setIsNarrow: (isNarrow: boolean) => {
+				emit('setIsNarrow', isNarrow)
+			},
 			tippyTriggerRef,
 			Yoco,
 		}

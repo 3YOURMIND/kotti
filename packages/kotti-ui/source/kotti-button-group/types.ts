@@ -1,4 +1,4 @@
-import { SpecifyRequiredProps } from '../types/utilities'
+import type { SpecifyRequiredProps } from '../types/utilities'
 
 export module KottiButtonGroup {
 	export type PropsInternal = Record<string, never>
