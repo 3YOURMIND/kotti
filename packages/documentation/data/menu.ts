@@ -37,7 +37,7 @@ export enum Tag {
 	ZOD = 'zod',
 }
 
-export type SubsectionPage = {
+type SubsectionPage = {
 	label: string
 	tags: Array<Tag>
 	path: string

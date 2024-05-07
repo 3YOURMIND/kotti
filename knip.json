@@ -1,0 +1,39 @@
+{
+	"$schema": "https://unpkg.com/knip@5/schema.json",
+	"ignore": ["**/dist/**"],
+	"ignoreBinaries": [],
+	"ignoreDependencies": ["lerna", "lint-staged"],
+	"workspaces": {
+		"packages/*": {
+			"entry": ["source/index.ts"],
+			"project": ["source/**/*.{js,ts,vue}"]
+		},
+		"packages/documentation": {
+			"entry": [
+				"pages/**/*.vue",
+				"layouts/**/*.vue",
+				"plugins/**/*.js",
+				"nuxt.config.ts"
+			],
+			"ignoreDependencies": [
+				"@nuxt/typescript-build",
+				"@nuxtjs/markdownit-loader",
+				"@nuxtjs/markdownit",
+				"@nuxtjs/style-resources",
+				"sass-loader",
+				"ts-loader",
+				"vue-server-renderer",
+				"vue-template-compiler"
+			],
+			"project": ["**/*.{js,ts,vue}"]
+		},
+		"packages/kotti-ui": {
+			"entry": ["source/index.ts", "tokens/index.js"],
+			"ignoreDependencies": ["core-js", "normalize.css", "vue-tsc"],
+			"project": ["source/**/*.{js,ts,vue}"]
+		},
+		"packages/yoco": {
+			"entry": ["source/index.ts", "source/generate.ts"]
+		}
+	}
+}

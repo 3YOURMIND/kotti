@@ -1,6 +1,6 @@
 import { setColumnsArray } from './column'
 
-export function getHiddenColumnIndex(state, column) {
+function getHiddenColumnIndex(state, column) {
 	return state.hiddenColumns.findIndex(({ prop }) => prop === column.prop)
 }
 

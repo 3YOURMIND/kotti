@@ -8,9 +8,6 @@ export const arrayToCustomProperties = (colors, type = 'reference') =>
 		)
 		.join('\n')
 
-export const tokenObjectToColorObject = (tokens) =>
-	tokens.map(({ name, reference }) => ({ name, value: reference }))
-
 export const objectToArray = (colors) =>
 	Object.entries(colors).map(([name, value]) => ({ name, value }))
 

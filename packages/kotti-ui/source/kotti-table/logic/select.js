@@ -1,7 +1,7 @@
 import debounce from 'lodash/debounce'
 import isEqual from 'lodash/isEqual'
 
-export function toggleRowSelection(state, row, selected) {
+function toggleRowSelection(state, row, selected) {
 	let changed = false
 	const selection = state.selection
 	const index = selection.findIndex((selectedRow) => isEqual(selectedRow, row))
@@ -22,16 +22,6 @@ export function toggleRowSelection(state, row, selected) {
 	}
 
 	return changed
-}
-
-export function getKeysMap(list, key) {
-	const map = {}
-	for (const item of list) map[item[key]] = item
-	return map
-}
-
-export function getRowIdentity(item, key = 'id') {
-	return item[key]
 }
 
 export function updateAllSelected(state) {
