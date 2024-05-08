@@ -9,18 +9,21 @@
 		"check": {
 			"dependsOn": [
 				"check:eslint",
+				"check:knip",
 				"check:prettier",
 				"check:publint",
-				"check:stylelint",
-				"check:unimported"
+				"check:stylelint"
 			]
 		},
 		"check:eslint": {
 			"inputs": ["**/*.{js,json,ts,vue}"],
 			"outputMode": "new-only"
 		},
+		"check:knip": {
+			"outputMode": "new-only"
+		},
 		"check:prettier": {
-			"inputs": ["**/*.{css,js,json,md,scss,ts,vue}"],
+			"inputs": ["**/*.{css,js,json,md,scss,ts,vue}", "../../.prettierignore"],
 			"outputMode": "new-only"
 		},
 		"check:publint": {
@@ -32,10 +35,6 @@
 			"inputs": ["**/*.{css,scss,vue}"],
 			"outputMode": "new-only"
 		},
-		"check:unimported": {
-			"inputs": ["**/*.{js,ts,vue}", "package.json", ".unimportedrc.json"],
-			"outputMode": "new-only"
-		},
 		"fix": {
 			"dependsOn": ["fix:eslint", "fix:prettier", "fix:stylelint"]
 		},
@@ -44,7 +43,7 @@
 			"outputMode": "new-only"
 		},
 		"fix:prettier": {
-			"inputs": ["**/*.{css,js,json,md,scss,ts,vue}"],
+			"inputs": ["**/*.{css,js,json,md,scss,ts,vue}", "../../.prettierignore"],
 			"outputMode": "new-only"
 		},
 		"fix:stylelint": {

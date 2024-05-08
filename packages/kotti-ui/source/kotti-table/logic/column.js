@@ -13,7 +13,7 @@ export function getColumnRealIndex(state, column) {
 	return state._columnsArray.findIndex(({ id }) => id == column.id)
 }
 
-export function getColumn(state, column = {}) {
+function getColumn(state, column = {}) {
 	return state._columns[column.prop]
 }
 
@@ -21,7 +21,7 @@ export function getColumnIndex(state, column) {
 	return getColumn(state, column).index
 }
 
-export function setColumn(state, { column, index, deleted }) {
+function setColumn(state, { column, index, deleted }) {
 	const { _columns = {} } = state
 	let newColumn = column
 	const oldColumn = _columns[newColumn.prop]
@@ -74,12 +74,7 @@ export function setColumnsArray(
 	})
 }
 
-export function getColumnsArray(state, prop) {
-	//please be sure to pass state[prop] that has an array type
-	return [...state[prop]]
-}
-
-export function emitColumnsChange(store) {
+function emitColumnsChange(store) {
 	store.table.$ready &&
 		store.emit(
 			'columnsChange',

@@ -4,13 +4,14 @@ export const defaultState = {
 	enabledRows: [],
 	isAllRowsDisabled: false,
 }
-export function getDisabledRows(rows, disableRow) {
+
+function getDisabledRows(rows, disableRow) {
 	return rows.filter((row, rowIndex) => {
 		return disableRow ? disableRow({ row, rowIndex }) : false
 	})
 }
 
-export function getEnabledRows(rows, disableRow) {
+function getEnabledRows(rows, disableRow) {
 	return getDisabledRows(rows, negate(disableRow))
 }
 

@@ -1,0 +1,46 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"pipeline": {
+		"check:eslint": {
+			"inputs": [
+				"../../*.{cjs,js,mjs,json,mjs,mts,ts}",
+				"../../.github/**/*",
+				"../../.vscode/**/*",
+				"../../eslint.config.mjs"
+			]
+		},
+		"check:knip": {
+			"inputs": [
+				"../../knip.json",
+				"../../packages/*/scripts/**/*",
+				"../../packages/*/source/**/*"
+			]
+		},
+		"check:prettier": {
+			"inputs": [
+				"../../.fake-prettierignore",
+				"../../.prettierignore",
+				"../../*.{cjs,js,mjs,json,mjs,mts,ts}",
+				"../../.github/**/*",
+				"../../.vscode/**/*"
+			]
+		},
+		"fix:eslint": {
+			"inputs": [
+				"../../*.{cjs,js,mjs,json,mjs,mts,ts}",
+				"../../.github/**/*",
+				"../../.vscode/**/*"
+			]
+		},
+		"fix:prettier": {
+			"inputs": [
+				"../../.fake-prettierignore",
+				"../../.prettierignore",
+				"../../*.{cjs,js,mjs,json,mjs,mts,ts}",
+				"../../.github/**/*",
+				"../../.vscode/**/*"
+			]
+		}
+	}
+}

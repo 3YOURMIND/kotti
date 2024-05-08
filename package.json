@@ -59,6 +59,7 @@
 		"eslint-plugin-vitest": "^0.3.22",
 		"eslint-plugin-vue": "^9.20.1",
 		"husky": "^7.0.1",
+		"knip": "^5.13.0",
 		"lerna": "^7.4.2",
 		"lint-staged": "^11.0.1",
 		"nodemon": "^3.0.3",
@@ -69,12 +70,13 @@
 		"stylelint": "^15.11.0",
 		"stylelint-config-recess-order": "^4.3.0",
 		"stylelint-config-recommended-vue": "^1.5.0",
+		"stylelint-config-standard": "^33.0.0",
 		"stylelint-config-standard-scss": "^10.0.0",
 		"stylelint-csstree-validator": "^3.0.0",
 		"stylelint-prettier": "^4.0.2",
 		"turbo": "^1.13.2",
 		"typescript": "^5.3",
-		"unimported": "1.31.1"
+		"vue-eslint-parser": "9"
 	},
 	"engines": {
 		"node": ">=18"
@@ -111,10 +113,10 @@
 		"build": "turbo run build",
 		"check": "turbo run check",
 		"check:eslint": "turbo run check:eslint",
+		"check:knip": "turbo run check:knip",
 		"check:prettier": "turbo run check:prettier",
 		"check:publint": "turbo run check:publint",
 		"check:stylelint": "turbo run check:stylelint",
-		"check:unimported": "turbo run check:unimported",
 		"fix": "turbo run fix",
 		"fix:eslint": "turbo run fix:eslint",
 		"fix:prettier": "turbo run fix:prettier",

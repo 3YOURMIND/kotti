@@ -1,8 +1,8 @@
-const noExtraneousDependenciesOverride = (package) => ({
+const noExtraneousDependenciesOverride = (packageName) => ({
 	'import/no-extraneous-dependencies': [
 		'error',
 		{
-			packageDir: ['.', `./packages/${package}`],
+			packageDir: ['.', `./packages/${packageName}`],
 		},
 	],
 })

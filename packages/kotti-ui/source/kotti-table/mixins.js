@@ -1,13 +1,4 @@
-import {
-	KT_LAYOUT,
-	KT_STORE,
-	KT_TABLE_STATE_PROVIDER,
-	KT_TABLE,
-} from './constants'
-
-export const tableInjectedMixin = {
-	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
-}
+import { KT_STORE, KT_TABLE_STATE_PROVIDER, KT_TABLE } from './constants'
 
 export const TableColumnsStateMixin = {
 	inject: {

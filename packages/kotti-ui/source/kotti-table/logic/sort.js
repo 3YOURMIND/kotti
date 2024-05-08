@@ -6,9 +6,9 @@ import property from 'lodash/property'
 import { IS_ASC, IS_DSC, PUBLIC_SORT_PROPS } from '../constants'
 import { KottiTable } from '../types'
 
-import { setColumnsArray, getColumn } from './column'
+import { setColumnsArray } from './column'
 
-export function getSortedColumnIndex(state, column) {
+function getSortedColumnIndex(state, column) {
 	return state.sortedColumns.findIndex(({ prop }) => prop === column.prop)
 }
 
@@ -25,19 +25,11 @@ export function setSortedColumn(state, column) {
 	}
 }
 
-export function setSortedColumns(state, columns) {
-	state.sortedColumns = columns.map((column) => {
-		column = pick(column, ['prop', 'sortOrder'])
-		const oldColumn = getColumn(state, column) || {}
-		return Object.assign(oldColumn, column)
-	})
-}
-
-export function getSortedColumn(state, column) {
+function getSortedColumn(state, column) {
 	return state.sortedColumns[getSortedColumnIndex(state, column)]
 }
 
-export function getNextSortOrder(column) {
+function getNextSortOrder(column) {
 	const length = column.sortOrders.length
 	const index = (column.sortOrders.indexOf(column.sortOrder) + 1) % length
 	return column.sortOrders[Math.max(index, 0)]
@@ -78,7 +70,7 @@ function compare(order, a, b, { sortMethod, sortBy, sortOrder }) {
 	return order * sortOrder
 }
 
-export function orderBy(array, sortedColumns) {
+function orderBy(array, sortedColumns) {
 	const columns = sortedColumns.map((column) => {
 		const { prop, sortMethod } = column
 

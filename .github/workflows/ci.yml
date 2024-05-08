@@ -74,7 +74,7 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Run Stylelint
         run: yarn run check:stylelint
-  check-unimported:
+  check-knip:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -88,8 +88,8 @@ jobs:
           key: ${{ hashFiles('**/yarn.lock') }}
       - name: Install modules
         run: yarn install --frozen-lockfile
-      - name: Run Unimported
-        run: yarn run check:unimported
+      - name: Run Knip
+        run: yarn run check:knip
   check-publint:
     runs-on: ubuntu-latest
     steps:
