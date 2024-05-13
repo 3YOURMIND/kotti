@@ -1,0 +1,34 @@
+name: Publish Packages to NPM
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+      - uses: oven-sh/setup-bun@v1
+
+      - run: bun install
+
+      # update npm for provenance support
+      - run: npm --version && npm install -g npm && npm --version
+
+      # make extra sure this publish wouldn’t break anything
+      - run: yarn run build check test
+
+      - name: publish
+        run: bun internals/scripts/source/publish.ts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
