@@ -87,6 +87,7 @@
 		"fix:prettier": "yarn run check:prettier --write",
 		"fix:stylelint": "yarn run check:stylelint --fix",
 		"format": "prettier --write '**/*.{vue,js,json,ts,md}'",
+		"publish-package": "npm publish --access public --provenance",
 		"test": "vitest --run --typecheck",
 		"watch": "vite build --watch"
 	},

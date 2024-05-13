@@ -9,3 +9,6 @@ packages/yoco/fonts/
 
 # vite config gets transpiled in-place for a short moment
 vite.config.ts.timestamp*
+
+# os:macOS
+.DS_Store

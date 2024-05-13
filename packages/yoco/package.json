@@ -59,7 +59,8 @@
 		"check:publint": "publint",
 		"check:stylelint": "stylelint style.css",
 		"fix:eslint": "yarn run check:eslint --fix",
-		"fix:prettier": "yarn run check:prettier --write"
+		"fix:prettier": "yarn run check:prettier --write",
+		"publish-package": "npm publish --access public --provenance"
 	},
 	"style": "./style.css",
 	"type": "module",

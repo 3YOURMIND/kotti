@@ -50,6 +50,11 @@
 			"inputs": ["**/*.{css,scss,vue}"],
 			"outputMode": "new-only"
 		},
+		"publish-package": {
+			"cache": false,
+			"dependsOn": ["build", "check", "test"]
+		},
+		"test": {},
 		"watch": {
 			"cache": false,
 			"persistent": true

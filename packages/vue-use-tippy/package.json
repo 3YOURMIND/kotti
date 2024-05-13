@@ -55,7 +55,8 @@
 		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/vue-use-tippy",
 		"check:publint": "publint",
 		"fix:eslint": "yarn run check:eslint --fix",
-		"fix:prettier": "yarn run check:prettier --write"
+		"fix:prettier": "yarn run check:prettier --write",
+		"publish-package": "npm publish --access public --provenance"
 	},
 	"type": "module",
 	"types": "./dist/mjs/index.d.ts",
