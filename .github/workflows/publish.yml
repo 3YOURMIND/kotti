@@ -18,9 +18,15 @@ jobs:
         with:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: ${{ hashFiles('**/yarn.lock') }}
       - uses: oven-sh/setup-bun@v1
 
-      - run: bun install
+      - name: Install modules
+        run: yarn install --frozen-lockfile
 
       # update npm for provenance support
       - run: npm --version && npm install -g npm && npm --version
