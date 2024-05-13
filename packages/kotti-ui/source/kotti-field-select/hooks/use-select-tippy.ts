@@ -1,21 +1,26 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import castArray from 'lodash/castArray'
-import { Props as TippyProps } from 'tippy.js'
-import { computed, inject, ref, Ref } from 'vue'
+import type { Props as TippyProps } from 'tippy.js'
+import type { Ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 
 import { TIPPY_DISTANCE_OFFSET } from '../../constants'
-import { KottiField } from '../../kotti-field/types'
+import type { KottiField } from '../../kotti-field/types'
 import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
 import { sameWidth } from '../utils/tippy-utils'
 
 export const useSelectTippy = <T>(
 	field: KottiField.Hook.Returns<T>,
 	triggerTargets?: Ref<TippyProps['triggerTarget']>,
-) => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const tippyRef = ref<any | null>(null)
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const tippyContentRef = ref<any | null>(null)
+): {
+	isDropdownMounted: Ref<boolean>
+	isDropdownOpen: Ref<boolean>
+	setIsDropdownOpen: (isDropdownOpen: boolean) => void
+	tippyContentRef: Ref<HTMLElement | null>
+	tippyRef: Ref<HTMLElement | null>
+} => {
+	const tippyRef = ref<HTMLElement | null>(null)
+	const tippyContentRef = ref<HTMLElement | null>(null)
 
 	// track in a ref because the `tippy.state.isShown` doesn’t immediately update
 	const isDropdownOpen = ref(false)
@@ -31,13 +36,14 @@ export const useSelectTippy = <T>(
 			 */
 			appendTo: isInPopover ? 'parent' : () => document.body,
 			arrow: false,
-			content: tippyContentRef.value,
+			content: tippyContentRef.value ?? undefined,
 			// hides the tippy if we click-away from the tippy
 			hideOnClick: false,
 			interactive: true,
 			maxWidth: 'none',
 			offset: [0, TIPPY_DISTANCE_OFFSET],
 			onClickOutside: () => {
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
 				setIsDropdownOpen(false)
 			},
 			onHidden: () => {

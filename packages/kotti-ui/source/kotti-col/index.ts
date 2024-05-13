@@ -2,10 +2,10 @@ import { h, computed, defineComponent, inject } from 'vue'
 import type { PropType } from 'vue'
 
 import { KT_ROW_CONTEXT } from '../kotti-row/constants'
-import { KottiRow } from '../kotti-row/types'
+import type { KottiRow } from '../kotti-row/types'
 import { attachMeta, makeInstallable } from '../utilities'
 
-import { KottiCol } from './types'
+import type { KottiCol } from './types'
 
 export const KtCol = attachMeta(
 	makeInstallable(
@@ -62,16 +62,16 @@ export const KtCol = attachMeta(
 					const { gap, gutter } = context
 
 					return {
-						paddingBottom: `${gap.value / 2}px`,
-						paddingLeft: `${gutter.value / 2}px`,
-						paddingRight: `${gutter.value / 2}px`,
-						paddingTop: `${gap.value / 2}px`,
+						paddingBottom: `${(gap.value / 2).toString()}px`,
+						paddingLeft: `${(gutter.value / 2).toString()}px`,
+						paddingRight: `${(gutter.value / 2).toString()}px`,
+						paddingTop: `${(gap.value / 2).toString()}px`,
 					}
 				})
 
 				const classes = computed(() => [
 					'kt-col',
-					`kt-col-${props.span}`,
+					`kt-col-${props.span.toString()}`,
 					...Object.entries(props)
 						.filter(
 							([key, value]) =>
@@ -87,7 +87,7 @@ export const KtCol = attachMeta(
 									'xl',
 								].includes(key),
 						)
-						.map(([key, value]) => `kt-col-${key}-${value}`),
+						.map(([key, value]) => `kt-col-${key}-${value?.toString() ?? ''}`),
 				])
 
 				return () =>

@@ -33,6 +33,7 @@ Again, these are automatically generated so it can be considered source of truth
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
 	baseColorsFactory,
 	tokenColorsFactory,
@@ -56,14 +57,15 @@ export default {
 		renderColor(h, { row }) {
 			const color = baseColorsFactory.object[row.reference]
 			if (!color) return 'No color'
-			return (
-				<div class="color-box" style={`--local-color: ${color};`}>
-					&nbsp;
-				</div>
+			return h(
+				'div',
+				// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+				{ class: 'color-box', style: `--local-color: ${color}` },
 			)
 		},
 		renderColorVar(h, { value }) {
-			return <code>--{value}</code>
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+			return h('code', null, `--${value}`)
 		},
 	},
 }

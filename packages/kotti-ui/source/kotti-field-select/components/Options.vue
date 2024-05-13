@@ -29,7 +29,7 @@
 			/>
 		</FieldSelectOptionsItem>
 		<div
-			v-if="modifiedActions.length"
+			v-if="modifiedActions.length > 0"
 			class="kt-field-select-options__separator"
 		/>
 		<FieldSelectOptionsItem
@@ -82,6 +82,12 @@ type ModifiedOption = z.output<
 	isSelected: boolean
 }
 
+type ModifiedAction = z.output<
+	(typeof propsSchema)['shape']['actions']
+>[number] & {
+	dataTest: string
+}
+
 const mod = (number: number, divisor: number) =>
 	((number % divisor) + divisor) % divisor
 
@@ -96,13 +102,14 @@ export default defineComponent({
 
 		const optionsRef = ref<HTMLDivElement | null>(null)
 
-		const modifiedActions = computed(() =>
-			props.actions.map((action) => ({
-				...action,
-				dataTest:
-					action.dataTest ??
-					`${props.dataTestPrefix}.${camelCase(action.label)}`,
-			})),
+		const modifiedActions = computed(
+			(): Array<ModifiedAction> =>
+				props.actions.map((action) => ({
+					...action,
+					dataTest:
+						action.dataTest ??
+						`${props.dataTestPrefix}.${camelCase(action.label)}`,
+				})),
 		)
 
 		const modifiedOptions = computed(() => {
@@ -115,9 +122,11 @@ export default defineComponent({
 				return {
 					...option,
 					dataTest:
-						option.dataTest ?? `${props.dataTestPrefix}.${option.value}`,
+						option.dataTest ??
+						`${props.dataTestPrefix}.${String(option.value)}`,
 					isDisabled:
 						props.isDisabled ||
+						// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- '??' is not the right choice to handle booleans
 						option.isDisabled ||
 						(isLimitReached && !isSelected),
 					isSelected,
@@ -191,10 +200,15 @@ export default defineComponent({
 
 					if (index < 0) return
 
-					if (index < optionsLength)
-						return selectOption(modifiedOptions.value[index])
+					if (index < optionsLength) {
+						selectOption(modifiedOptions.value[index] as ModifiedOption)
+						return
+					}
 
-					return onAction(modifiedActions.value[index - optionsLength])
+					onAction(
+						modifiedActions.value[index - optionsLength] as ModifiedAction,
+					)
+					return
 				}
 			}
 		}
@@ -219,7 +233,7 @@ export default defineComponent({
 						return index === hoveredIndex.value
 
 					default:
-						throw new Error(`Options.vue: unrecognized type “${type}”`)
+						throw new Error(`Options.vue: unrecognized type “${String(type)}”`)
 				}
 			},
 			modifiedActions,

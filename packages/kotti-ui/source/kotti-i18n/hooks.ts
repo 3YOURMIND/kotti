@@ -4,7 +4,8 @@ import elementEn from 'element-ui/lib/locale/lang/en'
 import elementEs from 'element-ui/lib/locale/lang/es'
 import elementFr from 'element-ui/lib/locale/lang/fr'
 import elementJa from 'element-ui/lib/locale/lang/ja'
-import { computed, inject, provide, reactive, Ref, UnwrapRef, watch } from 'vue'
+import type { Ref, UnwrapRef } from 'vue'
+import { computed, inject, provide, reactive, watch } from 'vue'
 
 import { DecimalSeparator } from '../types/kotti'
 
@@ -14,10 +15,15 @@ import { enUS } from './locales/en-US'
 import { esES } from './locales/es-ES'
 import { frFR } from './locales/fr-FR'
 import { jaJP } from './locales/ja-JP'
-import { KottiI18n } from './types'
+import type { KottiI18n } from './types'
 import { fixDeepMerge } from './utilities'
 
-export const useI18nContext = () => {
+export const useI18nContext = (): {
+	currencyMap: KottiI18n.CurrencyMap
+	locale: KottiI18n.SupportedLanguages
+	messages: KottiI18n.Messages
+	numberFormat: KottiI18n.NumberFormat
+} => {
 	const context = inject<KottiI18n.Context | null>(KT_I18N_CONTEXT, null)
 
 	if (context === null)
@@ -66,7 +72,7 @@ export const useI18nProvide = ({
 	locale: Ref<KottiI18n.Props['locale']>
 	messages: Ref<KottiI18n.Props['messages']>
 	numberFormat: Ref<KottiI18n.Props['numberFormat']>
-}) => {
+}): void => {
 	const defaultMessages = computed(
 		(): KottiI18n.Messages =>
 			({

@@ -1,4 +1,4 @@
-import { SpecifyRequiredProps } from '../types/utilities'
+import type { SpecifyRequiredProps } from '../types/utilities'
 
 /* eslint-disable no-magic-numbers */
 type UpTo24 =

@@ -1,4 +1,4 @@
-import { Props } from 'tippy.js'
+import type { Props } from 'tippy.js'
 
 type PopperModifier = Exclude<
 	Props['popperOptions']['modifiers'],
@@ -11,12 +11,14 @@ type PopperModifier = Exclude<
 export const sameWidth: PopperModifier = {
 	enabled: true,
 	fn: ({ instance, state }) => {
-		const triggerReferenceWidth = `${state.rects.reference.width}px`
+		const triggerReferenceWidth = `${state.rects.reference.width.toString()}px`
 
-		if (state.styles.popper.width !== triggerReferenceWidth) {
-			state.styles.popper.width = triggerReferenceWidth
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- popper style always exists at runtime
+		if (state.styles.popper!.width !== triggerReferenceWidth) {
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			state.styles.popper!.width = triggerReferenceWidth
 			// force update the popper instance, so it can reposition the dropdown properly
-			instance.update()
+			void instance.update()
 		}
 	},
 	name: 'sameWidth',

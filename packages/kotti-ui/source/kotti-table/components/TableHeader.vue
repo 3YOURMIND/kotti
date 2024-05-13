@@ -60,6 +60,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
 import { KottiTable } from '../types'
 

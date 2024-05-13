@@ -8,7 +8,7 @@
 import { defineComponent, inject, computed, provide } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
-import { KottiForm } from '../kotti-form/types'
+import type { KottiForm } from '../kotti-form/types'
 
 export default defineComponent({
 	name: 'KtFormControllerObject',
@@ -39,11 +39,12 @@ export default defineComponent({
 		const setValue = (
 			key: keyof KottiForm.ContextType,
 			newValue: KottiForm.ContextType[keyof KottiForm.ContextType],
-		) =>
+		) => {
 			context.setValue(props.formKey, {
 				...values.value,
 				[key]: newValue,
 			})
+		}
 
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			fieldInheritableProps: context.fieldInheritableProps,
@@ -60,8 +61,9 @@ export default defineComponent({
 			/**
 			 * Updates KtFormControllerObject values
 			 */
-			setValues: (newFormValues: KottiForm.ContextType) =>
-				context.setValue(props.formKey, newFormValues),
+			setValues: (newFormValues: KottiForm.ContextType) => {
+				context.setValue(props.formKey, newFormValues)
+			},
 			values,
 		}
 	},

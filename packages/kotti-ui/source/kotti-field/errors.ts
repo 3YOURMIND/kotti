@@ -1,14 +1,12 @@
-import { CustomError } from 'ts-custom-error'
-
-import { KottiField } from './types'
+import type { KottiField } from './types'
 
 const createErrorMessage = (
 	props: KottiField.PropsInternal,
 	messages: string[],
-) => `useField(${props.formKey ?? props.label}): ${messages.join('\n')}`
+) => `useField(${String(props.formKey ?? props.label)}): ${messages.join('\n')}`
 
-class ImplicitFormKeyNone extends CustomError {
-	public constructor(props: KottiField.PropsInternal) {
+class ImplicitFormKeyNoneError extends Error {
+	constructor(props: KottiField.PropsInternal) {
 		super(
 			createErrorMessage(props, [
 				'Encountered a KtField without a “formKey” inside a KtForm.',
@@ -16,11 +14,12 @@ class ImplicitFormKeyNone extends CustomError {
 				'If this is not a mistake, please add formKey="NONE" to your field and bind v-model explicitly.',
 			]),
 		)
+		this.name = 'ImplicitFormKeyNoneError'
 	}
 }
 
-class InvalidPropOutsideOfContext extends CustomError {
-	public constructor(
+class InvalidPropOutsideOfContextError extends Error {
+	constructor(
 		props: KottiField.PropsInternal,
 		propName: keyof KottiField.PropsInternal,
 	) {
@@ -30,22 +29,24 @@ class InvalidPropOutsideOfContext extends CustomError {
 				'This is most likely a mistake and should be removed.',
 			]),
 		)
+		this.name = 'InvalidPropOutsideOfContextError'
 	}
 }
 
-class DisabledSetValueCalled extends CustomError {
-	public constructor(props: KottiField.PropsInternal) {
+class DisabledSetValueCalledError extends Error {
+	constructor(props: KottiField.PropsInternal) {
 		super(
 			createErrorMessage(props, [
 				'Attempted to setValue on a disabled field.',
 				'Disabled fields should never call setValue as it causes unexpected behavior.',
 			]),
 		)
+		this.name = 'DisabledSetValueCalledError'
 	}
 }
 
-export const KtFieldErrors = {
-	DisabledSetValueCalled,
-	ImplicitFormKeyNone,
-	InvalidPropOutsideOfContext,
+export const ktFieldErrors = {
+	DisabledSetValueCalledError,
+	ImplicitFormKeyNoneError,
+	InvalidPropOutsideOfContextError,
 }

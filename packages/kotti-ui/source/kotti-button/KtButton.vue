@@ -109,7 +109,9 @@ export default defineComponent({
 				'kt-button--has-icon': props.icon !== null,
 				'kt-button--is-block': props.isBlock,
 				'kt-button--is-multiline': props.isMultiline,
-				[`kt-button--is-toggle-${props.toggleStatus}`]: isToggle.value,
+				...(props.toggleStatus
+					? { [`kt-button--is-toggle-${props.toggleStatus}`]: isToggle.value }
+					: {}),
 				[`kt-button--size-${props.size}`]: true,
 				[`kt-button--type-${props.type}`]: true,
 			})),

@@ -1,5 +1,5 @@
-import { KottiField } from '../kotti-field/types'
-import { KottiForm } from '../kotti-form/types'
+import type { KottiField } from '../kotti-field/types'
+import type { KottiForm } from '../kotti-form/types'
 
 export module KottiFormControllerList {
 	export type Props = {

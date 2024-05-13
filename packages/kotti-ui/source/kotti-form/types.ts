@@ -1,6 +1,6 @@
-import { Ref } from 'vue'
+import type { Ref } from 'vue'
 
-import { KottiField } from '../kotti-field/types'
+import type { KottiField } from '../kotti-field/types'
 
 export module KottiForm {
 	export interface Context<

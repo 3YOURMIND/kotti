@@ -1,13 +1,13 @@
-import { KottiFieldCurrency } from '../kotti-field-currency/types'
-import { KottiFieldDateRange } from '../kotti-field-date/types'
-import { KottiFieldNumber } from '../kotti-field-number/types'
-import {
+import type { KottiFieldCurrency } from '../kotti-field-currency/types'
+import type { KottiFieldDateRange } from '../kotti-field-date/types'
+import type { KottiFieldNumber } from '../kotti-field-number/types'
+import type {
 	KottiFieldMultiSelect,
 	KottiFieldSingleSelect,
 } from '../kotti-field-select/types'
-import { KottiFieldText } from '../kotti-field-text/types'
-import { KottiFieldToggle } from '../kotti-field-toggle/types'
-import { SpecifyRequiredProps } from '../types/utilities'
+import type { KottiFieldText } from '../kotti-field-text/types'
+import type { KottiFieldToggle } from '../kotti-field-toggle/types'
+import type { SpecifyRequiredProps } from '../types/utilities'
 
 export module KottiFilters {
 	export enum ButtonLinkType {

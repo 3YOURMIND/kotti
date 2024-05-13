@@ -19,7 +19,8 @@ import { computed, defineComponent, ref, watch } from 'vue'
 import { makeProps } from '../make-props'
 
 import CommentTextArea from './components/CommentTextArea.vue'
-import { KottiComment, KottiCommentInput } from './types'
+import type { KottiComment } from './types'
+import { KottiCommentInput } from './types'
 
 export default defineComponent({
 	name: 'KtCommentInput',
@@ -28,6 +29,7 @@ export default defineComponent({
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
 	setup(props, { emit }) {
+		// eslint-disable-next-line vue/no-setup-props-destructure
 		const localIsInternal = ref<KottiComment.PropsInternal['isInternal']>(
 			props.isInternal,
 		)

@@ -6,25 +6,21 @@
 			"dependsOn": ["^build", "build:vue-tsc", "build:vite", "build:tokens"]
 		},
 		"build:tokens": {
-			"inputs": ["./tokens/**"],
+			"inputs": ["tokens/**"],
 			"outputMode": "new-only",
-			"outputs": ["./source/kotti-style/tokens.css"]
+			"outputs": ["source/kotti-style/tokens.css"]
 		},
 		"build:vite": {
 			"dependsOn": ["^build"],
 			"inputs": ["vite.config.ts", "source/**", "tsconfig*.json"],
 			"outputMode": "new-only",
-			"outputs": [
-				"./dist/kotti-ui.*",
-				"./dist/variables.scss",
-				"./dist/style.css"
-			]
+			"outputs": ["dist/kotti-ui.*", "dist/variables.scss", "dist/style.css"]
 		},
 		"build:vue-tsc": {
 			"dependsOn": ["^build"],
 			"inputs": ["source/**", "tsconfig*.json"],
 			"outputMode": "new-only",
-			"outputs": ["./dist/**/*.{cts,d.ts}"]
+			"outputs": ["dist/**/*.{cts,d.ts}"]
 		},
 		"test": {
 			"dependsOn": ["^build"],

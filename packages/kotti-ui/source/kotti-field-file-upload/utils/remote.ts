@@ -38,7 +38,6 @@ export const buildFileInfo = ({
 	isUploaded: boolean
 	maxFileSize: KottiFieldFileUploadRemote.PropsInternal['maxFileSize']
 	progress: KottiFieldFileUploadRemote.Payload[0]['progress']
-	// eslint-disable-next-line sonarjs/cognitive-complexity
 }): KottiFieldFileUploadRemote.FileInfo => {
 	const fileName = 'file' in fileItem ? fileItem.file.name : fileItem.name
 	const fileSize = 'file' in fileItem ? fileItem.file.size : fileItem.size

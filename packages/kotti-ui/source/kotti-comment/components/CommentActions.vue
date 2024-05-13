@@ -44,9 +44,15 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtComment')
 
 		return {
-			onDelete: () => emit('delete'),
-			onEdit: () => emit('update:isEditing', true),
-			onReply: () => emit('reply'),
+			onDelete: () => {
+				emit('delete')
+			},
+			onEdit: () => {
+				emit('update:isEditing', true)
+			},
+			onReply: () => {
+				emit('reply')
+			},
 			translations,
 		}
 	},

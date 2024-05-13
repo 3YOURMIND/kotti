@@ -268,7 +268,7 @@ _Note:_ Neither events get triggered on a _disabled_ row.
 
 ```js
 methods: {
-	showAlertOnClickOrEnter(row, rowIndex){
+	showAlertOnClickOrEnter(row, rowIndex) {
 		alert(`${JSON.stringify(value)} is at index: ${model}!`)
 	}
 }
@@ -1086,6 +1086,7 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { KtAvatar, KtBanner, KtTable } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
 
@@ -1171,8 +1172,8 @@ export default {
 	},
 	computed: {
 		toIndex() {
-			const parsedFrom = parseInt(this.fromIndex, 10)
-			const parsedSteps = parseInt(this.dragSteps, 10)
+			const parsedFrom = Number.parseInt(this.fromIndex, 10)
+			const parsedSteps = Number.parseInt(this.dragSteps, 10)
 
 			return parsedFrom + parsedSteps + (parsedSteps > 0 ? 1 : 0)
 		},
@@ -1182,10 +1183,12 @@ export default {
 			return row.name.includes(this.disableName)
 		},
 		showAlertOnClickOrEnter(row, rowIndex) {
-			alert(`${JSON.stringify(row)} is at index: ${rowIndex}!`)
+			// eslint-disable-next-line no-alert
+			window.alert(`${JSON.stringify(row)} is at index: ${String(rowIndex)}!`)
 		},
 		showAlert(model, value) {
-			alert(`${model} is ${value}!`)
+			// eslint-disable-next-line no-alert, @typescript-eslint/restrict-template-expressions
+			window.alert(`${model} is ${value}!`)
 		},
 		sortDate(a, b) {
 			return new Date(a) - new Date(b)
@@ -1196,48 +1199,72 @@ export default {
 		formatDate(value) {
 			return new Date(value).toUTCString()
 		},
-		renderEmpty() {
-			return <div>Custom empty render</div>
+		renderEmpty(h) {
+			return h('div', 'Custom empty render')
 		},
-		renderLoading() {
-			return <div>Custom loading render</div>
+		renderLoading(h) {
+			return h('div', 'Custom loading render')
 		},
 		renderExpand(h, { row }) {
-			return (
-				<div>
-					<KtBanner message={row.name} icon="user" isGray />
-					<KtBanner message={row.address.line} icon="global" isGray />
-				</div>
-			)
+			return h('div', null, [
+				h(KtBanner, {
+					props: { message: row.name, icon: 'user', isGray: true },
+				}),
+				h(KtBanner, {
+					props: {
+						message: row.address.line,
+						icon: 'global',
+						isGray: true,
+					},
+				}),
+			])
 		},
 		renderActions(h, { row }) {
-			return (
-				<div>
-					<i class="yoco" onClick={() => this.showAlert(row.name, 'edited')}>
-						edit
-					</i>
-					<i class="yoco" onClick={() => this.showAlert(row.name, 'deleted')}>
-						trash
-					</i>
-				</div>
-			)
+			return [
+				h(
+					'i',
+					{
+						class: 'yoco',
+						on: {
+							click: () => {
+								this.showAlert(row.name, 'edited')
+							},
+						},
+					},
+					'edit',
+				),
+				h(
+					'i',
+					{
+						class: 'yoco',
+						on: {
+							click: () => {
+								this.showAlert(row.name, 'deleted')
+							},
+						},
+					},
+					'trash',
+				),
+			]
 		},
 		showAlterCallBack(name, text) {
-			return () => this.showAlert(name, text)
+			return () => {
+				this.showAlert(name, text)
+			}
 		},
 		renderHeader(h, { value }) {
-			return <div>{value}</div>
+			return h('div', value)
 		},
 		renderCell(h, { value }) {
-			return (
-				<KtAvatar
-					class="mr-16px"
-					name={value}
-					isHoverable
-					size={Kotti.Avatar.Size.SMALL}
-					src="https://picsum.photos/200"
-				/>
-			)
+			return h(KtAvatar, {
+				class: 'mr-16px',
+				props: {
+					name: value,
+					isHoverable: true,
+					size: Kotti.Avatar.Size.SMALL,
+					src: 'https://picsum.photos/200',
+				},
+			})
 		},
 	},
 }

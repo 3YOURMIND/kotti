@@ -29,6 +29,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 const ADJACENT_MULTIPLIER = 20
 const BASE_NUMBER_WIDTH = 24.5
 const BASE_OFFSET = 3
@@ -50,19 +51,23 @@ export default {
 			const baseElementsWidth =
 				(2 * this.adjacentAmount + MAX_NUMBER_OF_ELEMENTS) * numberWidth
 			const adjacentPagesOffset = this.adjacentAmount * ADJACENT_MULTIPLIER
+			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 			return baseElementsWidth + BASE_OFFSET * 2 + adjacentPagesOffset
 		},
 		containerStyle() {
-			return this.fixedWidth ? { width: `${this.pixelMargin}px` } : {}
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			return this.fixedWidth ? { width: `${String(this.pixelMargin)}px` } : {}
 		},
 		showFirstPage() {
 			return !this.neighborValues.includes(0)
 		},
 		showLeftDots() {
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			return this.showFirstPage && !this.neighborValues.includes(1)
 		},
 		showRightDots() {
 			return (
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 				this.showLastPage && !this.neighborValues.includes(this.maximumPage - 1)
 			)
 		},
@@ -78,9 +83,11 @@ export default {
 				const canJumpRight = max < this.maximumPage
 
 				if (canJumpLeft) min -= 1
+				// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 				else if (canJumpRight) max += 1
 				else break
 
+				// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 				if (canJumpRight) max += 1
 				else if (canJumpLeft) min -= 1
 				else break
@@ -108,6 +115,7 @@ export default {
 			}
 		},
 		humanReadablePageNumber(page) {
+			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 			return page + 1
 		},
 	},

@@ -1,4 +1,5 @@
-import { defineComponent, computed, h, provide, PropType } from 'vue'
+import type { PropType } from 'vue'
+import { defineComponent, computed, h, provide } from 'vue'
 
 import { attachMeta, makeInstallable } from '../utilities'
 
@@ -26,8 +27,8 @@ export const KtRow = attachMeta(
 				const style = computed(() =>
 					props.gutter
 						? {
-								marginLeft: `-${props.gutter / 2}px`,
-								marginRight: `-${props.gutter / 2}px`,
+								marginLeft: `-${String(props.gutter / 2)}px`,
+								marginRight: `-${String(props.gutter / 2)}px`,
 							}
 						: {},
 				)
@@ -43,10 +44,12 @@ export const KtRow = attachMeta(
 						{
 							class: [
 								'kt-row',
-								props.justify !== 'start'
+								props.justify !== KottiRow.Justify.START
 									? `kt-row--justify-${props.justify}`
 									: '',
-								props.align !== 'top' ? `kt-row--align-${props.align}` : '',
+								props.align !== KottiRow.Align.TOP
+									? `kt-row--align-${props.align}`
+									: '',
 							],
 							style: style.value,
 						},

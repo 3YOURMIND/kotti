@@ -3,12 +3,11 @@
 		"source.fixAll.eslint": "always"
 	},
 	"editor.formatOnSave": true,
-	"eslint.options": {
-		"extensions": [".js", ".vue", ".ts"]
-	},
 	"eslint.validate": [
 		"javascript",
 		"javascriptreact",
+		"json",
+		"jsonc",
 		"typescript",
 		"typescriptreact",
 		"vue"

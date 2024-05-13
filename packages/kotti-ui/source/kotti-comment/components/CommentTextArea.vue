@@ -40,6 +40,7 @@
 		</div>
 		<div v-if="showCancelMessage" class="kt-comment-text-area__footer">
 			<span v-text="translations.cancelMessage" />
+			<!-- eslint-disable-next-line vue/no-useless-mustaches -->
 			{{ ' ' }}
 			<a
 				:tabIndex="cancelMessageTabindex"
@@ -81,7 +82,9 @@ export default defineComponent({
 			computed(() => props.value),
 		)
 
-		const blurTextarea = () => blurElement(containerRef.value)
+		const blurTextarea = () => {
+			blurElement(containerRef.value)
+		}
 		const focusTextarea = () => {
 			textareaRef.value?.focus()
 			showCancelMessage.value = true
@@ -125,9 +128,12 @@ export default defineComponent({
 				emit('confirm')
 				blurTextarea()
 			},
-			onInput: (event: { target: HTMLTextAreaElement }) =>
-				emit('input', event.target.value),
-			onToggleInternal: () => emit('toggleInternal'),
+			onInput: (event: Event) => {
+				emit('input', (event.target as HTMLTextAreaElement).value)
+			},
+			onToggleInternal: () => {
+				emit('toggleInternal')
+			},
 			showCancelMessage,
 			textareaRef,
 			toggleInternalButtonProps: computed(

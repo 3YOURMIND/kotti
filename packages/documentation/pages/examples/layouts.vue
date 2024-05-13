@@ -42,6 +42,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 
@@ -220,7 +221,8 @@ export default {
 	},
 	methods: {
 		handleMenuClick() {
-			alert('Link Clicked')
+			// eslint-disable-next-line no-alert
+			window.alert('Link Clicked')
 		},
 		setIsNarrow(isNarrow) {
 			this.isNarrow = isNarrow

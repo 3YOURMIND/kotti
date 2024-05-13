@@ -1,8 +1,10 @@
-import { computed, h, defineComponent, PropType } from 'vue'
+import type { PropType } from 'vue'
+import { computed, h, defineComponent } from 'vue'
 
 import { useI18nProvide } from './hooks'
-import { KottiI18n } from './types'
+import type { KottiI18n } from './types'
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const KtI18nContext = defineComponent({
 	name: 'KtI18nContext',
 	props: {

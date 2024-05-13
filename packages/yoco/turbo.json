@@ -3,9 +3,9 @@
 	"extends": ["//"],
 	"pipeline": {
 		"build": {
-			"inputs": ["./scripts/**", "./source/**", "./svg/**", "tsconfig.*"],
+			"inputs": ["scripts/**", "source/**", "svg/**", "tsconfig.*"],
 			"outputMode": "new-only",
-			"outputs": ["./dist/**", "./fonts/**"]
+			"outputs": ["dist/**", "fonts/**"]
 		}
 	}
 }

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { Kotti } from '@3yourmind/kotti-ui'
+import type { Kotti } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from 'vue'
 
 import navLogo from '../assets/img/nav_logo.svg'
@@ -25,7 +25,7 @@ const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
 
 const saveSavedFieldsToLocalStorage = (isNarrow: boolean) => {
 	try {
-		if (typeof window !== 'undefined' && window.document)
+		if (typeof window !== 'undefined')
 			window.localStorage.setItem(
 				LOCALSTORAGE_IS_NAVBAR_NARROW_KEY,
 				JSON.stringify(isNarrow),
@@ -44,7 +44,7 @@ export default defineComponent({
 		const isNarrow = ref<boolean>(
 			(() => {
 				try {
-					if (typeof window !== 'undefined' && window.document) {
+					if (typeof window !== 'undefined') {
 						const value = window.localStorage.getItem(
 							LOCALSTORAGE_IS_NAVBAR_NARROW_KEY,
 						)
@@ -91,11 +91,9 @@ export default defineComponent({
 										? route.value.path === '/'
 										: route.value.path.startsWith(`/${subsection.path}`),
 								props: {
-									to: `/${subsection.path}${
-										subsection.pages.length >= 1
-											? `/${subsection.pages[0].path}`
-											: ''
-									}`,
+									to: [`/${subsection.path}`, subsection.pages[0]?.path]
+										.filter(Boolean)
+										.join('/'),
 								},
 								title: subsection.title,
 							}),

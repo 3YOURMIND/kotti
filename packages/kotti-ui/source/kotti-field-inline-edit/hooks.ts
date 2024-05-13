@@ -1,9 +1,11 @@
-import { Ref, computed, onMounted, watch } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 
-import { KottiField } from '../kotti-field/types'
-import { Nullable } from '../types/utilities'
+import type { KottiField } from '../kotti-field/types'
+import type { Nullable } from '../types/utilities'
 
-import { FieldInlineEditElement, KottiFieldInlineEdit } from './types'
+import type { FieldInlineEditElement } from './types'
+import { KottiFieldInlineEdit } from './types'
 import { resizeField } from './utils'
 
 export const useAdjustHeight = ({
@@ -14,7 +16,7 @@ export const useAdjustHeight = ({
 	field: KottiField.Hook.Returns<KottiFieldInlineEdit.Value>
 	inputRef: Ref<Nullable<FieldInlineEditElement>>
 	props: KottiFieldInlineEdit.PropsInternal
-}) => {
+}): void => {
 	const inputRef = _inputRef
 	const currentValue = computed(() => field.currentValue)
 
@@ -43,7 +45,9 @@ export const usePreventConfirm = ({
 }: {
 	field: KottiField.Hook.Returns<KottiFieldInlineEdit.Value>
 	props: KottiFieldInlineEdit.PropsInternal
-}) => {
+}): {
+	preventConfirm: ComputedRef<boolean>
+} => {
 	const fieldValidation = computed(() => field.validation.type)
 
 	const preventConfirm = computed<boolean>(() => {

@@ -49,7 +49,9 @@ export default defineComponent({
 				'kt-accordion__content--is-open': !props.isClosed,
 			})),
 			contentInnerRef,
-			toggle: () => emit('update:isClosed', !props.isClosed),
+			toggle: () => {
+				emit('update:isClosed', !props.isClosed)
+			},
 			toggleIcon: computed(() =>
 				props.isClosed ? Yoco.Icon.PLUS : Yoco.Icon.MINUS,
 			),

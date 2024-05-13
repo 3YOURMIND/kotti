@@ -101,17 +101,18 @@
 
 <script lang="ts">
 import { Octokit } from '@octokit/rest'
-import { Endpoints } from '@octokit/types'
+import type { Endpoints } from '@octokit/types'
 import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
 import { marked } from 'marked'
 import naturalSort from 'natural-sort'
-import { computed, onBeforeMount, defineComponent, ref, Ref } from 'vue'
+import type { Ref } from 'vue'
+import { computed, onBeforeMount, defineComponent, ref } from 'vue'
 
 const octokit = new Octokit()
 
 const convertPoundToIssueLink = (string: string) =>
-	string.replace(
+	string.replaceAll(
 		/#(\d+)/g,
 		'[#$1](https://github.com/3YOURMIND/kotti/issues/$1)',
 	)
@@ -126,6 +127,7 @@ export default defineComponent({
 			Endpoints['GET /repos/{owner}/{repo}/releases']['response']['data']
 		> = ref([])
 
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		onBeforeMount(async () => {
 			releases.value = (
 				await octokit.repos.listReleases({

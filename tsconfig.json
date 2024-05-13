@@ -2,11 +2,12 @@
 	"compilerOptions": {
 		"esModuleInterop": true,
 		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"noUncheckedIndexedAccess": true,
 		"resolveJsonModule": true,
 		"strict": true
 	},
 	"vueCompilerOptions": {
-		"target": 2.7,
-		"strictTemplates": true
+		"strictTemplates": true,
+		"target": 2.7
 	}
 }

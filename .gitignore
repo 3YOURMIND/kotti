@@ -1,7 +1,6 @@
 .nuxt/
 .turbo/
 dist/
-gh-pages/
 node_modules/
 packages/kotti-ui/report.*.html
 packages/yoco/fonts/
@@ -12,3 +11,6 @@ vite.config.ts.timestamp*
 
 # os:macOS
 .DS_Store
+
+# package.json debug:turbo script
+/turbo-graph.png

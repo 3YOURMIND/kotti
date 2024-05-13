@@ -10,6 +10,7 @@
 		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"noImplicitAny": true,
+		"noUncheckedIndexedAccess": true,
 		"outDir": "dist",
 		"resolveJsonModule": true,
 		"rootDir": "source",

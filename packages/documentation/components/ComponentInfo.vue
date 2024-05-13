@@ -101,7 +101,10 @@
 								style="font-style: italic"
 								v-text="'No default'"
 							/>
-							<code v-else v-text="stringifyDefault(prop.default, prop.type)" />
+							<code
+								v-else
+								v-text="stringifyPropDefault(prop.default, prop.type)"
+							/>
 						</td>
 						<td>
 							<div style="display: flex; align-items: center">
@@ -131,7 +134,8 @@ import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
 import castArray from 'lodash/castArray'
 import kebabCase from 'lodash/kebabCase'
-import { computed, defineComponent, ref, PropType } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 import ComponentInfoSlots from './component-info/Slots.vue'
 
@@ -263,14 +267,15 @@ export default defineComponent({
 				return result
 			}),
 			showProps: ref(false),
-			stringifyDefault: (
+			stringifyPropDefault: (
+				// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 				defaultValue: (() => unknown) | unknown,
 				type: Array<VuePropType> | VuePropType,
 			) => {
 				if (typeof defaultValue === 'function')
-					if (castArray(type).some((t) => t.name === 'Function'))
-						return `${defaultValue.toString()} *`
-					else return `${JSON.stringify(defaultValue())} *`
+					return castArray(type).some((t) => t.name === 'Function')
+						? `${defaultValue.toString()} *`
+						: `${JSON.stringify(defaultValue())} *`
 
 				return JSON.stringify(defaultValue)
 			},

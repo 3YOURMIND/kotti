@@ -6,13 +6,14 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, computed, ref, watch, UnwrapRef, nextTick } from 'vue'
-import { InputHTMLAttributes } from 'vue/types/jsx'
+import type { UnwrapRef } from 'vue'
+import { defineComponent, computed, ref, watch, nextTick } from 'vue'
+import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
-import { KottiI18n } from '../kotti-i18n/types'
+import type { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
 import { DecimalSeparator } from '../types/kotti'
 import { isNumberInRange } from '../utilities'
@@ -56,12 +57,13 @@ export default defineComponent({
 		const i18nContext = useI18nContext()
 
 		const currencyFormat = computed<KottiI18n.CurrencyMap[string]>(() => {
-			if (!(props.currency in i18nContext.currencyMap))
+			const result = i18nContext.currencyMap[props.currency]
+
+			if (!result)
 				throw new Error(
 					`KtFieldCurrency: couldn't find key: ${props.currency} in KtI18nContext.Props['currencyMap']`,
 				)
-
-			return i18nContext.currencyMap[props.currency]
+			return result
 		})
 
 		/**
@@ -102,7 +104,7 @@ export default defineComponent({
 				if (!isEqualPrecision)
 					throw new Error(
 						[
-							`KtFieldCurrency: field.currentValue “${newValue}” has more precision than is allowed (${newDecimalPlaces}).`,
+							`KtFieldCurrency: field.currentValue “${String(newValue)}” has more precision than is allowed (${String(newDecimalPlaces)}).`,
 							'This is an issue because there would be a difference between displayed and actual value',
 						].join(' '),
 					)
@@ -129,7 +131,7 @@ export default defineComponent({
 					})
 				)
 					throw new RangeError(
-						`KtFieldCurrency: encountered an out-of-range number "${newValue}"`,
+						`KtFieldCurrency: encountered an out-of-range number "${String(newValue)}"`,
 					)
 
 				const isLogicallyDifferent =

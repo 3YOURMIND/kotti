@@ -1,4 +1,4 @@
-import { resolve } from 'path'
+import path from 'node:path'
 
 import commonjs from '@rollup/plugin-commonjs'
 import vue from '@vitejs/plugin-vue2'
@@ -8,14 +8,6 @@ import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 import packageJSON from './package.json' assert { type: 'json' }
-
-/**
- * @see {@link https://vitejs.dev/guide/env-and-mode.html#node-env-and-modes}
- */
-enum Mode {
-	DEVELOPMENT = 'development',
-	PRODUCTION = 'production',
-}
 
 const getPlugins = ({ enableVisualizer }: { enableVisualizer: boolean }) => [
 	commonjs({
@@ -49,7 +41,10 @@ const getPlugins = ({ enableVisualizer }: { enableVisualizer: boolean }) => [
  * @see {@link https://vitejs.dev/config/}
  */
 export default defineConfig(({ mode }) => {
-	const isProduction = mode === Mode.PRODUCTION
+	/**
+	 * @see {@link https://vitejs.dev/guide/env-and-mode.html#node-env-and-modes}
+	 */
+	const isProduction = mode === 'production'
 
 	const enableVisualizer = ['1', 'true', 'yes', 'y'].includes(
 		process.env.ENABLE_VISUALIZER?.toLowerCase() ?? '',
@@ -72,7 +67,7 @@ export default defineConfig(({ mode }) => {
 			minify: isProduction ? 'esbuild' : false,
 			emptyOutDir: false,
 			lib: {
-				entry: resolve(__dirname, 'source/index.ts'),
+				entry: path.resolve(__dirname, 'source/index.ts'),
 				formats: ['es', 'cjs'],
 				name: 'KottiUI',
 				fileName: 'kotti-ui',

@@ -24,7 +24,9 @@ export default defineComponent({
 				icon: Yoco.Icon.CHECK,
 				tabindex: props.tabIndex,
 			})),
-			handleConfirm: () => emit('confirm'),
+			handleConfirm: () => {
+				emit('confirm')
+			},
 			Yoco,
 		}
 	},

@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'

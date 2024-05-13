@@ -1,43 +1,36 @@
 <template>
 	<div class="inline-container">
 		<li
-			v-for="(page, index) in totalPages"
+			v-for="(page, index) in pageAmount"
 			:key="index"
 			:class="paginatorClasses(page, 'page-item--active')"
 			@click="$emit('setPage', page)"
-			v-text="humanReadablePageNumber(page)"
+			v-text="getHumanReadablePageNumber(page)"
 		/>
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
+
+export default defineComponent({
 	name: 'PaginationExpanded',
 	props: {
-		currentPage: { type: Number, required: true },
-		pageSize: { type: Number, required: true },
-		total: { type: Number, required: true },
+		currentPage: { required: true, type: Number },
+		pageSize: { required: true, type: Number },
+		total: { required: true, type: Number },
 	},
-	computed: {
-		pageAmount() {
-			return Math.ceil(this.total / this.pageSize)
-		},
-		totalPages() {
-			return [...Array(this.pageAmount).keys()]
-		},
-	},
-	methods: {
-		humanReadablePageNumber(page) {
-			return page + 1
-		},
-		paginatorClasses(page, className) {
-			return {
+	setup(props) {
+		return {
+			getHumanReadablePageNumber: (pageNumber: number) => pageNumber + 1,
+			pageAmount: computed(() => Math.ceil(props.total / props.pageSize)),
+			paginatorClasses: (pageNumber: number, className: string) => ({
 				'page-item': true,
-				[className]: this.currentPage === page,
-			}
-		},
+				[className]: props.currentPage === pageNumber,
+			}),
+		}
 	},
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import { Instance, Props as TippyProps } from 'tippy.js'
+import type { Instance, Props as TippyProps } from 'tippy.js'
 import { computed, defineComponent, ref, watch } from 'vue'
 
 import { makeProps } from '../make-props'
@@ -75,7 +75,7 @@ export default defineComponent({
 					if (contentRef.value === null)
 						throw new Error('KtModal: Unbound contentRef')
 
-					popper.appendChild(contentRef.value)
+					popper.append(contentRef.value)
 
 					return { popper }
 				},

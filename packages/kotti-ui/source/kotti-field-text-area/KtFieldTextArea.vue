@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue'
-import { TextareaHTMLAttributes } from 'vue/types/jsx'
+import type { TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -39,7 +39,7 @@ const resizeTextarea = ({
 		textarea.setAttribute('style', 'height: auto')
 		textarea.setAttribute(
 			'style',
-			`height: ${textarea.scrollHeight + HEIGHT_OFFSET}px`,
+			`height: ${String(textarea.scrollHeight + HEIGHT_OFFSET)}px`,
 		)
 	}
 }

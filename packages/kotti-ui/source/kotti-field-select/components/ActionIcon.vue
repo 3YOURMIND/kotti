@@ -19,7 +19,8 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { PropType, computed, defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'ActionIcon',
@@ -35,8 +36,9 @@ export default defineComponent({
 				...props.classes,
 				'action-icon__container',
 			]),
-			handleSetIsDropdownOpen: () =>
-				emit('update:isDropdownOpen', !props.isDropdownOpen),
+			handleSetIsDropdownOpen: () => {
+				emit('update:isDropdownOpen', !props.isDropdownOpen)
+			},
 			Yoco,
 		}
 	},

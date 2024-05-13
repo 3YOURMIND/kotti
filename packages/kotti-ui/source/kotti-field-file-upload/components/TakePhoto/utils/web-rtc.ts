@@ -3,11 +3,11 @@
  * @returns true if supported, else false
  */
 export const isWebRTCSupported = (): boolean =>
-	!(
-		!window.navigator.mediaDevices ||
-		!window.navigator.mediaDevices.enumerateDevices ||
-		!window.navigator.mediaDevices.getUserMedia
-	)
+	Boolean(window.navigator.mediaDevices) &&
+	// eslint-disable-next-line @typescript-eslint/unbound-method
+	Boolean(window.navigator.mediaDevices.enumerateDevices) &&
+	// eslint-disable-next-line @typescript-eslint/unbound-method
+	Boolean(window.navigator.mediaDevices.getUserMedia)
 
 /**
  * Requests a list of the available cameras
@@ -36,9 +36,11 @@ export const requestCamera = async (cameraId: string): Promise<MediaStream> => {
 }
 
 /**
- * Stops the camera's assosiated stream media video tracks
+ * Stops the camera's associated stream media video tracks
  * @param stream MediaStream with the camera's video track
  */
-export const stopCameraStream = (stream: MediaStream | null) => {
-	if (stream) stream.getTracks().forEach((track) => track.stop())
+export const stopCameraStream = (stream: MediaStream | null): void => {
+	stream?.getTracks().forEach((track) => {
+		track.stop()
+	})
 }

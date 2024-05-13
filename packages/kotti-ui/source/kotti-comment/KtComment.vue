@@ -63,8 +63,8 @@ export default defineComponent({
 
 		const rootDataTest = computed(() =>
 			props.dataTest
-				? `${props.dataTest}.comment.${props.id}`
-				: `comment.${props.id}`,
+				? `${props.dataTest}.comment.${String(props.id)}`
+				: `comment.${String(props.id)}`,
 		)
 
 		return {
@@ -82,9 +82,12 @@ export default defineComponent({
 				emit('add', payload)
 			},
 			onCancel: () => (userToReply.value = null),
-			onDelete: (payload: KottiComment.Events.Delete) =>
-				emit('delete', payload),
-			onEdit: (payload: KottiComment.Events.Edit) => emit('edit', payload),
+			onDelete: (payload: KottiComment.Events.Delete) => {
+				emit('delete', payload)
+			},
+			onEdit: (payload: KottiComment.Events.Edit) => {
+				emit('edit', payload)
+			},
 			onReply: (user: KottiComment.User) => (userToReply.value = user),
 			placeholder: computed(() =>
 				userToReply.value

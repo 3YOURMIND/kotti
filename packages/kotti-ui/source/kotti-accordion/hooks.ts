@@ -1,4 +1,5 @@
-import { Ref, watch } from 'vue'
+import type { Ref } from 'vue'
+import { watch } from 'vue'
 
 const getDefaultOptions = (): KeyframeAnimationOptions => ({
 	duration: 250,
@@ -10,17 +11,19 @@ export const useSlideAnimation = (
 	element: Ref<HTMLElement | null>,
 	isContentOpen: Readonly<Ref<boolean>>,
 	options: KeyframeAnimationOptions,
-) => {
+): void => {
 	const finalOptions = { ...getDefaultOptions(), ...options }
 	const getRawHeight = (element: HTMLElement) => element.clientHeight
 
 	const executeAnimation = async (willOpen: boolean): Promise<void> => {
 		const animatedObject = element.value ?? null
 		if (animatedObject === null) return
+		const rawHeight = getRawHeight(animatedObject).toString()
 
-		const frames: Keyframe[] = ['0px', `${getRawHeight(animatedObject)}px`].map(
-			(height) => ({ height, overflow: 'hidden' }),
-		)
+		const frames: Keyframe[] = ['0px', `${rawHeight}px`].map((height) => ({
+			height,
+			overflow: 'hidden',
+		}))
 		const animation = animatedObject.animate(frames, finalOptions)
 
 		animation.pause()
@@ -37,7 +40,7 @@ export const useSlideAnimation = (
 		(shouldBeShown, wasShown) => {
 			if (shouldBeShown === wasShown) return
 
-			executeAnimation(shouldBeShown)
+			void executeAnimation(shouldBeShown)
 		},
 		{ immediate: true, flush: 'post' },
 	)

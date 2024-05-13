@@ -1,8 +1,0 @@
-{
-	"entry": ["source/index.ts"],
-	"extensions": [".ts"],
-	"ignorePatterns": ["**/node_modules/**", "**/dist/**"],
-	"ignoreUnimported": [],
-	"ignoreUnresolved": [],
-	"ignoreUnused": []
-}

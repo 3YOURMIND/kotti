@@ -64,11 +64,13 @@ export default defineComponent({
 			hasHelpText,
 			hasLabel,
 			notSetLabel: computed(() => translations.value.notSet),
-			rootClasses: computed(() => ({
-				'kt-value-label': true,
-				[`kt-value-label--is-validation-${validationType.value}`]:
-					validationType.value !== null,
-			})),
+			rootClasses: computed(() => {
+				const classes = ['kt-value-label']
+				if (validationType.value !== null)
+					classes.push(`kt-value-label--is-validation-${validationType.value}`)
+
+				return classes
+			}),
 			showHeader: computed(() => hasLabel.value || hasHelpText.value),
 			validationText: computed(() =>
 				props.validation !== null ? props.validation.text : null,
@@ -82,9 +84,7 @@ export default defineComponent({
 							warning: Yoco.Icon.CIRCLE_ATTENTION,
 						}[validationType.value],
 			),
-			valueToRender: computed(() =>
-				props.value !== null ? props.value : Dashes.EmDash,
-			),
+			valueToRender: computed(() => props.value ?? Dashes.EmDash),
 		}
 	},
 })

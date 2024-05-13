@@ -3,11 +3,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, provide, computed, PropType } from 'vue'
+import type { PropType } from 'vue'
+import { defineComponent, provide, computed } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../../kotti-form/constants'
-import { KottiForm } from '../../kotti-form/types'
-import { KottiFormControllerListItem } from '../types'
+import type { KottiForm } from '../../kotti-form/types'
+import type { KottiFormControllerListItem } from '../types'
 
 export default defineComponent({
 	name: 'FormControllerListItem',
@@ -24,6 +25,12 @@ export default defineComponent({
 		},
 	},
 	setup(props, { emit }) {
+		/* eslint-disable vue/no-setup-props-destructure */
+		/**
+		 * FIXME: This is not reactive and will likely cause issues. Fixing this
+		 * would require adjusting types in KottiForm.Context to support computed
+		 * which is out of scope
+		 */
 		provide<KottiForm.Context>(KT_FORM_CONTEXT, {
 			fieldInheritableProps: props.context.fieldInheritableProps,
 			formPath: computed(() => [
@@ -33,10 +40,13 @@ export default defineComponent({
 			]),
 			onAddField: props.context.onAddField,
 			onRemoveField: props.context.onRemoveField,
-			setValue: (formKey, newValue) => emit('setValue', { formKey, newValue }),
+			setValue: (formKey, newValue) => {
+				emit('setValue', { formKey, newValue })
+			},
 			validators: props.context.validators,
 			values: computed(() => props.values),
 		})
+		/* eslint-enable vue/no-setup-props-destructure */
 	},
 })
 </script>

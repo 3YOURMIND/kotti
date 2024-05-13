@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import type { ManipulateType } from 'dayjs'
 
-export const ISO8601 = 'YYYY-MM-DD' as const
-export const ISO8601_SECONDS = 'YYYY-MM-DD HH:mm:ss' as const
+export const ISO8601 = 'YYYY-MM-DD'
+export const ISO8601_SECONDS = 'YYYY-MM-DD HH:mm:ss'
 
 /**
  * Returns formatted today's date. Default template is ISO8601.

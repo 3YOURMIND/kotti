@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 // Base colors are not meant to change
 // They CAN but should not be used directly
 // Instead, we are using tokens that are role based colors

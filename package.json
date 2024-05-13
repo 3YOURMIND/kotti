@@ -47,23 +47,16 @@
 		}
 	],
 	"devDependencies": {
+		"@3yourmind/eslint-config": "*",
+		"@types/eslint__js": "^8.42.3",
 		"@types/node": "20.11.16",
-		"@typescript-eslint/eslint-plugin": "^6.21.0",
-		"@typescript-eslint/parser": "^6.21.0",
-		"@vue/eslint-config-typescript": "^12.0.0",
-		"eslint": "^8.56.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-import": "^2.29.1",
-		"eslint-plugin-prettier": "^5.0.1",
-		"eslint-plugin-sonarjs": "^0.23.0",
-		"eslint-plugin-vitest": "^0.3.22",
-		"eslint-plugin-vue": "^9.20.1",
+		"eslint": "^9.2.0",
 		"husky": "^7.0.1",
 		"knip": "^5.13.0",
 		"lerna": "^7.4.2",
 		"lint-staged": "^11.0.1",
 		"nodemon": "^3.0.3",
-		"postcss": "^8.4.34",
+		"postcss": "^8.4.38",
 		"postcss-html": "^1.6.0",
 		"prettier": "^3.2.5",
 		"publint": "^0.2.7",
@@ -74,9 +67,9 @@
 		"stylelint-config-standard-scss": "^10.0.0",
 		"stylelint-csstree-validator": "^3.0.0",
 		"stylelint-prettier": "^4.0.2",
-		"turbo": "^1.13.2",
-		"typescript": "^5.3",
-		"vue-eslint-parser": "9"
+		"turbo": "^1.13.3",
+		"typescript": "^5.4.4",
+		"typescript-eslint": "^7.8.0"
 	},
 	"engines": {
 		"node": ">=18"
@@ -117,6 +110,7 @@
 		"check:prettier": "turbo run check:prettier",
 		"check:publint": "turbo run check:publint",
 		"check:stylelint": "turbo run check:stylelint",
+		"debug:turbo": "turbo run build --graph --dry | dot -Tpng -oturbo-graph.png && open turbo-graph.png",
 		"fix": "turbo run fix",
 		"fix:eslint": "turbo run fix:eslint",
 		"fix:prettier": "turbo run fix:prettier",
@@ -124,7 +118,7 @@
 		"prepare": "husky install",
 		"prepublishOnly": "turbo run check build",
 		"test": "turbo run test",
-		"watch": "nodemon -e js,ts,vue,scss,css,json --watch packages/vue-use-tippy/source --watch packages/yoco/source --exec \"turbo run watch\""
+		"watch": "nodemon -e css,js,json,scss,ts,vue --watch packages/vue-use-tippy/source --watch packages/yoco/source --exec \"turbo run watch\""
 	},
 	"version": "1.0.0",
 	"workspaces": [

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { TimeConversion } from '@metatypes/units'
 
 import { isBrowser } from '../utilities'
@@ -54,13 +55,15 @@ export default {
 			this.queue.push({ id, text, type })
 
 			if (isBrowser)
-				window.setTimeout(() => this.deleteNotification(id), duration)
+				window.setTimeout(() => {
+					this.deleteNotification(id)
+				}, duration)
 		},
 		deleteNotification(id) {
 			this.queue = this.queue.filter(notId({ id }))
 		},
 		iconClass(notificationStatus) {
-			return `vue-yodify__icon vue-yodify__icon--${notificationStatus}`
+			return `vue-yodify__icon vue-yodify__icon--${String(notificationStatus)}`
 		},
 		iconText(type) {
 			if (type === 'error') return 'circle_cross'

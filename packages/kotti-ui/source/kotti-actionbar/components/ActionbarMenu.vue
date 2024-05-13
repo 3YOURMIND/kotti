@@ -11,7 +11,7 @@
 		>
 			<i
 				class="yoco kt-actionbar-nav__icon"
-				:class="navItemIconClass"
+				:class="`kt-actionbar-nav__icon--${iconPosition}`"
 				v-text="item.icon"
 			/>
 			<span class="kt-actionbar-nav__label" v-text="item.label" />
@@ -19,28 +19,32 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { KottiActionbar } from '../types'
+
+type Menu = KottiActionbar.PropsInternal['menu']
+
+export default defineComponent({
 	name: 'ActionbarMenu',
 	props: {
-		menu: { default: () => [], type: Array },
-		menuStyle: { default: () => ({}), type: Object },
-	},
-	computed: {
-		navItemIconClass() {
-			return {
-				[`kt-actionbar-nav__icon--${this.menuStyle.iconPosition}`]:
-					this.menuStyle.iconPosition ?? false,
-			}
+		menu: {
+			required: true,
+			type: Array as PropType<Menu>,
+		},
+		iconPosition: {
+			default: 'left',
+			type: String as PropType<'left' | 'right'>,
 		},
 	},
-	methods: {
-		navItemClass(item) {
-			return {
+	setup() {
+		return {
+			navItemClass: (item: Menu[number]) => ({
 				'kt-actionbar-nav__item--active': item.active,
 				'kt-actionbar-nav__item--disabled': item.disabled,
-			}
-		},
+			}),
+		}
 	},
-}
+})
 </script>

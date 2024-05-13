@@ -1,8 +1,8 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
-import { Instance as TippyInstance } from 'tippy.js'
+import type { Instance as TippyInstance } from 'tippy.js'
 import { z } from 'zod'
 
-import { Kotti } from '../types'
+import type { Kotti } from '../types'
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 const baseOptionSchema = z.object({

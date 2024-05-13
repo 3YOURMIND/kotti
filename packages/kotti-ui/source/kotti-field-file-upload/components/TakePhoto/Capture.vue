@@ -97,7 +97,8 @@ export default defineComponent({
 					throw new Error('KtFieldFileUpload: unbound HTML video element')
 				}
 				stream.value = await requestCamera(
-					cameraList.value[cameraIndex.value].deviceId,
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+					cameraList.value[cameraIndex.value]!.deviceId,
 				)
 				videoRef.value.srcObject = stream.value
 				state.value = State.READY
@@ -113,15 +114,18 @@ export default defineComponent({
 			stream.value = null
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		onBeforeMount(async () => {
 			if (isWebRTCSupported()) {
 				await findCameras()
 				await startCamera()
 				shouldOpenModal.value = true
-			} else emit('error', ErrorCodes.NotSupportedError)
+			} else emit('error', ErrorCodes.NOT_SUPPORTED_ERROR)
 		})
 
-		onBeforeUnmount(() => stopCamera())
+		onBeforeUnmount(() => {
+			stopCamera()
+		})
 
 		return {
 			hasMultipleCameras: computed(() => cameraList.value.length > 1),

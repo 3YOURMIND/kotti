@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import { expect, describe, it, vi } from 'vitest'
-import { defineComponent, ref, SetupContext } from 'vue'
+import type { SetupContext } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { z } from 'zod'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
@@ -9,7 +10,7 @@ import { makeProps } from '../make-props'
 import { localVue, getMockContext } from '../test-utils'
 
 import { FORM_KEY_NONE } from './constants'
-import { KtFieldErrors } from './errors'
+import { ktFieldErrors } from './errors'
 import { useField } from './hooks'
 import { KottiField } from './types'
 
@@ -75,19 +76,16 @@ describe('useField', () => {
 			propsData: { isDisabled: true },
 		})
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		expect(() => (wrapper.vm as any).field.setValue(null)).toThrow(
-			KtFieldErrors.DisabledSetValueCalled,
+			ktFieldErrors.DisabledSetValueCalledError,
 		)
 
-		wrapper.setProps({ isDisabled: false })
-		await wrapper.vm.$nextTick()
+		await wrapper.setProps({ isDisabled: false })
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		expect(() => (wrapper.vm as any).field.setValue(null)).not.toThrow()
 	})
 
-	it('props.value gets deepCloned', async () => {
+	it('props.value gets deepCloned', () => {
 		const VALUE_REFERENCE = { something: 'something' }
 
 		// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
@@ -99,9 +97,8 @@ describe('useField', () => {
 			},
 		})
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		expect((wrapper.vm as any).field.currentValue).toEqual(VALUE_REFERENCE)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 		expect((wrapper.vm as any).field.currentValue).not.toBe(VALUE_REFERENCE)
 	})
 
@@ -110,13 +107,10 @@ describe('useField', () => {
 			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.helpText).toBe(null)
 
-			wrapper.setProps({ helpText: 'something something' })
-			await wrapper.vm.$nextTick()
+			await wrapper.setProps({ helpText: 'something something' })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.helpText).toBe('something something')
 		})
 
@@ -124,13 +118,10 @@ describe('useField', () => {
 			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.isDisabled).toBe(false)
 
-			wrapper.setProps({ isDisabled: true })
-			await wrapper.vm.$nextTick()
+			await wrapper.setProps({ isDisabled: true })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.isDisabled).toBe(true)
 		})
 
@@ -138,13 +129,10 @@ describe('useField', () => {
 			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.isOptional).toBe(false)
 
-			wrapper.setProps({ isOptional: true })
-			await wrapper.vm.$nextTick()
+			await wrapper.setProps({ isOptional: true })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.isOptional).toBe(true)
 		})
 
@@ -152,13 +140,10 @@ describe('useField', () => {
 			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.label).toBe(null)
 
-			wrapper.setProps({ label: 'something something' })
-			await wrapper.vm.$nextTick()
+			await wrapper.setProps({ label: 'something something' })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.label).toBe('something something')
 		})
 	})
@@ -168,9 +153,7 @@ describe('useField', () => {
 			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, { localVue })
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			;(wrapper.vm as any).field.setValue('something else')
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			;(wrapper.vm as any).field.setValue(null)
 
 			await wrapper.vm.$nextTick()
@@ -190,9 +173,7 @@ describe('useField', () => {
 				},
 			})
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			;(wrapper.vm as any).field.setValue('something else')
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			;(wrapper.vm as any).field.setValue(null)
 
 			expect(context.setValue.mock.calls).toEqual([
@@ -200,7 +181,6 @@ describe('useField', () => {
 				['testKey', null],
 			])
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.currentValue).toBe('something')
 		})
 	})
@@ -214,15 +194,14 @@ describe('useField', () => {
 				localVue,
 				propsData: { formKey: 'test' },
 			}),
-		).toThrow(KtFieldErrors.InvalidPropOutsideOfContext)
+		).toThrow(ktFieldErrors.InvalidPropOutsideOfContextError)
 
 		// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 		const wrapper = shallowMount(TestComponent, { localVue })
 
 		console.error = vi.fn()
 
-		wrapper.setProps({ formKey: 'thisWillCrash' })
-		await wrapper.vm.$nextTick()
+		await wrapper.setProps({ formKey: 'thisWillCrash' })
 
 		/**
 		 * Check console.error since Vue decides to just swallow errors
@@ -257,18 +236,16 @@ describe('useField', () => {
 					validator: () => ({ type: 'success', text: 'Testing' }),
 				},
 			})
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 			expect((wrapper.vm as any).field.validation).toEqual({
 				type: 'success',
 				text: 'Testing',
 			})
 
-			wrapper.setProps({
+			await wrapper.setProps({
 				validator: () => ({ type: 'warning', text: 'Testing' }),
 			})
 
-			await wrapper.vm.$nextTick()
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.validation).toEqual({
 				type: 'warning',
 				text: 'Testing',
@@ -298,17 +275,13 @@ describe('useField', () => {
 				},
 			})
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.validation).toEqual({
 				type: 'warning',
 				text: 'This is testKey1',
 			})
 
-			wrapper.setProps({ formKey: 'testKey2' })
+			await wrapper.setProps({ formKey: 'testKey2' })
 
-			await wrapper.vm.$nextTick()
-
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).field.validation).toEqual({
 				type: 'warning',
 				text: 'This is testKey2',
@@ -331,7 +304,7 @@ describe('useField', () => {
 			})
 
 			expect(testKey).not.toHaveBeenCalled()
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 			expect((wrapper.vm as any).field.validation).toEqual({ type: 'empty' })
 		})
 	})

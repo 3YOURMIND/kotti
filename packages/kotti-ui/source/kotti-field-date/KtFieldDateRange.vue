@@ -23,8 +23,12 @@
 
 <script lang="ts">
 import { DatePicker as ElDate } from 'element-ui'
-import { DatePickerOptions, ElDatePicker } from 'element-ui/types/date-picker'
-import { defineComponent, ref, Ref, computed, inject } from 'vue'
+import type {
+	DatePickerOptions,
+	ElDatePicker,
+} from 'element-ui/types/date-picker'
+import type { Ref } from 'vue'
+import { defineComponent, ref, computed, inject } from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
@@ -36,7 +40,8 @@ import {
 	EL_DATE_RANGE_PROPS,
 	KOTTI_FIELD_DATE_SUPPORTS,
 } from './constants'
-import { usePicker, ElDateWithInternalAPI } from './hooks'
+import type { ElDateWithInternalAPI } from './hooks'
+import { usePicker } from './hooks'
 import { KottiFieldDateRange } from './types'
 import { isInvalidDate } from './utilities'
 
@@ -109,12 +114,11 @@ export default defineComponent({
 			elDateRef: elDateRef as any,
 			field,
 			inputContainerRef,
-			/**
-			 * element-ui emits `null` on clear
-			 */
 			onInput: (value: KottiFieldDateRange.Value | null) => {
-				if (!field.isDisabled && !field.isLoading)
-					field.setValue(value === null ? [null, null] : value)
+				if (field.isDisabled || field.isLoading) return
+
+				// element-ui emits `null` on clear
+				field.setValue(value ?? [null, null])
 			},
 		}
 	},

@@ -1,4 +1,4 @@
-export const silenceConsole = () => {
+export const silenceConsole = (): void => {
 	console.debug = () => undefined
 	console.error = () => undefined
 	console.group = () => undefined

@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge'
 
-import { DeepPartial } from './types'
+import type { DeepPartial } from './types'
 
 /**
  * deepmerge types do not support the DeepPartial type

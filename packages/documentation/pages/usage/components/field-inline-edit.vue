@@ -22,14 +22,12 @@
 						<h4>Settings</h4>
 						<KtFieldSingleSelect
 							formKey="validation"
-							hideClear
 							isOptional
 							label="Validation State"
 							:options="validationOptions"
 						/>
 						<KtFieldSingleSelect
 							formKey="preventConfirmationOn"
-							hideClear
 							isOptional
 							label="preventConfirmationOn"
 							:options="preventConfirmationOptions"
@@ -116,10 +114,10 @@ export default defineComponent({
 			helpText: Kotti.FieldText.Value
 			label: Kotti.FieldText.Value
 			placeholder: Kotti.FieldText.Value
-			preventConfirmationOn: Kotti.FieldInlineEdit.ConfirmationValidation
+			preventConfirmationOn: Kotti.FieldInlineEdit.ConfirmationValidation | null
 			tabIndex: Kotti.FieldNumber.Value
 			textStyle: Kotti.FieldInlineEdit.TextStyle | null
-			validation: Kotti.Field.Validation.Result['type']
+			validation: Kotti.Field.Validation.Result['type'] | null
 		}>({
 			booleanFlags: {
 				hideValidation: false,
@@ -134,7 +132,7 @@ export default defineComponent({
 			helpText: null,
 			label: 'Label',
 			placeholder: null,
-			preventConfirmationOn: Kotti.FieldInlineEdit.ConfirmationValidation.ERROR,
+			preventConfirmationOn: Kotti.FieldInlineEdit.ConfirmationValidation.NEVER,
 			tabIndex: null,
 			textStyle: null,
 			validation: 'empty',
@@ -160,9 +158,7 @@ export default defineComponent({
 				isReadonly: settings.value.booleanFlags.isReadonly,
 				label: settings.value.label,
 				placeholder: settings.value.placeholder,
-				preventConfirmationOn:
-					settings.value.preventConfirmationOn ??
-					Kotti.FieldInlineEdit.ConfirmationValidation.NEVER,
+				preventConfirmationOn: settings.value.preventConfirmationOn,
 				tabIndex: settings.value.tabIndex,
 				textStyle: settings.value.textStyle,
 				validator: () => ({
@@ -171,13 +167,14 @@ export default defineComponent({
 				}),
 			})),
 			onConfirm: (newVal: Kotti.FieldInlineEdit.Events.Confirm) => {
+				// eslint-disable-next-line no-alert
 				window.alert(newVal)
 			},
 			preventConfirmationOptions: ref(
 				Object.entries(Kotti.FieldInlineEdit.ConfirmationValidation).map(
 					([label, value]) => ({
 						label:
-							label === Kotti.FieldInlineEdit.ConfirmationValidation.NEVER
+							value === Kotti.FieldInlineEdit.ConfirmationValidation.NEVER
 								? `${label} (Default)`
 								: label,
 						value,

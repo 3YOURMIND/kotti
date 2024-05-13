@@ -7,8 +7,10 @@
 </template>
 
 <script lang="ts">
-import { isYocoIcon, Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, PropType } from 'vue'
+import type { Yoco } from '@3yourmind/yoco'
+import { isYocoIcon } from '@3yourmind/yoco'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { KottiFilters } from '../types'
 

@@ -1,6 +1,6 @@
 import Big from 'big.js'
 
-import { DecimalSeparator } from '../types/kotti'
+import type { DecimalSeparator } from '../types/kotti'
 import { DECIMAL_SEPARATORS_CHARACTER_SET } from '../utilities'
 
 export const toNumber = <T extends string | null>(
@@ -13,7 +13,7 @@ export const toNumber = <T extends string | null>(
 				value.replace(new RegExp(DECIMAL_SEPARATORS_CHARACTER_SET), '.'),
 			)) as T extends null ? null : number
 
-export const truncate = (value: number, decimalPlaces: number) =>
+export const truncate = (value: number, decimalPlaces: number): Big =>
 	Big(value).round(decimalPlaces, Big.roundDown)
 
 export const replaceDecimalSeparator = <T extends string | null>(

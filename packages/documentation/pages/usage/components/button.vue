@@ -499,7 +499,10 @@ export default defineComponent({
 		})
 
 		return {
-			alert: (value: string) => window.alert(value),
+			alert: (value: string) => {
+				// eslint-disable-next-line no-alert
+				window.alert(value)
+			},
 			iconOptions: Object.values(Yoco.Icon).map((icon) => ({
 				label: icon,
 				value: icon,

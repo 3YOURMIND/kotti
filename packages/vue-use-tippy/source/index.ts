@@ -1,14 +1,16 @@
 import castArray from 'lodash.castarray'
-import tippy, { Props, Instance } from 'tippy.js'
-import { onMounted, ref, Ref, onUnmounted, watch } from 'vue'
+import type { Props, Instance } from 'tippy.js'
+import tippy from 'tippy.js'
+import type { Ref } from 'vue'
+import { onMounted, ref, onUnmounted, watch } from 'vue'
 
-type InstanceRefType = Instance<Props>[] | Instance<Props> | null
+type InstanceRefType = Instance[] | Instance | null
 type Callback = (t: InstanceRefType) => void
 type Target = Ref<Element | null>
 
 const applyForEvery = (
 	instance: Ref<InstanceRefType>,
-	callback: (tippyInstance: Instance<Props>) => void,
+	callback: (tippyInstance: Instance) => void,
 ) => {
 	if (instance.value !== null)
 		for (const tippyInstance of castArray(instance.value))
@@ -27,7 +29,11 @@ const unwrapAndThrowOnNull = (target: Target) => {
 export const useTippy = (
 	targets: Array<Target> | Target | string,
 	options: Ref<Partial<Props>>,
-) => {
+): {
+	onMount: (callback: Callback) => void
+	onUnmount: (callback: Callback) => void
+	tippy: Ref<InstanceRefType>
+} => {
 	const instance = ref<InstanceRefType>(null)
 
 	const onMountCallbacks: Callback[] = []
@@ -43,22 +49,29 @@ export const useTippy = (
 			instance.value = tippy(unwrapAndThrowOnNull(targets), options.value)
 		}
 
-		onMountCallbacks.forEach((callback) => callback(instance.value))
+		onMountCallbacks.forEach((callback) => {
+			callback(instance.value)
+		})
 	})
 
 	const onUnmountCallbacks: Callback[] = []
 	onUnmounted(() => {
-		applyForEvery(instance, (tippyInstance) => tippyInstance.destroy())
+		applyForEvery(instance, (tippyInstance) => {
+			tippyInstance.destroy()
+		})
 
-		onUnmountCallbacks.forEach((callback) => callback(instance.value))
+		onUnmountCallbacks.forEach((callback) => {
+			callback(instance.value)
+		})
 	})
 
 	watch(
 		options,
-		() =>
-			applyForEvery(instance, (tippyInstance) =>
-				tippyInstance.setProps(options.value),
-			),
+		() => {
+			applyForEvery(instance, (tippyInstance) => {
+				tippyInstance.setProps(options.value)
+			})
+		},
 		{ immediate: true, flush: 'post' },
 	)
 

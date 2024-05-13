@@ -29,11 +29,12 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import { PropType, computed, defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
-import { KottiFieldSingleSelect } from '../../kotti-field-select/types'
+import type { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { KottiFilters } from '../types'
+import type { KottiFilters } from '../types'
 import { getFilterInitialState } from '../utils'
 
 import FilterRow from './FilterRow.vue'
@@ -95,7 +96,6 @@ export default defineComponent({
 
 		const handleAddFilter = (filter: KottiFilters.InternalFilter) => {
 			const newFilter = getFilterInitialState(filter.key, props.columns)
-			if (!newFilter) return
 			emit('input', [...props.filters, newFilter])
 			emit('endAddingFilter')
 		}

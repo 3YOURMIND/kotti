@@ -21,6 +21,7 @@
 </template>
 
 <script>
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import isEqual from 'lodash/isEqual'
 import pick from 'lodash/pick'
 
@@ -73,6 +74,7 @@ export default {
 		columns: { default: null, type: Array },
 		emptyText: { default: 'No Data', type: String },
 		id: { default: null, type: String },
+		// FIXME: Props should either be required or have a default
 		rowKey: { required: false, type: [String, Function] },
 		rows: { default: () => [], type: Array },
 		useColumnDragToOrder: { default: false, type: Boolean },
@@ -93,14 +95,22 @@ export default {
 
 		loading: { default: false, type: Boolean },
 
+		// FIXME: Props should either be required or have a default
 		headerClass: { required: false, type: [String, Array, Object] },
+		// FIXME: Props should either be required or have a default
 		tdClasses: { required: false, type: [String, Array, Object] },
+		// FIXME: Props should either be required or have a default
 		thClasses: { required: false, type: [String, Array, Object] },
+		// FIXME: Props should either be required or have a default
 		trClasses: { required: false, type: [String, Array, Object] },
 
+		// FIXME: Props should either be required or have a default
 		renderActions: { required: false, type: Function },
+		// FIXME: Props should either be required or have a default
 		renderEmpty: { required: false, type: Function },
+		// FIXME: Props should either be required or have a default
 		renderExpand: { required: false, type: Function },
+		// FIXME: Props should either be required or have a default
 		renderLoading: { required: false, type: Function },
 
 		disableRow: { default: DEFAULT_DISABLE_ROW, type: Function },
@@ -108,6 +118,7 @@ export default {
 		expandMultiple: { default: false, type: Boolean },
 		selected: { default: () => [], type: Array },
 	},
+	emits: ['input'],
 	data() {
 		let localStore
 		const initialState = pick(this, INITIAL_TABLE_STORE_PROPS)
@@ -144,7 +155,7 @@ export default {
 						if (column.key) {
 							// eslint-disable-next-line
 							console.warn(
-								`column ${column.prop} table column property 'key' is deprecated using prop is sufficient to identify the column`,
+								`column ${String(column.prop)} table column property 'key' is deprecated using prop is sufficient to identify the column`,
 							)
 							return { ...column, prop: column.prop || column.key }
 						}
@@ -156,57 +167,48 @@ export default {
 		colSpan() {
 			let colSpan = this.store.state.columns.length
 
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (this.isExpandable) colSpan++
 			if (this.isSelectable) colSpan++
 
 			return colSpan
 		},
 		isExpandable() {
-			return Boolean(this.$scopedSlots.expand || this.renderExpand)
+			return Boolean(this.$slots.expand || this.renderExpand)
 		},
 		hasActions() {
-			return Boolean(this.$scopedSlots.actions || this.renderActions)
+			return Boolean(this.$slots.actions || this.renderActions)
 		},
 		_renderExpand() {
-			// eslint-disable-next-line @typescript-eslint/no-this-alias
-			const table = this
 			return (h, rowData) => {
-				if (table.renderExpand) return table.renderExpand(h, rowData)
+				if (this.renderExpand) return this.renderExpand(h, rowData)
 
-				return table.$scopedSlots.expand(rowData)
+				return this.$slots.expand(rowData)
 			}
 		},
 		_renderActions() {
-			// eslint-disable-next-line @typescript-eslint/no-this-alias
-			const table = this
-
 			return (h, rowData) => {
-				if (table.renderActions) return table.renderActions(h, rowData)
+				if (this.renderActions) return this.renderActions(h, rowData)
 
-				return table.$scopedSlots.actions(rowData)
+				return this.$slots.actions(rowData)
 			}
 		},
 		_renderLoading() {
-			// eslint-disable-next-line @typescript-eslint/no-this-alias
-			const table = this
-
 			return (h) => {
-				if (table.renderLoading) return table.renderLoading(h)
+				if (this.renderLoading) return this.renderLoading(h)
 
-				return table.$slots.loading || h('div', { class: 'loading lg' })
+				return this.$slots.loading || h('div', { class: 'loading lg' })
 			}
 		},
 		_renderEmpty() {
-			// eslint-disable-next-line @typescript-eslint/no-this-alias
-			const table = this
-
 			return (h) => {
-				if (table.renderEmpty) return table.renderEmpty(h)
+				if (this.renderEmpty) return this.renderEmpty(h)
 
 				return (
-					table.$slots.empty ||
-					table.emptyText ||
-					(this.$t && this.$t('table.emptyText')) ||
+					this.$slots.empty ||
+					this.emptyText ||
+					// FIXME: $t is not supposed to be used in kotti, probably a hack
+					this.$t?.('table.emptyText') ||
 					'No Data'
 				)
 			}
@@ -277,7 +279,7 @@ export default {
 		},
 	},
 	beforeCreate() {
-		this.tableId = `kt-table_${tableIdSeed}`
+		this.tableId = `kt-table_${String(tableIdSeed)}`
 		tableIdSeed += 1
 	},
 	mounted() {

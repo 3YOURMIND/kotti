@@ -1,4 +1,4 @@
-import { KottiI18n } from '../types'
+import type { KottiI18n } from '../types'
 
 module Common {
 	export const is = 'ist'

@@ -1,16 +1,16 @@
-import { Ref } from 'vue'
+import type { Ref } from 'vue'
 
-import { KottiBanner } from '../kotti-banner/types'
-import { KottiComment } from '../kotti-comment/types'
-import { KottiField } from '../kotti-field/types'
-import { Shared as KottiFieldFileUploadShared } from '../kotti-field-file-upload/types'
-import { KottiFieldInlineEdit } from '../kotti-field-inline-edit/types'
-import { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
-import { KottiFilters } from '../kotti-filters/types'
-import { KottiFormSubmit } from '../kotti-form-submit/types'
-import { KottiNavbar } from '../kotti-navbar/types'
-import { KottiValueLabel } from '../kotti-value-label/types'
-import { DecimalSeparator } from '../types/kotti'
+import type { KottiBanner } from '../kotti-banner/types'
+import type { KottiComment } from '../kotti-comment/types'
+import type { KottiField } from '../kotti-field/types'
+import type { Shared as KottiFieldFileUploadShared } from '../kotti-field-file-upload/types'
+import type { KottiFieldInlineEdit } from '../kotti-field-inline-edit/types'
+import type { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
+import type { KottiFilters } from '../kotti-filters/types'
+import type { KottiFormSubmit } from '../kotti-form-submit/types'
+import type { KottiNavbar } from '../kotti-navbar/types'
+import type { KottiValueLabel } from '../kotti-value-label/types'
+import type { DecimalSeparator } from '../types/kotti'
 
 export type DeepPartial<T> =
 	T extends Record<string, unknown> ? { [K in keyof T]?: DeepPartial<T[K]> } : T

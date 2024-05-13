@@ -16,7 +16,9 @@
 			]
 		},
 		"check:eslint": {
-			"inputs": ["**/*.{js,json,ts,vue}"],
+			"dependsOn": ["@3yourmind/eslint-config#build", "^build"],
+			"env": ["TIMING"],
+			"inputs": ["**/*.{js,json,ts,vue}", "../../eslint.config.mjs"],
 			"outputMode": "new-only"
 		},
 		"check:knip": {
@@ -39,7 +41,9 @@
 			"dependsOn": ["fix:eslint", "fix:prettier", "fix:stylelint"]
 		},
 		"fix:eslint": {
-			"inputs": ["**/*.{js,json,ts,vue}"],
+			"dependsOn": ["@3yourmind/eslint-config#build", "^build"],
+			"env": ["TIMING"],
+			"inputs": ["**/*.{js,json,ts,vue}", "../../eslint.config.mjs"],
 			"outputMode": "new-only"
 		},
 		"fix:prettier": {

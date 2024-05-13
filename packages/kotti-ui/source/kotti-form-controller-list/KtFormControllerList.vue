@@ -37,10 +37,10 @@ import cloneDeep from 'lodash/cloneDeep'
 import { defineComponent, inject, computed } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
-import { KottiForm } from '../kotti-form/types'
+import type { KottiForm } from '../kotti-form/types'
 
 import FormControllerListItem from './components/FormControllerListItem.vue'
-import { KottiFormControllerListItem } from './types'
+import type { KottiFormControllerListItem } from './types'
 
 type Entry = KottiFormControllerListItem.Props['values']
 
@@ -70,21 +70,23 @@ export default defineComponent({
 			/**
 			 * Adds a new valuesList entry after the given index
 			 */
-			addAfter: (index: number) => (newRow: Entry) =>
+			addAfter: (index: number) => (newRow: Entry) => {
 				context.setValue(props.formKey, [
 					...valuesList.value.slice(0, index + 1),
 					newRow,
 					...valuesList.value.slice(index + 1, valuesList.value.length),
-				]),
+				])
+			},
 			/**
 			 * Adds a new valuesList entry before the given index
 			 */
-			addBefore: (index: number) => (newRow: Entry) =>
+			addBefore: (index: number) => (newRow: Entry) => {
 				context.setValue(props.formKey, [
 					...valuesList.value.slice(0, index),
 					newRow,
 					...valuesList.value.slice(index, valuesList.value.length),
-				]),
+				])
+			},
 			/**
 			 * Makes sure that consumers cannot accidentally modify the internal state
 			 */
@@ -93,11 +95,12 @@ export default defineComponent({
 			/**
 			 * Deletes the given index from the valuesList
 			 */
-			deleteSelf: (index: number) =>
+			deleteSelf: (index: number) => {
 				context.setValue(
 					props.formKey,
 					valuesList.value.filter((_, i) => (i === index ? false : true)),
-				),
+				)
+			},
 			/**
 			 * Updates a single formKey in a valuesList entry
 			 */
@@ -109,23 +112,25 @@ export default defineComponent({
 				formKey: string
 				index: number
 				newValue: unknown
-			}) =>
+			}) => {
 				context.setValue(
 					props.formKey,
 					valuesList.value.map((oldValue, i) =>
 						i === index ? { ...oldValue, [formKey]: newValue } : oldValue,
 					),
-				),
+				)
+			},
 			/**
 			 * Replaces an entire valuesListEntry with new data
 			 */
-			setValuesIndex: (index: number) => (newValue: Entry) =>
+			setValuesIndex: (index: number) => (newValue: Entry) => {
 				context.setValue(
 					props.formKey,
 					valuesList.value.map((oldValue, i) =>
 						i === index ? newValue : oldValue,
 					),
-				),
+				)
+			},
 			/**
 			 * Functions that are exposed to the footer and header slots
 			 * these should manipulate the entire array, instead of individual items
@@ -134,18 +139,21 @@ export default defineComponent({
 				/**
 				 * Adds a new valuesList entry to the end of the entire list
 				 */
-				addAfter: (newRow: Entry) =>
-					context.setValue(props.formKey, [...valuesList.value, newRow]),
+				addAfter: (newRow: Entry) => {
+					context.setValue(props.formKey, [...valuesList.value, newRow])
+				},
 				/**
 				 * Adds a new valuesList entry to the beginning of the entire list
 				 */
-				addBefore: (newRow: Entry) =>
-					context.setValue(props.formKey, [newRow, ...valuesList.value]),
+				addBefore: (newRow: Entry) => {
+					context.setValue(props.formKey, [newRow, ...valuesList.value])
+				},
 				/**
 				 * Replaces the entire valuesList with a new one
 				 */
-				setValues: (newValuesList: Entry[]) =>
-					context.setValue(props.formKey, newValuesList),
+				setValues: (newValuesList: Entry[]) => {
+					context.setValue(props.formKey, newValuesList)
+				},
 			},
 			valuesList,
 		}

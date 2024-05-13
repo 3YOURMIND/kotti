@@ -146,7 +146,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import { computed, defineComponent, ref } from 'vue'
 
 import { getLast, today } from '../../../utilities/date'
-import { ComponentValue, generateComponentCode } from '../../../utilities/pages'
+import type { ComponentValue } from '../../../utilities/pages'
+import { generateComponentCode } from '../../../utilities/pages'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -382,8 +383,13 @@ export default defineComponent({
 					dateRangeShortcuts: Object.entries(selectedShortcuts.value ?? {})
 						.filter(([_, value]) => value)
 						.map(([key]) => {
-							const { label, value } = shortcuts[key as keyof typeof shortcuts]
-							return { label, value }
+							const shortcut = shortcuts[key]
+							if (!shortcut) throw new Error('Could not find shortcut')
+
+							return {
+								label: shortcut.label,
+								value: shortcut.value,
+							}
 						}),
 				}
 			},

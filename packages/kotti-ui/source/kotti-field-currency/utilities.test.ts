@@ -47,7 +47,7 @@ describe('toFixedPrecisionString', () => {
 			['0.0', '0.000'],
 			['00.0', '0.000'],
 			['001.0', '1.000'],
-		])
+		] as const)
 			expect(toFixedPrecisionString(testCase, DECIMAL_PRECISION)).toBe(
 				expectedResult,
 			)
@@ -58,7 +58,7 @@ describe('toFixedPrecisionString', () => {
 			['0.0125', '0.012'],
 			['0.0123', '0.012'],
 			['0.9999', '0.999'],
-		])
+		] as const)
 			expect(toFixedPrecisionString(testCase, DECIMAL_PRECISION)).toBe(
 				expectedResult,
 			)

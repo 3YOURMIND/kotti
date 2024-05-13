@@ -1,7 +1,7 @@
-import { ComponentPublicInstanceConstructor } from 'vue/types/v3-component-public-instance'
-import { Vue as _Vue } from 'vue/types/vue'
+import type { ComponentPublicInstanceConstructor } from 'vue/types/v3-component-public-instance'
+import type { Vue as _Vue } from 'vue/types/vue'
 
-import { Kotti } from './types'
+import type { Kotti } from './types'
 import { DecimalSeparator } from './types/kotti'
 
 /**
@@ -12,20 +12,12 @@ export const attachMeta = <C extends ComponentPublicInstanceConstructor, T>(
 	component: C,
 	meta: Kotti.Meta,
 	other?: T,
-) => Object.assign(component, { meta: Object.assign({}, meta, other) })
+): C & { meta: Kotti.Meta & T } =>
+	Object.assign(component, { meta: Object.assign({}, meta, other) })
 
 export const isBrowser = Boolean(
 	typeof window !== 'undefined' && window.document,
 )
-
-/**
- * Triggers blur() on the given HTML element if it, or any of its children, is in focus
- * @param element The HTML element
- */
-export const blurElement = (element: HTMLElement | null) => {
-	if (document.activeElement instanceof HTMLElement && isInFocus(element))
-		document.activeElement.blur()
-}
 
 /**
  * Checks if the given HTML element, or any of its children, is in focus
@@ -36,6 +28,14 @@ export const isInFocus = (element: HTMLElement | null): boolean =>
 	(document.activeElement === element ||
 		(element?.contains(document.activeElement) ?? false))
 
+/**
+ * Triggers blur() on the given HTML element if it, or any of its children, is in focus
+ * @param element The HTML element
+ */
+export const blurElement = (element: HTMLElement | null): void => {
+	if (document.activeElement instanceof HTMLElement && isInFocus(element))
+		document.activeElement.blur()
+}
 /**
  * Checks if the given HTML element or Vue component is/contains the specified event target
  * @param component The HTML element or Vue component
@@ -63,10 +63,11 @@ export const isOrContainsEventTarget = (
  */
 export const makeInstallable = <C extends ComponentPublicInstanceConstructor>(
 	component: C,
-) =>
+): C & { install: Vue.PluginFunction<Record<string, never>> } =>
 	Object.assign(component, {
+		// eslint-disable-next-line @typescript-eslint/naming-convention
 		install: (Vue: typeof _Vue) => Vue.component(component.name, component),
-	}) as C & { install: Vue.PluginFunction<Record<string, never>> }
+	})
 
 export const isNumberInRange = ({
 	maximum,
@@ -76,7 +77,7 @@ export const isNumberInRange = ({
 	maximum: number | null
 	minimum: number | null
 	value: number | null
-}) => {
+}): boolean => {
 	if (value === null) return true
 
 	const fitsMinimum = minimum === null || value >= minimum

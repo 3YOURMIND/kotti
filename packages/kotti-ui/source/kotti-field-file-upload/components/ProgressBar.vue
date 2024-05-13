@@ -24,7 +24,7 @@ export default defineComponent({
 				'progress-bar__fill--is-error': props.isError,
 			})),
 			progressPercent: computed(
-				() => `${Math.floor(props.progress * ONE_HUNDRED_PERCENT)}%`,
+				() => `${String(Math.floor(props.progress * ONE_HUNDRED_PERCENT))}%`,
 			),
 		}
 	},

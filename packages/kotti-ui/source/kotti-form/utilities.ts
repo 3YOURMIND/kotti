@@ -1,10 +1,10 @@
-import { KottiField } from '../kotti-field/types'
+import type { KottiField } from '../kotti-field/types'
 
-import { KottiForm } from './types'
+import type { KottiForm } from './types'
 
 export const getValidationSummary = (
 	validations: ReadonlyArray<KottiField.Validation.Result>,
-) =>
+): KottiForm.ValidationSummary =>
 	validations.reduce<KottiForm.ValidationSummary>(
 		(accumulator, validation) => {
 			switch (validation.type) {

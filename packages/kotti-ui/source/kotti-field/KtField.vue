@@ -117,14 +117,15 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import debounce from 'lodash/debounce'
-import { PropType, computed, defineComponent, ref } from 'vue'
-import { VNode } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
+import type { VNode } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import FieldHelpText from './components/FieldHelpText.vue'
 import { useInput } from './hooks'
-import { KottiField } from './types'
+import type { KottiField } from './types'
 
 const LABEL_CLICK_DEBOUNCE = 200
 
@@ -189,7 +190,7 @@ export default defineComponent({
 				focusInput()
 			},
 			hasHelpText: computed(
-				() => props.helpTextSlot.length >= 1 || props.field.helpText !== null,
+				() => props.helpTextSlot.length > 0 || props.field.helpText !== null,
 			),
 			hasLabel: computed(() => props.field.label !== null),
 			iconClasses: computed(
@@ -246,6 +247,7 @@ export default defineComponent({
 				const classes = ['kt-field__wrapper']
 
 				if (props.field.isDisabled) classes.push('kt-field__wrapper--disabled')
+				// eslint-disable-next-line unicorn/explicit-length-check -- size is an enum, and thus a false positive
 				if (props.field.size)
 					classes.push(`kt-field__wrapper--is-${props.field.size}`)
 

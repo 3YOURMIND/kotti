@@ -1,15 +1,15 @@
 {
 	"dependencies": {
-		"@3yourmind/kotti-ui": "5.6.0",
+		"@3yourmind/kotti-ui": "*",
 		"@3yourmind/yoco": "*",
 		"@octokit/rest": "^20.0.2",
 		"@octokit/types": "^12.3.0",
+		"copy-to-clipboard": "^3.3.3",
 		"core-js": "^3.35.1",
 		"dayjs": "^1.9.1",
 		"lodash": "4.x",
 		"marked": "^12.0.0",
 		"natural-sort": "^1.0.0",
-		"vue-clipboard2": "^0.3.1",
 		"vue-router": "3.x"
 	},
 	"description": "Kotti-ui Doc Pages",
@@ -42,13 +42,12 @@
 	"private": true,
 	"scripts": {
 		"build": "nuxt generate",
-		"check:eslint": "yarn --cwd ../.. run eslint --max-warnings=0 --ignore-path=.gitignore ./packages/documentation",
+		"check:eslint": "eslint --max-warnings=0 .",
 		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/documentation",
 		"check:stylelint": "stylelint './**/*.{css,scss,vue}'",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
 		"fix:stylelint": "yarn run check:stylelint --fix",
-		"format": "prettier --write **/*.{vue,js,json,ts,md}",
 		"watch": "nuxt"
 	},
 	"version": "2.0.0"

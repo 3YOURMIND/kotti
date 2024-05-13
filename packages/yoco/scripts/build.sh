@@ -6,7 +6,7 @@ set -euo pipefail
 rm -rf dist
 
 # build cjs (common JS) and mjs (esm)
-tsc --build --verbose ./tsconfig.cjs.json ./tsconfig.mjs.json
+tsc --build ./tsconfig.cjs.json ./tsconfig.mjs.json
 
 # generate icon font
 node --unhandled-rejections=strict dist/mjs/generate.js

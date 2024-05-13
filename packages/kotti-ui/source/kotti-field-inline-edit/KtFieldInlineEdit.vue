@@ -34,8 +34,8 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
+import type { Ref } from 'vue'
 import {
-	Ref,
 	computed,
 	defineComponent,
 	onBeforeMount,
@@ -45,20 +45,21 @@ import {
 	toRefs,
 	watch,
 } from 'vue'
-import { InputHTMLAttributes, TextareaHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { useField, useForceUpdate } from '../kotti-field/hooks'
-import { KottiField } from '../kotti-field/types'
+import type { KottiField } from '../kotti-field/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
-import { Nullable } from '../types/utilities'
+import type { Nullable } from '../types/utilities'
 import { blurElement, isInFocus, isOrContainsEventTarget } from '../utilities'
 
 import ConfirmButton from './components/ConfirmButton.vue'
 import EditIcon from './components/EditIcon.vue'
 import { KOTTI_FIELD_INLINE_EDIT_SUPPORTS } from './constants'
 import { useAdjustHeight, usePreventConfirm } from './hooks'
-import { FieldInlineEditElement, KottiFieldInlineEdit } from './types'
+import type { FieldInlineEditElement } from './types'
+import { KottiFieldInlineEdit } from './types'
 
 export default defineComponent({
 	name: 'KtFieldInlineEdit',
@@ -67,7 +68,6 @@ export default defineComponent({
 		EditIcon,
 	},
 	props: makeProps(KottiFieldInlineEdit.propsSchema),
-	// eslint-disable-next-line sonarjs/cognitive-complexity
 	setup(props, { emit }) {
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		const translations = useTranslationNamespace('KtFieldInlineEdit')

@@ -1,4 +1,4 @@
-import { KottiFieldSingleSelect } from '../kotti-field-select/types'
+import type { KottiFieldSingleSelect } from '../kotti-field-select/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 import { KottiFilters } from './types'
@@ -29,9 +29,10 @@ const getFilterInitialOperation = (
 ): KottiFilters.Operation.Any => {
 	if (!Array.isArray(operations) || operations.length === 0)
 		throw new Error('Invalid Filter Operations')
+
 	return operations.includes(defaultOperation)
 		? defaultOperation
-		: operations[0]
+		: (operations[0] as KottiFilters.Operation.Any)
 }
 
 export const getFilterInitialState = (
@@ -120,8 +121,6 @@ export const getFilterInitialState = (
 export const getOperationOptions = (
 	column: KottiFilters.Column.Any,
 ): KottiFieldSingleSelect.Props['options'] => {
-	if (!column) return []
-
 	const translations = useTranslationNamespace('KtFilters')
 
 	switch (column.type) {

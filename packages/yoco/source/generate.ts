@@ -1,4 +1,4 @@
-import * as path from 'path'
+import path from 'node:path'
 
 import IconFontBuildr from 'icon-font-buildr'
 
@@ -23,8 +23,8 @@ async function build() {
 
 	// eslint-disable-next-line no-console
 	console.log(
-		`GENERATED ICON FONT WITH ${Object.values(ligatures).length} ICONS`,
+		`GENERATED ICON FONT WITH ${Object.values(ligatures).length.toString()} ICONS`,
 	)
 }
 
-build()
+void build()

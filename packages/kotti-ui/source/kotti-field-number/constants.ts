@@ -1,4 +1,4 @@
-import { KottiField } from '../kotti-field/types'
+import type { KottiField } from '../kotti-field/types'
 import { DecimalSeparator } from '../types/kotti'
 import { DECIMAL_SEPARATORS_CHARACTER_SET } from '../utilities'
 
@@ -23,7 +23,7 @@ export const TRAILING_ZEROES_REGEX = new RegExp(
 	`${DECIMAL_SEPARATORS_CHARACTER_SET}0*$|(${DECIMAL_SEPARATORS_CHARACTER_SET}[0-9]*[1-9])0+$`,
 )
 
-export const VALID_REGEX = (decimalPlaces: number) =>
+export const VALID_REGEX = (decimalPlaces: number): RegExp =>
 	new RegExp(
-		`^[-]?(0?|([1-9][0-9]*))?(${DECIMAL_SEPARATORS_CHARACTER_SET}[0-9]{0,${decimalPlaces}})?$`,
+		`^[-]?(0?|([1-9][0-9]*))?(${DECIMAL_SEPARATORS_CHARACTER_SET}[0-9]{0,${decimalPlaces.toString()}})?$`,
 	)

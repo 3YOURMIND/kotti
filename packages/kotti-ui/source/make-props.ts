@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition -- disable as only intentionally-set DEBUG flags are being marked */
 import cloneDeep from 'lodash/cloneDeep'
 import uniq from 'lodash/uniq'
 import type { PropOptions, PropType } from 'vue'
@@ -11,7 +12,11 @@ const NEVER = Symbol('NEVER')
 
 const setUnion = <T>(...sets: Set<T>[]): Set<T> => {
 	const result = new Set<T>()
-	for (const set of sets) for (const item of set) result.add(item)
+	for (const set of sets) {
+		for (const item of set) {
+			result.add(item)
+		}
+	}
 	return result
 }
 
@@ -242,7 +247,6 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 	}
 } =>
 	Object.fromEntries(
-		// eslint-disable-next-line sonarjs/cognitive-complexity
 		Object.entries(propsSchema.shape).map(([propName, propSchema]) => {
 			/* eslint-disable no-console */
 			if (DEBUG_MAKE_PROPS) console.log(`makeProps: generating “${propName}”`)
@@ -268,7 +272,7 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 				propDefinition.type = Symbol
 			} else {
 				const vuePropTypes = uniq(
-					[...zodTypeSet]
+					Array.from(zodTypeSet)
 						.filter((x) => !ignoredZodTypes.has(x))
 						.map((zodTypeName) => {
 							if (DEBUG_MAKE_PROPS)

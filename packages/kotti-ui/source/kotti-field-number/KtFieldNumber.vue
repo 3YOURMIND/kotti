@@ -52,23 +52,23 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import Big from 'big.js'
+import type { UnwrapRef } from 'vue'
 import {
 	defineComponent,
 	computed,
 	ref,
 	watch,
-	UnwrapRef,
 	onBeforeMount,
 	onUnmounted,
 	nextTick,
 } from 'vue'
-import { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate, useInput } from '../kotti-field/hooks'
-import { KottiField } from '../kotti-field/types'
+import type { KottiField } from '../kotti-field/types'
 import { useI18nContext } from '../kotti-i18n/hooks'
-import { KottiI18n } from '../kotti-i18n/types'
+import type { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
 import {
 	DECIMAL_SEPARATORS_CHARACTER_SET,
@@ -158,7 +158,7 @@ export default defineComponent({
 					})
 				)
 					throw new RangeError(
-						`KtFieldNumber: encountered an out-of-range number "${newNumber}"`,
+						`KtFieldNumber: encountered an out-of-range number "${String(newNumber)}"`,
 					)
 
 				if (
@@ -169,7 +169,7 @@ export default defineComponent({
 					})
 				)
 					throw new Error(
-						`KtFieldNumber: encountered a value "${newNumber}" that doesn't fit ((minimum + k * step): where k is an integer)`,
+						`KtFieldNumber: encountered a value "${String(newNumber)}" that doesn't fit ((minimum + k * step): where k is an integer)`,
 					)
 
 				if (toNumber(lastValidTypedStringValue.value) === newNumber) {
@@ -323,14 +323,16 @@ export default defineComponent({
 					value: internalStringValue.value,
 				}),
 			),
-			onBlur: () => forceUpdateDisplayedValue(field.currentValue),
+			onBlur: () => {
+				forceUpdateDisplayedValue(field.currentValue)
+			},
 			onClickMiddle: () => inputRef.value?.focus(),
 			onInput: (event: Event) => {
 				const value = (event.target as HTMLInputElement).value
 
 				lastUserSetCursorPosition.value = inputRef.value?.selectionStart ?? null
 
-				const { maximum, minimum, step } = props
+				const { decimalPlaces, maximum, minimum, step } = props
 
 				const valueWithoutLeadingZeroes = value.replace(
 					LEADING_ZEROES_REGEX,
@@ -339,7 +341,7 @@ export default defineComponent({
 				const nextNumber = toNumber(valueWithoutLeadingZeroes)
 
 				const isTypedNumberValid =
-					VALID_REGEX(props.decimalPlaces).test(valueWithoutLeadingZeroes) &&
+					VALID_REGEX(decimalPlaces).test(valueWithoutLeadingZeroes) &&
 					isStepMultiple({
 						minimum,
 						step,
