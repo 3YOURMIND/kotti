@@ -91,6 +91,7 @@
 			"prettier --write"
 		]
 	},
+	"packageManager": "yarn@1.22.22",
 	"prettier": {
 		"arrowParens": "always",
 		"quoteProps": "as-needed",
