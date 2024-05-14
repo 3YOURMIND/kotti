@@ -41,8 +41,6 @@ jobs:
       - name: Install modules
         run: yarn install --frozen-lockfile
 
-      -
-
       # update npm for provenance support
       - run: npm --version && npm install -g npm && npm --version
 
