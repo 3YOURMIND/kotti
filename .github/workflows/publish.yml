@@ -31,7 +31,8 @@ jobs:
       - run: echo $NODE_AUTH_TOKEN | wc -c
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: npm token
+      - run: npm config set //registry.npmjs.org/:_authToken $NODE_AUTH_TOKEN
+        # - run: npm token
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm whoami
