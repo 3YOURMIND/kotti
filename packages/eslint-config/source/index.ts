@@ -367,7 +367,7 @@ export default {
 			},
 		),
 		/**
-		 * Should be used on test files. It includes vitest-specific rules and tuns off rules that
+		 * Should be used on test files. It includes vitest-specific rules and turns off rules that
 		 * would be unhelpful/annoying when writing tests.
 		 */
 		tests: tseslint.config({

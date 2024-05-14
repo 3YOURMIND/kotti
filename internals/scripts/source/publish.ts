@@ -2,7 +2,11 @@
 import { $, semver } from 'bun'
 import { z } from 'zod'
 
-const packagesToConsider = ['packages/eslint-config', 'packages/yoco']
+const packagesToConsider = [
+	'packages/eslint-config',
+	'packages/vue-use-tippy',
+	'packages/yoco',
+]
 
 const packageJsonSchema = z.object({ name: z.string(), version: z.string() })
 
