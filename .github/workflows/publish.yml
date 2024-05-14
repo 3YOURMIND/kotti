@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
       - uses: actions/cache@v4
         with:
           path: |
@@ -26,7 +27,11 @@ jobs:
 
       - run: npm config list
       - run: npm token
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install modules
         run: yarn install --frozen-lockfile
