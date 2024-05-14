@@ -17,7 +17,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://registry.npmjs.org/'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: actions/cache@v4
         with:
           path: |
@@ -26,6 +28,9 @@ jobs:
       - uses: oven-sh/setup-bun@v1
 
       - run: npm config list
+      - run: echo $NODE_AUTH_TOKEN | wc -c
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm token
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -35,6 +40,8 @@ jobs:
 
       - name: Install modules
         run: yarn install --frozen-lockfile
+
+      -
 
       # update npm for provenance support
       - run: npm --version && npm install -g npm && npm --version
