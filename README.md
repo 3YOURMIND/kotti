@@ -150,11 +150,17 @@ yarn run test
 
 ### Publishing
 
+This monorepo supports a semi-automatic release workflow. To trigger an automatic release:
+
+- make sure that the package that should be auto-released is mentioned in `packagesToConsider` of [this file](internals/scripts/source/publish.ts)
+- bump the package's version in the relevant `package.json`
+- merge this change to `master`. This will trigger the repo's `publish` workflow which publishes any new versions it finds.
+
 #### Kotti
 
 1. Prepare a new release draft [here](https://github.com/3YOURMIND/kotti/releases/new)
 
-   a. Tag format: `v1.2.3` (select `Create new tag: v1.2.3 on publish`)
+   a. Tag format: `versions/kotti-ui/1.2.3` (select `Create new tag: versions/kotti-ui/1.2.3 on publish`)
 
    b. Title format: `1.2.3: tldr of what's happening`
 
@@ -162,99 +168,50 @@ yarn run test
 
    d. Click on `Save draft`
 
-2. Checkout the master branch in the Kotti repository and pull latest changes
+2. Optional: If you haven't already, make sure to functionally test:
 
 ```bash
-git checkout master
-git pull --rebase
+yarn run watch # or if already merged to master, go to <https://3yourmind.github.io/kotti/>
 ```
 
-3. Install/update dependencies
+3. Create a pull request that bumps the version:
+   a. Update the version in `packages/kotti-ui/package.json`
+   b. Commit message format: `version(kotti-ui@1.2.3): tldr of what's happening`
 
-```bash
-yarn install
-```
+4. Merge the pull request and publish the release draft from `step 1` [here](https://github.com/3YOURMIND/kotti/releases)
 
-4. Build Kotti. Make sure it builds successfully.
-
-```bash
-yarn run turbo run --filter=@3yourmind/kotti-ui build
-```
-
-5. Optional: If you haven't already, make sure to functionally test:
-
-```bash
-yarn run watch
-```
-
-6. Login into NPM with your credentials. Make sure you have publishing rights and 2FA on your npmjs.com account enabled.
-
-```bash
-npm login
-```
-
-7. Update the version in `package.json` in `packages/kotti-ui` and all `@3yourmind/kotti-ui` dependencies in:
-
-   a. `packages/documentation`
-
-   b. `packages/test-app`
-
-8. Make a version commit, **DO NOT PUSH** yet.
-
-   a. Commit message format: `version(1.2.3): tldr of what's happening`
-
-9. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
-
-```bash
-yarn run lerna publish from-package
-```
-
-10. Push the version commit to remote
-
-```bash
-git push
-```
-
-11. Find the release draft from `step 1` [here](https://github.com/3YOURMIND/kotti/releases), edit it and click on `Publish release`
-
-12. Announce the new version in the `#kotti` slack channel
+5. Announce the new version in the `#kotti` slack channel
 
 #### Yoco
 
-1. Create a version bump branch out of master
+1. Prepare a new release draft [here](https://github.com/3YOURMIND/kotti/releases/new)
 
-2. Update the version in `packages/yoco`
+   a. Tag format: `versions/yoco/1.2.3` (select `Create new tag: versions/yoco/1.2.3 on publish`)
 
-3. Commit and push
+   b. Title format: `Yoco 1.2.3: tldr of what's happening`
 
-4. Create a PR and get it merged
+   c. Release notes: Follow guidelines of previous releases
 
-5. Checkout the master branch in the Kotti repository and pull latest changes
+   d. Click on `Save draft`
 
-```bash
-git checkout master
-git pull --rebase
-```
-
-6. Login into NPM with your credentials. Make sure you have publishing rights and 2FA on your npmjs.com account enabled.
+2. Optional: If you haven't already, make sure to functionally test:
 
 ```bash
-npm login
+yarn run watch # or if already merged to master, go to <https://3yourmind.github.io/kotti/>
 ```
 
-7. Build yoco
+3. Create a pull request that bumps the version:
+   a. Update the version in `packages/yoco/package.json`
+   b. Update the yoco version in `packages/kotti-ui/package.json` (consider bumping kotti-ui, if the changes need to be used there as well)
+   c. Commit message format: `version(yoco@1.2.3): tldr of what's happening`
 
-```bash
-yarn run turbo run --filter=@3yourmind/yoco build
-```
+4. Merge the pull request and publish the release draft from `step 1` [here](https://github.com/3YOURMIND/kotti/releases)
 
-8. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
+5. Announce the new version in the `#kotti` slack channel
 
-```bash
-yarn run lerna publish from-package
-```
+#### Debugging
 
-9. If any new icon is needed in Kotti, create a PR updating the `@3yourmind/yoco` version in `package.json` in `kotti-ui`
+In case this does not work as expected, you want to check out the [publish script](internals/scripts/source/publish.ts) and the [github workflow definition](.github/workflows/publish.yml) that drive this action
 
 ### Build
 
