@@ -25,6 +25,9 @@ jobs:
           key: ${{ hashFiles('**/yarn.lock') }}
       - uses: oven-sh/setup-bun@v1
 
+      - run: npm config list
+      - run: npm whoami
+
       - name: Install modules
         run: yarn install --frozen-lockfile
 
