@@ -85,7 +85,7 @@
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
 		"fix:stylelint": "yarn run check:stylelint --fix",
-		"publish-package": "npm publish --access public --provenance",
+		"publish-package": "yarn publish --no-git-tag-version --verbose --non-interactive --access public",
 		"test": "vitest --run --typecheck",
 		"watch": "vite build --watch"
 	},

@@ -51,7 +51,10 @@
 	"main": "./dist/cjs/index.cjs",
 	"module": "./dist/mjs/index.js",
 	"name": "@3yourmind/yoco",
-	"repository": "git+https://github.com/3YOURMIND/kotti.git",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
 	"scripts": {
 		"build": "./scripts/build.sh",
 		"check:eslint": "eslint --max-warnings=0 .",
@@ -60,7 +63,7 @@
 		"check:stylelint": "stylelint style.css",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
-		"publish-package": "npm publish --access public --provenance"
+		"publish-package": "yarn publish --no-git-tag-version --verbose --non-interactive --access public"
 	},
 	"style": "./style.css",
 	"type": "module",

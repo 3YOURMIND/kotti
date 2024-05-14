@@ -46,7 +46,10 @@
 	"peerDependencies": {
 		"eslint": ">= 9"
 	},
-	"repository": "git+https://github.com/3YOURMIND/kotti.git",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
 	"scripts": {
 		"build": "./scripts/build.sh",
 		"check:eslint": "eslint --max-warnings=0 .",
@@ -54,7 +57,7 @@
 		"check:publint": "publint",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
-		"publish-package": "npm publish --access public --provenance"
+		"publish-package": "yarn publish --no-git-tag-version --verbose --non-interactive --access public"
 	},
 	"type": "module",
 	"types": "./dist/mjs/index.d.ts",

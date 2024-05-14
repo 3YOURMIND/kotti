@@ -102,7 +102,10 @@
 		"useTabs": true
 	},
 	"private": true,
-	"repository": "git@github.com:3YOURMIND/kotti",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/3YOURMIND/kotti.git"
+	},
 	"scripts": {
 		"build": "turbo run build",
 		"check": "turbo run check",

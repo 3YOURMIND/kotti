@@ -28,11 +28,15 @@ jobs:
       - name: Install modules
         run: yarn install --frozen-lockfile
 
-      # update npm for provenance support
-      - run: npm --version && npm install -g npm && npm --version
-
       # make extra sure this publish wouldn’t break anything
       - run: yarn run build check test
+
+      # HACK: When putting this workflow into action, the pipeline did not find the
+      # correct registry and/or Auth Token. To fix this we did the following:
+      # - adding both of these lines (we are not sure if only one would have done the trick)
+      # - using `yarn publish` instead of `npm publish`
+      - run: cp internals/scripts/source/npmrc-template /home/runner/work/_temp/.npmrc
+      - run: cp internals/scripts/source/npmrc-template .npmrc
 
       - name: publish
         run: bun internals/scripts/source/publish.ts

@@ -56,7 +56,7 @@
 		"check:publint": "publint",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
-		"publish-package": "npm publish --access public --provenance"
+		"publish-package": "yarn publish --no-git-tag-version --verbose --non-interactive --access public"
 	},
 	"type": "module",
 	"types": "./dist/mjs/index.d.ts",
