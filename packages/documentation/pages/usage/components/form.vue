@@ -3,6 +3,40 @@
 		<ComponentInfo v-bind="{ component }" />
 		<ClientOnly>
 			<KtI18nContext :locale="settings.locale">
+				<KtForm v-model="settings" :hideValidation="true">
+					<div class="wrapper">
+						<section>
+							<h3>Shared Form ↔ Field Settings</h3>
+							<KtFieldSingleSelect
+								formKey="size"
+								helpDescription="Can be overridden in individual fields"
+								isOptional
+								:hideValidation="false"
+								label="Size"
+								:options="[
+									{ label: 'small', value: 'small' },
+									{ label: 'medium (default)', value: 'medium' },
+									{ label: 'large', value: 'large' },
+								]"
+							/>
+						</section>
+						<div>
+							<h3>Form Settings</h3>
+							<KtFieldSingleSelect
+								formKey="preventSubmissionOn"
+								helpDescription="Which types of validation error prevent the form from submitting?"
+								isOptional
+								label="Prevent Submission"
+								:options="[
+									{ label: 'error (default)', value: 'error' },
+									{ label: 'warning', value: 'warning' },
+									{ label: 'NEVER', value: 'NEVER' },
+								]"
+							/>
+						</div>
+					</div>
+				</KtForm>
+
 				<KtForm v-model="settings">
 					<div class="wrapper">
 						<section>
