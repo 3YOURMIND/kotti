@@ -41,17 +41,17 @@ export default createRule({
 							},
 						],
 					},
-					definitions: {
-						nestedObject: {
-							type: 'object',
-							additionalProperties: {
-								anyOf: [
-									{ type: 'string' },
-									{
-										$ref: '#/definitions/nestedObject',
-									},
-								],
-							},
+				},
+				definitions: {
+					nestedObject: {
+						type: 'object',
+						additionalProperties: {
+							anyOf: [
+								{ type: 'string' },
+								{
+									$ref: '#/definitions/nestedObject',
+								},
+							],
 						},
 					},
 				},

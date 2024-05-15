@@ -25,7 +25,7 @@ export default defineComponent({
 		},
 	},
 	setup(props, { emit }) {
-		/* eslint-disable vue/no-setup-props-destructure */
+		/* eslint-disable vue/no-setup-props-reactivity-loss */
 		/**
 		 * FIXME: This is not reactive and will likely cause issues. Fixing this
 		 * would require adjusting types in KottiForm.Context to support computed
@@ -46,7 +46,6 @@ export default defineComponent({
 			validators: props.context.validators,
 			values: computed(() => props.values),
 		})
-		/* eslint-enable vue/no-setup-props-destructure */
 	},
 })
 </script>

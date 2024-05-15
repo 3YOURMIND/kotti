@@ -29,7 +29,7 @@ export default defineComponent({
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
 	setup(props, { emit }) {
-		// eslint-disable-next-line vue/no-setup-props-destructure
+		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const localIsInternal = ref<KottiComment.PropsInternal['isInternal']>(
 			props.isInternal,
 		)

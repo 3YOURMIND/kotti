@@ -130,17 +130,6 @@ const baseConfig = tseslint.config({
 			{ argsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_' },
 		],
 		'@typescript-eslint/no-use-before-define': 'error',
-		'@typescript-eslint/restrict-template-expressions': [
-			'error',
-			{
-				allowAny: false,
-				allowBoolean: false,
-				allowNullish: false,
-				allowNumber: true,
-				allowRegExp: false,
-				allowNever: false,
-			},
-		],
 
 		// Eslint
 		'dot-notation': 'warn',
@@ -274,6 +263,17 @@ const rulesRequiringTypes = {
 	'@typescript-eslint/no-unnecessary-type-assertion': 'error',
 	'@typescript-eslint/prefer-nullish-coalescing': 'warn',
 	'@typescript-eslint/prefer-optional-chain': 'warn',
+	'@typescript-eslint/restrict-template-expressions': [
+		'error',
+		{
+			allowAny: false,
+			allowBoolean: false,
+			allowNullish: false,
+			allowNumber: true,
+			allowRegExp: false,
+			allowNever: false,
+		},
+	],
 	'@typescript-eslint/switch-exhaustiveness-check': 'error',
 } satisfies SharedConfig.RulesRecord
 
@@ -375,11 +375,6 @@ export default {
 			plugins: { vitest },
 			extends: [vitest.configs.recommended, ...baseConfig],
 			rules: {
-				'no-console': 'off',
-				'no-magic-numbers': 'off',
-				'vitest/no-disabled-tests': 'error',
-				'vitest/no-identical-title': 'error',
-				'vue/one-component-per-file': 'off',
 				'@typescript-eslint/ban-ts-comment': 'off',
 				'@typescript-eslint/explicit-module-boundary-types': 'off',
 				'@typescript-eslint/naming-convention': 'off',
@@ -388,9 +383,15 @@ export default {
 				'@typescript-eslint/no-explicit-any': 'off',
 				'@typescript-eslint/no-unsafe-assignment': 'off',
 				'@typescript-eslint/no-unsafe-call': 'off',
-				'@typescript-eslint/no-unsafe-return': 'off',
 				'@typescript-eslint/no-unsafe-member-access': 'off',
+				'@typescript-eslint/no-unsafe-return': 'off',
 				'@typescript-eslint/no-use-before-define': 'off',
+				'@typescript-eslint/restrict-template-expressions': 'off',
+				'no-console': 'off',
+				'no-magic-numbers': 'off',
+				'vitest/no-disabled-tests': 'error',
+				'vitest/no-identical-title': 'error',
+				'vue/one-component-per-file': 'off',
 			},
 		}),
 		/**
@@ -447,7 +448,7 @@ export default {
 				'vue/no-empty-component-block': 'error',
 				'vue/no-mutating-props': 'error',
 				'vue/no-ref-as-operand': 'error',
-				'vue/no-setup-props-destructure': 'error',
+				'vue/no-setup-props-reactivity-loss': 'error',
 				'vue/no-unused-properties': 'error',
 				'vue/no-unused-refs': 'error',
 				'vue/no-useless-mustaches': ['warn', { ignoreIncludesComment: true }],

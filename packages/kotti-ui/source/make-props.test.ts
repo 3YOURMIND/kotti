@@ -28,7 +28,6 @@ expect.extend({
 		return {
 			message: () => {
 				if (!passNoDefault)
-					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					return `Expected “prop.default” to be “undefined”. Was “${prop.default}”`
 				if (!passRequired)
 					return `Expected “prop.required” to be “true”. Was “${String(prop.required)}”`
