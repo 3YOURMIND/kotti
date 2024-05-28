@@ -49,7 +49,6 @@ const config = tseslint.config(
 		languageOptions: {
 			ecmaVersion: 2022,
 			parserOptions: {
-				debugLevel: 'typescript-eslint',
 				project: [
 					'./tsconfig.json',
 					'./internals/*/tsconfig.json',

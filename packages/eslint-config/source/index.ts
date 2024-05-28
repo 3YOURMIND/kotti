@@ -1,6 +1,6 @@
 import type { TSESLint } from '@typescript-eslint/utils'
 import eslint from '@eslint/js'
-import eslintPluginPrettier from 'eslint-plugin-prettier/recommended'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import jsonc from 'eslint-plugin-jsonc'
 import jsoncEslintParser from 'jsonc-eslint-parser'
@@ -108,7 +108,11 @@ const rules = {
  * should be the last config that gets applied
  */
 const baseConfig = tseslint.config({
-	extends: [eslintPluginPrettier, sonarjs.configs.recommended],
+	name: '@3yourmind/eslint-config/base-config',
+	extends: [
+		eslintPluginPrettierRecommended as TSESLint.FlatConfig.Config,
+		sonarjs.configs.recommended,
+	],
 	rules: {
 		...ignoredRules,
 
@@ -287,6 +291,7 @@ export default {
 		 * Should be used on .ts and .tsx files. This enables rules that rely on type checking.
 		 */
 		default: tseslint.config({
+			name: '@3yourmind/eslint-config/default',
 			extends: [
 				eslint.configs.recommended,
 				...tseslint.configs.strictTypeChecked,
@@ -300,6 +305,7 @@ export default {
 		 * Registers plugins and settings that should be globally enabled.
 		 */
 		global: tseslint.config({
+			name: '@3yourmind/eslint-config/global',
 			languageOptions: {
 				/**
 				 * As recommended by eslint-plugin-unicorn
@@ -321,6 +327,7 @@ export default {
 		 */
 		json: tseslint.config(
 			{
+				name: '@3yourmind/eslint-config/json',
 				files: ['**/*.json'],
 				ignores: ['**/tsconfig*.json'],
 				languageOptions: {
@@ -340,12 +347,13 @@ export default {
 						},
 						{
 							pathPattern: '.*',
-							order: { type: 'asc' },
+							order: { type: 'asc', caseSensitive: false, natural: true },
 						},
 					],
 				},
 			},
 			{
+				name: '@3yourmind/eslint-config/tsconfig-json',
 				files: ['**/tsconfig*.json'],
 				languageOptions: {
 					parser: jsoncEslintParser,
@@ -371,6 +379,7 @@ export default {
 		 * would be unhelpful/annoying when writing tests.
 		 */
 		tests: tseslint.config({
+			name: '@3yourmind/eslint-config/tests',
 			files: ['**/*.test.{ts,tsx}'],
 			plugins: { vitest },
 			extends: [vitest.configs.recommended, ...baseConfig],
@@ -400,6 +409,7 @@ export default {
 		 * @deprecated
 		 */
 		untyped: tseslint.config({
+			name: '@3yourmind/eslint-config/untyped',
 			extends: [
 				eslint.configs.recommended,
 				...tseslint.configs.recommended,
@@ -411,6 +421,7 @@ export default {
 		 * Should be used only on .vue files. Includes vue-specific rules. Works best on `<script lang="ts">`
 		 */
 		vue: tseslint.config({
+			name: '@3yourmind/eslint-config/vue',
 			extends: [
 				...pluginVue.configs['flat/vue2-recommended'],
 				...tseslint.configs.strictTypeChecked,
