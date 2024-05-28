@@ -20,7 +20,6 @@ const config = tseslint.config(
 		languageOptions: {
 			ecmaVersion: 2022,
 			parserOptions: {
-				debugLevel: 'typescript-eslint',
 				project: [
 					'./tsconfig.json',
 					// FIXME: Change these to your `tsconfig.json`s
@@ -42,10 +41,10 @@ const config = tseslint.config(
 	...eslintConfig3YD.configs.tests.map((config) => ({
 		...config,
 		// FIXME: Add your custom test files here
-		files: [.
-			..config.files,
+		files: [
+			...config.files,
 			// 'packages/*/source/test-utils/**/*.ts'
-		]
+		],
 	})),
 	...eslintConfig3YD.configs.vue,
 	{
