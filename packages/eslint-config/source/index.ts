@@ -347,7 +347,7 @@ export default {
 						},
 						{
 							pathPattern: '.*',
-							order: { type: 'asc', caseSensitive: false, natural: true },
+							order: { caseSensitive: false, natural: true, type: 'asc' },
 						},
 					],
 				},
