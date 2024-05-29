@@ -14,7 +14,7 @@ import { KtBanner } from './kotti-banner'
 export * from './kotti-banner'
 import { KtBreadcrumb } from './kotti-breadcrumb'
 export * from './kotti-breadcrumb'
-import { KtButton } from './kotti-button'
+import { KtButton, KtSplitButton } from './kotti-button'
 export * from './kotti-button'
 import { KtButtonGroup } from './kotti-button-group'
 export * from './kotti-button-group'
@@ -157,6 +157,7 @@ export default {
 			KtPagination,
 			KtPopover,
 			KtRow,
+			KtSplitButton,
 			KtTable,
 			KtTableColumn,
 			KtTableConsumer,

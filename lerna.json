@@ -1,7 +1,7 @@
 {
 	"command": {
 		"version": {
-			"allowBranch": "master"
+			"allowBranch": "5.x"
 		}
 	},
 	"npmClient": "yarn",

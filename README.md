@@ -167,10 +167,10 @@ yarn run test
 
    d. Click on `Save draft`
 
-2. Checkout the master branch in the Kotti repository and pull latest changes
+2. Checkout the 5.x branch in the Kotti repository and pull latest changes
 
 ```bash
-git checkout master
+git checkout 5.x
 git pull --rebase
 ```
 
@@ -218,42 +218,9 @@ git push
 
 11. Announce the new version in the `#kotti` slack channel
 
-#### Yoco
+#### Yoco and others
 
-1. Create a version bump branch out of master
-
-2. Update the version in `packages/yoco`
-
-3. Commit and push
-
-4. Create a PR and get it merged
-
-5. Checkout the master branch in the Kotti repository and pull latest changes
-
-```bash
-git checkout master
-git pull --rebase
-```
-
-6. Login into NPM with your credentials. Make sure you have publishing rights and 2FA on your npmjs.com account enabled.
-
-```bash
-npm login
-```
-
-7. Publish. Lerna will auto-detect the packages whose versions got updated in `package.json` and ask you to confirm the packages to be updated and their corresponding versions.
-
-```bash
-yarn run lerna publish from-package
-```
-
-8. If any new icon is needed in Kotti, create a PR updating the `@3yourmind/yoco` version in `package.json` in `kotti-ui`
-
-### Build
-
-```bash
-yarn run lerna run build
-```
+Avoid publishing yoco and other packages except kotti-ui from legacy branch
 
 ## Internals
 

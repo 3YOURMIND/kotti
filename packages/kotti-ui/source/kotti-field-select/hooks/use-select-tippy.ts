@@ -1,10 +1,9 @@
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Ref, computed, inject, ref } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
-import { roundArrow } from 'tippy.js'
 import { Props as TippyProps } from 'tippy.js'
 
-import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 import { KottiField } from '../../kotti-field/types'
 import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
 import { sameWidth } from '../utils/tippy-utils'
@@ -31,13 +30,13 @@ export const useSelectTippy = <T>(
 			 * @see {@link https://atomiks.github.io/tippyjs/v6/all-props/#appendto}
 			 */
 			appendTo: isInPopover ? 'parent' : () => document.body,
-			arrow: roundArrow,
+			arrow: false,
 			content: tippyContentRef.value,
 			// hides the tippy if we click-away from the tippy
 			hideOnClick: false,
 			interactive: true,
 			maxWidth: 'none',
-			offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+			offset: [0, TIPPY_DISTANCE_OFFSET],
 			onClickOutside: () => {
 				setIsDropdownOpen(false)
 			},

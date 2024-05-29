@@ -360,4 +360,11 @@
 			}
 		}
 	}
+
+	/**
+	 * Override styles to hide popper arrow
+	 */
+	.popper__arrow {
+		display: none !important;
+	}
 }

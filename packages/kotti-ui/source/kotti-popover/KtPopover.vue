@@ -23,7 +23,7 @@
 							:isDisabled="option.isDisabled"
 							:isOptional="option.isOptional"
 							:value="option.isSelected"
-							@input="handleItemSelection({ index, option })"
+							@input="(() => handleItemSelection({ index, option }))()"
 						>
 							<span v-text="option.label" />
 						</KtFieldToggle>
@@ -46,9 +46,9 @@ import {
 	inject,
 } from '@vue/composition-api'
 import castArray from 'lodash/castArray'
-import { roundArrow, Props as TippyProps } from 'tippy.js'
+import { Props as TippyProps } from 'tippy.js'
 
-import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { KT_FORM_CONTEXT } from '../kotti-form'
 import { KottiForm } from '../kotti-form/types'
@@ -130,7 +130,7 @@ export default defineComponent({
 			triggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				arrow: roundArrow,
+				arrow: false,
 				content: contentRef.value ?? undefined,
 				/**
 				 * @see {@link https://atomiks.github.io/tippyjs/v6/all-props/#hideonclick}
@@ -138,7 +138,7 @@ export default defineComponent({
 				hideOnClick: false,
 				interactive: true,
 				maxWidth: 'none',
-				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				offset: [0, TIPPY_DISTANCE_OFFSET],
 				onClickOutside: () => {
 					if (props.trigger !== KottiPopover.Trigger.MANUAL) close()
 				},

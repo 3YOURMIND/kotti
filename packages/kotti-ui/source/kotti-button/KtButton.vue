@@ -19,9 +19,8 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { computed, defineComponent, onMounted, ref } from '@vue/composition-api'
-import { roundArrow } from 'tippy.js'
 
-import { TIPPY_LIGHT_BORDER_ARROW_HEIGHT } from '../constants'
+import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { makeProps } from '../make-props'
 
 import { KottiButton } from './types'
@@ -49,12 +48,12 @@ export default defineComponent({
 			helpTextTriggerRef,
 			computed(() => ({
 				appendTo: () => document.body,
-				arrow: roundArrow,
+				arrow: false,
 				content: props.helpText
 					? helpTextContentRef.value ?? undefined
 					: undefined,
 				interactive: true,
-				offset: [0, TIPPY_LIGHT_BORDER_ARROW_HEIGHT],
+				offset: [0, TIPPY_DISTANCE_OFFSET],
 				theme: 'light-border',
 				...(showHelpText.value
 					? { trigger: 'mouseenter focusin' }
@@ -124,7 +123,7 @@ export default defineComponent({
 	--default-button-height: var(--unit-8);
 	--default-button-line-height: var(--unit-6);
 	--large-button-height: var(--unit-9);
-	--small-button-height: var(--unit-6);
+	--small-button-height: var(--unit-7);
 	--button-main-color: var(--interactive-01);
 	--button-main-color-dark: var(--interactive-01-hover);
 	--button-main-color-light: var(--interactive-02-hover);

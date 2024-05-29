@@ -113,6 +113,9 @@
 			"prettier --write"
 		]
 	},
+	"engines": {
+		"node": "16.x"
+	},
 	"prettier": {
 		"arrowParens": "always",
 		"quoteProps": "as-needed",
