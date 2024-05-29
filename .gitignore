@@ -5,3 +5,7 @@ node_modules/
 packages/kotti-ui/report.*.html
 packages/yoco/fonts/
 *.log
+
+# To simplify maintaining legacy branch
+*.DS_Store
+.turbo
