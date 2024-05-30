@@ -28,8 +28,9 @@ export default createRule({
 			missingTranslation:
 				'Missing Translation. Not found in any known translation inputs',
 		},
-		schema: [
-			{
+		schema: {
+			type: 'array',
+			items: {
 				type: 'array',
 				items: {
 					type: 'object',
@@ -42,21 +43,21 @@ export default createRule({
 						],
 					},
 				},
-				definitions: {
-					nestedObject: {
-						type: 'object',
-						additionalProperties: {
-							anyOf: [
-								{ type: 'string' },
-								{
-									$ref: '#/definitions/nestedObject',
-								},
-							],
-						},
+			},
+			definitions: {
+				nestedObject: {
+					type: 'object',
+					additionalProperties: {
+						anyOf: [
+							{ type: 'string' },
+							{
+								$ref: '#/definitions/nestedObject',
+							},
+						],
 					},
 				},
 			},
-		],
+		},
 		type: 'problem',
 	},
 	defaultOptions: [[]],
