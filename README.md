@@ -192,11 +192,7 @@ yarn run watch
 npm login
 ```
 
-6. Update the version in `package.json` in `packages/kotti-ui` and all `@3yourmind/kotti-ui` dependencies in:
-
-   a. `packages/documentation`
-
-   b. `packages/test-app`
+6. Update the version in `package.json` in `packages/kotti-ui` and all `@3yourmind/kotti-ui` dependencies in `packages/documentation`.
 
 7. Make a version commit, **DO NOT PUSH** yet.
 
