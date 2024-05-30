@@ -41,7 +41,7 @@ export default {
 
 		this.$root.$on('vue-yodify', this.addNotification)
 	},
-	beforeDestroy() {
+	beforeUnmount() {
 		this.$root.$off('vue-yodify', this.addNotification)
 	},
 	methods: {

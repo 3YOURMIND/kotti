@@ -301,6 +301,7 @@ export default {
 	mounted() {
 		this.$ready = true
 		this.store.commit('updateColumns', { emitChange: false })
+		// eslint-disable-next-line vue/no-deprecated-events-api
 		this.$on('selectionChange', (selection) => {
 			if (this.value) {
 				this.$emit(

@@ -1,11 +1,15 @@
 <template>
 	<KtI18nContext locale="en-US">
 		<LayoutContainer>
-			<NavBar slot="navbar" />
-			<ActionBar slot="actionbar" />
-			<div slot="workspace">
+			<template #navbar>
+				<NavBar />
+			</template>
+			<template #actionbar>
+				<ActionBar />
+			</template>
+			<template #workspace>
 				<nuxt class="content" />
-			</div>
+			</template>
 		</LayoutContainer>
 	</KtI18nContext>
 </template>

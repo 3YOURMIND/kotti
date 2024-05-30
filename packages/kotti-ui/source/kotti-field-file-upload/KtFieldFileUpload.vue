@@ -4,57 +4,59 @@
 		debounceLabelClick
 		:helpTextSlot="$slots.helpText"
 	>
-		<div slot="container" class="kt-field-file-upload">
-			<DropArea
-				v-if="showDropArea"
-				v-bind="{
-					...sharedProps,
-					allowMultiple,
-					collapseExtensionsAfter,
-					externalUrl,
-					icon,
-					inputId,
-					tabIndex,
-				}"
-				@addFiles="onAddFiles"
-			>
-				<template #footer>
-					<TakePhoto
-						v-if="allowPhotos"
+		<template #container>
+			<div class="kt-field-file-upload">
+				<DropArea
+					v-if="showDropArea"
+					v-bind="{
+						...sharedProps,
+						allowMultiple,
+						collapseExtensionsAfter,
+						externalUrl,
+						icon,
+						inputId,
+						tabIndex,
+					}"
+					@addFiles="onAddFiles"
+				>
+					<template #footer>
+						<TakePhoto
+							v-if="allowPhotos"
+							v-bind="{
+								...sharedProps,
+								tabIndex,
+							}"
+							@addFiles="onAddFiles"
+						/>
+					</template>
+				</DropArea>
+				<div v-if="filesList.length > 0" :style="filesListStyle">
+					<FileItem
+						v-for="fileInfo in filesList"
 						v-bind="{
 							...sharedProps,
-							tabIndex,
+							fileInfo,
 						}"
-						@addFiles="onAddFiles"
+						:key="fileInfo.id"
+						@remove="onRemoveFile"
 					/>
-				</template>
-			</DropArea>
-			<div v-if="filesList.length > 0" :style="filesListStyle">
-				<FileItem
-					v-for="fileInfo in filesList"
-					v-bind="{
-						...sharedProps,
-						fileInfo,
-					}"
-					:key="fileInfo.id"
-					@remove="onRemoveFile"
-				/>
+				</div>
+				<div
+					v-if="preUploadedFilesList.length > 0"
+					:style="preUploadedFilesListStyle"
+				>
+					<PreUploadedFileItem
+						v-for="fileInfo in preUploadedFilesList"
+						v-bind="{
+							...sharedProps,
+							fileInfo,
+						}"
+						:key="fileInfo.id"
+						@remove="onRemoveFile"
+					/>
+				</div>
 			</div>
-			<div
-				v-if="preUploadedFilesList.length > 0"
-				:style="preUploadedFilesListStyle"
-			>
-				<PreUploadedFileItem
-					v-for="fileInfo in preUploadedFilesList"
-					v-bind="{
-						...sharedProps,
-						fileInfo,
-					}"
-					:key="fileInfo.id"
-					@remove="onRemoveFile"
-				/>
-			</div>
-		</div>
+		</template>
 	</KtField>
 </template>
 

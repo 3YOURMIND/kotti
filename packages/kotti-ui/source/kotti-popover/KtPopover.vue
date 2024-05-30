@@ -14,7 +14,7 @@
 					:isClickable="option.onClick !== undefined"
 					:isDisabled="option.isDisabled"
 					:label="option.label"
-					@click.stop="handleItemClick(option)"
+					@click="handleItemClick(option)"
 				>
 					<template v-if="areOptionsSelectable" #option>
 						<KtFieldToggle

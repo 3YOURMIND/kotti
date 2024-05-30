@@ -55,22 +55,22 @@
 							</template>
 							<template
 								v-if="componentRepresentation.headerSlot !== null"
-								slot="header"
+								#header
 							>
 								<div v-text="settings.additionalProps.headerSlot" />
 							</template>
 							<template
 								v-if="componentRepresentation.contentSlot !== null"
-								slot="content"
+								#content
 							>
 								<div v-text="settings.additionalProps.contentSlot" />
 							</template>
-							<a
+							<template
 								v-if="componentRepresentation.showHeaderSideSlot"
-								slot="headerSide"
-								href="#"
-								v-text="'Interactive'"
-							/>
+								#headerSide
+							>
+								<a href="#" v-text="'Interactive'" />
+							</template>
 							<template v-if="componentRepresentation.defaultSlot">
 								<div v-text="componentRepresentation.defaultSlot" />
 							</template>
@@ -150,12 +150,12 @@
 								{ label: 'Error', value: 'error' },
 							]"
 						>
-							<div slot="helpText">
+							<template #helpText>
 								Passed as a validation function:
 								<code>() => ({ type: 'error', message: '' })</code>
 								or via
 								<code>KtForm.validators</code>
-							</div>
+							</template>
 						</KtFieldSingleSelect>
 						<KtFieldToggleGroup
 							formKey="booleanFlags"
@@ -691,26 +691,21 @@
 							:actions="savedField.actions"
 							:validator="savedField.validator"
 						>
-							<div
-								v-if="savedField.headerSlot !== null"
-								slot="header"
-								v-text="savedField.headerSlot"
-							/>
-							<div v-if="savedField.hasHelpTextSlot" slot="helpText">
-								<div>
-									Supports
-									<abbr title="Hypertext Markup Language">HTML</abbr> via
-									<code>&lt;template v-slot:helpText&gt;</code>
-								</div>
-							</div>
-							<div
-								v-if="savedField.contentSlot !== null"
-								slot="content"
-								v-text="savedField.contentSlot"
-							/>
-							<div slot="default">
+							<template v-if="savedField.headerSlot !== null" #header>
+								<div v-text="savedField.headerSlot" />
+							</template>
+							<template v-if="savedField.hasHelpTextSlot" #helpText>
+								Supports
+								<abbr title="Hypertext Markup Language">HTML</abbr> via
+								<code>&lt;template v-slot:helpText&gt;</code>
+							</template>
+							<template v-if="savedField.contentSlot !== null" #content>
+								<div v-text="savedField.contentSlot" />
+							</template>
+
+							<template #default>
 								<div>Default Slot</div>
-							</div>
+							</template>
 						</component>
 						<KtButton
 							label="Remove"
@@ -730,6 +725,8 @@
 <script lang="ts">
 import {
 	Kotti,
+	KtAvatar,
+	KtButton,
 	KtFieldCurrency,
 	KtFieldDate,
 	KtFieldDateRange,
@@ -748,6 +745,9 @@ import {
 	KtFieldTextArea,
 	KtFieldToggle,
 	KtFieldToggleGroup,
+	KtForm,
+	KtFormControllerObject,
+	KtI18nContext,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { TimeConversion } from '@metatypes/units'
@@ -1126,6 +1126,29 @@ export default defineComponent({
 	name: 'DocumentationPageUsageComponentsFormFields',
 	components: {
 		ComponentInfo,
+		KtAvatar,
+		KtButton,
+		KtFieldCurrency,
+		KtFieldDate,
+		KtFieldDateRange,
+		KtFieldDateTime,
+		KtFieldDateTimeRange,
+		KtFieldFileUpload,
+		KtFieldFileUploadRemote,
+		KtFieldMultiSelect,
+		KtFieldMultiSelectRemote,
+		KtFieldNumber,
+		KtFieldPassword,
+		KtFieldRadioGroup,
+		KtFieldSingleSelect,
+		KtFieldSingleSelectRemote,
+		KtFieldText,
+		KtFieldTextArea,
+		KtFieldToggle,
+		KtFieldToggleGroup,
+		KtForm,
+		KtFormControllerObject,
+		KtI18nContext,
 	},
 	setup() {
 		const values = ref<typeof INITIAL_VALUES>(INITIAL_VALUES)

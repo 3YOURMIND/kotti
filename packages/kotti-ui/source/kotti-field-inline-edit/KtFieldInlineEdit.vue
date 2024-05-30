@@ -22,13 +22,14 @@
 			@keydown.enter="onEnter"
 			@keyup.esc="onCancel"
 		/>
-		<ConfirmButton
-			v-if="isEditing"
-			slot="container-right"
-			:dataTest="sharedProps['data-test']"
-			:tabIndex="sharedProps['tabindex']"
-			@confirm="onConfirm"
-		/>
+		<template #container-right>
+			<ConfirmButton
+				v-if="isEditing"
+				:dataTest="sharedProps['data-test']"
+				:tabIndex="sharedProps['tabindex']"
+				@confirm="onConfirm"
+			/>
+		</template>
 	</KtField>
 </template>
 

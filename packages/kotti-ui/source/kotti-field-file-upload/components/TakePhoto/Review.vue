@@ -1,12 +1,12 @@
 <template>
 	<KtModal isOpen size="lg">
-		<div slot="header">
+		<template #header>
 			<h2 v-text="translations.label.review" />
-		</div>
-		<div slot="body">
+		</template>
+		<template #body>
 			<img v-if="photoUrl" :src="photoUrl" />
-		</div>
-		<div slot="footer">
+		</template>
+		<template #footer>
 			<KtButton
 				class="mr-4"
 				:data-test="dataTest ? `${dataTest}.rejectPhoto` : undefined"
@@ -27,7 +27,7 @@
 				:label="translations.button.cancel"
 				@click.stop="$emit('close')"
 			/>
-		</div>
+		</template>
 	</KtModal>
 </template>
 

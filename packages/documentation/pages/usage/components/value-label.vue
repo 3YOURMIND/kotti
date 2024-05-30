@@ -62,10 +62,10 @@
 								{ label: 'Error', value: 'error' },
 							]"
 						>
-							<div slot="helpText">
+							<template #helpText>
 								Passed as an object:
 								<code>{ type: 'error', message: '' }</code>
-							</div>
+							</template>
 						</KtFieldSingleSelect>
 					</div>
 					<div>

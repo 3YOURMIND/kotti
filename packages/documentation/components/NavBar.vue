@@ -5,11 +5,11 @@
 		@logoClick="$router.push('/')"
 		@setIsNarrow="setIsNarrow"
 	>
-		<div slot="navbar-footer">
+		<template #navbar-footer>
 			<a class="github-link" href="https://github.com/3YOURMIND/kotti">
 				<img height="24" src="~/assets/img/icon_github.svg" width="24" />
 			</a>
-		</div>
+		</template>
 	</KtNavbar>
 </template>
 

@@ -6,7 +6,7 @@
 					<slot name="drawer-header" />
 				</div>
 				<div class="kt-drawer__body">
-					<slot slot name="drawer-body" />
+					<slot name="drawer-body" />
 				</div>
 				<div class="kt-drawer__footer">
 					<slot name="drawer-footer" />

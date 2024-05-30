@@ -1,30 +1,32 @@
 <template>
 	<LayoutContainer>
-		<KtNavbar
-			slot="navbar"
-			:isNarrow="isNarrow"
-			logoUrl="https://via.placeholder.com/160x50"
-			:notification="navbarNotification"
-			:quickLinks="quickLinksData"
-			:sections="navbarMenu"
-			:theme="theme"
-			@setIsNarrow="setIsNarrow"
-		>
-			<div slot="navbar-footer">
-				<KtUserMenu
-					:sections="userMenuData"
-					userName="Jony'O Five"
-					userStatus="Invisible"
-					@click="handleMenuClick($event)"
-				/>
-			</div>
-		</KtNavbar>
-		<KtActionbar
-			slot="actionbar"
-			headerTitle="LayoutContainer Example"
-			:menu="actionbarMenu"
-		/>
-		<div slot="workspace">
+		<template #navbar>
+			<KtNavbar
+				:isNarrow="isNarrow"
+				logoUrl="https://via.placeholder.com/160x50"
+				:notification="navbarNotification"
+				:quickLinks="quickLinksData"
+				:sections="navbarMenu"
+				:theme="theme"
+				@setIsNarrow="setIsNarrow"
+			>
+				<template #navbar-footer>
+					<KtUserMenu
+						:sections="userMenuData"
+						userName="Jony'O Five"
+						userStatus="Invisible"
+						@click="handleMenuClick($event)"
+					/>
+				</template>
+			</KtNavbar>
+		</template>
+		<template #actionbar>
+			<KtActionbar
+				headerTitle="LayoutContainer Example"
+				:menu="actionbarMenu"
+			/>
+		</template>
+		<template #workspace>
 			<KtFieldSingleSelect
 				v-model="theme"
 				hideClear
@@ -37,7 +39,7 @@
 					{ label: 'Default', value: Kotti.Navbar.Theme.DEFAULT },
 				]"
 			/>
-		</div>
+		</template>
 	</LayoutContainer>
 </template>
 

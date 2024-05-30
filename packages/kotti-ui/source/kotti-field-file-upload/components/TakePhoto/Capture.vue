@@ -1,13 +1,13 @@
 <template>
 	<KtModal :isOpen="shouldOpenModal" size="lg">
-		<div slot="header">
+		<template #header>
 			<h2 v-text="translations.label.capture" />
-		</div>
-		<div slot="body">
+		</template>
+		<template #body>
 			<video v-show="isReady" ref="videoRef" autoplay muted playsinline />
 			<div v-if="isLoading" class="loading lg" />
-		</div>
-		<div slot="footer">
+		</template>
+		<template #footer>
 			<KtButton
 				v-if="hasMultipleCameras"
 				class="mr-4"
@@ -32,7 +32,7 @@
 				:label="translations.button.cancel"
 				@click.stop="$emit('close')"
 			/>
-		</div>
+		</template>
 	</KtModal>
 </template>
 
