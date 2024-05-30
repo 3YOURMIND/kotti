@@ -89,6 +89,7 @@ export default defineComponent({
 		TakePhoto,
 	},
 	props: makeProps(KottiFieldFileUploadRemote.propsSchema),
+	emits: ['input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldFileUploadRemote.ValueInternal>({
 			emit,

@@ -94,6 +94,7 @@ export default defineComponent({
 			type: Array as PropType<KottiFilters.PropsInternal['value']>,
 		},
 	},
+	emits: ['input'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 

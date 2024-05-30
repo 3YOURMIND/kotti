@@ -29,6 +29,7 @@ const propsSchema = z.object({
 export default defineComponent({
 	name: 'FieldSelectOptionsItem',
 	props: makeProps(propsSchema),
+	emits: ['click', 'scrollTo'],
 	setup(props, { emit }) {
 		const optionRef = ref<HTMLDivElement | null>(null)
 

@@ -33,6 +33,7 @@ export default defineComponent({
 		KtButton,
 	},
 	props: makeProps(KottiBanner.propsSchema),
+	emits: ['click'],
 	setup(props, { slots }) {
 		const translations = useTranslationNamespace('KtBanner')
 

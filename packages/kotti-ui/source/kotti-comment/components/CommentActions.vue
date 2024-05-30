@@ -40,6 +40,7 @@ import { KottiComment } from '../types'
 export default defineComponent({
 	name: 'CommentActions',
 	props: makeProps(KottiComment.Actions.schema),
+	emits: ['delete', 'reply', 'update:isEditing'],
 	setup(_, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 

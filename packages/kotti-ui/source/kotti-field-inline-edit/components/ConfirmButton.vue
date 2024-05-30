@@ -17,6 +17,7 @@ export default defineComponent({
 		tabIndex: { type: Number, default: 0 },
 		dataTest: { type: String, default: null },
 	},
+	emits: ['confirm'],
 	setup(props, { emit }) {
 		return {
 			buttonProps: computed(() => ({

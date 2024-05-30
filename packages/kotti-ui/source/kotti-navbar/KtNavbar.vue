@@ -79,6 +79,7 @@ export default defineComponent({
 		NavbarQuickLink,
 	},
 	props: makeProps(KottiNavbar.propsSchema),
+	emits: ['linkClick', 'logoClick', 'setIsNarrow'],
 	setup(props, { emit }) {
 		const mobileMenuRef = ref<HTMLElement | null>(null)
 		const navbarRef = ref<HTMLElement | null>(null)

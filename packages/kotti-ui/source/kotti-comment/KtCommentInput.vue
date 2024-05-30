@@ -28,6 +28,7 @@ export default defineComponent({
 		CommentTextArea,
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
+	emits: ['add', 'cancel'],
 	setup(props, { emit }) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const localIsInternal = ref<KottiComment.PropsInternal['isInternal']>(

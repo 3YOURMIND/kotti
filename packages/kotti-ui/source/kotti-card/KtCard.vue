@@ -43,6 +43,7 @@ export default defineComponent({
 	name: 'KtCard',
 	components: { KtButton },
 	props: makeProps(KottiCard.propsSchema),
+	emits: ['click', 'clickOnPrimaryButton', 'clickOnSecondaryButton'],
 	setup(props, { emit }) {
 		const hasActions = computed(
 			() =>

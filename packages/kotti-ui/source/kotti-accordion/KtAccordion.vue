@@ -34,6 +34,7 @@ const ANIMATION_DURATION = 300
 export default defineComponent({
 	name: 'KtAccordion',
 	props: makeProps(KottiAccordion.propsSchema),
+	emits: ['update:isClosed'],
 	setup(props, { emit }) {
 		const contentInnerRef = ref<HTMLElement | null>(null)
 

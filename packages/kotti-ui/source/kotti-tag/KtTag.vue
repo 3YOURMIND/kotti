@@ -22,6 +22,7 @@ import { KottiTag } from './types'
 export default defineComponent({
 	name: 'KtTag',
 	props: makeProps(KottiTag.propsSchema),
+	emits: ['close'],
 	setup() {
 		return {
 			Yoco,

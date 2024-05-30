@@ -31,6 +31,7 @@ import { KottiModal } from './types'
 export default defineComponent({
 	name: 'KtModal',
 	props: makeProps(KottiModal.propsSchema),
+	emits: ['close'],
 	setup(props, { emit, slots }) {
 		const contentRef = ref<HTMLElement | null>(null)
 		const targetRef = ref<HTMLElement | null>(null)

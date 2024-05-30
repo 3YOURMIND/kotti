@@ -67,6 +67,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldRadioGroup.propsSchema),
+	emits: ['input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldRadioGroup.Value>({
 			emit,

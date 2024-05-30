@@ -20,6 +20,7 @@ export default defineComponent({
 		pageSize: { required: true, type: Number },
 		total: { required: true, type: Number },
 	},
+	emits: ['setPage'],
 	setup(props) {
 		return {
 			getHumanReadablePageNumber: (pageNumber: number) => pageNumber + 1,

@@ -70,6 +70,7 @@ export default defineComponent({
 		IconTextItem,
 	},
 	props: makeProps(KottiPopover.propsSchema),
+	emits: ['update:isSelected'],
 	setup(props, { emit }) {
 		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)

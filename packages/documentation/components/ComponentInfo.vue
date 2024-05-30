@@ -125,11 +125,27 @@
 				</tbody>
 			</table>
 		</KtHeading>
+
+		<KtHeading
+			v-if="component.emits && component.emits.length > 0"
+			text="Emits"
+			:toggleStatus="showEmits"
+			toggleCloseText="Hide"
+			toggleText="Show"
+			type="toggle"
+			@toggle="showEmits = !showEmits"
+		>
+			<div style="display: flex; flex-wrap: wrap; gap: 4px">
+				<template v-for="emit in component.emits">
+					<code :key="emit" v-text="`@${emit}`" />
+				</template>
+			</div>
+		</KtHeading>
 	</div>
 </template>
 
 <script lang="ts">
-import { Kotti } from '@3yourmind/kotti-ui'
+import { KtHeading, Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
 import castArray from 'lodash/castArray'
@@ -150,11 +166,13 @@ export default defineComponent({
 	name: 'ComponentInfo',
 	components: {
 		ComponentInfoSlots,
+		KtHeading,
 	},
 	props: {
 		component: {
 			required: true,
 			type: Object as PropType<{
+				emits?: string[]
 				meta: Kotti.Meta
 				name: string
 				props?: Record<string, unknown>
@@ -266,6 +284,7 @@ export default defineComponent({
 
 				return result
 			}),
+			showEmits: ref(false),
 			showProps: ref(false),
 			stringifyPropDefault: (
 				// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents

@@ -70,6 +70,7 @@ enum State {
 export default defineComponent({
 	name: 'CapturePhoto',
 	props: makeProps(Shared.TakePhoto.captureSchema),
+	emits: ['capture', 'close', 'error'],
 	setup(_, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 

@@ -41,6 +41,7 @@ export default defineComponent({
 		type: { default: 'checkbox', type: String },
 		value: { default: null, type: Boolean as PropType<boolean | null> },
 	},
+	emits: ['input'],
 	setup(props, { emit }) {
 		return {
 			onInput: (event: Event) => {

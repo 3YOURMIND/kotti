@@ -148,6 +148,7 @@ export default defineComponent({
 		isRange: { default: false, type: Boolean },
 		useFieldset: { default: false, type: Boolean },
 	},
+	emits: ['click', 'mousedown'],
 	setup(props) {
 		const inputId = computed(() =>
 			props.isRange

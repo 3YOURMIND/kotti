@@ -58,6 +58,7 @@ export default defineComponent({
 		ReviewPhoto,
 	},
 	props: makeProps(Shared.TakePhoto.schema),
+	emits: ['addFiles'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 

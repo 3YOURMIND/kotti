@@ -49,6 +49,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
+	emits: ['clearAll', 'startAddingFilter'],
 	setup(_, { emit }) {
 		const handleAdd = () => {
 			emit('startAddingFilter')

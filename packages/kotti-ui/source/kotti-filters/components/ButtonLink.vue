@@ -48,6 +48,7 @@ export default defineComponent({
 			},
 		},
 	},
+	emits: ['click'],
 	setup(props, { emit }) {
 		const mainClasses = computed(() => ({
 			'kt-button-link': true,

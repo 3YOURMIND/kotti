@@ -118,7 +118,23 @@ export default {
 		expandMultiple: { default: false, type: Boolean },
 		selected: { default: () => [], type: Array },
 	},
-	emits: ['input'],
+	emits: [
+		'activateRow',
+		'cellClick', // FIXME: Seems unused
+		'columnsChange',
+		'expand', // FIXME: Seems unused
+		'expandChange', // FIXME: Seems unused
+		'hiddenChange', // FIXME: Seems unused
+		'input',
+		'orderChange', // FIXME: Seems unused
+		'rowBlur', // FIXME: Seems unused
+		'rowClick',
+		'rowFocus', // FIXME: Seems unused
+		'select', // FIXME: Seems unused
+		'selectAll', // FIXME: Seems unused
+		'selectionChange',
+		'sortChange',
+	],
 	data() {
 		let localStore
 		const initialState = pick(this, INITIAL_TABLE_STORE_PROPS)

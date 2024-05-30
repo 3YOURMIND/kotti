@@ -42,7 +42,13 @@ const config = tseslint.config(
 	 * @see {@link https://eslint.org/docs/latest/use/configure/ignore#ignoring-files}
 	 */
 	{
-		ignores: ['**/dist/**', '**/.nuxt/**', '**/.turbo/**', '**/*.js'],
+		ignores: [
+			'**/dist/**',
+			'**/.nuxt/**',
+			'**/.turbo/**',
+			'**/*.js',
+			'**/vite.config.ts.timestamp-*', // used by vite to interpret vite.config.ts
+		],
 	},
 	...eslintConfig3YD.configs.global,
 	{

@@ -56,6 +56,7 @@ export default defineComponent({
 		KtCommentInput,
 	},
 	props: makeProps(KottiComment.propsSchema),
+	emits: ['add', 'delete', 'edit'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 

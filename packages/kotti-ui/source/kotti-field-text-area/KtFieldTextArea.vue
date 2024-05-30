@@ -50,6 +50,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldTextArea.propsSchema),
+	emits: ['input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldTextArea.Value>({
 			emit,

@@ -47,6 +47,7 @@ export default defineComponent({
 		ItemLayout,
 	},
 	props: makeProps(KottiFieldFileUpload.FileItem.schema),
+	emits: ['remove'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 

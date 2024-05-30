@@ -46,6 +46,7 @@ export default defineComponent({
 		NavbarTooltip,
 	},
 	props: makeProps(propsSchema),
+	emits: ['menuLinkClick'],
 	setup(props) {
 		return {
 			parsedSections: computed(() =>

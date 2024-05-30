@@ -44,6 +44,7 @@ export default {
 		fixedWidth: { type: Boolean, required: true },
 		maximumPage: { type: Number, required: true },
 	},
+	emits: ['setPage'],
 	computed: {
 		pixelMargin() {
 			const digitWidth = this.maximumPage.toString().length - 1
