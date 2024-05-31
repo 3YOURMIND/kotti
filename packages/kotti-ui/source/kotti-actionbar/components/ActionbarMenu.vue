@@ -1,20 +1,15 @@
 <template>
 	<div class="kt-actionbar-nav">
 		<!-- FIXME: External Dependencies Should not Be Used without Injection -->
-		<router-link
-			v-for="(item, index) in menu"
-			:key="index"
-			class="kt-actionbar-nav__item"
-			:class="navItemClass(item)"
-			tag="li"
-			:to="item.to"
-		>
-			<i
-				class="yoco kt-actionbar-nav__icon"
-				:class="`kt-actionbar-nav__icon--${iconPosition}`"
-				v-text="item.icon"
-			/>
-			<span class="kt-actionbar-nav__label" v-text="item.label" />
+		<router-link v-for="(item, index) in menu" :key="index" :to="item.to">
+			<li class="kt-actionbar-nav__item" :class="navItemClass(item)">
+				<i
+					class="yoco kt-actionbar-nav__icon"
+					:class="`kt-actionbar-nav__icon--${iconPosition}`"
+					v-text="item.icon"
+				/>
+				<span class="kt-actionbar-nav__label" v-text="item.label" />
+			</li>
 		</router-link>
 	</div>
 </template>

@@ -34,8 +34,12 @@
 		</KtForm>
 
 		<KtModal :isOpen="showAnnouncement" @close="showAnnouncement = false">
-			<span slot="body"> I am an announcement. I open by default </span>
-			<KtButton slot="footer" label="close" @click="showAnnouncement = false" />
+			<template #body>
+				<span> I am an announcement. I open by default </span>
+			</template>
+			<template #footer>
+				<KtButton label="close" @click="showAnnouncement = false" />
+			</template>
 		</KtModal>
 
 		<KtButton label="Open Modal" @click="showModal = true" />
@@ -65,7 +69,15 @@
 </template>
 
 <script lang="ts">
-import { KtModal, Kotti } from '@3yourmind/kotti-ui'
+import {
+	KtButton,
+	KtForm,
+	KtFieldSingleSelect,
+	KtFieldToggle,
+	KtFieldToggleGroup,
+	KtModal,
+	Kotti,
+} from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -74,6 +86,12 @@ export default defineComponent({
 	name: 'DocumentationPageUsageComponentsModal',
 	components: {
 		ComponentInfo,
+		KtButton,
+		KtFieldSingleSelect,
+		KtFieldToggle,
+		KtFieldToggleGroup,
+		KtForm,
+		KtModal,
 	},
 	setup() {
 		return {

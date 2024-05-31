@@ -8,7 +8,7 @@
 		}"
 		:data-test="dataTest"
 		:tabindex="isDisabled || !isClickable ? -1 : 0"
-		v-on="$listeners"
+		@click.stop="onClick"
 	>
 		<slot name="option">
 			<i v-if="icon" class="yoco" v-text="icon" />
@@ -26,6 +26,14 @@ import { IconTextItem } from '../types'
 export default defineComponent({
 	name: 'IconTextItem',
 	props: makeProps(IconTextItem.propsSchema),
+	emits: ['click'],
+	setup(_, { emit }) {
+		return {
+			onClick: (event: MouseEvent) => {
+				emit('click', event)
+			},
+		}
+	},
 })
 </script>
 

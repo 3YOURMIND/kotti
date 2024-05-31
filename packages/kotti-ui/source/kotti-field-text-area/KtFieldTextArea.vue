@@ -1,11 +1,8 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText">
-		<textarea
-			ref="textareaRef"
-			slot="container"
-			v-bind="inputProps"
-			@input="onInput"
-		/>
+		<template #container>
+			<textarea ref="textareaRef" v-bind="inputProps" @input="onInput" />
+		</template>
 	</KtField>
 </template>
 

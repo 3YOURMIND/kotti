@@ -32,8 +32,8 @@ export type ElDateWithInternalAPI = ElDate & {
 	haveTrigger: boolean
 	picker: Vue & {
 		$el: HTMLElement
-		leftLabel: string
-		rightLabel: string
+		leftLabel?: string
+		rightLabel?: string
 		width: number
 	}
 	popperJS: Exclude<Instance['popperInstance'], null>
@@ -337,8 +337,8 @@ const useRangePickerHeaderFix = <DATA_TYPE extends Values>({
 					 * ]
 					 */
 					const dates = [
-						dateComponent.picker.leftLabel.split(/\s+/),
-						dateComponent.picker.rightLabel.split(/\s+/),
+						dateComponent.picker.leftLabel?.split(/\s+/) ?? ['', ''],
+						dateComponent.picker.rightLabel?.split(/\s+/) ?? ['', ''],
 					]
 
 					const headers = dateComponent.picker.$el.querySelectorAll(

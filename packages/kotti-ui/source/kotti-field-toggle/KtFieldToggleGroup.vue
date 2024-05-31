@@ -1,33 +1,35 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" useFieldset>
-		<div slot="container" :class="wrapperClasses">
-			<div v-for="(option, index) of optionsWithChecked" :key="option.key">
-				<div class="kt-field-toggle-group__header">
-					<ToggleInner
-						component="label"
-						:data-test="getOptionDataTest(option)"
-						:inputProps="inputProps(index)"
-						:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
-						:type="type"
-						:value="option.value"
-						@input="onInput(option.key, $event)"
-					>
-						<slot name="header" :option="option">
-							<div v-text="option.label" />
-						</slot>
-					</ToggleInner>
-					<FieldHelpText
-						v-if="option.tooltip"
-						class="kt-field-toggle-group__header-tooltip"
-						:helpText="option.tooltip"
-					/>
-					<slot name="headerSide" :option="option" />
-				</div>
-				<div class="kt-field-toggle-group__content">
-					<slot name="content" :option="option" />
+		<template #container>
+			<div :class="wrapperClasses">
+				<div v-for="(option, index) of optionsWithChecked" :key="option.key">
+					<div class="kt-field-toggle-group__header">
+						<ToggleInner
+							component="label"
+							:data-test="getOptionDataTest(option)"
+							:inputProps="inputProps(index)"
+							:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
+							:type="type"
+							:value="option.value"
+							@input="onInput(option.key, $event)"
+						>
+							<slot name="header" :option="option">
+								<div v-text="option.label" />
+							</slot>
+						</ToggleInner>
+						<FieldHelpText
+							v-if="option.tooltip"
+							class="kt-field-toggle-group__header-tooltip"
+							:helpText="option.tooltip"
+						/>
+						<slot name="headerSide" :option="option" />
+					</div>
+					<div class="kt-field-toggle-group__content">
+						<slot name="content" :option="option" />
+					</div>
 				</div>
 			</div>
-		</div>
+		</template>
 	</KtField>
 </template>
 

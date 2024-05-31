@@ -6,13 +6,15 @@
 		:getEmptyValue="() => null"
 		:helpTextSlot="$slots.helpText"
 	>
-		<div
-			ref="inputContainerRef"
-			slot="container"
-			class="kt-field__input-container"
-		>
-			<ElDate ref="elDateRef" v-bind="elDateTimePickerProps" @input="onInput" />
-		</div>
+		<template #container>
+			<div ref="inputContainerRef" class="kt-field__input-container">
+				<ElDate
+					ref="elDateRef"
+					v-bind="elDateTimePickerProps"
+					@input="onInput"
+				/>
+			</div>
+		</template>
 	</KtField>
 </template>
 

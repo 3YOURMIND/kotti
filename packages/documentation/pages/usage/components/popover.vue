@@ -187,7 +187,15 @@
 </template>
 
 <script lang="ts">
-import { KtPopover, Kotti } from '@3yourmind/kotti-ui'
+import {
+	KtButton,
+	KtFieldDateTime,
+	KtFieldDateTimeRange,
+	KtFieldSingleSelect,
+	KtForm,
+	KtPopover,
+	Kotti,
+} from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from 'vue'
 
@@ -203,6 +211,12 @@ export default defineComponent({
 	name: 'DocumentationPageUsageComponentsPopever',
 	components: {
 		ComponentInfo,
+		KtButton,
+		KtFieldDateTime,
+		KtFieldDateTimeRange,
+		KtFieldSingleSelect,
+		KtForm,
+		KtPopover,
 	},
 	setup() {
 		const interactiveExampleRef = ref<HTMLElement | null>(null)
@@ -217,6 +231,10 @@ export default defineComponent({
 				label: 'User',
 				isSelected: false,
 				icon: Yoco.Icon.USER,
+				onClick: () => {
+					// eslint-disable-next-line no-alert
+					window.alert('clicked')
+				},
 			},
 			/**
 			 * `onClick` is not defined, therefore, the UI will make it not look clickable

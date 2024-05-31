@@ -4,39 +4,44 @@
 		:helpTextSlot="showHelpTextAsInnerSuffix ? undefined : $slots.helpText"
 		useFieldset
 	>
-		<div slot="container" class="kt-field-toggle">
-			<ToggleInner
-				component="label"
-				:inputProps="inputProps"
-				:isDisabled="fieldProps.isDisabled"
-				:type="type"
-				:value="fieldProps.currentValue"
-				@input="onInput"
-			>
-				<div class="kt-field-toggle__content">
-					<slot name="default" :value="fieldProps.currentValue" />
-					<div
-						v-if="showHelpTextAsInnerSuffix"
-						class="kt-field__header kt-field__header--is-suffix"
-					>
-						<div class="kt-field__header__label">
-							<span :class="labelSuffixClasses" v-text="labelSuffix" />
+		<template #container>
+			<div class="kt-field-toggle">
+				<ToggleInner
+					component="label"
+					:inputProps="inputProps"
+					:isDisabled="fieldProps.isDisabled"
+					:type="type"
+					:value="fieldProps.currentValue"
+					@input="onInput"
+				>
+					<div class="kt-field-toggle__content">
+						<slot name="default" :value="fieldProps.currentValue" />
+						<div
+							v-if="showHelpTextAsInnerSuffix"
+							class="kt-field__header kt-field__header--is-suffix"
+						>
+							<div class="kt-field__header__label">
+								<span :class="labelSuffixClasses" v-text="labelSuffix" />
+							</div>
 						</div>
 					</div>
-				</div>
-			</ToggleInner>
-			<div
-				v-if="showHelpTextAsInnerSuffix && hasHelpText"
-				class="kt-field__header kt-field__header--is-suffix"
-			>
+				</ToggleInner>
 				<div
-					class="kt-field__header__help-text"
-					:class="iconClasses('header__help-text', ['interactive'])"
+					v-if="showHelpTextAsInnerSuffix && hasHelpText"
+					class="kt-field__header kt-field__header--is-suffix"
 				>
-					<FieldHelpText :helpText="helpText" :helpTextSlot="$slots.helpText" />
+					<div
+						class="kt-field__header__help-text"
+						:class="iconClasses('header__help-text', ['interactive'])"
+					>
+						<FieldHelpText
+							:helpText="helpText"
+							:helpTextSlot="$slots.helpText"
+						/>
+					</div>
 				</div>
 			</div>
-		</div>
+		</template>
 	</KtField>
 </template>
 

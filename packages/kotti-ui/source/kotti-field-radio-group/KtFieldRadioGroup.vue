@@ -1,49 +1,51 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText" useFieldset>
-		<div slot="container" :class="rootClasses" :forceUpdateKey="forceUpdateKey">
-			<div
-				v-for="(option, index) in options"
-				:key="index"
-				class="kt-field-radio-group__container"
-			>
-				<div class="kt-field-radio-group__header">
-					<label
-						class="kt-field-radio-group__label"
-						:class="{
-							'kt-field-radio-group__label--disabled':
-								field.isDisabled || Boolean(option.isDisabled),
-						}"
-						:data-test="optionDataTest(option)"
-					>
-						<div
-							class="kt-field-radio-group__radio"
+		<template #container>
+			<div :class="rootClasses" :forceUpdateKey="forceUpdateKey">
+				<div
+					v-for="(option, index) in options"
+					:key="index"
+					class="kt-field-radio-group__container"
+				>
+					<div class="kt-field-radio-group__header">
+						<label
+							class="kt-field-radio-group__label"
 							:class="{
-								'kt-field-radio-group__radio--checked':
-									field.currentValue === option.value,
+								'kt-field-radio-group__label--disabled':
+									field.isDisabled || Boolean(option.isDisabled),
 							}"
+							:data-test="optionDataTest(option)"
 						>
-							<div class="kt-field-radio-group__radio-inside" />
-						</div>
-						<slot name="header" :option="option">
-							<div v-text="option.label" />
-						</slot>
-						<input
-							v-bind="inputProps(option, index)"
-							@change="onChange(option.value)"
+							<div
+								class="kt-field-radio-group__radio"
+								:class="{
+									'kt-field-radio-group__radio--checked':
+										field.currentValue === option.value,
+								}"
+							>
+								<div class="kt-field-radio-group__radio-inside" />
+							</div>
+							<slot name="header" :option="option">
+								<div v-text="option.label" />
+							</slot>
+							<input
+								v-bind="inputProps(option, index)"
+								@change="onChange(option.value)"
+							/>
+						</label>
+						<FieldHelpText
+							v-if="option.tooltip"
+							class="kt-field-radio-group__tooltip"
+							:helpText="option.tooltip"
 						/>
-					</label>
-					<FieldHelpText
-						v-if="option.tooltip"
-						class="kt-field-radio-group__tooltip"
-						:helpText="option.tooltip"
-					/>
-					<slot name="headerSide" :option="option" />
-				</div>
-				<div class="kt-field-radio-group__content">
-					<slot name="content" :option="option" />
+						<slot name="headerSide" :option="option" />
+					</div>
+					<div class="kt-field-radio-group__content">
+						<slot name="content" :option="option" />
+					</div>
 				</div>
 			</div>
-		</div>
+		</template>
 	</KtField>
 </template>
 

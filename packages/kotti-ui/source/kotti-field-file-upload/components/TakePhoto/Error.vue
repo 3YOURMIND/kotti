@@ -1,12 +1,12 @@
 <template>
 	<KtModal isOpen size="lg">
-		<div slot="header">
+		<template #header>
 			<h2 v-text="translations.label.error" />
-		</div>
-		<div slot="body">
+		</template>
+		<template #body>
 			<div v-if="error" v-text="errorText" />
-		</div>
-		<div slot="footer">
+		</template>
+		<template #footer>
 			<KtButton
 				class="mr-4"
 				:data-test="dataTest ? `${dataTest}.retakePhoto` : undefined"
@@ -19,7 +19,7 @@
 				:label="translations.button.cancel"
 				@click.stop="$emit('close')"
 			/>
-		</div>
+		</template>
 	</KtModal>
 </template>
 
