@@ -1,5 +1,5 @@
 import { yocoIconSchema } from '@3yourmind/yoco'
-import type { Ref, SetupContext } from 'vue'
+import type { Ref } from 'vue'
 import { z } from 'zod'
 
 import type { ReplaceRecordType } from '../types/utilities'
@@ -55,7 +55,7 @@ export module KottiField {
 
 	export module Hook {
 		export interface Parameters<DATA_TYPE> {
-			emit: SetupContext['emit']
+			emit: (name: 'input', ...args: unknown[]) => void
 
 			/**
 			 * Useful for checking validation on required fields

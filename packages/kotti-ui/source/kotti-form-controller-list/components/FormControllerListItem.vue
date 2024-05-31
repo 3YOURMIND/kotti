@@ -24,6 +24,7 @@ export default defineComponent({
 			type: Object as PropType<KottiFormControllerListItem.Props['values']>,
 		},
 	},
+	emits: ['setValue'],
 	setup(props, { emit }) {
 		/* eslint-disable vue/no-setup-props-reactivity-loss */
 		/**

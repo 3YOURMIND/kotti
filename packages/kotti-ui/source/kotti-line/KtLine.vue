@@ -16,6 +16,7 @@ import { KottiLine } from './types'
 export default defineComponent({
 	name: 'KtLine',
 	props: makeProps(KottiLine.propsSchema),
+	emits: ['click'],
 	setup(props, { emit }) {
 		return {
 			handleClick: () => {

@@ -61,6 +61,7 @@ export default defineComponent({
 		ToggleInner,
 	},
 	props: makeProps(KottiFieldToggle.propsSchema),
+	emits: ['input'],
 	setup(props, { emit, slots }) {
 		const field = useField<KottiFieldToggle.Value>({
 			emit,

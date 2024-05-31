@@ -42,6 +42,7 @@ import { Shared } from '../../types'
 export default defineComponent({
 	name: 'ReviewPhoto',
 	props: makeProps(Shared.TakePhoto.reviewSchema),
+	emits: ['accept', 'close', 'reject'],
 	setup() {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 

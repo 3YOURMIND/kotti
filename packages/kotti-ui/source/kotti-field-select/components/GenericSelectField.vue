@@ -132,6 +132,7 @@ export default defineComponent({
 		KtTag,
 	},
 	props: makeProps(propsSchema),
+	emits: ['emit', 'input'],
 	setup(props, { emit: rawEmit }) {
 		const emit = (event: string, payload: unknown) => {
 			rawEmit('emit', { event, payload })

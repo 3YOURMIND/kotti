@@ -23,6 +23,7 @@ export default defineComponent({
 	name: 'KtFieldPassword',
 	components: { KtField },
 	props: makeProps(KottiFieldPassword.propsSchema),
+	emits: ['input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({
 			emit,

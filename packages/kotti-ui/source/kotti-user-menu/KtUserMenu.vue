@@ -67,6 +67,7 @@ export default defineComponent({
 		KtAvatar,
 	},
 	props: makeProps(KottiUserMenu.propsSchema),
+	emits: ['click'],
 	setup(props) {
 		const triggerRef = ref<HTMLDivElement | null>(null)
 		const userMenuRef = ref<HTMLDivElement | null>(null)

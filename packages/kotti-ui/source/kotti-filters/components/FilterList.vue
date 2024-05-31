@@ -66,6 +66,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
+	emits: ['endAddingFilter', 'input'],
 	setup(props, { emit }) {
 		const currentFiltersKeys = computed<KottiFilters.InternalFilter['key'][]>(
 			() => props.filters.map((filter) => filter.key),

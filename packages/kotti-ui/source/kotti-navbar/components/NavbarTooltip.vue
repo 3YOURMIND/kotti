@@ -25,6 +25,7 @@ export default defineComponent({
 		},
 		label: { required: true, type: String },
 	},
+	emits: ['click'],
 	setup() {
 		const contentRef = ref<Element | null>(null)
 		const triggerRef = ref<Element | null>(null)

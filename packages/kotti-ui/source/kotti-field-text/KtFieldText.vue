@@ -25,6 +25,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldText.propsSchema),
+	emits: ['input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldText.Value>({
 			emit,

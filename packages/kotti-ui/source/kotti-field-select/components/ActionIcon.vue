@@ -30,6 +30,7 @@ export default defineComponent({
 		isDropdownOpen: { required: true, type: Boolean },
 		showClear: { required: true, type: Boolean },
 	},
+	emits: ['update:isDropdownOpen'],
 	setup(props, { emit }) {
 		return {
 			containerClasses: computed(() => [

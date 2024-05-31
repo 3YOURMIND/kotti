@@ -69,6 +69,7 @@ import { KottiComment } from '../types'
 export default defineComponent({
 	name: 'CommentTextArea',
 	props: makeProps(KottiComment.TextArea.schema),
+	emits: ['cancel', 'confirm', 'input', 'toggleInternal'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 

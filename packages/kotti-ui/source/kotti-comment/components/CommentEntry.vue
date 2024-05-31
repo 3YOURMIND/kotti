@@ -52,6 +52,7 @@ export default defineComponent({
 		CommentInlineEdit,
 	},
 	props: makeProps(KottiComment.Entry.schema),
+	emits: ['delete', 'edit', 'reply'],
 	setup(props, { emit }) {
 		const isEditing = ref(false)
 

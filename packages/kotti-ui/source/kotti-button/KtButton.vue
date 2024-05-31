@@ -28,6 +28,7 @@ import { KottiButton } from './types'
 export default defineComponent({
 	name: 'KtButton',
 	props: makeProps(KottiButton.propsSchema),
+	emits: ['click', 'update:toggleStatus'],
 	setup(props, { emit, slots }) {
 		const helpTextContentRef = ref<Element | null>(null)
 		const helpTextTriggerRef = ref<Element | null>(null)

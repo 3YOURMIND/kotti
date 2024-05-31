@@ -34,6 +34,7 @@ import { Shared } from '../../types'
 export default defineComponent({
 	name: 'ErrorViewer',
 	props: makeProps(Shared.TakePhoto.errorSchema),
+	emits: ['close', 'retry'],
 	setup(props) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 

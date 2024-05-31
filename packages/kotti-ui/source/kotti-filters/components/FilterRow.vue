@@ -107,6 +107,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
+	emits: ['input', 'remove'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 

@@ -466,6 +466,7 @@ export default {
 				'vue/no-useless-v-bind': 'warn',
 				'vue/require-component-is': 'error',
 				'vue/require-default-prop': 'off', // disabled because it doesn’t handle boolean props correctly
+				'vue/require-explicit-emits': 'error',
 			},
 		}),
 	},

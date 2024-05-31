@@ -35,6 +35,7 @@ const propsSchema = KottiSplitButton.actionSchema.extend({
 export default defineComponent({
 	name: 'SplitButtonActionsItem',
 	props: makeProps(propsSchema),
+	emits: ['click', 'updateIndexInFocus'],
 	setup(props, { emit }) {
 		const itemRef = ref<HTMLButtonElement | null>(null)
 

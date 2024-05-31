@@ -97,6 +97,7 @@ export default defineComponent({
 		FieldSelectOptionsItem,
 	},
 	props: makeProps(propsSchema),
+	emits: ['close', 'input'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldSelects')
 

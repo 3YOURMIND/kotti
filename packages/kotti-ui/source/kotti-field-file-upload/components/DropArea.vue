@@ -69,6 +69,7 @@ import { isSelectingMultipleFilesWhenNotAllowed } from '../validators'
 export default defineComponent({
 	name: 'DropArea',
 	props: makeProps(Shared.DropArea.schema),
+	emits: ['addFiles'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 

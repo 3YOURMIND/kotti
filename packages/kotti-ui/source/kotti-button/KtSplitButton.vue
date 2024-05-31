@@ -58,6 +58,7 @@ export default defineComponent({
 		ActionsItem,
 	},
 	props: makeProps(KottiSplitButton.propsSchema),
+	emits: ['click'],
 	setup(props, { emit }) {
 		const { isTippyOpen, setIsTippyOpen, tippyContentRef, tippyTriggerRef } =
 			useActionsTippy({

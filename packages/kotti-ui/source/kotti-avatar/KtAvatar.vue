@@ -31,6 +31,7 @@ import { KottiAvatar } from './types'
 export default defineComponent({
 	name: 'KtAvatar',
 	props: makeProps(KottiAvatar.propsSchema),
+	emits: ['click'],
 	setup(props, { emit, slots }) {
 		const avatarFallback = ref(true)
 
