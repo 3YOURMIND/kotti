@@ -8,7 +8,9 @@
 				<ActionBar />
 			</template>
 			<template #workspace>
-				<nuxt class="content" />
+				<div>
+					<nuxt class="content" />
+				</div>
 			</template>
 		</LayoutContainer>
 	</KtI18nContext>
