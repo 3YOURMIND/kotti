@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-param-reassign */
 
 import pick from 'lodash/pick'
@@ -8,11 +10,11 @@ import { KottiTable } from '../types'
 
 import { setColumnsArray } from './column'
 
-function getSortedColumnIndex(state, column) {
-	return state.sortedColumns.findIndex(({ prop }) => prop === column.prop)
+function getSortedColumnIndex(state: any, column: any) {
+	return state.sortedColumns.findIndex(({ prop }: any) => prop === column.prop)
 }
 
-export function setSortedColumn(state, column) {
+export function setSortedColumn(state: any, column: any) {
 	if (!state.sortMultiple) {
 		state.sortedColumns = [column]
 	} else {
@@ -25,21 +27,22 @@ export function setSortedColumn(state, column) {
 	}
 }
 
-function getSortedColumn(state, column) {
+function getSortedColumn(state: any, column: any) {
 	return state.sortedColumns[getSortedColumnIndex(state, column)]
 }
 
-function getNextSortOrder(column) {
+function getNextSortOrder(column: any) {
 	const length = column.sortOrders.length
+	// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 	const index = (column.sortOrders.indexOf(column.sortOrder) + 1) % length
 	return column.sortOrders[Math.max(index, 0)]
 }
 
-function getSortValue({ value, index }, by) {
+function getSortValue({ value, index }: any, by: any) {
 	return typeof by === 'string' ? property(by)(value) : by(value, index)
 }
 
-function compareArray(a, b, sortArray) {
+function compareArray(a: any, b: any, sortArray: any) {
 	for (const byProp of sortArray) {
 		const aVal = getSortValue(a, byProp)
 		const bVal = getSortValue(b, byProp)
@@ -57,12 +60,13 @@ function compareArray(a, b, sortArray) {
 	return 0
 }
 
-function compare(order, a, b, { sortMethod, sortBy, sortOrder }) {
-	if (sortMethod) {
-		order = sortMethod(a.value, b.value)
-	} else {
-		order = compareArray(a, b, sortBy)
-	}
+function compare(
+	order: any,
+	a: any,
+	b: any,
+	{ sortMethod, sortBy, sortOrder }: any,
+) {
+	order = sortMethod ? sortMethod(a.value, b.value) : compareArray(a, b, sortBy)
 	if (!order) {
 		// make stable https://en.wikipedia.org/wiki/sortOrder_algorithm#Stability
 		order = a.index - b.index
@@ -70,8 +74,8 @@ function compare(order, a, b, { sortMethod, sortBy, sortOrder }) {
 	return order * sortOrder
 }
 
-function orderBy(array, sortedColumns) {
-	const columns = sortedColumns.map((column) => {
+function orderBy(array: any, sortedColumns: any) {
+	const columns = sortedColumns.map((column: any) => {
 		const { prop, sortMethod } = column
 
 		let { sortOrder, sortBy = prop } = column
@@ -91,16 +95,16 @@ function orderBy(array, sortedColumns) {
 		}
 	})
 	return array
-		.map((value, index) => ({ value, index }))
-		.sort((a, b) =>
+		.map((value: any, index: number) => ({ value, index }))
+		.sort((a: any, b: any) =>
 			columns.reduce(
-				(order, column) => order || compare(order, a, b, column),
+				(order: any, column: any) => order || compare(order, a, b, column),
 				0,
 			),
 		)
-		.map((item) => item.value)
+		.map((item: any) => item.value)
 }
-export function sortData(data, state) {
+export function sortData(data: any, state: any) {
 	const sortedColumnNotYetSet = !state.sortedColumns
 	const isSortingThroughAPICall = state.remoteSort
 	if (sortedColumnNotYetSet || isSortingThroughAPICall) {
@@ -117,7 +121,7 @@ export const defaultState = {
 }
 
 export const mutations = {
-	sort(store, options) {
+	sort(store: any, options: any) {
 		const { column, order } = options
 		setSortedColumn(store.state, column)
 		column.sortOrder = order || getNextSortOrder(column)
@@ -128,7 +132,7 @@ export const mutations = {
 		}
 	},
 
-	removeSortedColumn(store, column) {
+	removeSortedColumn(store: any, column: any) {
 		const { state } = store
 		const index = getSortedColumnIndex(state, column)
 		const isInsortOrder = index !== -1
@@ -139,12 +143,12 @@ export const mutations = {
 		store.commit('changeSortConditions', { column })
 	},
 
-	changeSortConditions(store, options) {
+	changeSortConditions(store: any, options: any) {
 		const { state } = store
 		state.rows = sortData(state.filteredData || state._data || [], state)
 
-		if (!options || !options.silent) {
-			const sortedColumns = state.sortedColumns.map((column) => {
+		if (!options?.silent) {
+			const sortedColumns = state.sortedColumns.map((column: any) => {
 				return {
 					...pick(column, PUBLIC_SORT_PROPS),
 					sortBy: column.sortBy || column.prop,
@@ -159,29 +163,29 @@ export const mutations = {
 			})
 		}
 	},
-	setSortedColumns(store, columns) {
+	setSortedColumns(store: any, columns: any) {
 		setColumnsArray(store.state, 'sortedColumns', PUBLIC_SORT_PROPS, columns)
 		store.commit('updateColumns', { emitChange: false })
 	},
 }
 
 export const getters = {
-	hasSortOrder(state, column) {
+	hasSortOrder(state: any, column: any) {
 		column = getSortedColumn(state, column)
 		return column && column.sortOrder !== false
 	},
-	canSort(state, column) {
+	canSort(state: any, column: any) {
 		return column.sortable || (state.sortable && column.sortable !== false)
 	},
-	isSorted(state, column) {
+	isSorted(state: any, column: any) {
 		column = getSortedColumn(state, column)
 		return column && column.sortOrder !== KottiTable.Column.SortOrders.NONE
 	},
-	isSortedByAsc(state, column) {
+	isSortedByAsc(state: any, column: any) {
 		column = getSortedColumn(state, column)
 		return column && IS_ASC.test(String(column.sortOrder))
 	},
-	isSortedByDsc(state, column) {
+	isSortedByDsc(state: any, column: any) {
 		column = getSortedColumn(state, column)
 		return column && IS_DSC.test(String(column.sortOrder))
 	},

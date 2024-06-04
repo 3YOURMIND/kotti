@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import pick from 'lodash/pick'
 import Vue from 'vue'
 
@@ -9,19 +11,19 @@ import { setHiddenColumn, getResolvedHiddenColumns } from './hide'
 import { resolveColumnsOrder, getOrderedColumns } from './order'
 import { setSortedColumn } from './sort'
 
-export function getColumnRealIndex(state, column) {
-	return state._columnsArray.findIndex(({ id }) => id == column.id)
+export function getColumnRealIndex(state: any, column: any) {
+	return state._columnsArray.findIndex(({ id }: any) => id == column.id)
 }
 
-function getColumn(state, column = {}) {
+function getColumn(state: any, column: any = {}) {
 	return state._columns[column.prop]
 }
 
-export function getColumnIndex(state, column) {
+export function getColumnIndex(state: any, column: any) {
 	return getColumn(state, column).index
 }
 
-function setColumn(state, { column, index, deleted }) {
+function setColumn(state: any, { column, index, deleted }: any) {
 	const { _columns = {} } = state
 	let newColumn = column
 	const oldColumn = _columns[newColumn.prop]
@@ -42,6 +44,7 @@ function setColumn(state, { column, index, deleted }) {
 			Vue.set(_columns, newColumn.prop, newColumn)
 		}
 	} else {
+		// eslint-disable-next-line unicorn/explicit-length-check
 		newColumn.index = index || Object.keys(_columns).length
 		Vue.set(_columns, newColumn.prop, newColumn)
 	}
@@ -60,13 +63,13 @@ function setColumn(state, { column, index, deleted }) {
 }
 
 export function setColumnsArray(
-	state,
-	prop,
-	shapeKeys,
-	columns,
+	state: any,
+	prop: any,
+	shapeKeys: any,
+	columns: any,
 	mergeStrategy = Object.assign,
 ) {
-	state[prop] = columns.map((column) => {
+	state[prop] = columns.map((column: any) => {
 		// eslint-disable-next-line no-param-reassign
 		column = pick(column, shapeKeys)
 		const oldColumn = getColumn(state, column) || {}
@@ -74,17 +77,27 @@ export function setColumnsArray(
 	})
 }
 
-function emitColumnsChange(store) {
+function emitColumnsChange(store: any) {
 	store.table.$ready &&
 		store.emit(
 			'columnsChange',
-			store.state._columnsArray.map((col) => pick(col, PUBLIC_COLUMN_PROPS)),
+			store.state._columnsArray.map((col: any) =>
+				pick(col, PUBLIC_COLUMN_PROPS),
+			),
 		)
 }
 
-function didRestorDestroyedColumns({ _destroyedColumns }) {
+function didRestorDestroyedColumns({
+	_destroyedColumns,
+}: {
+	_destroyedColumns: any
+}) {
 	const columns = Object.values(_destroyedColumns)
-	return columns.length && columns.reduce((sum, n) => sum + n) === 0
+
+	return (
+		columns.length > 0 &&
+		columns.reduce((sum, n) => (sum as number) + (n as number) === 0)
+	)
 }
 
 export const defaultState = {
@@ -96,13 +109,13 @@ export const defaultState = {
 }
 
 export const mutations = {
-	insertColumn(store, { column, index }) {
+	insertColumn(store: any, { column, index }: any) {
 		const deleted = store.state._destroyedColumns[column.prop]
 		setColumn(store.state, { column, index, deleted })
 		deleted && (store.state._destroyedColumns[column.prop] = 0)
 		store.commit('updateColumns', { emitChange: false })
 	},
-	removeColumn(store, column) {
+	removeColumn(store: any, column: any) {
 		// eslint-disable-next-line no-param-reassign
 		column = getColumn(store.state, column)
 		if (column) {
@@ -111,9 +124,11 @@ export const mutations = {
 			store.commit('updateColumns', { emitChange: false })
 		}
 	},
-	setColumns(store, columns = store.state._columnsArray) {
+	setColumns(store: any, columns = store.state._columnsArray) {
 		const { state } = store
-		const pickedColumns = columns.map((col) => pick(col, PUBLIC_COLUMN_PROPS))
+		const pickedColumns = columns.map((col: any) =>
+			pick(col, PUBLIC_COLUMN_PROPS),
+		)
 		for (const col of pickedColumns) {
 			const column = getColumn(state, col) //getColumn: returns state._columns[col.prop]
 			if (column) {
@@ -130,12 +145,12 @@ export const mutations = {
 		})
 	},
 	updateColumns(
-		store,
+		store: any,
 		{
 			emitChange = true,
 			refreshColumnArray = store.state.refreshColumnArray,
 		} = {},
-	) {
+	): void {
 		const { table, state } = store
 		if (table.$ready) {
 			if (refreshColumnArray || didRestorDestroyedColumns(state)) {

@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import debounce from 'lodash/debounce'
 import isEqual from 'lodash/isEqual'
 
-function toggleRowSelection(state, row, selected) {
+function toggleRowSelection(state: any, row: any, selected: any) {
 	let changed = false
 	const selection = state.selection
-	const index = selection.findIndex((selectedRow) => isEqual(selectedRow, row))
+	const index = selection.findIndex((selectedRow: any) =>
+		isEqual(selectedRow, row),
+	)
 	if (typeof selected === 'undefined') {
 		if (index === -1) {
 			selection.push(row)
@@ -24,7 +28,7 @@ function toggleRowSelection(state, row, selected) {
 	return changed
 }
 
-export function updateAllSelected(state) {
+export function updateAllSelected(state: any) {
 	const { rows, selection } = state
 	if (!rows || rows.length === 0 || !selection || selection.length === 0) {
 		state.isAllSelected = false
@@ -34,15 +38,15 @@ export function updateAllSelected(state) {
 	state.isAllSelected = selection.length === rows.length
 }
 
-export function cleanSelection(store) {
+export function cleanSelection(store: any) {
 	const { rowKey, state } = store
 	const initialSelectionLength = state.selection.length
 	if (rowKey) {
-		const rowsSet = new Set(state.rows.map((r) => r[rowKey]))
-		state.selection = state.selection.filter((s) => rowsSet.has(s[rowKey]))
+		const rowsSet = new Set(state.rows.map((r: any) => r[rowKey]))
+		state.selection = state.selection.filter((s: any) => rowsSet.has(s[rowKey]))
 	} else {
-		state.selection = state.selection.filter((s) =>
-			state.rows.some((r) => isEqual(r, s)),
+		state.selection = state.selection.filter((s: any) =>
+			state.rows.some((r: any) => isEqual(r, s)),
 		)
 	}
 
@@ -51,10 +55,10 @@ export function cleanSelection(store) {
 	}
 }
 
-export function clearSelection(store) {
+export function clearSelection(store: any) {
 	const state = store.state
 	state.isAllSelected = false
-	if (state.selection.length) {
+	if (state.selection.length > 0) {
 		state.selection = []
 		store.emit('selectionChange', [])
 	}
@@ -67,7 +71,7 @@ export const defaultState = {
 }
 
 export const mutations = {
-	selectRow(store, row, selected) {
+	selectRow(store: any, row: any, selected: any) {
 		const { state } = store
 		const changed = toggleRowSelection(state, row, selected)
 		const { selection } = state
@@ -77,7 +81,7 @@ export const mutations = {
 		}
 		updateAllSelected(state)
 	},
-	toggleAllSelection: debounce((store) => {
+	toggleAllSelection: debounce((store: any) => {
 		const { state } = store
 		// refresh disabled rows status in case of external influence
 		store.commit('updateDisabledRows')
@@ -96,32 +100,32 @@ export const mutations = {
 		store.emit('selectAll', selection)
 	}),
 
-	setSelectedIndices(store, indices) {
+	setSelectedIndices(store: any, indices: any) {
 		store.commit(
 			'setSelected',
-			indices.map((index) => store.get('getRowByVisibleIndex', index)),
+			indices.map((index: any) => store.get('getRowByVisibleIndex', index)),
 		)
 	},
 
-	setSelected({ state }, selection) {
+	setSelected({ state }: any, selection: any) {
 		state.selection = selection
 		updateAllSelected(state)
 	},
 }
 
 export const getters = {
-	getRowByVisibleIndex(state, index) {
+	getRowByVisibleIndex(state: any, index: any) {
 		return state.rows[index]
 	},
-	getIndexByRow(state, row) {
-		return state.rows.findIndex((r) => r === row)
+	getIndexByRow(state: any, row: any) {
+		return state.rows.indexOf(row)
 	},
-	getRowKey(state, row) {
+	getRowKey(state: any, row: any) {
 		return typeof state.rowKey === 'function'
 			? state.rowKey(row)
 			: row[state.rowKey]
 	},
-	isSelected(state, row) {
-		return state.selection.some((e) => isEqual(e, row))
+	isSelected(state: any, row: any) {
+		return state.selection.some((e: any) => isEqual(e, row))
 	},
 }

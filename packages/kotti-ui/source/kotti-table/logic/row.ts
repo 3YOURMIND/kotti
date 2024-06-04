@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { updateAllSelected, cleanSelection, clearSelection } from './select'
 import { sortData } from './sort'
 
@@ -9,7 +11,7 @@ export const defaultState = {
 }
 
 export const mutations = {
-	setRows(store, data) {
+	setRows(store: any, data: any) {
 		const { state } = store
 		const { _data } = state
 		const dataInstanceChanged = _data !== data
@@ -25,16 +27,16 @@ export const mutations = {
 		}
 		updateAllSelected(state)
 	},
-	focuseRow({ state }, row) {
+	focuseRow({ state }: any, row: any) {
 		state.focusedRow = row
 	},
-	blurRow({ state }) {
+	blurRow({ state }: any) {
 		state.focusedRow = null
 	},
 }
 
 export const getters = {
-	isFocusedRow(state, row) {
+	isFocusedRow(state: any, row: any) {
 		return state.focusedRow === row
 	},
 }

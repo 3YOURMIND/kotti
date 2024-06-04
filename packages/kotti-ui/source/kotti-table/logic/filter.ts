@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { setColumnsArray } from './column'
 
-function getFilteredColumnIndex(state, column) {
-	return state.filteredColumns.findIndex(({ prop }) => prop === column.prop)
+function getFilteredColumnIndex(state: any, column: any) {
+	return state.filteredColumns.findIndex(
+		({ prop }: any) => prop === column.prop,
+	)
 }
 
 export const defaultState = {
@@ -9,7 +13,7 @@ export const defaultState = {
 }
 
 export const mutations = {
-	setFilteredColumns(store, columns = store.state.filteredColumns) {
+	setFilteredColumns(store: any, columns: any = store.state.filteredColumns) {
 		setColumnsArray(store.state, 'filteredColumns', ['prop', 'hidden'], columns)
 		store.commit('updateColumns', { emitChange: false })
 	},
@@ -17,7 +21,7 @@ export const mutations = {
 
 export const getters = {}
 
-export function setFilteredColumn(state, column) {
+export function setFilteredColumn(state: any, column: any) {
 	const columnIndex = getFilteredColumnIndex(state, column)
 	if (columnIndex !== -1) {
 		state.filteredColumns[columnIndex] = column
