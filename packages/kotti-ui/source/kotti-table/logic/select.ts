@@ -91,6 +91,7 @@ export const mutations = {
 			return
 		}
 
+		// eslint-disable-next-line unicorn/consistent-destructuring
 		const shouldSelectAll = !state.isAllSelected
 
 		store.commit('setSelected', shouldSelectAll ? [...enabledRows] : [])

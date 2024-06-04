@@ -87,7 +87,7 @@ function emitColumnsChange(store: any) {
 		)
 }
 
-function didRestorDestroyedColumns({
+function didRestoreDestroyedColumns({
 	_destroyedColumns,
 }: {
 	_destroyedColumns: any
@@ -95,7 +95,8 @@ function didRestorDestroyedColumns({
 	const columns = Object.values(_destroyedColumns)
 
 	return (
-		columns.length > 0 &&
+		// eslint-disable-next-line unicorn/explicit-length-check
+		columns.length &&
 		columns.reduce((sum, n) => (sum as number) + (n as number) === 0)
 	)
 }
@@ -153,7 +154,7 @@ export const mutations = {
 	): void {
 		const { table, state } = store
 		if (table.$ready) {
-			if (refreshColumnArray || didRestorDestroyedColumns(state)) {
+			if (refreshColumnArray || didRestoreDestroyedColumns(state)) {
 				state._columnsArray = resolveColumnsOrder(state)
 				state.orderedColumns = getOrderedColumns(state)
 				state._destroyedColumns = {}

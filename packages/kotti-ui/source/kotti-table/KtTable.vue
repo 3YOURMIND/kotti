@@ -6,6 +6,7 @@
 			<slot />
 			<!-- NOTE: As the column prop should be the source of truth in case of conflict -->
 			<!-- the prop columns need to be added after the columns from the slot. -->
+			<!-- @vue-expect-error -->
 			<KtTableColumn
 				v-for="(column, index) in formattedColumns"
 				:key="`${column.prop}_${index}`"
@@ -20,8 +21,9 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import isEqual from 'lodash/isEqual'
 import pick from 'lodash/pick'
 
@@ -37,6 +39,7 @@ import {
 import { KtTableColumn } from './KtTableColumn'
 import { TableStore } from './logic/store'
 import { TableLayout } from './table-layout'
+import type { CreateElement } from 'vue'
 
 let tableIdSeed = 1
 
@@ -66,7 +69,9 @@ export default {
 	provide() {
 		return {
 			[KT_TABLE]: this,
+			// @ts-expect-error store will exist at runtime
 			[KT_STORE]: this.store,
+			// @ts-expect-error layout will exist at runtime
 			[KT_LAYOUT]: this.layout,
 		}
 	},
@@ -138,16 +143,21 @@ export default {
 	data() {
 		let localStore
 		const initialState = pick(this, INITIAL_TABLE_STORE_PROPS)
+		// @ts-expect-error `this[KT_TABLE_STATE_PROVIDER]` seems to emulate a provide/inject pattern of sorts
 		if (this[KT_TABLE_STATE_PROVIDER]) {
 			if (this.id) {
 				localStore = new TableStore(this, initialState)
+				// @ts-expect-error `this[KT_TABLE_STATE_PROVIDER]` seems to emulate a provide/inject pattern of sorts
 				this[KT_TABLE_STATE_PROVIDER].addStore(this.id, localStore)
+				// @ts-expect-error `this[KT_TABLE_STATE_PROVIDER]` seems to emulate a provide/inject pattern of sorts
 				this[KT_TABLE_STATE_PROVIDER].selectedTableId(this.id)
 			} else {
+				// @ts-expect-error `this[KT_TABLE_STATE_PROVIDER]` seems to emulate a provide/inject pattern of sorts
 				localStore = this[KT_TABLE_STATE_PROVIDER].store
 				localStore.setTable(this)
 				localStore.setInitialState(initialState)
 			}
+			// @ts-expect-error `this[KT_TABLE_STATE_PROVIDER]` seems to emulate a provide/inject pattern of sorts
 			this[KT_TABLE_STATE_PROVIDER].addTable(this)
 		} else {
 			localStore = new TableStore(this, initialState)
@@ -161,13 +171,16 @@ export default {
 	},
 	computed: {
 		store() {
+			// @ts-expect-error `this[KT_TABLE_STATE_PROVIDER]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE_STATE_PROVIDER]
-				? this[KT_TABLE_STATE_PROVIDER].store
-				: this.localStore
+				? // @ts-expect-error `this[KT_TABLE_STATE_PROVIDER]` seems to emulate a provide/inject pattern of sorts
+					this[KT_TABLE_STATE_PROVIDER].store
+				: // @ts-expect-error localStore will exist at runtime
+					this.localStore
 		},
-		formattedColumns() {
+		formattedColumns(): unknown[] {
 			return this.columns
-				? this.columns.map((column) => {
+				? this.columns.map((column: any) => {
 						if (column.key) {
 							// eslint-disable-next-line
 							console.warn(
@@ -181,8 +194,10 @@ export default {
 				: []
 		},
 		colSpan() {
+			// @ts-expect-error store will exist at runtime
 			let colSpan = this.store.state.columns.length
 
+			// @ts-expect-error isExpandable will exist at runtime
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (this.isExpandable) colSpan++
 			if (this.isSelectable) colSpan++
@@ -196,34 +211,37 @@ export default {
 			return Boolean(this.$slots.actions || this.renderActions)
 		},
 		_renderExpand() {
-			return (h, rowData) => {
+			return (h: CreateElement, rowData: any) => {
 				if (this.renderExpand) return this.renderExpand(h, rowData)
 
+				// @ts-expect-error $slots will exist at runtime
 				return this.$slots.expand(rowData)
 			}
 		},
 		_renderActions() {
-			return (h, rowData) => {
+			return (h: CreateElement, rowData: any) => {
 				if (this.renderActions) return this.renderActions(h, rowData)
 
+				// @ts-expect-error $slots will exist at runtime
 				return this.$slots.actions(rowData)
 			}
 		},
 		_renderLoading() {
-			return (h) => {
+			return (h: CreateElement) => {
 				if (this.renderLoading) return this.renderLoading(h)
 
 				return this.$slots.loading || h('div', { class: 'loading lg' })
 			}
 		},
 		_renderEmpty() {
-			return (h) => {
+			return (h: CreateElement) => {
 				if (this.renderEmpty) return this.renderEmpty(h)
 
 				return (
 					this.$slots.empty ||
 					this.emptyText ||
 					// FIXME: $t is not supposed to be used in kotti, probably a hack
+					// @ts-expect-error $t will exist at runtime (?)
 					this.$t?.('table.emptyText') ||
 					'No Data'
 				)
@@ -232,11 +250,13 @@ export default {
 	},
 	watch: {
 		id(newId, id) {
+			// @ts-expect-error `this[KT_TABLE_STATE_PROVIDER]` seems to emulate a provide/inject pattern of sorts
 			this[KT_TABLE_STATE_PROVIDER].updateStoreId(id, newId)
 		},
 		rows: {
 			immediate: true,
 			handler(value) {
+				// @ts-expect-error localStore will exist at runtime
 				this.localStore.commit('setRows', value)
 			},
 		},
@@ -244,6 +264,7 @@ export default {
 			immediate: true,
 			handler(value, oldValue) {
 				if (!isEqual(value, oldValue)) {
+					// @ts-expect-error localStore will exist at runtime
 					this.localStore.commit('setSelected', value)
 				}
 			},
@@ -252,6 +273,7 @@ export default {
 			immediate: true,
 			handler(value, oldValue) {
 				if (value && !isEqual(value, oldValue)) {
+					// @ts-expect-error store will exist at runtime
 					this.store.commit('setColumns', value)
 				}
 			},
@@ -260,6 +282,7 @@ export default {
 			immediate: true,
 			handler(value, oldValue) {
 				if (value && !isEqual(value, oldValue)) {
+					// @ts-expect-error store will exist at runtime
 					this.store.commit('setSortedColumns', value)
 				}
 			},
@@ -268,6 +291,7 @@ export default {
 			immediate: true,
 			handler(value, oldValue) {
 				if (value && !isEqual(value, oldValue)) {
+					// @ts-expect-error store will exist at runtime
 					this.store.commit('setHiddenColumns', value)
 				}
 			},
@@ -276,6 +300,7 @@ export default {
 			immediate: true,
 			handler(value, oldValue) {
 				if (value && !isEqual(value, oldValue)) {
+					// @ts-expect-error store will exist at runtime
 					this.store.commit('setFilteredColumns', value)
 				}
 			},
@@ -284,52 +309,66 @@ export default {
 			immediate: true,
 			handler(value, oldValue) {
 				if (value && !isEqual(value, oldValue)) {
+					// @ts-expect-error store will exist at runtime
 					this.store.commit('setOrderedColumns', value)
 				}
 			},
 		},
 		disableRow: {
 			handler() {
+				// @ts-expect-error store will exist at runtime
 				this.store.commit('updateDisabledRows')
 			},
 		},
 	},
 	beforeCreate() {
+		// @ts-expect-error tableId will exist at runtime
 		this.tableId = `kt-table_${String(tableIdSeed)}`
 		tableIdSeed += 1
 	},
 	mounted() {
+		// @ts-expect-error $ready will exist at runtime
 		this.$ready = true
+		// @ts-expect-error store will exist at runtime
 		this.store.commit('updateColumns', { emitChange: false })
 		// eslint-disable-next-line vue/no-deprecated-events-api
-		this.$on('selectionChange', (selection) => {
+		this.$on('selectionChange', (selection: any) => {
+			// @ts-expect-error value will exist at runtime
 			if (this.value) {
 				this.$emit(
 					'input',
-					selection.map((row) => this.store.get('getIndexByRow', row)),
+					// @ts-expect-error store will exist at runtime
+					selection.map((row: any) => this.store.get('getIndexByRow', row)),
 				)
 			}
 		})
 	},
 	methods: {
-		isSelected(index) {
+		isSelected(index: unknown): unknown {
+			// @ts-expect-error store will exist at runtime
 			return this.store.isSelected(
+				// @ts-expect-error store will exist at runtime
 				this.store.get('getRowByVisibleIndex', index),
 			)
 		},
-		toggleExpand(index) {
+		toggleExpand(index: unknown): void {
+			// @ts-expect-error store will exist at runtime
 			this.store.commit(
 				'expandRow',
+				// @ts-expect-error store will exist at runtime
 				this.store.get('getRowByVisibleIndex', index),
 			)
 		},
-		toggleSelect(index) {
+		toggleSelect(index: unknown): void {
+			// @ts-expect-error store will exist at runtime
 			this.store.commit(
 				'selectRow',
+				// @ts-expect-error store will exist at runtime
 				this.store.get('getRowByVisibleIndex', index),
 			)
 		},
-		toggleSelectAll() {
+		toggleSelectAll(): void {
+			// @ts-expect-error store will exist at runtime
 			this.store.commit('toggleAllSelection')
 		},
 	},
