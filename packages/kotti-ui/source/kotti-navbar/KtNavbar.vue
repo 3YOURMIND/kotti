@@ -93,6 +93,7 @@ export default defineComponent({
 		watch(
 			() => props.theme,
 			(newTheme) => {
+				if (typeof document === 'undefined') return // SSR
 				const rootElement = document.querySelector(':root') as HTMLElement
 
 				rootElement.style.setProperty(
