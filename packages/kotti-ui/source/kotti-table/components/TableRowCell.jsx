@@ -35,7 +35,7 @@ export const TableRowCell = {
 	methods: {
 		cellClick($event, data) {
 			if (data.column.disableRowClick) {
-				$event.stopPropogation()
+				$event.stopPropagation()
 			}
 			this[KT_TABLE].$emit('cellClick', data)
 		},
