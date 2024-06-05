@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import debounce from 'lodash/debounce'
 import isEqual from 'lodash/isEqual'
+import type { Store } from './types'
 
 function toggleRowSelection(state: any, row: any, selected: any) {
 	let changed = false
@@ -64,10 +65,10 @@ export function clearSelection(store: any) {
 	}
 }
 
-export const defaultState = {
-	selection: [],
+export const defaultState: Store.StateComponents.Select = {
 	isAllSelected: false,
 	reserveSelection: false,
+	selection: [],
 }
 
 export const mutations = {

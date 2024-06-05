@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import isEqual from 'lodash/isEqual'
+import type { Store } from './types'
 
-export const defaultState = {
+export const defaultState: Store.StateComponents.Expand = {
 	expandMultiple: false,
 	expanded: [],
 }

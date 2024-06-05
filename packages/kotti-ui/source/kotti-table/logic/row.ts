@@ -2,8 +2,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { updateAllSelected, cleanSelection, clearSelection } from './select'
 import { sortData } from './sort'
+import type { Store } from './types'
 
-export const defaultState = {
+export const defaultState: Store.StateComponents.Row = {
 	_data: [],
 	filteredData: null,
 	focusedRow: null,

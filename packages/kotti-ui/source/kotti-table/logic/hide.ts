@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { setColumnsArray } from './column'
+import type { Store } from './types'
 
 function getHiddenColumnIndex(state: any, column: any) {
 	return state.hiddenColumns.findIndex(({ prop }: any) => prop === column.prop)
@@ -26,7 +27,7 @@ export function setHiddenColumn(state: any, column: any) {
 	}
 }
 
-export const defaultState = {
+export const defaultState: Store.StateComponents.Hide = {
 	hiddenColumns: [],
 }
 

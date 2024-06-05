@@ -14,15 +14,16 @@ import * as order from './order'
 import * as rows from './row'
 import * as select from './select'
 import * as sort from './sort'
+import type { Store } from './types'
 
 export class TableStore {
 	getters: any
 	mutations: any
-	state: any
+	state: Store.State
 	table: any
 	id: string | undefined
 
-	constructor(table: any, initialState: any = {}) {
+	constructor(table: any, initialState: Partial<Store.State> = {}) {
 		this.setTable(table)
 		// we deep clone initial state in order to not refer to the same objects
 		this.state = cloneDeep({
@@ -67,7 +68,7 @@ export class TableStore {
 		// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 		this.id = table.tableId + '_store'
 	}
-	setInitialState(initialState: any) {
+	setInitialState(initialState: Partial<Store.State>) {
 		this.state = cloneDeep({
 			...this.state,
 			...pickBy(initialState, negate(isUndefined)),

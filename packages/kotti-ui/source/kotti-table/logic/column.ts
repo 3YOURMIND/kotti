@@ -10,6 +10,7 @@ import { setFilteredColumn } from './filter'
 import { setHiddenColumn, getResolvedHiddenColumns } from './hide'
 import { resolveColumnsOrder, getOrderedColumns } from './order'
 import { setSortedColumn } from './sort'
+import type { Store } from './types'
 
 export function getColumnRealIndex(state: any, column: any) {
 	return state._columnsArray.findIndex(({ id }: any) => id == column.id)
@@ -101,12 +102,12 @@ function didRestoreDestroyedColumns({
 	)
 }
 
-export const defaultState = {
-	_destroyedColumns: {},
-	refreshColumnArray: true,
+export const defaultState: Store.StateComponents.Column = {
 	_columns: {},
 	_columnsArray: [],
+	_destroyedColumns: {},
 	columns: [],
+	refreshColumnArray: true,
 }
 
 export const mutations = {
