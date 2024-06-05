@@ -1,5 +1,6 @@
 export class TableLayout {
-	constructor(table) {
+	table: unknown
+	constructor(table: unknown) {
 		this.table = table
 	}
 }

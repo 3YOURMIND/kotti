@@ -59,8 +59,9 @@
 	</thead>
 </template>
 
-<script>
+<script lang="ts">
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
 import { KottiTable } from '../types'
 
@@ -78,46 +79,56 @@ export default {
 	},
 	computed: {
 		isAllRowsDisabled() {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].state.isAllRowsDisabled
 		},
 		isAllSelected() {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].state.isAllSelected
 		},
 		tableColumns() {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].state.columns
 		},
 		hasActions() {
+			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].hasActions
 		},
 		isDraggable() {
+			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].useColumnDragToOrder
 		},
 		isDraggingColumn() {
 			return Boolean(this.draggingColumn)
 		},
 		isExpandable() {
+			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].isExpandable
 		},
 		isSelectable() {
+			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].isSelectable
 		},
 		useQuickSortControl() {
+			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].useQuickSortControl
 		},
 		tableHeaderClass() {
+			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return ['table-header-row', this[KT_TABLE].headerClass]
 		},
 	},
 	methods: {
-		handleSelectAll() {
+		handleSelectAll(_event: unknown) {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			this[KT_STORE].commit('toggleAllSelection')
 		},
-		handleThClick(column) {
+		handleThClick(column: unknown) {
 			if (this.useQuickSortControl && this.canSort(column)) {
 				this.changeSort(column)
 			}
 		},
-		getThClasses(column) {
+		getThClasses(column: any) {
 			return [
 				{
 					['drag-over']: this.isDraggedOver(column),
@@ -126,44 +137,51 @@ export default {
 					sorted: this.isSorted(column),
 					clickable: this.canSort(column),
 				},
+				// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 				this[KT_TABLE].thClasses,
 				column.thClass,
 			]
 		},
-		getThStyle(column) {
+		getThStyle(column: any) {
 			return {
 				textAlign: column.align || KottiTable.Column.Align.LEFT,
 				width: column.width || 'auto',
 			}
 		},
-		canSort(column) {
+		canSort(column: unknown) {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].get('canSort', column)
 		},
-		isSorted(column) {
+		isSorted(column: unknown) {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].get('isSorted', column)
 		},
-		changeSort(column) {
+		changeSort(column: unknown) {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			this[KT_STORE].commit('sort', { column })
 		},
-		isSortedByAsc(column) {
+		isSortedByAsc(column: unknown) {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].get('isSortedByAsc', column)
 		},
-		isSortedByDsc(column) {
+		isSortedByDsc(column: unknown) {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].get('isSortedByDsc', column)
 		},
-		dragStart(event, column) {
+		dragStart(_event: unknown, column: any) {
 			this.draggingColumn = column
 		},
-		dragEnter(event, column) {
+		dragEnter(_event: unknown, column: any) {
 			this.columnDragOver = column
 		},
 		dragEnd() {
 			this.columnDragOver = null
 		},
-		isDraggedOver(column) {
+		isDraggedOver(column: unknown) {
 			return column === this.columnDragOver && this.draggingColumn !== column
 		},
-		drop(event, column) {
+		drop(_event: unknown, column: unknown) {
+			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			this[KT_STORE].commit('orderBefore', this.draggingColumn, column)
 			this.draggingColumn = null
 			this.columnDragOver = null

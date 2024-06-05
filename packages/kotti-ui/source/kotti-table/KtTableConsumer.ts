@@ -1,20 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TableColumnsStateMixin } from './mixins'
 
-const KtTableConsumer = {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const KtTableConsumer: any = {
 	name: 'KtTableConsumer',
 	mixins: [TableColumnsStateMixin],
 	props: {
 		id: { default: null, type: String },
 	},
 	watch: {
-		id(id) {
+		id(id: any) {
+			// @ts-expect-error KtSelectedTableId will exist at runtime
 			this.KtSelectedTableId = id
 		},
 	},
-	created() {
+	created(): void {
 		this.KtSelectedTableId = this.id
 	},
-	render() {
+	render(): any {
 		const {
 			KtTableStore: store,
 			KtTableColumns: columns,
@@ -26,6 +29,7 @@ const KtTableConsumer = {
 			KtTableOrderBeforeColumn: orderBeforeColumn,
 		} = this
 
+		// eslint-disable-next-line unicorn/consistent-destructuring
 		return this.$scopedSlots.default({
 			store,
 			columns,

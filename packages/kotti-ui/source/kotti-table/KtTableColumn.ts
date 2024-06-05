@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import pick from 'lodash/pick'
 
 import {
@@ -9,19 +10,24 @@ import {
 	DEFAULT_RENDER_HEADER,
 } from './constants'
 import { KottiTable } from './types'
+import type { CreateElement } from 'vue'
 
 let columnIdSeed = 1
 
-function updateColumnsfor(prop) {
-	return function updateColumnProp(newVal) {
+function updateColumnsfor(prop: any) {
+	return function updateColumnProp(newVal: unknown) {
+		// @ts-expect-error columnConfig will exist at runtime
 		if (this.columnConfig) {
+			// @ts-expect-error columnConfig will exist at runtime
 			this.columnConfig[prop] = newVal
+			// @ts-expect-error columnConfig will exist at runtime
 			this[KT_STORE].commit('updateColumns')
 		}
 	}
 }
 
-export const KtTableColumn = {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const KtTableColumn: any = {
 	name: 'KtTableColumn',
 	inheritAttrs: false,
 	props: {
@@ -49,7 +55,8 @@ export const KtTableColumn = {
 			type: [String, Number],
 		},
 		sortOrders: {
-			default: () => Object.values(KottiTable.Column.SortOrders),
+			default: (): KottiTable.Column.SortOrders[] =>
+				Object.values(KottiTable.Column.SortOrders),
 			type: Array,
 		},
 		// whether this column is sortable, string means sortOrder is remote
@@ -84,14 +91,14 @@ export const KtTableColumn = {
 		align: updateColumnsfor('align'),
 		default: updateColumnsfor('default'),
 	},
-	beforeCreate() {
+	beforeCreate(): void {
 		this.columnConfig = {}
 	},
-	created() {
+	created(): void {
 		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		this.columnConfig = createColumn(this)
 	},
-	mounted() {
+	mounted(): void {
 		const columnIndex = this[KT_TABLE].$children.indexOf(this)
 		this[KT_STORE].commit('insertColumn', {
 			column: this.columnConfig,
@@ -99,20 +106,21 @@ export const KtTableColumn = {
 			fromTableColumn: true,
 		})
 	},
-	destroyed() {
+	destroyed(): void {
 		if (!this.$parent) return
 		this.columnConfig &&
 			this[KT_STORE].commit('removeColumn', this.columnConfig)
 	},
-	render: () => null,
+	render: (): null => null,
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 }
 
-function createColumn(column = {}) {
+function createColumn(column: any = {}) {
 	const _self = column
 
 	let columnId = column.id
 	if (!columnId) {
+		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 		columnId = `${_self[KT_TABLE].tableId}_column_${columnIdSeed}`
 		columnIdSeed++
 	}
@@ -122,7 +130,7 @@ function createColumn(column = {}) {
 	column.sortOrder = column.sortOrder || KottiTable.Column.SortOrders.NONE
 	column.sortOrders =
 		column.sortOrders || Object.values(KottiTable.Column.SortOrders)
-	column.formatter = column.formatter || ((value) => value)
+	column.formatter = column.formatter || ((value: any) => value)
 
 	column.id = columnId
 	column.type = COLUMN_TYPE
@@ -132,8 +140,8 @@ function createColumn(column = {}) {
 	let renderCell = column.renderCell
 	let renderHeader = column.renderHeader
 
-	column.renderCell = function render(h, data) {
-		if (_self.$scopedSlots && _self.$scopedSlots.default) {
+	column.renderCell = function render(h: CreateElement, data: any) {
+		if (_self.$scopedSlots?.default) {
 			renderCell = () => _self.$scopedSlots.default(data)
 		}
 
@@ -143,8 +151,8 @@ function createColumn(column = {}) {
 		return renderCell(h, data)
 	}
 
-	column.renderHeader = function render(h, data) {
-		if (_self.$scopedSlots && _self.$scopedSlots.header) {
+	column.renderHeader = function render(h: CreateElement, data: any) {
+		if (_self.$scopedSlots?.header) {
 			renderHeader = () => _self.$scopedSlots.header(data)
 		}
 

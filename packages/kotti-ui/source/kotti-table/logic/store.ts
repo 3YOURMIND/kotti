@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import cloneDeep from 'lodash/cloneDeep'
 import isUndefined from 'lodash/isUndefined'
 import negate from 'lodash/negate'
@@ -14,7 +16,13 @@ import * as select from './select'
 import * as sort from './sort'
 
 export class TableStore {
-	constructor(table, initialState = {}) {
+	getters: any
+	mutations: any
+	state: any
+	table: any
+	id: string | undefined
+
+	constructor(table: any, initialState: any = {}) {
 		this.setTable(table)
 		// we deep clone initial state in order to not refer to the same objects
 		this.state = cloneDeep({
@@ -54,36 +62,39 @@ export class TableStore {
 			...filter.getters,
 		}
 	}
-	setTable(table) {
+	setTable(table: any) {
 		this.table = table
+		// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 		this.id = table.tableId + '_store'
 	}
-	setInitialState(initialState) {
+	setInitialState(initialState: any) {
 		this.state = cloneDeep({
 			...this.state,
 			...pickBy(initialState, negate(isUndefined)),
 		})
 	}
 
-	commit(name, ...args) {
+	commit(name: any, ...args: any) {
 		const mutations = this.mutations
 		if (mutations[name]) {
 			return mutations[name].call(this, this, ...args)
 		} else {
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			throw new Error(`Mutation not found: ${name}`)
 		}
 	}
 
-	get(name, ...args) {
+	get(name: any, ...args: any) {
 		const getters = this.getters
 		if (getters[name]) {
 			return getters[name].call(this, this.state, ...args)
 		} else {
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			throw new Error(`Getter not found: ${name}`)
 		}
 	}
 
-	emit(event, ...args) {
+	emit(event: any, ...args: any) {
 		this.table.$emit(event, ...args)
 	}
 }

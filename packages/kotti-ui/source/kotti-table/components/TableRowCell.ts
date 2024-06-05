@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import property from 'lodash/property'
 
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+import type { CreateElement } from 'vue'
 
-export const TableRowCell = {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const TableRowCell: any = {
 	name: 'TableRowCell',
 	props: {
 		column: Object,
@@ -12,16 +15,20 @@ export const TableRowCell = {
 	},
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
 	computed: {
-		value() {
+		value(): unknown {
+			// @ts-expect-error column and row will exist at runtime
 			return property(this.column.prop)(this.row)
 		},
-		_tdClasses() {
+		_tdClasses(): [unknown, unknown] {
+			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return [this[KT_TABLE].tdClasses, this.column.tdClass]
 		},
-		_cellClass() {
+		_cellClass(): [unknown, unknown] {
+			// @ts-expect-error column will exist at runtime
 			return ['kt-table__cell', this.column.cellClass]
 		},
-		_tdStyles() {
+		_tdStyles(): unknown {
+			// @ts-expect-error column will exist at runtime
 			const { column } = this
 			return {
 				...column.styles,
@@ -33,14 +40,16 @@ export const TableRowCell = {
 		},
 	},
 	methods: {
-		cellClick($event, data) {
+		cellClick($event: MouseEvent, data: any) {
 			if (data.column.disableRowClick) {
+				// @ts-expect-error likely supposed to mean stopPropagation
 				$event.stopPropogation()
 			}
+			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			this[KT_TABLE].$emit('cellClick', data)
 		},
 	},
-	render(h) {
+	render(h: CreateElement) {
 		const {
 			column,
 			row,
@@ -57,7 +66,7 @@ export const TableRowCell = {
 			{
 				class: _tdClasses,
 				on: {
-					click: ($event) =>
+					click: ($event: MouseEvent) =>
 						cellClick($event, { value, column, row, columnIndex, rowIndex }),
 				},
 				style: _tdStyles,

@@ -1,20 +1,26 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import pick from 'lodash/pick'
 
 import { setColumnsArray, getColumnIndex, getColumnRealIndex } from './column'
 
-function byOrder(a, b) {
+function byOrder(a: any, b: any) {
 	return a.order < b.order
 		? -1
 		: a.order > b.order
 			? 1
-			: a.orderAdvantage + a.index - (b.orderAdvantage + b.index)
+			: // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+				a.orderAdvantage + a.index - (b.orderAdvantage + b.index)
 }
 
-export function getOrderedColumns(state) {
-	return state._columnsArray.map((col) => pick(col, ['prop', 'order']))
+export function getOrderedColumns(state: any) {
+	return state._columnsArray.map((col: any) => pick(col, ['prop', 'order']))
 }
 
-export function resolveColumnsOrder({ _columns = {}, _columnsArray = [] }) {
+export function resolveColumnsOrder({
+	_columns = {},
+	_columnsArray = [],
+}: any) {
 	for (const col of _columnsArray) {
 		if (_columns[col.prop]) {
 			// _columnsArray --> _columns (we assign _columnsArray to _columns then later do the opposite)
@@ -24,8 +30,8 @@ export function resolveColumnsOrder({ _columns = {}, _columnsArray = [] }) {
 
 	// _columns --> _columnsArray
 	return Object.values(_columns)
-		.filter(({ _deleted }) => !_deleted)
-		.map((col, index) => {
+		.filter(({ _deleted }: any) => !_deleted)
+		.map((col: any, index) => {
 			return {
 				orderAdvantage: 'order' in col ? 1 : -1,
 				order: typeof col.order === 'number' ? col.order : col.index,
@@ -47,7 +53,7 @@ export const defaultState = {
 }
 
 export const mutations = {
-	orderBefore(store, fromColumn, toColumn) {
+	orderBefore(store: any, fromColumn: any, toColumn: any) {
 		const { state } = store
 		if (fromColumn.id === toColumn.id) return
 		const fromIndex = getColumnIndex(state, fromColumn)
@@ -56,14 +62,14 @@ export const mutations = {
 		const toIndex = getColumnRealIndex(state, toColumn)
 		state._columnsArray.splice(toIndex, 0, fromColumn)
 
-		state._columnsArray.forEach((col, index) => {
+		state._columnsArray.forEach((col: any, index: number) => {
 			col.order = index
 			col.index = index
 		})
 		store.emit('orderChange', getOrderedColumns(state))
 		store.commit('updateColumns')
 	},
-	setOrderedColumns(store, columns) {
+	setOrderedColumns(store: any, columns: any) {
 		setColumnsArray(store.state, 'orderedColumns', ['prop', 'order'], columns)
 		store.commit('updateColumns', {
 			emitChange: false,

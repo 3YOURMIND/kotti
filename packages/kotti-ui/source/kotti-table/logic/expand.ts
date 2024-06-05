@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import isEqual from 'lodash/isEqual'
 
 export const defaultState = {
@@ -5,9 +7,9 @@ export const defaultState = {
 	expanded: [],
 }
 
-function toggleRowExpansion(state, row) {
+function toggleRowExpansion(state: any, row: any) {
 	const expanded = state.expanded
-	const index = expanded.findIndex((elem) => isEqual(elem, row))
+	const index = expanded.findIndex((elem: any) => isEqual(elem, row))
 	const shouldExpand = index === -1 //if the row is not already included in state.expanded
 
 	if (state.expandMultiple) {
@@ -20,7 +22,7 @@ function toggleRowExpansion(state, row) {
 }
 
 export const mutations = {
-	expandRow(store, row) {
+	expandRow(store: any, row: any) {
 		const { state } = store
 		const isExpanded = toggleRowExpansion(state, row)
 		store.emit('expandChange', [...state.expanded])
@@ -29,7 +31,7 @@ export const mutations = {
 }
 
 export const getters = {
-	isExpanded(state, row) {
-		return state.expanded.some((e) => isEqual(e, row))
+	isExpanded(state: any, row: any) {
+		return state.expanded.some((e: any) => isEqual(e, row))
 	},
 }
