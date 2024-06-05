@@ -1,10 +1,10 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"extends": ["//"],
-	"pipeline": {
+	"tasks": {
 		"build": {
 			"inputs": ["scripts/**", "source/**", "tsconfig.*"],
-			"outputMode": "new-only",
+			"outputLogs": "new-only",
 			"outputs": ["dist/**"]
 		}
 	}

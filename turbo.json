@@ -1,10 +1,10 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"globalDependencies": ["tsconfig.json", "yarn.lock"],
-	"pipeline": {
+	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"check": {
 			"dependsOn": [
@@ -19,23 +19,23 @@
 			"dependsOn": ["@3yourmind/eslint-config#build", "^build"],
 			"env": ["TIMING"],
 			"inputs": ["**/*.{js,json,ts,vue}", "../../eslint.config.mjs"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"check:knip": {
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"check:prettier": {
 			"inputs": ["**/*.{css,js,json,md,scss,ts,vue}", "../../.prettierignore"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"check:publint": {
 			"dependsOn": ["build"],
 			"inputs": ["dist/**", "package.json"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"check:stylelint": {
 			"inputs": ["**/*.{css,scss,vue}"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"fix": {
 			"dependsOn": ["fix:eslint", "fix:prettier", "fix:stylelint"]
@@ -44,15 +44,15 @@
 			"dependsOn": ["@3yourmind/eslint-config#build", "^build"],
 			"env": ["TIMING"],
 			"inputs": ["**/*.{js,json,ts,vue}", "../../eslint.config.mjs"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"fix:prettier": {
 			"inputs": ["**/*.{css,js,json,md,scss,ts,vue}", "../../.prettierignore"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"fix:stylelint": {
 			"inputs": ["**/*.{css,scss,vue}"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"publish-package": {
 			"cache": false,

@@ -67,7 +67,7 @@
 		"stylelint-config-standard-scss": "^10.0.0",
 		"stylelint-csstree-validator": "^3.0.0",
 		"stylelint-prettier": "^4.0.2",
-		"turbo": "^1.13.3",
+		"turbo": "^2.0.1",
 		"typescript": "^5.4.4",
 		"typescript-eslint": "^7.8.0"
 	},
@@ -91,6 +91,7 @@
 			"prettier --write"
 		]
 	},
+	"name": "kotti",
 	"packageManager": "yarn@1.22.22",
 	"prettier": {
 		"arrowParens": "always",

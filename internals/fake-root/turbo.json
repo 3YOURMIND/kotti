@@ -1,7 +1,7 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"extends": ["//"],
-	"pipeline": {
+	"tasks": {
 		"check:eslint": {
 			"inputs": [
 				"../../*.{cjs,js,mjs,json,mjs,mts,ts}",

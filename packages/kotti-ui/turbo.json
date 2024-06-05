@@ -1,31 +1,31 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"extends": ["//"],
-	"pipeline": {
+	"tasks": {
 		"build": {
 			"dependsOn": ["^build", "build:vue-tsc", "build:vite", "build:tokens"]
 		},
 		"build:tokens": {
 			"inputs": ["tokens/**"],
-			"outputMode": "new-only",
+			"outputLogs": "new-only",
 			"outputs": ["source/kotti-style/tokens.css"]
 		},
 		"build:vite": {
 			"dependsOn": ["^build"],
 			"inputs": ["vite.config.ts", "source/**", "tsconfig*.json"],
-			"outputMode": "new-only",
+			"outputLogs": "new-only",
 			"outputs": ["dist/kotti-ui.*", "dist/variables.scss", "dist/style.css"]
 		},
 		"build:vue-tsc": {
 			"dependsOn": ["^build"],
 			"inputs": ["source/**", "tsconfig*.json"],
-			"outputMode": "new-only",
+			"outputLogs": "new-only",
 			"outputs": ["dist/**/*.{cts,d.ts}"]
 		},
 		"test": {
 			"dependsOn": ["^build"],
 			"inputs": ["source/**", "tsconfig*.json", "vite.config.ts"],
-			"outputMode": "new-only",
+			"outputLogs": "new-only",
 			"outputs": []
 		},
 		"watch": {
