@@ -42,8 +42,7 @@ export const TableRowCell: any = {
 	methods: {
 		cellClick($event: MouseEvent, data: any) {
 			if (data.column.disableRowClick) {
-				// @ts-expect-error likely supposed to mean stopPropagation
-				$event.stopPropogation()
+				$event.stopPropagation()
 			}
 			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			this[KT_TABLE].$emit('cellClick', data)
