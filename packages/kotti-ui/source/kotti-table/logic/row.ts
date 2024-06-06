@@ -11,8 +11,14 @@ export const defaultState: Store.StateComponents.Row = {
 	rows: null,
 }
 
-export const mutations = {
-	setRows(store: any, data: any) {
+export const mutations: Store.MutationComponents.Row = {
+	blurRow({ state }) {
+		state.focusedRow = null
+	},
+	focusRow({ state }, row) {
+		state.focusedRow = row
+	},
+	setRows(store, data) {
 		const { state } = store
 		const { _data } = state
 		const dataInstanceChanged = _data !== data
@@ -27,12 +33,6 @@ export const mutations = {
 			cleanSelection(store)
 		}
 		updateAllSelected(state)
-	},
-	focuseRow({ state }: any, row: any) {
-		state.focusedRow = row
-	},
-	blurRow({ state }: any) {
-		state.focusedRow = null
 	},
 }
 

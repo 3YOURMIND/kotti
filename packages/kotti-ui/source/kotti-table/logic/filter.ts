@@ -13,8 +13,8 @@ export const defaultState: Store.StateComponents.Filter = {
 	filteredColumns: [],
 }
 
-export const mutations = {
-	setFilteredColumns(store: any, columns: any = store.state.filteredColumns) {
+export const mutations: Store.MutationComponents.Filter = {
+	setFilteredColumns(store, columns = store.state.filteredColumns) {
 		setColumnsArray(store.state, 'filteredColumns', ['prop', 'hidden'], columns)
 		store.commit('updateColumns', { emitChange: false })
 	},

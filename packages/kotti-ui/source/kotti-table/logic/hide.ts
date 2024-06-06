@@ -31,8 +31,8 @@ export const defaultState: Store.StateComponents.Hide = {
 	hiddenColumns: [],
 }
 
-export const mutations = {
-	hide(store: any, column: any, hide: any = !column.hidden) {
+export const mutations: Store.MutationComponents.Hide = {
+	hide(store, column, hide = !column.hidden) {
 		const { state } = store
 		column.hidden = hide
 
@@ -44,16 +44,16 @@ export const mutations = {
 		store.commit('updateColumns')
 		store.emit('hiddenChange', state.hiddenColumns)
 	},
-	showAll(store: any) {
+	setHiddenColumns(store, columns = store.state.hiddenColumns) {
+		setColumnsArray(store.state, 'hiddenColumns', ['prop', 'hidden'], columns)
+		store.commit('updateColumns', { emitChange: false })
+	},
+	showAll(store) {
 		store.state._columnsArray.forEach((column: any) => (column.hidden = false))
 		store.state.hiddenColumns = []
 
 		store.commit('updateColumns')
 		store.emit('hiddenChange', store.state.hiddenColumns)
-	},
-	setHiddenColumns(store: any, columns = store.state.hiddenColumns) {
-		setColumnsArray(store.state, 'hiddenColumns', ['prop', 'hidden'], columns)
-		store.commit('updateColumns', { emitChange: false })
 	},
 }
 

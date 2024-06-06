@@ -103,7 +103,6 @@ export const KtTableColumn: any = {
 		this[KT_STORE].commit('insertColumn', {
 			column: this.columnConfig,
 			...(columnIndex !== -1 ? { index: columnIndex } : {}),
-			fromTableColumn: true,
 		})
 	},
 	destroyed(): void {

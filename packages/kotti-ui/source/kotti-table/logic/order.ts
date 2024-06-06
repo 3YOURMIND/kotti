@@ -53,8 +53,8 @@ export const defaultState: Store.StateComponents.Order = {
 	orderedColumns: [],
 }
 
-export const mutations = {
-	orderBefore(store: any, fromColumn: any, toColumn: any) {
+export const mutations: Store.MutationComponents.Order = {
+	orderBefore(store, fromColumn, toColumn) {
 		const { state } = store
 		if (fromColumn.id === toColumn.id) return
 		const fromIndex = getColumnIndex(state, fromColumn)
@@ -70,7 +70,7 @@ export const mutations = {
 		store.emit('orderChange', getOrderedColumns(state))
 		store.commit('updateColumns')
 	},
-	setOrderedColumns(store: any, columns: any) {
+	setOrderedColumns(store, columns) {
 		setColumnsArray(store.state, 'orderedColumns', ['prop', 'order'], columns)
 		store.commit('updateColumns', {
 			emitChange: false,

@@ -22,8 +22,8 @@ function toggleRowExpansion(state: any, row: any) {
 	return shouldExpand
 }
 
-export const mutations = {
-	expandRow(store: any, row: any) {
+export const mutations: Store.MutationComponents.Expand = {
+	expandRow(store, row) {
 		const { state } = store
 		const isExpanded = toggleRowExpansion(state, row)
 		store.emit('expandChange', [...state.expanded])
