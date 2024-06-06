@@ -167,4 +167,4 @@ export const mutations: Store.MutationComponents.Column = {
 	},
 }
 
-export const getters = {}
+export const getters: Store.GetterComponents.Column = {}

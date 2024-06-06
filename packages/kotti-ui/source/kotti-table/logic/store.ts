@@ -17,7 +17,7 @@ import * as sort from './sort'
 import type { Store } from './types'
 
 export class TableStore {
-	getters: any
+	getters: Store.Getters
 	mutations: Store.Mutations
 	state: Store.State
 	table: any
@@ -92,12 +92,18 @@ export class TableStore {
 		}
 	}
 
-	get(name: any, ...args: any) {
+	get<T extends keyof Store.Getters>(
+		name: T,
+		...args: Store.GetterParameters<T>
+	): ReturnType<Store.Getters[T]> {
 		const getters = this.getters
+
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (getters[name]) {
+			// FIXME: Can be fixed by e.g. refactoring getters to take at most one argument
+			// @ts-expect-error not easy to represent variadic arguments
 			return getters[name].call(this, this.state, ...args)
 		} else {
-			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			throw new Error(`Getter not found: ${name}`)
 		}
 	}

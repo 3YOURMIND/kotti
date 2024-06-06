@@ -169,7 +169,7 @@ export const mutations: Store.MutationComponents.Sort = {
 	},
 }
 
-export const getters = {
+export const getters: Store.GetterComponents.Sort = {
 	hasSortOrder(state: any, column: any) {
 		column = getSortedColumn(state, column)
 		return column && column.sortOrder !== false

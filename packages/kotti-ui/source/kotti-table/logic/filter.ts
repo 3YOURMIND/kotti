@@ -20,7 +20,7 @@ export const mutations: Store.MutationComponents.Filter = {
 	},
 }
 
-export const getters = {}
+export const getters: Store.GetterComponents.Filter = {}
 
 export function setFilteredColumn(state: any, column: any) {
 	const columnIndex = getFilteredColumnIndex(state, column)
