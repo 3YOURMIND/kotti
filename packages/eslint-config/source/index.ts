@@ -459,7 +459,7 @@ export default {
 				'vue/jsx-uses-vars': 'error',
 				'vue/no-deprecated-data-object-declaration': 'error',
 				'vue/no-deprecated-destroyed-lifecycle': 'error',
-				'vue/no-deprecated-dollar-scopedslots-api': 'error',
+				// 'vue/no-deprecated-dollar-scopedslots-api': 'error', -- FIXME: reactivate with Vue@3
 				'vue/no-deprecated-events-api': 'error',
 				'vue/no-deprecated-filter': 'error',
 				'vue/no-deprecated-functional-template': 'error',
