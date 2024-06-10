@@ -108,7 +108,7 @@ export class TableStore {
 		}
 	}
 
-	emit(event: any, ...args: any) {
+	emit<T extends keyof Store.Emits>(event: T, ...args: Store.Emits[T]) {
 		this.table.$emit(event, ...args)
 	}
 }
