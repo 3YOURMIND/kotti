@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import negate from 'lodash/negate'
+import type { Store } from './types'
 
-export const defaultState = {
+export const defaultState: Store.StateComponents.Disable = {
 	enabledRows: [],
 	isAllRowsDisabled: false,
 }

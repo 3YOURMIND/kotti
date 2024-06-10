@@ -136,6 +136,8 @@ export module KottiTable {
 		}
 	}
 
+	export type RowKey = string | ((row: Row.Props) => string | number)
+
 	export type Props = {
 		columns: Column.Props[] | null
 		emptyText: string

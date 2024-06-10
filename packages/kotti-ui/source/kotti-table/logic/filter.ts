@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { setColumnsArray } from './column'
+import type { Store } from './types'
 
 function getFilteredColumnIndex(state: any, column: any) {
 	return state.filteredColumns.findIndex(
@@ -8,7 +9,7 @@ function getFilteredColumnIndex(state: any, column: any) {
 	)
 }
 
-export const defaultState = {
+export const defaultState: Store.StateComponents.Filter = {
 	filteredColumns: [],
 }
 

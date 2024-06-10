@@ -39,19 +39,20 @@ import {
 import { KtTableColumn } from './KtTableColumn'
 import { TableStore } from './logic/store'
 import { TableLayout } from './table-layout'
-import type { CreateElement } from 'vue'
+import type { CreateElement, PropType } from 'vue'
+import type { KottiTable } from './types'
 
 let tableIdSeed = 1
 
 export const INITIAL_TABLE_STORE_PROPS = [
-	'rowKey',
-	'sortMultiple',
 	'expandMultiple',
+	'filteredColumns',
+	'hiddenColumns',
 	'remoteSort',
+	'rowKey',
 	'sortable',
 	'sortedColumns',
-	'hiddenColumns',
-	'filteredColumns',
+	'sortMultiple',
 ]
 
 export default {
@@ -80,7 +81,10 @@ export default {
 		emptyText: { default: 'No Data', type: String },
 		id: { default: null, type: String },
 		// FIXME: Props should either be required or have a default
-		rowKey: { required: false, type: [String, Function] },
+		rowKey: {
+			required: false,
+			type: [String, Function] as PropType<KottiTable.RowKey>,
+		},
 		rows: { default: () => [], type: Array },
 		useColumnDragToOrder: { default: false, type: Boolean },
 

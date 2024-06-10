@@ -3,6 +3,7 @@
 import pick from 'lodash/pick'
 
 import { setColumnsArray, getColumnIndex, getColumnRealIndex } from './column'
+import type { Store } from './types'
 
 function byOrder(a: any, b: any) {
 	return a.order < b.order
@@ -48,7 +49,7 @@ export function resolveColumnsOrder({
 		})
 }
 
-export const defaultState = {
+export const defaultState: Store.StateComponents.Order = {
 	orderedColumns: [],
 }
 

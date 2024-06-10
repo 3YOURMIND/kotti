@@ -9,6 +9,7 @@ import { IS_ASC, IS_DSC, PUBLIC_SORT_PROPS } from '../constants'
 import { KottiTable } from '../types'
 
 import { setColumnsArray } from './column'
+import type { Store } from './types'
 
 function getSortedColumnIndex(state: any, column: any) {
 	return state.sortedColumns.findIndex(({ prop }: any) => prop === column.prop)
@@ -113,11 +114,11 @@ export function sortData(data: any, state: any) {
 	return orderBy(data, state.sortedColumns)
 }
 
-export const defaultState = {
-	sortMultiple: false,
+export const defaultState: Store.StateComponents.Sort = {
 	remoteSort: false,
 	sortable: false,
 	sortedColumns: [],
+	sortMultiple: false,
 }
 
 export const mutations = {
