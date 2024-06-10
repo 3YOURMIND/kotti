@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { Kotti } from '../../types'
+import type { TableStore } from './store'
 
 export module Store {
 	export module StateComponents {
 		export type Column = {
 			_columns: any
-			_columnsArray: any
+			_columnsArray: any[]
 			_destroyedColumns: Record<string, number>
 			columns: any
 			refreshColumnArray: boolean
@@ -76,4 +77,122 @@ export module Store {
 			 */
 			rowKey?: Kotti.Table.RowKey
 		}
+
+	export module MutationComponents {
+		export type Column = {
+			insertColumn(
+				this: TableStore,
+				store: TableStore,
+				payload: { column: any; index?: number },
+			): void
+			removeColumn(this: TableStore, store: TableStore, column: any): void
+			setColumns(this: TableStore, store: TableStore, columns: any): void
+			updateColumns(
+				this: TableStore,
+				store: TableStore,
+				config?: {
+					emitChange?: boolean
+					refreshColumnArray?: boolean
+				},
+			): void
+		}
+		export type Disable = {
+			updateDisabledRows(this: TableStore, store: TableStore): void
+		}
+		export type Expand = {
+			expandRow(
+				this: TableStore,
+				store: TableStore,
+				row: State['expanded'][number],
+			): void
+		}
+		export type Filter = {
+			setFilteredColumns(
+				this: TableStore,
+				store: TableStore,
+				columns: any,
+			): void
+		}
+		export type Hide = {
+			hide(
+				this: TableStore,
+				store: TableStore,
+				column: State['hiddenColumns'][number],
+				hide: boolean,
+			): void
+			setHiddenColumns(this: TableStore, store: TableStore, columns: any): void
+			showAll(this: TableStore, store: TableStore): void
+		}
+		export type Order = {
+			orderBefore(
+				this: TableStore,
+				store: TableStore,
+				fromColumn: State['_columnsArray'][number],
+				toColumn: any,
+			): void
+			setOrderedColumns(this: TableStore, store: TableStore, columns: any): void
+		}
+		export type Row = {
+			blurRow(this: TableStore, store: TableStore): void
+			focusRow(
+				this: TableStore,
+				store: TableStore,
+				row: State['focusedRow'],
+			): void
+			setRows(this: TableStore, store: TableStore, data: State['_data']): void
+		}
+		export type Select = {
+			selectRow(
+				this: TableStore,
+				store: TableStore,
+				row: State['selection'][number],
+				selected?: boolean,
+			): void
+			setSelected(
+				this: TableStore,
+				store: TableStore,
+				selection: State['selection'],
+			): void
+			toggleAllSelection(this: TableStore, store: TableStore): void
+		}
+		export type Sort = {
+			changeSortConditions(
+				this: TableStore,
+				store: TableStore,
+				options: {
+					column: any
+					silent?: boolean
+				},
+			): void
+			removeSortedColumn(this: TableStore, store: TableStore, column: any): void
+			setSortedColumns(this: TableStore, store: TableStore, columns: any): void
+			sort(
+				this: TableStore,
+				store: TableStore,
+				options: {
+					column: any
+					order: any
+				},
+			): void
+		}
+	}
+
+	export type Mutations = MutationComponents.Column &
+		MutationComponents.Disable &
+		MutationComponents.Expand &
+		MutationComponents.Filter &
+		MutationComponents.Hide &
+		MutationComponents.Order &
+		MutationComponents.Row &
+		MutationComponents.Select &
+		MutationComponents.Sort
+
+	export type MutationParameters<K extends keyof Mutations> =
+		Mutations[K] extends (
+			this: TableStore,
+			store: TableStore,
+			...args: infer P
+		) => void
+			? P
+			: never
 }

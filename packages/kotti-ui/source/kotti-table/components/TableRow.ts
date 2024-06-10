@@ -128,7 +128,7 @@ export const TableRow: any = {
 			// @ts-expect-error isInteractive and isDisabled will exist at runtime
 			if (this.isInteractive && !this.isDisabled) {
 				// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-				this[KT_STORE].commit('focuseRow', row)
+				this[KT_STORE].commit('focusRow', row)
 				// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 				this[KT_TABLE].$emit('rowFocus', row, index)
 			}

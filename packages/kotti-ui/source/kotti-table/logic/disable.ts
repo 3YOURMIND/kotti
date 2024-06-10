@@ -18,8 +18,8 @@ function getEnabledRows(rows: any, disableRow: any) {
 	return getDisabledRows(rows, negate(disableRow))
 }
 
-export const mutations = {
-	updateDisabledRows({ state, table }: any): void {
+export const mutations: Store.MutationComponents.Disable = {
+	updateDisabledRows({ state, table }): void {
 		state.enabledRows = getEnabledRows(state.rows, table.disableRow)
 		state.isAllRowsDisabled = state.enabledRows.length === 0
 	},

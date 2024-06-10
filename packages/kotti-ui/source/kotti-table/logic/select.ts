@@ -71,8 +71,8 @@ export const defaultState: Store.StateComponents.Select = {
 	selection: [],
 }
 
-export const mutations = {
-	selectRow(store: any, row: any, selected: any) {
+export const mutations: Store.MutationComponents.Select = {
+	selectRow(store, row, selected) {
 		const { state } = store
 		const changed = toggleRowSelection(state, row, selected)
 		const { selection } = state
@@ -82,7 +82,11 @@ export const mutations = {
 		}
 		updateAllSelected(state)
 	},
-	toggleAllSelection: debounce((store: any) => {
+	setSelected({ state }, selection) {
+		state.selection = selection
+		updateAllSelected(state)
+	},
+	toggleAllSelection: debounce((store) => {
 		const { state } = store
 		// refresh disabled rows status in case of external influence
 		store.commit('updateDisabledRows')
@@ -101,18 +105,6 @@ export const mutations = {
 		store.emit('selectionChange', selection)
 		store.emit('selectAll', selection)
 	}),
-
-	setSelectedIndices(store: any, indices: any) {
-		store.commit(
-			'setSelected',
-			indices.map((index: any) => store.get('getRowByVisibleIndex', index)),
-		)
-	},
-
-	setSelected({ state }: any, selection: any) {
-		state.selection = selection
-		updateAllSelected(state)
-	},
 }
 
 export const getters = {

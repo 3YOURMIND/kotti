@@ -18,7 +18,7 @@ import type { Store } from './types'
 
 export class TableStore {
 	getters: any
-	mutations: any
+	mutations: Store.Mutations
 	state: Store.State
 	table: any
 	id: string | undefined
@@ -28,27 +28,27 @@ export class TableStore {
 		// we deep clone initial state in order to not refer to the same objects
 		this.state = cloneDeep({
 			...column.defaultState,
-			...rows.defaultState,
-			...expand.defaultState,
-			...order.defaultState,
 			...disable.defaultState,
-			...select.defaultState,
-			...hide.defaultState,
-			...sort.defaultState,
+			...expand.defaultState,
 			...filter.defaultState,
+			...hide.defaultState,
+			...order.defaultState,
+			...rows.defaultState,
+			...select.defaultState,
+			...sort.defaultState,
 		})
 		this.setInitialState(initialState)
 
 		this.mutations = {
 			...column.mutations,
-			...rows.mutations,
-			...expand.mutations,
-			...order.mutations,
 			...disable.mutations,
-			...select.mutations,
-			...hide.mutations,
-			...sort.mutations,
+			...expand.mutations,
 			...filter.mutations,
+			...hide.mutations,
+			...order.mutations,
+			...rows.mutations,
+			...select.mutations,
+			...sort.mutations,
 		}
 
 		this.getters = {
@@ -75,12 +75,19 @@ export class TableStore {
 		})
 	}
 
-	commit(name: any, ...args: any) {
+	commit<T extends keyof Store.Mutations>(
+		name: T,
+		...args: Store.MutationParameters<T>
+	) {
 		const mutations = this.mutations
+
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (mutations[name]) {
-			return mutations[name].call(this, this, ...args)
+			// FIXME: Can be fixed by e.g. refactoring mutations to take at most one argument
+			// @ts-expect-error not easy to represent variadic arguments
+			mutations[name].call(this, this, ...args)
+			return
 		} else {
-			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 			throw new Error(`Mutation not found: ${name}`)
 		}
 	}

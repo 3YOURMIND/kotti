@@ -110,14 +110,14 @@ export const defaultState: Store.StateComponents.Column = {
 	refreshColumnArray: true,
 }
 
-export const mutations = {
-	insertColumn(store: any, { column, index }: any) {
+export const mutations: Store.MutationComponents.Column = {
+	insertColumn(store, { column, index }) {
 		const deleted = store.state._destroyedColumns[column.prop]
 		setColumn(store.state, { column, index, deleted })
 		deleted && (store.state._destroyedColumns[column.prop] = 0)
 		store.commit('updateColumns', { emitChange: false })
 	},
-	removeColumn(store: any, column: any) {
+	removeColumn(store, column) {
 		// eslint-disable-next-line no-param-reassign
 		column = getColumn(store.state, column)
 		if (column) {
@@ -126,7 +126,7 @@ export const mutations = {
 			store.commit('updateColumns', { emitChange: false })
 		}
 	},
-	setColumns(store: any, columns = store.state._columnsArray) {
+	setColumns(store, columns = store.state._columnsArray) {
 		const { state } = store
 		const pickedColumns = columns.map((col: any) =>
 			pick(col, PUBLIC_COLUMN_PROPS),
@@ -147,7 +147,7 @@ export const mutations = {
 		})
 	},
 	updateColumns(
-		store: any,
+		store,
 		{
 			emitChange = true,
 			refreshColumnArray = store.state.refreshColumnArray,

@@ -121,33 +121,12 @@ export const defaultState: Store.StateComponents.Sort = {
 	sortMultiple: false,
 }
 
-export const mutations = {
-	sort(store: any, options: any) {
-		const { column, order } = options
-		setSortedColumn(store.state, column)
-		column.sortOrder = order || getNextSortOrder(column)
-		if (column.sortOrder === KottiTable.Column.SortOrders.NONE) {
-			store.commit('removeSortedColumn', column)
-		} else {
-			store.commit('changeSortConditions', { column })
-		}
-	},
-
-	removeSortedColumn(store: any, column: any) {
-		const { state } = store
-		const index = getSortedColumnIndex(state, column)
-		const isInsortOrder = index !== -1
-		if (isInsortOrder) {
-			state.sortedColumns.splice(index, 1)
-		}
-		column.sortOrder = KottiTable.Column.SortOrders.NONE
-		store.commit('changeSortConditions', { column })
-	},
-
-	changeSortConditions(store: any, options: any) {
+export const mutations: Store.MutationComponents.Sort = {
+	changeSortConditions(store, options) {
 		const { state } = store
 		state.rows = sortData(state.filteredData || state._data || [], state)
 
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!options?.silent) {
 			const sortedColumns = state.sortedColumns.map((column: any) => {
 				return {
@@ -164,9 +143,29 @@ export const mutations = {
 			})
 		}
 	},
-	setSortedColumns(store: any, columns: any) {
+	removeSortedColumn(store, column) {
+		const { state } = store
+		const index = getSortedColumnIndex(state, column)
+		const isInsortOrder = index !== -1
+		if (isInsortOrder) {
+			state.sortedColumns.splice(index, 1)
+		}
+		column.sortOrder = KottiTable.Column.SortOrders.NONE
+		store.commit('changeSortConditions', { column })
+	},
+	setSortedColumns(store, columns) {
 		setColumnsArray(store.state, 'sortedColumns', PUBLIC_SORT_PROPS, columns)
 		store.commit('updateColumns', { emitChange: false })
+	},
+	sort(store, options) {
+		const { column, order } = options
+		setSortedColumn(store.state, column)
+		column.sortOrder = order || getNextSortOrder(column)
+		if (column.sortOrder === KottiTable.Column.SortOrders.NONE) {
+			store.commit('removeSortedColumn', column)
+		} else {
+			store.commit('changeSortConditions', { column })
+		}
 	},
 }
 
