@@ -1,11 +1,11 @@
 <template>
 	<div class="inline-container">
 		<li
-			v-for="(page, index) in pageAmount"
-			:key="index"
-			:class="paginatorClasses(page, 'page-item--active')"
-			@click="$emit('setPage', page)"
-			v-text="getHumanReadablePageNumber(page)"
+			v-for="page in pageAmount"
+			:key="page"
+			:class="paginatorClasses(page - 1, 'page-item--active')"
+			@click="$emit('setPage', page - 1)"
+			v-text="page"
 		/>
 	</div>
 </template>
@@ -23,7 +23,6 @@ export default defineComponent({
 	emits: ['setPage'],
 	setup(props) {
 		return {
-			getHumanReadablePageNumber: (pageNumber: number) => pageNumber + 1,
 			pageAmount: computed(() => Math.ceil(props.total / props.pageSize)),
 			paginatorClasses: (pageNumber: number, className: string) => ({
 				'page-item': true,

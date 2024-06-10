@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import type { Kotti } from '@3yourmind/kotti-ui'
+import { KtNavbar } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from 'vue'
 
 import navLogo from '../assets/img/nav_logo.svg'
@@ -38,6 +39,9 @@ const saveSavedFieldsToLocalStorage = (isNarrow: boolean) => {
 
 export default defineComponent({
 	name: 'NavBar',
+	components: {
+		KtNavbar,
+	},
 	setup() {
 		const route = useRoute()
 

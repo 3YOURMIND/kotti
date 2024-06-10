@@ -98,7 +98,7 @@ function didRestoreDestroyedColumns({
 	return (
 		// eslint-disable-next-line unicorn/explicit-length-check
 		columns.length &&
-		columns.reduce((sum, n) => (sum as number) + (n as number) === 0)
+		columns.reduce((sum, n) => (sum as number) + (n as number)) === 0
 	)
 }
 

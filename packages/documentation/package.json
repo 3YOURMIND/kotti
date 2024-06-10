@@ -41,7 +41,7 @@
 	},
 	"private": true,
 	"scripts": {
-		"build": "nuxt generate",
+		"build": "nuxt generate && ./scripts/test-for-ssr-bug.sh",
 		"check:eslint": "eslint --max-warnings=0 .",
 		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/documentation",
 		"check:stylelint": "stylelint './**/*.{css,scss,vue}'",
