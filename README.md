@@ -163,9 +163,11 @@ yarn run test
 
    b. Title format: `1.2.3: tldr of what's happening`
 
-   c. Release notes: Follow guidelines of previous releases
+   c. Make sure to select `5.x` as target in the dropdown
 
-   d. Click on `Save draft`
+   d. Release notes: Follow guidelines of previous releases
+
+   e. Click on `Save draft`
 
 2. Checkout the 5.x branch in the Kotti repository and pull latest changes
 
