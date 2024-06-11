@@ -204,6 +204,7 @@ export default defineComponent({
 	&__avatar,
 	&__chevron {
 		flex-grow: 0;
+		flex-shrink: 0;
 	}
 
 	&__chevron {
