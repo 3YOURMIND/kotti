@@ -209,10 +209,10 @@ export default {
 			return colSpan
 		},
 		isExpandable() {
-			return Boolean(this.$slots.expand || this.renderExpand)
+			return Boolean(this.$scopedSlots.expand || this.renderExpand)
 		},
 		hasActions() {
-			return Boolean(this.$slots.actions || this.renderActions)
+			return Boolean(this.$scopedSlots.actions || this.renderActions)
 		},
 		_renderExpand() {
 			return (h: CreateElement, rowData: any) => {
@@ -220,7 +220,7 @@ export default {
 
 				// @ts-expect-error $slots will exist at runtime
 
-				return this.$slots.expand(rowData)
+				return this.$scopedSlots.expand(rowData)
 			}
 		},
 		_renderActions() {
@@ -229,7 +229,7 @@ export default {
 
 				// @ts-expect-error $slots will exist at runtime
 
-				return this.$slots.actions(rowData)
+				return this.$scopedSlots.actions(rowData)
 			}
 		},
 		_renderLoading() {
