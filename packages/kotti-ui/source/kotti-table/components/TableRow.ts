@@ -183,9 +183,13 @@ export const TableRow: any = {
 			'tr',
 			{
 				class: _trClasses,
-				domProps: {
-					role: isInteractive && !isDisabled ? 'button' : false,
+				attrs: {
+					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+					'data-test': `table:element:${row.number}:${row.title}`,
 					tabIndex: isInteractive && !isDisabled ? 0 : false,
+				},
+				domProps: {
+					role: isInteractive && !isDisabled ? 'button' : undefined,
 				},
 				on: {
 					click: ($event: MouseEvent) => handleClick($event, row, rowIndex),
@@ -231,9 +235,11 @@ export const TableRow: any = {
 								[
 									h('label', { class: 'form-checkbox' }, [
 										h('input', {
-											domProps: {
+											attrs: {
 												checked: isSelected,
 												disabled: isDisabled,
+											},
+											domProps: {
 												type: 'checkbox',
 											},
 											on: {

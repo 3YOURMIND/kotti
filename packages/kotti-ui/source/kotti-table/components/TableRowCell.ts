@@ -75,7 +75,7 @@ export const TableRowCell: any = {
 					'div',
 					{
 						class: _cellClass,
-						domProps: {
+						attrs: {
 							'data-prop': column.prop,
 						},
 					},

@@ -18,9 +18,7 @@ export const TableBodyExpandRow: any = {
 				h(
 					'td',
 					{
-						domProps: {
-							colSpan,
-						},
+						attrs: { colSpan },
 						class: 'kt-table__expanded-cell',
 					},
 					[renderExpand?.(h, { row, data: row, rowIndex })],
