@@ -88,7 +88,7 @@ const config = tseslint.config(
 				'error',
 				{
 					message:
-						"Avoid direct imports from lodash; e.g. import foo from 'lodash/foo' instead of import { foo } from 'lodash'",
+						"Avoid direct imports from lodash; e.g. import foo from 'lodash/foo.js' instead of import { foo } from 'lodash'",
 					name: 'lodash',
 				},
 			],

@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import isError from 'lodash/isError'
+import isError from 'lodash/isError.js'
 import {
 	computed,
 	defineComponent,

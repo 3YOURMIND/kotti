@@ -751,7 +751,7 @@ import {
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { TimeConversion } from '@metatypes/units'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep.js'
 import { computed, defineComponent, ref } from 'vue'
 
 import { useRouter } from '../../../hooks/use-router'

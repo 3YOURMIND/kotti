@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import camelCase from 'lodash/camelCase'
+import camelCase from 'lodash/camelCase.js'
 import {
 	computed,
 	defineComponent,

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import cloneDeep from 'lodash/cloneDeep'
-import isUndefined from 'lodash/isUndefined'
-import negate from 'lodash/negate'
-import pickBy from 'lodash/pickBy'
+import cloneDeep from 'lodash/cloneDeep.js'
+import isUndefined from 'lodash/isUndefined.js'
+import negate from 'lodash/negate.js'
+import pickBy from 'lodash/pickBy.js'
 
 import * as column from './column'
 import * as disable from './disable'

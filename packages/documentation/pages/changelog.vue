@@ -103,7 +103,7 @@
 import { Octokit } from '@octokit/rest'
 import type { Endpoints } from '@octokit/types'
 import dayjs from 'dayjs'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep.js'
 import { marked } from 'marked'
 import naturalSort from 'natural-sort'
 import type { Ref } from 'vue'

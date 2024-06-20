@@ -239,7 +239,7 @@
 <script lang="ts">
 import type { Kotti } from '@3yourmind/kotti-ui'
 import { KtComment } from '@3yourmind/kotti-ui'
-import escape from 'lodash/escape'
+import escape from 'lodash/escape.js'
 import { defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'

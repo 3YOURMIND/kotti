@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import omit from 'lodash/omit'
+import omit from 'lodash/omit.js'
 import { computed, defineComponent, ref } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'

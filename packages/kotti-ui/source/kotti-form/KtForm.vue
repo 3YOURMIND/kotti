@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep.js'
 import type { PropType } from 'vue'
 import { computed, defineComponent, provide, reactive } from 'vue'
 

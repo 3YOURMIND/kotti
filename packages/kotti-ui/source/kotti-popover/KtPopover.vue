@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
-import castArray from 'lodash/castArray'
+import castArray from 'lodash/castArray.js'
 import type { Props as TippyProps } from 'tippy.js'
 import {
 	computed,

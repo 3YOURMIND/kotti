@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep.js'
 import { defineComponent, inject, computed } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'

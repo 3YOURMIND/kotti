@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import property from 'lodash/property'
+import property from 'lodash/property.js'
 
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
 import type { CreateElement } from 'vue'

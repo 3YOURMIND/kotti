@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import pick from 'lodash/pick'
+import pick from 'lodash/pick.js'
 import Vue from 'vue'
 
 import { PUBLIC_COLUMN_PROPS } from '../constants'
