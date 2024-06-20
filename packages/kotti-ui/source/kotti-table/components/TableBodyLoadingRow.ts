@@ -20,9 +20,14 @@ export const TableBodyLoadingRow: any = {
 		const { colSpan, render } = this
 
 		return h('tr', {}, [
-			h('td', { domProps: { colSpan }, class: 'kt-table__loader' }, [
-				render(h),
-			]),
+			h(
+				'td',
+				{
+					attrs: { colSpan },
+					class: 'kt-table__loader',
+				},
+				[render(h)],
+			),
 		])
 	},
 }

@@ -46,10 +46,6 @@ export const TableBody: any = {
 
 						return [
 							h(TableRow, {
-								domProps: {
-									// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-									'data-test': `table:element:${row.number}:${row.title}`,
-								},
 								key,
 								props: {
 									row,
