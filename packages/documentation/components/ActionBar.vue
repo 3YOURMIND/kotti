@@ -1,39 +1,35 @@
 <template>
-	<div class="kt-actionbar">
-		<div class="kt-actionbar-wrapper">
-			<div class="kt-actionbar-header">
-				<h1 v-text="subsection.title" />
+	<KtActionbar :headerTitle="subsection.title">
+		<template #actionbar-body>
+			<div class="kt-actionbar-menu has-icon-right">
+				<ul>
+					<nuxt-link
+						v-for="(page, index) in subsection.pages"
+						:key="index"
+						:to="`/${subsection.path}/${page.path}`"
+					>
+						<li>
+							<span v-text="page.label" />
+							<span
+								v-for="(tag, tagIndex) in page.tags"
+								:key="tagIndex"
+								class="tag"
+								:class="`tag--is-${tag}`"
+								:title="tagTitles[tag]"
+								v-text="tag"
+							/>
+							<i class="yoco">chevron_right</i>
+						</li>
+					</nuxt-link>
+				</ul>
 			</div>
-			<div class="kt-actionbar-body">
-				<div class="kt-actionbar-menu has-icon-right">
-					<ul>
-						<nuxt-link
-							v-for="(page, index) in subsection.pages"
-							:key="index"
-							:to="`/${subsection.path}/${page.path}`"
-						>
-							<li>
-								<span v-text="page.label" />
-								<span
-									v-for="(tag, tagIndex) in page.tags"
-									:key="tagIndex"
-									class="tag"
-									:class="`tag--is-${tag}`"
-									:title="tagTitles[tag]"
-									v-text="tag"
-								/>
-								<i class="yoco">chevron_right</i>
-							</li>
-						</nuxt-link>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+		</template>
+	</KtActionbar>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
+import { KtActionbar } from '@3yourmind/kotti-ui'
 
 import type { Section, Subsection } from '../data/menu'
 import { menu, Tag } from '../data/menu'
@@ -50,6 +46,7 @@ const tagTitles: Record<Tag, string> = {
 
 export default defineComponent({
 	name: 'ActionBar',
+	components: { KtActionbar },
 	setup() {
 		const route = useRoute()
 

@@ -2,19 +2,19 @@
 	<div class="kt-actionbar">
 		<div class="kt-actionbar-wrapper">
 			<div class="kt-actionbar-header">
-				<slot name="actionbar-header">
-					<h1 v-text="headerTitle" />
-				</slot>
+				<h1 v-if="headerTitle" v-text="headerTitle" />
+				<slot name="actionbar-header" />
 			</div>
 			<div class="kt-actionbar-body">
-				<slot name="actionbar-body">
-					<ActionbarMenu v-if="menu" :menu="menu" :menuStyle="menuStyle" />
-				</slot>
+				<ActionbarMenu
+					v-if="menu.length > 0"
+					:menu="menu"
+					:menuStyle="menuStyle"
+				/>
+				<slot name="actionbar-body" />
 			</div>
 			<div class="kt-actionbar-footer">
-				<slot name="actionbar-footer">
-					<footer>Footer</footer>
-				</slot>
+				<slot name="actionbar-footer" />
 			</div>
 		</div>
 	</div>
