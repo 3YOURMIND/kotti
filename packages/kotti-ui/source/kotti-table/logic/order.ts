@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import pick from 'lodash/pick'
+import pick from 'lodash/pick.js'
 
 import { setColumnsArray, getColumnIndex, getColumnRealIndex } from './column'
 import type { Store } from './types'

@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-param-reassign */
 
-import pick from 'lodash/pick'
-import property from 'lodash/property'
+import pick from 'lodash/pick.js'
+import property from 'lodash/property.js'
 
 import { IS_ASC, IS_DSC, PUBLIC_SORT_PROPS } from '../constants'
 import { KottiTable } from '../types'

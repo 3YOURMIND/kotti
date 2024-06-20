@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import isNil from 'lodash/isNil'
+import isNil from 'lodash/isNil.js'
 import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 
 import { KottiButton } from '../../kotti-button/types'

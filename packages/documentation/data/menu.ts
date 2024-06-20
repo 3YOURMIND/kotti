@@ -25,8 +25,8 @@ import {
 	KtValueLabel,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import kebabCase from 'lodash/kebabCase'
-import startCase from 'lodash/startCase'
+import kebabCase from 'lodash/kebabCase.js'
+import startCase from 'lodash/startCase.js'
 
 export enum Tag {
 	CSS = 'css',

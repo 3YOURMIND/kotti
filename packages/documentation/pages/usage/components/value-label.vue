@@ -124,7 +124,7 @@
 
 <script lang="ts">
 import { Kotti, KtValueLabel } from '@3yourmind/kotti-ui'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep.js'
 import { computed, defineComponent, ref } from 'vue'
 
 import { generateComponentCode } from '../../../utilities/pages'

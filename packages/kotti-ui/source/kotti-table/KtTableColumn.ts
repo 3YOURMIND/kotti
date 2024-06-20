@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import pick from 'lodash/pick'
+import pick from 'lodash/pick.js'
 
 import {
 	COLUMN_TYPE,

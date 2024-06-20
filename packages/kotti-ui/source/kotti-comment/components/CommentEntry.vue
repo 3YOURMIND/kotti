@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import pick from 'lodash/pick'
+import pick from 'lodash/pick.js'
 import { defineComponent, ref } from 'vue'
 
 import { makeProps } from '../../make-props'

@@ -57,7 +57,7 @@
 <script lang="ts">
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import castArray from 'lodash/castArray'
+import castArray from 'lodash/castArray.js'
 import { computed, defineComponent, provide, ref, watch } from 'vue'
 
 import { makeProps } from '../make-props'

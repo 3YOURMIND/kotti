@@ -24,8 +24,8 @@
 <script lang="ts">
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import isEqual from 'lodash/isEqual'
-import pick from 'lodash/pick'
+import isEqual from 'lodash/isEqual.js'
+import pick from 'lodash/pick.js'
 
 import { TableBody } from './components/TableBody'
 import TableHeader from './components/TableHeader.vue'

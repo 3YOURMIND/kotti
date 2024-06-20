@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import pick from 'lodash/pick'
+import pick from 'lodash/pick.js'
 
 import { KT_TABLE_STATE_PROVIDER } from './constants'
 import KtTable, { INITIAL_TABLE_STORE_PROPS } from './KtTable.vue'

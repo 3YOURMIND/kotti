@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import omit from 'lodash/omit'
+import omit from 'lodash/omit.js'
 import { computed, defineComponent } from 'vue'
 
 import { KtField } from '../kotti-field'

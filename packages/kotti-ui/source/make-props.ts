@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition -- disable as only intentionally-set DEBUG flags are being marked */
-import cloneDeep from 'lodash/cloneDeep'
-import uniq from 'lodash/uniq'
+import cloneDeep from 'lodash/cloneDeep.js'
+import uniq from 'lodash/uniq.js'
 import type { PropOptions, PropType } from 'vue'
 import type { Prop } from 'vue/types/options'
 import { z } from 'zod'

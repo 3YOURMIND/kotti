@@ -142,7 +142,7 @@
 
 <script lang="ts">
 import { Kotti, KtFilters } from '@3yourmind/kotti-ui'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep.js'
 import { computed, defineComponent, ref } from 'vue'
 
 import { getLast, today } from '../../../utilities/date'

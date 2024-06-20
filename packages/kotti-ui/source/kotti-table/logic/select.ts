@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import debounce from 'lodash/debounce'
-import isEqual from 'lodash/isEqual'
+import debounce from 'lodash/debounce.js'
+import isEqual from 'lodash/isEqual.js'
 import type { Store } from './types'
 
 function toggleRowSelection(state: any, row: any, selected: any) {

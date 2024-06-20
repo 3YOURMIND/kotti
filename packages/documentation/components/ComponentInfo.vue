@@ -148,8 +148,8 @@
 import { KtHeading, Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
-import castArray from 'lodash/castArray'
-import kebabCase from 'lodash/kebabCase'
+import castArray from 'lodash/castArray.js'
+import kebabCase from 'lodash/kebabCase.js'
 import type { PropType } from 'vue'
 import { computed, defineComponent, ref } from 'vue'
 

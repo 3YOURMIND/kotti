@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash/isEqual.js'
 import type { Store } from './types'
 
 export const defaultState: Store.StateComponents.Expand = {

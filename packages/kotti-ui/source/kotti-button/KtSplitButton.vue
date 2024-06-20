@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
-import omit from 'lodash/omit'
+import omit from 'lodash/omit.js'
 import {
 	computed,
 	defineComponent,
