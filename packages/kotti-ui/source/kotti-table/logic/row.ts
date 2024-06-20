@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { updateAllSelected, cleanSelection, clearSelection } from './select'
 import { sortData } from './sort'
 import type { Store } from './types'
@@ -36,8 +34,8 @@ export const mutations: Store.MutationComponents.Row = {
 	},
 }
 
-export const getters = {
-	isFocusedRow(state: any, row: any) {
+export const getters: Store.GetterComponents.Row = {
+	isFocusedRow(state, row) {
 		return state.focusedRow === row
 	},
 }

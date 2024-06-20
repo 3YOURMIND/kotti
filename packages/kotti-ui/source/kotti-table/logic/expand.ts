@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import isEqual from 'lodash/isEqual'
 import type { Store } from './types'
@@ -31,8 +30,8 @@ export const mutations: Store.MutationComponents.Expand = {
 	},
 }
 
-export const getters = {
-	isExpanded(state: any, row: any) {
+export const getters: Store.GetterComponents.Expand = {
+	isExpanded(state, row) {
 		return state.expanded.some((e: any) => isEqual(e, row))
 	},
 }

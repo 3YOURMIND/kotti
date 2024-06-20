@@ -79,4 +79,4 @@ export const mutations: Store.MutationComponents.Order = {
 	},
 }
 
-export const getters = {}
+export const getters: Store.GetterComponents.Order = {}

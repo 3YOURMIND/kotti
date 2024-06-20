@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import negate from 'lodash/negate'
 import type { Store } from './types'
@@ -25,8 +24,8 @@ export const mutations: Store.MutationComponents.Disable = {
 	},
 }
 
-export const getters = {
-	isAllRowsDisabled(state: any): boolean {
+export const getters: Store.GetterComponents.Disable = {
+	isAllRowsDisabled(state) {
 		return (
 			state.rows.length ===
 			getDisabledRows(state.rows, (this as any).table.disableRow).length

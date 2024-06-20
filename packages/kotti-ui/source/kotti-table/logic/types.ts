@@ -195,4 +195,67 @@ export module Store {
 		) => void
 			? P
 			: never
+
+	export module GetterComponents {
+		export type Column = Record<string, never>
+		export type Disable = {
+			isAllRowsDisabled(this: TableStore, state: State): boolean
+		}
+		export type Expand = {
+			isExpanded(
+				this: TableStore,
+				state: State,
+				row: State['expanded'][number],
+			): boolean
+		}
+		export type Filter = Record<string, never>
+		export type Hide = Record<string, never>
+		export type Order = Record<string, never>
+		export type Row = {
+			isFocusedRow(
+				this: TableStore,
+				state: State,
+				row: State['focusedRow'],
+			): boolean
+		}
+		export type Select = {
+			getRowByVisibleIndex(
+				this: TableStore,
+				state: State,
+				index: number,
+			): State['rows'][number]
+			getIndexByRow(
+				this: TableStore,
+				state: State,
+				row: State['rows'][number],
+			): number
+			getRowKey(this: TableStore, state: State, row: any): string | number
+			isSelected(
+				this: TableStore,
+				state: State,
+				row: State['selection'][number],
+			): boolean
+		}
+		export type Sort = {
+			hasSortOrder(this: TableStore, state: State, column: any): boolean
+			canSort(this: TableStore, state: State, column: any): boolean
+			isSorted(this: TableStore, state: State, column: any): boolean
+			isSortedByAsc(this: TableStore, state: State, column: any): boolean
+			isSortedByDsc(this: TableStore, state: State, column: any): boolean
+		}
+	}
+
+	export type Getters = GetterComponents.Disable &
+		GetterComponents.Expand &
+		GetterComponents.Row &
+		GetterComponents.Select &
+		GetterComponents.Sort
+
+	export type GetterParameters<K extends keyof Getters> = Getters[K] extends (
+		this: TableStore,
+		state: State,
+		...args: infer P
+	) => void
+		? P
+		: never
 }

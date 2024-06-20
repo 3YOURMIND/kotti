@@ -57,4 +57,4 @@ export const mutations: Store.MutationComponents.Hide = {
 	},
 }
 
-export const getters = {}
+export const getters: Store.GetterComponents.Hide = {}

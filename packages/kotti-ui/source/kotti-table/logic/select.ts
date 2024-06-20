@@ -107,19 +107,20 @@ export const mutations: Store.MutationComponents.Select = {
 	}),
 }
 
-export const getters = {
-	getRowByVisibleIndex(state: any, index: any) {
+export const getters: Store.GetterComponents.Select = {
+	getRowByVisibleIndex(state, index) {
 		return state.rows[index]
 	},
-	getIndexByRow(state: any, row: any) {
+	getIndexByRow(state, row) {
 		return state.rows.indexOf(row)
 	},
-	getRowKey(state: any, row: any) {
+	getRowKey(state, row) {
 		return typeof state.rowKey === 'function'
 			? state.rowKey(row)
-			: row[state.rowKey]
+			: // @ts-expect-error rowKey may be undefined; in that case this getter returns `undefined`
+				row[state.rowKey]
 	},
-	isSelected(state: any, row: any) {
+	isSelected(state, row) {
 		return state.selection.some((e: any) => isEqual(e, row))
 	},
 }
