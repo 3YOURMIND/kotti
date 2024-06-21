@@ -5,6 +5,7 @@ node_modules/
 packages/kotti-ui/report.*.html
 packages/yoco/fonts/
 *.log
+packages/*/package.tar.gz
 
 # vite config gets transpiled in-place for a short moment
 vite.config.ts.timestamp*

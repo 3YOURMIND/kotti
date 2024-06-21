@@ -2,6 +2,23 @@
 	"$schema": "https://turbo.build/schema.v1.json",
 	"extends": ["//"],
 	"pipeline": {
+		"build": {
+			"inputs": [
+				"assets/**",
+				"components/**",
+				"data/**",
+				"hooks/**",
+				"layouts/**",
+				"pages/**",
+				"plugins/**",
+				"styles/**",
+				"utilities/**",
+				"nuxt.config.ts",
+				"package.json",
+				"shims-*.d.ts",
+				"tsconfig.json"
+			]
+		},
 		"check:publint": {
 			"dependsOn": []
 		},

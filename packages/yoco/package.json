@@ -63,7 +63,8 @@
 		"check:stylelint": "stylelint style.css",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
-		"publish-package": "yarn publish --no-git-tag-version --verbose --non-interactive --access public"
+		"publish-package": "yarn publish --no-git-tag-version --verbose --non-interactive --access public",
+		"tarball": "npm pack && mv *.tgz package.tar.gz"
 	},
 	"style": "./style.css",
 	"type": "module",
