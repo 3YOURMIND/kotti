@@ -219,6 +219,31 @@ In case this does not work as expected, you want to check out the [publish scrip
 yarn run build
 ```
 
+## Debugging
+
+### Creating tarballs
+
+For all packages that are published you can also create a tarball by running
+
+```bash
+# Create tarballs for all relevant packages
+yarn run tarball
+
+# Create tarball for a specific package
+yarn run tarball --filter @3yourmind/yoco
+
+# Can be combined with other commands
+yarn run build tarball
+
+# How the created tarballs can be installed in another project (yarn@1)
+yarn cache clean && yarn remove @3yourmind/yoco && yarn add ../path/to/kotti/packages/yoco/package.tar.gz
+```
+
+See more:
+
+- https://docs.npmjs.com/cli/v6/commands/npm-pack
+- https://classic.yarnpkg.com/en/docs/cli/add
+
 ## Internals
 
 ### Important Folders

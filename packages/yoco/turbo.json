@@ -4,8 +4,10 @@
 	"pipeline": {
 		"build": {
 			"inputs": ["scripts/**", "source/**", "svg/**", "tsconfig.*"],
-			"outputMode": "new-only",
 			"outputs": ["dist/**", "fonts/**"]
+		},
+		"tarball": {
+			"inputs": ["fonts/**", "dist/**", "svg/**", "style.css"]
 		}
 	}
 }

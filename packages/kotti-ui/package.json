@@ -86,6 +86,7 @@
 		"fix:prettier": "yarn run check:prettier --write",
 		"fix:stylelint": "yarn run check:stylelint --fix",
 		"publish-package": "yarn publish --no-git-tag-version --verbose --non-interactive --access public",
+		"tarball": "npm pack && mv *.tgz package.tar.gz",
 		"test": "vitest --run --typecheck",
 		"watch": "vite build --watch"
 	},

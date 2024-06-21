@@ -58,6 +58,12 @@
 			"cache": false,
 			"dependsOn": ["build", "check", "test"]
 		},
+		"tarball": {
+			"dependsOn": ["build"],
+			"inputs": ["dist/**", "package.json"],
+			"outputMode": "new-only",
+			"outputs": ["./package.tar.gz"]
+		},
 		"test": {},
 		"watch": {
 			"cache": false,

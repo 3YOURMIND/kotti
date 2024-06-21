@@ -121,6 +121,7 @@
 		"fix:stylelint": "turbo run fix:stylelint",
 		"prepare": "husky install",
 		"prepublishOnly": "turbo run check build",
+		"tarball": "turbo run tarball",
 		"test": "turbo run test",
 		"watch": "nodemon -e css,js,json,scss,ts,vue --watch packages/vue-use-tippy/source --watch packages/yoco/source --exec \"turbo run watch\""
 	},
