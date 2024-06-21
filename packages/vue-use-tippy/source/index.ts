@@ -1,8 +1,26 @@
 import castArray from 'lodash.castarray'
 import type { Props, Instance } from 'tippy.js'
-import tippy from 'tippy.js'
+import _tippy from 'tippy.js'
 import type { Ref } from 'vue'
 import { onMounted, ref, onUnmounted, watch } from 'vue'
+
+/**
+ * HACK: This hacky evaluation to tippy at runtime should just be
+ * ```js
+ * import tippy from 'tippy.js'
+ * ```
+ *
+ * However, there is a strange bug for some user apps, that will load
+ * vue-use-tippy as ESM but tippy.js as CJS. If that happens, they
+ * will see a error akin to "tippy is not a function".
+ *
+ * If tippy is not already (correctly) a function, we guess it might
+ * be on `.default`
+ */
+const tippy =
+	typeof _tippy === 'function'
+		? _tippy
+		: (_tippy as unknown as { default: typeof _tippy }).default
 
 type InstanceRefType = Instance[] | Instance | null
 type Callback = (t: InstanceRefType) => void
