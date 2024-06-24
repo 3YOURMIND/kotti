@@ -5,6 +5,25 @@ import eslintConfig3YD from '@3yourmind/eslint-config'
 import { fileURLToPath } from 'url'
 import path from 'node:path'
 
+import kottiUIPackageJSON from './packages/kotti-ui/package.json' assert { type: 'json' }
+import vueUseTippyPackageJSON from './packages/vue-use-tippy/package.json' assert { type: 'json' }
+import yocoPackageJSON from './packages/yoco/package.json' assert { type: 'json' }
+
+const trustedDependencies = new Set([
+	'@metatypes/typography',
+	'@metatypes/units',
+	'filesize',
+	'zod',
+])
+
+const notYetESMCompatible = Object.keys({
+	...kottiUIPackageJSON.dependencies,
+	...vueUseTippyPackageJSON.dependencies,
+	...yocoPackageJSON.dependencies,
+})
+	.filter((dep) => !dep.startsWith('@3yourmind'))
+	.filter((dep) => !trustedDependencies.has(dep))
+
 /**
  * Find the project root in a way that is compatible with most javascript engines (e.g. node, vscode's node, bun)
  */
@@ -87,9 +106,20 @@ const config = tseslint.config(
 			'@typescript-eslint/no-restricted-imports': [
 				'error',
 				{
-					message:
-						"Avoid direct imports from lodash; e.g. import foo from 'lodash/foo.js' instead of import { foo } from 'lodash'",
-					name: 'lodash',
+					paths: [
+						{
+							message:
+								"Avoid direct imports from lodash; e.g. import foo from 'lodash/foo.js' instead of import { foo } from 'lodash'",
+							name: 'lodash',
+						},
+						...notYetESMCompatible.map((name) => ({
+							name,
+							message:
+								'The default import is the only export guaranteed to resolve in packages without explicit cjs/esm import declarations. Named imports, inferred through heuristics, may fail in various environments. Therefore, it is advisable to always use the default import.',
+							allowImportNames: ['default'],
+							allowTypeImports: true,
+						})),
+					],
 				},
 			],
 		},

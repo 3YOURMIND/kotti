@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { DatePicker as ElDate } from 'element-ui'
+import ElDate from 'element-ui/lib/date-picker.js'
 import type {
 	DatePickerOptions,
 	ElDatePicker,
@@ -86,7 +86,7 @@ export default defineComponent({
 
 		return {
 			elDateTimeRangePickerProps: computed(
-				(): Partial<ElDate> => ({
+				(): Partial<ElDatePicker> => ({
 					...EL_DATE_TIME_PROPS,
 					...EL_DATE_RANGE_PROPS,
 					/**

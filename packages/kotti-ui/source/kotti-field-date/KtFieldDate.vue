@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { DatePicker as ElDate } from 'element-ui'
+import ElDate from 'element-ui/lib/date-picker.js'
 import type {
 	DatePickerOptions,
 	ElDatePicker,
@@ -79,7 +79,7 @@ export default defineComponent({
 
 		return {
 			elDatePickerProps: computed(
-				(): Partial<ElDate> => ({
+				(): Partial<ElDatePicker> => ({
 					...EL_DATE_PROPS,
 					/**
 					 * @see {@link https://github.com/ElemeFE/element/blob/v2.13.1/packages/date-picker/src/picker.vue#L334)}
