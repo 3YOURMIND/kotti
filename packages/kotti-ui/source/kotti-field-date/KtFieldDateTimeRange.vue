@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import elementUI from 'element-ui'
+import ElDate from 'element-ui/lib/date-picker.js'
 import type {
 	DatePickerOptions,
 	ElDatePicker,
@@ -42,9 +42,6 @@ import type { ElDateWithInternalAPI } from './hooks'
 import { usePicker } from './hooks'
 import { KottiFieldDateTimeRange } from './types'
 import { isInvalidDate } from './utilities'
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const { DatePicker: ElDate } = elementUI
 
 export default defineComponent({
 	name: 'KtFieldDateTimeRange',
