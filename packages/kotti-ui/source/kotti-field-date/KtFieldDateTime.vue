@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { DatePicker as ElDate } from 'element-ui'
+import elementUI from 'element-ui'
 import type {
 	DatePickerOptions,
 	ElDatePicker,
@@ -37,6 +37,9 @@ import type { ElDateWithInternalAPI } from './hooks'
 import { usePicker } from './hooks'
 import { KottiFieldDateTime } from './types'
 import { isInvalidDate } from './utilities'
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const { DatePicker: ElDate } = elementUI
 
 export default defineComponent({
 	name: 'KtFieldDateTime',
@@ -84,7 +87,7 @@ export default defineComponent({
 
 		return {
 			elDateTimePickerProps: computed(
-				(): Partial<ElDate> => ({
+				(): Partial<ElDatePicker> => ({
 					...EL_DATE_TIME_PROPS,
 					/**
 					 * @see {@link https://github.com/ElemeFE/element/blob/v2.13.1/packages/date-picker/src/picker.vue#L334)}
