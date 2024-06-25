@@ -34,7 +34,8 @@
 		},
 		"./style.css": {
 			"style": "./style.css"
-		}
+		},
+		"./svg/": "./svg/"
 	},
 	"files": [
 		"fonts",
