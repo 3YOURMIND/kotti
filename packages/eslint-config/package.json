@@ -58,7 +58,7 @@
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
 		"publish-package": "yarn publish --no-git-tag-version --verbose --non-interactive --access public",
-		"tarball": "npm pack && mv *.tgz package.tar.gz"
+		"tarball": "npm pack && mkdir -p ../../tarballs && mv *.tgz ../../tarballs/eslint-config.tar.gz"
 	},
 	"type": "module",
 	"types": "./dist/mjs/index.d.ts",

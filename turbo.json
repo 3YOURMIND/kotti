@@ -59,10 +59,9 @@
 			"dependsOn": ["build", "check", "test"]
 		},
 		"tarball": {
+			"cache": false,
 			"dependsOn": ["build"],
-			"inputs": ["dist/**", "package.json"],
-			"outputMode": "new-only",
-			"outputs": ["./package.tar.gz"]
+			"outputMode": "new-only"
 		},
 		"test": {},
 		"watch": {
