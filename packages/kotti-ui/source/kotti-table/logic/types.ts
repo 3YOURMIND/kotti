@@ -258,4 +258,33 @@ export module Store {
 	) => void
 		? P
 		: never
+
+	export type Emits = {
+		columnsChange: [
+			Pick<State['_columnsArray'][0], 'prop' | 'order' | 'hidden'>[],
+		]
+		expandChange: [State['expanded']]
+		expand: [any, boolean]
+		hiddenChange: [State['hiddenColumns']]
+		orderChange: [
+			// Likely can be refactored to KottiTable.Column.Ordered[]
+			Pick<State['_columnsArray'][0], 'prop' | 'order'>[],
+		]
+		selectionChange: [State['selection']]
+		select: [State['selection'], any]
+		selectAll: [State['selection']]
+		sortChange: [
+			{
+				// Likely can be refactored to KottiTable.Column.Sorted[]
+				sortedColumns: Pick<
+					State['sortedColumns'],
+					'prop' | 'sortOrder' | 'sortBy'
+				>[]
+				column: any
+				prop: any // Likely string
+				sortBy: any // Likely KottiTable.SortBy | string
+				sortOrder: any // Likely KottiTable.SortOrder
+			},
+		]
+	}
 }
