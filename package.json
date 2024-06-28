@@ -72,7 +72,7 @@
 		"typescript-eslint": "^7.8.0"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=20"
 	},
 	"husky": {
 		"hooks": {
