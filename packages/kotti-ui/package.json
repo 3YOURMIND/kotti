@@ -72,7 +72,7 @@
 	},
 	"scripts": {
 		"build": "rm -rf dist && yarn run build:tokens && yarn run build:kotti && yarn run build:scss-variables",
-		"build:kotti": "concurrently \"yarn run build:kotti:cjs\" \"yarn run build:kotti:esm\"",
+		"build:kotti": "yarn run build:kotti:cjs && yarn run build:kotti:esm",
 		"build:kotti:cjs": "rollup -c rollup.config.js --environment MODULE:cjs",
 		"build:kotti:cjs:visualizer": "rollup -c rollup.config.js --environment MODULE:cjs --environment ENABLE_VISUALIZER:true",
 		"build:kotti:esm": "rollup -c rollup.config.js --environment MODULE:esm",
