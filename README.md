@@ -162,7 +162,7 @@ This monorepo supports a semi-automatic release workflow. To trigger an automati
 
    a. Tag format: `versions/kotti-ui/1.2.3` (select `Create new tag: versions/kotti-ui/1.2.3 on publish`)
 
-   b. Title format: `1.2.3: tldr of what's happening`
+   b. Title format: `kotti-ui@1.2.3: tldr of what's happening`
 
    c. Release notes: Follow guidelines of previous releases
 
