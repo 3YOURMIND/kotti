@@ -409,15 +409,24 @@ export default {
 		 *
 		 * @deprecated
 		 */
-		untyped: tseslint.config({
-			name: '@3yourmind/eslint-config/untyped',
-			extends: [
-				eslint.configs.recommended,
-				...tseslint.configs.recommended,
-				...baseConfig,
-			],
-			files: ['**/*.{cjs,js,mjs}'],
-		}),
+		untyped: tseslint.config(
+			{
+				name: '@3yourmind/eslint-config/untyped',
+				extends: [
+					eslint.configs.recommended,
+					...tseslint.configs.recommended,
+					...baseConfig,
+				],
+				files: ['**/*.{cjs,js,mjs}'],
+			},
+			{
+				name: '@3yourmind/eslint-config/untyped-cjs',
+				files: ['**/*.cjs'],
+				rules: {
+					'@typescript-eslint/no-var-requires': 'off',
+				},
+			},
+		),
 		/**
 		 * Should be used only on .vue files. Includes vue-specific rules. Works best on `<script lang="ts">`
 		 */
