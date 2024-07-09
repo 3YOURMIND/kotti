@@ -5,7 +5,7 @@
 	},
 	"dependencies": {
 		"@3yourmind/vue-use-tippy": "3.x",
-		"@3yourmind/yoco": "^2.6.0",
+		"@3yourmind/yoco": "^2.7.0",
 		"@metatypes/typography": "^0.5.0",
 		"@metatypes/units": "^0.5.0",
 		"big.js": "^6.2.1",
