@@ -117,16 +117,6 @@ const baseConfig = tseslint.config({
 		...ignoredRules,
 
 		// Typescript Eslint
-		'@typescript-eslint/ban-ts-comment': [
-			'error',
-			{
-				'ts-expect-error': 'allow-with-description',
-				minimumDescriptionLength: 24,
-			},
-		],
-		'@typescript-eslint/explicit-function-return-type': 'off',
-		'@typescript-eslint/explicit-module-boundary-types': 'error',
-		'@typescript-eslint/no-empty-interface': 'error',
 		'@typescript-eslint/no-namespace': 'off', // We want to be able to use modules for namespacing
 		'@typescript-eslint/no-unsafe-enum-comparison': 'off', // This rule forbids comparing enums with their literal member values, which is useful in many cases
 		'@typescript-eslint/no-unused-vars': [
@@ -210,7 +200,16 @@ const defaultNamingConventionConfig = {
 }
 
 const rulesRequiringTypes = {
+	'@typescript-eslint/ban-ts-comment': [
+		'error',
+		{
+			'ts-expect-error': 'allow-with-description',
+			minimumDescriptionLength: 24,
+		},
+	],
 	'@typescript-eslint/consistent-type-imports': 'warn',
+	'@typescript-eslint/explicit-function-return-type': 'off',
+	'@typescript-eslint/explicit-module-boundary-types': 'error',
 	'@typescript-eslint/naming-convention': [
 		'error',
 		{
@@ -262,6 +261,7 @@ const rulesRequiringTypes = {
 		 */
 		{ ignoreUnions: true },
 	],
+	'@typescript-eslint/no-empty-interface': 'error',
 	'@typescript-eslint/no-unnecessary-condition': 'error',
 	'@typescript-eslint/no-unnecessary-type-arguments': 'warn',
 	'@typescript-eslint/no-unnecessary-type-assertion': 'error',
