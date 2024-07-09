@@ -188,7 +188,7 @@ yarn run watch # or if already merged to master, go to <https://3yourmind.github
 
    a. Tag format: `versions/yoco/1.2.3` (select `Create new tag: versions/yoco/1.2.3 on publish`)
 
-   b. Title format: `Yoco 1.2.3: tldr of what's happening`
+   b. Title format: `yoco@1.2.3: tldr of what's happening`
 
    c. Release notes: Follow guidelines of previous releases
 
