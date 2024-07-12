@@ -1,11 +1,15 @@
+import { nextTick } from 'vue'
 import type { FieldInlineEditElement } from './types'
 
-export const resizeField = ({
+export const resizeField = async ({
 	inputRef,
 }: {
 	inputRef: FieldInlineEditElement | null
-}): void => {
+}): Promise<void> => {
 	inputRef?.setAttribute('style', 'height: auto')
+
+	// ensure that DOM has updated properly before scrollHeight is retrieved
+	await nextTick()
 
 	const scrollHeight = inputRef?.scrollHeight ?? null
 

@@ -1,5 +1,5 @@
 <template>
-	<span :class="rootClasses" :tabindex="-1" v-text="Yoco.Icon.EDIT" />
+	<div :class="rootClasses" :tabindex="-1" v-text="Yoco.Icon.EDIT" />
 </template>
 
 <script lang="ts">
@@ -27,7 +27,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .kt-field-inline-edit__edit-icon {
 	display: flex;
-	padding-right: var(--unit-2);
+	font-size: var(--unit-4);
 
 	&--disabled {
 		color: var(--text-05);
