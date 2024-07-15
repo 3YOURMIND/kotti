@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { KtI18nContext } from '@3yourmind/kotti-ui'
+
 import ActionBar from '~/components/ActionBar.vue'
 import LayoutContainer from '~/components/LayoutContainer.vue'
 import NavBar from '~/components/NavBar.vue'
@@ -25,6 +27,7 @@ export default {
 	name: 'DefaultLayout',
 	components: {
 		ActionBar,
+		KtI18nContext,
 		NavBar,
 		LayoutContainer,
 	},

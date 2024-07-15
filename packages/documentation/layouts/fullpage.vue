@@ -10,11 +10,13 @@
 </template>
 
 <script>
+import { KtI18nContext } from '@3yourmind/kotti-ui'
 import NavBar from '~/components/NavBar.vue'
 
 export default {
 	name: 'FullPageLayout',
 	components: {
+		KtI18nContext,
 		NavBar,
 	},
 }
