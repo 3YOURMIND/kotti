@@ -56,7 +56,7 @@ export default defineConfig(({ mode }) => {
 	const external = [
 		...Object.keys(packageJSON.peerDependencies),
 		...Object.keys(packageJSON.dependencies),
-		/.*element-ui.*/,
+		/.*element-ui\/lib\/date-picker.js.*/,
 		/.*tippy\.js.*/,
 		/lodash\/.*/,
 		/vue\/.*/,

@@ -55,11 +55,15 @@
 
 <script lang="ts">
 import type { Kotti } from '@3yourmind/kotti-ui'
+import { KtHeading } from '@3yourmind/kotti-ui'
 import type { PropType } from 'vue'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
 	name: 'ComponentInfoSlots',
+	components: {
+		KtHeading,
+	},
 	props: {
 		slots: { required: true, type: Object as PropType<Kotti.Meta['slots']> },
 	},
