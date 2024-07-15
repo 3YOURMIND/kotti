@@ -329,6 +329,7 @@ export default defineComponent({
 	/* stylelint-disable-next-line selector-class-pattern */
 	::v-deep .kt-field__input-container__slot {
 		display: flex;
+		gap: var(--unit-2);
 		align-items: center;
 	}
 

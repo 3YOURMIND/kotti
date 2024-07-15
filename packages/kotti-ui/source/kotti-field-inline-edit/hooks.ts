@@ -21,7 +21,7 @@ export const useAdjustHeight = ({
 	const currentValue = computed(() => field.currentValue)
 
 	onMounted(() => {
-		if (inputRef.value) resizeField({ inputRef: inputRef.value })
+		if (inputRef.value) void resizeField({ inputRef: inputRef.value })
 	})
 
 	watch(
@@ -33,7 +33,7 @@ export const useAdjustHeight = ({
 			props.textStyle,
 		],
 		() => {
-			if (inputRef.value) resizeField({ inputRef: inputRef.value })
+			if (inputRef.value) void resizeField({ inputRef: inputRef.value })
 		},
 		{ immediate: true },
 	)
