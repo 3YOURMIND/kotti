@@ -1087,7 +1087,17 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 
 <script>
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { KtAvatar, KtBanner, KtTable } from '@3yourmind/kotti-ui'
+import {
+	KtAvatar,
+	KtBanner,
+	KtButton,
+	KtButtonGroup,
+	KtFieldText,
+	KtTable,
+	KtTableColumn,
+	KtTableConsumer,
+	KtTableProvider,
+} from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
@@ -1097,7 +1107,19 @@ const ADDRESS_DOT_LINE = 'address.line'
 
 export default {
 	name: 'DocumentationPageUsageComponentsTable',
-	components: { ComponentInfo, KtBanner, CodePreview },
+	components: {
+		CodePreview,
+		ComponentInfo,
+		KtAvatar,
+		KtBanner,
+		KtButton,
+		KtButtonGroup,
+		KtFieldText,
+		KtTable,
+		KtTableColumn,
+		KtTableConsumer,
+		KtTableProvider,
+	},
 	data() {
 		return {
 			component: KtTable,
