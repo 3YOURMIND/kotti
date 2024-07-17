@@ -997,7 +997,6 @@ The above code for `orderBeforeColumn` function, is meant to map the UI drag/dro
 | `trClasses`            | classes to apply to all table data rows: `<tr />` elements          | `String`, `Array`, `Object` | `"responsive"`        | -         |
 | `useColumnDragToOrder` | enable dragging columns to change their order                       | `Boolean`                   | -                     | `false`   |
 | `useQuickSortControl`  | enable toggle sort by column click UI (arrow keys)                  | `Boolean`                   | -                     | `false`   |
-| `value` (deprecated)   | used when v-model was used instead of `selected`                    | `Array`                     | —                     | —         |
 
 ### Column Attributes
 
