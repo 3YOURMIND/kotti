@@ -111,9 +111,6 @@ export const getters: Store.GetterComponents.Select = {
 	getRowByVisibleIndex(state, index) {
 		return state.rows[index]
 	},
-	getIndexByRow(state, row) {
-		return state.rows.indexOf(row)
-	},
 	getRowKey(state, row) {
 		return typeof state.rowKey === 'function'
 			? state.rowKey(row)

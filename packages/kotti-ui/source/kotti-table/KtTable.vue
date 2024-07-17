@@ -134,7 +134,6 @@ export default {
 		'expand', // FIXME: Seems unused
 		'expandChange', // FIXME: Seems unused
 		'hiddenChange', // FIXME: Seems unused
-		'input',
 		'orderChange', // FIXME: Seems unused
 		'rowBlur', // FIXME: Seems unused
 		'rowClick',
@@ -337,17 +336,6 @@ export default {
 		this.$ready = true
 		// @ts-expect-error store will exist at runtime
 		this.store.commit('updateColumns', { emitChange: false })
-		// eslint-disable-next-line vue/no-deprecated-events-api
-		this.$on('selectionChange', (selection: any) => {
-			// @ts-expect-error value will exist at runtime
-			if (this.value) {
-				this.$emit(
-					'input',
-					// @ts-expect-error store will exist at runtime
-					selection.map((row: any) => this.store.get('getIndexByRow', row)),
-				)
-			}
-		})
 	},
 	methods: {
 		isSelected(index: unknown): unknown {

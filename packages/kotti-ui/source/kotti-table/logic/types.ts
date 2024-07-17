@@ -224,11 +224,6 @@ export module Store {
 				state: State,
 				index: number,
 			): State['rows'][number]
-			getIndexByRow(
-				this: TableStore,
-				state: State,
-				row: State['rows'][number],
-			): number
 			getRowKey(this: TableStore, state: State, row: any): string | number
 			isSelected(
 				this: TableStore,
