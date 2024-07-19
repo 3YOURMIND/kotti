@@ -23,6 +23,7 @@
 	"exclude": ["node_modules"],
 	"include": ["./**/*.ts", "./**/*.js", "./**/*.vue"],
 	"vueCompilerOptions": {
+		"skipTemplateCodegen": true,
 		"strictTemplates": true,
 		"target": 2.7
 	}

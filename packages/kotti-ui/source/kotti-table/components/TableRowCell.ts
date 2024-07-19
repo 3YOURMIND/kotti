@@ -1,95 +1,116 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import property from 'lodash/property.js'
+import type { PropType } from 'vue'
+import { computed, defineComponent, h, inject } from 'vue'
 
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
-import type { CreateElement } from 'vue'
+import { type KottiTable } from '../types'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const TableRowCell: any = {
+export const TableRowCell = defineComponent({
 	name: 'TableRowCell',
 	props: {
-		column: Object,
-		row: Object,
-		columnIndex: Number,
-		rowIndex: Number,
+		column: {
+			required: true,
+			type: Object as PropType<KottiTable.Column.PropsInternal>,
+		},
+		columnIndex: {
+			required: true,
+			type: Number,
+		},
+		row: {
+			required: true,
+			type: Object as PropType<KottiTable.Row.Props>,
+		},
+		rowIndex: {
+			required: true,
+			type: Number,
+		},
 	},
-	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
-	computed: {
-		value(): unknown {
-			// @ts-expect-error column and row will exist at runtime
-			return property(this.column.prop)(this.row)
-		},
-		_tdClasses(): [unknown, unknown] {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return [this[KT_TABLE].tdClasses, this.column.tdClass]
-		},
-		_cellClass(): [unknown, unknown] {
-			// @ts-expect-error column will exist at runtime
-			return ['kt-table__cell', this.column.cellClass]
-		},
-		_tdStyles(): unknown {
-			// @ts-expect-error column will exist at runtime
-			const { column } = this
+	setup(props) {
+		const tableState = inject(KT_TABLE)
+		const tableStore = inject(KT_STORE)
+		const tableLayout = inject(KT_LAYOUT)
+
+		if (!tableState || !tableStore || !tableLayout)
+			throw new Error(
+				'TableRowCell: Component was used without providing the right contexts',
+			)
+
+		const value = computed(() => property(props.column.prop)(props.row))
+		const _tdClasses = computed(() => [
+			tableState.tdClasses,
+			props.column.tdClass,
+		])
+		const _cellClass = computed(() => [
+			'kt-table__cell',
+			props.column.cellClass,
+		])
+		const _tdStyles = computed(() => {
+			const { column } = props
 			return {
+				// @ts-expect-error not clear where styles is coming from, will fix later
 				...column.styles,
 				...(column.align ? { textAlign: column.align } : {}),
 				...(column.width ? { width: column.width } : {}),
 				...(column.maxWidth ? { maxWidth: column.maxWidth } : {}),
 				...(column.minWidth ? { minWidth: column.minWidth } : {}),
 			}
-		},
-	},
-	methods: {
-		cellClick($event: MouseEvent, data: any) {
+		})
+
+		const cellClick = (
+			$event: MouseEvent,
+			data: {
+				value: unknown
+				column: KottiTable.Column.PropsInternal
+				columnIndex: number
+				row: KottiTable.Row.Props
+				rowIndex: number
+			},
+		) => {
 			if (data.column.disableRowClick) {
 				$event.stopPropagation()
 			}
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			this[KT_TABLE].$emit('cellClick', data)
-		},
-	},
-	render(h: CreateElement) {
-		const {
-			column,
-			row,
-			rowIndex,
-			columnIndex,
-			cellClick,
-			_cellClass,
-			_tdClasses,
-			_tdStyles,
-			value,
-		} = this
-		return h(
-			'td',
-			{
-				class: _tdClasses,
-				on: {
-					click: ($event: MouseEvent) =>
-						cellClick($event, { value, column, row, columnIndex, rowIndex }),
-				},
-				style: _tdStyles,
-			},
-			[
-				h(
-					'div',
-					{
-						class: _cellClass,
-						attrs: {
-							'data-prop': column.prop,
+			tableState.$emit('cellClick', data)
+		}
+
+		return () =>
+			h(
+				'td',
+				{
+					class: _tdClasses,
+					on: {
+						click: ($event: MouseEvent) => {
+							cellClick($event, {
+								column: props.column,
+								columnIndex: props.columnIndex,
+								row: props.row,
+								rowIndex: props.rowIndex,
+								value: value.value,
+							})
 						},
 					},
-					[
-						column.renderCell(h, {
-							column,
-							row,
-							value,
-							columnIndex,
-							rowIndex,
-						}),
-					],
-				),
-			],
-		)
+					style: _tdStyles.value,
+				},
+				[
+					h(
+						'div',
+						{
+							class: _cellClass,
+							attrs: {
+								'data-prop': props.column.prop,
+							},
+						},
+						[
+							props.column.renderCell(h, {
+								column: props.column,
+								row: props.row,
+								value: value.value,
+								columnIndex: props.columnIndex,
+								rowIndex: props.rowIndex,
+							}),
+						],
+					),
+				],
+			)
 	},
-}
+})

@@ -1,4 +1,4 @@
-import type { CreateElement, VNode } from 'vue'
+import type { CreateElement, VNode, VNodeChildren } from 'vue'
 
 export module KottiTable {
 	export module Column {
@@ -28,7 +28,7 @@ export module KottiTable {
 			| 0
 
 		export interface Context {
-			column: Column.Props
+			column: Column.PropsInternal
 			columnIndex: number
 			row: Row.Props
 			rowIndex: number
@@ -95,6 +95,14 @@ export module KottiTable {
 				h: CreateElement,
 				data: Pick<Context, 'column' | 'columnIndex' | 'value'>,
 			) => VNode
+		}
+
+		export type PropsInternal = Omit<Props, 'renderCell' | 'renderHeader'> & {
+			renderCell: (h: CreateElement, data: Context) => VNodeChildren
+			renderHeader: (
+				h: CreateElement,
+				data: Pick<Context, 'column' | 'columnIndex' | 'value'>,
+			) => VNodeChildren
 		}
 
 		export module Slots {

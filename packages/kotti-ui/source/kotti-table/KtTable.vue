@@ -69,7 +69,7 @@ export default {
 	},
 	provide() {
 		return {
-			[KT_TABLE]: this,
+			[KT_TABLE as symbol]: this,
 			// @ts-expect-error store will exist at runtime
 			[KT_STORE]: this.store,
 			// @ts-expect-error layout will exist at runtime

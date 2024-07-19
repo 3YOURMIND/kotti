@@ -51,5 +51,10 @@
 		{
 			"path": "../yoco"
 		}
-	]
+	],
+	"vueCompilerOptions": {
+		"skipTemplateCodegen": true,
+		"strictTemplates": true,
+		"target": 2.7
+	}
 }

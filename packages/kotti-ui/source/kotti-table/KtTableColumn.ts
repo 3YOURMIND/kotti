@@ -99,7 +99,7 @@ export const KtTableColumn: any = {
 		this.columnConfig = createColumn(this)
 	},
 	mounted(): void {
-		const columnIndex = this[KT_TABLE].$children.indexOf(this)
+		const columnIndex = this[KT_TABLE as symbol].$children.indexOf(this)
 		this[KT_STORE].commit('insertColumn', {
 			column: this.columnConfig,
 			...(columnIndex !== -1 ? { index: columnIndex } : {}),
@@ -120,7 +120,7 @@ function createColumn(column: any = {}) {
 	let columnId = column.id
 	if (!columnId) {
 		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-		columnId = `${_self[KT_TABLE].tableId}_column_${columnIdSeed}`
+		columnId = `${_self[KT_TABLE as symbol].tableId}_column_${columnIdSeed}`
 		columnIdSeed++
 	}
 	// eslint-disable-next-line no-param-reassign

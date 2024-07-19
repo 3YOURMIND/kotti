@@ -8,6 +8,8 @@
 import type { ZodSchema } from 'zod'
 
 export * from './decimal-separator'
+export * from './typed-emit'
+
 export { KottiAccordion as Accordion } from '../kotti-accordion/types'
 export { KottiActionbar as Actionbar } from '../kotti-actionbar/types'
 export { KottiAvatar as Avatar } from '../kotti-avatar/types'
