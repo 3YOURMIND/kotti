@@ -768,6 +768,9 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 	</div>
 </KtTable>
 </div>
+<div slot="vue">
+<KtTable :rows="emptyRows" :columns="columnsDefault" emptyText="Custom empty via prop"/>
+</div>
 
 <div slot="style">
 

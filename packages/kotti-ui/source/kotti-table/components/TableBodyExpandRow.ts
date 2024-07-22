@@ -1,43 +1,50 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type { CreateElement, VNode } from 'vue'
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+import { computed, defineComponent, h, inject, type PropType } from 'vue'
+import { KT_TABLE, KT_STORE } from '../constants'
+import type { KottiTable } from '../types'
 
-export const TableBodyExpandRow: any = {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const TableBodyExpandRow = defineComponent({
 	name: 'TableBodyExpandRow',
 	props: {
-		row: Object,
-		rowIndex: Number,
+		row: {
+			type: Object as PropType<KottiTable.Row.Props>,
+			required: true,
+		},
+		rowIndex: {
+			type: Number,
+			required: true,
+		},
 	},
-	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
-	render(h: CreateElement): VNode {
-		const { isExpanded, row, rowIndex, colSpan, renderExpand } = this
-		return (
-			isExpanded &&
+	setup(props) {
+		const tableState = inject(KT_TABLE)
+		const tableStore = inject(KT_STORE)
+
+		if (!tableState || !tableStore)
+			throw new Error(
+				'TableRowCell: Component was used without providing the right contexts',
+			)
+
+		const colSpan = computed(() => tableState.colSpan)
+		const isExpanded = computed(() => tableStore.get('isExpanded', props.row))
+		const render = computed(() => tableState._renderExpand)
+
+		return () =>
+			isExpanded.value &&
 			h('tr', {}, [
 				h(
 					'td',
 					{
-						attrs: { colSpan },
+						attrs: { colSpan: colSpan.value },
 						class: 'kt-table__expanded-cell',
 					},
-					[renderExpand?.(h, { row, data: row, rowIndex })],
+					[
+						render.value(h, {
+							row: props.row,
+							data: props.row,
+							rowIndex: props.rowIndex,
+						}),
+					],
 				),
 			])
-		)
 	},
-	computed: {
-		colSpan(): unknown {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE].colSpan
-		},
-		isExpanded(): unknown {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_STORE].get('isExpanded', this.row)
-		},
-		renderExpand(): unknown {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE]._renderExpand
-		},
-	},
-}
+})

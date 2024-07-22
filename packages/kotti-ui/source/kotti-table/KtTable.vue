@@ -214,7 +214,14 @@ export default {
 			return Boolean(this.$scopedSlots.actions || this.renderActions)
 		},
 		_renderExpand() {
-			return (h: CreateElement, rowData: any) => {
+			return (
+				h: CreateElement,
+				rowData: {
+					data: KottiTable.Row.Props
+					row: KottiTable.Row.Props
+					rowIndex: number
+				},
+			) => {
 				if (this.renderExpand) return this.renderExpand(h, rowData)
 
 				// @ts-expect-error $slots will exist at runtime
