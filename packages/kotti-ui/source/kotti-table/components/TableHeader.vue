@@ -30,16 +30,7 @@
 				@dragstart="dragStart($event, column)"
 				@drop="drop($event, column)"
 			>
-				<div
-					:class="[
-						'kt-table__cell',
-						'kt-table__header-cell',
-						column.headerCellClass,
-					]"
-					:data-prop="column.prop"
-				>
-					<TableHeaderCell v-bind="{ column, columnIndex }" />
-				</div>
+				<TableHeaderCell v-bind="{ column, columnIndex }" />
 				<div v-if="useQuickSortControl" class="kt-table__controls">
 					<div
 						v-if="useQuickSortControl && (canSort(column) || isSorted(column))"
@@ -60,14 +51,15 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
 import { KottiTable } from '../types'
 
 import { TableHeaderCell } from './TableHeaderCell'
 
-export default {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const KtTableHeader: any = {
 	name: 'KtTableHeader',
 	components: { TableHeaderCell },
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
@@ -78,61 +70,64 @@ export default {
 		}
 	},
 	computed: {
-		isAllRowsDisabled() {
+		isAllRowsDisabled(): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].state.isAllRowsDisabled
 		},
-		isAllSelected() {
+		isAllSelected(): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].state.isAllSelected
 		},
-		tableColumns() {
+		tableColumns(): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].state.columns
 		},
-		hasActions() {
+		hasActions(): any {
 			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].hasActions
 		},
-		isDraggable() {
+		isDraggable(): any {
 			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].useColumnDragToOrder
 		},
-		isDraggingColumn() {
+		isDraggingColumn(): any {
+			// @ts-expect-error vue's type resolution is broken for this file
 			return Boolean(this.draggingColumn)
 		},
-		isExpandable() {
+		isExpandable(): any {
 			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].isExpandable
 		},
-		isSelectable() {
+		isSelectable(): any {
 			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].isSelectable
 		},
-		useQuickSortControl() {
+		useQuickSortControl(): any {
 			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_TABLE].useQuickSortControl
 		},
-		tableHeaderClass() {
+		tableHeaderClass(): any {
 			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
 			return ['table-header-row', this[KT_TABLE].headerClass]
 		},
 	},
 	methods: {
-		handleSelectAll(_event: unknown) {
+		handleSelectAll(_event: unknown): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			this[KT_STORE].commit('toggleAllSelection')
 		},
-		handleThClick(column: unknown) {
+		handleThClick(column: unknown): any {
+			// @ts-expect-error vue's type resolution is broken for this file
 			if (this.useQuickSortControl && this.canSort(column)) {
 				this.changeSort(column)
 			}
 		},
-		getThClasses(column: any) {
+		getThClasses(column: any): any {
 			return [
 				{
 					['drag-over']: this.isDraggedOver(column),
 					sortable: this.canSort(column),
+					// @ts-expect-error vue's type resolution is broken for this file
 					dragging: this.isDraggable,
 					sorted: this.isSorted(column),
 					clickable: this.canSort(column),
@@ -142,52 +137,60 @@ export default {
 				column.thClass,
 			]
 		},
-		getThStyle(column: any) {
+		getThStyle(column: any): any {
 			return {
 				textAlign: column.align || KottiTable.Column.Align.LEFT,
 				width: column.width || 'auto',
 			}
 		},
-		canSort(column: unknown) {
+		canSort(column: unknown): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].get('canSort', column)
 		},
-		isSorted(column: unknown) {
+		isSorted(column: unknown): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].get('isSorted', column)
 		},
-		changeSort(column: unknown) {
+		changeSort(column: unknown): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			this[KT_STORE].commit('sort', { column })
 		},
-		isSortedByAsc(column: unknown) {
+		isSortedByAsc(column: unknown): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].get('isSortedByAsc', column)
 		},
-		isSortedByDsc(column: unknown) {
+		isSortedByDsc(column: unknown): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			return this[KT_STORE].get('isSortedByDsc', column)
 		},
-		dragStart(_event: unknown, column: any) {
+		dragStart(_event: unknown, column: any): any {
+			// @ts-expect-error vue's type resolution is broken for this file
 			this.draggingColumn = column
 		},
-		dragEnter(_event: unknown, column: any) {
+		dragEnter(_event: unknown, column: any): any {
+			// @ts-expect-error vue's type resolution is broken for this file
 			this.columnDragOver = column
 		},
-		dragEnd() {
+		dragEnd(): any {
+			// @ts-expect-error vue's type resolution is broken for this file
 			this.columnDragOver = null
 		},
-		isDraggedOver(column: unknown) {
+		isDraggedOver(column: unknown): any {
+			// @ts-expect-error vue's type resolution is broken for this file
 			return column === this.columnDragOver && this.draggingColumn !== column
 		},
-		drop(_event: unknown, column: unknown) {
+		drop(_event: unknown, column: unknown): any {
 			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
 			this[KT_STORE].commit('orderBefore', this.draggingColumn, column)
+			// @ts-expect-error vue's type resolution is broken for this file
 			this.draggingColumn = null
+			// @ts-expect-error vue's type resolution is broken for this file
 			this.columnDragOver = null
 		},
 	},
 }
+
+export default KtTableHeader
 </script>
 
 <style lang="scss" scoped>

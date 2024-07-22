@@ -3,7 +3,7 @@ import { KT_STORE, KT_TABLE_STATE_PROVIDER, KT_TABLE } from './constants'
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TableColumnsStateMixin = {
 	inject: {
-		[KT_TABLE]: { default: false },
+		[KT_TABLE as symbol]: { default: false },
 		[KT_STORE]: { default: false },
 		[KT_TABLE_STATE_PROVIDER]: {
 			default: {
