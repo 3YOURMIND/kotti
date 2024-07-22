@@ -4,7 +4,7 @@ import { KT_STORE, KT_TABLE_STATE_PROVIDER, KT_TABLE } from './constants'
 export const TableColumnsStateMixin = {
 	inject: {
 		[KT_TABLE as symbol]: { default: false },
-		[KT_STORE]: { default: false },
+		[KT_STORE as symbol]: { default: false },
 		[KT_TABLE_STATE_PROVIDER]: {
 			default: {
 				get store(): void {

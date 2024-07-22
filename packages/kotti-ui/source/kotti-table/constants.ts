@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import type { CreateElement, InjectionKey } from 'vue'
+import type { CreateElement, InjectionKey, VNodeChildren } from 'vue'
 
 import type { KottiTable } from './types'
 import type { TypedEmit } from '../types/typed-emit'
+import type { TableStore } from './logic/store'
 
 export const IS_ASC = /ascending|^1/
 export const IS_DSC = /descending|^-1/
@@ -31,6 +32,17 @@ interface KottiTableContext {
 		selectionChange: unknown
 		sortChange: unknown
 	}>
+	_renderEmpty: (h: CreateElement) => VNodeChildren
+	_renderExpand: (
+		h: CreateElement,
+		payload: {
+			data: KottiTable.Row.Props
+			row: KottiTable.Row.Props
+			rowIndex: number
+		},
+	) => VNodeChildren
+	_renderLoading: (h: CreateElement) => VNodeChildren
+	colSpan: number
 	tdClasses: string | string[] | null
 }
 
@@ -45,7 +57,8 @@ interface KottiTableContext {
  */
 export const KT_TABLE: InjectionKey<KottiTableContext> =
 	'KT_TABLE' as unknown as symbol
-export const KT_STORE = 'KT_STORE'
+export const KT_STORE: InjectionKey<TableStore> =
+	'KT_STORE' as unknown as symbol
 export const KT_LAYOUT = 'KT_LAYOUT'
 export const KT_TABLE_STATE_PROVIDER = 'KT_TABLE_STATE_PROVIDER'
 export const COLUMN_TYPE = Symbol('kt-table-column')

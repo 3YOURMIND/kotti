@@ -1,32 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type { CreateElement, VNode } from 'vue'
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+import { computed, defineComponent, h, inject } from 'vue'
+import { KT_TABLE } from '../constants'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const TableBodyEmptyRow: any = {
+export const TableBodyEmptyRow = defineComponent({
 	name: 'TableBodyEmptyRow',
-	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
-	render(h: CreateElement): VNode {
-		const { colSpan, render } = this
-		return h('tr', {}, [
-			h(
-				'td',
-				{
-					domProps: { colSpan },
-					class: 'kt-table__no-row',
-				},
-				[h('span', { class: 'kt-table__empty-text' }, [render(h)])],
-			),
-		])
+	setup() {
+		const tableState = inject(KT_TABLE)
+
+		if (!tableState)
+			throw new Error(
+				'TableRowCell: Component was used without providing the right contexts',
+			)
+
+		const colSpan = computed(() => tableState.colSpan)
+		const render = computed(() => tableState._renderEmpty)
+
+		return () =>
+			h('tr', {}, [
+				h(
+					'td',
+					{
+						domProps: { colSpan: colSpan.value },
+						class: 'kt-table__no-row',
+					},
+					[h('span', { class: 'kt-table__empty-text' }, [render.value(h)])],
+				),
+			])
 	},
-	computed: {
-		colSpan(): unknown {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE].colSpan
-		},
-		render(): unknown {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE]._renderEmpty
-		},
-	},
-}
+})

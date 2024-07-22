@@ -100,7 +100,7 @@ export const KtTableColumn: any = {
 	},
 	mounted(): void {
 		const columnIndex = this[KT_TABLE as symbol].$children.indexOf(this)
-		this[KT_STORE].commit('insertColumn', {
+		this[KT_STORE as any].commit('insertColumn', {
 			column: this.columnConfig,
 			...(columnIndex !== -1 ? { index: columnIndex } : {}),
 		})
@@ -108,7 +108,7 @@ export const KtTableColumn: any = {
 	destroyed(): void {
 		if (!this.$parent) return
 		this.columnConfig &&
-			this[KT_STORE].commit('removeColumn', this.columnConfig)
+			this[KT_STORE as any].commit('removeColumn', this.columnConfig)
 	},
 	render: (): null => null,
 	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
