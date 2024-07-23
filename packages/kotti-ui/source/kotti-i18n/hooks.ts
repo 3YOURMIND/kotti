@@ -1,9 +1,4 @@
 import elementLocale from 'element-ui/lib/locale/index.js'
-import elementDe from 'element-ui/lib/locale/lang/de.js'
-import elementEn from 'element-ui/lib/locale/lang/en.js'
-import elementEs from 'element-ui/lib/locale/lang/es.js'
-import elementFr from 'element-ui/lib/locale/lang/fr.js'
-import elementJa from 'element-ui/lib/locale/lang/ja.js'
 import type { Ref, UnwrapRef } from 'vue'
 import { computed, inject, provide, reactive, watch } from 'vue'
 
@@ -59,6 +54,37 @@ export const useTranslationNamespace = <NS extends keyof KottiI18n.Messages>(
 	return computed(() => context.messages[namespace])
 }
 
+interface DefaultObject<R extends Record<string, unknown>> {
+	default: DefaultObject<R> | R
+}
+
+/**
+ * HACK: This function works around a CJS/ESM/EsModule interop issue.
+ *
+ * The objects we import at `element-ui/lib/locale/lang/[a-z]{2}.js` are EsModules
+ * (exports.__esModule = true). Due to current javascript flavour shenanigans,
+ * the imported object that we need can be found at the root, at the `.default` key,
+ * or even at the `.default.default` key.
+ * To mitigate we iterate down the potential default chain until we arrive at the
+ * right position.
+ */
+const accessDefaultKey = <R extends Record<string, unknown>>(
+	obj: DefaultObject<R>,
+): R => {
+	if (!('default' in obj)) return obj
+
+	let current: DefaultObject<R> | R = obj
+
+	// Practically, this should terminate after at most 2 iterations. Make it 10 for good measure
+	for (let i = 0; i < 10; i++) {
+		current = current.default as DefaultObject<R> | R
+		if (!('default' in current)) {
+			return current
+		}
+	}
+	throw new Error('accessDefaultKey: could not exhaust nested default keys')
+}
+
 /**
  * Provides the translation context to child components
  */
@@ -89,19 +115,26 @@ export const useI18nProvide = ({
 	 */
 	watch(
 		locale,
-		(newValue) => {
-			const elementUiTranslations = {
-				'en-US': elementEn,
-				'de-DE': elementDe,
-				'es-ES': elementEs,
-				'fr-FR': elementFr,
-				'ja-JP': elementJa,
-			}[newValue]
+		async (newValue) => {
+			try {
+				const elementUiTranslations = await {
+					/* eslint-disable @typescript-eslint/naming-convention */
+					'en-US': () => import('element-ui/lib/locale/lang/en.js'),
+					'de-DE': () => import('element-ui/lib/locale/lang/de.js'),
+					'es-ES': () => import('element-ui/lib/locale/lang/es.js'),
+					'fr-FR': () => import('element-ui/lib/locale/lang/fr.js'),
+					'ja-JP': () => import('element-ui/lib/locale/lang/ja.js'),
+					/* eslint-enable @typescript-eslint/naming-convention */
+				}[newValue]()
 
-			if ('default' in elementUiTranslations)
-				throw new Error('Detected Broken Build')
+				const resolvedEsModuleInterop = accessDefaultKey(elementUiTranslations)
 
-			elementLocale.use(elementUiTranslations)
+				elementLocale.use(resolvedEsModuleInterop)
+			} catch (error) {
+				// eslint-disable-next-line no-console
+				console.error(error)
+				throw error
+			}
 		},
 		{ immediate: true, flush: 'post' },
 	)
