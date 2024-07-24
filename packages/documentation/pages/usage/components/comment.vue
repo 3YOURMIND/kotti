@@ -18,6 +18,7 @@
 					:key="comment.id"
 					v-bind="comment"
 					:allowInternal="settings.allowInternal"
+					:forceInternal="settings.forceInternal"
 					class="mb-block"
 					:dataTest="settings.dataTest"
 					:isReadOnly="settings.isReadOnly"
@@ -29,6 +30,8 @@
 				/>
 				<KtCommentInput
 					:allowInternal="settings.allowInternal"
+					:forceInternal="settings.forceInternal"
+					:isInternal="settings.isInternal"
 					:dataTest="settings.dataTest"
 					:placeholder="settings.placeholder"
 					:tabIndex="settings.tabIndex"
@@ -61,6 +64,13 @@
 							helpText="Allows Internal Comments i.e. Restricted access"
 							isOptional
 							label="allowInternal"
+							type="switch"
+						/>
+						<KtFieldToggle
+							formKey="forceInternal"
+							helpText="Force Internal Comments i.e. No public access (only meaningful if allowInternal is true)"
+							isOptional
+							label="forceInternal"
 							type="switch"
 						/>
 						<KtFieldToggle
@@ -212,6 +222,7 @@
 					:key="comment.id"
 					v-bind="comment"
 					:allowInternal="settings.allowInternal"
+					:forceInternal="settings.forceInternal"
 					class="mb-block"
 					:dangerouslyOverrideParser="dangerouslyOverrideParser"
 					:dataTest="settings.dataTest"
@@ -225,6 +236,7 @@
 				/>
 				<KtCommentInput
 					:allowInternal="settings.allowInternal"
+					:forceInternal="settings.forceInternal"
 					:dataTest="settings.dataTest"
 					:placeholder="settings.placeholder"
 					:tabIndex="settings.tabIndex"
@@ -340,6 +352,7 @@ export default defineComponent({
 		})
 		const settings = ref<{
 			allowInternal: Kotti.FieldToggle.Value
+			forceInternal: Kotti.FieldToggle.Value
 			dataTest: Kotti.FieldText.Value
 			isReadOnly: Kotti.FieldToggle.Value
 			locale: Kotti.I18n.SupportedLanguages
@@ -347,6 +360,7 @@ export default defineComponent({
 			tabIndex: Kotti.FieldNumber.Value
 		}>({
 			allowInternal: true,
+			forceInternal: false,
 			dataTest: null,
 			isReadOnly: false,
 			locale: 'en-US',
