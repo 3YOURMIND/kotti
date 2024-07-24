@@ -97,12 +97,20 @@ export module KottiTable {
 			) => VNode
 		}
 
-		export type PropsInternal = Omit<Props, 'renderCell' | 'renderHeader'> & {
+		export type PropsInternal = Omit<
+			Props,
+			'align' | 'renderCell' | 'renderHeader' | 'width'
+		> & {
+			_deleted: boolean
+			align: Align
+			id: string
+			isPropDefined: boolean
 			renderCell: (h: CreateElement, data: Context) => VNodeChildren
 			renderHeader: (
 				h: CreateElement,
 				data: Pick<Context, 'column' | 'columnIndex' | 'value'>,
 			) => VNodeChildren
+			width: string
 		}
 
 		export module Slots {

@@ -3,7 +3,7 @@
 		<tr :class="tableHeaderClass">
 			<th v-if="isExpandable" class="th-expandable" />
 			<th v-if="isSelectable" class="th-selectable kt-table__checkbox-col">
-				<div class="form-group">
+				<div class="form-group" @click="handleSelectAll">
 					<label class="form-checkbox">
 						<input :checked="isAllSelected" type="checkbox" />
 						<i
@@ -11,37 +11,33 @@
 							:style="isAllRowsDisabled ? { cursor: 'not-allowed' } : {}"
 						/>
 					</label>
-					<div
-						class="kt-table-checkbox-col__click-area"
-						@click="handleSelectAll($event)"
-					/>
 				</div>
 			</th>
 			<th
 				v-for="(column, columnIndex) in tableColumns"
 				:key="column.prop"
 				:class="getThClasses(column)"
-				:draggable="isDraggable"
+				:draggable="useColumnDragToOrder"
 				:style="getThStyle(column)"
 				@click="handleThClick(column)"
-				@dragend="dragEnd"
-				@dragenter="dragEnter($event, column)"
+				@dragend="handleDragEnd"
+				@dragenter="handleDragEnter(column)"
 				@dragover.prevent
-				@dragstart="dragStart($event, column)"
-				@drop="drop($event, column)"
+				@dragstart="handleDragStart(column)"
+				@drop="handleDrop(column)"
 			>
 				<TableHeaderCell v-bind="{ column, columnIndex }" />
-				<div v-if="useQuickSortControl" class="kt-table__controls">
-					<div
-						v-if="useQuickSortControl && (canSort(column) || isSorted(column))"
-						class="kt-table__quick-sort-control clickable"
-					>
-						<i :class="['yoco', { active: isSortedByAsc(column) }]"
-							>triangle_up</i
-						>
-						<i :class="['yoco', { active: isSortedByDsc(column) }]"
-							>triangle_down</i
-						>
+				<div
+					v-if="useQuickSortControl && (canSort(column) || isSorted(column))"
+					class="kt-table__controls"
+				>
+					<div class="kt-table__quick-sort-control clickable">
+						<i :class="{ active: isSortedByAsc(column), yoco: true }">
+							triangle_up
+						</i>
+						<i :class="{ active: isSortedByDsc(column), yoco: true }">
+							triangle_down
+						</i>
 					</div>
 				</div>
 			</th>
@@ -51,146 +47,102 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+import { KT_TABLE, KT_STORE } from '../constants'
 import { KottiTable } from '../types'
+import { computed, defineComponent, inject, ref } from 'vue'
 
 import { TableHeaderCell } from './TableHeaderCell'
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const KtTableHeader: any = {
+export default defineComponent({
 	name: 'KtTableHeader',
-	components: { TableHeaderCell },
-	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
-	data() {
+	components: {
+		TableHeaderCell,
+	},
+	setup() {
+		const tableState = inject(KT_TABLE)
+		const tableStore = inject(KT_STORE)
+
+		if (!tableState || !tableStore)
+			throw new Error(
+				'TableRowCell: Component was used without providing the right contexts',
+			)
+
+		const dropTargetColumn = ref<KottiTable.Column.PropsInternal | null>(null)
+		const draggedColumn = ref<KottiTable.Column.PropsInternal | null>(null)
+
+		const useColumnDragToOrder = computed(() => tableState.useColumnDragToOrder)
+		const isDraggedOver = (column: unknown) =>
+			column === dropTargetColumn.value && draggedColumn.value !== column
+
+		const useQuickSortControl = computed(() => tableState.useQuickSortControl)
+
+		const canSort = (column: unknown) => tableStore.get('canSort', column)
+		const isSorted = (column: unknown) => tableStore.get('isSorted', column)
+
 		return {
-			draggingColumn: null,
-			columnDragOver: null,
+			canSort,
+			handleDragEnd: () => {
+				dropTargetColumn.value = null
+			},
+			handleDragEnter: (column: KottiTable.Column.PropsInternal) => {
+				dropTargetColumn.value = column
+			},
+			handleDragStart: (column: KottiTable.Column.PropsInternal) => {
+				draggedColumn.value = column
+			},
+			handleDrop: (column: KottiTable.Column.PropsInternal) => {
+				if (draggedColumn.value) {
+					tableStore.commit('orderBefore', draggedColumn.value, column)
+					draggedColumn.value = null
+				}
+				dropTargetColumn.value = null
+			},
+			getThClasses: (column: KottiTable.Column.PropsInternal) => [
+				{
+					'drag-over': isDraggedOver(column),
+					clickable: canSort(column),
+					dragging: useColumnDragToOrder.value,
+					sortable: canSort(column),
+					sorted: isSorted(column),
+				},
+				tableState.thClasses,
+				column.thClass,
+			],
+			getThStyle: (column: KottiTable.Column.PropsInternal) => ({
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				textAlign: column.align ?? KottiTable.Column.Align.LEFT,
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				width: column.width ?? 'auto',
+			}),
+			handleSelectAll: () => {
+				tableStore.commit('toggleAllSelection')
+			},
+			handleThClick: (column: KottiTable.Column.PropsInternal) => {
+				if (!useQuickSortControl.value) return
+				if (!canSort(column)) return
+
+				tableStore.commit('sort', { column })
+			},
+			hasActions: computed(() => tableState.hasActions),
+			isAllRowsDisabled: computed(() => tableStore.state.isAllRowsDisabled),
+			isAllSelected: computed(() => tableStore.state.isAllSelected),
+			isExpandable: computed(() => tableState.isExpandable),
+			isSelectable: computed(() => tableState.isSelectable),
+			isSorted,
+			isSortedByAsc: (column: KottiTable.Column.PropsInternal) =>
+				tableStore.get('isSortedByAsc', column),
+			isSortedByDsc: (column: KottiTable.Column.PropsInternal) =>
+				tableStore.get('isSortedByDsc', column),
+			tableColumns: computed(() => tableStore.state.columns),
+			tableHeaderClass: computed(() => [
+				'table-header-row',
+				tableState.headerClass,
+			]),
+			useColumnDragToOrder,
+			useQuickSortControl,
 		}
 	},
-	computed: {
-		isAllRowsDisabled(): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_STORE].state.isAllRowsDisabled
-		},
-		isAllSelected(): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_STORE].state.isAllSelected
-		},
-		tableColumns(): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_STORE].state.columns
-		},
-		hasActions(): any {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE].hasActions
-		},
-		isDraggable(): any {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE].useColumnDragToOrder
-		},
-		isDraggingColumn(): any {
-			// @ts-expect-error vue's type resolution is broken for this file
-			return Boolean(this.draggingColumn)
-		},
-		isExpandable(): any {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE].isExpandable
-		},
-		isSelectable(): any {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE].isSelectable
-		},
-		useQuickSortControl(): any {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_TABLE].useQuickSortControl
-		},
-		tableHeaderClass(): any {
-			// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-			return ['table-header-row', this[KT_TABLE].headerClass]
-		},
-	},
-	methods: {
-		handleSelectAll(_event: unknown): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			this[KT_STORE].commit('toggleAllSelection')
-		},
-		handleThClick(column: unknown): any {
-			// @ts-expect-error vue's type resolution is broken for this file
-			if (this.useQuickSortControl && this.canSort(column)) {
-				this.changeSort(column)
-			}
-		},
-		getThClasses(column: any): any {
-			return [
-				{
-					['drag-over']: this.isDraggedOver(column),
-					sortable: this.canSort(column),
-					// @ts-expect-error vue's type resolution is broken for this file
-					dragging: this.isDraggable,
-					sorted: this.isSorted(column),
-					clickable: this.canSort(column),
-				},
-				// @ts-expect-error `this[KT_TABLE]` seems to emulate a provide/inject pattern of sorts
-				this[KT_TABLE].thClasses,
-				column.thClass,
-			]
-		},
-		getThStyle(column: any): any {
-			return {
-				textAlign: column.align || KottiTable.Column.Align.LEFT,
-				width: column.width || 'auto',
-			}
-		},
-		canSort(column: unknown): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_STORE].get('canSort', column)
-		},
-		isSorted(column: unknown): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_STORE].get('isSorted', column)
-		},
-		changeSort(column: unknown): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			this[KT_STORE].commit('sort', { column })
-		},
-		isSortedByAsc(column: unknown): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_STORE].get('isSortedByAsc', column)
-		},
-		isSortedByDsc(column: unknown): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			return this[KT_STORE].get('isSortedByDsc', column)
-		},
-		dragStart(_event: unknown, column: any): any {
-			// @ts-expect-error vue's type resolution is broken for this file
-			this.draggingColumn = column
-		},
-		dragEnter(_event: unknown, column: any): any {
-			// @ts-expect-error vue's type resolution is broken for this file
-			this.columnDragOver = column
-		},
-		dragEnd(): any {
-			// @ts-expect-error vue's type resolution is broken for this file
-			this.columnDragOver = null
-		},
-		isDraggedOver(column: unknown): any {
-			// @ts-expect-error vue's type resolution is broken for this file
-			return column === this.columnDragOver && this.draggingColumn !== column
-		},
-		drop(_event: unknown, column: unknown): any {
-			// @ts-expect-error `this[KT_STORE]` seems to emulate a provide/inject pattern of sorts
-			this[KT_STORE].commit('orderBefore', this.draggingColumn, column)
-			// @ts-expect-error vue's type resolution is broken for this file
-			this.draggingColumn = null
-			// @ts-expect-error vue's type resolution is broken for this file
-			this.columnDragOver = null
-		},
-	},
-}
-
-export default KtTableHeader
+})
 </script>
 
 <style lang="scss" scoped>
@@ -202,15 +154,6 @@ export default KtTableHeader
 
 .kt-table__checkbox-col .form-group {
 	position: relative;
-}
-
-.kt-table-checkbox-col__click-area {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	cursor: pointer;
 }
 
 th {

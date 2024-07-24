@@ -53,7 +53,7 @@ export const INITIAL_TABLE_STORE_PROPS = [
 	'sortable',
 	'sortedColumns',
 	'sortMultiple',
-]
+] as const
 
 export default {
 	name: 'KtTable',
