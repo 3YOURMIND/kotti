@@ -60,8 +60,8 @@ export default defineComponent({
 				const payload: KottiComment.Events.Add = {
 					isInternal: localIsInternal.value,
 					message: localMessage.value,
-					replyToUserId: props.replyToUserId,
 					parentId: props.parentId,
+					replyToUserId: props.replyToUserId,
 				}
 
 				emit('add', payload)
@@ -69,7 +69,11 @@ export default defineComponent({
 				localIsInternal.value = props.isInternal
 				localMessage.value = ''
 			},
-			onToggleInternal: () => (localIsInternal.value = !localIsInternal.value),
+			onToggleInternal: () => {
+				if (localIsInternal.value && props.allowInternal && props.forceInternal)
+					return
+				localIsInternal.value = !localIsInternal.value
+			},
 		}
 	},
 })

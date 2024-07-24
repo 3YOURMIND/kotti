@@ -20,6 +20,7 @@
 					:allowInternal="settings.allowInternal"
 					class="mb-block"
 					:dataTest="settings.dataTest"
+					:forceInternal="settings.forceInternal"
 					:isReadOnly="settings.isReadOnly"
 					:tabIndex="settings.tabIndex"
 					:userAvatar="currentUser.avatar"
@@ -30,6 +31,8 @@
 				<KtCommentInput
 					:allowInternal="settings.allowInternal"
 					:dataTest="settings.dataTest"
+					:forceInternal="settings.forceInternal"
+					:isInternal="settings.isInternal"
 					:placeholder="settings.placeholder"
 					:tabIndex="settings.tabIndex"
 					:userAvatar="currentUser.avatar"
@@ -61,6 +64,13 @@
 							helpText="Allows Internal Comments i.e. Restricted access"
 							isOptional
 							label="allowInternal"
+							type="switch"
+						/>
+						<KtFieldToggle
+							formKey="forceInternal"
+							helpText="Force Internal Comments i.e. No public access (only meaningful if allowInternal is true)"
+							isOptional
+							label="forceInternal"
 							type="switch"
 						/>
 						<KtFieldToggle
@@ -215,6 +225,7 @@
 					class="mb-block"
 					:dangerouslyOverrideParser="dangerouslyOverrideParser"
 					:dataTest="settings.dataTest"
+					:forceInternal="settings.forceInternal"
 					:isReadOnly="settings.isReadOnly"
 					:postEscapeParser="postEscapeParser"
 					:tabIndex="settings.tabIndex"
@@ -226,6 +237,7 @@
 				<KtCommentInput
 					:allowInternal="settings.allowInternal"
 					:dataTest="settings.dataTest"
+					:forceInternal="settings.forceInternal"
 					:placeholder="settings.placeholder"
 					:tabIndex="settings.tabIndex"
 					:userAvatar="currentUser.avatar"
@@ -340,6 +352,7 @@ export default defineComponent({
 		})
 		const settings = ref<{
 			allowInternal: Kotti.FieldToggle.Value
+			forceInternal: Kotti.FieldToggle.Value
 			dataTest: Kotti.FieldText.Value
 			isReadOnly: Kotti.FieldToggle.Value
 			locale: Kotti.I18n.SupportedLanguages
@@ -347,6 +360,7 @@ export default defineComponent({
 			tabIndex: Kotti.FieldNumber.Value
 		}>({
 			allowInternal: true,
+			forceInternal: false,
 			dataTest: null,
 			isReadOnly: false,
 			locale: 'en-US',

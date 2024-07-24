@@ -27,6 +27,7 @@ export module KottiComment {
 
 	const sharedSchema = commentSchema.extend({
 		allowInternal: z.boolean().default(false),
+		forceInternal: z.boolean().default(false),
 		dangerouslyOverrideParser: parseFunctionSchema.default(defaultParser),
 		isReadOnly: z.boolean().default(false),
 		postEscapeParser: parseFunctionSchema.default(defaultPostEscapeParser),
@@ -169,6 +170,7 @@ export module KottiCommentInput {
 	export const propsSchema = KottiComment.propsSchema
 		.pick({
 			allowInternal: true,
+			forceInternal: true,
 			dataTest: true,
 			isInternal: true,
 			tabIndex: true,
