@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"zod": "3.23.6"
+		"zod": "3.22.5"
 	},
 	"devDependencies": {
 		"@types/bun": "^1.1.2"
