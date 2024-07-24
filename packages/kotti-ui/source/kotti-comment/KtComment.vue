@@ -25,7 +25,13 @@
 			/>
 			<KtCommentInput
 				v-if="userToReply"
-				v-bind="{ forceInternal, isInternal, placeholder, tabIndex, userAvatar }"
+				v-bind="{
+					forceInternal,
+					isInternal,
+					placeholder,
+					tabIndex,
+					userAvatar,
+				}"
 				autofocus
 				:dataTest="rootDataTest"
 				isReply

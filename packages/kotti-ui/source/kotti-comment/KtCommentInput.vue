@@ -70,7 +70,8 @@ export default defineComponent({
 				localMessage.value = ''
 			},
 			onToggleInternal: () => {
-				if (localIsInternal.value && props.allowInternal && props.forceInternal) return 
+				if (localIsInternal.value && props.allowInternal && props.forceInternal)
+					return
 				localIsInternal.value = !localIsInternal.value
 			},
 		}

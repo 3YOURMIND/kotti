@@ -18,9 +18,9 @@
 					:key="comment.id"
 					v-bind="comment"
 					:allowInternal="settings.allowInternal"
-					:forceInternal="settings.forceInternal"
 					class="mb-block"
 					:dataTest="settings.dataTest"
+					:forceInternal="settings.forceInternal"
 					:isReadOnly="settings.isReadOnly"
 					:tabIndex="settings.tabIndex"
 					:userAvatar="currentUser.avatar"
@@ -30,9 +30,9 @@
 				/>
 				<KtCommentInput
 					:allowInternal="settings.allowInternal"
+					:dataTest="settings.dataTest"
 					:forceInternal="settings.forceInternal"
 					:isInternal="settings.isInternal"
-					:dataTest="settings.dataTest"
 					:placeholder="settings.placeholder"
 					:tabIndex="settings.tabIndex"
 					:userAvatar="currentUser.avatar"
@@ -222,10 +222,10 @@
 					:key="comment.id"
 					v-bind="comment"
 					:allowInternal="settings.allowInternal"
-					:forceInternal="settings.forceInternal"
 					class="mb-block"
 					:dangerouslyOverrideParser="dangerouslyOverrideParser"
 					:dataTest="settings.dataTest"
+					:forceInternal="settings.forceInternal"
 					:isReadOnly="settings.isReadOnly"
 					:postEscapeParser="postEscapeParser"
 					:tabIndex="settings.tabIndex"
@@ -236,8 +236,8 @@
 				/>
 				<KtCommentInput
 					:allowInternal="settings.allowInternal"
-					:forceInternal="settings.forceInternal"
 					:dataTest="settings.dataTest"
+					:forceInternal="settings.forceInternal"
 					:placeholder="settings.placeholder"
 					:tabIndex="settings.tabIndex"
 					:userAvatar="currentUser.avatar"
