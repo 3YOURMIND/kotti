@@ -50,6 +50,7 @@ export const TableRowCell = defineComponent({
 			return {
 				// @ts-expect-error not clear where styles is coming from, will fix later
 				...column.styles,
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- eslint might be correct here
 				...(column.align ? { textAlign: column.align } : {}),
 				...(column.width ? { width: column.width } : {}),
 				...(column.maxWidth ? { maxWidth: column.maxWidth } : {}),

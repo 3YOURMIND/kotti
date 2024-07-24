@@ -43,7 +43,14 @@ interface KottiTableContext {
 	) => VNodeChildren
 	_renderLoading: (h: CreateElement) => VNodeChildren
 	colSpan: number
-	tdClasses: string | string[] | null
+	hasActions: boolean
+	headerClass: string | string[] | Record<string, unknown> | null
+	isExpandable: boolean
+	isSelectable: boolean
+	tdClasses: string | string[] | Record<string, unknown> | null
+	thClasses: string | string[] | Record<string, unknown> | null
+	useColumnDragToOrder: boolean
+	useQuickSortControl: boolean
 }
 
 /**
@@ -65,8 +72,8 @@ export const COLUMN_TYPE = Symbol('kt-table-column')
 
 export const DEFAULT_DISABLE_ROW = (): boolean => false
 
-export const PUBLIC_SORT_PROPS = ['prop', 'sortBy', 'sortOrder']
-export const PUBLIC_COLUMN_PROPS = ['prop', 'order', 'hidden']
+export const PUBLIC_SORT_PROPS = ['prop', 'sortBy', 'sortOrder'] as const
+export const PUBLIC_COLUMN_PROPS = ['prop', 'order', 'hidden'] as const
 
 export const DEFAULT_RENDER_CELL = function defaultRenderCell(
 	_h: CreateElement,

@@ -92,6 +92,7 @@ export const mutations: Store.MutationComponents.Select = {
 		store.commit('updateDisabledRows')
 		const { rows = [], isAllRowsDisabled, enabledRows } = state
 		if (rows.length === 0 || isAllRowsDisabled) {
+			// FIXME: Maybe we should not commit anything here and only return
 			store.commit('setSelected', [])
 			return
 		}

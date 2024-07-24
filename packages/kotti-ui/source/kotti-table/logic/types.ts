@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { Kotti } from '../../types'
+import type { KottiTable } from '../types'
 import type { TableStore } from './store'
 
 export module Store {
 	export module StateComponents {
 		export type Column = {
-			_columns: any
-			_columnsArray: any[]
+			_columns: Record<string, KottiTable.Column.PropsInternal>
+			_columnsArray: KottiTable.Column.PropsInternal[]
 			_destroyedColumns: Record<string, number>
-			columns: any
+			columns: KottiTable.Column.PropsInternal[]
 			refreshColumnArray: boolean
 		}
 
@@ -83,7 +84,7 @@ export module Store {
 			insertColumn(
 				this: TableStore,
 				store: TableStore,
-				payload: { column: any; index?: number },
+				payload: { column: KottiTable.Column.PropsInternal; index?: number },
 			): void
 			removeColumn(this: TableStore, store: TableStore, column: any): void
 			setColumns(this: TableStore, store: TableStore, columns: any): void
@@ -170,8 +171,8 @@ export module Store {
 				this: TableStore,
 				store: TableStore,
 				options: {
-					column: any
-					order: any
+					column: KottiTable.Column.PropsInternal
+					order?: any
 				},
 			): void
 		}
