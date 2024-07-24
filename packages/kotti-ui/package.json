@@ -18,7 +18,7 @@
 		"normalize.css": "^8.0.1",
 		"shortid": "^2.2.15",
 		"tippy.js": "6.x",
-		"zod": "3.23.6"
+		"zod": "3.22.5"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
