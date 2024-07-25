@@ -32,13 +32,11 @@ import TableHeader from './components/TableHeader.vue'
 import {
 	KT_TABLE,
 	KT_STORE,
-	KT_LAYOUT,
 	KT_TABLE_STATE_PROVIDER,
 	DEFAULT_DISABLE_ROW,
 } from './constants'
 import { KtTableColumn } from './KtTableColumn'
 import { TableStore } from './logic/store'
-import { TableLayout } from './table-layout'
 import type { CreateElement, PropType } from 'vue'
 import type { KottiTable } from './types'
 
@@ -72,8 +70,6 @@ export default {
 			[KT_TABLE as symbol]: this,
 			// @ts-expect-error store will exist at runtime
 			[KT_STORE]: this.store,
-			// @ts-expect-error layout will exist at runtime
-			[KT_LAYOUT]: this.layout,
 		}
 	},
 	props: {
@@ -166,10 +162,8 @@ export default {
 			localStore = new TableStore(this, initialState)
 		}
 
-		const layout = new TableLayout(this)
 		return {
 			localStore,
-			layout,
 		}
 	},
 	computed: {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { CreateElement } from 'vue'
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+import { KT_TABLE, KT_STORE } from '../constants'
 
 import { TableRowCell } from './TableRowCell'
 
@@ -11,7 +11,7 @@ export const TableRow: any = {
 		rowIndex: Number,
 		row: Object,
 	},
-	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
+	inject: { KT_TABLE, KT_STORE },
 	computed: {
 		_trClasses(): string[] {
 			const classes = []

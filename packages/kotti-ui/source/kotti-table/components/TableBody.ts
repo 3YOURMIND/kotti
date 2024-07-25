@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { computed, defineComponent, h, inject } from 'vue'
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+import { KT_TABLE, KT_STORE } from '../constants'
 
 import { TableBodyEmptyRow } from './TableBodyEmptyRow'
 import { TableBodyExpandRow } from './TableBodyExpandRow'
@@ -14,9 +14,8 @@ export const TableBody = defineComponent({
 	setup() {
 		const tableState = inject(KT_TABLE)
 		const tableStore = inject(KT_STORE)
-		const tableLayout = inject(KT_LAYOUT)
 
-		if (!tableState || !tableStore || !tableLayout)
+		if (!tableState || !tableStore)
 			throw new Error(
 				'TableRowCell: Component was used without providing the right contexts',
 			)

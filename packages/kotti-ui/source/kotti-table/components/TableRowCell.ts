@@ -2,7 +2,7 @@ import property from 'lodash/property.js'
 import type { PropType } from 'vue'
 import { computed, defineComponent, h, inject } from 'vue'
 
-import { KT_TABLE, KT_STORE, KT_LAYOUT } from '../constants'
+import { KT_TABLE, KT_STORE } from '../constants'
 import { type KottiTable } from '../types'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -29,9 +29,8 @@ export const TableRowCell = defineComponent({
 	setup(props) {
 		const tableState = inject(KT_TABLE)
 		const tableStore = inject(KT_STORE)
-		const tableLayout = inject(KT_LAYOUT)
 
-		if (!tableState || !tableStore || !tableLayout)
+		if (!tableState || !tableStore)
 			throw new Error(
 				'TableRowCell: Component was used without providing the right contexts',
 			)
