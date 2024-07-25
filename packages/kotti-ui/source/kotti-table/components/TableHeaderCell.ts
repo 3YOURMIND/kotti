@@ -1,6 +1,6 @@
 import { defineComponent, h } from 'vue'
 import type { PropType } from 'vue'
-import type { KottiTable } from '../types'
+import type { Store } from '../logic/types'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TableHeaderCell = defineComponent({
@@ -8,7 +8,7 @@ export const TableHeaderCell = defineComponent({
 	props: {
 		column: {
 			required: true,
-			type: Object as PropType<KottiTable.Column.PropsInternal>,
+			type: Object as PropType<Store.StateComponents.ColumnRepresentation>,
 		},
 		columnIndex: {
 			required: true,

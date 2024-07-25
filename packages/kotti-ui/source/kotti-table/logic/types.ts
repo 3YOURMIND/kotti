@@ -1,16 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import type { Kotti } from '../../types'
 import type { KottiTable } from '../types'
 import type { TableStore } from './store'
 
 export module Store {
 	export module StateComponents {
+		export type ColumnRepresentation = Omit<
+			KottiTable.Column.Props,
+			'align' | 'renderCell' | 'renderHeader' | 'width'
+		> & {
+			_deleted: boolean
+			align: KottiTable.Column.Align
+			id: string
+			isPropDefined: boolean
+			renderCell: KottiTable.Column.RenderCell
+			renderHeader: KottiTable.Column.RenderHeader
+			width: string
+		}
+
 		export type Column = {
-			_columns: Record<string, KottiTable.Column.PropsInternal>
-			_columnsArray: KottiTable.Column.PropsInternal[]
+			_columns: Record<string, ColumnRepresentation>
+			_columnsArray: ColumnRepresentation[]
 			_destroyedColumns: Record<string, number>
-			columns: KottiTable.Column.PropsInternal[]
+			columns: ColumnRepresentation[]
 			refreshColumnArray: boolean
 		}
 
@@ -84,7 +96,10 @@ export module Store {
 			insertColumn(
 				this: TableStore,
 				store: TableStore,
-				payload: { column: KottiTable.Column.PropsInternal; index?: number },
+				payload: {
+					column: Store.StateComponents.ColumnRepresentation
+					index?: number
+				},
 			): void
 			removeColumn(this: TableStore, store: TableStore, column: any): void
 			setColumns(this: TableStore, store: TableStore, columns: any): void
@@ -175,7 +190,7 @@ export module Store {
 				this: TableStore,
 				store: TableStore,
 				options: {
-					column: KottiTable.Column.PropsInternal
+					column: Store.StateComponents.ColumnRepresentation
 					order?: any
 				},
 			): void

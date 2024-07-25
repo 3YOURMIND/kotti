@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import type { CreateElement, InjectionKey, VNodeChildren } from 'vue'
+import type { Vue as VueType } from 'vue/types/vue'
 
 import type { KottiTable } from './types'
 import type { TypedEmit } from '../types/typed-emit'
 import type { TableStore } from './logic/store'
-import type { Vue as VueType } from 'vue/types/vue'
+import type { Store } from './logic/types'
 
 export const IS_ASC = /ascending|^1/
 export const IS_DSC = /descending|^-1/
@@ -15,7 +16,7 @@ interface KottiTableContext {
 		activateRow: [unknown, number]
 		cellClick: [
 			{
-				column: KottiTable.Column.PropsInternal
+				column: Store.StateComponents.ColumnRepresentation
 				columnIndex: number
 				row: KottiTable.Row.Props
 				rowIndex: number
@@ -87,8 +88,16 @@ export const COLUMN_TYPE = Symbol('kt-table-column')
 
 export const DEFAULT_DISABLE_ROW = (): boolean => false
 
-export const PUBLIC_SORT_PROPS = ['prop', 'sortBy', 'sortOrder'] as const
-export const PUBLIC_COLUMN_PROPS = ['prop', 'order', 'hidden'] as const
+export const PUBLIC_SORT_PROPS = [
+	'prop',
+	'sortBy',
+	'sortOrder',
+] satisfies (keyof Store.StateComponents.ColumnRepresentation)[]
+export const PUBLIC_COLUMN_PROPS = [
+	'prop',
+	'order',
+	'hidden',
+] satisfies (keyof Store.StateComponents.ColumnRepresentation)[]
 
 export const DEFAULT_RENDER_CELL = function defaultRenderCell(
 	_h: CreateElement,
