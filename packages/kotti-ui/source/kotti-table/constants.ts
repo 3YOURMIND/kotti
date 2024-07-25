@@ -67,7 +67,6 @@ export const KT_TABLE: InjectionKey<KottiTableContext> =
 	'KT_TABLE' as unknown as symbol
 export const KT_STORE: InjectionKey<TableStore> =
 	'KT_STORE' as unknown as symbol
-export const KT_LAYOUT = 'KT_LAYOUT'
 export const KT_TABLE_STATE_PROVIDER = 'KT_TABLE_STATE_PROVIDER'
 export const COLUMN_TYPE = Symbol('kt-table-column')
 

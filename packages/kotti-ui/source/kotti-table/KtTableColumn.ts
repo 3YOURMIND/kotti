@@ -6,7 +6,6 @@ import {
 	DEFAULT_RENDER_CELL,
 	KT_TABLE,
 	KT_STORE,
-	KT_LAYOUT,
 	DEFAULT_RENDER_HEADER,
 } from './constants'
 import { KottiTable } from './types'
@@ -111,7 +110,7 @@ export const KtTableColumn: any = {
 			this[KT_STORE as any].commit('removeColumn', this.columnConfig)
 	},
 	render: (): null => null,
-	inject: { KT_TABLE, KT_STORE, KT_LAYOUT },
+	inject: { KT_TABLE, KT_STORE },
 }
 
 function createColumn(column: any = {}) {
