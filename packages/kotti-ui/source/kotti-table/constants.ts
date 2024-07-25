@@ -47,6 +47,7 @@ interface KottiTableContext {
 	headerClass: string | string[] | Record<string, unknown> | null
 	isExpandable: boolean
 	isSelectable: boolean
+	loading: boolean
 	tdClasses: string | string[] | Record<string, unknown> | null
 	thClasses: string | string[] | Record<string, unknown> | null
 	useColumnDragToOrder: boolean
