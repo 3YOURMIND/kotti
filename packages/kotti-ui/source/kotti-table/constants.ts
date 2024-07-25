@@ -5,33 +5,45 @@ import type { CreateElement, InjectionKey, VNodeChildren } from 'vue'
 import type { KottiTable } from './types'
 import type { TypedEmit } from '../types/typed-emit'
 import type { TableStore } from './logic/store'
+import type { Vue as VueType } from 'vue/types/vue'
 
 export const IS_ASC = /ascending|^1/
 export const IS_DSC = /descending|^-1/
 
 interface KottiTableContext {
 	$emit: TypedEmit<{
-		activateRow: unknown
-		cellClick: {
-			column: KottiTable.Column.PropsInternal
-			columnIndex: number
+		activateRow: [unknown, number]
+		cellClick: [
+			{
+				column: KottiTable.Column.PropsInternal
+				columnIndex: number
+				row: KottiTable.Row.Props
+				rowIndex: number
+				value: unknown
+			},
+		]
+		columnsChange: unknown[]
+		expand: unknown[]
+		expandChange: unknown[]
+		hiddenChange: unknown[]
+		orderChange: unknown[]
+		rowBlur: [unknown, number]
+		rowClick: [unknown, number]
+		rowFocus: [unknown, number]
+		select: unknown[]
+		selectAll: unknown[]
+		selectionChange: unknown[]
+		sortChange: unknown[]
+	}>
+	$listeners: VueType['$listeners']
+	_renderActions: (
+		h: CreateElement,
+		payload: {
+			data: KottiTable.Row.Props
 			row: KottiTable.Row.Props
 			rowIndex: number
-			value: unknown
-		}
-		columnsChange: unknown
-		expand: unknown
-		expandChange: unknown
-		hiddenChange: unknown
-		orderChange: unknown
-		rowBlur: unknown
-		rowClick: unknown
-		rowFocus: unknown
-		select: unknown
-		selectAll: unknown
-		selectionChange: unknown
-		sortChange: unknown
-	}>
+		},
+	) => VNodeChildren
 	_renderEmpty: (h: CreateElement) => VNodeChildren
 	_renderExpand: (
 		h: CreateElement,
@@ -43,15 +55,18 @@ interface KottiTableContext {
 	) => VNodeChildren
 	_renderLoading: (h: CreateElement) => VNodeChildren
 	colSpan: number
+	disableRow: KottiTable.Props['disableRow']
 	hasActions: boolean
-	headerClass: string | string[] | Record<string, unknown> | null
+	headerClass: KottiTable.Props['headerClass']
 	isExpandable: boolean
-	isSelectable: boolean
+	isInteractive: KottiTable.Props['isInteractive']
+	isSelectable: KottiTable.Props['isSelectable']
 	loading: boolean
-	tdClasses: string | string[] | Record<string, unknown> | null
-	thClasses: string | string[] | Record<string, unknown> | null
-	useColumnDragToOrder: boolean
-	useQuickSortControl: boolean
+	tdClasses: KottiTable.Props['tdClasses']
+	thClasses: KottiTable.Props['thClasses']
+	trClasses: KottiTable.Props['trClasses']
+	useColumnDragToOrder: KottiTable.Props['useColumnDragToOrder']
+	useQuickSortControl: KottiTable.Props['useQuickSortControl']
 }
 
 /**

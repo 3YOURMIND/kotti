@@ -43,6 +43,7 @@ export const TableBody = defineComponent({
 									props: {
 										row,
 										rowIndex,
+										rowKey: key,
 									},
 								}),
 								isExpandable.value &&

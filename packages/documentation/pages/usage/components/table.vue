@@ -146,7 +146,9 @@ Alignment would default to be `left`. It can be customized for common cases that
 When content should not be hidden, using horizontal scrolling is a better alternative.
 `isScrollable` will enable horizontal scrolling for the table.
 
-<KtTable :rows="rows2" :columns="columnsDefault" isScrollable />
+<div style="max-width: 300px; padding: 10px; border: 1px dashed var(--ui-03);">
+    <KtTable :rows="rows2" :columns="columnsScrollable" isScrollable />
+</div>
 
 ```html
 <KtTable :rows="rows" :columns="columns" isScrollable />
@@ -1154,6 +1156,12 @@ export default {
 				{ prop: 'date', label: 'Date' },
 				{ prop: ADDRESS_DOT_LINE, label: 'Address' },
 			],
+			columnsScrollable: [
+				{ prop: 'name', label: 'Name', width: '200px' },
+				{ prop: 'date', label: 'Date', width: '300px' },
+				{ prop: ADDRESS_DOT_LINE, label: 'Address', width: '500px' },
+				{ prop: 'gender', label: 'Gender', width: '100px' },
+			],
 			columnsWidth: [
 				{ prop: 'name', label: 'Name', width: '30%' },
 				{ prop: 'date', label: 'Date', width: '20%' },
@@ -1161,9 +1169,22 @@ export default {
 			],
 			rows2: [
 				{
-					date: '2016-05-03',
-					name: 'Tom',
 					address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
+					date: '2016-05-03',
+					gender: 'm',
+					name: 'Tom',
+				},
+				{
+					address: { number: 331, line: 'No. 119, Grove St, Los Angeles' },
+					date: '2019-05-04',
+					gender: 'f',
+					name: 'Heinz Dieter',
+				},
+				{
+					address: { number: 10, line: 'No. 119, Grove St, Los Angeles' },
+					date: '2024-05-07',
+					gender: 'd',
+					name: 'Shabeer Mahood',
 				},
 			],
 			emptyRows: [],

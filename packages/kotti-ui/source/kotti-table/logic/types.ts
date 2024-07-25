@@ -134,7 +134,11 @@ export module Store {
 			setOrderedColumns(this: TableStore, store: TableStore, columns: any): void
 		}
 		export type Row = {
-			blurRow(this: TableStore, store: TableStore): void
+			blurRow(
+				this: TableStore,
+				store: TableStore,
+				row: State['focusedRow'],
+			): void
 			focusRow(
 				this: TableStore,
 				store: TableStore,
