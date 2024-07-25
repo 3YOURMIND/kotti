@@ -13,26 +13,33 @@ import { resolveColumnsOrder, getOrderedColumns } from './order'
 import { setSortedColumn } from './sort'
 import type { Store } from './types'
 
-export function getColumnRealIndex(state: any, column: any) {
-	return state._columnsArray.findIndex(({ id }: any) => id == column.id)
+export function getColumnRealIndex(
+	state: Store.State,
+	column: Store.StateComponents.ColumnRepresentation,
+) {
+	return state._columnsArray.findIndex(({ id }) => id == column.id)
 }
 
-export function getColumnIndex(state: any, column: any) {
-	return state._columns[column.prop].index
+export function getColumnIndex(state: Store.State, columnProp: string): number {
+	const columnInStore = state._columns[columnProp]
+
+	if (!columnInStore?.index)
+		throw new Error(`Could not find column ${columnProp} in KtTable Store`)
+
+	return columnInStore.index
 }
 
 export function setColumnsArray(
-	state: any,
-	prop: any,
-	shapeKeys: any,
-	columns: any,
-	mergeStrategy = Object.assign,
+	state: Store.State,
+	prop: keyof Store.State,
+	shapeKeys: (keyof Store.StateComponents.ColumnRepresentation)[],
+	columns: Store.StateComponents.ColumnRepresentation[],
 ) {
 	state[prop] = columns.map((column: any) => {
 		// eslint-disable-next-line no-param-reassign
 		column = pick(column, shapeKeys)
 		const oldColumn = state._columns[column.prop] ?? {}
-		return mergeStrategy(oldColumn, column)
+		return Object.assign(oldColumn, column)
 	})
 }
 
@@ -73,7 +80,7 @@ export const mutations: Store.MutationComponents.Column = {
 		const { state } = store
 		const deleted = state._destroyedColumns[column.prop]
 
-		const newColumn: KottiTable.Column.PropsInternal = (() => {
+		const newColumn: Store.StateComponents.ColumnRepresentation = (() => {
 			const oldColumn = state._columns[column.prop]
 
 			if (!oldColumn) {
@@ -103,7 +110,7 @@ export const mutations: Store.MutationComponents.Column = {
 				},
 				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 				(value) => value !== undefined,
-			) as KottiTable.Column.PropsInternal
+			) as Store.StateComponents.ColumnRepresentation
 		})()
 		Vue.set(state._columns, newColumn.prop, newColumn)
 

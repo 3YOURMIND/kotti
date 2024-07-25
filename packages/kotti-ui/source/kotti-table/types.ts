@@ -1,4 +1,5 @@
 import type { CreateElement, VNode, VNodeChildren } from 'vue'
+import type { Store } from './logic/types'
 
 export module KottiTable {
 	export module Column {
@@ -27,8 +28,10 @@ export module KottiTable {
 			| -1
 			| 0
 
+		export type SortMethod = <T>(a: T, b: T) => number
+
 		export interface Context {
-			column: Column.PropsInternal
+			column: Store.StateComponents.ColumnRepresentation
 			columnIndex: number
 			row: Row.Props
 			rowIndex: number
@@ -56,6 +59,21 @@ export module KottiTable {
 			sortOrder: SortOrder
 		}
 
+		export type Formatter = (
+			value: Context['value'],
+			row: Context['row'],
+			column: Context['column'],
+			columnIndex: Context['columnIndex'],
+			rowIndex: Context['rowIndex'],
+		) => unknown
+
+		export type RenderCell = (h: CreateElement, data: Context) => VNodeChildren
+
+		export type RenderHeader = (
+			h: CreateElement,
+			data: Pick<Context, 'column' | 'columnIndex' | 'value'>,
+		) => VNodeChildren
+
 		export type Props = {
 			index?: number // Unused
 			label?: string
@@ -75,7 +93,7 @@ export module KottiTable {
 			hidden?: boolean
 
 			sortBy?: SortBy
-			sortMethod?: ((a: unknown, b: unknown) => number) | null
+			sortMethod?: SortMethod
 			sortOrder?: SortOrder
 			sortOrders?: SortOrders[]
 			// whether this column is sortable, string means sortOrder is remote
@@ -83,34 +101,9 @@ export module KottiTable {
 
 			default?: string
 			disableRowClick?: boolean
-			formatter?: (
-				value: Context['value'],
-				row: Context['row'],
-				column: Context['column'],
-				columnIndex: Context['columnIndex'],
-				rowIndex: Context['rowIndex'],
-			) => unknown
-			renderCell?: (h: CreateElement, data: Context) => VNode
-			renderHeader?: (
-				h: CreateElement,
-				data: Pick<Context, 'column' | 'columnIndex' | 'value'>,
-			) => VNode
-		}
-
-		export type PropsInternal = Omit<
-			Props,
-			'align' | 'renderCell' | 'renderHeader' | 'width'
-		> & {
-			_deleted: boolean
-			align: Align
-			id: string
-			isPropDefined: boolean
-			renderCell: (h: CreateElement, data: Context) => VNodeChildren
-			renderHeader: (
-				h: CreateElement,
-				data: Pick<Context, 'column' | 'columnIndex' | 'value'>,
-			) => VNodeChildren
-			width: string
+			formatter?: Formatter
+			renderCell?: RenderCell
+			renderHeader?: RenderHeader
 		}
 
 		export module Slots {

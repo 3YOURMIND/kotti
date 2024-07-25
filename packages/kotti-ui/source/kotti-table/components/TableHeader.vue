@@ -49,6 +49,7 @@
 <script lang="ts">
 import { KT_TABLE, KT_STORE } from '../constants'
 import { KottiTable } from '../types'
+import type { Store } from '../logic/types'
 import { computed, defineComponent, inject, ref } from 'vue'
 
 import { TableHeaderCell } from './TableHeaderCell'
@@ -67,8 +68,10 @@ export default defineComponent({
 				'TableRowCell: Component was used without providing the right contexts',
 			)
 
-		const dropTargetColumn = ref<KottiTable.Column.PropsInternal | null>(null)
-		const draggedColumn = ref<KottiTable.Column.PropsInternal | null>(null)
+		const dropTargetColumn =
+			ref<Store.StateComponents.ColumnRepresentation | null>(null)
+		const draggedColumn =
+			ref<Store.StateComponents.ColumnRepresentation | null>(null)
 
 		const useColumnDragToOrder = computed(() => tableState.useColumnDragToOrder)
 		const isDraggedOver = (column: unknown) =>
@@ -84,20 +87,20 @@ export default defineComponent({
 			handleDragEnd: () => {
 				dropTargetColumn.value = null
 			},
-			handleDragEnter: (column: KottiTable.Column.PropsInternal) => {
+			handleDragEnter: (column: Store.StateComponents.ColumnRepresentation) => {
 				dropTargetColumn.value = column
 			},
-			handleDragStart: (column: KottiTable.Column.PropsInternal) => {
+			handleDragStart: (column: Store.StateComponents.ColumnRepresentation) => {
 				draggedColumn.value = column
 			},
-			handleDrop: (column: KottiTable.Column.PropsInternal) => {
+			handleDrop: (column: Store.StateComponents.ColumnRepresentation) => {
 				if (draggedColumn.value) {
 					tableStore.commit('orderBefore', draggedColumn.value, column)
 					draggedColumn.value = null
 				}
 				dropTargetColumn.value = null
 			},
-			getThClasses: (column: KottiTable.Column.PropsInternal) => [
+			getThClasses: (column: Store.StateComponents.ColumnRepresentation) => [
 				{
 					'drag-over': isDraggedOver(column),
 					clickable: canSort(column),
@@ -108,7 +111,7 @@ export default defineComponent({
 				tableState.thClasses,
 				column.thClass,
 			],
-			getThStyle: (column: KottiTable.Column.PropsInternal) => ({
+			getThStyle: (column: Store.StateComponents.ColumnRepresentation) => ({
 				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 				textAlign: column.align ?? KottiTable.Column.Align.LEFT,
 				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -117,7 +120,7 @@ export default defineComponent({
 			handleSelectAll: () => {
 				tableStore.commit('toggleAllSelection')
 			},
-			handleThClick: (column: KottiTable.Column.PropsInternal) => {
+			handleThClick: (column: Store.StateComponents.ColumnRepresentation) => {
 				if (!useQuickSortControl.value) return
 				if (!canSort(column)) return
 
@@ -129,9 +132,9 @@ export default defineComponent({
 			isExpandable: computed(() => tableState.isExpandable),
 			isSelectable: computed(() => tableState.isSelectable),
 			isSorted,
-			isSortedByAsc: (column: KottiTable.Column.PropsInternal) =>
+			isSortedByAsc: (column: Store.StateComponents.ColumnRepresentation) =>
 				tableStore.get('isSortedByAsc', column),
-			isSortedByDsc: (column: KottiTable.Column.PropsInternal) =>
+			isSortedByDsc: (column: Store.StateComponents.ColumnRepresentation) =>
 				tableStore.get('isSortedByDsc', column),
 			tableColumns: computed(() => tableStore.state.columns),
 			tableHeaderClass: computed(() => [

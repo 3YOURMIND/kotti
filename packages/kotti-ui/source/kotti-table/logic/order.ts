@@ -57,7 +57,7 @@ export const mutations: Store.MutationComponents.Order = {
 	orderBefore(store, fromColumn, toColumn) {
 		const { state } = store
 		if (fromColumn.id === toColumn.id) return
-		const fromIndex = getColumnIndex(state, fromColumn)
+		const fromIndex = getColumnIndex(state, fromColumn.prop)
 		state._columnsArray.splice(fromIndex, 1)
 
 		const toIndex = getColumnRealIndex(state, toColumn)
