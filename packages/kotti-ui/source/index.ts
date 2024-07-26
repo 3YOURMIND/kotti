@@ -93,7 +93,7 @@ import {
 	KtTableLegacy,
 	KtTableLegacyColumn,
 	KtTableLegacyProvider,
-	KtTableConsumer,
+	KtTableLegacyConsumer,
 } from './kotti-table-legacy'
 export * from './kotti-table-legacy'
 import { KtTag } from './kotti-tag'
@@ -161,7 +161,7 @@ export default {
 			KtSplitButton,
 			KtTableLegacy,
 			KtTableLegacyColumn,
-			KtTableConsumer,
+			KtTableLegacyConsumer,
 			KtTableLegacyProvider,
 			KtTag,
 			KtToaster,

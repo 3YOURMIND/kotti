@@ -842,12 +842,12 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 Sometimes you may need to access the table's store and control it from outside.
 While `ref` may work if your modifications are in the _same_ component, your controller component may be elsewhere.
 
-For that purpose, we introduce `KtTableLegacyProvider`/`KtTableConsumer`. The provider exposes the `store`, from which you can access many props from the store.
+For that purpose, we introduce `KtTableLegacyProvider`/`KtTableLegacyConsumer`. The provider exposes the `store`, from which you can access many props from the store.
 It also directly exposes `columns`, `filteredColumns`, `sortedColumns`, `hiddenColumns`, for faster accesss, and methods: `hideColumn`, `showAllColumns`, `orderBeforeColumn`.
 
 `<KtTableLegacyProvider />` takes the same props as `<KtTableLegacy/>`.
 
-`<KtTableLegacy />` can have an optional `id` prop that will allow the corresponding `<KtTableConsumer />` to select the same `id`.
+`<KtTableLegacy />` can have an optional `id` prop that will allow the corresponding `<KtTableLegacyConsumer />` to select the same `id`.
 Otherwise, all tables **under** the same provider will share the same store.
 
 _Notes_:
@@ -862,7 +862,7 @@ _Notes_:
 <div slot="vue">
 <KtTableLegacyProvider>
 	<div>
-		<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
+		<KtTableLegacyConsumer #default="{ columns, hideColumn, showAllColumns }">
 			<div class="parts-edit-columns-filter__container">
 				<KtButtonGroup style="margin-top: 20px;">
 						<KtButton
@@ -875,14 +875,14 @@ _Notes_:
 				</KtButtonGroup>
 				<KtButton :disabled="columns.filter(c=> c.hidden).length === 0" type="primary" label="Show All Columns" @click="showAllColumns"/>
 			</div>
-		</KtTableConsumer>
-		<KtTableConsumer #default="{ columns, orderBeforeColumn }">
+		</KtTableLegacyConsumer>
+		<KtTableLegacyConsumer #default="{ columns, orderBeforeColumn }">
 			<div>
 				<input label="Drag From: " type="number" min="0" :max="columns.length-1" v-model="fromIndex" />
 				<input label="(+-)Steps: " type="number" :min="fromIndex===0?0:-fromIndex" :max="(columns.length -2 - fromIndex)" v-model="dragSteps" />
 				<KtButton type="primary" label="Reorder Columns" :disabled="parseInt(dragSteps,10)===0" @click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )" />
 			</div>
-		</KtTableConsumer>
+		</KtTableLegacyConsumer>
 	</div>
 	<div>
 		<KtTableLegacy :rows="rows" :columns="columnsHidden" useColumnDragToOrder/>
@@ -894,7 +894,7 @@ _Notes_:
 ```html
 <KtTableLegacyProvider>
 	<div>
-		<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
+		<KtTableLegacyConsumer #default="{ columns, hideColumn, showAllColumns }">
 			<div class="parts-edit-columns-filter__container">
 				<KtButtonGroup>
 					<KtButton
@@ -912,8 +912,8 @@ _Notes_:
 					@click="showAllColumns"
 				/>
 			</div>
-		</KtTableConsumer>
-		<KtTableConsumer #default="{ columns, orderBeforeColumn }">
+		</KtTableLegacyConsumer>
+		<KtTableLegacyConsumer #default="{ columns, orderBeforeColumn }">
 			<div>
 				<input
 					label="Drag From: "
@@ -936,7 +936,7 @@ _Notes_:
 					@click="orderBeforeColumn( columns[parseInt(fromIndex, 10)], columns[parseInt(toIndex, 10)] )"
 				/>
 			</div>
-		</KtTableConsumer>
+		</KtTableLegacyConsumer>
 	</div>
 	<div>
 		<KtTableLegacy :rows="rows" :columns="columnsHidden" useColumnDragToOrder />
@@ -1103,7 +1103,7 @@ import {
 	KtFieldText,
 	KtTableLegacy,
 	KtTableLegacyColumn,
-	KtTableConsumer,
+	KtTableLegacyConsumer,
 	KtTableLegacyProvider,
 } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
@@ -1125,7 +1125,7 @@ export default {
 		KtFieldText,
 		KtTableLegacy,
 		KtTableLegacyColumn,
-		KtTableConsumer,
+		KtTableLegacyConsumer,
 		KtTableLegacyProvider,
 	},
 	data() {

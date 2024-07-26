@@ -4,7 +4,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import KtTableLegacyVue from './KtTableLegacy.vue'
 import { KtTableLegacyColumn as KtTableLegacyColumnVue } from './KtTableLegacyColumn'
-import { KtTableConsumer as KtTableConsumerVue } from './KtTableConsumer'
+import { KtTableLegacyConsumer as KtTableLegacyConsumerVue } from './KtTableLegacyConsumer'
 import { KtTableLegacyProvider as KtTableLegacyProviderVue } from './KtTableLegacyProvider'
 
 const META: Kotti.Meta = {
@@ -57,7 +57,7 @@ export const KtTableLegacyProvider = attachMeta(
 	makeInstallable(KtTableLegacyProviderVue),
 	META,
 )
-export const KtTableConsumer = attachMeta(
-	makeInstallable(KtTableConsumerVue),
+export const KtTableLegacyConsumer = attachMeta(
+	makeInstallable(KtTableLegacyConsumerVue),
 	META,
 )
