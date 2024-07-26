@@ -1,0 +1,18 @@
+%no-outline {
+	// overwrite native outline behavior
+	outline: none;
+
+	&:focus,
+	&::-moz-focus-inner {
+		outline: none;
+	}
+
+	* {
+		outline: none;
+
+		&:focus,
+		&::-moz-focus-inner {
+			outline: none;
+		}
+	}
+}

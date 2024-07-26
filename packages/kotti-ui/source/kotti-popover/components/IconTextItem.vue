@@ -38,10 +38,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-field/mixins';
+@import '../../kotti-field/templates.scss';
 
 .kt-popover-options-item {
-	@include no-outline;
+	@extend %no-outline;
 
 	display: flex;
 	align-items: center;

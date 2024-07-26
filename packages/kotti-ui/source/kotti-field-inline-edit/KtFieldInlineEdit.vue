@@ -34,6 +34,10 @@
 </template>
 
 <script lang="ts">
+import type {
+	InputHTMLAttributes,
+	TextareaHTMLAttributes,
+} from '@vue/runtime-dom'
 import type { Ref } from 'vue'
 import {
 	computed,
@@ -45,10 +49,10 @@ import {
 	toRefs,
 	watch,
 } from 'vue'
-import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import type { KottiField } from '../kotti-field/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -68,9 +72,10 @@ export default defineComponent({
 	components: {
 		ConfirmButton,
 		EditIcon,
+		KtField,
 	},
 	props: makeProps(KottiFieldInlineEdit.propsSchema),
-	emits: ['confirm', 'input'],
+	emits: ['confirm', 'update:value'],
 	setup(props, { emit }) {
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		const translations = useTranslationNamespace('KtFieldInlineEdit')

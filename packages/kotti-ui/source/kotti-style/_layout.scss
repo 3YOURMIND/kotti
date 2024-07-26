@@ -3,6 +3,7 @@
 
 .kt-container {
 	display: flex;
+	overflow-x: hidden;
 
 	@media (width <= $size-md) {
 		display: flex;

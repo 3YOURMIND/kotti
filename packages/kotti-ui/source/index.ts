@@ -1,3 +1,4 @@
+import type { App } from 'vue'
 // styles
 import './kotti-style/index.scss'
 
@@ -104,16 +105,13 @@ import { KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
-import type { VueConstructor } from 'vue'
-
 import { KtValueLabel } from './kotti-value-label'
 export * from './kotti-value-label'
 
 export * from './types'
 
 export default {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	install(Vue: VueConstructor): void {
+	install<T>(app: App<T>): void {
 		const components = [
 			KtAccordion,
 			KtActionbar,
@@ -173,26 +171,27 @@ export default {
 			KtValueLabel,
 		]
 		for (const component of components) {
-			Vue.use(component)
+			app.use(component, {})
 		}
 
-		const DEFAULT_YODIFY_DURATION = 3000
+		// TODO: rethink yodify for vue 3
+		// const DEFAULT_YODIFY_DURATION = 3000
+		//
+		// Vue.prototype.$yodifyBuffer = []
+		// Vue.prototype.$yodify = function ({
+		// 	duration = DEFAULT_YODIFY_DURATION,
+		// 	text,
+		// 	type = 'success',
+		// }: {
+		// 	duration: number
+		// 	text: string
+		// 	type: 'success' | 'error'
+		// }) {
+		// 	const notification = { duration, text, type }
 
-		Vue.prototype.$yodifyBuffer = []
-		Vue.prototype.$yodify = function ({
-			duration = DEFAULT_YODIFY_DURATION,
-			text,
-			type = 'success',
-		}: {
-			duration: number
-			text: string
-			type: 'error' | 'success'
-		}) {
-			const notification = { duration, text, type }
-
-			// buffer notifications if vue isn't ready
-			if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)
-			else this.$root.$emit('vue-yodify', notification)
-		}
+		// 	// buffer notifications if vue isn't ready
+		// 	if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)
+		// 	else this.$root.$emit('vue-yodify', notification)
+		// }
 	},
 }
