@@ -11,9 +11,9 @@
 
 ## Basic
 
-In order to use the table, you need give `rows` and `columns` data to `KtTable` component.
+In order to use the table, you need give `rows` and `columns` data to `KtTableLegacy` component.
 
-<KtTable :rows="rows" :columns="columnsResponsive" />
+<KtTableLegacy :rows="rows" :columns="columnsResponsive" />
 
 `columns` define the column of the table, `label` is the header text of table, `key` will be used to find the value from `rows`.
 
@@ -28,7 +28,7 @@ _For better performance in complex operations_, define a `rowKey` to index each 
 <div slot="vue">
 
 ```html
-<KtTable :rows="rows" :columns="columns" />
+<KtTableLegacy :rows="rows" :columns="columns" />
 ```
 
 ```js
@@ -85,16 +85,16 @@ All props that a column takes, the KtTableColumn component takes, as well, with 
 
 `prop` is required
 
-<KtTable :rows="rows" >
+<KtTableLegacy :rows="rows" >
 	<KtTableColumn label="Name" prop="name"/>
 	<KtTableColumn label="Address" prop="address.line"/>
-</KtTable>
+</KtTableLegacy>
 
 ```html
-<KtTable :rows="rows">
+<KtTableLegacy :rows="rows">
 	<KtTableColumn label="Name" prop="name" />
 	<KtTableColumn label="Address" prop="address.line" />
-</KtTable>
+</KtTableLegacy>
 ```
 
 ```js
@@ -112,7 +112,7 @@ All props that a column takes, the KtTableColumn component takes, as well, with 
 
 In most cases the table is the same width as its parent. You can also specify the column width in `columns`.
 
-<KtTable :rows="rows" :columns="columnsWidth" />
+<KtTableLegacy :rows="rows" :columns="columnsWidth" />
 
 ```js
 {
@@ -129,7 +129,7 @@ In most cases the table is the same width as its parent. You can also specify th
 Alignment would default to be `left`. It can be customized for common cases that require it, such as price, and currency.
 `align` in `columns` decides the alignment of each column’s text.
 
-<KtTable :rows="rows" :columns="columnsAlign" />
+<KtTableLegacy :rows="rows" :columns="columnsAlign" />
 
 ```js
 {
@@ -147,11 +147,11 @@ When content should not be hidden, using horizontal scrolling is a better altern
 `isScrollable` will enable horizontal scrolling for the table.
 
 <div style="max-width: 300px; padding: 10px; border: 1px dashed var(--ui-03);">
-    <KtTable :rows="rows2" :columns="columnsScrollable" isScrollable />
+    <KtTableLegacy :rows="rows2" :columns="columnsScrollable" isScrollable />
 </div>
 
 ```html
-<KtTable :rows="rows" :columns="columns" isScrollable />
+<KtTableLegacy :rows="rows" :columns="columns" isScrollable />
 ```
 
 ## Selectable
@@ -164,7 +164,7 @@ _Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to 
 > The former is an `Array` of selected indices, and the latter is an `Array` of _row_ `Object`s
 
 <div>
-	<KtTable :rows="rows" :columns="columnsDefault" isSelectable :selected="selected" @selectionChange="selected = $event" />
+	<KtTableLegacy :rows="rows" :columns="columnsDefault" isSelectable :selected="selected" @selectionChange="selected = $event" />
 	<pre>Selected Rows: {{JSON.stringify(selected,undefined, 2)}} </pre>
 </div>
 
@@ -172,7 +172,7 @@ _Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to 
 
 ```html
 <div>
-	<KtTable
+	<KtTableLegacy
 		:rows="rows"
 		:columns="columns"
 		isSelectable
@@ -201,10 +201,10 @@ _Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to 
 
 ## Disable
 
-`disableRow` function can be passed to `KtTable` to reactively disable rows, based on your view and specific row data.
+`disableRow` function can be passed to `KtTableLegacy` to reactively disable rows, based on your view and specific row data.
 
 <KtFieldText v-model="disableName" />
-<KtTable
+<KtTableLegacy
 	:rows="rows"
 	:columns="columnsResponsive"
 	:disableRow="disableRow"
@@ -213,7 +213,7 @@ _Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to 
 
 ```html
 <KtFieldText v-model="disableName" />
-<KtTable
+<KtTableLegacy
 	:rows="rows"
 	:columns="columns"
 	:disableRow="disableRow"
@@ -242,7 +242,7 @@ _Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to 
 
 ## Row Interaction
 
-`KtTable` has a `@rowClick` event for when a user clicks on a row.
+`KtTableLegacy` has a `@rowClick` event for when a user clicks on a row.
 
 _Note:_ `@activateRow` is, however, the preferred alternative, because the latter gets triggered
 on row click, _or_ when the user hits the "enter/return" key while row's focused, while the former gets triggered only with clicks.
@@ -251,7 +251,7 @@ Payload from `@activateRow` is (row, rowIndex)
 _Note:_ Neither events get triggered on a _disabled_ row.
 
 <KtFieldText v-model='disableName' />
-<KtTable
+<KtTableLegacy
 	:rows="rows"
 	:columns="columnsResponsive"
 	:disableRow="disableRow"
@@ -260,7 +260,7 @@ _Note:_ Neither events get triggered on a _disabled_ row.
 
 ```html
 <KtFieldText v-model="disableName" />
-<KtTable
+<KtTableLegacy
 	:rows="rows"
 	:columns="columns"
 	:disableRow="disableRow"
@@ -280,7 +280,7 @@ methods: {
 
 You can order Columns, by dragging, if you use the `useColumnDragToOrder` flag
 
-<KtTable :rows="rows" useColumnDragToOrder >
+<KtTableLegacy :rows="rows" useColumnDragToOrder >
 	<KtTableColumn
 		label="Avatar"
 		prop="name"
@@ -295,14 +295,14 @@ You can order Columns, by dragging, if you use the `useColumnDragToOrder` flag
 		label="Address"
 		prop="address.line"
 	/>
-</KtTable>
+</KtTableLegacy>
 
 ```html
-<KtTable :rows="rows" useColumnDragToOrder>
+<KtTableLegacy :rows="rows" useColumnDragToOrder>
 	<KtTableColumn label="Avatar" prop="name" :renderCell="renderCell" />
 	<KtTableColumn label="Date" prop="date" :formatter="formatDate" />
 	<KtTableColumn label="Address" prop="address.line" />
-</KtTable>
+</KtTableLegacy>
 ```
 
 ## Sorting
@@ -312,48 +312,48 @@ To enable sorting, you must do BOTH the following:
 - enable a UI-sorting flag `useQuickSortControl`
 - add `sortable` to any column definition (the ones to enable sorting for).
 
-<KtTable :rows="rows" useQuickSortControl >
+<KtTableLegacy :rows="rows" useQuickSortControl >
 	<KtTableColumn label="Name" prop="name" sortable />
 	<KtTableColumn label="Date" prop="date"/>
 	<KtTableColumn label="Address" prop="address.line"/>
-</KtTable>
+</KtTableLegacy>
 
 ```html
-<KtTable :rows="rows" useQuickSortControl>
+<KtTableLegacy :rows="rows" useQuickSortControl>
 	<KtTableColumn label="Name" prop="name" sortable />
 	<KtTableColumn label="Date" prop="date" />
 	<KtTableColumn label="Address" prop="address.line" />
-</KtTable>
+</KtTableLegacy>
 ```
 
-If you want to allow sorting for all columns excluding one, you can set `sortable="all"` on the `<KtTable/>`
+If you want to allow sorting for all columns excluding one, you can set `sortable="all"` on the `<KtTableLegacy/>`
 
-<KtTable :rows="rows" useQuickSortControl sortable="all">
+<KtTableLegacy :rows="rows" useQuickSortControl sortable="all">
 	<KtTableColumn label="Name" prop="name"/>
 	<KtTableColumn label="Date" prop="date"/>
 	<KtTableColumn label="Address" prop="address.line" :sortable="false"/>
-</KtTable>
+</KtTableLegacy>
 
 ```html
-<KtTable :rows="rows" useQuickSortControl sortable="all">
+<KtTableLegacy :rows="rows" useQuickSortControl sortable="all">
 	<KtTableColumn label="Name" prop="name" />
 	<KtTableColumn label="Date" prop="date" />
 	<KtTableColumn label="Address" prop="address.line" :sortable="false" />
-</KtTable>
+</KtTableLegacy>
 ```
 
 > Note the `:sortable=false` on the "Address" column in the above example, as an exception to the `sortable=all`.
 
 It's possible to customize your sorting experience by using the column's `sortMethod`, `sortBy` and `sortOrders`
 
-<KtTable :rows="rows" useQuickSortControl sortable="all">
+<KtTableLegacy :rows="rows" useQuickSortControl sortable="all">
 	<KtTableColumn label="Name" prop="name" :sortOrders="['descending', 'ascending', undefined]"/>
 	<KtTableColumn label="Date" prop="date" :sortMethod="sortDate" />
 	<KtTableColumn label="Address" prop="address.line" :sortBy="['address.number', byAddressLine]"/>
-</KtTable>
+</KtTableLegacy>
 
 ```html
-<KtTable :rows="rows" useQuickSortControl sortable="all">
+<KtTableLegacy :rows="rows" useQuickSortControl sortable="all">
 	<KtTableColumn
 		label="Name"
 		prop="name"
@@ -368,7 +368,7 @@ It's possible to customize your sorting experience by using the column's `sortMe
 		:sortBy="['address.number', byAddressLine]"
 	/>
 	<!-- target different props on the row  -->
-</KtTable>
+</KtTableLegacy>
 ```
 
 `sortOrders` determines the order by which sorting criteria changes with each click on the sorting buttons on the column headers. It can have one of three values:
@@ -401,7 +401,7 @@ It's possible to customize your sorting experience by using the column's `sortMe
 
 Sorting _resolution_ is handled the same way as sortBy for each column, i.e.: if the first prop used in comparison between two rows returns `0`, the next one is used until we resolve by actual array order
 
-You can pass to KtTable an array of `sortedColumns` of the form `[{ prop, sortOrder }]`
+You can pass to KtTableLegacy an array of `sortedColumns` of the form `[{ prop, sortOrder }]`
 
 You can also initialize the table to be already sorted, by setting the `sortOrder` prop for one of the columns: `<KtTableColumn :sortOrder="1" prop="name" />`
 
@@ -409,7 +409,7 @@ You can also initialize the table to be already sorted, by setting the `sortOrde
 
 To sort remotly:
 
-1. Set the `remoteSort` flag on `<KtTable/>` which disables the local table sort function.
+1. Set the `remoteSort` flag on `<KtTableLegacy/>` which disables the local table sort function.
 
 2. You can then listen to the `@sortChange` which returns:
 
@@ -423,10 +423,10 @@ To sort remotly:
    >
    > **sortBy**: the value of sortBy on the column, which is useful in case you want to send the backend a different value than `column.prop`
 
-3. You can, then, set the `sortedColumns` prop on the `<KtTable/>` to update the table UI, when your backend request is resolved.
+3. You can, then, set the `sortedColumns` prop on the `<KtTableLegacy/>` to update the table UI, when your backend request is resolved.
 
 ```html
-<KtTable
+<KtTableLegacy
 	:rows="rows"
 	useQuickSortControl
 	sortable="all"
@@ -437,7 +437,7 @@ To sort remotly:
 	<!-- sortBy in this case is "name" since it is the `prop` -->
 	<KtTableColumn label="Date" prop="date" sortBy="order_date" />
 	<KtTableColumn label="Address" prop="address.line" sortBy="address_line" />
-</KtTable>
+</KtTableLegacy>
 ```
 
 ```js
@@ -460,22 +460,22 @@ To sort remotly:
 
 <CodePreview vueSlotLabel="Actions Table" styleSlotLabel="html">
 <div slot="vue">
-<KtTable :rows="rows" :columns="columnsDefault">
+<KtTableLegacy :rows="rows" :columns="columnsDefault">
 	<div slot="actions" slot-scope="{row, rowIndex}">
 		<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
 		<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
 	</div>
-</KtTable>
+</KtTableLegacy>
 </div>
 <div slot="style">
 
 ```vue
-<KtTable :rows="rows" :columns="columns">
+<KtTableLegacy :rows="rows" :columns="columns">
 <div slot="actions" slot-scope="{ row }">
 	<i class="yoco" @click="showAlert(row.name, 'edited')">edit</i>
 	<i class="yoco" @click="showAlert(row.name, 'deleted')">trash</i>
 </div>
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -487,22 +487,22 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 <div slot="vue">
 
 ```html
-<KtTable :rows="rows" :columns="columns">
+<KtTableLegacy :rows="rows" :columns="columns">
 	<div slot="actions" slot-scope="{ row }">
 		<!-- as before  -->
 	</div>
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
 <div slot="style">
 
 ```html
-<KtTable :rows="rows" :columns="columns">
+<KtTableLegacy :rows="rows" :columns="columns">
 	<div slot="actions" slot-scope="{ row }">
 		<!-- as before  -->
 	</div>
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -510,27 +510,27 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 
 ## Expandable
 
-`isExpandable` enables expandability of the row**s**, defined on `<KtTable/>`. You use the `slot="expand"` to define the template that shows on expansion.
+`isExpandable` enables expandability of the row**s**, defined on `<KtTableLegacy/>`. You use the `slot="expand"` to define the template that shows on expansion.
 
 <CodePreview vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
-<KtTable :rows="rows" :columns="columnsDefault" isExpandable>
+<KtTableLegacy :rows="rows" :columns="columnsDefault" isExpandable>
 <div slot="expand" slot-scope="{ row, rowIndex }">
 	<KtBanner :message="row.name" icon="user" isGray />
 	<KtBanner :message="row.address.line" icon="global" isGray />
 </div>
-</KtTable>
+</KtTableLegacy>
 </div>
 
 <div slot="style">
 
 ```html
-<KtTable :rows="rows" :columns="columns" isExpandable>
+<KtTableLegacy :rows="rows" :columns="columns" isExpandable>
 	<div slot="expand" slot-scope="{ row, rowIndex }">
 		<KtBanner :message="row.name" icon="user" isGray />
 		<KtBanner :message="row.address.line" icon="global" isGray />
 	</div>
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -538,26 +538,26 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 
 The default behavior only allows you to expand one row at a time; expanding one row would trigger any currently-expanded rows to shrink back.
 
-If you want to allow for the expansion of multiple rows at a time, set the `expandMultiple` flag on `<KtTable />`, as well.
+If you want to allow for the expansion of multiple rows at a time, set the `expandMultiple` flag on `<KtTableLegacy />`, as well.
 
 <CodePreview vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
-<KtTable :rows="rows" :columns="columnsDefault" isExpandable expandMultiple>
+<KtTableLegacy :rows="rows" :columns="columnsDefault" isExpandable expandMultiple>
 <div slot="expand" slot-scope="{ row, rowIndex }">
 	<KtBanner :message="row.name" icon="user" isGray />
 	<KtBanner :message="row.address.line" icon="global" isGray />
 </div>
-</KtTable>
+</KtTableLegacy>
 </div>
 <div slot="style">
 
 ```vue
-<KtTable :rows="rows" :columns="columns" isExpandable expandMultiple>
+<KtTableLegacy :rows="rows" :columns="columns" isExpandable expandMultiple>
 <div slot="expand" slot-scope="{ row, rowIndex }">
 	<KtBanner :message="row.name" icon="user" isGray />
 	<KtBanner :message="row.address.line" icon="global" isGray />
 </div>
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -567,7 +567,7 @@ If you want to allow for the expansion of multiple rows at a time, set the `expa
 
 It is possible to customize parts (columns) of the table by passing your own render-prop functions instead of using slots.
 
-`<KtTable />` supports the following render props:
+`<KtTableLegacy />` supports the following render props:
 
 - `renderEmpty` &rarr; to define a custom rendered component when the table is empty, i.e., `:rows=[]`. `slot='empty'` can be used instead.
 - `renderLoading` &rarr; for when the `rows` are still loading (e.g., backend-api call has not resolved yet). `slot='loading'` can be used to render a template, instead.
@@ -584,7 +584,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 
 <CodePreview vueSlotLabel="Custom Render Table" styleSlotLabel="html">
 <div slot="vue" >
-	<KtTable
+	<KtTableLegacy
 		:rows="rows"
 		:renderExpand="renderExpand"
 		expandMultiple
@@ -601,13 +601,13 @@ It is possible to customize parts (columns) of the table by passing your own ren
 			prop="date"
 			:formatter="formatDate"
 		/>
-	</KtTable>
+	</KtTableLegacy>
 </div>
 
 <div slot="style">
 
 ```html
-<KtTable
+<KtTableLegacy
 	:rows="rows"
 	:renderExpand="renderExpand"
 	expandMultiple
@@ -620,7 +620,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 		:renderCell="renderCell"
 	/>
 	<KtTableColumn label="Date" prop="date" :formatter="formatDate" />
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -674,7 +674,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 
 <CodePreview vueSlotLabel="Custom Loading" styleSlotLabel="html">
 <div slot="vue">
-	<KtTable
+	<KtTableLegacy
 		:rows="rows"
 		:renderLoading="renderLoading"
 		loading
@@ -687,16 +687,16 @@ It is possible to customize parts (columns) of the table by passing your own ren
 			label="Date"
 			prop="date"
 		/>
-	</KtTable>
+	</KtTableLegacy>
 </div>
 
 <div slot="style">
 
 ```html
-<KtTable :rows="rows" :renderLoading="renderLoading" loading>
+<KtTableLegacy :rows="rows" :renderLoading="renderLoading" loading>
 	<KtTableColumn label="Name" prop="name" />
 	<KtTableColumn label="Date" prop="date" />
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -704,7 +704,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 
 <CodePreview vueSlotLabel="Empty Table" styleSlotLabel="html">
 <div slot="vue">
-<KtTable
+<KtTableLegacy
 	:rows="[]"
 	:renderEmpty="renderEmpty"
 >
@@ -716,16 +716,16 @@ It is possible to customize parts (columns) of the table by passing your own ren
 		label="Date"
 		prop="date"
 	/>
-</KtTable>
+</KtTableLegacy>
 </div>
 
 <div slot="style">
 
 ```html
-<KtTable :rows="[]" :renderEmpty="renderEmpty">
+<KtTableLegacy :rows="[]" :renderEmpty="renderEmpty">
 	<KtTableColumn label="Name" prop="name" />
 	<KtTableColumn label="Date" prop="date" />
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -744,19 +744,19 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 <CodePreview vueSlotLabel="Loading Slot" styleSlotLabel="html">
 <div slot="vue">
-<KtTable :rows="rows" :columns="columnsDefault" loading>
+<KtTableLegacy :rows="rows" :columns="columnsDefault" loading>
 	<div slot="loading">
 		Custom loading via slot
 	</div>
-</KtTable>
+</KtTableLegacy>
 </div>
 
 <div slot="style">
 
 ```html
-<KtTable :rows="rows" :columns="columnsDefault" loading>
+<KtTableLegacy :rows="rows" :columns="columnsDefault" loading>
 	<div slot="loading">Custom loading via slot</div>
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -764,22 +764,22 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 <CodePreview vueSlotLabel="Empty Slot" styleSlotLabel="html">
 <div slot="vue">
-<KtTable :rows="emptyRows" :columns="columnsDefault">
+<KtTableLegacy :rows="emptyRows" :columns="columnsDefault">
 	<div slot="empty">
 		Custom empty via slot
 	</div>
-</KtTable>
+</KtTableLegacy>
 </div>
 <div slot="vue">
-<KtTable :rows="emptyRows" :columns="columnsDefault" emptyText="Custom empty via prop"/>
+<KtTableLegacy :rows="emptyRows" :columns="columnsDefault" emptyText="Custom empty via prop"/>
 </div>
 
 <div slot="style">
 
 ```html
-<KtTable :rows="emptyRows" :columns="columns">
+<KtTableLegacy :rows="emptyRows" :columns="columns">
 	<div slot="empty">Custom empty via slot</div>
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -787,7 +787,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 <CodePreview vueSlotLabel="header/default slots" styleSlotLabel="html">
 <div slot="vue">
-<KtTable :rows="rows">
+<KtTableLegacy :rows="rows">
 <KtTableColumn
 	label="Name"
 	prop="name"
@@ -805,13 +805,13 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 	/>
 </div>
 </KtTableColumn>
-</KtTable>
+</KtTableLegacy>
 
 </div>
 <div slot="style">
 
 ```html
-<KtTable :rows="rows">
+<KtTableLegacy :rows="rows">
 	<KtTableColumn label="Name" prop="name">
 		<div slot="header" slot-scope="{ value, columnIndex }">
 			<div v-text="columnIndex + '::' + value"></div>
@@ -827,7 +827,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 			/>
 		</div>
 	</KtTableColumn>
-</KtTable>
+</KtTableLegacy>
 ```
 
 </div>
@@ -841,9 +841,9 @@ While `ref` may work if your modifications are in the _same_ component, your con
 For that purpose, we introduce `KtTableProvider`/`KtTableConsumer`. The provider exposes the `store`, from which you can access many props from the store.
 It also directly exposes `columns`, `filteredColumns`, `sortedColumns`, `hiddenColumns`, for faster accesss, and methods: `hideColumn`, `showAllColumns`, `orderBeforeColumn`.
 
-`<KtTableProvider />` takes the same props as `<KtTable/>`.
+`<KtTableProvider />` takes the same props as `<KtTableLegacy/>`.
 
-`<KtTable />` can have an optional `id` prop that will allow the corresponding `<KtTableConsumer />` to select the same `id`.
+`<KtTableLegacy />` can have an optional `id` prop that will allow the corresponding `<KtTableConsumer />` to select the same `id`.
 Otherwise, all tables **under** the same provider will share the same store.
 
 _Notes_:
@@ -881,7 +881,7 @@ _Notes_:
 		</KtTableConsumer>
 	</div>
 	<div>
-		<KtTable :rows="rows" :columns="columnsHidden" useColumnDragToOrder/>
+		<KtTableLegacy :rows="rows" :columns="columnsHidden" useColumnDragToOrder/>
 	</div>
 </KtTableProvider>
 </div>
@@ -935,7 +935,7 @@ _Notes_:
 		</KtTableConsumer>
 	</div>
 	<div>
-		<KtTable :rows="rows" :columns="columnsHidden" useColumnDragToOrder />
+		<KtTableLegacy :rows="rows" :columns="columnsHidden" useColumnDragToOrder />
 	</div>
 </KtTableProvider>
 ```
@@ -1097,7 +1097,7 @@ import {
 	KtButton,
 	KtButtonGroup,
 	KtFieldText,
-	KtTable,
+	KtTableLegacy,
 	KtTableColumn,
 	KtTableConsumer,
 	KtTableProvider,
@@ -1119,14 +1119,14 @@ export default {
 		KtButton,
 		KtButtonGroup,
 		KtFieldText,
-		KtTable,
+		KtTableLegacy,
 		KtTableColumn,
 		KtTableConsumer,
 		KtTableProvider,
 	},
 	data() {
 		return {
-			component: KtTable,
+			component: KtTableLegacy,
 			Kotti,
 			select: [0, 1],
 			selected: [

@@ -6,7 +6,7 @@ import pick from 'lodash/pick.js'
 import property from 'lodash/property.js'
 
 import { IS_ASC, IS_DSC, PUBLIC_SORT_PROPS } from '../constants'
-import { KottiTable } from '../types'
+import { KottiTableLegacy } from '../types'
 
 import { setColumnsArray } from './column'
 import type { Store } from './types'
@@ -82,7 +82,7 @@ function orderBy(array: any, sortedColumns: any) {
 		let { sortOrder, sortBy = prop } = column
 
 		if (typeof sortOrder === 'string') {
-			sortOrder = sortOrder === KottiTable.Column.SortOrders.DESCENDING ? -1 : 1
+			sortOrder = sortOrder === KottiTableLegacy.Column.SortOrders.DESCENDING ? -1 : 1
 		} else {
 			sortOrder = sortOrder && sortOrder < 0 ? -1 : 1
 		}
@@ -150,7 +150,7 @@ export const mutations: Store.MutationComponents.Sort = {
 		if (isInsortOrder) {
 			state.sortedColumns.splice(index, 1)
 		}
-		column.sortOrder = KottiTable.Column.SortOrders.NONE
+		column.sortOrder = KottiTableLegacy.Column.SortOrders.NONE
 		store.commit('changeSortConditions', { column })
 	},
 	setSortedColumns(store, columns) {
@@ -161,7 +161,7 @@ export const mutations: Store.MutationComponents.Sort = {
 		const { column, order } = options
 		setSortedColumn(store.state, column)
 		column.sortOrder = order || getNextSortOrder(column)
-		if (column.sortOrder === KottiTable.Column.SortOrders.NONE) {
+		if (column.sortOrder === KottiTableLegacy.Column.SortOrders.NONE) {
 			store.commit('removeSortedColumn', column)
 		} else {
 			store.commit('changeSortConditions', { column })
@@ -179,7 +179,7 @@ export const getters: Store.GetterComponents.Sort = {
 	},
 	isSorted(state: any, column: any) {
 		column = getSortedColumn(state, column)
-		return column && column.sortOrder !== KottiTable.Column.SortOrders.NONE
+		return column && column.sortOrder !== KottiTableLegacy.Column.SortOrders.NONE
 	},
 	isSortedByAsc(state: any, column: any) {
 		column = getSortedColumn(state, column)

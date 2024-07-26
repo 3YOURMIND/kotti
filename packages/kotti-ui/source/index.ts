@@ -90,12 +90,12 @@ export * from './kotti-popover'
 import { KtRow } from './kotti-row'
 export * from './kotti-row'
 import {
-	KtTable,
+	KtTableLegacy,
 	KtTableColumn,
 	KtTableProvider,
 	KtTableConsumer,
-} from './kotti-table'
-export * from './kotti-table'
+} from './kotti-table-legacy'
+export * from './kotti-table-legacy'
 import { KtTag } from './kotti-tag'
 export * from './kotti-tag'
 import { KtToaster } from './kotti-toaster'
@@ -159,7 +159,7 @@ export default {
 			KtPopover,
 			KtRow,
 			KtSplitButton,
-			KtTable,
+			KtTableLegacy,
 			KtTableColumn,
 			KtTableConsumer,
 			KtTableProvider,

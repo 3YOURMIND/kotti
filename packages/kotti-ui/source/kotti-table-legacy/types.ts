@@ -1,7 +1,7 @@
 import type { CreateElement, VNode, VNodeChildren } from 'vue'
 import type { Store } from './logic/types'
 
-export module KottiTable {
+export module KottiTableLegacy {
 	export module Column {
 		export enum Align {
 			CENTER = 'center',
@@ -136,7 +136,7 @@ export module KottiTable {
 	}
 
 	export module Provider {
-		export type Props = KottiTable.Props
+		export type Props = KottiTableLegacy.Props
 	}
 
 	export module Row {

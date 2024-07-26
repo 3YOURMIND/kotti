@@ -9,7 +9,7 @@ export const TableColumnsStateMixin = {
 			default: {
 				get store(): void {
 					throw new Error(
-						'tried to capture table state without KtTable or KtTableProvider',
+						'tried to capture table state without KtTableLegacy or KtTableProvider',
 					)
 				},
 			},

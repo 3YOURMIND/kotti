@@ -2,7 +2,7 @@
 import pick from 'lodash/pick.js'
 
 import { KT_TABLE_STATE_PROVIDER } from './constants'
-import KtTable, { INITIAL_TABLE_STORE_PROPS } from './KtTable.vue'
+import KtTableLegacy, { INITIAL_TABLE_STORE_PROPS } from './KtTableLegacy.vue'
 import { TableStore } from './logic/store'
 import type { CreateElement } from 'vue'
 
@@ -12,7 +12,7 @@ let tableProviderIdSeed = 1
 export const KtTableProvider: any = {
 	name: 'KtTableProvider',
 	components: {},
-	props: { ...KtTable.props, rows: Array },
+	props: { ...KtTableLegacy.props, rows: Array },
 	data(): any {
 		const defaultStore = new TableStore(
 			this,
