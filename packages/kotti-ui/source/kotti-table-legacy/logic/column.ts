@@ -24,7 +24,9 @@ export function getColumnIndex(state: Store.State, columnProp: string): number {
 	const columnInStore = state._columns[columnProp]
 
 	if (!columnInStore?.index)
-		throw new Error(`Could not find column ${columnProp} in KtTableLegacy Store`)
+		throw new Error(
+			`Could not find column ${columnProp} in KtTableLegacy Store`,
+		)
 
 	return columnInStore.index
 }

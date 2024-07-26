@@ -91,7 +91,7 @@ import { KtRow } from './kotti-row'
 export * from './kotti-row'
 import {
 	KtTableLegacy,
-	KtTableColumn,
+	KtTableLegacyColumn,
 	KtTableProvider,
 	KtTableConsumer,
 } from './kotti-table-legacy'
@@ -160,7 +160,7 @@ export default {
 			KtRow,
 			KtSplitButton,
 			KtTableLegacy,
-			KtTableColumn,
+			KtTableLegacyColumn,
 			KtTableConsumer,
 			KtTableProvider,
 			KtTag,

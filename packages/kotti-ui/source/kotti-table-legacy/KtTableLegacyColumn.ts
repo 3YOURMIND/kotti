@@ -26,8 +26,8 @@ function updateColumnsfor(prop: any) {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const KtTableColumn: any = {
-	name: 'KtTableColumn',
+export const KtTableLegacyColumn: any = {
+	name: 'KtTableLegacyColumn',
 	inheritAttrs: false,
 	props: {
 		index: { required: false, type: Number },
@@ -123,7 +123,7 @@ function createColumn(column: any = {}) {
 		columnIdSeed++
 	}
 	// eslint-disable-next-line no-param-reassign
-	column = pick(column, [...Object.keys(KtTableColumn.props), '$attrs'])
+	column = pick(column, [...Object.keys(KtTableLegacyColumn.props), '$attrs'])
 
 	column.sortOrder = column.sortOrder || KottiTableLegacy.Column.SortOrders.NONE
 	column.sortOrders =

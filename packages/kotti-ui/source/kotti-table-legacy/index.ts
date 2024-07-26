@@ -3,7 +3,7 @@ import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtTableLegacyVue from './KtTableLegacy.vue'
-import { KtTableColumn as KtTableColumnVue } from './KtTableColumn'
+import { KtTableLegacyColumn as KtTableLegacyColumnVue } from './KtTableLegacyColumn'
 import { KtTableConsumer as KtTableConsumerVue } from './KtTableConsumer'
 import { KtTableProvider as KtTableProviderVue } from './KtTableProvider'
 
@@ -49,7 +49,10 @@ const META: Kotti.Meta = {
 }
 
 export const KtTableLegacy = attachMeta(makeInstallable(KtTableLegacyVue), META)
-export const KtTableColumn = attachMeta(makeInstallable(KtTableColumnVue), META)
+export const KtTableLegacyColumn = attachMeta(
+	makeInstallable(KtTableLegacyColumnVue),
+	META,
+)
 export const KtTableProvider = attachMeta(
 	makeInstallable(KtTableProviderVue),
 	META,
