@@ -9,7 +9,11 @@ import { KtTableLegacyProvider as KtTableLegacyProviderVue } from './KtTableLega
 
 const META: Kotti.Meta = {
 	addedVersion: '0.0.1',
-	deprecated: null,
+	deprecated: {
+		alternatives: [],
+		reason: 'to be replaced by KtTable v2.0',
+		version: '8.0.0',
+	},
 	designs: {
 		type: MetaDesignType.FIGMA,
 		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=128%3A0',
