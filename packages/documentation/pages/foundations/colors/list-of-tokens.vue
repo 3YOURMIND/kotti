@@ -11,10 +11,10 @@ We encourage you to replace usage of kotti colors with kotti color tokens.
 This list is automatically generated so you can consider it a source of truth.
 
 <KtTableLegacy :rows="tokenColorsFactory.array" class="colorize">
-  <KtTableColumn label="Name" :renderCell="renderColorVar" prop="name"/>
-  <KtTableColumn label="Refers to" :renderCell="renderColorVar" prop="reference"/>
-  <KtTableColumn label="Color" prop="" :renderCell="renderColor"/>
-  <KtTableColumn label="Description" prop="description"/>
+  <KtTableLegacyColumn label="Name" :renderCell="renderColorVar" prop="name"/>
+  <KtTableLegacyColumn label="Refers to" :renderCell="renderColorVar" prop="reference"/>
+  <KtTableLegacyColumn label="Color" prop="" :renderCell="renderColor"/>
+  <KtTableLegacyColumn label="Description" prop="description"/>
 </KtTableLegacy>
 
 ## CSS custom properties generated

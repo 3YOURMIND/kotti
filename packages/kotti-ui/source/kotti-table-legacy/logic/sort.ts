@@ -82,7 +82,8 @@ function orderBy(array: any, sortedColumns: any) {
 		let { sortOrder, sortBy = prop } = column
 
 		if (typeof sortOrder === 'string') {
-			sortOrder = sortOrder === KottiTableLegacy.Column.SortOrders.DESCENDING ? -1 : 1
+			sortOrder =
+				sortOrder === KottiTableLegacy.Column.SortOrders.DESCENDING ? -1 : 1
 		} else {
 			sortOrder = sortOrder && sortOrder < 0 ? -1 : 1
 		}
@@ -179,7 +180,9 @@ export const getters: Store.GetterComponents.Sort = {
 	},
 	isSorted(state: any, column: any) {
 		column = getSortedColumn(state, column)
-		return column && column.sortOrder !== KottiTableLegacy.Column.SortOrders.NONE
+		return (
+			column && column.sortOrder !== KottiTableLegacy.Column.SortOrders.NONE
+		)
 	},
 	isSortedByAsc(state: any, column: any) {
 		column = getSortedColumn(state, column)

@@ -79,21 +79,21 @@ _For better performance in complex operations_, define a `rowKey` to index each 
 
 ## Declarative form
 
-The `columns` property can be written as nested children of the table components using `<KtTableColumn />`.
+The `columns` property can be written as nested children of the table components using `<KtTableLegacyColumn />`.
 
-All props that a column takes, the KtTableColumn component takes, as well, with the exception of `key`
+All props that a column takes, the KtTableLegacyColumn component takes, as well, with the exception of `key`
 
 `prop` is required
 
 <KtTableLegacy :rows="rows" >
-	<KtTableColumn label="Name" prop="name"/>
-	<KtTableColumn label="Address" prop="address.line"/>
+	<KtTableLegacyColumn label="Name" prop="name"/>
+	<KtTableLegacyColumn label="Address" prop="address.line"/>
 </KtTableLegacy>
 
 ```html
 <KtTableLegacy :rows="rows">
-	<KtTableColumn label="Name" prop="name" />
-	<KtTableColumn label="Address" prop="address.line" />
+	<KtTableLegacyColumn label="Name" prop="name" />
+	<KtTableLegacyColumn label="Address" prop="address.line" />
 </KtTableLegacy>
 ```
 
@@ -281,17 +281,17 @@ methods: {
 You can order Columns, by dragging, if you use the `useColumnDragToOrder` flag
 
 <KtTableLegacy :rows="rows" useColumnDragToOrder >
-	<KtTableColumn
+	<KtTableLegacyColumn
 		label="Avatar"
 		prop="name"
 		:renderCell="renderCell"
 	/>
-	<KtTableColumn
+	<KtTableLegacyColumn
 		label="Date"
 		prop="date"
 		:formatter="formatDate"
 	/>
-	<KtTableColumn
+	<KtTableLegacyColumn
 		label="Address"
 		prop="address.line"
 	/>
@@ -299,9 +299,9 @@ You can order Columns, by dragging, if you use the `useColumnDragToOrder` flag
 
 ```html
 <KtTableLegacy :rows="rows" useColumnDragToOrder>
-	<KtTableColumn label="Avatar" prop="name" :renderCell="renderCell" />
-	<KtTableColumn label="Date" prop="date" :formatter="formatDate" />
-	<KtTableColumn label="Address" prop="address.line" />
+	<KtTableLegacyColumn label="Avatar" prop="name" :renderCell="renderCell" />
+	<KtTableLegacyColumn label="Date" prop="date" :formatter="formatDate" />
+	<KtTableLegacyColumn label="Address" prop="address.line" />
 </KtTableLegacy>
 ```
 
@@ -313,32 +313,32 @@ To enable sorting, you must do BOTH the following:
 - add `sortable` to any column definition (the ones to enable sorting for).
 
 <KtTableLegacy :rows="rows" useQuickSortControl >
-	<KtTableColumn label="Name" prop="name" sortable />
-	<KtTableColumn label="Date" prop="date"/>
-	<KtTableColumn label="Address" prop="address.line"/>
+	<KtTableLegacyColumn label="Name" prop="name" sortable />
+	<KtTableLegacyColumn label="Date" prop="date"/>
+	<KtTableLegacyColumn label="Address" prop="address.line"/>
 </KtTableLegacy>
 
 ```html
 <KtTableLegacy :rows="rows" useQuickSortControl>
-	<KtTableColumn label="Name" prop="name" sortable />
-	<KtTableColumn label="Date" prop="date" />
-	<KtTableColumn label="Address" prop="address.line" />
+	<KtTableLegacyColumn label="Name" prop="name" sortable />
+	<KtTableLegacyColumn label="Date" prop="date" />
+	<KtTableLegacyColumn label="Address" prop="address.line" />
 </KtTableLegacy>
 ```
 
 If you want to allow sorting for all columns excluding one, you can set `sortable="all"` on the `<KtTableLegacy/>`
 
 <KtTableLegacy :rows="rows" useQuickSortControl sortable="all">
-	<KtTableColumn label="Name" prop="name"/>
-	<KtTableColumn label="Date" prop="date"/>
-	<KtTableColumn label="Address" prop="address.line" :sortable="false"/>
+	<KtTableLegacyColumn label="Name" prop="name"/>
+	<KtTableLegacyColumn label="Date" prop="date"/>
+	<KtTableLegacyColumn label="Address" prop="address.line" :sortable="false"/>
 </KtTableLegacy>
 
 ```html
 <KtTableLegacy :rows="rows" useQuickSortControl sortable="all">
-	<KtTableColumn label="Name" prop="name" />
-	<KtTableColumn label="Date" prop="date" />
-	<KtTableColumn label="Address" prop="address.line" :sortable="false" />
+	<KtTableLegacyColumn label="Name" prop="name" />
+	<KtTableLegacyColumn label="Date" prop="date" />
+	<KtTableLegacyColumn label="Address" prop="address.line" :sortable="false" />
 </KtTableLegacy>
 ```
 
@@ -347,22 +347,22 @@ If you want to allow sorting for all columns excluding one, you can set `sortabl
 It's possible to customize your sorting experience by using the column's `sortMethod`, `sortBy` and `sortOrders`
 
 <KtTableLegacy :rows="rows" useQuickSortControl sortable="all">
-	<KtTableColumn label="Name" prop="name" :sortOrders="['descending', 'ascending', undefined]"/>
-	<KtTableColumn label="Date" prop="date" :sortMethod="sortDate" />
-	<KtTableColumn label="Address" prop="address.line" :sortBy="['address.number', byAddressLine]"/>
+	<KtTableLegacyColumn label="Name" prop="name" :sortOrders="['descending', 'ascending', undefined]"/>
+	<KtTableLegacyColumn label="Date" prop="date" :sortMethod="sortDate" />
+	<KtTableLegacyColumn label="Address" prop="address.line" :sortBy="['address.number', byAddressLine]"/>
 </KtTableLegacy>
 
 ```html
 <KtTableLegacy :rows="rows" useQuickSortControl sortable="all">
-	<KtTableColumn
+	<KtTableLegacyColumn
 		label="Name"
 		prop="name"
 		:sortOrders="['descending', 'ascending', undefined]"
 	/>
 	<!-- On click, change the next sort order -->
-	<KtTableColumn label="Date" prop="date" :sortMethod="sortDate" />
+	<KtTableLegacyColumn label="Date" prop="date" :sortMethod="sortDate" />
 	<!-- use custom compare function -->
-	<KtTableColumn
+	<KtTableLegacyColumn
 		label="Address"
 		prop="address.line"
 		:sortBy="['address.number', byAddressLine]"
@@ -403,7 +403,7 @@ Sorting _resolution_ is handled the same way as sortBy for each column, i.e.: if
 
 You can pass to KtTableLegacy an array of `sortedColumns` of the form `[{ prop, sortOrder }]`
 
-You can also initialize the table to be already sorted, by setting the `sortOrder` prop for one of the columns: `<KtTableColumn :sortOrder="1" prop="name" />`
+You can also initialize the table to be already sorted, by setting the `sortOrder` prop for one of the columns: `<KtTableLegacyColumn :sortOrder="1" prop="name" />`
 
 ### Remote Sorting
 
@@ -433,10 +433,14 @@ To sort remotly:
 	remoteSort
 	@sortChange="sort"
 >
-	<KtTableColumn label="Name" prop="name" />
+	<KtTableLegacyColumn label="Name" prop="name" />
 	<!-- sortBy in this case is "name" since it is the `prop` -->
-	<KtTableColumn label="Date" prop="date" sortBy="order_date" />
-	<KtTableColumn label="Address" prop="address.line" sortBy="address_line" />
+	<KtTableLegacyColumn label="Date" prop="date" sortBy="order_date" />
+	<KtTableLegacyColumn
+		label="Address"
+		prop="address.line"
+		sortBy="address_line"
+	/>
 </KtTableLegacy>
 ```
 
@@ -576,7 +580,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 - `renderExpand` &rarr; alternative to the `expand` slot.
 - `renderActions` &rarr; alternative to the `actions` slot.
 
-`<KtTableColumn />` supports the following render props:
+`<KtTableLegacyColumn />` supports the following render props:
 
 - `formatter` &rarr; which applies formatting to the cell (somewhat similar to what you would consider as a `computed`)
 - `renderHeader` &rarr; custom render fn, to render a custom element in the header of the column. Instead you can use, slot='header'
@@ -590,13 +594,13 @@ It is possible to customize parts (columns) of the table by passing your own ren
 		expandMultiple
 		:renderActions="renderActions"
 	>
-		<KtTableColumn
+		<KtTableLegacyColumn
 			label="Name"
 			prop="name"
 			:renderHeader="renderHeader"
 			:renderCell="renderCell"
 		/>
-		<KtTableColumn
+		<KtTableLegacyColumn
 			label="Date"
 			prop="date"
 			:formatter="formatDate"
@@ -613,13 +617,13 @@ It is possible to customize parts (columns) of the table by passing your own ren
 	expandMultiple
 	:renderActions="renderActions"
 >
-	<KtTableColumn
+	<KtTableLegacyColumn
 		label="Name"
 		prop="name"
 		:renderHeader="renderHeader"
 		:renderCell="renderCell"
 	/>
-	<KtTableColumn label="Date" prop="date" :formatter="formatDate" />
+	<KtTableLegacyColumn label="Date" prop="date" :formatter="formatDate" />
 </KtTableLegacy>
 ```
 
@@ -679,11 +683,11 @@ It is possible to customize parts (columns) of the table by passing your own ren
 		:renderLoading="renderLoading"
 		loading
 		>
-		<KtTableColumn
+		<KtTableLegacyColumn
 			label="Name"
 			prop="name"
 		/>
-		<KtTableColumn
+		<KtTableLegacyColumn
 			label="Date"
 			prop="date"
 		/>
@@ -694,8 +698,8 @@ It is possible to customize parts (columns) of the table by passing your own ren
 
 ```html
 <KtTableLegacy :rows="rows" :renderLoading="renderLoading" loading>
-	<KtTableColumn label="Name" prop="name" />
-	<KtTableColumn label="Date" prop="date" />
+	<KtTableLegacyColumn label="Name" prop="name" />
+	<KtTableLegacyColumn label="Date" prop="date" />
 </KtTableLegacy>
 ```
 
@@ -708,11 +712,11 @@ It is possible to customize parts (columns) of the table by passing your own ren
 	:rows="[]"
 	:renderEmpty="renderEmpty"
 >
-	<KtTableColumn
+	<KtTableLegacyColumn
 		label="Name"
 		prop="name"
 	/>
-	<KtTableColumn
+	<KtTableLegacyColumn
 		label="Date"
 		prop="date"
 	/>
@@ -723,8 +727,8 @@ It is possible to customize parts (columns) of the table by passing your own ren
 
 ```html
 <KtTableLegacy :rows="[]" :renderEmpty="renderEmpty">
-	<KtTableColumn label="Name" prop="name" />
-	<KtTableColumn label="Date" prop="date" />
+	<KtTableLegacyColumn label="Name" prop="name" />
+	<KtTableLegacyColumn label="Date" prop="date" />
 </KtTableLegacy>
 ```
 
@@ -788,7 +792,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 <CodePreview vueSlotLabel="header/default slots" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacy :rows="rows">
-<KtTableColumn
+<KtTableLegacyColumn
 	label="Name"
 	prop="name"
 >
@@ -804,7 +808,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 		:size="Kotti.Avatar.Size.SMALL"
 	/>
 </div>
-</KtTableColumn>
+</KtTableLegacyColumn>
 </KtTableLegacy>
 
 </div>
@@ -812,7 +816,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 
 ```html
 <KtTableLegacy :rows="rows">
-	<KtTableColumn label="Name" prop="name">
+	<KtTableLegacyColumn label="Name" prop="name">
 		<div slot="header" slot-scope="{ value, columnIndex }">
 			<div v-text="columnIndex + '::' + value"></div>
 		</div>
@@ -826,7 +830,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 				src="https://picsum.photos/200"
 			/>
 		</div>
-	</KtTableColumn>
+	</KtTableLegacyColumn>
 </KtTableLegacy>
 ```
 
@@ -1098,7 +1102,7 @@ import {
 	KtButtonGroup,
 	KtFieldText,
 	KtTableLegacy,
-	KtTableColumn,
+	KtTableLegacyColumn,
 	KtTableConsumer,
 	KtTableProvider,
 } from '@3yourmind/kotti-ui'
@@ -1120,7 +1124,7 @@ export default {
 		KtButtonGroup,
 		KtFieldText,
 		KtTableLegacy,
-		KtTableColumn,
+		KtTableLegacyColumn,
 		KtTableConsumer,
 		KtTableProvider,
 	},

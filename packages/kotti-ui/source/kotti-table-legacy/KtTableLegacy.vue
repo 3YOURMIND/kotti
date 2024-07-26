@@ -7,7 +7,7 @@
 			<!-- NOTE: As the column prop should be the source of truth in case of conflict -->
 			<!-- the prop columns need to be added after the columns from the slot. -->
 			<!-- @vue-expect-error -->
-			<KtTableColumn
+			<KtTableLegacyColumn
 				v-for="(column, index) in formattedColumns"
 				:key="`${column.prop}_${index}`"
 				v-bind="column"
@@ -35,7 +35,7 @@ import {
 	KT_TABLE_STATE_PROVIDER,
 	DEFAULT_DISABLE_ROW,
 } from './constants'
-import { KtTableColumn } from './KtTableColumn'
+import { KtTableLegacyColumn } from './KtTableLegacyColumn'
 import { TableStore } from './logic/store'
 import type { CreateElement, PropType } from 'vue'
 import type { KottiTableLegacy } from './types'
@@ -56,7 +56,7 @@ export const INITIAL_TABLE_STORE_PROPS = [
 export default {
 	name: 'KtTableLegacy',
 	components: {
-		KtTableColumn,
+		KtTableLegacyColumn,
 		TableBody,
 		TableHeader,
 	},
