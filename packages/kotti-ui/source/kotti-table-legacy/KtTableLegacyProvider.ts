@@ -9,8 +9,8 @@ import type { CreateElement } from 'vue'
 let tableProviderIdSeed = 1
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const KtTableProvider: any = {
-	name: 'KtTableProvider',
+export const KtTableLegacyProvider: any = {
+	name: 'KtTableLegacyProvider',
 	components: {},
 	props: { ...KtTableLegacy.props, rows: Array },
 	data(): any {
