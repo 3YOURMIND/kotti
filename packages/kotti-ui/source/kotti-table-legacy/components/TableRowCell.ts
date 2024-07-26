@@ -3,7 +3,7 @@ import type { PropType } from 'vue'
 import { computed, defineComponent, h, inject } from 'vue'
 
 import { KT_TABLE, KT_STORE } from '../constants'
-import { type KottiTable } from '../types'
+import { type KottiTableLegacy } from '../types'
 import type { Store } from '../logic/types'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -20,7 +20,7 @@ export const TableRowCell = defineComponent({
 		},
 		row: {
 			required: true,
-			type: Object as PropType<KottiTable.Row.Props>,
+			type: Object as PropType<KottiTableLegacy.Row.Props>,
 		},
 		rowIndex: {
 			required: true,
@@ -64,7 +64,7 @@ export const TableRowCell = defineComponent({
 				value: unknown
 				column: Store.StateComponents.ColumnRepresentation
 				columnIndex: number
-				row: KottiTable.Row.Props
+				row: KottiTableLegacy.Row.Props
 				rowIndex: number
 			},
 		) => {

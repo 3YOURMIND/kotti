@@ -5,7 +5,7 @@ import pickBy from 'lodash/pickBy.js'
 import Vue from 'vue'
 
 import { PUBLIC_COLUMN_PROPS } from '../constants'
-import { KottiTable } from '../types'
+import { KottiTableLegacy } from '../types'
 
 import { setFilteredColumn } from './filter'
 import { setHiddenColumn, getResolvedHiddenColumns } from './hide'
@@ -24,7 +24,7 @@ export function getColumnIndex(state: Store.State, columnProp: string): number {
 	const columnInStore = state._columns[columnProp]
 
 	if (!columnInStore?.index)
-		throw new Error(`Could not find column ${columnProp} in KtTable Store`)
+		throw new Error(`Could not find column ${columnProp} in KtTableLegacy Store`)
 
 	return columnInStore.index
 }
@@ -114,7 +114,7 @@ export const mutations: Store.MutationComponents.Column = {
 		})()
 		Vue.set(state._columns, newColumn.prop, newColumn)
 
-		if (newColumn.sortOrder !== KottiTable.Column.SortOrders.NONE) {
+		if (newColumn.sortOrder !== KottiTableLegacy.Column.SortOrders.NONE) {
 			setSortedColumn(state, newColumn)
 		}
 		if (newColumn.hidden === true) {

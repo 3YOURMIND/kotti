@@ -1,13 +1,13 @@
 import { computed, defineComponent, h, inject, type PropType } from 'vue'
 import { KT_TABLE, KT_STORE } from '../constants'
-import type { KottiTable } from '../types'
+import type { KottiTableLegacy } from '../types'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TableBodyExpandRow = defineComponent({
 	name: 'TableBodyExpandRow',
 	props: {
 		row: {
-			type: Object as PropType<KottiTable.Row.Props>,
+			type: Object as PropType<KottiTableLegacy.Row.Props>,
 			required: true,
 		},
 		rowIndex: {

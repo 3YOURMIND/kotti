@@ -8,7 +8,7 @@ import {
 	KT_STORE,
 	DEFAULT_RENDER_HEADER,
 } from './constants'
-import { KottiTable } from './types'
+import { KottiTableLegacy } from './types'
 import type { CreateElement } from 'vue'
 
 let columnIdSeed = 1
@@ -40,7 +40,7 @@ export const KtTableColumn: any = {
 		tdClass: { required: false, type: [String, Array, Object] },
 		thClass: { required: false, type: [String, Array, Object] },
 
-		align: { default: KottiTable.Column.Align.LEFT, type: String },
+		align: { default: KottiTableLegacy.Column.Align.LEFT, type: String },
 		maxWidth: { required: false, type: String },
 		minWidth: { required: false, type: String },
 		width: { default: 'auto', type: String },
@@ -50,12 +50,12 @@ export const KtTableColumn: any = {
 		sortBy: { required: false, type: [String, Function, Array] },
 		sortMethod: { default: null, type: Function },
 		sortOrder: {
-			default: KottiTable.Column.SortOrders.NONE,
+			default: KottiTableLegacy.Column.SortOrders.NONE,
 			type: [String, Number],
 		},
 		sortOrders: {
-			default: (): KottiTable.Column.SortOrders[] =>
-				Object.values(KottiTable.Column.SortOrders),
+			default: (): KottiTableLegacy.Column.SortOrders[] =>
+				Object.values(KottiTableLegacy.Column.SortOrders),
 			type: Array,
 		},
 		// whether this column is sortable, string means sortOrder is remote
@@ -125,9 +125,9 @@ function createColumn(column: any = {}) {
 	// eslint-disable-next-line no-param-reassign
 	column = pick(column, [...Object.keys(KtTableColumn.props), '$attrs'])
 
-	column.sortOrder = column.sortOrder || KottiTable.Column.SortOrders.NONE
+	column.sortOrder = column.sortOrder || KottiTableLegacy.Column.SortOrders.NONE
 	column.sortOrders =
-		column.sortOrders || Object.values(KottiTable.Column.SortOrders)
+		column.sortOrders || Object.values(KottiTableLegacy.Column.SortOrders)
 	column.formatter = column.formatter || ((value: any) => value)
 
 	column.id = columnId

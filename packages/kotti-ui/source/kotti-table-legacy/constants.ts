@@ -3,7 +3,7 @@
 import type { CreateElement, InjectionKey, VNodeChildren } from 'vue'
 import type { Vue as VueType } from 'vue/types/vue'
 
-import type { KottiTable } from './types'
+import type { KottiTableLegacy } from './types'
 import type { TypedEmit } from '../types/typed-emit'
 import type { TableStore } from './logic/store'
 import type { Store } from './logic/types'
@@ -18,7 +18,7 @@ interface KottiTableContext {
 			{
 				column: Store.StateComponents.ColumnRepresentation
 				columnIndex: number
-				row: KottiTable.Row.Props
+				row: KottiTableLegacy.Row.Props
 				rowIndex: number
 				value: unknown
 			},
@@ -40,8 +40,8 @@ interface KottiTableContext {
 	_renderActions: (
 		h: CreateElement,
 		payload: {
-			data: KottiTable.Row.Props
-			row: KottiTable.Row.Props
+			data: KottiTableLegacy.Row.Props
+			row: KottiTableLegacy.Row.Props
 			rowIndex: number
 		},
 	) => VNodeChildren
@@ -49,25 +49,25 @@ interface KottiTableContext {
 	_renderExpand: (
 		h: CreateElement,
 		payload: {
-			data: KottiTable.Row.Props
-			row: KottiTable.Row.Props
+			data: KottiTableLegacy.Row.Props
+			row: KottiTableLegacy.Row.Props
 			rowIndex: number
 		},
 	) => VNodeChildren
 	_renderLoading: (h: CreateElement) => VNodeChildren
 	colSpan: number
-	disableRow: KottiTable.Props['disableRow']
+	disableRow: KottiTableLegacy.Props['disableRow']
 	hasActions: boolean
-	headerClass: KottiTable.Props['headerClass']
+	headerClass: KottiTableLegacy.Props['headerClass']
 	isExpandable: boolean
-	isInteractive: KottiTable.Props['isInteractive']
-	isSelectable: KottiTable.Props['isSelectable']
+	isInteractive: KottiTableLegacy.Props['isInteractive']
+	isSelectable: KottiTableLegacy.Props['isSelectable']
 	loading: boolean
-	tdClasses: KottiTable.Props['tdClasses']
-	thClasses: KottiTable.Props['thClasses']
-	trClasses: KottiTable.Props['trClasses']
-	useColumnDragToOrder: KottiTable.Props['useColumnDragToOrder']
-	useQuickSortControl: KottiTable.Props['useQuickSortControl']
+	tdClasses: KottiTableLegacy.Props['tdClasses']
+	thClasses: KottiTableLegacy.Props['thClasses']
+	trClasses: KottiTableLegacy.Props['trClasses']
+	useColumnDragToOrder: KottiTableLegacy.Props['useColumnDragToOrder']
+	useQuickSortControl: KottiTableLegacy.Props['useQuickSortControl']
 }
 
 /**

@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { KT_TABLE, KT_STORE } from '../constants'
-import { KottiTable } from '../types'
+import { KottiTableLegacy } from '../types'
 import type { Store } from '../logic/types'
 import { computed, defineComponent, inject, ref } from 'vue'
 
@@ -113,7 +113,7 @@ export default defineComponent({
 			],
 			getThStyle: (column: Store.StateComponents.ColumnRepresentation) => ({
 				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-				textAlign: column.align ?? KottiTable.Column.Align.LEFT,
+				textAlign: column.align ?? KottiTableLegacy.Column.Align.LEFT,
 				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 				width: column.width ?? 'auto',
 			}),

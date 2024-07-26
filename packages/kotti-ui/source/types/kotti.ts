@@ -67,7 +67,7 @@ export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiPopover as Popover } from '../kotti-popover/types'
 export { KottiRow as Row } from '../kotti-row/types'
 export { KottiTag as Tag } from '../kotti-tag/types'
-export { KottiTable as Table } from '../kotti-table/types'
+export { KottiTableLegacy as TableLegacy } from '../kotti-table-legacy/types'
 export { KottiUserMenu as UserMenu } from '../kotti-user-menu/types'
 export { KottiValueLabel as ValueLabel } from '../kotti-value-label/types'
 

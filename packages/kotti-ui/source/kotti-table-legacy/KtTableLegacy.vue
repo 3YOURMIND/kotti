@@ -38,7 +38,7 @@ import {
 import { KtTableColumn } from './KtTableColumn'
 import { TableStore } from './logic/store'
 import type { CreateElement, PropType } from 'vue'
-import type { KottiTable } from './types'
+import type { KottiTableLegacy } from './types'
 
 let tableIdSeed = 1
 
@@ -54,7 +54,7 @@ export const INITIAL_TABLE_STORE_PROPS = [
 ] as const
 
 export default {
-	name: 'KtTable',
+	name: 'KtTableLegacy',
 	components: {
 		KtTableColumn,
 		TableBody,
@@ -79,7 +79,7 @@ export default {
 		// FIXME: Props should either be required or have a default
 		rowKey: {
 			required: false,
-			type: [String, Function] as PropType<KottiTable.RowKey>,
+			type: [String, Function] as PropType<KottiTableLegacy.RowKey>,
 		},
 		rows: { default: () => [], type: Array },
 		useColumnDragToOrder: { default: false, type: Boolean },
@@ -211,8 +211,8 @@ export default {
 			return (
 				h: CreateElement,
 				rowData: {
-					data: KottiTable.Row.Props
-					row: KottiTable.Row.Props
+					data: KottiTableLegacy.Row.Props
+					row: KottiTableLegacy.Row.Props
 					rowIndex: number
 				},
 			) => {
