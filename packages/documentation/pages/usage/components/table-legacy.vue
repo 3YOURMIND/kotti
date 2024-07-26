@@ -842,10 +842,10 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 Sometimes you may need to access the table's store and control it from outside.
 While `ref` may work if your modifications are in the _same_ component, your controller component may be elsewhere.
 
-For that purpose, we introduce `KtTableProvider`/`KtTableConsumer`. The provider exposes the `store`, from which you can access many props from the store.
+For that purpose, we introduce `KtTableLegacyProvider`/`KtTableConsumer`. The provider exposes the `store`, from which you can access many props from the store.
 It also directly exposes `columns`, `filteredColumns`, `sortedColumns`, `hiddenColumns`, for faster accesss, and methods: `hideColumn`, `showAllColumns`, `orderBeforeColumn`.
 
-`<KtTableProvider />` takes the same props as `<KtTableLegacy/>`.
+`<KtTableLegacyProvider />` takes the same props as `<KtTableLegacy/>`.
 
 `<KtTableLegacy />` can have an optional `id` prop that will allow the corresponding `<KtTableConsumer />` to select the same `id`.
 Otherwise, all tables **under** the same provider will share the same store.
@@ -860,7 +860,7 @@ _Notes_:
 
 <CodePreview vueSlotLabel="Consumer/Provider Table" styleSlotLabel="html">
 <div slot="vue">
-<KtTableProvider>
+<KtTableLegacyProvider>
 	<div>
 		<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
 			<div class="parts-edit-columns-filter__container">
@@ -887,12 +887,12 @@ _Notes_:
 	<div>
 		<KtTableLegacy :rows="rows" :columns="columnsHidden" useColumnDragToOrder/>
 	</div>
-</KtTableProvider>
+</KtTableLegacyProvider>
 </div>
 <div slot="style">
 
 ```html
-<KtTableProvider>
+<KtTableLegacyProvider>
 	<div>
 		<KtTableConsumer #default="{ columns, hideColumn, showAllColumns }">
 			<div class="parts-edit-columns-filter__container">
@@ -941,7 +941,7 @@ _Notes_:
 	<div>
 		<KtTableLegacy :rows="rows" :columns="columnsHidden" useColumnDragToOrder />
 	</div>
-</KtTableProvider>
+</KtTableLegacyProvider>
 ```
 
 </div>
@@ -1104,7 +1104,7 @@ import {
 	KtTableLegacy,
 	KtTableLegacyColumn,
 	KtTableConsumer,
-	KtTableProvider,
+	KtTableLegacyProvider,
 } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
 
@@ -1126,7 +1126,7 @@ export default {
 		KtTableLegacy,
 		KtTableLegacyColumn,
 		KtTableConsumer,
-		KtTableProvider,
+		KtTableLegacyProvider,
 	},
 	data() {
 		return {

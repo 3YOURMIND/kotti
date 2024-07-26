@@ -92,7 +92,7 @@ export * from './kotti-row'
 import {
 	KtTableLegacy,
 	KtTableLegacyColumn,
-	KtTableProvider,
+	KtTableLegacyProvider,
 	KtTableConsumer,
 } from './kotti-table-legacy'
 export * from './kotti-table-legacy'
@@ -162,7 +162,7 @@ export default {
 			KtTableLegacy,
 			KtTableLegacyColumn,
 			KtTableConsumer,
-			KtTableProvider,
+			KtTableLegacyProvider,
 			KtTag,
 			KtToaster,
 			KtUserMenu,
