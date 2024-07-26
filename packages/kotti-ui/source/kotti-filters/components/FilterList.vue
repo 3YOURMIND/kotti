@@ -13,16 +13,16 @@
 			:filter="filter"
 			:isFirstItem="index === 0"
 			:isLoading="isLoading"
-			@input="handleSetFilter(filter.key, $event)"
 			@remove="handleRemoveFilter(filter.key)"
+			@update:value="handleSetFilter(filter.key, $event)"
 		/>
 		<FilterRow
 			v-if="isAddingFilter"
 			:columnOptions="getColumnOptions()"
 			:dataTest="dataTest ? `${dataTest}.addingFilter` : null"
 			:isFirstItem="filters.length === 0"
-			@input="handleAddFilter"
 			@remove="handleCancelAddFilter"
+			@update:value="handleAddFilter"
 		/>
 	</div>
 </template>
@@ -66,7 +66,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	emits: ['endAddingFilter', 'input'],
+	emits: ['endAddingFilter', 'update:value'],
 	setup(props, { emit }) {
 		const currentFiltersKeys = computed<KottiFilters.InternalFilter['key'][]>(
 			() => props.filters.map((filter) => filter.key),
@@ -97,7 +97,7 @@ export default defineComponent({
 
 		const handleAddFilter = (filter: KottiFilters.InternalFilter) => {
 			const newFilter = getFilterInitialState(filter.key, props.columns)
-			emit('input', [...props.filters, newFilter])
+			emit('update:value', [...props.filters, newFilter])
 			emit('endAddingFilter')
 		}
 		const handleCancelAddFilter = () => {
@@ -109,7 +109,7 @@ export default defineComponent({
 			const updatedFilters = props.filters.filter(
 				(filter) => filter.key !== filterKey,
 			)
-			emit('input', updatedFilters)
+			emit('update:value', updatedFilters)
 		}
 		const handleSetFilter = (
 			oldFilterKey: KottiFilters.InternalFilter['key'],
@@ -122,7 +122,7 @@ export default defineComponent({
 			const updatedFilters = props.filters.map((oldFilter) =>
 				oldFilter.key === oldFilterKey ? updatedFilter : oldFilter,
 			)
-			emit('input', updatedFilters)
+			emit('update:value', updatedFilters)
 		}
 
 		return {

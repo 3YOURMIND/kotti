@@ -103,7 +103,7 @@
 							label="Component"
 							:options="componentOptions"
 							:value="settings.component"
-							@input="updateComponent"
+							@update:value="updateComponent"
 						/>
 						<KtFieldSingleSelect
 							formKey="decimalSeparator"

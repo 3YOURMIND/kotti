@@ -117,9 +117,8 @@
 <script lang="ts">
 import { Yoco } from '@3yourmind/yoco'
 import debounce from 'lodash/debounce.js'
-import type { PropType } from 'vue'
+import type { PropType, Slot } from 'vue'
 import { computed, defineComponent, ref } from 'vue'
-import type { VNode } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
@@ -143,7 +142,10 @@ export default defineComponent({
 		 * Used when clearing the field. Most likely either null or []
 		 */
 		getEmptyValue: { default: null, type: Function as PropType<() => unknown> },
-		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
+		helpTextSlot: {
+			default: undefined,
+			type: Function as PropType<Slot<undefined>>,
+		},
 		isComponent: { default: null, type: String as PropType<string | null> },
 		isRange: { default: false, type: Boolean },
 		useFieldset: { default: false, type: Boolean },
@@ -191,7 +193,7 @@ export default defineComponent({
 				focusInput()
 			},
 			hasHelpText: computed(
-				() => props.helpTextSlot.length > 0 || props.field.helpText !== null,
+				() => Boolean(props.helpTextSlot) || props.field.helpText !== null,
 			),
 			hasLabel: computed(() => props.field.label !== null),
 			iconClasses: computed(
@@ -486,5 +488,6 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		}
 	}
 }
+
 /* stylelint-enable selector-class-pattern */
 </style>

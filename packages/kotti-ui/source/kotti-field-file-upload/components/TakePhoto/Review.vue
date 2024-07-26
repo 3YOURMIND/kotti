@@ -35,12 +35,18 @@
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from 'vue'
 
+import { KtModal } from '../../../kotti-modal'
+import { KtButton } from '../../../kotti-button'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
 import { Shared } from '../../types'
 
 export default defineComponent({
 	name: 'ReviewPhoto',
+	components: {
+		KtButton,
+		KtModal,
+	},
 	props: makeProps(Shared.TakePhoto.reviewSchema),
 	emits: ['accept', 'close', 'reject'],
 	setup() {

@@ -1,4 +1,4 @@
-import type { Wrapper } from '@vue/test-utils'
+import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { defineComponent, ref } from 'vue'
@@ -10,7 +10,6 @@ import { KottiField } from '../kotti-field/types'
 import KtForm from '../kotti-form/KtForm.vue'
 import { useI18nProvide } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
-import { localVue } from '../test-utils/index'
 
 import KtFormControllerList from './KtFormControllerList.vue'
 
@@ -58,20 +57,19 @@ const TestControllerListForm = {
 		controllerProps: { required: true, type: Object },
 		formProps: { required: true, type: Object },
 	},
-	template: `<KtForm v-bind="formProps" @input="$event => $emit('input', $event)"><TestControllerList v-bind="controllerProps"/></KtForm>`,
+	template: `<KtForm v-bind="formProps" @update:value="$event => $emit('update:value', $event)"><TestControllerList v-bind="controllerProps"/></KtForm>`,
 }
 
 const getField = (
-	wrapper: Wrapper<any>,
+	wrapper: VueWrapper<any>,
 	index: number,
 ): KottiField.Hook.Returns<string | null> =>
-	(wrapper.findAllComponents({ name: 'KtField' }).at(index).vm as any).field
+	wrapper.findAllComponents({ name: 'KtField' }).at(index)?.vm.field
 
 describe('KtFormControllerList', () => {
 	it('provides context with nested data, and passes-down the other properties of the KtFormContext', () => {
 		const wrapper = mount(TestControllerListForm, {
-			localVue,
-			propsData: {
+			props: {
 				controllerProps: {
 					formKey: 'parentKey',
 				},
@@ -103,8 +101,7 @@ describe('KtFormControllerList', () => {
 
 	it('implements setValue properly', async () => {
 		const wrapper = mount(TestControllerListForm, {
-			localVue,
-			propsData: {
+			props: {
 				controllerProps: {
 					formKey: 'parentKey',
 				},
@@ -125,7 +122,7 @@ describe('KtFormControllerList', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('input')?.[0]).toEqual([
+		expect(wrapper.emitted('update:value')?.[0]).toEqual([
 			{
 				parentKey: [
 					{ testKey: 'testName1b', somethingElse: true },
@@ -139,7 +136,7 @@ describe('KtFormControllerList', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('input')?.[1]).toEqual([
+		expect(wrapper.emitted('update:value')?.[1]).toEqual([
 			{
 				parentKey: [
 					// testKey is still testName1a because @input is mocked
@@ -163,8 +160,7 @@ describe('KtFormControllerList', () => {
 			}
 
 			const wrapper = mount(TestControllerListForm, {
-				localVue,
-				propsData: {
+				props: {
 					controllerProps: { formKey: 'parentKey' },
 					formProps: FORM_PROPS,
 				},

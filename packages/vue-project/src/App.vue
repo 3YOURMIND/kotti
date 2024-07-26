@@ -3,17 +3,17 @@ import '@3yourmind/kotti-ui/dist/style.css'
 import '@3yourmind/yoco/style.css'
 
 import {
+	KtActionbar,
 	KtButton,
 	KtFieldDate,
 	KtFieldText,
 	KtFieldToggle,
 	KtForm,
-	KtNavbar,
-	KtActionbar,
-	KtUserMenu,
 	KtI18nContext,
+	KtNavbar,
+	KtUserMenu,
 } from '@3yourmind/kotti-ui'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const alerty = (some: string) => {
 	window.alert(some)
@@ -25,6 +25,8 @@ const formValue = ref({
 	isNice: false,
 })
 const isNarrow = ref(false)
+
+const toISODate = (d: Date) => d.toISOString().split('T')[0]
 </script>
 
 <template>
@@ -168,7 +170,34 @@ const isNarrow = ref(false)
 							<strong> Let me help you </strong>
 						</template>
 					</KtFieldText>
-					<KtFieldDate formKey="birthday" label="birthday">
+					<KtFieldDate
+						formKey="birthday"
+						label="birthday"
+						maximumDate="2024-07-28"
+						minimumDate="2024-07-10"
+						:shortcuts="[
+							{
+								label: 'Today',
+								value: toISODate(new Date()),
+							},
+							{
+								label: 'Yesterday',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24)
+									return toISODate(date)
+								})(),
+							},
+							{
+								label: 'A week ago',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+									return toISODate(date)
+								})(),
+							},
+						]"
+					>
 						<template #helpText>
 							<strong> Let me help you </strong>
 						</template>
@@ -180,8 +209,8 @@ const isNarrow = ref(false)
 					</KtFieldToggle>
 				</KtForm>
 			</main>
-		</div> </KtI18nContext
-	>locale
+		</div>
+	</KtI18nContext>
 </template>
 
 <style scoped>

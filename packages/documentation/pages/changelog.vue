@@ -127,7 +127,6 @@ export default defineComponent({
 			Endpoints['GET /repos/{owner}/{repo}/releases']['response']['data']
 		> = ref([])
 
-		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		onBeforeMount(async () => {
 			releases.value = (
 				await octokit.repos.listReleases({

@@ -8,7 +8,7 @@
 import { Yoco } from '@3yourmind/yoco'
 import type { UnwrapRef } from 'vue'
 import { defineComponent, computed, ref, watch, nextTick } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes } from '@vue/runtime-dom'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -74,7 +74,7 @@ export default defineComponent({
 		const userCursorPositionFromRight = ref<number | null>(null)
 
 		const setCursorPosition = (position: number | null) => {
-			nextTick(() => {
+			void nextTick(() => {
 				if (position === null || inputRef.value === null) return
 
 				const newPosition = inputRef.value.value.length - position

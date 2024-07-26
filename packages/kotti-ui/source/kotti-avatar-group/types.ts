@@ -25,6 +25,10 @@ export module KottiAvatarGroup {
 			items: z.array(itemSchema).refine(...refinementNonEmpty),
 		})
 
+	// export const propsSchema = z.object({
+	// 	items: z.array(itemSchema).refine(...refinementNonEmpty),
+	// })
+
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 }

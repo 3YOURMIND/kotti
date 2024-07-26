@@ -1,3 +1,4 @@
+import type { App } from 'vue'
 // styles
 import './kotti-style/index.scss'
 
@@ -32,9 +33,9 @@ import { KtFieldCurrency } from './kotti-field-currency'
 export * from './kotti-field-currency'
 import {
 	KtFieldDate,
-	KtFieldDateRange,
-	KtFieldDateTime,
-	KtFieldDateTimeRange,
+	// 	KtFieldDateRange,
+	// 	KtFieldDateTime,
+	// 	KtFieldDateTimeRange,
 } from './kotti-field-date'
 export * from './kotti-field-date'
 import {
@@ -63,8 +64,8 @@ import { KtFieldTextArea } from './kotti-field-text-area'
 export * from './kotti-field-text-area'
 import { KtFieldToggle, KtFieldToggleGroup } from './kotti-field-toggle'
 export * from './kotti-field-toggle'
-import { KtFilters } from './kotti-filters'
-export * from './kotti-filters'
+// import { KtFilters } from './kotti-filters'
+// export * from './kotti-filters'
 import { KtForm } from './kotti-form'
 export * from './kotti-form'
 import { KtFormControllerList } from './kotti-form-controller-list'
@@ -89,13 +90,6 @@ import { KtPopover } from './kotti-popover'
 export * from './kotti-popover'
 import { KtRow } from './kotti-row'
 export * from './kotti-row'
-import {
-	KtTable,
-	KtTableColumn,
-	KtTableProvider,
-	KtTableConsumer,
-} from './kotti-table'
-export * from './kotti-table'
 import { KtTag } from './kotti-tag'
 export * from './kotti-tag'
 import { KtToaster } from './kotti-toaster'
@@ -103,14 +97,12 @@ export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
 import { KtValueLabel } from './kotti-value-label'
-import type { VueConstructor } from 'vue'
 export * from './kotti-value-label'
 
 export * from './types'
 
 export default {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	install(Vue: VueConstructor): void {
+	install<T>(app: App<T>): void {
 		const components = [
 			KtAccordion,
 			KtActionbar,
@@ -128,9 +120,9 @@ export default {
 			KtField,
 			KtFieldCurrency,
 			KtFieldDate,
-			KtFieldDateRange,
-			KtFieldDateTime,
-			KtFieldDateTimeRange,
+			// KtFieldDateRange,
+			// KtFieldDateTime,
+			// KtFieldDateTimeRange,
 			KtFieldFileUpload,
 			KtFieldFileUploadRemote,
 			KtFieldInlineEdit,
@@ -145,7 +137,7 @@ export default {
 			KtFieldTextArea,
 			KtFieldToggle,
 			KtFieldToggleGroup,
-			KtFilters,
+			// KtFilters,
 			KtForm,
 			KtFormControllerList,
 			KtFormControllerObject,
@@ -159,36 +151,33 @@ export default {
 			KtPopover,
 			KtRow,
 			KtSplitButton,
-			KtTable,
-			KtTableColumn,
-			KtTableConsumer,
-			KtTableProvider,
 			KtTag,
 			KtToaster,
 			KtUserMenu,
 			KtValueLabel,
 		]
 		for (const component of components) {
-			Vue.use(component)
+			app.use(component, {})
 		}
 
-		const DEFAULT_YODIFY_DURATION = 3000
+		// TODO: rethink yodify for vue 3
+		// const DEFAULT_YODIFY_DURATION = 3000
+		//
+		// Vue.prototype.$yodifyBuffer = []
+		// Vue.prototype.$yodify = function ({
+		// 	duration = DEFAULT_YODIFY_DURATION,
+		// 	text,
+		// 	type = 'success',
+		// }: {
+		// 	duration: number
+		// 	text: string
+		// 	type: 'success' | 'error'
+		// }) {
+		// 	const notification = { duration, text, type }
 
-		Vue.prototype.$yodifyBuffer = []
-		Vue.prototype.$yodify = function ({
-			duration = DEFAULT_YODIFY_DURATION,
-			text,
-			type = 'success',
-		}: {
-			duration: number
-			text: string
-			type: 'success' | 'error'
-		}) {
-			const notification = { duration, text, type }
-
-			// buffer notifications if vue isn't ready
-			if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)
-			else this.$root.$emit('vue-yodify', notification)
-		}
+		// 	// buffer notifications if vue isn't ready
+		// 	if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)
+		// 	else this.$root.$emit('vue-yodify', notification)
+		// }
 	},
 }

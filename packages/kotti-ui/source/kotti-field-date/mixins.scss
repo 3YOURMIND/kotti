@@ -12,7 +12,7 @@
 }
 
 @mixin el-picker-shared {
-	.el-picker-panel__body-wrapper {
+	/* .el-picker-panel__body-wrapper {
 		display: flex;
 		flex: 4;
 		flex-direction: column-reverse;
@@ -359,7 +359,7 @@
 				}
 			}
 		}
-	}
+	} */
 
 	/**
 	 * Override styles to hide popper arrow

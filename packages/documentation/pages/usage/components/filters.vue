@@ -99,7 +99,7 @@
     					label="shortcuts"
     					:options="shortcutsOptions"
     					:value="selectedShortcuts"
-    					@input="onSelectedShortcutsChange"
+    					@update:value="onSelectedShortcutsChange"
     				/>
     				<KtFieldSingleSelect
     					formKey="currencyCurrency"

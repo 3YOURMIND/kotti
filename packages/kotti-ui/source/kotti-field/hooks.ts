@@ -131,7 +131,7 @@ const useValue = <DATA_TYPE>({
 				props.formKey === null ||
 				props.formKey === FORM_KEY_NONE
 			) {
-				emit('input', newValue)
+				emit('update:value', newValue)
 				return
 			}
 

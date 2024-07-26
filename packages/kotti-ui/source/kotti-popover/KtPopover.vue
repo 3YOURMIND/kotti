@@ -23,7 +23,7 @@
 							:isDisabled="option.isDisabled"
 							:isOptional="option.isOptional"
 							:value="option.isSelected"
-							@input="(() => handleItemSelection({ index, option }))()"
+							@update:value="(() => handleItemSelection({ index, option }))()"
 						>
 							<span v-text="option.label" />
 						</KtFieldToggle>

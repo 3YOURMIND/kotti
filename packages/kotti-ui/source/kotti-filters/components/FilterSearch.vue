@@ -8,7 +8,7 @@
 		:placeholder="placeholder"
 		size="small"
 		:value="searchValue"
-		@input="handleSetSearchValue"
+		@update:value="handleSetSearchValue"
 	/>
 </template>
 
@@ -46,12 +46,12 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	emits: ['input'],
+	emits: ['update:value'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
 		const handleSetSearchValue = (value: string) => {
-			emit('input', {
+			emit('update:value', {
 				...(props.filter ?? getSearchFilterInitialState(props.column)),
 				value,
 			})
