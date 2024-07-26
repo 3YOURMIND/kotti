@@ -15,17 +15,6 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"outDir": "dist",
-		"paths": {
-			/**
-			 * Without specifying this path, resolution of vue/types/v3-component-public-instance fails:
-			 * TS2742 is thrown, and is only fixable by manually importing specific vue/types files
-			 * wherever there is an indirect reference to one of the types.
-			 *
-			 * Either baseUrl is specified to point to root node_modules by setting it to '../../'
-			 * or the particular reference to vue imports is set on the paths option.
-			 */
-			"vue/*": ["../../node_modules/vue/*"]
-		},
 		"resolveJsonModule": true,
 		"rootDir": "source",
 		"skipLibCheck": true,
@@ -55,6 +44,6 @@
 	"vueCompilerOptions": {
 		"skipTemplateCodegen": true,
 		"strictTemplates": true,
-		"target": 2.7
+		"target": 3
 	}
 }

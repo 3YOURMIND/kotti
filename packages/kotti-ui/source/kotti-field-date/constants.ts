@@ -1,26 +1,26 @@
-import { Dashes } from '@metatypes/typography'
+// import { Dashes } from '@metatypes/typography'
 
 import type { KottiField } from '../kotti-field/types'
 
-const EL_SHARED_INTERNAL_PROPS = {
-	editable: true,
-}
+// const EL_SHARED_INTERNAL_PROPS = {
+// 	editable: true,
+// }
 
-export const EL_DATE_RANGE_PROPS = {
-	rangeSeparator: Dashes.EnDash,
-}
+// export const EL_DATE_RANGE_PROPS = {
+// 	rangeSeparator: Dashes.EnDash,
+// }
 
-export const EL_DATE_PROPS = {
-	...EL_SHARED_INTERNAL_PROPS,
-	format: 'yyyy-MM-dd',
-	valueFormat: 'yyyy-MM-dd',
-}
+// export const EL_DATE_PROPS = {
+// 	...EL_SHARED_INTERNAL_PROPS,
+// 	format: 'YYYY-MM-DD',
+// 	valueFormat: 'YYYY-MM-DD',
+// }
 
-export const EL_DATE_TIME_PROPS = {
-	...EL_SHARED_INTERNAL_PROPS,
-	format: 'yyyy-MM-dd HH:mm',
-	valueFormat: 'yyyy-MM-dd HH:mm:ss',
-}
+// export const EL_DATE_TIME_PROPS = {
+// 	...EL_SHARED_INTERNAL_PROPS,
+// 	format: 'yyyy-MM-dd HH:mm',
+// 	valueFormat: 'yyyy-MM-dd HH:mm:ss',
+// }
 
 /**
  * ISO8601

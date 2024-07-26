@@ -6,10 +6,10 @@
 .kt-field-date-range,
 .kt-field-datetime,
 .kt-field-datetime-range {
-	.el-date-editor > input,
+	/* .el-date-editor > input,
 	button {
 		border: none;
-	}
+	} */
 
 	.kt-field__input-container {
 		width: 100%;
@@ -19,7 +19,7 @@
 			margin-bottom: 0.4rem;
 		}
 
-		.el-date-editor {
+		/* .el-date-editor {
 			width: 100%;
 
 			&--date,
@@ -65,7 +65,7 @@
 				margin: 0;
 				line-height: 1.6;
 			}
-		}
+		} */
 	}
 }
 
@@ -76,7 +76,7 @@ $td-diameter: 1.5rem;
 $year-font-size: 1rem;
 
 .el-picker-panel {
-	@include el-popper {
+	/* @include el-popper {
 		> * a {
 			color: var(--link-02);
 		}
@@ -87,14 +87,14 @@ $year-font-size: 1rem;
 			// thus, has &__footer as a child
 			flex-direction: column;
 		}
-	}
+	} */
 
 	// SHARED PICKER STYLES
 	@include el-picker-shared;
 
 	// RANGE PICKERS SPECIFIC STYLES
 
-	&.el-date-range-picker {
+	/* &.el-date-range-picker {
 		.el-picker-panel__body {
 			flex-wrap: wrap;
 
@@ -403,5 +403,5 @@ $year-font-size: 1rem;
 				background-color: transparent;
 			}
 		}
-	}
+	} */
 }

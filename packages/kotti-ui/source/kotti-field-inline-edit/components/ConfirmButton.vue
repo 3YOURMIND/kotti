@@ -8,11 +8,15 @@
 </template>
 
 <script lang="ts">
+import { KtButton } from '../../kotti-button'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'ConfirmButton',
+	components: {
+		KtButton,
+	},
 	props: {
 		tabIndex: { type: Number, default: 0 },
 		dataTest: { type: String, default: null },

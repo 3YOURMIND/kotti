@@ -7,7 +7,7 @@
 		:size="KottiField.Size.SMALL"
 		style="display: contents"
 		:value="filter"
-		@input="handleSetFilter"
+		@update:value="handleSetFilter"
 	>
 		<div class="kt-filter-row__wrapper">
 			<span class="kt-filter-row__label" v-text="label" />
@@ -107,7 +107,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	emits: ['input', 'remove'],
+	emits: ['update:value', 'remove'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
@@ -120,19 +120,19 @@ export default defineComponent({
 		}
 		const handleSetFilter = (newFilter: KottiFilters.InternalFilter) => {
 			if (!props.column) {
-				emit('input', newFilter)
+				emit('update:value', newFilter)
 				return
 			}
 
 			if (isEmptyOperation(newFilter.operation, props.column.type)) {
-				emit('input', {
+				emit('update:value', {
 					...newFilter,
 					value: getFilterEmptyValue(props.column.type),
 				})
 				return
 			}
 
-			emit('input', newFilter)
+			emit('update:value', newFilter)
 		}
 
 		return {

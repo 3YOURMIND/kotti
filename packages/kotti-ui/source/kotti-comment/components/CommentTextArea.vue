@@ -69,7 +69,7 @@ import { KottiComment } from '../types'
 export default defineComponent({
 	name: 'CommentTextArea',
 	props: makeProps(KottiComment.TextArea.schema),
-	emits: ['cancel', 'confirm', 'input', 'toggleInternal'],
+	emits: ['cancel', 'confirm', 'update:value', 'toggleInternal'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
@@ -130,7 +130,7 @@ export default defineComponent({
 				blurTextarea()
 			},
 			onInput: (event: Event) => {
-				emit('input', (event.target as HTMLTextAreaElement).value)
+				emit('update:value', (event.target as HTMLTextAreaElement).value)
 			},
 			onToggleInternal: () => {
 				emit('toggleInternal')

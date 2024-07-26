@@ -62,7 +62,7 @@ import {
 	onUnmounted,
 	nextTick,
 } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes } from '@vue/runtime-dom'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate, useInput } from '../kotti-field/hooks'
@@ -90,7 +90,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldNumber.propsSchema),
-	emits: ['blur', 'input'],
+	emits: ['blur', 'update:value'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
@@ -392,7 +392,7 @@ export default defineComponent({
 						? null
 						: lastUserSetCursorPosition.value - (isTypedNumberValid ? 0 : 1)
 
-				nextTick(() => {
+				void nextTick(() => {
 					setCursorPosition(newCursorPosition)
 				})
 			},

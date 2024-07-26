@@ -113,7 +113,7 @@
 									isOptional
 									label="Show First Name First"
 									:value="formObjectValues.firstNameFirst"
-									@input="
+									@update:value="
 										setValues({
 											...formObjectValues,
 											firstNameFirst: !formObjectValues.firstNameFirst,
