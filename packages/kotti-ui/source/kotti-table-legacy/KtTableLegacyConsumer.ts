@@ -2,8 +2,8 @@
 import { TableColumnsStateMixin } from './mixins'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const KtTableConsumer: any = {
-	name: 'KtTableConsumer',
+const KtTableLegacyConsumer: any = {
+	name: 'KtTableLegacyConsumer',
 	mixins: [TableColumnsStateMixin],
 	props: {
 		id: { default: null, type: String },
@@ -43,4 +43,4 @@ const KtTableConsumer: any = {
 	},
 }
 
-export { KtTableConsumer }
+export { KtTableLegacyConsumer }
