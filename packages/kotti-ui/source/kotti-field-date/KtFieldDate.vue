@@ -8,12 +8,18 @@
 	>
 		<template #container>
 			<div ref="inputContainerRef" class="kt-field__input-container">
-				<!-- <ElDatePicker
-					style="display: none"
-					ref="elDateRef"
-					v-bind="elDatePickerProps"
+				<!-- v-bind="elDatePickerProps" -->
+				<VueDatePicker
+					:enableTimePicker="false"
+					modelType="yyyy-MM-dd"
+					format="yyyy-MM-dd"
+					autoApply
+					:modelValue="field.currentValue"
 					@update:modelValue="onInput"
-				/> -->
+				>
+					...
+				</VueDatePicker>
+				i
 			</div>
 		</template>
 	</KtField>
@@ -21,6 +27,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import VueDatePicker from '@vuepic/vue-datepicker'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
@@ -40,6 +47,7 @@ export default defineComponent({
 	components: {
 		// ElDatePicker,
 		KtField,
+		VueDatePicker,
 	},
 	props: makeProps(KottiFieldDate.propsSchema),
 	setup(props, { emit }) {

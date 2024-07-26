@@ -163,13 +163,13 @@ const toISODate = (d: Date) => d.toISOString().split('T')[0]
 				]"
 			/>
 			<main class="workspace">
-				<KtButton label="hello" type="primary" @click="() => alerty('hello')" />
+				<!-- <KtButton label="hello" type="primary" @click="() => alerty('hello')" /> -->
 				<KtForm v-model:value="formValue">
-					<KtFieldText formKey="name" label="name">
+					<!-- <KtFieldText formKey="name" label="name">
 						<template #helpText>
 							<strong> Let me help you </strong>
 						</template>
-					</KtFieldText>
+					</KtFieldText> -->
 					<KtFieldDate
 						formKey="birthday"
 						label="birthday"
@@ -202,12 +202,13 @@ const toISODate = (d: Date) => d.toISOString().split('T')[0]
 							<strong> Let me help you </strong>
 						</template>
 					</KtFieldDate>
-					<KtFieldToggle formKey="isNice" label="toggle">
+					<!-- <KtFieldToggle formKey="isNice" label="toggle">
 						<template #helpText>
 							<strong> Let me help you </strong>
 						</template>
-					</KtFieldToggle>
+					</KtFieldToggle> -->
 				</KtForm>
+				<pre>{{ JSON.stringify(formValue, null, '\t') }}</pre>
 			</main>
 		</div>
 	</KtI18nContext>
