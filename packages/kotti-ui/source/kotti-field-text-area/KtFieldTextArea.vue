@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
+import type { TextareaHTMLAttributes } from '@vue/runtime-dom'
 import { computed, defineComponent, ref } from 'vue'
-import type { TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -47,7 +47,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldTextArea.propsSchema),
-	emits: ['input'],
+	emits: ['update:value'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldTextArea.Value>({
 			emit,

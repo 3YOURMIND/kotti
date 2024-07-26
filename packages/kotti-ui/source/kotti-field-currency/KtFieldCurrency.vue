@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
+import type { InputHTMLAttributes } from '@vue/runtime-dom'
 import type { UnwrapRef } from 'vue'
 import { computed, defineComponent, nextTick, ref, watch } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -75,7 +75,7 @@ export default defineComponent({
 		const userCursorPositionFromRight = ref<number | null>(null)
 
 		const setCursorPosition = (position: number | null) => {
-			nextTick(() => {
+			void nextTick(() => {
 				if (position === null || inputRef.value === null) return
 
 				const newPosition = inputRef.value.value.length - position

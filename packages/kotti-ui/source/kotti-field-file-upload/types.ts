@@ -326,10 +326,18 @@ export module KottiFieldFileUploadRemote {
 	}
 
 	export module FileItem {
-		export const schema = Shared.propsSchema.extend({
-			actions: actionsSchema,
-			fileInfo: fileInfoSchema,
-		})
+		export const schema = Shared.propsSchema
+			.pick({
+				dataTest: true,
+				extensions: true,
+				isDisabled: true,
+				isLoading: true,
+				maxFileSize: true,
+			})
+			.extend({
+				actions: actionsSchema,
+				fileInfo: fileInfoSchema,
+			})
 
 		export type Props = z.input<typeof schema>
 		export type PropsInternal = z.output<typeof schema>

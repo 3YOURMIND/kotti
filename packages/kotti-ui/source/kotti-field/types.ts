@@ -56,7 +56,7 @@ export module KottiField {
 
 	export module Hook {
 		export interface Parameters<DATA_TYPE> {
-			emit: (name: 'input', ...args: unknown[]) => void
+			emit: (name: 'update:value', ...args: unknown[]) => void
 
 			/**
 			 * Useful for checking validation on required fields

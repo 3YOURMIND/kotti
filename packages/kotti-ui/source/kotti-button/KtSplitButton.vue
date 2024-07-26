@@ -17,12 +17,17 @@
 				v-for="(action, index) in actions"
 				:key="index"
 				v-bind="{
-					...action,
+					...omit(action, ['onClick']),
 					hasFocus: isActionInFocus(index),
 					index,
 					rootDataTest: dataTest,
 				}"
-				@click="onClickAction"
+				@click="
+					() => {
+						action.onClick()
+						setIsTippyOpen(false)
+					}
+				"
 				@updateIndexInFocus="onUpdateIndexInFocus"
 			/>
 		</div>
@@ -46,6 +51,7 @@ import { makeProps } from '../make-props'
 
 import ActionsItem from './components/ActionsItem.vue'
 import { useActionsTippy } from './hooks/use-actions-tippy'
+import KtButton from './KtButton.vue'
 import { KottiSplitButton } from './types'
 
 /**
@@ -57,6 +63,7 @@ export default defineComponent({
 	name: 'KtSplitButton',
 	components: {
 		ActionsItem,
+		KtButton,
 	},
 	props: makeProps(KottiSplitButton.propsSchema),
 	emits: ['click'],
@@ -152,9 +159,6 @@ export default defineComponent({
 			currentActionIndexInFocus,
 			isActionInFocus: (actionIndex: number) =>
 				actionIndex === currentActionIndexInFocus.value,
-			onClickAction: () => {
-				setIsTippyOpen(false)
-			},
 			onClickPrimaryAction: () => {
 				if (props.isDisabled || props.isLoading) return
 				emit('click')
@@ -165,6 +169,7 @@ export default defineComponent({
 			onUpdateIndexInFocus: (index: number) => {
 				if (isTippyOpen.value) currentActionIndexInFocus.value = index
 			},
+			omit,
 			primaryActionButtonProps: computed(() => ({
 				...omit(props, ['actions', 'dataTest', 'isDisabled']),
 				'data-test': [props.dataTest, 'primary-action']
@@ -185,6 +190,7 @@ export default defineComponent({
 				size: props.size,
 				type: props.type,
 			})),
+			setIsTippyOpen,
 			tippyContentRef,
 			tippyTriggerRef,
 		}

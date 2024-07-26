@@ -39,6 +39,7 @@ import { KottiHeading } from './types'
 export default defineComponent({
 	name: 'KtHeading',
 	props: makeProps(KottiHeading.propsSchema),
+	// TODO: 'toogle' -> 'update:toggleStatus'
 	emits: ['click', 'toggle'],
 	setup(props, { emit }) {
 		return {

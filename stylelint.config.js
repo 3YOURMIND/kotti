@@ -34,12 +34,6 @@ module.exports = {
 				ignorePseudoClasses: ['deep'],
 			},
 		],
-		'selector-pseudo-element-no-unknown': [
-			true,
-			{
-				ignorePseudoElements: ['v-deep'],
-			},
-		],
 		'scss/at-import-no-partial-leading-underscore': null,
 		'scss/at-import-partial-extension': null,
 		'scss/at-rule-no-unknown': true,

@@ -1,3 +1,4 @@
+import type { App } from 'vue'
 // styles
 import './kotti-style/index.scss'
 
@@ -104,16 +105,13 @@ import { KtToast, KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
-import type { VueConstructor } from 'vue'
-
 import { KtValueLabel } from './kotti-value-label'
 export * from './kotti-value-label'
 
 export * from './types'
 
 export default {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	install(Vue: VueConstructor): void {
+	install<T>(app: App<T>): void {
 		const components = [
 			KtAccordion,
 			KtActionbar,
@@ -174,7 +172,7 @@ export default {
 			KtValueLabel,
 		]
 		for (const component of components) {
-			Vue.use(component)
+			app.use(component, {})
 		}
 	},
 }
