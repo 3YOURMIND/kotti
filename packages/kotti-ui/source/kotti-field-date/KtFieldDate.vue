@@ -8,29 +8,78 @@
 	>
 		<template #container>
 			<div ref="inputContainerRef" class="kt-field__input-container">
-				<!-- v-bind="elDatePickerProps" -->
-				<VueDatePicker
-					:enableTimePicker="false"
-					modelType="yyyy-MM-dd"
-					format="yyyy-MM-dd"
+				<!-- <VueDatePicker
 					autoApply
+					:enableTimePicker="false"
+					format="yyyy-MM-dd"
 					:modelValue="field.currentValue"
+					modelType="yyyy-MM-dd"
+					:ui="{
+						calendar: 'date-picker__calendar',
+						calendarCell: 'date-picker__calendar-cell',
+					}"
+					@update:modelValue="onInput"
+				/> -->
+				<VueDatePicker
+					ref="datePickerRef"
+					:actionRow="{
+						showPreview: false,
+						showCancel: false,
+						showSelect: true,
+					}"
+					format="yyyy-MM-dd HH:mm"
+					:locale="locale"
+					:maxDate="maximumDate"
+					:minDate="minimumDate"
+					:modelValue="field.currentValue"
+					modelType="iso"
+					:offset="20"
+					:presetDates="shortcuts"
+					:ui="{
+						calendar: 'date-picker__calendar',
+						calendarCell: 'date-picker__calendar-cell',
+						menu: 'date-picker__menu',
+					}"
 					@update:modelValue="onInput"
 				>
-					...
+					<template #trigger>
+						<input class="kt-field-text__wrapper" v-bind="inputProps" />
+					</template>
+					<template #time-picker-overlay="{ setHours, setMinutes, setSeconds }">
+						<FieldTime
+							v-bind="timePickerProps"
+							@update:hours="setHours"
+							@update:minutes="setMinutes"
+							@update:seconds="setSeconds"
+						/>
+					</template>
+					<template #actions-extra>
+						<!-- TODO: Add I18N to button -->
+						<KtButton
+							class="date-picker__confirm"
+							label="Ok"
+							size="small"
+							type="primary"
+							@click="selectDate"
+						/>
+					</template>
 				</VueDatePicker>
-				i
 			</div>
 		</template>
 	</KtField>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import dayjs from 'dayjs'
+import { computed, defineComponent, ref } from 'vue'
+import type { InputHTMLAttributes } from '@vue/runtime-dom'
 import VueDatePicker from '@vuepic/vue-datepicker'
+import type { DatePickerInstance } from '@vuepic/vue-datepicker'
 
+import { KtButton } from '../kotti-button'
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
+import { useI18nContext } from '../kotti-i18n/hooks'
 // import { KT_IS_IN_POPOVER } from '../kotti-popover/constants'
 import { makeProps } from '../make-props'
 
@@ -41,11 +90,14 @@ import {
 // import type { ElDateWithInternalAPI } from './hooks'
 // import { usePicker } from './hooks'
 import { KottiFieldDate } from './types'
+import FieldTime from './field-time/FieldTime.vue'
 
 export default defineComponent({
 	name: 'KtFieldDate',
 	components: {
 		// ElDatePicker,
+		FieldTime,
+		KtButton,
 		KtField,
 		VueDatePicker,
 	},
@@ -58,7 +110,10 @@ export default defineComponent({
 			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
+		const i18NContext = useI18nContext()
+
 		// const elDateRef = ref<ElDateWithInternalAPI | null>(null)
+		const datePickerRef = ref<DatePickerInstance | null>(null)
 		const inputContainerRef = ref<Element | null>(null)
 
 		// usePicker({
@@ -98,16 +153,104 @@ export default defineComponent({
 			// ),
 			// --eslint-disable-next-line @typescript-eslint/no-explicit-any
 			// elDateRef: elDateRef as any,
+			datePickerRef,
 			field,
+			inputProps: computed(
+				(): InputHTMLAttributes & {
+					class: string[]
+					// forceUpdateKey: number
+				} => ({
+					...field.inputProps,
+					class: ['kt-field-text__wrapper'],
+					// forceUpdateKey: forceUpdateKey.value,
+					type: 'text',
+					size: 1,
+					value: field.currentValue ?? '',
+					placeholder: props.placeholder ?? undefined,
+				}),
+			),
 			inputContainerRef,
+			locale: computed(() => i18NContext.locale),
 			onInput: (value: KottiFieldDate.Value) => {
 				if (!field.isDisabled && !field.isLoading) field.setValue(value)
 			},
+			selectDate: (value: string | null) => {
+				datePickerRef.value?.selectDate?.(value)
+			},
+			timePickerProps: computed(() => {
+				const date = dayjs(field.currentValue)
+
+				return {
+					years: date.get('years'),
+					months: date.get('months'),
+					days: date.get('days'),
+					minutes: date.get('minutes'),
+					hours: date.get('hours'),
+					seconds: date.get('seconds'),
+				}
+			}),
 		}
 	},
 })
 </script>
 
 <style lang="scss">
+@import '../kotti-style/_variables.scss';
 @import 'styles';
+
+.kt-field-date {
+	.date-picker {
+		&__calendar {
+			.dp__calendar_header_item {
+				display: flex;
+				align-items: center;
+				font-size: 0.6rem;
+				color: var(--text-03);
+				text-transform: uppercase;
+			}
+		}
+
+		&__calendar-cell {
+			font-size: 0.7rem;
+		}
+
+		&__menu {
+			// HACK: the default is set to 0.8rem, which assumes a base font-size of 16px.
+			// Since we have 20px, we have to adjust the relative size somewhat
+			--dp-preview-font-size: 0.64rem;
+			--dp-primary-coler: var(--interactive-01);
+			--dp-hover-color: var(--interactive-02-hover);
+			--dp-hover-text-color: var(--interactive-01);
+			font-family: $base-font-family;
+
+			.dp--preset-dates {
+				font-size: 0.7rem;
+			}
+
+			.dp__instance_calendar {
+				position: relative;
+			}
+
+			/* .dp__action_row {
+				padding: 0;
+			} */
+		}
+
+		&__confirm {
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			font-size: 14px;
+		}
+	}
+}
+
+.kt-field-text__wrapper {
+	display: flex;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	line-height: 1.6;
+	border: 0;
+}
 </style>

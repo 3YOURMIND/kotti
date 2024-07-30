@@ -30,7 +30,7 @@ const toISODate = (d: Date) => d.toISOString().split('T')[0]
 </script>
 
 <template>
-	<KtI18nContext locale="en-US">
+	<KtI18nContext locale="de-DE">
 		<div class="kt-container">
 			<KtNavbar
 				:isNarrow="isNarrow"
@@ -173,8 +173,6 @@ const toISODate = (d: Date) => d.toISOString().split('T')[0]
 					<KtFieldDate
 						formKey="birthday"
 						label="birthday"
-						maximumDate="2024-07-28"
-						minimumDate="2024-07-10"
 						:shortcuts="[
 							{
 								label: 'Today',
