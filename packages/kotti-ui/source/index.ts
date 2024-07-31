@@ -33,8 +33,8 @@ import { KtFieldCurrency } from './kotti-field-currency'
 export * from './kotti-field-currency'
 import {
 	KtFieldDate,
-	// 	KtFieldDateRange,
-	// 	KtFieldDateTime,
+	KtFieldDateRange,
+	KtFieldDateTime,
 	// 	KtFieldDateTimeRange,
 } from './kotti-field-date'
 export * from './kotti-field-date'
@@ -129,8 +129,8 @@ export default {
 			KtField,
 			KtFieldCurrency,
 			KtFieldDate,
-			// KtFieldDateRange,
-			// KtFieldDateTime,
+			KtFieldDateRange,
+			KtFieldDateTime,
 			// KtFieldDateTimeRange,
 			KtFieldFileUpload,
 			KtFieldFileUploadRemote,

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import pick from 'lodash/pick.js'
 import pickBy from 'lodash/pickBy.js'
-import Vue from 'vue'
+// import Vue from 'vue'
 
 import { PUBLIC_COLUMN_PROPS } from '../constants'
 import { KottiTableLegacy } from '../types'
@@ -114,7 +114,7 @@ export const mutations: Store.MutationComponents.Column = {
 				(value) => value !== undefined,
 			) as Store.StateComponents.ColumnRepresentation
 		})()
-		Vue.set(state._columns, newColumn.prop, newColumn)
+		// Vue.set(state._columns, newColumn.prop, newColumn)
 
 		if (newColumn.sortOrder !== KottiTableLegacy.Column.SortOrders.NONE) {
 			setSortedColumn(state, newColumn)
@@ -127,9 +127,9 @@ export const mutations: Store.MutationComponents.Column = {
 			setFilteredColumn(state, newColumn)
 		}
 
-		if (deleted) {
-			Vue.set(state._destroyedColumns, column.prop, 0)
-		}
+		// if (deleted) {
+		// 	Vue.set(state._destroyedColumns, column.prop, 0)
+		// }
 		store.commit('updateColumns', { emitChange: false })
 	},
 	removeColumn(store, column) {

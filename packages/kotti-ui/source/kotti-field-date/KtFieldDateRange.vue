@@ -9,111 +9,176 @@
 	>
 		<template #container>
 			<div ref="inputContainerRef" class="kt-field__input-container">
-				<!-- <ElDatePicker
-					ref="elDateRef"
-					v-bind="elDateRangePickerProps"
-					@input="onInput"
-				/> -->
+				<VueDatePicker
+					autoApply
+					:enableTimePicker="false"
+					:modelValue="cleanedCurrentValue"
+					modelType="yyyy-MM-dd"
+					multi-calendars
+					:range="{ partialRange: false }"
+					:ui="{
+						calendar: 'date-picker__calendar',
+						menu: 'date-picker__menu',
+					}"
+					@update:modelValue="onUpdateModelValue"
+				>
+					<template #trigger>
+						<input
+							class="kt-field-text__wrapper"
+							v-bind="inputProps"
+							@blur="onBlur"
+							@focus="onFocus"
+							@input="onInput"
+						/>
+					</template>
+
+					<template #action-buttons>
+						<div class="date-picker__action-buttons">
+							<KtButton
+								:label="translations.cancelButton"
+								size="small"
+								type="secondary"
+								@click="onCloseMenu"
+							/>
+							<KtButton
+								:disabled="isConfirmDisabled"
+								:label="translations.confirmButton"
+								size="small"
+								type="primary"
+								@click="onSelectDate"
+							/>
+						</div>
+					</template>
+				</VueDatePicker>
 			</div>
 		</template>
 	</KtField>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
+import type { InputHTMLAttributes } from '@vue/runtime-dom'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import type { DatePickerInstance } from '@vuepic/vue-datepicker'
 
+import { KtButton } from '../kotti-button'
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
 // import { KT_IS_IN_POPOVER } from '../kotti-popover/constants'
 import { makeProps } from '../make-props'
 
-import {
-	// EL_DATE_PROPS,
-	// EL_DATE_RANGE_PROPS,
-	KOTTI_FIELD_DATE_SUPPORTS,
-} from './constants'
-// import type { ElDateWithInternalAPI } from './hooks'
-// import { usePicker } from './hooks'
+import { KOTTI_FIELD_DATE_SUPPORTS } from './constants'
 import { KottiFieldDateRange } from './types'
+import dayjs from 'dayjs'
+import { useI18nContext, useTranslationNamespace } from '../kotti-i18n/hooks'
 // import { isInvalidDate } from './utilities'
+import FieldTime from './FieldTime.vue'
 
 export default defineComponent({
 	name: 'KtFieldDateRange',
 	components: {
-		// ElDatePicker,
+		FieldTime,
+		KtButton,
 		KtField,
+		VueDatePicker,
 	},
 	props: makeProps(KottiFieldDateRange.propsSchema),
 	setup(props, { emit }) {
 		const field = useField<KottiFieldDateRange.Value>({
 			emit,
-			isEmpty: (dateRangeValue) =>
-				dateRangeValue.every((date) => date === null),
+			isEmpty: ([lhs, rhs]) => lhs === null && rhs === null,
 			props,
 			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
+		const i18NContext = useI18nContext()
+		const translations = useTranslationNamespace('KtFieldDateShared')
+
 		// const elDateRef = ref<ElDateWithInternalAPI | null>(null)
-
+		const datePickerRef = ref<DatePickerInstance | null>(null)
 		const inputContainerRef = ref<Element | null>(null)
+		const internalDateValue = ref<Date | null>()
 
-		// usePicker({
-		// 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		// 	elDateRef: elDateRef as any,
-		// 	field,
-		// 	inputContainerRef,
-		// 	popperHeight: '470px',
-		// 	popperWidth: '700px',
-		// })
+		const isEditing = ref(false)
+		const cleanedCurrentValue = computed(() => [
+			field.currentValue[0] ?? '',
+			field.currentValue[1] ?? '',
+		])
 
-		// const pickerOptions: Ref<
-		// 	Pick<DatePickerProps, 'shortcuts' | 'disabledDate'>
-		// > = computed(() => ({
-		// 	disabledDate: (date: Date) => isInvalidDate(props, date),
-		// 	shortcuts: props.shortcuts.map(({ label, value, keepOpen }) => ({
-		// 		text: label,
-		// 		onClick(_picker: DatePickerInstance) {
-		// 			if (keepOpen !== true) _picker.$emit('pick', value)
-		// 			field.setValue(value)
-		// 		},
-		// 	})),
-		// }))
-
+		// TODO (?)
 		// const isInPopover = inject(KT_IS_IN_POPOVER, false)
 
 		return {
-			// elDateRangePickerProps: computed(
-			// 	(): Partial<DatePickerProps> => ({
-			// 		...EL_DATE_PROPS,
-			// 		...EL_DATE_RANGE_PROPS,
-			// 		/**
-			// 		 * @see {@link https://github.com/ElemeFE/element/blob/v2.13.1/packages/date-picker/src/picker.vue#L334)}
-			// 		 * */
-			// 		// @ts-expect-error (exposed through mixin on picker.vue on element-ui's implementation)
-			// 		appendToBody: !isInPopover,
-			// 		clearable: !field.hideClear,
-			// 		'data-test': field.inputProps['data-test'],
-			// 		disabled: field.isDisabled || field.isLoading,
-			// 		endPlaceholder: props.placeholder[1] ?? '',
-			// 		id: [`${field.inputProps.id}-start`, `${field.inputProps.id}-end`],
-			// 		pickerOptions: pickerOptions.value,
-			// 		startPlaceholder: props.placeholder[0] ?? '',
-			// 		type: 'daterange',
-			// 		value: field.currentValue.map((date) => date ?? '') as [
-			// 			string,
-			// 			string,
-			// 		],
-			// 	}),
-			// ),
-			// --eslint-disable-next-line @typescript-eslint/no-explicit-any
-			// elDateRef: elDateRef as any,
+			cleanedCurrentValue,
+			datePickerRef,
 			field,
-			inputContainerRef,
-			onInput: (value: KottiFieldDateRange.Value | null) => {
-				if (field.isDisabled || field.isLoading) return
+			handleInternalModelChange: (date: Date) => {
+				internalDateValue.value = date
+			},
+			handleClickOutside: () => {},
+			inputProps: computed(
+				(): InputHTMLAttributes & {
+					class: string[]
+					// forceUpdateKey: number
+				} => {
+					const value = (() => {
+						if (isEditing.value) return cleanedCurrentValue.value.join(', ')
 
-				// element-ui emits `null` on clear
-				field.setValue(value ?? [null, null])
+						// if (internalDateValue.value)
+						// 	return dayjs(internalDateValue.value).format('YYYY-MM-DD HH:mm')
+
+						return ''
+					})()
+
+					return {
+						...field.inputProps,
+						class: ['kt-field-text__wrapper'],
+						// forceUpdateKey: forceUpdateKey.value,
+						type: 'text',
+						size: 1,
+						value,
+						placeholder: props.placeholder ?? undefined,
+					}
+				},
+			),
+			inputContainerRef,
+			isConfirmDisabled: computed(() => internalDateValue.value === null),
+			locale: computed(() => i18NContext.locale),
+			onUpdateModelValue: (value: KottiFieldDateRange.Value) => {
+				if (!field.isDisabled && !field.isLoading) field.setValue(value)
+			},
+			onSelectDate: (value: string | null) => {
+				datePickerRef.value?.selectDate?.(value)
+			},
+			timeDisplay: computed(() => {
+				if (internalDateValue.value == null) return null
+
+				return dayjs(internalDateValue.value).format('HH:mm')
+			}),
+			translations,
+			onCloseMenu: () => {
+				datePickerRef.value?.closeMenu?.()
+			},
+			onInput: (event: InputEvent) => {
+				// const inputString = (event.target as HTMLInputElement).value as string
+				// const date = dayjs(inputString)
+				// field.setValue(inputString)
+				// if (!date.isValid()) return
+				// datePickerRef.value.updateInternalModelValue(date.toDate())
+			},
+			onBlur: () => {
+				isEditing.value = false
+				// if (internalDateValue.value === null) {
+				// 	field.setValue([null, null])
+				// 	return
+				// }
+				// const date = dayjs(internalDateValue.value)
+				// if (!date.isValid()) return
+				// const result = date.format('YYYY-MM-DD HH:mm')
+				// field.setValue(result)
+			},
+			onFocus: () => {
+				isEditing.value = true
 			},
 		}
 	},

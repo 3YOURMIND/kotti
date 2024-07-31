@@ -5,12 +5,12 @@ import { attachMeta, makeInstallable } from '../utilities'
 import { KOTTI_FIELD_DATE_SUPPORTS } from './constants'
 import KtFieldDateVue from './KtFieldDate.vue'
 import KtFieldDateRangeVue from './KtFieldDateRange.vue'
-// import KtFieldDateTimeVue from './KtFieldDateTime.vue'
+import KtFieldDateTimeVue from './KtFieldDateTime.vue'
 // import KtFieldDateTimeRangeVue from './KtFieldDateTimeRange.vue'
 import {
 	KottiFieldDate,
 	KottiFieldDateRange,
-	// KottiFieldDateTime,
+	KottiFieldDateTime,
 	// KottiFieldDateTimeRange,
 } from './types'
 
@@ -56,24 +56,24 @@ export const KtFieldDateRange = attachMeta(
 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
 )
 
-// export const KtFieldDateTime = attachMeta(
-// 	makeInstallable(KtFieldDateTimeVue),
-// 	{
-// 		addedVersion: '2.0.0',
-// 		componentFolder,
-// 		deprecated: null,
-// 		designs: {
-// 			type: MetaDesignType.FIGMA,
-// 			url: DESIGN_URL,
-// 		},
-// 		slots: FIELD_META_BASE_SLOTS,
-// 		typeScript: {
-// 			namespace: 'Kotti.FieldDateTime',
-// 			schema: KottiFieldDateTime.propsSchema,
-// 		},
-// 	},
-// 	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
-// )
+export const KtFieldDateTime = attachMeta(
+	makeInstallable(KtFieldDateTimeVue),
+	{
+		addedVersion: '2.0.0',
+		componentFolder,
+		deprecated: null,
+		designs: {
+			type: MetaDesignType.FIGMA,
+			url: DESIGN_URL,
+		},
+		slots: FIELD_META_BASE_SLOTS,
+		typeScript: {
+			namespace: 'Kotti.FieldDateTime',
+			schema: KottiFieldDateTime.propsSchema,
+		},
+	},
+	{ supports: KOTTI_FIELD_DATE_SUPPORTS },
+)
 
 // export const KtFieldDateTimeRange = attachMeta(
 // 	makeInstallable(KtFieldDateTimeRangeVue),

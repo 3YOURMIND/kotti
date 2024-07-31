@@ -118,7 +118,6 @@ export default defineComponent({
 				}
 			}),
 			onInput: (newValue: boolean | undefined) => {
-				console.log({ newValue })
 				if (!field.isDisabled && !field.isLoading)
 					field.setValue(newValue ?? null)
 

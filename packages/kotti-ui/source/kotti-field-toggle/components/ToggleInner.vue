@@ -45,7 +45,6 @@ export default defineComponent({
 	setup(props, { emit }) {
 		return {
 			onInput: (event: Event) => {
-				console.log(event)
 				const newValue = (event.target as InputHTMLAttributes).checked
 
 				if (!props.isDisabled) emit('update:value', newValue)
