@@ -36,7 +36,8 @@ export const enUS: KottiI18n.Messages = {
 		unlockedHelpText: 'Visible to all users',
 	},
 	KtFieldDateShared: {
-		confirmButton: 'ok',
+		cancelButton: 'Cancel',
+		confirmButton: 'OK',
 		hours: 'hours',
 		minutes: 'minutes',
 		seconds: 'seconds',

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import '@3yourmind/kotti-ui/dist/style.css'
 import '@3yourmind/yoco/style.css'
+import dayjs from 'dayjs'
 
 import {
 	KtActionbar,
@@ -27,6 +28,8 @@ const formValue = ref({
 const isNarrow = ref(false)
 
 const toISODate = (d: Date) => d.toISOString().split('T')[0]
+
+const lastReload = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
 </script>
 
 <template>
@@ -162,7 +165,33 @@ const toISODate = (d: Date) => d.toISOString().split('T')[0]
 					},
 				]"
 			/>
-			<main class="workspace">
+			<main class="workspace" style="padding-top: 4px">
+				<div
+					style="
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						margin-bottom: 4px;
+						font-size: 12px;
+						gap: 4px;
+					"
+				>
+					<div style="display: flex; flex-direction: column">
+						<span>Last Reload</span>
+						<time class="blink-once" :datetime="lastReload">
+							{{ lastReload }}
+						</time>
+					</div>
+					<div style="display: flex; flex-direction: column; text-align: right">
+						<span>Form State</span>
+						<pre
+							:key="JSON.stringify(formValue)"
+							class="blink-once"
+							style="padding: 2px"
+							v-text="JSON.stringify(formValue)"
+						/>
+					</div>
+				</div>
 				<!-- <KtButton label="hello" type="primary" @click="() => alerty('hello')" /> -->
 				<KtForm v-model:value="formValue">
 					<!-- <KtFieldText formKey="name" label="name">
@@ -206,7 +235,6 @@ const toISODate = (d: Date) => d.toISOString().split('T')[0]
 						</template>
 					</KtFieldToggle> -->
 				</KtForm>
-				<pre>{{ JSON.stringify(formValue, null, '\t') }}</pre>
 			</main>
 		</div>
 	</KtI18nContext>
@@ -243,4 +271,17 @@ main {
 		flex-wrap: wrap;
 	}
 } */
+
+@keyframes yellow-fade {
+	from {
+		background: #f96;
+	}
+	to {
+		background: transparent;
+	}
+}
+
+.blink-once {
+	animation: yellow-fade 1s ease-in-out 0s;
+}
 </style>

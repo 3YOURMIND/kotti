@@ -33,7 +33,7 @@
 <script lang="ts">
 import { TimeConversion } from '@metatypes/units'
 import range from 'lodash/range'
-import { defineComponent, ref, onMounted, watch, computed } from 'vue'
+import { defineComponent, onMounted, ref, watch, computed } from 'vue'
 import type { PropType } from 'vue'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -102,8 +102,12 @@ function scrollTo(time: TimeRecord, row: HTMLDivElement | null) {
 	if (!row) return
 
 	Object.entries(time).forEach(([type, value]: [string, number]) => {
+		const scrollToValue = Math.max(0, value - 3)
+
 		const container = row.querySelector(`[data-type="${type}"]`)
-		const node = container?.querySelector(`[data-key="${type}-${value}"]`)
+		const node = container?.querySelector(
+			`[data-key="${type}-${scrollToValue}"]`,
+		)
 
 		if (node && container) {
 			const position = getPosition(node, container)
@@ -192,11 +196,15 @@ export default defineComponent({
 			}
 		})
 
-		watch([() => time.value, () => props.format], ([newTime, _]) => {
-			if (rowRef.value) {
-				scrollTo(newTime, rowRef.value)
-			}
-		})
+		// watch(
+		// 	[() => time.value, () => props.format],
+		// 	([newTime, _]) => {
+		// 		if (rowRef.value) {
+		// 			scrollTo(newTime, rowRef.value)
+		// 		}
+		// 	},
+		// 	{ immediate: true },
+		// )
 
 		const handleClick = (type: TimeUnit, unit: number) => {
 			switch (type) {
@@ -236,6 +244,7 @@ export default defineComponent({
 							'time-picker__cell--is-disabled': isDisabled,
 							'time-picker__cell--is-selected': isSelected,
 						},
+						dataKey: `${type}-${number}`,
 						displayedNumber: number,
 						isDisabled,
 						isSelected,
