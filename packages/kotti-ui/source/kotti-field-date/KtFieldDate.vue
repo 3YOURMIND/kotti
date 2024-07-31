@@ -25,14 +25,14 @@
 					:actionRow="{
 						showPreview: false,
 						showCancel: false,
-						showSelect: true,
+						showSelect: false,
 					}"
 					format="yyyy-MM-dd HH:mm"
 					:locale="locale"
 					:maxDate="maximumDate"
 					:minDate="minimumDate"
+					modelType="yyyy-MM-dd HH:mm"
 					:modelValue="field.currentValue"
-					modelType="iso"
 					:offset="20"
 					:presetDates="shortcuts"
 					:ui="{
@@ -40,24 +40,38 @@
 						calendarCell: 'date-picker__calendar-cell',
 						menu: 'date-picker__menu',
 					}"
+					utc="preserve"
 					@update:modelValue="onInput"
 				>
+					<!-- :timezone="{ convertModel: false }" -->
 					<template #trigger>
 						<input class="kt-field-text__wrapper" v-bind="inputProps" />
 					</template>
-					<template #time-picker-overlay="{ setHours, setMinutes, setSeconds }">
+					<template
+						#time-picker-overlay="{
+							hours,
+							minutes,
+							seconds,
+							setHours,
+							setMinutes,
+							setSeconds,
+						}"
+					>
 						<FieldTime
 							v-bind="timePickerProps"
+							:hours="hours"
+							:minutes="minutes"
+							:seconds="seconds"
 							@update:hours="setHours"
 							@update:minutes="setMinutes"
 							@update:seconds="setSeconds"
 						/>
 					</template>
-					<template #actions-extra>
+					<template #action-buttons>
 						<!-- TODO: Add I18N to button -->
+						<!-- class="date-picker__confirm" -->
 						<KtButton
-							class="date-picker__confirm"
-							label="Ok"
+							:label="translations.confirmButton"
 							size="small"
 							type="primary"
 							@click="selectDate"
@@ -79,7 +93,7 @@ import type { DatePickerInstance } from '@vuepic/vue-datepicker'
 import { KtButton } from '../kotti-button'
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
-import { useI18nContext } from '../kotti-i18n/hooks'
+import { useI18nContext, useTranslationNamespace } from '../kotti-i18n/hooks'
 // import { KT_IS_IN_POPOVER } from '../kotti-popover/constants'
 import { makeProps } from '../make-props'
 
@@ -90,7 +104,7 @@ import {
 // import type { ElDateWithInternalAPI } from './hooks'
 // import { usePicker } from './hooks'
 import { KottiFieldDate } from './types'
-import FieldTime from './field-time/FieldTime.vue'
+import FieldTime from './FieldTime.vue'
 
 export default defineComponent({
 	name: 'KtFieldDate',
@@ -111,6 +125,7 @@ export default defineComponent({
 		})
 
 		const i18NContext = useI18nContext()
+		const translations = useTranslationNamespace('KtFieldDateShared')
 
 		// const elDateRef = ref<ElDateWithInternalAPI | null>(null)
 		const datePickerRef = ref<DatePickerInstance | null>(null)
@@ -172,6 +187,7 @@ export default defineComponent({
 			inputContainerRef,
 			locale: computed(() => i18NContext.locale),
 			onInput: (value: KottiFieldDate.Value) => {
+				console.log(value)
 				if (!field.isDisabled && !field.isLoading) field.setValue(value)
 			},
 			selectDate: (value: string | null) => {
@@ -184,11 +200,9 @@ export default defineComponent({
 					years: date.get('years'),
 					months: date.get('months'),
 					days: date.get('days'),
-					minutes: date.get('minutes'),
-					hours: date.get('hours'),
-					seconds: date.get('seconds'),
 				}
 			}),
+			translations,
 		}
 	},
 })

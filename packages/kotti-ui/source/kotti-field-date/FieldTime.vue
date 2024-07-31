@@ -1,12 +1,12 @@
 <template>
 	<div ref="componentRef" class="time-picker" role="group" :tabindex="-1">
-		<div ref="rowRef" class="time-picker__table">
+		<div ref="rowRef" class="time-picker__rows">
 			<div
 				v-for="type in ['hours', 'minutes']"
 				:key="type"
 				class="time-picker__column"
 			>
-				<div class="time-picker__header-cell">{{ locale?.[type] }}</div>
+				<div class="time-picker__header-cell">{{ translations[type] }}</div>
 				<div class="time-picker__header-separator" />
 				<ul :aria-label="`Select ${type}`" :data-type="type" role="listbox">
 					<li
@@ -21,7 +21,7 @@
 						@click="entry.onClick"
 					>
 						<span :class="['time-picker__cell', entry.classes]">
-							{{ i }}
+							{{ entry.displayedNumber }}
 						</span>
 					</li>
 				</ul>
@@ -32,8 +32,11 @@
 
 <script lang="ts">
 import { TimeConversion } from '@metatypes/units'
+import range from 'lodash/range'
 import { defineComponent, ref, onMounted, watch, computed } from 'vue'
 import type { PropType } from 'vue'
+
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 
 type TimeUnit = 'hours' | 'minutes' | 'seconds'
 type TimeRecord = Record<TimeUnit, number>
@@ -110,21 +113,13 @@ function scrollTo(time: TimeRecord, row: HTMLDivElement | null) {
 	})
 }
 
+type DisabledFunction = (dateRecord: DateRecord) => boolean
+type HideFunction = (dateRecord: DateRecord) => boolean
+
 export default defineComponent({
 	name: 'TimeDropdown',
 	props: {
 		format: { type: String, default: 'yyyy-MM-DD HH:mm:ss' },
-		/**
-		 * @deprecated TODO: Use kt i18n context instead
-		 */
-		locale: {
-			default: () => ({
-				hours: 'Hours',
-				minutes: 'Minutes',
-				seconds: 'Seconds',
-			}),
-			type: Object as PropType<Record<TimeUnit, string>>,
-		},
 
 		// years
 		years: { required: true, type: Number },
@@ -138,40 +133,42 @@ export default defineComponent({
 		// hours
 		disabledHours: {
 			default: () => false,
-			type: Function as PropType<(dateRecord: DateRecord) => boolean>,
+			type: Function as PropType<DisabledFunction>,
 		},
 		hideHours: {
 			default: () => false,
-			type: Function as PropType<(dateRecord: DateRecord) => boolean>,
+			type: Function as PropType<HideFunction>,
 		},
 		hours: { required: true, type: Number },
 
 		// minutes
 		disabledMinutes: {
 			default: () => false,
-			type: Function as PropType<(dateRecord: DateRecord) => boolean>,
+			type: Function as PropType<DisabledFunction>,
 		},
 		hideMinutes: {
 			default: () => false,
-			type: Function as PropType<(dateRecord: DateRecord) => boolean>,
+			type: Function as PropType<HideFunction>,
 		},
 		minutes: { required: true, type: Number },
 
 		// seconds
 		disabledSeconds: {
 			default: () => false,
-			type: Function as PropType<(dateRecord: DateRecord) => boolean>,
+			type: Function as PropType<DisabledFunction>,
 		},
 		hideSeconds: {
 			default: () => false,
-			type: Function as PropType<(dateRecord: DateRecord) => boolean>,
+			type: Function as PropType<HideFunction>,
 		},
 		seconds: { required: true, type: Number },
 	},
-	emits: ['click', 'update:hours', 'update:minutes', 'update:seconds'],
+	emits: ['update:hours', 'update:minutes', 'update:seconds'],
 	setup(props, { emit }) {
 		const rowRef = ref<HTMLDivElement | null>(null)
 		const componentRef = ref<HTMLDivElement | null>(null)
+
+		const translations = useTranslationNamespace('KtFieldDateShared')
 
 		const time = computed<TimeRecord>(() => ({
 			hours: props.hours,
@@ -179,14 +176,15 @@ export default defineComponent({
 			seconds: props.seconds,
 		}))
 
-		// const date = computed<DateRecord>(() => ({
-		// 	years: props.years,
-		// 	months: props.months,
-		// 	days: props.days,
-		// 	hours: props.hours,
-		// 	minutes: props.minutes,
-		// 	seconds: props.seconds,
-		// }))
+		const getAdjustedDate = (type: TimeUnit, unit: number) => ({
+			years: props.years,
+			months: props.months,
+			days: props.days,
+			hours: props.hours,
+			minutes: props.minutes,
+			seconds: props.seconds,
+			[type]: unit,
+		})
 
 		onMounted(() => {
 			if (rowRef.value) {
@@ -211,83 +209,142 @@ export default defineComponent({
 				case 'seconds':
 					emit('update:seconds', unit)
 					break
+				default:
+					throw new Error(`invalid type ${type}`)
 			}
 		}
 
-		const displayedNumbersForType = (timeUnit: TimeUnit) => {
-			const shownTimeEntries: number[] = []
-			const maximumTimeUnit =
-				timeUnit === 'hours'
-					? TimeConversion.HOURS_PER_DAY
-					: TimeConversion.MINUTES_PER_HOUR
+		const getEntries = (
+			// eslint-disable-next-line no-magic-numbers
+			maxNumber: 24 | 60,
+			type: TimeUnit,
+			hideFunction: HideFunction,
+			disabledFunction: DisabledFunction,
+		) =>
+			range(maxNumber)
+				.map((unit) => getAdjustedDate(type, unit))
+				.filter((dateRecord) => !hideFunction(dateRecord))
+				.map((dateRecord) => {
+					const number = dateRecord[type]
+					const isDisabled = disabledFunction(dateRecord)
 
-			const dayRecord: Record<Exclude<DateUnit, TimeUnit>, number> = {
-				years: props.years,
-				months: props.months,
-				days: props.days,
-			}
+					const isSelected = props[type] === number
 
-			for (let i = 0; i < maximumTimeUnit; i++) {
-				const dateRecord: DateRecord = {
-					...dayRecord,
-					hours: timeUnit === 'hours' ? i : props.hours,
-					minutes: timeUnit === 'minutes' ? i : props.minutes,
-					seconds: timeUnit === 'seconds' ? i : props.seconds,
-				}
+					return {
+						ariaLabel: `${number} ${type}`,
+						classes: {
+							'time-picker__cell--is-disabled': isDisabled,
+							'time-picker__cell--is-selected': isSelected,
+						},
+						displayedNumber: number,
+						isDisabled,
+						isSelected,
+						onClick: () => {
+							if (isDisabled) return
 
-				switch (timeUnit) {
-					case 'hours':
-						if (!props.hideHours(dateRecord)) shownTimeEntries.push(i)
-					case 'minutes':
-						if (!props.hideMinutes(dateRecord)) shownTimeEntries.push(i)
-					case 'seconds':
-						if (!props.hideSeconds(dateRecord)) shownTimeEntries.push(i)
-				}
-			}
-
-			return shownTimeEntries.map((number) => {
-				const dateRecord: DateRecord = {
-					...dayRecord,
-					hours: timeUnit === 'hours' ? number : props.hours,
-					minutes: timeUnit === 'minutes' ? number : props.minutes,
-					seconds: timeUnit === 'seconds' ? number : props.seconds,
-				}
-
-				const isDisabled = (() => {
-					switch (timeUnit) {
-						case 'hours':
-							return props.disabledHours(dateRecord)
-						case 'minutes':
-							return props.disabledMinutes(dateRecord)
-						case 'seconds':
-							return props.disabledSeconds(dateRecord)
+							handleClick(type, number)
+						},
 					}
-				})()
+				})
 
-				const isSelected = props[timeUnit] === number
+		const displayedNumbersForType = (timeUnit: TimeUnit) => {
+			switch (timeUnit) {
+				case 'hours':
+					return getEntries(
+						TimeConversion.HOURS_PER_DAY,
+						'hours',
+						props.hideHours,
+						props.disabledHours,
+					)
+				case 'minutes':
+					return getEntries(
+						TimeConversion.MINUTES_PER_HOUR,
+						'minutes',
+						props.hideMinutes,
+						props.disabledMinutes,
+					)
+				case 'seconds':
+					return getEntries(
+						TimeConversion.SECONDS_PER_MINUTE,
+						'seconds',
+						props.hideSeconds,
+						props.disabledSeconds,
+					)
+			}
+			// const shownTimeEntries: number[] = []
+			// const maximumTimeUnit =
+			// 	timeUnit === 'hours'
+			// 		? TimeConversion.HOURS_PER_DAY
+			// 		: TimeConversion.MINUTES_PER_HOUR
 
-				return {
-					ariaLabel: `${number} ${timeUnit}`,
-					classes: {
-						'time-picker__cell--is-disabled': isDisabled,
-						'time-picker__cell--is-selected': isSelected,
-					},
-					displayedNumber: number,
-					isDisabled,
-					isSelected,
-					onClick: isDisabled
-						? undefined
-						: () => {
-								handleClick(timeUnit, number)
-							},
-				}
-			})
+			// const dayRecord: Record<Exclude<DateUnit, TimeUnit>, number> = {
+			// 	years: props.years,
+			// 	months: props.months,
+			// 	days: props.days,
+			// }
+
+			// for (let i = 0; i < maximumTimeUnit; i++) {
+			// 	const dateRecord: DateRecord = {
+			// 		...dayRecord,
+			// 		hours: timeUnit === 'hours' ? i : props.hours,
+			// 		minutes: timeUnit === 'minutes' ? i : props.minutes,
+			// 		seconds: timeUnit === 'seconds' ? i : props.seconds,
+			// 	}
+
+			// 	switch (timeUnit) {
+			// 		case 'hours':
+			// 			if (!props.hideHours(dateRecord)) shownTimeEntries.push(i)
+			// 		case 'minutes':
+			// 			if (!props.hideMinutes(dateRecord)) shownTimeEntries.push(i)
+			// 		case 'seconds':
+			// 			if (!props.hideSeconds(dateRecord)) shownTimeEntries.push(i)
+			// 	}
+			// }
+
+			// return shownTimeEntries.map((number) => {
+			// 	const dateRecord: DateRecord = {
+			// 		...dayRecord,
+			// 		hours: timeUnit === 'hours' ? number : props.hours,
+			// 		minutes: timeUnit === 'minutes' ? number : props.minutes,
+			// 		seconds: timeUnit === 'seconds' ? number : props.seconds,
+			// 	}
+
+			// 	const isDisabled = (() => {
+			// 		switch (timeUnit) {
+			// 			case 'hours':
+			// 				return props.disabledHours(dateRecord)
+			// 			case 'minutes':
+			// 				return props.disabledMinutes(dateRecord)
+			// 			case 'seconds':
+			// 				return props.disabledSeconds(dateRecord)
+			// 		}
+			// 	})()
+
+			// 	const isSelected = props[timeUnit] === number
+
+			// 	return {
+			// 		ariaLabel: `${number} ${timeUnit}`,
+			// 		classes: {
+			// 			'time-picker__cell--is-disabled': isDisabled,
+			// 			'time-picker__cell--is-selected': isSelected,
+			// 		},
+			// 		displayedNumber: number,
+			// 		isDisabled,
+			// 		isSelected,
+			// 		onClick: isDisabled
+			// 			? undefined
+			// 			: () => {
+			// 					handleClick(timeUnit, number)
+			// 				},
+			// 	}
+			// })
 		}
 
 		return {
 			componentRef,
 			displayedNumbersForType,
 			rowRef,
+			translations,
 		}
 	},
 })
@@ -298,18 +355,24 @@ export default defineComponent({
 	font-size: 14px;
 	overflow: hidden;
 	padding: 6px 8px;
-	width: 100%;
+	height: 100%;
+	/* width: 100%; */
 
-	&__table {
-		display: table;
-		width: 100%;
+	&__rows {
+		display: flex;
+		align-items: stretch;
+		height: 100%;
+		/* width: 100%; */
 	}
 
 	&__column {
-		display: table-cell;
+		flex-basis: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
 
 		> ul {
-			height: 270px;
+			flex: 1;
 			overflow-y: auto;
 		}
 

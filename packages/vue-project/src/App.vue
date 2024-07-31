@@ -30,7 +30,7 @@ const toISODate = (d: Date) => d.toISOString().split('T')[0]
 </script>
 
 <template>
-	<KtI18nContext locale="de-DE">
+	<KtI18nContext locale="en-US">
 		<div class="kt-container">
 			<KtNavbar
 				:isNarrow="isNarrow"
