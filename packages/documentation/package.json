@@ -26,7 +26,7 @@
 		"@types/marked": "^6.0.0",
 		"@types/natural-sort": "^0.0.24",
 		"case-sensitive-paths-webpack-plugin": "^2.3.0",
-		"nuxt": "2.x",
+		"nuxt": "3.x",
 		"sass-loader": "10.x",
 		"ts-loader": "8.x",
 		"vue": "^2.7",
