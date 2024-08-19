@@ -294,6 +294,26 @@
 								</template>
 							</KtFieldSingleSelect>
 						</div>
+						<div
+							v-if="componentDefinition.supports.autoComplete"
+							class="field-row"
+						>
+							<KtFieldSingleSelect
+								formKey="autoComplete"
+								helpText="Support Varies"
+								:isOptional="settings.component !== 'KtFieldPassword'"
+								isUnsorted
+								label="autoComplete"
+								:options="autoCompleteOptions"
+							/>
+							<KtFieldText
+								formKey="autoCompleteToken"
+								helpText="A space-separated <token-list> that describes the meaning of the autocompletion value. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values"
+								:isDisabled="settings.autoComplete !== 'token'"
+								isOptional
+								label="<token>"
+							/>
+						</div>
 						<KtFormControllerObject
 							v-if="componentDefinition.additionalProps.length > 0"
 							formKey="additionalProps"
@@ -306,17 +326,6 @@
 								isOptional
 								label="actions"
 								type="switch"
-							/>
-							<KtFieldSingleSelect
-								v-if="
-									componentDefinition.additionalProps.includes('autoComplete')
-								"
-								formKey="autoComplete"
-								label="autoComplete"
-								:options="[
-									{ label: 'current-password', value: 'current-password' },
-									{ label: 'new-password', value: 'new-password' },
-								]"
 							/>
 							<KtFieldNumber
 								v-if="
@@ -752,7 +761,7 @@ import {
 import { Yoco } from '@3yourmind/yoco'
 import { TimeConversion } from '@metatypes/units'
 import cloneDeep from 'lodash/cloneDeep.js'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 import { useRouter } from '../../../hooks/use-router'
 import {
@@ -890,7 +899,7 @@ const components: Array<{
 		supports: KtFieldNumber.meta.supports,
 	},
 	{
-		additionalProps: ['autoComplete'],
+		additionalProps: [],
 		formKey: 'textValue',
 		name: 'KtFieldPassword',
 		supports: KtFieldPassword.meta.supports,
@@ -1166,7 +1175,6 @@ export default defineComponent({
 			additionalProps: {
 				allowMultiple: Kotti.FieldToggle.Value
 				allowPhotos: Kotti.FieldToggle.Value
-				autoComplete: 'current-password' | 'new-password'
 				autoSize: Kotti.FieldToggle.Value
 				clearOnSelect: Kotti.FieldToggle.Value
 				collapseExtensionsAfter: Kotti.FieldNumber.Value
@@ -1202,6 +1210,8 @@ export default defineComponent({
 				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
 				toggleType: 'checkbox' | 'switch'
 			}
+			autoComplete: string
+			autoCompleteToken: Kotti.FieldText.Value
 			booleanFlags: {
 				hideClear: Kotti.FieldToggle.Value
 				hideValidation: Kotti.FieldToggle.Value
@@ -1232,7 +1242,6 @@ export default defineComponent({
 			additionalProps: {
 				allowMultiple: false,
 				allowPhotos: false,
-				autoComplete: 'current-password',
 				autoSize: false,
 				clearOnSelect: false,
 				collapseExtensionsAfter: null,
@@ -1268,6 +1277,8 @@ export default defineComponent({
 				showHeaderSideSlot: false,
 				toggleType: 'checkbox',
 			},
+			autoComplete: Kotti.Field.AutoComplete.OFF,
+			autoCompleteToken: null,
 			booleanFlags: {
 				hideClear: false,
 				hideValidation: false,
@@ -1361,6 +1372,14 @@ export default defineComponent({
 					tabIndex: settings.value.tabIndex,
 				})
 
+			if (componentDefinition.value.supports.autoComplete)
+				Object.assign(additionalProps, {
+					autoComplete:
+						settings.value.autoComplete === 'token'
+							? settings.value.autoCompleteToken
+							: settings.value.autoComplete,
+				})
+
 			if (
 				componentDefinition.value.additionalProps.includes('toggleType') &&
 				settings.value.additionalProps.toggleType !== 'checkbox' // Exclude Default Value
@@ -1383,10 +1402,6 @@ export default defineComponent({
 					maxHeight: settings.value.additionalProps.maxHeight,
 				})
 
-			if (componentDefinition.value.additionalProps.includes('autoComplete'))
-				Object.assign(additionalProps, {
-					autoComplete: settings.value.additionalProps.autoComplete,
-				})
 			if (
 				componentDefinition.value.additionalProps.includes(
 					'numberDecimalPlaces',
@@ -1670,7 +1685,43 @@ export default defineComponent({
 			}),
 		)
 
+		watch(
+			() => settings.value.component,
+			(newComponent, oldComponent) => {
+				if (
+					newComponent === 'KtFieldPassword' &&
+					oldComponent !== 'KtFieldPassword'
+				)
+					settings.value = {
+						...settings.value,
+						autoComplete: Kotti.FieldPassword.AutoComplete.CURRENT,
+					}
+				else if (
+					newComponent !== 'KtFieldPassword' &&
+					oldComponent === 'KtFieldPassword'
+				)
+					settings.value = {
+						...settings.value,
+						autoComplete: Kotti.Field.AutoComplete.OFF,
+					}
+			},
+		)
+
 		return {
+			autoCompleteOptions: computed(() =>
+				settings.value.component === 'KtFieldPassword'
+					? Object.values(Kotti.FieldPassword.AutoComplete).map((option) => ({
+							label: option,
+							value: option,
+						}))
+					: [
+							...Object.values(Kotti.Field.AutoComplete).map((option) => ({
+								label: option,
+								value: option,
+							})),
+							{ label: '<token>', value: 'token' },
+						],
+			),
 			component: computed(
 				(): { meta: Kotti.Meta; name: string } =>
 					(

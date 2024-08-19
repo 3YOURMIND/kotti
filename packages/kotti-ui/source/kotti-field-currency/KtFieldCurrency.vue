@@ -166,6 +166,7 @@ export default defineComponent({
 					forceUpdateKey: number
 				} => ({
 					...field.inputProps,
+					autocomplete: props.autoComplete,
 					class: {
 						'kt-field-currency__input': true,
 					},

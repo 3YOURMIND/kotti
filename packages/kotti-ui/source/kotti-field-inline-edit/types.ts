@@ -20,7 +20,12 @@ export module KottiFieldInlineEdit {
 	}
 
 	export const propsSchema = KottiField.propsSchema
-		.merge(KottiField.potentiallySupportedPropsSchema.pick({ tabIndex: true }))
+		.merge(
+			KottiField.potentiallySupportedPropsSchema.pick({
+				autoComplete: true,
+				tabIndex: true,
+			}),
+		)
 		.extend({
 			isReadonly: z.boolean().default(false),
 			isMultiline: z.boolean().default(false),

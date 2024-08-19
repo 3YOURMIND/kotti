@@ -68,8 +68,23 @@
 							isOptional
 							label="helpDescription"
 						/>
+						<KtFieldText formKey="helpText" isOptional label="helpText" />
 						<div class="field-row">
-							<KtFieldText formKey="helpText" isOptional label="helpText" />
+							<KtFieldSingleSelect
+								formKey="autoComplete"
+								helpText="Support Varies"
+								isOptional
+								isUnsorted
+								label="autoComplete"
+								:options="autoCompleteOptions"
+							/>
+							<KtFieldText
+								formKey="autoCompleteToken"
+								helpText="A space-separated <token-list> that describes the meaning of the autocompletion value. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values"
+								:isDisabled="settings.autoComplete !== 'token'"
+								isOptional
+								label="<token>"
+							/>
 						</div>
 					</div>
 				</div>
@@ -101,6 +116,8 @@ export default defineComponent({
 		const getInitialValue = () => ({ fieldValue: null })
 
 		const settings = ref<{
+			autoComplete: Kotti.FieldText.Value
+			autoCompleteToken: Kotti.FieldText.Value
 			booleanFlags: {
 				hideValidation: Kotti.FieldToggle.Value
 				isDisabled: Kotti.FieldToggle.Value
@@ -119,6 +136,8 @@ export default defineComponent({
 			textStyle: Kotti.FieldInlineEdit.TextStyle | null
 			validation: Kotti.Field.Validation.Result['type'] | null
 		}>({
+			autoComplete: null,
+			autoCompleteToken: null,
 			booleanFlags: {
 				hideValidation: false,
 				isDisabled: false,
@@ -143,10 +162,21 @@ export default defineComponent({
 		)
 
 		return {
+			autoCompleteOptions: computed(() => [
+				...Object.values(Kotti.Field.AutoComplete).map((option) => ({
+					label: option,
+					value: option,
+				})),
+				{ label: '<token>', value: 'token' },
+			]),
 			component: KtFieldInlineEdit,
 			formValue,
 			fieldValue: computed(() => formValue.value.fieldValue),
 			fieldProps: computed(() => ({
+				autoComplete:
+					settings.value.autoComplete === 'token'
+						? settings.value.autoCompleteToken
+						: settings.value.autoComplete,
 				dataTest: settings.value.dataTest,
 				helpDescription: settings.value.helpDescription,
 				helpText: settings.value.helpText,

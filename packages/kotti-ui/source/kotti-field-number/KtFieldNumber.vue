@@ -312,6 +312,7 @@ export default defineComponent({
 						forceUpdateKey: number
 					} => ({
 					...field.inputProps,
+					autocomplete: props.autoComplete,
 					class: {
 						'kt-field-number__input': true,
 						'kt-field-number__input--has-maximum': showMaximum.value,

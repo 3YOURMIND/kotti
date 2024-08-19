@@ -44,6 +44,7 @@ export default defineComponent({
 					forceUpdateKey: number
 				} => ({
 					...field.inputProps,
+					autocomplete: props.autoComplete,
 					class: ['kt-field-text__wrapper'],
 					forceUpdateKey: forceUpdateKey.value,
 					type: 'text',

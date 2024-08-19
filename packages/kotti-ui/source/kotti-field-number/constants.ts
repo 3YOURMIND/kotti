@@ -3,6 +3,7 @@ import { DecimalSeparator } from '../types/kotti'
 import { DECIMAL_SEPARATORS_CHARACTER_SET } from '../utilities'
 
 export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {
+	autoComplete: true,
 	clear: false,
 	decoration: true,
 	placeholder: true,

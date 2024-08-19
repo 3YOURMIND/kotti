@@ -267,6 +267,7 @@ export default defineComponent({
 					forceUpdateKey: number
 				} => ({
 					...sharedProps.value,
+					autocomplete: props.autoComplete,
 					class: {
 						'kt-field-inline-edit__input': true,
 						...(props.textStyle !== null && { [props.textStyle]: true }),
@@ -307,6 +308,7 @@ export default defineComponent({
 					forceUpdateKey: number
 				} => ({
 					...sharedProps.value,
+					autocomplete: props.autoComplete,
 					class: {
 						'kt-field-inline-edit__input': true,
 						'kt-field-inline-edit__input--is-multiline': true,
