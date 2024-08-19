@@ -247,6 +247,7 @@ export default defineComponent({
 			),
 			inputProps: computed(() => ({
 				...field.inputProps,
+				autocomplete: props.autoComplete,
 				class: ['kt-field-select__wrapper'],
 				forceUpdateKey: forceUpdateKey.value,
 				placeholder: props.placeholder ?? undefined,

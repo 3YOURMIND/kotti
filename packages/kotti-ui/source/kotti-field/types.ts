@@ -101,6 +101,11 @@ export module KottiField {
 		}
 	}
 
+	export enum AutoComplete {
+		ON = 'on',
+		OFF = 'off',
+	}
+
 	/**
 	 * Each attribute on KottiField.Supports maps to one or more
 	 * KtField prop, as follows:
@@ -117,6 +122,13 @@ export module KottiField {
 	 * differently per field.
 	 */
 	export const potentiallySupportedPropsSchema = z.object({
+		autoComplete: z
+			.union([
+				z.literal(AutoComplete.ON),
+				z.literal(AutoComplete.OFF),
+				z.string(),
+			])
+			.optional(),
 		hideClear: z.boolean().default(false),
 		leftIcon: yocoIconSchema.nullable().default(null),
 		prefix: z.string().nullable().default(null),
@@ -270,6 +282,12 @@ export module KottiField {
 	 * the props on certain fields.
 	 */
 	export type Supports = {
+		/**
+		 * All fields except KtFieldToggle (checkbox), KtFieldRadioGroup (radio), KtFieldFileUpload,
+		 * and KtFieldDate[Range|Time|TimeRange]
+		 */
+		autoComplete: boolean
+
 		/**
 		 * In some fields, having a clear button would be nonsensical (e.g. KtFieldToggle)
 		 */

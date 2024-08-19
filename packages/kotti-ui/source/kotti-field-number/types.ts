@@ -9,6 +9,7 @@ export module KottiFieldNumber {
 	export const propsSchema = KottiField.propsSchema
 		.merge(
 			KottiField.potentiallySupportedPropsSchema.pick({
+				autoComplete: true,
 				leftIcon: true,
 				prefix: true,
 				rightIcon: true,

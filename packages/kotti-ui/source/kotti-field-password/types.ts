@@ -10,9 +10,12 @@ export module KottiFieldPassword {
 	export enum AutoComplete {
 		CURRENT = 'current-password',
 		NEW = 'new-password',
+		ONE_TIME_CODE = 'one-time-code',
 	}
 	export const propsSchema = KottiField.propsSchema
-		.merge(KottiField.potentiallySupportedPropsSchema)
+		.merge(
+			KottiField.potentiallySupportedPropsSchema.omit({ autoComplete: true }),
+		)
 		.extend({
 			placeholder: z.string().nullable().default(null),
 			autoComplete: createLooseZodEnumSchema(AutoComplete),

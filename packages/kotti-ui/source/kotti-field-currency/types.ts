@@ -10,6 +10,7 @@ export module KottiFieldCurrency {
 	export const propsSchema = KottiField.propsSchema
 		.merge(
 			KottiField.potentiallySupportedPropsSchema.pick({
+				autoComplete: true,
 				tabIndex: true,
 			}),
 		)
