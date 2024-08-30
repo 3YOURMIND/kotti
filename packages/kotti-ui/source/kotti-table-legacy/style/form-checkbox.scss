@@ -25,21 +25,8 @@ table.kt-table ::v-deep .form-checkbox {
 		background: var(--ui-background);
 		border: $border-width solid var(--ui-02);
 		border-radius: var(--border-radius);
-	}
 
-	input {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-
-		&:focus + .form-icon {
-			border-color: var(--interactive-01);
-		}
-
-		&:checked + .form-icon {
+		&--is-checked {
 			background: var(--interactive-01);
 			border-color: var(--interactive-01);
 
@@ -58,6 +45,19 @@ table.kt-table ::v-deep .form-checkbox {
 				border-left-width: 0;
 				transform: rotate(45deg);
 			}
+		}
+	}
+
+	input {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+
+		&:focus + .form-icon {
+			border-color: var(--interactive-01);
 		}
 
 		&:indeterminate + .form-icon {

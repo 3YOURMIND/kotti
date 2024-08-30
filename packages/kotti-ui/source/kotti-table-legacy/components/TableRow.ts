@@ -106,13 +106,9 @@ export const TableRow = defineComponent({
 
 			tableState.$emit('activateRow', row, index)
 		}
-		const handleSelect = ($event: InputEvent, row: unknown) => {
+		const handleSelect = ($event: MouseEvent, row: unknown) => {
 			$event.stopPropagation()
-			tableStore.commit(
-				'selectRow',
-				row,
-				($event.target as HTMLInputElement).checked,
-			)
+			tableStore.commit('selectRow', row, !isSelectedRow.value)
 		}
 
 		return () =>
@@ -189,13 +185,18 @@ export const TableRow = defineComponent({
 													type: 'checkbox',
 												},
 												on: {
-													change: ($event: InputEvent) => {
+													click: ($event: MouseEvent) => {
 														handleSelect($event, props.row)
 													},
 												},
 											}),
 											h('i', {
-												class: 'form-icon',
+												class: [
+													'form-icon',
+													isSelectedRow.value
+														? 'form-icon--is-checked'
+														: undefined,
+												],
 												style: isDisabled.value
 													? { cursor: 'not-allowed' }
 													: undefined,

@@ -163,9 +163,13 @@ _Note:_ The use of v-model is _REMOVED_. Instead, bind the Array of selected to 
 > Note the difference between the Array model passed to the v-model (now, removed) and that passed to the selected property.
 > The former is an `Array` of selected indices, and the latter is an `Array` of _row_ `Object`s
 
-<div>
+<div class="container">
 	<KtTableLegacy :rows="rows" :columns="columnsDefault" isSelectable :selected="selected" @selectionChange="selected = $event" />
-	<pre>Selected Rows: {{JSON.stringify(selected,undefined, 2)}} </pre>
+	<div class="container__buttons-row">
+		<KtButton :disabled="selected.length === rows.length" type="primary" label="Select All Rows" @click="setSelectedRows(rows)"/>
+		<KtButton :disabled="selected.length === 0" type="primary" label="Clear Row Selection" @click="setSelectedRows([])"/>
+	</div>
+	<pre>Selected Rows: {{JSON.stringify(selected, undefined, 2)}} </pre>
 </div>
 
 > Note that the use of a `JSON.stringify()` in a `<pre></pre>` tag is for readability purposes
@@ -1113,6 +1117,29 @@ import ComponentInfo from '~/components/ComponentInfo.vue'
 
 const ADDRESS_DOT_LINE = 'address.line'
 
+const rows = [
+	{
+		date: '2016-05-03',
+		name: 'Tom',
+		address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
+	},
+	{
+		date: '2016-05-02',
+		name: 'Jackson',
+		address: { number: 89, line: 'No. 89, Grove St, Los Angeles' },
+	},
+	{
+		date: '2016-05-04',
+		name: 'Fen',
+		address: { number: 182, line: 'No. 182, Grove St, Los Angeles' },
+	},
+	{
+		date: '2016-05-01',
+		name: 'Fexiang',
+		address: { number: 189, line: 'No. 189, Grove St, Los Angeles' },
+	},
+]
+
 export default {
 	name: 'DocumentationPageUsageComponentsTable',
 	components: {
@@ -1133,13 +1160,7 @@ export default {
 			component: KtTableLegacy,
 			Kotti,
 			select: [0, 1],
-			selected: [
-				{
-					date: '2016-05-04',
-					name: 'Tom',
-					address: { number: 119, line: 'No. 118, Grove St, Los Angeles' },
-				},
-			],
+			selected: [rows[0]],
 			selectedRows: [],
 			columnsDefault: [
 				{ prop: 'name', label: 'Name' },
@@ -1192,28 +1213,7 @@ export default {
 				},
 			],
 			emptyRows: [],
-			rows: [
-				{
-					date: '2016-05-03',
-					name: 'Tom',
-					address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
-				},
-				{
-					date: '2016-05-02',
-					name: 'Jackson',
-					address: { number: 89, line: 'No. 89, Grove St, Los Angeles' },
-				},
-				{
-					date: '2016-05-04',
-					name: 'Fen',
-					address: { number: 182, line: 'No. 182, Grove St, Los Angeles' },
-				},
-				{
-					date: '2016-05-01',
-					name: 'Fexiang',
-					address: { number: 189, line: 'No. 189, Grove St, Los Angeles' },
-				},
-			],
+			rows: [...rows],
 			disableName: 'F',
 			fromIndex: 0,
 			dragSteps: 0,
@@ -1230,6 +1230,9 @@ export default {
 	methods: {
 		disableRow({ row }) {
 			return row.name.includes(this.disableName)
+		},
+		setSelectedRows(rows) {
+			this.selected = [...rows]
 		},
 		showAlertOnClickOrEnter(row, rowIndex) {
 			// eslint-disable-next-line no-alert
@@ -1318,3 +1321,18 @@ export default {
 	},
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: var(--unit-2);
+
+	&__buttons-row {
+		display: flex;
+		gap: var(--unit-2);
+		align-items: center;
+		justify-content: flex-end;
+	}
+}
+</style>

@@ -7,7 +7,10 @@
 					<label class="form-checkbox">
 						<input :checked="isAllSelected" type="checkbox" />
 						<i
-							class="form-icon"
+							:class="{
+								'form-icon': true,
+								'form-icon--is-checked': isAllSelected,
+							}"
 							:style="isAllRowsDisabled ? { cursor: 'not-allowed' } : {}"
 						/>
 					</label>
