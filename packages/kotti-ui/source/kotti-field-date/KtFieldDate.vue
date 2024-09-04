@@ -9,14 +9,19 @@
 		<template #container>
 			<div ref="inputContainerRef" class="kt-field__input-container">
 				<VueDatePicker
-					autoApply
+					ref="datePickerRef"
+					:actionRow="{
+						showPreview: false,
+					}"
 					:enableTimePicker="false"
 					:modelValue="field.currentValue"
 					modelType="yyyy-MM-dd"
+					:presetDates="shortcuts"
 					:ui="{
 						calendar: 'date-picker__calendar',
 						menu: 'date-picker__menu',
 					}"
+					@internalModelChange="handleInternalModelChange"
 					@update:modelValue="onUpdateModelValue"
 				>
 					<template #trigger>
@@ -115,7 +120,7 @@ export default defineComponent({
 						if (isEditing.value) return field.currentValue ?? ''
 
 						if (internalDateValue.value)
-							return dayjs(internalDateValue.value).format('YYYY-MM-DD HH:mm')
+							return dayjs(internalDateValue.value).format('YYYY-MM-DD')
 
 						return ''
 					})()
@@ -178,7 +183,7 @@ export default defineComponent({
 				const date = dayjs(internalDateValue.value)
 				if (!date.isValid()) return
 
-				const result = date.format('YYYY-MM-DD HH:mm')
+				const result = date.format('YYYY-MM-DD')
 				field.setValue(result)
 			},
 			onFocus: () => {

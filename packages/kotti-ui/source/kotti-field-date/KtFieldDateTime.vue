@@ -156,6 +156,7 @@ export default defineComponent({
 
 		// TODO (?)
 		// const isInPopover = inject(KT_IS_IN_POPOVER, false)
+		//
 
 		return {
 			datePickerRef,

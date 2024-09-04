@@ -10,16 +10,22 @@
 		<template #container>
 			<div ref="inputContainerRef" class="kt-field__input-container">
 				<VueDatePicker
-					autoApply
+					ref="datePickerRef"
+					:actionRow="{
+						showPreview: false,
+					}"
 					:enableTimePicker="false"
 					:modelValue="cleanedCurrentValue"
 					modelType="yyyy-MM-dd"
 					multi-calendars
+					:presetDates="shortcuts"
 					:range="{ partialRange: false }"
 					:ui="{
 						calendar: 'date-picker__calendar',
 						menu: 'date-picker__menu',
 					}"
+					@rangeStart="onRangeStart"
+					@rangeEnd="onRangeEnd"
 					@update:modelValue="onUpdateModelValue"
 				>
 					<template #trigger>
@@ -97,7 +103,7 @@ export default defineComponent({
 		// const elDateRef = ref<ElDateWithInternalAPI | null>(null)
 		const datePickerRef = ref<DatePickerInstance | null>(null)
 		const inputContainerRef = ref<Element | null>(null)
-		const internalDateValue = ref<Date | null>()
+		const internalRangeValue = ref<[Date | null, Date | null]>([null, null])
 
 		const isEditing = ref(false)
 		const cleanedCurrentValue = computed(() => [
@@ -112,8 +118,9 @@ export default defineComponent({
 			cleanedCurrentValue,
 			datePickerRef,
 			field,
-			handleInternalModelChange: (date: Date) => {
-				internalDateValue.value = date
+			handleInternalModelChange: (date: [Date | null, Date | null]) => {
+				console.log('handleInternalModelChange', date)
+				internalRangeValue.value = date
 			},
 			handleClickOutside: () => {},
 			inputProps: computed(
@@ -122,10 +129,10 @@ export default defineComponent({
 					// forceUpdateKey: number
 				} => {
 					const value = (() => {
-						if (isEditing.value) return cleanedCurrentValue.value.join(', ')
+						if (isEditing.value) return JSON.stringify(internalRangeValue.value)
 
-						// if (internalDateValue.value)
-						// 	return dayjs(internalDateValue.value).format('YYYY-MM-DD HH:mm')
+						if (internalRangeValue.value)
+							return JSON.stringify(internalRangeValue.value)
 
 						return ''
 					})()
@@ -142,19 +149,31 @@ export default defineComponent({
 				},
 			),
 			inputContainerRef,
-			isConfirmDisabled: computed(() => internalDateValue.value === null),
+			isConfirmDisabled: computed(() => internalRangeValue.value === null),
 			locale: computed(() => i18NContext.locale),
 			onUpdateModelValue: (value: KottiFieldDateRange.Value) => {
+				console.log('onUpdateModelValue', value)
 				if (!field.isDisabled && !field.isLoading) field.setValue(value)
+			},
+			onRangeEnd: (value: Date) => {
+				const rangeStart = internalRangeValue.value[0]
+				if (rangeStart === null) {
+					throw new Error(
+						'Range end was triggered without a matching range start',
+					)
+				}
+				if (value <= rangeStart) {
+					internalRangeValue.value = [value, rangeStart]
+				} else {
+					internalRangeValue.value = [rangeStart, value]
+				}
+			},
+			onRangeStart: (value: Date) => {
+				internalRangeValue.value = [value, null]
 			},
 			onSelectDate: (value: string | null) => {
 				datePickerRef.value?.selectDate?.(value)
 			},
-			timeDisplay: computed(() => {
-				if (internalDateValue.value == null) return null
-
-				return dayjs(internalDateValue.value).format('HH:mm')
-			}),
 			translations,
 			onCloseMenu: () => {
 				datePickerRef.value?.closeMenu?.()

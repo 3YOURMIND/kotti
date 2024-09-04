@@ -30,6 +30,8 @@ const formValue = ref({
 const isNarrow = ref(false)
 
 const toISODate = (d: Date) => d.toISOString().split('T')[0]
+const toISODateTime = (d: Date) =>
+	d.toISOString().replace('T', ' ').split('.')[0]
 
 const lastReload = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
 </script>
@@ -201,17 +203,92 @@ const lastReload = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
 							<strong> Let me help you </strong>
 						</template>
 					</KtFieldText> -->
-					<KtFieldDate formKey="birthday" label="birthday">
+					<KtFieldDate
+						formKey="birthday"
+						label="birthday"
+						:shortcuts="[
+							{
+								label: 'Today',
+								value: toISODate(new Date()),
+							},
+							{
+								label: 'Yesterday',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24)
+									return toISODate(date)
+								})(),
+							},
+							{
+								label: 'A week ago',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+									return toISODate(date)
+								})(),
+							},
+						]"
+					>
 						<template #helpText>
 							<strong> Let me help you </strong>
 						</template>
 					</KtFieldDate>
-					<KtFieldDateTime formKey="birthdayTime" label="Birthday Time">
+					<KtFieldDateTime
+						formKey="birthdayTime"
+						label="Birthday Time"
+						:shortcuts="[
+							{
+								label: 'Todayeouaoe',
+								value: toISODateTime(new Date()),
+							},
+							{
+								label: 'Yesterday',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24)
+									return toISODateTime(date)
+								})(),
+							},
+							{
+								label: 'A week ago',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+									return toISODateTime(date)
+								})(),
+							},
+						]"
+					>
 						<template #helpText>
 							<strong> Let me help you </strong>
 						</template>
 					</KtFieldDateTime>
-					<KtFieldDateRange formKey="birthdayRange" label="Birthday Range" />
+					<KtFieldDateRange
+						formKey="birthdayRange"
+						label="Birthday Range"
+						:shortcuts="[
+							{
+								label: 'Todayaoeu',
+								value: [toISODate(new Date()), toISODate(new Date())],
+							},
+							{
+								label: 'Yesterday',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24)
+									return [toISODate(date), toISODate(new Date())]
+								})(),
+							},
+							{
+								label: 'A week ago',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+									return [toISODate(date), toISODate(new Date())]
+								})(),
+							},
+						]"
+					/>
 				</KtForm>
 			</main>
 		</div>
