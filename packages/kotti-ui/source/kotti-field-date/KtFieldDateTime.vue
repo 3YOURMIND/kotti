@@ -41,6 +41,7 @@
 					<template #trigger>
 						<input
 							class="kt-field-text__wrapper"
+							autocomplete="off"
 							v-bind="inputProps"
 							@blur="onBlur"
 							@focus="onFocus"

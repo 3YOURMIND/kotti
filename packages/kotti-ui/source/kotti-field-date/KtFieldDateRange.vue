@@ -20,6 +20,8 @@
 					multi-calendars
 					:presetDates="shortcuts"
 					:range="{ partialRange: false }"
+					teleport
+					:timezone="{ convertModel: false, timezone: 'UTC' }"
 					:ui="{
 						calendar: 'date-picker__calendar',
 						menu: 'date-picker__menu',
@@ -31,6 +33,16 @@
 					<template #trigger>
 						<input
 							class="kt-field-text__wrapper"
+							autocomplete="off"
+							v-bind="inputProps"
+							@blur="onBlur"
+							@focus="onFocus"
+							@input="onInput"
+						/>
+						<!-- Implement dual input -->
+						<input
+							class="kt-field-text__wrapper"
+							autocomplete="off"
 							v-bind="inputProps"
 							@blur="onBlur"
 							@focus="onFocus"
@@ -111,6 +123,13 @@ export default defineComponent({
 			field.currentValue[1] ?? '',
 		])
 
+		const cleanDateInput = (date: Date | null) => {
+			if (date === null) return null
+			const dayjsDate = dayjs(date)
+			if (!dayjsDate.isValid()) return null
+			return dayjsDate.format('YYYY-MM-DD')
+		}
+
 		// TODO (?)
 		// const isInPopover = inject(KT_IS_IN_POPOVER, false)
 
@@ -187,14 +206,11 @@ export default defineComponent({
 			},
 			onBlur: () => {
 				isEditing.value = false
-				// if (internalDateValue.value === null) {
-				// 	field.setValue([null, null])
-				// 	return
-				// }
-				// const date = dayjs(internalDateValue.value)
-				// if (!date.isValid()) return
-				// const result = date.format('YYYY-MM-DD HH:mm')
-				// field.setValue(result)
+				// FIXME: double-check if setting a value of [null, <date>] or vv is allowed
+				field.setValue([
+					cleanDateInput(internalRangeValue.value[0]),
+					cleanDateInput(internalRangeValue.value[1]),
+				])
 			},
 			onFocus: () => {
 				isEditing.value = true
