@@ -128,7 +128,7 @@ export module KottiField {
 				z.literal(AutoComplete.OFF),
 				z.string(),
 			])
-			.optional(),
+			.default(AutoComplete.OFF),
 		hideClear: z.boolean().default(false),
 		leftIcon: yocoIconSchema.nullable().default(null),
 		prefix: z.string().nullable().default(null),

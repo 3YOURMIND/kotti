@@ -199,7 +199,7 @@ export const generateComponentCode = (component: ComponentValue): string =>
 					case 'string':
 						return `${key}="${value}"`
 					default:
-						return `:${key}="${JSON.stringify(value).replaceAll('"', "'")}"`
+						return `:${key}="${JSON.stringify(value ?? null).replaceAll('"', "'")}"`
 				}
 			})
 			.map((prop) => `\t${prop}`),
