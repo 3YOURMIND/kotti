@@ -300,7 +300,7 @@
 						>
 							<KtFieldSingleSelect
 								formKey="autoComplete"
-								helpText="Support Varies"
+								helpText="Support Varies. Defaults to 'off'."
 								:isOptional="settings.component !== 'KtFieldPassword'"
 								isUnsorted
 								label="autoComplete"
@@ -1210,7 +1210,7 @@ export default defineComponent({
 				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
 				toggleType: 'checkbox' | 'switch'
 			}
-			autoComplete: string
+			autoComplete: Kotti.FieldSingleSelect.Value
 			autoCompleteToken: Kotti.FieldText.Value
 			booleanFlags: {
 				hideClear: Kotti.FieldToggle.Value
@@ -1377,7 +1377,7 @@ export default defineComponent({
 					autoComplete:
 						settings.value.autoComplete === 'token'
 							? settings.value.autoCompleteToken
-							: settings.value.autoComplete,
+							: settings.value.autoComplete ?? undefined,
 				})
 
 			if (
