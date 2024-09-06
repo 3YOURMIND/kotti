@@ -1,40 +1,32 @@
 <template>
 	<div :class="rootClasses" :data-test="dataTest">
-		<template v-if="isLoading">
+		<div v-if="showHeader || $slots.helpText" class="kt-value-label__header">
+			<label v-if="hasLabel" class="kt-value-label__label" v-text="label" />
 			<div
-				v-if="showHeader || $slots.helpText"
-				class="kt-value-label-loading__header skeleton rectangle md"
-			/>
-			<div class="kt-value-label-loading__value skeleton rectangle lg" />
-		</template>
-		<template v-else>
-			<div v-if="showHeader || $slots.helpText" class="kt-value-label__header">
-				<label v-if="hasLabel" class="kt-value-label__label" v-text="label" />
-				<div
-					v-if="hasHelpText || $slots.helpText"
-					class="kt-value-label__help-text"
-				>
-					<FieldHelpText :helpText="helpText" :helpTextSlot="$slots.helpText" />
-				</div>
-			</div>
-			<div
-				v-if="helpDescription"
-				class="kt-value-label__help-description"
-				v-text="helpDescription"
-			/>
-			<div class="kt-value-label__value">
-				<i v-if="isUnset" v-text="notSetLabel" />
-				<slot v-else-if="$slots.default" />
-				<span v-else v-text="valueToRender" />
-			</div>
-			<div
-				v-if="!isLoading && validationText !== null"
-				class="kt-value-label__validation-text"
+				v-if="hasHelpText || $slots.helpText"
+				class="kt-value-label__help-text"
 			>
-				<i class="yoco" v-text="validationTextIcon" />
-				{{ validationText }}
+				<FieldHelpText :helpText="helpText" :helpTextSlot="$slots.helpText" />
 			</div>
-		</template>
+		</div>
+		<div
+			v-if="helpDescription"
+			class="kt-value-label__help-description"
+			v-text="helpDescription"
+		/>
+		<div v-if="isLoading" class="kt-value-label__loading skeleton rectangle" />
+		<div v-else class="kt-value-label__value">
+			<i v-if="isUnset" v-text="notSetLabel" />
+			<slot v-else-if="$slots.default" />
+			<span v-else v-text="valueToRender" />
+		</div>
+		<div
+			v-if="!isLoading && validationText !== null"
+			class="kt-value-label__validation-text"
+		>
+			<i class="yoco" v-text="validationTextIcon" />
+			{{ validationText }}
+		</div>
 	</div>
 </template>
 
@@ -130,6 +122,10 @@ export default defineComponent({
 		color: var(--text-02);
 	}
 
+	&__loading {
+		height: 1.1rem;
+	}
+
 	&__help-description {
 		color: var(--text-03);
 	}
@@ -154,17 +150,6 @@ export default defineComponent({
 		span {
 			display: inline-block;
 		}
-	}
-}
-
-.kt-value-label-loading {
-	&__header {
-		max-width: 200px;
-		height: var(--unit-5);
-	}
-
-	&__value {
-		height: var(--unit-10);
 	}
 }
 
