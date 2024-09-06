@@ -163,6 +163,7 @@ export default defineComponent({
 			datePickerRef,
 			field,
 			handleInternalModelChange: (date: Date) => {
+				console.log('handleInternalModelChange', date)
 				internalDateValue.value = date
 			},
 			handleClickOutside: () => {},
@@ -171,8 +172,9 @@ export default defineComponent({
 					class: string[]
 					// forceUpdateKey: number
 				} => {
+					console.log('inputProps')
 					const value = (() => {
-						if (isEditing.value) return field.currentValue ?? ''
+						if (!isEditing.value) return field.currentValue ?? ''
 
 						if (internalDateValue.value)
 							return dayjs(internalDateValue.value).format('YYYY-MM-DD HH:mm')
@@ -195,13 +197,14 @@ export default defineComponent({
 			isConfirmDisabled: computed(() => internalDateValue.value === null),
 			locale: computed(() => i18NContext.locale),
 			onUpdateModelValue: (value: KottiFieldDate.Value) => {
+				console.log('onUpdateModelValue', value)
 				if (!field.isDisabled && !field.isLoading) field.setValue(value)
 			},
 			onSelectDate: (value: string | null) => {
 				datePickerRef.value?.selectDate?.(value)
 			},
 			timeDisplay: computed(() => {
-				if (internalDateValue.value == null) return null
+				if (internalDateValue.value === null) return null
 
 				return dayjs(internalDateValue.value).format('HH:mm')
 			}),
@@ -219,11 +222,12 @@ export default defineComponent({
 				datePickerRef.value?.closeMenu?.()
 			},
 			onInput: (event: InputEvent) => {
+				console.log('onInput', event)
 				const inputString = (event.target as HTMLInputElement).value as string
 				const date = dayjs(inputString)
-				field.setValue(inputString)
 
 				if (!date.isValid()) return
+				console.log('onInput', 'isValid')
 
 				datePickerRef.value.updateInternalModelValue(date.toDate())
 			},
