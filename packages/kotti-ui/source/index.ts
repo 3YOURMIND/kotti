@@ -63,6 +63,8 @@ import { KtFieldTextArea } from './kotti-field-text-area'
 export * from './kotti-field-text-area'
 import { KtFieldToggle, KtFieldToggleGroup } from './kotti-field-toggle'
 export * from './kotti-field-toggle'
+import { KtFileUpload } from './kotti-file-upload'
+export * from './kotti-file-upload'
 import { KtFilters } from './kotti-filters'
 export * from './kotti-filters'
 import { KtForm } from './kotti-form'
@@ -145,6 +147,7 @@ export default {
 			KtFieldTextArea,
 			KtFieldToggle,
 			KtFieldToggleGroup,
+			KtFileUpload,
 			KtFilters,
 			KtForm,
 			KtFormControllerList,

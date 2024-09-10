@@ -54,6 +54,7 @@ export {
 	KottiFieldSingleSelect as FieldSingleSelect,
 	KottiFieldSingleSelectRemote as FieldSingleSelectRemote,
 } from '../kotti-field-select/types'
+export { KottiFileUpload as FileUpload } from '../kotti-file-upload/types'
 export { KottiFilters as Filters } from '../kotti-filters/types'
 export type { KottiForm as Form } from '../kotti-form/types'
 export type { KottiFormControllerList as FormControllerList } from '../kotti-form-controller-list/types'

@@ -34,7 +34,12 @@ export const KtFieldFileUploadRemote = attachMeta(
 	{
 		addedVersion: '3.0.0-beta.43',
 		componentFolder,
-		deprecated: null,
+		deprecated: {
+			alternatives: ['Use KtFileUpload instead'],
+			reason:
+				'Implementing a component that is meant to upload files immediately as a form field is inherently flawed',
+			version: '7.2.0',
+		},
 		designs: {
 			type: MetaDesignType.FIGMA,
 			url,
