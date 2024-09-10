@@ -8,6 +8,7 @@ import {
 	KtFieldDate,
 	KtFieldDateRange,
 	KtFieldDateTime,
+	KtFieldDateTimeRange,
 	KtForm,
 	KtI18nContext,
 	KtNavbar,
@@ -285,6 +286,32 @@ const lastReload = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
 									const date = new Date()
 									date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
 									return [toISODate(date), toISODate(new Date())]
+								})(),
+							},
+						]"
+					/>
+					<KtFieldDateTimeRange
+						formKey="birthdayTimeRange"
+						label="Birthday Time Range"
+						:shortcuts="[
+							{
+								label: 'Todayaoeu',
+								value: [toISODateTime(new Date()), toISODateTime(new Date())],
+							},
+							{
+								label: 'Yesterday',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24)
+									return [toISODateTime(date), toISODateTime(new Date())]
+								})(),
+							},
+							{
+								label: 'A week ago',
+								value: (() => {
+									const date = new Date()
+									date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+									return [toISODateTime(date), toISODateTime(new Date())]
 								})(),
 							},
 						]"

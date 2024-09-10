@@ -31,23 +31,22 @@
 					@update:modelValue="onUpdateModelValue"
 				>
 					<template #trigger>
-						<input
-							class="kt-field-text__wrapper"
-							autocomplete="off"
-							v-bind="inputProps"
-							@blur="onBlur"
-							@focus="onFocus"
-							@input="onInput"
-						/>
-						<!-- Implement dual input -->
-						<input
-							class="kt-field-text__wrapper"
-							autocomplete="off"
-							v-bind="inputProps"
-							@blur="onBlur"
-							@focus="onFocus"
-							@input="onInput"
-						/>
+						<div class="kt-field-date-range__input-wrapper">
+							<input
+								class="kt-field-date-range__input"
+								autocomplete="off"
+								v-bind="inputPropsLeft"
+								@blur="saveOnBlurLeft.onBlur"
+								@input="saveOnBlurLeft.onInput"
+							/>
+							<input
+								class="kt-field-date-range__input"
+								autocomplete="off"
+								v-bind="inputPropsRight"
+								@blur="saveOnBlurRight.onBlur"
+								@input="saveOnBlurRight.onInput"
+							/>
+						</div>
 					</template>
 
 					<template #action-buttons>
@@ -91,6 +90,7 @@ import dayjs from 'dayjs'
 import { useI18nContext, useTranslationNamespace } from '../kotti-i18n/hooks'
 // import { isInvalidDate } from './utilities'
 import FieldTime from './FieldTime.vue'
+import { useSaveOnBlur } from './hooks'
 
 export default defineComponent({
 	name: 'KtFieldDateRange',
@@ -109,26 +109,40 @@ export default defineComponent({
 			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
+		const sortRange = ([
+			left,
+			right,
+		]: KottiFieldDateRange.Value): KottiFieldDateRange.Value => {
+			if (left === null || right === null) return [left, right]
+
+			const leftDate = dayjs(left)
+			const rightDate = dayjs(right)
+			if (leftDate.isBefore(rightDate)) return [left, right]
+			return [right, left]
+		}
+
+		const saveOnBlurLeft = useSaveOnBlur({
+			mode: 'date',
+			save: (value) =>
+				field.setValue(sortRange([value, field.currentValue[1]])),
+		})
+		const saveOnBlurRight = useSaveOnBlur({
+			mode: 'date',
+			save: (value) =>
+				field.setValue(sortRange([field.currentValue[0], value])),
+		})
+
 		const i18NContext = useI18nContext()
 		const translations = useTranslationNamespace('KtFieldDateShared')
 
-		// const elDateRef = ref<ElDateWithInternalAPI | null>(null)
 		const datePickerRef = ref<DatePickerInstance | null>(null)
 		const inputContainerRef = ref<Element | null>(null)
 		const internalRangeValue = ref<[Date | null, Date | null]>([null, null])
 
-		const isEditing = ref(false)
 		const cleanedCurrentValue = computed(() => [
 			field.currentValue[0] ?? '',
 			field.currentValue[1] ?? '',
 		])
-
-		const cleanDateInput = (date: Date | null) => {
-			if (date === null) return null
-			const dayjsDate = dayjs(date)
-			if (!dayjsDate.isValid()) return null
-			return dayjsDate.format('YYYY-MM-DD')
-		}
 
 		// TODO (?)
 		// const isInPopover = inject(KT_IS_IN_POPOVER, false)
@@ -138,41 +152,47 @@ export default defineComponent({
 			datePickerRef,
 			field,
 			handleInternalModelChange: (date: [Date | null, Date | null]) => {
-				console.log('handleInternalModelChange', date)
 				internalRangeValue.value = date
 			},
-			handleClickOutside: () => {},
-			inputProps: computed(
+			inputContainerRef,
+			inputPropsLeft: computed(
 				(): InputHTMLAttributes & {
 					class: string[]
 					// forceUpdateKey: number
 				} => {
-					const value = (() => {
-						if (isEditing.value) return JSON.stringify(internalRangeValue.value)
-
-						if (internalRangeValue.value)
-							return JSON.stringify(internalRangeValue.value)
-
-						return ''
-					})()
-
 					return {
 						...field.inputProps,
 						class: ['kt-field-text__wrapper'],
-						// forceUpdateKey: forceUpdateKey.value,
+						forceUpdateKey: saveOnBlurLeft.forceUpdateKey.value,
 						type: 'text',
 						size: 1,
-						value,
-						placeholder: props.placeholder ?? undefined,
+						value:
+							saveOnBlurLeft.inputString.value ?? field.currentValue[0] ?? '',
+						placeholder: props.placeholder[0] ?? undefined,
 					}
 				},
 			),
-			inputContainerRef,
+			inputPropsRight: computed(
+				(): InputHTMLAttributes & {
+					class: string[]
+					// forceUpdateKey: number
+				} => {
+					return {
+						...field.inputProps,
+						class: ['kt-field-text__wrapper'],
+						forceUpdateKey: saveOnBlurRight.forceUpdateKey.value,
+						type: 'text',
+						size: 1,
+						value:
+							saveOnBlurRight.inputString.value ?? field.currentValue[1] ?? '',
+						placeholder: props.placeholder[1] ?? undefined,
+					}
+				},
+			),
 			isConfirmDisabled: computed(() => internalRangeValue.value === null),
 			locale: computed(() => i18NContext.locale),
-			onUpdateModelValue: (value: KottiFieldDateRange.Value) => {
-				console.log('onUpdateModelValue', value)
-				if (!field.isDisabled && !field.isLoading) field.setValue(value)
+			onCloseMenu: () => {
+				datePickerRef.value?.closeMenu?.()
 			},
 			onRangeEnd: (value: Date) => {
 				const rangeStart = internalRangeValue.value[0]
@@ -193,28 +213,12 @@ export default defineComponent({
 			onSelectDate: (value: string | null) => {
 				datePickerRef.value?.selectDate?.(value)
 			},
+			onUpdateModelValue: (value: KottiFieldDateRange.Value) => {
+				if (!field.isDisabled && !field.isLoading) field.setValue(value)
+			},
+			saveOnBlurLeft,
+			saveOnBlurRight,
 			translations,
-			onCloseMenu: () => {
-				datePickerRef.value?.closeMenu?.()
-			},
-			onInput: (event: InputEvent) => {
-				// const inputString = (event.target as HTMLInputElement).value as string
-				// const date = dayjs(inputString)
-				// field.setValue(inputString)
-				// if (!date.isValid()) return
-				// datePickerRef.value.updateInternalModelValue(date.toDate())
-			},
-			onBlur: () => {
-				isEditing.value = false
-				// FIXME: double-check if setting a value of [null, <date>] or vv is allowed
-				field.setValue([
-					cleanDateInput(internalRangeValue.value[0]),
-					cleanDateInput(internalRangeValue.value[1]),
-				])
-			},
-			onFocus: () => {
-				isEditing.value = true
-			},
 		}
 	},
 })

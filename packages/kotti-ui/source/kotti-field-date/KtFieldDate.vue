@@ -27,11 +27,10 @@
 				>
 					<template #trigger>
 						<input
-							class="kt-field-text__wrapper"
+							class="kt-field-date__input"
 							autocomplete="off"
 							v-bind="inputProps"
 							@blur="onBlur"
-							@focus="onFocus"
 							@input="onInput"
 						/>
 					</template>
@@ -60,7 +59,6 @@
 </template>
 
 <script lang="ts">
-import dayjs from 'dayjs'
 import { computed, defineComponent, ref } from 'vue'
 import type { InputHTMLAttributes } from '@vue/runtime-dom'
 import VueDatePicker from '@vuepic/vue-datepicker'
@@ -74,6 +72,7 @@ import { makeProps } from '../make-props'
 
 import { KOTTI_FIELD_DATE_SUPPORTS } from './constants'
 import { KottiFieldDate } from './types'
+import { useSaveOnBlur } from './hooks'
 import FieldTime from './FieldTime.vue'
 
 export default defineComponent({
@@ -92,105 +91,62 @@ export default defineComponent({
 			props,
 			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
+		// const { forceUpdate, forceUpdateKey } = useForceUpdate()
 
 		const i18NContext = useI18nContext()
 		const translations = useTranslationNamespace('KtFieldDateShared')
 
-		// const elDateRef = ref<ElDateWithInternalAPI | null>(null)
 		const datePickerRef = ref<DatePickerInstance | null>(null)
 		const inputContainerRef = ref<Element | null>(null)
-		const internalDateValue = ref<Date | null>()
 
-		const isEditing = ref(false)
+		const vueDatePickerDateValue = ref<Date | null>()
 
-		// TODO (?)
+		const { forceUpdateKey, inputString, onInput, onBlur } = useSaveOnBlur({
+			mode: 'date',
+			save: field.setValue,
+		})
+		// TODO test within KtPopover
 		// const isInPopover = inject(KT_IS_IN_POPOVER, false)
 
 		return {
 			datePickerRef,
 			field,
 			handleInternalModelChange: (date: Date) => {
-				internalDateValue.value = date
+				vueDatePickerDateValue.value = date
 			},
-			handleClickOutside: () => {},
 			inputProps: computed(
 				(): InputHTMLAttributes & {
 					class: string[]
-					// forceUpdateKey: number
+					forceUpdateKey: number
 				} => {
-					const value = (() => {
-						if (isEditing.value) return field.currentValue ?? ''
-
-						if (internalDateValue.value)
-							return dayjs(internalDateValue.value).format('YYYY-MM-DD')
-
-						return ''
-					})()
-
 					return {
 						...field.inputProps,
 						class: ['kt-field-text__wrapper'],
-						// forceUpdateKey: forceUpdateKey.value,
+						forceUpdateKey: forceUpdateKey.value,
 						type: 'text',
 						size: 1,
-						value,
+						value: inputString.value ?? field.currentValue ?? '',
 						placeholder: props.placeholder ?? undefined,
 					}
 				},
 			),
 			inputContainerRef,
-			isConfirmDisabled: computed(() => internalDateValue.value === null),
+			isConfirmDisabled: computed(() => vueDatePickerDateValue.value === null),
 			locale: computed(() => i18NContext.locale),
-			onUpdateModelValue: (value: KottiFieldDate.Value) => {
-				if (!field.isDisabled && !field.isLoading) field.setValue(value)
-			},
-			onSelectDate: (value: string | null) => {
-				datePickerRef.value?.selectDate?.(value)
-			},
-			timeDisplay: computed(() => {
-				if (internalDateValue.value == null) return null
-
-				return dayjs(internalDateValue.value).format('HH:mm')
-			}),
-			timePickerProps: computed(() => {
-				const date = dayjs(field.currentValue)
-
-				return {
-					years: date.get('years'),
-					months: date.get('months'),
-					days: date.get('days'),
-				}
-			}),
-			translations,
+			onBlur,
 			onCloseMenu: () => {
 				datePickerRef.value?.closeMenu?.()
 			},
-			onInput: (event: InputEvent) => {
-				const inputString = (event.target as HTMLInputElement).value as string
-				const date = dayjs(inputString)
-				field.setValue(inputString)
-
-				if (!date.isValid()) return
-
-				datePickerRef.value.updateInternalModelValue(date.toDate())
+			onInput,
+			onSelectDate: (value: string | null) => {
+				datePickerRef.value?.selectDate?.(value)
 			},
-			onBlur: () => {
-				isEditing.value = false
-
-				if (internalDateValue.value === null) {
-					field.setValue(null)
-					return
+			onUpdateModelValue: (value: KottiFieldDate.Value) => {
+				if (!field.isDisabled && !field.isLoading) {
+					field.setValue(value)
 				}
-
-				const date = dayjs(internalDateValue.value)
-				if (!date.isValid()) return
-
-				const result = date.format('YYYY-MM-DD')
-				field.setValue(result)
 			},
-			onFocus: () => {
-				isEditing.value = true
-			},
+			translations,
 		}
 	},
 })

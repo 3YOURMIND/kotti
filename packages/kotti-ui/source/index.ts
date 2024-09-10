@@ -35,7 +35,7 @@ import {
 	KtFieldDate,
 	KtFieldDateRange,
 	KtFieldDateTime,
-	// 	KtFieldDateTimeRange,
+	KtFieldDateTimeRange,
 } from './kotti-field-date'
 export * from './kotti-field-date'
 import {

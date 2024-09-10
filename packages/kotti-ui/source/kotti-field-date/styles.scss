@@ -3,21 +3,37 @@
 @import '../kotti-style/_variables.scss';
 @import './mixins.scss';
 
-/* // INPUT STYLES OF ALL DATE-PICKERS
+// INPUT STYLES OF ALL DATE-PICKERS
 .kt-field-date,
 .kt-field-date-range,
 .kt-field-datetime,
 .kt-field-datetime-range {
-	.kt-field__input-container {
+	/* .kt-field__input-container {
 		width: 100%;
 		margin: 0;
 
 		&:not(:last-child) {
 			margin-bottom: 0.4rem;
 		}
+	} */
+
+	&__input-wrapper {
+		display: flex;
+		align-items: center;
+		gap: var(--unit-4);
+	}
+
+	&__input {
+		display: flex;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		line-height: 1.6;
+		border: 0;
 	}
 }
 
+/*
 // POPPER STYLE OF ALL DATE-PICKERS
 $icon-size: 1.3rem;
 $month-font-size: 1.2rem;
@@ -93,13 +109,4 @@ $year-font-size: 1rem; */
 			}
 		}
 	}
-}
-
-.kt-field-text__wrapper {
-	display: flex;
-	width: 100%;
-	padding: 0;
-	margin: 0;
-	line-height: 1.6;
-	border: 0;
 }

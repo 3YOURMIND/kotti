@@ -9,112 +9,254 @@
 	>
 		<template #container>
 			<div ref="inputContainerRef" class="kt-field__input-container">
-				<!-- <ElDatePicker
-					ref="elDateRef"
-					v-bind="elDateTimeRangePickerProps"
-					@input="onInput"
-				/> -->
+				<VueDatePicker
+					ref="datePickerRef"
+					:actionRow="{
+						showPreview: false,
+					}"
+					:enableTimePicker="!isConfirmDisabled"
+					:modelValue="cleanedCurrentValue"
+					modelType="yyyy-MM-dd HH:mm"
+					multi-calendars
+					:presetDates="shortcuts"
+					:range="{ partialRange: false }"
+					teleport
+					:ui="{
+						calendar: 'date-picker__calendar',
+						menu: 'date-picker__menu',
+					}"
+					@rangeStart="onRangeStart"
+					@rangeEnd="onRangeEnd"
+					@update:modelValue="onUpdateModelValue"
+				>
+					<template #trigger>
+						<div class="kt-field-date-range__input-wrapper">
+							<input
+								class="kt-field-datetime-range__input"
+								autocomplete="off"
+								v-bind="inputPropsLeft"
+								@blur="saveOnBlurLeft.onBlur"
+								@input="saveOnBlurLeft.onInput"
+							/>
+							<input
+								class="kt-field-datetime-range__input"
+								autocomplete="off"
+								v-bind="inputPropsRight"
+								@blur="saveOnBlurRight.onBlur"
+								@input="saveOnBlurRight.onInput"
+							/>
+						</div>
+					</template>
+					<!-- <template
+						#time-picker-overlay="{
+							hours,
+							minutes,
+							seconds,
+							setHours,
+							setMinutes,
+							setSeconds,
+						}"
+					>
+						<FieldTime
+							v-bind="timePickerProps"
+							:hours="hours"
+							:minutes="minutes"
+							:seconds="seconds"
+							@update:hours="setHours"
+							@update:minutes="setMinutes"
+							@update:seconds="setSeconds"
+						/>
+					</template> -->
+
+					<template #action-buttons>
+						<div class="date-picker__action-buttons">
+							<KtButton
+								:label="translations.cancelButton"
+								size="small"
+								type="secondary"
+								@click="onCloseMenu"
+							/>
+							<KtButton
+								:disabled="isConfirmDisabled"
+								:label="translations.confirmButton"
+								size="small"
+								type="primary"
+								@click="onSelectDate"
+							/>
+						</div>
+					</template>
+
+					<template #clock-icon>
+						<div class="date-picker__day-switch">
+							<i class="yoco" v-text="'clock'" />
+							<!-- {{ timeDisplay }} -->
+						</div>
+					</template>
+
+					<template #calendar-icon>
+						<i class="yoco" v-text="'calendar'" />
+					</template>
+
+					<template #arrow-left>
+						<i class="yoco" v-text="'chevron_left'" />
+					</template>
+
+					<template #arrow-right>
+						<i class="yoco" v-text="'chevron_right'" />
+					</template>
+				</VueDatePicker>
 			</div>
 		</template>
 	</KtField>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
+import type { InputHTMLAttributes } from '@vue/runtime-dom'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import type { DatePickerInstance } from '@vuepic/vue-datepicker'
 
+import { KtButton } from '../kotti-button'
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
 // import { KT_IS_IN_POPOVER } from '../kotti-popover/constants'
 import { makeProps } from '../make-props'
 
-import {
-	// EL_DATE_RANGE_PROPS,
-	// EL_DATE_TIME_PROPS,
-	KOTTI_FIELD_DATE_SUPPORTS,
-} from './constants'
-// import type { ElDateWithInternalAPI } from './hooks'
-// import { usePicker } from './hooks'
+import { KOTTI_FIELD_DATE_SUPPORTS } from './constants'
 import { KottiFieldDateTimeRange } from './types'
+import dayjs from 'dayjs'
+import { useI18nContext, useTranslationNamespace } from '../kotti-i18n/hooks'
 // import { isInvalidDate } from './utilities'
+import FieldTime from './FieldTime.vue'
+import { useSaveOnBlur } from './hooks'
 
 export default defineComponent({
 	name: 'KtFieldDateTimeRange',
 	components: {
-		// ElDatePicker,
+		FieldTime,
+		KtButton,
 		KtField,
+		VueDatePicker,
 	},
 	props: makeProps(KottiFieldDateTimeRange.propsSchema),
 	setup(props, { emit }) {
 		const field = useField<KottiFieldDateTimeRange.Value>({
 			emit,
-			isEmpty: (dateTimeRangeValue) =>
-				dateTimeRangeValue.every((dateTime) => dateTime === null),
+			isEmpty: ([lhs, rhs]) => lhs === null && rhs === null,
 			props,
 			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
-		// const elDateRef = ref<ElDateWithInternalAPI | null>(null)
+		const sortRange = ([
+			left,
+			right,
+		]: KottiFieldDateTimeRange.Value): KottiFieldDateTimeRange.Value => {
+			if (left === null || right === null) return [left, right]
 
+			const leftDate = dayjs(left)
+			const rightDate = dayjs(right)
+			if (leftDate.isBefore(rightDate)) return [left, right]
+			return [right, left]
+		}
+
+		const saveOnBlurLeft = useSaveOnBlur({
+			mode: 'date-time',
+			save: (value) =>
+				field.setValue(sortRange([value, field.currentValue[1]])),
+		})
+		const saveOnBlurRight = useSaveOnBlur({
+			mode: 'date-time',
+			save: (value) =>
+				field.setValue(sortRange([field.currentValue[0], value])),
+		})
+
+		const i18NContext = useI18nContext()
+		const translations = useTranslationNamespace('KtFieldDateShared')
+
+		const datePickerRef = ref<DatePickerInstance | null>(null)
 		const inputContainerRef = ref<Element | null>(null)
+		const internalRangeValue = ref<[Date | null, Date | null]>([null, null])
 
-		// usePicker({
-		// 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		// 	elDateRef: elDateRef as any,
-		// 	field,
-		// 	inputContainerRef,
-		// 	popperHeight: '550px',
-		// 	popperWidth: '700px',
-		// })
+		const cleanedCurrentValue = computed(() => [
+			field.currentValue[0] ?? '',
+			field.currentValue[1] ?? '',
+		])
 
-		// const pickerOptions: Ref<
-		// 	Pick<DatePickerProps, 'shortcuts' | 'disabledDate'>
-		// > = computed(() => ({
-		// 	disabledDate: (date: Date) => isInvalidDate(props, date),
-		// 	shortcuts: props.shortcuts.map(({ label, value, keepOpen }) => ({
-		// 		text: label,
-		// 		onClick(_picker: DatePickerInstance) {
-		// 			if (keepOpen !== true) _picker.$emit('pick', value)
-		// 			field.setValue(value)
-		// 		},
-		// 	})),
-		// }))
-
+		// TODO (?)
 		// const isInPopover = inject(KT_IS_IN_POPOVER, false)
 
 		return {
-			// elDateTimeRangePickerProps: computed(
-			// 	(): Partial<DatePickerInstance> => ({
-			// 		// ...EL_DATE_TIME_PROPS,
-			// 		// ...EL_DATE_RANGE_PROPS,
-			// 		/**
-			// 		 * @see {@link https://github.com/ElemeFE/element/blob/v2.13.1/packages/date-picker/src/picker.vue#L334)}
-			// 		 * */
-			// 		// @ts-expect-error (exposed through mixin on picker.vue on element-ui's implementation)
-			// 		appendToBody: !isInPopover,
-			// 		clearable: !field.hideClear,
-			// 		'data-test': field.inputProps['data-test'],
-			// 		disabled: field.isDisabled || field.isLoading,
-			// 		endPlaceholder: props.placeholder[1] ?? '',
-			// 		id: [`${field.inputProps.id}-start`, `${field.inputProps.id}-end`],
-			// 		pickerOptions: pickerOptions.value,
-			// 		startPlaceholder: props.placeholder[0] ?? '',
-			// 		type: 'datetimerange',
-			// 		value: field.currentValue.map((date) => date ?? '') as [
-			// 			string,
-			// 			string,
-			// 		],
-			// 	}),
-			// ),
-			// --eslint-disable-next-line @typescript-eslint/no-explicit-any
-			// elDateRef: elDateRef as any,
+			cleanedCurrentValue,
+			datePickerRef,
 			field,
-			inputContainerRef,
-			onInput: (value: KottiFieldDateTimeRange.Value | null) => {
-				if (field.isDisabled || field.isLoading) return
-
-				// element-ui emits `null` on clear
-				field.setValue(value ?? [null, null])
+			handleInternalModelChange: (date: [Date | null, Date | null]) => {
+				internalRangeValue.value = date
 			},
+			inputContainerRef,
+			inputPropsLeft: computed(
+				(): InputHTMLAttributes & {
+					class: string[]
+					// forceUpdateKey: number
+				} => {
+					return {
+						...field.inputProps,
+						class: ['kt-field-text__wrapper'],
+						forceUpdateKey: saveOnBlurLeft.forceUpdateKey.value,
+						type: 'text',
+						size: 1,
+						value:
+							saveOnBlurLeft.inputString.value ?? field.currentValue[0] ?? '',
+						placeholder: props.placeholder[0] ?? undefined,
+					}
+				},
+			),
+			inputPropsRight: computed(
+				(): InputHTMLAttributes & {
+					class: string[]
+					// forceUpdateKey: number
+				} => {
+					return {
+						...field.inputProps,
+						class: ['kt-field-text__wrapper'],
+						forceUpdateKey: saveOnBlurRight.forceUpdateKey.value,
+						type: 'text',
+						size: 1,
+						value:
+							saveOnBlurRight.inputString.value ?? field.currentValue[1] ?? '',
+						placeholder: props.placeholder[1] ?? undefined,
+					}
+				},
+			),
+			isConfirmDisabled: computed(() => internalRangeValue.value === null),
+			locale: computed(() => i18NContext.locale),
+			onCloseMenu: () => {
+				datePickerRef.value?.closeMenu?.()
+			},
+			onRangeEnd: (value: Date) => {
+				const rangeStart = internalRangeValue.value[0]
+				if (rangeStart === null) {
+					throw new Error(
+						'Range end was triggered without a matching range start',
+					)
+				}
+				if (value <= rangeStart) {
+					internalRangeValue.value = [value, rangeStart]
+				} else {
+					internalRangeValue.value = [rangeStart, value]
+				}
+			},
+			onRangeStart: (value: Date) => {
+				internalRangeValue.value = [value, null]
+			},
+			onSelectDate: (value: string | null) => {
+				datePickerRef.value?.selectDate?.(value)
+			},
+			onUpdateModelValue: (value: KottiFieldDateTimeRange.Value) => {
+				if (!field.isDisabled && !field.isLoading) field.setValue(value)
+			},
+			saveOnBlurLeft,
+			saveOnBlurRight,
+			translations,
 		}
 	},
 })
