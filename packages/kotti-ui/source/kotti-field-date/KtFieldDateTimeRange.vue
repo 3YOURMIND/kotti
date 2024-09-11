@@ -16,15 +16,16 @@
 					}"
 					:enableTimePicker="!isConfirmDisabled"
 					:modelValue="cleanedCurrentValue"
-					modelType="yyyy-MM-dd HH:mm"
+					modelType="yyyy-MM-dd HH:mm:ss"
 					multi-calendars
 					:presetDates="shortcuts"
-					:range="{ partialRange: false }"
+					range
 					teleport
 					:ui="{
 						calendar: 'date-picker__calendar',
-						menu: 'date-picker__menu',
+						menu: 'date-picker__menu date-picker--is-datetime date-picker--is-range',
 					}"
+					@internalModelChange="handleInternalModelChange"
 					@rangeStart="onRangeStart"
 					@rangeEnd="onRangeEnd"
 					@update:modelValue="onUpdateModelValue"
@@ -47,7 +48,7 @@
 							/>
 						</div>
 					</template>
-					<!-- <template
+					<template
 						#time-picker-overlay="{
 							hours,
 							minutes,
@@ -57,16 +58,42 @@
 							setSeconds,
 						}"
 					>
-						<FieldTime
-							v-bind="timePickerProps"
-							:hours="hours"
-							:minutes="minutes"
-							:seconds="seconds"
-							@update:hours="setHours"
-							@update:minutes="setMinutes"
-							@update:seconds="setSeconds"
-						/>
-					</template> -->
+						<div class="date-picker__field-time-wrapper">
+							<FieldTime
+								class="date-picker__field-time"
+								v-bind="timePickerPropsTuple[0]"
+								:hours="hours[0]"
+								:minutes="minutes[0]"
+								:seconds="seconds[0]"
+								@update:hours="(val) => setHours([val, hours[1]])"
+								@update:minutes="(val) => setMinutes([val, minutes[1]])"
+								@update:seconds="(val) => setSeconds([val, seconds[1]])"
+							/>
+
+							<FieldTime
+								class="date-picker__field-time"
+								v-bind="timePickerPropsTuple[1]"
+								:hours="hours[1]"
+								:minutes="minutes[1]"
+								:seconds="seconds[1]"
+								@update:hours="(val) => setHours([hours[0], val])"
+								@update:minutes="(val) => setMinutes([minutes[0], val])"
+								@update:seconds="(val) => setSeconds([seconds[0], val])"
+							/>
+						</div>
+					</template>
+
+					<template #action-extra>
+						<div class="date-picker__shortcut-list" v-if="shortcuts.length > 0">
+							<button
+								v-for="(shortcut, index) in shortcuts"
+								class="date-picker__shortcut"
+								:key="index"
+								v-text="shortcut.label"
+								@click="onSelectShortcut(shortcut.value)"
+							/>
+						</div>
+					</template>
 
 					<template #action-buttons>
 						<div class="date-picker__action-buttons">
@@ -88,8 +115,9 @@
 
 					<template #clock-icon>
 						<div class="date-picker__day-switch">
+							<div v-text="timeDisplay[0]" />
 							<i class="yoco" v-text="'clock'" />
-							<!-- {{ timeDisplay }} -->
+							<div v-text="timeDisplay[1]" />
 						</div>
 					</template>
 
@@ -147,6 +175,15 @@ export default defineComponent({
 			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
+		const cleanValue = (value: string | null) =>
+			value === null ? null : value.replace(/\d\d$/, '00')
+
+		/**
+		 */
+		const setCleanedValue = ([lhs, rhs]: KottiFieldDateTimeRange.Value) => {
+			field.setValue([cleanValue(lhs), cleanValue(rhs)])
+		}
+
 		const sortRange = ([
 			left,
 			right,
@@ -162,12 +199,12 @@ export default defineComponent({
 		const saveOnBlurLeft = useSaveOnBlur({
 			mode: 'date-time',
 			save: (value) =>
-				field.setValue(sortRange([value, field.currentValue[1]])),
+				setCleanedValue(sortRange([value, field.currentValue[1]])),
 		})
 		const saveOnBlurRight = useSaveOnBlur({
 			mode: 'date-time',
 			save: (value) =>
-				field.setValue(sortRange([field.currentValue[0], value])),
+				setCleanedValue(sortRange([field.currentValue[0], value])),
 		})
 
 		const i18NContext = useI18nContext()
@@ -175,7 +212,10 @@ export default defineComponent({
 
 		const datePickerRef = ref<DatePickerInstance | null>(null)
 		const inputContainerRef = ref<Element | null>(null)
-		const internalRangeValue = ref<[Date | null, Date | null]>([null, null])
+		const internalRangeValue = ref<[Date | null, Date | null] | null>([
+			null,
+			null,
+		])
 
 		const cleanedCurrentValue = computed(() => [
 			field.currentValue[0] ?? '',
@@ -190,6 +230,7 @@ export default defineComponent({
 			datePickerRef,
 			field,
 			handleInternalModelChange: (date: [Date | null, Date | null]) => {
+				console.log('handleInternalModelChange', date)
 				internalRangeValue.value = date
 			},
 			inputContainerRef,
@@ -227,7 +268,10 @@ export default defineComponent({
 					}
 				},
 			),
-			isConfirmDisabled: computed(() => internalRangeValue.value === null),
+			isConfirmDisabled: computed(
+				() =>
+					internalRangeValue.value?.every((value) => value === null) ?? true,
+			),
 			locale: computed(() => i18NContext.locale),
 			onCloseMenu: () => {
 				datePickerRef.value?.closeMenu?.()
@@ -251,11 +295,46 @@ export default defineComponent({
 			onSelectDate: (value: string | null) => {
 				datePickerRef.value?.selectDate?.(value)
 			},
+			onSelectShortcut: (value: [string, string]) => {
+				// datePickerRef.value?.updateInternalModelValue([])
+				// datePickerRef.value?.closeMenu?.()
+				// datePickerRef.value?.updateInternalModelValue?.(
+				// 	value.map((val) => dayjs(val).toDate()),
+				// )
+				setCleanedValue(value)
+			},
 			onUpdateModelValue: (value: KottiFieldDateTimeRange.Value) => {
-				if (!field.isDisabled && !field.isLoading) field.setValue(value)
+				if (!field.isDisabled && !field.isLoading) setCleanedValue(value)
 			},
 			saveOnBlurLeft,
 			saveOnBlurRight,
+			timeDisplay: computed(() => {
+				if (internalRangeValue.value.every((value) => value === null))
+					return ['', '']
+
+				console.log('timeDisplay', internalRangeValue.value)
+
+				return internalRangeValue.value
+					.filter((value) => value !== null)
+					.map((value) => dayjs(value).format('YYYY-MM-DD HH:mm'))
+			}),
+			timePickerPropsTuple: computed(() => {
+				const dateRangeStart = dayjs(field.currentValue[0])
+				const dateRangeEnd = dayjs(field.currentValue[1])
+
+				return [
+					{
+						years: dateRangeStart.get('years'),
+						months: dateRangeStart.get('months'),
+						days: dateRangeStart.get('days'),
+					},
+					{
+						years: dateRangeEnd.get('years'),
+						months: dateRangeEnd.get('months'),
+						days: dateRangeEnd.get('days'),
+					},
+				]
+			}),
 			translations,
 		}
 	},
@@ -264,4 +343,44 @@ export default defineComponent({
 
 <style lang="scss">
 @import 'styles';
+
+.dp--tp-wrap {
+	max-width: none;
+}
+
+.date-picker--is-range.date-picker--is-datetime {
+	.date-picker__field-time-wrapper {
+		display: flex;
+		height: calc(100% - 35px);
+	}
+
+	.date-picker__field-time {
+		flex-basis: 50%;
+	}
+}
+
+.date-picker__shortcut-list {
+	> .date-picker__shortcut {
+		padding: 0.4rem 0;
+		font-size: 1em;
+		color: var(--link-02);
+		text-decoration-line: underline;
+		text-decoration-style: solid;
+		cursor: pointer;
+		background-color: transparent;
+		border: 0;
+
+		& + button {
+			margin-left: 0.8rem;
+		}
+
+		&:hover {
+			color: var(--link-03);
+		}
+
+		&:active {
+			color: var(--link-01);
+		}
+	}
+}
 </style>

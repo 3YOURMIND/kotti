@@ -16,17 +16,17 @@
 						showSelect: false,
 					}"
 					:enableTimePicker="!isConfirmDisabled"
-					format="yyyy-MM-dd HH:mm"
+					format="yyyy-MM-dd HH:mm:ss"
 					:locale="locale"
 					:maxDate="maximumDate"
 					:minDate="minimumDate"
 					:modelValue="field.currentValue"
-					modelType="yyyy-MM-dd HH:mm"
+					modelType="yyyy-MM-dd HH:mm:ss"
 					:offset="18"
 					:presetDates="shortcuts"
 					teleport
 					:textInput="{
-						format: 'yyyy-MM-dd HH:mm',
+						format: 'yyyy-MM-dd HH:mm:ss',
 					}"
 					:ui="{
 						calendar: 'date-picker__calendar',

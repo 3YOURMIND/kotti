@@ -62,7 +62,12 @@ $year-font-size: 1rem; */
 		&__day-switch {
 			display: flex;
 			align-items: center;
+			justify-content: space-evenly;
+			width: 100%;
 			gap: 20px;
+			> div {
+				flex-basis: 33%;
+			}
 		}
 
 		&__menu {
