@@ -33,10 +33,10 @@
 <script lang="ts">
 import { TimeConversion } from '@metatypes/units'
 import range from 'lodash/range'
-import { defineComponent, onMounted, ref, watch, computed } from 'vue'
+import { defineComponent, onMounted, ref, computed } from 'vue'
 import type { PropType } from 'vue'
 
-import { useTranslationNamespace } from '../kotti-i18n/hooks'
+import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 
 type TimeUnit = 'hours' | 'minutes' | 'seconds'
 type TimeRecord = Record<TimeUnit, number>
@@ -218,6 +218,7 @@ export default defineComponent({
 					emit('update:seconds', unit)
 					break
 				default:
+					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					throw new Error(`invalid type ${type}`)
 			}
 		}
