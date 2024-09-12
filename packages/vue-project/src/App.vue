@@ -23,10 +23,10 @@ const alerty = (some: string) => {
 
 const formValue = ref({
 	name: null,
-	birthday: '2024-09-22',
-	birthdayTime: '2024-09-22 12:44:31',
-	birthdayRange: ['2024-09-22', '2024-10-22'],
-	birthdayTimeRange: ['2024-09-22 12:44:31', '2024-10-22 12:44:31'],
+	birthday: null,
+	birthdayTime: null,
+	birthdayRange: [null, null],
+	birthdayTimeRange: [null, null],
 	isNice: false,
 })
 const isNarrow = ref(false)
@@ -219,7 +219,10 @@ const setRange = () => {
 					</KtFieldText> -->
 						<KtFieldDate
 							formKey="birthday"
+							isDisabled
 							label="birthday"
+							maximumDate="2024-11-24"
+							minimumDate="2024-08-24"
 							:shortcuts="[
 								{
 									label: 'Today',
@@ -249,8 +252,30 @@ const setRange = () => {
 						</KtFieldDate>
 						<KtFieldDateTime
 							formKey="birthdayTime"
+							isLoading
 							label="Birthday Time"
+							placeholder="Na wie geths so?"
 							:shortcuts="[
+								{
+									label: 'Todayeouaoe',
+									value: toISODateTime(new Date()),
+								},
+								{
+									label: 'Yesterday',
+									value: (() => {
+										const date = new Date()
+										date.setTime(date.getTime() - 3600 * 1000 * 24)
+										return toISODateTime(date)
+									})(),
+								},
+								{
+									label: 'A week ago',
+									value: (() => {
+										const date = new Date()
+										date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+										return toISODateTime(date)
+									})(),
+								},
 								{
 									label: 'Todayeouaoe',
 									value: toISODateTime(new Date()),
@@ -302,10 +327,12 @@ const setRange = () => {
 									})(),
 								},
 							]"
+							size="large"
 						/>
 						<KtFieldDateTimeRange
 							formKey="birthdayTimeRange"
 							label="Birthday Time Range"
+							:placeholder="['likns', 'crehts']"
 							:shortcuts="[
 								{
 									label: 'Todayaoeu',

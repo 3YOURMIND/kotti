@@ -14,15 +14,21 @@
 					:actionRow="{
 						showPreview: false,
 					}"
+					:disabled="isDisabled"
 					:enableTimePicker="hasTime && !isConfirmDisabled"
+					:maxDate="maximumDate"
+					:minDate="minimumDate"
 					:modelType="hasTime ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd'"
-					:modelValue="cleanedCurrentValue"
+					:modelValue="vueDatePickerModelValue"
 					:multiCalendars="isRange"
+					:preventMinMaxNavigation="
+						minimumDate !== null && maximumDate !== null
+					"
 					:range="isRange"
 					teleport
 					:ui="{
 						calendar: 'date-picker__calendar',
-						menu: 'date-picker__menu date-picker--is-datetime date-picker--is-range',
+						menu: menuClass,
 					}"
 					@internalModelChange="onInternalModelChange"
 					@rangeEnd="onRangeEnd"
@@ -31,10 +37,12 @@
 				>
 					<template #trigger>
 						<div class="kt-field-date-range__input-wrapper">
+							<i
+								class="yoco"
+								v-text="hasTime ? 'calendar_clock' : 'calendar'"
+							/>
 							<input
 								v-bind="inputProps"
-								autocomplete="off"
-								class="kt-field-datetime-range__input"
 								:forceUpdateKey="saveOnBlurLeft.forceUpdateKey"
 								:placeholder="placeholderLeft"
 								:value="valueLeft"
@@ -44,8 +52,6 @@
 							<input
 								v-if="isRange"
 								v-bind="inputProps"
-								autocomplete="off"
-								class="kt-field-datetime-range__input"
 								:forceUpdateKey="saveOnBlurRight.forceUpdateKey"
 								:placeholder="placeholderRight"
 								:value="valueRight"
@@ -168,7 +174,6 @@ import type {
 import { Shared } from '../types'
 import { useI18nContext, useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { useSaveOnBlur } from '../hooks'
-// import { isInvalidDate } from './utilities'
 import FieldTime from './FieldTime.vue'
 
 type AnyDateValue =
@@ -176,10 +181,6 @@ type AnyDateValue =
 	| KottiFieldDateRange.Value
 	| KottiFieldDateTime.Value
 	| KottiFieldDateTimeRange.Value
-
-// type SimpleDateValue = KottiFieldDate.Value | KottiFieldDateRange.Value
-
-// type DateTimeValue = KottiFieldDateTime.Value | KottiFieldDateTimeRange.Value
 
 type SingleDateValue = KottiFieldDate.Value | KottiFieldDateTime.Value
 
@@ -207,7 +208,12 @@ export default defineComponent({
 				string | null | [string | null, string | null]
 			>,
 		},
-		shortcuts: { required: true, type: Array },
+		shortcuts: {
+			required: true,
+			type: Array as PropType<
+				Array<{ label: string; value: string | [string, string] }>
+			>,
+		},
 		// eslint-disable-next-line vue/no-unused-properties
 		value: {
 			required: true,
@@ -225,11 +231,10 @@ export default defineComponent({
 			supports: KOTTI_FIELD_DATE_SUPPORTS,
 		})
 
-		/**
-		 */
 		const setCleanedValue = (value: AnyDateValue) => {
-			const cleanValue = (value: string | null) =>
-				value === null ? null : value.replace(/\d\d$/, '00')
+			const cleanValue = (v: string | null) =>
+				v === null ? null : v.replace(/\d\d$/, '00')
+
 			const sortRange = ([left, right]: RangeDateValue): RangeDateValue => {
 				if (left === null || right === null) return [left, right]
 
@@ -271,7 +276,6 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtFieldDateShared')
 
 		const datePickerRef = ref<DatePickerInstance | null>(null)
-		// const inputContainerRef = ref<Element | null>(null)
 
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const internalValue = ref<InternalValue>(
@@ -285,17 +289,13 @@ export default defineComponent({
 		// const isInPopover = inject(KT_IS_IN_POPOVER, false)
 
 		return {
-			cleanedCurrentValue: computed(() => {
-				if (props.isRange) {
-					const [lhs, rhs] = field.currentValue as RangeDateValue
-					return [lhs ?? '', rhs ?? '']
-				}
-				return (field.currentValue as SingleDateValue) ?? ''
-			}),
 			datePickerRef,
 			field,
 			onInternalModelChange: (value: InternalValue) => {
-				internalValue.value = value
+				// HACK: VueDatePicker can in some cases emit a single null for ranges.
+				// In order to not mess with our logic we cast this to an array
+				internalValue.value =
+					props.isRange && value === null ? [null, null] : value
 			},
 			inputProps: computed(
 				(): InputHTMLAttributes & {
@@ -303,14 +303,27 @@ export default defineComponent({
 				} => {
 					return {
 						...field.inputProps,
-						class: ['kt-field-text__wrapper'],
+						autocomplete: 'off',
+						class: ['kt-field-datetime-range__input'],
 						type: 'text',
 						size: 1,
 					}
 				},
 			),
-			isConfirmDisabled: computed(() => field.isEmpty),
+			isConfirmDisabled: computed(() =>
+				props.isRange
+					? (internalValue.value as InternalRangeValue).every((v) => v === null)
+					: (internalValue.value as InternalDateValue) === null,
+			),
 			locale: computed(() => i18NContext.locale),
+			menuClass: computed(() => {
+				const classes = ['date-picker__menu']
+
+				if (props.isRange) classes.push('date-picker--is-range')
+				if (props.hasTime) classes.push('date-picker--has-time')
+
+				return classes.join(' ')
+			}),
 			onCloseMenu: () => {
 				datePickerRef.value?.closeMenu?.()
 			},
@@ -332,6 +345,7 @@ export default defineComponent({
 			},
 			onSelectShortcut: (value: AnyDateValue) => {
 				setCleanedValue(value)
+				datePickerRef.value?.closeMenu?.()
 			},
 			onUpdateModelValue: (value: AnyDateValue) => {
 				if (!field.isDisabled && !field.isLoading) setCleanedValue(value)
@@ -396,6 +410,13 @@ export default defineComponent({
 					(props.isRange ? (field.currentValue as RangeDateValue)[1] : '') ??
 					'',
 			),
+			vueDatePickerModelValue: computed(() => {
+				if (props.isRange) {
+					const [lhs, rhs] = field.currentValue as RangeDateValue
+					return [lhs ?? '', rhs ?? '']
+				}
+				return (field.currentValue as SingleDateValue) ?? ''
+			}),
 		}
 	},
 })
@@ -424,6 +445,14 @@ export default defineComponent({
 		display: flex;
 		align-items: center;
 		gap: var(--unit-4);
+
+		> .yoco {
+			align-items: center;
+			color: var(--icon-02);
+			display: flex;
+			font-size: 1.1em;
+			min-width: 1.1em;
+		}
 	}
 
 	&__input {
@@ -448,8 +477,9 @@ $year-font-size: 1rem; */
 		&__action-buttons {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
+			justify-content: flex-end;
 			width: 100%;
+			gap: 10px;
 		}
 
 		&__calendar {
@@ -466,11 +496,8 @@ $year-font-size: 1rem; */
 			display: flex;
 			align-items: center;
 			justify-content: space-evenly;
-			width: 100%;
 			gap: 20px;
-			> div {
-				flex-basis: 33%;
-			}
+			flex-direction: row-reverse;
 		}
 
 		&__menu {
@@ -481,11 +508,6 @@ $year-font-size: 1rem; */
 			--dp-hover-color: var(--interactive-02-hover);
 			--dp-hover-text-color: var(--interactive-01);
 
-			display: grid;
-			grid-template-areas:
-				'left-side-bar calendar'
-				'left-side-bar actions';
-
 			font-family: $base-font-family;
 			font-size: 0.7rem;
 
@@ -494,21 +516,8 @@ $year-font-size: 1rem; */
 					flex-grow: 1;
 				}
 
-				&__action-row {
-					grid-area: actions;
-				}
-
 				&__instance_calendar {
-					grid-area: calendar;
 					position: relative;
-				}
-
-				&__menu_content_wrapper {
-					display: contents;
-				}
-
-				&--preset-dates {
-					grid-area: left-side-bar;
 				}
 			}
 
@@ -523,7 +532,7 @@ $year-font-size: 1rem; */
 	max-width: none;
 }
 
-.date-picker--is-range.date-picker--is-datetime {
+.date-picker--is-range.date-picker--has-time {
 	.date-picker__field-time-wrapper {
 		display: flex;
 		height: calc(100% - 35px);
@@ -531,6 +540,14 @@ $year-font-size: 1rem; */
 
 	.date-picker__field-time {
 		flex-basis: 50%;
+	}
+
+	.date-picker__day-switch {
+		flex-direction: row;
+		width: 100%;
+		> div {
+			flex-basis: 33%;
+		}
 	}
 }
 
