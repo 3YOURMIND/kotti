@@ -70,16 +70,32 @@
 							setSeconds,
 						}"
 					>
+						<!-- TODO: Bug - time pickers don't scroll individually for KtFieldDateTime (works for Range) -->
 						<div class="date-picker__field-time-wrapper">
 							<FieldTime
 								class="date-picker__field-time"
 								v-bind="timePickerPropsLeft"
-								:hours="hours[0]"
-								:minutes="minutes[0]"
-								:seconds="seconds[0]"
-								@update:hours="(val) => setHours([val, hours[1]])"
-								@update:minutes="(val) => setMinutes([val, minutes[1]])"
-								@update:seconds="(val) => setSeconds([val, seconds[1]])"
+								:hours="Array.isArray(hours) ? hours[0] : hours"
+								:minutes="Array.isArray(minutes) ? minutes[0] : minutes"
+								:seconds="Array.isArray(seconds) ? seconds[0] : seconds"
+								@update:hours="
+									(val) =>
+										Array.isArray(hours)
+											? setHours([val, hours[1]])
+											: setHours(val)
+								"
+								@update:minutes="
+									(val) =>
+										Array.isArray(minutes)
+											? setMinutes([val, minutes[1]])
+											: setMinutes(val)
+								"
+								@update:seconds="
+									(val) =>
+										Array.isArray(seconds)
+											? setSeconds([val, seconds[1]])
+											: setSeconds(val)
+								"
 							/>
 
 							<FieldTime
@@ -98,12 +114,14 @@
 
 					<template #action-extra>
 						<div v-if="shortcuts.length > 0" class="date-picker__shortcut-list">
-							<button
+							<KtButton
 								v-for="(shortcut, index) in shortcuts"
 								:key="index"
 								class="date-picker__shortcut"
+								:label="shortcut.label"
+								size="small"
+								type="text"
 								@click="onSelectShortcut(shortcut.value)"
-								v-text="shortcut.label"
 							/>
 						</div>
 					</template>
@@ -135,7 +153,7 @@
 					</template>
 
 					<template #calendar-icon>
-						<i class="yoco" v-text="'calendar'" />
+						<i class="date-picker__date-switch yoco" v-text="'calendar'" />
 					</template>
 
 					<template #arrow-left>
@@ -432,15 +450,6 @@ export default defineComponent({
 .kt-field-date-range,
 .kt-field-datetime,
 .kt-field-datetime-range {
-	/* .kt-field__input-container {
-		width: 100%;
-		margin: 0;
-
-		&:not(:last-child) {
-			margin-bottom: 0.4rem;
-		}
-	} */
-
 	&__input-wrapper {
 		display: flex;
 		align-items: center;
@@ -475,6 +484,7 @@ $year-font-size: 1rem; */
 .dp__outer_menu_wrap {
 	.date-picker {
 		&__action-buttons {
+			// TODO: add margin-top if shortcuts are not rendered, verify with design
 			display: flex;
 			align-items: center;
 			justify-content: flex-end;
@@ -510,6 +520,7 @@ $year-font-size: 1rem; */
 
 			font-family: $base-font-family;
 			font-size: 0.7rem;
+			padding: var(--unit-3);
 
 			.dp {
 				&__action_buttons {
@@ -518,6 +529,11 @@ $year-font-size: 1rem; */
 
 				&__instance_calendar {
 					position: relative;
+				}
+
+				&__menu_inner > .dp__instance_calendar:last-child {
+					// TODO: verify with design
+					margin-left: var(--unit-4);
 				}
 			}
 
@@ -551,17 +567,21 @@ $year-font-size: 1rem; */
 	}
 }
 
-.date-picker__shortcut-list {
-	> .date-picker__shortcut {
-		padding: 0.4rem 0;
-		font-size: 1em;
-		color: var(--link-02);
-		text-decoration-line: underline;
-		text-decoration-style: solid;
-		cursor: pointer;
-		background-color: transparent;
-		border: 0;
+.date-picker__day-switch,
+.date-picker__date-switch {
+	color: var(--interactive-01);
+	font-weight: 500;
 
+	&:hover {
+		color: var(--interactive-01-hover);
+	}
+}
+
+.date-picker__shortcut-list {
+	// TODO verify with design
+	margin: var(--unit-1) 0 var(--unit-3);
+
+	> .date-picker__shortcut {
 		& + button {
 			margin-left: 0.8rem;
 		}
@@ -574,5 +594,10 @@ $year-font-size: 1rem; */
 			color: var(--link-01);
 		}
 	}
+}
+
+.date-picker--has-time .date-picker__shortcut-list {
+	// TODO verify with design, needs to adapt to time/date switcher being present or not
+	margin: var(--unit-3) 0;
 }
 </style>
