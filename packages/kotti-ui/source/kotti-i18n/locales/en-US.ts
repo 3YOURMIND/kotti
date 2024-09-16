@@ -19,8 +19,8 @@ module Common {
 
 export const enUS: KottiI18n.Messages = {
 	KtBanner: {
-		expandLabel: 'View',
 		expandCloseLabel: 'Close',
+		expandLabel: 'View',
 	},
 	KtComment: {
 		cancelMessage: 'Press Esc key or',
@@ -63,10 +63,10 @@ export const enUS: KottiI18n.Messages = {
 			HIDDEN: '',
 			INVALID: 'Invalid',
 			NOT_STARTED: 'Not started',
+			READY_TO_UPLOAD: 'Ready to upload on submittal',
 			UPLOADED: 'Uploaded',
 			UPLOADED_WITH_ERROR: 'Uploaded with error',
 			UPLOADING: 'Uploading...',
-			READY_TO_UPLOAD: 'Ready to upload on submittal',
 		},
 		text: {
 			clickToUpload: 'Click to upload',
@@ -88,8 +88,8 @@ export const enUS: KottiI18n.Messages = {
 	},
 	KtFieldSelects: {
 		loadingText: 'Loading',
-		noMatchText: 'No matching data',
 		noDataText: 'No results',
+		noMatchText: 'No matching data',
 		placeholder: 'Select',
 	},
 	KtFilters: {

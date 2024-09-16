@@ -19,8 +19,8 @@ module Common {
 
 export const frFR: KottiI18n.Messages = {
 	KtBanner: {
-		expandLabel: 'Voir',
 		expandCloseLabel: 'Fermer',
+		expandLabel: 'Voir',
 	},
 	KtComment: {
 		cancelMessage: 'Appuyez sur la touche Esc ou',
@@ -63,10 +63,10 @@ export const frFR: KottiI18n.Messages = {
 			HIDDEN: '',
 			INVALID: 'Invalide',
 			NOT_STARTED: 'Pas commencé',
+			READY_TO_UPLOAD: 'Prêt à être téléchargé',
 			UPLOADED: 'Téléchargé',
 			UPLOADED_WITH_ERROR: 'Téléchargé avec erreur',
 			UPLOADING: 'Téléchargement...',
-			READY_TO_UPLOAD: 'Prêt à être téléchargé',
 		},
 		text: {
 			clickToUpload: 'Cliquer pour télécharger',
@@ -88,8 +88,8 @@ export const frFR: KottiI18n.Messages = {
 	},
 	KtFieldSelects: {
 		loadingText: 'Chargement',
-		noMatchText: 'Aucune correspondance',
 		noDataText: 'Aucun résultat',
+		noMatchText: 'Aucune correspondance',
 		placeholder: 'Choisir',
 	},
 	KtFilters: {

@@ -1,0 +1,8 @@
+api_token: CROWDIN_V2_API_KEY
+base_path: './packages/kotti-ui'
+files:
+  - dest: '/source/locales/input.json'
+    source: '/source/locales/input.json'
+    translation: '/source/locales/%two_letters_code%.json'
+preserve_hierarchy: true
+project_id: '711705'
