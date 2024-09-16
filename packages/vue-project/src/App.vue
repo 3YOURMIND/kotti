@@ -13,6 +13,7 @@ import {
 	KtForm,
 	KtI18nContext,
 	KtNavbar,
+	KtPopover,
 	KtUserMenu,
 } from '@3yourmind/kotti-ui'
 import { computed, ref } from 'vue'
@@ -27,6 +28,8 @@ const formValue = ref({
 	birthdayTime: null,
 	birthdayRange: [null, null],
 	birthdayTimeRange: [null, null],
+	popoverDateTime: null,
+	popoverDateTimeRange: [null, null],
 	isNice: false,
 })
 const isNarrow = ref(false)
@@ -358,6 +361,31 @@ const setRange = () => {
 								},
 							]"
 						/>
+
+						<KtPopover>
+							<KtButton label="KtPopover Button" />
+							<template #content>
+								<div style="max-width: 500px">
+									<pre>
+										<code v-text="'<template #content>Slot</template>'" />
+									</pre>
+									<strong>We also support sub-dropdowns</strong> like
+									<code>KtFieldSingleSelect</code>, however it’s recommended to
+									use <code>trigger="click"</code> when utilizing this.
+									<br />
+									<KtFieldDateTime
+										formKey="popoverDateTime"
+										isOptional
+										label="Label"
+									/>
+									<KtFieldDateTimeRange
+										formKey="popoverDateTimeRange"
+										isOptional
+										label="Label"
+									/>
+								</div>
+							</template>
+						</KtPopover>
 						<KtButton label="Change to sth" @click="setRange" />
 					</KtForm>
 				</div>

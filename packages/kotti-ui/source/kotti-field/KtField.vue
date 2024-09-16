@@ -128,6 +128,8 @@ import type { KottiField } from './types'
 
 const LABEL_CLICK_DEBOUNCE = 200
 
+const SINGLE_MOUSE_CLICK = 1
+
 export default defineComponent({
 	name: 'KtField',
 	components: { FieldHelpText },
@@ -166,7 +168,7 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtFields')
 
 		const debouncedLabelClick = debounce((event: MouseEvent) => {
-			if (event.detail === 1) {
+			if (event.detail === SINGLE_MOUSE_CLICK) {
 				focusInput()
 				clickInput()
 			}
@@ -226,10 +228,15 @@ export default defineComponent({
 				}
 			}),
 			onClickLabel: (event: MouseEvent) => {
+				const isDoubleClick = event.detail > SINGLE_MOUSE_CLICK
+
 				if (props.debounceLabelClick) {
 					event.preventDefault()
 					debouncedLabelClick(event)
-				} else if (event.detail > 1) event.preventDefault()
+				} else if (isDoubleClick) {
+					// allow label to be selected
+					event.preventDefault()
+				}
 			},
 			showValidation,
 			validationText: computed(() =>

@@ -49,6 +49,7 @@ import {
 } from 'vue'
 
 import { TIPPY_DISTANCE_OFFSET } from '../constants'
+import { KtFieldToggle } from '../kotti-field-toggle'
 import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { KT_FORM_CONTEXT } from '../kotti-form'
 import type { KottiForm } from '../kotti-form/types'
@@ -68,6 +69,7 @@ export default defineComponent({
 	name: 'KtPopover',
 	components: {
 		IconTextItem,
+		KtFieldToggle,
 	},
 	props: makeProps(KottiPopover.propsSchema),
 	emits: ['update:isSelected'],

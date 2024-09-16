@@ -3,176 +3,166 @@
 		v-bind="{ field }"
 		:class="fieldClasses"
 		debounceLabelClick
-		:getEmptyValue="() => [null, null]"
+		:getEmptyValue="isRange ? () => [null, null] : () => null"
 		:helpTextSlot="$slots.helpText"
-		isRange
+		:isRange="isRange"
 	>
-		<template #container>
-			<div class="kt-field__input-container">
-				<VueDatePicker
-					ref="datePickerRef"
-					:actionRow="{
-						showPreview: false,
-					}"
-					:disabled="isDisabled"
-					:enableTimePicker="hasTime && !isConfirmDisabled"
-					:maxDate="maximumDate"
-					:minDate="minimumDate"
-					:modelType="hasTime ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd'"
-					:modelValue="vueDatePickerModelValue"
-					:multiCalendars="isRange"
-					:preventMinMaxNavigation="
-						minimumDate !== null && maximumDate !== null
-					"
-					:range="isRange"
-					teleport
-					:ui="vueDatePickerClasses"
-					@internalModelChange="onInternalModelChange"
-					@rangeEnd="onRangeEnd"
-					@rangeStart="onRangeStart"
-					@update:modelValue="onUpdateModelValue"
+		<VueDatePicker
+			ref="datePickerRef"
+			:actionRow="{
+				showPreview: false,
+			}"
+			:disabled="isDisabled"
+			:enableTimePicker="hasTime && !isConfirmDisabled"
+			:maxDate="maximumDate"
+			:minDate="minimumDate"
+			:modelType="hasTime ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd'"
+			:modelValue="vueDatePickerModelValue"
+			:multiCalendars="isRange"
+			:preventMinMaxNavigation="minimumDate !== null && maximumDate !== null"
+			:range="isRange"
+			:teleport="!isInPopover"
+			:ui="vueDatePickerClasses"
+			@internalModelChange="onInternalModelChange"
+			@rangeEnd="onRangeEnd"
+			@rangeStart="onRangeStart"
+			@update:modelValue="onUpdateModelValue"
+		>
+			<template #trigger>
+				<div class="kt-field-date__input-wrapper">
+					<i class="yoco" v-text="hasTime ? 'calendar_clock' : 'calendar'" />
+					<input
+						v-bind="inputProps"
+						:forceUpdateKey="saveOnBlurLeft.forceUpdateKey"
+						:id="isRange ? `${inputProps.id}-start` : inputProps.id"
+						:placeholder="placeholderLeft"
+						:value="valueLeft"
+						@blur="saveOnBlurLeft.onBlur"
+						@input="saveOnBlurLeft.onInput"
+					/>
+					<input
+						v-if="isRange"
+						v-bind="inputProps"
+						:forceUpdateKey="saveOnBlurRight.forceUpdateKey"
+						:id="`${inputProps.id}-end`"
+						:placeholder="placeholderRight"
+						:value="valueRight"
+						@blur="saveOnBlurRight.onBlur"
+						@input="saveOnBlurRight.onInput"
+					/>
+				</div>
+			</template>
+			<template
+				#time-picker-overlay="{
+					hours,
+					minutes,
+					seconds,
+					setHours,
+					setMinutes,
+					setSeconds,
+				}"
+			>
+				<div class="kt-field-date-popover__times">
+					<FieldTime
+						class="kt-field-date-popover__time"
+						v-bind="timePickerPropsLeft"
+						:hours="Array.isArray(hours) ? hours[0] : hours"
+						:minutes="Array.isArray(minutes) ? minutes[0] : minutes"
+						:seconds="Array.isArray(seconds) ? seconds[0] : seconds"
+						@update:hours="
+							(val) =>
+								Array.isArray(hours) ? setHours([val, hours[1]]) : setHours(val)
+						"
+						@update:minutes="
+							(val) =>
+								Array.isArray(minutes)
+									? setMinutes([val, minutes[1]])
+									: setMinutes(val)
+						"
+						@update:seconds="
+							(val) =>
+								Array.isArray(seconds)
+									? setSeconds([val, seconds[1]])
+									: setSeconds(val)
+						"
+					/>
+					<FieldTime
+						v-if="timePickerPropsRight"
+						class="kt-field-date-popover__time"
+						v-bind="timePickerPropsRight"
+						:hours="hours[1]"
+						:minutes="minutes[1]"
+						:seconds="seconds[1]"
+						@update:hours="(val) => setHours([hours[0], val])"
+						@update:minutes="(val) => setMinutes([minutes[0], val])"
+						@update:seconds="(val) => setSeconds([seconds[0], val])"
+					/>
+				</div>
+			</template>
+
+			<template #action-extra>
+				<div
+					v-if="shortcuts.length > 0"
+					class="kt-field-date-popover__shortcuts"
 				>
-					<template #trigger>
-						<div class="kt-field-date__input-wrapper">
-							<i
-								class="yoco"
-								v-text="hasTime ? 'calendar_clock' : 'calendar'"
-							/>
-							<input
-								v-bind="inputProps"
-								:forceUpdateKey="saveOnBlurLeft.forceUpdateKey"
-								:placeholder="placeholderLeft"
-								:value="valueLeft"
-								@blur="saveOnBlurLeft.onBlur"
-								@input="saveOnBlurLeft.onInput"
-							/>
-							<input
-								v-if="isRange"
-								v-bind="inputProps"
-								:forceUpdateKey="saveOnBlurRight.forceUpdateKey"
-								:placeholder="placeholderRight"
-								:value="valueRight"
-								@blur="saveOnBlurRight.onBlur"
-								@input="saveOnBlurRight.onInput"
-							/>
-						</div>
-					</template>
-					<template
-						#time-picker-overlay="{
-							hours,
-							minutes,
-							seconds,
-							setHours,
-							setMinutes,
-							setSeconds,
-						}"
-					>
-						<!-- TODO: Bug - time pickers don't scroll individually for KtFieldDateTime (works for Range) -->
-						<div class="kt-field-date-popover__times">
-							<FieldTime
-								class="kt-field-date-popover__time"
-								v-bind="timePickerPropsLeft"
-								:hours="Array.isArray(hours) ? hours[0] : hours"
-								:minutes="Array.isArray(minutes) ? minutes[0] : minutes"
-								:seconds="Array.isArray(seconds) ? seconds[0] : seconds"
-								@update:hours="
-									(val) =>
-										Array.isArray(hours)
-											? setHours([val, hours[1]])
-											: setHours(val)
-								"
-								@update:minutes="
-									(val) =>
-										Array.isArray(minutes)
-											? setMinutes([val, minutes[1]])
-											: setMinutes(val)
-								"
-								@update:seconds="
-									(val) =>
-										Array.isArray(seconds)
-											? setSeconds([val, seconds[1]])
-											: setSeconds(val)
-								"
-							/>
-							<FieldTime
-								v-if="timePickerPropsRight"
-								class="kt-field-date-popover__time"
-								v-bind="timePickerPropsRight"
-								:hours="hours[1]"
-								:minutes="minutes[1]"
-								:seconds="seconds[1]"
-								@update:hours="(val) => setHours([hours[0], val])"
-								@update:minutes="(val) => setMinutes([minutes[0], val])"
-								@update:seconds="(val) => setSeconds([seconds[0], val])"
-							/>
-						</div>
-					</template>
+					<KtButton
+						v-for="(shortcut, index) in shortcuts"
+						:key="index"
+						class="kt-field-date-popover__shortcut"
+						:label="shortcut.label"
+						size="small"
+						type="text"
+						@click="onSelectShortcut(shortcut.value)"
+					/>
+				</div>
+			</template>
 
-					<template #action-extra>
-						<div
-							v-if="shortcuts.length > 0"
-							class="kt-field-date-popover__shortcuts"
-						>
-							<KtButton
-								v-for="(shortcut, index) in shortcuts"
-								:key="index"
-								class="kt-field-date-popover__shortcut"
-								:label="shortcut.label"
-								size="small"
-								type="text"
-								@click="onSelectShortcut(shortcut.value)"
-							/>
-						</div>
-					</template>
+			<template #action-buttons>
+				<div class="kt-field-date-popover__buttons">
+					<KtButton
+						:label="translations.cancelButton"
+						size="small"
+						type="secondary"
+						@click="onCloseMenu"
+					/>
+					<KtButton
+						:disabled="isConfirmDisabled"
+						:label="translations.confirmButton"
+						size="small"
+						type="primary"
+						@click="onSelectDate"
+					/>
+				</div>
+			</template>
 
-					<template #action-buttons>
-						<div class="kt-field-date-popover__buttons">
-							<KtButton
-								:label="translations.cancelButton"
-								size="small"
-								type="secondary"
-								@click="onCloseMenu"
-							/>
-							<KtButton
-								:disabled="isConfirmDisabled"
-								:label="translations.confirmButton"
-								size="small"
-								type="primary"
-								@click="onSelectDate"
-							/>
-						</div>
-					</template>
+			<template #clock-icon>
+				<div class="kt-field-date-popover__day-switch">
+					<div v-text="timePreviewLeft" />
+					<i class="yoco" v-text="'clock'" />
+					<div v-if="isRange" v-text="timePreviewRight" />
+				</div>
+			</template>
 
-					<template #clock-icon>
-						<div class="kt-field-date-popover__day-switch">
-							<div v-text="timePreviewLeft" />
-							<i class="yoco" v-text="'clock'" />
-							<div v-if="isRange" v-text="timePreviewRight" />
-						</div>
-					</template>
+			<template #calendar-icon>
+				<i
+					class="kt-field-date-popover__date-switch yoco"
+					v-text="'calendar'"
+				/>
+			</template>
 
-					<template #calendar-icon>
-						<i
-							class="kt-field-date-popover__date-switch yoco"
-							v-text="'calendar'"
-						/>
-					</template>
+			<template #arrow-left>
+				<i class="yoco" v-text="'chevron_left'" />
+			</template>
 
-					<template #arrow-left>
-						<i class="yoco" v-text="'chevron_left'" />
-					</template>
-
-					<template #arrow-right>
-						<i class="yoco" v-text="'chevron_right'" />
-					</template>
-				</VueDatePicker>
-			</div>
-		</template>
+			<template #arrow-right>
+				<i class="yoco" v-text="'chevron_right'" />
+			</template>
+		</VueDatePicker>
 	</KtField>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, inject, ref } from 'vue'
 import type { InputHTMLAttributes, PropType } from '@vue/runtime-dom'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import type { DatePickerInstance } from '@vuepic/vue-datepicker'
@@ -181,7 +171,7 @@ import dayjs from 'dayjs'
 import { KtButton } from '../../kotti-button'
 import { KtField } from '../../kotti-field'
 import { useField } from '../../kotti-field/hooks'
-// import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
+import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
 import { makeProps } from '../../make-props'
 
 import { KOTTI_FIELD_DATE_SUPPORTS } from '../constants'
@@ -241,6 +231,8 @@ export default defineComponent({
 		},
 	},
 	setup(props, { emit }) {
+		const isInPopover = inject(KT_IS_IN_POPOVER, false)
+
 		const field = useField<AnyDateValue>({
 			emit,
 			isEmpty: (value) =>
@@ -305,9 +297,6 @@ export default defineComponent({
 		const getTimePreview = (datetime: InternalDateValue) =>
 			datetime === null ? '' : dayjs(datetime).format(formatString.value)
 
-		// TODO (?)
-		// const isInPopover = inject(KT_IS_IN_POPOVER, false)
-
 		return {
 			datePickerRef,
 			field,
@@ -337,6 +326,7 @@ export default defineComponent({
 					? (internalValue.value as InternalRangeValue).every((v) => v === null)
 					: (internalValue.value as InternalDateValue) === null,
 			),
+			isInPopover,
 			locale: computed(() => i18NContext.locale),
 			onCloseMenu: () => {
 				datePickerRef.value?.closeMenu?.()
@@ -458,14 +448,6 @@ export default defineComponent({
 @import '../../kotti-field/mixins.scss';
 @import '../../kotti-style/_variables.scss';
 
-/*
-// POPPER STYLE OF ALL DATE-PICKERS
-$icon-size: 1.3rem;
-$month-font-size: 1.2rem;
-$td-diameter: 1.5rem;
-$year-font-size: 1rem;
-*/
-
 .kt-field-date {
 	&__input {
 		display: flex;
@@ -499,11 +481,11 @@ $year-font-size: 1rem;
 	// HACK: the default is set to 0.8rem, which assumes a base font-size of 16px.
 	// Since we have 20px, we have to adjust the relative size somewhat
 	--dp-preview-font-size: 0.64rem;
+
 	--dp-primary-color: var(--interactive-01);
 	--dp-hover-color: var(--interactive-02-hover);
 	--dp-hover-text-color: var(--interactive-01);
 
-	font-family: $base-font-family;
 	font-size: 0.7rem;
 	padding: var(--unit-3);
 
@@ -517,7 +499,7 @@ $year-font-size: 1rem;
 	}
 
 	/**
-	 * open timepicker button wrapper
+	 * wrapper for the open timepicker button
 	 */
 	.dp--tp-wrap {
 		max-width: none;
@@ -528,7 +510,6 @@ $year-font-size: 1rem;
 	}
 
 	&__buttons {
-		// TODO: add margin-top if shortcuts are not rendered, verify with design
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
@@ -579,7 +560,6 @@ $year-font-size: 1rem;
 		gap: var(--unit-1);
 		flex-wrap: wrap;
 
-		// TODO verify with design, needs to adapt to time/date switcher being present or not
 		margin: var(--unit-3) 0;
 	}
 
