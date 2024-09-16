@@ -219,6 +219,7 @@ const setRange = () => {
 					</KtFieldText> -->
 						<KtFieldDate
 							formKey="birthday"
+							isOptional
 							label="birthday"
 							maximumDate="2024-11-24"
 							minimumDate="2024-08-24"
@@ -251,6 +252,7 @@ const setRange = () => {
 						</KtFieldDate>
 						<KtFieldDateTime
 							formKey="birthdayTime"
+							isOptional
 							label="Birthday Time"
 							placeholder="Na wie geths so?"
 							:shortcuts="[
@@ -302,6 +304,7 @@ const setRange = () => {
 						</KtFieldDateTime>
 						<KtFieldDateRange
 							formKey="birthdayRange"
+							isOptional
 							label="Birthday Range"
 							:shortcuts="[
 								{
@@ -329,6 +332,7 @@ const setRange = () => {
 						/>
 						<KtFieldDateTimeRange
 							formKey="birthdayTimeRange"
+							isOptional
 							label="Birthday Time Range"
 							:placeholder="['likns', 'crehts']"
 							:shortcuts="[

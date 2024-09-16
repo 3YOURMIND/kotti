@@ -1,0 +1,11 @@
+{
+	"$schema": "https://turbo.build/schema.v1.json",
+	"extends": ["//"],
+	"pipeline": {
+		"dev": {
+			"cache": false,
+			"dependsOn": ["@3yourmind/kotti-ui#build:vite"],
+			"persistent": true
+		}
+	}
+}

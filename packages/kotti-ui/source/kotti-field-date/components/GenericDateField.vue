@@ -1,7 +1,7 @@
 <template>
 	<KtField
 		v-bind="{ field }"
-		class="kt-field-datetime-range"
+		:class="fieldClasses"
 		debounceLabelClick
 		:getEmptyValue="() => [null, null]"
 		:helpTextSlot="$slots.helpText"
@@ -26,17 +26,14 @@
 					"
 					:range="isRange"
 					teleport
-					:ui="{
-						calendar: 'date-picker__calendar',
-						menu: menuClass,
-					}"
+					:ui="vueDatePickerClasses"
 					@internalModelChange="onInternalModelChange"
 					@rangeEnd="onRangeEnd"
 					@rangeStart="onRangeStart"
 					@update:modelValue="onUpdateModelValue"
 				>
 					<template #trigger>
-						<div class="kt-field-date-range__input-wrapper">
+						<div class="kt-field-date__input-wrapper">
 							<i
 								class="yoco"
 								v-text="hasTime ? 'calendar_clock' : 'calendar'"
@@ -71,9 +68,9 @@
 						}"
 					>
 						<!-- TODO: Bug - time pickers don't scroll individually for KtFieldDateTime (works for Range) -->
-						<div class="date-picker__field-time-wrapper">
+						<div class="kt-field-date-popover__times">
 							<FieldTime
-								class="date-picker__field-time"
+								class="kt-field-date-popover__time"
 								v-bind="timePickerPropsLeft"
 								:hours="Array.isArray(hours) ? hours[0] : hours"
 								:minutes="Array.isArray(minutes) ? minutes[0] : minutes"
@@ -97,10 +94,9 @@
 											: setSeconds(val)
 								"
 							/>
-
 							<FieldTime
 								v-if="timePickerPropsRight"
-								class="date-picker__field-time"
+								class="kt-field-date-popover__time"
 								v-bind="timePickerPropsRight"
 								:hours="hours[1]"
 								:minutes="minutes[1]"
@@ -113,11 +109,14 @@
 					</template>
 
 					<template #action-extra>
-						<div v-if="shortcuts.length > 0" class="date-picker__shortcut-list">
+						<div
+							v-if="shortcuts.length > 0"
+							class="kt-field-date-popover__shortcuts"
+						>
 							<KtButton
 								v-for="(shortcut, index) in shortcuts"
 								:key="index"
-								class="date-picker__shortcut"
+								class="kt-field-date-popover__shortcut"
 								:label="shortcut.label"
 								size="small"
 								type="text"
@@ -127,7 +126,7 @@
 					</template>
 
 					<template #action-buttons>
-						<div class="date-picker__action-buttons">
+						<div class="kt-field-date-popover__buttons">
 							<KtButton
 								:label="translations.cancelButton"
 								size="small"
@@ -145,7 +144,7 @@
 					</template>
 
 					<template #clock-icon>
-						<div class="date-picker__day-switch">
+						<div class="kt-field-date-popover__day-switch">
 							<div v-text="timePreviewLeft" />
 							<i class="yoco" v-text="'clock'" />
 							<div v-if="isRange" v-text="timePreviewRight" />
@@ -153,7 +152,10 @@
 					</template>
 
 					<template #calendar-icon>
-						<i class="date-picker__date-switch yoco" v-text="'calendar'" />
+						<i
+							class="kt-field-date-popover__date-switch yoco"
+							v-text="'calendar'"
+						/>
 					</template>
 
 					<template #arrow-left>
@@ -309,12 +311,14 @@ export default defineComponent({
 		return {
 			datePickerRef,
 			field,
-			onInternalModelChange: (value: InternalValue) => {
-				// HACK: VueDatePicker can in some cases emit a single null for ranges.
-				// In order to not mess with our logic we cast this to an array
-				internalValue.value =
-					props.isRange && value === null ? [null, null] : value
-			},
+			fieldClasses: computed(() => {
+				const classes = ['kt-field-date']
+
+				if (props.isRange) classes.push('kt-field-date--is-range')
+				if (props.hasTime) classes.push('kt-field-date--has-time')
+
+				return classes
+			}),
 			inputProps: computed(
 				(): InputHTMLAttributes & {
 					class: string[]
@@ -322,7 +326,7 @@ export default defineComponent({
 					return {
 						...field.inputProps,
 						autocomplete: 'off',
-						class: ['kt-field-datetime-range__input'],
+						class: ['kt-field-date__input'],
 						type: 'text',
 						size: 1,
 					}
@@ -334,16 +338,14 @@ export default defineComponent({
 					: (internalValue.value as InternalDateValue) === null,
 			),
 			locale: computed(() => i18NContext.locale),
-			menuClass: computed(() => {
-				const classes = ['date-picker__menu']
-
-				if (props.isRange) classes.push('date-picker--is-range')
-				if (props.hasTime) classes.push('date-picker--has-time')
-
-				return classes.join(' ')
-			}),
 			onCloseMenu: () => {
 				datePickerRef.value?.closeMenu?.()
+			},
+			onInternalModelChange: (value: InternalValue) => {
+				// HACK: VueDatePicker can in some cases emit a single null for ranges.
+				// In order to not mess with our logic we cast this to an array
+				internalValue.value =
+					props.isRange && value === null ? [null, null] : value
 			},
 			onRangeEnd: (value: Date) => {
 				const rangeStart = (internalValue.value as InternalRangeValue)[0]
@@ -380,6 +382,17 @@ export default defineComponent({
 						undefined
 					: undefined,
 			),
+			vueDatePickerClasses: computed(() => ({
+				calendar: 'kt-field-date-popover__calendar',
+				menu: (() => {
+					const classes = ['kt-field-date-popover']
+
+					if (props.isRange) classes.push('kt-field-date-popover--is-range')
+					if (props.hasTime) classes.push('kt-field-date-popover--has-time')
+
+					return classes.join(' ')
+				})(),
+			})),
 			saveOnBlurLeft,
 			saveOnBlurRight,
 			timePreviewLeft: computed(() =>
@@ -445,146 +458,112 @@ export default defineComponent({
 @import '../../kotti-field/mixins.scss';
 @import '../../kotti-style/_variables.scss';
 
-// INPUT STYLES OF ALL DATE-PICKERS
-.kt-field-date,
-.kt-field-date-range,
-.kt-field-datetime,
-.kt-field-datetime-range {
-	&__input-wrapper {
-		display: flex;
-		align-items: center;
-		gap: var(--unit-4);
-
-		> .yoco {
-			align-items: center;
-			color: var(--icon-02);
-			display: flex;
-			font-size: 1.1em;
-			min-width: 1.1em;
-		}
-	}
-
-	&__input {
-		display: flex;
-		width: 100%;
-		padding: 0;
-		margin: 0;
-		line-height: 1.6;
-		border: 0;
-	}
-}
-
 /*
 // POPPER STYLE OF ALL DATE-PICKERS
 $icon-size: 1.3rem;
 $month-font-size: 1.2rem;
 $td-diameter: 1.5rem;
-$year-font-size: 1rem; */
+$year-font-size: 1rem;
+*/
 
-.dp__outer_menu_wrap {
-	.date-picker {
-		&__action-buttons {
-			// TODO: add margin-top if shortcuts are not rendered, verify with design
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-			width: 100%;
-			gap: 10px;
-		}
-
-		&__calendar {
-			.dp__calendar_header_item {
-				display: flex;
-				align-items: center;
-				font-size: 0.6rem;
-				color: var(--text-03);
-				text-transform: uppercase;
-			}
-		}
-
-		&__day-switch {
-			display: flex;
-			align-items: center;
-			justify-content: space-evenly;
-			gap: 20px;
-			flex-direction: row-reverse;
-		}
-
-		&__menu {
-			// HACK: the default is set to 0.8rem, which assumes a base font-size of 16px.
-			// Since we have 20px, we have to adjust the relative size somewhat
-			--dp-preview-font-size: 0.64rem;
-			--dp-primary-coler: var(--interactive-01);
-			--dp-hover-color: var(--interactive-02-hover);
-			--dp-hover-text-color: var(--interactive-01);
-
-			font-family: $base-font-family;
-			font-size: 0.7rem;
-			padding: var(--unit-3);
-
-			.dp {
-				&__action_buttons {
-					flex-grow: 1;
-				}
-
-				&__instance_calendar {
-					position: relative;
-				}
-
-				&__menu_inner > .dp__instance_calendar:last-child {
-					// TODO: verify with design
-					margin-left: var(--unit-4);
-				}
-			}
-
-			.yoco {
-				font-size: 1.2rem;
-			}
-		}
-	}
-}
-
-.dp--tp-wrap {
-	max-width: none;
-}
-
-.date-picker--is-range.date-picker--has-time {
-	.date-picker__field-time-wrapper {
+.kt-field-date {
+	&__input {
 		display: flex;
-		height: calc(100% - 35px);
-	}
 
-	.date-picker__field-time {
-		flex-basis: 50%;
-	}
-
-	.date-picker__day-switch {
-		flex-direction: row;
 		width: 100%;
-		> div {
-			flex-basis: 33%;
+		padding: 0;
+		margin: 0;
+
+		line-height: 1.6;
+
+		border: 0;
+	}
+
+	&__input-wrapper {
+		display: flex;
+		align-items: center;
+		gap: var(--unit-4);
+
+		.yoco {
+			display: flex;
+			align-items: center;
+
+			color: var(--icon-02);
+			font-size: 1.1em;
+			min-width: 1.1em;
 		}
 	}
 }
 
-.date-picker__day-switch,
-.date-picker__date-switch {
-	color: var(--interactive-01);
-	font-weight: 500;
+.kt-field-date-popover {
+	// HACK: the default is set to 0.8rem, which assumes a base font-size of 16px.
+	// Since we have 20px, we have to adjust the relative size somewhat
+	--dp-preview-font-size: 0.64rem;
+	--dp-primary-color: var(--interactive-01);
+	--dp-hover-color: var(--interactive-02-hover);
+	--dp-hover-text-color: var(--interactive-01);
 
-	&:hover {
-		color: var(--interactive-01-hover);
+	font-family: $base-font-family;
+	font-size: 0.7rem;
+	padding: var(--unit-3);
+
+	.dp__instance_calendar .dp__flex_display {
+		// gap between calendars
+		gap: var(--unit-4);
 	}
-}
 
-.date-picker__shortcut-list {
-	// TODO verify with design
-	margin: var(--unit-1) 0 var(--unit-3);
+	.dp__menu_inner {
+		padding: 0;
+	}
 
-	> .date-picker__shortcut {
-		& + button {
-			margin-left: 0.8rem;
+	/**
+	 * open timepicker button wrapper
+	 */
+	.dp--tp-wrap {
+		max-width: none;
+	}
+
+	.yoco {
+		font-size: 1.2rem;
+	}
+
+	&__buttons {
+		// TODO: add margin-top if shortcuts are not rendered, verify with design
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		width: 100%;
+		gap: 10px;
+	}
+
+	&__calendar .dp__calendar_header_item {
+		display: flex;
+		align-items: center;
+		font-size: 0.6rem;
+		color: var(--text-03);
+		text-transform: uppercase;
+	}
+
+	&__day-switch {
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		gap: 20px;
+		flex-direction: row-reverse;
+	}
+
+	&__date-switch,
+	&__day-switch {
+		color: var(--interactive-01);
+		font-weight: 500;
+
+		&:hover {
+			color: var(--interactive-01-hover);
 		}
+	}
+
+	&__shortcut {
+		padding: 0 var(--unit-1) !important;
 
 		&:hover {
 			color: var(--link-03);
@@ -594,10 +573,37 @@ $year-font-size: 1rem; */
 			color: var(--link-01);
 		}
 	}
-}
 
-.date-picker--has-time .date-picker__shortcut-list {
-	// TODO verify with design, needs to adapt to time/date switcher being present or not
-	margin: var(--unit-3) 0;
+	&__shortcuts {
+		display: flex;
+		gap: var(--unit-1);
+		flex-wrap: wrap;
+
+		// TODO verify with design, needs to adapt to time/date switcher being present or not
+		margin: var(--unit-3) 0;
+	}
+
+	&__time {
+		width: 100%;
+		padding: 0 !important;
+	}
+
+	&--has-time &__times {
+		display: flex;
+		height: calc(100% - 35px);
+
+		gap: var(--unit-4);
+
+		justify-content: stretch;
+	}
+
+	&--is-range.kt-field-date-popover--has-time &__day-switch {
+		flex-direction: row;
+		width: 100%;
+
+		> div {
+			flex-basis: 33%;
+		}
+	}
 }
 </style>
