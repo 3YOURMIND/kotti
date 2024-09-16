@@ -128,6 +128,50 @@ There are two workflows to help with rebasing pull requests:
    Adding the `autorebase:opt-in` label to any pull request will automatically rebase the PR as soon as it’s out-of-date.
    This should preferrably be used by the author, as it requires them to be aware of having to use `git pull --rebase`
 
+### Translations
+
+Translations are currently handled by Kotti's internal implementation. However, there is a Crowdin project to make sure that all translations are correct.
+
+#### Pre-requisites
+
+- Have crowdin cli installed
+  - MacOs:
+    ```
+    brew tap crowdin/crowdin
+    brew install crowdin@3
+    ```
+  - Linux:
+    - https://support.crowdin.com/cli-tool/#installation
+- Have accesss to https://crowdin.com/project/3yourmind-kotti/en
+- Have a crowdin token stored in a local env variable (https://crowdin.com/settings#api-key)
+  ```
+  export CROWDIN_V2_API_KEY=1234567890...
+  ```
+
+#### Push translations
+
+Whenever new translations are added, edited or removed
+
+1. Update the Crowdin source file `packages/kotti-ui/source/locales/input.json` with latest translations from the Kotti language file `packages/kotti-ui/source/kotti-i18n/locales/en-US.ts`
+2. Push the source file to crowdin
+   ```
+   crowdin push
+   ```
+
+#### Pull translations
+
+1. Check if translations are ready. It should display `100%` next to the target language.
+   ```
+   crowdin status
+   ```
+2. Pull latest translations
+   ```
+   crowdin pull
+   ```
+3. Copy latest translations from the Crowdin language .json file to the corresponding Kotti language file. E.g.:
+   - From `packages/kotti-ui/source/locales/de.json`
+   - To `packages/kotti-ui/source/kotti-i18n/locales/de-DE.ts`
+
 ### Linting
 
 ```bash

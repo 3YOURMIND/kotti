@@ -19,8 +19,8 @@ module Common {
 
 export const jaJP: KottiI18n.Messages = {
 	KtBanner: {
-		expandLabel: '表示',
 		expandCloseLabel: '閉じる',
+		expandLabel: '表示',
 	},
 	KtComment: {
 		cancelMessage: 'Escキーを押すか',
@@ -63,10 +63,10 @@ export const jaJP: KottiI18n.Messages = {
 			HIDDEN: '',
 			INVALID: '無効',
 			NOT_STARTED: '始まっていない',
+			READY_TO_UPLOAD: '提出時にアップロードする準備ができました',
 			UPLOADED: 'アップロード済み',
 			UPLOADED_WITH_ERROR: 'エラーでアップロードされました',
 			UPLOADING: 'アップロード中...',
-			READY_TO_UPLOAD: '提出時にアップロードする準備ができました',
 		},
 		text: {
 			clickToUpload: 'クリックしてアップロード',
@@ -88,11 +88,10 @@ export const jaJP: KottiI18n.Messages = {
 	},
 	KtFieldSelects: {
 		loadingText: 'ロード中',
-		noMatchText: 'データなし',
 		noDataText: '結果がありません',
+		noMatchText: 'データなし',
 		placeholder: '選択してください',
 	},
-	// TODO check KtFilters translations
 	KtFilters: {
 		addFilterLabel: 'フィルタを追加',
 		andLabel: 'そして',

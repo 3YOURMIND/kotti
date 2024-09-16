@@ -1,0 +1,115 @@
+{
+	"common": {
+		"equal": "is equal to",
+		"greaterThan": "is greater than",
+		"greaterThanOrEqual": "is greater than or equal to",
+		"is": "is",
+		"isEmpty": "is empty",
+		"lessThan": "is less than",
+		"lessThanOrEqual": "is less than or equal to",
+		"restrictedAccess": "Restricted access"
+	},
+	"ktBanner": {
+		"expandCloseLabel": "Close",
+		"expandLabel": "View"
+	},
+	"ktComment": {
+		"cancelMessage": "Press Esc key or",
+		"clickToCancelLabel": "click to cancel",
+		"deleteButton": "Delete",
+		"editButton": "Edit",
+		"editedLabel": "Edited",
+		"postButton": "Post",
+		"replyButton": "Reply",
+		"replyToLabel": "Reply to",
+		"unlockedHelpText": "Visible to all users"
+	},
+	"ktFieldFileUpload": {
+		"button": {
+			"acceptPhoto": "Use Photo",
+			"cancel": "Cancel",
+			"nextCamera": "Next Camera",
+			"rejectPhoto": "Retake Photo",
+			"retry": "Retry",
+			"takePhoto": "Take Photo"
+		},
+		"error": {
+			"multipleNotAllowed": "Multiple files upload not allowed",
+			"notAllowed": "Permission denied to use the camera",
+			"notFound": "No available camera found",
+			"notSupported": "No compatible camera found"
+		},
+		"label": {
+			"capture": "Take Photo",
+			"error": "Error",
+			"review": "Review",
+			"unknown": "Unknown"
+		},
+		"statusMsg": {
+			"canceled": "Canceled",
+			"error": "Upload failed, please try again",
+			"invalid": "Invalid",
+			"notStarted": "Not started",
+			"readyToUpload": "Ready to upload on submittal",
+			"uploaded": "Uploaded",
+			"uploadedWithError": "Uploaded with error",
+			"uploading": "Uploading..."
+		},
+		"text": {
+			"clickToUpload": "Click to upload",
+			"dragAndDrop": "or drag and drop",
+			"learnMore": "Learn more",
+			"max": "max."
+		},
+		"validationMsg": {
+			"invalidExtension": "File format not supported",
+			"maxSizeExceeded": "Maximum file size allowed exceeded"
+		}
+	},
+	"ktFieldInlineEdit": {
+		"placeholder": "Click to Edit"
+	},
+	"ktFields": {
+		"optionalLabel": "Optional",
+		"requiredMessage": "This field is required"
+	},
+	"ktFieldSelects": {
+		"loadingText": "Loading",
+		"noDataText": "No results",
+		"noMatchText": "No matching data",
+		"placeholder": "Select"
+	},
+	"ktFilters": {
+		"addFilterLabel": "Add Filter",
+		"andLabel": "And",
+		"clearAllLabel": "Clear All",
+		"dateRange": {
+			"inRange": "is in range"
+		},
+		"emptyListLabel": "No Filters Applied",
+		"filterLabel": "Filter",
+		"filtersLabel": "Filters",
+		"multiEnum": {
+			"oneOf": "is one of"
+		},
+		"searchLabel": "Search",
+		"string": {
+			"contains": "contains"
+		},
+		"unsetLabel": "Unset",
+		"whereLabel": "Where"
+	},
+	"ktFormSubmit": {
+		"errorsSectionTitle": "Errors",
+		"title": "Form Submission Not Allowed",
+		"warningsSectionTitle": "Warnings"
+	},
+	"ktNavbar": {
+		"menuCollapse": "Collapse menu",
+		"menuExpand": "Expand menu",
+		"quickLinksTitle": "Quick Links"
+	},
+	"ktValueLabel": {
+		"notSet": "Not Set"
+	}
+}

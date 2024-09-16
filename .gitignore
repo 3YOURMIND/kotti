@@ -17,3 +17,7 @@ vite.config.ts.timestamp*
 
 # package.json tarball script
 /tarballs
+
+# crowdin (ignore all but the source file)
+packages/kotti-ui/source/locales/*.json
+!packages/kotti-ui/source/locales/input.json
