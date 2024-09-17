@@ -15,6 +15,23 @@ import {
 	KtNavbar,
 	KtPopover,
 	KtUserMenu,
+
+	// --------------
+	KtAccordion,
+	KtAvatarGroup,
+	KtBanner,
+	KtBreadcrumb,
+	KtCard,
+	KtCol,
+	KtDrawer,
+	KtModal,
+	KtRow,
+	KtLine,
+	KtTag,
+	KtValueLabel,
+	KtHeading,
+	KtSplitButton,
+	Kotti,
 } from '@3yourmind/kotti-ui'
 import { computed, ref } from 'vue'
 
@@ -39,6 +56,9 @@ const toISODateTime = (d: Date) =>
 	d.toISOString().replace('T', ' ').split('.')[0]
 
 const lastReload = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+const isAccordionOpen = ref(false)
+const isDrawerOpen = ref(false)
+const isModalOpen = ref(false)
 
 const setRange = () => {
 	setTimeout(() => {
@@ -48,6 +68,23 @@ const setRange = () => {
 		}
 	}, 1500)
 }
+
+const avatarGroupSettings = ref<
+	Kotti.AvatarGroup.Props & { showContentSlot: boolean }
+>({
+	count: 2,
+	isHoverable: true,
+	isStack: true,
+	items: [
+		{ name: 'Beyoncé', src: 'https://picsum.photos/200' },
+		{ name: 'Justin', src: 'https://picsum.photos/100' },
+		{ name: 'Britney', src: 'https://picsum.photos/130' },
+		{ name: 'Shakira', src: 'https://picsum.photos/140' },
+		{ name: 'Rihanna', src: 'https://picsum.photos/150' },
+	],
+	showContentSlot: false,
+	size: Kotti.Avatar.Size.MEDIUM,
+})
 </script>
 
 <template>
@@ -213,7 +250,63 @@ const setRange = () => {
 							/>
 						</div>
 					</div>
+					<KtHeading text="Hello vue3, yay" />
 					<!-- <KtButton label="hello" type="primary" @click="() => alerty('hello')" /> -->
+					<KtAccordion title="Accordion" v-model:isClosed="isAccordionOpen">
+						<KtValueLabel label="Labello" value="valulli" />
+					</KtAccordion>
+					<KtAvatarGroup v-bind="{ ...avatarGroupSettings }" />
+					<KtBanner
+						message="Your material is not published yet"
+						icon="announce"
+						actionText="Publish"
+					/>
+					<KtBreadcrumb
+						:activeIndex="2"
+						:breadcrumbs="[
+							{
+								title: 'Kotti',
+								onClick: () => {},
+								isCompleted: true,
+							},
+							{
+								title: 'Usage',
+								onClick: () => {},
+								isCompleted: true,
+							},
+							{
+								title: 'Components',
+								onClick: () => {},
+								isCompleted: true,
+							},
+							{
+								title: 'Links',
+								onClick: () => {},
+								isCompleted: false,
+							},
+							{
+								title: 'Breadcrumbs',
+								onClick: () => {},
+								isDisabled: true,
+							},
+						]"
+					/>
+
+					<KtCard
+						imgUrl="https://picsum.photos/900/300"
+						primaryActionLabel="Confirm"
+						secondaryActionLabel="Cancel"
+					>
+						<template #card-header>
+							<h2>Lorem Ipsum</h2>
+						</template>
+						<template #card-body>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+								Phasellus consequat nisl at nisl condimentum vehicula.
+							</p>
+						</template>
+					</KtCard>
 					<KtForm v-model:value="formValue">
 						<!-- <KtFieldText formKey="name" label="name">
 						<template #helpText>
@@ -361,6 +454,21 @@ const setRange = () => {
 								},
 							]"
 						/>
+						<KtDrawer v-if="isDrawerOpen">
+							<template #drawer-header>
+								<h2>Default Size Drawer</h2>
+							</template>
+							<template #drawer-body>
+								<p>Close from outside disabled</p>
+							</template>
+							<template #drawer-footer>
+								<KtButton
+									@click="isDrawerOpen = false"
+									class="w-100"
+									label="Close Drawer"
+								/>
+							</template>
+						</KtDrawer>
 
 						<KtPopover>
 							<KtButton label="KtPopover Button" />
@@ -386,9 +494,54 @@ const setRange = () => {
 								</div>
 							</template>
 						</KtPopover>
-						<KtButton label="Change to sth" @click="setRange" />
+						<KtSplitButton
+							:actions="[
+								{
+									icon: 'calendar',
+									label: 'Open Drawer',
+									onClick: () => (isDrawerOpen = true),
+									dataTest: 'calendar',
+								},
+								{
+									icon: 'landline',
+									label: 'Action 2',
+									onClick: () => (isModalOpen = true),
+									dataTest: 'landline',
+								},
+								{
+									icon: 'location',
+									label: 'Action 3',
+									onClick: () => alerty('Action 3'),
+									dataTest: 'location',
+									isDisabled: true,
+								},
+							]"
+							dataTest="btn-1"
+							icon="download"
+							label="Split Button"
+							type="primary"
+							@click="alerty('Split Button')"
+						/>
+						<KtTag text="tag me harder" />
+
+						<KtModal :isOpen="isModalOpen">
+							<template #body>
+								<span> I am an announcement. I open by default </span>
+							</template>
+							<template #footer>
+								<KtButton label="close" @click="isModalOpen = false" />
+							</template>
+						</KtModal>
 					</KtForm>
 				</div>
+				<KtLine />
+				<KtRow :gap="10">
+					<KtCol :xs="24" :span="3"><div class="grid-content light" /></KtCol>
+					<KtCol :sm="24" :span="4"><div class="grid-content dark" /></KtCol>
+					<KtCol :md="24" :span="5"><div class="grid-content light" /></KtCol>
+					<KtCol :lg="24" :span="6"><div class="grid-content dark" /></KtCol>
+					<KtCol :xl="24" :span="6"><div class="grid-content light" /></KtCol>
+				</KtRow>
 			</main>
 		</div>
 	</KtI18nContext>
@@ -441,5 +594,19 @@ pre {
 
 .blink-once {
 	animation: yellow-fade 1s ease-in-out 0s;
+}
+
+.grid-content {
+	height: 40px;
+	border-radius: 4px;
+	opacity: 0.46;
+
+	&.light {
+		background: #3173de;
+	}
+
+	&.dark {
+		background: #afc5e8;
+	}
 }
 </style>
