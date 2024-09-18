@@ -80,6 +80,7 @@ export default defineComponent({
 		line-height: 20px;
 		color: var(--text-01);
 		text-align: end;
+		font-variant-numeric: tabular-nums;
 	}
 }
 </style>

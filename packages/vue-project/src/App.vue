@@ -24,6 +24,7 @@ import {
 	KtCard,
 	KtCol,
 	KtDrawer,
+	KtFileUpload,
 	KtModal,
 	KtRow,
 	KtLine,
@@ -33,6 +34,7 @@ import {
 	KtSplitButton,
 	Kotti,
 } from '@3yourmind/kotti-ui'
+import UploadDocumentation from './KtFileUploadDocumentation.vue'
 import { computed, ref } from 'vue'
 
 const alerty = (some: string) => {
@@ -251,6 +253,9 @@ const avatarGroupSettings = ref<
 						</div>
 					</div>
 					<KtHeading text="Hello vue3, yay" />
+
+					<UploadDocumentation />
+
 					<!-- <KtButton label="hello" type="primary" @click="() => alerty('hello')" /> -->
 					<KtAccordion title="Accordion" v-model:isClosed="isAccordionOpen">
 						<KtValueLabel label="Labello" value="valulli" />

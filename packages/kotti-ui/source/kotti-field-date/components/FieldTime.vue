@@ -362,22 +362,20 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .time-picker {
-	font-size: 14px;
-	overflow: hidden;
-	padding: 6px 8px;
 	height: 100%;
-	/* width: 100%; */
+	padding: 6px 8px;
+	overflow: hidden;
+	font-size: 14px;
 
 	&__rows {
 		display: flex;
 		align-items: stretch;
 		height: 100%;
-		/* width: 100%; */
 	}
 
 	&__column {
-		flex-basis: 100%;
 		display: flex;
+		flex-basis: 100%;
 		flex-direction: column;
 		align-items: stretch;
 
@@ -388,34 +386,21 @@ export default defineComponent({
 
 		> ul,
 		> ul > li {
-			list-style: none;
-			margin: 0;
 			padding: 0;
+			margin: 0;
+			list-style: none;
 		}
 	}
 
 	&__header-cell {
-		/* font-size: 12px;
-		text-transform: uppercase;
-		background-color: var(--ui-01);
-		color: var(--gray-50);
-		padding-bottom: 2px;
-		padding-top: 2px;
-		text-align: center;
-		width: 100%; */
-
 		display: flex;
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
 		padding: 5px;
 		font-size: 0.6rem;
+		font-weight: 700;
 		color: var(--text-03);
 		text-transform: uppercase;
-		font-weight: 700;
-
-		/* align-items: center;
-		color: var(--dp-text-color);
-		white-space: nowrap; */
 	}
 
 	&__header-separator {
@@ -425,9 +410,9 @@ export default defineComponent({
 	}
 
 	&__cell {
-		color: inherit;
-		padding: 5px;
 		display: block;
+		padding: 5px;
+		color: inherit;
 		text-align: center;
 		cursor: pointer;
 

@@ -66,8 +66,8 @@ import { KtFieldToggle, KtFieldToggleGroup } from './kotti-field-toggle'
 export * from './kotti-field-toggle'
 import { KtFileUpload } from './kotti-file-upload'
 export * from './kotti-file-upload'
-// import { KtFilters } from './kotti-filters'
-// export * from './kotti-filters'
+import { KtFilters } from './kotti-filters'
+export * from './kotti-filters'
 import { KtForm } from './kotti-form'
 export * from './kotti-form'
 import { KtFormControllerList } from './kotti-form-controller-list'
@@ -131,7 +131,7 @@ export default {
 			KtFieldDate,
 			KtFieldDateRange,
 			KtFieldDateTime,
-			// KtFieldDateTimeRange,
+			KtFieldDateTimeRange,
 			KtFieldFileUpload,
 			KtFieldFileUploadRemote,
 			KtFieldInlineEdit,
@@ -147,7 +147,7 @@ export default {
 			KtFieldToggle,
 			KtFieldToggleGroup,
 			KtFileUpload,
-			// KtFilters,
+			KtFilters,
 			KtForm,
 			KtFormControllerList,
 			KtFormControllerObject,

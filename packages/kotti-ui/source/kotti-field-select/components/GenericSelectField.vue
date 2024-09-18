@@ -64,7 +64,7 @@
 				:options="filteredOptions"
 				:value="optionsValue"
 				@close="setIsDropdownOpen(false)"
-				@input="onOptionsInput"
+				@update:value="onOptionsInput"
 			>
 				<template #option="values">
 					<slot v-bind="values" name="option" />
@@ -276,11 +276,14 @@ export default defineComponent({
 			isFieldHovered,
 			ktFieldRef,
 			onOptionsInput: (value: MultiValue) => {
+				console.log('onOptionsInput')
 				if (props.isMultiple) {
+					console.log('if block', value)
 					field.setValue(value)
 					if (props.clearOnSelect) deleteQuery()
 				} else {
 					const newValue = value[0] ?? null
+					console.log('else block', field.currentValue, newValue)
 					// performance optimization
 					if (field.currentValue !== newValue) field.setValue(newValue)
 				}

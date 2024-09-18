@@ -451,28 +451,24 @@ export default defineComponent({
 .kt-field-date {
 	&__input {
 		display: flex;
-
 		width: 100%;
 		padding: 0;
 		margin: 0;
-
 		line-height: 1.6;
-
 		border: 0;
 	}
 
 	&__input-wrapper {
 		display: flex;
-		align-items: center;
 		gap: var(--unit-4);
+		align-items: center;
 
 		.yoco {
 			display: flex;
 			align-items: center;
-
-			color: var(--icon-02);
-			font-size: 1.1em;
 			min-width: 1.1em;
+			font-size: 1.1em;
+			color: var(--icon-02);
 		}
 	}
 }
@@ -481,14 +477,14 @@ export default defineComponent({
 	// HACK: the default is set to 0.8rem, which assumes a base font-size of 16px.
 	// Since we have 20px, we have to adjust the relative size somewhat
 	--dp-preview-font-size: 0.64rem;
-
 	--dp-primary-color: var(--interactive-01);
 	--dp-hover-color: var(--interactive-02-hover);
 	--dp-hover-text-color: var(--interactive-01);
 
-	font-size: 0.7rem;
 	padding: var(--unit-3);
+	font-size: 0.7rem;
 
+	/* stylelint-disable selector-class-pattern */
 	.dp__instance_calendar .dp__flex_display {
 		// gap between calendars
 		gap: var(--unit-4);
@@ -497,6 +493,8 @@ export default defineComponent({
 	.dp__menu_inner {
 		padding: 0;
 	}
+
+	/* stylelint-enable selector-class-pattern */
 
 	/**
 	 * wrapper for the open timepicker button
@@ -511,12 +509,13 @@ export default defineComponent({
 
 	&__buttons {
 		display: flex;
+		gap: 10px;
 		align-items: center;
 		justify-content: flex-end;
 		width: 100%;
-		gap: 10px;
 	}
 
+	/* stylelint-disable selector-class-pattern */
 	&__calendar .dp__calendar_header_item {
 		display: flex;
 		align-items: center;
@@ -524,19 +523,20 @@ export default defineComponent({
 		color: var(--text-03);
 		text-transform: uppercase;
 	}
+	/* stylelint-enable selector-class-pattern */
 
 	&__day-switch {
 		display: flex;
+		flex-direction: row-reverse;
+		gap: 20px;
 		align-items: center;
 		justify-content: space-evenly;
-		gap: 20px;
-		flex-direction: row-reverse;
 	}
 
 	&__date-switch,
 	&__day-switch {
-		color: var(--interactive-01);
 		font-weight: 500;
+		color: var(--interactive-01);
 
 		&:hover {
 			color: var(--interactive-01-hover);
@@ -557,9 +557,8 @@ export default defineComponent({
 
 	&__shortcuts {
 		display: flex;
-		gap: var(--unit-1);
 		flex-wrap: wrap;
-
+		gap: var(--unit-1);
 		margin: var(--unit-3) 0;
 	}
 
@@ -570,11 +569,9 @@ export default defineComponent({
 
 	&--has-time &__times {
 		display: flex;
-		height: calc(100% - 35px);
-
 		gap: var(--unit-4);
-
 		justify-content: stretch;
+		height: calc(100% - 35px);
 	}
 
 	&--is-range.kt-field-date-popover--has-time &__day-switch {
