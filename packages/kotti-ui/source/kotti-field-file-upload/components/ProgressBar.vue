@@ -1,9 +1,17 @@
 <template>
 	<div class="progress-bar">
 		<div class="progress-bar__background">
-			<div :class="fillClasses" :style="{ width: progressPercent }" />
+			<div :class="fillClasses" :style="{ width: progressCssWidth }" />
 		</div>
-		<span class="progress-bar__label" v-text="progressPercent" />
+		<div class="progress-bar__label-wrapper">
+			<!-- HACK: this invisible span calculates the width for "99%" -->
+			<span
+				class="progress-bar__label"
+				style="user-select: none; opacity: 0"
+				v-text="'99%'"
+			/>
+			<span class="progress-bar__label" v-text="progressPercent" />
+		</div>
 	</div>
 </template>
 
@@ -23,6 +31,9 @@ export default defineComponent({
 				'progress-bar__fill': true,
 				'progress-bar__fill--is-error': props.isError,
 			})),
+			progressCssWidth: computed(
+				() => `${String(props.progress * ONE_HUNDRED_PERCENT)}%`,
+			),
 			progressPercent: computed(
 				() => `${String(Math.floor(props.progress * ONE_HUNDRED_PERCENT))}%`,
 			),
@@ -57,9 +68,15 @@ export default defineComponent({
 		}
 	}
 
+	&__label-wrapper {
+		display: grid;
+	}
+
 	&__label {
-		flex: 1 0 auto;
+		grid-row: 1;
+		grid-column: 1;
 		font-size: 16px;
+		font-variant-numeric: tabular-nums;
 		line-height: 20px;
 		color: var(--text-01);
 		text-align: end;

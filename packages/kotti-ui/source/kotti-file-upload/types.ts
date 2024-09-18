@@ -15,7 +15,6 @@ export module KottiFileUpload {
 	export enum Status {
 		CANCELED = 'CANCELED',
 		ERROR = 'ERROR',
-		HIDDEN = 'HIDDEN',
 		INVALID = 'INVALID',
 		NOT_STARTED = 'NOT_STARTED',
 		UPLOADED = 'UPLOADED',
@@ -108,7 +107,7 @@ export module KottiFileUpload {
 
 	export const internalFileInfoSchema = propsSchema
 		.pick({
-			dateTest: true,
+			dataTest: true,
 			isDisabled: true,
 			isLoading: true,
 			extensions: true,
@@ -124,7 +123,11 @@ export module KottiFileUpload {
 			fileInfo: FileInfo
 		}>
 
+		export type CancelUpload = z.infer<typeof idSchema>
+
 		export type RemoveFile = z.infer<typeof idSchema>
+
+		export type RestartUpload = z.infer<typeof idSchema>
 	}
 
 	export module ActionButton {

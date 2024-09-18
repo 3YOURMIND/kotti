@@ -26,6 +26,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
+import { KtModal } from '../../../kotti-modal'
+import { KtButton } from '../../../kotti-button'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
 import { ErrorCodes } from '../../constants'
@@ -33,6 +35,10 @@ import { Shared } from '../../types'
 
 export default defineComponent({
 	name: 'ErrorViewer',
+	components: {
+		KtButton,
+		KtModal,
+	},
 	props: makeProps(Shared.TakePhoto.errorSchema),
 	emits: ['close', 'retry'],
 	setup(props) {

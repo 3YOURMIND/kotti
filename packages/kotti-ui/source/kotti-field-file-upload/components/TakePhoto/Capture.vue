@@ -47,6 +47,8 @@ import {
 	ref,
 } from 'vue'
 
+import { KtModal } from '../../../kotti-modal'
+import { KtButton } from '../../../kotti-button'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
 import { ErrorCodes } from '../../constants'
@@ -69,6 +71,10 @@ enum State {
 
 export default defineComponent({
 	name: 'CapturePhoto',
+	components: {
+		KtButton,
+		KtModal,
+	},
 	props: makeProps(Shared.TakePhoto.captureSchema),
 	emits: ['capture', 'close', 'error'],
 	setup(_, { emit }) {
