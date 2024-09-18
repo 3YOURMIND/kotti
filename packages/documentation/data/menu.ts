@@ -10,6 +10,7 @@ import {
 	KtComment,
 	KtDrawer,
 	KtFieldInlineEdit,
+	KtFileUpload,
 	KtFilters,
 	KtForm,
 	KtHeading,
@@ -159,6 +160,7 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtCard),
 					makeComponentMenuItem(KtComment),
 					makeComponentMenuItem(KtDrawer),
+					makeComponentMenuItem(KtFileUpload),
 					makeComponentMenuItem(KtFilters),
 					makeComponentMenuItem(KtForm),
 					{

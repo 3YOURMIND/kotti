@@ -35,6 +35,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 
+import { KtButton } from '../../../kotti-button'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
 import { Shared } from '../../types'
@@ -55,6 +56,7 @@ export default defineComponent({
 	components: {
 		CapturePhoto,
 		Error,
+		KtButton,
 		ReviewPhoto,
 	},
 	props: makeProps(Shared.TakePhoto.schema),

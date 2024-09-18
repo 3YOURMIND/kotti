@@ -76,6 +76,7 @@
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
 import DropArea from '../kotti-field-file-upload/components/DropArea.vue'
+import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import UploadedFileItem from './components/UploadedFileItem.vue'
 import PreUploadedFileItem from '../kotti-field-file-upload/components/PreUploadedFileItem.vue'
 import TakePhoto from '../kotti-field-file-upload/components/TakePhoto/TakePhoto.vue'
@@ -90,6 +91,7 @@ export default defineComponent({
 	name: 'KtFileUpload',
 	components: {
 		DropArea,
+		FieldHelpText,
 		PreUploadedFileItem,
 		TakePhoto,
 		UploadedFileItem,

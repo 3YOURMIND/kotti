@@ -98,7 +98,13 @@ export default defineComponent({
 		const isDeletable = computed(
 			() =>
 				validation.value !== KottiFileUpload.Validation.SUCCESS ||
-				status.value === KottiFileUpload.Status.UPLOADED,
+				[
+					KottiFileUpload.Status.CANCELED,
+					KottiFileUpload.Status.ERROR,
+					KottiFileUpload.Status.INVALID,
+					KottiFileUpload.Status.UPLOADED,
+					KottiFileUpload.Status.UPLOADED_WITH_ERROR,
+				].includes(status.value),
 		)
 
 		return {

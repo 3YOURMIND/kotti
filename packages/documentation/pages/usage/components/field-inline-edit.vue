@@ -2,94 +2,96 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
-		<div class="element-example white">
-			<KtForm v-model="formValue">
-				<KtFieldInlineEdit
-					v-bind="fieldProps"
-					class="mb-16px"
-					formKey="fieldValue"
-					@confirm="onConfirm"
-				/>
-				<div class="overview__component__value mb-8px">
-					<strong>Value:</strong>
-					<span v-text="JSON.stringify(fieldValue)" />
-					<a @click="reset">reset</a>
-				</div>
-			</KtForm>
-			<KtForm v-model="settings" size="small">
-				<div class="wrapper">
-					<div>
-						<h4>Settings</h4>
-						<KtFieldSingleSelect
-							formKey="validation"
-							isOptional
-							label="Validation State"
-							:options="validationOptions"
-						/>
-						<KtFieldSingleSelect
-							formKey="preventConfirmationOn"
-							isOptional
-							label="preventConfirmationOn"
-							:options="preventConfirmationOptions"
-						/>
-						<KtFieldSingleSelect
-							formKey="textStyle"
-							helpText="Only supported with single-line KtFieldInlineEdit"
-							hideClear
-							:isDisabled="settings.booleanFlags.isMultiline"
-							isOptional
-							label="Text Styles"
-							:options="textStyleOptions"
-						/>
-						<KtFieldToggleGroup
-							formKey="booleanFlags"
-							isOptional
-							label="Boolean Flags"
-							:options="[
-								{ key: 'hideValidation', label: 'hideValidation' },
-								{ key: 'isDisabled', label: 'isDisabled' },
-								{ key: 'isReadonly', label: 'isReadonly' },
-								{ key: 'isLoading', label: 'isLoading' },
-								{ key: 'isMultiline', label: 'isMultiline' },
-								{ key: 'isOptional', label: 'isOptional' },
-							]"
-							type="switch"
-						/>
-						<KtFieldText formKey="placeholder" isOptional label="placeholder" />
-						<KtFieldNumber formKey="tabIndex" isOptional label="tabIndex" />
-						<KtFieldText formKey="dataTest" isOptional label="dataTest" />
+		<div class="overview">
+			<div class="overview__component">
+				<KtForm v-model="formValue">
+					<KtFieldInlineEdit
+						v-bind="fieldProps"
+						formKey="fieldValue"
+						@confirm="onConfirm"
+					/>
+					<div class="overview__component-value">
+						<strong>Value:</strong>
+						<span v-text="JSON.stringify(fieldValue)" />
+						<a @click="reset">reset</a>
 					</div>
-
-					<div>
-						<h4>Texts</h4>
-						<KtFieldText formKey="label" isOptional label="label" />
-						<KtFieldText
-							formKey="helpDescription"
-							isOptional
-							label="helpDescription"
-						/>
-						<KtFieldText formKey="helpText" isOptional label="helpText" />
-						<div class="field-row">
-							<KtFieldSingleSelect
-								formKey="autoComplete"
-								helpText="Support Varies"
-								isOptional
-								isUnsorted
-								label="autoComplete"
-								:options="autoCompleteOptions"
-							/>
-							<KtFieldText
-								formKey="autoCompleteToken"
-								helpText="A space-separated <token-list> that describes the meaning of the autocompletion value. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values"
-								:isDisabled="settings.autoComplete !== 'token'"
-								isOptional
-								label="<token>"
-							/>
-						</div>
-					</div>
-				</div>
-			</KtForm>
+				</KtForm>
+			</div>
 		</div>
+
+		<KtForm v-model="settings" size="small">
+			<div class="wrapper">
+				<div>
+					<h4>Settings</h4>
+					<KtFieldSingleSelect
+						formKey="validation"
+						isOptional
+						label="Validation State"
+						:options="validationOptions"
+					/>
+					<KtFieldSingleSelect
+						formKey="preventConfirmationOn"
+						isOptional
+						label="preventConfirmationOn"
+						:options="preventConfirmationOptions"
+					/>
+					<KtFieldSingleSelect
+						formKey="textStyle"
+						helpText="Only supported with single-line KtFieldInlineEdit"
+						hideClear
+						:isDisabled="settings.booleanFlags.isMultiline"
+						isOptional
+						label="Text Styles"
+						:options="textStyleOptions"
+					/>
+					<KtFieldToggleGroup
+						formKey="booleanFlags"
+						isOptional
+						label="Boolean Flags"
+						:options="[
+							{ key: 'hideValidation', label: 'hideValidation' },
+							{ key: 'isDisabled', label: 'isDisabled' },
+							{ key: 'isReadonly', label: 'isReadonly' },
+							{ key: 'isLoading', label: 'isLoading' },
+							{ key: 'isMultiline', label: 'isMultiline' },
+							{ key: 'isOptional', label: 'isOptional' },
+						]"
+						type="switch"
+					/>
+					<KtFieldText formKey="placeholder" isOptional label="placeholder" />
+					<KtFieldNumber formKey="tabIndex" isOptional label="tabIndex" />
+					<KtFieldText formKey="dataTest" isOptional label="dataTest" />
+				</div>
+
+				<div>
+					<h4>Texts</h4>
+					<KtFieldText formKey="label" isOptional label="label" />
+					<KtFieldText
+						formKey="helpDescription"
+						isOptional
+						label="helpDescription"
+					/>
+					<KtFieldText formKey="helpText" isOptional label="helpText" />
+					<div class="field-row">
+						<KtFieldSingleSelect
+							formKey="autoComplete"
+							helpText="Support Varies"
+							isOptional
+							isUnsorted
+							label="autoComplete"
+							:options="autoCompleteOptions"
+						/>
+						<KtFieldText
+							formKey="autoCompleteToken"
+							helpText="A space-separated <token-list> that describes the meaning of the autocompletion value. See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values"
+							:isDisabled="settings.autoComplete !== 'token'"
+							isOptional
+							label="<token>"
+						/>
+					</div>
+				</div>
+			</div>
+		</KtForm>
 	</div>
 </template>
 

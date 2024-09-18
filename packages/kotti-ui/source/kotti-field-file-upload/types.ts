@@ -55,11 +55,7 @@ export module Shared {
 				.int()
 				.min(0)
 				.default(Number.MAX_SAFE_INTEGER),
-			extensions: z
-				.string()
-				.nonempty()
-				.array()
-				.default(() => []),
+			extensions: z.array(z.string().min(1)).default(() => []),
 			externalUrl: z.string().nullable().default(null),
 			hideDropArea: z.boolean().default(false),
 			icon: yocoIconSchema.default(Yoco.Icon.CLOUD_UPLOAD),
