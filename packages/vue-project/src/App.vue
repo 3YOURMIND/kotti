@@ -25,6 +25,7 @@ import {
 	KtCol,
 	KtDrawer,
 	KtFileUpload,
+	KtFilter,
 	KtModal,
 	KtRow,
 	KtLine,
@@ -254,7 +255,99 @@ const avatarGroupSettings = ref<
 					</div>
 					<KtHeading text="Hello vue3, yay" />
 
-					<UploadDocumentation />
+					<!-- <UploadDocumentation /> -->
+					<KtFilters
+						:columns="[
+							{ key: 'globalSearch', label: 'Search', type: 'SEARCH' },
+							{
+								key: 'stringColumn',
+								label: 'String Column',
+								operations: ['CONTAINS', 'EQUAL', 'IS_EMPTY'],
+								type: 'STRING',
+							},
+							{
+								key: 'integerColumn',
+								label: 'Integer Column',
+								operations: [
+									'EQUAL',
+									'GREATER_THAN',
+									'GREATER_THAN_OR_EQUAL',
+									'LESS_THAN',
+									'LESS_THAN_OR_EQUAL',
+									'IS_EMPTY',
+								],
+								prefix: null,
+								suffix: null,
+								type: 'INTEGER',
+							},
+							{
+								key: 'floatColumn',
+								label: 'Float Column',
+								operations: [
+									'EQUAL',
+									'GREATER_THAN',
+									'GREATER_THAN_OR_EQUAL',
+									'LESS_THAN',
+									'LESS_THAN_OR_EQUAL',
+									'IS_EMPTY',
+								],
+								prefix: null,
+								suffix: null,
+								type: 'FLOAT',
+							},
+							{
+								currency: 'USD',
+								key: 'currencyColumn',
+								label: 'Currency Column',
+								operations: [
+									'EQUAL',
+									'GREATER_THAN',
+									'GREATER_THAN_OR_EQUAL',
+									'LESS_THAN',
+									'LESS_THAN_OR_EQUAL',
+									'IS_EMPTY',
+								],
+								type: 'CURRENCY',
+							},
+							{
+								key: 'booleanColumn',
+								label: 'Boolean Column',
+								operations: ['EQUAL', 'IS_EMPTY'],
+								type: 'BOOLEAN',
+							},
+							{
+								key: 'dateRangeColumn',
+								label: 'Date Range Column',
+								operations: ['IN_RANGE', 'IS_EMPTY'],
+								type: 'DATE_RANGE',
+								maximumDate: null,
+								minimumDate: null,
+								shortcuts: [],
+							},
+							{
+								key: 'singleEnumColumn',
+								label: 'Single Enum Column',
+								operations: ['EQUAL', 'IS_EMPTY'],
+								options: [
+									{ label: 'Option 1', value: 'option-1' },
+									{ label: 'Option 2', value: 'option-2' },
+									{ label: 'Option 3', value: 'option-3' },
+								],
+								type: 'SINGLE_ENUM',
+							},
+							{
+								key: 'multiEnumColumn',
+								label: 'Multi Enum Column',
+								operations: ['ONE_OF', 'IS_EMPTY'],
+								options: [
+									{ label: 'Option 1', value: 'option-1' },
+									{ label: 'Option 2', value: 'option-2' },
+									{ label: 'Option 3', value: 'option-3' },
+								],
+								type: 'MULTI_ENUM',
+							},
+						]"
+					/>
 
 					<!-- <KtButton label="hello" type="primary" @click="() => alerty('hello')" /> -->
 					<KtAccordion title="Accordion" v-model:isClosed="isAccordionOpen">
