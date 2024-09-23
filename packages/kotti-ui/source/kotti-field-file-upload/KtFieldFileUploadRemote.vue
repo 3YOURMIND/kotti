@@ -28,6 +28,7 @@
 							}"
 							@addFiles="onAddFiles"
 						/>
+						<slot name="dropAreaFooter" @click.stop />
 					</template>
 				</DropArea>
 				<div v-if="filesList.length > 0" :style="filesListStyle">

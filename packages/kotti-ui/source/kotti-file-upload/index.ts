@@ -8,6 +8,10 @@ export const KtFileUpload = attachMeta(makeInstallable(KtFileUploadVue), {
 	deprecated: null,
 	designs: null,
 	slots: {
+		dropAreaFooter: {
+			description: "Displays custom content within the drop area's footer",
+			scope: null,
+		},
 		helpText: { description: 'custom helpText support (HTML)', scope: null },
 	},
 	typeScript: {

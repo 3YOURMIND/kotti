@@ -10,7 +10,19 @@
 					@cancelUpload="onCancelUpload"
 					@deleteFile="onDeleteFile"
 					@restartUpload="onRestartUpload"
-				/>
+				>
+					<template #dropAreaFooter v-if="settings.showDropAreaFooterSlot">
+						<div @click.stop @kepup.prevent style="padding: var(--unit-3)">
+							<KtFieldRadioGroup
+								v-model="failUploads"
+								:options="[
+									{ label: 'Succeed uploads', value: false },
+									{ label: 'Fail uploads', value: true },
+								]"
+							/>
+						</div>
+					</template>
+				</KtFileUpload>
 			</div>
 		</div>
 		<KtForm v-model="settings" size="small">
@@ -70,6 +82,12 @@
 						label="helpDescription"
 					/>
 					<KtFieldText formKey="helpText" isOptional label="helpText" />
+					<KtFieldToggle
+						formKey="showDropAreaFooterSlot"
+						isOptional
+						label="use #dropAreaFooter slot"
+						type="switch"
+					/>
 
 					<KtFieldSingleSelect
 						formKey="icon"
@@ -97,6 +115,7 @@ import {
 	Kotti,
 	KtFieldMultiSelect,
 	KtFieldNumber,
+	KtFieldRadioGroup,
 	KtFieldSingleSelect,
 	KtFieldText,
 	KtFieldToggleGroup,
@@ -151,6 +170,7 @@ export default defineComponent({
 		ComponentInfo,
 		KtFieldMultiSelect,
 		KtFieldNumber,
+		KtFieldRadioGroup,
 		KtFieldSingleSelect,
 		KtFieldText,
 		KtFieldToggleGroup,
@@ -175,6 +195,7 @@ export default defineComponent({
 			icon: Kotti.FieldSingleSelect.Value
 			label: Kotti.FieldText.Value
 			maxFileSize: Kotti.FieldNumber.Value
+			showDropAreaFooterSlot: Kotti.FieldToggle.Value
 			tabIndex: Kotti.FieldNumber.Value
 		}>({
 			booleanFlags: {
@@ -193,8 +214,10 @@ export default defineComponent({
 			icon: Yoco.Icon.CLOUD_UPLOAD,
 			label: 'Label',
 			maxFileSize: Number.MAX_SAFE_INTEGER,
+			showDropAreaFooterSlot: false,
 			tabIndex: null,
 		})
+		const failUploads = ref(false)
 
 		const state = ref<
 			(Kotti.FileUpload.FileInfo & {
@@ -212,7 +235,9 @@ export default defineComponent({
 					return {
 						...file,
 						progress: 1,
-						status: Kotti.FileUpload.Status.UPLOADED,
+						status: failUploads.value
+							? Kotti.FileUpload.Status.UPLOADED_WITH_ERROR
+							: Kotti.FileUpload.Status.UPLOADED,
 					}
 
 				const current = now.valueOf() - file.uploadStartTime.valueOf()
@@ -225,6 +250,7 @@ export default defineComponent({
 
 		return {
 			component: KtFileUpload,
+			failUploads,
 			fieldProps: computed(() => ({
 				allowMultiple: settings.value.booleanFlags.allowMultiple,
 				allowPhotos: settings.value.booleanFlags.allowPhotos,
@@ -249,10 +275,7 @@ export default defineComponent({
 					...addedFiles.map((e) => ({
 						...e.fileInfo,
 						status: Kotti.FileUpload.Status.UPLOADING,
-						uploadEndTime: dayjs().add(
-							Math.random() * TimeConversion.SECONDS_PER_MINUTE,
-							'second',
-						),
+						uploadEndTime: dayjs().add(Math.random() * 4, 'second'),
 						uploadStartTime,
 					})),
 					...state.value,

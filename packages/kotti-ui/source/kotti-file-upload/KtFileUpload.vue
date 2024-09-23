@@ -42,6 +42,7 @@
 						}"
 						@addFiles="onAddFiles"
 					/>
+					<slot name="dropAreaFooter" />
 				</template>
 			</DropArea>
 			<div v-if="uploadedFilesList.length > 0">

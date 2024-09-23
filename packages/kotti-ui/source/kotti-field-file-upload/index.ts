@@ -20,7 +20,13 @@ export const KtFieldFileUpload = attachMeta(
 			type: MetaDesignType.FIGMA,
 			url,
 		},
-		slots: FIELD_META_BASE_SLOTS,
+		slots: {
+			dropAreaFooter: {
+				description: "Displays custom content within the drop area's footer",
+				scope: null,
+			},
+			...FIELD_META_BASE_SLOTS,
+		},
 		typeScript: {
 			namespace: 'Kotti.FieldFileUpload',
 			schema: KottiFieldFileUpload.propsSchema,
@@ -44,7 +50,13 @@ export const KtFieldFileUploadRemote = attachMeta(
 			type: MetaDesignType.FIGMA,
 			url,
 		},
-		slots: FIELD_META_BASE_SLOTS,
+		slots: {
+			dropAreaFooter: {
+				description: "Displays custom content within the drop area's footer",
+				scope: null,
+			},
+			...FIELD_META_BASE_SLOTS,
+		},
 		typeScript: {
 			namespace: 'Kotti.FieldFileUploadRemote',
 			schema: KottiFieldFileUploadRemote.propsSchema,
