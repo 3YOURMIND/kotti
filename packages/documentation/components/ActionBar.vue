@@ -77,6 +77,25 @@ export default defineComponent({
 })
 </script>
 
+<style lang="scss">
+.kt-actionbar-menu {
+	.kt-actionbar-nav__item {
+		padding: var(--unit-2) 0;
+		font-size: 0.75rem;
+		color: $darkgray-500;
+		list-style: none;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	i {
+		color: $lightgray-500;
+	}
+}
+</style>
+
 <style lang="scss" scoped>
 .nuxt-link-exact-active li {
 	font-weight: 600;

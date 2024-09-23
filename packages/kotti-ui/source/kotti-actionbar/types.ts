@@ -4,10 +4,11 @@ import { yocoIconSchema } from '@3yourmind/yoco'
 export module KottiActionbar {
 	export const menuItemSchema = z.object({
 		active: z.boolean().default(false),
+		component: z.string().default('a'),
 		disabled: z.boolean().default(false),
 		icon: yocoIconSchema,
-		to: z.unknown().nullable(),
 		label: z.string(),
+		props: z.record(z.unknown()).optional(),
 	})
 	export type MenuItem = z.output<typeof menuItemSchema>
 

@@ -25,10 +25,11 @@ import {
 	KtCol,
 	KtDrawer,
 	KtFileUpload,
-	KtFilter,
+	KtFilters,
 	KtModal,
 	KtRow,
 	KtLine,
+	KtTableLegacy,
 	KtTag,
 	KtValueLabel,
 	KtHeading,
@@ -62,15 +63,35 @@ const lastReload = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
 const isAccordionOpen = ref(false)
 const isDrawerOpen = ref(false)
 const isModalOpen = ref(false)
+const filtersValue = ref([])
 
-const setRange = () => {
-	setTimeout(() => {
-		formValue.value = {
-			...formValue.value,
-			birthdayTimeRange: ['2024-09-22 12:44:31', '2024-10-22 12:44:31'],
-		}
-	}, 1500)
-}
+const columns = [
+	{ label: 'Name', prop: 'name' },
+	{ label: 'Date', prop: 'date' },
+	{ label: 'Address', prop: 'address.line' },
+]
+const rows = [
+	{
+		date: '2016-05-03',
+		name: 'Tom',
+		address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
+	},
+	{
+		date: '2016-05-02',
+		name: 'Jackson',
+		address: { number: 89, line: 'No. 89, Grove St, Los Angeles' },
+	},
+	{
+		date: '2016-05-04',
+		name: 'Fen',
+		address: { number: 182, line: 'No. 182, Grove St, Los Angeles' },
+	},
+	{
+		date: '2016-05-01',
+		name: 'Fexiang',
+		address: { number: 189, line: 'No. 189, Grove St, Los Angeles' },
+	},
+]
 
 const avatarGroupSettings = ref<
 	Kotti.AvatarGroup.Props & { showContentSlot: boolean }
@@ -202,21 +223,27 @@ const avatarGroupSettings = ref<
 				:menu="[
 					{
 						label: 'First Link',
-						to: '/examples/layouts',
+						props: {
+							to: '/examples/layouts',
+						},
 						icon: 'user',
 						active: false,
 						disabled: false,
 					},
 					{
 						label: 'Second Link',
-						to: 'https://google.com',
+						props: {
+							to: 'https://google.com',
+						},
 						icon: 'basket',
 						active: true,
 						disabled: false,
 					},
 					{
 						label: 'Third Link',
-						to: '/',
+						props: {
+							to: '/',
+						},
 						icon: 'bell',
 						active: false,
 						disabled: true,
@@ -256,6 +283,7 @@ const avatarGroupSettings = ref<
 					<KtHeading text="Hello vue3, yay" />
 
 					<!-- <UploadDocumentation /> -->
+					<!-- <KtTableLegacy :rows="rows" :columns="columns" /> -->
 					<KtFilters
 						:columns="[
 							{ key: 'globalSearch', label: 'Search', type: 'SEARCH' },
@@ -347,6 +375,7 @@ const avatarGroupSettings = ref<
 								type: 'MULTI_ENUM',
 							},
 						]"
+						v-model:value="filtersValue"
 					/>
 
 					<!-- <KtButton label="hello" type="primary" @click="() => alerty('hello')" /> -->
