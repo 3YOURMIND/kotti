@@ -49,7 +49,6 @@ import {
 import KtButton from './KtButton.vue'
 import { makeProps } from '../make-props'
 
-import KtButton from './KtButton.vue'
 import ActionsItem from './components/ActionsItem.vue'
 import { useActionsTippy } from './hooks/use-actions-tippy'
 import { KottiSplitButton } from './types'

@@ -2,18 +2,14 @@
 	<KottiReadMe />
 </template>
 
-<script>
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+<script lang="ts">
+import { defineComponent } from 'vue'
 import KottiReadMe from '../../../../README.md'
 
-export default {
+export default defineComponent({
 	name: 'IndexPage',
-	layout: 'fullpage',
 	components: {
 		KottiReadMe,
 	},
-	data() {
-		return {}
-	},
-}
+})
 </script>

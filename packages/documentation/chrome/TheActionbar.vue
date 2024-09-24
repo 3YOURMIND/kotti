@@ -1,28 +1,33 @@
 <template>
 	<KtActionbar :headerTitle="subsection.title">
 		<template #actionbar-body>
-			<div class="kt-actionbar-menu has-icon-right">
-				<ul>
-					<a
-						v-for="(page, index) in subsection.pages"
-						:key="index"
-						:to="`/${subsection.path}/${page.path}`"
+			<ul class="kt-actionbar-nav has-icon-right">
+				<a
+					v-for="(page, index) in subsection.pages"
+					:key="index"
+					:href="`/${subsection.path}/${page.path}`"
+				>
+					<li
+						:class="{
+							'kt-actionbar-nav__item': true,
+							'kt-actionbar-nav__item--is-active': isActive(
+								`/${subsection.path}/${page.path}`,
+							),
+						}"
 					>
-						<li>
-							<span v-text="page.label" />
-							<span
-								v-for="(tag, tagIndex) in page.tags"
-								:key="tagIndex"
-								class="tag"
-								:class="`tag--is-${tag}`"
-								:title="tagTitles[tag]"
-								v-text="tag"
-							/>
-							<i class="yoco">chevron_right</i>
-						</li>
-					</a>
-				</ul>
-			</div>
+						<span v-text="page.label" />
+						<span
+							v-for="(tag, tagIndex) in page.tags"
+							:key="tagIndex"
+							class="tag"
+							:class="`tag--is-${tag}`"
+							:title="tagTitles[tag]"
+							v-text="tag"
+						/>
+						<i class="yoco">chevron_right</i>
+					</li>
+				</a>
+			</ul>
 		</template>
 	</KtActionbar>
 </template>
@@ -30,10 +35,10 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { KtActionbar } from '@3yourmind/kotti-ui'
+import { usePageContext } from 'vike-vue/usePageContext'
 
 import type { Section, Subsection } from '../data/menu'
 import { menu, Tag } from '../data/menu'
-// import { useRoute } from '../hooks/use-route'
 
 const tagTitles: Record<Tag, string> = {
 	[Tag.CSS]: 'Not a component, just CSS',
@@ -45,14 +50,14 @@ const tagTitles: Record<Tag, string> = {
 }
 
 export default defineComponent({
-	name: 'ActionBar',
-	components: { KtActionbar },
+	name: 'TheActionbar',
+	components: {
+		KtActionbar,
+	},
 	setup() {
-		// const route = useRoute()
+		const pageContext = usePageContext()
 
-		const path = computed(
-			() => '/usage/components/button' /*route.value.path */,
-		)
+		const path = computed(() => pageContext.urlPathname)
 
 		const subsection = computed((): Subsection => {
 			const match = menu
@@ -72,6 +77,12 @@ export default defineComponent({
 		})
 
 		return {
+			isActive: (path: string) => {
+				const { urlPathname } = pageContext
+				return path === '/'
+					? urlPathname === path
+					: urlPathname.startsWith(path)
+			},
 			subsection,
 			tagTitles,
 		}
@@ -79,33 +90,18 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-.kt-actionbar-menu {
-	.kt-actionbar-nav__item {
-		padding: var(--unit-2) 0;
-		font-size: 0.75rem;
-		color: $darkgray-500;
-		list-style: none;
-	}
-
-	a {
-		text-decoration: none;
-	}
+<style lang="scss" scoped>
+.kt-actionbar-nav__item {
+	display: flex;
+	align-items: center;
 
 	i {
-		color: $lightgray-500;
+		color: var(--text-01);
 	}
 }
-</style>
 
-<style lang="scss" scoped>
-.nuxt-link-exact-active li {
-	font-weight: 600;
-	color: #2c66c4;
-
-	i {
-		color: #2c66c4;
-	}
+.has-icon-right i {
+	margin-left: auto;
 }
 
 .tag {

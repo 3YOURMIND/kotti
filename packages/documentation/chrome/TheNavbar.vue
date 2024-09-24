@@ -1,9 +1,9 @@
 <template>
-	<!-- @logoClick="$router.push('/')" -->
 	<KtNavbar
 		v-bind="{ isNarrow, sections, quickLinks }"
 		:logoUrl="navLogo"
 		@setIsNarrow="setIsNarrow"
+		@logoClick="onLogoClick"
 	>
 		<template #navbar-footer>
 			<a class="github-link" href="https://github.com/3YOURMIND/kotti">
@@ -17,10 +17,10 @@
 import type { Kotti } from '@3yourmind/kotti-ui'
 import { KtNavbar } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from 'vue'
+import { usePageContext } from 'vike-vue/usePageContext'
 
 import navLogo from '../assets/logo.svg'
 import { menu } from '../data/menu'
-// import { useRoute } from '../hooks/use-route'
 
 const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
 
@@ -38,12 +38,12 @@ const saveSavedFieldsToLocalStorage = (isNarrow: boolean) => {
 }
 
 export default defineComponent({
-	name: 'NavBar',
+	name: 'TheNavbar',
 	components: {
 		KtNavbar,
 	},
 	setup() {
-		// const route = useRoute()
+		const pageContext = usePageContext()
 
 		const isNarrow = ref<boolean>(
 			(() => {
@@ -65,6 +65,9 @@ export default defineComponent({
 		return {
 			isNarrow,
 			navLogo,
+			onLogoClick: () => {
+				window.location.href = '/'
+			},
 			quickLinks: [
 				{
 					title: 'Create New Issue',
@@ -88,14 +91,14 @@ export default defineComponent({
 					(section): Kotti.Navbar.Section => ({
 						links: section.subsections.map(
 							(subsection): Kotti.Navbar.SectionLink => ({
-								component: 'nuxt-link',
+								component: 'a',
 								icon: subsection.icon,
-								isActive: false,
-								// isActive: subsection.path === ''
-								// 	? route.value.path === '/'
-								// 	: route.value.path.startsWith(`/${subsection.path}`),
+								isActive:
+									subsection.path === ''
+										? pageContext.urlPathname === '/'
+										: pageContext.urlPathname.startsWith(`/${subsection.path}`),
 								props: {
-									to: [`/${subsection.path}`, subsection.pages[0]?.path]
+									href: [`/${subsection.path}`, subsection.pages[0]?.path]
 										.filter(Boolean)
 										.join('/'),
 								},

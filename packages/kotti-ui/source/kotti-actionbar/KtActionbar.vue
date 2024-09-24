@@ -6,7 +6,7 @@
 				<slot name="actionbar-header" />
 			</div>
 			<div class="kt-actionbar-body">
-				<div class="kt-actionbar-nav" v-if="menu.length > 0">
+				<ul class="kt-actionbar-nav" v-if="menu.length > 0">
 					<component
 						:is="item.component"
 						v-for="(item, index) in parsedMenu"
@@ -23,7 +23,7 @@
 							<span class="kt-actionbar-nav__label" v-text="item.label" />
 						</li>
 					</component>
-				</div>
+				</ul>
 				<slot name="actionbar-body" />
 			</div>
 			<div class="kt-actionbar-footer">

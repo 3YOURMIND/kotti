@@ -13,7 +13,7 @@
 				/>
 			</div>
 		</div>
-		<KtForm v-model="settings" size="small">
+		<KtForm v-model:value="settings" size="small">
 			<div class="wrapper">
 				<div>
 					<h4>Settings</h4>
@@ -108,9 +108,9 @@ import dayjs from 'dayjs'
 import { computed, defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
 import { TimeConversion } from '@metatypes/units'
 
-import ComponentInfo from '~/components/ComponentInfo.vue'
+import ComponentInfo from '../../../../components/component-info/ComponentInfo.vue'
 
-export function useRequestAnimationFrame(callback: () => void): {
+function useRequestAnimationFrame(callback: () => void): {
 	start: () => void
 	stop: () => void
 } {
@@ -293,4 +293,4 @@ export default defineComponent({
 })
 </script>
 
-<style src="../../../styles/form-fields.scss" lang="scss" scoped />
+<style src="../../../../styles/form-fields.scss" lang="scss" scoped />

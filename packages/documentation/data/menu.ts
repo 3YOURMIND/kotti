@@ -152,9 +152,9 @@ export const menu: Array<Section> = [
 				title: 'Components',
 				path: 'usage/components',
 				pages: [
-					makeComponentMenuItem(KtAccordion),
-					makeComponentMenuItem(KtAvatar),
-					makeComponentMenuItem(KtBanner),
+					// makeComponentMenuItem(KtAccordion),
+					// makeComponentMenuItem(KtAvatar),
+					// makeComponentMenuItem(KtBanner),
 					makeComponentMenuItem(KtButton),
 					makeComponentMenuItem(KtBreadcrumb),
 					makeComponentMenuItem(KtCard),
