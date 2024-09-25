@@ -37,8 +37,8 @@ import { computed, defineComponent } from 'vue'
 import { KtActionbar } from '@3yourmind/kotti-ui'
 import { usePageContext } from 'vike-vue/usePageContext'
 
-import type { Section, Subsection } from '../data/menu'
-import { menu, Tag } from '../data/menu'
+import type { Section, Subsection } from '~/data/menu'
+import { menu, Tag } from '~/data/menu'
 
 const tagTitles: Record<Tag, string> = {
 	[Tag.CSS]: 'Not a component, just CSS',

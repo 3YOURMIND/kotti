@@ -11,7 +11,7 @@
 import { KtI18nContext } from '@3yourmind/kotti-ui'
 import { defineComponent, onMounted, ref } from 'vue'
 
-import TheNavbar from '../chrome/TheNavbar.vue'
+import TheNavbar from '~/chrome/TheNavbar.vue'
 
 export default defineComponent({
 	name: 'TheGlobalLayout',

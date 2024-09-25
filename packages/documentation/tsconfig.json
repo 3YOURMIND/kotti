@@ -11,6 +11,9 @@
 		"module": "ESNext",
 		"noEmit": true,
 		"moduleResolution": "Bundler",
+		"paths": {
+			"~/*": ["./*"]
+		},
 		"target": "ES2022",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"types": ["vite/client"],

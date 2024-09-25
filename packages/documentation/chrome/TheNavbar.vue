@@ -19,8 +19,8 @@ import { KtNavbar } from '@3yourmind/kotti-ui'
 import { computed, defineComponent, ref } from 'vue'
 import { usePageContext } from 'vike-vue/usePageContext'
 
-import navLogo from '../assets/logo.svg'
-import { menu } from '../data/menu'
+import navLogo from '~/assets/logo.svg'
+import { menu } from '~/data/menu'
 
 const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
 

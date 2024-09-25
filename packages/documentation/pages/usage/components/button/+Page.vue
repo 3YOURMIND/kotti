@@ -13,7 +13,7 @@
 			self-explanatory and short.
 		</p>
 
-		<!-- <img alt="Button labels" src="~/assets/img/button_label.png" /> -->
+		<img alt="Button labels" src="/assets/img/button_label.png" />
 
 		<p>
 			<code>Yes/No</code> buttons are not self-explanatory, the user needs to
@@ -467,7 +467,7 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from 'vue'
 
-import ComponentInfo from '../../../../components/component-info/ComponentInfo.vue'
+import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsButton',
@@ -568,4 +568,4 @@ export default defineComponent({
 })
 </script>
 
-<!-- <style src="../../../styles/form-fields.scss" lang="scss" scoped /> -->
+<!-- <style src="~/styles/form-fields.scss" lang="scss" scoped /> -->

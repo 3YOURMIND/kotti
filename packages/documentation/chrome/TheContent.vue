@@ -1,9 +1,6 @@
 <template>
 	<div id="page-container">
-		<div
-			id="page-content"
-			style="padding: 20px; padding-bottom: 50px; min-height: 100vh"
-		>
+		<div id="page-content">
 			<slot />
 		</div>
 	</div>
@@ -28,10 +25,17 @@ body.page-is-transitioning #page-content {
 }
 </style>
 
-<style scoped>
+<style>
 /* Page Transition Animation */
 #page-content {
+	max-width: 40rem;
+	margin: 0 auto;
+	width: 100%;
 	opacity: 1;
 	transition: opacity 0.3s ease-in-out;
+}
+
+#page-content img {
+	max-width: 100%;
 }
 </style>

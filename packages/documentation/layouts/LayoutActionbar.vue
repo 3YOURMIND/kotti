@@ -1,6 +1,6 @@
 <template>
 	<TheActionbar />
-	<div class="content">
+	<div class="workspace">
 		<TheContent> <slot /></TheContent>
 	</div>
 </template>
@@ -8,8 +8,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import TheActionbar from '../chrome/TheActionbar.vue'
-import TheContent from '../chrome/TheContent.vue'
+import TheActionbar from '~/chrome/TheActionbar.vue'
+import TheContent from '~/chrome/TheContent.vue'
 
 export default defineComponent({
 	name: 'LayoutDefault',
@@ -21,10 +21,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.content {
+/* .content {
 	padding: 20px;
 	padding-bottom: 50px;
 	min-height: 100vh;
 	flex-grow: 1;
-}
+} */
 </style>
