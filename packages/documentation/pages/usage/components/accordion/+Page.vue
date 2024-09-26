@@ -20,7 +20,7 @@
 				nisl.
 			</KtAccordion>
 		`'
-		language="vue"
+		language="vue-html"
 	>
 		<template #example>
 			<KtAccordion
@@ -59,7 +59,7 @@
 				nisl.
 			</KtAccordion>
 		`'
-		language="vue"
+		language="vue-html"
 	>
 		<template #example>
 			<KtAccordion
@@ -99,7 +99,7 @@
 				@click="() => (isClosed = !isClosed)"
 			/>
 		`'
-		language="vue"
+		language="vue-html"
 	>
 		<template #example>
 			<KtAccordion
