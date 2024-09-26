@@ -1,56 +1,104 @@
 <template>
-	<div class="code-preview">
-		<div
-			class="code-preview__switcher"
-			@click="showCode = !showCode"
-			v-text="switcherLabel"
-		/>
-		<slot v-if="showCode" name="vue" />
-		<slot v-else name="style" />
+	<div :class="$style.wrapper">
+		<section :class="$style.example">
+			<slot name="example" />
+		</section>
+		<div :class="$style.actions">
+			<div :class="$style.language" v-text="language" />
+
+			<div :class="$style.copyButton" role="button" @click="onCopy">
+				<i class="yoco">copy</i>
+			</div>
+		</div>
+		<div :class="$style.code" v-html="codeHtml" />
 	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import copy from 'copy-to-clipboard'
+import dedent from 'dedent'
+import { codeToHtml } from 'shiki'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
 	name: 'CodePreview',
 	props: {
-		vueSlotLabel: { default: 'Kotti-UI', type: String },
-		styleSlotLabel: { default: 'Kotti-Style', type: String },
+		code: { required: true, type: String },
+		language: { required: true, type: String },
 	},
 	setup(props) {
-		const showCode = ref(true)
+		const codeHtml = ref<string | null>(null)
+
+		watch(
+			() => props.code,
+			async (code) => {
+				codeHtml.value = await codeToHtml(dedent(code), {
+					lang: props.language,
+					theme: 'vitesse-light',
+				})
+			},
+			{ immediate: true },
+		)
 
 		return {
-			showCode,
-			switcherLabel: computed<string>(() =>
-				showCode.value ? props.vueSlotLabel : props.styleSlotLabel,
-			),
+			codeHtml,
+			onCopy: () => {
+				copy(props.code)
+			},
 		}
 	},
 })
 </script>
 
-<style lang="scss" scoped>
-.code-preview {
-	position: relative;
-	display: inline-block;
-	width: 100%;
-	padding-top: var(--unit-2);
+<style module>
+.wrapper {
+	border-radius: var(--border-radius);
+	border: 1px solid var(--gray-20);
+	overflow: hidden;
+}
 
-	&__switcher {
-		width: fit-content;
-		padding: var(--unit-1) var(--unit-2);
-		margin-bottom: var(--unit-3);
-		font-size: 12px;
-		color: var(--white);
-		background: rgb(0 0 0 / 40%);
+.actions,
+.code > * {
+	padding: var(--unit-3) var(--unit-6);
+}
 
-		&:hover {
-			cursor: pointer;
-			background: rgb(44 100 204 / 60%);
-		}
+.actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	border: 1px solid transparent;
+	border-top-color: var(--gray-20);
+	border-bottom-color: var(--gray-20);
+
+	background-color: var(--gray-10);
+}
+
+.code {
+	> * {
+		background-color: var(--gray-10) !important;
+		margin: 0;
 	}
+}
+
+.copyButton {
+	display: flex;
+	padding: var(--unit-2);
+	margin: calc(-1 * var(--unit-2));
+	font-size: 1.2rem;
+	cursor: pointer;
+
+	&:hover {
+		color: var(--interactive-01);
+	}
+}
+
+.example {
+	padding: var(--unit-6);
+}
+
+.language {
+	font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+		'Courier New', monospace;
 }
 </style>

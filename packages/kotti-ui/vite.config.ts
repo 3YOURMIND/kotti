@@ -85,6 +85,11 @@ export default defineConfig(({ mode }) => {
 			postcss: {
 				plugins: [PresetEnv() as any],
 			},
+			preprocessorOptions: {
+				scss: {
+					api: 'modern-compiler',
+				},
+			},
 		},
 		plugins: getPlugins({ enableVisualizer }),
 		test: {

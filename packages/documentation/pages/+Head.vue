@@ -1,17 +1,17 @@
 <template>
-	<link rel="icon" :href="logoUrl" />
+	<link rel="icon" :href="iconUrl" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import logoUrl from '~/assets/logo.svg'
+import iconUrl from '~/assets/icon.svg'
 
 export default defineComponent({
 	name: 'TheHead',
 	setup() {
 		return {
-			logoUrl,
+			iconUrl,
 		}
 	},
 })
