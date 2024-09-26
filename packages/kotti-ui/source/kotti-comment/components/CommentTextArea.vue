@@ -65,9 +65,13 @@ import { makeProps } from '../../make-props'
 import { blurElement, isOrContainsEventTarget } from '../../utilities'
 import { useResizeTextarea } from '../hooks'
 import { KottiComment } from '../types'
+import KtButton from '../../kotti-button/KtButton.vue'
 
 export default defineComponent({
 	name: 'CommentTextArea',
+	components: {
+		KtButton,
+	},
 	props: makeProps(KottiComment.TextArea.schema),
 	emits: ['cancel', 'confirm', 'update:value', 'toggleInternal'],
 	setup(props, { emit }) {

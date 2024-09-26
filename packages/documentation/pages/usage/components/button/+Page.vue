@@ -13,7 +13,7 @@
 			self-explanatory and short.
 		</p>
 
-		<img alt="Button labels" src="/assets/img/button_label.png" />
+		<img alt="Button labels" src="./button_label.png" />
 
 		<p>
 			<code>Yes/No</code> buttons are not self-explanatory, the user needs to

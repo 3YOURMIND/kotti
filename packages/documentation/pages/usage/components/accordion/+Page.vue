@@ -46,7 +46,7 @@
 	<MarkdownBlock>
 		## Using icons We can use `yoco` icons as well:
 
-		```html
+		```vue
 		<KtAccordion
 			icon="edit"
 			:isClosed="isSecondAccordionClosed"
@@ -89,7 +89,7 @@
 		## Since the component is fully controlled, custom open/close logic can be
 		easily set up.
 
-		```html
+		```vue
 		<KtButton
 			label="Toggle Accordion"
 			@click="() => (isThirdAccordionClosed = !isThirdAccordionClosed)"

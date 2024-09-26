@@ -39,6 +39,7 @@ import { defineComponent, ref } from 'vue'
 
 import { makeProps } from '../../make-props'
 import { KottiComment } from '../types'
+import KtAvatar from '../../kotti-avatar/KtAvatar.vue'
 
 import CommentActions from './CommentActions.vue'
 import CommentHeader from './CommentHeader.vue'
@@ -50,6 +51,7 @@ export default defineComponent({
 		CommentActions,
 		CommentHeader,
 		CommentInlineEdit,
+		KtAvatar,
 	},
 	props: makeProps(KottiComment.Entry.schema),
 	emits: ['delete', 'edit', 'reply'],
