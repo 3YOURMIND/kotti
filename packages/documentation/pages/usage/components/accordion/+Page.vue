@@ -3,18 +3,11 @@
 
 	<h2>Basic Usage</h2>
 
-	<i>
-		An animated accordion for hiding content on click. The accordion is fully
-		controlled.
-	</i>
-	<br />
-	<br />
 	<!-- prettier-ignore -->
 	<CodePreview
 		:code='`
 			<KtAccordion
-				:isClosed="isFirstAccordionClosed"
-				@update:isClosed="(newVal) => (isFirstAccordionClosed = newVal)"
+				v-model:isClosed="isClosed"
 				title="Accordion"
 			>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
@@ -31,8 +24,7 @@
 	>
 		<template #example>
 			<KtAccordion
-				:isClosed="isFirstAccordionClosed"
-				@update:isClosed="(newVal) => (isFirstAccordionClosed = newVal)"
+				v-model:isClosed="isFirstAccordionClosed"
 				title="Accordion"
 			>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
@@ -47,15 +39,14 @@
 		</template>
 	</CodePreview>
 
-	<h2>Using icons We can use `yoco` icons as well:</h2>
+	<h2>With Icon</h2>
 
 	<!-- prettier-ignore -->
 	<CodePreview
 		:code='`
 			<KtAccordion
+				v-model:isClosed="isClosed"
 				icon="edit"
-				:isClosed="isSecondAccordionClosed"
-				@update:isClosed="(newVal) => (isSecondAccordionClosed = newVal)"
 				title="Accordion with icon"
 			>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
@@ -72,9 +63,8 @@
 	>
 		<template #example>
 			<KtAccordion
+				v-model:isClosed="isSecondAccordionClosed"
 				icon="edit"
-				:isClosed="isSecondAccordionClosed"
-				@update:isClosed="(newVal) => (isSecondAccordionClosed = newVal)"
 				title="Accordion with icon"
 			>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
@@ -89,49 +79,48 @@
 		</template>
 	</CodePreview>
 
+	<h2>As Controlled Component</h2>
+
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-		## Since the component is fully controlled, custom open/close logic can be
-		easily set up.
-
-		```vue
-		<KtButton
-			label="Toggle Accordion"
-			@click="() => (isThirdAccordionClosed = !isThirdAccordionClosed)"
-		/>
-		<KtAccordion :isClosed="isThirdAccordionClosed" title="Openable block :)">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-			purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-			nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-			leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-			lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-			dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-			iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-			nisl.
-		</KtAccordion>
-		```
-	</MarkdownBlock>
-
-	<div class="element-example">
-		<KtButton
-			label="Toggle Accordion"
-			@click="() => (isThirdAccordionClosed = !isThirdAccordionClosed)"
-		/>
-		<KtAccordion
-			dataTest="documentation-accordion-remote"
-			:isClosed="isThirdAccordionClosed"
-			title="Openable block :)"
-		>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-			purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-			nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-			leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-			lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-			dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-			iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-			nisl.
-		</KtAccordion>
-	</div>
+	<CodePreview
+		:code='`
+			<KtAccordion v-model:isClosed="isClosed" title="Openable block :)">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
+				purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
+				nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
+				leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
+				lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
+				dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
+				iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
+				nisl.
+			</KtAccordion>
+			<KtButton
+				label="Toggle Accordion"
+				@click="() => (isClosed = !isClosed)"
+			/>
+		`'
+		language="vue"
+	>
+		<template #example>
+			<KtAccordion
+				v-model:isClosed="isThirdAccordionClosed"
+				title="Openable block :)"
+			>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
+				purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
+				nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
+				leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
+				lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
+				dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
+				iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
+				nisl.
+			</KtAccordion>
+			<KtButton
+				label="Toggle Accordion"
+				@click="() => (isThirdAccordionClosed = !isThirdAccordionClosed)"
+			/>
+		</template>
+	</CodePreview>
 </template>
 
 <script lang="ts">

@@ -55,6 +55,8 @@ export default defineComponent({
 	border-radius: var(--border-radius);
 	border: 1px solid var(--gray-20);
 	overflow: hidden;
+
+	margin-bottom: var(--unit-8);
 }
 
 .actions,
