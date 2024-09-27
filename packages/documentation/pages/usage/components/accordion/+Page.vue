@@ -22,21 +22,19 @@
 		`'
 		language="vue-html"
 	>
-		<template #example>
-			<KtAccordion
-				v-model:isClosed="isFirstAccordionClosed"
-				title="Accordion"
-			>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-				purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-				nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-				leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-				lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-				dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-				iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-				nisl.
-			</KtAccordion>
-		</template>
+		<KtAccordion
+			v-model:isClosed="isFirstAccordionClosed"
+			title="Accordion"
+		>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
+			purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
+			nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
+			leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
+			lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
+			dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
+			iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
+			nisl.
+		</KtAccordion>
 	</CodePreview>
 
 	<h2>With Icon</h2>
@@ -61,22 +59,20 @@
 		`'
 		language="vue-html"
 	>
-		<template #example>
-			<KtAccordion
-				v-model:isClosed="isSecondAccordionClosed"
-				icon="edit"
-				title="Accordion with icon"
-			>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-				purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-				nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-				leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-				lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-				dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-				iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-				nisl.
-			</KtAccordion>
-		</template>
+		<KtAccordion
+			v-model:isClosed="isSecondAccordionClosed"
+			icon="edit"
+			title="Accordion with icon"
+		>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
+			purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
+			nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
+			leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
+			lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
+			dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
+			iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
+			nisl.
+		</KtAccordion>
 	</CodePreview>
 
 	<h2>As Controlled Component</h2>
@@ -101,25 +97,23 @@
 		`'
 		language="vue-html"
 	>
-		<template #example>
-			<KtAccordion
-				v-model:isClosed="isThirdAccordionClosed"
-				title="Openable block :)"
-			>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-				purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-				nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-				leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-				lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-				dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-				iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-				nisl.
-			</KtAccordion>
-			<KtButton
-				label="Toggle Accordion"
-				@click="() => (isThirdAccordionClosed = !isThirdAccordionClosed)"
-			/>
-		</template>
+		<KtAccordion
+			v-model:isClosed="isThirdAccordionClosed"
+			title="Openable block :)"
+		>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
+			purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
+			nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
+			leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
+			lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
+			dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
+			iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
+			nisl.
+		</KtAccordion>
+		<KtButton
+			label="Toggle Accordion"
+			@click="() => (isThirdAccordionClosed = !isThirdAccordionClosed)"
+		/>
 	</CodePreview>
 </template>
 

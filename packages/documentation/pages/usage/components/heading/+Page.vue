@@ -104,6 +104,7 @@ export default defineComponent({
 	name: 'DocumentationPageUsageComponentsHeadings',
 	components: {
 		ComponentInfo,
+		KtHeading,
 	},
 	setup() {
 		return {

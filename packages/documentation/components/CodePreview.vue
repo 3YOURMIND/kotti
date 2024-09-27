@@ -1,16 +1,16 @@
 <template>
 	<div :class="$style.wrapper">
 		<section :class="$style.example">
-			<slot name="example" />
+			<slot />
 		</section>
-		<div :class="$style.actions">
+		<div v-if="code" :class="$style.actions">
 			<div :class="$style.language" v-text="language" />
 
 			<div :class="$style.copyButton" role="button" @click="onCopy">
 				<i class="yoco">copy</i>
 			</div>
 		</div>
-		<div :class="$style.code" v-html="codeHtml" />
+		<div v-if="code" :class="$style.code" v-html="codeHtml" />
 	</div>
 </template>
 
@@ -23,7 +23,7 @@ import { defineComponent, ref, watch } from 'vue'
 export default defineComponent({
 	name: 'CodePreview',
 	props: {
-		code: { required: true, type: String },
+		code: { default: null, type: String },
 		language: { required: true, type: String },
 	},
 	setup(props) {
@@ -32,6 +32,7 @@ export default defineComponent({
 		watch(
 			() => props.code,
 			async (code) => {
+				if (code === null) return
 				codeHtml.value = await codeToHtml(dedent(code), {
 					lang: props.language,
 					theme: 'vitesse-light',

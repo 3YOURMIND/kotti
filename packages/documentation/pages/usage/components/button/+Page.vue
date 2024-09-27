@@ -24,23 +24,26 @@
 
 		<h2>Types</h2>
 
-		<div class="element-example white">
-			<KtButton class="mt-4 mr-4" type="primary" @click="alert('primary')"
+		<CodePreview language="vue-html">
+			<KtButton class="mt-4 mb-4 mr-4" type="primary" @click="alert('primary')"
 				>Primary Button</KtButton
 			>
-			<KtButton class="mt-4 mr-4" type="secondary" @click="alert('secondary')"
+			<KtButton
+				class="mt-4 mb-4 mr-4"
+				type="secondary"
+				@click="alert('secondary')"
 				>Secondary Button</KtButton
 			>
-			<KtButton class="mt-4 mr-4" type="danger" @click="alert('danger')"
+			<KtButton class="mt-4 mb-4 mr-4" type="danger" @click="alert('danger')"
 				>Danger Button</KtButton
 			>
-			<KtButton class="mt-4 mr-4" @click="alert('default')"
+			<KtButton class="mt-4 mb-4 mr-4" @click="alert('default')"
 				>Default Button</KtButton
 			>
-			<KtButton class="mt-4 mr-4" type="text" @click="alert('text')"
+			<KtButton class="mt-4 mb-4" type="text" @click="alert('text')"
 				>Text Button</KtButton
 			>
-		</div>
+		</CodePreview>
 
 		<h4>Primary button</h4>
 
@@ -81,9 +84,14 @@
 
 		<h2>Label</h2>
 
-		<div class="element-example">
+		<!-- prettier-ignore -->
+		<CodePreview :code='`
+		<KtButton icon="edit" label="Edit Button" type="primary" />
+		<!-- is equivalent to -->
+		<KtButton icon="edit" type="primary">Edit Button</KtButton>
+		`' language="vue-html">
 			<KtButton icon="edit" label="Edit Button" type="primary" />
-		</div>
+		</CodePreview>
 
 		<p>
 			Instead of using the default slot, you can also provide text via the
@@ -91,23 +99,28 @@
 			<code>v-t</code> are <strong>NOT SUPPORTED</strong>.
 		</p>
 
-		<pre><code data-lang="html">
-&lt;KtButton type=&quot;primary&quot; icon=&quot;edit&quot; label=&quot;Edit Button&quot; /&gt;
-        </code></pre>
-
 		<h2>Icon</h2>
 
-		<div class="element-example">
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
 			<KtButton class="mr-4" type="primary">Edit button</KtButton>
 			<KtButton class="mr-4" icon="edit" label="Edit Button" type="primary" />
-			<KtButton
-				icon="edit"
-				iconPosition="right"
-				label="Right Icon Button"
-				type="primary"
-			/>
+			<KtButton icon="edit" iconPosition="right" label="Icon To The Right" type="primary" />
 			<KtButton helpText="This is an icon button" icon="edit" type="primary" />
-		</div>
+			`'
+			language="vue-html"
+		>
+    		<KtButton class="mr-4" type="primary">Edit button</KtButton>
+    		<KtButton class="mr-4" icon="edit" label="Edit Button" type="primary" />
+    		<KtButton
+          		icon="edit"
+          		iconPosition="right"
+          		label="Icon To The Right"
+          		type="primary"
+    		/>
+    		<KtButton helpText="This is an icon button" icon="edit" type="primary" />
+		</CodePreview>
 
 		<ul>
 			<li><strong>Label only:</strong> Used in most cases.</li>
@@ -130,13 +143,6 @@
 			</li>
 		</ul>
 
-		<pre><code data-lang="html">
-&lt;KtButton type=&quot;primary&quot;&gt;Edit button&lt;/KtButton&gt;
-&lt;KtButton type=&quot;primary&quot; icon=&quot;edit&quot; label=&quot;Edit Button&quot; /&gt;
-&lt;KtButton type=&quot;primary&quot; icon=&quot;edit&quot; helpText=&quot;This is an icon button&quot; /&gt;
-&lt;KtButton type=&quot;primary&quot; icon=&quot;edit&quot; label=&quot;Right Icon Button&quot; iconPosition=&quot;right&quot; /&gt;
-        </code></pre>
-
 		<h2><code>toggleStatus</code></h2>
 
 		<ul>
@@ -150,7 +156,7 @@
 			</li>
 		</ul>
 
-		<div class="element-example white">
+		<CodePreview language="vue-html">
 			<KtButton
 				class="mr-4"
 				:icon="toggleDefaultIcon"
@@ -167,7 +173,7 @@
 				type="text"
 				@update:toggleStatus="(event) => onToggleTextClick(event)"
 			/>
-		</div>
+		</CodePreview>
 
 		<h2><code>isMultiline</code>/<code>isBlock</code></h2>
 
@@ -176,33 +182,47 @@
 			<code>isBlock</code> properties.
 		</p>
 
-		<pre><code data-lang="html">
-&lt;KtButton&gt;Purchase&lt;/KtButton&gt;
-&lt;KtButton isMultiline&gt;Purchase this product without the 5 year garantee and proceed with the 2 year only garantee&lt;/KtButton&gt;
-        </code></pre>
-
-		<div class="element-example">
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
 			<div style="width: 200px">
 				<KtButton block type="primary">Purchase</KtButton><br />
-				<KtButton icon="save" isBlock isMultiline
-					>Purchase this product without the 5 year garantee</KtButton
-				><br />
-				<KtButton isBlock isMultiline
-					>Purchase this product without the 5 year garantee and proceed with
-					the 2 year only garantee</KtButton
-				>
+				<KtButton icon="save" isBlock isMultiline>
+					Purchase this product without the 5 year garantee
+				</KtButton>
+				<KtButton isBlock isMultiline>
+					Purchase this product without the 5 year garantee and proceed with the
+					2 year only garantee
+				</KtButton>
 			</div>
-			<br />
-			<br />
 			<KtButton isMultiline
-				>Multiline works on one line if the parent does not constraint the
-				width</KtButton
-			><br />
-			<KtButton isMultiline
-				>(But the height is less reliable as it uses
-				<code>line-height</code>)</KtButton
-			>
-		</div>
+				>Multiline works on one line if the parent does not constraint the width
+			</KtButton>
+			<KtButton isMultiline>
+				(But the height is less reliable as it uses
+				<code>line-height</code>)
+			</KtButton>
+			`'
+			language="vue-html"
+		>
+    		<div style="width: 200px">
+    			<KtButton block type="primary">Purchase</KtButton><br />
+    			<KtButton icon="save" isBlock isMultiline>
+    				Purchase this product without the 5 year garantee
+    			</KtButton>
+    			<KtButton isBlock isMultiline>
+    				Purchase this product without the 5 year garantee and proceed with the
+    				2 year only garantee
+    			</KtButton>
+    		</div>
+    		<KtButton isMultiline>
+    		  Multiline works on one line if the parent does not constraint the width
+    		</KtButton>
+    		<KtButton isMultiline>
+    			(But the height is less reliable as it uses
+    			<code>line-height</code>)
+    		</KtButton>
+		</CodePreview>
 
 		<h2>Loading</h2>
 
@@ -214,8 +234,9 @@
 				iconPosition="right"
 				isLoading
 				type="primary"
-				>Loading button</KtButton
 			>
+				Loading button
+			</KtButton>
 			<KtButton class="mr-16px" isLoading type="secondary">Loading</KtButton>
 			<KtButton class="mr-16px" isLoading type="danger">Loading</KtButton>
 		</div>
@@ -467,11 +488,13 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from 'vue'
 
+import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsButton',
 	components: {
+		CodePreview,
 		ComponentInfo,
 		KtButton,
 		KtButtonGroup,

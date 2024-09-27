@@ -14,38 +14,55 @@
     1. **Glyph icon:** Indicates the type of this banner.
     2. **Message:** Give a short description of this issue or summary of an important message.
     3. **Action:** A textual call to action button to resolve this issue.
-
-    ## Types
-
-    ### Collapsed Banner
-
-    Only use this type of banner when this issue will cause a significant error.
 	</MarkdownBlock>
 
-	<div class="element-example">
-		<KtBanner
-			message="Your material is not published yet"
-			icon="announce"
-			actionText="Publish"
-		/>
-	</div>
+	<h2>Types</h2>
+
+	<h3>Collapsed Banner</h3>
+
+	<p>
+		Only use this type of banner when this issue will cause a significant error.
+	</p>
 
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-		```vue
+	<CodePreview
+		:code='`
+      		<KtBanner
+     			message="Your material is not published yet"
+     			icon="announce"
+     			actionText="Publish"
+      		/>
+        `'
+		language="vue-html"
+	>
 		<KtBanner
 			message="Your material is not published yet"
 			icon="announce"
 			actionText="Publish"
 		/>
-		```
+	</CodePreview>
 
-		### Expand Banner It shows the most import message inside the banner but
-		hides other information. Use it when you want to create a clear,
-		non-interrupting interface.
-	</MarkdownBlock>
+	<h3>Expand Banner</h3>
 
-	<div class="element-example">
+	<p>
+		It shows the most import message inside the banner but hides other
+		information. Use it when you want to create a clear, non-interrupting
+		interface.
+	</p>
+
+	<!-- prettier-ignore -->
+	<CodePreview
+		:code='`
+			<KtBanner message="Your material is not published yet" icon="cloud">
+				<div>
+					<h2>Order #100002</h2>
+					<h3>Order information</h3>
+					.... ....
+				</div>
+			</KtBanner>
+        `'
+			language="vue-html"
+		>
 		<KtBanner message="Your material is not published yet" icon="cloud">
 			<div>
 				<h2>Order #100002</h2>
@@ -53,48 +70,39 @@
 				.... ....
 			</div>
 		</KtBanner>
-	</div>
+	</CodePreview>
+
+	<h2>Style</h2>
+
+	<h3>Background</h3>
+
+	<p>
+		You can use `banner-gray` to change the banner's background color, this
+		style is useful when you want add contrast to the page.
+	</p>
+
+	<!-- prettier-ignore -->
+	<CodePreview
+			:code='`
+			<KtBanner
+				message="Your material is not published yet"
+				icon="announce"
+				actionText="Publish"
+				isGray
+			/>
+        `'
+				language="vue-html"
+			>
+			<KtBanner
+				message="Your material is not published yet"
+				icon="announce"
+				actionText="Publish"
+				isGray
+			/>
+		</CodePreview>
 
 	<!-- prettier-ignore -->
 	<MarkdownBlock>
-		```vue
-		<KtBanner message="Your material is not published yet" icon="cloud">
-			<div>
-				<h2>Order #100002</h2>
-				<h3>Order information</h3>
-				.... ....
-			</div>
-		</KtBanner>
-		```
-
-		## Style
-
-		### Background
-
-		You can use `banner-gray` to change the banner's
-		background color, this style is useful when you want add contrast to the page.
-	</MarkdownBlock>
-
-	<div class="element-example white">
-		<KtBanner
-			message="Your material is not published yet"
-			icon="announce"
-			actionText="Publish"
-			isGray
-		/>
-	</div>
-
-	<!-- prettier-ignore -->
-	<MarkdownBlock>
-```vue
-<KtBanner
-	message="Your material is not published yet"
-	icon="announce"
-	actionText="Publish"
-	isGray
-/>
-```
-
 ## Usage
 
 ### Attributes
@@ -114,11 +122,13 @@
 import { KtBanner } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
 
+import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsBanner',
 	components: {
+		CodePreview,
 		ComponentInfo,
 		KtBanner,
 	},
