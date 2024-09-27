@@ -1,4 +1,4 @@
-import shortid from 'shortid'
+import { nanoid } from 'nanoid'
 import { KottiFileUpload } from './types'
 import { validateFile } from '../kotti-field-file-upload/validators'
 
@@ -21,7 +21,7 @@ export const buildFileInfo = ({
 	})
 
 	return {
-		id: shortid(),
+		id: nanoid(),
 		name: file.name,
 		size: file.size,
 		status:

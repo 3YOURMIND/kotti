@@ -8,7 +8,7 @@ export const KtToaster = attachMeta(makeInstallable(KtToasterVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=128%3A2082',
+		url: 'https://www.figma.com/design/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=6671-10835',
 	},
 	slots: {},
 	typeScript: null,
