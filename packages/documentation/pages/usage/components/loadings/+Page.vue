@@ -15,7 +15,15 @@
     3. **Rectangle:** Width equals to parents, height can be medium `md` or large `lg`.
     </MarkdownBlock>
 
-	<div class="element-example">
+	<!-- prettier-ignore -->
+	<CodePreview
+		:code='`
+			<div class="skeleton circle" />
+			<div class="skeleton square"/>
+			<div class="skeleton rectangle"/>
+		`'
+		language="html"
+	>
 		<div class="columns">
 			<div class="column col-2">
 				<div class="skeleton circle" />
@@ -31,43 +39,41 @@
 				<div class="skeleton rectangle md" />
 			</div>
 		</div>
-	</div>
+	</CodePreview>
+
+	<p>Rectangle skeleton with different height.</p>
 
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-    ```vue
-    <div class="skeleton circle" />
-    <div class="skeleton square"/>
-    <div class="skeleton rectangle"/>
-    ```
+	<CodePreview
+		:code='`
+			<div class="skeleton rectangle"/>
+			<div class="skeleton rectangle md"/>
+			<div class="skeleton rectangle md"/>
+			<div class="skeleton rectangle lg"/>
+		`'
+		language="html"
+	>
+		<div class="skeleton rectangle"/>
+		<div class="skeleton rectangle md"/>
+		<div class="skeleton rectangle md"/>
+		<div class="skeleton rectangle lg"/>
+	</CodePreview>
 
-    Rectangle skeleton with different height.
-        </MarkdownBlock>
+	<h2>Spin Loading</h2>
 
-	<div class="element-example col-with-row-gap">
-		<div class="skeleton rectangle" />
-		<div class="skeleton rectangle md" />
-		<div class="skeleton rectangle md" />
-		<div class="skeleton rectangle lg" />
-	</div>
+	<p>
+		Loading indicator is used for loading and updating.
+		<code>loading</code> class is regular size, <code>lg</code> is large size.
+	</p>
 
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-    ```vue
-    <div class="col-with-row-gap">
-    	<div class="skeleton rectangle"/>
-    	<div class="skeleton rectangle md"/>
-    	<div class="skeleton rectangle md"/>
-    	<div class="skeleton rectangle lg"/>
-    </div>
-    ```
-
-    ## Spin Loading
-
-    Loading indicator is used for loading and updating. `loading` class is regular size, `lg` is large size.
-        </MarkdownBlock>
-
-	<div class="element-example">
+	<CodePreview
+		:code='`
+			<div class="loading"/>
+			<div class="loading lg"/>
+		`'
+		language="html"
+	>
 		<div class="columns">
 			<div class="column col-6">
 				<div class="loading" />
@@ -76,77 +82,77 @@
 				<div class="loading lg" />
 			</div>
 		</div>
-	</div>
+	</CodePreview>
+
+	<p>
+		You can also use animated loading indicator inline <code>inline</code> with
+		other elements.
+	</p>
 
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-    ```vue
-    <div class="loading"/>
-    <div class="loading lg"/>
-    ```
+	<CodePreview
+		:code='`
+			<button>
+				<div class="loading inline"></div>
+				Uploading
+			</button>
+        `'
+		language="html"
+	>
+		<button>
+			<div class="loading inline"></div>
+			Uploading
+		</button>
+	</CodePreview>
 
-    You can also use animated loading indicator inline `inline` with other elements.
-        </MarkdownBlock>
-
-	<button>
-		<div class="loading inline"></div>
-		Uploading
-	</button>
-
-	<!-- prettier-ignore -->
-	<MarkdownBlock>
-    ```vue
-    <button>
-    	<div class="loading inline"></div>
-    		 Uploading
-    </button>
-    ```
-
-    Using `white` class can change the ring color to white.
-        </MarkdownBlock>
-
-	<button class="primary">
-		<div class="loading inline white"></div>
-		Uploading
-	</button>
+	<p>Using <code>white</code> class can change the ring color to white.</p>
 
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-    ```vue
-    <button class="primary">
-    	<div class="loading inline white"></div>
-    		Uploading
-    </button>
-    ```
+	<CodePreview
+		:code='`
+			<button>
+				<div class="loading inline white"></div>
+				Uploading
+			</button>
+        `'
+		language="html"
+	>
+		<button>
+			<div class="loading inline white"></div>
+			Uploading
+		</button>
+	</CodePreview>
 
-    Using `gray` class can change the ring color to gray.
-        </MarkdownBlock>
-
-	<button class="primary">
-		<div class="loading inline gray"></div>
-		Uploading
-	</button>
+	<p>Using <code>gray</code> class can change the ring color to gray.</p>
 
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-    ```vue
-    <button class="primary">
-    	<div class="loading inline gray"></div>
-    		Uploading
-    </button>
-    ```
-        </MarkdownBlock>
+	<CodePreview
+		:code='`
+			<button>
+				<div class="loading inline gray"></div>
+				Uploading
+			</button>
+        `'
+		language="html"
+	>
+		<button>
+			<div class="loading inline gray"></div>
+			Uploading
+		</button>
+	</CodePreview>
 </template>
 
 <script lang="ts">
 import { Kotti } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
 
+import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsLoading',
 	components: {
+		CodePreview,
 		ComponentInfo,
 	},
 	setup() {

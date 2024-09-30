@@ -1,7 +1,64 @@
 <template>
 	<div>
 		<ComponentInfo v-bind="{ component }" />
-		<div class="card-view-example">
+
+		<h2>Standard Usage</h2>
+
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+		    <KtCard imgUrl="https://picsum.photos/900/300">
+				<template #card-header>
+					<h2>Lorem Ipsum</h2>
+				</template>
+				<template #card-body>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+						consequat nisl at nisl condimentum vehicula.
+					</p>
+				</template>
+			</KtCard>
+		`'
+			language="vue-html"
+		>
+			<KtCard
+				v-bind="{ imgPosition }"
+				imgUrl="https://picsum.photos/900/300"
+			>
+				<template #card-header>
+					<h2>Lorem Ipsum</h2>
+				</template>
+				<template #card-body>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+						consequat nisl at nisl condimentum vehicula.
+					</p>
+				</template>
+			</KtCard>
+		</CodePreview>
+		<br />
+
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+		    <KtCard
+				imgUrl="https://picsum.photos/900/300"
+				primaryActionLabel="Confirm"
+				secondaryActionLabel="Cancel"
+			>
+				<template #card-header>
+					<h2>Lorem Ipsum</h2>
+				</template>
+				<template #card-body>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+						consequat nisl at nisl condimentum vehicula.
+					</p>
+				</template>
+			</KtCard>
+		`'
+			language="vue-html"
+		>
 			<KtCard
 				v-bind="{ imgPosition }"
 				imgUrl="https://picsum.photos/900/300"
@@ -18,23 +75,9 @@
 					</p>
 				</template>
 			</KtCard>
-		</div>
+		</CodePreview>
 		<br />
 
-		<div class="card-view-example-2">
-			<KtCard v-bind="{ imgPosition }" imgUrl="https://picsum.photos/900/300">
-				<template #card-header>
-					<h2>Lorem Ipsum</h2>
-				</template>
-				<template #card-body>
-					<p>
-						Moebius ring by pmaegermanis licensed under CC BY 3.0 (Creative
-						Commons https://www.thingiverse.com/thing:1649028
-					</p>
-				</template>
-			</KtCard>
-		</div>
-		<br />
 		<div class="card-view-example-skeleton">
 			<KtCard
 				v-bind="{ imgPosition }"
@@ -56,7 +99,7 @@
 			</KtCard>
 		</div>
 		<br />
-		<div class="element-example">
+		<CodePreview language="vue-html">
 			<KtCard>
 				<template #card-header>
 					<div>
@@ -78,7 +121,7 @@
 					</div>
 				</template>
 			</KtCard>
-		</div>
+		</CodePreview>
 
 		<KtRow :gap="8">
 			<KtCol :span="12">
@@ -120,11 +163,13 @@ import {
 } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
 
+import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsCards',
 	components: {
+		CodePreview,
 		ComponentInfo,
 		KtButton,
 		KtCard,

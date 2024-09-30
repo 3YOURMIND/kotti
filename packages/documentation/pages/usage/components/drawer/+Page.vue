@@ -16,13 +16,33 @@ It is best to place secondary functionality or information into the drawer, and 
 - **Background:** The background should be black `#000000` with `46%` opacity.
 
 ## Size
-</MarkdownBlock>
+There are different ways to customize the width of the drawer.
 
-	<template class="element-example">
+Each drawer has a default state and a wide state, the transition can be triggered by clicking on the arrow at the edge of the drawer.
+
+When the `isWide` flag is set to `true` the default state will be `26.8rem` wide, the expanded state will be `75%` of the screen width.
+
+You can also customize the width of drawer by setting both `defaultWidth` and `expandWidth`. If only one values is set, this will not work
+
+	</MarkdownBlock>
+
+	<CodePreview
+		:code="`
+		    <!-- default width drawer -->
+			<KtDrawer> ... </KtDrawer>
+
+			<!-- Wide width drawer -->
+				<KtDrawer isWide> ... </KtDrawer>
+
+			<!-- Customize width drawer -->
+			<KtDrawer defaultWidth=&quot;400px&quot; expandWidth=&quot;600px&quot;> ... </KtDrawer>
+		`"
+		language="vue-html"
+	>
 		<KtButton
 			type="primary"
 			class="mr-16px"
-			@click="showDrawer = true"
+			@click="showDefaultWidthDrawer = true"
 			label="Show Default Size Drawer"
 		/>
 		<KtButton
@@ -33,13 +53,12 @@ It is best to place secondary functionality or information into the drawer, and 
 		/>
 		<KtButton
 			type="primary"
-			@click="customizeWidthDrawer = true"
+			@click="showCustomWidthDrawer = true"
 			label="Customize Size Drawer"
 		/>
 		<KtDrawer
-			v-if="showDrawer"
-			@close="showDrawer = false"
-			disallowCloseOutside
+			v-if="showDefaultWidthDrawer"
+			@close="showDefaultWidthDrawer = false"
 		>
 			<template #drawer-header>
 				<h2>Default Size Drawer</h2>
@@ -49,7 +68,7 @@ It is best to place secondary functionality or information into the drawer, and 
 			</template>
 			<template #drawer-footer>
 				<KtButton
-					@click="showDrawer = false"
+					@click="showDefaultWidthDrawer = false"
 					class="w-100"
 					label="Close Drawer"
 				/>
@@ -71,10 +90,10 @@ It is best to place secondary functionality or information into the drawer, and 
 			</template>
 		</KtDrawer>
 		<KtDrawer
-			v-if="customizeWidthDrawer"
+			v-if="showCustomWidthDrawer"
 			defaultWidth="400px"
 			expandWidth="600px"
-			@close="customizeWidthDrawer = false"
+			@close="showCustomWidthDrawer = false"
 		>
 			<template #drawer-header>
 				<h2>Custom Size Drawer</h2>
@@ -84,103 +103,78 @@ It is best to place secondary functionality or information into the drawer, and 
 			</template>
 			<template #drawer-footer>
 				<KtButton
-					@click="customizeWidthDrawer = false"
+					@click="showCustomWidthDrawer = false"
 					class="w-100"
 					label="Close Drawer"
 				/>
 			</template>
 		</KtDrawer>
-	</template>
-
-	<!-- prettier-ignore -->
-	<MarkdownBlock>
-There are different ways to customize the width of the drawer.
-
-Each drawer has a default state and a wide state, the transition can be triggered by clicking on the arrow at the edge of the drawer.
-
-When the `isWide` flag is set to `true` the default state will be `26.8rem` wide, the expanded state will be `75%` of the screen width.
-
-You can also customize the width of drawer by setting both `defaultWidth` and `expandWidth`. If only one values is set, this will not work
-
-```vue
-<!-- Wide width drawer -->
-<KtDrawer isWide> ... </KtDrawer>
-
-<!-- Customize width drawer -->
-<KtDrawer defaultWidth="400px" expandWidth="600px"> ... </KtDrawer>
-```
-
-## Close from outside
-
-When the `disallowCloseOutside` flag is set, it prevents the user from accidentally closing the drawer by clicking outside of the drawer.
-</MarkdownBlock>
-
-	<CodePreview>
-		<template #vue>
-			<!-- prettier-ignore -->
-			<MarkdownBlock>
-```html
-<KtDrawer v-if="showDrawer" @close="showDrawer=false" disallowCloseOutside>
-	<div slot="drawer-header">
-		<h2>Default Size Drawer</h2>
-	</div>
-	<div slot="drawer-body">
-		<p>Close from outside disabled</p>
-	</div>
-	<div slot="drawer-footer">
-		<KtButton @click="showDrawer=false" class="w-100" label="Close Drawer" />
-	</div>
-</KtDrawer>
-```
-</MarkdownBlock>
-		</template>
-
-		<template #style>
-			<!-- prettier-ignore -->
-			<MarkdownBlock>
-```html
-<div class="drawer-mask">
-	<div class="drawer-container">
-		<div class="drawer-header">
-			<h2>default header</h2>
-		</div>
-		<div class="drawer-body">default body</div>
-		<div class="drawer-footer">
-			<KtButton class="w-100" label="Close" />
-		</div>
-		<div class="drawer-handle">
-			<i class="yoco" v-if="expand">chevron_right</i>
-			<i class="yoco" v-else>chevron_left</i>
-		</div>
-	</div>
-</div>
-
-<div class="drawer-mask">
-	<div class="drawer-container drawer-wide">
-		<div class="drawer-header"></div>
-		<div class="drawer-body"></div>
-		...
-	</div>
-</div>
-```
-</MarkdownBlock>
-		</template>
 	</CodePreview>
 
+	<h2>Close from outside</h2>
+
+	<p>
+		When the <code>disallowCloseOutside</code> flag is set, it prevents the user
+		from accidentally closing the drawer by clicking outside of the drawer.
+	</p>
+
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-## Usage
-
-### Attributes
-
-| Attribute              | Description                                | Type      | Accepted values | Default |
-| :--------------------- | :----------------------------------------- | :-------- | :-------------- | :------ |
-| `disallowCloseOutside` | closed drawer when click outside of drawer | `Boolean` | —               | `true`  |
-| `defaultWidth`         | width when drawer is closed                | `String`  | CSS width       | —       |
-| `expandWidth`          | width when drawer is expanded              | `String`  | CSS width       | —       |
-| `isWide`               | wide drawer                                | `Boolean` | —               | `false` |
-
-</MarkdownBlock>
+	<CodePreview
+		:code='`
+		<KtButton
+				type="primary"
+				class="mr-16px"
+				@click="showDrawer = true"
+				label="Show Drawer"
+			/>
+			<KtDrawer
+				v-if="showDrawer"
+				@close="showDrawer = false"
+				disallowCloseOutside
+			>
+				<template #drawer-header>
+					<h2>Default Size Drawer</h2>
+				</template>
+				<template #drawer-body>
+					<p>Close from outside disabled</p>
+				</template>
+				<template #drawer-footer>
+					<KtButton
+						@click="showDrawer = false"
+						class="w-100"
+						label="Close Drawer"
+					/>
+				</template>
+			</KtDrawer>
+		`'
+		language="vue-html"
+	>
+		<KtButton
+			type="primary"
+			class="mr-16px"
+			@click="showDrawer = true"
+			label="Show Drawer"
+		/>
+		<KtDrawer
+			v-if="showDrawer"
+			@close="showDrawer = false"
+			disallowCloseOutside
+		>
+			<template #drawer-header>
+				<h2>Default Size Drawer</h2>
+			</template>
+			<template #drawer-body>
+				<p>Close from outside disabled</p>
+			</template>
+			<template #drawer-footer>
+				<KtButton
+					@click="showDrawer = false"
+					class="w-100"
+					label="Close Drawer"
+				/>
+			</template>
+		</KtDrawer>
+	</CodePreview>
 </template>
 
 <script lang="ts">
@@ -201,7 +195,8 @@ export default defineComponent({
 	data() {
 		return {
 			component: KtDrawer,
-			customizeWidthDrawer: ref(false),
+			showCustomWidthDrawer: ref(false),
+			showDefaultWidthDrawer: ref(false),
 			showDrawer: ref(false),
 			showWideDrawer: ref(false),
 		}

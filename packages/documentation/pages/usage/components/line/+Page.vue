@@ -6,85 +6,90 @@
 		information structure.
 	</p>
 
-	<p>You can add `text` to `KtLine` to display the text in the middle.</p>
+	<p>
+		You can add <code>text</code> to <code>KtLine</code> to display the text in
+		the middle.
+	</p>
 
-	<div class="element-example white">
-		<div v-text="'Full Line'" class="line-description" />
-		<KtLine />
-		<div v-text="'Title in center position'" class="line-description" />
-		<KtLine text="Title Center" />
-		<div v-text="'Title in left position'" class="line-description" />
-		<KtLine position="left" text="Title Left" />
-		<div v-text="'Title in right position'" class="line-description" />
-		<KtLine position="right" text="Title Right" />
-		<div
-			v-text="'Interactive title in center position'"
-			class="line-description"
-		/>
+	<p>Full Line</p>
+	<CodePreview code="<KtLine />" language="vue-html">
+		<KtLine class="line-description" />
+	</CodePreview>
+
+	<p>Title in center position</p>
+	<CodePreview code='<KtLine text="Title Center" />' language="vue-html">
+		<KtLine class="line-description" text="Title Center" />
+	</CodePreview>
+
+	<p>Title in left position</p>
+	<CodePreview
+		code='<KtLine position="left" text="Title Left" />'
+		language="vue-html"
+	>
+		<KtLine class="line-description" position="left" text="Title Left" />
+	</CodePreview>
+
+	<p>Title in right position</p>
+	<CodePreview
+		code='<KtLine position="right" text="Title Right" />'
+		language="vue-html"
+	>
+		<KtLine class="line-description" position="right" text="Title Right" />
+	</CodePreview>
+
+	<p>Interactive title in center position</p>
+	<CodePreview
+		code='<KtLine isInteractive text="Action Center" @click="handleClick" />'
+		language="vue-html"
+	>
 		<KtLine
+			class="line-description"
 			isInteractive
 			text="Action Center"
 			@click="handleClick('clicked center title')"
 		/>
-		<div
-			v-text="'Interactive title in left position'"
-			class="line-description"
-		/>
+	</CodePreview>
+
+	<p>Interactive title in left position</p>
+	<CodePreview
+		code='<KtLine isInteractive text="Action Left" @click="handleClick" />'
+		language="vue-html"
+	>
 		<KtLine
+			class="line-description"
 			isInteractive
 			position="left"
 			text="Action Left"
 			@click="handleClick('clicked left title')"
 		/>
-		<div
-			v-text="'Interactive title in right position'"
-			class="line-description"
-		/>
+	</CodePreview>
+
+	<p>Interactive title in right position</p>
+	<CodePreview
+		code='<KtLine isInteractive text="Action Right" @click="handleClick" />'
+		language="vue-html"
+	>
 		<KtLine
+			class="line-description"
 			isInteractive
 			position="right"
 			text="Action Right"
 			@click="handleClick('clicked right title')"
 		/>
-	</div>
-
-	<!-- prettier-ignore -->
-	<MarkdownBlock>
-    ```vue
-    	<KtLine />
-    	<KtLine text="Title Center" />
-    	<KtLine position="left" text="Title Left" />
-    	<KtLine position="right" text="Title Right" />
-    	<KtLine
-    		isInteractive
-    		text="Action Center"
-    		@click="alert('clicked center title')"
-    	/>
-    	<KtLine
-    		isInteractive
-    		position="left"
-    		text="Action Left"
-    		@click="alert('clicked left title')"
-    	/>
-    	<KtLine
-    		isInteractive
-    		position="right"
-    		text="Action Right"
-    		@click="alert('clicked right title')"
-    	/>
-    ```
-    </MarkdownBlock>
+	</CodePreview>
 </template>
 
 <script lang="ts">
 import { KtLine } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+import CodePreview from '~/components/CodePreview.vue'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsLine',
 	components: {
+		CodePreview,
 		ComponentInfo,
 		KtLine,
 	},
@@ -102,6 +107,6 @@ export default defineComponent({
 
 <style scoped>
 .line-description {
-	margin: 1.5rem 0 0.5rem;
+	margin: 1rem 0;
 }
 </style>

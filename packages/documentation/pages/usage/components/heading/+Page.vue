@@ -1,11 +1,41 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	H3 heading supports customize actions, and also can work as section toggles.
+	<p>
+		H3 heading supports customize actions, and also can work as section toggles.
+	</p>
+
+	<h2>Standard Use</h2>
+
+	<CodePreview code='<KtHeading text="Normal Title" />' language="vue-html">
+		<KtHeading text="Normal Title" icon="calendar" actionText="Click Me" />
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor
+			commodo leo, non malesuada ipsum volutpat sed. Fusce at nulla ipsum. Morbi
+			sodales vel ipsum ullamcorper dictum.
+		</p>
+	</CodePreview>
 
 	<h2>Heading with Action</h2>
 
-	<div class="element-example">
+	<p>
+		When heading type is <code>action</code>, the heading has
+		<code>click</code> event for that action.
+	</p>
+
+	<!-- prettier-ignore -->
+	<CodePreview
+	:code='`
+	<KtHeading
+		text="Title with action"
+		type="action"
+		icon="announce"
+		actionText="Click Me"
+		@click="showAlert"
+	/>
+	`'
+	language="vue-html"
+	>
 		<KtHeading
 			text="Title with action"
 			type="action"
@@ -13,31 +43,30 @@
 			actionText="Click Me"
 			@click="showAlert"
 		/>
-		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor
-			commodo leo, non malesuada ipsum volutpat sed. Fusce at nulla ipsum. Morbi
-			sodales vel ipsum ullamcorper dictum.
-		</p>
-	</div>
+	</CodePreview>
 
-	When heading type is `action`, the heading has `click` event for that action.
+	<h2>Heading with Toggle</h2>
+	<p>
+		Set <code>type</code> to <code>toggle</code> make the heading has toggle
+		function. You can change the <code>toggleStatus</code> dynamically by
+		binding value to it.
+	</p>
 
 	<!-- prettier-ignore -->
-	<MarkdownBlock>
-```html
-<KtHeading
-	text="Title with action"
-	type="action"
-	icon="announce"
-	actionText="Click Me"
-	@click="showAlert"
-/>
-```
-
-## Heading with Toggle
-</MarkdownBlock>
-
-	<div class="element-example white">
+	<CodePreview
+		code='`
+		<KtHeading
+			text="Title with toggle"
+			type="toggle"
+			toggleText="Open"
+			toggleCloseText="Hide"
+			:toggleStatus="toggle"
+			@toggle="toggle=!toggle"
+		>
+			<div>We hide this message :)</div>
+		</KtHeading>`'
+		language="vue-html"
+	>
 		<KtHeading
 			text="Title with toggle"
 			type="toggle"
@@ -46,31 +75,11 @@
 			:toggleStatus="toggle"
 			@toggle="toggle = !toggle"
 		>
-			<div>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor
-				commodo leo, non malesuada ipsum volutpat sed. Fusce at nulla ipsum.
-				Morbi sodales vel ipsum ullamcorper dictum.
-			</div>
+			<div>We hide this message :)</div>
 		</KtHeading>
-	</div>
-
+	</CodePreview>
 	<!-- prettier-ignore -->
 	<MarkdownBlock>
-Set `type` to `toggle` make the heading has toggle function.
-You can change the `toggleStatus` dynamically by binding value to it.
-
-```html
-<KtHeading
-	text="Title with toggle"
-	type="toggle"
-	toggleText="Open"
-	toggleCloseText="Hide"
-	:toggleStatus="toggle"
-	@toggle="toggle=!toggle"
->
-	<div>We hide this message :)</div>
-</KtHeading>
-```
 
 ## Usage
 
@@ -98,11 +107,13 @@ You can change the `toggleStatus` dynamically by binding value to it.
 import { KtHeading } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
 
+import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsHeadings',
 	components: {
+		CodePreview,
 		ComponentInfo,
 		KtHeading,
 	},
