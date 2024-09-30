@@ -3,10 +3,9 @@
 
 	<h2>Usage</h2>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
-			import { success, toaster } from "~/shared/toaster.ts"
+		:code="`
+			import { success, toaster } from &quot;~/shared/toaster.ts&quot;
 
 			export const someAction = async () => {
 				// push a notification without waiting for it
@@ -20,14 +19,14 @@
 				succ.abort()
 
 				// programmatically push any kind of notification
-				toaster.push({ message: "TODO: message?", type: "error" })
+				toaster.push({ message: &quot;TODO: message?&quot;, type: &quot;error&quot; })
 
 				// create a designated message pusher
-				const customPusher = toaster.createPusher({ type: "success" })
+				const customPusher = toaster.createPusher({ type: &quot;success&quot; })
 				const message = customPusher()
 				await message.done
 			}
-		`'
+		`"
 		fileName="~/store/my-module.ts"
 		language="typescript"
 	/>
