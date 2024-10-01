@@ -1,11 +1,17 @@
 <template>
-	<div :class="$style.wrapper">
-		<section :class="$style.example">
+	<div :class="[$style.wrapper, $style[`wrapper--is-type-${type}`]]">
+		<section v-if="$slots.example" :class="$style.example">
 			<slot />
 		</section>
+		<div v-else style="margin-bottom: -1px" />
 		<div v-if="code" :class="$style.actions">
+			<div v-if="fileName" :class="$style.fileName" v-text="fileName" />
 			<div :class="$style.language" v-text="language" />
-
+			<div
+				:class="$style.language"
+				v-if="type !== 'default'"
+				v-text="`(${type.toUpperCase()})`"
+			/>
 			<div :class="$style.copyButton" role="button" @click="onCopy">
 				<i class="yoco">copy</i>
 			</div>
@@ -18,13 +24,18 @@
 import copy from 'copy-to-clipboard'
 import dedent from 'dedent'
 import { codeToHtml } from 'shiki'
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, type PropType, ref, watch } from 'vue'
 
 export default defineComponent({
 	name: 'CodePreview',
 	props: {
 		code: { default: null, type: String },
+		fileName: { default: null, type: String },
 		language: { required: true, type: String },
+		type: {
+			default: 'default',
+			type: String as PropType<'default' | 'preview'>,
+		},
 	},
 	setup(props) {
 		const codeHtml = ref<string | null>(null)
@@ -54,10 +65,45 @@ export default defineComponent({
 <style module>
 .wrapper {
 	border-radius: var(--border-radius);
-	border: 1px solid var(--gray-20);
+	border: 1px solid transparent;
 	overflow: hidden;
 
 	margin-bottom: var(--unit-8);
+}
+
+.wrapper--is-type-default {
+	border-color: var(--gray-20);
+
+	.actions {
+		border-top-color: var(--gray-20);
+		border-bottom-color: var(--gray-20);
+		background-color: var(--gray-10);
+	}
+
+	.code {
+		> * {
+			background-color: var(--gray-10) !important;
+		}
+	}
+}
+
+.wrapper--is-type-preview {
+	border-color: var(--orange-20);
+	opacity: 0.667;
+	border-style: dashed;
+
+	.actions {
+		border-style: dashed;
+		border-top-color: var(--yellow-50);
+		border-bottom-color: var(--orange-20);
+		background-color: var(--yellow-20);
+	}
+
+	.code {
+		> * {
+			background-color: var(--yellow-20) !important;
+		}
+	}
 }
 
 .actions,
@@ -68,18 +114,14 @@ export default defineComponent({
 .actions {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+
+	gap: var(--unit-6);
 
 	border: 1px solid transparent;
-	border-top-color: var(--gray-20);
-	border-bottom-color: var(--gray-20);
-
-	background-color: var(--gray-10);
 }
 
 .code {
 	> * {
-		background-color: var(--gray-10) !important;
 		margin: 0;
 	}
 }
@@ -88,6 +130,7 @@ export default defineComponent({
 	display: flex;
 	padding: var(--unit-2);
 	margin: calc(-1 * var(--unit-2));
+	margin-left: auto; /* push to end of flexbox */
 	font-size: 1.2rem;
 	cursor: pointer;
 
@@ -100,8 +143,13 @@ export default defineComponent({
 	padding: var(--unit-6);
 }
 
+.fileName,
 .language {
 	font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
 		'Courier New', monospace;
+}
+
+.fileName {
+	font-weight: bold;
 }
 </style>
