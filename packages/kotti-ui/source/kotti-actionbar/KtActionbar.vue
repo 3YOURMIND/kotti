@@ -108,9 +108,9 @@ export default defineComponent({
 		margin: var(--unit-2) 0;
 		font-size: 0.75rem;
 		color: var(--text-01);
+		cursor: pointer;
 		list-style: none;
 		border-radius: 0.2rem;
-		cursor: pointer;
 
 		&:not(&--is-disabled):hover {
 			background: var(--ui-02);
@@ -122,8 +122,8 @@ export default defineComponent({
 		}
 
 		&--is-disabled {
-			cursor: not-allowed;
 			color: var(--text-05);
+			cursor: not-allowed;
 		}
 	}
 

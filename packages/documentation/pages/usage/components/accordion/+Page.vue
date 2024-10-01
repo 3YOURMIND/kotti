@@ -1,6 +1,8 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
+	<ComponentForm :component="component" :componentProps="{}" />
+
 	<h2>Basic Usage</h2>
 
 	<!-- prettier-ignore -->
@@ -121,6 +123,7 @@
 import { KtAccordion, KtButton } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
 
+import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
@@ -128,6 +131,7 @@ export default defineComponent({
 	name: 'DocumentationPageUsageComponentsAccordion',
 	components: {
 		CodePreview,
+		ComponentForm,
 		ComponentInfo,
 		KtAccordion,
 		KtButton,

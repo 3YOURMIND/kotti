@@ -429,20 +429,42 @@
 			</div>
 		</KtForm>
 
-		<pre><code data-lang="html">
-&lt;KtSplitButton
-    :actions=&quot;[
-        { icon: 'calendar', label: 'Action 1', onClick: () => alert('Action 1'), dataTest: 'calendar' },
-        { icon: 'landline', label: 'Action 2', onClick: () => alert('Action 2'), dataTest: 'landline' },
-        { icon: 'location', label: 'Action 3', onClick: () => alert('Action 3'), dataTest: 'location', isDisabled: true },
-    ]&quot;
-    dataTest=&quot;btn-1&quot;
-    icon=&quot;download&quot;
-    label=&quot;Split Button&quot;
-    type=&quot;primary&quot;
-    @click=&quot;alert('Split Button')&quot;
-/&gt;
-        </code></pre>
+		<br />
+
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+			<KtSplitButton
+				:actions="[
+					{
+						icon: "calendar",
+						label: "Action 1",
+						onClick: () => alert("Action 1"),
+						dataTest: "calendar"
+					},
+					{
+						icon: "landline",
+						label: "Action 2",
+						onClick: () => alert("Action 2"),
+						dataTest: "landline"
+					},
+					{
+						icon: "location",
+						label: "Action 3",
+						onClick: () => alert("Action 3"),
+						dataTest: "location",
+						isDisabled: true
+					},
+				]"
+				dataTest="btn-1"
+				icon="download"
+				label="Split Button"
+				type="primary"
+				@click="alert("Split Button")"
+			/>
+			`'
+			language="vue-html"
+		/>
 
 		<h3>Best practices</h3>
 
