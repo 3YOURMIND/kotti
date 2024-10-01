@@ -1,19 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { z } from 'zod'
+
 import { makeProps } from '../make-props'
+import { schema } from './types'
 
 export default defineComponent({
 	name: 'KtToaster',
-	props: makeProps(
-		z.object({
-			toaster: z
-				.object({
-					tbd: z.boolean(),
-				})
-				.strict(),
-		}),
-	),
+	props: makeProps(schema),
 	setup() {},
 })
 </script>

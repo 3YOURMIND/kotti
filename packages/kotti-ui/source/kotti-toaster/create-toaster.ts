@@ -27,7 +27,7 @@ const pushOptionsSchema = z
 		type: z.string(),
 	})
 	.strict()
-type PushOptions = z.output<typeof pushOptionsSchema>
+type PushOptions = z.input<typeof pushOptionsSchema>
 
 const pushSchema = z.function(z.tuple([pushOptionsSchema]), pushResultSchema)
 
@@ -46,12 +46,11 @@ const queueItemSchema = z
 	.strict()
 type QueueItem = z.output<typeof queueItemSchema>
 
+const partialPushOptionsSchema = pushOptionsSchema.partial()
+
 export const toasterSchema = z
 	.object({
-		createPusher: z.function(
-			z.tuple([pushOptionsSchema.partial()]),
-			pushSchema,
-		),
+		createPusher: z.function(z.tuple([partialPushOptionsSchema]), pushSchema),
 		abort: z.function(z.tuple([z.string()]), z.void()),
 		push: pushSchema,
 	})
@@ -61,7 +60,9 @@ export type Toaster = z.output<typeof toasterSchema>
 export const createToaster = (/* toasterOptions = {} */): Toaster => {
 	const queue: QueueItem[] = []
 
-	const push = (options: PushOptions): PusherReturn => {
+	const push = (_options: PushOptions): PusherReturn => {
+		const options = pushOptionsSchema.parse(_options)
+
 		const { id } = options
 		// const parsedArguments = value.schema.parse(rawArguments)
 
@@ -117,8 +118,6 @@ export const createToaster = (/* toasterOptions = {} */): Toaster => {
 				throw new Error(`could not find to be removed notification “${id}”`)
 
 			removedQueueItem.metadata.abortController.abort()
-
-			// delete from queue
 		},
 		createPusher: (options: Partial<PushOptions> = {}) => {
 			return (pushOptions: PushOptions) => push({ ...options, ...pushOptions })
