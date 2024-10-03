@@ -1,6 +1,6 @@
 <template>
 	<div :class="[$style.wrapper, $style[`wrapper--is-type-${type}`]]">
-		<section v-if="$slots.example" :class="$style.example">
+		<section v-if="$slots.default" :class="$style.example">
 			<slot />
 		</section>
 		<div v-else style="margin-bottom: -1px" />
@@ -37,7 +37,7 @@ export default defineComponent({
 			type: String as PropType<'default' | 'preview'>,
 		},
 	},
-	setup(props) {
+	setup(props, { slots }) {
 		const codeHtml = ref<string | null>(null)
 
 		watch(

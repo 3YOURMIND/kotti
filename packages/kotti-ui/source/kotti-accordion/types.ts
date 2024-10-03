@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export module KottiAccordion {
 	export const propsSchema = z.object({
-		dataTest: z.string().optional(),
+		dataTest: z.string().nullable().default(null),
 		icon: yocoIconSchema.nullable().default(null),
 		isClosed: z.boolean().default(false),
 		title: z.string(),

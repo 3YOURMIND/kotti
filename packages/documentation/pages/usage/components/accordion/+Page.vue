@@ -1,7 +1,24 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	<ComponentForm :component="component" :componentProps="{}" />
+	<ComponentForm
+		:component="component"
+		:propFormatters="{}"
+		:props="omit(componentProps, ['content'])"
+		:hiddenProps="{
+			'onUpdate:isClosed': (val: boolean) => (componentProps.isClosed = val),
+		}"
+		:slots="[{ content: componentProps.content, name: 'default' }]"
+	>
+		<template #component-form-settings>
+			<div>
+				<KtForm v-model:value="componentProps" size="small">
+					<KtFieldText label="title" formKey="title" />
+					<KtFieldText label="content" formKey="content" />
+				</KtForm>
+			</div>
+		</template>
+	</ComponentForm>
 
 	<h2>Basic Usage</h2>
 
@@ -120,8 +137,9 @@
 </template>
 
 <script lang="ts">
-import { KtAccordion, KtButton } from '@3yourmind/kotti-ui'
+import { KtAccordion, KtButton, KtFieldText, KtForm } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
+import omit from 'lodash/omit.js'
 
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import CodePreview from '~/components/CodePreview.vue'
@@ -135,13 +153,24 @@ export default defineComponent({
 		ComponentInfo,
 		KtAccordion,
 		KtButton,
+		KtFieldText,
+		KtForm,
 	},
 	setup() {
 		return {
 			component: KtAccordion,
+			componentProps: ref({
+				dataTest: null,
+				icon: null,
+				isClosed: false,
+				content: 'Example Content',
+				title: 'Example title',
+			}),
+			isClosed: ref(false),
 			isFirstAccordionClosed: ref(false),
 			isSecondAccordionClosed: ref(false),
 			isThirdAccordionClosed: ref(false),
+			omit,
 		}
 	},
 })
