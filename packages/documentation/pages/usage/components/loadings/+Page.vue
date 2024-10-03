@@ -3,17 +3,17 @@
 
 	<!-- prettier-ignore -->
 	<MarkdownBlock>
-    ## Skeleton Screen
+	## Skeleton Screen
 
-    A skeleton screen gives a visual cue that content is loading one after the other into each UI element area. We suggest using skeleton screen for content densitive pages.
+	A skeleton screen gives a visual cue that content is loading one after the other into each UI element area. We suggest using skeleton screen for content densitive pages.
 
 
-    There are three types of skeleton elements:
+	There are three types of skeleton elements:
 
-    1. **Circle:** Cicular shape which width and height are equal to parents' width, class name `circle`;
-    2. **Square:** Width and height are equal to parents' width, class name `square`;
-    3. **Rectangle:** Width equals to parents, height can be medium `md` or large `lg`.
-    </MarkdownBlock>
+	1. **Circle:** Cicular shape which width and height are equal to parents' width, class name `circle`;
+	2. **Square:** Width and height are equal to parents' width, class name `square`;
+	3. **Rectangle:** Width equals to parents, height can be medium `md` or large `lg`.
+	</MarkdownBlock>
 
 	<!-- prettier-ignore -->
 	<CodePreview
@@ -96,7 +96,7 @@
 				<div class="loading inline"></div>
 				Uploading
 			</button>
-        `'
+		`'
 		language="html"
 	>
 		<button>
@@ -114,7 +114,7 @@
 				<div class="loading inline white"></div>
 				Uploading
 			</button>
-        `'
+		`'
 		language="html"
 	>
 		<button>
@@ -132,7 +132,7 @@
 				<div class="loading inline gray"></div>
 				Uploading
 			</button>
-        `'
+		`'
 		language="html"
 	>
 		<button>

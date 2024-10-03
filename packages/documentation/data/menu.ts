@@ -134,7 +134,6 @@ export const menu: Array<Section> = [
 						path: 'list-of-colors',
 						tags: [Tag.CSS, Tag.OUTDATED],
 					},
-					{ label: 'Figma', path: 'figma', tags: [Tag.GUIDE, Tag.OUTDATED] },
 					{
 						label: 'Theming',
 						path: 'theming',

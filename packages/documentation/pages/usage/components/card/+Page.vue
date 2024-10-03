@@ -7,7 +7,7 @@
 		<!-- prettier-ignore -->
 		<CodePreview
 			:code='`
-		    <KtCard imgUrl="https://picsum.photos/900/300">
+			<KtCard imgUrl="https://picsum.photos/900/300">
 				<template #card-header>
 					<h2>Lorem Ipsum</h2>
 				</template>
@@ -41,7 +41,7 @@
 		<!-- prettier-ignore -->
 		<CodePreview
 			:code='`
-		    <KtCard
+			<KtCard
 				imgUrl="https://picsum.photos/900/300"
 				primaryActionLabel="Confirm"
 				secondaryActionLabel="Cancel"

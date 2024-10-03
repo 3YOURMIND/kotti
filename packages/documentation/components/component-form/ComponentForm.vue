@@ -28,6 +28,7 @@ type PropFormatter = (value: unknown) => string[]
 type Slot = {
 	content: string
 	name: string
+	scope?: string
 }
 
 const generateCode = ({
@@ -72,18 +73,20 @@ const generateCode = ({
 					`\t${lastLine}"`,
 				].join('\n')
 			}),
-		`>`,
+		slots.length === 0 ? '/>' : `>`,
 		...slots.flatMap((slot) => {
 			if (slot.name === 'default') return [`\t${slot.content}`]
 
 			return [
-				`\t<template #${slot.name}>`,
+				`\t<template #${slot.name}${slot.scope ? `="${slot.scope}"` : ''}>`,
 				`\t\t${slot.content}`,
 				'\t</template>',
 			]
 		}),
-		`</${component.name}>`,
+		...(slots.length === 0 ? [] : [`</${component.name}>`]),
 	].join('\n')
+
+const NOT_SET = Symbol('NOT_SET')
 
 export default defineComponent({
 	name: 'ComponentForm',
@@ -111,6 +114,9 @@ export default defineComponent({
 			default: () => [],
 			type: Array as PropType<Slot[]>,
 		},
+		value: {
+			default: () => NOT_SET as unknown,
+		},
 	},
 	setup(props, { slots }) {
 		const allSlots = computed(() => {
@@ -126,6 +132,8 @@ export default defineComponent({
 
 			return result
 		})
+
+		// code handling
 
 		const code = computed(() =>
 			generateCode({
@@ -148,12 +156,40 @@ export default defineComponent({
 			{ immediate: true },
 		)
 
+		// value code handling
+
+		const valueCodeHtml = ref<string | null>(null)
+		watch(
+			() => props.value,
+			async (_code) => {
+				if (_code === NOT_SET) {
+					valueCodeHtml.value = null
+					return
+				}
+
+				const codeStringified = JSON.stringify(_code)
+
+				const code =
+					codeStringified.length > 70
+						? JSON.stringify(_code, null, '\t')
+						: codeStringified
+
+				valueCodeHtml.value = await codeToHtml(`${code} // value`, {
+					lang: 'js',
+					theme: 'vitesse-light',
+				})
+			},
+			{ immediate: true },
+		)
+
 		return {
 			allSlots,
 			codeHtml,
+			hasValue: computed(() => props.value !== NOT_SET),
 			onCopy: () => {
 				copy(code.value)
 			},
+			valueCodeHtml,
 		}
 	},
 })
@@ -163,12 +199,21 @@ export default defineComponent({
 	<section :class="$style.wrapper">
 		<div :class="$style.preview">
 			<component :is="component" v-bind="{ ...props, ...hiddenProps }">
-				<template v-for="slot in allSlots" #[slot.name] :key="slot.name">
-					<component :is="$slots[slot.name]" v-if="$slots[slot.name]" />
+				<template
+					v-for="slot in allSlots"
+					#[slot.name]="bound"
+					:key="slot.name"
+				>
+					<component
+						:is="$slots[slot.name]"
+						v-if="$slots[slot.name]"
+						v-bind="bound"
+					/>
 					<div v-else v-text="slot.content" />
 				</template>
 			</component>
 		</div>
+		<div v-if="hasValue" :class="$style.value" v-html="valueCodeHtml" />
 		<div :class="$style.settings">
 			<slot name="component-form-settings" />
 		</div>
@@ -183,7 +228,8 @@ export default defineComponent({
 </template>
 
 <style lang="scss" module>
-.code {
+.code,
+.value {
 	> * {
 		padding: var(--unit-3) var(--unit-6);
 		margin: 0;
@@ -198,31 +244,28 @@ export default defineComponent({
 
 	gap: var(--unit-6);
 
-	border: 1px solid transparent;
-	border-bottom-color: var(--gray-20);
 	background-color: var(--gray-10);
 	padding: var(--unit-3) var(--unit-6);
 }
 
 .wrapper {
 	border-radius: var(--border-radius);
-	border: 1px solid transparent;
+	border: 1px solid var(--gray-20);
 	overflow: hidden;
 
 	margin-bottom: var(--unit-8);
 
-	border-color: var(--gray-20);
+	> *:not(:last-child) {
+		border-bottom: 1px solid var(--gray-20);
+	}
 }
 
 .preview {
 	padding: var(--unit-3) var(--unit-6);
-	border-bottom: 1px solid var(--gray-20);
-	/* background-color: var(--gray-10); */
 }
 
 .settings {
 	display: flex;
-	border-bottom: 1px solid var(--gray-20);
 	background-color: #fcfcfc;
 
 	> div {

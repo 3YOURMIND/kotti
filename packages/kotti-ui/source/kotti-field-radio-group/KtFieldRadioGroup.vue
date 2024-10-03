@@ -121,7 +121,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../kotti-field/mixins';
+@import '../kotti-field/mixins.scss';
 
 :root {
 	--radio-size: 0.8rem;

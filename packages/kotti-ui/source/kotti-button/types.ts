@@ -86,7 +86,7 @@ export module KottiSplitButton {
 
 	export const propsSchema = Shared.propsSchema.extend({
 		actions: z.array(actionSchema).default(() => []),
-		dataTest: z.string().optional(),
+		dataTest: z.string().nullable().default(null),
 		isDisabled: z.boolean().default(false),
 		label: z.string(),
 		type: typeSchema.default(Type.DEFAULT),

@@ -12,7 +12,7 @@ import TheActionbar from '~/chrome/TheActionbar.vue'
 import TheContent from '~/chrome/TheContent.vue'
 
 export default defineComponent({
-	name: 'LayoutDefault',
+	name: 'LayoutActionbar',
 	components: {
 		TheActionbar,
 		TheContent,

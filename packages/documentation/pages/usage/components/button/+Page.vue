@@ -24,25 +24,46 @@
 
 		<h2>Types</h2>
 
-		<CodePreview language="vue-html">
-			<KtButton class="mt-4 mb-4 mr-4" type="primary" @click="alert('primary')"
-				>Primary Button</KtButton
-			>
-			<KtButton
-				class="mt-4 mb-4 mr-4"
-				type="secondary"
-				@click="alert('secondary')"
-				>Secondary Button</KtButton
-			>
-			<KtButton class="mt-4 mb-4 mr-4" type="danger" @click="alert('danger')"
-				>Danger Button</KtButton
-			>
-			<KtButton class="mt-4 mb-4 mr-4" @click="alert('default')"
-				>Default Button</KtButton
-			>
-			<KtButton class="mt-4 mb-4" type="text" @click="alert('text')"
-				>Text Button</KtButton
-			>
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+				<div style="display: flex; gap: var(--unit-6)">
+					<KtButton type="primary" @click="...">
+						Primary Button
+					</KtButton>
+					<KtButton type="secondary" @click="...">
+						Secondary Button
+					</KtButton>
+					<KtButton type="danger" @click="...">
+						Danger Button
+					</KtButton>
+					<KtButton @click="...">
+						Default Button
+					</KtButton>
+					<KtButton type="text" @click="...">
+						Text Button
+					</KtButton>
+				</div>
+			`'
+			language="vue-html"
+		>
+			<div style="display: flex; gap: var(--unit-6); flex-wrap: wrap">
+				<KtButton type="primary" @click="alert('primary')">
+					Primary Button
+				</KtButton>
+				<KtButton type="secondary" @click="alert('secondary')">
+					Secondary Button
+				</KtButton>
+				<KtButton type="danger" @click="alert('danger')">
+					Danger Button
+				</KtButton>
+				<KtButton @click="alert('default')">
+					Default Button
+				</KtButton>
+				<KtButton type="text" @click="alert('text')">
+					Text Button
+				</KtButton>
+			</div>
 		</CodePreview>
 
 		<h4>Primary button</h4>
@@ -101,27 +122,6 @@
 
 		<h2>Icon</h2>
 
-		<!-- prettier-ignore -->
-		<CodePreview
-			:code='`
-			<KtButton class="mr-4" type="primary">Edit button</KtButton>
-			<KtButton class="mr-4" icon="edit" label="Edit Button" type="primary" />
-			<KtButton icon="edit" iconPosition="right" label="Icon To The Right" type="primary" />
-			<KtButton helpText="This is an icon button" icon="edit" type="primary" />
-			`'
-			language="vue-html"
-		>
-    		<KtButton class="mr-4" type="primary">Edit button</KtButton>
-    		<KtButton class="mr-4" icon="edit" label="Edit Button" type="primary" />
-    		<KtButton
-          		icon="edit"
-          		iconPosition="right"
-          		label="Icon To The Right"
-          		type="primary"
-    		/>
-    		<KtButton helpText="This is an icon button" icon="edit" type="primary" />
-		</CodePreview>
-
 		<ul>
 			<li><strong>Label only:</strong> Used in most cases.</li>
 			<li>
@@ -143,6 +143,26 @@
 			</li>
 		</ul>
 
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+				<div style="display: flex; gap: var(--unit-6)">
+					<KtButton type="primary">Edit button</KtButton>
+					<KtButton icon="edit" label="Edit Button" type="primary" />
+					<KtButton icon="edit" iconPosition="right" label="Icon To The Right" type="primary"/>
+					<KtButton helpText="This is an icon button" icon="edit" type="primary" />
+				</div>
+			`'
+			language="vue-html"
+		>
+			<div style="display: flex; gap: var(--unit-6)">
+				<KtButton type="primary">Edit button</KtButton>
+				<KtButton icon="edit" label="Edit Button" type="primary" />
+				<KtButton icon="edit" iconPosition="right" label="Icon To The Right" type="primary"/>
+				<KtButton helpText="This is an icon button" icon="edit" type="primary" />
+			</div>
+		</CodePreview>
+
 		<h2><code>toggleStatus</code></h2>
 
 		<ul>
@@ -156,23 +176,46 @@
 			</li>
 		</ul>
 
-		<CodePreview language="vue-html">
-			<KtButton
-				class="mr-4"
-				:icon="toggleDefaultIcon"
-				:toggleStatus="toggleDefaultStatus"
-				type="default"
-				@update:toggleStatus="(event) => onToggleDefaultClick(event)"
-				>{{ toggleDefaultLabel }}</KtButton
-			>
-			<KtButton
-				class="mr-4"
-				:icon="toggleTextIcon"
-				:label="toggleTextLabel"
-				:toggleStatus="toggleTextStatus"
-				type="text"
-				@update:toggleStatus="(event) => onToggleTextClick(event)"
-			/>
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+				<div style="display: flex; gap: var(--unit-6)">
+					<KtButton
+						:icon="toggleDefaultIcon"
+						:toggleStatus="toggleDefaultStatus"
+						type="default"
+						@update:toggleStatus="(event) => onToggleDefaultClick(event)"
+					>
+						{{ toggleDefaultLabel }}
+					</KtButton
+					<KtButton
+						:icon="toggleTextIcon"
+						:label="toggleTextLabel"
+						:toggleStatus="toggleTextStatus"
+						type="text"
+						@update:toggleStatus="(event) => onToggleTextClick(event)"
+					/>
+				</div>
+			`'
+			language="vue-html"
+		>
+			<div style="display: flex; gap: var(--unit-6)">
+				<KtButton
+					:icon="toggleDefaultIcon"
+					:toggleStatus="toggleDefaultStatus"
+					type="default"
+					@update:toggleStatus="(event) => onToggleDefaultClick(event)"
+				>
+					{{ toggleDefaultLabel }}
+				</KtButton>
+				<KtButton
+					:icon="toggleTextIcon"
+					:label="toggleTextLabel"
+					:toggleStatus="toggleTextStatus"
+					type="text"
+					@update:toggleStatus="(event) => onToggleTextClick(event)"
+				/>
+			</div>
 		</CodePreview>
 
 		<h2><code>isMultiline</code>/<code>isBlock</code></h2>
@@ -185,8 +228,8 @@
 		<!-- prettier-ignore -->
 		<CodePreview
 			:code='`
-			<div style="width: 200px">
-				<KtButton block type="primary">Purchase</KtButton><br />
+			<div style="width: 200px; display: flex; flex-direction: column; gap: var(--unit-1)">
+				<KtButton block type="primary">Purchase</KtButton>
 				<KtButton icon="save" isBlock isMultiline>
 					Purchase this product without the 5 year garantee
 				</KtButton>
@@ -195,97 +238,129 @@
 					2 year only garantee
 				</KtButton>
 			</div>
-			<KtButton isMultiline
-				>Multiline works on one line if the parent does not constraint the width
-			</KtButton>
-			<KtButton isMultiline>
-				(But the height is less reliable as it uses
-				<code>line-height</code>)
-			</KtButton>
+			<br/>
+			<div style="display: flex; flex-direction: column; gap: var(--unit-1)">
+				<KtButton isMultiline>
+					Multiline works on one line if the parent does not constraint the width
+				</KtButton>
+				<KtButton isMultiline>
+					(But the height is less reliable as it uses
+					<code>line-height</code>)
+				</KtButton>
+			</div>
 			`'
 			language="vue-html"
 		>
-    		<div style="width: 200px">
-    			<KtButton block type="primary">Purchase</KtButton><br />
-    			<KtButton icon="save" isBlock isMultiline>
-    				Purchase this product without the 5 year garantee
-    			</KtButton>
-    			<KtButton isBlock isMultiline>
-    				Purchase this product without the 5 year garantee and proceed with the
-    				2 year only garantee
-    			</KtButton>
-    		</div>
-    		<KtButton isMultiline>
-    		  Multiline works on one line if the parent does not constraint the width
-    		</KtButton>
-    		<KtButton isMultiline>
-    			(But the height is less reliable as it uses
-    			<code>line-height</code>)
-    		</KtButton>
+			<div style="width: 200px; display: flex; flex-direction: column; gap: var(--unit-1)">
+				<KtButton block type="primary">Purchase</KtButton><br />
+					<KtButton icon="save" isBlock isMultiline>
+					Purchase this product without the 5 year garantee
+				</KtButton>
+				<KtButton isBlock isMultiline>
+					Purchase this product without the 5 year garantee and proceed with the
+					2 year only garantee
+				</KtButton>
+			</div>
+			<br/>
+			<div style="display: flex; flex-direction: column; gap: var(--unit-1)">
+				<KtButton isMultiline>
+					  Multiline works on one line if the parent does not constraint the width
+				</KtButton>
+				<KtButton isMultiline>
+						(But the height is less reliable as it uses
+						<code>line-height</code>)
+				</KtButton>
+			</div>
 		</CodePreview>
 
 		<h2>Loading</h2>
 
-		<div class="element-example">
-			<KtButton class="mr-16px" icon="edit" isLoading>Loading button</KtButton>
-			<KtButton
-				class="mr-16px"
-				icon="edit"
-				iconPosition="right"
-				isLoading
-				type="primary"
-			>
-				Loading button
-			</KtButton>
-			<KtButton class="mr-16px" isLoading type="secondary">Loading</KtButton>
-			<KtButton class="mr-16px" isLoading type="danger">Loading</KtButton>
-		</div>
-
-		<pre><code data-lang="html">
-&lt;KtButton isLoading&gt;Loading button&lt;/KtButton&gt;
-&lt;KtButton type=&quot;primary&quot; isLoading&gt;Loading button&lt;/KtButton&gt;
-&lt;KtButton type=&quot;secondary&quot; isLoading /&gt;
-&lt;KtButton type=&quot;danger&quot; isLoading /&gt;
-        </code></pre>
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+				<div style="display: flex; gap: var(--unit-6)">
+					<KtButton icon="edit" isLoading>
+						Loading button
+					</KtButton>
+					<KtButton icon="edit" iconPosition="right" isLoading type="primary">
+						Loading button
+					</KtButton>
+					<KtButton isLoading type="secondary">Loading</KtButton>
+					<KtButton isLoading type="danger">Loading</KtButton>
+				</div>
+			`'
+			language="vue-html"
+		>
+			<div style="display: flex; gap: var(--unit-6)">
+				<KtButton icon="edit" isLoading>
+					Loading button
+				</KtButton>
+				<KtButton
+					icon="edit"
+					iconPosition="right"
+					isLoading
+					type="primary"
+				>
+					Loading button
+				</KtButton>
+				<KtButton isLoading type="secondary">Loading</KtButton>
+				<KtButton isLoading type="danger">Loading</KtButton>
+			</div>
+		</CodePreview>
 
 		<h2>Button Group</h2>
 
-		<div class="element-example">
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+				<KtButtonGroup>
+					<KtButton icon="edit" type="primary">Edit</KtButton>
+					<KtButton icon="trash" type="secondary">Delete</KtButton>
+				</KtButtonGroup>
+			`'
+			language="vue-html"
+		>
 			<KtButtonGroup>
 				<KtButton icon="edit" type="primary">Edit</KtButton>
 				<KtButton icon="trash" type="secondary">Delete</KtButton>
 			</KtButtonGroup>
-		</div>
-
-		<pre><code data-lang="html">
-&lt;KtButtonGroup&gt;
-    &lt;KtButton type=&quot;primary&quot; icon=&quot;edit&quot;&gt;Edit&lt;/KtButton&gt;
-    &lt;KtButton type=&quot;secondary&quot; icon=&quot;trash&quot;&gt;Delete&lt;/KtButton&gt;
-&lt;/KtButtonGroup&gt;
-        </code></pre>
+		</CodePreview>
 
 		<h2>Size</h2>
 
-		<div class="element-example">
-			<KtButton class="mr-16px" icon="edit" size="small" type="primary"
-				>Small</KtButton
-			>
-			<KtButton class="mr-16px" isLoading size="medium"
-				>Medium (Default)</KtButton
-			>
-			<KtButton icon="edit" size="large">Large</KtButton>
-		</div>
+		<MarkdownBlock>
+			`KtButton` has 3 sizes: `small`, `medium`, and `large`
+		</MarkdownBlock>
 
-		<p>
-			<code>KtButton</code> has 3 size: <code>small</code>,
-			<code>medium</code> and <code>large</code>.
-		</p>
-
-		<pre><code data-lang="html">
-&lt;KtButton type=&quot;primary&quot; size=&quot;small&quot; icon=&quot;edit&quot;&gt;Small&lt;/KtButton&gt;
-&lt;KtButton isLoading size=&quot;medium&quot;&gt;Medium (Default)&lt;/KtButton&gt;
-&lt;KtButton size=&quot;large&quot; icon=&quot;edit&quot;&gt;&gt;Large&lt;/KtButton&gt;
-        </code></pre>
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+				<div style="display: flex; gap: var(--unit-6)">
+					<KtButton icon="edit" size="small" type="primary">
+						Small
+					</KtButton>
+					<KtButton isLoading size="medium">
+						Medium (Default)
+					</KtButton>
+					<KtButton icon="edit" size="large">
+						Large
+					</KtButton>
+				</div>
+			`'
+			language="vue-html"
+		>
+			<div style="display: flex; gap: var(--unit-6)">
+				<KtButton icon="edit" size="small" type="primary">
+					Small
+				</KtButton>
+				<KtButton isLoading size="medium">
+					Medium (Default)
+				</KtButton>
+				<KtButton icon="edit" size="large">
+					Large
+				</KtButton>
+			</div>
+		</CodePreview>
 
 		<h2><code>isSubmit</code></h2>
 
@@ -297,7 +372,7 @@
 
 		<br />
 
-		<ComponentInfo v-bind="{ component: ktSplitButtonComponent }" />
+		<ComponentInfo :component="ktSplitButtonComponent" />
 
 		<p>
 			A split button lets someone take one of several related actions. The
@@ -306,167 +381,9 @@
 			button.
 		</p>
 
-		<div class="element-example">
-			<KtSplitButton
-				v-bind="splitButtonProps"
-				:actions="[
-					{
-						icon: 'calendar',
-						label: 'Action 1',
-						onClick: () => alert('Action 1'),
-						dataTest: 'action-1',
-					},
-					{
-						icon: 'landline',
-						label: 'Action 2',
-						onClick: () => alert('Action 2'),
-						dataTest: 'action-2',
-					},
-					{
-						icon: 'location',
-						label: 'Action 3',
-						onClick: () => alert('Action 3'),
-						dataTest: 'action-3',
-						isDisabled: true,
-					},
-				]"
-				class="mr-4"
-				@click="alert(splitButtonProps.label)"
-			/>
-			<KtSplitButton
-				v-bind="splitButtonProps"
-				:actions="[
-					{
-						label: 'Action 4',
-						onClick: () => alert('Action 4'),
-						dataTest: 'action-4',
-					},
-					{
-						label: 'Action 5',
-						onClick: () => alert('Action 5'),
-						dataTest: 'action-5',
-						isDisabled: true,
-					},
-					{
-						label: 'Action 6',
-						onClick: () => alert('Action 6'),
-						dataTest: 'action-6',
-					},
-				]"
-				@click="alert(splitButtonProps.label)"
-			/>
-		</div>
+		<h3>Usage</h3>
 
-		<KtForm v-model:value="settings" size="small">
-			<div class="wrapper">
-				<div>
-					<h4>Settings</h4>
-					<KtFieldSingleSelect
-						formKey="type"
-						hideClear
-						isUnsorted
-						label="type"
-						:options="[
-							{ label: 'default (default)', value: 'default' },
-							{ label: 'primary', value: 'primary' },
-						]"
-					/>
-					<KtFieldSingleSelect
-						formKey="size"
-						hideClear
-						isUnsorted
-						label="size"
-						:options="[
-							{ label: 'small', value: 'small' },
-							{ label: 'medium (default)', value: 'medium' },
-							{ label: 'large', value: 'large' },
-						]"
-					/>
-					<KtFieldToggleGroup
-						formKey="booleanFlags"
-						isOptional
-						label="Boolean Flags"
-						:options="[
-							{ key: 'isDisabled', label: 'isDisabled' },
-							{ key: 'isLoading', label: 'isLoading' },
-						]"
-						type="switch"
-					/>
-				</div>
-				<div>
-					<h4>Texts</h4>
-					<KtFieldText formKey="label" label="label" />
-					<KtFieldText formKey="dataTest" isOptional label="dataTest" />
-					<h4>Decoration</h4>
-					<div class="field-row">
-						<KtFieldSingleSelect
-							formKey="icon"
-							isOptional
-							label="icon"
-							:options="iconOptions"
-						>
-							<template #option="{ option }">
-								<i
-									class="yoco"
-									style="margin-right: 10px; font-size: 24px"
-									v-text="option.value"
-								/>
-								<span v-text="option.label" />
-							</template>
-						</KtFieldSingleSelect>
-						<KtFieldSingleSelect
-							formKey="iconPosition"
-							isOptional
-							isUnsorted
-							label="iconPosition"
-							:options="[
-								{ label: 'left (default)', value: 'left' },
-								{ label: 'right', value: 'right' },
-							]"
-						/>
-					</div>
-				</div>
-			</div>
-		</KtForm>
-
-		<br />
-
-		<!-- prettier-ignore -->
-		<CodePreview
-			:code='`
-			<KtSplitButton
-				:actions="[
-					{
-						icon: "calendar",
-						label: "Action 1",
-						onClick: () => alert("Action 1"),
-						dataTest: "calendar"
-					},
-					{
-						icon: "landline",
-						label: "Action 2",
-						onClick: () => alert("Action 2"),
-						dataTest: "landline"
-					},
-					{
-						icon: "location",
-						label: "Action 3",
-						onClick: () => alert("Action 3"),
-						dataTest: "location",
-						isDisabled: true
-					},
-				]"
-				dataTest="btn-1"
-				icon="download"
-				label="Split Button"
-				type="primary"
-				@click="alert("Split Button")"
-			/>
-			`'
-			language="vue-html"
-		/>
-
-		<h3>Best practices</h3>
+		<h4>Best practices</h4>
 
 		<ul>
 			<li>
@@ -493,6 +410,75 @@
 				with the "...” icon.
 			</li>
 		</ul>
+
+		<KtForm v-model:value="splitButtonSettings" size="small">
+			<ComponentForm
+				:component="ktSplitButtonComponent"
+				:propFormatters="propFormatters"
+				:props="splitButtonProps"
+			>
+				<template #component-form-settings>
+					<div>
+						<KtFormControllerObject formKey="props">
+							<h4>Settings</h4>
+							<KtFieldSingleSelect
+								formKey="type"
+								hideClear
+								isUnsorted
+								label="type"
+								:options="[
+									{ label: 'default (default)', value: 'default' },
+									{ label: 'primary', value: 'primary' },
+								]"
+							/>
+							<KtFieldSingleSelect
+								formKey="size"
+								hideClear
+								isUnsorted
+								label="size"
+								:options="[
+									{ label: 'small', value: 'small' },
+									{ label: 'medium (default)', value: 'medium' },
+									{ label: 'large', value: 'large' },
+								]"
+							/>
+						</KtFormControllerObject>
+						<KtFieldToggleGroup
+							formKey="booleanFlags"
+							isOptional
+							label="Boolean Flags"
+							:options="[
+								{ key: 'isDisabled', label: 'isDisabled' },
+								{ key: 'isLoading', label: 'isLoading' },
+							]"
+							style="margin-top: 0.8rem"
+							type="switch"
+						/>
+					</div>
+					<div>
+						<KtFormControllerObject formKey="props">
+							<h4>Texts</h4>
+							<KtFieldText formKey="label" label="label" />
+							<KtFieldText formKey="dataTest" isOptional label="dataTest" />
+							<h4>Decoration</h4>
+							<div class="field-row">
+								<FieldYocoIcon isOptional />
+								<KtFieldSingleSelect
+									formKey="iconPosition"
+									isOptional
+									isUnsorted
+									label="iconPosition"
+									:options="[
+										{ label: 'left (default)', value: 'left' },
+										{ label: 'right', value: 'right' },
+									]"
+								/>
+							</div>
+						</KtFormControllerObject>
+					</div>
+				</template>
+			</ComponentForm>
+		</KtForm>
 	</div>
 </template>
 
@@ -504,6 +490,7 @@ import {
 	KtFieldText,
 	KtFieldToggleGroup,
 	KtForm,
+	KtFormControllerObject,
 	KtSplitButton,
 } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
@@ -511,19 +498,24 @@ import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from 'vue'
 
 import CodePreview from '~/components/CodePreview.vue'
+import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import FieldYocoIcon from '~/components/component-form/FieldYocoIcon.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsButton',
 	components: {
 		CodePreview,
+		ComponentForm,
 		ComponentInfo,
+		FieldYocoIcon,
 		KtButton,
 		KtButtonGroup,
 		KtFieldSingleSelect,
 		KtFieldText,
 		KtFieldToggleGroup,
 		KtForm,
+		KtFormControllerObject,
 		KtSplitButton,
 	},
 	setup() {
@@ -534,28 +526,19 @@ export default defineComponent({
 			Kotti.Button.ToggleStatus.OFF,
 		)
 
-		const settings = ref<{
+		const splitButtonSettings = ref({
 			booleanFlags: {
-				isDisabled: Kotti.FieldToggle.Value
-				isLoading: Kotti.FieldToggle.Value
-			}
-			dataTest: Kotti.FieldText.Value
-			icon: Kotti.FieldSingleSelect.Value
-			iconPosition: Kotti.FieldSingleSelect.Value
-			label: Kotti.FieldText.Value
-			size: Kotti.FieldSingleSelect.Value
-			type: Kotti.FieldSingleSelect.Value
-		}>({
-			booleanFlags: {
-				isDisabled: null,
-				isLoading: null,
+				isDisabled: false,
+				isLoading: false,
 			},
-			dataTest: null,
-			icon: null,
-			iconPosition: null,
-			label: 'Split Button',
-			size: Kotti.SplitButton.Size.MEDIUM,
-			type: Kotti.SplitButton.Type.DEFAULT,
+			props: {
+				dataTest: null,
+				icon: null,
+				iconPosition: Kotti.SplitButton.IconPosition.LEFT,
+				label: 'Split Button',
+				size: Kotti.SplitButton.Size.MEDIUM,
+				type: Kotti.SplitButton.Type.DEFAULT,
+			},
 		})
 
 		return {
@@ -575,17 +558,49 @@ export default defineComponent({
 			onToggleTextClick: (status: Kotti.Button.ToggleStatus) => {
 				toggleTextStatus.value = status
 			},
-			settings,
-			splitButtonProps: computed(() =>
-				Object.fromEntries(
-					[
-						...Object.entries(settings.value).filter(
-							([prop]) => prop !== 'booleanFlags',
-						),
-						...Object.entries(settings.value.booleanFlags),
-					].filter(([_, value]) => value !== null),
-				),
-			),
+			propFormatters: {
+				actions: (items: unknown) =>
+					JSON.stringify(items, null, '\t').split('\n'),
+			},
+			splitButtonSettings,
+			splitButtonProps: computed(() => ({
+				...splitButtonSettings.value.booleanFlags,
+				...splitButtonSettings.value.props,
+				actions: [
+					{
+						dataTest: 'action-1',
+						icon: 'calendar',
+						label: 'Action 1',
+						onClick: () => alert('Action 1'),
+					},
+					{
+						dataTest: 'action-2',
+						icon: 'landline',
+						label: 'Action 2',
+						onClick: () => alert('Action 2'),
+					},
+					{
+						dataTest: 'action-3',
+						icon: 'location',
+						isDisabled: true,
+						label: 'Action 3',
+						onClick: () => alert('Action 3'),
+					},
+					{
+						dataTest: 'action-4',
+						label: 'Action 4 (without icon)',
+						onClick: () => alert('Action 4'),
+					},
+				],
+			})),
+			// Object.fromEntries(
+			// 	[
+			// 		...Object.entries(settings.value).filter(
+			// 			([prop]) => prop !== 'booleanFlags',
+			// 		),
+			// 		...Object.entries(settings.value.booleanFlags),
+			// 	].filter(([_, value]) => value !== null),
+			// ),
 			toggleDefaultIcon: computed(() =>
 				toggleDefaultStatus.value === Kotti.Button.ToggleStatus.ON
 					? 'check'

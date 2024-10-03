@@ -37,7 +37,7 @@ export default defineComponent({
 			type: String as PropType<'default' | 'preview'>,
 		},
 	},
-	setup(props, { slots }) {
+	setup(props) {
 		const codeHtml = ref<string | null>(null)
 
 		watch(
@@ -68,7 +68,7 @@ export default defineComponent({
 	border: 1px solid transparent;
 	overflow: hidden;
 
-	margin-bottom: var(--unit-8);
+	margin-block: var(--unit-8);
 }
 
 .wrapper--is-type-default {
@@ -122,6 +122,7 @@ export default defineComponent({
 
 .code {
 	> * {
+		overflow-x: auto;
 		margin: 0;
 	}
 }

@@ -278,7 +278,8 @@ export default defineComponent({
 <!-- FIXME: https://github.com/3YOURMIND/kotti/issues/829 should this be implemented,
 we would be able to extend on demand instead of unscoping all field classes -->
 <style lang="scss">
-@import './mixins';
+@import './mixins.scss';
+@import './templates.scss';
 
 :root {
 	--field-border-radius: 2px;
@@ -299,7 +300,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 			margin-bottom: 0.4rem;
 		}
 
-		@include no-outline;
+		@extend %no-outline;
 		@include sizes;
 		@include input-colors;
 

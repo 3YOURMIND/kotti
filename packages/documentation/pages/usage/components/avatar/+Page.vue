@@ -1,15 +1,50 @@
 <template>
-	<div>
-		<ComponentInfo :component="KtAvatar" />
-		<KtAvatar v-bind="{ ...avatarSettings }">
-			<template v-if="avatarSettings.showContentSlot" #content>
+	<ComponentInfo :component="KtAvatar" />
+
+	<KtForm v-model:value="ktAvatarSettings" size="small">
+		<ComponentForm
+			:component="KtAvatar"
+			:props="ktAvatarProps"
+			:slots="
+				ktAvatarSettings.hasSlot ? [{ content: '...', name: 'content' }] : []
+			"
+		>
+			<template #component-form-settings>
+				<div>
+					<KtFormControllerObject formKey="props">
+						<KtFieldToggle
+							formKey="isHoverable"
+							isOptional
+							label="isHoverable"
+							type="switch"
+						/>
+						<KtFieldText formKey="name" isOptional label="name" />
+						<KtFieldSingleSelect
+							formKey="size"
+							isOptional
+							label="size"
+							:options="sizeOptions"
+						/>
+						<KtFieldText formKey="src" isOptional label="src" />
+					</KtFormControllerObject>
+				</div>
+				<div>
+					<KtFieldToggle
+						formKey="hasSlot"
+						isOptional
+						label="Use Content Slot"
+						type="switch"
+					/>
+				</div>
+			</template>
+			<template #content v-if="ktAvatarSettings.hasSlot">
 				<div class="user-container">
-					<KtAvatar size="lg" :src="avatarSettings.src" />
+					<KtAvatar size="lg" :src="ktAvatarSettings.props.src" />
 					<div class="user-container__info">
-						<h3 v-text="avatarSettings.name" />
+						<h2 v-text="ktAvatarSettings.props.name" />
 						<div>
 							<span class="yoco" v-text="Yoco.Icon.USER" />
-							<span> email@example.com </span>
+							<span>email@example.com</span>
 						</div>
 						<div>
 							<span class="yoco" v-text="Yoco.Icon.OFFICE" />
@@ -18,81 +53,74 @@
 					</div>
 				</div>
 			</template>
-		</KtAvatar>
-		<div class="wrapper">
-			<KtForm v-model:value="avatarSettings" size="small">
-				<KtFieldSingleSelect
-					formKey="size"
-					hideClear
-					isOptional
-					label="size"
-					:options="sizeOptions"
-				/>
-				<KtFieldToggle
-					formKey="showContentSlot"
-					isOptional
-					label="show content slot"
-					type="switch"
-				/>
-				<KtFieldToggle
-					formKey="isHoverable"
-					isOptional
-					label="isHoverable"
-					type="switch"
-				/>
-			</KtForm>
-		</div>
-		<ComponentInfo :component="KtAvatarGroup" />
-		<KtAvatarGroup v-bind="{ ...avatarGroupSettings }">
-			<template v-if="avatarGroupSettings.showContentSlot" #content="{ item }">
-				<KtRow>
+		</ComponentForm>
+	</KtForm>
+
+	<ComponentInfo :component="KtAvatarGroup" />
+
+	<KtForm v-model:value="ktAvatarGroupSettings" size="small">
+		<ComponentForm
+			:component="KtAvatarGroup"
+			:propFormatters="propFormatters"
+			:props="ktAvatarGroupProps"
+			:slots="
+				ktAvatarGroupSettings.hasSlot
+					? [{ content: '...', scope: '{ item }', name: 'content' }]
+					: []
+			"
+		>
+			<template #component-form-settings>
+				<div>
+					<KtFormControllerObject formKey="props">
+						<KtFieldNumber
+							formKey="count"
+							hideMaximum
+							isOptional
+							label="count"
+							:maximum="ktAvatarGroupProps.items.length"
+							:minimum="1"
+						/>
+						<KtFieldToggle
+							formKey="isHoverable"
+							isOptional
+							label="isHoverable"
+							type="switch"
+						/>
+						<KtFieldToggle
+							formKey="isStack"
+							isOptional
+							label="isStack"
+							type="switch"
+						/>
+						<KtFieldSingleSelect
+							formKey="size"
+							isOptional
+							label="size"
+							:options="sizeOptions"
+						/>
+					</KtFormControllerObject>
+				</div>
+				<div>
+					<KtFieldToggle
+						formKey="hasSlot"
+						isOptional
+						label="Use Content Slot"
+						type="switch"
+					/>
+				</div>
+			</template>
+			<template #content="{ item }" v-if="ktAvatarGroupSettings.hasSlot">
+				<div style="display: flex; align-items: center; gap: var(--unit-1)">
 					<KtAvatar :src="item.src" />
 					<h4 v-text="item.name" />
-				</KtRow>
-				<KtRow>
+				</div>
+				<div style="display: flex; align-items: center; gap: var(--unit-1)">
 					<span class="yoco" v-text="Yoco.Icon.LOCATION" />
-					<p>Berlin, Germany</p>
-				</KtRow>
+					<span>Berlin, Germany</span>
+				</div>
 			</template>
-		</KtAvatarGroup>
-		<div class="wrapper">
-			<KtForm v-model:value="avatarGroupSettings" size="small">
-				<KtFieldSingleSelect
-					formKey="size"
-					hideClear
-					isOptional
-					label="size"
-					:options="sizeOptions"
-				/>
-				<KtFieldToggle
-					formKey="isHoverable"
-					isOptional
-					label="isHoverable"
-					type="switch"
-				/>
-				<KtFieldToggle
-					formKey="isStack"
-					isOptional
-					label="isStack"
-					type="switch"
-				/>
-				<KtFieldNumber
-					formKey="count"
-					hideMaximum
-					isOptional
-					label="count"
-					:maximum="avatarGroupSettings.items.length"
-					:minimum="1"
-				/>
-				<KtFieldToggle
-					formKey="showContentSlot"
-					isOptional
-					label="show content slot"
-					type="switch"
-				/>
-			</KtForm>
-		</div>
-	</div>
+		</ComponentForm>
+	</KtForm>
 </template>
 
 <script lang="ts">
@@ -102,42 +130,60 @@ import {
 	KtAvatarGroup,
 	KtFieldNumber,
 	KtFieldSingleSelect,
+	KtFieldText,
 	KtFieldToggle,
 	KtForm,
+	KtFormControllerObject,
 	KtRow,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
+import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsAvatar',
 	components: {
+		ComponentForm,
 		ComponentInfo,
 		KtAvatar,
 		KtAvatarGroup,
 		KtFieldNumber,
 		KtFieldSingleSelect,
+		KtFieldText,
 		KtFieldToggle,
 		KtForm,
-		KtRow,
+		KtFormControllerObject,
 	},
 	setup() {
-		return {
-			avatarSettings: ref<Kotti.Avatar.Props & { showContentSlot: boolean }>({
-				isHoverable: false,
-				name: "Jony O'Five",
-				showContentSlot: false,
-				size: Kotti.Avatar.Size.MEDIUM,
+		const ktAvatarSettings = ref({
+			hasSlot: false,
+			props: {
+				isHoverable: true,
+				name: 'Example User',
+				size: null,
 				src: 'https://picsum.photos/200/100',
-			}),
-			avatarGroupSettings: ref<
-				Kotti.AvatarGroup.Props & { showContentSlot: boolean }
-			>({
-				count: 1,
-				isHoverable: false,
+			},
+		})
+
+		const ktAvatarGroupSettings = ref({
+			hasSlot: false,
+			props: {
+				count: 3,
+				isHoverable: true,
 				isStack: false,
+				size: null,
+			},
+		})
+
+		return {
+			ktAvatarProps: computed(() => ({
+				...ktAvatarSettings.value.props,
+				size: ktAvatarSettings.value.props.size ?? 'md',
+			})),
+			ktAvatarGroupProps: computed(() => ({
+				...ktAvatarGroupSettings.value.props,
 				items: [
 					{ name: 'Beyoncé', src: 'https://picsum.photos/200' },
 					{ name: 'Justin', src: 'https://picsum.photos/100' },
@@ -145,9 +191,12 @@ export default defineComponent({
 					{ name: 'Shakira', src: 'https://picsum.photos/140' },
 					{ name: 'Rihanna', src: 'https://picsum.photos/150' },
 				],
-				showContentSlot: false,
-				size: Kotti.Avatar.Size.MEDIUM,
-			}),
+				size: ktAvatarGroupSettings.value.props.size ?? 'md',
+			})),
+			propFormatters: {
+				items: (items: unknown) =>
+					JSON.stringify(items, null, '\t').split('\n'),
+			},
 			sizeOptions: Object.entries(Kotti.Avatar.Size).map(([label, value]) => ({
 				label,
 				value,
@@ -155,6 +204,8 @@ export default defineComponent({
 			Kotti,
 			KtAvatar,
 			KtAvatarGroup,
+			ktAvatarGroupSettings,
+			ktAvatarSettings,
 			Yoco,
 		}
 	},
@@ -162,21 +213,30 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/form-fields.scss';
-
 .user-container {
 	display: flex;
 	flex-direction: row;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: space-between;
 	padding: var(--unit-4);
+	gap: var(--unit-2);
 
 	&__info {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
-		margin-left: var(--unit-2);
 		word-wrap: break-word;
+		gap: var(--unit-1);
+
+		h2 {
+			font-size: 1rem;
+			margin: 0;
+		}
+
+		> * {
+			display: flex;
+			align-items: center;
+			gap: var(--unit-1);
+		}
 	}
 }
 </style>

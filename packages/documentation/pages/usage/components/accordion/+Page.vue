@@ -1,98 +1,25 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	<ComponentForm
-		:component="component"
-		:propFormatters="{}"
-		:props="omit(componentProps, ['content'])"
-		:hiddenProps="{
-			'onUpdate:isClosed': (val: boolean) => (componentProps.isClosed = val),
-		}"
-		:slots="[{ content: componentProps.content, name: 'default' }]"
-	>
-		<template #component-form-settings>
-			<div>
-				<KtForm v-model:value="componentProps" size="small">
+	<KtForm v-model:value="componentProps" size="small">
+		<ComponentForm
+			:component="component"
+			:props="omit(componentProps, ['content'])"
+			:hiddenProps="{
+				'onUpdate:isClosed': (val: boolean) => (componentProps.isClosed = val),
+			}"
+			:slots="[{ content: 'Example Content', name: 'default' }]"
+		>
+			<template #component-form-settings>
+				<div>
 					<KtFieldText label="title" formKey="title" />
-					<KtFieldText label="content" formKey="content" />
-				</KtForm>
-			</div>
-		</template>
-	</ComponentForm>
-
-	<h2>Basic Usage</h2>
-
-	<!-- prettier-ignore -->
-	<CodePreview
-		:code='`
-			<KtAccordion
-				v-model:isClosed="isClosed"
-				title="Accordion"
-			>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-				purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-				nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-				leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-				lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-				dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-				iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-				nisl.
-			</KtAccordion>
-		`'
-		language="vue-html"
-	>
-		<KtAccordion
-			v-model:isClosed="isFirstAccordionClosed"
-			title="Accordion"
-		>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-			purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-			nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-			leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-			lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-			dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-			iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-			nisl.
-		</KtAccordion>
-	</CodePreview>
-
-	<h2>With Icon</h2>
-
-	<!-- prettier-ignore -->
-	<CodePreview
-		:code='`
-			<KtAccordion
-				v-model:isClosed="isClosed"
-				icon="edit"
-				title="Accordion with icon"
-			>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-				purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-				nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-				leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-				lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-				dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-				iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-				nisl.
-			</KtAccordion>
-		`'
-		language="vue-html"
-	>
-		<KtAccordion
-			v-model:isClosed="isSecondAccordionClosed"
-			icon="edit"
-			title="Accordion with icon"
-		>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
-			purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
-			nibh vestibulum cursus. Maecenas nec nulla nec mi sodales dapibus id vitae
-			leo. Aenean sodales placerat sodales. Pellentesque imperdiet ipsum at
-			lacus tincidunt, eu mattis nisl convallis. Aliquam dolor massa, volutpat a
-			dui ultricies, ornare feugiat nisl. Vivamus ut arcu non justo efficitur
-			iaculis eget id dolor. Nulla eget tortor dictum nunc suscipit ornare at et
-			nisl.
-		</KtAccordion>
-	</CodePreview>
+				</div>
+				<div>
+					<FieldYocoIcon isOptional />
+				</div>
+			</template>
+		</ComponentForm>
+	</KtForm>
 
 	<h2>As Controlled Component</h2>
 
@@ -144,6 +71,7 @@ import omit from 'lodash/omit.js'
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import FieldYocoIcon from '~/components/component-form/FieldYocoIcon.vue'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsAccordion',
@@ -151,6 +79,7 @@ export default defineComponent({
 		CodePreview,
 		ComponentForm,
 		ComponentInfo,
+		FieldYocoIcon,
 		KtAccordion,
 		KtButton,
 		KtFieldText,
@@ -163,7 +92,6 @@ export default defineComponent({
 				dataTest: null,
 				icon: null,
 				isClosed: false,
-				content: 'Example Content',
 				title: 'Example title',
 			}),
 			isClosed: ref(false),

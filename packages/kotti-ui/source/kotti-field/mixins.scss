@@ -28,7 +28,7 @@
 	}
 }
 
-@mixin no-outline {
+/* @mixin no-outline {
 	// overwrite native outline behavior
 	outline: none;
 
@@ -45,7 +45,7 @@
 			outline: none;
 		}
 	}
-}
+} */
 
 @mixin prettify-scrollbar {
 	&::-webkit-scrollbar {

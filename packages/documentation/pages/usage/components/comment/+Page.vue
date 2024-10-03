@@ -106,7 +106,7 @@
 				@delete="handleDelete($event)"
 				@edit="handleEdit($event)"
 			/>
-            <KtCommentInput
+			<KtCommentInput
 				allowInternal
 				dataTest="comments"
 				placeholder="Add a comment"
@@ -170,15 +170,15 @@
 						<td><code>KtComment</code>, <code>KtCommentInput</code></td>
 						<td>
 							<pre>
-						    <code data-lang="ts">
+							<code data-lang="ts">
 							{
-                               	isInternal?: boolean,
-                               	message: string,
-                               	parentId?: number | string,
-                               	replyToUserId?: number | string,
-                            }
-                            </code>
-                        </pre>
+								isInternal?: boolean,
+								message: string,
+								parentId?: number | string,
+								replyToUserId?: number | string,
+							}
+							</code>
+						</pre>
 						</td>
 						<td>Add new comment</td>
 					</tr>
@@ -187,12 +187,12 @@
 						<td><code>KtComment</code></td>
 						<td>
 							<pre>
-						    <code data-lang="ts">{
-                               	id: number | string,
-                               	parentId?: number | string,
-                            }
-                            </code>
-                        </pre>
+							<code data-lang="ts">{
+								id: number | string,
+								parentId?: number | string,
+							}
+							</code>
+						</pre>
 						</td>
 						<td>Delete comment</td>
 					</tr>
@@ -201,14 +201,14 @@
 						<td><code>KtComment</code></td>
 						<td>
 							<pre>
-						    <code data-lang="ts">{
-                               	id: number | string,
-                               	isInternal?: boolean,
-                               	message: string,
-                               	parentId?: number | string,
-	                        }
-                            </code>
-                        </pre>
+							<code data-lang="ts">{
+								id: number | string,
+								isInternal?: boolean,
+								message: string,
+								parentId?: number | string,
+							}
+							</code>
+							</pre>
 						</td>
 						<td>Edit comment</td>
 					</tr>

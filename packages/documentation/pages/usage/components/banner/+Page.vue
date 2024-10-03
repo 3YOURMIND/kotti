@@ -3,17 +3,17 @@
 
 	<!-- prettier-ignore -->
 	<MarkdownBlock>
-	Banners can be used as an alert at the top of the screen to display
-    critical messages or expandable information. It should not include a
-    dismiss icon, and should **only disappear** once the problem is **resolved**.
+		Banners can be used as an alert at the top of the screen to display
+		critical messages or expandable information. It should not include a
+		dismiss icon, and should **only disappear** once the problem is **resolved**.
 
-    ## Structure
+		## Structure
 
-    ![Banner Structure](./banner_alert.png)
+		![Banner Structure](./banner_alert.png)
 
-    1. **Glyph icon:** Indicates the type of this banner.
-    2. **Message:** Give a short description of this issue or summary of an important message.
-    3. **Action:** A textual call to action button to resolve this issue.
+		1. **Glyph icon:** Indicates the type of this banner.
+		2. **Message:** Give a short description of this issue or summary of an important message.
+		3. **Action:** A textual call to action button to resolve this issue.
 	</MarkdownBlock>
 
 	<h2>Types</h2>
@@ -27,18 +27,18 @@
 	<!-- prettier-ignore -->
 	<CodePreview
 		:code='`
-      		<KtBanner
-     			message="Your material is not published yet"
-     			icon="announce"
-     			actionText="Publish"
-      		/>
-        `'
+			<KtBanner
+				actionText="Publish"
+				icon="announce"
+				message="Your material is not published yet"
+			/>
+		`'
 		language="vue-html"
 	>
 		<KtBanner
-			message="Your material is not published yet"
-			icon="announce"
 			actionText="Publish"
+			icon="announce"
+			message="Your material is not published yet"
 		/>
 	</CodePreview>
 
@@ -57,17 +57,17 @@
 				<div>
 					<h2>Order #100002</h2>
 					<h3>Order information</h3>
-					.... ....
+					...
 				</div>
 			</KtBanner>
-        `'
-			language="vue-html"
-		>
+		`'
+		language="vue-html"
+	>
 		<KtBanner message="Your material is not published yet" icon="cloud">
 			<div>
 				<h2>Order #100002</h2>
 				<h3>Order information</h3>
-				.... ....
+				...
 			</div>
 		</KtBanner>
 	</CodePreview>
@@ -76,46 +76,30 @@
 
 	<h3>Background</h3>
 
-	<p>
-		You can use `banner-gray` to change the banner's background color, this
-		style is useful when you want add contrast to the page.
-	</p>
+	<!-- prettier-ignore -->
+	<MarkdownBlock>
+		You can use `isGray` to change the banner's background color, this style is useful when you want add contrast to the page.
+	</MarkdownBlock>
 
 	<!-- prettier-ignore -->
 	<CodePreview
-			:code='`
+		:code='`
 			<KtBanner
-				message="Your material is not published yet"
-				icon="announce"
 				actionText="Publish"
-				isGray
-			/>
-        `'
-				language="vue-html"
-			>
-			<KtBanner
-				message="Your material is not published yet"
 				icon="announce"
-				actionText="Publish"
 				isGray
+				message="Your material is not published yet"
 			/>
-		</CodePreview>
-
-	<!-- prettier-ignore -->
-	<MarkdownBlock>
-## Usage
-
-### Attributes
-
-| Attribute          | Description                                    | Type      | Accepted values     | Default      |
-|--------------------|------------------------------------------------|-----------|---------------------|--------------|
-| `message`          | message in banner                              | `String`  | —                   | —            |
-| `icon`             | icon name from `yoco`                          | `String`  | icon name in `yoco` | `"announce"` |
-| `isGray`           | gray background for high contrast              | `Boolean` | —                   | `false`      |
-| `actionText`       | text shows when banner is not expandable       | `String`  | —                   | —            |
-| `expandLabel`      | text shows when expandable banner is collapsed | `String`  | —                   | `View`       |
-| `expandCloseLabel` | text shows when expandable banner is expand    | `String`  | —                   | `Close`      |1
-	</MarkdownBlock>
+		`'
+		language="vue-html"
+	>
+		<KtBanner
+			message="Your material is not published yet"
+			icon="announce"
+			actionText="Publish"
+			isGray
+		/>
+	</CodePreview>
 </template>
 
 <script lang="ts">

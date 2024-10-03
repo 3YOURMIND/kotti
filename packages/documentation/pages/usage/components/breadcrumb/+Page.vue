@@ -35,7 +35,7 @@
 					isDisabled: true,
 				}
 			]"
-	 	/>`'
+		/>`'
 		language="vue-html"
 	>
 		<KtBreadcrumb :activeIndex="activeIndex" :breadcrumbs="links" />

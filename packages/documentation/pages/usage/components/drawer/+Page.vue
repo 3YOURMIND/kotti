@@ -28,7 +28,7 @@ You can also customize the width of drawer by setting both `defaultWidth` and `e
 
 	<CodePreview
 		:code="`
-		    <!-- default width drawer -->
+			<!-- default width drawer -->
 			<KtDrawer> ... </KtDrawer>
 
 			<!-- Wide width drawer -->

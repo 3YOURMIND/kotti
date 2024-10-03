@@ -211,13 +211,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
-@import '../kotti-field/mixins';
+@import '../kotti-field/templates.scss';
 
 .kt-popover {
 	display: inline-block;
 
 	> div {
-		@include no-outline;
+		@extend %no-outline;
 	}
 
 	&__content {
