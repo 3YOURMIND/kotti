@@ -4,6 +4,8 @@ import { attachMeta, makeInstallable } from '../utilities'
 import KtToasterVue from './KtToaster.vue'
 import { schema } from './types'
 
+export { createToaster } from './create-toaster'
+
 export const KtToaster = attachMeta(makeInstallable(KtToasterVue), {
 	addedVersion: '1.0.0',
 	deprecated: null,

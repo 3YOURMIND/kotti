@@ -3,40 +3,40 @@
 
 	<!-- prettier-ignore -->
 	<MarkdownBlock>
-Drawer is another layer of the interface. It adds more information or functionality to the current layout without messing up the elements.
+		Drawer is another layer of the interface. It adds more information or functionality to the current layout without messing up the elements.
 
-It is best to place secondary functionality or information into the drawer, and only present the most important elements or interaction in the workspace.
+		It is best to place secondary functionality or information into the drawer, and only present the most important elements or interaction in the workspace.
 
-## Structure
+		## Structure
 
-![Structure](./drawer_structure.png)
+		![Structure](./drawer_structure.png)
 
-- **Drawer:** The size of drawer depends on information density.
-- **Handle:** By clicking the handles, the drawer can be `Expanded` to display more information.
-- **Background:** The background should be black `#000000` with `46%` opacity.
+		- **Drawer:** The size of drawer depends on information density.
+		- **Handle:** By clicking the handles, the drawer can be `Expanded` to display more information.
+		- **Background:** The background should be black `#000000` with `46%` opacity.
 
-## Size
-There are different ways to customize the width of the drawer.
+		## Size
+		There are different ways to customize the width of the drawer.
 
-Each drawer has a default state and a wide state, the transition can be triggered by clicking on the arrow at the edge of the drawer.
+		Each drawer has a default state and a wide state, the transition can be triggered by clicking on the arrow at the edge of the drawer.
 
-When the `isWide` flag is set to `true` the default state will be `26.8rem` wide, the expanded state will be `75%` of the screen width.
+		When the `isWide` flag is set to `true` the default state will be `26.8rem` wide, the expanded state will be `75%` of the screen width.
 
-You can also customize the width of drawer by setting both `defaultWidth` and `expandWidth`. If only one values is set, this will not work
-
+		You can also customize the width of drawer by setting both `defaultWidth` and `expandWidth`. If only one values is set, this will not work
 	</MarkdownBlock>
 
+	<!-- prettier-ignore -->
 	<CodePreview
-		:code="`
+		:code='`
 			<!-- default width drawer -->
 			<KtDrawer> ... </KtDrawer>
 
 			<!-- Wide width drawer -->
-				<KtDrawer isWide> ... </KtDrawer>
+			<KtDrawer isWide> ... </KtDrawer>
 
 			<!-- Customize width drawer -->
-			<KtDrawer defaultWidth=&quot;400px&quot; expandWidth=&quot;600px&quot;> ... </KtDrawer>
-		`"
+			<KtDrawer defaultWidth="400px" expandWidth="600px"> ... </KtDrawer>
+		`'
 		language="vue-html"
 	>
 		<KtButton
@@ -121,7 +121,7 @@ You can also customize the width of drawer by setting both `defaultWidth` and `e
 	<!-- prettier-ignore -->
 	<CodePreview
 		:code='`
-		<KtButton
+			<KtButton
 				type="primary"
 				class="mr-16px"
 				@click="showDrawer = true"

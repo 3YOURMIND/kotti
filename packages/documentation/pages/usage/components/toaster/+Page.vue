@@ -1,11 +1,17 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
+	<KtToaster :toaster="toaster" />
+
+	<KtButton @click="sudoMakeMeAToast">sudo make me a toast</KtButton>
+	<br />
+
 	<h2>Usage</h2>
 
+	<!-- prettier-ignore -->
 	<CodePreview
-		:code="`
-			import { success, toaster } from &quot;~/shared/toaster.ts&quot;
+		:code='`
+			import { success, toaster } from "~/shared/toaster.ts"
 
 			export const someAction = async () => {
 				// push a notification without waiting for it
@@ -19,14 +25,14 @@
 				succ.abort()
 
 				// programmatically push any kind of notification
-				toaster.push({ message: &quot;TODO: message?&quot;, type: &quot;error&quot; })
+				toaster.push({ message: "TODO: message?", type: "error" })
 
 				// create a designated message pusher
-				const customPusher = toaster.createPusher({ type: &quot;success&quot; })
+				const customPusher = toaster.createPusher({ type: "success" })
 				const message = customPusher()
 				await message.done
 			}
-		`"
+		`'
 		fileName="~/store/my-module.ts"
 		language="typescript"
 	/>
@@ -100,6 +106,7 @@
 			import { createToaster } from "@3yourmind/kotti-ui"
 
 			// create a toaster instance, usually there should only ever be one per app
+			// TODO: consider splitting API in public and private
 			export const toaster = createToaster()
 
 			// define custom notification types with pre-configured options
@@ -147,11 +154,13 @@
 </template>
 
 <script lang="ts">
-import { KtButton, KtToaster } from '@3yourmind/kotti-ui'
+import { createToaster, KtButton, KtToaster } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+
+const toaster = createToaster()
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsToaster',
@@ -164,7 +173,11 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtToaster,
+			sudoMakeMeAToast: () => {
+				toaster.push({ text: 'some message' })
+			},
 			template: 'template', // HACK: parsers are angry when you say template
+			toaster,
 		}
 	},
 })

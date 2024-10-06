@@ -58,31 +58,31 @@
 	<!-- prettier-ignore -->
 	<CodePreview
 		:code='`
-            <KtPagination
-             	pagingStyle="flex"
-             	:total="500"
-             	:pageSize="10"
-             	:page="25"
-             	:adjacentAmount="1"
-            />
-            <KtPagination
-             	pagingStyle="flex"
-             	:total="500"
-             	:pageSize="10"
-             	:page="25"
-             	:adjacentAmount="2"
-            />
-            <KtPagination
-             	pagingStyle="flex"
-             	:total="500"
-             	:pageSize="10"
-             	:page="25"
-             	:adjacentAmount="3"
-            />
+			<KtPagination
+			 	pagingStyle="flex"
+			 	:total="500"
+			 	:pageSize="10"
+			 	:page="25"
+			 	:adjacentAmount="1"
+			/>
+			<KtPagination
+			 	pagingStyle="flex"
+			 	:total="500"
+			 	:pageSize="10"
+			 	:page="25"
+			 	:adjacentAmount="2"
+			/>
+			<KtPagination
+			 	pagingStyle="flex"
+			 	:total="500"
+			 	:pageSize="10"
+			 	:page="25"
+			 	:adjacentAmount="3"
+			/>
 
-            <KtPagination pagingStyle="flex" :total="500" :pageSize="10" />
-            <KtPagination pagingStyle="flex" :total="500" :pageSize="10" fixedWidth />
-       	`'
+			<KtPagination pagingStyle="flex" :total="500" :pageSize="10" />
+			<KtPagination pagingStyle="flex" :total="500" :pageSize="10" fixedWidth />
+	   	`'
 		language="vue-html"
 	>
 		<KtPagination
