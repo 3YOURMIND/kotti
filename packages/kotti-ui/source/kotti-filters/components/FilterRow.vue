@@ -257,7 +257,7 @@ export default defineComponent({
 		}
 	}
 
-	::v-deep .kt-field-select {
+	:deep(.kt-field-select) {
 		margin-bottom: 0;
 	}
 }

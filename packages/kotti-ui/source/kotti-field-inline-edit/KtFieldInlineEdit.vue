@@ -329,7 +329,7 @@ export default defineComponent({
 	// slot that wraps <input /> & <EditIcon/>
 
 	/* stylelint-disable-next-line selector-class-pattern */
-	::v-deep .kt-field__input-container__slot {
+	:deep(.kt-field__input-container__slot) {
 		display: flex;
 		gap: var(--unit-2);
 		align-items: center;
@@ -341,12 +341,12 @@ export default defineComponent({
 		margin: 0;
 	}
 
-	::v-deep .kt-field__input-container {
+	:deep(.kt-field__input-container) {
 		background-color: transparent;
 	}
 
 	&--is-readonly {
-		::v-deep .kt-field__input-container {
+		:deep(.kt-field__input-container) {
 			box-shadow: none !important;
 		}
 	}
@@ -376,7 +376,7 @@ export default defineComponent({
 	&.kt-field-inline-edit--is-editable:hover:not(
 			.kt-field-inline-edit--is-editing
 		) {
-		::v-deep .kt-field__wrapper:not(.kt-field__wrapper--disabled) {
+		:deep(.kt-field__wrapper:not(.kt-field__wrapper--disabled)) {
 			.kt-field__input-container:hover {
 				cursor: pointer;
 				background-color: var(--ui-05);
@@ -394,7 +394,7 @@ export default defineComponent({
 			word-break: break-word;
 		}
 
-		::v-deep .kt-field__input-container {
+		:deep(.kt-field__input-container) {
 			border: 0;
 		}
 	}
