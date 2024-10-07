@@ -174,7 +174,7 @@ export default defineComponent({
 		return {
 			component: KtToaster,
 			sudoMakeMeAToast: () => {
-				toaster.push({ text: 'some message' })
+				toaster.push({ text: 'some message', duration: 1500 })
 			},
 			toaster,
 			parserHack: {

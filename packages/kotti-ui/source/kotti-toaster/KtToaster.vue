@@ -3,7 +3,7 @@ import { defineComponent, onBeforeMount, onUnmounted, ref } from 'vue'
 
 import { makeProps } from '../make-props'
 import { schema } from './types'
-import type { InternalMessage } from './create-toaster'
+import type { RenderedMessage } from './create-toaster'
 
 // toaster keeps unshown toasts
 // component asks for ownership transfer when it has space
@@ -12,21 +12,13 @@ export default defineComponent({
 	name: 'KtToaster',
 	props: makeProps(schema),
 	setup(props) {
-		const currentToasts = ref<Array<InternalMessage>>([])
-
-		const attemptPollingToast = () => {
-			if (currentToasts.value.length >= props.shownToasts) return
-
-			const nextToast = props.toaster._internal_pls_dont_touch.pollMessage()
-			if (nextToast) {
-				currentToasts.value = [...currentToasts.value, nextToast]
-				// set up automatic delete
-			}
-		}
+		const currentToasts = ref<Array<RenderedMessage>>([])
 
 		onBeforeMount(() => {
 			// TODO: onMounted(?)
-			props.toaster._internal_pls_dont_touch.subscribe(attemptPollingToast)
+			props.toaster._internal_pls_dont_touch.subscribe((activeToasts) => {
+				currentToasts.value = activeToasts
+			})
 		})
 
 		onUnmounted(() => {
@@ -34,11 +26,11 @@ export default defineComponent({
 		})
 
 		const deleteToast = (deleteId: string) => {
-			currentToasts.value = currentToasts.value.filter(
-				({ metadata }) => metadata.id !== deleteId,
-			)
+			// currentToasts.value = currentToasts.value.filter(
+			// 	({ metadata }) => metadata.id !== deleteId,
+			// )
 
-			attemptPollingToast()
+			props.toaster._internal_pls_dont_touch.requestDelete(deleteId)
 		}
 
 		return {
@@ -55,13 +47,14 @@ export default defineComponent({
 			<div class="kt-toaster__notifications">
 				<div
 					v-for="toast in currentToasts"
-					class="kt-toast"
 					:key="toast.metadata.id"
+					class="kt-toast"
 				>
 					<div class="kt-toast__icon">
 						<i class="yoco" v-text="toast.icon" />
 					</div>
 					<div class="kt-toast__text">{{ toast.text }}</div>
+					<div class="kt-toast__text">{{ toast.progress }}</div>
 					<div
 						class="kt-toast__close"
 						@click="() => deleteToast(toast.metadata.id)"

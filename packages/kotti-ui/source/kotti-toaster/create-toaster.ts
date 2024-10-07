@@ -1,5 +1,8 @@
 import { nanoid } from 'nanoid'
 import { z } from 'zod'
+import dayjs from 'dayjs'
+import { Dayjs } from 'dayjs'
+import { createDeferred } from './create-deferred'
 
 const customSchema = z.record(z.unknown())
 
@@ -7,22 +10,39 @@ const durationSchema = z.number().int().finite().positive().nullable()
 
 const metadataSchema = z
 	.object({
-		abortController: z.instanceof(AbortController),
+		abortController: z.instanceof(globalThis.AbortController),
 		id: z.string(),
 	})
 	.strict()
 
-const internalMessageSchema = z
+const queuedToastSchema = z
 	.object({
-		abort: z.function(z.tuple([]), z.void()),
 		custom: customSchema,
-		done: z.promise(z.void()),
+		deferred: z
+			.object({
+				promise: z.promise(z.void()),
+				reject: z.function().args(z.unknown()).returns(z.void()),
+				resolve: z.function().args(z.undefined()).returns(z.void()),
+			})
+			.strict(),
+		duration: durationSchema,
 		metadata: metadataSchema,
 		text: z.string(),
 	})
 	.strict()
 
-export type InternalMessage = z.output<typeof internalMessageSchema>
+export type QueuedToast = z.output<typeof queuedToastSchema>
+
+const renderedMessageSchema = z
+	.object({
+		custom: customSchema,
+		metadata: metadataSchema,
+		progress: z.number().min(0).max(1),
+		text: z.string(),
+	})
+	.strict()
+
+export type RenderedMessage = z.output<typeof renderedMessageSchema>
 
 const pushResultSchema = z
 	.object({
@@ -42,8 +62,8 @@ const messageSchema = z
 		metadata: z
 			.object({
 				abortController: z
-					.instanceof(AbortController)
-					.default(() => new AbortController()),
+					.instanceof(globalThis.AbortController)
+					.default(() => new globalThis.AbortController()),
 				id: z.string().default(nanoid),
 			})
 			.strict()
@@ -61,6 +81,13 @@ const pushOptionsSchema = z
 	.strict()
 const pushSchema = z.function().args(messageSchema).returns(pushResultSchema)
 
+const subscribeHandlerSchema = z
+	.function()
+	.args(z.array(renderedMessageSchema))
+	.returns(z.union([z.promise(z.void()), z.void()]))
+
+type SubscribeHandler = z.output<typeof subscribeHandlerSchema>
+
 export const toasterReturnSchema = z.object({
 	abort: z.function(z.tuple([z.string()]), z.void()),
 	createPusher: z
@@ -72,19 +99,8 @@ export const toasterReturnSchema = z.object({
 	// internal
 	_internal_pls_dont_touch: z
 		.object({
-			pollMessage: z
-				.function()
-				.args()
-				.returns(internalMessageSchema.nullable()),
-			subscribe: z
-				.function()
-				.args(
-					z
-						.function()
-						.args()
-						.returns(z.union([z.promise(z.void()), z.void()])),
-				)
-				.returns(z.void()),
+			requestDelete: z.function().args(z.string()).returns(z.void()),
+			subscribe: z.function().args(subscribeHandlerSchema).returns(z.void()),
 			unsubscribe: z.function().args().returns(z.void()),
 		})
 		.strict(),
@@ -92,55 +108,174 @@ export const toasterReturnSchema = z.object({
 
 type ToasterReturn = z.output<typeof toasterReturnSchema>
 
-export const createToaster = (): ToasterReturn => {
-	let toastReceiver: (() => Promise<void> | void) | null = null
+const createToasterOptions = z
+	.object({
+		numberOfToasts: z.number().int().positive().finite().default(3),
+	})
+	.strict()
+	.default(() => ({}))
 
-	const fifoToasterQueue: Array<InternalMessage> = []
+type CreateToasterOptions = z.input<typeof createToasterOptions>
+
+type ActiveToast = {
+	beginTime: Dayjs
+	endTime: Dayjs | null
+	message: QueuedToast
+	progress: number
+}
+
+export const createToaster = (
+	_options: CreateToasterOptions = {},
+): ToasterReturn => {
+	const options = createToasterOptions.parse(_options)
+	let subscriber: SubscribeHandler | null = null
+
+	const fifoToasterQueue: Array<QueuedToast> = []
+	const activeToasts: Array<ActiveToast> = []
+
+	let animationFrameId: number | null = null
+
+	const notifySubscriber = () => {
+		if (subscriber === null)
+			throw new Error('could not find subscriber to notify')
+
+		void subscriber(
+			activeToasts.map((x) => ({
+				custom: x.message.custom,
+				progress: x.progress,
+				metadata: x.message.metadata,
+				text: x.message.text,
+			})),
+		)
+	}
+
+	const stop = () => {
+		if (animationFrameId) {
+			globalThis.cancelAnimationFrame(animationFrameId)
+			animationFrameId = null
+		}
+	}
+
+	const start = () => {
+		const animate = () => {
+			console.log('animate')
+			animationFrameId = globalThis.requestAnimationFrame(animate)
+			// eslint-disable-next-line @typescript-eslint/no-use-before-define -- FIXME
+			updateActiveToasts()
+		}
+		animationFrameId = globalThis.requestAnimationFrame(animate)
+	}
+
+	const updateActiveToasts = () => {
+		if (subscriber === null) return
+
+		const wasEmpty = activeToasts.length === 0
+
+		let dirty = false
+
+		let index = 0
+		while (index < activeToasts.length) {
+			const toast = activeToasts[index] as ActiveToast
+
+			if (toast.endTime === null) {
+				index++
+				continue
+			}
+			const now = dayjs()
+
+			const current = now.valueOf() - toast.beginTime.valueOf()
+			const delta = toast.endTime.valueOf() - toast.beginTime.valueOf()
+
+			toast.progress = Math.max(Math.min(current / delta, 1), 0)
+			dirty = true
+
+			if (toast.progress >= 1) {
+				activeToasts.splice(index, 1)
+				continue
+			}
+			index++
+		}
+
+		while (activeToasts.length < options.numberOfToasts) {
+			const message = fifoToasterQueue.shift() ?? null
+			if (message === null) break
+
+			// const { signal } = message.metadata.abortController
+
+			// if (signal.aborted) {
+			// 	message.deferred.reject(signal.reason)
+			// 	continue
+			// }
+
+			// const timeout = globalThis.setTimeout(() => {
+			// 	const toBeRemovedIndex = fifoToasterQueue.findIndex(
+			// 		({ metadata }) => metadata.id === options.metadata.id,
+			// 	)
+
+			// 	if (toBeRemovedIndex === -1)
+			// 		throw new Error(
+			// 			`could not find to be removed notification “${options.metadata.id}”`,
+			// 		)
+
+			// 	fifoToasterQueue.splice(toBeRemovedIndex, 1)
+
+			// 	resolve()
+			// }, options.duration ?? 3000) // TODO: persistent toast support
+
+			// // TODO: possible memory leak
+			// signal.addEventListener('abort', () => {
+			// 	globalThis.clearTimeout(timeout)
+			// 	reject(signal.reason)
+			// })
+
+			activeToasts.push({
+				beginTime: dayjs(),
+				endTime: message.duration
+					? dayjs().add(message.duration, 'milliseconds')
+					: null,
+				message,
+				progress: 0,
+			})
+			dirty = true
+		}
+
+		const isNowEmpty = activeToasts.length === 0
+
+		if (!dirty) return
+
+		notifySubscriber()
+		if (wasEmpty && !isNowEmpty) {
+			start()
+		} else if (!wasEmpty && isNowEmpty) {
+			stop()
+		}
+	}
 
 	const push: ToasterReturn['push'] = (message) => {
 		const options = messageSchema.parse(message)
 
-		const { signal } = options.metadata.abortController
+		const doneDeferred = createDeferred()
 
-		const donePromise = new Promise<void>((resolve, reject) => {
-			// FIXME: this function needs to be redone
-
-			if (signal.aborted) return reject(signal.reason)
-
-			const timeout = globalThis.setTimeout(() => {
-				const toBeRemovedIndex = fifoToasterQueue.findIndex(
-					({ metadata }) => metadata.id === options.metadata.id,
-				)
-
-				if (toBeRemovedIndex === -1)
-					throw new Error(
-						`could not find to be removed notification “${options.metadata.id}”`,
-					)
-
-				fifoToasterQueue.splice(toBeRemovedIndex, 1)
-
-				resolve()
-			}, options.duration ?? 3000) // TODO: persistent toast support
-
-			// TODO: possible memory leak
-			signal.addEventListener('abort', () => {
-				globalThis.clearTimeout(timeout)
-				reject(signal.reason)
-			})
+		fifoToasterQueue.push({
+			custom: options.custom,
+			deferred: doneDeferred,
+			duration: options.duration,
+			metadata: options.metadata,
+			text: options.text,
 		})
 
-		const queueItem: InternalMessage = {
-			abort: () => options.metadata.abortController.abort(),
+		updateActiveToasts()
+
+		return {
+			abort: () => {
+				// TODO: will it work
+				options.metadata.abortController.abort()
+			},
 			custom: options.custom,
-			done: donePromise,
+			done: doneDeferred.promise,
 			metadata: options.metadata,
 			text: options.text,
 		}
-		fifoToasterQueue.push(queueItem)
-
-		toastReceiver?.()
-
-		return queueItem
 	}
 
 	return {
@@ -172,28 +307,33 @@ export const createToaster = (): ToasterReturn => {
 			}
 		},
 		_internal_pls_dont_touch: {
-			pollMessage: () => {
-				// FIXME: this function needs to be redone
-				return fifoToasterQueue.shift() ?? null
+			requestDelete: (deleteId) => {
+				const index = activeToasts.findIndex(
+					(toast) => toast.message.metadata.id === deleteId,
+				)
+				if (index === -1)
+					throw new Error(`could not find toast with id ${deleteId}`)
+
+				activeToasts.splice(index, 1)
+				updateActiveToasts()
 			},
-			subscribe: (handler: () => Promise<void> | void) => {
-				if (toastReceiver)
+			subscribe: (handler) => {
+				if (subscriber)
 					throw new Error(
 						'create-toaster: toaster already has a subscriber, aborting',
 					)
 
-				toastReceiver = handler
+				subscriber = handler
 
-				// TODO: Consider always calling toastReceiver here (?)
-				if (fifoToasterQueue.length) toastReceiver()
+				updateActiveToasts()
 			},
 			unsubscribe: () => {
-				if (!toastReceiver)
+				if (!subscriber)
 					throw new Error(
 						'create-toaster: toaster currently has no subscriber, aborting',
 					)
 
-				toastReceiver = null
+				subscriber = null
 			},
 		},
 		push,
