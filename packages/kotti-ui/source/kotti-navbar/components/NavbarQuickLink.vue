@@ -76,7 +76,7 @@ export default defineComponent({
 		color: var(--kt-navbar-color-active);
 	}
 
-	::v-deep .yoco {
+	:deep(.yoco) {
 		font-size: 0.8rem;
 	}
 

@@ -156,7 +156,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-section ::v-deep img {
+section :deep(img) {
 	display: block;
 	overflow: hidden;
 	border: 1px solid var(--ui-02);

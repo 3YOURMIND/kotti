@@ -28,6 +28,12 @@ module.exports = {
 					`"${error}" is not a valid BEM class name (see https://getbem.com/naming/)`,
 			},
 		],
+		'selector-pseudo-class-no-unknown': [
+			true,
+			{
+				ignorePseudoClasses: ['deep'],
+			},
+		],
 		'selector-pseudo-element-no-unknown': [
 			true,
 			{

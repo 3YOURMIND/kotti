@@ -72,7 +72,7 @@ $margin: 0.8rem 1rem;
 }
 
 .kt-navbar-logo {
-	::v-deep .yoco {
+	:deep(.yoco) {
 		padding: $margin;
 		font-size: 1.2rem;
 		color: var(--kt-navbar-color-light);

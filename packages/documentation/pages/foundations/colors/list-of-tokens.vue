@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.colorize ::v-deep .color-box {
+.colorize :deep(.color-box) {
 	width: 50px;
 	height: 50px;
 	margin: 8px;

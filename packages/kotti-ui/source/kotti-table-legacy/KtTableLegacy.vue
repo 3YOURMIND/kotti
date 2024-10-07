@@ -382,7 +382,7 @@ table.kt-table {
 	border-collapse: collapse;
 }
 
-::v-deep table.kt-table tr {
+:deep(table.kt-table tr) {
 	position: relative;
 	margin: 0;
 
@@ -408,7 +408,7 @@ table.kt-table {
 	}
 }
 
-::v-deep table.kt-table td {
+:deep(table.kt-table td) {
 	position: relative;
 	padding: var(--unit-2) var(--unit-1);
 	line-height: 1.2rem;
@@ -420,7 +420,7 @@ table.kt-table {
 	}
 }
 
-::v-deep table.kt-table {
+:deep(table.kt-table) {
 	.expand-toggle,
 	.kt-table__quick-sort-control {
 		i {
@@ -435,7 +435,7 @@ table.kt-table {
 	}
 }
 
-::v-deep table.kt-table .table-actions {
+:deep(table.kt-table .table-actions) {
 	position: absolute;
 	top: 50%;
 	right: 0.8rem;
@@ -468,7 +468,7 @@ table.kt-table {
 	}
 }
 
-::v-deep table.kt-table .form-group {
+:deep(table.kt-table .form-group) {
 	width: 32px;
 	line-height: 0;
 
@@ -477,16 +477,16 @@ table.kt-table {
 	}
 }
 
-::v-deep .kt-table .kt-table__no-row {
+:deep(.kt-table .kt-table__no-row) {
 	color: $lightgray-500;
 	text-align: center;
 }
 
-::v-deep .kt-table .kt-table__loader {
+:deep(.kt-table .kt-table__loader) {
 	text-align: center;
 }
 
-::v-deep .kt-table .loading {
+:deep(.kt-table .loading) {
 	margin: 1.6rem 0;
 	text-align: center;
 }
