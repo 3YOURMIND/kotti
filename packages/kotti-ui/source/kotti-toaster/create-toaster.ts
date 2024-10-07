@@ -1,16 +1,24 @@
 import { nanoid } from 'nanoid'
 import { z } from 'zod'
 
+const customSchema = z.record(z.unknown())
+
+const durationSchema = z.number().int().finite().positive().nullable()
+
+const metadataSchema = z
+	.object({
+		abortController: z.instanceof(AbortController),
+		id: z.string(),
+	})
+	.strict()
+
 const internalMessageSchema = z
 	.object({
 		abort: z.function(z.tuple([]), z.void()),
+		custom: customSchema,
 		done: z.promise(z.void()),
-		metadata: z
-			.object({
-				abortController: z.instanceof(AbortController),
-				id: z.string(),
-			})
-			.strict(),
+		metadata: metadataSchema,
+		text: z.string(),
 	})
 	.strict()
 
@@ -19,33 +27,34 @@ export type InternalMessage = z.output<typeof internalMessageSchema>
 const pushResultSchema = z
 	.object({
 		abort: z.function(z.tuple([]), z.void()),
+		custom: customSchema,
 		done: z.promise(z.void()),
-		metadata: z.object({
-			abortController: z.instanceof(AbortController),
-			id: z.string(),
-		}),
+		text: z.string(),
+		metadata: metadataSchema,
 	})
 	.strict()
 
 const messageSchema = z
 	.object({
-		custom: z.record(z.unknown()).optional(),
-		id: z.string().default(nanoid), // TODO: re-consider defaulting here
+		custom: customSchema.default(() => ({})),
+		duration: durationSchema.default(null),
 		text: z.string(),
 		metadata: z
 			.object({
-				abortController: z.instanceof(AbortController),
-				id: z.string(),
+				abortController: z
+					.instanceof(AbortController)
+					.default(() => new AbortController()),
+				id: z.string().default(nanoid),
 			})
 			.strict()
-			.optional(),
+			.default(() => ({})),
 	})
 	.strict()
 
 const pushOptionsSchema = z
 	.object({
-		custom: z.record(z.unknown()).default(() => ({})),
-		duration: z.number().positive().finite().int().nullable().default(null),
+		custom: customSchema.default(() => ({})),
+		duration: durationSchema.default(null),
 		id: z.string().default(nanoid),
 		type: z.string(),
 	})
@@ -91,35 +100,41 @@ export const createToaster = (): ToasterReturn => {
 	const push: ToasterReturn['push'] = (message) => {
 		const options = messageSchema.parse(message)
 
-		const { id } = options
-		// const parsedArguments = value.schema.parse(rawArguments)
-		const abortController = new AbortController()
-		const signal = abortController.signal
+		const { signal } = options.metadata.abortController
 
 		const donePromise = new Promise<void>((resolve, reject) => {
+			// FIXME: this function needs to be redone
+
 			if (signal.aborted) return reject(signal.reason)
 
-			console.log('showing notification')
 			const timeout = globalThis.setTimeout(() => {
+				const toBeRemovedIndex = fifoToasterQueue.findIndex(
+					({ metadata }) => metadata.id === options.metadata.id,
+				)
+
+				if (toBeRemovedIndex === -1)
+					throw new Error(
+						`could not find to be removed notification “${options.metadata.id}”`,
+					)
+
+				fifoToasterQueue.splice(toBeRemovedIndex, 1)
+
 				resolve()
-			}, 5000) // options.duration
+			}, options.duration ?? 3000) // TODO: persistent toast support
 
 			// TODO: possible memory leak
 			signal.addEventListener('abort', () => {
-				console.log('deleting notification')
 				globalThis.clearTimeout(timeout)
 				reject(signal.reason)
 			})
 		})
 
 		const queueItem: InternalMessage = {
-			abort: () => abortController.abort(),
-			// custom: {},
+			abort: () => options.metadata.abortController.abort(),
+			custom: options.custom,
 			done: donePromise,
-			metadata: {
-				abortController,
-				id,
-			},
+			metadata: options.metadata,
+			text: options.text,
 		}
 		fifoToasterQueue.push(queueItem)
 
@@ -130,7 +145,7 @@ export const createToaster = (): ToasterReturn => {
 
 	return {
 		abort: (id: string) => {
-			console.log(`aborting ${id}`)
+			// FIXME: this function needs to be redone
 
 			const toBeRemovedIndex = fifoToasterQueue.findIndex(
 				({ metadata }) => metadata.id === id,
@@ -139,7 +154,7 @@ export const createToaster = (): ToasterReturn => {
 			if (toBeRemovedIndex === -1)
 				throw new Error(`could not find to be removed notification “${id}”`)
 
-			const removedQueueItem = fifoToasterQueue.slice(toBeRemovedIndex, 1)[0]
+			const removedQueueItem = fifoToasterQueue.splice(toBeRemovedIndex, 1)[0]
 
 			if (!removedQueueItem)
 				throw new Error(`could not find to be removed notification “${id}”`)
@@ -158,6 +173,7 @@ export const createToaster = (): ToasterReturn => {
 		},
 		_internal_pls_dont_touch: {
 			pollMessage: () => {
+				// FIXME: this function needs to be redone
 				return fifoToasterQueue.shift() ?? null
 			},
 			subscribe: (handler: () => Promise<void> | void) => {
@@ -168,8 +184,8 @@ export const createToaster = (): ToasterReturn => {
 
 				toastReceiver = handler
 
-				// TODO: Consider calling toastReceiver here to get things started
-				// toastReceiver()
+				// TODO: Consider always calling toastReceiver here (?)
+				if (fifoToasterQueue.length) toastReceiver()
 			},
 			unsubscribe: () => {
 				if (!toastReceiver)
@@ -183,22 +199,3 @@ export const createToaster = (): ToasterReturn => {
 		push,
 	}
 }
-
-// export function useDebouncedRef(value, delay = 200) {
-// 	let timeout
-// 	return customRef((track, trigger) => {
-// 		return {
-// 			get() {
-// 				track()
-// 				return value
-// 			},
-// 			set(newValue) {
-// 				clearTimeout(timeout)
-// 				timeout = setTimeout(() => {
-// 					value = newValue
-// 					trigger()
-// 				}, delay)
-// 			},
-// 		}
-// 	})
-// }

@@ -40,7 +40,7 @@
 	<!-- prettier-ignore -->
 	<CodePreview
 		:code='`
-			<script lang="ts">
+			<${parserHack.script} lang="ts">
 			import { defineComponent } from "vue"
 
 			import { success } from "~/shared/toaster.ts"
@@ -57,11 +57,11 @@
 					}
 				}
 			})
-			</script>
+			</${parserHack.script}>
 
-			<${template}>
+			<${parserHack.template}>
 				<KtButton label="Send Notification" @click="onClick">
-			</${template}>
+			</${parserHack.template}>
 		`'
 		fileName="~/components/MyComponent.vue"
 		language="vue"
@@ -77,11 +77,11 @@
 	<!-- prettier-ignore -->
 	<CodePreview
 		:code='`
-			<${template}>
+			<${parserHack.template}>
 				<KtToaster :toaster="toaster" />
-			</${template}>
+			</${parserHack.template}>
 
-			<script lang="ts">
+			<${parserHack.script} lang="ts">
 			import { defineComponent } from "vue"
 
 			import { toaster } from "~/shared/toaster.ts"
@@ -94,7 +94,7 @@
 					}
 				}
 			})
-			</script>
+			</${parserHack.script}>
 		`'
 		fileName="App.vue"
 		language="vue"
@@ -126,11 +126,11 @@
 	<!-- prettier-ignore -->
 	<CodePreview
 		:code='`
-			<${template}>
+			<${parserHack.template}>
 				<KtToaster />
-			</${template}>
+			</${parserHack.template}>
 
-			<script lang="ts">
+			<${parserHack.script} lang="ts">
 			import { KT_TOASTER_CONTEXT } from "@3yourmind/kotti-ui"
 			import { defineComponent } from "vue"
 
@@ -145,7 +145,7 @@
 					return {}
 				}
 			})
-			</script>
+			</${parserHack.script}>
 		`'
 		fileName="App.vue"
 		language="vue"
@@ -176,8 +176,12 @@ export default defineComponent({
 			sudoMakeMeAToast: () => {
 				toaster.push({ text: 'some message' })
 			},
-			template: 'template', // HACK: parsers are angry when you say template
 			toaster,
+			parserHack: {
+				// HACK: parsers are angry when you say template
+				script: 'script',
+				template: 'template',
+			},
 		}
 	},
 })
