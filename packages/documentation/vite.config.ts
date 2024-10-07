@@ -9,18 +9,25 @@ import markdownInVue from './plugins/vite-markdown-plugin'
 const shikiInstance = await Shiki({ theme: 'vitesse-light' })
 
 export default defineConfig({
+	css: {
+		preprocessorOptions: {
+			scss: {
+				api: 'modern-compiler',
+			},
+		},
+	},
 	plugins: [
 		vike({ prerender: true }),
 		vue({
 			include: [/\.vue$/, /\.md$/],
 		}),
 		markdownInVue({
-			async markdownItSetup(md) {
+			markdownItSetup(md) {
 				md.use(shikiInstance)
 			},
 		}),
 		md({
-			async markdownItSetup(md) {
+			markdownItSetup(md) {
 				md.use(shikiInstance)
 			},
 		}),
