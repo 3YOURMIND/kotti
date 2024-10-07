@@ -46,6 +46,7 @@ import {
 	watch,
 } from 'vue'
 
+import KtButton from './KtButton.vue'
 import { makeProps } from '../make-props'
 
 import KtButton from './KtButton.vue'
