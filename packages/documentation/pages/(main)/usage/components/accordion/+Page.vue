@@ -8,7 +8,7 @@
 				'onUpdate:isClosed': (val: boolean) => (componentProps.isClosed = val),
 			}"
 			:props="omit(componentProps, ['content'])"
-			:slots="[{ content: 'Example Content', name: 'default' }]"
+			:slots="[{ content: ['Example Content'], name: 'default' }]"
 		>
 			<template #component-form-settings>
 				<div>

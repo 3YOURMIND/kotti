@@ -103,7 +103,18 @@ export default defineComponent({
 				if (componentSettings.value.hasDefaultSlot) {
 					slots.push({
 						name: 'default',
-						content: componentSettings.value.value,
+						content: [componentSettings.value.value],
+					})
+				}
+				if (componentSettings.value.hasHelpTextSlot) {
+					slots.push({
+						name: 'helpText',
+						content: [
+							'<div>',
+							'\tSupports <abbr title="Hypertext Markup Language">HTML</abbr>',
+							'\tvia <code><template #helpText></code>',
+							'</div>',
+						],
 					})
 				}
 				return slots
@@ -113,14 +124,6 @@ export default defineComponent({
 			propFormatters: {
 				validation: (value: unknown) =>
 					JSON.stringify(value, null, '\t').split('\n'),
-			},
-			slotFormatters: {
-				helpText: () => [
-					'<div>',
-					'\tSupports <abbr title="Hypertext Markup Language">HTML</abbr>',
-					'\tvia <code><template #helpText></code>',
-					'</div>',
-				],
 			},
 		}
 	},
@@ -148,7 +151,6 @@ export default defineComponent({
 				:component="component"
 				:propFormatters="propFormatters"
 				:props="componentProps"
-				:slotFormatters="slotFormatters"
 				:slots="componentSlots"
 			>
 				<template #component-form-settings>

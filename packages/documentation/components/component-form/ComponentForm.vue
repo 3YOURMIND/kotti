@@ -27,8 +27,15 @@ type PropFormatter = (value: unknown) => string[]
 type SlotFormatter = () => string[]
 
 type Slot = {
-	content: string
+	content: string[]
 	name: string
+	scope?: string
+}
+
+type RenderedSlot = {
+	content: string[]
+	name: string
+	renderedString: string
 	scope?: string
 }
 
@@ -36,13 +43,11 @@ const generateCode = ({
 	component,
 	propFormatters,
 	props,
-	slotFormatters,
 	slots,
 }: {
 	component: Component
 	propFormatters: Record<string, PropFormatter>
 	props: Record<string, unknown>
-	slotFormatters: Record<string, SlotFormatter>
 	slots: Slot[]
 }): string =>
 	[
@@ -66,8 +71,8 @@ const generateCode = ({
 
 				if (lines.length < 2) return `\t:${key}="${lines.join('\n')}"`
 
-				const firstLine = lines.at(0)
-				const lastLine = lines.at(-1)
+				const firstLine = lines.at(0) as string
+				const lastLine = lines.at(-1) as string
 				const otherLines = lines.slice(1, -1)
 
 				return [
@@ -78,13 +83,13 @@ const generateCode = ({
 			}),
 		slots.length === 0 ? '/>' : `>`,
 		...slots.flatMap((slot) => {
-			if (slot.name === 'default') return [`\t${slot.content}`]
+			if (slot.name === 'default')
+				return slot.content.map((line) => `\t${line}`)
 
 			return [
+				// eslint-disable-next-line sonarjs/no-nested-template-literals
 				`\t<template #${slot.name}${slot.scope ? `="${slot.scope}"` : ''}>`,
-				...(slot.name in slotFormatters
-					? slotFormatters[slot.name]().map((line) => `\t\t${line}`)
-					: [`\t\t${slot.content}`]),
+				...slot.content.map((line) => `\t\t${line}`),
 				'\t</template>',
 			]
 		}),
@@ -115,28 +120,41 @@ export default defineComponent({
 			default: () => ({}),
 			type: Object as PropType<Record<string, unknown>>,
 		},
-		slotFormatters: {
-			default: () => ({}),
-			type: Object as PropType<Record<string, SlotFormatter>>,
-		},
 		slots: {
 			default: () => [],
 			type: Array as PropType<Slot[]>,
 		},
 		value: {
 			default: () => NOT_SET as unknown,
+			type: [
+				Number,
+				String,
+				Object,
+				Array,
+				Symbol,
+				Boolean,
+				null,
+				undefined,
+			] as PropType<unknown>,
 		},
 	},
 	setup(props, { slots }) {
 		const allSlots = computed(() => {
-			const result: Slot[] = [...props.slots]
+			const result: RenderedSlot[] = props.slots.map((slot) => ({
+				...slot,
+				renderedString: slot.content.join('\n'),
+			}))
 
 			for (const slotName of Object.keys(slots)) {
 				if (slotName === 'component-form-settings') continue
 
 				if (props.slots.some((slot) => slot.name === slotName)) continue
 
-				result.push({ name: slotName, content: `${slotName} content` })
+				result.push({
+					name: slotName,
+					content: [`\t${slotName} content`],
+					renderedString: `${slotName} content`,
+				})
 			}
 
 			return result
@@ -149,7 +167,6 @@ export default defineComponent({
 				component: props.component,
 				propFormatters: props.propFormatters,
 				props: props.props,
-				slotFormatters: props.slotFormatters,
 				slots: allSlots.value,
 			}),
 		)
@@ -216,10 +233,11 @@ export default defineComponent({
 						:key="slot.name"
 						v-bind="bound"
 					/>
-					<div v-else :key="`${slot.name}-else`" v-text="slot.content" />
+					<div v-else :key="`${slot.name}-else`" v-text="slot.renderedString" />
 				</template>
 			</component>
 		</div>
+		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div v-if="hasValue" :class="$style.value" v-html="valueCodeHtml" />
 		<div :class="$style.settings">
 			<slot name="component-form-settings" />
@@ -230,6 +248,7 @@ export default defineComponent({
 				<i class="yoco">copy</i>
 			</div>
 		</div>
+		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div :class="$style.code" v-html="codeHtml" />
 	</section>
 </template>

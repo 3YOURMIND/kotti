@@ -6,7 +6,7 @@
 			:component="KtAvatar"
 			:props="ktAvatarProps"
 			:slots="
-				ktAvatarSettings.hasSlot ? [{ content: '...', name: 'content' }] : []
+				ktAvatarSettings.hasSlot ? [{ content: ['...'], name: 'content' }] : []
 			"
 		>
 			<template #component-form-settings>
@@ -65,7 +65,7 @@
 			:props="ktAvatarGroupProps"
 			:slots="
 				ktAvatarGroupSettings.hasSlot
-					? [{ content: '...', scope: '{ item }', name: 'content' }]
+					? [{ content: ['...'], scope: '{ item }', name: 'content' }]
 					: []
 			"
 		>
