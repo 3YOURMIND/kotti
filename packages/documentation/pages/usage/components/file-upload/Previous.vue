@@ -2,92 +2,99 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
-		<div class="overview">
-			<div class="overview__component">
-				<KtFileUpload
-					v-bind="fieldProps"
-					@addFiles="onAddFiles"
-					@cancelUpload="onCancelUpload"
-					@deleteFile="onDeleteFile"
-					@restartUpload="onRestartUpload"
-				/>
-			</div>
-		</div>
 		<KtForm v-model:value="settings" size="small">
-			<div class="wrapper">
-				<div>
-					<h4>Settings</h4>
+			<ComponentForm
+				:component="component"
+				:hiddenProps="{
+					onAddFiles,
+					onCancelUpload,
+					onDeleteFile,
+					onRestartUpload,
+				}"
+				:propFormatters="propFormatters"
+				:props="fieldProps"
+			>
+				<template #component-form-settings>
+					<div>
+						<h4>Settings</h4>
 
-					<KtFieldToggleGroup
-						formKey="booleanFlags"
-						isOptional
-						label="Boolean Flags"
-						:options="[
-							{ key: 'allowMultiple', label: 'allowMultiple' },
-							{ key: 'allowPhotos', label: 'allowPhotos' },
-							{ key: 'hideDropArea', label: 'hideDropArea' },
-							{ key: 'isDisabled', label: 'isDisabled' },
-							{ key: 'isLoading', label: 'isLoading' },
-						]"
-						type="switch"
-					/>
-					<KtFieldNumber
-						formKey="collapseExtensionsAfter"
-						isOptional
-						label="collapseExtensionsAfter"
-					/>
-					<KtFieldNumber formKey="maxFileSize" isOptional label="maxFileSize" />
-					<KtFieldNumber formKey="tabIndex" isOptional label="tabIndex" />
-					<KtFieldText formKey="dataTest" isOptional label="dataTest" />
+						<!-- TODO: add i18n -->
 
-					<KtFieldMultiSelect
-						formKey="extensions"
-						helpText="List of allowed file extensions. Takes an array of case-insensitive strings."
-						isOptional
-						label="extensions"
-						:options="[
-							{ label: 'DOC', value: 'DOC' },
-							{ label: 'GIF', value: 'GIF' },
-							{ label: 'JP2', value: 'JP2' },
-							{ label: 'JPEG', value: 'JPEG' },
-							{ label: 'JPG', value: 'JPG' },
-							{ label: 'OBJ', value: 'OBJ' },
-							{ label: 'PDF', value: 'PDF' },
-							{ label: 'PNG', value: 'PNG' },
-							{ label: 'STL', value: 'STL' },
-							{ label: 'TXT', value: 'TXT' },
-						]"
-					/>
-				</div>
+						<KtFieldToggleGroup
+							formKey="booleanFlags"
+							isOptional
+							label="Boolean Flags"
+							:options="[
+								{ key: 'allowMultiple', label: 'allowMultiple' },
+								{ key: 'allowPhotos', label: 'allowPhotos' },
+								{ key: 'hideDropArea', label: 'hideDropArea' },
+								{ key: 'isDisabled', label: 'isDisabled' },
+								{ key: 'isLoading', label: 'isLoading' },
+							]"
+							type="switch"
+						/>
+						<KtFieldNumber
+							formKey="collapseExtensionsAfter"
+							isOptional
+							label="collapseExtensionsAfter"
+						/>
+						<KtFieldNumber
+							formKey="maxFileSize"
+							isOptional
+							label="maxFileSize"
+						/>
+						<KtFieldNumber formKey="tabIndex" isOptional label="tabIndex" />
+						<KtFieldText formKey="dataTest" isOptional label="dataTest" />
 
-				<div>
-					<h4>Texts</h4>
-					<KtFieldText formKey="label" isOptional label="label" />
-					<KtFieldText formKey="externalUrl" isOptional label="externalUrl" />
-					<KtFieldText
-						formKey="helpDescription"
-						isOptional
-						label="helpDescription"
-					/>
-					<KtFieldText formKey="helpText" isOptional label="helpText" />
+						<KtFieldMultiSelect
+							formKey="extensions"
+							helpText="List of allowed file extensions. Takes an array of case-insensitive strings."
+							isOptional
+							label="extensions"
+							:options="[
+								{ label: 'DOC', value: 'DOC' },
+								{ label: 'GIF', value: 'GIF' },
+								{ label: 'JP2', value: 'JP2' },
+								{ label: 'JPEG', value: 'JPEG' },
+								{ label: 'JPG', value: 'JPG' },
+								{ label: 'OBJ', value: 'OBJ' },
+								{ label: 'PDF', value: 'PDF' },
+								{ label: 'PNG', value: 'PNG' },
+								{ label: 'STL', value: 'STL' },
+								{ label: 'TXT', value: 'TXT' },
+							]"
+						/>
+					</div>
 
-					<KtFieldSingleSelect
-						formKey="icon"
-						isOptional
-						label="icon"
-						:options="yocoIconOptions"
-					>
-						<template #option="{ option }">
-							<i
-								class="yoco"
-								style="margin-right: 10px; font-size: 24px"
-								v-text="option.value"
-							/>
-							<span v-text="option.label" />
-						</template>
-					</KtFieldSingleSelect>
-				</div>
-			</div>
+					<div>
+						<h4>Texts</h4>
+						<KtFieldText formKey="label" isOptional label="label" />
+						<KtFieldText formKey="externalUrl" isOptional label="externalUrl" />
+						<KtFieldText
+							formKey="helpDescription"
+							isOptional
+							label="helpDescription"
+						/>
+						<KtFieldText formKey="helpText" isOptional label="helpText" />
+
+						<KtFieldSingleSelect
+							formKey="icon"
+							isOptional
+							label="icon"
+							:options="yocoIconOptions"
+						>
+							<template #option="{ option }">
+								<i
+									class="yoco"
+									style="margin-right: 10px; font-size: 24px"
+									v-text="option.value"
+								/>
+								<span v-text="option.label" />
+							</template>
+						</KtFieldSingleSelect>
+					</div>
+				</template>
+			</ComponentForm>
 		</KtForm>
 	</div>
 </template>
@@ -105,10 +112,17 @@ import {
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 import dayjs from 'dayjs'
+import omit from 'lodash/omit'
 import { computed, defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
 import { TimeConversion } from '@metatypes/units'
 
+import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+
+type ModifiedUploadState = (Kotti.FileUpload.FileInfo & {
+	uploadStartTime: dayjs.Dayjs
+	uploadEndTime: dayjs.Dayjs
+})[]
 
 function useRequestAnimationFrame(callback: () => void): {
 	start: () => void
@@ -148,6 +162,7 @@ function useRequestAnimationFrame(callback: () => void): {
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsFileUpload',
 	components: {
+		ComponentForm,
 		ComponentInfo,
 		KtFieldMultiSelect,
 		KtFieldNumber,
@@ -196,12 +211,7 @@ export default defineComponent({
 			tabIndex: null,
 		})
 
-		const state = ref<
-			(Kotti.FileUpload.FileInfo & {
-				uploadStartTime: dayjs.Dayjs
-				uploadEndTime: dayjs.Dayjs
-			})[]
-		>([])
+		const state = ref<ModifiedUploadState>([])
 
 		useRequestAnimationFrame(() => {
 			state.value = state.value.map((file) => {
@@ -282,6 +292,16 @@ export default defineComponent({
 								uploadStartTime: dayjs(),
 							},
 				)
+			},
+			propFormatters: {
+				state: (value: unknown) =>
+					JSON.stringify(
+						(value as ModifiedUploadState).map((file) =>
+							omit(file, ['uploadEndTime', 'uploadStartTime']),
+						),
+						null,
+						'\t',
+					).split('\n'),
 			},
 			settings,
 			yocoIconOptions: Object.values(Yoco.Icon).map((icon) => ({

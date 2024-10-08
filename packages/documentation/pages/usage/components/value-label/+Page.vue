@@ -43,7 +43,6 @@ export default defineComponent({
 		KtFieldToggle,
 		KtForm,
 		KtFormControllerObject,
-		KtValueLabel,
 	},
 	setup() {
 		// const settings = ref({
@@ -73,35 +72,55 @@ export default defineComponent({
 		const componentSettings = ref({
 			hasDefaultSlot: false,
 			hasHelpTextSlot: false,
-			isUnset: false,
-			validation: null,
+			validation: null as string | null,
+			value: 'Some Value',
 			props: {
 				dataTest: null,
 				helpDescription: null,
 				helpText: null,
 				isLoading: false,
+				isUnset: false,
 				label: 'Some Label',
-				value: 'Some Value',
 			},
 		})
 
 		return {
 			component: KtValueLabel,
-			componentProps: computed(() => ({
-				...componentSettings.value.props,
-				validation:
-					componentSettings.value.validation !== null
-						? {
-								text: `Some Validation Text`,
-								type: componentSettings.value.validation,
-							}
-						: null,
-			})),
+			componentProps: computed(() => {
+				const { value, validation, props, hasDefaultSlot } =
+					componentSettings.value
+				return {
+					...props,
+					validation:
+						validation !== null
+							? { type: validation, text: `${validation} text` }
+							: null,
+					value: hasDefaultSlot ? undefined : value,
+				}
+			}),
+			componentSlots: computed(() => {
+				const slots = []
+				if (componentSettings.value.hasDefaultSlot) {
+					slots.push({
+						name: 'default',
+						content: componentSettings.value.value,
+					})
+				}
+				return slots
+			}),
 			componentSettings,
-			// DEFAULT_SLOT_CONTENT,
 			Kotti,
 			propFormatters: {
-				validation: (value: unknown) => JSON.stringify(value, null, '\t'),
+				validation: (value: unknown) =>
+					JSON.stringify(value, null, '\t').split('\n'),
+			},
+			slotFormatters: {
+				helpText: () => [
+					'<div>',
+					'\tSupports <abbr title="Hypertext Markup Language">HTML</abbr>',
+					'\tvia <code><template #helpText></code>',
+					'</div>',
+				],
 			},
 		}
 	},
@@ -125,7 +144,13 @@ export default defineComponent({
 		</p>
 
 		<KtForm v-model:value="componentSettings" size="small">
-			<ComponentForm :component="component" :props="componentProps">
+			<ComponentForm
+				:component="component"
+				:propFormatters="propFormatters"
+				:props="componentProps"
+				:slotFormatters="slotFormatters"
+				:slots="componentSlots"
+			>
 				<template #component-form-settings>
 					<!-- <div>
 						<KtFormControllerObject formKey="props">
@@ -156,9 +181,9 @@ export default defineComponent({
 
 					<div>
 						<h4>Texts</h4>
+						<KtFieldText formKey="value" isOptional label="value" />
 						<KtFormControllerObject formKey="props">
 							<KtFieldText formKey="label" isOptional label="label" />
-							<KtFieldText formKey="value" isOptional label="value" />
 							<KtFieldText
 								formKey="helpDescription"
 								isOptional
@@ -229,20 +254,27 @@ export default defineComponent({
 								:size="Kotti.Field.Size.SMALL"
 								type="switch"
 							/>
+							<KtFieldToggle
+								formKey="isUnset"
+								isOptional
+								label="isUnset"
+								:size="Kotti.Field.Size.SMALL"
+								type="switch"
+							/>
 						</KtFormControllerObject>
-						<KtFieldToggle
-							formKey="isUnset"
-							isOptional
-							label="isUnset"
-							:size="Kotti.Field.Size.SMALL"
-							type="switch"
-						/>
 						<KtFieldToggle
 							formKey="hasDefaultSlot"
 							isOptional
 							label="Use #default Slot"
 							type="switch"
 						/>
+					</div>
+				</template>
+				<template v-if="componentSettings.hasHelpTextSlot" #helpText>
+					<div>
+						Supports
+						<abbr title="Hypertext Markup Language">HTML</abbr> via
+						<code>&lt;template #helpText&gt;</code>
 					</div>
 				</template>
 			</ComponentForm>

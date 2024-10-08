@@ -4,10 +4,10 @@
 	<KtForm v-model:value="componentProps" size="small">
 		<ComponentForm
 			:component="component"
-			:props="omit(componentProps, ['content'])"
 			:hiddenProps="{
 				'onUpdate:isClosed': (val: boolean) => (componentProps.isClosed = val),
 			}"
+			:props="omit(componentProps, ['content'])"
 			:slots="[{ content: 'Example Content', name: 'default' }]"
 		>
 			<template #component-form-settings>

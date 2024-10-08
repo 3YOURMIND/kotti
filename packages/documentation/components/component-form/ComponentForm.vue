@@ -24,6 +24,7 @@ type Component = {
 }
 
 type PropFormatter = (value: unknown) => string[]
+type SlotFormatter = () => string[]
 
 type Slot = {
 	content: string
@@ -35,11 +36,13 @@ const generateCode = ({
 	component,
 	propFormatters,
 	props,
+	slotFormatters,
 	slots,
 }: {
 	component: Component
 	propFormatters: Record<string, PropFormatter>
 	props: Record<string, unknown>
+	slotFormatters: Record<string, SlotFormatter>
 	slots: Slot[]
 }): string =>
 	[
@@ -79,7 +82,9 @@ const generateCode = ({
 
 			return [
 				`\t<template #${slot.name}${slot.scope ? `="${slot.scope}"` : ''}>`,
-				`\t\t${slot.content}`,
+				...(slot.name in slotFormatters
+					? slotFormatters[slot.name]().map((line) => `\t\t${line}`)
+					: [`\t\t${slot.content}`]),
 				'\t</template>',
 			]
 		}),
@@ -109,6 +114,10 @@ export default defineComponent({
 		props: {
 			default: () => ({}),
 			type: Object as PropType<Record<string, unknown>>,
+		},
+		slotFormatters: {
+			default: () => ({}),
+			type: Object as PropType<Record<string, SlotFormatter>>,
 		},
 		slots: {
 			default: () => [],
@@ -140,6 +149,7 @@ export default defineComponent({
 				component: props.component,
 				propFormatters: props.propFormatters,
 				props: props.props,
+				slotFormatters: props.slotFormatters,
 				slots: allSlots.value,
 			}),
 		)
@@ -199,17 +209,14 @@ export default defineComponent({
 	<section :class="$style.wrapper">
 		<div :class="$style.preview">
 			<component :is="component" v-bind="{ ...props, ...hiddenProps }">
-				<template
-					v-for="slot in allSlots"
-					#[slot.name]="bound"
-					:key="slot.name"
-				>
+				<template v-for="slot in allSlots" #[slot.name]="bound">
 					<component
 						:is="$slots[slot.name]"
 						v-if="$slots[slot.name]"
+						:key="slot.name"
 						v-bind="bound"
 					/>
-					<div v-else v-text="slot.content" />
+					<div v-else :key="`${slot.name}-else`" v-text="slot.content" />
 				</template>
 			</component>
 		</div>
@@ -268,7 +275,7 @@ export default defineComponent({
 	display: flex;
 	background-color: #fcfcfc;
 
-	> div {
+	> * {
 		padding: var(--unit-3) var(--unit-6);
 		flex: 1;
 		flex-basis: 0;
