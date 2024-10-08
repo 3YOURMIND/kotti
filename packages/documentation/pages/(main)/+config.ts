@@ -13,5 +13,5 @@ export default {
 	title: 'Kotti Design System',
 	description: '3YOURMIND’s Vue UI Framework & Design System ',
 
-	extends: vikeVue as typeof vikeVue,
+	extends: vikeVue,
 } satisfies Config
