@@ -2,9 +2,32 @@ import { describe, expect, it, jest } from 'bun:test'
 
 import { createToaster } from './create-toaster'
 
+const createAnimationFrameMock = () => {
+	let interval: Timer | null = null
+	return {
+		getIsRunning: () => interval !== null,
+		start: (t: () => void) => {
+			// console.log('hello from start')
+			interval = globalThis.setInterval(() => {
+				// console.log('hello from interval')
+				t()
+			}, 5)
+		},
+		stop: () => {
+			// console.log('hello from stop')
+			if (interval) {
+				globalThis.clearInterval(interval)
+				interval = null
+			}
+		},
+	}
+}
+
 describe('createToaster', () => {
 	it('returns things', () => {
-		const toaster = createToaster()
+		const toaster = createToaster({
+			animationFrame: createAnimationFrameMock(),
+		})
 
 		expect(toaster).toEqual({
 			_internal_pls_dont_touch: expect.anything(),
@@ -18,19 +41,26 @@ describe('createToaster', () => {
 		it('can abort a toast', () => {
 			const toaster = createToaster()
 			const toast = toaster.push({ duration: 1, text: 'test' })
-			expect(() => toaster.abort(toast.metadata.id)).not.toThrow()
+			expect(() => {
+				toaster.abort(toast.metadata.id)
+			}).not.toThrow()
 			expect(toast.metadata.abortController.signal.aborted).toBe(true)
-			expect(toast.done).rejects.toThrow('The operation was aborted.')
+			expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
 		})
 
 		it('throws for unknown toasts', () => {
-			const toaster = createToaster()
+			const toaster = createToaster({
+				animationFrame: createAnimationFrameMock(),
+			})
+			toaster._internal_pls_dont_touch.subscribe(() => {})
 			const toast = toaster.push({ duration: 1, text: 'test' })
-			expect(() => toaster.abort('not-a-real-toast')).toThrow(
-				'could not find to be removed notification “not-a-real-toast”',
+			expect(() => {
+				toaster.abort('not-a-real-toast')
+			}).toThrow(
+				'could not find toast in fifoToasterQueue with id “not-a-real-toast”',
 			)
 			expect(toast.metadata.abortController.signal.aborted).toBe(false)
-			expect(toast.done).resolves.toBe(undefined)
+			expect(toast.done).resolves.toBe('deleted')
 		})
 	})
 
@@ -56,26 +86,34 @@ describe('createToaster', () => {
 
 	describe('.push()', () => {
 		it('can push', () => {
-			const toaster = createToaster()
+			const toaster = createToaster({
+				animationFrame: createAnimationFrameMock(),
+			})
+			toaster._internal_pls_dont_touch.subscribe(() => {})
 			const toast = toaster.push({ duration: 1, text: 'example toast' })
 
 			expect(toast.text).toBe('example toast')
-			expect(toast.done).resolves.toBe(undefined)
+			expect(toast.done).resolves.toBe('deleted')
 		})
 
-		it('correctly handles durations', async () => {
-			const toaster = createToaster()
+		it('correctly handles durations', () => {
+			const toaster = createToaster({
+				animationFrame: createAnimationFrameMock(),
+			})
+			toaster._internal_pls_dont_touch.subscribe(() => {})
 
 			const wait = (ms: number) =>
 				new Promise((_resolve, reject) => {
-					setTimeout(() => reject(`timeout after ${ms}ms`), ms)
+					globalThis.setTimeout(() => {
+						reject(new Error(`timeout after ${ms}ms`))
+					}, ms)
 				})
 
 			const fastToast = toaster.push({ duration: 1, text: 'fast toast' })
-			expect(Promise.race([fastToast.done, wait(10)])).resolves.toBe(undefined)
+			expect(Promise.race([fastToast.done, wait(10)])).resolves.toBe('deleted')
 
 			const slowToast = toaster.push({ duration: 100, text: 'slow toast' })
-			expect(Promise.race([slowToast.done, wait(200)])).resolves.toBe(undefined)
+			expect(Promise.race([slowToast.done, wait(200)])).resolves.toBe('deleted')
 
 			const superSlowToast = toaster.push({
 				duration: 500,
@@ -89,15 +127,21 @@ describe('createToaster', () => {
 		it('can push custom data', () => {
 			const custom = { testing: true }
 
-			const toaster = createToaster()
+			const toaster = createToaster({
+				animationFrame: createAnimationFrameMock(),
+			})
+			toaster._internal_pls_dont_touch.subscribe(() => {})
 			const toast = toaster.push({ custom, duration: 1, text: 'example toast' })
 
 			expect(toast.custom).toEqual(custom)
-			expect(toast.done).resolves.toBe(undefined)
+			expect(toast.done).resolves.toBe('deleted')
 		})
 
 		it('can push with metadata.id', () => {
-			const toaster = createToaster()
+			const toaster = createToaster({
+				animationFrame: createAnimationFrameMock(),
+			})
+			toaster._internal_pls_dont_touch.subscribe(() => {})
 			const toast = toaster.push({
 				duration: 1,
 				metadata: { id: 'foo' },
@@ -105,12 +149,14 @@ describe('createToaster', () => {
 			})
 
 			expect(toast.metadata.id).toEqual('foo')
-			expect(toast.done).resolves.toBe(undefined)
+			expect(toast.done).resolves.toBe('deleted')
 		})
 
 		it('can push with metadata.abortController', () => {
-			const toaster = createToaster()
-			const abortController = new AbortController()
+			const toaster = createToaster({
+				animationFrame: createAnimationFrameMock(),
+			})
+			const abortController = new globalThis.AbortController()
 			const toast = toaster.push({
 				duration: 1,
 				metadata: { abortController },
@@ -118,91 +164,114 @@ describe('createToaster', () => {
 			})
 
 			expect(toast.metadata.abortController).toBe(abortController)
-			expect(() => toast.abort()).not.toThrow()
+			expect(() => {
+				toast.abort()
+			}).not.toThrow()
 			expect(abortController.signal.aborted).toBe(true)
-			expect(toast.done).rejects.toThrow('aborted')
+			expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
 		})
 
 		describe('returns', () => {
 			it('.abort()', () => {
-				const toaster = createToaster()
+				const toaster = createToaster({
+					animationFrame: createAnimationFrameMock(),
+				})
+				toaster._internal_pls_dont_touch.subscribe(() => {})
 				const toast = toaster.push({ duration: 1, text: '42' })
 
 				expect(toast.metadata.abortController.signal.aborted).toBe(false)
 				toast.abort()
 				expect(toast.metadata.abortController.signal.aborted).toBe(true)
-				expect(toast.done).rejects.toThrow('The operation was aborted')
+				expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
 			})
 
-			it('supports await toast.done', async () => {
-				const toaster = createToaster()
+			it('supports await toast.done', () => {
+				const toaster = createToaster({
+					animationFrame: createAnimationFrameMock(),
+				})
+				toaster._internal_pls_dont_touch.subscribe(() => {})
 				const toast = toaster.push({ duration: 10, text: '42' })
 
-				await toast.done
-				expect(toaster._internal_pls_dont_touch.pollMessage()).toBe(null)
+				expect(toast.done).resolves.toBe('deleted')
 			})
 		})
 	})
 
 	describe('._internal_pls_dont_touch', () => {
-		describe('.pollMessage()', () => {
-			it.skip('receives messages in FIFO order', () => {
-				const toaster = createToaster()
-				const handler = jest.fn()
-
-				toaster.push({ text: 'test' })
-				toaster.push({ text: 'test 2' })
-
-				const { pollMessage } = toaster._internal_pls_dont_touch
-
-				expect(handler.mock.calls).toEqual([])
-				toaster._internal_pls_dont_touch.subscribe(handler)
-				expect(handler.mock.calls).toEqual([[]])
-				expect(pollMessage()!.text).toBe('test')
-				expect(pollMessage()!.text).toBe('test 2')
-				expect(pollMessage()).toBe(null)
-
-				toaster.push({ text: 'test 3' })
-				expect(handler.mock.calls).toEqual([[], []])
-				expect(pollMessage()!.text).toBe('test 3')
-				expect(pollMessage()).toBe(null)
-			})
-		})
-
 		describe('.subscribe()', () => {
 			it('can subscribe', () => {
-				const toaster = createToaster()
+				const toaster = createToaster({
+					animationFrame: createAnimationFrameMock(),
+				})
 				const handler = jest.fn()
 
 				toaster._internal_pls_dont_touch.subscribe(handler)
 
-				expect(handler.mock.calls).toEqual([])
+				expect(handler.mock.calls).toEqual([[[]]])
 				toaster.push({ text: 'test' })
-				expect(handler.mock.calls).toEqual([[]])
+				expect(handler.mock.calls).toEqual([[[]], [[expect.anything()]]])
 			})
 
 			it('correctly handles old toasts upon subscribing', () => {
-				const toaster = createToaster()
+				const toaster = createToaster({
+					animationFrame: createAnimationFrameMock(),
+				})
 				const handler = jest.fn()
 
 				toaster.push({ text: 'test' })
 
 				expect(handler.mock.calls).toEqual([])
 				toaster._internal_pls_dont_touch.subscribe(handler)
-				expect(handler.mock.calls).toEqual([[]])
+				expect(handler.mock.calls).toEqual([
+					[
+						[
+							{
+								custom: {},
+								metadata: expect.anything(),
+								progress: 0,
+								text: 'test',
+							},
+						],
+					],
+				])
 			})
 
 			it('prevents multiple simultaneous subscriptions', () => {
 				const toaster = createToaster()
 				const handler = () => {}
 
-				expect(() =>
-					toaster._internal_pls_dont_touch.subscribe(handler),
-				).not.toThrow()
+				expect(() => {
+					toaster._internal_pls_dont_touch.subscribe(handler)
+				}).not.toThrow()
 
-				expect(() =>
-					toaster._internal_pls_dont_touch.subscribe(handler),
-				).toThrow('toaster already has a subscriber')
+				expect(() => {
+					toaster._internal_pls_dont_touch.subscribe(handler)
+				}).toThrow('toaster already has a subscriber')
+			})
+
+			it('receives messages in FIFO order', async () => {
+				const toaster = createToaster({
+					animationFrame: createAnimationFrameMock(),
+				})
+				const handler = jest.fn()
+
+				const toast1 = toaster.push({ text: 'test', duration: 50 })
+				const toast2 = toaster.push({ text: 'test 2', duration: 50 })
+
+				expect(handler.mock.calls).toEqual([])
+				toaster._internal_pls_dont_touch.subscribe(handler)
+				expect(handler.mock.lastCall![0][0]).toMatchObject({ text: 'test' })
+				expect(handler.mock.lastCall![0][1]).toMatchObject({ text: 'test 2' })
+
+				await Promise.all([toast1.done, toast2.done])
+
+				expect(handler.mock.lastCall).toEqual([[]])
+
+				const toast3 = toaster.push({ text: 'test 3', duration: 50 })
+				expect(handler.mock.lastCall![0][0]).toMatchObject({ text: 'test 3' })
+
+				await toast3.done
+				expect(handler.mock.lastCall).toEqual([[]])
 			})
 		})
 
@@ -214,17 +283,17 @@ describe('createToaster', () => {
 				toaster._internal_pls_dont_touch.subscribe(handler)
 				toaster._internal_pls_dont_touch.unsubscribe()
 
-				expect(handler.mock.calls).toEqual([])
+				expect(handler.mock.calls).toEqual([[[]]])
 				toaster.push({ text: 'test' })
-				expect(handler.mock.calls).toEqual([])
+				expect(handler.mock.calls).toEqual([[[]]])
 			})
 
 			it('throws when unsubscribe without a subscription', () => {
 				const toaster = createToaster()
 
-				expect(() => toaster._internal_pls_dont_touch.unsubscribe()).toThrow(
-					'toaster currently has no subscriber',
-				)
+				expect(() => {
+					toaster._internal_pls_dont_touch.unsubscribe()
+				}).toThrow('toaster currently has no subscriber')
 			})
 		})
 	})

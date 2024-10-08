@@ -1,10 +1,37 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	<KtToaster :toaster="toaster" />
+	<!-- prettier-ignore -->
+	<CodePreview
+		:code='`
+			<${parserHack.script} lang="ts">
+			import { toaster } from \x27~/shared/toaster.ts\x27
 
+			export default defineComponent({
+				name: \x27App\x27,
+				setup () {
+					// you can also try this in your browser console
+					globalThis.toaster = toaster
+
+					return {
+						toaster
+					}
+				}
+			})
+			</${parserHack.script}>
+
+			<${parserHack.template}>
+				<KtToaster :toaster="toaster" />
+				<KtButton @click="sudoMakeMeAToast">sudo make me a toast</KtButton>
+			</${parserHack.template}>
+		`'
+		fileName="~/App.vue"
+		language="vue"
+	>
+	<KtToaster :toaster="toaster" />
 	<KtButton @click="sudoMakeMeAToast">sudo make me a toast</KtButton>
-	<br />
+	<KtButton v-if="lastToast" @click="() => toaster.abort(lastToast.metadata.id)" >abort via toaster.abort()</KtButton>
+	</CodePreview>
 
 	<h2>Usage</h2>
 
@@ -155,7 +182,7 @@
 
 <script lang="ts">
 import { createToaster, KtButton, KtToaster } from '@3yourmind/kotti-ui'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -171,10 +198,19 @@ export default defineComponent({
 		KtToaster,
 	},
 	setup() {
+		const lastToast = ref<any | null>(null)
+
+		// you can also try this in your browser console
+		globalThis.toaster = toaster
+
 		return {
 			component: KtToaster,
+			lastToast,
 			sudoMakeMeAToast: () => {
-				toaster.push({ text: 'some message', duration: 1500 })
+				lastToast.value = toaster.push({ text: 'some message', duration: 1500 })
+				lastToast.value.done.then(() => {
+					lastToast.value = null
+				})
 			},
 			toaster,
 			parserHack: {

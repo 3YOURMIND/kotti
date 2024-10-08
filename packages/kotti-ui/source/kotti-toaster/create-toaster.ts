@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import { z } from 'zod'
 import dayjs from 'dayjs'
-import { Dayjs } from 'dayjs'
+import type { Dayjs } from 'dayjs'
 import { createDeferred } from './create-deferred'
 
 const customSchema = z.record(z.unknown())
@@ -20,9 +20,9 @@ const queuedToastSchema = z
 		custom: customSchema,
 		deferred: z
 			.object({
-				promise: z.promise(z.void()),
+				promise: z.promise(z.literal('deleted')),
 				reject: z.function().args(z.unknown()).returns(z.void()),
-				resolve: z.function().args(z.undefined()).returns(z.void()),
+				resolve: z.function().args(z.literal('deleted')).returns(z.void()),
 			})
 			.strict(),
 		duration: durationSchema,
@@ -48,7 +48,7 @@ const pushResultSchema = z
 	.object({
 		abort: z.function(z.tuple([]), z.void()),
 		custom: customSchema,
-		done: z.promise(z.void()),
+		done: z.promise(z.literal('deleted')),
 		text: z.string(),
 		metadata: metadataSchema,
 	})
@@ -110,6 +110,37 @@ type ToasterReturn = z.output<typeof toasterReturnSchema>
 
 const createToasterOptions = z
 	.object({
+		animationFrame: z
+			.object({
+				getIsRunning: z.function().args().returns(z.boolean()),
+				start: z
+					.function()
+					.args(z.function().args().returns(z.void()))
+					.returns(z.void()),
+				stop: z.function().args().returns(z.void()),
+			})
+			.strict()
+			.default(() => {
+				let animationFrameId: null | number = null
+				return {
+					getIsRunning: () => animationFrameId !== null,
+					start: (update) => {
+						const animate = () => {
+							// eslint-disable-next-line no-console
+							console.log('create-toaster: update')
+							animationFrameId = globalThis.requestAnimationFrame(animate)
+							update()
+						}
+						animationFrameId = globalThis.requestAnimationFrame(animate)
+					},
+					stop: () => {
+						if (animationFrameId) {
+							globalThis.cancelAnimationFrame(animationFrameId)
+							animationFrameId = null
+						}
+					},
+				}
+			}),
 		numberOfToasts: z.number().int().positive().finite().default(3),
 	})
 	.strict()
@@ -124,6 +155,8 @@ type ActiveToast = {
 	progress: number
 }
 
+const INTERNAL_ABORT = 'INTERNAL_ABORT'
+
 export const createToaster = (
 	_options: CreateToasterOptions = {},
 ): ToasterReturn => {
@@ -133,11 +166,10 @@ export const createToaster = (
 	const fifoToasterQueue: Array<QueuedToast> = []
 	const activeToasts: Array<ActiveToast> = []
 
-	let animationFrameId: number | null = null
+	// let animationFrameId: number | null = null
 
 	const notifySubscriber = () => {
-		if (subscriber === null)
-			throw new Error('could not find subscriber to notify')
+		if (subscriber === null) return
 
 		void subscriber(
 			activeToasts.map((x) => ({
@@ -149,29 +181,93 @@ export const createToaster = (
 		)
 	}
 
-	const stop = () => {
-		if (animationFrameId) {
-			globalThis.cancelAnimationFrame(animationFrameId)
-			animationFrameId = null
+	const deleteToastFromActiveToasts = (toastId: string) => {
+		const index = activeToasts.findIndex(
+			(toast) => toast.message.metadata.id === toastId,
+		)
+		if (index === -1)
+			throw new Error(
+				`could not find toast in activeToasts with id “${toastId}”`,
+			)
+
+		const removedToast = activeToasts.splice(index, 1)[0]
+
+		if (!removedToast)
+			throw new Error(
+				`could not find toast in activeToasts with id “${toastId}”`,
+			)
+
+		notifySubscriber()
+		return removedToast.message
+	}
+
+	const deleteToastFromFifoQueue = (toastId: string) => {
+		const index = fifoToasterQueue.findIndex(
+			(toast) => toast.metadata.id === toastId,
+		)
+		if (index === -1)
+			throw new Error(
+				`could not find toast in fifoToasterQueue with id “${toastId}”`,
+			)
+
+		const removedToast = fifoToasterQueue.splice(index, 1)[0]
+
+		if (!removedToast)
+			throw new Error(
+				`could not find toast in fifoToasterQueue with id “${toastId}”`,
+			)
+
+		// TODO notifySubscriber()
+		return removedToast
+	}
+
+	const deleteAndAbortToast = (mode: 'abort' | 'delete', toastId: string) => {
+		const removedToast = activeToasts.some(
+			(toast) => toast.message.metadata.id === toastId,
+		)
+			? deleteToastFromActiveToasts(toastId)
+			: deleteToastFromFifoQueue(toastId)
+
+		switch (mode) {
+			case 'abort': {
+				const { abortController } = removedToast.metadata
+				if (!abortController.signal.aborted) {
+					abortController.abort(INTERNAL_ABORT)
+				}
+				removedToast.deferred.reject(
+					abortController.signal.aborted
+						? abortController.signal.reason
+						: 'aborted',
+				)
+				break
+			}
+			case 'delete': {
+				removedToast.deferred.resolve('deleted')
+				break
+			}
 		}
 	}
 
-	const start = () => {
-		const animate = () => {
-			console.log('animate')
-			animationFrameId = globalThis.requestAnimationFrame(animate)
-			// eslint-disable-next-line @typescript-eslint/no-use-before-define -- FIXME
-			updateActiveToasts()
-		}
-		animationFrameId = globalThis.requestAnimationFrame(animate)
-	}
+	// const stop = () => {
+	// 	if (animationFrameId) {
+	// 		globalThis.cancelAnimationFrame(animationFrameId)
+	// 		animationFrameId = null
+	// 	}
+	// }
 
-	const updateActiveToasts = () => {
+	// const start = () => {
+	// 	const animate = () => {
+	// 		console.log('animate')
+	// 		animationFrameId = globalThis.requestAnimationFrame(animate)
+	// 		// eslint-disable-next-line @typescript-eslint/no-use-before-define -- FIXME
+	// 		updateActiveToasts()
+	// 	}
+	// 	animationFrameId = globalThis.requestAnimationFrame(animate)
+	// }
+
+	const updateActiveToasts = (_dirty = false) => {
 		if (subscriber === null) return
-
-		const wasEmpty = activeToasts.length === 0
-
-		let dirty = false
+		let dirty = _dirty
 
 		let index = 0
 		while (index < activeToasts.length) {
@@ -190,7 +286,7 @@ export const createToaster = (
 			dirty = true
 
 			if (toast.progress >= 1) {
-				activeToasts.splice(index, 1)
+				deleteAndAbortToast('delete', toast.message.metadata.id)
 				continue
 			}
 			index++
@@ -199,34 +295,6 @@ export const createToaster = (
 		while (activeToasts.length < options.numberOfToasts) {
 			const message = fifoToasterQueue.shift() ?? null
 			if (message === null) break
-
-			// const { signal } = message.metadata.abortController
-
-			// if (signal.aborted) {
-			// 	message.deferred.reject(signal.reason)
-			// 	continue
-			// }
-
-			// const timeout = globalThis.setTimeout(() => {
-			// 	const toBeRemovedIndex = fifoToasterQueue.findIndex(
-			// 		({ metadata }) => metadata.id === options.metadata.id,
-			// 	)
-
-			// 	if (toBeRemovedIndex === -1)
-			// 		throw new Error(
-			// 			`could not find to be removed notification “${options.metadata.id}”`,
-			// 		)
-
-			// 	fifoToasterQueue.splice(toBeRemovedIndex, 1)
-
-			// 	resolve()
-			// }, options.duration ?? 3000) // TODO: persistent toast support
-
-			// // TODO: possible memory leak
-			// signal.addEventListener('abort', () => {
-			// 	globalThis.clearTimeout(timeout)
-			// 	reject(signal.reason)
-			// })
 
 			activeToasts.push({
 				beginTime: dayjs(),
@@ -241,20 +309,29 @@ export const createToaster = (
 
 		const isNowEmpty = activeToasts.length === 0
 
+		if (!options.animationFrame.getIsRunning() && !isNowEmpty) {
+			options.animationFrame.start(() => {
+				updateActiveToasts()
+			})
+		} else if (options.animationFrame.getIsRunning() && isNowEmpty) {
+			options.animationFrame.stop()
+		}
+
 		if (!dirty) return
 
 		notifySubscriber()
-		if (wasEmpty && !isNowEmpty) {
-			start()
-		} else if (!wasEmpty && isNowEmpty) {
-			stop()
-		}
 	}
 
 	const push: ToasterReturn['push'] = (message) => {
 		const options = messageSchema.parse(message)
 
-		const doneDeferred = createDeferred()
+		const doneDeferred = createDeferred<'deleted'>()
+		const { signal } = options.metadata.abortController
+
+		signal.addEventListener('abort', () => {
+			if (signal.reason !== INTERNAL_ABORT)
+				deleteAndAbortToast('abort', options.metadata.id)
+		})
 
 		fifoToasterQueue.push({
 			custom: options.custom,
@@ -268,8 +345,7 @@ export const createToaster = (
 
 		return {
 			abort: () => {
-				// TODO: will it work
-				options.metadata.abortController.abort()
+				deleteAndAbortToast('abort', options.metadata.id)
 			},
 			custom: options.custom,
 			done: doneDeferred.promise,
@@ -279,22 +355,8 @@ export const createToaster = (
 	}
 
 	return {
-		abort: (id: string) => {
-			// FIXME: this function needs to be redone
-
-			const toBeRemovedIndex = fifoToasterQueue.findIndex(
-				({ metadata }) => metadata.id === id,
-			)
-
-			if (toBeRemovedIndex === -1)
-				throw new Error(`could not find to be removed notification “${id}”`)
-
-			const removedQueueItem = fifoToasterQueue.splice(toBeRemovedIndex, 1)[0]
-
-			if (!removedQueueItem)
-				throw new Error(`could not find to be removed notification “${id}”`)
-
-			removedQueueItem.metadata.abortController.abort()
+		abort: (toastId: string) => {
+			deleteAndAbortToast('abort', toastId)
 		},
 		createPusher: (options = {}) => {
 			return (pushOptions) => {
@@ -306,16 +368,17 @@ export const createToaster = (
 				return push(mergedOptions)
 			}
 		},
+		/**
+		 * The methods in here expose the toasts from `activeToasts` to a single subscriber.
+		 * Toasts from `fifoToasterQueue` are kept private.
+		 * The subscriber:
+		 *   - gets updated whenever `activeToasts` gets mutated
+		 *   - can delete a specific toast by id
+		 */
 		_internal_pls_dont_touch: {
 			requestDelete: (deleteId) => {
-				const index = activeToasts.findIndex(
-					(toast) => toast.message.metadata.id === deleteId,
-				)
-				if (index === -1)
-					throw new Error(`could not find toast with id ${deleteId}`)
-
-				activeToasts.splice(index, 1)
-				updateActiveToasts()
+				deleteAndAbortToast('delete', deleteId)
+				updateActiveToasts(true)
 			},
 			subscribe: (handler) => {
 				if (subscriber)
@@ -325,7 +388,7 @@ export const createToaster = (
 
 				subscriber = handler
 
-				updateActiveToasts()
+				updateActiveToasts(true)
 			},
 			unsubscribe: () => {
 				if (!subscriber)

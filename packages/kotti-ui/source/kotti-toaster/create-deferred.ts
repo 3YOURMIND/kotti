@@ -1,12 +1,12 @@
-export const createDeferred = (): {
-	promise: Promise<void>
-	resolve: () => void
+export const createDeferred = <T>(): {
+	promise: Promise<T>
+	resolve: (res: T) => void
 	reject: (arg: unknown) => void
 } => {
-	let resolve: (() => void) | null = null
+	let resolve: ((res: T) => void) | null = null
 	let reject: ((arg: unknown) => void) | null = null
 
-	const promise = new Promise<void>((res, rej) => {
+	const promise = new Promise<T>((res, rej) => {
 		resolve = res
 		reject = rej
 	})
