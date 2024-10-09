@@ -6,8 +6,6 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
-
 <style>
 /* Page Transition Animation */
 body.page-is-transitioning #page-content {
