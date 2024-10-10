@@ -31,9 +31,10 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'

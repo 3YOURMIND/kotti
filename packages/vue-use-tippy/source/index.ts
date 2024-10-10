@@ -1,8 +1,8 @@
 import castArray from 'lodash.castarray'
-import type { Props, Instance } from 'tippy.js'
+import type { Instance, Props } from 'tippy.js'
 import _tippy from 'tippy.js'
 import type { Ref } from 'vue'
-import { onMounted, ref, onUnmounted, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
 /**
  * HACK: This hacky evaluation to tippy at runtime should just be
@@ -22,7 +22,7 @@ const tippy =
 		? _tippy
 		: (_tippy as unknown as { default: typeof _tippy }).default
 
-type InstanceRefType = Instance[] | Instance | null
+type InstanceRefType = Instance | Instance[] | null
 type Callback = (t: InstanceRefType) => void
 type Target = Ref<Element | null>
 
@@ -90,7 +90,7 @@ export const useTippy = (
 				tippyInstance.setProps(options.value)
 			})
 		},
-		{ immediate: true, flush: 'post' },
+		{ flush: 'post', immediate: true },
 	)
 
 	return {

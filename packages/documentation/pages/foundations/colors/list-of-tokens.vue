@@ -39,6 +39,7 @@ import {
 	tokenColorsFactory,
 } from '@3yourmind/kotti-ui/tokens'
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'DocumenationPageFoundationsColorsTokens',
 	data() {
@@ -69,6 +70,7 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style lang="scss" scoped>

@@ -7,18 +7,15 @@
  */
 import type { ZodSchema } from 'zod'
 
-export * from './decimal-separator'
-export * from './typed-emit'
-
 export { KottiAccordion as Accordion } from '../kotti-accordion/types'
 export { KottiActionbar as Actionbar } from '../kotti-actionbar/types'
-export { KottiAvatar as Avatar } from '../kotti-avatar/types'
 export { KottiAvatarGroup as AvatarGroup } from '../kotti-avatar-group/types'
+export { KottiAvatar as Avatar } from '../kotti-avatar/types'
 export { KottiBanner as Banner } from '../kotti-banner/types'
 export { KottiBreadcrumb as Breadcrumb } from '../kotti-breadcrumb/types'
+export type { KottiButtonGroup as ButtonGroup } from '../kotti-button-group/types'
 export { KottiButton as Button } from '../kotti-button/types'
 export { KottiSplitButton as SplitButton } from '../kotti-button/types'
-export type { KottiButtonGroup as ButtonGroup } from '../kotti-button-group/types'
 export { KottiCard as Card } from '../kotti-card/types'
 export type { KottiCol as Col } from '../kotti-col/types'
 export {
@@ -26,12 +23,7 @@ export {
 	KottiCommentInput as CommentInput,
 } from '../kotti-comment/types'
 export { KottiDrawer as Drawer } from '../kotti-drawer/types'
-export { KottiField as Field } from '../kotti-field/types'
 export { KottiFieldCurrency as FieldCurrency } from '../kotti-field-currency/types'
-export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'
-export { KottiFieldPassword as FieldPassword } from '../kotti-field-password/types'
-export { KottiFieldText as FieldText } from '../kotti-field-text/types'
-export { KottiFieldTextArea as FieldTextArea } from '../kotti-field-text-area/types'
 export {
 	KottiFieldDate as FieldDate,
 	KottiFieldDateRange as FieldDateRange,
@@ -43,23 +35,28 @@ export {
 	KottiFieldFileUploadRemote as FieldFileUploadRemote,
 } from '../kotti-field-file-upload/types'
 export { KottiFieldInlineEdit as FieldInlineEdit } from '../kotti-field-inline-edit/types'
+export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'
+export { KottiFieldPassword as FieldPassword } from '../kotti-field-password/types'
 export { KottiFieldRadioGroup as FieldRadioGroup } from '../kotti-field-radio-group/types'
-export {
-	KottiFieldToggle as FieldToggle,
-	KottiFieldToggleGroup as FieldToggleGroup,
-} from '../kotti-field-toggle/types'
 export {
 	KottiFieldMultiSelect as FieldMultiSelect,
 	KottiFieldMultiSelectRemote as FieldMultiSelectRemote,
 	KottiFieldSingleSelect as FieldSingleSelect,
 	KottiFieldSingleSelectRemote as FieldSingleSelectRemote,
 } from '../kotti-field-select/types'
+export { KottiFieldTextArea as FieldTextArea } from '../kotti-field-text-area/types'
+export { KottiFieldText as FieldText } from '../kotti-field-text/types'
+export {
+	KottiFieldToggle as FieldToggle,
+	KottiFieldToggleGroup as FieldToggleGroup,
+} from '../kotti-field-toggle/types'
+export { KottiField as Field } from '../kotti-field/types'
 export { KottiFileUpload as FileUpload } from '../kotti-file-upload/types'
 export { KottiFilters as Filters } from '../kotti-filters/types'
-export type { KottiForm as Form } from '../kotti-form/types'
 export type { KottiFormControllerList as FormControllerList } from '../kotti-form-controller-list/types'
 export type { KottiFormControllerObject as FormControllerObject } from '../kotti-form-controller-object/types'
 export type { KottiFormSubmit as FormSubmit } from '../kotti-form-submit/types'
+export type { KottiForm as Form } from '../kotti-form/types'
 export { KottiHeading as Heading } from '../kotti-heading/types'
 export type { KottiI18n as I18n } from '../kotti-i18n/types'
 export { KottiLine as Line } from '../kotti-line/types'
@@ -67,10 +64,12 @@ export { KottiModal as Modal } from '../kotti-modal/types'
 export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiPopover as Popover } from '../kotti-popover/types'
 export { KottiRow as Row } from '../kotti-row/types'
-export { KottiTag as Tag } from '../kotti-tag/types'
 export { KottiTableLegacy as TableLegacy } from '../kotti-table-legacy/types'
+export { KottiTag as Tag } from '../kotti-tag/types'
 export { KottiUserMenu as UserMenu } from '../kotti-user-menu/types'
 export { KottiValueLabel as ValueLabel } from '../kotti-value-label/types'
+export * from './decimal-separator'
+export * from './typed-emit'
 
 export enum MetaDesignType {
 	FIGMA = 'FIGMA',
@@ -99,13 +98,13 @@ export type Meta = {
 		string,
 		{
 			description: string | null
-			scope: null | Record<
+			scope: Record<
 				string,
 				{
 					description: string | null
-					type: 'function' | 'object' | 'integer'
+					type: 'function' | 'integer' | 'object'
 				}
-			>
+			> | null
 		}
 	>
 	typeScript: {

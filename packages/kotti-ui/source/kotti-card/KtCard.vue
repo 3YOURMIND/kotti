@@ -52,17 +52,17 @@ export default defineComponent({
 
 		return {
 			cardClass: computed(() => ({
+				[`kt-card--has-${props.imgPosition}-image`]: props.imgUrl,
 				'kt-card': true,
 				'kt-card--is-clickable': !hasActions.value,
-				[`kt-card--has-${props.imgPosition}-image`]: props.imgUrl,
 			})),
 			handleClick: () => {
 				if (!hasActions.value) emit('click')
 			},
 			hasActions,
 			imageRowClass: computed(() => ({
-				'kt-card__image-row': true,
 				[`kt-card__image-row--is-${props.imgPosition}`]: props.imgUrl,
+				'kt-card__image-row': true,
 			})),
 			KottiCard,
 		}

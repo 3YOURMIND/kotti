@@ -17,8 +17,8 @@ export module KottiFieldPassword {
 			KottiField.potentiallySupportedPropsSchema.omit({ autoComplete: true }),
 		)
 		.extend({
-			placeholder: z.string().nullable().default(null),
 			autoComplete: createLooseZodEnumSchema(AutoComplete),
+			placeholder: z.string().nullable().default(null),
 			value: valueSchema.default(null),
 		})
 

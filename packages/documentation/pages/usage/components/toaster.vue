@@ -69,8 +69,9 @@ this.$yodify({
 </template>
 
 <script lang="ts">
-import { KtToaster } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtToaster } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

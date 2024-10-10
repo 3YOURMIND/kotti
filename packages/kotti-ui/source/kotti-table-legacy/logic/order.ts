@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import pick from 'lodash/pick.js'
 
-import { setColumnsArray, getColumnIndex, getColumnRealIndex } from './column'
+import { getColumnIndex, getColumnRealIndex, setColumnsArray } from './column'
 import type { Store } from './types'
 
 function byOrder(a: any, b: any) {
@@ -34,10 +34,10 @@ export function resolveColumnsOrder({
 		.filter(({ _deleted }: any) => !_deleted)
 		.map((col: any, index) => {
 			return {
-				orderAdvantage: 'order' in col ? 1 : -1,
-				order: typeof col.order === 'number' ? col.order : col.index,
-				index: typeof col.index === 'number' ? col.index : index,
 				col,
+				index: typeof col.index === 'number' ? col.index : index,
+				order: typeof col.order === 'number' ? col.order : col.index,
+				orderAdvantage: 'order' in col ? 1 : -1,
 			}
 		})
 		.sort(byOrder)

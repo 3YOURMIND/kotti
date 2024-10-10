@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { computed, defineComponent, h, inject } from 'vue'
+
 import { KT_TABLE } from '../constants'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

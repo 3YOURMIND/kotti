@@ -4,8 +4,8 @@ import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 export module KottiLine {
 	export enum Position {
-		LEFT = 'left',
 		CENTER = 'center',
+		LEFT = 'left',
 		RIGHT = 'right',
 	}
 

@@ -1,4 +1,5 @@
 import utils from 'eslint-plugin-vue/lib/utils/index.js'
+
 import { createRule } from '../utils/eslint-helpers.js'
 
 const description = `
@@ -7,7 +8,21 @@ as it is not safe to do so. It can cause unpredictable bugs in any part of the a
 that are extremely hard to track down.
 `
 export default createRule({
-	name: 'vue-no-v-model-deep',
+	create(context) {
+		return utils.defineTemplateBodyVisitor(context, {
+			// @ts-expect-error -- let's not guess vue-eslint-plugin's internals
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			"VElement VAttribute[directive=true][key.name.name='model']"(node) {
+				if (node.value.expression.object)
+					context.report({
+						loc: node.loc,
+						messageId: 'avoidDeepAttributesInProps',
+						node,
+					})
+			},
+		})
+	},
+	defaultOptions: [],
 	meta: {
 		docs: {
 			description,
@@ -20,19 +35,5 @@ export default createRule({
 		schema: [],
 		type: 'problem',
 	},
-	defaultOptions: [],
-	create(context) {
-		return utils.defineTemplateBodyVisitor(context, {
-			// @ts-expect-error -- let's not guess vue-eslint-plugin's internals
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			"VElement VAttribute[directive=true][key.name.name='model']"(node) {
-				if (node.value.expression.object)
-					context.report({
-						node,
-						loc: node.loc,
-						messageId: 'avoidDeepAttributesInProps',
-					})
-			},
-		})
-	},
+	name: 'vue-no-v-model-deep',
 })

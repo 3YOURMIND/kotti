@@ -82,12 +82,13 @@ textSeparator: {
 </template>
 
 <script lang="ts">
-import { KtBreadcrumb } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
 
-import { useRouter } from '../../../hooks/use-router'
+import { KtBreadcrumb } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
+
+import { useRouter } from '../../../hooks/use-router'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsBreadcrumb',

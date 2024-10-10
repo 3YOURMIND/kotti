@@ -18,8 +18,9 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { KtButton } from '../kotti-button'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'

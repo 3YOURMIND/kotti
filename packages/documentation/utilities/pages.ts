@@ -49,12 +49,12 @@ export type ComponentValue = {
 	defaultSlot: string | null
 	hasActions: boolean
 	hasHelpTextSlot: boolean
-	hasRemoteUpload: boolean
 	hasOptionSlot: boolean
+	hasRemoteUpload: boolean
 	headerSlot: string | null
-	showHeaderSideSlot: boolean
 	name: ComponentNames
 	props: Record<string, unknown>
+	showHeaderSideSlot: boolean
 	validation: Kotti.Field.Validation.Result['type']
 }
 

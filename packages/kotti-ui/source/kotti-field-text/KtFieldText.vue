@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { computed, defineComponent } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
@@ -47,10 +47,10 @@ export default defineComponent({
 					autocomplete: props.autoComplete,
 					class: ['kt-field-text__wrapper'],
 					forceUpdateKey: forceUpdateKey.value,
-					type: 'text',
-					size: 1,
-					value: field.currentValue ?? '',
 					placeholder: props.placeholder ?? undefined,
+					size: 1,
+					type: 'text',
+					value: field.currentValue ?? '',
 				}),
 			),
 			onInput: (event: Event) => {

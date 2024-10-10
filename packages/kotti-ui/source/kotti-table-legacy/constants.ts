@@ -3,15 +3,34 @@
 import type { CreateElement, InjectionKey, VNodeChildren } from 'vue'
 import type { Vue as VueType } from 'vue/types/vue'
 
-import type { KottiTableLegacy } from './types'
 import type { TypedEmit } from '../types/typed-emit'
+
 import type { TableStore } from './logic/store'
 import type { Store } from './logic/types'
+import type { KottiTableLegacy } from './types'
 
 export const IS_ASC = /ascending|^1/
 export const IS_DSC = /descending|^-1/
 
 interface KottiTableContext {
+	_renderActions: (
+		h: CreateElement,
+		payload: {
+			data: KottiTableLegacy.Row.Props
+			row: KottiTableLegacy.Row.Props
+			rowIndex: number
+		},
+	) => VNodeChildren
+	_renderEmpty: (h: CreateElement) => VNodeChildren
+	_renderExpand: (
+		h: CreateElement,
+		payload: {
+			data: KottiTableLegacy.Row.Props
+			row: KottiTableLegacy.Row.Props
+			rowIndex: number
+		},
+	) => VNodeChildren
+	_renderLoading: (h: CreateElement) => VNodeChildren
 	$emit: TypedEmit<{
 		activateRow: [unknown, number]
 		cellClick: [
@@ -37,24 +56,6 @@ interface KottiTableContext {
 		sortChange: unknown[]
 	}>
 	$listeners: VueType['$listeners']
-	_renderActions: (
-		h: CreateElement,
-		payload: {
-			data: KottiTableLegacy.Row.Props
-			row: KottiTableLegacy.Row.Props
-			rowIndex: number
-		},
-	) => VNodeChildren
-	_renderEmpty: (h: CreateElement) => VNodeChildren
-	_renderExpand: (
-		h: CreateElement,
-		payload: {
-			data: KottiTableLegacy.Row.Props
-			row: KottiTableLegacy.Row.Props
-			rowIndex: number
-		},
-	) => VNodeChildren
-	_renderLoading: (h: CreateElement) => VNodeChildren
 	colSpan: number
 	disableRow: KottiTableLegacy.Props['disableRow']
 	hasActions: boolean
@@ -101,7 +102,7 @@ export const PUBLIC_COLUMN_PROPS = [
 
 export const DEFAULT_RENDER_CELL = function defaultRenderCell(
 	_h: CreateElement,
-	{ row, rowIndex, column, columnIndex, value }: any,
+	{ column, columnIndex, row, rowIndex, value }: any,
 ): [any] {
 	return [
 		column.formatter(value, row, column, columnIndex, rowIndex) ??

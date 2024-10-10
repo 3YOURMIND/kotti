@@ -27,10 +27,11 @@
 </template>
 
 <script lang="ts">
+import { TimeConversion } from '@metatypes/units'
 import copy from 'copy-to-clipboard'
 import type { PropType } from 'vue'
 import { computed, defineComponent, ref } from 'vue'
-import { TimeConversion } from '@metatypes/units'
+
 import type { Yoco } from '@3yourmind/yoco'
 
 export default defineComponent({

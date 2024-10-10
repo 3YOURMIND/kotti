@@ -1,5 +1,6 @@
-import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
+
+import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 
 import { KottiField } from '../kotti-field/types'
 import type { EnumToPrimitiveUnion } from '../zod-utilities/enums'
@@ -89,10 +90,10 @@ export module Shared {
 				dataTest: true,
 				extensions: true,
 				externalUrl: true,
+				hideDropArea: true,
 				icon: true,
 				isDisabled: true,
 				isLoading: true,
-				hideDropArea: true,
 				maxFileSize: true,
 				tabIndex: true,
 			})
@@ -176,10 +177,10 @@ export module Shared {
 			HIDDEN: string
 			INVALID: string
 			NOT_STARTED: string
+			READY_TO_UPLOAD: string
 			UPLOADED: string
 			UPLOADED_WITH_ERROR: string
 			UPLOADING: string
-			READY_TO_UPLOAD: string
 		}
 		text: {
 			clickToUpload: string

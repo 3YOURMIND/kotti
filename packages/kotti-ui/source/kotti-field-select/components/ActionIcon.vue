@@ -18,9 +18,10 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 export default defineComponent({
 	name: 'ActionIcon',

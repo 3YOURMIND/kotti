@@ -26,9 +26,9 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-import { KtModal } from '../../../kotti-modal'
 import { KtButton } from '../../../kotti-button'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import { KtModal } from '../../../kotti-modal'
 import { makeProps } from '../../../make-props'
 import { ErrorCodes } from '../../constants'
 import { Shared } from '../../types'
@@ -45,10 +45,10 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const errors = computed<Record<string, string>>(() => ({
+			default: `${translations.value.label.unknown}: ${String(props.error)}`,
 			[ErrorCodes.NOT_ALLOWED_ERROR]: translations.value.error.notAllowed,
 			[ErrorCodes.NOT_FOUND_ERROR]: translations.value.error.notFound,
 			[ErrorCodes.NOT_SUPPORTED_ERROR]: translations.value.error.notSupported,
-			default: `${translations.value.label.unknown}: ${String(props.error)}`,
 		}))
 
 		return {

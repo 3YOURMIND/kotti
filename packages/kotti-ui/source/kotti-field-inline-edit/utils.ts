@@ -1,4 +1,5 @@
 import { nextTick } from 'vue'
+
 import type { FieldInlineEditElement } from './types'
 
 export const resizeField = async ({

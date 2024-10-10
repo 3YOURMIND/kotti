@@ -39,7 +39,7 @@ function getNextSortOrder(column: any) {
 	return column.sortOrders[Math.max(index, 0)]
 }
 
-function getSortValue({ value, index }: any, by: any) {
+function getSortValue({ index, value }: any, by: any) {
 	return typeof by === 'string' ? property(by)(value) : by(value, index)
 }
 
@@ -65,7 +65,7 @@ function compare(
 	order: any,
 	a: any,
 	b: any,
-	{ sortMethod, sortBy, sortOrder }: any,
+	{ sortBy, sortMethod, sortOrder }: any,
 ) {
 	order = sortMethod ? sortMethod(a.value, b.value) : compareArray(a, b, sortBy)
 	if (!order) {
@@ -79,7 +79,7 @@ function orderBy(array: any, sortedColumns: any) {
 	const columns = sortedColumns.map((column: any) => {
 		const { prop, sortMethod } = column
 
-		let { sortOrder, sortBy = prop } = column
+		let { sortBy = prop, sortOrder } = column
 
 		if (typeof sortOrder === 'string') {
 			sortOrder =
@@ -97,7 +97,7 @@ function orderBy(array: any, sortedColumns: any) {
 		}
 	})
 	return array
-		.map((value: any, index: number) => ({ value, index }))
+		.map((value: any, index: number) => ({ index, value }))
 		.sort((a: any, b: any) =>
 			columns.reduce(
 				(order: any, column: any) => order || compare(order, a, b, column),
@@ -136,10 +136,10 @@ export const mutations: Store.MutationComponents.Sort = {
 				}
 			})
 			store.emit('sortChange', {
-				sortedColumns,
 				column: options.column,
 				prop: options.column.prop,
 				sortBy: options.column.sortBy || options.column.prop,
+				sortedColumns,
 				sortOrder: options.column.sortOrder,
 			})
 		}
@@ -171,12 +171,12 @@ export const mutations: Store.MutationComponents.Sort = {
 }
 
 export const getters: Store.GetterComponents.Sort = {
+	canSort(state: any, column: any) {
+		return column.sortable || (state.sortable && column.sortable !== false)
+	},
 	hasSortOrder(state: any, column: any) {
 		column = getSortedColumn(state, column)
 		return column && column.sortOrder !== false
-	},
-	canSort(state: any, column: any) {
-		return column.sortable || (state.sortable && column.sortable !== false)
 	},
 	isSorted(state: any, column: any) {
 		column = getSortedColumn(state, column)

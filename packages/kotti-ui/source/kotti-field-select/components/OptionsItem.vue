@@ -50,11 +50,11 @@ export default defineComponent({
 
 		return {
 			classes: computed(() => ({
+				[`kt-field-select-options-item--is-type-${props.type}`]: true,
 				'kt-field-select-options-item': true,
 				'kt-field-select-options-item--is-disabled': props.isDisabled,
 				'kt-field-select-options-item--is-hovered': props.isHovered,
 				'kt-field-select-options-item--is-selected': props.isSelected,
-				[`kt-field-select-options-item--is-type-${props.type}`]: true,
 			})),
 			optionRef,
 		}

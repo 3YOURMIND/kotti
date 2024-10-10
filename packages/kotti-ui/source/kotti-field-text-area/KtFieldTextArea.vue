@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import type { TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'

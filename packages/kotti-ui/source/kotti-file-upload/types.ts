@@ -1,8 +1,9 @@
 import { z } from 'zod'
 
-import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
+
 import { KottiField } from '../kotti-field/types'
-import { yocoIconSchema, Yoco } from '@3yourmind/yoco'
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 export module KottiFileUpload {
 	export enum Validation {
@@ -108,9 +109,9 @@ export module KottiFileUpload {
 	export const internalFileInfoSchema = propsSchema
 		.pick({
 			dataTest: true,
+			extensions: true,
 			isDisabled: true,
 			isLoading: true,
-			extensions: true,
 			maxFileSize: true,
 		})
 		.extend({
@@ -151,10 +152,10 @@ export module KottiFileUpload {
 				dataTest: true,
 				extensions: true,
 				externalUrl: true,
+				hideDropArea: true,
 				icon: true,
 				isDisabled: true,
 				isLoading: true,
-				hideDropArea: true,
 				maxFileSize: true,
 				tabIndex: true,
 			})
@@ -238,10 +239,10 @@ export module KottiFileUpload {
 			HIDDEN: string
 			INVALID: string
 			NOT_STARTED: string
+			READY_TO_UPLOAD: string
 			UPLOADED: string
 			UPLOADED_WITH_ERROR: string
 			UPLOADING: string
-			READY_TO_UPLOAD: string
 		}
 		text: {
 			clickToUpload: string

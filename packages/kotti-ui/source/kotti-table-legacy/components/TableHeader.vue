@@ -50,10 +50,11 @@
 </template>
 
 <script lang="ts">
-import { KT_TABLE, KT_STORE } from '../constants'
-import { KottiTableLegacy } from '../types'
-import type { Store } from '../logic/types'
 import { computed, defineComponent, inject, ref } from 'vue'
+
+import { KT_STORE, KT_TABLE } from '../constants'
+import type { Store } from '../logic/types'
+import { KottiTableLegacy } from '../types'
 
 import { TableHeaderCell } from './TableHeaderCell'
 

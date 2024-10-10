@@ -8,8 +8,8 @@ import { PUBLIC_COLUMN_PROPS } from '../constants'
 import { KottiTableLegacy } from '../types'
 
 import { setFilteredColumn } from './filter'
-import { setHiddenColumn, getResolvedHiddenColumns } from './hide'
-import { resolveColumnsOrder, getOrderedColumns } from './order'
+import { getResolvedHiddenColumns, setHiddenColumn } from './hide'
+import { getOrderedColumns, resolveColumnsOrder } from './order'
 import { setSortedColumn } from './sort'
 import type { Store } from './types'
 
@@ -161,7 +161,7 @@ export const mutations: Store.MutationComponents.Column = {
 			refreshColumnArray = store.state.refreshColumnArray,
 		} = {},
 	): void {
-		const { table, state } = store
+		const { state, table } = store
 		if (table.$ready) {
 			if (refreshColumnArray || didRestoreDestroyedColumns(state)) {
 				state._columnsArray = resolveColumnsOrder(state)

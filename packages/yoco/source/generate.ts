@@ -8,13 +8,13 @@ const cwd = process.cwd()
 
 async function build() {
 	const builder = new IconFontBuildr({
-		sources: [path.join(cwd, 'svg', '[icon].svg')],
 		icons: Object.values(Yoco.Icon),
 		output: {
-			fonts: path.join(cwd, 'fonts'),
 			fontName: 'yoco',
+			fonts: path.join(cwd, 'fonts'),
 			formats: ['eot', 'ttf', 'woff', 'woff2'],
 		},
+		sources: [path.join(cwd, 'svg', '[icon].svg')],
 	})
 
 	await builder.build()

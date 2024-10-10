@@ -1,10 +1,11 @@
+/* eslint-disable perfectionist/sort-objects */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import pick from 'lodash/pick.js'
+import type { CreateElement } from 'vue'
 
 import { KT_TABLE_STATE_PROVIDER } from './constants'
 import KtTableLegacy, { INITIAL_TABLE_STORE_PROPS } from './KtTableLegacy.vue'
 import { TableStore } from './logic/store'
-import type { CreateElement } from 'vue'
 
 let tableProviderIdSeed = 1
 

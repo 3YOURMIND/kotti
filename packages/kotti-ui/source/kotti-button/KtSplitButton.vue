@@ -30,7 +30,6 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import omit from 'lodash/omit.js'
 import {
 	computed,
@@ -40,6 +39,8 @@ import {
 	ref,
 	watch,
 } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { makeProps } from '../make-props'
 

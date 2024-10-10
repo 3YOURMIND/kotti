@@ -1,5 +1,6 @@
-import { createRule } from '../utils/eslint-helpers.js'
 import utils from 'eslint-plugin-vue/lib/utils/index.js'
+
+import { createRule } from '../utils/eslint-helpers.js'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isTranslated = (translations: Record<string, any>[], key: string) => {
@@ -18,49 +19,6 @@ const description =
 	'this rule ensures that all v-t translation strings actually exist in the provided translation objects'
 
 export default createRule({
-	name: 'vue-no-v-t-without-translation',
-	meta: {
-		docs: {
-			description,
-			requiresTypeChecking: false,
-		},
-		messages: {
-			missingTranslation:
-				'Missing Translation. Not found in any known translation inputs',
-		},
-		schema: {
-			type: 'array',
-			items: {
-				type: 'array',
-				items: {
-					type: 'object',
-					additionalProperties: {
-						anyOf: [
-							{ type: 'string' },
-							{
-								$ref: '#/definitions/nestedObject',
-							},
-						],
-					},
-				},
-			},
-			definitions: {
-				nestedObject: {
-					type: 'object',
-					additionalProperties: {
-						anyOf: [
-							{ type: 'string' },
-							{
-								$ref: '#/definitions/nestedObject',
-							},
-						],
-					},
-				},
-			},
-		},
-		type: 'problem',
-	},
-	defaultOptions: [[]],
 	create(context) {
 		const translations = context.options[0]
 
@@ -74,11 +32,54 @@ export default createRule({
 
 				if (!isTranslated(translations, translationKey))
 					context.report({
-						node,
 						loc: node.loc,
 						messageId: 'missingTranslation',
+						node,
 					})
 			},
 		})
 	},
+	defaultOptions: [[]],
+	meta: {
+		docs: {
+			description,
+			requiresTypeChecking: false,
+		},
+		messages: {
+			missingTranslation:
+				'Missing Translation. Not found in any known translation inputs',
+		},
+		schema: {
+			definitions: {
+				nestedObject: {
+					additionalProperties: {
+						anyOf: [
+							{ type: 'string' },
+							{
+								$ref: '#/definitions/nestedObject',
+							},
+						],
+					},
+					type: 'object',
+				},
+			},
+			items: {
+				items: {
+					additionalProperties: {
+						anyOf: [
+							{ type: 'string' },
+							{
+								$ref: '#/definitions/nestedObject',
+							},
+						],
+					},
+					type: 'object',
+				},
+				type: 'array',
+			},
+			type: 'array',
+		},
+		type: 'problem',
+	},
+	name: 'vue-no-v-t-without-translation',
 })

@@ -249,10 +249,11 @@
 </template>
 
 <script lang="ts">
-import type { Kotti } from '@3yourmind/kotti-ui'
-import { KtComment } from '@3yourmind/kotti-ui'
 import escape from 'lodash/escape.js'
 import { defineComponent, ref } from 'vue'
+
+import type { Kotti } from '@3yourmind/kotti-ui'
+import { KtComment } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -352,16 +353,16 @@ export default defineComponent({
 		})
 		const settings = ref<{
 			allowInternal: Kotti.FieldToggle.Value
-			forceInternal: Kotti.FieldToggle.Value
 			dataTest: Kotti.FieldText.Value
+			forceInternal: Kotti.FieldToggle.Value
 			isReadOnly: Kotti.FieldToggle.Value
 			locale: Kotti.I18n.SupportedLanguages
 			placeholder: Kotti.FieldText.Value
 			tabIndex: Kotti.FieldNumber.Value
 		}>({
 			allowInternal: true,
-			forceInternal: false,
 			dataTest: null,
+			forceInternal: false,
 			isReadOnly: false,
 			locale: 'en-US',
 			placeholder: 'Add a comment',

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { computed, defineComponent, h, inject } from 'vue'
-import { KT_TABLE, KT_STORE } from '../constants'
+
+import { KT_STORE, KT_TABLE } from '../constants'
 
 import { TableBodyEmptyRow } from './TableBodyEmptyRow'
 import { TableBodyExpandRow } from './TableBodyExpandRow'

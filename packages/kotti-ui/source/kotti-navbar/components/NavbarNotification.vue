@@ -26,6 +26,7 @@
 </template>
 
 <script>
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'KtNavbarNotification',
 	props: {
@@ -35,6 +36,7 @@ export default {
 		title: { type: String, default: 'Notification' },
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style lang="scss" scoped>

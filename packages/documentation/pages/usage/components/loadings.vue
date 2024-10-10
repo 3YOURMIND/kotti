@@ -119,8 +119,9 @@
 </template>
 
 <script lang="ts">
-import { Kotti } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { Kotti } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

@@ -79,8 +79,9 @@ We can use `yoco` icons as well:
 </template>
 
 <script lang="ts">
-import { KtAccordion, KtButton } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
+
+import { KtAccordion, KtButton } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

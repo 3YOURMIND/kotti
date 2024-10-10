@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Kotti } from '../../types'
 import type { KottiTableLegacy } from '../types'
+
 import type { TableStore } from './store'
 
 export module Store {
@@ -244,7 +245,7 @@ export module Store {
 				state: State,
 				index: number,
 			): State['rows'][number]
-			getRowKey(this: TableStore, state: State, row: any): string | number
+			getRowKey(this: TableStore, state: State, row: any): number | string
 			isSelected(
 				this: TableStore,
 				state: State,
@@ -252,8 +253,8 @@ export module Store {
 			): boolean
 		}
 		export type Sort = {
-			hasSortOrder(this: TableStore, state: State, column: any): boolean
 			canSort(this: TableStore, state: State, column: any): boolean
+			hasSortOrder(this: TableStore, state: State, column: any): boolean
 			isSorted(this: TableStore, state: State, column: any): boolean
 			isSortedByAsc(this: TableStore, state: State, column: any): boolean
 			isSortedByDsc(this: TableStore, state: State, column: any): boolean
@@ -276,28 +277,28 @@ export module Store {
 
 	export type Emits = {
 		columnsChange: [
-			Pick<State['_columnsArray'][0], 'prop' | 'order' | 'hidden'>[],
+			Pick<State['_columnsArray'][0], 'hidden' | 'order' | 'prop'>[],
 		]
-		expandChange: [State['expanded']]
 		expand: [any, boolean]
+		expandChange: [State['expanded']]
 		hiddenChange: [State['hiddenColumns']]
 		orderChange: [
 			// Likely can be refactored to KottiTableLegacy.Column.Ordered[]
-			Pick<State['_columnsArray'][0], 'prop' | 'order'>[],
+			Pick<State['_columnsArray'][0], 'order' | 'prop'>[],
 		]
-		selectionChange: [State['selection']]
 		select: [State['selection'], any]
 		selectAll: [State['selection']]
+		selectionChange: [State['selection']]
 		sortChange: [
 			{
 				// Likely can be refactored to KottiTableLegacy.Column.Sorted[]
-				sortedColumns: Pick<
-					State['sortedColumns'],
-					'prop' | 'sortOrder' | 'sortBy'
-				>[]
 				column: any
 				prop: any // Likely string
 				sortBy: any // Likely KottiTableLegacy.SortBy | string
+				sortedColumns: Pick<
+					State['sortedColumns'],
+					'prop' | 'sortBy' | 'sortOrder'
+				>[]
 				sortOrder: any // Likely KottiTableLegacy.SortOrder
 			},
 		]

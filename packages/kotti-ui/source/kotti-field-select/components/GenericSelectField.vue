@@ -75,10 +75,11 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import type { Ref } from 'vue'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { z } from 'zod'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { KtField } from '../../kotti-field'
 import { useField } from '../../kotti-field/hooks'
@@ -88,10 +89,10 @@ import { makeProps } from '../../make-props'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from '../constants'
 import { useSelectTippy } from '../hooks/use-select-tippy'
 import type {
-	KottiFieldSingleSelectRemote,
-	KottiFieldSingleSelect,
 	KottiFieldMultiSelect,
 	KottiFieldMultiSelectRemote,
+	KottiFieldSingleSelect,
+	KottiFieldSingleSelectRemote,
 } from '../types'
 import { Shared } from '../types'
 
@@ -138,7 +139,7 @@ export default defineComponent({
 			rawEmit('emit', { event, payload })
 		}
 
-		const field = useField<SingleValue | MultiValue>({
+		const field = useField<MultiValue | SingleValue>({
 			emit,
 			isEmpty: (value) =>
 				props.isMultiple
@@ -217,7 +218,7 @@ export default defineComponent({
 					),
 				])
 			},
-			{ immediate: true, flush: 'post' },
+			{ flush: 'post', immediate: true },
 		)
 
 		const isInputVisible = computed(

@@ -7,10 +7,11 @@
 </template>
 
 <script lang="ts">
-import type { Yoco } from '@3yourmind/yoco'
-import { isYocoIcon } from '@3yourmind/yoco'
 import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
+
+import type { Yoco } from '@3yourmind/yoco'
+import { isYocoIcon } from '@3yourmind/yoco'
 
 import { KottiFilters } from '../types'
 
@@ -51,9 +52,9 @@ export default defineComponent({
 	emits: ['click'],
 	setup(props, { emit }) {
 		const mainClasses = computed(() => ({
+			[`kt-button-link--type-${props.type}`]: !props.isDisabled,
 			'kt-button-link': true,
 			'kt-button-link--is-disabled': props.isDisabled,
-			[`kt-button-link--type-${props.type}`]: !props.isDisabled,
 		}))
 
 		const handleClick = (event: Event) => {

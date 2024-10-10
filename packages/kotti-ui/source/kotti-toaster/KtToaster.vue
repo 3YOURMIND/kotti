@@ -29,6 +29,7 @@ import { generateId, notId } from './utilities.js'
 
 const DEFAULT_DURATION_IN_SECONDS = 3
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'KtToaster',
 	data() {
@@ -72,6 +73,7 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style lang="scss" scoped>

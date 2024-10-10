@@ -94,8 +94,8 @@ export * from './kotti-row'
 import {
 	KtTableLegacy,
 	KtTableLegacyColumn,
-	KtTableLegacyProvider,
 	KtTableLegacyConsumer,
+	KtTableLegacyProvider,
 } from './kotti-table-legacy'
 export * from './kotti-table-legacy'
 import { KtTag } from './kotti-tag'
@@ -104,8 +104,9 @@ import { KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
-import { KtValueLabel } from './kotti-value-label'
 import type { VueConstructor } from 'vue'
+
+import { KtValueLabel } from './kotti-value-label'
 export * from './kotti-value-label'
 
 export * from './types'
@@ -185,7 +186,7 @@ export default {
 		}: {
 			duration: number
 			text: string
-			type: 'success' | 'error'
+			type: 'error' | 'success'
 		}) {
 			const notification = { duration, text, type }
 

@@ -141,35 +141,36 @@
 </template>
 
 <script lang="ts">
-import { Kotti, KtFilters } from '@3yourmind/kotti-ui'
 import cloneDeep from 'lodash/cloneDeep.js'
 import { computed, defineComponent, ref } from 'vue'
+
+import { Kotti, KtFilters } from '@3yourmind/kotti-ui'
+
+import ComponentInfo from '~/components/ComponentInfo.vue'
 
 import { getLast, today } from '../../../utilities/date'
 import type { ComponentValue } from '../../../utilities/pages'
 import { generateComponentCode } from '../../../utilities/pages'
 
-import ComponentInfo from '~/components/ComponentInfo.vue'
-
 const shortcuts: Record<
 	string,
 	NonNullable<Kotti.FieldDateRange.Props['shortcuts']>[0]
 > = {
-	today: {
-		label: 'Today',
-		value: [today(), today()],
+	lastMonth: {
+		label: 'Last Month',
+		value: [getLast('month'), today()],
 	},
 	lastWeek: {
 		label: 'Last Week',
 		value: [getLast('week'), today()],
 	},
-	lastMonth: {
-		label: 'Last Month',
-		value: [getLast('month'), today()],
-	},
 	lastYear: {
 		label: 'Last Year',
 		value: [getLast('year'), today()],
+	},
+	today: {
+		label: 'Today',
+		value: [today(), today()],
 	},
 }
 
@@ -313,14 +314,14 @@ export default defineComponent({
 					{
 						key: 'dateRangeColumn',
 						label: 'Date Range Column',
+						maximumDate: settings.value.dateRangeMaximumDate,
+						minimumDate: settings.value.dateRangeMinimumDate,
 						operations: [
 							Kotti.Filters.Operation.DateRange.IN_RANGE,
 							Kotti.Filters.Operation.DateRange.IS_EMPTY,
 						],
-						type: Kotti.Filters.FilterType.DATE_RANGE,
-						maximumDate: settings.value.dateRangeMaximumDate,
-						minimumDate: settings.value.dateRangeMinimumDate,
 						shortcuts: settings.value.dateRangeShortcuts,
+						type: Kotti.Filters.FilterType.DATE_RANGE,
 					},
 					{
 						key: 'singleEnumColumn',

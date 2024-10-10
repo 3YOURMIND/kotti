@@ -23,6 +23,7 @@ import ActionBar from '~/components/ActionBar.vue'
 import LayoutContainer from '~/components/LayoutContainer.vue'
 import NavBar from '~/components/NavBar.vue'
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'DefaultLayout',
 	components: {
@@ -32,6 +33,7 @@ export default {
 		LayoutContainer,
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 import castArray from 'lodash/castArray.js'
 import isEqual from 'lodash/isEqual.js'
-import { expect, describe, it, beforeAll } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import type { PropOptions, PropType } from 'vue'
 import { z } from 'zod'
 

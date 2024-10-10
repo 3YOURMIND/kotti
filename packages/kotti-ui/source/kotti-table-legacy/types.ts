@@ -1,4 +1,6 @@
+/* eslint-disable perfectionist/sort-object-types */
 import type { CreateElement, VNode, VNodeChildren } from 'vue'
+
 import type { Store } from './logic/types'
 
 export module KottiTableLegacy {
@@ -18,15 +20,15 @@ export module KottiTableLegacy {
 		export type SortOrders = (typeof SortOrders)[keyof typeof SortOrders]
 
 		export type SortBy =
+			| (((row: Row.Props, rowIndex: number) => number | string) | string)[]
+			| ((row: Row.Props, rowIndex: number) => number | string)
 			| string
-			| ((row: Row.Props, rowIndex: number) => string | number)
-			| (string | ((row: Row.Props, rowIndex: number) => string | number))[]
 
 		export type SortOrder =
 			| (typeof SortOrders)[keyof typeof SortOrders]
-			| 1
 			| -1
 			| 0
+			| 1
 
 		export type SortMethod = <T>(a: T, b: T) => number
 
@@ -80,10 +82,10 @@ export module KottiTableLegacy {
 			order?: number
 			prop: string
 
-			cellClass?: string | string[] | Record<string, unknown>
-			headerCellClass?: string | string[] | Record<string, unknown>
-			tdClass?: string | string[] | Record<string, unknown>
-			thClass?: string | string[] | Record<string, unknown>
+			cellClass?: Record<string, unknown> | string[] | string
+			headerCellClass?: Record<string, unknown> | string[] | string
+			tdClass?: Record<string, unknown> | string[] | string
+			thClass?: Record<string, unknown> | string[] | string
 
 			align?: Align
 			minWidth?: string
@@ -145,13 +147,13 @@ export module KottiTableLegacy {
 		}
 	}
 
-	export type RowKey = string | ((row: Row.Props) => string | number)
+	export type RowKey = ((row: Row.Props) => number | string) | string
 
 	export type Props = {
 		columns: Column.Props[] | null
 		emptyText: string
 		id: string | null
-		rowKey?: string | ((row: Row.Props) => string | number)
+		rowKey?: ((row: Row.Props) => number | string) | string
 		rows: Row.Props[]
 		useColumnDragToOrder: boolean
 
@@ -161,7 +163,7 @@ export module KottiTableLegacy {
 
 		remoteSort: boolean
 		sortMultiple: boolean
-		sortable: boolean | 'all'
+		sortable: 'all' | boolean
 		useQuickSortControl: boolean
 
 		filteredColumns: Column.Filtered[] // Unused
@@ -171,10 +173,10 @@ export module KottiTableLegacy {
 
 		loading: boolean
 
-		headerClass?: string | string[] | Record<string, unknown>
-		tdClasses?: string | string[] | Record<string, unknown>
-		thClasses?: string | string[] | Record<string, unknown>
-		trClasses?: string | string[] | Record<string, unknown>
+		headerClass?: Record<string, unknown> | string[] | string
+		tdClasses?: Record<string, unknown> | string[] | string
+		thClasses?: Record<string, unknown> | string[] | string
+		trClasses?: Record<string, unknown> | string[] | string
 
 		renderActions?: (
 			h: CreateElement,

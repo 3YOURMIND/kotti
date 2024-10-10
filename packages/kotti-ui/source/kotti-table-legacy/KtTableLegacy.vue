@@ -22,22 +22,23 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable perfectionist/sort-objects */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import isEqual from 'lodash/isEqual.js'
 import pick from 'lodash/pick.js'
+import type { CreateElement, PropType } from 'vue'
 
 import { TableBody } from './components/TableBody'
 import TableHeader from './components/TableHeader.vue'
 import {
-	KT_TABLE,
-	KT_STORE,
-	KT_TABLE_STATE_PROVIDER,
 	DEFAULT_DISABLE_ROW,
+	KT_STORE,
+	KT_TABLE,
+	KT_TABLE_STATE_PROVIDER,
 } from './constants'
 import { KtTableLegacyColumn } from './KtTableLegacyColumn'
 import { TableStore } from './logic/store'
-import type { CreateElement, PropType } from 'vue'
 import type { KottiTableLegacy } from './types'
 
 let tableIdSeed = 1

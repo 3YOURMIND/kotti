@@ -101,8 +101,9 @@ this style is useful when you want add contrast to the page.
 </template>
 
 <script lang="ts">
-import { KtBanner } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtBanner } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

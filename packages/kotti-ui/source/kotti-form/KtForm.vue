@@ -44,7 +44,7 @@ export default defineComponent({
 			): value is KottiForm.Props['preventSubmissionOn'] => {
 				return (
 					typeof value === 'string' &&
-					['error', 'warning', 'NEVER'].includes(value)
+					['error', 'NEVER', 'warning'].includes(value)
 				)
 			},
 		},

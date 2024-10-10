@@ -123,9 +123,10 @@
 </template>
 
 <script lang="ts">
-import { Kotti, KtValueLabel } from '@3yourmind/kotti-ui'
 import cloneDeep from 'lodash/cloneDeep.js'
 import { computed, defineComponent, ref } from 'vue'
+
+import { Kotti, KtValueLabel } from '@3yourmind/kotti-ui'
 
 import { generateComponentCode } from '../../../utilities/pages'
 
@@ -148,6 +149,7 @@ export default defineComponent({
 	setup() {
 		const settings = ref({
 			dataTest: null,
+			hasDefaultSlot: false,
 			hasHelpTextSlot: false,
 			helpDescription: null,
 			helpText: null,
@@ -155,7 +157,6 @@ export default defineComponent({
 			isUnset: false,
 			label: 'Label',
 			locale: 'en-US',
-			hasDefaultSlot: false,
 			validation: null,
 			value: 'Value',
 		})

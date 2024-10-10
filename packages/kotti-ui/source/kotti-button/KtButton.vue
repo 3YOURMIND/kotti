@@ -17,8 +17,9 @@
 </template>
 
 <script lang="ts">
-import { useTippy } from '@3yourmind/vue-use-tippy'
 import { computed, defineComponent, onMounted, ref } from 'vue'
+
+import { useTippy } from '@3yourmind/vue-use-tippy'
 
 import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { makeProps } from '../make-props'

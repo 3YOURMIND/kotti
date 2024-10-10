@@ -121,8 +121,9 @@ quickLinksData: [{
 </template>
 
 <script lang="ts">
-import { KtNavbar } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtNavbar } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

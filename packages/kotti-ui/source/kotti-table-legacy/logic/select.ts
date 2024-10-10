@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import debounce from 'lodash/debounce.js'
 import isEqual from 'lodash/isEqual.js'
+
 import type { Store } from './types'
 
 function toggleRowSelection(state: any, row: any, selected: any) {
@@ -90,7 +91,7 @@ export const mutations: Store.MutationComponents.Select = {
 		const { state } = store
 		// refresh disabled rows status in case of external influence
 		store.commit('updateDisabledRows')
-		const { rows = [], isAllRowsDisabled, enabledRows } = state
+		const { enabledRows, isAllRowsDisabled, rows = [] } = state
 		if (rows.length === 0 || isAllRowsDisabled) {
 			// FIXME: Maybe we should not commit anything here and only return
 			store.commit('setSelected', [])

@@ -75,15 +75,16 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
-import DropArea from '../kotti-field-file-upload/components/DropArea.vue'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
-import UploadedFileItem from './components/UploadedFileItem.vue'
+import DropArea from '../kotti-field-file-upload/components/DropArea.vue'
 import PreUploadedFileItem from '../kotti-field-file-upload/components/PreUploadedFileItem.vue'
 import TakePhoto from '../kotti-field-file-upload/components/TakePhoto/TakePhoto.vue'
-import { buildFileInfo } from './utilities'
-import { KottiFileUpload } from './types'
-import { makeProps } from '../make-props'
 import type { Shared } from '../kotti-field-file-upload/types'
+import { makeProps } from '../make-props'
+
+import UploadedFileItem from './components/UploadedFileItem.vue'
+import { KottiFileUpload } from './types'
+import { buildFileInfo } from './utilities'
 
 let ktFileUploadId = 1
 
@@ -149,7 +150,7 @@ export default defineComponent({
 				}
 				emit('addFiles', payload)
 			},
-			onDeleteFile: (fileId: string | number) => {
+			onDeleteFile: (fileId: number | string) => {
 				const interceptedFileIndex = interceptedFiles.value.findIndex(
 					(file) => file.id === fileId,
 				)

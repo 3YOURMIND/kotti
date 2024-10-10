@@ -51,8 +51,9 @@
 </template>
 
 <script lang="ts">
-import { useTippy } from '@3yourmind/vue-use-tippy'
 import { computed, defineComponent, inject, ref } from 'vue'
+
+import { useTippy } from '@3yourmind/vue-use-tippy'
 
 import { KtAvatar } from '../kotti-avatar'
 import { KT_NAVBAR_CONTEXT } from '../kotti-navbar/constants'

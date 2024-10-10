@@ -43,8 +43,9 @@ menu: [
 </template>
 
 <script lang="ts">
-import { KtActionbar } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtActionbar } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

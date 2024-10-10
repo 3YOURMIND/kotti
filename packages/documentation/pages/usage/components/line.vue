@@ -62,8 +62,9 @@
 </template>
 
 <script lang="ts">
-import { KtLine } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtLine } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

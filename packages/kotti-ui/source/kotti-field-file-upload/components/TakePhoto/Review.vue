@@ -32,12 +32,13 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from 'vue'
 
-import { KtModal } from '../../../kotti-modal'
+import { Yoco } from '@3yourmind/yoco'
+
 import { KtButton } from '../../../kotti-button'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import { KtModal } from '../../../kotti-modal'
 import { makeProps } from '../../../make-props'
 import { Shared } from '../../types'
 

@@ -53,7 +53,7 @@ export default defineComponent({
 
 				localMessage.value = isEditing ? props.message : ''
 			},
-			{ immediate: true, flush: 'post' },
+			{ flush: 'post', immediate: true },
 		)
 
 		return {

@@ -1,6 +1,8 @@
 import shortid from 'shortid'
-import { KottiFileUpload } from './types'
+
 import { validateFile } from '../kotti-field-file-upload/validators'
+
+import { KottiFileUpload } from './types'
 
 export const buildFileInfo = ({
 	extensions,

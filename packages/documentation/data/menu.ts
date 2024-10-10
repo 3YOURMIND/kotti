@@ -1,3 +1,6 @@
+import kebabCase from 'lodash/kebabCase.js'
+import startCase from 'lodash/startCase.js'
+
 import type { Kotti } from '@3yourmind/kotti-ui'
 import {
 	KtAccordion,
@@ -26,8 +29,6 @@ import {
 	KtValueLabel,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import kebabCase from 'lodash/kebabCase.js'
-import startCase from 'lodash/startCase.js'
 
 export enum Tag {
 	CSS = 'css',
@@ -40,25 +41,25 @@ export enum Tag {
 
 type SubsectionPage = {
 	label: string
-	tags: Array<Tag>
 	path: string
+	tags: Array<Tag>
 }
 
 export type Subsection = {
 	icon: Yoco.Icon
-	title: string
-	path: string
 	pages: Array<SubsectionPage>
+	path: string
+	title: string
 }
 
 export type Section = {
-	title: string | null
 	subsections: Array<Subsection>
+	title: string | null
 }
 
 const makeComponentMenuItem = (component: {
-	name: string
 	meta: Kotti.Meta
+	name: string
 }): SubsectionPage => ({
 	label: startCase(component.name.replace(/^Kt/, '')),
 	path: kebabCase(component.name.replace(/^Kt/, '')),
@@ -71,39 +72,36 @@ const makeComponentMenuItem = (component: {
 
 export const menu: Array<Section> = [
 	{
-		title: null,
 		subsections: [
-			{ icon: Yoco.Icon.FILE, title: 'Overview', path: '', pages: [] },
+			{ icon: Yoco.Icon.FILE, pages: [], path: '', title: 'Overview' },
 			{
 				icon: Yoco.Icon.VERSION,
-				title: 'Changelog',
-				path: 'changelog',
 				pages: [],
+				path: 'changelog',
+				title: 'Changelog',
 			},
 		],
+		title: null,
 	},
 	{
-		title: 'Foundations',
 		subsections: [
 			{
 				icon: Yoco.Icon.EDIT,
-				title: 'Text',
-				path: 'foundations/text',
 				pages: [
 					{ label: 'Typography', path: 'typography', tags: [Tag.CSS] },
 					{ label: 'Writing Style ', path: 'writing-style', tags: [Tag.GUIDE] },
 				],
+				path: 'foundations/text',
+				title: 'Text',
 			},
 			{
 				icon: Yoco.Icon.DIMENSION,
-				title: 'Units',
-				path: 'foundations/units',
 				pages: [],
+				path: 'foundations/units',
+				title: 'Units',
 			},
 			{
 				icon: Yoco.Icon.MARKUP,
-				title: 'Icons',
-				path: 'foundations/icons',
 				pages: [
 					{ label: 'List', path: 'list', tags: [Tag.CSS, Tag.TS] },
 					{
@@ -117,11 +115,11 @@ export const menu: Array<Section> = [
 						tags: [Tag.GUIDE],
 					},
 				],
+				path: 'foundations/icons',
+				title: 'Icons',
 			},
 			{
 				icon: Yoco.Icon.MATERIAL,
-				title: 'Colors & Tokens',
-				path: 'foundations/colors',
 				pages: [
 					{
 						label: 'Introduction to Design Tokens',
@@ -141,16 +139,16 @@ export const menu: Array<Section> = [
 						tags: [Tag.GUIDE, Tag.OUTDATED],
 					},
 				],
+				path: 'foundations/colors',
+				title: 'Colors & Tokens',
 			},
 		],
+		title: 'Foundations',
 	},
 	{
-		title: 'Usage',
 		subsections: [
 			{
 				icon: Yoco.Icon.DASHBOARD,
-				title: 'Components',
-				path: 'usage/components',
 				pages: [
 					makeComponentMenuItem(KtAccordion),
 					makeComponentMenuItem(KtAvatar),
@@ -180,11 +178,11 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtToaster),
 					makeComponentMenuItem(KtValueLabel),
 				],
+				path: 'usage/components',
+				title: 'Components',
 			},
 			{
 				icon: Yoco.Icon.LAYER,
-				title: 'Layouts',
-				path: 'usage/layouts',
 				pages: [
 					{ label: 'Introduction', path: 'introduction', tags: [Tag.GUIDE] },
 					{ label: 'Grid System', path: 'grid-system', tags: [Tag.TS] },
@@ -192,13 +190,16 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtActionbar),
 					makeComponentMenuItem(KtUserMenu),
 				],
+				path: 'usage/layouts',
+				title: 'Layouts',
 			},
 			{
 				icon: Yoco.Icon.SCALE,
-				title: 'Utilities',
-				path: 'usage/utilities',
 				pages: [],
+				path: 'usage/utilities',
+				title: 'Utilities',
 			},
 		],
+		title: 'Usage',
 	},
 ]

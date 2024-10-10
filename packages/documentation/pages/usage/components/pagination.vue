@@ -114,8 +114,9 @@
 </template>
 
 <script lang="ts">
-import { KtPagination } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtPagination } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

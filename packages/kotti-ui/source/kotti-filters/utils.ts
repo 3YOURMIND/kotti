@@ -5,7 +5,7 @@ import { KottiFilters } from './types'
 
 export const getFilterEmptyValue = (
 	type: KottiFilters.Column.Any['type'],
-): null | [null, null] | [] => {
+): [] | [null, null] | null => {
 	switch (type) {
 		case KottiFilters.FilterType.BOOLEAN:
 		case KottiFilters.FilterType.CURRENCY:
@@ -185,11 +185,11 @@ export const getValueComponent = (
 			return 'KtFieldToggle'
 		case KottiFilters.FilterType.CURRENCY:
 			return 'KtFieldCurrency'
+		case KottiFilters.FilterType.DATE_RANGE:
+			return 'KtFieldDateRange'
 		case KottiFilters.FilterType.FLOAT:
 		case KottiFilters.FilterType.INTEGER:
 			return 'KtFieldNumber'
-		case KottiFilters.FilterType.DATE_RANGE:
-			return 'KtFieldDateRange'
 		case KottiFilters.FilterType.MULTI_ENUM:
 			return 'KtFieldMultiSelect'
 		case KottiFilters.FilterType.SINGLE_ENUM:

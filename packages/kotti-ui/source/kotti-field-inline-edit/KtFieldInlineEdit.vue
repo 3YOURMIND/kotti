@@ -34,7 +34,6 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import type { Ref } from 'vue'
 import {
 	computed,
@@ -47,6 +46,8 @@ import {
 	watch,
 } from 'vue'
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'vue/types/jsx'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import type { KottiField } from '../kotti-field/types'
@@ -174,7 +175,7 @@ export default defineComponent({
 		 */
 		const lastEventTarget = ref<EventTarget | null>(null)
 
-		const onMouseDown = (event: MouseEvent | KeyboardEvent) => {
+		const onMouseDown = (event: KeyboardEvent | MouseEvent) => {
 			if (
 				event.target === null ||
 				props.isDisabled ||
@@ -262,10 +263,10 @@ export default defineComponent({
 		return {
 			inputContainerWrapperRef,
 			inputProps: computed(
-				(): (TextareaHTMLAttributes | InputHTMLAttributes) & {
+				(): {
 					class: Record<string, boolean>
 					forceUpdateKey: number
-				} => ({
+				} & (InputHTMLAttributes | TextareaHTMLAttributes) => ({
 					...sharedProps.value,
 					autocomplete: props.autoComplete,
 					class: {

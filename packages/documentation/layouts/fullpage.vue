@@ -11,8 +11,10 @@
 
 <script>
 import { KtI18nContext } from '@3yourmind/kotti-ui'
+
 import NavBar from '~/components/NavBar.vue'
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'FullPageLayout',
 	components: {
@@ -20,6 +22,7 @@ export default {
 		NavBar,
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style lang="scss" scoped>

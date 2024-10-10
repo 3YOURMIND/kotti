@@ -187,17 +187,18 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import {
+	Kotti,
 	KtButton,
 	KtFieldDateTime,
 	KtFieldDateTimeRange,
 	KtFieldSingleSelect,
 	KtForm,
 	KtPopover,
-	Kotti,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -225,12 +226,12 @@ export default defineComponent({
 			Exclude<Kotti.Popover.Props['options'], undefined>
 		>([
 			{
+				dataTest: 'data-test',
+				icon: Yoco.Icon.USER,
 				isDisabled: false,
 				isOptional: true,
-				dataTest: 'data-test',
-				label: 'User',
 				isSelected: false,
-				icon: Yoco.Icon.USER,
+				label: 'User',
 				onClick: () => {
 					// eslint-disable-next-line no-alert
 					window.alert('clicked')
@@ -241,16 +242,16 @@ export default defineComponent({
 			 * - even if it's not disabled.
 			 * */
 			{
+				icon: Yoco.Icon.ATTACHMENT,
 				isDisabled: false,
 				isOptional: true,
 				label: 'Attachment',
-				icon: Yoco.Icon.ATTACHMENT,
 			},
 			{
+				icon: Yoco.Icon.SHIPPING,
 				isDisabled: true,
 				isOptional: true,
 				label: 'Disabled Option',
-				icon: Yoco.Icon.SHIPPING,
 			},
 		])
 
@@ -298,12 +299,12 @@ export default defineComponent({
 			]),
 			UsageMode,
 			values: ref<
-				{
+				Pick<Kotti.Popover.PropsInternal, 'placement' | 'size' | 'trigger'> & {
 					usageMode: UsageMode
 					valueDateTime: Kotti.FieldDateTime.Value
 					valueDateTimeRange: Kotti.FieldDateTimeRange.Value
 					valueSingleSelect: Kotti.FieldSingleSelect.Value
-				} & Pick<Kotti.Popover.PropsInternal, 'size' | 'trigger' | 'placement'>
+				}
 			>({
 				placement: Kotti.Popover.Placement.AUTO,
 				size: Kotti.Popover.Size.AUTO,

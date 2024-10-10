@@ -48,18 +48,18 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref } from 'vue'
 
-import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { makeProps } from '../../make-props'
-import { formatFileSize } from '../../kotti-field-file-upload/formatters'
-import { KottiFileUpload } from '../../kotti-file-upload/types'
+import { Yoco } from '@3yourmind/yoco'
 
 import ActionButton from '../../kotti-field-file-upload/components/ActionButton.vue'
 import ItemLayout from '../../kotti-field-file-upload/components/ItemLayout.vue'
 import ProgressBar from '../../kotti-field-file-upload/components/ProgressBar.vue'
+import { formatFileSize } from '../../kotti-field-file-upload/formatters'
 import { validateFile } from '../../kotti-field-file-upload/validators'
+import { KottiFileUpload } from '../../kotti-file-upload/types'
+import { useTranslationNamespace } from '../../kotti-i18n/hooks'
+import { makeProps } from '../../make-props'
 
 export default defineComponent({
 	name: 'UploadedFileItem',

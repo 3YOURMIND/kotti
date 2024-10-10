@@ -16,9 +16,9 @@ const getPlugins = ({ enableVisualizer }: { enableVisualizer: boolean }) => [
 	viteStaticCopy({
 		targets: [
 			{
-				src: 'source/kotti-style/_variables.scss',
 				dest: '.',
 				rename: 'variables.scss',
+				src: 'source/kotti-style/_variables.scss',
 			},
 		],
 	}),
@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => {
 	 */
 	const isProduction = mode === 'production'
 
-	const enableVisualizer = ['1', 'true', 'yes', 'y'].includes(
+	const enableVisualizer = ['1', 'true', 'y', 'yes'].includes(
 		process.env.ENABLE_VISUALIZER?.toLowerCase() ?? '',
 	)
 
@@ -64,14 +64,14 @@ export default defineConfig(({ mode }) => {
 
 	return {
 		build: {
-			minify: isProduction ? 'esbuild' : false,
 			emptyOutDir: false,
 			lib: {
 				entry: path.resolve(__dirname, 'source/index.ts'),
+				fileName: 'kotti-ui',
 				formats: ['es', 'cjs'],
 				name: 'KottiUI',
-				fileName: 'kotti-ui',
 			},
+			minify: isProduction ? 'esbuild' : false,
 			rollupOptions: {
 				external,
 				output: {

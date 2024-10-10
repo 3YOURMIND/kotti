@@ -454,10 +454,11 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import { KtButton, KtSplitButton } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

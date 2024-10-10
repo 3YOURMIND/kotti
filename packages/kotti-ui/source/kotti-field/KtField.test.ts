@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import { expect, describe, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { SetupContext } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { z } from 'zod'
@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { useI18nProvide } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
-import { localVue, getMockContext } from '../test-utils'
+import { getMockContext, localVue } from '../test-utils'
 
 import { FORM_KEY_NONE } from './constants'
 import { ktFieldErrors } from './errors'
@@ -218,10 +218,10 @@ describe('useField', () => {
 			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			shallowMount(TestComponent, {
 				localVue,
+				propsData: { formKey: FORM_KEY_NONE },
 				provide: {
 					[KT_FORM_CONTEXT]: getMockContext(),
 				},
-				propsData: { formKey: FORM_KEY_NONE },
 			}),
 		).not.toThrow()
 	})
@@ -232,24 +232,24 @@ describe('useField', () => {
 			const wrapper = shallowMount(TestComponent, {
 				localVue,
 				propsData: {
+					validator: () => ({ text: 'Testing', type: 'success' }),
 					value: `as long as it has a value, or is Optional, validator
 					won't throw internal error about a missing required filed`,
-					validator: () => ({ type: 'success', text: 'Testing' }),
 				},
 			})
 
 			expect((wrapper.vm as any).field.validation).toEqual({
-				type: 'success',
 				text: 'Testing',
+				type: 'success',
 			})
 
 			await wrapper.setProps({
-				validator: () => ({ type: 'warning', text: 'Testing' }),
+				validator: () => ({ text: 'Testing', type: 'warning' }),
 			})
 
 			expect((wrapper.vm as any).field.validation).toEqual({
-				type: 'warning',
 				text: 'Testing',
+				type: 'warning',
 			})
 		})
 
@@ -263,12 +263,12 @@ describe('useField', () => {
 					[KT_FORM_CONTEXT]: getMockContext({
 						validators: {
 							testKey1: () => ({
-								type: 'warning',
 								text: 'This is testKey1',
+								type: 'warning',
 							}),
 							testKey2: () => ({
-								type: 'warning',
 								text: 'This is testKey2',
+								type: 'warning',
 							}),
 						},
 						values: { testKey1: 'something1', testKey2: 'something2' },
@@ -277,15 +277,15 @@ describe('useField', () => {
 			})
 
 			expect((wrapper.vm as any).field.validation).toEqual({
-				type: 'warning',
 				text: 'This is testKey1',
+				type: 'warning',
 			})
 
 			await wrapper.setProps({ formKey: 'testKey2' })
 
 			expect((wrapper.vm as any).field.validation).toEqual({
-				type: 'warning',
 				text: 'This is testKey2',
+				type: 'warning',
 			})
 		})
 

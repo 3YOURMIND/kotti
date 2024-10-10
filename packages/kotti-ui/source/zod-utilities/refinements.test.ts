@@ -14,10 +14,10 @@ describe('refinementNonEmpty', () => {
 		const result = schema.safeParse([])
 
 		expect(result).toEqual({
-			success: false,
 			error: new z.ZodError([
 				{ code: 'custom', message: 'array may not be empty', path: [] },
 			]),
+			success: false,
 		})
 	})
 })

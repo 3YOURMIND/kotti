@@ -17,8 +17,8 @@ const GLOBALS_WHITELIST = new Set([
 	'Boolean',
 	'CanvasRenderingContext2D', // complicated due to typescript types
 	'console',
-	'document',
 	'Date',
+	'document',
 	'Element',
 	'Error',
 	'fetch',
@@ -72,7 +72,7 @@ const GLOBALS_FORBIDDEN = (() => {
 
 export const noRestrictedGlobalsConfig = Array.from(GLOBALS_FORBIDDEN).map(
 	(globalVariable) => ({
-		name: globalVariable,
 		message: `Do not directly access global variables. Use window.${globalVariable} instead.`,
+		name: globalVariable,
 	}),
 )

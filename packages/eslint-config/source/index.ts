@@ -1,13 +1,15 @@
-import type { TSESLint } from '@typescript-eslint/utils'
 import eslint from '@eslint/js'
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
-import eslintPluginUnicorn from 'eslint-plugin-unicorn'
+import type { TSESLint } from '@typescript-eslint/utils'
+import type { SharedConfig } from '@typescript-eslint/utils/ts-eslint'
 import jsonc from 'eslint-plugin-jsonc'
-import jsoncEslintParser from 'jsonc-eslint-parser'
-import pluginVue from 'eslint-plugin-vue'
+import perfectionist from 'eslint-plugin-perfectionist'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import sonarjs from 'eslint-plugin-sonarjs'
-import tseslint from 'typescript-eslint'
+import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import vitest from 'eslint-plugin-vitest'
+import pluginVue from 'eslint-plugin-vue'
+import jsoncEslintParser from 'jsonc-eslint-parser'
+import tseslint from 'typescript-eslint'
 import vueParser from 'vue-eslint-parser'
 
 import vueConsistentRefNames from './rules/vue-consistent-ref-names.js'
@@ -15,7 +17,6 @@ import vueNoVModelDeep from './rules/vue-no-v-model-deep.js'
 import vueNoVTOnComponents from './rules/vue-no-v-t-on-components.js'
 import vueNoVTWithoutTranslation from './rules/vue-no-v-t-without-translation.js'
 import { noRestrictedGlobalsConfig } from './utils/no-restricted-globals.js'
-import type { SharedConfig } from '@typescript-eslint/utils/ts-eslint'
 
 const IGNORED_AS_UNLIKELY = ['for-direction']
 const IGNORED_AS_COVERED_BY_TS = [
@@ -74,9 +75,9 @@ const IGNORED_BECAUSE_ESLINT_CAN_NOT_RELIABLY_INFER_TYPES = [
 ]
 
 const IGNORED_RULES = new Set([
-	...IGNORED_AS_UNLIKELY,
 	...IGNORED_AS_COVERED_BY_TS,
 	...IGNORED_AS_COVERED_BY_TS_ESLINT,
+	...IGNORED_AS_UNLIKELY,
 	...IGNORED_BECAUSE_ESLINT_CAN_NOT_RELIABLY_INFER_TYPES,
 ])
 
@@ -108,11 +109,11 @@ const rules = {
  * should be the last config that gets applied
  */
 const baseConfig = tseslint.config({
-	name: '@3yourmind/eslint-config/base-config',
 	extends: [
 		eslintPluginPrettierRecommended as TSESLint.FlatConfig.Config,
 		sonarjs.configs.recommended,
 	],
+	name: '@3yourmind/eslint-config/base-config',
 	rules: {
 		...ignoredRules,
 
@@ -141,9 +142,8 @@ const baseConfig = tseslint.config({
 		// SonarJS
 		'sonarjs/no-collapsible-if': 'off', // replaced by unicorn/no-lonely-if
 		'sonarjs/no-duplicate-string': 'off',
-		'sonarjs/no-small-switch': 'off',
 		'sonarjs/no-redundant-jump': 'off',
-
+		'sonarjs/no-small-switch': 'off',
 		// Unicorn
 		'unicorn/catch-error-name': 'warn',
 		'unicorn/consistent-destructuring': 'warn',
@@ -164,8 +164,8 @@ const baseConfig = tseslint.config({
 		'unicorn/no-useless-spread': 'warn',
 		'unicorn/no-zero-fractions': 'warn',
 		'unicorn/prefer-array-find': 'warn',
-		'unicorn/prefer-array-flat-map': 'warn',
 		'unicorn/prefer-array-flat': 'warn',
+		'unicorn/prefer-array-flat-map': 'warn',
 		'unicorn/prefer-array-index-of': 'warn',
 		'unicorn/prefer-array-some': 'warn',
 		'unicorn/prefer-date-now': 'warn',
@@ -203,8 +203,8 @@ const rulesRequiringTypes = {
 	'@typescript-eslint/ban-ts-comment': [
 		'error',
 		{
-			'ts-expect-error': 'allow-with-description',
 			minimumDescriptionLength: 24,
+			'ts-expect-error': 'allow-with-description',
 		},
 	],
 	'@typescript-eslint/consistent-type-imports': 'warn',
@@ -214,43 +214,43 @@ const rulesRequiringTypes = {
 		'error',
 		{
 			...defaultNamingConventionConfig,
-			selector: 'default',
 			format: null,
+			selector: 'default',
 		},
 		{
 			...defaultNamingConventionConfig,
+			format: ['camelCase'],
 			selector: [
 				'classMethod',
 				'function',
 				'objectLiteralMethod',
 				'typeMethod',
 			],
-			format: ['camelCase'],
 		},
 		{
 			...defaultNamingConventionConfig,
+			format: ['PascalCase'],
 			selector: 'enum',
-			format: ['PascalCase'],
 		},
 		{
 			...defaultNamingConventionConfig,
+			format: ['UPPER_CASE'],
 			selector: 'enumMember',
-			format: ['UPPER_CASE'],
 		},
 		{
 			...defaultNamingConventionConfig,
-			selector: ['parameter', 'variable'],
 			format: ['camelCase', 'UPPER_CASE'],
+			selector: ['parameter', 'variable'],
 		},
 		{
 			...defaultNamingConventionConfig,
-			selector: 'typeParameter',
 			format: ['UPPER_CASE'],
+			selector: 'typeParameter',
 		},
 		{
 			...defaultNamingConventionConfig,
-			selector: ['class', 'enum', 'interface', 'typeAlias'],
 			format: ['PascalCase'],
+			selector: ['class', 'enum', 'interface', 'typeAlias'],
 		},
 	],
 	'@typescript-eslint/no-confusing-void-expression': 'warn',
@@ -272,10 +272,10 @@ const rulesRequiringTypes = {
 		{
 			allowAny: false,
 			allowBoolean: false,
+			allowNever: false,
 			allowNullish: false,
 			allowNumber: true,
 			allowRegExp: false,
-			allowNever: false,
 		},
 	],
 	'@typescript-eslint/switch-exhaustiveness-check': 'error',
@@ -291,12 +291,12 @@ export default {
 		 * Should be used on .ts and .tsx files. This enables rules that rely on type checking.
 		 */
 		default: tseslint.config({
-			name: '@3yourmind/eslint-config/default',
 			extends: [
 				eslint.configs.recommended,
 				...tseslint.configs.strictTypeChecked,
 				...baseConfig,
 			],
+			name: '@3yourmind/eslint-config/default',
 			rules: {
 				...rulesRequiringTypes,
 			},
@@ -305,7 +305,11 @@ export default {
 		 * Registers plugins and settings that should be globally enabled.
 		 */
 		global: tseslint.config({
-			name: '@3yourmind/eslint-config/global',
+			extends: [
+				perfectionist.configs[
+					'recommended-natural'
+				] as TSESLint.FlatConfig.Config,
+			],
 			languageOptions: {
 				/**
 				 * As recommended by eslint-plugin-unicorn
@@ -316,11 +320,95 @@ export default {
 			linterOptions: {
 				reportUnusedDisableDirectives: 'error',
 			},
+			name: '@3yourmind/eslint-config/global',
 			plugins: {
 				'@3yourmind/eslint-config': plugin,
 				'@typescript-eslint': tseslint.plugin,
 				unicorn: eslintPluginUnicorn,
 				vue: pluginVue,
+			},
+			rules: {
+				'perfectionist/sort-array-includes': [
+					'error',
+					{ partitionByComment: true },
+				],
+				'perfectionist/sort-classes': ['error', { partitionByComment: true }],
+				'perfectionist/sort-enums': ['error', { partitionByComment: true }],
+				'perfectionist/sort-exports': ['error', { partitionByComment: true }],
+				'perfectionist/sort-imports': [
+					'error',
+					{
+						customGroups: {
+							type: {
+								'3yourmind': ['@3yourmind/*'],
+							},
+							value: {
+								'3yourmind': ['@3yourmind/*'],
+							},
+						},
+						groups: [
+							'type',
+							'builtin',
+							['external-type', 'external'],
+							'3yourmind',
+							'side-effect',
+							['internal-type', 'internal'],
+							['parent-type', 'parent'],
+							['sibling-type', 'sibling', 'index-type', 'index'],
+							['object', 'unknown'],
+						],
+						order: 'asc',
+						type: 'natural',
+					},
+				],
+				'perfectionist/sort-interfaces': [
+					'error',
+					{ partitionByComment: true },
+				],
+				'perfectionist/sort-intersection-types': [
+					'error',
+					{
+						groups: ['named', 'object', 'function', 'unknown', 'nullish'],
+						order: 'asc',
+						partitionByComment: true,
+						type: 'natural',
+					},
+				],
+				'perfectionist/sort-maps': ['error', { partitionByComment: true }],
+				'perfectionist/sort-named-exports': [
+					'error',
+					{ partitionByComment: true },
+				],
+				'perfectionist/sort-named-imports': [
+					'error',
+					{ partitionByComment: true },
+				],
+				'perfectionist/sort-object-types': [
+					'error',
+					{ partitionByComment: true },
+				],
+				'perfectionist/sort-objects': [
+					'error',
+					{
+						ignorePattern: ['defineComponent'],
+						partitionByComment: true,
+					},
+				],
+				'perfectionist/sort-sets': ['error', { partitionByComment: true }],
+				'perfectionist/sort-union-types': [
+					'error',
+					{
+						groups: ['named', 'object', 'function', 'unknown', 'nullish'],
+						order: 'asc',
+						partitionByComment: true,
+						type: 'natural',
+					},
+				],
+				'perfectionist/sort-variable-declarations': [
+					'error',
+					{ partitionByComment: true },
+				],
+				'perfectionist/sort-vue-attributes': 'off',
 			},
 		}),
 		/**
@@ -328,12 +416,12 @@ export default {
 		 */
 		json: tseslint.config(
 			{
-				name: '@3yourmind/eslint-config/json',
 				files: ['**/*.json'],
 				ignores: ['**/tsconfig*.json'],
 				languageOptions: {
 					parser: jsoncEslintParser,
 				},
+				name: '@3yourmind/eslint-config/json',
 				plugins: {
 					jsonc,
 				},
@@ -343,22 +431,22 @@ export default {
 					'jsonc/sort-keys': [
 						'warn',
 						{
-							pathPattern: '^exports(?:\\[[^\\]]+\\]|\\.[^.]+)+$',
 							order: ['types', 'default', 'import', 'require'],
+							pathPattern: '^exports(?:\\[[^\\]]+\\]|\\.[^.]+)+$',
 						},
 						{
-							pathPattern: '.*',
 							order: { caseSensitive: false, natural: true, type: 'asc' },
+							pathPattern: '.*',
 						},
 					],
 				},
 			},
 			{
-				name: '@3yourmind/eslint-config/tsconfig-json',
 				files: ['**/tsconfig*.json'],
 				languageOptions: {
 					parser: jsoncEslintParser,
 				},
+				name: '@3yourmind/eslint-config/tsconfig-json',
 				plugins: {
 					jsonc,
 				},
@@ -368,8 +456,8 @@ export default {
 					'jsonc/sort-keys': [
 						'warn',
 						{
-							pathPattern: '.*',
 							order: { type: 'asc' },
+							pathPattern: '.*',
 						},
 					],
 				},
@@ -380,10 +468,10 @@ export default {
 		 * would be unhelpful/annoying when writing tests.
 		 */
 		tests: tseslint.config({
-			name: '@3yourmind/eslint-config/tests',
-			files: ['**/*.test.{ts,tsx}'],
-			plugins: { vitest },
 			extends: [vitest.configs.recommended, ...baseConfig],
+			files: ['**/*.test.{ts,tsx}'],
+			name: '@3yourmind/eslint-config/tests',
+			plugins: { vitest },
 			rules: {
 				'@typescript-eslint/ban-ts-comment': 'off',
 				'@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -411,17 +499,17 @@ export default {
 		 */
 		untyped: tseslint.config(
 			{
-				name: '@3yourmind/eslint-config/untyped',
 				extends: [
 					eslint.configs.recommended,
 					...tseslint.configs.recommended,
 					...baseConfig,
 				],
 				files: ['**/*.{cjs,js,mjs}'],
+				name: '@3yourmind/eslint-config/untyped',
 			},
 			{
-				name: '@3yourmind/eslint-config/untyped-cjs',
 				files: ['**/*.cjs'],
+				name: '@3yourmind/eslint-config/untyped-cjs',
 				rules: {
 					'@typescript-eslint/no-var-requires': 'off',
 				},
@@ -431,7 +519,6 @@ export default {
 		 * Should be used only on .vue files. Includes vue-specific rules. Works best on `<script lang="ts">`
 		 */
 		vue: tseslint.config({
-			name: '@3yourmind/eslint-config/vue',
 			extends: [
 				...pluginVue.configs['flat/vue2-recommended'],
 				...tseslint.configs.strictTypeChecked,
@@ -449,6 +536,7 @@ export default {
 					parser: tseslint.parser,
 				},
 			},
+			name: '@3yourmind/eslint-config/vue',
 			rules: {
 				...rulesRequiringTypes,
 				'@3yourmind/eslint-config/vue-consistent-ref-names': 'error',

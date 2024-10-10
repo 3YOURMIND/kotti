@@ -17,6 +17,7 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
+
 import type { KottiActionbar } from '../types'
 
 export default defineComponent({

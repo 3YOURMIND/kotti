@@ -9,15 +9,15 @@ export module KottiRow {
 	}
 
 	export enum Align {
-		TOP = 'top',
-		CENTER = 'center',
 		BOTTOM = 'bottom',
+		CENTER = 'center',
+		TOP = 'top',
 	}
 
 	export enum Justify {
-		START = 'start',
 		CENTER = 'center',
 		END = 'end',
+		START = 'start',
 	}
 
 	export type PropsInternal = {

@@ -1,7 +1,8 @@
-import { useTippy } from '@3yourmind/vue-use-tippy'
 import type { Instance } from 'tippy.js'
 import type { Ref } from 'vue'
 import { computed, ref, watch } from 'vue'
+
+import { useTippy } from '@3yourmind/vue-use-tippy'
 
 import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 

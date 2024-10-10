@@ -1,6 +1,6 @@
 import type { Wrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { expect, it, describe } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import type { SetupContext } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { z } from 'zod'
@@ -81,7 +81,7 @@ const TestForm2 = {
 
 const getField = (
 	wrapper: Wrapper<any>,
-): KottiField.Hook.Returns<string | Record<string, unknown> | null> =>
+): KottiField.Hook.Returns<Record<string, unknown> | string | null> =>
 	wrapper.vm.$children[0].$children[0].field
 
 describe('KtForm', () => {
@@ -137,7 +137,7 @@ describe('KtForm', () => {
 		})
 
 		it('setValue updates reference, and doesn’t perform deep mutations', async () => {
-			const VALUE_REFERENCE = { treatedAsImmutable: 'true', testKey: 'wow' }
+			const VALUE_REFERENCE = { testKey: 'wow', treatedAsImmutable: 'true' }
 
 			const wrapper = mount(TestForm, {
 				localVue,
@@ -153,8 +153,8 @@ describe('KtForm', () => {
 
 			expect(wrapper.emitted().input?.[0]?.[0]).not.toBe(VALUE_REFERENCE)
 			expect(wrapper.emitted().input?.[0]?.[0]).toEqual({
-				treatedAsImmutable: 'true',
 				testKey: 'wowspin',
+				treatedAsImmutable: 'true',
 			})
 		})
 	})
@@ -193,13 +193,13 @@ describe('KtForm', () => {
 
 			await wrapper.setProps({
 				validators: {
-					testKey: () => ({ type: 'success', text: 'Testing' }),
+					testKey: () => ({ text: 'Testing', type: 'success' }),
 				},
 			})
 
 			expect(field.validation).toEqual({
-				type: 'success',
 				text: 'Testing',
+				type: 'success',
 			})
 		})
 

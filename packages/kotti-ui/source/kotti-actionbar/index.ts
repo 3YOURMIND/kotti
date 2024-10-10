@@ -1,8 +1,8 @@
 import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
-import { KottiActionbar } from './types'
 
 import KtActionbarVue from './KtActionbar.vue'
+import { KottiActionbar } from './types'
 
 export const KtActionbar = attachMeta(makeInstallable(KtActionbarVue), {
 	addedVersion: '0.0.9',

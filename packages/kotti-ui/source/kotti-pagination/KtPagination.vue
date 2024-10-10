@@ -22,6 +22,7 @@ import PaginationExpanded from './components/PaginationExpanded.vue'
 import PaginationFlexible from './components/PaginationFlexible.vue'
 import PaginationFractionated from './components/PaginationFractionated.vue'
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'KtPagination',
 	components: {
@@ -120,6 +121,7 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style lang="scss">

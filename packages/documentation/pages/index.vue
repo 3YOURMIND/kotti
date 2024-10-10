@@ -7,6 +7,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import KottiReadMe from '../../../README.md'
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'IndexPage',
 	layout: 'fullpage',
@@ -14,4 +15,5 @@ export default {
 		return { KottiReadMe }
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>

@@ -1,8 +1,9 @@
-import { useTippy } from '@3yourmind/vue-use-tippy'
 import castArray from 'lodash/castArray.js'
 import type { Props as TippyProps } from 'tippy.js'
 import type { Ref } from 'vue'
 import { computed, inject, ref } from 'vue'
+
+import { useTippy } from '@3yourmind/vue-use-tippy'
 
 import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 import type { KottiField } from '../../kotti-field/types'
