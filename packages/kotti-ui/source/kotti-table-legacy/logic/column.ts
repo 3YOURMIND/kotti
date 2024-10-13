@@ -176,3 +176,5 @@ export const mutations: Store.MutationComponents.Column = {
 }
 
 export const getters: Store.GetterComponents.Column = {}
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-enable @typescript-eslint/no-explicit-any */

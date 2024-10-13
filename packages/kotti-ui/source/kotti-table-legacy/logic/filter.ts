@@ -30,3 +30,5 @@ export function setFilteredColumn(state: any, column: any) {
 		state.filteredColumns.push(column)
 	}
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */

@@ -63,4 +63,3 @@ console.info(`attempting to publish ${packagesToPublish.join(', ')}`)
 for (const packageName of packagesToPublish) {
 	await $`yarn run turbo run publish-package --continue --filter=${packageName}`
 }
-/* eslint-enable no-console */

@@ -45,3 +45,5 @@ const KtTableLegacyConsumer: any = {
 }
 
 export { KtTableLegacyConsumer }
+/* eslint-enable perfectionist/sort-objects */
+/* eslint-enable @typescript-eslint/no-explicit-any */

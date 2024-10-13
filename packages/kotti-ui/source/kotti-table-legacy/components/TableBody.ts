@@ -60,3 +60,4 @@ export const TableBody = defineComponent({
 			])
 	},
 })
+/* eslint-enable @typescript-eslint/no-explicit-any */

@@ -164,3 +164,5 @@ function createColumn(column: any = {}) {
 
 	return column
 }
+/* eslint-enable perfectionist/sort-objects */
+/* eslint-enable @typescript-eslint/no-explicit-any */

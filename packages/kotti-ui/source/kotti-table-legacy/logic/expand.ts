@@ -36,3 +36,4 @@ export const getters: Store.GetterComponents.Expand = {
 		return state.expanded.some((e: any) => isEqual(e, row))
 	},
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */

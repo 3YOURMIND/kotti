@@ -247,3 +247,4 @@ export const TableRow = defineComponent({
 			)
 	},
 })
+/* eslint-enable @typescript-eslint/no-explicit-any */

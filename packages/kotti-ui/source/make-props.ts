@@ -328,3 +328,4 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 			type: PropType<z.output<PROPS_SCHEMA>[KEY]>
 		}
 	}
+/* eslint-enable @typescript-eslint/no-unnecessary-condition */

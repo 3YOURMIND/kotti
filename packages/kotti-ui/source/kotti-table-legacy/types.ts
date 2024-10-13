@@ -260,3 +260,5 @@ export module KottiTableLegacy {
 		export type Loading = undefined
 	}
 }
+
+/* eslint-enable perfectionist/sort-object-types */

@@ -112,3 +112,5 @@ export class TableStore {
 		this.id = table.tableId + '_store'
 	}
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */

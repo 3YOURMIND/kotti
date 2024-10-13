@@ -1,4 +1,5 @@
 import eslint from '@eslint/js'
+import comments from '@eslint-community/eslint-plugin-eslint-comments/configs'
 import type { TSESLint } from '@typescript-eslint/utils'
 import type { SharedConfig } from '@typescript-eslint/utils/ts-eslint'
 import jsonc from 'eslint-plugin-jsonc'
@@ -306,6 +307,7 @@ export default {
 		 */
 		global: tseslint.config({
 			extends: [
+				comments.recommended,
 				perfectionist.configs[
 					'recommended-natural'
 				] as TSESLint.FlatConfig.Config,
@@ -328,6 +330,7 @@ export default {
 				vue: pluginVue,
 			},
 			rules: {
+				'@eslint-community/eslint-comments/no-duplicate-disable': 'off',
 				'perfectionist/sort-array-includes': [
 					'error',
 					{ partitionByComment: true },
