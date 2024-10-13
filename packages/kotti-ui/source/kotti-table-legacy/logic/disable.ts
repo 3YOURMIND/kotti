@@ -33,3 +33,4 @@ export const getters: Store.GetterComponents.Disable = {
 		)
 	},
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */

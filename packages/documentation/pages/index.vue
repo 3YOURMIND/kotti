@@ -16,4 +16,5 @@ export default {
 	},
 }
 /* eslint-enable perfectionist/sort-objects */
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */
 </script>

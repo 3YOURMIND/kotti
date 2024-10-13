@@ -304,3 +304,5 @@ export module Store {
 		]
 	}
 }
+
+/* eslint-enable @typescript-eslint/no-explicit-any */

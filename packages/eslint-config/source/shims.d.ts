@@ -1,5 +1,7 @@
 declare module 'eslint-plugin-vue/lib/utils/index.js'
 
+declare module '@eslint-community/eslint-plugin-eslint-comments/configs'
+
 declare module 'eslint-plugin-unicorn' {
 	import type { TSESLint } from '@typescript-eslint/utils'
 

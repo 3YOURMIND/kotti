@@ -80,3 +80,5 @@ export const mutations: Store.MutationComponents.Order = {
 }
 
 export const getters: Store.GetterComponents.Order = {}
+/* eslint-enable @typescript-eslint/no-explicit-any */
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */

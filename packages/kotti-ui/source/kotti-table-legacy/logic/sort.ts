@@ -193,3 +193,6 @@ export const getters: Store.GetterComponents.Sort = {
 		return column && IS_DSC.test(String(column.sortOrder))
 	},
 }
+/* eslint-enable no-param-reassign */
+/* eslint-enable @typescript-eslint/no-explicit-any */
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */

@@ -30,3 +30,4 @@ export const TableBodyLoadingRow: any = defineComponent({
 			])
 	},
 })
+/* eslint-enable @typescript-eslint/no-explicit-any */

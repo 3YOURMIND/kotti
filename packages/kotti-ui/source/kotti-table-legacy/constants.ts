@@ -116,3 +116,5 @@ export const DEFAULT_RENDER_HEADER = function defaultRenderHeader(
 ): [any] {
 	return [column.label === undefined ? column.prop : column.label]
 }
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-enable @typescript-eslint/no-explicit-any */

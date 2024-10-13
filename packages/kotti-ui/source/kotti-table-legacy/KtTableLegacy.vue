@@ -180,7 +180,7 @@ export default {
 			return this.columns
 				? this.columns.map((column: any) => {
 						if (column.key) {
-							// eslint-disable-next-line
+							// eslint-disable-next-line no-console
 							console.warn(
 								`column ${String(column.prop)} table column property 'key' is deprecated using prop is sufficient to identify the column`,
 							)
@@ -369,6 +369,9 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-enable @typescript-eslint/no-explicit-any */
 </script>
 
 <style lang="scss" scoped>

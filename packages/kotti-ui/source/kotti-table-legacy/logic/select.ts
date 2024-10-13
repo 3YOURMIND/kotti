@@ -123,3 +123,5 @@ export const getters: Store.GetterComponents.Select = {
 		return state.selection.some((e: any) => isEqual(e, row))
 	},
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */
+/* eslint-enable @typescript-eslint/explicit-module-boundary-types */

@@ -71,3 +71,4 @@ export const TableColumnsStateMixin = {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */

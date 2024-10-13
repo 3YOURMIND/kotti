@@ -74,3 +74,5 @@ export const KtTableLegacyProvider: any = {
 		}
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
+/* eslint-enable @typescript-eslint/no-explicit-any */

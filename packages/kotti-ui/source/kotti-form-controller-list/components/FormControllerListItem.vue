@@ -47,6 +47,7 @@ export default defineComponent({
 			validators: props.context.validators,
 			values: computed(() => props.values),
 		})
+		/* eslint-enable vue/no-setup-props-reactivity-loss */
 	},
 })
 </script>
