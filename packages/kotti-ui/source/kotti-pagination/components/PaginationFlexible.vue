@@ -36,6 +36,7 @@ const BASE_OFFSET = 3
 const MAX_NUMBER_OF_ELEMENTS = 5
 const PIXEL_MULTIPLIER = 2.8
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'PaginationFlexible',
 	props: {
@@ -121,6 +122,7 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style lang="scss" scoped>

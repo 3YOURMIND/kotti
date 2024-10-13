@@ -18,10 +18,10 @@ import type { Store } from './types'
 
 export class TableStore {
 	getters: Store.Getters
+	id: string | undefined
 	mutations: Store.Mutations
 	state: Store.State
 	table: any
-	id: string | undefined
 
 	constructor(table: any, initialState: Partial<Store.State> = {}) {
 		this.setTable(table)
@@ -63,18 +63,6 @@ export class TableStore {
 			...filter.getters,
 		}
 	}
-	setTable(table: any) {
-		this.table = table
-		// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-		this.id = table.tableId + '_store'
-	}
-	setInitialState(initialState: Partial<Store.State>) {
-		this.state = cloneDeep({
-			...this.state,
-			...pickBy(initialState, negate(isUndefined)),
-		})
-	}
-
 	commit<T extends keyof Store.Mutations>(
 		name: T,
 		...args: Store.MutationParameters<T>
@@ -90,6 +78,9 @@ export class TableStore {
 		} else {
 			throw new Error(`Mutation not found: ${name}`)
 		}
+	}
+	emit<T extends keyof Store.Emits>(event: T, ...args: Store.Emits[T]) {
+		this.table.$emit(event, ...args)
 	}
 
 	get<T extends keyof Store.Getters>(
@@ -108,7 +99,16 @@ export class TableStore {
 		}
 	}
 
-	emit<T extends keyof Store.Emits>(event: T, ...args: Store.Emits[T]) {
-		this.table.$emit(event, ...args)
+	setInitialState(initialState: Partial<Store.State>) {
+		this.state = cloneDeep({
+			...this.state,
+			...pickBy(initialState, negate(isUndefined)),
+		})
+	}
+
+	setTable(table: any) {
+		this.table = table
+		// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+		this.id = table.tableId + '_store'
 	}
 }

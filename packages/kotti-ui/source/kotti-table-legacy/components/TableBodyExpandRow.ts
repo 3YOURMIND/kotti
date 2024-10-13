@@ -1,5 +1,6 @@
 import { computed, defineComponent, h, inject, type PropType } from 'vue'
-import { KT_TABLE, KT_STORE } from '../constants'
+
+import { KT_STORE, KT_TABLE } from '../constants'
 import type { KottiTableLegacy } from '../types'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -39,8 +40,8 @@ export const TableBodyExpandRow = defineComponent({
 					},
 					[
 						render.value(h, {
-							row: props.row,
 							data: props.row,
+							row: props.row,
 							rowIndex: props.rowIndex,
 						}),
 					],

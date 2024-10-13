@@ -93,6 +93,10 @@
 </template>
 
 <script lang="ts">
+import { TimeConversion } from '@metatypes/units'
+import dayjs from 'dayjs'
+import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
+
 import {
 	Kotti,
 	KtFieldMultiSelect,
@@ -104,9 +108,6 @@ import {
 	KtForm,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import dayjs from 'dayjs'
-import { computed, defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
-import { TimeConversion } from '@metatypes/units'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -186,8 +187,8 @@ export default defineComponent({
 			},
 			collapseExtensionsAfter: 5,
 			dataTest: null,
-			externalUrl: null,
 			extensions: [],
+			externalUrl: null,
 			helpDescription: null,
 			helpText: null,
 			icon: Yoco.Icon.CLOUD_UPLOAD,
@@ -198,8 +199,8 @@ export default defineComponent({
 
 		const state = ref<
 			(Kotti.FileUpload.FileInfo & {
-				uploadStartTime: dayjs.Dayjs
 				uploadEndTime: dayjs.Dayjs
+				uploadStartTime: dayjs.Dayjs
 			})[]
 		>([])
 
@@ -230,8 +231,8 @@ export default defineComponent({
 				allowPhotos: settings.value.booleanFlags.allowPhotos,
 				collapseExtensionsAfter: settings.value.collapseExtensionsAfter,
 				dataTest: settings.value.dataTest,
-				externalUrs: settings.value.externalUrl,
 				extensions: settings.value.extensions,
+				externalUrs: settings.value.externalUrl,
 				helpDescription: settings.value.helpDescription,
 				helpText: settings.value.helpText,
 				hideDropArea: settings.value.booleanFlags.hideDropArea,

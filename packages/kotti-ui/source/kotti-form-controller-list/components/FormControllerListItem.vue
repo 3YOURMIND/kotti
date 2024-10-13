@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import type { PropType } from 'vue'
-import { defineComponent, provide, computed } from 'vue'
+import { computed, defineComponent, provide } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../../kotti-form/constants'
 import type { KottiForm } from '../../kotti-form/types'

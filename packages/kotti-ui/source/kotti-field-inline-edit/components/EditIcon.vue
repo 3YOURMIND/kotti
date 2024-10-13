@@ -3,8 +3,9 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 export default defineComponent({
 	name: 'EditIcon',
@@ -14,9 +15,9 @@ export default defineComponent({
 	setup(props) {
 		return {
 			rootClasses: computed(() => ({
-				yoco: true,
 				'kt-field-inline-edit__edit-icon': true,
 				'kt-field-inline-edit__edit-icon--disabled': props.isDisabled,
+				yoco: true,
 			})),
 			Yoco,
 		}

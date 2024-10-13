@@ -74,8 +74,8 @@ const useValue = <DATA_TYPE>({
 	context,
 	emit,
 	isDisabled,
-	isLoading,
 	isEmpty,
+	isLoading,
 	props,
 }: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'emit' | 'isEmpty' | 'props'> & {
 	context: KottiForm.Context | null
@@ -94,7 +94,7 @@ const useValue = <DATA_TYPE>({
 					'formKey',
 				)
 		},
-		{ immediate: true, flush: 'post' },
+		{ flush: 'post', immediate: true },
 	)
 
 	// fetch value
@@ -141,10 +141,10 @@ const useValue = <DATA_TYPE>({
 }
 
 const useValidation = <DATA_TYPE>({
-	currentValue,
 	context,
-	isEmpty,
+	currentValue,
 	hideValidation,
+	isEmpty,
 	props,
 }: Pick<KottiField.Hook.Parameters<DATA_TYPE>, 'props'> &
 	Pick<
@@ -186,7 +186,7 @@ const useValidation = <DATA_TYPE>({
 			return isMissingRequiredField.value
 				? customValidation.type === 'error'
 					? customValidation
-					: { type: 'error', text: translations.value.requiredMessage }
+					: { text: translations.value.requiredMessage, type: 'error' }
 				: customValidation
 		}),
 	}
@@ -263,8 +263,8 @@ export const useField = <DATA_TYPE>({
 	const values = useValue({
 		context,
 		emit,
-		isEmpty,
 		isDisabled: sharedProperties.isDisabled,
+		isEmpty,
 		isLoading: sharedProperties.isLoading,
 		props,
 	})
@@ -331,16 +331,16 @@ export const useInput = (
  * The emitted value doesn't immediately have to be the actually bound value; making the input `controlled`
  */
 export const useForceUpdate = (): {
-	forceUpdateKey: Ref<number>
 	forceUpdate: () => void
+	forceUpdateKey: Ref<number>
 } => {
 	const forceUpdateKey = ref(0)
 
 	return {
-		forceUpdateKey,
 		forceUpdate: () => {
 			// HACK: This basically just updates some arbitrary ref so that vue thinks the input element needs to be re-rendered
 			forceUpdateKey.value++
 		},
+		forceUpdateKey,
 	}
 }

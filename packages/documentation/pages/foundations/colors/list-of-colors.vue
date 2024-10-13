@@ -66,6 +66,7 @@
 import ColorPalette from '~/components/ColorPalette.vue'
 import ColorUsage from '~/components/ColorUsage.vue'
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'DocumenationPageFoundationsColorsList',
 	components: {
@@ -98,4 +99,5 @@ export default {
 		}
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>

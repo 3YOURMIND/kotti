@@ -33,13 +33,13 @@ type MediaQueryProps = {
 }
 
 export module KottiCol {
-	export type PropsInternal = {
+	export type PropsInternal = MediaQueryProps & {
 		offset: UpTo24 | null
 		pull: UpTo24 | null
 		push: UpTo24 | null
 		span: UpTo24
 		tag: string
-	} & MediaQueryProps
+	}
 
 	export type Props = SpecifyRequiredProps<PropsInternal, never>
 }

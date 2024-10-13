@@ -14,8 +14,8 @@ export const useResizeTextarea = (
 			resizeTextarea(textareaRef.value)
 		},
 		{
-			immediate: true,
 			flush: 'post',
+			immediate: true,
 		},
 	)
 }

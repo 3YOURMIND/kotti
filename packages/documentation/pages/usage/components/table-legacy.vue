@@ -1119,27 +1119,28 @@ const ADDRESS_DOT_LINE = 'address.line'
 
 const rows = [
 	{
+		address: { line: 'No. 119, Grove St, Los Angeles', number: 119 },
 		date: '2016-05-03',
 		name: 'Tom',
-		address: { number: 119, line: 'No. 119, Grove St, Los Angeles' },
 	},
 	{
+		address: { line: 'No. 89, Grove St, Los Angeles', number: 89 },
 		date: '2016-05-02',
 		name: 'Jackson',
-		address: { number: 89, line: 'No. 89, Grove St, Los Angeles' },
 	},
 	{
+		address: { line: 'No. 182, Grove St, Los Angeles', number: 182 },
 		date: '2016-05-04',
 		name: 'Fen',
-		address: { number: 182, line: 'No. 182, Grove St, Los Angeles' },
 	},
 	{
+		address: { line: 'No. 189, Grove St, Los Angeles', number: 189 },
 		date: '2016-05-01',
 		name: 'Fexiang',
-		address: { number: 189, line: 'No. 189, Grove St, Los Angeles' },
 	},
 ]
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'DocumentationPageUsageComponentsTable',
 	components: {
@@ -1320,6 +1321,7 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style lang="scss" scoped>

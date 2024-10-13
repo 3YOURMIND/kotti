@@ -5,10 +5,11 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import type { UnwrapRef } from 'vue'
-import { defineComponent, computed, ref, watch, nextTick } from 'vue'
+import { computed, defineComponent, nextTick, ref, watch } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -22,9 +23,9 @@ import { KOTTI_FIELD_CURRENCY_SUPPORTS, VALID_REGEX } from './constants'
 import { formatCurrencyUserInput } from './input-formatter'
 import { KottiFieldCurrency } from './types'
 import {
+	replaceDecimalSeparator,
 	toFixedPrecisionString,
 	toNumber,
-	replaceDecimalSeparator,
 	truncate,
 } from './utilities'
 
@@ -109,7 +110,7 @@ export default defineComponent({
 						].join(' '),
 					)
 			},
-			{ immediate: true, flush: 'post' },
+			{ flush: 'post', immediate: true },
 		)
 
 		watch(
@@ -151,7 +152,7 @@ export default defineComponent({
 					userCursorPositionFromRight.value = null
 				}
 			},
-			{ immediate: true, flush: 'post' },
+			{ flush: 'post', immediate: true },
 		)
 
 		return {
@@ -190,8 +191,8 @@ export default defineComponent({
 
 				const nextString = isValid
 					? formatCurrencyUserInput({
-							value: replaceDecimalSeparator(value, DecimalSeparator.DOT),
 							decimalPlaces: currencyFormat.value.decimalPlaces,
+							value: replaceDecimalSeparator(value, DecimalSeparator.DOT),
 						})
 					: ''
 

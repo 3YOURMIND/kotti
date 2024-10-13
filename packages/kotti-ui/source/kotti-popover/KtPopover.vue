@@ -35,18 +35,19 @@
 </template>
 
 <script lang="ts">
-import { useTippy } from '@3yourmind/vue-use-tippy'
 import castArray from 'lodash/castArray.js'
 import type { Props as TippyProps } from 'tippy.js'
 import {
 	computed,
 	defineComponent,
-	onMounted,
-	ref,
-	provide,
-	watch,
 	inject,
+	onMounted,
+	provide,
+	ref,
+	watch,
 } from 'vue'
+
+import { useTippy } from '@3yourmind/vue-use-tippy'
 
 import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { KottiFieldToggle } from '../kotti-field-toggle/types'
@@ -193,9 +194,9 @@ export default defineComponent({
 				}: Pick<KottiPopover.Events.UpdateIsSelected, 'index' | 'option'>) =>
 				(value: KottiPopover.Events.UpdateIsSelected['value']) => {
 					emit('update:isSelected', {
-						value,
 						index,
 						option,
+						value,
 					})
 				},
 			KottiFieldToggle,

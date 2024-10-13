@@ -1,4 +1,5 @@
-import { KT_STORE, KT_TABLE_STATE_PROVIDER, KT_TABLE } from './constants'
+/* eslint-disable perfectionist/sort-objects */
+import { KT_STORE, KT_TABLE, KT_TABLE_STATE_PROVIDER } from './constants'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TableColumnsStateMixin = {
@@ -15,6 +16,7 @@ export const TableColumnsStateMixin = {
 			},
 		},
 	},
+
 	data(): unknown {
 		return {
 			KtSelectedTableId: null,

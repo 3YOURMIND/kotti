@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import isEqual from 'lodash/isEqual.js'
+
 import type { Store } from './types'
 
 export const defaultState: Store.StateComponents.Expand = {
-	expandMultiple: false,
 	expanded: [],
+	expandMultiple: false,
 }
 
 function toggleRowExpansion(state: any, row: any) {

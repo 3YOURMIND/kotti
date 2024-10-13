@@ -8,8 +8,9 @@
 </template>
 
 <script lang="ts">
-import { KtUserMenu } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtUserMenu } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

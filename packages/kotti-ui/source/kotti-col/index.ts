@@ -1,4 +1,4 @@
-import { h, computed, defineComponent, inject } from 'vue'
+import { computed, defineComponent, h, inject } from 'vue'
 import type { PropType } from 'vue'
 
 import { KT_ROW_CONTEXT } from '../kotti-row/constants'
@@ -76,6 +76,7 @@ export const KtCol = attachMeta(
 						.filter(
 							([key, value]) =>
 								value !== null &&
+								/* eslint-disable perfectionist/sort-array-includes */
 								[
 									'offset',
 									'pull',
@@ -86,6 +87,7 @@ export const KtCol = attachMeta(
 									'lg',
 									'xl',
 								].includes(key),
+							/* eslint-enable perfectionist/sort-array-includes */
 						)
 						.map(([key, value]) => `kt-col-${key}-${value?.toString() ?? ''}`),
 				])

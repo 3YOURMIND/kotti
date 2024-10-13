@@ -107,7 +107,7 @@ import cloneDeep from 'lodash/cloneDeep.js'
 import { marked } from 'marked'
 import naturalSort from 'natural-sort'
 import type { Ref } from 'vue'
-import { computed, onBeforeMount, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onBeforeMount, ref } from 'vue'
 
 const octokit = new Octokit()
 

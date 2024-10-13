@@ -1,8 +1,9 @@
-import { Yoco } from '@3yourmind/yoco'
 import type { DatePicker as ElDate } from 'element-ui'
 import type { Instance } from 'tippy.js'
 import type { Ref } from 'vue'
-import { onMounted, watchEffect, type default as Vue } from 'vue'
+import { onMounted, type default as Vue, watchEffect } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import type { KottiField } from '../kotti-field/types'
 
@@ -36,8 +37,8 @@ export type ElDateWithInternalAPI = ElDate & {
 		rightLabel?: string
 		width: number
 	}
-	popperJS: Exclude<Instance['popperInstance'], null>
 	pickerVisible: boolean
+	popperJS: Exclude<Instance['popperInstance'], null>
 	referenceElm: Element
 	showClose: boolean
 }
@@ -156,8 +157,8 @@ const useInputSizeFix = <DATA_TYPE extends Values>({
 
 const usePickerDimensionsFix = <DATA_TYPE extends Values>({
 	elDateRef,
-	popperWidth,
 	popperHeight,
+	popperWidth,
 }: Pick<
 	HookParameters<DATA_TYPE>,
 	'elDateRef' | 'popperHeight' | 'popperWidth'

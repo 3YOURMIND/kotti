@@ -55,9 +55,10 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import isNil from 'lodash/isNil.js'
 import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { KottiButton } from '../../kotti-button/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
@@ -97,7 +98,7 @@ export default defineComponent({
 			showCancelMessage.value = false
 		}
 
-		const onClick = (event: MouseEvent | KeyboardEvent) => {
+		const onClick = (event: KeyboardEvent | MouseEvent) => {
 			if (event.target === null) return
 
 			const isClickInside = isOrContainsEventTarget(

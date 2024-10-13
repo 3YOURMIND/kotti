@@ -7,9 +7,9 @@ export module KottiForm {
 		CONTEXT_TYPE extends ContextType = ContextType,
 		T extends keyof CONTEXT_TYPE = keyof CONTEXT_TYPE,
 	> {
-		formPath: Ref<ReadonlyArray<string | number>>
-
 		fieldInheritableProps: Ref<KottiField.InheritablePropsInternal>
+
+		formPath: Ref<ReadonlyArray<number | string>>
 
 		onAddField: <DATA_TYPE>(toAdd: KottiField.Hook.Returns<DATA_TYPE>) => void
 		onRemoveField: <DATA_TYPE>(
@@ -45,7 +45,7 @@ export module KottiForm {
 		 * warning: prevent if [...errors, ...warnings].length > 0
 		 * NEVER: allow submission, regardless of validation status
 		 */
-		preventSubmissionOn: 'error' | 'warning' | 'NEVER'
+		preventSubmissionOn: 'error' | 'NEVER' | 'warning'
 
 		validators: Record<string, KottiField.Validation.Function>
 
@@ -58,9 +58,9 @@ export module KottiForm {
 	}
 
 	export interface ValidationSummary {
-		errors: Array<KottiField.Validation.Error & AdditionalContext>
-		successes: Array<KottiField.Validation.Success & AdditionalContext>
-		warnings: Array<KottiField.Validation.Warning & AdditionalContext>
+		errors: Array<AdditionalContext & KottiField.Validation.Error>
+		successes: Array<AdditionalContext & KottiField.Validation.Success>
+		warnings: Array<AdditionalContext & KottiField.Validation.Warning>
 	}
 
 	export module Events {

@@ -50,19 +50,20 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import Big from 'big.js'
 import type { UnwrapRef } from 'vue'
 import {
-	defineComponent,
 	computed,
-	ref,
-	watch,
+	defineComponent,
+	nextTick,
 	onBeforeMount,
 	onUnmounted,
-	nextTick,
+	ref,
+	watch,
 } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate, useInput } from '../kotti-field/hooks'
@@ -72,8 +73,8 @@ import type { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
 import {
 	DECIMAL_SEPARATORS_CHARACTER_SET,
-	isOrContainsEventTarget,
 	isNumberInRange,
+	isOrContainsEventTarget,
 } from '../utilities'
 
 import {
@@ -179,7 +180,7 @@ export default defineComponent({
 					forceUpdateDisplayedValue(newNumber)
 				}
 			},
-			{ immediate: true, flush: 'post' },
+			{ flush: 'post', immediate: true },
 		)
 
 		/**
@@ -306,8 +307,8 @@ export default defineComponent({
 			incrementValue,
 			inputRef,
 			inputProps: computed(
-				(): KottiField.Hook.Returns<KottiFieldNumber.Value>['inputProps'] &
-					InputHTMLAttributes & {
+				(): InputHTMLAttributes &
+					KottiField.Hook.Returns<KottiFieldNumber.Value>['inputProps'] & {
 						class: Record<string, boolean>
 						forceUpdateKey: number
 					} => ({

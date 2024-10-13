@@ -1,3 +1,4 @@
+/* eslint-disable perfectionist/sort-objects */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TableColumnsStateMixin } from './mixins'
 

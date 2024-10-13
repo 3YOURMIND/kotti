@@ -290,13 +290,14 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import type { Kotti } from '@3yourmind/kotti-ui'
 import {
 	KtForm,
 	KtFormControllerList,
 	KtFormControllerObject,
 } from '@3yourmind/kotti-ui'
-import { defineComponent, computed, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -308,6 +309,7 @@ export default defineComponent({
 	setup() {
 		const values = ref({
 			addresses: [{ country: null, houseNumber: null, streetName: null }],
+			gender: 'other',
 			personalDetails: {
 				age: 1,
 				firstName: 'John',
@@ -316,7 +318,6 @@ export default defineComponent({
 				lastName: 'Smith',
 			},
 			username: null,
-			gender: 'other',
 		})
 
 		return {
@@ -333,9 +334,9 @@ export default defineComponent({
 				/* eslint-enable no-magic-numbers */
 			}),
 			genderOptions: computed((): Kotti.FieldRadioGroup.Props['options'] => [
-				{ label: 'MALE', value: 'male', dataTest: 'unique-male-data-test' },
+				{ dataTest: 'unique-male-data-test', label: 'MALE', value: 'male' },
 				{ label: 'FEMALE', value: 'female' },
-				{ label: 'OTHER', value: 'other', dataTest: 'unique-other-data-test' },
+				{ dataTest: 'unique-other-data-test', label: 'OTHER', value: 'other' },
 			]),
 			isDeleteDisabled: computed(() => values.value.addresses.length === 1),
 			KtFormControllerList,

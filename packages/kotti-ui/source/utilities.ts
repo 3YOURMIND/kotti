@@ -45,7 +45,7 @@ export const blurElement = (element: HTMLElement | null): void => {
  * {@link https://web.archive.org/web/20231208174614/https://gomakethings.com/detecting-click-events-on-svgs-with-vanilla-js-event-delegation/}
  */
 export const isOrContainsEventTarget = (
-	component: { $el: HTMLElement } | HTMLElement | null,
+	component: HTMLElement | { $el: HTMLElement } | null,
 	eventTarget: EventTarget | null,
 ): boolean => {
 	if (component === null) return false

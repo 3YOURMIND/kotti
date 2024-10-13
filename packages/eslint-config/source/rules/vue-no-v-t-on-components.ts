@@ -1,5 +1,6 @@
-import { createRule } from '../utils/eslint-helpers.js'
 import utils from 'eslint-plugin-vue/lib/utils/index.js'
+
+import { createRule } from '../utils/eslint-helpers.js'
 
 const description = `
 this rule ensures that components never get used with \`v-t\` or \`v-text\`
@@ -8,7 +9,22 @@ everything inside the main element of the component. This leads to a lot of
 visual bugs and unexpected side-effects.
 `
 export default createRule({
-	name: 'vue-no-v-t-on-components',
+	create(context) {
+		return utils.defineTemplateBodyVisitor(context, {
+			// @ts-expect-error -- let's not guess vue-eslint-plugin's internals
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			"VElement VAttribute[directive=true][key.name.name='t']"(node) {
+				const name = node.parent.parent.rawName
+				if (name.toLowerCase() !== name || name.includes('-'))
+					context.report({
+						loc: node.loc,
+						messageId: 'avoidUnsupportedVT',
+						node,
+					})
+			},
+		})
+	},
+	defaultOptions: [],
 	meta: {
 		docs: {
 			description,
@@ -21,20 +37,5 @@ export default createRule({
 		schema: [],
 		type: 'problem',
 	},
-	defaultOptions: [],
-	create(context) {
-		return utils.defineTemplateBodyVisitor(context, {
-			// @ts-expect-error -- let's not guess vue-eslint-plugin's internals
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			"VElement VAttribute[directive=true][key.name.name='t']"(node) {
-				const name = node.parent.parent.rawName
-				if (name.toLowerCase() !== name || name.includes('-'))
-					context.report({
-						node,
-						loc: node.loc,
-						messageId: 'avoidUnsupportedVT',
-					})
-			},
-		})
-	},
+	name: 'vue-no-v-t-on-components',
 })

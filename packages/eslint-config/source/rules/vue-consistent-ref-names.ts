@@ -1,4 +1,5 @@
 import utils from 'eslint-plugin-vue/lib/utils/index.js'
+
 import { createRule } from '../utils/eslint-helpers.js'
 
 const description = `
@@ -6,7 +7,24 @@ this rule ensures that template refs always end with \`Ref\`, to enforce
 a consistent naming policy that can be relied upon
 `
 export default createRule({
-	name: 'vue-consistent-ref-names',
+	create(context) {
+		return utils.defineTemplateBodyVisitor(context, {
+			// @ts-expect-error -- let's not guess vue-eslint-plugin's internals
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			"VAttribute[directive=false][key.name='ref']"(node) {
+				if (
+					typeof node.value.value === 'string' &&
+					!node.value.value.endsWith('Ref')
+				)
+					context.report({
+						loc: node.loc,
+						messageId: 'avoidName',
+						node,
+					})
+			},
+		})
+	},
+	defaultOptions: [],
 	meta: {
 		docs: {
 			description,
@@ -18,22 +36,5 @@ export default createRule({
 		schema: [],
 		type: 'problem',
 	},
-	defaultOptions: [],
-	create(context) {
-		return utils.defineTemplateBodyVisitor(context, {
-			// @ts-expect-error -- let's not guess vue-eslint-plugin's internals
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			"VAttribute[directive=false][key.name='ref']"(node) {
-				if (
-					typeof node.value.value === 'string' &&
-					!node.value.value.endsWith('Ref')
-				)
-					context.report({
-						node,
-						loc: node.loc,
-						messageId: 'avoidName',
-					})
-			},
-		})
-	},
+	name: 'vue-consistent-ref-names',
 })

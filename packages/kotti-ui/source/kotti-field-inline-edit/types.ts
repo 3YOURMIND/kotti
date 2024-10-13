@@ -9,14 +9,14 @@ export module KottiFieldInlineEdit {
 
 	export enum ConfirmationValidation {
 		ERROR = 'error',
-		WARNING = 'warning',
 		NEVER = 'never',
+		WARNING = 'warning',
 	}
 
 	export enum TextStyle {
 		HEADER_ONE = 'h1',
-		HEADER_TWO = 'h2',
 		HEADER_THREE = 'h3',
+		HEADER_TWO = 'h2',
 	}
 
 	export const propsSchema = KottiField.propsSchema
@@ -27,12 +27,12 @@ export module KottiFieldInlineEdit {
 			}),
 		)
 		.extend({
-			isReadonly: z.boolean().default(false),
 			isMultiline: z.boolean().default(false),
+			isReadonly: z.boolean().default(false),
+			placeholder: z.string().nullable().default(null),
 			preventConfirmationOn: createLooseZodEnumSchema(
 				ConfirmationValidation,
 			).default(ConfirmationValidation.NEVER),
-			placeholder: z.string().nullable().default(null),
 			textStyle: createLooseZodEnumSchema(TextStyle).nullable().default(null),
 			value: valueSchema.default(null),
 		})

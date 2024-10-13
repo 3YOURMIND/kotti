@@ -32,8 +32,9 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { defineComponent } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 

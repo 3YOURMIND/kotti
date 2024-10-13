@@ -49,7 +49,7 @@ const TestField = defineComponent({
 })
 
 const TestControllerList = {
-	components: { TestField, KtFormControllerList },
+	components: { KtFormControllerList, TestField },
 	template: `<KtFormControllerList v-bind="$attrs"><TestField formKey="testKey"/></KtFormControllerList>`,
 }
 
@@ -81,7 +81,7 @@ describe('KtFormControllerList', () => {
 					validators: {
 						testKey: (v: unknown) =>
 							v === 'testName1'
-								? { type: 'error', text: 'test1' }
+								? { text: 'test1', type: 'error' }
 								: { type: 'empty' },
 					},
 					value: {
@@ -94,7 +94,7 @@ describe('KtFormControllerList', () => {
 		const row1Field = getField(wrapper, 0)
 		expect(row1Field.currentValue).toBe('testName1')
 		expect(row1Field.hideValidation).toBe(true)
-		expect(row1Field.validation).toEqual({ type: 'error', text: 'test1' })
+		expect(row1Field.validation).toEqual({ text: 'test1', type: 'error' })
 
 		const row2Field = getField(wrapper, 1)
 		expect(row2Field.currentValue).toBe('testName2')
@@ -113,8 +113,8 @@ describe('KtFormControllerList', () => {
 					hideValidation: true,
 					value: {
 						parentKey: [
-							{ testKey: 'testName1a', somethingElse: true },
-							{ testKey: 'testName2a', somethingElse: false },
+							{ somethingElse: true, testKey: 'testName1a' },
+							{ somethingElse: false, testKey: 'testName2a' },
 						],
 					},
 				},
@@ -129,8 +129,8 @@ describe('KtFormControllerList', () => {
 		expect(wrapper.emitted('input')?.[0]).toEqual([
 			{
 				parentKey: [
-					{ testKey: 'testName1b', somethingElse: true },
-					{ testKey: 'testName2a', somethingElse: false },
+					{ somethingElse: true, testKey: 'testName1b' },
+					{ somethingElse: false, testKey: 'testName2a' },
 				],
 			},
 		])
@@ -144,8 +144,8 @@ describe('KtFormControllerList', () => {
 			{
 				parentKey: [
 					// testKey is still testName1a because @input is mocked
-					{ testKey: 'testName1a', somethingElse: true },
-					{ testKey: 'testName2b', somethingElse: false },
+					{ somethingElse: true, testKey: 'testName1a' },
+					{ somethingElse: false, testKey: 'testName2b' },
 				],
 			},
 		])
@@ -157,8 +157,8 @@ describe('KtFormControllerList', () => {
 				hideValidation: false,
 				value: {
 					parentKey: [
-						{ testKey: 'testName1b', somethingElse: true },
-						{ testKey: 'testName2a', somethingElse: false },
+						{ somethingElse: true, testKey: 'testName1b' },
+						{ somethingElse: false, testKey: 'testName2a' },
 					],
 				},
 			}

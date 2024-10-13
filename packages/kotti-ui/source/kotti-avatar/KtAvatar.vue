@@ -19,9 +19,10 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, onMounted, ref } from 'vue'
+
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, onMounted, ref } from 'vue'
 
 import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { makeProps } from '../make-props'

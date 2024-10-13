@@ -102,8 +102,8 @@ export const useI18nProvide = ({
 	const defaultMessages = computed(
 		(): KottiI18n.Messages =>
 			({
-				'en-US': enUS,
 				'de-DE': deDE,
+				'en-US': enUS,
 				'es-ES': esES,
 				'fr-FR': frFR,
 				'ja-JP': jaJP,
@@ -119,8 +119,8 @@ export const useI18nProvide = ({
 			try {
 				const elementUiTranslations = await {
 					/* eslint-disable @typescript-eslint/naming-convention */
-					'en-US': () => import('element-ui/lib/locale/lang/en.js'),
 					'de-DE': () => import('element-ui/lib/locale/lang/de.js'),
+					'en-US': () => import('element-ui/lib/locale/lang/en.js'),
 					'es-ES': () => import('element-ui/lib/locale/lang/es.js'),
 					'fr-FR': () => import('element-ui/lib/locale/lang/fr.js'),
 					'ja-JP': () => import('element-ui/lib/locale/lang/ja.js'),
@@ -136,7 +136,7 @@ export const useI18nProvide = ({
 				throw error
 			}
 		},
-		{ immediate: true, flush: 'post' },
+		{ flush: 'post', immediate: true },
 	)
 
 	provide<KottiI18n.Context>(KT_I18N_CONTEXT, {

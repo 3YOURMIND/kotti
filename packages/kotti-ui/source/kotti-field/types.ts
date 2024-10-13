@@ -1,6 +1,7 @@
-import { yocoIconSchema } from '@3yourmind/yoco'
 import type { Ref } from 'vue'
 import { z } from 'zod'
+
+import { yocoIconSchema } from '@3yourmind/yoco'
 
 import type { ReplaceRecordType } from '../types/utilities'
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
@@ -21,20 +22,20 @@ export module KottiField {
 		export type Empty = z.output<typeof emptySchema>
 
 		export const errorSchema = z.object({
-			type: z.literal('error'),
 			text: z.string().nullable(),
+			type: z.literal('error'),
 		})
 		export type Error = z.output<typeof errorSchema>
 
 		export const successSchema = z.object({
-			type: z.literal('success'),
 			text: z.string().nullable(),
+			type: z.literal('success'),
 		})
 		export type Success = z.output<typeof successSchema>
 
 		export const warningSchema = z.object({
-			type: z.literal('warning'),
 			text: z.string().nullable(),
+			type: z.literal('warning'),
 		})
 		export type Warning = z.output<typeof warningSchema>
 
@@ -74,11 +75,11 @@ export module KottiField {
 			| 'isDisabled'
 			| 'isLoading'
 			| 'isOptional'
-			| 'size'
 			| 'label'
 			| 'leftIcon'
 			| 'prefix'
 			| 'rightIcon'
+			| 'size'
 			| 'suffix'
 		> & {
 			currentValue: DATA_TYPE
@@ -102,8 +103,8 @@ export module KottiField {
 	}
 
 	export enum AutoComplete {
-		ON = 'on',
 		OFF = 'off',
+		ON = 'on',
 	}
 
 	/**
@@ -232,11 +233,11 @@ export module KottiField {
 		 *
 		 * This is never by default and specified by component schemas that need it
 		 */
-		rightIcon: z.never(),
-
 		isOptional: z.boolean().default(false),
 
 		label: z.string().nullable().default(null),
+
+		rightIcon: z.never(),
 
 		/**
 		 * Show some string before the field

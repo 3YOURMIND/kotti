@@ -1,9 +1,11 @@
 // @ts-check
 
-import tseslint from 'typescript-eslint'
-import eslintConfig3YD from '@3yourmind/eslint-config'
-import { fileURLToPath } from 'url'
 import path from 'node:path'
+import { fileURLToPath } from 'url'
+
+import tseslint from 'typescript-eslint'
+
+import eslintConfig3YD from '@3yourmind/eslint-config'
 
 import kottiUIPackageJSON from './packages/kotti-ui/package.json' assert { type: 'json' }
 import vueUseTippyPackageJSON from './packages/vue-use-tippy/package.json' assert { type: 'json' }
@@ -113,11 +115,11 @@ const config = tseslint.config(
 							name: 'lodash',
 						},
 						...notYetESMCompatible.map((name) => ({
-							name,
-							message:
-								'The default import is the only export guaranteed to resolve in packages without explicit cjs/esm import declarations. Named imports, inferred through heuristics, may fail in various environments. Therefore, it is advisable to always use the default import.',
 							allowImportNames: ['default'],
 							allowTypeImports: true,
+							message:
+								'The default import is the only export guaranteed to resolve in packages without explicit cjs/esm import declarations. Named imports, inferred through heuristics, may fail in various environments. Therefore, it is advisable to always use the default import.',
+							name,
 						})),
 					],
 				},

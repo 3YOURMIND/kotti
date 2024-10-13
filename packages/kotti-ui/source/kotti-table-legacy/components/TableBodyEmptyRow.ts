@@ -1,4 +1,5 @@
 import { computed, defineComponent, h, inject } from 'vue'
+
 import { KT_TABLE } from '../constants'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -20,8 +21,8 @@ export const TableBodyEmptyRow = defineComponent({
 				h(
 					'td',
 					{
-						domProps: { colSpan: colSpan.value },
 						class: 'kt-table__no-row',
+						domProps: { colSpan: colSpan.value },
 					},
 					[h('span', { class: 'kt-table__empty-text' }, [render.value(h)])],
 				),

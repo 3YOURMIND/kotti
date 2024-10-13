@@ -20,9 +20,10 @@
 </template>
 
 <script lang="ts">
-import { useTippy } from '@3yourmind/vue-use-tippy'
 import type { Instance, Props as TippyProps } from 'tippy.js'
 import { computed, defineComponent, ref, watch } from 'vue'
+
+import { useTippy } from '@3yourmind/vue-use-tippy'
 
 import { makeProps } from '../make-props'
 
@@ -53,12 +54,12 @@ export default defineComponent({
 				 * It can alternatively be passed as a prop to tippy (`showOnCreate`)
 				 * @see {@link https://atomiks.github.io/tippyjs/v6/all-props/#showoncreate}
 				 */
+				offset: [0, 0],
 				onCreate(instance) {
 					tippyInstanceRef.value = instance
 
 					if (props.isOpen) tippyInstanceRef.value.show()
 				},
-				offset: [0, 0],
 				popperOptions: {
 					modifiers: [
 						{
@@ -96,7 +97,7 @@ export default defineComponent({
 				if (shouldOpen) tippyInstanceRef.value.show()
 				else tippyInstanceRef.value.unmount()
 			},
-			{ immediate: true, flush: 'post' },
+			{ flush: 'post', immediate: true },
 		)
 
 		return {

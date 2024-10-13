@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import { computed, h, defineComponent } from 'vue'
+import { computed, defineComponent, h } from 'vue'
 
 import { useI18nProvide } from './hooks'
 import type { KottiI18n } from './types'

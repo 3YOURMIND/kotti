@@ -28,9 +28,10 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import type { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'

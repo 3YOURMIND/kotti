@@ -50,6 +50,7 @@ import { Yoco } from '@3yourmind/yoco'
 
 import LayoutContainer from '~/components/LayoutContainer.vue'
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'DocumentationPageExamplesLayouts',
 	components: {
@@ -231,4 +232,5 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>

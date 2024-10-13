@@ -1,4 +1,4 @@
-import { updateAllSelected, cleanSelection, clearSelection } from './select'
+import { cleanSelection, clearSelection, updateAllSelected } from './select'
 import { sortData } from './sort'
 import type { Store } from './types'
 

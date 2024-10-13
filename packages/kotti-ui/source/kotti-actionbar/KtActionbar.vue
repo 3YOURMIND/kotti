@@ -22,9 +22,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
+import { makeProps } from '../make-props'
+
 import ActionbarMenu from './components/ActionbarMenu.vue'
 import { KottiActionbar } from './types'
-import { makeProps } from '../make-props'
 
 export default defineComponent({
 	name: 'KtActionbar',

@@ -6,10 +6,11 @@
 </template>
 
 <script lang="ts">
-import { useTippy } from '@3yourmind/vue-use-tippy'
-import type { Yoco } from '@3yourmind/yoco'
 import type { PropType } from 'vue'
 import { computed, defineComponent, ref } from 'vue'
+
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import type { Yoco } from '@3yourmind/yoco'
 
 import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 import type { EnumToPrimitiveUnion } from '../../zod-utilities/enums'

@@ -1,5 +1,6 @@
-import { yocoIconSchema } from '@3yourmind/yoco'
 import { z } from 'zod'
+
+import { yocoIconSchema } from '@3yourmind/yoco'
 
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
@@ -36,8 +37,8 @@ export module KottiButton {
 	export import sizeSchema = Shared.sizeSchema
 
 	export enum ToggleStatus {
-		ON = 'on',
 		OFF = 'off',
+		ON = 'on',
 	}
 	export const toggleStatusSchema = createLooseZodEnumSchema(ToggleStatus)
 

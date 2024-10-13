@@ -1,15 +1,16 @@
+/* eslint-disable perfectionist/sort-objects */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import pick from 'lodash/pick.js'
+import type { CreateElement } from 'vue'
 
 import {
 	COLUMN_TYPE,
 	DEFAULT_RENDER_CELL,
-	KT_TABLE,
-	KT_STORE,
 	DEFAULT_RENDER_HEADER,
+	KT_STORE,
+	KT_TABLE,
 } from './constants'
 import { KottiTableLegacy } from './types'
-import type { CreateElement } from 'vue'
 
 let columnIdSeed = 1
 

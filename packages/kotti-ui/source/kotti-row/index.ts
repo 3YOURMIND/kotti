@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import { defineComponent, computed, h, provide } from 'vue'
+import { computed, defineComponent, h, provide } from 'vue'
 
 import { attachMeta, makeInstallable } from '../utilities'
 

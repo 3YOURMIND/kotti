@@ -120,32 +120,35 @@ export module KottiFilters {
 
 		export type DateRange<
 			OPERATION extends Operation.DateRange = Operation.DateRange,
-		> = Common & {
-			operations: OPERATION[]
-			type: FilterType.DATE_RANGE
-		} & Pick<
+		> = Common &
+			Pick<
 				KottiFieldDateRange.Props,
 				'maximumDate' | 'minimumDate' | 'shortcuts'
-			>
+			> & {
+				operations: OPERATION[]
+				type: FilterType.DATE_RANGE
+			}
 
 		export type Float<OPERATION extends Operation.Float = Operation.Float> =
-			Common & {
-				operations: OPERATION[]
-				type: FilterType.FLOAT
-			} & Pick<
+			Common &
+				Pick<
 					KottiFieldNumber.Props,
 					'decimalPlaces' | 'maximum' | 'minimum' | 'prefix' | 'step' | 'suffix'
-				>
+				> & {
+					operations: OPERATION[]
+					type: FilterType.FLOAT
+				}
 
 		export type Integer<
 			OPERATION extends Operation.Integer = Operation.Integer,
-		> = Common & {
-			operations: OPERATION[]
-			type: FilterType.INTEGER
-		} & Pick<
+		> = Common &
+			Pick<
 				KottiFieldNumber.Props,
 				'maximum' | 'minimum' | 'prefix' | 'suffix'
-			>
+			> & {
+				operations: OPERATION[]
+				type: FilterType.INTEGER
+			}
 
 		export type MultiEnum<
 			OPERATION extends Operation.MultiEnum = Operation.MultiEnum,

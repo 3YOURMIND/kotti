@@ -140,10 +140,10 @@ export default defineComponent({
 			field.currentValue.forEach((fileItem) => {
 				if (
 					[
-						undefined,
 						KottiFieldFileUpload.Status.UPLOADED,
 						KottiFieldFileUpload.Status.UPLOADED_WITH_ERROR,
-					].includes(fileItem.status as undefined | KottiFieldFileUpload.Status)
+						undefined,
+					].includes(fileItem.status as KottiFieldFileUpload.Status | undefined)
 				)
 					preUploadedFilesIds.add(fileItem.id)
 			})

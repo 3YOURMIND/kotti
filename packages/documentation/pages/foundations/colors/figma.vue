@@ -77,9 +77,9 @@ tokens = {{[...baseImportableList,...tokenImportableList]}}
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
 	baseColorsFactory,
+	factoryToFigmaImportable,
 	figma,
 	tokenColorsFactory,
-	factoryToFigmaImportable,
 } from '@3yourmind/kotti-ui/tokens'
 
 const figmaImportScript = `tokens.forEach(token => {
@@ -108,6 +108,7 @@ const figmaImportScript = `tokens.forEach(token => {
 	]
 })`
 
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'DocumenationPageFoundationsColorsFigma',
 	data() {
@@ -135,4 +136,5 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>

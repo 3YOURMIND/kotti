@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, computed, provide } from 'vue'
+import { computed, defineComponent, inject, provide } from 'vue'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import type { KottiForm } from '../kotti-form/types'

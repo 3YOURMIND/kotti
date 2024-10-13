@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import negate from 'lodash/negate.js'
+
 import type { Store } from './types'
 
 export const defaultState: Store.StateComponents.Disable = {

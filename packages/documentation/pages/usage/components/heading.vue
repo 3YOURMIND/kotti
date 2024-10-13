@@ -85,8 +85,9 @@ You can change the `toggleStatus` dynamically by binding value to it.
 </template>
 
 <script lang="ts">
-import { KtHeading } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
+
+import { KtHeading } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

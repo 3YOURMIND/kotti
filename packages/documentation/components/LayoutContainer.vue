@@ -10,6 +10,8 @@
 
 <script>
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
+/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'LayoutContainer',
 	computed: {
@@ -18,4 +20,5 @@ export default {
 		},
 	},
 }
+/* eslint-enable perfectionist/sort-objects */
 </script>

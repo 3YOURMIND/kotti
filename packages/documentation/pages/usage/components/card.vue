@@ -110,6 +110,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue'
+
 import {
 	Kotti,
 	KtButton,
@@ -118,7 +120,6 @@ import {
 	KtFieldSingleSelect,
 	KtRow,
 } from '@3yourmind/kotti-ui'
-import { defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

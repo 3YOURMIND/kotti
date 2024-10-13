@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { type PropType, defineComponent, h, inject, computed } from 'vue'
-import { KT_TABLE, KT_STORE } from '../constants'
+import { computed, defineComponent, h, inject, type PropType } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
+
+import { KT_STORE, KT_TABLE } from '../constants'
 
 import { TableRowCell } from './TableRowCell'
-import { Yoco } from '@3yourmind/yoco'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TableRow = defineComponent({
@@ -58,7 +60,7 @@ export const TableRow = defineComponent({
 		const renderActions = computed(() => tableState._renderActions)
 		const tableColumns = computed(() => tableStore.state.columns)
 		const _trClasses = computed(() => {
-			const classes: (string | string[] | Record<string, unknown>)[] = []
+			const classes: (Record<string, unknown> | string[] | string)[] = []
 
 			if ((isInteractive.value || hasClickListener.value) && !isDisabled.value)
 				classes.push('clickable')
@@ -115,11 +117,11 @@ export const TableRow = defineComponent({
 			h(
 				'tr',
 				{
-					class: _trClasses.value,
 					attrs: {
 						'data-test': `table:element:${props.rowIndex}:${props.rowKey}`,
 						tabIndex: isInteractive.value && !isDisabled.value ? 0 : false,
 					},
+					class: _trClasses.value,
 					domProps: {
 						role:
 							isInteractive.value && !isDisabled.value ? 'button' : undefined,
@@ -233,8 +235,8 @@ export const TableRow = defineComponent({
 									},
 									[
 										renderActions.value(h, {
-											row: props.row,
 											data: props.row,
+											row: props.row,
 											rowIndex: props.rowIndex,
 										}),
 									],

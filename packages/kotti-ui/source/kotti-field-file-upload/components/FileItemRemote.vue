@@ -48,8 +48,9 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent, ref, watch } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
@@ -92,7 +93,7 @@ export default defineComponent({
 					shouldTriggerRemoteUpload.value = false
 				}
 			},
-			{ immediate: true, flush: 'post' },
+			{ flush: 'post', immediate: true },
 		)
 
 		return {

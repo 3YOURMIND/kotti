@@ -26,7 +26,7 @@ import type {
 	ElDatePicker,
 } from 'element-ui/types/date-picker'
 import type { Ref } from 'vue'
-import { defineComponent, ref, computed, inject } from 'vue'
+import { computed, defineComponent, inject, ref } from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField } from '../kotti-field/hooks'
@@ -70,15 +70,15 @@ export default defineComponent({
 		})
 
 		const pickerOptions: Ref<
-			Pick<DatePickerOptions, 'shortcuts' | 'disabledDate'>
+			Pick<DatePickerOptions, 'disabledDate' | 'shortcuts'>
 		> = computed(() => ({
 			disabledDate: (date: Date) => isInvalidDate(props, date),
-			shortcuts: props.shortcuts.map(({ label, value, keepOpen }) => ({
-				text: label,
+			shortcuts: props.shortcuts.map(({ keepOpen, label, value }) => ({
 				onClick(_picker: ElDatePicker) {
 					if (keepOpen !== true) _picker.$emit('pick', value)
 					field.setValue(value)
 				},
+				text: label,
 			})),
 		}))
 

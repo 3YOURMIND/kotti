@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import type { Kotti } from '@3yourmind/kotti-ui'
 import { KtNavbar } from '@3yourmind/kotti-ui'
-import { computed, defineComponent, ref } from 'vue'
 
 import navLogo from '../assets/img/nav_logo.svg'
 import { menu } from '../data/menu'

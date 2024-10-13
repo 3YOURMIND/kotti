@@ -28,8 +28,9 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import { computed, defineComponent } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { makeProps } from '../make-props'
 

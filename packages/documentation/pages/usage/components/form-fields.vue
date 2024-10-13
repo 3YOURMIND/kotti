@@ -732,6 +732,10 @@
 </template>
 
 <script lang="ts">
+import { TimeConversion } from '@metatypes/units'
+import cloneDeep from 'lodash/cloneDeep.js'
+import { computed, defineComponent, ref, watch } from 'vue'
+
 import {
 	Kotti,
 	KtAvatar,
@@ -759,26 +763,23 @@ import {
 	KtI18nContext,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { TimeConversion } from '@metatypes/units'
-import cloneDeep from 'lodash/cloneDeep.js'
-import { computed, defineComponent, ref, watch } from 'vue'
+
+import ComponentInfo from '~/components/ComponentInfo.vue'
 
 import { useRouter } from '../../../hooks/use-router'
 import {
 	getLast,
-	today,
 	ISO8601,
 	ISO8601_SECONDS,
+	today,
 } from '../../../utilities/date'
-import type { ComponentValue, ComponentNames } from '../../../utilities/pages'
+import type { ComponentNames, ComponentValue } from '../../../utilities/pages'
 import {
 	createActions,
 	createRemoteUpload,
 	generateComponentCode,
 	isComponentName,
 } from '../../../utilities/pages'
-
-import ComponentInfo from '~/components/ComponentInfo.vue'
 
 const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
 	'kotti-documentation-form-fields-saved-components'
@@ -971,8 +972,8 @@ const INITIAL_VALUES: {
 	dateTimeRangeValue: Kotti.FieldDateRange.Value
 	dateTimeValue: Kotti.FieldDateTime.Value
 	dateValue: Kotti.FieldDate.Value
-	fileUploadValue: Kotti.FieldFileUpload.Value
 	fileUploadRemoteValue: Kotti.FieldFileUploadRemote.Value
+	fileUploadValue: Kotti.FieldFileUpload.Value
 	multiSelectValue: Kotti.FieldMultiSelect.Value
 	numberValue: Kotti.FieldNumber.Value
 	singleSelectValue: Kotti.FieldSingleSelect.Value
@@ -985,8 +986,8 @@ const INITIAL_VALUES: {
 	dateTimeRangeValue: [null, null],
 	dateTimeValue: null,
 	dateValue: null,
-	fileUploadValue: [],
 	fileUploadRemoteValue: [],
+	fileUploadValue: [],
 	multiSelectValue: [],
 	numberValue: null,
 	singleSelectValue: null,
@@ -1019,8 +1020,8 @@ const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 	{
 		dataTest: 'data-test-key-2',
 		label: 'Key 2',
-		value: 'value2',
 		tooltip: 'Some tooltip',
+		value: 'value2',
 	},
 	{
 		isDisabled: true,
@@ -1031,8 +1032,8 @@ const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 	{
 		label:
 			'Key 4 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-		value: 'value4',
 		tooltip: 'This option has a long label',
+		value: 'value4',
 	},
 ]
 
@@ -1064,15 +1065,15 @@ const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
 	{
 		isDisabled: true,
 		key: 'disabled',
-		tooltip: 'A tooltip!',
 		label: 'Disabled',
+		tooltip: 'A tooltip!',
 	},
 
 	{
 		key: 'hasLongLabel',
-		tooltip: 'A tooltip!',
 		label:
 			'Long Label: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+		tooltip: 'A tooltip!',
 	},
 ]
 
@@ -1083,7 +1084,7 @@ const getShortcuts = (
 	{
 		keepOpen?: boolean
 		label: string
-		value: string | [string, string]
+		value: [string, string] | string
 	}
 > => {
 	if (
@@ -1105,10 +1106,11 @@ const getShortcuts = (
 	const todayDate = today(templateFormat)
 
 	return {
-		today: {
-			keepOpen: true,
-			label: 'Today',
-			value: isRange ? [todayDate, todayDate] : todayDate,
+		lastMonth: {
+			label: 'Last Month',
+			value: isRange
+				? [getLast('month', templateFormat), todayDate]
+				: getLast('month', templateFormat),
 		},
 		lastWeek: {
 			label: 'Last Week',
@@ -1116,17 +1118,16 @@ const getShortcuts = (
 				? [getLast('week', templateFormat), todayDate]
 				: getLast('week', templateFormat),
 		},
-		lastMonth: {
-			label: 'Last Month',
-			value: isRange
-				? [getLast('month', templateFormat), todayDate]
-				: getLast('month', templateFormat),
-		},
 		lastYear: {
 			label: 'Last Year',
 			value: isRange
 				? [getLast('year', templateFormat), todayDate]
 				: getLast('year', templateFormat),
+		},
+		today: {
+			keepOpen: true,
+			label: 'Today',
+			value: isRange ? [todayDate, todayDate] : todayDate,
 		},
 	}
 }
@@ -1290,10 +1291,10 @@ export default defineComponent({
 			dataTest: null,
 			decimalSeparator: Kotti.DecimalSeparator.DOT,
 			emitBlur: false,
+			formId: null,
 			hasHelpTextSlot: false,
 			helpDescription: null,
 			helpText: null,
-			formId: null,
 			label: 'Label',
 			leftIcon: null,
 			locale: 'en-US',
@@ -1668,8 +1669,8 @@ export default defineComponent({
 				defaultSlot: settings.value.additionalProps.defaultSlot,
 				hasActions: hasActions.value,
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
-				hasRemoteUpload: settings.value.component === 'KtFieldFileUploadRemote',
 				hasOptionSlot: settings.value.additionalProps.hasOptionSlot,
+				hasRemoteUpload: settings.value.component === 'KtFieldFileUploadRemote',
 				headerSlot: settings.value.additionalProps.headerSlot,
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),
@@ -1733,9 +1734,9 @@ export default defineComponent({
 							KtFieldDateTimeRange,
 							KtFieldFileUpload,
 							KtFieldFileUploadRemote,
-							KtFieldNumber,
 							KtFieldMultiSelect,
 							KtFieldMultiSelectRemote,
+							KtFieldNumber,
 							KtFieldPassword,
 							KtFieldRadioGroup,
 							KtFieldSingleSelect,

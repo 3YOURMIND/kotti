@@ -8,8 +8,8 @@ import { refinementNonEmpty } from '../zod-utilities/refinements'
 export module KottiFieldToggle {
 	export module Shared {
 		export enum Type {
-			SWITCH = 'switch',
 			CHECKBOX = 'checkbox',
+			SWITCH = 'switch',
 		}
 		export const propsSchema = KottiField.propsSchema
 			.merge(

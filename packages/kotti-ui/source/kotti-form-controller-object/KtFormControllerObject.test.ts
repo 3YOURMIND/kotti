@@ -49,7 +49,7 @@ const TestField = defineComponent({
 })
 
 const TestControllerObject = {
-	components: { TestField, KtFormControllerObject },
+	components: { KtFormControllerObject, TestField },
 	template: `<KtFormControllerObject v-bind="$attrs"><TestField formKey="testKey"/></KtFormControllerObject>`,
 }
 

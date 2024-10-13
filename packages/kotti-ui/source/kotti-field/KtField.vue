@@ -115,11 +115,12 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import debounce from 'lodash/debounce.js'
 import type { PropType } from 'vue'
 import { computed, defineComponent, ref } from 'vue'
 import type { VNode } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 

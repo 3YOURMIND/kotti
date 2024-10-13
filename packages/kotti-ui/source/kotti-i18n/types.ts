@@ -58,8 +58,8 @@ export module KottiI18n {
 	 * @see {@link https://tools.ietf.org/html/rfc4646}
 	 */
 	export type SupportedLanguages =
-		| 'en-US'
 		| 'de-DE'
+		| 'en-US'
 		| 'es-ES'
 		| 'fr-FR'
 		| 'ja-JP'

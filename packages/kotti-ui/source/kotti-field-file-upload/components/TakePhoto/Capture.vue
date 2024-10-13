@@ -37,7 +37,6 @@
 </template>
 
 <script lang="ts">
-import { Yoco } from '@3yourmind/yoco'
 import isError from 'lodash/isError.js'
 import {
 	computed,
@@ -47,9 +46,11 @@ import {
 	ref,
 } from 'vue'
 
-import { KtModal } from '../../../kotti-modal'
+import { Yoco } from '@3yourmind/yoco'
+
 import { KtButton } from '../../../kotti-button'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import { KtModal } from '../../../kotti-modal'
 import { makeProps } from '../../../make-props'
 import { ErrorCodes } from '../../constants'
 import { Shared } from '../../types'

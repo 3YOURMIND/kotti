@@ -12,8 +12,9 @@
 </template>
 
 <script lang="ts">
-import { KtTag } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
+
+import { KtTag } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

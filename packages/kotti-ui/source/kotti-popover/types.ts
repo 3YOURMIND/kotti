@@ -1,6 +1,7 @@
-import { yocoIconSchema } from '@3yourmind/yoco'
 import type { Instance as TippyInstance } from 'tippy.js'
 import { z } from 'zod'
+
+import { yocoIconSchema } from '@3yourmind/yoco'
 
 import type { Kotti } from '../types'
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
@@ -10,9 +11,9 @@ const baseOptionSchema = z.object({
 	icon: yocoIconSchema.optional(),
 	isActive: z.boolean().default(false),
 	isClickable: z.boolean().default(false),
-	isSelected: z.boolean().default(false),
 	isDisabled: z.boolean().default(false),
 	isOptional: z.boolean().default(false),
+	isSelected: z.boolean().default(false),
 	label: z.string(),
 	onClick: z.function(z.tuple([]), z.void()).optional(),
 })
@@ -39,6 +40,7 @@ export module KottiPopover {
 		TOP_START = 'top-start',
 	}
 
+	/* eslint-disable perfectionist/sort-enums */
 	export enum Size {
 		AUTO = 'auto',
 		SMALL = 'sm',
@@ -46,6 +48,7 @@ export module KottiPopover {
 		LARGE = 'lg',
 		EXTRA_LARGE = 'xl',
 	}
+	/* eslint-enable perfectionist/sort-enums */
 
 	export enum Trigger {
 		/**
@@ -73,8 +76,8 @@ export module KottiPopover {
 	}
 
 	export type Ref = {
-		open: TippyInstance['show']
 		close: TippyInstance['hide']
+		open: TippyInstance['show']
 	}
 
 	/**
@@ -107,9 +110,9 @@ export module KottiPopover {
 
 	export module Events {
 		export type UpdateIsSelected = {
-			value: Kotti.FieldToggle.Value
 			index: number
 			option: KottiPopover.PropsInternal['options'][0]
+			value: Kotti.FieldToggle.Value
 		}
 	}
 }

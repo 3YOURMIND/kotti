@@ -16,8 +16,7 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from 'vue'
-import { defineComponent, computed } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import type { KottiField } from '../../kotti-field/types'
@@ -52,12 +51,12 @@ export default defineComponent({
 			svgComponent: computed(() => {
 				const isBox = props.type === KottiFieldToggle.Shared.Type.CHECKBOX
 				return {
-					is: isBox ? ToggleBox.name : ToggleSwitch.name,
 					class: {
 						'kt-field-toggle-inner__svg': true,
 						'kt-field-toggle-inner__svg--is-box': isBox,
 						'kt-field-toggle-inner__svg--is-switch': !isBox,
 					},
+					is: isBox ? ToggleBox.name : ToggleSwitch.name,
 				}
 			}),
 			toggleClasses: computed(() => ({

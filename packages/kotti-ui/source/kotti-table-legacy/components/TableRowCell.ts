@@ -2,9 +2,9 @@ import property from 'lodash/property.js'
 import type { PropType } from 'vue'
 import { computed, defineComponent, h, inject } from 'vue'
 
-import { KT_TABLE, KT_STORE } from '../constants'
-import { type KottiTableLegacy } from '../types'
+import { KT_STORE, KT_TABLE } from '../constants'
 import type { Store } from '../logic/types'
+import { type KottiTableLegacy } from '../types'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TableRowCell = defineComponent({
@@ -61,11 +61,11 @@ export const TableRowCell = defineComponent({
 		const cellClick = (
 			$event: MouseEvent,
 			data: {
-				value: unknown
 				column: Store.StateComponents.ColumnRepresentation
 				columnIndex: number
 				row: KottiTableLegacy.Row.Props
 				rowIndex: number
+				value: unknown
 			},
 		) => {
 			if (data.column.disableRowClick) {
@@ -96,18 +96,18 @@ export const TableRowCell = defineComponent({
 					h(
 						'div',
 						{
-							class: _cellClass,
 							attrs: {
 								'data-prop': props.column.prop,
 							},
+							class: _cellClass,
 						},
 						[
 							props.column.renderCell(h, {
 								column: props.column,
-								row: props.row,
-								value: value.value,
 								columnIndex: props.columnIndex,
+								row: props.row,
 								rowIndex: props.rowIndex,
+								value: value.value,
 							}),
 						],
 					),

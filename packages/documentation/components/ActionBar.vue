@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
+
 import { KtActionbar } from '@3yourmind/kotti-ui'
 
 import type { Section, Subsection } from '../data/menu'

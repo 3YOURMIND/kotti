@@ -96,13 +96,14 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import {
 	Kotti,
 	KtFieldInlineEdit,
 	KtFieldSingleSelect,
 	KtForm,
 } from '@3yourmind/kotti-ui'
-import { defineComponent, ref, computed } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -194,8 +195,8 @@ export default defineComponent({
 				tabIndex: settings.value.tabIndex,
 				textStyle: settings.value.textStyle,
 				validator: () => ({
-					type: settings.value.validation ?? 'empty',
 					text: 'Some validation text',
+					type: settings.value.validation ?? 'empty',
 				}),
 			})),
 			onConfirm: (newVal: Kotti.FieldInlineEdit.Events.Confirm) => {

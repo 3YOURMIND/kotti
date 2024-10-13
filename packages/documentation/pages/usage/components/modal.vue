@@ -69,16 +69,17 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue'
+
 import {
+	Kotti,
 	KtButton,
-	KtForm,
 	KtFieldSingleSelect,
 	KtFieldToggle,
 	KtFieldToggleGroup,
+	KtForm,
 	KtModal,
-	Kotti,
 } from '@3yourmind/kotti-ui'
-import { defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 

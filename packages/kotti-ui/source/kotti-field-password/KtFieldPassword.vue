@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { computed, defineComponent } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
@@ -46,8 +46,8 @@ export default defineComponent({
 					class: ['kt-field-password__wrapper'],
 					forceUpdateKey: forceUpdateKey.value,
 					placeholder: props.placeholder ?? undefined,
-					type: 'password',
 					size: 1,
+					type: 'password',
 					value: field.currentValue ?? '',
 				}),
 			),

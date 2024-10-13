@@ -55,10 +55,11 @@
 </template>
 
 <script lang="ts">
-import { useTippy } from '@3yourmind/vue-use-tippy'
-import { Yoco } from '@3yourmind/yoco'
 import castArray from 'lodash/castArray.js'
 import { computed, defineComponent, provide, ref, watch } from 'vue'
+
+import { useTippy } from '@3yourmind/vue-use-tippy'
+import { Yoco } from '@3yourmind/yoco'
 
 import { makeProps } from '../make-props'
 
@@ -135,8 +136,8 @@ export default defineComponent({
 		const { tippy } = useTippy(
 			navbarRef,
 			computed(() => ({
-				arrow: false,
 				appendTo: () => document.body,
+				arrow: false,
 				content: mobileMenuRef.value ?? undefined,
 				interactive: true,
 				maxWidth: 'none',
@@ -150,8 +151,8 @@ export default defineComponent({
 
 		return {
 			classes: computed(() => ({
-				'kt-navbar--narrow': props.isNarrow,
 				[`kt-navbar--theme-${props.theme}`]: true,
+				'kt-navbar--narrow': props.isNarrow,
 			})),
 			hideMobileMenu: () => {
 				if (tippy.value === null) return

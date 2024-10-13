@@ -18,10 +18,10 @@
 </template>
 
 <script lang="ts">
+import { TimeConversion } from '@metatypes/units'
 import copy from 'copy-to-clipboard'
 import type { PropType } from 'vue'
 import { defineComponent, ref } from 'vue'
-import { TimeConversion } from '@metatypes/units'
 
 export default defineComponent({
 	name: 'ColorPalette',

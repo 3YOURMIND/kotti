@@ -6,24 +6,24 @@ const config: NuxtConfig = {
 	/*
 	 ** Headers of the page
 	 */
+	css: ['./styles/main.scss'],
 	head: {
-		title: 'Kotti Design System',
+		link: [{ href: '/favicon.ico', rel: 'icon', type: 'image/x-icon' }],
 		meta: [
 			{ charset: 'utf-8' },
-			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+			{ content: 'width=device-width, initial-scale=1', name: 'viewport' },
 			{
+				content: `Kotti helps to unify our design language and provides the documentation for further product design decisions. The Kotti design system has two main parts: foundation and components.`,
 				hid: 'description',
 				name: 'description',
-				content: `Kotti helps to unify our design language and provides the documentation for further product design decisions. The Kotti design system has two main parts: foundation and components.`,
 			},
 		],
-		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+		title: 'Kotti Design System',
 	},
-	css: ['./styles/main.scss'],
-	modules: ['@nuxtjs/markdownit', '@nuxtjs/style-resources'],
 	loading: {
 		color: '#2C64CC',
 	},
+	modules: ['@nuxtjs/markdownit', '@nuxtjs/style-resources'],
 	plugins: ['~/plugins/yoco', { src: '~/plugins/kotti-ui', ssr: false }],
 	/*
 	 ** Build configuration

@@ -28,13 +28,13 @@ const slots: Meta['slots'] = {
 				description: 'option index (after filtering)',
 				type: 'integer',
 			},
-			select: {
-				description: 'select the current option',
-				type: 'function',
-			},
 			option: {
 				description: 'the entire option entry',
 				type: 'object',
+			},
+			select: {
+				description: 'select the current option',
+				type: 'function',
 			},
 		},
 	},
