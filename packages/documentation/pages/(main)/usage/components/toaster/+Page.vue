@@ -1,9 +1,8 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<${parserHack.script} lang="ts">
 			import { createToaster, KtButton, KtToast, KtToaster } from \x27@3yourmind/kotti-ui\x27
 
@@ -76,7 +75,7 @@
 					<KtButton @click="linkToast">link toast</KtButton>
 				</div>
 			</${parserHack.template}>
-		`'
+		'
 		fileName="Example.vue"
 		language="vue"
 	>
@@ -110,9 +109,8 @@
 
 	<h2>Usage</h2>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			import { success, toaster } from "~/shared/toaster.ts"
 
 			export const someAction = async () => {
@@ -134,14 +132,13 @@
 				const message = customizedShow({ text: \x27my message\x27 })
 				await message.done
 			}
-		`'
+		'
 		fileName="~/store/my-module.ts"
 		language="typescript"
 	/>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<${parserHack.script} lang="ts">
 			import { defineComponent } from "vue"
 
@@ -163,21 +160,19 @@
 			<${parserHack.template}>
 				<KtButton label="Show Toast" @click="onClick">
 			</${parserHack.template}>
-		`'
+		'
 		fileName="~/components/MyComponent.vue"
 		language="vue"
 	/>
 
 	<h2>Initial Setup</h2>
 
-	<!-- prettier-ignore -->
 	<MarkdownBlock>
 		This is the per-app setup process for `KtToaster`
 	</MarkdownBlock>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<${parserHack.template}>
 				<KtToaster :toaster="toaster" />
 			</${parserHack.template}>
@@ -196,14 +191,13 @@
 				}
 			})
 			</${parserHack.script}>
-		`'
+		'
 		fileName="App.vue"
 		language="vue"
 	/>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			import { createToaster } from "@3yourmind/kotti-ui"
 
 			// create a toaster instance, usually there should only ever be one per app
@@ -216,7 +210,7 @@
 			export const error = toaster.withOptions({ duration: 5_000, type: "error" })
 			export const success = toaster.withOptions({ duration: 5_000, type: "success" })
 			export const successPersistent = toaster.withOptions({ type: "success" })
-		`'
+		'
 		fileName="~/shared/toaster.ts"
 		language="typescript"
 	/>

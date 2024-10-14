@@ -23,18 +23,17 @@
 		<code>click</code> event for that action.
 	</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-	:code='`
-	<KtHeading
-		text="Title with action"
-		type="action"
-		icon="announce"
-		actionText="Click Me"
-		@click="showAlert"
-	/>
-	`'
-	language="vue-html"
+		code='
+		<KtHeading
+			text="Title with action"
+			type="action"
+			icon="announce"
+			actionText="Click Me"
+			@click="showAlert"
+		/>
+	'
+		language="vue-html"
 	>
 		<KtHeading
 			text="Title with action"
@@ -52,9 +51,8 @@
 		binding value to it.
 	</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		code='`
+		code='
 		<KtHeading
 			text="Title with toggle"
 			type="toggle"
@@ -64,15 +62,15 @@
 			@toggle="toggle=!toggle"
 		>
 			<div>We hide this message :)</div>
-		</KtHeading>`'
+		</KtHeading>'
 		language="vue-html"
 	>
 		<KtHeading
 			text="Title with toggle"
-			type="toggle"
-			toggleText="Open"
-			toggleCloseText="Hide"
 			:toggleStatus="toggle"
+			toggleCloseText="Hide"
+			toggleText="Open"
+			type="toggle"
 			@toggle="toggle = !toggle"
 		>
 			<div>We hide this message :)</div>
@@ -109,6 +107,7 @@ import { defineComponent, ref } from 'vue'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import { success } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsHeadings',
@@ -122,8 +121,7 @@ export default defineComponent({
 			component: KtHeading,
 			toggle: ref(false),
 			showAlert() {
-				// eslint-disable-next-line no-alert
-				window.alert('H3 Action Clicked')
+				success({ text: 'H3 Action Clicked' })
 			},
 		}
 	},

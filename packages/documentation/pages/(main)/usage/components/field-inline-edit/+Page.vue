@@ -109,6 +109,7 @@ import {
 } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import { success } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsFieldInlineEdit',
@@ -206,8 +207,7 @@ export default defineComponent({
 				}),
 			})),
 			onConfirm: (newVal: Kotti.FieldInlineEdit.Events.Confirm) => {
-				// eslint-disable-next-line no-alert
-				window.alert(newVal)
+				success({ text: JSON.stringify(newVal, undefined, 2) })
 			},
 			preventConfirmationOptions: ref(
 				Object.entries(Kotti.FieldInlineEdit.ConfirmationValidation).map(

@@ -1114,6 +1114,7 @@ import { Kotti } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/ComponentInfo.vue'
+import { success } from '~/utilities/toaster'
 
 const ADDRESS_DOT_LINE = 'address.line'
 
@@ -1240,8 +1241,7 @@ export default {
 			window.alert(`${JSON.stringify(row)} is at index: ${String(rowIndex)}!`)
 		},
 		showAlert(model, value) {
-			// eslint-disable-next-line no-alert, @typescript-eslint/restrict-template-expressions
-			window.alert(`${model} is ${value}!`)
+			success({ text: `${model} is ${value}!` })
 		},
 		sortDate(a, b) {
 			return new Date(a) - new Date(b)

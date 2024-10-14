@@ -47,6 +47,7 @@ import {
 	generateComponentCode,
 	isComponentName,
 } from '../../../utilities/pages'
+import { success } from '~/utilities/toaster'
 
 const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
 	'kotti-documentation-form-fields-saved-components'
@@ -1043,12 +1044,11 @@ export default defineComponent({
 				})),
 			isRangeComponent,
 			onBlur: (value: number) => {
-				// eslint-disable-next-line no-alert
-				if (settings.value.emitBlur) window.alert(`@blur: ${String(value)}`)
+				if (settings.value.emitBlur)
+					success({ text: `@blur: ${String(value)}` })
 			},
 			onSubmit: (values: Record<string, unknown>) => {
-				// eslint-disable-next-line no-alert
-				window.alert(`@submit: ${JSON.stringify(values, null, '\t')}`)
+				success({ text: `@submit: ${JSON.stringify(values, null, '\t')}` })
 			},
 			reset: () => {
 				values.value = INITIAL_VALUES

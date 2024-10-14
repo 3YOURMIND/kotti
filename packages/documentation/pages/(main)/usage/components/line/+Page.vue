@@ -11,80 +11,80 @@
 		the middle.
 	</p>
 
-	<p>Full Line</p>
-	<CodePreview code="<KtLine />" language="vue-html">
-		<KtLine class="line-description" />
-	</CodePreview>
-
-	<p>Title in center position</p>
-	<CodePreview code='<KtLine text="Title Center" />' language="vue-html">
-		<KtLine class="line-description" text="Title Center" />
-	</CodePreview>
-
-	<p>Title in left position</p>
+	<h2>Basic usage with or without title</h2>
 	<CodePreview
-		code='<KtLine position="left" text="Title Left" />'
+		code='
+			<p>Without title</p>
+			<KtLine />
+			<p>Center position</p>
+			<KtLine text="Title Center" />
+			<p>Left position</p>
+			<KtLine position="left" text="Title Left" />
+			<p>Right position</p>
+			<KtLine position="right" text="Title Right" />
+		'
 		language="vue-html"
 	>
-		<KtLine class="line-description" position="left" text="Title Left" />
+		<div class="line-preview">
+			<p>Without title</p>
+			<KtLine class="line-description" />
+			<p>Center position</p>
+			<KtLine class="line-description" text="Title Center" />
+			<p>Left position</p>
+			<KtLine class="line-description" position="left" text="Title Left" />
+			<p>Right position</p>
+			<KtLine class="line-description" position="right" text="Title Right" />
+		</div>
 	</CodePreview>
 
-	<p>Title in right position</p>
+	<h2>Interactive Title</h2>
 	<CodePreview
-		code='<KtLine position="right" text="Title Right" />'
+		code='
+			<p>Center position</p>
+			<KtLine isInteractive text="Action Center" @click="handleClick" />
+			<p>Left position</p>
+			<KtLine isInteractive position="left" text="Action Center" @click="handleClick" />
+			<p>Right position</p>
+			<KtLine isInteractive position="right text="Action Center" @click="handleClick" />
+				'
 		language="vue-html"
 	>
-		<KtLine class="line-description" position="right" text="Title Right" />
-	</CodePreview>
-
-	<p>Interactive title in center position</p>
-	<CodePreview
-		code='<KtLine isInteractive text="Action Center" @click="handleClick" />'
-		language="vue-html"
-	>
-		<KtLine
-			class="line-description"
-			isInteractive
-			text="Action Center"
-			@click="handleClick('clicked center title')"
-		/>
-	</CodePreview>
-
-	<p>Interactive title in left position</p>
-	<CodePreview
-		code='<KtLine isInteractive text="Action Left" @click="handleClick" />'
-		language="vue-html"
-	>
-		<KtLine
-			class="line-description"
-			isInteractive
-			position="left"
-			text="Action Left"
-			@click="handleClick('clicked left title')"
-		/>
-	</CodePreview>
-
-	<p>Interactive title in right position</p>
-	<CodePreview
-		code='<KtLine isInteractive text="Action Right" @click="handleClick" />'
-		language="vue-html"
-	>
-		<KtLine
-			class="line-description"
-			isInteractive
-			position="right"
-			text="Action Right"
-			@click="handleClick('clicked right title')"
-		/>
+		<div class="line-preview">
+			<p>Center position</p>
+			<KtLine
+				class="line-description"
+				isInteractive
+				text="Action Center"
+				@click="handleClick('clicked center title')"
+			/>
+			<p>Left position</p>
+			<KtLine
+				class="line-description"
+				isInteractive
+				position="left"
+				text="Action Left"
+				@click="handleClick('clicked left title')"
+			/>
+			<p>Right position</p>
+			<KtLine
+				class="line-description"
+				isInteractive
+				position="right"
+				text="Action Right"
+				@click="handleClick('clicked right title')"
+			/>
+		</div>
 	</CodePreview>
 </template>
 
 <script lang="ts">
-import { KtLine } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
-import CodePreview from '~/components/CodePreview.vue'
 
+import { KtLine } from '@3yourmind/kotti-ui'
+
+import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import { success } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsLine',
@@ -97,16 +97,21 @@ export default defineComponent({
 		return {
 			component: KtLine,
 			handleClick: (text: string) => {
-				// eslint-disable-next-line no-alert
-				window.alert(text)
+				success({ text })
 			},
 		}
 	},
 })
 </script>
 
-<style scoped>
-.line-description {
-	margin: 1rem 0;
+<style lang="scss" scoped>
+.line-preview {
+	.line-description {
+		margin: 1rem 0;
+
+		&:not(:last-child) {
+			margin-bottom: 2rem;
+		}
+	}
 }
 </style>

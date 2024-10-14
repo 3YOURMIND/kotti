@@ -24,15 +24,14 @@
 		Only use this type of banner when this issue will cause a significant error.
 	</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<KtBanner
 				actionText="Publish"
 				icon="announce"
 				message="Your material is not published yet"
 			/>
-		`'
+		'
 		language="vue-html"
 	>
 		<KtBanner
@@ -50,9 +49,8 @@
 		interface.
 	</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<KtBanner message="Your material is not published yet" icon="cloud">
 				<div>
 					<h2>Order #100002</h2>
@@ -60,7 +58,7 @@
 					...
 				</div>
 			</KtBanner>
-		`'
+		'
 		language="vue-html"
 	>
 		<KtBanner message="Your material is not published yet" icon="cloud">
@@ -81,16 +79,15 @@
 		You can use `isGray` to change the banner's background color, this style is useful when you want add contrast to the page.
 	</MarkdownBlock>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<KtBanner
 				actionText="Publish"
 				icon="announce"
 				isGray
 				message="Your material is not published yet"
 			/>
-		`'
+		'
 		language="vue-html"
 	>
 		<KtBanner

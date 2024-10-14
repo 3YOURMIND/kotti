@@ -3,24 +3,23 @@
 
 	Tags should either visualize active user input or invite for a user action.
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
-		<KtTag text="I display Information" isDisabled />
+		code='
+			<KtTag text="I display Information" isDisabled />
+			<KtTag
+				v-if="showTag"
+				text="You can remove me if you want"
+				@close="showTag = false"
+			/>
+		'
+		language="vue-html"
+	>
+		<KtTag isDisabled text="I display Information" />
 		<KtTag
 			v-if="showTag"
 			text="You can remove me if you want"
 			@close="showTag = false"
 		/>
-		`'
-		language="vue-html"
-	>
-  		<KtTag text="I display Information" isDisabled />
-  		<KtTag
- 			v-if="showTag"
- 			text="You can remove me if you want"
- 			@close="showTag = false"
-  		/>
 	</CodePreview>
 </template>
 

@@ -4,9 +4,8 @@
 	<h2>Basic</h2>
 	Indicate the current page’s location within a navigational hierarchy.
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 		<KtBreadcrumb
 			:activeIndex="activeIndex"
 			:breadcrumbs="[
@@ -35,7 +34,7 @@
 					isDisabled: true,
 				}
 			]"
-		/>`'
+		/>'
 		language="vue-html"
 	>
 		<KtBreadcrumb :activeIndex="activeIndex" :breadcrumbs="links" />
@@ -43,9 +42,8 @@
 
 	<h2>Separator Style</h2>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<KtBreadcrumb
 				:breadcrumbs="links"
 				:separator="{
@@ -60,7 +58,7 @@
 					value: "chevron_right",
 				}"
 			/>
-		`'
+		'
 		language="vue-html"
 	>
 		<KtBreadcrumb

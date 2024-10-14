@@ -3,61 +3,55 @@
 
 	<h2>Basic Usage</h2>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`<KtPagination :total="50" :pageSize="10" />`'
+		code='<KtPagination :total="50" :pageSize="10" />'
 		language="vue-html"
 	>
-		<KtPagination :total="50" :pageSize="10" />
+		<KtPagination :pageSize="10" :total="50" />
 	</CodePreview>
 
 	<h2>Default Page</h2>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`<KtPagination :total="50" :pageSize="10" :page="3" />`'
+		code='<KtPagination :total="50" :pageSize="10" :page="3" />'
 		language="vue-html"
 	>
-		<KtPagination :total="50" :pageSize="10" :page="3" />
+		<KtPagination :page="3" :pageSize="10" :total="50" />
 	</CodePreview>
 
 	<h2>Styles</h2>
 
 	<h4>Expanded</h4>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`<KtPagination pagingStyle="expand" :total="50" :pageSize="10" />`'
+		code='<KtPagination pagingStyle="expand" :total="50" :pageSize="10" />'
 		language="vue-html"
 	>
-		<KtPagination pagingStyle="expand" :total="50" :pageSize="10" />
+		<KtPagination :pageSize="10" pagingStyle="expand" :total="50" />
 	</CodePreview>
 
 	<h4>Fraction</h4>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`<KtPagination pagingStyle="fraction" :total="50" :pageSize="10" />`'
+		code='<KtPagination pagingStyle="fraction" :total="50" :pageSize="10" />'
 		language="vue-html"
 	>
-		<KtPagination pagingStyle="fraction" :total="50" :pageSize="10" />
+		<KtPagination :pageSize="10" pagingStyle="fraction" :total="50" />
 	</CodePreview>
 
 	<h4>Flexible</h4>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`<KtPagination pagingStyle="flex" :total="50" :pageSize="10" />`'
+		code='<KtPagination pagingStyle="flex" :total="50" :pageSize="10" />'
 		language="vue-html"
 	>
-		<KtPagination pagingStyle="flex" :total="50" :pageSize="10" />
+		<KtPagination :pageSize="10" pagingStyle="flex" :total="50" />
 	</CodePreview>
 
 	<h4>Extra Options</h4>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<KtPagination
 			 	pagingStyle="flex"
 			 	:total="500"
@@ -82,33 +76,33 @@
 
 			<KtPagination pagingStyle="flex" :total="500" :pageSize="10" />
 			<KtPagination pagingStyle="flex" :total="500" :pageSize="10" fixedWidth />
-	   	`'
+	   	'
 		language="vue-html"
 	>
 		<KtPagination
-			pagingStyle="flex"
-			:total="500"
-			:pageSize="10"
-			:page="25"
 			:adjacentAmount="1"
-		/>
-		<KtPagination
+			:page="25"
+			:pageSize="10"
 			pagingStyle="flex"
 			:total="500"
-			:pageSize="10"
-			:page="25"
+		/>
+		<KtPagination
 			:adjacentAmount="2"
-		/>
-		<KtPagination
+			:page="25"
+			:pageSize="10"
 			pagingStyle="flex"
 			:total="500"
-			:pageSize="10"
-			:page="25"
+		/>
+		<KtPagination
 			:adjacentAmount="3"
+			:page="25"
+			:pageSize="10"
+			pagingStyle="flex"
+			:total="500"
 		/>
 
-		<KtPagination pagingStyle="flex" :total="500" :pageSize="10" />
-		<KtPagination pagingStyle="flex" :total="500" :pageSize="10" fixedWidth />
+		<KtPagination :pageSize="10" pagingStyle="flex" :total="500" />
+		<KtPagination fixedWidth :pageSize="10" pagingStyle="flex" :total="500" />
 	</CodePreview>
 
 	<!-- prettier-ignore -->

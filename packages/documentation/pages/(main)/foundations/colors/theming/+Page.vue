@@ -17,20 +17,21 @@
 	<p>Overwrite style in a single component</p>
 
 	<CodePreview
-		:code="`.kt-navbar {
+		code="
+		.kt-navbar {
 			--primary-70: red;
-		}`"
+		}"
 		language="css"
 	/>
 
 	<p>A simpler approach is to overwrite the root element style.</p>
 
 	<CodePreview
-		:code="`
+		code="
 			:root {
 				--primary-70: red;
 			}
-		`"
+		"
 		language="css"
 	/>
 

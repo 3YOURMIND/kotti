@@ -5,20 +5,19 @@
 		<button class="primary">Show Layout Example</button>
 	</a>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`<KtActionbar
+		code='
+		<KtActionbar
 			slot="actionbar"
 			headerTitle="KtContainer Example"
 			:menuStyle="menuStyle"
 			:menu="menu"
-		/>`'
+		/>'
 		language="vue-html"
 	/>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 		menuStyle: {
 			iconPosition: "left",
 		},
@@ -42,7 +41,7 @@
 				icon: "bell",
 				disabled: true,
 			},
-		],`'
+		],'
 		language="js"
 	/>
 </template>

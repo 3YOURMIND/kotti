@@ -47,6 +47,8 @@ import {
 import { Yoco } from '@3yourmind/yoco'
 import { defineComponent, ref } from 'vue'
 
+import { success } from '~/utilities/toaster'
+
 export default defineComponent({
 	name: 'DocumentationPageExamplesLayouts',
 	components: {
@@ -61,8 +63,7 @@ export default defineComponent({
 			isNarrow,
 			theme: Kotti.Navbar.Theme.DEFAULT,
 			handleMenuClick() {
-				// eslint-disable-next-line no-alert
-				window.alert('Link Clicked')
+				success({ text: 'Link Clicked' })
 			},
 			setIsNarrow(_isNarrow: boolean) {
 				isNarrow.value = _isNarrow
@@ -88,9 +89,9 @@ export default defineComponent({
 						{
 							icon: Yoco.Icon.CLOSE,
 							isActive: true,
-							component: 'nuxt-link',
+							component: 'a',
 							props: {
-								to: '/usage/layouts/navbar',
+								href: '/usage/layouts/navbar',
 							},
 							title: 'Close Example',
 						},
@@ -195,9 +196,9 @@ export default defineComponent({
 							title: 'Settings',
 						},
 						{
-							component: 'nuxt-link',
+							component: 'a',
 							props: {
-								to: '/usage/layouts/navbar',
+								href: '/usage/layouts/navbar',
 							},
 							title: 'Logout (Close Example)',
 						},

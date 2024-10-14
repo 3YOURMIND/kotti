@@ -26,9 +26,8 @@
 
 	<p>This list is automatically generated and thus always up-to-date.</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code="`
+		code="
 			/* Base colors */
 
 			${baseColorsFactory.string}
@@ -36,7 +35,7 @@
 			/* Token colors */
 
 			${tokenColorsFactory.string}
-		`"
+		"
 		language="css"
 	/>
 </template>

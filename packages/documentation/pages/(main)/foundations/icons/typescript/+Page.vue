@@ -3,23 +3,21 @@
 
 	<h3>TS Example</h3>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			// enum of icons and the associated ligature / svg name
 			import { Yoco } "@3yourmind/yoco"
 
 			console.log(Yoco.Icon.ANNOUNCE)
 			// "announce"
-		`'
+		'
 		language="typescript"
 	/>
 
 	<h3>Vue Example</h3>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<script lang="ts">
 			import { Yoco } from "@3yourmind/yoco"
 			import { defineComponent } from "vue"
@@ -43,7 +41,7 @@
 				<!-- using the enum will catch typos at build time -->
 				<i class="yoco" v-text="Yoco.Icon.ANNOUNCE" />
 			</template>
-		`'
+		'
 		language="vue"
 	/>
 </template>
