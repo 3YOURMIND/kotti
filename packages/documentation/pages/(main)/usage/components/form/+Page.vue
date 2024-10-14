@@ -302,6 +302,7 @@ import {
 import { defineComponent, computed, ref } from 'vue'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import { success } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsForm',
@@ -357,8 +358,7 @@ export default defineComponent({
 			onSubmit: (event: Kotti.Form.Events.Submit) => {
 				// eslint-disable-next-line no-console
 				console.debug('onSubmit', event)
-				// eslint-disable-next-line no-alert
-				window.alert('onSubmit: See Console for Event Details')
+				success({ text: 'onSubmit: See Console for Event Details' })
 			},
 			settings: ref({
 				booleanFlags: {

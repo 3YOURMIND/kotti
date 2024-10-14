@@ -15,13 +15,12 @@
 	3. **Rectangle:** Width equals to parents, height can be medium `md` or large `lg`.
 	</MarkdownBlock>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<div class="skeleton circle" />
 			<div class="skeleton square"/>
 			<div class="skeleton rectangle"/>
-		`'
+		'
 		language="html"
 	>
 		<div class="columns">
@@ -43,20 +42,19 @@
 
 	<p>Rectangle skeleton with different height.</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<div class="skeleton rectangle"/>
 			<div class="skeleton rectangle md"/>
 			<div class="skeleton rectangle md"/>
 			<div class="skeleton rectangle lg"/>
-		`'
+		'
 		language="html"
 	>
-		<div class="skeleton rectangle"/>
-		<div class="skeleton rectangle md"/>
-		<div class="skeleton rectangle md"/>
-		<div class="skeleton rectangle lg"/>
+		<div class="skeleton rectangle" />
+		<div class="skeleton rectangle md" />
+		<div class="skeleton rectangle md" />
+		<div class="skeleton rectangle lg" />
 	</CodePreview>
 
 	<h2>Spin Loading</h2>
@@ -66,12 +64,11 @@
 		<code>loading</code> class is regular size, <code>lg</code> is large size.
 	</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<div class="loading"/>
 			<div class="loading lg"/>
-		`'
+		'
 		language="html"
 	>
 		<div class="columns">
@@ -89,50 +86,47 @@
 		other elements.
 	</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<button>
 				<div class="loading inline"></div>
 				Uploading
 			</button>
-		`'
+		'
 		language="html"
 	>
 		<button>
-			<div class="loading inline"></div>
+			<div class="loading inline" />
 			Uploading
 		</button>
 	</CodePreview>
 
 	<p>Using <code>white</code> class can change the ring color to white.</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<button>
 				<div class="loading inline white"></div>
 				Uploading
 			</button>
-		`'
+		'
 		language="html"
 	>
 		<button>
-			<div class="loading inline white"></div>
+			<div class="loading inline white" />
 			Uploading
 		</button>
 	</CodePreview>
 
 	<p>Using <code>gray</code> class can change the ring color to gray.</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<button>
 				<div class="loading inline gray"></div>
 				Uploading
 			</button>
-		`'
+		'
 		language="html"
 	>
 		<button>

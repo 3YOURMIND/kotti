@@ -23,9 +23,8 @@
 
 	<h2>As Controlled Component</h2>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<KtAccordion v-model:isClosed="isClosed" title="Openable block :)">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique
 				purus vel felis posuere, quis posuere enim consequat. Cras vel metus non
@@ -40,7 +39,7 @@
 				label="Toggle Accordion"
 				@click="() => (isClosed = !isClosed)"
 			/>
-		`'
+		'
 		language="vue-html"
 	>
 		<KtAccordion

@@ -24,9 +24,8 @@
 
 		<h2>Types</h2>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 				<div style="display: flex; gap: var(--unit-6)">
 					<KtButton type="primary" @click="...">
 						Primary Button
@@ -44,23 +43,21 @@
 						Text Button
 					</KtButton>
 				</div>
-			`'
+			'
 			language="vue-html"
 		>
 			<div style="display: flex; gap: var(--unit-6); flex-wrap: wrap">
-				<KtButton type="primary" @click="alert('primary')">
+				<KtButton type="primary" @click="showToaster('primary')">
 					Primary Button
 				</KtButton>
-				<KtButton type="secondary" @click="alert('secondary')">
+				<KtButton type="secondary" @click="showToaster('secondary')">
 					Secondary Button
 				</KtButton>
-				<KtButton type="danger" @click="alert('danger')">
+				<KtButton type="danger" @click="showToaster('danger')">
 					Danger Button
 				</KtButton>
-				<KtButton @click="alert('default')">
-					Default Button
-				</KtButton>
-				<KtButton type="text" @click="alert('text')">
+				<KtButton @click="showToaster('default')"> Default Button </KtButton>
+				<KtButton type="text" @click="showToaster('text')">
 					Text Button
 				</KtButton>
 			</div>
@@ -105,12 +102,14 @@
 
 		<h2>Label</h2>
 
-		<!-- prettier-ignore -->
-		<CodePreview :code='`
-		<KtButton icon="edit" label="Edit Button" type="primary" />
-		<!-- is equivalent to -->
-		<KtButton icon="edit" type="primary">Edit Button</KtButton>
-		`' language="vue-html">
+		<CodePreview
+			code='
+				<KtButton icon="edit" label="Edit Button" type="primary" />
+				<!-- is equivalent to -->
+				<KtButton icon="edit" type="primary">Edit Button</KtButton>
+			'
+			language="vue-html"
+		>
 			<KtButton icon="edit" label="Edit Button" type="primary" />
 		</CodePreview>
 
@@ -143,23 +142,31 @@
 			</li>
 		</ul>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 				<div style="display: flex; gap: var(--unit-6)">
 					<KtButton type="primary">Edit button</KtButton>
 					<KtButton icon="edit" label="Edit Button" type="primary" />
 					<KtButton icon="edit" iconPosition="right" label="Icon To The Right" type="primary"/>
 					<KtButton helpText="This is an icon button" icon="edit" type="primary" />
 				</div>
-			`'
+			'
 			language="vue-html"
 		>
 			<div style="display: flex; gap: var(--unit-6)">
 				<KtButton type="primary">Edit button</KtButton>
 				<KtButton icon="edit" label="Edit Button" type="primary" />
-				<KtButton icon="edit" iconPosition="right" label="Icon To The Right" type="primary"/>
-				<KtButton helpText="This is an icon button" icon="edit" type="primary" />
+				<KtButton
+					icon="edit"
+					iconPosition="right"
+					label="Icon To The Right"
+					type="primary"
+				/>
+				<KtButton
+					helpText="This is an icon button"
+					icon="edit"
+					type="primary"
+				/>
 			</div>
 		</CodePreview>
 
@@ -176,9 +183,8 @@
 			</li>
 		</ul>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 				<div style="display: flex; gap: var(--unit-6)">
 					<KtButton
 						:icon="toggleDefaultIcon"
@@ -196,7 +202,7 @@
 						@update:toggleStatus="(event) => onToggleTextClick(event)"
 					/>
 				</div>
-			`'
+			'
 			language="vue-html"
 		>
 			<div style="display: flex; gap: var(--unit-6)">
@@ -225,9 +231,8 @@
 			<code>isBlock</code> properties.
 		</p>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 			<div style="width: 200px; display: flex; flex-direction: column; gap: var(--unit-1)">
 				<KtButton block type="primary">Purchase</KtButton>
 				<KtButton icon="save" isBlock isMultiline>
@@ -248,12 +253,19 @@
 					<code>line-height</code>)
 				</KtButton>
 			</div>
-			`'
+			'
 			language="vue-html"
 		>
-			<div style="width: 200px; display: flex; flex-direction: column; gap: var(--unit-1)">
+			<div
+				style="
+					width: 200px;
+					display: flex;
+					flex-direction: column;
+					gap: var(--unit-1);
+				"
+			>
 				<KtButton block type="primary">Purchase</KtButton><br />
-					<KtButton icon="save" isBlock isMultiline>
+				<KtButton icon="save" isBlock isMultiline>
 					Purchase this product without the 5 year garantee
 				</KtButton>
 				<KtButton isBlock isMultiline>
@@ -261,23 +273,23 @@
 					2 year only garantee
 				</KtButton>
 			</div>
-			<br/>
+			<br />
 			<div style="display: flex; flex-direction: column; gap: var(--unit-1)">
 				<KtButton isMultiline>
-					  Multiline works on one line if the parent does not constraint the width
+					Multiline works on one line if the parent does not constraint the
+					width
 				</KtButton>
 				<KtButton isMultiline>
-						(But the height is less reliable as it uses
-						<code>line-height</code>)
+					(But the height is less reliable as it uses
+					<code>line-height</code>)
 				</KtButton>
 			</div>
 		</CodePreview>
 
 		<h2>Loading</h2>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 				<div style="display: flex; gap: var(--unit-6)">
 					<KtButton icon="edit" isLoading>
 						Loading button
@@ -288,19 +300,12 @@
 					<KtButton isLoading type="secondary">Loading</KtButton>
 					<KtButton isLoading type="danger">Loading</KtButton>
 				</div>
-			`'
+			'
 			language="vue-html"
 		>
 			<div style="display: flex; gap: var(--unit-6)">
-				<KtButton icon="edit" isLoading>
-					Loading button
-				</KtButton>
-				<KtButton
-					icon="edit"
-					iconPosition="right"
-					isLoading
-					type="primary"
-				>
+				<KtButton icon="edit" isLoading> Loading button </KtButton>
+				<KtButton icon="edit" iconPosition="right" isLoading type="primary">
 					Loading button
 				</KtButton>
 				<KtButton isLoading type="secondary">Loading</KtButton>
@@ -310,14 +315,13 @@
 
 		<h2>Button Group</h2>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 				<KtButtonGroup>
 					<KtButton icon="edit" type="primary">Edit</KtButton>
 					<KtButton icon="trash" type="secondary">Delete</KtButton>
 				</KtButtonGroup>
-			`'
+			'
 			language="vue-html"
 		>
 			<KtButtonGroup>
@@ -332,9 +336,8 @@
 			`KtButton` has 3 sizes: `small`, `medium`, and `large`
 		</MarkdownBlock>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 				<div style="display: flex; gap: var(--unit-6)">
 					<KtButton icon="edit" size="small" type="primary">
 						Small
@@ -346,19 +349,13 @@
 						Large
 					</KtButton>
 				</div>
-			`'
+			'
 			language="vue-html"
 		>
 			<div style="display: flex; gap: var(--unit-6)">
-				<KtButton icon="edit" size="small" type="primary">
-					Small
-				</KtButton>
-				<KtButton isLoading size="medium">
-					Medium (Default)
-				</KtButton>
-				<KtButton icon="edit" size="large">
-					Large
-				</KtButton>
+				<KtButton icon="edit" size="small" type="primary"> Small </KtButton>
+				<KtButton isLoading size="medium"> Medium (Default) </KtButton>
+				<KtButton icon="edit" size="large"> Large </KtButton>
 			</div>
 		</CodePreview>
 
@@ -544,7 +541,7 @@ export default defineComponent({
 		})
 
 		return {
-			alert: (value: string) => {
+			showToaster: (value: string) => {
 				success({ text: value })
 			},
 			iconOptions: Object.values(Yoco.Icon).map((icon) => ({

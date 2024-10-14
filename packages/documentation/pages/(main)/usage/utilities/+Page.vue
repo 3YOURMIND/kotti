@@ -5,15 +5,14 @@
 
 	<p>Text utility helps text format text.</p>
 
-	<!--  prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<div class="text-primary">Text Primary</div>
 			<div class="text-gray">Text Gray</div>
 			<div class="text-success">Text Succes</div>
 			<div class="text-error">Text Error</div>
 			<div class="text-warning">Text Warning</div>
-		`'
+		'
 		language="html"
 	>
 		<h4>Text Color</h4>
@@ -24,13 +23,12 @@
 		<div class="text-warning">Text Warning</div>
 	</CodePreview>
 
-	<!--  prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<div class="text-truncate" style="width: 100px">
 				Text Truncate - Long text string
 			</div>
-		`'
+		'
 		language="html"
 	>
 		<h4>Text Truncate</h4>
@@ -39,14 +37,13 @@
 		</div>
 	</CodePreview>
 
-	<!--  prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<div class="text-left">Text Left</div>
 			<div class="text-center">Text Center</div>
 			<div class="text-right">Text Warning</div>
 			<div class="text-justify">Text Justify ...</div>
-		`'
+		'
 		language="html"
 	>
 		<h4>Text Alignment</h4>
@@ -66,9 +63,8 @@
 		pointer is over an element.
 	</p>
 
-	<!--  prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<div class="c-hand">Pointer cursor</div>
 			<!-- Or Clickable -->
 			<div class="clickable">Pointer cursor</div>
@@ -77,7 +73,7 @@
 			<div class="c-zoom-out">Zoom-out cursor</div>
 			<div class="c-not-allowed">Not-allowed cursor</div>
 			<div class="c-auto">Cursor based on the context.</div>
-		`'
+		'
 		language="html"
 	>
 		<div class="c-hand">Pointer cursor</div>

@@ -132,9 +132,8 @@
 			called, closes the popper.
 		</p>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 				<KtPopover trigger="hover">
 					<KtButton label="Close with Cancel Button" />
 					<template #content="{ close }">
@@ -143,16 +142,14 @@
 						<KtButton label="Save" type="primary" />
 					</template>
 				</KtPopover>
-				`'
+			'
 			language="vue-html"
 		>
 			<KtPopover class="mt-4 ml-4" trigger="hover">
 				<template #default="{ showPopover }">
 					<KtButton
 						:label="
-							showPopover
-								? 'Close with Cancel Button'
-								: 'Hover to open Popover'
+							showPopover ? 'Close with Cancel Button' : 'Hover to open Popover'
 						"
 					/>
 				</template>
@@ -170,9 +167,8 @@
 			trigger element will not have any effect
 		</p>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 				<KtPopover class="mb-4" :isDisabled="isPopoverDisabled"; trigger="hover">
 					<a>Hover Me</a>
 					<template #content>
@@ -183,7 +179,7 @@
 				<KtFieldToggle v-model:value="isPopoverDisabled" isOptional>
 					Is Popover disabled
 				</KtFieldToggle>
-			`'
+			'
 			language="vue-html"
 		>
 			<KtPopover class="mb-4" :isDisabled="isPopoverDisabled" trigger="hover">
@@ -252,7 +248,7 @@ export default defineComponent({
 				isSelected: false,
 				label: 'User',
 				onClick: () => {
-					info({ text: 'clicked' })
+					info({ text: 'clicked User Option' })
 				},
 			},
 			/**

@@ -1,8 +1,8 @@
-import md from 'unplugin-vue-markdown/vite'
-import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
-import vike from 'vike/plugin'
 import Shiki from '@shikijs/markdown-it'
+import vue from '@vitejs/plugin-vue'
+import md from 'unplugin-vue-markdown/vite'
+import vike from 'vike/plugin'
+import { defineConfig } from 'vite'
 
 import markdownInVue from './plugins/vite-markdown-plugin'
 

@@ -15,7 +15,7 @@
 	</MarkdownBlock>
 
 	<CodePreview
-		:code="`
+		code="
 			/* set a css custom property */
 			--text-01: #000;
 			--background-01: #f5f5f5;
@@ -25,7 +25,7 @@
 				color: var(--text-01);
 				background-color: var(--background-01);
 			}
-		`"
+		"
 		language="css"
 	/>
 </template>
@@ -37,7 +37,7 @@ import CodePreview from '~/components/CodePreview.vue'
 export default defineComponent({
 	name: 'DocumenationPageFoundationsColorsIntroduction',
 	components: {
-		CodePreview
+		CodePreview,
 	},
 })
 </script>

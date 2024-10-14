@@ -207,7 +207,7 @@ export default defineComponent({
 				}),
 			})),
 			onConfirm: (newVal: Kotti.FieldInlineEdit.Events.Confirm) => {
-				success({ text: newVal ?? '' })
+				success({ text: JSON.stringify(newVal, undefined, 2) })
 			},
 			preventConfirmationOptions: ref(
 				Object.entries(Kotti.FieldInlineEdit.ConfirmationValidation).map(

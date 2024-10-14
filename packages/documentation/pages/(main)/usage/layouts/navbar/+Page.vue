@@ -130,7 +130,7 @@ quickLinksData: [{
 </template>
 
 <script lang="ts">
-import { KtNavbar } from '@3yourmind/kotti-ui'
+import { KtButton, KtNavbar } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -139,6 +139,7 @@ export default defineComponent({
 	name: 'DocumentationPageUsageLayoutsNavbar',
 	components: {
 		ComponentInfo,
+		KtButton,
 	},
 	setup() {
 		return {

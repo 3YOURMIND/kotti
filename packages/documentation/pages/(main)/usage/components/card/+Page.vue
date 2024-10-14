@@ -4,9 +4,8 @@
 
 		<h2>Standard Usage</h2>
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
+			code='
 			<KtCard imgUrl="https://picsum.photos/900/300">
 				<template #card-header>
 					<h2>Lorem Ipsum</h2>
@@ -18,13 +17,10 @@
 					</p>
 				</template>
 			</KtCard>
-		`'
+		'
 			language="vue-html"
 		>
-			<KtCard
-				v-bind="{ imgPosition }"
-				imgUrl="https://picsum.photos/900/300"
-			>
+			<KtCard v-bind="{ imgPosition }" imgUrl="https://picsum.photos/900/300">
 				<template #card-header>
 					<h2>Lorem Ipsum</h2>
 				</template>
@@ -38,25 +34,24 @@
 		</CodePreview>
 		<br />
 
-		<!-- prettier-ignore -->
 		<CodePreview
-			:code='`
-			<KtCard
-				imgUrl="https://picsum.photos/900/300"
-				primaryActionLabel="Confirm"
-				secondaryActionLabel="Cancel"
-			>
-				<template #card-header>
-					<h2>Lorem Ipsum</h2>
-				</template>
-				<template #card-body>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-						consequat nisl at nisl condimentum vehicula.
-					</p>
-				</template>
-			</KtCard>
-		`'
+			code='
+				<KtCard
+					imgUrl="https://picsum.photos/900/300"
+					primaryActionLabel="Confirm"
+					secondaryActionLabel="Cancel"
+				>
+					<template #card-header>
+						<h2>Lorem Ipsum</h2>
+					</template>
+					<template #card-body>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+							consequat nisl at nisl condimentum vehicula.
+						</p>
+					</template>
+				</KtCard>
+			'
 			language="vue-html"
 		>
 			<KtCard

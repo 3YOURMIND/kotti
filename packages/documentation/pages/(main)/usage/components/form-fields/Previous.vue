@@ -48,6 +48,7 @@ import {
 	generateComponentCode,
 	isComponentName,
 } from '../../../utilities/pages'
+import { success } from '~/utilities/toaster'
 
 const LOCALSTORAGE_SAVED_COMPONENTS_KEY =
 	'kotti-documentation-form-fields-saved-components'

@@ -25,9 +25,8 @@
 		You can also customize the width of drawer by setting both `defaultWidth` and `expandWidth`. If only one values is set, this will not work
 	</MarkdownBlock>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<!-- default width drawer -->
 			<KtDrawer> ... </KtDrawer>
 
@@ -36,14 +35,14 @@
 
 			<!-- Customize width drawer -->
 			<KtDrawer defaultWidth="400px" expandWidth="600px"> ... </KtDrawer>
-		`'
+		'
 		language="vue-html"
 	>
 		<KtButton
-			type="primary"
 			class="mr-16px"
-			@click="showDefaultWidthDrawer = true"
 			label="Show Default Size Drawer"
+			type="primary"
+			@click="showDefaultWidthDrawer = true"
 		/>
 		<KtButton
 			type="primary"
@@ -83,9 +82,9 @@
 			</template>
 			<template #drawer-footer>
 				<KtButton
-					@click="showWideDrawer = false"
 					class="w-100"
 					label="Close Drawer"
+					@click="showWideDrawer = false"
 				/>
 			</template>
 		</KtDrawer>
@@ -103,9 +102,9 @@
 			</template>
 			<template #drawer-footer>
 				<KtButton
-					@click="showCustomWidthDrawer = false"
 					class="w-100"
 					label="Close Drawer"
+					@click="showCustomWidthDrawer = false"
 				/>
 			</template>
 		</KtDrawer>
@@ -118,9 +117,8 @@
 		from accidentally closing the drawer by clicking outside of the drawer.
 	</p>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<KtButton
 				type="primary"
 				class="mr-16px"
@@ -146,7 +144,7 @@
 					/>
 				</template>
 			</KtDrawer>
-		`'
+		'
 		language="vue-html"
 	>
 		<KtButton

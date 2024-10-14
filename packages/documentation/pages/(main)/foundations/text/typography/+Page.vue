@@ -21,19 +21,18 @@
 		| **H3 Section Header with actions**<br/>Text button for actions.                         | —                                                                      | —                                                                       |
 	</MarkdownBlock>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
-	<h1>H1 Page Header</h1>
-	<h2>H2 Subpage Header</h2>
-	<h3>H3 Section Header</h3>
-	<KtHeading
-		actionText="Actions"
-		icon="plus"
-		text="H3 Section Header"
-		type="action"
-	/>
-	`'
+		code='
+			<h1>H1 Page Header</h1>
+			<h2>H2 Subpage Header</h2>
+			<h3>H3 Section Header</h3>
+			<KtHeading
+				actionText="Actions"
+				icon="plus"
+				text="H3 Section Header"
+				type="action"
+			/>
+		'
 		language="vue-html"
 	>
 		<h1>H1 Page Header</h1>
@@ -50,9 +49,9 @@
 
 	<div class="mb-8px">
 		<KtBanner
-			message="Using Header Component for H3"
-			icon="circle_attention"
 			actionText="View"
+			icon="circle_attention"
+			message="Using Header Component for H3"
 			@click="gotoHeadingPage"
 		/>
 	</div>
@@ -73,9 +72,8 @@
 
 </MarkdownBlock>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<div class="label-value">
 				<label>Label</label>
 				<div class="default">Default Value</div>
@@ -95,7 +93,7 @@
 				<div class="default">Bismarckstr. 10-12, Berlin</div>
 				<div class="action"><i class="yoco">edit</i></div>
 			</div>
-		`'
+		'
 		language="html"
 	>
 		<div class="label-value">
@@ -132,24 +130,29 @@
 
 </MarkdownBlock>
 
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code="
 			<p>Lorem ipsum dolor sit amet, ....</p>
 			<p>Maecenas molestie hendrerit lectus, ....</p>
-		`'
+		"
 		language="html"
 	>
 		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean massa nibh, fermentum et facilisis sit amet, ullamcorper lobortis metus.
-			Maecenas finibus ante orci, quis efficitur orci sagittis eget. Nulla ut felis cursus, mollis eros nec, ultricies sem.
-			Donec tellus ligula, faucibus sed facilisis sit amet, luctus finibus nisi. Nulla condimentum urna in laoreet fermentum.	Donec tellus ligula, faucibus sed facilisis sit amet, luctus finibus nisi. Nulla condimentum urna in laoreet fermentum.
-			Donec leo mi, consectetur a sem id, fringilla fringilla ex. Mauris augue magna, pharetra eu dapibus a, finibus id purus.
-			In hac habitasse platea dictumst.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean massa
+			nibh, fermentum et facilisis sit amet, ullamcorper lobortis metus.
+			Maecenas finibus ante orci, quis efficitur orci sagittis eget. Nulla ut
+			felis cursus, mollis eros nec, ultricies sem. Donec tellus ligula,
+			faucibus sed facilisis sit amet, luctus finibus nisi. Nulla condimentum
+			urna in laoreet fermentum. Donec tellus ligula, faucibus sed facilisis sit
+			amet, luctus finibus nisi. Nulla condimentum urna in laoreet fermentum.
+			Donec leo mi, consectetur a sem id, fringilla fringilla ex. Mauris augue
+			magna, pharetra eu dapibus a, finibus id purus. In hac habitasse platea
+			dictumst.
 		</p>
 		<p>
-			Maecenas molestie hendrerit lectus, quis pellentesque dolor tempus sit amet. Etiam sagittis consectetur bibendum.
-			Vestibulum sed consectetur nisi, ut vulputate est. Donec et ultricies nisl, ac accumsan arcu.
+			Maecenas molestie hendrerit lectus, quis pellentesque dolor tempus sit
+			amet. Etiam sagittis consectetur bibendum. Vestibulum sed consectetur
+			nisi, ut vulputate est. Donec et ultricies nisl, ac accumsan arcu.
 		</p>
 	</CodePreview>
 
