@@ -5,10 +5,7 @@ import { useForceUpdate } from '../kotti-field/hooks'
 
 import { DATE_FORMAT_REGEX, DATE_TIME_FORMAT_REGEX } from './constants'
 
-export const useSaveOnBlur = ({
-	mode,
-	save,
-}: {
+export const useSaveOnBlur = (options: {
 	mode: 'date' | 'date-time'
 	save(value: string | null): void
 }) => {
@@ -19,7 +16,7 @@ export const useSaveOnBlur = ({
 	const formatString = {
 		date: 'YYYY-MM-DD',
 		'date-time': 'YYYY-MM-DD HH:mm',
-	}[mode]
+	}[options.mode]
 
 	return {
 		forceUpdateKey,
@@ -30,23 +27,23 @@ export const useSaveOnBlur = ({
 				if (inputString.value === null) return
 
 				if (inputString.value === '') {
-					save(null)
+					options.save(null)
 					return
 				}
 
 				const date = dayjs(inputString.value)
 
 				if (DATE_FORMAT_REGEX.test(inputString.value) && date.isValid()) {
-					save(date.format(formatString))
+					options.save(date.format(formatString))
 					return
 				}
 
 				if (
-					mode === 'date-time' &&
+					options.mode === 'date-time' &&
 					DATE_TIME_FORMAT_REGEX.test(inputString.value) &&
 					date.isValid()
 				) {
-					save(date.format(formatString))
+					options.save(date.format(formatString))
 					return
 				}
 			} finally {
@@ -55,7 +52,7 @@ export const useSaveOnBlur = ({
 			}
 		},
 		onInput: (event: InputEvent) => {
-			inputString.value = (event.target as HTMLInputElement).value as string
+			inputString.value = (event.target as HTMLInputElement).value
 		},
 	}
 }

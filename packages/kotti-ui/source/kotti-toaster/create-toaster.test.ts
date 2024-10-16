@@ -56,7 +56,7 @@ describe('createToaster', () => {
 			expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
 		})
 
-		it('cannot abort an aborted toast', async () => {
+		it('cannot abort an aborted toast', () => {
 			const toaster = createToaster()
 
 			const toast = toaster.show({ duration: 1, text: 'test' })
@@ -70,7 +70,7 @@ describe('createToaster', () => {
 			}).toThrow()
 		})
 
-		it('cannot abort an already toasted toast', async () => {
+		it('cannot abort an already toasted toast', () => {
 			const toaster = createToaster({
 				animationFrame: createAnimationFrameMock(),
 			})

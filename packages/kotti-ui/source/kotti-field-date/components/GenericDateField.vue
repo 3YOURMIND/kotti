@@ -362,14 +362,14 @@ export default defineComponent({
 			},
 			placeholderLeft: computed(() =>
 				props.isRange
-					? (props.placeholder as [string | null, string | null])[0] ??
-						undefined
-					: props.placeholder ?? undefined,
+					? ((props.placeholder as [string | null, string | null])[0] ??
+						undefined)
+					: (props.placeholder ?? undefined),
 			),
 			placeholderRight: computed(() =>
 				props.isRange
-					? (props.placeholder as [string | null, string | null])[1] ??
-						undefined
+					? ((props.placeholder as [string | null, string | null])[1] ??
+						undefined)
 					: undefined,
 			),
 			vueDatePickerClasses: computed(() => ({

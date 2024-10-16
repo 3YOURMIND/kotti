@@ -317,13 +317,13 @@ export const useInput = (
 			// eslint-disable-next-line unicorn/prefer-query-selector
 			const inputEl = document.getElementById(fieldId)
 			if (!inputEl) throw new Error('wtf')
-			inputEl?.click()
+			inputEl.click()
 		},
 		focusInput: () => {
 			// eslint-disable-next-line unicorn/prefer-query-selector
 			const inputEl = document.getElementById(fieldId)
 			if (!inputEl) throw new Error('wtf 2')
-			inputEl?.focus()
+			inputEl.focus()
 		},
 	}
 }

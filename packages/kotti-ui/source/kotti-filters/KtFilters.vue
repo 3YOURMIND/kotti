@@ -112,9 +112,9 @@ export default defineComponent({
 
 		const searchColumn = computed(
 			() =>
-				(props.columns.find(
+				props.columns.find(
 					(column) => column.type === KottiFilters.FilterType.SEARCH,
-				) ?? null) as KottiFilters.Column.Search | null,
+				) ?? null,
 		)
 
 		const searchValue = computed<KottiFilters.InternalFilterSearch | null>(

@@ -80,7 +80,7 @@ export enum MetaDesignType {
 	FIGMA = 'FIGMA',
 }
 
-export type Meta<T> = {
+export type Meta<T = ZodSchema<unknown>> = {
 	addedVersion: string | null
 	componentFolder?: string
 	deprecated: {

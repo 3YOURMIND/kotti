@@ -7,7 +7,10 @@ import { DecimalSeparator } from './types/kotti'
  * Takes a Vue Component and assigns a meta object which
  * describes various properties of the component
  */
-export const attachMeta = <C extends Component, T>(
+export const attachMeta = <
+	C extends Component,
+	T extends Record<string, unknown>,
+>(
 	component: C,
 	meta: Kotti.Meta,
 	other?: T,

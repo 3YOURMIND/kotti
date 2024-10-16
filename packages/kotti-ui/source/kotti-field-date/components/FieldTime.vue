@@ -102,6 +102,7 @@ function scrollTo(time: TimeRecord, row: HTMLDivElement | null) {
 	if (!row) return
 
 	Object.entries(time).forEach(([type, value]: [string, number]) => {
+		// eslint-disable-next-line no-magic-numbers
 		const scrollToValue = Math.max(0, value - 3)
 
 		const container = row.querySelector(`[data-type="${type}"]`)
