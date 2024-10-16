@@ -59,9 +59,55 @@ export default defineComponent({
 	display: contents;
 }
 
+<<<<<<< HEAD
 .kt-toast > * {
 	box-shadow:
 		0 4px 6px 0 rgba(0 0 0 / 10%),
 		0 2px 4px 0 rgba(0 0 0 / 6%);
+=======
+	background-color: var(--ui-01);
+
+	border-radius: var(--border-radius);
+	/* border: 1px solid var(--gray-20); */
+	overflow: hidden;
+
+	filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03))
+		drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+
+	&__icon,
+	&__close {
+		.yoco {
+			font-size: var(--unit-6);
+			height: var(--unit-6);
+			width: var(--unit-6);
+		}
+	}
+
+	&__icon {
+		display: flex;
+
+		padding: var(--unit-2) var(--unit-2) var(--unit-2) var(--unit-4);
+	}
+
+	&__text {
+		flex: 1;
+		padding-block: var(--unit-2);
+	}
+
+	&__close {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		padding: var(--unit-2) var(--unit-4) var(--unit-2) var(--unit-2);
+
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--interactive-01);
+			color: #fff;
+		}
+	}
+>>>>>>> 4f75dff3d (wip: Make KtToaster Greater Again)
 }
 </style>

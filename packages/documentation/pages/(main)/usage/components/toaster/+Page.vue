@@ -148,7 +148,7 @@
 							icon: null,
 							backgroundColor: 'black',
 							darkColor: 'black',
-							lightColor: 'var(--gray-70)'
+							lightColor: 'var(--gray-70)',
 						}"
 					/>
 				</template>
@@ -174,7 +174,7 @@
 				</template>
 			</KtToaster>
 
-			<div style="display: flex; flex-wrap: wrap; gap: var(--unit-6);">
+			<div style="display: flex; flex-wrap: wrap; gap: var(--unit-6)">
 				<KtButton @click="defaultToast">default toast</KtButton>
 				<KtButton @click="errorToast">error toast</KtButton>
 				<KtButton @click="infoToast">info toast</KtButton>
