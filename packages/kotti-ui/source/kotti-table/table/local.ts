@@ -53,30 +53,6 @@ export function getNumericalSorter<T extends Record<string, unknown>>(
 	}
 }
 
-export function getDateSorter<T extends Record<string, unknown>>(
-	mapper: (data: T) => Date | null,
-	mode: SortMode,
-): (a: T, b: T) => SortInstruction {
-	const map = SORT_MAP[mode]
-
-	return function mappedDateSorter(a: T, b: T) {
-		const valueA = mapper(a)
-		const valueB = mapper(b)
-
-		// values are equal (nulls)
-		if (valueA === null && valueB === null) return map.A_IS_B
-
-		// always punish null
-		if (valueA === null) return map.A_IS_NULL
-		if (valueB === null) return map.B_IS_NULL
-
-		// values are equal (dates)
-		if (valueA <= valueB && valueB <= valueA) return map.A_IS_B
-
-		return valueA < valueB ? map.A_IS_SMALLER : map.B_IS_SMALLER
-	}
-}
-
 export function getTextSorter<T extends Record<string, unknown>>(
 	mapper: (data: T) => string | null,
 	mode: SortMode,

@@ -52,25 +52,7 @@ _For better performance in complex operations_, define a `rowKey` to index each 
 <div slot="style">
 
 ```html
-<table>
-	<thead>
-		<th>Name</th>
-		<th>Date</th>
-		<th>Address</th>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Tom</td>
-			<td>2016-05-03</td>
-			<td>No. 119, Grove St, Los Angeles</td>
-		</tr>
-		<tr>
-			<td>Jackson</td>
-			<td>2016-05-02</td>
-			<td>No. 89, Grove St, Los Angeles</td>
-		</tr>
-	</tbody>
-</table>
+Mach ma so
 ```
 
 </div>
