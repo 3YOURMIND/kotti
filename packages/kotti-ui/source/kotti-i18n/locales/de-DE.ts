@@ -133,6 +133,11 @@ export const deDE: KottiI18n.Messages = {
 		menuExpand: 'Menü einblenden',
 		quickLinksTitle: 'Schnellzugriff',
 	},
+	KtTable: {
+		no: 'Nein',
+		noItems: 'Keine Einträge',
+		yes: 'Ja',
+	},
 	KtValueLabel: {
 		notSet: 'Nicht festgelegt',
 	},

@@ -133,6 +133,11 @@ export const esES: KottiI18n.Messages = {
 		menuExpand: 'Expandir el menú',
 		quickLinksTitle: 'Enlaces rápidos',
 	},
+	KtTable: {
+		no: 'No',
+		noItems: 'No Data',
+		yes: 'Yes',
+	},
 	KtValueLabel: {
 		notSet: 'No Establecido',
 	},

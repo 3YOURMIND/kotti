@@ -2,7 +2,7 @@ import elementLocale from 'element-ui/lib/locale/index.js'
 import type { Ref, UnwrapRef } from 'vue'
 import { computed, inject, provide, reactive, watch } from 'vue'
 
-import { DecimalSeparator } from '../types/kotti'
+import { DecimalSeparator } from '../types/decimal-separator'
 
 import { KT_I18N_CONTEXT } from './constants'
 import { deDE } from './locales/de-DE'
@@ -13,12 +13,7 @@ import { jaJP } from './locales/ja-JP'
 import type { KottiI18n } from './types'
 import { fixDeepMerge } from './utilities'
 
-export const useI18nContext = (): {
-	currencyMap: KottiI18n.CurrencyMap
-	locale: KottiI18n.SupportedLanguages
-	messages: KottiI18n.Messages
-	numberFormat: KottiI18n.NumberFormat
-} => {
+export const useI18nContext = (): KottiI18n.ContextInternal => {
 	const context = inject<KottiI18n.Context | null>(KT_I18N_CONTEXT, null)
 
 	if (context === null)
