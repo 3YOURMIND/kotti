@@ -2,7 +2,7 @@ import elementLocale from 'element-ui/lib/locale/index.js'
 import type { Ref, UnwrapRef } from 'vue'
 import { computed, inject, provide, reactive, watch } from 'vue'
 
-import { DecimalSeparator } from '../types/kotti'
+import { DecimalSeparator } from '../types/decimal-separator'
 
 import { KT_I18N_CONTEXT } from './constants'
 import { deDE } from './locales/de-DE'

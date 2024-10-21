@@ -1,6 +1,6 @@
 import Big from 'big.js'
 
-import type { DecimalSeparator } from '../types/kotti'
+import type { DecimalSeparator } from '../types/decimal-separator'
 import { DECIMAL_SEPARATORS_CHARACTER_SET } from '../utilities'
 
 export const toNumber = <T extends string | null>(
