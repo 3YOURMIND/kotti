@@ -9,6 +9,10 @@
 2. **Table Row**: The row content uses `default text` style.
 3. **Table Hover Action Button**: The table rows can imply further functionality when they are hovered over.
 
+<ClientOnly>
+<KtTable />
+</ClientOnly>
+
 ## Basic
 
 In order to use the table, you need give `rows` and `columns` data to `KtTableLegacy` component.
