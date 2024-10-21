@@ -106,7 +106,6 @@ export module KottiTable {
 			expandedRows: Ref<Record<string, boolean>>
 			hiddenColumns: Ref<Set<COLUMN_ID>>
 			ordering: Ref<KottiTable.Ordering<COLUMN_ID>[]>
-			pagination: Ref<KottiTable.Pagination['state']>
 			selectedRows: Ref<RowSelectionState>
 		}
 	}
@@ -116,15 +115,4 @@ export module KottiTable {
 		noItems: string
 		yes: string
 	}
-
-	// FIXME: Either use me or move me into standard table.
-	export const paginationSchema = z.object({
-		rowCount: z.number().int().finite().min(0),
-		state: z.object({
-			pageIndex: z.number().int().finite().min(0),
-			pageSize: z.number().int().finite().gt(0),
-		}),
-		type: z.enum(['local', 'remote']),
-	})
-	export type Pagination = z.output<typeof paginationSchema>
 }

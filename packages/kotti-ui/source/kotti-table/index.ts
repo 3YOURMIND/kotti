@@ -2,16 +2,29 @@ import type { Kotti } from '../types'
 import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
+import KtStandardTableVue from './KtStandardTable.vue'
 import KtTableVue from './KtTable.vue'
+import { KottiStandardTable } from './standard-table/types'
 import { KottiTable } from './table/types'
 
+export { useKottiStandardTable } from './standard-table/hooks'
+export {
+	type KottiStandardTableStorage,
+	LocalStorageAdapter,
+	type StorageOperationContext,
+} from './standard-table/storage'
 export {
 	createColumnContext,
 	getCustomDisplay,
 	getDisplay,
 } from './table/column-helper'
 export { useKottiTable } from './table/hooks'
-export { getNumericalSorter, getTextSorter, useLocalSort } from './table/local'
+export {
+	getDateSorter,
+	getNumericalSorter,
+	getTextSorter,
+	useLocalSort,
+} from './table/local'
 
 const TABLE_META: Kotti.Meta = {
 	addedVersion: '8.2.0',
@@ -51,4 +64,40 @@ const TABLE_META: Kotti.Meta = {
 	},
 }
 
+const STANDARD_META: Kotti.Meta = {
+	addedVersion: '7.4.0',
+	deprecated: null,
+	designs: {
+		type: MetaDesignType.FIGMA,
+		url: 'https://www.figma.com/design/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=6305-10646&node-type=canvas&t=8lzEM5nlkrh8aUMF-0',
+	},
+	slots: {
+		'applied-filter-actions': {
+			description: 'slot next to the applied filters section',
+			scope: null,
+		},
+		'control-actions': {
+			description: 'slot next to the table controls section',
+			scope: null,
+		},
+		'header-actions': {
+			description: 'slot next to the table title',
+			scope: null,
+		},
+		table: {
+			description: 'slot to show custom content instead of the KtTable',
+			scope: null,
+		},
+	},
+	typeScript: {
+		namespace: 'Kotti.StandardTable',
+		schema: KottiStandardTable.propsSchema,
+	},
+}
+
 export const KtTable = attachMeta(makeInstallable(KtTableVue), TABLE_META)
+
+export const KtStandardTable = attachMeta(
+	makeInstallable(KtStandardTableVue),
+	STANDARD_META,
+)

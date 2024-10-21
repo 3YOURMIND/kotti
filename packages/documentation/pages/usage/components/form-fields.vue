@@ -1054,6 +1054,7 @@ const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
 	{ label: 'Key 1', value: 'value1' },
 	{ isDisabled: true, label: 'Key 3', value: 'value3' },
 	{ label: 'Key 7', value: 'value7' },
+	{ label: 'Key 10', value: 'value10' },
 	{ label: 'Key 4', value: 'value4' },
 	{ label: 'Key 9', value: 'value9' },
 	{ label: 'Key 6', value: 'value6' },
