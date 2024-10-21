@@ -23,7 +23,7 @@ _Update:_ The use of `key` is deprecated use `prop` instead of `key` when defini
 
 _For better performance in complex operations_, define a `rowKey` to index each row with.
 
-<CodePreview>
+<CodePreviewLegacy>
 
 <div slot="vue">
 
@@ -75,7 +75,7 @@ _For better performance in complex operations_, define a `rowKey` to index each 
 
 </div>
 
-</CodePreview>
+</CodePreviewLegacy>
 
 ## Declarative form
 
@@ -466,7 +466,7 @@ To sort remotly:
 > You must use `slot-scope` prop for the `actions` slot for it to be detected.
 > Update: shorthand for v-slot is used now, instead.
 
-<CodePreview vueSlotLabel="Actions Table" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Actions Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacy :rows="rows" :columns="columnsDefault">
 	<div slot="actions" slot-scope="{row, rowIndex}">
@@ -487,11 +487,11 @@ To sort remotly:
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
 _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](https://vuejs.org/v2/guide/components-slots.html)
 
-<CodePreview vueSlotLabel="v-slot syntax" styleSlotLabel="shorthand">
+<CodePreviewLegacy vueSlotLabel="v-slot syntax" styleSlotLabel="shorthand">
 <div slot="vue">
 
 ```html
@@ -514,13 +514,13 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
 ## Expandable
 
 `isExpandable` enables expandability of the row**s**, defined on `<KtTableLegacy/>`. You use the `slot="expand"` to define the template that shows on expansion.
 
-<CodePreview vueSlotLabel="Expandable Table" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacy :rows="rows" :columns="columnsDefault" isExpandable>
 <div slot="expand" slot-scope="{ row, rowIndex }">
@@ -542,13 +542,13 @@ _Update_: Preferably, since the above syntax is now deprecated, use [v-slot](htt
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
 The default behavior only allows you to expand one row at a time; expanding one row would trigger any currently-expanded rows to shrink back.
 
 If you want to allow for the expansion of multiple rows at a time, set the `expandMultiple` flag on `<KtTableLegacy />`, as well.
 
-<CodePreview vueSlotLabel="Expandable Table" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Expandable Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacy :rows="rows" :columns="columnsDefault" isExpandable expandMultiple>
 <div slot="expand" slot-scope="{ row, rowIndex }">
@@ -569,7 +569,7 @@ If you want to allow for the expansion of multiple rows at a time, set the `expa
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
 ## Custom Render
 
@@ -590,7 +590,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 - `renderHeader` &rarr; custom render fn, to render a custom element in the header of the column. Instead you can use, slot='header'
 - `renderCell` &rarr; custom render fn, to render a custom element in the cells of the column. Instead use a default slot.
 
-<CodePreview vueSlotLabel="Custom Render Table" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Custom Render Table" styleSlotLabel="html">
 <div slot="vue" >
 	<KtTableLegacy
 		:rows="rows"
@@ -632,7 +632,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
 ```jsx
 {
@@ -680,7 +680,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 }
 ```
 
-<CodePreview vueSlotLabel="Custom Loading" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Custom Loading" styleSlotLabel="html">
 <div slot="vue">
 	<KtTableLegacy
 		:rows="rows"
@@ -708,9 +708,9 @@ It is possible to customize parts (columns) of the table by passing your own ren
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
-<CodePreview vueSlotLabel="Empty Table" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Empty Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacy
 	:rows="[]"
@@ -737,7 +737,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
 ```js
 renderLoading() {
@@ -750,7 +750,7 @@ renderEmpty() {
 
 You can also use slots instead of render props. [`slot="loading"`, `slot="empty"`, `slot="header"`, `slot="default"`].
 
-<CodePreview vueSlotLabel="Loading Slot" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Loading Slot" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacy :rows="rows" :columns="columnsDefault" loading>
 	<div slot="loading">
@@ -768,9 +768,9 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
-<CodePreview vueSlotLabel="Empty Slot" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Empty Slot" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacy :rows="emptyRows" :columns="columnsDefault">
 	<div slot="empty">
@@ -791,9 +791,9 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
-<CodePreview vueSlotLabel="header/default slots" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="header/default slots" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacy :rows="rows">
 <KtTableLegacyColumn
@@ -839,7 +839,7 @@ You can also use slots instead of render props. [`slot="loading"`, `slot="empty"
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
 ### Provider/Consumer and Mixin
 
@@ -862,7 +862,7 @@ _Notes_:
 
 > There’s also the _deprecated_ `KtTableColumnsStateMixin`.
 
-<CodePreview vueSlotLabel="Consumer/Provider Table" styleSlotLabel="html">
+<CodePreviewLegacy vueSlotLabel="Consumer/Provider Table" styleSlotLabel="html">
 <div slot="vue">
 <KtTableLegacyProvider>
 	<div>
@@ -949,7 +949,7 @@ _Notes_:
 ```
 
 </div>
-</CodePreview>
+</CodePreviewLegacy>
 
 ```js
 {
@@ -1112,7 +1112,7 @@ import {
 } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
 
-import CodePreview from '~/components/CodePreview.vue'
+import CodePreviewLegacy from '~/components/CodePreviewLegacy.vue'
 import ComponentInfo from '~/components/ComponentInfo.vue'
 import { info } from '~/utilities/toaster'
 
@@ -1145,7 +1145,7 @@ const rows = [
 export default {
 	name: 'DocumentationPageUsageComponentsTable',
 	components: {
-		CodePreview,
+		CodePreviewLegacy,
 		ComponentInfo,
 		KtAvatar,
 		KtBanner,

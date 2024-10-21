@@ -12,8 +12,8 @@
 		"module": "ESNext",
 		"moduleResolution": "bundler",
 		"noUncheckedIndexedAccess": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
+		"noUnusedLocals": true, // FIXME: disable in development
+		"noUnusedParameters": true, // FIXME: disable in development
 		"outDir": "dist",
 		"paths": {
 			/**

@@ -1,5 +1,5 @@
 import type { KottiField } from '../kotti-field/types'
-import { DecimalSeparator } from '../types/kotti'
+import { DecimalSeparator } from '../types/decimal-separator'
 import { DECIMAL_SEPARATORS_CHARACTER_SET } from '../utilities'
 
 export const KOTTI_FIELD_NUMBER_SUPPORTS: KottiField.Supports = {

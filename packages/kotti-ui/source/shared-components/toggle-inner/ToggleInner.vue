@@ -20,7 +20,7 @@ import { computed, defineComponent, type PropType } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import type { KottiField } from '../../kotti-field/types'
-import { KottiFieldToggle } from '../types'
+import { KottiFieldToggle } from '../../kotti-field-toggle/types'
 
 import ToggleBox from './ToggleBox.vue'
 import ToggleSwitch from './ToggleSwitch.vue'
@@ -82,28 +82,6 @@ export default defineComponent({
 
 	input {
 		display: none;
-	}
-
-	&__svg {
-		flex-shrink: 0;
-
-		&--is-box {
-			// align checkbox with the center of the first line of the label
-			// (assumption: font-size comes from common parent element)
-			//  > starting point is upper end of the container (flex-start)
-			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
-			//  > (-8px) Put it up half the height of the checkbox height (16px)
-			transform: translateY(calc(0.75em - 8px));
-		}
-
-		&--is-switch {
-			// align switch with the center of the first line of the label
-			// (assumption: font-size comes from common parent element)
-			//  > starting point is upper end of the container (flex-start)
-			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
-			//  > (-10px) Put it up half the height of the switch height (20px)
-			transform: translateY(calc(0.75em - 10px));
-		}
 	}
 
 	&--is-disabled {
