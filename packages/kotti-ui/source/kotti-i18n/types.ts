@@ -9,6 +9,7 @@ import type { Shared as KottiFieldSelectShared } from '../kotti-field-select/typ
 import type { KottiFilters } from '../kotti-filters/types'
 import type { KottiFormSubmit } from '../kotti-form-submit/types'
 import type { KottiNavbar } from '../kotti-navbar/types'
+import type { KottiStandardTable } from '../kotti-table/standard-table/types'
 import type { KottiTable } from '../kotti-table/table/types'
 import type { KottiValueLabel } from '../kotti-value-label/types'
 import { DecimalSeparator } from '../types/decimal-separator'
@@ -52,6 +53,7 @@ export module KottiI18n {
 		KtFilters: KottiFilters.Translations
 		KtFormSubmit: KottiFormSubmit.Translations
 		KtNavbar: KottiNavbar.Translations
+		KtStandardTable: KottiStandardTable.Translations
 		KtTable: KottiTable.Translations
 		KtValueLabel: KottiValueLabel.Translations
 	}

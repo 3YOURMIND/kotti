@@ -83,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, h, ref, watch } from 'vue'
 
 import {
 	createColumnContext,
@@ -139,7 +139,7 @@ export default defineComponent({
 			'component' | 'expand' | 'link' | 'simple-event' | null
 		>(null)
 		const booleanDisplay = getDisplay({ mode: 'text', type: 'boolean' })
-		const dateDisplay = getDisplay({ type: 'date' })
+		const dateDisplay = getDisplay({ formatString: 'YYYY-MM-DD', type: 'date' })
 		const textDisplay = getDisplay({ type: 'text' })
 
 		const clickBehaviorValue = computed(() => {
@@ -250,20 +250,19 @@ export default defineComponent({
 			computed(() => ({
 				columns: [
 					createColumn({
-						// display: getCustomDisplay<TableRow>({
-						// 	align: 'left',
-						// 	disableCellClick: true,
-						// 	isNumeric: false,
-						// 	render: (value) => {
-						// 		return h('div', {}, [
-						// 			h('em', { style: { color: 'green' } }, value.id),
-						// 			` ${value.name} is `,
-						// 			h('b', {}, value.age),
-						// 		])
-						// 	},
-						// }),
-						display: getDisplay({ minimumDecimalPlaces: 1, type: 'numerical' }),
-						getData: (row) => row.age,
+						display: getCustomDisplay<TableRow>({
+							align: 'left',
+							disableCellClick: true,
+							isNumeric: false,
+							render: (value) => {
+								return h('div', {}, [
+									h('em', { style: { color: 'green' } }, value.id),
+									` ${value.name} is `,
+									h('b', {}, value.age),
+								])
+							},
+						}),
+						getData: (row) => row,
 						id: 'age',
 						isSortable: true,
 						label: 'age (click disabled)',
@@ -288,38 +287,34 @@ export default defineComponent({
 						isSortable: true,
 						label: 'Lifespan (click allowed)',
 					}),
-					...(booleanFlags.value.hasDragAndDrop
-						? [
-								createColumn({
-									display: textDisplay,
-									getData: (row) => row.name,
-									id: 'name',
-									isSortable: true,
-									label: 'Name',
-								}),
-								createColumn({
-									display: textDisplay,
-									getData: (row) => row.purpose,
-									id: 'purpose',
-									isSortable: true,
-									label: 'Primary Purpose',
-								}),
-								createColumn({
-									display: textDisplay,
-									getData: (row) => row.speed,
-									id: 'speed',
-									isSortable: true,
-									label: 'Speed',
-								}),
-								createColumn({
-									display: dateDisplay,
-									getData: (row) => new Date(row.someDate),
-									id: 'randomDate',
-									isSortable: true,
-									label: 'Random Date',
-								}),
-							]
-						: []),
+					createColumn({
+						display: textDisplay,
+						getData: (row) => row.name,
+						id: 'name',
+						isSortable: true,
+						label: 'Name',
+					}),
+					createColumn({
+						display: textDisplay,
+						getData: (row) => row.purpose,
+						id: 'purpose',
+						isSortable: true,
+						label: 'Primary Purpose',
+					}),
+					createColumn({
+						display: textDisplay,
+						getData: (row) => row.speed,
+						id: 'speed',
+						isSortable: true,
+						label: 'Speed',
+					}),
+					createColumn({
+						display: dateDisplay,
+						getData: (row) => new Date(row.someDate),
+						id: 'randomDate',
+						isSortable: true,
+						label: 'Random Date',
+					}),
 					createColumn({
 						display: textDisplay,
 						getData: (row) => row.bestSkill,
