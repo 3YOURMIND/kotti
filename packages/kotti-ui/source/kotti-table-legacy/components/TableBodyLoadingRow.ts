@@ -23,7 +23,7 @@ export const TableBodyLoadingRow: any = defineComponent({
 					'td',
 					{
 						attrs: { colSpan: colSpan.value },
-						class: 'kt-table__loader',
+						class: 'kt-table-legacy__loader',
 					},
 					[render.value(h)],
 				),

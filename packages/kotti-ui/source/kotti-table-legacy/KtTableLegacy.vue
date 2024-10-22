@@ -14,7 +14,7 @@
 				isPropDefined
 			/>
 		</div>
-		<table class="kt-table">
+		<table class="kt-table-legacy">
 			<TableHeader />
 			<TableBody />
 		</table>
@@ -330,7 +330,7 @@ export default {
 	},
 	beforeCreate() {
 		// @ts-expect-error tableId will exist at runtime
-		this.tableId = `kt-table_${String(tableIdSeed)}`
+		this.tableId = `kt-table-legacy_${String(tableIdSeed)}`
 		tableIdSeed += 1
 	},
 	mounted() {
@@ -378,7 +378,7 @@ export default {
 @import './style/form-checkbox.scss';
 @import '../kotti-style/_variables.scss';
 
-table.kt-table {
+table.kt-table-legacy {
 	position: relative;
 	width: 100%;
 	hyphens: auto;
@@ -386,7 +386,7 @@ table.kt-table {
 	border-collapse: collapse;
 }
 
-:deep(table.kt-table tr) {
+:deep(table.kt-table-legacy tr) {
 	position: relative;
 	margin: 0;
 
@@ -412,7 +412,7 @@ table.kt-table {
 	}
 }
 
-:deep(table.kt-table td) {
+:deep(table.kt-table-legacy td) {
 	position: relative;
 	padding: var(--unit-2) var(--unit-1);
 	line-height: 1.2rem;
@@ -424,9 +424,9 @@ table.kt-table {
 	}
 }
 
-:deep(table.kt-table) {
+:deep(table.kt-table-legacy) {
 	.expand-toggle,
-	.kt-table__quick-sort-control {
+	.kt-table-legacy__quick-sort-control {
 		i {
 			margin: 0 0.2rem;
 			font-size: 1rem !important;
@@ -439,7 +439,7 @@ table.kt-table {
 	}
 }
 
-:deep(table.kt-table .table-actions) {
+:deep(table.kt-table-legacy .table-actions) {
 	position: absolute;
 	top: 50%;
 	right: 0.8rem;
@@ -472,7 +472,7 @@ table.kt-table {
 	}
 }
 
-:deep(table.kt-table .form-group) {
+:deep(table.kt-table-legacy .form-group) {
 	width: 32px;
 	line-height: 0;
 
@@ -481,16 +481,16 @@ table.kt-table {
 	}
 }
 
-:deep(.kt-table .kt-table__no-row) {
+:deep(.kt-table-legacy .kt-table-legacy__no-row) {
 	color: $lightgray-500;
 	text-align: center;
 }
 
-:deep(.kt-table .kt-table__loader) {
+:deep(.kt-table-legacy .kt-table-legacy__loader) {
 	text-align: center;
 }
 
-:deep(.kt-table .loading) {
+:deep(.kt-table-legacy .loading) {
 	margin: 1.6rem 0;
 	text-align: center;
 }

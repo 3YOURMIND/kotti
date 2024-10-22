@@ -2,7 +2,10 @@
 	<thead>
 		<tr :class="tableHeaderClass">
 			<th v-if="isExpandable" class="th-expandable" />
-			<th v-if="isSelectable" class="th-selectable kt-table__checkbox-col">
+			<th
+				v-if="isSelectable"
+				class="th-selectable kt-table-legacy__checkbox-col"
+			>
 				<div class="form-group" @click="handleSelectAll">
 					<label class="form-checkbox">
 						<input :checked="isAllSelected" type="checkbox" />
@@ -32,9 +35,9 @@
 				<TableHeaderCell v-bind="{ column, columnIndex }" />
 				<div
 					v-if="useQuickSortControl && (canSort(column) || isSorted(column))"
-					class="kt-table__controls"
+					class="kt-table-legacy__controls"
 				>
-					<div class="kt-table__quick-sort-control clickable">
+					<div class="kt-table-legacy__quick-sort-control clickable">
 						<i :class="{ active: isSortedByAsc(column), yoco: true }">
 							triangle_up
 						</i>
@@ -159,7 +162,7 @@ export default defineComponent({
 	background-color: var(--ui-01);
 }
 
-.kt-table__checkbox-col .form-group {
+.kt-table-legacy__checkbox-col .form-group {
 	position: relative;
 }
 
@@ -189,7 +192,7 @@ th.dragging {
 	cursor: move;
 }
 
-th.sortable .kt-table__controls {
+th.sortable .kt-table-legacy__controls {
 	position: absolute;
 	top: 0;
 	right: 0.1rem;
@@ -199,27 +202,27 @@ th.sortable .kt-table__controls {
 	hyphens: none;
 }
 
-th.sortable:hover .kt-table__controls,
-th.sorted .kt-table__controls {
+th.sortable:hover .kt-table-legacy__controls,
+th.sorted .kt-table-legacy__controls {
 	display: flex;
 	align-items: center;
 }
 
-th.sortable:hover .kt-table__quick-sort-control,
-th.sorted .kt-table__quick-sort-control {
+th.sortable:hover .kt-table-legacy__quick-sort-control,
+th.sorted .kt-table-legacy__quick-sort-control {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 0.5rem;
 }
 
-.kt-table__quick-sort-control .yoco {
+.kt-table-legacy__quick-sort-control .yoco {
 	height: 0.5rem;
 	line-height: 0.5;
 	color: var(--text-03);
 }
 
-.kt-table__quick-sort-control .yoco.active {
+.kt-table-legacy__quick-sort-control .yoco.active {
 	color: var(--interactive-01);
 }
 </style>

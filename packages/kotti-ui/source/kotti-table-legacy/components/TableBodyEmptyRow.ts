@@ -21,10 +21,14 @@ export const TableBodyEmptyRow = defineComponent({
 				h(
 					'td',
 					{
-						class: 'kt-table__no-row',
+						class: 'kt-table-legacy__no-row',
 						domProps: { colSpan: colSpan.value },
 					},
-					[h('span', { class: 'kt-table__empty-text' }, [render.value(h)])],
+					[
+						h('span', { class: 'kt-table-legacy__empty-text' }, [
+							render.value(h),
+						]),
+					],
 				),
 			])
 	},
