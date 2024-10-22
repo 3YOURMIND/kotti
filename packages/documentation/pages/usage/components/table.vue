@@ -1,7 +1,9 @@
 <template lang="md">
 ## Seriöses Example
 
+<div class="smol">
 <KtTable id="example" />
+</div>
 </template>
 
 <script lang="ts">
@@ -124,3 +126,12 @@ export default defineComponent({
 	},
 })
 </script>
+
+<style scoped>
+.smol {
+	border: 1px solid gray;
+	margin: 5px;
+
+	width: 40%;
+}
+</style>

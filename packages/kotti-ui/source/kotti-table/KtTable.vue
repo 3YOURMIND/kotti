@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div :class="tableClasses">
 		<table>
 			<thead>
 				<tr
@@ -71,6 +71,10 @@ export default defineComponent({
 			throw new Error(`KtTable: could not find context for “${props.id}”`)
 
 		return {
+			tableClasses: computed(() => ({
+				'kt-table': true,
+				'kt-table--is-scrollable': !props.isNotScrollable,
+			})),
 			table: computed(() => tableContext.value.internal.table.value),
 		}
 	},
@@ -79,5 +83,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .kt-table {
+	&--is-scrollable {
+		overflow-x: scroll;
+	}
 }
 </style>
