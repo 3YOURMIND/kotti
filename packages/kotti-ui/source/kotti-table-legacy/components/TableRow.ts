@@ -163,7 +163,7 @@ export const TableRow = defineComponent({
 						h(
 							'td',
 							{
-								class: 'td-selectable kt-table__checkbox-col',
+								class: 'td-selectable kt-table-legacy__checkbox-col',
 								on: {
 									click: ($event: MouseEvent) => {
 										$event.stopPropagation()

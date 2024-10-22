@@ -33,7 +33,7 @@ export const KtTableLegacyProvider: any = {
 		},
 	},
 	beforeCreate(): void {
-		this.tableId = `kt-table-provider_${tableProviderIdSeed}`
+		this.tableId = `kt-table-legacy-provider_${tableProviderIdSeed}`
 		tableProviderIdSeed += 1
 	},
 	methods: {

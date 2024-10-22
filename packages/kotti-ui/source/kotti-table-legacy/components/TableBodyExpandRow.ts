@@ -36,7 +36,7 @@ export const TableBodyExpandRow = defineComponent({
 					'td',
 					{
 						attrs: { colSpan: colSpan.value },
-						class: 'kt-table__expanded-cell',
+						class: 'kt-table-legacy__expanded-cell',
 					},
 					[
 						render.value(h, {

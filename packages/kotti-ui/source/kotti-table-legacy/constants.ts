@@ -85,7 +85,7 @@ export const KT_TABLE: InjectionKey<KottiTableContext> =
 export const KT_STORE: InjectionKey<TableStore> =
 	'KT_STORE' as unknown as symbol
 export const KT_TABLE_STATE_PROVIDER = 'KT_TABLE_STATE_PROVIDER'
-export const COLUMN_TYPE = Symbol('kt-table-column')
+export const COLUMN_TYPE = Symbol('kt-table-legacy-column')
 
 export const DEFAULT_DISABLE_ROW = (): boolean => false
 

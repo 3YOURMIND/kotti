@@ -4,7 +4,7 @@
  * @deprecated this was moved-over from the old KtCheckbox.vue so
  * that it can be removed without having to touch the table
  */
-table.kt-table :deep(.form-checkbox) {
+table.kt-table-legacy :deep(.form-checkbox) {
 	position: relative;
 	display: inline-block;
 	min-height: 1.2rem;

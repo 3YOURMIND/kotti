@@ -25,8 +25,8 @@ export const TableHeaderCell = defineComponent({
 						'data-prop': props.column.prop,
 					},
 					class: [
-						'kt-table__cell',
-						'kt-table__header-cell',
+						'kt-table-legacy__cell',
+						'kt-table-legacy__header-cell',
 						props.column.headerCellClass,
 					],
 				},

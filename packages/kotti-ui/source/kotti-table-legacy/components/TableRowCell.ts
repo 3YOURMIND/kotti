@@ -42,7 +42,7 @@ export const TableRowCell = defineComponent({
 			props.column.tdClass,
 		])
 		const _cellClass = computed(() => [
-			'kt-table__cell',
+			'kt-table-legacy__cell',
 			props.column.cellClass,
 		])
 		const _tdStyles = computed(() => {
