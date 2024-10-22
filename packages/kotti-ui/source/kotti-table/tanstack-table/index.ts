@@ -14,9 +14,8 @@ import {
 	TableOptionsResolved,
 	TableOptions,
 	createTable,
+	Table,
 } from '@tanstack/table-core'
-
-type MaybeRef<T> = Ref<T> | T
 
 // Such a silly hack to not get a new element
 const createTextVNode = (text: string) => h('span', text).children?.[0]
@@ -73,8 +72,8 @@ export const FlexRender = defineComponent({
  * ```
  */
 export const useVueTable = <TData extends RowData>(
-	options: MaybeRef<TableOptions<TData>>,
-) => {
+	options: Ref<TableOptions<TData>>,
+): Ref<Table<TData>> => {
 	const optionsRef = computed(() => unref(options))
 	const resolvedOptions: TableOptionsResolved<TData> = {
 		state: {}, // Dummy state

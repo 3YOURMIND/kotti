@@ -9,12 +9,6 @@
 2. **Table Row**: The row content uses `default text` style.
 3. **Table Hover Action Button**: The table rows can imply further functionality when they are hovered over.
 
-<ClientOnly>
-<KtTable />
-</ClientOnly>
-
-<CodePreview code="henlo"> hello </CodePreview>
-
 ## Basic
 
 In order to use the table, you need give `rows` and `columns` data to `KtTableLegacy` component.
@@ -58,25 +52,7 @@ _For better performance in complex operations_, define a `rowKey` to index each 
 <div slot="style">
 
 ```html
-<table>
-	<thead>
-		<th>Name</th>
-		<th>Date</th>
-		<th>Address</th>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Tom</td>
-			<td>2016-05-03</td>
-			<td>No. 119, Grove St, Los Angeles</td>
-		</tr>
-		<tr>
-			<td>Jackson</td>
-			<td>2016-05-02</td>
-			<td>No. 89, Grove St, Los Angeles</td>
-		</tr>
-	</tbody>
-</table>
+Mach ma so
 ```
 
 </div>
@@ -1120,7 +1096,6 @@ import { Kotti } from '@3yourmind/kotti-ui'
 
 import CodePreviewLegacy from '~/components/CodePreviewLegacy.vue'
 import ComponentInfo from '~/components/ComponentInfo.vue'
-import CodePreview from '~/components/CodePreview.vue'
 
 const ADDRESS_DOT_LINE = 'address.line'
 
@@ -1152,7 +1127,6 @@ export default {
 	name: 'DocumentationPageUsageComponentsTable',
 	components: {
 		CodePreviewLegacy,
-		CodePreview,
 		ComponentInfo,
 		KtAvatar,
 		KtBanner,
