@@ -1,5 +1,5 @@
-import { Ref } from 'vue'
-import { Table } from '@tanstack/table-core'
+import type { Table } from '@tanstack/table-core'
+import type { Ref } from 'vue'
 
 import { type AnyRow } from './types'
 

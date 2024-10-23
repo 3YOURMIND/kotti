@@ -13,8 +13,8 @@
 					>
 						<FlexRender
 							v-if="!header.isPlaceholder"
-							:render="header.column.columnDef.header"
 							:props="{ ...header.getContext() }"
+							:render="header.column.columnDef.header"
 						/>
 					</th>
 				</tr>
@@ -23,8 +23,8 @@
 				<tr v-for="row in table.getRowModel().rows" :key="row.id">
 					<td v-for="cell in row.getVisibleCells()" :key="cell.id">
 						<FlexRender
-							:render="cell.column.columnDef.cell"
 							:props="{ ...cell.getContext() }"
+							:render="cell.column.columnDef.cell"
 						/>
 					</td>
 				</tr>
@@ -53,17 +53,21 @@
 
 <script lang="ts">
 import { computed, defineComponent, inject } from 'vue'
-import { FlexRender } from './tanstack-table'
-import { KottiTable, type AnyRow } from './types'
-import { type TableContext, getTableContextKey } from './context'
+
 import { makeProps } from '../make-props'
+
+import { getTableContextKey, type TableContext } from './context'
+import { FlexRender } from './tanstack-table'
+import { type AnyRow, KottiTable } from './types'
 
 export default defineComponent({
 	name: 'KtTable',
 	components: { FlexRender },
 	props: makeProps(KottiTable.propsSchema),
 	setup(props) {
+		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = inject<TableContext<AnyRow>>(
+			// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 			getTableContextKey(props.id),
 		)
 

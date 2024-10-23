@@ -1,13 +1,12 @@
 <template lang="md">
 ## Seriöses Example
 
-<div class="smol">
 <KtTable id="example" />
-</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
+
 import { KtTable, useKottiTable } from '@3yourmind/kotti-ui'
 
 // | **Item**           | **Primary Purpose**     | **Speed**             | **Best Skill**        | **Worst Enemy**      | **Preferred Sound**  | **Lifespan**         | **Cuteness Level**   |
@@ -24,13 +23,14 @@ export default defineComponent({
 	},
 	setup() {
 		type TableRow = {
+			bestSkill: string
+			id: number
+			lifespan: string
 			name: string
+			preferredSound: string
 			purpose: string
 			speed: string
-			bestSkill: string
 			worstEnemy: string
-			preferredSound: string
-			lifespan: string
 		}
 
 		// const exampleRow: TableRow = {
@@ -40,6 +40,8 @@ export default defineComponent({
 		//   tungsten: "Being immortal and holy",
 		//   coffee: "Keeping people awake",
 		// }
+
+		const selectedRows = ref<Record<string, boolean>>({})
 
 		const table = useKottiTable<TableRow>({
 			columns: computed(() => [
@@ -62,6 +64,7 @@ export default defineComponent({
 					getData: (row) => row.bestSkill,
 					id: 'bestSkill',
 					label: 'Best Skill',
+					renderSlot: 'bestSkillSlot',
 				},
 				{
 					getData: (row) => row.worstEnemy,
@@ -81,46 +84,58 @@ export default defineComponent({
 			]),
 			data: computed(() => [
 				{
+					bestSkill: 'Perfect naps',
+					id: 1,
+					lifespan: '9 lives',
 					name: 'Cats',
+					preferredSound: 'Purring',
 					purpose: 'Ignoring humans',
 					speed: 'Slow and stealthy',
-					bestSkill: 'Perfect naps',
 					worstEnemy: 'Vacuum cleaners',
-					preferredSound: 'Purring',
-					lifespan: '9 lives',
 				},
 				{
+					bestSkill: 'Quantum jumps',
+					id: 2,
+					lifespan: 'Until it crashes',
 					name: 'Spaceships',
+					preferredSound: 'Engine roar',
 					purpose: 'Exploring the universe',
 					speed: 'Faster than light',
-					bestSkill: 'Quantum jumps',
 					worstEnemy: 'Black holes',
-					preferredSound: 'Engine roar',
-					lifespan: 'Until it crashes',
 				},
 				{
+					bestSkill: 'Outlasting everything',
+					id: 3,
+					lifespan: 'Infinite (obviously)',
 					name: 'Tungsten',
+					preferredSound: 'Eternal silence',
 					purpose: 'Being immortal and holy',
 					speed: 'Absolutely unmoving',
-					bestSkill: 'Outlasting everything',
 					worstEnemy: 'Rust (blasphemy!)',
-					preferredSound: 'Eternal silence',
-					lifespan: 'Infinite (obviously)',
 				},
 				{
+					bestSkill: 'Fueling all-nighters',
+					id: 4,
+					lifespan: '10 minutes per cup',
 					name: 'Coffee',
+					preferredSound: 'Slurping',
 					purpose: 'Keeping people awake',
 					speed: 'Varies by caffeine level',
-					bestSkill: 'Fueling all-nighters',
 					worstEnemy: 'Decaf',
-					preferredSound: 'Slurping',
-					lifespan: '10 minutes per cup',
 				},
 			]),
 			id: 'example',
+			selection: {
+				getRowId: (row) => String(row.id),
+				onSelectionUpdate: (updated) => {
+					selectedRows.value = updated
+				},
+				selectedRows: selectedRows.value,
+			},
 		})
 
 		return {
+			selectedRows,
 			table,
 		}
 	},
