@@ -20,7 +20,7 @@ import { computed, defineComponent, type PropType } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import type { KottiField } from '../../kotti-field/types'
-import { KottiFieldToggle } from '../types'
+import { KottiFieldToggle } from '../../kotti-field-toggle/types'
 
 import ToggleBox from './ToggleBox.vue'
 import ToggleSwitch from './ToggleSwitch.vue'

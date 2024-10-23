@@ -2,12 +2,13 @@
 ## Seriöses Example
 
 <KtTable id="example" />
+<KtButton label="empty selection" @click="emptySelection" />
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 
-import { KtTable, useKottiTable } from '@3yourmind/kotti-ui'
+import { KtButton, KtTable, useKottiTable } from '@3yourmind/kotti-ui'
 
 // | **Item**           | **Primary Purpose**     | **Speed**             | **Best Skill**        | **Worst Enemy**      | **Preferred Sound**  | **Lifespan**         | **Cuteness Level**   |
 // |--------------------|-------------------------|-----------------------|-----------------------|----------------------|----------------------|----------------------|----------------------|
@@ -19,10 +20,12 @@ import { KtTable, useKottiTable } from '@3yourmind/kotti-ui'
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsTable',
 	components: {
+		KtButton,
 		KtTable,
 	},
 	setup() {
 		type TableRow = {
+			age: number
 			bestSkill: string
 			id: number
 			lifespan: string
@@ -46,37 +49,50 @@ export default defineComponent({
 		const table = useKottiTable<TableRow>({
 			columns: computed(() => [
 				{
+					dataType: 'INTEGER',
+					getData: (row) => row.age,
+					id: 'age',
+					label: 'age',
+				},
+				{
+					dataType: 'TEXT',
 					getData: (row) => row.name,
 					id: 'name',
 					label: 'Name',
 				},
 				{
+					dataType: 'TEXT',
 					getData: (row) => row.purpose,
 					id: 'purpose',
 					label: 'Primary Purpose',
 				},
 				{
+					dataType: 'TEXT',
 					getData: (row) => row.speed,
 					id: 'speed',
 					label: 'Speed',
 				},
 				{
+					dataType: 'TEXT',
 					getData: (row) => row.bestSkill,
 					id: 'bestSkill',
 					label: 'Best Skill',
 					renderSlot: 'bestSkillSlot',
 				},
 				{
+					dataType: 'NUMERICAL',
 					getData: (row) => row.worstEnemy,
 					id: 'worstEnemy',
 					label: 'Worst Enemy',
 				},
 				{
+					dataType: 'TEXT',
 					getData: (row) => row.preferredSound,
 					id: 'preferredSound',
 					label: 'Preferred Sound',
 				},
 				{
+					dataType: 'TEXT',
 					getData: (row) => row.lifespan,
 					id: 'lifespan',
 					label: 'Lifespan',
@@ -84,6 +100,7 @@ export default defineComponent({
 			]),
 			data: computed(() => [
 				{
+					age: 27,
 					bestSkill: 'Perfect naps',
 					id: 1,
 					lifespan: '9 lives',
@@ -94,6 +111,7 @@ export default defineComponent({
 					worstEnemy: 'Vacuum cleaners',
 				},
 				{
+					age: 85,
 					bestSkill: 'Quantum jumps',
 					id: 2,
 					lifespan: 'Until it crashes',
@@ -104,6 +122,7 @@ export default defineComponent({
 					worstEnemy: 'Black holes',
 				},
 				{
+					age: 988938,
 					bestSkill: 'Outlasting everything',
 					id: 3,
 					lifespan: 'Infinite (obviously)',
@@ -114,6 +133,7 @@ export default defineComponent({
 					worstEnemy: 'Rust (blasphemy!)',
 				},
 				{
+					age: 0,
 					bestSkill: 'Fueling all-nighters',
 					id: 4,
 					lifespan: '10 minutes per cup',
@@ -130,11 +150,16 @@ export default defineComponent({
 				onSelectionUpdate: (updated) => {
 					selectedRows.value = updated
 				},
-				selectedRows: selectedRows.value,
+				selectedRows: selectedRows,
 			},
 		})
 
+		// globalThis.table = table
+
 		return {
+			emptySelection: () => {
+				selectedRows.value = {}
+			},
 			selectedRows,
 			table,
 		}
@@ -144,9 +169,8 @@ export default defineComponent({
 
 <style scoped>
 .smol {
-	border: 1px solid gray;
 	margin: 5px;
-
 	width: 40%;
+	border: 1px solid gray;
 }
 </style>

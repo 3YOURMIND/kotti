@@ -9,6 +9,7 @@
 					<th
 						v-for="header in headerGroup.headers"
 						:key="header.id"
+						:class="header.column.columnDef.meta.headerClasses"
 						:colSpan="header.colSpan"
 					>
 						<FlexRender
@@ -21,7 +22,11 @@
 			</thead>
 			<tbody>
 				<tr v-for="row in table.getRowModel().rows" :key="row.id">
-					<td v-for="cell in row.getVisibleCells()" :key="cell.id">
+					<td
+						v-for="cell in row.getVisibleCells()"
+						:key="cell.id"
+						:class="cell.column.columnDef.meta.cellClasses"
+					>
 						<FlexRender
 							:props="{ ...cell.getContext() }"
 							:render="cell.column.columnDef.cell"
@@ -75,6 +80,7 @@ export default defineComponent({
 			throw new Error(`KtTable: could not find context for “${props.id}”`)
 
 		return {
+			console,
 			tableClasses: computed(() => ({
 				'kt-table': true,
 				'kt-table--is-scrollable': !props.isNotScrollable,
@@ -85,10 +91,52 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .kt-table {
 	&--is-scrollable {
 		overflow-x: scroll;
+		white-space: nowrap;
+	}
+
+	table {
+		border-collapse: collapse;
+
+		thead {
+			background-color: var(--ui-01);
+
+			th {
+				color: var(--gray-50);
+				padding: 0.4rem 0.2rem;
+				font-size: var(--unit-3);
+				text-transform: uppercase;
+			}
+		}
+
+		tbody {
+			tr {
+				border-bottom: 1px solid var(--ui-02);
+			}
+
+			td {
+				padding: 0.4rem 0.2rem;
+			}
+		}
+	}
+}
+
+.kt-table-cell {
+	&--is-left-aligned {
+		text-align: left;
+	}
+	&--is-right-aligned {
+		text-align: right;
+	}
+	&--is-center-aligned {
+		text-align: center;
+	}
+
+	&--displays-number {
+		font-variant-numeric: tabular-nums;
 	}
 }
 </style>

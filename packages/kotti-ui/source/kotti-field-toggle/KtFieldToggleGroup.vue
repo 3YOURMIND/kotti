@@ -41,8 +41,8 @@ import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { makeProps } from '../make-props'
+import ToggleInner from '../shared-components/toggle-inner/ToggleInner.vue'
 
-import ToggleInner from './components/ToggleInner.vue'
 import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import { KottiFieldToggleGroup } from './types'
 
