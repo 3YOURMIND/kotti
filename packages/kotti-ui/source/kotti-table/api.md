@@ -178,3 +178,42 @@ table.setColumnHidden(columnId, true)
 
 table.hiddenColumns //
 ```
+
+## Pagination
+
+```vue
+<KtTable hasPagination />
+```
+
+```vue
+<KtTable>
+	<template #header>
+		<KtTableTextField />
+		<KtTableFilters />
+		<KtTableColumnConfigurator />
+	</template>
+  <template #pagination>
+		<KtPagination/>
+	</template>
+</KtTable>
+```
+
+```vue
+<KtStandardTable hasPagination>
+	<KtTable />
+</KtStandardTable>
+```
+
+```vue
+<KtStandardTable>
+	<KtTable/>
+	<template #header>
+			<KtTableTextField />
+			<KtTableFilters />
+			<KtTableColumnConfigurator />
+		</template>
+	<template #pagination>
+		<KtPagination/>
+	</template>
+</KtStandardTable>
+```
