@@ -1,167 +1,148 @@
 <template>
 	<div>
-		<ul class="pagination">
-			<li :class="paginatorClasses(0, 'disabled')" @click="previousPage">
-				<i class="yoco page-button">chevron_left</i>
+		<ul class="kt-pagination">
+			<li :class="paginatorClasses(0)" @click="previousPage">
+				<i
+					class="yoco kt-pagination__page-button"
+					v-text="Yoco.Icon.CHEVRON_LEFT"
+				/>
 			</li>
 			<component
-				:is="component"
-				v-bind="bound"
+				:is="paginationComponent"
+				v-bind="paginationProps"
 				@setPage="setCurrentPage($event)"
 			/>
-			<li :class="paginatorClasses(maximumPage, 'disabled')" @click="nextPage">
-				<i class="yoco page-button">chevron_right</i>
+			<li :class="paginatorClasses(pageAmount)" @click="nextPage">
+				<i
+					class="yoco kt-pagination__page-button"
+					v-text="Yoco.Icon.CHEVRON_RIGHT"
+				/>
 			</li>
 		</ul>
 	</div>
 </template>
 
-<script>
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
+
+import { makeProps } from '../make-props'
+
 import PaginationExpanded from './components/PaginationExpanded.vue'
 import PaginationFlexible from './components/PaginationFlexible.vue'
 import PaginationFractionated from './components/PaginationFractionated.vue'
+import { KottiPagination } from './types'
 
-/* eslint-disable perfectionist/sort-objects */
-export default {
+export default defineComponent({
 	name: 'KtPagination',
 	components: {
 		PaginationExpanded,
 		PaginationFlexible,
 		PaginationFractionated,
 	},
-	props: {
-		adjacentAmount: { type: Number, default: 1 },
-		fixedWidth: { type: Boolean, default: false },
-		page: { type: Number, default: 1 },
-		pageSize: { type: Number, default: 10 },
-		pagingStyle: { type: String, default: 'expand' },
-		total: { type: Number, required: true },
+	props: makeProps(KottiPagination.propsSchema),
+	emits: [
+		'currentPageChange',
+		'previousPageClicked',
+		'nextPageClicked',
+		'setPage',
+	],
+	setup(props, { emit }) {
+		const pageAmount = computed(() => Math.ceil(props.total / props.pageSize))
 
-		/**
-		 * @deprecated
-		 * Use :pagingStyle='fraction' instead
-		 */
-		fractionStyle: { type: Boolean, default: false },
-	},
-	data() {
 		return {
-			currentPage: this.page - 1,
+			paginationComponent: computed(() => {
+				const isFlexLogical = 2 * (props.adjacentAmount + 1) < pageAmount.value
+				switch (props.pagingStyle) {
+					case KottiPagination.PagingStyle.FLEX:
+						return !isFlexLogical || pageAmount.value < 2
+							? PaginationExpanded.name
+							: PaginationFlexible.name
+					case KottiPagination.PagingStyle.FRACTION:
+						return PaginationFractionated.name
+					case KottiPagination.PagingStyle.EXPAND:
+					default:
+						return PaginationExpanded.name
+				}
+			}),
+			nextPage: () => {
+				if (props.page >= pageAmount.value) return
+				emit('nextPageClicked', props.page + 1)
+				emit('setPage', props.page + 1)
+			},
+			pageAmount,
+			paginatorClasses: (page: number) => ({
+				'kt-pagination__page-item': true,
+				'kt-pagination__page-item--is-disabled': props.page === page,
+			}),
+			paginationProps: computed(() => ({
+				adjacentAmount: props.adjacentAmount,
+				currentPage: props.page,
+				fixedWidth: props.fixedWidth,
+				maximumPage: pageAmount.value,
+				pageSize: props.pageSize,
+				total: props.total,
+			})),
+			previousPage: () => {
+				if (props.page === 1) return
+				emit('previousPageClicked', props.page - 1)
+				emit('setPage', props.page - 1)
+			},
+			setCurrentPage: (page: number) => {
+				if (page === props.page) return
+				emit('currentPageChange', page)
+				emit('setPage', page)
+			},
+			Yoco,
 		}
 	},
-	computed: {
-		bound() {
-			return {
-				adjacentAmount: this.adjacentAmount,
-				currentPage: this.currentPage,
-				fixedWidth: this.fixedWidth,
-				// eslint-disable-next-line @typescript-eslint/unbound-method
-				maximumPage: this.maximumPage,
-				pageSize: this.pageSize,
-				total: this.total,
-				totalPages: this.totalPages,
-			}
-		},
-		component() {
-			// eslint-disable-next-line @typescript-eslint/unbound-method, @typescript-eslint/restrict-plus-operands
-			const isFlexLogical = 2 * (this.adjacentAmount + 1) < this.pageAmount
-			// eslint-disable-next-line @typescript-eslint/unbound-method
-			if (!isFlexLogical || this.pageAmount < 2) return 'PaginationExpanded'
-
-			if (this.fractionStyle) {
-				// eslint-disable-next-line no-console
-				console.warn(
-					"<KtPagination>: fractionStyle is deprecated, please use :pagingStyle='fraction' instead",
-				)
-				return PaginationFractionated.name
-			}
-
-			switch (this.pagingStyle) {
-				case 'flex':
-					return PaginationFlexible.name
-				case 'fraction':
-					return PaginationFractionated.name
-				default:
-					return PaginationExpanded.name
-			}
-		},
-		maximumPage() {
-			return Math.ceil(this.total / this.pageSize) - 1
-		},
-		pageAmount() {
-			return Math.ceil(this.total / this.pageSize)
-		},
-	},
-	methods: {
-		paginatorClasses(page, className) {
-			return {
-				'page-item': true,
-				[className]: this.currentPage === page,
-			}
-		},
-		setCurrentPage(page) {
-			if (page === this.currentPage) return
-			this.currentPage = page
-			this.eventEmitter('currentPageChange')
-		},
-		nextPage() {
-			if (this.currentPage === this.maximumPage) return
-			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-			this.currentPage += 1
-			this.eventEmitter('nextPageClicked')
-		},
-		previousPage() {
-			if (this.currentPage === 0) return
-			this.currentPage -= 1
-			this.eventEmitter('previousPageClicked')
-		},
-		eventEmitter(eventName) {
-			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-			this.$emit(eventName, this.currentPage + 1)
-		},
-	},
-}
-/* eslint-enable perfectionist/sort-objects */
-/* eslint-enable @typescript-eslint/explicit-module-boundary-types */
+})
 </script>
 
 <style lang="scss">
 @import '../kotti-style/_variables.scss';
 
 :root {
-	--pagination-color-active: var(--interactive-03);
+	--kt-pagination-color-active: var(--interactive-03);
 }
+</style>
 
-.pagination {
+<style lang="scss" scoped>
+.kt-pagination {
 	margin: 0;
 	list-style: none;
 	user-select: none;
 
-	.page-button {
+	&__page-button {
 		display: inline-block;
 		padding: var(--unit-1);
-		background: $lightgray-300;
+		background: var(--gray-10);
 		border-radius: var(--border-radius);
 
 		&:hover {
 			cursor: pointer;
-			background: $lightgray-400;
+			background: var(--gray-20);
 		}
 	}
 
-	.fraction {
-		display: inline-block;
+	:deep(.kt-pagination__page-item--is-active) {
+		color: var(--kt-pagination-color-active);
 	}
 
-	.page-item {
+	:deep(.kt-pagination__page-item--is-disabled) {
+		cursor: not-allowed;
+
+		.kt-pagination__page-button {
+			opacity: 0.46;
+		}
+	}
+
+	:deep(.kt-pagination__page-item) {
 		display: inline-block;
 		padding: var(--unit-2);
 		line-height: 24px;
 		text-align: center;
-
-		&--active {
-			color: var(--pagination-color-active);
-		}
 
 		&:hover {
 			cursor: pointer;
