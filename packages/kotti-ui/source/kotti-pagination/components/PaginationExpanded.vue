@@ -3,8 +3,8 @@
 		<li
 			v-for="page in pageAmount"
 			:key="page"
-			:class="paginatorClasses(page - 1, 'page-item--active')"
-			@click="$emit('setPage', page - 1)"
+			:class="paginatorClasses(page)"
+			@click="$emit('setPage', page)"
 			v-text="page"
 		/>
 	</div>
@@ -24,9 +24,9 @@ export default defineComponent({
 	setup(props) {
 		return {
 			pageAmount: computed(() => Math.ceil(props.total / props.pageSize)),
-			paginatorClasses: (pageNumber: number, className: string) => ({
-				'page-item': true,
-				[className]: props.currentPage === pageNumber,
+			paginatorClasses: (page: number) => ({
+				'kt-pagination__page-item': true,
+				'kt-pagination__page-item--is-active': props.currentPage === page,
 			}),
 		}
 	},
