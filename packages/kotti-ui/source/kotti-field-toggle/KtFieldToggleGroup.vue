@@ -151,5 +151,27 @@ export default defineComponent({
 	&__content {
 		font-size: var(--font-size-small);
 	}
+
+	:deep(.kt-field-toggle-inner__svg) {
+		flex-shrink: 0;
+	}
+
+	:deep(.kt-field-toggle-inner__svg--is-box) {
+		// align checkbox with the center of the first line of the label
+		// (assumption: font-size comes from common parent element)
+		//  > starting point is upper end of the container (flex-start)
+		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+		//  > (-8px) Put it up half the height of the checkbox height (16px)
+		transform: translateY(calc(0.75em - 8px));
+	}
+
+	:deep(.kt-field-toggle-inner__svg--is-switch) {
+		// align switch with the center of the first line of the label
+		// (assumption: font-size comes from common parent element)
+		//  > starting point is upper end of the container (flex-start)
+		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+		//  > (-10px) Put it up half the height of the switch height (20px)
+		transform: translateY(calc(0.75em - 10px));
+	}
 }
 </style>

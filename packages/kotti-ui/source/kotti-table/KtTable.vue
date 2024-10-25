@@ -116,10 +116,10 @@ export default defineComponent({
 			tr {
 				border-bottom: 1px solid var(--ui-02);
 			}
+		}
 
-			td {
-				padding: 0.4rem 0.2rem;
-			}
+		.kt-table-cell {
+			padding: 0.4rem 0.2rem;
 		}
 	}
 }

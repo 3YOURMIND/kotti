@@ -6,22 +6,54 @@ import {
 	type HeaderContext,
 } from '@tanstack/table-core'
 import { computed, h, provide, type Ref } from 'vue'
+import { Dashes } from '@metatypes/typography'
 
 import ToggleInner from '../shared-components/toggle-inner/ToggleInner.vue'
 
 import { getTableContextKey, type TableContext } from './context'
 import { useVueTable } from './tanstack-table'
 import type { AnyRow } from './types'
+import { KottiI18n } from '../kotti-i18n/types'
+import { useI18nContext } from '../kotti-i18n/hooks'
 
-type ResolvedColumnDisplay = {
+type ResolvedColumnDisplay<C extends Record<string, unknown>> = {
 	align: 'center' | 'left' | 'right'
+	formatter:
+		| ((
+				value: unknown,
+				context: { numberFormat: KottiI18n.NumberFormat; options: C },
+		  ) => string | null)
+		| null
 	isNumeric: boolean
 }
+
+type Display =
+	// TODO: getData should understand display.type
+	// TODO: truncate text, ask how default behavior
+	// TODO: attachments, needs design
+	// TODO: image, array of urls as data, needs render functions
+	// TODO: tuples with separator (e.g. "1234 x 23")
+	| { type: 'boolean' | 'date' | 'datetime' | 'integer' | 'text' }
+	| { type: 'numerical'; decimalPlaces?: number }
+	| {
+			type: 'custom'
+			align: 'center' | 'left' | 'right'
+			formatter:
+				| ((
+						value: unknown,
+						context: {
+							numberFormat: KottiI18n.NumberFormat
+							options: unknown
+						},
+				  ) => string | null)
+				| null
+			isNumeric: boolean
+	  }
 
 type KottiTableParameter<ROW extends AnyRow> = {
 	columns: Ref<
 		{
-			dataType: ResolvedColumnDisplay | keyof typeof columnDisplayMap
+			display: Display
 			getData: (row: ROW) => unknown /* TODO: <DATA> */
 			id: string /* number | symbol */
 			label: string
@@ -36,20 +68,64 @@ type KottiTableParameter<ROW extends AnyRow> = {
 	}
 }
 
+const boolean: ResolvedColumnDisplay<Record<string, never>> = {
+	align: 'left',
+	// TODO: ask how boolean should be displayed
+	formatter: (value: unknown) => (value ? 'TRUE' : 'FALSE'),
+	isNumeric: true,
+}
+
+const date: ResolvedColumnDisplay<Record<string, never>> = {
+	align: 'left',
+	formatter: (value: unknown) => value as string,
+	isNumeric: true,
+}
+
+const datetime: ResolvedColumnDisplay<Record<string, never>> = {
+	align: 'left',
+	formatter: (value: unknown) => (value as string).replace('T', ' '),
+	isNumeric: true,
+}
+
+const integer: ResolvedColumnDisplay<Record<string, never>> = {
+	align: 'right',
+	formatter: (value: unknown) =>
+		value === null ? null : String(Math.round(value as number)),
+	isNumeric: true,
+}
+
+const numerical: ResolvedColumnDisplay<{ decimalPlaces?: number }> = {
+	align: 'right',
+	formatter: (value, context) =>
+		value === null
+			? null
+			: (value as number)
+					.toFixed(context.options.decimalPlaces ?? 2)
+					.replace('.', context.numberFormat.decimalSeparator),
+	isNumeric: true,
+}
+
+const text: ResolvedColumnDisplay<Record<string, never>> = {
+	align: 'left',
+	formatter: (value: unknown) => value as string,
+	isNumeric: false,
+}
+
 const columnDisplayMap = {
-	DATE: { align: 'right', isNumeric: false },
-	DATETIME: { align: 'right', isNumeric: false },
-	INTEGER: { align: 'right', isNumeric: true },
-	NUMERICAL: { align: 'right', isNumeric: true },
-	TEXT: { align: 'left', isNumeric: false },
-} satisfies Record<string, ResolvedColumnDisplay>
+	boolean,
+	date,
+	datetime,
+	integer,
+	numerical,
+	text,
+}
 
-const resolveColumnDisplay = (
-	dataType: ResolvedColumnDisplay | keyof typeof columnDisplayMap,
-): ResolvedColumnDisplay => {
-	if (typeof dataType === 'object') return dataType
+const resolveColumnDisplay = <C extends Record<string, unknown>>(
+	display: Display,
+): ResolvedColumnDisplay<C> => {
+	if (display.type === 'custom') return display
 
-	return columnDisplayMap[dataType]
+	return columnDisplayMap[display.type] as ResolvedColumnDisplay<C>
 }
 
 export const useKottiTable = <ROW extends AnyRow>(
@@ -58,6 +134,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 	tableContext: TableContext<ROW>
 } => {
 	const columnHelper = createColumnHelper<ROW>()
+	const i18nContext = useI18nContext()
 
 	const table = useVueTable(
 		computed(() => ({
@@ -125,9 +202,10 @@ export const useKottiTable = <ROW extends AnyRow>(
 						]
 					: []),
 				...params.columns.value.map((column) => {
-					const columnDisplay = resolveColumnDisplay(column.dataType)
+					const columnDisplay = resolveColumnDisplay(column.display)
 					const alignmentClass: string = Object.entries({
 						[`kt-table-cell--is-${columnDisplay.align}-aligned`]: true,
+						'kt-table-cell': true,
 						'kt-table-cell--displays-number': columnDisplay.isNumeric,
 					})
 						.filter(([_, isTrue]) => isTrue)
@@ -135,7 +213,17 @@ export const useKottiTable = <ROW extends AnyRow>(
 						.join(' ')
 
 					return columnHelper.accessor(column.getData, {
-						cell: (info) => info.getValue(),
+						cell: (info) => {
+							if (columnDisplay.formatter) {
+								return (
+									columnDisplay.formatter(info.getValue(), {
+										numberFormat: i18nContext.numberFormat,
+										options: column.display,
+									}) ?? Dashes.EmDash
+								)
+							}
+							return info.getValue() ?? Dashes.EmDash
+						},
 						header: () => column.label,
 						id: column.id,
 						meta: {

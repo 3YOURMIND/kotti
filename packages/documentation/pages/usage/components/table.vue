@@ -25,13 +25,15 @@ export default defineComponent({
 	},
 	setup() {
 		type TableRow = {
-			age: number
+			age: number | null
 			bestSkill: string
 			id: number
+			isAlive: boolean
 			lifespan: string
 			name: string
 			preferredSound: string
 			purpose: string
+			someDate: string
 			speed: string
 			worstEnemy: string
 		}
@@ -49,50 +51,67 @@ export default defineComponent({
 		const table = useKottiTable<TableRow>({
 			columns: computed(() => [
 				{
-					dataType: 'INTEGER',
+					display: { type: 'numerical', decimalPlaces: 3 },
 					getData: (row) => row.age,
 					id: 'age',
 					label: 'age',
 				},
 				{
-					dataType: 'TEXT',
+					display: { type: 'text' },
 					getData: (row) => row.name,
 					id: 'name',
 					label: 'Name',
 				},
 				{
-					dataType: 'TEXT',
+					display: { type: 'text' },
 					getData: (row) => row.purpose,
 					id: 'purpose',
 					label: 'Primary Purpose',
 				},
 				{
-					dataType: 'TEXT',
+					display: { type: 'boolean' },
+					getData: (row) => row.isAlive,
+					id: 'isAlive',
+					label: 'Aliveness',
+				},
+				{
+					display: { type: 'text' },
 					getData: (row) => row.speed,
 					id: 'speed',
 					label: 'Speed',
 				},
 				{
-					dataType: 'TEXT',
+					display: { type: 'date' },
+					getData: (row) => row.someDate,
+					id: 'Random Date somehow',
+					label: 'Random Date',
+				},
+				{
+					display: { type: 'text' },
 					getData: (row) => row.bestSkill,
 					id: 'bestSkill',
 					label: 'Best Skill',
 					renderSlot: 'bestSkillSlot',
 				},
 				{
-					dataType: 'NUMERICAL',
+					display: { type: 'text' },
 					getData: (row) => row.worstEnemy,
 					id: 'worstEnemy',
 					label: 'Worst Enemy',
 				},
 				{
-					dataType: 'TEXT',
+					display: { type: 'text' },
 					getData: (row) => row.preferredSound,
 					id: 'preferredSound',
 					label: 'Preferred Sound',
 				},
 				{
-					dataType: 'TEXT',
+					display: {
+						align: 'right',
+						formatter: (value: unknown) => String(value).replaceAll('e', 'x'),
+						isNumeric: false,
+						type: 'custom',
+					},
 					getData: (row) => row.lifespan,
 					id: 'lifespan',
 					label: 'Lifespan',
@@ -100,46 +119,54 @@ export default defineComponent({
 			]),
 			data: computed(() => [
 				{
-					age: 27,
+					age: 27.1,
 					bestSkill: 'Perfect naps',
 					id: 1,
+					isAlive: true,
 					lifespan: '9 lives',
 					name: 'Cats',
 					preferredSound: 'Purring',
 					purpose: 'Ignoring humans',
+					someDate: '2013-22-11',
 					speed: 'Slow and stealthy',
 					worstEnemy: 'Vacuum cleaners',
 				},
 				{
-					age: 85,
+					age: 85.8,
 					bestSkill: 'Quantum jumps',
 					id: 2,
+					isAlive: false,
 					lifespan: 'Until it crashes',
 					name: 'Spaceships',
 					preferredSound: 'Engine roar',
 					purpose: 'Exploring the universe',
+					someDate: '1922-12-01',
 					speed: 'Faster than light',
 					worstEnemy: 'Black holes',
 				},
 				{
-					age: 988938,
+					age: null,
 					bestSkill: 'Outlasting everything',
 					id: 3,
+					isAlive: false,
 					lifespan: 'Infinite (obviously)',
 					name: 'Tungsten',
 					preferredSound: 'Eternal silence',
 					purpose: 'Being immortal and holy',
+					someDate: '1833-04-23',
 					speed: 'Absolutely unmoving',
 					worstEnemy: 'Rust (blasphemy!)',
 				},
 				{
-					age: 0,
+					age: 0.1,
 					bestSkill: 'Fueling all-nighters',
 					id: 4,
+					isAlive: false,
 					lifespan: '10 minutes per cup',
 					name: 'Coffee',
 					preferredSound: 'Slurping',
 					purpose: 'Keeping people awake',
+					someDate: '2044-01-03',
 					speed: 'Varies by caffeine level',
 					worstEnemy: 'Decaf',
 				},
