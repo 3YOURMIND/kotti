@@ -182,29 +182,6 @@ table.hiddenColumns //
 ## Pagination
 
 ```vue
-<KtTable hasPagination />
-```
-
-```vue
-<KtTable>
-	<template #header>
-		<KtTableTextField />
-		<KtTableFilters />
-		<KtTableColumnConfigurator />
-	</template>
-  <template #pagination>
-		<KtPagination/>
-	</template>
-</KtTable>
-```
-
-```vue
-<KtStandardTable hasPagination>
-	<KtTable />
-</KtStandardTable>
-```
-
-```vue
 <KtStandardTable>
 	<KtTable/>
 	<template #header>
@@ -217,3 +194,24 @@ table.hiddenColumns //
 	</template>
 </KtStandardTable>
 ```
+
+```ts
+const useKottiStandardTable = ({
+	pagination,
+	tableArguments,
+}: {
+	pagination:
+		| { itemsPerPage: number; page: number; type: 'local ' }
+		| { itemsPerPage: number; page: number; total: number; type: 'remote' }
+	tableArguments: {...}
+}) => {
+	const table = useKottiTable({...tableArguments, manualPagiation: pagination.type === 'remote'})
+	// useVueTable
+}
+```
+
+| Pagination            | local                                      | Remote                    |
+| --------------------- | ------------------------------------------ | ------------------------- |
+| row data              | array of any length that is auto-paginated | array of set itemsPerPage |
+| changing itemsPerPage | re-auto-pagination                         | re-fetching data          |
+| changing page         | pointing to a different auto-page          | re-fetching data          |

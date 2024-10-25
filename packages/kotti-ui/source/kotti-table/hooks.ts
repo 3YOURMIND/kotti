@@ -4,8 +4,9 @@ import {
 	createColumnHelper,
 	getCoreRowModel,
 	type HeaderContext,
+	getPaginationRowModel,
 } from '@tanstack/table-core'
-import { computed, h, provide, type Ref } from 'vue'
+import { computed, h, provide, ref, type Ref } from 'vue'
 import { Dashes } from '@metatypes/typography'
 
 import ToggleInner from '../shared-components/toggle-inner/ToggleInner.vue'
@@ -61,6 +62,13 @@ type KottiTableParameter<ROW extends AnyRow> = {
 	>
 	data: Ref<ROW[]>
 	id: string
+	pagination?:
+		| { page: Ref<{ pageIndex: number; pageSize: number }>; type: 'local' }
+		| {
+				page: Ref<{ pageIndex: number; pageSize: number }>
+				total: number
+				type: 'remote'
+		  }
 	selection?: {
 		getRowId: (row: ROW) => string // maybe needed in other places?
 		onSelectionUpdate: (updated: Record<string, boolean>) => void
@@ -235,7 +243,23 @@ export const useKottiTable = <ROW extends AnyRow>(
 			],
 			data: params.data.value,
 			getCoreRowModel: getCoreRowModel(),
+			getPaginationRowModel:
+				params.pagination && params.pagination.type === 'local'
+					? getPaginationRowModel()
+					: undefined,
 			getRowId: params.selection?.getRowId,
+			manualPagination: params.pagination
+				? params.pagination.type === 'remote'
+				: undefined,
+			onPaginationChange: (updateOrValue) => {
+				if (!params.pagination) throw new Error('no selection available')
+
+				const updatedPage =
+					typeof updateOrValue === 'function'
+						? updateOrValue(params.pagination.page.value)
+						: updateOrValue
+				params.pagination.page.value = updatedPage
+			},
 			onRowSelectionChange: (updateOrValue) => {
 				if (!params.selection) throw new Error('no selection available')
 
@@ -246,6 +270,10 @@ export const useKottiTable = <ROW extends AnyRow>(
 				params.selection.selectedRows.value = updatedSelection
 			},
 			state: {
+				pagination:
+					params.pagination && params.pagination.type === 'local'
+						? params.pagination.page.value
+						: undefined,
 				rowSelection: params.selection?.selectedRows.value,
 			},
 		})),
@@ -257,6 +285,579 @@ export const useKottiTable = <ROW extends AnyRow>(
 		},
 	}))
 	provide<TableContext<ROW>>(getTableContextKey(params.id), tableContext)
+
+	return {
+		tableContext,
+	}
+}
+
+type DummyData = {
+	age: number | null
+	bestSkill: string
+	id: number
+	isAlive: boolean
+	lifespan: string
+	name: string
+	preferredSound: string
+	purpose: string
+	someDate: string
+	speed: string
+	worstEnemy: string
+}
+
+const getPaginationFeature = <DummyData>(
+	pagination:
+		| { itemsPerPage: number; page: number; type: 'local' }
+		| { itemsPerPage: number; page: number; total: number; type: 'remote' }
+		| null,
+) => {
+	if (pagination === null) return null
+
+	if (pagination.type === 'local') {
+		return {
+			tableArguments: {
+				page: ref({
+					pageIndex: pagination.page,
+					pageSize: pagination.itemsPerPage,
+				}),
+				type: 'local' as const,
+			},
+		}
+	}
+	return null
+}
+
+export const useKottiStandardTable = (params: {
+	id: string
+	pagination?:
+		| { itemsPerPage: number; page: number; type: 'local' }
+		| { itemsPerPage: number; page: number; total: number; type: 'remote' }
+}) => {
+	const data = [
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+		{
+			age: 85.8,
+			bestSkill: 'Quantum jumps',
+			id: 2,
+			isAlive: false,
+			lifespan: 'Until it crashes',
+			name: 'Spaceships',
+			preferredSound: 'Engine roar',
+			purpose: 'Exploring the universe',
+			someDate: '1922-12-01',
+			speed: 'Faster than light',
+			worstEnemy: 'Black holes',
+		},
+		{
+			age: null,
+			bestSkill: 'Outlasting everything',
+			id: 3,
+			isAlive: false,
+			lifespan: 'Infinite (obviously)',
+			name: 'Tungsten',
+			preferredSound: 'Eternal silence',
+			purpose: 'Being immortal and holy',
+			someDate: '1833-04-23',
+			speed: 'Absolutely unmoving',
+			worstEnemy: 'Rust (blasphemy!)',
+		},
+		{
+			age: 0.1,
+			bestSkill: 'Fueling all-nighters',
+			id: 4,
+			isAlive: false,
+			lifespan: '10 minutes per cup',
+			name: 'Coffee',
+			preferredSound: 'Slurping',
+			purpose: 'Keeping people awake',
+			someDate: '2044-01-03',
+			speed: 'Varies by caffeine level',
+			worstEnemy: 'Decaf',
+		},
+	]
+
+	const pagination = getPaginationFeature(params.pagination ?? null)
+
+	const { tableContext } = useKottiTable<DummyData>({
+		columns: computed(() => [
+			{
+				display: { type: 'text' },
+				getData: (row) => row.id,
+				id: 'id',
+				label: 'ID',
+			},
+			{
+				display: { type: 'date' },
+				getData: (row) => row.someDate,
+				id: 'Random Date somehow',
+				label: 'Random Date',
+			},
+			{
+				display: { type: 'text' },
+				getData: (row) => row.bestSkill,
+				id: 'bestSkill',
+				label: 'Best Skill',
+				renderSlot: 'bestSkillSlot',
+			},
+		]),
+		data: computed(() => data),
+		id: params.id,
+		pagination: pagination ? pagination.tableArguments : undefined,
+	})
 
 	return {
 		tableContext,

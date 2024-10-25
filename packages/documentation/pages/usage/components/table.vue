@@ -6,9 +6,7 @@
 
 <h2 class="standard-table-header"> Standard Table</h2>
 
-<KtStandardTable>
-	<KtTable id="example"/>
-</KtStandardTable>
+<KtStandardTable />
 </template>
 
 <script lang="ts">
