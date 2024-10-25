@@ -1,14 +1,25 @@
 <template lang="md">
-## Seriöses Example
+## Basic Example
 
 <KtTable id="example" />
 <KtButton label="empty selection" @click="emptySelection" />
+
+<h2 class="standard-table-header"> Standard Table</h2>
+
+<KtStandardTable>
+	<KtTable id="example"/>
+</KtStandardTable>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 
-import { KtButton, KtTable, useKottiTable } from '@3yourmind/kotti-ui'
+import {
+	KtButton,
+	KtTable,
+	KtStandardTable,
+	useKottiTable,
+} from '@3yourmind/kotti-ui'
 
 // | **Item**           | **Primary Purpose**     | **Speed**             | **Best Skill**        | **Worst Enemy**      | **Preferred Sound**  | **Lifespan**         | **Cuteness Level**   |
 // |--------------------|-------------------------|-----------------------|-----------------------|----------------------|----------------------|----------------------|----------------------|
@@ -21,6 +32,7 @@ export default defineComponent({
 	name: 'DocumentationPageUsageComponentsTable',
 	components: {
 		KtButton,
+		KtStandardTable,
 		KtTable,
 	},
 	setup() {
@@ -199,5 +211,9 @@ export default defineComponent({
 	margin: 5px;
 	width: 40%;
 	border: 1px solid gray;
+}
+
+.standard-table-header {
+	margin-top: 4rem;
 }
 </style>
