@@ -56,6 +56,7 @@ type KottiTableParameter<ROW extends AnyRow> = {
 			display: Display
 			getData: (row: ROW) => unknown /* TODO: <DATA> */
 			id: string /* number | symbol */
+			isSortable?: boolean
 			label: string
 		}[]
 	>
@@ -225,6 +226,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 							return info.getValue() ?? Dashes.EmDash
 						},
 						header: () => column.label,
+						enableSorting: column.isSortable ?? false,
 						id: column.id,
 						meta: {
 							cellClasses: alignmentClass,

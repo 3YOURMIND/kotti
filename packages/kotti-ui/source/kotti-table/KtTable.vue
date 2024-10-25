@@ -11,12 +11,14 @@
 						:key="header.id"
 						:class="header.column.columnDef.meta.headerClasses"
 						:colSpan="header.colSpan"
+						@click="header.column.getToggleSortingHandler()?.($event)"
 					>
 						<FlexRender
 							v-if="!header.isPlaceholder"
 							:props="{ ...header.getContext() }"
 							:render="header.column.columnDef.header"
 						/>
+						{{ { asc: ' 🔼', desc: ' 🔽' }[header.column.getIsSorted()] }}
 					</th>
 				</tr>
 			</thead>
