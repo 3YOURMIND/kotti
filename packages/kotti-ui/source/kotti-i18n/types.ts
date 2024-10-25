@@ -1,4 +1,5 @@
 import type { Ref } from 'vue'
+import { z } from 'zod'
 
 import type { KottiBanner } from '../kotti-banner/types'
 import type { KottiComment } from '../kotti-comment/types'
@@ -10,7 +11,7 @@ import type { KottiFilters } from '../kotti-filters/types'
 import type { KottiFormSubmit } from '../kotti-form-submit/types'
 import type { KottiNavbar } from '../kotti-navbar/types'
 import type { KottiValueLabel } from '../kotti-value-label/types'
-import type { DecimalSeparator } from '../types/kotti'
+import { DecimalSeparator } from '../types/kotti'
 
 export type DeepPartial<T> =
 	T extends Record<string, unknown> ? { [K in keyof T]?: DeepPartial<T[K]> } : T
@@ -28,9 +29,12 @@ export module KottiI18n {
 		{ decimalPlaces: number; symbol: string }
 	>
 
-	export type NumberFormat = {
-		decimalSeparator: DecimalSeparator
-	}
+	export const numberFormatSchema = z
+		.object({
+			decimalSeparator: z.nativeEnum(DecimalSeparator),
+		})
+		.strict()
+	export type NumberFormat = z.output<typeof numberFormatSchema>
 
 	export type Messages = {
 		KtBanner: KottiBanner.Translations

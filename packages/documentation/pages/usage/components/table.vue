@@ -1,14 +1,16 @@
 <template lang="md">
-## Seriöses Example
+<ComponentInfo v-bind="{ component }" />
 
 <KtTable id="example" />
 <KtButton label="empty selection" @click="emptySelection" />
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 import { KtButton, KtTable, useKottiTable } from '@3yourmind/kotti-ui'
+
+import ComponentInfo from '~/components/ComponentInfo.vue'
 
 // | **Item**           | **Primary Purpose**     | **Speed**             | **Best Skill**        | **Worst Enemy**      | **Preferred Sound**  | **Lifespan**         | **Cuteness Level**   |
 // |--------------------|-------------------------|-----------------------|-----------------------|----------------------|----------------------|----------------------|----------------------|
@@ -20,6 +22,7 @@ import { KtButton, KtTable, useKottiTable } from '@3yourmind/kotti-ui'
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsTable',
 	components: {
+		ComponentInfo,
 		KtButton,
 		KtTable,
 	},
@@ -48,10 +51,10 @@ export default defineComponent({
 
 		const selectedRows = ref<Record<string, boolean>>({})
 
-		const table = useKottiTable<TableRow>({
+		const tableHook = useKottiTable<TableRow>({
 			columns: computed(() => [
 				{
-					display: { type: 'numerical', decimalPlaces: 3 },
+					display: { decimalPlaces: 3, type: 'numerical' },
 					getData: (row) => row.age,
 					id: 'age',
 					isSortable: true,
@@ -192,12 +195,21 @@ export default defineComponent({
 
 		// globalThis.table = table
 
+		watch(tableHook.ordering, () => {
+			try {
+				console.log(JSON.stringify(tableHook.ordering.value))
+			} catch (error) {
+				console.error(error)
+			}
+		})
+
 		return {
+			component: KtTable,
 			emptySelection: () => {
 				selectedRows.value = {}
 			},
 			selectedRows,
-			table,
+			table: tableHook,
 		}
 	},
 })

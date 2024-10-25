@@ -59,30 +59,26 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { makeProps } from '../make-props'
 
-import { getTableContextKey, type TableContext } from './context'
+import { useTableContext } from './context'
 import { FlexRender } from './tanstack-table'
-import { type AnyRow, KottiTable } from './types'
+import { KottiTable } from './types'
 
 export default defineComponent({
 	name: 'KtTable',
-	components: { FlexRender },
+	components: {
+		FlexRender,
+	},
 	props: makeProps(KottiTable.propsSchema),
 	setup(props) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
-		const tableContext = inject<TableContext<AnyRow>>(
-			// eslint-disable-next-line vue/no-setup-props-reactivity-loss
-			getTableContextKey(props.id),
-		)
-
-		if (!tableContext)
-			throw new Error(`KtTable: could not find context for “${props.id}”`)
+		const tableContext = useTableContext(props.id)
 
 		return {
-			console,
+			console, // TODO: remove
 			tableClasses: computed(() => ({
 				'kt-table': true,
 				'kt-table--is-scrollable': !props.isNotScrollable,

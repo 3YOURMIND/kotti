@@ -7,15 +7,49 @@ import type {
 	TableOptionsResolved,
 } from '@tanstack/table-core'
 import { createTable } from '@tanstack/table-core'
+import type { UnwrapRef } from 'vue'
 import {
 	computed,
 	defineComponent,
 	h,
 	type Ref,
+	ref,
 	shallowRef,
 	unref,
 	watch,
 } from 'vue'
+
+// const [state, setState] = useState(false)
+
+// setState(true)
+// setState((x) => !x)
+
+/**
+ * "use react"
+ *
+ * @deprecated
+ */
+export const useState = <T>(
+	initialState: T,
+): [Ref<UnwrapRef<T>>, (updater: T | ((prevState: T) => T)) => void] => {
+	const state = ref(initialState)
+
+	return [
+		state,
+		(updater) => {
+			if (typeof updater === 'function') {
+				state.value = (updater as (prevState: UnwrapRef<T>) => UnwrapRef<T>)(
+					state.value,
+				)
+				return
+			}
+
+			state.value = updater as UnwrapRef<T>
+		},
+	]
+}
+
+// TODO: wtf
 
 // Such a silly hack to not get a new element
 const createTextVNode = (text: string) => h('span', text).children?.[0]

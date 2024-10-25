@@ -140,11 +140,15 @@ const baseConfig = tseslint.config({
 		radix: 'error',
 		'valid-typeof': 'error',
 
+		// prettier
+		'prettier/prettier': 'warn',
+
 		// SonarJS
 		'sonarjs/no-collapsible-if': 'off', // replaced by unicorn/no-lonely-if
 		'sonarjs/no-duplicate-string': 'off',
 		'sonarjs/no-redundant-jump': 'off',
 		'sonarjs/no-small-switch': 'off',
+
 		// Unicorn
 		'unicorn/catch-error-name': 'warn',
 		'unicorn/consistent-destructuring': 'warn',
@@ -332,14 +336,14 @@ export default {
 			rules: {
 				'@eslint-community/eslint-comments/no-duplicate-disable': 'off',
 				'perfectionist/sort-array-includes': [
-					'error',
+					'warn',
 					{ partitionByComment: true },
 				],
-				'perfectionist/sort-classes': ['error', { partitionByComment: true }],
-				'perfectionist/sort-enums': ['error', { partitionByComment: true }],
-				'perfectionist/sort-exports': ['error', { partitionByComment: true }],
+				'perfectionist/sort-classes': ['warn', { partitionByComment: true }],
+				'perfectionist/sort-enums': ['warn', { partitionByComment: true }],
+				'perfectionist/sort-exports': ['warn', { partitionByComment: true }],
 				'perfectionist/sort-imports': [
-					'error',
+					'warn',
 					{
 						customGroups: {
 							type: {
@@ -364,12 +368,9 @@ export default {
 						type: 'natural',
 					},
 				],
-				'perfectionist/sort-interfaces': [
-					'error',
-					{ partitionByComment: true },
-				],
+				'perfectionist/sort-interfaces': ['warn', { partitionByComment: true }],
 				'perfectionist/sort-intersection-types': [
-					'error',
+					'warn',
 					{
 						groups: ['named', 'object', 'function', 'unknown', 'nullish'],
 						order: 'asc',
@@ -377,29 +378,29 @@ export default {
 						type: 'natural',
 					},
 				],
-				'perfectionist/sort-maps': ['error', { partitionByComment: true }],
+				'perfectionist/sort-maps': ['warn', { partitionByComment: true }],
 				'perfectionist/sort-named-exports': [
-					'error',
+					'warn',
 					{ partitionByComment: true },
 				],
 				'perfectionist/sort-named-imports': [
-					'error',
+					'warn',
 					{ partitionByComment: true },
 				],
 				'perfectionist/sort-object-types': [
-					'error',
+					'warn',
 					{ partitionByComment: true },
 				],
 				'perfectionist/sort-objects': [
-					'error',
+					'warn',
 					{
 						ignorePattern: ['defineComponent'],
 						partitionByComment: true,
 					},
 				],
-				'perfectionist/sort-sets': ['error', { partitionByComment: true }],
+				'perfectionist/sort-sets': ['warn', { partitionByComment: true }],
 				'perfectionist/sort-union-types': [
-					'error',
+					'warn',
 					{
 						groups: ['named', 'object', 'function', 'unknown', 'nullish'],
 						order: 'asc',
@@ -408,7 +409,7 @@ export default {
 					},
 				],
 				'perfectionist/sort-variable-declarations': [
-					'error',
+					'warn',
 					{ partitionByComment: true },
 				],
 				'perfectionist/sort-vue-attributes': 'off',

@@ -1,12 +1,29 @@
 import type { Table } from '@tanstack/table-core'
-import type { Ref } from 'vue'
+import { inject, provide, type Ref } from 'vue'
 
-import { type AnyRow } from './types'
+import type { AnyRow } from './types'
 
-export const getTableContextKey = (id: string): string => `kt-table-${id}`
-
-export type TableContext<T extends AnyRow> = Ref<{
+export type TableContext<ROW extends AnyRow> = Ref<{
 	internal: {
-		table: Ref<Table<T>>
+		table: Ref<Table<ROW>>
 	}
 }>
+
+const getTableContextKey = (id: string): string => `kt-table-${id}`
+
+export const useProvideTableContext = <ROW extends AnyRow>(
+	id: string,
+	tableContext: TableContext<ROW>,
+): void => {
+	provide<TableContext<ROW>>(getTableContextKey(id), tableContext)
+}
+
+export const useTableContext = <ROW extends AnyRow>(
+	id: string,
+): TableContext<ROW> => {
+	const context = inject<TableContext<ROW>>(getTableContextKey(id))
+
+	if (!context) throw new Error(`KtTable: could not find context for “${id}”`)
+
+	return context
+}
