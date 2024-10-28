@@ -47,10 +47,28 @@ export const useKottiTable = <ROW extends AnyRow>(
 	const i18nContext = useI18nContext()
 
 	const ordering = ref<KottiTable.Ordering[]>([])
-	const [sorting, setSorting] = useState<SortingState>([])
+	const [columnOrder, setColumnOrder] = useState<string[]>(
+		params.columns.value.map(({ id }) => id),
+	)
 
 	// TODO: should we do this
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+	const [sorting, setSorting] = useState<SortingState>([])
+
+	const draggedColumnIndex = ref<number | null>(null)
+	const dropTargetColumnIndex = ref<number | null>(null)
+
+	const swapColumns = (): string[] => {
+		const draggedIndex = draggedColumnIndex.value
+		const dropTargetIndex = dropTargetColumnIndex.value
+		if (draggedIndex === null || dropTargetIndex === null)
+			return columnOrder.value
+		return columnOrder.value.map((columnId, index, order) => {
+			if (index === draggedIndex) return order[dropTargetIndex] as string
+			if (index === dropTargetIndex) return order[draggedIndex] as string
+			return columnId
+		})
+	}
 
 	watch(
 		() => sorting.value,
@@ -129,12 +147,16 @@ export const useKottiTable = <ROW extends AnyRow>(
 					: []),
 				...params.columns.value.map((column) => {
 					const columnDisplay = resolveColumnDisplay(column.display)
+					const index = columnOrder.value.indexOf(column.id)
 
 					// TODO: The alignmentClass generation is a bit complex. You could simplify this by directly joining classes without filtering when boolean values are true, or consider a helper function to manage conditional classes. — ChatGippety
 					const alignmentClass: string = Object.entries({
 						[`kt-table-cell--is-${columnDisplay.align}-aligned`]: true,
 						'kt-table-cell': true,
 						'kt-table-cell--displays-number': columnDisplay.isNumeric,
+						'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
+						'kt-table-cell--is-drop-target':
+							index === dropTargetColumnIndex.value,
 					})
 						.filter(([_, isTrue]) => isTrue)
 						.map(([className, _]) => className)
@@ -165,6 +187,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 			data: params.data.value,
 			getCoreRowModel: getCoreRowModel(),
 			getRowId: params.selection?.getRowId,
+			onColumnOrderChange: setColumnOrder,
 			onRowSelectionChange: setRowSelection,
 			// onRowSelectionChange: (updateOrValue) => {
 			// 	if (!params.selection) throw new Error('no selection available')
@@ -183,6 +206,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 			// 	}))
 			// },
 			state: {
+				columnOrder: columnOrder.value,
 				rowSelection: rowSelection.value,
 				sorting: sorting.value,
 				// sorting: ordering.value.map((x) => ({
@@ -195,6 +219,22 @@ export const useKottiTable = <ROW extends AnyRow>(
 
 	const tableContext: TableContext<ROW> = computed(() => ({
 		internal: {
+			setDraggedColumnIndex: (columnId: string | null) => {
+				const columnIndex = columnOrder.value.indexOf(columnId ?? '')
+				draggedColumnIndex.value = columnIndex >= 0 ? columnIndex : null
+			},
+			setDropTargetColumnIndex: (columnId: string | null) => {
+				const columnIndex = columnOrder.value.indexOf(columnId ?? '')
+				dropTargetColumnIndex.value = columnIndex >= 0 ? columnIndex : null
+			},
+			swapDraggedAndDropTarget: () => {
+				if (
+					dropTargetColumnIndex.value === null ||
+					draggedColumnIndex.value === null
+				)
+					return
+				columnOrder.value = swapColumns()
+			},
 			table,
 		},
 	}))

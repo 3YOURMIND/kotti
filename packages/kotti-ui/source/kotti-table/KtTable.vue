@@ -7,11 +7,17 @@
 					:key="headerGroup.id"
 				>
 					<th
-						v-for="header in headerGroup.headers"
+						v-for="(header, headerIndex) in headerGroup.headers"
+						draggable
 						:key="header.id"
 						:class="header.column.columnDef.meta.headerClasses"
 						:colSpan="header.colSpan"
 						@click="header.column.getToggleSortingHandler()?.($event)"
+						@dragend="handleDragEnd"
+						@dragenter="handleDragEnter(header.id)"
+						@dragover.prevent
+						@dragstart="handleDragStart(header.id)"
+						@drop="handleDrop"
 					>
 						<FlexRender
 							v-if="!header.isPlaceholder"
@@ -79,6 +85,23 @@ export default defineComponent({
 
 		return {
 			console, // TODO: remove
+			handleDragEnd: () => {
+				console.log('handleDragEnd')
+				tableContext.value.internal.setDropTargetColumnIndex(null)
+				tableContext.value.internal.setDraggedColumnIndex(null)
+			},
+			handleDragEnter: (columnId: string) => {
+				console.log('handleDragEnter', columnId)
+				tableContext.value.internal.setDropTargetColumnIndex(columnId)
+			},
+			handleDragStart: (columnId: string) => {
+				console.log('handleDragStart', columnId)
+				tableContext.value.internal.setDraggedColumnIndex(columnId)
+			},
+			handleDrop: () => {
+				console.log('handleDrop')
+				tableContext.value.internal.swapDraggedAndDropTarget()
+			},
 			tableClasses: computed(() => ({
 				'kt-table': true,
 				'kt-table--is-scrollable': !props.isNotScrollable,
@@ -108,11 +131,37 @@ export default defineComponent({
 				font-size: var(--unit-3);
 				text-transform: uppercase;
 			}
+
+			.kt-table-cell {
+				&--is-dragged {
+					background-color: var(--gray-20);
+					opacity: 0.75;
+					min-width: min(auto, 10rem);
+				}
+
+				&--is-drop-target {
+					background-color: var(--yellow-50);
+					opacity: 0.75;
+				}
+			}
 		}
 
 		tbody {
 			tr {
 				border-bottom: 1px solid var(--ui-02);
+			}
+
+			.kt-table-cell {
+				&--is-dragged {
+					background-color: var(--gray-10);
+					opacity: 0.75;
+					min-width: min(auto, 10rem);
+				}
+
+				&--is-drop-target {
+					background-color: var(--yellow-20);
+					opacity: 0.75;
+				}
 			}
 		}
 

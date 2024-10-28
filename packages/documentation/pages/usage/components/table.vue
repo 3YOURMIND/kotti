@@ -186,10 +186,6 @@ export default defineComponent({
 			id: 'example',
 			selection: {
 				getRowId: (row) => String(row.id),
-				onSelectionUpdate: (updated) => {
-					selectedRows.value = updated
-				},
-				selectedRows: selectedRows,
 			},
 		})
 

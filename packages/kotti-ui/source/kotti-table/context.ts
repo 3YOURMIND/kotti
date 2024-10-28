@@ -5,6 +5,9 @@ import type { AnyRow } from './types'
 
 export type TableContext<ROW extends AnyRow> = Ref<{
 	internal: {
+		setDraggedColumnIndex: (columnId: string | null) => void
+		setDropTargetColumnIndex: (columnId: string | null) => void
+		swapDraggedAndDropTarget: () => void
 		table: Ref<Table<ROW>>
 	}
 }>
