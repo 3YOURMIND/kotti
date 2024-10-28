@@ -3,6 +3,7 @@
 
 <KtTable id="example" />
 <KtButton label="empty selection" @click="emptySelection" />
+<KtButton label="reverse columns" @click="reverseColumnOrder" />
 </template>
 
 <script lang="ts">
@@ -48,8 +49,6 @@ export default defineComponent({
 		//   tungsten: "Being immortal and holy",
 		//   coffee: "Keeping people awake",
 		// }
-
-		const selectedRows = ref<Record<string, boolean>>({})
 
 		const tableHook = useKottiTable<TableRow>({
 			columns: computed(() => [
@@ -183,6 +182,7 @@ export default defineComponent({
 					worstEnemy: 'Decaf',
 				},
 			]),
+			hasDragAndDrop: true,
 			id: 'example',
 			selection: {
 				getRowId: (row) => String(row.id),
@@ -202,9 +202,11 @@ export default defineComponent({
 		return {
 			component: KtTable,
 			emptySelection: () => {
-				selectedRows.value = {}
+				tableHook.rowSelection.value = {}
 			},
-			selectedRows,
+			reverseColumnOrder: () => {
+				tableHook.columnOrder.value = tableHook.columnOrder.value.reverse()
+			},
 			table: tableHook,
 		}
 	},
