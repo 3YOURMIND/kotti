@@ -20,16 +20,17 @@
 						@dragenter="handleDragEnter($event, header.id)"
 						@dragleave="handleDragLeave($event)"
 						@dragover.prevent="handleDragOver($event, header.id)"
-						@dragstart="handleDragStart(header.id)"
+						@dragstart="handleDragStart($event, header.id)"
 						@drop="handleDrop"
 					>
-						<div class="kt-table-header">
+						<div v-if="!header.isPlaceholder" class="kt-table-header">
 							<FlexRender
 								v-if="!header.isPlaceholder"
 								:props="{ ...header.getContext() }"
 								:render="header.column.columnDef.header"
 							/>
-							<i v-if="header.column.getCanSort()" class="yoco">
+							<!-- <div style="flex: 1" v-text="header.column.columnDef.header()" /> -->
+							<i v-if="header.column.getIsSorted()" class="yoco">
 								{{
 									{
 										asc: 'chevron_up',
@@ -131,6 +132,8 @@ export default defineComponent({
 				tableContext.value.internal.setDropTargetColumnIndex(columnIndex)
 			},
 			handleDragOver: (event: DragEvent, columnId: string) => {
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				event.dataTransfer!.dropEffect = 'move'
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
 				const target = event.target as HTMLElement
 
@@ -164,7 +167,9 @@ export default defineComponent({
 				// console.log('handleDragLeave', event.currentTarget, event.target)
 				// tableContext.value.internal.setDropTargetColumnIndex(null)
 			},
-			handleDragStart: (columnId: string) => {
+			handleDragStart: (event: DragEvent, columnId: string) => {
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				event.dataTransfer!.dropEffect = 'move'
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
 				console.log('handleDragStart', columnIndex)
 				tableContext.value.internal.setDraggedColumnIndex(columnIndex)
@@ -190,7 +195,7 @@ export default defineComponent({
 <style lang="scss">
 @keyframes fade-in-right {
 	from {
-		background-color: var(--blue-20);
+		background-color: var(--green-20);
 		opacity: 0.8;
 	}
 
@@ -213,6 +218,7 @@ export default defineComponent({
 			background-color: var(--ui-01);
 
 			.kt-table-cell--is-header {
+				cursor: grab; // TODO hasDragAndDrop
 				padding: 0.4rem 0.2rem;
 				font-size: var(--unit-3);
 				color: var(--gray-50);
@@ -298,14 +304,26 @@ export default defineComponent({
 .kt-table-cell {
 	&--is-left-aligned {
 		text-align: left;
+
+		/* .kt-table-header {
+			align-items: flex-start;
+		} */
 	}
 
 	&--is-right-aligned {
 		text-align: right;
+
+		/* .kt-table-header {
+			align-items: flex-end;
+		} */
 	}
 
 	&--is-center-aligned {
 		text-align: center;
+
+		/* .kt-table-header {
+			align-items: center;
+		} */
 	}
 
 	&--was-successfully-dropped {

@@ -249,7 +249,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 							return info.getValue() ?? Dashes.EmDash
 						},
 						enableSorting: column.isSortable ?? false,
-						header: () => column.label,
+						header: () => h('div', { style: { flex: 1 } }, column.label),
 						id: column.id,
 						meta: {
 							cellClasses: getCellClasses('body'),
