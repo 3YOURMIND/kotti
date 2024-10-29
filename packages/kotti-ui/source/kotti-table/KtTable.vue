@@ -8,19 +8,19 @@
 				>
 					<th
 						v-for="(header, headerIndex) in headerGroup.headers"
+						:key="`${header.id}-${headerIndex}`"
+						:class="header.column.columnDef.meta.headerClasses"
+						:colSpan="header.colSpan"
 						:draggable="
 							tableContext.internal.hasDragAndDrop &&
 							![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(header.id)
 						"
-						:key="`${header.id}-${headerIndex}`"
-						:class="header.column.columnDef.meta.headerClasses"
-						:colSpan="header.colSpan"
 						@click="header.column.getToggleSortingHandler()?.($event)"
 						@dragend="handleDragEnd"
-						@dragenter="handleDragEnter($event, headerIndex)"
+						@dragenter="handleDragEnter($event, header.id)"
 						@dragleave="handleDragLeave($event)"
-						@dragover.prevent="handleDragOver($event, headerIndex)"
-						@dragstart="handleDragStart(headerIndex)"
+						@dragover.prevent="handleDragOver($event, header.id)"
+						@dragstart="handleDragStart(header.id)"
 						@drop="handleDrop"
 					>
 						<div class="kt-table-header">
@@ -62,14 +62,14 @@
 						</td>
 					</tr>
 					<tr
-						:key="`${row.id}-expanded-row`"
 						v-if="$slots['expanded-row'] && row.getIsExpanded()"
+						:key="`${row.id}-expanded-row`"
 					>
 						<td :colSpan="row.getAllCells().length">
 							<slot
 								name="expanded-row"
-								:rowIndex="rowIndex"
 								:row="row.original"
+								:rowIndex="rowIndex"
 							/>
 						</td>
 					</tr>
@@ -102,8 +102,8 @@ import { computed, defineComponent } from 'vue'
 
 import { makeProps } from '../make-props'
 
-import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './hooks'
 import { useTableContext } from './context'
+import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID, ARRAY_START } from './hooks'
 import { FlexRender } from './tanstack-table'
 import { KottiTable } from './types'
 
@@ -125,11 +125,13 @@ export default defineComponent({
 				tableContext.value.internal.setDropTargetColumnIndex(null)
 				tableContext.value.internal.setDraggedColumnIndex(null)
 			},
-			handleDragEnter: (event: DragEvent, columnIndex: number) => {
+			handleDragEnter: (event: DragEvent, columnId: string) => {
+				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
 				console.log('handleDragEnter', event.currentTarget, columnIndex)
 				tableContext.value.internal.setDropTargetColumnIndex(columnIndex)
 			},
-			handleDragOver: (event: DragEvent, columnIndex: number) => {
+			handleDragOver: (event: DragEvent, columnId: string) => {
+				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
 				const target = event.target as HTMLElement
 
 				const { x: elementX, width: elementWidth } =
@@ -138,11 +140,8 @@ export default defineComponent({
 				const cursorX = event.clientX
 
 				const isLeftHalf = cursorX - elementX < elementWidth / 2
-				const firstViableColumnIndex =
-					(tableContext.value.internal.isExpandable ? 1 : 0) +
-					(tableContext.value.internal.isSelectable ? 1 : 0)
 				const targetIndex = Math.max(
-					firstViableColumnIndex,
+					ARRAY_START,
 					columnIndex + (isLeftHalf ? 0 : 1),
 				)
 
@@ -165,7 +164,8 @@ export default defineComponent({
 				// console.log('handleDragLeave', event.currentTarget, event.target)
 				// tableContext.value.internal.setDropTargetColumnIndex(null)
 			},
-			handleDragStart: (columnIndex: number) => {
+			handleDragStart: (columnId: string) => {
+				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
 				console.log('handleDragStart', columnIndex)
 				tableContext.value.internal.setDraggedColumnIndex(columnIndex)
 			},

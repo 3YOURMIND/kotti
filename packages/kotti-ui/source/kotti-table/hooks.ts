@@ -25,6 +25,7 @@ import type { AnyRow, KottiTable } from './types'
 
 export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
 export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
+export const ARRAY_START = 2
 
 type KottiTableParameter<
 	ROW extends AnyRow,
@@ -62,8 +63,8 @@ export const useKottiTable = <ROW extends AnyRow>(
 
 	const ordering = ref<KottiTable.Ordering[]>([])
 	const columnOrderInternal = ref<string[]>([
-		...(params.value.isExpandable ? [EXPANSION_COLUMN_ID] : []),
-		...(params.value.selection ? [SELECTION_COLUMN_ID] : []),
+		EXPANSION_COLUMN_ID,
+		SELECTION_COLUMN_ID,
 		...params.value.columns.map(({ id }) => id),
 	])
 
@@ -296,6 +297,9 @@ export const useKottiTable = <ROW extends AnyRow>(
 
 	const tableContext: TableContext<ROW> = computed(() => ({
 		internal: {
+			getColumnIndex: (columnId: string) => {
+				return columnOrderInternal.value.indexOf(columnId)
+			},
 			hasDragAndDrop: Boolean(params.value.hasDragAndDrop),
 			isExpandable: Boolean(params.value.isExpandable),
 			isSelectable: Boolean(params.value.selection),
@@ -324,15 +328,11 @@ export const useKottiTable = <ROW extends AnyRow>(
 
 	return {
 		columnOrder: computed({
-			get: () =>
-				columnOrderInternal.value.filter(
-					(columnId) =>
-						![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(columnId),
-				),
+			get: () => columnOrderInternal.value.toSpliced(0, ARRAY_START),
 			set: (value) => {
 				columnOrderInternal.value = [
-					...(params.value.isExpandable ? [EXPANSION_COLUMN_ID] : []),
-					...(params.value.selection ? [SELECTION_COLUMN_ID] : []),
+					EXPANSION_COLUMN_ID,
+					SELECTION_COLUMN_ID,
 					...value,
 				]
 			},

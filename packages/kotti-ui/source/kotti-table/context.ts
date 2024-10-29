@@ -5,6 +5,7 @@ import type { AnyRow } from './types'
 
 export type TableContext<ROW extends AnyRow> = Ref<{
 	internal: {
+		getColumnIndex: (columnId: string) => number
 		hasDragAndDrop: boolean
 		isExpandable: boolean
 		isSelectable: boolean
