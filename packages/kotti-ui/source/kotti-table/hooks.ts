@@ -29,9 +29,9 @@ export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
 type KottiTableParameter<
 	ROW extends AnyRow,
 	COLUMN_IDS extends string = string,
-> = {
-	columns: Ref<KottiTable.Column<ROW, COLUMN_IDS>[]>
-	data: Ref<ROW[]>
+> = Ref<{
+	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
+	data: ROW[]
 	getRowId: (row: ROW) => string
 	hasDragAndDrop?: boolean
 	id: string
@@ -41,33 +41,52 @@ type KottiTableParameter<
 	// onSelectionUpdate: (updated: Record<string, boolean>) => void
 	// selectedRows: Ref<Record<string, boolean>>
 	//}
-}
+}>
 
 // TODO: check for Exclude<> issue with generic
 export const useKottiTable = <ROW extends AnyRow>(
 	params: KottiTableParameter<ROW>,
 ): {
 	columnOrder: Ref<string[]>
+	hiddenColumns: Ref<Set<string>>
 	ordering: Ref<KottiTable.Ordering[]>
 	rowSelection: Ref<RowSelectionState>
 	tableContext: TableContext<ROW>
-	visibilityState: Ref<VisibilityState>
 } => {
 	const columnHelper = createColumnHelper<ROW>()
 	const i18nContext = useI18nContext()
 
+	const columnIdSet = computed<Set<string>>(
+		() => new Set(params.value.columns.map((c) => c.id)),
+	)
+
 	const ordering = ref<KottiTable.Ordering[]>([])
 	const columnOrderInternal = ref<string[]>([
-		...(params.isExpandable ? [EXPANSION_COLUMN_ID] : []),
-		...(params.selection ? [SELECTION_COLUMN_ID] : []),
-		...params.columns.value.map(({ id }) => id),
+		...(params.value.isExpandable ? [EXPANSION_COLUMN_ID] : []),
+		...(params.value.selection ? [SELECTION_COLUMN_ID] : []),
+		...params.value.columns.map(({ id }) => id),
 	])
+
+	// watch(
+	// 	() => params,
+	// 	() => {
+	// 		columnOrderInternal.value = [
+	// 			...(params.value.isExpandable ? [EXPANSION_COLUMN_ID] : []),
+	// 			...(params.value.selection ? [SELECTION_COLUMN_ID] : []),
+	// 			...columnOrderInternal.value.filter(
+	// 				(columnId) =>
+	// 					![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(columnId),
+	// 			),
+	// 		]
+	// 	},
+	// 	{ immediate: true },
+	// )
 
 	// TODO: should we do this
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [visibilityState, setVisibiltyState] = useState<VisibilityState>(
-		Object.fromEntries(params.columns.value.map((column) => [column.id, true])),
+		Object.fromEntries(params.value.columns.map((column) => [column.id, true])),
 	)
 
 	const draggedColumnIndex = ref<number | null>(null)
@@ -102,21 +121,26 @@ export const useKottiTable = <ROW extends AnyRow>(
 	const table = useVueTable(
 		computed(() => ({
 			columns: [
-				...(params.isExpandable
+				...(params.value.isExpandable
 					? [
 							columnHelper.display({
 								cell: ({ row }: CellContext<ROW, unknown>) =>
-									h(
-										'KtButton',
-										{
-											on: {
-												click: () => {
-													row.toggleExpanded(!row.getIsExpanded())
-												},
+									h('KtButton', {
+										on: {
+											click: () => {
+												row.toggleExpanded(!row.getIsExpanded())
 											},
 										},
-										[h('i', { class: 'yoco' }, 'triangle_down')],
-									),
+										props: {
+											icon: row.getIsExpanded() ? 'chevron_up' : 'chevron_down',
+											size: 'small',
+											type: 'text',
+										},
+										style: {
+											color: 'var(--icon-02)',
+											padding: 0,
+										},
+									}),
 								id: EXPANSION_COLUMN_ID,
 								meta: {
 									cellClasses: '',
@@ -125,7 +149,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 							}),
 						]
 					: []),
-				...(params.selection
+				...(params.value.selection
 					? [
 							columnHelper.display({
 								cell: ({ row }: CellContext<ROW, unknown>) =>
@@ -181,33 +205,35 @@ export const useKottiTable = <ROW extends AnyRow>(
 									),
 								id: SELECTION_COLUMN_ID,
 								meta: {
-									cellClasses: 'kt-table-cell',
-									headerClasses: 'kt-table-cell',
+									cellClasses: 'kt-table-cell kt-table-cell--is-body',
+									headerClasses: 'kt-table-cell kt-table-cell--is-header',
 								},
 							}),
 						]
 					: []),
-				...params.columns.value.map((column, _, columns) => {
+				...params.value.columns.map((column, _, columns) => {
 					const columnDisplay = resolveColumnDisplay(column.display)
 					const index = columnOrderInternal.value.indexOf(column.id)
 
 					// TODO: The alignmentClass generation is a bit complex. You could simplify this by directly joining classes without filtering when boolean values are true, or consider a helper function to manage conditional classes. — ChatGippety
-					const alignmentClass: string = Object.entries({
-						[`kt-table-cell--is-${columnDisplay.align}-aligned`]: true,
-						'kt-table-cell': true,
-						'kt-table-cell--displays-number': columnDisplay.isNumeric,
-						'kt-table-cell--has-drop-indicator':
-							index === dropTargetColumnIndex.value,
-						'kt-table-cell--has-drop-indicator-right':
-							index + 1 === dropTargetColumnIndex.value &&
-							index === columns.length - 1,
-						'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
-						'kt-table-cell--was-successfully-dropped':
-							column.id === successfullyDroppedColumnId.value,
-					})
-						.filter(([_, isTrue]) => isTrue)
-						.map(([className, _]) => className)
-						.join(' ')
+					const getCellClasses = (cellType: 'header' | 'body'): string =>
+						Object.entries({
+							[`kt-table-cell--is-${cellType}`]: true,
+							[`kt-table-cell--is-${columnDisplay.align}-aligned`]: true,
+							'kt-table-cell': true,
+							'kt-table-cell--displays-number': columnDisplay.isNumeric,
+							'kt-table-cell--has-drop-indicator':
+								index === dropTargetColumnIndex.value,
+							'kt-table-cell--has-drop-indicator-right':
+								index + 1 === dropTargetColumnIndex.value &&
+								index === columns.length - 1,
+							'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
+							'kt-table-cell--was-successfully-dropped':
+								column.id === successfullyDroppedColumnId.value,
+						})
+							.filter(([_, isTrue]) => isTrue)
+							.map(([className, _]) => className)
+							.join(' ')
 
 					return columnHelper.accessor(column.getData, {
 						cell: (info) => {
@@ -225,18 +251,18 @@ export const useKottiTable = <ROW extends AnyRow>(
 						header: () => column.label,
 						id: column.id,
 						meta: {
-							cellClasses: alignmentClass,
-							headerClasses: alignmentClass,
+							cellClasses: getCellClasses('body'),
+							headerClasses: getCellClasses('header'),
 						} satisfies ColumnMeta<ROW, unknown>,
 					})
 				}),
 			],
-			data: params.data.value,
+			data: params.value.data,
 			getCoreRowModel: getCoreRowModel(),
-			getExpandedRowModel: params.isExpandable
+			getExpandedRowModel: params.value.isExpandable
 				? getExpandedRowModel()
 				: undefined,
-			getRowId: params.getRowId,
+			getRowId: params.value.getRowId,
 			onColumnVisibilityChange: setVisibiltyState,
 			onRowSelectionChange: setRowSelection,
 			// onRowSelectionChange: (updateOrValue) => {
@@ -270,8 +296,9 @@ export const useKottiTable = <ROW extends AnyRow>(
 
 	const tableContext: TableContext<ROW> = computed(() => ({
 		internal: {
-			hasDragAndDrop: Boolean(params.hasDragAndDrop),
-			isSelectable: Boolean(params.selection),
+			hasDragAndDrop: Boolean(params.value.hasDragAndDrop),
+			isExpandable: Boolean(params.value.isExpandable),
+			isSelectable: Boolean(params.value.selection),
 			setDraggedColumnIndex: (columnIndex: number | null) => {
 				draggedColumnIndex.value = columnIndex
 			},
@@ -293,7 +320,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 			table,
 		},
 	}))
-	useProvideTableContext<ROW>(params.id, tableContext)
+	useProvideTableContext<ROW>(params.value.id, tableContext)
 
 	return {
 		columnOrder: computed({
@@ -302,16 +329,36 @@ export const useKottiTable = <ROW extends AnyRow>(
 					(columnId) =>
 						![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(columnId),
 				),
-			set: (value) =>
-				(columnOrderInternal.value = [
-					...(params.isExpandable ? [EXPANSION_COLUMN_ID] : []),
-					...(params.selection ? [SELECTION_COLUMN_ID] : []),
+			set: (value) => {
+				columnOrderInternal.value = [
+					...(params.value.isExpandable ? [EXPANSION_COLUMN_ID] : []),
+					...(params.value.selection ? [SELECTION_COLUMN_ID] : []),
 					...value,
-				]),
+				]
+			},
+		}),
+		hiddenColumns: computed({
+			get: () => {
+				const result = new Set<string>()
+
+				for (const id of columnIdSet.value) {
+					if (visibilityState.value[id] === false) result.add(id)
+				}
+
+				return result
+			},
+			set: (newSet) => {
+				const newVisibilityState: VisibilityState = {}
+
+				for (const id of columnIdSet.value) {
+					newVisibilityState[id] = !newSet.has(id)
+				}
+
+				visibilityState.value = newVisibilityState
+			},
 		}),
 		ordering,
 		rowSelection, // TODO: rename
 		tableContext,
-		visibilityState,
 	}
 }

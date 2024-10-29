@@ -32,8 +32,8 @@
 							<i v-if="header.column.getCanSort()" class="yoco">
 								{{
 									{
-										asc: 'triangle_up',
-										desc: 'triangle_down',
+										asc: 'chevron_up',
+										desc: 'chevron_down',
 										[false]: '',
 									}[header.column.getIsSorted()]
 								}}
@@ -138,9 +138,9 @@ export default defineComponent({
 				const cursorX = event.clientX
 
 				const isLeftHalf = cursorX - elementX < elementWidth / 2
-				const firstViableColumnIndex = tableContext.value.internal.isSelectable
-					? 1
-					: 0
+				const firstViableColumnIndex =
+					(tableContext.value.internal.isExpandable ? 1 : 0) +
+					(tableContext.value.internal.isSelectable ? 1 : 0)
 				const targetIndex = Math.max(
 					firstViableColumnIndex,
 					columnIndex + (isLeftHalf ? 0 : 1),
@@ -212,8 +212,7 @@ export default defineComponent({
 		thead {
 			background-color: var(--ui-01);
 
-			th {
-				position: relative; // used by drop indicators
+			.kt-table-cell--is-header {
 				padding: 0.4rem 0.2rem;
 				font-size: var(--unit-3);
 				color: var(--gray-50);
@@ -236,6 +235,11 @@ export default defineComponent({
 			.kt-table-cell {
 				&--has-drop-indicator {
 					$drag-indicatordrag-border-width: var(--unit-1);
+
+					&, // TODO: does this work? it should, right?
+					&-right {
+						position: relative;
+					}
 
 					&::before,
 					&-right::after {
@@ -277,7 +281,7 @@ export default defineComponent({
 				border-bottom: 1px solid var(--ui-02);
 			}
 
-			.kt-table-cell {
+			.kt-table-cell--is-body {
 				&--is-dragged {
 					background-color: var(--gray-10);
 					opacity: 0.4;
@@ -310,6 +314,10 @@ export default defineComponent({
 
 	&--displays-number {
 		font-variant-numeric: tabular-nums;
+	}
+
+	.kt-table-selection {
+		margin-right: var(--unit-3);
 	}
 }
 </style>

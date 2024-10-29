@@ -1,19 +1,25 @@
-<template lang="md">
-<ComponentInfo v-bind="{ component }" />
+<template>
+	<div>
+		<ComponentInfo v-bind="{ component }" />
 
-<KtFieldToggleGroup
-	:value="table.visibilityState.value"
-	isOptional
-	label="hide columns"
-	:options="visibilityOptions"
-/>
-<KtTable id="example">
-	<template #expanded-row>
-		Expanded content
-	</template>
-</KtTable>
-<KtButton label="empty selection" @click="emptySelection" />
-<KtButton label="reverse columns" @click="reverseColumnOrder" />
+		<KtFieldToggle v-model="isTableExpandable" isOptional type="switch">
+			Is Table Extendable
+		</KtFieldToggle>
+		<KtFieldToggle v-model="isTableSelectable" isOptional type="switch">
+			Is Table Selectable
+		</KtFieldToggle>
+
+		<KtTable id="example">
+			<div slot="expanded-row">Expanded content</div>
+		</KtTable>
+		<div style="display: flex; gap: var(--unit-1)">
+			<KtButton label="empty selection" @click="emptySelection" />
+			<KtButton label="reverse columns" @click="reverseColumnOrder" />
+			<br />
+			<KtButton label="shuffle hidden columns" @click="shuffleHiddenColumns" />
+			<KtButton label="show all columns" @click="showAllColumns" />
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
@@ -21,7 +27,7 @@ import { computed, defineComponent, ref, watch } from 'vue'
 
 import {
 	KtButton,
-	KtFieldToggleGroup,
+	KtFieldToggle,
 	KtTable,
 	useKottiTable,
 } from '@3yourmind/kotti-ui'
@@ -41,10 +47,12 @@ export default defineComponent({
 	components: {
 		ComponentInfo,
 		KtButton,
-		KtFieldToggleGroup,
+		KtFieldToggle,
 		KtTable,
 	},
 	setup() {
+		const isTableExpandable = ref(true)
+		const isTableSelectable = ref(true)
 		type TableRow = {
 			age: number | null
 			bestSkill: string
@@ -66,145 +74,149 @@ export default defineComponent({
 		//   tungsten: "Being immortal and holy",
 		//   coffee: "Keeping people awake",
 		// }
+		//
+		const columns = computed<Kotti.Table.Column<TableRow>[]>(() => [
+			{
+				display: { decimalPlaces: 3, type: 'numerical' },
+				getData: (row: TableRow) => row.age,
+				id: 'age',
+				isSortable: true,
+				label: 'age',
+			},
+			{
+				display: { type: 'text' },
+				getData: (row: TableRow) => row.name,
+				id: 'name',
+				isSortable: true,
+				label: 'Name',
+			},
+			{
+				display: { type: 'text' },
+				getData: (row: TableRow) => row.purpose,
+				id: 'purpose',
+				isSortable: true,
+				label: 'Primary Purpose',
+			},
+			{
+				display: { type: 'boolean' },
+				getData: (row: TableRow) => row.isAlive,
+				id: 'isAlive',
+				isSortable: true,
+				label: 'Aliveness',
+			},
+			{
+				display: { type: 'text' },
+				getData: (row: TableRow) => row.speed,
+				id: 'speed',
+				isSortable: true,
+				label: 'Speed',
+			},
+			{
+				display: { type: 'date' },
+				getData: (row: TableRow) => row.someDate,
+				id: 'randomDate',
+				isSortable: true,
+				label: 'Random Date',
+			},
+			{
+				display: { type: 'text' },
+				getData: (row: TableRow) => row.bestSkill,
+				id: 'bestSkill',
+				isSortable: true,
+				label: 'Best Skill',
+			},
+			{
+				display: { type: 'text' },
+				getData: (row: TableRow) => row.worstEnemy,
+				id: 'worstEnemy',
+				isSortable: true,
+				label: 'Worst Enemy',
+			},
+			{
+				display: { type: 'text' },
+				getData: (row: TableRow) => row.preferredSound,
+				id: 'preferredSound',
+				isSortable: true,
+				label: 'Preferred Sound',
+			},
+			{
+				display: {
+					align: 'right',
+					formatter: (value: unknown) => String(value).replaceAll('e', 'x'),
+					isNumeric: false,
+					type: 'custom',
+				},
+				getData: (row: TableRow) => row.lifespan,
+				id: 'lifespan',
+				isSortable: true,
+				label: 'Lifespan',
+			},
+		])
 
-		const tableHook = useKottiTable<TableRow>({
-			columns: computed(() => [
-				{
-					display: { decimalPlaces: 3, type: 'numerical' },
-					getData: (row) => row.age,
-					id: 'age',
-					isSortable: true,
-					label: 'age',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row) => row.name,
-					id: 'name',
-					isSortable: true,
-					label: 'Name',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row) => row.purpose,
-					id: 'purpose',
-					isSortable: true,
-					label: 'Primary Purpose',
-				},
-				{
-					display: { type: 'boolean' },
-					getData: (row) => row.isAlive,
-					id: 'isAlive',
-					isSortable: true,
-					label: 'Aliveness',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row) => row.speed,
-					id: 'speed',
-					isSortable: true,
-					label: 'Speed',
-				},
-				{
-					display: { type: 'date' },
-					getData: (row) => row.someDate,
-					id: 'randomDate',
-					isSortable: true,
-					label: 'Random Date',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row) => row.bestSkill,
-					id: 'bestSkill',
-					isSortable: true,
-					label: 'Best Skill',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row) => row.worstEnemy,
-					id: 'worstEnemy',
-					isSortable: true,
-					label: 'Worst Enemy',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row) => row.preferredSound,
-					id: 'preferredSound',
-					isSortable: true,
-					label: 'Preferred Sound',
-				},
-				{
-					display: {
-						align: 'right',
-						formatter: (value: unknown) => String(value).replaceAll('e', 'x'),
-						isNumeric: false,
-						type: 'custom',
+		const tableHook = useKottiTable<TableRow>(
+			computed(() => ({
+				columns: columns.value,
+				data: [
+					{
+						age: 27.1,
+						bestSkill: 'Perfect naps',
+						id: 1,
+						isAlive: true,
+						lifespan: '9 lives',
+						name: 'Cats',
+						preferredSound: 'Purring',
+						purpose: 'Ignoring humans',
+						someDate: '2013-22-11',
+						speed: 'Slow and stealthy',
+						worstEnemy: 'Vacuum cleaners',
 					},
-					getData: (row) => row.lifespan,
-					id: 'lifespan',
-					isSortable: true,
-					label: 'Lifespan',
-				},
-			]),
-			data: computed(() => [
-				{
-					age: 27.1,
-					bestSkill: 'Perfect naps',
-					id: 1,
-					isAlive: true,
-					lifespan: '9 lives',
-					name: 'Cats',
-					preferredSound: 'Purring',
-					purpose: 'Ignoring humans',
-					someDate: '2013-22-11',
-					speed: 'Slow and stealthy',
-					worstEnemy: 'Vacuum cleaners',
-				},
-				{
-					age: 85.8,
-					bestSkill: 'Quantum jumps',
-					id: 2,
-					isAlive: false,
-					lifespan: 'Until it crashes',
-					name: 'Spaceships',
-					preferredSound: 'Engine roar',
-					purpose: 'Exploring the universe',
-					someDate: '1922-12-01',
-					speed: 'Faster than light',
-					worstEnemy: 'Black holes',
-				},
-				{
-					age: null,
-					bestSkill: 'Outlasting everything',
-					id: 3,
-					isAlive: false,
-					lifespan: 'Infinite (obviously)',
-					name: 'Tungsten',
-					preferredSound: 'Eternal silence',
-					purpose: 'Being immortal and holy',
-					someDate: '1833-04-23',
-					speed: 'Absolutely unmoving',
-					worstEnemy: 'Rust (blasphemy!)',
-				},
-				{
-					age: 0.1,
-					bestSkill: 'Fueling all-nighters',
-					id: 4,
-					isAlive: false,
-					lifespan: '10 minutes per cup',
-					name: 'Coffee',
-					preferredSound: 'Slurping',
-					purpose: 'Keeping people awake',
-					someDate: '2044-01-03',
-					speed: 'Varies by caffeine level',
-					worstEnemy: 'Decaf',
-				},
-			]),
-			getRowId: (row) => String(row.id) + '-string',
-			hasDragAndDrop: true,
-			id: 'example',
-			isExpandable: true,
-			selection: {},
-		})
+					{
+						age: 85.8,
+						bestSkill: 'Quantum jumps',
+						id: 2,
+						isAlive: false,
+						lifespan: 'Until it crashes',
+						name: 'Spaceships',
+						preferredSound: 'Engine roar',
+						purpose: 'Exploring the universe',
+						someDate: '1922-12-01',
+						speed: 'Faster than light',
+						worstEnemy: 'Black holes',
+					},
+					{
+						age: null,
+						bestSkill: 'Outlasting everything',
+						id: 3,
+						isAlive: false,
+						lifespan: 'Infinite (obviously)',
+						name: 'Tungsten',
+						preferredSound: 'Eternal silence',
+						purpose: 'Being immortal and holy',
+						someDate: '1833-04-23',
+						speed: 'Absolutely unmoving',
+						worstEnemy: 'Rust (blasphemy!)',
+					},
+					{
+						age: 0.1,
+						bestSkill: 'Fueling all-nighters',
+						id: 4,
+						isAlive: false,
+						lifespan: '10 minutes per cup',
+						name: 'Coffee',
+						preferredSound: 'Slurping',
+						purpose: 'Keeping people awake',
+						someDate: '2044-01-03',
+						speed: 'Varies by caffeine level',
+						worstEnemy: 'Decaf',
+					},
+				],
+				getRowId: (row) => String(row.id) + '-string',
+				hasDragAndDrop: true,
+				id: 'example',
+				isExpandable: isTableExpandable.value,
+				selection: isTableSelectable.value ? {} : undefined,
+			})),
+		)
 
 		globalThis.table = tableHook
 
@@ -218,11 +230,21 @@ export default defineComponent({
 
 		return {
 			component: KtTable,
-			emptyVisibility: () => {
-				tableHook.visibilityState.value = {age: false, fakeLOL: true, satan666: false}
-			},
 			emptySelection: () => {
 				tableHook.rowSelection.value = {}
+			},
+			isTableExpandable,
+			isTableSelectable,
+			shuffleHiddenColumns: () => {
+				const ONE_HALF = 0.5
+				tableHook.hiddenColumns.value = new Set(
+					columns.value
+						.map((column) => column.id)
+						.filter(() => Math.random() < ONE_HALF),
+				)
+			},
+			reverseColumnOrder: () => {
+				tableHook.columnOrder.value = tableHook.columnOrder.value.reverse()
 			},
 			visibilityOptions: computed<Kotti.FieldToggleGroup.Props['options']>(
 				() => [
@@ -237,8 +259,8 @@ export default defineComponent({
 					{ key: 'preferredSound', label: 'Preferred Sound' },
 				],
 			),
-			reverseColumnOrder: () => {
-				tableHook.columnOrder.value = tableHook.columnOrder.value.reverse()
+			showAllColumns: () => {
+				tableHook.hiddenColumns.value = new Set()
 			},
 			table: tableHook,
 		}

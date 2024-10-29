@@ -6,6 +6,7 @@ import type { AnyRow } from './types'
 export type TableContext<ROW extends AnyRow> = Ref<{
 	internal: {
 		hasDragAndDrop: boolean
+		isExpandable: boolean
 		isSelectable: boolean
 		setDraggedColumnIndex: (columnId: number | null) => void
 		setDropTargetColumnIndex: (columnId: number | null) => void
