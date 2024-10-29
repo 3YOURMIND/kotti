@@ -152,11 +152,11 @@ export default defineComponent({
 		font-size: var(--font-size-small);
 	}
 
-	:deep(.kt-field-toggle-inner__svg) {
+	.kt-field-toggle-inner__svg {
 		flex-shrink: 0;
 	}
 
-	:deep(.kt-field-toggle-inner__svg--is-box) {
+	.kt-field-toggle-inner__svg--is-box {
 		// align checkbox with the center of the first line of the label
 		// (assumption: font-size comes from common parent element)
 		//  > starting point is upper end of the container (flex-start)
@@ -165,7 +165,7 @@ export default defineComponent({
 		transform: translateY(calc(0.75em - 8px));
 	}
 
-	:deep(.kt-field-toggle-inner__svg--is-switch) {
+	.kt-field-toggle-inner__svg--is-switch {
 		// align switch with the center of the first line of the label
 		// (assumption: font-size comes from common parent element)
 		//  > starting point is upper end of the container (flex-start)

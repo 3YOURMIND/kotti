@@ -10,7 +10,7 @@
 						v-for="(header, headerIndex) in headerGroup.headers"
 						:draggable="
 							tableContext.internal.hasDragAndDrop &&
-							header.id !== SELECTION_COLUMN_ID
+							![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(header.id)
 						"
 						:key="`${header.id}-${headerIndex}`"
 						:class="header.column.columnDef.meta.headerClasses"
@@ -23,33 +23,57 @@
 						@dragstart="handleDragStart(headerIndex)"
 						@drop="handleDrop"
 					>
-						<FlexRender
-							v-if="!header.isPlaceholder"
-							:props="{ ...header.getContext() }"
-							:render="header.column.columnDef.header"
-						/>
-						{{ { asc: ' 🔼', desc: ' 🔽' }[header.column.getIsSorted()] }}
+						<div class="kt-table-header">
+							<FlexRender
+								v-if="!header.isPlaceholder"
+								:props="{ ...header.getContext() }"
+								:render="header.column.columnDef.header"
+							/>
+							<i v-if="header.column.getCanSort()" class="yoco">
+								{{
+									{
+										asc: 'triangle_up',
+										desc: 'triangle_down',
+										[false]: '',
+									}[header.column.getIsSorted()]
+								}}
+							</i>
+						</div>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="row in table.getRowModel().rows" :key="row.id">
-					<td
-						v-for="(cell, cellIndex) in row.getVisibleCells()"
-						:key="cell.id"
-						:class="cell.column.columnDef.meta.cellClasses"
-						@dragend="handleDragEnd"
-						@dragenter="handleDragEnter($event, cellIndex)"
-						@dragleave="handleDragLeave($event)"
-						@dragover.prevent="handleDragOver($event, cellIndex)"
-						@drop="handleDrop"
+				<template v-for="(row, rowIndex) in table.getRowModel().rows">
+					<tr :key="row.id">
+						<td
+							v-for="(cell, cellIndex) in row.getVisibleCells()"
+							:key="cell.id"
+							:class="cell.column.columnDef.meta.cellClasses"
+							@dragend="handleDragEnd"
+							@dragenter="handleDragEnter($event, cellIndex)"
+							@dragleave="handleDragLeave($event)"
+							@dragover.prevent="handleDragOver($event, cellIndex)"
+							@drop="handleDrop"
+						>
+							<FlexRender
+								:props="{ ...cell.getContext() }"
+								:render="cell.column.columnDef.cell"
+							/>
+						</td>
+					</tr>
+					<tr
+						:key="`${row.id}-expanded-row`"
+						v-if="$slots['expanded-row'] && row.getIsExpanded()"
 					>
-						<FlexRender
-							:props="{ ...cell.getContext() }"
-							:render="cell.column.columnDef.cell"
-						/>
-					</td>
-				</tr>
+						<td :colSpan="row.getAllCells().length">
+							<slot
+								name="expanded-row"
+								:rowIndex="rowIndex"
+								:row="row.original"
+							/>
+						</td>
+					</tr>
+				</template>
 			</tbody>
 			<!-- <tfoot>
 				<tr
@@ -78,7 +102,7 @@ import { computed, defineComponent } from 'vue'
 
 import { makeProps } from '../make-props'
 
-import { SELECTION_COLUMN_ID } from './hooks'
+import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './hooks'
 import { useTableContext } from './context'
 import { FlexRender } from './tanstack-table'
 import { KottiTable } from './types'
@@ -95,6 +119,7 @@ export default defineComponent({
 
 		return {
 			console, // TODO: remove
+			EXPANSION_COLUMN_ID,
 			handleDragEnd: () => {
 				console.log('handleDragEnd')
 				tableContext.value.internal.setDropTargetColumnIndex(null)
@@ -121,18 +146,18 @@ export default defineComponent({
 					columnIndex + (isLeftHalf ? 0 : 1),
 				)
 
-				console.log(
-					'handleDragOver',
-					event,
-					JSON.stringify({
-						columnIndex,
-						cursorX,
-						elementX,
-						elementWidth,
-						half: isLeftHalf ? 'left' : 'right',
-						targetIndex,
-					}),
-				)
+				// console.log(
+				// 	'handleDragOver',
+				// 	event,
+				// 	JSON.stringify({
+				// 		columnIndex,
+				// 		cursorX,
+				// 		elementX,
+				// 		elementWidth,
+				// 		half: isLeftHalf ? 'left' : 'right',
+				// 		targetIndex,
+				// 	}),
+				// )
 
 				tableContext.value.internal.setDropTargetColumnIndex(targetIndex)
 			},
@@ -168,6 +193,7 @@ export default defineComponent({
 		background-color: var(--blue-20);
 		opacity: 0.8;
 	}
+
 	to {
 		background-color: none;
 		opacity: 1;
@@ -181,55 +207,64 @@ export default defineComponent({
 	}
 
 	table {
-		$drag-border-width: var(--unit-1);
 		border-collapse: collapse;
 
 		thead {
 			background-color: var(--ui-01);
 
 			th {
-				color: var(--gray-50);
+				position: relative; // used by drop indicators
 				padding: 0.4rem 0.2rem;
 				font-size: var(--unit-3);
+				color: var(--gray-50);
 				text-transform: uppercase;
-			}
 
-			th {
-				position: relative;
-			}
+				.kt-table-header {
+					display: inline-flex;
+					align-items: center;
+					justify-content: space-between;
+					width: 100%;
 
-			.kt-table-cell--has-drop-indicator::before,
-			.kt-table-cell--has-drop-indicator-right::after {
-				content: '';
-				position: absolute;
-				top: 0;
-				width: $drag-border-width;
-				height: 100%;
-				background-color: var(--gray-50);
-				pointer-events: none;
-			}
-
-			.kt-table-cell--has-drop-indicator {
-				&:first-child::before {
-					left: 0px !important;
-				}
-
-				&::before {
-					left: calc($drag-border-width / -2);
-				}
-			}
-
-			.kt-table-cell--has-drop-indicator-right {
-				&:last-child::after {
-					right: 0px !important;
-				}
-
-				&::after {
-					right: calc($drag-border-width / -2);
+					.yoco {
+						min-width: 1rem;
+						font-size: 0.9rem;
+						color: var(--interactive-03);
+					}
 				}
 			}
 
 			.kt-table-cell {
+				&--has-drop-indicator {
+					$drag-indicatordrag-border-width: var(--unit-1);
+
+					&::before,
+					&-right::after {
+						position: absolute;
+						top: 0;
+						width: $drag-indicatordrag-border-width;
+						height: 100%;
+						pointer-events: none;
+						content: '';
+						background-color: var(--gray-50);
+					}
+
+					&:first-child::before {
+						left: 0 !important;
+					}
+
+					&-right:last-child::after {
+						right: 0 !important;
+					}
+
+					&::before {
+						left: calc($drag-indicatordrag-border-width / -2);
+					}
+
+					&-right::after {
+						right: calc($drag-indicatordrag-border-width / -2);
+					}
+				}
+
 				&--is-dragged {
 					background-color: var(--gray-20);
 					opacity: 0.4;
@@ -260,12 +295,15 @@ export default defineComponent({
 	&--is-left-aligned {
 		text-align: left;
 	}
+
 	&--is-right-aligned {
 		text-align: right;
 	}
+
 	&--is-center-aligned {
 		text-align: center;
 	}
+
 	&--was-successfully-dropped {
 		animation: 0.2s ease-in 1 fade-in-right;
 	}

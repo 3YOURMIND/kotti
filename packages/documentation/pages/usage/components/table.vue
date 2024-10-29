@@ -1,7 +1,17 @@
 <template lang="md">
 <ComponentInfo v-bind="{ component }" />
 
-<KtTable id="example" />
+<KtFieldToggleGroup
+	:value="table.visibilityState.value"
+	isOptional
+	label="hide columns"
+	:options="visibilityOptions"
+/>
+<KtTable id="example">
+	<template #expanded-row>
+		Expanded content
+	</template>
+</KtTable>
 <KtButton label="empty selection" @click="emptySelection" />
 <KtButton label="reverse columns" @click="reverseColumnOrder" />
 </template>
@@ -9,7 +19,13 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
 
-import { KtButton, KtTable, useKottiTable } from '@3yourmind/kotti-ui'
+import {
+	KtButton,
+	KtFieldToggleGroup,
+	KtTable,
+	useKottiTable,
+} from '@3yourmind/kotti-ui'
+import type { Kotti } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -25,6 +41,7 @@ export default defineComponent({
 	components: {
 		ComponentInfo,
 		KtButton,
+		KtFieldToggleGroup,
 		KtTable,
 	},
 	setup() {
@@ -90,7 +107,7 @@ export default defineComponent({
 				{
 					display: { type: 'date' },
 					getData: (row) => row.someDate,
-					id: 'Random Date somehow',
+					id: 'randomDate',
 					isSortable: true,
 					label: 'Random Date',
 				},
@@ -182,14 +199,14 @@ export default defineComponent({
 					worstEnemy: 'Decaf',
 				},
 			]),
+			getRowId: (row) => String(row.id) + '-string',
 			hasDragAndDrop: true,
 			id: 'example',
-			selection: {
-				getRowId: (row) => String(row.id),
-			},
+			isExpandable: true,
+			selection: {},
 		})
 
-		// globalThis.table = table
+		globalThis.table = tableHook
 
 		watch(tableHook.ordering, () => {
 			try {
@@ -201,9 +218,25 @@ export default defineComponent({
 
 		return {
 			component: KtTable,
+			emptyVisibility: () => {
+				tableHook.visibilityState.value = {age: false, fakeLOL: true, satan666: false}
+			},
 			emptySelection: () => {
 				tableHook.rowSelection.value = {}
 			},
+			visibilityOptions: computed<Kotti.FieldToggleGroup.Props['options']>(
+				() => [
+					{ key: 'age', label: 'Age' },
+					{ key: 'name', label: 'Name' },
+					{ key: 'purpose', label: 'Primary Purpose' },
+					{ key: 'isAlive', label: 'Aliveness' },
+					{ key: 'speed', label: 'Speed' },
+					{ key: 'randomDate', label: 'Random Date' },
+					{ key: 'bestSkill', label: 'Best Skill' },
+					{ key: 'worstEnemy', label: 'Worst Enemy' },
+					{ key: 'preferredSound', label: 'Preferred Sound' },
+				],
+			),
 			reverseColumnOrder: () => {
 				tableHook.columnOrder.value = tableHook.columnOrder.value.reverse()
 			},
@@ -215,8 +248,8 @@ export default defineComponent({
 
 <style scoped>
 .smol {
-	margin: 5px;
 	width: 40%;
+	margin: 5px;
 	border: 1px solid gray;
 }
 </style>

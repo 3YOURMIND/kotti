@@ -3,11 +3,13 @@ import type {
 	ColumnMeta,
 	RowSelectionState,
 	SortingState,
+	VisibilityState,
 } from '@tanstack/table-core'
 import {
 	type CellContext,
 	createColumnHelper,
 	getCoreRowModel,
+	getExpandedRowModel,
 	type HeaderContext,
 } from '@tanstack/table-core'
 import { computed, h, ref, type Ref, watch } from 'vue'
@@ -21,6 +23,7 @@ import { useProvideTableContext } from './context'
 import { useState, useVueTable } from './tanstack-table'
 import type { AnyRow, KottiTable } from './types'
 
+export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
 export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
 
 type KottiTableParameter<
@@ -29,14 +32,15 @@ type KottiTableParameter<
 > = {
 	columns: Ref<KottiTable.Column<ROW, COLUMN_IDS>[]>
 	data: Ref<ROW[]>
+	getRowId: (row: ROW) => string
 	hasDragAndDrop?: boolean
 	id: string
-	selection?: {
-		getRowId: (row: ROW) => string // maybe needed in other places?
-		// mode: 'single-page' | 'global'   // Consider negative selection for global case
-		// onSelectionUpdate: (updated: Record<string, boolean>) => void
-		// selectedRows: Ref<Record<string, boolean>>
-	}
+	isExpandable?: boolean
+	selection?: Record<string, never> //{
+	// mode: 'single-page' | 'global'   // Consider negative selection for global case
+	// onSelectionUpdate: (updated: Record<string, boolean>) => void
+	// selectedRows: Ref<Record<string, boolean>>
+	//}
 }
 
 // TODO: check for Exclude<> issue with generic
@@ -47,12 +51,14 @@ export const useKottiTable = <ROW extends AnyRow>(
 	ordering: Ref<KottiTable.Ordering[]>
 	rowSelection: Ref<RowSelectionState>
 	tableContext: TableContext<ROW>
+	visibilityState: Ref<VisibilityState>
 } => {
 	const columnHelper = createColumnHelper<ROW>()
 	const i18nContext = useI18nContext()
 
 	const ordering = ref<KottiTable.Ordering[]>([])
 	const columnOrderInternal = ref<string[]>([
+		...(params.isExpandable ? [EXPANSION_COLUMN_ID] : []),
 		...(params.selection ? [SELECTION_COLUMN_ID] : []),
 		...params.columns.value.map(({ id }) => id),
 	])
@@ -60,13 +66,16 @@ export const useKottiTable = <ROW extends AnyRow>(
 	// TODO: should we do this
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
 	const [sorting, setSorting] = useState<SortingState>([])
+	const [visibilityState, setVisibiltyState] = useState<VisibilityState>(
+		Object.fromEntries(params.columns.value.map((column) => [column.id, true])),
+	)
 
 	const draggedColumnIndex = ref<number | null>(null)
 	const dropTargetColumnIndex = ref<number | null>(null)
 	const successfullyDroppedColumnId = ref<string | null>(null)
 
 	const moveColumnTo = (fromIndex: number, toIndex: number): string[] => {
-		console.log({ name: 'moveColumnTo', fromIndex, toIndex })
+		console.log({ fromIndex, name: 'moveColumnTo', toIndex })
 		const droppedColumnId = columnOrderInternal.value[fromIndex]
 		if (!droppedColumnId) throw new Error('index is out of bound')
 
@@ -93,6 +102,29 @@ export const useKottiTable = <ROW extends AnyRow>(
 	const table = useVueTable(
 		computed(() => ({
 			columns: [
+				...(params.isExpandable
+					? [
+							columnHelper.display({
+								cell: ({ row }: CellContext<ROW, unknown>) =>
+									h(
+										'KtButton',
+										{
+											on: {
+												click: () => {
+													row.toggleExpanded(!row.getIsExpanded())
+												},
+											},
+										},
+										[h('i', { class: 'yoco' }, 'triangle_down')],
+									),
+								id: EXPANSION_COLUMN_ID,
+								meta: {
+									cellClasses: '',
+									headerClasses: '',
+								},
+							}),
+						]
+					: []),
 				...(params.selection
 					? [
 							columnHelper.display({
@@ -164,12 +196,12 @@ export const useKottiTable = <ROW extends AnyRow>(
 						[`kt-table-cell--is-${columnDisplay.align}-aligned`]: true,
 						'kt-table-cell': true,
 						'kt-table-cell--displays-number': columnDisplay.isNumeric,
-						'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
 						'kt-table-cell--has-drop-indicator':
 							index === dropTargetColumnIndex.value,
 						'kt-table-cell--has-drop-indicator-right':
 							index + 1 === dropTargetColumnIndex.value &&
 							index === columns.length - 1,
+						'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
 						'kt-table-cell--was-successfully-dropped':
 							column.id === successfullyDroppedColumnId.value,
 					})
@@ -201,7 +233,11 @@ export const useKottiTable = <ROW extends AnyRow>(
 			],
 			data: params.data.value,
 			getCoreRowModel: getCoreRowModel(),
-			getRowId: params.selection?.getRowId,
+			getExpandedRowModel: params.isExpandable
+				? getExpandedRowModel()
+				: undefined,
+			getRowId: params.getRowId,
+			onColumnVisibilityChange: setVisibiltyState,
 			onRowSelectionChange: setRowSelection,
 			// onRowSelectionChange: (updateOrValue) => {
 			// 	if (!params.selection) throw new Error('no selection available')
@@ -227,6 +263,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 				// 	desc: x.value === 'descending',
 				// 	id: x.id,
 				// })),
+				columnVisibility: visibilityState.value,
 			},
 		})),
 	)
@@ -262,10 +299,12 @@ export const useKottiTable = <ROW extends AnyRow>(
 		columnOrder: computed({
 			get: () =>
 				columnOrderInternal.value.filter(
-					(columnId) => columnId !== SELECTION_COLUMN_ID,
+					(columnId) =>
+						![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(columnId),
 				),
 			set: (value) =>
 				(columnOrderInternal.value = [
+					...(params.isExpandable ? [EXPANSION_COLUMN_ID] : []),
 					...(params.selection ? [SELECTION_COLUMN_ID] : []),
 					...value,
 				]),
@@ -273,5 +312,6 @@ export const useKottiTable = <ROW extends AnyRow>(
 		ordering,
 		rowSelection, // TODO: rename
 		tableContext,
+		visibilityState,
 	}
 }
