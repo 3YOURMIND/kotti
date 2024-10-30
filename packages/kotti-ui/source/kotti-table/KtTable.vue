@@ -17,7 +17,7 @@
 						"
 						@click="header.column.getToggleSortingHandler()?.($event)"
 						@dragend="handleDragEnd"
-						@dragenter="handleDragEnter($event, header.id)"
+						@dragenter.prevent
 						@dragleave.prevent
 						@dragover.prevent="handleDragOver($event, header.id)"
 						@dragstart="handleDragStart($event, header.id)"
@@ -50,7 +50,7 @@
 							:key="cell.id"
 							:class="cell.column.columnDef.meta.cellClasses"
 							@dragend="handleDragEnd"
-							@dragenter="handleDragEnter($event, cell.column.id)"
+							@dragenter.prevent
 							@dragleave.prevent
 							@dragover.prevent="handleDragOver($event, cell.column.id)"
 						>
@@ -129,15 +129,6 @@ export default defineComponent({
 				// console.log('handleDragEnd')
 				tableContext.value.internal.setDropTargetColumnIndex(null)
 				tableContext.value.internal.setDraggedColumnIndex(null)
-			},
-			handleDragEnter: (event: DragEvent, columnId: string) => {
-				// console.log('handleDragEnter', event.dataTransfer)
-				if (!isColumnMoveDataTransfer(event)) return
-
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				event.dataTransfer!.dropEffect = 'move'
-				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
-				tableContext.value.internal.setDropTargetColumnIndex(columnIndex)
 			},
 			handleDragOver: (event: DragEvent, columnId: string) => {
 				if (!isColumnMoveDataTransfer(event)) return
