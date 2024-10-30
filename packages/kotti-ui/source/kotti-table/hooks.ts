@@ -105,6 +105,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 			0,
 			droppedColumnId,
 		)
+		// TODO setting this should not happen in this util function
 		successfullyDroppedColumnId.value = droppedColumnId
 		return spliced
 	}
@@ -227,7 +228,8 @@ export const useKottiTable = <ROW extends AnyRow>(
 						'kt-table-cell--has-drop-indicator':
 							index === dropTargetColumnIndex.value,
 						'kt-table-cell--has-drop-indicator-right':
-							index + 1 === dropTargetColumnIndex.value,
+							index + 1 === dropTargetColumnIndex.value &&
+							columnOrderInternal.value.length - 1 === index,
 						'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
 						'kt-table-cell--was-successfully-dropped':
 							column.id === successfullyDroppedColumnId.value,

@@ -240,44 +240,16 @@ export default defineComponent({
 
 			.kt-table-cell {
 				&--has-drop-indicator {
-					$drag-indicatordrag-border-width: var(--unit-1);
-
-					&, // TODO: does this work? it should, right?
-					&-right {
-						position: relative;
-					}
-
 					&::before,
 					&-right::after {
-						position: absolute;
-						top: 0;
-						width: $drag-indicatordrag-border-width;
-						height: 100%;
-						pointer-events: none;
-						content: '';
-						background-color: var(--gray-50);
-					}
-
-					&:first-child::before {
-						left: 0 !important;
-					}
-
-					&-right:last-child::after {
-						right: 0 !important;
-					}
-
-					&::before {
-						left: calc($drag-indicatordrag-border-width / -2);
-					}
-
-					&-right::after {
-						right: calc($drag-indicatordrag-border-width / -2);
+						background-color: var(--gray-30);
 					}
 				}
 
 				&--is-dragged {
 					background-color: var(--gray-20);
-					opacity: 0.4;
+					// TODO consider if this is needed (note that it affects the drop indicator)
+					/* opacity: 0.4; */
 				}
 			}
 		}
@@ -288,9 +260,17 @@ export default defineComponent({
 			}
 
 			.kt-table-cell--is-body {
-				&--is-dragged {
+				&.kt-table-cell--has-drop-indicator {
+					&::before,
+					&-right::after {
+						background-color: var(--gray-30);
+					}
+				}
+
+				&.kt-table-cell--is-dragged {
 					background-color: var(--gray-10);
-					opacity: 0.4;
+					// TODO consider if this is needed (note that it affects the drop indicator)
+					/* opacity: 0.4; */
 				}
 			}
 		}
@@ -336,6 +316,41 @@ export default defineComponent({
 
 	.kt-table-selection {
 		margin-right: var(--unit-3);
+	}
+
+	&--has-drop-indicator {
+		$drag-indicatordrag-border-width: 2px;
+
+		&, // TODO: does this work? it should, right?
+		&-right {
+			position: relative;
+		}
+
+		&::before,
+		&-right::after {
+			position: absolute;
+			top: 0;
+			width: $drag-indicatordrag-border-width;
+			height: 100%;
+			pointer-events: none;
+			content: '';
+		}
+
+		&:first-child::before {
+			left: 0 !important;
+		}
+
+		&-right:last-child::after {
+			right: 0 !important;
+		}
+
+		&::before {
+			left: calc($drag-indicatordrag-border-width / -2);
+		}
+
+		&-right::after {
+			right: calc($drag-indicatordrag-border-width / -2);
+		}
 	}
 }
 </style>
