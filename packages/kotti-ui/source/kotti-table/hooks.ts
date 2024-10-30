@@ -212,29 +212,26 @@ export const useKottiTable = <ROW extends AnyRow>(
 							}),
 						]
 					: []),
-				...params.value.columns.map((column, _, columns) => {
+				...params.value.columns.map((column) => {
 					const columnDisplay = resolveColumnDisplay(column.display)
 					const index = columnOrderInternal.value.indexOf(column.id)
 
 					// TODO: The alignmentClass generation is a bit complex. You could simplify this by directly joining classes without filtering when boolean values are true, or consider a helper function to manage conditional classes. — ChatGippety
-					const getCellClasses = (cellType: 'header' | 'body'): string =>
-						Object.entries({
-							[`kt-table-cell--is-${cellType}`]: true,
-							[`kt-table-cell--is-${columnDisplay.align}-aligned`]: true,
-							'kt-table-cell': true,
-							'kt-table-cell--displays-number': columnDisplay.isNumeric,
-							'kt-table-cell--has-drop-indicator':
-								index === dropTargetColumnIndex.value,
-							'kt-table-cell--has-drop-indicator-right':
-								index + 1 === dropTargetColumnIndex.value &&
-								index === columns.length - 1,
-							'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
-							'kt-table-cell--was-successfully-dropped':
-								column.id === successfullyDroppedColumnId.value,
-						})
-							.filter(([_, isTrue]) => isTrue)
-							.map(([className, _]) => className)
-							.join(' ')
+					const getCellClasses = (
+						cellType: 'body' | 'header',
+					): Record<string, boolean> => ({
+						[`kt-table-cell--is-${cellType}`]: true,
+						[`kt-table-cell--is-${columnDisplay.align}-aligned`]: true,
+						'kt-table-cell': true,
+						'kt-table-cell--displays-number': columnDisplay.isNumeric,
+						'kt-table-cell--has-drop-indicator':
+							index === dropTargetColumnIndex.value,
+						'kt-table-cell--has-drop-indicator-right':
+							index + 1 === dropTargetColumnIndex.value,
+						'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
+						'kt-table-cell--was-successfully-dropped':
+							column.id === successfullyDroppedColumnId.value,
+					})
 
 					return columnHelper.accessor(column.getData, {
 						cell: (info) => {

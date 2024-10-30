@@ -1,6 +1,6 @@
 <template>
 	<div :class="tableClasses">
-		<table>
+		<table @drop="handleDrop" @dragleave="handleDragLeave">
 			<thead>
 				<tr
 					v-for="headerGroup in table.getHeaderGroups()"
@@ -18,10 +18,9 @@
 						@click="header.column.getToggleSortingHandler()?.($event)"
 						@dragend="handleDragEnd"
 						@dragenter="handleDragEnter($event, header.id)"
-						@dragleave="handleDragLeave($event)"
+						@dragleave.prevent
 						@dragover.prevent="handleDragOver($event, header.id)"
 						@dragstart="handleDragStart($event, header.id)"
-						@drop="handleDrop"
 					>
 						<div v-if="!header.isPlaceholder" class="kt-table-header">
 							<FlexRender
@@ -51,10 +50,9 @@
 							:key="cell.id"
 							:class="cell.column.columnDef.meta.cellClasses"
 							@dragend="handleDragEnd"
-							@dragenter="handleDragEnter($event, cellIndex)"
-							@dragleave="handleDragLeave($event)"
-							@dragover.prevent="handleDragOver($event, cellIndex)"
-							@drop="handleDrop"
+							@dragenter="handleDragEnter($event, cell.column.id)"
+							@dragleave.prevent
+							@dragover.prevent="handleDragOver($event, cell.column.id)"
 						>
 							<FlexRender
 								:props="{ ...cell.getContext() }"
@@ -108,6 +106,8 @@ import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID, ARRAY_START } from './hooks'
 import { FlexRender } from './tanstack-table'
 import { KottiTable } from './types'
 
+const TRANSFER_TYPE = 'application/move-column'
+
 export default defineComponent({
 	name: 'KtTable',
 	components: {
@@ -118,20 +118,29 @@ export default defineComponent({
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = useTableContext(props.id)
 
+		const isColumnMoveDataTransfer = (event: DragEvent): boolean => {
+			return event.dataTransfer?.types.includes(TRANSFER_TYPE) ?? false
+		}
+
 		return {
 			console, // TODO: remove
 			EXPANSION_COLUMN_ID,
 			handleDragEnd: () => {
-				console.log('handleDragEnd')
+				// console.log('handleDragEnd')
 				tableContext.value.internal.setDropTargetColumnIndex(null)
 				tableContext.value.internal.setDraggedColumnIndex(null)
 			},
 			handleDragEnter: (event: DragEvent, columnId: string) => {
+				// console.log('handleDragEnter', event.dataTransfer)
+				if (!isColumnMoveDataTransfer(event)) return
+
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				event.dataTransfer!.dropEffect = 'move'
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
-				console.log('handleDragEnter', event.currentTarget, columnIndex)
 				tableContext.value.internal.setDropTargetColumnIndex(columnIndex)
 			},
 			handleDragOver: (event: DragEvent, columnId: string) => {
+				if (!isColumnMoveDataTransfer(event)) return
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				event.dataTransfer!.dropEffect = 'move'
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
@@ -165,17 +174,17 @@ export default defineComponent({
 			},
 			handleDragLeave: (_event: DragEvent) => {
 				// console.log('handleDragLeave', event.currentTarget, event.target)
-				// tableContext.value.internal.setDropTargetColumnIndex(null)
+				tableContext.value.internal.setDropTargetColumnIndex(null)
 			},
 			handleDragStart: (event: DragEvent, columnId: string) => {
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				event.dataTransfer!.dropEffect = 'move'
+				event.dataTransfer?.setData(TRANSFER_TYPE, '')
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
-				console.log('handleDragStart', columnIndex)
+				// console.log('handleDragStart', columnIndex)
 				tableContext.value.internal.setDraggedColumnIndex(columnIndex)
 			},
 			handleDrop: (event: DragEvent) => {
-				console.log('handleDrop', event)
+				if (!isColumnMoveDataTransfer(event)) return
+
 				tableContext.value.internal.swapDraggedAndDropTarget()
 				tableContext.value.internal.setDropTargetColumnIndex(null)
 				tableContext.value.internal.setDraggedColumnIndex(null)
