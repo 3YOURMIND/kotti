@@ -11,7 +11,7 @@ import type { KottiFilters } from '../kotti-filters/types'
 import type { KottiFormSubmit } from '../kotti-form-submit/types'
 import type { KottiNavbar } from '../kotti-navbar/types'
 import type { KottiValueLabel } from '../kotti-value-label/types'
-import { DecimalSeparator } from '../types/kotti'
+import { DecimalSeparator } from '../types/decimal-separator'
 
 export type DeepPartial<T> =
 	T extends Record<string, unknown> ? { [K in keyof T]?: DeepPartial<T[K]> } : T

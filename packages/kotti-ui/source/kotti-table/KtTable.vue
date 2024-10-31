@@ -1,70 +1,72 @@
 <template>
 	<div :class="tableClasses">
-		<table @drop="handleDrop" @dragleave="handleDragLeave">
+		<table
+			@dragend="handleTableDragEnd"
+			@dragleave="handleDragLeave"
+			@drop="handleDrop"
+		>
 			<thead>
-				<tr
-					v-for="headerGroup in table.getHeaderGroups()"
-					:key="headerGroup.id"
-				>
+				<tr v-for="headerRow in headerRows" :key="headerRow.key">
 					<th
-						v-for="(header, headerIndex) in headerGroup.headers"
-						:key="`${header.id}-${headerIndex}`"
-						:class="header.column.columnDef.meta.headerClasses"
+						v-for="header in headerRow.headers"
+						:key="header.key"
+						:class="header.classes"
 						:colSpan="header.colSpan"
-						:draggable="
-							tableContext.internal.hasDragAndDrop &&
-							![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(header.id)
-						"
-						@click="header.column.getToggleSortingHandler()?.($event)"
-						@dragend="handleDragEnd"
+						:draggable="header.isDraggable"
+						@click="(e) => handleHeaderClick(e, header.id)"
 						@dragenter.prevent
 						@dragleave.prevent
-						@dragover.prevent="handleDragOver($event, header.id)"
-						@dragstart="handleDragStart($event, header.id)"
+						@dragover.prevent="(e) => handleCellDragOver(e, header.id)"
+						@dragstart="(e) => handleHeaderDragStart(e, header.id)"
 					>
 						<div v-if="!header.isPlaceholder" class="kt-table-header">
 							<FlexRender
-								v-if="!header.isPlaceholder"
 								:props="{ ...header.getContext() }"
 								:render="header.column.columnDef.header"
 							/>
 							<!-- <div style="flex: 1" v-text="header.column.columnDef.header()" /> -->
-							<i v-if="header.column.getIsSorted()" class="yoco">
-								{{
-									{
-										asc: 'chevron_up',
-										desc: 'chevron_down',
-										[false]: '',
-									}[header.column.getIsSorted()]
-								}}
-							</i>
+							<i
+								v-if="header.isSortable"
+								class="yoco"
+								v-text="header.sortIndicatorIcon"
+							/>
 						</div>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<template v-for="(row, rowIndex) in table.getRowModel().rows">
-					<tr :key="row.id">
+				<template v-for="(row, rowIndex) in bodyRows">
+					<!-- TODO: add data-test -->
+					<tr :key="row.key">
 						<td
-							v-for="(cell, cellIndex) in row.getVisibleCells()"
-							:key="cell.id"
-							:class="cell.column.columnDef.meta.cellClasses"
-							@dragend="handleDragEnd"
+							v-for="(cell, cellIndex) in row.cells"
+							:key="cell.key"
+							:class="cell.classes"
 							@dragenter.prevent
 							@dragleave.prevent
-							@dragover.prevent="handleDragOver($event, cell.column.id)"
+							@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
 						>
+							<!-- TODO: error when custom has no slot // {{ `slot ${cell.columnId}` }} -->
+							<slot
+								v-if="cell.hasSlot"
+								:columnIndex="cellIndex"
+								:data="cell.data"
+								:name="cell.columnId"
+								:row="row.original"
+								:rowIndex="rowIndex"
+							/>
 							<FlexRender
+								v-else
 								:props="{ ...cell.getContext() }"
 								:render="cell.column.columnDef.cell"
 							/>
 						</td>
 					</tr>
 					<tr
-						v-if="$slots['expanded-row'] && row.getIsExpanded()"
-						:key="`${row.id}-expanded-row`"
+						v-if="$scopedSlots['expanded-row'] && row.isExpanded"
+						:key="row.expandedKey"
 					>
-						<td :colSpan="row.getAllCells().length">
+						<td :colSpan="row.expandedColSpan">
 							<slot
 								name="expanded-row"
 								:row="row.original"
@@ -97,12 +99,15 @@
 </template>
 
 <script lang="ts">
+import type { Header } from '@tanstack/table-core'
 import { computed, defineComponent } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { makeProps } from '../make-props'
 
 import { useTableContext } from './context'
-import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID, ARRAY_START } from './hooks'
+import { ARRAY_START, EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './hooks'
 import { FlexRender } from './tanstack-table'
 import { KottiTable } from './types'
 
@@ -114,7 +119,7 @@ export default defineComponent({
 		FlexRender,
 	},
 	props: makeProps(KottiTable.propsSchema),
-	setup(props) {
+	setup(props, { slots }) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = useTableContext(props.id)
 
@@ -122,15 +127,34 @@ export default defineComponent({
 			return event.dataTransfer?.types.includes(TRANSFER_TYPE) ?? false
 		}
 
+		const table = computed(() => tableContext.value.internal.table.value)
+
 		return {
+			bodyRows: computed(() =>
+				table.value.getRowModel().rows.map((row) => ({
+					cells: row.getVisibleCells().map((cell) => ({
+						classes: cell.column.columnDef.meta.cellClasses,
+						column: cell.column,
+						columnId: cell.column.id,
+						data:
+							typeof cell.column.columnDef.cell === 'string'
+								? cell.column.columnDef.cell
+								: cell.column.columnDef.cell?.({ ...cell.getContext() }) ?? '',
+						getContext: cell.getContext,
+						hasSlot:
+							Boolean(slots[cell.column.id]) &&
+							cell.column.columnDef.meta.type === 'custom',
+						key: cell.id,
+					})),
+					expandedColSpan: row.getAllCells().length,
+					expandedKey: `${row.id}-expanded-row`,
+					isExpanded: row.getIsExpanded(),
+					key: row.id,
+				})),
+			),
 			console, // TODO: remove
 			EXPANSION_COLUMN_ID,
-			handleDragEnd: () => {
-				// console.log('handleDragEnd')
-				tableContext.value.internal.setDropTargetColumnIndex(null)
-				tableContext.value.internal.setDraggedColumnIndex(null)
-			},
-			handleDragOver: (event: DragEvent, columnId: string) => {
+			handleCellDragOver: (event: DragEvent, columnId: string) => {
 				if (!isColumnMoveDataTransfer(event)) return
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				event.dataTransfer!.dropEffect = 'move'
@@ -167,12 +191,6 @@ export default defineComponent({
 				// console.log('handleDragLeave', event.currentTarget, event.target)
 				tableContext.value.internal.setDropTargetColumnIndex(null)
 			},
-			handleDragStart: (event: DragEvent, columnId: string) => {
-				event.dataTransfer?.setData(TRANSFER_TYPE, '')
-				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
-				// console.log('handleDragStart', columnIndex)
-				tableContext.value.internal.setDraggedColumnIndex(columnIndex)
-			},
 			handleDrop: (event: DragEvent) => {
 				if (!isColumnMoveDataTransfer(event)) return
 
@@ -180,12 +198,50 @@ export default defineComponent({
 				tableContext.value.internal.setDropTargetColumnIndex(null)
 				tableContext.value.internal.setDraggedColumnIndex(null)
 			},
+			handleHeaderClick: (
+				$event: MouseEvent,
+				header: Header<unknown, unknown>,
+			) => {
+				header.column.getToggleSortingHandler()?.($event)
+			},
+			handleHeaderDragStart: (event: DragEvent, columnId: string) => {
+				event.dataTransfer?.setData(TRANSFER_TYPE, '')
+				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
+				// console.log('handleHeaderDragStart', columnIndex)
+				tableContext.value.internal.setDraggedColumnIndex(columnIndex)
+			},
+			handleTableDragEnd: () => {
+				// console.log('handleTableDragEnd')
+				tableContext.value.internal.setDropTargetColumnIndex(null)
+				tableContext.value.internal.setDraggedColumnIndex(null)
+			},
+			headerRows: computed(() =>
+				table.value.getHeaderGroups().map((headerRow) => ({
+					headers: headerRow.headers.map((header, headerIndex) => ({
+						classes: header.column.columnDef.meta.headerClasses,
+						column: header.column,
+						colSpan: header.colSpan,
+						getContext: header.getContext,
+						isDraggable:
+							tableContext.value.internal.hasDragAndDrop &&
+							![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(header.id),
+						isSortable: header.column.getCanSort(),
+						key: `${header.id}-${headerIndex}`,
+						sortIndicatorIcon: {
+							asc: Yoco.Icon.CHEVRON_UP,
+							desc: Yoco.Icon.CHEVRON_DOWN,
+							false: '',
+						}[header.column.getIsSorted() || 'false'],
+					})),
+					key: headerRow.id,
+				})),
+			),
 			SELECTION_COLUMN_ID,
 			tableClasses: computed(() => ({
 				'kt-table': true,
 				'kt-table--is-scrollable': !props.isNotScrollable,
 			})),
-			table: computed(() => tableContext.value.internal.table.value),
+			table,
 			tableContext: computed(() => tableContext.value),
 		}
 	},

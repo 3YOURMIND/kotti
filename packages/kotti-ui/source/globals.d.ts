@@ -1,5 +1,7 @@
 import type { z } from 'zod'
 
+import '@tanstack/table-core'
+
 declare global {
 	interface Window {
 		/**
@@ -7,5 +9,21 @@ declare global {
 		 * inspect the failing schema in the brower console
 		 */
 		lastZodSchema?: z.ZodTypeAny
+	}
+}
+
+declare module '@tanstack/table-core' {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	interface ColumnMeta<T_DATA extends RowData, T_VALUE> {
+		cellClasses: Record<string, boolean> | string
+		headerClasses: Record<string, boolean> | string
+		type:
+			| 'boolean'
+			| 'custom'
+			| 'date'
+			| 'datetime'
+			| 'integer'
+			| 'numerical'
+			| 'text'
 	}
 }

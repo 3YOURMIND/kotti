@@ -1,3 +1,4 @@
+import type { VNode } from 'vue'
 import { z } from 'zod'
 
 import { KottiI18n } from '../kotti-i18n/types'
@@ -22,7 +23,7 @@ export module KottiTable {
 						z
 							.object({
 								numberFormat: KottiI18n.numberFormatSchema,
-								options: z.object({}).strict(),
+								options: z.object({}).passthrough(),
 							})
 							.strict(),
 					)
@@ -32,6 +33,7 @@ export module KottiTable {
 				type: z.literal('custom'),
 			})
 			.strict(),
+		// z.object({ type: z.literal('custom') }).passthrough(),
 		z
 			.object({
 				decimalPlaces: z.number().int().finite().min(0).default(2),
@@ -51,19 +53,43 @@ export module KottiTable {
 			display: columnDisplaySchema,
 			getData: z.function().args(z.any()).returns(z.unknown()),
 			id: z.string(),
-			isSortable: z.boolean().optional(),
+			isSortable: z.boolean().default(false),
 			label: z.string(),
 		})
 		.strict()
 
+	type DataDisplay<ROW extends AnyRow> =
+		| {
+				display: {
+					align: 'center' | 'left' | 'right'
+					formatter?: unknown
+					isNumeric: boolean
+					type: 'custom'
+				}
+				getData: (row: ROW) => VNode | string | null
+		  }
+		| {
+				display: { type: 'boolean' }
+				getData: (row: ROW) => boolean
+		  }
+		| {
+				display: { type: 'date' } | { type: 'date-time' } | { type: 'text' }
+				getData: (row: ROW) => string
+		  }
+		| {
+				display:
+					| { decimalPlaces: number; type: 'numerical' }
+					| { type: 'integer' }
+				getData: (row: ROW) => number
+		  }
+
 	export type Column<
 		ROW extends AnyRow,
 		COLUMN_IDS extends string = string,
-		DATA = unknown,
-	> = {
-		display: ColumnDisplay
+	> = DataDisplay<ROW> & {
+		// display: ColumnDisplay
 		// TODO: make data dependent on type of display or sth
-		getData: (row: ROW) => DATA
+		// getData: (row: ROW) => DATA
 		id: COLUMN_IDS
 		isSortable?: boolean
 		label: string

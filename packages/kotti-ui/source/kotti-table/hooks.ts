@@ -1,6 +1,5 @@
 import { Dashes } from '@metatypes/typography'
 import type {
-	ColumnMeta,
 	RowSelectionState,
 	SortingState,
 	VisibilityState,
@@ -13,15 +12,16 @@ import {
 	type HeaderContext,
 } from '@tanstack/table-core'
 import { computed, h, ref, type Ref, watch } from 'vue'
+import { z } from 'zod'
 
+import { KtButton } from '../kotti-button'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import ToggleInner from '../shared-components/toggle-inner/ToggleInner.vue'
 
 import { resolveColumnDisplay } from './column'
-import type { TableContext } from './context'
-import { useProvideTableContext } from './context'
+import { type TableContext, useProvideTableContext } from './context'
 import { useState, useVueTable } from './tanstack-table'
-import type { AnyRow, KottiTable } from './types'
+import { type AnyRow, KottiTable } from './types'
 
 export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
 export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
@@ -44,9 +44,21 @@ type KottiTableParameter<
 	//}
 }>
 
+const paramsSchema = z
+	.object({
+		columns: z.array(KottiTable.columnSchema),
+		data: z.array(z.any()),
+		getRowId: z.function().args(z.any()).returns(z.string()),
+		hasDragAndDrop: z.boolean().default(false),
+		id: z.string(),
+		isExpandable: z.boolean().default(false),
+		selection: z.record(z.string(), z.never()).optional(), //FIXME should have default {}
+	})
+	.strict()
+
 // TODO: check for Exclude<> issue with generic
 export const useKottiTable = <ROW extends AnyRow>(
-	params: KottiTableParameter<ROW>,
+	_params: KottiTableParameter<ROW>,
 ): {
 	columnOrder: Ref<string[]>
 	hiddenColumns: Ref<Set<string>>
@@ -54,6 +66,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 	rowSelection: Ref<RowSelectionState>
 	tableContext: TableContext<ROW>
 } => {
+	const params = computed(() => paramsSchema.parse(_params.value))
 	const columnHelper = createColumnHelper<ROW>()
 	const i18nContext = useI18nContext()
 
@@ -127,7 +140,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 					? [
 							columnHelper.display({
 								cell: ({ row }: CellContext<ROW, unknown>) =>
-									h('KtButton', {
+									h(KtButton, {
 										on: {
 											click: () => {
 												row.toggleExpanded(!row.getIsExpanded())
@@ -147,6 +160,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 								meta: {
 									cellClasses: '',
 									headerClasses: '',
+									meta: 'text',
 								},
 							}),
 						]
@@ -173,6 +187,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 														// TODO: pass data-test
 														// TODO: disable when row is disabled
 														disabled: !row.getCanSelect(), // TODO: make ToggleInner not stupid
+														id: `${params.value.id}-${row.id}-select`,
 													},
 													isDisabled: !row.getCanSelect(),
 													value: row.getIsSelected(),
@@ -198,6 +213,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 													component: 'div',
 													inputProps: {
 														// TODO: pass data-test
+														id: `${params.value.id}-header-select-all`,
 													},
 													isDisabled: false,
 													value: table.getIsAllRowsSelected(),
@@ -209,6 +225,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 								meta: {
 									cellClasses: 'kt-table-cell kt-table-cell--is-body',
 									headerClasses: 'kt-table-cell kt-table-cell--is-header',
+									meta: '',
 								},
 							}),
 						]
@@ -247,13 +264,14 @@ export const useKottiTable = <ROW extends AnyRow>(
 							}
 							return info.getValue() ?? Dashes.EmDash
 						},
-						enableSorting: column.isSortable ?? false,
+						enableSorting: column.isSortable,
 						header: () => h('div', { style: { flex: 1 } }, column.label),
 						id: column.id,
 						meta: {
 							cellClasses: getCellClasses('body'),
 							headerClasses: getCellClasses('header'),
-						} satisfies ColumnMeta<ROW, unknown>,
+							type: column.display.type,
+						},
 					})
 				}),
 			],
