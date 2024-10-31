@@ -144,6 +144,7 @@ export default defineComponent({
 						hasSlot:
 							Boolean(slots[cell.column.id]) &&
 							cell.column.columnDef.meta.type === 'custom',
+						id: cell.id,
 						key: cell.id,
 					})),
 					expandedColSpan: row.getAllCells().length,
@@ -152,8 +153,6 @@ export default defineComponent({
 					key: row.id,
 				})),
 			),
-			console, // TODO: remove
-			EXPANSION_COLUMN_ID,
 			handleCellDragOver: (event: DragEvent, columnId: string) => {
 				if (!isColumnMoveDataTransfer(event)) return
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -219,9 +218,10 @@ export default defineComponent({
 				table.value.getHeaderGroups().map((headerRow) => ({
 					headers: headerRow.headers.map((header, headerIndex) => ({
 						classes: header.column.columnDef.meta.headerClasses,
-						column: header.column,
 						colSpan: header.colSpan,
+						column: header.column,
 						getContext: header.getContext,
+						id: header.id,
 						isDraggable:
 							tableContext.value.internal.hasDragAndDrop &&
 							![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(header.id),
@@ -236,7 +236,6 @@ export default defineComponent({
 					key: headerRow.id,
 				})),
 			),
-			SELECTION_COLUMN_ID,
 			tableClasses: computed(() => ({
 				'kt-table': true,
 				'kt-table--is-scrollable': !props.isNotScrollable,
@@ -274,8 +273,8 @@ export default defineComponent({
 			background-color: var(--ui-01);
 
 			.kt-table-cell--is-header {
-				cursor: grab; // TODO hasDragAndDrop
 				padding: 0.4rem 0.2rem;
+				cursor: grab; // TODO hasDragAndDrop
 				font-size: var(--unit-3);
 				color: var(--gray-50);
 				text-transform: uppercase;
@@ -325,8 +324,9 @@ export default defineComponent({
 
 				&.kt-table-cell--is-dragged {
 					background-color: var(--gray-10);
+
 					// TODO consider if this is needed (note that it affects the drop indicator)
-					/* opacity: 0.4; */
+					// opacity: 0.4;
 				}
 			}
 		}
