@@ -114,6 +114,7 @@ export module KottiTable {
 		.object({
 			id: z.string(),
 			// TODO: desired?
+			// TODO: bug: can lead to header cells wrapping content
 			isNotScrollable: z.boolean().default(false),
 		})
 		.strict()

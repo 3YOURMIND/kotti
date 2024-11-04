@@ -46,6 +46,8 @@ type KottiTableParameter<
 
 const paramsSchema = z
 	.object({
+		//TODO:
+		// actions : list of buttons (based on baseOptionSchema)
 		columns: z.array(KottiTable.columnSchema),
 		data: z.array(z.any()),
 		getRowId: z.function().args(z.any()).returns(z.string()),
@@ -80,6 +82,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 		SELECTION_COLUMN_ID,
 		...params.value.columns.map(({ id }) => id),
 	])
+	// const hasActionSlot = ref(false)
 
 	// watch(
 	// 	() => params,
@@ -274,6 +277,19 @@ export const useKottiTable = <ROW extends AnyRow>(
 						},
 					})
 				}),
+				// Column for actions may not need to exist in tanstack
+				// ...(hasActionSlot.value
+				// 	? [
+				// 			columnHelper.display({
+				// 				id: ACTION_COLUMN_ID,
+				// 				meta: {
+				// 					cellClasses: 'kt-table-cell kt-table-cell--is-actions',
+				// 					headerClasses: 'kt-table-cell',
+				// 					meta: '',
+				// 				},
+				// 			}),
+				// 		]
+				// 	: []),
 			],
 			data: params.value.data,
 			getCoreRowModel: getCoreRowModel(),

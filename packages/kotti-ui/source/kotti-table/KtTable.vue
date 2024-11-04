@@ -13,7 +13,7 @@
 						:class="header.classes"
 						:colSpan="header.colSpan"
 						:draggable="header.isDraggable"
-						@click="(e) => handleHeaderClick(e, header.id)"
+						@click="(e) => handleHeaderClick(e, header)"
 						@dragenter.prevent
 						@dragleave.prevent
 						@dragover.prevent="(e) => handleCellDragOver(e, header.id)"
@@ -32,6 +32,7 @@
 							/>
 						</div>
 					</th>
+					<th v-if="$scopedSlots['actions']" class="kt-table__actions-column" />
 				</tr>
 			</thead>
 			<tbody>
@@ -60,6 +61,11 @@
 								:props="{ ...cell.getContext() }"
 								:render="cell.column.columnDef.cell"
 							/>
+						</td>
+						<td v-if="$scopedSlots['actions']" class="kt-table__actions-column">
+							<div class="kt-table__actions">
+								<slot name="actions" :row="row.original" :rowIndex="rowIndex" />
+							</div>
 						</td>
 					</tr>
 					<tr
@@ -151,6 +157,7 @@ export default defineComponent({
 					expandedKey: `${row.id}-expanded-row`,
 					isExpanded: row.getIsExpanded(),
 					key: row.id,
+					original: row.original,
 				})),
 			),
 			handleCellDragOver: (event: DragEvent, columnId: string) => {
@@ -158,6 +165,7 @@ export default defineComponent({
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				event.dataTransfer!.dropEffect = 'move'
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
+				console.log('handleCellDragOver', columnId, columnIndex)
 				const target = event.target as HTMLElement
 
 				const { x: elementX, width: elementWidth } =
@@ -206,7 +214,7 @@ export default defineComponent({
 			handleHeaderDragStart: (event: DragEvent, columnId: string) => {
 				event.dataTransfer?.setData(TRANSFER_TYPE, '')
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
-				// console.log('handleHeaderDragStart', columnIndex)
+				console.log('handleHeaderDragStart', columnId, columnIndex)
 				tableContext.value.internal.setDraggedColumnIndex(columnIndex)
 			},
 			handleTableDragEnd: () => {
@@ -303,15 +311,23 @@ export default defineComponent({
 
 				&--is-dragged {
 					background-color: var(--gray-20);
+
 					// TODO consider if this is needed (note that it affects the drop indicator)
-					/* opacity: 0.4; */
+					// opacity: 0.4;
 				}
 			}
 		}
 
 		tbody {
 			tr {
+				position: relative;
 				border-bottom: 1px solid var(--ui-02);
+
+				&:hover .kt-table__actions {
+					display: inline-flex;
+					justify-content: center;
+					background: var(--white);
+				}
 			}
 
 			.kt-table-cell--is-body {
@@ -333,6 +349,42 @@ export default defineComponent({
 
 		.kt-table-cell {
 			padding: 0.4rem 0.2rem;
+		}
+	}
+
+	&__actions-column {
+		position: sticky;
+		right: 0;
+
+		> .kt-table__actions {
+			//TODO was copy pasted, please clean
+			position: absolute;
+			right: 0.8rem;
+			z-index: 400;
+			display: none;
+			padding: 0.25rem;
+			margin-top: -0.8rem;
+			font-size: 0.8rem;
+			line-height: 0.8rem;
+			border: 0;
+			border-radius: var(--border-radius);
+			box-shadow: 0 0 1px #999;
+
+			> * {
+				display: flex;
+				flex-direction: row;
+			}
+
+			i {
+				margin: 0 var(--unit-1);
+				font-size: 1rem;
+				color: var(--icon-02);
+
+				&:hover {
+					color: var(--icon-01);
+					cursor: pointer;
+				}
+			}
 		}
 	}
 }

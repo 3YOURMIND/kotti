@@ -10,6 +10,7 @@
 		</KtFieldToggle>
 
 		<KtTable id="example">
+			<template #actions> I am a nice action </template>
 			<template #expanded-row>
 				<div>Expanded content</div>
 			</template>
@@ -251,7 +252,7 @@ export default defineComponent({
 			})),
 		)
 
-		globalThis.table = tableHook
+		// globalThis.table = tableHook
 
 		watch(tableHook.ordering, () => {
 			try {
