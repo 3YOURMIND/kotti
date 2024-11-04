@@ -8,7 +8,7 @@
 		code='<KtPagination :total="50" :pageSize="10" v-model:page="page50" />'
 		language="vue-html"
 	>
-		<KtPagination :total="50" :pageSize="10" v-model:page="page50" />
+		<KtPagination v-model:page="page50" :pageSize="10" :total="50" />
 	</CodePreview>
 
 	<h2>Default Page</h2>
@@ -18,7 +18,7 @@
 		code='<KtPagination :total="50" :pageSize="10" :page="3" v-model:page="page50" />'
 		language="vue-html"
 	>
-		<KtPagination :total="50" :pageSize="10" v-model:page="page50" />
+		<KtPagination v-model:page="page50" :pageSize="10" :total="50" />
 	</CodePreview>
 
 	<h2>Styles</h2>
@@ -30,7 +30,7 @@
 		code='<KtPagination pagingStyle="expand" :total="50" :pageSize="10" v-model:page="page50" />'
 		language="vue-html"
 	>
-		<KtPagination pagingStyle="expand" :total="50" :pageSize="10" v-model:page="page50" />
+		<KtPagination v-model:page="page50" :pageSize="10" pagingStyle="expand" :total="50" />
 	</CodePreview>
 
 	<h4>Fraction</h4>
@@ -40,7 +40,7 @@
 		code='<KtPagination pagingStyle="fraction" :total="50" :pageSize="10" v-model:page="page50" />'
 		language="vue-html"
 	>
-		<KtPagination pagingStyle="fraction" :total="50" :pageSize="10" v-model:page="page50" />
+		<KtPagination v-model:page="page50" :pageSize="10" pagingStyle="fraction" :total="50" />
 	</CodePreview>
 
 	<h4>Flexible</h4>
@@ -50,15 +50,14 @@
 		code='<KtPagination pagingStyle="flex" :total="50" :pageSize="10" v-model:page="page50" />'
 		language="vue-html"
 	>
-		<KtPagination pagingStyle="flex" :total="50" :pageSize="10" v-model:page="page50" />
+		<KtPagination v-model:page="page50" :pageSize="10" pagingStyle="flex" :total="50" />
 	</CodePreview>
 
 	<h4>Extra Options</h4>
 
 	<!-- TODO: make component form -->
-	<!-- prettier-ignore -->
 	<CodePreview
-		:code='`
+		code='
 			<KtPagination
 				v-model:page="page500"
 				:adjacentAmount="1"
@@ -95,7 +94,7 @@
 				pagingStyle="flex"
 				:total="500"
 			/>
-	   	`'
+		'
 		language="vue-html"
 	>
 		<KtPagination
@@ -138,8 +137,9 @@
 </template>
 
 <script lang="ts">
-import { KtPagination } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
+
+import { KtPagination } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
