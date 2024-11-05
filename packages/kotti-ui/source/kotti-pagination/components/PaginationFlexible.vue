@@ -96,7 +96,7 @@ export default defineComponent({
 			showRightDots: computed(
 				() =>
 					showLastPage.value &&
-					!neighborValues.value.includes(props.maximumPage),
+					!neighborValues.value.includes(props.maximumPage - 1),
 			),
 		}
 	},

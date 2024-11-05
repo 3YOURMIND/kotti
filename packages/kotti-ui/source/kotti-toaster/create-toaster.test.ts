@@ -46,31 +46,7 @@ describe('createToaster', () => {
 
 	describe('.abort()', () => {
 		it('can abort a toast', () => {
-<<<<<<< HEAD
 			const toaster = createToaster()
-=======
-			// default: Record<string, never>
-			const toaster = createToaster<{
-				error: Record<string, never>
-				success: { tbd: true }
-			}>()
-
-			const success = toaster.withOptions({ type: 'success' })
-			const error = toaster.withOptions({ type: 'error' })
-
-			error({ text: 'something' })
-
-			// wrong, surplus key
-			success({ custom: { tbd: true, wrong: true }, text: 'sdsdf' })
-
-			success({ text: 'wow' })
-
-			// correct
-			success({ custom: { tbd: true }, text: 'sdsdf' })
-
-			// wrong, custom missing
-			success({ text: 'simple' })
->>>>>>> 4f75dff3d (wip: Make KtToaster Greater Again)
 
 			const toast = toaster.show({ duration: 1, text: 'test' })
 			expect(() => {

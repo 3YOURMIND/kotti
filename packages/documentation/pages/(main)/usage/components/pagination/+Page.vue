@@ -134,14 +134,74 @@
 			:total="500"
 		/>
 	</CodePreview>
+
+	<KtForm v-model:value="settings">
+		<ComponentForm
+			:component="component"
+			:hiddenProps="{
+				'onUpdate:page': (val: number) => (settings.page = val),
+			}"
+			:props="settings"
+		>
+			<template #component-form-settings>
+				<div>
+					<h4>Settings</h4>
+					<KtFieldSingleSelect
+						formKey="pagingStyle"
+						hideClear
+						label="Paging style"
+						:options="[
+							{ label: 'expand (default)', value: 'expand' },
+							{ label: 'flex', value: 'flex' },
+							{ label: 'fraction', value: 'fraction' },
+						]"
+					/>
+					<KtFieldToggle
+						v-show="settings.pagingStyle === 'flex'"
+						formKey="fixedWidth"
+						isOptional
+						label="Fixed width"
+						type="switch"
+					>
+						<template #helpText>
+							<code>fixedWidth</code> only has an effect if
+							<code>pagingStyle</code> is set to <code>flex</code>
+						</template>
+					</KtFieldToggle>
+				</div>
+				<div>
+					<h4>Numbers</h4>
+					<KtFieldNumber formKey="page" hideClear label="Page" />
+					<KtFieldNumber formKey="pageSize" hideClear label="Page size" />
+					<KtFieldNumber formKey="total" hideClear label="Total" />
+					<KtFieldNumber
+						formKey="adjacentAmount"
+						hideClear
+						label="Adjacent Pages"
+					/>
+				</div>
+			</template>
+		</ComponentForm>
+	</KtForm>
+
+	<!-- Scape goat element to redirect eslint's anger -->
+	<div />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import { KtPagination } from '@3yourmind/kotti-ui'
+import type { Kotti } from '@3yourmind/kotti-ui'
+import {
+	KtFieldNumber,
+	KtFieldSingleSelect,
+	KtFieldToggle,
+	KtForm,
+	KtPagination,
+} from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
+import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 export default defineComponent({
@@ -149,6 +209,11 @@ export default defineComponent({
 	components: {
 		CodePreview,
 		ComponentInfo,
+		ComponentForm,
+		KtFieldSingleSelect,
+		KtFieldNumber,
+		KtFieldToggle,
+		KtForm,
 		KtPagination,
 	},
 	setup() {
@@ -156,6 +221,21 @@ export default defineComponent({
 			component: KtPagination,
 			page50: ref(1),
 			page500: ref(1),
+			settings: ref<{
+				adjacentAmount: Kotti.FieldNumber.Value
+				fixedWidth: Kotti.FieldToggle.Value
+				page: Kotti.FieldNumber.Value
+				pageSize: Kotti.FieldNumber.Value
+				pagingStyle: 'expand' | 'flex' | 'fraction'
+				total: Kotti.FieldNumber.Value
+			}>({
+				adjacentAmount: 2,
+				fixedWidth: false,
+				page: 1,
+				pageSize: 10,
+				pagingStyle: 'expand',
+				total: 100,
+			}),
 		}
 	},
 })

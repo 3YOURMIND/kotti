@@ -153,8 +153,8 @@ export default defineComponent({
 				if (props.slots.some((slot) => slot.name === slotName)) continue
 
 				result.push({
-					name: slotName,
 					content: [`\t${slotName} content`],
+					name: slotName,
 					renderedString: `${slotName} content`,
 				})
 			}

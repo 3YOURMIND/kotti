@@ -80,10 +80,6 @@ type IsEmptyObject<T> = T extends Record<string, never> ? true : false
 
 // messages
 
-<<<<<<< HEAD
-=======
-// type MessageTypes = Record<string, Record<string, unknown>>
->>>>>>> 4f75dff3d (wip: Make KtToaster Greater Again)
 type MessageTypes = {
 	[key: string]: Record<string, unknown>
 	default: Record<string, never>
@@ -103,10 +99,7 @@ type Messages<MESSAGE_TYPES extends MessageTypes> = {
 type MessagesNoDefault<MESSAGE_TYPES extends MessageTypes> = {
 	[KEY in keyof MESSAGE_TYPES]: {
 		duration?: number | null
-<<<<<<< HEAD
 		header?: string | null
-=======
->>>>>>> 4f75dff3d (wip: Make KtToaster Greater Again)
 		text: string
 		type: KEY
 	} & (IsEmptyObject<MESSAGE_TYPES[KEY]> extends true
