@@ -25,21 +25,33 @@
 		<h2>Types</h2>
 
 		<div class="element-example white">
-			<KtButton class="mt-4 mr-4" type="primary" @click="alert('primary')"
-				>Primary Button</KtButton
+			<KtButton
+				class="mt-4 mr-4"
+				type="primary"
+				@click="info({ text: 'primary' })"
 			>
-			<KtButton class="mt-4 mr-4" type="secondary" @click="alert('secondary')"
-				>Secondary Button</KtButton
+				Primary Button
+			</KtButton>
+			<KtButton
+				class="mt-4 mr-4"
+				type="secondary"
+				@click="info({ text: 'secondary' })"
 			>
-			<KtButton class="mt-4 mr-4" type="danger" @click="alert('danger')"
-				>Danger Button</KtButton
+				Secondary Button
+			</KtButton>
+			<KtButton
+				class="mt-4 mr-4"
+				type="danger"
+				@click="info({ text: 'danger' })"
 			>
-			<KtButton class="mt-4 mr-4" @click="alert('default')"
-				>Default Button</KtButton
-			>
-			<KtButton class="mt-4 mr-4" type="text" @click="alert('text')"
-				>Text Button</KtButton
-			>
+				Danger Button
+			</KtButton>
+			<KtButton class="mt-4 mr-4" @click="info({ text: 'default' })">
+				Default Button
+			</KtButton>
+			<KtButton class="mt-4 mr-4" type="text" @click="info({ text: 'text' })">
+				Text Button
+			</KtButton>
 		</div>
 
 		<h4>Primary button</h4>
@@ -292,47 +304,47 @@
 					{
 						icon: 'calendar',
 						label: 'Action 1',
-						onClick: () => alert('Action 1'),
+						onClick: () => info({ text: 'Action 1' }),
 						dataTest: 'action-1',
 					},
 					{
 						icon: 'landline',
 						label: 'Action 2',
-						onClick: () => alert('Action 2'),
+						onClick: () => info({ text: 'Action 2' }),
 						dataTest: 'action-2',
 					},
 					{
 						icon: 'location',
 						label: 'Action 3',
-						onClick: () => alert('Action 3'),
+						onClick: () => info({ text: 'Action 3' }),
 						dataTest: 'action-3',
 						isDisabled: true,
 					},
 				]"
 				class="mr-4"
-				@click="alert(splitButtonProps.label)"
+				@click="info({ text: splitButtonProps.label })"
 			/>
 			<KtSplitButton
 				v-bind="splitButtonProps"
 				:actions="[
 					{
 						label: 'Action 4',
-						onClick: () => alert('Action 4'),
+						onClick: () => info({ text: 'Action 4' }),
 						dataTest: 'action-4',
 					},
 					{
 						label: 'Action 5',
-						onClick: () => alert('Action 5'),
+						onClick: () => info({ text: 'Action 5' }),
 						dataTest: 'action-5',
 						isDisabled: true,
 					},
 					{
 						label: 'Action 6',
-						onClick: () => alert('Action 6'),
+						onClick: () => info({ text: 'Action 6' }),
 						dataTest: 'action-6',
 					},
 				]"
-				@click="alert(splitButtonProps.label)"
+				@click="info({ text: splitButtonProps.label })"
 			/>
 		</div>
 
@@ -411,15 +423,15 @@
 		<pre><code data-lang="html">
 &lt;KtSplitButton
     :actions=&quot;[
-        { icon: 'calendar', label: 'Action 1', onClick: () => alert('Action 1'), dataTest: 'calendar' },
-        { icon: 'landline', label: 'Action 2', onClick: () => alert('Action 2'), dataTest: 'landline' },
-        { icon: 'location', label: 'Action 3', onClick: () => alert('Action 3'), dataTest: 'location', isDisabled: true },
+        { icon: 'calendar', label: 'Action 1', onClick: () => info({text: 'Action 1'}), dataTest: 'calendar' },
+        { icon: 'landline', label: 'Action 2', onClick: () => info({text: 'Action 2'}), dataTest: 'landline' },
+        { icon: 'location', label: 'Action 3', onClick: () => info({text: 'Action 3'}), dataTest: 'location', isDisabled: true },
     ]&quot;
     dataTest=&quot;btn-1&quot;
     icon=&quot;download&quot;
     label=&quot;Split Button&quot;
     type=&quot;primary&quot;
-    @click=&quot;alert('Split Button')&quot;
+    @click=&quot;info({text: 'Split Button'})&quot;
 /&gt;
         </code></pre>
 
@@ -461,6 +473,7 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsButton',
@@ -500,14 +513,11 @@ export default defineComponent({
 		})
 
 		return {
-			alert: (value: string) => {
-				// eslint-disable-next-line no-alert
-				window.alert(value)
-			},
 			iconOptions: Object.values(Yoco.Icon).map((icon) => ({
 				label: icon,
 				value: icon,
 			})),
+			info,
 			ktButtonComponent: KtButton,
 			ktSplitButtonComponent: KtSplitButton,
 			onToggleDefaultClick: (status: Kotti.Button.ToggleStatus) => {

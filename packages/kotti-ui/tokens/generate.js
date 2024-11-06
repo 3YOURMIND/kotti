@@ -11,9 +11,9 @@ const output = `
 	Run \`yarn workspace @3yourmind/kotti-ui run build:tokens\` to regenerate it
 */
 
-:root{
-	${arrayToCustomProperties(objectToArray(baseColors), 'color')}
-	${arrayToCustomProperties(tokens)}
+:root {
+${arrayToCustomProperties(objectToArray(baseColors), 'color')}
+${arrayToCustomProperties(tokens)}
 }`
 
 // Write it

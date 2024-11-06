@@ -9,11 +9,25 @@ export const KtBanner = attachMeta(makeInstallable(KtBannerVue), {
 	deprecated: null,
 	designs: {
 		type: MetaDesignType.FIGMA,
-		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=1439%3A5',
+		url: 'https://www.figma.com/design/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=7096-5539',
 	},
 	slots: {
-		default: {
-			description: 'Content when Banner is expanded',
+		action: {
+			description:
+				'Use this only if you need to implement a custom action button',
+			scope: null,
+		},
+		footer: {
+			description:
+				'Used to put e.g. buttons or other interactive elements at the bottom of the banner',
+			scope: null,
+		},
+		header: {
+			description: 'Used to replace the optional header text',
+			scope: null,
+		},
+		text: {
+			description: 'Used to replace the main text',
 			scope: null,
 		},
 	},

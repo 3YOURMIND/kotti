@@ -18,21 +18,17 @@
 		<div class="copy copy-hover">
 			<div>Click to Copy</div>
 		</div>
-		<div
-			v-if="copySuccess"
-			class="success-message"
-			v-text="copyIconSuccessMessage"
-		/>
 	</div>
 </template>
 
 <script lang="ts">
-import { TimeConversion } from '@metatypes/units'
 import copy from 'copy-to-clipboard'
 import type { PropType } from 'vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import type { Yoco } from '@3yourmind/yoco'
+
+import { error, success } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'YocoPreview',
@@ -41,8 +37,6 @@ export default defineComponent({
 		icon: { required: true, type: String as PropType<Yoco.Icon> },
 	},
 	setup(props) {
-		const copySuccess = ref(false)
-
 		return {
 			copyIconSuccessMessage: computed(() => `Copied icon "${props.icon}"`),
 			copyLiga: (yocoName: string) => {
@@ -50,16 +44,15 @@ export default defineComponent({
 				const wasSuccessful = copy(codeString)
 
 				if (wasSuccessful) {
-					copySuccess.value = true
-					window.setTimeout(() => {
-						copySuccess.value = false
-					}, 2 * TimeConversion.MILLISECONDS_PER_SECOND)
+					success({
+						text: `Copied icon "${props.icon}"`,
+					})
 				} else {
-					// eslint-disable-next-line no-alert
-					window.alert('failed')
+					error({
+						text: 'There was a failure when copying to clipboard',
+					})
 				}
 			},
-			copySuccess,
 			enumRepresentation: computed(() => `Yoco.Icon.${props.enum}`),
 		}
 	},

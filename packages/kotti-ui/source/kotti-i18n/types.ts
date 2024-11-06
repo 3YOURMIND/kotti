@@ -1,6 +1,5 @@
 import type { Ref } from 'vue'
 
-import type { KottiBanner } from '../kotti-banner/types'
 import type { KottiComment } from '../kotti-comment/types'
 import type { KottiField } from '../kotti-field/types'
 import type { Shared as KottiFieldFileUploadShared } from '../kotti-field-file-upload/types'
@@ -33,7 +32,6 @@ export module KottiI18n {
 	}
 
 	export type Messages = {
-		KtBanner: KottiBanner.Translations
 		KtComment: KottiComment.Translations
 		KtFieldFileUpload: KottiFieldFileUploadShared.Translations
 		KtFieldInlineEdit: KottiFieldInlineEdit.Translations

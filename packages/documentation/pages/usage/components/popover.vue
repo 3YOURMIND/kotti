@@ -201,6 +201,7 @@ import {
 import { Yoco } from '@3yourmind/yoco'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 enum UsageMode {
 	OPTIONS = 'OPTIONS',
@@ -233,8 +234,7 @@ export default defineComponent({
 				isSelected: false,
 				label: 'User',
 				onClick: () => {
-					// eslint-disable-next-line no-alert
-					window.alert('clicked')
+					info({ text: 'clicked' })
 				},
 			},
 			/**

@@ -5,6 +5,7 @@
 			<div class="workspace">
 				<nuxt class="content" />
 			</div>
+			<MyToaster />
 		</div>
 	</KtI18nContext>
 </template>
@@ -12,6 +13,7 @@
 <script>
 import { KtI18nContext } from '@3yourmind/kotti-ui'
 
+import MyToaster from '~/components/MyToaster.vue'
 import NavBar from '~/components/NavBar.vue'
 
 /* eslint-disable perfectionist/sort-objects */
@@ -19,6 +21,7 @@ export default {
 	name: 'FullPageLayout',
 	components: {
 		KtI18nContext,
+		MyToaster,
 		NavBar,
 	},
 }

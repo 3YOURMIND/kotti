@@ -18,10 +18,6 @@ module Common {
 }
 
 export const enUS: KottiI18n.Messages = {
-	KtBanner: {
-		expandCloseLabel: 'Close',
-		expandLabel: 'View',
-	},
 	KtComment: {
 		cancelMessage: 'Press Esc key or',
 		clickToCancelLabel: 'click to cancel',

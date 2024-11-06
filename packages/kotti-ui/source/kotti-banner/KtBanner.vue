@@ -1,29 +1,9 @@
-<template>
-	<div :class="bannerClass">
-		<div class="kt-banner__collapse">
-			<i class="yoco" v-text="icon" />
-			<div class="kt-banner__message" v-text="message" />
-			<div v-if="!expandable" @click="() => $emit('click')">
-				<KtButton v-if="actionText !== null" :label="actionText" type="text" />
-			</div>
-			<div v-else @click="isExpanded = !isExpanded">
-				<KtButton v-if="!isExpanded" :label="switchOpenLabel" type="text" />
-				<KtButton v-else :label="switchCloseLabel" type="text" />
-			</div>
-		</div>
-		<div v-if="isExpanded" class="kt-banner__expand">
-			<slot />
-		</div>
-	</div>
-</template>
-
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
 import { KtButton } from '../kotti-button'
-import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 
 import { KottiBanner } from './types'
@@ -34,62 +14,183 @@ export default defineComponent({
 		KtButton,
 	},
 	props: makeProps(KottiBanner.propsSchema),
-	emits: ['click'],
-	setup(props, { slots }) {
-		const translations = useTranslationNamespace('KtBanner')
+	emits: ['action', 'close'],
+	setup(props, { emit, slots }) {
+		const styles = computed((): KottiBanner.Style => {
+			switch (props.type) {
+				case 'error':
+					return {
+						backgroundColor: 'var(--banner-error-bg)',
+						darkColor: 'var(--banner-error-dark)',
+						icon: Yoco.Icon.CIRCLE_CROSS,
+						lightColor: 'var(--banner-error-light)',
+					}
+
+				case 'info':
+					return {
+						backgroundColor: 'var(--banner-info-bg)',
+						darkColor: 'var(--banner-info-dark)',
+						icon: Yoco.Icon.CIRCLE_I,
+						lightColor: 'var(--banner-info-light)',
+					}
+
+				case 'success':
+					return {
+						backgroundColor: 'var(--banner-success-bg)',
+						darkColor: 'var(--banner-success-dark)',
+						icon: Yoco.Icon.CIRCLE_CHECK,
+						lightColor: 'var(--banner-success-light)',
+					}
+
+				case 'warning':
+					return {
+						backgroundColor: 'var(--banner-warning-bg)',
+						darkColor: 'var(--banner-warning-dark)',
+						icon: Yoco.Icon.CIRCLE_ATTENTION,
+						lightColor: 'var(--banner-warning-light)',
+					}
+
+				default:
+					return props.type
+			}
+		})
 
 		return {
-			bannerClass: computed(() => ({
-				'kt-banner': true,
-				'kt-banner--is-gray': props.isGray,
-			})),
-			expandable: computed(() => Boolean(slots.default)),
-			isExpanded: ref(false),
-			switchCloseLabel: computed(
-				() => props.expandCloseLabel ?? translations.value.expandCloseLabel,
+			hasActionSlot: computed((): boolean => Boolean(slots.action)),
+			hasFooter: computed((): boolean => Boolean(slots.footer)),
+			hasHeader: computed(
+				(): boolean => props.header !== null || Boolean(slots.header),
 			),
-			switchOpenLabel: computed(
-				() => props.expandLabel ?? translations.value.expandLabel,
-			),
-			Yoco,
+			onAction: (event: MouseEvent) => {
+				emit('action', event)
+			},
+			onClose: (event: MouseEvent) => {
+				emit('close', event)
+			},
+			styles,
 		}
 	},
 })
 </script>
 
+<template>
+	<div class="kt-banner" :style="{ borderColor: styles.lightColor }">
+		<div
+			v-if="styles.icon !== null"
+			class="kt-banner__icon"
+			:style="{
+				color: styles.darkColor,
+				backgroundColor: styles.backgroundColor,
+			}"
+		>
+			<i class="yoco" v-text="styles.icon" />
+		</div>
+		<div class="kt-banner__text" :class="{ 'ml-1': styles.icon === null }">
+			<div v-if="hasHeader" class="kt-banner__header">
+				<slot name="header">
+					{{ header }}
+				</slot>
+			</div>
+			<div>
+				<slot name="text">
+					{{ text }}
+				</slot>
+			</div>
+			<div v-if="hasFooter">
+				<slot name="footer" />
+			</div>
+		</div>
+		<div v-if="hasActionSlot" class="kt-banner__action">
+			<slot name="action" />
+		</div>
+		<div v-else-if="action" class="kt-banner__action">
+			<KtButton :label="action" type="text" @click="onAction" />
+		</div>
+		<div v-if="isCloseable" class="kt-banner__close" @click="onClose">
+			<i class="yoco">close</i>
+		</div>
+	</div>
+</template>
+
+<style>
+:root {
+	--banner-error-bg: var(--support-error-bg);
+	--banner-error-light: var(--support-error-light);
+	--banner-error-dark: var(--support-error-dark);
+	--banner-info-bg: var(--support-info-bg);
+	--banner-info-light: var(--support-info-light);
+	--banner-info-dark: var(--support-info-dark);
+	--banner-warning-bg: var(--support-warning-bg);
+	--banner-warning-light: var(--support-warning-light);
+	--banner-warning-dark: var(--support-warning-dark);
+	--banner-success-bg: var(--support-success-bg);
+	--banner-success-light: var(--support-success-light);
+	--banner-success-dark: var(--support-success-dark);
+}
+</style>
+
 <style lang="scss" scoped>
 .kt-banner {
 	display: flex;
-	flex-direction: column;
-	padding: var(--unit-2) var(--unit-4);
-	background: var(--white);
-	border: 1px solid var(--gray-20);
-	border-radius: var(--border-radius);
+	gap: var(--unit-2);
+	padding: var(--unit-1);
+	user-select: none;
+	background-color: var(--ui-background);
+	border: 1px solid transparent;
+	border-radius: var(--unit-2);
 
-	&--is-gray {
-		background: var(--gray-20);
-	}
-
-	&__collapse {
+	&__icon,
+	&__close,
+	&__action {
 		display: flex;
-		flex-direction: row;
 		align-items: center;
-		width: 100%;
+		justify-content: center;
 	}
 
-	&__expand {
-		margin-top: var(--unit-4);
+	&__icon,
+	&__close {
+		width: var(--unit-7);
+		height: var(--unit-7);
+
+		.yoco {
+			font-size: var(--unit-5);
+		}
 	}
 
-	&__message {
-		flex: 1 1 100%;
-		padding: 0 var(--unit-4);
-		font-weight: 600;
-		color: var(--gray-70);
+	&__close,
+	&__action {
+		.yoco {
+			color: var(--icon-02);
+			pointer-events: none;
+		}
+
+		&:hover .yoco {
+			color: var(--icon-01);
+		}
 	}
 
-	.yoco {
-		font-size: 1.2rem;
+	&__action {
+		align-self: flex-start;
+		margin-top: -2px;
+	}
+
+	&__icon {
+		border-radius: var(--border-radius);
+	}
+
+	&__header {
+		font-weight: 700;
+		user-select: text;
+	}
+
+	&__text {
+		display: flex;
+		flex: 1 0;
+		flex-direction: column;
+		gap: var(--unit-1);
+		margin-top: 4px;
+		line-height: var(--unit-5);
+		user-select: text;
 	}
 }
 </style>

@@ -1,5 +1,7 @@
 import { Kotti } from '@3yourmind/kotti-ui'
 
+import { info } from '~/utilities/toaster'
+
 export type ComponentNames =
 	| 'KtFieldDate'
 	| 'KtFieldDateRange'
@@ -69,15 +71,13 @@ export const createActions = (
 				{
 					label: 'Create Item',
 					onClick: () => {
-						// eslint-disable-next-line no-alert
-						window.alert('actions[0].onClick called')
+						info({ text: 'actions[0].onClick called' })
 					},
 				},
 				{
 					label: 'Edit Item',
 					onClick: () => {
-						// eslint-disable-next-line no-alert
-						window.alert('actions[1].onClick called')
+						info({ text: 'actions[1].onClick called' })
 					},
 				},
 			]

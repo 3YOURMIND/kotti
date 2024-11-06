@@ -300,6 +300,7 @@ import {
 } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsForm',
@@ -344,8 +345,7 @@ export default defineComponent({
 			onSubmit: (event: Kotti.Form.Events.Submit) => {
 				// eslint-disable-next-line no-console
 				console.debug('onSubmit', event)
-				// eslint-disable-next-line no-alert
-				window.alert('onSubmit: See Console for Event Details')
+				info({ text: 'onSubmit: See Console for Event Details' })
 			},
 			settings: ref({
 				booleanFlags: {

@@ -13,6 +13,7 @@
 				</div>
 			</template>
 		</LayoutContainer>
+		<MyToaster />
 	</KtI18nContext>
 </template>
 
@@ -21,6 +22,7 @@ import { KtI18nContext } from '@3yourmind/kotti-ui'
 
 import ActionBar from '~/components/ActionBar.vue'
 import LayoutContainer from '~/components/LayoutContainer.vue'
+import MyToaster from '~/components/MyToaster.vue'
 import NavBar from '~/components/NavBar.vue'
 
 /* eslint-disable perfectionist/sort-objects */
@@ -29,6 +31,7 @@ export default {
 	components: {
 		ActionBar,
 		KtI18nContext,
+		MyToaster,
 		NavBar,
 		LayoutContainer,
 	},

@@ -2,7 +2,7 @@ export const arrayToCustomProperties = (colors, type = 'reference') =>
 	colors
 		.map(
 			(color) =>
-				`--${color.name}: ${
+				`\t--${color.name}: ${
 					type === 'reference' ? `var(--${color.reference})` : color.value
 				};`,
 		)
