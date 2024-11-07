@@ -35,8 +35,27 @@
 					<th v-if="$scopedSlots['actions']" class="kt-table__actions-column" />
 				</tr>
 			</thead>
-			<tbody>
-				<template v-for="(row, rowIndex) in bodyRows">
+			<tbody @mouseleave="updateHoveredRowId(null)">
+				<tr v-if="isLoading">
+					<td class="kt-table-row--is-loading" :colSpan="tableColSpan">
+						<slot name="loading">
+							<div
+								v-for="key in 3"
+								:key="key"
+								class="skeleton rectangle"
+								style="width: 100%; height: 2rem; margin-top: 0.2rem"
+							/>
+						</slot>
+					</td>
+				</tr>
+				<tr v-else-if="bodyRows.length === 0">
+					<td class="kt-table-row--is-empty" :colSpan="tableColSpan">
+						<slot name="empty">
+							<div v-text="emptyText" />
+						</slot>
+					</td>
+				</tr>
+				<template v-for="(row, rowIndex) in bodyRows" v-else>
 					<!-- TODO: add data-test -->
 					<tr :key="row.key">
 						<td
@@ -106,7 +125,7 @@
 
 <script lang="ts">
 import type { Header } from '@tanstack/table-core'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -386,6 +405,18 @@ export default defineComponent({
 				}
 			}
 		}
+	}
+}
+
+.kt-table-row {
+	&--is-empty {
+		height: var(--unit-8);
+		color: var(--text-05);
+		text-align: center;
+	}
+
+	&--is-loading {
+		text-align: center;
 	}
 }
 

@@ -2,15 +2,32 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
-		<KtFieldToggle v-model="isTableExpandable" isOptional type="switch">
-			Is Table Extendable
-		</KtFieldToggle>
-		<KtFieldToggle v-model="isTableSelectable" isOptional type="switch">
-			Is Table Selectable
-		</KtFieldToggle>
+		<KtFieldToggleGroup
+			v-model="booleanFlags"
+			isOptional
+			:options="toggleGroupOptions"
+			type="switch"
+		/>
 
-		<KtTable id="example">
+		<!-- TODO: should not reuse `id` -->
+		<KtTable id="example" class="mb-4" :isLoading="booleanFlags.isLoading">
 			<template #actions> I am a nice action </template>
+			<template
+				v-if="booleanFlags.isEmpty && booleanFlags.showEmptySlot"
+				#empty
+			>
+				<img
+					src="https://usagif.com/wp-content/uploads/2021/4fh5wi/pepefrg-33.gif"
+				/>
+			</template>
+			<template
+				v-if="booleanFlags.isLoading && booleanFlags.showLoadingSlot"
+				#loading
+			>
+				<img
+					src="https://usagif.com/wp-content/uploads/2021/4fh5wi/pepefrg-54.gif"
+				/>
+			</template>
 			<template #expanded-row>
 				<div>Expanded content</div>
 			</template>
@@ -30,7 +47,7 @@ import { computed, defineComponent, h, ref, watch } from 'vue'
 
 import {
 	KtButton,
-	KtFieldToggle,
+	KtFieldToggleGroup,
 	KtTable,
 	useKottiTable,
 } from '@3yourmind/kotti-ui'
@@ -50,12 +67,19 @@ export default defineComponent({
 	components: {
 		ComponentInfo,
 		KtButton,
-		KtFieldToggle,
+		KtFieldToggleGroup,
 		KtTable,
 	},
 	setup() {
-		const isTableExpandable = ref(true)
-		const isTableSelectable = ref(true)
+		const booleanFlags = ref({
+			isEmpty: false,
+			isExpandable: true,
+			isLoading: false,
+			isSelectable: true,
+			showEmptySlot: false,
+			showLoadingSlot: false,
+		})
+
 		type TableRow = {
 			age: number | null
 			bestSkill: string
@@ -190,65 +214,67 @@ export default defineComponent({
 		const tableHook = useKottiTable<TableRow>(
 			computed(() => ({
 				columns: columns.value,
-				data: [
-					{
-						age: 27.1,
-						bestSkill: 'Perfect naps',
-						id: 1,
-						isAlive: true,
-						lifespan: '9 lives',
-						name: 'Cats',
-						preferredSound: 'Purring',
-						purpose: 'Ignoring humans',
-						someDate: '2013-22-11',
-						speed: 'Slow and stealthy',
-						worstEnemy: 'Vacuum cleaners',
-					},
-					{
-						age: 85.8,
-						bestSkill: 'Quantum jumps',
-						id: 2,
-						isAlive: false,
-						lifespan: 'Until it crashes',
-						name: 'Spaceships',
-						preferredSound: 'Engine roar',
-						purpose: 'Exploring the universe',
-						someDate: '1922-12-01',
-						speed: 'Faster than light',
-						worstEnemy: 'Black holes',
-					},
-					{
-						age: null,
-						bestSkill: 'Outlasting everything',
-						id: 3,
-						isAlive: false,
-						lifespan: 'Infinite (obviously)',
-						name: 'Tungsten',
-						preferredSound: 'Eternal silence',
-						purpose: 'Being immortal and holy',
-						someDate: '1833-04-23',
-						speed: 'Absolutely unmoving',
-						worstEnemy: 'Rust (blasphemy!)',
-					},
-					{
-						age: 0.1,
-						bestSkill: 'Fueling all-nighters',
-						id: 4,
-						isAlive: false,
-						lifespan: '10 minutes per cup',
-						name: 'Coffee',
-						preferredSound: 'Slurping',
-						purpose: 'Keeping people awake',
-						someDate: '2044-01-03',
-						speed: 'Varies by caffeine level',
-						worstEnemy: 'Decaf',
-					},
-				],
+				data: booleanFlags.value.isEmpty
+					? []
+					: [
+							{
+								age: 27.1,
+								bestSkill: 'Perfect naps',
+								id: 1,
+								isAlive: true,
+								lifespan: '9 lives',
+								name: 'Cats',
+								preferredSound: 'Purring',
+								purpose: 'Ignoring humans',
+								someDate: '2013-22-11',
+								speed: 'Slow and stealthy',
+								worstEnemy: 'Vacuum cleaners',
+							},
+							{
+								age: 85.8,
+								bestSkill: 'Quantum jumps',
+								id: 2,
+								isAlive: false,
+								lifespan: 'Until it crashes',
+								name: 'Spaceships',
+								preferredSound: 'Engine roar',
+								purpose: 'Exploring the universe',
+								someDate: '1922-12-01',
+								speed: 'Faster than light',
+								worstEnemy: 'Black holes',
+							},
+							{
+								age: null,
+								bestSkill: 'Outlasting everything',
+								id: 3,
+								isAlive: false,
+								lifespan: 'Infinite (obviously)',
+								name: 'Tungsten',
+								preferredSound: 'Eternal silence',
+								purpose: 'Being immortal and holy',
+								someDate: '1833-04-23',
+								speed: 'Absolutely unmoving',
+								worstEnemy: 'Rust (blasphemy!)',
+							},
+							{
+								age: 0.1,
+								bestSkill: 'Fueling all-nighters',
+								id: 4,
+								isAlive: false,
+								lifespan: '10 minutes per cup',
+								name: 'Coffee',
+								preferredSound: 'Slurping',
+								purpose: 'Keeping people awake',
+								someDate: '2044-01-03',
+								speed: 'Varies by caffeine level',
+								worstEnemy: 'Decaf',
+							},
+						],
 				getRowId: (row) => String(row.id) + '-string',
 				hasDragAndDrop: true,
 				id: 'example',
-				isExpandable: isTableExpandable.value,
-				selection: isTableSelectable.value ? {} : undefined,
+				isExpandable: booleanFlags.value.isExpandable,
+				selection: booleanFlags.value.isSelectable ? {} : undefined,
 			})),
 		)
 
@@ -263,12 +289,11 @@ export default defineComponent({
 		})
 
 		return {
+			booleanFlags,
 			component: KtTable,
 			emptySelection: () => {
 				tableHook.rowSelection.value = {}
 			},
-			isTableExpandable,
-			isTableSelectable,
 			shuffleHiddenColumns: () => {
 				const ONE_HALF = 0.5
 				tableHook.hiddenColumns.value = new Set(
@@ -297,6 +322,42 @@ export default defineComponent({
 				tableHook.hiddenColumns.value = new Set()
 			},
 			table: tableHook,
+			toggleGroupOptions: computed(() => [
+				{
+					key: 'isExpandable',
+					label: 'table is expandable',
+				},
+				{
+					isDisabled: booleanFlags.value.isLoading,
+					key: 'isEmpty',
+					label: 'table is empty',
+				},
+				...(booleanFlags.value.isEmpty
+					? [
+							{
+								key: 'showEmptySlot',
+								label: "show table's #empty slot",
+							},
+						]
+					: []),
+				{
+					isDisabled: booleanFlags.value.isEmpty,
+					key: 'isLoading',
+					label: 'table is loading',
+				},
+				...(booleanFlags.value.isLoading
+					? [
+							{
+								key: 'showLoadingSlot',
+								label: "show table's #loading slot",
+							},
+						]
+					: []),
+				{
+					key: 'isSelectable',
+					label: 'table is selectable',
+				},
+			]),
 		}
 	},
 })

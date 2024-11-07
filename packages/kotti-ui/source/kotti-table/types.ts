@@ -112,7 +112,9 @@ export module KottiTable {
 
 	export const propsSchema = z
 		.object({
+			emptyText: z.string().default('No data'),
 			id: z.string(),
+			isLoading: z.boolean().default(false),
 			// TODO: desired?
 			// TODO: bug: can lead to header cells wrapping content
 			isNotScrollable: z.boolean().default(false),
