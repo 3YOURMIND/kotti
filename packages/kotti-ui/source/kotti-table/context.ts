@@ -1,11 +1,12 @@
 import type { Table } from '@tanstack/table-core'
 import { inject, provide, type Ref } from 'vue'
 
-import type { AnyRow } from './types'
+import type { AnyRow, GetRowBehavior } from './types'
 
 export type TableContext<ROW extends AnyRow> = Ref<{
 	internal: {
 		getColumnIndex: (columnId: string) => number
+		getRowBehavior: GetRowBehavior<ROW>
 		hasDragAndDrop: boolean
 		isExpandable: boolean
 		isSelectable: boolean

@@ -10,7 +10,7 @@
 		/>
 
 		<!-- TODO: should not reuse `id` -->
-		<KtTable id="example" class="mb-4" :isLoading="booleanFlags.isLoading">
+		<KtTable class="mb-4" :isLoading="booleanFlags.isLoading" tableId="example">
 			<template #actions> I am a nice action </template>
 			<template
 				v-if="booleanFlags.isEmpty && booleanFlags.showEmptySlot"
@@ -107,23 +107,33 @@ export default defineComponent({
 				{
 					display: {
 						align: 'left',
+						disableCellClick: true,
 						formatter: null,
 						isNumeric: false,
 						type: 'custom',
 					},
-					// display: { decimalPlaces: 3, type: 'numerical' },
-					// <em style="color: green">{{ data.id }}:</em> {{ data.name }} is
-					// <b>{{ data.age }}</b> old
 					getData: (row: TableRow) =>
 						h('div', {}, [
 							h('em', { style: { color: 'green' } }, row.id),
 							` ${row.name} is `,
 							h('b', {}, row.age),
 						]),
-					// getData: (row: TableRow) => row.age,
 					id: 'age',
 					isSortable: true,
-					label: 'age',
+					label: 'age (click disabled)',
+				},
+				{
+					display: {
+						align: 'right',
+						disableCellClick: false,
+						formatter: (value: unknown) => String(value).replaceAll('e', 'x'),
+						isNumeric: false,
+						type: 'custom',
+					},
+					getData: (row: TableRow) => row.lifespan,
+					id: 'lifespan',
+					isSortable: true,
+					label: 'Lifespan (click allowed)',
 				},
 				// {
 				// 	display: {
@@ -196,18 +206,6 @@ export default defineComponent({
 					isSortable: true,
 					label: 'Preferred Sound',
 				},
-				{
-					display: {
-						align: 'right',
-						formatter: (value: unknown) => String(value).replaceAll('e', 'x'),
-						isNumeric: false,
-						type: 'custom',
-					},
-					getData: (row: TableRow) => row.lifespan,
-					id: 'lifespan',
-					isSortable: true,
-					label: 'Lifespan',
-				},
 			],
 		)
 
@@ -270,11 +268,20 @@ export default defineComponent({
 								worstEnemy: 'Decaf',
 							},
 						],
-				getRowId: (row) => String(row.id) + '-string',
+				getRowBehavior: ({ row, rowIndex }) => ({
+					classes: [], //rowIndex % 2 === 0 ? ['everything-red'] : [],
+					click: 'expand',
+					disable: {
+						click: false,
+						expand: rowIndex % 2 === 0,
+						select: false,
+					},
+					id: String(row.id),
+				}),
 				hasDragAndDrop: true,
 				id: 'example',
 				isExpandable: booleanFlags.value.isExpandable,
-				selection: booleanFlags.value.isSelectable ? {} : undefined,
+				isSelectable: booleanFlags.value.isSelectable,
 			})),
 		)
 
@@ -362,6 +369,13 @@ export default defineComponent({
 	},
 })
 </script>
+
+<style>
+.everything-red {
+	background-color: rosybrown !important;
+	color: red !important;
+}
+</style>
 
 <style scoped>
 .smol {

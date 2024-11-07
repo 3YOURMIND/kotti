@@ -6,16 +6,62 @@ import { KottiI18n } from '../kotti-i18n/types'
 // TODO: move somewhere else
 export type AnyRow = Record<string, unknown>
 
+/**
+ * @see {@link ./hooks.ts paramsSchema}
+ */
+export type GetRowBehavior<
+	ROW extends AnyRow,
+	ROW_BEHAVIOR_CLICK_COMPONENT extends string = string,
+> = (params: { row: ROW; rowIndex: number }) => {
+	classes?: string[]
+	click?:
+		| {
+				/**
+				 * For example for opening drawers. Should not be used for navigation. Also consider using normal link with
+				 * a query parameter instead.
+				 */
+				component: null
+				onClick: () => Promise<void> | void
+		  }
+		| 'expand'
+		| ({
+				/**
+				 * This should be used in most use cases and would usually be a `router-link`
+				 */
+				component: ROW_BEHAVIOR_CLICK_COMPONENT
+				on?: Record<string, unknown>
+		  } & (ROW_BEHAVIOR_CLICK_COMPONENT extends 'a'
+				? {
+						props: {
+							[k: string]: unknown
+							href: string
+						}
+					}
+				: { props?: Record<string, unknown> }))
+	disable?: {
+		// actions/canHover: { icon: Yoco.Icon; onClick: () => Promise<void> | void }[]
+		click: boolean
+		expand: boolean
+		select: boolean
+	}
+	id: string
+}
+
 export module KottiTable {
+	/**
+	 * Keep in sync with its type expression
+	 * @see DataDisplay
+	 */
 	export const columnDisplaySchema = z.discriminatedUnion('type', [
-		// TODO: getData should understand display.type
+		// TODO: consider not exporting schemas
 		// TODO: truncate text, ask how default behavior
-		// TODO: attachments, needs design
-		// TODO: image, array of urls as data, needs render functions
-		// TODO: tuples with separator (e.g. "1234 x 23")
+		// TODO (nice-to-have): attachments, needs design
+		// TODO (nice-to-have): image, array of urls as data, needs render functions
+		// TODO (nice-to-have): tuples with separator (e.g. "1234 x 23")
 		z
 			.object({
 				align: z.enum(['center', 'left', 'right']),
+				disableCellClick: z.boolean(),
 				formatter: z
 					.function()
 					.args(
@@ -33,7 +79,6 @@ export module KottiTable {
 				type: z.literal('custom'),
 			})
 			.strict(),
-		// z.object({ type: z.literal('custom') }).passthrough(),
 		z
 			.object({
 				decimalPlaces: z.number().int().finite().min(0).default(2),
@@ -51,6 +96,7 @@ export module KottiTable {
 	export const columnSchema = z
 		.object({
 			display: columnDisplaySchema,
+			// TODO: getData should understand display.type
 			getData: z.function().args(z.any()).returns(z.unknown()),
 			id: z.string(),
 			isSortable: z.boolean().default(false),
@@ -58,10 +104,15 @@ export module KottiTable {
 		})
 		.strict()
 
+	/**
+	 * Keep in sync with its schema
+	 * @see columnDisplaySchema
+	 */
 	type DataDisplay<ROW extends AnyRow> =
 		| {
 				display: {
 					align: 'center' | 'left' | 'right'
+					disableCellClick: boolean
 					formatter?: unknown
 					isNumeric: boolean
 					type: 'custom'
@@ -87,9 +138,6 @@ export module KottiTable {
 		ROW extends AnyRow,
 		COLUMN_IDS extends string = string,
 	> = DataDisplay<ROW> & {
-		// display: ColumnDisplay
-		// TODO: make data dependent on type of display or sth
-		// getData: (row: ROW) => DATA
 		id: COLUMN_IDS
 		isSortable?: boolean
 		label: string
@@ -112,12 +160,12 @@ export module KottiTable {
 
 	export const propsSchema = z
 		.object({
-			emptyText: z.string().default('No data'),
-			id: z.string(),
+			emptyText: z.string().default('No data'), // TODO translate
 			isLoading: z.boolean().default(false),
 			// TODO: desired?
 			// TODO: bug: can lead to header cells wrapping content
 			isNotScrollable: z.boolean().default(false),
+			tableId: z.string(),
 		})
 		.strict()
 }

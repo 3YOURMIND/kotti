@@ -14,13 +14,15 @@ import {
 import { computed, h, ref, type Ref, watch } from 'vue'
 import { z } from 'zod'
 
-import { KtButton } from '../kotti-button'
+import { Yoco } from '@3yourmind/yoco'
+
 import { useI18nContext } from '../kotti-i18n/hooks'
 import ToggleInner from '../shared-components/toggle-inner/ToggleInner.vue'
 
 import { resolveColumnDisplay } from './column'
 import { type TableContext, useProvideTableContext } from './context'
 import { useState, useVueTable } from './tanstack-table'
+import type { GetRowBehavior } from './types'
 import { type AnyRow, KottiTable } from './types'
 
 export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
@@ -33,11 +35,11 @@ type KottiTableParameter<
 > = Ref<{
 	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 	data: ROW[]
-	getRowId: (row: ROW) => string
+	getRowBehavior: GetRowBehavior<ROW>
 	hasDragAndDrop?: boolean
 	id: string
 	isExpandable?: boolean
-	selection?: Record<string, never> //{
+	isSelectable?: boolean //{
 	// mode: 'single-page' | 'global'   // Consider negative selection for global case
 	// onSelectionUpdate: (updated: Record<string, boolean>) => void
 	// selectedRows: Ref<Record<string, boolean>>
@@ -50,11 +52,52 @@ const paramsSchema = z
 		// actions : list of buttons (based on baseOptionSchema)
 		columns: z.array(KottiTable.columnSchema),
 		data: z.array(z.any()),
-		getRowId: z.function().args(z.any()).returns(z.string()),
+		/**
+		 * Keep in sync with type expression
+		 * @see GetRowBehavior
+		 */
+		getRowBehavior: z
+			.function()
+			.args(z.object({ row: z.record(z.unknown()), rowIndex: z.number() }))
+			.returns(
+				z.object({
+					classes: z.array(z.string()).optional(),
+					click: z
+						.union([
+							z.object({
+								component: z.null(),
+								onClick: z
+									.function()
+									.args()
+									.returns(z.union([z.void(), z.promise(z.void())])),
+							}),
+							z.object({
+								component: z.string().regex(/^[^a]($|.+)/),
+								on: z.record(z.unknown()).optional(),
+								props: z.record(z.unknown()).optional(),
+							}),
+							z.object({
+								component: z.literal('a'),
+								on: z.record(z.unknown()).optional(),
+								props: z.object({ href: z.string() }).passthrough(),
+							}),
+							z.literal('expand'),
+						])
+						.optional(),
+					disable: z
+						.object({
+							click: z.boolean(),
+							expand: z.boolean(),
+							select: z.boolean(),
+						})
+						.optional(),
+					id: z.string(),
+				}),
+			),
 		hasDragAndDrop: z.boolean().default(false),
 		id: z.string(),
 		isExpandable: z.boolean().default(false),
-		selection: z.record(z.string(), z.never()).optional(), //FIXME should have default {}
+		isSelectable: z.boolean().default(false),
 	})
 	.strict()
 
@@ -111,7 +154,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 	const successfullyDroppedColumnId = ref<string | null>(null)
 
 	const moveColumnTo = (fromIndex: number, toIndex: number): string[] => {
-		console.log({ fromIndex, name: 'moveColumnTo', toIndex })
+		// console.log({ fromIndex, name: 'moveColumnTo', toIndex })
 		const droppedColumnId = columnOrderInternal.value[fromIndex]
 		if (!droppedColumnId) throw new Error('index is out of bound')
 
@@ -136,39 +179,56 @@ export const useKottiTable = <ROW extends AnyRow>(
 		},
 	)
 
-	const table = useVueTable(
+	const table = useVueTable<ROW>(
 		computed(() => ({
 			columns: [
 				...(params.value.isExpandable
 					? [
 							columnHelper.display({
-								cell: ({ row }: CellContext<ROW, unknown>) =>
-									h(KtButton, {
-										on: {
-											click: () => {
-												row.toggleExpanded(!row.getIsExpanded())
+								cell: ({ row }: CellContext<ROW, unknown>) => {
+									const rowBehavior = params.value.getRowBehavior({
+										row: row.original,
+										rowIndex: row.index,
+									})
+									const isDisabled = rowBehavior.disable?.expand ?? false
+
+									return h(
+										'div',
+										{
+											class: {
+												'kt-table-expand': true,
+												yoco: true,
+											},
+											domProps: {
+												ariaDisabled: String(isDisabled),
+												ariaExpanded: String(row.getIsExpanded()),
+												role: 'button',
+												// tabindex: 0, focus css
+											},
+											on: {
+												click: (event: MouseEvent) => {
+													event.stopPropagation()
+													event.preventDefault()
+													if (isDisabled) return
+													row.toggleExpanded(!row.getIsExpanded())
+												},
 											},
 										},
-										props: {
-											icon: row.getIsExpanded() ? 'chevron_up' : 'chevron_down',
-											size: 'small',
-											type: 'text',
-										},
-										style: {
-											color: 'var(--icon-02)',
-											padding: 0,
-										},
-									}),
+										row.getIsExpanded()
+											? Yoco.Icon.CHEVRON_DOWN
+											: Yoco.Icon.CHEVRON_RIGHT,
+									)
+								},
 								id: EXPANSION_COLUMN_ID,
 								meta: {
-									cellClasses: '',
-									headerClasses: '',
-									meta: 'text',
+									cellClasses: 'kt-table-cell kt-table-cell--is-body',
+									headerClasses: 'kt-table-cell kt-table-cell--is-header',
+									type: 'text',
 								},
 							}),
 						]
 					: []),
-				...(params.value.selection
+				...(params.value.isSelectable
 					? [
 							columnHelper.display({
 								cell: ({ row }: CellContext<ROW, unknown>) =>
@@ -177,7 +237,9 @@ export const useKottiTable = <ROW extends AnyRow>(
 										{
 											class: 'kt-table-selection',
 											on: {
-												click: () => {
+												click: (event: MouseEvent) => {
+													event.stopPropagation()
+													event.preventDefault()
 													row.toggleSelected(!row.getIsSelected())
 												},
 											},
@@ -228,7 +290,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 								meta: {
 									cellClasses: 'kt-table-cell kt-table-cell--is-body',
 									headerClasses: 'kt-table-cell kt-table-cell--is-header',
-									meta: '',
+									type: 'text',
 								},
 							}),
 						]
@@ -292,11 +354,21 @@ export const useKottiTable = <ROW extends AnyRow>(
 				// 	: []),
 			],
 			data: params.value.data,
+			enableRowSelection: (row) => {
+				if (!params.value.isSelectable) return false
+
+				const behavior = params.value.getRowBehavior({
+					row: row.original,
+					rowIndex: row.index,
+				})
+				return !behavior.disable?.select
+			},
 			getCoreRowModel: getCoreRowModel(),
 			getExpandedRowModel: params.value.isExpandable
 				? getExpandedRowModel()
 				: undefined,
-			getRowId: params.value.getRowId,
+			getRowId: (row, rowIndex) =>
+				params.value.getRowBehavior({ row, rowIndex }).id,
 			onColumnVisibilityChange: setVisibiltyState,
 			onRowSelectionChange: setRowSelection,
 			// onRowSelectionChange: (updateOrValue) => {
@@ -333,9 +405,10 @@ export const useKottiTable = <ROW extends AnyRow>(
 			getColumnIndex: (columnId: string) => {
 				return columnOrderInternal.value.indexOf(columnId)
 			},
+			getRowBehavior: params.value.getRowBehavior,
 			hasDragAndDrop: Boolean(params.value.hasDragAndDrop),
 			isExpandable: Boolean(params.value.isExpandable),
-			isSelectable: Boolean(params.value.selection),
+			isSelectable: Boolean(params.value.isSelectable),
 			setDraggedColumnIndex: (columnIndex: number | null) => {
 				draggedColumnIndex.value = columnIndex
 			},

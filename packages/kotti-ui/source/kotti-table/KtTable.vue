@@ -35,7 +35,7 @@
 					<th v-if="$scopedSlots['actions']" class="kt-table__actions-column" />
 				</tr>
 			</thead>
-			<tbody @mouseleave="updateHoveredRowId(null)">
+			<tbody>
 				<tr v-if="isLoading">
 					<td class="kt-table-row--is-loading" :colSpan="tableColSpan">
 						<slot name="loading">
@@ -57,7 +57,7 @@
 				</tr>
 				<template v-for="(row, rowIndex) in bodyRows" v-else>
 					<!-- TODO: add data-test -->
-					<tr :key="row.key">
+					<tr :key="row.key" :class="row.classes">
 						<td
 							v-for="(cell, cellIndex) in row.cells"
 							:key="cell.key"
@@ -66,20 +66,26 @@
 							@dragleave.prevent
 							@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
 						>
-							<!-- TODO: error when custom has no slot // {{ `slot ${cell.columnId}` }} -->
-							<slot
-								v-if="cell.hasSlot"
-								:columnIndex="cellIndex"
-								:data="cell.data"
-								:name="cell.columnId"
-								:row="row.original"
-								:rowIndex="rowIndex"
-							/>
-							<FlexRender
-								v-else
-								:props="{ ...cell.getContext() }"
-								:render="cell.column.columnDef.cell"
-							/>
+							<component
+								:is="'a'"
+								class="kt-table-cell-content"
+								href="https://www.google.com"
+							>
+								<!-- TODO: error when custom has no slot // {{ `slot ${cell.columnId}` }} -->
+								<slot
+									v-if="cell.hasSlot"
+									:columnIndex="cellIndex"
+									:data="cell.data"
+									:name="cell.columnId"
+									:row="row.original"
+									:rowIndex="rowIndex"
+								/>
+								<FlexRender
+									v-else
+									:props="{ ...cell.getContext() }"
+									:render="cell.column.columnDef.cell"
+								/>
+							</component>
 						</td>
 						<td v-if="$scopedSlots['actions']" class="kt-table__actions-column">
 							<div class="kt-table__actions">
@@ -91,7 +97,7 @@
 						v-if="$scopedSlots['expanded-row'] && row.isExpanded"
 						:key="row.expandedKey"
 					>
-						<td :colSpan="row.expandedColSpan">
+						<td :colSpan="tableColSpan">
 							<slot
 								name="expanded-row"
 								:row="row.original"
@@ -125,7 +131,7 @@
 
 <script lang="ts">
 import type { Header } from '@tanstack/table-core'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -146,7 +152,7 @@ export default defineComponent({
 	props: makeProps(KottiTable.propsSchema),
 	setup(props, { slots }) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
-		const tableContext = useTableContext(props.id)
+		const tableContext = useTableContext(props.tableId)
 
 		const isColumnMoveDataTransfer = (event: DragEvent): boolean => {
 			return event.dataTransfer?.types.includes(TRANSFER_TYPE) ?? false
@@ -154,37 +160,79 @@ export default defineComponent({
 
 		const table = computed(() => tableContext.value.internal.table.value)
 
+		// const computeWrapperProps = (row: AnyRow, rowIndex: number) => {
+		// | {
+		// 		/**
+		// 		 * For example for opening drawers. Should not be used for navigation. Also consider using normal link with
+		// 		 * a query parameter instead.
+		// 		 */
+		// 		component: ROW_BEHAVIOR_CLICK_COMPONENT extends null ? null : never
+		// 		onClick: () => Promise<void> | void
+		//   }
+		// | {
+		// 		/**
+		// 		 * This should be used in most use cases and would usually be a `router-link`
+		// 		 */
+		// 		component: ROW_BEHAVIOR_CLICK_COMPONENT extends 'a' | null
+		// 			? never
+		// 			: string
+		// 		on?: Record<string, unknown>
+		// 		props?: Record<string, unknown>
+		//   }
+		// | {
+		// 		/**
+		// 		 * You can also just use a simple link
+		// 		 */
+		// 		component: ROW_BEHAVIOR_CLICK_COMPONENT extends 'a' ? 'a' : never
+		// 		on?: Record<string, unknown>
+		// 		props: {
+		// 			[k: string]: unknown
+		// 			href: string
+		// 		}
+		//   }
+		// | 'expand'
+		// }
+
 		return {
 			bodyRows: computed(() =>
-				table.value.getRowModel().rows.map((row) => ({
-					cells: row.getVisibleCells().map((cell) => ({
-						classes: cell.column.columnDef.meta.cellClasses,
-						column: cell.column,
-						columnId: cell.column.id,
-						data:
-							typeof cell.column.columnDef.cell === 'string'
-								? cell.column.columnDef.cell
-								: cell.column.columnDef.cell?.({ ...cell.getContext() }) ?? '',
-						getContext: cell.getContext,
-						hasSlot:
-							Boolean(slots[cell.column.id]) &&
-							cell.column.columnDef.meta.type === 'custom',
-						id: cell.id,
-						key: cell.id,
-					})),
-					expandedColSpan: row.getAllCells().length,
-					expandedKey: `${row.id}-expanded-row`,
-					isExpanded: row.getIsExpanded(),
-					key: row.id,
-					original: row.original,
-				})),
+				table.value.getRowModel().rows.map((row, rowIndex) => {
+					const rowBehavior = tableContext.value.internal.getRowBehavior({
+						row: row.original,
+						rowIndex,
+					})
+
+					return {
+						cells: row.getVisibleCells().map((cell) => ({
+							classes: cell.column.columnDef.meta.cellClasses,
+							column: cell.column,
+							columnId: cell.column.id,
+							data:
+								typeof cell.column.columnDef.cell === 'string'
+									? cell.column.columnDef.cell
+									: cell.column.columnDef.cell?.({ ...cell.getContext() }) ??
+										'',
+							getContext: cell.getContext,
+							hasSlot:
+								Boolean(slots[cell.column.id]) &&
+								cell.column.columnDef.meta.type === 'custom',
+							id: cell.id,
+							key: cell.id,
+						})),
+						classes: rowBehavior.classes,
+						expandedColSpan: row.getAllCells().length,
+						expandedKey: `${row.id}-expanded-row`,
+						isExpanded: row.getIsExpanded(),
+						key: row.id,
+						original: row.original,
+					}
+				}),
 			),
 			handleCellDragOver: (event: DragEvent, columnId: string) => {
 				if (!isColumnMoveDataTransfer(event)) return
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				event.dataTransfer!.dropEffect = 'move'
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
-				console.log('handleCellDragOver', columnId, columnIndex)
+				// console.log('handleCellDragOver', columnId, columnIndex)
 				const target = event.target as HTMLElement
 
 				const { x: elementX, width: elementWidth } =
@@ -233,7 +281,7 @@ export default defineComponent({
 			handleHeaderDragStart: (event: DragEvent, columnId: string) => {
 				event.dataTransfer?.setData(TRANSFER_TYPE, '')
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
-				console.log('handleHeaderDragStart', columnId, columnIndex)
+				// console.log('handleHeaderDragStart', columnId, columnIndex)
 				tableContext.value.internal.setDraggedColumnIndex(columnIndex)
 			},
 			handleTableDragEnd: () => {
@@ -269,6 +317,7 @@ export default defineComponent({
 			})),
 			table,
 			tableContext: computed(() => tableContext.value),
+			tableColSpan: computed(() => table.value.getAllFlatColumns().length),
 		}
 	},
 })
@@ -296,14 +345,19 @@ export default defineComponent({
 	table {
 		border-collapse: collapse;
 
+		a {
+			color: inherit;
+			text-decoration: inherit;
+		}
+
 		thead {
 			background-color: var(--ui-01);
 
 			.kt-table-cell--is-header {
 				padding: 0.4rem 0.2rem;
-				cursor: grab; // TODO hasDragAndDrop
 				font-size: var(--unit-3);
 				color: var(--gray-50);
+				cursor: grab; // TODO hasDragAndDrop
 				text-transform: uppercase;
 
 				.kt-table-header {
@@ -364,10 +418,53 @@ export default defineComponent({
 					// opacity: 0.4;
 				}
 			}
+
+			.kt-table-expand {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 24px;
+				height: 24px;
+				clip-path: circle(12px);
+				color: var(--icon-02);
+				font-size: 16px;
+				user-select: none;
+
+				&:not([aria-disabled='true']):hover {
+					background-color: var(--interactive-02-hover);
+				}
+
+				&[aria-expanded='true'] {
+					color: var(--interactive-03);
+				}
+
+				&[aria-disabled='true'] {
+					color: var(--text-05);
+				}
+			}
 		}
 
 		.kt-table-cell {
-			padding: 0.4rem 0.2rem;
+			padding: 0;
+
+			> .kt-table-cell-content {
+				display: flex;
+				gap: 4px;
+				padding: var(--unit-2) var(--unit-1);
+				align-items: center;
+			}
+
+			&--is-left-aligned > .kt-table-cell-content {
+				justify-content: flex-start;
+			}
+
+			&--is-right-aligned > .kt-table-cell-content {
+				justify-content: flex-end;
+			}
+
+			&--is-center-aligned > .kt-table-cell-content {
+				justify-content: center;
+			}
 		}
 	}
 
@@ -376,7 +473,7 @@ export default defineComponent({
 		right: 0;
 
 		> .kt-table__actions {
-			//TODO was copy pasted, please clean
+			// TODO was copy pasted, please clean
 			position: absolute;
 			right: 0.8rem;
 			z-index: 400;
