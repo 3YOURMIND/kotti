@@ -57,7 +57,16 @@
 				</tr>
 				<template v-for="(row, rowIndex) in bodyRows" v-else>
 					<!-- TODO: add data-test -->
-					<tr :key="row.key">
+					<a
+						style="display: table-row; background-color: bisque"
+						href="https://www.google.com"
+					>
+						<!-- <component
+						v-bind="getTableRowProps(row.key)"
+						:is="row.key === hoveredRowId ? 'a' : 'tr'"
+						:key="row.key"
+						@mouseenter="updateHoveredRowId(row.key)"
+					> -->
 						<td
 							v-for="(cell, cellIndex) in row.cells"
 							:key="cell.key"
@@ -86,12 +95,13 @@
 								<slot name="actions" :row="row.original" :rowIndex="rowIndex" />
 							</div>
 						</td>
-					</tr>
+						<!-- </component> -->
+					</a>
 					<tr
 						v-if="$scopedSlots['expanded-row'] && row.isExpanded"
 						:key="row.expandedKey"
 					>
-						<td :colSpan="row.expandedColSpan">
+						<td :colSpan="tableColSpan">
 							<slot
 								name="expanded-row"
 								:row="row.original"
@@ -148,6 +158,8 @@ export default defineComponent({
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = useTableContext(props.id)
 
+		const hoveredRowId = ref<string | null>(null)
+
 		const isColumnMoveDataTransfer = (event: DragEvent): boolean => {
 			return event.dataTransfer?.types.includes(TRANSFER_TYPE) ?? false
 		}
@@ -179,6 +191,19 @@ export default defineComponent({
 					original: row.original,
 				})),
 			),
+			getTableRowProps: (rowId: string) => {
+				if (rowId !== hoveredRowId.value) return { is: 'tr' }
+
+				return {
+					is: 'a',
+					href: 'https://google.com',
+					style: {
+						backgroundColor: 'var(--interactive-02-hover)',
+						display: 'table-row',
+					},
+					// 'display: table-row; background-color: var(--interactive-02-hover);',
+				}
+			},
 			handleCellDragOver: (event: DragEvent, columnId: string) => {
 				if (!isColumnMoveDataTransfer(event)) return
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -263,12 +288,17 @@ export default defineComponent({
 					key: headerRow.id,
 				})),
 			),
+			hoveredRowId,
 			tableClasses: computed(() => ({
 				'kt-table': true,
 				'kt-table--is-scrollable': !props.isNotScrollable,
 			})),
 			table,
 			tableContext: computed(() => tableContext.value),
+			tableColSpan: computed(() => table.value.getAllFlatColumns().length),
+			updateHoveredRowId: (rowId: string | null) => {
+				hoveredRowId.value = rowId
+			},
 		}
 	},
 })
@@ -338,6 +368,8 @@ export default defineComponent({
 		}
 
 		tbody {
+			/* TODO: a tag should be removed */
+			a,
 			tr {
 				position: relative;
 				border-bottom: 1px solid var(--ui-02);
