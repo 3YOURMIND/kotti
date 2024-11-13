@@ -72,14 +72,14 @@ const paramsSchema = z
 									.returns(z.union([z.void(), z.promise(z.void())])),
 							}),
 							z.object({
-								component: z.string().regex(/^[^a]($|.+)/),
-								on: z.record(z.unknown()).optional(),
-								props: z.record(z.unknown()).optional(),
-							}),
-							z.object({
 								component: z.literal('a'),
 								on: z.record(z.unknown()).optional(),
 								props: z.object({ href: z.string() }).passthrough(),
+							}),
+							z.object({
+								component: z.string().regex(/^[^a]($|.+)/),
+								on: z.record(z.unknown()).optional(),
+								props: z.record(z.unknown()).optional(),
 							}),
 							z.literal('expand'),
 						])
@@ -222,6 +222,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 								id: EXPANSION_COLUMN_ID,
 								meta: {
 									cellClasses: 'kt-table-cell kt-table-cell--is-body',
+									disableCellClick: true,
 									headerClasses: 'kt-table-cell kt-table-cell--is-header',
 									type: 'text',
 								},
@@ -289,6 +290,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 								id: SELECTION_COLUMN_ID,
 								meta: {
 									cellClasses: 'kt-table-cell kt-table-cell--is-body',
+									disableCellClick: true,
 									headerClasses: 'kt-table-cell kt-table-cell--is-header',
 									type: 'text',
 								},
@@ -334,6 +336,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 						id: column.id,
 						meta: {
 							cellClasses: getCellClasses('body'),
+							disableCellClick: columnDisplay.disableCellClick,
 							headerClasses: getCellClasses('header'),
 							type: column.display.type,
 						},

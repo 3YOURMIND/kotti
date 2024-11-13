@@ -8,6 +8,33 @@
 			:options="toggleGroupOptions"
 			type="switch"
 		/>
+		<KtFieldSingleSelect
+			v-model="clickBehavior"
+			label="Row Click Behavior"
+			:options="[
+				{
+					label: 'expand',
+					value: 'expand',
+				},
+				{
+					label: 'track row clicks',
+					value: 'simple-event',
+				},
+				{
+					label: 'go to google',
+					value: 'link',
+				},
+				{
+					label: 'Custom component',
+					value: 'component',
+				},
+			]"
+		/>
+		<KtValueLabel
+			v-if="clickBehavior === 'simple-event'"
+			label="Row clicks"
+			:value="counter"
+		/>
 
 		<!-- TODO: should not reuse `id` -->
 		<KtTable class="mb-4" :isLoading="booleanFlags.isLoading" tableId="example">
@@ -47,8 +74,10 @@ import { computed, defineComponent, h, ref, watch } from 'vue'
 
 import {
 	KtButton,
+	KtFieldSingleSelect,
 	KtFieldToggleGroup,
 	KtTable,
+	KtValueLabel,
 	useKottiTable,
 } from '@3yourmind/kotti-ui'
 import type { Kotti } from '@3yourmind/kotti-ui'
@@ -67,8 +96,10 @@ export default defineComponent({
 	components: {
 		ComponentInfo,
 		KtButton,
+		KtFieldSingleSelect,
 		KtFieldToggleGroup,
 		KtTable,
+		KtValueLabel,
 	},
 	setup() {
 		const booleanFlags = ref({
@@ -78,6 +109,40 @@ export default defineComponent({
 			isSelectable: true,
 			showEmptySlot: false,
 			showLoadingSlot: false,
+		})
+		const counter = ref(0)
+		const clickBehavior = ref<
+			'component' | 'expand' | 'link' | 'simple-event' | null
+		>(null)
+
+		const clickBehaviorValue = computed(() => {
+			switch (clickBehavior.value) {
+				case 'component':
+					return {
+						component: 'nuxt-link',
+						props: {
+							to: '/usage/layouts/navbar',
+						},
+					}
+				case 'expand':
+					return 'expand'
+				case 'link':
+					return {
+						component: 'a',
+						props: {
+							href: 'https://www.google.com',
+						},
+					}
+				case 'simple-event':
+					return {
+						component: null,
+						onClick: () => {
+							counter.value += 1
+						},
+					}
+				default:
+					return undefined
+			}
 		})
 
 		type TableRow = {
@@ -270,7 +335,7 @@ export default defineComponent({
 						],
 				getRowBehavior: ({ row, rowIndex }) => ({
 					classes: [], //rowIndex % 2 === 0 ? ['everything-red'] : [],
-					click: 'expand',
+					click: clickBehaviorValue.value,
 					disable: {
 						click: false,
 						expand: rowIndex % 2 === 0,
@@ -297,7 +362,9 @@ export default defineComponent({
 
 		return {
 			booleanFlags,
+			clickBehavior,
 			component: KtTable,
+			counter,
 			emptySelection: () => {
 				tableHook.rowSelection.value = {}
 			},
@@ -312,19 +379,6 @@ export default defineComponent({
 			reverseColumnOrder: () => {
 				tableHook.columnOrder.value = tableHook.columnOrder.value.reverse()
 			},
-			visibilityOptions: computed<Kotti.FieldToggleGroup.Props['options']>(
-				() => [
-					{ key: 'age', label: 'Age' },
-					{ key: 'name', label: 'Name' },
-					{ key: 'purpose', label: 'Primary Purpose' },
-					{ key: 'isAlive', label: 'Aliveness' },
-					{ key: 'speed', label: 'Speed' },
-					{ key: 'randomDate', label: 'Random Date' },
-					{ key: 'bestSkill', label: 'Best Skill' },
-					{ key: 'worstEnemy', label: 'Worst Enemy' },
-					{ key: 'preferredSound', label: 'Preferred Sound' },
-				],
-			),
 			showAllColumns: () => {
 				tableHook.hiddenColumns.value = new Set()
 			},

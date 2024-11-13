@@ -4,6 +4,7 @@ import type { KottiTable } from './types'
 
 export type ResolvedColumnDisplay<OPTIONS extends Record<string, unknown>> = {
 	align: 'center' | 'left' | 'right'
+	disableCellClick: boolean
 	formatter:
 		| ((
 				value: unknown,
@@ -18,6 +19,7 @@ export type ResolvedColumnDisplay<OPTIONS extends Record<string, unknown>> = {
 
 const boolean: ResolvedColumnDisplay<Record<string, never>> = {
 	align: 'left',
+	disableCellClick: false,
 	// TODO: ask how boolean should be displayed
 	formatter: (value: unknown) => (value ? 'TRUE' : 'FALSE'),
 	isNumeric: true,
@@ -25,18 +27,21 @@ const boolean: ResolvedColumnDisplay<Record<string, never>> = {
 
 const date: ResolvedColumnDisplay<Record<string, never>> = {
 	align: 'left',
+	disableCellClick: false,
 	formatter: (value: unknown) => value as string,
 	isNumeric: true,
 }
 
 const datetime: ResolvedColumnDisplay<Record<string, never>> = {
 	align: 'left',
+	disableCellClick: false,
 	formatter: (value: unknown) => (value as string).replace('T', ' '),
 	isNumeric: true,
 }
 
 const integer: ResolvedColumnDisplay<Record<string, never>> = {
 	align: 'right',
+	disableCellClick: false,
 	formatter: (value: unknown) =>
 		value === null ? null : String(Math.round(value as number)),
 	isNumeric: true,
@@ -44,6 +49,7 @@ const integer: ResolvedColumnDisplay<Record<string, never>> = {
 
 const numerical: ResolvedColumnDisplay<{ decimalPlaces?: number }> = {
 	align: 'right',
+	disableCellClick: false,
 	formatter: (value, context) =>
 		value === null
 			? null
@@ -55,6 +61,7 @@ const numerical: ResolvedColumnDisplay<{ decimalPlaces?: number }> = {
 
 const text: ResolvedColumnDisplay<Record<string, never>> = {
 	align: 'left',
+	disableCellClick: false,
 	formatter: (value: unknown) => value as string,
 	isNumeric: false,
 }

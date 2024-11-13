@@ -67,11 +67,11 @@
 							@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
 						>
 							<component
-								:is="'a'"
+								:is="cell.wrapComponent.component"
+								v-bind="cell.wrapComponent.props"
 								class="kt-table-cell-content"
-								href="https://www.google.com"
+								v-on="cell.wrapComponent.on"
 							>
-								<!-- TODO: error when custom has no slot // {{ `slot ${cell.columnId}` }} -->
 								<slot
 									v-if="cell.hasSlot"
 									:columnIndex="cellIndex"
@@ -139,6 +139,7 @@ import { makeProps } from '../make-props'
 
 import { useTableContext } from './context'
 import { ARRAY_START, EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './hooks'
+import { DEFAULT_CELL_WRAPPER, resolveRowBehavior } from './row'
 import { FlexRender } from './tanstack-table'
 import { KottiTable } from './types'
 
@@ -161,6 +162,7 @@ export default defineComponent({
 		const table = computed(() => tableContext.value.internal.table.value)
 
 		// const computeWrapperProps = (row: AnyRow, rowIndex: number) => {
+		// | 'expand'
 		// | {
 		// 		/**
 		// 		 * For example for opening drawers. Should not be used for navigation. Also consider using normal link with
@@ -190,16 +192,15 @@ export default defineComponent({
 		// 			href: string
 		// 		}
 		//   }
-		// | 'expand'
 		// }
 
 		return {
 			bodyRows: computed(() =>
-				table.value.getRowModel().rows.map((row, rowIndex) => {
-					const rowBehavior = tableContext.value.internal.getRowBehavior({
-						row: row.original,
-						rowIndex,
-					})
+				table.value.getRowModel().rows.map((row) => {
+					const rowBehavior = resolveRowBehavior(
+						tableContext.value.internal.getRowBehavior,
+						row,
+					)
 
 					return {
 						cells: row.getVisibleCells().map((cell) => ({
@@ -217,6 +218,9 @@ export default defineComponent({
 								cell.column.columnDef.meta.type === 'custom',
 							id: cell.id,
 							key: cell.id,
+							wrapComponent: cell.column.columnDef.meta.disableCellClick
+								? DEFAULT_CELL_WRAPPER
+								: rowBehavior.wrapComponent,
 						})),
 						classes: rowBehavior.classes,
 						expandedColSpan: row.getAllCells().length,
@@ -345,7 +349,7 @@ export default defineComponent({
 	table {
 		border-collapse: collapse;
 
-		a {
+		a.kt-table-cell-content {
 			color: inherit;
 			text-decoration: inherit;
 		}
