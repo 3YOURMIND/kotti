@@ -13,24 +13,6 @@ export const IS_ASC = /ascending|^1/
 export const IS_DSC = /descending|^-1/
 
 interface KottiTableContext {
-	_renderActions: (
-		h: CreateElement,
-		payload: {
-			data: KottiTableLegacy.Row.Props
-			row: KottiTableLegacy.Row.Props
-			rowIndex: number
-		},
-	) => VNodeChildren
-	_renderEmpty: (h: CreateElement) => VNodeChildren
-	_renderExpand: (
-		h: CreateElement,
-		payload: {
-			data: KottiTableLegacy.Row.Props
-			row: KottiTableLegacy.Row.Props
-			rowIndex: number
-		},
-	) => VNodeChildren
-	_renderLoading: (h: CreateElement) => VNodeChildren
 	$emit: TypedEmit<{
 		activateRow: [unknown, number]
 		cellClick: [
@@ -56,6 +38,24 @@ interface KottiTableContext {
 		sortChange: unknown[]
 	}>
 	$listeners: VueType['$listeners']
+	_renderActions: (
+		h: CreateElement,
+		payload: {
+			data: KottiTableLegacy.Row.Props
+			row: KottiTableLegacy.Row.Props
+			rowIndex: number
+		},
+	) => VNodeChildren
+	_renderEmpty: (h: CreateElement) => VNodeChildren
+	_renderExpand: (
+		h: CreateElement,
+		payload: {
+			data: KottiTableLegacy.Row.Props
+			row: KottiTableLegacy.Row.Props
+			rowIndex: number
+		},
+	) => VNodeChildren
+	_renderLoading: (h: CreateElement) => VNodeChildren
 	colSpan: number
 	disableRow: KottiTableLegacy.Props['disableRow']
 	hasActions: boolean

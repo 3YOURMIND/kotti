@@ -332,14 +332,35 @@ export default {
 			rules: {
 				'@eslint-community/eslint-comments/no-duplicate-disable': 'off',
 				'perfectionist/sort-array-includes': [
-					'error',
-					{ partitionByComment: true },
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
 				],
-				'perfectionist/sort-classes': ['error', { partitionByComment: true }],
-				'perfectionist/sort-enums': ['error', { partitionByComment: true }],
-				'perfectionist/sort-exports': ['error', { partitionByComment: true }],
+				'perfectionist/sort-classes': [
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
+				],
+				'perfectionist/sort-enums': [
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
+				],
+				'perfectionist/sort-exports': [
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
+				],
 				'perfectionist/sort-imports': [
-					'error',
+					'warn',
 					{
 						customGroups: {
 							type: {
@@ -365,11 +386,14 @@ export default {
 					},
 				],
 				'perfectionist/sort-interfaces': [
-					'error',
-					{ partitionByComment: true },
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
 				],
 				'perfectionist/sort-intersection-types': [
-					'error',
+					'warn',
 					{
 						groups: ['named', 'object', 'function', 'unknown', 'nullish'],
 						order: 'asc',
@@ -377,29 +401,48 @@ export default {
 						type: 'natural',
 					},
 				],
-				'perfectionist/sort-maps': ['error', { partitionByComment: true }],
+				'perfectionist/sort-maps': [
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
+				],
 				'perfectionist/sort-named-exports': [
-					'error',
-					{ partitionByComment: true },
+					'warn',
+					{ partitionByComment: true, type: 'natural' },
 				],
 				'perfectionist/sort-named-imports': [
-					'error',
-					{ partitionByComment: true },
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
 				],
 				'perfectionist/sort-object-types': [
-					'error',
-					{ partitionByComment: true },
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
 				],
 				'perfectionist/sort-objects': [
-					'error',
+					'warn',
 					{
 						ignorePattern: ['defineComponent'],
 						partitionByComment: true,
+						type: 'natural',
 					},
 				],
-				'perfectionist/sort-sets': ['error', { partitionByComment: true }],
+				'perfectionist/sort-sets': [
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
+				],
 				'perfectionist/sort-union-types': [
-					'error',
+					'warn',
 					{
 						groups: ['named', 'object', 'function', 'unknown', 'nullish'],
 						order: 'asc',
@@ -408,8 +451,11 @@ export default {
 					},
 				],
 				'perfectionist/sort-variable-declarations': [
-					'error',
-					{ partitionByComment: true },
+					'warn',
+					{
+						partitionByComment: true,
+						type: 'natural',
+					},
 				],
 				'perfectionist/sort-vue-attributes': 'off',
 			},
