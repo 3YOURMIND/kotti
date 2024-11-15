@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-exit 0
 
 # this directory is assumed to exist, so create it
 mkdir -p dist

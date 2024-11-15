@@ -14,7 +14,7 @@ export const DEFAULT_CELL_WRAPPER: RowCellWrapper = {
 	component: 'div',
 }
 
-const getCellWrapComponent = (
+export const getCellWrapComponent = (
 	clickBehavior: RowBehavior['click'],
 	row: Row<AnyRow>,
 ): RowCellWrapper => {
@@ -41,21 +41,4 @@ const getCellWrapComponent = (
 		}
 
 	return clickBehavior
-}
-
-export const resolveRowBehavior = (
-	getRowBehavior: GetRowBehavior<AnyRow>,
-	row: Row<AnyRow>,
-): {
-	classes?: string[]
-	wrapComponent: RowCellWrapper
-} => {
-	const behavior = getRowBehavior({ row: row.original, rowIndex: row.index })
-
-	const wrapComponent = getCellWrapComponent(behavior.click, row)
-
-	return {
-		classes: behavior.classes,
-		wrapComponent,
-	}
 }

@@ -139,7 +139,7 @@ import { makeProps } from '../make-props'
 
 import { useTableContext } from './context'
 import { ARRAY_START, EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './hooks'
-import { DEFAULT_CELL_WRAPPER, resolveRowBehavior } from './row'
+import { DEFAULT_CELL_WRAPPER, getCellWrapComponent } from './row'
 import { FlexRender } from './tanstack-table'
 import { KottiTable } from './types'
 
@@ -197,10 +197,12 @@ export default defineComponent({
 		return {
 			bodyRows: computed(() =>
 				table.value.getRowModel().rows.map((row) => {
-					const rowBehavior = resolveRowBehavior(
-						tableContext.value.internal.getRowBehavior,
-						row,
-					)
+					const behavior = tableContext.value.internal.getRowBehavior({
+						row: row.original,
+						rowIndex: row.index,
+					})
+
+					const wrapComponent = getCellWrapComponent(behavior.click, row)
 
 					return {
 						cells: row.getVisibleCells().map((cell) => ({
@@ -220,9 +222,9 @@ export default defineComponent({
 							key: cell.id,
 							wrapComponent: cell.column.columnDef.meta.disableCellClick
 								? DEFAULT_CELL_WRAPPER
-								: rowBehavior.wrapComponent,
+								: wrapComponent,
 						})),
-						classes: rowBehavior.classes,
+						classes: behavior.classes,
 						expandedColSpan: row.getAllCells().length,
 						expandedKey: `${row.id}-expanded-row`,
 						isExpanded: row.getIsExpanded(),
