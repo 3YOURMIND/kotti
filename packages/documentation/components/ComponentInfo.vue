@@ -339,6 +339,7 @@ $radius: 3px;
 	&--is-deprecated {
 		.component-info__title {
 			text-decoration: underline wavy var(--red-50);
+			text-decoration-skip-ink: none;
 		}
 	}
 }
