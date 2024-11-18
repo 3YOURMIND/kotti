@@ -1,0 +1,98 @@
+export const todos = [
+	{
+		completed: true,
+		id: 1,
+		todo: 'Watch a classic movie',
+		userId: 68,
+	},
+	{
+		completed: false,
+		id: 2,
+		todo: 'Contribute code or a monetary donation to an open-source software project',
+		userId: 69,
+	},
+	{
+		completed: false,
+		id: 3,
+		todo: 'Invite some friends over for a game night',
+		userId: 104,
+	},
+	{
+		completed: true,
+		id: 4,
+		todo: "Text a friend you haven't talked to in a long time",
+		userId: 2,
+	},
+	{
+		completed: true,
+		id: 5,
+		todo: "Plan a vacation you've always wanted to take",
+		userId: 162,
+	},
+	{
+		completed: false,
+		id: 6,
+		todo: 'Clean out car',
+		userId: 71,
+	},
+	{
+		completed: true,
+		id: 7,
+		todo: 'Create a cookbook with favorite recipes',
+		userId: 53,
+	},
+	{
+		completed: false,
+		id: 8,
+		todo: 'Create a compost pile',
+		userId: 13,
+	},
+	{
+		completed: true,
+		id: 9,
+		todo: 'Take a hike at a local park',
+		userId: 37,
+	},
+	{
+		completed: true,
+		id: 10,
+		todo: 'Take a class at local community center that interests you',
+		userId: 65,
+	},
+	{
+		completed: true,
+		id: 11,
+		todo: 'Research a topic interested in',
+		userId: 130,
+	},
+	{
+		completed: false,
+		id: 12,
+		todo: 'Plan a trip to another country',
+		userId: 140,
+	},
+	{
+		completed: false,
+		id: 13,
+		todo: 'Improve touch typing',
+		userId: 178,
+	},
+	{
+		completed: false,
+		id: 14,
+		todo: 'Learn Express.js',
+		userId: 194,
+	},
+	{
+		completed: false,
+		id: 15,
+		todo: 'Learn calligraphy',
+		userId: 80,
+	},
+	{
+		completed: true,
+		id: 16,
+		todo: 'Go to the gym',
+		userId: 142,
+	},
+]

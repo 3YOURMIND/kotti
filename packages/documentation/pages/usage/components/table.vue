@@ -372,8 +372,10 @@ export default defineComponent({
 
 		watch(tableHook.ordering, () => {
 			try {
+				// eslint-disable-next-line no-console
 				console.log(JSON.stringify(tableHook.ordering.value))
 			} catch (error) {
+				// eslint-disable-next-line no-console
 				console.error(error)
 			}
 		})
@@ -444,8 +446,8 @@ export default defineComponent({
 
 <style>
 .everything-red {
-	background-color: rosybrown !important;
 	color: red !important;
+	background-color: rosybrown !important;
 }
 </style>
 
