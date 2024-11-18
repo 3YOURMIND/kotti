@@ -62,7 +62,6 @@
 				</div>
 			</section>
 		</article>
-		<ComponentInfoSlots :slots="component.meta.slots" />
 		<KtHeading
 			v-if="component.props"
 			text="Properties"
@@ -141,6 +140,8 @@
 				</template>
 			</div>
 		</KtHeading>
+
+		<ComponentInfoSlots :slots="component.meta.slots" />
 	</div>
 </template>
 
