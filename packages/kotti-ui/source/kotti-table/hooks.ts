@@ -1,15 +1,17 @@
 import { Dashes } from '@metatypes/typography'
 import type {
+	CellContext,
+	HeaderContext,
+	PaginationState,
 	RowSelectionState,
 	SortingState,
 	VisibilityState,
 } from '@tanstack/table-core'
 import {
-	type CellContext,
 	createColumnHelper,
 	getCoreRowModel,
 	getExpandedRowModel,
-	type HeaderContext,
+	getPaginationRowModel,
 } from '@tanstack/table-core'
 import { computed, h, ref, type Ref, watch } from 'vue'
 import { z } from 'zod'
@@ -23,7 +25,8 @@ import { resolveColumnDisplay } from './column'
 import { type TableContext, useProvideTableContext } from './context'
 import { useState, useVueTable } from './tanstack-table'
 import type { GetRowBehavior } from './types'
-import { type AnyRow, KottiTable } from './types'
+import type { AnyRow } from './types'
+import { KottiTable } from './types'
 
 export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
 export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
@@ -44,6 +47,7 @@ type KottiTableParameter<
 	// onSelectionUpdate: (updated: Record<string, boolean>) => void
 	// selectedRows: Ref<Record<string, boolean>>
 	//}
+	pagination?: KottiTable.Pagination
 }>
 
 const paramsSchema = z
@@ -98,6 +102,7 @@ const paramsSchema = z
 		id: z.string(),
 		isExpandable: z.boolean().default(false),
 		isSelectable: z.boolean().default(false),
+		pagination: KottiTable.paginationSchema.optional(),
 	})
 	.strict()
 
@@ -143,6 +148,12 @@ export const useKottiTable = <ROW extends AnyRow>(
 	// )
 
 	// TODO: should we do this
+	const [pagination, setPagination] = useState<PaginationState>(
+		params.value.pagination?.state ?? {
+			pageIndex: 0,
+			pageSize: 10,
+		},
+	)
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [visibilityState, setVisibiltyState] = useState<VisibilityState>(
@@ -370,9 +381,16 @@ export const useKottiTable = <ROW extends AnyRow>(
 			getExpandedRowModel: params.value.isExpandable
 				? getExpandedRowModel()
 				: undefined,
+			getPaginationRowModel:
+				params.value.pagination?.type === KottiTable.PaginationType.LOCAL
+					? getPaginationRowModel()
+					: undefined,
 			getRowId: (row, rowIndex) =>
 				params.value.getRowBehavior({ row, rowIndex }).id,
+			manualPagination:
+				params.value.pagination?.type === KottiTable.PaginationType.REMOTE,
 			onColumnVisibilityChange: setVisibiltyState,
+			onPaginationChange: params.value.pagination ? setPagination : undefined,
 			onRowSelectionChange: setRowSelection,
 			// onRowSelectionChange: (updateOrValue) => {
 			// 	if (!params.selection) throw new Error('no selection available')
@@ -390,15 +408,20 @@ export const useKottiTable = <ROW extends AnyRow>(
 			// 		value: x.desc ? 'descending' : 'ascending',
 			// 	}))
 			// },
+			rowCount:
+				params.value.pagination?.type === KottiTable.PaginationType.REMOTE
+					? params.value.pagination.rowCount
+					: undefined,
 			state: {
 				columnOrder: columnOrderInternal.value,
+				columnVisibility: visibilityState.value,
+				pagination: params.value.pagination ? pagination.value : undefined,
 				rowSelection: rowSelection.value,
 				sorting: sorting.value,
 				// sorting: ordering.value.map((x) => ({
 				// 	desc: x.value === 'descending',
 				// 	id: x.id,
 				// })),
-				columnVisibility: visibilityState.value,
 			},
 		})),
 	)
@@ -407,6 +430,9 @@ export const useKottiTable = <ROW extends AnyRow>(
 		internal: {
 			getColumnIndex: (columnId: string) => {
 				return columnOrderInternal.value.indexOf(columnId)
+			},
+			getOrdering: () => {
+				return ordering.value
 			},
 			getRowBehavior: params.value.getRowBehavior,
 			hasDragAndDrop: Boolean(params.value.hasDragAndDrop),
