@@ -362,6 +362,38 @@ export default defineComponent({
 				type: Kotti.StandardTable.FilterType.NUMBER_RANGE,
 				unit: 'Kg',
 			},
+			...(settings.value.showInlineFilters
+				? [
+						{
+							dataTest: 'single-select-filter-inline',
+							displayInline: true,
+							id: 'singleSelectFilterInline',
+							isUnsorted: true,
+							label: 'Single select filter Inline',
+							options: [
+								{
+									dataTest: 'opt-1',
+									isDisabled: false,
+									label: 'Option 1',
+									value: 101,
+								},
+								{
+									dataTest: 'opt-2',
+									isDisabled: false,
+									label: 'Option 2',
+									value: 102,
+								},
+								{
+									dataTest: 'opt-3',
+									isDisabled: false,
+									label: 'Option 3',
+									value: 103,
+								},
+							],
+							type: Kotti.StandardTable.FilterType.SINGLE_SELECT,
+						},
+					]
+				: []),
 		])
 
 		useKottiStandardTable<TodoRow>(
@@ -388,18 +420,6 @@ export default defineComponent({
 				filters: filters.value,
 				id: 'example-remote-data',
 				isLoading: isLoadingRecipes.value,
-				options: {
-					hideControls: {
-						columns: settings.value.booleanFlags.hideColumns ?? undefined,
-						filters: settings.value.booleanFlags.hideFilters ?? undefined,
-						search: settings.value.booleanFlags.hideSearch ?? undefined,
-					},
-					popoversSize: {
-						columns: settings.value.columnsPopoverSize,
-						filters: settings.value.filtersPopoverSize,
-					},
-					searchPlaceholder: settings.value.searchPlaceholder ?? undefined,
-				},
 				pagination: {
 					pageSize: 5,
 					// eslint-disable-next-line no-magic-numbers
