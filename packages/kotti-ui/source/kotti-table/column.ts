@@ -2,7 +2,7 @@ import type { KottiI18n } from '../kotti-i18n/types'
 
 import type { KottiTable } from './types'
 
-export type ResolvedColumnDisplay<OPTIONS extends Record<string, unknown>> = {
+type ResolvedColumnDisplay<OPTIONS extends Record<string, unknown>> = {
 	align: 'center' | 'left' | 'right'
 	disableCellClick: boolean
 	formatter:

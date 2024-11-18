@@ -363,8 +363,8 @@ export default defineComponent({
 				padding: 0.4rem 0.2rem;
 				font-size: var(--unit-3);
 				color: var(--gray-50);
-				cursor: grab; // TODO hasDragAndDrop
 				text-transform: uppercase;
+				cursor: grab; // TODO hasDragAndDrop
 
 				.kt-table-header {
 					display: inline-flex;
@@ -432,8 +432,8 @@ export default defineComponent({
 				width: 24px;
 				height: 24px;
 				clip-path: circle(12px);
-				color: var(--icon-02);
 				font-size: 16px;
+				color: var(--icon-02);
 				user-select: none;
 
 				&:not([aria-disabled='true']):hover {
@@ -456,8 +456,8 @@ export default defineComponent({
 			> .kt-table-cell-content {
 				display: flex;
 				gap: 4px;
-				padding: var(--unit-2) var(--unit-1);
 				align-items: center;
+				padding: var(--unit-2) var(--unit-1);
 			}
 
 			&--is-left-aligned > .kt-table-cell-content {

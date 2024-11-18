@@ -1,11 +1,12 @@
 import type { Table } from '@tanstack/table-core'
 import { inject, provide, type Ref } from 'vue'
 
-import type { AnyRow, GetRowBehavior } from './types'
+import type { AnyRow, GetRowBehavior, KottiTable } from './types'
 
 export type TableContext<ROW extends AnyRow> = Ref<{
 	internal: {
 		getColumnIndex: (columnId: string) => number
+		getOrdering: () => KottiTable.Ordering[]
 		getRowBehavior: GetRowBehavior<ROW>
 		hasDragAndDrop: boolean
 		isExpandable: boolean

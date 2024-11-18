@@ -168,4 +168,28 @@ export module KottiTable {
 			tableId: z.string(),
 		})
 		.strict()
+
+	export enum PaginationType {
+		LOCAL = 'LOCAL',
+		REMOTE = 'REMOTE',
+	}
+
+	export const paginationSchema = z.discriminatedUnion('type', [
+		z.object({
+			state: z.object({
+				pageIndex: z.number().int().finite().min(0),
+				pageSize: z.number().int().finite().gt(0),
+			}),
+			type: z.literal(PaginationType.LOCAL),
+		}),
+		z.object({
+			rowCount: z.number().int().finite().min(0),
+			state: z.object({
+				pageIndex: z.number().int().finite().min(0),
+				pageSize: z.number().int().finite().gt(0),
+			}),
+			type: z.literal(PaginationType.REMOTE),
+		}),
+	])
+	export type Pagination = z.output<typeof paginationSchema>
 }
