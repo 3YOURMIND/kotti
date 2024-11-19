@@ -12,9 +12,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
-import type { KottiFieldDateRange } from '../../../kotti-field-date/types'
-import { makeProps } from '../../../make-props'
+import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
+import type { KottiFieldDateRange } from '../../../../kotti-field-date/types'
+import { makeProps } from '../../../../make-props'
 
 import { KottiStandardTable } from '../../types'
 import { getLast, today } from '../../utilities/date'

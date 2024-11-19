@@ -1,9 +1,9 @@
 import type { Ref } from 'vue'
 import { computed, watch } from 'vue'
 
-import { useKottiTable } from '../kotti-table/hooks'
-import type { AnyRow } from '../kotti-table/types'
-import type { KottiTable } from '../kotti-table/types'
+import { useKottiTable } from '../table/hooks'
+import type { AnyRow } from '../table/types'
+import type { KottiTable } from '../table/types'
 
 import type { StandardTableContext } from './context'
 import { useProvideStandardTableContext } from './context'

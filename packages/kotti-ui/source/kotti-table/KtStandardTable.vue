@@ -81,18 +81,18 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
 
-import { useTableContext } from '../kotti-table/context'
+import { useTableContext } from './table/context'
 import { makeProps } from '../make-props'
 
-import { useStandardTableContext } from './context'
-import { KottiStandardTable } from './types'
-import { formatFilterValue } from './utilities/filters'
+import { useStandardTableContext } from './standard-table/context'
+import { KottiStandardTable } from './standard-table/types'
+import { formatFilterValue } from './standard-table/utilities/filters'
 
-import TableColumns from './components/Columns.vue'
-import TableFilters from './components/Filters.vue'
-import TablePageSize from './components/PageSize.vue'
-import TablePagination from './components/Pagination.vue'
-import TableSearch from './components/Search.vue'
+import TableColumns from './standard-table/components/Columns.vue'
+import TableFilters from './standard-table/components/Filters.vue'
+import TablePageSize from './standard-table/components/PageSize.vue'
+import TablePagination from './standard-table/components/Pagination.vue'
+import TableSearch from './standard-table/components/Search.vue'
 
 export default defineComponent({
 	name: 'KtStandardTable',

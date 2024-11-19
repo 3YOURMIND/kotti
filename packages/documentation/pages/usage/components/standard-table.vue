@@ -31,7 +31,11 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 
-import { KtButton, KtStandardTable, useKottiStandardTable } from '@3yourmind/kotti-ui'
+import {
+	KtButton,
+	KtStandardTable,
+	useKottiStandardTable,
+} from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
@@ -206,7 +210,7 @@ export default defineComponent({
 				isUnsorted: true,
 				label: 'Multi select filter',
 				options: [
-				{
+					{
 						dataTest: 'opt-1',
 						isDisabled: false,
 						label: 'Option 1',
@@ -249,12 +253,14 @@ export default defineComponent({
 
 		return {
 			component: KtStandardTable,
-			fetchData: async (args: Kotti.StandardTable.Events.UpdateDataFetchDependencies) => {
+			fetchData: async (
+				args: Kotti.StandardTable.Events.UpdateDataFetchDependencies,
+			) => {
 				isLoadingRecipes.value = true
 
 				const { pagination } = args
 				const { pageIndex, pageSize } = pagination
-				const skip = (pageSize * pageIndex)
+				const skip = pageSize * pageIndex
 				const url = `https://dummyjson.com/recipes?limit=${pageSize}&skip=${skip}`
 
 				type Response = {
@@ -265,13 +271,13 @@ export default defineComponent({
 				}
 
 				try {
-					const response = await fetch(url);
+					const response = await fetch(url)
 
 					if (!response.ok) {
 						throw new Error(`Response status: ${response.status}`)
 					}
 
-					const { recipes, total }: Response = await response.json();
+					const { recipes, total }: Response = await response.json()
 
 					recipesData.value = recipes
 					recipesRowCount.value = total
@@ -295,7 +301,7 @@ export default defineComponent({
 						pageSizeOptions: [5, 10, 15, 20],
 						type: Kotti.StandardTable.PaginationType.LOCAL,
 					},
-				}))
+				})),
 			),
 			remoteStandardTableHook: useKottiStandardTable<RecipeRow>(
 				computed(() => ({
@@ -311,7 +317,7 @@ export default defineComponent({
 						rowCount: recipesRowCount.value,
 						type: Kotti.StandardTable.PaginationType.REMOTE,
 					},
-				}))
+				})),
 			),
 		}
 	},

@@ -1,14 +1,14 @@
 import { z } from 'zod'
 
-import { KottiFieldDateRange } from '../kotti-field-date/types'
-import { KottiFieldNumber } from '../kotti-field-number/types'
+import { KottiFieldDateRange } from '../../kotti-field-date/types'
+import { KottiFieldNumber } from '../../kotti-field-number/types'
 import {
 	KottiFieldMultiSelect,
 	KottiFieldSingleSelect,
-} from '../kotti-field-select/types'
-import { KottiFieldText } from '../kotti-field-text/types'
-import { KottiFieldToggle } from '../kotti-field-toggle/types'
-import { KottiTable } from '../kotti-table/types'
+} from '../../kotti-field-select/types'
+import { KottiFieldText } from '../../kotti-field-text/types'
+import { KottiFieldToggle } from '../../kotti-field-toggle/types'
+import { KottiTable } from '../table/types'
 
 import {
 	DEFAULT_PAGE_SIZE,

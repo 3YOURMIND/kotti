@@ -18,9 +18,9 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import type { KottiFieldSingleSelect } from '../../kotti-field-select/types'
-import { makeProps } from '../../make-props'
+import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import type { KottiFieldSingleSelect } from '../../../kotti-field-select/types'
+import { makeProps } from '../../../make-props'
 
 import { KottiStandardTable } from '../types'
 

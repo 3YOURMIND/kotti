@@ -33,8 +33,8 @@
 import { computed, defineComponent } from 'vue'
 import { Yoco } from '@3yourmind/yoco'
 
-import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { makeProps } from '../../make-props'
+import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import { makeProps } from '../../../make-props'
 
 import { KottiStandardTable } from '../types'
 

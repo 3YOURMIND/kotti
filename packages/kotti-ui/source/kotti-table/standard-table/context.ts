@@ -1,7 +1,7 @@
 import { inject, provide, type Ref } from 'vue'
 
-import type { KottiTable } from '../kotti-table/types'
-import type { AnyRow } from '../kotti-table/types'
+import type { KottiTable } from '../table/types'
+import type { AnyRow } from '../table/types'
 
 import type { KottiStandardTable } from './types'
 

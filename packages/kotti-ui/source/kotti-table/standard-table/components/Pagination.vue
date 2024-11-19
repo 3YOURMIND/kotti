@@ -23,8 +23,8 @@
 import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent } from 'vue'
 
-import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { makeProps } from '../../make-props'
+import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import { makeProps } from '../../../make-props'
 
 import { KottiStandardTable } from '../types'
 import { pluralize } from '../utilities/translation'

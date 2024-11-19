@@ -16,7 +16,7 @@
 import isNil from 'lodash/isNil'
 import { computed, defineComponent } from 'vue'
 
-import { makeProps } from '../../../make-props'
+import { makeProps } from '../../../../make-props'
 
 import { KottiStandardTable } from '../../types'
 

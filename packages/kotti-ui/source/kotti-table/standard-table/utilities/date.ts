@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import type { ManipulateType } from 'dayjs'
 
-import { ISO8601 } from '../../constants'
+import { ISO8601 } from '../../../constants'
 
 /**
  * Returns formatted today's date. Default template is ISO8601.

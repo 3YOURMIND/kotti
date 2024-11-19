@@ -1,4 +1,4 @@
-import type { KottiI18n } from '../kotti-i18n/types'
+import type { KottiI18n } from '../../kotti-i18n/types'
 
 import type { KottiTable } from './types'
 

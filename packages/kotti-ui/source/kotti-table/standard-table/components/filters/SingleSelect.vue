@@ -14,7 +14,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { makeProps } from '../../../make-props'
+import { makeProps } from '../../../../make-props'
 
 import { KottiStandardTable } from '../../types'
 
