@@ -80,8 +80,6 @@ export default defineComponent({
 				const value = props.value.find(
 					(appliedFilter) => appliedFilter.id === filter.id,
 				)?.value
-				// TODO: should pick the defaultValue only the first time (i.e. nothing is saved in cash)
-				// return value ?? filter.defaultValue ?? null
 				return value ?? getDefaultValue(filter)
 			},
 			onInput: (

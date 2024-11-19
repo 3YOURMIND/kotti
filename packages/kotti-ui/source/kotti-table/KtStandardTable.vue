@@ -81,6 +81,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
 
+import type { KottiFieldText } from '../kotti-field-text/types'
 import { makeProps } from '../make-props'
 
 import TableColumns from './standard-table/components/Columns.vue'
@@ -115,7 +116,7 @@ export default defineComponent({
 		const tableContext = useTableContext(props.id)
 
 		const appliedFilters = ref<KottiStandardTable.AppliedFilter[]>([])
-		const searchValue = ref<string | null>(null) // TODO: type?
+		const searchValue = ref<KottiFieldText.Value>(null)
 
 		const table = computed(() => tableContext.value.internal.table.value)
 		const tablePagination = computed(() => table.value.getState().pagination)

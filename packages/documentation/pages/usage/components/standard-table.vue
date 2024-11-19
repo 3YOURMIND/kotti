@@ -172,16 +172,14 @@ export default defineComponent({
 		const filters = ref<Kotti.StandardTable.Filter[]>([
 			{
 				dataTest: 'boolean-filter',
-				// defaultValue: true,
-				extraFilterLabelAnnotation: ['No', 'Yes'],
 				id: 'booleanFilter',
 				isPopupFilter: true,
 				label: 'Boolean filter',
+				slotLabels: ['No', 'Yes'],
 				type: Kotti.StandardTable.FilterType.BOOLEAN,
 			},
 			{
 				dataTest: 'single-select-filter',
-				// defaultValue: 101,
 				id: 'singleSelectFilter',
 				isPopupFilter: false,
 				isUnsorted: true,
@@ -210,7 +208,6 @@ export default defineComponent({
 			},
 			{
 				dataTest: 'multi-select-filter',
-				// defaultValue: 101,
 				id: 'multiSelectFilter',
 				isPopupFilter: false,
 				isUnsorted: true,
@@ -239,7 +236,6 @@ export default defineComponent({
 			},
 			{
 				dataTest: 'date-range-filter',
-				// defaultValue: ['2024-11-20', '2024-12-20'],
 				id: 'dateRangeFilter',
 				isPopupFilter: false,
 				label: 'Data range filter',
@@ -248,7 +244,6 @@ export default defineComponent({
 			{
 				dataTest: 'number-range-filter',
 				decimalPlaces: 2,
-				// defaultValue: [10, 20],
 				id: 'numberRangeFilter',
 				isPopupFilter: false,
 				label: 'Number range filter',

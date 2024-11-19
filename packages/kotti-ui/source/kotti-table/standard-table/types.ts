@@ -39,7 +39,7 @@ export namespace KottiStandardTable {
 
 	const booleanFilterSchema = sharedFilterSchema.extend({
 		defaultValue: KottiFieldToggle.valueSchema.optional(),
-		extraFilterLabelAnnotation: z.tuple([z.string(), z.string()]).optional(), // slot labels..
+		slotLabels: z.tuple([z.string(), z.string()]).optional(),
 		type: z.literal(FilterType.BOOLEAN),
 	})
 

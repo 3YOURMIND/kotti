@@ -26,11 +26,11 @@ export default defineComponent({
 	setup(props) {
 		return {
 			slotLabel: computed(() => {
-				if (!props.filter.extraFilterLabelAnnotation || isNil(props.value)) {
+				if (!props.filter.slotLabels || isNil(props.value)) {
 					return null
 				}
 				const index = props.value ? 1 : 0
-				return props.filter.extraFilterLabelAnnotation[index]
+				return props.filter.slotLabels[index]
 			}),
 		}
 	},
