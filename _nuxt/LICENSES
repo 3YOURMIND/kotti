@@ -1,15 +1,4 @@
 /*!
- * natural-sort.js
- * ===============
- * Sorting with support for numbers, dates, unicode and more.
- *
- * http://github.com/studio-b12/natural-sort
- * MIT License, © Studio B12 GmbH 2014
- *
- */
-
-
-/*!
  * vue-client-only v0.0.0-semantic-release
  * (c) 2021-present egoist <0x142857@gmail.com>
  * Released under the MIT License.
@@ -29,6 +18,17 @@
  * @copyright 2023 Jason Mulligan <jason.mulligan@avoidwork.com>
  * @license BSD-3-Clause
  * @version 10.1.0
+ */
+
+
+/*!
+ * natural-sort.js
+ * ===============
+ * Sorting with support for numbers, dates, unicode and more.
+ *
+ * http://github.com/studio-b12/natural-sort
+ * MIT License, © Studio B12 GmbH 2014
+ *
  */
 
 
