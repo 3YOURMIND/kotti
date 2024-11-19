@@ -37,14 +37,10 @@ export default defineComponent({
 	<div class="kt-toast">
 		<KtBanner isCloseable :type="type" @close="onDelete">
 			<template v-if="hasHeaderSlot" #header>
-				<div class="kt-banner__action">
-					<slot name="header" />
-				</div>
+				<slot name="header" />
 			</template>
 			<template v-else-if="headerWithFallback" #header>
-				<div class="kt-banner__action">
-					{{ headerWithFallback }}
-				</div>
+				{{ headerWithFallback }}
 			</template>
 			<template #text>
 				<slot name="text">
