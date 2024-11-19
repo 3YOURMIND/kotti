@@ -56,12 +56,12 @@ export namespace KottiStandardTable {
 	})
 
 	const numberRangeFilterSchema = sharedFilterSchema.extend({
+		decimalPlaces: KottiFieldNumber.propsSchema.shape.decimalPlaces,
 		defaultValue: z
 			.tuple([KottiFieldNumber.valueSchema, KottiFieldNumber.valueSchema])
 			.optional(),
-		decimalPlaces: KottiFieldNumber.propsSchema.shape.decimalPlaces,
-		unit: KottiFieldNumber.propsSchema.shape.prefix,
 		type: z.literal(FilterType.NUMBER_RANGE),
+		unit: KottiFieldNumber.propsSchema.shape.prefix,
 	})
 
 	const singleSelectFilterSchema = sharedFilterSchema.extend({
@@ -190,8 +190,8 @@ export namespace KottiStandardTable {
 
 	export namespace TableFilters {
 		export const propsSchema = z.object({
-			isLoading: z.boolean().default(false),
 			filters: z.array(filterSchema),
+			isLoading: z.boolean().default(false),
 			value: z.array(appliedFilterSchema),
 		})
 		export type Props = z.output<typeof propsSchema>

@@ -21,13 +21,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
 import isEqual from 'lodash/isEqual'
+import { computed, defineComponent, ref, watch } from 'vue'
 
-import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
 import type { KottiFieldNumber } from '../../../../kotti-field-number/types'
+import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
 import { makeProps } from '../../../../make-props'
-
 import { KottiStandardTable } from '../../types'
 import { reOrderRange } from '../../utilities/filters'
 

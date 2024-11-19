@@ -1,6 +1,5 @@
 import { Dashes } from '@metatypes/typography'
 
-import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import type { KottiFieldDateRange } from '../../../kotti-field-date/types'
 import type { KottiFieldNumber } from '../../../kotti-field-number/types'
 import type {
@@ -8,7 +7,7 @@ import type {
 	KottiFieldSingleSelect,
 } from '../../../kotti-field-select/types'
 import type { KottiFieldToggle } from '../../../kotti-field-toggle/types'
-
+import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { KottiStandardTable } from '../types'
 
 /**

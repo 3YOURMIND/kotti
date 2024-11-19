@@ -15,7 +15,6 @@
 import { defineComponent } from 'vue'
 
 import { makeProps } from '../../../../make-props'
-
 import { KottiStandardTable } from '../../types'
 
 export default defineComponent({

@@ -8,7 +8,7 @@
 export const pluralize = (
 	translation: string,
 	count: number,
-	values: Record<string, string | number>,
+	values: Record<string, number | string>,
 ): string => {
 	const cases = translation.split('|')
 

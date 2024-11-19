@@ -1,31 +1,37 @@
-<template lang="md">
-<ComponentInfo v-bind="{ component }" />
+<template>
+	<div>
+		<ComponentInfo v-bind="{ component }" />
 
-<KtStandardTable id="example-local-data" title="Local Pagination">
-	<template #header-action>
-		<KtButton label="Some Action" />
-	</template>
-	<template #buttons>
-		<KtButton label="Some Action" />
-	</template>
-	<template #switch-buttons>
-		<KtButton label="Some Action" />
-	</template>
-</KtStandardTable>
+		<KtStandardTable id="example-local-data" title="Local Pagination">
+			<template #header-action>
+				<KtButton label="Some Action" />
+			</template>
+			<template #buttons>
+				<KtButton label="Some Action" />
+			</template>
+			<template #switch-buttons>
+				<KtButton label="Some Action" />
+			</template>
+		</KtStandardTable>
 
-<br /><br />
+		<br /><br />
 
-<KtStandardTable id="example-remote-data" title="Remote Pagination" v-on:update:dataFetchDependencies="fetchData">
-	<template #header-action>
-		<KtButton label="Some Action" />
-	</template>
-	<template #buttons>
-		<KtButton label="Some Action" />
-	</template>
-	<template #switch-buttons>
-		<KtButton label="Some Action" />
-	</template>
-</KtStandardTable>
+		<KtStandardTable
+			id="example-remote-data"
+			title="Remote Pagination"
+			@update:dataFetchDependencies="fetchData"
+		>
+			<template #header-action>
+				<KtButton label="Some Action" />
+			</template>
+			<template #buttons>
+				<KtButton label="Some Action" />
+			</template>
+			<template #switch-buttons>
+				<KtButton label="Some Action" />
+			</template>
+		</KtStandardTable>
+	</div>
 </template>
 
 <script lang="ts">

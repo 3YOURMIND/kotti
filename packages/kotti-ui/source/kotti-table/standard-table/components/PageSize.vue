@@ -18,10 +18,9 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import type { KottiFieldSingleSelect } from '../../../kotti-field-select/types'
+import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
-
 import { KottiStandardTable } from '../types'
 
 export default defineComponent({
@@ -32,8 +31,8 @@ export default defineComponent({
 		return {
 			options: computed<KottiFieldSingleSelect.Props['options']>(() =>
 				props.pageSizeOptions.map((value) => ({
-					value,
 					label: String(value),
+					value,
 				})),
 			),
 			translations: useTranslationNamespace('KtStandardTable'),

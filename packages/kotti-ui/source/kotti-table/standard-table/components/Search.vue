@@ -15,13 +15,13 @@
 <script lang="ts">
 import debounce from 'lodash/debounce'
 import { defineComponent, ref, watch } from 'vue'
+
 import { Yoco } from '@3yourmind/yoco'
 
 import { DEFAULT_DEBOUNCE } from '../../../constants'
-import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import type { KottiFieldText } from '../../../kotti-field-text/types'
+import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
-
 import { KottiStandardTable } from '../types'
 
 export default defineComponent({
