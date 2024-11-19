@@ -45,7 +45,9 @@ export default defineComponent({
 	setup(props) {
 		return {
 			isShowAllDisabled: computed(
-				() => !Object.values(props.value).some((optionValue) => !optionValue),
+				() =>
+					props.isLoading ||
+					!Object.values(props.value).some((optionValue) => !optionValue),
 			),
 			translations: useTranslationNamespace('KtStandardTable'),
 			Yoco,
@@ -61,7 +63,7 @@ export default defineComponent({
 	max-height: 50vh;
 	overflow-y: auto;
 
-	::v-deep > .kt-button {
+	:deep(.kt-button) {
 		flex-shrink: 0;
 		align-self: end;
 	}

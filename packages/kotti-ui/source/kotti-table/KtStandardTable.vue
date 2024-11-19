@@ -123,16 +123,18 @@ export default defineComponent({
 
 		watch(
 			[
+				appliedFilters,
 				() => tableContext.value.internal.getOrdering(),
 				tablePagination,
 				searchValue,
 			],
-			([ordering, pagination, search]) => {
+			([filters, ordering, pagination, search]) => {
 				if (
 					standardTableContext.value.internal.paginationType ===
 					KottiStandardTable.PaginationType.REMOTE
 				) {
 					emit('update:dataFetchDependencies', {
+						filters,
 						ordering,
 						pagination,
 						search,

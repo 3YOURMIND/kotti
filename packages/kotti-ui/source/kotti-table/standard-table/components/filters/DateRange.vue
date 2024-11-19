@@ -1,5 +1,6 @@
 <template>
 	<KtFieldDateRange
+		:isLoading="isLoading"
 		isOptional
 		:label="filter.label"
 		:placeholder="[startPlaceholder, endPlaceholder]"

@@ -22,6 +22,7 @@
 					@input="onInput"
 				/>
 				<KtButton
+					:disabled="isLoading"
 					:label="translations.clearAll"
 					type="text"
 					@click="$emit('input', [])"
@@ -131,9 +132,16 @@ export default defineComponent({
 	max-height: 50vh;
 	overflow-y: auto;
 
-	::v-deep > .kt-button {
+	:deep(.kt-button) {
 		flex-shrink: 0;
 		align-self: end;
+	}
+
+	:deep(.kt-field__wrapper) {
+		/* stylelint-disable-next-line */
+		.kt-field__header__label__suffix {
+			display: none;
+		}
 	}
 }
 </style>

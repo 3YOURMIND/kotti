@@ -109,7 +109,7 @@ export default defineComponent({
 		gap: var(--unit-4);
 		align-items: center;
 
-		::v-deep .kt-field {
+		:deep(.kt-field) {
 			flex: 1 1 auto;
 			margin-bottom: 0;
 		}

@@ -144,7 +144,7 @@ export const enUS: KottiI18n.Messages = {
 		endDate: 'End',
 		lastMonth: 'Last Month',
 		lastWeek: 'Last Week',
-		lastYear: 'LastYear',
+		lastYear: 'Last Year',
 		max: 'Max.',
 		min: 'Min.',
 		moreThan: 'More than',

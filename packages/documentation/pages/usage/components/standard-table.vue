@@ -238,7 +238,7 @@ export default defineComponent({
 				dataTest: 'date-range-filter',
 				id: 'dateRangeFilter',
 				isPopupFilter: false,
-				label: 'Data range filter',
+				label: 'Date range filter',
 				type: Kotti.StandardTable.FilterType.DATE_RANGE,
 			},
 			{
@@ -258,6 +258,9 @@ export default defineComponent({
 				args: Kotti.StandardTable.Events.UpdateDataFetchDependencies,
 			) => {
 				isLoadingRecipes.value = true
+
+				// eslint-disable-next-line no-console
+				console.log('🚀 ~ docs ~ standard-table ~ fetchData:', { ...args })
 
 				const { pagination } = args
 				const { pageIndex, pageSize } = pagination
