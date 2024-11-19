@@ -1,15 +1,15 @@
 <template>
 	<div class="kt-standard-table">
 		<div
-			v-if="title || $slots['header-action']"
+			v-if="title || $slots['header-actions']"
 			class="kt-standard-table__header"
 		>
 			<h1 v-if="title" v-text="title" />
-			<div v-if="$slots['header-action']" class="kt-standard-table__slot">
-				<slot name="header-action" />
+			<div v-if="$slots['header-actions']" class="kt-standard-table__slot">
+				<slot name="header-actions" />
 			</div>
 		</div>
-		<div class="kt-standard-table__actions">
+		<div class="kt-standard-table__controls">
 			<div class="kt-standard-table__table-actions">
 				<TableSearch
 					:isLoading="isLoading"
@@ -30,12 +30,12 @@
 					@showAll="onShowAllColumns"
 				/>
 			</div>
-			<div v-if="$slots['buttons']" class="kt-standard-table__slot">
-				<slot name="buttons" />
+			<div v-if="$slots['controls-actions']" class="kt-standard-table__slot">
+				<slot name="controls-actions" />
 			</div>
 		</div>
 		<div
-			v-if="appliedFilters.length > 0 || $slots['switch-buttons']"
+			v-if="appliedFilters.length > 0 || $slots['info-actions']"
 			class="kt-standard-table__info"
 		>
 			<div
@@ -49,8 +49,8 @@
 					:text="formatAppliedFilter(filter)"
 				/>
 			</div>
-			<div v-if="$slots['switch-buttons']" class="kt-standard-table__slot">
-				<slot name="switch-buttons" />
+			<div v-if="$slots['info-actions']" class="kt-standard-table__slot">
+				<slot name="info-actions" />
 			</div>
 		</div>
 		<div class="kt-standard-table__table">
@@ -210,17 +210,17 @@ export default defineComponent({
 	flex-direction: column;
 	gap: var(--unit-4);
 
-	&__actions {
-		display: flex;
-		gap: var(--unit-4);
-		align-items: center;
-	}
-
 	&__applied-filters {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: left;
+	}
+
+	&__controls {
+		display: flex;
+		gap: var(--unit-4);
+		align-items: center;
 	}
 
 	&__footer {

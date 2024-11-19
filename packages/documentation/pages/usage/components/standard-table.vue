@@ -3,13 +3,13 @@
 		<ComponentInfo v-bind="{ component }" />
 
 		<KtStandardTable id="example-local-data" title="Local Pagination">
-			<template #header-action>
+			<template #header-actions>
 				<KtButton label="Some Action" />
 			</template>
-			<template #buttons>
+			<template #controls-actions>
 				<KtButton label="Some Action" />
 			</template>
-			<template #switch-buttons>
+			<template #info-actions>
 				<KtButton label="Some Action" />
 			</template>
 		</KtStandardTable>
@@ -21,13 +21,13 @@
 			title="Remote Pagination"
 			@update:dataFetchDependencies="fetchData"
 		>
-			<template #header-action>
+			<template #header-actions>
 				<KtButton label="Some Action" />
 			</template>
-			<template #buttons>
+			<template #controls-actions>
 				<KtButton label="Some Action" />
 			</template>
-			<template #switch-buttons>
+			<template #info-actions>
 				<KtButton label="Some Action" />
 			</template>
 		</KtStandardTable>

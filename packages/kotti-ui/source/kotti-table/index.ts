@@ -58,10 +58,16 @@ const STANDARD_META: Kotti.Meta = {
 		url: 'https://www.figma.com/design/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=6305-10646&node-type=canvas&t=8lzEM5nlkrh8aUMF-0',
 	},
 	slots: {
-		buttons: { description: 'slot next to table actions', scope: null },
-		'header-action': { description: 'slot next to title', scope: null },
-		'switch-buttons': {
-			description: 'slot next to applied filters',
+		'controls-actions': {
+			description: 'slot next to the table controls section',
+			scope: null,
+		},
+		'header-actions': {
+			description: 'slot next to the table title',
+			scope: null,
+		},
+		'info-actions': {
+			description: 'slot next to the applied filters section',
 			scope: null,
 		},
 	},
