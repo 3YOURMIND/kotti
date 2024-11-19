@@ -15,6 +15,7 @@ const trustedDependencies = new Set([
 	'@metatypes/typography',
 	'@metatypes/units',
 	'filesize',
+	'nanoid',
 	'zod',
 ])
 

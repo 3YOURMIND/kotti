@@ -100,7 +100,7 @@ import {
 export * from './kotti-table-legacy'
 import { KtTag } from './kotti-tag'
 export * from './kotti-tag'
-import { KtToaster } from './kotti-toaster'
+import { KtToast, KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
@@ -168,31 +168,13 @@ export default {
 			KtTableLegacyConsumer,
 			KtTableLegacyProvider,
 			KtTag,
+			KtToast,
 			KtToaster,
 			KtUserMenu,
 			KtValueLabel,
 		]
 		for (const component of components) {
 			Vue.use(component)
-		}
-
-		const DEFAULT_YODIFY_DURATION = 3000
-
-		Vue.prototype.$yodifyBuffer = []
-		Vue.prototype.$yodify = function ({
-			duration = DEFAULT_YODIFY_DURATION,
-			text,
-			type = 'success',
-		}: {
-			duration: number
-			text: string
-			type: 'error' | 'success'
-		}) {
-			const notification = { duration, text, type }
-
-			// buffer notifications if vue isn't ready
-			if (!this.$root) Vue.prototype.$yodifyBuffer.push(notification)
-			else this.$root.$emit('vue-yodify', notification)
 		}
 	},
 }

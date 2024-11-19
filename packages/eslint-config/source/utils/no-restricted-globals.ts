@@ -27,6 +27,7 @@ const GLOBALS_WHITELIST = new Set([
 	'FileReader', // complicated due to typescript types
 	'FormData',
 	'Function',
+	'globalThis',
 	'Intl',
 	'JSON',
 	'Map',

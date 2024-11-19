@@ -275,7 +275,7 @@ _Note:_ Neither events get triggered on a _disabled_ row.
 ```js
 methods: {
 	showAlertOnClickOrEnter(row, rowIndex) {
-		alert(`${JSON.stringify(value)} is at index: ${model}!`)
+		info({text: `${JSON.stringify(value)} is at index: ${model}!`})
 	}
 }
 ```
@@ -649,7 +649,7 @@ It is possible to customize parts (columns) of the table by passing your own ren
 			)
 		},
 		showAlert(model, value) {
-			alert(`${model} is ${value}!`)
+			info({text: `${model} is ${value}!`)
 		},
 		renderActions(h, { row }) {
 			const onEditClick = () => this.showAlert(row.name, 'edited')
@@ -1114,6 +1114,7 @@ import { Kotti } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 const ADDRESS_DOT_LINE = 'address.line'
 
@@ -1236,12 +1237,10 @@ export default {
 			this.selected = [...rows]
 		},
 		showAlertOnClickOrEnter(row, rowIndex) {
-			// eslint-disable-next-line no-alert
-			window.alert(`${JSON.stringify(row)} is at index: ${String(rowIndex)}!`)
+			info({ text: `${JSON.stringify(row)} is at index: ${String(rowIndex)}!` })
 		},
 		showAlert(model, value) {
-			// eslint-disable-next-line no-alert, @typescript-eslint/restrict-template-expressions
-			window.alert(`${model} is ${value}!`)
+			info({ text: `${String(model)} is ${String(value)}!` })
 		},
 		sortDate(a, b) {
 			return new Date(a) - new Date(b)

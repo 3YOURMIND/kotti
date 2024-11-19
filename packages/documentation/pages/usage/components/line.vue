@@ -44,19 +44,19 @@
     	<KtLine
     		isInteractive
     		text="Action Center"
-    		@click="alert('clicked center title')"
+    		@click="handleClick('clicked center title')"
     	/>
     	<KtLine
     		isInteractive
     		position="left"
     		text="Action Left"
-    		@click="alert('clicked left title')"
+    		@click="handleClick('clicked left title')"
     	/>
     	<KtLine
     		isInteractive
     		position="right"
     		text="Action Right"
-    		@click="alert('clicked right title')"
+    		@click="handleClick('clicked right title')"
     	/>
     ```
 </template>
@@ -67,6 +67,7 @@ import { defineComponent } from 'vue'
 import { KtLine } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsLine',
@@ -77,8 +78,7 @@ export default defineComponent({
 		return {
 			component: KtLine,
 			handleClick: (text: string) => {
-				// eslint-disable-next-line no-alert
-				window.alert(text)
+				info({ text })
 			},
 		}
 	},

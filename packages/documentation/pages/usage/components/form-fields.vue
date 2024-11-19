@@ -185,12 +185,12 @@
 						<div
 							v-if="componentDefinition.additionalProps.includes('emitEvents')"
 						>
-							<h4>Actions</h4>
+							<h4>Events</h4>
 							<KtFieldToggle
 								formKey="emitBlur"
 								helpText="Only works with KtFieldNumber for now"
 								isOptional
-								label="Blur"
+								label="Show blur event toasts (documentation-only)"
 								type="switch"
 							/>
 						</div>
@@ -765,6 +765,7 @@ import {
 import { Yoco } from '@3yourmind/yoco'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 import { useRouter } from '../../../hooks/use-router'
 import {
@@ -1776,12 +1777,15 @@ export default defineComponent({
 				})),
 			isRangeComponent,
 			onBlur: (value: number) => {
-				// eslint-disable-next-line no-alert
-				if (settings.value.emitBlur) window.alert(`@blur: ${String(value)}`)
+				if (settings.value.emitBlur)
+					info({
+						text: `@blur: ${String(value)}`,
+					})
 			},
 			onSubmit: (values: Record<string, unknown>) => {
-				// eslint-disable-next-line no-alert
-				window.alert(`@submit: ${JSON.stringify(values, null, '\t')}`)
+				info({
+					text: `@submit: ${JSON.stringify(values, null, '\t')}`,
+				})
 			},
 			reset: () => {
 				values.value = INITIAL_VALUES

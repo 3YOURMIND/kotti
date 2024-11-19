@@ -90,6 +90,7 @@ import { defineComponent, ref } from 'vue'
 import { KtHeading } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsHeadings',
@@ -101,8 +102,7 @@ export default defineComponent({
 			component: KtHeading,
 			toggle: ref(false),
 			showAlert() {
-				// eslint-disable-next-line no-alert
-				window.alert('H3 Action Clicked')
+				info({ text: 'H3 Action Clicked' })
 			},
 		}
 	},

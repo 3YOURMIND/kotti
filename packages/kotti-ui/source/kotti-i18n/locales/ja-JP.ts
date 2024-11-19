@@ -18,10 +18,6 @@ module Common {
 }
 
 export const jaJP: KottiI18n.Messages = {
-	KtBanner: {
-		expandCloseLabel: '閉じる',
-		expandLabel: '表示',
-	},
 	KtComment: {
 		cancelMessage: 'Escキーを押すか',
 		clickToCancelLabel: 'クリックしてキャンセルします',

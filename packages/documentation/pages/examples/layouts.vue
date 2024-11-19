@@ -49,6 +49,7 @@ import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
 
 import LayoutContainer from '~/components/LayoutContainer.vue'
+import { info } from '~/utilities/toaster'
 
 /* eslint-disable perfectionist/sort-objects */
 export default {
@@ -224,8 +225,7 @@ export default {
 	},
 	methods: {
 		handleMenuClick() {
-			// eslint-disable-next-line no-alert
-			window.alert('Link Clicked')
+			info({ text: 'Link Clicked' })
 		},
 		setIsNarrow(isNarrow) {
 			this.isNarrow = isNarrow

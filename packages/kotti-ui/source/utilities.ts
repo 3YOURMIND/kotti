@@ -15,10 +15,6 @@ export const attachMeta = <C extends ComponentPublicInstanceConstructor, T>(
 ): C & { meta: Kotti.Meta & T } =>
 	Object.assign(component, { meta: Object.assign({}, meta, other) })
 
-export const isBrowser = Boolean(
-	typeof window !== 'undefined' && window.document,
-)
-
 /**
  * Checks if the given HTML element, or any of its children, is in focus
  * @param element The HTML element

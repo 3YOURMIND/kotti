@@ -11,17 +11,15 @@
 			<div class="color-palette__name" v-text="color.name" />
 			<div class="color-palette__code" v-text="color.code" />
 		</div>
-		<transition name="slide-fade">
-			<div v-if="copySuccess" class="success-message">Copy successful</div>
-		</transition>
 	</div>
 </template>
 
 <script lang="ts">
-import { TimeConversion } from '@metatypes/units'
 import copy from 'copy-to-clipboard'
 import type { PropType } from 'vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
+
+import { error, success } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'ColorPalette',
@@ -33,22 +31,19 @@ export default defineComponent({
 		},
 	},
 	setup() {
-		const copySuccess = ref(false)
-
 		return {
 			copyColor: (codeString: string) => {
 				const wasSuccessful = copy(codeString)
 				if (wasSuccessful) {
-					copySuccess.value = true
-					window.setTimeout(() => {
-						copySuccess.value = false
-					}, TimeConversion.MILLISECONDS_PER_SECOND)
+					success({
+						text: `Copied color "${codeString}"`,
+					})
 				} else {
-					// eslint-disable-next-line no-alert
-					window.alert('failed')
+					error({
+						text: 'There was a failure when copying to clipboard',
+					})
 				}
 			},
-			copySuccess,
 			textColor: (colorName: string) => {
 				if (
 					colorName === 'Lightgray-300' ||
