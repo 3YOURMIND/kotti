@@ -1,7 +1,7 @@
 import type { VNode } from 'vue'
 import { z } from 'zod'
 
-import { KottiI18n } from '../kotti-i18n/types'
+import { KottiI18n } from '../../kotti-i18n/types'
 
 // TODO: move somewhere else
 export type AnyRow = Record<string, unknown>

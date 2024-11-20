@@ -18,8 +18,8 @@ import { z } from 'zod'
 
 import { Yoco } from '@3yourmind/yoco'
 
-import { useI18nContext } from '../kotti-i18n/hooks'
-import ToggleInner from '../shared-components/toggle-inner/ToggleInner.vue'
+import { useI18nContext } from '../../kotti-i18n/hooks'
+import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 
 import { resolveColumnDisplay } from './column'
 import { type TableContext, useProvideTableContext } from './context'

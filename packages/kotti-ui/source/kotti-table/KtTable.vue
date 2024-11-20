@@ -137,11 +137,15 @@ import { Yoco } from '@3yourmind/yoco'
 
 import { makeProps } from '../make-props'
 
-import { useTableContext } from './context'
-import { ARRAY_START, EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './hooks'
-import { DEFAULT_CELL_WRAPPER, getCellWrapComponent } from './row'
-import { FlexRender } from './tanstack-table'
-import { KottiTable } from './types'
+import { useTableContext } from './table/context'
+import {
+	ARRAY_START,
+	EXPANSION_COLUMN_ID,
+	SELECTION_COLUMN_ID,
+} from './table/hooks'
+import { DEFAULT_CELL_WRAPPER, getCellWrapComponent } from './table/row'
+import { FlexRender } from './table/tanstack-table'
+import { KottiTable } from './table/types'
 
 const TRANSFER_TYPE = 'application/move-column'
 
