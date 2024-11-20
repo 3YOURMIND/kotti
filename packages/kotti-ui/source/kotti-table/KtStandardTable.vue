@@ -35,18 +35,18 @@
 			</div>
 		</div>
 		<div
-			v-if="appliedFilters.length > 0 || $slots['info-actions']"
+			v-if="filterTags.length > 0 || $slots['info-actions']"
 			class="kt-standard-table__info"
 		>
 			<div
-				v-if="appliedFilters.length > 0"
+				v-if="filterTags.length > 0"
 				class="kt-standard-table__applied-filters"
 			>
 				<KtTag
-					v-for="(filter, index) in appliedFilters"
+					v-for="({ label, value }, index) in filterTags"
 					:key="index"
 					isDisabled
-					:text="formatAppliedFilter(filter)"
+					:text="`${label}: ${value}`"
 				/>
 			</div>
 			<div v-if="$slots['info-actions']" class="kt-standard-table__slot">
@@ -157,20 +157,25 @@ export default defineComponent({
 					tableContext.value.internal.table.value.getState().columnVisibility,
 			),
 			filters: computed(() => standardTableContext.value.internal.filters),
-			formatAppliedFilter: ({
-				id,
-				value,
-			}: KottiStandardTable.AppliedFilter) => {
-				const filter = standardTableContext.value.internal.getFilter(id)
+			filterTags: computed(() =>
+				appliedFilters.value
+					.map(({ id, value }) => {
+						const filter = standardTableContext.value.internal.getFilter(id)
 
-				if (!filter) {
-					throw new Error(`filter not found for id "${id}"`)
-				}
+						if (!filter) {
+							throw new Error(`filter not found for id "${id}"`)
+						}
 
-				const formattedValue = formatFilterValue(value, filter)
+						const formattedValue = formatFilterValue(value, filter)
 
-				return [filter.label, formattedValue].join(': ')
-			},
+						return {
+							label: filter.label,
+							value: formattedValue,
+						}
+					})
+					.filter(({ value }) => value.length > 0),
+			),
+
 			isLoading: computed(() => standardTableContext.value.internal.isLoading),
 			onShowAllColumns: () => {
 				tableContext.value.internal.table.value.toggleAllColumnsVisible()

@@ -40,7 +40,7 @@ import { Yoco } from '@3yourmind/yoco'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { makeProps } from '../../../make-props'
 import { KottiStandardTable } from '../types'
-import { getDefaultValue, isFilterValueEmpty } from '../utilities/filters'
+import { getEmptyValue, isEmptyValue } from '../utilities/filters'
 
 import BooleanFilter from './filters/Boolean.vue'
 import DateRangeFilter from './filters/DateRange.vue'
@@ -77,46 +77,26 @@ export default defineComponent({
 						return null
 				}
 			},
-			getValue: (filter: KottiStandardTable.Filter) => {
-				const value = props.value.find(
-					(appliedFilter) => appliedFilter.id === filter.id,
-				)?.value
-				return value ?? getDefaultValue(filter)
-			},
+			getValue: (filter: KottiStandardTable.Filter) =>
+				props.value.find((appliedFilter) => appliedFilter.id === filter.id)
+					?.value ?? getEmptyValue(filter),
 			onInput: (
 				value: KottiStandardTable.FilterValue,
 				id: KottiStandardTable.Filter['id'],
 			) => {
-				const newOrEditedFilter: KottiStandardTable.AppliedFilter = {
-					id,
-					value,
-				}
-				const isEmpty = isFilterValueEmpty(newOrEditedFilter.value)
-
-				const isUpdatedValue = props.value.some(
-					(appliedFilter) => appliedFilter.id === newOrEditedFilter.id,
+				const isNewValue = !props.value.some(
+					(appliedFilter) => appliedFilter.id === id,
 				)
 
-				if (isUpdatedValue) {
-					emit(
-						'input',
-						props.value.reduce(
-							(filters: KottiStandardTable.AppliedFilter[], appliedFilter) => {
-								if (appliedFilter.id === newOrEditedFilter.id) {
-									if (!isEmpty) {
-										filters.push(newOrEditedFilter)
-									}
-									return filters
-								}
-								filters.push(appliedFilter)
-								return filters
-							},
-							[],
-						),
-					)
-				} else if (!isEmpty) {
-					emit('input', [...props.value, newOrEditedFilter])
-				}
+				const updatedValue = (
+					isNewValue
+						? [...props.value, { id, value }]
+						: props.value.map((appliedFilter) =>
+								appliedFilter.id === id ? { id, value } : appliedFilter,
+							)
+				).filter(({ value }) => !isEmptyValue(value))
+
+				emit('input', updatedValue)
 			},
 			translations: useTranslationNamespace('KtStandardTable'),
 			Yoco,

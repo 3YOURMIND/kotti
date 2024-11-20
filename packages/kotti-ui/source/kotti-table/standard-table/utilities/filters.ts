@@ -11,11 +11,11 @@ import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { KottiStandardTable } from '../types'
 
 /**
- * Gets the default nullish value
+ * Returns the empty nullish value
  * @param filter the filter
- * @returns the default value
+ * @returns the empty value
  */
-export const getDefaultValue = (
+export const getEmptyValue = (
 	filter: KottiStandardTable.Filter,
 ): KottiStandardTable.FilterValue => {
 	switch (filter.type) {
@@ -92,13 +92,11 @@ export const formatFilterValue = (
 }
 
 /**
- * Check if the value is nullish
- * @param value the filter field value
- * @returns true if it is not null, false otherwise
+ * Checks if the value is nullish
+ * @param value the field value
+ * @returns true if the value is nullish, false otherwise
  */
-export const isFilterValueEmpty = (
-	value: KottiStandardTable.FilterValue,
-): boolean =>
+export const isEmptyValue = (value: KottiStandardTable.FilterValue): boolean =>
 	Array.isArray(value)
 		? value.length === 0 || (value[0] === null && value[1] === null)
 		: value === null
