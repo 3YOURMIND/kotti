@@ -5,6 +5,7 @@
 		:label="filter.label"
 		:placeholder="[startPlaceholder, endPlaceholder]"
 		:shortcuts="shortcuts"
+		size="small"
 		:value="value"
 		@input="onInput"
 	/>

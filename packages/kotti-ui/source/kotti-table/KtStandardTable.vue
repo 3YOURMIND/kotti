@@ -17,7 +17,7 @@
 					@input="onUpdateSearchValue"
 				/>
 				<TableFilters
-					:filters="filters"
+					:filters="popoverFilters"
 					:isLoading="isLoading"
 					:value="appliedFilters"
 					@input="onUpdateAppliedFilters"
@@ -33,13 +33,24 @@
 			<div v-if="$slots['controls-actions']" class="kt-standard-table__slot">
 				<slot name="controls-actions" />
 			</div>
+			<div
+				v-if="inlineFilters.length > 0"
+				class="kt-standard-table__inline-filters"
+			>
+				<FilterList
+					:filters="inlineFilters"
+					:isLoading="isLoading"
+					:value="appliedFilters"
+					@input="onUpdateAppliedFilters"
+				/>
+			</div>
 		</div>
 		<div
 			v-if="filterTags.length > 0 || $slots['info-actions']"
 			class="kt-standard-table__info"
 		>
 			<div
-				v-if="filterTags.length > 0"
+				v-if="filterTags.length > 0 && !isLoading"
 				class="kt-standard-table__applied-filters"
 			>
 				<KtTag
@@ -85,6 +96,7 @@ import type { KottiFieldText } from '../kotti-field-text/types'
 import { makeProps } from '../make-props'
 
 import TableColumns from './standard-table/components/Columns.vue'
+import FilterList from './standard-table/components/FilterList.vue'
 import TableFilters from './standard-table/components/Filters.vue'
 import TablePageSize from './standard-table/components/PageSize.vue'
 import TablePagination from './standard-table/components/Pagination.vue'
@@ -97,6 +109,7 @@ import { useTableContext } from './table/context'
 export default defineComponent({
 	name: 'KtStandardTable',
 	components: {
+		FilterList,
 		TableColumns,
 		TableFilters,
 		TablePageSize,
@@ -118,6 +131,7 @@ export default defineComponent({
 		const appliedFilters = ref<KottiStandardTable.AppliedFilter[]>([])
 		const searchValue = ref<KottiFieldText.Value>(null)
 
+		const filters = computed(() => standardTableContext.value.internal.filters)
 		const table = computed(() => tableContext.value.internal.table.value)
 		const tablePagination = computed(() => table.value.getState().pagination)
 
@@ -156,7 +170,6 @@ export default defineComponent({
 				() =>
 					tableContext.value.internal.table.value.getState().columnVisibility,
 			),
-			filters: computed(() => standardTableContext.value.internal.filters),
 			filterTags: computed(() =>
 				appliedFilters.value
 					.map(({ id, value }) => {
@@ -175,7 +188,9 @@ export default defineComponent({
 					})
 					.filter(({ value }) => value.length > 0),
 			),
-
+			inlineFilters: computed(() =>
+				filters.value.filter((filter) => filter.displayInline),
+			),
 			isLoading: computed(() => standardTableContext.value.internal.isLoading),
 			onShowAllColumns: () => {
 				tableContext.value.internal.table.value.toggleAllColumnsVisible()
@@ -203,6 +218,9 @@ export default defineComponent({
 			pageSize: computed(() => tablePagination.value.pageSize),
 			pageSizeOptions: computed(
 				() => standardTableContext.value.internal.pageSizeOptions,
+			),
+			popoverFilters: computed(() =>
+				filters.value.filter((filter) => !filter.displayInline),
 			),
 			rowCount: computed(() => table.value.getRowCount()),
 			searchValue,
@@ -253,6 +271,16 @@ export default defineComponent({
 	&__info {
 		display: flex;
 		gap: var(--unit-4);
+	}
+
+	&__inline-filters {
+		min-width: 9rem;
+
+		:deep(.kt-field__wrapper) {
+			.kt-field__header {
+				display: none;
+			}
+		}
 	}
 
 	&__slot {

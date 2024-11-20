@@ -27,6 +27,12 @@ export const useKottiStandardTable = <ROW extends AnyRow>(
 	context: StandardTableContext<ROW>
 	tableHook: ReturnType<typeof useKottiTable<ROW>>
 } => {
+	const filters = computed(() =>
+		KottiStandardTable.filterSchema
+			.array()
+			.default(() => [])
+			.parse(params.value.filters),
+	)
 	const paginationParams = computed(() =>
 		KottiStandardTable.paginationSchema.parse(params.value.pagination),
 	)
@@ -64,9 +70,9 @@ export const useKottiStandardTable = <ROW extends AnyRow>(
 	const standardTableContext: StandardTableContext<ROW> = computed(() => ({
 		internal: {
 			columns: params.value.columns,
-			filters: params.value.filters ?? [],
+			filters: filters.value,
 			getFilter: (id) =>
-				(params.value.filters ?? []).find((filter) => filter.id === id) ?? null,
+				filters.value.find((filter) => filter.id === id) ?? null,
 			isLoading: params.value.isLoading ?? false,
 			pageSizeOptions: paginationParams.value.pageSizeOptions,
 			paginationType: paginationParams.value.type,

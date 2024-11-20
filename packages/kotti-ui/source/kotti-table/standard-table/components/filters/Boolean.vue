@@ -4,6 +4,7 @@
 		:isLoading="isLoading"
 		isOptional
 		:label="filter.label"
+		size="small"
 		type="switch"
 		:value="value"
 		@input="$emit('input', $event, filter.id)"
