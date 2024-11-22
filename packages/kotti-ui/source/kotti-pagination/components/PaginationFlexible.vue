@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import range from 'lodash/range'
+import range from 'lodash/range.js'
 import { computed, defineComponent } from 'vue'
 
 const ADJACENT_MULTIPLIER = 20
