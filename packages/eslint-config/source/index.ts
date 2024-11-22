@@ -140,6 +140,9 @@ const baseConfig = tseslint.config({
 		radix: 'error',
 		'valid-typeof': 'error',
 
+		// prettier
+		'prettier/prettier': 'warn',
+
 		// SonarJS
 		'sonarjs/no-collapsible-if': 'off', // replaced by unicorn/no-lonely-if
 		'sonarjs/no-duplicate-string': 'off',
