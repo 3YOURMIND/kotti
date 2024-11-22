@@ -116,9 +116,8 @@
 
 <script lang="ts">
 import debounce from 'lodash/debounce.js'
-import type { PropType } from 'vue'
+import type { PropType, Slot } from 'vue'
 import { computed, defineComponent, ref } from 'vue'
-import type { VNode } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -129,6 +128,8 @@ import { useInput } from './hooks'
 import type { KottiField } from './types'
 
 const LABEL_CLICK_DEBOUNCE = 200
+
+const SINGLE_MOUSE_CLICK = 1
 
 export default defineComponent({
 	name: 'KtField',
@@ -144,7 +145,10 @@ export default defineComponent({
 		 * Used when clearing the field. Most likely either null or []
 		 */
 		getEmptyValue: { default: null, type: Function as PropType<() => unknown> },
-		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
+		helpTextSlot: {
+			default: undefined,
+			type: Function as PropType<Slot<undefined>>,
+		},
 		isComponent: { default: null, type: String as PropType<string | null> },
 		isRange: { default: false, type: Boolean },
 		useFieldset: { default: false, type: Boolean },
@@ -165,7 +169,7 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtFields')
 
 		const debouncedLabelClick = debounce((event: MouseEvent) => {
-			if (event.detail === 1) {
+			if (event.detail === SINGLE_MOUSE_CLICK) {
 				focusInput()
 				clickInput()
 			}
@@ -192,7 +196,7 @@ export default defineComponent({
 				focusInput()
 			},
 			hasHelpText: computed(
-				() => props.helpTextSlot.length > 0 || props.field.helpText !== null,
+				() => Boolean(props.helpTextSlot) || props.field.helpText !== null,
 			),
 			hasLabel: computed(() => props.field.label !== null),
 			iconClasses: computed(
@@ -225,10 +229,15 @@ export default defineComponent({
 				}
 			}),
 			onClickLabel: (event: MouseEvent) => {
+				const isDoubleClick = event.detail > SINGLE_MOUSE_CLICK
+
 				if (props.debounceLabelClick) {
 					event.preventDefault()
 					debouncedLabelClick(event)
-				} else if (event.detail > 1) event.preventDefault()
+				} else if (isDoubleClick) {
+					// allow label to be selected
+					event.preventDefault()
+				}
 			},
 			showValidation,
 			validationText: computed(() =>
@@ -270,7 +279,8 @@ export default defineComponent({
 <!-- FIXME: https://github.com/3YOURMIND/kotti/issues/829 should this be implemented,
 we would be able to extend on demand instead of unscoping all field classes -->
 <style lang="scss">
-@import './mixins';
+@import './mixins.scss';
+@import './templates.scss';
 
 :root {
 	--field-border-radius: 2px;
@@ -291,7 +301,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 			margin-bottom: 0.4rem;
 		}
 
-		@include no-outline;
+		@extend %no-outline;
 		@include sizes;
 		@include input-colors;
 
@@ -487,5 +497,6 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		}
 	}
 }
+
 /* stylelint-enable selector-class-pattern */
 </style>

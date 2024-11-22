@@ -6,7 +6,7 @@
 			:dataTest="dataTest"
 			:filter="searchValue"
 			:isLoading="isLoading"
-			@input="setSearchFilter"
+			@update:value="setSearchFilter"
 		/>
 		<div ref="listTriggerRef">
 			<ButtonLink
@@ -25,7 +25,7 @@
 				:isAddingFilter="isAddingFilter"
 				:isLoading="isLoading"
 				@endAddingFilter="isAddingFilter = false"
-				@input="setFilters"
+				@update:value="setFilters"
 			/>
 			<FilterActions
 				:dataTest="dataTest"
@@ -95,7 +95,7 @@ export default defineComponent({
 			type: Array as PropType<KottiFilters.PropsInternal['value']>,
 		},
 	},
-	emits: ['input'],
+	emits: ['update:value'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
@@ -112,9 +112,9 @@ export default defineComponent({
 
 		const searchColumn = computed(
 			() =>
-				(props.columns.find(
+				props.columns.find(
 					(column) => column.type === KottiFilters.FilterType.SEARCH,
-				) ?? null) as KottiFilters.Column.Search | null,
+				) ?? null,
 		)
 
 		const searchValue = computed<KottiFilters.InternalFilterSearch | null>(
@@ -146,25 +146,25 @@ export default defineComponent({
 
 		const clearAll = () => {
 			if (searchValue.value === null) {
-				emit('input', [])
+				emit('update:value', [])
 				return
 			}
-			emit('input', [searchValue.value])
+			emit('update:value', [searchValue.value])
 		}
 		const setFilters = (filters: KottiFilters.Value) => {
 			if (searchValue.value === null) {
-				emit('input', filters)
+				emit('update:value', filters)
 				return
 			}
-			emit('input', [...filters, searchValue.value])
+			emit('update:value', [...filters, searchValue.value])
 		}
 		const setSearchFilter = (searchFilter: KottiFilters.InternalFilter) => {
 			if (searchColumn.value !== null) {
 				if (searchFilter.value === null) {
-					emit('input', filterListValues.value)
+					emit('update:value', filterListValues.value)
 					return
 				}
-				emit('input', [...filterListValues.value, searchFilter])
+				emit('update:value', [...filterListValues.value, searchFilter])
 			}
 		}
 

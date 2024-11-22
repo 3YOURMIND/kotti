@@ -51,7 +51,7 @@ export default defineComponent({
 		validators: { default: () => ({}), type: Object },
 		value: { required: true, type: Object },
 	},
-	emits: ['input', 'submit'],
+	emits: ['update:value', 'submit'],
 	setup(props, { emit }) {
 		const currentFieldsWrapper = reactive<{
 			currentFields: KottiField.Hook.Returns<unknown>[]
@@ -82,7 +82,7 @@ export default defineComponent({
 					)
 			},
 			setValue(key, newValue) {
-				emit('input', {
+				emit('update:value', {
 					...props.value,
 					[key]: newValue,
 				})

@@ -52,7 +52,7 @@ export default defineComponent({
 				appendTo: () => document.body,
 				arrow: false,
 				content: props.helpText
-					? helpTextContentRef.value ?? undefined
+					? (helpTextContentRef.value ?? undefined)
 					: undefined,
 				interactive: true,
 				offset: [0, TIPPY_DISTANCE_OFFSET],

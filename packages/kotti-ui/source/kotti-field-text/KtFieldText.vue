@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts">
+import type { InputHTMLAttributes } from '@vue/runtime-dom'
 import { computed, defineComponent } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -25,7 +25,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldText.propsSchema),
-	emits: ['input'],
+	emits: ['update:value'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldText.Value>({
 			emit,

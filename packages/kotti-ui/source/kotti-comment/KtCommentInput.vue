@@ -2,7 +2,7 @@
 	<div class="kt-comment-input">
 		<KtAvatar size="sm" :src="userAvatar" />
 		<CommentTextArea
-			v-model="localMessage"
+			v-model:value="localMessage"
 			v-bind="{ allowInternal, autofocus, isReply, placeholder, tabIndex }"
 			:dataTest="localDataTest"
 			:isInternal="localIsInternal"
@@ -16,6 +16,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
 
+import KtAvatar from '../kotti-avatar/KtAvatar.vue'
 import { makeProps } from '../make-props'
 
 import CommentTextArea from './components/CommentTextArea.vue'
@@ -26,6 +27,7 @@ export default defineComponent({
 	name: 'KtCommentInput',
 	components: {
 		CommentTextArea,
+		KtAvatar,
 	},
 	props: makeProps(KottiCommentInput.propsSchema),
 	emits: ['add', 'cancel'],

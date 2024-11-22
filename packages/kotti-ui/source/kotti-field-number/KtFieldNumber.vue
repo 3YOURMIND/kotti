@@ -50,6 +50,7 @@
 </template>
 
 <script lang="ts">
+import type { InputHTMLAttributes } from '@vue/runtime-dom'
 import Big from 'big.js'
 import type { UnwrapRef } from 'vue'
 import {
@@ -61,7 +62,6 @@ import {
 	ref,
 	watch,
 } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -91,7 +91,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldNumber.propsSchema),
-	emits: ['blur', 'input'],
+	emits: ['blur', 'update:value'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
@@ -230,7 +230,7 @@ export default defineComponent({
 				field.currentValue === null
 					? canFallbackToZero.value
 						? 0
-						: props.minimum ?? props.maximum ?? 0
+						: (props.minimum ?? props.maximum ?? 0)
 					: Big(field.currentValue).minus(props.step).toNumber(),
 			)
 			focusInput()
@@ -243,7 +243,7 @@ export default defineComponent({
 				field.currentValue === null
 					? canFallbackToZero.value
 						? 0
-						: props.minimum ?? props.maximum ?? 0
+						: (props.minimum ?? props.maximum ?? 0)
 					: Big(field.currentValue).add(props.step).toNumber(),
 			)
 			focusInput()
@@ -393,7 +393,7 @@ export default defineComponent({
 						? null
 						: lastUserSetCursorPosition.value - (isTypedNumberValid ? 0 : 1)
 
-				nextTick(() => {
+				void nextTick(() => {
 					setCursorPosition(newCursorPosition)
 				})
 			},

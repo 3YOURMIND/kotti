@@ -148,6 +148,7 @@ const baseConfig = tseslint.config({
 		'sonarjs/no-duplicate-string': 'off',
 		'sonarjs/no-redundant-jump': 'off',
 		'sonarjs/no-small-switch': 'off',
+
 		// Unicorn
 		'unicorn/catch-error-name': 'warn',
 		'unicorn/consistent-destructuring': 'warn',
@@ -539,6 +540,7 @@ export default {
 				'@typescript-eslint/no-unsafe-return': 'off',
 				'@typescript-eslint/no-use-before-define': 'off',
 				'@typescript-eslint/restrict-template-expressions': 'off',
+				'@typescript-eslint/unbound-method': 'off',
 				'no-console': 'off',
 				'no-magic-numbers': 'off',
 				'vitest/no-disabled-tests': 'error',
