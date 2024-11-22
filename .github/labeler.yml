@@ -1,3 +1,6 @@
+package:eslint-config:
+  - packages/eslint-config/**/*
+
 package:kotti-ui:
   - packages/kotti-ui/**/*
 
@@ -9,3 +12,6 @@ package:vue-use-tippy:
 
 scope:ci:
   - .github/**/*
+
+scope:documentation:
+  - packages/documentation/**/*
