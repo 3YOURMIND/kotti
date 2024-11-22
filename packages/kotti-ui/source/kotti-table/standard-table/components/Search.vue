@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import debounce from 'lodash/debounce'
+import debounce from 'lodash/debounce.js'
 import { defineComponent, ref, watch } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'

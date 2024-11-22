@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash/isEqual.js'
 import { computed, defineComponent, ref, watch } from 'vue'
 
 import type { KottiFieldNumber } from '../../../../kotti-field-number/types'

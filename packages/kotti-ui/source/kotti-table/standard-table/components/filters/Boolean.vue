@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import isNil from 'lodash/isNil'
+import isNil from 'lodash/isNil.js'
 import { computed, defineComponent } from 'vue'
 
 import { makeProps } from '../../../../make-props'
