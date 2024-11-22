@@ -44,7 +44,12 @@ export default defineComponent({
 
 		const reOrderAndEmitRangeValue = () => {
 			range.value = reOrderRange(range.value)
-			emit('input', range.value, props.filter.id)
+
+			emit('input', {
+				id: props.filter.id,
+				operation: props.filter.operations[0], // Current filters support only one operation
+				value: range.value,
+			})
 		}
 
 		watch(

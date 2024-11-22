@@ -211,7 +211,7 @@ export default defineComponent({
 				table.value.setPageSize(value)
 				emit('update:pageSize', value)
 			},
-			onUpdateSearchValue: (value: string | null) => {
+			onUpdateSearchValue: (value: KottiFieldText.Value) => {
 				searchValue.value = value
 			},
 			pageIndex: computed(() => tablePagination.value.pageIndex),
