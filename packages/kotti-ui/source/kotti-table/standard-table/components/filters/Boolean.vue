@@ -7,7 +7,7 @@
 		size="small"
 		type="switch"
 		:value="value"
-		@input="$emit('input', $event, filter.id)"
+		@input="onInput"
 	>
 		<span v-if="slotLabel" v-text="slotLabel" />
 	</KtFieldToggle>
@@ -24,8 +24,15 @@ export default defineComponent({
 	name: 'BooleanFilter',
 	props: makeProps(KottiStandardTable.BooleanFilter.propsSchema),
 	emits: ['input'],
-	setup(props) {
+	setup(props, { emit }) {
 		return {
+			onInput: (value: KottiStandardTable.FilterValue) => {
+				emit('input', {
+					id: props.filter.id,
+					operation: props.filter.operations[0], // Current filters support only one operation
+					value,
+				})
+			},
 			slotLabel: computed(() => {
 				if (!props.filter.slotLabels || isNil(props.value)) {
 					return null

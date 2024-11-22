@@ -16,7 +16,7 @@ import { KottiStandardTable } from '../types'
  * @returns the empty value
  */
 export const getEmptyValue = (
-	filter: KottiStandardTable.Filter,
+	filter: KottiStandardTable.FilterInternal,
 ): KottiStandardTable.FilterValue => {
 	switch (filter.type) {
 		case KottiStandardTable.FilterType.DATE_RANGE:
@@ -48,7 +48,7 @@ const getOptionLabel = (
  */
 export const formatFilterValue = (
 	value: KottiStandardTable.FilterValue,
-	filter: KottiStandardTable.Filter,
+	filter: KottiStandardTable.FilterInternal,
 ): string => {
 	switch (filter.type) {
 		case KottiStandardTable.FilterType.BOOLEAN: {

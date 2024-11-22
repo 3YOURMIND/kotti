@@ -38,7 +38,7 @@ export default defineComponent({
 	emits: ['input'],
 	setup(props, { emit }) {
 		return {
-			getComponent: (filter: KottiStandardTable.Filter) => {
+			getComponent: (filter: KottiStandardTable.FilterInternal) => {
 				switch (filter.type) {
 					case KottiStandardTable.FilterType.BOOLEAN:
 						return 'BooleanFilter'
@@ -54,25 +54,18 @@ export default defineComponent({
 						return null
 				}
 			},
-			getValue: (filter: KottiStandardTable.Filter) =>
-				props.value.find((appliedFilter) => appliedFilter.id === filter.id)
-					?.value ?? getEmptyValue(filter),
-			onInput: (
-				value: KottiStandardTable.FilterValue,
-				id: KottiStandardTable.Filter['id'],
-			) => {
-				const isNewValue = !props.value.some(
-					(appliedFilter) => appliedFilter.id === id,
-				)
-				const updatedValue = (
+			getValue: (filter: KottiStandardTable.FilterInternal) =>
+				props.value.find((v) => v.id === filter.id)?.value ??
+				getEmptyValue(filter),
+			onInput: (value: KottiStandardTable.AppliedFilter) => {
+				const isNewValue = !props.value.some((v) => v.id === value.id)
+				const updatedValueList = (
 					isNewValue
-						? [...props.value, { id, value }]
-						: props.value.map((appliedFilter) =>
-								appliedFilter.id === id ? { id, value } : appliedFilter,
-							)
+						? [...props.value, value]
+						: props.value.map((v) => (v.id === value.id ? value : v))
 				).filter(({ value }) => !isEmptyValue(value))
 
-				emit('input', updatedValue)
+				emit('input', updatedValueList)
 			},
 		}
 	},

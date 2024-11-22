@@ -8,7 +8,7 @@
 		:options="filter.options"
 		size="small"
 		:value="value"
-		@input="$emit('input', $event, filter.id)"
+		@input="onInput"
 	/>
 </template>
 
@@ -22,8 +22,16 @@ export default defineComponent({
 	name: 'SingleSelectFilter',
 	props: makeProps(KottiStandardTable.SingleSelectFilter.propsSchema),
 	emits: ['input'],
-	setup() {
-		return {}
+	setup(props, { emit }) {
+		return {
+			onInput: (value: KottiStandardTable.FilterValue) => {
+				emit('input', {
+					id: props.filter.id,
+					operation: props.filter.operations[0], // Current filters support only one operation
+					value,
+				})
+			},
+		}
 	},
 })
 </script>

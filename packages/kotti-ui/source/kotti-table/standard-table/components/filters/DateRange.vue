@@ -14,7 +14,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import type { KottiFieldDateRange } from '../../../../kotti-field-date/types'
 import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
 import { makeProps } from '../../../../make-props'
 import { KottiStandardTable } from '../../types'
@@ -29,8 +28,12 @@ export default defineComponent({
 
 		return {
 			endPlaceholder: translations.value.endDate,
-			onInput: (value: KottiFieldDateRange.Value) => {
-				emit('input', value, props.filter.id)
+			onInput: (value: KottiStandardTable.FilterValue) => {
+				emit('input', {
+					id: props.filter.id,
+					operation: props.filter.operations[0], // Current filters support only one operation
+					value,
+				})
 			},
 			shortcuts: [
 				{

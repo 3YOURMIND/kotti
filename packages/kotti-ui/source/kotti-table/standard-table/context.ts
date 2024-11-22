@@ -11,10 +11,10 @@ export type StandardTableContext<
 > = Ref<{
 	internal: {
 		columns: KottiTable.Column<ROW, COLUMN_IDS>[]
-		filters: KottiStandardTable.Filter[]
+		filters: KottiStandardTable.FilterInternal[]
 		getFilter: (
-			id: KottiStandardTable.Filter['id'],
-		) => KottiStandardTable.Filter | null
+			id: KottiStandardTable.FilterInternal['id'],
+		) => KottiStandardTable.FilterInternal | null
 		isLoading: boolean
 		pageSizeOptions: number[]
 		paginationType: KottiStandardTable.PaginationType

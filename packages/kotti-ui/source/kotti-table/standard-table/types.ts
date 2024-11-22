@@ -24,6 +24,35 @@ export namespace KottiStandardTable {
 		NUMBER_RANGE = 'NUMBER_RANGE',
 		SINGLE_SELECT = 'SINGLE_SELECT',
 	}
+	export namespace FilterOperation {
+		export enum Boolean {
+			EQUAL = 'EQUAL',
+		}
+
+		export enum DateRange {
+			IN_RANGE = 'IN_RANGE',
+		}
+
+		export enum MultiEnum {
+			ONE_OF = 'ONE_OF', // OR
+		}
+
+		export enum NumberRange {
+			IN_RANGE = 'IN_RANGE',
+		}
+
+		export enum SingleEnum {
+			EQUAL = 'EQUAL',
+		}
+
+		export const schema = z.union([
+			z.nativeEnum(Boolean),
+			z.nativeEnum(DateRange),
+			z.nativeEnum(MultiEnum),
+			z.nativeEnum(NumberRange),
+			z.nativeEnum(SingleEnum),
+		])
+	}
 
 	export enum PaginationType {
 		LOCAL = 'LOCAL',
@@ -39,12 +68,22 @@ export namespace KottiStandardTable {
 
 	const booleanFilterSchema = sharedFilterSchema.extend({
 		defaultValue: KottiFieldToggle.valueSchema.optional(),
+		operations: z
+			.nativeEnum(FilterOperation.Boolean)
+			.array()
+			.nonempty()
+			.default([FilterOperation.Boolean.EQUAL]),
 		slotLabels: z.tuple([z.string(), z.string()]).optional(),
 		type: z.literal(FilterType.BOOLEAN),
 	})
 
 	const dateRangeFilterSchema = sharedFilterSchema.extend({
 		defaultValue: KottiFieldDateRange.valueSchema.optional(),
+		operations: z
+			.nativeEnum(FilterOperation.DateRange)
+			.array()
+			.nonempty()
+			.default([FilterOperation.DateRange.IN_RANGE]),
 		type: z.literal(FilterType.DATE_RANGE),
 	})
 
@@ -57,6 +96,11 @@ export namespace KottiStandardTable {
 		)
 		.extend({
 			defaultValue: KottiFieldMultiSelect.valueSchema.optional(),
+			operations: z
+				.nativeEnum(FilterOperation.MultiEnum)
+				.array()
+				.nonempty()
+				.default([FilterOperation.MultiEnum.ONE_OF]),
 			type: z.literal(FilterType.MULTI_SELECT),
 		})
 
@@ -70,6 +114,11 @@ export namespace KottiStandardTable {
 			defaultValue: z
 				.tuple([KottiFieldNumber.valueSchema, KottiFieldNumber.valueSchema])
 				.optional(),
+			operations: z
+				.nativeEnum(FilterOperation.NumberRange)
+				.array()
+				.nonempty()
+				.default([FilterOperation.NumberRange.IN_RANGE]),
 			type: z.literal(FilterType.NUMBER_RANGE),
 			unit: KottiFieldNumber.propsSchema.shape.prefix,
 		})
@@ -83,6 +132,11 @@ export namespace KottiStandardTable {
 		)
 		.extend({
 			defaultValue: KottiFieldSingleSelect.valueSchema.optional(),
+			operations: z
+				.nativeEnum(FilterOperation.SingleEnum)
+				.array()
+				.nonempty()
+				.default([FilterOperation.SingleEnum.EQUAL]),
 			type: z.literal(FilterType.SINGLE_SELECT),
 		})
 
@@ -94,6 +148,7 @@ export namespace KottiStandardTable {
 		singleSelectFilterSchema,
 	])
 	export type Filter = z.input<typeof filterSchema>
+	export type FilterInternal = z.output<typeof filterSchema>
 
 	export const filterValueSchema = z.union([
 		KottiFieldToggle.valueSchema,
@@ -102,15 +157,15 @@ export namespace KottiStandardTable {
 		z.tuple([KottiFieldNumber.valueSchema, KottiFieldNumber.valueSchema]),
 		KottiFieldSingleSelect.valueSchema,
 	])
-	export type FilterValue = z.input<typeof filterValueSchema>
+	export type FilterValue = z.output<typeof filterValueSchema>
 
-	// TODO: add operation?
 	export const appliedFilterSchema = sharedFilterSchema
 		.pick({ id: true })
 		.extend({
+			operation: FilterOperation.schema,
 			value: filterValueSchema,
 		})
-	export type AppliedFilter = z.input<typeof appliedFilterSchema>
+	export type AppliedFilter = z.output<typeof appliedFilterSchema>
 
 	const sharedPaginationSchema = z.object({
 		pageIndex: z.number().int().finite().min(0),
@@ -259,6 +314,7 @@ export namespace KottiStandardTable {
 
 	export namespace Events {
 		const updateDataFetchDependencies = z.object({
+			filters: appliedFilterSchema.array(),
 			ordering: KottiTable.orderingSchema,
 			pagination: sharedPaginationSchema.pick({
 				pageIndex: true,
