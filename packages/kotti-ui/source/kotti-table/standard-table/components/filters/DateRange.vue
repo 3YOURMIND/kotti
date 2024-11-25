@@ -3,7 +3,7 @@
 		:isLoading="isLoading"
 		isOptional
 		:label="filter.label"
-		:placeholder="[startPlaceholder, endPlaceholder]"
+		:placeholder="[translations.startDate, translations.endDate]"
 		:shortcuts="shortcuts"
 		size="small"
 		:value="value"
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
 import { makeProps } from '../../../../make-props'
@@ -27,7 +27,6 @@ export default defineComponent({
 		const translations = useTranslationNamespace('KtStandardTable')
 
 		return {
-			endPlaceholder: translations.value.endDate,
 			onInput: (value: KottiStandardTable.FilterValue) => {
 				emit('input', {
 					id: props.filter.id,
@@ -35,7 +34,7 @@ export default defineComponent({
 					value,
 				})
 			},
-			shortcuts: [
+			shortcuts: computed(() => [
 				{
 					label: translations.value.today,
 					value: [today(), today()],
@@ -52,8 +51,8 @@ export default defineComponent({
 					label: translations.value.lastYear,
 					value: [getLast('year'), today()],
 				},
-			],
-			startPlaceholder: translations.value.startDate,
+			]),
+			translations,
 		}
 	},
 })

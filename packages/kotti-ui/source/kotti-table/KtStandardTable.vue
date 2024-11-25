@@ -9,35 +9,47 @@
 				<slot name="header-actions" />
 			</div>
 		</div>
-		<div class="kt-standard-table__controls">
-			<div class="kt-standard-table__table-actions">
+		<div
+			v-if="
+				!hideTableActions ||
+				$slots['controls-actions'] ||
+				inlineFilters.length > 0
+			"
+			class="kt-standard-table__controls"
+		>
+			<div v-if="!hideTableActions" class="kt-standard-table__table-actions">
 				<TableSearch
+					v-if="!options?.hideControls?.search"
 					:isLoading="isLoading"
+					:placeholder="options?.searchPlaceholder"
 					:value="searchValue"
 					@input="onUpdateSearchValue"
 				/>
 				<TableFilters
+					v-if="!options?.hideControls?.filters"
 					:filters="popoverFilters"
 					:isLoading="isLoading"
+					:size="options?.popoversSize?.filters"
 					:value="appliedFilters"
 					@input="onUpdateAppliedFilters"
 				/>
 				<TableColumns
+					v-if="!options?.hideControls?.columns"
 					:isLoading="isLoading"
 					:options="columnOptions"
+					:size="options?.popoversSize?.columns"
 					:value="columnVisibility"
 					@input="onUpdateColumnVisivility"
 					@showAll="onShowAllColumns"
 				/>
 			</div>
-			<div v-if="$slots['controls-actions']" class="kt-standard-table__slot">
-				<slot name="controls-actions" />
-			</div>
-			<div
-				v-if="inlineFilters.length > 0"
-				class="kt-standard-table__inline-filters"
-			>
+			<div class="kt-standard-table__right-aligned-container">
+				<div v-if="$slots['controls-actions']" class="kt-standard-table__slot">
+					<slot name="controls-actions" />
+				</div>
 				<FilterList
+					v-if="inlineFilters.length > 0"
+					class="kt-standard-table__inline-filters"
 					:filters="inlineFilters"
 					:isLoading="isLoading"
 					:value="appliedFilters"
@@ -64,8 +76,14 @@
 				<slot name="info-actions" />
 			</div>
 		</div>
-		<div class="kt-standard-table__table">
-			<KtTable :isLoading="isLoading" :tableId="id" />
+		<div>
+			<slot v-if="$slots['table']" name="table" />
+			<KtTable
+				v-else
+				class="kt-standard-table__table"
+				:isLoading="isLoading"
+				:tableId="id"
+			/>
 		</div>
 		<div class="kt-standard-table__footer">
 			<TablePageSize
@@ -117,11 +135,7 @@ export default defineComponent({
 		TableSearch,
 	},
 	props: makeProps(KottiStandardTable.propsSchema),
-	emits: [
-		'update:dataFetchDependencies',
-		'update:pageIndex',
-		'update:pageSize',
-	],
+	emits: ['update:dataFetchDependencies'],
 	setup(props, { emit }) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const standardTableContext = useStandardTableContext(props.id)
@@ -188,6 +202,12 @@ export default defineComponent({
 					})
 					.filter(({ value }) => value.length > 0),
 			),
+			hideTableActions: computed(
+				() =>
+					props.options?.hideControls?.columns &&
+					props.options.hideControls.filters &&
+					props.options.hideControls.search,
+			),
 			inlineFilters: computed(() =>
 				filters.value.filter((filter) => filter.displayInline),
 			),
@@ -205,11 +225,9 @@ export default defineComponent({
 			},
 			onUpdatePageIndex: (value: number) => {
 				table.value.setPageIndex(value)
-				emit('update:pageIndex', value)
 			},
 			onUpdatePageSize: (value: number) => {
 				table.value.setPageSize(value)
-				emit('update:pageSize', value)
 			},
 			onUpdateSearchValue: (value: KottiFieldText.Value) => {
 				searchValue.value = value
@@ -283,12 +301,19 @@ export default defineComponent({
 		}
 	}
 
+	&__right-aligned-container {
+		display: flex;
+		gap: 0.8rem;
+		gap: var(--unit-4);
+		align-items: center;
+		margin-left: auto;
+	}
+
 	&__slot {
 		margin-left: auto;
 	}
 
 	&__table {
-		overflow: hidden;
 		border: 1px solid var(--ui-02);
 		border-radius: var(--unit-2);
 	}

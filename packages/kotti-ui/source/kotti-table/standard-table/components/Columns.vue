@@ -1,7 +1,7 @@
 <template>
 	<KtPopover
 		v-if="options && options.length > 0"
-		size="md"
+		:size="size"
 		:trigger="isLoading ? 'manual' : 'click'"
 	>
 		<KtButton
