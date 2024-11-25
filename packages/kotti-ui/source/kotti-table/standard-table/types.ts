@@ -32,8 +32,8 @@ export namespace KottiStandardTable {
 
 	const sharedFilterSchema = z.object({
 		dataTest: z.string().optional(),
+		displayInline: z.boolean().default(false),
 		id: z.string(),
-		isPopupFilter: z.boolean().default(false),
 		label: z.string(),
 	})
 
@@ -48,28 +48,43 @@ export namespace KottiStandardTable {
 		type: z.literal(FilterType.DATE_RANGE),
 	})
 
-	const multiSelectFilterSchema = sharedFilterSchema.extend({
-		defaultValue: KottiFieldMultiSelect.valueSchema.optional(),
-		isUnsorted: KottiFieldMultiSelect.propsSchema.shape.isUnsorted,
-		options: KottiFieldMultiSelect.propsSchema.shape.options,
-		type: z.literal(FilterType.MULTI_SELECT),
-	})
+	const multiSelectFilterSchema = sharedFilterSchema
+		.merge(
+			KottiFieldMultiSelect.propsSchema.pick({
+				isUnsorted: true,
+				options: true,
+			}),
+		)
+		.extend({
+			defaultValue: KottiFieldMultiSelect.valueSchema.optional(),
+			type: z.literal(FilterType.MULTI_SELECT),
+		})
 
-	const numberRangeFilterSchema = sharedFilterSchema.extend({
-		decimalPlaces: KottiFieldNumber.propsSchema.shape.decimalPlaces,
-		defaultValue: z
-			.tuple([KottiFieldNumber.valueSchema, KottiFieldNumber.valueSchema])
-			.optional(),
-		type: z.literal(FilterType.NUMBER_RANGE),
-		unit: KottiFieldNumber.propsSchema.shape.prefix,
-	})
+	const numberRangeFilterSchema = sharedFilterSchema
+		.merge(
+			KottiFieldNumber.propsSchema.pick({
+				decimalPlaces: true,
+			}),
+		)
+		.extend({
+			defaultValue: z
+				.tuple([KottiFieldNumber.valueSchema, KottiFieldNumber.valueSchema])
+				.optional(),
+			type: z.literal(FilterType.NUMBER_RANGE),
+			unit: KottiFieldNumber.propsSchema.shape.prefix,
+		})
 
-	const singleSelectFilterSchema = sharedFilterSchema.extend({
-		defaultValue: KottiFieldSingleSelect.valueSchema.optional(),
-		isUnsorted: KottiFieldSingleSelect.propsSchema.shape.isUnsorted,
-		options: KottiFieldSingleSelect.propsSchema.shape.options,
-		type: z.literal(FilterType.SINGLE_SELECT),
-	})
+	const singleSelectFilterSchema = sharedFilterSchema
+		.merge(
+			KottiFieldSingleSelect.propsSchema.pick({
+				isUnsorted: true,
+				options: true,
+			}),
+		)
+		.extend({
+			defaultValue: KottiFieldSingleSelect.valueSchema.optional(),
+			type: z.literal(FilterType.SINGLE_SELECT),
+		})
 
 	export const filterSchema = z.discriminatedUnion('type', [
 		booleanFilterSchema,
@@ -90,10 +105,11 @@ export namespace KottiStandardTable {
 	export type FilterValue = z.input<typeof filterValueSchema>
 
 	// TODO: add operation?
-	export const appliedFilterSchema = z.object({
-		id: sharedFilterSchema.shape.id,
-		value: filterValueSchema,
-	})
+	export const appliedFilterSchema = sharedFilterSchema
+		.pick({ id: true })
+		.extend({
+			value: filterValueSchema,
+		})
 	export type AppliedFilter = z.input<typeof appliedFilterSchema>
 
 	const sharedPaginationSchema = z.object({
@@ -154,7 +170,7 @@ export namespace KottiStandardTable {
 		export const propsSchema = z.object({
 			filter: multiSelectFilterSchema,
 			isLoading: z.boolean().default(false),
-			value: KottiFieldMultiSelect.valueSchema.default([]),
+			value: KottiFieldMultiSelect.valueSchema.default(() => []),
 		})
 	}
 	export namespace NumberRangeFilter {
@@ -174,6 +190,15 @@ export namespace KottiStandardTable {
 		})
 	}
 
+	export namespace FilterList {
+		export const propsSchema = z.object({
+			filters: z.array(filterSchema).default(() => []),
+			isLoading: z.boolean().default(false),
+			value: z.array(appliedFilterSchema).default(() => []),
+		})
+		export type Props = z.output<typeof propsSchema>
+	}
+
 	export namespace TableColumns {
 		export const propsSchema = z.object({
 			isLoading: z.boolean().default(false),
@@ -190,9 +215,9 @@ export namespace KottiStandardTable {
 
 	export namespace TableFilters {
 		export const propsSchema = z.object({
-			filters: z.array(filterSchema),
+			filters: z.array(filterSchema).default(() => []),
 			isLoading: z.boolean().default(false),
-			value: z.array(appliedFilterSchema),
+			value: z.array(appliedFilterSchema).default(() => []),
 		})
 		export type Props = z.output<typeof propsSchema>
 	}

@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash/isEqual.js'
 import { computed, defineComponent, ref, watch } from 'vue'
 
 import type { KottiFieldNumber } from '../../../../kotti-field-number/types'
@@ -67,6 +67,7 @@ export default defineComponent({
 				isOptional: true,
 				placeholder: translations.value.max,
 				prefix: props.filter.unit,
+				size: 'small',
 				value: range.value[1],
 			})),
 			minFieldProps: computed(() => ({
@@ -79,6 +80,7 @@ export default defineComponent({
 				isOptional: true,
 				placeholder: translations.value.min,
 				prefix: props.filter.unit,
+				size: 'small',
 				value: range.value[0],
 			})),
 			onMaxInputBlur: (newMax: KottiFieldNumber.Value) => {

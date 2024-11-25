@@ -173,7 +173,6 @@ export default defineComponent({
 			{
 				dataTest: 'boolean-filter',
 				id: 'booleanFilter',
-				isPopupFilter: true,
 				label: 'Boolean filter',
 				slotLabels: ['No', 'Yes'],
 				type: Kotti.StandardTable.FilterType.BOOLEAN,
@@ -181,7 +180,6 @@ export default defineComponent({
 			{
 				dataTest: 'single-select-filter',
 				id: 'singleSelectFilter',
-				isPopupFilter: false,
 				isUnsorted: true,
 				label: 'Single select filter',
 				options: [
@@ -209,7 +207,6 @@ export default defineComponent({
 			{
 				dataTest: 'multi-select-filter',
 				id: 'multiSelectFilter',
-				isPopupFilter: false,
 				isUnsorted: true,
 				label: 'Multi select filter',
 				options: [
@@ -237,7 +234,6 @@ export default defineComponent({
 			{
 				dataTest: 'date-range-filter',
 				id: 'dateRangeFilter',
-				isPopupFilter: false,
 				label: 'Date range filter',
 				type: Kotti.StandardTable.FilterType.DATE_RANGE,
 			},
@@ -245,10 +241,37 @@ export default defineComponent({
 				dataTest: 'number-range-filter',
 				decimalPlaces: 2,
 				id: 'numberRangeFilter',
-				isPopupFilter: false,
 				label: 'Number range filter',
 				type: Kotti.StandardTable.FilterType.NUMBER_RANGE,
 				unit: 'Kg',
+			},
+			{
+				dataTest: 'single-select-filter-inline',
+				displayInline: true,
+				id: 'singleSelectFilterInline',
+				isUnsorted: true,
+				label: 'Single select filter Inline',
+				options: [
+					{
+						dataTest: 'opt-1',
+						isDisabled: false,
+						label: 'Option 1',
+						value: 101,
+					},
+					{
+						dataTest: 'opt-2',
+						isDisabled: false,
+						label: 'Option 2',
+						value: 102,
+					},
+					{
+						dataTest: 'opt-3',
+						isDisabled: false,
+						label: 'Option 3',
+						value: 103,
+					},
+				],
+				type: Kotti.StandardTable.FilterType.SINGLE_SELECT,
 			},
 		])
 

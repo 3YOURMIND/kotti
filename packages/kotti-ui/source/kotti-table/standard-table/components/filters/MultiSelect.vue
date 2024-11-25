@@ -6,6 +6,7 @@
 		isOptional
 		:label="filter.label"
 		:options="filter.options"
+		size="small"
 		:value="value"
 		@input="$emit('input', $event, filter.id)"
 	/>
