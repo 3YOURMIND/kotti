@@ -70,6 +70,10 @@ const STANDARD_META: Kotti.Meta = {
 			description: 'slot next to the applied filters section',
 			scope: null,
 		},
+		table: {
+			description: 'slot to show custom content instead of the KtTable',
+			scope: null,
+		},
 	},
 	typeScript: {
 		namespace: 'Kotti.StandardTable',

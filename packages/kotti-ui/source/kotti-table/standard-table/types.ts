@@ -8,6 +8,7 @@ import {
 } from '../../kotti-field-select/types'
 import { KottiFieldText } from '../../kotti-field-text/types'
 import { KottiFieldToggle } from '../../kotti-field-toggle/types'
+import { KottiPopover } from '../../kotti-popover/types'
 import { KottiTable } from '../table/types'
 
 import {
@@ -203,6 +204,24 @@ export namespace KottiStandardTable {
 
 	export const propsSchema = z.object({
 		id: z.string().min(1, { message: 'Field cannot be empty' }),
+		options: z
+			.object({
+				hideControls: z
+					.object({
+						columns: z.boolean().default(false),
+						filters: z.boolean().default(false),
+						search: z.boolean().default(false),
+					})
+					.optional(),
+				popoversSize: z
+					.object({
+						columns: KottiPopover.propsSchema.shape.size,
+						filters: KottiPopover.propsSchema.shape.size,
+					})
+					.optional(),
+				searchPlaceholder: z.string().optional(),
+			})
+			.optional(),
 		title: z.string().optional(),
 	})
 	export type Props = z.input<typeof propsSchema>
@@ -263,6 +282,9 @@ export namespace KottiStandardTable {
 					label: z.string(),
 				})
 				.array(),
+			size: KottiPopover.propsSchema.shape.size.default(
+				KottiPopover.Size.MEDIUM,
+			),
 			value: z.record(z.string(), z.boolean()),
 		})
 		export type Props = z.output<typeof propsSchema>
@@ -272,6 +294,9 @@ export namespace KottiStandardTable {
 		export const propsSchema = z.object({
 			filters: z.array(filterSchema).default(() => []),
 			isLoading: z.boolean().default(false),
+			size: KottiPopover.propsSchema.shape.size.default(
+				KottiPopover.Size.MEDIUM,
+			),
 			value: z.array(appliedFilterSchema).default(() => []),
 		})
 		export type Props = z.output<typeof propsSchema>
