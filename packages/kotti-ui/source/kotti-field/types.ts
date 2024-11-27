@@ -79,6 +79,7 @@ export module KottiField {
 			| 'leftIcon'
 			| 'prefix'
 			| 'rightIcon'
+			| 'showVisibilityToggle'
 			| 'size'
 			| 'suffix'
 		> & {
@@ -134,6 +135,7 @@ export module KottiField {
 		leftIcon: yocoIconSchema.nullable().default(null),
 		prefix: z.string().nullable().default(null),
 		rightIcon: yocoIconSchema.nullable().default(null),
+		showVisibilityToggle: z.boolean().default(false),
 		suffix: z.string().nullable().default(null),
 		tabIndex: z.number().default(0),
 	})
@@ -168,6 +170,7 @@ export module KottiField {
 		 * Prevents the validation (e.g. color, text) from being shown
 		 */
 		hideValidation: z.boolean().default(false),
+		showVisibilityToggle: z.boolean().default(false),
 
 		/**
 		 * Defines the size of the field which influences child styles
@@ -239,6 +242,12 @@ export module KottiField {
 
 		rightIcon: z.never(),
 
+		/**
+		 * Show some an eye icon on the right side of the field to hide/show the field content
+		 *
+		 * This is false by default and is meant to be used for KtFieldPassword
+		 */
+		showVisibilityToggle: z.boolean().default(false),
 		/**
 		 * Show some string before the field
 		 *

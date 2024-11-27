@@ -84,6 +84,18 @@
 							</div>
 						</slot>
 						<div
+							v-if="field.showVisibilityToggle"
+							:class="iconClasses('input-container', ['right', 'interactive'])"
+							@click.stop="handleVisibilityChange"
+						>
+							<i
+								v-if="valueVisibility"
+								class="yoco"
+								v-text="Yoco.Icon.EYE_SLASHED"
+							/>
+							<i v-else class="yoco" v-text="Yoco.Icon.EYE" />
+						</div>
+						<div
 							v-if="field.rightIcon"
 							:class="iconClasses('input-container', ['right'])"
 						>
@@ -149,13 +161,14 @@ export default defineComponent({
 		isRange: { default: false, type: Boolean },
 		useFieldset: { default: false, type: Boolean },
 	},
-	emits: ['click', 'mousedown'],
-	setup(props) {
+	emits: ['click', 'mousedown', 'visibilityChange'],
+	setup(props, { emit }) {
 		const inputId = computed(() =>
 			props.isRange
 				? `${props.field.inputProps.id}-start`
 				: props.field.inputProps.id,
 		)
+		const valueVisibility = ref(false)
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
 			() => !(props.field.hideValidation || validationType.value === 'empty'),
@@ -190,6 +203,10 @@ export default defineComponent({
 
 				props.field.setValue(props.getEmptyValue())
 				focusInput()
+			},
+			handleVisibilityChange: () => {
+				if (props.field.showVisibilityToggle) emit('visibilityChange')
+				valueVisibility.value = !valueVisibility.value
 			},
 			hasHelpText: computed(
 				() => props.helpTextSlot.length > 0 || props.field.helpText !== null,
@@ -245,6 +262,7 @@ export default defineComponent({
 						warning: Yoco.Icon.CIRCLE_ATTENTION,
 					})[validationType.value],
 			),
+			valueVisibility,
 			wrapperClasses: computed(() => {
 				const classes = ['kt-field__wrapper']
 
