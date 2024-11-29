@@ -16,6 +16,7 @@ export type StandardTableContext<
 			id: KottiStandardTable.FilterInternal['id'],
 		) => KottiStandardTable.FilterInternal | null
 		isLoading: boolean
+		options?: KottiStandardTable.Options
 		pageSizeOptions: number[]
 		paginationType: KottiStandardTable.PaginationType
 	}

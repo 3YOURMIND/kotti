@@ -1,9 +1,13 @@
-import type { Ref } from 'vue'
+import type { Ref, UnwrapRef } from 'vue'
 import { computed, watch } from 'vue'
+import { z } from 'zod'
 
-import { useKottiTable } from '../table/hooks'
+import type { KottiTableParameter } from '../table/hooks'
+import {
+	paramsSchema as KottiTableHookParamsSchema,
+	useKottiTable,
+} from '../table/hooks'
 import type { AnyRow } from '../table/types'
-import type { KottiTable } from '../table/types'
 
 import type { StandardTableContext } from './context'
 import { useProvideStandardTableContext } from './context'
@@ -13,54 +17,55 @@ type KottiStandardTableParameters<
 	ROW extends AnyRow,
 	COLUMN_IDS extends string = string,
 > = Ref<{
-	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
-	data: ROW[]
 	filters?: KottiStandardTable.Filter[]
 	id: string
 	isLoading?: boolean
+	options?: KottiStandardTable.Options
 	pagination: KottiStandardTable.Pagination
+	table: Omit<
+		UnwrapRef<KottiTableParameter<ROW, COLUMN_IDS>>,
+		'id' | 'pagination'
+	>
 }>
 
+const paramsSchema = z.object({
+	filters: KottiStandardTable.filterSchema.array().default(() => []),
+	id: z.string(),
+	isLoading: z.boolean().default(false),
+	options: KottiStandardTable.optionsSchema.optional(),
+	pagination: KottiStandardTable.paginationSchema,
+	table: KottiTableHookParamsSchema.omit({
+		id: true,
+		pagination: true,
+	}),
+})
+
 export const useKottiStandardTable = <ROW extends AnyRow>(
-	params: KottiStandardTableParameters<ROW>,
+	_params: KottiStandardTableParameters<ROW>,
 ): {
 	context: StandardTableContext<ROW>
 	tableHook: ReturnType<typeof useKottiTable<ROW>>
 } => {
-	const filters = computed(() =>
-		KottiStandardTable.filterSchema
-			.array()
-			.default(() => [])
-			.parse(params.value.filters),
-	)
-	const paginationParams = computed(() =>
-		KottiStandardTable.paginationSchema.parse(params.value.pagination),
-	)
+	const params = computed(() => paramsSchema.parse(_params.value))
 
 	const tableHook = useKottiTable<ROW>(
 		computed(() => ({
-			columns: params.value.columns,
-			data: params.value.data,
-			getRowBehavior: ({ row }: { row: ROW }) => ({
-				id: String(row.id),
-			}),
-			hasDragAndDrop: true,
+			..._params.value.table,
 			id: params.value.id,
-			isSelectable: true,
 			pagination:
-				paginationParams.value.type === KottiStandardTable.PaginationType.LOCAL
+				params.value.pagination.type === KottiStandardTable.PaginationType.LOCAL
 					? {
 							state: {
 								pageIndex: 0,
-								pageSize: paginationParams.value.pageSize,
+								pageSize: params.value.pagination.pageSize,
 							},
 							type: KottiStandardTable.PaginationType.LOCAL,
 						}
 					: {
-							rowCount: paginationParams.value.rowCount,
+							rowCount: params.value.pagination.rowCount,
 							state: {
 								pageIndex: 0,
-								pageSize: paginationParams.value.pageSize,
+								pageSize: params.value.pagination.pageSize,
 							},
 							type: KottiStandardTable.PaginationType.REMOTE,
 						},
@@ -69,13 +74,14 @@ export const useKottiStandardTable = <ROW extends AnyRow>(
 
 	const standardTableContext: StandardTableContext<ROW> = computed(() => ({
 		internal: {
-			columns: params.value.columns,
-			filters: filters.value,
+			columns: _params.value.table.columns,
+			filters: params.value.filters,
 			getFilter: (id) =>
-				filters.value.find((filter) => filter.id === id) ?? null,
-			isLoading: params.value.isLoading ?? false,
-			pageSizeOptions: paginationParams.value.pageSizeOptions,
-			paginationType: paginationParams.value.type,
+				params.value.filters.find((filter) => filter.id === id) ?? null,
+			isLoading: params.value.isLoading,
+			options: params.value.options,
+			pageSizeOptions: params.value.pagination.pageSizeOptions,
+			paginationType: params.value.pagination.type,
 		},
 	}))
 	useProvideStandardTableContext(params.value.id, standardTableContext)

@@ -82,7 +82,7 @@
 				v-else
 				class="kt-standard-table__table"
 				:isLoading="isLoading"
-				:tableId="id"
+				:tableId="tableId"
 			/>
 		</div>
 		<div class="kt-standard-table__footer">
@@ -138,9 +138,9 @@ export default defineComponent({
 	emits: ['update:dataFetchDependencies'],
 	setup(props, { emit }) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
-		const standardTableContext = useStandardTableContext(props.id)
+		const standardTableContext = useStandardTableContext(props.tableId)
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
-		const tableContext = useTableContext(props.id)
+		const tableContext = useTableContext(props.tableId)
 
 		const appliedFilters = ref<KottiStandardTable.AppliedFilter[]>([])
 		const searchValue = ref<KottiFieldText.Value>(null)
@@ -148,6 +148,7 @@ export default defineComponent({
 		const filters = computed(() => standardTableContext.value.internal.filters)
 		const table = computed(() => tableContext.value.internal.table.value)
 		const tablePagination = computed(() => table.value.getState().pagination)
+		const options = computed(() => standardTableContext.value.internal.options)
 
 		watch(
 			[
@@ -204,9 +205,9 @@ export default defineComponent({
 			),
 			hideTableActions: computed(
 				() =>
-					props.options?.hideControls?.columns &&
-					props.options.hideControls.filters &&
-					props.options.hideControls.search,
+					options.value?.hideControls?.columns &&
+					options.value.hideControls.filters &&
+					options.value.hideControls.search,
 			),
 			inlineFilters: computed(() =>
 				filters.value.filter((filter) => filter.displayInline),
@@ -232,6 +233,7 @@ export default defineComponent({
 			onUpdateSearchValue: (value: KottiFieldText.Value) => {
 				searchValue.value = value
 			},
+			options,
 			pageIndex: computed(() => tablePagination.value.pageIndex),
 			pageSize: computed(() => tablePagination.value.pageSize),
 			pageSizeOptions: computed(
