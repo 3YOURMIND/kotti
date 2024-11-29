@@ -2,14 +2,13 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
-		<KtStandardTable id="example-local-data" title="Title" />
+		<KtStandardTable tableId="example-local-data" title="Title" />
 
 		<br /><br />
 
 		<KtI18nContext :locale="settings.locale">
 			<KtStandardTable
-				id="example-remote-data"
-				:options="options"
+				tableId="example-remote-data"
 				:title="settings.title"
 				@update:dataFetchDependencies="fetchData"
 			>
@@ -254,8 +253,8 @@ export default defineComponent({
 				hideFilters: Kotti.FieldToggle.Value
 				hideSearch: Kotti.FieldToggle.Value
 			}
-			columnsPopoverSize: Kotti.FieldSingleSelect.Value
-			filtersPopoverSize: Kotti.FieldSingleSelect.Value
+			columnsPopoverSize: Kotti.Popover.Size
+			filtersPopoverSize: Kotti.Popover.Size
 			locale: Kotti.I18n.SupportedLanguages
 			searchPlaceholder?: Kotti.FieldText.Value
 			showInlineFilters: Kotti.FieldToggle.Value
@@ -296,6 +295,7 @@ export default defineComponent({
 			},
 			{
 				dataTest: 'single-select-filter',
+				displayInline: settings.value.showInlineFilters ?? false,
 				id: 'singleSelectFilter',
 				isUnsorted: true,
 				label: 'Single select filter',
@@ -362,44 +362,10 @@ export default defineComponent({
 				type: Kotti.StandardTable.FilterType.NUMBER_RANGE,
 				unit: 'Kg',
 			},
-			...(settings.value.showInlineFilters
-				? [
-						{
-							dataTest: 'single-select-filter-inline',
-							displayInline: true,
-							id: 'singleSelectFilterInline',
-							isUnsorted: true,
-							label: 'Single select filter Inline',
-							options: [
-								{
-									dataTest: 'opt-1',
-									isDisabled: false,
-									label: 'Option 1',
-									value: 101,
-								},
-								{
-									dataTest: 'opt-2',
-									isDisabled: false,
-									label: 'Option 2',
-									value: 102,
-								},
-								{
-									dataTest: 'opt-3',
-									isDisabled: false,
-									label: 'Option 3',
-									value: 103,
-								},
-							],
-							type: Kotti.StandardTable.FilterType.SINGLE_SELECT,
-						},
-					]
-				: []),
 		])
 
 		useKottiStandardTable<TodoRow>(
 			computed(() => ({
-				columns: todosColumns.value,
-				data: todosData.value,
 				id: 'example-local-data',
 				pagination: {
 					pageSize: 5,
@@ -407,22 +373,46 @@ export default defineComponent({
 					pageSizeOptions: [5, 10, 15, 20],
 					type: Kotti.StandardTable.PaginationType.LOCAL,
 				},
+				table: {
+					columns: todosColumns.value,
+					data: todosData.value,
+					getRowBehavior: ({ row }: { row: TodoRow }) => ({
+						id: String(row.id),
+					}),
+				},
 			})),
 		)
 
 		useKottiStandardTable<RecipeRow>(
 			computed(() => ({
-				columns: recipesColumns.value,
-				data: recipesData.value,
 				filters: filters.value,
 				id: 'example-remote-data',
 				isLoading: isLoadingRecipes.value,
+				options: {
+					hideControls: {
+						columns: settings.value.booleanFlags.hideColumns ?? undefined,
+						filters: settings.value.booleanFlags.hideFilters ?? undefined,
+						search: settings.value.booleanFlags.hideSearch ?? undefined,
+					},
+					popoversSize: {
+						columns: settings.value.columnsPopoverSize,
+						filters: settings.value.filtersPopoverSize,
+					},
+					searchPlaceholder: settings.value.searchPlaceholder ?? undefined,
+				},
 				pagination: {
 					pageSize: 5,
 					// eslint-disable-next-line no-magic-numbers
 					pageSizeOptions: [5, 10, 15, 30, 50, 100],
 					rowCount: recipesRowCount.value,
 					type: Kotti.StandardTable.PaginationType.REMOTE,
+				},
+				table: {
+					columns: recipesColumns.value,
+					data: recipesData.value,
+					getRowBehavior: ({ row }: { row: RecipeRow }) => ({
+						id: String(row.id),
+					}),
 				},
 			})),
 		)
@@ -468,19 +458,6 @@ export default defineComponent({
 					throw error
 				}
 			},
-			isLoadingRecipes,
-			options: computed(() => ({
-				hideControls: {
-					columns: settings.value.booleanFlags.hideColumns,
-					filters: settings.value.booleanFlags.hideFilters,
-					search: settings.value.booleanFlags.hideSearch,
-				},
-				popoversSize: {
-					columns: settings.value.columnsPopoverSize,
-					filters: settings.value.filtersPopoverSize,
-				},
-				searchPlaceholder: settings.value.searchPlaceholder,
-			})),
 			settings,
 			sizeOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
 				Object.entries(Kotti.Popover.Size).map(([key, value]) => ({

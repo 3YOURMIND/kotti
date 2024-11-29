@@ -32,7 +32,7 @@ export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
 export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
 export const ARRAY_START = 2
 
-type KottiTableParameter<
+export type KottiTableParameter<
 	ROW extends AnyRow,
 	COLUMN_IDS extends string = string,
 > = Ref<{
@@ -50,7 +50,7 @@ type KottiTableParameter<
 	pagination?: KottiTable.Pagination
 }>
 
-const paramsSchema = z
+export const paramsSchema = z
 	.object({
 		//TODO:
 		// actions : list of buttons (based on baseOptionSchema)

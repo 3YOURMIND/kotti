@@ -168,6 +168,24 @@ export namespace KottiStandardTable {
 		})
 	export type AppliedFilter = z.output<typeof appliedFilterSchema>
 
+	export const optionsSchema = z.object({
+		hideControls: z
+			.object({
+				columns: z.boolean().default(false),
+				filters: z.boolean().default(false),
+				search: z.boolean().default(false),
+			})
+			.optional(),
+		popoversSize: z
+			.object({
+				columns: KottiPopover.propsSchema.shape.size,
+				filters: KottiPopover.propsSchema.shape.size,
+			})
+			.optional(),
+		searchPlaceholder: z.string().optional(),
+	})
+	export type Options = z.input<typeof optionsSchema>
+
 	const sharedPaginationSchema = z.object({
 		pageIndex: z.number().int().finite().min(0),
 		pageSize: z.number().int().finite().gt(0),
@@ -203,25 +221,7 @@ export namespace KottiStandardTable {
 	export type Pagination = z.input<typeof paginationSchema>
 
 	export const propsSchema = z.object({
-		id: z.string().min(1, { message: 'Field cannot be empty' }),
-		options: z
-			.object({
-				hideControls: z
-					.object({
-						columns: z.boolean().default(false),
-						filters: z.boolean().default(false),
-						search: z.boolean().default(false),
-					})
-					.optional(),
-				popoversSize: z
-					.object({
-						columns: KottiPopover.propsSchema.shape.size,
-						filters: KottiPopover.propsSchema.shape.size,
-					})
-					.optional(),
-				searchPlaceholder: z.string().optional(),
-			})
-			.optional(),
+		tableId: z.string().min(1, { message: 'Field cannot be empty' }),
 		title: z.string().optional(),
 	})
 	export type Props = z.input<typeof propsSchema>
