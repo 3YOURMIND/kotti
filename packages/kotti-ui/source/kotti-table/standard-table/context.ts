@@ -13,6 +13,7 @@ export type StandardTableContext<
 	internal: {
 		columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 		filters: KottiStandardTable.FilterInternal[]
+		getAppliedFilters: () => KottiStandardTable.AppliedFilter[]
 		getFilter: (
 			id: KottiStandardTable.FilterInternal['id'],
 		) => KottiStandardTable.FilterInternal | null
@@ -21,6 +22,7 @@ export type StandardTableContext<
 		options?: KottiStandardTable.Options
 		pageSizeOptions: number[]
 		paginationType: KottiStandardTable.PaginationType
+		setAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => void
 		setSearchValue: (value: KottiFieldText.Value) => void
 	}
 }>

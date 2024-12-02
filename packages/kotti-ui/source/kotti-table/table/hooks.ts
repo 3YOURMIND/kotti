@@ -1,6 +1,7 @@
 import { Dashes } from '@metatypes/typography'
 import type {
 	CellContext,
+	ColumnFiltersState,
 	HeaderContext,
 	PaginationState,
 	RowSelectionState,
@@ -37,6 +38,7 @@ export type KottiTableParameter<
 	ROW extends AnyRow,
 	COLUMN_IDS extends string = string,
 > = Ref<{
+	columnFilters?: ColumnFiltersState
 	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 	data: ROW[]
 	getRowBehavior: GetRowBehavior<ROW>
@@ -56,6 +58,14 @@ export const paramsSchema = z
 	.object({
 		//TODO:
 		// actions : list of buttons (based on baseOptionSchema)
+		columnFilters: z
+			.object({
+				id: z.string(),
+				// Zod schema `z.unknown()` incorrectly infers the property as optional
+				value: z.any(),
+			})
+			.array()
+			.optional(),
 		columns: z.array(KottiTable.columnSchema),
 		data: z.array(z.any()),
 		/**
@@ -346,6 +356,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 							return info.getValue() ?? Dashes.EmDash
 						},
 						enableSorting: column.isSortable,
+						filterFn: column.filterFn ?? undefined,
 						header: () => h('div', { style: { flex: 1 } }, column.label),
 						id: column.id,
 						meta: {
@@ -395,6 +406,17 @@ export const useKottiTable = <ROW extends AnyRow>(
 				params.value.getRowBehavior({ row, rowIndex }).id,
 			manualPagination:
 				params.value.pagination?.type === KottiTable.PaginationType.REMOTE,
+			onColumnFiltersChange: (updaterOrValue) => {
+				if (!params.value.columnFilters)
+					throw new Error('columnFilters not found')
+
+				const updatedColumnFilters =
+					typeof updaterOrValue === 'function'
+						? updaterOrValue(params.value.columnFilters as ColumnFiltersState)
+						: updaterOrValue
+
+				params.value.columnFilters = updatedColumnFilters
+			},
 			onColumnVisibilityChange: setVisibiltyState,
 			onGlobalFilterChange: (updaterOrValue) => {
 				if (!params.value.globalFilter)
@@ -430,6 +452,10 @@ export const useKottiTable = <ROW extends AnyRow>(
 					? params.value.pagination.rowCount
 					: undefined,
 			state: {
+				// Zod schema `z.unknown()` incorrectly infers the property as optional
+				columnFilters: (params.value.columnFilters ?? undefined) as
+					| ColumnFiltersState
+					| undefined,
 				columnOrder: columnOrderInternal.value,
 				columnVisibility: visibilityState.value,
 				globalFilter: params.value.globalFilter ?? undefined,

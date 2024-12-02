@@ -108,7 +108,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 
 import type { KottiFieldText } from '../kotti-field-text/types'
 import { makeProps } from '../make-props'
@@ -142,13 +142,14 @@ export default defineComponent({
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = useTableContext(props.tableId)
 
-		const appliedFilters = ref<KottiStandardTable.AppliedFilter[]>([])
-
 		const filters = computed(() => standardTableContext.value.internal.filters)
 		const table = computed(() => tableContext.value.internal.table.value)
 		const tablePagination = computed(() => table.value.getState().pagination)
 		const options = computed(() => standardTableContext.value.internal.options)
 
+		const appliedFilters = computed(() =>
+			standardTableContext.value.internal.getAppliedFilters(),
+		)
 		const searchValue = computed(() =>
 			standardTableContext.value.internal.getSearchValue(),
 		)
@@ -220,7 +221,7 @@ export default defineComponent({
 				tableContext.value.internal.table.value.toggleAllColumnsVisible()
 			},
 			onUpdateAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => {
-				appliedFilters.value = value
+				standardTableContext.value.internal.setAppliedFilters(value)
 			},
 			onUpdateColumnVisivility: (
 				value: KottiStandardTable.TableColumns.Props['value'],
