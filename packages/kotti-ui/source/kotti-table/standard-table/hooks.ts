@@ -1,7 +1,8 @@
 import type { Ref, UnwrapRef } from 'vue'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { z } from 'zod'
 
+import type { KottiFieldText } from '../../kotti-field-text/types'
 import type { KottiTableParameter } from '../table/hooks'
 import {
 	paramsSchema as KottiTableHookParamsSchema,
@@ -48,9 +49,15 @@ export const useKottiStandardTable = <ROW extends AnyRow>(
 } => {
 	const params = computed(() => paramsSchema.parse(_params.value))
 
+	const globalFilter = ref<KottiFieldText.Value>(null)
+
 	const tableHook = useKottiTable<ROW>(
 		computed(() => ({
 			..._params.value.table,
+			globalFilter:
+				params.value.pagination.type === KottiStandardTable.PaginationType.LOCAL
+					? globalFilter.value
+					: undefined,
 			id: params.value.id,
 			pagination:
 				params.value.pagination.type === KottiStandardTable.PaginationType.LOCAL
@@ -78,10 +85,14 @@ export const useKottiStandardTable = <ROW extends AnyRow>(
 			filters: params.value.filters,
 			getFilter: (id) =>
 				params.value.filters.find((filter) => filter.id === id) ?? null,
+			getSearchValue: () => globalFilter.value,
 			isLoading: params.value.isLoading,
 			options: params.value.options,
 			pageSizeOptions: params.value.pagination.pageSizeOptions,
 			paginationType: params.value.pagination.type,
+			setSearchValue: (value: KottiFieldText.Value) => {
+				globalFilter.value = value
+			},
 		},
 	}))
 	useProvideStandardTableContext(params.value.id, standardTableContext)

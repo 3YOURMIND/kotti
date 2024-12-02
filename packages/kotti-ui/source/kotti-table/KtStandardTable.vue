@@ -143,12 +143,15 @@ export default defineComponent({
 		const tableContext = useTableContext(props.tableId)
 
 		const appliedFilters = ref<KottiStandardTable.AppliedFilter[]>([])
-		const searchValue = ref<KottiFieldText.Value>(null)
 
 		const filters = computed(() => standardTableContext.value.internal.filters)
 		const table = computed(() => tableContext.value.internal.table.value)
 		const tablePagination = computed(() => table.value.getState().pagination)
 		const options = computed(() => standardTableContext.value.internal.options)
+
+		const searchValue = computed(() =>
+			standardTableContext.value.internal.getSearchValue(),
+		)
 
 		watch(
 			[
@@ -231,7 +234,7 @@ export default defineComponent({
 				table.value.setPageSize(value)
 			},
 			onUpdateSearchValue: (value: KottiFieldText.Value) => {
-				searchValue.value = value
+				standardTableContext.value.internal.setSearchValue(value)
 			},
 			options,
 			pageIndex: computed(() => tablePagination.value.pageIndex),

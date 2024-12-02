@@ -11,6 +11,7 @@ import {
 	createColumnHelper,
 	getCoreRowModel,
 	getExpandedRowModel,
+	getFilteredRowModel,
 	getPaginationRowModel,
 } from '@tanstack/table-core'
 import { computed, h, ref, type Ref, watch } from 'vue'
@@ -39,6 +40,7 @@ export type KottiTableParameter<
 	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 	data: ROW[]
 	getRowBehavior: GetRowBehavior<ROW>
+	globalFilter?: string | null
 	hasDragAndDrop?: boolean
 	id: string
 	isExpandable?: boolean
@@ -98,6 +100,7 @@ export const paramsSchema = z
 					id: z.string(),
 				}),
 			),
+		globalFilter: z.string().nullable().optional(),
 		hasDragAndDrop: z.boolean().default(false),
 		id: z.string(),
 		isExpandable: z.boolean().default(false),
@@ -381,6 +384,9 @@ export const useKottiTable = <ROW extends AnyRow>(
 			getExpandedRowModel: params.value.isExpandable
 				? getExpandedRowModel()
 				: undefined,
+			getFilteredRowModel: params.value.globalFilter
+				? getFilteredRowModel()
+				: undefined,
 			getPaginationRowModel:
 				params.value.pagination?.type === KottiTable.PaginationType.LOCAL
 					? getPaginationRowModel()
@@ -390,6 +396,17 @@ export const useKottiTable = <ROW extends AnyRow>(
 			manualPagination:
 				params.value.pagination?.type === KottiTable.PaginationType.REMOTE,
 			onColumnVisibilityChange: setVisibiltyState,
+			onGlobalFilterChange: (updaterOrValue) => {
+				if (!params.value.globalFilter)
+					throw new Error('globalFilter not found')
+
+				const updatedGlobalFilter =
+					typeof updaterOrValue === 'function'
+						? updaterOrValue(params.value.globalFilter)
+						: updaterOrValue
+
+				params.value.globalFilter = updatedGlobalFilter
+			},
 			onPaginationChange: params.value.pagination ? setPagination : undefined,
 			onRowSelectionChange: setRowSelection,
 			// onRowSelectionChange: (updateOrValue) => {
@@ -415,6 +432,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 			state: {
 				columnOrder: columnOrderInternal.value,
 				columnVisibility: visibilityState.value,
+				globalFilter: params.value.globalFilter ?? undefined,
 				pagination: params.value.pagination ? pagination.value : undefined,
 				rowSelection: rowSelection.value,
 				sorting: sorting.value,
