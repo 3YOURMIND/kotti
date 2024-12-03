@@ -113,6 +113,7 @@
 </template>
 
 <script lang="ts">
+import isNil from 'lodash/isNil'
 import { computed, defineComponent, ref } from 'vue'
 
 import {
@@ -128,7 +129,11 @@ import { todos } from './data/standard-table'
 
 type TodoRow = {
 	completed: boolean
+	dueDate: string
+	effort: number
 	id: number
+	priority: string
+	tag: string
 	todo: string
 	userId: number
 }
@@ -170,11 +175,82 @@ export default defineComponent({
 				label: 'Todo',
 			},
 			{
+				display: { type: 'text' },
+				filterFn: (row, columnId, filterValue) =>
+					row.getValue(columnId) === filterValue,
+				getData: (row: TodoRow) => row.priority,
+				id: 'priority',
+				isSortable: true,
+				label: 'Priority',
+			},
+			{
+				display: { decimalPlaces: 2, type: 'numerical' },
+				filterFn: (row, columnId, filterValue) => {
+					const value: number | null | undefined = row.getValue(columnId)
+
+					if (isNil(value)) {
+						return false
+					}
+
+					const [min, max] = filterValue as [number | null, number | null]
+
+					if (min !== null && max !== null) {
+						return value >= min && value <= max
+					}
+
+					if (min !== null) {
+						return value >= min
+					}
+
+					if (max !== null) {
+						return value <= max
+					}
+
+					return false
+				},
+				getData: (row: TodoRow) => row.effort,
+				id: 'effort',
+				isSortable: true,
+				label: 'Effort',
+			},
+			{
+				display: { type: 'text' },
+				filterFn: (row, columnId, filterValue) => {
+					if (!row.getValue(columnId)) {
+						return false
+					}
+
+					const start = new Date(filterValue[0])
+					const end = new Date(filterValue[1])
+					const value = new Date(row.getValue(columnId))
+
+					return (
+						value.getTime() >= start.getTime() &&
+						value.getTime() <= end.getTime()
+					)
+				},
+				getData: (row: TodoRow) => row.dueDate,
+				id: 'dueDate',
+				isSortable: true,
+				label: 'Due Date',
+			},
+			{
 				display: { type: 'boolean' },
+				filterFn: (row, columnId, filterValue) =>
+					row.getValue(columnId) === filterValue,
 				getData: (row: TodoRow) => row.completed,
 				id: 'completed',
 				isSortable: true,
 				label: 'Completed',
+			},
+			{
+				display: { type: 'text' },
+				filterFn: (row, columnId, filterValue) =>
+					filterValue.includes(row.getValue(columnId)),
+				getData: (row: TodoRow) => row.tag,
+				id: 'tag',
+				isSortable: true,
+				label: 'Tag',
 			},
 			{
 				display: { decimalPlaces: 0, type: 'numerical' },
@@ -285,87 +361,68 @@ export default defineComponent({
 			title: 'Title',
 		})
 
-		const filters = computed<Kotti.StandardTable.Filter[]>(() => [
-			{
-				dataTest: 'boolean-filter',
-				id: 'booleanFilter',
-				label: 'Boolean filter',
-				slotLabels: ['No', 'Yes'],
-				type: Kotti.StandardTable.FilterType.BOOLEAN,
-			},
-			{
-				dataTest: 'single-select-filter',
-				displayInline: settings.value.showInlineFilters ?? false,
-				id: 'singleSelectFilter',
-				isUnsorted: true,
-				label: 'Single select filter',
-				options: [
-					{
-						dataTest: 'opt-1',
-						isDisabled: false,
-						label: 'Option 1',
-						value: 101,
-					},
-					{
-						dataTest: 'opt-2',
-						isDisabled: false,
-						label: 'Option 2',
-						value: 102,
-					},
-					{
-						dataTest: 'opt-3',
-						isDisabled: false,
-						label: 'Option 3',
-						value: 103,
-					},
-				],
-				type: Kotti.StandardTable.FilterType.SINGLE_SELECT,
-			},
-			{
-				dataTest: 'multi-select-filter',
-				id: 'multiSelectFilter',
-				isUnsorted: true,
-				label: 'Multi select filter',
-				options: [
-					{
-						dataTest: 'opt-1',
-						isDisabled: false,
-						label: 'Option 1',
-						value: 101,
-					},
-					{
-						dataTest: 'opt-2',
-						isDisabled: false,
-						label: 'Option 2',
-						value: 102,
-					},
-					{
-						dataTest: 'opt-3',
-						isDisabled: false,
-						label: 'Option 3',
-						value: 103,
-					},
-				],
-				type: Kotti.StandardTable.FilterType.MULTI_SELECT,
-			},
-			{
-				dataTest: 'date-range-filter',
-				id: 'dateRangeFilter',
-				label: 'Date range filter',
-				type: Kotti.StandardTable.FilterType.DATE_RANGE,
-			},
-			{
-				dataTest: 'number-range-filter',
-				decimalPlaces: 2,
-				id: 'numberRangeFilter',
-				label: 'Number range filter',
-				type: Kotti.StandardTable.FilterType.NUMBER_RANGE,
-				unit: 'Kg',
-			},
-		])
-
 		useKottiStandardTable<TodoRow>(
 			computed(() => ({
+				filters: [
+					{
+						id: 'completed',
+						label: 'Completed',
+						slotLabels: ['No', 'Yes'],
+						type: Kotti.StandardTable.FilterType.BOOLEAN,
+					},
+					{
+						id: 'priority',
+						isUnsorted: true,
+						label: 'Priority',
+						options: [
+							{
+								label: 'High',
+								value: 'High',
+							},
+							{
+								label: 'Medium',
+								value: 'Medium',
+							},
+							{
+								label: 'Low',
+								value: 'Low',
+							},
+						],
+						type: Kotti.StandardTable.FilterType.SINGLE_SELECT,
+					},
+					{
+						id: 'tag',
+						isUnsorted: true,
+						label: 'Tag',
+						options: [
+							{
+								label: 'Tag 1',
+								value: 'tag-1',
+							},
+							{
+								label: 'Tag 2',
+								value: 'tag-2',
+							},
+							{
+								label: 'Tag 3',
+								value: 'tag-3',
+							},
+						],
+						type: Kotti.StandardTable.FilterType.MULTI_SELECT,
+					},
+					{
+						id: 'dueDate',
+						label: 'Due Date',
+						type: Kotti.StandardTable.FilterType.DATE_RANGE,
+					},
+					{
+						decimalPlaces: 2,
+						id: 'effort',
+						label: 'Effort',
+						type: Kotti.StandardTable.FilterType.NUMBER_RANGE,
+						unit: 'hours',
+					},
+				],
 				id: 'example-local-data',
 				pagination: {
 					pageSize: 5,
@@ -385,7 +442,84 @@ export default defineComponent({
 
 		useKottiStandardTable<RecipeRow>(
 			computed(() => ({
-				filters: filters.value,
+				filters: [
+					{
+						dataTest: 'boolean-filter',
+						id: 'booleanFilter',
+						label: 'Boolean filter',
+						slotLabels: ['No', 'Yes'],
+						type: Kotti.StandardTable.FilterType.BOOLEAN,
+					},
+					{
+						dataTest: 'single-select-filter',
+						displayInline: settings.value.showInlineFilters ?? false,
+						id: 'singleSelectFilter',
+						isUnsorted: true,
+						label: 'Single select filter',
+						options: [
+							{
+								dataTest: 'opt-1',
+								isDisabled: false,
+								label: 'Option 1',
+								value: 101,
+							},
+							{
+								dataTest: 'opt-2',
+								isDisabled: false,
+								label: 'Option 2',
+								value: 102,
+							},
+							{
+								dataTest: 'opt-3',
+								isDisabled: false,
+								label: 'Option 3',
+								value: 103,
+							},
+						],
+						type: Kotti.StandardTable.FilterType.SINGLE_SELECT,
+					},
+					{
+						dataTest: 'multi-select-filter',
+						id: 'multiSelectFilter',
+						isUnsorted: true,
+						label: 'Multi select filter',
+						options: [
+							{
+								dataTest: 'opt-1',
+								isDisabled: false,
+								label: 'Option 1',
+								value: 101,
+							},
+							{
+								dataTest: 'opt-2',
+								isDisabled: false,
+								label: 'Option 2',
+								value: 102,
+							},
+							{
+								dataTest: 'opt-3',
+								isDisabled: false,
+								label: 'Option 3',
+								value: 103,
+							},
+						],
+						type: Kotti.StandardTable.FilterType.MULTI_SELECT,
+					},
+					{
+						dataTest: 'date-range-filter',
+						id: 'dateRangeFilter',
+						label: 'Date range filter',
+						type: Kotti.StandardTable.FilterType.DATE_RANGE,
+					},
+					{
+						dataTest: 'number-range-filter',
+						decimalPlaces: 2,
+						id: 'numberRangeFilter',
+						label: 'Number range filter',
+						type: Kotti.StandardTable.FilterType.NUMBER_RANGE,
+						unit: 'Kg',
+					},
+				],
 				id: 'example-remote-data',
 				isLoading: isLoadingRecipes.value,
 				options: {

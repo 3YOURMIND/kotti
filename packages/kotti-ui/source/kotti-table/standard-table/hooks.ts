@@ -1,7 +1,9 @@
+import type { ColumnFiltersState } from '@tanstack/table-core'
 import type { Ref, UnwrapRef } from 'vue'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { z } from 'zod'
 
+import type { KottiFieldText } from '../../kotti-field-text/types'
 import type { KottiTableParameter } from '../table/hooks'
 import {
 	paramsSchema as KottiTableHookParamsSchema,
@@ -40,6 +42,14 @@ const paramsSchema = z.object({
 	}),
 })
 
+const mapToColumnFilters = (
+	appliedFilters: KottiStandardTable.AppliedFilter[],
+): ColumnFiltersState =>
+	appliedFilters.map(({ id, value }) => ({
+		id,
+		value,
+	}))
+
 export const useKottiStandardTable = <ROW extends AnyRow>(
 	_params: KottiStandardTableParameters<ROW>,
 ): {
@@ -48,9 +58,23 @@ export const useKottiStandardTable = <ROW extends AnyRow>(
 } => {
 	const params = computed(() => paramsSchema.parse(_params.value))
 
+	const appliedFilters = ref<KottiStandardTable.AppliedFilter[]>([])
+	/**
+	 * https://github.com/TanStack/table/discussions/4670
+	 */
+	const globalFilter = ref<KottiFieldText.Value>(' ')
+
 	const tableHook = useKottiTable<ROW>(
 		computed(() => ({
 			..._params.value.table,
+			columnFilters:
+				params.value.pagination.type === KottiStandardTable.PaginationType.LOCAL
+					? mapToColumnFilters(appliedFilters.value)
+					: undefined,
+			globalFilter:
+				params.value.pagination.type === KottiStandardTable.PaginationType.LOCAL
+					? globalFilter.value
+					: undefined,
 			id: params.value.id,
 			pagination:
 				params.value.pagination.type === KottiStandardTable.PaginationType.LOCAL
@@ -76,12 +100,20 @@ export const useKottiStandardTable = <ROW extends AnyRow>(
 		internal: {
 			columns: _params.value.table.columns,
 			filters: params.value.filters,
+			getAppliedFilters: () => appliedFilters.value,
 			getFilter: (id) =>
 				params.value.filters.find((filter) => filter.id === id) ?? null,
+			getSearchValue: () => globalFilter.value,
 			isLoading: params.value.isLoading,
 			options: params.value.options,
 			pageSizeOptions: params.value.pagination.pageSizeOptions,
 			paginationType: params.value.pagination.type,
+			setAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => {
+				appliedFilters.value = value
+			},
+			setSearchValue: (value: KottiFieldText.Value) => {
+				globalFilter.value = value
+			},
 		},
 	}))
 	useProvideStandardTableContext(params.value.id, standardTableContext)

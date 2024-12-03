@@ -1,6 +1,7 @@
 import { Dashes } from '@metatypes/typography'
 import type {
 	CellContext,
+	ColumnFiltersState,
 	HeaderContext,
 	PaginationState,
 	RowSelectionState,
@@ -11,6 +12,7 @@ import {
 	createColumnHelper,
 	getCoreRowModel,
 	getExpandedRowModel,
+	getFilteredRowModel,
 	getPaginationRowModel,
 } from '@tanstack/table-core'
 import { computed, h, ref, type Ref, watch } from 'vue'
@@ -36,9 +38,11 @@ export type KottiTableParameter<
 	ROW extends AnyRow,
 	COLUMN_IDS extends string = string,
 > = Ref<{
+	columnFilters?: ColumnFiltersState
 	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 	data: ROW[]
 	getRowBehavior: GetRowBehavior<ROW>
+	globalFilter?: string | null
 	hasDragAndDrop?: boolean
 	id: string
 	isExpandable?: boolean
@@ -54,6 +58,14 @@ export const paramsSchema = z
 	.object({
 		//TODO:
 		// actions : list of buttons (based on baseOptionSchema)
+		columnFilters: z
+			.object({
+				id: z.string(),
+				// Zod schema `z.unknown()` incorrectly infers the property as optional
+				value: z.any(),
+			})
+			.array()
+			.optional(),
 		columns: z.array(KottiTable.columnSchema),
 		data: z.array(z.any()),
 		/**
@@ -98,6 +110,7 @@ export const paramsSchema = z
 					id: z.string(),
 				}),
 			),
+		globalFilter: z.string().nullable().optional(),
 		hasDragAndDrop: z.boolean().default(false),
 		id: z.string(),
 		isExpandable: z.boolean().default(false),
@@ -343,6 +356,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 							return info.getValue() ?? Dashes.EmDash
 						},
 						enableSorting: column.isSortable,
+						filterFn: column.filterFn ?? undefined,
 						header: () => h('div', { style: { flex: 1 } }, column.label),
 						id: column.id,
 						meta: {
@@ -381,6 +395,9 @@ export const useKottiTable = <ROW extends AnyRow>(
 			getExpandedRowModel: params.value.isExpandable
 				? getExpandedRowModel()
 				: undefined,
+			getFilteredRowModel: params.value.globalFilter
+				? getFilteredRowModel()
+				: undefined,
 			getPaginationRowModel:
 				params.value.pagination?.type === KottiTable.PaginationType.LOCAL
 					? getPaginationRowModel()
@@ -389,7 +406,29 @@ export const useKottiTable = <ROW extends AnyRow>(
 				params.value.getRowBehavior({ row, rowIndex }).id,
 			manualPagination:
 				params.value.pagination?.type === KottiTable.PaginationType.REMOTE,
+			onColumnFiltersChange: (updaterOrValue) => {
+				if (!params.value.columnFilters)
+					throw new Error('columnFilters not found')
+
+				const updatedColumnFilters =
+					typeof updaterOrValue === 'function'
+						? updaterOrValue(params.value.columnFilters as ColumnFiltersState)
+						: updaterOrValue
+
+				params.value.columnFilters = updatedColumnFilters
+			},
 			onColumnVisibilityChange: setVisibiltyState,
+			onGlobalFilterChange: (updaterOrValue) => {
+				if (!params.value.globalFilter)
+					throw new Error('globalFilter not found')
+
+				const updatedGlobalFilter =
+					typeof updaterOrValue === 'function'
+						? updaterOrValue(params.value.globalFilter)
+						: updaterOrValue
+
+				params.value.globalFilter = updatedGlobalFilter
+			},
 			onPaginationChange: params.value.pagination ? setPagination : undefined,
 			onRowSelectionChange: setRowSelection,
 			// onRowSelectionChange: (updateOrValue) => {
@@ -413,8 +452,13 @@ export const useKottiTable = <ROW extends AnyRow>(
 					? params.value.pagination.rowCount
 					: undefined,
 			state: {
+				// Zod schema `z.unknown()` incorrectly infers the property as optional
+				columnFilters: (params.value.columnFilters ?? undefined) as
+					| ColumnFiltersState
+					| undefined,
 				columnOrder: columnOrderInternal.value,
 				columnVisibility: visibilityState.value,
+				globalFilter: params.value.globalFilter ?? undefined,
 				pagination: params.value.pagination ? pagination.value : undefined,
 				rowSelection: rowSelection.value,
 				sorting: sorting.value,

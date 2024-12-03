@@ -1,3 +1,4 @@
+import type { FilterFnOption } from '@tanstack/table-core'
 import type { VNode } from 'vue'
 import { z } from 'zod'
 
@@ -97,6 +98,7 @@ export module KottiTable {
 		.object({
 			display: columnDisplaySchema,
 			// TODO: getData should understand display.type
+			filterFn: z.function().args(z.any()).returns(z.boolean()).optional(),
 			getData: z.function().args(z.any()).returns(z.unknown()),
 			id: z.string(),
 			isSortable: z.boolean().default(false),
@@ -138,6 +140,7 @@ export module KottiTable {
 		ROW extends AnyRow,
 		COLUMN_IDS extends string = string,
 	> = DataDisplay<ROW> & {
+		filterFn?: FilterFnOption<ROW>
 		id: COLUMN_IDS
 		isSortable?: boolean
 		label: string
