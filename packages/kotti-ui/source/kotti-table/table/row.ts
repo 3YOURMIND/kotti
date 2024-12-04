@@ -5,24 +5,29 @@ import type { AnyRow, GetRowBehavior } from './types'
 type RowBehavior = ReturnType<GetRowBehavior<AnyRow>>
 
 type RowCellWrapper = {
+	class: string[]
 	component: string
 	on?: Record<string, unknown>
 	props?: Record<string, unknown>
 }
 
 export const DEFAULT_CELL_WRAPPER: RowCellWrapper = {
+	class: ['kt-table-cell-content'],
 	component: 'div',
 }
 
 export const getCellWrapComponent = (
-	clickBehavior: RowBehavior['click'],
+	behavior: RowBehavior,
 	row: Row<AnyRow>,
 ): RowCellWrapper => {
-	if (!clickBehavior) return DEFAULT_CELL_WRAPPER
+	if (behavior.disable?.click) return DEFAULT_CELL_WRAPPER
 
-	if (clickBehavior === 'expand')
+	const { click } = behavior
+	if (!click) return DEFAULT_CELL_WRAPPER
+
+	if (click === 'expand')
 		return {
-			component: 'div',
+			...DEFAULT_CELL_WRAPPER,
 			on: {
 				click: () => {
 					row.toggleExpanded()
@@ -30,15 +35,18 @@ export const getCellWrapComponent = (
 			},
 		}
 
-	if (clickBehavior.component === null)
+	if (click.component === null)
 		return {
-			component: 'div',
+			...DEFAULT_CELL_WRAPPER,
 			on: {
 				click: () => {
-					void clickBehavior.onClick()
+					void click.onClick()
 				},
 			},
 		}
 
-	return clickBehavior
+	return {
+		...click,
+		class: ['kt-table-cell-content'],
+	}
 }

@@ -1,5 +1,6 @@
 import { inject, provide, type Ref } from 'vue'
 
+import type { KottiFieldText } from '../../kotti-field-text/types'
 import type { KottiTable } from '../table/types'
 import type { AnyRow } from '../table/types'
 
@@ -10,6 +11,7 @@ export type StandardTableContext<
 	COLUMN_IDS extends string = string,
 > = Ref<{
 	internal: {
+		appliedFilters: KottiStandardTable.AppliedFilter[]
 		columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 		filters: KottiStandardTable.FilterInternal[]
 		getFilter: (
@@ -19,6 +21,9 @@ export type StandardTableContext<
 		options?: KottiStandardTable.Options
 		pageSizeOptions: number[]
 		paginationType: KottiStandardTable.PaginationType
+		searchValue: KottiFieldText.Value
+		setAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => void
+		setSearchValue: (value: KottiFieldText.Value) => void
 	}
 }>
 

@@ -108,9 +108,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 
-import type { KottiFieldText } from '../kotti-field-text/types'
 import { makeProps } from '../make-props'
 
 import TableColumns from './standard-table/components/Columns.vue'
@@ -142,8 +141,12 @@ export default defineComponent({
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = useTableContext(props.tableId)
 
-		const appliedFilters = ref<KottiStandardTable.AppliedFilter[]>([])
-		const searchValue = ref<KottiFieldText.Value>(null)
+		const appliedFilters = computed(
+			() => standardTableContext.value.internal.appliedFilters,
+		)
+		const searchValue = computed(
+			() => standardTableContext.value.internal.searchValue,
+		)
 
 		const filters = computed(() => standardTableContext.value.internal.filters)
 		const table = computed(() => tableContext.value.internal.table.value)
@@ -217,7 +220,7 @@ export default defineComponent({
 				tableContext.value.internal.table.value.toggleAllColumnsVisible()
 			},
 			onUpdateAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => {
-				appliedFilters.value = value
+				standardTableContext.value.internal.setAppliedFilters(value)
 			},
 			onUpdateColumnVisivility: (
 				value: KottiStandardTable.TableColumns.Props['value'],
@@ -230,8 +233,8 @@ export default defineComponent({
 			onUpdatePageSize: (value: number) => {
 				table.value.setPageSize(value)
 			},
-			onUpdateSearchValue: (value: KottiFieldText.Value) => {
-				searchValue.value = value
+			onUpdateSearchValue: (value: string | null) => {
+				standardTableContext.value.internal.setSearchValue(value)
 			},
 			options,
 			pageIndex: computed(() => tablePagination.value.pageIndex),

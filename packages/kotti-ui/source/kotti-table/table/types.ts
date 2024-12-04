@@ -18,6 +18,7 @@ export type GetRowBehavior<
 	actions?: {
 		dataTest?: string
 		icon: z.input<typeof yocoIconSchema>
+		isDisabled?: boolean
 		onClick: () => Promise<void> | void
 	}[]
 	classes?: string[]
@@ -46,7 +47,7 @@ export type GetRowBehavior<
 					}
 				: { props?: Record<string, unknown> }))
 	disable?: {
-		// actions/canHover: { icon: Yoco.Icon; onClick: () => Promise<void> | void }[]
+		actions: boolean
 		click: boolean
 		expand: boolean
 		select: boolean
@@ -63,7 +64,7 @@ export module KottiTable {
 		// TODO: consider not exporting schemas
 		// TODO: truncate text, ask how default behavior
 		// TODO (nice-to-have): attachments, needs design
-		// TODO (nice-to-have): image, array of urls as data, needs render functions
+		// TODO (nice-to-have): image, array of urls as data
 		// TODO (nice-to-have): tuples with separator (e.g. "1234 x 23")
 		z
 			.object({
@@ -124,21 +125,21 @@ export module KottiTable {
 					isNumeric: boolean
 					type: 'custom'
 				}
-				getData: (row: ROW) => VNode | string | null
+				getData: (row: ROW) => VNode | VNode[] | string | null
 		  }
 		| {
 				display: { type: 'boolean' }
-				getData: (row: ROW) => boolean
+				getData: (row: ROW) => boolean | null
 		  }
 		| {
 				display: { type: 'date' } | { type: 'date-time' } | { type: 'text' }
-				getData: (row: ROW) => string
+				getData: (row: ROW) => string | null
 		  }
 		| {
 				display:
 					| { decimalPlaces: number; type: 'numerical' }
 					| { type: 'integer' }
-				getData: (row: ROW) => number
+				getData: (row: ROW) => number | null
 		  }
 
 	export type Column<

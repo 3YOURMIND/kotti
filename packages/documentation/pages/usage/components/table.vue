@@ -103,6 +103,7 @@ export default defineComponent({
 	},
 	setup() {
 		const booleanFlags = ref({
+			hasDragAndDrop: false,
 			isEmpty: false,
 			isExpandable: true,
 			isLoading: false,
@@ -188,6 +189,13 @@ export default defineComponent({
 					label: 'age (click disabled)',
 				},
 				{
+					display: { type: 'boolean' },
+					getData: (row: TableRow) => row.isAlive,
+					id: 'isAlive',
+					isSortable: true,
+					label: 'Aliveness',
+				},
+				{
 					display: {
 						align: 'right',
 						disableCellClick: false,
@@ -228,13 +236,6 @@ export default defineComponent({
 					id: 'purpose',
 					isSortable: true,
 					label: 'Primary Purpose',
-				},
-				{
-					display: { type: 'boolean' },
-					getData: (row: TableRow) => row.isAlive,
-					id: 'isAlive',
-					isSortable: true,
-					label: 'Aliveness',
 				},
 				{
 					display: { type: 'text' },
@@ -340,13 +341,16 @@ export default defineComponent({
 									{
 										dataTest: `download-test-data-${rowIndex}`,
 										icon: 'download',
+										isDisabled: true,
 										onClick: () => {
+											// eslint-disable-next-line no-alert
 											window.alert('download icon clicked')
 										},
 									},
 									{
 										icon: 'send',
 										onClick: () => {
+											// eslint-disable-next-line no-alert
 											window.alert('send icon clicked')
 										},
 									},
@@ -355,13 +359,14 @@ export default defineComponent({
 					classes: [], //rowIndex % 2 === 0 ? ['everything-red'] : [],
 					click: clickBehaviorValue.value,
 					disable: {
-						click: false,
-						expand: rowIndex % 2 === 0,
-						select: false,
+						actions: false,
+						click: rowIndex === 1,
+						expand: rowIndex === 1,
+						select: rowIndex === 1,
 					},
 					id: String(row.id),
 				}),
-				hasDragAndDrop: true,
+				hasDragAndDrop: booleanFlags.value.hasDragAndDrop,
 				id: 'example',
 				isExpandable: booleanFlags.value.isExpandable,
 				isSelectable: booleanFlags.value.isSelectable,
@@ -370,10 +375,10 @@ export default defineComponent({
 
 		// globalThis.table = tableHook
 
-		watch(tableHook.ordering, () => {
+		watch(tableHook.api.ordering, () => {
 			try {
 				// eslint-disable-next-line no-console
-				console.log(JSON.stringify(tableHook.ordering.value))
+				console.log(JSON.stringify(tableHook.api.ordering.value))
 			} catch (error) {
 				// eslint-disable-next-line no-console
 				console.error(error)
@@ -386,24 +391,29 @@ export default defineComponent({
 			component: KtTable,
 			counter,
 			emptySelection: () => {
-				tableHook.rowSelection.value = {}
+				tableHook.api.selectedRows.value = {}
 			},
 			shuffleHiddenColumns: () => {
 				const ONE_HALF = 0.5
-				tableHook.hiddenColumns.value = new Set(
+				tableHook.api.hiddenColumns.value = new Set(
 					columns.value
 						.map((column) => column.id)
 						.filter(() => Math.random() < ONE_HALF),
 				)
 			},
 			reverseColumnOrder: () => {
-				tableHook.columnOrder.value = tableHook.columnOrder.value.reverse()
+				tableHook.api.columnOrder.value =
+					tableHook.api.columnOrder.value.reverse()
 			},
 			showAllColumns: () => {
-				tableHook.hiddenColumns.value = new Set()
+				tableHook.api.hiddenColumns.value = new Set()
 			},
 			table: tableHook,
 			toggleGroupOptions: computed(() => [
+				{
+					key: 'hasDragAndDrop',
+					label: 'table has drag and drop',
+				},
 				{
 					key: 'isExpandable',
 					label: 'table is expandable',

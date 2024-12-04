@@ -405,6 +405,7 @@ export default defineComponent({
 					pageSizeOptions: [5, 10, 15, 20],
 					type: Kotti.StandardTable.PaginationType.LOCAL,
 				},
+				storageAdapter: null,
 				table: {
 					columns: todosColumns.value,
 					data: todosData.value,
@@ -427,6 +428,7 @@ export default defineComponent({
 					rowCount: recipesRowCount.value,
 					type: Kotti.StandardTable.PaginationType.REMOTE,
 				},
+				storageAdapter: null,
 				table: {
 					columns: recipesColumns.value,
 					data: recipesData.value,

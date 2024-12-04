@@ -13,7 +13,7 @@ import {
 	getExpandedRowModel,
 	getPaginationRowModel,
 } from '@tanstack/table-core'
-import { computed, h, ref, type Ref, watch } from 'vue'
+import { computed, h, ref, type Ref } from 'vue'
 import { z } from 'zod'
 
 import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
@@ -23,7 +23,8 @@ import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 
 import { resolveColumnDisplay } from './column'
 import { type TableContext, useProvideTableContext } from './context'
-import { useState, useVueTable } from './tanstack-table'
+import { useVueTable } from './tanstack-table'
+import { useComputedRef } from './todo'
 import type { GetRowBehavior } from './types'
 import type { AnyRow } from './types'
 import { KottiTable } from './types'
@@ -69,6 +70,7 @@ export const paramsSchema = z
 								.object({
 									dataTest: z.string().optional(),
 									icon: yocoIconSchema,
+									isDisabled: z.boolean().optional(),
 									onClick: z
 										.function()
 										.args()
@@ -102,6 +104,7 @@ export const paramsSchema = z
 						.optional(),
 					disable: z
 						.object({
+							actions: z.boolean(),
 							click: z.boolean(),
 							expand: z.boolean(),
 							select: z.boolean(),
@@ -122,10 +125,13 @@ export const paramsSchema = z
 export const useKottiTable = <ROW extends AnyRow>(
 	_params: KottiTableParameter<ROW>,
 ): {
-	columnOrder: Ref<string[]>
-	hiddenColumns: Ref<Set<string>>
-	ordering: Ref<KottiTable.Ordering[]>
-	rowSelection: Ref<RowSelectionState>
+	api: {
+		columnOrder: Ref<string[]>
+		hiddenColumns: Ref<Set<string>>
+		ordering: Ref<KottiTable.Ordering[]>
+		pagination: Ref<KottiTable.Pagination['state']>
+		selectedRows: Ref<RowSelectionState>
+	}
 	tableContext: TableContext<ROW>
 } => {
 	const params = computed(() => paramsSchema.parse(_params.value))
@@ -136,41 +142,107 @@ export const useKottiTable = <ROW extends AnyRow>(
 		() => new Set(params.value.columns.map((c) => c.id)),
 	)
 
-	const ordering = ref<KottiTable.Ordering[]>([])
-	const columnOrderInternal = ref<string[]>([
-		EXPANSION_COLUMN_ID,
-		SELECTION_COLUMN_ID,
-		...params.value.columns.map(({ id }) => id),
-	])
-	// const hasActionSlot = ref(false)
-
-	// watch(
-	// 	() => params,
-	// 	() => {
-	// 		columnOrderInternal.value = [
-	// 			...(params.value.isExpandable ? [EXPANSION_COLUMN_ID] : []),
-	// 			...(params.value.selection ? [SELECTION_COLUMN_ID] : []),
-	// 			...columnOrderInternal.value.filter(
-	// 				(columnId) =>
-	// 					![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(columnId),
-	// 			),
-	// 		]
-	// 	},
-	// 	{ immediate: true },
-	// )
-
-	// TODO: should we do this
-	const [pagination, setPagination] = useState<PaginationState>(
-		params.value.pagination?.state ?? {
-			pageIndex: 0,
-			pageSize: 10,
+	const columnOrder = useComputedRef<string[]>({
+		get: (value) => value.toSpliced(0, ARRAY_START),
+		set: (value) => {
+			const newValue = [EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID]
+			// Drop unknown columns from outside value
+			for (const columnId of value) {
+				if (columnIdSet.value.has(columnId)) {
+					newValue.push(columnId)
+				} else {
+					// eslint-disable-next-line no-console
+					console.warn(`useKottiTable: dropped unknown column "${columnId}"`)
+				}
+			}
+			// Append missing column ids
+			for (const column of params.value.columns) {
+				if (!newValue.includes(column.id)) {
+					newValue.push(column.id)
+				}
+			}
+			return newValue
 		},
-	)
-	const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
-	const [sorting, setSorting] = useState<SortingState>([])
-	const [visibilityState, setVisibiltyState] = useState<VisibilityState>(
-		Object.fromEntries(params.value.columns.map((column) => [column.id, true])),
-	)
+		value: ref([
+			EXPANSION_COLUMN_ID,
+			SELECTION_COLUMN_ID,
+			...params.value.columns.map(({ id }) => id),
+		]),
+	})
+
+	const pagination = useComputedRef<PaginationState>({
+		get: (value) => value,
+		set: (value) => {
+			const currentRow = value.pageIndex * value.pageSize
+			// @ts-expect-error TODO: fix pagination api
+			if (currentRow > params.value.pagination?.rowCount) {
+				return {
+					...value,
+					pageIndex: 0,
+				}
+			}
+			return value
+		},
+		value: ref(
+			params.value.pagination?.state ?? {
+				pageIndex: 0,
+				pageSize: 10,
+			},
+		),
+	})
+
+	const selectedRows = useComputedRef<RowSelectionState>({
+		get: (value) => value,
+		set: (value) => value,
+		value: ref({}),
+	})
+
+	const ordering = useComputedRef<SortingState, KottiTable.Ordering[]>({
+		get(value) {
+			return value.map((sorting) => ({
+				id: sorting.id,
+				value: sorting.desc ? ('descending' as const) : ('ascending' as const),
+			}))
+		},
+		set(value) {
+			return (
+				value
+					// Remove entries that do not have a valid column
+					.filter((sorting) => columnIdSet.value.has(sorting.id))
+					.map((sorting) => ({
+						desc: sorting.value === 'descending',
+						id: sorting.id,
+					}))
+			)
+		},
+		value: ref([]),
+	})
+
+	const hiddenColumns = useComputedRef<VisibilityState, Set<string>>({
+		get: (value) => {
+			const result = new Set<string>()
+
+			for (const id of columnIdSet.value) {
+				if (value[id] === false) result.add(id)
+			}
+
+			return result
+		},
+		set: (newSet) => {
+			const newVisibilityState: VisibilityState = {}
+
+			for (const id of columnIdSet.value) {
+				newVisibilityState[id] = !newSet.has(id)
+			}
+
+			return newVisibilityState
+		},
+		value: ref(
+			Object.fromEntries(
+				params.value.columns.map((column) => [column.id, true]),
+			),
+		),
+	})
 
 	const draggedColumnIndex = ref<number | null>(null)
 	const dropTargetColumnIndex = ref<number | null>(null)
@@ -178,10 +250,10 @@ export const useKottiTable = <ROW extends AnyRow>(
 
 	const moveColumnTo = (fromIndex: number, toIndex: number): string[] => {
 		// console.log({ fromIndex, name: 'moveColumnTo', toIndex })
-		const droppedColumnId = columnOrderInternal.value[fromIndex]
+		const droppedColumnId = columnOrder.tanstackGetter()[fromIndex]
 		if (!droppedColumnId) throw new Error('index is out of bound')
 
-		const spliced = columnOrderInternal.value.toSpliced(fromIndex, 1)
+		const spliced = columnOrder.tanstackGetter().toSpliced(fromIndex, 1)
 		spliced.splice(
 			toIndex > fromIndex ? toIndex - 1 : toIndex,
 			0,
@@ -191,16 +263,6 @@ export const useKottiTable = <ROW extends AnyRow>(
 		successfullyDroppedColumnId.value = droppedColumnId
 		return spliced
 	}
-
-	watch(
-		() => sorting.value,
-		() => {
-			ordering.value = sorting.value.map((x) => ({
-				id: x.id,
-				value: x.desc ? 'descending' : 'ascending',
-			}))
-		},
-	)
 
 	const table = useVueTable<ROW>(
 		computed(() => ({
@@ -322,7 +384,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 					: []),
 				...params.value.columns.map((column) => {
 					const columnDisplay = resolveColumnDisplay(column.display)
-					const index = columnOrderInternal.value.indexOf(column.id)
+					const index = columnOrder.tanstackGetter().indexOf(column.id)
 
 					// TODO: The alignmentClass generation is a bit complex. You could simplify this by directly joining classes without filtering when boolean values are true, or consider a helper function to manage conditional classes. — ChatGippety
 					const getCellClasses = (
@@ -336,7 +398,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 							index === dropTargetColumnIndex.value,
 						'kt-table-cell--has-drop-indicator-right':
 							index + 1 === dropTargetColumnIndex.value &&
-							columnOrderInternal.value.length - 1 === index,
+							columnOrder.tanstackGetter().length - 1 === index,
 						'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
 						'kt-table-cell--was-successfully-dropped':
 							column.id === successfullyDroppedColumnId.value,
@@ -401,39 +463,24 @@ export const useKottiTable = <ROW extends AnyRow>(
 				params.value.getRowBehavior({ row, rowIndex }).id,
 			manualPagination:
 				params.value.pagination?.type === KottiTable.PaginationType.REMOTE,
-			onColumnVisibilityChange: setVisibiltyState,
-			onPaginationChange: params.value.pagination ? setPagination : undefined,
-			onRowSelectionChange: setRowSelection,
-			// onRowSelectionChange: (updateOrValue) => {
-			// 	if (!params.selection) throw new Error('no selection available')
-
-			// 	const updatedSelection =
-			// 		typeof updateOrValue === 'function'
-			// 			? updateOrValue(params.selection.selectedRows.value)
-			// 			: updateOrValue
-			// 	params.selection.selectedRows.value = updatedSelection
-			// },
-			onSortingChange: setSorting,
-			// onSortingChange: (_x) => {
-			// 	ordering.value = tryUpdater(_x).map((x) => ({
-			// 		id: x.id,
-			// 		value: x.desc ? 'descending' : 'ascending',
-			// 	}))
-			// },
+			onColumnVisibilityChange: hiddenColumns.tanstackSetter,
+			onPaginationChange: params.value.pagination
+				? pagination.tanstackSetter
+				: undefined,
+			onRowSelectionChange: selectedRows.tanstackSetter,
+			onSortingChange: ordering.tanstackSetter,
 			rowCount:
 				params.value.pagination?.type === KottiTable.PaginationType.REMOTE
 					? params.value.pagination.rowCount
 					: undefined,
 			state: {
-				columnOrder: columnOrderInternal.value,
-				columnVisibility: visibilityState.value,
-				pagination: params.value.pagination ? pagination.value : undefined,
-				rowSelection: rowSelection.value,
-				sorting: sorting.value,
-				// sorting: ordering.value.map((x) => ({
-				// 	desc: x.value === 'descending',
-				// 	id: x.id,
-				// })),
+				columnOrder: columnOrder.tanstackGetter(),
+				columnVisibility: hiddenColumns.tanstackGetter(),
+				pagination: params.value.pagination
+					? pagination.tanstackGetter()
+					: undefined,
+				rowSelection: selectedRows.tanstackGetter(),
+				sorting: ordering.tanstackGetter(),
 			},
 		})),
 	)
@@ -441,7 +488,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 	const tableContext: TableContext<ROW> = computed(() => ({
 		internal: {
 			getColumnIndex: (columnId: string) => {
-				return columnOrderInternal.value.indexOf(columnId)
+				return columnOrder.tanstackGetter().indexOf(columnId)
 			},
 			getOrdering: () => {
 				return ordering.value
@@ -463,9 +510,8 @@ export const useKottiTable = <ROW extends AnyRow>(
 				)
 					return
 
-				columnOrderInternal.value = moveColumnTo(
-					draggedColumnIndex.value,
-					dropTargetColumnIndex.value,
+				columnOrder.tanstackSetter(
+					moveColumnTo(draggedColumnIndex.value, dropTargetColumnIndex.value),
 				)
 			},
 			table,
@@ -474,38 +520,13 @@ export const useKottiTable = <ROW extends AnyRow>(
 	useProvideTableContext<ROW>(params.value.id, tableContext)
 
 	return {
-		columnOrder: computed({
-			get: () => columnOrderInternal.value.toSpliced(0, ARRAY_START),
-			set: (value) => {
-				columnOrderInternal.value = [
-					EXPANSION_COLUMN_ID,
-					SELECTION_COLUMN_ID,
-					...value,
-				]
-			},
-		}),
-		hiddenColumns: computed({
-			get: () => {
-				const result = new Set<string>()
-
-				for (const id of columnIdSet.value) {
-					if (visibilityState.value[id] === false) result.add(id)
-				}
-
-				return result
-			},
-			set: (newSet) => {
-				const newVisibilityState: VisibilityState = {}
-
-				for (const id of columnIdSet.value) {
-					newVisibilityState[id] = !newSet.has(id)
-				}
-
-				visibilityState.value = newVisibilityState
-			},
-		}),
-		ordering,
-		rowSelection, // TODO: rename
+		api: {
+			columnOrder,
+			hiddenColumns,
+			ordering,
+			pagination,
+			selectedRows,
+		},
 		tableContext,
 	}
 }
