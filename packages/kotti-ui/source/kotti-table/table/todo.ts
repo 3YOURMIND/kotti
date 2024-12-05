@@ -1,7 +1,7 @@
 import type { Ref, WritableComputedRef } from 'vue'
 import { computed, ref } from 'vue'
 
-type ReactStyleUpdater<INTERNAL_VALUE> = (
+export type ReactStyleUpdater<INTERNAL_VALUE> = (
 	updater: INTERNAL_VALUE | ((prevState: INTERNAL_VALUE) => INTERNAL_VALUE),
 ) => void
 

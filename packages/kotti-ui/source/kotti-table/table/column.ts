@@ -1,6 +1,8 @@
+import { VNode } from 'vue'
+
 import type { KottiI18n } from '../../kotti-i18n/types'
 
-import type { KottiTable } from './types'
+import type { AnyRow, KottiTable } from './types'
 
 type ResolvedColumnDisplay<OPTIONS extends Record<string, unknown>> = {
 	align: 'center' | 'left' | 'right'
@@ -12,7 +14,7 @@ type ResolvedColumnDisplay<OPTIONS extends Record<string, unknown>> = {
 					numberFormat: KottiI18n.NumberFormat
 					options: OPTIONS
 				},
-		  ) => string | null)
+		  ) => VNode | string | null)
 		| null
 	isNumeric: boolean
 }
@@ -69,14 +71,17 @@ const text: ResolvedColumnDisplay<Record<string, never>> = {
 const columnDisplayMap = {
 	boolean,
 	date,
-	datetime,
+	'date-time': datetime,
 	integer,
 	numerical,
 	text,
 }
 
-export const resolveColumnDisplay = <OPTIONS extends Record<string, unknown>>(
-	display: KottiTable.ColumnDisplay,
+export const resolveColumnDisplay = <
+	ROW extends AnyRow,
+	OPTIONS extends Record<string, unknown>,
+>(
+	display: KottiTable.Column<ROW>['display'],
 ): ResolvedColumnDisplay<OPTIONS> => {
 	if (display.type === 'custom') return display
 

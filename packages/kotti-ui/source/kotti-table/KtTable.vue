@@ -75,16 +75,18 @@
 								:class="cell.wrapComponent.class"
 								v-on="cell.wrapComponent.on"
 							>
-								<slot
+								<!-- <slot
 									v-if="cell.hasSlot"
 									:columnIndex="cellIndex"
 									:data="cell.data"
 									:name="cell.columnId"
 									:row="row.original"
 									:rowIndex="rowIndex"
-								/>
-								<FlexRender
+
+									...
 									v-else
+								/> -->
+								<FlexRender
 									:props="{ ...cell.getContext() }"
 									:render="cell.column.columnDef.cell"
 								/>
@@ -260,9 +262,9 @@ export default defineComponent({
 										'',
 							dataTest: `kt-table-row-${row.id}-column-${cell.column.id}`,
 							getContext: cell.getContext,
-							hasSlot:
-								Boolean(slots[cell.column.id]) &&
-								cell.column.columnDef.meta.type === 'custom',
+							// hasSlot:
+							// 	Boolean(slots[cell.column.id]) &&
+							// 	cell.column.columnDef.meta.type === 'custom',
 							id: cell.id,
 							key: cell.id,
 							wrapComponent: cell.column.columnDef.meta.disableCellClick

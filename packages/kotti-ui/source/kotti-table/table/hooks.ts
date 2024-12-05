@@ -4,7 +4,6 @@ import type {
 	HeaderContext,
 	PaginationState,
 	RowSelectionState,
-	SortingState,
 	VisibilityState,
 } from '@tanstack/table-core'
 import {
@@ -24,7 +23,7 @@ import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 import { resolveColumnDisplay } from './column'
 import { type TableContext, useProvideTableContext } from './context'
 import { useVueTable } from './tanstack-table'
-import { useComputedRef } from './todo'
+import { ReactStyleUpdater, useComputedRef } from './todo'
 import type { GetRowBehavior } from './types'
 import type { AnyRow } from './types'
 import { KottiTable } from './types'
@@ -33,10 +32,20 @@ export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
 export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
 export const ARRAY_START = 2
 
+export type SortingState<COLUMN_ID extends string = string> = {
+	desc: boolean
+	id: COLUMN_ID
+}[]
+
+type InternalColumnId<COLUMN_ID extends string = string> =
+	| COLUMN_ID
+	| typeof EXPANSION_COLUMN_ID
+	| typeof SELECTION_COLUMN_ID
+
 export type KottiTableParameter<
 	ROW extends AnyRow,
 	COLUMN_IDS extends string = string,
-> = Ref<{
+> = {
 	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 	data: ROW[]
 	getRowBehavior: GetRowBehavior<ROW>
@@ -49,7 +58,7 @@ export type KottiTableParameter<
 	// selectedRows: Ref<Record<string, boolean>>
 	//}
 	pagination?: KottiTable.Pagination
-}>
+}
 
 export const paramsSchema = z
 	.object({
@@ -122,30 +131,39 @@ export const paramsSchema = z
 	.strict()
 
 // TODO: check for Exclude<> issue with generic
-export const useKottiTable = <ROW extends AnyRow>(
-	_params: KottiTableParameter<ROW>,
+export const useKottiTable = <
+	ROW extends AnyRow,
+	COLUMN_ID extends string = string,
+>(
+	_params: Ref<KottiTableParameter<ROW, COLUMN_ID>>,
 ): {
 	api: {
-		columnOrder: Ref<string[]>
-		hiddenColumns: Ref<Set<string>>
-		ordering: Ref<KottiTable.Ordering[]>
+		columnOrder: Ref<COLUMN_ID[]>
+		hiddenColumns: Ref<Set<COLUMN_ID>>
+		ordering: Ref<KottiTable.Ordering<COLUMN_ID>[]>
 		pagination: Ref<KottiTable.Pagination['state']>
 		selectedRows: Ref<RowSelectionState>
 	}
 	tableContext: TableContext<ROW>
 } => {
-	const params = computed(() => paramsSchema.parse(_params.value))
+	const params = computed(
+		() =>
+			paramsSchema.parse(_params.value) as KottiTableParameter<ROW, COLUMN_ID>,
+	)
 	const columnHelper = createColumnHelper<ROW>()
 	const i18nContext = useI18nContext()
 
-	const columnIdSet = computed<Set<string>>(
+	const columnIdSet = computed<Set<COLUMN_ID>>(
 		() => new Set(params.value.columns.map((c) => c.id)),
 	)
 
-	const columnOrder = useComputedRef<string[]>({
-		get: (value) => value.toSpliced(0, ARRAY_START),
+	const columnOrder = useComputedRef<InternalColumnId[], COLUMN_ID[]>({
+		get: (value) => value.toSpliced(0, ARRAY_START) as COLUMN_ID[],
 		set: (value) => {
-			const newValue = [EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID]
+			const newValue: InternalColumnId[] = [
+				EXPANSION_COLUMN_ID,
+				SELECTION_COLUMN_ID,
+			]
 			// Drop unknown columns from outside value
 			for (const columnId of value) {
 				if (columnIdSet.value.has(columnId)) {
@@ -197,7 +215,10 @@ export const useKottiTable = <ROW extends AnyRow>(
 		value: ref({}),
 	})
 
-	const ordering = useComputedRef<SortingState, KottiTable.Ordering[]>({
+	const ordering = useComputedRef<
+		SortingState<COLUMN_ID>,
+		KottiTable.Ordering<COLUMN_ID>[]
+	>({
 		get(value) {
 			return value.map((sorting) => ({
 				id: sorting.id,
@@ -218,9 +239,9 @@ export const useKottiTable = <ROW extends AnyRow>(
 		value: ref([]),
 	})
 
-	const hiddenColumns = useComputedRef<VisibilityState, Set<string>>({
+	const hiddenColumns = useComputedRef<VisibilityState, Set<COLUMN_ID>>({
 		get: (value) => {
-			const result = new Set<string>()
+			const result = new Set<COLUMN_ID>()
 
 			for (const id of columnIdSet.value) {
 				if (value[id] === false) result.add(id)
@@ -423,7 +444,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 							cellClasses: getCellClasses('body'),
 							disableCellClick: columnDisplay.disableCellClick,
 							headerClasses: getCellClasses('header'),
-							type: column.display.type,
+							// type: column.display.type,
 						},
 					})
 				}),
@@ -468,7 +489,7 @@ export const useKottiTable = <ROW extends AnyRow>(
 				? pagination.tanstackSetter
 				: undefined,
 			onRowSelectionChange: selectedRows.tanstackSetter,
-			onSortingChange: ordering.tanstackSetter,
+			onSortingChange: ordering.tanstackSetter as ReactStyleUpdater<unknown>,
 			rowCount:
 				params.value.pagination?.type === KottiTable.PaginationType.REMOTE
 					? params.value.pagination.rowCount

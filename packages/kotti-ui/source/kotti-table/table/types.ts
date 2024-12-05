@@ -116,16 +116,16 @@ export module KottiTable {
 	 * Keep in sync with its schema
 	 * @see columnDisplaySchema
 	 */
-	type DataDisplay<ROW extends AnyRow> =
+	type DataDisplay<ROW extends AnyRow, DATA = unknown> =
 		| {
 				display: {
 					align: 'center' | 'left' | 'right'
 					disableCellClick: boolean
-					formatter?: unknown
+					formatter: (args: DATA) => VNode | string | null
 					isNumeric: boolean
 					type: 'custom'
 				}
-				getData: (row: ROW) => VNode | VNode[] | string | null
+				getData: (row: ROW) => DATA
 		  }
 		| {
 				display: { type: 'boolean' }
@@ -161,8 +161,8 @@ export module KottiTable {
 			.strict(),
 	)
 
-	export type Ordering = {
-		id: string
+	export type Ordering<COLUMN_ID extends string = string> = {
+		id: COLUMN_ID
 		value: 'ascending' | 'descending'
 	}
 

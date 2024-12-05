@@ -39,6 +39,7 @@
 		<!-- TODO: should not reuse `id` -->
 		<KtTable class="mb-4" :isLoading="booleanFlags.isLoading" tableId="example">
 			<template #actions> I am a nice action </template>
+			<template #mycolumnid> costum content </template>
 			<template
 				v-if="booleanFlags.isEmpty && booleanFlags.showEmptySlot"
 				#empty
@@ -174,16 +175,16 @@ export default defineComponent({
 					display: {
 						align: 'left',
 						disableCellClick: true,
-						formatter: null,
+						formatter: (row: TableRow) =>
+							h('div', {}, [
+								h('em', { style: { color: 'green' } }, row.id),
+								` ${row.name} is `,
+								h('b', {}, row.age),
+							]),
 						isNumeric: false,
 						type: 'custom',
 					},
-					getData: (row: TableRow) =>
-						h('div', {}, [
-							h('em', { style: { color: 'green' } }, row.id),
-							` ${row.name} is `,
-							h('b', {}, row.age),
-						]),
+					getData: (row: TableRow) => row,
 					id: 'age',
 					isSortable: true,
 					label: 'age (click disabled)',

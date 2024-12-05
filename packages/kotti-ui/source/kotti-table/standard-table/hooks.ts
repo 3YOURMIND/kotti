@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual.js'
-import type { Ref, UnwrapRef } from 'vue'
+import type { Ref } from 'vue'
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import { z } from 'zod'
 
@@ -32,10 +32,7 @@ type KottiStandardTableParameters<
 	options?: KottiStandardTable.Options
 	pagination: KottiStandardTable.Pagination
 	storageAdapter: KottiStandardTableStorage | null
-	table: Omit<
-		UnwrapRef<KottiTableParameter<ROW, COLUMN_IDS>>,
-		'id' | 'pagination'
-	>
+	table: Omit<KottiTableParameter<ROW, COLUMN_IDS>, 'id' | 'pagination'>
 }>
 
 const _paramsSchema = z.object({
