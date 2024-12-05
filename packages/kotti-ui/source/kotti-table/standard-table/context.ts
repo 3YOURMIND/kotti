@@ -1,7 +1,7 @@
 import { inject, provide, type Ref } from 'vue'
 
 import type { KottiFieldText } from '../../kotti-field-text/types'
-import type { KottiTable } from '../table/types'
+import { type MappedColumn } from '../table/column-helper'
 import type { AnyRow } from '../table/types'
 
 import type { KottiStandardTable } from './types'
@@ -12,7 +12,7 @@ export type StandardTableContext<
 > = Ref<{
 	internal: {
 		appliedFilters: KottiStandardTable.AppliedFilter[]
-		columns: KottiTable.Column<ROW, COLUMN_IDS>[]
+		columns: MappedColumn<ROW, COLUMN_IDS>[]
 		filters: KottiStandardTable.FilterInternal[]
 		getFilter: (
 			id: KottiStandardTable.FilterInternal['id'],

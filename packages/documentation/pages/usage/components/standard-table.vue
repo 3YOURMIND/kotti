@@ -396,48 +396,48 @@ export default defineComponent({
 				: []),
 		])
 
-		useKottiStandardTable<TodoRow>(
-			computed(() => ({
-				id: 'example-local-data',
-				pagination: {
-					pageSize: 5,
-					// eslint-disable-next-line no-magic-numbers
-					pageSizeOptions: [5, 10, 15, 20],
-					type: Kotti.StandardTable.PaginationType.LOCAL,
-				},
-				storageAdapter: null,
-				table: {
-					columns: todosColumns.value,
-					data: todosData.value,
-					getRowBehavior: ({ row }: { row: TodoRow }) => ({
-						id: String(row.id),
-					}),
-				},
-			})),
-		)
+		// useKottiStandardTable<TodoRow>(
+		// 	computed(() => ({
+		// 		id: 'example-local-data',
+		// 		pagination: {
+		// 			pageSize: 5,
+		// 			// eslint-disable-next-line no-magic-numbers
+		// 			pageSizeOptions: [5, 10, 15, 20],
+		// 			type: Kotti.StandardTable.PaginationType.LOCAL,
+		// 		},
+		// 		storageAdapter: null,
+		// 		table: {
+		// 			columns: todosColumns.value,
+		// 			data: todosData.value,
+		// 			getRowBehavior: ({ row }: { row: TodoRow }) => ({
+		// 				id: String(row.id),
+		// 			}),
+		// 		},
+		// 	})),
+		// )
 
-		useKottiStandardTable<RecipeRow>(
-			computed(() => ({
-				filters: filters.value,
-				id: 'example-remote-data',
-				isLoading: isLoadingRecipes.value,
-				pagination: {
-					pageSize: 5,
-					// eslint-disable-next-line no-magic-numbers
-					pageSizeOptions: [5, 10, 15, 30, 50, 100],
-					rowCount: recipesRowCount.value,
-					type: Kotti.StandardTable.PaginationType.REMOTE,
-				},
-				storageAdapter: null,
-				table: {
-					columns: recipesColumns.value,
-					data: recipesData.value,
-					getRowBehavior: ({ row }: { row: RecipeRow }) => ({
-						id: String(row.id),
-					}),
-				},
-			})),
-		)
+		// useKottiStandardTable<RecipeRow>(
+		// 	computed(() => ({
+		// 		filters: filters.value,
+		// 		id: 'example-remote-data',
+		// 		isLoading: isLoadingRecipes.value,
+		// 		pagination: {
+		// 			pageSize: 5,
+		// 			// eslint-disable-next-line no-magic-numbers
+		// 			pageSizeOptions: [5, 10, 15, 30, 50, 100],
+		// 			rowCount: recipesRowCount.value,
+		// 			type: Kotti.StandardTable.PaginationType.REMOTE,
+		// 		},
+		// 		storageAdapter: null,
+		// 		table: {
+		// 			columns: recipesColumns.value,
+		// 			data: recipesData.value,
+		// 			getRowBehavior: ({ row }: { row: RecipeRow }) => ({
+		// 				id: String(row.id),
+		// 			}),
+		// 		},
+		// 	})),
+		// )
 
 		return {
 			component: KtStandardTable,

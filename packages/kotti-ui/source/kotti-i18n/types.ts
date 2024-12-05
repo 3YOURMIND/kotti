@@ -10,6 +10,7 @@ import type { KottiFilters } from '../kotti-filters/types'
 import type { KottiFormSubmit } from '../kotti-form-submit/types'
 import type { KottiNavbar } from '../kotti-navbar/types'
 import type { KottiStandardTable } from '../kotti-table/standard-table/types'
+import type { KottiTable } from '../kotti-table/table/types'
 import type { KottiValueLabel } from '../kotti-value-label/types'
 import { DecimalSeparator } from '../types/decimal-separator'
 
@@ -22,6 +23,13 @@ export module KottiI18n {
 		locale: Ref<SupportedLanguages>
 		messages: Ref<Messages>
 		numberFormat: Ref<NumberFormat>
+	}
+
+	export type ContextInternal = {
+		currencyMap: CurrencyMap
+		locale: SupportedLanguages
+		messages: Messages
+		numberFormat: NumberFormat
 	}
 
 	export type CurrencyMap = Record<
@@ -46,6 +54,7 @@ export module KottiI18n {
 		KtFormSubmit: KottiFormSubmit.Translations
 		KtNavbar: KottiNavbar.Translations
 		KtStandardTable: KottiStandardTable.Translations
+		KtTable: KottiTable.Translations
 		KtValueLabel: KottiValueLabel.Translations
 	}
 

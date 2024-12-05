@@ -61,7 +61,7 @@
 				<template v-for="(row, rowIndex) in bodyRows" v-else>
 					<tr :key="row.key" :class="row.classes">
 						<td
-							v-for="(cell, cellIndex) in row.cells"
+							v-for="cell in row.cells"
 							:key="cell.key"
 							:class="cell.classes"
 							:data-test="cell.dataTest"
@@ -196,7 +196,7 @@ export default defineComponent({
 		FlexRender,
 	},
 	props: makeProps(KottiTable.propsSchema),
-	setup(props, { slots }) {
+	setup(props) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = useTableContext(props.tableId)
 
@@ -431,7 +431,7 @@ export default defineComponent({
 			background-color: var(--ui-01);
 
 			.kt-table-cell--is-header {
-				padding: var(--unit-2);
+				padding: 0.4rem 0.3rem;
 				font-size: var(--unit-3);
 				color: var(--gray-50);
 				text-transform: uppercase;
@@ -541,7 +541,7 @@ export default defineComponent({
 		}
 
 		.kt-table-cell {
-			padding: var(--unit-2);
+			padding: 0.4rem 0.3rem;
 
 			> .kt-table-cell-content {
 				display: flex;

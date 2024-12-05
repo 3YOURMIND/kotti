@@ -4,10 +4,16 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import KtStandardTableVue from './KtStandardTable.vue'
 import KtTableVue from './KtTable.vue'
-import { useKottiStandardTable as _useKottiStandardTable } from './standard-table/hooks'
 import { KottiStandardTable } from './standard-table/types'
-import { useKottiTable as _useKottiTable } from './table/hooks'
 import { KottiTable } from './table/types'
+
+export { useKottiStandardTable } from './standard-table/hooks'
+export {
+	createColumnContext,
+	getCustomDisplay,
+	getDisplay,
+} from './table/column-helper'
+export { useKottiTable } from './table/hooks'
 
 const TABLE_META: Kotti.Meta = {
 	addedVersion: '7.4.0',
@@ -82,10 +88,8 @@ const STANDARD_META: Kotti.Meta = {
 }
 
 export const KtTable = attachMeta(makeInstallable(KtTableVue), TABLE_META)
-export const useKottiTable = _useKottiTable
 
 export const KtStandardTable = attachMeta(
 	makeInstallable(KtStandardTableVue),
 	STANDARD_META,
 )
-export const useKottiStandardTable = _useKottiStandardTable

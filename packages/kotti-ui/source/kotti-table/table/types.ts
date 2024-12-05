@@ -3,8 +3,6 @@ import { z } from 'zod'
 
 import type { yocoIconSchema } from '@3yourmind/yoco'
 
-import { KottiI18n } from '../../kotti-i18n/types'
-
 // TODO: move somewhere else
 export type AnyRow = Record<string, unknown>
 
@@ -60,7 +58,7 @@ export module KottiTable {
 	 * Keep in sync with its type expression
 	 * @see DataDisplay
 	 */
-	export const columnDisplaySchema = z.discriminatedUnion('type', [
+	export const columnDisplaySchema =
 		// TODO: consider not exporting schemas
 		// TODO: truncate text, ask how default behavior
 		// TODO (nice-to-have): attachments, needs design
@@ -70,35 +68,22 @@ export module KottiTable {
 			.object({
 				align: z.enum(['center', 'left', 'right']),
 				disableCellClick: z.boolean(),
-				formatter: z
+				isNumeric: z.boolean(),
+				render: z
 					.function()
 					.args(
 						z.unknown(),
 						z
 							.object({
-								numberFormat: KottiI18n.numberFormatSchema,
-								options: z.object({}).passthrough(),
+								// TODO: add schema?
+								i18n: z.any(),
 							})
 							.strict(),
 					)
-					.returns(z.string().nullable())
+					.returns(z.unknown())
 					.nullable(),
-				isNumeric: z.boolean(),
-				type: z.literal('custom'),
 			})
-			.strict(),
-		z
-			.object({
-				decimalPlaces: z.number().int().finite().min(0).default(2),
-				type: z.literal('numerical'),
-			})
-			.strict(),
-		z.object({ type: z.literal('boolean') }).strict(),
-		z.object({ type: z.literal('date') }).strict(),
-		z.object({ type: z.literal('datetime') }).strict(),
-		z.object({ type: z.literal('integer') }).strict(),
-		z.object({ type: z.literal('text') }).strict(),
-	])
+			.strict()
 	export type ColumnDisplay = z.input<typeof columnDisplaySchema>
 
 	export const columnSchema = z
@@ -180,6 +165,12 @@ export module KottiTable {
 	export enum PaginationType {
 		LOCAL = 'LOCAL',
 		REMOTE = 'REMOTE',
+	}
+
+	export type Translations = {
+		no: string
+		noItems: string
+		yes: string
 	}
 
 	export const paginationSchema = z.discriminatedUnion('type', [

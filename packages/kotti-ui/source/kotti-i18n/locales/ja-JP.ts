@@ -153,6 +153,11 @@ export const jaJP: KottiI18n.Messages = {
 		today: 'Today',
 		upTo: 'Up to',
 	},
+	KtTable: {
+		no: 'No',
+		noItems: 'No Data',
+		yes: 'Yes',
+	},
 	KtValueLabel: {
 		notSet: '未設定',
 	},

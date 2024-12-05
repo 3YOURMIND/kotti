@@ -20,13 +20,11 @@ import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { useI18nContext } from '../../kotti-i18n/hooks'
 import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 
-import { resolveColumnDisplay } from './column'
+import { type MappedColumn } from './column-helper'
 import { type TableContext, useProvideTableContext } from './context'
 import { useVueTable } from './tanstack-table'
-import { ReactStyleUpdater, useComputedRef } from './todo'
-import type { GetRowBehavior } from './types'
-import type { AnyRow } from './types'
-import { KottiTable } from './types'
+import { type ReactStyleUpdater, useComputedRef } from './todo'
+import { type AnyRow, type GetRowBehavior, KottiTable } from './types'
 
 export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
 export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
@@ -46,7 +44,7 @@ export type KottiTableParameter<
 	ROW extends AnyRow,
 	COLUMN_IDS extends string = string,
 > = {
-	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
+	columns: MappedColumn<ROW, COLUMN_IDS>[]
 	data: ROW[]
 	getRowBehavior: GetRowBehavior<ROW>
 	hasDragAndDrop?: boolean
@@ -153,9 +151,15 @@ export const useKottiTable = <
 	const columnHelper = createColumnHelper<ROW>()
 	const i18nContext = useI18nContext()
 
-	const columnIdSet = computed<Set<COLUMN_ID>>(
-		() => new Set(params.value.columns.map((c) => c.id)),
-	)
+	const columnIdSet = computed<Set<COLUMN_ID>>(() => {
+		const result = new Set(params.value.columns.map((c) => c.id))
+
+		if (result.size !== params.value.columns.length) {
+			throw new Error('Column ids should be unique')
+		}
+
+		return result
+	})
 
 	const columnOrder = useComputedRef<InternalColumnId[], COLUMN_ID[]>({
 		get: (value) => value.toSpliced(0, ARRAY_START) as COLUMN_ID[],
@@ -404,7 +408,6 @@ export const useKottiTable = <
 						]
 					: []),
 				...params.value.columns.map((column) => {
-					const columnDisplay = resolveColumnDisplay(column.display)
 					const index = columnOrder.tanstackGetter().indexOf(column.id)
 
 					// TODO: The alignmentClass generation is a bit complex. You could simplify this by directly joining classes without filtering when boolean values are true, or consider a helper function to manage conditional classes. — ChatGippety
@@ -412,9 +415,9 @@ export const useKottiTable = <
 						cellType: 'body' | 'header',
 					): Record<string, boolean> => ({
 						[`kt-table-cell--is-${cellType}`]: true,
-						[`kt-table-cell--is-${columnDisplay.align}-aligned`]: true,
+						[`kt-table-cell--is-${column.display.align}-aligned`]: true,
 						'kt-table-cell': true,
-						'kt-table-cell--displays-number': columnDisplay.isNumeric,
+						'kt-table-cell--displays-number': column.display.isNumeric,
 						'kt-table-cell--has-drop-indicator':
 							index === dropTargetColumnIndex.value,
 						'kt-table-cell--has-drop-indicator-right':
@@ -427,22 +430,22 @@ export const useKottiTable = <
 
 					return columnHelper.accessor(column.getData, {
 						cell: (info) => {
-							if (columnDisplay.formatter) {
-								return (
-									columnDisplay.formatter(info.getValue(), {
-										numberFormat: i18nContext.numberFormat,
-										options: column.display,
-									}) ?? Dashes.EmDash
-								)
-							}
-							return info.getValue() ?? Dashes.EmDash
+							const value = info.getValue()
+
+							if (value === null) return Dashes.EmDash
+
+							return (
+								column.display.render(value, {
+									i18n: i18nContext,
+								}) ?? Dashes.EmDash
+							)
 						},
 						enableSorting: column.isSortable,
 						header: () => h('div', { style: { flex: 1 } }, column.label),
 						id: column.id,
 						meta: {
 							cellClasses: getCellClasses('body'),
-							disableCellClick: columnDisplay.disableCellClick,
+							disableCellClick: column.display.disableCellClick,
 							headerClasses: getCellClasses('header'),
 							// type: column.display.type,
 						},

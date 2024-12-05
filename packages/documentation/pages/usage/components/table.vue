@@ -74,6 +74,8 @@
 import { computed, defineComponent, h, ref, watch } from 'vue'
 
 import {
+	getCustomDisplay,
+	getDisplay,
 	KtButton,
 	KtFieldSingleSelect,
 	KtFieldToggleGroup,
@@ -116,6 +118,9 @@ export default defineComponent({
 		const clickBehavior = ref<
 			'component' | 'expand' | 'link' | 'simple-event' | null
 		>(null)
+		const booleanDisplay = getDisplay({ mode: 'text', type: 'boolean' })
+		const dateDisplay = getDisplay({ formatString: 'YYYY-MM-DD', type: 'date' })
+		const textDisplay = getDisplay({ type: 'text' })
 
 		const clickBehaviorValue = computed(() => {
 			switch (clickBehavior.value) {
@@ -148,7 +153,7 @@ export default defineComponent({
 		})
 
 		type TableRow = {
-			age: number | null
+			age: number
 			bestSkill: string
 			id: number
 			isAlive: boolean
@@ -157,7 +162,7 @@ export default defineComponent({
 			preferredSound: string
 			purpose: string
 			someDate: string
-			speed: string
+			speed: string | null
 			worstEnemy: string
 		}
 
@@ -169,112 +174,101 @@ export default defineComponent({
 		//   coffee: "Keeping people awake",
 		// }
 		//
-		const columns = computed<Kotti.Table.Column<TableRow>[]>(
-			(): Kotti.Table.Column<TableRow>[] => [
-				{
-					display: {
-						align: 'left',
-						disableCellClick: true,
-						formatter: (row: TableRow) =>
-							h('div', {}, [
-								h('em', { style: { color: 'green' } }, row.id),
-								` ${row.name} is `,
-								h('b', {}, row.age),
-							]),
-						isNumeric: false,
-						type: 'custom',
+		const columns = computed(() => [
+			{
+				display: getCustomDisplay({
+					align: 'left',
+					disableCellClick: true,
+					isNumeric: false,
+					render: (row: TableRow) => {
+						return h('div', {}, [
+							h('em', { style: { color: 'green' } }, row.id),
+							` ${row.name} is `,
+							h('b', {}, row.age),
+						])
 					},
-					getData: (row: TableRow) => row,
-					id: 'age',
-					isSortable: true,
-					label: 'age (click disabled)',
-				},
-				{
-					display: { type: 'boolean' },
-					getData: (row: TableRow) => row.isAlive,
-					id: 'isAlive',
-					isSortable: true,
-					label: 'Aliveness',
-				},
-				{
-					display: {
-						align: 'right',
-						disableCellClick: false,
-						formatter: (value: unknown) => String(value).replaceAll('e', 'x'),
-						isNumeric: false,
-						type: 'custom',
-					},
-					getData: (row: TableRow) => row.lifespan,
-					id: 'lifespan',
-					isSortable: true,
-					label: 'Lifespan (click allowed)',
-				},
-				// {
-				// 	display: {
-				// 		align: 'left',
-				// 		formatter: null,
-				// 		isNumeric: false,
-				// 		type: 'custom',
-				// 	},
-				// 	getData: (row) => ({
-				// 		age: row.age,
-				// 		id: row.id,
-				// 		name: row.name,
-				// 	}),
-				// 	id: 'renderTest',
-				// 	label: 'Render Test',
+				}),
+				getData: (row: TableRow) => row,
+				id: 'age',
+				isSortable: true,
+				label: 'age (click disabled)',
+			},
+			{
+				display: booleanDisplay,
+				getData: (row: TableRow) => row.isAlive,
+				id: 'isAlive',
+				isSortable: true,
+				label: 'Aliveness',
+			},
+			{
+				// display: {
+				// 	align: 'right',
+				// 	disableCellClick: false,
+				// 	formatter: (value: unknown) => String(value).replaceAll('e', 'x'),
+				// 	isNumeric: false,
+				// 	type: 'custom',
 				// },
-				{
-					display: { type: 'text' },
-					getData: (row) => row.name,
-					id: 'name',
-					isSortable: true,
-					label: 'Name',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row) => row.purpose,
-					id: 'purpose',
-					isSortable: true,
-					label: 'Primary Purpose',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row: TableRow) => String(row.age),
-					id: 'speed',
-					isSortable: true,
-					label: 'Speed',
-				},
-				{
-					display: { type: 'date' },
-					getData: (row: TableRow) => row.someDate,
-					id: 'randomDate',
-					isSortable: true,
-					label: 'Random Date',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row: TableRow) => row.bestSkill,
-					id: 'bestSkill',
-					isSortable: true,
-					label: 'Best Skill',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row: TableRow) => row.worstEnemy,
-					id: 'worstEnemy',
-					isSortable: true,
-					label: 'Worst Enemy',
-				},
-				{
-					display: { type: 'text' },
-					getData: (row: TableRow) => row.preferredSound,
-					id: 'preferredSound',
-					isSortable: true,
-					label: 'Preferred Sound',
-				},
-			],
-		)
+				display: getCustomDisplay({
+					align: 'right',
+					disableCellClick: false,
+					isNumeric: false,
+					render: (value: string) => value.replaceAll('e', 'x'),
+				}),
+				getData: (row: TableRow) => row.lifespan,
+				id: 'lifespan',
+				isSortable: true,
+				label: 'Lifespan (click allowed)',
+			},
+			{
+				display: textDisplay,
+				getData: (row: TableRow) => row.name,
+				id: 'name',
+				isSortable: true,
+				label: 'Name',
+			},
+			{
+				display: textDisplay,
+				getData: (row: TableRow) => row.purpose,
+				id: 'purpose',
+				isSortable: true,
+				label: 'Primary Purpose',
+			},
+			{
+				display: textDisplay,
+				getData: (row: TableRow) => row.speed,
+				id: 'speed',
+				isSortable: true,
+				label: 'Speed',
+			},
+			{
+				display: dateDisplay,
+				getData: (row: TableRow) => row.someDate,
+				id: 'randomDate',
+				isSortable: true,
+				label: 'Random Date',
+			},
+			{
+				display: textDisplay,
+				getData: (row: TableRow) => row.bestSkill,
+				id: 'bestSkill',
+				isSortable: true,
+				label: 'Best Skill',
+			},
+			{
+				display: textDisplay,
+				getData: (row: TableRow) => row.worstEnemy,
+				id: 'worstEnemy',
+				isSortable: true,
+				label: 'Worst Enemy',
+			},
+			{
+				display: textDisplay,
+				getData: (row: TableRow) => row.preferredSound,
+				id: 'preferredSound',
+				isSortable: true,
+				label: 'Preferred Sound',
+			},
+		])
 
 		const tableHook = useKottiTable<TableRow>(
 			computed(() => ({
@@ -309,7 +303,7 @@ export default defineComponent({
 								worstEnemy: 'Black holes',
 							},
 							{
-								age: null,
+								age: 2134412,
 								bestSkill: 'Outlasting everything',
 								id: 3,
 								isAlive: false,
@@ -318,7 +312,7 @@ export default defineComponent({
 								preferredSound: 'Eternal silence',
 								purpose: 'Being immortal and holy',
 								someDate: '1833-04-23',
-								speed: 'Absolutely unmoving',
+								speed: null,
 								worstEnemy: 'Rust (blasphemy!)',
 							},
 							{

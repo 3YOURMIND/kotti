@@ -153,6 +153,11 @@ export const enUS: KottiI18n.Messages = {
 		today: 'Today',
 		upTo: 'Up to',
 	},
+	KtTable: {
+		no: 'No',
+		noItems: 'No Items',
+		yes: 'Yes',
+	},
 	KtValueLabel: {
 		notSet: 'Not Set',
 	},
