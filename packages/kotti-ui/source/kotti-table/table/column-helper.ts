@@ -2,14 +2,17 @@ import type { VNode } from 'vue'
 
 import type { KottiI18n } from '../../kotti-i18n/types'
 
+import type { AnyRow } from './types'
+
 type DisplayOptionBoolean = { type: 'boolean' }
 type DisplayOptionCustom<DATA> = {
 	align: 'center' | 'left' | 'right'
-	formatter: (
-		data: DATA,
-	) => DATA extends 'please provide a generic parameter for your expected data type if you use type custom'
-		? DATA
-		: string | null
+	formatter: (data: DATA) => string | null
+	// formatter: (
+	// 	data: DATA,
+	// ) => DATA extends 'please provide a generic parameter for your expected data type if you use type custom'
+	// 	? DATA
+	// 	: string | null
 	isNumeric: boolean
 	type: 'custom'
 }
@@ -21,9 +24,9 @@ type DisplayOptionNumerical = {
 	type: 'numerical'
 }
 type DisplayOptionText = { type: 'text' }
-type DisplayOption<DATA> =
+type DisplayOption =
 	| DisplayOptionBoolean
-	| DisplayOptionCustom<DATA>
+	// | DisplayOptionCustom<DATA>
 	| DisplayOptionDate
 	| DisplayOptionDateTime
 	| DisplayOptionInteger
@@ -45,30 +48,21 @@ type Display<DATA_TYPE> = {
 // 	: Display<DisplayResultMap[OPTION['type']]>
 //
 
-export const getDisplay = <
-	DATA = 'please provide a generic parameter for your expected data type if you use type custom',
-	OPTION extends DisplayOption<DATA> = DisplayOption<DATA>,
->(
+export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
 	param: OPTION,
 ): Display<
-	DATA extends 'please provide a generic parameter for your expected data type if you use type custom'
-		? {
-				boolean: boolean | null
-				custom: never
-				date: Date | null
-				'date-time': Date | null
-				integer: number | null
-				numerical: number | null
-				text: string | null
-			}[OPTION['type']]
-		: DATA
+	{
+		boolean: boolean | null
+		date: Date | null
+		'date-time': Date | null
+		integer: number | null
+		numerical: number | null
+		text: string | null
+	}[OPTION['type']]
 > => {
 	switch (param.type) {
 		case 'boolean': {
 			throw new Error('Not implemented yet: "boolean" case')
-		}
-		case 'custom': {
-			throw new Error('Not implemented yet: "custom" case')
 		}
 		case 'date': {
 			throw new Error('Not implemented yet: "date" case')
@@ -88,24 +82,35 @@ export const getDisplay = <
 	}
 }
 
+export const getCustomDisplay = <
+	DATA = 'please provide a generic parameter for your expected data type if you use type custom',
+>(
+	param: DisplayOptionCustom<DATA>,
+): Display<DATA> => {
+	throw new Error('Not implemented yet: "custom" case')
+}
+
+const x = getCustomDisplay({
+	align: 'center',
+	formatter: (ineedastringpls) => 'wow',
+	// ineedastringpls + 'wow such string, thank you',
+	isNumeric: false,
+	type: 'custom',
+})
+
 // getDisplay()
 // getCustomDisplay()
 
-// eslint-disable-next-line sonarjs/no-use-of-empty-return-value -- sonar pls wtf
 const display1 = getDisplay({ type: 'numerical' })
-// eslint-disable-next-line sonarjs/no-use-of-empty-return-value -- sonar pls wtf
 const display2 = getDisplay({ type: 'text' })
-// eslint-disable-next-line sonarjs/no-use-of-empty-return-value -- sonar pls wtf
 const display3 = getDisplay({ type: 'integer' })
-// eslint-disable-next-line sonarjs/no-use-of-empty-return-value -- sonar pls wtf
-const display4 = getDisplay<string>({
+const display4 = getCustomDisplay({
 	align: 'center',
 	formatter: (ineedastringpls) => 'wow such string, thank you',
 	isNumeric: false,
 	type: 'custom',
 })
-// eslint-disable-next-line sonarjs/no-use-of-empty-return-value -- sonar pls wtf
-const display5 = getDisplay({
+const display5 = getCustomDisplay({
 	align: 'center',
 	formatter: (ineedastringpls) =>
 		'please provide a generic parameter for your expected data type if you use type custom',
@@ -114,17 +119,54 @@ const display5 = getDisplay({
 	type: 'custom',
 })
 
+type DataDisplay<ROW extends AnyRow, DATA = unknown> =
+	| {
+			display: {
+				align: 'center' | 'left' | 'right'
+				disableCellClick: boolean
+				formatter: (args: DATA) => VNode | string | null
+				isNumeric: boolean
+				type: 'custom'
+			}
+			getData: (row: ROW) => DATA
+	  }
+	| {
+			display: { type: 'boolean' }
+			getData: (row: ROW) => boolean | null
+	  }
+	| {
+			display: { type: 'date' } | { type: 'date-time' } | { type: 'text' }
+			getData: (row: ROW) => string | null
+	  }
+	| {
+			display:
+				| { decimalPlaces: number; type: 'numerical' }
+				| { type: 'integer' }
+			getData: (row: ROW) => number | null
+	  }
+
 /**
  * This is the column passed to `useKottiTable`’s `columns`
  */
-type MappedColumn = {}
+type MappedColumn<
+	ROW extends AnyRow,
+	COLUMN_IDS extends string = string,
+> = DataDisplay<ROW> & {
+	id: COLUMN_IDS
+	isSortable?: boolean
+	label: string
+}
 
-export const createColumn = <COLUMN_ID extends string, DATA_TYPE>(options: {
+export const createColumn = <
+	ROW extends AnyRow,
+	COLUMN_ID extends string,
+	DATA_TYPE,
+>(options: {
 	display: Display<DATA_TYPE>
 	getData: () => DATA_TYPE
 	id: COLUMN_ID
 	isSortable?: boolean
 	label: string
-}): MappedColumn => {
+}): MappedColumn<ROW, COLUMN_ID> => {
 	throw new Error('Not implemented yet')
 }
