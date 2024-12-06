@@ -66,6 +66,7 @@ export default defineComponent({
 				hideValidation: props.hideValidation,
 				isDisabled: props.isDisabled,
 				isLoading: props.isLoading,
+				showVisibilityToggle: props.showVisibilityToggle,
 				size: props.size,
 			})),
 			formPath: computed(() => [props.formId]),

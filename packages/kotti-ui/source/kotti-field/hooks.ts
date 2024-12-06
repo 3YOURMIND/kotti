@@ -28,6 +28,9 @@ const useDecoration = <DATA_TYPE>({
 		leftIcon: computed(() => (supports.decoration ? props.leftIcon : null)),
 		prefix: computed(() => (supports.decoration ? props.prefix : null)),
 		rightIcon: computed(() => (supports.decoration ? props.rightIcon : null)),
+		showVisibilityToggle: computed(() =>
+			supports.decoration ? props.showVisibilityToggle : false,
+		),
 		suffix: computed(() => (supports.decoration ? props.suffix : null)),
 	}
 }
