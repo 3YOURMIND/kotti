@@ -73,6 +73,7 @@
 	--text-05: var(--gray-30);
 	--interactive-01: var(--primary-60);
 	--interactive-01-hover: var(--primary-70);
+	--interactive-01-active: var(--primary-90);
 	--interactive-02: var(--gray-10);
 	--interactive-02-hover: var(--primary-10);
 	--interactive-03: var(--primary-50);

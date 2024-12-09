@@ -16,11 +16,17 @@
 							}"
 							:data-test="optionDataTest(option)"
 						>
+							<input
+								v-bind="inputProps(option, index)"
+								@change="onChange(option.value)"
+							/>
 							<div
 								class="kt-field-radio-group__radio"
 								:class="{
 									'kt-field-radio-group__radio--checked':
 										field.currentValue === option.value,
+									'kt-field-radio-group__radio--is-disabled':
+										field.isDisabled || Boolean(option.isDisabled),
 								}"
 							>
 								<div class="kt-field-radio-group__radio-inside" />
@@ -28,10 +34,6 @@
 							<slot name="header" :option="option">
 								<div v-text="option.label" />
 							</slot>
-							<input
-								v-bind="inputProps(option, index)"
-								@change="onChange(option.value)"
-							/>
 						</label>
 						<FieldHelpText
 							v-if="option.tooltip"
@@ -191,7 +193,17 @@ export default defineComponent({
 	}
 
 	&__input {
-		display: none;
+		width: 0;
+		height: 0;
+
+		&:focus + .kt-field-radio-group__radio {
+			outline: 1px solid var(--primary-50);
+			outline-offset: 3px;
+		}
+
+		&:focus:not(:focus-visible) + .kt-field-radio-group__radio {
+			outline: none;
+		}
 	}
 
 	&__radio {
@@ -212,10 +224,32 @@ export default defineComponent({
 		//  > (-var(--radio-size) * 0.5) Put it up half the height of the radio height
 		transform: translateY(calc(0.75em - var(--radio-size) * 0.5));
 
+		&:hover {
+			border-color: var(--interactive-01-hover);
+		}
+
+		&:active {
+			border-color: var(--interactive-01-active);
+		}
+
 		&--checked {
 			background-color: var(--interactive-01);
 			border-color: var(--interactive-01);
 			box-shadow: var(--shadow-base);
+
+			&:hover {
+				background-color: var(--interactive-01-hover);
+				border-color: var(--interactive-01-hover);
+			}
+
+			&:active {
+				background-color: var(--interactive-01-active);
+				border-color: var(--interactive-01-active);
+			}
+		}
+
+		&--is-disabled {
+			pointer-events: none;
 		}
 	}
 
