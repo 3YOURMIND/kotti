@@ -628,7 +628,18 @@
 								:minimum="1"
 								:step="1"
 							/>
-
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'showVisibilityToggle',
+									)
+								"
+								formKey="showVisibilityToggle"
+								helpText="For Password: display an eye icon to reveal/hide the content"
+								isOptional
+								label="Show visibility toggle"
+								type="switch"
+							/>
 							<h4>Additional Slots</h4>
 							<KtFieldText
 								v-if="
@@ -901,7 +912,7 @@ const components: Array<{
 		supports: KtFieldNumber.meta.supports,
 	},
 	{
-		additionalProps: [],
+		additionalProps: ['showVisibilityToggle'],
 		formKey: 'textValue',
 		name: 'KtFieldPassword',
 		supports: KtFieldPassword.meta.supports,
@@ -1210,6 +1221,7 @@ export default defineComponent({
 				rows: Kotti.FieldNumber.Value
 				shortcuts: Kotti.FieldToggleGroup.Value
 				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
+				showVisibilityToggle: boolean
 				toggleType: 'checkbox' | 'switch'
 			}
 			autoComplete: Kotti.FieldSingleSelect.Value
@@ -1277,6 +1289,7 @@ export default defineComponent({
 				rows: null,
 				shortcuts: null,
 				showHeaderSideSlot: false,
+				showVisibilityToggle: false,
 				toggleType: 'checkbox',
 			},
 			autoComplete: Kotti.Field.AutoComplete.OFF,
@@ -1392,6 +1405,16 @@ export default defineComponent({
 			if (componentDefinition.value.additionalProps.includes('autoSize')) {
 				Object.assign(additionalProps, {
 					autoSize: settings.value.additionalProps.autoSize,
+				})
+			}
+			if (
+				componentDefinition.value.additionalProps.includes(
+					'showVisibilityToggle',
+				)
+			) {
+				Object.assign(additionalProps, {
+					showVisibilityToggle:
+						settings.value.additionalProps.showVisibilityToggle,
 				})
 			}
 

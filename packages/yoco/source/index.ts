@@ -57,6 +57,7 @@ export module Yoco {
 		EMAIL = 'email',
 		EXIT_FULLSCREEN = 'exit_fullscreen',
 		EYE = 'eye',
+		EYE_SLASHED = 'eye_slashed',
 		FILE = 'file',
 		FILTER = 'filter',
 		FIX_RIGHT = 'fix_right',

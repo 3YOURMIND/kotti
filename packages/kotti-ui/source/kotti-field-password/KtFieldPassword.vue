@@ -3,13 +3,14 @@
 		v-bind="{ field }"
 		:getEmptyValue="() => null"
 		:helpTextSlot="$slots.helpText"
+		@visibilityChange="handleVisibilityChange"
 	>
 		<input v-bind="inputProps" @input="onInput" />
 	</KtField>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
@@ -31,9 +32,8 @@ export default defineComponent({
 			props,
 			supports: KOTTI_FIELD_PASSWORD_SUPPORTS,
 		})
-
+		const fieldType = ref('password')
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
-
 		return {
 			field,
 			inputProps: computed(
@@ -47,7 +47,7 @@ export default defineComponent({
 					forceUpdateKey: forceUpdateKey.value,
 					placeholder: props.placeholder ?? undefined,
 					size: 1,
-					type: 'password',
+					type: fieldType.value,
 					value: field.currentValue ?? '',
 				}),
 			),
@@ -56,6 +56,10 @@ export default defineComponent({
 				field.setValue(newValue === '' ? null : newValue)
 
 				forceUpdate()
+			},
+			handleVisibilityChange: () => {
+				const isValueHidden = fieldType.value === 'password'
+				fieldType.value = isValueHidden ? 'text' : 'password'
 			},
 		}
 	},

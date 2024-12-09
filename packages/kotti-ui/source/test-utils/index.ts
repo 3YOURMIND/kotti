@@ -21,6 +21,7 @@ export const getMockContext = ({ validators = {}, values = {} } = {}): Pick<
 			hideValidation: false,
 			isDisabled: false,
 			isLoading: false,
+			showVisibilityToggle: true,
 			size: KottiField.Size.MEDIUM,
 		},
 	},

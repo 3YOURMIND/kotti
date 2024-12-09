@@ -19,6 +19,7 @@ export module KottiFieldPassword {
 		.extend({
 			autoComplete: createLooseZodEnumSchema(AutoComplete),
 			placeholder: z.string().nullable().default(null),
+			showVisibilityToggle: z.boolean().default(false),
 			value: valueSchema.default(null),
 		})
 
