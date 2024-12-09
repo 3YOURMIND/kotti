@@ -9,8 +9,8 @@ import {
 	paramsSchema as KottiTableHookParamsSchema,
 	useKottiTable,
 } from '../table/hooks'
-import { useComputedRef } from '../table/todo'
-import type { AnyRow } from '../table/types'
+import type { KottiTable } from '../table/types'
+import { useComputedRef } from '../table/use-computed-ref'
 
 import type { StandardTableContext } from './context'
 import { useProvideStandardTableContext } from './context'
@@ -23,7 +23,7 @@ import {
 import { KottiStandardTable } from './types'
 
 type KottiStandardTableParameters<
-	ROW extends AnyRow,
+	ROW extends KottiTable.AnyRow,
 	COLUMN_IDS extends string = string,
 > = Ref<{
 	filters?: KottiStandardTable.Filter[]
@@ -52,7 +52,7 @@ const _paramsSchema = z.object({
 	}),
 })
 
-export const useKottiStandardTable = <ROW extends AnyRow>(
+export const useKottiStandardTable = <ROW extends KottiTable.AnyRow>(
 	_params: KottiStandardTableParameters<ROW>,
 ): {
 	appliedFilters: Ref<unknown>

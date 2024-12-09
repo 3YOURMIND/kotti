@@ -12,6 +12,7 @@ import {
 	getExpandedRowModel,
 	getPaginationRowModel,
 } from '@tanstack/table-core'
+import classNames from 'classnames'
 import { computed, h, ref, type Ref } from 'vue'
 import { z } from 'zod'
 
@@ -20,14 +21,13 @@ import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { useI18nContext } from '../../kotti-i18n/hooks'
 import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 
-import { type MappedColumn } from './column-helper'
 import { type TableContext, useProvideTableContext } from './context'
 import { useVueTable } from './tanstack-table'
-import { type ReactStyleUpdater, useComputedRef } from './todo'
-import { type AnyRow, type GetRowBehavior, KottiTable } from './types'
+import { type GetRowBehavior, KottiTable } from './types'
+import { type ReactStyleUpdater, useComputedRef } from './use-computed-ref'
 
-export const EXPANSION_COLUMN_ID = 'kt-table-inner-expand'
-export const SELECTION_COLUMN_ID = 'kt-table-inner-select'
+export const EXPANSION_COLUMN_ID = 'internal-expand-column'
+export const SELECTION_COLUMN_ID = 'internal-select-column'
 export const ARRAY_START = 2
 
 export type SortingState<COLUMN_ID extends string = string> = {
@@ -41,10 +41,10 @@ type InternalColumnId<COLUMN_ID extends string = string> =
 	| typeof SELECTION_COLUMN_ID
 
 export type KottiTableParameter<
-	ROW extends AnyRow,
+	ROW extends KottiTable.AnyRow,
 	COLUMN_IDS extends string = string,
 > = {
-	columns: MappedColumn<ROW, COLUMN_IDS>[]
+	columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 	data: ROW[]
 	getRowBehavior: GetRowBehavior<ROW>
 	hasDragAndDrop?: boolean
@@ -60,7 +60,24 @@ export type KottiTableParameter<
 
 export const paramsSchema = z
 	.object({
-		columns: z.array(KottiTable.columnSchema),
+		columns: z.array(
+			z
+				.object({
+					display: z
+						.object({
+							align: z.enum(['center', 'left', 'right']),
+							disableCellClick: z.boolean(),
+							isNumeric: z.boolean(),
+							render: z.function(),
+						})
+						.strict(),
+					getData: z.function(),
+					id: z.string(),
+					isSortable: z.boolean().default(false),
+					label: z.string(),
+				})
+				.strict(),
+		),
 		data: z.array(z.any()),
 		/**
 		 * Keep in sync with type expression
@@ -128,9 +145,8 @@ export const paramsSchema = z
 	})
 	.strict()
 
-// TODO: check for Exclude<> issue with generic
 export const useKottiTable = <
-	ROW extends AnyRow,
+	ROW extends KottiTable.AnyRow,
 	COLUMN_ID extends string = string,
 >(
 	_params: Ref<KottiTableParameter<ROW, COLUMN_ID>>,
@@ -142,7 +158,7 @@ export const useKottiTable = <
 		pagination: Ref<KottiTable.Pagination['state']>
 		selectedRows: Ref<RowSelectionState>
 	}
-	tableContext: TableContext<ROW>
+	tableContext: TableContext<ROW, COLUMN_ID>
 } => {
 	const params = computed(
 		() =>
@@ -170,7 +186,7 @@ export const useKottiTable = <
 			]
 			// Drop unknown columns from outside value
 			for (const columnId of value) {
-				if (columnIdSet.value.has(columnId)) {
+				if (columnIdSet.value.has(columnId) && !newValue.includes(columnId)) {
 					newValue.push(columnId)
 				} else {
 					// eslint-disable-next-line no-console
@@ -269,24 +285,28 @@ export const useKottiTable = <
 		),
 	})
 
-	const draggedColumnIndex = ref<number | null>(null)
+	const draggedColumnId: Ref<COLUMN_ID | null> = ref(null)
+	/**
+	 * Primarily used for displaying the drop indicator line
+	 */
 	const dropTargetColumnIndex = ref<number | null>(null)
 	const successfullyDroppedColumnId = ref<string | null>(null)
 
-	const moveColumnTo = (fromIndex: number, toIndex: number): string[] => {
-		// console.log({ fromIndex, name: 'moveColumnTo', toIndex })
-		const droppedColumnId = columnOrder.tanstackGetter()[fromIndex]
-		if (!droppedColumnId) throw new Error('index is out of bound')
+	const getMovedColumnOrder = (
+		fromColumnId: COLUMN_ID,
+		toIndex: number,
+	): COLUMN_ID[] => {
+		const fromIndex = columnOrder.value.indexOf(fromColumnId)
+		if (fromIndex === -1)
+			throw new Error(`Could not find column id ${fromColumnId}`)
 
-		const spliced = columnOrder.tanstackGetter().toSpliced(fromIndex, 1)
-		spliced.splice(
+		const newOrder = columnOrder.value.toSpliced(fromIndex, 1)
+		newOrder.splice(
 			toIndex > fromIndex ? toIndex - 1 : toIndex,
 			0,
-			droppedColumnId,
+			fromColumnId,
 		)
-		// TODO setting this should not happen in this util function
-		successfullyDroppedColumnId.value = droppedColumnId
-		return spliced
+		return newOrder
 	}
 
 	const table = useVueTable<ROW>(
@@ -312,6 +332,7 @@ export const useKottiTable = <
 											domProps: {
 												ariaDisabled: String(isDisabled),
 												ariaExpanded: String(row.getIsExpanded()),
+												'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
 												role: 'button',
 												// tabindex: 0, focus css
 											},
@@ -360,9 +381,8 @@ export const useKottiTable = <
 												props: {
 													component: 'div',
 													inputProps: {
-														// TODO: pass data-test
-														// TODO: disable when row is disabled
-														disabled: !row.getCanSelect(), // TODO: make ToggleInner not stupid
+														'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
+														disabled: !row.getCanSelect(),
 														id: `${params.value.id}-${row.id}-select`,
 													},
 													isDisabled: !row.getCanSelect(),
@@ -388,8 +408,9 @@ export const useKottiTable = <
 												props: {
 													component: 'div',
 													inputProps: {
-														// TODO: pass data-test
-														id: `${params.value.id}-header-select-all`,
+														'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.header.checkbox`,
+														// 'data-test': `${props.tableId}.column-${cell.column.id}.row-${row.id}`,
+														id: `${params.value.id}-column-select-header`,
 													},
 													isDisabled: false,
 													value: table.getIsAllRowsSelected(),
@@ -408,31 +429,27 @@ export const useKottiTable = <
 						]
 					: []),
 				...params.value.columns.map((column) => {
-					const index = columnOrder.tanstackGetter().indexOf(column.id)
+					const index = columnOrder.value.indexOf(column.id)
 
-					// TODO: The alignmentClass generation is a bit complex. You could simplify this by directly joining classes without filtering when boolean values are true, or consider a helper function to manage conditional classes. — ChatGippety
-					const getCellClasses = (
-						cellType: 'body' | 'header',
-					): Record<string, boolean> => ({
-						[`kt-table-cell--is-${cellType}`]: true,
-						[`kt-table-cell--is-${column.display.align}-aligned`]: true,
-						'kt-table-cell': true,
-						'kt-table-cell--displays-number': column.display.isNumeric,
-						'kt-table-cell--has-drop-indicator':
-							index === dropTargetColumnIndex.value,
-						'kt-table-cell--has-drop-indicator-right':
-							index + 1 === dropTargetColumnIndex.value &&
-							columnOrder.tanstackGetter().length - 1 === index,
-						'kt-table-cell--is-dragged': index === draggedColumnIndex.value,
-						'kt-table-cell--was-successfully-dropped':
-							column.id === successfullyDroppedColumnId.value,
-					})
+					const getCellClasses = (cellType: 'body' | 'header') =>
+						classNames({
+							[`kt-table-cell--is-${cellType}`]: true,
+							[`kt-table-cell--is-${column.display.align}-aligned`]: true,
+							'kt-table-cell': true,
+							'kt-table-cell--displays-number': column.display.isNumeric,
+							'kt-table-cell--has-drop-indicator':
+								index === dropTargetColumnIndex.value,
+							'kt-table-cell--has-drop-indicator-right':
+								index + 1 === dropTargetColumnIndex.value &&
+								columnOrder.value.length - 1 === index,
+							'kt-table-cell--is-dragged': column.id === draggedColumnId.value,
+							'kt-table-cell--was-successfully-dropped':
+								column.id === successfullyDroppedColumnId.value,
+						})
 
 					return columnHelper.accessor(column.getData, {
 						cell: (info) => {
 							const value = info.getValue()
-
-							if (value === null) return Dashes.EmDash
 
 							return (
 								column.display.render(value, {
@@ -509,39 +526,43 @@ export const useKottiTable = <
 		})),
 	)
 
-	const tableContext: TableContext<ROW> = computed(() => ({
+	const tableContext: TableContext<ROW, COLUMN_ID> = computed(() => ({
 		internal: {
-			getColumnIndex: (columnId: string) => {
-				return columnOrder.tanstackGetter().indexOf(columnId)
+			getColumnIndex: (columnId) => {
+				return columnOrder.value.indexOf(columnId)
 			},
 			getOrdering: () => {
 				return ordering.value
 			},
 			getRowBehavior: params.value.getRowBehavior,
 			hasDragAndDrop: Boolean(params.value.hasDragAndDrop),
+			isDragAndDropActive: draggedColumnId.value !== null,
 			isExpandable: Boolean(params.value.isExpandable),
 			isSelectable: Boolean(params.value.isSelectable),
-			setDraggedColumnIndex: (columnIndex: number | null) => {
-				draggedColumnIndex.value = columnIndex
+			setDraggedColumnId: (columnId) => {
+				draggedColumnId.value = columnId
 			},
-			setDropTargetColumnIndex: (columnIndex: number | null) => {
+			setDropTargetColumnIndex: (columnIndex) => {
 				dropTargetColumnIndex.value = columnIndex
 			},
 			swapDraggedAndDropTarget: () => {
 				if (
 					dropTargetColumnIndex.value === null ||
-					draggedColumnIndex.value === null
+					draggedColumnId.value === null
 				)
 					return
 
-				columnOrder.tanstackSetter(
-					moveColumnTo(draggedColumnIndex.value, dropTargetColumnIndex.value),
+				columnOrder.value = getMovedColumnOrder(
+					draggedColumnId.value,
+					dropTargetColumnIndex.value,
 				)
+
+				successfullyDroppedColumnId.value = draggedColumnId.value
 			},
 			table,
 		},
 	}))
-	useProvideTableContext<ROW>(params.value.id, tableContext)
+	useProvideTableContext<ROW, COLUMN_ID>(params.value.id, tableContext)
 
 	return {
 		api: {

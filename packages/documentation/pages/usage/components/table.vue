@@ -83,7 +83,6 @@ import {
 	KtValueLabel,
 	useKottiTable,
 } from '@3yourmind/kotti-ui'
-import type { Kotti } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
@@ -197,7 +196,6 @@ export default defineComponent({
 				display: booleanDisplay,
 				getData: (row: TableRow) => row.isAlive,
 				id: 'isAlive',
-				isSortable: true,
 				label: 'Aliveness',
 			},
 			{

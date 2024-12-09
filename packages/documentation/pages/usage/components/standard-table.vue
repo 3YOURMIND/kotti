@@ -116,6 +116,7 @@
 import { computed, defineComponent, ref } from 'vue'
 
 import {
+	getDisplay,
 	KtButton,
 	KtStandardTable,
 	useKottiStandardTable,
@@ -153,31 +154,34 @@ export default defineComponent({
 	},
 	setup() {
 		const isLoadingRecipes = ref(false)
+		const booleanDisplay = getDisplay({ mode: 'text', type: 'boolean' })
+		const integerDisplay = getDisplay({ type: 'integer' })
+		const textDisplay = getDisplay({ type: 'text' })
 
 		const todosColumns = ref<Kotti.Table.Column<TodoRow>[]>([
 			{
-				display: { decimalPlaces: 0, type: 'numerical' },
+				display: integerDisplay,
 				getData: (row: TodoRow) => row.id,
 				id: 'id',
 				isSortable: true,
 				label: 'ID',
 			},
 			{
-				display: { type: 'text' },
+				display: textDisplay,
 				getData: (row: TodoRow) => row.todo,
 				id: 'todo',
 				isSortable: true,
 				label: 'Todo',
 			},
 			{
-				display: { type: 'boolean' },
+				display: booleanDisplay,
 				getData: (row: TodoRow) => row.completed,
 				id: 'completed',
 				isSortable: true,
 				label: 'Completed',
 			},
 			{
-				display: { decimalPlaces: 0, type: 'numerical' },
+				display: integerDisplay,
 				getData: (row: TodoRow) => row.userId,
 				id: 'userId',
 				isSortable: true,
@@ -188,56 +192,56 @@ export default defineComponent({
 
 		const recipesColumns = ref<Kotti.Table.Column<RecipeRow>[]>([
 			{
-				display: { decimalPlaces: 0, type: 'numerical' },
+				display: integerDisplay,
 				getData: (row: RecipeRow) => row.id,
 				id: 'id',
 				isSortable: true,
 				label: 'ID',
 			},
 			{
-				display: { type: 'text' },
+				display: textDisplay,
 				getData: (row: RecipeRow) => row.name,
 				id: 'name',
 				isSortable: true,
 				label: 'Name',
 			},
 			{
-				display: { type: 'text' },
+				display: textDisplay,
 				getData: (row: RecipeRow) => row.ingredients.join('; '),
 				id: 'ingredients',
 				isSortable: true,
 				label: 'Ingredients',
 			},
 			{
-				display: { decimalPlaces: 0, type: 'numerical' },
+				display: integerDisplay,
 				getData: (row: RecipeRow) => row.prepTimeMinutes,
 				id: 'prepTimeMinutes',
 				isSortable: true,
 				label: 'Prep time minutes',
 			},
 			{
-				display: { decimalPlaces: 0, type: 'numerical' },
+				display: integerDisplay,
 				getData: (row: RecipeRow) => row.cookTimeMinutes,
 				id: 'cookTimeMinutes',
 				isSortable: true,
 				label: 'Cook time minutes',
 			},
 			{
-				display: { type: 'text' },
+				display: textDisplay,
 				getData: (row: RecipeRow) => row.difficulty,
 				id: 'difficulty',
 				isSortable: true,
 				label: 'Difficulty',
 			},
 			{
-				display: { type: 'text' },
+				display: textDisplay,
 				getData: (row: RecipeRow) => row.cuisine,
 				id: 'cuisine',
 				isSortable: true,
 				label: 'Cuisine',
 			},
 			{
-				display: { decimalPlaces: 0, type: 'numerical' },
+				display: integerDisplay,
 				getData: (row: RecipeRow) => row.rating,
 				id: 'rating',
 				isSortable: true,
@@ -396,48 +400,48 @@ export default defineComponent({
 				: []),
 		])
 
-		// useKottiStandardTable<TodoRow>(
-		// 	computed(() => ({
-		// 		id: 'example-local-data',
-		// 		pagination: {
-		// 			pageSize: 5,
-		// 			// eslint-disable-next-line no-magic-numbers
-		// 			pageSizeOptions: [5, 10, 15, 20],
-		// 			type: Kotti.StandardTable.PaginationType.LOCAL,
-		// 		},
-		// 		storageAdapter: null,
-		// 		table: {
-		// 			columns: todosColumns.value,
-		// 			data: todosData.value,
-		// 			getRowBehavior: ({ row }: { row: TodoRow }) => ({
-		// 				id: String(row.id),
-		// 			}),
-		// 		},
-		// 	})),
-		// )
+		useKottiStandardTable<TodoRow>(
+			computed(() => ({
+				id: 'example-local-data',
+				pagination: {
+					pageSize: 5,
+					// eslint-disable-next-line no-magic-numbers
+					pageSizeOptions: [5, 10, 15, 20],
+					type: Kotti.StandardTable.PaginationType.LOCAL,
+				},
+				storageAdapter: null,
+				table: {
+					columns: todosColumns.value,
+					data: todosData.value,
+					getRowBehavior: ({ row }: { row: TodoRow }) => ({
+						id: String(row.id),
+					}),
+				},
+			})),
+		)
 
-		// useKottiStandardTable<RecipeRow>(
-		// 	computed(() => ({
-		// 		filters: filters.value,
-		// 		id: 'example-remote-data',
-		// 		isLoading: isLoadingRecipes.value,
-		// 		pagination: {
-		// 			pageSize: 5,
-		// 			// eslint-disable-next-line no-magic-numbers
-		// 			pageSizeOptions: [5, 10, 15, 30, 50, 100],
-		// 			rowCount: recipesRowCount.value,
-		// 			type: Kotti.StandardTable.PaginationType.REMOTE,
-		// 		},
-		// 		storageAdapter: null,
-		// 		table: {
-		// 			columns: recipesColumns.value,
-		// 			data: recipesData.value,
-		// 			getRowBehavior: ({ row }: { row: RecipeRow }) => ({
-		// 				id: String(row.id),
-		// 			}),
-		// 		},
-		// 	})),
-		// )
+		useKottiStandardTable<RecipeRow>(
+			computed(() => ({
+				filters: filters.value,
+				id: 'example-remote-data',
+				isLoading: isLoadingRecipes.value,
+				pagination: {
+					pageSize: 5,
+					// eslint-disable-next-line no-magic-numbers
+					pageSizeOptions: [5, 10, 15, 30, 50, 100],
+					rowCount: recipesRowCount.value,
+					type: Kotti.StandardTable.PaginationType.REMOTE,
+				},
+				storageAdapter: null,
+				table: {
+					columns: recipesColumns.value,
+					data: recipesData.value,
+					getRowBehavior: ({ row }: { row: RecipeRow }) => ({
+						id: String(row.id),
+					}),
+				},
+			})),
+		)
 
 		return {
 			component: KtStandardTable,

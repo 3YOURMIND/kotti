@@ -1,8 +1,8 @@
 import type { Row } from '@tanstack/table-core'
 
-import type { AnyRow, GetRowBehavior } from './types'
+import type { GetRowBehavior, KottiTable } from './types'
 
-type RowBehavior = ReturnType<GetRowBehavior<AnyRow>>
+type RowBehavior = ReturnType<GetRowBehavior<KottiTable.AnyRow>>
 
 type RowCellWrapper = {
 	class: string[]
@@ -18,7 +18,7 @@ export const DEFAULT_CELL_WRAPPER: RowCellWrapper = {
 
 export const getCellWrapComponent = (
 	behavior: RowBehavior,
-	row: Row<AnyRow>,
+	row: Row<KottiTable.AnyRow>,
 ): RowCellWrapper => {
 	if (behavior.disable?.click) return DEFAULT_CELL_WRAPPER
 

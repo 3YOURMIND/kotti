@@ -5,7 +5,12 @@ import { Yoco } from '@3yourmind/yoco'
 
 import type { KottiI18n } from '../../kotti-i18n/types'
 
-import type { AnyRow } from './types'
+import type { KottiTable } from './types'
+
+// TODO: truncate text, ask how default behavior
+// TODO (nice-to-have): attachments, needs design
+// TODO (nice-to-have): image, array of urls as data
+// TODO (nice-to-have): tuples with separator (e.g. "1234 x 23")
 
 type DisplayOptionBoolean = {
 	mode: 'icon' | 'text'
@@ -42,26 +47,30 @@ type DisplayOption =
 	| DisplayOptionNumerical
 	| DisplayOptionText
 
-type Display<DATA_TYPE> = {
-	align: 'center' | 'left' | 'right'
-	disableCellClick: boolean
-	isNumeric: boolean
-	render: (
-		value: DATA_TYPE,
-		context: { i18n: KottiI18n.ContextInternal },
-	) => VNode | string | null
-}
+type ResolvedDisplayType<OPTION extends DisplayOption = DisplayOption> =
+	KottiTable.Display<
+		{
+			boolean: boolean | null
+			date: Date | null
+			'date-time': Date | null
+			integer: number | null
+			numerical: number | null
+			text: string | null
+		}[OPTION['type']]
+	>
 
-export function getDisplay(param: DisplayOptionBoolean): Display<boolean | null>
-export function getDisplay(
-	param: DisplayOptionDate | DisplayOptionDateTime,
-): Display<Date | null>
-export function getDisplay(
-	param: DisplayOptionInteger | DisplayOptionNumerical,
-): Display<number | null>
-export function getDisplay(param: DisplayOptionText): Display<string | null>
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getDisplay(param: DisplayOption): Display<any> {
+export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
+	param: OPTION,
+): KottiTable.Display<
+	{
+		boolean: boolean | null
+		date: Date | null
+		'date-time': Date | null
+		integer: number | null
+		numerical: number | null
+		text: string | null
+	}[OPTION['type']]
+> => {
 	switch (param.type) {
 		case 'boolean': {
 			return {
@@ -88,7 +97,7 @@ export function getDisplay(param: DisplayOption): Display<any> {
 						icon,
 					)
 				},
-			}
+			} as ResolvedDisplayType<OPTION>
 		}
 		case 'date':
 		case 'date-time': {
@@ -98,7 +107,7 @@ export function getDisplay(param: DisplayOption): Display<any> {
 				isNumeric: true,
 				render: (value: Date | null) =>
 					value === null ? null : dayjs(value).format(param.formatString),
-			}
+			} as ResolvedDisplayType<OPTION>
 		}
 		case 'integer': {
 			return {
@@ -107,7 +116,7 @@ export function getDisplay(param: DisplayOption): Display<any> {
 				isNumeric: true,
 				render: (value: number | null) =>
 					value === null ? null : String(Math.round(value)),
-			}
+			} as ResolvedDisplayType<OPTION>
 		}
 		case 'numerical': {
 			return {
@@ -120,7 +129,7 @@ export function getDisplay(param: DisplayOption): Display<any> {
 						: value
 								.toFixed(param.decimalPlaces ?? 2)
 								.replace('.', i18n.numberFormat.decimalSeparator),
-			}
+			} as ResolvedDisplayType<OPTION>
 		}
 		case 'text': {
 			return {
@@ -128,7 +137,7 @@ export function getDisplay(param: DisplayOption): Display<any> {
 				disableCellClick: false,
 				isNumeric: false,
 				render: (value: string | null) => value,
-			}
+			} as ResolvedDisplayType<OPTION>
 		}
 	}
 }
@@ -137,126 +146,20 @@ export const getCustomDisplay = <
 	DATA = 'please provide a generic parameter for your expected data type if you use type custom',
 >(
 	param: DisplayOptionCustom<DATA>,
-): Display<DATA> => {
+): KottiTable.Display<DATA> => {
 	return param
 }
 
-// const x = getCustomDisplay({
-// 	align: 'center',
-// 	disableCellClick: false,
-// 	isNumeric: false,
-// 	render: (_ineedastringpls: string) => 'wow',
-// 	type: 'custom',
-// })
-
-// getDisplay()
-// getCustomDisplay()
-
-// const display1 = getDisplay({ type: 'numerical' })
-// const display2 = getDisplay({ type: 'text' })
-// const display3 = getDisplay({ type: 'integer' })
-// const display4 = getCustomDisplay<{ c: string; d: number }>({
-// 	align: 'center',
-// 	disableCellClick: false,
-// 	isNumeric: false,
-// 	render: (ineedastringpls) => 'wow such string, thank you',
-// 	type: 'custom',
-// })
-// const display5 = getCustomDisplay({
-// 	align: 'center',
-// 	disableCellClick: false,
-// 	isNumeric: false,
-// 	render: (ineedastringpls) =>
-// 		'please provide a generic parameter for your expected data type if you use type custom',
-// 	// ineedastringpls + 'wow such string, thank you',
-// 	type: 'custom',
-// })
-
-/**
- * This is the column passed to `useKottiTable`’s `columns`
- */
-export type MappedColumn<
-	ROW extends AnyRow,
-	COLUMN_IDS extends string = string,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	DATA = any,
-> = {
-	display: Display<DATA>
-	getData: (row: ROW) => DATA
-	id: COLUMN_IDS
-	isSortable?: boolean
-	label: string
-}
-
 export const createColumn = <
-	ROW extends AnyRow,
+	ROW extends KottiTable.AnyRow,
 	const COLUMN_ID extends string,
 	DATA_TYPE,
 >(options: {
-	display: Display<DATA_TYPE>
+	display: KottiTable.Display<DATA_TYPE>
 	getData: (row: ROW) => DATA_TYPE
 	id: COLUMN_ID
 	isSortable?: boolean
 	label: string
-}): MappedColumn<ROW, COLUMN_ID, DATA_TYPE> => {
+}): KottiTable.Column<ROW, COLUMN_ID, DATA_TYPE> => {
 	return options
 }
-
-// usage example
-// const columnsPassedToHook = [
-// 	createColumn({
-// 		display: display2,
-// 		getData: (row) => row.b,
-// 		id: 'my-column-1', // FIXME: potentially needing as const for this might be an issue, let's hope it isn't
-// 		label: 'My Column',
-// 	}),
-// 	createColumn({
-// 		display: display1,
-// 		getData: (row) => 42,
-// 		id: 'my-column-1', // FIXME: potentially needing as const for this might be an issue, let's hope it isn't
-// 		label: 'My Column',
-// 	}),
-// 	createColumn({
-// 		display: display4,
-// 		getData: (row) => ({ c: row.b, d: 420 }),
-// 		id: 'my-column-1', // FIXME: potentially needing as const for this might be an issue, let's hope it isn't
-// 		label: 'My Column',
-// 	}),
-// ] //satisfies MappedColumn<{ a: boolean; b: string }, infer S, infer K>[]
-
-export const createColumnContext = <ROW extends AnyRow>(): {
-	createColumn: <COLUMN_ID extends string, DATA_TYPE>(options: {
-		display: Display<DATA_TYPE>
-		getData: (row: ROW) => DATA_TYPE
-		id: COLUMN_ID
-		isSortable?: boolean
-		label: string
-	}) => MappedColumn<ROW, COLUMN_ID, DATA_TYPE>
-} => {
-	return {
-		createColumn: (options) => options,
-	}
-}
-
-// const ctx = createColumnContext<{ a: boolean; b: string }>()
-
-// const _columnsPassedToHook2 = [
-// 	ctx.createColumn({
-// 		display: display2,
-// 		getData: (row) => row.b,
-// 		id: 'my-column-1', // FIXME: potentially needing as const for this might be an issue, let's hope it isn't
-// 		label: 'My Column',
-// 	}),
-// 	ctx.createColumn({
-// 		display: display1,
-// 		getData: (row) => 42,
-// 		id: 'my-column-2', // FIXME: potentially needing as const for this might be an issue, let's hope it isn't
-// 		label: 'My Column',
-// 	}),
-// 	ctx.createColumn({
-// 		display: display4,
-// 		getData: (row) => ({ c: row.b, d: 420 }),
-// 		id: 'my-column-3', // FIXME: potentially needing as const for this might be an issue, let's hope it isn't
-// 		label: 'My Column',
-// 	}),
-// ] satisfies MappedColumn<{ a: boolean; b: string }>[]

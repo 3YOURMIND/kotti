@@ -1,18 +1,17 @@
 import { inject, provide, type Ref } from 'vue'
 
 import type { KottiFieldText } from '../../kotti-field-text/types'
-import { type MappedColumn } from '../table/column-helper'
-import type { AnyRow } from '../table/types'
+import type { KottiTable } from '../table/types'
 
 import type { KottiStandardTable } from './types'
 
 export type StandardTableContext<
-	ROW extends AnyRow,
+	ROW extends KottiTable.AnyRow,
 	COLUMN_IDS extends string = string,
 > = Ref<{
 	internal: {
 		appliedFilters: KottiStandardTable.AppliedFilter[]
-		columns: MappedColumn<ROW, COLUMN_IDS>[]
+		columns: KottiTable.Column<ROW, COLUMN_IDS>[]
 		filters: KottiStandardTable.FilterInternal[]
 		getFilter: (
 			id: KottiStandardTable.FilterInternal['id'],
@@ -30,7 +29,7 @@ export type StandardTableContext<
 const getStandardTableContextKey = (id: string): string =>
 	`kt-standard-table-${id}`
 
-export const useProvideStandardTableContext = <ROW extends AnyRow>(
+export const useProvideStandardTableContext = <ROW extends KottiTable.AnyRow>(
 	id: string,
 	standardTableContext: StandardTableContext<ROW>,
 ): void => {
@@ -40,7 +39,7 @@ export const useProvideStandardTableContext = <ROW extends AnyRow>(
 	)
 }
 
-export const useStandardTableContext = <ROW extends AnyRow>(
+export const useStandardTableContext = <ROW extends KottiTable.AnyRow>(
 	id: string,
 ): StandardTableContext<ROW> => {
 	const context = inject<StandardTableContext<ROW>>(

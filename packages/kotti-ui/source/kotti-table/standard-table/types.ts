@@ -9,7 +9,6 @@ import {
 import { KottiFieldText } from '../../kotti-field-text/types'
 import { KottiFieldToggle } from '../../kotti-field-toggle/types'
 import { KottiPopover } from '../../kotti-popover/types'
-import { KottiTable } from '../table/types'
 
 import {
 	DEFAULT_PAGE_SIZE,
@@ -340,7 +339,14 @@ export namespace KottiStandardTable {
 	export namespace Events {
 		const updateDataFetchDependencies = z.object({
 			filters: appliedFilterSchema.array(),
-			ordering: KottiTable.orderingSchema,
+			ordering: z.array(
+				z
+					.object({
+						id: z.string(),
+						value: z.enum(['ascending', 'descending']),
+					})
+					.strict(),
+			),
 			pagination: sharedPaginationSchema.pick({
 				pageIndex: true,
 				pageSize: true,

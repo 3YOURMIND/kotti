@@ -12,6 +12,7 @@
 						:key="header.key"
 						:class="header.classes"
 						:colSpan="header.colSpan"
+						:data-test="header.dataTest"
 						:draggable="header.isDraggable"
 						@click="(e) => handleHeaderClick(e, header)"
 						@dragenter.prevent
@@ -54,7 +55,7 @@
 				>
 					<td :colSpan="tableColSpan">
 						<slot name="empty">
-							<div v-text="emptyText" />
+							<div v-text="defaultedEmptyText" />
 						</slot>
 					</td>
 				</tr>
@@ -178,12 +179,9 @@ import { Yoco } from '@3yourmind/yoco'
 
 import { makeProps } from '../make-props'
 
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { useTableContext } from './table/context'
-import {
-	ARRAY_START,
-	EXPANSION_COLUMN_ID,
-	SELECTION_COLUMN_ID,
-} from './table/hooks'
+import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './table/hooks'
 import { DEFAULT_CELL_WRAPPER, getCellWrapComponent } from './table/row'
 import { FlexRender } from './table/tanstack-table'
 import { KottiTable } from './table/types'
@@ -199,45 +197,13 @@ export default defineComponent({
 	setup(props) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = useTableContext(props.tableId)
+		const translations = useTranslationNamespace('KtTable')
 
 		const isColumnMoveDataTransfer = (event: DragEvent): boolean => {
 			return event.dataTransfer?.types.includes(TRANSFER_TYPE) ?? false
 		}
 
 		const table = computed(() => tableContext.value.internal.table.value)
-
-		// const computeWrapperProps = (row: AnyRow, rowIndex: number) => {
-		// | 'expand'
-		// | {
-		// 		/**
-		// 		 * For example for opening drawers. Should not be used for navigation. Also consider using normal link with
-		// 		 * a query parameter instead.
-		// 		 */
-		// 		component: ROW_BEHAVIOR_CLICK_COMPONENT extends null ? null : never
-		// 		onClick: () => Promise<void> | void
-		//   }
-		// | {
-		// 		/**
-		// 		 * This should be used in most use cases and would usually be a `router-link`
-		// 		 */
-		// 		component: ROW_BEHAVIOR_CLICK_COMPONENT extends 'a' | null
-		// 			? never
-		// 			: string
-		// 		on?: Record<string, unknown>
-		// 		props?: Record<string, unknown>
-		//   }
-		// | {
-		// 		/**
-		// 		 * You can also just use a simple link
-		// 		 */
-		// 		component: ROW_BEHAVIOR_CLICK_COMPONENT extends 'a' ? 'a' : never
-		// 		on?: Record<string, unknown>
-		// 		props: {
-		// 			[k: string]: unknown
-		// 			href: string
-		// 		}
-		//   }
-		// }
 
 		return {
 			bodyRows: computed(() =>
@@ -260,7 +226,7 @@ export default defineComponent({
 									? cell.column.columnDef.cell
 									: cell.column.columnDef.cell?.({ ...cell.getContext() }) ??
 										'',
-							dataTest: `kt-table-row-${row.id}-column-${cell.column.id}`,
+							dataTest: `${props.tableId}.column-${cell.column.id}.row-${row.id}`,
 							getContext: cell.getContext,
 							// hasSlot:
 							// 	Boolean(slots[cell.column.id]) &&
@@ -292,6 +258,9 @@ export default defineComponent({
 					}
 				}),
 			),
+			defaultedEmptyText: computed(
+				() => props.emptyText ?? translations.value.noItems,
+			),
 			handleCellDragOver: (event: DragEvent, columnId: string) => {
 				if (!isColumnMoveDataTransfer(event)) return
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -306,10 +275,7 @@ export default defineComponent({
 				const cursorX = event.clientX
 
 				const isLeftHalf = cursorX - elementX < elementWidth / 2
-				const targetIndex = Math.max(
-					ARRAY_START,
-					columnIndex + (isLeftHalf ? 0 : 1),
-				)
+				const targetIndex = columnIndex + (isLeftHalf ? 0 : 1)
 
 				// console.log(
 				// 	'handleDragOver',
@@ -335,7 +301,7 @@ export default defineComponent({
 
 				tableContext.value.internal.swapDraggedAndDropTarget()
 				tableContext.value.internal.setDropTargetColumnIndex(null)
-				tableContext.value.internal.setDraggedColumnIndex(null)
+				tableContext.value.internal.setDraggedColumnId(null)
 			},
 			handleHeaderClick: (_: MouseEvent, header: Header<unknown, unknown>) => {
 				const id = header.column.columnDef.id as string
@@ -354,23 +320,25 @@ export default defineComponent({
 			},
 			handleHeaderDragStart: (event: DragEvent, columnId: string) => {
 				event.dataTransfer?.setData(TRANSFER_TYPE, '')
-				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
+				// const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
 				// console.log('handleHeaderDragStart', columnId, columnIndex)
-				tableContext.value.internal.setDraggedColumnIndex(columnIndex)
+				tableContext.value.internal.setDraggedColumnId(columnId)
 			},
 			handleTableDragEnd: () => {
 				// console.log('handleTableDragEnd')
 				tableContext.value.internal.setDropTargetColumnIndex(null)
-				tableContext.value.internal.setDraggedColumnIndex(null)
+				tableContext.value.internal.setDraggedColumnId(null)
 			},
 			headerRows: computed(() =>
 				table.value.getHeaderGroups().map((headerRow) => ({
 					headers: headerRow.headers.map((header, headerIndex) => ({
 						classes: classNames(header.column.columnDef.meta.headerClasses, {
+							'kt-table-cell--is-sortable': header.column.getCanSort(),
 							'kt-table-cell--is-sorted': header.column.getIsSorted(),
 						}),
 						colSpan: header.colSpan,
 						column: header.column,
+						dataTest: `${props.tableId}.column-${header.column.id}.header`,
 						getContext: header.getContext,
 						id: header.id,
 						isDraggable:
@@ -389,6 +357,8 @@ export default defineComponent({
 			),
 			tableClasses: computed(() => ({
 				'kt-table': true,
+				'kt-table--is-drag-and-drop-active':
+					tableContext.value.internal.isDragAndDropActive,
 				'kt-table--is-scrollable': !props.isNotScrollable,
 			})),
 			table,
@@ -442,11 +412,6 @@ export default defineComponent({
 
 				&[draggable='true'] {
 					cursor: grab;
-
-					&:hover {
-						color: var(--gray-60);
-						background-color: var(--ui-02);
-					}
 				}
 
 				.kt-table-header {
@@ -461,11 +426,6 @@ export default defineComponent({
 						color: var(--interactive-03);
 					}
 				}
-
-				&:hover {
-					color: var(--gray-60);
-					background-color: var(--ui-02);
-				}
 			}
 
 			.kt-table-cell {
@@ -479,8 +439,11 @@ export default defineComponent({
 				&--is-dragged {
 					background-color: var(--gray-20);
 
-					// TODO consider if this is needed (note that it affects the drop indicator)
-					// opacity: 0.4;
+					// setting opacity only for the content, not for the drop
+					// indicator and background color
+					> * {
+						opacity: 0.5;
+					}
 				}
 			}
 		}
@@ -508,8 +471,11 @@ export default defineComponent({
 				&.kt-table-cell--is-dragged {
 					background-color: var(--gray-10);
 
-					// TODO consider if this is needed (note that it affects the drop indicator)
-					// opacity: 0.4;
+					// setting opacity only for the content, not for the drop
+					// indicator and background color
+					> * {
+						opacity: 0.5;
+					}
 				}
 			}
 
@@ -612,6 +578,15 @@ export default defineComponent({
 					}
 				}
 			}
+		}
+	}
+
+	// disable hover when drag and drop is active, otherwise drag and drop specific styles won't show
+	&:not(.kt-table--is-drag-and-drop-active) thead .kt-table-cell--is-header {
+		&.kt-table-cell--is-sortable:hover,
+		&[draggable='true']:hover {
+			color: var(--gray-60);
+			background-color: var(--ui-02);
 		}
 	}
 }

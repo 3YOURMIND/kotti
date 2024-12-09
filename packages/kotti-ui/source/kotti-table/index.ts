@@ -9,7 +9,7 @@ import { KottiTable } from './table/types'
 
 export { useKottiStandardTable } from './standard-table/hooks'
 export {
-	createColumnContext,
+	createColumn,
 	getCustomDisplay,
 	getDisplay,
 } from './table/column-helper'
