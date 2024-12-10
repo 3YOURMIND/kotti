@@ -4,14 +4,14 @@
 		class="kt-field-toggle-inner"
 		:class="toggleClasses"
 	>
-		<component :is="svgComponent.is" :class="svgComponent.class" />
-		<slot name="default" />
 		<input
 			v-bind="inputProps"
 			:checked="value === true"
 			type="checkbox"
 			@change="onInput"
 		/>
+		<component :is="svgComponent.is" :class="svgComponent.class" />
+		<slot name="default" />
 	</component>
 </template>
 
@@ -20,7 +20,7 @@ import { computed, defineComponent, type PropType } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import type { KottiField } from '../../kotti-field/types'
-import { KottiFieldToggle } from '../types'
+import { KottiFieldToggle } from '../../kotti-field-toggle/types'
 
 import ToggleBox from './ToggleBox.vue'
 import ToggleSwitch from './ToggleSwitch.vue'
@@ -72,7 +72,7 @@ export default defineComponent({
 
 <style lang="scss">
 :root {
-	--toggle-border-radius: 0.1rem;
+	--toggle-border-radius: 1px;
 }
 
 .kt-field-toggle-inner {
@@ -81,28 +81,25 @@ export default defineComponent({
 	cursor: pointer;
 
 	input {
-		display: none;
-	}
+		width: 0;
+		height: 0;
 
-	&__svg {
-		flex-shrink: 0;
-
-		&--is-box {
-			// align checkbox with the center of the first line of the label
-			// (assumption: font-size comes from common parent element)
-			//  > starting point is upper end of the container (flex-start)
-			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
-			//  > (-8px) Put it up half the height of the checkbox height (16px)
-			transform: translateY(calc(0.75em - 8px));
+		&:focus + .kt-field-toggle-inner__svg--is-box {
+			outline: 1px solid var(--primary-50);
+			outline-offset: 3px;
 		}
 
-		&--is-switch {
-			// align switch with the center of the first line of the label
-			// (assumption: font-size comes from common parent element)
-			//  > starting point is upper end of the container (flex-start)
-			//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
-			//  > (-10px) Put it up half the height of the switch height (20px)
-			transform: translateY(calc(0.75em - 10px));
+		&:focus:not(:focus-visible) + .kt-field-toggle-inner__svg--is-box {
+			outline: none;
+		}
+
+		&:focus + .kt-field-toggle-inner__svg--is-switch {
+			outline: 1px solid var(--primary-50);
+			outline-offset: 1px;
+		}
+
+		&:focus:not(:focus-visible) + .kt-field-toggle-inner__svg--is-switch {
+			outline: none;
 		}
 	}
 
@@ -111,8 +108,18 @@ export default defineComponent({
 		cursor: not-allowed;
 	}
 
-	> *:not(:first-child) {
-		margin-left: 0.3rem;
+	&__svg {
+		margin-right: var(--unit-2);
 	}
+
+	/* .kt-field-toggle-inner__svg--is-box.kt-field-toggle-inner__svg:focus-within(
+			:active
+		) {
+		outline: 2px solid var(--primary-50);
+	}
+
+	.kt-field-toggle-inner__svg--is-switch.kt-field-toggle-inner__svg--is-focused {
+		background-color: pink;
+	} */
 }
 </style>
