@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<ul class="kt-pagination">
-			<li :class="paginatorClasses(0)" @click="previousPage">
+			<li :class="paginatorClasses(1)" @click="previousPage">
 				<i
 					class="yoco kt-pagination__page-button"
 					v-text="Yoco.Icon.CHEVRON_LEFT"
