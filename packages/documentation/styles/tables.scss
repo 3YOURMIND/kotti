@@ -1,6 +1,6 @@
 @import '@3yourmind/kotti-ui/source/kotti-style/_variables.scss';
 
-table:not(.kt-table-legacy) {
+*:not(.kt-table) > table:not(.kt-table-legacy) {
 	width: 100%;
 	hyphens: auto;
 	table-layout: auto;

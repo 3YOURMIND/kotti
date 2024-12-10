@@ -91,6 +91,8 @@ import { KtPopover } from './kotti-popover'
 export * from './kotti-popover'
 import { KtRow } from './kotti-row'
 export * from './kotti-row'
+import { KtTable } from './kotti-table'
+export * from './kotti-table'
 import {
 	KtTableLegacy,
 	KtTableLegacyColumn,
@@ -163,6 +165,7 @@ export default {
 			KtPopover,
 			KtRow,
 			KtSplitButton,
+			KtTable,
 			KtTableLegacy,
 			KtTableLegacyColumn,
 			KtTableLegacyConsumer,

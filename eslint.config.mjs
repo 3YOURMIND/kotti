@@ -14,6 +14,7 @@ import yocoPackageJSON from './packages/yoco/package.json' assert { type: 'json'
 const trustedDependencies = new Set([
 	'@metatypes/typography',
 	'@metatypes/units',
+	'@tanstack/table-core',
 	'filesize',
 	'nanoid',
 	'zod',

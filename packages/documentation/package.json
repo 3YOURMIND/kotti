@@ -49,6 +49,7 @@
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
 		"fix:stylelint": "yarn run check:stylelint --fix",
+		"test": "bun test",
 		"watch": "nuxt"
 	},
 	"version": "2.0.0"
