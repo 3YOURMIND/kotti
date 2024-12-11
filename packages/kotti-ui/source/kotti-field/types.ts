@@ -91,7 +91,7 @@ export module KottiField {
 				'data-test': string
 				disabled: boolean
 				id: string
-				tabindex: KottiField.PropsInternal['tabIndex']
+				tabindex: number
 			}>
 			isEmpty: boolean
 			setValue(newValue: DATA_TYPE, options?: { forceUpdate: boolean }): void

@@ -148,6 +148,8 @@ const baseConfig = tseslint.config({
 		'sonarjs/no-duplicate-string': 'off',
 		'sonarjs/no-redundant-jump': 'off',
 		'sonarjs/no-small-switch': 'off',
+		'sonarjs/no-use-of-empty-return-value': 'off',
+
 		// Unicorn
 		'unicorn/catch-error-name': 'warn',
 		'unicorn/consistent-destructuring': 'warn',

@@ -105,6 +105,11 @@
 		"menuExpand": "Expand menu",
 		"quickLinksTitle": "Quick Links"
 	},
+	"ktTable": {
+		"no": "No",
+		"noItems": "No Data",
+		"yes": "Yes"
+	},
 	"ktValueLabel": {
 		"notSet": "Not Set"
 	}

@@ -1,4 +1,5 @@
 import type { Ref } from 'vue'
+import { z } from 'zod'
 
 import type { KottiComment } from '../kotti-comment/types'
 import type { KottiField } from '../kotti-field/types'
@@ -8,8 +9,9 @@ import type { Shared as KottiFieldSelectShared } from '../kotti-field-select/typ
 import type { KottiFilters } from '../kotti-filters/types'
 import type { KottiFormSubmit } from '../kotti-form-submit/types'
 import type { KottiNavbar } from '../kotti-navbar/types'
+import type { KottiTable } from '../kotti-table/table/types'
 import type { KottiValueLabel } from '../kotti-value-label/types'
-import type { DecimalSeparator } from '../types/kotti'
+import { DecimalSeparator } from '../types/decimal-separator'
 
 export type DeepPartial<T> =
 	T extends Record<string, unknown> ? { [K in keyof T]?: DeepPartial<T[K]> } : T
@@ -22,14 +24,24 @@ export module KottiI18n {
 		numberFormat: Ref<NumberFormat>
 	}
 
+	export type ContextInternal = {
+		currencyMap: CurrencyMap
+		locale: SupportedLanguages
+		messages: Messages
+		numberFormat: NumberFormat
+	}
+
 	export type CurrencyMap = Record<
 		string,
 		{ decimalPlaces: number; symbol: string }
 	>
 
-	export type NumberFormat = {
-		decimalSeparator: DecimalSeparator
-	}
+	export const numberFormatSchema = z
+		.object({
+			decimalSeparator: z.nativeEnum(DecimalSeparator),
+		})
+		.strict()
+	export type NumberFormat = z.output<typeof numberFormatSchema>
 
 	export type Messages = {
 		KtComment: KottiComment.Translations
@@ -40,6 +52,7 @@ export module KottiI18n {
 		KtFilters: KottiFilters.Translations
 		KtFormSubmit: KottiFormSubmit.Translations
 		KtNavbar: KottiNavbar.Translations
+		KtTable: KottiTable.Translations
 		KtValueLabel: KottiValueLabel.Translations
 	}
 

@@ -41,8 +41,8 @@ import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { makeProps } from '../make-props'
+import ToggleInner from '../shared-components/toggle-inner/ToggleInner.vue'
 
-import ToggleInner from './components/ToggleInner.vue'
 import { KOTTI_FIELD_TOGGLE_SUPPORTS } from './constants'
 import { KottiFieldToggleGroup } from './types'
 
@@ -150,6 +150,28 @@ export default defineComponent({
 
 	&__content {
 		font-size: var(--font-size-small);
+	}
+
+	.kt-field-toggle-inner__svg {
+		flex-shrink: 0;
+	}
+
+	.kt-field-toggle-inner__svg--is-box {
+		// align checkbox with the center of the first line of the label
+		// (assumption: font-size comes from common parent element)
+		//  > starting point is upper end of the container (flex-start)
+		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+		//  > (-8px) Put it up half the height of the checkbox height (16px)
+		transform: translateY(calc(0.75em - 8px));
+	}
+
+	.kt-field-toggle-inner__svg--is-switch {
+		// align switch with the center of the first line of the label
+		// (assumption: font-size comes from common parent element)
+		//  > starting point is upper end of the container (flex-start)
+		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
+		//  > (-10px) Put it up half the height of the switch height (20px)
+		transform: translateY(calc(0.75em - 10px));
 	}
 }
 </style>

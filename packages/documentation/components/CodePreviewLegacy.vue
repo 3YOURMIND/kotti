@@ -14,7 +14,7 @@
 import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
-	name: 'CodePreview',
+	name: 'CodePreviewLegacy',
 	props: {
 		vueSlotLabel: { default: 'Kotti-UI', type: String },
 		styleSlotLabel: { default: 'Kotti-Style', type: String },

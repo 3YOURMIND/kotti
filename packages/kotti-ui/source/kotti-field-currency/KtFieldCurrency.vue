@@ -16,7 +16,7 @@ import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import type { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
-import { DecimalSeparator } from '../types/kotti'
+import { DecimalSeparator } from '../types/decimal-separator'
 import { isNumberInRange } from '../utilities'
 
 import { KOTTI_FIELD_CURRENCY_SUPPORTS, VALID_REGEX } from './constants'
