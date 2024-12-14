@@ -93,6 +93,7 @@ export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
 						icon,
 					)
 				},
+				sortBehavior: 'desc-asc',
 			} as ResolvedDisplayType<OPTION>
 		}
 		case 'date': {
@@ -104,6 +105,7 @@ export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
 					const formatString = param.formatString ?? ISO8601
 					return value === null ? null : dayjs(value).format(formatString)
 				},
+				sortBehavior: 'desc-asc',
 			} as ResolvedDisplayType<OPTION>
 		}
 		case 'date-time': {
@@ -115,6 +117,7 @@ export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
 					const formatString = param.formatString ?? ISO8601_SECONDS
 					return value === null ? null : dayjs(value).format(formatString)
 				},
+				sortBehavior: 'desc-asc',
 			} as ResolvedDisplayType<OPTION>
 		}
 		case 'integer': {
@@ -128,6 +131,7 @@ export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
 						: numberFormatter
 								.format(Math.round(value))
 								.replaceAll(',', '\u2009'),
+				sortBehavior: 'desc-asc',
 			} as ResolvedDisplayType<OPTION>
 		}
 		case 'numerical': {
@@ -146,6 +150,7 @@ export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
 								.format(value)
 								.replaceAll(',', ' ') //'\u2009')
 								.replace('.', i18n.numberFormat.decimalSeparator),
+				sortBehavior: 'desc-asc',
 			} as ResolvedDisplayType<OPTION>
 		}
 		case 'text': {
@@ -154,6 +159,7 @@ export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
 				disableCellClick: false,
 				isNumeric: false,
 				render: (value: string | null) => value,
+				sortBehavior: 'asc-desc',
 			} as ResolvedDisplayType<OPTION>
 		}
 	}

@@ -61,17 +61,13 @@
 				v-if="booleanFlags.isEmpty && booleanFlags.showEmptySlot"
 				#empty
 			>
-				<img
-					src="https://usagif.com/wp-content/uploads/2021/4fh5wi/pepefrg-33.gif"
-				/>
+				<img src="https://picsum.photos/400/150" />
 			</template>
 			<template
 				v-if="booleanFlags.isLoading && booleanFlags.showLoadingSlot"
 				#loading
 			>
-				<img
-					src="https://usagif.com/wp-content/uploads/2021/4fh5wi/pepefrg-54.gif"
-				/>
+				<img src="https://picsum.photos/400/150" />
 			</template>
 			<template #expanded-row>
 				<div>Expanded content</div>
@@ -87,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, h, ref, watch } from 'vue'
 
 import {
 	createColumnContext,
@@ -109,6 +105,7 @@ import ComponentInfo from '~/components/ComponentInfo.vue'
 type ColumnId =
 	| 'age'
 	| 'bestSkill'
+	| 'id'
 	| 'isAlive'
 	| 'lifespan'
 	| 'name'
@@ -254,20 +251,27 @@ export default defineComponent({
 			computed(() => ({
 				columns: [
 					createColumn({
-						// display: getCustomDisplay<TableRow>({
-						// 	align: 'left',
-						// 	disableCellClick: true,
-						// 	isNumeric: false,
-						// 	render: (value) => {
-						// 		return h('div', {}, [
-						// 			h('em', { style: { color: 'green' } }, value.id),
-						// 			` ${value.name} is `,
-						// 			h('b', {}, value.age),
-						// 		])
-						// 	},
-						// }),
-						display: getDisplay({ minimumDecimalPlaces: 1, type: 'numerical' }),
-						getData: (row) => row.age,
+						display: getDisplay({ type: 'integer' }),
+						getData: (row) => row.id,
+						id: 'id',
+						isSortable: true,
+						label: '# Id',
+					}),
+					createColumn({
+						display: getCustomDisplay<TableRow>({
+							align: 'left',
+							disableCellClick: true,
+							isNumeric: false,
+							render: (value) => {
+								return h('div', {}, [
+									h('em', { style: { color: 'green' } }, value.id),
+									` ${value.name} is `,
+									h('b', {}, value.age),
+								])
+							},
+							sortBehavior: 'asc-desc',
+						}),
+						getData: (row) => row,
 						id: 'age',
 						isSortable: true,
 						label: 'age (click disabled)',
@@ -282,49 +286,46 @@ export default defineComponent({
 					}),
 					createColumn({
 						display: getCustomDisplay({
-							align: 'right',
+							align: 'center',
 							disableCellClick: false,
 							isNumeric: false,
 							render: (value: string) => value.replaceAll('e', 'x'),
+							sortBehavior: 'asc-desc',
 						}),
 						getData: (row) => row.lifespan,
 						id: 'lifespan',
 						isSortable: true,
 						label: 'Lifespan (click allowed)',
-						maxWidth: '100px',
 					}),
-					...(booleanFlags.value.hasDragAndDrop
-						? [
-								createColumn({
-									display: textDisplay,
-									getData: (row) => row.name,
-									id: 'name',
-									isSortable: true,
-									label: 'Name',
-								}),
-								createColumn({
-									display: textDisplay,
-									getData: (row) => row.purpose,
-									id: 'purpose',
-									isSortable: true,
-									label: 'Primary Purpose',
-								}),
-								createColumn({
-									display: textDisplay,
-									getData: (row) => row.speed,
-									id: 'speed',
-									isSortable: true,
-									label: 'Speed',
-								}),
-								createColumn({
-									display: dateDisplay,
-									getData: (row) => new Date(row.someDate),
-									id: 'randomDate',
-									isSortable: true,
-									label: 'Random Date',
-								}),
-							]
-						: []),
+					createColumn({
+						display: textDisplay,
+						getData: (row) => row.name,
+						id: 'name',
+						isSortable: true,
+						label: 'Name',
+					}),
+					createColumn({
+						display: textDisplay,
+						getData: (row) => row.purpose,
+						id: 'purpose',
+						isSortable: true,
+						label: 'Primary Purpose',
+					}),
+					createColumn({
+						display: textDisplay,
+						getData: (row) => row.speed,
+						id: 'speed',
+						isSortable: true,
+						label: 'Speed',
+						maxWidth: '120px',
+					}),
+					createColumn({
+						display: dateDisplay,
+						getData: (row) => new Date(row.someDate),
+						id: 'randomDate',
+						isSortable: true,
+						label: 'Random Date',
+					}),
 					createColumn({
 						display: textDisplay,
 						getData: (row) => row.bestSkill,
@@ -400,6 +401,7 @@ export default defineComponent({
 				age: (mode) => getNumericalSorter<TableRow>((row) => row.age, mode),
 				bestSkill: (mode) =>
 					getTextSorter<TableRow>((row) => row.bestSkill, mode),
+				id: (mode) => getNumericalSorter<TableRow>((row) => row.id, mode),
 				isAlive: (mode) =>
 					getNumericalSorter<TableRow>((row) => (row.isAlive ? 1 : 0), mode),
 				lifespan: (mode) =>
@@ -449,7 +451,6 @@ export default defineComponent({
 					label: 'table has drag and drop',
 				},
 				{
-					isDisabled: booleanFlags.value.isLoading,
 					key: 'isEmpty',
 					label: 'table is empty',
 				},
@@ -462,11 +463,10 @@ export default defineComponent({
 						]
 					: []),
 				{
-					isDisabled: booleanFlags.value.isEmpty,
 					key: 'isLoading',
 					label: 'table is loading',
 				},
-				...(booleanFlags.value.isLoading
+				...(booleanFlags.value.isLoading && booleanFlags.value.isEmpty
 					? [
 							{
 								key: 'showLoadingSlot',

@@ -70,5 +70,5 @@
 	"style": "./style.css",
 	"type": "module",
 	"types": "./dist/mjs/index.d.ts",
-	"version": "2.8.0"
+	"version": "2.9.0"
 }

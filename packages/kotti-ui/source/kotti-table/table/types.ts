@@ -62,6 +62,7 @@ export module KottiTable {
 			value: DATA_TYPE,
 			context: { i18n: KottiI18n.ContextInternal },
 		) => VNode | string | null
+		sortBehavior: 'asc-desc' | 'desc-asc'
 	}
 
 	/**

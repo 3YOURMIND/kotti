@@ -14,6 +14,20 @@
 	}
 }
 
+@keyframes skeleton-loading-reduced {
+	0% {
+		background: $lightgray-300;
+	}
+
+	50% {
+		background: $lightgray-400;
+	}
+
+	100% {
+		background: $lightgray-300;
+	}
+}
+
 %skeleton-style {
 	box-sizing: border-box;
 	display: block;
@@ -62,6 +76,12 @@
 		&.lg {
 			height: 1.2rem;
 		}
+	}
+}
+
+@media (prefers-reduced-motion) {
+	.skeleton {
+		animation-name: skeleton-loading-reduced !important;
 	}
 }
 

@@ -14,14 +14,16 @@
 						:colSpan="header.colSpan"
 						:data-test="header.dataTest"
 						:draggable="header.isDraggable"
+						:style="header.style"
 						@click="(e) => handleHeaderClick(e, header)"
 						@dragenter.prevent
 						@dragleave.prevent
 						@dragover.prevent="(e) => handleCellDragOver(e, header.id)"
 						@dragstart="(e) => handleHeaderDragStart(e, header.id)"
 					>
-						<div class="kt-table-header" :style="header.style">
+						<div class="kt-table-header">
 							<FlexRender
+								class="kt-table-header-content"
 								:props="{ ...header.getContext() }"
 								:render="header.column.columnDef.header"
 							/>
@@ -36,7 +38,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-if="isLoading" class="kt-table-row kt-table-row--is-loading">
+				<tr
+					v-if="bodyRows.length === 0 && isLoading"
+					class="kt-table-row kt-table-row--is-loading"
+				>
 					<td :colSpan="tableColSpan">
 						<slot name="loading">
 							<div
@@ -65,6 +70,7 @@
 							:key="cell.key"
 							:class="cell.classes"
 							:data-test="cell.dataTest"
+							:style="cell.style"
 							@dragenter.prevent
 							@dragleave.prevent
 							@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
@@ -73,7 +79,6 @@
 								:is="cell.wrapComponent.component"
 								v-bind="cell.wrapComponent.props"
 								:class="cell.wrapComponent.class"
-								:style="cell.style"
 								v-on="cell.wrapComponent.on"
 							>
 								<FlexRender
@@ -160,6 +165,12 @@ import { KottiTable } from './table/types'
 
 const TRANSFER_TYPE = 'application/move-column'
 
+const SORT_BEHAVIOR_MAP = {
+	'asc-desc': [false, 'asc', 'desc'],
+	'desc-asc': [false, 'desc', 'asc'],
+} as const
+const SORT_ORDER_COUNT = 3
+
 export default defineComponent({
 	name: 'KtTable',
 	components: {
@@ -216,6 +227,7 @@ export default defineComponent({
 							'kt-table-row--is-click-disabled': behavior.disable?.click,
 							'kt-table-row--is-interactive':
 								!behavior.disable?.click && behavior.click,
+							'kt-table-row--is-selected': row.getIsSelected(),
 						}),
 						expandedColSpan: row.getAllCells().length,
 						expandedKey: `${row.id}-expanded-row`,
@@ -261,14 +273,28 @@ export default defineComponent({
 
 				const id = header.column.columnDef.id as string
 
-				switch (header.column.getIsSorted()) {
-					case false:
-						table.value.setSorting([{ desc: true, id }])
-						break
-					case 'desc':
+				const sortBehavior =
+					SORT_BEHAVIOR_MAP[
+						header.column.columnDef.meta.sortBehavior as 'asc-desc' | 'desc-asc'
+					]
+
+				const currentSortIndex = sortBehavior.indexOf(
+					header.column.getIsSorted(),
+				)
+
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				const nextSort = sortBehavior.at(
+					(currentSortIndex + 1) % SORT_ORDER_COUNT,
+				)!
+
+				switch (nextSort) {
+					case 'asc':
 						table.value.setSorting([{ desc: false, id }])
 						break
-					case 'asc':
+					case 'desc':
+						table.value.setSorting([{ desc: true, id }])
+						break
+					case false:
 						table.value.setSorting([])
 						break
 				}
@@ -299,9 +325,9 @@ export default defineComponent({
 						isSortable: header.column.getCanSort(),
 						key: `${header.id}-${headerIndex}`,
 						sortIndicatorIcon: {
-							asc: Yoco.Icon.CHEVRON_UP,
-							desc: Yoco.Icon.CHEVRON_DOWN,
-							false: '',
+							asc: Yoco.Icon.ARROW_UP,
+							desc: Yoco.Icon.ARROW_DOWN,
+							false: Yoco.Icon.ARROW_UP_DOWN,
 						}[header.column.getIsSorted() || 'false'],
 						style: header.column.columnDef.meta.style,
 					})),
@@ -312,6 +338,8 @@ export default defineComponent({
 				'kt-table': true,
 				'kt-table--is-drag-and-drop-active':
 					tableContext.value.internal.isDragAndDropActive,
+				'kt-table--is-loading skeleton rectangle':
+					props.isLoading && table.value.getRowModel().rows.length > 0,
 				'kt-table--is-scrollable': !props.isNotScrollable,
 			})),
 			table,
@@ -341,6 +369,20 @@ export default defineComponent({
 		white-space: nowrap;
 	}
 
+	&--is-loading {
+		&.rectangle {
+			height: unset;
+		}
+
+		tbody {
+			mix-blend-mode: multiply;
+
+			tr {
+				border-bottom-color: white !important;
+			}
+		}
+	}
+
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -354,12 +396,30 @@ export default defineComponent({
 			background-color: var(--ui-01);
 
 			.kt-table-cell--is-header {
+				height: 28px;
 				font-size: var(--unit-3);
-				color: var(--gray-50);
+				color: var(--text-02);
 				text-transform: uppercase;
 
 				&.kt-table-cell--is-sorted {
-					color: var(--gray-60);
+					color: var(--interactive-01);
+				}
+
+				&:not(.kt-table-cell--is-sorted) {
+					.yoco {
+						opacity: 0;
+					}
+
+					&:hover {
+						.yoco {
+							color: var(--icon-02);
+							opacity: 1;
+
+							&:hover {
+								color: var(--icon-01);
+							}
+						}
+					}
 				}
 
 				&[draggable='true'] {
@@ -368,17 +428,36 @@ export default defineComponent({
 
 				.kt-table-header {
 					display: inline-flex;
+					gap: 2px;
 					align-items: center;
-					justify-content: space-between;
 					width: 100%;
-					padding: 0.4rem 0.3rem;
+					padding: 0.2rem 0.4rem;
 					overflow: hidden;
 
-					.yoco {
-						min-width: 1rem;
-						font-size: 0.9rem;
+					> .yoco {
+						min-width: 0.8rem;
+						font-size: 0.8rem;
 						color: var(--interactive-03);
+						user-select: none;
 					}
+				}
+
+				&.kt-table-cell--is-left-aligned .kt-table-header {
+					justify-content: flex-start;
+				}
+
+				&.kt-table-cell--is-center-aligned .kt-table-header {
+					justify-content: center;
+				}
+
+				&.kt-table-cell--is-right-aligned .kt-table-header {
+					flex-flow: row-reverse;
+					justify-content: flex-start;
+				}
+
+				&.kt-table-cell--is-center-aligned.kt-table-cell--is-sortable
+					.kt-table-header-content {
+					margin-left: 0.9rem;
 				}
 			}
 
@@ -409,6 +488,7 @@ export default defineComponent({
 
 				&:hover .kt-table__actions {
 					display: inline-flex;
+					gap: var(--unit-1);
 					align-items: center;
 					background: var(--white);
 				}
@@ -468,7 +548,7 @@ export default defineComponent({
 				gap: 4px;
 				align-items: center;
 				height: 100%;
-				padding: 0.4rem 0.3rem;
+				padding: 0.4rem;
 				overflow: hidden;
 			}
 
@@ -496,7 +576,7 @@ export default defineComponent({
 			z-index: 400;
 			display: none;
 			min-height: var(--unit-8);
-			padding: 0.25rem;
+			padding: 0 var(--unit-h);
 			margin-top: -0.8rem;
 			font-size: 0.8rem;
 			line-height: 0.8rem;
@@ -517,7 +597,7 @@ export default defineComponent({
 
 			.kt-table__action-icon,
 			.yoco {
-				margin: 0 var(--unit-1);
+				padding: var(--unit-1);
 				font-size: 1rem;
 				cursor: pointer;
 				user-select: none;
@@ -535,15 +615,6 @@ export default defineComponent({
 					}
 				}
 			}
-		}
-	}
-
-	// disable hover when drag and drop is active, otherwise drag and drop specific styles won't show
-	&:not(.kt-table--is-drag-and-drop-active) thead .kt-table-cell--is-header {
-		&.kt-table-cell--is-sortable:hover,
-		&[draggable='true']:hover {
-			color: var(--gray-60);
-			background-color: var(--ui-02);
 		}
 	}
 }
@@ -580,23 +651,13 @@ tr.kt-table-row {
 	&--is-loading {
 		text-align: center;
 	}
+
+	&--is-selected {
+		background-color: rgb(234 240 250 / 50%); // ~= rgb(--blue-10 / 60%)
+	}
 }
 
 .kt-table-cell {
-	height: 44px;
-
-	&--is-left-aligned {
-		text-align: left;
-	}
-
-	&--is-right-aligned {
-		text-align: right;
-	}
-
-	&--is-center-aligned {
-		text-align: center;
-	}
-
 	&--was-successfully-dropped {
 		animation: 0.2s ease-in 1 flash-green;
 	}
