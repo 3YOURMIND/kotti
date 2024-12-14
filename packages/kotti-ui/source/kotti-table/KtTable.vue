@@ -1,144 +1,161 @@
 <template>
-	<div :class="tableClasses">
-		<table
-			@dragend="handleTableDragEnd"
-			@dragleave="handleDragLeave"
-			@drop="handleDrop"
-		>
-			<thead>
-				<tr v-for="headerRow in headerRows" :key="headerRow.key">
-					<th
-						v-for="header in headerRow.headers"
-						:key="header.key"
-						:class="header.classes"
-						:colSpan="header.colSpan"
-						:data-test="header.dataTest"
-						:draggable="header.isDraggable"
-						@click="(e) => handleHeaderClick(e, header)"
-						@dragenter.prevent
-						@dragleave.prevent
-						@dragover.prevent="(e) => handleCellDragOver(e, header.id)"
-						@dragstart="(e) => handleHeaderDragStart(e, header.id)"
-					>
-						<div class="kt-table-header" :style="header.style">
-							<FlexRender
-								:props="{ ...header.getContext() }"
-								:render="header.column.columnDef.header"
-							/>
-							<i
-								v-if="header.isSortable"
-								class="yoco"
-								v-text="header.sortIndicatorIcon"
-							/>
-						</div>
-					</th>
-					<th v-if="$scopedSlots['actions']" class="kt-table__actions-column" />
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-if="isLoading" class="kt-table-row kt-table-row--is-loading">
-					<td :colSpan="tableColSpan">
-						<slot name="loading">
-							<div
-								v-for="key in 3"
-								:key="key"
-								class="skeleton rectangle"
-								style="width: 100%; height: 2rem; margin-top: 0.2rem"
-							/>
-						</slot>
-					</td>
-				</tr>
-				<tr
-					v-else-if="bodyRows.length === 0"
-					class="kt-table-row kt-table-row--is-empty"
-				>
-					<td :colSpan="tableColSpan">
-						<slot name="empty">
-							<div v-text="defaultedEmptyText" />
-						</slot>
-					</td>
-				</tr>
-				<template v-for="(row, rowIndex) in bodyRows" v-else>
-					<tr :key="row.key" :class="row.classes">
-						<td
-							v-for="cell in row.cells"
-							:key="cell.key"
-							:class="cell.classes"
-							:data-test="cell.dataTest"
+	<div class="kt-table">
+		<div
+			v-if="bodyRows.length > 0 && isLoading"
+			class="kt-table-loading-overlay skeleton rectangle"
+		/>
+		<div :class="tableClasses">
+			<table
+				@dragend="handleTableDragEnd"
+				@dragleave="handleDragLeave"
+				@drop="handleDrop"
+			>
+				<thead>
+					<tr v-for="headerRow in headerRows" :key="headerRow.key">
+						<th
+							v-for="header in headerRow.headers"
+							:key="header.key"
+							:class="header.classes"
+							:colSpan="header.colSpan"
+							:data-test="header.dataTest"
+							:draggable="header.isDraggable"
+							:style="header.style"
+							@click="(e) => handleHeaderClick(e, header)"
 							@dragenter.prevent
 							@dragleave.prevent
-							@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
+							@dragover.prevent="(e) => handleCellDragOver(e, header.id)"
+							@dragstart="(e) => handleHeaderDragStart(e, header.id)"
 						>
-							<component
-								:is="cell.wrapComponent.component"
-								v-bind="cell.wrapComponent.props"
-								:class="cell.wrapComponent.class"
-								:style="cell.style"
-								v-on="cell.wrapComponent.on"
-							>
+							<div class="kt-table-header">
 								<FlexRender
-									:props="{ ...cell.getContext() }"
-									:render="cell.column.columnDef.cell"
+									:props="{ ...header.getContext() }"
+									:render="header.column.columnDef.header"
 								/>
-							</component>
-						</td>
-						<td v-if="row.actions !== null" class="kt-table__actions-column">
-							<div
-								class="kt-table__actions"
-								:class="{
-									'kt-table__actions--is-disabled': row.isActionDisabled,
-								}"
-							>
 								<i
-									v-for="(action, index) in row.actions"
-									:key="index"
-									:class="{
-										yoco: true,
-										'kt-table__action-icon': true,
-										'kt-table__action-icon--is-disabled':
-											row.isActionDisabled || action.isDisabled,
-									}"
-									:data-test="action.dataTest"
-									@click="
-										() => {
-											if (action.isDisabled) return
-
-											action.onClick()
-										}
-									"
-									v-text="action.icon"
+									v-if="header.isSortable"
+									class="yoco"
+									v-text="header.sortIndicatorIcon"
 								/>
 							</div>
-						</td>
-						<td
-							v-else-if="$scopedSlots['actions']"
+						</th>
+						<th
+							v-if="$scopedSlots['actions']"
 							class="kt-table__actions-column"
-						>
-							<div
-								class="kt-table__actions"
-								:class="{
-									'kt-table__actions--is-disabled': row.isActionDisabled,
-								}"
-							>
-								<slot name="actions" :row="row.original" :rowIndex="rowIndex" />
-							</div>
+						/>
+					</tr>
+				</thead>
+				<tbody>
+					<tr
+						v-if="bodyRows.length === 0 && isLoading"
+						class="kt-table-row kt-table-row--is-loading"
+					>
+						<td :colSpan="tableColSpan">
+							<slot name="loading">
+								<div
+									v-for="key in 3"
+									:key="key"
+									class="skeleton rectangle"
+									style="width: 100%; height: 2rem; margin-top: 0.2rem"
+								/>
+							</slot>
 						</td>
 					</tr>
 					<tr
-						v-if="$scopedSlots['expanded-row'] && row.isExpanded"
-						:key="row.expandedKey"
+						v-else-if="bodyRows.length === 0"
+						class="kt-table-row kt-table-row--is-empty"
 					>
 						<td :colSpan="tableColSpan">
-							<slot
-								name="expanded-row"
-								:row="row.original"
-								:rowIndex="rowIndex"
-							/>
+							<slot name="empty">
+								<div v-text="defaultedEmptyText" />
+							</slot>
 						</td>
 					</tr>
-				</template>
-			</tbody>
-		</table>
+					<template v-for="(row, rowIndex) in bodyRows" v-else>
+						<tr :key="row.key" :class="row.classes">
+							<td
+								v-for="cell in row.cells"
+								:key="cell.key"
+								:class="cell.classes"
+								:data-test="cell.dataTest"
+								:style="cell.style"
+								@dragenter.prevent
+								@dragleave.prevent
+								@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
+							>
+								<component
+									:is="cell.wrapComponent.component"
+									v-bind="cell.wrapComponent.props"
+									:class="cell.wrapComponent.class"
+									v-on="cell.wrapComponent.on"
+								>
+									<FlexRender
+										:props="{ ...cell.getContext() }"
+										:render="cell.column.columnDef.cell"
+									/>
+								</component>
+							</td>
+							<td v-if="row.actions !== null" class="kt-table__actions-column">
+								<div
+									class="kt-table__actions"
+									:class="{
+										'kt-table__actions--is-disabled': row.isActionDisabled,
+									}"
+								>
+									<i
+										v-for="(action, index) in row.actions"
+										:key="index"
+										:class="{
+											yoco: true,
+											'kt-table__action-icon': true,
+											'kt-table__action-icon--is-disabled':
+												row.isActionDisabled || action.isDisabled,
+										}"
+										:data-test="action.dataTest"
+										@click="
+											() => {
+												if (action.isDisabled) return
+
+												action.onClick()
+											}
+										"
+										v-text="action.icon"
+									/>
+								</div>
+							</td>
+							<td
+								v-else-if="$scopedSlots['actions']"
+								class="kt-table__actions-column"
+							>
+								<div
+									class="kt-table__actions"
+									:class="{
+										'kt-table__actions--is-disabled': row.isActionDisabled,
+									}"
+								>
+									<slot
+										name="actions"
+										:row="row.original"
+										:rowIndex="rowIndex"
+									/>
+								</div>
+							</td>
+						</tr>
+						<tr
+							v-if="$scopedSlots['expanded-row'] && row.isExpanded"
+							:key="row.expandedKey"
+						>
+							<td :colSpan="tableColSpan">
+								<slot
+									name="expanded-row"
+									:row="row.original"
+									:rowIndex="rowIndex"
+								/>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </template>
 
@@ -309,10 +326,10 @@ export default defineComponent({
 				})),
 			),
 			tableClasses: computed(() => ({
-				'kt-table': true,
-				'kt-table--is-drag-and-drop-active':
+				'kt-table-container': true,
+				'kt-table-container--is-drag-and-drop-active':
 					tableContext.value.internal.isDragAndDropActive,
-				'kt-table--is-scrollable': !props.isNotScrollable,
+				'kt-table-container--is-scrollable': !props.isNotScrollable,
 			})),
 			table,
 			tableContext: computed(() => tableContext.value),
@@ -336,7 +353,18 @@ export default defineComponent({
 }
 
 .kt-table {
-	&--is-scrollable {
+	position: relative;
+
+	.kt-table-loading-overlay {
+		position: absolute;
+		top: 44px; // move overlay down 44px so only rows are show in the hover state, not the header
+		left: 0;
+		width: 100%;
+		height: calc(100% - 44px);
+		background-color: rgb(0 0 0 / 20%);
+	}
+
+	.kt-table-container--is-scrollable {
 		overflow-x: scroll;
 		white-space: nowrap;
 	}
@@ -374,10 +402,53 @@ export default defineComponent({
 					padding: 0.4rem 0.3rem;
 					overflow: hidden;
 
-					.yoco {
-						min-width: 1rem;
+					> .yoco {
 						font-size: 0.9rem;
 						color: var(--interactive-03);
+					}
+
+					> .yoco,
+					> div:nth-child(1) {
+						transition: all 0.3s ease-out;
+					}
+				}
+
+				&.kt-table-cell--is-left-aligned,
+				&.kt-table-cell--is-center-aligned {
+					.yoco {
+						min-width: 0.9rem;
+						font-size: 0.9rem;
+						color: var(--interactive-03);
+					}
+				}
+
+				&.kt-table-cell--is-center-aligned.kt-table-cell--is-sortable
+					> .kt-table-header
+					> div:nth-child(1) {
+					margin-left: 0.9rem;
+				}
+
+				&.kt-table-cell--is-right-aligned:not(.kt-table-cell--is-sorted)
+					> .kt-table-header {
+					> div:nth-child(1) {
+						margin-left: 0.9rem;
+					}
+
+					.yoco {
+						width: 0;
+						opacity: 0;
+					}
+				}
+
+				&.kt-table-cell--is-right-aligned.kt-table-cell--is-sorted
+					> .kt-table-header {
+					> div:nth-child(1) {
+						margin-left: 0;
+					}
+
+					.yoco {
+						width: 0.9rem;
+						opacity: 1;
 					}
 				}
 			}
@@ -539,7 +610,9 @@ export default defineComponent({
 	}
 
 	// disable hover when drag and drop is active, otherwise drag and drop specific styles won't show
-	&:not(.kt-table--is-drag-and-drop-active) thead .kt-table-cell--is-header {
+	&:not(.kt-table-container--is-drag-and-drop-active)
+		thead
+		.kt-table-cell--is-header {
 		&.kt-table-cell--is-sortable:hover,
 		&[draggable='true']:hover {
 			color: var(--gray-60);
