@@ -61,17 +61,13 @@
 				v-if="booleanFlags.isEmpty && booleanFlags.showEmptySlot"
 				#empty
 			>
-				<img
-					src="https://usagif.com/wp-content/uploads/2021/4fh5wi/pepefrg-33.gif"
-				/>
+				<img src="https://picsum.photos/400/150" />
 			</template>
 			<template
 				v-if="booleanFlags.isLoading && booleanFlags.showLoadingSlot"
 				#loading
 			>
-				<img
-					src="https://usagif.com/wp-content/uploads/2021/4fh5wi/pepefrg-54.gif"
-				/>
+				<img src="https://picsum.photos/400/150" />
 			</template>
 			<template #expanded-row>
 				<div>Expanded content</div>
@@ -282,7 +278,7 @@ export default defineComponent({
 					}),
 					createColumn({
 						display: getCustomDisplay({
-							align: 'right',
+							align: 'center',
 							disableCellClick: false,
 							isNumeric: false,
 							render: (value: string) => value.replaceAll('e', 'x'),
@@ -291,7 +287,6 @@ export default defineComponent({
 						id: 'lifespan',
 						isSortable: true,
 						label: 'Lifespan (click allowed)',
-						maxWidth: '100px',
 					}),
 					...(booleanFlags.value.hasDragAndDrop
 						? [
@@ -449,7 +444,6 @@ export default defineComponent({
 					label: 'table has drag and drop',
 				},
 				{
-					isDisabled: booleanFlags.value.isLoading,
 					key: 'isEmpty',
 					label: 'table is empty',
 				},
@@ -462,11 +456,10 @@ export default defineComponent({
 						]
 					: []),
 				{
-					isDisabled: booleanFlags.value.isEmpty,
 					key: 'isLoading',
 					label: 'table is loading',
 				},
-				...(booleanFlags.value.isLoading
+				...(booleanFlags.value.isLoading && booleanFlags.value.isEmpty
 					? [
 							{
 								key: 'showLoadingSlot',

@@ -14,13 +14,14 @@
 						:colSpan="header.colSpan"
 						:data-test="header.dataTest"
 						:draggable="header.isDraggable"
+						:style="header.style"
 						@click="(e) => handleHeaderClick(e, header)"
 						@dragenter.prevent
 						@dragleave.prevent
 						@dragover.prevent="(e) => handleCellDragOver(e, header.id)"
 						@dragstart="(e) => handleHeaderDragStart(e, header.id)"
 					>
-						<div class="kt-table-header" :style="header.style">
+						<div class="kt-table-header">
 							<FlexRender
 								:props="{ ...header.getContext() }"
 								:render="header.column.columnDef.header"
@@ -36,7 +37,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-if="isLoading" class="kt-table-row kt-table-row--is-loading">
+				<tr
+					v-if="bodyRows.length === 0 && isLoading"
+					class="kt-table-row kt-table-row--is-loading"
+				>
 					<td :colSpan="tableColSpan">
 						<slot name="loading">
 							<div
@@ -65,6 +69,7 @@
 							:key="cell.key"
 							:class="cell.classes"
 							:data-test="cell.dataTest"
+							:style="cell.style"
 							@dragenter.prevent
 							@dragleave.prevent
 							@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
@@ -73,7 +78,6 @@
 								:is="cell.wrapComponent.component"
 								v-bind="cell.wrapComponent.props"
 								:class="cell.wrapComponent.class"
-								:style="cell.style"
 								v-on="cell.wrapComponent.on"
 							>
 								<FlexRender
@@ -313,6 +317,7 @@ export default defineComponent({
 				'kt-table--is-drag-and-drop-active':
 					tableContext.value.internal.isDragAndDropActive,
 				'kt-table--is-scrollable': !props.isNotScrollable,
+				'skeleton rectangle': props.isLoading,
 			})),
 			table,
 			tableContext: computed(() => tableContext.value),
@@ -339,6 +344,14 @@ export default defineComponent({
 	&--is-scrollable {
 		overflow-x: scroll;
 		white-space: nowrap;
+	}
+
+	&.skeleton.rectangle {
+		height: unset;
+
+		tbody {
+			mix-blend-mode: multiply;
+		}
 	}
 
 	table {
@@ -374,10 +387,53 @@ export default defineComponent({
 					padding: 0.4rem 0.3rem;
 					overflow: hidden;
 
-					.yoco {
-						min-width: 1rem;
+					> .yoco {
 						font-size: 0.9rem;
 						color: var(--interactive-03);
+					}
+
+					> .yoco,
+					> div:nth-child(1) {
+						transition: all 0.3s ease-out;
+					}
+				}
+
+				&.kt-table-cell--is-left-aligned,
+				&.kt-table-cell--is-center-aligned {
+					.yoco {
+						min-width: 0.9rem;
+						font-size: 0.9rem;
+						color: var(--interactive-03);
+					}
+				}
+
+				&.kt-table-cell--is-center-aligned.kt-table-cell--is-sortable
+					> .kt-table-header
+					> div:nth-child(1) {
+					margin-left: 0.9rem;
+				}
+
+				&.kt-table-cell--is-right-aligned:not(.kt-table-cell--is-sorted)
+					> .kt-table-header {
+					> div:nth-child(1) {
+						margin-left: 0.9rem;
+					}
+
+					.yoco {
+						width: 0;
+						opacity: 0;
+					}
+				}
+
+				&.kt-table-cell--is-right-aligned.kt-table-cell--is-sorted
+					> .kt-table-header {
+					> div:nth-child(1) {
+						margin-left: 0;
+					}
+
+					.yoco {
+						width: 0.9rem;
+						opacity: 1;
 					}
 				}
 			}
