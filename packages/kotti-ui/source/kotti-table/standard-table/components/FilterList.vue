@@ -13,9 +13,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 
-import { makeProps } from '../../../make-props'
 import { KottiStandardTable } from '../types'
 import { getEmptyValue, isEmptyValue } from '../utilities/filters'
 
@@ -34,7 +33,17 @@ export default defineComponent({
 		NumberRangeFilter,
 		SingleSelectFilter,
 	},
-	props: makeProps(KottiStandardTable.FilterList.propsSchema),
+	props: {
+		filters: {
+			default: () => [],
+			type: Array as PropType<KottiStandardTable.FilterInternal[]>,
+		},
+		isLoading: { default: false, type: Boolean },
+		value: {
+			default: () => [],
+			type: Array as PropType<KottiStandardTable.AppliedFilter[]>,
+		},
+	},
 	emits: ['input'],
 	setup(props, { emit }) {
 		return {

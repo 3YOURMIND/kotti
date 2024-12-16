@@ -30,17 +30,26 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
-import { makeProps } from '../../../make-props'
-import { KottiStandardTable } from '../types'
 
 export default defineComponent({
 	name: 'TableColumns',
-	props: makeProps(KottiStandardTable.TableColumns.propsSchema),
+	props: {
+		isLoading: { default: false, type: Boolean },
+		options: {
+			required: true,
+			type: Array as PropType<{ key: string; label: string }[]>,
+		},
+		size: { default: 'md', type: String },
+		value: {
+			required: true,
+			type: Object as PropType<Record<string, boolean>>,
+		},
+	},
 	emits: ['input', 'showAll'],
 	setup(props) {
 		return {

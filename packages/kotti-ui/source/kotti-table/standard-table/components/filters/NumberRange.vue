@@ -22,17 +22,30 @@
 
 <script lang="ts">
 import isEqual from 'lodash/isEqual.js'
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, type PropType, ref, watch } from 'vue'
 
 import type { KottiFieldNumber } from '../../../../kotti-field-number/types'
 import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
-import { makeProps } from '../../../../make-props'
-import { KottiStandardTable } from '../../types'
+import type { KottiStandardTable } from '../../types'
 import { reOrderRange } from '../../utilities/filters'
 
 export default defineComponent({
 	name: 'NumberRangeFilter',
-	props: makeProps(KottiStandardTable.NumberRangeFilter.propsSchema),
+	props: {
+		filter: {
+			required: true,
+			type: Object as PropType<
+				KottiStandardTable.FilterInternal & {
+					type: KottiStandardTable.FilterType.NUMBER_RANGE
+				}
+			>,
+		},
+		isLoading: { default: false, type: Boolean },
+		value: {
+			default: () => [null, null],
+			type: Array as unknown as PropType<[number | null, number | null]>,
+		},
+	},
 	emits: ['input'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtStandardTable')

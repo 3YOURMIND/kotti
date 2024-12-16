@@ -1,4 +1,4 @@
-import type { Table } from '@tanstack/table-core'
+import type { Table, VisibilityState } from '@tanstack/table-core'
 import { inject, provide, type Ref } from 'vue'
 
 import type { GetRowBehavior, KottiTable } from './types'
@@ -20,6 +20,7 @@ export type TableContext<
 		swapDraggedAndDropTarget: () => void
 		table: Ref<Table<ROW>>
 		triggerExpand: (rowId: string) => void
+		visibleColumns: VisibilityState
 	}
 }>
 

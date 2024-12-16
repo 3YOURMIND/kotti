@@ -13,14 +13,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 
-import { makeProps } from '../../../../make-props'
-import { KottiStandardTable } from '../../types'
+import type { KottiStandardTable } from '../../types'
 
 export default defineComponent({
 	name: 'MultiSelectFilter',
-	props: makeProps(KottiStandardTable.MultiSelectFilter.propsSchema),
+	props: {
+		filter: {
+			required: true,
+			type: Object as PropType<
+				KottiStandardTable.FilterInternal & {
+					type: KottiStandardTable.FilterType.MULTI_SELECT
+				}
+			>,
+		},
+		isLoading: { default: false, type: Boolean },
+		value: {
+			default: () => [null, null],
+			type: Array as PropType<(number | string)[]>,
+		},
+	},
 	emits: ['input'],
 	setup(props, { emit }) {
 		return {

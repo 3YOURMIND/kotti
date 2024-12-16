@@ -77,7 +77,12 @@
 			</div>
 		</div>
 		<div>
-			<slot v-if="$slots['table']" name="table" />
+			<slot
+				v-if="$scopedSlots['table']"
+				:isLoading="isLoading"
+				name="table"
+				:tableId="tableId"
+			/>
 			<KtTable
 				v-else
 				class="kt-standard-table__table"
@@ -89,7 +94,7 @@
 			<TablePageSize
 				v-bind="{
 					isLoading,
-					pageSize,
+					pageSize: tablePagination.pageSize,
 					pageSizeOptions,
 				}"
 				@updatePageSize="onUpdatePageSize"
@@ -97,8 +102,8 @@
 			<TablePagination
 				v-bind="{
 					isLoading,
-					pageIndex,
-					pageSize,
+					pageIndex: tablePagination.pageIndex,
+					pageSize: tablePagination.pageSize,
 					rowCount,
 				}"
 				@updatePageIndex="onUpdatePageIndex"
@@ -149,8 +154,9 @@ export default defineComponent({
 		)
 
 		const filters = computed(() => standardTableContext.value.internal.filters)
-		const table = computed(() => tableContext.value.internal.table.value)
-		const tablePagination = computed(() => table.value.getState().pagination)
+		const tablePagination = computed(
+			() => standardTableContext.value.internal.pagination,
+		)
 		const options = computed(() => standardTableContext.value.internal.options)
 
 		watch(
@@ -180,8 +186,7 @@ export default defineComponent({
 				})),
 			),
 			columnVisibility: computed(
-				() =>
-					tableContext.value.internal.table.value.getState().columnVisibility,
+				() => tableContext.value.internal.visibleColumns,
 			),
 			filterTags: computed(() =>
 				appliedFilters.value
@@ -217,31 +222,24 @@ export default defineComponent({
 			onUpdateAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => {
 				standardTableContext.value.internal.setAppliedFilters(value)
 			},
-			onUpdateColumnVisivility: (
-				value: KottiStandardTable.TableColumns.Props['value'],
-			) => {
+			onUpdateColumnVisivility: (value: Record<string, boolean>) => {
 				tableContext.value.internal.table.value.setColumnVisibility(value)
 			},
-			onUpdatePageIndex: (value: number) => {
-				table.value.setPageIndex(value)
-			},
-			onUpdatePageSize: (value: number) => {
-				table.value.setPageSize(value)
-			},
+			onUpdatePageIndex: standardTableContext.value.internal.setPageIndex,
+			onUpdatePageSize: standardTableContext.value.internal.setPageSize,
 			onUpdateSearchValue: (value: string | null) => {
 				standardTableContext.value.internal.setSearchValue(value)
 			},
 			options,
-			pageIndex: computed(() => tablePagination.value.pageIndex),
-			pageSize: computed(() => tablePagination.value.pageSize),
 			pageSizeOptions: computed(
 				() => standardTableContext.value.internal.pageSizeOptions,
 			),
 			popoverFilters: computed(() =>
 				filters.value.filter((filter) => !filter.displayInline),
 			),
-			rowCount: computed(() => table.value.getRowCount()),
+			rowCount: computed(() => standardTableContext.value.internal.rowCount),
 			searchValue,
+			tablePagination,
 		}
 	},
 })

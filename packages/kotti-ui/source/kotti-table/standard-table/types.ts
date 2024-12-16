@@ -1,3 +1,4 @@
+import type { Ref } from 'vue'
 import { z } from 'zod'
 
 import { KottiFieldDateRange } from '../../kotti-field-date/types'
@@ -9,6 +10,7 @@ import {
 import { KottiFieldText } from '../../kotti-field-text/types'
 import { KottiFieldToggle } from '../../kotti-field-toggle/types'
 import { KottiPopover } from '../../kotti-popover/types'
+import type { KottiTable } from '../table/types'
 
 import {
 	DEFAULT_PAGE_SIZE,
@@ -52,11 +54,6 @@ export namespace KottiStandardTable {
 			z.nativeEnum(NumberRange),
 			z.nativeEnum(SingleEnum),
 		])
-	}
-
-	export enum PaginationType {
-		LOCAL = 'LOCAL',
-		REMOTE = 'REMOTE',
 	}
 
 	const sharedFilterSchema = z.object({
@@ -200,7 +197,7 @@ export namespace KottiStandardTable {
 				pageSizeOptions: sharedPaginationSchema.shape.pageSizeOptions.default(
 					() => DEFAULT_PAGE_SIZE_OPTIONS,
 				),
-				type: z.literal(PaginationType.LOCAL),
+				type: z.literal('local'),
 			}),
 			z.object({
 				pageSize:
@@ -209,13 +206,13 @@ export namespace KottiStandardTable {
 					() => DEFAULT_PAGE_SIZE_OPTIONS,
 				),
 				rowCount: sharedPaginationSchema.shape.rowCount,
-				type: z.literal(PaginationType.REMOTE),
+				type: z.literal('remote'),
 			}),
 		])
 		.default({
 			pageSize: DEFAULT_PAGE_SIZE,
 			pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
-			type: PaginationType.LOCAL,
+			type: 'local',
 		})
 	export type Pagination = z.input<typeof paginationSchema>
 
@@ -224,117 +221,6 @@ export namespace KottiStandardTable {
 		title: z.string().optional(),
 	})
 	export type Props = z.input<typeof propsSchema>
-
-	export namespace BooleanFilter {
-		export const propsSchema = z.object({
-			filter: booleanFilterSchema,
-			isLoading: z.boolean().default(false),
-			value: KottiFieldToggle.valueSchema.default(null),
-		})
-	}
-	export namespace DateRangeFilter {
-		export const propsSchema = z.object({
-			filter: dateRangeFilterSchema,
-			isLoading: z.boolean().default(false),
-			value: KottiFieldDateRange.valueSchema.default([null, null]),
-		})
-	}
-	export namespace MultiSelectFilter {
-		export const propsSchema = z.object({
-			filter: multiSelectFilterSchema,
-			isLoading: z.boolean().default(false),
-			value: KottiFieldMultiSelect.valueSchema.default(() => []),
-		})
-	}
-	export namespace NumberRangeFilter {
-		export const propsSchema = z.object({
-			filter: numberRangeFilterSchema,
-			isLoading: z.boolean().default(false),
-			value: z
-				.tuple([KottiFieldNumber.valueSchema, KottiFieldNumber.valueSchema])
-				.default([null, null]),
-		})
-	}
-	export namespace SingleSelectFilter {
-		export const propsSchema = z.object({
-			filter: singleSelectFilterSchema,
-			isLoading: z.boolean().default(false),
-			value: KottiFieldSingleSelect.valueSchema.default(null),
-		})
-	}
-
-	export namespace FilterList {
-		export const propsSchema = z.object({
-			filters: z.array(filterSchema).default(() => []),
-			isLoading: z.boolean().default(false),
-			value: z.array(appliedFilterSchema).default(() => []),
-		})
-		export type Props = z.output<typeof propsSchema>
-	}
-
-	export namespace TableColumns {
-		export const propsSchema = z.object({
-			isLoading: z.boolean().default(false),
-			options: z
-				.object({
-					key: z.string(),
-					label: z.string(),
-				})
-				.array(),
-			size: KottiPopover.propsSchema.shape.size.default(
-				KottiPopover.Size.MEDIUM,
-			),
-			value: z.record(z.string(), z.boolean()),
-		})
-		export type Props = z.output<typeof propsSchema>
-	}
-
-	export namespace TableFilters {
-		export const propsSchema = z.object({
-			filters: z.array(filterSchema).default(() => []),
-			isLoading: z.boolean().default(false),
-			size: KottiPopover.propsSchema.shape.size.default(
-				KottiPopover.Size.MEDIUM,
-			),
-			value: z.array(appliedFilterSchema).default(() => []),
-		})
-		export type Props = z.output<typeof propsSchema>
-	}
-
-	export namespace TablePageSize {
-		export const propsSchema = sharedPaginationSchema
-			.pick({
-				pageSize: true,
-				pageSizeOptions: true,
-			})
-			.extend({
-				isLoading: z.boolean().default(false),
-			})
-		export type Props = z.output<typeof propsSchema>
-	}
-
-	export namespace TablePagination {
-		export const propsSchema = sharedPaginationSchema
-			.pick({
-				pageIndex: true,
-				pageSize: true,
-				rowCount: true,
-			})
-			.extend({
-				isLoading: z.boolean().default(false),
-			})
-		export type Props = z.output<typeof propsSchema>
-	}
-
-	export namespace TableSearch {
-		export const propsSchema = z.object({
-			dataTest: z.string().optional(),
-			isLoading: z.boolean().default(false),
-			placeholder: z.string().optional(),
-			value: KottiFieldText.valueSchema.default(null),
-		})
-		export type Props = z.output<typeof propsSchema>
-	}
 
 	export namespace Events {
 		const updateDataFetchDependencies = z.object({
@@ -356,6 +242,18 @@ export namespace KottiStandardTable {
 		export type UpdateDataFetchDependencies = z.output<
 			typeof updateDataFetchDependencies
 		>
+	}
+
+	export module Hook {
+		export type Returns<COLUMN_ID extends string> =
+			KottiTable.Hook.Returns<COLUMN_ID> & {
+				appliedFilters: Ref<AppliedFilter[]>
+				pagination: Ref<{
+					pageIndex: number
+					pageSize: number
+				}>
+				searchValue: Ref<string | null>
+			}
 	}
 
 	export type Translations = {

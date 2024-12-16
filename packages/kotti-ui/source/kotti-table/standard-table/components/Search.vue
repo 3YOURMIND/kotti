@@ -21,12 +21,15 @@ import { Yoco } from '@3yourmind/yoco'
 import { DEFAULT_DEBOUNCE } from '../../../constants'
 import type { KottiFieldText } from '../../../kotti-field-text/types'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
-import { makeProps } from '../../../make-props'
-import { KottiStandardTable } from '../types'
 
 export default defineComponent({
 	name: 'TableSearch',
-	props: makeProps(KottiStandardTable.TableSearch.propsSchema),
+	props: {
+		dataTest: { default: null, type: String },
+		isLoading: { default: false, type: Boolean },
+		placeholder: { default: null, type: String },
+		value: { default: null, type: String },
+	},
 	emits: ['input'],
 	setup(props, { emit }) {
 		const internalValue = ref<KottiFieldText.Value>(null)
