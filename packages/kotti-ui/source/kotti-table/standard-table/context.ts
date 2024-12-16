@@ -1,6 +1,7 @@
 import { inject, provide, type Ref } from 'vue'
 
 import type { KottiFieldText } from '../../kotti-field-text/types'
+import type { KottiTableHook } from '../table/hooks'
 import type { KottiTable } from '../table/types'
 
 import type { KottiStandardTable } from './types'
@@ -19,21 +20,31 @@ export type StandardTableContext<
 		isLoading: boolean
 		options?: KottiStandardTable.Options
 		pageSizeOptions: number[]
-		paginationType: KottiStandardTable.PaginationType
+		pagination: { pageIndex: number; pageSize: number }
+		rowCount: number
 		searchValue: KottiFieldText.Value
 		setAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => void
+		setPageIndex: (value: number) => void
+		setPageSize: (value: number) => void
 		setSearchValue: (value: KottiFieldText.Value) => void
 	}
+	tableInternal: KottiTableHook<
+		ROW,
+		COLUMN_ID
+	>['tableContext']['value']['internal']
 }>
 
 const getStandardTableContextKey = (id: string): string =>
 	`kt-standard-table-${id}`
 
-export const useProvideStandardTableContext = <ROW extends KottiTable.AnyRow>(
+export const useProvideStandardTableContext = <
+	ROW extends KottiTable.AnyRow,
+	COLUMN_ID extends string,
+>(
 	id: string,
-	standardTableContext: StandardTableContext<ROW>,
+	standardTableContext: StandardTableContext<ROW, COLUMN_ID>,
 ): void => {
-	provide<StandardTableContext<ROW>>(
+	provide<StandardTableContext<ROW, COLUMN_ID>>(
 		getStandardTableContextKey(id),
 		standardTableContext,
 	)

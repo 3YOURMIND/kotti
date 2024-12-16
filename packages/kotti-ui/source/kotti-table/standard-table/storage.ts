@@ -1,10 +1,11 @@
 import { z } from 'zod'
 
 import { simpleHash } from './simple-hash'
+import { KottiStandardTable } from './types'
 
 export const serializableStateSchema = z
 	.object({
-		appliedFilters: z.any(), // TODO: use filtersSchema,
+		appliedFilters: z.array(KottiStandardTable.appliedFilterSchema),
 		columnOrder: z.array(z.string()),
 		hiddenColumns: z.array(z.string()),
 		ordering: z.array(
@@ -58,7 +59,6 @@ export type StorageOperationContext = {
 	 * Used for column hashing in {@link LocalStorageAdapter}
 	 */
 	columnIds: string[]
-	// TODO: filters maybe?
 }
 
 export class LocalStorageAdapter implements KottiStandardTableStorage {
@@ -96,9 +96,6 @@ export class LocalStorageAdapter implements KottiStandardTableStorage {
 		if (!json) return null
 
 		try {
-			// eslint-disable-next-line no-console
-			console.debug('loading localStorage', json)
-
 			const data = localStorageSchema.parse(JSON.parse(json))
 
 			if (!this.#validateVersionHash(context.columnIds, data.version))
@@ -130,28 +127,6 @@ export class LocalStorageAdapter implements KottiStandardTableStorage {
 			version,
 		})
 
-		// eslint-disable-next-line no-console
-		console.debug('saving localStorage', json)
 		window.localStorage.setItem(this.#storageKey, json)
 	}
 }
-
-// class QueryParameterStorageAdapter implements KottiStandardTableStorage {
-// 	// eslint-disable-next-line @typescript-eslint/require-await
-// 	async load() {
-// 		return {
-// 			columnOrder: [],
-// 			filters: [],
-// 			pagination: { pageIndex: 0, pageSize: 5 },
-// 			searchValue: null,
-// 			sorting: [],
-// 		}
-// 	}
-
-// 	// eslint-disable-next-line @typescript-eslint/require-await
-// 	async save(state: SerializableState) {
-// 		// qs(something)
-// 		// eslint-disable-next-line no-console
-// 		console.log('totally saving to query parameters', state)
-// 	}
-// }

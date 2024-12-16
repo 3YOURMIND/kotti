@@ -2,18 +2,18 @@
 
 ## Review Comments
 
-- [ ] make sure it wraps properly
-- [ ] consider display-noning sorting indicator when inactive and showing animation when toggling making it appear
-- [ ] table looses scroll position when loading
-- [ ] should have a simpler loading state if datat is already present
-- [ ] check search placeholder and popover sizes in documentation
-- [ ] use api/internal pattern for return
-- [ ] sync pagination schema
-- [ ] simplify forwarding properties from standard table to table, some properties are not forwarded yet
-- [ ] remove local pagination
-- [ ] check useComputedRef for reactivity bugs
+- [x] make sure it wraps properly
+- [x] consider display-noning sorting indicator when inactive and showing animation when toggling making it appear
+- [x] table looses scroll position when loading
+- [x] should have a simpler loading state if datat is already present
+- [x] check search placeholder and popover sizes in documentation
+- [x] use api/internal pattern for return
+- [x] sync pagination schema
+- [x] simplify forwarding properties from standard table to table, some properties are not forwarded yet
+- [x] remove local pagination
+- [x] check useComputedRef for reactivity bugs
 - [ ] FIXMEs/TODOs
-- [ ] double-check all calls to table.getState() and other direct calls to tanstack api
+- [x] double-check all calls to table.getState() and other direct calls to tanstack api
 - [ ] prune out schemas from types.ts that don't need
 
 ## Kinds

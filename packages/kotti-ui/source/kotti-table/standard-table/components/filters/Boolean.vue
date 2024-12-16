@@ -15,14 +15,24 @@
 
 <script lang="ts">
 import isNil from 'lodash/isNil.js'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
 
-import { makeProps } from '../../../../make-props'
-import { KottiStandardTable } from '../../types'
+import type { KottiStandardTable } from '../../types'
 
 export default defineComponent({
 	name: 'BooleanFilter',
-	props: makeProps(KottiStandardTable.BooleanFilter.propsSchema),
+	props: {
+		filter: {
+			required: true,
+			type: Object as PropType<
+				KottiStandardTable.FilterInternal & {
+					type: KottiStandardTable.FilterType.BOOLEAN
+				}
+			>,
+		},
+		isLoading: { default: false, type: Boolean },
+		value: { default: null, type: Boolean },
+	},
 	emits: ['input'],
 	setup(props, { emit }) {
 		return {

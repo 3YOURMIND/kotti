@@ -12,16 +12,29 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
 
 import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
-import { makeProps } from '../../../../make-props'
-import { KottiStandardTable } from '../../types'
+import type { KottiStandardTable } from '../../types'
 import { getLast, today } from '../../utilities/date'
 
 export default defineComponent({
 	name: 'DateRangeFilter',
-	props: makeProps(KottiStandardTable.DateRangeFilter.propsSchema),
+	props: {
+		filter: {
+			required: true,
+			type: Object as PropType<
+				KottiStandardTable.FilterInternal & {
+					type: KottiStandardTable.FilterType.DATE_RANGE
+				}
+			>,
+		},
+		isLoading: { default: false, type: Boolean },
+		value: {
+			default: () => [null, null],
+			type: Array as unknown as PropType<[string | null, string | null]>,
+		},
+	},
 	emits: ['input'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtStandardTable')

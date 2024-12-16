@@ -16,16 +16,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
 
 import type { KottiFieldSingleSelect } from '../../../kotti-field-select/types'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
-import { makeProps } from '../../../make-props'
-import { KottiStandardTable } from '../types'
 
 export default defineComponent({
 	name: 'TablePageSize',
-	props: makeProps(KottiStandardTable.TablePageSize.propsSchema),
+	props: {
+		isLoading: { default: false, type: Boolean },
+		pageSize: { required: true, type: Number },
+		pageSizeOptions: { required: true, type: Array as PropType<number[]> },
+	},
 	emits: ['updatePageSize'],
 	setup(props) {
 		return {

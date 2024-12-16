@@ -24,13 +24,16 @@ import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent } from 'vue'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
-import { makeProps } from '../../../make-props'
-import { KottiStandardTable } from '../types'
 import { pluralize } from '../utilities/translation'
 
 export default defineComponent({
 	name: 'TablePagination',
-	props: makeProps(KottiStandardTable.TablePagination.propsSchema),
+	props: {
+		isLoading: { default: false, type: Boolean },
+		pageIndex: { required: true, type: Number },
+		pageSize: { required: true, type: Number },
+		rowCount: { required: true, type: Number },
+	},
 	emits: ['updatePageIndex'],
 	setup(props) {
 		const translations = useTranslationNamespace('KtStandardTable')

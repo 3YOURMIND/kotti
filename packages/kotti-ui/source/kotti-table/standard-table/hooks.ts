@@ -16,31 +16,31 @@ import type { StandardTableContext } from './context'
 import { useProvideStandardTableContext } from './context'
 import type { StorageOperationContext } from './storage'
 import {
+	DummyStorageAdapter,
 	type KottiStandardTableStorage,
-	LocalStorageAdapter,
 	serializableStateSchema,
 } from './storage'
 import { KottiStandardTable } from './types'
 
 type KottiStandardTableParameters<
 	ROW extends KottiTable.AnyRow,
-	COLUMN_ID extends string = string,
+	COLUMN_ID extends string,
 > = Ref<{
 	filters?: KottiStandardTable.Filter[]
 	id: string
+	initialPagination: KottiStandardTable.Pagination
 	isLoading?: boolean
 	options?: KottiStandardTable.Options
-	pagination: KottiStandardTable.Pagination
 	storageAdapter: KottiStandardTableStorage | null
-	table: Omit<KottiTableParameter<ROW, COLUMN_ID>, 'id' | 'pagination'>
+	table: Omit<KottiTableParameter<ROW, COLUMN_ID>, 'id'>
 }>
 
 const _paramsSchema = z.object({
 	filters: KottiStandardTable.filterSchema.array().default(() => []),
 	id: z.string(),
+	initialPagination: KottiStandardTable.paginationSchema,
 	isLoading: z.boolean().default(false),
 	options: KottiStandardTable.optionsSchema.optional(),
-	pagination: KottiStandardTable.paginationSchema,
 	storageAdapter: z
 		.object({
 			load: z.any(),
@@ -49,22 +49,28 @@ const _paramsSchema = z.object({
 		.nullable(),
 	table: KottiTableHookParamsSchema.omit({
 		id: true,
-		pagination: true,
 	}),
 })
 
-export const useKottiStandardTable = <ROW extends KottiTable.AnyRow>(
-	_params: KottiStandardTableParameters<ROW>,
+export const useKottiStandardTable = <
+	ROW extends KottiTable.AnyRow,
+	COLUMN_ID extends string,
+>(
+	_params: KottiStandardTableParameters<ROW, COLUMN_ID>,
 ): {
-	appliedFilters: Ref<unknown>
-	context: StandardTableContext<ROW>
-	searchValue: Ref<KottiFieldText.Value>
-	tableHook: ReturnType<typeof useKottiTable<ROW, string>>
+	api: KottiStandardTable.Hook.Returns<COLUMN_ID>
+	context: StandardTableContext<ROW, COLUMN_ID>
 } => {
 	const params = computed(() => _paramsSchema.parse(_params.value))
 
 	const filterIdSet = computed<Set<string>>(
 		() => new Set(params.value.filters.map((f) => f.id)),
+	)
+
+	const rowCount = computed(() =>
+		params.value.initialPagination.type === 'local'
+			? params.value.table.data.length
+			: params.value.initialPagination.rowCount,
 	)
 
 	// refs exposed on return/api
@@ -78,39 +84,46 @@ export const useKottiStandardTable = <ROW extends KottiTable.AnyRow>(
 		value: ref([]),
 	})
 
+	// FIXME: This useComputedRef right now assumes that the pageSize provdided via params
+	// does not change. If a user would change it, it will lead to unintended behavior
+	const pagination = useComputedRef<{ pageIndex: number; pageSize: number }>({
+		get: (value) => value,
+		set: (value) => {
+			const currentRow = value.pageIndex * value.pageSize
+			if (currentRow > rowCount.value) {
+				return {
+					...value,
+					pageIndex: 0,
+				}
+			}
+			return value
+		},
+		value: ref({
+			pageIndex: 0,
+			pageSize: params.value.initialPagination.pageSize,
+		}),
+	})
+
+	const data = computed(() => {
+		if (params.value.initialPagination.type === 'remote')
+			return params.value.table.data
+
+		const sliceStart = pagination.value.pageIndex * pagination.value.pageSize
+		const sliceEnd = sliceStart + pagination.value.pageSize
+		return params.value.table.data.slice(sliceStart, sliceEnd)
+	})
+
 	// go
 
 	const storageAdapter = computed(
-		// FIXME: should be new DummyStorageAdapter()
-		() => params.value.storageAdapter ?? new LocalStorageAdapter('sample-key'),
+		() => params.value.storageAdapter ?? new DummyStorageAdapter(),
 	)
 
-	const tableHook = useKottiTable<ROW, string>(
+	const tableHook = useKottiTable<ROW, COLUMN_ID>(
 		computed(() => ({
-			columns: _params.value.table.columns,
-			data: params.value.table.data,
-			getRowBehavior: ({ row }: { row: ROW }) => ({
-				id: String(row.id),
-			}),
-			hasDragAndDrop: true,
+			..._params.value.table,
+			data: data.value,
 			id: params.value.id,
-			pagination:
-				params.value.pagination.type === KottiStandardTable.PaginationType.LOCAL
-					? {
-							state: {
-								pageIndex: 0,
-								pageSize: params.value.pagination.pageSize,
-							},
-							type: KottiStandardTable.PaginationType.LOCAL,
-						}
-					: {
-							rowCount: params.value.pagination.rowCount,
-							state: {
-								pageIndex: 0,
-								pageSize: params.value.pagination.pageSize,
-							},
-							type: KottiStandardTable.PaginationType.REMOTE,
-						},
 		})),
 	)
 
@@ -127,44 +140,58 @@ export const useKottiStandardTable = <ROW extends KottiTable.AnyRow>(
 		)
 
 		if (!rawState) {
-			// eslint-disable-next-line no-console
-			console.log('TODO: storage adapter returned no value')
 			return
 		}
 
 		const state = serializableStateSchema.parse(rawState)
 
-		tableHook.api.columnOrder.value = state.columnOrder
-		tableHook.api.hiddenColumns.value = new Set(state.hiddenColumns)
-		tableHook.api.ordering.value = state.ordering
+		tableHook.api.columnOrder.value = state.columnOrder as COLUMN_ID[]
+		tableHook.api.hiddenColumns.value = new Set(
+			state.hiddenColumns as COLUMN_ID[],
+		)
+		tableHook.api.ordering.value =
+			state.ordering as KottiTable.Ordering<COLUMN_ID>[]
 		appliedFilters.value = state.appliedFilters
+		pagination.value = state.pagination
 		searchValue.value = state.searchValue
-		tableHook.api.pagination.value = state.pagination
 	})
 
-	// eslint-disable-next-line no-console
-	console.log('TODO: useStandardTable(params)', params.value)
-
-	const standardTableContext: StandardTableContext<ROW> = computed(() => ({
-		internal: {
-			appliedFilters: appliedFilters.value,
-			columns: _params.value.table.columns,
-			filters: params.value.filters,
-			getFilter: (id) =>
-				params.value.filters.find((filter) => filter.id === id) ?? null,
-			isLoading: params.value.isLoading,
-			options: params.value.options,
-			pageSizeOptions: params.value.pagination.pageSizeOptions,
-			paginationType: params.value.pagination.type,
-			searchValue: searchValue.value,
-			setAppliedFilters: (filters: KottiStandardTable.AppliedFilter[]) => {
-				appliedFilters.value = filters
+	const standardTableContext: StandardTableContext<ROW, COLUMN_ID> = computed(
+		() => ({
+			internal: {
+				appliedFilters: appliedFilters.value,
+				columns: _params.value.table.columns,
+				filters: params.value.filters,
+				getFilter: (id) =>
+					params.value.filters.find((filter) => filter.id === id) ?? null,
+				isLoading: params.value.isLoading,
+				options: params.value.options,
+				pageSizeOptions: params.value.initialPagination.pageSizeOptions,
+				pagination: pagination.value,
+				rowCount: rowCount.value,
+				searchValue: searchValue.value,
+				setAppliedFilters: (filters: KottiStandardTable.AppliedFilter[]) => {
+					appliedFilters.value = filters
+				},
+				setPageIndex: (pageIndex: number) => {
+					pagination.value = {
+						...pagination.value,
+						pageIndex,
+					}
+				},
+				setPageSize: (pageSize: number) => {
+					pagination.value = {
+						pageIndex: 0,
+						pageSize,
+					}
+				},
+				setSearchValue: (search: KottiFieldText.Value) => {
+					searchValue.value = search
+				},
 			},
-			setSearchValue: (search: KottiFieldText.Value) => {
-				searchValue.value = search
-			},
-		},
-	}))
+			tableInternal: tableHook.tableContext.value.internal,
+		}),
+	)
 	useProvideStandardTableContext(params.value.id, standardTableContext)
 
 	watch(
@@ -173,7 +200,7 @@ export const useKottiStandardTable = <ROW extends KottiTable.AnyRow>(
 			columnOrder: tableHook.api.columnOrder.value,
 			hiddenColumns: tableHook.api.hiddenColumns.value,
 			ordering: tableHook.api.ordering.value,
-			pagination: tableHook.api.pagination.value,
+			pagination: pagination.value,
 			searchValue: searchValue.value,
 		})),
 		async (newState, oldState) => {
@@ -190,19 +217,27 @@ export const useKottiStandardTable = <ROW extends KottiTable.AnyRow>(
 	)
 
 	watch(
-		() =>
-			tableHook.tableContext.value.internal.table.value.getState().pagination
-				.pageSize,
-		() => {
-			tableHook.tableContext.value.internal.table.value.setPageIndex(0)
+		() => pagination,
+		(newPagination, oldPagination) => {
+			const old = oldPagination.value
+			const current = newPagination.value
+			if (current.pageSize === old.pageSize) return
+
+			const newPageIndex = (old.pageSize * old.pageIndex) / current.pageSize
+			pagination.value = {
+				pageIndex: newPageIndex,
+				pageSize: current.pageIndex,
+			}
 		},
 	)
 
 	return {
-		appliedFilters,
-		searchValue,
-		// paginationParams,
-		context: standardTableContext, // TODO: convert to provide/inject
-		tableHook: tableHook,
+		api: {
+			...tableHook.api,
+			appliedFilters,
+			pagination,
+			searchValue,
+		},
+		context: standardTableContext,
 	}
 }

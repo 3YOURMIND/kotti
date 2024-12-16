@@ -21,8 +21,16 @@
 				<template v-if="settings.slots.infoActionsSlot" #info-actions>
 					<KtButton label="Some Action" />
 				</template>
-				<template v-if="settings.slots.tableSlot" #table>
-					CUSTOM CONTENT
+				<template
+					v-if="settings.slots.tableSlot"
+					#table="{ isLoading, tableId }"
+				>
+					{{ JSON.stringify({ isLoading, tableId }) }}
+					<KtTable v-bind="{ isLoading, tableId }">
+						<template #expanded-row="{ row }">
+							{{ JSON.stringify(row) }}
+						</template>
+					</KtTable>
 				</template>
 			</KtStandardTable>
 		</KtI18nContext>
@@ -260,7 +268,7 @@ export default defineComponent({
 				search: boolean
 			}
 			locale: Kotti.I18n.SupportedLanguages
-			searchPlaceholder?: Kotti.FieldText.Value
+			searchPlaceholder: Kotti.FieldText.Value
 			showInlineFilters: Kotti.FieldToggle.Value
 			slots: {
 				controlsActionsSlot: Kotti.FieldToggle.Value
@@ -278,7 +286,7 @@ export default defineComponent({
 				search: false,
 			},
 			locale: 'en-US',
-			searchPlaceholder: undefined,
+			searchPlaceholder: null,
 			showInlineFilters: false,
 			slots: {
 				controlsActionsSlot: false,
@@ -400,14 +408,14 @@ export default defineComponent({
 				: []),
 		])
 
-		useKottiStandardTable<TodoRow>(
+		useKottiStandardTable(
 			computed(() => ({
 				id: 'example-local-data',
-				pagination: {
+				initialPagination: {
 					pageSize: 5,
 					// eslint-disable-next-line no-magic-numbers
 					pageSizeOptions: [5, 10, 15, 20],
-					type: Kotti.StandardTable.PaginationType.LOCAL,
+					type: 'local',
 				},
 				storageAdapter: null,
 				table: {
@@ -420,25 +428,31 @@ export default defineComponent({
 			})),
 		)
 
-		useKottiStandardTable<RecipeRow>(
+		useKottiStandardTable(
 			computed(() => ({
 				filters: filters.value,
 				id: 'example-remote-data',
-				isLoading: isLoadingRecipes.value,
-				options: {
-					hideControls: settings.value.hideControls,
-				},
-				pagination: {
+				initialPagination: {
 					pageSize: 5,
 					// eslint-disable-next-line no-magic-numbers
 					pageSizeOptions: [5, 10, 15, 30, 50, 100],
 					rowCount: recipesRowCount.value,
-					type: Kotti.StandardTable.PaginationType.REMOTE,
+					type: 'remote',
+				},
+				isLoading: isLoadingRecipes.value,
+				options: {
+					hideControls: settings.value.hideControls,
+					popoversSize: {
+						columns: settings.value.columnsPopoverSize,
+						filters: settings.value.filtersPopoverSize,
+					},
+					searchPlaceholder: settings.value.searchPlaceholder ?? undefined,
 				},
 				storageAdapter: null,
 				table: {
 					columns: recipesColumns.value,
 					data: recipesData.value,
+					expandMode: settings.value.slots.tableSlot ? 'single' : undefined,
 					getRowBehavior: ({ row }: { row: RecipeRow }) => ({
 						id: String(row.id),
 					}),

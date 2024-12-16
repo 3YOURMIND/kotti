@@ -33,13 +33,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
-import { makeProps } from '../../../make-props'
-import { KottiStandardTable } from '../types'
+import type { KottiStandardTable } from '../types'
 
 import FilterList from './FilterList.vue'
 
@@ -48,7 +47,19 @@ export default defineComponent({
 	components: {
 		FilterList,
 	},
-	props: makeProps(KottiStandardTable.TableFilters.propsSchema),
+	props: {
+		filters: {
+			default: () => [],
+			type: Array as PropType<KottiStandardTable.FilterInternal[]>,
+		},
+		isLoading: { default: false, type: Boolean },
+
+		size: { default: 'md', type: String },
+		value: {
+			default: () => [],
+			type: Array as PropType<KottiStandardTable.AppliedFilter[]>,
+		},
+	},
 	emits: ['input'],
 	setup() {
 		return {
