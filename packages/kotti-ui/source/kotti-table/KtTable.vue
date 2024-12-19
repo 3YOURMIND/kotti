@@ -14,13 +14,14 @@
 						:colSpan="header.colSpan"
 						:data-test="header.dataTest"
 						:draggable="header.isDraggable"
+						:style="header.style"
 						@click="(e) => handleHeaderClick(e, header)"
 						@dragenter.prevent
 						@dragleave.prevent
 						@dragover.prevent="(e) => handleCellDragOver(e, header.id)"
 						@dragstart="(e) => handleHeaderDragStart(e, header.id)"
 					>
-						<div class="kt-table-header" :style="header.style">
+						<div class="kt-table-header">
 							<FlexRender
 								:props="{ ...header.getContext() }"
 								:render="header.column.columnDef.header"
@@ -36,7 +37,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-if="isLoading" class="kt-table-row kt-table-row--is-loading">
+				<tr
+					v-if="bodyRows.length === 0 && isLoading"
+					class="kt-table-row kt-table-row--is-loading"
+				>
 					<td :colSpan="tableColSpan">
 						<slot name="loading">
 							<div
@@ -65,6 +69,7 @@
 							:key="cell.key"
 							:class="cell.classes"
 							:data-test="cell.dataTest"
+							:style="cell.style"
 							@dragenter.prevent
 							@dragleave.prevent
 							@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
@@ -73,7 +78,6 @@
 								:is="cell.wrapComponent.component"
 								v-bind="cell.wrapComponent.props"
 								:class="cell.wrapComponent.class"
-								:style="cell.style"
 								v-on="cell.wrapComponent.on"
 							>
 								<FlexRender
@@ -216,6 +220,7 @@ export default defineComponent({
 							'kt-table-row--is-click-disabled': behavior.disable?.click,
 							'kt-table-row--is-interactive':
 								!behavior.disable?.click && behavior.click,
+							'kt-table-row--is-selected': row.getIsSelected(),
 						}),
 						expandedColSpan: row.getAllCells().length,
 						expandedKey: `${row.id}-expanded-row`,
@@ -263,12 +268,12 @@ export default defineComponent({
 
 				switch (header.column.getIsSorted()) {
 					case false:
-						table.value.setSorting([{ desc: true, id }])
-						break
-					case 'desc':
 						table.value.setSorting([{ desc: false, id }])
 						break
 					case 'asc':
+						table.value.setSorting([{ desc: true, id }])
+						break
+					case 'desc':
 						table.value.setSorting([])
 						break
 				}
@@ -299,9 +304,9 @@ export default defineComponent({
 						isSortable: header.column.getCanSort(),
 						key: `${header.id}-${headerIndex}`,
 						sortIndicatorIcon: {
-							asc: Yoco.Icon.CHEVRON_UP,
-							desc: Yoco.Icon.CHEVRON_DOWN,
-							false: '',
+							asc: Yoco.Icon.ARROW_UP,
+							desc: Yoco.Icon.ARROW_DOWN,
+							false: Yoco.Icon.ARROW_UP_DOWN,
 						}[header.column.getIsSorted() || 'false'],
 						style: header.column.columnDef.meta.style,
 					})),
@@ -313,6 +318,7 @@ export default defineComponent({
 				'kt-table--is-drag-and-drop-active':
 					tableContext.value.internal.isDragAndDropActive,
 				'kt-table--is-scrollable': !props.isNotScrollable,
+				'skeleton rectangle': props.isLoading,
 			})),
 			table,
 			tableContext: computed(() => tableContext.value),
@@ -341,6 +347,14 @@ export default defineComponent({
 		white-space: nowrap;
 	}
 
+	&.skeleton.rectangle {
+		height: unset;
+
+		tbody {
+			mix-blend-mode: multiply;
+		}
+	}
+
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -355,11 +369,28 @@ export default defineComponent({
 
 			.kt-table-cell--is-header {
 				font-size: var(--unit-3);
-				color: var(--gray-50);
+				color: var(--text-02);
 				text-transform: uppercase;
 
 				&.kt-table-cell--is-sorted {
-					color: var(--gray-60);
+					color: var(--interactive-01);
+				}
+
+				&:not(.kt-table-cell--is-sorted) {
+					.yoco {
+						opacity: 0;
+					}
+
+					&:hover {
+						.yoco {
+							opacity: 1;
+							color: var(--icon-02);
+
+							&:hover {
+								color: var(--icon-01);
+							}
+						}
+					}
 				}
 
 				&[draggable='true'] {
@@ -369,16 +400,36 @@ export default defineComponent({
 				.kt-table-header {
 					display: inline-flex;
 					align-items: center;
-					justify-content: space-between;
+					gap: 4px;
 					width: 100%;
 					padding: 0.4rem 0.3rem;
 					overflow: hidden;
 
-					.yoco {
-						min-width: 1rem;
+					> .yoco {
+						min-width: 0.9rem;
 						font-size: 0.9rem;
+						user-select: none;
 						color: var(--interactive-03);
 					}
+				}
+
+				&.kt-table-cell--is-left-aligned .kt-table-header {
+					justify-content: flex-start;
+				}
+
+				&.kt-table-cell--is-center-aligned .kt-table-header {
+					justify-content: center;
+				}
+
+				&.kt-table-cell--is-right-aligned .kt-table-header {
+					justify-content: flex-start;
+					flex-flow: row-reverse;
+				}
+
+				&.kt-table-cell--is-center-aligned.kt-table-cell--is-sortable
+					> .kt-table-header
+					> div:nth-child(1) {
+					margin-left: 0.9rem;
 				}
 			}
 
@@ -410,6 +461,7 @@ export default defineComponent({
 				&:hover .kt-table__actions {
 					display: inline-flex;
 					align-items: center;
+					gap: var(--unit-1);
 					background: var(--white);
 				}
 			}
@@ -496,7 +548,7 @@ export default defineComponent({
 			z-index: 400;
 			display: none;
 			min-height: var(--unit-8);
-			padding: 0.25rem;
+			padding: var(--unit-h) var(--unit-1);
 			margin-top: -0.8rem;
 			font-size: 0.8rem;
 			line-height: 0.8rem;
@@ -517,7 +569,7 @@ export default defineComponent({
 
 			.kt-table__action-icon,
 			.yoco {
-				margin: 0 var(--unit-1);
+				padding: var(--unit-h);
 				font-size: 1rem;
 				cursor: pointer;
 				user-select: none;
@@ -535,15 +587,6 @@ export default defineComponent({
 					}
 				}
 			}
-		}
-	}
-
-	// disable hover when drag and drop is active, otherwise drag and drop specific styles won't show
-	&:not(.kt-table--is-drag-and-drop-active) thead .kt-table-cell--is-header {
-		&.kt-table-cell--is-sortable:hover,
-		&[draggable='true']:hover {
-			color: var(--gray-60);
-			background-color: var(--ui-02);
 		}
 	}
 }
@@ -580,22 +623,14 @@ tr.kt-table-row {
 	&--is-loading {
 		text-align: center;
 	}
+
+	&--is-selected {
+		background-color: rgb(234 240 250 / 50%); // ~= rgb(--blue-10 / 60%)
+	}
 }
 
 .kt-table-cell {
 	height: 44px;
-
-	&--is-left-aligned {
-		text-align: left;
-	}
-
-	&--is-right-aligned {
-		text-align: right;
-	}
-
-	&--is-center-aligned {
-		text-align: center;
-	}
 
 	&--was-successfully-dropped {
 		animation: 0.2s ease-in 1 flash-green;

@@ -543,7 +543,7 @@ export const useKottiTable = <
 							)
 						},
 						enableSorting: column.isSortable,
-						header: () => h('div', { style: { flex: 1 } }, column.label),
+						header: () => h('div', column.label),
 						id: column.id,
 						meta: {
 							cellClasses: getCellClasses('body'),
