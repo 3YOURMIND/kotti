@@ -18,6 +18,7 @@ declare module '@tanstack/table-core' {
 		cellClasses: Record<string, boolean> | string
 		disableCellClick: boolean
 		headerClasses: Record<string, boolean> | string
+		sortBehavior: 'asc-desc' | 'desc-asc'
 		style?: Record<string, string>
 	}
 }

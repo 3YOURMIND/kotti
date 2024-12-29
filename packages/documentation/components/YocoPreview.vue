@@ -95,6 +95,10 @@ export default defineComponent({
 	background: #f8f8f8;
 	box-shadow: 0 2px 2px #ddd;
 
+	.yoco {
+		border: 1px dashed var(--gray-20);
+	}
+
 	.size-1,
 	.size-3 {
 		opacity: 1;

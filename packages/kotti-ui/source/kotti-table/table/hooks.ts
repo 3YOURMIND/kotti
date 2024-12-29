@@ -69,6 +69,7 @@ export const paramsSchema = z
 							disableCellClick: z.boolean(),
 							isNumeric: z.boolean(),
 							render: z.function(),
+							sortBehavior: z.enum(['asc-desc', 'desc-asc']),
 						})
 						.strict(),
 					getData: z.function(),
@@ -543,12 +544,13 @@ export const useKottiTable = <
 							)
 						},
 						enableSorting: column.isSortable,
-						header: () => h('div', { style: { flex: 1 } }, column.label),
+						header: () => h('div', column.label),
 						id: column.id,
 						meta: {
 							cellClasses: getCellClasses('body'),
 							disableCellClick: column.display.disableCellClick,
 							headerClasses: getCellClasses('header'),
+							sortBehavior: column.display.sortBehavior,
 							style: {
 								'max-width': column.maxWidth,
 								'min-width': column.minWidth,

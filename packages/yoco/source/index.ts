@@ -4,7 +4,10 @@ export module Yoco {
 	export enum Icon {
 		ADDRESS_BOOK = 'address_book',
 		ANNOUNCE = 'announce',
+		ARROW_DOWN = 'arrow_down',
 		ARROW_LINE = 'arrow_line',
+		ARROW_UP = 'arrow_up',
+		ARROW_UP_DOWN = 'arrow_up_down',
 		ATTACHMENT = 'attachment',
 		ATTENTION = 'attention',
 		BASKET = 'basket',
