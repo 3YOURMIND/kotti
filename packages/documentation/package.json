@@ -30,7 +30,7 @@
 		"nuxt": "2.x",
 		"sass-loader": "10.x",
 		"ts-loader": "8.x",
-		"vue": "^2.7",
+		"vue": "^3.0",
 		"vue-server-renderer": "^2.7",
 		"vue-template-compiler": "^2.7"
 	},
