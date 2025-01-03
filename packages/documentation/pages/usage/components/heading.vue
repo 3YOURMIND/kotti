@@ -100,10 +100,10 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtHeading,
-			toggle: ref(false),
 			showAlert() {
 				info({ text: 'H3 Action Clicked' })
 			},
+			toggle: ref(false),
 		}
 	},
 })

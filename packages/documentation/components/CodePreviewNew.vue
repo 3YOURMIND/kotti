@@ -32,7 +32,7 @@ import { error, success } from '~/utilities/toaster'
 
 /**
  * Port of an equivalent component from 'vue3/upgrade'. Used to document the new kt-toaster
- * TODO: remove in vue3
+ * FIXME: remove in vue3
  */
 export default defineComponent({
 	name: 'CodePreviewNew',

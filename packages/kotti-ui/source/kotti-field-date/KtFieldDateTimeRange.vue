@@ -85,6 +85,8 @@ export default defineComponent({
 		const isInPopover = inject(KT_IS_IN_POPOVER, false)
 
 		return {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			elDateRef: elDateRef as any,
 			elDateTimeRangePickerProps: computed(
 				(): Partial<ElDatePicker> => ({
 					...EL_DATE_TIME_PROPS,
@@ -108,8 +110,6 @@ export default defineComponent({
 					],
 				}),
 			),
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			elDateRef: elDateRef as any,
 			field,
 			inputContainerRef,
 			onInput: (value: KottiFieldDateTimeRange.Value | null) => {

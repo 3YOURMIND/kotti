@@ -22,8 +22,8 @@ const tippy =
 		? _tippy
 		: (_tippy as unknown as { default: typeof _tippy }).default
 
-type InstanceRefType = Instance | Instance[] | null
 type Callback = (t: InstanceRefType) => void
+type InstanceRefType = Instance | Instance[] | null
 type Target = Ref<Element | null>
 
 const applyForEvery = (

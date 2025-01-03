@@ -15,8 +15,8 @@ import { localVue } from '../test-utils/index'
 import KtFormControllerObject from './KtFormControllerObject.vue'
 
 const TestField = defineComponent({
-	name: 'TestField',
 	components: { KtField },
+	name: 'TestField',
 	props: makeProps(
 		KottiField.propsSchema.extend({
 			value: z.string().nullable().default(null),

@@ -103,44 +103,44 @@ export default defineComponent({
 			component: KtBreadcrumb,
 			links: [
 				{
-					title: 'Kotti',
+					isCompleted: true,
 					onClick: () => {
 						activeIndex.value = 0
 						void router.value.push('#')
 					},
-					isCompleted: true,
+					title: 'Kotti',
 				},
 				{
-					title: 'Usage',
+					isCompleted: true,
 					onClick: () => {
 						activeIndex.value = 1
 						void router.value.push('#')
 					},
-					isCompleted: true,
+					title: 'Usage',
 				},
 				{
-					title: 'Components',
+					isCompleted: true,
 					onClick: () => {
 						activeIndex.value = 2
 						void router.value.push('#')
 					},
-					isCompleted: true,
+					title: 'Components',
 				},
 				{
-					title: 'Links',
+					isCompleted: false,
 					onClick: () => {
 						activeIndex.value = 3
 						void router.value.push('#')
 					},
-					isCompleted: false,
+					title: 'Links',
 				},
 				{
-					title: 'Breadcrumbs',
+					isDisabled: true,
 					onClick: () => {
 						activeIndex.value = 4
 						void router.value.push('#')
 					},
-					isDisabled: true,
+					title: 'Breadcrumbs',
 				},
 			],
 			textSeparator: {

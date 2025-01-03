@@ -246,14 +246,14 @@ export const useKottiTable = <
 		},
 		set: (value) => {
 			switch (params.value.expandMode) {
-				case null:
-					return {}
 				case 'multi':
 					return Object.fromEntries(
 						Object.entries(value).filter(
 							([rowId, isExpanded]) => rowIdSet.value.has(rowId) && isExpanded,
 						),
 					)
+				case null:
+					return {}
 				case 'single': {
 					for (const [rowId, isExpanded] of Object.entries(value)) {
 						if (rowIdSet.value.has(rowId) && isExpanded) {

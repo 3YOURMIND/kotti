@@ -52,6 +52,12 @@ export default defineComponent({
 		const pageAmount = computed(() => Math.ceil(props.total / props.pageSize))
 
 		return {
+			nextPage: () => {
+				if (props.page >= pageAmount.value) return
+				emit('nextPageClicked', props.page + 1)
+				emit('setPage', props.page + 1)
+			},
+			pageAmount,
 			paginationComponent: computed(() => {
 				const isFlexLogical = 2 * (props.adjacentAmount + 1) < pageAmount.value
 				switch (props.pagingStyle) {
@@ -66,16 +72,6 @@ export default defineComponent({
 						return PaginationExpanded.name
 				}
 			}),
-			nextPage: () => {
-				if (props.page >= pageAmount.value) return
-				emit('nextPageClicked', props.page + 1)
-				emit('setPage', props.page + 1)
-			},
-			pageAmount,
-			paginatorClasses: (page: number) => ({
-				'kt-pagination__page-item': true,
-				'kt-pagination__page-item--is-disabled': props.page === page,
-			}),
 			paginationProps: computed(() => ({
 				adjacentAmount: props.adjacentAmount,
 				currentPage: props.page,
@@ -84,6 +80,10 @@ export default defineComponent({
 				pageSize: props.pageSize,
 				total: props.total,
 			})),
+			paginatorClasses: (page: number) => ({
+				'kt-pagination__page-item': true,
+				'kt-pagination__page-item--is-disabled': props.page === page,
+			}),
 			previousPage: () => {
 				if (props.page === 1) return
 				emit('previousPageClicked', props.page - 1)

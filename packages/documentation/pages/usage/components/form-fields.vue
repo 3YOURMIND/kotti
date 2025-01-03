@@ -803,7 +803,7 @@ const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 				LOCALSTORAGE_SAVED_COMPONENTS_KEY,
 				JSON.stringify(savedFields),
 			)
-	} catch (error) {
+	} catch {
 		// eslint-disable-next-line no-console
 		console.warn('could not save to localStorage')
 	}
@@ -1337,6 +1337,7 @@ export default defineComponent({
 			settings.value.component.includes('Range'),
 		)
 
+		// eslint-disable-next-line sonarjs/cognitive-complexity
 		const componentProps = computed(() => {
 			const standardProps = {
 				dataTest: settings.value.dataTest,
@@ -1666,7 +1667,7 @@ export default defineComponent({
 						)
 						if (value) return JSON.parse(value)
 					}
-				} catch (error) {
+				} catch {
 					// eslint-disable-next-line no-console
 					console.warn('could not read localStorage')
 				}
@@ -1814,6 +1815,13 @@ export default defineComponent({
 			reset: () => {
 				values.value = INITIAL_VALUES
 			},
+			savedFieldsAdd: () => {
+				savedFields.value = [
+					...savedFields.value,
+					cloneDeep(componentValue.value),
+				]
+				saveSavedFieldsToLocalStorage(savedFields.value)
+			},
 			savedFieldsMap: computed(() =>
 				savedFields.value.map(
 					(component): ComponentRepresentation => ({
@@ -1823,13 +1831,6 @@ export default defineComponent({
 					}),
 				),
 			),
-			savedFieldsAdd: () => {
-				savedFields.value = [
-					...savedFields.value,
-					cloneDeep(componentValue.value),
-				]
-				saveSavedFieldsToLocalStorage(savedFields.value)
-			},
 			savedFieldsRemove: (toRemove: number) => {
 				savedFields.value = savedFields.value.filter(
 					(_, index) => index !== toRemove,

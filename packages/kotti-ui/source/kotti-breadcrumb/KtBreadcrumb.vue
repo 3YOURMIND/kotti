@@ -44,11 +44,11 @@ export default defineComponent({
 			breadCrumbClasses: (item: KottiBreadcrumb.Breadcrumb, index: number) => {
 				return {
 					'kt-breadcrumb__list-item': true,
-					'kt-breadcrumb__list-item--is-disabled': item.isDisabled,
-					'kt-breadcrumb__list-item--is-completed':
-						!item.isDisabled && item.isCompleted,
 					'kt-breadcrumb__list-item--is-active':
 						!item.isDisabled && index === props.activeIndex,
+					'kt-breadcrumb__list-item--is-completed':
+						!item.isDisabled && item.isCompleted,
+					'kt-breadcrumb__list-item--is-disabled': item.isDisabled,
 				}
 			},
 			handleClick: (item: KottiBreadcrumb.Breadcrumb) => {

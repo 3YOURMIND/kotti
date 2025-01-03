@@ -32,7 +32,7 @@ const saveSavedFieldsToLocalStorage = (isNarrow: boolean) => {
 				LOCALSTORAGE_IS_NAVBAR_NARROW_KEY,
 				JSON.stringify(isNarrow),
 			)
-	} catch (error) {
+	} catch {
 		// eslint-disable-next-line no-console
 		console.warn('could not save to localStorage')
 	}
@@ -55,7 +55,7 @@ export default defineComponent({
 						)
 						if (value) return JSON.parse(value)
 					}
-				} catch (error) {
+				} catch {
 					// eslint-disable-next-line no-console
 					console.warn('could not read localStorage')
 				}
@@ -68,20 +68,20 @@ export default defineComponent({
 			navLogo,
 			quickLinks: [
 				{
-					title: 'Create New Issue',
 					link: 'https://github.com/3YOURMIND/kotti/issues/new/choose',
+					title: 'Create New Issue',
 				},
 				{
-					title: 'NPM',
 					link: 'https://www.npmjs.com/package/@3yourmind/kotti-ui',
+					title: 'NPM',
 				},
 				{
-					title: 'Issues',
 					link: 'https://github.com/3YOURMIND/kotti/issues',
+					title: 'Issues',
 				},
 				{
-					title: 'Readme',
 					link: 'https://github.com/3YOURMIND/kotti#readme',
+					title: 'Readme',
 				},
 			],
 			sections: computed(() =>

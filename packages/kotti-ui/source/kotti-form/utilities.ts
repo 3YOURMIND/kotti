@@ -8,6 +8,9 @@ export const getValidationSummary = (
 	validations.reduce<KottiForm.ValidationSummary>(
 		(accumulator, validation) => {
 			switch (validation.type) {
+				case 'empty':
+					return accumulator
+
 				case 'error':
 					return {
 						...accumulator,
@@ -25,9 +28,6 @@ export const getValidationSummary = (
 						...accumulator,
 						warnings: [...accumulator.warnings, validation],
 					}
-
-				case 'empty':
-					return accumulator
 			}
 		},
 		{

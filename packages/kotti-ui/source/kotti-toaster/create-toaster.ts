@@ -14,6 +14,7 @@ const metadataSchema = z
 	})
 	.strict()
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const queuedToastSchema = z
 	.object({
 		custom: customSchema,
@@ -354,6 +355,7 @@ export const createToaster = <
 	 * - Manages the animation frame, starting or stopping it based on whether there are active toasts.
 	 * - Notifies the subscriber if the state of `activeToasts` changes.
 	 */
+	// eslint-disable-next-line sonarjs/cognitive-complexity
 	const updateActiveToasts = (_dirty = false) => {
 		if (subscriber === null) return
 		let dirty = _dirty

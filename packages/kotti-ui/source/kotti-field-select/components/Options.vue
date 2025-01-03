@@ -77,16 +77,16 @@ const propsSchema = z.object({
 	value: z.array(Shared.valueSchema),
 })
 
-type ModifiedOption = z.output<
-	(typeof propsSchema)['shape']['options']
->[number] & {
-	isSelected: boolean
-}
-
 type ModifiedAction = z.output<
 	(typeof propsSchema)['shape']['actions']
 >[number] & {
 	dataTest: string
+}
+
+type ModifiedOption = z.output<
+	(typeof propsSchema)['shape']['options']
+>[number] & {
+	isSelected: boolean
 }
 
 const mod = (number: number, divisor: number) =>

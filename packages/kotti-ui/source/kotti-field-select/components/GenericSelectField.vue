@@ -116,13 +116,13 @@ const propsSchema = Shared.propsSchema
 		]),
 	})
 
-type SingleValue =
-	| KottiFieldSingleSelect.Value
-	| KottiFieldSingleSelectRemote.Value
-
 type MultiValue =
 	| KottiFieldMultiSelect.Value
 	| KottiFieldMultiSelectRemote.Value
+
+type SingleValue =
+	| KottiFieldSingleSelect.Value
+	| KottiFieldSingleSelectRemote.Value
 
 export default defineComponent({
 	name: 'GenericSelectField',
@@ -286,7 +286,6 @@ export default defineComponent({
 				if (!props.isMultiple) selectTippy.setIsDropdownOpen(false)
 			},
 			onPressDelete: () => {
-				// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- Not sure if '??' is the right choice to handle empty strings
 				if (queryValue.value || !props.isMultiple) return // only delete value if query is already empty
 
 				const value = field.currentValue as MultiValue

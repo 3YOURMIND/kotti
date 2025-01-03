@@ -74,11 +74,11 @@ export default defineComponent({
 			})),
 			avatarFallback,
 			contentRef,
-			onImageFailedToLoad: () => {
-				avatarFallback.value = false
-			},
 			onAvatarContainerClick(event: MouseEvent) {
 				emit('click', event)
+			},
+			onImageFailedToLoad: () => {
+				avatarFallback.value = false
 			},
 			triggerRef,
 			Yoco,

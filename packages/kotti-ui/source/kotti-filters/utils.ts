@@ -11,6 +11,7 @@ export const getFilterEmptyValue = (
 		case KottiFilters.FilterType.CURRENCY:
 		case KottiFilters.FilterType.FLOAT:
 		case KottiFilters.FilterType.INTEGER:
+		case KottiFilters.FilterType.SEARCH:
 		case KottiFilters.FilterType.SINGLE_ENUM:
 		case KottiFilters.FilterType.STRING:
 			return null
@@ -40,7 +41,11 @@ export const getFilterInitialState = (
 	columns: KottiFilters.Column.Any[],
 ): KottiFilters.InternalFilter => {
 	const column = columns.find((columnItem) => columnItem.key === columnKey)
-	switch (column?.type) {
+	if (!column) {
+		throw new Error('Invalid Filter Type: column for initial state not found')
+	}
+
+	switch (column.type) {
 		case KottiFilters.FilterType.BOOLEAN:
 			return {
 				key: columnKey,

@@ -1,5 +1,5 @@
-import eslint from '@eslint/js'
 import comments from '@eslint-community/eslint-plugin-eslint-comments/configs'
+import eslint from '@eslint/js'
 import type { TSESLint } from '@typescript-eslint/utils'
 import type { SharedConfig } from '@typescript-eslint/utils/ts-eslint'
 import jsonc from 'eslint-plugin-jsonc'
@@ -126,6 +126,12 @@ const baseConfig = tseslint.config({
 			{ argsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_' },
 		],
 		'@typescript-eslint/no-use-before-define': 'error',
+		'@typescript-eslint/switch-exhaustiveness-check': [
+			'error',
+			{
+				considerDefaultExhaustiveForUnions: true,
+			},
+		],
 
 		// Eslint
 		'dot-notation': 'warn',
@@ -144,11 +150,20 @@ const baseConfig = tseslint.config({
 		'prettier/prettier': 'warn',
 
 		// SonarJS
+		'sonarjs/deprecation': 'off', // deprecation is intentionally used for flagging outdated but not yet removed code
+		'sonarjs/different-types-comparison': 'off', // conflicts with @typescript-eslint/no-unnecessary-condition
+		'sonarjs/empty-string-repetition': 'off',
+		'sonarjs/fixme-tag': 'off',
+		'sonarjs/function-return-type': 'off',
 		'sonarjs/no-collapsible-if': 'off', // replaced by unicorn/no-lonely-if
 		'sonarjs/no-duplicate-string': 'off',
+		'sonarjs/no-nested-conditional': 'off',
 		'sonarjs/no-redundant-jump': 'off',
 		'sonarjs/no-small-switch': 'off',
 		'sonarjs/no-use-of-empty-return-value': 'off',
+		'sonarjs/pseudo-random': 'off',
+		'sonarjs/redundant-type-aliases': 'off',
+		'sonarjs/void-use': 'off',
 
 		// Unicorn
 		'unicorn/catch-error-name': 'warn',
@@ -284,14 +299,23 @@ const rulesRequiringTypes = {
 			allowRegExp: false,
 		},
 	],
-	'@typescript-eslint/switch-exhaustiveness-check': 'error',
 } satisfies SharedConfig.RulesRecord
 
 const plugin = {
 	rules,
 } satisfies TSESLint.FlatConfig.Plugin
 
-export default {
+const kottiEslintConfig: {
+	configs: {
+		default: TSESLint.FlatConfig.ConfigArray
+		global: TSESLint.FlatConfig.ConfigArray
+		json: TSESLint.FlatConfig.ConfigArray
+		tests: TSESLint.FlatConfig.ConfigArray
+		untyped: TSESLint.FlatConfig.ConfigArray
+		vue: TSESLint.FlatConfig.ConfigArray
+	}
+	plugin: TSESLint.FlatConfig.Plugin
+} = {
 	configs: {
 		/**
 		 * Should be used on .ts and .tsx files. This enables rules that rely on type checking.
@@ -406,6 +430,12 @@ export default {
 						type: 'natural',
 					},
 				],
+				'perfectionist/sort-jsx-props': [
+					'warn',
+					{
+						type: 'natural',
+					},
+				],
 				'perfectionist/sort-maps': [
 					'warn',
 					{
@@ -413,6 +443,7 @@ export default {
 						type: 'natural',
 					},
 				],
+				'perfectionist/sort-modules': 'off', // conflicts with @typescript-eslint/no-use-before-define
 				'perfectionist/sort-named-exports': [
 					'warn',
 					{ partitionByComment: true, type: 'natural' },
@@ -443,6 +474,12 @@ export default {
 					'warn',
 					{
 						partitionByComment: true,
+						type: 'natural',
+					},
+				],
+				'perfectionist/sort-switch-case': [
+					'warn',
+					{
 						type: 'natural',
 					},
 				],
@@ -539,10 +576,12 @@ export default {
 				'@typescript-eslint/no-unsafe-call': 'off',
 				'@typescript-eslint/no-unsafe-member-access': 'off',
 				'@typescript-eslint/no-unsafe-return': 'off',
+				'@typescript-eslint/no-unused-expressions': 'off',
 				'@typescript-eslint/no-use-before-define': 'off',
 				'@typescript-eslint/restrict-template-expressions': 'off',
 				'no-console': 'off',
 				'no-magic-numbers': 'off',
+				'sonarjs/no-nested-functions': 'off',
 				'vitest/no-disabled-tests': 'error',
 				'vitest/no-identical-title': 'error',
 				'vue/one-component-per-file': 'off',
@@ -644,3 +683,5 @@ export default {
 	},
 	plugin,
 }
+
+export default kottiEslintConfig

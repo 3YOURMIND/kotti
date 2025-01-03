@@ -5,6 +5,18 @@ const createErrorMessage = (
 	messages: string[],
 ) => `useField(${String(props.formKey ?? props.label)}): ${messages.join('\n')}`
 
+class DisabledSetValueCalledError extends Error {
+	constructor(props: KottiField.PropsInternal) {
+		super(
+			createErrorMessage(props, [
+				'Attempted to setValue on a disabled field.',
+				'Disabled fields should never call setValue as it causes unexpected behavior.',
+			]),
+		)
+		this.name = 'DisabledSetValueCalledError'
+	}
+}
+
 class ImplicitFormKeyNoneError extends Error {
 	constructor(props: KottiField.PropsInternal) {
 		super(
@@ -30,18 +42,6 @@ class InvalidPropOutsideOfContextError extends Error {
 			]),
 		)
 		this.name = 'InvalidPropOutsideOfContextError'
-	}
-}
-
-class DisabledSetValueCalledError extends Error {
-	constructor(props: KottiField.PropsInternal) {
-		super(
-			createErrorMessage(props, [
-				'Attempted to setValue on a disabled field.',
-				'Disabled fields should never call setValue as it causes unexpected behavior.',
-			]),
-		)
-		this.name = 'DisabledSetValueCalledError'
 	}
 }
 

@@ -132,7 +132,6 @@ export default defineComponent({
 	},
 	setup() {
 		const component: { meta: Kotti.Meta; name: string } = {
-			name: 'Loadings',
 			meta: {
 				addedVersion: null,
 				deprecated: null,
@@ -143,6 +142,7 @@ export default defineComponent({
 				slots: {},
 				typeScript: null,
 			},
+			name: 'Loadings',
 		}
 
 		return {

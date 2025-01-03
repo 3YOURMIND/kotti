@@ -112,9 +112,9 @@ export default defineComponent({
 
 		const searchColumn = computed(
 			() =>
-				(props.columns.find(
+				props.columns.find(
 					(column) => column.type === KottiFilters.FilterType.SEARCH,
-				) ?? null) as KottiFilters.Column.Search | null,
+				) ?? null,
 		)
 
 		const searchValue = computed<KottiFilters.InternalFilterSearch | null>(
@@ -192,7 +192,9 @@ export default defineComponent({
 
 			isListVisible.value = !isListVisible.value
 
-			if (!isListVisible.value) isAddingFilter.value
+			if (!isListVisible.value) {
+				isAddingFilter.value = false
+			}
 
 			for (const tippy of tippys) {
 				if (isListVisible.value) tippy.show()

@@ -46,7 +46,7 @@ export function setColumnsArray(
 }
 
 function emitColumnsChange(store: any) {
-	store.table.$ready &&
+	if (store.table.$ready)
 		store.emit(
 			'columnsChange',
 			store.state._columnsArray.map((col: any) =>
@@ -65,6 +65,7 @@ function didRestoreDestroyedColumns({
 	return (
 		// eslint-disable-next-line unicorn/explicit-length-check
 		columns.length &&
+		// eslint-disable-next-line sonarjs/reduce-initial-value
 		columns.reduce((sum, n) => (sum as number) + (n as number)) === 0
 	)
 }
@@ -170,7 +171,7 @@ export const mutations: Store.MutationComponents.Column = {
 				state.refreshColumnArray = false
 			}
 			state.columns = getResolvedHiddenColumns(state._columnsArray)
-			emitChange && emitColumnsChange(store)
+			if (emitChange) emitColumnsChange(store)
 		}
 	},
 }

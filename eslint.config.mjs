@@ -78,12 +78,10 @@ const config = tseslint.config(
 		languageOptions: {
 			ecmaVersion: 2022,
 			parserOptions: {
-				project: [
-					'./tsconfig.json',
-					'./internals/*/tsconfig.json',
-					'./packages/*/tsconfig.json',
-					'./packages/kotti-ui/tsconfig.node.json',
-				],
+				projectService: {
+					allowDefaultProject: ['*.mjs'],
+					defaultProject: 'tsconfig.json',
+				},
 				tsconfigRootDir: root,
 			},
 			sourceType: 'module',
@@ -126,6 +124,7 @@ const config = tseslint.config(
 					],
 				},
 			],
+			'@typescript-eslint/prefer-namespace-keyword': 'off',
 		},
 	},
 	{

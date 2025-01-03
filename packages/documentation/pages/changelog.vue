@@ -142,9 +142,9 @@ export default defineComponent({
 		return {
 			dayjs,
 			isLoading,
+			releases,
 			renderMarkdown: (markdown: string) =>
 				marked.parse(convertPoundToIssueLink(markdown)),
-			releases,
 			sortedReleases: computed(() =>
 				cloneDeep(releases.value).sort((a, b) =>
 					naturalSort({ direction: 'desc' })(a.tag_name, b.tag_name),

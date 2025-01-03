@@ -54,10 +54,10 @@ export const usePreventConfirm = ({
 		switch (props.preventConfirmationOn) {
 			case KottiFieldInlineEdit.ConfirmationValidation.ERROR:
 				return fieldValidation.value === 'error'
-			case KottiFieldInlineEdit.ConfirmationValidation.WARNING:
-				return ['error', 'warning'].includes(fieldValidation.value)
 			case KottiFieldInlineEdit.ConfirmationValidation.NEVER:
 				return false
+			case KottiFieldInlineEdit.ConfirmationValidation.WARNING:
+				return ['error', 'warning'].includes(fieldValidation.value)
 			default:
 				throw new Error(
 					`KtFieldInlineEdit: Unexpected type for 'preventConfirmationOn': ${props.preventConfirmationOn}`,

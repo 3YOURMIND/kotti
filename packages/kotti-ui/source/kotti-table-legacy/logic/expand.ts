@@ -14,7 +14,8 @@ function toggleRowExpansion(state: any, row: any) {
 	const shouldExpand = index === -1 //if the row is not already included in state.expanded
 
 	if (state.expandMultiple) {
-		shouldExpand ? expanded.push(row) : expanded.splice(index, 1)
+		if (shouldExpand) expanded.push(row)
+		else expanded.splice(index, 1)
 	} else {
 		//explicitly need state.expanded b/c Object reference will to be changed w/ assignments
 		state.expanded = shouldExpand ? [row] : []

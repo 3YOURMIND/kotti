@@ -289,6 +289,7 @@ export default defineComponent({
 					value,
 				})),
 			),
+			UsageMode,
 			usageOptions: computed<Kotti.FieldSingleSelect.Props['options']>(() => [
 				{ label: 'Use Slot', value: UsageMode.SLOT },
 				{ label: 'Use Options', value: UsageMode.OPTIONS },
@@ -297,7 +298,6 @@ export default defineComponent({
 					value: UsageMode.SELECTABLE_OPTIONS,
 				},
 			]),
-			UsageMode,
 			values: ref<
 				Pick<Kotti.Popover.PropsInternal, 'placement' | 'size' | 'trigger'> & {
 					usageMode: UsageMode

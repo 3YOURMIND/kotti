@@ -25,7 +25,7 @@ export default defineComponent({
 	name: 'KtForm',
 	props: {
 		...makeProps(
-			// TODO: should be done on propsSchema level once KtForms use zod
+			// FIXME: should be done on propsSchema level once KtForms use zod
 			KottiField.inheritablePropsSchema.merge(
 				KottiField.potentiallySupportedPropsSchema.pick({
 					hideClear: true,
