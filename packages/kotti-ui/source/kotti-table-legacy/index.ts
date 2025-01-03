@@ -10,7 +10,7 @@ import { KtTableLegacyProvider as KtTableLegacyProviderVue } from './KtTableLega
 const META: Kotti.Meta = {
 	addedVersion: '0.0.1',
 	deprecated: {
-		alternatives: [],
+		alternatives: ['KtTable', 'KtStandardTable'],
 		reason:
 			'Will be replaced by the new implementation of KtTable with Kotti@9.0.0',
 		version: '8.0.0',

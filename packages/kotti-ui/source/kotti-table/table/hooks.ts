@@ -3,7 +3,6 @@ import type {
 	CellContext,
 	ExpandedState,
 	HeaderContext,
-	PaginationState,
 	RowSelectionState,
 	VisibilityState,
 } from '@tanstack/table-core'
@@ -11,7 +10,6 @@ import {
 	createColumnHelper,
 	getCoreRowModel,
 	getExpandedRowModel,
-	getPaginationRowModel,
 } from '@tanstack/table-core'
 import classNames from 'classnames'
 import { computed, h, ref, type Ref } from 'vue'
@@ -24,7 +22,8 @@ import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 
 import { type TableContext, useProvideTableContext } from './context'
 import { useVueTable } from './tanstack-table'
-import { type GetRowBehavior, KottiTable } from './types'
+import type { KottiTable } from './types'
+import { type GetRowBehavior } from './types'
 import { type ReactStyleUpdater, useComputedRef } from './use-computed-ref'
 
 export const EXPANSION_COLUMN_ID = 'internal-expand-column'
@@ -52,10 +51,6 @@ export type KottiTableParameter<
 	hasDragAndDrop?: boolean
 	id: string
 	isSelectable?: boolean // FIXME: Consider isSelectable to become `selectMode: 'single-page' | 'global' | null` when we support selection across pages. Current behavior is 'global'
-	// FIXME: pagination should not be part of KtTable's API (only KtStandardTable).
-	// Suggested fix: There should be a way for KtStandardTable to call `useVueTable` without having to use `useKottiTable`
-	// OR don't use tanstack to handle pagination
-	initialPagination?: KottiTable.Pagination
 }
 
 export const paramsSchema = z
@@ -144,7 +139,6 @@ export const paramsSchema = z
 			),
 		hasDragAndDrop: z.boolean().default(false),
 		id: z.string(),
-		initialPagination: KottiTable.paginationSchema.nullable().default(null),
 		isSelectable: z.boolean().default(false),
 	})
 	.strict()
@@ -160,8 +154,12 @@ type InternalKottiTableParameters<
 	expandMode: 'multi' | 'single' | null
 	hasDragAndDrop: boolean
 	id: string
-	initialPagination: KottiTable.Pagination | null
 	isSelectable: boolean
+}
+
+type KottiTableHook<ROW extends KottiTable.AnyRow, COLUMN_ID extends string> = {
+	api: KottiTable.Hook.Returns<COLUMN_ID>
+	tableContext: TableContext<ROW, COLUMN_ID>
 }
 
 export const useKottiTable = <
@@ -169,10 +167,7 @@ export const useKottiTable = <
 	COLUMN_ID extends string,
 >(
 	_params: Ref<KottiTableParameter<ROW, COLUMN_ID>>,
-): {
-	api: KottiTable.Hook.Returns<COLUMN_ID>
-	tableContext: TableContext<ROW, COLUMN_ID>
-} => {
+): KottiTableHook<ROW, COLUMN_ID> => {
 	const params = computed(
 		() =>
 			paramsSchema.parse(_params.value) as InternalKottiTableParameters<
@@ -230,29 +225,6 @@ export const useKottiTable = <
 			SELECTION_COLUMN_ID,
 			...params.value.columns.map(({ id }) => id),
 		]),
-	})
-
-	const pagination = useComputedRef<PaginationState>({
-		get: (value) => value,
-		set: (value) => {
-			const currentRow = value.pageIndex * value.pageSize
-			if (
-				currentRow >
-				(params.value.initialPagination?.rowCount ?? Number.MAX_SAFE_INTEGER)
-			) {
-				return {
-					...value,
-					pageIndex: 0,
-				}
-			}
-			return value
-		},
-		value: ref(
-			params.value.initialPagination?.state ?? {
-				pageIndex: 0,
-				pageSize: 10,
-			},
-		),
 	})
 
 	// FIXME: This useComputedRef will not clear out row ids that are not present
@@ -573,30 +545,15 @@ export const useKottiTable = <
 			getCoreRowModel: getCoreRowModel(),
 			getExpandedRowModel:
 				params.value.expandMode !== null ? getExpandedRowModel() : undefined,
-			getPaginationRowModel:
-				params.value.initialPagination?.type === 'local'
-					? getPaginationRowModel()
-					: undefined,
 			getRowId: (row, rowIndex) =>
 				params.value.getRowBehavior({ row, rowIndex }).id,
-			manualPagination: params.value.initialPagination?.type === 'remote',
 			onColumnVisibilityChange: hiddenColumns.tanstackSetter,
-			onPaginationChange: params.value.initialPagination
-				? pagination.tanstackSetter
-				: undefined,
 			onRowSelectionChange: selectedRows.tanstackSetter,
 			onSortingChange: ordering.tanstackSetter as ReactStyleUpdater<unknown>,
-			rowCount:
-				params.value.initialPagination?.type === 'remote'
-					? params.value.initialPagination.rowCount
-					: undefined,
 			state: {
 				columnOrder: columnOrder.tanstackGetter(),
 				columnVisibility: hiddenColumns.tanstackGetter(),
 				expanded: expandedRows.tanstackGetter(),
-				pagination: params.value.initialPagination
-					? pagination.tanstackGetter()
-					: undefined,
 				rowSelection: selectedRows.tanstackGetter(),
 				sorting: ordering.tanstackGetter(),
 			},
@@ -638,6 +595,7 @@ export const useKottiTable = <
 			},
 			table,
 			triggerExpand,
+			visibleColumns: hiddenColumns.tanstackGetter(),
 		},
 	}))
 	useProvideTableContext<ROW, COLUMN_ID>(params.value.id, tableContext)
@@ -648,7 +606,6 @@ export const useKottiTable = <
 			expandedRows,
 			hiddenColumns,
 			ordering,
-			pagination,
 			selectedRows,
 		},
 		tableContext,

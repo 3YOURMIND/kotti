@@ -105,6 +105,25 @@
 		"menuExpand": "Expand menu",
 		"quickLinksTitle": "Quick Links"
 	},
+	"ktStandardTable": {
+		"clearAll": "Clear All",
+		"editColumns": "Edit Columns",
+		"editFilters": "Edit Filters",
+		"endDate": "End",
+		"lastMonth": "Last Month",
+		"lastWeek": "Last Week",
+		"lastYear": "Last Year",
+		"max": "Max.",
+		"min": "Min.",
+		"moreThan": "More Than",
+		"resultsCounter": "No items | {range} of {total} item | {range} of {total} items",
+		"rowsPerPage": "Rows per page",
+		"search": "Search",
+		"showAll": "Show All",
+		"startDate": "Start",
+		"today": "Today",
+		"upTo": "Up To"
+	},
 	"ktTable": {
 		"no": "No",
 		"noItems": "No Data",

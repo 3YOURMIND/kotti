@@ -57,6 +57,7 @@ import {
 } from 'vue'
 import { z } from 'zod'
 
+import { useI18nContext } from '../../kotti-i18n/hooks'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
 import { Shared } from '../types'
@@ -99,6 +100,7 @@ export default defineComponent({
 	props: makeProps(propsSchema),
 	emits: ['close', 'input'],
 	setup(props, { emit }) {
+		const i18nContext = useI18nContext()
 		const translations = useTranslationNamespace('KtFieldSelects')
 
 		const optionsRef = ref<HTMLDivElement | null>(null)
@@ -136,7 +138,12 @@ export default defineComponent({
 
 			if (props.isUnsorted) return modifiedOptions
 
-			return modifiedOptions.sort((a, b) => a.label.localeCompare(b.label))
+			const collator = new Intl.Collator(i18nContext.locale, {
+				numeric: true,
+				sensitivity: 'base',
+			})
+
+			return modifiedOptions.sort((a, b) => collator.compare(a.label, b.label))
 		})
 
 		const hoveredIndex = ref(0)
