@@ -1,4 +1,4 @@
-import clone from 'lodash/clone'
+import clone from 'lodash/clone.js'
 import type { Ref } from 'vue'
 import { watch } from 'vue'
 
