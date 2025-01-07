@@ -17,11 +17,23 @@ class DisabledSetValueCalledError extends Error {
 	}
 }
 
+class FormKeyNotFoundError extends Error {
+	constructor(props: KottiField.PropsInternal) {
+		super(
+			createErrorMessage(props, [
+				'Encountered a KtField without a value for the specified formKey inside a KtForm.',
+				'This means that the field will not be able to determine the initial value.',
+			]),
+		)
+		this.name = 'FormKeyNotFoundError'
+	}
+}
+
 class ImplicitFormKeyNoneError extends Error {
 	constructor(props: KottiField.PropsInternal) {
 		super(
 			createErrorMessage(props, [
-				'Encountered a KtField without a “formKey” inside a KtForm.',
+				'Encountered a KtField without a formKey inside a KtForm.',
 				'This means that the field will not connect itself to the KtForm’s Context Values',
 				'If this is not a mistake, please add formKey="NONE" to your field and bind v-model explicitly.',
 			]),
@@ -47,6 +59,7 @@ class InvalidPropOutsideOfContextError extends Error {
 
 export const ktFieldErrors = {
 	DisabledSetValueCalledError,
+	FormKeyNotFoundError,
 	ImplicitFormKeyNoneError,
 	InvalidPropOutsideOfContextError,
 }

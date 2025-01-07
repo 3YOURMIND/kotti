@@ -5,7 +5,7 @@
 			<div class="kt-tag__text" v-text="text" />
 		</slot>
 		<div
-			v-if="!isDisabled && !hideActions"
+			v-if="!isDisabled"
 			class="kt-tag__icon"
 			@click.prevent.stop="$emit('close')"
 		>
@@ -49,7 +49,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
-$colors: 'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
+$colors:
+	'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
 	'slate', 'violet', 'yellow';
 
 .kt-tag {
