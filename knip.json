@@ -14,14 +14,6 @@
 				"components/{ActionBar,ColorPalette,ColorUsage,LayoutContainer,MyToaster,NavBar}.vue",
 				"plugins/**/*.js"
 			],
-			"ignoreDependencies": [
-				"@nuxt/typescript-build",
-				"@nuxtjs/markdownit-loader",
-				"sass-loader",
-				"ts-loader",
-				"vue-server-renderer",
-				"vue-template-compiler"
-			],
 			"project": ["**/*.{js,ts,vue}"]
 		},
 		"packages/kotti-ui": {

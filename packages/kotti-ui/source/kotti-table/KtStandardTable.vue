@@ -88,7 +88,7 @@
 			@emptySelection="unselectAllRows"
 		/>
 		<slot
-			v-if="$scopedSlots['table']"
+			v-if="$slots['table']"
 			:emptyText="emptyText"
 			:isLoading="isLoading"
 			name="table"
@@ -202,7 +202,7 @@ export default defineComponent({
 			columnVisibility: computed(
 				() =>
 					// FIXME: use hiddenColumns instead of internal api
-					tableContext.value.internal.table.value.getState().columnVisibility,
+					tableContext.value.internal.table.getState().columnVisibility,
 			),
 			filterTags: computed(() =>
 				appliedFilters.value
@@ -235,18 +235,17 @@ export default defineComponent({
 			isLoadingAndEmpty: computed(
 				() =>
 					standardTableContext.value.internal.isLoading &&
-					tableContext.value.internal.table.value.getRowModel().rows.length ===
-						0,
+					tableContext.value.internal.table.getRowModel().rows.length === 0,
 			),
 			onShowAllColumns: () => {
-				tableContext.value.internal.table.value.toggleAllColumnsVisible()
+				tableContext.value.internal.table.toggleAllColumnsVisible()
 			},
 			onUpdateAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => {
 				standardTableContext.value.internal.setAppliedFilters(value)
 				standardTableContext.value.internal.setPageIndex(0)
 			},
 			onUpdateColumnVisivility: (value: Record<string, boolean>) => {
-				tableContext.value.internal.table.value.setColumnVisibility(value)
+				tableContext.value.internal.table.setColumnVisibility(value)
 			},
 			onUpdatePageIndex: standardTableContext.value.internal.setPageIndex,
 			onUpdatePageSize: standardTableContext.value.internal.setPageSize,
@@ -274,7 +273,7 @@ export default defineComponent({
 					tableContext.value.internal.selectionCount > 0,
 			),
 			tableRows: computed(() =>
-				tableContext.value.internal.table.value
+				tableContext.value.internal.table
 					.getRowModel()
 					.rows.map((row) => row.original),
 			),
