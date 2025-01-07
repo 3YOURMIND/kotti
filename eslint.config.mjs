@@ -15,6 +15,7 @@ const trustedDependencies = new Set([
 	'@metatypes/typography',
 	'@metatypes/units',
 	'@tanstack/table-core',
+	'@tanstack/vue-table',
 	'filesize',
 	'nanoid',
 	'zod',

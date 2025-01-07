@@ -26,7 +26,7 @@ export {
 	useLocalSort,
 } from './table/local'
 
-const TABLE_META: Kotti.Meta = {
+const TABLE_META: Kotti.Meta<typeof KottiTable.propsSchema> = {
 	addedVersion: '8.2.0',
 	deprecated: null,
 	designs: {
@@ -64,7 +64,7 @@ const TABLE_META: Kotti.Meta = {
 	},
 }
 
-const STANDARD_META: Kotti.Meta = {
+const STANDARD_META: Kotti.Meta<typeof KottiStandardTable.propsSchema> = {
 	addedVersion: '7.4.0',
 	deprecated: null,
 	designs: {
