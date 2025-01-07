@@ -1,5 +1,6 @@
 <template>
 	<transition mode="out-in" name="kt-drawer">
+		<!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
 		<div class="kt-drawer__mask" @click.self="onOutsideDrawerClick">
 			<div :class="drawerClass" :style="drawerWidth">
 				<div class="kt-drawer__header">
@@ -164,7 +165,7 @@ export default defineComponent({
 	}
 }
 
-@media (width <= $size-sm) {
+@media (width < $size-sm) {
 	.kt-drawer {
 		&__container,
 		&__container--is-wide {

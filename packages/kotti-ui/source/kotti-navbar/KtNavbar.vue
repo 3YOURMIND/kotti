@@ -310,7 +310,7 @@ $narrow-navbar-width: 3.4rem;
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.kt-navbar {
 		flex: 0 0 $mobile-navbar-height;
 		width: auto;
