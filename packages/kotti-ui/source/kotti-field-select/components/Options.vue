@@ -98,7 +98,7 @@ export default defineComponent({
 		FieldSelectOptionsItem,
 	},
 	props: makeProps(propsSchema),
-	emits: ['close', 'input'],
+	emits: ['close', 'update:value'],
 	setup(props, { emit }) {
 		const i18nContext = useI18nContext()
 		const translations = useTranslationNamespace('KtFieldSelects')
@@ -174,12 +174,12 @@ export default defineComponent({
 
 			if (props.isMultiple)
 				emit(
-					'input',
+					'update:value',
 					props.value.includes(option.value)
 						? props.value.filter((v) => v !== option.value)
 						: [...props.value, option.value],
 				)
-			else emit('input', [option.value])
+			else emit('update:value', [option.value])
 		}
 
 		const onAction = (action: z.output<typeof Shared.actionSchema>) => {

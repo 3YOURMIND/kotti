@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes } from 'vue'
 
 import { KtField } from '../kotti-field'
 import {
@@ -30,7 +30,7 @@ export default defineComponent({
 	name: 'KtFieldPassword',
 	components: { KtField },
 	props: makeProps(KottiFieldPassword.propsSchema),
-	emits: ['blur', 'input', 'keyup'],
+	emits: ['blur', 'keyup', 'update:value'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({
 			emit,

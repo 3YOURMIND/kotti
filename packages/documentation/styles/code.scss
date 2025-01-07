@@ -1,3 +1,5 @@
+@import '@3yourmind/kotti-ui/dist/variables.scss';
+
 code {
 	color: #091142;
 	tab-size: 2;
@@ -8,70 +10,3 @@ pre code {
 	font-weight: 500;
 	background: transparent;
 }
-
-/* stylelint-disable selector-class-pattern -- classes from highlight.js don't follow BEM */
-.hljs {
-	display: block;
-	padding: 0.5em;
-	overflow-x: auto;
-	color: #bababa;
-	background: #2b2b2b;
-
-	&-strong,
-	&-emphasis {
-		color: #2c64cc;
-	}
-
-	&-bullet,
-	&-quote,
-	&-link,
-	&-number,
-	&-regexp,
-	&-literal {
-		color: #6896ba;
-	}
-
-	&-code,
-	&-selector-class {
-		color: #a6e22e;
-	}
-
-	&-emphasis {
-		font-style: italic;
-	}
-
-	&-keyword,
-	&-selector-tag,
-	&-section,
-	&-attribute,
-	&-name,
-	&-variable,
-	&-string {
-		color: #2c64cc;
-	}
-
-	&-params {
-		color: #b9b9b9;
-	}
-
-	&-subst,
-	&-type,
-	&-built_in,
-	&-builtin-name,
-	&-symbol,
-	&-selector-id,
-	&-selector-attr,
-	&-selector-pseudo,
-	&-template-tag,
-	&-template-variable,
-	&-addition {
-		color: #e0c46c;
-	}
-
-	&-comment,
-	&-deletion,
-	&-meta {
-		color: #7f7f7f;
-	}
-}
-/* stylelint-enable selector-class-pattern */

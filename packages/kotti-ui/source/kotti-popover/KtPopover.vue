@@ -23,7 +23,7 @@
 							:isDisabled="option.isDisabled"
 							:isOptional="option.isOptional"
 							:value="option.isSelected"
-							@input="(() => handleItemSelection({ index, option }))()"
+							@update:value="(() => handleItemSelection({ index, option }))()"
 						>
 							<span v-text="option.label" />
 						</KtFieldToggle>
@@ -50,6 +50,7 @@ import {
 import { useTippy } from '@3yourmind/vue-use-tippy'
 
 import { TIPPY_DISTANCE_OFFSET } from '../constants'
+import { KtFieldToggle } from '../kotti-field-toggle'
 import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { KT_FORM_CONTEXT } from '../kotti-form'
 import type { KottiForm } from '../kotti-form/types'
@@ -69,6 +70,7 @@ export default defineComponent({
 	name: 'KtPopover',
 	components: {
 		IconTextItem,
+		KtFieldToggle,
 	},
 	props: makeProps(KottiPopover.propsSchema),
 	emits: ['update:isSelected'],
@@ -210,13 +212,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '../kotti-style/_variables.scss';
-@import '../kotti-field/mixins';
+@import '../kotti-field/templates.scss';
 
 .kt-popover {
 	display: inline-block;
 
 	> div {
-		@include no-outline;
+		@extend %no-outline;
 	}
 
 	&__content {

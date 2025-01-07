@@ -116,8 +116,8 @@ export default defineComponent({
 	}
 
 	&__image {
-		border-radius: 100%;
 		object-fit: cover;
+		border-radius: 100%;
 	}
 
 	&--is-hoverable:hover {
