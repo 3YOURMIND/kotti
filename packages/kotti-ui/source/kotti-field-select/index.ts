@@ -1,3 +1,5 @@
+import type { z } from 'zod'
+
 import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
 import type { Meta } from '../types/kotti'
 import { MetaDesignType } from '../types/kotti'
@@ -19,7 +21,7 @@ const componentFolder = 'kotti-field-select'
 const url =
 	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=428%3A3482'
 
-const slots: Meta['slots'] = {
+const getSlots = <T extends z.ZodTypeAny>(): Meta<T>['slots'] => ({
 	...FIELD_META_BASE_SLOTS,
 	option: {
 		description: null,
@@ -38,7 +40,7 @@ const slots: Meta['slots'] = {
 			},
 		},
 	},
-}
+})
 
 export const KtFieldSingleSelect = attachMeta(
 	makeInstallable(KtFieldSingleSelectVue),
@@ -50,7 +52,7 @@ export const KtFieldSingleSelect = attachMeta(
 			type: MetaDesignType.FIGMA,
 			url,
 		},
-		slots,
+		slots: getSlots(),
 		typeScript: {
 			namespace: 'Kotti.FieldSingleSelect',
 			schema: KottiFieldSingleSelect.propsSchema,
@@ -69,7 +71,7 @@ export const KtFieldSingleSelectRemote = attachMeta(
 			type: MetaDesignType.FIGMA,
 			url,
 		},
-		slots,
+		slots: getSlots(),
 		typeScript: {
 			namespace: 'Kotti.FieldSingleSelectRemote',
 			schema: KottiFieldSingleSelectRemote.propsSchema,
@@ -88,7 +90,7 @@ export const KtFieldMultiSelect = attachMeta(
 			type: MetaDesignType.FIGMA,
 			url,
 		},
-		slots,
+		slots: getSlots(),
 		typeScript: {
 			namespace: 'Kotti.FieldMultiSelect',
 			schema: KottiFieldMultiSelect.propsSchema,
@@ -107,7 +109,7 @@ export const KtFieldMultiSelectRemote = attachMeta(
 			type: MetaDesignType.FIGMA,
 			url,
 		},
-		slots,
+		slots: getSlots(),
 		typeScript: {
 			namespace: 'Kotti.FieldMultiSelectRemote',
 			schema: KottiFieldMultiSelectRemote.propsSchema,

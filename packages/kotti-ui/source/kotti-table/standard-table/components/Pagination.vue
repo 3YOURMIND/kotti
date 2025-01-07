@@ -13,7 +13,7 @@
 				:pageSize="pageSize"
 				pagingStyle="flex"
 				:total="rowCount"
-				@setPage="(value) => $emit('updatePageIndex', value - 1)"
+				@setPage="(value: number) => $emit('updatePageIndex', value - 1)"
 			/>
 		</template>
 	</div>
