@@ -60,6 +60,7 @@ import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import KtButton from '../../kotti-button/KtButton.vue'
 import { KottiButton } from '../../kotti-button/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
@@ -69,8 +70,11 @@ import { KottiComment } from '../types'
 
 export default defineComponent({
 	name: 'CommentTextArea',
+	components: {
+		KtButton,
+	},
 	props: makeProps(KottiComment.TextArea.schema),
-	emits: ['cancel', 'confirm', 'input', 'toggleInternal'],
+	emits: ['cancel', 'confirm', 'update:value', 'toggleInternal'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtComment')
 
@@ -131,7 +135,7 @@ export default defineComponent({
 				blurTextarea()
 			},
 			onInput: (event: Event) => {
-				emit('input', (event.target as HTMLTextAreaElement).value)
+				emit('update:value', (event.target as HTMLTextAreaElement).value)
 			},
 			onToggleInternal: () => {
 				emit('toggleInternal')

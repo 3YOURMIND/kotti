@@ -134,7 +134,7 @@ export default defineComponent({
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.tippy-box[data-theme^='kt-usermenu'] {
 		width: 100vw;
 		border-radius: 0 0 0.2rem 0.2rem;
@@ -231,7 +231,7 @@ export default defineComponent({
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.kt-user-menu-container {
 		display: block;
 	}

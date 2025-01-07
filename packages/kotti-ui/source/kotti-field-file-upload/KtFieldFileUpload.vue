@@ -88,7 +88,7 @@ export default defineComponent({
 		TakePhoto,
 	},
 	props: makeProps(KottiFieldFileUpload.propsSchema),
-	emits: ['blur', 'input'],
+	emits: ['blur', 'update:value'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldFileUpload.ValueInternal>({
 			emit,

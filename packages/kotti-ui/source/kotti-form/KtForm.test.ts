@@ -1,4 +1,4 @@
-import type { Wrapper } from '@vue/test-utils'
+import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { SetupContext } from 'vue'
@@ -10,7 +10,6 @@ import KtField from '../kotti-field/KtField.vue'
 import { KottiField } from '../kotti-field/types'
 import { useI18nProvide } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
-import { localVue } from '../test-utils'
 
 import KtForm from './KtForm.vue'
 
@@ -72,24 +71,24 @@ const TestFieldObject = defineComponent({
 
 const TestForm = {
 	components: { KtForm, TestField },
-	template: `<KtForm v-bind="$attrs" @input="$event => $emit('input', $event)"><TestField formKey="testKey"/></KtForm>`,
+	props: ['hideValidation'],
+	template: `<KtForm v-bind="$attrs" @update:value="$event => $emit('update:value', $event)"><TestField formKey="testKey"/></KtForm>`,
 }
 
 const TestForm2 = {
 	components: { KtForm, TestFieldObject },
-	template: `<KtForm v-bind="$attrs" @input="$event => $emit('input', $event)"><TestFieldObject formKey="testKey"/></KtForm>`,
+	template: `<KtForm v-bind="$attrs" @update:value="$event => $emit('update:value', $event)"><TestFieldObject formKey="testKey"/></KtForm>`,
 }
 
 const getField = (
-	wrapper: Wrapper<any>,
+	wrapper: VueWrapper<any>,
 ): KottiField.Hook.Returns<Record<string, unknown> | string | null> =>
 	wrapper.vm.$children[0].$children[0].field
 
 describe('KtForm', () => {
 	it('provides a context', () => {
 		const wrapper = mount(TestForm, {
-			localVue,
-			propsData: {
+			props: {
 				value: { testKey: 'testing' },
 			},
 		})
@@ -101,8 +100,7 @@ describe('KtForm', () => {
 
 	it('emits on setValue', async () => {
 		const wrapper = mount(TestForm, {
-			localVue,
-			propsData: {
+			props: {
 				value: { testKey: 'testing' },
 			},
 		})
@@ -125,8 +123,7 @@ describe('KtForm', () => {
 			const DEEP_VALUE_REFERENCE = { deep: true }
 
 			const wrapper = mount(TestForm2, {
-				localVue,
-				propsData: {
+				props: {
 					value: { testKey: DEEP_VALUE_REFERENCE },
 				},
 			})
@@ -141,8 +138,7 @@ describe('KtForm', () => {
 			const VALUE_REFERENCE = { testKey: 'wow', treatedAsImmutable: 'true' }
 
 			const wrapper = mount(TestForm, {
-				localVue,
-				propsData: {
+				props: {
 					value: VALUE_REFERENCE,
 				},
 			})
@@ -152,8 +148,10 @@ describe('KtForm', () => {
 			field.setValue('wowspin')
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.emitted().input?.[0]?.[0]).not.toBe(VALUE_REFERENCE)
-			expect(wrapper.emitted().input?.[0]?.[0]).toEqual({
+			expect(wrapper.emitted('update:value')?.[0]?.[0]).not.toBe(
+				VALUE_REFERENCE,
+			)
+			expect(wrapper.emitted('update:value')?.[0]?.[0]).toEqual({
 				testKey: 'wowspin',
 				treatedAsImmutable: 'true',
 			})
@@ -163,8 +161,7 @@ describe('KtForm', () => {
 	describe('context gets updated when props change', () => {
 		it('hideValidation', async () => {
 			const wrapper = mount(TestForm, {
-				localVue,
-				propsData: {
+				props: {
 					hideValidation: false,
 					value: { testKey: 'testing' },
 				},
@@ -181,8 +178,7 @@ describe('KtForm', () => {
 
 		it('validators', async () => {
 			const wrapper = mount(TestForm, {
-				localVue,
-				propsData: {
+				props: {
 					validators: {},
 					value: { testKey: 'testing' },
 				},
@@ -206,8 +202,7 @@ describe('KtForm', () => {
 
 		it('value', async () => {
 			const wrapper = mount(TestForm, {
-				localVue,
-				propsData: {
+				props: {
 					value: { testKey: 'testing' },
 				},
 			})

@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes, PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { KottiFieldToggle } from '../../kotti-field-toggle/types'
 import type { KottiField } from '../../kotti-field/types'
@@ -41,13 +41,13 @@ export default defineComponent({
 		type: { default: 'checkbox', type: String },
 		value: { default: null, type: Boolean as PropType<boolean | null> },
 	},
-	emits: ['input'],
+	emits: ['update:value'],
 	setup(props, { emit }) {
 		return {
 			onInput: (event: Event) => {
 				const newValue = (event.target as InputHTMLAttributes).checked
 
-				if (!props.isDisabled) emit('input', newValue)
+				if (!props.isDisabled) emit('update:value', newValue)
 			},
 			svgComponent: computed(() => {
 				const isBox = props.type === KottiFieldToggle.Shared.Type.CHECKBOX
