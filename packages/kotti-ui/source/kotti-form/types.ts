@@ -38,6 +38,7 @@ export namespace KottiForm {
 		 * can be useful otherwise
 		 */
 		formId: string
+		modelValue: ContextType
 
 		/**
 		 * @default warning
@@ -48,8 +49,6 @@ export namespace KottiForm {
 		preventSubmissionOn: 'error' | 'NEVER' | 'warning'
 
 		validators: Record<string, KottiField.Validation.Function>
-
-		value: ContextType
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-empty-object-type

@@ -1,12 +1,14 @@
 import castArray from 'lodash/castArray.js'
 import isEqual from 'lodash/isEqual.js'
 import { beforeAll, describe, expect, it } from 'vitest'
-import type { PropOptions, PropType } from 'vue'
+import type { Prop, PropType } from 'vue'
 import { z } from 'zod'
 
 import { makeProps } from './make-props'
 import { silenceConsole } from './test-utils/silence-console'
 import { refinementNonEmpty } from './zod-utilities/refinements'
+
+type PropOptions<T, D = T> = Exclude<Prop<T, D>, PropType<T>>
 
 interface CustomMatchers<R = unknown> {
 	toBeRequired(): R
@@ -89,17 +91,24 @@ expect.extend({
 		}
 	},
 	toValidate(prop: PropOptions<unknown>, ...cases: unknown[]) {
-		// eslint-disable-next-line @typescript-eslint/unbound-method
 		const { validator } = prop
-
 		if (validator === undefined)
 			return {
 				message: () => 'Expected prop.validator to exist',
 				pass: false,
 			}
 
-		const successfulCases = cases.filter((c) => validator(c))
-		const failedCases = cases.filter((c) => !validator(c))
+		const successfulCases = cases.filter((c) =>
+			validator(c, {
+				toValidateTestName: c,
+			}),
+		)
+		const failedCases = cases.filter(
+			(c) =>
+				!validator(c, {
+					toValidateTestName: c,
+				}),
+		)
 
 		const wrongCases = this.isNot ? successfulCases : failedCases
 
