@@ -107,7 +107,7 @@ export const KtTableLegacyColumn: any = {
 	},
 	destroyed(): void {
 		if (!this.$parent) return
-		this.columnConfig &&
+		if (this.columnConfig)
 			this[KT_STORE as any].commit('removeColumn', this.columnConfig)
 	},
 	render: (): null => null,

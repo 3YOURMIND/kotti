@@ -104,11 +104,11 @@ export default defineComponent({
 			onMaxInputBlur: (newMax: KottiFieldNumber.Value) => {
 				if (props.value[1] !== newMax) reOrderAndEmitRangeValue()
 			},
-			onMinInputBlur: (newMin: KottiFieldNumber.Value) => {
-				if (props.value[0] !== newMin) reOrderAndEmitRangeValue()
-			},
 			onMaxValueInput: (newMax: KottiFieldNumber.Value) => {
 				range.value = [range.value[0], newMax]
+			},
+			onMinInputBlur: (newMin: KottiFieldNumber.Value) => {
+				if (props.value[0] !== newMin) reOrderAndEmitRangeValue()
 			},
 			onMinValueInput: (newMin: KottiFieldNumber.Value) => {
 				range.value = [newMin, range.value[1]]

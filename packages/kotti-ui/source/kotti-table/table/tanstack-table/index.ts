@@ -43,7 +43,7 @@ export const FlexRender = defineComponent({
 /**
  * Vue 2 reactivity wrapper around TanStack Table Core `createTable`
  *
- * @todo replace this with the official package `@tanstack/vue-table` in vue3
+ * FIXME: replace this with the official package `@tanstack/vue-table` in vue3
  * @link https://www.npmjs.com/package/@tanstack/vue-table
  */
 export const useVueTable = <T_DATA extends RowData>(

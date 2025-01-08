@@ -1,3 +1,4 @@
+// eslint-disable-next-line sonarjs/slow-regex
 const separatorRegex = new RegExp(/\s*\|\s*/g)
 
 /**

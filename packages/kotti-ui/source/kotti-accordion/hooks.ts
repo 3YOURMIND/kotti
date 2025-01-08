@@ -27,7 +27,9 @@ export const useSlideAnimation = (
 		const animation = animatedObject.animate(frames, finalOptions)
 
 		animation.pause()
-		willOpen ? animation.play() : animation.reverse()
+
+		if (willOpen) animation.play()
+		else animation.reverse()
 
 		await animation.finished
 

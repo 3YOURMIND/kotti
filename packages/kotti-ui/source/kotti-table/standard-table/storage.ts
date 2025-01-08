@@ -73,20 +73,6 @@ export class LocalStorageAdapter implements KottiStandardTableStorage {
 		this.#manualVersion = manualVersion
 	}
 
-	#getVersionHash(columnIds: string[]): string {
-		const version = this.#manualVersion ?? simpleHash(columnIds)
-		return `${this.#storageKey}@${version}`
-	}
-
-	#validateVersionHash(columnIds: string[], version: string): boolean {
-		if (!version.startsWith(`${this.#storageKey}@`)) return false
-
-		const correctHash = simpleHash(columnIds)
-		const givenHash = version.replace(`${this.#storageKey}@`, '')
-
-		return correctHash === givenHash
-	}
-
 	// eslint-disable-next-line @typescript-eslint/require-await
 	async load(
 		context: StorageOperationContext,
@@ -131,5 +117,19 @@ export class LocalStorageAdapter implements KottiStandardTableStorage {
 		})
 
 		window.localStorage.setItem(this.#storageKey, json)
+	}
+
+	#getVersionHash(columnIds: string[]): string {
+		const version = this.#manualVersion ?? simpleHash(columnIds)
+		return `${this.#storageKey}@${version}`
+	}
+
+	#validateVersionHash(columnIds: string[], version: string): boolean {
+		if (!version.startsWith(`${this.#storageKey}@`)) return false
+
+		const correctHash = simpleHash(columnIds)
+		const givenHash = version.replace(`${this.#storageKey}@`, '')
+
+		return correctHash === givenHash
 	}
 }

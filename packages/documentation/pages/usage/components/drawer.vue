@@ -149,8 +149,8 @@ import ComponentInfo from '~/components/ComponentInfo.vue'
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsDrawer',
 	components: {
-		ComponentInfo,
 		CodePreviewLegacy,
+		ComponentInfo,
 	},
 	data() {
 		return {

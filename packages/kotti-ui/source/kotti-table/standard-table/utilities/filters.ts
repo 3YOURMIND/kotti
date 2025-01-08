@@ -49,6 +49,7 @@ const getOptionLabel = (
 export const formatFilterValue = (
 	value: KottiStandardTable.FilterValue,
 	filter: KottiStandardTable.FilterInternal,
+	// eslint-disable-next-line sonarjs/cognitive-complexity
 ): string => {
 	switch (filter.type) {
 		case KottiStandardTable.FilterType.BOOLEAN: {

@@ -15,8 +15,8 @@ import { Yoco } from '@3yourmind/yoco'
 export default defineComponent({
 	name: 'ConfirmButton',
 	props: {
-		tabIndex: { type: Number, default: 0 },
-		dataTest: { type: String, default: null },
+		dataTest: { default: null, type: String },
+		tabIndex: { default: 0, type: Number },
 	},
 	emits: ['confirm'],
 	setup(props, { emit }) {

@@ -438,8 +438,9 @@ export default defineComponent({
 			},
 			expandMode,
 			reverseColumnOrder: () => {
-				tableHook.api.columnOrder.value =
-					tableHook.api.columnOrder.value.reverse()
+				const localColumns = [...tableHook.api.columnOrder.value]
+				localColumns.reverse()
+				tableHook.api.columnOrder.value = localColumns
 			},
 			showAllColumns: () => {
 				tableHook.api.hiddenColumns.value = new Set()

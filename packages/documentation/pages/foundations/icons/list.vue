@@ -34,7 +34,6 @@ export default defineComponent({
 	},
 	setup() {
 		const component: { meta: Kotti.Meta; name: string } = {
-			name: 'Icons',
 			meta: {
 				addedVersion: null,
 				deprecated: null,
@@ -48,6 +47,7 @@ export default defineComponent({
 					schema: yocoIconSchema,
 				},
 			},
+			name: 'Icons',
 		}
 
 		return {

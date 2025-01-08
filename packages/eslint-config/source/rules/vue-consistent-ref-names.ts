@@ -28,7 +28,6 @@ export default createRule({
 	meta: {
 		docs: {
 			description,
-			requiresTypeChecking: false,
 		},
 		messages: {
 			avoidName: "Refs to elements or components should always end with 'Ref'",

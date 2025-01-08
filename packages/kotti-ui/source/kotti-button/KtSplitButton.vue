@@ -138,6 +138,7 @@ export default defineComponent({
 		watch(
 			() => isTippyOpen.value,
 			(isOpen) => {
+				// eslint-disable-next-line sonarjs/no-selector-parameter
 				if (!isOpen) currentActionIndexInFocus.value = UNSET_INDEX
 				else if (hasAvailableActions.value)
 					// Focus the 1st available action item

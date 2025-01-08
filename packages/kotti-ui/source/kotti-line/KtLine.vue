@@ -22,11 +22,11 @@ export default defineComponent({
 			handleClick: () => {
 				if (props.isInteractive) emit('click')
 			},
+			Position: KottiLine.Position,
 			textClasses: computed(() => ({
 				'kt-line__text': true,
 				'kt-line__text--is-interactive': props.isInteractive,
 			})),
-			Position: KottiLine.Position,
 		}
 	},
 })

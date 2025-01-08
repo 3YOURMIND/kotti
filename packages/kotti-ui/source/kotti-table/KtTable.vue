@@ -248,7 +248,7 @@ export default defineComponent({
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
 				const target = event.target as HTMLElement
 
-				const { x: elementX, width: elementWidth } =
+				const { width: elementWidth, x: elementX } =
 					target.getBoundingClientRect()
 
 				const cursorX = event.clientX
@@ -334,6 +334,7 @@ export default defineComponent({
 					key: headerRow.id,
 				})),
 			),
+			table,
 			tableClasses: computed(() => ({
 				'kt-table': true,
 				'kt-table--is-drag-and-drop-active':
@@ -342,9 +343,8 @@ export default defineComponent({
 					props.isLoading && table.value.getRowModel().rows.length > 0,
 				'kt-table--is-scrollable': !props.isNotScrollable,
 			})),
-			table,
-			tableContext: computed(() => tableContext.value),
 			tableColSpan: computed(() => table.value.getAllFlatColumns().length),
+			tableContext: computed(() => tableContext.value),
 		}
 	},
 })

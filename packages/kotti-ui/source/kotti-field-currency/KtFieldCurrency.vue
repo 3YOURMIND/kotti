@@ -156,11 +156,6 @@ export default defineComponent({
 		)
 
 		return {
-			modifiedField: computed(() => ({
-				...field,
-				prefix: currencyFormat.value.symbol,
-			})),
-			inputRef,
 			inputProps: computed(
 				(): InputHTMLAttributes & {
 					class: Record<string, boolean>
@@ -179,6 +174,11 @@ export default defineComponent({
 					value: internalStringValue.value,
 				}),
 			),
+			inputRef,
+			modifiedField: computed(() => ({
+				...field,
+				prefix: currencyFormat.value.symbol,
+			})),
 			onInput: (event: Event) => {
 				const value = (event.target as HTMLInputElement).value
 

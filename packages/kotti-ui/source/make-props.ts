@@ -28,8 +28,8 @@ const propValidator = <SCHEMA extends z.ZodTypeAny>({
 	isNever: boolean
 	propName: string
 	propSchema: SCHEMA
-}) => {
-	const validator = (value: unknown) => {
+}): ((value: unknown) => value is SCHEMA) => {
+	const validator = (value: unknown): value is SCHEMA => {
 		if (isNever && value === NEVER) return true
 
 		try {
@@ -88,8 +88,8 @@ const propValidator = <SCHEMA extends z.ZodTypeAny>({
 /**
  * Collects all unique types used in the top level of a Zod schema
  */
-const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
-	schema: SCHEMA,
+const walkSchemaTypes = (
+	schema: z.ZodTypeAny,
 ): Set<z.ZodFirstPartyTypeKind> => {
 	/* eslint-disable no-console */
 	const typeName = schema._def.typeName as z.ZodFirstPartyTypeKind
@@ -98,51 +98,6 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 		console.log(`walkSchemaTypes: found “ZodFirstPartyTypeKind.${typeName}”`)
 
 	switch (typeName) {
-		case z.ZodFirstPartyTypeKind.ZodUnion: {
-			const { options } = schema._def as z.ZodUnionDef
-
-			if (DEBUG_WALK_SCHEMA_TYPES)
-				console.group('walkSchemaTypes: walking union')
-
-			// walk every option in the union and merge results
-			const result = setUnion(...options.map((x) => walkSchemaTypes(x)))
-
-			if (DEBUG_WALK_SCHEMA_TYPES) console.groupEnd()
-
-			return result
-		}
-
-		// e.g. z.refine()
-		case z.ZodFirstPartyTypeKind.ZodEffects: {
-			const def = schema._def as z.ZodEffectsDef
-
-			if (DEBUG_WALK_SCHEMA_TYPES)
-				console.log(
-					`walkSchemaTypes: walking schema of “ZodFirstPartyTypeKind.ZodEffects”`,
-				)
-
-			return walkSchemaTypes(def.schema)
-		}
-
-		case z.ZodFirstPartyTypeKind.ZodDefault:
-		case z.ZodFirstPartyTypeKind.ZodNullable:
-		case z.ZodFirstPartyTypeKind.ZodOptional: {
-			const { innerType } = schema._def as
-				| z.ZodDefaultDef
-				| z.ZodNullableDef
-				| z.ZodOptionalDef
-
-			if (DEBUG_WALK_SCHEMA_TYPES)
-				console.log(
-					`walkSchemaTypes: walking innerType of “ZodFirstPartyTypeKind.${typeName}”`,
-				)
-
-			return setUnion(
-				new Set<z.ZodFirstPartyTypeKind>([typeName]),
-				walkSchemaTypes(innerType),
-			)
-		}
-
 		case z.ZodFirstPartyTypeKind.ZodArray:
 		case z.ZodFirstPartyTypeKind.ZodBoolean:
 		case z.ZodFirstPartyTypeKind.ZodDate:
@@ -162,6 +117,48 @@ const walkSchemaTypes = <SCHEMA extends z.ZodTypeAny>(
 				)
 
 			return new Set([typeName])
+		}
+		case z.ZodFirstPartyTypeKind.ZodDefault:
+		case z.ZodFirstPartyTypeKind.ZodNullable:
+		case z.ZodFirstPartyTypeKind.ZodOptional: {
+			const { innerType } = schema._def as
+				| z.ZodDefaultDef
+				| z.ZodNullableDef
+				| z.ZodOptionalDef
+
+			if (DEBUG_WALK_SCHEMA_TYPES)
+				console.log(
+					`walkSchemaTypes: walking innerType of “ZodFirstPartyTypeKind.${typeName}”`,
+				)
+
+			return setUnion(
+				new Set<z.ZodFirstPartyTypeKind>([typeName]),
+				walkSchemaTypes(innerType),
+			)
+		}
+		// e.g. z.refine()
+		case z.ZodFirstPartyTypeKind.ZodEffects: {
+			const def = schema._def as z.ZodEffectsDef
+
+			if (DEBUG_WALK_SCHEMA_TYPES)
+				console.log(
+					`walkSchemaTypes: walking schema of “ZodFirstPartyTypeKind.ZodEffects”`,
+				)
+
+			return walkSchemaTypes(def.schema)
+		}
+		case z.ZodFirstPartyTypeKind.ZodUnion: {
+			const { options } = schema._def as z.ZodUnionDef
+
+			if (DEBUG_WALK_SCHEMA_TYPES)
+				console.group('walkSchemaTypes: walking union')
+
+			// walk every option in the union and merge results
+			const result = setUnion(...options.map((x) => walkSchemaTypes(x)))
+
+			if (DEBUG_WALK_SCHEMA_TYPES) console.groupEnd()
+
+			return result
 		}
 
 		default: {

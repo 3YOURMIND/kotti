@@ -52,14 +52,17 @@ export module KottiForm {
 		value: ContextType
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-empty-interface
+	// eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-empty-object-type
 	export interface AdditionalContext {
-		// TODO: notReallyFormKey: Array<string | number>
+		// FIKME: notReallyFormKey: Array<string | number>
 	}
 
 	export interface ValidationSummary {
+		// eslint-disable-next-line sonarjs/no-useless-intersection
 		errors: Array<AdditionalContext & KottiField.Validation.Error>
+		// eslint-disable-next-line sonarjs/no-useless-intersection
 		successes: Array<AdditionalContext & KottiField.Validation.Success>
+		// eslint-disable-next-line sonarjs/no-useless-intersection
 		warnings: Array<AdditionalContext & KottiField.Validation.Warning>
 	}
 

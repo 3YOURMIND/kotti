@@ -16,8 +16,8 @@ import { computed, defineComponent, ref } from 'vue'
 export default defineComponent({
 	name: 'CodePreviewLegacy',
 	props: {
-		vueSlotLabel: { default: 'Kotti-UI', type: String },
 		styleSlotLabel: { default: 'Kotti-Style', type: String },
+		vueSlotLabel: { default: 'Kotti-UI', type: String },
 	},
 	setup(props) {
 		const showCode = ref(true)

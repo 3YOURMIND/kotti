@@ -75,11 +75,11 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
-import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import DropArea from '../kotti-field-file-upload/components/DropArea.vue'
 import PreUploadedFileItem from '../kotti-field-file-upload/components/PreUploadedFileItem.vue'
 import TakePhoto from '../kotti-field-file-upload/components/TakePhoto/TakePhoto.vue'
 import type { Shared } from '../kotti-field-file-upload/types'
+import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { makeProps } from '../make-props'
 
 import UploadedFileItem from './components/UploadedFileItem.vue'
@@ -171,7 +171,6 @@ export default defineComponent({
 					.filter((file) => preUploadedFileIds.value.has(file.id))
 					.map((file) => ({ ...file, validation: 'SUCCESS' })),
 			),
-			uploadedFilesList,
 			sharedProps: computed(() => ({
 				dataTest: props.dataTest,
 				extensions: props.extensions,
@@ -184,6 +183,7 @@ export default defineComponent({
 					!props.hideDropArea &&
 					(props.allowMultiple || props.state.length === 0),
 			),
+			uploadedFilesList,
 		}
 	},
 })

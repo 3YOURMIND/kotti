@@ -305,7 +305,6 @@ export default defineComponent({
 			})),
 			incrementButtonRef,
 			incrementValue,
-			inputRef,
 			inputProps: computed(
 				(): InputHTMLAttributes &
 					KottiField.Hook.Returns<KottiFieldNumber.Value>['inputProps'] & {
@@ -326,6 +325,7 @@ export default defineComponent({
 					value: internalStringValue.value,
 				}),
 			),
+			inputRef,
 			onBlur: () => {
 				forceUpdateDisplayedValue(field.currentValue)
 			},

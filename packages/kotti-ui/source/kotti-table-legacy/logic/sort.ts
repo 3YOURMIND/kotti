@@ -67,6 +67,7 @@ function compare(
 	b: any,
 	{ sortBy, sortMethod, sortOrder }: any,
 ) {
+	// eslint-disable-next-line sonarjs/no-parameter-reassignment
 	order = sortMethod ? sortMethod(a.value, b.value) : compareArray(a, b, sortBy)
 	if (!order) {
 		// make stable https://en.wikipedia.org/wiki/sortOrder_algorithm#Stability

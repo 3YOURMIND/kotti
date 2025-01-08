@@ -295,7 +295,6 @@ export default defineComponent({
 					onConfirm()
 				}
 			},
-			sharedProps,
 			rootClasses: computed(() => ({
 				'kt-field-inline-edit': true,
 				'kt-field-inline-edit--is-editable': !props.isReadonly,
@@ -303,6 +302,7 @@ export default defineComponent({
 					isEditing.value && !props.isDisabled,
 				'kt-field-inline-edit--is-readonly': props.isReadonly,
 			})),
+			sharedProps,
 			textareaProps: computed(
 				(): TextareaHTMLAttributes & {
 					class: Record<string, boolean>

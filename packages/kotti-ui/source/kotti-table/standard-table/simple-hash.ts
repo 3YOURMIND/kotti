@@ -9,9 +9,11 @@ export const simpleHash = (strings: string[]): string => {
 
 	const result = new window.Uint8Array(maximumLength)
 
+	// eslint-disable-next-line sonarjs/no-alphabetical-sort
 	for (const string of [...strings].sort()) {
 		for (let charIndex = 0; charIndex < string.length; charIndex++) {
 			// string.length is added to make collisions less likely (e.g. foo + fooBar = baz + bazBar without this)
+
 			result[charIndex] ^= string.charCodeAt(charIndex) + string.length
 		}
 	}

@@ -10,8 +10,8 @@ import { TableRow } from './TableRow'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const TableBody = defineComponent({
-	name: 'TableBody',
 	components: { TableRow },
+	name: 'TableBody',
 	setup() {
 		const tableState = inject(KT_TABLE)
 		const tableStore = inject(KT_STORE)

@@ -97,8 +97,6 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtModal,
-			showAnnouncement: ref(true),
-			showModal: ref(false),
 			settings: ref<{
 				preventCloseOutside: boolean
 				size: Kotti.Modal.Size
@@ -116,6 +114,8 @@ export default defineComponent({
 					header: true,
 				},
 			}),
+			showAnnouncement: ref(true),
+			showModal: ref(false),
 		}
 	},
 })

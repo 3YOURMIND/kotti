@@ -36,6 +36,10 @@ export default defineComponent({
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		return {
 			field,
+			handleVisibilityChange: () => {
+				const isValueHidden = fieldType.value === 'password'
+				fieldType.value = isValueHidden ? 'text' : 'password'
+			},
 			inputProps: computed(
 				(): InputHTMLAttributes & {
 					class: string[]
@@ -56,10 +60,6 @@ export default defineComponent({
 				field.setValue(newValue === '' ? null : newValue)
 
 				forceUpdate()
-			},
-			handleVisibilityChange: () => {
-				const isValueHidden = fieldType.value === 'password'
-				fieldType.value = isValueHidden ? 'text' : 'password'
 			},
 		}
 	},

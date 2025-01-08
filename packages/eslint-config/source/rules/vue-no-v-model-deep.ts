@@ -26,7 +26,6 @@ export default createRule({
 	meta: {
 		docs: {
 			description,
-			requiresTypeChecking: false,
 		},
 		messages: {
 			avoidDeepAttributesInProps:

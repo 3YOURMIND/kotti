@@ -1,3 +1,5 @@
+import type { ComponentPublicInstanceConstructor } from 'vue/types/v3-component-public-instance'
+
 import type { Kotti } from '../types'
 import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
@@ -16,17 +18,23 @@ const META: Omit<Kotti.Meta, 'typeScript'> = {
 	slots: {},
 }
 
-export const KtComment = attachMeta(makeInstallable(KtCommentVue), {
-	...META,
-	typeScript: {
-		namespace: 'Kotti.Comment',
-		schema: KottiComment.propsSchema,
+export const KtComment = attachMeta(
+	makeInstallable(KtCommentVue as ComponentPublicInstanceConstructor),
+	{
+		...META,
+		typeScript: {
+			namespace: 'Kotti.Comment',
+			schema: KottiComment.propsSchema,
+		},
 	},
-})
-export const KtCommentInput = attachMeta(makeInstallable(KtCommentInputVue), {
-	...META,
-	typeScript: {
-		namespace: 'Kotti.CommentInput',
-		schema: KottiCommentInput.propsSchema,
+)
+export const KtCommentInput = attachMeta(
+	makeInstallable(KtCommentInputVue as ComponentPublicInstanceConstructor),
+	{
+		...META,
+		typeScript: {
+			namespace: 'Kotti.CommentInput',
+			schema: KottiCommentInput.propsSchema,
+		},
 	},
-})
+)

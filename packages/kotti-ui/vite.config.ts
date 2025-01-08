@@ -56,8 +56,8 @@ export default defineConfig(({ mode }) => {
 	const external = [
 		...Object.keys(packageJSON.peerDependencies),
 		...Object.keys(packageJSON.dependencies),
-		/.*element-ui.*/,
-		/.*tippy\.js.*/,
+		/element-ui/,
+		/tippy\.js/,
 		/lodash\/.*/,
 		/vue\/.*/,
 	]

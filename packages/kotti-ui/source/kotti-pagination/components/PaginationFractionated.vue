@@ -11,8 +11,8 @@ export default defineComponent<{
 }>({
 	name: 'PaginationFractionated',
 	props: {
-		currentPage: { type: Number, required: true },
-		maximumPage: { type: Number, required: true },
+		currentPage: { required: true, type: Number },
+		maximumPage: { required: true, type: Number },
 	},
 	setup(props) {
 		return {

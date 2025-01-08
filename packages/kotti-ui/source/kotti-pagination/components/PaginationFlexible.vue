@@ -45,10 +45,10 @@ const PIXEL_MULTIPLIER = 2.8
 export default defineComponent({
 	name: 'PaginationFlexible',
 	props: {
-		adjacentAmount: { type: Number, required: true },
-		currentPage: { type: Number, required: true },
-		fixedWidth: { type: Boolean, required: true },
-		maximumPage: { type: Number, required: true },
+		adjacentAmount: { required: true, type: Number },
+		currentPage: { required: true, type: Number },
+		fixedWidth: { required: true, type: Boolean },
+		maximumPage: { required: true, type: Number },
 	},
 	emits: ['setPage'],
 	setup(props) {

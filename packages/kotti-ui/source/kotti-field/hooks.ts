@@ -165,7 +165,7 @@ const useValidation = <DATA_TYPE>({
 
 	return {
 		hideValidation,
-		// TODO: Write unit test to figure out if props.isDisabled affects this function or if a computed() is necessary
+		// FIXME: Write unit test to figure out if props.isDisabled affects this function or if a computed() is necessary
 		validation: computed((): KottiField.Validation.Result => {
 			const customValidation = (() => {
 				if (!context && props.formKey)

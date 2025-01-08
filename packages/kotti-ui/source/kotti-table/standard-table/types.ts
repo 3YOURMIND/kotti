@@ -7,7 +7,6 @@ import {
 	KottiFieldMultiSelect,
 	KottiFieldSingleSelect,
 } from '../../kotti-field-select/types'
-import { KottiFieldText } from '../../kotti-field-text/types'
 import { KottiFieldToggle } from '../../kotti-field-toggle/types'
 import { KottiPopover } from '../../kotti-popover/types'
 import type { KottiTable } from '../table/types'
@@ -268,23 +267,15 @@ export namespace KottiStandardTable {
 	export type Props = z.input<typeof propsSchema>
 
 	export namespace Events {
-		const updateFetchData = z.object({
-			filters: appliedFilterSchema.array(),
-			ordering: z.array(
-				z
-					.object({
-						id: z.string(),
-						value: z.enum(['ascending', 'descending']),
-					})
-					.strict(),
-			),
-			pagination: sharedPaginationSchema.pick({
-				pageIndex: true,
-				pageSize: true,
-			}),
-			search: KottiFieldText.valueSchema,
-		})
-		export type UpdateFetchData = z.output<typeof updateFetchData>
+		export type UpdateFetchData = {
+			filters: AppliedFilter[]
+			ordering: { id: string; value: 'ascending' | 'descending' }[]
+			pagination: {
+				pageIndex: number
+				pageSize: number
+			}
+			search: string | null
+		}
 	}
 
 	export module Hook {

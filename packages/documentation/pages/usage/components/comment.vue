@@ -394,8 +394,8 @@ export default defineComponent({
 				comment.id === payload.id
 					? {
 							...comment,
-							isModified: true,
 							isInternal: payload.isInternal,
+							isModified: true,
 							message: payload.message,
 						}
 					: comment
@@ -432,31 +432,6 @@ export default defineComponent({
 					}),
 				)
 			},
-			handleEdit(payload: Kotti.Comment.Events.Edit) {
-				if (!payload.parentId) {
-					if (!comments.value.some((comment) => comment.id === payload.id))
-						throw new Error(`Comment not found, comment id: ${payload.id}`)
-
-					comments.value = comments.value.map(editComment(payload))
-					return
-				}
-
-				const parentComment = comments.value.find(
-					(comment) => comment.id === payload.parentId,
-				)
-
-				if (!parentComment)
-					throw new Error(
-						`Comment not found, comment id: ${String(payload.parentId)}`,
-					)
-
-				if (!parentComment.replies.some((reply) => reply.id === payload.id))
-					throw new Error(
-						`Comment not found, comment id: ${String(payload.id)}`,
-					)
-
-				parentComment.replies = parentComment.replies.map(editComment(payload))
-			},
 			handleDelete(payload: Kotti.Comment.Events.Delete) {
 				if (!payload.parentId) {
 					if (!comments.value.some((comment) => comment.id === payload.id))
@@ -487,6 +462,31 @@ export default defineComponent({
 				parentComment.replies = parentComment.replies.filter(
 					(reply) => reply.id !== payload.id,
 				)
+			},
+			handleEdit(payload: Kotti.Comment.Events.Edit) {
+				if (!payload.parentId) {
+					if (!comments.value.some((comment) => comment.id === payload.id))
+						throw new Error(`Comment not found, comment id: ${payload.id}`)
+
+					comments.value = comments.value.map(editComment(payload))
+					return
+				}
+
+				const parentComment = comments.value.find(
+					(comment) => comment.id === payload.parentId,
+				)
+
+				if (!parentComment)
+					throw new Error(
+						`Comment not found, comment id: ${String(payload.parentId)}`,
+					)
+
+				if (!parentComment.replies.some((reply) => reply.id === payload.id))
+					throw new Error(
+						`Comment not found, comment id: ${String(payload.id)}`,
+					)
+
+				parentComment.replies = parentComment.replies.map(editComment(payload))
 			},
 			postEscapeParser: (msg: string) => msg.replaceAll('\n', '</br>'),
 			settings,

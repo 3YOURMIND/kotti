@@ -91,6 +91,23 @@ export default defineComponent({
 
 		return {
 			canSort,
+			getThClasses: (column: Store.StateComponents.ColumnRepresentation) => [
+				{
+					clickable: canSort(column),
+					'drag-over': isDraggedOver(column),
+					dragging: useColumnDragToOrder.value,
+					sortable: canSort(column),
+					sorted: isSorted(column),
+				},
+				tableState.thClasses,
+				column.thClass,
+			],
+			getThStyle: (column: Store.StateComponents.ColumnRepresentation) => ({
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				textAlign: column.align ?? KottiTableLegacy.Column.Align.LEFT,
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				width: column.width ?? 'auto',
+			}),
 			handleDragEnd: () => {
 				dropTargetColumn.value = null
 			},
@@ -107,23 +124,6 @@ export default defineComponent({
 				}
 				dropTargetColumn.value = null
 			},
-			getThClasses: (column: Store.StateComponents.ColumnRepresentation) => [
-				{
-					'drag-over': isDraggedOver(column),
-					clickable: canSort(column),
-					dragging: useColumnDragToOrder.value,
-					sortable: canSort(column),
-					sorted: isSorted(column),
-				},
-				tableState.thClasses,
-				column.thClass,
-			],
-			getThStyle: (column: Store.StateComponents.ColumnRepresentation) => ({
-				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-				textAlign: column.align ?? KottiTableLegacy.Column.Align.LEFT,
-				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-				width: column.width ?? 'auto',
-			}),
 			handleSelectAll: () => {
 				tableStore.commit('toggleAllSelection')
 			},

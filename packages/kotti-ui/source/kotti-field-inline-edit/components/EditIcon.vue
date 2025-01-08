@@ -10,7 +10,7 @@ import { Yoco } from '@3yourmind/yoco'
 export default defineComponent({
 	name: 'EditIcon',
 	props: {
-		isDisabled: { type: Boolean, default: false },
+		isDisabled: { default: false, type: Boolean },
 	},
 	setup(props) {
 		return {

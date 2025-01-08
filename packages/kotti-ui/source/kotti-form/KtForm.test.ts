@@ -42,8 +42,8 @@ const useTestHook = (
 }
 
 const TestField = defineComponent({
-	name: 'TestField',
 	components: { KtField },
+	name: 'TestField',
 	props: makeProps(
 		KottiField.propsSchema.extend({
 			value: z.string().nullable().default(null),
@@ -56,8 +56,8 @@ const TestField = defineComponent({
 })
 
 const TestFieldObject = defineComponent({
-	name: 'TestFieldObject',
 	components: { KtField },
+	name: 'TestFieldObject',
 	props: makeProps(
 		KottiField.propsSchema.extend({
 			value: z.record(z.unknown()).nullable().default(null),

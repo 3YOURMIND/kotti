@@ -174,8 +174,6 @@ export default defineComponent({
 				{ label: '<token>', value: 'token' },
 			]),
 			component: KtFieldInlineEdit,
-			formValue,
-			fieldValue: computed(() => formValue.value.fieldValue),
 			fieldProps: computed(() => ({
 				autoComplete:
 					settings.value.autoComplete === 'token'
@@ -200,6 +198,8 @@ export default defineComponent({
 					type: settings.value.validation ?? 'empty',
 				}),
 			})),
+			fieldValue: computed(() => formValue.value.fieldValue),
+			formValue,
 			onConfirm: (newVal: Kotti.FieldInlineEdit.Events.Confirm) => {
 				success({ text: newVal ?? '' })
 			},

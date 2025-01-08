@@ -8,12 +8,12 @@ export const TableBodyExpandRow = defineComponent({
 	name: 'TableBodyExpandRow',
 	props: {
 		row: {
-			type: Object as PropType<KottiTableLegacy.Row.Props>,
 			required: true,
+			type: Object as PropType<KottiTableLegacy.Row.Props>,
 		},
 		rowIndex: {
-			type: Number,
 			required: true,
+			type: Number,
 		},
 	},
 	setup(props) {

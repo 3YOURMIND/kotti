@@ -86,8 +86,6 @@ export module Store {
 			 * Note: rowKey is right now not a required prop of KtTableLegacy, but from what I can see
 			 * the store either depends on its existence or at least has better performance if
 			 * it exists.
-			 *
-			 * TODO: investigate if rowKey should be a required prop.
 			 */
 			rowKey?: Kotti.TableLegacy.RowKey
 		}

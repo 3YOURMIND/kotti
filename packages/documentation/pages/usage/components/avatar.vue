@@ -110,13 +110,6 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			avatarSettings: ref<Kotti.Avatar.Props & { showContentSlot: boolean }>({
-				isHoverable: false,
-				name: "Jony O'Five",
-				showContentSlot: false,
-				size: Kotti.Avatar.Size.MEDIUM,
-				src: 'https://picsum.photos/200/100',
-			}),
 			avatarGroupSettings: ref<
 				Kotti.AvatarGroup.Props & { showContentSlot: boolean }
 			>({
@@ -133,13 +126,20 @@ export default defineComponent({
 				showContentSlot: false,
 				size: Kotti.Avatar.Size.MEDIUM,
 			}),
+			avatarSettings: ref<Kotti.Avatar.Props & { showContentSlot: boolean }>({
+				isHoverable: false,
+				name: "Jony O'Five",
+				showContentSlot: false,
+				size: Kotti.Avatar.Size.MEDIUM,
+				src: 'https://picsum.photos/200/100',
+			}),
+			Kotti,
+			KtAvatar,
+			KtAvatarGroup,
 			sizeOptions: Object.entries(Kotti.Avatar.Size).map(([label, value]) => ({
 				label,
 				value,
 			})),
-			Kotti,
-			KtAvatar,
-			KtAvatarGroup,
 			Yoco,
 		}
 	},

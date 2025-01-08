@@ -14,20 +14,6 @@ import type {
 	KottiFieldDateTimeRange,
 } from './types'
 
-type Values =
-	| KottiFieldDate.Value
-	| KottiFieldDateRange.Value
-	| KottiFieldDateTime.Value
-	| KottiFieldDateTimeRange.Value
-
-type HookParameters<DATA_TYPE extends Values> = {
-	elDateRef: Ref<ElDateWithInternalAPI | null>
-	field: KottiField.Hook.Returns<DATA_TYPE>
-	inputContainerRef: Ref<Element | null>
-	popperHeight: string
-	popperWidth: string
-}
-
 export type ElDateWithInternalAPI = ElDate & {
 	blur(): void
 	haveTrigger: boolean
@@ -42,6 +28,20 @@ export type ElDateWithInternalAPI = ElDate & {
 	referenceElm: Element
 	showClose: boolean
 }
+
+type HookParameters<DATA_TYPE extends Values> = {
+	elDateRef: Ref<ElDateWithInternalAPI | null>
+	field: KottiField.Hook.Returns<DATA_TYPE>
+	inputContainerRef: Ref<Element | null>
+	popperHeight: string
+	popperWidth: string
+}
+
+type Values =
+	| KottiFieldDate.Value
+	| KottiFieldDateRange.Value
+	| KottiFieldDateTime.Value
+	| KottiFieldDateTimeRange.Value
 
 const getDateComponent = <DATA_TYPE extends Values>({
 	elDateRef,
