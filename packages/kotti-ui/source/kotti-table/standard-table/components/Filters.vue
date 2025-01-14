@@ -56,7 +56,6 @@ export default defineComponent({
 		},
 		isLoading: { default: false, type: Boolean },
 		size: { default: 'md', type: String },
-		tableId: { required: true, type: String },
 		value: {
 			default: () => [],
 			type: Array as PropType<KottiStandardTable.AppliedFilter[]>,
