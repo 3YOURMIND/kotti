@@ -14,7 +14,7 @@
 		"noUncheckedIndexedAccess": true,
 		"noUnusedLocals": true, // FIXME: disable in development
 		"noUnusedParameters": true, // FIXME: disable in development
-		"outDir": "dist",
+		"outDir": "dist/types",
 		"paths": {
 			/**
 			 * Without specifying this path, resolution of vue/types/v3-component-public-instance fails:
@@ -32,7 +32,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "ESNext",
-		"tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
+		"tsBuildInfoFile": "dist/types/tsconfig.tsbuildinfo"
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": [
