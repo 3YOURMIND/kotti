@@ -20,6 +20,7 @@
 			<div v-if="!hideTableActions" class="kt-standard-table__table-actions">
 				<TableSearch
 					v-if="!options?.hideControls?.search"
+					data-test="table-search-field"
 					:isLoading="isLoadingAndEmpty"
 					:placeholder="options?.searchPlaceholder"
 					:value="searchValue"

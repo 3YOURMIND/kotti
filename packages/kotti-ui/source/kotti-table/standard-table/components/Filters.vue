@@ -5,6 +5,7 @@
 		:trigger="isLoading ? 'manual' : 'click'"
 	>
 		<KtButton
+			data-test="table-filter-edit-button"
 			:disabled="isLoading"
 			:icon="Yoco.Icon.CHEVRON_DOWN"
 			:isLoading="isLoading"
@@ -22,6 +23,7 @@
 					@input="$emit('input', $event)"
 				/>
 				<KtButton
+					data-test="table-filter-clear-all-button"
 					:disabled="isLoading"
 					:label="translations.clearAll"
 					type="text"
@@ -53,7 +55,6 @@ export default defineComponent({
 			type: Array as PropType<KottiStandardTable.FilterInternal[]>,
 		},
 		isLoading: { default: false, type: Boolean },
-
 		size: { default: 'md', type: String },
 		value: {
 			default: () => [],

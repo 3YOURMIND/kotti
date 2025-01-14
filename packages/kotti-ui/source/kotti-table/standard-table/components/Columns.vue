@@ -5,6 +5,7 @@
 		:trigger="isLoading ? 'manual' : 'click'"
 	>
 		<KtButton
+			data-test="table-column-edit-button"
 			:disabled="isLoading"
 			:icon="Yoco.Icon.CHEVRON_DOWN"
 			:isLoading="isLoading"
@@ -20,6 +21,7 @@
 				/>
 				<!-- FIXME: ideally this button shoud not be behind the fold -->
 				<KtButton
+					data-test="table-column-show-all-button"
 					:disabled="isShowAllDisabled"
 					:label="translations.showAll"
 					type="text"

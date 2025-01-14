@@ -32,6 +32,7 @@ export default defineComponent({
 		return {
 			options: computed<KottiFieldSingleSelect.Props['options']>(() =>
 				props.pageSizeOptions.map((value) => ({
+					dataTest: `table-page-size-options-${value}`,
 					label: String(value),
 					value,
 				})),
