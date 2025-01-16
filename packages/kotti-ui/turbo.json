@@ -17,10 +17,10 @@
 			"outputs": ["dist/kotti-ui.*", "dist/variables.scss", "dist/style.css"]
 		},
 		"build:vue-tsc": {
-			"dependsOn": ["^build"],
+			"dependsOn": ["^build", "build:vite"],
 			"inputs": ["source/**", "tsconfig*.json"],
 			"outputMode": "new-only",
-			"outputs": ["dist/**/*.{cts,d.ts}"]
+			"outputs": ["dist/types/**/*.{cts,d.ts}"]
 		},
 		"test": {
 			"dependsOn": ["^build"],

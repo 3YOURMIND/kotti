@@ -28,6 +28,7 @@ export const KtComment = attachMeta(
 		},
 	},
 )
+
 export const KtCommentInput = attachMeta(
 	makeInstallable(KtCommentInputVue as ComponentPublicInstanceConstructor),
 	{

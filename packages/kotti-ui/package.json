@@ -40,16 +40,16 @@
 		"vitest": "^1.6.0",
 		"vue": "^2.7",
 		"vue-template-compiler": "^2.7",
-		"vue-tsc": "^1.8.22"
+		"vue-tsc": "^2.2.0"
 	},
 	"exports": {
 		".": {
 			"import": {
-				"types": "./dist/index.d.ts",
+				"types": "./dist/types/index.d.ts",
 				"default": "./dist/kotti-ui.js"
 			},
 			"require": {
-				"types": "./dist/index.d.cts",
+				"types": "./dist/types/index.d.cts",
 				"default": "./dist/kotti-ui.cjs"
 			}
 		},
@@ -97,6 +97,6 @@
 	],
 	"style": "./dist/style.css",
 	"type": "module",
-	"types": "./dist/index.d.ts",
+	"types": "./dist/types/index.d.ts",
 	"version": "8.3.2"
 }

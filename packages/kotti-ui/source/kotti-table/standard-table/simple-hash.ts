@@ -12,9 +12,10 @@ export const simpleHash = (strings: string[]): string => {
 	// eslint-disable-next-line sonarjs/no-alphabetical-sort
 	for (const string of [...strings].sort()) {
 		for (let charIndex = 0; charIndex < string.length; charIndex++) {
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			const char = result[charIndex]!
 			// string.length is added to make collisions less likely (e.g. foo + fooBar = baz + bazBar without this)
-
-			result[charIndex] ^= string.charCodeAt(charIndex) + string.length
+			result[charIndex] = char ^ (string.charCodeAt(charIndex) + string.length)
 		}
 	}
 
