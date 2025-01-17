@@ -234,8 +234,9 @@
 								&:not(.disabled) {
 									&:not(.in-range) {
 										@supports (
-											clip-path:
-												circle(calc(#{$td-diameter * 0.5} + 2px) at center)
+											clip-path: circle(
+													calc(#{$td-diameter * 0.5} + 2px) at center
+												)
 										) {
 											clip-path: circle(
 												calc(#{$td-diameter * 0.5} + 2px) at center

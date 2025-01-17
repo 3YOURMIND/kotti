@@ -23,8 +23,8 @@ export const pluralize = (
 		count === 0
 			? cases[0]
 			: count === 1
-				? cases[1] ?? cases[0]
-				: cases[2] ?? cases[1] ?? cases[0]
+				? (cases[1] ?? cases[0])
+				: (cases[2] ?? cases[1] ?? cases[0])
 	) as string
 
 	Object.entries(values).forEach(([key, value]) => {

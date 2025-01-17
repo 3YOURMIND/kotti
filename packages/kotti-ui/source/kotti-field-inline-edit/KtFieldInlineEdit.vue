@@ -120,7 +120,7 @@ export default defineComponent({
 		const fieldPlaceholder = computed(() =>
 			props.isReadonly
 				? null
-				: props.placeholder ?? translations.value.placeholder,
+				: (props.placeholder ?? translations.value.placeholder),
 		)
 
 		const setFieldValue = (newValue: KottiFieldInlineEdit.Value) => {
@@ -254,7 +254,7 @@ export default defineComponent({
 			} => ({
 				...modifiedField.inputProps,
 				forceUpdateKey: forceUpdateKey.value,
-				placeholder: isEditing.value ? '' : fieldPlaceholder.value ?? '',
+				placeholder: isEditing.value ? '' : (fieldPlaceholder.value ?? ''),
 				readonly: props.isReadonly,
 				value: modifiedField.currentValue ?? '',
 			}),
