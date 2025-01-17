@@ -33,7 +33,7 @@ const queuedToastSchema = z
 	})
 	.strict()
 
-export type QueuedToast = z.output<typeof queuedToastSchema>
+type QueuedToast = z.output<typeof queuedToastSchema>
 
 const renderedMessageSchema = z
 	.object({

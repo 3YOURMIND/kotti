@@ -33,12 +33,12 @@ import { computed, defineComponent } from 'vue'
 import { makeProps } from '../../make-props'
 import { KottiNavbar } from '../types'
 
-export const propsSchema = KottiNavbar.propsSchema.pick({
+import NavbarTooltip from './NavbarTooltip.vue'
+
+const propsSchema = KottiNavbar.propsSchema.pick({
 	isNarrow: true,
 	sections: true,
 })
-
-import NavbarTooltip from './NavbarTooltip.vue'
 
 export default defineComponent({
 	name: 'KtNavbarMenu',
