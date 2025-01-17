@@ -28,9 +28,9 @@ import { type ReactStyleUpdater, useComputedRef } from './use-computed-ref'
 
 export const EXPANSION_COLUMN_ID = 'internal-expand-column'
 export const SELECTION_COLUMN_ID = 'internal-select-column'
-export const ARRAY_START = 2
+const ARRAY_START = 2
 
-export type SortingState<COLUMN_ID extends string = string> = {
+type SortingState<COLUMN_ID extends string = string> = {
 	desc: boolean
 	id: COLUMN_ID
 }[]

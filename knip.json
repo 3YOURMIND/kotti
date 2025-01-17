@@ -12,6 +12,7 @@
 			"entry": [
 				"pages/**/*.vue",
 				"layouts/**/*.vue",
+				"components/{ActionBar,ColorPalette,ColorUsage,LayoutContainer,MyToaster,NavBar}.vue",
 				"plugins/**/*.js",
 				"nuxt.config.ts"
 			],
