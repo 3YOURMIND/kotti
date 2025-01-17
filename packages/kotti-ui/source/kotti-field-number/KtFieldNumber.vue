@@ -230,7 +230,7 @@ export default defineComponent({
 				field.currentValue === null
 					? canFallbackToZero.value
 						? 0
-						: props.minimum ?? props.maximum ?? 0
+						: (props.minimum ?? props.maximum ?? 0)
 					: Big(field.currentValue).minus(props.step).toNumber(),
 			)
 			focusInput()
@@ -243,7 +243,7 @@ export default defineComponent({
 				field.currentValue === null
 					? canFallbackToZero.value
 						? 0
-						: props.minimum ?? props.maximum ?? 0
+						: (props.minimum ?? props.maximum ?? 0)
 					: Big(field.currentValue).add(props.step).toNumber(),
 			)
 			focusInput()

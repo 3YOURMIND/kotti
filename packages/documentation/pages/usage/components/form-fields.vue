@@ -1394,7 +1394,7 @@ export default defineComponent({
 					autoComplete:
 						settings.value.autoComplete === 'token'
 							? settings.value.autoCompleteToken
-							: settings.value.autoComplete ?? undefined,
+							: (settings.value.autoComplete ?? undefined),
 				})
 
 			if (
