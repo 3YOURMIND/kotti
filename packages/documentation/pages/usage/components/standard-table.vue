@@ -379,38 +379,6 @@ export default defineComponent({
 				type: Kotti.StandardTable.FilterType.NUMBER_RANGE,
 				unit: 'Kg',
 			},
-			...(settings.value.showInlineFilters
-				? [
-						{
-							dataTest: 'single-select-filter-inline',
-							displayInline: true,
-							id: 'singleSelectFilterInline',
-							isUnsorted: true,
-							label: 'Single select filter Inline',
-							options: [
-								{
-									dataTest: 'opt-1',
-									isDisabled: false,
-									label: 'Option 1',
-									value: 101,
-								},
-								{
-									dataTest: 'opt-2',
-									isDisabled: false,
-									label: 'Option 2',
-									value: 102,
-								},
-								{
-									dataTest: 'opt-3',
-									isDisabled: false,
-									label: 'Option 3',
-									value: 103,
-								},
-							],
-							type: Kotti.StandardTable.FilterType.SINGLE_SELECT,
-						},
-					]
-				: []),
 		])
 
 		useKottiStandardTable(
