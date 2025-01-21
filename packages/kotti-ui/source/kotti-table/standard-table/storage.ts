@@ -127,7 +127,7 @@ export class LocalStorageAdapter implements KottiStandardTableStorage {
 	#validateVersionHash(columnIds: string[], version: string): boolean {
 		if (!version.startsWith(`${this.#storageKey}@`)) return false
 
-		const correctHash = simpleHash(columnIds)
+		const correctHash = this.#manualVersion ?? simpleHash(columnIds)
 		const givenHash = version.replace(`${this.#storageKey}@`, '')
 
 		return correctHash === givenHash
