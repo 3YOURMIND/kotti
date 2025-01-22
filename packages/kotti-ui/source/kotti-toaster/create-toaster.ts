@@ -207,9 +207,6 @@ const createToasterOptions = z
 					getIsRunning: () => animationFrameId !== null,
 					start: (update) => {
 						const animate = () => {
-							// Leave console log for now, so issues with the toaster have a chance to be detected
-							// eslint-disable-next-line no-console
-							console.log('create-toaster: update')
 							animationFrameId = globalThis.requestAnimationFrame(animate)
 							update()
 						}
