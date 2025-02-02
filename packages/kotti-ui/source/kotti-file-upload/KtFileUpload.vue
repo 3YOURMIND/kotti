@@ -118,10 +118,8 @@ export default defineComponent({
 			for (const file of props.state) {
 				if (
 					!preUploadedFileIds.value.has(file.id) &&
-					[
-						KottiFileUpload.Status.UPLOADED,
-						KottiFileUpload.Status.UPLOADED_WITH_ERROR,
-					].includes(file.status)
+					(file.status === KottiFileUpload.Status.UPLOADED ||
+						file.status === KottiFileUpload.Status.UPLOADED_WITH_ERROR)
 				) {
 					preUploadedFileIds.value.add(file.id)
 				}

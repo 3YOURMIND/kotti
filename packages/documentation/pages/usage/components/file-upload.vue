@@ -202,7 +202,85 @@ export default defineComponent({
 				uploadEndTime: dayjs.Dayjs
 				uploadStartTime: dayjs.Dayjs
 			})[]
-		>([])
+		>([
+			{
+				id: 'uploading-file-id',
+				name: 'uploading file',
+				size: 256,
+				status: Kotti.FileUpload.Status.UPLOADING,
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'uploaded-with-error-file-id',
+				name: 'uploaded with error file',
+				size: 256,
+				status: Kotti.FileUpload.Status.UPLOADED_WITH_ERROR,
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'uploaded-file-id',
+				name: 'uploaded file',
+				size: 256,
+				status: Kotti.FileUpload.Status.UPLOADED,
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'not-started-file-id',
+				name: 'not started file',
+				size: 256,
+				status: Kotti.FileUpload.Status.NOT_STARTED,
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'invalid-file-id',
+				name: 'invalid file',
+				size: 256,
+				status: Kotti.FileUpload.Status.INVALID,
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'error-file-id',
+				name: 'error file',
+				size: 256,
+				status: Kotti.FileUpload.Status.ERROR,
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'cancelled-file-id',
+				name: 'canceled file',
+				size: 256,
+				status: Kotti.FileUpload.Status.CANCELED,
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'cancelled-file-id',
+				name: 'custom status file',
+				size: 256,
+				status: {
+					label: 'i have a custom status',
+				},
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'cancelled-file-id',
+				name: 'custom error file',
+				size: 256,
+				status: {
+					label: 'i have a custom error',
+					type: 'error',
+				},
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+		])
 
 		useRequestAnimationFrame(() => {
 			state.value = state.value.map((file) => {

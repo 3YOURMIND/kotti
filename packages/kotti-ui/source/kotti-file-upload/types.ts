@@ -23,6 +23,8 @@ export module KottiFileUpload {
 		UPLOADING = 'UPLOADING',
 	}
 	export const statusSchema = createLooseZodEnumSchema(Status)
+		.transform((status) => status as Status)
+		.or(z.object({ label: z.string(), type: z.enum(['error']).optional() }))
 
 	export const idSchema = z.union([z.number(), z.string()])
 
@@ -37,9 +39,7 @@ export module KottiFileUpload {
 			.transform((val) => Math.max(1, val))
 			.optional(),
 		size: z.number().int().min(0),
-		status: statusSchema
-			.default(Status.UPLOADED)
-			.transform((status) => status as Status),
+		status: statusSchema.default(Status.UPLOADED),
 		validation: validationSchema.optional(),
 		viewUrl: z.string().optional(),
 	})
@@ -105,18 +105,6 @@ export module KottiFileUpload {
 			}),
 		)
 		.merge(uploadPropsSchema)
-
-	export const internalFileInfoSchema = propsSchema
-		.pick({
-			dataTest: true,
-			extensions: true,
-			isDisabled: true,
-			isLoading: true,
-			maxFileSize: true,
-		})
-		.extend({
-			fileInfo: fileInfoSchema,
-		})
 
 	export module Events {
 		export type AddFiles = Array<{

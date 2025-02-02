@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, type PropType, ref } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -59,7 +59,6 @@ import { formatFileSize } from '../../kotti-field-file-upload/formatters'
 import { validateFile } from '../../kotti-field-file-upload/validators'
 import { KottiFileUpload } from '../../kotti-file-upload/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
-import { makeProps } from '../../make-props'
 
 export default defineComponent({
 	name: 'UploadedFileItem',
@@ -68,14 +67,37 @@ export default defineComponent({
 		ItemLayout,
 		ProgressBar,
 	},
-	props: makeProps(KottiFileUpload.internalFileInfoSchema),
+	props: {
+		dataTest: {
+			default: null,
+			type: String,
+		},
+		extensions: {
+			default: () => [],
+			type: Array as PropType<Array<string>>,
+		},
+		fileInfo: {
+			required: true,
+			type: Object as PropType<KottiFileUpload.FileInfo>,
+		},
+		isDisabled: {
+			default: false,
+			type: Boolean,
+		},
+		maxFileSize: {
+			default: Number.MAX_SAFE_INTEGER,
+			type: Number,
+		},
+	},
 	emits: ['cancelUpload', 'deleteFile', 'restartUpload'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const progressBarForceRenderKey = ref<number>(0)
 
-		const status = computed<KottiFileUpload.Status>(() => props.fileInfo.status)
+		const status = computed(() =>
+			typeof props.fileInfo.status === 'object' ? null : props.fileInfo.status,
+		)
 		const validation = computed<KottiFileUpload.Validation>(() => {
 			if (props.fileInfo.validation) return props.fileInfo.validation
 
@@ -89,11 +111,14 @@ export default defineComponent({
 
 			return KottiFileUpload.Validation.SUCCESS
 		})
-		const statusText = computed(() =>
-			validation.value === KottiFileUpload.Validation.SUCCESS
-				? translations.value.statusMsg[status.value]
-				: translations.value.validationMsg[validation.value],
-		)
+		const statusText = computed(() => {
+			const { status } = props.fileInfo
+			if (typeof status === 'object') return status.label
+
+			return validation.value === KottiFileUpload.Validation.SUCCESS
+				? translations.value.statusMsg[status as KottiFileUpload.Status]
+				: translations.value.validationMsg[validation.value]
+		})
 
 		const isDeletable = computed(
 			() =>
@@ -104,6 +129,7 @@ export default defineComponent({
 					KottiFileUpload.Status.INVALID,
 					KottiFileUpload.Status.UPLOADED,
 					KottiFileUpload.Status.UPLOADED_WITH_ERROR,
+					null,
 				].includes(status.value),
 		)
 
@@ -114,13 +140,17 @@ export default defineComponent({
 			description: computed(() =>
 				[formatFileSize(props.fileInfo.size), statusText.value].join(' - '),
 			),
-			isError: computed(() =>
-				[
-					KottiFileUpload.Status.ERROR,
-					KottiFileUpload.Status.INVALID,
-					KottiFileUpload.Status.UPLOADED_WITH_ERROR,
-				].includes(status.value),
-			),
+			isError: computed(() => {
+				const { status } = props.fileInfo
+				if (typeof status === 'string')
+					return [
+						KottiFileUpload.Status.ERROR,
+						KottiFileUpload.Status.INVALID,
+						KottiFileUpload.Status.UPLOADED_WITH_ERROR,
+					].includes(status)
+
+				return status.type === 'error'
+			}),
 			onClickCancelOrDelete: () => {
 				if (props.isDisabled) return
 
