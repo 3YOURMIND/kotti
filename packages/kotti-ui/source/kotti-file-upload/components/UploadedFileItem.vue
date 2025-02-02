@@ -68,24 +68,6 @@ export default defineComponent({
 		ProgressBar,
 	},
 	props: {
-		// export const fileInfoSchema = z.object({
-		// 	downloadUrl: z.string().optional(),
-		// 	id: idSchema,
-		// 	isInternal: z.boolean().optional(),
-		// 	name: z.string(),
-		// 	progress: z
-		// 		.number()
-		// 		.min(0)
-		// 		.transform((val) => Math.max(1, val))
-		// 		.optional(),
-		// 	size: z.number().int().min(0),
-		// 	status: statusSchema
-		// 		.default(Status.UPLOADED)
-		// 		.transform((status) => status as Status)
-		// 		.or(z.object({ label: z.string(), type: z.enum(['error']).optional() })),
-		// 	validation: validationSchema.optional(),
-		// 	viewUrl: z.string().optional(),
-		// })
 		dataTest: {
 			default: null,
 			type: String,
