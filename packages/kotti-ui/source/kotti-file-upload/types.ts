@@ -24,7 +24,12 @@ export module KottiFileUpload {
 	}
 	export const statusSchema = createLooseZodEnumSchema(Status)
 		.transform((status) => status as Status)
-		.or(z.object({ label: z.string(), type: z.enum(['error']).optional() }))
+		.or(
+			z.object({
+				label: z.string(),
+				type: z.enum(['error', 'loading']),
+			}),
+		)
 
 	export const idSchema = z.union([z.number(), z.string()])
 
