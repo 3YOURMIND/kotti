@@ -2,6 +2,7 @@
 	<ItemLayout :isInternal="fileInfo.isInternal" :name="fileInfo.name">
 		<template #description>
 			<i v-if="isError" class="yoco" v-text="Yoco.Icon.CIRCLE_ATTENTION" />
+			<div v-else-if="isLoading" class="description-spinner loading inline" />
 			{{ description }}
 		</template>
 		<template #actions>
@@ -95,9 +96,17 @@ export default defineComponent({
 
 		const progressBarForceRenderKey = ref<number>(0)
 
-		const status = computed(() =>
-			typeof props.fileInfo.status === 'object' ? null : props.fileInfo.status,
-		)
+		const status = computed<KottiFileUpload.Status>(() => {
+			const { status } = props.fileInfo
+			if (typeof status === 'object') {
+				if (status.type === 'error') return KottiFileUpload.Status.ERROR
+
+				return KottiFileUpload.Status.UPLOADED
+			}
+
+			return status
+		})
+
 		const validation = computed<KottiFileUpload.Validation>(() => {
 			if (props.fileInfo.validation) return props.fileInfo.validation
 
@@ -129,7 +138,6 @@ export default defineComponent({
 					KottiFileUpload.Status.INVALID,
 					KottiFileUpload.Status.UPLOADED,
 					KottiFileUpload.Status.UPLOADED_WITH_ERROR,
-					null,
 				].includes(status.value),
 		)
 
@@ -150,6 +158,10 @@ export default defineComponent({
 					].includes(status)
 
 				return status.type === 'error'
+			}),
+			isLoading: computed(() => {
+				const { status } = props.fileInfo
+				return typeof status === 'object' && status.type === 'loading'
 			}),
 			onClickCancelOrDelete: () => {
 				if (props.isDisabled) return
@@ -201,3 +213,10 @@ export default defineComponent({
 	},
 })
 </script>
+
+<style lang="scss" scoped>
+.description-spinner {
+	margin: 0 var(--unit-2) 0 0;
+	transform: scale(0.8);
+}
+</style>

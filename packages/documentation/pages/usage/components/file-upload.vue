@@ -260,22 +260,23 @@ export default defineComponent({
 				uploadStartTime: dayjs(),
 			},
 			{
-				id: 'cancelled-file-id',
-				name: 'custom status file',
-				size: 256,
-				status: {
-					label: 'i have a custom status',
-				},
-				uploadEndTime: dayjs(),
-				uploadStartTime: dayjs(),
-			},
-			{
-				id: 'cancelled-file-id',
+				id: 'custom-error-file-id',
 				name: 'custom error file',
 				size: 256,
 				status: {
 					label: 'i have a custom error',
 					type: 'error',
+				},
+				uploadEndTime: dayjs(),
+				uploadStartTime: dayjs(),
+			},
+			{
+				id: 'custom-loading-file-id',
+				name: 'processing file',
+				size: 256,
+				status: {
+					label: 'needs some processing...',
+					type: 'loading',
 				},
 				uploadEndTime: dayjs(),
 				uploadStartTime: dayjs(),
