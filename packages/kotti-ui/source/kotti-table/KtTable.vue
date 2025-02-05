@@ -228,6 +228,7 @@ export default defineComponent({
 							'kt-table-row--is-click-disabled': behavior.disable?.click,
 							'kt-table-row--is-interactive':
 								!behavior.disable?.click && behavior.click,
+							'kt-table-row--is-loading skeleton rectangle': behavior.isLoading,
 							'kt-table-row--is-selected': row.getIsSelected(),
 						}),
 						expandedColSpan: row.getAllCells().length,
@@ -652,8 +653,9 @@ tr.kt-table-row {
 		}
 	}
 
-	&--is-loading {
-		text-align: center;
+	&--is-loading.rectangle {
+		display: table-row;
+		height: unset;
 	}
 
 	&--is-selected {

@@ -51,6 +51,7 @@ export type GetRowBehavior<
 		select: boolean
 	}
 	id: string
+	isLoading?: boolean
 }
 
 export module KottiTable {
