@@ -135,6 +135,7 @@ export const paramsSchema = z
 						})
 						.optional(),
 					id: z.string(),
+					isLoading: z.boolean().optional(),
 				}),
 			),
 		hasDragAndDrop: z.boolean().default(false),
