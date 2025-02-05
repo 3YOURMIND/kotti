@@ -386,6 +386,7 @@ export default defineComponent({
 						select: rowIndex === 1,
 					},
 					id: String(row.id),
+					isLoading: rowIndex === 2,
 				}),
 				hasDragAndDrop: booleanFlags.value.hasDragAndDrop,
 				id: 'example',
