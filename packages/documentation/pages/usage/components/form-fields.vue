@@ -188,9 +188,9 @@
 							<h4>Events</h4>
 							<KtFieldToggle
 								formKey="emitBlur"
-								helpText="Only works with KtFieldNumber for now"
+								helpText="Support Varies"
 								isOptional
-								label="Show blur event toasts (documentation-only)"
+								label="Listen to blur events (and show a toast in documentation only)"
 								type="switch"
 							/>
 						</div>
@@ -809,7 +809,12 @@ const saveSavedFieldsToLocalStorage = (savedFields: Array<unknown>) => {
 	}
 }
 
-const DATE_ADDITIONAL_PROPS = ['maximumDate', 'minimumDate', 'shortcuts']
+const DATE_ADDITIONAL_PROPS = [
+	'emitEvents',
+	'maximumDate',
+	'minimumDate',
+	'shortcuts',
+]
 const FILE_UPLOAD_SHARED_PROPS = [
 	'allowMultiple',
 	'allowPhotos',
@@ -828,7 +833,12 @@ const components: Array<{
 	supports: Kotti.Field.Supports
 }> = [
 	{
-		additionalProps: ['currencyCurrency', 'numberMaximum', 'numberMinimum'],
+		additionalProps: [
+			'currencyCurrency',
+			'emitEvents',
+			'numberMaximum',
+			'numberMinimum',
+		],
 		formKey: 'currencyValue',
 		name: 'KtFieldCurrency',
 		supports: KtFieldCurrency.meta.supports,
@@ -858,7 +868,7 @@ const components: Array<{
 		supports: KtFieldDateTimeRange.meta.supports,
 	},
 	{
-		additionalProps: [...FILE_UPLOAD_SHARED_PROPS],
+		additionalProps: [...FILE_UPLOAD_SHARED_PROPS, 'emitEvents'],
 		formKey: 'fileUploadValue',
 		name: 'KtFieldFileUpload',
 		supports: KtFieldFileUpload.meta.supports,
@@ -874,6 +884,7 @@ const components: Array<{
 			'actions',
 			'clearOnSelect',
 			'collapseTagsAfter',
+			'emitEvents',
 			'hasOptionSlot',
 			'isUnsorted',
 			'maximumSelectable',
@@ -887,6 +898,7 @@ const components: Array<{
 			'actions',
 			'clearOnSelect',
 			'collapseTagsAfter',
+			'emitEvents',
 			'hasOptionSlot',
 			'isLoadingOptions',
 			'isUnsorted',
@@ -912,7 +924,7 @@ const components: Array<{
 		supports: KtFieldNumber.meta.supports,
 	},
 	{
-		additionalProps: ['showVisibilityToggle'],
+		additionalProps: ['emitEvents', 'showVisibilityToggle'],
 		formKey: 'textValue',
 		name: 'KtFieldPassword',
 		supports: KtFieldPassword.meta.supports,
@@ -929,7 +941,7 @@ const components: Array<{
 		supports: KtFieldRadioGroup.meta.supports,
 	},
 	{
-		additionalProps: ['actions', 'hasOptionSlot', 'isUnsorted'],
+		additionalProps: ['actions', 'emitEvents', 'hasOptionSlot', 'isUnsorted'],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
 		supports: KtFieldSingleSelect.meta.supports,
@@ -937,6 +949,7 @@ const components: Array<{
 	{
 		additionalProps: [
 			'actions',
+			'emitEvents',
 			'hasOptionSlot',
 			'isLoadingOptions',
 			'isUnsorted',
@@ -947,13 +960,13 @@ const components: Array<{
 		supports: KtFieldSingleSelectRemote.meta.supports,
 	},
 	{
-		additionalProps: [],
+		additionalProps: ['emitEvents'],
 		formKey: 'textValue',
 		name: 'KtFieldText',
 		supports: KtFieldText.meta.supports,
 	},
 	{
-		additionalProps: ['autoSize', 'maxHeight', 'rows'],
+		additionalProps: ['autoSize', 'emitEvents', 'maxHeight', 'rows'],
 		formKey: 'textValue',
 		name: 'KtFieldTextArea',
 		supports: KtFieldTextArea.meta.supports,
@@ -1804,7 +1817,7 @@ export default defineComponent({
 			onBlur: (value: number) => {
 				if (settings.value.emitBlur)
 					info({
-						text: `@blur: ${String(value)}`,
+						text: `@blur: ${JSON.stringify(value)}`,
 					})
 			},
 			onSubmit: (values: Record<string, unknown>) => {

@@ -3,6 +3,7 @@
 		:class="classes"
 		:data-test="dataTest ? `${dataTest}.dropArea` : undefined"
 		:tabIndex="localTabIndex"
+		@blur="onBlur"
 		@click.stop="onTriggerInput"
 		@dragleave.stop.prevent="onDragLeave"
 		@dragover.stop.prevent="onDragOver"
@@ -35,6 +36,7 @@
 			v-show="false"
 			ref="uploadInputRef"
 			v-bind="inputProps"
+			@cancel="onCancelSelect"
 			@change="onSelect"
 		/>
 		<div
@@ -69,12 +71,13 @@ import { isSelectingMultipleFilesWhenNotAllowed } from '../validators'
 export default defineComponent({
 	name: 'DropArea',
 	props: makeProps(Shared.DropArea.schema),
-	emits: ['addFiles'],
+	emits: ['addFiles', 'blur'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
 		const isDragging = ref<boolean>(false)
 		const isError = ref<boolean>(false)
+		const isFileExplorerOpen = ref<boolean>(false)
 		const isHovering = ref<boolean>(false)
 		const uploadInputRef = ref<HTMLInputElement | null>(null)
 
@@ -104,6 +107,7 @@ export default defineComponent({
 
 			const payload: Shared.Events.AddFiles = Array.from(files)
 			emit('addFiles', payload)
+			isFileExplorerOpen.value = false
 		}
 
 		return {
@@ -128,7 +132,17 @@ export default defineComponent({
 			})),
 			isError,
 			isHovering,
-			localTabIndex: computed(() => (props.isDisabled ? -1 : props.tabIndex)),
+			localTabIndex: computed(() =>
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				props.isDisabled ? -1 : (props.tabIndex ?? 0),
+			),
+			onBlur: () => {
+				if (isFileExplorerOpen.value) return
+				emit('blur')
+			},
+			onCancelSelect: () => {
+				isFileExplorerOpen.value = false
+			},
 			onDragLeave: () => {
 				isDragging.value = false
 				isError.value = false
@@ -154,6 +168,7 @@ export default defineComponent({
 				if (uploadInputRef.value === null)
 					throw new Error('uploadInputRef is null')
 
+				isFileExplorerOpen.value = true
 				uploadInputRef.value.click()
 			},
 			showInformation: computed(

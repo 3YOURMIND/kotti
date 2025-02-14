@@ -18,6 +18,7 @@
 						tabIndex,
 					}"
 					@addFiles="onAddFiles"
+					@blur="onBlur"
 				>
 					<template #footer>
 						<TakePhoto
@@ -87,6 +88,7 @@ export default defineComponent({
 		TakePhoto,
 	},
 	props: makeProps(KottiFieldFileUpload.propsSchema),
+	emits: ['blur', 'input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldFileUpload.ValueInternal>({
 			emit,
@@ -163,6 +165,9 @@ export default defineComponent({
 						...value.map((file) => buildFileItem(file)),
 					])
 				else field.setValue([buildFileItem(value[0] as File)])
+			},
+			onBlur: () => {
+				emit('blur', field.currentValue)
 			},
 			onRemoveFile: (id: Shared.Events.RemoveFile) => {
 				field.setValue(

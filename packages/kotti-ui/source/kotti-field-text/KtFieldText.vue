@@ -4,7 +4,7 @@
 		:getEmptyValue="() => null"
 		:helpTextSlot="$slots.helpText"
 	>
-		<input v-bind="inputProps" @input="onInput" />
+		<input v-bind="inputProps" @blur="onBlur" @input="onInput" />
 	</KtField>
 </template>
 
@@ -25,7 +25,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldText.propsSchema),
-	emits: ['input'],
+	emits: ['blur', 'input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldText.Value>({
 			emit,
@@ -53,6 +53,9 @@ export default defineComponent({
 					value: field.currentValue ?? '',
 				}),
 			),
+			onBlur: () => {
+				emit('blur', field.currentValue)
+			},
 			onInput: (event: Event) => {
 				const newValue = (event.target as HTMLInputElement).value
 				field.setValue(newValue === '' ? null : newValue)

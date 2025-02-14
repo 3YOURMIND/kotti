@@ -12,6 +12,7 @@
 				<ElDate
 					ref="elDateRef"
 					v-bind="elDateRangePickerProps"
+					@blur="onBlur"
 					@input="onInput"
 				/>
 			</div>
@@ -47,6 +48,7 @@ export default defineComponent({
 	name: 'KtFieldDateRange',
 	components: { ElDate, KtField },
 	props: makeProps(KottiFieldDateRange.propsSchema),
+	emits: ['blur', 'input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldDateRange.Value>({
 			emit,
@@ -112,6 +114,9 @@ export default defineComponent({
 			elDateRef: elDateRef as any,
 			field,
 			inputContainerRef,
+			onBlur: () => {
+				emit('blur', field.currentValue)
+			},
 			onInput: (value: KottiFieldDateRange.Value | null) => {
 				if (field.isDisabled || field.isLoading) return
 

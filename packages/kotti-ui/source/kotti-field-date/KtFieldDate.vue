@@ -8,7 +8,12 @@
 	>
 		<template #container>
 			<div ref="inputContainerRef" class="kt-field__input-container">
-				<ElDate ref="elDateRef" v-bind="elDatePickerProps" @input="onInput" />
+				<ElDate
+					ref="elDateRef"
+					v-bind="elDatePickerProps"
+					@blur="onBlur"
+					@input="onInput"
+				/>
 			</div>
 		</template>
 	</KtField>
@@ -38,6 +43,7 @@ export default defineComponent({
 	name: 'KtFieldDate',
 	components: { ElDate, KtField },
 	props: makeProps(KottiFieldDate.propsSchema),
+	emits: ['blur', 'input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldDate.Value>({
 			emit,
@@ -100,6 +106,9 @@ export default defineComponent({
 			elDateRef: elDateRef as any,
 			field,
 			inputContainerRef,
+			onBlur: () => {
+				emit('blur', field.currentValue)
+			},
 			onInput: (value: KottiFieldDate.Value) => {
 				if (!field.isDisabled && !field.isLoading) field.setValue(value)
 			},
