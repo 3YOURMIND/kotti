@@ -146,7 +146,7 @@ export const deDE: KottiI18n.Messages = {
 		moreThan: 'Mehr als',
 		resultsCounter:
 			'Kein Eintrag | {range} von {total} Eintrag | {range} von {total} Einträgen',
-		rowsPerPage: 'Zeilen pro Seite',
+		rowsPerPage: 'Einträge pro Seite',
 		search: 'Suche',
 		showAll: 'Alles anzeigen',
 		startDate: 'Startdatum',
