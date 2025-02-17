@@ -155,7 +155,7 @@ export const jaJP: KottiI18n.Messages = {
 	},
 	KtTable: {
 		no: 'No',
-		noItems: 'No Data',
+		noItems: 'No items',
 		yes: 'Yes',
 	},
 	KtValueLabel: {

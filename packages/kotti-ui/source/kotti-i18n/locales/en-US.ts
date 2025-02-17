@@ -155,7 +155,7 @@ export const enUS: KottiI18n.Messages = {
 	},
 	KtTable: {
 		no: 'No',
-		noItems: 'No Items',
+		noItems: 'No items',
 		yes: 'Yes',
 	},
 	KtValueLabel: {
