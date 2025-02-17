@@ -295,6 +295,7 @@ export namespace KottiStandardTable {
 		editColumns: string
 		editFilters: string
 		endDate: string
+		itemsPerPage: string
 		lastMonth: string
 		lastWeek: string
 		lastYear: string
@@ -302,7 +303,6 @@ export namespace KottiStandardTable {
 		min: string
 		moreThan: string
 		resultsCounter: string
-		rowsPerPage: string
 		search: string
 		showAll: string
 		startDate: string

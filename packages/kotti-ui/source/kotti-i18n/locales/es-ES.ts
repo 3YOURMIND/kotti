@@ -138,6 +138,7 @@ export const esES: KottiI18n.Messages = {
 		editColumns: 'Editar columnas',
 		editFilters: 'Editar filtros',
 		endDate: 'Finalización',
+		itemsPerPage: 'Artículos por página',
 		lastMonth: 'Mes pasado',
 		lastWeek: 'Semana pasada',
 		lastYear: 'Año pasado',
@@ -146,7 +147,6 @@ export const esES: KottiI18n.Messages = {
 		moreThan: 'Más de',
 		resultsCounter:
 			'No hay artículos | {range} de {total} artículo | {range} de {total} artículos',
-		rowsPerPage: 'Filas por página',
 		search: 'Buscar',
 		showAll: 'Mostrar todo',
 		startDate: 'Inicio',

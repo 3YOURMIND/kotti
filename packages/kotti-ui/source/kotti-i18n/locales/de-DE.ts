@@ -138,6 +138,7 @@ export const deDE: KottiI18n.Messages = {
 		editColumns: 'Spalten ändern',
 		editFilters: 'Filter ändern',
 		endDate: 'Enddatum',
+		itemsPerPage: 'Einträge pro Seite',
 		lastMonth: 'Letzter Monat',
 		lastWeek: 'Letzte Woche',
 		lastYear: 'Letztes Jahr',
@@ -146,7 +147,6 @@ export const deDE: KottiI18n.Messages = {
 		moreThan: 'Mehr als',
 		resultsCounter:
 			'Kein Eintrag | {range} von {total} Eintrag | {range} von {total} Einträgen',
-		rowsPerPage: 'Einträge pro Seite',
 		search: 'Suche',
 		showAll: 'Alles anzeigen',
 		startDate: 'Startdatum',

@@ -138,6 +138,7 @@ export const jaJP: KottiI18n.Messages = {
 		editColumns: 'Edit Columns',
 		editFilters: 'Edit Filters',
 		endDate: 'End',
+		itemsPerPage: 'Items per page',
 		lastMonth: 'Last Month',
 		lastWeek: 'Last Week',
 		lastYear: 'Last Year',
@@ -146,7 +147,6 @@ export const jaJP: KottiI18n.Messages = {
 		moreThan: 'More Than',
 		resultsCounter:
 			'No items | {range} of {total} item | {range} of {total} items',
-		rowsPerPage: 'Items per page',
 		search: 'Search',
 		showAll: 'Show All',
 		startDate: 'Start',
