@@ -20,6 +20,7 @@ export type TableContext<
 		swapDraggedAndDropTarget: () => void
 		table: Ref<Table<ROW>>
 		triggerExpand: (rowId: string) => void
+		unsetDroppedColumnId: () => void
 		visibleColumns: VisibilityState
 	}
 }>
