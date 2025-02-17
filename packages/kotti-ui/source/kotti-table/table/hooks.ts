@@ -595,6 +595,12 @@ export const useKottiTable = <
 			},
 			table,
 			triggerExpand,
+			unsetDroppedColumnId: () => {
+				// Avoid eventual redraws since method will be called once per row
+				if (successfullyDroppedColumnId.value === null) return
+
+				successfullyDroppedColumnId.value = null
+			},
 			visibleColumns: hiddenColumns.tanstackGetter(),
 		},
 	}))

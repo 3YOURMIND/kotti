@@ -15,6 +15,7 @@
 						:data-test="header.dataTest"
 						:draggable="header.isDraggable"
 						:style="header.style"
+						@animationend="handleAnimationEnd"
 						@click="(e) => handleHeaderClick(e, header)"
 						@dragenter.prevent
 						@dragleave.prevent
@@ -241,6 +242,9 @@ export default defineComponent({
 			defaultedEmptyText: computed(
 				() => props.emptyText ?? translations.value.noItems,
 			),
+			handleAnimationEnd: () => {
+				tableContext.value.internal.unsetDroppedColumnId()
+			},
 			handleCellDragOver: (event: DragEvent, columnId: string) => {
 				if (!isColumnMoveDataTransfer(event)) return
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
