@@ -10,6 +10,13 @@ import type { KottiField } from '../../kotti-field/types'
 import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
 import { sameWidth } from '../utils/tippy-utils'
 
+const TIPPY_CONTENT_WRAPPER_CLASSES = new Set(['tippy-box', 'tippy-content'])
+
+export const isTippyContentWrapper = (element: HTMLElement): boolean =>
+	[...element.classList].some((className) =>
+		TIPPY_CONTENT_WRAPPER_CLASSES.has(className),
+	)
+
 export const useSelectTippy = <T>(
 	field: KottiField.Hook.Returns<T>,
 	triggerTargets?: Ref<TippyProps['triggerTarget']>,

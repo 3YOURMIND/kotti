@@ -1,7 +1,12 @@
 <template>
 	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText">
 		<template #container>
-			<textarea ref="textareaRef" v-bind="inputProps" @input="onInput" />
+			<textarea
+				ref="textareaRef"
+				v-bind="inputProps"
+				@blur="onBlur"
+				@input="onInput"
+			/>
 		</template>
 	</KtField>
 </template>
@@ -47,7 +52,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldTextArea.propsSchema),
-	emits: ['input'],
+	emits: ['blur', 'input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldTextArea.Value>({
 			emit,
@@ -74,6 +79,9 @@ export default defineComponent({
 					value: field.currentValue ?? '',
 				}),
 			),
+			onBlur: () => {
+				emit('blur', field.currentValue)
+			},
 			onInput: (event: Event) => {
 				const target = event.target as HTMLTextAreaElement
 				field.setValue(target.value === '' ? null : target.value)

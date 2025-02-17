@@ -1,6 +1,6 @@
 <template>
 	<KtField :field="modifiedField" :helpTextSlot="$slots.helpText">
-		<input ref="inputRef" v-bind="inputProps" @input="onInput" />
+		<input ref="inputRef" v-bind="inputProps" @blur="onBlur" @input="onInput" />
 	</KtField>
 </template>
 
@@ -47,6 +47,7 @@ export default defineComponent({
 	name: 'KtFieldCurrency',
 	components: { KtField },
 	props: makeProps(KottiFieldCurrency.propsSchema),
+	emits: ['blur', 'input'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldCurrency.Value>({
 			emit,
@@ -179,6 +180,9 @@ export default defineComponent({
 				...field,
 				prefix: currencyFormat.value.symbol,
 			})),
+			onBlur: () => {
+				emit('blur', field.currentValue)
+			},
 			onInput: (event: Event) => {
 				const value = (event.target as HTMLInputElement).value
 

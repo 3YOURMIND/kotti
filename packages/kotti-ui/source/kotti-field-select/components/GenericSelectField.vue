@@ -51,7 +51,7 @@
 				</template>
 			</KtField>
 		</div>
-		<div ref="tippyContentRef">
+		<div :id="tippyContentId" ref="tippyContentRef">
 			<FieldSelectOptions
 				:actions="actions"
 				:dataTestPrefix="inputProps['data-test']"
@@ -76,7 +76,14 @@
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import { computed, defineComponent, ref, watch } from 'vue'
+import {
+	computed,
+	defineComponent,
+	onBeforeMount,
+	onUnmounted,
+	ref,
+	watch,
+} from 'vue'
 import { z } from 'zod'
 
 import { Yoco } from '@3yourmind/yoco'
@@ -86,8 +93,12 @@ import { useField } from '../../kotti-field/hooks'
 import { useForceUpdate } from '../../kotti-field/hooks'
 import { KtTag } from '../../kotti-tag'
 import { makeProps } from '../../make-props'
+import { isOrContainsEventTarget } from '../../utilities'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from '../constants'
-import { useSelectTippy } from '../hooks/use-select-tippy'
+import {
+	isTippyContentWrapper,
+	useSelectTippy,
+} from '../hooks/use-select-tippy'
 import type {
 	KottiFieldMultiSelect,
 	KottiFieldMultiSelectRemote,
@@ -133,7 +144,7 @@ export default defineComponent({
 		KtTag,
 	},
 	props: makeProps(propsSchema),
-	emits: ['emit', 'input'],
+	emits: ['blur', 'emit', 'input'],
 	setup(props, { emit: rawEmit }) {
 		const emit = (event: string, payload: unknown) => {
 			rawEmit('emit', { event, payload })
@@ -168,12 +179,56 @@ export default defineComponent({
 
 		const { isDropdownOpen, isDropdownMounted, ...selectTippy } =
 			useSelectTippy(field, triggerTargets)
+		const tippyContentId = `TIPPY_CONTENT_${field.inputProps.id}`
 
 		const deleteQuery = () => {
 			if (props.isRemote) {
 				if (props.query !== null) emit(UPDATE_QUERY, null)
 			} else localQuery.value = null
 		}
+
+		/**
+		 * last element to capture the click or focus event
+		 */
+		const lastEventTarget = ref<EventTarget | null>(null)
+		const isFieldTargeted = (target: Event['target'] | null): boolean =>
+			isOrContainsEventTarget(
+				ktFieldRef.value?.inputContainerRef ?? null,
+				target,
+			) || isOrContainsEventTarget(selectTippy.tippyContentRef.value, target)
+		const getEventTarget = (target: EventTarget | null): EventTarget | null => {
+			if (target === null || !(target instanceof HTMLElement)) return target
+
+			if (target.id === tippyContentId) return target
+
+			return isTippyContentWrapper(target)
+				? getEventTarget((target.childNodes[0] ?? null) as EventTarget | null)
+				: target
+		}
+
+		const onClickOrFocusChange = (event: Event) => {
+			if (event.target === null || props.isDisabled) return
+
+			const target = getEventTarget(event.target)
+
+			const wasFieldTargetedBefore = isFieldTargeted(lastEventTarget.value)
+			const isFieldTargetedNow = isFieldTargeted(target)
+
+			if (!isFieldTargetedNow && wasFieldTargetedBefore)
+				emit('blur', field.currentValue)
+
+			lastEventTarget.value = target
+		}
+
+		onBeforeMount(() => {
+			window.addEventListener('click', onClickOrFocusChange, true)
+			window.addEventListener('focus', onClickOrFocusChange, true)
+		})
+
+		onUnmounted(() => {
+			window.removeEventListener('click', onClickOrFocusChange)
+			window.removeEventListener('focus', onClickOrFocusChange)
+		})
 
 		watch(
 			isDropdownMounted,
@@ -313,6 +368,7 @@ export default defineComponent({
 				() => (showClear: boolean) =>
 					showClear && (isFieldHovered.value || isFieldFocused.value),
 			),
+			tippyContentId,
 			tippyContentRef: selectTippy.tippyContentRef,
 			tippyRef: selectTippy.tippyRef,
 			updateQuery: (event: Event) => {
