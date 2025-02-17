@@ -3,8 +3,8 @@ import type { CreateElement, VNode, VNodeChildren } from 'vue'
 
 import type { Store } from './logic/types'
 
-export module KottiTableLegacy {
-	export module Column {
+export namespace KottiTableLegacy {
+	export namespace Column {
 		export enum Align {
 			CENTER = 'center',
 			LEFT = 'left',
@@ -108,19 +108,19 @@ export module KottiTableLegacy {
 			renderHeader?: RenderHeader
 		}
 
-		export module Slots {
+		export namespace Slots {
 			export type Default = Context
 
 			export type Header = Pick<Context, 'row' | 'rowIndex' | 'value'>
 		}
 	}
 
-	export module Consumer {
+	export namespace Consumer {
 		export type Props = {
 			id: string | null
 		}
 
-		export module Slots {
+		export namespace Slots {
 			export type Default = {
 				columns: Column.Props[]
 				filteredColumns: Column.Props[]
@@ -137,11 +137,11 @@ export module KottiTableLegacy {
 		}
 	}
 
-	export module Provider {
+	export namespace Provider {
 		export type Props = KottiTableLegacy.Props
 	}
 
-	export module Row {
+	export namespace Row {
 		export type Props = {
 			[key: string]: unknown
 		}
@@ -195,7 +195,7 @@ export module KottiTableLegacy {
 		selected: Row.Props[]
 	}
 
-	export module Events {
+	export namespace Events {
 		export type ActivateRow = {
 			row: Row.Props
 			index: number
@@ -250,7 +250,7 @@ export module KottiTableLegacy {
 		}
 	}
 
-	export module Slots {
+	export namespace Slots {
 		export type Actions = Pick<Column.Context, 'row' | 'rowIndex' | 'value'>
 
 		export type Empty = undefined

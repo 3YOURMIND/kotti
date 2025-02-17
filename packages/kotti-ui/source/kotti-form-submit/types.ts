@@ -1,6 +1,6 @@
 import type { SpecifyRequiredProps } from '../types/utilities'
 
-export module KottiFormSubmit {
+export namespace KottiFormSubmit {
 	export type PropsInternal = {
 		label: string
 	}

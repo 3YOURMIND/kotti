@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
 
-export module Shared {
+export namespace Shared {
 	export const valueSchema = z
 		.union([z.boolean(), z.number(), z.string()])
 		.nullable()
@@ -59,7 +59,7 @@ export module Shared {
 	}
 }
 
-export module KottiFieldMultiSelect {
+export namespace KottiFieldMultiSelect {
 	export const valueSchema = Shared.isMultipleSchema.shape.value._def.innerType
 	export type Value = z.output<typeof valueSchema>
 
@@ -71,7 +71,7 @@ export module KottiFieldMultiSelect {
 	export type Translations = Shared.Translations
 }
 
-export module KottiFieldMultiSelectRemote {
+export namespace KottiFieldMultiSelectRemote {
 	export const valueSchema = Shared.isMultipleSchema.shape.value._def.innerType
 	export type Value = z.output<typeof valueSchema>
 
@@ -84,12 +84,12 @@ export module KottiFieldMultiSelectRemote {
 
 	export type Translations = Shared.Translations
 
-	export module Events {
+	export namespace Events {
 		export type UpdateQuery = KottiFieldMultiSelectRemote.Props['query']
 	}
 }
 
-export module KottiFieldSingleSelect {
+export namespace KottiFieldSingleSelect {
 	export const valueSchema = Shared.valueSchema
 	export type Value = z.output<typeof valueSchema>
 
@@ -101,7 +101,7 @@ export module KottiFieldSingleSelect {
 	export type Translations = Shared.Translations
 }
 
-export module KottiFieldSingleSelectRemote {
+export namespace KottiFieldSingleSelectRemote {
 	export const valueSchema = Shared.valueSchema
 	export type Value = z.output<typeof valueSchema>
 
@@ -114,7 +114,7 @@ export module KottiFieldSingleSelectRemote {
 
 	export type Translations = Shared.Translations
 
-	export module Events {
+	export namespace Events {
 		export type UpdateQuery = KottiFieldSingleSelectRemote.Props['query']
 	}
 }

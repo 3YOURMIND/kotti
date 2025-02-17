@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
 
-export module KottiFieldCurrency {
+export namespace KottiFieldCurrency {
 	const VALUE_PROP_REGEX = /^-?(0?|([1-9]\d*))?(\.\d+)?$/
 	export const valueSchema = z.string().regex(VALUE_PROP_REGEX).nullable()
 	export type Value = z.output<typeof valueSchema>

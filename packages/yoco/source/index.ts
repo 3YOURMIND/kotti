@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export module Yoco {
+export namespace Yoco {
 	export enum Icon {
 		ADDRESS_BOOK = 'address_book',
 		ANNOUNCE = 'announce',

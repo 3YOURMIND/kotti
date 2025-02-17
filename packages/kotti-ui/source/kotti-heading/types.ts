@@ -4,7 +4,7 @@ import { Yoco } from '@3yourmind/yoco'
 
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiHeading {
+export namespace KottiHeading {
 	export enum Type {
 		ACTION = 'action',
 		TOGGLE = 'toggle',

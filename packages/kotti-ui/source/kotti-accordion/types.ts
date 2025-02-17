@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { yocoIconSchema } from '@3yourmind/yoco'
 
-export module KottiAccordion {
+export namespace KottiAccordion {
 	export const propsSchema = z.object({
 		dataTest: z.string().optional(),
 		icon: yocoIconSchema.nullable().default(null),

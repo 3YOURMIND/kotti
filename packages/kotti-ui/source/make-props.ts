@@ -221,7 +221,7 @@ const zodToVueType = new Map<z.ZodFirstPartyTypeKind, Prop<unknown>>([
  * })
  *
  * // types.ts
- * export module KottiUserMenu {
+ * export namespace KottiUserMenu {
  *   export const propsSchema = z.object({
  *     // ...
  *   })

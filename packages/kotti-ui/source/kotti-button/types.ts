@@ -4,7 +4,7 @@ import { yocoIconSchema } from '@3yourmind/yoco'
 
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module Shared {
+export namespace Shared {
 	export enum IconPosition {
 		LEFT = 'left',
 		RIGHT = 'right',
@@ -29,7 +29,7 @@ export module Shared {
 	export type PropsInternal = z.output<typeof propsSchema>
 }
 
-export module KottiButton {
+export namespace KottiButton {
 	export import IconPosition = Shared.IconPosition
 	export import iconPositionSchema = Shared.iconPositionSchema
 
@@ -63,7 +63,7 @@ export module KottiButton {
 	export type PropsInternal = z.output<typeof propsSchema>
 }
 
-export module KottiSplitButton {
+export namespace KottiSplitButton {
 	export import IconPosition = Shared.IconPosition
 	export import iconPositionSchema = Shared.iconPositionSchema
 

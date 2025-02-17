@@ -124,7 +124,6 @@ const config = tseslint.config(
 					],
 				},
 			],
-			'@typescript-eslint/prefer-namespace-keyword': 'off',
 		},
 	},
 	{
