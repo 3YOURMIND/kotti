@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { yocoIconSchema } from '@3yourmind/yoco'
 
-export module KottiActionbar {
+export namespace KottiActionbar {
 	export const menuItemSchema = z.object({
 		active: z.boolean().default(false),
 		disabled: z.boolean().default(false),

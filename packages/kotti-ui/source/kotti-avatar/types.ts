@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiAvatar {
+export namespace KottiAvatar {
 	export enum Size {
 		LARGE = 'lg',
 		MEDIUM = 'md',

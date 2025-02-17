@@ -4,7 +4,7 @@ import { KottiField } from '../kotti-field/types'
 
 import { DATE_FORMAT_REGEX, DATE_TIME_FORMAT_REGEX } from './constants'
 
-export module Shared {
+export namespace Shared {
 	export const dateShortcutSchema = z.object({
 		keepOpen: z.boolean().optional(),
 		label: z.string(),
@@ -39,7 +39,7 @@ export module Shared {
 	export type PropsInternal = z.output<typeof propsSchema>
 }
 
-export module KottiFieldDate {
+export namespace KottiFieldDate {
 	export const valueSchema = z.string().regex(DATE_FORMAT_REGEX).nullable()
 	export type Value = z.output<typeof valueSchema>
 
@@ -59,7 +59,7 @@ export module KottiFieldDate {
 	export type PropsInternal = z.output<typeof propsSchema>
 }
 
-export module KottiFieldDateRange {
+export namespace KottiFieldDateRange {
 	export const valueSchema = z.tuple([
 		z.string().regex(DATE_FORMAT_REGEX).nullable(),
 		z.string().regex(DATE_FORMAT_REGEX).nullable(),
@@ -87,7 +87,7 @@ export module KottiFieldDateRange {
 	export type PropsInternal = z.output<typeof propsSchema>
 }
 
-export module KottiFieldDateTime {
+export namespace KottiFieldDateTime {
 	export const valueSchema = z.string().regex(DATE_TIME_FORMAT_REGEX).nullable()
 	export type Value = z.output<typeof valueSchema>
 
@@ -107,7 +107,7 @@ export module KottiFieldDateTime {
 	export type PropsInternal = z.output<typeof propsSchema>
 }
 
-export module KottiFieldDateTimeRange {
+export namespace KottiFieldDateTimeRange {
 	export const valueSchema = z.tuple([
 		z.string().regex(DATE_TIME_FORMAT_REGEX).nullable(),
 		z.string().regex(DATE_TIME_FORMAT_REGEX).nullable(),

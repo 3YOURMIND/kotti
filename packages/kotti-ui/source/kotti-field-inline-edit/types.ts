@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { KottiField } from '../kotti-field/types'
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiFieldInlineEdit {
+export namespace KottiFieldInlineEdit {
 	export const valueSchema = z.string().nullable()
 	export type Value = z.output<typeof valueSchema>
 
@@ -39,7 +39,7 @@ export module KottiFieldInlineEdit {
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 
-	export module Events {
+	export namespace Events {
 		export type Confirm = KottiFieldInlineEdit.Value
 	}
 

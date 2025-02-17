@@ -4,8 +4,8 @@ import type { KottiTableLegacy } from '../types'
 
 import type { TableStore } from './store'
 
-export module Store {
-	export module StateComponents {
+export namespace Store {
+	export namespace StateComponents {
 		export type ColumnRepresentation = Omit<
 			KottiTableLegacy.Column.Props,
 			'align' | 'renderCell' | 'renderHeader' | 'width'
@@ -90,7 +90,7 @@ export module Store {
 			rowKey?: Kotti.TableLegacy.RowKey
 		}
 
-	export module MutationComponents {
+	export namespace MutationComponents {
 		export type Column = {
 			insertColumn(
 				this: TableStore,
@@ -215,7 +215,7 @@ export module Store {
 			? P
 			: never
 
-	export module GetterComponents {
+	export namespace GetterComponents {
 		export type Column = Record<string, never>
 		export type Disable = {
 			isAllRowsDisabled(this: TableStore, state: State): boolean

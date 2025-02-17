@@ -4,7 +4,7 @@ import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiBreadcrumb {
+export namespace KottiBreadcrumb {
 	export enum SeparatorType {
 		ICON = 'icon',
 		TEXT = 'text',

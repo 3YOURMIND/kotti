@@ -18,7 +18,7 @@ const baseOptionSchema = z.object({
 	onClick: z.function(z.tuple([]), z.void()).optional(),
 })
 
-export module KottiPopover {
+export namespace KottiPopover {
 	/**
 	 * @see `@popperjs/core`
 	 */
@@ -108,7 +108,7 @@ export module KottiPopover {
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 
-	export module Events {
+	export namespace Events {
 		export type UpdateIsSelected = {
 			index: number
 			option: KottiPopover.PropsInternal['options'][0]
@@ -117,7 +117,7 @@ export module KottiPopover {
 	}
 }
 
-export module IconTextItem {
+export namespace IconTextItem {
 	export const propsSchema = baseOptionSchema.pick({
 		dataTest: true,
 		icon: true,

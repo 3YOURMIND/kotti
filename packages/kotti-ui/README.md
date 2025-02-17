@@ -15,7 +15,7 @@ import { KtFieldText } from '@3yourmind/kotti'
 Kotti components are internally annotated like this:
 
 ```typescript
-export module KottiComponent {
+export namespace KottiComponent {
 	export type Events = {}
 
 	export type Props = {}

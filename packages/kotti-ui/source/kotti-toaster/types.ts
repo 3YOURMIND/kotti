@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { KottiBanner } from '../kotti-banner/types'
 
-export module KottiToaster {
+export namespace KottiToaster {
 	export const propsSchema = z.object({
 		toaster: z.object({
 			_internal_pls_dont_touch: z.object({}).passthrough(),
@@ -16,7 +16,7 @@ export module KottiToaster {
 	export type PropsInternal = z.output<typeof propsSchema>
 }
 
-export module KottiToast {
+export namespace KottiToast {
 	export const propsSchema = z.object({
 		header: z.string().nullable().default(null),
 		progress: z.number().int().finite().positive().nullable().default(null),

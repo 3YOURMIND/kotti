@@ -2,7 +2,7 @@ import type { Ref } from 'vue'
 
 import type { KottiField } from '../kotti-field/types'
 
-export module KottiForm {
+export namespace KottiForm {
 	export interface Context<
 		CONTEXT_TYPE extends ContextType = ContextType,
 		T extends keyof CONTEXT_TYPE = keyof CONTEXT_TYPE,
@@ -66,7 +66,7 @@ export module KottiForm {
 		warnings: Array<AdditionalContext & KottiField.Validation.Warning>
 	}
 
-	export module Events {
+	export namespace Events {
 		export interface Submit<CONTEXT_TYPE extends ContextType = ContextType> {
 			validationSummary: KottiForm.ValidationSummary
 			values: CONTEXT_TYPE

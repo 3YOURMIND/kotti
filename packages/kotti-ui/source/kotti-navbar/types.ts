@@ -4,7 +4,7 @@ import { yocoIconSchema } from '@3yourmind/yoco'
 
 import { refinementNonEmpty } from '../zod-utilities/refinements'
 
-export module KottiNavbar {
+export namespace KottiNavbar {
 	export type Context = {
 		isNarrow: boolean
 		theme: KottiNavbar.Theme
