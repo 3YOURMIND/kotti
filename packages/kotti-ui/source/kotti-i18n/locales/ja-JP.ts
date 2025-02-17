@@ -146,7 +146,7 @@ export const jaJP: KottiI18n.Messages = {
 		moreThan: 'More Than',
 		resultsCounter:
 			'No items | {range} of {total} item | {range} of {total} items',
-		rowsPerPage: 'Rows per page',
+		rowsPerPage: 'Items per page',
 		search: 'Search',
 		showAll: 'Show All',
 		startDate: 'Start',
