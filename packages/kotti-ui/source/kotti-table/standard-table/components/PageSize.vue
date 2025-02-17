@@ -1,6 +1,6 @@
 <template>
 	<div class="table-page-size">
-		<span v-text="translations.rowsPerPage" />
+		<span v-text="translations.itemsPerPage" />
 		<KtFieldSingleSelect
 			class="table-page-size__selector"
 			dataTest="table-page-size-selector"
