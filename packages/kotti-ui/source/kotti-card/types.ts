@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiCard {
+export namespace KottiCard {
 	export enum ImagePosition {
 		BOTTOM = 'bottom',
 		MIDDLE = 'middle',

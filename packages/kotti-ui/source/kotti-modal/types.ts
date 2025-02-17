@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiModal {
+export namespace KottiModal {
 	export enum Size {
 		EXTRA_LARGE = 'xl',
 		LARGE = 'lg',

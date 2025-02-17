@@ -5,7 +5,7 @@ import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { KottiField } from '../kotti-field/types'
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiFileUpload {
+export namespace KottiFileUpload {
 	export enum Validation {
 		INVALID_EXTENSION = 'INVALID_EXTENSION',
 		MAX_SIZE_EXCEEDED = 'MAX_SIZE_EXCEEDED',
@@ -111,7 +111,7 @@ export module KottiFileUpload {
 		)
 		.merge(uploadPropsSchema)
 
-	export module Events {
+	export namespace Events {
 		export type AddFiles = Array<{
 			file: File
 			fileInfo: FileInfo
@@ -124,7 +124,7 @@ export module KottiFileUpload {
 		export type RestartUpload = z.infer<typeof idSchema>
 	}
 
-	export module ActionButton {
+	export namespace ActionButton {
 		export const schema = propsSchema
 			.pick({
 				isDisabled: true,
@@ -137,7 +137,7 @@ export module KottiFileUpload {
 		export type PropsInternal = z.output<typeof schema>
 	}
 
-	export module DropArea {
+	export namespace DropArea {
 		export const schema = propsSchema
 			.pick({
 				allowMultiple: true,
@@ -160,7 +160,7 @@ export module KottiFileUpload {
 		export type PropsInternal = z.output<typeof schema>
 	}
 
-	export module FileItem {
+	export namespace FileItem {
 		export const schema = propsSchema.pick({
 			dataTest: true,
 			extensions: true,
@@ -169,7 +169,7 @@ export module KottiFileUpload {
 		})
 	}
 
-	export module TakePhoto {
+	export namespace TakePhoto {
 		export const schema = propsSchema.pick({
 			dataTest: true,
 			isDisabled: true,
@@ -194,7 +194,7 @@ export module KottiFileUpload {
 		})
 		export type ErrorProps = z.output<typeof errorSchema>
 
-		export module Events {
+		export namespace Events {
 			export type Capture = {
 				file: File
 				photoUrl: string

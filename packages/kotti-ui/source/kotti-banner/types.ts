@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { yocoIconSchema } from '@3yourmind/yoco'
 
-export module KottiBanner {
+export namespace KottiBanner {
 	export const styleSchema = z
 		.object({
 			backgroundColor: z.string(),

@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { KottiField } from '../kotti-field/types'
 import { refinementNonEmpty } from '../zod-utilities/refinements'
 
-export module KottiFieldRadioGroup {
+export namespace KottiFieldRadioGroup {
 	export const valueSchema = z
 		.union([z.string(), z.number(), z.boolean()])
 		.nullable()

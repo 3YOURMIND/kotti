@@ -8,14 +8,14 @@ import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 import { FORM_KEY_NONE } from './constants'
 
-export module KottiField {
+export namespace KottiField {
 	export enum Size {
 		LARGE = 'large',
 		MEDIUM = 'medium',
 		SMALL = 'small',
 	}
 
-	export module Validation {
+	export namespace Validation {
 		export const emptySchema = z.object({
 			type: z.literal('empty'),
 		})
@@ -54,7 +54,7 @@ export module KottiField {
 		export type Function = z.output<typeof functionSchema>
 	}
 
-	export module Hook {
+	export namespace Hook {
 		export interface Parameters<DATA_TYPE> {
 			emit: (name: 'input', ...args: unknown[]) => void
 

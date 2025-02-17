@@ -32,7 +32,7 @@ type MediaQueryProps = {
 	[KEY in 'lg' | 'md' | 'sm' | 'xl' | 'xs']: UpTo24 | null
 }
 
-export module KottiCol {
+export namespace KottiCol {
 	export type PropsInternal = MediaQueryProps & {
 		offset: UpTo24 | null
 		pull: UpTo24 | null

@@ -54,7 +54,7 @@ export type GetRowBehavior<
 	isLoading?: boolean
 }
 
-export module KottiTable {
+export namespace KottiTable {
 	export type Display<DATA_TYPE> = {
 		align: 'center' | 'left' | 'right'
 		disableCellClick: boolean
@@ -101,7 +101,7 @@ export module KottiTable {
 		})
 		.strict()
 
-	export module Hook {
+	export namespace Hook {
 		export type Returns<COLUMN_ID extends string> = {
 			columnOrder: Ref<COLUMN_ID[]>
 			expandedRows: Ref<Record<string, boolean>>

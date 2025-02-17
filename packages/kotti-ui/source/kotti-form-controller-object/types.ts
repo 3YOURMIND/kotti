@@ -1,4 +1,4 @@
-export module KottiFormControllerObject {
+export namespace KottiFormControllerObject {
 	export type Props = {
 		formKey: string
 	}
