@@ -139,6 +139,7 @@ import { Kotti } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 import { todos } from '~/data/standard-table'
+import { info } from '~/utilities/toaster'
 
 type TodoRow = {
 	completed: boolean
@@ -395,8 +396,18 @@ export default defineComponent({
 					columns: todosColumns.value,
 					data: todosData.value,
 					getRowBehavior: ({ row }: { row: TodoRow }) => ({
+						click: {
+							component: null,
+							onClick: () => {
+								info({
+									text: row.todo,
+								})
+							},
+						},
 						id: String(row.id),
 					}),
+					hasDragAndDrop: true,
+					isSelectable: true,
 				},
 			})),
 		)
@@ -427,8 +438,18 @@ export default defineComponent({
 					data: recipesData.value,
 					expandMode: settings.value.slots.tableSlot ? 'single' : undefined,
 					getRowBehavior: ({ row }: { row: RecipeRow }) => ({
+						click: {
+							component: null,
+							onClick: () => {
+								info({
+									text: row.name,
+								})
+							},
+						},
 						id: String(row.id),
 					}),
+					hasDragAndDrop: true,
+					isSelectable: true,
 				},
 			})),
 		)
