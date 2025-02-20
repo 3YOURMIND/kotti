@@ -137,6 +137,14 @@ export default defineComponent({
 					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 				}
 			}
+
+			.kt-field-text-area__wrapper:not(:focus-within):hover {
+				--support-empty-bg: var(--interactive-02-hover);
+				--support-empty-light: var(--interactive-04);
+
+				background-color: var(--support-#{$type}-bg);
+				border-color: var(--support-#{$type}-light);
+			}
 		}
 	}
 

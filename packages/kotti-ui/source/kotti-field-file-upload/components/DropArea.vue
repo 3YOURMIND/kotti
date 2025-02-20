@@ -1,6 +1,6 @@
 <template>
 	<div
-		:class="classes"
+		:class="rootClasses"
 		:data-test="dataTest ? `${dataTest}.dropArea` : undefined"
 		:tabIndex="localTabIndex"
 		@blur="onBlur"
@@ -111,16 +111,6 @@ export default defineComponent({
 		}
 
 		return {
-			classes: computed(() => ({
-				'kt-field-file-upload-drop-area': true,
-				'kt-field-file-upload-drop-area--is-disabled': props.isDisabled,
-				'kt-field-file-upload-drop-area--is-error':
-					!props.isDisabled && isError.value,
-				'kt-field-file-upload-drop-area--is-hover':
-					!props.isDisabled &&
-					!isError.value &&
-					(isDragging.value || isHovering.value),
-			})),
 			informationText,
 			inputProps: computed(() => ({
 				accept: buildAcceptString(props.extensions),
@@ -171,6 +161,16 @@ export default defineComponent({
 				isFileExplorerOpen.value = true
 				uploadInputRef.value.click()
 			},
+			rootClasses: computed(() => ({
+				'kt-field-file-upload-drop-area': true,
+				'kt-field-file-upload-drop-area--is-disabled': props.isDisabled,
+				'kt-field-file-upload-drop-area--is-error':
+					!props.isDisabled && isError.value,
+				'kt-field-file-upload-drop-area--is-hover':
+					!props.isDisabled &&
+					!isError.value &&
+					(isDragging.value || isHovering.value),
+			})),
 			showInformation: computed(
 				() => informationText.value || props.externalUrl,
 			),
@@ -182,7 +182,34 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$support-error-light: #f0a8a8;
+@import '../../kotti-field/mixins.scss';
+
+.kt-field__wrapper {
+	@include validations using ($type) {
+		&:not(.kt-field__wrapper--disabled) {
+			@if $type != empty {
+				.kt-field-file-upload-drop-area {
+					border-color: var(--support-#{$type}-light);
+				}
+			}
+
+			.kt-field-file-upload-drop-area:focus {
+				--support-empty-light: var(--interactive-05);
+
+				padding: calc(var(--unit-9) - 1px) calc(var(--unit-6) - 1px);
+				border: 2px dashed var(--support-#{$type}-light);
+			}
+
+			.kt-field-file-upload-drop-area:not(:focus-within):hover {
+				--support-empty-bg: var(--interactive-02-hover);
+				--support-empty-light: var(--interactive-04);
+
+				background-color: var(--support-#{$type}-bg);
+				border-color: var(--support-#{$type}-light);
+			}
+		}
+	}
+}
 
 .kt-field-file-upload-drop-area {
 	position: relative;
@@ -196,10 +223,6 @@ $support-error-light: #f0a8a8;
 	border: 1px dashed var(--ui-02);
 	border-radius: var(--unit-1);
 
-	&:focus:not(&--disabled) {
-		border-color: var(--interactive-01-hover);
-	}
-
 	&--is-disabled {
 		pointer-events: none;
 		background-color: var(--ui-background);
@@ -210,13 +233,8 @@ $support-error-light: #f0a8a8;
 	}
 
 	&--is-error {
-		background-color: rgba($support-error-light, 0.25);
-		border-color: var(--support-error-dark);
-	}
-
-	&--is-hover {
-		background-color: var(--interactive-02-hover);
-		border-color: var(--interactive-01-hover);
+		background-color: var(--support-error-bg);
+		border-color: var(--support-error-light);
 	}
 
 	&__description {
