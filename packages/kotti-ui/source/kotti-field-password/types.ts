@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { KottiField } from '../kotti-field/types'
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiFieldPassword {
+export namespace KottiFieldPassword {
 	export const valueSchema = z.string().nullable()
 	export type Value = z.output<typeof valueSchema>
 

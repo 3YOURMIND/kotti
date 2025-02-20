@@ -17,7 +17,7 @@ import { DecimalSeparator } from '../types/decimal-separator'
 export type DeepPartial<T> =
 	T extends Record<string, unknown> ? { [K in keyof T]?: DeepPartial<T[K]> } : T
 
-export module KottiI18n {
+export namespace KottiI18n {
 	export type Context = {
 		currencyMap: Ref<CurrencyMap>
 		locale: Ref<SupportedLanguages>

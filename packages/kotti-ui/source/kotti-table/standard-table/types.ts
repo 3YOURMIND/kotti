@@ -278,7 +278,7 @@ export namespace KottiStandardTable {
 		}
 	}
 
-	export module Hook {
+	export namespace Hook {
 		export type Returns<COLUMN_ID extends string> =
 			KottiTable.Hook.Returns<COLUMN_ID> & {
 				appliedFilters: Ref<AppliedFilter[]>

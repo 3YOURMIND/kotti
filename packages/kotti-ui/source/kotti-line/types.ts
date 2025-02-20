@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
-export module KottiLine {
+export namespace KottiLine {
 	export enum Position {
 		CENTER = 'center',
 		LEFT = 'left',
