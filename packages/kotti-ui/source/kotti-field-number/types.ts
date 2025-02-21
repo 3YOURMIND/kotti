@@ -10,6 +10,7 @@ export module KottiFieldNumber {
 		.merge(
 			KottiField.potentiallySupportedPropsSchema.pick({
 				autoComplete: true,
+				isBorderless: true,
 				leftIcon: true,
 				prefix: true,
 				rightIcon: true,

@@ -37,6 +37,7 @@ const TestField = defineComponent({
 				props,
 				supports: {
 					autoComplete: true,
+					borderless: true,
 					clear: true,
 					decoration: true,
 					placeholder: true,
