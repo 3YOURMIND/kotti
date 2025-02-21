@@ -267,6 +267,8 @@ export default defineComponent({
 				const classes = ['kt-field__wrapper']
 
 				if (props.field.isDisabled) classes.push('kt-field__wrapper--disabled')
+				if (props.field.isBorderless)
+					classes.push('kt-field__wrapper--is-borderless')
 				// eslint-disable-next-line unicorn/explicit-length-check -- size is an enum, and thus a false positive
 				if (props.field.size)
 					classes.push(`kt-field__wrapper--is-${props.field.size}`)
@@ -316,8 +318,18 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		@include validations using ($type) {
 			&:not(.kt-field__wrapper--disabled) {
 				@if $type != empty {
-					.kt-field__input-container {
-						border-color: var(--support-#{$type}-light);
+					&.kt-field__wrapper--is-borderless {
+						.kt-field__input-container {
+							background-color: rgb(
+								from var(--support-#{$type}-bg) r g b / 25%
+							);
+						}
+					}
+
+					&:not(.kt-field__wrapper--is-borderless) {
+						.kt-field__input-container {
+							border-color: var(--support-#{$type}-light);
+						}
 					}
 
 					.kt-field__validation-text {
@@ -328,6 +340,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 				.kt-field__input-container:focus-within {
 					--support-empty-light: var(--interactive-05);
 
+					background-color: unset;
 					border-color: var(--support-#{$type}-light);
 					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 				}
@@ -357,6 +370,13 @@ we would be able to extend on demand instead of unscoping all field classes -->
 				&__icon {
 					color: var(--text-05);
 				}
+			}
+		}
+
+		&--is-borderless {
+			.kt-field__input-container {
+				background-color: rgb(from var(--gray-20) r g b / 25%);
+				border-color: transparent;
 			}
 		}
 	}

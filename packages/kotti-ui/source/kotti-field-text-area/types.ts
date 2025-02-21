@@ -10,6 +10,7 @@ export module KottiFieldTextArea {
 		.merge(
 			KottiField.potentiallySupportedPropsSchema.pick({
 				autoComplete: true,
+				isBorderless: true,
 				tabIndex: true,
 			}),
 		)

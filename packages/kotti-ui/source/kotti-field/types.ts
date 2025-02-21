@@ -72,6 +72,7 @@ export module KottiField {
 			| 'helpText'
 			| 'hideClear'
 			| 'hideValidation'
+			| 'isBorderless'
 			| 'isDisabled'
 			| 'isLoading'
 			| 'isOptional'
@@ -132,6 +133,7 @@ export module KottiField {
 			])
 			.default(AutoComplete.OFF),
 		hideClear: z.boolean().default(false),
+		isBorderless: z.boolean().default(false),
 		leftIcon: yocoIconSchema.nullable().default(null),
 		prefix: z.string().nullable().default(null),
 		rightIcon: yocoIconSchema.nullable().default(null),
@@ -188,6 +190,13 @@ export module KottiField {
 	>
 
 	export const propsSchema = inheritablePropsSchema.extend({
+		/**
+		 * Is the field borderless when not interacted with?
+		 *
+		 * This is never by default and specified by component schemas that need it.
+		 */
+		isBorderless: z.never(),
+
 		/**
 		 * Is used as the 'data-test' property
 		 * on the input level
@@ -297,6 +306,12 @@ export module KottiField {
 		 * and KtFieldDate[Range|Time|TimeRange]
 		 */
 		autoComplete: boolean
+
+		/**
+		 * All fields except KtFieldToggle/KtFieldToggleGroup (checkbox), KtFieldRadioGroup (radio),
+		 * and KtFieldFileUpload
+		 */
+		borderless: boolean
 
 		/**
 		 * In some fields, having a clear button would be nonsensical (e.g. KtFieldToggle)
