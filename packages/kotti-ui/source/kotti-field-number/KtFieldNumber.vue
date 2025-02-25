@@ -1,5 +1,5 @@
 <template>
-	<KtField v-bind="{ field }" :helpTextSlot="$slots.helpText">
+	<KtField v-bind="{ field }" ref="ktFieldRef" :helpTextSlot="$slots.helpText">
 		<div
 			ref="wrapperRef"
 			class="kt-field-number"
@@ -11,7 +11,6 @@
 		>
 			<div
 				v-if="!hideChangeButtons"
-				ref="decrementButtonRef"
 				class="kt-field-number__button"
 				:class="decrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-decrement`"
@@ -36,7 +35,6 @@
 			</div>
 			<div
 				v-if="!hideChangeButtons"
-				ref="incrementButtonRef"
 				class="kt-field-number__button"
 				:class="incrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-increment`"
@@ -66,7 +64,13 @@ import type { InputHTMLAttributes } from 'vue/types/jsx'
 import { Yoco } from '@3yourmind/yoco'
 
 import { KtField } from '../kotti-field'
-import { useField, useForceUpdate, useInput } from '../kotti-field/hooks'
+import {
+	useEmitBlur,
+	useField,
+	useForceUpdate,
+	useInput,
+	useKtFieldRef,
+} from '../kotti-field/hooks'
 import type { KottiField } from '../kotti-field/types'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import type { KottiI18n } from '../kotti-i18n/types'
@@ -102,8 +106,14 @@ export default defineComponent({
 
 		const { focusInput } = useInput(field.inputProps.id)
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
-
 		const i18nContext = useI18nContext()
+		const ktFieldRef = useKtFieldRef()
+
+		useEmitBlur({
+			emit,
+			field,
+			fieldTarget: computed(() => ktFieldRef.value?.inputContainerRef ?? null),
+		})
 
 		const isDecrementEnabled = computed(
 			() =>
@@ -250,29 +260,9 @@ export default defineComponent({
 		}
 
 		const wrapperRef = ref<HTMLDivElement | null>(null)
-		const incrementButtonRef = ref<HTMLDivElement | null>(null)
-		const decrementButtonRef = ref<HTMLDivElement | null>(null)
 
-		/**
-		 * last element to capture the click or focus event
-		 */
-		const lastEventTarget = ref<EventTarget | null>(null)
 		const isFieldTargeted = (target: Event['target'] | null): boolean =>
-			isOrContainsEventTarget(inputRef.value, target) ||
-			isOrContainsEventTarget(decrementButtonRef.value, target) ||
-			isOrContainsEventTarget(incrementButtonRef.value, target)
-
-		const onClickOrFocusChange = (event: Event) => {
-			if (event.target === null || props.isDisabled) return
-
-			const wasFieldTargetedBefore = isFieldTargeted(lastEventTarget.value)
-			const isFieldTargetedNow = isFieldTargeted(event.target)
-
-			if (!isFieldTargetedNow && wasFieldTargetedBefore)
-				emit('blur', field.currentValue)
-
-			lastEventTarget.value = event.target
-		}
+			isOrContainsEventTarget(inputRef.value, target)
 
 		const onKeyup = (event: KeyboardEvent) => {
 			if (!isFieldTargeted(event.target)) return
@@ -282,14 +272,10 @@ export default defineComponent({
 		}
 
 		onBeforeMount(() => {
-			window.addEventListener('click', onClickOrFocusChange, true)
-			window.addEventListener('focus', onClickOrFocusChange, true)
 			window.addEventListener('keyup', onKeyup, true)
 		})
 
 		onUnmounted(() => {
-			window.removeEventListener('click', onClickOrFocusChange)
-			window.removeEventListener('focus', onClickOrFocusChange)
 			window.removeEventListener('keyup', onKeyup)
 		})
 
@@ -297,13 +283,11 @@ export default defineComponent({
 			decrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
 			})),
-			decrementButtonRef,
 			decrementValue,
 			field,
 			incrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isIncrementEnabled.value,
 			})),
-			incrementButtonRef,
 			incrementValue,
 			inputProps: computed(
 				(): InputHTMLAttributes &
@@ -326,6 +310,7 @@ export default defineComponent({
 				}),
 			),
 			inputRef,
+			ktFieldRef,
 			onBlur: () => {
 				forceUpdateDisplayedValue(field.currentValue)
 			},

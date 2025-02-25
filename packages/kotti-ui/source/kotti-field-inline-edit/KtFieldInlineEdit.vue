@@ -34,7 +34,6 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue'
 import {
 	computed,
 	defineComponent,
@@ -49,7 +48,7 @@ import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { Yoco } from '@3yourmind/yoco'
 
-import { useField, useForceUpdate } from '../kotti-field/hooks'
+import { useField, useForceUpdate, useKtFieldRef } from '../kotti-field/hooks'
 import type { KottiField } from '../kotti-field/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
@@ -75,9 +74,7 @@ export default defineComponent({
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
 
-		const ktFieldRef = ref<{
-			inputContainerWrapperRef: Ref<HTMLDivElement>
-		} | null>(null)
+		const ktFieldRef = useKtFieldRef()
 		const inputContainerWrapperRef = ref<HTMLDivElement | null>(null)
 		const inputRef = ref<Nullable<FieldInlineEditElement>>(null)
 

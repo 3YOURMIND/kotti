@@ -1,11 +1,12 @@
 <template>
 	<KtField
 		v-bind="{ field }"
+		ref="ktFieldRef"
 		:getEmptyValue="() => null"
 		:helpTextSlot="$slots.helpText"
 		@visibilityChange="handleVisibilityChange"
 	>
-		<input v-bind="inputProps" @blur="onBlur" @input="onInput" />
+		<input v-bind="inputProps" @input="onInput" />
 	</KtField>
 </template>
 
@@ -14,13 +15,16 @@ import { computed, defineComponent, ref } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { KtField } from '../kotti-field'
-import { useField, useForceUpdate } from '../kotti-field/hooks'
+import {
+	useEmitBlur,
+	useField,
+	useForceUpdate,
+	useKtFieldRef,
+} from '../kotti-field/hooks'
 import { makeProps } from '../make-props'
 
 import { KOTTI_FIELD_PASSWORD_SUPPORTS } from './constants'
 import { KottiFieldPassword } from './types'
-
-const VALUE_PLACEHOLDER = '•••'
 
 export default defineComponent({
 	name: 'KtFieldPassword',
@@ -36,6 +40,15 @@ export default defineComponent({
 		})
 		const fieldType = ref('password')
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
+		const ktFieldRef = useKtFieldRef()
+
+		useEmitBlur({
+			emit,
+			field,
+			fieldTarget: computed(() => ktFieldRef.value?.inputContainerRef ?? null),
+			valueOverride: '•••',
+		})
+
 		return {
 			field,
 			handleVisibilityChange: () => {
@@ -57,9 +70,7 @@ export default defineComponent({
 					value: field.currentValue ?? '',
 				}),
 			),
-			onBlur: () => {
-				emit('blur', field.currentValue === null ? null : VALUE_PLACEHOLDER)
-			},
+			ktFieldRef,
 			onInput: (event: Event) => {
 				const newValue = (event.target as HTMLInputElement).value
 				field.setValue(newValue === '' ? null : newValue)
