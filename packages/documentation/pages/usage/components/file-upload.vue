@@ -273,7 +273,6 @@ export default defineComponent({
 			{
 				id: 'custom-loading-file-id',
 				name: 'processing file',
-				size: 256,
 				status: {
 					label: 'needs some processing...',
 					type: 'loading',

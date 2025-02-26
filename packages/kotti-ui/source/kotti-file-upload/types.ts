@@ -43,7 +43,7 @@ export module KottiFileUpload {
 			.min(0)
 			.transform((val) => Math.max(1, val))
 			.optional(),
-		size: z.number().int().min(0),
+		size: z.number().int().min(0).optional(),
 		status: statusSchema.default(Status.UPLOADED),
 		validation: validationSchema.optional(),
 		viewUrl: z.string().optional(),
