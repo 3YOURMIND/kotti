@@ -15,6 +15,7 @@ export namespace Shared {
 		.merge(
 			KottiField.potentiallySupportedPropsSchema.pick({
 				hideClear: true,
+				isBorderless: true,
 			}),
 		)
 		.extend({

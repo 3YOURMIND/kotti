@@ -110,7 +110,10 @@ export default defineComponent({
 		const validation = computed<KottiFileUpload.Validation>(() => {
 			if (props.fileInfo.validation) return props.fileInfo.validation
 
-			if (props.fileInfo.status === KottiFileUpload.Status.NOT_STARTED)
+			if (
+				props.fileInfo.status === KottiFileUpload.Status.NOT_STARTED &&
+				props.fileInfo.size !== undefined
+			)
 				return validateFile({
 					extensions: props.extensions,
 					fileName: props.fileInfo.name,
@@ -145,9 +148,12 @@ export default defineComponent({
 			cancelOrDeleteActionIcon: computed<Yoco.Icon>(() =>
 				isDeletable.value ? Yoco.Icon.TRASH : Yoco.Icon.CLOSE,
 			),
-			description: computed(() =>
-				[formatFileSize(props.fileInfo.size), statusText.value].join(' - '),
-			),
+			description: computed(() => {
+				const { size } = props.fileInfo
+				if (size === undefined) return statusText.value
+
+				return [formatFileSize(size), statusText.value].join(' - ')
+			}),
 			isError: computed(() => {
 				const { status } = props.fileInfo
 				if (typeof status === 'string')

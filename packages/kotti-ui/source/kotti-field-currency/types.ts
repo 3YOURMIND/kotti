@@ -11,6 +11,7 @@ export namespace KottiFieldCurrency {
 		.merge(
 			KottiField.potentiallySupportedPropsSchema.pick({
 				autoComplete: true,
+				isBorderless: true,
 				tabIndex: true,
 			}),
 		)

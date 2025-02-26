@@ -33,6 +33,7 @@ export const DATE_TIME_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/
 
 export const KOTTI_FIELD_DATE_SUPPORTS: KottiField.Supports = {
 	autoComplete: false,
+	borderless: true,
 	clear: true,
 	decoration: false,
 	placeholder: true,
