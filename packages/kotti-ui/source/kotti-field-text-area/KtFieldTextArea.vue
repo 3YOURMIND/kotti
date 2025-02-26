@@ -124,8 +124,16 @@ export default defineComponent({
 	@include validations using ($type) {
 		&:not(.kt-field__wrapper--disabled) {
 			@if $type != empty {
-				.kt-field-text-area__wrapper {
-					border-color: var(--support-#{$type}-light);
+				&.kt-field__wrapper--is-borderless {
+					.kt-field-text-area__wrapper {
+						background-color: rgb(from var(--support-#{$type}-bg) r g b / 25%);
+					}
+				}
+
+				&:not(.kt-field__wrapper--is-borderless) {
+					.kt-field-text-area__wrapper {
+						border-color: var(--support-#{$type}-light);
+					}
 				}
 			}
 
@@ -133,9 +141,18 @@ export default defineComponent({
 				--support-empty-light: var(--interactive-05);
 
 				.kt-field-text-area__wrapper {
+					background-color: unset;
 					border-color: var(--support-#{$type}-light);
 					box-shadow: 0 0 0 1px var(--support-#{$type}-light);
 				}
+			}
+
+			.kt-field-text-area__wrapper:not(:focus-within):hover {
+				--support-empty-bg: var(--interactive-02-hover);
+				--support-empty-light: var(--interactive-04);
+
+				background-color: var(--support-#{$type}-bg);
+				border-color: var(--support-#{$type}-light);
 			}
 		}
 	}
@@ -143,6 +160,13 @@ export default defineComponent({
 	&--disabled {
 		.kt-field-text-area__wrapper {
 			border-color: var(--ui-01);
+		}
+	}
+
+	&--is-borderless {
+		.kt-field-text-area__wrapper {
+			background-color: rgb(from var(--gray-20) r g b / 25%);
+			border-color: transparent;
 		}
 	}
 }

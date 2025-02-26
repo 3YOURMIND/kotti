@@ -8,6 +8,7 @@ export enum ErrorCodes {
 
 export const KOTTI_FIELD_FILE_UPLOAD_SUPPORTS: KottiField.Supports = {
 	autoComplete: false,
+	borderless: false,
 	clear: false,
 	decoration: false,
 	placeholder: false,

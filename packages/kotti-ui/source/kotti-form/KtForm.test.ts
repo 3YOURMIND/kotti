@@ -32,6 +32,7 @@ const useTestHook = (
 			props,
 			supports: {
 				autoComplete: true,
+				borderless: true,
 				clear: true,
 				decoration: true,
 				placeholder: true,

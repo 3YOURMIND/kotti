@@ -169,6 +169,12 @@
 									tooltip: 'Support Varies',
 								},
 								{ key: 'hideValidation', label: 'hideValidation' },
+								{
+									isDisabled: !componentDefinition.supports.borderless,
+									key: 'isBorderless',
+									label: 'isBorderless',
+									tooltip: 'Support Varies',
+								},
 								{ key: 'isDisabled', label: 'isDisabled' },
 								{ key: 'isLoading', label: 'isLoading' },
 								{ key: 'isOptional', label: 'isOptional' },
@@ -1243,6 +1249,7 @@ export default defineComponent({
 			booleanFlags: {
 				hideClear: Kotti.FieldToggle.Value
 				hideValidation: Kotti.FieldToggle.Value
+				isBorderless: Kotti.FieldToggle.Value
 				isDisabled: Kotti.FieldToggle.Value
 				isLoading: Kotti.FieldToggle.Value
 				isOptional: Kotti.FieldToggle.Value
@@ -1311,6 +1318,7 @@ export default defineComponent({
 			booleanFlags: {
 				hideClear: false,
 				hideValidation: false,
+				isBorderless: false,
 				isDisabled: false,
 				isLoading: false,
 				isOptional: true,
@@ -1370,6 +1378,11 @@ export default defineComponent({
 			if (componentDefinition.value.supports.clear)
 				Object.assign(additionalProps, {
 					hideClear: settings.value.booleanFlags.hideClear,
+				})
+
+			if (componentDefinition.value.supports.borderless)
+				Object.assign(additionalProps, {
+					isBorderless: settings.value.booleanFlags.isBorderless,
 				})
 
 			if (componentDefinition.value.supports.decoration)
