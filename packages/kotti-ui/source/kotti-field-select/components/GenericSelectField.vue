@@ -51,7 +51,7 @@
 				</template>
 			</KtField>
 		</div>
-		<div :id="tippyContentId" ref="tippyContentRef">
+		<div ref="tippyContentRef">
 			<FieldSelectOptions
 				:actions="actions"
 				:dataTestPrefix="inputProps['data-test']"
@@ -75,25 +75,20 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue'
-import {
-	computed,
-	defineComponent,
-	onBeforeMount,
-	onUnmounted,
-	ref,
-	watch,
-} from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { z } from 'zod'
 
 import { Yoco } from '@3yourmind/yoco'
 
 import { KtField } from '../../kotti-field'
 import { useField } from '../../kotti-field/hooks'
-import { useForceUpdate } from '../../kotti-field/hooks'
+import {
+	useEmitBlur,
+	useForceUpdate,
+	useKtFieldRef,
+} from '../../kotti-field/hooks'
 import { KtTag } from '../../kotti-tag'
 import { makeProps } from '../../make-props'
-import { isOrContainsEventTarget } from '../../utilities'
 import { KOTTI_FIELD_SELECT_SUPPORTS } from '../constants'
 import {
 	isTippyContentWrapper,
@@ -166,20 +161,14 @@ export default defineComponent({
 		const localQuery = ref<string | null>(null)
 
 		const { forceUpdateKey, forceUpdate } = useForceUpdate()
+		const ktFieldRef = useKtFieldRef()
 
-		/**
-		 * fieldLabelRef is a template ref on KtField.vue
-		 */
-		const ktFieldRef = ref<{ inputContainerRef: Ref<HTMLDivElement> } | null>(
-			null,
-		)
 		const triggerTargets = computed(() =>
 			ktFieldRef.value ? [ktFieldRef.value.inputContainerRef] : [],
 		)
 
 		const { isDropdownOpen, isDropdownMounted, ...selectTippy } =
 			useSelectTippy(field, triggerTargets)
-		const tippyContentId = `TIPPY_CONTENT_${field.inputProps.id}`
 
 		const deleteQuery = () => {
 			if (props.isRemote) {
@@ -188,46 +177,28 @@ export default defineComponent({
 		}
 
 		/**
-		 * last element to capture the click or focus event
+		 * Tippy wraps the content inside additional div elements.
+		 * So, we need to look for the actual content element.
 		 */
-		const lastEventTarget = ref<EventTarget | null>(null)
-		const isFieldTargeted = (target: Event['target'] | null): boolean =>
-			isOrContainsEventTarget(
-				ktFieldRef.value?.inputContainerRef ?? null,
-				target,
-			) || isOrContainsEventTarget(selectTippy.tippyContentRef.value, target)
-		const getEventTarget = (target: EventTarget | null): EventTarget | null => {
+		const findEventTarget = (
+			target: EventTarget | null,
+		): EventTarget | null => {
 			if (target === null || !(target instanceof HTMLElement)) return target
 
-			if (target.id === tippyContentId) return target
+			if (target === selectTippy.tippyContentRef.value) return target
 
 			return isTippyContentWrapper(target)
-				? getEventTarget((target.childNodes[0] ?? null) as EventTarget | null)
+				? findEventTarget((target.childNodes[0] ?? null) as EventTarget | null)
 				: target
 		}
-
-		const onClickOrFocusChange = (event: Event) => {
-			if (event.target === null || props.isDisabled) return
-
-			const target = getEventTarget(event.target)
-
-			const wasFieldTargetedBefore = isFieldTargeted(lastEventTarget.value)
-			const isFieldTargetedNow = isFieldTargeted(target)
-
-			if (!isFieldTargetedNow && wasFieldTargetedBefore)
-				emit('blur', field.currentValue)
-
-			lastEventTarget.value = target
-		}
-
-		onBeforeMount(() => {
-			window.addEventListener('click', onClickOrFocusChange, true)
-			window.addEventListener('focus', onClickOrFocusChange, true)
-		})
-
-		onUnmounted(() => {
-			window.removeEventListener('click', onClickOrFocusChange)
-			window.removeEventListener('focus', onClickOrFocusChange)
+		useEmitBlur({
+			emit,
+			field,
+			fieldTarget: computed(() => [
+				ktFieldRef.value?.inputContainerRef ?? null,
+				selectTippy.tippyContentRef.value,
+			]),
+			findEventTarget,
 		})
 
 		watch(
@@ -362,13 +333,13 @@ export default defineComponent({
 				field.setValue(
 					(field.currentValue as MultiValue).filter((v) => v !== value),
 				)
+				inputRef.value?.focus()
 			},
 			setIsDropdownOpen: selectTippy.setIsDropdownOpen,
 			showClearIcon: computed(
 				() => (showClear: boolean) =>
 					showClear && (isFieldHovered.value || isFieldFocused.value),
 			),
-			tippyContentId,
 			tippyContentRef: selectTippy.tippyContentRef,
 			tippyRef: selectTippy.tippyRef,
 			updateQuery: (event: Event) => {

@@ -3,6 +3,7 @@ import type { Ref } from 'vue'
 import {
 	computed,
 	inject,
+	onBeforeMount,
 	onMounted,
 	onUnmounted,
 	reactive,
@@ -13,6 +14,7 @@ import {
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import type { KottiForm } from '../kotti-form/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
+import { isOrContainsEventTarget } from '../utilities'
 
 import { FORM_KEY_NONE } from './constants'
 import { ktFieldErrors } from './errors'
@@ -349,4 +351,73 @@ export const useForceUpdate = (): {
 		},
 		forceUpdateKey,
 	}
+}
+
+export const useKtFieldRef = (): Ref<{
+	inputContainerRef: HTMLDivElement
+	inputContainerWrapperRef: HTMLDivElement
+} | null> => {
+	/**
+	 * both inputContainerRef and inputContainerWrapperRef
+	 * are template refs on KtField.vue
+	 */
+	const ktFieldRef = ref<{
+		inputContainerRef: Ref<HTMLDivElement>
+		inputContainerWrapperRef: Ref<HTMLDivElement>
+	} | null>(null)
+
+	return ktFieldRef
+}
+
+export const useEmitBlur = <T>({
+	emit,
+	field,
+	fieldTarget,
+	findEventTarget,
+	valueOverride,
+}: {
+	emit: (event: 'blur', value: T | null) => void
+	field: KottiField.Hook.Returns<T>
+	fieldTarget: Ref<Array<HTMLElement | null> | HTMLElement | null>
+	findEventTarget?: (target: EventTarget | null) => EventTarget | null
+	valueOverride?: T | null
+}): void => {
+	/**
+	 * last element to capture the click or focus event
+	 */
+	const lastEventTarget = ref<EventTarget | null>(null)
+
+	const isFieldTargeted = (target: Event['target'] | null): boolean =>
+		Array.isArray(fieldTarget.value)
+			? fieldTarget.value.some((ft) => isOrContainsEventTarget(ft, target))
+			: isOrContainsEventTarget(fieldTarget.value, target)
+
+	const onClickOrFocusChange = (event: Event) => {
+		if (event.target === null || field.isDisabled) return
+
+		const eventTarget = findEventTarget?.(event.target) ?? event.target
+
+		const wasFieldTargetedBefore = isFieldTargeted(lastEventTarget.value)
+		const isFieldTargetedNow = isFieldTargeted(eventTarget)
+
+		if (!isFieldTargetedNow && wasFieldTargetedBefore) {
+			if (valueOverride !== undefined) {
+				emit('blur', field.currentValue === null ? null : valueOverride)
+			} else {
+				emit('blur', field.currentValue)
+			}
+		}
+
+		lastEventTarget.value = eventTarget
+	}
+
+	onBeforeMount(() => {
+		window.addEventListener('click', onClickOrFocusChange, true)
+		window.addEventListener('focus', onClickOrFocusChange, true)
+	})
+
+	onUnmounted(() => {
+		window.removeEventListener('click', onClickOrFocusChange)
+		window.removeEventListener('focus', onClickOrFocusChange)
+	})
 }

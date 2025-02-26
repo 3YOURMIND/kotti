@@ -224,7 +224,7 @@ export default defineComponent({
 			/**
 			 * HACK: This template ref is used by child components, refactor with caution if needed
 			 */
-			inputContainerRef: ref<Element | null>(null),
+			inputContainerRef: ref<HTMLDivElement | null>(null),
 			/**
 			 * HACK: This template ref is used by child components, refactor with caution if needed
 			 */

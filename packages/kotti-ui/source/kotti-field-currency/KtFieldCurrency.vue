@@ -1,6 +1,10 @@
 <template>
-	<KtField :field="modifiedField" :helpTextSlot="$slots.helpText">
-		<input ref="inputRef" v-bind="inputProps" @blur="onBlur" @input="onInput" />
+	<KtField
+		ref="ktFieldRef"
+		:field="modifiedField"
+		:helpTextSlot="$slots.helpText"
+	>
+		<input ref="inputRef" v-bind="inputProps" @input="onInput" />
 	</KtField>
 </template>
 
@@ -12,7 +16,12 @@ import type { InputHTMLAttributes } from 'vue/types/jsx'
 import { Yoco } from '@3yourmind/yoco'
 
 import { KtField } from '../kotti-field'
-import { useField, useForceUpdate } from '../kotti-field/hooks'
+import {
+	useEmitBlur,
+	useField,
+	useForceUpdate,
+	useKtFieldRef,
+} from '../kotti-field/hooks'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import type { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
@@ -57,6 +66,13 @@ export default defineComponent({
 		})
 
 		const i18nContext = useI18nContext()
+		const ktFieldRef = useKtFieldRef()
+
+		useEmitBlur({
+			emit,
+			field,
+			fieldTarget: computed(() => ktFieldRef.value?.inputContainerRef ?? null),
+		})
 
 		const currencyFormat = computed<KottiI18n.CurrencyMap[string]>(() => {
 			const result = i18nContext.currencyMap[props.currency]
@@ -176,13 +192,11 @@ export default defineComponent({
 				}),
 			),
 			inputRef,
+			ktFieldRef,
 			modifiedField: computed(() => ({
 				...field,
 				prefix: currencyFormat.value.symbol,
 			})),
-			onBlur: () => {
-				emit('blur', field.currentValue)
-			},
 			onInput: (event: Event) => {
 				const value = (event.target as HTMLInputElement).value
 
