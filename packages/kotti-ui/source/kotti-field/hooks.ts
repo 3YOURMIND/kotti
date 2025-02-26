@@ -43,6 +43,9 @@ const useInputProps = <DATA_TYPE>({
 	context: KottiForm.Context | null
 	isDisabled: Ref<boolean>
 }) => {
+	// Generate unique id for input outside computed to avoid undesired reactivity
+	const id = String(++ktFieldId)
+
 	const formPath = computed(() => {
 		if (context === null) return []
 
@@ -58,8 +61,7 @@ const useInputProps = <DATA_TYPE>({
 		inputProps: computed(() => ({
 			'data-test': props.dataTest ?? formPath.value.join('.'),
 			disabled: isDisabled.value,
-			id: String(++ktFieldId),
-
+			id,
 			tabindex: props.tabIndex,
 		})),
 	}
