@@ -21,11 +21,12 @@ $inner-gap: ($outer-size - $inner-size) * 0.5;
 $track-width: $inner-size * 2.25;
 
 @mixin switch-colors($outer-color, $inner-color) {
-	/* background-color: $outer-color; */
-	box-shadow: 0 0 1px $outer-color;
+	.kt-field-toggle-switch {
+		background-color: $outer-color;
 
-	.kt-field-toggle-switch__inner {
-		background-color: $inner-color;
+		&__inner {
+			background-color: $inner-color;
+		}
 	}
 }
 
@@ -45,23 +46,74 @@ $track-width: $inner-size * 2.25;
 }
 
 .kt-field-toggle-inner {
-	&--is-disabled.kt-field-toggle-inner .kt-field-toggle-switch__inner {
-		background-color: var(--ui-01);
+	&--is-indeterminate {
+		@include switch-colors(var(--interactive-01), var(--interactive-04));
+
+		.kt-field-toggle-switch__inner {
+			width: $track-width;
+		}
+
+		&:hover {
+			@include switch-colors(
+				var(--interactive-01-hover),
+				var(--interactive-01-hover)
+			);
+		}
+
+		&:active {
+			@include switch-colors(
+				var(--interactive-01-active),
+				var(--interactive-01-active)
+			);
+		}
 	}
 
-	&--is-indeterminate .kt-field-toggle-switch__inner {
-		width: $track-width;
-		background-color: var(--gray-30);
+	&--is-off {
+		@include switch-colors(var(--ui-02), var(--white));
+
+		.kt-field-toggle-switch__inner {
+			margin-left: 0;
+		}
+
+		&:hover {
+			@include switch-colors(var(--ui-03), var(--white));
+		}
+
+		&:active {
+			@include switch-colors(var(--ui-04), var(--white));
+		}
 	}
 
-	&--is-off .kt-field-toggle-switch__inner {
-		margin-left: 0;
-		background-color: var(--ui-03);
-	}
+	&--is-on {
+		@include switch-colors(var(--interactive-03), var(--white));
 
-	&--is-on .kt-field-toggle-switch__inner {
-		margin-left: #{$track-width - $inner-size};
-		background-color: var(--interactive-03);
+		.kt-field-toggle-switch__inner {
+			margin-left: #{$track-width - $inner-size};
+		}
+
+		&:hover {
+			@include switch-colors(var(--interactive-01-hover), var(--white));
+		}
+
+		&:active {
+			@include switch-colors(var(--interactive-01-active), var(--white));
+		}
+	}
+}
+
+.kt-field-toggle-inner--is-disabled {
+	&.kt-field-toggle-inner {
+		&--is-indeterminate {
+			@include switch-colors(var(--text-05), var(--ui-02));
+		}
+
+		&--is-off {
+			@include switch-colors(var(--text-05), var(--ui-01));
+		}
+
+		&--is-on {
+			@include switch-colors(var(--text-05), var(--ui-01));
+		}
 	}
 }
 

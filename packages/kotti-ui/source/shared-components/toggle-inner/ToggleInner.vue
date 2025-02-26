@@ -4,14 +4,15 @@
 		class="kt-field-toggle-inner"
 		:class="toggleClasses"
 	>
-		<component :is="svgComponent.is" :class="svgComponent.class" />
-		<slot name="default" />
 		<input
 			v-bind="inputProps"
 			:checked="value === true"
+			:tabindex="isDisabled ? -1 : undefined"
 			type="checkbox"
 			@change="onInput"
 		/>
+		<component :is="svgComponent.is" :class="svgComponent.class" />
+		<slot name="default" />
 	</component>
 </template>
 
@@ -72,7 +73,7 @@ export default defineComponent({
 
 <style lang="scss">
 :root {
-	--toggle-border-radius: 0.1rem;
+	--toggle-border-radius: 1px;
 }
 
 .kt-field-toggle-inner {
@@ -81,7 +82,26 @@ export default defineComponent({
 	cursor: pointer;
 
 	input {
-		display: none;
+		width: 0;
+		height: 0;
+
+		&:focus + .kt-field-toggle-inner__svg--is-box {
+			outline: 1px solid var(--primary-50);
+			outline-offset: 3px;
+		}
+
+		&:focus:not(:focus-visible) + .kt-field-toggle-inner__svg--is-box {
+			outline: none;
+		}
+
+		&:focus + .kt-field-toggle-inner__svg--is-switch {
+			outline: 1px solid var(--primary-50);
+			outline-offset: 1px;
+		}
+
+		&:focus:not(:focus-visible) + .kt-field-toggle-inner__svg--is-switch {
+			outline: none;
+		}
 	}
 
 	&--is-disabled {
@@ -89,8 +109,8 @@ export default defineComponent({
 		cursor: not-allowed;
 	}
 
-	> *:not(:first-child) {
-		margin-left: 0.3rem;
+	&__svg {
+		margin-right: var(--unit-2);
 	}
 }
 </style>

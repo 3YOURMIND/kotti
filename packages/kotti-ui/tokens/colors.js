@@ -130,6 +130,11 @@ export const tokens = [
 		reference: 'primary-70',
 	},
 	{
+		name: 'interactive-01-active',
+		description: 'Active for Interactive-01',
+		reference: 'primary-90',
+	},
+	{
 		name: 'interactive-02',
 		description: 'Secondary interactive color\nSecondary button',
 		reference: 'gray-10',
