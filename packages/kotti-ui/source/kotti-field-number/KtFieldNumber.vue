@@ -405,7 +405,6 @@ export default defineComponent({
 			&__button,
 			&__middle {
 				color: var(--text-05);
-				background-color: var(--ui-01);
 			}
 		}
 	}
