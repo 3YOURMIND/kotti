@@ -27,6 +27,7 @@ export namespace KottiFileUpload {
 		.or(
 			z.object({
 				label: z.string(),
+				showProgress: z.boolean().optional(),
 				type: z.enum(['error', 'loading']),
 			}),
 		)

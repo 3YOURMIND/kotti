@@ -193,12 +193,17 @@ export default defineComponent({
 			},
 			progress: computed(() => props.fileInfo.progress ?? 0),
 			progressBarForceRenderKey,
-			showProgressBar: computed(
-				() =>
+			showProgressBar: computed(() => {
+				const { status: s } = props.fileInfo
+				if (typeof s === 'object' && s.showProgress !== undefined)
+					return s.showProgress
+
+				return (
 					props.fileInfo.validation === KottiFileUpload.Validation.SUCCESS &&
 					(status.value === KottiFileUpload.Status.ERROR ||
-						status.value === KottiFileUpload.Status.UPLOADING),
-			),
+						status.value === KottiFileUpload.Status.UPLOADING)
+				)
+			}),
 			showRetryAction: computed(
 				() =>
 					props.fileInfo.validation === KottiFileUpload.Validation.SUCCESS &&
