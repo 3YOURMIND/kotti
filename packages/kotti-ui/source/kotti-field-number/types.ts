@@ -1,10 +1,16 @@
 import { z } from 'zod'
 
 import { KottiField } from '../kotti-field/types'
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 export namespace KottiFieldNumber {
 	export const valueSchema = z.number().nullable()
 	export type Value = z.output<typeof valueSchema>
+
+	export enum Align {
+		LEFT = 'left',
+		RIGHT = 'right',
+	}
 
 	export const propsSchema = KottiField.propsSchema
 		.merge(
@@ -19,6 +25,7 @@ export namespace KottiFieldNumber {
 			}),
 		)
 		.extend({
+			align: createLooseZodEnumSchema(Align).default(Align.LEFT),
 			// eslint-disable-next-line no-magic-numbers
 			decimalPlaces: z.number().default(3),
 			hideChangeButtons: z.boolean().default(false),

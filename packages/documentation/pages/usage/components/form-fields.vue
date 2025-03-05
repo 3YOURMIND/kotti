@@ -392,18 +392,73 @@
 									{ label: 'switch', value: 'switch' },
 								]"
 							/>
+							<KtFieldSingleSelect
+								v-if="
+									componentDefinition.additionalProps.includes('numberAlign')
+								"
+								formKey="numberAlign"
+								helpText="Support varies"
+								isOptional
+								label="align"
+								:options="[
+									{ label: 'left (Default)', value: 'left' },
+									{ label: 'right', value: 'right' },
+								]"
+							/>
 							<div
 								v-if="
-									componentDefinition.additionalProps.includes('numberMaximum')
+									componentDefinition.additionalProps.includes(
+										'numberDecimalPlaces',
+									) ||
+									componentDefinition.additionalProps.includes('numberStep')
 								"
 								class="field-row"
 							>
 								<KtFieldNumber
+									v-if="
+										componentDefinition.additionalProps.includes(
+											'numberDecimalPlaces',
+										)
+									"
+									formKey="numberDecimalPlaces"
+									isOptional
+									label="decimalPlaces"
+									:minimum="0"
+								/>
+								<KtFieldNumber
+									v-if="
+										componentDefinition.additionalProps.includes('numberStep')
+									"
+									formKey="numberStep"
+									isOptional
+									label="step"
+								/>
+							</div>
+							<div
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'numberMaximum',
+									) ||
+									componentDefinition.additionalProps.includes('numberMinimum')
+								"
+								class="field-row"
+							>
+								<KtFieldNumber
+									v-if="
+										componentDefinition.additionalProps.includes(
+											'numberMaximum',
+										)
+									"
 									formKey="numberMaximum"
 									isOptional
 									label="maximum"
 								/>
 								<KtFieldNumber
+									v-if="
+										componentDefinition.additionalProps.includes(
+											'numberMinimum',
+										)
+									"
 									formKey="numberMinimum"
 									isOptional
 									label="minimum"
@@ -412,38 +467,35 @@
 							<div
 								v-if="
 									componentDefinition.additionalProps.includes(
+										'numberHideChangeButtons',
+									) ||
+									componentDefinition.additionalProps.includes(
 										'numberHideMaximum',
 									)
 								"
 								class="field-row"
 							>
 								<KtFieldToggle
-									formKey="numberHideMaximum"
-									isOptional
-									label="hideMaximum"
-									type="switch"
-								/>
-								<KtFieldNumber formKey="numberStep" isOptional label="step" />
-							</div>
-							<div
-								v-if="
-									componentDefinition.additionalProps.includes(
-										'numberHideChangeButtons',
-									)
-								"
-								class="field-row"
-							>
-								<KtFieldToggle
+									v-if="
+										componentDefinition.additionalProps.includes(
+											'numberHideChangeButtons',
+										)
+									"
 									formKey="numberHideChangeButtons"
 									isOptional
 									label="hideChangeButtons"
 									type="switch"
 								/>
-								<KtFieldNumber
-									formKey="numberDecimalPlaces"
+								<KtFieldToggle
+									v-if="
+										componentDefinition.additionalProps.includes(
+											'numberHideMaximum',
+										)
+									"
+									formKey="numberHideMaximum"
 									isOptional
-									label="decimalPlaces"
-									:minimum="0"
+									label="hideMaximum"
+									type="switch"
 								/>
 							</div>
 							<KtFieldSingleSelect
@@ -917,6 +969,7 @@ const components: Array<{
 	},
 	{
 		additionalProps: [
+			'numberAlign',
 			'numberDecimalPlaces',
 			'numberHideChangeButtons',
 			'numberHideMaximum',
@@ -1232,6 +1285,7 @@ export default defineComponent({
 				maximumDate: Kotti.FieldDate.Value
 				maximumSelectable: Kotti.FieldNumber.Value
 				minimumDate: Kotti.FieldDate.Value
+				numberAlign: Kotti.FieldSingleSelect.Value
 				numberDecimalPlaces: Kotti.FieldNumber.Value
 				numberHideChangeButtons: boolean
 				numberHideMaximum: boolean
@@ -1301,6 +1355,7 @@ export default defineComponent({
 				maximumDate: null,
 				maximumSelectable: null,
 				minimumDate: null,
+				numberAlign: 'left',
 				numberDecimalPlaces: null,
 				numberHideChangeButtons: false,
 				numberHideMaximum: false,
@@ -1470,6 +1525,11 @@ export default defineComponent({
 			)
 				Object.assign(additionalProps, {
 					currency: settings.value.additionalProps.currencyCurrency,
+				})
+
+			if (componentDefinition.value.additionalProps.includes('numberAlign'))
+				Object.assign(additionalProps, {
+					align: settings.value.additionalProps.numberAlign ?? 'left',
 				})
 
 			if (

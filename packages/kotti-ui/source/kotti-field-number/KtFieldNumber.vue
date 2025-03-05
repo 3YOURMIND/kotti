@@ -300,6 +300,14 @@ export default defineComponent({
 					class: {
 						'kt-field-number__input': true,
 						'kt-field-number__input--has-maximum': showMaximum.value,
+						'kt-field-number__input--left-aligned':
+							!showMaximum.value &&
+							props.hideChangeButtons &&
+							props.align === 'left',
+						'kt-field-number__input--right-aligned':
+							!showMaximum.value &&
+							props.hideChangeButtons &&
+							props.align === 'right',
 					},
 					disabled: field.isDisabled,
 					forceUpdateKey: forceUpdateKey.value,
@@ -428,12 +436,6 @@ export default defineComponent({
 	align-items: center;
 	font-variant-numeric: tabular-nums;
 
-	&--is-hide-change-buttons:not(&--has-maximum) {
-		.kt-field-number__input {
-			text-align: left;
-		}
-	}
-
 	&__button {
 		display: flex;
 		align-items: center;
@@ -475,6 +477,14 @@ export default defineComponent({
 		border: none;
 
 		&--has-maximum {
+			text-align: right;
+		}
+
+		&--left-aligned {
+			text-align: left;
+		}
+
+		&--right-aligned {
 			text-align: right;
 		}
 	}
