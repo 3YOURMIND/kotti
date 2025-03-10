@@ -301,7 +301,7 @@ export const useField = <DATA_TYPE>({
 				sharedProperties.isDisabled.value ||
 				(supports.clear ? sharedProperties.hideClear.value : true),
 		),
-		isBorderless: computed(() => props.isBorderless),
+		isBorderless: computed(() => supports.borderless && props.isBorderless),
 		isOptional: computed(() => props.isOptional),
 	}) as KottiField.Hook.Returns<DATA_TYPE>
 
