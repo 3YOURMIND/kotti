@@ -82,8 +82,7 @@ export default defineComponent({
 	cursor: pointer;
 
 	input {
-		width: 0;
-		height: 0;
+		display: none;
 
 		&:focus + .kt-field-toggle-inner__svg--is-box {
 			outline: 1px solid var(--primary-50);
