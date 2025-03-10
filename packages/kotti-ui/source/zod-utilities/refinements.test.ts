@@ -11,13 +11,11 @@ describe('refinementNonEmpty', () => {
 	})
 
 	it('rejects arrays without items', () => {
-		const result = schema.safeParse([])
+		const result = schema.safeParse([]) as z.SafeParseError<number[]>
 
-		expect(result).toEqual({
-			error: new z.ZodError([
-				{ code: 'custom', message: 'array may not be empty', path: [] },
-			]),
-			success: false,
-		})
+		expect(result.success).toEqual(false)
+		expect(result.error.issues).toEqual([
+			{ code: 'custom', message: 'array may not be empty', path: [] },
+		])
 	})
 })
