@@ -473,7 +473,11 @@ export const useKottiTable = <
 														id: `${params.value.id}-column-select-header`,
 													},
 													isDisabled: false,
-													value: table.getIsAllRowsSelected(),
+													value: table.getIsAllRowsSelected()
+														? true
+														: table.getIsSomeRowsSelected()
+															? null
+															: false,
 												},
 											}),
 										],
