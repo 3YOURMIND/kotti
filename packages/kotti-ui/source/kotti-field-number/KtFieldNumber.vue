@@ -1,7 +1,6 @@
 <template>
 	<KtField v-bind="{ field }" ref="ktFieldRef" :helpTextSlot="$slots.helpText">
 		<div
-			ref="wrapperRef"
 			class="kt-field-number"
 			:class="{
 				'kt-field-number--is-hide-change-buttons': hideChangeButtons,
@@ -25,6 +24,7 @@
 					v-bind="inputProps"
 					@blur="onBlur"
 					@input="onInput"
+					@keydown="onKeydown"
 				/>
 				<div v-if="showMaximum" v-text="'/'" />
 				<div
@@ -50,15 +50,7 @@
 <script lang="ts">
 import Big from 'big.js'
 import type { UnwrapRef } from 'vue'
-import {
-	computed,
-	defineComponent,
-	nextTick,
-	onBeforeMount,
-	onUnmounted,
-	ref,
-	watch,
-} from 'vue'
+import { computed, defineComponent, nextTick, ref, watch } from 'vue'
 import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { Yoco } from '@3yourmind/yoco'
@@ -75,11 +67,7 @@ import type { KottiField } from '../kotti-field/types'
 import { useI18nContext } from '../kotti-i18n/hooks'
 import type { KottiI18n } from '../kotti-i18n/types'
 import { makeProps } from '../make-props'
-import {
-	DECIMAL_SEPARATORS_CHARACTER_SET,
-	isNumberInRange,
-	isOrContainsEventTarget,
-} from '../utilities'
+import { DECIMAL_SEPARATORS_CHARACTER_SET, isNumberInRange } from '../utilities'
 
 import {
 	KOTTI_FIELD_NUMBER_SUPPORTS,
@@ -259,26 +247,6 @@ export default defineComponent({
 			focusInput()
 		}
 
-		const wrapperRef = ref<HTMLDivElement | null>(null)
-
-		const isFieldTargeted = (target: Event['target'] | null): boolean =>
-			isOrContainsEventTarget(inputRef.value, target)
-
-		const onKeyup = (event: KeyboardEvent) => {
-			if (!isFieldTargeted(event.target)) return
-
-			if (event.code === 'ArrowUp') incrementValue()
-			if (event.code === 'ArrowDown') decrementValue()
-		}
-
-		onBeforeMount(() => {
-			window.addEventListener('keyup', onKeyup, true)
-		})
-
-		onUnmounted(() => {
-			window.removeEventListener('keyup', onKeyup)
-		})
-
 		return {
 			decrementButtonClasses: computed(() => ({
 				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
@@ -390,8 +358,15 @@ export default defineComponent({
 					setCursorPosition(newCursorPosition)
 				})
 			},
+			onKeydown: (event: KeyboardEvent) => {
+				if (event.code === 'ArrowUp') {
+					event.preventDefault()
+					incrementValue()
+				} else if (event.code === 'ArrowDown') {
+					decrementValue()
+				}
+			},
 			showMaximum,
-			wrapperRef,
 			Yoco,
 		}
 	},
