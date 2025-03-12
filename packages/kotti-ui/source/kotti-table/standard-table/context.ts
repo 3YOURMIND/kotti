@@ -22,6 +22,7 @@ export type StandardTableContext<
 		pagination: { pageIndex: number; pageSize: number }
 		rowCount: number
 		searchValue: KottiFieldText.Value
+		selectMode: 'global' | 'single-page' | null
 		setAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => void
 		setPageIndex: (value: number) => void
 		setPageSize: (value: number) => void

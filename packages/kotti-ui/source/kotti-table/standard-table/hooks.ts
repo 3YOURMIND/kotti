@@ -45,8 +45,9 @@ type KottiStandardTableParameters<
 	isLoading?: boolean
 	options?: KottiStandardTable.Options
 	paginationOptions: KottiStandardTable.Pagination
+	selectMode?: 'global' | 'single-page' | null
 	storageAdapter: KottiStandardTableStorage | null
-	table: Omit<KottiTableParameter<ROW, COLUMN_ID>, 'id'>
+	table: Omit<KottiTableParameter<ROW, COLUMN_ID>, 'id' | 'isSelectable'>
 }>
 
 const paramsSchema = z.object({
@@ -55,12 +56,14 @@ const paramsSchema = z.object({
 	isLoading: z.boolean().default(false),
 	options: KottiStandardTable.optionsSchema.optional(),
 	paginationOptions: KottiStandardTable.paginationSchema,
+	selectMode: z.enum(['global', 'single-page']).nullable().default(null),
 	/**
 	 * Need to use z.any because there is currently no way in zod to ensure a class extends an interface.
 	 */
 	storageAdapter: z.any(),
 	table: KottiTableHookParamsSchema.omit({
 		id: true,
+		isSelectable: true,
 	}),
 })
 
@@ -209,6 +212,7 @@ export const useKottiStandardTable = <
 			>),
 			data: data.value,
 			id: params.value.id,
+			isSelectable: params.value.selectMode !== null,
 		})),
 	)
 
@@ -256,6 +260,7 @@ export const useKottiStandardTable = <
 				pagination: pagination.value,
 				rowCount: rowCount.value,
 				searchValue: searchValue.value,
+				selectMode: params.value.selectMode,
 				setAppliedFilters: (filters: KottiStandardTable.AppliedFilter[]) => {
 					appliedFilters.value = filters
 				},
@@ -298,6 +303,15 @@ export const useKottiStandardTable = <
 				},
 				storageOperationContext.value,
 			)
+		},
+	)
+
+	watch(
+		() => pagination.value,
+		() => {
+			if (params.value.selectMode === 'single-page') {
+				tableHook.api.selectedRows.value = {}
+			}
 		},
 	)
 

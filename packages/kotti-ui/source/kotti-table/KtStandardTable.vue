@@ -81,6 +81,11 @@
 				<slot name="applied-filter-actions" />
 			</div>
 		</div>
+		<TableGlobalSelection
+			v-show="showGlobalSelection"
+			:selectionCount="selectionCount"
+			@emptySelection="unselectAllRows"
+		/>
 		<slot
 			v-if="$scopedSlots['table']"
 			:emptyText="emptyText"
@@ -127,6 +132,7 @@ import { makeProps } from '../make-props'
 import TableColumns from './standard-table/components/Columns.vue'
 import FilterList from './standard-table/components/FilterList.vue'
 import TableFilters from './standard-table/components/Filters.vue'
+import TableGlobalSelection from './standard-table/components/GlobalSelection.vue'
 import TablePageSize from './standard-table/components/PageSize.vue'
 import TablePagination from './standard-table/components/Pagination.vue'
 import TableSearch from './standard-table/components/Search.vue'
@@ -141,6 +147,7 @@ export default defineComponent({
 		FilterList,
 		TableColumns,
 		TableFilters,
+		TableGlobalSelection,
 		TablePageSize,
 		TablePagination,
 		TableSearch,
@@ -258,11 +265,20 @@ export default defineComponent({
 			),
 			rowCount: computed(() => standardTableContext.value.internal.rowCount),
 			searchValue,
+			selectionCount: computed(
+				() => tableContext.value.internal.selectionCount,
+			),
+			showGlobalSelection: computed(
+				() =>
+					standardTableContext.value.internal.selectMode === 'global' &&
+					tableContext.value.internal.selectionCount > 0,
+			),
 			tableRows: computed(() =>
 				tableContext.value.internal.table.value
 					.getRowModel()
 					.rows.map((row) => row.original),
 			),
+			unselectAllRows: tableContext.value.internal.unselectAllRows,
 		}
 	},
 })

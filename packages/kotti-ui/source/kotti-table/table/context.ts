@@ -14,12 +14,13 @@ export type TableContext<
 		hasDragAndDrop: boolean
 		isDragAndDropActive: boolean
 		isExpandable: boolean
-		isSelectable: boolean
+		selectionCount: number
 		setDraggedColumnId: (columnId: COLUMN_ID | null) => void
 		setDropTargetColumnIndex: (columnIndex: number | null) => void
 		swapDraggedAndDropTarget: () => void
 		table: Ref<Table<ROW>>
 		triggerExpand: (rowId: string) => void
+		unselectAllRows: () => void
 		unsetDroppedColumnId: () => void
 		visibleColumns: VisibilityState
 	}

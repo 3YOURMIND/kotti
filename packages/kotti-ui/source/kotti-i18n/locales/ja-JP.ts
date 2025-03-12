@@ -135,6 +135,7 @@ export const jaJP: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Clear All',
+		clearSelection: 'Clear Selection',
 		editColumns: 'Edit Columns',
 		editFilters: 'Edit Filters',
 		endDate: 'End',
@@ -148,6 +149,7 @@ export const jaJP: KottiI18n.Messages = {
 		resultsCounter:
 			'No items | {range} of {total} item | {range} of {total} items',
 		search: 'Search',
+		selectionCount: '| {count} item selected | {count} items selected',
 		showAll: 'Show All',
 		startDate: 'Start',
 		today: 'Today',

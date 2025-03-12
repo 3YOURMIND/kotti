@@ -135,6 +135,7 @@ export const deDE: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Alles löschen',
+		clearSelection: 'Auswahl löschen',
 		editColumns: 'Spalten bearbeiten',
 		editFilters: 'Filter bearbeiten',
 		endDate: 'Ende',
@@ -148,6 +149,7 @@ export const deDE: KottiI18n.Messages = {
 		resultsCounter:
 			'Keine Elemente | {range} von {total} Element | {range} von {total} Elementen',
 		search: 'Suche',
+		selectionCount: '| {count} Element ausgewählt | {count} items ausgewählt',
 		showAll: 'Alles anzeigen',
 		startDate: 'Start',
 		today: 'Heute',
