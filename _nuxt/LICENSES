@@ -1,11 +1,4 @@
 /*!
- * Vue.js v2.7.16
- * (c) 2014-2023 Evan You
- * Released under the MIT License.
- */
-
-
-/*!
  * natural-sort.js
  * ===============
  * Sorting with support for numbers, dates, unicode and more.
@@ -13,6 +6,13 @@
  * http://github.com/studio-b12/natural-sort
  * MIT License, © Studio B12 GmbH 2014
  *
+ */
+
+
+/*!
+ * Vue.js v2.7.16
+ * (c) 2014-2023 Evan You
+ * Released under the MIT License.
  */
 
 
