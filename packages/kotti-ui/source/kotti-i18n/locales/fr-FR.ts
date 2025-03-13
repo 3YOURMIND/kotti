@@ -137,7 +137,8 @@ export const frFR: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Tout effacer',
-		editColumns: 'odifier les colonnes',
+		clearSelection: 'Clear Selection',
+		editColumns: 'Odifier les colonnes',
 		editFilters: 'Modifier les filtres',
 		endDate: 'Fin',
 		itemsPerPage: 'Éléments par page',
@@ -150,6 +151,7 @@ export const frFR: KottiI18n.Messages = {
 		resultsCounter:
 			'Aucun élément | {range} de {total} élément | {range} de {total} éléments',
 		search: 'Rechercher',
+		selectionCount: '| {count} item selected | {count} items selected',
 		showAll: 'Afficher tout',
 		startDate: 'Début',
 		today: "Aujourd'hui",

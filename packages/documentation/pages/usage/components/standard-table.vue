@@ -391,6 +391,7 @@ export default defineComponent({
 					pageSizeOptions: [5, 10, 15, 20],
 					type: 'local',
 				},
+				selectMode: 'single-page',
 				storageAdapter: null,
 				table: {
 					columns: todosColumns.value,
@@ -407,7 +408,6 @@ export default defineComponent({
 						id: String(row.id),
 					}),
 					hasDragAndDrop: true,
-					isSelectable: true,
 				},
 			})),
 		)
@@ -432,6 +432,7 @@ export default defineComponent({
 					rowCount: recipesRowCount.value,
 					type: 'remote',
 				},
+				selectMode: 'global',
 				storageAdapter: null,
 				table: {
 					columns: recipesColumns.value,
@@ -449,7 +450,6 @@ export default defineComponent({
 						id: String(row.id),
 					}),
 					hasDragAndDrop: true,
-					isSelectable: true,
 				},
 			})),
 		)

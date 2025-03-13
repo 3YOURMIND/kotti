@@ -50,7 +50,7 @@ export type KottiTableParameter<
 	getRowBehavior: GetRowBehavior<ROW>
 	hasDragAndDrop?: boolean
 	id: string
-	isSelectable?: boolean // FIXME: Consider isSelectable to become `selectMode: 'single-page' | 'global' | null` when we support selection across pages. Current behavior is 'global'
+	isSelectable?: boolean
 }
 
 export const paramsSchema = z
@@ -232,7 +232,11 @@ export const useKottiTable = <
 	// in the data provided via params. That means selection is always global.
 	const selectedRows = useComputedRef<RowSelectionState>({
 		get: (value) => value,
-		set: (value) => value,
+		set: (value) => {
+			return Object.fromEntries(
+				Object.entries(value).filter(([_, isSelected]) => isSelected),
+			)
+		},
 		value: ref({}),
 	})
 
@@ -475,7 +479,9 @@ export const useKottiTable = <
 													isDisabled: false,
 													value: table.getIsAllRowsSelected()
 														? true
-														: table.getIsSomeRowsSelected()
+														: table
+																	.getRowModel()
+																	.rows.some((row) => row.getIsSelected())
 															? null
 															: false,
 												},
@@ -577,7 +583,7 @@ export const useKottiTable = <
 			hasDragAndDrop: Boolean(params.value.hasDragAndDrop),
 			isDragAndDropActive: draggedColumnId.value !== null,
 			isExpandable: Boolean(params.value.expandMode !== null),
-			isSelectable: Boolean(params.value.isSelectable),
+			selectionCount: Object.values(selectedRows.value).length,
 			setDraggedColumnId: (columnId) => {
 				draggedColumnId.value = columnId
 			},
@@ -600,6 +606,9 @@ export const useKottiTable = <
 			},
 			table,
 			triggerExpand,
+			unselectAllRows: () => {
+				selectedRows.value = {}
+			},
 			unsetDroppedColumnId: () => {
 				// Avoid eventual redraws since method will be called once per row
 				if (successfullyDroppedColumnId.value === null) return

@@ -135,6 +135,7 @@ export const esES: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Despejar todo',
+		clearSelection: 'Clear Selection',
 		editColumns: 'Editar columnas',
 		editFilters: 'Editar filtros',
 		endDate: 'Finalización',
@@ -148,6 +149,7 @@ export const esES: KottiI18n.Messages = {
 		resultsCounter:
 			'No hay artículos | {range} de {total} artículo | {range} de {total} artículos',
 		search: 'Buscar',
+		selectionCount: '| {count} item selected | {count} items selected',
 		showAll: 'Mostrar todo',
 		startDate: 'Inicio',
 		today: 'Hoy',
