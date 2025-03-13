@@ -1,5 +1,10 @@
 <template>
-	<KtField v-bind="{ field }" ref="ktFieldRef" :helpTextSlot="$slots.helpText">
+	<KtField
+		v-bind="{ field }"
+		ref="ktFieldRef"
+		class="kt-field__number-field"
+		:helpTextSlot="$slots.helpText"
+	>
 		<div
 			class="kt-field-number"
 			:class="{
@@ -8,16 +13,15 @@
 			}"
 			:tabIndex="-1"
 		>
-			<div
+			<KtButton
 				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
-				:class="decrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-decrement`"
+				:disabled="!isDecrementEnabled"
+				:icon="Yoco.Icon.MINUS"
 				:tabIndex="-1"
 				@click.stop="decrementValue"
-			>
-				<i class="yoco" v-text="Yoco.Icon.MINUS" />
-			</div>
+			/>
 			<div class="kt-field-number__middle" @click="onClickMiddle">
 				<input
 					ref="inputRef"
@@ -33,16 +37,16 @@
 					v-text="maximum"
 				/>
 			</div>
-			<div
+
+			<KtButton
 				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
-				:class="incrementButtonClasses"
 				:data-test="`${inputProps['data-test']}-increment`"
+				:disabled="!isIncrementEnabled"
+				:icon="Yoco.Icon.PLUS"
 				:tabIndex="-1"
 				@click.stop="incrementValue"
-			>
-				<i class="yoco" v-text="Yoco.Icon.PLUS" />
-			</div>
+			/>
 		</div>
 	</KtField>
 </template>
@@ -55,6 +59,7 @@ import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import { KtButton } from '../kotti-button'
 import { KtField } from '../kotti-field'
 import {
 	useEmitBlur,
@@ -80,6 +85,7 @@ import { isStepMultiple, toNumber, toString } from './utilities'
 export default defineComponent({
 	name: 'KtFieldNumber',
 	components: {
+		KtButton,
 		KtField,
 	},
 	props: makeProps(KottiFieldNumber.propsSchema),
@@ -248,14 +254,8 @@ export default defineComponent({
 		}
 
 		return {
-			decrementButtonClasses: computed(() => ({
-				'kt-field-number__button--is-disabled': !isDecrementEnabled.value,
-			})),
 			decrementValue,
 			field,
-			incrementButtonClasses: computed(() => ({
-				'kt-field-number__button--is-disabled': !isIncrementEnabled.value,
-			})),
 			incrementValue,
 			inputProps: computed(
 				(): InputHTMLAttributes &
@@ -286,6 +286,8 @@ export default defineComponent({
 				}),
 			),
 			inputRef,
+			isDecrementEnabled,
+			isIncrementEnabled,
 			ktFieldRef,
 			onBlur: () => {
 				forceUpdateDisplayedValue(field.currentValue)
@@ -383,15 +385,6 @@ export default defineComponent({
 		'large': 2rem,
 	);
 
-	&--disabled {
-		.kt-field-number {
-			&__button,
-			&__middle {
-				color: var(--text-05);
-			}
-		}
-	}
-
 	@each $type in 'small', 'medium', 'large' {
 		&--is-#{$type} {
 			.kt-field-number__button {
@@ -406,30 +399,14 @@ export default defineComponent({
 	}
 }
 
+.kt-field__number-field .kt-field__input-container {
+	padding: 0 var(--unit-1);
+}
+
 .kt-field-number {
 	display: flex;
 	align-items: center;
 	font-variant-numeric: tabular-nums;
-
-	&__button {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--icon-02);
-		cursor: pointer;
-		user-select: none;
-		background: var(--ui-01);
-		border-radius: var(--field-border-radius);
-
-		&:not(&--is-disabled):hover {
-			background: var(--ui-02);
-		}
-
-		&--is-disabled {
-			color: var(--text-05);
-			cursor: not-allowed;
-		}
-	}
 
 	&__middle {
 		display: flex;
