@@ -29,6 +29,7 @@
 							v-bind="componentRepresentation.props"
 							:validator="componentRepresentation.validator"
 							@blur="onBlur"
+							@open="onOpen"
 							@update:query="updateQuery"
 						>
 							<template
@@ -192,11 +193,25 @@
 							v-if="componentDefinition.additionalProps.includes('emitEvents')"
 						>
 							<h4>Events</h4>
-							<KtFieldToggle
-								formKey="emitBlur"
-								helpText="Support Varies"
+							<KtFieldToggleGroup
+								formKey="events"
 								isOptional
-								label="Listen to blur events (and show a toast in documentation only)"
+								:options="[
+									{
+										isDisabled: !componentDefinition.supports.clear,
+										key: 'emitBlur',
+										label: 'Listen to blur event',
+										tooltip:
+											'Support Varies. Shows a toast in documentation only.',
+									},
+									{
+										isDisabled: !componentDefinition.supports.borderless,
+										key: 'emitOpen',
+										label: 'Listen to open event',
+										tooltip:
+											'Support Varies. Shows a toast in documentation only.',
+									},
+								]"
 								type="switch"
 							/>
 						</div>
@@ -1311,7 +1326,10 @@ export default defineComponent({
 			component: ComponentNames
 			dataTest: Kotti.FieldText.Value
 			decimalSeparator: Kotti.DecimalSeparator
-			emitBlur: boolean
+			events: {
+				emitBlur: Kotti.FieldToggle.Value
+				emitOpen: Kotti.FieldToggle.Value
+			}
 			formId: Kotti.FieldText.Value
 			hasHelpTextSlot: boolean
 			helpDescription: Kotti.FieldText.Value
@@ -1381,7 +1399,10 @@ export default defineComponent({
 			component: initialComponentName ?? 'KtFieldText',
 			dataTest: null,
 			decimalSeparator: Kotti.DecimalSeparator.DOT,
-			emitBlur: false,
+			events: {
+				emitBlur: false,
+				emitOpen: false,
+			},
 			formId: null,
 			hasHelpTextSlot: false,
 			helpDescription: null,
@@ -1888,9 +1909,15 @@ export default defineComponent({
 				})),
 			isRangeComponent,
 			onBlur: (value: number) => {
-				if (settings.value.emitBlur)
+				if (settings.value.events.emitBlur)
 					info({
 						text: `@blur: ${JSON.stringify(value)}`,
+					})
+			},
+			onOpen: () => {
+				if (settings.value.events.emitOpen)
+					info({
+						text: '@open',
 					})
 			},
 			onSubmit: (values: Record<string, unknown>) => {
