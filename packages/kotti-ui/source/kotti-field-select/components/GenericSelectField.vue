@@ -139,7 +139,7 @@ export default defineComponent({
 		KtTag,
 	},
 	props: makeProps(propsSchema),
-	emits: ['blur', 'emit', 'input'],
+	emits: ['blur', 'emit', 'input', 'open'],
 	setup(props, { emit: rawEmit }) {
 		const emit = (event: string, payload: unknown) => {
 			rawEmit('emit', { event, payload })
@@ -215,6 +215,7 @@ export default defineComponent({
 			(isOpen) => {
 				if (!isOpen) return
 				inputRef.value?.focus()
+				emit('open', undefined)
 			},
 			{ flush: 'post' },
 		)
