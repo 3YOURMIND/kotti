@@ -399,9 +399,16 @@ export default defineComponent({
 	}
 }
 
+/* stylelint-disable selector-class-pattern */
 .kt-field__number-field .kt-field__input-container {
 	padding: 0 var(--unit-1);
+
+	&__affix--left,
+	&__affix--right {
+		padding: 0 var(--unit-2);
+	}
 }
+/* stylelint-enable selector-class-pattern */
 
 .kt-field-number {
 	display: flex;
