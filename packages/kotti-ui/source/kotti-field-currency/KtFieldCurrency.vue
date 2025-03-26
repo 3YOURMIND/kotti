@@ -5,7 +5,12 @@
 		:field="modifiedField"
 		:helpTextSlot="$slots.helpText"
 	>
-		<input ref="inputRef" v-bind="inputProps" @input="onInput" />
+		<input
+			ref="inputRef"
+			v-bind="inputProps"
+			@input="onInput"
+			@keyup="onKeyup"
+		/>
 	</KtField>
 </template>
 
@@ -57,7 +62,7 @@ export default defineComponent({
 	name: 'KtFieldCurrency',
 	components: { KtField },
 	props: makeProps(KottiFieldCurrency.propsSchema),
-	emits: ['blur', 'input'],
+	emits: ['blur', 'input', 'keyup'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldCurrency.Value>({
 			emit,
@@ -229,6 +234,9 @@ export default defineComponent({
 				forceUpdate()
 
 				setCursorPosition(userCursorPositionFromRight.value)
+			},
+			onKeyup: (event: KeyboardEvent) => {
+				emit('keyup', event)
 			},
 			Yoco,
 		}

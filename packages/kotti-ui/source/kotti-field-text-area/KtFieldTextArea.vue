@@ -6,6 +6,7 @@
 				v-bind="inputProps"
 				@blur="onBlur"
 				@input="onInput"
+				@keyup="onKeyup"
 			/>
 		</template>
 	</KtField>
@@ -52,7 +53,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldTextArea.propsSchema),
-	emits: ['blur', 'input'],
+	emits: ['blur', 'input', 'keyup'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldTextArea.Value>({
 			emit,
@@ -93,6 +94,9 @@ export default defineComponent({
 				})
 
 				forceUpdate()
+			},
+			onKeyup: (event: KeyboardEvent) => {
+				emit('keyup', event)
 			},
 			textareaRef,
 		}
