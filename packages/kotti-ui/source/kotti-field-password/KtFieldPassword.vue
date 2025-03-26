@@ -6,7 +6,7 @@
 		:helpTextSlot="$slots.helpText"
 		@visibilityChange="handleVisibilityChange"
 	>
-		<input v-bind="inputProps" @input="onInput" />
+		<input v-bind="inputProps" @input="onInput" @keyup="onKeyup" />
 	</KtField>
 </template>
 
@@ -30,7 +30,7 @@ export default defineComponent({
 	name: 'KtFieldPassword',
 	components: { KtField },
 	props: makeProps(KottiFieldPassword.propsSchema),
-	emits: ['blur', 'input'],
+	emits: ['blur', 'input', 'keyup'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({
 			emit,
@@ -76,6 +76,9 @@ export default defineComponent({
 				field.setValue(newValue === '' ? null : newValue)
 
 				forceUpdate()
+			},
+			onKeyup: (event: KeyboardEvent) => {
+				emit('keyup', event)
 			},
 		}
 	},

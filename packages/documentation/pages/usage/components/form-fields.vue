@@ -29,6 +29,7 @@
 							v-bind="componentRepresentation.props"
 							:validator="componentRepresentation.validator"
 							@blur="onBlur"
+							@keyup="onKeyup"
 							@open="onOpen"
 							@update:query="updateQuery"
 						>
@@ -198,14 +199,18 @@
 								isOptional
 								:options="[
 									{
-										isDisabled: !componentDefinition.supports.clear,
 										key: 'emitBlur',
 										label: 'Listen to blur event',
 										tooltip:
 											'Support Varies. Shows a toast in documentation only.',
 									},
 									{
-										isDisabled: !componentDefinition.supports.borderless,
+										key: 'emitKeyup',
+										label: 'Listen to keyup event',
+										tooltip:
+											'Support Varies. Shows a toast in documentation only.',
+									},
+									{
 										key: 'emitOpen',
 										label: 'Listen to open event',
 										tooltip:
@@ -1328,6 +1333,7 @@ export default defineComponent({
 			decimalSeparator: Kotti.DecimalSeparator
 			events: {
 				emitBlur: Kotti.FieldToggle.Value
+				emitKeyup: Kotti.FieldToggle.Value
 				emitOpen: Kotti.FieldToggle.Value
 			}
 			formId: Kotti.FieldText.Value
@@ -1401,6 +1407,7 @@ export default defineComponent({
 			decimalSeparator: Kotti.DecimalSeparator.DOT,
 			events: {
 				emitBlur: false,
+				emitKeyup: false,
 				emitOpen: false,
 			},
 			formId: null,
@@ -1914,11 +1921,12 @@ export default defineComponent({
 						text: `@blur: ${JSON.stringify(value)}`,
 					})
 			},
+			onKeyup: () => {
+				if (settings.value.events.emitKeyup)
+					info({ text: '@keyup: event[KeyboardEvent]' })
+			},
 			onOpen: () => {
-				if (settings.value.events.emitOpen)
-					info({
-						text: '@open',
-					})
+				if (settings.value.events.emitOpen) info({ text: '@open' })
 			},
 			onSubmit: (values: Record<string, unknown>) => {
 				info({

@@ -29,6 +29,7 @@
 					@blur="onBlur"
 					@input="onInput"
 					@keydown="onKeydown"
+					@keyup="onKeyup"
 				/>
 				<div v-if="showMaximum" v-text="'/'" />
 				<div
@@ -89,7 +90,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldNumber.propsSchema),
-	emits: ['blur', 'input'],
+	emits: ['blur', 'input', 'keyup'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
@@ -367,6 +368,9 @@ export default defineComponent({
 				} else if (event.code === 'ArrowDown') {
 					decrementValue()
 				}
+			},
+			onKeyup: (event: KeyboardEvent) => {
+				emit('keyup', event)
 			},
 			showMaximum,
 			Yoco,
