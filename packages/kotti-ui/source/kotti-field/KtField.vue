@@ -293,7 +293,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 @import './mixins';
 
 :root {
-	--field-border-radius: 2px;
+	--field-border-radius: 4px;
 }
 
 /* stylelint-disable selector-class-pattern */
