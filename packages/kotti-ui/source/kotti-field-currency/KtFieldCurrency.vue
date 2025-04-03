@@ -1,7 +1,6 @@
 <template>
 	<KtField
 		ref="ktFieldRef"
-		class="kt-field__currency-field"
 		:field="modifiedField"
 		:helpTextSlot="$slots.helpText"
 	>
@@ -245,17 +244,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-/* stylelint-disable selector-class-pattern */
-.kt-field__currency-field .kt-field__input-container {
-	padding: 0 var(--unit-1);
-
-	&__affix--left,
-	&__affix--right {
-		padding: 0 var(--unit-2);
-	}
-}
-/* stylelint-enable selector-class-pattern */
-
 .kt-field-currency__input {
 	display: flex;
 	width: 100%;

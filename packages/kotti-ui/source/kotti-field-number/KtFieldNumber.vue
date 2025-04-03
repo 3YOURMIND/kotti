@@ -2,17 +2,12 @@
 	<KtField
 		v-bind="{ field }"
 		ref="ktFieldRef"
-		class="kt-field__number-field"
+		:class="{
+			'kt-field__number-field--has-buttons': !hideChangeButtons,
+		}"
 		:helpTextSlot="$slots.helpText"
 	>
-		<div
-			class="kt-field-number"
-			:class="{
-				'kt-field-number--is-hide-change-buttons': hideChangeButtons,
-				'kt-field-number--has-maximum': showMaximum && maximum !== null,
-			}"
-			:tabIndex="-1"
-		>
+		<div class="kt-field-number" :tabIndex="-1">
 			<KtButton
 				v-if="!hideChangeButtons"
 				class="kt-field-number__button"
@@ -404,12 +399,20 @@ export default defineComponent({
 }
 
 /* stylelint-disable selector-class-pattern */
-.kt-field__number-field .kt-field__input-container {
-	padding: 0 var(--unit-1);
+.kt-field__number-field--has-buttons .kt-field__input-container {
+	padding: 0 calc(var(--unit-1) - 1px); // minus 1px from the borders
 
 	&__affix--left,
 	&__affix--right {
 		padding: 0 var(--unit-2);
+	}
+
+	&__icon--left {
+		transform: translate(-0.1rem);
+	}
+
+	&__icon--right {
+		transform: translate(0.1rem);
 	}
 }
 /* stylelint-enable selector-class-pattern */
