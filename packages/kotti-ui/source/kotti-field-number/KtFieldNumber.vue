@@ -400,7 +400,7 @@ export default defineComponent({
 
 /* stylelint-disable selector-class-pattern */
 .kt-field__number-field--has-buttons .kt-field__input-container {
-	padding: 0 calc(var(--unit-1) - 1px); // minus 1px from the borders
+	padding: 0 0.15rem;
 
 	&__affix--left,
 	&__affix--right {
