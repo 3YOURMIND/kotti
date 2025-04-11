@@ -25,12 +25,15 @@
 			{{ informationText }}
 			<a
 				v-if="externalUrl"
+				class="kt-field-file-upload-drop-area__external-link"
 				:href="externalUrl"
 				rel="noopener noreferrer"
 				target="_blank"
 				@click.stop
-				v-text="translations.text.learnMore"
-			/>
+			>
+				{{ translations.text.learnMore }}
+				<i class="yoco" v-text="Yoco.Icon.LINK" />
+			</a>
 		</div>
 		<input
 			v-show="false"
@@ -60,6 +63,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
+
+import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
@@ -176,6 +181,7 @@ export default defineComponent({
 			),
 			translations,
 			uploadInputRef,
+			Yoco,
 		}
 	},
 })
@@ -266,6 +272,11 @@ export default defineComponent({
 		text-align: center;
 	}
 
+	&__external-link {
+		color: var(--interactive-01);
+		cursor: pointer;
+	}
+
 	&__footer-slot {
 		margin-top: var(--unit-4);
 	}
@@ -276,11 +287,6 @@ export default defineComponent({
 		line-height: 20px;
 		color: var(--text-03);
 		text-align: center;
-
-		a {
-			color: var(--interactive-01);
-			cursor: pointer;
-		}
 	}
 }
 </style>

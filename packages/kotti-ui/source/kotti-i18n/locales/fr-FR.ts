@@ -67,7 +67,7 @@ export const frFR: KottiI18n.Messages = {
 		},
 		text: {
 			clickToUpload: 'Cliquer pour télécharger',
-			dragAndDrop: 'ou effectuez un glisser-déposer',
+			dragAndDrop: 'or drag and drop your files here',
 			learnMore: 'En savoir plus',
 			max: 'max.',
 		},

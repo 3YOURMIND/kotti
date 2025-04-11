@@ -66,7 +66,7 @@ export const esES: KottiI18n.Messages = {
 		},
 		text: {
 			clickToUpload: 'Haga clic para cargar',
-			dragAndDrop: 'o arrastre y suelte',
+			dragAndDrop: 'o arrastre y suelte sus archivos aquí',
 			learnMore: 'Más información',
 			max: 'máx.',
 		},

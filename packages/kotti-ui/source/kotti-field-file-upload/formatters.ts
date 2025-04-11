@@ -14,7 +14,7 @@ export const formatExtensions = (
 		...extensions
 			.slice(0, collapseExtensionsAfter)
 			.map((extension: string) => extension.replaceAll('.', '').trim()),
-		...(extensions.length > collapseExtensionsAfter ? ['...'] : []),
+		...(extensions.length > collapseExtensionsAfter ? ['…'] : []),
 	]
 		.join(', ')
 		.toUpperCase()
