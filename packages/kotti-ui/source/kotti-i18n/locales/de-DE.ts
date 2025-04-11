@@ -66,7 +66,7 @@ export const deDE: KottiI18n.Messages = {
 		},
 		text: {
 			clickToUpload: 'Zum Hochladen klicken',
-			dragAndDrop: 'oder ziehen und ablegen',
+			dragAndDrop: 'or drag and drop your files here',
 			learnMore: 'Mehr erfahren',
 			max: 'max.',
 		},

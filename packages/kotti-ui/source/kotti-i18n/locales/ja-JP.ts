@@ -66,7 +66,7 @@ export const jaJP: KottiI18n.Messages = {
 		},
 		text: {
 			clickToUpload: 'クリックしてアップロード',
-			dragAndDrop: 'またはドラッグ＆ドロップ',
+			dragAndDrop: 'or drag and drop your files here',
 			learnMore: 'もっと詳しく知る',
 			max: '最大',
 		},
