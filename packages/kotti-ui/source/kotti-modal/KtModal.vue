@@ -4,13 +4,25 @@
 		<div ref="contentRef" class="kt-modal__mask" @click.self="closeModal">
 			<slot name="container">
 				<div :class="modalClass">
-					<div v-if="hasHeader" class="kt-modal__header">
-						<slot name="header" />
+					<div
+						v-if="hasSlot('header') || showCloseButton"
+						class="kt-modal__header-wrapper"
+					>
+						<div v-if="hasSlot('header')" class="kt-modal__header">
+							<slot name="header" />
+						</div>
+						<KtButton
+							v-if="showCloseButton"
+							class="kt-modal__close-button"
+							:icon="Yoco.Icon.CLOSE"
+							type="text"
+							@click="$emit('close')"
+						/>
 					</div>
-					<div v-if="hasBody" class="kt-modal__body">
+					<div v-if="hasSlot('body')" class="kt-modal__body">
 						<slot name="body" />
 					</div>
-					<div v-if="hasFooter" class="kt-modal__footer">
+					<div v-if="hasSlot('footer')" class="kt-modal__footer">
 						<slot name="footer" />
 					</div>
 				</div>
@@ -24,6 +36,7 @@ import type { Instance, Props as TippyProps } from 'tippy.js'
 import { computed, defineComponent, ref, watch } from 'vue'
 
 import { useTippy } from '@3yourmind/vue-use-tippy'
+import { Yoco } from '@3yourmind/yoco'
 
 import { makeProps } from '../make-props'
 
@@ -85,6 +98,12 @@ export default defineComponent({
 			})),
 		)
 
+		/**
+		 * 'slots' is non-reactive, so we need to use a function to check
+		 * if a slot exists instead of a computed value
+		 */
+		const hasSlot = (name: string): boolean => name in slots
+
 		watch(
 			() => props.isOpen,
 			(shouldOpen, wasOpen) => {
@@ -105,14 +124,13 @@ export default defineComponent({
 				if (!props.preventCloseOutside) emit('close')
 			},
 			contentRef,
-			hasBody: computed(() => Boolean(slots.body)),
-			hasFooter: computed(() => Boolean(slots.footer)),
-			hasHeader: computed(() => Boolean(slots.header)),
+			hasSlot,
 			modalClass: computed(() => [
 				'kt-modal__container',
 				`kt-modal--is-size-${props.size}`,
 			]),
 			targetRef,
+			Yoco,
 		}
 	},
 })
@@ -139,6 +157,7 @@ export default defineComponent({
 	&__container {
 		display: flex;
 		flex-direction: column;
+		gap: 0.8rem;
 		width: 90%;
 		max-height: 90%;
 		padding: var(--unit-4);
@@ -146,10 +165,6 @@ export default defineComponent({
 		border-radius: var(--border-radius);
 		box-shadow: 0 2px 8px rgb(0 0 0 / 33%);
 		transition: all 0.3s ease;
-
-		> *:not(:first-child) {
-			margin-top: 0.8rem;
-		}
 	}
 
 	&--is-size {
@@ -170,8 +185,35 @@ export default defineComponent({
 		}
 	}
 
+	&__close-button {
+		width: 20px;
+		height: 20px;
+		padding: 0;
+		color: var(--icon-01);
+
+		&:hover,
+		&:focus-visible {
+			background-color: var(--ui-01);
+			border-color: var(--ui-01);
+		}
+
+		:deep(.yoco) {
+			font-size: 21px;
+		}
+	}
+
+	&__header-wrapper {
+		display: flex;
+		flex: 1 1 auto;
+		justify-content: space-between;
+
+		&:not(:has(.kt-modal__header)) {
+			justify-content: flex-end;
+		}
+	}
+
 	&__header {
-		flex: 0 0 auto;
+		flex: 1 1 auto;
 	}
 
 	&__body {

@@ -13,6 +13,7 @@ export namespace KottiModal {
 	export const propsSchema = z.object({
 		isOpen: z.boolean().default(false),
 		preventCloseOutside: z.boolean().default(false),
+		showCloseButton: z.boolean().default(false),
 		size: createLooseZodEnumSchema(Size).default(Size.MEDIUM),
 	})
 
