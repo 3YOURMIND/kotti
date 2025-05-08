@@ -7,8 +7,8 @@
 		"strict": true
 	},
 	"vueCompilerOptions": {
-		"skipTemplateCodegen": true,
+		"skipTemplateCodegen": false,
 		"strictTemplates": true,
-		"target": 2.7
+		"target": 3
 	}
 }

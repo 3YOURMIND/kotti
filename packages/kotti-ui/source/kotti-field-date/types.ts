@@ -37,6 +37,14 @@ export namespace Shared {
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
+
+	export type Translations = {
+		cancelButton: string
+		confirmButton: string
+		hours: string
+		minutes: string
+		seconds: string
+	}
 }
 
 export namespace KottiFieldDate {

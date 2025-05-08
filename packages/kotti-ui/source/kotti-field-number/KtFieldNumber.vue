@@ -49,9 +49,8 @@
 
 <script lang="ts">
 import Big from 'big.js'
-import type { UnwrapRef } from 'vue'
 import { computed, defineComponent, nextTick, ref, watch } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes, UnwrapRef } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -85,7 +84,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldNumber.propsSchema),
-	emits: ['blur', 'input', 'keyup'],
+	emits: ['blur', 'keyup', 'update:value'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldNumber.Value>({
 			emit,
@@ -352,7 +351,7 @@ export default defineComponent({
 						? null
 						: lastUserSetCursorPosition.value - (isTypedNumberValid ? 0 : 1)
 
-				nextTick(() => {
+				void nextTick(() => {
 					setCursorPosition(newCursorPosition)
 				})
 			},

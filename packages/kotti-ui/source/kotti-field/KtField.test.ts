@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
 import { useI18nProvide } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
-import { getMockContext, localVue } from '../test-utils'
+import { getMockContext } from '../test-utils'
 
 import { FORM_KEY_NONE } from './constants'
 import { ktFieldErrors } from './errors'
@@ -72,91 +72,84 @@ describe('useField', () => {
 	it('should throw if setValue is called on a disabled field', async () => {
 		console.error = vi.fn()
 
-		// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 		const wrapper = shallowMount(TestComponent, {
-			localVue,
-			propsData: { isDisabled: true },
+			props: { isDisabled: true } as any,
 		})
 
-		expect(() => (wrapper.vm as any).field.setValue(null)).toThrow(
-			ktFieldErrors.DisabledSetValueCalledError,
-		)
+		expect(() => {
+			wrapper.vm.field.setValue(null)
+		}).toThrow(ktFieldErrors.DisabledSetValueCalledError)
 
 		await wrapper.setProps({ isDisabled: false })
 
-		expect(() => (wrapper.vm as any).field.setValue(null)).not.toThrow()
+		expect(() => {
+			wrapper.vm.field.setValue(null)
+		}).not.toThrow()
 	})
 
 	it('props.value gets deepCloned', () => {
 		const VALUE_REFERENCE = { something: 'something' }
 
-		// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 		const wrapper = shallowMount(TestComponentObject, {
-			localVue,
-			propsData: {
+			props: {
 				label: 'Test_Component_Object',
 				value: VALUE_REFERENCE,
-			},
+			} as any,
 		})
 
-		expect((wrapper.vm as any).field.currentValue).toEqual(VALUE_REFERENCE)
+		expect(wrapper.vm.field.currentValue).toEqual(VALUE_REFERENCE)
 
-		expect((wrapper.vm as any).field.currentValue).not.toBe(VALUE_REFERENCE)
+		expect(wrapper.vm.field.currentValue).not.toBe(VALUE_REFERENCE)
 	})
 
 	describe('props reactivity', () => {
 		it('helpText is reactive', async () => {
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
-			const wrapper = shallowMount(TestComponent, { localVue })
+			const wrapper = shallowMount(TestComponent)
 
-			expect((wrapper.vm as any).field.helpText).toBe(null)
+			expect(wrapper.vm.field.helpText).toBe(null)
 
 			await wrapper.setProps({ helpText: 'something something' })
 
-			expect((wrapper.vm as any).field.helpText).toBe('something something')
+			expect(wrapper.vm.field.helpText).toBe('something something')
 		})
 
 		it('isDisabled is reactive', async () => {
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
-			const wrapper = shallowMount(TestComponent, { localVue })
+			const wrapper = shallowMount(TestComponent)
 
-			expect((wrapper.vm as any).field.isDisabled).toBe(false)
+			expect(wrapper.vm.field.isDisabled).toBe(false)
 
 			await wrapper.setProps({ isDisabled: true })
 
-			expect((wrapper.vm as any).field.isDisabled).toBe(true)
+			expect(wrapper.vm.field.isDisabled).toBe(true)
 		})
 
 		it('isOptional is reactive', async () => {
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
-			const wrapper = shallowMount(TestComponent, { localVue })
+			const wrapper = shallowMount(TestComponent)
 
-			expect((wrapper.vm as any).field.isOptional).toBe(false)
+			expect(wrapper.vm.field.isOptional).toBe(false)
 
 			await wrapper.setProps({ isOptional: true })
 
-			expect((wrapper.vm as any).field.isOptional).toBe(true)
+			expect(wrapper.vm.field.isOptional).toBe(true)
 		})
 
 		it('label is reactive', async () => {
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
-			const wrapper = shallowMount(TestComponent, { localVue })
+			const wrapper = shallowMount(TestComponent)
 
-			expect((wrapper.vm as any).field.label).toBe(null)
+			expect(wrapper.vm.field.label).toBe(null)
 
 			await wrapper.setProps({ label: 'something something' })
 
-			expect((wrapper.vm as any).field.label).toBe('something something')
+			expect(wrapper.vm.field.label).toBe('something something')
 		})
 	})
 
 	describe('setValue', () => {
 		it('should emit change when calling setValue on a field outside of a context', async () => {
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
-			const wrapper = shallowMount(TestComponent, { localVue })
+			const wrapper = shallowMount(TestComponent)
 
-			;(wrapper.vm as any).field.setValue('something else')
-			;(wrapper.vm as any).field.setValue(null)
+			wrapper.vm.field.setValue('something else')
+			wrapper.vm.field.setValue(null)
 
 			await wrapper.vm.$nextTick()
 
@@ -166,24 +159,22 @@ describe('useField', () => {
 		it('context should emit when when calling setValue inside a context', () => {
 			const context = getMockContext({ values: { testKey: 'something' } })
 
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, {
-				localVue,
-				propsData: { formKey: 'testKey' },
+				props: { formKey: 'testKey' } as any,
 				provide: {
 					[KT_FORM_CONTEXT]: context,
 				},
 			})
 
-			;(wrapper.vm as any).field.setValue('something else')
-			;(wrapper.vm as any).field.setValue(null)
+			wrapper.vm.field.setValue('something else')
+			wrapper.vm.field.setValue(null)
 
 			expect(context.setValue.mock.calls).toEqual([
 				['testKey', 'something else'],
 				['testKey', null],
 			])
 
-			expect((wrapper.vm as any).field.currentValue).toBe('something')
+			expect(wrapper.vm.field.currentValue).toBe('something')
 		})
 	})
 
@@ -191,15 +182,11 @@ describe('useField', () => {
 		console.error = vi.fn()
 
 		expect(() =>
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			shallowMount(TestComponent, {
-				localVue,
-				propsData: { formKey: 'test' },
+				props: { formKey: 'test' } as any,
 			}),
 		).toThrow(ktFieldErrors.InvalidPropOutsideOfContextError)
-
-		// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
-		const wrapper = shallowMount(TestComponent, { localVue })
+		const wrapper = shallowMount(TestComponent)
 
 		console.error = vi.fn()
 
@@ -216,10 +203,8 @@ describe('useField', () => {
 
 	it('doesn’t throw when formKey is NONE and context is provided', () => {
 		expect(() =>
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			shallowMount(TestComponent, {
-				localVue,
-				propsData: { formKey: FORM_KEY_NONE },
+				props: { formKey: FORM_KEY_NONE } as any,
 				provide: {
 					[KT_FORM_CONTEXT]: getMockContext(),
 				},
@@ -229,17 +214,15 @@ describe('useField', () => {
 
 	describe('validation', () => {
 		it('works with only props.validator', async () => {
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, {
-				localVue,
-				propsData: {
+				props: {
 					validator: () => ({ text: 'Testing', type: 'success' }),
 					value: `as long as it has a value, or is Optional, validator
 					won't throw internal error about a missing required filed`,
-				},
+				} as any,
 			})
 
-			expect((wrapper.vm as any).field.validation).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				text: 'Testing',
 				type: 'success',
 			})
@@ -248,18 +231,15 @@ describe('useField', () => {
 				validator: () => ({ text: 'Testing', type: 'warning' }),
 			})
 
-			expect((wrapper.vm as any).field.validation).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				text: 'Testing',
 				type: 'warning',
 			})
 		})
 
 		it('works with only formKey in a context', async () => {
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
-
 			const wrapper = shallowMount(TestComponent, {
-				localVue,
-				propsData: { formKey: 'testKey1' },
+				props: { formKey: 'testKey1' } as any,
 				provide: {
 					[KT_FORM_CONTEXT]: getMockContext({
 						validators: {
@@ -277,14 +257,14 @@ describe('useField', () => {
 				},
 			})
 
-			expect((wrapper.vm as any).field.validation).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				text: 'This is testKey1',
 				type: 'warning',
 			})
 
 			await wrapper.setProps({ formKey: 'testKey2' })
 
-			expect((wrapper.vm as any).field.validation).toEqual({
+			expect(wrapper.vm.field.validation).toEqual({
 				text: 'This is testKey2',
 				type: 'warning',
 			})
@@ -293,10 +273,8 @@ describe('useField', () => {
 		it('does not validate if formKey is not in validators', () => {
 			const testKey = vi.fn()
 
-			// @ts-expect-error shallowMount type is not compatible with return type from defineComponent
 			const wrapper = shallowMount(TestComponent, {
-				localVue,
-				propsData: { formKey: 'wrongKey' },
+				props: { formKey: 'wrongKey' } as any,
 				provide: {
 					[KT_FORM_CONTEXT]: getMockContext({
 						validators: { testKey },
@@ -307,7 +285,7 @@ describe('useField', () => {
 
 			expect(testKey).not.toHaveBeenCalled()
 
-			expect((wrapper.vm as any).field.validation).toEqual({ type: 'empty' })
+			expect(wrapper.vm.field.validation).toEqual({ type: 'empty' })
 		})
 	})
 })

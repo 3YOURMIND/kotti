@@ -2,7 +2,7 @@
 	<div class="kt-comment-inline-edit">
 		<CommentTextArea
 			v-if="isEditing"
-			v-model="localMessage"
+			v-model:value="localMessage"
 			v-bind="{
 				allowInternal,
 				dataTest,
