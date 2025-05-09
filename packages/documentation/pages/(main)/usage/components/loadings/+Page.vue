@@ -130,15 +130,16 @@
 		language="html"
 	>
 		<button>
-			<div class="loading inline gray"></div>
+			<div class="loading inline gray" />
 			Uploading
 		</button>
 	</CodePreview>
 </template>
 
 <script lang="ts">
-import { Kotti } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { Kotti } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -151,7 +152,6 @@ export default defineComponent({
 	},
 	setup() {
 		const component: { meta: Kotti.Meta; name: string } = {
-			name: 'Loadings',
 			meta: {
 				addedVersion: null,
 				deprecated: null,
@@ -162,6 +162,7 @@ export default defineComponent({
 				slots: {},
 				typeScript: null,
 			},
+			name: 'Loadings',
 		}
 
 		return {

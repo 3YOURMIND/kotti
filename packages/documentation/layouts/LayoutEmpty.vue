@@ -15,8 +15,8 @@ import MyToaster from '~/components/MyToaster.vue'
 export default defineComponent({
 	name: 'EmptyLayout',
 	components: {
-		MyToaster,
 		KtI18nContext,
+		MyToaster,
 	},
 })
 </script>

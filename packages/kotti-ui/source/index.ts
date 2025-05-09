@@ -39,10 +39,7 @@ import {
 	KtFieldDateTimeRange,
 } from './kotti-field-date'
 export * from './kotti-field-date'
-import {
-	KtFieldFileUpload,
-	KtFieldFileUploadRemote,
-} from './kotti-field-file-upload'
+import { KtFieldFileUpload } from './kotti-field-file-upload'
 export * from './kotti-field-file-upload'
 import { KtFieldInlineEdit } from './kotti-field-inline-edit'
 export * from './kotti-field-inline-edit'
@@ -108,7 +105,7 @@ export * from './types'
 
 export default {
 	install<T>(app: App<T>): void {
-		const components = [
+		const components = {
 			KtAccordion,
 			KtActionbar,
 			KtAvatar,
@@ -129,7 +126,6 @@ export default {
 			KtFieldDateTime,
 			KtFieldDateTimeRange,
 			KtFieldFileUpload,
-			KtFieldFileUploadRemote,
 			KtFieldInlineEdit,
 			KtFieldMultiSelect,
 			KtFieldMultiSelectRemote,
@@ -164,9 +160,9 @@ export default {
 			KtToaster,
 			KtUserMenu,
 			KtValueLabel,
-		]
-		for (const component of components) {
-			app.use(component, {})
+		}
+		for (const [name, component] of Object.entries(components)) {
+			app.component(name, component)
 		}
 	},
 }

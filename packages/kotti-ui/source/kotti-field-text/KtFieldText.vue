@@ -30,7 +30,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldText.propsSchema),
-	emits: ['blur', 'keyup', 'update:value'],
+	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldText.Value>({
 			emit,

@@ -18,7 +18,7 @@ const TestField = defineComponent({
 	name: 'TestField',
 	props: makeProps(
 		KottiField.propsSchema.extend({
-			value: z.string().nullable().default(null),
+			modelValue: z.string().nullable().default(null),
 		}),
 	),
 	setup: (props, { emit }) => {
@@ -59,7 +59,7 @@ const TestControllerObjectForm = {
 		controllerProps: { required: true, type: Object },
 		formProps: { required: true, type: Object },
 	},
-	template: `<KtForm v-bind="formProps" @update:value="$event => $emit('update:value', $event)"><TestControllerObject v-bind="controllerProps"/></KtForm>`,
+	template: `<KtForm v-bind="formProps" @update:modelValue="$event => $emit('update:modelValue', $event)"><TestControllerObject v-bind="controllerProps"/></KtForm>`,
 }
 
 const getField = (
@@ -107,7 +107,7 @@ describe('KtFormControllerObject', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:value')).toEqual([
+		expect(wrapper.emitted('update:modelValue')).toEqual([
 			[{ parentKey: { testKey: 'setSomething' } }],
 		])
 	})

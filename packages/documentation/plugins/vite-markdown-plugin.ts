@@ -26,6 +26,7 @@ SOFTWARE.
 */
 
 import MarkdownIt from 'markdown-it'
+import type { Plugin } from 'vite'
 
 const defaults = {
 	/**
@@ -53,8 +54,8 @@ const defaults = {
 	/**
 	 * Alter markdown-it instance (add plugins, etc)
 	 */
-	markdownItSetup(md: MarkdownIt) {
-		// md.use(something)
+	markdownItSetup(_md: MarkdownIt) {
+		// _md.use(something)
 	},
 	/**
 	 * Wrap content in <div>, only if default parser
@@ -95,31 +96,66 @@ function newTagRegex(name: string): RegExp {
 	return new RegExp(`<${name}>([\\s\\S]*?)</${name}>`, 'gm')
 }
 
-export default function pluginMarkdownInVue(options: Partial<Config>) {
-	const config = Object.assign({}, defaults, options)
-	const md = new MarkdownIt(config.markdownItOptions)
+/**
+ * Trims the indent off the markdown so it's as if it was not indented
+ * since it's inside components (indented)
+ */
+function trimToMinimumIndent(text: string) {
+	const lines = text.split('\n')
+	// eslint-disable-next-line no-restricted-globals
+	let minIndent = Infinity
 
-	const regex: RegexObject = {
-		unclosedHtmlComment: /<!--(?![\s\S]*-->)/gm,
-		emptyLines: /^\s*\n/g,
-		markdownBlock: newTagRegex(config.elementNameBlock),
-		markdownInline: newTagRegex(config.elementNameInline),
+	// Find the minimum indent
+	for (const line of lines) {
+		const firstCharIndex = line.search(/\S/) // Find index of first non-whitespace character
+		if (firstCharIndex !== -1 && firstCharIndex < minIndent) {
+			minIndent = firstCharIndex
+		}
 	}
-	const shared = { config, md, regex }
 
-	if (config.markdownItSetup) {
-		config.markdownItSetup(md)
+	// Trim each line by the minimum indent
+	return lines.map((line) => line.slice(minIndent)).join('\n')
+}
+
+/**
+ * In order to allow nested <template> to be captured
+ * we instead search for first last and return indices for
+ * extraction.
+ * - One edge case is if <template> is within a comment at top of file
+ */
+function getTemplateIndices(code: string, regex: RegexObject) {
+	const regexStart = /<template>/g
+	const regexEnd = /<\/template>/g
+
+	let startMatch: RegExpExecArray | null = null
+	let endMatch: RegExpExecArray | null = null
+	let startIndex: number = -1
+	let endIndex: number = -1
+
+	// Make sure we get the first <template> not in a comment
+	while ((startMatch = regexStart.exec(code)) !== null) {
+		if (regex.unclosedHtmlComment.test(code.slice(0, startMatch.index))) {
+			continue // Skip this template in comment block
+		}
+		startIndex = startMatch.index
+	}
+
+	while ((endMatch = regexEnd.exec(code)) !== null) {
+		endIndex = endMatch.index
+	}
+
+	const hasStart = startIndex > -1
+	const hasEnd = endIndex > -1
+
+	if (!hasStart || !hasEnd) {
+		return null
 	}
 
 	return {
-		name: 'pluginMarkdownInVue' as const,
-		enforce: 'pre' as const,
-		transform(code: string, id: string) {
-			const included = config.include.test(id)
-			const excluded = config.exclude ? config.exclude.test(id) : false
-			const ctx = { code, id, ...shared }
-			return included && !excluded ? parseCode(ctx) : code
-		},
+		end: endIndex,
+		endLast: endIndex + 10,
+		start: startIndex,
+		startLast: startIndex + 10,
 	}
 }
 
@@ -128,11 +164,11 @@ export default function pluginMarkdownInVue(options: Partial<Config>) {
  * and transforming them (find/parse/replace), then returning the module
  */
 function parseCode(ctx: Context) {
-	const { code, config, md, id, regex } = ctx
+	const { code, config, id, md, regex } = ctx
 
 	// Ensure this needs to be transformed before doing any work in file
-	const hasBlock = code.match(regex.markdownBlock)
-	const hasInline = code.match(regex.markdownInline)
+	const hasBlock = regex.markdownBlock.test(code)
+	const hasInline = regex.markdownInline.test(code)
 
 	// Exit if none
 	if (!hasBlock && !hasInline) {
@@ -171,7 +207,7 @@ function parseCode(ctx: Context) {
 
 	const replacer = (parser: (content: string) => string) => {
 		return (match: string, body: string, index: number, full: string) => {
-			const markupBefore = full.substring(0, index)
+			const markupBefore = full.slice(0, index)
 			const inComment = regex.unclosedHtmlComment.test(markupBefore)
 			if (inComment) return match
 			return parser(body)
@@ -184,18 +220,19 @@ function parseCode(ctx: Context) {
 			.replace(regex.markdownInline, replacer(parseInline))
 	}
 
-	if (id.match(config.isVueSfc)) {
+	if (config.isVueSfc.test(id)) {
 		const indices = getTemplateIndices(code, regex)
 
 		if (!indices) {
+			// eslint-disable-next-line no-console
 			console.error('Unable to preprocess markdown in vue:', id)
 			return code
 		}
 
-		const templateCode = code.substring(indices.startLast, indices.end)
+		const templateCode = code.slice(indices.startLast, indices.end)
 		const transformed = transform(templateCode)
-		const before = code.substring(0, indices.startLast)
-		const after = code.substring(indices.end!)
+		const before = code.slice(0, indices.startLast)
+		const after = code.slice(indices.end)
 
 		// Put the original file back together with the new content
 		return before + transformed + after
@@ -205,64 +242,28 @@ function parseCode(ctx: Context) {
 	}
 }
 
-/**
- * Trims the indent off the markdown so it's as if it was not indented
- * since it's inside components (indented)
- */
-function trimToMinimumIndent(text: string) {
-	const lines = text.split('\n')
-	let minIndent = Infinity
+export default function pluginMarkdownInVue(options: Partial<Config>): Plugin {
+	const config = Object.assign({}, defaults, options)
+	const md = new MarkdownIt(config.markdownItOptions)
 
-	// Find the minimum indent
-	for (const line of lines) {
-		const firstCharIndex = line.search(/\S/) // Find index of first non-whitespace character
-		if (firstCharIndex !== -1 && firstCharIndex < minIndent) {
-			minIndent = firstCharIndex
-		}
+	const regex: RegexObject = {
+		emptyLines: /^\s*\n/g,
+		markdownBlock: newTagRegex(config.elementNameBlock),
+		markdownInline: newTagRegex(config.elementNameInline),
+		unclosedHtmlComment: /<!--(?![\s\S]*-->)/gm,
 	}
+	const shared = { config, md, regex }
 
-	// Trim each line by the minimum indent
-	return lines.map((line) => line.substring(minIndent)).join('\n')
-}
-
-/**
- * In order to allow nested <template> to be captured
- * we instead search for first last and return indices for
- * extraction.
- * - One edge case is if <template> is within a comment at top of file
- */
-function getTemplateIndices(code: string, regex: RegexObject) {
-	const regexStart = /<template>/g
-	const regexEnd = /<\/template>/g
-
-	let startMatch: RegExpExecArray | null = null
-	let endMatch: RegExpExecArray | null = null
-	let startIndex: number = -1
-	let endIndex: number = -1
-
-	// Make sure we get the first <template> not in a comment
-	while ((startMatch = regexStart.exec(code)) !== null) {
-		if (regex.unclosedHtmlComment.test(code.slice(0, startMatch.index))) {
-			continue // Skip this template in comment block
-		}
-		startIndex = startMatch.index
-	}
-
-	while ((endMatch = regexEnd.exec(code)) !== null) {
-		endIndex = endMatch.index
-	}
-
-	const hasStart = startIndex > -1
-	const hasEnd = endIndex > -1
-
-	if (!hasStart || !hasEnd) {
-		return null
-	}
+	config.markdownItSetup(md)
 
 	return {
-		start: startIndex,
-		startLast: startIndex + 10,
-		end: endIndex,
-		endLast: endIndex + 10,
+		enforce: 'pre' as const,
+		name: 'pluginMarkdownInVue' as const,
+		transform(code: string, id: string) {
+			const included = config.include.test(id)
+			const excluded = config.exclude ? config.exclude.test(id) : false
+			const ctx = { code, id, ...shared }
+			return included && !excluded ? parseCode(ctx) : code
+		},
 	}
 }

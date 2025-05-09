@@ -30,10 +30,7 @@ export {
 	KottiFieldDateTime as FieldDateTime,
 	KottiFieldDateTimeRange as FieldDateTimeRange,
 } from '../kotti-field-date/types'
-export {
-	KottiFieldFileUpload as FieldFileUpload,
-	KottiFieldFileUploadRemote as FieldFileUploadRemote,
-} from '../kotti-field-file-upload/types'
+export { KottiFieldFileUpload as FieldFileUpload } from '../kotti-field-file-upload/types'
 export { KottiFieldInlineEdit as FieldInlineEdit } from '../kotti-field-inline-edit/types'
 export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'
 export { KottiFieldPassword as FieldPassword } from '../kotti-field-password/types'

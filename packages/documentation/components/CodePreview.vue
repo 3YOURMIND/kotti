@@ -5,17 +5,18 @@
 		</section>
 		<div v-else style="margin-bottom: -1px" />
 		<div v-if="code" :class="$style.actions">
-			<div v-if="fileName" :class="$style.fileName" v-text="fileName" />
+			<div v-if="fileName" :class="$style['file-name']" v-text="fileName" />
 			<div :class="$style.language" v-text="language" />
 			<div
-				:class="$style.language"
 				v-if="type !== 'default'"
+				:class="$style.language"
 				v-text="`(${type.toUpperCase()})`"
 			/>
-			<div :class="$style.copyButton" role="button" @click="onCopy">
+			<div :class="$style['copy-button']" role="button" @click="onCopy">
 				<i class="yoco">copy</i>
 			</div>
 		</div>
+		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div v-if="code" :class="$style.code" v-html="codeHtml" />
 	</div>
 </template>
@@ -31,7 +32,7 @@ import { success } from '~/utilities/toaster'
 export default defineComponent({
 	name: 'CodePreview',
 	props: {
-		code: { default: null, type: String },
+		code: { default: null, type: String as PropType<string | null> },
 		fileName: { default: null, type: String },
 		language: { required: true, type: String },
 		type: {
@@ -57,9 +58,12 @@ export default defineComponent({
 		return {
 			codeHtml,
 			onCopy: () => {
+				if (props.code === null) return
+
 				copy(props.code)
 				success({
-					text: `copied “${props.code.substring(0, 40)}...” to clipboard`,
+					// eslint-disable-next-line no-magic-numbers
+					text: `copied “${props.code.slice(0, 40)}...” to clipboard`,
 				})
 			},
 		}
@@ -69,20 +73,19 @@ export default defineComponent({
 
 <style module>
 .wrapper {
-	border-radius: var(--border-radius);
-	border: 1px solid transparent;
-	overflow: hidden;
-
 	margin-block: var(--unit-8);
+	overflow: hidden;
+	border: 1px solid transparent;
+	border-radius: var(--border-radius);
 }
 
 .wrapper--is-type-default {
 	border-color: var(--gray-20);
 
 	.actions {
+		background-color: var(--gray-10);
 		border-top-color: var(--gray-20);
 		border-bottom-color: var(--gray-20);
-		background-color: var(--gray-10);
 	}
 
 	.code {
@@ -94,14 +97,14 @@ export default defineComponent({
 
 .wrapper--is-type-preview {
 	border-color: var(--orange-20);
-	opacity: 0.667;
 	border-style: dashed;
+	opacity: 0.667;
 
 	.actions {
+		background-color: var(--yellow-20);
 		border-style: dashed;
 		border-top-color: var(--yellow-50);
 		border-bottom-color: var(--orange-20);
-		background-color: var(--yellow-20);
 	}
 
 	.code {
@@ -118,21 +121,19 @@ export default defineComponent({
 
 .actions {
 	display: flex;
-	align-items: center;
-
 	gap: var(--unit-6);
-
+	align-items: center;
 	border: 1px solid transparent;
 }
 
 .code {
 	> * {
-		overflow-x: auto;
 		margin: 0;
+		overflow-x: auto;
 	}
 }
 
-.copyButton {
+.copy-button {
 	display: flex;
 	padding: var(--unit-2);
 	margin: calc(-1 * var(--unit-2));
@@ -149,13 +150,14 @@ export default defineComponent({
 	padding: var(--unit-6);
 }
 
-.fileName,
+.file-name,
 .language {
-	font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-		'Courier New', monospace;
+	font-family:
+		SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+		monospace;
 }
 
-.fileName {
+.file-name {
 	font-weight: bold;
 }
 </style>

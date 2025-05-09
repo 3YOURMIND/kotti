@@ -40,7 +40,7 @@
 	"module": "./dist/mjs/index.js",
 	"name": "@3yourmind/vue-use-tippy",
 	"peerDependencies": {
-		"vue": "^3.4.32"
+		"vue": "^3.5.17"
 	},
 	"publishConfig": {
 		"access": "public"

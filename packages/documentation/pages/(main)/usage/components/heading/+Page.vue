@@ -8,7 +8,7 @@
 	<h2>Standard Use</h2>
 
 	<CodePreview code='<KtHeading text="Normal Title" />' language="vue-html">
-		<KtHeading text="Normal Title" icon="calendar" actionText="Click Me" />
+		<KtHeading actionText="Click Me" icon="calendar" text="Normal Title" />
 		<p>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor
 			commodo leo, non malesuada ipsum volutpat sed. Fusce at nulla ipsum. Morbi
@@ -36,10 +36,10 @@
 		language="vue-html"
 	>
 		<KtHeading
+			actionText="Click Me"
+			icon="announce"
 			text="Title with action"
 			type="action"
-			icon="announce"
-			actionText="Click Me"
 			@click="showAlert"
 		/>
 	</CodePreview>
@@ -102,8 +102,9 @@
 </template>
 
 <script lang="ts">
-import { KtHeading } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
+
+import { KtHeading } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -119,10 +120,10 @@ export default defineComponent({
 	setup() {
 		return {
 			component: KtHeading,
-			toggle: ref(false),
 			showAlert() {
 				success({ text: 'H3 Action Clicked' })
 			},
+			toggle: ref(false),
 		}
 	},
 })

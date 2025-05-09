@@ -148,16 +148,16 @@
 </template>
 
 <script lang="ts">
-import { KtHeading, Kotti } from '@3yourmind/kotti-ui'
-import { Yoco } from '@3yourmind/yoco'
 import { Dashes } from '@metatypes/typography'
 import castArray from 'lodash/castArray.js'
 import kebabCase from 'lodash/kebabCase.js'
 import type { Prop, PropType } from 'vue'
 import { computed, defineComponent, ref } from 'vue'
 
+import { Kotti, KtHeading } from '@3yourmind/kotti-ui'
+import { Yoco } from '@3yourmind/yoco'
+
 import ComponentInfoSlots from './Slots.vue'
-type Test = typeof ComponentInfoSlots.props
 
 type PropOption = Exclude<Prop<unknown>, PropType<unknown>>
 type VuePropType = PropOption['type']

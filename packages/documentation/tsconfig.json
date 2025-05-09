@@ -1,24 +1,24 @@
 {
 	"compilerOptions": {
-		"strict": true,
 		"allowJs": true,
 		"checkJs": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"sourceMap": true,
+		"jsx": "preserve",
+		"jsxImportSource": "vue",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"module": "ESNext",
-		"noEmit": true,
 		"moduleResolution": "Bundler",
+		"noEmit": true,
 		"paths": {
 			"~/*": ["./*"]
 		},
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
 		"target": "ES2022",
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
-		"types": ["vite/client"],
-		"jsx": "preserve",
-		"jsxImportSource": "vue"
+		"types": ["vite/client"]
 	},
 	"exclude": ["dist"]
 }

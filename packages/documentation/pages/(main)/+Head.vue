@@ -1,5 +1,5 @@
 <template>
-	<link rel="icon" :href="iconUrl" />
+	<link :href="iconUrl" rel="icon" />
 </template>
 
 <script lang="ts">

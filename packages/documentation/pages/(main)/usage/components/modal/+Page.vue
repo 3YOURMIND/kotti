@@ -2,7 +2,7 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
-		<KtForm v-model:value="settings">
+		<KtForm v-model="settings">
 			<KtFieldSingleSelect
 				formKey="size"
 				isOptional

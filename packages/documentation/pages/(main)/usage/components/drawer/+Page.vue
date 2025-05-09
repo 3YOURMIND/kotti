@@ -45,15 +45,15 @@
 			@click="showDefaultWidthDrawer = true"
 		/>
 		<KtButton
-			type="primary"
 			class="mr-16px"
-			@click="showWideDrawer = true"
 			label="Show Wide Size Drawer"
+			type="primary"
+			@click="showWideDrawer = true"
 		/>
 		<KtButton
+			label="Customize Size Drawer"
 			type="primary"
 			@click="showCustomWidthDrawer = true"
-			label="Customize Size Drawer"
 		/>
 		<KtDrawer
 			v-if="showDefaultWidthDrawer"
@@ -67,9 +67,9 @@
 			</template>
 			<template #drawer-footer>
 				<KtButton
-					@click="showDefaultWidthDrawer = false"
 					class="w-100"
 					label="Close Drawer"
+					@click="showDefaultWidthDrawer = false"
 				/>
 			</template>
 		</KtDrawer>
@@ -148,15 +148,15 @@
 		language="vue-html"
 	>
 		<KtButton
-			type="primary"
 			class="mr-16px"
-			@click="showDrawer = true"
 			label="Show Drawer"
+			type="primary"
+			@click="showDrawer = true"
 		/>
 		<KtDrawer
 			v-if="showDrawer"
-			@close="showDrawer = false"
 			disallowCloseOutside
+			@close="showDrawer = false"
 		>
 			<template #drawer-header>
 				<h2>Default Size Drawer</h2>
@@ -166,9 +166,9 @@
 			</template>
 			<template #drawer-footer>
 				<KtButton
-					@click="showDrawer = false"
 					class="w-100"
 					label="Close Drawer"
+					@click="showDrawer = false"
 				/>
 			</template>
 		</KtDrawer>
@@ -176,8 +176,9 @@
 </template>
 
 <script lang="ts">
-import { KtButton, KtDrawer } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
+
+import { KtButton, KtDrawer } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -185,8 +186,8 @@ import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsDrawer',
 	components: {
-		ComponentInfo,
 		CodePreview,
+		ComponentInfo,
 		KtButton,
 		KtDrawer,
 	},

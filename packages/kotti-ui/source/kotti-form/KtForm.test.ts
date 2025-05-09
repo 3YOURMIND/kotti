@@ -46,7 +46,7 @@ const TestField = defineComponent({
 	name: 'TestField',
 	props: makeProps(
 		KottiField.propsSchema.extend({
-			value: z.string().nullable().default(null),
+			modelValue: z.string().nullable().default(null),
 		}),
 	),
 	setup: (props, { emit }) => {
@@ -60,7 +60,7 @@ const TestFieldObject = defineComponent({
 	name: 'TestFieldObject',
 	props: makeProps(
 		KottiField.propsSchema.extend({
-			value: z.record(z.unknown()).nullable().default(null),
+			modelValue: z.record(z.unknown()).nullable().default(null),
 		}),
 	),
 	setup: (props, { emit }) => {
@@ -72,12 +72,12 @@ const TestFieldObject = defineComponent({
 const TestForm = {
 	components: { KtForm, TestField },
 	props: ['hideValidation'],
-	template: `<KtForm v-bind="$attrs" @update:value="$event => $emit('update:value', $event)"><TestField formKey="testKey"/></KtForm>`,
+	template: `<KtForm v-bind="$attrs" @update:modelValue="$event => $emit('update:modelValue', $event)"><TestField formKey="testKey"/></KtForm>`,
 }
 
 const TestForm2 = {
 	components: { KtForm, TestFieldObject },
-	template: `<KtForm v-bind="$attrs" @update:value="$event => $emit('update:value', $event)"><TestFieldObject formKey="testKey"/></KtForm>`,
+	template: `<KtForm v-bind="$attrs" @update:modelValue="$event => $emit('update:modelValue', $event)"><TestFieldObject formKey="testKey"/></KtForm>`,
 }
 
 const getField = (
@@ -148,10 +148,10 @@ describe('KtForm', () => {
 			field.setValue('wowspin')
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.emitted('update:value')?.[0]?.[0]).not.toBe(
+			expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).not.toBe(
 				VALUE_REFERENCE,
 			)
-			expect(wrapper.emitted('update:value')?.[0]?.[0]).toEqual({
+			expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toEqual({
 				testKey: 'wowspin',
 				treatedAsImmutable: 'true',
 			})

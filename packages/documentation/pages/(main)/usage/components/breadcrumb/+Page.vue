@@ -79,8 +79,9 @@
 </template>
 
 <script lang="ts">
-import { KtBreadcrumb } from '@3yourmind/kotti-ui'
 import { defineComponent, ref } from 'vue'
+
+import { KtBreadcrumb } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -99,39 +100,39 @@ export default defineComponent({
 			component: KtBreadcrumb,
 			links: [
 				{
-					title: 'Kotti',
+					isCompleted: true,
 					onClick: () => {
 						activeIndex.value = 0
 					},
-					isCompleted: true,
+					title: 'Kotti',
 				},
 				{
-					title: 'Usage',
+					isCompleted: true,
 					onClick: () => {
 						activeIndex.value = 1
 					},
-					isCompleted: true,
+					title: 'Usage',
 				},
 				{
-					title: 'Components',
+					isCompleted: true,
 					onClick: () => {
 						activeIndex.value = 2
 					},
-					isCompleted: true,
+					title: 'Components',
 				},
 				{
-					title: 'Links',
+					isCompleted: false,
 					onClick: () => {
 						activeIndex.value = 3
 					},
-					isCompleted: false,
+					title: 'Links',
 				},
 				{
-					title: 'Breadcrumbs',
+					isDisabled: true,
 					onClick: () => {
 						activeIndex.value = 4
 					},
-					isDisabled: true,
+					title: 'Breadcrumbs',
 				},
 			],
 		}

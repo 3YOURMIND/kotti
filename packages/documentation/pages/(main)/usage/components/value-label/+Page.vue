@@ -1,4 +1,6 @@
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import {
 	Kotti,
 	KtFieldSingleSelect,
@@ -8,7 +10,6 @@ import {
 	KtFormControllerObject,
 	KtValueLabel,
 } from '@3yourmind/kotti-ui'
-import { computed, defineComponent, ref } from 'vue'
 
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -72,8 +73,6 @@ export default defineComponent({
 		const componentSettings = ref({
 			hasDefaultSlot: false,
 			hasHelpTextSlot: false,
-			validation: null as string | null,
-			value: 'Some Value',
 			props: {
 				dataTest: null,
 				helpDescription: null,
@@ -82,44 +81,46 @@ export default defineComponent({
 				isUnset: false,
 				label: 'Some Label',
 			},
+			validation: null as string | null,
+			value: 'Some Value',
 		})
 
 		return {
 			component: KtValueLabel,
 			componentProps: computed(() => {
-				const { value, validation, props, hasDefaultSlot } =
+				const { hasDefaultSlot, props, validation, value } =
 					componentSettings.value
 				return {
 					...props,
 					validation:
 						validation !== null
-							? { type: validation, text: `${validation} text` }
+							? { text: `${validation} text`, type: validation }
 							: null,
 					value: hasDefaultSlot ? undefined : value,
 				}
 			}),
+			componentSettings,
 			componentSlots: computed(() => {
 				const slots = []
 				if (componentSettings.value.hasDefaultSlot) {
 					slots.push({
-						name: 'default',
 						content: [componentSettings.value.value],
+						name: 'default',
 					})
 				}
 				if (componentSettings.value.hasHelpTextSlot) {
 					slots.push({
-						name: 'helpText',
 						content: [
 							'<div>',
 							'\tSupports <abbr title="Hypertext Markup Language">HTML</abbr>',
 							'\tvia <code><template #helpText></code>',
 							'</div>',
 						],
+						name: 'helpText',
 					})
 				}
 				return slots
 			}),
-			componentSettings,
 			Kotti,
 			propFormatters: {
 				validation: (value: unknown) =>
@@ -146,7 +147,7 @@ export default defineComponent({
 			different sections of the more general layout.
 		</p>
 
-		<KtForm v-model:value="componentSettings" size="small">
+		<KtForm v-model="componentSettings" size="small">
 			<ComponentForm
 				:component="component"
 				:propFormatters="propFormatters"

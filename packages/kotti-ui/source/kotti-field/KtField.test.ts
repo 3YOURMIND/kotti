@@ -46,7 +46,7 @@ const TestComponent = defineComponent({
 	name: 'TestComponent',
 	props: makeProps(
 		KottiField.propsSchema.extend({
-			value: z.string().nullable().default(null),
+			modelValue: z.string().nullable().default(null),
 		}),
 	),
 	setup: (props, { emit }) => {
@@ -59,7 +59,7 @@ const TestComponentObject = defineComponent({
 	name: 'TestComponentObject',
 	props: makeProps(
 		KottiField.propsSchema.extend({
-			value: z.record(z.unknown()).nullable().default(null),
+			modelValue: z.record(z.unknown()).nullable().default(null),
 		}),
 	),
 	setup: (props, { emit }) => {

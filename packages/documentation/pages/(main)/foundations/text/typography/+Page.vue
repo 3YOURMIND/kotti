@@ -172,7 +172,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 import { KtBanner, KtHeading } from '@3yourmind/kotti-ui'
+
 import CodePreview from '~/components/CodePreview.vue'
 
 export default defineComponent({

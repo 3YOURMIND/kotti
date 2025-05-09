@@ -98,7 +98,7 @@
 								<template v-for="(action, index) in row.actions">
 									<KtPopover
 										v-if="action.tooltip"
-										:key="index"
+										:key="`tooltip-action-${index}`"
 										placement="top"
 										trigger="hover"
 									>
@@ -125,7 +125,7 @@
 									</KtPopover>
 									<i
 										v-else
-										:key="index"
+										:key="`plain-action-${index}`"
 										:class="{
 											yoco: true,
 											'kt-table__action-icon': true,

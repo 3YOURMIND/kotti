@@ -7,7 +7,7 @@
 			<KtToast style="background-color: var(--red-20)" />
 		</template>
 	</KtToaster>
-	<KtI18nContext locale="en-US" v-if="shouldRender">
+	<KtI18nContext v-if="shouldRender" locale="en-US">
 		<div class="kt-container">
 			<TheNavbar />
 			<slot />
@@ -16,8 +16,9 @@
 </template>
 
 <script lang="ts">
-import { KtI18nContext, KtToast, KtToaster } from '@3yourmind/kotti-ui'
 import { defineComponent, onMounted, ref } from 'vue'
+
+import { KtI18nContext, KtToast, KtToaster } from '@3yourmind/kotti-ui'
 
 import TheNavbar from '~/chrome/TheNavbar.vue'
 import { toaster } from '~/utilities/toaster'
@@ -26,8 +27,8 @@ export default defineComponent({
 	name: 'TheGlobalLayout',
 	components: {
 		KtI18nContext,
-		KtToaster,
 		KtToast,
+		KtToaster,
 		TheNavbar,
 	},
 	setup() {
@@ -37,6 +38,7 @@ export default defineComponent({
 			await Promise.race([
 				document.fonts.load('16px "Yoco"'),
 				new Promise<void>((resolve) => {
+					// eslint-disable-next-line no-magic-numbers
 					window.setTimeout(resolve, 1000)
 				}),
 			])
@@ -54,11 +56,13 @@ export default defineComponent({
 
 <style scoped>
 /* Page Transition Animation */
+
 /* TODO Decide if these transitions should be kept */
 #page-content {
 	opacity: 1;
 	transition: opacity 0.3s ease-in-out;
 }
+
 body.page-is-transitioning #page-content {
 	opacity: 0;
 }

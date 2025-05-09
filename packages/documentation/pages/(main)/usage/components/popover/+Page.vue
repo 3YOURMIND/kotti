@@ -15,7 +15,7 @@
 
 		<h2>Interactive Example</h2>
 
-		<KtForm v-model:value="values">
+		<KtForm v-model="values">
 			<KtFieldSingleSelect
 				formKey="usageMode"
 				hideClear
@@ -189,7 +189,7 @@
 				</template>
 			</KtPopover>
 
-			<KtFieldToggle v-model:value="isPopoverDisabled" isOptional>
+			<KtFieldToggle v-model="isPopoverDisabled" isOptional>
 				Is Popover disabled
 			</KtFieldToggle>
 		</CodePreview>

@@ -4,10 +4,10 @@
 		:formId="dataTest ?? undefined"
 		hideValidation
 		:isLoading="isLoading"
+		:modelValue="filter"
 		size="small"
 		style="display: contents"
-		:value="filter"
-		@update:value="handleSetFilter"
+		@update:modelValue="handleSetFilter"
 	>
 		<div class="kt-filter-row__wrapper">
 			<span class="kt-filter-row__label" v-text="label" />
@@ -106,7 +106,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	emits: ['update:value', 'remove'],
+	emits: ['update:modelValue', 'remove'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
@@ -119,19 +119,19 @@ export default defineComponent({
 		}
 		const handleSetFilter = (newFilter: KottiFilters.InternalFilter) => {
 			if (!props.column) {
-				emit('update:value', newFilter)
+				emit('update:modelValue', newFilter)
 				return
 			}
 
 			if (isEmptyOperation(newFilter.operation, props.column.type)) {
-				emit('update:value', {
+				emit('update:modelValue', {
 					...newFilter,
 					value: getFilterEmptyValue(props.column.type),
 				})
 				return
 			}
 
-			emit('update:value', newFilter)
+			emit('update:modelValue', newFilter)
 		}
 
 		return {

@@ -1,9 +1,5 @@
 <template>
-	<GenericDateField
-		v-bind="$props"
-		:helpTextSlot="$slots.helpText"
-		@emit="onEmit"
-	/>
+	<GenericDateField v-bind="$props" @emit="onEmit" />
 </template>
 
 <script lang="ts">

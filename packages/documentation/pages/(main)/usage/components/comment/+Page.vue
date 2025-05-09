@@ -40,7 +40,7 @@
 				/>
 			</div>
 
-			<KtForm v-model:value="settings" size="small">
+			<KtForm v-model="settings" size="small">
 				<div class="wrapper">
 					<div>
 						<h4>Settings</h4>
@@ -273,6 +273,9 @@
 </template>
 
 <script lang="ts">
+import escape from 'lodash/escape.js'
+import { defineComponent, ref } from 'vue'
+
 import type { Kotti } from '@3yourmind/kotti-ui'
 import {
 	KtComment,
@@ -284,8 +287,6 @@ import {
 	KtForm,
 	KtI18nContext,
 } from '@3yourmind/kotti-ui'
-import escape from 'lodash/escape.js'
-import { defineComponent, ref } from 'vue'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
@@ -393,16 +394,16 @@ export default defineComponent({
 		})
 		const settings = ref<{
 			allowInternal: Kotti.FieldToggle.Value
-			forceInternal: Kotti.FieldToggle.Value
 			dataTest: Kotti.FieldText.Value
+			forceInternal: Kotti.FieldToggle.Value
 			isReadOnly: Kotti.FieldToggle.Value
 			locale: Kotti.I18n.SupportedLanguages
 			placeholder: Kotti.FieldText.Value
 			tabIndex: Kotti.FieldNumber.Value
 		}>({
 			allowInternal: true,
-			forceInternal: false,
 			dataTest: null,
+			forceInternal: false,
 			isReadOnly: false,
 			locale: 'en-US',
 			placeholder: 'Add a comment',

@@ -4,8 +4,7 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import { KOTTI_FIELD_FILE_UPLOAD_SUPPORTS } from './constants'
 import KtFieldFileUploadVue from './KtFieldFileUpload.vue'
-import KtFieldFileUploadRemoteVue from './KtFieldFileUploadRemote.vue'
-import { KottiFieldFileUpload, KottiFieldFileUploadRemote } from './types'
+import { KottiFieldFileUpload } from './types'
 
 const componentFolder = 'kotti-field-file-upload'
 const url =
@@ -25,30 +24,6 @@ export const KtFieldFileUpload = attachMeta(
 		typeScript: {
 			namespace: 'Kotti.FieldFileUpload',
 			schema: KottiFieldFileUpload.propsSchema,
-		},
-	},
-	{ supports: KOTTI_FIELD_FILE_UPLOAD_SUPPORTS },
-)
-
-export const KtFieldFileUploadRemote = attachMeta(
-	makeInstallable(KtFieldFileUploadRemoteVue),
-	{
-		addedVersion: '3.0.0-beta.43',
-		componentFolder,
-		deprecated: {
-			alternatives: ['Use KtFileUpload instead'],
-			reason:
-				'Implementing a component that is meant to upload files immediately as a form field is inherently flawed',
-			version: '7.2.0',
-		},
-		designs: {
-			type: MetaDesignType.FIGMA,
-			url,
-		},
-		slots: FIELD_META_BASE_SLOTS,
-		typeScript: {
-			namespace: 'Kotti.FieldFileUploadRemote',
-			schema: KottiFieldFileUploadRemote.propsSchema,
 		},
 	},
 	{ supports: KOTTI_FIELD_FILE_UPLOAD_SUPPORTS },

@@ -4,7 +4,7 @@
 
 		<div class="overview">
 			<div class="overview__component">
-				<KtForm v-model:value="formValue">
+				<KtForm v-model="formValue">
 					<KtFieldInlineEdit
 						v-bind="fieldProps"
 						formKey="fieldValue"
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 
-		<KtForm v-model:value="settings" size="small">
+		<KtForm v-model="settings" size="small">
 			<div class="wrapper">
 				<div>
 					<h4>Settings</h4>

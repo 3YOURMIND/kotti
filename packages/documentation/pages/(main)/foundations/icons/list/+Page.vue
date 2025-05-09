@@ -10,8 +10,8 @@
 	<div class="columns">
 		<YocoPreview
 			v-for="[key, value] in Object.entries(Yoco.Icon)"
-			class="column col-2 col-md-6"
 			:key="value"
+			class="column col-2 col-md-6"
 			:enum="key"
 			:icon="value"
 		/>
@@ -19,12 +19,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+
 import YocoPreview from './YocoPreview.vue'
 
 export default defineComponent({

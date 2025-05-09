@@ -1,7 +1,7 @@
 <template>
 	<ComponentInfo :component="KtAvatar" />
 
-	<KtForm v-model:value="ktAvatarSettings" size="small">
+	<KtForm v-model="ktAvatarSettings" size="small">
 		<ComponentForm
 			:component="KtAvatar"
 			:props="ktAvatarProps"
@@ -37,7 +37,7 @@
 					/>
 				</div>
 			</template>
-			<template #content v-if="ktAvatarSettings.hasSlot">
+			<template v-if="ktAvatarSettings.hasSlot" #content>
 				<div class="user-container">
 					<KtAvatar size="lg" :src="ktAvatarSettings.props.src" />
 					<div class="user-container__info">
@@ -58,7 +58,7 @@
 
 	<ComponentInfo :component="KtAvatarGroup" />
 
-	<KtForm v-model:value="ktAvatarGroupSettings" size="small">
+	<KtForm v-model="ktAvatarGroupSettings" size="small">
 		<ComponentForm
 			:component="KtAvatarGroup"
 			:propFormatters="propFormatters"
@@ -109,12 +109,12 @@
 					/>
 				</div>
 			</template>
-			<template #content="{ item }" v-if="ktAvatarGroupSettings.hasSlot">
-				<div style="display: flex; align-items: center; gap: var(--unit-1)">
+			<template v-if="ktAvatarGroupSettings.hasSlot" #content="{ item }">
+				<div style="display: flex; gap: var(--unit-1); align-items: center">
 					<KtAvatar :src="item.src" />
 					<h4 v-text="item.name" />
 				</div>
-				<div style="display: flex; align-items: center; gap: var(--unit-1)">
+				<div style="display: flex; gap: var(--unit-1); align-items: center">
 					<span class="yoco" v-text="Yoco.Icon.LOCATION" />
 					<span>Berlin, Germany</span>
 				</div>
@@ -124,6 +124,8 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import {
 	Kotti,
 	KtAvatar,
@@ -134,10 +136,8 @@ import {
 	KtFieldToggle,
 	KtForm,
 	KtFormControllerObject,
-	KtRow,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from 'vue'
 
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -148,7 +148,6 @@ export default defineComponent({
 		ComponentForm,
 		ComponentInfo,
 		KtAvatar,
-		KtAvatarGroup,
 		KtFieldNumber,
 		KtFieldSingleSelect,
 		KtFieldText,
@@ -157,31 +156,36 @@ export default defineComponent({
 		KtFormControllerObject,
 	},
 	setup() {
-		const ktAvatarSettings = ref({
+		const ktAvatarSettings = ref<{
+			hasSlot: boolean
+			props: Kotti.Avatar.Props
+		}>({
 			hasSlot: false,
 			props: {
 				isHoverable: true,
 				name: 'Example User',
-				size: null,
+				size: 'md',
 				src: 'https://picsum.photos/200/100',
 			},
 		})
 
-		const ktAvatarGroupSettings = ref({
+		const ktAvatarGroupSettings = ref<{
+			hasSlot: boolean
+			props: Omit<Kotti.AvatarGroup.Props, 'items'>
+		}>({
 			hasSlot: false,
 			props: {
 				count: 3,
 				isHoverable: true,
 				isStack: false,
-				size: null,
+				size: 'md',
 			},
 		})
 
 		return {
-			ktAvatarProps: computed(() => ({
-				...ktAvatarSettings.value.props,
-				size: ktAvatarSettings.value.props.size ?? 'md',
-			})),
+			Kotti,
+			KtAvatar,
+			KtAvatarGroup,
 			ktAvatarGroupProps: computed(() => ({
 				...ktAvatarGroupSettings.value.props,
 				items: [
@@ -193,6 +197,12 @@ export default defineComponent({
 				],
 				size: ktAvatarGroupSettings.value.props.size ?? 'md',
 			})),
+			ktAvatarGroupSettings,
+			ktAvatarProps: computed(() => ({
+				...ktAvatarSettings.value.props,
+				size: ktAvatarSettings.value.props.size ?? 'md',
+			})),
+			ktAvatarSettings,
 			propFormatters: {
 				items: (items: unknown) =>
 					JSON.stringify(items, null, '\t').split('\n'),
@@ -201,11 +211,6 @@ export default defineComponent({
 				label,
 				value,
 			})),
-			Kotti,
-			KtAvatar,
-			KtAvatarGroup,
-			ktAvatarGroupSettings,
-			ktAvatarSettings,
 			Yoco,
 		}
 	},
@@ -216,26 +221,26 @@ export default defineComponent({
 .user-container {
 	display: flex;
 	flex-direction: row;
+	gap: var(--unit-2);
 	align-items: center;
 	justify-content: space-between;
 	padding: var(--unit-4);
-	gap: var(--unit-2);
 
 	&__info {
 		display: flex;
 		flex-direction: column;
-		word-wrap: break-word;
 		gap: var(--unit-1);
+		word-wrap: break-word;
 
 		h2 {
-			font-size: 1rem;
 			margin: 0;
+			font-size: 1rem;
 		}
 
 		> * {
 			display: flex;
-			align-items: center;
 			gap: var(--unit-1);
+			align-items: center;
 		}
 	}
 }

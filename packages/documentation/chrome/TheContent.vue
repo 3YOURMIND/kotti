@@ -26,9 +26,9 @@ body.page-is-transitioning #page-content {
 <style>
 /* Page Transition Animation */
 #page-content {
+	width: 100%;
 	max-width: 40rem;
 	margin: 0 auto;
-	width: 100%;
 	opacity: 1;
 	transition: opacity 0.3s ease-in-out;
 }

@@ -125,7 +125,7 @@ export namespace KottiComment {
 			.extend({
 				autofocus: z.boolean().default(false),
 				placeholder: z.string().optional(),
-				value: InlineEdit.schema.shape.message,
+				modelValue: InlineEdit.schema.shape.message,
 			})
 		export type PropsInternal = z.output<typeof schema>
 	}

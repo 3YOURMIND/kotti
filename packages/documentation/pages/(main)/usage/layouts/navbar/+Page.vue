@@ -19,7 +19,7 @@
 </MarkdownBlock>
 
 	<a href="/examples/layouts">
-		<KtButton type="primary" icon="link">Open Example</KtButton>
+		<KtButton icon="link" type="primary">Open Example</KtButton>
 	</a>
 
 	<!-- prettier-ignore -->
@@ -28,10 +28,10 @@
 ```html
 <KtNavbar
 	:notification="notificationData"
-	:sections="menuData"
 	:quickLinks="quickLinksData"
-	@logoClick="redirect($event)"
+	:sections="menuData"
 	@linkClick="redirect($event)"
+	@logoClick="redirect($event)"
 />
 ```
 
@@ -130,8 +130,9 @@ quickLinksData: [{
 </template>
 
 <script lang="ts">
-import { KtButton, KtNavbar } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtButton, KtNavbar } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 

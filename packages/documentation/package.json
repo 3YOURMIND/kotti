@@ -1,33 +1,39 @@
 {
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview",
-		"watch": "vite"
-	},
 	"dependencies": {
 		"@3yourmind/kotti-ui": "*",
 		"@3yourmind/yoco": "*",
 		"@metatypes/typography": "^0.5.0",
 		"@metatypes/units": "^0.5.0",
-		"@vitejs/plugin-vue": "^5.1.4",
+		"@vitejs/plugin-vue": "^5.2.3",
 		"copy-to-clipboard": "^3.3.3",
 		"dayjs": "1.x",
-		"dedent": "^1.5.3",
+		"dedent": "^1.6.0",
 		"lodash": "4.x",
 		"markdown-it": "^14.1.0",
-		"shiki": "^1.18.0",
-		"unplugin-vue-markdown": "^0.26.2",
-		"vike-vue": "^0.8.5",
-		"vue": "^3.4.32"
+		"shiki": "^3.4.0",
+		"unplugin-vue-markdown": "^28.3.1",
+		"vike-vue": "^0.9.0",
+		"vue": "^3.5.17"
 	},
 	"devDependencies": {
-		"@shikijs/markdown-it": "^1.18.0",
+		"@shikijs/markdown-it": "^3.4.0",
 		"typescript": "^5.6.2",
-		"vike": "^0.4.196",
-		"vite": "^5.4.7"
+		"vike": "^0.4.229",
+		"vite": "^6.3.5"
 	},
 	"name": "@3yourmind/documentation",
-	"version": "0.0.0",
-	"type": "module"
+	"scripts": {
+		"build": "vite build",
+		"check:eslint": "eslint --max-warnings=0 .",
+		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/documentation",
+		"check:stylelint": "stylelint './**/*.{css,scss,vue}'",
+		"dev": "vite",
+		"fix:eslint": "yarn run check:eslint --fix",
+		"fix:prettier": "yarn run check:prettier --write",
+		"fix:stylelint": "yarn run check:stylelint --fix",
+		"preview": "vite preview",
+		"watch": "vite"
+	},
+	"type": "module",
+	"version": "0.0.0"
 }

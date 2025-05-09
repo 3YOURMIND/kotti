@@ -21,7 +21,7 @@
 		<KtActionbar headerTitle="LayoutContainer Example" :menu="actionbarMenu" />
 		<div class="workspace">
 			<KtFieldSingleSelect
-				v-model="theme"
+				v-model:value="theme"
 				hideClear
 				isOptional
 				label="Navbar Theme"
@@ -37,6 +37,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue'
+
 import {
 	Kotti,
 	KtActionbar,
@@ -45,7 +47,6 @@ import {
 	KtUserMenu,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent, ref } from 'vue'
 
 import { success } from '~/utilities/toaster'
 
@@ -60,21 +61,32 @@ export default defineComponent({
 	setup() {
 		const isNarrow = ref(false)
 		return {
-			isNarrow,
-			theme: Kotti.Navbar.Theme.DEFAULT,
+			actionbarMenu: [
+				{
+					active: false,
+					disabled: false,
+					icon: Yoco.Icon.USER,
+					label: 'First Link',
+					to: '/examples/layouts',
+				},
+				{
+					active: true,
+					icon: Yoco.Icon.BASKET,
+					label: 'Second Link',
+					to: '#',
+				},
+				{
+					disabled: true,
+					icon: Yoco.Icon.BELL,
+					label: 'Third Link',
+					to: '/',
+				},
+			],
 			handleMenuClick() {
 				success({ text: 'Link Clicked' })
 			},
-			setIsNarrow(_isNarrow: boolean) {
-				isNarrow.value = _isNarrow
-			},
+			isNarrow,
 			Kotti,
-			quickLinksData: [
-				{
-					title: 'Create New Issue',
-					link: 'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
-				},
-			],
 			navbarMenu: [
 				{
 					links: [
@@ -87,9 +99,9 @@ export default defineComponent({
 							title: 'Dashboard',
 						},
 						{
+							component: 'a',
 							icon: Yoco.Icon.CLOSE,
 							isActive: true,
-							component: 'a',
 							props: {
 								href: '/usage/layouts/navbar',
 							},
@@ -143,9 +155,19 @@ export default defineComponent({
 			],
 			navbarNotification: {
 				count: 1,
-				title: 'Message',
 				link: '#',
+				title: 'Message',
 			},
+			quickLinksData: [
+				{
+					link: 'https://jira.3yourmind.com/secure/RapidBoard.jspa?rapidView=52',
+					title: 'Create New Issue',
+				},
+			],
+			setIsNarrow(_isNarrow: boolean) {
+				isNarrow.value = _isNarrow
+			},
+			theme: Kotti.Navbar.Theme.DEFAULT,
 			userMenuData: [
 				{
 					links: [
@@ -204,27 +226,6 @@ export default defineComponent({
 						},
 					],
 					title: null,
-				},
-			],
-			actionbarMenu: [
-				{
-					label: 'First Link',
-					to: '/examples/layouts',
-					icon: Yoco.Icon.USER,
-					active: false,
-					disabled: false,
-				},
-				{
-					label: 'Second Link',
-					to: '#',
-					icon: Yoco.Icon.BASKET,
-					active: true,
-				},
-				{
-					label: 'Third Link',
-					to: '/',
-					icon: Yoco.Icon.BELL,
-					disabled: true,
 				},
 			],
 		}

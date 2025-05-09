@@ -71,7 +71,7 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldInlineEdit.propsSchema),
-	emits: ['confirm', 'update:value'],
+	emits: ['confirm', 'update:modelValue'],
 	setup(props, { emit }) {
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		const translations = useTranslationNamespace('KtFieldInlineEdit')

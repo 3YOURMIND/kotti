@@ -2,7 +2,7 @@
 	<div class="kt-comment-input">
 		<KtAvatar size="sm" :src="userAvatar" />
 		<CommentTextArea
-			v-model:value="localMessage"
+			v-model="localMessage"
 			v-bind="{ allowInternal, autofocus, isReply, placeholder, tabIndex }"
 			:dataTest="localDataTest"
 			:isInternal="localIsInternal"

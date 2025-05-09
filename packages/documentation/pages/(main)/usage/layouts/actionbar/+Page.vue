@@ -47,8 +47,9 @@
 </template>
 
 <script lang="ts">
-import { KtActionbar } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtActionbar } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
