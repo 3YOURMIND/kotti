@@ -1,4 +1,6 @@
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import {
 	Kotti,
 	KtFieldDate,
@@ -10,32 +12,30 @@ import {
 	KtForm,
 	KtI18nContext,
 } from '@3yourmind/kotti-ui'
-import { computed, defineComponent, ref } from 'vue'
-
-import { getLast, today } from '~/utilities/date'
 
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import { getLast, today } from '~/utilities/date'
 
 const shortcuts: Record<
 	string,
 	NonNullable<Kotti.FieldDateRange.Props['shortcuts']>[0]
 > = {
-	today: {
-		label: 'Today',
-		value: [today(), today()],
+	lastMonth: {
+		label: 'Last Month',
+		value: [getLast('month'), today()],
 	},
 	lastWeek: {
 		label: 'Last Week',
 		value: [getLast('week'), today()],
 	},
-	lastMonth: {
-		label: 'Last Month',
-		value: [getLast('month'), today()],
-	},
 	lastYear: {
 		label: 'Last Year',
 		value: [getLast('year'), today()],
+	},
+	today: {
+		label: 'Today',
+		value: [today(), today()],
 	},
 }
 
@@ -187,14 +187,14 @@ export default defineComponent({
 					{
 						key: 'dateRangeColumn',
 						label: 'Date Range Column',
+						maximumDate: settings.value.dateRangeMaximumDate,
+						minimumDate: settings.value.dateRangeMinimumDate,
 						operations: [
 							Kotti.Filters.Operation.DateRange.IN_RANGE,
 							Kotti.Filters.Operation.DateRange.IS_EMPTY,
 						],
-						type: Kotti.Filters.FilterType.DATE_RANGE,
-						maximumDate: settings.value.dateRangeMaximumDate,
-						minimumDate: settings.value.dateRangeMinimumDate,
 						shortcuts: settings.value.dateRangeShortcuts,
+						type: Kotti.Filters.FilterType.DATE_RANGE,
 					},
 					{
 						key: 'singleEnumColumn',
@@ -242,7 +242,6 @@ export default defineComponent({
 						.filter(([_, value]) => value)
 						.map(([key]) => {
 							const shortcut = shortcuts[key]
-							if (!shortcut) throw new Error('Could not find shortcut')
 
 							return {
 								label: shortcut.label,
@@ -270,162 +269,141 @@ export default defineComponent({
 </script>
 
 <template>
-	<div>
-		<ComponentInfo v-bind="{ component }" />
+	<ComponentInfo v-bind="{ component }" />
 
-		<KtI18nContext
-			:currencyMap="{
-				EUR: { symbol: '€', decimalPlaces: 2 },
-				USD: { symbol: '$', decimalPlaces: 2 },
+	<KtI18nContext
+		:currencyMap="{
+			EUR: { symbol: '€', decimalPlaces: 2 },
+			USD: { symbol: '$', decimalPlaces: 2 },
+		}"
+		:locale="settings.locale"
+	>
+		<ComponentForm
+			:hiddenProps="{
+				'onUpdate:modelValue': (value: any) => (filters = value),
 			}"
-			:locale="settings.locale"
+			:props="{ value: filters, ...componentProps }"
+			v-bind="{
+				component,
+				propFormatters,
+			}"
 		>
-			<!-- <div class="overview">
-				<div class="overview__component">
-					<h4>Component</h4>
-					<KtFilters
-						v-model="filters"
-						:columns="componentProps.columns"
-						dataTest="ktFilters"
-						:isLoading="componentProps.isLoading"
+			<template #component-form-settings>
+				<KtForm v-model="settings">
+					<h4>Settings</h4>
+					<KtFieldSingleSelect
+						formKey="locale"
+						helpText="Can be set via KtI18nContext"
+						hideClear
+						label="Language"
+						leftIcon="global"
+						:options="[
+							{ label: 'German (de-DE)', value: 'de-DE' },
+							{ label: 'English (en-US)', value: 'en-US' },
+							{ label: 'Spanish (es-ES)', value: 'es-ES' },
+							{ label: 'French (fr-FR)', value: 'fr-FR' },
+							{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+						]"
+						:size="Kotti.Field.Size.SMALL"
 					/>
-					<div class="overview__component-value">
-						<strong>Value</strong>: <span v-text="JSON.stringify(filters)" />
-						<a @click.prevent="reset">reset</a>
-					</div>
-				</div>
-				<div class="overview__code">
-					<h4>Code</h4>
-					<pre v-text="componentCode" />
-				</div>
-			</div> -->
-			<ComponentForm
-				:hiddenProps="{
-					'onUpdate:value': (value: any) => (filters = value),
-				}"
-				:props="{ value: filters, ...componentProps }"
-				v-bind="{
-					component,
-					propFormatters,
-				}"
-			>
-				<template #component-form-settings>
-					<KtForm v-model:value="settings">
-						<h4>Settings</h4>
-						<KtFieldSingleSelect
-							formKey="locale"
-							helpText="Can be set via KtI18nContext"
-							hideClear
-							label="Language"
-							leftIcon="global"
-							:options="[
-								{ label: 'German (de-DE)', value: 'de-DE' },
-								{ label: 'English (en-US)', value: 'en-US' },
-								{ label: 'Spanish (es-ES)', value: 'es-ES' },
-								{ label: 'French (fr-FR)', value: 'fr-FR' },
-								{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
-							]"
-							:size="Kotti.Field.Size.SMALL"
-						/>
-						<KtFieldToggleGroup
-							formKey="booleanFlags"
+					<KtFieldToggleGroup
+						formKey="booleanFlags"
+						isOptional
+						label="Boolean Flags"
+						:options="[{ key: 'isLoading', label: 'isLoading' }]"
+						:size="Kotti.Field.Size.SMALL"
+						type="switch"
+					/>
+					<h4>Additional Props</h4>
+					<div class="field-row">
+						<KtFieldNumber
+							formKey="numberDecimalPlaces"
+							helpText="Support on FLOAT column type only"
 							isOptional
-							label="Boolean Flags"
-							:options="[{ key: 'isLoading', label: 'isLoading' }]"
-							:size="Kotti.Field.Size.SMALL"
-							type="switch"
+							label="decimalPlaces"
+							:minimum="0"
 						/>
-						<h4>Additional Props</h4>
-						<div class="field-row">
-							<KtFieldNumber
-								formKey="numberDecimalPlaces"
-								helpText="Support on FLOAT column type only"
-								isOptional
-								label="decimalPlaces"
-								:minimum="0"
-							/>
-							<KtFieldNumber
-								formKey="numberStep"
-								helpText="Support on FLOAT column type only"
-								isOptional
-								label="step"
-							/>
-						</div>
-						<div class="field-row">
-							<KtFieldNumber
-								formKey="numberMinimum"
-								helpText="Support on FLOAT & INTEGER column types"
-								isOptional
-								label="minimum"
-							/>
-							<KtFieldNumber
-								formKey="numberMaximum"
-								helpText="Support on FLOAT & INTEGER column types"
-								isOptional
-								label="maximum"
-							/>
-						</div>
-						<div class="field-row">
-							<KtFieldDate
-								formKey="dateRangeMaximumDate"
-								helpText="Support on DATE_RANGE column type only"
-								isOptional
-								label="maximumDate"
-							/>
-							<KtFieldDate
-								formKey="dateRangeMinimumDate"
-								helpText="Support on DATE_RANGE column type only"
-								isOptional
-								label="minimumDate"
-							/>
-						</div>
-						<KtFieldToggleGroup
-							formKey="NONE"
+						<KtFieldNumber
+							formKey="numberStep"
+							helpText="Support on FLOAT column type only"
+							isOptional
+							label="step"
+						/>
+					</div>
+					<div class="field-row">
+						<KtFieldNumber
+							formKey="numberMinimum"
+							helpText="Support on FLOAT & INTEGER column types"
+							isOptional
+							label="minimum"
+						/>
+						<KtFieldNumber
+							formKey="numberMaximum"
+							helpText="Support on FLOAT & INTEGER column types"
+							isOptional
+							label="maximum"
+						/>
+					</div>
+					<div class="field-row">
+						<KtFieldDate
+							formKey="dateRangeMaximumDate"
 							helpText="Support on DATE_RANGE column type only"
 							isOptional
-							label="shortcuts"
-							:options="shortcutsOptions"
-							:value="selectedShortcuts"
-							@input="onSelectedShortcutsChange"
+							label="maximumDate"
 						/>
-						<KtFieldSingleSelect
-							formKey="currencyCurrency"
-							helpText='Available Currencies can be defined via <KtI18nContext :currencyMap="..."/>'
-							label="currency"
-							:options="[
-								{ label: 'EUR', value: 'EUR' },
-								{ label: 'USD', value: 'USD' },
-							]"
-						/>
-					</KtForm>
-					<KtForm v-model:value="settings">
-						<h4>Texts</h4>
-						<KtFieldText
-							formKey="searchPlaceholder"
+						<KtFieldDate
+							formKey="dateRangeMinimumDate"
+							helpText="Support on DATE_RANGE column type only"
 							isOptional
-							label="placeholder"
-							:size="Kotti.Field.Size.SMALL"
+							label="minimumDate"
 						/>
-						<h4>Decoration</h4>
-						<div class="field-row">
-							<KtFieldText
-								formKey="numberPrefix"
-								helpText="Support on FLOAT & INTEGER column types"
-								isOptional
-								label="prefix"
-							/>
-							<KtFieldText
-								formKey="numberSuffix"
-								helpText="Support on FLOAT & INTEGER column types"
-								isOptional
-								label="suffix"
-							/>
-						</div>
-					</KtForm>
-				</template>
-			</ComponentForm>
-		</KtI18nContext>
-	</div>
+					</div>
+					<KtFieldToggleGroup
+						formKey="NONE"
+						helpText="Support on DATE_RANGE column type only"
+						isOptional
+						label="shortcuts"
+						:options="shortcutsOptions"
+						:value="selectedShortcuts"
+						@input="onSelectedShortcutsChange"
+					/>
+					<KtFieldSingleSelect
+						formKey="currencyCurrency"
+						helpText='Available Currencies can be defined via <KtI18nContext :currencyMap="..."/>'
+						label="currency"
+						:options="[
+							{ label: 'EUR', value: 'EUR' },
+							{ label: 'USD', value: 'USD' },
+						]"
+					/>
+				</KtForm>
+				<KtForm v-model="settings">
+					<h4>Texts</h4>
+					<KtFieldText
+						formKey="searchPlaceholder"
+						isOptional
+						label="placeholder"
+						:size="Kotti.Field.Size.SMALL"
+					/>
+					<h4>Decoration</h4>
+					<div class="field-row">
+						<KtFieldText
+							formKey="numberPrefix"
+							helpText="Support on FLOAT & INTEGER column types"
+							isOptional
+							label="prefix"
+						/>
+						<KtFieldText
+							formKey="numberSuffix"
+							helpText="Support on FLOAT & INTEGER column types"
+							isOptional
+							label="suffix"
+						/>
+					</div>
+				</KtForm>
+			</template>
+		</ComponentForm>
+	</KtI18nContext>
 </template>
 
 <style lang="scss" scoped>

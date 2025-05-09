@@ -18,7 +18,7 @@ const TestField = defineComponent({
 	name: 'TestField',
 	props: makeProps(
 		KottiField.propsSchema.extend({
-			value: z.string().nullable().default(null),
+			modelValue: z.string().nullable().default(null),
 		}),
 	),
 	setup: (props, { emit }) => {
@@ -59,7 +59,7 @@ const TestControllerListForm = {
 		controllerProps: { required: true, type: Object },
 		formProps: { required: true, type: Object },
 	},
-	template: `<KtForm v-bind="formProps" @update:value="$event => $emit('update:value', $event)"><TestControllerList v-bind="controllerProps"/></KtForm>`,
+	template: `<KtForm v-bind="formProps" @update:modelValue="$event => $emit('update:modelValue', $event)"><TestControllerList v-bind="controllerProps"/></KtForm>`,
 }
 
 const getField = (
@@ -124,7 +124,7 @@ describe('KtFormControllerList', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:value')?.[0]).toEqual([
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([
 			{
 				parentKey: [
 					{ somethingElse: true, testKey: 'testName1b' },
@@ -138,7 +138,7 @@ describe('KtFormControllerList', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:value')?.[1]).toEqual([
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([
 			{
 				parentKey: [
 					// testKey is still testName1a because @input is mocked

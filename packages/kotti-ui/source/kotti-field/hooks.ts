@@ -107,11 +107,11 @@ const useValue = <DATA_TYPE>({
 	// fetch value
 
 	const currentValue = computed((): DATA_TYPE => {
-		if (context === null) return cloneDeep(props.value)
+		if (context === null) return cloneDeep(props.modelValue)
 
 		switch (props.formKey) {
 			case FORM_KEY_NONE:
-				return cloneDeep(props.value)
+				return cloneDeep(props.modelValue)
 
 			case null:
 				throw new ktFieldErrors.ImplicitFormKeyNoneError(props)
@@ -142,7 +142,7 @@ const useValue = <DATA_TYPE>({
 				props.formKey === null ||
 				props.formKey === FORM_KEY_NONE
 			) {
-				emit('update:value', newValue)
+				emit('update:modelValue', newValue)
 				return
 			}
 

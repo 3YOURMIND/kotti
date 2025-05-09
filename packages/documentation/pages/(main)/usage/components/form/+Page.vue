@@ -2,7 +2,7 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 		<KtI18nContext :locale="settings.locale">
-			<KtForm v-model:value="settings">
+			<KtForm v-model="settings">
 				<div class="wrapper">
 					<section>
 						<h3>Shared Form ↔ Field Settings</h3>

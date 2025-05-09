@@ -9,9 +9,9 @@
 							:data-test="getOptionDataTest(option)"
 							:inputProps="inputProps(index)"
 							:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
+							:modelValue="option.value"
 							:type="type"
-							:value="option.value"
-							@update:value="onInput(option.key, $event)"
+							@update:modelValue="onInput(option.key, $event)"
 						>
 							<slot name="header" :option="option">
 								<div v-text="option.label" />
@@ -54,7 +54,7 @@ export default defineComponent({
 		ToggleInner,
 	},
 	props: makeProps(KottiFieldToggleGroup.propsSchema),
-	emits: ['update:value'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldToggleGroup.Value>({
 			emit,

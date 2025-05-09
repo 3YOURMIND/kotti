@@ -2,7 +2,7 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
-		<KtForm v-model:value="settings" size="small">
+		<KtForm v-model="settings" size="small">
 			<ComponentForm
 				:component="component"
 				:hiddenProps="{
@@ -100,6 +100,11 @@
 </template>
 
 <script lang="ts">
+import { TimeConversion } from '@metatypes/units'
+import dayjs from 'dayjs'
+import omit from 'lodash/omit'
+import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
+
 import {
 	Kotti,
 	KtFieldMultiSelect,
@@ -111,17 +116,13 @@ import {
 	KtForm,
 } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import dayjs from 'dayjs'
-import omit from 'lodash/omit'
-import { computed, defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
-import { TimeConversion } from '@metatypes/units'
 
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
 type ModifiedUploadState = (Kotti.FileUpload.FileInfo & {
-	uploadStartTime: dayjs.Dayjs
 	uploadEndTime: dayjs.Dayjs
+	uploadStartTime: dayjs.Dayjs
 })[]
 
 function useRequestAnimationFrame(callback: () => void): {
@@ -169,7 +170,6 @@ export default defineComponent({
 		KtFieldSingleSelect,
 		KtFieldText,
 		KtFieldToggleGroup,
-		KtFileUpload,
 		KtForm,
 	},
 	setup() {
@@ -201,8 +201,8 @@ export default defineComponent({
 			},
 			collapseExtensionsAfter: 5,
 			dataTest: null,
-			externalUrl: null,
 			extensions: [],
+			externalUrl: null,
 			helpDescription: null,
 			helpText: null,
 			icon: Yoco.Icon.CLOUD_UPLOAD,
@@ -323,8 +323,8 @@ export default defineComponent({
 				allowPhotos: settings.value.booleanFlags.allowPhotos,
 				collapseExtensionsAfter: settings.value.collapseExtensionsAfter,
 				dataTest: settings.value.dataTest,
-				externalUrs: settings.value.externalUrl,
 				extensions: settings.value.extensions,
+				externalUrs: settings.value.externalUrl,
 				helpDescription: settings.value.helpDescription,
 				helpText: settings.value.helpText,
 				hideDropArea: settings.value.booleanFlags.hideDropArea,

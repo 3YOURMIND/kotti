@@ -63,7 +63,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import ColorPalette from './ColorPalette.vue'
 import ColorUsage from './ColorUsage.vue'
 
@@ -75,29 +75,28 @@ export default defineComponent({
 	},
 	setup() {
 		return {
-			primaryColor: [
-				{ name: 'Primary-400', code: '#3173DE' },
-				{ name: 'Primary-500', code: '#2C66C4' },
-				{ name: 'Primary-600', code: '#2659AB' },
-			],
-			greenColor: [{ name: 'Green-500', code: '#64AD13' }],
-			redColor: [
-				{ name: 'Red-400', code: '#F21D1D' },
-				{ name: 'Red-500', code: '#D91919' },
-			],
-			orangeColor: [{ name: 'Orange-500', code: '#FF7800' }],
 			darkGray: [
-				{ name: 'Darkgray-300', code: '#8A8A8A' },
-				{ name: 'Darkgray-400', code: '#575757' },
-				{ name: 'Darkgray-500', code: '#3D3D3D' },
+				{ code: '#8A8A8A', name: 'Darkgray-300' },
+				{ code: '#575757', name: 'Darkgray-400' },
+				{ code: '#3D3D3D', name: 'Darkgray-500' },
 			],
+			greenColor: [{ code: '#64AD13', name: 'Green-500' }],
 			lightGray: [
-				{ name: 'Lightgray-300', code: '#F8F8F8' },
-				{ name: 'Lightgray-400', code: '#DBDBDB' },
-				{ name: 'Lightgray-500', code: '#A8A8A8' },
+				{ code: '#F8F8F8', name: 'Lightgray-300' },
+				{ code: '#DBDBDB', name: 'Lightgray-400' },
+				{ code: '#A8A8A8', name: 'Lightgray-500' },
+			],
+			orangeColor: [{ code: '#FF7800', name: 'Orange-500' }],
+			primaryColor: [
+				{ code: '#3173DE', name: 'Primary-400' },
+				{ code: '#2C66C4', name: 'Primary-500' },
+				{ code: '#2659AB', name: 'Primary-600' },
+			],
+			redColor: [
+				{ code: '#F21D1D', name: 'Red-400' },
+				{ code: '#D91919', name: 'Red-500' },
 			],
 		}
 	},
 })
-/* eslint-enable @typescript-eslint/explicit-module-boundary-types */
 </script>

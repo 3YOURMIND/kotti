@@ -14,8 +14,8 @@
 			}"
 			:disabled="isDisabled"
 			:enableTimePicker="hasTime && !isConfirmDisabled"
-			:maxDate="maximumDate"
-			:minDate="minimumDate"
+			:maxDate="maximumDate ?? undefined"
+			:minDate="minimumDate ?? undefined"
 			:modelType="hasTime ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd'"
 			:modelValue="vueDatePickerModelValue"
 			:multiCalendars="isRange"
@@ -70,17 +70,17 @@
 						:minutes="Array.isArray(minutes) ? minutes[0] : minutes"
 						:seconds="Array.isArray(seconds) ? seconds[0] : seconds"
 						@update:hours="
-							(val) =>
+							(val: number | null) =>
 								Array.isArray(hours) ? setHours([val, hours[1]]) : setHours(val)
 						"
 						@update:minutes="
-							(val) =>
+							(val: number | null) =>
 								Array.isArray(minutes)
 									? setMinutes([val, minutes[1]])
 									: setMinutes(val)
 						"
 						@update:seconds="
-							(val) =>
+							(val: number | null) =>
 								Array.isArray(seconds)
 									? setSeconds([val, seconds[1]])
 									: setSeconds(val)
@@ -93,9 +93,9 @@
 						:hours="hours[1]"
 						:minutes="minutes[1]"
 						:seconds="seconds[1]"
-						@update:hours="(val) => setHours([hours[0], val])"
-						@update:minutes="(val) => setMinutes([minutes[0], val])"
-						@update:seconds="(val) => setSeconds([seconds[0], val])"
+						@update:hours="(val: number) => setHours([hours[0], val])"
+						@update:minutes="(val: number) => setMinutes([minutes[0], val])"
+						@update:seconds="(val: number) => setSeconds([seconds[0], val])"
 					/>
 				</div>
 			</template>

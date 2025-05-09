@@ -1,7 +1,7 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	<KtForm v-model:value="componentProps" size="small">
+	<KtForm v-model="componentProps" size="small">
 		<ComponentForm
 			:component="component"
 			:hiddenProps="{

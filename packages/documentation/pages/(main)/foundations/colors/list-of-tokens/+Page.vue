@@ -41,12 +41,12 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { defineComponent } from 'vue'
+
 import {
 	baseColorsFactory,
 	tokenColorsFactory,
 } from '@3yourmind/kotti-ui/tokens'
-import { defineComponent } from 'vue'
 
 import CodePreview from '~/components/CodePreview.vue'
 

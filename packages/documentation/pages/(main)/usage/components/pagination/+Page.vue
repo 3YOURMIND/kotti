@@ -135,7 +135,7 @@
 		/>
 	</CodePreview>
 
-	<KtForm v-model:value="settings">
+	<KtForm v-model="settings">
 		<ComponentForm
 			:component="component"
 			:hiddenProps="{
@@ -208,10 +208,10 @@ export default defineComponent({
 	name: 'DocumentationPageUsageComponentsPagination',
 	components: {
 		CodePreview,
-		ComponentInfo,
 		ComponentForm,
-		KtFieldSingleSelect,
+		ComponentInfo,
 		KtFieldNumber,
+		KtFieldSingleSelect,
 		KtFieldToggle,
 		KtForm,
 		KtPagination,

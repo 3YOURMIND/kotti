@@ -60,7 +60,7 @@ export default defineComponent({
 	name: 'KtFieldCurrency',
 	components: { KtField },
 	props: makeProps(KottiFieldCurrency.propsSchema),
-	emits: ['blur', 'keyup', 'update:value'],
+	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldCurrency.Value>({
 			emit,

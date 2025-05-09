@@ -30,7 +30,7 @@ export namespace KottiFieldRadioGroup {
 						new Set(options.map(({ value }) => value)).size === options.length,
 					{ message: 'options need to be unique by `value`' },
 				),
-			value: valueSchema.default(null),
+			modelValue: valueSchema.default(null),
 		})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>

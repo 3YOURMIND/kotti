@@ -56,7 +56,7 @@ export namespace KottiField {
 
 	export namespace Hook {
 		export interface Parameters<DATA_TYPE> {
-			emit: (name: 'update:value', ...args: unknown[]) => void
+			emit: (name: 'update:modelValue', ...args: unknown[]) => void
 
 			/**
 			 * Useful for checking validation on required fields
@@ -287,7 +287,7 @@ export namespace KottiField {
 		 * This is never, and specified by each component's schema
 		 * v-model value
 		 */
-		value: z.never(),
+		modelValue: z.never(),
 	})
 	export type Props = z.input<typeof propsSchema>
 	/**

@@ -30,7 +30,7 @@ export default defineComponent({
 	name: 'KtFieldPassword',
 	components: { KtField },
 	props: makeProps(KottiFieldPassword.propsSchema),
-	emits: ['blur', 'keyup', 'update:value'],
+	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldPassword.Value>({
 			emit,

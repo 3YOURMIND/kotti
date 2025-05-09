@@ -1,7 +1,8 @@
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 import { KtFieldSingleSelect } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { defineComponent } from 'vue'
 
 export default defineComponent({
 	name: 'FieldYocoIcon',
@@ -31,10 +32,10 @@ export default defineComponent({
 
 <template>
 	<KtFieldSingleSelect
-		:label="formKey"
 		:formKey="formKey"
-		:options="options"
 		:isOptional="isOptional"
+		:label="formKey"
+		:options="options"
 	>
 		<template #option="{ option }">
 			<i

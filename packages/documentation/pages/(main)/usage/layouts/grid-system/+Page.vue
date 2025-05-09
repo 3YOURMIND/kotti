@@ -212,8 +212,9 @@
 </template>
 
 <script lang="ts">
-import { KtCol, KtRow } from '@3yourmind/kotti-ui'
 import { defineComponent } from 'vue'
+
+import { KtCol, KtRow } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'

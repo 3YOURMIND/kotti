@@ -10,9 +10,9 @@
 					component="label"
 					:inputProps="inputProps"
 					:isDisabled="fieldProps.isDisabled"
+					:modelValue="fieldProps.currentValue"
 					:type="type"
-					:value="fieldProps.currentValue"
-					@update:value="onInput"
+					@update:modelValue="onInput"
 				>
 					<div class="kt-field-toggle__content">
 						<slot name="default" :value="fieldProps.currentValue" />
@@ -66,7 +66,7 @@ export default defineComponent({
 		ToggleInner,
 	},
 	props: makeProps(KottiFieldToggle.propsSchema),
-	emits: ['update:value'],
+	emits: ['update:modelValue'],
 	setup(props, { emit, slots }) {
 		const field = useField<KottiFieldToggle.Value>({
 			emit,

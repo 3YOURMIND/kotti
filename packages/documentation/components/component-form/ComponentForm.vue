@@ -1,9 +1,10 @@
 <script lang="ts">
 import copy from 'copy-to-clipboard'
-import { codeToHtml } from 'shiki'
 import isEqual from 'lodash/isEqual.js'
+import { codeToHtml } from 'shiki'
 import type { PropType } from 'vue'
 import { computed, defineComponent, ref, watch } from 'vue'
+
 import { KtI18nContext } from '@3yourmind/kotti-ui'
 
 import { success } from '~/utilities/toaster'
@@ -13,13 +14,13 @@ type Component = {
 	props?: Record<
 		string,
 		| {
-				default: undefined
-				required: true
+				default: (() => unknown) | unknown
+				required: false | undefined
 				type: PropType<unknown>
 		  }
 		| {
-				default: unknown | (() => unknown)
-				required: undefined | false
+				default: undefined
+				required: true
 				type: PropType<unknown>
 		  }
 	>
@@ -67,6 +68,7 @@ const generateCode = ({
 				if (value === true) return `\t${key}`
 
 				if (!(key in propFormatters))
+					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 					return `\t${typeof value === 'string' ? '' : ':'}${key}="${value}"`
 
 				const lines = propFormatters[key](value)
@@ -199,6 +201,7 @@ export default defineComponent({
 				const codeStringified = JSON.stringify(_code)
 
 				const code =
+					// eslint-disable-next-line no-magic-numbers
 					codeStringified.length > 70
 						? JSON.stringify(_code, null, '\t')
 						: codeStringified
@@ -218,7 +221,8 @@ export default defineComponent({
 			onCopy: () => {
 				copy(code.value)
 				success({
-					text: `copied “${code.value.substring(0, 40)}...” to clipboard`,
+					// eslint-disable-next-line no-magic-numbers
+					text: `copied “${code.value.slice(0, 40)}...” to clipboard`,
 				})
 			},
 			valueCodeHtml,
@@ -249,7 +253,7 @@ export default defineComponent({
 		</div>
 		<div :class="$style.actions">
 			<div :class="$style.language" v-text="'vue-html'" />
-			<div :class="$style.copyButton" role="button" @click="onCopy">
+			<div :class="$style['copy-button']" role="button" @click="onCopy">
 				<i class="yoco">copy</i>
 			</div>
 		</div>
@@ -264,27 +268,23 @@ export default defineComponent({
 	> * {
 		padding: var(--unit-3) var(--unit-6);
 		margin: 0;
-
 		background-color: var(--gray-10) !important;
 	}
 }
 
 .actions {
 	display: flex;
-	align-items: center;
-
 	gap: var(--unit-6);
-
-	background-color: var(--gray-10);
+	align-items: center;
 	padding: var(--unit-3) var(--unit-6);
+	background-color: var(--gray-10);
 }
 
 .wrapper {
-	border-radius: var(--border-radius);
-	border: 1px solid var(--gray-20);
-	overflow: hidden;
-
 	margin-bottom: var(--unit-8);
+	overflow: hidden;
+	border: 1px solid var(--gray-20);
+	border-radius: var(--border-radius);
 
 	> *:not(:last-child) {
 		border-bottom: 1px solid var(--gray-20);
@@ -300,9 +300,9 @@ export default defineComponent({
 	background-color: #fcfcfc;
 
 	> * {
-		padding: var(--unit-3) var(--unit-6);
 		flex: 1;
 		flex-basis: 0;
+		padding: var(--unit-3) var(--unit-6);
 
 		&:not(:last-child) {
 			border-right: 1px solid var(--gray-20);
@@ -310,7 +310,7 @@ export default defineComponent({
 	}
 }
 
-.copyButton {
+.copy-button {
 	display: flex;
 	padding: var(--unit-2);
 	margin: calc(-1 * var(--unit-2));
@@ -324,7 +324,8 @@ export default defineComponent({
 }
 
 .language {
-	font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-		'Courier New', monospace;
+	font-family:
+		SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+		monospace;
 }
 </style>

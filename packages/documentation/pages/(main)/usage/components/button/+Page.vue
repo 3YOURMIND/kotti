@@ -46,7 +46,7 @@
 			'
 			language="vue-html"
 		>
-			<div style="display: flex; gap: var(--unit-6); flex-wrap: wrap">
+			<div style="display: flex; flex-wrap: wrap; gap: var(--unit-6)">
 				<KtButton type="primary" @click="showToaster('primary')">
 					Primary Button
 				</KtButton>
@@ -258,10 +258,10 @@
 		>
 			<div
 				style="
-					width: 200px;
 					display: flex;
 					flex-direction: column;
 					gap: var(--unit-1);
+					width: 200px;
 				"
 			>
 				<KtButton block type="primary">Purchase</KtButton><br />
@@ -408,7 +408,7 @@
 			</li>
 		</ul>
 
-		<KtForm v-model:value="splitButtonSettings" size="small">
+		<KtForm v-model="splitButtonSettings" size="small">
 			<ComponentForm
 				:component="ktSplitButtonComponent"
 				:propFormatters="propFormatters"
@@ -480,6 +480,8 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
 import {
 	KtButton,
 	KtButtonGroup,
@@ -492,14 +494,12 @@ import {
 } from '@3yourmind/kotti-ui'
 import { Kotti } from '@3yourmind/kotti-ui'
 import { Yoco } from '@3yourmind/yoco'
-import { computed, defineComponent, ref } from 'vue'
-
-import { success } from '~/utilities/toaster'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
-import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 import FieldYocoIcon from '~/components/component-form/FieldYocoIcon.vue'
+import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import { success } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsButton',
@@ -515,7 +515,6 @@ export default defineComponent({
 		KtFieldToggleGroup,
 		KtForm,
 		KtFormControllerObject,
-		KtSplitButton,
 	},
 	setup() {
 		const toggleDefaultStatus = ref<Kotti.Button.ToggleStatus>(
@@ -541,9 +540,6 @@ export default defineComponent({
 		})
 
 		return {
-			showToaster: (value: string) => {
-				success({ text: value })
-			},
 			iconOptions: Object.values(Yoco.Icon).map((icon) => ({
 				label: icon,
 				value: icon,
@@ -560,7 +556,9 @@ export default defineComponent({
 				actions: (items: unknown) =>
 					JSON.stringify(items, null, '\t').split('\n'),
 			},
-			splitButtonSettings,
+			showToaster: (value: string) => {
+				success({ text: value })
+			},
 			splitButtonProps: computed(() => ({
 				...splitButtonSettings.value.booleanFlags,
 				...splitButtonSettings.value.props,
@@ -591,6 +589,7 @@ export default defineComponent({
 					},
 				],
 			})),
+			splitButtonSettings,
 			toggleDefaultIcon: computed(() =>
 				toggleDefaultStatus.value === Kotti.Button.ToggleStatus.ON
 					? 'check'

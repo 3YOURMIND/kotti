@@ -40,15 +40,16 @@
 	<p>Overwrite the Primary Color.</p>
 
 	<KtFieldSingleSelect
+		v-model:value="primaryColor"
 		isOptional
 		label="Primary Brand Color"
-		v-model:value="primaryColor"
 		:options="colors"
 	/>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watchEffect } from 'vue'
+import { defineComponent, ref, watchEffect } from 'vue'
+
 import { KtFieldSingleSelect } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
@@ -65,10 +66,7 @@ export default defineComponent({
 		watchEffect(() => {
 			const rootElement = document.querySelector(':root')
 
-			;(rootElement as any).style.setProperty(
-				'--primary-70',
-				primaryColor.value ?? '#2659ab',
-			)
+			rootElement.style.setProperty('--primary-70', primaryColor.value)
 		})
 
 		return {

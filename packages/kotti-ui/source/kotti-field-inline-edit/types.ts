@@ -34,7 +34,7 @@ export namespace KottiFieldInlineEdit {
 				ConfirmationValidation,
 			).default(ConfirmationValidation.NEVER),
 			textStyle: createLooseZodEnumSchema(TextStyle).nullable().default(null),
-			value: valueSchema.default(null),
+			modelValue: valueSchema.default(null),
 		})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>

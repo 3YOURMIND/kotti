@@ -61,10 +61,10 @@
 				:isMultiple="isMultiple"
 				:isUnsorted="isUnsorted"
 				:maximumSelectable="maximumSelectable"
+				:modelValue="optionsValue"
 				:options="filteredOptions"
-				:value="optionsValue"
 				@close="setIsDropdownOpen(false)"
-				@update:value="onOptionsInput"
+				@update:modelValue="onOptionsInput"
 			>
 				<template #option="values">
 					<slot v-bind="values" name="option" />
@@ -112,14 +112,14 @@ const propsSchema = Shared.propsSchema
 	.merge(Shared.isMultipleSchema)
 	.merge(Shared.isRemoteSchema)
 	.merge(Shared.isSingleSchema)
-	.omit({ value: true })
+	.omit({ modelValue: true })
 	.extend({
 		helpTextSlot: z.function().returns(z.array(z.any())).optional(),
 		isMultiple: z.boolean().default(false),
 		isRemote: z.boolean().default(false),
-		value: z.union([
-			Shared.isMultipleSchema.shape.value,
-			Shared.isSingleSchema.shape.value,
+		modelValue: z.union([
+			Shared.isMultipleSchema.shape.modelValue,
+			Shared.isSingleSchema.shape.modelValue,
 		]),
 	})
 
@@ -146,7 +146,7 @@ export default defineComponent({
 			type: Function as PropType<Slot<undefined>>,
 		},
 	},
-	emits: ['blur', 'emit', 'open', 'update:value'],
+	emits: ['blur', 'emit', 'open', 'update:modelValue'],
 	setup(props, { emit: rawEmit }) {
 		const emit = (event: string, payload: unknown) => {
 			rawEmit('emit', { event, payload })

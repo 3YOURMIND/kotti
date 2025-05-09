@@ -147,6 +147,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 import CodePreview from '~/components/CodePreview.vue'
 
 export default defineComponent({
