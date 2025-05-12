@@ -36,7 +36,7 @@ export namespace Shared {
 		clearOnSelect: z.boolean().default(false),
 		collapseTagsAfter: z.number().int().min(0).default(Number.MAX_SAFE_INTEGER),
 		maximumSelectable: z.number().int().min(0).default(Number.MAX_SAFE_INTEGER),
-		value: z.array(Shared.valueSchema).default(() => []),
+		modelValue: z.array(Shared.valueSchema).default(() => []),
 	})
 
 	export const isRemoteSchema = z.object({
@@ -45,7 +45,7 @@ export namespace Shared {
 	})
 
 	export const isSingleSchema = z.object({
-		value: Shared.valueSchema.default(null),
+		modelValue: Shared.valueSchema.default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -60,7 +60,8 @@ export namespace Shared {
 }
 
 export namespace KottiFieldMultiSelect {
-	export const valueSchema = Shared.isMultipleSchema.shape.value._def.innerType
+	export const valueSchema =
+		Shared.isMultipleSchema.shape.modelValue._def.innerType
 	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = Shared.propsSchema.merge(Shared.isMultipleSchema)
@@ -72,7 +73,8 @@ export namespace KottiFieldMultiSelect {
 }
 
 export namespace KottiFieldMultiSelectRemote {
-	export const valueSchema = Shared.isMultipleSchema.shape.value._def.innerType
+	export const valueSchema =
+		Shared.isMultipleSchema.shape.modelValue._def.innerType
 	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = Shared.propsSchema

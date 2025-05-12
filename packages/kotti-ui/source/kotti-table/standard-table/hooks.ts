@@ -223,7 +223,6 @@ export const useKottiStandardTable = <
 		}),
 	)
 
-	// eslint-disable-next-line @typescript-eslint/no-misused-promises
 	onBeforeMount(async () => {
 		const rawState = await storageAdapter.value.load(
 			storageOperationContext.value,
