@@ -98,7 +98,6 @@
 		/>
 		<KtTable
 			v-else
-			class="kt-standard-table__table"
 			:emptyText="emptyText"
 			:isLoading="isLoading"
 			:tableId="tableId"
@@ -354,15 +353,6 @@ export default defineComponent({
 
 	&__slot {
 		margin-left: auto;
-	}
-
-	&__table {
-		border: 1px solid var(--ui-02);
-		border-radius: var(--unit-2);
-
-		:deep(tr:last-child) {
-			border-bottom: none;
-		}
 	}
 
 	&__table-actions {
