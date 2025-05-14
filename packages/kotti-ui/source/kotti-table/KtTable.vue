@@ -369,6 +369,9 @@ export default defineComponent({
 }
 
 .kt-table {
+	border: 1px solid var(--ui-02);
+	border-radius: var(--unit-2);
+
 	&--is-scrollable {
 		overflow-x: scroll;
 		white-space: nowrap;
@@ -490,6 +493,10 @@ export default defineComponent({
 			tr {
 				position: relative;
 				border-bottom: 1px solid var(--ui-02);
+
+				&:last-child {
+					border-bottom: none;
+				}
 
 				&:hover .kt-table__actions {
 					display: inline-flex;
