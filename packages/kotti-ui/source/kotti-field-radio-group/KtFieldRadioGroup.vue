@@ -193,8 +193,7 @@ export default defineComponent({
 	}
 
 	&__input {
-		width: 0;
-		height: 0;
+		display: none;
 
 		&:focus + .kt-field-radio-group__radio {
 			outline: 1px solid var(--primary-50);
