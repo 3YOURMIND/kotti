@@ -79,6 +79,9 @@ export default defineComponent({
 	overflow-y: auto;
 
 	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--unit-4);
 		margin-bottom: var(--unit-4);
 	}
 

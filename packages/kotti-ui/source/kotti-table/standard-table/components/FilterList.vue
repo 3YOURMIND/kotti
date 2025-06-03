@@ -86,4 +86,9 @@ export default defineComponent({
 .filter-list :deep(.kt-field__wrapper) .kt-field__header__label__suffix {
 	display: none;
 }
+
+.filter-list :deep(.kt-field),
+.filter-list :deep(.kt-field-select) {
+	margin-bottom: 0;
+}
 </style>
