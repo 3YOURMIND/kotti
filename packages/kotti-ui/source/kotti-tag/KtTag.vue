@@ -1,8 +1,9 @@
 <template>
 	<div class="kt-tag">
+		<div v-if="label" class="kt-tag__label">{{ label }}:&nbsp;</div>
 		<div class="kt-tag__text" v-text="text" />
 		<div
-			v-if="!isDisabled"
+			v-if="!isDisabled && !hideActions"
 			class="kt-tag__icon"
 			@click.prevent.stop="$emit('close')"
 		>
@@ -76,6 +77,10 @@ export default defineComponent({
 		&:hover {
 			background-color: var(--interactive-02-hover);
 		}
+	}
+
+	&__label {
+		font-weight: bold;
 	}
 }
 </style>
