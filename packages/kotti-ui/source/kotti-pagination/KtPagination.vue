@@ -10,7 +10,7 @@
 			<component
 				:is="paginationComponent"
 				v-bind="paginationProps"
-				@setPage="setCurrentPage($event)"
+				@update:page="setCurrentPage($event)"
 			/>
 			<li :class="paginatorClasses(pageAmount)" @click="nextPage">
 				<i
@@ -42,20 +42,14 @@ export default defineComponent({
 		PaginationFractionated,
 	},
 	props: makeProps(KottiPagination.propsSchema),
-	emits: [
-		'currentPageChange',
-		'previousPageClicked',
-		'nextPageClicked',
-		'setPage',
-	],
+	emits: ['update:page'],
 	setup(props, { emit }) {
 		const pageAmount = computed(() => Math.ceil(props.total / props.pageSize))
 
 		return {
 			nextPage: () => {
 				if (props.page >= pageAmount.value) return
-				emit('nextPageClicked', props.page + 1)
-				emit('setPage', props.page + 1)
+				emit('update:page', props.page + 1)
 			},
 			pageAmount,
 			paginationComponent: computed(() => {
@@ -86,13 +80,11 @@ export default defineComponent({
 			}),
 			previousPage: () => {
 				if (props.page === 1) return
-				emit('previousPageClicked', props.page - 1)
-				emit('setPage', props.page - 1)
+				emit('update:page', props.page - 1)
 			},
 			setCurrentPage: (page: number) => {
 				if (page === props.page) return
-				emit('currentPageChange', page)
-				emit('setPage', page)
+				emit('update:page', page)
 			},
 			Yoco,
 		}

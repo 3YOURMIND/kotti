@@ -1,3 +1,5 @@
+import type { App } from 'vue'
+
 // styles
 import './kotti-style/index.scss'
 
@@ -93,29 +95,19 @@ import { KtRow } from './kotti-row'
 export * from './kotti-row'
 import { KtStandardTable, KtTable } from './kotti-table'
 export * from './kotti-table'
-import {
-	KtTableLegacy,
-	KtTableLegacyColumn,
-	KtTableLegacyConsumer,
-	KtTableLegacyProvider,
-} from './kotti-table-legacy'
-export * from './kotti-table-legacy'
 import { KtTag } from './kotti-tag'
 export * from './kotti-tag'
 import { KtToast, KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
-import type { VueConstructor } from 'vue'
-
 import { KtValueLabel } from './kotti-value-label'
 export * from './kotti-value-label'
 
 export * from './types'
 
 export default {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	install(Vue: VueConstructor): void {
+	install<T>(app: App<T>): void {
 		const components = [
 			KtAccordion,
 			KtActionbar,
@@ -167,10 +159,6 @@ export default {
 			KtStandardTable,
 			KtSplitButton,
 			KtTable,
-			KtTableLegacy,
-			KtTableLegacyColumn,
-			KtTableLegacyConsumer,
-			KtTableLegacyProvider,
 			KtTag,
 			KtToast,
 			KtToaster,
@@ -178,7 +166,7 @@ export default {
 			KtValueLabel,
 		]
 		for (const component of components) {
-			Vue.use(component)
+			app.use(component, {})
 		}
 	},
 }

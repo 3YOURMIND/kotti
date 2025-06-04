@@ -35,7 +35,7 @@
 							/>
 						</div>
 					</th>
-					<th v-if="$scopedSlots['actions']" class="kt-table__actions-column" />
+					<th v-if="$slots['actions']" class="kt-table__actions-column" />
 				</tr>
 			</thead>
 			<tbody>
@@ -64,8 +64,8 @@
 						</slot>
 					</td>
 				</tr>
-				<template v-for="(row, rowIndex) in bodyRows" v-else>
-					<tr :key="row.key" :class="row.classes">
+				<template v-for="(row, rowIndex) in bodyRows" v-else :key="row.key">
+					<tr :class="row.classes">
 						<td
 							v-for="cell in row.cells"
 							:key="cell.key"
@@ -116,10 +116,7 @@
 								/>
 							</div>
 						</td>
-						<td
-							v-else-if="$scopedSlots['actions']"
-							class="kt-table__actions-column"
-						>
+						<td v-else-if="$slots['actions']" class="kt-table__actions-column">
 							<div
 								class="kt-table__actions"
 								:class="{
@@ -131,7 +128,7 @@
 						</td>
 					</tr>
 					<tr
-						v-if="$scopedSlots['expanded-row'] && row.isExpanded"
+						v-if="$slots['expanded-row'] && row.isExpanded"
 						:key="row.expandedKey"
 					>
 						<td :colSpan="tableColSpan">
@@ -150,6 +147,7 @@
 
 <script lang="ts">
 import type { Header } from '@tanstack/table-core'
+import { FlexRender } from '@tanstack/vue-table'
 import classNames from 'classnames'
 import { computed, defineComponent } from 'vue'
 
@@ -161,7 +159,6 @@ import { makeProps } from '../make-props'
 import { useTableContext } from './table/context'
 import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './table/hooks'
 import { DEFAULT_CELL_WRAPPER, getCellWrapComponent } from './table/row'
-import { FlexRender } from './table/tanstack-table'
 import { KottiTable } from './table/types'
 
 const TRANSFER_TYPE = 'application/move-column'
@@ -187,7 +184,7 @@ export default defineComponent({
 			return event.dataTransfer?.types.includes(TRANSFER_TYPE) ?? false
 		}
 
-		const table = computed(() => tableContext.value.internal.table.value)
+		const table = computed(() => tableContext.value.internal.table)
 
 		return {
 			bodyRows: computed(() =>
