@@ -95,25 +95,54 @@
 									'kt-table__actions--is-disabled': row.isActionDisabled,
 								}"
 							>
-								<i
-									v-for="(action, index) in row.actions"
-									:key="index"
-									:class="{
-										yoco: true,
-										'kt-table__action-icon': true,
-										'kt-table__action-icon--is-disabled':
-											row.isActionDisabled || action.isDisabled,
-									}"
-									:data-test="action.dataTest"
-									@click="
-										() => {
-											if (action.isDisabled) return
+								<template v-for="(action, index) in row.actions">
+									<KtPopover
+										v-if="action.tooltip"
+										:key="index"
+										placement="top"
+										trigger="hover"
+									>
+										<i
+											:class="{
+												yoco: true,
+												'kt-table__action-icon': true,
+												'kt-table__action-icon--is-disabled':
+													row.isActionDisabled || action.isDisabled,
+											}"
+											:data-test="action.dataTest"
+											@click="
+												() => {
+													if (action.isDisabled) return
 
-											action.onClick()
-										}
-									"
-									v-text="action.icon"
-								/>
+													action.onClick()
+												}
+											"
+											v-text="action.icon"
+										/>
+										<template #content>
+											<span v-text="action.tooltip" />
+										</template>
+									</KtPopover>
+									<i
+										v-else
+										:key="index"
+										:class="{
+											yoco: true,
+											'kt-table__action-icon': true,
+											'kt-table__action-icon--is-disabled':
+												row.isActionDisabled || action.isDisabled,
+										}"
+										:data-test="action.dataTest"
+										@click="
+											() => {
+												if (action.isDisabled) return
+
+												action.onClick()
+											}
+										"
+										v-text="action.icon"
+									/>
+								</template>
 							</div>
 						</td>
 						<td
