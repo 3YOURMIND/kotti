@@ -99,6 +99,7 @@ export const paramsSchema = z
 										.function()
 										.args()
 										.returns(z.union([z.void(), z.promise(z.void())])),
+									tooltip: z.string().optional(),
 								})
 								.strict(),
 						)

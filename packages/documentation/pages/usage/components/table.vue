@@ -375,6 +375,7 @@ export default defineComponent({
 											// eslint-disable-next-line no-alert
 											window.alert('send icon clicked')
 										},
+										tooltip: 'Click to send',
 									},
 								]
 							: undefined,
