@@ -18,6 +18,7 @@ export type GetRowBehavior<
 		icon: z.input<typeof yocoIconSchema>
 		isDisabled?: boolean
 		onClick: () => Promise<void> | void
+		tooltip?: string
 	}[]
 	classes?: string[]
 	click?:
