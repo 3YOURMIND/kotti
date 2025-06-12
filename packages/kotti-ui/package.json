@@ -98,5 +98,5 @@
 	"style": "./dist/style.css",
 	"type": "module",
 	"types": "./dist/types/index.d.ts",
-	"version": "8.7.9"
+	"version": "8.7.10"
 }
