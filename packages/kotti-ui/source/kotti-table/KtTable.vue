@@ -610,6 +610,7 @@ export default defineComponent({
 	&__actions-column {
 		position: sticky;
 		right: 0;
+		padding: 0;
 
 		.kt-table__actions {
 			position: absolute;
