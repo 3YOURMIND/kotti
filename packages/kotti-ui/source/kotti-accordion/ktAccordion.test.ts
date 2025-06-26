@@ -14,7 +14,7 @@ describe('KtAccordion.vue', () => {
 
 	it('renders correctly (with props)', () => {
 		const wrapper = shallowMount(KtAccordion, {
-			propsData: {
+			props: {
 				dataTest: 'my-accordion',
 				icon: Yoco.Icon.BOOKMARK,
 				isClosed: true,

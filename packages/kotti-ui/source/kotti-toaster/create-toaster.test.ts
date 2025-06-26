@@ -1,4 +1,4 @@
-import { describe, expect, it, jest } from 'bun:test'
+import { describe, expect, it, vi } from 'vitest'
 
 import { createToaster } from './create-toaster'
 
@@ -45,7 +45,7 @@ describe('createToaster', () => {
 	})
 
 	describe('.abort()', () => {
-		it('can abort a toast', () => {
+		it('can abort a toast', async () => {
 			const toaster = createToaster()
 
 			const toast = toaster.show({ duration: 1, text: 'test' })
@@ -53,10 +53,10 @@ describe('createToaster', () => {
 				toaster.abort(toast.metadata.id)
 			}).not.toThrow()
 			expect(toast.metadata.abortController.signal.aborted).toBe(true)
-			expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
+			await expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
 		})
 
-		it('cannot abort an aborted toast', () => {
+		it('cannot abort an aborted toast', async () => {
 			const toaster = createToaster()
 
 			const toast = toaster.show({ duration: 1, text: 'test' })
@@ -64,26 +64,26 @@ describe('createToaster', () => {
 				toaster.abort(toast.metadata.id)
 			}).not.toThrow()
 			expect(toast.metadata.abortController.signal.aborted).toBe(true)
-			expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
+			await expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
 			expect(() => {
 				toaster.abort(toast.metadata.id)
 			}).toThrow()
 		})
 
-		it('cannot abort an already toasted toast', () => {
+		it('cannot abort an already toasted toast', async () => {
 			const toaster = createToaster({
 				animationFrame: createAnimationFrameMock(),
 			})
 			toaster._internal_pls_dont_touch.subscribe(() => {})
 
 			const toast = toaster.show({ duration: 1, text: 'test' })
-			expect(toast.done).resolves.toBe('deleted')
+			await expect(toast.done).resolves.toBe('deleted')
 			expect(() => {
 				toaster.abort(toast.metadata.id)
 			}).toThrow()
 		})
 
-		it('throws for unknown toasts', () => {
+		it('throws for unknown toasts', async () => {
 			const toaster = createToaster({
 				animationFrame: createAnimationFrameMock(),
 			})
@@ -95,7 +95,7 @@ describe('createToaster', () => {
 				'could not find toast in fifoToasterQueue with id “not-a-real-toast”',
 			)
 			expect(toast.metadata.abortController.signal.aborted).toBe(false)
-			expect(toast.done).resolves.toBe('deleted')
+			await expect(toast.done).resolves.toBe('deleted')
 		})
 	})
 
@@ -118,7 +118,7 @@ describe('createToaster', () => {
 	})
 
 	describe('.show()', () => {
-		it('can push', () => {
+		it('can push', async () => {
 			const toaster = createToaster({
 				animationFrame: createAnimationFrameMock(),
 			})
@@ -126,10 +126,10 @@ describe('createToaster', () => {
 			const toast = toaster.show({ duration: 1, text: 'example toast' })
 
 			expect(toast.text).toBe('example toast')
-			expect(toast.done).resolves.toBe('deleted')
+			await expect(toast.done).resolves.toBe('deleted')
 		})
 
-		it('correctly handles durations', () => {
+		it('correctly handles durations', async () => {
 			const toaster = createToaster({
 				animationFrame: createAnimationFrameMock(),
 			})
@@ -143,21 +143,25 @@ describe('createToaster', () => {
 				})
 
 			const fastToast = toaster.show({ duration: 1, text: 'fast toast' })
-			expect(Promise.race([fastToast.done, wait(10)])).resolves.toBe('deleted')
+			await expect(Promise.race([fastToast.done, wait(10)])).resolves.toBe(
+				'deleted',
+			)
 
 			const slowToast = toaster.show({ duration: 100, text: 'slow toast' })
-			expect(Promise.race([slowToast.done, wait(200)])).resolves.toBe('deleted')
+			await expect(Promise.race([slowToast.done, wait(200)])).resolves.toBe(
+				'deleted',
+			)
 
 			const superSlowToast = toaster.show({
 				duration: 500,
 				text: 'super slow toast',
 			})
-			expect(Promise.race([superSlowToast.done, wait(200)])).rejects.toThrow(
-				'timeout',
-			)
+			await expect(
+				Promise.race([superSlowToast.done, wait(200)]),
+			).rejects.toThrow('timeout')
 		})
 
-		it('can push custom data', () => {
+		it('can push custom data', async () => {
 			const custom = { testing: true }
 
 			const toaster = createToaster<{
@@ -175,10 +179,10 @@ describe('createToaster', () => {
 			})
 
 			expect(toast.custom).toEqual(custom)
-			expect(toast.done).resolves.toBe('deleted')
+			await expect(toast.done).resolves.toBe('deleted')
 		})
 
-		it('can push with metadata.id', () => {
+		it('can push with metadata.id', async () => {
 			const toaster = createToaster({
 				animationFrame: createAnimationFrameMock(),
 			})
@@ -190,10 +194,10 @@ describe('createToaster', () => {
 			})
 
 			expect(toast.metadata.id).toEqual('foo')
-			expect(toast.done).resolves.toBe('deleted')
+			await expect(toast.done).resolves.toBe('deleted')
 		})
 
-		it('can push with metadata.abortController', () => {
+		it('can push with metadata.abortController', async () => {
 			const toaster = createToaster({
 				animationFrame: createAnimationFrameMock(),
 			})
@@ -209,11 +213,11 @@ describe('createToaster', () => {
 				toast.abort()
 			}).not.toThrow()
 			expect(abortController.signal.aborted).toBe(true)
-			expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
+			await expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
 		})
 
 		describe('returns', () => {
-			it('.abort()', () => {
+			it('.abort()', async () => {
 				const toaster = createToaster({
 					animationFrame: createAnimationFrameMock(),
 				})
@@ -223,17 +227,17 @@ describe('createToaster', () => {
 				expect(toast.metadata.abortController.signal.aborted).toBe(false)
 				toast.abort()
 				expect(toast.metadata.abortController.signal.aborted).toBe(true)
-				expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
+				await expect(toast.done).rejects.toThrow('INTERNAL_ABORT')
 			})
 
-			it('supports await toast.done', () => {
+			it('supports await toast.done', async () => {
 				const toaster = createToaster({
 					animationFrame: createAnimationFrameMock(),
 				})
 				toaster._internal_pls_dont_touch.subscribe(() => {})
 				const toast = toaster.show({ duration: 10, text: '42' })
 
-				expect(toast.done).resolves.toBe('deleted')
+				await expect(toast.done).resolves.toBe('deleted')
 			})
 		})
 	})
@@ -266,7 +270,7 @@ describe('createToaster', () => {
 				const toaster = createToaster({
 					animationFrame: createAnimationFrameMock(),
 				})
-				const handler = jest.fn()
+				const handler = vi.fn()
 
 				toaster._internal_pls_dont_touch.subscribe(handler)
 
@@ -279,7 +283,7 @@ describe('createToaster', () => {
 				const toaster = createToaster({
 					animationFrame: createAnimationFrameMock(),
 				})
-				const handler = jest.fn()
+				const handler = vi.fn()
 
 				toaster.show({ text: 'test' })
 
@@ -319,7 +323,7 @@ describe('createToaster', () => {
 				const toaster = createToaster({
 					animationFrame: createAnimationFrameMock(),
 				})
-				const handler = jest.fn()
+				const handler = vi.fn()
 
 				const toast1 = toaster.show({ duration: 50, text: 'test' })
 				const toast2 = toaster.show({ duration: 50, text: 'test 2' })
@@ -344,7 +348,7 @@ describe('createToaster', () => {
 		describe('.unsubscribe()', () => {
 			it('can unsubscribe', () => {
 				const toaster = createToaster()
-				const handler = jest.fn()
+				const handler = vi.fn()
 
 				toaster._internal_pls_dont_touch.subscribe(handler)
 				toaster._internal_pls_dont_touch.unsubscribe()
