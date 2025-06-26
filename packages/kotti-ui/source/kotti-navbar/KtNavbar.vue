@@ -239,7 +239,6 @@ $narrow-navbar-width: 3.4rem;
 	&__header {
 		flex: 0 0 auto;
 		cursor: pointer;
-		border-bottom: 1px solid var(--kt-navbar-border);
 	}
 
 	&__body {
@@ -341,7 +340,6 @@ $narrow-navbar-width: 3.4rem;
 			justify-content: center;
 			width: auto;
 			padding: 0.2rem 0;
-			border: 0;
 		}
 
 		&__footer {
