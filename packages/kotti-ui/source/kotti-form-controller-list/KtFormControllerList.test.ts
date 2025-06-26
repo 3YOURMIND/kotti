@@ -77,14 +77,14 @@ describe('KtFormControllerList', () => {
 				},
 				formProps: {
 					hideValidation: true,
+					modelValue: {
+						parentKey: [{ testKey: 'testName1' }, { testKey: 'testName2' }],
+					},
 					validators: {
 						testKey: (v: unknown) =>
 							v === 'testName1'
 								? { text: 'test1', type: 'error' }
 								: { type: 'empty' },
-					},
-					value: {
-						parentKey: [{ testKey: 'testName1' }, { testKey: 'testName2' }],
 					},
 				},
 			},
@@ -109,7 +109,7 @@ describe('KtFormControllerList', () => {
 				},
 				formProps: {
 					hideValidation: true,
-					value: {
+					modelValue: {
 						parentKey: [
 							{ somethingElse: true, testKey: 'testName1a' },
 							{ somethingElse: false, testKey: 'testName2a' },
@@ -153,7 +153,7 @@ describe('KtFormControllerList', () => {
 		it('hideValidation', async () => {
 			const FORM_PROPS = {
 				hideValidation: false,
-				value: {
+				modelValue: {
 					parentKey: [
 						{ somethingElse: true, testKey: 'testName1b' },
 						{ somethingElse: false, testKey: 'testName2a' },

@@ -93,7 +93,7 @@ describe('useField', () => {
 		const wrapper = shallowMount(TestComponentObject, {
 			props: {
 				label: 'Test_Component_Object',
-				value: VALUE_REFERENCE,
+				modelValue: VALUE_REFERENCE,
 			} as any,
 		})
 
@@ -153,17 +153,22 @@ describe('useField', () => {
 
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.emitted().input).toEqual([['something else'], [null]])
+			expect(wrapper.emitted('update:modelValue')).toEqual([
+				['something else'],
+				[null],
+			])
 		})
 
-		it('context should emit when when calling setValue inside a context', () => {
+		it('context should emit when calling setValue inside a context', () => {
 			const context = getMockContext({ values: { testKey: 'something' } })
 
 			const wrapper = shallowMount(TestComponent, {
-				props: { formKey: 'testKey' } as any,
-				provide: {
-					[KT_FORM_CONTEXT]: context,
+				global: {
+					provide: {
+						[KT_FORM_CONTEXT]: context,
+					},
 				},
+				props: { formKey: 'testKey' } as any,
 			})
 
 			wrapper.vm.field.setValue('something else')
@@ -204,10 +209,12 @@ describe('useField', () => {
 	it('doesn’t throw when formKey is NONE and context is provided', () => {
 		expect(() =>
 			shallowMount(TestComponent, {
-				props: { formKey: FORM_KEY_NONE } as any,
-				provide: {
-					[KT_FORM_CONTEXT]: getMockContext(),
+				global: {
+					provide: {
+						[KT_FORM_CONTEXT]: getMockContext(),
+					},
 				},
+				props: { formKey: FORM_KEY_NONE } as any,
 			}),
 		).not.toThrow()
 	})
@@ -216,9 +223,9 @@ describe('useField', () => {
 		it('works with only props.validator', async () => {
 			const wrapper = shallowMount(TestComponent, {
 				props: {
-					validator: () => ({ text: 'Testing', type: 'success' }),
-					value: `as long as it has a value, or is Optional, validator
+					modelValue: `as long as it has a value, or is Optional, validator
 					won't throw internal error about a missing required filed`,
+					validator: () => ({ text: 'Testing', type: 'success' }),
 				} as any,
 			})
 
@@ -239,22 +246,24 @@ describe('useField', () => {
 
 		it('works with only formKey in a context', async () => {
 			const wrapper = shallowMount(TestComponent, {
-				props: { formKey: 'testKey1' } as any,
-				provide: {
-					[KT_FORM_CONTEXT]: getMockContext({
-						validators: {
-							testKey1: () => ({
-								text: 'This is testKey1',
-								type: 'warning',
-							}),
-							testKey2: () => ({
-								text: 'This is testKey2',
-								type: 'warning',
-							}),
-						},
-						values: { testKey1: 'something1', testKey2: 'something2' },
-					}),
+				global: {
+					provide: {
+						[KT_FORM_CONTEXT]: getMockContext({
+							validators: {
+								testKey1: () => ({
+									text: 'This is testKey1',
+									type: 'warning',
+								}),
+								testKey2: () => ({
+									text: 'This is testKey2',
+									type: 'warning',
+								}),
+							},
+							values: { testKey1: 'something1', testKey2: 'something2' },
+						}),
+					},
 				},
+				props: { formKey: 'testKey1' } as any,
 			})
 
 			expect(wrapper.vm.field.validation).toEqual({
@@ -274,13 +283,15 @@ describe('useField', () => {
 			const testKey = vi.fn()
 
 			const wrapper = shallowMount(TestComponent, {
-				props: { formKey: 'wrongKey' } as any,
-				provide: {
-					[KT_FORM_CONTEXT]: getMockContext({
-						validators: { testKey },
-						values: { wrongKey: 'something' },
-					}),
+				global: {
+					provide: {
+						[KT_FORM_CONTEXT]: getMockContext({
+							validators: { testKey },
+							values: { wrongKey: 'something' },
+						}),
+					},
 				},
+				props: { formKey: 'wrongKey' } as any,
 			})
 
 			expect(testKey).not.toHaveBeenCalled()
