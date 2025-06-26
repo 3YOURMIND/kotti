@@ -83,13 +83,13 @@ const TestForm2 = {
 const getField = (
 	wrapper: VueWrapper<any>,
 ): KottiField.Hook.Returns<Record<string, unknown> | string | null> =>
-	wrapper.vm.$children[0].$children[0].field
+	wrapper.findAllComponents({ name: 'KtField' }).at(0)?.vm.field
 
 describe('KtForm', () => {
 	it('provides a context', () => {
 		const wrapper = mount(TestForm, {
 			props: {
-				value: { testKey: 'testing' },
+				modelValue: { testKey: 'testing' },
 			},
 		})
 
@@ -101,7 +101,7 @@ describe('KtForm', () => {
 	it('emits on setValue', async () => {
 		const wrapper = mount(TestForm, {
 			props: {
-				value: { testKey: 'testing' },
+				modelValue: { testKey: 'testing' },
 			},
 		})
 
@@ -113,7 +113,9 @@ describe('KtForm', () => {
 
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted().input).toEqual([[{ testKey: 'new value' }]])
+		expect(wrapper.emitted('update:modelValue')).toEqual([
+			[{ testKey: 'new value' }],
+		])
 
 		expect(field.currentValue).toBe('testing')
 	})
@@ -124,7 +126,7 @@ describe('KtForm', () => {
 
 			const wrapper = mount(TestForm2, {
 				props: {
-					value: { testKey: DEEP_VALUE_REFERENCE },
+					modelValue: { testKey: DEEP_VALUE_REFERENCE },
 				},
 			})
 
@@ -139,7 +141,7 @@ describe('KtForm', () => {
 
 			const wrapper = mount(TestForm, {
 				props: {
-					value: VALUE_REFERENCE,
+					modelValue: VALUE_REFERENCE,
 				},
 			})
 
@@ -163,7 +165,7 @@ describe('KtForm', () => {
 			const wrapper = mount(TestForm, {
 				props: {
 					hideValidation: false,
-					value: { testKey: 'testing' },
+					modelValue: { testKey: 'testing' },
 				},
 			})
 
@@ -179,8 +181,8 @@ describe('KtForm', () => {
 		it('validators', async () => {
 			const wrapper = mount(TestForm, {
 				props: {
+					modelValue: { testKey: 'testing' },
 					validators: {},
-					value: { testKey: 'testing' },
 				},
 			})
 
@@ -203,7 +205,7 @@ describe('KtForm', () => {
 		it('value', async () => {
 			const wrapper = mount(TestForm, {
 				props: {
-					value: { testKey: 'testing' },
+					modelValue: { testKey: 'testing' },
 				},
 			})
 
@@ -211,7 +213,7 @@ describe('KtForm', () => {
 
 			expect(field.currentValue).toEqual('testing')
 
-			await wrapper.setProps({ value: { testKey: null } })
+			await wrapper.setProps({ modelValue: { testKey: null } })
 
 			expect(field.currentValue).toEqual(null)
 		})
