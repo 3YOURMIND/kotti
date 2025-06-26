@@ -75,8 +75,8 @@ describe('KtFormControllerObject', () => {
 				controllerProps: { formKey: 'parentKey' },
 				formProps: {
 					hideValidation: true,
+					modelValue: { parentKey: { testKey: 'something' } },
 					validators: { testKey: () => ({ type: 'empty' }) },
-					value: { parentKey: { testKey: 'something' } },
 				},
 			},
 		})
@@ -94,10 +94,10 @@ describe('KtFormControllerObject', () => {
 				controllerProps: { formKey: 'parentKey' },
 				formProps: {
 					hideValidation: true,
+					modelValue: { parentKey: { testKey: 'something' } },
 					validators: {
 						testKey: () => ({ type: 'empty' }),
 					},
-					value: { parentKey: { testKey: 'something' } },
 				},
 			},
 		})
@@ -116,7 +116,7 @@ describe('KtFormControllerObject', () => {
 		it('hideValidation', async () => {
 			const FORM_PROPS = {
 				hideValidation: false,
-				value: {
+				modelValue: {
 					parentKey: { testKey: 'something' },
 				},
 			}
