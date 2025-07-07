@@ -165,16 +165,7 @@ export default defineComponent({
 					}
 				}
 
-				&--is-off:not(.kt-field-toggle-inner--is-disabled) {
-					.kt-field-toggle-box {
-						@include toggle-colors(transparent);
-
-						&:hover {
-							@include toggle-colors(transparent);
-						}
-					}
-				}
-
+				&--is-off:not(.kt-field-toggle-inner--is-disabled),
 				&--is-on:not(.kt-field-toggle-inner--is-disabled) {
 					.kt-field-toggle-box {
 						/* stylelint-disable */
