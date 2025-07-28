@@ -26,4 +26,4 @@ export const formatExtensions = (
  * @returns Formatted file size string
  */
 export const formatFileSize = (fileSize: number, round = 1): string =>
-	filesize(fileSize, { round, standard: 'iec' })
+	filesize(fileSize, { round })
