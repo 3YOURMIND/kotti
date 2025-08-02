@@ -19,8 +19,8 @@ export namespace KottiFieldCurrency {
 			currency: z.string(),
 			maximum: z.number().nullable().default(null),
 			minimum: z.number().nullable().default(null),
-			placeholder: z.string().nullable().default(null),
 			modelValue: valueSchema.default(null),
+			placeholder: z.string().nullable().default(null),
 		})
 
 	export type Props = z.input<typeof propsSchema>

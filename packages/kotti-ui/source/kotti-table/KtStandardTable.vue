@@ -70,7 +70,7 @@
 					v-for="({ label, value }, index) in filterTags"
 					:key="index"
 					class="kt-standard-table__applied-filter-tag"
-					hideActions
+					isDisabled
 					:label="label"
 					:text="value"
 				/>

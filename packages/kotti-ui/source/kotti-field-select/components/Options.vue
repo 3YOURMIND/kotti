@@ -73,8 +73,8 @@ const propsSchema = z.object({
 	isMultiple: z.boolean().default(false),
 	isUnsorted: z.boolean().default(false),
 	maximumSelectable: z.number().int().min(0),
-	options: z.array(Shared.optionSchema),
 	modelValue: z.array(Shared.valueSchema),
+	options: z.array(Shared.optionSchema),
 })
 
 type ModifiedAction = z.output<

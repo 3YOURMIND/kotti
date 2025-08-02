@@ -14,20 +14,19 @@ type Component = {
 	props?: Record<
 		string,
 		| {
-				default: (() => unknown) | unknown
-				required: false | undefined
+				default: undefined
+				required: true
 				type: PropType<unknown>
 		  }
 		| {
-				default: undefined
-				required: true
+				default: unknown
+				required: false | undefined
 				type: PropType<unknown>
 		  }
 	>
 }
 
 type PropFormatter = (value: unknown) => string[]
-type SlotFormatter = () => string[]
 
 type Slot = {
 	content: string[]
@@ -324,8 +323,7 @@ export default defineComponent({
 }
 
 .language {
-	font-family:
-		SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-		monospace;
+	font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+		'Courier New', monospace;
 }
 </style>

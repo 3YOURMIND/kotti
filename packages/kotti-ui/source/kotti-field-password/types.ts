@@ -18,9 +18,9 @@ export namespace KottiFieldPassword {
 		)
 		.extend({
 			autoComplete: createLooseZodEnumSchema(AutoComplete),
+			modelValue: valueSchema.default(null),
 			placeholder: z.string().nullable().default(null),
 			showVisibilityToggle: z.boolean().default(false),
-			modelValue: valueSchema.default(null),
 		})
 
 	export type Props = z.input<typeof propsSchema>

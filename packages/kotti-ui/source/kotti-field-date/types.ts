@@ -52,6 +52,7 @@ export namespace KottiFieldDate {
 	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
+		modelValue: valueSchema.default(null),
 		placeholder: z.string().nullable().default(null),
 		shortcuts: z
 			.array(
@@ -60,7 +61,6 @@ export namespace KottiFieldDate {
 				}),
 			)
 			.default(() => []),
-		modelValue: valueSchema.default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -75,6 +75,7 @@ export namespace KottiFieldDateRange {
 	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
+		modelValue: valueSchema.default((): [null, null] => [null, null]),
 		placeholder: z
 			.tuple([z.string().nullable(), z.string().nullable()])
 			.default((): [null, null] => [null, null]),
@@ -88,7 +89,6 @@ export namespace KottiFieldDateRange {
 				}),
 			)
 			.default(() => []),
-		modelValue: valueSchema.default((): [null, null] => [null, null]),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -100,6 +100,7 @@ export namespace KottiFieldDateTime {
 	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
+		modelValue: valueSchema.default(null),
 		placeholder: z.string().nullable().default(null),
 		shortcuts: z
 			.array(
@@ -108,7 +109,6 @@ export namespace KottiFieldDateTime {
 				}),
 			)
 			.default(() => []),
-		modelValue: valueSchema.default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -123,6 +123,7 @@ export namespace KottiFieldDateTimeRange {
 	export type Value = z.output<typeof valueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
+		modelValue: valueSchema.default((): [null, null] => [null, null]),
 		placeholder: z
 			.tuple([z.string().nullable(), z.string().nullable()])
 			.default((): [null, null] => [null, null]),
@@ -136,7 +137,6 @@ export namespace KottiFieldDateTimeRange {
 				}),
 			)
 			.default(() => []),
-		modelValue: valueSchema.default((): [null, null] => [null, null]),
 	})
 
 	export type Props = z.input<typeof propsSchema>
