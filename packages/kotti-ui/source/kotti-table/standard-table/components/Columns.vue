@@ -20,10 +20,13 @@
 				>
 					<KtFieldToggle
 						isOptional
-						:value="value[option.key] || false"
-						@input="
+						:modelValue="value[option.key] || false"
+						@update:modelValue="
 							(isChecked) =>
-								$emit('input', { ...value, [option.key]: isChecked })
+								$emit('update:columnVisibility', {
+									...value,
+									[option.key]: isChecked,
+								})
 						"
 					>
 						<span v-text="option.label" />
@@ -59,24 +62,26 @@ export default defineComponent({
 		MenuOptionItem,
 	},
 	props: {
+		columnVisibility: {
+			required: true,
+			type: Object as PropType<Record<string, boolean>>,
+		},
 		isLoading: { default: false, type: Boolean },
 		options: {
 			required: true,
 			type: Array as PropType<{ key: string; label: string }[]>,
 		},
 		size: { default: 'md', type: String },
-		value: {
-			required: true,
-			type: Object as PropType<Record<string, boolean>>,
-		},
 	},
-	emits: ['input', 'showAll'],
+	emits: ['update:columnVisibility', 'showAll'],
 	setup(props) {
 		return {
 			isShowAllDisabled: computed(
 				(): boolean =>
 					props.isLoading ||
-					Object.values(props.value).every((optionValue) => optionValue),
+					Object.values(props.columnVisibility).every(
+						(optionValue) => optionValue,
+					),
 			),
 			translations: useTranslationNamespace('KtStandardTable'),
 			Yoco,

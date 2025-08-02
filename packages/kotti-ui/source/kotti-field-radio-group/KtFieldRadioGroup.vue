@@ -72,7 +72,7 @@ export default defineComponent({
 	props: makeProps(KottiFieldRadioGroup.propsSchema),
 	emits: ['update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldRadioGroup.Value>({
+		const field = useField<KottiFieldRadioGroup.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,

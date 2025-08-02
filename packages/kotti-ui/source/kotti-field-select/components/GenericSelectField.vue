@@ -123,12 +123,12 @@ const propsSchema = Shared.propsSchema
 	})
 
 type MultiValue =
-	| KottiFieldMultiSelect.Value
-	| KottiFieldMultiSelectRemote.Value
+	| KottiFieldMultiSelect.ModelValue
+	| KottiFieldMultiSelectRemote.ModelValue
 
 type SingleValue =
-	| KottiFieldSingleSelect.Value
-	| KottiFieldSingleSelectRemote.Value
+	| KottiFieldSingleSelect.ModelValue
+	| KottiFieldSingleSelectRemote.ModelValue
 
 export default defineComponent({
 	name: 'GenericSelectField',

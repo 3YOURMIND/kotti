@@ -59,7 +59,7 @@ export default defineComponent({
 	props: makeProps(KottiFieldTextArea.propsSchema),
 	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldTextArea.Value>({
+		const field = useField<KottiFieldTextArea.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,

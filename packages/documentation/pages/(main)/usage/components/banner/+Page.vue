@@ -2,6 +2,12 @@
 	<div>
 		<ComponentInfo v-bind="{ component }" />
 
+		<p>
+			The <code>KtBanner</code> component is a versatile alert box used for
+			communicating important application-level or contextual information, such
+			as errors, warnings, or success messages.
+		</p>
+
 		<!-- eslint-disable vue/no-useless-v-bind -->
 		<!-- prettier-ignore -->
 		<CodePreview
@@ -44,7 +50,7 @@
 				action="Action"
 				isCloseable
 				text="You can close this banner. We do not know why you would do that but you can. You can close this banner. We do not know why you would do that but you can. You can close this banner. We do not know why you would do that but you can."
-				:type="type"
+				type="info"
 				@action="onAction"
 				@close="onClose"
 			/>
@@ -137,6 +143,7 @@ import { Yoco } from '@3yourmind/yoco'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsBanner',
@@ -148,21 +155,16 @@ export default defineComponent({
 	},
 	setup() {
 		const closed = ref(false)
-		const type = ref('success')
 
 		return {
 			closed,
 			component: KtBanner,
 			onAction: () => {
-				type.value = ['success', 'warning', 'error', 'info'][
-					// eslint-disable-next-line no-magic-numbers
-					Math.floor(Math.random() * 4)
-				]
+				info({ text: 'Banner action was clicked' })
 			},
 			onClose: () => {
 				closed.value = !closed.value
 			},
-			type,
 			Yoco,
 		}
 	},

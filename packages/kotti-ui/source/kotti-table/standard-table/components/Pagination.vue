@@ -13,7 +13,7 @@
 				:pageSize="pageSize"
 				pagingStyle="flex"
 				:total="rowCount"
-				@setPage="(value: number) => $emit('updatePageIndex', value - 1)"
+				@setPage="(value: number) => $emit('update:pageIndex', value - 1)"
 			/>
 		</template>
 	</div>
@@ -38,7 +38,7 @@ export default defineComponent({
 			type: Number as PropType<number | null>,
 		},
 	},
-	emits: ['updatePageIndex'],
+	emits: ['update:pageIndex'],
 	setup(props) {
 		const translations = useTranslationNamespace('KtStandardTable')
 

@@ -19,19 +19,19 @@ export namespace KottiFieldToggle {
 			})
 	}
 
-	export const valueSchema = z.boolean().nullable()
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = z.boolean().nullable()
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
-		value: valueSchema.default(null),
+		modelValue: modelValueSchema.default(null),
 	})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
 }
 
 export namespace KottiFieldToggleGroup {
-	export const valueSchema = z.record(z.boolean().nullable()).nullable()
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = z.record(z.boolean().nullable()).nullable()
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const entrySchema = z.object({
 		dataTest: z.string().optional(),
@@ -44,6 +44,7 @@ export namespace KottiFieldToggleGroup {
 
 	export const propsSchema = KottiFieldToggle.Shared.propsSchema.extend({
 		isInline: z.boolean().default(false),
+		modelValue: modelValueSchema.default(null),
 		options: z
 			.array(entrySchema)
 			.refine(...refinementNonEmpty)
@@ -52,7 +53,6 @@ export namespace KottiFieldToggleGroup {
 					new Set(options.map(({ key }) => key)).size === options.length,
 				{ message: 'options need to be unique by `key`' },
 			),
-		value: valueSchema.default(null),
 	})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>

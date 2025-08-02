@@ -6,10 +6,10 @@
 			dataTest="table-page-size-selector"
 			hideClear
 			:isLoading="isLoading"
+			:modelValue="pageSize"
 			:options="options"
 			size="small"
-			:value="pageSize"
-			@input="$emit('updatePageSize', $event)"
+			@input="$emit('update:pageSize', $event)"
 		/>
 	</div>
 </template>
@@ -27,7 +27,7 @@ export default defineComponent({
 		pageSize: { required: true, type: Number },
 		pageSizeOptions: { required: true, type: Array as PropType<number[]> },
 	},
-	emits: ['updatePageSize'],
+	emits: ['update:pageSize'],
 	setup(props) {
 		return {
 			options: computed<KottiFieldSingleSelect.Props['options']>(() =>
