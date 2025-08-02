@@ -26,5 +26,7 @@ export default defineComponent({
 </script>
 
 <template>
-	<slot />
+	<div>
+		<slot />
+	</div>
 </template>

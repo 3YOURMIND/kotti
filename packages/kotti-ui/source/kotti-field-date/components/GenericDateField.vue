@@ -187,21 +187,23 @@ import { Shared } from '../types'
 import FieldTime from './FieldTime.vue'
 
 type AnyDateValue =
-	| KottiFieldDate.Value
-	| KottiFieldDateRange.Value
-	| KottiFieldDateTime.Value
-	| KottiFieldDateTimeRange.Value
+	| KottiFieldDate.ModelValue
+	| KottiFieldDateRange.ModelValue
+	| KottiFieldDateTime.ModelValue
+	| KottiFieldDateTimeRange.ModelValue
 
-type SingleDateValue = KottiFieldDate.Value | KottiFieldDateTime.Value
+type SingleDateValue = KottiFieldDate.ModelValue | KottiFieldDateTime.ModelValue
 
-type RangeDateValue = KottiFieldDateRange.Value | KottiFieldDateTimeRange.Value
+type RangeDateValue =
+	| KottiFieldDateRange.ModelValue
+	| KottiFieldDateTimeRange.ModelValue
 
 type InternalRangeValue = [Date | null, Date | null]
 type InternalDateValue = Date | null
 type InternalValue = InternalDateValue | InternalRangeValue
 
 export default defineComponent({
-	name: 'KtFieldDateTimeRange',
+	name: 'GenericDateField',
 	components: {
 		FieldTime,
 		KtButton,
@@ -212,6 +214,10 @@ export default defineComponent({
 		...makeProps(Shared.propsSchema),
 		hasTime: { default: false, type: Boolean },
 		isRange: { default: false, type: Boolean },
+		modelValue: {
+			required: true,
+			type: [String, Array, null] as PropType<AnyDateValue>,
+		},
 		placeholder: {
 			required: true,
 			type: [String, Array, null] as PropType<
@@ -224,11 +230,8 @@ export default defineComponent({
 				Array<{ label: string; value: [string, string] | string }>
 			>,
 		},
-		value: {
-			required: true,
-			type: [String, Array, null] as PropType<AnyDateValue>,
-		},
 	},
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		const isInPopover = inject(KT_IS_IN_POPOVER, false)
 

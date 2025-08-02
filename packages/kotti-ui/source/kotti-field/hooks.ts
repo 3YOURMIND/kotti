@@ -101,7 +101,7 @@ const useValue = <DATA_TYPE>({
 					'formKey',
 				)
 		},
-		{ flush: 'post', immediate: true },
+		{ flush: 'sync', immediate: true },
 	)
 
 	// fetch value
@@ -234,8 +234,8 @@ const useInheritableProperties = <DATA_TYPE>({
 
 	return {
 		hideClear: useShared('hideClear', false),
-		hideValidation: computed(() =>
-			isLoading.value ? true : useShared('hideValidation', false).value,
+		hideValidation: computed(
+			() => isLoading.value || useShared('hideValidation', false).value,
 		),
 		isDisabled: useShared('isDisabled', false),
 		isLoading,

@@ -394,13 +394,13 @@ export default defineComponent({
 			name: 'James',
 		})
 		const settings = ref<{
-			allowInternal: Kotti.FieldToggle.Value
-			dataTest: Kotti.FieldText.Value
-			forceInternal: Kotti.FieldToggle.Value
-			isReadOnly: Kotti.FieldToggle.Value
+			allowInternal: Kotti.FieldToggle.ModelValue
+			dataTest: Kotti.FieldText.ModelValue
+			forceInternal: Kotti.FieldToggle.ModelValue
+			isReadOnly: Kotti.FieldToggle.ModelValue
 			locale: Kotti.I18n.SupportedLanguages
-			placeholder: Kotti.FieldText.Value
-			tabIndex: Kotti.FieldNumber.Value
+			placeholder: Kotti.FieldText.ModelValue
+			tabIndex: Kotti.FieldNumber.ModelValue
 		}>({
 			allowInternal: true,
 			dataTest: null,

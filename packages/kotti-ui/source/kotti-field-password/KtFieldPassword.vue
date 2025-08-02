@@ -32,7 +32,7 @@ export default defineComponent({
 	props: makeProps(KottiFieldPassword.propsSchema),
 	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldPassword.Value>({
+		const field = useField<KottiFieldPassword.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,

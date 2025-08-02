@@ -14,26 +14,6 @@ import {
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 
-// const DEFAULT_SLOT_CONTENT = 'Default slot content'
-
-// componentCode: computed(() =>
-// 	generateComponentCode({
-// 		contentSlot: null,
-// 		defaultSlot: settings.value.hasDefaultSlot
-// 			? DEFAULT_SLOT_CONTENT
-// 			: null,
-// 		hasActions: false,
-// 		hasHelpTextSlot: settings.value.hasHelpTextSlot,
-// 		hasOptionSlot: false,
-// 		hasRemoteUpload: false,
-// 		headerSlot: null,
-// 		name: 'KtValueLabel',
-// 		props: cloneDeep(componentProps.value),
-// 		showHeaderSideSlot: false,
-// 		validation: 'empty',
-// 	}),
-// ),
-
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsValueLabel',
 	components: {

@@ -14,20 +14,19 @@ type Component = {
 	props?: Record<
 		string,
 		| {
-				default: (() => unknown) | unknown
-				required: false | undefined
+				default: undefined
+				required: true
 				type: PropType<unknown>
 		  }
 		| {
-				default: undefined
-				required: true
+				default: unknown
+				required: false | undefined
 				type: PropType<unknown>
 		  }
 	>
 }
 
 type PropFormatter = (value: unknown) => string[]
-type SlotFormatter = () => string[]
 
 type Slot = {
 	content: string[]
@@ -263,6 +262,8 @@ export default defineComponent({
 </template>
 
 <style lang="scss" module>
+@import '@3yourmind/kotti-ui/dist/variables.scss';
+
 .code,
 .value {
 	> * {
@@ -303,9 +304,21 @@ export default defineComponent({
 		flex: 1;
 		flex-basis: 0;
 		padding: var(--unit-3) var(--unit-6);
+	}
 
-		&:not(:last-child) {
-			border-right: 1px solid var(--gray-20);
+	@media (width < $size-md) {
+		flex-direction: column;
+
+		> *:not(:last-child) {
+			border-bottom: 1px solid var(--ui-02);
+		}
+	}
+
+	@media (width >= $size-md) {
+		flex-direction: row;
+
+		> *:not(:last-child) {
+			border-right: 1px solid var(--ui-02);
 		}
 	}
 }

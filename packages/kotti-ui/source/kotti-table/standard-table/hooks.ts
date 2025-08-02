@@ -278,7 +278,7 @@ export const useKottiStandardTable = <
 						pageSize,
 					}
 				},
-				setSearchValue: (search: KottiFieldText.Value) => {
+				setSearchValue: (search: KottiFieldText.ModelValue) => {
 					searchValue.value = search
 				},
 			},

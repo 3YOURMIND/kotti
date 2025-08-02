@@ -68,7 +68,7 @@ export default defineComponent({
 	props: makeProps(KottiFieldToggle.propsSchema),
 	emits: ['update:modelValue'],
 	setup(props, { emit, slots }) {
-		const field = useField<KottiFieldToggle.Value>({
+		const field = useField<KottiFieldToggle.ModelValue>({
 			emit,
 			isEmpty: (value) => value !== true,
 			props,
