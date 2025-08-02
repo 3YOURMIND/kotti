@@ -13,7 +13,7 @@ export const useAdjustHeight = ({
 	inputRef: _inputRef,
 	props,
 }: {
-	field: KottiField.Hook.Returns<KottiFieldInlineEdit.Value>
+	field: KottiField.Hook.Returns<KottiFieldInlineEdit.ModelValue>
 	inputRef: Ref<Nullable<FieldInlineEditElement>>
 	props: KottiFieldInlineEdit.PropsInternal
 }): void => {
@@ -43,7 +43,7 @@ export const usePreventConfirm = ({
 	field,
 	props,
 }: {
-	field: KottiField.Hook.Returns<KottiFieldInlineEdit.Value>
+	field: KottiField.Hook.Returns<KottiFieldInlineEdit.ModelValue>
 	props: KottiFieldInlineEdit.PropsInternal
 }): {
 	preventConfirm: ComputedRef<boolean>

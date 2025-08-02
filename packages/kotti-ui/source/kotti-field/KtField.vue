@@ -175,7 +175,7 @@ export default defineComponent({
 		const valueVisibility = ref(false)
 		const validationType = computed(() => props.field.validation.type)
 		const showValidation = computed(
-			() => !(props.field.hideValidation || validationType.value === 'empty'),
+			() => !props.field.hideValidation && validationType.value !== 'empty',
 		)
 
 		const { clickInput, focusInput } = useInput(inputId.value)

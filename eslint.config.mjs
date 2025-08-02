@@ -96,14 +96,12 @@ const config = tseslint.config(
 	...eslintConfig3YD.configs.json,
 	...eslintConfig3YD.configs.tests.map((config) => ({
 		...config,
-		files: [...config.files, 'packages/kotti-ui/source/test-utils/**/*.ts'],
+		files: [
+			...(config.files ?? []),
+			'packages/kotti-ui/source/test-utils/**/*.ts',
+		],
 	})),
-	{
-		extends: eslintConfig3YD.configs.vue,
-		rules: {
-			'vue/no-deprecated-dollar-listeners-api': 'error',
-		},
-	},
+	...eslintConfig3YD.configs.vue,
 	{
 		rules: {
 			'@typescript-eslint/no-restricted-imports': [

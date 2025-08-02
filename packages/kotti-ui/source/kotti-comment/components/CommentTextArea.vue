@@ -14,7 +14,7 @@
 				:placeholder="placeholder"
 				rows="1"
 				:tabindex="tabIndex"
-				:value="value"
+				:value="modelValue"
 				@input="onInput"
 			/>
 			<div class="kt-comment-text-area__actions">

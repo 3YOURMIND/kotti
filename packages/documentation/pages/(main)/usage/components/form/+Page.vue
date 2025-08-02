@@ -63,7 +63,7 @@
 				</div>
 			</KtForm>
 			<KtForm
-				v-model:value="values"
+				v-model="values"
 				v-bind="settings.booleanFlags"
 				:preventSubmissionOn="settings.preventSubmissionOn"
 				:size="settings.size"
@@ -100,7 +100,7 @@
 								formKey="NONE"
 								hideClear
 								label="Full Name"
-								:value="
+								:modelValue="
 									(formObjectValues.firstNameFirst
 										? [formObjectValues.firstName, formObjectValues.lastName]
 										: [formObjectValues.lastName, formObjectValues.firstName]
@@ -111,7 +111,7 @@
 								formKey="NONE"
 								isOptional
 								label="Show First Name First"
-								:value="formObjectValues.firstNameFirst"
+								:modelValue="formObjectValues.firstNameFirst"
 								@input="
 									setValues({
 										...formObjectValues,
@@ -303,7 +303,7 @@ import {
 } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
-import { success } from '~/utilities/toaster'
+import { info } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsForm',
@@ -359,7 +359,7 @@ export default defineComponent({
 			onSubmit: (event: Kotti.Form.Events.Submit) => {
 				// eslint-disable-next-line no-console
 				console.debug('onSubmit', event)
-				success({ text: 'onSubmit: See Console for Event Details' })
+				info({ text: 'onSubmit: See Console for Event Details' })
 			},
 			settings: ref({
 				booleanFlags: {
@@ -402,8 +402,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@3yourmind/kotti-ui/dist/variables.scss';
-
 .address-controller {
 	> *:not(:first-child) {
 		padding-top: 20px;
@@ -486,22 +484,6 @@ h3 {
 		flex: 1;
 		padding: 1.5em;
 		margin: 0 !important;
-	}
-
-	@media (width < $size-lg) {
-		flex-direction: column;
-
-		> *:not(:first-child) {
-			border-top: 1px solid var(--ui-02);
-		}
-	}
-
-	@media (width >= $size-lg) {
-		flex-direction: row;
-
-		> *:not(:last-child) {
-			border-right: 1px solid var(--ui-02);
-		}
 	}
 }
 </style>

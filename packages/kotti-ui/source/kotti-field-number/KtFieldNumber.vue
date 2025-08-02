@@ -86,7 +86,7 @@ export default defineComponent({
 	props: makeProps(KottiFieldNumber.propsSchema),
 	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldNumber.Value>({
+		const field = useField<KottiFieldNumber.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,
@@ -147,7 +147,7 @@ export default defineComponent({
 
 		watch(
 			(): [
-				KottiFieldNumber.Value,
+				KottiFieldNumber.ModelValue,
 				UnwrapRef<KottiI18n.Context['numberFormat']>['decimalSeparator'],
 			] => [field.currentValue, i18nContext.numberFormat.decimalSeparator],
 			([newNumber]) => {
@@ -254,7 +254,7 @@ export default defineComponent({
 			incrementValue,
 			inputProps: computed(
 				(): InputHTMLAttributes &
-					KottiField.Hook.Returns<KottiFieldNumber.Value>['inputProps'] & {
+					KottiField.Hook.Returns<KottiFieldNumber.ModelValue>['inputProps'] & {
 						class: Record<string, boolean>
 						forceUpdateKey: number
 					} => ({

@@ -252,17 +252,18 @@ export namespace KottiField {
 		rightIcon: z.never(),
 
 		/**
-		 * Show some an eye icon on the right side of the field to hide/show the field content
-		 *
-		 * This is false by default and is meant to be used for KtFieldPassword
-		 */
-		showVisibilityToggle: z.boolean().default(false),
-		/**
 		 * Show some string before the field
 		 *
 		 * This is never by default and specified by component schemas that need it
 		 */
 		prefix: z.never(),
+
+		/**
+		 * Show some an eye icon on the right side of the field to hide/show the field content
+		 *
+		 * This is false by default and is meant to be used for KtFieldPassword
+		 */
+		showVisibilityToggle: z.boolean().default(false),
 
 		/**
 		 * Show some string after the field

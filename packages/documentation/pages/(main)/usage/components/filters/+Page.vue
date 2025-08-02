@@ -253,7 +253,7 @@ export default defineComponent({
 			propFormatters: {
 				columns: (value: unknown) =>
 					JSON.stringify(value, null, '\t').split('\n'),
-				value: (value: unknown) =>
+				modelValue: (value: unknown) =>
 					JSON.stringify(value, null, '\t').split('\n'),
 			},
 			reset: () => (filters.value = []),
@@ -282,14 +282,14 @@ export default defineComponent({
 			:hiddenProps="{
 				'onUpdate:modelValue': (value: any) => (filters = value),
 			}"
-			:props="{ value: filters, ...componentProps }"
+			:props="{ modelValue: filters, ...componentProps }"
 			v-bind="{
 				component,
 				propFormatters,
 			}"
 		>
 			<template #component-form-settings>
-				<KtForm v-model="settings">
+				<KtForm v-model="settings" size="small">
 					<h4>Settings</h4>
 					<KtFieldSingleSelect
 						formKey="locale"

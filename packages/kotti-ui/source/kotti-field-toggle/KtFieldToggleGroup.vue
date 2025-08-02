@@ -11,7 +11,7 @@
 							:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
 							:modelValue="option.value"
 							:type="type"
-							@update:modelValue="onInput(option.key, $event)"
+							@update:modelValue="onUpdateModelValue(option.key, $event)"
 						>
 							<slot name="header" :option="option">
 								<div v-text="option.label" />
@@ -56,7 +56,7 @@ export default defineComponent({
 	props: makeProps(KottiFieldToggleGroup.propsSchema),
 	emits: ['update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldToggleGroup.Value>({
+		const field = useField<KottiFieldToggleGroup.ModelValue>({
 			emit,
 			isEmpty: (value) =>
 				value !== null &&
@@ -84,7 +84,7 @@ export default defineComponent({
 					id: `${field.inputProps.id}-${String(index)}`,
 				}
 			}),
-			onInput: (
+			onUpdateModelValue: (
 				key: KottiFieldToggleGroup.Entry['key'],
 				newValue: boolean | undefined,
 			) => {

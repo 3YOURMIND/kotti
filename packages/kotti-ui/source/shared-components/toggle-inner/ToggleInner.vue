@@ -34,7 +34,7 @@ export default defineComponent({
 		inputProps: {
 			required: true,
 			type: Object as PropType<
-				KottiField.Hook.Returns<KottiFieldToggle.Value>['inputProps']
+				KottiField.Hook.Returns<KottiFieldToggle.ModelValue>['inputProps']
 			>,
 		},
 		isDisabled: { required: true, type: Boolean },

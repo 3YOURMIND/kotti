@@ -94,7 +94,7 @@ export default defineComponent({
 			isEditing.value = shouldEdit
 		}
 
-		const field = useField<KottiFieldInlineEdit.Value>({
+		const field = useField<KottiFieldInlineEdit.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null || value.trim() === '',
 			props,
@@ -122,12 +122,12 @@ export default defineComponent({
 				: (props.placeholder ?? translations.value.placeholder),
 		)
 
-		const setFieldValue = (newValue: KottiFieldInlineEdit.Value) => {
+		const setFieldValue = (newValue: KottiFieldInlineEdit.ModelValue) => {
 			modifiedField.setValue(newValue === '' ? null : newValue)
 			forceUpdate()
 		}
 
-		const preEditingValue = ref<KottiFieldInlineEdit.Value>(
+		const preEditingValue = ref<KottiFieldInlineEdit.ModelValue>(
 			modifiedField.currentValue,
 		)
 
@@ -244,12 +244,12 @@ export default defineComponent({
 
 		const sharedProps = computed(
 			(): KottiField.Hook.Returns<
-				NonNullable<KottiFieldInlineEdit.Value>
+				NonNullable<KottiFieldInlineEdit.ModelValue>
 			>['inputProps'] & {
 				forceUpdateKey: number
 				placeholder: string
 				readonly: boolean
-				value: NonNullable<KottiFieldInlineEdit.Value>
+				value: NonNullable<KottiFieldInlineEdit.ModelValue>
 			} => ({
 				...modifiedField.inputProps,
 				forceUpdateKey: forceUpdateKey.value,

@@ -22,26 +22,26 @@
 					v-if="!options?.hideControls?.search"
 					data-test="table-search-field"
 					:isLoading="isLoadingAndEmpty"
+					:modelValue="searchValue"
 					:placeholder="options?.searchPlaceholder"
-					:value="searchValue"
-					@input="onUpdateSearchValue"
+					@update:modelValue="onUpdateSearchValue"
 				/>
 				<TableFilters
 					v-if="!options?.hideControls?.filters"
+					:appliedFilters="appliedFilters"
 					:filters="popoverFilters"
 					:isLoading="isLoadingAndEmpty"
 					:size="options?.popoversSize?.filters"
-					:value="appliedFilters"
-					@input="onUpdateAppliedFilters"
+					@update:appliedFilters="onUpdateAppliedFilters"
 				/>
 				<TableColumns
 					v-if="!options?.hideControls?.columns"
+					:columnVisibility="columnVisibility"
 					:isLoading="isLoadingAndEmpty"
 					:options="columnOptions"
 					:size="options?.popoversSize?.columns"
-					:value="columnVisibility"
-					@input="onUpdateColumnVisivility"
 					@showAll="onShowAllColumns"
+					@update:columnVisibility="onUpdateColumnVisivility"
 				/>
 			</div>
 			<div class="kt-standard-table__right-aligned-container">
@@ -70,7 +70,7 @@
 					v-for="({ label, value }, index) in filterTags"
 					:key="index"
 					class="kt-standard-table__applied-filter-tag"
-					hideActions
+					isDisabled
 					:label="label"
 					:text="value"
 				/>
@@ -109,7 +109,7 @@
 					pageSize,
 					pageSizeOptions,
 				}"
-				@updatePageSize="onUpdatePageSize"
+				@update:pageSize="onUpdatePageSize"
 			/>
 			<TablePagination
 				v-bind="{
@@ -118,7 +118,7 @@
 					pageSize,
 					rowCount,
 				}"
-				@updatePageIndex="onUpdatePageIndex"
+				@update:pageIndex="onUpdatePageIndex"
 			/>
 		</div>
 	</div>
@@ -127,8 +127,10 @@
 <script lang="ts">
 import { computed, defineComponent, watch } from 'vue'
 
+import { KtTag } from '../kotti-tag'
 import { makeProps } from '../make-props'
 
+import KtTable from './KtTable.vue'
 import TableColumns from './standard-table/components/Columns.vue'
 import FilterList from './standard-table/components/FilterList.vue'
 import TableFilters from './standard-table/components/Filters.vue'
@@ -145,13 +147,16 @@ export default defineComponent({
 	name: 'KtStandardTable',
 	components: {
 		FilterList,
+		KtTable,
+		KtTag,
 		TableColumns,
 		TableFilters,
 		TableGlobalSelection,
 		TablePageSize,
 		TablePagination,
 		TableSearch,
-	},
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} as any,
 	props: makeProps(KottiStandardTable.propsSchema),
 	emits: ['update:fetchData'],
 	setup(props, { emit }) {

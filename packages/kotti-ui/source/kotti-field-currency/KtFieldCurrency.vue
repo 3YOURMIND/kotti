@@ -62,7 +62,7 @@ export default defineComponent({
 	props: makeProps(KottiFieldCurrency.propsSchema),
 	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldCurrency.Value>({
+		const field = useField<KottiFieldCurrency.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,
@@ -109,7 +109,7 @@ export default defineComponent({
 		const internalStringValue = ref('')
 
 		watch(
-			(): [KottiFieldCurrency.Value, KottiI18n.CurrencyMap[string]] => [
+			(): [KottiFieldCurrency.ModelValue, KottiI18n.CurrencyMap[string]] => [
 				field.currentValue,
 				currencyFormat.value,
 			],
@@ -136,7 +136,7 @@ export default defineComponent({
 
 		watch(
 			(): [
-				KottiFieldCurrency.Value,
+				KottiFieldCurrency.ModelValue,
 				UnwrapRef<KottiI18n.Context['numberFormat']>['decimalSeparator'],
 				typeof currencyFormat,
 			] => [
