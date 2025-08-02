@@ -385,166 +385,197 @@ export const useKottiTable = <
 	}
 
 	const table = useVueTable<ROW>({
-		columns: [
-			...(params.value.expandMode !== null
-				? [
-						columnHelper.display({
-							cell: ({ row }: CellContext<ROW, unknown>) => {
-								const rowBehavior = params.value.getRowBehavior({
-									row: row.original,
-									rowIndex: row.index,
-								})
-								const isDisabled = rowBehavior.disable?.expand ?? false
+		get columns() {
+			return [
+				...(params.value.expandMode !== null
+					? [
+							columnHelper.display({
+								cell: ({ row }: CellContext<ROW, unknown>) => {
+									const rowBehavior = params.value.getRowBehavior({
+										row: row.original,
+										rowIndex: row.index,
+									})
+									const isDisabled = rowBehavior.disable?.expand ?? false
 
-								return h(
-									'div',
-									{
-										class: {
-											'kt-table-expand': true,
-											yoco: true,
-										},
-										domProps: {
-											ariaDisabled: String(isDisabled),
-											ariaExpanded: String(row.getIsExpanded()),
-											'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
-											role: 'button',
-										},
-										on: {
-											click: (event: MouseEvent) => {
-												event.stopPropagation()
-												event.preventDefault()
-												if (isDisabled) return
-												triggerExpand(row.id)
+									return h(
+										'div',
+										{
+											class: {
+												'kt-table-expand': true,
+												yoco: true,
+											},
+											domProps: {
+												ariaDisabled: String(isDisabled),
+												ariaExpanded: String(row.getIsExpanded()),
+												'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
+												role: 'button',
+											},
+											on: {
+												click: (event: MouseEvent) => {
+													event.stopPropagation()
+													event.preventDefault()
+													if (isDisabled) return
+													triggerExpand(row.id)
+												},
 											},
 										},
-									},
-									row.getIsExpanded()
-										? Yoco.Icon.CHEVRON_DOWN
-										: Yoco.Icon.CHEVRON_RIGHT,
-								)
-							},
-							id: EXPANSION_COLUMN_ID,
-							meta: {
-								cellClasses: 'kt-table-cell kt-table-cell--is-body',
-								disableCellClick: true,
-								headerClasses: 'kt-table-cell kt-table-cell--is-header',
-							},
-						}),
-					]
-				: []),
-			...(params.value.isSelectable
-				? [
-						columnHelper.display({
-							cell: ({ row }: CellContext<ROW, unknown>) =>
-								h(
-									'div',
-									{
-										class: 'kt-table-selection',
-										on: {
-											click: (event: MouseEvent) => {
-												event.stopPropagation()
-												event.preventDefault()
-												row.toggleSelected(!row.getIsSelected())
-											},
-										},
-									},
-									[
-										h(ToggleInner, {
-											component: 'div',
-											inputProps: {
-												'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
-												disabled: !row.getCanSelect(),
-												id: `${params.value.id}-${row.id}-select`,
-												tabindex: 1,
-											},
-											isDisabled: !row.getCanSelect(),
-											modelValue: row.getIsSelected(),
-										}),
-									],
-								),
-							header: ({ table }: HeaderContext<ROW, unknown>) =>
-								h(
-									'div',
-									{
-										on: {
-											click: () => {
-												table.toggleAllRowsSelected(
-													!table.getIsAllRowsSelected(),
-												)
-											},
-										},
-									},
-									[
-										h(ToggleInner, {
-											component: 'div',
-											inputProps: {
-												'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.header.checkbox`,
-												disabled: false,
-												id: `${params.value.id}-column-select-header`,
-												tabindex: 1,
-											},
-											isDisabled: false,
-											// 'onUpdate:modelValue': () => {},
-											modelValue: table.getIsAllRowsSelected(),
-										}),
-									],
-								),
-							id: SELECTION_COLUMN_ID,
-							meta: {
-								cellClasses: 'kt-table-cell kt-table-cell--is-body',
-								disableCellClick: true,
-								headerClasses: 'kt-table-cell kt-table-cell--is-header',
-							},
-						}),
-					]
-				: []),
-			...params.value.columns.map((column) => {
-				const index = columnOrder.value.indexOf(column.id)
+										row.getIsExpanded()
+											? Yoco.Icon.CHEVRON_DOWN
+											: Yoco.Icon.CHEVRON_RIGHT,
+									)
+								},
+								id: EXPANSION_COLUMN_ID,
+								meta: {
+									cellClasses: 'kt-table-cell kt-table-cell--is-body',
+									disableCellClick: true,
+									headerClasses: 'kt-table-cell kt-table-cell--is-header',
+								},
+							}),
+						]
+					: []),
+				...(params.value.isSelectable
+					? [
+							columnHelper.display({
+								cell: ({ row }: CellContext<ROW, unknown>) =>
+									h(
+										'div',
+										{
+											class: 'kt-table-selection',
+											on: {
+												click: (event: MouseEvent) => {
+													event.stopPropagation()
+													event.preventDefault()
 
-				const getCellClasses = (cellType: 'body' | 'header') =>
-					classNames({
-						[`kt-table-cell--is-${cellType}`]: true,
-						[`kt-table-cell--is-${column.display.align}-aligned`]: true,
-						'kt-table-cell': true,
-						'kt-table-cell--displays-number': column.display.isNumeric,
-						'kt-table-cell--has-drop-indicator':
-							index === dropTargetColumnIndex.value,
-						'kt-table-cell--has-drop-indicator-right':
-							index + 1 === dropTargetColumnIndex.value &&
-							columnOrder.value.length - 1 === index,
-						'kt-table-cell--is-dragged': column.id === draggedColumnId.value,
-						'kt-table-cell--was-successfully-dropped':
-							column.id === successfullyDroppedColumnId.value,
-					})
+													if (
+														event.shiftKey &&
+														rowSelectionAnchorIndex.value !== null &&
+														rowIdSet.value.has(
+															rowSelectionAnchorIndex.value.rowId,
+														)
+													) {
+														const { rowIndex } = rowSelectionAnchorIndex.value
+														const rangeStart = Math.min(rowIndex, row.index)
+														const rangeEnd = Math.max(rowIndex, row.index)
+														const { rows } = table.getRowModel()
+														for (let i = rangeStart; i <= rangeEnd; i++) {
+															const rowInRange = rows[i]
+															// all rows in the range will get the toggle state that the targetted row gets.
+															rowInRange?.toggleSelected(!row.getIsSelected())
+														}
+													} else {
+														row.toggleSelected(!row.getIsSelected())
+													}
+													rowSelectionAnchorIndex.value = {
+														rowId: row.id,
+														rowIndex: row.index,
+													}
+												},
+												// this prevents table content selection that would happen with shift clicking
+												mousedown: (event: MouseEvent) => {
+													event.preventDefault()
+												},
+											},
+										},
+										[
+											h(ToggleInner, {
+												component: 'div',
+												inputProps: {
+													'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
+													disabled: !row.getCanSelect(),
+													id: `${params.value.id}-${row.id}-select`,
+													tabindex: 1,
+												},
+												isDisabled: !row.getCanSelect(),
+												modelValue: row.getIsSelected(),
+											}),
+										],
+									),
+								header: ({ table }: HeaderContext<ROW, unknown>) =>
+									h(
+										'div',
+										{
+											on: {
+												click: () => {
+													table.toggleAllRowsSelected(
+														!table.getIsAllRowsSelected(),
+													)
+												},
+											},
+										},
+										[
+											h(ToggleInner, {
+												component: 'div',
+												inputProps: {
+													'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.header.checkbox`,
+													disabled: false,
+													id: `${params.value.id}-column-select-header`,
+													tabindex: 1,
+												},
+												isDisabled: false,
+												// 'onUpdate:modelValue': () => {},
+												modelValue: table.getIsAllRowsSelected(),
+											}),
+										],
+									),
+								id: SELECTION_COLUMN_ID,
+								meta: {
+									cellClasses: 'kt-table-cell kt-table-cell--is-body',
+									disableCellClick: true,
+									headerClasses: 'kt-table-cell kt-table-cell--is-header',
+								},
+							}),
+						]
+					: []),
+				...params.value.columns.map((column) => {
+					const index = columnOrder.value.indexOf(column.id)
 
-				return columnHelper.accessor(column.getData, {
-					cell: (info) => {
-						const value = info.getValue()
+					const getCellClasses = (cellType: 'body' | 'header') =>
+						classNames({
+							[`kt-table-cell--is-${cellType}`]: true,
+							[`kt-table-cell--is-${column.display.align}-aligned`]: true,
+							'kt-table-cell': true,
+							'kt-table-cell--displays-number': column.display.isNumeric,
+							'kt-table-cell--has-drop-indicator':
+								index === dropTargetColumnIndex.value,
+							'kt-table-cell--has-drop-indicator-right':
+								index + 1 === dropTargetColumnIndex.value &&
+								columnOrder.value.length - 1 === index,
+							'kt-table-cell--is-dragged': column.id === draggedColumnId.value,
+							'kt-table-cell--was-successfully-dropped':
+								column.id === successfullyDroppedColumnId.value,
+						})
 
-						return (
-							column.display.render(value, {
-								i18n: i18nContext,
-							}) ?? Dashes.EmDash
-						)
-					},
-					enableSorting: column.isSortable,
-					header: () => h('div', column.label),
-					id: column.id,
-					meta: {
-						cellClasses: getCellClasses('body'),
-						disableCellClick: column.display.disableCellClick,
-						headerClasses: getCellClasses('header'),
-						sortBehavior: column.display.sortBehavior,
-						style: {
-							'max-width': column.maxWidth,
-							'min-width': column.minWidth,
-							width: column.width,
+					return columnHelper.accessor(column.getData, {
+						cell: (info) => {
+							const value = info.getValue()
+
+							return (
+								column.display.render(value, {
+									i18n: i18nContext,
+								}) ?? Dashes.EmDash
+							)
 						},
-					},
-				})
-			}),
-		],
-		data: params.value.data,
+						enableSorting: column.isSortable,
+						header: () => h('div', column.label),
+						id: column.id,
+						meta: {
+							cellClasses: getCellClasses('body'),
+							disableCellClick: column.display.disableCellClick,
+							headerClasses: getCellClasses('header'),
+							sortBehavior: column.display.sortBehavior,
+							style: {
+								'max-width': column.maxWidth,
+								'min-width': column.minWidth,
+								width: column.width,
+							},
+						},
+					})
+				}),
+			]
+		},
+		get data() {
+			return params.value.data
+		},
 		enableRowSelection: (row) => {
 			if (!params.value.isSelectable) return false
 

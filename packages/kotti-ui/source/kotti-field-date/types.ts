@@ -48,10 +48,11 @@ export namespace Shared {
 }
 
 export namespace KottiFieldDate {
-	export const valueSchema = z.string().regex(DATE_FORMAT_REGEX).nullable()
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = z.string().regex(DATE_FORMAT_REGEX).nullable()
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
+		modelValue: modelValueSchema.default(null),
 		placeholder: z.string().nullable().default(null),
 		shortcuts: z
 			.array(
@@ -60,7 +61,6 @@ export namespace KottiFieldDate {
 				}),
 			)
 			.default(() => []),
-		modelValue: valueSchema.default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -68,13 +68,14 @@ export namespace KottiFieldDate {
 }
 
 export namespace KottiFieldDateRange {
-	export const valueSchema = z.tuple([
+	export const modelValueSchema = z.tuple([
 		z.string().regex(DATE_FORMAT_REGEX).nullable(),
 		z.string().regex(DATE_FORMAT_REGEX).nullable(),
 	])
-	export type Value = z.output<typeof valueSchema>
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
+		modelValue: modelValueSchema.default((): [null, null] => [null, null]),
 		placeholder: z
 			.tuple([z.string().nullable(), z.string().nullable()])
 			.default((): [null, null] => [null, null]),
@@ -88,7 +89,6 @@ export namespace KottiFieldDateRange {
 				}),
 			)
 			.default(() => []),
-		modelValue: valueSchema.default((): [null, null] => [null, null]),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -96,10 +96,14 @@ export namespace KottiFieldDateRange {
 }
 
 export namespace KottiFieldDateTime {
-	export const valueSchema = z.string().regex(DATE_TIME_FORMAT_REGEX).nullable()
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = z
+		.string()
+		.regex(DATE_TIME_FORMAT_REGEX)
+		.nullable()
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
+		modelValue: modelValueSchema.default(null),
 		placeholder: z.string().nullable().default(null),
 		shortcuts: z
 			.array(
@@ -108,7 +112,6 @@ export namespace KottiFieldDateTime {
 				}),
 			)
 			.default(() => []),
-		modelValue: valueSchema.default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -116,13 +119,14 @@ export namespace KottiFieldDateTime {
 }
 
 export namespace KottiFieldDateTimeRange {
-	export const valueSchema = z.tuple([
+	export const modelValueSchema = z.tuple([
 		z.string().regex(DATE_TIME_FORMAT_REGEX).nullable(),
 		z.string().regex(DATE_TIME_FORMAT_REGEX).nullable(),
 	])
-	export type Value = z.output<typeof valueSchema>
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
+		modelValue: modelValueSchema.default((): [null, null] => [null, null]),
 		placeholder: z
 			.tuple([z.string().nullable(), z.string().nullable()])
 			.default((): [null, null] => [null, null]),
@@ -136,7 +140,6 @@ export namespace KottiFieldDateTimeRange {
 				}),
 			)
 			.default(() => []),
-		modelValue: valueSchema.default((): [null, null] => [null, null]),
 	})
 
 	export type Props = z.input<typeof propsSchema>

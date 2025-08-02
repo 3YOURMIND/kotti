@@ -46,5 +46,6 @@ export const getCellWrapComponent = (
 	return {
 		...click,
 		class: ['kt-table-cell-content'],
+		on: {},
 	}
 }

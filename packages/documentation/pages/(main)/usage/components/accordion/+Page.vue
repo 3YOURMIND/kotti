@@ -1,21 +1,41 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	<KtForm v-model="componentProps" size="small">
+	<p>
+		The <code>KtAccordion</code> component allows you to create collapsible
+		content panels. It is useful for organizing large amounts of information
+		into manageable sections.
+	</p>
+
+	<KtForm v-model="localProps" size="small">
 		<ComponentForm
 			:component="component"
 			:hiddenProps="{
-				'onUpdate:isClosed': (val: boolean) => (componentProps.isClosed = val),
+				'onUpdate:isClosed': (val: boolean) => (localProps.isClosed = val),
 			}"
-			:props="componentProps"
-			:slots="[{ content: ['Example Content'], name: 'default' }]"
+			:props="localProps"
+			:slots="slots"
 		>
 			<template #component-form-settings>
 				<div>
-					<KtFieldText formKey="title" label="title" />
+					<KtFieldText formKey="title" isOptional label="title" />
+					<KtFieldText formKey="dataTest" isOptional label="dataTest" />
+					<FieldYocoIcon isOptional />
+					<KtFieldToggle
+						formKey="isClosed"
+						isOptional
+						label="isClosed"
+						type="switch"
+					/>
 				</div>
 				<div>
-					<FieldYocoIcon isOptional />
+					<KtFieldToggle
+						v-model="showTitleSlot"
+						formKey="NONE"
+						isOptional
+						label="Use Title Slot"
+						type="switch"
+					/>
 				</div>
 			</template>
 		</ComponentForm>
@@ -63,10 +83,15 @@
 </template>
 
 <script lang="ts">
-import omit from 'lodash/omit.js'
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
-import { KtAccordion, KtButton, KtFieldText, KtForm } from '@3yourmind/kotti-ui'
+import {
+	KtAccordion,
+	KtButton,
+	KtFieldText,
+	KtFieldToggle,
+	KtForm,
+} from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
@@ -83,20 +108,35 @@ export default defineComponent({
 		KtAccordion,
 		KtButton,
 		KtFieldText,
+		KtFieldToggle,
 		KtForm,
 	},
 	setup() {
+		const showTitleSlot = ref(false)
 		return {
 			component: KtAccordion,
-			componentProps: ref({
+			isThirdAccordionClosed: ref(false),
+			localProps: ref({
 				dataTest: null,
 				icon: null,
 				isClosed: false,
 				title: 'Example title',
 			}),
-			isClosed: ref(false),
-			isThirdAccordionClosed: ref(false),
-			omit,
+			showTitleSlot,
+			slots: computed(() => {
+				const slots = [
+					{
+						content: ['This is the content of the accordion'],
+						name: 'default',
+					},
+				]
+
+				if (showTitleSlot.value) {
+					slots.push({ content: ['Title From Slot'], name: 'title' })
+				}
+
+				return slots
+			}),
 		}
 	},
 })

@@ -187,14 +187,16 @@ import { Shared } from '../types'
 import FieldTime from './FieldTime.vue'
 
 type AnyDateValue =
-	| KottiFieldDate.Value
-	| KottiFieldDateRange.Value
-	| KottiFieldDateTime.Value
-	| KottiFieldDateTimeRange.Value
+	| KottiFieldDate.ModelValue
+	| KottiFieldDateRange.ModelValue
+	| KottiFieldDateTime.ModelValue
+	| KottiFieldDateTimeRange.ModelValue
 
-type SingleDateValue = KottiFieldDate.Value | KottiFieldDateTime.Value
+type SingleDateValue = KottiFieldDate.ModelValue | KottiFieldDateTime.ModelValue
 
-type RangeDateValue = KottiFieldDateRange.Value | KottiFieldDateTimeRange.Value
+type RangeDateValue =
+	| KottiFieldDateRange.ModelValue
+	| KottiFieldDateTimeRange.ModelValue
 
 type InternalRangeValue = [Date | null, Date | null]
 type InternalDateValue = Date | null

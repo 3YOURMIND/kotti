@@ -61,9 +61,9 @@ export namespace Shared {
 }
 
 export namespace KottiFieldMultiSelect {
-	export const valueSchema =
+	export const modelValueSchema =
 		Shared.isMultipleSchema.shape.modelValue._def.innerType
-	export type Value = z.output<typeof valueSchema>
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema.merge(Shared.isMultipleSchema)
 
@@ -74,9 +74,9 @@ export namespace KottiFieldMultiSelect {
 }
 
 export namespace KottiFieldMultiSelectRemote {
-	export const valueSchema =
+	export const modelValueSchema =
 		Shared.isMultipleSchema.shape.modelValue._def.innerType
-	export type Value = z.output<typeof valueSchema>
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema
 		.merge(Shared.isMultipleSchema)
@@ -93,8 +93,8 @@ export namespace KottiFieldMultiSelectRemote {
 }
 
 export namespace KottiFieldSingleSelect {
-	export const valueSchema = Shared.valueSchema
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = Shared.valueSchema
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema.merge(Shared.isSingleSchema)
 
@@ -105,8 +105,8 @@ export namespace KottiFieldSingleSelect {
 }
 
 export namespace KottiFieldSingleSelectRemote {
-	export const valueSchema = Shared.valueSchema
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = Shared.valueSchema
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = Shared.propsSchema
 		.merge(Shared.isSingleSchema)

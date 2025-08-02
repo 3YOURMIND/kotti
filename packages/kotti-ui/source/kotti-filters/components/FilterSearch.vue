@@ -63,7 +63,7 @@ export default defineComponent({
 			placeholder: computed<string>(
 				() => props.column.placeholder ?? translations.value.searchLabel,
 			),
-			searchValue: computed<KottiFieldText.Value>(
+			searchValue: computed<KottiFieldText.ModelValue>(
 				() => props.filter?.value ?? null,
 			),
 			Yoco,

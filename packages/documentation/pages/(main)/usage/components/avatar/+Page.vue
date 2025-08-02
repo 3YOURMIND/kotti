@@ -1,13 +1,17 @@
 <template>
 	<ComponentInfo :component="KtAvatar" />
 
+	<p>
+		The <code>KtAvatar</code> component displays a user's avatar. It supports
+		displaying an image from a URL and a hoverable popover with the user's name
+		or custom content.
+	</p>
+
 	<KtForm v-model="ktAvatarSettings" size="small">
 		<ComponentForm
 			:component="KtAvatar"
 			:props="ktAvatarProps"
-			:slots="
-				ktAvatarSettings.hasSlot ? [{ content: ['...'], name: 'content' }] : []
-			"
+			:slots="ktAvatarSettings.hasSlot ? [{ content, name: 'content' }] : []"
 		>
 			<template #component-form-settings>
 				<div>
@@ -57,6 +61,12 @@
 	</KtForm>
 
 	<ComponentInfo :component="KtAvatarGroup" />
+
+	<p>
+		The <code>KtAvatarGroup</code> component displays a group of avatars. Use it
+		to represent a collection of users like team mempers or attendees to an
+		event.
+	</p>
 
 	<KtForm v-model="ktAvatarGroupSettings" size="small">
 		<ComponentForm
@@ -141,6 +151,7 @@ import { Yoco } from '@3yourmind/yoco'
 
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
+import { info } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsAvatar',
@@ -183,6 +194,18 @@ export default defineComponent({
 		})
 
 		return {
+			content: [
+				'<KtAvatar size="lg" :src="ktAvatarSettings.props.src" />',
+				'<h2 v-text="ktAvatarSettings.props.name" />',
+				'<div>',
+				'	<span class="yoco" v-text="Yoco.Icon.USER" />',
+				'	<span>email@example.com</span>',
+				'</div>',
+				'<div>',
+				'	<span class="yoco" v-text="Yoco.Icon.OFFICE" />',
+				'	<span>3yourmind GmbH</span>',
+				'</div>',
+			],
 			Kotti,
 			KtAvatar,
 			KtAvatarGroup,
@@ -200,6 +223,7 @@ export default defineComponent({
 			ktAvatarGroupSettings,
 			ktAvatarProps: computed(() => ({
 				...ktAvatarSettings.value.props,
+				onClick: () => info({ text: 'Avatar component was clicked' }),
 				size: ktAvatarSettings.value.props.size ?? 'md',
 			})),
 			ktAvatarSettings,

@@ -15,9 +15,9 @@
 			<div class="table-columns">
 				<KtFieldToggleGroup
 					isOptional
+					:modelValue="columnVisibility"
 					:options="options"
-					:value="value"
-					@input="$emit('input', $event)"
+					@update:modelValue="$emit('update:columnVisibility', $event)"
 				/>
 				<!-- FIXME: ideally this button shoud not be behind the fold -->
 				<KtButton
@@ -42,24 +42,26 @@ import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 export default defineComponent({
 	name: 'TableColumns',
 	props: {
+		columnVisibility: {
+			required: true,
+			type: Object as PropType<Record<string, boolean>>,
+		},
 		isLoading: { default: false, type: Boolean },
 		options: {
 			required: true,
 			type: Array as PropType<{ key: string; label: string }[]>,
 		},
 		size: { default: 'md', type: String },
-		value: {
-			required: true,
-			type: Object as PropType<Record<string, boolean>>,
-		},
 	},
-	emits: ['input', 'showAll'],
+	emits: ['update:columnVisibility', 'showAll'],
 	setup(props) {
 		return {
 			isShowAllDisabled: computed(
 				(): boolean =>
 					props.isLoading ||
-					Object.values(props.value).every((optionValue) => optionValue),
+					Object.values(props.columnVisibility).every(
+						(optionValue) => optionValue,
+					),
 			),
 			translations: useTranslationNamespace('KtStandardTable'),
 			Yoco,

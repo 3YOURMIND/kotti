@@ -5,10 +5,10 @@
 		:isUnsorted="filter.isUnsorted"
 		isOptional
 		:label="filter.label"
+		:modelValue="modelValue"
 		:options="filter.options"
 		size="small"
-		:value="value"
-		@input="onInput"
+		@update:modelValue="onUpdateModelValue"
 	/>
 </template>
 
@@ -29,16 +29,16 @@ export default defineComponent({
 			>,
 		},
 		isLoading: { default: false, type: Boolean },
-		value: {
+		modelValue: {
 			default: () => [null, null],
 			type: Array as PropType<(number | string)[]>,
 		},
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		return {
-			onInput: (value: KottiStandardTable.FilterValue) => {
-				emit('input', {
+			onUpdateModelValue: (value: KottiStandardTable.FilterValue) => {
+				emit('update:modelValue', {
 					id: props.filter.id,
 					operation: props.filter.operations[0], // Current filters support only one operation
 					value,
