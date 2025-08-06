@@ -11,6 +11,7 @@ import {
 	getCoreRowModel,
 	getExpandedRowModel,
 } from '@tanstack/table-core'
+import { useVueTable } from '@tanstack/vue-table'
 import classNames from 'classnames'
 import { computed, h, ref, type Ref } from 'vue'
 import { z } from 'zod'
@@ -21,9 +22,7 @@ import { useI18nContext } from '../../kotti-i18n/hooks'
 import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 
 import { type TableContext, useProvideTableContext } from './context'
-import { useVueTable } from './tanstack-table'
-import type { KottiTable } from './types'
-import { type GetRowBehavior } from './types'
+import type { GetRowBehavior, KottiTable } from './types'
 import { type ReactStyleUpdater, useComputedRef } from './use-computed-ref'
 
 export const EXPANSION_COLUMN_ID = 'internal-expand-column'
@@ -377,200 +376,192 @@ export const useKottiTable = <
 		return newOrder
 	}
 
-	const table = useVueTable<ROW>(
-		computed(() => ({
-			columns: [
-				...(params.value.expandMode !== null
-					? [
-							columnHelper.display({
-								cell: ({ row }: CellContext<ROW, unknown>) => {
-									const rowBehavior = params.value.getRowBehavior({
-										row: row.original,
-										rowIndex: row.index,
-									})
-									const isDisabled = rowBehavior.disable?.expand ?? false
+	const table = useVueTable<ROW>({
+		columns: [
+			...(params.value.expandMode !== null
+				? [
+						columnHelper.display({
+							cell: ({ row }: CellContext<ROW, unknown>) => {
+								const rowBehavior = params.value.getRowBehavior({
+									row: row.original,
+									rowIndex: row.index,
+								})
+								const isDisabled = rowBehavior.disable?.expand ?? false
 
-									return h(
-										'div',
-										{
-											class: {
-												'kt-table-expand': true,
-												yoco: true,
-											},
-											domProps: {
-												ariaDisabled: String(isDisabled),
-												ariaExpanded: String(row.getIsExpanded()),
-												'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
-												role: 'button',
-											},
-											on: {
-												click: (event: MouseEvent) => {
-													event.stopPropagation()
-													event.preventDefault()
-													if (isDisabled) return
-													triggerExpand(row.id)
-												},
+								return h(
+									'div',
+									{
+										class: {
+											'kt-table-expand': true,
+											yoco: true,
+										},
+										domProps: {
+											ariaDisabled: String(isDisabled),
+											ariaExpanded: String(row.getIsExpanded()),
+											'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
+											role: 'button',
+										},
+										on: {
+											click: (event: MouseEvent) => {
+												event.stopPropagation()
+												event.preventDefault()
+												if (isDisabled) return
+												triggerExpand(row.id)
 											},
 										},
-										row.getIsExpanded()
-											? Yoco.Icon.CHEVRON_DOWN
-											: Yoco.Icon.CHEVRON_RIGHT,
-									)
-								},
-								id: EXPANSION_COLUMN_ID,
-								meta: {
-									cellClasses: 'kt-table-cell kt-table-cell--is-body',
-									disableCellClick: true,
-									headerClasses: 'kt-table-cell kt-table-cell--is-header',
-								},
-							}),
-						]
-					: []),
-				...(params.value.isSelectable
-					? [
-							columnHelper.display({
-								cell: ({ row }: CellContext<ROW, unknown>) =>
-									h(
-										'div',
-										{
-											class: 'kt-table-selection',
-											on: {
-												click: (event: MouseEvent) => {
-													event.stopPropagation()
-													event.preventDefault()
-													row.toggleSelected(!row.getIsSelected())
-												},
-											},
-										},
-										[
-											h(ToggleInner, {
-												props: {
-													component: 'div',
-													inputProps: {
-														'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
-														disabled: !row.getCanSelect(),
-														id: `${params.value.id}-${row.id}-select`,
-													},
-													isDisabled: !row.getCanSelect(),
-													value: row.getIsSelected(),
-												},
-											}),
-										],
-									),
-								header: ({ table }: HeaderContext<ROW, unknown>) =>
-									h(
-										'div',
-										{
-											on: {
-												click: () => {
-													table.toggleAllRowsSelected(
-														!table.getIsAllRowsSelected(),
-													)
-												},
-											},
-										},
-										[
-											h(ToggleInner, {
-												props: {
-													component: 'div',
-													inputProps: {
-														'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.header.checkbox`,
-														id: `${params.value.id}-column-select-header`,
-													},
-													isDisabled: false,
-													value: table.getIsAllRowsSelected()
-														? true
-														: table
-																	.getRowModel()
-																	.rows.some((row) => row.getIsSelected())
-															? null
-															: false,
-												},
-											}),
-										],
-									),
-								id: SELECTION_COLUMN_ID,
-								meta: {
-									cellClasses: 'kt-table-cell kt-table-cell--is-body',
-									disableCellClick: true,
-									headerClasses: 'kt-table-cell kt-table-cell--is-header',
-								},
-							}),
-						]
-					: []),
-				...params.value.columns.map((column) => {
-					const index = columnOrder.value.indexOf(column.id)
-
-					const getCellClasses = (cellType: 'body' | 'header') =>
-						classNames({
-							[`kt-table-cell--is-${cellType}`]: true,
-							[`kt-table-cell--is-${column.display.align}-aligned`]: true,
-							'kt-table-cell': true,
-							'kt-table-cell--displays-number': column.display.isNumeric,
-							'kt-table-cell--has-drop-indicator':
-								index === dropTargetColumnIndex.value,
-							'kt-table-cell--has-drop-indicator-right':
-								index + 1 === dropTargetColumnIndex.value &&
-								columnOrder.value.length - 1 === index,
-							'kt-table-cell--is-dragged': column.id === draggedColumnId.value,
-							'kt-table-cell--was-successfully-dropped':
-								column.id === successfullyDroppedColumnId.value,
-						})
-
-					return columnHelper.accessor(column.getData, {
-						cell: (info) => {
-							const value = info.getValue()
-
-							return (
-								column.display.render(value, {
-									i18n: i18nContext,
-								}) ?? Dashes.EmDash
-							)
-						},
-						enableSorting: column.isSortable,
-						header: () => h('div', column.label),
-						id: column.id,
-						meta: {
-							cellClasses: getCellClasses('body'),
-							disableCellClick: column.display.disableCellClick,
-							headerClasses: getCellClasses('header'),
-							sortBehavior: column.display.sortBehavior,
-							style: {
-								'max-width': column.maxWidth,
-								'min-width': column.minWidth,
-								width: column.width,
+									},
+									row.getIsExpanded()
+										? Yoco.Icon.CHEVRON_DOWN
+										: Yoco.Icon.CHEVRON_RIGHT,
+								)
 							},
-						},
-					})
-				}),
-			],
-			data: params.value.data,
-			enableRowSelection: (row) => {
-				if (!params.value.isSelectable) return false
+							id: EXPANSION_COLUMN_ID,
+							meta: {
+								cellClasses: 'kt-table-cell kt-table-cell--is-body',
+								disableCellClick: true,
+								headerClasses: 'kt-table-cell kt-table-cell--is-header',
+							},
+						}),
+					]
+				: []),
+			...(params.value.isSelectable
+				? [
+						columnHelper.display({
+							cell: ({ row }: CellContext<ROW, unknown>) =>
+								h(
+									'div',
+									{
+										class: 'kt-table-selection',
+										on: {
+											click: (event: MouseEvent) => {
+												event.stopPropagation()
+												event.preventDefault()
+												row.toggleSelected(!row.getIsSelected())
+											},
+										},
+									},
+									[
+										h(ToggleInner, {
+											component: 'div',
+											inputProps: {
+												'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
+												disabled: !row.getCanSelect(),
+												id: `${params.value.id}-${row.id}-select`,
+												tabindex: 1,
+											},
+											isDisabled: !row.getCanSelect(),
+											modelValue: row.getIsSelected(),
+										}),
+									],
+								),
+							header: ({ table }: HeaderContext<ROW, unknown>) =>
+								h(
+									'div',
+									{
+										on: {
+											click: () => {
+												table.toggleAllRowsSelected(
+													!table.getIsAllRowsSelected(),
+												)
+											},
+										},
+									},
+									[
+										h(ToggleInner, {
+											component: 'div',
+											inputProps: {
+												'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.header.checkbox`,
+												disabled: false,
+												id: `${params.value.id}-column-select-header`,
+												tabindex: 1,
+											},
+											isDisabled: false,
+											// 'onUpdate:modelValue': () => {},
+											modelValue: table.getIsAllRowsSelected(),
+										}),
+									],
+								),
+							id: SELECTION_COLUMN_ID,
+							meta: {
+								cellClasses: 'kt-table-cell kt-table-cell--is-body',
+								disableCellClick: true,
+								headerClasses: 'kt-table-cell kt-table-cell--is-header',
+							},
+						}),
+					]
+				: []),
+			...params.value.columns.map((column) => {
+				const index = columnOrder.value.indexOf(column.id)
 
-				const behavior = params.value.getRowBehavior({
-					row: row.original,
-					rowIndex: row.index,
+				const getCellClasses = (cellType: 'body' | 'header') =>
+					classNames({
+						[`kt-table-cell--is-${cellType}`]: true,
+						[`kt-table-cell--is-${column.display.align}-aligned`]: true,
+						'kt-table-cell': true,
+						'kt-table-cell--displays-number': column.display.isNumeric,
+						'kt-table-cell--has-drop-indicator':
+							index === dropTargetColumnIndex.value,
+						'kt-table-cell--has-drop-indicator-right':
+							index + 1 === dropTargetColumnIndex.value &&
+							columnOrder.value.length - 1 === index,
+						'kt-table-cell--is-dragged': column.id === draggedColumnId.value,
+						'kt-table-cell--was-successfully-dropped':
+							column.id === successfullyDroppedColumnId.value,
+					})
+
+				return columnHelper.accessor(column.getData, {
+					cell: (info) => {
+						const value = info.getValue()
+
+						return (
+							column.display.render(value, {
+								i18n: i18nContext,
+							}) ?? Dashes.EmDash
+						)
+					},
+					enableSorting: column.isSortable,
+					header: () => h('div', column.label),
+					id: column.id,
+					meta: {
+						cellClasses: getCellClasses('body'),
+						disableCellClick: column.display.disableCellClick,
+						headerClasses: getCellClasses('header'),
+						sortBehavior: column.display.sortBehavior,
+						style: {
+							'max-width': column.maxWidth,
+							'min-width': column.minWidth,
+							width: column.width,
+						},
+					},
 				})
-				return !behavior.disable?.select
-			},
-			getCoreRowModel: getCoreRowModel(),
-			getExpandedRowModel:
-				params.value.expandMode !== null ? getExpandedRowModel() : undefined,
-			getRowId: (row, rowIndex) =>
-				params.value.getRowBehavior({ row, rowIndex }).id,
-			onColumnVisibilityChange: hiddenColumns.tanstackSetter,
-			onRowSelectionChange: selectedRows.tanstackSetter,
-			onSortingChange: ordering.tanstackSetter as ReactStyleUpdater<unknown>,
-			state: {
-				columnOrder: columnOrder.tanstackGetter(),
-				columnVisibility: hiddenColumns.tanstackGetter(),
-				expanded: expandedRows.tanstackGetter(),
-				rowSelection: selectedRows.tanstackGetter(),
-				sorting: ordering.tanstackGetter(),
-			},
-		})),
-	)
+			}),
+		],
+		data: params.value.data,
+		enableRowSelection: (row) => {
+			if (!params.value.isSelectable) return false
+
+			const behavior = params.value.getRowBehavior({
+				row: row.original,
+				rowIndex: row.index,
+			})
+			return !behavior.disable?.select
+		},
+		getCoreRowModel: getCoreRowModel(),
+		getExpandedRowModel:
+			params.value.expandMode !== null ? getExpandedRowModel() : undefined,
+		getRowId: (row, rowIndex) =>
+			params.value.getRowBehavior({ row, rowIndex }).id,
+		onColumnVisibilityChange: hiddenColumns.tanstackSetter,
+		onRowSelectionChange: selectedRows.tanstackSetter,
+		onSortingChange: ordering.tanstackSetter as ReactStyleUpdater<unknown>,
+		state: {
+			columnOrder: columnOrder.tanstackGetter(),
+			columnVisibility: hiddenColumns.tanstackGetter(),
+			expanded: expandedRows.tanstackGetter(),
+			rowSelection: selectedRows.tanstackGetter(),
+			sorting: ordering.tanstackGetter(),
+		},
+	})
 
 	const tableContext: TableContext<ROW, COLUMN_ID> = computed(() => ({
 		internal: {

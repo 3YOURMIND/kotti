@@ -16,16 +16,6 @@
 				"plugins/**/*.js",
 				"nuxt.config.ts"
 			],
-			"ignoreDependencies": [
-				"@nuxt/typescript-build",
-				"@nuxtjs/markdownit-loader",
-				"@nuxtjs/markdownit",
-				"@nuxtjs/style-resources",
-				"sass-loader",
-				"ts-loader",
-				"vue-server-renderer",
-				"vue-template-compiler"
-			],
 			"project": ["**/*.{js,ts,vue}"]
 		},
 		"packages/kotti-ui": {

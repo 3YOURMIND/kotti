@@ -8,7 +8,7 @@ export namespace Shared {
 	export const dateShortcutSchema = z.object({
 		keepOpen: z.boolean().optional(),
 		label: z.string(),
-		value: z.never(), // overridden per date*-field
+		modelValue: z.never(), // overridden per date*-field
 	})
 
 	export const propsSchema = KottiField.propsSchema
@@ -37,6 +37,14 @@ export namespace Shared {
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
+
+	export type Translations = {
+		cancelButton: string
+		confirmButton: string
+		hours: string
+		minutes: string
+		seconds: string
+	}
 }
 
 export namespace KottiFieldDate {
@@ -48,11 +56,11 @@ export namespace KottiFieldDate {
 		shortcuts: z
 			.array(
 				Shared.dateShortcutSchema.extend({
-					value: z.string().regex(DATE_FORMAT_REGEX),
+					modelValue: z.string().regex(DATE_FORMAT_REGEX),
 				}),
 			)
 			.default(() => []),
-		value: valueSchema.default(null),
+		modelValue: valueSchema.default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -73,14 +81,14 @@ export namespace KottiFieldDateRange {
 		shortcuts: z
 			.array(
 				Shared.dateShortcutSchema.extend({
-					value: z.tuple([
+					modelValue: z.tuple([
 						z.string().regex(DATE_FORMAT_REGEX),
 						z.string().regex(DATE_FORMAT_REGEX),
 					]),
 				}),
 			)
 			.default(() => []),
-		value: valueSchema.default((): [null, null] => [null, null]),
+		modelValue: valueSchema.default((): [null, null] => [null, null]),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -96,11 +104,11 @@ export namespace KottiFieldDateTime {
 		shortcuts: z
 			.array(
 				Shared.dateShortcutSchema.extend({
-					value: z.string().regex(DATE_TIME_FORMAT_REGEX),
+					modelValue: z.string().regex(DATE_TIME_FORMAT_REGEX),
 				}),
 			)
 			.default(() => []),
-		value: valueSchema.default(null),
+		modelValue: valueSchema.default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>
@@ -121,14 +129,14 @@ export namespace KottiFieldDateTimeRange {
 		shortcuts: z
 			.array(
 				Shared.dateShortcutSchema.extend({
-					value: z.tuple([
+					modelValue: z.tuple([
 						z.string().regex(DATE_TIME_FORMAT_REGEX),
 						z.string().regex(DATE_TIME_FORMAT_REGEX),
 					]),
 				}),
 			)
 			.default(() => []),
-		value: valueSchema.default((): [null, null] => [null, null]),
+		modelValue: valueSchema.default((): [null, null] => [null, null]),
 	})
 
 	export type Props = z.input<typeof propsSchema>
