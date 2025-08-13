@@ -56,6 +56,7 @@ export type ComponentValue = {
 	headerSlot: string | null
 	name: ComponentNames
 	props: Record<string, unknown>
+	showDropAreaExtraContentSlot: boolean
 	showHeaderSideSlot: boolean
 	validation: Kotti.Field.Validation.Result['type']
 }

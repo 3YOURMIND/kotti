@@ -60,7 +60,7 @@ export const frFR: KottiI18n.Messages = {
 			HIDDEN: '',
 			INVALID: 'Non valide',
 			NOT_STARTED: 'Pas commencé',
-			READY_TO_UPLOAD: 'Prêt au téléchargement après envoi',
+			READY_TO_UPLOAD: 'Prêt au téléchargement',
 			UPLOADED: 'Téléchargement terminé',
 			UPLOADED_WITH_ERROR: 'Téléchargement terminé avec une erreur',
 			UPLOADING: 'Téléchargement en cours…',

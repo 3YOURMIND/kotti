@@ -59,7 +59,7 @@ export const esES: KottiI18n.Messages = {
 			HIDDEN: '',
 			INVALID: 'Inválido',
 			NOT_STARTED: 'No iniciado',
-			READY_TO_UPLOAD: 'Listo para cargar en el envío',
+			READY_TO_UPLOAD: 'Listo para cargar',
 			UPLOADED: 'Cargado',
 			UPLOADED_WITH_ERROR: 'Cargado con error',
 			UPLOADING: 'Cargando...',

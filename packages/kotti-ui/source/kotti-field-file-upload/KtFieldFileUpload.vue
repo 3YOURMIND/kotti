@@ -29,6 +29,10 @@
 							}"
 							@addFiles="onAddFiles"
 						/>
+						<slot
+							v-if="$slots.dropAreaExtraContent"
+							name="dropAreaExtraContent"
+						/>
 					</template>
 				</DropArea>
 				<div v-if="filesList.length > 0" :style="filesListStyle">

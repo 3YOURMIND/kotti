@@ -10,8 +10,6 @@
 		@drop.stop.prevent="onDrop"
 		@keydown.enter.stop.prevent="onTriggerInput"
 		@keydown.space.stop.prevent="onTriggerInput"
-		@mouseenter.stop.prevent="isHovering = true"
-		@mouseleave.stop.prevent="isHovering = false"
 	>
 		<div class="kt-field-file-upload-drop-area__description">
 			<i v-if="icon" class="yoco" v-text="icon" />
@@ -45,10 +43,9 @@
 		<div
 			v-if="$slots.footer"
 			class="kt-field-file-upload-drop-area__footer-slot"
+			@click.stop
 			@keydown.enter.stop
 			@keydown.space.stop
-			@mouseenter.prevent.stop="isHovering = false"
-			@mouseleave.prevent.stop="isHovering = true"
 		>
 			<slot name="footer" />
 		</div>
@@ -80,10 +77,8 @@ export default defineComponent({
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFieldFileUpload')
 
-		const isDragging = ref<boolean>(false)
 		const isError = ref<boolean>(false)
 		const isFileExplorerOpen = ref<boolean>(false)
-		const isHovering = ref<boolean>(false)
 		const uploadInputRef = ref<HTMLInputElement | null>(null)
 
 		const informationText = computed(() =>
@@ -126,7 +121,6 @@ export default defineComponent({
 				type: 'file',
 			})),
 			isError,
-			isHovering,
 			localTabIndex: computed(() =>
 				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 				props.isDisabled ? -1 : (props.tabIndex ?? 0),
@@ -139,19 +133,16 @@ export default defineComponent({
 				isFileExplorerOpen.value = false
 			},
 			onDragLeave: () => {
-				isDragging.value = false
 				isError.value = false
 			},
 			onDragOver: (event: DragEvent) => {
 				const items = Array.from(event.dataTransfer?.items ?? [])
-				isDragging.value = true
 				isError.value = isSelectingMultipleFilesWhenNotAllowed(
 					props.allowMultiple,
 					items.length,
 				)
 			},
 			onDrop: (event: DragEvent) => {
-				isDragging.value = false
 				isError.value = false
 				emitFiles(event.dataTransfer?.files ?? null)
 			},
@@ -171,10 +162,6 @@ export default defineComponent({
 				'kt-field-file-upload-drop-area--is-disabled': props.isDisabled,
 				'kt-field-file-upload-drop-area--is-error':
 					!props.isDisabled && isError.value,
-				'kt-field-file-upload-drop-area--is-hover':
-					!props.isDisabled &&
-					!isError.value &&
-					(isDragging.value || isHovering.value),
 			})),
 			showInformation: computed(
 				() => informationText.value || props.externalUrl,
@@ -278,6 +265,10 @@ export default defineComponent({
 	}
 
 	&__footer-slot {
+		display: flex;
+		flex-direction: column;
+		gap: var(--unit-2);
+		align-items: center;
 		margin-top: var(--unit-4);
 	}
 
