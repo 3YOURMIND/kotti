@@ -59,7 +59,7 @@ export const jaJP: KottiI18n.Messages = {
 			HIDDEN: '',
 			INVALID: '無効',
 			NOT_STARTED: '始まっていない',
-			READY_TO_UPLOAD: '提出時にアップロードする準備ができました',
+			READY_TO_UPLOAD: 'アップロード準備完了',
 			UPLOADED: 'アップロード済み',
 			UPLOADED_WITH_ERROR: 'エラーでアップロードされました',
 			UPLOADING: 'アップロード中...',
