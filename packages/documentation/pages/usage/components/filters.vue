@@ -369,6 +369,7 @@ export default defineComponent({
 					headerSlot: null,
 					name: 'KtFilters',
 					props: cloneDeep(componentProps.value),
+					showDropAreaExtraContentSlot: false,
 					showHeaderSideSlot: false,
 					validation: 'empty',
 				}

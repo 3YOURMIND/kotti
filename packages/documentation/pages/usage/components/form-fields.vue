@@ -76,6 +76,15 @@
 							<template v-if="componentRepresentation.defaultSlot">
 								<div v-text="componentRepresentation.defaultSlot" />
 							</template>
+							<template
+								v-if="componentRepresentation.showDropAreaExtraContentSlot"
+								#dropAreaExtraContent
+							>
+								<KtButton
+									label="Custom action"
+									@click="onDropAreaSlotButtonClick"
+								/>
+							</template>
 						</component>
 					</KtForm>
 					<div class="overview__component-value">
@@ -771,6 +780,23 @@
 									interactive elements like buttons or links
 								</template>
 							</KtFieldToggle>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'showDropAreaExtraContentSlot',
+									)
+								"
+								formKey="showDropAreaExtraContentSlot"
+								isOptional
+								type="switch"
+							>
+								<template #default>
+									Shows Drop Area slot for additional content
+								</template>
+								<template #helpText>
+									Allows to add custom content to the Drop Area
+								</template>
+							</KtFieldToggle>
 						</KtFormControllerObject>
 					</div>
 				</div>
@@ -946,11 +972,16 @@ const components: Array<{
 		supports: KtFieldDateTimeRange.meta.supports,
 	},
 	{
-		additionalProps: [...FILE_UPLOAD_SHARED_PROPS, 'emitEvents'],
+		additionalProps: [
+			...FILE_UPLOAD_SHARED_PROPS,
+			'emitEvents',
+			'showDropAreaExtraContentSlot',
+		],
 		formKey: 'fileUploadValue',
 		name: 'KtFieldFileUpload',
 		supports: KtFieldFileUpload.meta.supports,
 	},
+	// FIXME: KtFieldFileUploadRemote is deprecated and will be removed in the future.
 	{
 		additionalProps: [...FILE_UPLOAD_SHARED_PROPS, 'actions', 'payload'],
 		formKey: 'fileUploadRemoteValue',
@@ -1314,6 +1345,7 @@ export default defineComponent({
 				numberStep: Kotti.FieldNumber.Value
 				rows: Kotti.FieldNumber.Value
 				shortcuts: Kotti.FieldToggleGroup.Value
+				showDropAreaExtraContentSlot: ComponentValue['showDropAreaExtraContentSlot']
 				showHeaderSideSlot: ComponentValue['showHeaderSideSlot']
 				showVisibilityToggle: boolean
 				toggleType: 'checkbox' | 'switch'
@@ -1388,6 +1420,7 @@ export default defineComponent({
 				numberStep: null,
 				rows: null,
 				shortcuts: null,
+				showDropAreaExtraContentSlot: false,
 				showHeaderSideSlot: false,
 				showVisibilityToggle: false,
 				toggleType: 'checkbox',
@@ -1814,6 +1847,8 @@ export default defineComponent({
 				headerSlot: settings.value.additionalProps.headerSlot,
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),
+				showDropAreaExtraContentSlot:
+					settings.value.additionalProps.showDropAreaExtraContentSlot,
 				showHeaderSideSlot: settings.value.additionalProps.showHeaderSideSlot,
 				validation: settings.value.validation,
 			}),
@@ -1920,6 +1955,9 @@ export default defineComponent({
 					info({
 						text: `@blur: ${JSON.stringify(value)}`,
 					})
+			},
+			onDropAreaSlotButtonClick: () => {
+				info({ text: 'Drop Area Slot Button Clicked' })
 			},
 			onKeyup: () => {
 				if (settings.value.events.emitKeyup)

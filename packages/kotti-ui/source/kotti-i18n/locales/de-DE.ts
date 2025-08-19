@@ -59,7 +59,7 @@ export const deDE: KottiI18n.Messages = {
 			HIDDEN: '',
 			INVALID: 'Ungültig',
 			NOT_STARTED: 'Nicht angefangen',
-			READY_TO_UPLOAD: 'Bereit zum Hochladen bei Einreichung',
+			READY_TO_UPLOAD: 'Bereit zum Hochladen',
 			UPLOADED: 'Hochgeladen',
 			UPLOADED_WITH_ERROR: 'Mit Fehler hochgeladen',
 			UPLOADING: 'Wird hochgeladen …',

@@ -46,7 +46,7 @@
 			"error": "Upload failed, please try again",
 			"invalid": "Invalid",
 			"notStarted": "Not started",
-			"readyToUpload": "Ready to upload on submittal",
+			"readyToUpload": "Ready to upload",
 			"uploaded": "Uploaded",
 			"uploadedWithError": "Uploaded with error",
 			"uploading": "Uploading..."
