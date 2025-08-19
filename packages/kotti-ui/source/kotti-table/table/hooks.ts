@@ -360,6 +360,14 @@ export const useKottiTable = <
 	const dropTargetColumnIndex = ref<number | null>(null)
 	const successfullyDroppedColumnId = ref<string | null>(null)
 
+	/**
+	 * Used for selecting multiple rows via shift click
+	 */
+	const rowSelectionAnchorIndex = ref<{
+		rowId: string
+		rowIndex: number
+	} | null>(null)
+
 	const getMovedColumnOrder = (
 		fromColumnId: COLUMN_ID,
 		toIndex: number,
@@ -438,7 +446,33 @@ export const useKottiTable = <
 												click: (event: MouseEvent) => {
 													event.stopPropagation()
 													event.preventDefault()
-													row.toggleSelected(!row.getIsSelected())
+													if (
+														event.shiftKey &&
+														rowSelectionAnchorIndex.value !== null &&
+														rowIdSet.value.has(
+															rowSelectionAnchorIndex.value.rowId,
+														)
+													) {
+														const { rowIndex } = rowSelectionAnchorIndex.value
+														const rangeStart = Math.min(rowIndex, row.index)
+														const rangeEnd = Math.max(rowIndex, row.index)
+														const { rows } = table.value.getRowModel()
+														for (let i = rangeStart; i <= rangeEnd; i++) {
+															const rowInRange = rows[i]
+															// all rows in the range will get the toggle state that the targetted row gets.
+															rowInRange?.toggleSelected(!row.getIsSelected())
+														}
+													} else {
+														row.toggleSelected(!row.getIsSelected())
+													}
+													rowSelectionAnchorIndex.value = {
+														rowId: row.id,
+														rowIndex: row.index,
+													}
+												},
+												// this prevents table content selection that would happen with shift clicking
+												mousedown: (event: MouseEvent) => {
+													event.preventDefault()
 												},
 											},
 										},
