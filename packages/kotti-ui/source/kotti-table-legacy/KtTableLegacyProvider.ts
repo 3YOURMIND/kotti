@@ -62,6 +62,7 @@ export const KtTableLegacyProvider: any = {
 		},
 		getStore(id: any): unknown {
 			// @ts-expect-error stores and defaultStore will exist at runtime
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 			return this.stores[id] || this.defaultStore
 		},
 	},

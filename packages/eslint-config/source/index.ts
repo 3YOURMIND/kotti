@@ -150,6 +150,7 @@ const baseConfig = tseslint.config({
 		'prettier/prettier': 'warn',
 
 		// SonarJS
+		'sonarjs/assertions-in-tests': 'off',
 		'sonarjs/deprecation': 'off', // deprecation is intentionally used for flagging outdated but not yet removed code
 		'sonarjs/different-types-comparison': 'off', // conflicts with @typescript-eslint/no-unnecessary-condition
 		'sonarjs/empty-string-repetition': 'off',

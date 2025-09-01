@@ -220,7 +220,7 @@ const useInheritableProperties = <DATA_TYPE>({
 		computed((): KottiField.InheritablePropsInternal[KEY] => {
 			if (props[key]) return props[key]
 
-			if (context !== null && context.fieldInheritableProps.value[key])
+			if (context?.fieldInheritableProps.value[key])
 				return context.fieldInheritableProps.value[key]
 
 			return defaultValue

@@ -33,6 +33,7 @@ export const TableRow = defineComponent({
 				'TableRowCell: Component was used without providing the right contexts',
 			)
 
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion
 		const hasActions = computed(() => Boolean(tableState.hasActions))
 		const hasClickListener = computed(() =>
 			Boolean(tableState.$listeners.rowClick),
@@ -210,6 +211,7 @@ export const TableRow = defineComponent({
 						),
 					...tableColumns.value.map((column: any, columnIndex: number) =>
 						h(TableRowCell, {
+							// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 							key: column.prop || columnIndex,
 							props: {
 								column,

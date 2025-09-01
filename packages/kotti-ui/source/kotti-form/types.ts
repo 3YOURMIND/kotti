@@ -58,11 +58,8 @@ export namespace KottiForm {
 	}
 
 	export interface ValidationSummary {
-		// eslint-disable-next-line sonarjs/no-useless-intersection
 		errors: Array<AdditionalContext & KottiField.Validation.Error>
-		// eslint-disable-next-line sonarjs/no-useless-intersection
 		successes: Array<AdditionalContext & KottiField.Validation.Success>
-		// eslint-disable-next-line sonarjs/no-useless-intersection
 		warnings: Array<AdditionalContext & KottiField.Validation.Warning>
 	}
 

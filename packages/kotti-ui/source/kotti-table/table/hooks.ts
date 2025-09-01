@@ -615,9 +615,9 @@ export const useKottiTable = <
 				return ordering.value
 			},
 			getRowBehavior: params.value.getRowBehavior,
-			hasDragAndDrop: Boolean(params.value.hasDragAndDrop),
+			hasDragAndDrop: params.value.hasDragAndDrop,
 			isDragAndDropActive: draggedColumnId.value !== null,
-			isExpandable: Boolean(params.value.expandMode !== null),
+			isExpandable: params.value.expandMode !== null,
 			selectionCount: Object.values(selectedRows.value).length,
 			setDraggedColumnId: (columnId) => {
 				draggedColumnId.value = columnId

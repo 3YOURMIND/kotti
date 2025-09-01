@@ -7,9 +7,9 @@ import tseslint from 'typescript-eslint'
 
 import eslintConfig3YD from '@3yourmind/eslint-config'
 
-import kottiUIPackageJSON from './packages/kotti-ui/package.json' assert { type: 'json' }
-import vueUseTippyPackageJSON from './packages/vue-use-tippy/package.json' assert { type: 'json' }
-import yocoPackageJSON from './packages/yoco/package.json' assert { type: 'json' }
+import kottiUIPackageJSON from './packages/kotti-ui/package.json' with { type: 'json' }
+import vueUseTippyPackageJSON from './packages/vue-use-tippy/package.json' with { type: 'json' }
+import yocoPackageJSON from './packages/yoco/package.json' with { type: 'json' }
 
 const trustedDependencies = new Set([
 	'@metatypes/typography',
