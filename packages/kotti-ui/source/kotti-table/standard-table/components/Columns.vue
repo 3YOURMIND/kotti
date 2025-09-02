@@ -59,9 +59,7 @@ export default defineComponent({
 			isShowAllDisabled: computed(
 				(): boolean =>
 					props.isLoading ||
-					Object.values(props.value).every((optionValue) =>
-						Boolean(optionValue),
-					),
+					Object.values(props.value).every((optionValue) => optionValue),
 			),
 			translations: useTranslationNamespace('KtStandardTable'),
 			Yoco,

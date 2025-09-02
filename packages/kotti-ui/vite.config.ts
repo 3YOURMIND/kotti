@@ -7,7 +7,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
-import packageJSON from './package.json' assert { type: 'json' }
+import packageJSON from './package.json' with { type: 'json' }
 
 const getPlugins = ({ enableVisualizer }: { enableVisualizer: boolean }) => [
 	commonjs({

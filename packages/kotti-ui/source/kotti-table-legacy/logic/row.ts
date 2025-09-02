@@ -23,6 +23,7 @@ export const mutations: Store.MutationComponents.Row = {
 		state._data = data
 
 		state.filteredData = data
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 		state.rows = sortData(data || [], state)
 
 		if (dataInstanceChanged) {

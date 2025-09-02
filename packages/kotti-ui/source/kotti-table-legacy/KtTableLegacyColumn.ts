@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable perfectionist/sort-objects */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import pick from 'lodash/pick.js'
@@ -166,3 +167,4 @@ function createColumn(column: any = {}) {
 }
 /* eslint-enable perfectionist/sort-objects */
 /* eslint-enable @typescript-eslint/no-explicit-any */
+/* eslint-enable @typescript-eslint/prefer-nullish-coalescing */

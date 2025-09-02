@@ -216,7 +216,7 @@ export const generateComponentCode = (component: ComponentValue): string =>
 		...(component.validation === 'empty'
 			? []
 			: [
-					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${String(component.validation)}" })"`,
+					`\t:validator="(value) => ({ text: 'Some Validation Text', type: "${component.validation}" })"`,
 				]),
 		createRemoteUploadCode(component),
 		appendAdditionalSlots(component),
