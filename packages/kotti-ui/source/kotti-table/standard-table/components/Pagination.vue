@@ -7,7 +7,7 @@
 		<template v-else>
 			<span v-text="resultLabel" />
 			<KtPagination
-				v-if="rowCount > 0"
+				v-if="!rowCount || rowCount > 0"
 				:adjacentAmount="1"
 				:page="pageIndex + 1"
 				:pageSize="pageSize"
@@ -22,6 +22,7 @@
 <script lang="ts">
 import { Dashes } from '@metatypes/typography'
 import { computed, defineComponent } from 'vue'
+import type { PropType } from 'vue'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { pluralize } from '../utilities/translation'
@@ -32,7 +33,10 @@ export default defineComponent({
 		isLoading: { default: false, type: Boolean },
 		pageIndex: { required: true, type: Number },
 		pageSize: { required: true, type: Number },
-		rowCount: { required: true, type: Number },
+		rowCount: {
+			default: null,
+			type: Number as PropType<number | null>,
+		},
 	},
 	emits: ['updatePageIndex'],
 	setup(props) {
@@ -41,6 +45,9 @@ export default defineComponent({
 		return {
 			resultLabel: computed(() => {
 				const start = props.pageIndex * props.pageSize
+				if (props.rowCount === null) {
+					return `${start + 1}${Dashes.EnDash}${start + props.pageSize}`
+				}
 				const end = Math.min(start + props.pageSize, props.rowCount)
 
 				return pluralize(translations.value.resultsCounter, props.rowCount, {
