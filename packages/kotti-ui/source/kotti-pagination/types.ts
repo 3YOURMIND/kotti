@@ -13,7 +13,7 @@ export namespace KottiPagination {
 		page: z.number(),
 		pageSize: z.number().default(10),
 		pagingStyle: z.nativeEnum(PagingStyle).default(PagingStyle.EXPAND),
-		total: z.number(),
+		total: z.number().nullable().default(null),
 	})
 
 	export type PropsInternal = z.output<typeof propsSchema>

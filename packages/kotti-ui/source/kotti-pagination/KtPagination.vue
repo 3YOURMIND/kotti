@@ -49,20 +49,23 @@ export default defineComponent({
 		'setPage',
 	],
 	setup(props, { emit }) {
-		const pageAmount = computed(() => Math.ceil(props.total / props.pageSize))
+		const pageAmount = computed(() =>
+			props.total === null ? null : Math.ceil(props.total / props.pageSize),
+		)
 
 		return {
 			nextPage: () => {
-				if (props.page >= pageAmount.value) return
+				if (pageAmount.value !== null && props.page >= pageAmount.value) return
 				emit('nextPageClicked', props.page + 1)
 				emit('setPage', props.page + 1)
 			},
 			pageAmount,
 			paginationComponent: computed(() => {
-				const isFlexLogical = 2 * (props.adjacentAmount + 1) < pageAmount.value
 				switch (props.pagingStyle) {
 					case KottiPagination.PagingStyle.FLEX:
-						return !isFlexLogical || pageAmount.value < 2
+						return pageAmount.value !== null &&
+							(2 * (props.adjacentAmount + 1) >= pageAmount.value ||
+								pageAmount.value < 2)
 							? PaginationExpanded.name
 							: PaginationFlexible.name
 					case KottiPagination.PagingStyle.FRACTION:

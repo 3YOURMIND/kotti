@@ -5,6 +5,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
+import { validateTotalIsNumber } from '../utils'
+
 export default defineComponent<{
 	currentPage: number
 	maximumPage: number
@@ -12,7 +14,11 @@ export default defineComponent<{
 	name: 'PaginationFractionated',
 	props: {
 		currentPage: { required: true, type: Number },
-		maximumPage: { required: true, type: Number },
+		maximumPage: {
+			required: true,
+			type: Number,
+			validator: validateTotalIsNumber,
+		},
 	},
 	setup(props) {
 		return {

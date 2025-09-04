@@ -248,7 +248,7 @@ export namespace KottiStandardTable {
 				pageSizeOptions: sharedPaginationSchema.shape.pageSizeOptions.default(
 					() => DEFAULT_PAGE_SIZE_OPTIONS,
 				),
-				rowCount: sharedPaginationSchema.shape.rowCount,
+				rowCount: sharedPaginationSchema.shape.rowCount.nullable(),
 				type: z.literal('remote'),
 			}),
 		])

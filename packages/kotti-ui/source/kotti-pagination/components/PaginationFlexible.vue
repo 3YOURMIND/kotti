@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import range from 'lodash/range.js'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
 
 const ADJACENT_MULTIPLIER = 20
 const BASE_NUMBER_WIDTH = 24.5
@@ -48,12 +48,14 @@ export default defineComponent({
 		adjacentAmount: { required: true, type: Number },
 		currentPage: { required: true, type: Number },
 		fixedWidth: { required: true, type: Boolean },
-		maximumPage: { required: true, type: Number },
+		maximumPage: { default: null, type: Number as PropType<number | null> },
 	},
 	emits: ['setPage'],
 	setup(props) {
 		const pixelMargin = computed(() => {
-			const digitWidth = props.maximumPage.toString().length - 1
+			const widestDigit =
+				props.maximumPage ?? props.currentPage + props.adjacentAmount
+			const digitWidth = widestDigit.toString().length - 1
 			const numberWidth = BASE_NUMBER_WIDTH + digitWidth * PIXEL_MULTIPLIER
 			const baseElementsWidth =
 				(2 * props.adjacentAmount + MAX_NUMBER_OF_ELEMENTS) * numberWidth
@@ -65,18 +67,26 @@ export default defineComponent({
 			const center = ((): number => {
 				if (props.currentPage - props.adjacentAmount < 1)
 					return props.adjacentAmount + 1
-				if (props.currentPage + props.adjacentAmount > props.maximumPage - 2)
+				if (
+					props.maximumPage !== null &&
+					props.currentPage + props.adjacentAmount > props.maximumPage - 2
+				)
 					return props.maximumPage - props.adjacentAmount - 1
 				return props.currentPage
 			})()
 			const start = Math.max(1, center - props.adjacentAmount)
-			const end = Math.min(props.maximumPage, center + props.adjacentAmount)
+			const end = Math.min(
+				props.maximumPage ?? Number.MAX_SAFE_INTEGER,
+				center + props.adjacentAmount,
+			)
 			return range(start, end + 1)
 		})
 
 		const showFirstPage = computed(() => !neighborValues.value.includes(1))
 		const showLastPage = computed(
-			() => !neighborValues.value.includes(props.maximumPage),
+			() =>
+				props.maximumPage !== null &&
+				!neighborValues.value.includes(props.maximumPage),
 		)
 
 		return {
@@ -96,8 +106,9 @@ export default defineComponent({
 			),
 			showRightDots: computed(
 				() =>
-					showLastPage.value &&
-					!neighborValues.value.includes(props.maximumPage),
+					props.maximumPage === null ||
+					(showLastPage.value &&
+						!neighborValues.value.includes(props.maximumPage)),
 			),
 		}
 	},

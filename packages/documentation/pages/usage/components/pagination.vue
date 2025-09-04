@@ -53,6 +53,15 @@
 <KtPagination pagingStyle="flex" :total="500" :pageSize="10" />
 ```
 
+##### Flexible without right bound
+
+With flexible pagination components you can omit the `total` prop. This will make the upper bound disappear, the user
+can increase the page indefinitely. This is useful for cases where the total number of pages is not (yet) known
+
+<div class="element-example white">
+	<KtPagination pagingStyle="flex" :pageSize="10" :page="page500" @setPage="updatePage500" />
+</div>
+
 #### Extra Options
 
 <div class="element-example white">
@@ -107,15 +116,20 @@ export default defineComponent({
 	setup() {
 		const page50 = ref(1)
 		const page500 = ref(1)
+		const pageLimitLess = ref(1)
 		return {
 			component: KtPagination,
 			page50,
 			page500,
+			pageLimitLess,
 			updatePage50: (page: number) => {
 				page50.value = page
 			},
 			updatePage500: (page: number) => {
 				page500.value = page
+			},
+			updatePageLimitless: (page: number) => {
+				pageLimitLess.value = page
 			},
 		}
 	},
