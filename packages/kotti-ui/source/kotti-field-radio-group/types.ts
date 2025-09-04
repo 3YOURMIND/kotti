@@ -22,6 +22,7 @@ export namespace KottiFieldRadioGroup {
 		.merge(KottiField.potentiallySupportedPropsSchema.pick({ tabIndex: true }))
 		.extend({
 			isInline: z.boolean().default(false),
+			modelValue: valueSchema.default(null),
 			options: z
 				.array(entrySchema)
 				.refine(...refinementNonEmpty)
@@ -30,7 +31,6 @@ export namespace KottiFieldRadioGroup {
 						new Set(options.map(({ value }) => value)).size === options.length,
 					{ message: 'options need to be unique by `value`' },
 				),
-			value: valueSchema.default(null),
 		})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>

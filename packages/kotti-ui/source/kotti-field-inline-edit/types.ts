@@ -29,12 +29,12 @@ export namespace KottiFieldInlineEdit {
 		.extend({
 			isMultiline: z.boolean().default(false),
 			isReadonly: z.boolean().default(false),
+			modelValue: valueSchema.default(null),
 			placeholder: z.string().nullable().default(null),
 			preventConfirmationOn: createLooseZodEnumSchema(
 				ConfirmationValidation,
 			).default(ConfirmationValidation.NEVER),
 			textStyle: createLooseZodEnumSchema(TextStyle).nullable().default(null),
-			value: valueSchema.default(null),
 		})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
