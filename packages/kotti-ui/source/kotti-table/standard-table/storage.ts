@@ -37,9 +37,6 @@ export interface KottiStandardTableStorage {
 	): Promise<void>
 }
 
-/**
- * @knipignore
- */
 export class DummyStorageAdapter implements KottiStandardTableStorage {
 	// eslint-disable-next-line @typescript-eslint/require-await
 	async load(): Promise<SerializableState | null> {

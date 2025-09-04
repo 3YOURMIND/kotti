@@ -88,6 +88,8 @@ jobs:
           key: ${{ hashFiles('**/yarn.lock') }}
       - name: Install modules
         run: yarn install --frozen-lockfile
+      - name: Build @3yourmind/eslint-config
+        run: yarn workspace @3yourmind/eslint-config run build
       - name: Run Knip
         run: yarn run check:knip
   check-publint:
