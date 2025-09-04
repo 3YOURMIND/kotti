@@ -20,25 +20,16 @@ type ToasterAPIHack = (params: {
 	text: string
 }) => Record<string, unknown>
 
-/**
- * @knipignore
- */
 export const error = toaster.withOptions({
 	duration: 5_000,
 	type: 'error',
 }) as unknown as ToasterAPIHack
 
-/**
- * @knipignore
- */
 export const info = toaster.withOptions({
 	duration: 5_000,
 	type: 'info',
 }) as unknown as ToasterAPIHack
 
-/**
- * @knipignore
- */
 export const success = toaster.withOptions({
 	duration: 5_000,
 	type: 'success',
