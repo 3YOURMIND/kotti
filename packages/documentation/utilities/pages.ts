@@ -66,7 +66,9 @@ export const isComponentName = (name: unknown): name is ComponentNames =>
 
 export const createActions = (
 	hasActions: boolean,
-): Array<{ label: string; onClick: () => void }> | undefined =>
+):
+	| Array<{ isDisabled?: boolean; label: string; onClick: () => void }>
+	| undefined =>
 	hasActions
 		? [
 				{
@@ -79,6 +81,13 @@ export const createActions = (
 					label: 'Edit Item',
 					onClick: () => {
 						info({ text: 'actions[1].onClick called' })
+					},
+				},
+				{
+					isDisabled: true,
+					label: 'Delete Item',
+					onClick: () => {
+						info({ text: 'actions[2].onClick called' })
 					},
 				},
 			]
@@ -207,9 +216,10 @@ export const generateComponentCode = (component: ComponentValue): string =>
 		...(component.hasActions
 			? [
 					`\t:actions="${JSON.stringify(
-						createActions(true)?.map(
-							(a) => `{ label: '${a.label}', onClick: () => {} }`,
-						) ?? [],
+						createActions(true)?.map((a) => {
+							const disabledProp = a.isDisabled ? ' isDisabled: true,' : ''
+							return `{${disabledProp} label: '${a.label}', onClick: () => {} }`
+						}) ?? [],
 					).replaceAll('"', '')}"`,
 				]
 			: []),
