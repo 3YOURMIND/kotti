@@ -36,6 +36,7 @@
 			v-for="(action, index) in modifiedActions"
 			:key="`action-${index}`"
 			:dataTest="action.dataTest"
+			:isDisabled="action.isDisabled"
 			:isHovered="isHovered('action', index)"
 			:label="action.label"
 			type="action"
@@ -183,6 +184,8 @@ export default defineComponent({
 		}
 
 		const onAction = (action: z.output<typeof Shared.actionSchema>) => {
+			if (action.isDisabled) return
+
 			emit('close')
 
 			action.onClick()

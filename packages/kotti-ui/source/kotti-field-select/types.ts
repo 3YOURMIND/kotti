@@ -18,6 +18,7 @@ export namespace Shared {
 
 	export const actionSchema = z.object({
 		dataTest: z.string().optional(),
+		isDisabled: z.boolean().optional(),
 		label: z.string(),
 		onClick: z.function(z.tuple([]), z.void()),
 	})
