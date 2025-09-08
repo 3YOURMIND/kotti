@@ -1,15 +1,4 @@
 /*!
- * natural-sort.js
- * ===============
- * Sorting with support for numbers, dates, unicode and more.
- *
- * http://github.com/studio-b12/natural-sort
- * MIT License, © Studio B12 GmbH 2014
- *
- */
-
-
-/*!
 	Copyright (c) 2018 Jed Watson.
 	Licensed under the MIT License (MIT), see
 	http://jedwatson.github.io/classnames
@@ -46,6 +35,17 @@
  * @copyright 2023 Jason Mulligan <jason.mulligan@avoidwork.com>
  * @license BSD-3-Clause
  * @version 10.1.0
+ */
+
+
+/*!
+ * natural-sort.js
+ * ===============
+ * Sorting with support for numbers, dates, unicode and more.
+ *
+ * http://github.com/studio-b12/natural-sort
+ * MIT License, © Studio B12 GmbH 2014
+ *
  */
 
 
