@@ -13,12 +13,18 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
+import { validateTotalIsNumber } from '../utils'
+
 export default defineComponent({
 	name: 'PaginationExpanded',
 	props: {
 		currentPage: { required: true, type: Number },
 		pageSize: { required: true, type: Number },
-		total: { required: true, type: Number },
+		total: {
+			required: true,
+			type: Number,
+			validator: validateTotalIsNumber,
+		},
 	},
 	emits: ['setPage'],
 	setup(props) {

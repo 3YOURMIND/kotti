@@ -181,7 +181,10 @@ export const useKottiStandardTable = <
 			const pageFirstRowIndex = pageIndex * pageSize
 			return {
 				pageIndex:
-					pageIndex < 0 || pageFirstRowIndex > rowCount.value ? 0 : pageIndex,
+					pageIndex < 0 ||
+					(rowCount.value !== null && pageFirstRowIndex > rowCount.value)
+						? 0
+						: pageIndex,
 				pageSize,
 			}
 		},

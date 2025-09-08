@@ -159,6 +159,13 @@ type RecipeRow = {
 	rating: number
 }
 
+type Response = {
+	limit: number
+	recipes: RecipeRow[]
+	skip: number
+	total: number
+}
+
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsStandardTable',
 	components: {
@@ -263,7 +270,7 @@ export default defineComponent({
 			},
 		])
 		const recipesData = ref<RecipeRow[]>([])
-		const recipesRowCount = ref(0)
+		const recipesRowCount = ref<number | null>(null)
 
 		const settings = ref<{
 			columnsPopoverSize: Kotti.Popover.Size
@@ -412,7 +419,7 @@ export default defineComponent({
 			})),
 		)
 
-		useKottiStandardTable(
+		const recipeTable = useKottiStandardTable(
 			computed(() => ({
 				filters: filters.value,
 				id: 'example-remote-data',
@@ -454,45 +461,48 @@ export default defineComponent({
 			})),
 		)
 
+		const fetchData = async (
+			args: Kotti.StandardTable.Events.UpdateFetchData,
+		) => {
+			isLoadingRecipes.value = true
+
+			// eslint-disable-next-line no-console
+			console.log('🚀 ~ docs ~ standard-table ~ fetchData:', { ...args })
+
+			const { pagination } = args
+			const { pageIndex, pageSize } = pagination
+			const skip = pageSize * pageIndex
+			const url = `https://dummyjson.com/recipes?limit=${pageSize}&skip=${skip}`
+
+			try {
+				const response = await fetch(url)
+
+				if (!response.ok) {
+					throw new Error(`Response status: ${response.status}`)
+				}
+
+				const { recipes }: Response = await response.json()
+
+				recipesData.value = recipes
+				if (recipesData.value.length < pageSize) {
+					recipesRowCount.value = pageIndex * pageSize
+					recipeTable.api.pagination.value.pageIndex = 0
+					void fetchData({
+						...args,
+						pagination: recipeTable.api.pagination.value,
+					})
+				}
+				isLoadingRecipes.value = false
+			} catch (error: unknown) {
+				// eslint-disable-next-line no-console
+				console.error((error as { message: string }).message)
+				throw error
+			}
+		}
+
 		return {
 			component: KtStandardTable,
-			fetchData: async (args: Kotti.StandardTable.Events.UpdateFetchData) => {
-				isLoadingRecipes.value = true
-
-				// eslint-disable-next-line no-console
-				console.log('🚀 ~ docs ~ standard-table ~ fetchData:', { ...args })
-
-				const { pagination } = args
-				const { pageIndex, pageSize } = pagination
-				const skip = pageSize * pageIndex
-				const url = `https://dummyjson.com/recipes?limit=${pageSize}&skip=${skip}`
-
-				type Response = {
-					limit: number
-					recipes: RecipeRow[]
-					skip: number
-					total: number
-				}
-
-				try {
-					const response = await fetch(url)
-
-					if (!response.ok) {
-						throw new Error(`Response status: ${response.status}`)
-					}
-
-					const { recipes, total }: Response = await response.json()
-
-					recipesData.value = recipes
-					recipesRowCount.value = total
-
-					isLoadingRecipes.value = false
-				} catch (error: unknown) {
-					// eslint-disable-next-line no-console
-					console.error((error as { message: string }).message)
-					throw error
-				}
-			},
+			fetchData,
 			settings,
 			sizeOptions: computed((): Kotti.FieldSingleSelect.Props['options'] =>
 				Object.entries(Kotti.Popover.Size).map(([key, value]) => ({
