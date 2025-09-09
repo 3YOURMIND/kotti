@@ -176,7 +176,7 @@ export default defineComponent({
 				isHoverable: true,
 				name: 'Example User',
 				size: 'md',
-				src: 'https://picsum.photos/200/100',
+				src: 'https://picsum.photos/100/100',
 			},
 		})
 
@@ -212,11 +212,11 @@ export default defineComponent({
 			ktAvatarGroupProps: computed(() => ({
 				...ktAvatarGroupSettings.value.props,
 				items: [
-					{ name: 'Beyoncé', src: 'https://picsum.photos/200' },
-					{ name: 'Justin', src: 'https://picsum.photos/100' },
-					{ name: 'Britney', src: 'https://picsum.photos/130' },
-					{ name: 'Shakira', src: 'https://picsum.photos/140' },
-					{ name: 'Rihanna', src: 'https://picsum.photos/150' },
+					{ name: 'Beyoncé', src: 'https://picsum.photos/200/200' },
+					{ name: 'Justin', src: 'https://picsum.photos/100/100' },
+					{ name: 'Britney', src: 'https://picsum.photos/130/130' },
+					{ name: 'Shakira', src: 'https://picsum.photos/140/140' },
+					{ name: 'Rihanna', src: 'https://picsum.photos/150/150' },
 				],
 				size: ktAvatarGroupSettings.value.props.size ?? 'md',
 			})),

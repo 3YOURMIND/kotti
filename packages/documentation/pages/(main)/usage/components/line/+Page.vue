@@ -22,18 +22,6 @@
 		<KtLine />
 		{{ loremIpsum[1] }}
 	</CodePreview>
-
-	<h2>Line with Text</h2>
-	<p>
-		Add descriptive titles to your lines. The text can be positioned to the
-		left, right, or center.
-	</p>
-	<CodePreview
-		code='<KtLine text="Title Center" position="center" />'
-		language="vue-html"
-	>
-		<KtLine position="center" text="Title Center" />
-	</CodePreview>
 </template>
 
 <script lang="ts">

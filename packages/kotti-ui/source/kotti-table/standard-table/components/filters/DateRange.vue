@@ -14,12 +14,16 @@
 <script lang="ts">
 import { computed, defineComponent, type PropType } from 'vue'
 
+import KtFieldDateRange from '../../../../kotti-field-date/KtFieldDateRange.vue'
 import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
 import type { KottiStandardTable } from '../../types'
 import { getLast, getToday } from '../../utilities/date'
 
 export default defineComponent({
 	name: 'DateRangeFilter',
+	components: {
+		KtFieldDateRange,
+	},
 	props: {
 		filter: {
 			required: true,

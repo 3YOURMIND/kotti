@@ -39,7 +39,9 @@ import { defineComponent, type PropType } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import KtButton from '../../../kotti-button/KtButton.vue'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import KtPopover from '../../../kotti-popover/KtPopover.vue'
 import type { KottiStandardTable } from '../types'
 
 import FilterList from './FilterList.vue'
@@ -48,6 +50,8 @@ export default defineComponent({
 	name: 'TableFilters',
 	components: {
 		FilterList,
+		KtButton,
+		KtPopover,
 	},
 	props: {
 		appliedFilters: {

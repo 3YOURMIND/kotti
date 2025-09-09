@@ -15,10 +15,14 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 
+import KtFieldSingleSelect from '../../../../kotti-field-select/KtFieldSingleSelect.vue'
 import type { KottiStandardTable } from '../../types'
 
 export default defineComponent({
 	name: 'SingleSelectFilter',
+	components: {
+		KtFieldSingleSelect,
+	},
 	props: {
 		filter: {
 			required: true,

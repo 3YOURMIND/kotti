@@ -6,40 +6,95 @@
 
 		<CodePreview
 			code='
-			<KtCard imgUrl="https://picsum.photos/900/300">
+			<KtCard imgUrl="https://picsum.photos/400/200">
 				<template #card-header>
 					<h2>Lorem Ipsum</h2>
 				</template>
 				<template #card-body>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-						consequat nisl at nisl condimentum vehicula.
-					</p>
+					Lorem ipsum dolor [...]
+				</template>
+			</KtCard>
+
+			<KtCard
+				imgUrl="https://picsum.photos/400/200"
+				primaryActionLabel="Confirm"
+				secondaryActionLabel="Cancel"
+			>
+				<template #card-header>
+					<h2>Lorem Ipsum</h2>
+				</template>
+				<template #card-body>
+					Lorem ipsum [...]
 				</template>
 			</KtCard>
 		'
 			language="vue-html"
 		>
-			<KtCard v-bind="{ imgPosition }" imgUrl="https://picsum.photos/900/300">
+			<div class="card-usage-standard">
+				<KtCard v-bind="{ imgPosition }" imgUrl="https://picsum.photos/380/200">
+					<template #card-header>
+						<h2>Simple display</h2>
+					</template>
+					<template #card-body>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+							consequat nisl at nisl condimentum vehicula.
+						</p>
+					</template>
+				</KtCard>
+
+				<KtCard
+					v-bind="{ imgPosition }"
+					imgUrl="https://picsum.photos/390/200"
+					primaryActionLabel="Confirm"
+					secondaryActionLabel="Cancel"
+				>
+					<template #card-header>
+						<h2>Example with buttons</h2>
+					</template>
+					<template #card-body>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+							consequat nisl at nisl condimentum vehicula.
+						</p>
+					</template>
+				</KtCard>
+			</div>
+		</CodePreview>
+
+		<CodePreview
+			code='
+			<KtCard
+				imgUrl="https://picsum.photos/400/200"
+				isImgLoading
+			>
 				<template #card-header>
 					<h2>Lorem Ipsum</h2>
 				</template>
 				<template #card-body>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-						consequat nisl at nisl condimentum vehicula.
-					</p>
+					Lorem ipsum [...]
 				</template>
 			</KtCard>
-		</CodePreview>
-		<br />
 
-		<CodePreview
-			code='
+			<KtCard
+				imgUrl="https://picsum.photos/400/200"
+				isTextLoading
+			>
+				<template #card-header>
+					<h2>Lorem Ipsum</h2>
+				</template>
+				<template #card-body>
+					Lorem ipsum [...]
+				</template>
+			</KtCard>
+		'
+			language="vue-html"
+		>
+			<div class="card-usage-standard">
 				<KtCard
-					imgUrl="https://picsum.photos/900/300"
-					primaryActionLabel="Confirm"
-					secondaryActionLabel="Cancel"
+					v-bind="{ imgPosition }"
+					imgUrl="https://picsum.photos/400/200"
+					isImgLoading
 				>
 					<template #card-header>
 						<h2>Lorem Ipsum</h2>
@@ -51,84 +106,36 @@
 						</p>
 					</template>
 				</KtCard>
-			'
-			language="vue-html"
-		>
-			<KtCard
-				v-bind="{ imgPosition }"
-				imgUrl="https://picsum.photos/900/300"
-				primaryActionLabel="Confirm"
-				secondaryActionLabel="Cancel"
-			>
-				<template #card-header>
-					<h2>Lorem Ipsum</h2>
-				</template>
-				<template #card-body>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-						consequat nisl at nisl condimentum vehicula.
-					</p>
-				</template>
-			</KtCard>
-		</CodePreview>
-		<br />
 
-		<div class="card-view-example-skeleton">
-			<KtCard
-				v-bind="{ imgPosition }"
-				imgUrl="https://picsum.photos/900/300"
-				:isImgLoading="true"
-				:isTextLoading="true"
-				primaryActionLabel="Confirm"
-				secondaryActionLabel="Cancel"
-			>
-				<template #card-header>
-					<h2>Lorem Ipsum</h2>
-				</template>
-				<template #card-body>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-						consequat nisl at nisl condimentum vehicula.
-					</p>
-				</template>
-			</KtCard>
-		</div>
-		<br />
-		<CodePreview language="vue-html">
-			<KtCard>
-				<template #card-header>
-					<div>
+				<KtCard
+					v-bind="{ imgPosition }"
+					imgUrl="https://picsum.photos/410/200"
+					isTextLoading
+				>
+					<template #card-header>
 						<h2>Lorem Ipsum</h2>
-						<b>consectetur adipiscing elit</b>
-					</div>
-				</template>
-				<template #card-body>
-					<div>
+					</template>
+					<template #card-body>
 						<p>
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
 							consequat nisl at nisl condimentum vehicula.
 						</p>
-					</div>
-				</template>
-				<template #card-footer>
-					<div>
-						<KtButton label="Button" />
-					</div>
-				</template>
-			</KtCard>
+					</template>
+				</KtCard>
+			</div>
 		</CodePreview>
 
 		<KtRow :gap="8">
 			<KtCol :span="12">
 				<KtFieldSingleSelect
-					v-model:value="imgPosition"
+					v-model="imgPosition"
 					hideClear
 					label="Image Position"
 					:options="imgPositionOptions"
 				/>
 			</KtCol>
 			<KtCol :span="12">
-				<KtCard v-bind="{ imgPosition }" imgUrl="https://picsum.photos/900/300">
+				<KtCard v-bind="{ imgPosition }" imgUrl="https://picsum.photos/420/300">
 					<template #card-header>
 						<h2>Lorem Ipsum</h2>
 					</template>
@@ -152,7 +159,6 @@ import { defineComponent, ref } from 'vue'
 
 import {
 	Kotti,
-	KtButton,
 	KtCard,
 	KtCol,
 	KtFieldSingleSelect,
@@ -167,7 +173,6 @@ export default defineComponent({
 	components: {
 		CodePreview,
 		ComponentInfo,
-		KtButton,
 		KtCard,
 		KtCol,
 		KtFieldSingleSelect,
@@ -187,3 +192,11 @@ export default defineComponent({
 	},
 })
 </script>
+
+<style lang="scss" scoped>
+.card-usage-standard {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 30px;
+}
+</style>

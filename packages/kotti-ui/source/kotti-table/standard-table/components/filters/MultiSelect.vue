@@ -15,10 +15,14 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 
+import KtFieldMultiSelect from '../../../../kotti-field-select/KtFieldMultiSelect.vue'
 import type { KottiStandardTable } from '../../types'
 
 export default defineComponent({
 	name: 'MultiSelectFilter',
+	components: {
+		KtFieldMultiSelect,
+	},
 	props: {
 		filter: {
 			required: true,

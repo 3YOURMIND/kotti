@@ -183,6 +183,7 @@ import { computed, defineComponent } from 'vue'
 import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
+import { KtPopover } from '../kotti-popover'
 import { makeProps } from '../make-props'
 
 import { useTableContext } from './table/context'
@@ -202,6 +203,7 @@ export default defineComponent({
 	name: 'KtTable',
 	components: {
 		FlexRender,
+		KtPopover,
 	},
 	props: makeProps(KottiTable.propsSchema),
 	setup(props) {

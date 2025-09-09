@@ -24,6 +24,7 @@
 import isEqual from 'lodash/isEqual.js'
 import { computed, defineComponent, type PropType, ref, watch } from 'vue'
 
+import KtFieldNumber from '../../../../kotti-field-number/KtFieldNumber.vue'
 import type { KottiFieldNumber } from '../../../../kotti-field-number/types'
 import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
 import type { KottiStandardTable } from '../../types'
@@ -31,6 +32,9 @@ import { getReorderedRange } from '../../utilities/filters'
 
 export default defineComponent({
 	name: 'NumberRangeFilter',
+	components: {
+		KtFieldNumber,
+	},
 	props: {
 		filter: {
 			required: true,

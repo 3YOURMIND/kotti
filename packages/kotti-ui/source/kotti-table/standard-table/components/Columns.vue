@@ -37,10 +37,18 @@ import { computed, defineComponent, type PropType } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import KtButton from '../../../kotti-button/KtButton.vue'
+import KtFieldToggleGroup from '../../../kotti-field-toggle/KtFieldToggleGroup.vue'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import KtPopover from '../../../kotti-popover/KtPopover.vue'
 
 export default defineComponent({
 	name: 'TableColumns',
+	components: {
+		KtButton,
+		KtFieldToggleGroup,
+		KtPopover,
+	},
 	props: {
 		columnVisibility: {
 			required: true,

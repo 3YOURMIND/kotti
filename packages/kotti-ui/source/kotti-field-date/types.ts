@@ -8,7 +8,6 @@ export namespace Shared {
 	export const dateShortcutSchema = z.object({
 		keepOpen: z.boolean().optional(),
 		label: z.string(),
-		modelValue: z.never(), // overridden per date*-field
 	})
 
 	export const propsSchema = KottiField.propsSchema
@@ -57,7 +56,7 @@ export namespace KottiFieldDate {
 		shortcuts: z
 			.array(
 				Shared.dateShortcutSchema.extend({
-					modelValue: z.string().regex(DATE_FORMAT_REGEX),
+					value: z.string().regex(DATE_FORMAT_REGEX),
 				}),
 			)
 			.default(() => []),
@@ -82,7 +81,7 @@ export namespace KottiFieldDateRange {
 		shortcuts: z
 			.array(
 				Shared.dateShortcutSchema.extend({
-					modelValue: z.tuple([
+					value: z.tuple([
 						z.string().regex(DATE_FORMAT_REGEX),
 						z.string().regex(DATE_FORMAT_REGEX),
 					]),
@@ -108,7 +107,7 @@ export namespace KottiFieldDateTime {
 		shortcuts: z
 			.array(
 				Shared.dateShortcutSchema.extend({
-					modelValue: z.string().regex(DATE_TIME_FORMAT_REGEX),
+					value: z.string().regex(DATE_TIME_FORMAT_REGEX),
 				}),
 			)
 			.default(() => []),
@@ -133,7 +132,7 @@ export namespace KottiFieldDateTimeRange {
 		shortcuts: z
 			.array(
 				Shared.dateShortcutSchema.extend({
-					modelValue: z.tuple([
+					value: z.tuple([
 						z.string().regex(DATE_TIME_FORMAT_REGEX),
 						z.string().regex(DATE_TIME_FORMAT_REGEX),
 					]),

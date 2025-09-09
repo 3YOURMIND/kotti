@@ -25,10 +25,14 @@ import { computed, defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import KtPagination from '../../../kotti-pagination/KtPagination.vue'
 import { pluralize } from '../utilities/translation'
 
 export default defineComponent({
 	name: 'TablePagination',
+	components: {
+		KtPagination,
+	},
 	props: {
 		isLoading: { default: false, type: Boolean },
 		pageIndex: { required: true, type: Number },

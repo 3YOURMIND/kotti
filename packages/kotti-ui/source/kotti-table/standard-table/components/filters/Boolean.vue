@@ -16,10 +16,14 @@
 <script lang="ts">
 import { computed, defineComponent, type PropType } from 'vue'
 
+import KtFieldToggle from '../../../../kotti-field-toggle/KtFieldToggle.vue'
 import type { KottiStandardTable } from '../../types'
 
 export default defineComponent({
 	name: 'BooleanFilter',
+	components: {
+		KtFieldToggle,
+	},
 	props: {
 		filter: {
 			required: true,
