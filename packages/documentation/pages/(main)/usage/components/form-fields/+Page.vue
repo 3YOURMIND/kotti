@@ -1,25 +1,324 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	<KtForm v-model="values">
-		<ComponentForm
-			:component="component"
-			:hiddenProps="componentProps.hidden"
-			:props="componentProps.open"
-		>
-			<template #component-form-settings>
-				<KtForm v-model="settings">
-					<KtFieldSingleSelect
-						formKey="component"
-						hideClear
-						label="Component"
-						:options="componentOptions"
-					/>
-				</KtForm>
-				<div />
-			</template>
-		</ComponentForm>
-	</KtForm>
+	<KtI18nContext
+		:currencyMap="{
+			USD: {
+				symbol: '$',
+				decimalPlaces: 2,
+			},
+			EUR: {
+				symbol: '€',
+				decimalPlaces: 2,
+			},
+		}"
+		:locale="settings.locale"
+		:numberFormat="{ decimalSeparator: settings.decimalSeparator }"
+	>
+		<KtForm v-model="values">
+			<ComponentForm
+				:component="component"
+				:hiddenProps="componentProps.hidden"
+				:propFormatters="componenPropFormatters"
+				:props="componentProps.open"
+				:slots="componentSlots"
+			>
+				<template #component-form-settings>
+					<KtForm v-model="settings" size="small">
+						<h4>Settings</h4>
+						<KtFieldSingleSelect
+							formKey="NONE"
+							hideClear
+							label="Component"
+							:modelValue="settings.component"
+							:options="componentOptions"
+							@update:modelValue="setComponent"
+						/>
+						<KtFieldSingleSelect
+							formKey="size"
+							isOptional
+							label="Size"
+							:options="[
+								{ label: 'Small', value: 'small' },
+								{ label: 'Medium (Default)', value: 'medium' },
+								{ label: 'Large', value: 'large' },
+							]"
+						/>
+						<KtFieldSingleSelect
+							v-model="validation"
+							formKey="NONE"
+							isOptional
+							label="Validation State"
+							:options="[
+								{ label: 'Empty (Default)', value: 'empty' },
+								{ label: 'Success', value: 'success' },
+								{ label: 'Warning', value: 'warning' },
+								{ label: 'Error', value: 'error' },
+							]"
+						>
+							<template #helpText>
+								Passed as a validation function:
+								<code>() => ({ type: 'error', message: '' })</code>
+								or via
+								<code>KtForm.validators</code>
+							</template>
+						</KtFieldSingleSelect>
+
+						<KtFieldToggleGroup
+							formKey="booleanFlags"
+							isOptional
+							label="Boolean Flags"
+							:options="[
+								{
+									isDisabled: !componentDefinition.supports.clear,
+									key: 'hideClear',
+									label: 'hideClear',
+									tooltip: 'Support Varies',
+								},
+								{ key: 'hideValidation', label: 'hideValidation' },
+								{
+									isDisabled: !componentDefinition.supports.borderless,
+									key: 'isBorderless',
+									label: 'isBorderless',
+									tooltip: 'Support Varies',
+								},
+								{ key: 'isDisabled', label: 'isDisabled' },
+								{ key: 'isLoading', label: 'isLoading' },
+								{ key: 'isOptional', label: 'isOptional' },
+							]"
+							type="switch"
+						/>
+
+						<div
+							v-show="
+								componentDefinition.additionalProps.includes('emitEvents')
+							"
+						>
+							<h4>Events</h4>
+							<KtFieldToggleGroup
+								formKey="events"
+								isOptional
+								:options="[
+									{
+										key: 'emitBlur',
+										label: 'Listen to blur event',
+										tooltip:
+											'Support Varies. Shows a toast in documentation only.',
+									},
+									{
+										key: 'emitKeyup',
+										label: 'Listen to keyup event',
+										tooltip:
+											'Support Varies. Shows a toast in documentation only.',
+									},
+									{
+										key: 'emitOpen',
+										label: 'Listen to open event',
+										tooltip:
+											'Support Varies. Shows a toast in documentation only.',
+									},
+								]"
+								type="switch"
+							/>
+						</div>
+					</KtForm>
+					<KtForm v-model="settings" size="small">
+						<h4>Texts</h4>
+						<KtFieldText formKey="label" isOptional label="label" />
+						<KtFieldText
+							formKey="helpDescription"
+							isOptional
+							label="helpDescription"
+						/>
+						<KtFieldText formKey="dataTest" isOptional label="dataTest" />
+
+						<div class="field-row">
+							<KtFieldText
+								formKey="helpText"
+								:helpText="
+									settings.hasHelpTextSlot
+										? 'Not supported when using a #helpText slot'
+										: null
+								"
+								:isDisabled="settings.hasHelpTextSlot"
+								isOptional
+								label="helpText"
+							/>
+							<KtFieldToggle
+								formKey="hasHelpTextSlot"
+								isOptional
+								label="Use #helpText Slot"
+								type="switch"
+							/>
+						</div>
+						<div class="field-row">
+							<KtFieldText
+								formKey="placeholder"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.placeholder"
+								isOptional
+								label="placeholder"
+							/>
+							<KtFieldText
+								v-show="isRangeComponent"
+								formKey="placeholder2"
+								helpText="On range components, placeholder is an array of two strings"
+								isOptional
+								label="placeholder2"
+							/>
+						</div>
+
+						<h4 class="mt-4">Decoration</h4>
+						<div class="field-row">
+							<KtFieldText
+								formKey="prefix"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="prefix"
+							/>
+							<KtFieldText
+								formKey="suffix"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="suffix"
+							/>
+						</div>
+						<div class="field-row">
+							<KtFieldSingleSelect
+								formKey="leftIcon"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="leftIcon"
+								:options="yocoIconOptions"
+							>
+								<template #option="{ option }">
+									<i
+										class="yoco"
+										style="margin-right: 10px; font-size: 24px"
+										v-text="option.value"
+									/>
+									<span v-text="option.label" />
+								</template>
+							</KtFieldSingleSelect>
+							<KtFieldSingleSelect
+								formKey="rightIcon"
+								helpText="Support Varies"
+								:isDisabled="!componentDefinition.supports.decoration"
+								isOptional
+								label="rightIcon"
+								:options="yocoIconOptions"
+							>
+								<template #option="{ option }">
+									<i
+										class="yoco"
+										style="margin-right: 10px; font-size: 24px"
+										v-text="option.value"
+									/>
+									<span v-text="option.label" />
+								</template>
+							</KtFieldSingleSelect>
+						</div>
+						<div
+							v-show="componentDefinition.supports.autoComplete"
+							class="field-row"
+						>
+							<KtFieldSingleSelect
+								formKey="autoComplete"
+								helpText="Support Varies. Defaults to 'off'."
+								hideClear
+								:isOptional="settings.component !== 'KtFieldPassword'"
+								isUnsorted
+								label="autoComplete"
+								:options="autoCompleteOptions"
+							/>
+							<KtFieldText
+								formKey="autoCompleteToken"
+								:isDisabled="settings.autoComplete !== 'token'"
+								isOptional
+								label="<token>"
+							>
+								<template #helpText>
+									A space-separated token-list that describes the meaning of the
+									autocompletion value. Learn more in
+									<a
+										href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values"
+										>MDN Docs</a
+									>
+								</template>
+							</KtFieldText>
+						</div>
+
+						<KtFormControllerObject formKey="additionalProps">
+							<AdditionalProps v-bind="{ componentDefinition }" />
+							<AdditionalSlots v-bind="{ componentDefinition }" />
+						</KtFormControllerObject>
+					</KtForm>
+				</template>
+				<template v-if="settings.hasHelpTextSlot" #helpText>
+					<div>
+						Supports
+						<abbr title="Hypertext Markup Language">HTML</abbr> via
+						<code>&lt;template #helpText&gt;</code>
+					</div>
+				</template>
+
+				<template
+					v-if="settings.additionalProps.showHeaderSideSlot"
+					#headerSide
+				>
+					<a href="#" v-text="'Interactive'" />
+				</template>
+				<template
+					v-if="
+						componentDefinition.additionalProps.includes('showContentSlot') &&
+						settings.additionalProps.showContentSlot
+					"
+					#content="{ option }"
+				>
+					Content for {{ option.label }}
+				</template>
+				<template
+					v-if="
+						componentDefinition.additionalProps.includes('showHeaderSlot') &&
+						settings.additionalProps.showHeaderSlot
+					"
+					#header="{ option }"
+				>
+					Header for {{ option.label }}
+				</template>
+
+				<template
+					v-if="
+						componentDefinition.additionalProps.includes(
+							'showDropAreaExtraContentSlot',
+						) && settings.additionalProps.showDropAreaExtraContentSlot
+					"
+					#dropAreaExtraContent
+				>
+					<KtButton label="Custom action" @click="onDropAreaSlotButtonClick" />
+				</template>
+
+				<template
+					v-if="
+						componentDefinition.additionalProps.includes('showOptionSlot') &&
+						settings.additionalProps.showOptionSlot
+					"
+					#option="{ option }"
+				>
+					<div style="display: flex; gap: 10px; align-items: center">
+						<KtAvatar
+							size="sm"
+							:src="`https://picsum.photos/seed/${option.label}/100/100`"
+						/>
+						{{ option.label }}
+					</div>
+				</template>
+			</ComponentForm>
+		</KtForm>
+	</KtI18nContext>
 </template>
 
 <script lang="ts">
@@ -27,8 +326,8 @@ import { computed, defineComponent, ref } from 'vue'
 
 import {
 	Kotti,
-	// KtAvatar,
-	// KtButton,
+	KtAvatar,
+	KtButton,
 	KtFieldCurrency,
 	KtFieldDate,
 	KtFieldDateRange,
@@ -47,392 +346,44 @@ import {
 	KtFieldToggle,
 	KtFieldToggleGroup,
 	KtForm,
-	// KtFormControllerObject,
-	// KtI18nContext,
+	KtFormControllerObject,
+	KtI18nContext,
 } from '@3yourmind/kotti-ui'
-import type { Yoco } from '@3yourmind/yoco'
 
 import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
-import { getLast, ISO8601, ISO8601_SECONDS, today } from '~/utilities/date'
 import { info } from '~/utilities/toaster'
 
-type ComponentNames =
-	| 'KtFieldDate'
-	| 'KtFieldDateRange'
-	| 'KtFieldDateTime'
-	| 'KtFieldDateTimeRange'
-	| 'KtFieldFileUpload'
-	| 'KtFieldMultiSelect'
-	| 'KtFieldMultiSelectRemote'
-	| 'KtFieldNumber'
-	| 'KtFieldPassword'
-	| 'KtFieldRadioGroup'
-	| 'KtFieldSingleSelect'
-	| 'KtFieldSingleSelectRemote'
-	| 'KtFieldText'
-	| 'KtFieldTextArea'
-	| 'KtFieldToggle'
-	| 'KtFieldToggleGroup'
-	| 'KtFilters'
-	| 'KtValueLabel'
-
-type FieldValueLookup = {
-	currencyValue: Kotti.FieldCurrency.Value
-	dateRangeValue: Kotti.FieldDateRange.Value
-	dateTimeRangeValue: Kotti.FieldDateRange.Value
-	dateTimeValue: Kotti.FieldDateTime.Value
-	dateValue: Kotti.FieldDate.Value
-	fileUploadRemoteValue: Kotti.FieldFileUploadRemote.Value
-	fileUploadValue: Kotti.FieldFileUpload.Value
-	multiSelectValue: Kotti.FieldMultiSelect.Value
-	numberValue: Kotti.FieldNumber.Value
-	singleSelectValue: Kotti.FieldSingleSelect.Value
-	textValue: Kotti.FieldText.Value
-	toggleGroupValue: Kotti.FieldToggleGroup.Value
-	toggleValue: Kotti.FieldToggle.Value
-}
-
-const DATE_ADDITIONAL_PROPS = [
-	'emitEvents',
-	'maximumDate',
-	'minimumDate',
-	'shortcuts',
-]
-const FILE_UPLOAD_SHARED_PROPS = [
-	'allowMultiple',
-	'allowPhotos',
-	'collapseExtensionsAfter',
-	'extensions',
-	'externalUrl',
-	'hideDropArea',
-	'icon',
-	'maxFileSize',
-]
-
-const getInitialValue = (): FieldValueLookup => ({
-	currencyValue: null,
-	dateRangeValue: [null, null],
-	dateTimeRangeValue: [null, null],
-	dateTimeValue: null,
-	dateValue: null,
-	fileUploadRemoteValue: [],
-	fileUploadValue: [],
-	multiSelectValue: [],
-	numberValue: null,
-	singleSelectValue: null,
-	textValue: null,
-	toggleGroupValue: {
-		initiallyFalse: false,
-		initiallyNull: null,
-		initiallyTrue: true,
-	},
-	toggleValue: null,
-})
-
-const components: Array<{
-	additionalProps: Array<string>
-	formKey: keyof FieldValueLookup
-	name: string
-	supports: Kotti.Field.Supports
-}> = [
-	{
-		additionalProps: [
-			'currencyCurrency',
-			'emitEvents',
-			'numberMaximum',
-			'numberMinimum',
-		],
-		formKey: 'currencyValue',
-		name: 'KtFieldCurrency',
-		supports: KtFieldCurrency.meta.supports,
-	},
-	{
-		additionalProps: DATE_ADDITIONAL_PROPS,
-		formKey: 'dateValue',
-		name: 'KtFieldDate',
-		supports: KtFieldDate.meta.supports,
-	},
-	{
-		additionalProps: DATE_ADDITIONAL_PROPS,
-		formKey: 'dateRangeValue',
-		name: 'KtFieldDateRange',
-		supports: KtFieldDateRange.meta.supports,
-	},
-	{
-		additionalProps: DATE_ADDITIONAL_PROPS,
-		formKey: 'dateTimeValue',
-		name: 'KtFieldDateTime',
-		supports: KtFieldDateTime.meta.supports,
-	},
-	{
-		additionalProps: DATE_ADDITIONAL_PROPS,
-		formKey: 'dateTimeRangeValue',
-		name: 'KtFieldDateTimeRange',
-		supports: KtFieldDateTimeRange.meta.supports,
-	},
-	{
-		additionalProps: [...FILE_UPLOAD_SHARED_PROPS, 'emitEvents'],
-		formKey: 'fileUploadValue',
-		name: 'KtFieldFileUpload',
-		supports: KtFieldFileUpload.meta.supports,
-	},
-	{
-		additionalProps: [
-			'actions',
-			'clearOnSelect',
-			'collapseTagsAfter',
-			'emitEvents',
-			'hasOptionSlot',
-			'isUnsorted',
-			'maximumSelectable',
-		],
-		formKey: 'multiSelectValue',
-		name: 'KtFieldMultiSelect',
-		supports: KtFieldMultiSelect.meta.supports,
-	},
-	{
-		additionalProps: [
-			'actions',
-			'clearOnSelect',
-			'collapseTagsAfter',
-			'emitEvents',
-			'hasOptionSlot',
-			'isLoadingOptions',
-			'isUnsorted',
-			'maximumSelectable',
-			'query',
-		],
-		formKey: 'multiSelectValue',
-		name: 'KtFieldMultiSelectRemote',
-		supports: KtFieldMultiSelectRemote.meta.supports,
-	},
-	{
-		additionalProps: [
-			'numberAlign',
-			'numberDecimalPlaces',
-			'numberHideChangeButtons',
-			'numberHideMaximum',
-			'numberMaximum',
-			'numberMinimum',
-			'numberStep',
-			'emitEvents',
-		],
-		formKey: 'numberValue',
-		name: 'KtFieldNumber',
-		supports: KtFieldNumber.meta.supports,
-	},
-	{
-		additionalProps: ['emitEvents', 'showVisibilityToggle'],
-		formKey: 'textValue',
-		name: 'KtFieldPassword',
-		supports: KtFieldPassword.meta.supports,
-	},
-	{
-		additionalProps: [
-			'contentSlot',
-			'headerSlot',
-			'isInline',
-			'showHeaderSideSlot',
-		],
-		formKey: 'singleSelectValue',
-		name: 'KtFieldRadioGroup',
-		supports: KtFieldRadioGroup.meta.supports,
-	},
-	{
-		additionalProps: ['actions', 'emitEvents', 'hasOptionSlot', 'isUnsorted'],
-		formKey: 'singleSelectValue',
-		name: 'KtFieldSingleSelect',
-		supports: KtFieldSingleSelect.meta.supports,
-	},
-	{
-		additionalProps: [
-			'actions',
-			'emitEvents',
-			'hasOptionSlot',
-			'isLoadingOptions',
-			'isUnsorted',
-			'query',
-		],
-		formKey: 'singleSelectValue',
-		name: 'KtFieldSingleSelectRemote',
-		supports: KtFieldSingleSelectRemote.meta.supports,
-	},
-	{
-		additionalProps: ['emitEvents'],
-		formKey: 'textValue',
-		name: 'KtFieldText',
-		supports: KtFieldText.meta.supports,
-	},
-	{
-		additionalProps: ['autoSize', 'emitEvents', 'maxHeight', 'rows'],
-		formKey: 'textValue',
-		name: 'KtFieldTextArea',
-		supports: KtFieldTextArea.meta.supports,
-	},
-	{
-		additionalProps: ['defaultSlot', 'toggleType'],
-		formKey: 'toggleValue',
-		name: 'KtFieldToggle',
-		supports: KtFieldToggle.meta.supports,
-	},
-	{
-		additionalProps: [
-			'contentSlot',
-			'headerSlot',
-			'isInline',
-			'showHeaderSideSlot',
-			'toggleType',
-		],
-		formKey: 'toggleGroupValue',
-		name: 'KtFieldToggleGroup',
-		supports: KtFieldToggleGroup.meta.supports,
-	},
-]
-
-const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
-	{ dataTest: 'data-test-key-1', label: 'Key 1', value: 'value1' },
-	{
-		dataTest: 'data-test-key-2',
-		label: 'Key 2',
-		tooltip: 'Some tooltip',
-		value: 'value2',
-	},
-	{
-		isDisabled: true,
-		label: 'Key 3',
-		tooltip: 'This option is disabled',
-		value: 'value3',
-	},
-	{
-		label:
-			'Key 4 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-		tooltip: 'This option has a long label',
-		value: 'value4',
-	},
-]
-
-const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
-	{ label: 'Key 2', value: 'value2' },
-	{ label: 'Key 1', value: 'value1' },
-	{ isDisabled: true, label: 'Key 3', value: 'value3' },
-	{ label: 'Key 7', value: 'value7' },
-	{ label: 'Key 10', value: 'value10' },
-	{ label: 'Key 4', value: 'value4' },
-	{ label: 'Key 9', value: 'value9' },
-	{ label: 'Key 6', value: 'value6' },
-	{ label: 'Key 8', value: 'value8' },
-	{ label: 'Key 5', value: 'value5' },
-]
-
-const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
-	{
-		dataTest: 'data-test-initially-false',
-		key: 'initiallyFalse',
-		label: 'Initially False',
-	},
-	{
-		dataTest: 'data-test-initially-null',
-		key: 'initiallyNull',
-		label: 'Initially Null',
-		tooltip: 'null is for uninitialized data',
-	},
-	{ key: 'initiallyTrue', label: 'Initially True' },
-	{
-		isDisabled: true,
-		key: 'disabled',
-		label: 'Disabled',
-		tooltip: 'A tooltip!',
-	},
-
-	{
-		key: 'hasLongLabel',
-		label:
-			'Long Label: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-		tooltip: 'A tooltip!',
-	},
-]
-
-const getShortcuts = (
-	component: ComponentNames,
-): Record<
-	string,
-	{
-		keepOpen?: boolean
-		label: string
-		value: [string, string] | string
-	}
-> => {
-	if (
-		![
-			'KtFieldDate',
-			'KtFieldDateRange',
-			'KtFieldDateTime',
-			'KtFieldDateTimeRange',
-		].includes(component)
-	)
-		throw new Error(`getShortcuts: invalid component "${component}"`)
-
-	const isRange = ['KtFieldDateRange', 'KtFieldDateTimeRange'].includes(
-		component,
-	)
-	const templateFormat = ['KtFieldDate', 'KtFieldDateRange'].includes(component)
-		? ISO8601
-		: ISO8601_SECONDS
-	const todayDate = today(templateFormat)
-
-	return {
-		lastMonth: {
-			label: 'Last Month',
-			value: isRange
-				? [getLast('month', templateFormat), todayDate]
-				: getLast('month', templateFormat),
-		},
-		lastWeek: {
-			label: 'Last Week',
-			value: isRange
-				? [getLast('week', templateFormat), todayDate]
-				: getLast('week', templateFormat),
-		},
-		lastYear: {
-			label: 'Last Year',
-			value: isRange
-				? [getLast('year', templateFormat), todayDate]
-				: getLast('year', templateFormat),
-		},
-		today: {
-			keepOpen: true,
-			label: 'Today',
-			value: isRange ? [todayDate, todayDate] : todayDate,
-		},
-	}
-}
+import AdditionalProps from './AdditionalProps.vue'
+import AdditionalSlots from './AdditionalSlots.vue'
+import {
+	type ComponentNames,
+	FIELD_COMPONENTS,
+	getInitialSettings,
+	getInitialValue,
+	getShortcuts,
+	radioGroupOptions,
+	singleOrMultiSelectOptions,
+	toggleGroupOptions,
+	yocoIconOptions,
+} from './data'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsFormFields',
 	components: {
+		AdditionalProps,
+		AdditionalSlots,
 		ComponentForm,
 		ComponentInfo,
-		// KtAvatar,
-		// KtButton,
-		// KtFieldCurrency,
-		// KtFieldDate,
-		// KtFieldDateRange,
-		// KtFieldDateTime,
-		// KtFieldDateTimeRange,
-		// KtFieldFileUpload,
-		// KtFieldMultiSelect,
-		// KtFieldMultiSelectRemote,
-		// KtFieldNumber,
-		// KtFieldPassword,
-		// KtFieldRadioGroup,
+		KtAvatar,
+		KtButton,
 		KtFieldSingleSelect,
-		// KtFieldSingleSelectRemote,
-		// KtFieldText,
-		// KtFieldTextArea,
-		// KtFieldToggle,
-		// KtFieldToggleGroup,
+		KtFieldText,
+		KtFieldToggle,
+		KtFieldToggleGroup,
 		KtForm,
+		KtFormControllerObject,
+		KtI18nContext,
 	},
 	setup() {
 		const values = ref(getInitialValue())
@@ -440,158 +391,14 @@ export default defineComponent({
 		const remoteSingleSelectQuery =
 			ref<Kotti.FieldSingleSelectRemote.Props['query']>(null)
 
-		const settings = ref<{
-			additionalProps: {
-				allowMultiple: Kotti.FieldToggle.Value
-				allowPhotos: Kotti.FieldToggle.Value
-				autoSize: Kotti.FieldToggle.Value
-				clearOnSelect: Kotti.FieldToggle.Value
-				collapseExtensionsAfter: Kotti.FieldNumber.Value
-				collapseTagsAfter: Kotti.FieldNumber.Value
-				contentSlot: string | null
-				currencyCurrency: string
-				defaultSlot: string | null
-				emitEvents: boolean
-				extensions: Kotti.FieldMultiSelect.Value
-				externalUrl: Kotti.FieldText.Value
-				hasActions: boolean
-				hasOptionSlot: boolean
-				headerSlot: string | null
-				hideChangeButtons: boolean
-				hideDropArea: boolean
-				icon: Yoco.Icon | null
-				isInline: boolean
-				isLoadingOptions: boolean
-				isUnsorted: boolean
-				maxFileSize: Kotti.FieldNumber.Value
-				maxHeight: Kotti.FieldNumber.Value
-				maximumDate: Kotti.FieldDate.Value
-				maximumSelectable: Kotti.FieldNumber.Value
-				minimumDate: Kotti.FieldDate.Value
-				numberAlign: Kotti.FieldSingleSelect.Value
-				numberDecimalPlaces: Kotti.FieldNumber.Value
-				numberHideChangeButtons: boolean
-				numberHideMaximum: boolean
-				numberMaximum: Kotti.FieldNumber.Value
-				numberMinimum: Kotti.FieldNumber.Value
-				numberStep: Kotti.FieldNumber.Value
-				rows: Kotti.FieldNumber.Value
-				shortcuts: Kotti.FieldToggleGroup.Value
-				showHeaderSideSlot: boolean
-				showVisibilityToggle: boolean
-				toggleType: 'checkbox' | 'switch'
-			}
-			autoComplete: Kotti.FieldSingleSelect.Value
-			autoCompleteToken: Kotti.FieldText.Value
-			booleanFlags: {
-				hideClear: Kotti.FieldToggle.Value
-				hideValidation: Kotti.FieldToggle.Value
-				isBorderless: Kotti.FieldToggle.Value
-				isDisabled: Kotti.FieldToggle.Value
-				isLoading: Kotti.FieldToggle.Value
-				isOptional: Kotti.FieldToggle.Value
-			}
-			component: ComponentNames
-			dataTest: Kotti.FieldText.Value
-			decimalSeparator: Kotti.DecimalSeparator
-			events: {
-				emitBlur: Kotti.FieldToggle.Value
-				emitKeyup: Kotti.FieldToggle.Value
-				emitOpen: Kotti.FieldToggle.Value
-			}
-			formId: Kotti.FieldText.Value
-			hasHelpTextSlot: boolean
-			helpDescription: Kotti.FieldText.Value
-			helpText: Kotti.FieldText.Value
-			label: Kotti.FieldText.Value
-			leftIcon: Yoco.Icon | null
-			locale: Kotti.I18n.SupportedLanguages
-			placeholder: Kotti.FieldText.Value
-			placeholder2: Kotti.FieldText.Value
-			prefix: Kotti.FieldText.Value
-			rightIcon: Yoco.Icon | null
-			size: Kotti.Field.Size
-			suffix: Kotti.FieldText.Value
-			tabIndex: Kotti.FieldNumber.Value
-			validation: Kotti.Field.Validation.Result['type']
-		}>({
-			additionalProps: {
-				allowMultiple: false,
-				allowPhotos: false,
-				autoSize: false,
-				clearOnSelect: false,
-				collapseExtensionsAfter: null,
-				collapseTagsAfter: null,
-				contentSlot: null,
-				currencyCurrency: 'USD',
-				defaultSlot: 'Default Slot',
-				emitEvents: false,
-				extensions: [],
-				externalUrl: null,
-				hasActions: false,
-				hasOptionSlot: false,
-				headerSlot: null,
-				hideChangeButtons: false,
-				hideDropArea: false,
-				icon: null,
-				isInline: false,
-				isLoadingOptions: false,
-				isUnsorted: false,
-				maxFileSize: null,
-				maxHeight: null,
-				maximumDate: null,
-				maximumSelectable: null,
-				minimumDate: null,
-				numberAlign: 'left',
-				numberDecimalPlaces: null,
-				numberHideChangeButtons: false,
-				numberHideMaximum: false,
-				numberMaximum: null,
-				numberMinimum: null,
-				numberStep: null,
-				rows: null,
-				shortcuts: null,
-				showHeaderSideSlot: false,
-				showVisibilityToggle: false,
-				toggleType: 'checkbox',
-			},
-			autoComplete: Kotti.Field.AutoComplete.OFF,
-			autoCompleteToken: null,
-			booleanFlags: {
-				hideClear: false,
-				hideValidation: false,
-				isBorderless: false,
-				isDisabled: false,
-				isLoading: false,
-				isOptional: true,
-			},
-			component: 'KtFieldText',
-			dataTest: null,
-			decimalSeparator: Kotti.DecimalSeparator.DOT,
-			events: {
-				emitBlur: false,
-				emitKeyup: false,
-				emitOpen: false,
-			},
-			formId: null,
-			hasHelpTextSlot: false,
-			helpDescription: null,
-			helpText: null,
-			label: 'Label',
-			leftIcon: null,
-			locale: 'en-US',
-			placeholder: null,
-			placeholder2: null,
-			prefix: null,
-			rightIcon: null,
-			size: Kotti.Field.Size.MEDIUM,
-			suffix: null,
-			tabIndex: null,
-			validation: 'empty',
-		})
+		const settings = ref(getInitialSettings())
+
+		const validation = ref<'empty' | 'error' | 'success' | 'warning' | null>(
+			null,
+		)
 
 		const componentDefinition = computed(() => {
-			const result = components.find(
+			const result = FIELD_COMPONENTS.find(
 				({ name }) => name === settings.value.component,
 			)
 
@@ -608,6 +415,7 @@ export default defineComponent({
 		const componentProps = computed(() => {
 			const standardProps = {
 				dataTest: settings.value.dataTest,
+				formKey: componentDefinition.value.formKey,
 				helpDescription: settings.value.helpDescription,
 				helpText: settings.value.helpText,
 				hideValidation: settings.value.booleanFlags.hideValidation,
@@ -892,7 +700,15 @@ export default defineComponent({
 				})
 			}
 
-			if (componentDefinition.value.additionalProps.includes('actions'))
+			if (
+				[
+					'KtFieldMultiSelect',
+					'KtFieldMultiSelectRemote',
+					'KtFieldSingleSelect',
+					'KtFieldSingleSelectRemote',
+				].includes(settings.value.component) &&
+				componentDefinition.value.additionalProps.includes('actions')
+			)
 				Object.assign(additionalProps, {
 					actions: [
 						{
@@ -910,6 +726,35 @@ export default defineComponent({
 					],
 				})
 
+			if (validation.value !== null) {
+				Object.assign(additionalProps, {
+					validator: () => ({
+						text:
+							validation.value === 'empty' ? undefined : 'Some Validation Text',
+						type: validation.value,
+					}),
+				})
+			}
+
+			if (settings.value.events.emitBlur) {
+				Object.assign(additionalProps, {
+					onBlur: () => info({ text: '@blur: field has emitted blur event' }),
+				})
+			}
+
+			if (settings.value.events.emitKeyup) {
+				Object.assign(additionalProps, {
+					onKeyup: () =>
+						info({ text: '@keyup: field has emitted keyup event' }),
+				})
+			}
+
+			if (settings.value.events.emitOpen) {
+				Object.assign(additionalProps, {
+					onOpen: () => info({ text: '@open: field has emitted open event' }),
+				})
+			}
+
 			if (
 				['KtFieldMultiSelectRemote', 'KtFieldSingleSelectRemote'].includes(
 					settings.value.component,
@@ -920,21 +765,12 @@ export default defineComponent({
 
 			if (['KtFieldRadioGroup'].includes(settings.value.component)) {
 				Object.assign(additionalProps, {
-					contentSlot: null,
-					headerSlot: null,
 					options: radioGroupOptions,
-					showHeaderSideSlot: false,
 				})
 			}
-			if (['KtFieldToggle'].includes(settings.value.component))
-				Object.assign(additionalProps, {
-					defaultSlot: 'Default Slot',
-				})
 
 			if (['KtFieldToggleGroup'].includes(settings.value.component))
 				Object.assign(additionalProps, {
-					contentSlot: null,
-					headerSlot: null,
 					options: toggleGroupOptions,
 				})
 
@@ -947,6 +783,60 @@ export default defineComponent({
 		})
 
 		return {
+			autoCompleteOptions: computed(() =>
+				settings.value.component === 'KtFieldPassword'
+					? Object.values(Kotti.FieldPassword.AutoComplete).map((option) => ({
+							label: option,
+							value: option,
+						}))
+					: [
+							...Object.values(Kotti.Field.AutoComplete).map((option) => ({
+								label: option,
+								value: option,
+							})),
+							{ label: '<token>', value: 'token' },
+						],
+			),
+			componenPropFormatters: {
+				actions: (value: unknown) =>
+					JSON.stringify(value, null, '\t').split('\n'),
+				onBlur: () => [
+					"() => info({text: '@blur: field has emitted blur event'}",
+				],
+				onKeyup: () => [
+					"() => info({text: '@keyup: field has emitted keyup event'}",
+				],
+				onOpen: () => [
+					"() => info({text: '@open: field has emitted open event'}",
+				],
+				options: (value: unknown) =>
+					JSON.stringify(value, null, '\t').split('\n'),
+				placeholder: () => {
+					const { placeholder, placeholder2 } = settings.value
+					const formatPlaceholder = (placeholder: string | null) =>
+						placeholder === null ? 'null' : `'${placeholder}'`
+
+					if (isRangeComponent.value) {
+						return [
+							`[${formatPlaceholder(placeholder)}, ${formatPlaceholder(placeholder2)}]`,
+						]
+					}
+
+					return [formatPlaceholder(placeholder)]
+				},
+				validator: () => {
+					if (validation.value === null) return []
+
+					return [
+						'() => {(',
+						...(validation.value === 'empty'
+							? []
+							: ["	text: 'Some Validation Text',"]),
+						`	type: '${validation.value}',`,
+						')}',
+					]
+				},
+			},
 			component: computed(
 				(): { meta: Kotti.Meta; name: string } =>
 					(
@@ -971,14 +861,132 @@ export default defineComponent({
 						}) as Record<string, { meta: Kotti.Meta; name: string }>
 					)[settings.value.component],
 			),
-			componentOptions: components.map((comp) => ({
+			componentDefinition,
+			componentOptions: FIELD_COMPONENTS.map((comp) => ({
 				label: comp.name,
 				value: comp.name,
 			})),
 			componentProps,
+			componentSlots: computed(() => {
+				const slots = []
+
+				if (settings.value.hasHelpTextSlot) {
+					slots.push({
+						content: [
+							'<div>',
+							'	Supports',
+							'	<abbr title="Hypertext Markup Language">HTML</abbr> via',
+							'	<code>&lt;template #helpText&gt;</code>',
+							'</div>',
+						],
+						name: 'helpText',
+					})
+				}
+
+				if (
+					componentDefinition.value.additionalProps.includes('defaultSlot') &&
+					settings.value.additionalProps.defaultSlot !== null
+				)
+					slots.push({
+						content: [settings.value.additionalProps.defaultSlot],
+						name: 'default',
+					})
+
+				if (
+					componentDefinition.value.additionalProps.includes(
+						'showContentSlot',
+					) &&
+					settings.value.additionalProps.showContentSlot
+				)
+					slots.push({
+						content: ['Content for {{ scope.option.label }}'],
+						name: 'content',
+						scope: 'scope',
+					})
+
+				if (
+					componentDefinition.value.additionalProps.includes(
+						'showHeaderSlot',
+					) &&
+					settings.value.additionalProps.showHeaderSlot
+				)
+					slots.push({
+						content: ['Header for {{ scope.option.label }}'],
+						name: 'header',
+						scope: 'scope',
+					})
+
+				if (
+					componentDefinition.value.additionalProps.includes(
+						'showDropAreaExtraContentSlot',
+					) &&
+					settings.value.additionalProps.showDropAreaExtraContentSlot
+				)
+					slots.push({
+						content: [
+							'<KtButton',
+							'	label="Custom action"',
+							'	@click="info({text: \'Drop Area Slot Button Clicked\'})"',
+							'/>',
+						],
+						name: 'dropAreaExtraContent',
+					})
+
+				if (
+					componentDefinition.value.additionalProps.includes(
+						'showOptionSlot',
+					) &&
+					settings.value.additionalProps.showOptionSlot
+				)
+					slots.push({
+						content: [
+							'<div style="display: flex; gap: 10px; align-items: center">',
+							'	<KtAvatar',
+							'		size="sm"',
+							'		:src="`https://picsum.photos/seed/${scope.option.label}/100/100`"',
+							'	/>',
+							'	{{ scope.option.label }}',
+							'</div>',
+						],
+						name: 'option',
+						scope: 'scope',
+					})
+
+				if (settings.value.additionalProps.showHeaderSideSlot)
+					slots.push({
+						content: ['<a href="#" v-text="\'Interactive\'" />'],
+						name: 'headerSide',
+					})
+
+				return slots
+			}),
+			isRangeComponent,
+			onDropAreaSlotButtonClick: () => {
+				info({ text: 'Drop Area Slot Button Clicked' })
+			},
+			setComponent: (componentName: ComponentNames) => {
+				settings.value.component = componentName
+				if (componentName === 'KtFieldPassword') {
+					settings.value = {
+						...settings.value,
+						autoComplete: Kotti.FieldPassword.AutoComplete.CURRENT,
+					}
+				} else {
+					settings.value = {
+						...settings.value,
+						autoComplete: Kotti.Field.AutoComplete.OFF,
+					}
+				}
+			},
 			settings,
+			validation,
 			values,
+			yocoIconOptions,
 		}
 	},
 })
 </script>
+
+<style lang="scss" scoped>
+@import '~/styles/form-fields.scss';
+</style>

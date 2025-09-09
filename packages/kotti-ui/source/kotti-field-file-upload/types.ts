@@ -217,7 +217,7 @@ export namespace KottiFieldFileUpload {
 
 	export const modelValueSchema = selectedFileSchema.or(preUploadedFileSchema)
 	export const valuesSchema = modelValueSchema.array()
-	export type Value = z.input<typeof valuesSchema>
+	export type ModelValue = z.input<typeof valuesSchema>
 	export type ValueInternal = z.output<typeof valuesSchema>
 
 	export const fileInfoSchema = Shared.fileInfoSchema.extend({

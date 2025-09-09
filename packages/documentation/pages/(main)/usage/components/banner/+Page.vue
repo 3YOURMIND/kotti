@@ -54,6 +54,7 @@
 				@action="onAction"
 				@close="onClose"
 			/>
+			<KtButton v-else label="May I please try again?" @click="onClose" />
 		</CodePreview>
 
 		<h2>With Header</h2>

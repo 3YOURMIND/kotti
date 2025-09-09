@@ -19,11 +19,15 @@ import { defineComponent, ref, watch } from 'vue'
 import { Yoco } from '@3yourmind/yoco'
 
 import { DEFAULT_DEBOUNCE } from '../../../constants'
+import KtFieldText from '../../../kotti-field-text/KtFieldText.vue'
 import type { KottiFieldText } from '../../../kotti-field-text/types'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 
 export default defineComponent({
 	name: 'TableSearch',
+	components: {
+		KtFieldText,
+	},
 	props: {
 		dataTest: { default: null, type: String },
 		isLoading: { default: false, type: Boolean },

@@ -17,11 +17,15 @@
 <script lang="ts">
 import { computed, defineComponent, type PropType } from 'vue'
 
+import KtFieldSingleSelect from '../../../kotti-field-select/KtFieldSingleSelect.vue'
 import type { KottiFieldSingleSelect } from '../../../kotti-field-select/types'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 
 export default defineComponent({
 	name: 'TablePageSize',
+	components: {
+		KtFieldSingleSelect,
+	},
 	props: {
 		isLoading: { default: false, type: Boolean },
 		pageSize: { required: true, type: Number },

@@ -127,8 +127,10 @@
 <script lang="ts">
 import { computed, defineComponent, watch } from 'vue'
 
+import { KtTag } from '../kotti-tag'
 import { makeProps } from '../make-props'
 
+import KtTable from './KtTable.vue'
 import TableColumns from './standard-table/components/Columns.vue'
 import FilterList from './standard-table/components/FilterList.vue'
 import TableFilters from './standard-table/components/Filters.vue'
@@ -145,13 +147,16 @@ export default defineComponent({
 	name: 'KtStandardTable',
 	components: {
 		FilterList,
+		KtTable,
+		KtTag,
 		TableColumns,
 		TableFilters,
 		TableGlobalSelection,
 		TablePageSize,
 		TablePagination,
 		TableSearch,
-	},
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} as any,
 	props: makeProps(KottiStandardTable.propsSchema),
 	emits: ['update:fetchData'],
 	setup(props, { emit }) {

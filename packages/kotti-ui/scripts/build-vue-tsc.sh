@@ -17,7 +17,7 @@ find ./dist/types -type d -empty -delete
 
 
 # generate types
-vue-tsc --declaration --emitDeclarationOnly
+# vue-tsc --declaration --emitDeclarationOnly
 
 # HACK: duplicate index.d.ts in order to calm down publint
-cp ./dist/types/index.d.ts ./dist/types/index.d.cts
+# cp ./dist/types/index.d.ts ./dist/types/index.d.cts

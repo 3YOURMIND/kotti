@@ -262,6 +262,8 @@ export default defineComponent({
 </template>
 
 <style lang="scss" module>
+@import '@3yourmind/kotti-ui/dist/variables.scss';
+
 .code,
 .value {
 	> * {
@@ -302,9 +304,21 @@ export default defineComponent({
 		flex: 1;
 		flex-basis: 0;
 		padding: var(--unit-3) var(--unit-6);
+	}
 
-		&:not(:last-child) {
-			border-right: 1px solid var(--gray-20);
+	@media (width < $size-md) {
+		flex-direction: column;
+
+		> *:not(:last-child) {
+			border-bottom: 1px solid var(--ui-02);
+		}
+	}
+
+	@media (width >= $size-md) {
+		flex-direction: row;
+
+		> *:not(:last-child) {
+			border-right: 1px solid var(--ui-02);
 		}
 	}
 }

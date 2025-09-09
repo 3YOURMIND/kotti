@@ -410,13 +410,11 @@ export const useKottiTable = <
 												'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
 												role: 'button',
 											},
-											on: {
-												click: (event: MouseEvent) => {
-													event.stopPropagation()
-													event.preventDefault()
-													if (isDisabled) return
-													triggerExpand(row.id)
-												},
+											onClick: (event: MouseEvent) => {
+												event.stopPropagation()
+												event.preventDefault()
+												if (isDisabled) return
+												triggerExpand(row.id)
 											},
 										},
 										row.getIsExpanded()
@@ -441,39 +439,37 @@ export const useKottiTable = <
 										'div',
 										{
 											class: 'kt-table-selection',
-											on: {
-												click: (event: MouseEvent) => {
-													event.stopPropagation()
-													event.preventDefault()
+											onClick: (event: MouseEvent) => {
+												event.stopPropagation()
+												event.preventDefault()
 
-													if (
-														event.shiftKey &&
-														rowSelectionAnchorIndex.value !== null &&
-														rowIdSet.value.has(
-															rowSelectionAnchorIndex.value.rowId,
-														)
-													) {
-														const { rowIndex } = rowSelectionAnchorIndex.value
-														const rangeStart = Math.min(rowIndex, row.index)
-														const rangeEnd = Math.max(rowIndex, row.index)
-														const { rows } = table.getRowModel()
-														for (let i = rangeStart; i <= rangeEnd; i++) {
-															const rowInRange = rows[i]
-															// all rows in the range will get the toggle state that the targetted row gets.
-															rowInRange?.toggleSelected(!row.getIsSelected())
-														}
-													} else {
-														row.toggleSelected(!row.getIsSelected())
+												if (
+													event.shiftKey &&
+													rowSelectionAnchorIndex.value !== null &&
+													rowIdSet.value.has(
+														rowSelectionAnchorIndex.value.rowId,
+													)
+												) {
+													const { rowIndex } = rowSelectionAnchorIndex.value
+													const rangeStart = Math.min(rowIndex, row.index)
+													const rangeEnd = Math.max(rowIndex, row.index)
+													const { rows } = table.getRowModel()
+													for (let i = rangeStart; i <= rangeEnd; i++) {
+														const rowInRange = rows[i]
+														// all rows in the range will get the toggle state that the targetted row gets.
+														rowInRange?.toggleSelected(!row.getIsSelected())
 													}
-													rowSelectionAnchorIndex.value = {
-														rowId: row.id,
-														rowIndex: row.index,
-													}
-												},
-												// this prevents table content selection that would happen with shift clicking
-												mousedown: (event: MouseEvent) => {
-													event.preventDefault()
-												},
+												} else {
+													row.toggleSelected(!row.getIsSelected())
+												}
+												rowSelectionAnchorIndex.value = {
+													rowId: row.id,
+													rowIndex: row.index,
+												}
+											},
+											// this prevents table content selection that would happen with shift clicking
+											onMousedown: (event: MouseEvent) => {
+												event.preventDefault()
 											},
 										},
 										[
@@ -494,12 +490,10 @@ export const useKottiTable = <
 									h(
 										'div',
 										{
-											on: {
-												click: () => {
-													table.toggleAllRowsSelected(
-														!table.getIsAllRowsSelected(),
-													)
-												},
+											onClick: () => {
+												table.toggleAllRowsSelected(
+													!table.getIsAllRowsSelected(),
+												)
 											},
 										},
 										[
@@ -594,11 +588,21 @@ export const useKottiTable = <
 		onRowSelectionChange: selectedRows.tanstackSetter,
 		onSortingChange: ordering.tanstackSetter as ReactStyleUpdater<unknown>,
 		state: {
-			columnOrder: columnOrder.tanstackGetter(),
-			columnVisibility: hiddenColumns.tanstackGetter(),
-			expanded: expandedRows.tanstackGetter(),
-			rowSelection: selectedRows.tanstackGetter(),
-			sorting: ordering.tanstackGetter(),
+			get columnOrder() {
+				return columnOrder.tanstackGetter()
+			},
+			get columnVisibility() {
+				return hiddenColumns.tanstackGetter()
+			},
+			get expanded() {
+				return expandedRows.tanstackGetter()
+			},
+			get rowSelection() {
+				return selectedRows.tanstackGetter()
+			},
+			get sorting() {
+				return ordering.tanstackGetter()
+			},
 		},
 	})
 
