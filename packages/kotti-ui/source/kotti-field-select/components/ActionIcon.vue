@@ -28,6 +28,7 @@ export default defineComponent({
 	props: {
 		classes: { required: true, type: Array as PropType<Array<string>> },
 		handleClear: { required: true, type: Function as PropType<() => void> },
+		hasClear: { required: true, type: Boolean },
 		isDropdownOpen: { required: true, type: Boolean },
 		showClear: { required: true, type: Boolean },
 	},
@@ -36,6 +37,7 @@ export default defineComponent({
 		return {
 			containerClasses: computed(() => [
 				...props.classes,
+				...(props.hasClear ? ['action-icon__container--has-clear-icon'] : []),
 				'action-icon__container',
 			]),
 			handleSetIsDropdownOpen: () => {
@@ -51,5 +53,10 @@ export default defineComponent({
 .action-icon__container {
 	display: flex;
 	justify-content: center;
+
+	&--has-clear-icon {
+		justify-content: flex-end;
+		min-width: 1.6rem;
+	}
 }
 </style>
