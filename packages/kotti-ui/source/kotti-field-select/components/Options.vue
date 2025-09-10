@@ -1,33 +1,35 @@
 <template>
-	<div ref="optionsRef" class="kt-field-select-options">
+	<div class="kt-field-select-options">
 		<div v-if="isLoading" class="kt-field-select-options__loading">
 			<div class="loading" />
 		</div>
-		<FieldSelectOptionsItem
-			v-if="modifiedOptions.length === 0"
-			dataTest="NO_DATA"
-			isDisabled
-			:label="translations.noDataText"
-			type="option"
-			@scrollTo="scrollTo"
-		/>
-		<FieldSelectOptionsItem
-			v-for="(option, index) in modifiedOptions"
-			:key="`option-${index}`"
-			:dataTest="option.dataTest"
-			:isDisabled="option.isDisabled"
-			:isHovered="isHovered('option', index)"
-			:isSelected="option.isSelected"
-			:label="option.label"
-			type="option"
-			@click="() => selectOption(option)"
-			@scrollTo="scrollTo"
-		>
-			<slot
-				v-bind="{ index, option, select: () => selectOption(option) }"
-				name="option"
+		<div ref="optionsRef" class="kt-field-select-options__options-list">
+			<FieldSelectOptionsItem
+				v-if="modifiedOptions.length === 0"
+				dataTest="NO_DATA"
+				isDisabled
+				:label="translations.noDataText"
+				type="option"
+				@scrollTo="scrollTo"
 			/>
-		</FieldSelectOptionsItem>
+			<FieldSelectOptionsItem
+				v-for="(option, index) in modifiedOptions"
+				:key="`option-${index}`"
+				:dataTest="option.dataTest"
+				:isDisabled="option.isDisabled"
+				:isHovered="isHovered('option', index)"
+				:isSelected="option.isSelected"
+				:label="option.label"
+				type="option"
+				@click="() => selectOption(option)"
+				@scrollTo="scrollTo"
+			>
+				<slot
+					v-bind="{ index, option, select: () => selectOption(option) }"
+					name="option"
+				/>
+			</FieldSelectOptionsItem>
+		</div>
 		<div
 			v-if="modifiedActions.length > 0"
 			class="kt-field-select-options__separator"
@@ -270,22 +272,24 @@ export default defineComponent({
 .kt-field-select-options {
 	position: relative;
 
-	@include prettify-scrollbar;
-
-	max-height: 40vh;
-
 	/*
 	  undo padding from theme,
 	  alternatively fork theme and remove the left/right padding
 	*/
 	margin-right: -9px;
 	margin-left: -9px;
-	overflow: auto;
 
 	&__loading {
 		position: absolute;
 		top: var(--unit-2);
 		right: var(--unit-6);
+	}
+
+	&__options-list {
+		@include prettify-scrollbar;
+
+		max-height: 40vh;
+		overflow: auto;
 	}
 
 	&__separator {
