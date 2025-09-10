@@ -41,6 +41,7 @@
 						v-bind="{
 							classes,
 							handleClear,
+							hasClear: showClear,
 							isDropdownOpen,
 							showClear: showClearIcon(showClear),
 						}"
