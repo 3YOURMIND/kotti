@@ -22,6 +22,7 @@
 			"outputMode": "new-only"
 		},
 		"check:knip": {
+			"dependsOn": ["@3yourmind/eslint-config#build"],
 			"outputMode": "new-only"
 		},
 		"check:prettier": {

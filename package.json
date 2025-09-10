@@ -52,7 +52,7 @@
 		"@types/node": "20.11.16",
 		"eslint": "^9.34.0",
 		"husky": "^7.0.1",
-		"knip": "^5.42.1",
+		"knip": "^5.63.1",
 		"lerna": "^7.4.2",
 		"lint-staged": "^11.0.1",
 		"nodemon": "^3.0.3",
@@ -72,7 +72,7 @@
 		"typescript-eslint": "^8.41.0"
 	},
 	"engines": {
-		"node": "20"
+		"node": ">= 20"
 	},
 	"husky": {
 		"hooks": {

@@ -2,7 +2,7 @@
 	"$schema": "https://unpkg.com/knip@5/schema.json",
 	"ignore": ["**/dist/**"],
 	"ignoreBinaries": ["dot", "open", "publish"],
-	"ignoreDependencies": ["lerna", "lint-staged"],
+	"ignoreDependencies": ["lerna"],
 	"workspaces": {
 		"packages/*": {
 			"entry": ["source/index.ts"],
@@ -13,14 +13,11 @@
 				"pages/**/*.vue",
 				"layouts/**/*.vue",
 				"components/{ActionBar,ColorPalette,ColorUsage,LayoutContainer,MyToaster,NavBar}.vue",
-				"plugins/**/*.js",
-				"nuxt.config.ts"
+				"plugins/**/*.js"
 			],
 			"ignoreDependencies": [
 				"@nuxt/typescript-build",
 				"@nuxtjs/markdownit-loader",
-				"@nuxtjs/markdownit",
-				"@nuxtjs/style-resources",
 				"sass-loader",
 				"ts-loader",
 				"vue-server-renderer",
@@ -29,7 +26,7 @@
 			"project": ["**/*.{js,ts,vue}"]
 		},
 		"packages/kotti-ui": {
-			"entry": ["source/index.ts", "tokens/index.js"],
+			"entry": ["tokens/index.js"],
 			"ignoreDependencies": ["core-js", "normalize.css", "vue-tsc"],
 			"project": ["source/**/*.{js,ts,vue}"]
 		},
