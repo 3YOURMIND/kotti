@@ -1,4 +1,4 @@
-import { describe, expect, it, vitest } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { createToaster } from './create-toaster'
 
@@ -270,7 +270,7 @@ describe('createToaster', () => {
 				const toaster = createToaster({
 					animationFrame: createAnimationFrameMock(),
 				})
-				const handler = vitest.fn()
+				const handler = vi.fn()
 
 				toaster._internal_pls_dont_touch.subscribe(handler)
 
@@ -283,7 +283,7 @@ describe('createToaster', () => {
 				const toaster = createToaster({
 					animationFrame: createAnimationFrameMock(),
 				})
-				const handler = vitest.fn()
+				const handler = vi.fn()
 
 				toaster.show({ text: 'test' })
 
@@ -323,7 +323,7 @@ describe('createToaster', () => {
 				const toaster = createToaster({
 					animationFrame: createAnimationFrameMock(),
 				})
-				const handler = vitest.fn()
+				const handler = vi.fn()
 
 				const toast1 = toaster.show({ duration: 50, text: 'test' })
 				const toast2 = toaster.show({ duration: 50, text: 'test 2' })
@@ -348,7 +348,7 @@ describe('createToaster', () => {
 		describe('.unsubscribe()', () => {
 			it('can unsubscribe', () => {
 				const toaster = createToaster()
-				const handler = vitest.fn()
+				const handler = vi.fn()
 
 				toaster._internal_pls_dont_touch.subscribe(handler)
 				toaster._internal_pls_dont_touch.unsubscribe()

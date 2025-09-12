@@ -76,8 +76,8 @@ const propsSchema = z.object({
 	isMultiple: z.boolean().default(false),
 	isUnsorted: z.boolean().default(false),
 	maximumSelectable: z.number().int().min(0),
+	modelValue: z.array(Shared.valueSchema),
 	options: z.array(Shared.optionSchema),
-	value: z.array(Shared.valueSchema),
 })
 
 type ModifiedAction = z.output<
@@ -101,7 +101,7 @@ export default defineComponent({
 		FieldSelectOptionsItem,
 	},
 	props: makeProps(propsSchema),
-	emits: ['close', 'input'],
+	emits: ['close', 'update:modelValue'],
 	setup(props, { emit }) {
 		const i18nContext = useI18nContext()
 		const translations = useTranslationNamespace('KtFieldSelects')
@@ -120,10 +120,10 @@ export default defineComponent({
 
 		const modifiedOptions = computed(() => {
 			const isLimitReached =
-				props.isMultiple && props.value.length >= props.maximumSelectable
+				props.isMultiple && props.modelValue.length >= props.maximumSelectable
 
 			const modifiedOptions: ModifiedOption[] = props.options.map((option) => {
-				const isSelected = props.value.includes(option.value)
+				const isSelected = props.modelValue.includes(option.value)
 
 				return {
 					...option,
@@ -177,12 +177,12 @@ export default defineComponent({
 
 			if (props.isMultiple)
 				emit(
-					'input',
-					props.value.includes(option.value)
-						? props.value.filter((v) => v !== option.value)
-						: [...props.value, option.value],
+					'update:modelValue',
+					props.modelValue.includes(option.value)
+						? props.modelValue.filter((v) => v !== option.value)
+						: [...props.modelValue, option.value],
 				)
-			else emit('input', [option.value])
+			else emit('update:modelValue', [option.value])
 		}
 
 		const onAction = (action: z.output<typeof Shared.actionSchema>) => {

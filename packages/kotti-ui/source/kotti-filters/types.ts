@@ -190,13 +190,13 @@ export namespace KottiFilters {
 	}
 
 	export type FilterValue =
-		| KottiFieldCurrency.Value
-		| KottiFieldDateRange.Value
-		| KottiFieldMultiSelect.Value
-		| KottiFieldNumber.Value
-		| KottiFieldSingleSelect.Value
-		| KottiFieldText.Value
-		| KottiFieldToggle.Value
+		| KottiFieldCurrency.ModelValue
+		| KottiFieldDateRange.ModelValue
+		| KottiFieldMultiSelect.ModelValue
+		| KottiFieldNumber.ModelValue
+		| KottiFieldSingleSelect.ModelValue
+		| KottiFieldText.ModelValue
+		| KottiFieldToggle.ModelValue
 
 	export type InternalFilter = {
 		key: Column.Any['key']
@@ -207,7 +207,7 @@ export namespace KottiFilters {
 	export type InternalFilterSearch = {
 		key: Column.Search['key']
 		operation: Operation.Search
-		value: KottiFieldText.Value
+		value: KottiFieldText.ModelValue
 	}
 
 	export type Filter = SpecifyRequiredProps<
