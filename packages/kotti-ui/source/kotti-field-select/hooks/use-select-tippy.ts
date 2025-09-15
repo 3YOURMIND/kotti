@@ -72,7 +72,7 @@ export const useSelectTippy = <T>(
 			popperOptions: {
 				modifiers: [sameWidth],
 			},
-			theme: 'light-border',
+			theme: 'kt-light-border',
 			trigger: 'click focusin',
 			triggerTarget: triggerTargets?.value ?? undefined,
 		})),

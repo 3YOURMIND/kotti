@@ -27,4 +27,16 @@
 // tippy.js
 @import 'tippy.js/dist/tippy';
 @import 'tippy.js/dist/svg-arrow';
-@import 'tippy.js/themes/light-border';
+
+/* forked from tippy’s light-border theme */
+.tippy-box[data-theme~='kt-light-border'] {
+	color: var(--text-01);
+	background-color: var(--white);
+	background-clip: padding-box;
+	border: 1px solid var(--ui-02);
+	box-shadow: 0 2px 4px 0 rgba(0 0 0 / 16%);
+
+	.tippy-content {
+		padding: var(--unit-2);
+	}
+}

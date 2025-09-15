@@ -26,7 +26,7 @@ export default defineComponent({
 				content: helpTextContentRef.value ?? undefined,
 				interactive: true,
 				offset: [0, TIPPY_DISTANCE_OFFSET],
-				theme: 'light-border',
+				theme: 'kt-light-border',
 			})),
 		)
 

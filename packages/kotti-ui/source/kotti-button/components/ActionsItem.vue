@@ -2,12 +2,19 @@
 	<button
 		ref="itemRef"
 		v-bind="itemProps"
+		class="kt-split-button-actions-item"
+		:disabled="isDisabled"
 		@click.stop="onItemClick"
 		@keydown.down.prevent
 		@keydown.up.prevent
 	>
-		<i v-if="icon" class="yoco" v-text="icon" />
-		<span v-text="label" />
+		<MenuOptionItem
+			v-bind="{ isDisabled }"
+			class="kt-split-button-actions-item__content"
+		>
+			<i v-if="icon" class="yoco" v-text="icon" />
+			<span v-text="label" />
+		</MenuOptionItem>
 	</button>
 </template>
 
@@ -23,6 +30,7 @@ import {
 import { z } from 'zod'
 
 import { makeProps } from '../../make-props'
+import MenuOptionItem from '../../shared-components/menu-option/MenuOptionItem.vue'
 import { isInFocus } from '../../utilities'
 import { KottiSplitButton } from '../types'
 
@@ -34,6 +42,9 @@ const propsSchema = KottiSplitButton.actionSchema.extend({
 
 export default defineComponent({
 	name: 'SplitButtonActionsItem',
+	components: {
+		MenuOptionItem,
+	},
 	props: makeProps(propsSchema),
 	emits: ['click', 'updateIndexInFocus'],
 	setup(props, { emit }) {
@@ -63,10 +74,6 @@ export default defineComponent({
 
 		return {
 			itemProps: computed(() => ({
-				class: {
-					'kt-split-button-actions-item': true,
-					'kt-split-button-actions-item--is-disabled': props.isDisabled,
-				},
 				'data-test': [
 					props.rootDataTest,
 					`action-${String(props.index)}`,
@@ -104,34 +111,22 @@ export default defineComponent({
 	@include remove-button-styles;
 
 	display: flex;
-	gap: var(--unit-2);
-	align-items: center;
 	width: 100%;
-	padding: var(--unit-2) var(--unit-4);
 	color: var(--text-01);
-	cursor: pointer;
 
-	&--is-disabled {
-		cursor: not-allowed;
-		opacity: 0.46;
+	&__content {
+		display: flex;
+		gap: var(--unit-2);
+		align-items: center;
 	}
 
 	&:focus {
+		background-color: var(--interactive-02-hover);
 		outline: none;
-	}
-
-	&:focus,
-	&:hover:not(.kt-split-button-actions-item--is-disabled) {
-		background-color: var(--ui-01);
 	}
 
 	.yoco {
 		font-size: 1rem;
-	}
-
-	span {
-		font-size: 16px;
-		line-height: 20px;
 	}
 }
 </style>

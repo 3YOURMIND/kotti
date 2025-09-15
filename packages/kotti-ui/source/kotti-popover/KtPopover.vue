@@ -10,7 +10,7 @@
 					:key="index"
 					:dataTest="option.dataTest"
 					:icon="option.icon"
-					:isActive="option.isActive"
+					:isActive="option.isActive || option.isSelected"
 					:isClickable="option.onClick !== undefined"
 					:isDisabled="option.isDisabled"
 					:label="option.label"
@@ -143,7 +143,7 @@ export default defineComponent({
 					close()
 				},
 				placement: props.placement,
-				theme: 'light-border',
+				theme: 'kt-light-border',
 				trigger: TRIGGER_MAP[props.trigger],
 			})),
 		)

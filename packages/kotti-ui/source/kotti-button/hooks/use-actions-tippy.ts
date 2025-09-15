@@ -53,26 +53,10 @@ export const useActionsTippy = ({
 				isTippyOpen.value = true
 			},
 			placement: 'bottom-end',
-			theme: 'light-border',
+			theme: 'kt-light-border',
 			trigger: 'manual',
 		})),
 	)
-
-	watch(isTippyOpen, (isOpen) => {
-		if (!tippyInstanceRef.value || !isOpen) return
-
-		const tippyEl = document.querySelector(
-			`#tippy-${tippyInstanceRef.value.id.toString()}`,
-		)
-
-		if (tippyEl) {
-			const containerEl = tippyEl.querySelector('.tippy-content')
-			if (!containerEl) {
-				throw new Error('useActionsTippy: container element was not found ')
-			}
-			containerEl.setAttribute('style', 'padding: 8px')
-		}
-	})
 
 	watch(
 		[isDisabled, isLoading],
