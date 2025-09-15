@@ -13,13 +13,26 @@
 		/>
 		<template #content>
 			<div class="table-columns">
-				<KtFieldToggleGroup
-					isOptional
-					:options="options"
-					:value="value"
-					@input="$emit('input', $event)"
-				/>
-				<!-- FIXME: ideally this button shoud not be behind the fold -->
+				<MenuOptionItem
+					v-for="option in options"
+					:key="option.key"
+					class="table-columns__menu-item"
+				>
+					<KtFieldToggle
+						isOptional
+						:value="value[option.key] || false"
+						@input="
+							(isChecked) =>
+								$emit('input', { ...value, [option.key]: isChecked })
+						"
+					>
+						<span v-text="option.label" />
+					</KtFieldToggle>
+				</MenuOptionItem>
+			</div>
+
+			<!-- FIXME: ideally this button shoud not be behind the fold -->
+			<div class="table-columns__footer">
 				<KtButton
 					data-test="table-column-show-all-button"
 					:disabled="isShowAllDisabled"
@@ -38,9 +51,13 @@ import { computed, defineComponent, type PropType } from 'vue'
 import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import MenuOptionItem from '../../../shared-components/menu-option/MenuOptionItem.vue'
 
 export default defineComponent({
 	name: 'TableColumns',
+	components: {
+		MenuOptionItem,
+	},
 	props: {
 		isLoading: { default: false, type: Boolean },
 		options: {
@@ -72,12 +89,24 @@ export default defineComponent({
 .table-columns {
 	display: flex;
 	flex-direction: column;
-	max-height: 50vh;
+	max-height: 35vh;
 	overflow-y: auto;
 
-	:deep(.kt-button) {
-		flex-shrink: 0;
-		align-self: end;
+	&__menu-item {
+		padding: var(--unit-1) var(--unit-2);
+
+		:deep(.kt-field__header--is-suffix) {
+			display: none;
+		}
+
+		:deep(.kt-field-toggle),
+		:deep(.kt-field-toggle-inner) {
+			width: 100%;
+		}
+	}
+
+	&__footer {
+		text-align: end;
 	}
 }
 </style>

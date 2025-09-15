@@ -51,7 +51,7 @@ export default defineComponent({
 				content: contentRef.value ?? undefined,
 				interactive: true,
 				offset: [0, TIPPY_DISTANCE_OFFSET],
-				theme: 'light-border',
+				theme: 'kt-light-border',
 				...(hideTippy.value
 					? { trigger: 'manual' }
 					: { trigger: 'mouseenter focusin' }),

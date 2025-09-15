@@ -9,7 +9,6 @@
 				dataTest="NO_DATA"
 				isDisabled
 				:label="translations.noDataText"
-				type="option"
 				@scrollTo="scrollTo"
 			/>
 			<FieldSelectOptionsItem
@@ -20,7 +19,6 @@
 				:isHovered="isHovered('option', index)"
 				:isSelected="option.isSelected"
 				:label="option.label"
-				type="option"
 				@click="() => selectOption(option)"
 				@scrollTo="scrollTo"
 			>
@@ -37,11 +35,11 @@
 		<FieldSelectOptionsItem
 			v-for="(action, index) in modifiedActions"
 			:key="`action-${index}`"
+			class="kt-field-select-options__action"
 			:dataTest="action.dataTest"
 			:isDisabled="action.isDisabled"
 			:isHovered="isHovered('action', index)"
 			:label="action.label"
-			type="action"
 			@click="() => onAction(action)"
 			@scrollTo="scrollTo"
 		/>
@@ -272,12 +270,12 @@ export default defineComponent({
 .kt-field-select-options {
 	position: relative;
 
-	/*
-	  undo padding from theme,
-	  alternatively fork theme and remove the left/right padding
-	*/
-	margin-right: -9px;
-	margin-left: -9px;
+	&__action {
+		padding: 6px;
+		font-weight: 600;
+		color: var(--interactive-01);
+		border-radius: 4px;
+	}
 
 	&__loading {
 		position: absolute;

@@ -56,7 +56,7 @@ export default defineComponent({
 					: undefined,
 				interactive: true,
 				offset: [0, TIPPY_DISTANCE_OFFSET],
-				theme: 'light-border',
+				theme: 'kt-light-border',
 				...(showHelpText.value
 					? { trigger: 'mouseenter focusin' }
 					: { trigger: 'manual' }),

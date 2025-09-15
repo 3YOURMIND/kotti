@@ -1,11 +1,7 @@
 <template>
-	<div
+	<MenuOptionItem
+		v-bind="{ isActive, isClickable, isDisabled }"
 		class="kt-popover-options-item"
-		:class="{
-			'kt-popover-options-item--is-active': isActive,
-			'kt-popover-options-item--is-clickable': isClickable,
-			'kt-popover-options-item--is-disabled': isDisabled,
-		}"
 		:data-test="dataTest"
 		:tabindex="isDisabled || !isClickable ? -1 : 0"
 		@click.stop="onClick"
@@ -14,17 +10,21 @@
 			<i v-if="icon" class="yoco" v-text="icon" />
 			<div v-if="label" v-text="label" />
 		</slot>
-	</div>
+	</MenuOptionItem>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 import { makeProps } from '../../make-props'
+import MenuOptionItem from '../../shared-components/menu-option/MenuOptionItem.vue'
 import { IconTextItem } from '../types'
 
 export default defineComponent({
 	name: 'IconTextItem',
+	components: {
+		MenuOptionItem,
+	},
 	props: makeProps(IconTextItem.propsSchema),
 	emits: ['click'],
 	setup(_, { emit }) {
@@ -41,37 +41,9 @@ export default defineComponent({
 @import '../../kotti-field/mixins';
 
 .kt-popover-options-item {
-	@include no-outline;
-
 	display: flex;
 	align-items: center;
-	padding: var(--unit-2) var(--unit-4);
 	user-select: none;
-	border-radius: var(--border-radius);
-
-	&--is-active {
-		font-weight: 700;
-		color: var(--interactive-03);
-	}
-
-	&--is-disabled {
-		cursor: not-allowed;
-		opacity: 0.46;
-	}
-
-	&--is-clickable {
-		&:not(.kt-popover-options-item--is-disabled) {
-			cursor: pointer;
-
-			&:hover {
-				background-color: var(--ui-01);
-
-				&.kt-popover-options-item--is-active {
-					color: var(--interactive-01-hover);
-				}
-			}
-		}
-	}
 
 	.yoco {
 		font-size: 1rem;

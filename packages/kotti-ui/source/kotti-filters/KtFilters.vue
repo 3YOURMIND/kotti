@@ -179,7 +179,7 @@ export default defineComponent({
 				maxWidth: 'none',
 				offset: [0, TIPPY_DISTANCE_OFFSET],
 				placement: 'bottom',
-				theme: 'light-border',
+				theme: 'kt-light-border',
 				trigger: 'manual',
 				zIndex: 1000,
 			})),
