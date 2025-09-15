@@ -64,20 +64,10 @@ export default defineComponent({
 		})
 
 		const neighborValues = computed(() => {
-			const center = ((): number => {
-				if (props.currentPage - props.adjacentAmount < 1)
-					return props.adjacentAmount + 1
-				if (
-					props.maximumPage !== null &&
-					props.currentPage + props.adjacentAmount > props.maximumPage - 2
-				)
-					return props.maximumPage - props.adjacentAmount - 1
-				return props.currentPage
-			})()
-			const start = Math.max(1, center - props.adjacentAmount)
+			const start = Math.max(1, props.currentPage - props.adjacentAmount)
 			const end = Math.min(
 				props.maximumPage ?? Number.MAX_SAFE_INTEGER,
-				center + props.adjacentAmount,
+				props.currentPage + props.adjacentAmount,
 			)
 			return range(start, end + 1)
 		})

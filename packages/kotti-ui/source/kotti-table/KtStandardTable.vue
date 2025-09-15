@@ -113,7 +113,7 @@
 			/>
 			<TablePagination
 				v-bind="{
-					isLoading: isLoadingAndEmpty,
+					isLoading,
 					pageIndex,
 					pageSize,
 					rowCount,

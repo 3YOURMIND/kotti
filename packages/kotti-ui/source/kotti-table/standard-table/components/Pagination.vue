@@ -8,7 +8,7 @@
 			<span v-text="resultLabel" />
 			<KtPagination
 				v-if="!rowCount || rowCount > 0"
-				:adjacentAmount="1"
+				:adjacentAmount="2"
 				:page="pageIndex + 1"
 				:pageSize="pageSize"
 				pagingStyle="flex"
