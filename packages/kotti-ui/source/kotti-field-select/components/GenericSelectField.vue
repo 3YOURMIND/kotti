@@ -305,7 +305,6 @@ export default defineComponent({
 					// performance optimization
 					if (field.currentValue !== newValue) field.setValue(newValue)
 				}
-				inputRef.value?.focus()
 				// single select: close the tippy instance whenever a selection is made.
 				// This (watcher on isDropdownMounted) also intentionally resets the query
 				// so that the api-call (for example) can already trigger and load the non-filtered options
