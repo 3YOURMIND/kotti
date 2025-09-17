@@ -14,6 +14,7 @@ exports[`KtAccordion.vue > renders correctly (with props) 1`] = `
       class="kt-accordion__title"
       data-v-b260b1b5=""
     >
+      
       <i
         class="yoco kt-accordion__icon"
         data-v-b260b1b5=""
@@ -26,6 +27,7 @@ exports[`KtAccordion.vue > renders correctly (with props) 1`] = `
       >
         My Accordion
       </div>
+      
     </div>
     <div
       class="kt-accordion__toggle"
@@ -46,7 +48,10 @@ exports[`KtAccordion.vue > renders correctly (with props) 1`] = `
     <div
       class="kt-accordion__inner"
       data-v-b260b1b5=""
-    />
+    >
+      
+      
+    </div>
   </div>
 </div>
 `;
@@ -64,11 +69,13 @@ exports[`KtAccordion.vue > renders correctly 1`] = `
       class="kt-accordion__title"
       data-v-b260b1b5=""
     >
-      <!---->
+      
+      <!--v-if-->
       <div
         class="kt-accordion__text"
         data-v-b260b1b5=""
       />
+      
     </div>
     <div
       class="kt-accordion__toggle"
@@ -89,7 +96,10 @@ exports[`KtAccordion.vue > renders correctly 1`] = `
     <div
       class="kt-accordion__inner"
       data-v-b260b1b5=""
-    />
+    >
+      
+      
+    </div>
   </div>
 </div>
 `;

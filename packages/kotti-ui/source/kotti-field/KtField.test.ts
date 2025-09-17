@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { SetupContext } from 'vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, nextTick } from 'vue'
 import { z } from 'zod'
 
 import { KT_FORM_CONTEXT } from '../kotti-form/constants'
@@ -184,26 +184,18 @@ describe('useField', () => {
 	})
 
 	it('throws when formKey is provided and context is missing', async () => {
-		console.error = vi.fn()
-
 		expect(() =>
 			shallowMount(TestComponent, {
 				props: { formKey: 'test' } as any,
 			}),
 		).toThrow(ktFieldErrors.InvalidPropOutsideOfContextError)
+
+		// TODO: split out to 2nd test
 		const wrapper = shallowMount(TestComponent)
-
-		console.error = vi.fn()
-
-		await wrapper.setProps({ formKey: 'thisWillCrash' })
-
-		/**
-		 * Check console.error since Vue decides to just swallow errors
-		 * that get thrown in watchers (except for the first call, of course!)
-		 *
-		 * @see {@link https://github.com/vuejs/vue/issues/576}
-		 */
-		expect(console.error).toHaveBeenCalled()
+		await expect(async () => {
+			await wrapper.setProps({ formKey: 'this-will-crash' })
+			await nextTick()
+		}).rejects.toThrow(ktFieldErrors.InvalidPropOutsideOfContextError)
 	})
 
 	it('doesn’t throw when formKey is NONE and context is provided', () => {

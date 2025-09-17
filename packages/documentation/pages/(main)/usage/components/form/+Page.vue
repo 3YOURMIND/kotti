@@ -302,14 +302,12 @@ import {
 	KtI18nContext,
 } from '@3yourmind/kotti-ui'
 
-import ComponentForm from '~/components/component-form/ComponentForm.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
 import { info } from '~/utilities/toaster'
 
 export default defineComponent({
 	name: 'DocumentationPageUsageComponentsForm',
 	components: {
-		ComponentForm,
 		ComponentInfo,
 		KtFieldNumber,
 		KtFieldRadioGroup,

@@ -26,7 +26,7 @@
 		"build": "vite build",
 		"check:eslint": "eslint --max-warnings=0 .",
 		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/documentation",
-		"check:stylelint": "stylelint './**/*.{css,scss,vue}'",
+		"check:stylelint": "stylelint './**/*.{css,scss,vue}' --ignore-path=.gitignore",
 		"dev": "vite",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
