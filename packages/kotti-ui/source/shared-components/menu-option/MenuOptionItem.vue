@@ -1,9 +1,5 @@
 <template>
-	<div
-		:class="classes"
-		:data-test="dataTest"
-		@click.stop="(e) => $emit('click', e)"
-	>
+	<div :class="classes" :data-test="dataTest" @click="$emit('click', $event)">
 		<slot />
 	</div>
 </template>
@@ -12,7 +8,7 @@
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'FieldSelectOptionsItem',
+	name: 'MenuOptionItem',
 	props: {
 		isActive: {
 			default: false,
