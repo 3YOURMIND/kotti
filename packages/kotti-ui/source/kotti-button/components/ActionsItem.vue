@@ -10,8 +10,8 @@
 	>
 		<MenuOptionItem
 			v-bind="{ isDisabled }"
-			isClickable
 			class="kt-split-button-actions-item__content"
+			isClickable
 		>
 			<i v-if="icon" class="yoco" v-text="icon" />
 			<span v-text="label" />

@@ -2,8 +2,8 @@
 	<MenuOptionItem
 		ref="optionRef"
 		v-bind="{ isDisabled, isSelected }"
-		isClickable
 		:data-test="dataTest"
+		isClickable
 		@click.stop="(e) => $emit('click', e)"
 	>
 		<slot>
