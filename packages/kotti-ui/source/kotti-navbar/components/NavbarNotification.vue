@@ -26,17 +26,15 @@
 </template>
 
 <script>
-/* eslint-disable perfectionist/sort-objects */
 export default {
 	name: 'KtNavbarNotification',
 	props: {
-		count: { type: Number, default: 0 },
-		isNarrow: { type: Boolean, default: false },
-		link: { type: String, default: null },
-		title: { type: String, default: 'Notification' },
+		count: { default: 0, type: Number },
+		isNarrow: { default: false, type: Boolean },
+		link: { default: null, type: String },
+		title: { default: 'Notification', type: String },
 	},
 }
-/* eslint-enable perfectionist/sort-objects */
 </script>
 
 <style lang="scss" scoped>

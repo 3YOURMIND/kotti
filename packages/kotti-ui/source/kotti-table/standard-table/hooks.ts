@@ -226,7 +226,6 @@ export const useKottiStandardTable = <
 		}),
 	)
 
-	// eslint-disable-next-line @typescript-eslint/no-misused-promises
 	onBeforeMount(async () => {
 		const rawState = await storageAdapter.value.load(
 			storageOperationContext.value,
@@ -279,7 +278,7 @@ export const useKottiStandardTable = <
 						pageSize,
 					}
 				},
-				setSearchValue: (search: KottiFieldText.Value) => {
+				setSearchValue: (search: KottiFieldText.ModelValue) => {
 					searchValue.value = search
 				},
 			},

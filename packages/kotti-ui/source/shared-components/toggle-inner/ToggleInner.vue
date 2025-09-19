@@ -6,7 +6,7 @@
 	>
 		<input
 			v-bind="inputProps"
-			:checked="value === true"
+			:checked="modelValue === true"
 			:tabindex="isDisabled ? -1 : undefined"
 			type="checkbox"
 			@change="onInput"
@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes, PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { KottiFieldToggle } from '../../kotti-field-toggle/types'
 import type { KottiField } from '../../kotti-field/types'
@@ -34,20 +34,20 @@ export default defineComponent({
 		inputProps: {
 			required: true,
 			type: Object as PropType<
-				KottiField.Hook.Returns<KottiFieldToggle.Value>['inputProps']
+				KottiField.Hook.Returns<KottiFieldToggle.ModelValue>['inputProps']
 			>,
 		},
 		isDisabled: { required: true, type: Boolean },
+		modelValue: { default: null, type: Boolean as PropType<boolean | null> },
 		type: { default: 'checkbox', type: String },
-		value: { default: null, type: Boolean as PropType<boolean | null> },
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		return {
 			onInput: (event: Event) => {
 				const newValue = (event.target as InputHTMLAttributes).checked
 
-				if (!props.isDisabled) emit('input', newValue)
+				if (!props.isDisabled) emit('update:modelValue', newValue)
 			},
 			svgComponent: computed(() => {
 				const isBox = props.type === KottiFieldToggle.Shared.Type.CHECKBOX
@@ -62,9 +62,9 @@ export default defineComponent({
 			}),
 			toggleClasses: computed(() => ({
 				'kt-field-toggle-inner--is-disabled': props.isDisabled,
-				'kt-field-toggle-inner--is-indeterminate': props.value === null,
-				'kt-field-toggle-inner--is-off': props.value === false,
-				'kt-field-toggle-inner--is-on': props.value === true,
+				'kt-field-toggle-inner--is-indeterminate': props.modelValue === null,
+				'kt-field-toggle-inner--is-off': props.modelValue === false,
+				'kt-field-toggle-inner--is-on': props.modelValue === true,
 			})),
 		}
 	},

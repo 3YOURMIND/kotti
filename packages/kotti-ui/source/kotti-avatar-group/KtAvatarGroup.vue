@@ -59,7 +59,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: row-reverse;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-end;
 
 	.kt-avatar-group__number {
 		position: relative;

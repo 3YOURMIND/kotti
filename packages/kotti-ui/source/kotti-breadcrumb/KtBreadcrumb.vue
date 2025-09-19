@@ -9,12 +9,12 @@
 			>
 				<span v-if="showSeparator(index)" class="kt-breadcrumb__separator">
 					<i
-						v-if="separator.style === KottiBreadcrumb.SeparatorType.ICON"
+						v-if="separator.style === SeparatorType.ICON"
 						class="yoco"
 						v-text="separator.value"
 					/>
 					<span
-						v-else-if="separator.style === KottiBreadcrumb.SeparatorType.TEXT"
+						v-else-if="separator.style === SeparatorType.TEXT"
 						v-text="separator.value"
 					/>
 				</span>
@@ -55,7 +55,7 @@ export default defineComponent({
 				if (item.isDisabled) return
 				item.onClick()
 			},
-			KottiBreadcrumb,
+			SeparatorType: KottiBreadcrumb.SeparatorType,
 			showSeparator: (index: number) =>
 				index > 0 && index < props.breadcrumbs.length,
 		}

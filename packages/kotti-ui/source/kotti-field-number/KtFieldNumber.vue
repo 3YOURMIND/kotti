@@ -49,9 +49,8 @@
 
 <script lang="ts">
 import Big from 'big.js'
-import type { UnwrapRef } from 'vue'
 import { computed, defineComponent, nextTick, ref, watch } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import type { InputHTMLAttributes, UnwrapRef } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -85,9 +84,9 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldNumber.propsSchema),
-	emits: ['blur', 'input', 'keyup'],
+	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldNumber.Value>({
+		const field = useField<KottiFieldNumber.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,
@@ -148,7 +147,7 @@ export default defineComponent({
 
 		watch(
 			(): [
-				KottiFieldNumber.Value,
+				KottiFieldNumber.ModelValue,
 				UnwrapRef<KottiI18n.Context['numberFormat']>['decimalSeparator'],
 			] => [field.currentValue, i18nContext.numberFormat.decimalSeparator],
 			([newNumber]) => {
@@ -255,7 +254,7 @@ export default defineComponent({
 			incrementValue,
 			inputProps: computed(
 				(): InputHTMLAttributes &
-					KottiField.Hook.Returns<KottiFieldNumber.Value>['inputProps'] & {
+					KottiField.Hook.Returns<KottiFieldNumber.ModelValue>['inputProps'] & {
 						class: Record<string, boolean>
 						forceUpdateKey: number
 					} => ({
@@ -352,7 +351,7 @@ export default defineComponent({
 						? null
 						: lastUserSetCursorPosition.value - (isTypedNumberValid ? 0 : 1)
 
-				nextTick(() => {
+				void nextTick(() => {
 					setCursorPosition(newCursorPosition)
 				})
 			},
