@@ -132,7 +132,7 @@ export const menu: Array<Section> = [
 					{
 						label: 'List of Colors',
 						path: 'list-of-colors',
-						tags: [Tag.CSS, Tag.OUTDATED],
+						tags: [Tag.CSS],
 					},
 					{ label: 'Figma', path: 'figma', tags: [Tag.GUIDE, Tag.OUTDATED] },
 					{

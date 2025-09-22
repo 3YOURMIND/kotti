@@ -9,18 +9,20 @@
 			</li>
 			<li><b>Green:</b> Success or progress, which gives positive feedback.</li>
 			<li><b>Red:</b> signals attention or danger.</li>
-			<li><b>Darkgray:</b> neutral color.</li>
-			<li><b>Lightgray:</b> neutral color.</li>
+			<li><b>Gray:</b> neutral color.</li>
+			<li><b>Slate:</b> neutral color.</li>
 		</ul>
 		<h3>Dark text on light background</h3>
 		<div class="example-wrapper">
 			<div class="example-content light">
-				<div style="color: #3d3d3d">Default text <code>Darkgray-500</code></div>
+				<div style="color: #3d3d3d">
+					Default text <code>var(--gray-80)</code>
+				</div>
 				<div style="color: #575757">
-					Secondary text <code>Darkgray-400</code>
+					Secondary text <code>var(--gray-60)</code>
 				</div>
 				<div style="color: #8a8a8a">
-					Disabled / hint text <code>Darkgray-300</code>
+					Disabled / hint text <code>var(--gray-30)</code>
 				</div>
 			</div>
 		</div>
@@ -28,32 +30,36 @@
 			Depends on text meaning and hierarchy, there are three different types:
 		</p>
 		<ul>
-			<li><b>Default text</b> should be <code>Darkgray-500</code>.</li>
+			<li><b>Default text</b> should be <code>var(--gray-80)</code>.</li>
 			<li>
 				<b>Secondary text, which is lower in the visual hierarchy,</b> uses
-				<code>Darkgray-400</code>.
+				<code>var(--gray-60)</code>.
 			</li>
-			<li><b>Disabled / hint text</b> should be <code>Darkgray-300</code>.</li>
+			<li>
+				<b>Disabled / hint text</b> should be <code>var(--gray-30)</code>.
+			</li>
 		</ul>
 		<h3>Light text on dark background</h3>
 		<div class="example-wrapper">
 			<div class="example-content dark">
-				<div style="color: #f8f8f8">
-					Default text <code>Lightgray-300</code>
+				<div style="color: var(--gray-05)">
+					Default text <code>var(--gray-05)</code>
 				</div>
-				<div style="color: #dbdbdb">
-					Secondary text <code>Lightgray-400</code>
+				<div style="color: var(--gray-20)">
+					Secondary text <code>var(--gray-20)</code>
 				</div>
-				<div style="color: #a8a8a8">
-					Disabled / hint text <code>Lightgray-500</code>
+				<div style="color: var(--gray-40)">
+					Disabled / hint text <code>var(--gray-40)</code>
 				</div>
 			</div>
 		</div>
 		<p>Similar to light text, there are three different types:</p>
 		<ul>
-			<li><b>Default text</b> should be <code>Lightgray-300</code>.</li>
-			<li><b>Secondary text</b> uses <code>Lightgray-400</code>.</li>
-			<li><b>Disabled / hint text</b> should be <code>Lightgray-500</code>.</li>
+			<li><b>Default text</b> should be <code>var(--gray-05)</code>.</li>
+			<li><b>Secondary text</b> uses <code>var(--gray-20)</code>.</li>
+			<li>
+				<b>Disabled / hint text</b> should be <code>var(--gray-40)</code>.
+			</li>
 		</ul>
 		<h3>Light text on color background</h3>
 		<div class="example-wrapper">
@@ -87,7 +93,7 @@
 		<div class="example-wrapper">
 			<div class="example-content icon">
 				<div style="background: #f8f8f8">
-					<i class="yoco" style="color: #8a8a8a">file</i>
+					<i class="yoco" style="color: var(--gray-40)">file</i>
 					<span> file_name.pdf</span>
 				</div>
 				<div style="color: #fff; background: #2c66c4">
@@ -105,7 +111,7 @@
 		<ul>
 			<li>
 				<b>If icon is supplementary to default text:</b> Icon color should be
-				<code>Darkgray-300</code>.
+				<code>var(--gray-40)</code>.
 			</li>
 			<li>
 				<b>If icon has color background:</b> Icon color is <code>White</code>.
