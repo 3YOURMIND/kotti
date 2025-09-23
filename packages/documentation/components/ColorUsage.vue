@@ -117,7 +117,7 @@
 				<b>If icon has color background:</b> Icon color is <code>White</code>.
 			</li>
 			<li>
-				<b>If text has color or status:</b> Icon color should math to its text.
+				<b>If text has color or status:</b> Icon color should match to its text.
 			</li>
 		</ul>
 	</div>

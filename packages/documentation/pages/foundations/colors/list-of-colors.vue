@@ -26,7 +26,7 @@
 		<div class="columns">
 			<ColorPalette
 				class="column col-md-12 col-4"
-				colorName="Prirmary Blue"
+				colorName="Primary Blue"
 				:colors="primaryColors"
 			/>
 			<ColorPalette

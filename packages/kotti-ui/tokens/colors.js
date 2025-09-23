@@ -8,16 +8,16 @@ export const baseColors = {
 	white: '#FFF',
 
 	// Blue
-	'blue-05': '#F0F8FE',
-	'blue-10': '#E6F2FD',
-	'blue-20': '#C6E1F5',
-	'blue-30': '#A0CEED',
-	'blue-40': '#77B7E8',
-	'blue-50': '#5093D4',
-	'blue-60': '#3E77C1',
-	'blue-70': '#3361AA',
-	'blue-80': '#2B4E8D',
-	'blue-90': '#203E76',
+	'blue-05': '#F3F8FF',
+	'blue-10': '#E7F0FF',
+	'blue-20': '#C7DAF9',
+	'blue-30': '#99BDF7',
+	'blue-40': '#689CF1',
+	'blue-50': '#3173DE',
+	'blue-60': '#2E65BF',
+	'blue-70': '#2757A6',
+	'blue-80': '#1A4488',
+	'blue-90': '#0F2F62',
 
 	// Gray
 	'gray-05': '#F8F8F8',
@@ -68,16 +68,16 @@ export const baseColors = {
 	'orange-90': '#7E2E10',
 
 	// Primary
-	'primary-05': '#F0F8FE',
-	'primary-10': '#E6F2FD',
-	'primary-20': '#C6E1F5',
-	'primary-30': '#A0CEED',
-	'primary-40': '#77B7E8',
-	'primary-50': '#5093D4',
-	'primary-60': '#3E77C1',
-	'primary-70': '#3361AA',
-	'primary-80': '#2B4E8D',
-	'primary-90': '#203E76',
+	'primary-05': '#F3F8FF',
+	'primary-10': '#E7F0FF',
+	'primary-20': '#C7DAF9',
+	'primary-30': '#99BDF7',
+	'primary-40': '#689CF1',
+	'primary-50': '#3173DE',
+	'primary-60': '#2E65BF',
+	'primary-70': '#2757A6',
+	'primary-80': '#1A4488',
+	'primary-90': '#0F2F62',
 
 	// Purple
 	'purple-05': '#FAF6FD',

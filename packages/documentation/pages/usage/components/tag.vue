@@ -25,6 +25,9 @@
 				label="Label"
 				text="I have a label"
 			/>
+			<KtTag v-bind="{ colorStyle }" hideActions>
+				<code> Some custom <b> HTML</b></code>
+			</KtTag>
 			<KtTag
 				v-if="showTag"
 				v-bind="{ colorStyle }"
@@ -37,7 +40,25 @@
 			v-model="colorStyle"
 			label="Color Style"
 			:options="colorStyleOptions"
-		/>
+		>
+			<template #option="{ option }">
+				<KtTag
+					:colorStyle="option.value"
+					hideActions
+					:style="getTagStyle(option.value)"
+					text="···"
+				/>
+				{{ option.label }}
+			</template>
+			<template #selection="{ currentValue }">
+				<KtTag
+					:colorStyle="currentValue"
+					hideActions
+					:style="getTagStyle(currentValue)"
+					text="···"
+				/>
+			</template>
+		</KtFieldSingleSelect>
 	</div>
 </template>
 
@@ -81,6 +102,12 @@ export default defineComponent({
 				{ label: 'yellow-filled', value: 'yellow-filled' },
 			],
 			component: KtTag,
+			getTagStyle: (styleName: string) => {
+				const [colorName, variant] = styleName.split('-') as [string, string]
+				return variant === 'filled'
+					? `height: 16px; border: 3px solid var(--${colorName}-60)`
+					: 'height: 16px; border-width: 3px'
+			},
 			showTag: ref(true),
 		}
 	},
