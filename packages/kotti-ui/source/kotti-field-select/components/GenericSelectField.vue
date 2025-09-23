@@ -12,18 +12,26 @@
 				:helpTextSlot="helpTextSlot"
 			>
 				<div class="kt-field-select__input-and-tags">
-					<KtTag
-						v-for="option in visibleSelectedTags"
-						:key="option.value"
-						:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
-						:text="option.label"
-						@close="removeTag(option.value)"
-					/>
-					<KtTag
-						v-if="collapsedTagCount > 0"
-						isDisabled
-						:text="`+${collapsedTagCount}`"
-					/>
+					<slot
+						:currentValue="
+							isMultiple ? visibleSelectedTags : field.currentValue
+						"
+						name="selection"
+						:removeValue="removeTag"
+					>
+						<KtTag
+							v-for="option in visibleSelectedTags"
+							:key="option.value"
+							:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
+							:text="option.label"
+							@close="removeTag(option.value)"
+						/>
+						<KtTag
+							v-if="collapsedTagCount > 0"
+							isDisabled
+							:text="`+${collapsedTagCount}`"
+						/>
+					</slot>
 					<input
 						ref="inputRef"
 						v-bind="inputProps"
@@ -407,6 +415,7 @@ export default defineComponent({
 	&__input-and-tags {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: center;
 
 		// HACK: use negative margins to align multi-line grids of tags
 		margin: #{-$vertical-tag-gap + 4px} #{-$horizontal-tag-gap};

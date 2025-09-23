@@ -135,7 +135,7 @@ $radius: 3px;
 
 	&__item {
 		display: flex;
-		align-items: center;
+		align-items: baseline;
 
 		> *:not(:first-child) {
 			margin-left: 0.3rem;

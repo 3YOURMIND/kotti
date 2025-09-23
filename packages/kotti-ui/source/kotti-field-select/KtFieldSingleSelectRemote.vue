@@ -8,6 +8,9 @@
 		<template #option="values">
 			<slot v-bind="values" name="option" />
 		</template>
+		<template #selection="values">
+			<slot v-bind="values" name="selection" />
+		</template>
 	</GenericSelectField>
 </template>
 

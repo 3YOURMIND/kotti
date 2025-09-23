@@ -53,6 +53,7 @@ export type ComponentValue = {
 	hasHelpTextSlot: boolean
 	hasOptionSlot: boolean
 	hasRemoteUpload: boolean
+	hasSelectionSlot: boolean
 	headerSlot: string | null
 	name: ComponentNames
 	props: Record<string, unknown>
