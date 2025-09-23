@@ -122,6 +122,7 @@ export namespace Yoco {
 		SIDEBAR = 'sidebar',
 		SORT_ASCEND = 'sort_ascend',
 		SORT_DESCEND = 'sort_descend',
+		SQUARE_SOLID = 'square_solid',
 		STAR = 'star',
 		STAR_SOLID = 'star_solid',
 		STRUCTURE = 'structure',
