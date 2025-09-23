@@ -11,12 +11,18 @@
 			code='
 				<KtTag text="I display Information" isDisabled />
 				<KtTag label="Label:" text="I have a label" hideActions />
+				<KtTag hideActions>
+					<code>Some <b>custom</b> HTML via slot</code>
+				</KtTag>
 				<KtTag v-if="showTag" text="You can remove me if you want" @close="showTag = false" />
 			'
 			language="vue-html"
 		>
 			<KtTag isDisabled text="I display Information" />
 			<KtTag hideActions label="Label" text="I have a label" />
+			<KtTag hideActions>
+				<code>Some <b>custom</b> HTML via slot</code>
+			</KtTag>
 			<KtTag
 				v-if="showTag"
 				text="You can remove me if you want"

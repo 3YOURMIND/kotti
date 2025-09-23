@@ -109,7 +109,7 @@ export type Meta = {
 				string,
 				{
 					description: string | null
-					type: 'float' | 'function' | 'integer' | 'object' | 'string'
+					type: 'array' | 'float' | 'function' | 'integer' | 'object' | 'string'
 				}
 			> | null
 		}

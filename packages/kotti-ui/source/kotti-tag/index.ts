@@ -7,7 +7,12 @@ export const KtTag = attachMeta(makeInstallable(KtTagVue), {
 	addedVersion: '3.0.0-beta.36',
 	deprecated: null,
 	designs: null,
-	slots: {},
+	slots: {
+		default: {
+			description: null,
+			scope: {},
+		},
+	},
 	typeScript: {
 		namespace: 'Kotti.Tag',
 		schema: KottiTag.propsSchema,

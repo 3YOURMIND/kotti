@@ -1,7 +1,9 @@
 <template>
 	<div class="kt-tag">
 		<div v-if="label" class="kt-tag__label">{{ label }}:&nbsp;</div>
-		<div class="kt-tag__text" v-text="text" />
+		<slot>
+			<div class="kt-tag__text" v-text="text" />
+		</slot>
 		<div
 			v-if="!isDisabled && !hideActions"
 			class="kt-tag__icon"
