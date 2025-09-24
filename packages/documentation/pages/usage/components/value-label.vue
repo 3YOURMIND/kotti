@@ -183,6 +183,7 @@ export default defineComponent({
 					hasHelpTextSlot: settings.value.hasHelpTextSlot,
 					hasOptionSlot: false,
 					hasRemoteUpload: false,
+					hasSelectionSlot: false,
 					headerSlot: null,
 					name: 'KtValueLabel',
 					props: cloneDeep(componentProps.value),

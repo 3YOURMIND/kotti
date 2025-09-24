@@ -366,6 +366,7 @@ export default defineComponent({
 					hasHelpTextSlot: false,
 					hasOptionSlot: false,
 					hasRemoteUpload: false,
+					hasSelectionSlot: false,
 					headerSlot: null,
 					name: 'KtFilters',
 					props: cloneDeep(componentProps.value),

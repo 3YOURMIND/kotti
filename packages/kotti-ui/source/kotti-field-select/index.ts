@@ -38,6 +38,16 @@ const slots: Meta['slots'] = {
 			},
 		},
 	},
+	selection: {
+		description: 'displays current selection',
+		scope: {
+			currentValue: {
+				description:
+					'the `value` of the current selection. is either a number/string/symbol for single select, or an array for multi select',
+				type: 'object',
+			},
+		},
+	},
 }
 
 export const KtFieldSingleSelect = attachMeta(

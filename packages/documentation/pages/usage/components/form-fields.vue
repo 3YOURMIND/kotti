@@ -50,10 +50,47 @@
 								<div style="display: flex; gap: 10px; align-items: center">
 									<KtAvatar
 										size="sm"
-										:src="`https://picsum.photos/seed/${option.label}/100/100`"
+										:src="`https://picsum.photos/seed/${option.value}/100/100`"
 									/>
 									{{ option.label }}
 								</div>
+							</template>
+							<template
+								v-if="
+									componentRepresentation.hasSelectionSlot &&
+									(componentRepresentation.name === 'KtFieldSingleSelect' ||
+										componentRepresentation.name ===
+											'KtFieldSingleSelectRemote')
+								"
+								#selection="{ currentValue }"
+							>
+								<KtAvatar
+									v-if="currentValue !== null"
+									size="sm"
+									:src="`https://picsum.photos/seed/${currentValue}/100/100`"
+								/>
+							</template>
+							<template
+								v-else-if="
+									componentRepresentation.hasSelectionSlot &&
+									(componentRepresentation.name === 'KtFieldMultiSelect' ||
+										componentRepresentation.name === 'KtFieldMultiSelectRemote')
+								"
+								#selection="{ currentValue, removeValue }"
+							>
+								<KtTag
+									v-for="option in currentValue"
+									:key="option.value"
+									@close="removeValue(option.value)"
+								>
+									<KtAvatar
+										size="sm"
+										:src="`https://picsum.photos/seed/${option.value}/100/100`"
+										style="width: 1rem; height: 1rem"
+									/>
+
+									{{ option.label }}
+								</KtTag>
 							</template>
 							<template
 								v-if="componentRepresentation.headerSlot !== null"
@@ -303,12 +340,22 @@
 								:options="yocoIconOptions"
 							>
 								<template #option="{ option }">
+									<div style="display: flex; gap: 10px; align-items: center">
+										<i
+											class="yoco"
+											style="font-size: 16px; color: var(--text-02)"
+											v-text="option.value"
+										/>
+										<span v-text="option.label" />
+									</div>
+								</template>
+								<template #selection="{ currentValue }">
 									<i
-										class="yoco"
-										style="margin-right: 10px; font-size: 24px"
-										v-text="option.value"
+										v-if="currentValue !== null"
+										class="yoco mr-2"
+										style="font-size: 16px; color: var(--text-02)"
+										v-text="currentValue"
 									/>
-									<span v-text="option.label" />
 								</template>
 							</KtFieldSingleSelect>
 							<KtFieldSingleSelect
@@ -322,10 +369,18 @@
 								<template #option="{ option }">
 									<i
 										class="yoco"
-										style="margin-right: 10px; font-size: 24px"
+										style="font-size: 16px; color: var(--text-02)"
 										v-text="option.value"
 									/>
 									<span v-text="option.label" />
+								</template>
+								<template #selection="{ currentValue }">
+									<i
+										v-if="currentValue !== null"
+										class="yoco mr-2"
+										style="font-size: 16px; color: var(--text-02)"
+										v-text="currentValue"
+									/>
 								</template>
 							</KtFieldSingleSelect>
 						</div>
@@ -610,6 +665,17 @@
 								formKey="hasOptionSlot"
 								isOptional
 								label="option slot"
+								type="switch"
+							/>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'hasSelectionSlot',
+									)
+								"
+								formKey="hasSelectionSlot"
+								isOptional
+								label="selection slot"
 								type="switch"
 							/>
 							<KtFieldToggle
@@ -995,6 +1061,7 @@ const components: Array<{
 			'collapseTagsAfter',
 			'emitEvents',
 			'hasOptionSlot',
+			'hasSelectionSlot',
 			'isUnsorted',
 			'maximumSelectable',
 		],
@@ -1009,6 +1076,7 @@ const components: Array<{
 			'collapseTagsAfter',
 			'emitEvents',
 			'hasOptionSlot',
+			'hasSelectionSlot',
 			'isLoadingOptions',
 			'isUnsorted',
 			'maximumSelectable',
@@ -1051,7 +1119,13 @@ const components: Array<{
 		supports: KtFieldRadioGroup.meta.supports,
 	},
 	{
-		additionalProps: ['actions', 'emitEvents', 'hasOptionSlot', 'isUnsorted'],
+		additionalProps: [
+			'actions',
+			'emitEvents',
+			'hasOptionSlot',
+			'hasSelectionSlot',
+			'isUnsorted',
+		],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
 		supports: KtFieldSingleSelect.meta.supports,
@@ -1061,6 +1135,7 @@ const components: Array<{
 			'actions',
 			'emitEvents',
 			'hasOptionSlot',
+			'hasSelectionSlot',
 			'isLoadingOptions',
 			'isUnsorted',
 			'query',
@@ -1324,6 +1399,7 @@ export default defineComponent({
 				externalUrl: Kotti.FieldText.Value
 				hasActions: boolean
 				hasOptionSlot: boolean
+				hasSelectionSlot: boolean
 				headerSlot: ComponentValue['headerSlot']
 				hideChangeButtons: boolean
 				hideDropArea: boolean
@@ -1399,6 +1475,7 @@ export default defineComponent({
 				externalUrl: null,
 				hasActions: false,
 				hasOptionSlot: false,
+				hasSelectionSlot: false,
 				headerSlot: null,
 				hideChangeButtons: false,
 				hideDropArea: false,
@@ -1844,6 +1921,7 @@ export default defineComponent({
 				hasHelpTextSlot: settings.value.hasHelpTextSlot,
 				hasOptionSlot: settings.value.additionalProps.hasOptionSlot,
 				hasRemoteUpload: settings.value.component === 'KtFieldFileUploadRemote',
+				hasSelectionSlot: settings.value.additionalProps.hasSelectionSlot,
 				headerSlot: settings.value.additionalProps.headerSlot,
 				name: settings.value.component,
 				props: cloneDeep(componentProps.value),

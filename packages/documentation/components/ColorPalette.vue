@@ -46,14 +46,78 @@ export default defineComponent({
 			},
 			textColor: (colorName: string) => {
 				if (
-					colorName === 'Lightgray-300' ||
-					colorName === 'Lightgray-400' ||
-					colorName === 'White-000' ||
-					colorName === 'Yellow-300' ||
-					colorName === 'Yellow-400'
-				) {
-					return '#3d3d3d'
-				}
+					colorName === 'primary-05' ||
+					colorName === 'primary-10' ||
+					colorName === 'primary-20' ||
+					colorName === 'primary-30'
+				)
+					return '#2B4E8D'
+				if (
+					colorName === 'red-05' ||
+					colorName === 'red-10' ||
+					colorName === 'red-20' ||
+					colorName === 'red-30'
+				)
+					return '#9D1717'
+				if (
+					colorName === 'green-05' ||
+					colorName === 'green-10' ||
+					colorName === 'green-20' ||
+					colorName === 'green-30'
+				)
+					return '#19670F'
+				if (
+					colorName === 'yellow-05' ||
+					colorName === 'yellow-10' ||
+					colorName === 'yellow-20' ||
+					colorName === 'yellow-30' ||
+					colorName === 'yellow-40'
+				)
+					return '#88560B'
+				if (
+					colorName === 'purple-05' ||
+					colorName === 'purple-10' ||
+					colorName === 'purple-20' ||
+					colorName === 'purple-30'
+				)
+					return '#613078'
+				if (
+					colorName === 'mint-05' ||
+					colorName === 'mint-10' ||
+					colorName === 'mint-20' ||
+					colorName === 'mint-30' ||
+					colorName === 'mint-40'
+				)
+					return '#08675F'
+				if (
+					colorName === 'orange-05' ||
+					colorName === 'orange-10' ||
+					colorName === 'orange-20' ||
+					colorName === 'orange-30'
+				)
+					return '#9D360F'
+				if (
+					colorName === 'violet-05' ||
+					colorName === 'violet-10' ||
+					colorName === 'violet-20' ||
+					colorName === 'violet-30' ||
+					colorName === 'violet-40'
+				)
+					return '#8C2858'
+				if (
+					colorName === 'gray-05' ||
+					colorName === 'gray-10' ||
+					colorName === 'gray-20' ||
+					colorName === 'gray-30'
+				)
+					return '#3A3A3A'
+				if (
+					colorName === 'slate-05' ||
+					colorName === 'slate-10' ||
+					colorName === 'slate-20' ||
+					colorName === 'slate-30'
+				)
+					return '#3C3D50'
 			},
 		}
 	},
