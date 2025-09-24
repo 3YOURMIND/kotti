@@ -63,13 +63,34 @@ export default defineComponent({
 			return baseElementsWidth + BASE_OFFSET * 2 + adjacentPagesOffset
 		})
 
+		/**
+		 * Adjusts the page range to eliminate single-page gaps between the first/last page and the ellipsis.
+		 * This function effectively "closes the gap" when the range of pages around the current page
+		 * is just one page away from either the first page (page 1) or the last page.
+		 *
+		 * For example, this pagination state: 1 … 3 4 5 6 7 … 9
+		 * becomes:                            1 2 3 4 5 6 7 8 9
+		 *
+		 * @param start The starting page number of the range.
+		 * @param end The ending page number of the range.
+		 * @param maximumPage The total number of pages available.
+		 * @returns A new, "cleaned" array of page numbers.
+		 */
+		const getCleanRange = (start: number, end: number) => {
+			const { maximumPage } = props
+			const cleanStart = start - 2 <= 1 ? 1 : start
+			const cleanEnd =
+				maximumPage !== null && maximumPage - 2 <= end ? maximumPage : end
+			return range(cleanStart, cleanEnd + 1)
+		}
+
 		const neighborValues = computed(() => {
 			const start = Math.max(1, props.currentPage - props.adjacentAmount)
 			const end = Math.min(
 				props.maximumPage ?? Number.MAX_SAFE_INTEGER,
 				props.currentPage + props.adjacentAmount,
 			)
-			return range(start, end + 1)
+			return getCleanRange(start, end)
 		})
 
 		const showFirstPage = computed(() => !neighborValues.value.includes(1))
