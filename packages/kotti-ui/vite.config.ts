@@ -66,6 +66,7 @@ export default defineConfig(({ mode }) => {
 		build: {
 			emptyOutDir: false,
 			lib: {
+				cssFileName: 'style',
 				entry: path.resolve(__dirname, 'source/index.ts'),
 				fileName: 'kotti-ui',
 				formats: ['es', 'cjs'],
