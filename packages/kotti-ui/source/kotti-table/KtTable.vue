@@ -527,11 +527,12 @@ export default defineComponent({
 					border-bottom: none;
 				}
 
-				&:hover .kt-table__actions {
-					display: inline-flex;
-					gap: var(--unit-1);
-					align-items: center;
-					background: var(--white);
+				&:hover .kt-table__actions-column {
+					position: sticky;
+
+					.kt-table__actions {
+						border-color: var(--ui-02);
+					}
 				}
 			}
 
@@ -608,21 +609,22 @@ export default defineComponent({
 	}
 
 	&__actions-column {
-		position: sticky;
 		right: 0;
-		padding: 0;
+		text-align: right;
 
 		.kt-table__actions {
-			position: absolute;
 			right: 0.8rem;
 			z-index: 400;
-			display: none;
+			display: inline-flex;
+			gap: var(--unit-1);
+			align-items: center;
 			min-height: var(--unit-8);
 			padding: 0 var(--unit-h);
-			margin-top: -0.8rem;
+			margin-right: var(--unit-1);
 			font-size: 0.8rem;
 			line-height: 0.8rem;
-			border: 1px solid var(--ui-02);
+			background-color: var(--white);
+			border: 1px solid transparent;
 			border-radius: var(--border-radius);
 
 			&--is-disabled {
