@@ -1,5 +1,5 @@
 <template>
-	<div class="kt-tag">
+	<div :class="classes">
 		<div v-if="label" class="kt-tag__label">{{ label }}:&nbsp;</div>
 		<slot>
 			<div class="kt-tag__text" v-text="text" />
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -27,8 +27,12 @@ export default defineComponent({
 	name: 'KtTag',
 	props: makeProps(KottiTag.propsSchema),
 	emits: ['close'],
-	setup() {
+	setup(props) {
 		return {
+			classes: computed(() => ({
+				[`kt-tag--is-${props.colorStyle}`]: true,
+				'kt-tag': true,
+			})),
 			Yoco,
 		}
 	},
@@ -45,6 +49,9 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
+$colors: 'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
+	'slate', 'violet', 'yellow';
+
 .kt-tag {
 	display: inline-flex;
 	align-items: center;
@@ -54,7 +61,6 @@ export default defineComponent({
 	color: var(--text-02);
 	white-space: nowrap;
 	background-color: var(--interactive-02);
-	border: var(--kt-tag-border) solid var(--ui-02);
 	border-radius: var(--field-border-radius);
 
 	&__icon {
@@ -67,7 +73,6 @@ export default defineComponent({
 		height: $size;
 		margin-left: var(--unit-1);
 		cursor: pointer;
-		background-color: var(--ui-02);
 		border-radius: 50%;
 
 		// clipping also affects the clickable area
@@ -75,14 +80,31 @@ export default defineComponent({
 			clip-path: circle(#{$size * 0.5} at center);
 			border-radius: 0;
 		}
-
-		&:hover {
-			background-color: var(--interactive-02-hover);
-		}
 	}
 
 	&__label {
 		font-weight: bold;
+	}
+
+	@each $color in $colors {
+		&--is-#{$color}-light {
+			color: var(--#{$color}-70);
+			background-color: var(--#{$color}-10);
+			border: var(--kt-tag-border) solid var(--#{$color}-20);
+
+			.kt-tag__icon:not(:hover) {
+				background-color: var(--#{$color}-20);
+			}
+		}
+
+		&--is-#{$color}-filled {
+			color: var(--#{$color}-05);
+			background-color: var(--#{$color}-60);
+
+			.kt-tag__icon:not(:hover) {
+				background-color: var(--#{$color}-50);
+			}
+		}
 	}
 }
 </style>

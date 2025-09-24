@@ -26,35 +26,55 @@
 		<div class="columns">
 			<ColorPalette
 				class="column col-md-12 col-4"
-				colorName="Prirmary Blue"
-				:colors="primaryColor"
-			/>
-			<ColorPalette
-				class="column col-md-12 col-4"
-				colorName="Green"
-				:colors="greenColor"
+				colorName="Primary Blue"
+				:colors="primaryColors"
 			/>
 			<ColorPalette
 				class="column col-md-12 col-4"
 				colorName="Red"
-				:colors="redColor"
+				:colors="redColors"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Green"
+				:colors="greenColors"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Yellow"
+				:colors="yellowColors"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Violet"
+				:colors="violetColors"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Mint"
+				:colors="mintColors"
+			/>
+			<ColorPalette
+				class="column col-md-12 col-4"
+				colorName="Purple"
+				:colors="purpleColors"
 			/>
 			<ColorPalette
 				class="column col-md-12 col-4"
 				colorName="Orange"
-				:colors="orangeColor"
+				:colors="orangeColors"
 			/>
 		</div>
 		<div class="columns">
 			<ColorPalette
 				class="column col-md-12 col-4"
-				colorName="Dark Gray"
-				:colors="darkGray"
+				colorName="Gray"
+				:colors="grayColors"
 			/>
 			<ColorPalette
 				class="column col-md-12 col-4"
-				colorName="Light Gray"
-				:colors="lightGray"
+				colorName="Slate"
+				:colors="slateColors"
 			/>
 		</div>
 		<ColorUsage />
@@ -62,6 +82,8 @@
 </template>
 
 <script>
+import { baseColorsFactory } from '@3yourmind/kotti-ui/tokens'
+
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import ColorPalette from '~/components/ColorPalette.vue'
 import ColorUsage from '~/components/ColorUsage.vue'
@@ -74,28 +96,22 @@ export default {
 		ColorUsage,
 	},
 	data() {
+		const extractTokens = (prefix) =>
+			baseColorsFactory.array
+				.filter((color) => color.name.startsWith(prefix))
+				.map(({ name, value }) => ({ name, code: value }))
+
 		return {
-			primaryColor: [
-				{ name: 'Primary-400', code: '#3173DE' },
-				{ name: 'Primary-500', code: '#2C66C4' },
-				{ name: 'Primary-600', code: '#2659AB' },
-			],
-			greenColor: [{ name: 'Green-500', code: '#64AD13' }],
-			redColor: [
-				{ name: 'Red-400', code: '#F21D1D' },
-				{ name: 'Red-500', code: '#D91919' },
-			],
-			orangeColor: [{ name: 'Orange-500', code: '#FF7800' }],
-			darkGray: [
-				{ name: 'Darkgray-300', code: '#8A8A8A' },
-				{ name: 'Darkgray-400', code: '#575757' },
-				{ name: 'Darkgray-500', code: '#3D3D3D' },
-			],
-			lightGray: [
-				{ name: 'Lightgray-300', code: '#F8F8F8' },
-				{ name: 'Lightgray-400', code: '#DBDBDB' },
-				{ name: 'Lightgray-500', code: '#A8A8A8' },
-			],
+			grayColors: extractTokens('gray'),
+			greenColors: extractTokens('green'),
+			mintColors: extractTokens('mint'),
+			orangeColors: extractTokens('orange'),
+			primaryColors: extractTokens('primary'),
+			purpleColors: extractTokens('purple'),
+			redColors: extractTokens('red'),
+			slateColors: extractTokens('slate'),
+			violetColors: extractTokens('violet'),
+			yellowColors: extractTokens('yellow'),
 		}
 	},
 }
