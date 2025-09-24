@@ -9,7 +9,27 @@
 			type="switch"
 		/>
 		<KtFieldSingleSelect
+			v-model="actionsMethod"
+			isOptional
+			label="Action Method"
+			:options="[
+				{
+					label: 'None',
+					value: 'none',
+				},
+				{
+					label: 'Via Parameter',
+					value: 'via-parameter',
+				},
+				{
+					label: 'Via Slot',
+					value: 'via-slot',
+				},
+			]"
+		/>
+		<KtFieldSingleSelect
 			v-model="expandMode"
+			isOptional
 			label="Expand Mode"
 			:options="[
 				{
@@ -28,6 +48,7 @@
 		/>
 		<KtFieldSingleSelect
 			v-model="clickBehavior"
+			isOptional
 			label="Row Click Behavior"
 			:options="[
 				{
@@ -55,7 +76,9 @@
 		/>
 
 		<KtTable class="mb-4" :isLoading="booleanFlags.isLoading" tableId="example">
-			<template #actions> I am a nice action </template>
+			<template v-if="actionsMethod === 'via-slot'" #actions>
+				I am a nice action
+			</template>
 			<template #mycolumnid> costum content </template>
 			<template
 				v-if="booleanFlags.isEmpty && booleanFlags.showEmptySlot"
@@ -102,6 +125,8 @@ import {
 
 import ComponentInfo from '~/components/ComponentInfo.vue'
 
+import { info } from '../../../utilities/toaster'
+
 type ColumnId =
 	| 'age'
 	| 'bestSkill'
@@ -139,6 +164,7 @@ export default defineComponent({
 		const clickBehavior = ref<
 			'component' | 'expand' | 'link' | 'simple-event' | null
 		>(null)
+		const actionsMethod = ref<'none' | 'via-parameter' | 'via-slot'>('none')
 		const booleanDisplay = getDisplay({ mode: 'text', type: 'boolean' })
 		const dateDisplay = getDisplay({ type: 'date' })
 		const textDisplay = getDisplay({ type: 'text' })
@@ -358,22 +384,21 @@ export default defineComponent({
 					rowIndex: number
 				}) => ({
 					actions:
-						rowIndex % 2 === 0
+						actionsMethod.value === 'via-parameter'
 							? [
 									{
 										dataTest: `download-test-data-${rowIndex}`,
 										icon: 'download',
-										isDisabled: true,
+										isDisabled: rowIndex === 1,
 										onClick: () => {
-											// eslint-disable-next-line no-alert
-											window.alert('download icon clicked')
+											info({ text: 'download icon clicked' })
 										},
 									},
 									{
 										icon: 'send',
+										isDisabled: rowIndex === 1,
 										onClick: () => {
-											// eslint-disable-next-line no-alert
-											window.alert('send icon clicked')
+											info({ text: 'send icon clicked' })
 										},
 										tooltip: 'Click to send',
 									},
@@ -431,6 +456,7 @@ export default defineComponent({
 		})
 
 		return {
+			actionsMethod,
 			booleanFlags,
 			clickBehavior,
 			component: KtTable,

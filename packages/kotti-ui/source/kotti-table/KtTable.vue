@@ -35,7 +35,7 @@
 							/>
 						</div>
 					</th>
-					<th v-if="$scopedSlots['actions']" class="kt-table__actions-column" />
+					<th v-if="hasActions" class="kt-table__actions-column" />
 				</tr>
 			</thead>
 			<tbody>
@@ -207,7 +207,7 @@ export default defineComponent({
 		FlexRender,
 	},
 	props: makeProps(KottiTable.propsSchema),
-	setup(props) {
+	setup(props, { slots }) {
 		// eslint-disable-next-line vue/no-setup-props-reactivity-loss
 		const tableContext = useTableContext(props.tableId)
 		const translations = useTranslationNamespace('KtTable')
@@ -341,6 +341,17 @@ export default defineComponent({
 				tableContext.value.internal.setDropTargetColumnIndex(null)
 				tableContext.value.internal.setDraggedColumnId(null)
 			},
+			hasActions: computed(
+				() =>
+					Boolean(slots.actions) ||
+					table.value.getRowModel().rows.some((row) => {
+						const behavior = tableContext.value.internal.getRowBehavior({
+							row: row.original,
+							rowIndex: row.index,
+						})
+						return Boolean(behavior.actions)
+					}),
+			),
 			headerRows: computed(() =>
 				table.value.getHeaderGroups().map((headerRow) => ({
 					headers: headerRow.headers.map((header, headerIndex) => ({
@@ -531,6 +542,7 @@ export default defineComponent({
 					position: sticky;
 
 					.kt-table__actions {
+						background-color: var(--white);
 						border-color: var(--ui-02);
 					}
 				}
@@ -623,7 +635,6 @@ export default defineComponent({
 			margin-right: var(--unit-1);
 			font-size: 0.8rem;
 			line-height: 0.8rem;
-			background-color: var(--white);
 			border: 1px solid transparent;
 			border-radius: var(--border-radius);
 
