@@ -1,5 +1,5 @@
 <template>
-	<div :class="classes" :data-test="dataTest" @click="$emit('click', $event)">
+	<div :class="classes" @click="$emit('click', $event)">
 		<slot />
 	</div>
 </template>
