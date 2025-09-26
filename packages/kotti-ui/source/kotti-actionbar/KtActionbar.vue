@@ -140,6 +140,43 @@ export default defineComponent({
 	}
 }
 
+.kt-actionbar-menu {
+	ul {
+		position: relative;
+		margin: 0;
+	}
+
+	li {
+		padding: var(--unit-2) 0;
+		font-size: 0.75rem;
+		color: $darkgray-500;
+		list-style: none;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	i {
+		color: $lightgray-500;
+	}
+
+	&.has-icon-right i {
+		float: right;
+	}
+
+	.router-link-active {
+		li {
+			font-weight: 600;
+			color: var(--action-bar-color-active);
+		}
+
+		i {
+			color: var(--action-bar-color-active);
+		}
+	}
+}
+
 @media (width < $size-md) {
 	.kt-actionbar {
 		z-index: 100;
