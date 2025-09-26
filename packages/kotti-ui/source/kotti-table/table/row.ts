@@ -12,6 +12,7 @@ type RowCellWrapper = {
 export const DEFAULT_CELL_WRAPPER: RowCellWrapper = {
 	class: ['kt-table-cell-content'],
 	component: 'div',
+	on: {},
 }
 
 export const getCellWrapComponent = (
@@ -46,5 +47,6 @@ export const getCellWrapComponent = (
 	return {
 		...click,
 		class: ['kt-table-cell-content'],
+		on: {},
 	}
 }
