@@ -135,7 +135,6 @@ export const jaJP: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Clear All',
-		clearSelection: 'Clear Selection',
 		editColumns: 'Edit Columns',
 		editFilters: 'Edit Filters',
 		endDate: 'End',

@@ -135,7 +135,6 @@ export const deDE: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Alles löschen',
-		clearSelection: 'Auswahl löschen',
 		editColumns: 'Spalten bearbeiten',
 		editFilters: 'Filter bearbeiten',
 		endDate: 'Ende',
