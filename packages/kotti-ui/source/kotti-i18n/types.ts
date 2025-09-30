@@ -76,4 +76,5 @@ export namespace KottiI18n {
 		| 'es-ES'
 		| 'fr-FR'
 		| 'ja-JP'
+		| 'uk-UA'
 }

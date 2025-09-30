@@ -82,6 +82,7 @@
 								{ label: 'Spanish (es-ES)', value: 'es-ES' },
 								{ label: 'French (fr-FR)', value: 'fr-FR' },
 								{ label: 'Japanese (ja-JP)', value: 'ja-JP' },
+								{ label: 'Ukranian (uk-UA)', value: 'uk-UA' },
 							]"
 						/>
 						<KtFieldToggle

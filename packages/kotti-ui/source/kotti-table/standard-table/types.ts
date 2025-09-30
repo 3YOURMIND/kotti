@@ -292,7 +292,6 @@ export namespace KottiStandardTable {
 
 	export type Translations = {
 		clearAll: string
-		clearSelection: string
 		editColumns: string
 		editFilters: string
 		endDate: string

@@ -10,6 +10,7 @@ import { enUS } from './locales/en-US'
 import { esES } from './locales/es-ES'
 import { frFR } from './locales/fr-FR'
 import { jaJP } from './locales/ja-JP'
+import { ukUA } from './locales/uk-UA'
 import type { KottiI18n } from './types'
 import { fixDeepMerge } from './utilities'
 
@@ -102,6 +103,7 @@ export const useI18nProvide = ({
 				'es-ES': esES,
 				'fr-FR': frFR,
 				'ja-JP': jaJP,
+				'uk-UA': ukUA,
 			})[locale.value],
 	)
 
@@ -119,6 +121,7 @@ export const useI18nProvide = ({
 					'es-ES': () => import('element-ui/lib/locale/lang/es.js'),
 					'fr-FR': () => import('element-ui/lib/locale/lang/fr.js'),
 					'ja-JP': () => import('element-ui/lib/locale/lang/ja.js'),
+					'uk-UA': () => import('element-ui/lib/locale/lang/ua.js'),
 					/* eslint-enable @typescript-eslint/naming-convention */
 				}[newValue]()
 

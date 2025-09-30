@@ -137,7 +137,6 @@ export const frFR: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Tout effacer',
-		clearSelection: 'Clear Selection',
 		editColumns: 'Odifier les colonnes',
 		editFilters: 'Modifier les filtres',
 		endDate: 'Fin',
