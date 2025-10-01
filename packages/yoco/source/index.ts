@@ -110,6 +110,7 @@ export namespace Yoco {
 		QR_CODE = 'qr_code',
 		QUOTE = 'quote',
 		RELOAD = 'reload',
+		REPORT_CHART = 'report_chart',
 		REQUEST = 'request',
 		SAVE = 'save',
 		SCALE = 'scale',
