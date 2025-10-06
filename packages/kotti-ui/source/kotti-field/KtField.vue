@@ -445,11 +445,6 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		align-items: stretch;
 	}
 
-	&__input-container-wrapper-loading {
-		height: 40px !important;
-		margin-bottom: 0 !important;
-	}
-
 	// placeholders for slots
 	&__input-container__prefix,
 	&__input-container__suffix {
