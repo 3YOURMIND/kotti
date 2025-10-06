@@ -152,11 +152,15 @@ export namespace KottiFilters {
 
 		export type MultiEnum<
 			OPERATION extends Operation.MultiEnum = Operation.MultiEnum,
-		> = Common & {
-			operations: OPERATION[]
-			options: KottiFieldMultiSelect.Props['options']
-			type: FilterType.MULTI_ENUM
-		}
+		> = Common &
+			Pick<
+				KottiFieldMultiSelect.Props,
+				'clearOnSelect' | 'collapseTagsAfter' | 'isUnsorted'
+			> & {
+				operations: OPERATION[]
+				options: KottiFieldMultiSelect.Props['options']
+				type: FilterType.MULTI_ENUM
+			}
 
 		export type Search = Common & {
 			placeholder?: string | null
@@ -165,11 +169,12 @@ export namespace KottiFilters {
 
 		export type SingleEnum<
 			OPERATION extends Operation.SingleEnum = Operation.SingleEnum,
-		> = Common & {
-			operations: OPERATION[]
-			options: KottiFieldSingleSelect.Props['options']
-			type: FilterType.SINGLE_ENUM
-		}
+		> = Common &
+			Pick<KottiFieldSingleSelect.Props, 'isUnsorted'> & {
+				operations: OPERATION[]
+				options: KottiFieldSingleSelect.Props['options']
+				type: FilterType.SINGLE_ENUM
+			}
 
 		export type String<OPERATION extends Operation.String = Operation.String> =
 			Common & {
