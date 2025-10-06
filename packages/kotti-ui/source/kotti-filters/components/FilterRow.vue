@@ -159,11 +159,15 @@ export default defineComponent({
 				if (!props.column?.type) return null
 				return getValueComponent(props.column.type)
 			}),
+			// eslint-disable-next-line sonarjs/cognitive-complexity
 			valueComponentProps: computed(() => ({
+				clearOnSelect:
+					props.column?.type === KottiFilters.FilterType.MULTI_ENUM
+						? props.column.clearOnSelect
+						: undefined,
 				collapseTagsAfter:
-					props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||
-					props.column?.type === KottiFilters.FilterType.SINGLE_ENUM
-						? 1
+					props.column?.type === KottiFilters.FilterType.MULTI_ENUM
+						? props.column.collapseTagsAfter
 						: undefined,
 				currency:
 					props.column?.type === KottiFilters.FilterType.CURRENCY
@@ -175,6 +179,11 @@ export default defineComponent({
 						: props.column?.type === KottiFilters.FilterType.INTEGER
 							? 0
 							: undefined,
+				isUnsorted:
+					props.column?.type === KottiFilters.FilterType.MULTI_ENUM ||
+					props.column?.type === KottiFilters.FilterType.SINGLE_ENUM
+						? props.column.isUnsorted
+						: undefined,
 				maximum:
 					props.column?.type === KottiFilters.FilterType.FLOAT ||
 					props.column?.type === KottiFilters.FilterType.INTEGER

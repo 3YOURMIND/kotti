@@ -45,11 +45,22 @@
     					formKey="booleanFlags"
     					isOptional
     					label="Boolean Flags"
-    					:options="[{ key: 'isLoading', label: 'isLoading' }]"
+    					:options="[
+    						{ key: 'clearOnSelect', label: 'clearOnSelect', tooltip: 'Support on MULTI_ENUM columns type only', },
+    						{ key: 'isLoading', label: 'isLoading' },
+    						{ key: 'isUnsorted', label: 'isUnsorted', tooltip: 'Support on MULTI_ENUM and SINGLE_ENUM columns type only', },
+    					]"
     					:size="Kotti.Field.Size.SMALL"
     					type="switch"
     				/>
     				<h4>Additional Props</h4>
+    				<KtFieldNumber
+    					formKey="collapseTagsAfter"
+    					helpText="Support on MULTI_ENUM columns type only"
+    					isOptional
+    					label="collapseTagsAfter"
+    					:minimum="0"
+    				/>
     				<div class="field-row">
     					<KtFieldNumber
     						formKey="numberDecimalPlaces"
@@ -196,8 +207,11 @@ export default defineComponent({
 
 		const settings = ref<{
 			booleanFlags: {
+				clearOnSelect: boolean
 				isLoading: boolean
+				isUnsorted: boolean
 			}
+			collapseTagsAfter: Kotti.FieldNumber.Value
 			currencyCurrency: string
 			dateRangeMaximumDate: Kotti.FieldDateRange.Props['maximumDate']
 			dateRangeMinimumDate: Kotti.FieldDateRange.Props['minimumDate']
@@ -212,8 +226,11 @@ export default defineComponent({
 			searchPlaceholder: Kotti.FieldText.Value
 		}>({
 			booleanFlags: {
+				clearOnSelect: false,
 				isLoading: false,
+				isUnsorted: false,
 			},
+			collapseTagsAfter: 1,
 			currencyCurrency: 'USD',
 			dateRangeMaximumDate: null,
 			dateRangeMinimumDate: null,
@@ -325,6 +342,7 @@ export default defineComponent({
 						type: Kotti.Filters.FilterType.DATE_RANGE,
 					},
 					{
+						isUnsorted: settings.value.booleanFlags.isUnsorted,
 						key: 'singleEnumColumn',
 						label: 'Single Enum Column',
 						operations: [
@@ -332,13 +350,18 @@ export default defineComponent({
 							Kotti.Filters.Operation.SingleEnum.IS_EMPTY,
 						],
 						options: [
-							{ label: 'Option 1', value: 'option-1' },
 							{ label: 'Option 2', value: 'option-2' },
 							{ label: 'Option 3', value: 'option-3' },
+							{ label: 'Option 1', value: 'option-1' },
+							{ label: 'Option 5', value: 'option-5' },
+							{ label: 'Option 4', value: 'option-4' },
 						],
 						type: Kotti.Filters.FilterType.SINGLE_ENUM,
 					},
 					{
+						clearOnSelect: settings.value.booleanFlags.clearOnSelect,
+						collapseTagsAfter: settings.value.collapseTagsAfter ?? undefined,
+						isUnsorted: settings.value.booleanFlags.isUnsorted,
 						key: 'multiEnumColumn',
 						label: 'Multi Enum Column',
 						operations: [
@@ -346,9 +369,11 @@ export default defineComponent({
 							Kotti.Filters.Operation.MultiEnum.IS_EMPTY,
 						],
 						options: [
-							{ label: 'Option 1', value: 'option-1' },
 							{ label: 'Option 2', value: 'option-2' },
 							{ label: 'Option 3', value: 'option-3' },
+							{ label: 'Option 1', value: 'option-1' },
+							{ label: 'Option 5', value: 'option-5' },
+							{ label: 'Option 4', value: 'option-4' },
 						],
 						type: Kotti.Filters.FilterType.MULTI_ENUM,
 					},
