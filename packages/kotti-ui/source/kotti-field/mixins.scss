@@ -445,6 +445,11 @@
 			> .kt-field__input-container-wrapper > .kt-field__input-container {
 				min-height: map.get($heights, $type);
 			}
+
+			> .kt-field__input-container-wrapper-loading {
+				height: map.get($heights, $type);
+				margin-bottom: 0;
+			}
 		}
 	}
 }
