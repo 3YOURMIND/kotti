@@ -8,3 +8,6 @@ export const KOTTI_FIELD_SELECT_SUPPORTS: KottiField.Supports = {
 	placeholder: true,
 	tabIndex: true,
 }
+
+export const POPPER_MAX_WIDTH = 300
+export const POPPER_MIN_WIDTH = 160
