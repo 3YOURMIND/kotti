@@ -17,7 +17,7 @@
 			:numberFormat="{ decimalSeparator: settings.decimalSeparator }"
 		>
 			<div class="overview">
-				<div class="overview__component">
+				<div class="overview__component" :style="componentContainerStyles">
 					<h4>Component</h4>
 					<KtForm
 						v-model="values"
@@ -624,6 +624,14 @@
 								label="isUnsorted"
 								type="switch"
 							/>
+							<KtFieldToggle
+								v-if="componentHasDropdownPopup"
+								formKey="isInNarrowContainer"
+								helpText="The dropdown popup's width accomodates content bigger than the field"
+								isOptional
+								label="Is inside a narrow container"
+								type="switch"
+							/>
 							<KtFieldDate
 								v-if="
 									componentDefinition.additionalProps.includes('maximumDate')
@@ -658,26 +666,6 @@
 								isOptional
 								label="shortcuts"
 								:options="getShortcutsOptions(settings.component)"
-							/>
-							<KtFieldToggle
-								v-if="
-									componentDefinition.additionalProps.includes('hasOptionSlot')
-								"
-								formKey="hasOptionSlot"
-								isOptional
-								label="option slot"
-								type="switch"
-							/>
-							<KtFieldToggle
-								v-if="
-									componentDefinition.additionalProps.includes(
-										'hasSelectionSlot',
-									)
-								"
-								formKey="hasSelectionSlot"
-								isOptional
-								label="selection slot"
-								type="switch"
 							/>
 							<KtFieldToggle
 								v-if="
@@ -794,6 +782,7 @@
 								label="Show visibility toggle"
 								type="switch"
 							/>
+
 							<h4>Additional Slots</h4>
 							<KtFieldText
 								v-if="
@@ -847,6 +836,26 @@
 									interactive elements like buttons or links
 								</template>
 							</KtFieldToggle>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes('hasOptionSlot')
+								"
+								formKey="hasOptionSlot"
+								isOptional
+								label="option slot"
+								type="switch"
+							/>
+							<KtFieldToggle
+								v-if="
+									componentDefinition.additionalProps.includes(
+										'hasSelectionSlot',
+									)
+								"
+								formKey="hasSelectionSlot"
+								isOptional
+								label="selection slot"
+								type="switch"
+							/>
 							<KtFieldToggle
 								v-if="
 									componentDefinition.additionalProps.includes(
@@ -1249,16 +1258,18 @@ const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 ]
 
 const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] = [
-	{ label: 'Key 2', value: 'value2' },
-	{ label: 'Key 1', value: 'value1' },
-	{ isDisabled: true, label: 'Key 3', value: 'value3' },
-	{ label: 'Key 7', value: 'value7' },
-	{ label: 'Key 10', value: 'value10' },
-	{ label: 'Key 4', value: 'value4' },
-	{ label: 'Key 9', value: 'value9' },
-	{ label: 'Key 6', value: 'value6' },
-	{ label: 'Key 8', value: 'value8' },
-	{ label: 'Key 5', value: 'value5' },
+	{ label: 'Kiwi', value: 'value4' },
+	{ label: 'Pineapple', value: 'value9' },
+	{ label: 'Mango', value: 'value2' },
+	{ label: 'Blueberry', value: 'value1' },
+	{ label: 'Orange', value: 'value7' },
+	{ isDisabled: true, label: 'Peach', value: 'value3' },
+	{ label: 'Passionfruit', value: 'value10' },
+	{ label: 'Banana', value: 'value6' },
+	{ label: 'Strawberry', value: 'value5' },
+	{ label: 'Apple', value: 'value8' },
+	{ label: 'Watermelon', value: 'value11' },
+	{ label: 'Tangerine', value: 'value12' },
 ]
 
 const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
@@ -1406,6 +1417,7 @@ export default defineComponent({
 				hideDropArea: boolean
 				icon: Yoco.Icon | null
 				isInline: boolean
+				isInNarrowContainer: boolean
 				isLoadingOptions: boolean
 				isUnsorted: boolean
 				maxFileSize: Kotti.FieldNumber.Value
@@ -1482,6 +1494,7 @@ export default defineComponent({
 				hideDropArea: false,
 				icon: null,
 				isInline: false,
+				isInNarrowContainer: false,
 				isLoadingOptions: false,
 				isUnsorted: false,
 				maxFileSize: null,
@@ -1908,6 +1921,14 @@ export default defineComponent({
 				'KtFieldSingleSelectRemote',
 			].includes(settings.value.component),
 		)
+		const componentHasDropdownPopup = computed(() =>
+			[
+				'KtFieldMultiSelect',
+				'KtFieldMultiSelectRemote',
+				'KtFieldSingleSelect',
+				'KtFieldSingleSelectRemote',
+			].includes(settings.value.component),
+		)
 		const hasActions = computed(
 			() =>
 				componentHasActionsToggle.value &&
@@ -2007,8 +2028,15 @@ export default defineComponent({
 						>
 					] as { meta: Kotti.Meta; name: string },
 			),
+			componentContainerStyles: computed(() =>
+				componentHasDropdownPopup.value &&
+				settings.value.additionalProps.isInNarrowContainer
+					? { 'max-width': '120px' }
+					: undefined,
+			),
 			componentDefinition,
 			componentHasActionsToggle,
+			componentHasDropdownPopup,
 			componentOptions: components.map((component) => ({
 				label: component.name,
 				value: component.name,

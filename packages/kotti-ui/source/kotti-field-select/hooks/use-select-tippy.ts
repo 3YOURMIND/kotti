@@ -8,7 +8,7 @@ import { useTippy } from '@3yourmind/vue-use-tippy'
 import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 import type { KottiField } from '../../kotti-field/types'
 import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
-import { sameWidth } from '../utils/tippy-utils'
+import { matchInputOrExpand } from '../utils/tippy-utils'
 
 const TIPPY_CONTENT_WRAPPER_CLASSES = new Set(['tippy-box', 'tippy-content'])
 
@@ -68,9 +68,9 @@ export const useSelectTippy = <T>(
 
 				isDropdownOpen.value = true
 			},
-			placement: 'bottom',
+			placement: 'bottom-start',
 			popperOptions: {
-				modifiers: [sameWidth],
+				modifiers: [matchInputOrExpand],
 			},
 			theme: 'kt-light-border',
 			trigger: 'click focusin',
