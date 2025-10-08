@@ -95,7 +95,7 @@ git config user.email "123456+githubusername@users.noreply.github.com"
 # install dependencies
 yarn config set workspaces-experimental true
 yarn install
-yarn run lerna bootstrap
+yarn run build
 ```
 
 ### Develop
