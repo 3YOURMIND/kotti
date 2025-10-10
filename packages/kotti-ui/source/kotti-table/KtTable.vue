@@ -510,6 +510,8 @@ export default defineComponent({
 			}
 
 			.kt-table-cell {
+				height: inherit;
+
 				&--has-drop-indicator {
 					&::before,
 					&-right::after {
@@ -576,7 +578,7 @@ export default defineComponent({
 				clip-path: circle(12px);
 				font-size: 16px;
 				color: var(--icon-02);
-				cursor: default;
+				cursor: pointer;
 				user-select: none;
 
 				&:not([aria-disabled='true']):hover {
