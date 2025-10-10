@@ -4,7 +4,7 @@
 			v-for="page in pageAmount"
 			:key="page"
 			:class="paginatorClasses(page)"
-			@click="$emit('setPage', page)"
+			@click="$emit('update:page', page)"
 			v-text="page"
 		/>
 	</div>
@@ -26,7 +26,7 @@ export default defineComponent({
 			validator: validateTotalIsNumber,
 		},
 	},
-	emits: ['setPage'],
+	emits: ['update:page'],
 	setup(props) {
 		return {
 			pageAmount: computed(() => Math.ceil(props.total / props.pageSize)),

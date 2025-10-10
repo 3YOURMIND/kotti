@@ -1,6 +1,6 @@
 import { attachMeta, makeInstallable } from '../utilities'
 
-import { KtI18nContext as KtI18nContextVue } from './KtI18nContext'
+import KtI18nContextVue from './KtI18nContext.vue'
 
 export const KtI18nContext = attachMeta(makeInstallable(KtI18nContextVue), {
 	addedVersion: '2.0.0',

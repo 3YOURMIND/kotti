@@ -10,9 +10,11 @@
 </p>
 
 <table border="0" width="100%">
+<colgroup>
 <col style="width:33%">
 <col style="width:33%">
 <col style="width:33%">
+</colgroup>
 <tbody>
 <tr style="border: 0px !important;">
 <td valign="top" style="border: 0px !important;"><b>Complete</b>. The most commonly-needed components are implemented in Kotti. More components will be implemented when there is a specific need for them.</td>
@@ -121,10 +123,10 @@ yarn workspace @3yourmind/documentation run serve
 
 There are two workflows to help with rebasing pull requests:
 
-1. Rebase  
+1. Rebase
    Commenting `/rebase` on any pull request will trigger a GitHub Action that rebases the PR.
    This is best used when attempting to rebase a PR without auto-rebase before merging.
-2. Auto-Rebase  
+2. Auto-Rebase
    Adding the `autorebase:opt-in` label to any pull request will automatically rebase the PR as soon as it’s out-of-date.
    This should preferrably be used by the author, as it requires them to be aware of having to use `git pull --rebase`
 
