@@ -428,7 +428,7 @@ export const useKottiTable = <
 								id: EXPANSION_COLUMN_ID,
 								meta: {
 									cellClasses: 'kt-table-cell kt-table-cell--is-body',
-									disableCellClick: true,
+									disableCellClick: false,
 									headerClasses: 'kt-table-cell kt-table-cell--is-header',
 								},
 							}),
@@ -526,7 +526,7 @@ export const useKottiTable = <
 								id: SELECTION_COLUMN_ID,
 								meta: {
 									cellClasses: 'kt-table-cell kt-table-cell--is-body',
-									disableCellClick: true,
+									disableCellClick: false,
 									headerClasses: 'kt-table-cell kt-table-cell--is-header',
 								},
 							}),
