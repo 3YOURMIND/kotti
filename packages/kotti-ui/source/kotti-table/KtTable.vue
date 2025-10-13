@@ -597,6 +597,7 @@ export default defineComponent({
 		}
 
 		.kt-table-cell {
+			height: inherit;
 			padding: 0;
 
 			> .kt-table-cell-content {
