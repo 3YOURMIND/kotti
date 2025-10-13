@@ -20,19 +20,6 @@
 	}
 }
 
-.inline-edit {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-
-	&__edit-buttons {
-		position: absolute;
-		right: 0;
-		bottom: -32px;
-		z-index: $zindex-4;
-	}
-}
-
 .form-input {
 	position: relative;
 	width: 100%;
