@@ -85,6 +85,11 @@ export namespace KottiField {
 			| 'suffix'
 		> & {
 			currentValue: DATA_TYPE
+			/**
+			 * Whether the clear button is supported and enabled or not
+			 * e.g. KtFieldSingleSelect, KtFieldMultiSelect
+			 */
+			hasClear: boolean
 			inputProps: Readonly<{
 				/**
 				 * Native HTML Props should have lowercase keys

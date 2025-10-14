@@ -11,7 +11,7 @@
 				:getEmptyValue="() => (isMultiple ? [] : null)"
 				:helpTextSlot="helpTextSlot"
 			>
-				<div class="kt-field-select__input-and-tags">
+				<div :class="inputClasses">
 					<slot
 						:currentValue="
 							isMultiple ? visibleSelectedTags : field.currentValue
@@ -44,12 +44,12 @@
 						@keydown.up.prevent
 					/>
 				</div>
-				<template #actionIcon="{ classes, handleClear, showClear }">
+				<template #actionIcon="{ classes, handleClear, hasClear, showClear }">
 					<ActionIcon
 						v-bind="{
 							classes,
 							handleClear,
-							hasClear: showClear,
+							hasClear,
 							isDropdownOpen,
 							showClear: showClearIcon(showClear),
 						}"
@@ -280,6 +280,10 @@ export default defineComponent({
 								o.label.toLowerCase().includes(localQuery.value.toLowerCase()),
 						),
 			),
+			inputClasses: computed(() => ({
+				'kt-field-select__input': true,
+				'kt-field-select__input--has-tags': props.isMultiple,
+			})),
 			inputProps: computed(() => ({
 				...field.inputProps,
 				autocomplete: props.autoComplete,
@@ -412,13 +416,16 @@ export default defineComponent({
 	$vertical-tag-gap: 2px;
 	$horizontal-tag-gap: 4px;
 
-	&__input-and-tags {
+	&__input {
 		display: flex;
-		flex-wrap: wrap;
 		align-items: center;
 
-		// HACK: use negative margins to align multi-line grids of tags
-		margin: #{-$vertical-tag-gap + 4px} #{-$horizontal-tag-gap};
+		&--has-tags {
+			flex-wrap: wrap;
+
+			// HACK: use negative margins to align multi-line grids of tags
+			margin: #{-$vertical-tag-gap + 4px} #{-$horizontal-tag-gap};
+		}
 	}
 
 	&__wrapper {

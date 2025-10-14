@@ -71,6 +71,7 @@
 						<slot
 							:classes="iconClasses('input-container', ['interactive'])"
 							:handleClear="handleClear"
+							:hasClear="field.hasClear"
 							name="actionIcon"
 							:showClear="!field.hideClear"
 						>
