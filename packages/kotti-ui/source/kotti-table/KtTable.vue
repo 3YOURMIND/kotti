@@ -625,6 +625,7 @@ export default defineComponent({
 
 	&__actions-column {
 		right: 0;
+		z-index: 400;
 		text-align: right;
 
 		.kt-table__actions {
