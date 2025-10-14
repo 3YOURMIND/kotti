@@ -295,6 +295,9 @@ export const useField = <DATA_TYPE>({
 			props,
 		}),
 		...values,
+		hasClear: computed(
+			() => supports.clear && !sharedProperties.hideClear.value,
+		),
 		hideClear: computed(
 			() =>
 				values.isEmpty.value ||

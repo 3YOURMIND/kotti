@@ -7,6 +7,7 @@
 			@click.stop="handleClear"
 			v-text="Yoco.Icon.CLOSE"
 		/>
+		<div v-else-if="hasClear" class="action-icon__clear-placeholder" />
 		<i
 			class="yoco"
 			role="button"
@@ -50,13 +51,22 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.action-icon__container {
-	display: flex;
-	justify-content: center;
+$icon-width: 1.1em;
 
-	&--has-clear-icon {
-		justify-content: flex-end;
-		min-width: 1.6rem;
+.action-icon {
+	&__container {
+		display: flex;
+		justify-content: center;
+
+		&--has-clear-icon {
+			justify-content: flex-end;
+			min-width: 1.6rem;
+		}
+	}
+
+	&__clear-placeholder {
+		width: $icon-width;
+		cursor: text;
 	}
 }
 </style>
