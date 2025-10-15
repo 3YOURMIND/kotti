@@ -17,7 +17,7 @@
 			:numberFormat="{ decimalSeparator: settings.decimalSeparator }"
 		>
 			<div class="overview">
-				<div class="overview__component" :style="componentContainerStyles">
+				<div class="overview__component">
 					<h4>Component</h4>
 					<KtForm
 						v-model="values"
@@ -626,10 +626,10 @@
 							/>
 							<KtFieldToggle
 								v-if="componentHasDropdownPopup"
-								formKey="isInNarrowContainer"
-								helpText="The dropdown popup's width accomodates content bigger than the field"
+								formKey="hasDropdownStyles"
+								helpText="Allows to customize the dropdown's styles via an object"
 								isOptional
-								label="Is inside a narrow container"
+								label="dropdownStyles"
 								type="switch"
 							/>
 							<KtFieldDate
@@ -1069,6 +1069,7 @@ const components: Array<{
 			'actions',
 			'clearOnSelect',
 			'collapseTagsAfter',
+			'dropdownStyles',
 			'emitEvents',
 			'hasOptionSlot',
 			'hasSelectionSlot',
@@ -1084,6 +1085,7 @@ const components: Array<{
 			'actions',
 			'clearOnSelect',
 			'collapseTagsAfter',
+			'dropdownStyles',
 			'emitEvents',
 			'hasOptionSlot',
 			'hasSelectionSlot',
@@ -1131,6 +1133,7 @@ const components: Array<{
 	{
 		additionalProps: [
 			'actions',
+			'dropdownStyles',
 			'emitEvents',
 			'hasOptionSlot',
 			'hasSelectionSlot',
@@ -1143,6 +1146,7 @@ const components: Array<{
 	{
 		additionalProps: [
 			'actions',
+			'dropdownStyles',
 			'emitEvents',
 			'hasOptionSlot',
 			'hasSelectionSlot',
@@ -1291,7 +1295,6 @@ const toggleGroupOptions: Kotti.FieldToggleGroup.Props['options'] = [
 		label: 'Disabled',
 		tooltip: 'A tooltip!',
 	},
-
 	{
 		key: 'hasLongLabel',
 		label:
@@ -1410,6 +1413,7 @@ export default defineComponent({
 				extensions: Kotti.FieldMultiSelect.Value
 				externalUrl: Kotti.FieldText.Value
 				hasActions: boolean
+				hasDropdownStyles: boolean
 				hasOptionSlot: boolean
 				hasSelectionSlot: boolean
 				headerSlot: ComponentValue['headerSlot']
@@ -1417,7 +1421,6 @@ export default defineComponent({
 				hideDropArea: boolean
 				icon: Yoco.Icon | null
 				isInline: boolean
-				isInNarrowContainer: boolean
 				isLoadingOptions: boolean
 				isUnsorted: boolean
 				maxFileSize: Kotti.FieldNumber.Value
@@ -1487,6 +1490,7 @@ export default defineComponent({
 				extensions: [],
 				externalUrl: null,
 				hasActions: false,
+				hasDropdownStyles: false,
 				hasOptionSlot: false,
 				hasSelectionSlot: false,
 				headerSlot: null,
@@ -1494,7 +1498,6 @@ export default defineComponent({
 				hideDropArea: false,
 				icon: null,
 				isInline: false,
-				isInNarrowContainer: false,
 				isLoadingOptions: false,
 				isUnsorted: false,
 				maxFileSize: null,
@@ -1865,6 +1868,14 @@ export default defineComponent({
 			if (hasActions.value)
 				Object.assign(additionalProps, { actions: createActions(true) })
 
+			if (settings.value.additionalProps.hasDropdownStyles)
+				Object.assign(additionalProps, {
+					dropdownStyles: {
+						border: '1px dashed #FFA500',
+						width: '160px',
+					},
+				})
+
 			if (
 				['KtFieldMultiSelectRemote', 'KtFieldSingleSelectRemote'].includes(
 					settings.value.component,
@@ -2027,12 +2038,6 @@ export default defineComponent({
 							'KtFilters' | 'KtValueLabel'
 						>
 					] as { meta: Kotti.Meta; name: string },
-			),
-			componentContainerStyles: computed(() =>
-				componentHasDropdownPopup.value &&
-				settings.value.additionalProps.isInNarrowContainer
-					? { 'max-width': '120px' }
-					: undefined,
 			),
 			componentDefinition,
 			componentHasActionsToggle,

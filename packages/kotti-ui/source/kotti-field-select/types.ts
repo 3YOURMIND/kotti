@@ -28,6 +28,7 @@ export namespace Shared {
 		.merge(KottiField.potentiallySupportedPropsSchema)
 		.extend({
 			actions: z.array(actionSchema).default(() => []),
+			dropdownStyles: z.record(z.unknown()).nullable().default(null),
 			isUnsorted: z.boolean().default(false),
 			options: z.array(optionSchema),
 			placeholder: z.string().nullable().default(null),
