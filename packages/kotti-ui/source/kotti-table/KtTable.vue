@@ -441,6 +441,7 @@ export default defineComponent({
 		}
 
 		thead {
+			z-index: 3;
 			background-color: var(--ui-01);
 
 			.kt-table-cell--is-header {
@@ -625,7 +626,7 @@ export default defineComponent({
 
 	&__actions-column {
 		right: 0;
-		z-index: 400;
+		z-index: 2;
 		text-align: right;
 
 		.kt-table__actions {
