@@ -173,9 +173,10 @@ export default defineComponent({
 		const triggerTargets = computed(() =>
 			ktFieldRef.value ? [ktFieldRef.value.inputContainerRef] : [],
 		)
+		const dropdownStyles = computed(() => props.dropdownStyles ?? {})
 
 		const { isDropdownOpen, isDropdownMounted, ...selectTippy } =
-			useSelectTippy(field, triggerTargets)
+			useSelectTippy(field, triggerTargets, dropdownStyles)
 
 		const deleteQuery = () => {
 			if (props.isRemote) {
