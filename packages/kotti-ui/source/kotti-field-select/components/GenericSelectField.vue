@@ -1,5 +1,5 @@
 <template>
-	<div :class="fieldSelectClasses">
+	<div class="kt-field-select">
 		<div
 			ref="tippyRef"
 			@mouseenter="isFieldHovered = true"
@@ -11,7 +11,7 @@
 				:getEmptyValue="() => (isMultiple ? [] : null)"
 				:helpTextSlot="helpTextSlot"
 			>
-				<div :class="inputClasses">
+				<div :class="inputWrapperClasses">
 					<slot
 						:currentValue="
 							isMultiple ? visibleSelectedTags : field.currentValue
@@ -255,9 +255,12 @@ export default defineComponent({
 			{ flush: 'post', immediate: true },
 		)
 
+		/**
+		 * Make sure the input field does not take up the last row on its own
+		 * when tags are shown and the dropwown is closed.
+		 */
 		const isInputVisible = computed(
-			// save some space in multi select when tags are shown
-			() => !props.isMultiple || isDropdownOpen.value || field.isEmpty,
+			() => !props.isMultiple || field.isEmpty || isDropdownOpen.value,
 		)
 
 		return {
@@ -267,10 +270,6 @@ export default defineComponent({
 					: 0,
 			),
 			field,
-			fieldSelectClasses: computed(() => ({
-				'kt-field-select': true,
-				'kt-field-select--is-input-visible': !isInputVisible.value,
-			})),
 			filteredOptions: computed(() =>
 				props.isRemote
 					? props.options
@@ -280,14 +279,10 @@ export default defineComponent({
 								o.label.toLowerCase().includes(localQuery.value.toLowerCase()),
 						),
 			),
-			inputClasses: computed(() => ({
-				'kt-field-select__input': true,
-				'kt-field-select__input--has-tags': props.isMultiple,
-			})),
 			inputProps: computed(() => ({
 				...field.inputProps,
 				autocomplete: props.autoComplete,
-				class: ['kt-field-select__wrapper'],
+				class: ['kt-field-select__input-field'],
 				forceUpdateKey: forceUpdateKey.value,
 				placeholder: props.placeholder ?? undefined,
 				size: 1,
@@ -304,6 +299,12 @@ export default defineComponent({
 				})(),
 			})),
 			inputRef,
+			inputWrapperClasses: computed(() => ({
+				'kt-field-select__input-wrapper': true,
+				'kt-field-select__input-wrapper--has-tags': props.isMultiple,
+				'kt-field-select__input-wrapper--hide-input-field':
+					!isInputVisible.value,
+			})),
 			isDropdownOpen,
 			isFieldFocused,
 			isFieldHovered,
@@ -311,7 +312,10 @@ export default defineComponent({
 			onOptionsInput: (value: MultiValue) => {
 				if (props.isMultiple) {
 					field.setValue(value)
-					if (props.clearOnSelect) deleteQuery()
+					if (props.clearOnSelect) {
+						deleteQuery()
+						inputRef.value?.focus()
+					}
 				} else {
 					const newValue = value[0] ?? null
 					// performance optimization
@@ -392,17 +396,6 @@ export default defineComponent({
 		margin-bottom: 0.8rem;
 	}
 
-	// can't rely on v-if because the field wouldn't be focusable
-	&.kt-field-select--is-input-visible {
-		position: relative;
-
-		.kt-field-select__wrapper {
-			position: absolute;
-			left: -10000px;
-			pointer-events: none;
-		}
-	}
-
 	&__query {
 		display: flex;
 		flex: 1;
@@ -416,9 +409,10 @@ export default defineComponent({
 	$vertical-tag-gap: 2px;
 	$horizontal-tag-gap: 4px;
 
-	&__input {
+	&__input-wrapper {
 		display: flex;
 		align-items: center;
+		cursor: text;
 
 		&--has-tags {
 			flex-wrap: wrap;
@@ -426,12 +420,22 @@ export default defineComponent({
 			// HACK: use negative margins to align multi-line grids of tags
 			margin: #{-$vertical-tag-gap + 4px} #{-$horizontal-tag-gap};
 		}
+
+		&--hide-input-field {
+			position: relative;
+
+			.kt-field-select__input-field {
+				position: absolute;
+				inset: 0;
+				z-index: -1;
+			}
+		}
 	}
 
-	&__wrapper {
+	&__input-field {
 		display: flex;
-		flex: 1;
-		min-width: 30%;
+		flex: 1 1 auto;
+		min-width: 25%;
 		padding: 0;
 		margin: 0;
 		line-height: 1.6;
