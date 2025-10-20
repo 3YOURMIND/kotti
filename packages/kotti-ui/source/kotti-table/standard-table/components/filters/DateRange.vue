@@ -3,23 +3,27 @@
 		:isLoading="isLoading"
 		isOptional
 		:label="filter.label"
+		:modelValue="modelValue"
 		:placeholder="[translations.startDate, translations.endDate]"
 		:shortcuts="shortcuts"
 		size="small"
-		:value="value"
-		@input="onInput"
+		@update:modelValue="onUpdateModelValue"
 	/>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, type PropType } from 'vue'
 
+import KtFieldDateRange from '../../../../kotti-field-date/KtFieldDateRange.vue'
 import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
 import type { KottiStandardTable } from '../../types'
 import { getLast, getToday } from '../../utilities/date'
 
 export default defineComponent({
 	name: 'DateRangeFilter',
+	components: {
+		KtFieldDateRange,
+	},
 	props: {
 		filter: {
 			required: true,
@@ -30,18 +34,18 @@ export default defineComponent({
 			>,
 		},
 		isLoading: { default: false, type: Boolean },
-		value: {
+		modelValue: {
 			default: () => [null, null],
 			type: Array as unknown as PropType<[string | null, string | null]>,
 		},
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtStandardTable')
 
 		return {
-			onInput: (value: KottiStandardTable.FilterValue) => {
-				emit('input', {
+			onUpdateModelValue: (value: KottiStandardTable.FilterValue) => {
+				emit('update:modelValue', {
 					id: props.filter.id,
 					operation: props.filter.operations[0], // Current filters support only one operation
 					value,
