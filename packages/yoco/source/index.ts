@@ -6,6 +6,7 @@ export namespace Yoco {
 		ANNOUNCE = 'announce',
 		ARROW_DOWN = 'arrow_down',
 		ARROW_LINE = 'arrow_line',
+		ARROW_RIGHT = 'arrow_right',
 		ARROW_UP = 'arrow_up',
 		ARROW_UP_DOWN = 'arrow_up_down',
 		ATTACHMENT = 'attachment',
