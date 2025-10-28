@@ -130,6 +130,7 @@ import { info } from '../../../utilities/toaster'
 type ColumnId =
 	| 'age'
 	| 'bestSkill'
+	| 'features'
 	| 'id'
 	| 'isAlive'
 	| 'lifespan'
@@ -202,6 +203,7 @@ export default defineComponent({
 		type TableRow = {
 			age: number
 			bestSkill: string
+			features: string[]
 			id: number
 			isAlive: boolean
 			lifespan: string
@@ -217,6 +219,7 @@ export default defineComponent({
 			{
 				age: 27.1,
 				bestSkill: 'Perfect naps',
+				features: ['feat 1', 'feat 2', 'feat 3'],
 				id: 1,
 				isAlive: true,
 				lifespan: '9 lives',
@@ -230,6 +233,7 @@ export default defineComponent({
 			{
 				age: 85.8,
 				bestSkill: 'Quantum jumps',
+				features: ['feat 1000'],
 				id: 2,
 				isAlive: false,
 				lifespan: 'Until it crashes',
@@ -243,6 +247,7 @@ export default defineComponent({
 			{
 				age: 2134412,
 				bestSkill: 'Outlasting everything',
+				features: ['feat 2000'],
 				id: 3,
 				isAlive: false,
 				lifespan: 'Infinite (obviously)',
@@ -256,6 +261,7 @@ export default defineComponent({
 			{
 				age: 0.1,
 				bestSkill: 'Fueling all-nighters',
+				features: ['feat 101', 'feat 102'],
 				id: 4,
 				isAlive: false,
 				lifespan: '10 minutes per cup',
@@ -281,7 +287,45 @@ export default defineComponent({
 						getData: (row) => row.id,
 						id: 'id',
 						isSortable: true,
-						label: '# Id',
+						label: 'Id',
+					}),
+					createColumn({
+						display: textDisplay,
+						getData: (row) => row.name,
+						id: 'name',
+						isSortable: true,
+						label: 'Name',
+					}),
+					createColumn({
+						display: getCustomDisplay<TableRow['features']>({
+							align: 'left',
+							disableCellClick: false,
+							isNumeric: false,
+							render: (value) => {
+								return h(
+									'div',
+									{},
+									value.map((item) => [
+										h(
+											'div',
+											{
+												style: {
+													display: 'list-item',
+													'list-style-position': 'inside',
+													'list-style-type': 'disc',
+												},
+											},
+											item,
+										),
+									]),
+								)
+							},
+							sortBehavior: 'asc-desc',
+						}),
+						getData: (row) => row.features,
+						id: 'features',
+						isSortable: true,
+						label: 'Features',
 					}),
 					createColumn({
 						display: getCustomDisplay<TableRow>({
@@ -300,15 +344,8 @@ export default defineComponent({
 						getData: (row) => row,
 						id: 'age',
 						isSortable: true,
-						label: 'age (click disabled)',
-						minWidth: '300px',
-					}),
-					createColumn({
-						display: booleanDisplay,
-						getData: (row) => row.isAlive,
-						id: 'isAlive',
-						label: 'Aliveness',
-						width: '300px',
+						label: 'Age (click disabled)',
+						minWidth: '250px',
 					}),
 					createColumn({
 						display: getCustomDisplay({
@@ -324,11 +361,11 @@ export default defineComponent({
 						label: 'Lifespan (click allowed)',
 					}),
 					createColumn({
-						display: textDisplay,
-						getData: (row) => row.name,
-						id: 'name',
-						isSortable: true,
-						label: 'Name',
+						display: booleanDisplay,
+						getData: (row) => row.isAlive,
+						id: 'isAlive',
+						label: 'Aliveness',
+						width: '300px',
 					}),
 					createColumn({
 						display: textDisplay,
@@ -428,6 +465,8 @@ export default defineComponent({
 				age: (mode) => getNumericalSorter<TableRow>((row) => row.age, mode),
 				bestSkill: (mode) =>
 					getTextSorter<TableRow>((row) => row.bestSkill, mode),
+				features: (mode) =>
+					getTextSorter<TableRow>((row) => row.features[0] ?? '', mode),
 				id: (mode) => getNumericalSorter<TableRow>((row) => row.id, mode),
 				isAlive: (mode) =>
 					getNumericalSorter<TableRow>((row) => (row.isAlive ? 1 : 0), mode),

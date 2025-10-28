@@ -511,8 +511,6 @@ export default defineComponent({
 			}
 
 			.kt-table-cell {
-				height: inherit;
-
 				&--has-drop-indicator {
 					&::before,
 					&-right::after {
@@ -600,6 +598,11 @@ export default defineComponent({
 		.kt-table-cell {
 			height: inherit;
 			padding: 0;
+
+			/* Firefox only */
+			@-moz-document url-prefix() {
+				height: 100%;
+			}
 
 			> .kt-table-cell-content {
 				display: flex;
