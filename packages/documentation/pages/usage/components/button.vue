@@ -110,15 +110,37 @@
 		<h2>Icon</h2>
 
 		<div class="element-example">
-			<KtButton class="mr-4" type="primary">Edit button</KtButton>
-			<KtButton class="mr-4" icon="edit" label="Edit Button" type="primary" />
+			<div class="mb-6">
+				<KtButton class="mr-4" type="primary">Edit button</KtButton>
+				<KtButton class="mr-4" icon="edit" label="Edit Button" type="primary" />
+				<KtButton
+					icon="edit"
+					iconPosition="right"
+					label="Right Icon Button"
+					type="primary"
+				/>
+			</div>
 			<KtButton
+				class="mr-4"
+				helpText="This is an icon button"
 				icon="edit"
-				iconPosition="right"
-				label="Right Icon Button"
+				size="small"
 				type="primary"
 			/>
-			<KtButton helpText="This is an icon button" icon="edit" type="primary" />
+			<KtButton
+				class="mr-4"
+				helpText="This is an icon button"
+				icon="edit"
+				size="medium"
+				type="primary"
+			/>
+			<KtButton
+				class="mr-4"
+				helpText="This is an icon button"
+				icon="edit"
+				size="large"
+				type="primary"
+			/>
 		</div>
 
 		<ul>
