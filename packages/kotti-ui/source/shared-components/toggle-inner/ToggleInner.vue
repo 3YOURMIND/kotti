@@ -78,6 +78,7 @@ export default defineComponent({
 
 .kt-field-toggle-inner {
 	display: flex;
+	gap: var(--unit-2);
 	align-items: flex-start;
 	cursor: pointer;
 
@@ -106,10 +107,6 @@ export default defineComponent({
 	&--is-disabled {
 		color: var(--text-05);
 		cursor: not-allowed;
-	}
-
-	&__svg {
-		margin-right: var(--unit-2);
 	}
 }
 </style>

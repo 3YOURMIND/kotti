@@ -1,3 +1,5 @@
+import type { Column } from '@tanstack/table-core'
+
 import type { GetRowBehavior, KottiTable } from './types'
 
 type RowBehavior = ReturnType<GetRowBehavior<KottiTable.AnyRow>>
@@ -9,39 +11,50 @@ type RowCellWrapper = {
 	props?: Record<string, unknown>
 }
 
-export const DEFAULT_CELL_WRAPPER: RowCellWrapper = {
-	class: ['kt-table-cell-content'],
-	component: 'div',
+const getCellWrapper = (onClick?: () => void) => {
+	return {
+		class: ['kt-table-cell-content'],
+		component: 'div',
+		on: onClick
+			? {
+					click: onClick,
+				}
+			: undefined,
+	}
 }
 
-export const getCellWrapComponent = (
-	behavior: RowBehavior,
-	triggerExpanded: (rowId: string) => void,
-): RowCellWrapper => {
-	if (behavior.disable?.click) return DEFAULT_CELL_WRAPPER
+export const getCellWrapComponent = ({
+	behavior,
+	column,
+	triggerExpand,
+}: {
+	behavior: RowBehavior
+	column: Column<KottiTable.AnyRow>
+	triggerExpand: (rowId: string) => void
+}): RowCellWrapper => {
+	if (column.columnDef.meta.disableCellClick) {
+		return {
+			class: [
+				'kt-table-cell-content',
+				'kt-table-cell-content--is-click-disabled',
+			],
+			component: 'div',
+		}
+	}
 
-	const { click, id: rowId } = behavior
-	if (!click) return DEFAULT_CELL_WRAPPER
+	const { click, disable, id: rowId } = behavior
+
+	if (disable?.click || !click) return getCellWrapper()
 
 	if (click === 'expand')
-		return {
-			...DEFAULT_CELL_WRAPPER,
-			on: {
-				click: () => {
-					triggerExpanded(rowId)
-				},
-			},
-		}
+		return getCellWrapper(() => {
+			triggerExpand(rowId)
+		})
 
 	if (click.component === null)
-		return {
-			...DEFAULT_CELL_WRAPPER,
-			on: {
-				click: () => {
-					void click.onClick()
-				},
-			},
-		}
+		return getCellWrapper(() => {
+			void click.onClick()
+		})
 
 	return {
 		...click,
