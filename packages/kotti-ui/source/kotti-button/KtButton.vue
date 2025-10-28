@@ -127,8 +127,8 @@ export default defineComponent({
 :root {
 	--default-button-height: var(--unit-8);
 	--default-button-line-height: var(--unit-6);
-	--large-button-height: var(--unit-9);
 	--small-button-height: var(--unit-7);
+	--large-button-height: var(--unit-9);
 	--button-main-color: var(--interactive-01);
 	--button-main-color-dark: var(--interactive-01-hover);
 	--button-main-color-light: var(--interactive-02-hover);
@@ -177,7 +177,17 @@ export default defineComponent({
 		}
 
 		&:not(.kt-button--has-content) {
-			padding: 0 var(--unit-2);
+			&.kt-button--size-small {
+				width: var(--small-button-height);
+			}
+
+			&.kt-button--size-medium {
+				width: var(--default-button-height);
+			}
+
+			&.kt-button--size-large {
+				width: var(--large-button-height);
+			}
 		}
 	}
 
