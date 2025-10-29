@@ -189,7 +189,7 @@ import { makeProps } from '../make-props'
 
 import { useTableContext } from './table/context'
 import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './table/hooks'
-import { DEFAULT_CELL_WRAPPER, getCellWrapComponent } from './table/row'
+import { getCellWrapComponent } from './table/row'
 import { FlexRender } from './table/tanstack-table'
 import { KottiTable } from './table/types'
 
@@ -226,11 +226,6 @@ export default defineComponent({
 						rowIndex: row.index,
 					})
 
-					const wrapComponent = getCellWrapComponent(
-						behavior,
-						tableContext.value.internal.triggerExpand,
-					)
-
 					return {
 						actions: behavior.actions ?? null,
 						cells: row.getVisibleCells().map((cell) => ({
@@ -242,15 +237,11 @@ export default defineComponent({
 							id: cell.id,
 							key: cell.id,
 							style: cell.column.columnDef.meta.style,
-							wrapComponent: cell.column.columnDef.meta.disableCellClick
-								? {
-										...DEFAULT_CELL_WRAPPER,
-										class: [
-											...DEFAULT_CELL_WRAPPER.class,
-											'kt-table-cell-content--is-click-disabled',
-										],
-									}
-								: wrapComponent,
+							wrapComponent: getCellWrapComponent({
+								behavior,
+								column: cell.column,
+								triggerExpand: tableContext.value.internal.triggerExpand,
+							}),
 						})),
 						classes: classNames(behavior.classes, {
 							'kt-table-row': true,
@@ -489,6 +480,16 @@ export default defineComponent({
 						color: var(--interactive-03);
 						user-select: none;
 					}
+
+					.kt-table-selection-header {
+						padding: 2px var(--unit-2);
+						cursor: pointer;
+						border-radius: var(--border-radius);
+
+						&:hover {
+							background-color: var(--ui-02);
+						}
+					}
 				}
 
 				&.kt-table-cell--is-left-aligned .kt-table-header {
@@ -568,29 +569,24 @@ export default defineComponent({
 				}
 			}
 
-			.kt-table-expand {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 24px;
-				height: 24px;
-				clip-path: circle(12px);
-				font-size: 16px;
-				color: var(--icon-02);
-				cursor: pointer;
-				user-select: none;
+			.kt-table-selection {
+				padding: var(--unit-2);
+				border-radius: var(--border-radius);
 
-				&:not([aria-disabled='true']):hover {
-					background-color: var(--interactive-02-hover);
+				&[aria-disabled='false'] {
+					cursor: pointer;
+
+					&:hover {
+						background-color: var(--ui-05);
+					}
 				}
+			}
 
-				&[aria-expanded='true'] {
-					color: var(--interactive-03);
-				}
+			.kt-table-expand[aria-expanded='true'] {
+				background-color: var(--ui-05);
 
-				&[aria-disabled='true'] {
-					color: var(--text-05);
-					cursor: not-allowed;
+				&:hover {
+					background-color: var(--interactive-04);
 				}
 			}
 		}
@@ -728,10 +724,6 @@ tr.kt-table-row {
 
 	&--displays-number {
 		font-variant-numeric: tabular-nums;
-	}
-
-	.kt-table-selection {
-		margin-right: var(--unit-3);
 	}
 
 	&--has-drop-indicator {

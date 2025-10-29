@@ -46,8 +46,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.table-global-selection__clear-all {
-	padding: 0 6px;
-	margin-left: 6px;
+.table-global-selection {
+	display: flex;
+	align-items: center;
+
+	&__clear-all {
+		padding: 0 6px;
+		margin-left: 6px;
+	}
 }
 </style>

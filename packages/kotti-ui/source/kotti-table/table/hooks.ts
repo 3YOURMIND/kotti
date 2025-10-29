@@ -17,6 +17,7 @@ import { z } from 'zod'
 
 import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 
+import { KtButton } from '../../kotti-button/'
 import { useI18nContext } from '../../kotti-i18n/hooks'
 import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 
@@ -329,6 +330,13 @@ export const useKottiTable = <
 
 	const triggerExpand = (rowId: string) => {
 		switch (params.value.expandMode) {
+			case 'multi': {
+				expandedRows.value = {
+					...expandedRows.value,
+					[rowId]: !(rowId in expandedRows.value),
+				}
+				break
+			}
 			case null: {
 				expandedRows.value = {}
 				break
@@ -341,14 +349,6 @@ export const useKottiTable = <
 					expandedRows.value = { [rowId]: true }
 				}
 				break
-			}
-			case 'multi': {
-				// eslint-disable-next-line unicorn/prefer-ternary
-				if (rowId in expandedRows.value) {
-					expandedRows.value = { ...expandedRows.value, [rowId]: false }
-				} else {
-					expandedRows.value = { ...expandedRows.value, [rowId]: true }
-				}
 			}
 		}
 	}
@@ -398,37 +398,36 @@ export const useKottiTable = <
 									})
 									const isDisabled = rowBehavior.disable?.expand ?? false
 
-									return h(
-										'div',
-										{
-											class: {
-												'kt-table-expand': true,
-												yoco: true,
-											},
-											domProps: {
-												ariaDisabled: String(isDisabled),
-												ariaExpanded: String(row.getIsExpanded()),
-												'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
-												role: 'button',
-											},
-											on: {
-												click: (event: MouseEvent) => {
-													event.stopPropagation()
-													event.preventDefault()
-													if (isDisabled) return
-													triggerExpand(row.id)
-												},
+									return h(KtButton, {
+										class: {
+											'kt-table-expand': true,
+											yoco: true,
+										},
+										domProps: {
+											ariaExpanded: String(row.getIsExpanded()),
+											'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
+											disabled: isDisabled,
+										},
+										on: {
+											click: (event: MouseEvent) => {
+												event.stopPropagation()
+												event.preventDefault()
+												if (isDisabled) return
+												triggerExpand(row.id)
 											},
 										},
-										row.getIsExpanded()
-											? Yoco.Icon.CHEVRON_DOWN
-											: Yoco.Icon.CHEVRON_RIGHT,
-									)
+										props: {
+											icon: row.getIsExpanded()
+												? Yoco.Icon.CHEVRON_DOWN
+												: Yoco.Icon.CHEVRON_RIGHT,
+											type: 'text',
+										},
+									})
 								},
 								id: EXPANSION_COLUMN_ID,
 								meta: {
 									cellClasses: 'kt-table-cell kt-table-cell--is-body',
-									disableCellClick: true,
+									disableCellClick: false,
 									headerClasses: 'kt-table-cell kt-table-cell--is-header',
 								},
 							}),
@@ -441,7 +440,9 @@ export const useKottiTable = <
 									h(
 										'div',
 										{
-											class: 'kt-table-selection',
+											domProps: {
+												ariaDisabled: !row.getCanSelect(),
+											},
 											on: {
 												click: (event: MouseEvent) => {
 													event.stopPropagation()
@@ -475,6 +476,7 @@ export const useKottiTable = <
 													event.preventDefault()
 												},
 											},
+											staticClass: 'kt-table-selection',
 										},
 										[
 											h(ToggleInner, {
@@ -502,6 +504,7 @@ export const useKottiTable = <
 													)
 												},
 											},
+											staticClass: 'kt-table-selection-header',
 										},
 										[
 											h(ToggleInner, {
