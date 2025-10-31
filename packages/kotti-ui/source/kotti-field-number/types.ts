@@ -4,8 +4,8 @@ import { KottiField } from '../kotti-field/types'
 import { createLooseZodEnumSchema } from '../zod-utilities/enums'
 
 export namespace KottiFieldNumber {
-	export const valueSchema = z.number().nullable()
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = z.number().nullable()
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export enum Align {
 		LEFT = 'left',
@@ -32,9 +32,9 @@ export namespace KottiFieldNumber {
 			hideMaximum: z.boolean().default(false),
 			maximum: z.number().nullable().default(null),
 			minimum: z.number().nullable().default(null),
+			modelValue: modelValueSchema.default(null),
 			placeholder: z.string().nullable().default(null),
 			step: z.number().min(0).default(1),
-			value: valueSchema.default(null),
 		})
 
 	export type Props = z.input<typeof propsSchema>

@@ -14,9 +14,8 @@
 </template>
 
 <script lang="ts">
-import type { UnwrapRef } from 'vue'
+import type { InputHTMLAttributes, UnwrapRef } from 'vue'
 import { computed, defineComponent, nextTick, ref, watch } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -61,9 +60,9 @@ export default defineComponent({
 	name: 'KtFieldCurrency',
 	components: { KtField },
 	props: makeProps(KottiFieldCurrency.propsSchema),
-	emits: ['blur', 'input', 'keyup'],
+	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldCurrency.Value>({
+		const field = useField<KottiFieldCurrency.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,
@@ -97,7 +96,7 @@ export default defineComponent({
 		const userCursorPositionFromRight = ref<number | null>(null)
 
 		const setCursorPosition = (position: number | null) => {
-			nextTick(() => {
+			void nextTick(() => {
 				if (position === null || inputRef.value === null) return
 
 				const newPosition = inputRef.value.value.length - position
@@ -110,7 +109,7 @@ export default defineComponent({
 		const internalStringValue = ref('')
 
 		watch(
-			(): [KottiFieldCurrency.Value, KottiI18n.CurrencyMap[string]] => [
+			(): [KottiFieldCurrency.ModelValue, KottiI18n.CurrencyMap[string]] => [
 				field.currentValue,
 				currencyFormat.value,
 			],
@@ -137,7 +136,7 @@ export default defineComponent({
 
 		watch(
 			(): [
-				KottiFieldCurrency.Value,
+				KottiFieldCurrency.ModelValue,
 				UnwrapRef<KottiI18n.Context['numberFormat']>['decimalSeparator'],
 				typeof currencyFormat,
 			] => [

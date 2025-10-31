@@ -53,8 +53,7 @@
 
 <script lang="ts">
 import omit from 'lodash/omit.js'
-import { computed, defineComponent } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import { computed, defineComponent, type InputHTMLAttributes } from 'vue'
 
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
@@ -71,9 +70,9 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldRadioGroup.propsSchema),
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldRadioGroup.Value>({
+		const field = useField<KottiFieldRadioGroup.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,
@@ -123,7 +122,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../kotti-field/mixins';
+@import '../kotti-field/mixins.scss';
 
 :root {
 	--radio-size: 0.8rem;
