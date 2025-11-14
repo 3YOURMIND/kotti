@@ -79,7 +79,6 @@ export const jaJP: KottiI18n.Messages = {
 		placeholder: 'クリックで編集',
 	},
 	KtFields: {
-		optionalLabel: '任意',
 		requiredMessage: 'このフィールドは必須です。',
 	},
 	KtFieldSelects: {

@@ -15,7 +15,11 @@
 					@click="onClickLabel"
 				>
 					<span class="kt-field__header__label__text" v-text="field.label" />
-					<span :class="labelSuffixClasses" v-text="labelSuffix" />
+					<span
+						v-if="labelSuffix"
+						:class="labelSuffixClasses"
+						v-text="labelSuffix"
+					/>
 				</component>
 				<div
 					v-if="hasHelpText"
@@ -135,8 +139,6 @@ import type { VNode } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
-import { useTranslationNamespace } from '../kotti-i18n/hooks'
-
 import FieldHelpText from './components/FieldHelpText.vue'
 import { useInput } from './hooks'
 import type { KottiField } from './types'
@@ -176,7 +178,6 @@ export default defineComponent({
 		)
 
 		const { clickInput, focusInput } = useInput(inputId.value)
-		const translations = useTranslationNamespace('KtFields')
 
 		const debouncedLabelClick = debounce((event: MouseEvent) => {
 			if (event.detail === 1) {
@@ -230,9 +231,7 @@ export default defineComponent({
 			 * HACK: This template ref is used by child components, refactor with caution if needed
 			 */
 			inputContainerWrapperRef: ref<HTMLDivElement | null>(null),
-			labelSuffix: computed(() =>
-				props.field.isOptional ? `(${translations.value.optionalLabel})` : '*',
-			),
+			labelSuffix: computed(() => (!props.field.isOptional ? '*' : null)),
 			labelSuffixClasses: computed(() => {
 				return {
 					'kt-field__header__label__suffix': true,

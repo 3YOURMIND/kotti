@@ -79,7 +79,6 @@ export const esES: KottiI18n.Messages = {
 		placeholder: 'Haga clic para editar',
 	},
 	KtFields: {
-		optionalLabel: 'Opcional',
 		requiredMessage: 'Este campo es obligatorio',
 	},
 	KtFieldSelects: {

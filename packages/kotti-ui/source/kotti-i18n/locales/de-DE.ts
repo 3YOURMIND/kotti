@@ -79,7 +79,6 @@ export const deDE: KottiI18n.Messages = {
 		placeholder: 'Zum Bearbeiten klicken',
 	},
 	KtFields: {
-		optionalLabel: 'Optional',
 		requiredMessage: 'Dieses Feld ist erforderlich',
 	},
 	KtFieldSelects: {
