@@ -81,7 +81,6 @@ export const frFR: KottiI18n.Messages = {
 		placeholder: 'Cliquez pour modifier',
 	},
 	KtFields: {
-		optionalLabel: 'Facultatif',
 		requiredMessage: 'Ce champ est obligatoire',
 	},
 	KtFieldSelects: {

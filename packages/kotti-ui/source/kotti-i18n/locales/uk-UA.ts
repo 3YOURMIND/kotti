@@ -79,7 +79,6 @@ export const ukUA: KottiI18n.Messages = {
 		placeholder: 'Натисніть для редагування',
 	},
 	KtFields: {
-		optionalLabel: "Необов'язково",
 		requiredMessage: "Це поле є обов'язковим",
 	},
 	KtFieldSelects: {

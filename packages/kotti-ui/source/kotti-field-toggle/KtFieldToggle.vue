@@ -17,7 +17,7 @@
 					<div class="kt-field-toggle__content">
 						<slot name="default" :value="fieldProps.currentValue" />
 						<div
-							v-if="showHelpTextAsInnerSuffix"
+							v-if="showHelpTextAsInnerSuffix && labelSuffix"
 							class="kt-field__header kt-field__header--is-suffix"
 						>
 							<div class="kt-field__header__label">
@@ -51,7 +51,6 @@ import { computed, defineComponent } from 'vue'
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
-import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { makeProps } from '../make-props'
 import ToggleInner from '../shared-components/toggle-inner/ToggleInner.vue'
 
@@ -85,7 +84,6 @@ export default defineComponent({
 		)
 
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
-		const translations = useTranslationNamespace('KtFields')
 
 		return {
 			fieldProps: computed(() => ({
@@ -107,9 +105,7 @@ export default defineComponent({
 				...field.inputProps,
 				forceUpdateKey: forceUpdateKey.value,
 			})),
-			labelSuffix: computed(() =>
-				field.isOptional ? `(${translations.value.optionalLabel})` : '*',
-			),
+			labelSuffix: computed(() => (!field.isOptional ? '*' : null)),
 			labelSuffixClasses: computed(() => {
 				return {
 					'kt-field__header__label__suffix': true,
