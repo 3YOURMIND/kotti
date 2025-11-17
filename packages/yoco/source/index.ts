@@ -9,6 +9,7 @@ export namespace Yoco {
 		ARROW_RIGHT = 'arrow_right',
 		ARROW_UP = 'arrow_up',
 		ARROW_UP_DOWN = 'arrow_up_down',
+		ASSEMBLY = 'assembly',
 		ATTACHMENT = 'attachment',
 		ATTENTION = 'attention',
 		BASKET = 'basket',
