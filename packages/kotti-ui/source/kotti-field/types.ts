@@ -203,6 +203,11 @@ export namespace KottiField {
 		isBorderless: z.never(),
 
 		/**
+		 * Used when KtLabel and a KtField* instance are composed manually
+		 */
+		inputId: z.string().nullable().default(null),
+
+		/**
 		 * Is used as the 'data-test' property
 		 * on the input level
 		 */

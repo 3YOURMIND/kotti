@@ -1,18 +1,11 @@
 <template>
 	<div :class="rootClasses" :data-test="dataTest">
-		<div v-if="showHeader || $slots.helpText" class="kt-value-label__header">
-			<label v-if="hasLabel" class="kt-value-label__label" v-text="label" />
-			<div
-				v-if="hasHelpText || $slots.helpText"
-				class="kt-value-label__help-text"
-			>
-				<FieldHelpText :helpText="helpText" :helpTextSlot="$slots.helpText" />
-			</div>
-		</div>
-		<div
-			v-if="helpDescription"
-			class="kt-value-label__help-description"
-			v-text="helpDescription"
+		<KtLabel
+			v-show="showHeader"
+			:helpDescription="helpDescription"
+			:helpText="helpText"
+			:helpTextSlot="$slots.helpText"
+			:label="label"
 		/>
 		<div v-if="isLoading" class="kt-value-label__loading skeleton rectangle" />
 		<div v-else class="kt-value-label__value">
@@ -36,15 +29,15 @@ import { computed, defineComponent } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
-import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
+import { KtLabel } from '../kotti-label'
 import { makeProps } from '../make-props'
 
 import { KottiValueLabel } from './types'
 
 export default defineComponent({
 	name: 'KtValueLabel',
-	components: { FieldHelpText },
+	components: { KtLabel },
 	props: makeProps(KottiValueLabel.propsSchema),
 	setup(props) {
 		const translations = useTranslationNamespace('KtValueLabel')
@@ -54,8 +47,6 @@ export default defineComponent({
 		const validationType = computed(() => props.validation?.type ?? null)
 
 		return {
-			hasHelpText,
-			hasLabel,
 			notSetLabel: computed(() => translations.value.notSet),
 			rootClasses: computed(() => {
 				const classes = ['kt-value-label']
@@ -64,7 +55,10 @@ export default defineComponent({
 
 				return classes
 			}),
-			showHeader: computed(() => hasLabel.value || hasHelpText.value),
+			showHeader: computed(
+				() =>
+					hasLabel.value || hasHelpText.value || props.helpDescription !== null,
+			),
 			validationText: computed(() =>
 				props.validation !== null ? props.validation.text : null,
 			),
@@ -101,34 +95,8 @@ export default defineComponent({
 		margin-bottom: var(--unit-1);
 	}
 
-	&__header {
-		display: flex;
-		font-size: 0.9em;
-
-		> :not(:first-child) {
-			margin-left: 0.2rem;
-		}
-	}
-
-	&__help-text {
-		display: flex;
-		align-items: center;
-		font-size: 1.4em;
-		color: var(--icon-02);
-		cursor: pointer;
-	}
-
-	&__label {
-		font-weight: 500;
-		color: var(--text-02);
-	}
-
 	&__loading {
 		height: 1.1rem;
-	}
-
-	&__help-description {
-		color: var(--text-03);
 	}
 
 	&__validation-text {
