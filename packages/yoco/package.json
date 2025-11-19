@@ -33,7 +33,8 @@
 			}
 		},
 		"./style.css": {
-			"style": "./style.css"
+			"style": "./style.css",
+			"default": "./style.css"
 		},
 		"./svg/*": "./svg/*"
 	},

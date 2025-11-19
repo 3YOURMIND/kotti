@@ -53,8 +53,7 @@
 
 <script lang="ts">
 import omit from 'lodash/omit.js'
-import { computed, defineComponent } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import { computed, defineComponent, type InputHTMLAttributes } from 'vue'
 
 import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
@@ -71,9 +70,9 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldRadioGroup.propsSchema),
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldRadioGroup.Value>({
+		const field = useField<KottiFieldRadioGroup.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,
@@ -214,7 +213,6 @@ export default defineComponent({
 		background-color: var(--ui-background);
 		border: 1px solid var(--ui-02);
 		border-radius: 50%;
-		transition: all ease-in-out var(--transition-short);
 
 		// align radio with the center of the first line of the label
 		// (assumption: font-size comes from common parent element)
@@ -222,6 +220,7 @@ export default defineComponent({
 		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
 		//  > (-var(--radio-size) * 0.5) Put it up half the height of the radio height
 		transform: translateY(calc(0.75em - var(--radio-size) * 0.5));
+		transition: all ease-in-out var(--transition-short);
 
 		&:hover {
 			border-color: var(--interactive-01-hover);

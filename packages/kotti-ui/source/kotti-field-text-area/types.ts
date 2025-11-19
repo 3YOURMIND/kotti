@@ -3,8 +3,8 @@ import { z } from 'zod'
 import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldTextArea {
-	export const valueSchema = z.string().nullable()
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = z.string().nullable()
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = KottiField.propsSchema
 		.merge(
@@ -17,10 +17,10 @@ export namespace KottiFieldTextArea {
 		.extend({
 			autoSize: z.boolean().default(false),
 			maxHeight: z.number().nullable().default(null),
+			modelValue: modelValueSchema.default(null),
 			placeholder: z.string().nullable().default(null),
 			// eslint-disable-next-line no-magic-numbers
 			rows: z.number().default(5),
-			value: valueSchema.default(null),
 		})
 
 	export type Props = z.input<typeof propsSchema>

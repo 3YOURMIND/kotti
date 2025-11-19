@@ -98,7 +98,7 @@ export default defineComponent({
 	&__message {
 		display: flex;
 		align-items: center;
-		word-break: break-word;
+		word-break: normal;
 	}
 }
 </style>

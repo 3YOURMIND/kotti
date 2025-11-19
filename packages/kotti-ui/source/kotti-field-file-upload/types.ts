@@ -215,9 +215,9 @@ export namespace KottiFieldFileUpload {
 	})
 	export type PreUploadedFile = z.input<typeof preUploadedFileSchema>
 
-	export const valueSchema = selectedFileSchema.or(preUploadedFileSchema)
-	export const valuesSchema = valueSchema.array()
-	export type Value = z.input<typeof valuesSchema>
+	export const modelValueSchema = selectedFileSchema.or(preUploadedFileSchema)
+	export const valuesSchema = modelValueSchema.array()
+	export type ModelValue = z.input<typeof valuesSchema>
 	export type ValueInternal = z.output<typeof valuesSchema>
 
 	export const fileInfoSchema = Shared.fileInfoSchema.extend({
@@ -227,7 +227,7 @@ export namespace KottiFieldFileUpload {
 	export type FileInfo = z.output<typeof fileInfoSchema>
 
 	export const propsSchema = Shared.propsSchema.extend({
-		value: valuesSchema.default(() => []),
+		modelValue: valuesSchema.default(() => []),
 	})
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
@@ -248,101 +248,12 @@ export namespace KottiFieldFileUpload {
 		export type Props = z.input<typeof schema>
 		export type PropsInternal = z.output<typeof schema>
 	}
-}
-
-export namespace KottiFieldFileUploadRemote {
-	export enum Status {
-		CANCELED = 'CANCELED',
-		ERROR = 'ERROR',
-		HIDDEN = 'HIDDEN',
-		INVALID = 'INVALID',
-		NOT_STARTED = 'NOT_STARTED',
-		UPLOADED = 'UPLOADED',
-		UPLOADED_WITH_ERROR = 'UPLOADED_WITH_ERROR',
-		UPLOADING = 'UPLOADING',
-	}
-	export const statusSchema = createLooseZodEnumSchema(Status)
-
-	export const selectedFileSchema = Shared.selectedFileSchema.extend({
-		status: statusSchema,
-	})
-	export type SelectedFile = z.input<typeof selectedFileSchema>
-
-	export const preUploadedFileSchema = Shared.preUploadedFileSchema.extend({
-		status: statusSchema.optional(),
-	})
-	export type PreUploadedFile = z.input<typeof preUploadedFileSchema>
-
-	export const valueSchema = selectedFileSchema.or(preUploadedFileSchema)
-	export const valuesSchema = valueSchema.array()
-
-	export type Value = z.input<typeof valuesSchema>
-	export type ValueInternal = z.output<typeof valuesSchema>
-
-	export const fileInfoSchema = Shared.fileInfoSchema.extend({
-		id: Shared.idSchema,
-		progress: z.number().min(0).max(1).optional(),
-		status: statusSchema,
-	})
-	export type FileInfo = z.output<typeof fileInfoSchema>
-
-	export const actionsSchema = z.object({
-		onCancel: z.function().args(Shared.idSchema).returns(z.void()),
-		onDelete: z.function().args(Shared.idSchema).returns(z.void()),
-		onRetry: z.function().args(Shared.idSchema).returns(z.void()),
-		onUpload: z.function().args(Shared.idSchema).returns(z.void()),
-	})
-	export type Actions = z.output<typeof actionsSchema>
-
-	export const payloadEntrySchema = z.object({
-		progress: z.number().min(0).max(1).default(0),
-		status: z
-			.enum([
-				Status.CANCELED,
-				Status.ERROR,
-				Status.HIDDEN,
-				Status.UPLOADED,
-				Status.UPLOADING,
-			])
-			.default(Status.UPLOADING),
-	})
-	// Record Key is the File Item ID
-	export const payloadSchema = z.record(payloadEntrySchema)
-	export type Payload = z.output<typeof payloadSchema>
-
-	export const propsSchema = Shared.propsSchema.extend({
-		actions: actionsSchema,
-		payload: payloadSchema,
-		value: valuesSchema.default(() => []),
-	})
-	export type Props = z.input<typeof propsSchema>
-	export type PropsInternal = z.output<typeof propsSchema>
-
-	export namespace Events {
-		export type SetStatus = {
-			id: z.infer<typeof Shared.idSchema>
-			status: EnumToPrimitiveUnion<typeof Status> | Status
-		}
-	}
-
-	export namespace FileItem {
-		export const schema = Shared.propsSchema.extend({
-			actions: actionsSchema,
-			fileInfo: fileInfoSchema,
-		})
-
-		export type Props = z.input<typeof schema>
-		export type PropsInternal = z.output<typeof schema>
-	}
 
 	export namespace ProgressBar {
-		export const schema = payloadEntrySchema
-			.pick({
-				progress: true,
-			})
-			.extend({
-				isError: z.boolean().default(false),
-			})
+		export const schema = z.object({
+			isError: z.boolean().default(false),
+			progress: z.number().min(0).max(1).default(0),
+		})
 
 		export type Props = z.input<typeof schema>
 		export type PropsInternal = z.output<typeof schema>

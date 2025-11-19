@@ -5,10 +5,10 @@
 		hideValidation
 		:isLoading="isLoading"
 		:leftIcon="Yoco.Icon.SEARCH"
+		:modelValue="searchValue"
 		:placeholder="placeholder"
 		size="small"
-		:value="searchValue"
-		@input="handleSetSearchValue"
+		@update:modelValue="handleSetSearchValue"
 	/>
 </template>
 
@@ -47,12 +47,12 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
 		const handleSetSearchValue = (value: string) => {
-			emit('input', {
+			emit('update:modelValue', {
 				...(props.filter ?? getSearchFilterInitialState(props.column)),
 				value,
 			})
@@ -63,7 +63,7 @@ export default defineComponent({
 			placeholder: computed<string>(
 				() => props.column.placeholder ?? translations.value.searchLabel,
 			),
-			searchValue: computed<KottiFieldText.Value>(
+			searchValue: computed<KottiFieldText.ModelValue>(
 				() => props.filter?.value ?? null,
 			),
 			Yoco,
