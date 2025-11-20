@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { PropType } from 'vue'
+import type { PropType, Slot } from 'vue'
 import { computed, defineComponent, h, ref } from 'vue'
-import type { VNode } from 'vue'
 
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
@@ -12,7 +11,10 @@ export default defineComponent({
 	name: 'FieldHelpText',
 	props: {
 		helpText: { default: null, type: String as PropType<string | null> },
-		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
+		helpTextSlot: {
+			default: undefined,
+			type: Function as PropType<Slot<undefined>>,
+		},
 	},
 	setup(props) {
 		const helpTextContentRef = ref<Element | null>(null)
@@ -54,9 +56,7 @@ export default defineComponent({
 						{
 							ref: helpTextContentRef,
 						},
-						props.helpTextSlot.length > 0
-							? props.helpTextSlot
-							: [props.helpText],
+						props.helpTextSlot ?? [props.helpText],
 					),
 				],
 			)

@@ -20,8 +20,8 @@
 						:removeValue="removeTag"
 					>
 						<KtTag
-							v-for="option in visibleSelectedTags"
-							:key="option.value"
+							v-for="(option, index) in visibleSelectedTags"
+							:key="index"
 							:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
 							:text="option.label"
 							@close="removeTag(option.value)"
@@ -68,10 +68,10 @@
 				:isMultiple="isMultiple"
 				:isUnsorted="isUnsorted"
 				:maximumSelectable="maximumSelectable"
+				:modelValue="optionsValue"
 				:options="filteredOptions"
-				:value="optionsValue"
 				@close="setIsDropdownOpen(false)"
-				@input="onOptionsInput"
+				@update:modelValue="onOptionsInput"
 			>
 				<template #option="values">
 					<slot v-bind="values" name="option" />
@@ -82,6 +82,7 @@
 </template>
 
 <script lang="ts">
+import type { PropType, Slot } from 'vue'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { z } from 'zod'
 
@@ -118,24 +119,24 @@ const propsSchema = Shared.propsSchema
 	.merge(Shared.isMultipleSchema)
 	.merge(Shared.isRemoteSchema)
 	.merge(Shared.isSingleSchema)
-	.omit({ value: true })
+	.omit({ modelValue: true })
 	.extend({
-		helpTextSlot: z.array(z.any()).default(() => []),
+		helpTextSlot: z.function().returns(z.array(z.any())).optional(),
 		isMultiple: z.boolean().default(false),
 		isRemote: z.boolean().default(false),
-		value: z.union([
-			Shared.isMultipleSchema.shape.value,
-			Shared.isSingleSchema.shape.value,
+		modelValue: z.union([
+			Shared.isMultipleSchema.shape.modelValue,
+			Shared.isSingleSchema.shape.modelValue,
 		]),
 	})
 
 type MultiValue =
-	| KottiFieldMultiSelect.Value
-	| KottiFieldMultiSelectRemote.Value
+	| KottiFieldMultiSelect.ModelValue
+	| KottiFieldMultiSelectRemote.ModelValue
 
 type SingleValue =
-	| KottiFieldSingleSelect.Value
-	| KottiFieldSingleSelectRemote.Value
+	| KottiFieldSingleSelect.ModelValue
+	| KottiFieldSingleSelectRemote.ModelValue
 
 export default defineComponent({
 	name: 'GenericSelectField',
@@ -145,8 +146,14 @@ export default defineComponent({
 		KtField,
 		KtTag,
 	},
-	props: makeProps(propsSchema),
-	emits: ['blur', 'emit', 'input', 'open'],
+	props: {
+		...makeProps(propsSchema),
+		helpTextSlot: {
+			default: undefined,
+			type: Function as PropType<Slot<undefined>>,
+		},
+	},
+	emits: ['blur', 'emit', 'open', 'update:modelValue', UPDATE_QUERY],
 	setup(props, { emit: rawEmit }) {
 		const emit = (event: string, payload: unknown) => {
 			rawEmit('emit', { event, payload })

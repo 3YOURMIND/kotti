@@ -2,6 +2,7 @@ import comments from '@eslint-community/eslint-plugin-eslint-comments/configs'
 import eslint from '@eslint/js'
 import type { TSESLint } from '@typescript-eslint/utils'
 import type { SharedConfig } from '@typescript-eslint/utils/ts-eslint'
+import type { ESLint } from 'eslint'
 import jsonc from 'eslint-plugin-jsonc'
 import perfectionist from 'eslint-plugin-perfectionist'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
@@ -9,6 +10,7 @@ import sonarjs from 'eslint-plugin-sonarjs'
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import vitest from 'eslint-plugin-vitest'
 import pluginVue from 'eslint-plugin-vue'
+import { defineConfig } from 'eslint/config'
 import jsoncEslintParser from 'jsonc-eslint-parser'
 import tseslint from 'typescript-eslint'
 import vueParser from 'vue-eslint-parser'
@@ -103,17 +105,14 @@ const rules = {
 	 * @see {@link https://github.com/3YOURMIND/kotti/blob/master/packages/eslint-config/source/rules/vue-no-v-t-without-translation.ts}
 	 */
 	'vue-no-v-t-without-translation': vueNoVTWithoutTranslation,
-} satisfies Record<string, TSESLint.LooseRuleDefinition>
+}
 
 /**
  * This config should be used as the last item in `extends` since eslint-plugin-prettier
  * should be the last config that gets applied
  */
-const baseConfig = tseslint.config({
-	extends: [
-		eslintPluginPrettierRecommended as TSESLint.FlatConfig.Config,
-		sonarjs.configs.recommended,
-	],
+const baseConfig = defineConfig({
+	extends: [eslintPluginPrettierRecommended, sonarjs.configs.recommended],
 	name: '@3yourmind/eslint-config/base-config',
 	rules: {
 		...ignoredRules,
@@ -302,9 +301,10 @@ const rulesRequiringTypes = {
 	],
 } satisfies SharedConfig.RulesRecord
 
-const plugin = {
+const plugin: ESLint.Plugin = {
+	// @ts-expect-error Errors because our custom rules have been created with @typescript-eslint's RuleCreator
 	rules,
-} satisfies TSESLint.FlatConfig.Plugin
+}
 
 const kottiEslintConfig: {
 	configs: {
@@ -315,13 +315,13 @@ const kottiEslintConfig: {
 		untyped: TSESLint.FlatConfig.ConfigArray
 		vue: TSESLint.FlatConfig.ConfigArray
 	}
-	plugin: TSESLint.FlatConfig.Plugin
+	plugin: ESLint.Plugin
 } = {
 	configs: {
 		/**
 		 * Should be used on .ts and .tsx files. This enables rules that rely on type checking.
 		 */
-		default: tseslint.config({
+		default: defineConfig({
 			extends: [
 				eslint.configs.recommended,
 				...tseslint.configs.strictTypeChecked,
@@ -335,12 +335,10 @@ const kottiEslintConfig: {
 		/**
 		 * Registers plugins and settings that should be globally enabled.
 		 */
-		global: tseslint.config({
+		global: defineConfig({
 			extends: [
 				comments.recommended,
-				perfectionist.configs[
-					'recommended-natural'
-				] as TSESLint.FlatConfig.Config,
+				perfectionist.configs['recommended-natural'],
 			],
 			languageOptions: {
 				/**
@@ -356,8 +354,8 @@ const kottiEslintConfig: {
 			plugins: {
 				'@3yourmind/eslint-config': plugin,
 				'@typescript-eslint': tseslint.plugin,
-				unicorn: eslintPluginUnicorn,
-				vue: pluginVue,
+				unicorn: eslintPluginUnicorn as ESLint.Plugin,
+				vue: pluginVue as ESLint.Plugin,
 			},
 			rules: {
 				'@eslint-community/eslint-comments/no-duplicate-disable': 'off',
@@ -506,7 +504,7 @@ const kottiEslintConfig: {
 		/**
 		 * Should be used only on JSON files. Treats some files (e.g. tsconfig) as jsonc.
 		 */
-		json: tseslint.config(
+		json: defineConfig(
 			{
 				files: ['**/*.json'],
 				ignores: ['**/tsconfig*.json'],
@@ -515,7 +513,7 @@ const kottiEslintConfig: {
 				},
 				name: '@3yourmind/eslint-config/json',
 				plugins: {
-					jsonc,
+					jsonc: jsonc as ESLint.Plugin,
 				},
 				rules: {
 					...(jsonc.configs['recommended-with-json']
@@ -540,7 +538,7 @@ const kottiEslintConfig: {
 				},
 				name: '@3yourmind/eslint-config/tsconfig-json',
 				plugins: {
-					jsonc,
+					jsonc: jsonc as ESLint.Plugin,
 				},
 				rules: {
 					...(jsonc.configs['recommended-with-jsonc']
@@ -559,7 +557,7 @@ const kottiEslintConfig: {
 		 * Should be used on test files. It includes vitest-specific rules and turns off rules that
 		 * would be unhelpful/annoying when writing tests.
 		 */
-		tests: tseslint.config({
+		tests: defineConfig({
 			extends: [vitest.configs.recommended, ...baseConfig],
 			files: ['**/*.test.{ts,tsx}'],
 			name: '@3yourmind/eslint-config/tests',
@@ -580,6 +578,7 @@ const kottiEslintConfig: {
 				'@typescript-eslint/no-unused-expressions': 'off',
 				'@typescript-eslint/no-use-before-define': 'off',
 				'@typescript-eslint/restrict-template-expressions': 'off',
+				'@typescript-eslint/unbound-method': 'off',
 				'no-console': 'off',
 				'no-magic-numbers': 'off',
 				'sonarjs/no-nested-functions': 'off',
@@ -587,13 +586,18 @@ const kottiEslintConfig: {
 				'vitest/no-identical-title': 'error',
 				'vue/one-component-per-file': 'off',
 			},
+			settings: {
+				vitest: {
+					typecheck: true,
+				},
+			},
 		}),
 		/**
 		 * Enables basic rules for javascript files. Use a more specific config if possible
 		 *
 		 * @deprecated
 		 */
-		untyped: tseslint.config(
+		untyped: defineConfig(
 			{
 				extends: [
 					eslint.configs.recommended,
@@ -614,9 +618,9 @@ const kottiEslintConfig: {
 		/**
 		 * Should be used only on .vue files. Includes vue-specific rules. Works best on `<script lang="ts">`
 		 */
-		vue: tseslint.config({
+		vue: defineConfig({
 			extends: [
-				...pluginVue.configs['flat/vue2-recommended'],
+				...pluginVue.configs['flat/recommended'],
 				...tseslint.configs.strictTypeChecked,
 				...baseConfig,
 			],
@@ -649,36 +653,10 @@ const kottiEslintConfig: {
 						svg: 'always',
 					},
 				],
-				'vue/jsx-uses-vars': 'error',
-				'vue/no-deprecated-data-object-declaration': 'error',
-				'vue/no-deprecated-destroyed-lifecycle': 'error',
-				// 'vue/no-deprecated-dollar-scopedslots-api': 'error', -- FIXME: reactivate with Vue@3
-				'vue/no-deprecated-events-api': 'error',
-				'vue/no-deprecated-filter': 'error',
-				'vue/no-deprecated-functional-template': 'error',
-				'vue/no-deprecated-html-element-is': 'error',
-				'vue/no-deprecated-inline-template': 'error',
-				'vue/no-deprecated-props-default-this': 'error',
-				'vue/no-deprecated-router-link-tag-prop': 'error',
-				'vue/no-deprecated-scope-attribute': 'error',
-				'vue/no-deprecated-slot-attribute': 'error',
-				'vue/no-deprecated-slot-scope-attribute': 'error',
-				'vue/no-deprecated-v-bind-sync': 'error',
-				'vue/no-deprecated-v-is': 'error',
-				'vue/no-deprecated-v-on-native-modifier': 'error',
-				'vue/no-deprecated-v-on-number-modifiers': 'error',
-				'vue/no-deprecated-vue-config-keycodes': 'error',
 				'vue/no-empty-component-block': 'error',
-				'vue/no-mutating-props': 'error',
-				'vue/no-ref-as-operand': 'error',
 				'vue/no-setup-props-reactivity-loss': 'error',
-				'vue/no-unused-properties': 'error',
-				'vue/no-unused-refs': 'error',
-				'vue/no-useless-mustaches': ['warn', { ignoreIncludesComment: true }],
-				'vue/no-useless-v-bind': 'warn',
-				'vue/require-component-is': 'error',
 				'vue/require-default-prop': 'off', // disabled because it doesn’t handle boolean props correctly
-				'vue/require-explicit-emits': 'error',
+				'vue/v-on-event-hyphenation': ['error', 'never'],
 			},
 		}),
 	},

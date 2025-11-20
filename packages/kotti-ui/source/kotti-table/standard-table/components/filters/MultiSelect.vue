@@ -5,20 +5,24 @@
 		:isUnsorted="filter.isUnsorted"
 		isOptional
 		:label="filter.label"
+		:modelValue="modelValue"
 		:options="filter.options"
 		size="small"
-		:value="value"
-		@input="onInput"
+		@update:modelValue="onUpdateModelValue"
 	/>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 
+import KtFieldMultiSelect from '../../../../kotti-field-select/KtFieldMultiSelect.vue'
 import type { KottiStandardTable } from '../../types'
 
 export default defineComponent({
 	name: 'MultiSelectFilter',
+	components: {
+		KtFieldMultiSelect,
+	},
 	props: {
 		filter: {
 			required: true,
@@ -29,16 +33,16 @@ export default defineComponent({
 			>,
 		},
 		isLoading: { default: false, type: Boolean },
-		value: {
+		modelValue: {
 			default: () => [null, null],
 			type: Array as PropType<(number | string)[]>,
 		},
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		return {
-			onInput: (value: KottiStandardTable.FilterValue) => {
-				emit('input', {
+			onUpdateModelValue: (value: KottiStandardTable.FilterValue) => {
+				emit('update:modelValue', {
 					id: props.filter.id,
 					operation: props.filter.operations[0], // Current filters support only one operation
 					value,

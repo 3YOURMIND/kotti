@@ -104,7 +104,7 @@ export default defineComponent({
 			<slot name="action" />
 		</div>
 		<div v-else-if="action" class="kt-banner__action">
-			<KtButton :label="action" type="text" @click="onAction" />
+			<KtButton :label="action" size="small" type="text" @click="onAction" />
 		</div>
 		<div v-if="isCloseable" class="kt-banner__close" @click="onClose">
 			<i class="yoco">close</i>
@@ -171,7 +171,6 @@ export default defineComponent({
 
 	&__action {
 		align-self: flex-start;
-		margin-top: -2px;
 	}
 
 	&__icon {

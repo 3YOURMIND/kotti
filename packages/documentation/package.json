@@ -2,53 +2,38 @@
 	"dependencies": {
 		"@3yourmind/kotti-ui": "*",
 		"@3yourmind/yoco": "*",
-		"@octokit/rest": "^20.0.2",
-		"@octokit/types": "^12.3.0",
-		"copy-to-clipboard": "^3.3.3",
-		"core-js": "^3.35.1",
-		"dayjs": "^1.9.1",
-		"lodash": "4.x",
-		"marked": "^16.2.1",
-		"natural-sort": "^1.0.0",
-		"ts-dedent": "^2.2.0",
-		"vue-router": "3.x"
-	},
-	"description": "Kotti-ui Doc Pages",
-	"devDependencies": {
 		"@metatypes/typography": "^0.5.0",
 		"@metatypes/units": "^0.5.0",
-		"@nuxt/types": "2.x",
-		"@nuxt/typescript-build": "2.x",
-		"@nuxtjs/markdownit": "2.x",
-		"@nuxtjs/markdownit-loader": "1.x",
-		"@nuxtjs/style-resources": "1.x",
-		"@types/case-sensitive-paths-webpack-plugin": "^2.1.9",
-		"@types/lodash": "4.x",
-		"@types/natural-sort": "^0.0.24",
-		"case-sensitive-paths-webpack-plugin": "^2.3.0",
-		"nuxt": "2.x",
-		"sass-loader": "10.x",
-		"ts-loader": "8.x",
-		"vue": "^2.7",
-		"vue-server-renderer": "^2.7",
-		"vue-template-compiler": "^2.7"
+		"@vitejs/plugin-vue": "^6.0.1",
+		"copy-to-clipboard": "^3.3.3",
+		"dayjs": "1.x",
+		"dedent": "^1.7.0",
+		"lodash": "4.x",
+		"markdown-it": "^14.1.0",
+		"shiki": "^3.14.0",
+		"unplugin-vue-markdown": "^29.2.0",
+		"vike-vue": "^0.9.4",
+		"vue": "3.5.25"
 	},
-	"homepage": "https://github.com/3YOURMIND/kotti#readme",
-	"license": "MIT",
+	"devDependencies": {
+		"@shikijs/markdown-it": "^3.14.0",
+		"typescript": "^5.6.2",
+		"vike": "^0.4.244",
+		"vite": "^7.1.12"
+	},
 	"name": "@3yourmind/documentation",
-	"peerDependencies": {
-		"color": "4.x"
-	},
-	"private": true,
 	"scripts": {
-		"build": "nuxt generate && ./scripts/test-for-ssr-bug.sh",
+		"build": "vite build",
 		"check:eslint": "eslint --max-warnings=0 .",
 		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.gitignore ./packages/documentation",
-		"check:stylelint": "stylelint './**/*.{css,scss,vue}'",
+		"check:stylelint": "stylelint './**/*.{css,scss,vue}' --ignore-path=.gitignore",
+		"dev": "vite",
 		"fix:eslint": "yarn run check:eslint --fix",
 		"fix:prettier": "yarn run check:prettier --write",
 		"fix:stylelint": "yarn run check:stylelint --fix",
-		"watch": "nuxt"
+		"preview": "vite preview",
+		"watch": "vite"
 	},
-	"version": "2.0.0"
+	"type": "module",
+	"version": "0.0.0"
 }

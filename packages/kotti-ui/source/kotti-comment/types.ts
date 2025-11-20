@@ -124,8 +124,8 @@ export namespace KottiComment {
 			})
 			.extend({
 				autofocus: z.boolean().default(false),
+				modelValue: InlineEdit.schema.shape.message,
 				placeholder: z.string().optional(),
-				value: InlineEdit.schema.shape.message,
 			})
 		export type PropsInternal = z.output<typeof schema>
 	}
@@ -175,19 +175,11 @@ export namespace KottiCommentInput {
 			isInternal: true,
 			tabIndex: true,
 		})
-		.merge(
-			KottiComment.TextArea.schema.pick({
-				autofocus: true,
-				placeholder: true,
-			}),
-		)
-		.merge(
-			KottiComment.Entry.schema.pick({
-				isReply: true,
-				parentId: true,
-			}),
-		)
 		.extend({
+			autofocus: z.boolean().default(false),
+			isReply: z.boolean().default(false),
+			parentId: idSchema.optional(),
+			placeholder: z.string().optional(),
 			replyToUserId: KottiComment.userSchema.shape.id.optional(),
 			userAvatar: KottiComment.userSchema.shape.avatar,
 		})

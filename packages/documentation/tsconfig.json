@@ -1,30 +1,24 @@
 {
 	"compilerOptions": {
 		"allowJs": true,
-		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
+		"checkJs": true,
 		"esModuleInterop": true,
-		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"forceConsistentCasingInFileNames": true,
+		"jsx": "preserve",
+		"jsxImportSource": "vue",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"module": "ESNext",
-		"moduleResolution": "Node",
+		"moduleResolution": "Bundler",
 		"noEmit": true,
-		"noUncheckedIndexedAccess": true,
 		"paths": {
-			"@/*": ["./*"],
 			"~/*": ["./*"]
 		},
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"target": "ES2018",
-		"types": ["node", "@nuxt/types"]
+		"target": "ES2022",
+		"types": ["vite/client"]
 	},
-	"exclude": ["node_modules"],
-	"include": ["./**/*.ts", "./**/*.js", "./**/*.vue"],
-	"vueCompilerOptions": {
-		"skipTemplateCodegen": true,
-		"strictTemplates": true,
-		"target": 2.7
-	}
+	"exclude": ["dist"]
 }

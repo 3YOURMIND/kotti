@@ -13,7 +13,7 @@
 				:pageSize="pageSize"
 				pagingStyle="flex"
 				:total="rowCount"
-				@setPage="(value) => $emit('updatePageIndex', value - 1)"
+				@setPage="(value: number) => $emit('update:pageIndex', value - 1)"
 			/>
 		</template>
 	</div>
@@ -25,10 +25,14 @@ import { computed, defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import KtPagination from '../../../kotti-pagination/KtPagination.vue'
 import { pluralize } from '../utilities/translation'
 
 export default defineComponent({
 	name: 'TablePagination',
+	components: {
+		KtPagination,
+	},
 	props: {
 		isLoading: { default: false, type: Boolean },
 		pageIndex: { required: true, type: Number },
@@ -38,7 +42,7 @@ export default defineComponent({
 			type: Number as PropType<number | null>,
 		},
 	},
-	emits: ['updatePageIndex'],
+	emits: ['update:pageIndex'],
 	setup(props) {
 		const translations = useTranslationNamespace('KtStandardTable')
 

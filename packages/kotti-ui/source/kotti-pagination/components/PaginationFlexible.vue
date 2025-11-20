@@ -3,8 +3,8 @@
 		<li
 			v-if="showFirstPage"
 			:class="paginatorClasses(1)"
-			@click="$emit('setPage', 1)"
-			v-text="humanReadablePageNumber(1)"
+			@click="$emit('update:page', 1)"
+			v-text="1"
 		/>
 		<li
 			v-if="showLeftDots"
@@ -15,8 +15,8 @@
 			v-for="page in neighborValues"
 			:key="page"
 			:class="paginatorClasses(page)"
-			@click="$emit('setPage', page)"
-			v-text="humanReadablePageNumber(page)"
+			@click="$emit('update:page', page)"
+			v-text="page"
 		/>
 		<li
 			v-if="showRightDots"
@@ -26,8 +26,8 @@
 		<li
 			v-if="showLastPage"
 			:class="paginatorClasses(maximumPage)"
-			@click="$emit('setPage', maximumPage)"
-			v-text="humanReadablePageNumber(maximumPage)"
+			@click="$emit('update:page', maximumPage)"
+			v-text="maximumPage"
 		/>
 	</div>
 </template>
@@ -50,7 +50,7 @@ export default defineComponent({
 		fixedWidth: { required: true, type: Boolean },
 		maximumPage: { default: null, type: Number as PropType<number | null> },
 	},
-	emits: ['setPage'],
+	emits: ['update:page'],
 	setup(props) {
 		const pixelMargin = computed(() => {
 			const widestDigit =
@@ -104,7 +104,6 @@ export default defineComponent({
 			containerStyle: computed(
 				() => props.fixedWidth && { width: `${pixelMargin.value}px` },
 			),
-			humanReadablePageNumber: (page: number) => page,
 			neighborValues,
 			paginatorClasses: (page: number) => ({
 				'kt-pagination__page-item': true,
@@ -119,7 +118,7 @@ export default defineComponent({
 				() =>
 					props.maximumPage === null ||
 					(showLastPage.value &&
-						!neighborValues.value.includes(props.maximumPage)),
+						!neighborValues.value.includes(props.maximumPage - 1)),
 			),
 		}
 	},

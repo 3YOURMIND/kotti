@@ -101,23 +101,27 @@ const useValue = <DATA_TYPE>({
 					'formKey',
 				)
 		},
-		{ flush: 'post', immediate: true },
+		{ flush: 'sync', immediate: true },
 	)
 
 	// fetch value
 
 	const currentValue = computed((): DATA_TYPE => {
-		if (context === null) return cloneDeep(props.value)
+		if (context === null) return cloneDeep(props.modelValue)
 
 		switch (props.formKey) {
 			case FORM_KEY_NONE:
-				return cloneDeep(props.value)
+				return cloneDeep(props.modelValue)
 
 			case null:
 				throw new ktFieldErrors.ImplicitFormKeyNoneError(props)
 
-			default:
+			default: {
+				if (!(props.formKey in context.values.value))
+					throw new ktFieldErrors.FormKeyNotFoundError(props)
+
 				return context.values.value[props.formKey] as DATA_TYPE
+			}
 		}
 	})
 
@@ -138,7 +142,7 @@ const useValue = <DATA_TYPE>({
 				props.formKey === null ||
 				props.formKey === FORM_KEY_NONE
 			) {
-				emit('input', newValue)
+				emit('update:modelValue', newValue)
 				return
 			}
 
@@ -230,8 +234,8 @@ const useInheritableProperties = <DATA_TYPE>({
 
 	return {
 		hideClear: useShared('hideClear', false),
-		hideValidation: computed(() =>
-			isLoading.value ? true : useShared('hideValidation', false).value,
+		hideValidation: computed(
+			() => isLoading.value || useShared('hideValidation', false).value,
 		),
 		isDisabled: useShared('isDisabled', false),
 		isLoading,
@@ -323,12 +327,14 @@ export const useInput = (
 		clickInput: () => {
 			// eslint-disable-next-line unicorn/prefer-query-selector
 			const inputEl = document.getElementById(fieldId)
-			inputEl?.click()
+			if (!inputEl) throw new Error('wtf')
+			inputEl.click()
 		},
 		focusInput: () => {
 			// eslint-disable-next-line unicorn/prefer-query-selector
 			const inputEl = document.getElementById(fieldId)
-			inputEl?.focus()
+			if (!inputEl) throw new Error('wtf 2')
+			inputEl.focus()
 		},
 	}
 }

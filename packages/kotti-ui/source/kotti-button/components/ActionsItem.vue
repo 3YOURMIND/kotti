@@ -122,8 +122,8 @@ export default defineComponent({
 	}
 
 	&:focus {
-		background-color: var(--interactive-02-hover);
 		outline: none;
+		background-color: var(--interactive-02-hover);
 	}
 
 	.yoco {

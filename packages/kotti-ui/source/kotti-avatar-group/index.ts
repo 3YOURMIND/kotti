@@ -10,7 +10,17 @@ export const KtAvatarGroup = attachMeta(makeInstallable(KtAvatarGroupVue), {
 		type: MetaDesignType.FIGMA,
 		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A66',
 	},
-	slots: {},
+	slots: {
+		content: {
+			description: 'Replaces Name Popover',
+			scope: {
+				item: {
+					description: 'individual item of props.items',
+					type: 'object',
+				},
+			},
+		},
+	},
 	typeScript: {
 		namespace: 'Kotti.AvatarGroup',
 		schema: null,

@@ -115,7 +115,7 @@ export namespace KottiPopover {
 		export type UpdateIsSelected = {
 			index: number
 			option: KottiPopover.PropsInternal['options'][0]
-			value: Kotti.FieldToggle.Value
+			value: Kotti.FieldToggle.ModelValue
 		}
 	}
 }

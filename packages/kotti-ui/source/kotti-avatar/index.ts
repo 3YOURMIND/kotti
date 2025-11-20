@@ -11,7 +11,12 @@ export const KtAvatar = attachMeta(makeInstallable(KtAvatarVue), {
 		type: MetaDesignType.FIGMA,
 		url: 'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=95%3A66',
 	},
-	slots: {},
+	slots: {
+		content: {
+			description: 'Replaces Name Popover',
+			scope: null,
+		},
+	},
 	typeScript: {
 		namespace: 'Kotti.Avatar',
 		schema: KottiAvatar.propsSchema,

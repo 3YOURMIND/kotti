@@ -1,10 +1,10 @@
 @import 'normalize.css/';
 @import 'variables';
-@import 'fonts';
-@import 'shadows';
-@import 'spacing';
-@import 'tokens';
-@import 'transitions';
+@import 'fonts.css';
+@import 'shadows.css';
+@import 'spacing.css';
+@import 'tokens.css';
+@import 'transitions.css';
 
 // Reset and dependencies
 @import 'base';
@@ -25,8 +25,8 @@
 @import 'typography';
 
 // tippy.js
-@import 'tippy.js/dist/tippy';
-@import 'tippy.js/dist/svg-arrow';
+@import 'tippy.js/dist/tippy.css';
+@import 'tippy.js/dist/svg-arrow.css';
 
 /* forked from tippy’s light-border theme */
 .tippy-box[data-theme~='kt-light-border'] {

@@ -90,7 +90,7 @@ export const getDisplay = <OPTION extends DisplayOption = DisplayOption>(
 							class: 'yoco',
 							style: { color: color, fontSize: '1rem' },
 						},
-						icon,
+						() => icon,
 					)
 				},
 				sortBehavior: 'desc-asc',

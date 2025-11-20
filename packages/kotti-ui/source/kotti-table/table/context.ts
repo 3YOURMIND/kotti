@@ -18,7 +18,7 @@ export type TableContext<
 		setDraggedColumnId: (columnId: COLUMN_ID | null) => void
 		setDropTargetColumnIndex: (columnIndex: number | null) => void
 		swapDraggedAndDropTarget: () => void
-		table: Ref<Table<ROW>>
+		table: Table<ROW>
 		triggerExpand: (rowId: string) => void
 		unselectAllRows: () => void
 		unsetDroppedColumnId: () => void

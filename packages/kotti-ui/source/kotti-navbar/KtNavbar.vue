@@ -175,7 +175,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 .tippy-box[data-theme^='kt-navbar'] {
 	width: 100vw;
@@ -190,7 +190,7 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 $navbar-width: 12rem;
 $mobile-navbar-height: 2.4rem;
@@ -310,7 +310,7 @@ $narrow-navbar-width: 3.4rem;
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.kt-navbar {
 		flex: 0 0 $mobile-navbar-height;
 		width: auto;

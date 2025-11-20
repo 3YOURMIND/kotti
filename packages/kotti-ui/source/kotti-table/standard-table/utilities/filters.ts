@@ -37,7 +37,7 @@ export const getEmptyValue = (
  */
 const getOptionLabel = (
 	options: KottiFieldSingleSelect.Props['options'],
-	value: KottiFieldSingleSelect.Value,
+	value: KottiFieldSingleSelect.ModelValue,
 ): string => options.find((option) => option.value === value)?.label ?? ''
 
 /**
@@ -56,19 +56,22 @@ export const formatFilterValue = (
 			// FIXME: useTranslationNamespace should not be called outside of hooks => this should be a hook or
 			// the translation object should be passed from the outside
 			const translations = useTranslationNamespace('KtTable')
-			const _value = value as KottiFieldToggle.Value
+			const _value = value as KottiFieldToggle.ModelValue
 			return _value ? translations.value.yes : ''
 		}
 		case KottiStandardTable.FilterType.DATE_RANGE: {
-			const _value = value as KottiFieldDateRange.Value
+			const _value = value as KottiFieldDateRange.ModelValue
 			return _value[0] === null ? '' : _value.join(Dashes.EnDash)
 		}
 		case KottiStandardTable.FilterType.MULTI_SELECT: {
-			const _value = value as KottiFieldMultiSelect.Value
+			const _value = value as KottiFieldMultiSelect.ModelValue
 			return _value.map((v) => getOptionLabel(filter.options, v)).join(', ')
 		}
 		case KottiStandardTable.FilterType.NUMBER_RANGE: {
-			const _value = value as [KottiFieldNumber.Value, KottiFieldNumber.Value]
+			const _value = value as [
+				KottiFieldNumber.ModelValue,
+				KottiFieldNumber.ModelValue,
+			]
 			const [min, max] = _value
 
 			if (min === null && max === null) return ''
@@ -91,7 +94,7 @@ export const formatFilterValue = (
 					: ''
 		}
 		case KottiStandardTable.FilterType.SINGLE_SELECT: {
-			const _value = value as KottiFieldSingleSelect.Value
+			const _value = value as KottiFieldSingleSelect.ModelValue
 			return getOptionLabel(filter.options, _value)
 		}
 	}
@@ -114,8 +117,8 @@ export const isEmptyValue = (value: KottiStandardTable.FilterValue): boolean =>
  * @returns the re-ordered range value
  */
 export const getReorderedRange = (
-	range: [KottiFieldNumber.Value, KottiFieldNumber.Value],
-): [KottiFieldNumber.Value, KottiFieldNumber.Value] => {
+	range: [KottiFieldNumber.ModelValue, KottiFieldNumber.ModelValue],
+): [KottiFieldNumber.ModelValue, KottiFieldNumber.ModelValue] => {
 	const [min, max] = range
 
 	if (min !== null && max !== null && min > max) return [max, min]

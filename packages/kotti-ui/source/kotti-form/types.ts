@@ -38,6 +38,7 @@ export namespace KottiForm {
 		 * can be useful otherwise
 		 */
 		formId: string
+		modelValue: ContextType
 
 		/**
 		 * @default warning
@@ -48,8 +49,6 @@ export namespace KottiForm {
 		preventSubmissionOn: 'error' | 'NEVER' | 'warning'
 
 		validators: Record<string, KottiField.Validation.Function>
-
-		value: ContextType
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-empty-object-type
@@ -58,8 +57,11 @@ export namespace KottiForm {
 	}
 
 	export interface ValidationSummary {
+		// eslint-disable-next-line sonarjs/no-useless-intersection
 		errors: Array<AdditionalContext & KottiField.Validation.Error>
+		// eslint-disable-next-line sonarjs/no-useless-intersection
 		successes: Array<AdditionalContext & KottiField.Validation.Success>
+		// eslint-disable-next-line sonarjs/no-useless-intersection
 		warnings: Array<AdditionalContext & KottiField.Validation.Warning>
 	}
 
