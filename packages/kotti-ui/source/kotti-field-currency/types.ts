@@ -4,8 +4,8 @@ import { KottiField } from '../kotti-field/types'
 
 export namespace KottiFieldCurrency {
 	const VALUE_PROP_REGEX = /^-?(0?|([1-9]\d*))?(\.\d+)?$/
-	export const valueSchema = z.string().regex(VALUE_PROP_REGEX).nullable()
-	export type Value = z.output<typeof valueSchema>
+	export const modelValueSchema = z.string().regex(VALUE_PROP_REGEX).nullable()
+	export type ModelValue = z.output<typeof modelValueSchema>
 
 	export const propsSchema = KottiField.propsSchema
 		.merge(
@@ -19,8 +19,8 @@ export namespace KottiFieldCurrency {
 			currency: z.string(),
 			maximum: z.number().nullable().default(null),
 			minimum: z.number().nullable().default(null),
+			modelValue: modelValueSchema.default(null),
 			placeholder: z.string().nullable().default(null),
-			value: valueSchema.default(null),
 		})
 
 	export type Props = z.input<typeof propsSchema>

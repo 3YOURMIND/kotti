@@ -7,7 +7,6 @@ const BEM_REGEX = new RegExp(
 
 module.exports = {
 	configBaseDir: path.resolve(__dirname, 'node_modules'),
-	plugins: ['stylelint-csstree-validator'],
 	extends: [
 		'stylelint-config-standard',
 		'stylelint-config-standard-scss',
@@ -17,7 +16,9 @@ module.exports = {
 	],
 	rules: {
 		'at-rule-no-unknown': null,
+		'declaration-property-value-no-unknown': null,
 		'function-no-unknown': null,
+		'media-query-no-invalid': null,
 		'no-descending-specificity': null,
 		'no-empty-source': null,
 		'selector-class-pattern': [
@@ -34,17 +35,15 @@ module.exports = {
 				ignorePseudoClasses: ['deep'],
 			},
 		],
-		'selector-pseudo-element-no-unknown': [
-			true,
-			{
-				ignorePseudoElements: ['v-deep'],
-			},
-		],
 		'scss/at-import-no-partial-leading-underscore': null,
 		'scss/at-import-partial-extension': null,
 		'scss/at-rule-no-unknown': true,
+		'scss/dollar-variable-colon-space-after': null,
 		'scss/function-no-unknown': true,
+		'scss/load-partial-extension': null,
 		'scss/no-duplicate-dollar-variables': true,
+
+		'scss/load-no-partial-leading-underscore': null,
 		'value-keyword-case': [
 			'lower',
 			{
