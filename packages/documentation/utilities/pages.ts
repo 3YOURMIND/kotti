@@ -21,6 +21,7 @@ export type ComponentNames =
 	| 'KtFieldToggle'
 	| 'KtFieldToggleGroup'
 	| 'KtFilters'
+	| 'KtLabel'
 	| 'KtValueLabel'
 
 const COMPONENT_NAMES = new Set<ComponentNames>([
@@ -42,6 +43,7 @@ const COMPONENT_NAMES = new Set<ComponentNames>([
 	'KtFieldToggle',
 	'KtFieldToggleGroup',
 	'KtFilters',
+	'KtLabel',
 	'KtValueLabel',
 ])
 

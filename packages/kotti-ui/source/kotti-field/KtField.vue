@@ -1,42 +1,23 @@
 <template>
 	<div class="kt-field">
 		<component
-			:is="useFieldset ? 'fieldset' : isComponent ? isComponent : 'div'"
+			:is="useFieldset ? 'fieldset' : 'div'"
 			:class="wrapperClasses"
 			@click="$emit('click', $event)"
 			@mousedown="$emit('mousedown', $event)"
 		>
-			<div v-if="hasLabel || hasHelpText" class="kt-field__header">
-				<component
-					:is="useFieldset ? 'legend' : 'label'"
-					v-if="hasLabel"
-					class="kt-field__header__label"
-					:for="useFieldset ? undefined : inputId"
-					@click="onClickLabel"
-				>
-					<span class="kt-field__header__label__text" v-text="field.label" />
-					<span
-						v-if="labelSuffix"
-						:class="labelSuffixClasses"
-						v-text="labelSuffix"
-					/>
-				</component>
-				<div
-					v-if="hasHelpText"
-					class="kt-field__header__help-text"
-					:class="iconClasses('header__help-text', ['interactive'])"
-				>
-					<FieldHelpText
-						:helpText="field.helpText"
-						:helpTextSlot="helpTextSlot"
-					/>
-				</div>
-			</div>
-			<div
-				v-if="field.helpDescription"
-				class="kt-field__help-description"
-				v-text="field.helpDescription"
+			<KtLabel
+				v-show="showLabel"
+				:helpDescription="field.helpDescription"
+				:helpText="field.helpText"
+				:helpTextSlot="helpTextSlot"
+				:inputId="useFieldset ? undefined : inputId"
+				:isRequired="!field.isOptional"
+				:label="field.label"
+				:validationState="validationState"
+				@click="onClickLabel"
 			/>
+
 			<div
 				v-if="field.isLoading"
 				class="kt-field__input-container-wrapper-loading skeleton rectangle"
@@ -139,6 +120,8 @@ import type { VNode } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import { KtLabel } from '../kotti-label'
+
 import FieldHelpText from './components/FieldHelpText.vue'
 import { useInput } from './hooks'
 import type { KottiField } from './types'
@@ -147,7 +130,7 @@ const LABEL_CLICK_DEBOUNCE = 200
 
 export default defineComponent({
 	name: 'KtField',
-	components: { FieldHelpText },
+	components: { FieldHelpText, KtLabel },
 	props: {
 		debounceLabelClick: { default: false, type: Boolean },
 		field: {
@@ -160,7 +143,6 @@ export default defineComponent({
 		 */
 		getEmptyValue: { default: null, type: Function as PropType<() => unknown> },
 		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
-		isComponent: { default: null, type: String as PropType<string | null> },
 		isRange: { default: false, type: Boolean },
 		useFieldset: { default: false, type: Boolean },
 	},
@@ -210,10 +192,6 @@ export default defineComponent({
 				if (props.field.showVisibilityToggle) emit('visibilityChange')
 				valueVisibility.value = !valueVisibility.value
 			},
-			hasHelpText: computed(
-				() => props.helpTextSlot.length > 0 || props.field.helpText !== null,
-			),
-			hasLabel: computed(() => props.field.label !== null),
 			iconClasses: computed(
 				() => (element: string, modifications: string[]) => [
 					`kt-field__${element}__icon`,
@@ -231,23 +209,30 @@ export default defineComponent({
 			 * HACK: This template ref is used by child components, refactor with caution if needed
 			 */
 			inputContainerWrapperRef: ref<HTMLDivElement | null>(null),
-			labelSuffix: computed(() => (!props.field.isOptional ? '*' : null)),
-			labelSuffixClasses: computed(() => {
-				return {
-					'kt-field__header__label__suffix': true,
-					'kt-field__header__label__suffix--error':
-						showValidation.value &&
-						!props.field.isOptional &&
-						props.field.isEmpty,
-				}
-			}),
 			onClickLabel: (event: MouseEvent) => {
 				if (props.debounceLabelClick) {
 					event.preventDefault()
 					debouncedLabelClick(event)
 				} else if (event.detail > 1) event.preventDefault()
 			},
+			showLabel: computed(() => {
+				const {
+					field: { helpDescription, helpText, label },
+					helpTextSlot,
+				} = props
+				return (
+					label !== null ||
+					helpDescription !== null ||
+					helpText !== null ||
+					helpTextSlot.length > 0
+				)
+			}),
 			showValidation,
+			validationState: computed(() =>
+				showValidation.value && !props.field.isOptional && props.field.isEmpty
+					? 'error'
+					: 'empty',
+			),
 			validationText: computed(() =>
 				props.field.validation.type === 'empty'
 					? null
@@ -387,69 +372,10 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		border: 0;
 	}
 
-	&__header {
-		display: flex;
-		font-size: 0.9em;
-
-		> :not(:first-child) {
-			margin-left: 0.2rem;
-		}
-
-		&--is-suffix {
-			/*
-			For suffix case, align the suffix with the first line of the toggle's label.
-			to roughly calculate this, note that the fontsize of the suffix is 90% of the
-			label's fontsize (0.9em). So we push it 10% down to make them even (enough)
-			*/
-			align-self: flex-start;
-			transform: translateY(10%);
-		}
-
-		&__help-text {
-			display: flex;
-			align-items: center;
-
-			&__icon {
-				.yoco {
-					font-size: 1.4em;
-				}
-			}
-		}
-
-		&__label {
-			display: flex;
-			align-items: center;
-			color: var(--text-02);
-
-			&__suffix {
-				margin-left: 0.2rem;
-
-				&--error {
-					color: var(--support-error);
-				}
-			}
-
-			&__text {
-				font-weight: 500;
-			}
-		}
-	}
-
-	&__help-description {
-		color: var(--text-03);
-	}
-
 	&__input-container-wrapper {
 		display: flex;
 		gap: var(--unit-2);
 		align-items: stretch;
-	}
-
-	// placeholders for slots
-	&__input-container__prefix,
-	&__input-container__suffix {
-		display: flex;
-		align-items: center;
 	}
 
 	&__input-container {
@@ -483,20 +409,19 @@ we would be able to extend on demand instead of unscoping all field classes -->
 			}
 		}
 
-		&__icon {
-			.yoco {
-				font-size: 1.1em;
-			}
+		// placeholders for slots
+		&__prefix,
+		&__suffix {
+			display: flex;
+			align-items: center;
 		}
-	}
 
-	&__header__help-text,
-	&__input-container {
 		&__icon {
 			color: var(--icon-02);
 
 			.yoco {
 				display: flex;
+				font-size: 1.1em;
 			}
 
 			&--left,

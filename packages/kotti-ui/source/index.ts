@@ -79,6 +79,8 @@ import { KtHeading } from './kotti-heading'
 export * from './kotti-heading'
 import { KtI18nContext } from './kotti-i18n'
 export * from './kotti-i18n'
+import { KtLabel } from './kotti-label'
+export * from './kotti-label'
 import { KtLine } from './kotti-line'
 export * from './kotti-line'
 import { KtModal } from './kotti-modal'
@@ -158,6 +160,7 @@ export default {
 			KtFormSubmit,
 			KtHeading,
 			KtI18nContext,
+			KtLabel,
 			KtLine,
 			KtModal,
 			KtNavbar,
