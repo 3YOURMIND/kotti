@@ -15,17 +15,6 @@
 		"noUnusedLocals": true, // FIXME: disable in development
 		"noUnusedParameters": true, // FIXME: disable in development
 		"outDir": "dist/types",
-		"paths": {
-			/**
-			 * Without specifying this path, resolution of vue/types/v3-component-public-instance fails:
-			 * TS2742 is thrown, and is only fixable by manually importing specific vue/types files
-			 * wherever there is an indirect reference to one of the types.
-			 *
-			 * Either baseUrl is specified to point to root node_modules by setting it to '../../'
-			 * or the particular reference to vue imports is set on the paths option.
-			 */
-			"vue/*": ["../../node_modules/vue/*"]
-		},
 		"resolveJsonModule": true,
 		"rootDir": "source",
 		"skipLibCheck": true,
@@ -53,8 +42,16 @@
 		}
 	],
 	"vueCompilerOptions": {
+		/**
+		FIXME: setting `skipTemplateCodegen` to false (or equivalently removing it) will make vue typecheck the
+		template section of vue components. This is desirable, but would have increased the scope of the vue migration
+		considerably.
+
+		Proposed future handling: deactivate this flag locally and fix type errors one by one until all kotti components
+		are typesafe, then remove this flag.
+		*/
 		"skipTemplateCodegen": true,
 		"strictTemplates": true,
-		"target": 2.7
+		"target": 3
 	}
 }

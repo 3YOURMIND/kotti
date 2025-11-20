@@ -13,16 +13,16 @@
 			:filter="filter"
 			:isFirstItem="index === 0"
 			:isLoading="isLoading"
-			@input="handleSetFilter(filter.key, $event)"
 			@remove="handleRemoveFilter(filter.key)"
+			@update:modelValue="handleSetFilter(filter.key, $event)"
 		/>
 		<FilterRow
 			v-if="isAddingFilter"
 			:columnOptions="getColumnOptions()"
 			:dataTest="dataTest ? `${dataTest}.addingFilter` : null"
 			:isFirstItem="filters.length === 0"
-			@input="handleAddFilter"
 			@remove="handleCancelAddFilter"
+			@update:modelValue="handleAddFilter"
 		/>
 	</div>
 </template>
@@ -30,8 +30,6 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
-
-import { Yoco } from '@3yourmind/yoco'
 
 import type { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
@@ -67,7 +65,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	emits: ['endAddingFilter', 'input'],
+	emits: ['endAddingFilter', 'update:modelValue'],
 	setup(props, { emit }) {
 		const currentFiltersKeys = computed<KottiFilters.InternalFilter['key'][]>(
 			() => props.filters.map((filter) => filter.key),
@@ -96,26 +94,26 @@ export default defineComponent({
 					value: column.key,
 				}))
 
-		const handleAddFilter = (filter: KottiFilters.InternalFilter) => {
+		const handleAddFilter = (filter: KottiFilters.InternalFilter): void => {
 			const newFilter = getFilterInitialState(filter.key, props.columns)
-			emit('input', [...props.filters, newFilter])
+			emit('update:modelValue', [...props.filters, newFilter])
 			emit('endAddingFilter')
 		}
-		const handleCancelAddFilter = () => {
+		const handleCancelAddFilter = (): void => {
 			emit('endAddingFilter')
 		}
 		const handleRemoveFilter = (
 			filterKey: KottiFilters.InternalFilter['key'],
-		) => {
+		): void => {
 			const updatedFilters = props.filters.filter(
 				(filter) => filter.key !== filterKey,
 			)
-			emit('input', updatedFilters)
+			emit('update:modelValue', updatedFilters)
 		}
 		const handleSetFilter = (
 			oldFilterKey: KottiFilters.InternalFilter['key'],
 			newFilter: KottiFilters.InternalFilter,
-		) => {
+		): void => {
 			const updatedFilter = currentFiltersKeys.value.includes(newFilter.key)
 				? newFilter
 				: getFilterInitialState(newFilter.key, props.columns)
@@ -123,7 +121,7 @@ export default defineComponent({
 			const updatedFilters = props.filters.map((oldFilter) =>
 				oldFilter.key === oldFilterKey ? updatedFilter : oldFilter,
 			)
-			emit('input', updatedFilters)
+			emit('update:modelValue', updatedFilters)
 		}
 
 		return {
@@ -134,39 +132,38 @@ export default defineComponent({
 			handleRemoveFilter,
 			handleSetFilter,
 			translations: useTranslationNamespace('KtFilters'),
-			Yoco,
 		}
 	},
 })
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-style/_variables.scss';
+@import '../../kotti-style/_variables';
 
 .kt-filter__list {
 	display: grid;
 	grid-template-rows: auto;
 	grid-template-columns: max-content repeat(3, 1fr) max-content;
-	grid-gap: var(--unit-1);
+	gap: var(--unit-1);
 	width: 50vw;
 
-	@media (width <= $size-md) {
+	@media (width < $size-md) {
 		grid-template-columns: auto max-content;
 	}
 
-	@media (width <= $size-xl) {
+	@media (width < $size-xl) {
 		width: 60vw;
 	}
 
-	@media (width <= $size-lg) {
+	@media (width < $size-lg) {
 		width: 75vw;
 	}
 
-	@media (width <= $size-md) {
+	@media (width < $size-md) {
 		width: 90vw;
 	}
 
-	@media (width <= $size-sm) {
+	@media (width < $size-sm) {
 		width: 95vw;
 	}
 }

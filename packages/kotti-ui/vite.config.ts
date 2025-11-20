@@ -1,7 +1,7 @@
 import path from 'node:path'
 
 import commonjs from '@rollup/plugin-commonjs'
-import vue from '@vitejs/plugin-vue2'
+import vue from '@vitejs/plugin-vue'
 import PresetEnv from 'postcss-preset-env'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
@@ -56,7 +56,6 @@ export default defineConfig(({ mode }) => {
 	const external = [
 		...Object.keys(packageJSON.peerDependencies),
 		...Object.keys(packageJSON.dependencies),
-		/element-ui/,
 		/tippy\.js/,
 		/lodash\/.*/,
 		/vue\/.*/,

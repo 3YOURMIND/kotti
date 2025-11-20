@@ -25,7 +25,6 @@ import {
 	KtPopover,
 	KtStandardTable,
 	KtTable,
-	KtTableLegacy,
 	KtTag,
 	KtToaster,
 	KtUserMenu,
@@ -61,7 +60,7 @@ export type Section = {
 }
 
 const makeComponentMenuItem = (component: {
-	meta: Kotti.Meta
+	meta: Kotti.Meta<unknown>
 	name: string
 }): SubsectionPage => ({
 	label: startCase(component.name.replace(/^Kt/, '')),
@@ -135,7 +134,6 @@ export const menu: Array<Section> = [
 						path: 'list-of-colors',
 						tags: [Tag.CSS],
 					},
-					{ label: 'Figma', path: 'figma', tags: [Tag.GUIDE, Tag.OUTDATED] },
 					{
 						label: 'Theming',
 						path: 'theming',
@@ -156,11 +154,12 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtAccordion),
 					makeComponentMenuItem(KtAvatar),
 					makeComponentMenuItem(KtBanner),
-					makeComponentMenuItem(KtButton),
 					makeComponentMenuItem(KtBreadcrumb),
+					makeComponentMenuItem(KtButton),
 					makeComponentMenuItem(KtCard),
 					makeComponentMenuItem(KtComment),
 					makeComponentMenuItem(KtDrawer),
+					makeComponentMenuItem(KtFieldInlineEdit),
 					makeComponentMenuItem(KtFileUpload),
 					makeComponentMenuItem(KtFilters),
 					makeComponentMenuItem(KtForm),
@@ -169,7 +168,6 @@ export const menu: Array<Section> = [
 						path: 'form-fields',
 						tags: [Tag.TS, Tag.ZOD],
 					},
-					makeComponentMenuItem(KtFieldInlineEdit),
 					makeComponentMenuItem(KtHeading),
 					makeComponentMenuItem(KtLabel),
 					makeComponentMenuItem(KtLine),
@@ -179,7 +177,6 @@ export const menu: Array<Section> = [
 					makeComponentMenuItem(KtPopover),
 					makeComponentMenuItem(KtStandardTable),
 					makeComponentMenuItem(KtTable),
-					makeComponentMenuItem(KtTableLegacy),
 					makeComponentMenuItem(KtTag),
 					makeComponentMenuItem(KtToaster),
 					makeComponentMenuItem(KtValueLabel),

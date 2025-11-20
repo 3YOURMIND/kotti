@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition -- disable as only intentionally-set DEBUG flags are being marked */
 import cloneDeep from 'lodash/cloneDeep.js'
 import uniq from 'lodash/uniq.js'
-import type { PropOptions, PropType } from 'vue'
-import type { Prop } from 'vue/types/options'
+import type { Prop, PropType } from 'vue'
 import { z } from 'zod'
+
+type SinglePropType<T> = Exclude<PropType<T>, Array<unknown>>
 
 const DEBUG_MAKE_PROPS = false as const // enable to print debug log
 const DEBUG_WALK_SCHEMA_TYPES = false as const // enable to print debug log
@@ -182,7 +183,7 @@ const ignoredZodTypes = new Set([
 /**
  * This maps the internal zod name of a type to the the constructor that Vue expects in `propName.type`
  */
-const zodToVueType = new Map<z.ZodFirstPartyTypeKind, Prop<unknown>>([
+const zodToVueType = new Map<z.ZodFirstPartyTypeKind, SinglePropType<unknown>>([
 	[z.ZodFirstPartyTypeKind.ZodArray, Array],
 	[z.ZodFirstPartyTypeKind.ZodBoolean, Boolean],
 	[z.ZodFirstPartyTypeKind.ZodDate, Date],
@@ -233,15 +234,14 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 	propsSchema: PROPS_SCHEMA,
 ): {
 	[PROP_NAME in keyof PROPS_SCHEMA['shape']]: Omit<
-		PropOptions,
+		Prop<z.output<PROPS_SCHEMA>[PROP_NAME]>,
 		'default' | 'required' | 'type'
 	> & {
-		default: undefined extends z.input<PROPS_SCHEMA>[PROP_NAME]
-			? () => z.output<PROPS_SCHEMA>[PROP_NAME]
-			: undefined
 		required: undefined extends z.input<PROPS_SCHEMA>[PROP_NAME] ? false : true
 		type: PropType<z.output<PROPS_SCHEMA>[PROP_NAME]>
-	}
+	} & (undefined extends z.input<PROPS_SCHEMA>[PROP_NAME]
+			? { default: () => z.output<PROPS_SCHEMA>[PROP_NAME] }
+			: Record<string, never>)
 } =>
 	Object.fromEntries(
 		Object.entries(propsSchema.shape).map(([propName, propSchema]) => {
@@ -255,7 +255,7 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 			if (isNever && zodTypeSet.size > 1)
 				throw new Error('makeProps: Unexpected Mixed Usage of Never')
 
-			const propDefinition: PropOptions<unknown> = {
+			const propDefinition: Prop<unknown> = {
 				validator: propValidator({
 					isNever,
 					propName,
@@ -282,7 +282,7 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 									`makeProps: unknown “ZodFirstPartyTypeKind.${zodTypeName}”`,
 								)
 
-							return zodToVueType.get(zodTypeName) as Prop<unknown>
+							return zodToVueType.get(zodTypeName) as SinglePropType<unknown>
 						}),
 				)
 
@@ -315,14 +315,13 @@ export const makeProps = <PROPS_SCHEMA extends z.ZodObject<z.ZodRawShape>>(
 		}),
 	) as {
 		[KEY in keyof PROPS_SCHEMA['shape']]: Omit<
-			PropOptions,
+			Prop<z.output<PROPS_SCHEMA>[KEY]>,
 			'default' | 'required' | 'type'
 		> & {
-			default: undefined extends z.input<PROPS_SCHEMA>[KEY]
-				? () => z.output<PROPS_SCHEMA>[KEY]
-				: undefined
 			required: undefined extends z.input<PROPS_SCHEMA>[KEY] ? false : true
 			type: PropType<z.output<PROPS_SCHEMA>[KEY]>
-		}
+		} & (undefined extends z.input<PROPS_SCHEMA>[KEY]
+				? { default: () => z.output<PROPS_SCHEMA>[KEY] }
+				: Record<string, never>)
 	}
 /* eslint-enable @typescript-eslint/no-unnecessary-condition */

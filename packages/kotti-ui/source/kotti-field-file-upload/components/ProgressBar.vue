@@ -20,11 +20,11 @@ import { computed, defineComponent } from 'vue'
 
 import { ONE_HUNDRED_PERCENT } from '../../constants'
 import { makeProps } from '../../make-props'
-import { KottiFieldFileUploadRemote } from '../types'
+import { KottiFieldFileUpload } from '../types'
 
 export default defineComponent({
 	name: 'ProgressBar',
-	props: makeProps(KottiFieldFileUploadRemote.ProgressBar.schema),
+	props: makeProps(KottiFieldFileUpload.ProgressBar.schema),
 	setup(props) {
 		return {
 			fillClasses: computed(() => ({
