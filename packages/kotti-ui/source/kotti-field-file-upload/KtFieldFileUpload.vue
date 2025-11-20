@@ -79,7 +79,7 @@ import TakePhoto from './components/TakePhoto/TakePhoto.vue'
 import { KOTTI_FIELD_FILE_UPLOAD_SUPPORTS } from './constants'
 import type { Shared } from './types'
 import { KottiFieldFileUpload } from './types'
-import { buildFileInfo, buildFileItem } from './utils/non-remote'
+import { buildFileInfo, buildFileItem } from './utils/files'
 import { isValidValue } from './validators'
 
 export default defineComponent({
@@ -92,7 +92,7 @@ export default defineComponent({
 		TakePhoto,
 	},
 	props: makeProps(KottiFieldFileUpload.propsSchema),
-	emits: ['blur', 'input'],
+	emits: ['blur', 'update:modelValue'],
 	setup(props, { emit }) {
 		const field = useField<KottiFieldFileUpload.ValueInternal>({
 			emit,
@@ -101,8 +101,7 @@ export default defineComponent({
 			 * a. No files are selected, or
 			 * b. Value is invalid
 			 */
-			isEmpty: (value) =>
-				value.length === 0 || !isValidValue(value, 'NonRemote'),
+			isEmpty: (value) => value.length === 0 || !isValidValue(value),
 			props,
 			supports: KOTTI_FIELD_FILE_UPLOAD_SUPPORTS,
 		})
@@ -218,5 +217,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import './styles.scss';
+@import './styles';
 </style>

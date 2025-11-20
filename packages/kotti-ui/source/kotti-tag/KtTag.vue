@@ -5,7 +5,7 @@
 			<div class="kt-tag__text" v-text="text" />
 		</slot>
 		<div
-			v-if="!isDisabled && !hideActions"
+			v-if="!isDisabled"
 			class="kt-tag__icon"
 			@click.prevent.stop="$emit('close')"
 		>
@@ -49,7 +49,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
-$colors: 'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
+$colors:
+	'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
 	'slate', 'violet', 'yellow';
 
 .kt-tag {
@@ -77,8 +78,8 @@ $colors: 'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
 
 		// clipping also affects the clickable area
 		@supports (clip-path: circle(#{$size * 0.5} at center)) {
-			clip-path: circle(#{$size * 0.5} at center);
 			border-radius: 0;
+			clip-path: circle(#{$size * 0.5} at center);
 		}
 	}
 

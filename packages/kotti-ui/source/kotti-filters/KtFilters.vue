@@ -6,7 +6,7 @@
 			:dataTest="dataTest"
 			:filter="searchValue"
 			:isLoading="isLoading"
-			@input="setSearchFilter"
+			@update:modelValue="setSearchFilter"
 		/>
 		<div ref="listTriggerRef">
 			<ButtonLink
@@ -25,7 +25,7 @@
 				:isAddingFilter="isAddingFilter"
 				:isLoading="isLoading"
 				@endAddingFilter="isAddingFilter = false"
-				@input="setFilters"
+				@update:modelValue="setFilters"
 			/>
 			<FilterActions
 				:dataTest="dataTest"
@@ -90,12 +90,12 @@ export default defineComponent({
 			default: false,
 			type: Boolean,
 		},
-		value: {
+		modelValue: {
 			required: true,
 			type: Array as PropType<KottiFilters.PropsInternal['value']>,
 		},
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
@@ -119,12 +119,15 @@ export default defineComponent({
 
 		const searchValue = computed<KottiFilters.InternalFilterSearch | null>(
 			() =>
-				(props.value.find((filter) => filter.key === searchColumn.value?.key) ??
-					null) as KottiFilters.InternalFilterSearch | null,
+				(props.modelValue.find(
+					(filter) => filter.key === searchColumn.value?.key,
+				) ?? null) as KottiFilters.InternalFilterSearch | null,
 		)
 
 		const filterListValues = computed<KottiFilters.Value>(() =>
-			props.value.filter((filter) => filter.key !== searchColumn.value?.key),
+			props.modelValue.filter(
+				(filter) => filter.key !== searchColumn.value?.key,
+			),
 		)
 		const isAddDisabled = computed(
 			() =>
@@ -146,25 +149,25 @@ export default defineComponent({
 
 		const clearAll = () => {
 			if (searchValue.value === null) {
-				emit('input', [])
+				emit('update:modelValue', [])
 				return
 			}
-			emit('input', [searchValue.value])
+			emit('update:modelValue', [searchValue.value])
 		}
 		const setFilters = (filters: KottiFilters.Value) => {
 			if (searchValue.value === null) {
-				emit('input', filters)
+				emit('update:modelValue', filters)
 				return
 			}
-			emit('input', [...filters, searchValue.value])
+			emit('update:modelValue', [...filters, searchValue.value])
 		}
 		const setSearchFilter = (searchFilter: KottiFilters.InternalFilter) => {
 			if (searchColumn.value !== null) {
 				if (searchFilter.value === null) {
-					emit('input', filterListValues.value)
+					emit('update:modelValue', filterListValues.value)
 					return
 				}
-				emit('input', [...filterListValues.value, searchFilter])
+				emit('update:modelValue', [...filterListValues.value, searchFilter])
 			}
 		}
 
@@ -225,7 +228,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 .kt-filter {
 	display: flex;

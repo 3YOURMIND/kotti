@@ -14,20 +14,20 @@
 		<template #content>
 			<div class="table-filters">
 				<FilterList
+					:appliedFilters="appliedFilters"
 					class="table-filters__list"
 					v-bind="{
 						filters,
 						isLoading,
-						value,
 					}"
-					@input="$emit('input', $event)"
+					@update:appliedFilters="$emit('update:appliedFilters', $event)"
 				/>
 				<KtButton
 					data-test="table-filter-clear-all-button"
 					:disabled="isLoading"
 					:label="translations.clearAll"
 					type="text"
-					@click="$emit('input', [])"
+					@click="$emit('update:appliedFilters', [])"
 				/>
 			</div>
 		</template>
@@ -39,7 +39,9 @@ import { defineComponent, type PropType } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import KtButton from '../../../kotti-button/KtButton.vue'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import KtPopover from '../../../kotti-popover/KtPopover.vue'
 import type { KottiStandardTable } from '../types'
 
 import FilterList from './FilterList.vue'
@@ -48,20 +50,22 @@ export default defineComponent({
 	name: 'TableFilters',
 	components: {
 		FilterList,
+		KtButton,
+		KtPopover,
 	},
 	props: {
+		appliedFilters: {
+			default: () => [],
+			type: Array as PropType<KottiStandardTable.AppliedFilter[]>,
+		},
 		filters: {
 			default: () => [],
 			type: Array as PropType<KottiStandardTable.FilterInternal[]>,
 		},
 		isLoading: { default: false, type: Boolean },
 		size: { default: 'md', type: String },
-		value: {
-			default: () => [],
-			type: Array as PropType<KottiStandardTable.AppliedFilter[]>,
-		},
 	},
-	emits: ['input'],
+	emits: ['update:appliedFilters'],
 	setup() {
 		return {
 			translations: useTranslationNamespace('KtStandardTable'),

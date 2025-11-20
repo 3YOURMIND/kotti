@@ -14,27 +14,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-      - uses: actions/cache@v4
-        with:
-          path: |
-            **/node_modules
-          key: ${{ hashFiles('**/yarn.lock') }}
       - uses: oven-sh/setup-bun@v1
 
       - name: Install modules
-        run: yarn install --frozen-lockfile
+        run: bun install
 
       # make extra sure this publish wouldn’t break anything
-      - run: yarn run build check test
+      - run: bun run build check test
 
       # HACK: When putting this workflow into action, the pipeline did not find the
       # correct registry and/or Auth Token. To fix this we did the following:
       # - adding both of these lines (we are not sure if only one would have done the trick)
-      # - using `yarn publish` instead of `npm publish`
+      # - using `bun publish` instead of `npm publish`
       - run: cp internals/scripts/source/npmrc-template /home/runner/work/_temp/.npmrc
       - run: cp internals/scripts/source/npmrc-template .npmrc
 

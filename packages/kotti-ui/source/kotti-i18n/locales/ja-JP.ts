@@ -31,6 +31,13 @@ export const jaJP: KottiI18n.Messages = {
 		replyToLabel: '返信',
 		unlockedHelpText: 'すべてのユーザーに表示されます',
 	},
+	KtFieldDateShared: {
+		cancelButton: 'Cancel',
+		confirmButton: 'OK',
+		hours: 'hours',
+		minutes: 'minutes',
+		seconds: 'seconds',
+	},
 	KtFieldFileUpload: {
 		button: {
 			acceptPhoto: '写真を使用',

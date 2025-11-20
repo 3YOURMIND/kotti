@@ -1,8 +1,4 @@
-import {
-	KottiFieldFileUpload,
-	KottiFieldFileUploadRemote,
-	Shared,
-} from './types'
+import { KottiFieldFileUpload, Shared } from './types'
 
 export const isSelectingMultipleFilesWhenNotAllowed = (
 	allowMultiple: boolean,
@@ -60,7 +56,12 @@ export const validateFile = ({
 	return Shared.Validation.SUCCESS
 }
 
-const isValidValueNonRemote = (
+/**
+ * Checks whether Value is valid
+ * @param value The value to evaluate
+ * @returns true if at least one selected file is valid, else false
+ */
+export const isValidValue = (
 	value: KottiFieldFileUpload.ValueInternal,
 ): boolean =>
 	value.some(
@@ -68,29 +69,3 @@ const isValidValueNonRemote = (
 			fileItem.status === KottiFieldFileUpload.Status.READY_TO_UPLOAD ||
 			fileItem.status === KottiFieldFileUpload.Status.UPLOADED,
 	)
-
-const isValidValueRemote = (
-	value: KottiFieldFileUploadRemote.ValueInternal,
-): boolean =>
-	value.some(
-		(fileItem) =>
-			fileItem.status === KottiFieldFileUploadRemote.Status.UPLOADED ||
-			fileItem.status === KottiFieldFileUploadRemote.Status.UPLOADING,
-	)
-
-/**
- * Checks whether Value is valid
- * @param value The value to evaluate
- * @returns true if at least one selected file is valid, else false
- */
-export const isValidValue = <
-	T extends
-		| KottiFieldFileUpload.ValueInternal
-		| KottiFieldFileUploadRemote.ValueInternal,
->(
-	value: T,
-	type: T extends KottiFieldFileUpload.ValueInternal ? 'NonRemote' : 'Remote',
-): boolean =>
-	type === 'NonRemote'
-		? isValidValueNonRemote(value as KottiFieldFileUpload.ValueInternal)
-		: isValidValueRemote(value as KottiFieldFileUploadRemote.ValueInternal)

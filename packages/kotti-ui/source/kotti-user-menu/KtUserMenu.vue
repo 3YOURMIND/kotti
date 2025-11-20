@@ -121,7 +121,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 .tippy-box[data-theme^='kt-usermenu'] {
 	width: 11.2rem;
@@ -134,7 +134,7 @@ export default defineComponent({
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.tippy-box[data-theme^='kt-usermenu'] {
 		width: 100vw;
 		border-radius: 0 0 0.2rem 0.2rem;
@@ -146,7 +146,7 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 .kt-user-menu-item-wrapper {
 	margin-bottom: 0.4rem;
@@ -231,7 +231,7 @@ export default defineComponent({
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.kt-user-menu-container {
 		display: block;
 	}

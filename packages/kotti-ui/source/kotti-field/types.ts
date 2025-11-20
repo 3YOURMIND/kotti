@@ -56,7 +56,7 @@ export namespace KottiField {
 
 	export namespace Hook {
 		export interface Parameters<DATA_TYPE> {
-			emit: (name: 'input', ...args: unknown[]) => void
+			emit: (name: 'update:modelValue', ...args: unknown[]) => void
 
 			/**
 			 * Useful for checking validation on required fields
@@ -262,17 +262,18 @@ export namespace KottiField {
 		rightIcon: z.never(),
 
 		/**
-		 * Show some an eye icon on the right side of the field to hide/show the field content
-		 *
-		 * This is false by default and is meant to be used for KtFieldPassword
-		 */
-		showVisibilityToggle: z.boolean().default(false),
-		/**
 		 * Show some string before the field
 		 *
 		 * This is never by default and specified by component schemas that need it
 		 */
 		prefix: z.never(),
+
+		/**
+		 * Show some an eye icon on the right side of the field to hide/show the field content
+		 *
+		 * This is false by default and is meant to be used for KtFieldPassword
+		 */
+		showVisibilityToggle: z.boolean().default(false),
 
 		/**
 		 * Show some string after the field
@@ -297,7 +298,7 @@ export namespace KottiField {
 		 * This is never, and specified by each component's schema
 		 * v-model value
 		 */
-		value: z.never(),
+		modelValue: z.never(),
 	})
 	export type Props = z.input<typeof propsSchema>
 	/**

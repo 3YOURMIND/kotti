@@ -1,3 +1,5 @@
+import type { z } from 'zod'
+
 import { FIELD_META_BASE_SLOTS } from '../kotti-field/meta'
 import type { Kotti } from '../types'
 import { MetaDesignType } from '../types/kotti'
@@ -10,7 +12,7 @@ import { KottiFieldToggle, KottiFieldToggleGroup } from './types'
 
 const componentFolder = 'kotti-field-toggle'
 
-const designs: Kotti.Meta['designs'] = [
+const designs: Kotti.Meta<z.ZodTypeAny>['designs'] = [
 	{
 		title: 'type=switch',
 		type: MetaDesignType.FIGMA,

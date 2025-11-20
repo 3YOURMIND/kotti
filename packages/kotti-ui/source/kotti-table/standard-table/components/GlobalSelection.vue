@@ -14,11 +14,15 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
+import KtButton from '../../../kotti-button/KtButton.vue'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import { pluralize } from '../utilities/translation'
 
 export default defineComponent({
 	name: 'GlobalSelection',
+	components: {
+		KtButton,
+	},
 	props: {
 		selectionCount: {
 			required: true,

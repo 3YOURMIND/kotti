@@ -4,10 +4,10 @@
 		:formId="dataTest ?? undefined"
 		hideValidation
 		:isLoading="isLoading"
-		:size="KottiField.Size.SMALL"
+		:modelValue="filter"
+		size="small"
 		style="display: contents"
-		:value="filter"
-		@input="handleSetFilter"
+		@update:modelValue="handleSetFilter"
 	>
 		<div class="kt-filter-row__wrapper">
 			<span class="kt-filter-row__label" v-text="label" />
@@ -32,9 +32,9 @@
 		<ButtonLink
 			class="kt-filter-row__remove"
 			:dataTest="dataTest ? `${dataTest}.remove` : undefined"
-			:icon="Yoco.Icon.CLOSE"
+			icon="clase"
 			:isLoading="isLoading"
-			:type="KottiFilters.ButtonLinkType.DANGER"
+			type="danger"
 			@click="handleRemove"
 		/>
 	</KtForm>
@@ -44,8 +44,6 @@
 import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
 
-import { Yoco } from '@3yourmind/yoco'
-
 import { KtFieldCurrency } from '../../kotti-field-currency'
 import { KtFieldDateRange } from '../../kotti-field-date'
 import { KtFieldNumber } from '../../kotti-field-number'
@@ -54,7 +52,6 @@ import { KtFieldSingleSelect } from '../../kotti-field-select'
 import type { KottiFieldSingleSelect } from '../../kotti-field-select/types'
 import { KtFieldText } from '../../kotti-field-text'
 import { KtFieldToggle } from '../../kotti-field-toggle'
-import { KottiField } from '../../kotti-field/types'
 import { KtForm } from '../../kotti-form'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KottiFilters } from '../types'
@@ -79,7 +76,8 @@ export default defineComponent({
 		KtFieldText,
 		KtFieldToggle,
 		KtForm,
-	},
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} as any,
 	props: {
 		column: {
 			default: null,
@@ -108,7 +106,7 @@ export default defineComponent({
 			type: Boolean,
 		},
 	},
-	emits: ['input', 'remove'],
+	emits: ['update:modelValue', 'remove'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtFilters')
 
@@ -121,19 +119,19 @@ export default defineComponent({
 		}
 		const handleSetFilter = (newFilter: KottiFilters.InternalFilter) => {
 			if (!props.column) {
-				emit('input', newFilter)
+				emit('update:modelValue', newFilter)
 				return
 			}
 
 			if (isEmptyOperation(newFilter.operation, props.column.type)) {
-				emit('input', {
+				emit('update:modelValue', {
 					...newFilter,
 					value: getFilterEmptyValue(props.column.type),
 				})
 				return
 			}
 
-			emit('input', newFilter)
+			emit('update:modelValue', newFilter)
 		}
 
 		return {
@@ -147,8 +145,6 @@ export default defineComponent({
 					props.column &&
 					!isEmptyOperation(props.filter.operation, props.column.type),
 			),
-			KottiField,
-			KottiFilters,
 			label: computed(() =>
 				props.isFirstItem
 					? translations.value.whereLabel
@@ -226,20 +222,19 @@ export default defineComponent({
 						? props.column.suffix
 						: undefined,
 			})),
-			Yoco,
 		}
 	},
 })
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-style/_variables.scss';
+@import '../../kotti-style/_variables';
 
 .kt-filter-row {
 	&__wrapper {
 		display: contents;
 
-		@media (width <= $size-md) {
+		@media (width < $size-md) {
 			display: unset;
 
 			> * {
@@ -262,7 +257,7 @@ export default defineComponent({
 		grid-column: 5;
 		align-self: center;
 
-		@media (width <= $size-md) {
+		@media (width < $size-md) {
 			grid-column: 2;
 		}
 	}

@@ -4,10 +4,10 @@
 		:isLoading="isLoading"
 		isOptional
 		:label="filter.label"
+		:modelValue="modelValue"
 		size="small"
 		type="switch"
-		:value="value"
-		@input="onInput"
+		@update:modelValue="onUpdateModelValue"
 	>
 		<span v-if="slotLabel" v-text="slotLabel" />
 	</KtFieldToggle>
@@ -16,10 +16,14 @@
 <script lang="ts">
 import { computed, defineComponent, type PropType } from 'vue'
 
+import KtFieldToggle from '../../../../kotti-field-toggle/KtFieldToggle.vue'
 import type { KottiStandardTable } from '../../types'
 
 export default defineComponent({
 	name: 'BooleanFilter',
+	components: {
+		KtFieldToggle,
+	},
 	props: {
 		filter: {
 			required: true,
@@ -30,23 +34,23 @@ export default defineComponent({
 			>,
 		},
 		isLoading: { default: false, type: Boolean },
-		value: { default: null, type: Boolean as PropType<boolean | null> },
+		modelValue: { default: null, type: Boolean as PropType<boolean | null> },
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		return {
-			onInput: (value: KottiStandardTable.FilterValue) => {
-				emit('input', {
+			onUpdateModelValue: (value: KottiStandardTable.FilterValue) => {
+				emit('update:modelValue', {
 					id: props.filter.id,
 					operation: props.filter.operations[0], // Current filters support only one operation
 					value,
 				})
 			},
 			slotLabel: computed(() => {
-				if (!props.filter.slotLabels || props.value === null) {
+				if (!props.filter.slotLabels || props.modelValue === null) {
 					return null
 				}
-				const index = props.value ? 1 : 0
+				const index = props.modelValue ? 1 : 0
 				return props.filter.slotLabels[index]
 			}),
 		}

@@ -61,7 +61,7 @@ export default defineComponent({
 
 .kt-toast > * {
 	box-shadow:
-		0 4px 6px 0 rgba(0 0 0 / 10%),
-		0 2px 4px 0 rgba(0 0 0 / 6%);
+		0 4px 6px 0 rgb(0 0 0 / 10%),
+		0 2px 4px 0 rgb(0 0 0 / 6%);
 }
 </style>

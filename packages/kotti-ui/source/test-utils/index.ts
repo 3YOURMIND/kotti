@@ -1,10 +1,7 @@
-import { createLocalVue } from '@vue/test-utils'
 import { type Mock, vi } from 'vitest'
 
 import { KottiField } from '../kotti-field/types'
 import type { KottiForm } from '../kotti-form/types'
-
-export const localVue = createLocalVue()
 
 export const getMockContext = ({ validators = {}, values = {} } = {}): Pick<
 	KottiForm.Context,

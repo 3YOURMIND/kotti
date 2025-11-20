@@ -14,14 +14,14 @@
 	}
 }
 
-@media (width <= $size-lg) {
+@media (width < $size-lg) {
 	.workspace {
 		width: 100%;
 		margin-right: 0;
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.workspace {
 		width: 100%;
 		margin-right: 0;

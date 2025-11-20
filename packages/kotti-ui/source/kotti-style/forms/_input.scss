@@ -28,9 +28,9 @@
 	line-height: $line-height;
 	color: var(--text-01);
 	appearance: none;
+	outline: none;
 	border: 1px solid var(--ui-02);
 	border-radius: var(--border-radius);
-	outline: none;
 }
 
 textarea.form-input {

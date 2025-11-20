@@ -33,12 +33,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import KtButton from '../../kotti-button/KtButton.vue'
 import { useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { makeProps } from '../../make-props'
 import { KottiComment } from '../types'
 
 export default defineComponent({
 	name: 'CommentActions',
+	components: {
+		KtButton,
+	},
 	props: makeProps(KottiComment.Actions.schema),
 	emits: ['delete', 'reply', 'update:isEditing'],
 	setup(_, { emit }) {

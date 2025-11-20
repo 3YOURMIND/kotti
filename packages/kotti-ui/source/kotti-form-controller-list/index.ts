@@ -1,9 +1,13 @@
+import type { z } from 'zod'
+
 import type { Kotti } from '../types'
 import { attachMeta, makeInstallable } from '../utilities'
 
 import KtFormControllerListVue from './KtFormControllerList.vue'
 
-export const sharedHeaderFooterScope: Kotti.Meta['slots'][string]['scope'] = {
+const getSharedHeaderFooterScope = <
+	T extends z.ZodTypeAny,
+>(): Kotti.Meta<T>['slots'][string]['scope'] => ({
 	addAfter: {
 		description: 'append an item to the list',
 		type: 'function',
@@ -20,7 +24,7 @@ export const sharedHeaderFooterScope: Kotti.Meta['slots'][string]['scope'] = {
 		description: 'all items in the list',
 		type: 'object',
 	},
-}
+})
 
 export const KtFormControllerList = attachMeta(
 	makeInstallable(KtFormControllerListVue),
@@ -60,11 +64,11 @@ export const KtFormControllerList = attachMeta(
 			},
 			footer: {
 				description: 'inserted below the list, exposes list utilities',
-				scope: sharedHeaderFooterScope,
+				scope: getSharedHeaderFooterScope(),
 			},
 			header: {
 				description: 'inserted above the list, exposes list utilities',
-				scope: sharedHeaderFooterScope,
+				scope: getSharedHeaderFooterScope(),
 			},
 		},
 		typeScript: {

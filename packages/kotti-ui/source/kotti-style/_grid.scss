@@ -22,38 +22,38 @@
 }
 
 .kt-col {
-	box-sizing: border-box;
 	float: left;
+	box-sizing: border-box;
 }
 
 @include col-width('');
 
-@media (width <= $size-xl) {
+@media (width < $size-xl) {
 	@include col-width('-xl');
 }
 
-@media (width <= $size-lg) {
+@media (width < $size-lg) {
 	@include col-width('-lg');
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	@include col-width('-md');
 }
 
-@media (width <= $size-sm) {
+@media (width < $size-sm) {
 	@include col-width('-sm');
 }
 
-@media (width <= $size-xs) {
+@media (width < $size-xs) {
 	@include col-width('-xs');
 }
 
 .kt-row {
 	position: relative;
+	clear: both;
 	box-sizing: border-box;
 	display: flex;
 	flex-wrap: wrap;
-	clear: both;
 
 	&::before,
 	&::after {

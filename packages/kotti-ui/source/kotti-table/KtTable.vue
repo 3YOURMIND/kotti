@@ -64,8 +64,8 @@
 						</slot>
 					</td>
 				</tr>
-				<template v-for="(row, rowIndex) in bodyRows" v-else>
-					<tr :key="row.key" :class="row.classes">
+				<template v-for="(row, rowIndex) in bodyRows" v-else :key="row.key">
+					<tr :class="row.classes">
 						<td
 							v-for="cell in row.cells"
 							:key="cell.key"
@@ -80,7 +80,7 @@
 								:is="cell.wrapComponent.component"
 								v-bind="cell.wrapComponent.props"
 								:class="cell.wrapComponent.class"
-								v-on="cell.wrapComponent.on"
+								v-on="cell.wrapComponent.on || {}"
 							>
 								<FlexRender
 									:props="{ ...cell.getContext() }"
@@ -98,7 +98,7 @@
 								<template v-for="(action, index) in row.actions">
 									<KtPopover
 										v-if="action.tooltip"
-										:key="index"
+										:key="`tooltip-action-${index}`"
 										placement="top"
 										trigger="hover"
 									>
@@ -125,7 +125,7 @@
 									</KtPopover>
 									<i
 										v-else
-										:key="index"
+										:key="`plain-action-${index}`"
 										:class="{
 											yoco: true,
 											'kt-table__action-icon': true,
@@ -145,10 +145,7 @@
 								</template>
 							</div>
 						</td>
-						<td
-							v-else-if="$scopedSlots['actions']"
-							class="kt-table__actions-column"
-						>
+						<td v-else-if="$slots['actions']" class="kt-table__actions-column">
 							<div
 								class="kt-table__actions"
 								:class="{
@@ -160,7 +157,7 @@
 						</td>
 					</tr>
 					<tr
-						v-if="$scopedSlots['expanded-row'] && row.isExpanded"
+						v-if="$slots['expanded-row'] && row.isExpanded"
 						:key="row.expandedKey"
 					>
 						<td :colSpan="tableColSpan">
@@ -179,18 +176,19 @@
 
 <script lang="ts">
 import type { Header } from '@tanstack/table-core'
+import { FlexRender } from '@tanstack/vue-table'
 import classNames from 'classnames'
 import { computed, defineComponent } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
+import { KtPopover } from '../kotti-popover'
 import { makeProps } from '../make-props'
 
 import { useTableContext } from './table/context'
 import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './table/hooks'
 import { getCellWrapComponent } from './table/row'
-import { FlexRender } from './table/tanstack-table'
 import { KottiTable } from './table/types'
 
 const TRANSFER_TYPE = 'application/move-column'
@@ -205,6 +203,7 @@ export default defineComponent({
 	name: 'KtTable',
 	components: {
 		FlexRender,
+		KtPopover,
 	},
 	props: makeProps(KottiTable.propsSchema),
 	setup(props, { slots }) {
@@ -216,7 +215,7 @@ export default defineComponent({
 			return event.dataTransfer?.types.includes(TRANSFER_TYPE) ?? false
 		}
 
-		const table = computed(() => tableContext.value.internal.table.value)
+		const table = computed(() => tableContext.value.internal.table)
 
 		return {
 			bodyRows: computed(() =>
@@ -596,6 +595,7 @@ export default defineComponent({
 			padding: 0;
 
 			/* Firefox only */
+			/* stylelint-disable-next-line at-rule-no-deprecated, at-rule-prelude-no-invalid, at-rule-no-vendor-prefix */
 			@-moz-document url-prefix() {
 				height: 100%;
 			}

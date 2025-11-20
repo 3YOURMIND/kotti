@@ -79,7 +79,7 @@ export const useKottiStandardTable = <
 	ROW extends KottiTable.AnyRow,
 	COLUMN_ID extends string,
 >(
-	_params: KottiStandardTableParameters<ROW, COLUMN_ID>,
+	_params: Readonly<KottiStandardTableParameters<ROW, COLUMN_ID>>,
 ): KottiStandardTableHook<ROW, COLUMN_ID> => {
 	const params = computed(() => paramsSchema.parse(_params.value))
 
@@ -226,7 +226,6 @@ export const useKottiStandardTable = <
 		}),
 	)
 
-	// eslint-disable-next-line @typescript-eslint/no-misused-promises
 	onBeforeMount(async () => {
 		const rawState = await storageAdapter.value.load(
 			storageOperationContext.value,
@@ -279,7 +278,7 @@ export const useKottiStandardTable = <
 						pageSize,
 					}
 				},
-				setSearchValue: (search: KottiFieldText.Value) => {
+				setSearchValue: (search: KottiFieldText.ModelValue) => {
 					searchValue.value = search
 				},
 			},

@@ -24,6 +24,7 @@
 import isEqual from 'lodash/isEqual.js'
 import { computed, defineComponent, type PropType, ref, watch } from 'vue'
 
+import KtFieldNumber from '../../../../kotti-field-number/KtFieldNumber.vue'
 import type { KottiFieldNumber } from '../../../../kotti-field-number/types'
 import { useTranslationNamespace } from '../../../../kotti-i18n/hooks'
 import type { KottiStandardTable } from '../../types'
@@ -31,6 +32,9 @@ import { getReorderedRange } from '../../utilities/filters'
 
 export default defineComponent({
 	name: 'NumberRangeFilter',
+	components: {
+		KtFieldNumber,
+	},
 	props: {
 		filter: {
 			required: true,
@@ -41,24 +45,23 @@ export default defineComponent({
 			>,
 		},
 		isLoading: { default: false, type: Boolean },
-		value: {
+		modelValue: {
 			default: () => [null, null],
 			type: Array as unknown as PropType<[number | null, number | null]>,
 		},
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		const translations = useTranslationNamespace('KtStandardTable')
 
-		const range = ref<[KottiFieldNumber.Value, KottiFieldNumber.Value]>([
-			null,
-			null,
-		])
+		const range = ref<
+			[KottiFieldNumber.ModelValue, KottiFieldNumber.ModelValue]
+		>([null, null])
 
 		const reOrderAndEmitRangeValue = () => {
 			range.value = getReorderedRange(range.value)
 
-			emit('input', {
+			emit('update:modelValue', {
 				id: props.filter.id,
 				operation: props.filter.operations[0], // Current filters support only one operation
 				value: range.value,
@@ -66,7 +69,7 @@ export default defineComponent({
 		}
 
 		watch(
-			() => props.value,
+			() => props.modelValue,
 			(newRange) => {
 				if (!isEqual(newRange, range.value))
 					range.value = [newRange[0], newRange[1]]
@@ -83,10 +86,10 @@ export default defineComponent({
 				hideChangeButtons: true,
 				isLoading: props.isLoading,
 				isOptional: true,
+				modelValue: range.value[1],
 				placeholder: translations.value.max,
 				prefix: props.filter.unit,
 				size: 'small',
-				value: range.value[1],
 			})),
 			minFieldProps: computed(() => ({
 				dataTest: [props.filter.dataTest, 'min-value-input']
@@ -96,21 +99,21 @@ export default defineComponent({
 				hideChangeButtons: true,
 				isLoading: props.isLoading,
 				isOptional: true,
+				modelValue: range.value[0],
 				placeholder: translations.value.min,
 				prefix: props.filter.unit,
 				size: 'small',
-				value: range.value[0],
 			})),
-			onMaxInputBlur: (newMax: KottiFieldNumber.Value) => {
-				if (props.value[1] !== newMax) reOrderAndEmitRangeValue()
+			onMaxInputBlur: (newMax: KottiFieldNumber.ModelValue) => {
+				if (props.modelValue[1] !== newMax) reOrderAndEmitRangeValue()
 			},
-			onMaxValueInput: (newMax: KottiFieldNumber.Value) => {
+			onMaxValueInput: (newMax: KottiFieldNumber.ModelValue) => {
 				range.value = [range.value[0], newMax]
 			},
-			onMinInputBlur: (newMin: KottiFieldNumber.Value) => {
-				if (props.value[0] !== newMin) reOrderAndEmitRangeValue()
+			onMinInputBlur: (newMin: KottiFieldNumber.ModelValue) => {
+				if (props.modelValue[0] !== newMin) reOrderAndEmitRangeValue()
 			},
-			onMinValueInput: (newMin: KottiFieldNumber.Value) => {
+			onMinValueInput: (newMin: KottiFieldNumber.ModelValue) => {
 				range.value = [newMin, range.value[1]]
 			},
 		}
