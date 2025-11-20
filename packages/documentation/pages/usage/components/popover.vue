@@ -248,6 +248,7 @@ export default defineComponent({
 				isDisabled: false,
 				isOptional: true,
 				label: 'Attachment',
+				tooltip: 'This is a tooltip for Attachment option',
 			},
 			{
 				icon: Yoco.Icon.SHIPPING,
