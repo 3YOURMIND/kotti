@@ -14,6 +14,7 @@
 					:isClickable="option.onClick !== undefined"
 					:isDisabled="option.isDisabled"
 					:label="option.label"
+					:tooltip="option.tooltip"
 					@click="handleItemClick(option)"
 				>
 					<template v-if="areOptionsSelectable" #option>

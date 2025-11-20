@@ -16,6 +16,7 @@ const baseOptionSchema = z.object({
 	isSelected: z.boolean().default(false),
 	label: z.string(),
 	onClick: z.function(z.tuple([]), z.void()).optional(),
+	tooltip: z.string().optional(),
 })
 
 export namespace KottiPopover {
@@ -95,6 +96,7 @@ export namespace KottiPopover {
 		isSelected: true,
 		label: true,
 		onClick: true,
+		tooltip: true,
 	})
 
 	export const propsSchema = z.object({
@@ -126,6 +128,7 @@ export namespace IconTextItem {
 		isClickable: true,
 		isDisabled: true,
 		label: true,
+		tooltip: true,
 	})
 
 	export type Props = z.input<typeof propsSchema>
