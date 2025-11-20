@@ -6,8 +6,8 @@
 			:key="index"
 			:filter="filter"
 			:isLoading="isLoading"
-			:value="getValue(filter)"
-			@input="onInput"
+			:modelValue="getValue(filter)"
+			@update:modelValue="onUpdateModelValue"
 		/>
 	</div>
 </template>
@@ -34,17 +34,17 @@ export default defineComponent({
 		SingleSelectFilter,
 	},
 	props: {
+		appliedFilters: {
+			default: () => [],
+			type: Array as PropType<KottiStandardTable.AppliedFilter[]>,
+		},
 		filters: {
 			default: () => [],
 			type: Array as PropType<KottiStandardTable.FilterInternal[]>,
 		},
 		isLoading: { default: false, type: Boolean },
-		value: {
-			default: () => [],
-			type: Array as PropType<KottiStandardTable.AppliedFilter[]>,
-		},
 	},
-	emits: ['input'],
+	emits: ['update:appliedFilters'],
 	setup(props, { emit }) {
 		return {
 			getComponent: (filter: KottiStandardTable.FilterInternal) => {
@@ -64,17 +64,17 @@ export default defineComponent({
 				}
 			},
 			getValue: (filter: KottiStandardTable.FilterInternal) =>
-				props.value.find((v) => v.id === filter.id)?.value ??
+				props.appliedFilters.find((v) => v.id === filter.id)?.value ??
 				getEmptyValue(filter),
-			onInput: (value: KottiStandardTable.AppliedFilter) => {
-				const isNewValue = !props.value.some((v) => v.id === value.id)
+			onUpdateModelValue: (value: KottiStandardTable.AppliedFilter) => {
+				const isNewValue = !props.appliedFilters.some((v) => v.id === value.id)
 				const updatedValueList = (
 					isNewValue
-						? [...props.value, value]
-						: props.value.map((v) => (v.id === value.id ? value : v))
+						? [...props.appliedFilters, value]
+						: props.appliedFilters.map((v) => (v.id === value.id ? value : v))
 				).filter(({ value }) => !isEmptyValue(value))
 
-				emit('input', updatedValueList)
+				emit('update:appliedFilters', updatedValueList)
 			},
 		}
 	},

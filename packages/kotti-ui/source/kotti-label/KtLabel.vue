@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import type { PropType, VNode } from 'vue'
+import type { PropType, Slot } from 'vue'
 
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { makeProps } from '../make-props'
@@ -51,13 +51,16 @@ export default defineComponent({
 		/**
 		 * This is not exposed in the KottiLabel namespace because it should only be used for Kotti internals.
 		 */
-		helpTextSlot: { default: () => [], type: Array as PropType<VNode[]> },
+		helpTextSlot: {
+			default: undefined,
+			type: Function as PropType<Slot<undefined>>,
+		},
 	},
 	emits: ['click'],
 	setup(props) {
 		return {
 			hasHelpText: computed(
-				() => props.helpTextSlot.length > 0 || props.helpText !== null,
+				() => Boolean(props.helpTextSlot) || props.helpText !== null,
 			),
 			labelSuffix: computed(() => (props.isRequired ? '*' : null)),
 			labelSuffixClasses: computed(() => {

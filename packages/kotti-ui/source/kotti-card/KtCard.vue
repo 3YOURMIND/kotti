@@ -75,7 +75,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	padding: var(--unit-4);
-	word-break: break-word;
+	word-break: normal;
 	background: var(--ui-background);
 	border-radius: var(--border-radius);
 
