@@ -5,7 +5,7 @@
 			class="kt-label__header"
 		>
 			<component
-				:is="resolvedInputId ? 'label' : 'legend'"
+				:is="inputId ? 'label' : 'legend'"
 				class="kt-label__label"
 				:for="inputId ?? undefined"
 				@click="$emit('click', $event)"
