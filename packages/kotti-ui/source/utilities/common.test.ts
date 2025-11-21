@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { isNumberInRange } from './utilities'
+import { isNumberInRange } from './common'
 
 describe('isNumberInRange', () => {
 	it('returns true if value is in range', () => {
