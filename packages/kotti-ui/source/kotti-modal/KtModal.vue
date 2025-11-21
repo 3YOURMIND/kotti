@@ -15,6 +15,7 @@
 							v-if="showCloseButton"
 							class="kt-modal__close-button"
 							:icon="Yoco.Icon.CLOSE"
+							size="small"
 							type="text"
 							@click="$emit('close')"
 						/>
@@ -186,9 +187,6 @@ export default defineComponent({
 	}
 
 	&__close-button {
-		width: 20px;
-		height: 20px;
-		padding: 0;
 		color: var(--icon-01);
 
 		&:hover,
