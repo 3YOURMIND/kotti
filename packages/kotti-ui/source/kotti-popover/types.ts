@@ -43,6 +43,7 @@ export namespace KottiPopover {
 	/* eslint-disable perfectionist/sort-enums */
 	export enum Size {
 		AUTO = 'auto',
+		SAME_AS_TRIGGER = 'sameAsTrigger',
 		SMALL = 'sm',
 		MEDIUM = 'md',
 		LARGE = 'lg',

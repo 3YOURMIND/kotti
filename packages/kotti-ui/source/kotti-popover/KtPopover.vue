@@ -54,6 +54,7 @@ import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { KT_FORM_CONTEXT } from '../kotti-form'
 import type { KottiForm } from '../kotti-form/types'
 import { makeProps } from '../make-props'
+import { sameWidthOrStyled } from '../utilities/tippy'
 
 import IconTextItem from './components/IconTextItem.vue'
 import { KT_IS_IN_POPOVER } from './constants'
@@ -143,6 +144,10 @@ export default defineComponent({
 					close()
 				},
 				placement: props.placement,
+				popperOptions: {
+					modifiers:
+						props.size === 'sameAsTrigger' ? [sameWidthOrStyled()] : [],
+				},
 				theme: 'kt-light-border',
 				trigger: TRIGGER_MAP[props.trigger],
 			})),
@@ -169,10 +174,10 @@ export default defineComponent({
 		return {
 			close,
 			contentClass: computed(() => {
-				const classes = [
-					'kt-popover__content',
-					`kt-popover__content--size-${props.size}`,
-				]
+				const classes = ['kt-popover__content']
+
+				if (props.size !== 'sameAsTrigger')
+					classes.push(`kt-popover__content--size-${props.size}`)
 
 				if (props.options.length > 0)
 					classes.push(`kt-popover__content--has-options`)

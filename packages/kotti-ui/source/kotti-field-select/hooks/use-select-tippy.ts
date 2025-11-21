@@ -8,7 +8,7 @@ import { useTippy } from '@3yourmind/vue-use-tippy'
 import { TIPPY_DISTANCE_OFFSET } from '../../constants'
 import type { KottiField } from '../../kotti-field/types'
 import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
-import { sameWidthOrStyled } from '../utils/tippy-utils'
+import { sameWidthOrStyled } from '../../utilities/tippy'
 
 const TIPPY_CONTENT_WRAPPER_CLASSES = new Set(['tippy-box', 'tippy-content'])
 

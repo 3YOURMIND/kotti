@@ -1,8 +1,8 @@
 import type { ComponentPublicInstanceConstructor } from 'vue/types/v3-component-public-instance'
 import type { Vue as _Vue } from 'vue/types/vue'
 
-import type { Kotti } from './types'
-import { DecimalSeparator } from './types/decimal-separator'
+import type { Kotti } from '../types'
+import { DecimalSeparator } from '../types/decimal-separator'
 
 /**
  * Takes a Vue Component and assigns a meta object which
