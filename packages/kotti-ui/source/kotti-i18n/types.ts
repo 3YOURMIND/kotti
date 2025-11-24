@@ -2,6 +2,7 @@ import type { Ref } from 'vue'
 import { z } from 'zod'
 
 import type { KottiComment } from '../kotti-comment/types'
+import type { Shared as KottiFieldDateShared } from '../kotti-field-date/types'
 import type { Shared as KottiFieldFileUploadShared } from '../kotti-field-file-upload/types'
 import type { KottiFieldInlineEdit } from '../kotti-field-inline-edit/types'
 import type { Shared as KottiFieldSelectShared } from '../kotti-field-select/types'
@@ -46,6 +47,7 @@ export namespace KottiI18n {
 
 	export type Messages = {
 		KtComment: KottiComment.Translations
+		KtFieldDateShared: KottiFieldDateShared.Translations
 		KtFieldFileUpload: KottiFieldFileUploadShared.Translations
 		KtFieldInlineEdit: KottiFieldInlineEdit.Translations
 		KtFields: KottiField.Translations

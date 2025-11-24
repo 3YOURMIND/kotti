@@ -122,7 +122,6 @@ export default defineComponent({
 			stream.value = null
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		onBeforeMount(async () => {
 			if (isWebRTCSupported()) {
 				await findCameras()

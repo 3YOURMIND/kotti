@@ -2,11 +2,11 @@
 	"name": "fake-root",
 	"private": true,
 	"scripts": {
-		"check:eslint": "yarn --cwd ../.. run eslint --max-warnings=0 --ignore-pattern=internals --ignore-pattern=packages .",
-		"check:knip": "yarn --cwd ../.. run knip --tags=-knipignore",
-		"check:prettier": "yarn --cwd ../.. run prettier --check --ignore-path=.fake-prettierignore --ignore-path=.prettierignore .",
-		"fix:eslint": "yarn run check:eslint --fix",
-		"fix:prettier": "yarn run check:prettier --write"
+		"check:eslint": "bun --bun run --cwd ../.. eslint --max-warnings=0 --ignore-pattern=internals --ignore-pattern=packages .",
+		"check:knip": "bun --bun run --cwd ../.. knip --tags=-knipignore",
+		"check:prettier": "bun --bun run --cwd ../.. prettier --check --ignore-path=.fake-prettierignore --ignore-path=.prettierignore .",
+		"fix:eslint": "bun --bun run check:eslint --fix",
+		"fix:prettier": "bun --bun run check:prettier --write"
 	},
 	"version": "0.0.0"
 }

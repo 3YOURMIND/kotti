@@ -5,17 +5,17 @@
 			:disabled="isDisabled"
 			:label="translations.button.takePhoto"
 			:tabindex="tabIndex"
-			@click.stop="state = State.CAPTURE"
+			@click.stop="state = 'capture'"
 		/>
 		<CapturePhoto
-			v-if="state === State.CAPTURE"
+			v-if="state === 'capture'"
 			:dataTest="localDataTest"
 			@capture="onCapturePhoto"
 			@close="onClose"
 			@error="onError"
 		/>
 		<ReviewPhoto
-			v-else-if="state === State.REVIEW"
+			v-else-if="state === 'review'"
 			:dataTest="localDataTest"
 			:photoUrl="photoUrl"
 			@accept="onAcceptPhoto"
@@ -23,7 +23,7 @@
 			@reject="onRejectPhoto"
 		/>
 		<Error
-			v-else-if="state === State.ERROR"
+			v-else-if="state === 'error'"
 			:dataTest="localDataTest"
 			:error="error"
 			@close="onClose"
@@ -44,12 +44,7 @@ import CapturePhoto from './Capture.vue'
 import Error from './Error.vue'
 import ReviewPhoto from './Review.vue'
 
-enum State {
-	CAPTURE = 'capture',
-	CLOSED = 'closed',
-	ERROR = 'error',
-	REVIEW = 'review',
-}
+type State = 'capture' | 'closed' | 'error' | 'review'
 
 export default defineComponent({
 	name: 'TakePhoto',
@@ -67,7 +62,7 @@ export default defineComponent({
 		const error = ref<string | null>(null)
 		const file = ref<File | null>(null)
 		const photoUrl = ref<string | null>(null)
-		const state = ref<State>(State.CLOSED)
+		const state = ref<State>('closed')
 
 		const reset = () => {
 			error.value = null
@@ -85,34 +80,33 @@ export default defineComponent({
 				const payload: Shared.Events.AddFiles = [file.value]
 				emit('addFiles', payload)
 				reset()
-				state.value = State.CLOSED
+				state.value = 'closed'
 			},
 			onCapturePhoto: (payload: Shared.TakePhoto.Events.Capture) => {
 				reset()
 				file.value = payload.file
 				photoUrl.value = payload.photoUrl
-				state.value = State.REVIEW
+				state.value = 'review'
 			},
 			onClose: () => {
 				reset()
-				state.value = State.CLOSED
+				state.value = 'closed'
 			},
 			onError: (err: Shared.TakePhoto.Events.Error) => {
 				reset()
 				error.value = err
-				state.value = State.ERROR
+				state.value = 'error'
 			},
 			onErrorRetry: () => {
 				reset()
-				state.value = State.CAPTURE
+				state.value = 'capture'
 			},
 			onRejectPhoto: () => {
 				reset()
-				state.value = State.CAPTURE
+				state.value = 'capture'
 			},
 			photoUrl,
 			state,
-			State,
 			translations,
 		}
 	},

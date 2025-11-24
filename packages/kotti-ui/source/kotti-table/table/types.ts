@@ -36,7 +36,6 @@ export type GetRowBehavior<
 				 * This should be used in most use cases and would usually be a `router-link`
 				 */
 				component: ROW_BEHAVIOR_CLICK_COMPONENT
-				on?: Record<string, unknown>
 		  } & (ROW_BEHAVIOR_CLICK_COMPONENT extends 'a'
 				? {
 						props: {
