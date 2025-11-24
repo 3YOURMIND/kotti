@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@3yourmind/kotti-ui": "*",
+		"@3yourmind/kotti-ui": "9.0.0-rc1",
 		"@3yourmind/yoco": "*",
 		"@metatypes/typography": "^0.5.0",
 		"@metatypes/units": "^0.5.0",

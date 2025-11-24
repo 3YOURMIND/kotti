@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+      # TODO: Remove once vue3/upgrade is merged into master
+      - vue3/upgrade
 
 jobs:
   publish:

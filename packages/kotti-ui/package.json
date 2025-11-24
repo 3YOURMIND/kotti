@@ -4,7 +4,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
-		"@3yourmind/vue-use-tippy": "3.x",
+		"@3yourmind/vue-use-tippy": "4.0.0-rc1",
 		"@3yourmind/yoco": "^2.15.0",
 		"@metatypes/typography": "^0.5.0",
 		"@metatypes/units": "^0.5.0",
@@ -101,5 +101,5 @@
 	"style": "./dist/style.css",
 	"type": "module",
 	"types": "./dist/types/index.d.ts",
-	"version": "8.22.4"
+	"version": "9.0.0-rc1"
 }
