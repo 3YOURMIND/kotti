@@ -47,7 +47,7 @@
 		}
 	],
 	"devDependencies": {
-		"@3yourmind/eslint-config": "*",
+		"@3yourmind/eslint-config": "1.0.0-rc1",
 		"@types/node": "20.11.16",
 		"eslint": "^9.34.0",
 		"husky": "^7.0.1",
