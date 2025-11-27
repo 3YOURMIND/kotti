@@ -45,10 +45,9 @@ export default defineComponent({
 				appendTo: () => document.body,
 				arrow: false,
 				content: contentRef.value ?? undefined,
-				fallbackPlacements: ['left', 'auto'],
 				interactive: true,
 				offset: [0, TIPPY_DISTANCE_OFFSET],
-				placement: 'right',
+				placement: 'auto',
 				theme: 'kt-light-border',
 				...(props.tooltip
 					? { trigger: 'mouseenter focusin' }
