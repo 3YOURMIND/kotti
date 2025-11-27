@@ -47,6 +47,25 @@
 			]"
 		/>
 		<KtFieldSingleSelect
+			v-model="selectMode"
+			isOptional
+			label="Select Mode"
+			:options="[
+				{
+					label: 'None',
+					value: false,
+				},
+				{
+					label: 'Single',
+					value: 'single',
+				},
+				{
+					label: 'Multi',
+					value: 'multi',
+				},
+			]"
+		/>
+		<KtFieldSingleSelect
 			v-model="clickBehavior"
 			isOptional
 			label="Row Click Behavior"
@@ -156,11 +175,11 @@ export default defineComponent({
 			hasDragAndDrop: false,
 			isEmpty: false,
 			isLoading: false,
-			isSelectable: true,
 			showEmptySlot: false,
 			showLoadingSlot: false,
 		})
 		const expandMode = ref<'multi' | 'single' | null>('single')
+		const selectMode = ref<'multi' | 'single' | false>('multi')
 		const counter = ref(0)
 		const clickBehavior = ref<
 			'component' | 'expand' | 'link' | 'simple-event' | null
@@ -453,7 +472,7 @@ export default defineComponent({
 				}),
 				hasDragAndDrop: booleanFlags.value.hasDragAndDrop,
 				id: 'example',
-				isSelectable: booleanFlags.value.isSelectable,
+				isSelectable: selectMode.value,
 			})),
 		)
 
@@ -509,6 +528,7 @@ export default defineComponent({
 				localColumns.reverse()
 				tableHook.api.columnOrder.value = localColumns
 			},
+			selectMode,
 			showAllColumns: () => {
 				tableHook.api.hiddenColumns.value = new Set()
 			},
@@ -542,10 +562,6 @@ export default defineComponent({
 							},
 						]
 					: []),
-				{
-					key: 'isSelectable',
-					label: 'table is selectable',
-				},
 			]),
 		}
 	},
