@@ -20,17 +20,11 @@
 								v-bind="inputProps(option, index)"
 								@change="onChange(option.value)"
 							/>
-							<div
+							<ToggleRadio
 								class="kt-field-radio-group__radio"
-								:class="{
-									'kt-field-radio-group__radio--checked':
-										field.currentValue === option.value,
-									'kt-field-radio-group__radio--is-disabled':
-										field.isDisabled || Boolean(option.isDisabled),
-								}"
-							>
-								<div class="kt-field-radio-group__radio-inside" />
-							</div>
+								:isChecked="field.currentValue === option.value"
+								:isDisabled="field.isDisabled || Boolean(option.isDisabled)"
+							/>
 							<slot name="header" :option="option">
 								<div v-text="option.label" />
 							</slot>
@@ -60,6 +54,7 @@ import { KtField } from '../kotti-field'
 import FieldHelpText from '../kotti-field/components/FieldHelpText.vue'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
 import { makeProps } from '../make-props'
+import ToggleRadio from '../shared-components/ToggleRadio.vue'
 
 import { KOTTI_FIELD_RADIO_GROUP_SUPPORTS } from './constants'
 import { KottiFieldRadioGroup } from './types'
@@ -69,6 +64,7 @@ export default defineComponent({
 	components: {
 		FieldHelpText,
 		KtField,
+		ToggleRadio,
 	},
 	props: makeProps(KottiFieldRadioGroup.propsSchema),
 	emits: ['input'],
@@ -124,11 +120,6 @@ export default defineComponent({
 
 <style lang="scss">
 @import '../kotti-field/mixins';
-
-:root {
-	--radio-size: 0.8rem;
-	--radio-inside-side: 0.2rem;
-}
 
 .kt-field-radio-group {
 	display: flex;
@@ -194,62 +185,15 @@ export default defineComponent({
 
 	&__input {
 		display: none;
-
-		&:focus + .kt-field-radio-group__radio {
-			outline: 1px solid var(--primary-50);
-			outline-offset: 3px;
-		}
-
-		&:focus:not(:focus-visible) + .kt-field-radio-group__radio {
-			outline: none;
-		}
 	}
 
 	&__radio {
-		display: grid;
-		flex-shrink: 0;
-		place-items: center;
-		width: var(--radio-size);
-		height: var(--radio-size);
-		background-color: var(--ui-background);
-		border: 1px solid var(--ui-02);
-		border-radius: 50%;
-		transition: all ease-in-out var(--transition-short);
-
 		// align radio with the center of the first line of the label
 		// (assumption: font-size comes from common parent element)
 		//  > starting point is upper end of the container (flex-start)
 		//  > (+0.75em) Put upper edge of element into center (since line-height = 1.5 * font-size)
 		//  > (-var(--radio-size) * 0.5) Put it up half the height of the radio height
 		transform: translateY(calc(0.75em - var(--radio-size) * 0.5));
-
-		&:hover {
-			border-color: var(--interactive-01-hover);
-		}
-
-		&:active {
-			border-color: var(--interactive-01-active);
-		}
-
-		&--checked {
-			background-color: var(--interactive-01);
-			border-color: var(--interactive-01);
-			box-shadow: var(--shadow-base);
-
-			&:hover {
-				background-color: var(--interactive-01-hover);
-				border-color: var(--interactive-01-hover);
-			}
-
-			&:active {
-				background-color: var(--interactive-01-active);
-				border-color: var(--interactive-01-active);
-			}
-		}
-
-		&--is-disabled {
-			pointer-events: none;
-		}
 	}
 
 	&__radio-inside {
