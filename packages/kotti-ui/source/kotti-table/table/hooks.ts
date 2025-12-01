@@ -20,6 +20,7 @@ import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 import { KtButton } from '../../kotti-button/'
 import { useI18nContext } from '../../kotti-i18n/hooks'
 import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
+import ToggleRadio from '../../shared-components/ToggleRadio.vue'
 
 import { type TableContext, useProvideTableContext } from './context'
 import { useVueTable } from './tanstack-table'
@@ -51,7 +52,7 @@ export type KottiTableParameter<
 	getRowBehavior: GetRowBehavior<ROW>
 	hasDragAndDrop?: boolean
 	id: string
-	isSelectable?: boolean
+	isSelectable?: 'multi' | 'single' | boolean
 }
 
 export const paramsSchema = z
@@ -142,7 +143,14 @@ export const paramsSchema = z
 			),
 		hasDragAndDrop: z.boolean().default(false),
 		id: z.string(),
-		isSelectable: z.boolean().default(false),
+		isSelectable: z
+			.union([z.boolean(), z.enum(['multi', 'single'])])
+			.nullable()
+			.default(null)
+			.transform((val) => {
+				if (typeof val === 'string') return val
+				return val ? 'multi' : null
+			}),
 	})
 	.strict()
 
@@ -157,7 +165,7 @@ type InternalKottiTableParameters<
 	expandMode: 'multi' | 'single' | null
 	hasDragAndDrop: boolean
 	id: string
-	isSelectable: boolean
+	isSelectable: 'multi' | 'single' | null
 }
 
 type KottiTableHook<ROW extends KottiTable.AnyRow, COLUMN_ID extends string> = {
@@ -433,7 +441,7 @@ export const useKottiTable = <
 							}),
 						]
 					: []),
-				...(params.value.isSelectable
+				...(params.value.isSelectable === 'multi'
 					? [
 							columnHelper.display({
 								cell: ({ row }: CellContext<ROW, unknown>) =>
@@ -526,6 +534,53 @@ export const useKottiTable = <
 											}),
 										],
 									),
+								id: SELECTION_COLUMN_ID,
+								meta: {
+									cellClasses: 'kt-table-cell kt-table-cell--is-body',
+									disableCellClick: false,
+									headerClasses: 'kt-table-cell kt-table-cell--is-header',
+								},
+							}),
+						]
+					: []),
+				...(params.value.isSelectable === 'single'
+					? [
+							columnHelper.display({
+								cell: ({ row }: CellContext<ROW, unknown>) =>
+									h(
+										'div',
+										{
+											domProps: {
+												ariaDisabled: !row.getCanSelect(),
+											},
+											on: {
+												click: (event: MouseEvent) => {
+													if (!row.getCanSelect()) return
+
+													event.stopPropagation()
+													event.preventDefault()
+
+													const isSelected = !row.getIsSelected()
+													table.value.toggleAllRowsSelected(false)
+													row.toggleSelected(isSelected)
+												},
+												// this prevents table content selection that would happen with shift clicking
+												mousedown: (event: MouseEvent) => {
+													event.preventDefault()
+												},
+											},
+											staticClass: 'kt-table-selection',
+										},
+										[
+											h(ToggleRadio, {
+												props: {
+													isChecked: row.getIsSelected(),
+													isDisabled: !row.getCanSelect(),
+												},
+											}),
+										],
+									),
+								header: () => null,
 								id: SELECTION_COLUMN_ID,
 								meta: {
 									cellClasses: 'kt-table-cell kt-table-cell--is-body',
