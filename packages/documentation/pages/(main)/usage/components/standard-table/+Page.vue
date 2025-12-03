@@ -295,15 +295,15 @@ export default defineComponent({
 				search: boolean
 			}
 			locale: Kotti.I18n.SupportedLanguages
-			searchPlaceholder: Kotti.FieldText.Value
-			showInlineFilters: Kotti.FieldToggle.Value
+			searchPlaceholder: Kotti.FieldText.ModelValue
+			showInlineFilters: Kotti.FieldToggle.ModelValue
 			slots: {
-				appliedFilterActionsSlot: Kotti.FieldToggle.Value
-				controlsActionsSlot: Kotti.FieldToggle.Value
-				headerActionsSlot: Kotti.FieldToggle.Value
-				tableSlot: Kotti.FieldToggle.Value
+				appliedFilterActionsSlot: Kotti.FieldToggle.ModelValue
+				controlsActionsSlot: Kotti.FieldToggle.ModelValue
+				headerActionsSlot: Kotti.FieldToggle.ModelValue
+				tableSlot: Kotti.FieldToggle.ModelValue
 			}
-			title: Kotti.FieldText.Value
+			title: Kotti.FieldText.ModelValue
 		}>({
 			columnsPopoverSize: Kotti.Popover.Size.MEDIUM,
 			filtersPopoverSize: Kotti.Popover.Size.MEDIUM,

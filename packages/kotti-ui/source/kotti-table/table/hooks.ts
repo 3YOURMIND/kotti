@@ -472,11 +472,11 @@ export const useKottiTable = <
 													rowIndex: row.index,
 												}
 											},
-											staticClass: 'kt-table-selection',
 											// this prevents table content selection that would happen with shift clicking
 											onMousedown: (event: MouseEvent) => {
 												event.preventDefault()
 											},
+											staticClass: 'kt-table-selection',
 										},
 										() => [
 											h(ToggleInner, {
@@ -542,30 +542,22 @@ export const useKottiTable = <
 											domProps: {
 												ariaDisabled: !row.getCanSelect(),
 											},
-											on: {
-												click: (event: MouseEvent) => {
-													if (!row.getCanSelect()) return
+											onClick: (event: MouseEvent) => {
+												if (!row.getCanSelect()) return
 
-													event.stopPropagation()
-													event.preventDefault()
+												event.stopPropagation()
+												event.preventDefault()
 
-													const isSelected = !row.getIsSelected()
-													table.toggleAllRowsSelected(false)
-													row.toggleSelected(isSelected)
-												},
-												// this prevents table content selection that would happen with shift clicking
-												mousedown: (event: MouseEvent) => {
-													event.preventDefault()
-												},
+												const isSelected = !row.getIsSelected()
+												table.toggleAllRowsSelected(false)
+												row.toggleSelected(isSelected)
 											},
 											staticClass: 'kt-table-selection',
 										},
 										[
 											h(ToggleRadio, {
-												props: {
-													isChecked: row.getIsSelected(),
-													isDisabled: !row.getCanSelect(),
-												},
+												isChecked: row.getIsSelected(),
+												isDisabled: !row.getCanSelect(),
 											}),
 										],
 									),

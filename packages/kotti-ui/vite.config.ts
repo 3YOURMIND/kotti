@@ -22,7 +22,11 @@ const getPlugins = ({ enableVisualizer }: { enableVisualizer: boolean }) => [
 			},
 		],
 	}),
-	vue(),
+	vue({
+		features: {
+			optionsAPI: false,
+		},
+	}),
 	...(enableVisualizer
 		? [
 				visualizer({
