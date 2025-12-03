@@ -101,5 +101,5 @@
 	"style": "./dist/style.css",
 	"type": "module",
 	"types": "./dist/types/index.d.ts",
-	"version": "9.0.0-rc1"
+	"version": "9.0.0-rc2"
 }
