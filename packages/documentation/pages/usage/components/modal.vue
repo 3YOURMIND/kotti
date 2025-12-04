@@ -3,6 +3,7 @@
 		<ComponentInfo v-bind="{ component }" />
 
 		<KtForm v-model="settings">
+			<KtFieldText formKey="title" isOptional label="title" />
 			<KtFieldSingleSelect
 				formKey="size"
 				isOptional
@@ -56,10 +57,11 @@
 			:preventCloseOutside="settings.preventCloseOutside"
 			:showCloseButton="settings.showCloseButton"
 			:size="settings.size"
+			:title="settings.title"
 			@close="showModal = false"
 		>
 			<template v-if="settings.usedSlots.header" #header>
-				<h2 style="margin: 0">This the modal title</h2>
+				<h2 style="margin: 0">This the modal title (from slot)</h2>
 			</template>
 			<template v-if="settings.usedSlots.body" #body>
 				<p style="margin: 0; text-align: justify">
@@ -73,6 +75,7 @@
 					mauris primis scelerisque vivamus metus, sodales tristique laoreet
 					taciti tortor porttitor justo.
 				</p>
+				<br />
 				<p style="margin: 0; text-align: justify">
 					Ligula cras arcu sociosqu ornare quam justo gravida pretium, magna
 					aenean neque praesent duis suspendisse eros vehicula, id cum primis
@@ -80,6 +83,50 @@
 					risus platea dapibus facilisis, purus aenean netus placerat auctor
 					interdum litora, conubia vehicula habitant iaculis ultrices mi
 					cubilia.
+				</p>
+				<br />
+				<p style="margin: 0; text-align: justify">
+					Neque in eros laoreet metus vivamus suscipit fringilla tellus dui,
+					sociis molestie aptent nisl sodales ac tristique cubilia. Ligula
+					platea nulla tortor id mus vehicula, aliquam dictumst pulvinar lacinia
+					sollicitudin, conubia auctor per iaculis cursus. Dignissim ridiculus
+					rutrum dui volutpat sapien massa interdum ornare proin, curabitur in
+					sociis mauris congue potenti hendrerit sollicitudin, fringilla risus
+					metus lacinia aenean suscipit felis eu.
+				</p>
+				<br />
+				<p style="margin: 0; text-align: justify">
+					Semper ut magnis senectus dictum primis in posuere ridiculus accumsan
+					eros, mauris aenean a ligula per nulla odio vestibulum nam lobortis
+					tortor, turpis morbi blandit sociis felis curae dignissim euismod
+					penatibus. Natoque dui mus etiam felis primis himenaeos pretium diam
+					aenean, curabitur aptent arcu ac viverra conubia nam purus. Iaculis
+					nam scelerisque fringilla nisi curae aliquam leo ligula, vivamus
+					fermentum vitae posuere suspendisse vestibulum class dictumst aliquet,
+					tempus at augue volutpat neque massa dis.
+				</p>
+				<br />
+				<p style="margin: 0; text-align: justify">
+					A praesent magnis ridiculus iaculis diam facilisis libero cras
+					facilisi placerat, neque nostra habitant lacus integer eleifend nisl
+					convallis ultrices nec, molestie consequat rhoncus taciti primis dis
+					nibh mus non. Hendrerit bibendum blandit eros fringilla class rutrum
+					pulvinar, maecenas donec platea convallis a. Nunc netus nascetur erat
+					feugiat cursus tristique class, dictum penatibus lobortis venenatis
+					vitae leo, gravida duis egestas augue ornare facilisi.
+				</p>
+				<br />
+				<p style="margin: 0; text-align: justify">
+					Feugiat curae congue placerat porttitor molestie montes netus cras
+					suscipit massa, ad dictum sodales inceptos blandit at mus ante natoque
+					pulvinar lacinia, fames quisque arcu dis potenti libero lectus
+					facilisi cubilia. Sed morbi mi conubia donec tempor massa justo
+					eleifend, fames bibendum libero aptent purus sociis tellus fusce,
+					neque vehicula phasellus mauris parturient pellentesque habitasse.
+					Himenaeos luctus tristique lectus parturient venenatis eros nam
+					gravida aenean, potenti pulvinar arcu ut leo rutrum mi curabitur
+					hendrerit velit, urna bibendum enim convallis sagittis inceptos neque
+					accumsan.
 				</p>
 			</template>
 			<template v-if="settings.usedSlots.footer" #footer>
@@ -122,6 +169,7 @@ export default defineComponent({
 				preventCloseOutside: boolean
 				showCloseButton: boolean
 				size: Kotti.Modal.Size
+				title: string
 				usedSlots: {
 					body: boolean
 					footer: boolean
@@ -131,6 +179,7 @@ export default defineComponent({
 				preventCloseOutside: false,
 				showCloseButton: false,
 				size: Kotti.Modal.Size.MEDIUM,
+				title: 'This the modal title (from props)',
 				usedSlots: {
 					body: true,
 					footer: true,
