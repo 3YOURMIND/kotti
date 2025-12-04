@@ -20,6 +20,13 @@
 		"replyToLabel": "Reply to",
 		"unlockedHelpText": "Visible to all users"
 	},
+	"ktFieldDateShared": {
+		"cancelButton": "Cancel",
+		"confirmButton": "OK",
+		"hours": "hours",
+		"minutes": "minutes",
+		"seconds": "seconds"
+	},
 	"ktFieldFileUpload": {
 		"button": {
 			"acceptPhoto": "Use Photo",

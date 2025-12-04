@@ -67,7 +67,7 @@ export namespace KottiStandardTable {
 	})
 
 	const booleanFilterSchema = sharedFilterSchema.extend({
-		defaultValue: KottiFieldToggle.valueSchema.optional(),
+		defaultValue: KottiFieldToggle.modelValueSchema.optional(),
 		operations: z
 			.nativeEnum(FilterOperation.Boolean)
 			.array()
@@ -78,7 +78,7 @@ export namespace KottiStandardTable {
 	})
 
 	const dateRangeFilterSchema = sharedFilterSchema.extend({
-		defaultValue: KottiFieldDateRange.valueSchema.optional(),
+		defaultValue: KottiFieldDateRange.modelValueSchema.optional(),
 		operations: z
 			.nativeEnum(FilterOperation.DateRange)
 			.array()
@@ -95,7 +95,7 @@ export namespace KottiStandardTable {
 			}),
 		)
 		.extend({
-			defaultValue: KottiFieldMultiSelect.valueSchema.optional(),
+			defaultValue: KottiFieldMultiSelect.modelValueSchema.optional(),
 			operations: z
 				.nativeEnum(FilterOperation.MultiEnum)
 				.array()
@@ -112,7 +112,10 @@ export namespace KottiStandardTable {
 		)
 		.extend({
 			defaultValue: z
-				.tuple([KottiFieldNumber.valueSchema, KottiFieldNumber.valueSchema])
+				.tuple([
+					KottiFieldNumber.modelValueSchema,
+					KottiFieldNumber.modelValueSchema,
+				])
 				.optional(),
 			operations: z
 				.nativeEnum(FilterOperation.NumberRange)
@@ -131,7 +134,7 @@ export namespace KottiStandardTable {
 			}),
 		)
 		.extend({
-			defaultValue: KottiFieldSingleSelect.valueSchema.optional(),
+			defaultValue: KottiFieldSingleSelect.modelValueSchema.optional(),
 			operations: z
 				.nativeEnum(FilterOperation.SingleEnum)
 				.array()
@@ -151,41 +154,44 @@ export namespace KottiStandardTable {
 	export type FilterInternal = z.output<typeof filterSchema>
 
 	export const filterValueSchema = z.union([
-		KottiFieldToggle.valueSchema,
-		KottiFieldDateRange.valueSchema,
-		KottiFieldMultiSelect.valueSchema,
-		z.tuple([KottiFieldNumber.valueSchema, KottiFieldNumber.valueSchema]),
-		KottiFieldSingleSelect.valueSchema,
+		KottiFieldToggle.modelValueSchema,
+		KottiFieldDateRange.modelValueSchema,
+		KottiFieldMultiSelect.modelValueSchema,
+		z.tuple([
+			KottiFieldNumber.modelValueSchema,
+			KottiFieldNumber.modelValueSchema,
+		]),
+		KottiFieldSingleSelect.modelValueSchema,
 	])
 	export type FilterValue = z.output<typeof filterValueSchema>
 
 	export const appliedBooleanSchema = z.object({
 		id: z.string(),
 		operation: z.nativeEnum(FilterOperation.Boolean),
-		value: KottiFieldToggle.valueSchema,
+		value: KottiFieldToggle.modelValueSchema,
 	})
 	export const appliedDateRangeSchema = z.object({
 		id: z.string(),
 		operation: z.nativeEnum(FilterOperation.DateRange),
-		value: KottiFieldDateRange.valueSchema,
+		value: KottiFieldDateRange.modelValueSchema,
 	})
 	export const appliedMultiEnumSchema = z.object({
 		id: z.string(),
 		operation: z.nativeEnum(FilterOperation.MultiEnum),
-		value: KottiFieldMultiSelect.valueSchema,
+		value: KottiFieldMultiSelect.modelValueSchema,
 	})
 	export const appliedNumberRangeSchema = z.object({
 		id: z.string(),
 		operation: z.nativeEnum(FilterOperation.NumberRange),
 		value: z.tuple([
-			KottiFieldNumber.valueSchema,
-			KottiFieldNumber.valueSchema,
+			KottiFieldNumber.modelValueSchema,
+			KottiFieldNumber.modelValueSchema,
 		]),
 	})
 	export const appliedSingleEnumSchema = z.object({
 		id: z.string(),
 		operation: z.nativeEnum(FilterOperation.SingleEnum),
-		value: KottiFieldSingleSelect.valueSchema,
+		value: KottiFieldSingleSelect.modelValueSchema,
 	})
 
 	export const appliedFilterSchema = z.union([

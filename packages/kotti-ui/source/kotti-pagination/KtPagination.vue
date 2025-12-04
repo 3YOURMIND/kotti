@@ -10,7 +10,7 @@
 			<component
 				:is="paginationComponent"
 				v-bind="paginationProps"
-				@setPage="setCurrentPage($event)"
+				@update:page="setCurrentPage($event)"
 			/>
 			<li :class="paginatorClasses(pageAmount)" @click="nextPage">
 				<i
@@ -42,12 +42,7 @@ export default defineComponent({
 		PaginationFractionated,
 	},
 	props: makeProps(KottiPagination.propsSchema),
-	emits: [
-		'currentPageChange',
-		'previousPageClicked',
-		'nextPageClicked',
-		'setPage',
-	],
+	emits: ['update:page'],
 	setup(props, { emit }) {
 		const pageAmount = computed(() =>
 			props.total === null ? null : Math.ceil(props.total / props.pageSize),
@@ -56,8 +51,7 @@ export default defineComponent({
 		return {
 			nextPage: () => {
 				if (pageAmount.value !== null && props.page >= pageAmount.value) return
-				emit('nextPageClicked', props.page + 1)
-				emit('setPage', props.page + 1)
+				emit('update:page', props.page + 1)
 			},
 			pageAmount,
 			paginationComponent: computed(() => {
@@ -89,13 +83,11 @@ export default defineComponent({
 			}),
 			previousPage: () => {
 				if (props.page === 1) return
-				emit('previousPageClicked', props.page - 1)
-				emit('setPage', props.page - 1)
+				emit('update:page', props.page - 1)
 			},
 			setCurrentPage: (page: number) => {
 				if (page === props.page) return
-				emit('currentPageChange', page)
-				emit('setPage', page)
+				emit('update:page', page)
 			},
 			Yoco,
 		}
@@ -104,7 +96,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 :root {
 	--kt-pagination-color-active: var(--interactive-03);
@@ -114,8 +106,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .kt-pagination {
 	margin: 0;
-	list-style: none;
 	user-select: none;
+	list-style: none;
 
 	&__page-button {
 		display: inline-block;

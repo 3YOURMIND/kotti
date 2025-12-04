@@ -67,8 +67,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-field/mixins';
-
 .kt-popover-options-item {
 	display: flex;
 	align-items: center;

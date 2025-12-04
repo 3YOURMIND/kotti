@@ -175,7 +175,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-field/mixins.scss';
+@import '../../kotti-field/mixins';
 
 .kt-field__wrapper {
 	@include validations using ($type) {
@@ -239,8 +239,8 @@ export default defineComponent({
 		i {
 			margin-right: var(--unit-1);
 			font-size: var(--unit-6);
-			color: var(--icon-02);
 			vertical-align: bottom;
+			color: var(--icon-02);
 		}
 
 		a {

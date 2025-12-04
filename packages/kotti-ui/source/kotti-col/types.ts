@@ -41,5 +41,6 @@ export namespace KottiCol {
 		tag: string
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-deprecated
 	export type Props = SpecifyRequiredProps<PropsInternal, never>
 }
