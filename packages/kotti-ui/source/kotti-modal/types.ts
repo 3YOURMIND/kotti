@@ -15,6 +15,7 @@ export namespace KottiModal {
 		preventCloseOutside: z.boolean().default(false),
 		showCloseButton: z.boolean().default(false),
 		size: createLooseZodEnumSchema(Size).default(Size.MEDIUM),
+		title: z.string().nullable().default(null),
 	})
 
 	export type Props = z.input<typeof propsSchema>

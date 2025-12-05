@@ -5,24 +5,40 @@
 			<slot name="container">
 				<div :class="modalClass">
 					<div
-						v-if="hasSlot('header') || showCloseButton"
-						class="kt-modal__header-wrapper"
+						v-if="hasSlot('header') || title || showCloseButton"
+						:class="{
+							'kt-modal__header': true,
+							'kt-modal__header--has-content': hasSlot('header') || title,
+						}"
 					>
-						<div v-if="hasSlot('header')" class="kt-modal__header">
+						<div v-if="hasSlot('header')">
 							<slot name="header" />
 						</div>
+						<h2
+							v-else-if="title"
+							class="kt-modal__header-title"
+							v-text="title"
+						/>
 						<KtButton
 							v-if="showCloseButton"
-							class="kt-modal__close-button"
+							class="kt-modal__header-close-btn"
+							data-test="kt-modal-header-close-btn"
 							:icon="Yoco.Icon.CLOSE"
 							size="small"
 							type="text"
 							@click="$emit('close')"
 						/>
 					</div>
-					<div v-if="hasSlot('body')" class="kt-modal__body">
+					<ScrollableContainer
+						v-if="hasSlot('body')"
+						:class="{
+							'kt-modal__body--has-padding-bottom': !hasSlot('footer'),
+							'kt-modal__body--has-padding-top':
+								!hasSlot('header') && !title && !showCloseButton,
+						}"
+					>
 						<slot name="body" />
-					</div>
+					</ScrollableContainer>
 					<div v-if="hasSlot('footer')" class="kt-modal__footer">
 						<slot name="footer" />
 					</div>
@@ -41,10 +57,14 @@ import { Yoco } from '@3yourmind/yoco'
 
 import { makeProps } from '../make-props'
 
+import ScrollableContainer from './components/ScrollableContainer.vue'
 import { KottiModal } from './types'
 
 export default defineComponent({
 	name: 'KtModal',
+	components: {
+		ScrollableContainer,
+	},
 	props: makeProps(KottiModal.propsSchema),
 	emits: ['close'],
 	setup(props, { emit, slots }) {
@@ -99,12 +119,6 @@ export default defineComponent({
 			})),
 		)
 
-		/**
-		 * 'slots' is non-reactive, so we need to use a function to check
-		 * if a slot exists instead of a computed value
-		 */
-		const hasSlot = (name: string): boolean => name in slots
-
 		watch(
 			() => props.isOpen,
 			(shouldOpen, wasOpen) => {
@@ -125,7 +139,12 @@ export default defineComponent({
 				if (!props.preventCloseOutside) emit('close')
 			},
 			contentRef,
-			hasSlot,
+			/**
+			 * 'slots' is non-reactive, so computed values won't react to
+			 * changes in 'slots'. Therefore, a function is needed to check
+			 * if a slot exists.
+			 */
+			hasSlot: (name: string): boolean => name in slots,
 			modalClass: computed(() => [
 				'kt-modal__container',
 				`kt-modal--is-size-${props.size}`,
@@ -158,10 +177,8 @@ export default defineComponent({
 	&__container {
 		display: flex;
 		flex-direction: column;
-		gap: 0.8rem;
 		width: 90%;
 		max-height: 90%;
-		padding: var(--unit-4);
 		background-color: #fff;
 		border-radius: var(--border-radius);
 		box-shadow: 0 2px 8px rgb(0 0 0 / 33%);
@@ -186,7 +203,18 @@ export default defineComponent({
 		}
 	}
 
-	&__close-button {
+	&__header {
+		display: flex;
+		flex: 1 1 auto;
+		justify-content: flex-end;
+		padding: var(--unit-3) var(--unit-4);
+
+		&--has-content {
+			justify-content: space-between;
+		}
+	}
+
+	&__header-close-btn {
 		color: var(--icon-01);
 
 		&:hover,
@@ -194,33 +222,26 @@ export default defineComponent({
 			background-color: var(--ui-01);
 			border-color: var(--ui-01);
 		}
-
-		:deep(.yoco) {
-			font-size: 21px;
-		}
 	}
 
-	&__header-wrapper {
-		display: flex;
-		flex: 1 1 auto;
-		justify-content: space-between;
-
-		&:not(:has(.kt-modal__header)) {
-			justify-content: flex-end;
-		}
+	&__header-title {
+		padding: 0;
+		margin: 0;
+		line-height: 1;
+		border: 0;
 	}
 
-	&__header {
-		flex: 1 1 auto;
+	&__body--has-padding-bottom {
+		padding-bottom: var(--unit-3);
 	}
 
-	&__body {
-		flex: 1 1 auto;
-		overflow: auto;
+	&__body--has-padding-top {
+		padding-top: var(--unit-3);
 	}
 
 	&__footer {
 		flex: 0 0 auto;
+		padding: var(--unit-3) var(--unit-4);
 		text-align: right;
 	}
 }
