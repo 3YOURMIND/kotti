@@ -15,9 +15,17 @@ const packagesToConsider = [
 
 const packageJsonSchema = z.object({ name: z.string(), version: z.string() })
 
-const getRemoteVersion = async (name: string): Promise<string | null> => {
+const getRemoteVersion = async (
+	name: string,
+	currentVersion: string,
+): Promise<string | null> => {
 	try {
-		return (await $`npm view ${name} version`.text()).trim()
+		const versions =
+			(await $`npm view ${name} versions --json`.json()) as string[]
+		const officialVersions = versions.filter(
+			(version) => currentVersion.includes('rc') || !version.includes('rc'),
+		)
+		return officialVersions[officialVersions.length - 1] ?? null
 	} catch {
 		return null
 	}
@@ -29,7 +37,7 @@ for (const path of packagesToConsider) {
 	const { name, version } = packageJsonSchema.parse(
 		await Bun.file(`./${path}/package.json`).json(),
 	)
-	const remoteVersion = await getRemoteVersion(name)
+	const remoteVersion = await getRemoteVersion(name, version)
 
 	console.info(
 		`${path}: found package “${name}@${version}”, remote is ${remoteVersion ?? 'LIKELY UNPUBLISHED'}`,
