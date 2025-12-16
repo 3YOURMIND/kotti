@@ -3,7 +3,7 @@
 		v-bind="$props"
 		hasTime
 		:helpTextSlot="$slots.helpText"
-		@emit="onEmit"
+		@update:modelValue="onUpdateModelValue"
 	/>
 </template>
 
@@ -21,10 +21,11 @@ export default defineComponent({
 		GenericDateField,
 	},
 	props: makeProps(KottiFieldDateTime.propsSchema),
+	emits: ['update:modelValue'],
 	setup(_, { emit }) {
 		return {
-			onEmit: ({ event, payload }: { event: string; payload: unknown }) => {
-				emit(event, payload)
+			onUpdateModelValue: (payload: unknown) => {
+				emit('update:modelValue', payload)
 			},
 		}
 	},

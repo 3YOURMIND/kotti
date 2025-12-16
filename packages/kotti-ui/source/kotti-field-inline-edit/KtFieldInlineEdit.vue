@@ -329,7 +329,7 @@ export default defineComponent({
 	// slot that wraps <input /> & <EditIcon/>
 
 	/* stylelint-disable-next-line selector-class-pattern */
-	:deep(.kt-field__input-container-slot) {
+	:deep(.kt-field__input-container__slot) {
 		display: flex;
 		gap: var(--unit-2);
 		align-items: center;

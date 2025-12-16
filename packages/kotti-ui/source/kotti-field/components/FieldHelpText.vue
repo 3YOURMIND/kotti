@@ -56,7 +56,7 @@ export default defineComponent({
 						{
 							ref: helpTextContentRef,
 						},
-						props.helpTextSlot ?? [props.helpText],
+						props.helpTextSlot?.() ?? [props.helpText],
 					),
 				],
 			)
