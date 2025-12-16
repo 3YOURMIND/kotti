@@ -12,20 +12,11 @@
 				"pages/**/*.vue",
 				"layouts/**/*.vue",
 				"components/{ActionBar,ColorPalette,ColorUsage,LayoutContainer,MyToaster,NavBar}.vue",
-				"plugins/**/*.js"
-			],
-			"ignoreDependencies": [
-				"@nuxt/typescript-build",
-				"@nuxtjs/markdownit-loader",
-				"sass-loader",
-				"ts-loader",
-				"vue-server-renderer",
-				"vue-template-compiler"
+				"plugins/**/*.ts"
 			],
 			"project": ["**/*.{js,ts,vue}"]
 		},
 		"packages/kotti-ui": {
-			"entry": ["tokens/index.js"],
 			"ignoreDependencies": ["core-js", "normalize.css", "vue-tsc"],
 			"project": ["source/**/*.{js,ts,vue}"]
 		},

@@ -1,20 +1,18 @@
 // Codes
-%code-base {
-	line-height: 1.5;
-	background: var(--ui-01);
-	border-radius: var(--border-radius);
-}
 
-pre {
-	@extend %code-base;
+/* pre {
+	line-height: 1.5;
+	background-color: var(--ui-01);
+	border: 1px solid var(--ui-02);
+	border-radius: var(--border-radius);
 
 	display: flex;
-	padding: var(--unit-2) var(--unit-8);
+	padding: var(--unit-2) var(--unit-4);
 	overflow: hidden;
 	overflow-x: auto;
 	color: inherit;
 
-	code {
+	> code {
 		padding: unset;
 		overflow: unset;
 
@@ -32,18 +30,23 @@ pre {
 	}
 }
 
-code {
-	@extend %code-base;
+
+:not(pre) > code {
+	line-height: 1.5;
+	background-color: var(--ui-01);
+	border: 1px solid var(--ui-02);
+	border-radius: var(--border-radius);
 
 	position: relative;
 	padding: var(--unit-h);
 	overflow: hidden;
 	font-size: 85%;
 	color: var(--text-01);
-	background: var(--ui-02);
+
+background-color: var(--ui-02);
 	border-radius: var(--border-radius);
 
-	&[data-lang]::after {
+ &[data-lang]::after {
 		display: flex;
 		align-items: center;
 		align-self: stretch;
@@ -55,4 +58,4 @@ code {
 		content: attr(data-lang);
 		background-color: var(--ui-04);
 	}
-}
+} */

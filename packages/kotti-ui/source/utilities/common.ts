@@ -1,5 +1,5 @@
-import type { ComponentPublicInstanceConstructor } from 'vue/types/v3-component-public-instance'
-import type { Vue as _Vue } from 'vue/types/vue'
+import type { App, Component, FunctionPlugin } from 'vue'
+import { type z } from 'zod'
 
 import type { Kotti } from '../types'
 import { DecimalSeparator } from '../types/decimal-separator'
@@ -8,11 +8,15 @@ import { DecimalSeparator } from '../types/decimal-separator'
  * Takes a Vue Component and assigns a meta object which
  * describes various properties of the component
  */
-export const attachMeta = <C extends ComponentPublicInstanceConstructor, T>(
+export const attachMeta = <
+	C extends Component,
+	T extends Record<string, unknown>,
+	ZOD extends z.ZodTypeAny | null,
+>(
 	component: C,
-	meta: Kotti.Meta,
+	meta: Kotti.Meta<ZOD>,
 	other?: T,
-): C & { meta: Kotti.Meta & T } =>
+): C & { meta: Kotti.Meta<ZOD> & T } =>
 	Object.assign(component, { meta: Object.assign({}, meta, other) })
 
 /**
@@ -57,13 +61,18 @@ export const isOrContainsEventTarget = (
  * Takes a Vue Component and assigns an install function to it
  * this makes sure that it can be used with Vue.use(component)
  */
-export const makeInstallable = <C extends ComponentPublicInstanceConstructor>(
+export const makeInstallable = <C extends Component>(
 	component: C,
-): C & { install: Vue.PluginFunction<Record<string, never>> } =>
-	Object.assign(component, {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		install: (Vue: typeof _Vue) => Vue.component(component.name, component),
+): C & { install: FunctionPlugin<Record<string, never>> } => {
+	const { name } = component
+	if (name === undefined) {
+		throw new Error('makeInstallable was passed a component without a name')
+	}
+
+	return Object.assign(component, {
+		install: (app: App) => app.component(name, component),
 	})
+}
 
 export const isNumberInRange = ({
 	maximum,

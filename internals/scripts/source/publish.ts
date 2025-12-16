@@ -64,10 +64,10 @@ const filters = packagesToPublish
 	.map((packageName) => `--filter=${packageName}`)
 	.join(' ')
 
-await $`yarn run turbo run build check test ${filters}`
+await $`bun run turbo run build check test ${filters}`
 
 console.info(`attempting to publish ${packagesToPublish.join(', ')}`)
 
 for (const packageName of packagesToPublish) {
-	await $`yarn run turbo run publish-package --continue --filter=${packageName}`
+	await $`bun run turbo run publish-package --continue --filter=${packageName}`
 }

@@ -13,7 +13,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 .kt-button-group {
 	font-size: 0; /* Fix for inline element space https://css-tricks.com/fighting-the-space-between-inline-block-elements/ */

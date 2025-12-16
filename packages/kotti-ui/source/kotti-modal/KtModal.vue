@@ -157,7 +157,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 .kt-modal {
 	&__mask {

@@ -1,3 +1,5 @@
+import type { App } from 'vue'
+
 // styles
 import './kotti-style/index.scss'
 
@@ -37,10 +39,7 @@ import {
 	KtFieldDateTimeRange,
 } from './kotti-field-date'
 export * from './kotti-field-date'
-import {
-	KtFieldFileUpload,
-	KtFieldFileUploadRemote,
-} from './kotti-field-file-upload'
+import { KtFieldFileUpload } from './kotti-field-file-upload'
 export * from './kotti-field-file-upload'
 import { KtFieldInlineEdit } from './kotti-field-inline-edit'
 export * from './kotti-field-inline-edit'
@@ -95,30 +94,20 @@ import { KtRow } from './kotti-row'
 export * from './kotti-row'
 import { KtStandardTable, KtTable } from './kotti-table'
 export * from './kotti-table'
-import {
-	KtTableLegacy,
-	KtTableLegacyColumn,
-	KtTableLegacyConsumer,
-	KtTableLegacyProvider,
-} from './kotti-table-legacy'
-export * from './kotti-table-legacy'
 import { KtTag } from './kotti-tag'
 export * from './kotti-tag'
 import { KtToast, KtToaster } from './kotti-toaster'
 export * from './kotti-toaster'
 import { KtUserMenu } from './kotti-user-menu'
 export * from './kotti-user-menu'
-import type { VueConstructor } from 'vue'
-
 import { KtValueLabel } from './kotti-value-label'
 export * from './kotti-value-label'
 
 export * from './types'
 
 export default {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	install(Vue: VueConstructor): void {
-		const components = [
+	install<T>(app: App<T>): void {
+		const components = {
 			KtAccordion,
 			KtActionbar,
 			KtAvatar,
@@ -139,7 +128,6 @@ export default {
 			KtFieldDateTime,
 			KtFieldDateTimeRange,
 			KtFieldFileUpload,
-			KtFieldFileUploadRemote,
 			KtFieldInlineEdit,
 			KtFieldMultiSelect,
 			KtFieldMultiSelectRemote,
@@ -167,21 +155,17 @@ export default {
 			KtPagination,
 			KtPopover,
 			KtRow,
-			KtStandardTable,
 			KtSplitButton,
+			KtStandardTable,
 			KtTable,
-			KtTableLegacy,
-			KtTableLegacyColumn,
-			KtTableLegacyConsumer,
-			KtTableLegacyProvider,
 			KtTag,
 			KtToast,
 			KtToaster,
 			KtUserMenu,
 			KtValueLabel,
-		]
-		for (const component of components) {
-			Vue.use(component)
+		}
+		for (const [name, component] of Object.entries(components)) {
+			app.component(name, component)
 		}
 	},
 }

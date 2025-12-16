@@ -99,7 +99,7 @@ export const KtCol = attachMeta(
 							class: classes.value,
 							style: style.value,
 						},
-						[slots.default?.() ?? null],
+						slots.default?.(),
 					)
 			},
 		}),

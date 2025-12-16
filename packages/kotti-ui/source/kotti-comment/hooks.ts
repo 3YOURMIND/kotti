@@ -6,10 +6,10 @@ import { resizeTextarea } from './utilities'
 
 export const useResizeTextarea = (
 	textareaRef: Ref<HTMLTextAreaElement | null>,
-	value: Ref<KottiComment.TextArea.PropsInternal['value']>,
+	modelValue: Ref<KottiComment.TextArea.PropsInternal['modelValue']>,
 ): void => {
 	watch(
-		[textareaRef, value],
+		[textareaRef, modelValue],
 		() => {
 			resizeTextarea(textareaRef.value)
 		},
