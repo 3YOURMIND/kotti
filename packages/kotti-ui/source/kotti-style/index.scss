@@ -31,10 +31,10 @@
 /* forked from tippy’s light-border theme */
 .tippy-box[data-theme~='kt-light-border'] {
 	color: var(--text-01);
-	background-color: var(--white);
+	background-color: var(--ui-background);
 	background-clip: padding-box;
 	border: 1px solid var(--ui-02);
-	box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%);
+	box-shadow: 0 2px 4px 0 var(--text-01);
 
 	.tippy-content {
 		padding: var(--unit-2);

@@ -62,6 +62,6 @@ video.video-responsive {
 
 	.figure-caption {
 		margin-top: $layout-spacing;
-		color: $darkgray-500;
+		color: var(--text-01);
 	}
 }

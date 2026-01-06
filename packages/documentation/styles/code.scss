@@ -1,9 +1,9 @@
 @import '@3yourmind/kotti-ui/dist/variables.scss';
 
 code {
-	color: #091142;
+	color: var(--text-02);
 	tab-size: 2;
-	background: #e6e6e6;
+	background: var(--ui-02);
 }
 
 pre code {

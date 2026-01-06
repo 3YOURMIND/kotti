@@ -49,7 +49,7 @@ export default defineComponent({
 				if (code === null) return
 				codeHtml.value = await codeToHtml(dedent(code), {
 					lang: props.language,
-					theme: 'vitesse-light',
+					theme: 'kanagawa-wave',
 				})
 			},
 			{ immediate: true },
@@ -80,17 +80,17 @@ export default defineComponent({
 }
 
 .wrapper--is-type-default {
-	border-color: var(--gray-20);
+	border-color: var(--ui-02);
 
 	.actions {
-		background-color: var(--gray-10);
-		border-top-color: var(--gray-20);
-		border-bottom-color: var(--gray-20);
+		background-color: var(--ui-01);
+		border-top-color: var(--ui-02);
+		border-bottom-color: var(--ui-02);
 	}
 
 	.code {
 		> * {
-			background-color: var(--gray-10) !important;
+			background-color: var(--ui-01) !important;
 		}
 	}
 }

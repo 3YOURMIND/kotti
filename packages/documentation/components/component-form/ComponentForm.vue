@@ -180,7 +180,7 @@ export default defineComponent({
 			async (newCode) => {
 				codeHtml.value = await codeToHtml(newCode, {
 					lang: 'vue-html',
-					theme: 'vitesse-light',
+					theme: 'kanagawa-wave',
 				})
 			},
 			{ immediate: true },
@@ -207,7 +207,7 @@ export default defineComponent({
 
 				valueCodeHtml.value = await codeToHtml(`${code} // value`, {
 					lang: 'js',
-					theme: 'vitesse-light',
+					theme: 'kanagawa-wave',
 				})
 			},
 			{ immediate: true },
@@ -269,7 +269,7 @@ export default defineComponent({
 	> * {
 		padding: var(--unit-3) var(--unit-6);
 		margin: 0;
-		background-color: var(--gray-10) !important;
+		background-color: var(--ui-background) !important;
 	}
 }
 
@@ -278,17 +278,17 @@ export default defineComponent({
 	gap: var(--unit-6);
 	align-items: center;
 	padding: var(--unit-3) var(--unit-6);
-	background-color: var(--gray-10);
+	background-color: var(--ui-background);
 }
 
 .wrapper {
 	margin-bottom: var(--unit-8);
 	overflow: hidden;
-	border: 1px solid var(--gray-20);
+	border: 1px solid var(--ui-03);
 	border-radius: var(--border-radius);
 
 	> *:not(:last-child) {
-		border-bottom: 1px solid var(--gray-20);
+		border-bottom: 1px solid var(--ui-03);
 	}
 }
 
@@ -298,7 +298,7 @@ export default defineComponent({
 
 .settings {
 	display: flex;
-	background-color: #fcfcfc;
+	background-color: var(--ui-background);
 
 	> * {
 		flex: 1;
@@ -310,7 +310,7 @@ export default defineComponent({
 		flex-direction: column;
 
 		> *:not(:last-child) {
-			border-bottom: 1px solid var(--ui-02);
+			border-bottom: 1px solid var(--ui-03);
 		}
 	}
 
@@ -318,7 +318,7 @@ export default defineComponent({
 		flex-direction: row;
 
 		> *:not(:last-child) {
-			border-right: 1px solid var(--ui-02);
+			border-right: 1px solid var(--ui-03);
 		}
 	}
 }

@@ -74,8 +74,8 @@ export default defineComponent({
 	flex-direction: column;
 	width: var(--action-bar-width);
 	min-height: 100vh;
-	background: #fcfcfc;
-	border-right: 1px solid #ddd;
+	background: var(--ui-02);
+	border-right: 1px solid var(--ui-03);
 
 	.kt-actionbar-wrapper {
 		position: fixed;
@@ -148,7 +148,7 @@ export default defineComponent({
 	li {
 		padding: var(--unit-2) 0;
 		font-size: 0.75rem;
-		color: $darkgray-500;
+		color: var(--text-01);
 		list-style: none;
 	}
 
@@ -157,7 +157,7 @@ export default defineComponent({
 	}
 
 	i {
-		color: $lightgray-500;
+		color: var(--link-02);
 	}
 
 	&.has-icon-right i {

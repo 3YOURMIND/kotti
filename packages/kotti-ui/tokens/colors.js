@@ -30,6 +30,7 @@ export const baseColors = {
 	'gray-70': '#4F4F4F',
 	'gray-80': '#3A3A3A',
 	'gray-90': '#282828',
+	'gray-95': '#121212',
 
 	// Green
 	'green-05': '#E5FFE1',
@@ -146,17 +147,17 @@ export const tokens = [
 	{
 		name: 'ui-background',
 		description: 'Page background',
-		reference: 'white',
+		reference: 'gray-95',
 	},
 	{
 		name: 'ui-01',
 		description: 'Secondary page\nBackground 2',
-		reference: 'gray-10',
+		reference: 'gray-90',
 	},
 	{
 		name: 'ui-02',
 		description: 'Subtle border\nBackground 3',
-		reference: 'gray-20',
+		reference: 'gray-80',
 	},
 	{
 		name: 'ui-03',
@@ -166,62 +167,62 @@ export const tokens = [
 	{
 		name: 'ui-04',
 		description: 'High contrast border',
-		reference: 'gray-60',
+		reference: 'gray-40',
 	},
 	{
 		name: 'ui-05',
 		description: 'Lightly colored background',
-		reference: 'primary-10',
+		reference: 'primary-90',
 	},
 	{
 		name: 'text-01',
 		description: 'Primary text\nHeaders',
-		reference: 'gray-80',
+		reference: 'gray-20',
 	},
 	{
 		name: 'text-02',
 		description: 'Secondary text\nForm labels',
-		reference: 'gray-60',
+		reference: 'gray-40',
 	},
 	{
 		name: 'text-03',
 		description: 'Tertiary text\nHelp text\nPlaceholder text',
-		reference: 'gray-40',
+		reference: 'gray-60',
 	},
 	{
 		name: 'text-04',
 		description: 'Text on interactive colors',
-		reference: 'white',
+		reference: 'black',
 	},
 	{
 		name: 'text-05',
 		description: 'Disabled text',
-		reference: 'gray-30',
+		reference: 'gray-70',
 	},
 	{
 		name: 'interactive-01',
 		description: 'Primary interactive color\nPrimary buttons\nChecked color',
-		reference: 'primary-60',
+		reference: 'primary-40',
 	},
 	{
 		name: 'interactive-01-hover',
 		description: 'Hover for Interactive-01',
-		reference: 'primary-70',
+		reference: 'primary-30',
 	},
 	{
 		name: 'interactive-01-active',
 		description: 'Active for Interactive-01',
-		reference: 'primary-90',
+		reference: 'primary-10',
 	},
 	{
 		name: 'interactive-02',
 		description: 'Secondary interactive color\nSecondary button',
-		reference: 'gray-10',
+		reference: 'gray-90',
 	},
 	{
 		name: 'interactive-02-hover',
 		description: 'Hover for Interactive-02',
-		reference: 'primary-10',
+		reference: 'primary-90',
 	},
 	{
 		name: 'interactive-03',
@@ -231,12 +232,12 @@ export const tokens = [
 	{
 		name: 'interactive-04',
 		description: 'Selected elements light\n Alternative border',
-		reference: 'primary-20',
+		reference: 'primary-80',
 	},
 	{
 		name: 'interactive-05',
 		description: 'Active element border',
-		reference: 'primary-40',
+		reference: 'primary-60',
 	},
 	{
 		name: 'danger',
@@ -246,12 +247,12 @@ export const tokens = [
 	{
 		name: 'hover-danger',
 		description: 'Danger hover',
-		reference: 'red-70',
+		reference: 'red-30',
 	},
 	{
 		name: 'link-01',
 		description: 'Primary links\nText buttons',
-		reference: 'primary-60',
+		reference: 'primary-40',
 	},
 	{
 		name: 'link-02',
@@ -266,17 +267,17 @@ export const tokens = [
 	{
 		name: 'link-04',
 		description: 'Dark background link',
-		reference: 'primary-40',
+		reference: 'primary-60',
 	},
 	{
 		name: 'link-05',
 		description: 'Dark background active link',
-		reference: 'primary-30',
+		reference: 'primary-70',
 	},
 	{
 		name: 'icon-01',
 		description: 'Primary icon',
-		reference: 'gray-80',
+		reference: 'gray-20',
 	},
 	{
 		name: 'icon-02',
@@ -286,7 +287,7 @@ export const tokens = [
 	{
 		name: 'icon-03',
 		description: 'Icons on interactive colors',
-		reference: 'white',
+		reference: 'black',
 	},
 	{
 		name: 'support-error',
@@ -296,17 +297,17 @@ export const tokens = [
 	{
 		name: 'support-error-bg',
 		description: 'Error Background',
-		reference: 'red-10',
+		reference: 'red-90',
 	},
 	{
 		name: 'support-error-dark',
 		description: 'Error dark',
-		reference: 'red-70',
+		reference: 'red-30',
 	},
 	{
 		name: 'support-error-light',
 		description: 'Error light',
-		reference: 'red-20',
+		reference: 'red-80',
 	},
 	{
 		name: 'support-warning',
@@ -316,17 +317,17 @@ export const tokens = [
 	{
 		name: 'support-warning-bg',
 		description: 'Warning Background',
-		reference: 'orange-10',
+		reference: 'orange-90',
 	},
 	{
 		name: 'support-warning-dark',
 		description: 'Warning dark',
-		reference: 'orange-70',
+		reference: 'orange-30',
 	},
 	{
 		name: 'support-warning-light',
 		description: 'Warning light',
-		reference: 'orange-20',
+		reference: 'orange-80',
 	},
 	{
 		name: 'support-success',
@@ -336,17 +337,17 @@ export const tokens = [
 	{
 		name: 'support-success-bg',
 		description: 'Success Background',
-		reference: 'green-10',
+		reference: 'green-90',
 	},
 	{
 		name: 'support-success-dark',
 		description: 'Success dark',
-		reference: 'green-70',
+		reference: 'green-30',
 	},
 	{
 		name: 'support-success-light',
 		description: 'Success light',
-		reference: 'green-20',
+		reference: 'green-80',
 	},
 	{
 		name: 'support-info',
@@ -356,16 +357,16 @@ export const tokens = [
 	{
 		name: 'support-info-bg',
 		description: 'Information Background',
-		reference: 'blue-10',
+		reference: 'blue-90',
 	},
 	{
 		name: 'support-info-dark',
 		description: 'Information dark',
-		reference: 'blue-70',
+		reference: 'blue-30',
 	},
 	{
 		name: 'support-info-light',
 		description: 'Information light',
-		reference: 'blue-20',
+		reference: 'blue-80',
 	},
 ]

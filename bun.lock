@@ -92,7 +92,7 @@
     },
     "packages/kotti-ui": {
       "name": "@3yourmind/kotti-ui",
-      "version": "9.0.0-rc2",
+      "version": "9.0.0-rc3",
       "dependencies": {
         "@3yourmind/vue-use-tippy": "4.0.0-rc1",
         "@3yourmind/yoco": "^2.15.0",
