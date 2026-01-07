@@ -16,15 +16,15 @@
 
 @keyframes skeleton-loading-reduced {
 	0% {
-		background: $lightgray-300;
+		background: var(--ui-background);
 	}
 
 	50% {
-		background: $lightgray-400;
+		background: var(--text-05);
 	}
 
 	100% {
-		background: $lightgray-300;
+		background: var(--ui-background);
 	}
 }
 
@@ -34,9 +34,9 @@
 	width: 100%;
 	background: linear-gradient(
 		to left,
-		$lightgray-300 0%,
-		$lightgray-400 50%,
-		$lightgray-300 100%
+		var(--ui-background) 0%,
+		var(--text-05) 50%,
+		var(--ui-background) 100%
 	);
 	border-radius: 2px;
 	animation: 2s ease-out infinite skeleton-loading;
@@ -102,7 +102,7 @@
 	height: var(--unit-4);
 	margin-right: var(--unit-1);
 	pointer-events: none;
-	border: $border-width-lg solid var(--loading-color);
+	border: var(--unit-h) solid var(--loading-color);
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-radius: 50%;
@@ -126,7 +126,7 @@
 		margin-top: calc(-1 * var(--unit-2));
 		margin-left: calc(-1 * var(--unit-2));
 		content: '';
-		border: $border-width-lg solid var(--loading-color);
+		border: var(--unit-h) solid var(--loading-color);
 		border-top-color: transparent;
 		border-right-color: transparent;
 		border-radius: 50%;

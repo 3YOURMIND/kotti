@@ -4,10 +4,10 @@
 	display: block;
 	width: 100%;
 	padding: 0;
-	font-size: $font-size-sm;
+	font-size: var(--font-size-small);
 	font-weight: 700;
 	line-height: var(--unit-6);
-	color: $lightgray-500;
+	color: var(--text-02);
 
 	i {
 		font-size: var(--unit-4);

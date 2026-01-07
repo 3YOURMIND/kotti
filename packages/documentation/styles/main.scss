@@ -26,7 +26,7 @@ pre.long {
 	display: block;
 	padding: 2rem 1.2rem;
 	margin: 1rem 0;
-	background: #f8f8f8;
+	background: var(--ui-background);
 
 	&::before {
 		position: absolute;
@@ -36,14 +36,14 @@ pre.long {
 		display: block;
 		padding: 0.2rem 0.4rem;
 		font-size: 0.875em;
-		color: #fff;
+		color: var(--text-05);
 		content: 'Example';
 		background: #555;
 		opacity: 0.46;
 	}
 
 	&.white {
-		background: #fff;
-		border: 1px solid #dbdbdb;
+		background: var(--ui-background);
+		border: 1px solid var(--ui-02);
 	}
 }

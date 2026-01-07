@@ -97,7 +97,7 @@ export default defineComponent({
 		padding-left: var(--unit-8);
 		overflow-y: auto;
 		background-color: var(--ui-background);
-		box-shadow: 0 2px 8px rgb(0 0 0 / 33%);
+		box-shadow: var(--shadow-md);
 		transition: all 0.3s ease;
 
 		&--is-expanded {

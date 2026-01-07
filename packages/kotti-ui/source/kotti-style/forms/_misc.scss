@@ -7,7 +7,7 @@
 	.form-icon {
 		position: absolute;
 		font-size: 1rem;
-		color: $lightgray-500;
+		color: var(--icon-02);
 	}
 }
 
@@ -71,7 +71,7 @@
 
 	.form-validation-text {
 		padding: 0.2rem;
-		font-size: $font-size-sm;
+		font-size: var(--font-size-small);
 		font-weight: 600;
 		color: var(--form-border-color);
 	}
@@ -84,7 +84,7 @@
 		--form-input-interactive-color: var(--ui-03);
 
 		cursor: not-allowed;
-		background: $lightgray-300;
+		background: var(--ui-background);
 		opacity: 0.46;
 	}
 }

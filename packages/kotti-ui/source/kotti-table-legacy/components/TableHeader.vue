@@ -169,9 +169,9 @@ export default defineComponent({
 th {
 	box-sizing: border-box;
 	padding: var(--unit-2) var(--unit-1);
-	font-size: $font-size-sm;
+	font-size: var(--font-size-small);
 	line-height: 1em;
-	color: $lightgray-500;
+	color: var(--gray-50);
 	text-align: inherit;
 	text-transform: uppercase;
 	border-width: 0;

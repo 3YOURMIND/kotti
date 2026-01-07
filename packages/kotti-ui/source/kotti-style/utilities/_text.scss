@@ -12,11 +12,11 @@
 }
 
 $text-colors: (
-	text-primary: $primary-500,
-	text-gray: $lightgray-500,
-	text-success: $green-500,
-	text-error: $red-500,
-	text-warning: $orange-500,
+	text-primary: var(--interactive-01),
+	text-gray: var(--text-02),
+	text-success: var(--support-success-dark),
+	text-error: var(--support-error-dark),
+	text-warning: var(--support-warning-dark),
 );
 $text-aligns: (
 	text-right: right,

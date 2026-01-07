@@ -360,7 +360,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 
 		&--is-borderless {
 			.kt-field__input-container {
-				background-color: rgb(from var(--gray-20) r g b / 25%);
+				background-color: rgb(from var(--ui-02) r g b / 25%);
 				border-color: transparent;
 			}
 		}
@@ -383,6 +383,7 @@ we would be able to extend on demand instead of unscoping all field classes -->
 		flex: 1;
 		align-items: center;
 		padding: 0 0.8rem;
+		background-color: var(--ui-background);
 		border: 1px solid var(--ui-02);
 		border-radius: var(--field-border-radius);
 

@@ -195,6 +195,7 @@ export default defineComponent({
 		textarea {
 			padding: 0;
 			resize: none;
+			background-color: transparent;
 			border: none;
 		}
 	}

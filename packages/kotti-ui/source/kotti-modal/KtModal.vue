@@ -179,9 +179,9 @@ export default defineComponent({
 		flex-direction: column;
 		width: 90%;
 		max-height: 90%;
-		background-color: #fff;
+		background-color: var(--ui-background);
 		border-radius: var(--border-radius);
-		box-shadow: 0 2px 8px rgb(0 0 0 / 33%);
+		box-shadow: var(--shadow-lg);
 		transition: all 0.3s ease;
 	}
 

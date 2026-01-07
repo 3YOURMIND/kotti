@@ -69,13 +69,12 @@ export default defineComponent({
 $border: var(--gray-90);
 $fill: var(--gray-90);
 $text: var(--gray-10);
-$shadow: var(--gray-100);
 
 .tippy-box[data-theme~='kt-tooltip-navbar'] {
 	color: $text;
 	background-color: $fill;
 	border: 1px solid $border;
-	box-shadow: 0 4px 14px -2px $shadow;
+	box-shadow: var(--shadow-lg);
 }
 
 .tippy-box[data-theme~='kt-tooltip-navbar'] > .tippy-backdrop {
