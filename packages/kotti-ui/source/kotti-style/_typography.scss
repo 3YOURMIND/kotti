@@ -103,7 +103,7 @@ dl {
 	}
 
 	.default {
-		font-size: $font-size;
+		font-size: var(--font-size-medium);
 	}
 
 	.key {

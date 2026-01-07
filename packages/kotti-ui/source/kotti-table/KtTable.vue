@@ -425,6 +425,7 @@ export default defineComponent({
 	table {
 		width: 100%;
 		border-collapse: collapse;
+		background-color: var(--ui-background);
 
 		a.kt-table-cell-content {
 			color: inherit;
@@ -515,12 +516,12 @@ export default defineComponent({
 				&--has-drop-indicator {
 					&::before,
 					&-right::after {
-						background-color: var(--gray-30);
+						background-color: var(--text-05);
 					}
 				}
 
 				&--is-dragged {
-					background-color: var(--gray-20);
+					background-color: var(--ui-02);
 
 					// setting opacity only for the content, not for the drop
 					// indicator and background color
@@ -554,12 +555,12 @@ export default defineComponent({
 				&.kt-table-cell--has-drop-indicator {
 					&::before,
 					&-right::after {
-						background-color: var(--gray-30);
+						background-color: var(--text-05);
 					}
 				}
 
 				&.kt-table-cell--is-dragged {
-					background-color: var(--gray-10);
+					background-color: var(--ui-01);
 
 					// setting opacity only for the content, not for the drop
 					// indicator and background color
@@ -645,8 +646,8 @@ export default defineComponent({
 			&--is-disabled {
 				color: var(--text-05);
 				cursor: not-allowed;
-				background-color: rgb(248 248 248 / 60%); // ~= rgb(--gray-10 / 60%)
-				border-color: rgb(224 224 224 / 60%); // ~= rgb(--gray-20 / 60%)
+				background-color: rgb(from var(--ui-01) r g b / 60%);
+				border-color: rgb(from var(--ui-02) r g b / 60%);
 			}
 
 			> * {
@@ -684,7 +685,7 @@ tr.kt-table-row {
 	&--is-click-disabled > :not(.kt-table__actions-column) {
 		color: var(--text-05);
 		cursor: not-allowed;
-		background-color: rgb(248 248 248 / 60%); // ~= rgb(--gray-10 / 60%)
+		background-color: rgb(from var(--ui-01) r g b / 60%);
 	}
 
 	&--is-empty {
@@ -699,7 +700,7 @@ tr.kt-table-row {
 		cursor: pointer;
 
 		&:hover {
-			background-color: rgb(234 240 250 / 50%); // ~= rgb(--blue-10 / 60%)
+			background-color: rgb(from var(--ui-05) r g b / 50%);
 		}
 
 		.kt-table-cell-content--is-click-disabled:hover {
@@ -713,7 +714,7 @@ tr.kt-table-row {
 	}
 
 	&--is-selected {
-		background-color: rgb(234 240 250 / 50%); // ~= rgb(--blue-10 / 60%)
+		background-color: rgb(from var(--ui-05) r g b / 50%);
 	}
 }
 

@@ -120,12 +120,12 @@ export default defineComponent({
 	&__page-button {
 		display: inline-block;
 		padding: var(--unit-1);
-		background: var(--gray-10);
+		background: var(--ui-01);
 		border-radius: var(--border-radius);
 
 		&:hover {
 			cursor: pointer;
-			background: var(--gray-20);
+			background: var(--ui-02);
 		}
 	}
 

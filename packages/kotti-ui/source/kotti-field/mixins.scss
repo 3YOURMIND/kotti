@@ -367,7 +367,7 @@
 		color: $main-color;
 
 		// overwrites native behavior when disabled
-		background-color: transparent;
+		background-color: var(--ui-background);
 
 		&:disabled {
 			color: $disabled-color;

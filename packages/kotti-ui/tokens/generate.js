@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import { tokens, baseColors } from './colors.js'
+import { darkModeTokens, tokens, baseColors } from './colors.js'
 import { arrayToCustomProperties, objectToArray } from './utilities.js'
 
 // get CSS
@@ -14,7 +14,14 @@ const output = `
 :root {
 ${arrayToCustomProperties(objectToArray(baseColors), 'color')}
 ${arrayToCustomProperties(tokens)}
-}`
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+	${arrayToCustomProperties(darkModeTokens)}
+	}
+}
+`
 
 // Write it
 fs.writeFile('./source/kotti-style/tokens.css', output, (err) => {

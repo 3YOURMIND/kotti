@@ -54,8 +54,8 @@ export default defineComponent({
 	flex-direction: column;
 	width: var(--action-bar-width);
 	min-height: 100vh;
-	background: #fcfcfc;
-	border-right: 1px solid #ddd;
+	background: var(--ui-01);
+	border-right: 1px solid var(--ui-02);
 
 	.kt-actionbar-wrapper {
 		position: fixed;
@@ -98,13 +98,13 @@ export default defineComponent({
 		padding: var(--unit-2);
 		margin: var(--unit-2) 0;
 		font-size: 0.75rem;
-		color: $darkgray-500;
+		color: var(--text-01);
 		list-style: none;
 		border-radius: 0.2rem;
 
 		&:hover {
 			cursor: pointer;
-			background: $lightgray-400;
+			background: var(--text-05);
 		}
 
 		&--active {
@@ -125,14 +125,14 @@ export default defineComponent({
 
 			.kt-actionbar-nav__label,
 			.kt-actionbar-nav__icon {
-				color: $lightgray-500;
+				color: var(--gray-50);
 			}
 		}
 	}
 
 	&__icon {
 		padding-right: 0.4rem;
-		color: $darkgray-500;
+		color: var(--text-01);
 
 		&--right {
 			float: right;
@@ -142,7 +142,7 @@ export default defineComponent({
 	}
 
 	&__label {
-		color: $darkgray-500;
+		color: var(--text-01);
 	}
 }
 
@@ -155,7 +155,7 @@ export default defineComponent({
 	li {
 		padding: var(--unit-2) 0;
 		font-size: 0.75rem;
-		color: $darkgray-500;
+		color: var(--text-01);
 		list-style: none;
 	}
 
@@ -164,7 +164,7 @@ export default defineComponent({
 	}
 
 	i {
-		color: $lightgray-500;
+		color: var(--link-02);
 	}
 
 	&.has-icon-right i {
@@ -190,7 +190,7 @@ export default defineComponent({
 		width: 100%;
 		min-height: auto;
 		border-right: 0;
-		border-bottom: 1px solid #ddd;
+		border-bottom: 1px solid var(--ui-02);
 
 		.kt-actionbar-wrapper {
 			position: relative;

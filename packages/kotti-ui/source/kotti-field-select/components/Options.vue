@@ -293,7 +293,7 @@ export default defineComponent({
 	&__separator {
 		height: var(--unit-q);
 		margin: var(--unit-1) 0;
-		background-color: var(--gray-20);
+		background-color: var(--ui-02);
 	}
 }
 </style>

@@ -418,10 +418,10 @@ table.kt-table-legacy {
 	position: relative;
 	padding: var(--unit-2) var(--unit-1);
 	line-height: 1.2rem;
-	border-bottom: 1px solid $lightgray-400;
+	border-bottom: 1px solid var(--gray-20);
 
 	&.empty {
-		color: $lightgray-500;
+		color: var(--gray-50);
 		text-align: center;
 	}
 }
@@ -432,10 +432,10 @@ table.kt-table-legacy {
 		i {
 			margin: 0 0.2rem;
 			font-size: 1rem !important;
-			color: $darkgray-300;
+			color: var(--gray-50);
 
 			&.disabled {
-				color: $lightgray-500;
+				color: var(--gray-50);
 			}
 		}
 	}
@@ -465,10 +465,10 @@ table.kt-table-legacy {
 	i {
 		margin: 0 var(--unit-1);
 		font-size: 1rem;
-		color: $lightgray-500;
+		color: var(--gray-50);
 
 		&:hover {
-			color: $darkgray-500;
+			color: var(--text-01);
 			cursor: pointer;
 		}
 	}
@@ -484,7 +484,7 @@ table.kt-table-legacy {
 }
 
 :deep(.kt-table-legacy .kt-table-legacy__no-row) {
-	color: $lightgray-500;
+	color: var(--gray-50);
 	text-align: center;
 }
 

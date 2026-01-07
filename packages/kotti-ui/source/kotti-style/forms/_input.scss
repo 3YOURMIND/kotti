@@ -7,7 +7,7 @@
 	padding: 0.4rem 0.8rem;
 	margin-top: 0.2rem;
 	font-size: 0.85em;
-	background: #fff;
+	background: var(--ui-background);
 	border-radius: 2px;
 	box-shadow: 0 0 0.2rem rgb(0 0 0 / 26%);
 
@@ -25,7 +25,7 @@
 	width: 100%;
 	height: $control-size;
 	padding: 0 var(--unit-2);
-	line-height: $line-height;
+	line-height: 1rem;
 	color: var(--text-01);
 	appearance: none;
 	border: 1px solid var(--ui-02);
@@ -36,66 +36,4 @@
 textarea.form-input {
 	height: auto;
 	padding: var(--unit-2);
-}
-
-// Form element: Input groups
-.input-group {
-	display: flex;
-
-	.input-group-addon {
-		padding: 0 $control-padding-x;
-		font-size: $font-size-sm;
-		line-height: 1.5rem;
-		white-space: nowrap;
-		background: $lightgray-300;
-		border: $border-width solid #dbdbdb;
-		border-radius: var(--border-radius);
-
-		&.addon-sm {
-			padding: $control-padding-y-sm $control-padding-x-sm;
-			font-size: $font-size-sm;
-		}
-
-		&.addon-lg {
-			padding: $control-padding-y-lg $control-padding-x-lg;
-			font-size: $font-size-lg;
-		}
-	}
-
-	.form-input {
-		flex: 1 1 auto;
-		width: 1%;
-	}
-
-	.input-group-btn {
-		z-index: $zindex-0;
-	}
-
-	.form-input,
-	.input-group-addon,
-	.input-group-btn {
-		&:first-child:not(:last-child) {
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
-		}
-
-		&:not(:first-child, :last-child) {
-			margin-left: -$border-width;
-			border-radius: 0;
-		}
-
-		&:last-child:not(:first-child) {
-			margin-left: -$border-width;
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-
-		&:focus {
-			z-index: $zindex-0 + 1;
-		}
-	}
-
-	&.input-inline {
-		display: inline-flex;
-	}
 }

@@ -182,7 +182,7 @@ export default defineComponent({
 	color: var(--kt-navbar-color);
 	background-color: var(--kt-navbar-background);
 	border-radius: 0 0 0.2rem 0.2rem;
-	box-shadow: 0 2px 4px rgb(0 0 0 / 26%);
+	box-shadow: var(--shadow-md);
 
 	// HACK: tippy box has a 5px offset that I can not get rid of using its props
 	transform: translateX(-5px);

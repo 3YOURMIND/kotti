@@ -8,22 +8,19 @@ table.kt-table-legacy :deep(.form-checkbox) {
 	position: relative;
 	display: inline-block;
 	min-height: 1.2rem;
-	padding: (($control-size-sm - $line-height) * 0.5) $control-padding-x
-		(($control-size-sm - $line-height) * 0.5)
-		($control-icon-size + $control-padding-x);
-	margin: ($control-size - $control-size-sm) * 0.5 0;
-	line-height: $line-height;
+	padding: 0.4rem 0.2rem 0.4rem 1.2rem;
+	line-height: 1rem;
 
 	.form-icon {
 		position: absolute;
-		top: ($control-size-sm - $control-icon-size) * 0.5;
+		top: 0.2rem;
 		left: 0;
 		display: inline-block;
-		width: $control-icon-size;
-		height: $control-icon-size;
+		width: var(--unit-4);
+		height: var(--unit-4);
 		cursor: pointer;
 		background: var(--ui-background);
-		border: $border-width solid var(--ui-02);
+		border: 1px solid var(--ui-02);
 		border-radius: var(--border-radius);
 
 		&--is-checked {
@@ -40,7 +37,7 @@ table.kt-table-legacy :deep(.form-checkbox) {
 				margin-left: -3px;
 				content: '';
 				background-clip: padding-box;
-				border: $border-width-lg solid #fff;
+				border: var(--unit-h) solid var(--ui-white);
 				border-top-width: 0;
 				border-left-width: 0;
 				transform: rotate(45deg);
@@ -73,7 +70,7 @@ table.kt-table-legacy :deep(.form-checkbox) {
 				margin-top: -1px;
 				margin-left: -5px;
 				content: '';
-				background: $lightgray-400;
+				background: var(--ui-02);
 			}
 		}
 
@@ -89,11 +86,11 @@ table.kt-table-legacy :deep(.form-checkbox) {
 	// Input checkbox sizes
 	&.input-sm {
 		margin: 0;
-		font-size: $font-size-sm;
+		font-size: var(--font-size-small);
 	}
 
 	&.input-lg {
-		margin: ($control-size-lg - $control-size-sm) * 0.5 0;
-		font-size: $font-size-lg;
+		margin: 6px 0;
+		font-size: var(--font-size-large);
 	}
 }

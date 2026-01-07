@@ -19,7 +19,7 @@ export default defineComponent({
 	font-size: 0; /* Fix for inline element space https://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
 
 	.kt-button {
-		font-size: $font-size;
+		font-size: var(--font-size-medium);
 		border-radius: 0;
 
 		&:first-of-type {

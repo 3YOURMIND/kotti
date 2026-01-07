@@ -83,16 +83,18 @@ export default defineComponent({
 }
 
 .wrapper--is-type-default {
-	border-color: var(--gray-20);
+	border-color: var(--ui-02);
 
 	.actions {
-		background-color: var(--gray-10);
-		border-top-color: var(--gray-20);
-		border-bottom-color: var(--gray-20);
+		background-color: var(--ui-01);
+		border-top-color: var(--ui-02);
+		border-bottom-color: var(--ui-02);
 	}
 
-	.code > * {
-		background-color: var(--gray-10) !important;
+	.code {
+		> * {
+			background-color: var(--ui-01) !important;
+		}
 	}
 }
 

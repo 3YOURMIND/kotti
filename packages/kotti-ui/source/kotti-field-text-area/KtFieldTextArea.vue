@@ -169,7 +169,7 @@ export default defineComponent({
 
 	&--is-borderless {
 		.kt-field-text-area__wrapper {
-			background-color: rgb(from var(--gray-20) r g b / 25%);
+			background-color: rgb(from var(--ui-02) r g b / 25%);
 			border-color: transparent;
 		}
 	}

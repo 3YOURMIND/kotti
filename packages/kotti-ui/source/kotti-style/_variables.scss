@@ -1,20 +1,5 @@
 // DEPRECATED: Please use CSS Custom Properties instead
 
-// Color
-$primary-500: #2c66c4;
-$primary-400: #3173de;
-$primary-600: #2659ab;
-$darkgray-300: #8a8a8a;
-$darkgray-400: #575757;
-$darkgray-500: #3d3d3d;
-$lightgray-300: #f8f8f8;
-$lightgray-500: #8f8f8f;
-$lightgray-400: #dbdbdb;
-$green-500: #64ad13;
-$orange-500: #ff7800;
-$red-400: #f21d1d;
-$red-500: #d91919;
-
 // Fonts
 // Credit: https://css-tricks.com/snippets/css/system-font-stack/
 
@@ -41,14 +26,6 @@ $unit-7: 1.4rem !default;
 $unit-8: 1.6rem !default;
 $unit-10: 2rem !default;
 
-// Font sizes
-$html-font-size: 20px !default;
-$html-line-height: 1.5 !default;
-$font-size: 0.7rem !default;
-$font-size-sm: 0.6rem !default;
-$font-size-lg: 0.8rem !default;
-$line-height: 1rem !default;
-
 // Sizes
 $layout-spacing: $unit-2 !default;
 $layout-spacing-lg: $unit-4 !default;
@@ -57,11 +34,6 @@ $border-width-lg: $unit-h !default;
 $control-size: $unit-8 !default;
 $control-size-sm: $unit-7 !default;
 $control-size-lg: $unit-10 !default;
-$control-padding-x: $unit-2 !default;
-$control-padding-x-sm: $unit-2 * 0.75 !default;
-$control-padding-x-lg: $unit-2 * 1.5 !default;
-$control-padding-y-sm: ($control-size-sm - $line-height) * 0.5 - $border-width !default;
-$control-padding-y-lg: ($control-size-lg - $line-height) * 0.5 - $border-width !default;
 $control-icon-size: 0.8rem !default;
 
 // Responsive breakpoints
@@ -78,10 +50,3 @@ $zindex-0: 1 !default;
 $zindex-1: 100 !default;
 $zindex-2: 200 !default;
 $zindex-4: 400 !default;
-
-// Shadow
-
-// stylelint-disable
-$box-shadow:
-	0 0 1px #dbdbdb,
-	0 0.1rem 5px rgb(0 0 0 / 26%);
