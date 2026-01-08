@@ -62,8 +62,8 @@
 					<div
 						class="tag"
 						:style="{
-							'--color': 'var(--red-70)',
-							'--background-color': 'var(--red-20)',
+							'--color': 'var(--support-error-dark)',
+							'--background-color': 'var(--support-error-light)',
 						}"
 					>
 						<div class="tag__left">NPM</div>

@@ -545,7 +545,7 @@ export default defineComponent({
 					position: sticky;
 
 					.kt-table__actions {
-						background-color: var(--white);
+						background-color: var(--ui-background);
 						border-color: var(--ui-02);
 					}
 				}

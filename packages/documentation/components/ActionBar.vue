@@ -103,8 +103,8 @@ export default defineComponent({
 	}
 
 	&--is-deprecated {
-		color: var(--red-70);
-		background: var(--red-20);
+		color: var(--support-error-bg);
+		background: var(--support-error);
 	}
 
 	&--is-guide {
