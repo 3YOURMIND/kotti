@@ -17,7 +17,7 @@ ${arrayToCustomProperties(tokens)}
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme="light"]) {
 	${arrayToCustomProperties(darkModeTokens)}
 	}
 }

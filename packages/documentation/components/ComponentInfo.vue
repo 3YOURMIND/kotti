@@ -213,8 +213,8 @@ export default defineComponent({
 
 				if (deprecated !== null)
 					result.push({
-						backgroundColor: 'var(--red-20)',
-						color: 'var(--red-70)',
+						backgroundColor: 'var(--support-error-light)',
+						color: 'var(--support-error-dark)',
 						left: 'Deprecated for',
 						right: `v${deprecated.version}`,
 					})
@@ -380,7 +380,7 @@ $radius: 3px;
 }
 
 .danger-block {
-	color: var(--red-70);
+	color: var(--support-error-dark);
 	background: var(--support-error-light);
 	border: 1px solid var(--support-error-dark);
 	border-radius: $radius;

@@ -96,9 +96,9 @@ export default defineComponent({
 	position: relative;
 	display: inline-flex;
 	aspect-ratio: 1/1;
-	color: var(--white);
+	color: var(--ui-background);
 	background: var(--ui-02);
-	border: 0.1rem solid var(--white);
+	border: 0.1rem solid var(--ui-background);
 	border-radius: 100%;
 
 	&__fallback,

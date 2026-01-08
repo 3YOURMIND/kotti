@@ -69,7 +69,7 @@ export default defineComponent({
 		margin-left: 0.2rem;
 		color: var(--text-03);
 		background: var(--ui-02);
-		border: 0.1rem solid var(--white);
+		border: 0.1rem solid var(--ui-background);
 		border-radius: 100%;
 	}
 

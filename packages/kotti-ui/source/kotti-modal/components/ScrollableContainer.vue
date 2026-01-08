@@ -92,7 +92,7 @@ $shadow-overlay-height: 5px;
 		z-index: 5;
 		height: $shadow-overlay-height;
 		pointer-events: none;
-		background-color: var(--white);
+		background-color: var(--ui-background);
 		opacity: 0;
 		transition: opacity 0.3s ease;
 

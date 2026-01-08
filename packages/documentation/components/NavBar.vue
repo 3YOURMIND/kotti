@@ -6,24 +6,48 @@
 		@setIsNarrow="setIsNarrow"
 	>
 		<template #navbar-footer>
-			<a class="github-link" href="https://github.com/3YOURMIND/kotti">
-				<img height="24" src="~/assets/img/icon_github.svg" width="24" />
-			</a>
+			<div class="footer">
+				<KtFieldToggle
+					v-show="!isNarrow"
+					v-model="isDarkColorScheme"
+					class="darkmode-toggle"
+					isOptional
+					type="switch"
+				>
+					Dark Mode</KtFieldToggle
+				>
+				<a href="https://github.com/3YOURMIND/kotti">
+					<img height="24" src="~/assets/img/icon_github.svg" width="24" />
+				</a>
+			</div>
 		</template>
 	</KtNavbar>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 import type { Kotti } from '@3yourmind/kotti-ui'
-import { KtNavbar } from '@3yourmind/kotti-ui'
+import { KtFieldToggle, KtNavbar } from '@3yourmind/kotti-ui'
 
 import navLogo from '../assets/img/nav_logo.svg'
 import { menu } from '../data/menu'
 import { useRoute } from '../hooks/use-route'
 
+const LOCALSTORAGE_IS_DARK_COLOR_CHEME = 'kotti-documentation-is-dark'
 const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
+
+const saveColorSchemeToLocalStorage = (colorScheme: 'dark' | 'light') => {
+	try {
+		if (typeof window !== 'undefined') {
+			window.document.documentElement.setAttribute('data-theme', colorScheme)
+			window.localStorage.setItem(LOCALSTORAGE_IS_DARK_COLOR_CHEME, colorScheme)
+		}
+	} catch {
+		// eslint-disable-next-line no-console
+		console.warn('could not save to localStorage')
+	}
+}
 
 const saveSavedFieldsToLocalStorage = (isNarrow: boolean) => {
 	try {
@@ -41,10 +65,31 @@ const saveSavedFieldsToLocalStorage = (isNarrow: boolean) => {
 export default defineComponent({
 	name: 'NavBar',
 	components: {
+		KtFieldToggle,
 		KtNavbar,
 	},
 	setup() {
 		const route = useRoute()
+
+		const isDarkColorScheme = ref<boolean>(
+			(() => {
+				try {
+					if (typeof window !== 'undefined') {
+						const colorScheme = window.localStorage.getItem(
+							LOCALSTORAGE_IS_DARK_COLOR_CHEME,
+						)
+						return colorScheme !== null
+							? colorScheme === 'dark'
+							: window.matchMedia('(prefers-color-scheme: dark)').matches
+					}
+				} catch {
+					// eslint-disable-next-line no-console
+					console.warn('could not read localStorage')
+				}
+
+				return false
+			})(),
+		)
 
 		const isNarrow = ref<boolean>(
 			(() => {
@@ -63,7 +108,12 @@ export default defineComponent({
 			})(),
 		)
 
+		watch(isDarkColorScheme, (isDark) => {
+			saveColorSchemeToLocalStorage(isDark ? 'dark' : 'light')
+		})
+
 		return {
+			isDarkColorScheme,
 			isNarrow,
 			navLogo,
 			quickLinks: [
@@ -117,9 +167,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.github-link {
+.footer {
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	width: 100%;
+
+	.darkmode-toggle {
+		margin-bottom: 0;
+	}
 }
 </style>

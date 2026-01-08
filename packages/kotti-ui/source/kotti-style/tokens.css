@@ -175,7 +175,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme='light']) {
 		--ui-black: var(--white);
 		--ui-white: var(--black);
 		--ui-background: var(--gray-100);
