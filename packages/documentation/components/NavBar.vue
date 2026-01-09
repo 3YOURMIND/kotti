@@ -108,9 +108,13 @@ export default defineComponent({
 			})(),
 		)
 
-		watch(isDarkColorScheme, (isDark) => {
-			saveColorSchemeToLocalStorage(isDark ? 'dark' : 'light')
-		})
+		watch(
+			isDarkColorScheme,
+			(isDark) => {
+				saveColorSchemeToLocalStorage(isDark ? 'dark' : 'light')
+			},
+			{ immediate: true },
+		)
 
 		return {
 			isDarkColorScheme,
