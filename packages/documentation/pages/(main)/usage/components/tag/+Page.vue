@@ -15,6 +15,8 @@
 		language="vue-html"
 	>
 		<KtTag isDisabled text="I display Information" />
+		<KtTag colorStyle="orange-light" isDisabled text="I have color style" />
+		<KtTag isDisabled label="Label" text="I have a label" />
 		<KtTag
 			v-if="showTag"
 			text="You can remove me if you want"
