@@ -16,10 +16,8 @@ ${arrayToCustomProperties(objectToArray(baseColors), 'color')}
 ${arrayToCustomProperties(tokens)}
 }
 
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme="light"]) {
-	${arrayToCustomProperties(darkModeTokens)}
-	}
+:root[data-theme="dark"] {
+${arrayToCustomProperties(darkModeTokens)}
 }
 `
 
