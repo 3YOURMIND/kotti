@@ -4,7 +4,7 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
-		"@3yourmind/vue-use-tippy": "4.0.0-rc1",
+		"@3yourmind/vue-use-tippy": "4.0.0",
 		"@3yourmind/yoco": "^2.15.0",
 		"@metatypes/typography": "^0.5.0",
 		"@metatypes/units": "^0.5.0",
@@ -38,7 +38,7 @@
 		"vite-plugin-static-copy": "^3.1.4",
 		"vitest": "^4.0.13",
 		"vue": "3.5.25",
-		"vue-tsc": "^3.1.5"
+		"vue-tsc": "^3.2.2"
 	},
 	"exports": {
 		".": {
@@ -101,5 +101,5 @@
 	"style": "./dist/style.css",
 	"type": "module",
 	"types": "./dist/types/index.d.ts",
-	"version": "9.0.0-rc2"
+	"version": "9.0.0"
 }
