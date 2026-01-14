@@ -27,7 +27,7 @@
 	--gray-60: #696969;
 	--gray-70: #4f4f4f;
 	--gray-80: #3a3a3a;
-	--gray-90: #282828;
+	--gray-90: #222;
 	--gray-100: #141414;
 	--green-05: #e5ffe1;
 	--green-10: #cbfcc5;
@@ -36,9 +36,9 @@
 	--green-40: #58c74a;
 	--green-50: #40b032;
 	--green-60: #359928;
-	--green-70: #217b15;
-	--green-80: #19670f;
-	--green-90: #105008;
+	--green-70: #237618;
+	--green-80: #13510c;
+	--green-90: #0c3507;
 	--green-100: #0a3505;
 	--mint-05: #e5faf5;
 	--mint-10: #c7fdf1;
@@ -128,6 +128,7 @@
 	--ui-black: var(--black);
 	--ui-white: var(--white);
 	--ui-background: var(--gray-05);
+	--ui-background-shade: var(--gray-10);
 	--ui-01: var(--gray-10);
 	--ui-02: var(--gray-20);
 	--ui-03: var(--gray-50);
@@ -178,6 +179,7 @@
 	--ui-black: var(--white);
 	--ui-white: var(--black);
 	--ui-background: var(--gray-100);
+	--ui-background-shade: var(--gray-90);
 	--ui-01: var(--gray-90);
 	--ui-02: var(--gray-80);
 	--ui-03: var(--gray-50);
@@ -186,10 +188,10 @@
 	--text-01: var(--gray-20);
 	--text-02: var(--gray-40);
 	--text-03: var(--gray-60);
-	--text-04: var(--black);
+	--text-04: var(--primary-20);
 	--text-05: var(--gray-70);
-	--interactive-01: var(--primary-40);
-	--interactive-01-hover: var(--primary-30);
+	--interactive-01: var(--primary-50);
+	--interactive-01-hover: var(--primary-60);
 	--interactive-01-active: var(--primary-10);
 	--interactive-02: var(--gray-90);
 	--interactive-02-hover: var(--primary-90);

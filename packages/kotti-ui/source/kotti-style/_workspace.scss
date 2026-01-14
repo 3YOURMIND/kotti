@@ -12,6 +12,10 @@
 	h3:not(:first-of-type) {
 		margin-top: var(--unit-8);
 	}
+
+	&.shade {
+		background-color: var(--ui-background-shade);
+	}
 }
 
 @media (width <= $size-lg) {

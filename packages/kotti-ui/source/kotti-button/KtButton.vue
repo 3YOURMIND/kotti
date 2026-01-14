@@ -132,8 +132,15 @@ export default defineComponent({
 	--button-main-color: var(--interactive-01);
 	--button-main-color-dark: var(--interactive-01-hover);
 	--button-main-color-light: var(--interactive-02-hover);
+	--button-secondary-color: var(--interactive-01-hover);
 }
 
+:root[data-theme='dark'] {
+	--button-secondary-color: var(--interactive-01);
+}
+</style>
+
+<style lang="scss" scoped>
 .kt-button {
 	display: inline-flex;
 	align-items: center;
@@ -254,7 +261,7 @@ export default defineComponent({
 		}
 
 		&-default {
-			color: var(--button-main-color-dark);
+			color: var(--button-secondary-color);
 			background-color: var(--interactive-02);
 			border-color: var(--ui-02);
 
@@ -305,7 +312,7 @@ export default defineComponent({
 		}
 
 		&-secondary {
-			color: var(--button-main-color-dark);
+			color: var(--button-secondary-color);
 			background-color: var(--interactive-02);
 			border-color: var(--button-main-color-dark);
 
@@ -322,7 +329,7 @@ export default defineComponent({
 		}
 
 		&-text {
-			color: var(--button-main-color-dark);
+			color: var(--button-secondary-color);
 			background-color: transparent;
 			border-color: transparent;
 
