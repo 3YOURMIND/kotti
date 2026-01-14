@@ -40,27 +40,79 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+$colors:
+	'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
+	'slate', 'violet', 'yellow';
+
 :root {
 	--kt-tag-vertical-gap: var(--unit-h);
 	--kt-tag-horizontal-gap: var(--unit-1);
 	--kt-tag-border: var(--unit-q);
 	--kt-tag-padding: var(--unit-1);
+
+	.kt-tag {
+		color: var(--text-02);
+		background-color: var(--interactive-02);
+
+		@each $color in $colors {
+			&--is-#{$color}-light {
+				color: var(--#{$color}-70);
+				background-color: var(--#{$color}-10);
+				border: var(--kt-tag-border) solid var(--#{$color}-30);
+
+				.kt-tag__icon:not(:hover) {
+					background-color: var(--#{$color}-20);
+				}
+			}
+
+			&--is-#{$color}-filled {
+				color: var(--#{$color}-05);
+				background-color: var(--#{$color}-60);
+				border: var(--kt-tag-border) solid var(--#{$color}-40);
+
+				.kt-tag__icon:not(:hover) {
+					background-color: var(--#{$color}-70);
+				}
+			}
+		}
+	}
+}
+
+:root[data-theme='dark'] {
+	.kt-tag {
+		@each $color in $colors {
+			&--is-#{$color}-light {
+				color: var(--#{$color}-30);
+				background-color: var(--#{$color}-90);
+				border: var(--kt-tag-border) solid var(--#{$color}-70);
+
+				.kt-tag__icon:not(:hover) {
+					background-color: var(--#{$color}-80);
+				}
+			}
+
+			&--is-#{$color}-filled {
+				color: var(--#{$color}-100);
+				background-color: var(--#{$color}-40);
+				border: var(--kt-tag-border) solid var(--#{$color}-60);
+
+				.kt-tag__icon:not(:hover) {
+					background-color: var(--#{$color}-50);
+				}
+			}
+		}
+	}
 }
 </style>
 
 <style lang="scss" scoped>
-$colors: 'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
-	'slate', 'violet', 'yellow';
-
 .kt-tag {
 	display: inline-flex;
 	align-items: center;
 	padding: var(--kt-tag-padding);
 	margin: var(--kt-tag-vertical-gap) var(--kt-tag-horizontal-gap);
 	font-size: 0.875em;
-	color: var(--text-02);
 	white-space: nowrap;
-	background-color: var(--interactive-02);
 	border-radius: var(--field-border-radius);
 
 	&__icon {
@@ -73,38 +125,17 @@ $colors: 'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
 		height: $size;
 		margin-left: var(--unit-1);
 		cursor: pointer;
-		border-radius: 50%;
+		border-radius: var(--border-radius);
 
 		// clipping also affects the clickable area
-		@supports (clip-path: circle(#{$size * 0.5} at center)) {
+		/* @supports (clip-path: circle(#{$size * 0.5} at center)) {
 			clip-path: circle(#{$size * 0.5} at center);
 			border-radius: 0;
-		}
+		} */
 	}
 
 	&__label {
 		font-weight: bold;
-	}
-
-	@each $color in $colors {
-		&--is-#{$color}-light {
-			color: var(--#{$color}-70);
-			background-color: var(--#{$color}-10);
-			border: var(--kt-tag-border) solid var(--#{$color}-20);
-
-			.kt-tag__icon:not(:hover) {
-				background-color: var(--#{$color}-20);
-			}
-		}
-
-		&--is-#{$color}-filled {
-			color: var(--#{$color}-05);
-			background-color: var(--#{$color}-60);
-
-			.kt-tag__icon:not(:hover) {
-				background-color: var(--#{$color}-50);
-			}
-		}
 	}
 }
 </style>

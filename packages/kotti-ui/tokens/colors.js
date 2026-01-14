@@ -30,7 +30,7 @@ export const baseColors = {
 	'gray-60': '#696969',
 	'gray-70': '#4F4F4F',
 	'gray-80': '#3A3A3A',
-	'gray-90': '#282828',
+	'gray-90': '#222222',
 	'gray-100': '#141414',
 
 	// Green
@@ -41,9 +41,9 @@ export const baseColors = {
 	'green-40': '#58C74A',
 	'green-50': '#40B032',
 	'green-60': '#359928',
-	'green-70': '#217B15',
-	'green-80': '#19670F',
-	'green-90': '#105008',
+	'green-70': '#237618',
+	'green-80': '#13510C',
+	'green-90': '#0C3507',
 	'green-100': '#0A3505',
 
 	// Mint
@@ -169,6 +169,11 @@ export const tokens = [
 		name: 'ui-background',
 		description: 'Page background',
 		reference: 'gray-05',
+	},
+	{
+		name: 'ui-background-shade',
+		description: 'Shaded Page background',
+		reference: 'gray-10',
 	},
 	{
 		name: 'ui-01',
@@ -409,6 +414,11 @@ export const darkModeTokens = [
 		reference: 'gray-100',
 	},
 	{
+		name: 'ui-background-shade',
+		description: 'Shaded Page background',
+		reference: 'gray-90',
+	},
+	{
 		name: 'ui-01',
 		description: 'Secondary page\nBackground 2',
 		reference: 'gray-90',
@@ -451,7 +461,7 @@ export const darkModeTokens = [
 	{
 		name: 'text-04',
 		description: 'Text on interactive colors',
-		reference: 'black',
+		reference: 'primary-20',
 	},
 	{
 		name: 'text-05',
@@ -461,12 +471,12 @@ export const darkModeTokens = [
 	{
 		name: 'interactive-01',
 		description: 'Primary interactive color\nPrimary buttons\nChecked color',
-		reference: 'primary-40',
+		reference: 'primary-50',
 	},
 	{
 		name: 'interactive-01-hover',
 		description: 'Hover for Interactive-01',
-		reference: 'primary-30',
+		reference: 'primary-60',
 	},
 	{
 		name: 'interactive-01-active',

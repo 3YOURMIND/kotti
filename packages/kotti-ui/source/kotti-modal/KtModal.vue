@@ -183,6 +183,7 @@ export default defineComponent({
 		border-radius: var(--border-radius);
 		box-shadow: var(--shadow-lg);
 		transition: all 0.3s ease;
+		border: 1px solid var(--ui-02);
 	}
 
 	&--is-size {
