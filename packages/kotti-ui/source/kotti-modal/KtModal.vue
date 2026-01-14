@@ -180,10 +180,10 @@ export default defineComponent({
 		width: 90%;
 		max-height: 90%;
 		background-color: var(--ui-background);
+		border: 1px solid var(--ui-02);
 		border-radius: var(--border-radius);
 		box-shadow: var(--shadow-lg);
 		transition: all 0.3s ease;
-		border: 1px solid var(--ui-02);
 	}
 
 	&--is-size {
