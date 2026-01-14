@@ -30,7 +30,7 @@ export const baseColors = {
 	'gray-60': '#696969',
 	'gray-70': '#4F4F4F',
 	'gray-80': '#3A3A3A',
-	'gray-90': '#222222',
+	'gray-90': '#222',
 	'gray-100': '#141414',
 
 	// Green
