@@ -1,15 +1,8 @@
-import { z } from 'zod'
+import { computed, ref } from 'vue'
 
-const themeSchema = z.enum(['dark', 'light'])
+const colorScheme = ref<'dark' | 'light'>('light')
 
-export const getColorScheme = (): 'dark' | 'light' => {
-	const dataTheme = document.documentElement.getAttribute('data-theme')
-	const res = themeSchema.safeParse(dataTheme)
-	if (res.success) {
-		return res.data
-	}
-
-	return window.matchMedia('(prefers-color-scheme: dark)').matches
-		? 'dark'
-		: 'light'
+export const isDarkMode = computed(() => colorScheme.value === 'dark')
+export const setColorScheme = (value: 'dark' | 'light'): void => {
+	colorScheme.value = value
 }

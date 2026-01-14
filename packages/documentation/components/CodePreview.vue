@@ -49,7 +49,10 @@ export default defineComponent({
 				if (code === null) return
 				codeHtml.value = await codeToHtml(dedent(code), {
 					lang: props.language,
-					theme: 'vitesse-light',
+					themes: {
+						dark: 'vitesse-dark',
+						light: 'vitesse-light',
+					},
 				})
 			},
 			{ immediate: true },

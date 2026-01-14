@@ -104,6 +104,7 @@ import { KtValueLabel } from './kotti-value-label'
 export * from './kotti-value-label'
 
 export * from './types'
+export * from './utilities/color-scheme'
 
 export default {
 	install<T>(app: App<T>): void {

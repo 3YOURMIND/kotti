@@ -14,10 +14,10 @@
 					isOptional
 					type="switch"
 				>
-					Dark Mode</KtFieldToggle
-				>
+					Dark Mode
+				</KtFieldToggle>
 				<a href="https://github.com/3YOURMIND/kotti">
-					<img height="24" src="~/assets/img/icon_github.svg" width="24" />
+					<img height="24" src="/assets/github.svg" width="24" />
 				</a>
 			</div>
 		</template>
@@ -25,11 +25,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
 import { usePageContext } from 'vike-vue/usePageContext'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 import type { Kotti } from '@3yourmind/kotti-ui'
-import { KtFieldToggle, KtNavbar } from '@3yourmind/kotti-ui'
+import { KtFieldToggle, KtNavbar, setColorScheme } from '@3yourmind/kotti-ui'
 
 import navLogo from '~/assets/logo.svg'
 import { menu } from '~/data/menu'
@@ -40,6 +40,7 @@ const LOCALSTORAGE_IS_NAVBAR_NARROW_KEY = 'kotti-documentation-is-navbar-narrow'
 const saveColorSchemeToLocalStorage = (colorScheme: 'dark' | 'light') => {
 	try {
 		if (typeof window !== 'undefined') {
+			setColorScheme(colorScheme)
 			window.document.documentElement.setAttribute('data-theme', colorScheme)
 			window.localStorage.setItem(LOCALSTORAGE_IS_DARK_COLOR_CHEME, colorScheme)
 		}
@@ -90,6 +91,8 @@ export default defineComponent({
 				return false
 			})(),
 		)
+
+		setColorScheme(isDarkColorScheme.value ? 'dark' : 'light')
 
 		const isNarrow = ref<boolean>(
 			(() => {

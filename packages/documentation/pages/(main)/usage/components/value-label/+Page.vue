@@ -26,30 +26,6 @@ export default defineComponent({
 		KtFormControllerObject,
 	},
 	setup() {
-		// const settings = ref({
-		// 	dataTest: null,
-		// 	hasHelpTextSlot: false,
-		// 	helpDescription: null,
-		// 	helpText: null,
-		// 	isLoading: false,
-		// 	isUnset: false,
-		// 	label: 'Label',
-		// 	locale: 'en-US',
-		// 	hasDefaultSlot: false,
-		// 	validation: null,
-		// 	value: 'Value',
-		// })
-		// const componentProps = computed(() => ({
-		// 	dataTest: settings.value.dataTest,
-		// 	helpDescription: settings.value.helpDescription,
-		// 	helpText: settings.value.helpText,
-		// 	isLoading: settings.value.isLoading,
-		// 	isUnset: settings.value.isUnset,
-		// 	label: settings.value.label,
-		// 	validation: createValidation(settings.value.validation),
-		// 	value: settings.value.value,
-		// }))
-
 		const componentSettings = ref({
 			hasDefaultSlot: false,
 			hasHelpTextSlot: false,

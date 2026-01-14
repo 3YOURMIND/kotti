@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { getColorScheme } from '../utilities/color-scheme'
-
 export namespace KottiTag {
 	export const propsSchema = z.object({
 		colorStyle: z
@@ -27,9 +25,7 @@ export namespace KottiTag {
 				'yellow-filled',
 				'yellow-light',
 			])
-			.default(() =>
-				getColorScheme() === 'dark' ? 'gray-filled' : 'gray-light',
-			),
+			.default('gray-light'),
 		hideActions: z.boolean().optional().default(false),
 		isDisabled: z.boolean().default(false),
 		label: z.string().optional(),

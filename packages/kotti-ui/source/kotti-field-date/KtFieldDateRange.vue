@@ -3,7 +3,7 @@
 		v-bind="$props"
 		:helpTextSlot="$slots.helpText"
 		isRange
-		@emit="onEmit"
+		@update:modelValue="onUpdateModelValue"
 	/>
 </template>
 
@@ -21,10 +21,11 @@ export default defineComponent({
 		GenericDateField,
 	},
 	props: makeProps(KottiFieldDateRange.propsSchema),
+	emits: ['update:modelValue'],
 	setup(_, { emit }) {
 		return {
-			onEmit: ({ event, payload }: { event: string; payload: unknown }) => {
-				emit(event, payload)
+			onUpdateModelValue: (payload: unknown) => {
+				emit('update:modelValue', payload)
 			},
 		}
 	},

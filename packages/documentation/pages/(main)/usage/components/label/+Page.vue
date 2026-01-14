@@ -65,7 +65,9 @@ import { computed, defineComponent, ref } from 'vue'
 import {
 	Kotti,
 	KtFieldSingleSelect,
+	KtFieldText,
 	KtFieldToggle,
+	KtForm,
 	KtLabel,
 } from '@3yourmind/kotti-ui'
 
@@ -78,10 +80,13 @@ export default defineComponent({
 		ComponentForm,
 		ComponentInfo,
 		KtFieldSingleSelect,
+		KtFieldText,
 		KtFieldToggle,
+		KtForm,
 	},
 	setup() {
 		const settings = ref({
+			dataTest: null,
 			hasHelpTextSlot: false,
 			helpDescription: null,
 			helpText: null,

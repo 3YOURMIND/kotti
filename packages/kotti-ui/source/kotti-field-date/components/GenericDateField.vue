@@ -12,6 +12,7 @@
 			:actionRow="{
 				showPreview: false,
 			}"
+			:dark="isDarkMode"
 			:disabled="isDisabled"
 			:enableTimePicker="hasTime && !isConfirmDisabled"
 			:maxDate="maximumDate ?? undefined"
@@ -174,6 +175,7 @@ import { useField } from '../../kotti-field/hooks'
 import { useI18nContext, useTranslationNamespace } from '../../kotti-i18n/hooks'
 import { KT_IS_IN_POPOVER } from '../../kotti-popover/constants'
 import { makeProps } from '../../make-props'
+import { isDarkMode } from '../../utilities/color-scheme'
 import { KOTTI_FIELD_DATE_SUPPORTS } from '../constants'
 import { useSaveOnBlur } from '../hooks'
 import type {
@@ -328,6 +330,7 @@ export default defineComponent({
 					? (internalValue.value as InternalRangeValue).every((v) => v === null)
 					: (internalValue.value as InternalDateValue) === null,
 			),
+			isDarkMode,
 			isInPopover,
 			locale: computed(() => i18NContext.locale),
 			onCloseMenu: () => {

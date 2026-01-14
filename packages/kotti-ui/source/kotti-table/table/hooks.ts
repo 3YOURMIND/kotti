@@ -407,11 +407,9 @@ export const useKottiTable = <
 									const isDisabled = rowBehavior.disable?.expand ?? false
 
 									return h(KtButton, {
-										domProps: {
-											ariaExpanded: String(row.getIsExpanded()),
-											'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
-											disabled: isDisabled,
-										},
+										ariaExpanded: String(row.getIsExpanded()),
+										'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
+										disabled: isDisabled,
 										icon: row.getIsExpanded()
 											? Yoco.Icon.CHEVRON_DOWN
 											: Yoco.Icon.CHEVRON_RIGHT,
@@ -441,9 +439,7 @@ export const useKottiTable = <
 									h(
 										'div',
 										{
-											domProps: {
-												ariaDisabled: !row.getCanSelect(),
-											},
+											ariaDisabled: !row.getCanSelect(),
 											onClick: (event: MouseEvent) => {
 												event.stopPropagation()
 												event.preventDefault()
@@ -478,7 +474,7 @@ export const useKottiTable = <
 											},
 											staticClass: 'kt-table-selection',
 										},
-										() => [
+										[
 											h(ToggleInner, {
 												component: 'div',
 												inputProps: {
@@ -502,7 +498,7 @@ export const useKottiTable = <
 												)
 											},
 										},
-										() => [
+										[
 											h(ToggleInner, {
 												component: 'div',
 												inputProps: {
@@ -516,7 +512,6 @@ export const useKottiTable = <
 													table.getIsAllRowsSelected() ||
 													table
 														.getRowModel()
-														// eslint-disable-next-line sonarjs/no-nested-functions
 														.rows.some((row) => row.getIsSelected())
 														? null
 														: false,
@@ -539,9 +534,7 @@ export const useKottiTable = <
 									h(
 										'div',
 										{
-											domProps: {
-												ariaDisabled: !row.getCanSelect(),
-											},
+											ariaDisabled: !row.getCanSelect(),
 											onClick: (event: MouseEvent) => {
 												if (!row.getCanSelect()) return
 

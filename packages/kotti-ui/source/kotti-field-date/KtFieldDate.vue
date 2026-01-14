@@ -1,5 +1,9 @@
 <template>
-	<GenericDateField v-bind="$props" @emit="onEmit" />
+	<GenericDateField
+		v-bind="$props"
+		:helpTextSlot="$slots.helpText"
+		@update:modelValue="onUpdateModelValue"
+	/>
 </template>
 
 <script lang="ts">
@@ -16,10 +20,11 @@ export default defineComponent({
 		GenericDateField,
 	},
 	props: makeProps(KottiFieldDate.propsSchema),
+	emits: ['update:modelValue'],
 	setup(_, { emit }) {
 		return {
-			onEmit: ({ event, payload }: { event: string; payload: unknown }) => {
-				emit(event, payload)
+			onUpdateModelValue: (payload: unknown) => {
+				emit('update:modelValue', payload)
 			},
 		}
 	},

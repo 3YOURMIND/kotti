@@ -4,7 +4,7 @@
 		hasTime
 		:helpTextSlot="$slots.helpText"
 		isRange
-		@emit="onEmit"
+		@update:modelValue="onUpdateModelValue"
 	/>
 </template>
 
@@ -22,10 +22,11 @@ export default defineComponent({
 		GenericDateField,
 	},
 	props: makeProps(KottiFieldDateTimeRange.propsSchema),
+	emits: ['update:modelValue'],
 	setup(_, { emit }) {
 		return {
-			onEmit: ({ event, payload }: { event: string; payload: unknown }) => {
-				emit(event, payload)
+			onUpdateModelValue: (payload: unknown) => {
+				emit('update:modelValue', payload)
 			},
 		}
 	},

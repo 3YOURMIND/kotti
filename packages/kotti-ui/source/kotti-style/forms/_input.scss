@@ -1,29 +1,9 @@
 // Form element: Input
 
-.dialog {
-	position: absolute;
-	z-index: $zindex-4;
-	max-width: 20rem;
-	padding: 0.4rem 0.8rem;
-	margin-top: 0.2rem;
-	font-size: 0.85em;
-	background: var(--ui-background);
-	border-radius: 2px;
-	box-shadow: 0 0 0.2rem rgb(0 0 0 / 26%);
-
-	&--right {
-		right: 0;
-	}
-
-	&--left {
-		left: 0;
-	}
-}
-
 .form-input {
 	position: relative;
 	width: 100%;
-	height: $control-size;
+	height: var(--unit-8);
 	padding: 0 var(--unit-2);
 	line-height: 1rem;
 	color: var(--text-01);

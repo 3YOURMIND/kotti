@@ -32,7 +32,7 @@
 		<ButtonLink
 			class="kt-filter-row__remove"
 			:dataTest="dataTest ? `${dataTest}.remove` : undefined"
-			icon="clase"
+			icon="close"
 			:isLoading="isLoading"
 			type="danger"
 			@click="handleRemove"

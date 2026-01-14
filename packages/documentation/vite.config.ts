@@ -6,7 +6,12 @@ import { defineConfig } from 'vite'
 
 import markdownInVue from './plugins/vite-markdown-plugin'
 
-const shikiInstance = await Shiki({ theme: 'vitesse-light' })
+const shikiInstance = await Shiki({
+	themes: {
+		dark: 'vitesse-dark',
+		light: 'vitesse-light',
+	},
+})
 
 export default defineConfig({
 	plugins: [

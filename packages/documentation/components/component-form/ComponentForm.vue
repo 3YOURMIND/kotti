@@ -180,7 +180,10 @@ export default defineComponent({
 			async (newCode) => {
 				codeHtml.value = await codeToHtml(newCode, {
 					lang: 'vue-html',
-					theme: 'vitesse-light',
+					themes: {
+						dark: 'vitesse-dark',
+						light: 'vitesse-light',
+					},
 				})
 			},
 			{ immediate: true },
@@ -207,7 +210,10 @@ export default defineComponent({
 
 				valueCodeHtml.value = await codeToHtml(`${code} // value`, {
 					lang: 'js',
-					theme: 'vitesse-light',
+					themes: {
+						dark: 'vitesse-dark',
+						light: 'vitesse-light',
+					},
 				})
 			},
 			{ immediate: true },
@@ -269,7 +275,7 @@ export default defineComponent({
 	> * {
 		padding: var(--unit-3) var(--unit-6);
 		margin: 0;
-		background-color: var(--gray-10) !important;
+		background-color: var(--ui-01) !important;
 	}
 }
 
@@ -278,17 +284,17 @@ export default defineComponent({
 	gap: var(--unit-6);
 	align-items: center;
 	padding: var(--unit-3) var(--unit-6);
-	background-color: var(--gray-10);
+	background-color: var(--ui-01);
 }
 
 .wrapper {
 	margin-bottom: var(--unit-8);
 	overflow: hidden;
-	border: 1px solid var(--gray-20);
+	border: 1px solid var(--ui-02);
 	border-radius: var(--border-radius);
 
 	> *:not(:last-child) {
-		border-bottom: 1px solid var(--gray-20);
+		border-bottom: 1px solid var(--ui-02);
 	}
 }
 
@@ -298,7 +304,7 @@ export default defineComponent({
 
 .settings {
 	display: flex;
-	background-color: #fcfcfc;
+	background-color: var(-ui-01);
 
 	> * {
 		flex: 1;
