@@ -5,7 +5,7 @@
  * vite build errors if a file doesn't have enums so you'd use it
  * but does not warn about the opposite scenario
  */
-import type { ZodSchema } from 'zod'
+import type { z } from 'zod'
 
 export { KottiAccordion as Accordion } from '../kotti-accordion/types'
 export { KottiActionbar as Actionbar } from '../kotti-actionbar/types'
@@ -30,10 +30,7 @@ export {
 	KottiFieldDateTime as FieldDateTime,
 	KottiFieldDateTimeRange as FieldDateTimeRange,
 } from '../kotti-field-date/types'
-export {
-	KottiFieldFileUpload as FieldFileUpload,
-	KottiFieldFileUploadRemote as FieldFileUploadRemote,
-} from '../kotti-field-file-upload/types'
+export { KottiFieldFileUpload as FieldFileUpload } from '../kotti-field-file-upload/types'
 export { KottiFieldInlineEdit as FieldInlineEdit } from '../kotti-field-inline-edit/types'
 export { KottiFieldNumber as FieldNumber } from '../kotti-field-number/types'
 export { KottiFieldPassword as FieldPassword } from '../kotti-field-password/types'
@@ -65,7 +62,6 @@ export { KottiNavbar as Navbar } from '../kotti-navbar/types'
 export { KottiPagination as Pagination } from '../kotti-pagination/types'
 export { KottiPopover as Popover } from '../kotti-popover/types'
 export { KottiRow as Row } from '../kotti-row/types'
-export { KottiTableLegacy as TableLegacy } from '../kotti-table-legacy/types'
 export { KottiStandardTable as StandardTable } from '../kotti-table/standard-table/types'
 export { KottiTable as Table } from '../kotti-table/table/types'
 export { KottiTag as Tag } from '../kotti-tag/types'
@@ -82,7 +78,7 @@ export enum MetaDesignType {
 	FIGMA = 'FIGMA',
 }
 
-export type Meta = {
+export type Meta<T extends z.ZodTypeAny | null = z.ZodTypeAny | null> = {
 	addedVersion: string | null
 	componentFolder?: string
 	deprecated: {
@@ -116,6 +112,6 @@ export type Meta = {
 	>
 	typeScript: {
 		namespace: string
-		schema: ZodSchema<unknown> | null
+		schema: T | null
 	} | null
 }

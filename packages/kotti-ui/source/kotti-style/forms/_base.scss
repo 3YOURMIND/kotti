@@ -1,14 +1,6 @@
 // Forms
 fieldset {
-	margin-bottom: $layout-spacing-lg;
-}
-
-.form-group {
-	position: relative;
-
-	&:not(:last-child) {
-		margin-bottom: $layout-spacing;
-	}
+	margin-bottom: var(--unit-4);
 }
 
 .form-textarea,

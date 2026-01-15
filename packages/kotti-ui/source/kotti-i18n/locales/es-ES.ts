@@ -31,6 +31,13 @@ export const esES: KottiI18n.Messages = {
 		replyToLabel: 'Responder a',
 		unlockedHelpText: 'Visible para todos los usuarios',
 	},
+	KtFieldDateShared: {
+		cancelButton: 'Cancel',
+		confirmButton: 'OK',
+		hours: 'hours',
+		minutes: 'minutes',
+		seconds: 'seconds',
+	},
 	KtFieldFileUpload: {
 		button: {
 			acceptPhoto: 'Usar Foto',

@@ -3,38 +3,21 @@
 // Fonts
 // Credit: https://css-tricks.com/snippets/css/system-font-stack/
 
-$base-font-family: -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
-	'Helvetica', 'Arial', 'sans-serif' !default;
-$mono-font-family: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', 'Menlo',
-	'Courier', 'monospace' !default;
+$base-font-family:
+	-apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica',
+	'Arial', 'sans-serif' !default;
+$mono-font-family:
+	'SF Mono', 'Segoe UI Mono', 'Roboto Mono', 'Menlo', 'Courier', 'monospace' !default;
 $fallback-font-family: 'Helvetica Neue', 'sans-serif' !default;
-$cjk-zh-font-family: $base-font-family, 'PingFang SC', 'Hiragino Sans GB',
-	'Microsoft YaHei', $fallback-font-family !default;
-$cjk-jp-font-family: $base-font-family, 'Hiragino Sans',
-	'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'YuGothic, Meiryo',
+$cjk-zh-font-family:
+	$base-font-family, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
 	$fallback-font-family !default;
-$cjk-ko-font-family: $base-font-family, 'Malgun Gothic', $fallback-font-family !default;
+$cjk-jp-font-family:
+	$base-font-family, 'Hiragino Sans', 'Hiragino Kaku Gothic Pro', 'Yu Gothic',
+	'YuGothic, Meiryo', $fallback-font-family !default;
+$cjk-ko-font-family:
+	$base-font-family, 'Malgun Gothic', $fallback-font-family !default;
 $body-font-family: $base-font-family, $fallback-font-family !default;
-
-// Unit sizes
-$unit-q: 0.05rem !default;
-$unit-h: 0.1rem !default;
-$unit-1: 0.2rem !default;
-$unit-2: 0.4rem !default;
-$unit-4: 0.8rem !default;
-$unit-7: 1.4rem !default;
-$unit-8: 1.6rem !default;
-$unit-10: 2rem !default;
-
-// Sizes
-$layout-spacing: $unit-2 !default;
-$layout-spacing-lg: $unit-4 !default;
-$border-width: $unit-q !default;
-$border-width-lg: $unit-h !default;
-$control-size: $unit-8 !default;
-$control-size-sm: $unit-7 !default;
-$control-size-lg: $unit-10 !default;
-$control-icon-size: 0.8rem !default;
 
 // Responsive breakpoints
 $size-xs: 480px !default;

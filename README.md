@@ -10,9 +10,11 @@
 </p>
 
 <table border="0" width="100%">
+<colgroup>
 <col style="width:33%">
 <col style="width:33%">
 <col style="width:33%">
+</colgroup>
 <tbody>
 <tr style="border: 0px !important;">
 <td valign="top" style="border: 0px !important;"><b>Complete</b>. The most commonly-needed components are implemented in Kotti. More components will be implemented when there is a specific need for them.</td>
@@ -43,16 +45,23 @@ or
 
 **Documentation**: <https://3yourmind.github.io/kotti/>
 
+You can use Kotti as a vue plugin. This will make all of Kotti's components accessible globally
+
 ```typescript
 // in main.ts / entrypoint
-import Vue from 'vue'
+import { createApp } from 'vue'
 import KottiUI from '@3yourmind/kotti-ui'
 import '@3yourmind/kotti-ui/dist/style.css'
 
-// (optional) register all KtComponents globally
-Vue.use(KottiUI)
+const app = createApp(/* ... */)
 
-// Alternatively, import the components you need
+// Use Kotti as a plugin
+app.use(KottiUI)
+```
+
+Alternatively, you can import single components into your vue files as needed
+
+```typescript
 import { KtForm } from '@3yourmind/kotti-ui'
 
 const CustomVueComponent = {
@@ -92,39 +101,41 @@ cd kotti
 # configure github email for this repository
 git config user.email "123456+githubusername@users.noreply.github.com"
 
+# Set up bun to produce a human readable lock file. Learn more here: https://bun.com/docs/guides/install/git-diff-bun-lockfile
+git config diff.lockb.textconv bun
+git config diff.lockb.binary true
+
 # install dependencies
-yarn config set workspaces-experimental true
-yarn install
-yarn run build
+bun install
+bun run build
 ```
 
 ### Develop
 
 ```bash
 # auto-build/watch
-yarn run watch
+bun run watch
 ```
 
 or
 
 ```bash
 # having to build should hopefully be resolved in a future update
-yarn workspace @3yourmind/sass-node-modules-importer run build
-yarn workspace @3yourmind/yoco run build
-yarn workspace @3yourmind/vue-use-tippy run build
-yarn workspace @3yourmind/kotti-ui run build
+bun workspace @3yourmind/yoco run build
+bun workspace @3yourmind/vue-use-tippy run build
+bun workspace @3yourmind/kotti-ui run build
 # serve at http://localhost:3000
-yarn workspace @3yourmind/documentation run serve
+bun workspace @3yourmind/documentation run serve
 ```
 
 ### Handling Rebases
 
 There are two workflows to help with rebasing pull requests:
 
-1. Rebase  
+1. Rebase
    Commenting `/rebase` on any pull request will trigger a GitHub Action that rebases the PR.
    This is best used when attempting to rebase a PR without auto-rebase before merging.
-2. Auto-Rebase  
+2. Auto-Rebase
    Adding the `autorebase:opt-in` label to any pull request will automatically rebase the PR as soon as it’s out-of-date.
    This should preferrably be used by the author, as it requires them to be aware of having to use `git pull --rebase`
 
@@ -176,20 +187,20 @@ Whenever new translations are added, edited or removed
 
 ```bash
 # es-lint (with --fix)
-yarn run fix:eslint
+bun run fix:eslint
 # es-lint (without --fix)
-yarn run check:eslint
+bun run check:eslint
 
 # stylelint (with --fix)
-yarn run fix:stylelint
+bun run fix:stylelint
 # stylelint (without --fix)
-yarn run check:stylelint
+bun run check:stylelint
 ```
 
 ### Testing
 
 ```bash
-yarn run test
+bun test
 ```
 
 ### Publishing
@@ -215,7 +226,7 @@ This monorepo supports a semi-automatic release workflow. To trigger an automati
 2. Optional: If you haven't already, make sure to functionally test:
 
 ```bash
-yarn run watch # or if already merged to master, go to <https://3yourmind.github.io/kotti/>
+bun run watch # or if already merged to master, go to <https://3yourmind.github.io/kotti/>
 ```
 
 3. Create a pull request that bumps the version:
@@ -241,7 +252,7 @@ yarn run watch # or if already merged to master, go to <https://3yourmind.github
 2. Optional: If you haven't already, make sure to functionally test:
 
 ```bash
-yarn run watch # or if already merged to master, go to <https://3yourmind.github.io/kotti/>
+bun run watch # or if already merged to master, go to <https://3yourmind.github.io/kotti/>
 ```
 
 3. Create a pull request that bumps the version:
@@ -260,7 +271,7 @@ In case this does not work as expected, you want to check out the [publish scrip
 ### Build
 
 ```bash
-yarn run build
+bun run build
 ```
 
 ## Debugging
@@ -271,13 +282,13 @@ For all packages that are published you can also create a tarball by running
 
 ```bash
 # Create tarballs for all relevant packages
-yarn run tarball
+bun run tarball
 
 # Create tarball for a specific package
-yarn run tarball --filter @3yourmind/yoco
+bun run tarball --filter @3yourmind/yoco
 
 # Can be combined with other commands
-yarn run build tarball
+bun run build tarball
 
 # How the created tarballs can be installed in another project (yarn@1)
 yarn cache clean && yarn remove @3yourmind/yoco && yarn add ../path/to/kotti/packages/yoco/package.tar.gz
@@ -311,5 +322,5 @@ It is also possible to [visualize the graph used by `turbo run`](https://turbo.b
 
 ```sh
 # generate a graph of turbo run build (needs graphviz)
-yarn run debug:turbo
+bun run debug:turbo
 ```

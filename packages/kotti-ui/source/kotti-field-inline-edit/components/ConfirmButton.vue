@@ -12,8 +12,13 @@ import { computed, defineComponent } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import { KtButton } from '../../kotti-button'
+
 export default defineComponent({
 	name: 'ConfirmButton',
+	components: {
+		KtButton,
+	},
 	props: {
 		dataTest: { default: null, type: String },
 		tabIndex: { default: 0, type: Number },

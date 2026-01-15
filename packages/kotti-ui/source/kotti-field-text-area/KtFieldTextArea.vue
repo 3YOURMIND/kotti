@@ -13,8 +13,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
-import type { TextareaHTMLAttributes } from 'vue/types/jsx'
+import {
+	computed,
+	defineComponent,
+	ref,
+	type TextareaHTMLAttributes,
+} from 'vue'
 
 import { KtField } from '../kotti-field'
 import { useField, useForceUpdate } from '../kotti-field/hooks'
@@ -53,9 +57,9 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldTextArea.propsSchema),
-	emits: ['blur', 'input', 'keyup'],
+	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldTextArea.Value>({
+		const field = useField<KottiFieldTextArea.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,

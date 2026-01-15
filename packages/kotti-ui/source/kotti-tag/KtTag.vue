@@ -40,7 +40,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-$colors: 'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
+$colors:
+	'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
 	'slate', 'violet', 'yellow';
 
 :root {
@@ -124,14 +125,7 @@ $colors: 'blue', 'gray', 'green', 'mint', 'orange', 'primary', 'purple', 'red',
 		height: $size;
 		margin-left: var(--unit-1);
 		cursor: pointer;
-		border-radius: var(--border-radius);
-
-		// clipping also affects the clickable area
-
-		/* @supports (clip-path: circle(#{$size * 0.5} at center)) {
-			clip-path: circle(#{$size * 0.5} at center);
-			border-radius: 0;
-		} */
+		border-radius: 1px;
 	}
 
 	&__label {

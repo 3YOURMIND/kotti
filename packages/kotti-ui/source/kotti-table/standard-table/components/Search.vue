@@ -5,10 +5,10 @@
 		:isLoading="isLoading"
 		isOptional
 		:leftIcon="Yoco.Icon.SEARCH"
+		:modelValue="internalValue"
 		:placeholder="placeholder ?? translations.search"
 		size="small"
-		:value="internalValue"
-		@input="onInput"
+		@update:modelValue="onInput"
 	/>
 </template>
 
@@ -19,27 +19,31 @@ import { defineComponent, ref, watch } from 'vue'
 import { Yoco } from '@3yourmind/yoco'
 
 import { DEFAULT_DEBOUNCE } from '../../../constants'
+import KtFieldText from '../../../kotti-field-text/KtFieldText.vue'
 import type { KottiFieldText } from '../../../kotti-field-text/types'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 
 export default defineComponent({
 	name: 'TableSearch',
+	components: {
+		KtFieldText,
+	},
 	props: {
 		dataTest: { default: null, type: String },
 		isLoading: { default: false, type: Boolean },
+		modelValue: { default: null, type: String },
 		placeholder: { default: null, type: String },
-		value: { default: null, type: String },
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
-		const internalValue = ref<KottiFieldText.Value>(null)
+		const internalValue = ref<KottiFieldText.ModelValue>(null)
 
 		const emitValue = debounce(() => {
-			emit('input', internalValue.value)
+			emit('update:modelValue', internalValue.value)
 		}, DEFAULT_DEBOUNCE)
 
 		watch(
-			() => props.value,
+			() => props.modelValue,
 			(newValue) => {
 				internalValue.value = newValue
 			},
@@ -48,7 +52,7 @@ export default defineComponent({
 
 		return {
 			internalValue,
-			onInput: (value: KottiFieldText.Value) => {
+			onInput: (value: KottiFieldText.ModelValue) => {
 				internalValue.value = value
 				emitValue()
 			},

@@ -10,8 +10,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-import type { InputHTMLAttributes } from 'vue/types/jsx'
+import { computed, defineComponent, type InputHTMLAttributes } from 'vue'
 
 import { KtField } from '../kotti-field'
 import {
@@ -31,9 +30,9 @@ export default defineComponent({
 		KtField,
 	},
 	props: makeProps(KottiFieldText.propsSchema),
-	emits: ['blur', 'input', 'keyup'],
+	emits: ['blur', 'keyup', 'update:modelValue'],
 	setup(props, { emit }) {
-		const field = useField<KottiFieldText.Value>({
+		const field = useField<KottiFieldText.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null,
 			props,

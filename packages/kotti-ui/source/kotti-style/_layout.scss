@@ -3,15 +3,16 @@
 
 .kt-container {
 	display: flex;
+	overflow-x: hidden;
 
-	@media (width <= $size-md) {
+	@media (width < $size-md) {
 		display: flex;
 		flex-direction: column;
 	}
 }
 
 // deprecate
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.responsive {
 		display: flex;
 		flex-direction: column;
@@ -19,12 +20,12 @@
 }
 
 .container {
+	clear: both;
 	width: 100%;
-	padding-right: $layout-spacing;
-	padding-left: $layout-spacing;
+	padding-right: var(--unit-2);
+	padding-left: var(--unit-2);
 	margin-right: auto;
 	margin-left: auto;
-	clear: both;
 }
 
 // Responsive breakpoint system
@@ -40,7 +41,7 @@
 .column {
 	flex: 1;
 	max-width: 100%;
-	padding: $layout-spacing;
+	padding: var(--unit-2);
 
 	&.col-12,
 	&.col-11,
@@ -128,8 +129,8 @@
 .columns {
 	display: flex;
 	flex-wrap: wrap;
-	margin-right: -$layout-spacing;
-	margin-left: -$layout-spacing;
+	margin-right: calc(0px - var(--unit-2));
+	margin-left: calc(0px - var(--unit-2));
 
 	&.col-gapless {
 		margin-right: 0;
@@ -142,12 +143,12 @@
 	}
 
 	&.col-gutter-sm {
-		margin-right: -$layout-spacing * 0.5;
-		margin-left: -$layout-spacing * 0.5;
+		margin-right: calc(0px - var(--unit-2) * 0.5);
+		margin-left: calc(0px - var(--unit-2) * 0.5);
 
 		& > .column {
-			padding-right: $layout-spacing * 0.5;
-			padding-left: $layout-spacing * 0.5;
+			padding-right: calc(var(--unit-2) * 0.5);
+			padding-left: calc(var(--unit-2) * 0.5);
 		}
 	}
 
@@ -162,12 +163,12 @@
 	}
 
 	&.row-gutter-sm > .column {
-		padding-top: $layout-spacing * 0.5;
-		padding-bottom: $layout-spacing * 0.5;
+		padding-top: calc(var(--unit-2) * 0.5);
+		padding-bottom: calc(var(--unit-2) * 0.5);
 	}
 }
 
-@media (width <= $size-xl) {
+@media (width < $size-xl) {
 	.col-xl-12,
 	.col-xl-11,
 	.col-xl-10,
@@ -240,7 +241,7 @@
 	}
 }
 
-@media (width <= $size-lg) {
+@media (width < $size-lg) {
 	.col-lg-12,
 	.col-lg-11,
 	.col-lg-10,
@@ -313,7 +314,7 @@
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.col-md-12,
 	.col-md-11,
 	.col-md-10,
@@ -386,7 +387,7 @@
 	}
 }
 
-@media (width <= $size-sm) {
+@media (width < $size-sm) {
 	.col-sm-12,
 	.col-sm-11,
 	.col-sm-10,
@@ -459,7 +460,7 @@
 	}
 }
 
-@media (width <= $size-xs) {
+@media (width < $size-xs) {
 	.col-xs-12,
 	.col-xs-11,
 	.col-xs-10,

@@ -62,9 +62,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .kt-heading__button {
+	float: right;
 	display: flex;
 	align-items: center;
-	float: right;
 	font-weight: 500;
 	color: var(--interactive-01);
 

@@ -31,6 +31,13 @@ export const ukUA: KottiI18n.Messages = {
 		replyToLabel: 'Відповісти',
 		unlockedHelpText: 'Видимий для всіх користувачів',
 	},
+	KtFieldDateShared: {
+		cancelButton: 'Cancel',
+		confirmButton: 'OK',
+		hours: 'hours',
+		minutes: 'minutes',
+		seconds: 'seconds',
+	},
 	KtFieldFileUpload: {
 		button: {
 			acceptPhoto: 'Використати фото',

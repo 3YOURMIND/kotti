@@ -62,7 +62,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../../kotti-style/_variables.scss';
+@import '../../kotti-style/_variables';
 
 $margin: 0.8rem 1rem;
 
@@ -119,7 +119,7 @@ $margin: 0.8rem 1rem;
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.kt-navbar-logo {
 		&--is-desktop {
 			display: none;

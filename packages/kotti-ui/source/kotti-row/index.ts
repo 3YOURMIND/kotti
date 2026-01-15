@@ -53,7 +53,7 @@ export const KtRow = attachMeta(
 							],
 							style: style.value,
 						},
-						[slots.default?.() ?? null],
+						slots.default?.(),
 					)
 			},
 		}),

@@ -5,20 +5,24 @@
 		:isUnsorted="filter.isUnsorted"
 		isOptional
 		:label="filter.label"
+		:modelValue="modelValue"
 		:options="filter.options"
 		size="small"
-		:value="value"
-		@input="onInput"
+		@update:modelValue="onInput"
 	/>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 
+import KtFieldSingleSelect from '../../../../kotti-field-select/KtFieldSingleSelect.vue'
 import type { KottiStandardTable } from '../../types'
 
 export default defineComponent({
 	name: 'SingleSelectFilter',
+	components: {
+		KtFieldSingleSelect,
+	},
 	props: {
 		filter: {
 			required: true,
@@ -29,13 +33,13 @@ export default defineComponent({
 			>,
 		},
 		isLoading: { default: false, type: Boolean },
-		value: { default: null, type: [String, Number] },
+		modelValue: { default: null, type: [String, Number] },
 	},
-	emits: ['input'],
+	emits: ['update:modelValue'],
 	setup(props, { emit }) {
 		return {
 			onInput: (value: KottiStandardTable.FilterValue) => {
-				emit('input', {
+				emit('update:modelValue', {
 					id: props.filter.id,
 					operation: props.filter.operations[0], // Current filters support only one operation
 					value,

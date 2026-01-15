@@ -4,43 +4,41 @@
 		"url": "https://github.com/3YOURMIND/kotti/issues"
 	},
 	"dependencies": {
-		"@3yourmind/vue-use-tippy": "3.x",
+		"@3yourmind/vue-use-tippy": "4.0.0",
 		"@3yourmind/yoco": "^2.15.0",
 		"@metatypes/typography": "^0.5.0",
-		"@tanstack/table-core": "^8.20.5",
-		"big.js": "^6.2.1",
+		"@metatypes/units": "^0.5.0",
+		"@tanstack/table-core": "^8.21.3",
+		"@tanstack/vue-table": "^8.21.3",
+		"@vuepic/vue-datepicker": "^11.0.3",
+		"big.js": "^7.0.1",
 		"classnames": "^2.5.1",
-		"core-js": "3.6.5",
+		"core-js": "3.47.0",
 		"dayjs": "1.x",
 		"deepmerge": "^4.3.1",
-		"element-ui": "2.13.1",
-		"filesize": "^10.1.0",
+		"filesize": "^11.0.13",
 		"lodash": "4.x",
-		"nanoid": "3.x",
+		"nanoid": "^5.1.5",
 		"normalize.css": "^8.0.1",
-		"shortid": "^2.2.15",
 		"tippy.js": "6.x",
 		"zod": "3.22.5"
 	},
 	"description": "Kotti Vue Component UI",
 	"devDependencies": {
-		"@rollup/plugin-commonjs": "^25.0.7",
+		"@rollup/plugin-commonjs": "^29.0.0",
 		"@types/big.js": "^6.2.2",
 		"@types/lodash": "4.x",
-		"@types/shortid": "^0.0.32",
-		"@vitejs/plugin-vue2": "*",
-		"@vue/test-utils": "1.x",
-		"color": "^4.2.3",
-		"jsdom": "^24.0.0",
-		"postcss-preset-env": "^9.5.9",
-		"rollup-plugin-visualizer": "^5.12.0",
-		"sass": "^1.70.0",
-		"vite": "^7.1.11",
-		"vite-plugin-static-copy": "^3.1.2",
-		"vitest": "^3.2.4",
-		"vue": "^2.7",
-		"vue-template-compiler": "^2.7",
-		"vue-tsc": "^2.2.0"
+		"@vitejs/plugin-vue": "*",
+		"@vue/test-utils": "^2.4.6",
+		"jsdom": "^27.1.0",
+		"postcss-preset-env": "^10.4.0",
+		"rollup-plugin-visualizer": "^6.0.3",
+		"sass": "1.70.0",
+		"vite": "^7.2.4",
+		"vite-plugin-static-copy": "^3.1.4",
+		"vitest": "^4.0.13",
+		"vue": "3.5.25",
+		"vue-tsc": "^3.2.2"
 	},
 	"exports": {
 		".": {
@@ -54,14 +52,19 @@
 			}
 		},
 		"./dist/style.css": {
-			"style": "./dist/style.css"
+			"style": "./dist/style.css",
+			"default": "./dist/style.css"
 		},
 		"./dist/variables.scss": {
 			"style": "./dist/variables.scss"
+		},
+		"./tokens": {
+			"default": "./tokens/index.js"
 		}
 	},
 	"files": [
-		"dist"
+		"dist",
+		"tokens/index.js"
 	],
 	"homepage": "https://github.com/3YOURMIND/kotti#readme",
 	"license": "MIT",
@@ -70,7 +73,7 @@
 	"name": "@3yourmind/kotti-ui",
 	"peerDependencies": {
 		"core-js": "*",
-		"vue": "^2.7"
+		"vue": "3.5.25"
 	},
 	"repository": {
 		"type": "git",
@@ -98,5 +101,5 @@
 	"style": "./dist/style.css",
 	"type": "module",
 	"types": "./dist/types/index.d.ts",
-	"version": "8.22.4"
+	"version": "9.0.0"
 }

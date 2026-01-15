@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, useTemplateRef } from 'vue'
 
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
@@ -36,8 +36,8 @@ export default defineComponent({
 	setup(props, { emit, slots }) {
 		const avatarFallback = ref(true)
 
-		const contentRef = ref<HTMLElement | null>(null)
-		const triggerRef = ref<HTMLElement | null>(null)
+		const contentRef = useTemplateRef<HTMLElement>('contentRef')
+		const triggerRef = useTemplateRef<HTMLElement>('triggerRef')
 
 		const hideTippy = computed(
 			() => !props.isHoverable || (!slots.content && props.name === null),
@@ -73,14 +73,12 @@ export default defineComponent({
 				'kt-avatar--is-size-small': props.size === KottiAvatar.Size.SMALL,
 			})),
 			avatarFallback,
-			contentRef,
 			onAvatarContainerClick(event: MouseEvent) {
 				emit('click', event)
 			},
 			onImageFailedToLoad: () => {
 				avatarFallback.value = false
 			},
-			triggerRef,
 			Yoco,
 		}
 	},
@@ -116,8 +114,8 @@ export default defineComponent({
 	}
 
 	&__image {
-		border-radius: 100%;
 		object-fit: cover;
+		border-radius: 100%;
 	}
 
 	&--is-hoverable:hover {

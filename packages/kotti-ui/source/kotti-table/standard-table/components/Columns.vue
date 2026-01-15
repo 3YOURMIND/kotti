@@ -20,10 +20,13 @@
 				>
 					<KtFieldToggle
 						isOptional
-						:value="value[option.key] || false"
-						@input="
+						:modelValue="columnVisibility[option.key] || false"
+						@update:modelValue="
 							(isChecked) =>
-								$emit('input', { ...value, [option.key]: isChecked })
+								$emit('update:columnVisibility', {
+									...columnVisibility,
+									[option.key]: isChecked,
+								})
 						"
 					>
 						<span v-text="option.label" />
@@ -50,33 +53,41 @@ import { computed, defineComponent, type PropType } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import KtButton from '../../../kotti-button/KtButton.vue'
+import KtFieldToggle from '../../../kotti-field-toggle/KtFieldToggle.vue'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import KtPopover from '../../../kotti-popover/KtPopover.vue'
 import MenuOptionItem from '../../../shared-components/menu-option/MenuOptionItem.vue'
 
 export default defineComponent({
 	name: 'TableColumns',
 	components: {
+		KtButton,
+		KtFieldToggle,
+		KtPopover,
 		MenuOptionItem,
 	},
 	props: {
+		columnVisibility: {
+			required: true,
+			type: Object as PropType<Record<string, boolean>>,
+		},
 		isLoading: { default: false, type: Boolean },
 		options: {
 			required: true,
 			type: Array as PropType<{ key: string; label: string }[]>,
 		},
 		size: { default: 'md', type: String },
-		value: {
-			required: true,
-			type: Object as PropType<Record<string, boolean>>,
-		},
 	},
-	emits: ['input', 'showAll'],
+	emits: ['update:columnVisibility', 'showAll'],
 	setup(props) {
 		return {
 			isShowAllDisabled: computed(
 				(): boolean =>
 					props.isLoading ||
-					Object.values(props.value).every((optionValue) => optionValue),
+					Object.values(props.columnVisibility).every(
+						(optionValue) => optionValue,
+					),
 			),
 			translations: useTranslationNamespace('KtStandardTable'),
 			Yoco,

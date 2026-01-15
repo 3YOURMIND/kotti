@@ -34,6 +34,7 @@
 </template>
 
 <script lang="ts">
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'vue'
 import {
 	computed,
 	defineComponent,
@@ -44,10 +45,10 @@ import {
 	toRefs,
 	watch,
 } from 'vue'
-import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'vue/types/jsx'
 
 import { Yoco } from '@3yourmind/yoco'
 
+import { KtField } from '../kotti-field'
 import { useField, useForceUpdate, useKtFieldRef } from '../kotti-field/hooks'
 import type { KottiField } from '../kotti-field/types'
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
@@ -67,9 +68,10 @@ export default defineComponent({
 	components: {
 		ConfirmButton,
 		EditIcon,
+		KtField,
 	},
 	props: makeProps(KottiFieldInlineEdit.propsSchema),
-	emits: ['confirm', 'input'],
+	emits: ['confirm', 'update:modelValue'],
 	setup(props, { emit }) {
 		const { forceUpdate, forceUpdateKey } = useForceUpdate()
 		const translations = useTranslationNamespace('KtFieldInlineEdit')
@@ -92,7 +94,7 @@ export default defineComponent({
 			isEditing.value = shouldEdit
 		}
 
-		const field = useField<KottiFieldInlineEdit.Value>({
+		const field = useField<KottiFieldInlineEdit.ModelValue>({
 			emit,
 			isEmpty: (value) => value === null || value.trim() === '',
 			props,
@@ -120,12 +122,12 @@ export default defineComponent({
 				: (props.placeholder ?? translations.value.placeholder),
 		)
 
-		const setFieldValue = (newValue: KottiFieldInlineEdit.Value) => {
+		const setFieldValue = (newValue: KottiFieldInlineEdit.ModelValue) => {
 			modifiedField.setValue(newValue === '' ? null : newValue)
 			forceUpdate()
 		}
 
-		const preEditingValue = ref<KottiFieldInlineEdit.Value>(
+		const preEditingValue = ref<KottiFieldInlineEdit.ModelValue>(
 			modifiedField.currentValue,
 		)
 
@@ -242,12 +244,12 @@ export default defineComponent({
 
 		const sharedProps = computed(
 			(): KottiField.Hook.Returns<
-				NonNullable<KottiFieldInlineEdit.Value>
+				NonNullable<KottiFieldInlineEdit.ModelValue>
 			>['inputProps'] & {
 				forceUpdateKey: number
 				placeholder: string
 				readonly: boolean
-				value: NonNullable<KottiFieldInlineEdit.Value>
+				value: NonNullable<KottiFieldInlineEdit.ModelValue>
 			} => ({
 				...modifiedField.inputProps,
 				forceUpdateKey: forceUpdateKey.value,
@@ -321,7 +323,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 .kt-field-inline-edit {
 	// slot that wraps <input /> & <EditIcon/>
@@ -389,7 +391,7 @@ export default defineComponent({
 
 	&:not(.kt-field-inline-edit--is-editing) {
 		.kt-field-inline-edit__input--is-multiline {
-			word-break: break-word;
+			word-break: normal;
 		}
 
 		:deep(.kt-field__input-container) {

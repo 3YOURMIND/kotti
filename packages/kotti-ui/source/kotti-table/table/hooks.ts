@@ -11,6 +11,7 @@ import {
 	getCoreRowModel,
 	getExpandedRowModel,
 } from '@tanstack/table-core'
+import { useVueTable } from '@tanstack/vue-table'
 import classNames from 'classnames'
 import { computed, h, ref, type Ref } from 'vue'
 import { z } from 'zod'
@@ -23,9 +24,7 @@ import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 import ToggleRadio from '../../shared-components/ToggleRadio.vue'
 
 import { type TableContext, useProvideTableContext } from './context'
-import { useVueTable } from './tanstack-table'
-import type { KottiTable } from './types'
-import { type GetRowBehavior } from './types'
+import type { GetRowBehavior, KottiTable } from './types'
 import { type ReactStyleUpdater, useComputedRef } from './use-computed-ref'
 
 export const EXPANSION_COLUMN_ID = 'internal-expand-column'
@@ -177,7 +176,7 @@ export const useKottiTable = <
 	ROW extends KottiTable.AnyRow,
 	COLUMN_ID extends string,
 >(
-	_params: Ref<KottiTableParameter<ROW, COLUMN_ID>>,
+	_params: Ref<Readonly<KottiTableParameter<ROW, COLUMN_ID>>>,
 ): KottiTableHook<ROW, COLUMN_ID> => {
 	const params = computed(
 		() =>
@@ -208,7 +207,7 @@ export const useKottiTable = <
 	// FIXME: This useComputedRef right now assumes that column ids provdided via params
 	// do not change. If a user would change them, it will lead to unintended behavior
 	const columnOrder = useComputedRef<InternalColumnId[], COLUMN_ID[]>({
-		get: (value) => value.toSpliced(0, ARRAY_START) as COLUMN_ID[],
+		get: (value) => value.slice(ARRAY_START) as COLUMN_ID[],
 		set: (value) => {
 			const newValue: InternalColumnId[] = [
 				EXPANSION_COLUMN_ID,
@@ -384,7 +383,8 @@ export const useKottiTable = <
 		if (fromIndex === -1)
 			throw new Error(`Could not find column id ${fromColumnId}`)
 
-		const newOrder = columnOrder.value.toSpliced(fromIndex, 1)
+		const newOrder = [...columnOrder.value]
+		newOrder.splice(fromIndex, 1)
 		newOrder.splice(
 			toIndex > fromIndex ? toIndex - 1 : toIndex,
 			0,
@@ -393,9 +393,9 @@ export const useKottiTable = <
 		return newOrder
 	}
 
-	const table = useVueTable<ROW>(
-		computed(() => ({
-			columns: [
+	const table = useVueTable<ROW>({
+		get columns() {
+			return [
 				...(params.value.expandMode !== null
 					? [
 							columnHelper.display({
@@ -407,29 +407,20 @@ export const useKottiTable = <
 									const isDisabled = rowBehavior.disable?.expand ?? false
 
 									return h(KtButton, {
-										class: {
-											'kt-table-expand': true,
-											yoco: true,
+										ariaExpanded: String(row.getIsExpanded()),
+										'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
+										disabled: isDisabled,
+										icon: row.getIsExpanded()
+											? Yoco.Icon.CHEVRON_DOWN
+											: Yoco.Icon.CHEVRON_RIGHT,
+										onClick: (event: MouseEvent) => {
+											event.stopPropagation()
+											event.preventDefault()
+											if (isDisabled) return
+											triggerExpand(row.id)
 										},
-										domProps: {
-											ariaExpanded: String(row.getIsExpanded()),
-											'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
-											disabled: isDisabled,
-										},
-										on: {
-											click: (event: MouseEvent) => {
-												event.stopPropagation()
-												event.preventDefault()
-												if (isDisabled) return
-												triggerExpand(row.id)
-											},
-										},
-										props: {
-											icon: row.getIsExpanded()
-												? Yoco.Icon.CHEVRON_DOWN
-												: Yoco.Icon.CHEVRON_RIGHT,
-											type: 'text',
-										},
+										staticClass: 'kt-table-expand',
+										type: 'text',
 									})
 								},
 								id: EXPANSION_COLUMN_ID,
@@ -448,56 +439,52 @@ export const useKottiTable = <
 									h(
 										'div',
 										{
-											domProps: {
-												ariaDisabled: !row.getCanSelect(),
+											ariaDisabled: !row.getCanSelect(),
+											onClick: (event: MouseEvent) => {
+												event.stopPropagation()
+												event.preventDefault()
+
+												if (
+													event.shiftKey &&
+													rowSelectionAnchorIndex.value !== null &&
+													rowIdSet.value.has(
+														rowSelectionAnchorIndex.value.rowId,
+													)
+												) {
+													const { rowIndex } = rowSelectionAnchorIndex.value
+													const rangeStart = Math.min(rowIndex, row.index)
+													const rangeEnd = Math.max(rowIndex, row.index)
+													const { rows } = table.getRowModel()
+													for (let i = rangeStart; i <= rangeEnd; i++) {
+														const rowInRange = rows[i]
+														// all rows in the range will get the toggle state that the targetted row gets.
+														rowInRange?.toggleSelected(!row.getIsSelected())
+													}
+												} else {
+													row.toggleSelected(!row.getIsSelected())
+												}
+												rowSelectionAnchorIndex.value = {
+													rowId: row.id,
+													rowIndex: row.index,
+												}
 											},
-											on: {
-												click: (event: MouseEvent) => {
-													event.stopPropagation()
-													event.preventDefault()
-													if (
-														event.shiftKey &&
-														rowSelectionAnchorIndex.value !== null &&
-														rowIdSet.value.has(
-															rowSelectionAnchorIndex.value.rowId,
-														)
-													) {
-														const { rowIndex } = rowSelectionAnchorIndex.value
-														const rangeStart = Math.min(rowIndex, row.index)
-														const rangeEnd = Math.max(rowIndex, row.index)
-														const { rows } = table.value.getRowModel()
-														for (let i = rangeStart; i <= rangeEnd; i++) {
-															const rowInRange = rows[i]
-															// all rows in the range will get the toggle state that the targetted row gets.
-															rowInRange?.toggleSelected(!row.getIsSelected())
-														}
-													} else {
-														row.toggleSelected(!row.getIsSelected())
-													}
-													rowSelectionAnchorIndex.value = {
-														rowId: row.id,
-														rowIndex: row.index,
-													}
-												},
-												// this prevents table content selection that would happen with shift clicking
-												mousedown: (event: MouseEvent) => {
-													event.preventDefault()
-												},
+											// this prevents table content selection that would happen with shift clicking
+											onMousedown: (event: MouseEvent) => {
+												event.preventDefault()
 											},
 											staticClass: 'kt-table-selection',
 										},
 										[
 											h(ToggleInner, {
-												props: {
-													component: 'div',
-													inputProps: {
-														'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
-														disabled: !row.getCanSelect(),
-														id: `${params.value.id}-${row.id}-select`,
-													},
-													isDisabled: !row.getCanSelect(),
-													value: row.getIsSelected(),
+												component: 'div',
+												inputProps: {
+													'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
+													disabled: !row.getCanSelect(),
+													id: `${params.value.id}-${row.id}-select`,
+													tabindex: 1,
 												},
+												isDisabled: !row.getCanSelect(),
+												modelValue: row.getIsSelected(),
 											}),
 										],
 									),
@@ -505,32 +492,29 @@ export const useKottiTable = <
 									h(
 										'div',
 										{
-											on: {
-												click: () => {
-													table.toggleAllRowsSelected(
-														!table.getIsAllRowsSelected(),
-													)
-												},
+											onClick: () => {
+												table.toggleAllRowsSelected(
+													!table.getIsAllRowsSelected(),
+												)
 											},
-											staticClass: 'kt-table-selection-header',
 										},
 										[
 											h(ToggleInner, {
-												props: {
-													component: 'div',
-													inputProps: {
-														'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.header.checkbox`,
-														id: `${params.value.id}-column-select-header`,
-													},
-													isDisabled: false,
-													value: table.getIsAllRowsSelected()
-														? true
-														: table
-																	.getRowModel()
-																	.rows.some((row) => row.getIsSelected())
-															? null
-															: false,
+												component: 'div',
+												inputProps: {
+													'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.header.checkbox`,
+													disabled: false,
+													id: `${params.value.id}-column-select-header`,
+													tabindex: 1,
 												},
+												isDisabled: false,
+												modelValue:
+													table.getIsAllRowsSelected() ||
+													table
+														.getRowModel()
+														.rows.some((row) => row.getIsSelected())
+														? null
+														: false,
 											}),
 										],
 									),
@@ -550,33 +534,23 @@ export const useKottiTable = <
 									h(
 										'div',
 										{
-											domProps: {
-												ariaDisabled: !row.getCanSelect(),
-											},
-											on: {
-												click: (event: MouseEvent) => {
-													if (!row.getCanSelect()) return
+											ariaDisabled: !row.getCanSelect(),
+											onClick: (event: MouseEvent) => {
+												if (!row.getCanSelect()) return
 
-													event.stopPropagation()
-													event.preventDefault()
+												event.stopPropagation()
+												event.preventDefault()
 
-													const isSelected = !row.getIsSelected()
-													table.value.toggleAllRowsSelected(false)
-													row.toggleSelected(isSelected)
-												},
-												// this prevents table content selection that would happen with shift clicking
-												mousedown: (event: MouseEvent) => {
-													event.preventDefault()
-												},
+												const isSelected = !row.getIsSelected()
+												table.toggleAllRowsSelected(false)
+												row.toggleSelected(isSelected)
 											},
 											staticClass: 'kt-table-selection',
 										},
 										[
 											h(ToggleRadio, {
-												props: {
-													isChecked: row.getIsSelected(),
-													isDisabled: !row.getCanSelect(),
-												},
+												isChecked: row.getIsSelected(),
+												isDisabled: !row.getCanSelect(),
 											}),
 										],
 									),
@@ -635,34 +609,46 @@ export const useKottiTable = <
 						},
 					})
 				}),
-			],
-			data: params.value.data,
-			enableRowSelection: (row) => {
-				if (!params.value.isSelectable) return false
+			]
+		},
+		get data() {
+			return params.value.data
+		},
+		enableRowSelection: (row) => {
+			if (!params.value.isSelectable) return false
 
-				const behavior = params.value.getRowBehavior({
-					row: row.original,
-					rowIndex: row.index,
-				})
-				return !behavior.disable?.select
+			const behavior = params.value.getRowBehavior({
+				row: row.original,
+				rowIndex: row.index,
+			})
+			return !behavior.disable?.select
+		},
+		getCoreRowModel: getCoreRowModel(),
+		getExpandedRowModel:
+			params.value.expandMode !== null ? getExpandedRowModel() : undefined,
+		getRowId: (row, rowIndex) =>
+			params.value.getRowBehavior({ row, rowIndex }).id,
+		onColumnVisibilityChange: hiddenColumns.tanstackSetter,
+		onRowSelectionChange: selectedRows.tanstackSetter,
+		onSortingChange: ordering.tanstackSetter as ReactStyleUpdater<unknown>,
+		state: {
+			get columnOrder() {
+				return columnOrder.tanstackGetter()
 			},
-			getCoreRowModel: getCoreRowModel(),
-			getExpandedRowModel:
-				params.value.expandMode !== null ? getExpandedRowModel() : undefined,
-			getRowId: (row, rowIndex) =>
-				params.value.getRowBehavior({ row, rowIndex }).id,
-			onColumnVisibilityChange: hiddenColumns.tanstackSetter,
-			onRowSelectionChange: selectedRows.tanstackSetter,
-			onSortingChange: ordering.tanstackSetter as ReactStyleUpdater<unknown>,
-			state: {
-				columnOrder: columnOrder.tanstackGetter(),
-				columnVisibility: hiddenColumns.tanstackGetter(),
-				expanded: expandedRows.tanstackGetter(),
-				rowSelection: selectedRows.tanstackGetter(),
-				sorting: ordering.tanstackGetter(),
+			get columnVisibility() {
+				return hiddenColumns.tanstackGetter()
 			},
-		})),
-	)
+			get expanded() {
+				return expandedRows.tanstackGetter()
+			},
+			get rowSelection() {
+				return selectedRows.tanstackGetter()
+			},
+			get sorting() {
+				return ordering.tanstackGetter()
+			},
+		},
+	})
 
 	const tableContext: TableContext<ROW, COLUMN_ID> = computed(() => ({
 		internal: {

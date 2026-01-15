@@ -13,7 +13,7 @@ declare module 'eslint-plugin-vue' {
 	import type { TSESLint } from '@typescript-eslint/utils'
 	const plugin: TSESLint.FlatConfig.Plugin & {
 		configs: {
-			'flat/vue2-recommended': TSESLint.FlatConfig.ConfigArray
+			'flat/recommended': TSESLint.FlatConfig.ConfigArray
 		}
 	}
 	export = plugin

@@ -109,7 +109,7 @@ export default defineComponent({
 		gap: var(--unit-2);
 		align-items: center;
 		justify-content: space-between;
-		word-break: break-word;
+		word-break: normal;
 	}
 }
 </style>

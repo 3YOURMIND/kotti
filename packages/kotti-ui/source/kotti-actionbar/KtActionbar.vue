@@ -6,11 +6,24 @@
 				<slot name="actionbar-header" />
 			</div>
 			<div class="kt-actionbar-body">
-				<ActionbarMenu
-					v-if="menu.length > 0"
-					:menu="menu"
-					:menuStyle="menuStyle"
-				/>
+				<ul v-if="menu.length > 0" class="kt-actionbar-nav">
+					<component
+						:is="item.component"
+						v-for="(item, index) in parsedMenu"
+						:key="index"
+						v-bind="item.props"
+						@click="$emit('menuItemClick', item)"
+					>
+						<li :class="navItemClass(item)">
+							<i
+								class="yoco kt-actionbar-nav__icon"
+								:class="`kt-actionbar-nav__icon--is-${menuStyle.iconPosition}`"
+								v-text="item.icon"
+							/>
+							<span class="kt-actionbar-nav__label" v-text="item.label" />
+						</li>
+					</component>
+				</ul>
 				<slot name="actionbar-body" />
 			</div>
 			<div class="kt-actionbar-footer">
@@ -21,33 +34,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { makeProps } from '../make-props'
 
-import ActionbarMenu from './components/ActionbarMenu.vue'
 import { KottiActionbar } from './types'
 
 export default defineComponent({
 	name: 'KtActionbar',
-	components: {
-		ActionbarMenu,
-	},
 	props: makeProps(KottiActionbar.propsSchema),
+	emits: ['menuItemClick'],
+	setup(props) {
+		return {
+			navItemClass: (item: KottiActionbar.MenuItem) => ({
+				'kt-actionbar-nav__item': true,
+				'kt-actionbar-nav__item--is-active': item.active,
+				'kt-actionbar-nav__item--is-disabled': item.disabled,
+			}),
+			parsedMenu: computed(() =>
+				KottiActionbar.propsSchema.shape.menu.parse(props.menu),
+			),
+		}
+	},
 })
 </script>
 
 <style lang="scss">
-@import '../kotti-style/_variables.scss';
+@import '../kotti-style/_variables';
 
 :root {
 	--action-bar-color-active: var(--interactive-03);
 	--action-bar-width: 16rem;
 }
 
-// Action bar element
 .kt-actionbar {
-	position: relative;
 	box-sizing: border-box;
 	display: flex;
 	flex: 0 0 var(--action-bar-width);
@@ -81,16 +101,6 @@ export default defineComponent({
 	}
 }
 
-.kt-actionbar-back {
-	margin-top: 0;
-	margin-bottom: 0.8rem;
-	margin-left: -0.8rem;
-	font-size: 0.7rem;
-	font-weight: 600;
-	line-height: 1.2rem;
-	color: var(--action-bar-color-active);
-}
-
 .kt-actionbar-nav {
 	margin: 0 calc(-1 * var(--unit-2));
 
@@ -99,50 +109,33 @@ export default defineComponent({
 		margin: var(--unit-2) 0;
 		font-size: 0.75rem;
 		color: var(--text-01);
+		cursor: pointer;
 		list-style: none;
 		border-radius: 0.2rem;
 
-		&:hover {
-			cursor: pointer;
-			background: var(--text-05);
+		&:not(&--is-disabled):hover {
+			background: var(--ui-02);
 		}
 
-		&--active {
-			.kt-actionbar-nav__icon {
-				color: var(--action-bar-color-active);
-			}
-
-			.kt-actionbar-nav__label {
-				font-weight: 600;
-				color: var(--action-bar-color-active);
-			}
+		&--is-active {
+			font-weight: 600;
+			color: var(--action-bar-color-active);
 		}
 
-		&--disabled {
-			&:hover {
-				cursor: not-allowed;
-			}
-
-			.kt-actionbar-nav__label,
-			.kt-actionbar-nav__icon {
-				color: var(--gray-50);
-			}
+		&--is-disabled {
+			color: var(--text-05);
+			cursor: not-allowed;
 		}
 	}
 
 	&__icon {
 		padding-right: 0.4rem;
-		color: var(--text-01);
 
-		&--right {
+		&--is-right {
 			float: right;
 			padding-right: 0;
 			padding-left: 0.4rem;
 		}
-	}
-
-	&__label {
-		color: var(--text-01);
 	}
 }
 
@@ -183,9 +176,9 @@ export default defineComponent({
 	}
 }
 
-@media (width <= $size-md) {
+@media (width < $size-md) {
 	.kt-actionbar {
-		z-index: $zindex-1;
+		z-index: 100;
 		flex: 1 1 auto;
 		width: 100%;
 		min-height: auto;
@@ -193,7 +186,7 @@ export default defineComponent({
 		border-bottom: 1px solid var(--ui-02);
 
 		.kt-actionbar-wrapper {
-			position: relative;
+			position: static;
 			width: 100%;
 		}
 	}

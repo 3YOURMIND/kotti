@@ -37,6 +37,7 @@
 import pick from 'lodash/pick.js'
 import { defineComponent, ref } from 'vue'
 
+import KtAvatar from '../../kotti-avatar/KtAvatar.vue'
 import { makeProps } from '../../make-props'
 import { KottiComment } from '../types'
 
@@ -50,6 +51,7 @@ export default defineComponent({
 		CommentActions,
 		CommentHeader,
 		CommentInlineEdit,
+		KtAvatar,
 	},
 	props: makeProps(KottiComment.Entry.schema),
 	emits: ['delete', 'edit', 'reply'],

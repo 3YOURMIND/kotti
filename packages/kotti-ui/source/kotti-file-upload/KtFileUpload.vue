@@ -8,10 +8,7 @@
 				v-text="label"
 			/>
 			<span v-if="hasHelpText" class="kt-field__help-text">
-				<FieldHelpText
-					:helpText="field.helpText"
-					:helpTextSlot="$slots.helpText"
-				/>
+				<FieldHelpText :helpText="helpText" :helpTextSlot="$slots.helpText" />
 			</span>
 		</div>
 		<div
