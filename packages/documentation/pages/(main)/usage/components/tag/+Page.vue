@@ -5,7 +5,8 @@
 
 	<CodePreview
 		code='
-			<KtTag text="I display Information" isDisabled />
+			<KtTag isDisabled text="I display Information" />
+			<KtTag isDisabled label="Label" text="I have a label" />
 			<KtTag
 				v-if="showTag"
 				text="You can remove me if you want"
@@ -15,6 +16,7 @@
 		language="vue-html"
 	>
 		<KtTag isDisabled text="I display Information" />
+		<KtTag isDisabled label="Label" text="I have a label" />
 		<KtTag
 			v-if="showTag"
 			text="You can remove me if you want"
@@ -30,7 +32,7 @@
 				v-for="color in colors"
 				:key="color"
 				:colorStyle="color"
-				hideActions
+				isDisabled
 				:text="color"
 			/>
 		</div>
