@@ -5,7 +5,7 @@
 			<div class="kt-tag__text" v-text="text" />
 		</slot>
 		<div
-			v-if="!isDisabled && !hideActions"
+			v-if="!isDisabled"
 			class="kt-tag__icon"
 			@click.prevent.stop="$emit('close')"
 		>

@@ -26,7 +26,6 @@ export namespace KottiTag {
 				'yellow-light',
 			])
 			.default('gray-light'),
-		hideActions: z.boolean().optional().default(false),
 		isDisabled: z.boolean().default(false),
 		label: z.string().optional(),
 		text: z.string().optional(),
