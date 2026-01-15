@@ -2,6 +2,12 @@
 	<div class="kt-popover">
 		<div ref="triggerRef" tabindex="0">
 			<slot :showPopover="showPopover" />
+			<ContextEscapeWrapper
+				v-if="$slots.contextEscapeSlot"
+				:showPopover="showPopover"
+			>
+				<slot name="contextEscapeSlot" />
+			</ContextEscapeWrapper>
 		</div>
 		<div ref="contentRef" :class="contentClass">
 			<slot :close="close" name="content">
@@ -60,6 +66,7 @@ import type { KottiForm } from '../kotti-form/types'
 import { makeProps } from '../make-props'
 import { sameWidthOrStyled } from '../utilities/tippy'
 
+import ContextEscapeWrapper from './components/ContextEscapeWrapper.vue'
 import IconTextItem from './components/IconTextItem.vue'
 import { KT_IS_IN_POPOVER } from './constants'
 import { KottiPopover } from './types'
@@ -73,6 +80,7 @@ const TRIGGER_MAP: Record<KottiPopover.Trigger, TippyProps['trigger']> = {
 export default defineComponent({
 	name: 'KtPopover',
 	components: {
+		ContextEscapeWrapper,
 		IconTextItem,
 		KtFieldToggle,
 	},
