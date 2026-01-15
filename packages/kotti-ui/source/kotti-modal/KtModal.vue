@@ -55,6 +55,7 @@ import { computed, defineComponent, ref, watch } from 'vue'
 import { useTippy } from '@3yourmind/vue-use-tippy'
 import { Yoco } from '@3yourmind/yoco'
 
+import { KtButton } from '../kotti-button'
 import { makeProps } from '../make-props'
 
 import ScrollableContainer from './components/ScrollableContainer.vue'
@@ -63,6 +64,7 @@ import { KottiModal } from './types'
 export default defineComponent({
 	name: 'KtModal',
 	components: {
+		KtButton,
 		ScrollableContainer,
 	},
 	props: makeProps(KottiModal.propsSchema),

@@ -10,7 +10,7 @@ const componentFolder = 'kotti-field-file-upload'
 const url =
 	'https://www.figma.com/file/0yFVivSWXgFf2ddEF92zkf/Kotti-Design-System?node-id=3547%3A8456&t=hhn880dUtUMnmX06-0'
 
-export const KtFieldFileUpload = attachMeta(
+export const KtFieldFileUpload: ReturnType<typeof attachMeta> = attachMeta(
 	makeInstallable(KtFieldFileUploadVue),
 	{
 		addedVersion: '3.0.0-beta.43',

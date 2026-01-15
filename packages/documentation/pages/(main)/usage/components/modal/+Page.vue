@@ -128,6 +128,35 @@
 					hendrerit velit, urna bibendum enim convallis sagittis inceptos neque
 					accumsan.
 				</p>
+				<br />
+				<KtPopover class="w-100" trigger="hover">
+					<template #contextEscapeSlot>
+						<KtFieldSingleSelect
+							v-model="selectedOption"
+							isOptional
+							label="Select with many options"
+							:options="[
+								{ label: 'Option 1', value: 'option-1' },
+								{ label: 'Option 2', value: 'option-2' },
+								{ label: 'Option 3', value: 'option-3' },
+								{ label: 'Option 4', value: 'option-4' },
+								{ label: 'Option 5', value: 'option-5' },
+								{ label: 'Option 6', value: 'option-6' },
+								{ label: 'Option 7', value: 'option-7' },
+								{ label: 'Option 8', value: 'option-8' },
+								{ label: 'Option 9', value: 'option-9' },
+								{ label: 'Option 10', value: 'option-10' },
+							]"
+						/>
+					</template>
+					<template #content>
+						<div
+							v-text="
+								'Lorem ipsum dolor sit amet consectetur adipiscing, in eu morbi augue nullam.'
+							"
+						/>
+					</template>
+				</KtPopover>
 			</template>
 			<template v-if="settings.usedSlots.footer" #footer>
 				<KtButton label="Close" @click="showModal = false" />
@@ -143,10 +172,12 @@ import {
 	Kotti,
 	KtButton,
 	KtFieldSingleSelect,
+	KtFieldText,
 	KtFieldToggle,
 	KtFieldToggleGroup,
 	KtForm,
 	KtModal,
+	KtPopover,
 } from '@3yourmind/kotti-ui'
 
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -157,14 +188,17 @@ export default defineComponent({
 		ComponentInfo,
 		KtButton,
 		KtFieldSingleSelect,
+		KtFieldText,
 		KtFieldToggle,
 		KtFieldToggleGroup,
 		KtForm,
 		KtModal,
+		KtPopover,
 	},
 	setup() {
 		return {
 			component: KtModal,
+			selectedOption: ref<string | null>(null),
 			settings: ref<{
 				preventCloseOutside: boolean
 				showCloseButton: boolean
