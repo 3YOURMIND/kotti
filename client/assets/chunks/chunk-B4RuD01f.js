@@ -1,1 +1,0 @@
-/* empty css              *//* empty css              */import{_ as t,c as o,o as n,a as s,aP as a}from"./chunk-Db8Ga7PJ.js";const c={},r={id:"page-container"},i={id:"page-content"};function _(e,d){return n(),o("div",r,[s("div",i,[a(e.$slots,"default")])])}const m=t(c,[["render",_]]);export{m as T};
