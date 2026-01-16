@@ -1,0 +1,1 @@
+const e="_wrapper_ztyx4_2",t="_actions_ztyx4_12",_="_code_ztyx4_18",p="_example_ztyx4_76",a="_language_ztyx4_81",o={wrapper:e,"wrapper--is-type-default":"_wrapper--is-type-default_ztyx4_9",actions:t,code:_,"wrapper--is-type-preview":"_wrapper--is-type-preview_ztyx4_25","copy-button":"_copy-button_ztyx4_63",example:p,"file-name":"_file-name_ztyx4_80",language:a};export{o as s};

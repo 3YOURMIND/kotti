@@ -1,0 +1,1 @@
+.label-container{display:grid;grid-template-columns:2fr 3fr;align-items:baseline}.label-container__label{grid-column:1/3}
