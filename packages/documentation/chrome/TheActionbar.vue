@@ -5,13 +5,13 @@
 				<a
 					v-for="(page, index) in subsection.pages"
 					:key="index"
-					:href="`/${subsection.path}/${page.path}`"
+					:href="`/kotti/${subsection.path}/${page.path}`"
 				>
 					<li
 						:class="{
 							'kt-actionbar-nav__item': true,
 							'kt-actionbar-nav__item--is-active': isActive(
-								`/${subsection.path}/${page.path}`,
+								`/kotti/${subsection.path}/${page.path}`,
 							),
 						}"
 					>

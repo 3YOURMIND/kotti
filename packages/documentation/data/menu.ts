@@ -76,12 +76,12 @@ export const menu: Array<Section> = [
 	{
 		subsections: [
 			{ icon: Yoco.Icon.FILE, pages: [], path: '', title: 'Overview' },
-			{
-				icon: Yoco.Icon.VERSION,
-				pages: [],
-				path: 'changelog',
-				title: 'Changelog',
-			},
+			// {
+			// 	icon: Yoco.Icon.VERSION,
+			// 	pages: [],
+			// 	path: 'changelog',
+			// 	title: 'Changelog',
+			// },
 		],
 		title: null,
 	},
