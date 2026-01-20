@@ -156,7 +156,7 @@ export default defineComponent({
 										? pageContext.urlPathname === '/'
 										: pageContext.urlPathname.startsWith(`/${subsection.path}`),
 								props: {
-									href: [`/${subsection.path}`, subsection.pages[0]?.path]
+									href: [`/kotti/${subsection.path}`, subsection.pages[0]?.path]
 										.filter(Boolean)
 										.join('/'),
 								},
