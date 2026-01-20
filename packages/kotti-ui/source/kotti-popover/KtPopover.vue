@@ -2,11 +2,8 @@
 	<div class="kt-popover">
 		<div ref="triggerRef" tabindex="0">
 			<slot :showPopover="showPopover" />
-			<ContextEscapeWrapper
-				v-if="$slots.contextEscapeSlot"
-				:showPopover="showPopover"
-			>
-				<slot name="contextEscapeSlot" />
+			<ContextEscapeWrapper v-if="$slots.contextEscapeSlot">
+				<slot name="contextEscapeSlot" :showPopover="showPopover" />
 			</ContextEscapeWrapper>
 		</div>
 		<div ref="contentRef" :class="contentClass">
