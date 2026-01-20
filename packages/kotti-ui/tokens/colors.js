@@ -218,7 +218,7 @@ export const tokens = [
 	{
 		name: 'text-04',
 		description: 'Text on interactive colors',
-		reference: 'white',
+		reference: 'gray-10',
 	},
 	{
 		name: 'text-05',
@@ -461,7 +461,7 @@ export const darkModeTokens = [
 	{
 		name: 'text-04',
 		description: 'Text on interactive colors',
-		reference: 'primary-20',
+		reference: 'gray-90',
 	},
 	{
 		name: 'text-05',
