@@ -14,7 +14,7 @@ const shikiInstance = await Shiki({
 })
 
 export default defineConfig({
-	base: '/kotti',
+	base: '/kotti/',
 	plugins: [
 		vike(),
 		vue({

@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - master
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -16,8 +22,11 @@ jobs:
         run: bun install
       - name: Build @3yourmind/documentation
         run: bun run turbo run --filter=@3yourmind/documentation build
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          branch: gh-pages
-          folder: packages/documentation/dist
+          # Upload dist folder
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
