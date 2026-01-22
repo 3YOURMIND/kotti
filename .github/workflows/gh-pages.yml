@@ -28,5 +28,7 @@ jobs:
           # Upload dist folder
           path: 'packages/documentation/dist'
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: packages/documentation/gh-pages
