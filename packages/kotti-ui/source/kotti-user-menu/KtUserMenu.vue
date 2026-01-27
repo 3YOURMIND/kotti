@@ -202,6 +202,12 @@ export default defineComponent({
 		background-color: var(--user-menu-background);
 	}
 
+	&__avatar {
+		background-color: var(--user-menu-background);
+		border-color: var(--user-menu-background);
+		color: var(--user-menu-color);
+	}
+
 	&__avatar,
 	&__chevron {
 		flex-grow: 0;

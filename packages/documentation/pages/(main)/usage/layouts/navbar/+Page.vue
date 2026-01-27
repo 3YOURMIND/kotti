@@ -18,7 +18,7 @@
 
 </MarkdownBlock>
 
-	<a href="/examples/layouts">
+	<a href="/kotti/examples/layouts">
 		<KtButton icon="link" type="primary">Open Example</KtButton>
 	</a>
 

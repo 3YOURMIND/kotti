@@ -21,7 +21,7 @@
 		<KtActionbar headerTitle="LayoutContainer Example" :menu="actionbarMenu" />
 		<div class="workspace">
 			<KtFieldSingleSelect
-				v-model:value="theme"
+				v-model="theme"
 				hideClear
 				isOptional
 				label="Navbar Theme"
@@ -167,7 +167,7 @@ export default defineComponent({
 			setIsNarrow(_isNarrow: boolean) {
 				isNarrow.value = _isNarrow
 			},
-			theme: Kotti.Navbar.Theme.DEFAULT,
+			theme: ref(Kotti.Navbar.Theme.DEFAULT),
 			userMenuData: [
 				{
 					links: [

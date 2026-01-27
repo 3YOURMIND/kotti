@@ -60,12 +60,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .kt-navbar-menu {
 	box-sizing: border-box;
-	padding: 0.4rem 1rem;
+	padding: 0.4rem 0.7rem;
 	text-align: left;
 
 	&__section {
 		display: block;
-		padding: 0.2rem 0;
+		padding: 0.2rem;
 		margin-top: 0.4rem;
 		font-size: 0.85em;
 		font-weight: 700;
@@ -76,11 +76,14 @@ export default defineComponent({
 	&__item {
 		display: flex;
 		align-items: center;
-		padding: 0.6rem 0;
+		padding: 0.3rem;
+		margin: 0.3rem 0;
 		font-size: 0.75rem;
 		color: inherit;
+		border-radius: var(--border-radius);
 
 		&:hover {
+			background-color: var(--kt-navbar-background-active);
 			color: var(--kt-navbar-color-active);
 			cursor: pointer;
 		}

@@ -9,6 +9,7 @@ export const NAVBAR_THEME: Record<
 	KottiNavbar.Theme,
 	{
 		background: string
+		backgroundActive: string
 		border: string
 		color: string
 		colorActive: string
@@ -20,6 +21,7 @@ export const NAVBAR_THEME: Record<
 > = {
 	[KottiNavbar.Theme.DARK]: {
 		background: 'var(--gray-90)',
+		backgroundActive: 'var(--gray-80)',
 		border: 'var(--gray-70)',
 		color: 'var(--gray-10)',
 		colorActive: 'var(--gray-10)',
@@ -30,6 +32,7 @@ export const NAVBAR_THEME: Record<
 	},
 	[KottiNavbar.Theme.DEFAULT]: {
 		background: 'var(--primary-70)',
+		backgroundActive: 'var(--primary-60)',
 		border: 'var(--primary-60)',
 		color: 'var(--primary-10)',
 		colorActive: 'var(--white)',
@@ -40,6 +43,7 @@ export const NAVBAR_THEME: Record<
 	},
 	[KottiNavbar.Theme.LIGHT]: {
 		background: 'var(--white)',
+		backgroundActive: 'var(--gray-10)',
 		border: 'var(--gray-20)',
 		color: 'var(--primary-90)',
 		colorActive: 'var(--primary-50)',
@@ -50,6 +54,7 @@ export const NAVBAR_THEME: Record<
 	},
 	[KottiNavbar.Theme.REVERSE]: {
 		background: 'var(--primary-10)',
+		backgroundActive: 'var(--primary-20)',
 		border: 'var(--primary-20)',
 		color: 'var(--primary-80)',
 		colorActive: 'var(--primary-60)',
