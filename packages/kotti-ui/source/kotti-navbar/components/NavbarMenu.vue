@@ -83,9 +83,9 @@ export default defineComponent({
 		border-radius: var(--border-radius);
 
 		&:hover {
-			background-color: var(--kt-navbar-background-active);
 			color: var(--kt-navbar-color-active);
 			cursor: pointer;
+			background-color: var(--kt-navbar-background-active);
 		}
 
 		&.narrow {

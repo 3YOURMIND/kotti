@@ -203,9 +203,9 @@ export default defineComponent({
 	}
 
 	&__avatar {
+		color: var(--user-menu-color);
 		background-color: var(--user-menu-background);
 		border-color: var(--user-menu-background);
-		color: var(--user-menu-color);
 	}
 
 	&__avatar,
