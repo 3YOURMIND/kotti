@@ -102,6 +102,10 @@ export default defineComponent({
 					NAVBAR_THEME[newTheme].background,
 				)
 				rootElement.style.setProperty(
+					'--kt-navbar-background-active',
+					NAVBAR_THEME[newTheme].backgroundActive,
+				)
+				rootElement.style.setProperty(
 					'--kt-navbar-border',
 					NAVBAR_THEME[newTheme].border,
 				)

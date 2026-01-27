@@ -300,7 +300,7 @@
 
 		<ComponentInfo :component="KtToast" />
 
-		<a href="/usage/components/banner"> See <code>KtBanner</code> </a>
+		<a href="kotti/usage/components/banner"> See <code>KtBanner</code> </a>
 
 		<!-- eslint-disable vue/no-useless-v-bind -->
 		<!-- prettier-ignore -->

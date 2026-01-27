@@ -1,7 +1,7 @@
 <template>
 	<ComponentInfo v-bind="{ component }" />
 
-	<a href="/examples/layouts">
+	<a href="/kotti/examples/layouts">
 		<button class="primary">Show Layout Example</button>
 	</a>
 
