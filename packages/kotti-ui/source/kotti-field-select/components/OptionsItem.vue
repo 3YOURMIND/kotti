@@ -4,6 +4,7 @@
 		v-bind="{ isDisabled, isSelected }"
 		:data-test="dataTest"
 		isClickable
+		isDraggable
 		@click.stop="(e) => $emit('click', e)"
 	>
 		<slot>
