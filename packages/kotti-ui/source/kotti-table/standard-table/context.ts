@@ -11,11 +11,13 @@ export type StandardTableContext<
 > = Ref<{
 	internal: {
 		appliedFilters: KottiStandardTable.AppliedFilter[]
+		columnOrder: COLUMN_ID[]
 		columns: KottiTable.Column<ROW, COLUMN_ID>[]
 		filters: KottiStandardTable.FilterInternal[]
 		getFilter: (
 			id: KottiStandardTable.FilterInternal['id'],
 		) => KottiStandardTable.FilterInternal | null
+		hasDragAndDrop: boolean
 		isLoading: boolean
 		options?: KottiStandardTable.Options
 		pageSizeOptions: number[]
@@ -24,6 +26,7 @@ export type StandardTableContext<
 		searchValue: KottiFieldText.ModelValue
 		selectMode: 'global' | 'single-page' | null
 		setAppliedFilters: (value: KottiStandardTable.AppliedFilter[]) => void
+		setColumnSelection: (value: COLUMN_ID[]) => void
 		setPageIndex: (value: number) => void
 		setPageSize: (value: number) => void
 		setSearchValue: (value: KottiFieldText.ModelValue) => void

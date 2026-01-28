@@ -50,18 +50,14 @@ export default defineComponent({
 		background-color: var(--interactive-02-hover);
 	}
 
-	&--is-clickable {
+	&--is-clickable:not(.menu-options-item--is-disabled) {
 		cursor: pointer;
 
-		&:not(.menu-options-item--is-disabled) {
-			cursor: pointer;
+		&:hover {
+			background-color: var(--ui-01);
 
-			&:hover {
-				background-color: var(--ui-01);
-
-				&.menu-options-item--is-active {
-					color: var(--interactive-01-hover);
-				}
+			&.menu-options-item--is-active {
+				color: var(--interactive-01-hover);
 			}
 		}
 	}
