@@ -252,10 +252,14 @@ export const useKottiStandardTable = <
 		() => ({
 			internal: {
 				appliedFilters: appliedFilters.value,
+				columnOrder: tableHook.api.columnOrder.value.filter(
+					(columnId) => !tableHook.api.hiddenColumns.value.has(columnId),
+				),
 				columns: _params.value.table.columns,
 				filters: params.value.filters,
 				getFilter: (id) =>
 					params.value.filters.find((filter) => filter.id === id) ?? null,
+				hasDragAndDrop: params.value.table.hasDragAndDrop,
 				isLoading: params.value.isLoading,
 				options: params.value.options,
 				pageSizeOptions: params.value.paginationOptions.pageSizeOptions,
@@ -265,6 +269,17 @@ export const useKottiStandardTable = <
 				selectMode: params.value.selectMode,
 				setAppliedFilters: (filters: KottiStandardTable.AppliedFilter[]) => {
 					appliedFilters.value = filters
+				},
+				setColumnSelection: (columnOrder: string[]) => {
+					tableHook.api.columnOrder.value = columnOrder as COLUMN_ID[]
+					tableHook.tableContext.value.internal.table.setColumnVisibility(
+						Object.fromEntries(
+							params.value.table.columns.map((key) => [
+								key.id,
+								columnOrder.includes(key.id),
+							]),
+						),
+					)
 				},
 				setPageIndex: (pageIndex: number) => {
 					pagination.value = {

@@ -34,14 +34,13 @@
 					:size="options?.popoversSize?.filters"
 					@update:appliedFilters="onUpdateAppliedFilters"
 				/>
-				<TableColumns
+				<KtColumnSelector
 					v-if="!options?.hideControls?.columns"
-					:columnVisibility="columnVisibility"
+					:canChangeColumnOrder="canChangeColumnOrder"
+					:categories="columnOptions"
 					:isLoading="isLoadingAndEmpty"
-					:options="columnOptions"
-					:size="options?.popoversSize?.columns"
-					@showAll="onShowAllColumns"
-					@update:columnVisibility="onUpdateColumnVisivility"
+					:selection="columnSelection"
+					@update:selection="onUpdateColumnSelection"
 				/>
 			</div>
 			<div class="kt-standard-table__right-aligned-container">
@@ -130,8 +129,8 @@ import { computed, defineComponent, watch } from 'vue'
 import { KtTag } from '../kotti-tag'
 import { makeProps } from '../make-props'
 
+import KtColumnSelector from './KtColumnSelector.vue'
 import KtTable from './KtTable.vue'
-import TableColumns from './standard-table/components/Columns.vue'
 import FilterList from './standard-table/components/FilterList.vue'
 import TableFilters from './standard-table/components/Filters.vue'
 import TableGlobalSelection from './standard-table/components/GlobalSelection.vue'
@@ -142,14 +141,15 @@ import { useStandardTableContext } from './standard-table/context'
 import { KottiStandardTable } from './standard-table/types'
 import { formatFilterValue } from './standard-table/utilities/filters'
 import { useTableContext } from './table/context'
+import type { KottiColumnSelector } from './types'
 
 export default defineComponent({
 	name: 'KtStandardTable',
 	components: {
 		FilterList,
+		KtColumnSelector,
 		KtTable,
 		KtTag,
-		TableColumns,
 		TableFilters,
 		TableGlobalSelection,
 		TablePageSize,
@@ -198,17 +198,24 @@ export default defineComponent({
 
 		return {
 			appliedFilters,
-			columnOptions: computed(() =>
-				standardTableContext.value.internal.columns.map(({ id, label }) => ({
-					key: id,
-					label,
-				})),
+			canChangeColumnOrder: computed(
+				() => standardTableContext.value.internal.hasDragAndDrop,
 			),
-			columnVisibility: computed(
-				() =>
-					// FIXME: use hiddenColumns instead of internal api
-					tableContext.value.internal.table.getState().columnVisibility,
+			columnOptions: computed<KottiColumnSelector.Category[]>(() => [
+				{
+					label: 'Hidden Columns', // TODO: make translatable
+					options: standardTableContext.value.internal.columns.map(
+						({ id, label }) => ({
+							key: id,
+							label,
+						}),
+					),
+				},
+			]),
+			columnSelection: computed(
+				() => standardTableContext.value.internal.columnOrder,
 			),
+			columnsInOrder: computed(() => tableContext.value),
 			filterTags: computed(() =>
 				appliedFilters.value
 					.map(({ id, value }) => {
@@ -249,8 +256,8 @@ export default defineComponent({
 				standardTableContext.value.internal.setAppliedFilters(value)
 				standardTableContext.value.internal.setPageIndex(0)
 			},
-			onUpdateColumnVisivility: (value: Record<string, boolean>) => {
-				tableContext.value.internal.table.setColumnVisibility(value)
+			onUpdateColumnSelection: (value: string[]) => {
+				standardTableContext.value.internal.setColumnSelection(value)
 			},
 			onUpdatePageIndex: standardTableContext.value.internal.setPageIndex,
 			onUpdatePageSize: standardTableContext.value.internal.setPageSize,

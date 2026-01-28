@@ -4,8 +4,11 @@ import { attachMeta, makeInstallable } from '../utilities'
 
 import KtStandardTableVue from './KtStandardTable.vue'
 import KtTableVue from './KtTable.vue'
+import KtColumnSelectorVue from './KtColumnSelector.vue'
+
 import { KottiStandardTable } from './standard-table/types'
 import { KottiTable } from './table/types'
+import { KottiColumnSelector } from './types'
 
 export { useKottiStandardTable } from './standard-table/hooks'
 export {
@@ -100,4 +103,18 @@ export const KtTable = attachMeta(makeInstallable(KtTableVue), TABLE_META)
 export const KtStandardTable = attachMeta(
 	makeInstallable(KtStandardTableVue),
 	STANDARD_META,
+)
+
+export const KtColumnSelector = attachMeta(
+	makeInstallable(KtColumnSelectorVue),
+	{
+		addedVersion: '9.3.0',
+		deprecated: null,
+		designs: null,
+		slots: {},
+		typeScript: {
+			namespace: 'Kotti.ColumnSelector',
+			schema: KottiColumnSelector.propsSchema,
+		},
+	},
 )
