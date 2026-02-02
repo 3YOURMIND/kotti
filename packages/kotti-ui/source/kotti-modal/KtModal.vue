@@ -57,8 +57,8 @@ import { Yoco } from '@3yourmind/yoco'
 
 import { KtButton } from '../kotti-button'
 import { makeProps } from '../make-props'
+import ScrollableContainer from '../shared-components/ScrollableContainer.vue'
 
-import ScrollableContainer from './components/ScrollableContainer.vue'
 import { KottiModal } from './types'
 
 export default defineComponent({

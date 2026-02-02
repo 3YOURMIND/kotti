@@ -8,27 +8,30 @@
 			data-test="table-filter-edit-button"
 			:disabled="isLoading"
 			:icon="Yoco.Icon.CHEVRON_DOWN"
+			iconPosition="right"
 			:isLoading="isLoading"
-			:label="translations.editFilters"
+			:label="translations.filters"
 		/>
 		<template #content>
 			<div class="table-filters">
 				<FilterList
 					:appliedFilters="appliedFilters"
-					class="table-filters__list"
+					class="table-filters__content"
 					v-bind="{
 						filters,
 						isLoading,
 					}"
 					@update:appliedFilters="$emit('update:appliedFilters', $event)"
 				/>
-				<KtButton
-					data-test="table-filter-clear-all-button"
-					:disabled="isLoading"
-					:label="translations.clearAll"
-					type="text"
-					@click="$emit('update:appliedFilters', [])"
-				/>
+				<div class="table-filters__footer">
+					<KtButton
+						data-test="table-filter-clear-all-button"
+						:disabled="isLoading"
+						:label="translations.clearAll"
+						type="text"
+						@click="$emit('update:appliedFilters', [])"
+					/>
+				</div>
 			</div>
 		</template>
 	</KtPopover>
@@ -77,21 +80,21 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .table-filters {
-	display: flex;
-	flex-direction: column;
-	max-height: 50vh;
-	overflow-y: auto;
+	// KtPopover padding reset
+	margin: calc(-1 * var(--unit-2));
 
-	&__list {
+	&__content {
 		display: flex;
 		flex-direction: column;
 		gap: var(--unit-4);
-		margin-bottom: var(--unit-4);
+		max-height: 40vh;
+		padding: var(--unit-2);
+		overflow-y: auto;
 	}
 
-	:deep(.kt-button) {
-		flex-shrink: 0;
-		align-self: end;
+	&__footer {
+		padding: var(--unit-2);
+		text-align: end;
 	}
 }
 </style>

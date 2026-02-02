@@ -1,5 +1,5 @@
 <template>
-	<div class="filter-list">
+	<ScrollableContainer class="filter-list">
 		<component
 			:is="getComponent(filter)"
 			v-for="(filter, index) in filters"
@@ -9,12 +9,13 @@
 			:modelValue="getValue(filter)"
 			@update:modelValue="onUpdateModelValue"
 		/>
-	</div>
+	</ScrollableContainer>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 
+import ScrollableContainer from '../../../shared-components/ScrollableContainer.vue'
 import { KottiStandardTable } from '../types'
 import { getEmptyValue, isEmptyValue } from '../utilities/filters'
 
@@ -31,6 +32,7 @@ export default defineComponent({
 		DateRangeFilter,
 		MultiSelectFilter,
 		NumberRangeFilter,
+		ScrollableContainer,
 		SingleSelectFilter,
 	},
 	props: {
@@ -90,5 +92,9 @@ export default defineComponent({
 .filter-list :deep(.kt-field),
 .filter-list :deep(.kt-field-select) {
 	margin-bottom: 0;
+}
+
+.filter-list :deep(.scrollable-container__content) {
+	padding: 0;
 }
 </style>

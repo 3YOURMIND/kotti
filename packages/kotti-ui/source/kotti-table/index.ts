@@ -2,10 +2,9 @@ import type { Kotti } from '../types'
 import { MetaDesignType } from '../types/kotti'
 import { attachMeta, makeInstallable } from '../utilities'
 
+import KtColumnSelectorVue from './KtColumnSelector.vue'
 import KtStandardTableVue from './KtStandardTable.vue'
 import KtTableVue from './KtTable.vue'
-import KtColumnSelectorVue from './KtColumnSelector.vue'
-
 import { KottiStandardTable } from './standard-table/types'
 import { KottiTable } from './table/types'
 import { KottiColumnSelector } from './types'

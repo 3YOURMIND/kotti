@@ -1,79 +1,100 @@
 <template>
 	<KtPopover
 		v-if="categories && categories.length > 0"
-		:isDisabled="isLoading"
-		size="md"
+		:isDisabled="isDisabled || isLoading"
+		:size="size"
 		trigger="click"
+		@hide="handlePopoverHide"
 	>
 		<KtButton
-			data-test="table-column-edit-button"
-			:disabled="isLoading"
+			:data-test="dataTest ? `${dataTest}-button` : 'kt-column-selector-button'"
+			:disabled="isDisabled || isLoading"
 			:icon="Yoco.Icon.CHEVRON_DOWN"
+			iconPosition="right"
 			:isLoading="isLoading"
-			:label="translations.editColumns"
+			:label="label ?? translations.columns"
 		/>
 		<template #content>
-			<div class="table-columns">
-				<!-- TODO: make translatable -->
-				<div class="table-columns__subheader" v-text="'Selected Columns'" />
-				<div
-					@dragend="handleDragEnd"
-					@dragleave="handleDragLeave"
-					@drop="handleDrop"
-				>
-					<MenuOptionItem
-						v-for="option in selectedOptions"
-						:key="option.key"
-						class="table-columns__menu-item"
-						:draggable="canChangeColumnOrder"
-						@dragenter.prevent
-						@dragleave.prevent
-						@dragover.prevent="(e) => handleDragOver(e, option.key)"
-						@dragstart="(e) => handleDragStart(e, option.key)"
-					>
-						<KtFieldToggle
-							class="table-columns__menu-toggle"
-							isOptional
-							:modelValue="true"
-							@update:modelValue="removeOption(option.key)"
-						>
-							<span v-text="option.label" />
-						</KtFieldToggle>
-						<span class="table-columns__drag-indicator">
-							<i class="yoco narrow">dots_vertical</i>
-							<i class="yoco">dots_vertical</i>
-						</span>
-					</MenuOptionItem>
+			<div class="kt-column-selector">
+				<div class="kt-column-selector__header">
+					<SearchInput
+						v-if="canSearchColumn"
+						v-model="searchQuery"
+						:dataTest="
+							dataTest
+								? `${dataTest}-search-input`
+								: 'kt-column-selector-search-input'
+						"
+						:isLoading="isLoading"
+						:placeholder="translations.searchColumn"
+						size="small"
+					/>
 				</div>
 
-				<template v-for="(category, index) in cleanedCategories" :key="index">
-					<div class="table-columns__subheader" v-text="category.label" />
-
-					<MenuOptionItem
-						v-for="option in category.options"
-						:key="option.key"
-						class="table-columns__menu-item"
+				<ScrollableContainer class="kt-column-selector__content">
+					<div
+						v-if="selectedOptions.length > 0"
+						class="kt-column-selector__category-header"
+						v-text="translations.visibleColumns"
+					/>
+					<div
+						@dragend="handleDragEnd"
+						@dragleave="handleDragLeave"
+						@drop="handleDrop"
 					>
-						<KtFieldToggle
-							isOptional
-							:modelValue="false"
-							@update:modelValue="addOption(option.key)"
+						<MenuOptionItem
+							v-for="option in selectedOptions"
+							:key="option.key"
+							class="kt-column-selector__category-item"
+							:draggable="canChangeColumnOrder"
+							@dragenter.prevent
+							@dragleave.prevent
+							@dragover.prevent="(e) => handleDragOver(e, option.key)"
+							@dragstart="(e) => handleDragStart(e, option.key)"
 						>
-							<span v-text="option.label" />
-						</KtFieldToggle>
-					</MenuOptionItem>
-				</template>
-			</div>
+							<KtFieldToggle
+								class="kt-column-selector__category-item-toggle"
+								isOptional
+								:modelValue="true"
+								@update:modelValue="removeOption(option.key)"
+							>
+								<span v-text="option.label" />
+							</KtFieldToggle>
+							<span
+								v-if="canChangeColumnOrder"
+								class="kt-column-selector__category-item-drag-handle"
+							>
+								<i class="yoco narrow">dots_vertical</i>
+								<i class="yoco">dots_vertical</i>
+							</span>
+						</MenuOptionItem>
+					</div>
 
-			<!-- FIXME: ideally this button shoud not be behind the fold -->
-			<div class="table-columns__footer">
-				<!-- <KtButton
-					data-test="table-column-show-all-button"
-					:disabled="isShowAllDisabled"
-					:label="translations.showAll"
-					type="text"
-					@click="$emit('showAll')"
-				/> -->
+					<template v-for="(category, index) in cleanedCategories" :key="index">
+						<div
+							class="kt-column-selector__category-header"
+							v-text="category.label"
+						/>
+
+						<MenuOptionItem
+							v-for="option in category.options"
+							:key="option.key"
+							class="kt-column-selector__category-item"
+						>
+							<KtFieldToggle
+								isOptional
+								:modelValue="false"
+								@update:modelValue="addOption(option.key)"
+							>
+								<span v-text="option.label" />
+							</KtFieldToggle>
+						</MenuOptionItem>
+					</template>
+				</ScrollableContainer>
+
+				<div v-if="$slots.footer" class="kt-column-selector__footer">
+					<slot name="footer" />
+				</div>
 			</div>
 		</template>
 	</KtPopover>
@@ -90,7 +111,9 @@ import { useI18nContext, useTranslationNamespace } from '../kotti-i18n/hooks'
 import KtPopover from '../kotti-popover/KtPopover.vue'
 import { makeProps } from '../make-props'
 import MenuOptionItem from '../shared-components/menu-option/MenuOptionItem.vue'
+import ScrollableContainer from '../shared-components/ScrollableContainer.vue'
 
+import SearchInput from './components/SearchInput.vue'
 import { KottiColumnSelector } from './types'
 
 const TRANSFER_TYPE = 'application/move-column'
@@ -105,6 +128,8 @@ export default defineComponent({
 		KtFieldToggle,
 		KtPopover,
 		MenuOptionItem,
+		ScrollableContainer,
+		SearchInput,
 	},
 	props: makeProps(KottiColumnSelector.propsSchema),
 	emits: {
@@ -114,6 +139,9 @@ export default defineComponent({
 	},
 	setup(props, { emit }) {
 		const i18nContext = useI18nContext()
+		const translations = useTranslationNamespace('KtColumnSelector')
+
+		const searchQuery = ref<string | null>(null)
 		const selectedOptions = ref<KottiColumnSelector.Option[]>([])
 
 		const draggedColumnId = ref<string | null>(null)
@@ -123,7 +151,7 @@ export default defineComponent({
 			() =>
 				new Map(
 					props.categories
-						.flatMap((cat) => cat.options)
+						.flatMap((category) => category.options)
 						.map((option) => [option.key, option.label]),
 				),
 		)
@@ -133,14 +161,17 @@ export default defineComponent({
 			(selection) => {
 				selectedOptions.value = []
 				const errors: string[] = []
+
 				for (const optionKey of selection) {
 					const label = optionKeyMap.value.get(optionKey)
+
 					if (label === undefined) {
 						errors.push(optionKey)
 					} else {
 						selectedOptions.value.push({ key: optionKey, label })
 					}
 				}
+
 				if (errors.length > 0) {
 					// Sync and report if props.selection included keys that are not found
 					// any option within props.categories
@@ -170,8 +201,16 @@ export default defineComponent({
 				return props.categories
 					.map((category) => ({
 						...category,
+						label: category.label ?? translations.value.availableColumns,
 						options: category.options
-							.filter(({ key }) => !props.selection.includes(key))
+							.filter(
+								({ key, label }) =>
+									!props.selection.includes(key) &&
+									(!searchQuery.value ||
+										label
+											.toLowerCase()
+											.includes(searchQuery.value.toLowerCase())),
+							)
 							.sort((a, b) => collator.compare(a.label, b.label)),
 					}))
 					.filter((category) => category.options.length > 0)
@@ -202,14 +241,24 @@ export default defineComponent({
 				newOrder.splice(toIndex, 0, ...extract)
 				emit('update:selection', newOrder)
 			},
+			handlePopoverHide: () => {
+				searchQuery.value = null
+			},
 			removeOption: (optionKey: string) => {
 				emit(
 					'update:selection',
 					props.selection.filter((key) => key !== optionKey),
 				)
 			},
-			selectedOptions,
-			translations: useTranslationNamespace('KtStandardTable'),
+			searchQuery,
+			selectedOptions: computed(() =>
+				selectedOptions.value.filter(({ label }) =>
+					searchQuery.value
+						? label.toLowerCase().includes(searchQuery.value.toLowerCase())
+						: true,
+				),
+			),
+			translations,
 			Yoco,
 		}
 	},
@@ -217,16 +266,46 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.table-columns {
-	display: flex;
-	flex-direction: column;
-	max-height: 35vh;
-	overflow-y: auto;
+.kt-column-selector {
+	// KtPopover padding reset
+	margin: calc(-1 * var(--unit-2));
 
-	&__menu-item {
+	&__content {
+		display: flex;
+		flex-direction: column;
+		max-height: 40vh;
+		overflow-y: auto;
+
+		:deep(.scrollable-container__content) {
+			padding: 0;
+		}
+	}
+
+	&__footer {
+		padding: var(--unit-2);
+		text-align: end;
+	}
+
+	&__header {
+		padding: var(--unit-2);
+	}
+
+	&__category-header {
+		display: flex;
+		align-items: center;
+		height: 22px;
+		padding: var(--unit-1) var(--unit-2);
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 18px;
+		color: var(--text-02);
+		background-color: var(--ui-01);
+	}
+
+	&__category-item {
 		display: flex;
 		justify-content: space-between;
-		padding: var(--unit-1) var(--unit-2);
+		padding: var(--unit-2);
 
 		:deep(.kt-field__header--is-suffix) {
 			display: none;
@@ -238,18 +317,7 @@ export default defineComponent({
 		}
 	}
 
-	&__menu-toggle {
-		margin: 0;
-	}
-
-	&__subheader {
-		padding-inline: var(--unit-2);
-		font-size: var(--unit-3);
-		color: var(--text-02);
-		background-color: var(--ui-01);
-	}
-
-	&__drag-indicator {
+	&__category-item-drag-handle {
 		cursor: grab;
 
 		.yoco {
@@ -262,8 +330,8 @@ export default defineComponent({
 		}
 	}
 
-	&__footer {
-		text-align: end;
+	&__category-item-toggle {
+		margin: 0;
 	}
 }
 </style>

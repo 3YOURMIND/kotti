@@ -12,6 +12,7 @@ import type { KottiFormSubmit } from '../kotti-form-submit/types'
 import type { KottiNavbar } from '../kotti-navbar/types'
 import type { KottiStandardTable } from '../kotti-table/standard-table/types'
 import type { KottiTable } from '../kotti-table/table/types'
+import type { KottiColumnSelector } from '../kotti-table/types'
 import type { KottiValueLabel } from '../kotti-value-label/types'
 import { DecimalSeparator } from '../types/decimal-separator'
 
@@ -46,6 +47,7 @@ export namespace KottiI18n {
 	export type NumberFormat = z.output<typeof numberFormatSchema>
 
 	export type Messages = {
+		KtColumnSelector: KottiColumnSelector.Translations
 		KtComment: KottiComment.Translations
 		KtFieldDateShared: KottiFieldDateShared.Translations
 		KtFieldFileUpload: KottiFieldFileUploadShared.Translations

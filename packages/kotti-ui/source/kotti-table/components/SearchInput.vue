@@ -1,38 +1,43 @@
 <template>
 	<KtFieldText
-		class="table-search"
-		:dataTest="dataTest ? `${dataTest}.searchInput` : undefined"
+		class="search-input"
+		:dataTest="dataTest"
 		:isLoading="isLoading"
 		isOptional
 		:leftIcon="Yoco.Icon.SEARCH"
 		:modelValue="internalValue"
-		:placeholder="placeholder ?? translations.search"
-		size="small"
+		:placeholder="placeholder"
+		:size="size"
 		@update:modelValue="onInput"
 	/>
 </template>
 
 <script lang="ts">
 import debounce from 'lodash/debounce.js'
+import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
-import { DEFAULT_DEBOUNCE } from '../../../constants'
-import KtFieldText from '../../../kotti-field-text/KtFieldText.vue'
-import type { KottiFieldText } from '../../../kotti-field-text/types'
-import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import { DEFAULT_DEBOUNCE } from '../../constants'
+import KtFieldText from '../../kotti-field-text/KtFieldText.vue'
+import type { KottiFieldText } from '../../kotti-field-text/types'
+import { KottiField } from '../../kotti-field/types'
 
 export default defineComponent({
-	name: 'TableSearch',
+	name: 'SearchInput',
 	components: {
 		KtFieldText,
 	},
 	props: {
-		dataTest: { default: null, type: String },
+		dataTest: { required: false, type: String },
 		isLoading: { default: false, type: Boolean },
 		modelValue: { default: null, type: String },
-		placeholder: { default: null, type: String },
+		placeholder: { required: false, type: String },
+		size: {
+			default: KottiField.Size.MEDIUM,
+			type: String as PropType<KottiField.Size>,
+		},
 	},
 	emits: ['update:modelValue'],
 	setup(props, { emit }) {
@@ -56,7 +61,6 @@ export default defineComponent({
 				internalValue.value = value
 				emitValue()
 			},
-			translations: useTranslationNamespace('KtStandardTable'),
 			Yoco,
 		}
 	},
@@ -64,10 +68,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.table-search {
-	flex: 1 1 auto;
-	min-width: 8rem;
-	max-width: 10rem;
+.search-input {
 	margin-bottom: 0;
 }
 </style>

@@ -298,9 +298,8 @@ export namespace KottiStandardTable {
 
 	export type Translations = {
 		clearAll: string
-		editColumns: string
-		editFilters: string
 		endDate: string
+		filters: string
 		itemsPerPage: string
 		lastMonth: string
 		lastWeek: string
