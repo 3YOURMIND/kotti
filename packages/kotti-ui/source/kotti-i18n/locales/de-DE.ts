@@ -18,6 +18,12 @@ namespace Common {
 }
 
 export const deDE: KottiI18n.Messages = {
+	KtColumnSelector: {
+		availableColumns: 'Available Columns',
+		columns: 'Columns',
+		searchColumn: 'Search Column',
+		visibleColumns: 'Visible Columns',
+	},
 	KtComment: {
 		cancelMessage: 'Esc drücken oder',
 		clickToCancelLabel: 'klicken, um abzubrechen',
@@ -141,9 +147,8 @@ export const deDE: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Alles löschen',
-		editColumns: 'Spalten bearbeiten',
-		editFilters: 'Filter bearbeiten',
 		endDate: 'Ende',
+		filters: 'Filter',
 		itemsPerPage: 'Elemente pro Seite',
 		lastMonth: 'Letzter Monat',
 		lastWeek: 'Letzte Woche',

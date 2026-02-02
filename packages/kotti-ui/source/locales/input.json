@@ -9,6 +9,12 @@
 		"lessThanOrEqual": "is less than or equal to",
 		"restrictedAccess": "Restricted access"
 	},
+	"KtColumnSelector": {
+		"availableColumns": "Available Columns",
+		"columns": "Columns",
+		"searchColumn": "Search Column",
+		"visibleColumns": "Visible Columns"
+	},
 	"ktComment": {
 		"cancelMessage": "Press Esc key or",
 		"clickToCancelLabel": "click to cancel",
@@ -113,9 +119,8 @@
 	},
 	"ktStandardTable": {
 		"clearAll": "Clear All",
-		"editColumns": "Edit Columns",
-		"editFilters": "Edit Filters",
 		"endDate": "End",
+		"filters": "Filters",
 		"itemsPerPage": "Items per page",
 		"lastMonth": "Last Month",
 		"lastWeek": "Last Week",

@@ -20,10 +20,12 @@
 			<div v-if="!hideTableActions" class="kt-standard-table__table-actions">
 				<TableSearch
 					v-if="!options?.hideControls?.search"
-					data-test="table-search-field"
+					class="kt-standard-table__search-input"
+					dataTest="table-search-input"
 					:isLoading="isLoadingAndEmpty"
 					:modelValue="searchValue"
-					:placeholder="options?.searchPlaceholder"
+					:placeholder="options?.searchPlaceholder ?? translations.search"
+					size="small"
 					@update:modelValue="onUpdateSearchValue"
 				/>
 				<TableFilters
@@ -37,11 +39,24 @@
 				<KtColumnSelector
 					v-if="!options?.hideControls?.columns"
 					:canChangeColumnOrder="canChangeColumnOrder"
+					canSearchColumn
 					:categories="columnOptions"
+					dataTest="table-column-edit"
 					:isLoading="isLoadingAndEmpty"
 					:selection="columnSelection"
+					:size="options?.popoversSize?.columns"
 					@update:selection="onUpdateColumnSelection"
-				/>
+				>
+					<template #footer>
+						<KtButton
+							data-test="table-column-show-all-button"
+							:disabled="isShowAllColumnsDisabled"
+							:label="translations.showAll"
+							type="text"
+							@click="onShowAllColumns"
+						/>
+					</template>
+				</KtColumnSelector>
 			</div>
 			<div class="kt-standard-table__right-aligned-container">
 				<div v-if="$slots['control-actions']" class="kt-standard-table__slot">
@@ -126,9 +141,12 @@
 <script lang="ts">
 import { computed, defineComponent, watch } from 'vue'
 
+import { KtButton } from '../kotti-button'
+import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { KtTag } from '../kotti-tag'
 import { makeProps } from '../make-props'
 
+import TableSearch from './components/SearchInput.vue'
 import KtColumnSelector from './KtColumnSelector.vue'
 import KtTable from './KtTable.vue'
 import FilterList from './standard-table/components/FilterList.vue'
@@ -136,7 +154,6 @@ import TableFilters from './standard-table/components/Filters.vue'
 import TableGlobalSelection from './standard-table/components/GlobalSelection.vue'
 import TablePageSize from './standard-table/components/PageSize.vue'
 import TablePagination from './standard-table/components/Pagination.vue'
-import TableSearch from './standard-table/components/Search.vue'
 import { useStandardTableContext } from './standard-table/context'
 import { KottiStandardTable } from './standard-table/types'
 import { formatFilterValue } from './standard-table/utilities/filters'
@@ -147,6 +164,7 @@ export default defineComponent({
 	name: 'KtStandardTable',
 	components: {
 		FilterList,
+		KtButton,
 		KtColumnSelector,
 		KtTable,
 		KtTag,
@@ -167,6 +185,9 @@ export default defineComponent({
 
 		const appliedFilters = computed(
 			() => standardTableContext.value.internal.appliedFilters,
+		)
+		const isLoading = computed(
+			() => standardTableContext.value.internal.isLoading,
 		)
 		const searchValue = computed(
 			() => standardTableContext.value.internal.searchValue,
@@ -203,7 +224,7 @@ export default defineComponent({
 			),
 			columnOptions: computed<KottiColumnSelector.Category[]>(() => [
 				{
-					label: 'Hidden Columns', // TODO: make translatable
+					label: null,
 					options: standardTableContext.value.internal.columns.map(
 						({ id, label }) => ({
 							key: id,
@@ -243,11 +264,18 @@ export default defineComponent({
 			inlineFilters: computed(() =>
 				filters.value.filter((filter) => filter.displayInline),
 			),
-			isLoading: computed(() => standardTableContext.value.internal.isLoading),
+			isLoading,
 			isLoadingAndEmpty: computed(
 				() =>
-					standardTableContext.value.internal.isLoading &&
+					isLoading.value &&
 					tableContext.value.internal.table.getRowModel().rows.length === 0,
+			),
+			isShowAllColumnsDisabled: computed(
+				(): boolean =>
+					isLoading.value ||
+					Object.values(tableContext.value.internal.visibleColumns).every(
+						(optionValue) => optionValue,
+					),
 			),
 			onShowAllColumns: () => {
 				tableContext.value.internal.table.toggleAllColumnsVisible()
@@ -289,6 +317,7 @@ export default defineComponent({
 					.getRowModel()
 					.rows.map((row) => row.original),
 			),
+			translations: useTranslationNamespace('KtStandardTable'),
 			unselectAllRows: tableContext.value.internal.unselectAllRows,
 		}
 	},
@@ -360,6 +389,12 @@ export default defineComponent({
 		gap: var(--unit-4);
 		align-items: center;
 		margin-left: auto;
+	}
+
+	&__search-input {
+		flex: 1 1 auto;
+		min-width: 8rem;
+		max-width: 10rem;
 	}
 
 	&__slot {

@@ -82,7 +82,7 @@ export default defineComponent({
 		KtFieldToggle,
 	},
 	props: makeProps(KottiPopover.propsSchema),
-	emits: ['update:isSelected'],
+	emits: ['hide', 'update:isSelected'],
 	setup(props, { emit }) {
 		const triggerRef = ref<HTMLElement | null>(null)
 		const contentRef = ref<HTMLElement | null>(null)
@@ -144,6 +144,7 @@ export default defineComponent({
 				},
 				onHide: () => {
 					showPopover.value = false
+					emit('hide')
 				},
 				onShow: () => {
 					if (!props.isDisabled) showPopover.value = true

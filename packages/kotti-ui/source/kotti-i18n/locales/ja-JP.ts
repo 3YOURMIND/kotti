@@ -18,6 +18,12 @@ namespace Common {
 }
 
 export const jaJP: KottiI18n.Messages = {
+	KtColumnSelector: {
+		availableColumns: 'Available Columns',
+		columns: 'Columns',
+		searchColumn: 'Search Column',
+		visibleColumns: 'Visible Columns',
+	},
 	KtComment: {
 		cancelMessage: 'Escキーを押すか',
 		clickToCancelLabel: 'クリックしてキャンセルします',
@@ -141,9 +147,8 @@ export const jaJP: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Clear All',
-		editColumns: 'Edit Columns',
-		editFilters: 'Edit Filters',
 		endDate: 'End',
+		filters: 'Filters',
 		itemsPerPage: 'Items per page',
 		lastMonth: 'Last Month',
 		lastWeek: 'Last Week',

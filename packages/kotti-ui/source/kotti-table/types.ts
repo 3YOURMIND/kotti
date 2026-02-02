@@ -1,12 +1,8 @@
 import { z } from 'zod'
 
-export namespace KottiColumnSelector {
-	export enum Size {
-		LARGE = 'lg',
-		MEDIUM = 'md',
-		SMALL = 'sm',
-	}
+import { KottiPopover } from '../kotti-popover/types'
 
+export namespace KottiColumnSelector {
 	const optionSchema = z.object({
 		key: z.string(),
 		label: z.string(),
@@ -15,7 +11,7 @@ export namespace KottiColumnSelector {
 	export type Option = z.input<typeof optionSchema>
 
 	const categorySchema = z.object({
-		label: z.string(),
+		label: z.string().nullable().default(null),
 		options: z.array(optionSchema),
 	})
 
@@ -23,12 +19,23 @@ export namespace KottiColumnSelector {
 
 	export const propsSchema = z.object({
 		canChangeColumnOrder: z.boolean().default(false),
+		canSearchColumn: z.boolean().default(false),
 		categories: z.array(categorySchema).default(() => []),
-		defaultSelection: z.array(z.string()).nullable().default(null),
+		dataTest: z.string().optional(),
+		isDisabled: z.boolean().default(false),
 		isLoading: z.boolean().default(false),
+		label: z.string().nullable().default(null),
 		selection: z.array(z.string()),
+		size: KottiPopover.propsSchema.shape.size,
 	})
 
 	export type Props = z.input<typeof propsSchema>
 	export type PropsInternal = z.output<typeof propsSchema>
+
+	export type Translations = {
+		availableColumns: string
+		columns: string
+		searchColumn: string
+		visibleColumns: string
+	}
 }

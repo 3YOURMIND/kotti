@@ -18,6 +18,12 @@ namespace Common {
 }
 
 export const ukUA: KottiI18n.Messages = {
+	KtColumnSelector: {
+		availableColumns: 'Available Columns',
+		columns: 'Columns',
+		searchColumn: 'Search Column',
+		visibleColumns: 'Visible Columns',
+	},
 	KtComment: {
 		cancelMessage: 'Натисніть Esc або',
 		clickToCancelLabel: 'натисніть, щоб скасувати',
@@ -141,9 +147,8 @@ export const ukUA: KottiI18n.Messages = {
 	},
 	KtStandardTable: {
 		clearAll: 'Очистити все',
-		editColumns: 'Редагувати колонки',
-		editFilters: 'Редагувати фільтри',
 		endDate: 'Кінець',
+		filters: 'Фільтри',
 		itemsPerPage: 'Елементів на сторінці',
 		lastMonth: 'Минулий місяць',
 		lastWeek: 'Минулий тиждень',
