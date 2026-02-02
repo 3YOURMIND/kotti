@@ -127,8 +127,8 @@
 	--yellow-100: #4f3310;
 	--ui-black: var(--black);
 	--ui-white: var(--white);
-	--ui-background: var(--gray-05);
-	--ui-background-shade: var(--gray-10);
+	--ui-background: var(--white);
+	--ui-background-shade: var(--gray-05);
 	--ui-01: var(--gray-10);
 	--ui-02: var(--gray-20);
 	--ui-03: var(--gray-50);

@@ -168,12 +168,12 @@ export const tokens = [
 	{
 		name: 'ui-background',
 		description: 'Page background',
-		reference: 'gray-05',
+		reference: 'white',
 	},
 	{
 		name: 'ui-background-shade',
 		description: 'Shaded Page background',
-		reference: 'gray-10',
+		reference: 'gray-05',
 	},
 	{
 		name: 'ui-01',
