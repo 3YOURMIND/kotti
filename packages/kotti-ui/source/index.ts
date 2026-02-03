@@ -92,7 +92,7 @@ import { KtPopover } from './kotti-popover'
 export * from './kotti-popover'
 import { KtRow } from './kotti-row'
 export * from './kotti-row'
-import { KtStandardTable, KtTable } from './kotti-table'
+import { KtColumnSelector, KtStandardTable, KtTable } from './kotti-table'
 export * from './kotti-table'
 import { KtTag } from './kotti-tag'
 export * from './kotti-tag'
@@ -119,6 +119,7 @@ export default {
 			KtButtonGroup,
 			KtCard,
 			KtCol,
+			KtColumnSelector,
 			KtComment,
 			KtCommentInput,
 			KtDrawer,
