@@ -16,7 +16,6 @@
 			<div class="table-filters">
 				<FilterList
 					:appliedFilters="appliedFilters"
-					class="table-filters__content"
 					v-bind="{
 						filters,
 						isLoading,
@@ -82,15 +81,6 @@ export default defineComponent({
 .table-filters {
 	// KtPopover padding reset
 	margin: calc(-1 * var(--unit-2));
-
-	&__content {
-		display: flex;
-		flex-direction: column;
-		gap: var(--unit-4);
-		max-height: 40vh;
-		padding: var(--unit-2);
-		overflow-y: auto;
-	}
 
 	&__footer {
 		padding: var(--unit-2);
