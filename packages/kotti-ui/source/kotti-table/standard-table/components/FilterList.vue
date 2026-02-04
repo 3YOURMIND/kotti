@@ -1,14 +1,16 @@
 <template>
-	<ScrollableContainer class="filter-list">
-		<component
-			:is="getComponent(filter)"
-			v-for="(filter, index) in filters"
-			:key="index"
-			:filter="filter"
-			:isLoading="isLoading"
-			:modelValue="getValue(filter)"
-			@update:modelValue="onUpdateModelValue"
-		/>
+	<ScrollableContainer>
+		<div class="filter-list">
+			<component
+				:is="getComponent(filter)"
+				v-for="(filter, index) in filters"
+				:key="index"
+				:filter="filter"
+				:isLoading="isLoading"
+				:modelValue="getValue(filter)"
+				@update:modelValue="onUpdateModelValue"
+			/>
+		</div>
 	</ScrollableContainer>
 </template>
 
@@ -84,17 +86,25 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-/* stylelint-disable-next-line selector-class-pattern */
-.filter-list :deep(.kt-field__wrapper) .kt-field__header__label__suffix {
-	display: none;
+.filter-list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--unit-4);
+	padding: var(--unit-2);
+
+	/* stylelint-disable-next-line selector-class-pattern */
+	:deep(.kt-field__wrapper) .kt-field__header__label__suffix {
+		display: none;
+	}
+
+	:deep(.kt-field),
+	:deep(.kt-field-select) {
+		margin-bottom: 0;
+	}
 }
 
-.filter-list :deep(.kt-field),
-.filter-list :deep(.kt-field-select) {
-	margin-bottom: 0;
-}
-
-.filter-list :deep(.scrollable-container__content) {
+:deep(.scrollable-container__content) {
+	max-height: 40vh;
 	padding: 0;
 }
 </style>
