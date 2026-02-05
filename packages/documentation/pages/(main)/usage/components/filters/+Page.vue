@@ -397,9 +397,9 @@ export default defineComponent({
 						helpText="Support on DATE_RANGE column type only"
 						isOptional
 						label="shortcuts"
+						:modelValue="selectedShortcuts"
 						:options="shortcutsOptions"
-						:value="selectedShortcuts"
-						@input="onSelectedShortcutsChange"
+						@update:modelValue="onSelectedShortcutsChange"
 					/>
 					<KtFieldSingleSelect
 						formKey="currencyCurrency"

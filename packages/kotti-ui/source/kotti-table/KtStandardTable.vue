@@ -64,11 +64,11 @@
 				</div>
 				<FilterList
 					v-if="inlineFilters.length > 0"
+					:appliedFilters="appliedFilters"
 					class="kt-standard-table__inline-filters"
 					:filters="inlineFilters"
 					:isLoading="isLoadingAndEmpty"
-					:value="appliedFilters"
-					@input="onUpdateAppliedFilters"
+					@update:appliedFilters="onUpdateAppliedFilters"
 				/>
 			</div>
 		</div>

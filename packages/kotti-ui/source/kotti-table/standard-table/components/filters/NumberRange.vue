@@ -9,12 +9,12 @@
 			<KtFieldNumber
 				v-bind="minFieldProps"
 				@blur="onMinInputBlur"
-				@input="onMinValueInput"
+				@update:modelValue="onMinValueInput"
 			/>
 			<KtFieldNumber
 				v-bind="maxFieldProps"
 				@blur="onMaxInputBlur"
-				@input="onMaxValueInput"
+				@update:modelValue="onMaxValueInput"
 			/>
 		</div>
 	</fieldset>

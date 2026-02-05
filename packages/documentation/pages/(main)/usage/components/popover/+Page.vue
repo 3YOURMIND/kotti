@@ -184,7 +184,7 @@
 					</template>
 				</KtPopover>
 
-				<KtFieldToggle v-model:value="isPopoverDisabled" isOptional>
+				<KtFieldToggle v-model="isPopoverDisabled" isOptional>
 					Is Popover disabled
 				</KtFieldToggle>
 			'
