@@ -20,6 +20,10 @@
 			<div class="skeleton circle" />
 			<div class="skeleton square"/>
 			<div class="skeleton rectangle"/>
+
+			<KtLoading type="circle" />
+			<KtLoading type="square" />
+			<KtLoading type="rectangle" />
 		'
 		language="html"
 	>
@@ -38,23 +42,40 @@
 				<div class="skeleton rectangle md" />
 			</div>
 		</div>
+		<div class="columns">
+			<div class="column col-2">
+				<KtLoading type="circle" />
+			</div>
+			<div class="column col-2">
+				<KtLoading type="square" />
+			</div>
+			<div class="column col-8 col-with-row-gap">
+				<KtLoading type="rectangle-md" />
+				<KtLoading type="rectangle-md" />
+				<KtLoading type="rectangle-md" />
+				<KtLoading type="rectangle-md" />
+				<KtLoading type="rectangle-md" />
+			</div>
+		</div>
 	</CodePreview>
 
 	<p>Rectangle skeleton with different height.</p>
 
 	<CodePreview
 		code='
-			<div class="skeleton rectangle"/>
-			<div class="skeleton rectangle md"/>
-			<div class="skeleton rectangle md"/>
-			<div class="skeleton rectangle lg"/>
+			<KtLoading type="rectangle" />
+			<KtLoading type="rectangle-md" />
+			<KtLoading type="rectangle-md" />
+			<KtLoading type="rectangle-lg" />
 		'
 		language="html"
 	>
-		<div class="skeleton rectangle" />
-		<div class="skeleton rectangle md" />
-		<div class="skeleton rectangle md" />
-		<div class="skeleton rectangle lg" />
+		<div class="col-with-row-gap">
+			<KtLoading type="rectangle" />
+			<KtLoading type="rectangle-md" />
+			<KtLoading type="rectangle-md" />
+			<KtLoading type="rectangle-lg" />
+		</div>
 	</CodePreview>
 
 	<h2>Spin Loading</h2>
@@ -139,7 +160,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { Kotti } from '@3yourmind/kotti-ui'
+import { Kotti, KtLoading } from '@3yourmind/kotti-ui'
 
 import CodePreview from '~/components/CodePreview.vue'
 import ComponentInfo from '~/components/component-info/ComponentInfo.vue'
@@ -149,6 +170,7 @@ export default defineComponent({
 	components: {
 		CodePreview,
 		ComponentInfo,
+		KtLoading,
 	},
 	setup() {
 		const component: { meta: Kotti.Meta; name: string } = {
