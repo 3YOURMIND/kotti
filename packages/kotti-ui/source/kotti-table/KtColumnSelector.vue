@@ -274,7 +274,6 @@ export default defineComponent({
 		display: flex;
 		flex-direction: column;
 		max-height: 40vh;
-		overflow-y: auto;
 
 		:deep(.scrollable-container__content) {
 			padding: 0;
@@ -305,7 +304,7 @@ export default defineComponent({
 	&__category-item {
 		display: flex;
 		justify-content: space-between;
-		padding: var(--unit-2);
+		padding: var(--unit-2) var(--unit-3);
 
 		:deep(.kt-field__header--is-suffix) {
 			display: none;

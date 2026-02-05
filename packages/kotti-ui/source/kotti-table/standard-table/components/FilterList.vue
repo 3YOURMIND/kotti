@@ -90,7 +90,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	gap: var(--unit-4);
-	padding: var(--unit-2);
+	padding: var(--unit-2) calc(var(--unit-3) + var(--unit-h));
 
 	/* stylelint-disable-next-line selector-class-pattern */
 	:deep(.kt-field__wrapper) .kt-field__header__label__suffix {
