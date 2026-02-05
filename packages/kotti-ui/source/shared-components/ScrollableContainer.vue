@@ -3,7 +3,12 @@
 		<div
 			class="scrollable-container__shadow-overlay scrollable-container__shadow-overlay--is-top"
 		/>
-		<div class="scrollable-container__content">
+		<div
+			:class="{
+				'scrollable-container__content': true,
+				'hide-scrollbar': hideScrollbar,
+			}"
+		>
 			<div ref="topSentinelRef" class="scrollable-container__sentinel" />
 			<slot />
 			<div ref="bottomSentinelRef" class="scrollable-container__sentinel" />
@@ -19,6 +24,9 @@ import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 
 export default defineComponent({
 	name: 'ScrollableContainer',
+	props: {
+		hideScrollbar: { default: false, type: Boolean },
+	},
 	setup() {
 		const bottomSentinelRef = ref<HTMLDivElement | null>(null)
 		const containerRef = ref<HTMLDivElement | null>(null)
@@ -71,10 +79,26 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import '../kotti-field/mixins';
+
 $shadow-overlay-height: 5px;
+
+.hide-scrollbar {
+	overflow-y: auto;
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* Internet Explorer and Edge */
+
+	&::-webkit-scrollbar {
+		display: none; /* Webkit browsers (Chrome, Safari, newer Edge) */
+	}
+}
 
 .scrollable-container {
 	&__content {
+		&:not(.hide-scrollbar) {
+			@include prettify-scrollbar;
+		}
+
 		position: relative;
 		padding: 0 var(--unit-4);
 		overflow-y: auto;
