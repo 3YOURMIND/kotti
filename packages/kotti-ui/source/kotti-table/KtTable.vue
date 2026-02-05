@@ -412,11 +412,15 @@ export default defineComponent({
 			height: unset;
 		}
 
-		tbody {
-			mix-blend-mode: multiply;
+		table,
+		tr,
+		td {
+			background-color: transparent !important;
+		}
 
+		tbody {
 			tr {
-				border-bottom-color: white !important;
+				border-bottom-color: var(--ui-background) !important;
 			}
 		}
 	}
