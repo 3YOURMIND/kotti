@@ -12,7 +12,7 @@
 			:isLoading="isLoading"
 			:label="translations.filters"
 		/>
-		<template #content>
+		<template #contextEscapeContent>
 			<div class="table-filters">
 				<FilterList
 					:appliedFilters="appliedFilters"

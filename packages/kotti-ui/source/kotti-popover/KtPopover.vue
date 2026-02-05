@@ -36,6 +36,9 @@
 					</template>
 				</IconTextItem>
 			</slot>
+			<ContextEscapeWrapper v-if="$slots.contextEscapeContent">
+				<slot :close="close" name="contextEscapeContent" />
+			</ContextEscapeWrapper>
 		</div>
 	</div>
 </template>
