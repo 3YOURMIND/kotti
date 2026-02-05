@@ -303,6 +303,7 @@ export default defineComponent({
 
 	&__category-item {
 		display: flex;
+		gap: var(--unit-3);
 		justify-content: space-between;
 		padding: var(--unit-2) var(--unit-3);
 
@@ -317,6 +318,8 @@ export default defineComponent({
 	}
 
 	&__category-item-drag-handle {
+		display: flex;
+		align-items: center;
 		cursor: grab;
 
 		.yoco {
