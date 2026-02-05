@@ -40,7 +40,7 @@
 	<p>Overwrite the Primary Color.</p>
 
 	<KtFieldSingleSelect
-		v-model:value="primaryColor"
+		v-model:modelValue="primaryColor"
 		isOptional
 		label="Primary Brand Color"
 		:options="colors"

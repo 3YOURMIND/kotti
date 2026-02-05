@@ -9,7 +9,7 @@
 			:modelValue="pageSize"
 			:options="options"
 			size="small"
-			@input="$emit('update:pageSize', $event)"
+			@update:modelValue="$emit('update:pageSize', $event)"
 		/>
 	</div>
 </template>
