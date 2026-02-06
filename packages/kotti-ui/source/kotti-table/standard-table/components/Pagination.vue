@@ -1,9 +1,6 @@
 <template>
 	<div class="table-pagination">
-		<div
-			v-if="isLoading"
-			class="table-pagination__loading skeleton rectangle"
-		/>
+		<KtLoading v-if="isLoading" class="table-pagination__loading" />
 		<template v-else>
 			<span v-text="resultLabel" />
 			<KtPagination
@@ -25,12 +22,14 @@ import { computed, defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
+import KtLoading from '../../../kotti-loading/KtLoading.vue'
 import KtPagination from '../../../kotti-pagination/KtPagination.vue'
 import { pluralize } from '../utilities/translation'
 
 export default defineComponent({
 	name: 'TablePagination',
 	components: {
+		KtLoading,
 		KtPagination,
 	},
 	props: {

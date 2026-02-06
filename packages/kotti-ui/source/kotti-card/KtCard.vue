@@ -1,15 +1,15 @@
 <template>
 	<div :class="cardClass" tabindex="0" @click.prevent="handleClick">
 		<div v-if="imgUrl" :class="imageRowClass">
-			<div v-if="isImgLoading" class="skeleton square md" />
+			<KtLoading v-if="isImgLoading" type="square" />
 			<img v-else class="kt-card__image" :src="imgUrl" />
 		</div>
 		<div v-if="$slots['card-header']" class="kt-card__header">
-			<div v-if="isTextLoading" class="skeleton rectangle md" />
+			<KtLoading v-if="isTextLoading" type="rectangle-md" />
 			<slot v-else name="card-header" />
 		</div>
 		<div v-if="$slots['card-body']" class="kt-card__body">
-			<div v-if="isTextLoading" class="skeleton rectangle sm" />
+			<KtLoading v-if="isTextLoading" class="rectangle-sm" />
 			<slot v-else name="card-body" />
 		</div>
 		<div v-if="hasActions" class="kt-card__footer">
@@ -35,13 +35,14 @@
 import { computed, defineComponent } from 'vue'
 
 import { KtButton } from '../kotti-button'
+import { KtLoading } from '../kotti-loading'
 import { makeProps } from '../make-props'
 
 import { KottiCard } from './types'
 
 export default defineComponent({
 	name: 'KtCard',
-	components: { KtButton },
+	components: { KtButton, KtLoading },
 	props: makeProps(KottiCard.propsSchema),
 	emits: ['click', 'clickOnPrimaryButton', 'clickOnSecondaryButton'],
 	setup(props, { emit }) {

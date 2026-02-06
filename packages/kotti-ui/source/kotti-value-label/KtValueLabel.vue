@@ -7,7 +7,7 @@
 			:helpTextSlot="$slots.helpText"
 			:label="label"
 		/>
-		<div v-if="isLoading" class="kt-value-label__loading skeleton rectangle" />
+		<KtLoading v-if="isLoading" class="kt-value-label__loading" />
 		<div v-else class="kt-value-label__value">
 			<i v-if="isUnset" v-text="notSetLabel" />
 			<slot v-else-if="$slots.default" />
@@ -31,13 +31,14 @@ import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
 import { KtLabel } from '../kotti-label'
+import { KtLoading } from '../kotti-loading'
 import { makeProps } from '../make-props'
 
 import { KottiValueLabel } from './types'
 
 export default defineComponent({
 	name: 'KtValueLabel',
-	components: { KtLabel },
+	components: { KtLabel, KtLoading },
 	props: makeProps(KottiValueLabel.propsSchema),
 	setup(props) {
 		const translations = useTranslationNamespace('KtValueLabel')

@@ -18,9 +18,9 @@
 				@click="onClickLabel"
 			/>
 
-			<div
+			<KtLoading
 				v-if="field.isLoading"
-				class="kt-field__input-container-wrapper-loading skeleton rectangle"
+				class="kt-field__input-container-wrapper-loading"
 			/>
 			<div
 				v-show="!field.isLoading"
@@ -120,6 +120,7 @@ import { computed, defineComponent, ref } from 'vue'
 import { Yoco } from '@3yourmind/yoco'
 
 import { KtLabel } from '../kotti-label'
+import { KtLoading } from '../kotti-loading'
 
 import FieldHelpText from './components/FieldHelpText.vue'
 import { useInput } from './hooks'
@@ -131,7 +132,7 @@ const SINGLE_MOUSE_CLICK = 1
 
 export default defineComponent({
 	name: 'KtField',
-	components: { FieldHelpText, KtLabel },
+	components: { FieldHelpText, KtLabel, KtLoading },
 	props: {
 		debounceLabelClick: { default: false, type: Boolean },
 		field: {
