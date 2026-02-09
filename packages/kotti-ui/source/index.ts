@@ -82,6 +82,8 @@ import { KtLabel } from './kotti-label'
 export * from './kotti-label'
 import { KtLine } from './kotti-line'
 export * from './kotti-line'
+import { KtLoading } from './kotti-loading'
+export * from './kotti-loading'
 import { KtModal } from './kotti-modal'
 export * from './kotti-modal'
 import { KtNavbar } from './kotti-navbar'
@@ -152,6 +154,7 @@ export default {
 			KtI18nContext,
 			KtLabel,
 			KtLine,
+			KtLoading,
 			KtModal,
 			KtNavbar,
 			KtPagination,

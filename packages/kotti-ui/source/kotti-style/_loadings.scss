@@ -6,25 +6,15 @@
 
 @keyframes skeleton-loading {
 	0% {
-		background-position: -50rem 0;
-	}
-
-	100% {
-		background-position: 50rem 0;
-	}
-}
-
-@keyframes skeleton-loading-reduced {
-	0% {
-		background: var(--ui-background);
+		opacity: 1;
 	}
 
 	50% {
-		background: var(--text-05);
+		opacity: 0.4;
 	}
 
 	100% {
-		background: var(--ui-background);
+		opacity: 1;
 	}
 }
 
@@ -32,14 +22,9 @@
 	box-sizing: border-box;
 	display: block;
 	width: 100%;
-	background: linear-gradient(
-		to left,
-		var(--ui-background) 0%,
-		var(--text-05) 50%,
-		var(--ui-background) 100%
-	);
+	background-color: var(--gray-50);
 	border-radius: 2px;
-	animation: 2s ease-out infinite skeleton-loading;
+	animation: 2s ease-in infinite alternate skeleton-loading;
 }
 
 .skeleton {
@@ -76,11 +61,11 @@
 			height: 1.2rem;
 		}
 	}
-}
 
-@media (prefers-reduced-motion) {
-	.skeleton {
-		animation-name: skeleton-loading-reduced !important;
+	@for $i from 1 through 20 {
+		&.delay-#{$i} {
+			animation-delay: (calc(1s / 50) * $i);
+		}
 	}
 }
 

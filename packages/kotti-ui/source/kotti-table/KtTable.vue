@@ -45,10 +45,9 @@
 				>
 					<td :colSpan="tableColSpan">
 						<slot name="loading">
-							<div
+							<KtLoading
 								v-for="key in 3"
 								:key="key"
-								class="skeleton rectangle"
 								style="width: 100%; height: 2rem; margin-top: 0.2rem"
 							/>
 						</slot>
@@ -183,6 +182,7 @@ import { computed, defineComponent } from 'vue'
 import { Yoco } from '@3yourmind/yoco'
 
 import { useTranslationNamespace } from '../kotti-i18n/hooks'
+import { KtLoading } from '../kotti-loading'
 import { KtPopover } from '../kotti-popover'
 import { makeProps } from '../make-props'
 
@@ -203,6 +203,7 @@ export default defineComponent({
 	name: 'KtTable',
 	components: {
 		FlexRender,
+		KtLoading,
 		KtPopover,
 	},
 	props: makeProps(KottiTable.propsSchema),
