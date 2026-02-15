@@ -28,7 +28,7 @@
 							:isOptional="option.isOptional"
 							:modelValue="option.isSelected"
 							@update:modelValue="
-								(() => handleItemSelection({ index, option }))()
+								(value) => handleItemSelection({ index, option, value })
 							"
 						>
 							<span v-text="option.label" />
@@ -60,7 +60,6 @@ import { useTippy } from '@3yourmind/vue-use-tippy'
 
 import { TIPPY_DISTANCE_OFFSET } from '../constants'
 import { KtFieldToggle } from '../kotti-field-toggle'
-import { KottiFieldToggle } from '../kotti-field-toggle/types'
 import { KT_FORM_CONTEXT } from '../kotti-form'
 import type { KottiForm } from '../kotti-form/types'
 import { makeProps } from '../make-props'
@@ -206,19 +205,17 @@ export default defineComponent({
 					close()
 				}
 			},
-			handleItemSelection:
-				({
+			handleItemSelection: ({
+				index,
+				option,
+				value,
+			}: KottiPopover.Events.UpdateIsSelected) => {
+				emit('update:isSelected', {
 					index,
 					option,
-				}: Pick<KottiPopover.Events.UpdateIsSelected, 'index' | 'option'>) =>
-				(value: KottiPopover.Events.UpdateIsSelected['value']) => {
-					emit('update:isSelected', {
-						index,
-						option,
-						value,
-					})
-				},
-			KottiFieldToggle,
+					value,
+				})
+			},
 			open,
 			showPopover,
 			triggerRef,

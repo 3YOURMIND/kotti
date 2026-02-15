@@ -173,7 +173,7 @@
 					<h4>Numbers</h4>
 					<KtFieldNumber formKey="page" hideClear label="Page" />
 					<KtFieldNumber formKey="pageSize" hideClear label="Page size" />
-					<KtFieldNumber formKey="total" hideClear label="Total" />
+					<KtFieldNumber formKey="total" hideClear isOptional label="Total" />
 					<KtFieldNumber
 						formKey="adjacentAmount"
 						hideClear
