@@ -1,4 +1,4 @@
-import { tokens, baseColors } from './colors.js'
+import { tokens, baseColors, darkModeTokens } from './colors.js'
 import {
 	objectToArray,
 	arrayToCustomProperties,
@@ -15,4 +15,10 @@ export const tokenColorsFactory = {
 	object: arrayToObject(tokens),
 	array: tokens,
 	string: arrayToCustomProperties(tokens),
+}
+
+export const darkModeTokenColorsFactory = {
+	object: arrayToObject(darkModeTokens),
+	array: darkModeTokens,
+	string: arrayToCustomProperties(darkModeTokens),
 }
