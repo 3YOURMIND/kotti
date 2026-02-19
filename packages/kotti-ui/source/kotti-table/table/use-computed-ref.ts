@@ -6,6 +6,7 @@ export type ReactStyleUpdater<INTERNAL_VALUE> = (
 ) => void
 
 type Other<INTERNAL_VALUE> = {
+	recalculate: () => void
 	tanstackGetter: () => INTERNAL_VALUE
 	tanstackSetter: ReactStyleUpdater<INTERNAL_VALUE>
 }
@@ -13,6 +14,7 @@ type Other<INTERNAL_VALUE> = {
 type Options<INTERNAL_VALUE, EXTERNAL_VALUE> = {
 	get(value: INTERNAL_VALUE): EXTERNAL_VALUE
 	set(oldValue: EXTERNAL_VALUE): INTERNAL_VALUE
+	sync?(oldValue: INTERNAL_VALUE): INTERNAL_VALUE
 	value: Ref<INTERNAL_VALUE>
 }
 
@@ -30,6 +32,10 @@ export const useComputedRef = <INTERNAL_VALUE, EXTERNAL_VALUE = INTERNAL_VALUE>(
 		},
 	}) as Partial<Other<INTERNAL_VALUE>> & WritableComputedRef<EXTERNAL_VALUE>
 
+	result.recalculate = () => {
+		if (!options.sync) return
+		internalValue.value = options.sync(internalValue.value)
+	}
 	result.tanstackGetter = () => internalValue.value
 	result.tanstackSetter = (updater) => {
 		if (typeof updater === 'function') {
