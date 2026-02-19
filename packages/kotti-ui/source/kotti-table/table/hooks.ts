@@ -13,7 +13,7 @@ import {
 } from '@tanstack/table-core'
 import { useVueTable } from '@tanstack/vue-table'
 import classNames from 'classnames'
-import { computed, h, ref, type Ref } from 'vue'
+import { computed, h, ref, type Ref, watch } from 'vue'
 import { z } from 'zod'
 
 import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
@@ -28,8 +28,9 @@ import type { GetRowBehavior, KottiTable } from './types'
 import { type ReactStyleUpdater, useComputedRef } from './use-computed-ref'
 
 export const EXPANSION_COLUMN_ID = 'internal-expand-column'
-export const SELECTION_COLUMN_ID = 'internal-select-column'
-const ARRAY_START = 2
+export const MULTI_SELECTION_COLUMN_ID = 'internal-single-select-column'
+export const SINGLE_SELECTION_COLUMN_ID = 'internal-multi-select-column'
+const ARRAY_START = 3
 
 type SortingState<COLUMN_ID extends string = string> = {
 	desc: boolean
@@ -39,7 +40,8 @@ type SortingState<COLUMN_ID extends string = string> = {
 type InternalColumnId<COLUMN_ID extends string = string> =
 	| COLUMN_ID
 	| typeof EXPANSION_COLUMN_ID
-	| typeof SELECTION_COLUMN_ID
+	| typeof MULTI_SELECTION_COLUMN_ID
+	| typeof SINGLE_SELECTION_COLUMN_ID
 
 export type KottiTableParameter<
 	ROW extends KottiTable.AnyRow,
@@ -204,14 +206,13 @@ export const useKottiTable = <
 		)
 	})
 
-	// FIXME: This useComputedRef right now assumes that column ids provdided via params
-	// do not change. If a user would change them, it will lead to unintended behavior
 	const columnOrder = useComputedRef<InternalColumnId[], COLUMN_ID[]>({
 		get: (value) => value.slice(ARRAY_START) as COLUMN_ID[],
 		set: (value) => {
 			const newValue: InternalColumnId[] = [
 				EXPANSION_COLUMN_ID,
-				SELECTION_COLUMN_ID,
+				MULTI_SELECTION_COLUMN_ID,
+				SINGLE_SELECTION_COLUMN_ID,
 			]
 			// Drop unknown columns from outside value
 			for (const columnId of value) {
@@ -230,15 +231,22 @@ export const useKottiTable = <
 			}
 			return newValue
 		},
+		sync: (oldValue) => [
+			EXPANSION_COLUMN_ID,
+			MULTI_SELECTION_COLUMN_ID,
+			SINGLE_SELECTION_COLUMN_ID,
+			...oldValue.filter((columnId) =>
+				columnIdSet.value.has(columnId as COLUMN_ID),
+			),
+		],
 		value: ref([
 			EXPANSION_COLUMN_ID,
-			SELECTION_COLUMN_ID,
+			MULTI_SELECTION_COLUMN_ID,
+			SINGLE_SELECTION_COLUMN_ID,
 			...params.value.columns.map(({ id }) => id),
 		]),
 	})
 
-	// FIXME: This useComputedRef will not clear out row ids that are not present
-	// in the data provided via params. That means selection is always global.
 	const selectedRows = useComputedRef<RowSelectionState>({
 		get: (value) => value,
 		set: (value) => {
@@ -281,8 +289,6 @@ export const useKottiTable = <
 		value: ref({}),
 	})
 
-	// FIXME: This useComputedRef right now assumes that column ids provdided via params
-	// do not change. If a user would change them, it will lead to unintended behavior
 	const ordering = useComputedRef<
 		SortingState<COLUMN_ID>,
 		KottiTable.Ordering<COLUMN_ID>[]
@@ -304,23 +310,32 @@ export const useKottiTable = <
 					}))
 			)
 		},
+		sync: (oldValue) => {
+			return oldValue.filter(({ id }) => columnIdSet.value.has(id))
+		},
 		value: ref([]),
 	})
 
-	// FIXME: This useComputedRef right now assumes that column ids provdided via params
-	// do not change. If a user would change them, it will lead to unintended behavior
 	const hiddenColumns = useComputedRef<VisibilityState, Set<COLUMN_ID>>({
 		get: (value) => {
 			const result = new Set<COLUMN_ID>()
 
 			for (const id of columnIdSet.value) {
+				if (
+					id === EXPANSION_COLUMN_ID ||
+					id === SINGLE_SELECTION_COLUMN_ID ||
+					id === MULTI_SELECTION_COLUMN_ID
+				)
+					continue
 				if (value[id] === false) result.add(id)
 			}
 
 			return result
 		},
 		set: (newSet) => {
-			const newVisibilityState: VisibilityState = {}
+			const newVisibilityState: VisibilityState = {
+				[EXPANSION_COLUMN_ID]: params.value.expandMode !== null,
+			}
 
 			for (const id of columnIdSet.value) {
 				newVisibilityState[id] = !newSet.has(id)
@@ -328,11 +343,22 @@ export const useKottiTable = <
 
 			return newVisibilityState
 		},
-		value: ref(
-			Object.fromEntries(
+		sync: (oldValue) => {
+			return {
+				...oldValue,
+				[EXPANSION_COLUMN_ID]: params.value.expandMode !== null,
+				[MULTI_SELECTION_COLUMN_ID]: params.value.isSelectable === 'multi',
+				[SINGLE_SELECTION_COLUMN_ID]: params.value.isSelectable === 'single',
+			}
+		},
+		value: ref({
+			...Object.fromEntries(
 				params.value.columns.map((column) => [column.id, true]),
 			),
-		),
+			[EXPANSION_COLUMN_ID]: params.value.expandMode !== null,
+			[MULTI_SELECTION_COLUMN_ID]: params.value.isSelectable === 'multi',
+			[SINGLE_SELECTION_COLUMN_ID]: params.value.isSelectable === 'single',
+		}),
 	})
 
 	const triggerExpand = (rowId: string) => {
@@ -359,13 +385,6 @@ export const useKottiTable = <
 			}
 		}
 	}
-
-	const draggedColumnId: Ref<COLUMN_ID | null> = ref(null)
-	/**
-	 * Primarily used for displaying the drop indicator line
-	 */
-	const dropTargetColumnIndex = ref<number | null>(null)
-	const successfullyDroppedColumnId = ref<string | null>(null)
 
 	/**
 	 * Used for selecting multiple rows via shift click
@@ -394,223 +413,212 @@ export const useKottiTable = <
 	}
 
 	const table = useVueTable<ROW>({
-		get columns() {
-			return [
-				...(params.value.expandMode !== null
-					? [
-							columnHelper.display({
-								cell: ({ row }: CellContext<ROW, unknown>) => {
-									const rowBehavior = params.value.getRowBehavior({
-										row: row.original,
-										rowIndex: row.index,
-									})
-									const isDisabled = rowBehavior.disable?.expand ?? false
-
-									return h(KtButton, {
-										ariaExpanded: String(row.getIsExpanded()),
-										'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
-										disabled: isDisabled,
-										icon: row.getIsExpanded()
-											? Yoco.Icon.CHEVRON_DOWN
-											: Yoco.Icon.CHEVRON_RIGHT,
-										onClick: (event: MouseEvent) => {
-											event.stopPropagation()
-											event.preventDefault()
-											if (isDisabled) return
-											triggerExpand(row.id)
-										},
-										staticClass: 'kt-table-expand',
-										type: 'text',
-									})
-								},
-								id: EXPANSION_COLUMN_ID,
-								meta: {
-									cellClasses: 'kt-table-cell kt-table-cell--is-body',
-									disableCellClick: false,
-									headerClasses: 'kt-table-cell kt-table-cell--is-header',
-								},
-							}),
-						]
-					: []),
-				...(params.value.isSelectable === 'multi'
-					? [
-							columnHelper.display({
-								cell: ({ row }: CellContext<ROW, unknown>) =>
-									h(
-										'div',
-										{
-											ariaDisabled: !row.getCanSelect(),
-											onClick: (event: MouseEvent) => {
-												event.stopPropagation()
-												event.preventDefault()
-
-												if (
-													event.shiftKey &&
-													rowSelectionAnchorIndex.value !== null &&
-													rowIdSet.value.has(
-														rowSelectionAnchorIndex.value.rowId,
-													)
-												) {
-													const { rowIndex } = rowSelectionAnchorIndex.value
-													const rangeStart = Math.min(rowIndex, row.index)
-													const rangeEnd = Math.max(rowIndex, row.index)
-													const { rows } = table.getRowModel()
-													for (let i = rangeStart; i <= rangeEnd; i++) {
-														const rowInRange = rows[i]
-														// all rows in the range will get the toggle state that the targetted row gets.
-														rowInRange?.toggleSelected(!row.getIsSelected())
-													}
-												} else {
-													row.toggleSelected(!row.getIsSelected())
-												}
-												rowSelectionAnchorIndex.value = {
-													rowId: row.id,
-													rowIndex: row.index,
-												}
-											},
-											// this prevents table content selection that would happen with shift clicking
-											onMousedown: (event: MouseEvent) => {
-												event.preventDefault()
-											},
-											staticClass: 'kt-table-selection',
-										},
-										[
-											h(ToggleInner, {
-												component: 'div',
-												inputProps: {
-													'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
-													disabled: !row.getCanSelect(),
-													id: `${params.value.id}-${row.id}-select`,
-													tabindex: 1,
-												},
-												isDisabled: !row.getCanSelect(),
-												modelValue: row.getIsSelected(),
-											}),
-										],
-									),
-								header: ({ table }: HeaderContext<ROW, unknown>) =>
-									h(
-										'div',
-										{
-											onClick: () => {
-												table.toggleAllRowsSelected(
-													!table.getIsAllRowsSelected(),
-												)
-											},
-										},
-										[
-											h(ToggleInner, {
-												component: 'div',
-												inputProps: {
-													'data-test': `${params.value.id}.column-${SELECTION_COLUMN_ID}.header.checkbox`,
-													disabled: false,
-													id: `${params.value.id}-column-select-header`,
-													tabindex: 1,
-												},
-												isDisabled: false,
-												modelValue:
-													table.getIsAllRowsSelected() ||
-													table
-														.getRowModel()
-														.rows.some((row) => row.getIsSelected())
-														? null
-														: false,
-											}),
-										],
-									),
-								id: SELECTION_COLUMN_ID,
-								meta: {
-									cellClasses: 'kt-table-cell kt-table-cell--is-body',
-									disableCellClick: false,
-									headerClasses: 'kt-table-cell kt-table-cell--is-header',
-								},
-							}),
-						]
-					: []),
-				...(params.value.isSelectable === 'single'
-					? [
-							columnHelper.display({
-								cell: ({ row }: CellContext<ROW, unknown>) =>
-									h(
-										'div',
-										{
-											ariaDisabled: !row.getCanSelect(),
-											onClick: (event: MouseEvent) => {
-												if (!row.getCanSelect()) return
-
-												event.stopPropagation()
-												event.preventDefault()
-
-												const isSelected = !row.getIsSelected()
-												table.toggleAllRowsSelected(false)
-												row.toggleSelected(isSelected)
-											},
-											staticClass: 'kt-table-selection',
-										},
-										[
-											h(ToggleRadio, {
-												isChecked: row.getIsSelected(),
-												isDisabled: !row.getCanSelect(),
-											}),
-										],
-									),
-								header: () => null,
-								id: SELECTION_COLUMN_ID,
-								meta: {
-									cellClasses: 'kt-table-cell kt-table-cell--is-body',
-									disableCellClick: false,
-									headerClasses: 'kt-table-cell kt-table-cell--is-header',
-								},
-							}),
-						]
-					: []),
-				...params.value.columns.map((column) => {
-					const index = columnOrder.value.indexOf(column.id)
-
-					const getCellClasses = (cellType: 'body' | 'header') =>
-						classNames({
-							[`kt-table-cell--is-${cellType}`]: true,
-							[`kt-table-cell--is-${column.display.align}-aligned`]: true,
-							'kt-table-cell': true,
-							'kt-table-cell--displays-number': column.display.isNumeric,
-							'kt-table-cell--has-drop-indicator':
-								index === dropTargetColumnIndex.value,
-							'kt-table-cell--has-drop-indicator-right':
-								index + 1 === dropTargetColumnIndex.value &&
-								columnOrder.value.length - 1 === index,
-							'kt-table-cell--is-dragged': column.id === draggedColumnId.value,
-							'kt-table-cell--was-successfully-dropped':
-								column.id === successfullyDroppedColumnId.value,
-						})
-
-					return columnHelper.accessor(column.getData, {
-						cell: (info) => {
-							const value = info.getValue()
-
-							return (
-								column.display.render(value, {
-									i18n: i18nContext,
-								}) ?? Dashes.EmDash
-							)
-						},
-						enableSorting: column.isSortable,
-						header: () => h('div', column.label),
-						id: column.id,
-						meta: {
-							cellClasses: getCellClasses('body'),
-							disableCellClick: column.display.disableCellClick,
-							headerClasses: getCellClasses('header'),
-							sortBehavior: column.display.sortBehavior,
-							style: {
-								'max-width': column.maxWidth,
-								'min-width': column.minWidth,
-								width: column.width,
-							},
-						},
+		columns: [
+			// Expand Column
+			columnHelper.display({
+				cell: ({ row }: CellContext<ROW, unknown>) => {
+					const rowBehavior = params.value.getRowBehavior({
+						row: row.original,
+						rowIndex: row.index,
 					})
-				}),
-			]
-		},
+					const isDisabled = rowBehavior.disable?.expand ?? false
+
+					return h(KtButton, {
+						ariaExpanded: String(row.getIsExpanded()),
+						'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
+						disabled: isDisabled,
+						icon: row.getIsExpanded()
+							? Yoco.Icon.CHEVRON_DOWN
+							: Yoco.Icon.CHEVRON_RIGHT,
+						onClick: (event: MouseEvent) => {
+							event.stopPropagation()
+							event.preventDefault()
+							if (isDisabled) return
+							triggerExpand(row.id)
+						},
+						staticClass: 'kt-table-expand',
+						type: 'text',
+					})
+				},
+				id: EXPANSION_COLUMN_ID,
+				meta: {
+					cellClasses: 'kt-table-cell kt-table-cell--is-body',
+					disableCellClick: false,
+					headerClasses: 'kt-table-cell kt-table-cell--is-header',
+					index: 0,
+				},
+			}),
+			// Multi select rows column
+			columnHelper.display({
+				cell: ({ row }: CellContext<ROW, unknown>) =>
+					h(
+						'div',
+						{
+							ariaDisabled: !row.getCanSelect(),
+							onClick: (event: MouseEvent) => {
+								event.stopPropagation()
+								event.preventDefault()
+
+								if (
+									event.shiftKey &&
+									rowSelectionAnchorIndex.value !== null &&
+									rowIdSet.value.has(rowSelectionAnchorIndex.value.rowId)
+								) {
+									const { rowIndex } = rowSelectionAnchorIndex.value
+									const rangeStart = Math.min(rowIndex, row.index)
+									const rangeEnd = Math.max(rowIndex, row.index)
+									const { rows } = table.getRowModel()
+									for (let i = rangeStart; i <= rangeEnd; i++) {
+										const rowInRange = rows[i]
+										// all rows in the range will get the toggle state that the targetted row gets.
+										rowInRange?.toggleSelected(!row.getIsSelected())
+									}
+								} else {
+									row.toggleSelected(!row.getIsSelected())
+								}
+								rowSelectionAnchorIndex.value = {
+									rowId: row.id,
+									rowIndex: row.index,
+								}
+							},
+							// this prevents table content selection that would happen with shift clicking
+							onMousedown: (event: MouseEvent) => {
+								event.preventDefault()
+							},
+							staticClass: 'kt-table-selection',
+						},
+						[
+							h(ToggleInner, {
+								component: 'div',
+								inputProps: {
+									'data-test': `${params.value.id}.column-${MULTI_SELECTION_COLUMN_ID}.row-${row.id}.checkbox`,
+									disabled: !row.getCanSelect(),
+									id: `${params.value.id}-${row.id}-select`,
+									tabindex: 1,
+								},
+								isDisabled: !row.getCanSelect(),
+								modelValue: row.getIsSelected(),
+							}),
+						],
+					),
+				header: ({ table }: HeaderContext<ROW, unknown>) =>
+					table.getRowCount() > 0
+						? h(
+								'div',
+								{
+									onClick: () => {
+										table.toggleAllRowsSelected(!table.getIsAllRowsSelected())
+									},
+								},
+								[
+									h(ToggleInner, {
+										component: 'div',
+										inputProps: {
+											'data-test': `${params.value.id}.column-${MULTI_SELECTION_COLUMN_ID}.header.checkbox`,
+											disabled: false,
+											id: `${params.value.id}-column-select-header`,
+											tabindex: 1,
+										},
+										isDisabled: false,
+										modelValue:
+											table.getIsAllRowsSelected() ||
+											table
+												.getRowModel()
+												.rows.some((row) => row.getIsSelected())
+												? null
+												: false,
+									}),
+								],
+							)
+						: null,
+				id: MULTI_SELECTION_COLUMN_ID,
+				meta: {
+					cellClasses: 'kt-table-cell kt-table-cell--is-body',
+					disableCellClick: false,
+					headerClasses: 'kt-table-cell kt-table-cell--is-header',
+					index: 1,
+				},
+			}),
+			// Single select rows column
+			columnHelper.display({
+				cell: ({ row }: CellContext<ROW, unknown>) =>
+					h(
+						'div',
+						{
+							ariaDisabled: !row.getCanSelect(),
+							onClick: (event: MouseEvent) => {
+								if (!row.getCanSelect()) return
+
+								event.stopPropagation()
+								event.preventDefault()
+
+								const isSelected = !row.getIsSelected()
+								table.toggleAllRowsSelected(false)
+								row.toggleSelected(isSelected)
+							},
+							staticClass: 'kt-table-selection',
+						},
+						[
+							h(ToggleRadio, {
+								isChecked: row.getIsSelected(),
+								isDisabled: !row.getCanSelect(),
+							}),
+						],
+					),
+				header: () => null,
+				id: SINGLE_SELECTION_COLUMN_ID,
+				meta: {
+					cellClasses: 'kt-table-cell kt-table-cell--is-body',
+					disableCellClick: false,
+					headerClasses: 'kt-table-cell kt-table-cell--is-header',
+					index: 2,
+				},
+			}),
+			...params.value.columns.map((column) => {
+				const getCellClasses = (cellType: 'body' | 'header') =>
+					classNames({
+						[`kt-table-cell--is-${cellType}`]: true,
+						[`kt-table-cell--is-${column.display.align}-aligned`]: true,
+						'kt-table-cell': true,
+						'kt-table-cell--displays-number': column.display.isNumeric,
+						// 'kt-table-cell--has-drop-indicator':
+						// 	index === dropTargetColumnIndex.value,
+						// 'kt-table-cell--has-drop-indicator-right':
+						// 	index + 1 === dropTargetColumnIndex.value &&
+						// 	columnOrder.value.length - 1 === index,
+						// 'kt-table-cell--is-dragged': column.id === draggedColumnId.value,
+						// 'kt-table-cell--was-successfully-dropped':
+						// 	column.id === successfullyDroppedColumnId.value,
+					})
+
+				return columnHelper.accessor(column.getData, {
+					cell: (info) => {
+						const value = info.getValue()
+
+						return (
+							column.display.render(value, {
+								i18n: i18nContext,
+							}) ?? Dashes.EmDash
+						)
+					},
+					enableSorting: column.isSortable,
+					header: () => h('div', column.label),
+					id: column.id,
+					meta: {
+						cellClasses: getCellClasses('body'),
+						disableCellClick: column.display.disableCellClick,
+						headerClasses: getCellClasses('header'),
+						index: columnOrder.value.indexOf(column.id),
+						sortBehavior: column.display.sortBehavior,
+						style: {
+							'max-width': column.maxWidth,
+							'min-width': column.minWidth,
+							width: column.width,
+						},
+					},
+				})
+			}),
+		],
 		get data() {
 			return params.value.data
 		},
@@ -650,8 +658,24 @@ export const useKottiTable = <
 		},
 	})
 
+	watch(params, (newParams, oldParams) => {
+		const oldColumnSet = new Set(oldParams.columns.map((column) => column.id))
+		const newColumnSet = new Set(newParams.columns.map((column) => column.id))
+		const isDifferent =
+			oldColumnSet.size !== newColumnSet.size ||
+			[...oldColumnSet.keys()].some((entry) => !newColumnSet.has(entry))
+		if (isDifferent) {
+			columnOrder.recalculate()
+			hiddenColumns.recalculate()
+			ordering.recalculate()
+		} else {
+			hiddenColumns.recalculate()
+		}
+	})
+
 	const tableContext: TableContext<ROW, COLUMN_ID> = computed(() => ({
 		internal: {
+			columnOrder: columnOrder.value,
 			getColumnIndex: (columnId) => {
 				return columnOrder.value.indexOf(columnId)
 			},
@@ -660,39 +684,15 @@ export const useKottiTable = <
 			},
 			getRowBehavior: params.value.getRowBehavior,
 			hasDragAndDrop: params.value.hasDragAndDrop,
-			isDragAndDropActive: draggedColumnId.value !== null,
 			isExpandable: params.value.expandMode !== null,
 			selectionCount: Object.values(selectedRows.value).length,
-			setDraggedColumnId: (columnId) => {
-				draggedColumnId.value = columnId
-			},
-			setDropTargetColumnIndex: (columnIndex) => {
-				dropTargetColumnIndex.value = columnIndex
-			},
-			swapDraggedAndDropTarget: () => {
-				if (
-					dropTargetColumnIndex.value === null ||
-					draggedColumnId.value === null
-				)
-					return
-
-				columnOrder.value = getMovedColumnOrder(
-					draggedColumnId.value,
-					dropTargetColumnIndex.value,
-				)
-
-				successfullyDroppedColumnId.value = draggedColumnId.value
+			swapDraggedAndDropTarget: (draggedColumnId, targetIndex) => {
+				columnOrder.value = getMovedColumnOrder(draggedColumnId, targetIndex)
 			},
 			table,
 			triggerExpand,
 			unselectAllRows: () => {
 				selectedRows.value = {}
-			},
-			unsetDroppedColumnId: () => {
-				// Avoid eventual redraws since method will be called once per row
-				if (successfullyDroppedColumnId.value === null) return
-
-				successfullyDroppedColumnId.value = null
 			},
 			visibleColumns: hiddenColumns.tanstackGetter(),
 		},

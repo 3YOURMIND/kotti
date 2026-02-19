@@ -8,20 +8,20 @@ export type TableContext<
 	COLUMN_ID extends string,
 > = Ref<{
 	internal: {
+		columnOrder: COLUMN_ID[]
 		getColumnIndex: (columnId: COLUMN_ID) => number
 		getOrdering: () => KottiTable.Ordering[]
 		getRowBehavior: GetRowBehavior<ROW>
 		hasDragAndDrop: boolean
-		isDragAndDropActive: boolean
 		isExpandable: boolean
 		selectionCount: number
-		setDraggedColumnId: (columnId: COLUMN_ID | null) => void
-		setDropTargetColumnIndex: (columnIndex: number | null) => void
-		swapDraggedAndDropTarget: () => void
+		swapDraggedAndDropTarget: (
+			draggedColumnId: COLUMN_ID,
+			targetIndex: number,
+		) => void
 		table: Table<ROW>
 		triggerExpand: (rowId: string) => void
 		unselectAllRows: () => void
-		unsetDroppedColumnId: () => void
 		visibleColumns: VisibilityState
 	}
 }>

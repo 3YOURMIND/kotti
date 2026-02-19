@@ -177,7 +177,7 @@
 import type { Header } from '@tanstack/table-core'
 import { FlexRender } from '@tanstack/vue-table'
 import classNames from 'classnames'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 import { Yoco } from '@3yourmind/yoco'
 
@@ -187,7 +187,11 @@ import { KtPopover } from '../kotti-popover'
 import { makeProps } from '../make-props'
 
 import { useTableContext } from './table/context'
-import { EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID } from './table/hooks'
+import {
+	EXPANSION_COLUMN_ID,
+	MULTI_SELECTION_COLUMN_ID,
+	SINGLE_SELECTION_COLUMN_ID,
+} from './table/hooks'
 import { getCellWrapComponent } from './table/row'
 import { KottiTable } from './table/types'
 
@@ -212,6 +216,13 @@ export default defineComponent({
 		const tableContext = useTableContext(props.tableId)
 		const translations = useTranslationNamespace('KtTable')
 
+		const draggedColumnId = ref<string | null>(null)
+		/**
+		 * Primarily used for displaying the drop indicator line
+		 */
+		const dropTargetColumnIndex = ref<number | null>(null)
+		const successfullyDroppedColumnId = ref<string | null>(null)
+
 		const isColumnMoveDataTransfer = (event: DragEvent): boolean => {
 			return event.dataTransfer?.types.includes(TRANSFER_TYPE) ?? false
 		}
@@ -229,7 +240,10 @@ export default defineComponent({
 					return {
 						actions: behavior.actions ?? null,
 						cells: row.getVisibleCells().map((cell) => ({
-							classes: cell.column.columnDef.meta.cellClasses,
+							classes: classNames(cell.column.columnDef.meta.cellClasses, {
+								'kt-table-cell--was-successfully-dropped':
+									cell.column.id === successfullyDroppedColumnId.value,
+							}),
 							column: cell.column,
 							columnId: cell.column.id,
 							dataTest: `${props.tableId}.column-${cell.column.id}.row-${row.id}`,
@@ -264,12 +278,10 @@ export default defineComponent({
 				() => props.emptyText ?? translations.value.noItems,
 			),
 			handleAnimationEnd: () => {
-				tableContext.value.internal.unsetDroppedColumnId()
+				successfullyDroppedColumnId.value = null
 			},
 			handleCellDragOver: (event: DragEvent, columnId: string) => {
 				if (!isColumnMoveDataTransfer(event)) return
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				event.dataTransfer!.dropEffect = 'move'
 				const columnIndex = tableContext.value.internal.getColumnIndex(columnId)
 				const target = event.target as HTMLElement
 
@@ -281,17 +293,26 @@ export default defineComponent({
 				const isLeftHalf = cursorX - elementX < elementWidth / 2
 				const targetIndex = columnIndex + (isLeftHalf ? 0 : 1)
 
-				tableContext.value.internal.setDropTargetColumnIndex(targetIndex)
+				dropTargetColumnIndex.value = targetIndex
 			},
 			handleDragLeave: (_event: DragEvent) => {
-				tableContext.value.internal.setDropTargetColumnIndex(null)
+				dropTargetColumnIndex.value = null
 			},
 			handleDrop: (event: DragEvent) => {
-				if (!isColumnMoveDataTransfer(event)) return
+				if (
+					!isColumnMoveDataTransfer(event) ||
+					draggedColumnId.value === null ||
+					dropTargetColumnIndex.value === null
+				)
+					return
 
-				tableContext.value.internal.swapDraggedAndDropTarget()
-				tableContext.value.internal.setDropTargetColumnIndex(null)
-				tableContext.value.internal.setDraggedColumnId(null)
+				tableContext.value.internal.swapDraggedAndDropTarget(
+					draggedColumnId.value,
+					dropTargetColumnIndex.value,
+				)
+				successfullyDroppedColumnId.value = draggedColumnId.value
+				draggedColumnId.value = null
+				dropTargetColumnIndex.value = null
 			},
 			handleHeaderClick: (_: MouseEvent, header: Header<unknown, unknown>) => {
 				if (!header.column.getCanSort()) return
@@ -326,11 +347,11 @@ export default defineComponent({
 			},
 			handleHeaderDragStart: (event: DragEvent, columnId: string) => {
 				event.dataTransfer?.setData(TRANSFER_TYPE, '')
-				tableContext.value.internal.setDraggedColumnId(columnId)
+				draggedColumnId.value = columnId
 			},
 			handleTableDragEnd: () => {
-				tableContext.value.internal.setDropTargetColumnIndex(null)
-				tableContext.value.internal.setDraggedColumnId(null)
+				dropTargetColumnIndex.value = null
+				draggedColumnId.value = null
 			},
 			hasActions: computed(
 				() =>
@@ -345,36 +366,50 @@ export default defineComponent({
 			),
 			headerRows: computed(() =>
 				table.value.getHeaderGroups().map((headerRow) => ({
-					headers: headerRow.headers.map((header, headerIndex) => ({
-						classes: classNames(header.column.columnDef.meta.headerClasses, {
-							'kt-table-cell--is-sortable': header.column.getCanSort(),
-							'kt-table-cell--is-sorted': header.column.getIsSorted(),
-						}),
-						colSpan: header.colSpan,
-						column: header.column,
-						dataTest: `${props.tableId}.column-${header.column.id}.header`,
-						getContext: header.getContext,
-						id: header.id,
-						isDraggable:
-							tableContext.value.internal.hasDragAndDrop &&
-							![EXPANSION_COLUMN_ID, SELECTION_COLUMN_ID].includes(header.id),
-						isSortable: header.column.getCanSort(),
-						key: `${header.id}-${headerIndex}`,
-						sortIndicatorIcon: {
-							asc: Yoco.Icon.ARROW_UP,
-							desc: Yoco.Icon.ARROW_DOWN,
-							false: Yoco.Icon.ARROW_UP_DOWN,
-						}[header.column.getIsSorted() || 'false'],
-						style: header.column.columnDef.meta.style,
-					})),
+					headers: headerRow.headers.map((header, headerIndex) => {
+						const { columnOrder, hasDragAndDrop } = tableContext.value.internal
+						const index = columnOrder.indexOf(header.column.id)
+						return {
+							classes: classNames(header.column.columnDef.meta.headerClasses, {
+								'kt-table-cell--has-drop-indicator':
+									index === dropTargetColumnIndex.value,
+								'kt-table-cell--has-drop-indicator-right':
+									index + 1 === dropTargetColumnIndex.value &&
+									columnOrder.length - 1 === index,
+								'kt-table-cell--is-dragged':
+									header.column.id === draggedColumnId.value,
+								'kt-table-cell--is-sortable': header.column.getCanSort(),
+								'kt-table-cell--is-sorted': header.column.getIsSorted(),
+							}),
+							colSpan: header.colSpan,
+							column: header.column,
+							dataTest: `${props.tableId}.column-${header.column.id}.header`,
+							getContext: header.getContext,
+							id: header.id,
+							isDraggable:
+								hasDragAndDrop &&
+								![
+									EXPANSION_COLUMN_ID,
+									MULTI_SELECTION_COLUMN_ID,
+									SINGLE_SELECTION_COLUMN_ID,
+								].includes(header.id),
+							isSortable: header.column.getCanSort(),
+							key: `${header.id}-${headerIndex}`,
+							sortIndicatorIcon: {
+								asc: Yoco.Icon.ARROW_UP,
+								desc: Yoco.Icon.ARROW_DOWN,
+								false: Yoco.Icon.ARROW_UP_DOWN,
+							}[header.column.getIsSorted() || 'false'],
+							style: header.column.columnDef.meta.style,
+						}
+					}),
 					key: headerRow.id,
 				})),
 			),
 			table,
 			tableClasses: computed(() => ({
 				'kt-table': true,
-				'kt-table--is-drag-and-drop-active':
-					tableContext.value.internal.isDragAndDropActive,
+				'kt-table--is-drag-and-drop-active': draggedColumnId.value !== null,
 				'kt-table--is-loading skeleton rectangle':
 					props.isLoading && table.value.getRowModel().rows.length > 0,
 				'kt-table--is-scrollable': !props.isNotScrollable,
