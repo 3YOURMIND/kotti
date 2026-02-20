@@ -12,6 +12,9 @@
 					@setIsNarrow="setIsNarrow"
 				/>
 			</div>
+			<div class="kt-navbar__subheader">
+				<slot name="navbar-header" />
+			</div>
 			<NavbarNotification
 				v-if="notification"
 				:count="notification.count"
