@@ -89,6 +89,7 @@ export namespace Yoco {
 		LAYER = 'layer',
 		LIGHTNING_BOLT = 'lightning_bolt',
 		LINK = 'link',
+		LINKED = 'linked',
 		LIST = 'list',
 		LOCATION = 'location',
 		LOGOUT = 'logout',
