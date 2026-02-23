@@ -248,13 +248,17 @@ export const useKottiStandardTable = <
 		searchValue.value = state.searchValue
 	})
 
+	const orderedVisibleColumns = computed(() =>
+		tableHook.api.columnOrder.value.filter(
+			(columnId) => !tableHook.api.hiddenColumns.value.has(columnId),
+		),
+	)
+
 	const standardTableContext: StandardTableContext<ROW, COLUMN_ID> = computed(
 		() => ({
 			internal: {
 				appliedFilters: appliedFilters.value,
-				columnOrder: tableHook.api.columnOrder.value.filter(
-					(columnId) => !tableHook.api.hiddenColumns.value.has(columnId),
-				),
+				columnOrder: orderedVisibleColumns.value,
 				columns: _params.value.table.columns,
 				filters: params.value.filters,
 				getFilter: (id) =>
@@ -270,16 +274,54 @@ export const useKottiStandardTable = <
 				setAppliedFilters: (filters: KottiStandardTable.AppliedFilter[]) => {
 					appliedFilters.value = filters
 				},
-				setColumnSelection: (columnOrder: string[]) => {
-					tableHook.api.columnOrder.value = columnOrder as COLUMN_ID[]
-					tableHook.tableContext.value.internal.table.setColumnVisibility(
-						Object.fromEntries(
-							params.value.table.columns.map((key) => [
-								key.id,
-								columnOrder.includes(key.id),
-							]),
-						),
-					)
+				setColumnSelection: (newSelection: string[]) => {
+					const newSelectionIds = new Set(newSelection as COLUMN_ID[])
+					const currentVisibleIds = new Set(orderedVisibleColumns.value)
+
+					// check if the input a reorder of visible columns
+					const isPureReorder =
+						newSelectionIds.size === currentVisibleIds.size &&
+						[...newSelectionIds].every((id) => currentVisibleIds.has(id))
+
+					/**
+					 * CASE 1: Pure Reordering
+					 * We need to update the master 'columnOrder' while preserving the
+					 * positions of currently hidden columns.
+					 */
+					if (isPureReorder) {
+						const reorderQueue = [...newSelection] as COLUMN_ID[]
+
+						tableHook.api.columnOrder.value =
+							tableHook.api.columnOrder.value.map((id) => {
+								if (!newSelectionIds.has(id)) {
+									return id // Hidden column: stay put
+								}
+
+								const nextSortedId = reorderQueue.shift()
+								if (!nextSortedId) {
+									throw new Error(
+										`Column sync error: unexpected empty queue for ${id}`,
+									)
+								}
+								return nextSortedId
+							})
+
+						return
+					}
+
+					/**
+					 * CASE 2: Visibility Change (Hide/Show)
+					 * Note: We don't change the master order here to avoid "jumping"
+					 * columns when someone simply toggles a checkbox.
+					 */
+					const newHiddenSet = new Set<COLUMN_ID>()
+					for (const column of params.value.table.columns) {
+						if (!newSelectionIds.has(column.id as COLUMN_ID)) {
+							newHiddenSet.add(column.id as COLUMN_ID)
+						}
+					}
+
+					tableHook.api.hiddenColumns.value = newHiddenSet
 				},
 				setPageIndex: (pageIndex: number) => {
 					pagination.value = {
