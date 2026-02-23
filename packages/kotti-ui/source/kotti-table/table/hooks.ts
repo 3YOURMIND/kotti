@@ -335,6 +335,8 @@ export const useKottiTable = <
 		set: (newSet) => {
 			const newVisibilityState: VisibilityState = {
 				[EXPANSION_COLUMN_ID]: params.value.expandMode !== null,
+				[MULTI_SELECTION_COLUMN_ID]: params.value.isSelectable === 'multi',
+				[SINGLE_SELECTION_COLUMN_ID]: params.value.isSelectable === 'single',
 			}
 
 			for (const id of columnIdSet.value) {

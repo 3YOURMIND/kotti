@@ -1,6 +1,6 @@
 <template>
 	<div class="kt-navbar-menu">
-		<div v-for="(item, index) in parsedSections" :key="index">
+		<div v-for="(item, index) in sections" :key="index">
 			<div
 				v-if="item.title"
 				class="kt-navbar-menu__section"
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 
 import { makeProps } from '../../make-props'
 import { KottiNavbar } from '../types'
@@ -47,13 +47,6 @@ export default defineComponent({
 	},
 	props: makeProps(propsSchema),
 	emits: ['menuLinkClick'],
-	setup(props) {
-		return {
-			parsedSections: computed(() =>
-				propsSchema.shape.sections.parse(props.sections),
-			),
-		}
-	},
 })
 </script>
 

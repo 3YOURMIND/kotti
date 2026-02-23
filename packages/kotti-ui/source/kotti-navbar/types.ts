@@ -46,6 +46,7 @@ export namespace KottiNavbar {
 	}
 
 	export const propsSchema = z.object({
+		footerSection: sectionSchema.nullable(),
 		isNarrow: z.boolean().default(false),
 		logoUrl: z.string(),
 		notification: notificationSchema.nullable().default(null),
