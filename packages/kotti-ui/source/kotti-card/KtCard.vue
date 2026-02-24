@@ -1,5 +1,10 @@
 <template>
-	<component :is="component" :class="cardClass" tabindex="0" @click.prevent="handleClick">
+	<component
+		:is="component"
+		:class="cardClass"
+		tabindex="0"
+		@click.prevent="handleClick"
+	>
 		<div v-if="imgUrl" :class="imageRowClass">
 			<KtLoading v-if="isImgLoading" type="square" />
 			<img v-else class="kt-card__image" :src="imgUrl" />
