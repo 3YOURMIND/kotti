@@ -77,6 +77,8 @@
 			</KtCard>
 
 			<KtCard
+				component="a"
+				href="#"
 				imgUrl="https://picsum.photos/400/200"
 				isTextLoading
 			>
@@ -108,6 +110,8 @@
 				</KtCard>
 
 				<KtCard
+					component="a"
+					href="#"
 					v-bind="{ imgPosition }"
 					imgUrl="https://picsum.photos/410/200"
 					isTextLoading
