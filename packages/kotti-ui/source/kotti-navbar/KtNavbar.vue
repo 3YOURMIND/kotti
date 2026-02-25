@@ -12,7 +12,7 @@
 					@setIsNarrow="setIsNarrow"
 				/>
 			</div>
-			<div class="kt-navbar__subheader">
+			<div v-if="$slots['navbar-header']" class="kt-navbar__subheader">
 				<slot name="navbar-header" />
 			</div>
 			<NavbarNotification
@@ -50,6 +50,12 @@
 					:links="quickLinks"
 				/>
 			</div>
+			<NavbarMenu
+				v-if="footerSection"
+				:isNarrow="isNarrow"
+				:sections="[footerSection]"
+				@menuLinkClick="$emit('linkClick', $event)"
+			/>
 			<div class="kt-navbar__footer">
 				<slot name="navbar-footer" />
 			</div>
@@ -220,8 +226,10 @@ $narrow-navbar-width: 3.4rem;
 		position: fixed;
 		display: flex;
 		flex-flow: column nowrap;
+		gap: var(--unit-2);
 		width: $navbar-width;
 		height: 100%;
+		padding: var(--unit-2);
 	}
 
 	&-toggle {
@@ -260,8 +268,6 @@ $narrow-navbar-width: 3.4rem;
 
 	&__footer {
 		flex: 0 0 auto;
-		padding: 0.8rem;
-		border-top: 1px solid var(--kt-navbar-border);
 	}
 
 	&__dropdown {
@@ -351,10 +357,8 @@ $narrow-navbar-width: 3.4rem;
 
 		&__footer {
 			display: flex;
-			flex: 0 0 2.4rem;
 			align-items: center;
 			justify-content: center;
-			border: 0;
 		}
 
 		&__body {

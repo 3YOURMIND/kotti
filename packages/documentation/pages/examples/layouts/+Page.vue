@@ -1,6 +1,7 @@
 <template>
 	<div class="kt-container">
 		<KtNavbar
+			:footerSection="footerSection"
 			:isNarrow="isNarrow"
 			logoUrl="https://via.placeholder.com/160x50"
 			:notification="navbarNotification"
@@ -82,6 +83,17 @@ export default defineComponent({
 					to: '/',
 				},
 			],
+			footerSection: {
+				links: [
+					{
+						component: 'div',
+						icon: 'setting',
+						isActive: false,
+						title: 'Settings',
+					} as const,
+				],
+				title: null,
+			},
 			handleMenuClick() {
 				success({ text: 'Link Clicked' })
 			},
@@ -91,6 +103,7 @@ export default defineComponent({
 				{
 					links: [
 						{
+							component: 'a',
 							icon: Yoco.Icon.DASHBOARD,
 							isActive: true,
 							props: {
