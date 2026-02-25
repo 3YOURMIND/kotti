@@ -9,8 +9,8 @@
 			rel="noopener noreferrer"
 			target="_blank"
 		>
-			<span v-if="!isNarrow" v-text="item.title" />
 			<div v-if="!isNarrow" class="yoco" v-text="Yoco.Icon.LINK" />
+			<span v-if="!isNarrow" v-text="item.title" />
 			<NavbarTooltip
 				v-else
 				class="kt-navbar-quick-link__tooltip"
@@ -57,21 +57,27 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .kt-navbar-quick-links {
-	padding: 1.2rem 1rem;
-	margin: 0.4rem 0;
+	padding: 0.1rem;
+	margin-top: 0.4rem;
 
 	&__title {
-		font-size: 0.6rem;
-		font-weight: 700;
+		font-size: 13px;
+		font-weight: 600;
 		text-transform: uppercase;
-		opacity: 0.64;
+		opacity: 0.6;
 	}
 }
 
 .kt-navbar-quick-link {
 	display: flex;
 	align-items: center;
+	padding: 0.1rem 0.5rem;
 	color: var(--kt-navbar-color-light);
+
+	span {
+		margin-left: var(--unit-2);
+		font-weight: 400;
+	}
 
 	&:hover {
 		color: var(--kt-navbar-color-active);

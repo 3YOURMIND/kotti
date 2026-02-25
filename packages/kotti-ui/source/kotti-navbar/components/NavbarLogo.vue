@@ -64,7 +64,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../../kotti-style/_variables';
 
-$margin: 0.8rem 1rem;
+$margin: 0.4rem 0.6rem;
 
 .kt-navbar-logo-container {
 	display: flex;

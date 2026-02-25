@@ -1,34 +1,36 @@
 <template>
-	<div class="kt-navbar-menu">
-		<div v-for="(item, index) in sections" :key="index">
-			<div
-				v-if="item.title"
-				class="kt-navbar-menu__section"
-				v-text="isNarrow ? '' : item.title"
+	<div
+		v-for="(item, index) in parsedSections"
+		:key="index"
+		class="kt-navbar-menu"
+	>
+		<div
+			v-if="item.title"
+			class="kt-navbar-menu__section"
+			v-text="isNarrow ? '' : item.title"
+		/>
+		<component
+			:is="link.component"
+			v-for="(link, linkIndex) in item.links"
+			:key="linkIndex"
+			v-bind="link.props"
+			class="kt-navbar-menu__item"
+			:class="{ active: link.isActive, narrow: isNarrow }"
+			@click="$emit('menuLinkClick', link)"
+		>
+			<NavbarTooltip v-if="isNarrow" :icon="link.icon" :label="link.title" />
+			<div v-else class="yoco" v-text="link.icon" />
+			<span
+				v-if="!isNarrow"
+				:data-test="`kt-navbar-section-item-${link.title.toLowerCase()}`"
+				v-text="link.title"
 			/>
-			<component
-				:is="link.component"
-				v-for="(link, linkIndex) in item.links"
-				:key="linkIndex"
-				v-bind="link.props"
-				class="kt-navbar-menu__item"
-				:class="{ active: link.isActive, narrow: isNarrow }"
-				@click="$emit('menuLinkClick', link)"
-			>
-				<NavbarTooltip v-if="isNarrow" :icon="link.icon" :label="link.title" />
-				<div v-else class="yoco" v-text="link.icon" />
-				<span
-					v-if="!isNarrow"
-					:data-test="`kt-navbar-section-item-${link.title.toLowerCase()}`"
-					v-text="link.title"
-				/>
-			</component>
-		</div>
+		</component>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { makeProps } from '../../make-props'
 import { KottiNavbar } from '../types'
@@ -47,30 +49,33 @@ export default defineComponent({
 	},
 	props: makeProps(propsSchema),
 	emits: ['menuLinkClick'],
+	setup(props) {
+		return {
+			parsedSections: computed(() => propsSchema.parse(props).sections),
+		}
+	},
 })
 </script>
 
 <style lang="scss" scoped>
 .kt-navbar-menu {
-	box-sizing: border-box;
-	padding: 0.4rem 0.9rem;
+	padding: 0.1rem;
 	text-align: left;
 
 	&__section {
 		display: block;
 		padding: 0.2rem;
 		margin-top: 0.4rem;
-		font-size: 0.85em;
-		font-weight: 700;
-		color: var(--kt-navbar-color-light);
+		font-size: 13px;
+		font-weight: 600;
 		text-transform: uppercase;
+		opacity: 0.6;
 	}
 
 	&__item {
 		display: flex;
 		align-items: center;
-		padding: 0.3rem;
-		margin: 0.3rem 0;
+		padding: 0.3rem 0.5rem;
 		font-size: 0.75rem;
 		color: inherit;
 		border-radius: var(--border-radius);
@@ -92,7 +97,8 @@ export default defineComponent({
 	}
 
 	&__item span {
-		margin-left: 0.8rem;
+		margin-left: var(--unit-2);
+		color: var(--kt-navbar-color-light);
 	}
 
 	.yoco {

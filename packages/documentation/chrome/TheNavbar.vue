@@ -5,8 +5,8 @@
 		@logoClick="onLogoClick"
 		@setIsNarrow="setIsNarrow"
 	>
-		<template #navbar-footer>
-			<div class="footer">
+		<template #navbar-header>
+			<div class="container">
 				<KtFieldToggle
 					v-show="!isNarrow"
 					v-model="isDarkColorScheme"
@@ -16,6 +16,10 @@
 				>
 					Dark Mode
 				</KtFieldToggle>
+			</div>
+		</template>
+		<template #navbar-footer>
+			<div class="container">
 				<a href="https://github.com/3YOURMIND/kotti">
 					<img height="24" src="/assets/github.svg" width="24" />
 				</a>
@@ -177,7 +181,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.footer {
+.container {
 	display: flex;
 	justify-content: space-evenly;
 	width: 100%;
