@@ -10,6 +10,7 @@ export namespace KottiCard {
 	}
 
 	export const propsSchema = z.object({
+		component: z.string().default('div'),
 		imgPosition: createLooseZodEnumSchema(ImagePosition).default(
 			ImagePosition.TOP,
 		),
