@@ -158,6 +158,18 @@ export default defineComponent({
 })
 </script>
 
+<style>
+:root {
+	--kt-drawer-mask-background: rgb(0 0 0 / 50%);
+	--kt-drawer-shadow: var(--shadow-lg);
+}
+
+:root[data-theme='dark'] {
+	--kt-drawer-mask-background: rgb(0 0 0 / 70%);
+	--kt-drawer-shadow: 0 0 32px rgb(180 180 255 / 10%);
+}
+</style>
+
 <style lang="scss" scoped>
 @import '../kotti-style/_variables';
 
@@ -184,7 +196,7 @@ export default defineComponent({
 		background-color: var(--ui-background);
 		border: 1px solid var(--ui-02);
 		border-radius: var(--border-radius);
-		box-shadow: var(--shadow-lg);
+		box-shadow: var(--kt-drawer-shadow);
 		transition: all 0.3s ease;
 	}
 

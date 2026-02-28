@@ -67,6 +67,13 @@ export default defineComponent({
 :root {
 	--kt-drawer-default-width: 18.8rem;
 	--kt-drawer-wide-width: 26.8rem;
+	--kt-drawer-mask-background: rgb(0 0 0 / 50%);
+	--kt-drawer-shadow: var(--shadow-lg);
+}
+
+:root[data-theme='dark'] {
+	--kt-drawer-mask-background: rgb(0 0 0 / 70%);
+	--kt-drawer-shadow: 0 0 32px rgb(180 180 255 / 10%);
 }
 </style>
 
@@ -82,7 +89,7 @@ export default defineComponent({
 		display: flex;
 		width: 100%;
 		height: 100%;
-		background-color: rgb(0 0 0 / 50%);
+		background-color: var(--kt-drawer-mask-background);
 		transition: opacity 0.5s ease;
 	}
 
@@ -98,7 +105,8 @@ export default defineComponent({
 		padding-left: var(--unit-8);
 		overflow-y: auto;
 		background-color: var(--ui-background);
-		box-shadow: var(--shadow-md);
+		border: 1px solid var(--ui-02);
+		box-shadow: var(--kt-drawer-shadow);
 		transition: all 0.3s ease;
 
 		&--is-expanded {
