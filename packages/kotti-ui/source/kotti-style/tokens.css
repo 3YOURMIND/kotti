@@ -21,6 +21,7 @@
 	--gray-05: #f8f8f8;
 	--gray-10: #f3f3f3;
 	--gray-20: #e3e3e3;
+	--gray-25: #d2d2d2;
 	--gray-30: #bababa;
 	--gray-40: #9d9d9d;
 	--gray-50: #848484;
@@ -60,7 +61,8 @@
 	--orange-60: #ef5c07;
 	--orange-70: #c64308;
 	--orange-80: #9d360f;
-	--orange-90: #5b2612;
+	--orange-90: #7e2e10;
+	--orange-100: #5b2612;
 	--primary-05: #f3f8ff;
 	--primary-10: #e7f0ff;
 	--primary-20: #c7daf9;
@@ -71,6 +73,7 @@
 	--primary-70: #2757a6;
 	--primary-80: #1a4488;
 	--primary-90: #0f2f62;
+	--primary-100: #071a38;
 	--purple-05: #faf6fd;
 	--purple-10: #f4ecfb;
 	--purple-20: #e9d9f5;
@@ -102,7 +105,8 @@
 	--slate-60: #555674;
 	--slate-70: #46485e;
 	--slate-80: #3c3d50;
-	--slate-90: #212129;
+	--slate-90: #2b2b36;
+	--slate-100: #212129;
 	--violet-05: #fcf3f9;
 	--violet-10: #f9eaf4;
 	--violet-20: #f5d5e9;
@@ -185,10 +189,10 @@
 	--ui-03: var(--gray-50);
 	--ui-04: var(--gray-40);
 	--ui-05: var(--primary-90);
-	--text-01: var(--gray-20);
+	--text-01: var(--gray-25);
 	--text-02: var(--gray-40);
 	--text-03: var(--gray-60);
-	--text-04: var(--gray-90);
+	--text-04: var(--primary-05);
 	--text-05: var(--gray-70);
 	--interactive-01: var(--primary-50);
 	--interactive-01-hover: var(--primary-60);
@@ -205,7 +209,7 @@
 	--link-03: var(--primary-50);
 	--link-04: var(--primary-60);
 	--link-05: var(--primary-70);
-	--icon-01: var(--gray-20);
+	--icon-01: var(--gray-25);
 	--icon-02: var(--gray-50);
 	--icon-03: var(--black);
 	--support-error: var(--red-50);

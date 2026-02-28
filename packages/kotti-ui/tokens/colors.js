@@ -24,6 +24,7 @@ export const baseColors = {
 	'gray-05': '#F8F8F8',
 	'gray-10': '#F3F3F3',
 	'gray-20': '#E3E3E3',
+	'gray-25': '#D2D2D2',
 	'gray-30': '#BABABA',
 	'gray-40': '#9D9D9D',
 	'gray-50': '#848484',
@@ -70,7 +71,7 @@ export const baseColors = {
 	'orange-70': '#C64308',
 	'orange-80': '#9D360F',
 	'orange-90': '#7E2E10',
-	'orange-90': '#5B2612',
+	'orange-100': '#5B2612',
 
 	// Primary
 	'primary-05': '#F3F8FF',
@@ -83,8 +84,7 @@ export const baseColors = {
 	'primary-70': '#2757A6',
 	'primary-80': '#1A4488',
 	'primary-90': '#0F2F62',
-	'primary-90': '#0F2F62',
-	'blue-100': '#071A38',
+	'primary-100': '#071A38',
 
 	// Purple
 	'purple-05': '#FAF6FD',
@@ -123,7 +123,7 @@ export const baseColors = {
 	'slate-70': '#46485E',
 	'slate-80': '#3C3D50',
 	'slate-90': '#2B2B36',
-	'slate-90': '#212129',
+	'slate-100': '#212129',
 
 	// Violet
 	'violet-05': '#FCF3F9',
@@ -446,7 +446,7 @@ export const darkModeTokens = [
 	{
 		name: 'text-01',
 		description: 'Primary text\nHeaders',
-		reference: 'gray-20',
+		reference: 'gray-25',
 	},
 	{
 		name: 'text-02',
@@ -461,7 +461,7 @@ export const darkModeTokens = [
 	{
 		name: 'text-04',
 		description: 'Text on interactive colors',
-		reference: 'gray-90',
+		reference: 'primary-05',
 	},
 	{
 		name: 'text-05',
@@ -546,7 +546,7 @@ export const darkModeTokens = [
 	{
 		name: 'icon-01',
 		description: 'Primary icon',
-		reference: 'gray-20',
+		reference: 'gray-25',
 	},
 	{
 		name: 'icon-02',
