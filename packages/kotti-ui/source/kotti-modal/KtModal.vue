@@ -184,7 +184,7 @@ export default defineComponent({
 		justify-content: center;
 		width: 100%;
 		height: 100%;
-		background-color: rgb(0 0 0 / 46%);
+		background-color: var(--kt-drawer-mask-background);
 		transition: opacity var(--transition-long) ease;
 	}
 
