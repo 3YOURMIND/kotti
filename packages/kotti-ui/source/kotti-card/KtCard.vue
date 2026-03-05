@@ -3,7 +3,7 @@
 		:is="component"
 		:class="cardClass"
 		tabindex="0"
-		@click.prevent="handleClick"
+		@click="handleClick"
 	>
 		<div v-if="imgUrl" :class="imageRowClass">
 			<KtLoading v-if="isImgLoading" type="square" />
@@ -62,8 +62,11 @@ export default defineComponent({
 				'kt-card': true,
 				'kt-card--is-clickable': !hasActions.value,
 			})),
-			handleClick: () => {
-				if (!hasActions.value) emit('click')
+			handleClick: (event: MouseEvent) => {
+				if (hasActions.value) {
+					event.preventDefault()
+					event.stopPropagation()
+				} else emit('click')
 			},
 			hasActions,
 			imageRowClass: computed(() => ({
