@@ -84,6 +84,7 @@ export default defineComponent({
 	}
 
 	:deep(.yoco) {
+		margin: 2px;
 		font-size: 0.8rem;
 	}
 

@@ -66,7 +66,7 @@ export default defineComponent({
 		display: block;
 		padding: 0.2rem;
 		margin-top: 0.4rem;
-		font-size: 13px;
+		font-size: 12px;
 		font-weight: 600;
 		text-transform: uppercase;
 		opacity: 0.6;
@@ -76,7 +76,7 @@ export default defineComponent({
 		display: flex;
 		align-items: center;
 		padding: 0.3rem 0.5rem;
-		font-size: 0.75rem;
+		font-size: 13px;
 		color: inherit;
 		border-radius: var(--border-radius);
 

@@ -5,8 +5,9 @@
 			class="kt-navbar-logo kt-navbar-logo--is-desktop kt-navbar-logo--is-narrow"
 		>
 			<NavbarTooltip
-				:icon="Yoco.Icon.BURGER"
+				:icon="Yoco.Icon.HIDE_MENU"
 				:label="translations.menuExpand"
+				style="transform: rotate(180deg)"
 				@click.stop="() => $emit('setIsNarrow', false)"
 			/>
 		</div>
