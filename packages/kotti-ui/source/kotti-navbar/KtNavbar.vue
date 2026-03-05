@@ -298,7 +298,7 @@ $narrow-navbar-width: 3.4rem;
 		}
 
 		:deep(.kt-navbar-menu) {
-			padding: 0.4rem 0.9rem;
+			padding: 0.4rem 0.5rem;
 			text-align: center;
 		}
 
