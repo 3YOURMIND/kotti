@@ -61,7 +61,7 @@ export default defineComponent({
 	margin-top: 0.4rem;
 
 	&__title {
-		font-size: 13px;
+		font-size: 12px;
 		font-weight: 600;
 		text-transform: uppercase;
 		opacity: 0.6;
@@ -76,6 +76,7 @@ export default defineComponent({
 
 	span {
 		margin-left: var(--unit-2);
+		font-size: 13px;
 		font-weight: 400;
 	}
 
