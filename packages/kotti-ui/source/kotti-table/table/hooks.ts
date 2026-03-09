@@ -427,6 +427,7 @@ export const useKottiTable = <
 
 					return h(KtButton, {
 						ariaExpanded: String(row.getIsExpanded()),
+						class: 'kt-table-expand',
 						'data-test': `${params.value.id}.column-${EXPANSION_COLUMN_ID}.row-${row.id}.button`,
 						disabled: isDisabled,
 						icon: row.getIsExpanded()
@@ -438,7 +439,6 @@ export const useKottiTable = <
 							if (isDisabled) return
 							triggerExpand(row.id)
 						},
-						staticClass: 'kt-table-expand',
 						type: 'text',
 					})
 				},
@@ -484,10 +484,10 @@ export const useKottiTable = <
 								}
 							},
 							// this prevents table content selection that would happen with shift clicking
+							class: 'kt-table-selection',
 							onMousedown: (event: MouseEvent) => {
 								event.preventDefault()
 							},
-							staticClass: 'kt-table-selection',
 						},
 						[
 							h(ToggleInner, {
@@ -548,6 +548,7 @@ export const useKottiTable = <
 						'div',
 						{
 							ariaDisabled: !row.getCanSelect(),
+							class: 'kt-table-selection',
 							onClick: (event: MouseEvent) => {
 								if (!row.getCanSelect()) return
 
@@ -558,7 +559,6 @@ export const useKottiTable = <
 								table.toggleAllRowsSelected(false)
 								row.toggleSelected(isSelected)
 							},
-							staticClass: 'kt-table-selection',
 						},
 						[
 							h(ToggleRadio, {
