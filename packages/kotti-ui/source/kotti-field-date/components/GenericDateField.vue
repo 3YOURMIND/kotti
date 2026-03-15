@@ -67,23 +67,35 @@
 					<FieldTime
 						class="kt-field-date-popover__time"
 						v-bind="timePickerPropsLeft"
-						:hours="Array.isArray(hours) ? hours[0] : hours"
-						:minutes="Array.isArray(minutes) ? minutes[0] : minutes"
-						:seconds="Array.isArray(seconds) ? seconds[0] : seconds"
+						:hours="
+							Array.isArray(hours) ? (hours as [number, number])[0] : hours
+						"
+						:minutes="
+							Array.isArray(minutes)
+								? (minutes as [number, number])[0]
+								: minutes
+						"
+						:seconds="
+							Array.isArray(seconds)
+								? (seconds as [number, number])[0]
+								: seconds
+						"
 						@update:hours="
-							(val: number | null) =>
-								Array.isArray(hours) ? setHours([val, hours[1]]) : setHours(val)
+							(val: number) =>
+								Array.isArray(hours)
+									? setHours([val, (hours as [number, number])[1]])
+									: setHours(val)
 						"
 						@update:minutes="
-							(val: number | null) =>
+							(val: number) =>
 								Array.isArray(minutes)
-									? setMinutes([val, minutes[1]])
+									? setMinutes([val, (minutes as [number, number])[1]])
 									: setMinutes(val)
 						"
 						@update:seconds="
-							(val: number | null) =>
+							(val: number) =>
 								Array.isArray(seconds)
-									? setSeconds([val, seconds[1]])
+									? setSeconds([val, (seconds as [number, number])[1]])
 									: setSeconds(val)
 						"
 					/>
@@ -91,12 +103,20 @@
 						v-if="timePickerPropsRight"
 						class="kt-field-date-popover__time"
 						v-bind="timePickerPropsRight"
-						:hours="hours[1]"
-						:minutes="minutes[1]"
-						:seconds="seconds[1]"
-						@update:hours="(val: number) => setHours([hours[0], val])"
-						@update:minutes="(val: number) => setMinutes([minutes[0], val])"
-						@update:seconds="(val: number) => setSeconds([seconds[0], val])"
+						:hours="(hours as [number, number])[1]"
+						:minutes="(minutes as [number, number])[1]"
+						:seconds="(seconds as [number, number])[1]"
+						@update:hours="
+							(val: number) => setHours([(hours as [number, number])[0], val])
+						"
+						@update:minutes="
+							(val: number) =>
+								setMinutes([(minutes as [number, number])[0], val])
+						"
+						@update:seconds="
+							(val: number) =>
+								setSeconds([(seconds as [number, number])[0], val])
+						"
 					/>
 				</div>
 			</template>
@@ -127,7 +147,7 @@
 						@click="onCloseMenu"
 					/>
 					<KtButton
-						:disabled="isConfirmDisabled"
+						:isDisabled="isConfirmDisabled"
 						:label="translations.confirmButton"
 						size="small"
 						type="primary"

@@ -2,6 +2,7 @@
 	<button
 		ref="helpTextTriggerRef"
 		:class="mainClasses"
+		:disabled="isDisabled"
 		:type="isSubmit ? 'submit' : 'button'"
 		@click="handleClick"
 	>
