@@ -263,6 +263,7 @@ export default defineComponent({
 						id: 'id',
 						isSortable: true,
 						label: '# Id',
+						tooltip: 'The ID column with a tooltip on the header',
 					}),
 					createColumn({
 						display: getCustomDisplay<TableRow>({
@@ -285,6 +286,7 @@ export default defineComponent({
 						isSortable: true,
 						label: 'age (click disabled)',
 						minWidth: '300px',
+						tooltip: 'Custom render and sort behavior, cell click disabled',
 					}),
 					createColumn({
 						display: booleanDisplay,

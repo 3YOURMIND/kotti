@@ -82,6 +82,7 @@ export namespace KottiTable {
 		label: string
 		maxWidth?: string
 		minWidth?: string
+		tooltip?: string
 		width?: string
 	}
 

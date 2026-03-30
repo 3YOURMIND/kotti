@@ -182,6 +182,7 @@ export const createColumnContext = <ROW extends KottiTable.AnyRow>(): {
 		label: string
 		maxWidth?: string
 		minWidth?: string
+		tooltip?: string
 		width?: string
 	}) => KottiTable.Column<ROW, COLUMN_ID, DATA_TYPE>
 } => {
