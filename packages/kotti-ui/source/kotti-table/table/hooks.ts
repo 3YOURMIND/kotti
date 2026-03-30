@@ -20,6 +20,7 @@ import { Yoco, yocoIconSchema } from '@3yourmind/yoco'
 
 import { KtButton } from '../../kotti-button/'
 import { useI18nContext } from '../../kotti-i18n/hooks'
+import { KtPopover } from '../../kotti-popover/'
 import ToggleInner from '../../shared-components/toggle-inner/ToggleInner.vue'
 import ToggleRadio from '../../shared-components/ToggleRadio.vue'
 
@@ -76,6 +77,7 @@ export const paramsSchema = z
 					label: z.string(),
 					maxWidth: z.string().optional(),
 					minWidth: z.string().optional(),
+					tooltip: z.string().optional(),
 					width: z.string().optional(),
 				})
 				.strict(),
@@ -604,7 +606,21 @@ export const useKottiTable = <
 						)
 					},
 					enableSorting: column.isSortable,
-					header: () => h('div', column.label),
+					header: () =>
+						column.tooltip
+							? h('div', [
+									h('span', column.label),
+									h(
+										KtPopover,
+										{ placement: 'top', trigger: 'hover' },
+										{
+											content: () => h('span', column.tooltip),
+											default: () =>
+												h('i', { class: 'yoco' }, Yoco.Icon.CIRCLE_QUESTION),
+										},
+									),
+								])
+							: h('div', column.label),
 					id: column.id,
 					meta: {
 						cellClasses: getCellClasses('body'),

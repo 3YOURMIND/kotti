@@ -30,7 +30,7 @@
 							/>
 							<i
 								v-if="header.isSortable"
-								class="yoco"
+								class="kt-table-header-sort-icon yoco"
 								v-text="header.sortIndicatorIcon"
 							/>
 						</div>
@@ -486,12 +486,12 @@ export default defineComponent({
 				}
 
 				&:not(.kt-table-cell--is-sorted) {
-					.yoco {
+					.kt-table-header-sort-icon.yoco {
 						opacity: 0;
 					}
 
 					&:hover {
-						.yoco {
+						.kt-table-header-sort-icon.yoco {
 							color: var(--icon-02);
 							opacity: 1;
 
@@ -528,6 +528,19 @@ export default defineComponent({
 
 						&:hover {
 							background-color: var(--ui-02);
+						}
+					}
+
+					.kt-table-header-content {
+						display: inline-flex;
+						gap: var(--unit-1);
+						align-items: center;
+
+						.yoco {
+							display: block;
+							min-width: 0.8rem;
+							font-size: 0.8rem;
+							user-select: none;
 						}
 					}
 				}
