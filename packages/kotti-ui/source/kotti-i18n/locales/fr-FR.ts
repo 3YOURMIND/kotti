@@ -101,6 +101,7 @@ export const frFR: KottiI18n.Messages = {
 		noDataText: 'Aucun résultat',
 		noMatchText: 'Aucune donnée trouvée',
 		placeholder: 'Sélectionner',
+		ungroupedText: 'Other',
 	},
 	KtFilters: {
 		addFilterLabel: 'Ajouter un filtre',

@@ -62,6 +62,7 @@
 			<FieldSelectOptions
 				:actions="actions"
 				:dataTestPrefix="inputProps['data-test']"
+				:groups="groups"
 				:isDisabled="field.isDisabled"
 				:isDropdownOpen="isDropdownOpen"
 				:isLoading="isLoadingOptions"

@@ -363,6 +363,7 @@ import {
 	getInitialValue,
 	getShortcuts,
 	radioGroupOptions,
+	singleOrMultiSelectGroups,
 	singleOrMultiSelectOptions,
 	toggleGroupOptions,
 	yocoIconOptions,
@@ -679,6 +680,10 @@ export default defineComponent({
 					'KtFieldSingleSelectRemote',
 				].includes(settings.value.component)
 			) {
+				const groupIds = [
+					...(singleOrMultiSelectGroups ?? []).map(({ id }) => id),
+					undefined,
+				]
 				const options = (
 					['KtFieldMultiSelectRemote', 'KtFieldSingleSelectRemote'].includes(
 						settings.value.component,
@@ -694,9 +699,16 @@ export default defineComponent({
 				).map((option, index) => ({
 					...option,
 					dataTest: index % 2 === 0 ? String(option.value) : undefined,
+					groupId: settings.value.additionalProps.hasGroups
+						? groupIds[Math.floor(groupIds.length * Math.random())]
+						: undefined,
 				}))
+				const groups = settings.value.additionalProps.hasGroups
+					? singleOrMultiSelectGroups
+					: []
 
 				Object.assign(additionalProps, {
+					groups,
 					options,
 				})
 			}
@@ -708,7 +720,8 @@ export default defineComponent({
 					'KtFieldSingleSelect',
 					'KtFieldSingleSelectRemote',
 				].includes(settings.value.component) &&
-				componentDefinition.value.additionalProps.includes('actions')
+				componentDefinition.value.additionalProps.includes('actions') &&
+				settings.value.additionalProps.hasActions
 			)
 				Object.assign(additionalProps, {
 					actions: [
@@ -722,6 +735,13 @@ export default defineComponent({
 							label: 'Edit Item',
 							onClick: () => {
 								info({ text: 'actions[1].onClick called' })
+							},
+						},
+						{
+							isDisabled: true,
+							label: 'Delete Item',
+							onClick: () => {
+								info({ text: 'actions[2].onClick called' })
 							},
 						},
 					],
@@ -806,6 +826,8 @@ export default defineComponent({
 			),
 			componenPropFormatters: {
 				actions: (value: unknown) =>
+					JSON.stringify(value, null, '\t').split('\n'),
+				groups: (value: unknown) =>
 					JSON.stringify(value, null, '\t').split('\n'),
 				onBlur: () => [
 					"() => info({text: '@blur: field has emitted blur event'}",
