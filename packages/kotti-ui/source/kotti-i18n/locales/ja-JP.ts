@@ -99,6 +99,7 @@ export const jaJP: KottiI18n.Messages = {
 		noDataText: '結果がありません',
 		noMatchText: 'データなし',
 		placeholder: '選択してください',
+		ungroupedText: 'Other',
 	},
 	KtFilters: {
 		addFilterLabel: 'フィルタを追加',

@@ -8,3 +8,5 @@ export const KOTTI_FIELD_SELECT_SUPPORTS: KottiField.Supports = {
 	placeholder: true,
 	tabIndex: true,
 }
+
+export const UNGROUPED_KEY = Symbol('ungrouped')

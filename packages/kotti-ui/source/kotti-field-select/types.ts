@@ -8,8 +8,14 @@ export namespace Shared {
 		.nullable()
 	export type Value = z.output<typeof valueSchema>
 
+	export const groupSchema = z.object({
+		id: z.union([z.string(), z.number()]),
+		label: z.string(),
+	})
+
 	export const optionSchema = z.object({
 		dataTest: z.string().optional(),
+		groupId: groupSchema.shape.id.optional(),
 		isDisabled: z.boolean().optional(),
 		label: z.string(),
 		value: valueSchema,
@@ -29,6 +35,7 @@ export namespace Shared {
 		.extend({
 			actions: z.array(actionSchema).default(() => []),
 			dropdownStyles: z.record(z.unknown()).nullable().default(null),
+			groups: z.array(groupSchema).default(() => []),
 			isUnsorted: z.boolean().default(false),
 			options: z.array(optionSchema),
 			placeholder: z.string().nullable().default(null),
@@ -58,6 +65,7 @@ export namespace Shared {
 		noDataText: string
 		noMatchText: string
 		placeholder: string
+		ungroupedText: string
 	}
 }
 

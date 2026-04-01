@@ -70,6 +70,7 @@ type FormFieldSettings = {
 		extensions: Kotti.FieldMultiSelect.ModelValue
 		externalUrl: Kotti.FieldText.ModelValue
 		hasActions: boolean
+		hasGroups: boolean
 		hideChangeButtons: boolean
 		hideDropArea: boolean
 		icon: Yoco.Icon | null
@@ -147,6 +148,7 @@ export const getInitialSettings = (): FormFieldSettings => ({
 		extensions: [],
 		externalUrl: null,
 		hasActions: false,
+		hasGroups: false,
 		hideChangeButtons: false,
 		hideDropArea: false,
 		icon: null,
@@ -257,6 +259,7 @@ export type ComponentDefinition = {
 		| 'emitEvents'
 		| 'extensions'
 		| 'externalUrl'
+		| 'groups'
 		| 'hideDropArea'
 		| 'icon'
 		| 'isInline'
@@ -348,6 +351,7 @@ export const FIELD_COMPONENTS: Array<ComponentDefinition> = [
 			'clearOnSelect',
 			'collapseTagsAfter',
 			'emitEvents',
+			'groups',
 			'isUnsorted',
 			'maximumSelectable',
 			'showOptionSlot',
@@ -362,6 +366,7 @@ export const FIELD_COMPONENTS: Array<ComponentDefinition> = [
 			'clearOnSelect',
 			'collapseTagsAfter',
 			'emitEvents',
+			'groups',
 			'isLoadingOptions',
 			'isUnsorted',
 			'maximumSelectable',
@@ -405,7 +410,13 @@ export const FIELD_COMPONENTS: Array<ComponentDefinition> = [
 		supports: KtFieldRadioGroup.meta.supports,
 	},
 	{
-		additionalProps: ['actions', 'emitEvents', 'showOptionSlot', 'isUnsorted'],
+		additionalProps: [
+			'actions',
+			'emitEvents',
+			'groups',
+			'showOptionSlot',
+			'isUnsorted',
+		],
 		formKey: 'singleSelectValue',
 		name: 'KtFieldSingleSelect',
 		supports: KtFieldSingleSelect.meta.supports,
@@ -414,6 +425,7 @@ export const FIELD_COMPONENTS: Array<ComponentDefinition> = [
 		additionalProps: [
 			'actions',
 			'emitEvents',
+			'groups',
 			'isLoadingOptions',
 			'isUnsorted',
 			'query',
@@ -476,6 +488,13 @@ export const radioGroupOptions: Kotti.FieldRadioGroup.Props['options'] = [
 		value: 'value4',
 	},
 ]
+
+export const singleOrMultiSelectGroups: Kotti.FieldSingleSelect.Props['groups'] =
+	[
+		{ id: 1, label: 'Group A' },
+		{ id: 2, label: 'Group B' },
+		{ id: 3, label: 'Group C' },
+	]
 
 export const singleOrMultiSelectOptions: Kotti.FieldSingleSelect.Props['options'] =
 	[

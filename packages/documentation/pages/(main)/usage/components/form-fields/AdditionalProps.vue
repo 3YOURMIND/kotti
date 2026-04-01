@@ -94,6 +94,14 @@ export default defineComponent({
 			/>
 		</div>
 		<KtFieldToggle
+			v-show="componentDefinition.additionalProps.includes('groups')"
+			formKey="hasGroups"
+			helpText="Whether the list of options is grouped or not in the dropdown"
+			isOptional
+			label="groups"
+			type="switch"
+		/>
+		<KtFieldToggle
 			v-if="componentDefinition.additionalProps.includes('hideDropArea')"
 			formKey="hideDropArea"
 			isOptional

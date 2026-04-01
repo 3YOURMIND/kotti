@@ -99,6 +99,7 @@ export const enUS: KottiI18n.Messages = {
 		noDataText: 'No results',
 		noMatchText: 'No matching data',
 		placeholder: 'Select',
+		ungroupedText: 'Other',
 	},
 	KtFilters: {
 		addFilterLabel: 'Add Filter',

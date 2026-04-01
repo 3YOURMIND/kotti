@@ -99,6 +99,7 @@ export const ukUA: KottiI18n.Messages = {
 		noDataText: 'Немає результатів',
 		noMatchText: 'Даних не знайдено',
 		placeholder: 'Вибрати',
+		ungroupedText: 'Other',
 	},
 	KtFilters: {
 		addFilterLabel: 'Додати фільтр',
