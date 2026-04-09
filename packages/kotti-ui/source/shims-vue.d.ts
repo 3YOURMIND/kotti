@@ -1,10 +1,12 @@
-declare module '*.vue' {
-	import type { DefineComponent } from 'vue'
-	const component: DefineComponent<
-		Record<string, never>,
-		Rcord<string, never>,
-		// eslint-disable-next-line  @typescript-eslint/no-explicit-any
-		any
-	>
-	export default component
+import type { HTMLAttributes } from 'vue'
+
+declare module '@vue/runtime-core' {
+	interface AllowedComponentProps extends HTMLAttributes {
+		dataTest?: string | null
+		ref?: string
+		// // This allows any data- attribute to be passed to any component
+		// [key: `data-${string}`]: unknown
+	}
 }
+
+export {}

@@ -16,11 +16,13 @@
 						:draggable="header.isDraggable"
 						:style="header.style"
 						@animationend="handleAnimationEnd"
-						@click="(e) => handleHeaderClick(e, header)"
+						@click="(e: MouseEvent) => handleHeaderClick(e, header)"
 						@dragenter.prevent
 						@dragleave.prevent
-						@dragover.prevent="(e) => handleCellDragOver(e, header.id)"
-						@dragstart="(e) => handleHeaderDragStart(e, header.id)"
+						@dragover.prevent="
+							(e: DragEvent) => handleCellDragOver(e, header.id)
+						"
+						@dragstart="(e: DragEvent) => handleHeaderDragStart(e, header.id)"
 					>
 						<div class="kt-table-header">
 							<FlexRender
@@ -73,7 +75,9 @@
 							:style="cell.style"
 							@dragenter.prevent
 							@dragleave.prevent
-							@dragover.prevent="(e) => handleCellDragOver(e, cell.columnId)"
+							@dragover.prevent="
+								(e: DragEvent) => handleCellDragOver(e, cell.columnId)
+							"
 						>
 							<component
 								:is="cell.wrapComponent.component"
@@ -314,7 +318,10 @@ export default defineComponent({
 				draggedColumnId.value = null
 				dropTargetColumnIndex.value = null
 			},
-			handleHeaderClick: (_: MouseEvent, header: Header<unknown, unknown>) => {
+			handleHeaderClick: (
+				_: MouseEvent,
+				header: { column: Header<KottiTable.AnyRow, unknown>['column'] },
+			) => {
 				if (!header.column.getCanSort()) return
 
 				const id = header.column.columnDef.id as string
