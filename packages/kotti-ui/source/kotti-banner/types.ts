@@ -17,6 +17,7 @@ export namespace KottiBanner {
 	export const propsSchema = z.object({
 		action: z.string().nullable().default(null),
 		header: z.string().nullable().default(null),
+		icon: yocoIconSchema.nullable().default(null),
 		isCloseable: z.boolean().default(false),
 		text: z.string().nullable().default(null),
 		type: z
