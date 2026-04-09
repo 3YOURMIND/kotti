@@ -16,45 +16,6 @@ export default defineComponent({
 	props: makeProps(KottiBanner.propsSchema),
 	emits: ['action', 'close'],
 	setup(props, { emit, slots }) {
-		const styles = computed((): KottiBanner.Style => {
-			switch (props.type) {
-				case 'error':
-					return {
-						backgroundColor: 'var(--banner-error-bg)',
-						darkColor: 'var(--banner-error-dark)',
-						icon: Yoco.Icon.CIRCLE_CROSS,
-						lightColor: 'var(--banner-error-light)',
-					}
-
-				case 'info':
-					return {
-						backgroundColor: 'var(--banner-info-bg)',
-						darkColor: 'var(--banner-info-dark)',
-						icon: Yoco.Icon.CIRCLE_I,
-						lightColor: 'var(--banner-info-light)',
-					}
-
-				case 'success':
-					return {
-						backgroundColor: 'var(--banner-success-bg)',
-						darkColor: 'var(--banner-success-dark)',
-						icon: Yoco.Icon.CIRCLE_CHECK,
-						lightColor: 'var(--banner-success-light)',
-					}
-
-				case 'warning':
-					return {
-						backgroundColor: 'var(--banner-warning-bg)',
-						darkColor: 'var(--banner-warning-dark)',
-						icon: Yoco.Icon.CIRCLE_ATTENTION,
-						lightColor: 'var(--banner-warning-light)',
-					}
-
-				default:
-					return props.type
-			}
-		})
-
 		return {
 			hasActionSlot: computed((): boolean => Boolean(slots.action)),
 			hasFooter: computed((): boolean => Boolean(slots.footer)),
@@ -67,7 +28,53 @@ export default defineComponent({
 			onClose: (event: MouseEvent) => {
 				emit('close', event)
 			},
-			styles,
+			styles: computed<KottiBanner.Style>(() => {
+				const styles: KottiBanner.Style = (() => {
+					switch (props.type) {
+						case 'error':
+							return {
+								backgroundColor: 'var(--banner-error-bg)',
+								darkColor: 'var(--banner-error-dark)',
+								icon: Yoco.Icon.CIRCLE_CROSS,
+								lightColor: 'var(--banner-error-light)',
+							}
+
+						case 'info':
+							return {
+								backgroundColor: 'var(--banner-info-bg)',
+								darkColor: 'var(--banner-info-dark)',
+								icon: Yoco.Icon.CIRCLE_I,
+								lightColor: 'var(--banner-info-light)',
+							}
+
+						case 'success':
+							return {
+								backgroundColor: 'var(--banner-success-bg)',
+								darkColor: 'var(--banner-success-dark)',
+								icon: Yoco.Icon.CIRCLE_CHECK,
+								lightColor: 'var(--banner-success-light)',
+							}
+
+						case 'warning':
+							return {
+								backgroundColor: 'var(--banner-warning-bg)',
+								darkColor: 'var(--banner-warning-dark)',
+								icon: Yoco.Icon.CIRCLE_ATTENTION,
+								lightColor: 'var(--banner-warning-light)',
+							}
+
+						default:
+							return props.type
+					}
+				})()
+
+				return props.icon
+					? {
+							...styles,
+							icon: props.icon,
+						}
+					: styles
+			}),
 		}
 	},
 })
@@ -171,6 +178,10 @@ export default defineComponent({
 
 	&__action {
 		align-self: flex-start;
+	}
+
+	&__close {
+		cursor: pointer;
 	}
 
 	&__icon {

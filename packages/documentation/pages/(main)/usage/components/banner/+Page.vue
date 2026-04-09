@@ -99,6 +99,33 @@
 			<KtButton v-else label="May I please try again?" @click="onClose" />
 		</CodePreview>
 
+		<h2>Custom Icon</h2>
+
+		<!-- prettier-ignore -->
+		<CodePreview
+			:code='`
+				<KtBanner
+					:icon="Yoco.Icon.VERSION"
+					isCloseable
+					text="Running late..."
+					type="error"
+					@close="onClose"
+				/>
+			`'
+			language="vue-html"
+		>
+			<KtBanner
+				v-if="!closed"
+				:icon="Yoco.Icon.VERSION"
+				isCloseable
+				text="Running late..."
+				type="error"
+				@close="onClose"
+			/>
+			<KtButton v-else label="May I please try again?" @click="onClose" />
+		</CodePreview>
+		<!-- eslint-enable vue/no-useless-v-bind -->
+
 		<h2>Custom Style</h2>
 
 		<!-- prettier-ignore -->
