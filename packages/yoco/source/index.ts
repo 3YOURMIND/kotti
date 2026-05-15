@@ -60,6 +60,7 @@ export namespace Yoco {
 		DOTS = 'dots',
 		DOTS_VERTICAL = 'dots_vertical',
 		DOWNLOAD = 'download',
+		DRAGGABLE_DOTS = 'draggable_dots',
 		EDIT = 'edit',
 		EMAIL = 'email',
 		EXIT = 'exit',
