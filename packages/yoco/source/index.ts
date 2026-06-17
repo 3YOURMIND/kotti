@@ -3,6 +3,7 @@ import { z } from 'zod'
 export namespace Yoco {
 	export enum Icon {
 		ADDRESS_BOOK = 'address_book',
+		AI_STARS = 'ai_stars',
 		ANNOUNCE = 'announce',
 		ARROW_DOWN = 'arrow_down',
 		ARROW_LINE = 'arrow_line',
