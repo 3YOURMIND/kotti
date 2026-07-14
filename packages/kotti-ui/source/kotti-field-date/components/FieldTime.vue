@@ -2,7 +2,7 @@
 	<div ref="componentRef" class="time-picker" role="group" :tabindex="-1">
 		<div ref="rowRef" class="time-picker__rows">
 			<div
-				v-for="type in ['hours', 'minutes']"
+				v-for="type in ['hours', 'minutes'] as const"
 				:key="type"
 				class="time-picker__column"
 			>

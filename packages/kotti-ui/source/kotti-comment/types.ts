@@ -94,7 +94,6 @@ export namespace KottiComment {
 			.pick({
 				allowInternal: true,
 				dangerouslyOverrideParser: true,
-				id: true,
 				isInternal: true,
 				message: true,
 				postEscapeParser: true,
@@ -108,6 +107,7 @@ export namespace KottiComment {
 				}),
 			)
 			.extend({
+				id: idSchema,
 				isEditing: z.boolean().default(false),
 			})
 		export type PropsInternal = z.output<typeof schema>

@@ -32,11 +32,11 @@ export default defineComponent({
 	props: {
 		dataTest: { required: false, type: String },
 		isLoading: { default: false, type: Boolean },
-		modelValue: { default: null, type: String },
+		modelValue: { default: null, type: String as PropType<string | null> },
 		placeholder: { required: false, type: String },
 		size: {
 			default: KottiField.Size.MEDIUM,
-			type: String as PropType<KottiField.Size>,
+			type: String as PropType<KottiField.PropsInternal['size']>,
 		},
 	},
 	emits: ['update:modelValue'],
