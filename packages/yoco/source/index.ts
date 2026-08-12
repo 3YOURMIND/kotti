@@ -78,6 +78,7 @@ export namespace Yoco {
 		FLAG = 'flag',
 		FOLDER = 'folder',
 		FORK_RIGHT = 'fork_right',
+		FORWARD = 'forward',
 		FULLSCREEN = 'fullscreen',
 		GANT_CHART = 'gant_chart',
 		GLOBAL = 'global',
