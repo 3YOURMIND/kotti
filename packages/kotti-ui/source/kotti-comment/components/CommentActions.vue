@@ -5,7 +5,7 @@
 			class="kt-comment__actions__reply-button"
 			:data-test="`${dataTest}.reply-button`"
 			:label="translations.replyButton"
-			:tabIndex="tabIndex"
+			:tabindex="tabIndex"
 			type="text"
 			@click.stop="onReply"
 		/>
@@ -14,7 +14,7 @@
 			class="kt-comment__actions__edit-button"
 			:data-test="`${dataTest}.edit-button`"
 			:label="translations.editButton"
-			:tabIndex="tabIndex"
+			:tabindex="tabIndex"
 			type="text"
 			@click.stop="onEdit"
 		/>
@@ -23,7 +23,7 @@
 			class="kt-comment__actions__delete-button"
 			:data-test="`${dataTest}.delete-button`"
 			:label="translations.deleteButton"
-			:tabIndex="tabIndex"
+			:tabindex="tabIndex"
 			type="text"
 			@click.stop="onDelete"
 		/>

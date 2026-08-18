@@ -6,9 +6,9 @@
 	>
 		<KtButton
 			data-test="table-filter-edit-button"
-			:disabled="isLoading"
 			:icon="Yoco.Icon.CHEVRON_DOWN"
 			iconPosition="right"
+			:isDisabled="isLoading"
 			:isLoading="isLoading"
 			:label="translations.filters"
 		/>
@@ -25,7 +25,7 @@
 				<div class="table-filters__footer">
 					<KtButton
 						data-test="table-filter-clear-all-button"
-						:disabled="isLoading"
+						:isDisabled="isLoading"
 						:label="translations.clearAll"
 						type="text"
 						@click="$emit('update:appliedFilters', [])"
@@ -44,6 +44,7 @@ import { Yoco } from '@3yourmind/yoco'
 import KtButton from '../../../kotti-button/KtButton.vue'
 import { useTranslationNamespace } from '../../../kotti-i18n/hooks'
 import KtPopover from '../../../kotti-popover/KtPopover.vue'
+import type { KottiPopover } from '../../../kotti-popover/types'
 import type { KottiStandardTable } from '../types'
 
 import FilterList from './FilterList.vue'
@@ -65,7 +66,10 @@ export default defineComponent({
 			type: Array as PropType<KottiStandardTable.FilterInternal[]>,
 		},
 		isLoading: { default: false, type: Boolean },
-		size: { default: 'md', type: String },
+		size: {
+			default: 'md',
+			type: String as PropType<KottiPopover.PropsInternal['size']>,
+		},
 	},
 	emits: ['update:appliedFilters'],
 	setup() {

@@ -1,5 +1,8 @@
 <template>
-	<div class="kt-navbar-quick-link-tooltip" @click="(e) => $emit('click', e)">
+	<div
+		class="kt-navbar-quick-link-tooltip"
+		@click="(e: MouseEvent) => $emit('click', e)"
+	>
 		<i ref="triggerRef" class="yoco" v-text="icon" />
 		<div ref="contentRef" v-text="label" />
 	</div>

@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { createLooseZodEnumSchema } from '../zod-utilities/enums'
+
 export namespace KottiPagination {
 	export enum PagingStyle {
 		EXPAND = 'expand',
@@ -12,7 +14,9 @@ export namespace KottiPagination {
 		fixedWidth: z.boolean().default(false),
 		page: z.number(),
 		pageSize: z.number().default(10),
-		pagingStyle: z.nativeEnum(PagingStyle).default(PagingStyle.EXPAND),
+		pagingStyle: createLooseZodEnumSchema(PagingStyle).default(
+			PagingStyle.EXPAND,
+		),
 		total: z.number().nullable().default(null),
 	})
 

@@ -54,6 +54,7 @@ export namespace KottiButton {
 	export const propsSchema = Shared.propsSchema.extend({
 		helpText: z.string().nullable().default(null),
 		isBlock: z.boolean().default(false),
+		isDisabled: z.boolean().default(false),
 		isMultiline: z.boolean().default(false),
 		label: z.string().nullable().default(null),
 		toggleStatus: toggleStatusSchema.nullable().default(null),

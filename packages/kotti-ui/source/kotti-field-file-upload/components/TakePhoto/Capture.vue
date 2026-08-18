@@ -12,7 +12,7 @@
 				v-if="hasMultipleCameras"
 				class="mr-4"
 				:data-test="dataTest ? `${dataTest}.nextCamera` : undefined"
-				:disabled="!isReady"
+				:isDisabled="!isReady"
 				:isLoading="isLoading"
 				:label="translations.button.nextCamera"
 				@click="onClickNextCamera"
@@ -20,8 +20,8 @@
 			<KtButton
 				class="mr-4"
 				:data-test="dataTest ? `${dataTest}.capture` : undefined"
-				:disabled="!isReady"
 				:icon="Yoco.Icon.CAMERA"
+				:isDisabled="!isReady"
 				:isLoading="isLoading"
 				:label="translations.button.takePhoto"
 				type="primary"

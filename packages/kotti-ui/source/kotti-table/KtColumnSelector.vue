@@ -8,9 +8,9 @@
 	>
 		<KtButton
 			:data-test="dataTest ? `${dataTest}-button` : 'kt-column-selector-button'"
-			:disabled="isDisabled || isLoading"
 			:icon="Yoco.Icon.CHEVRON_DOWN"
 			iconPosition="right"
+			:isDisabled="isDisabled || isLoading"
 			:isLoading="isLoading"
 			:label="label ?? translations.columns"
 		/>

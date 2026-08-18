@@ -2,7 +2,7 @@
 	<div>
 		<KtButton
 			:data-test="localDataTest"
-			:disabled="isDisabled"
+			:isDisabled="isDisabled"
 			:label="translations.button.takePhoto"
 			:tabindex="tabIndex"
 			@click.stop="state = 'capture'"

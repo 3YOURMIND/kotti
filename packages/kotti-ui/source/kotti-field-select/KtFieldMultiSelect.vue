@@ -28,9 +28,16 @@ export default defineComponent({
 		GenericSelectField,
 	},
 	props: makeProps(KottiFieldMultiSelect.propsSchema),
+	emits: ['@update:modelValue'],
 	setup(_, { emit }) {
 		return {
-			onEmit: ({ event, payload }: { event: string; payload: unknown }) => {
+			onEmit: ({
+				event,
+				payload,
+			}: {
+				event: '@update:modelValue'
+				payload: unknown
+			}) => {
 				emit(event, payload)
 			},
 		}
